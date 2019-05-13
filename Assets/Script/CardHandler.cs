@@ -30,7 +30,7 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
     public void OpenCardInfoList() {
         if (!blockButton) {
-            Transform css = GameObject.Find("Canvas").transform.GetChild(2);
+            Transform css = GameObject.Find("Canvas").transform.GetChild(3);
             css.gameObject.SetActive(true);
             css.GetComponentInChildren<HorizontalScrollSnap>().GoToScreen(transform.GetSiblingIndex());
             
