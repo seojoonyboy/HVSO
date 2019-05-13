@@ -5,16 +5,16 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public bool race;
-    public int[,] placement = new int[2, 5] { {0,0,0,0,0 },
+    public int[,] placement = new int[2,5] { {0,0,0,0,0 },
                                               {0,0,0,0,0 }};
     public GameObject card;
+    public GameObject playerUI;
+    public int deckCount = 0;
+    public int HP = 20;
 
 
-    
-
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-
-    }
+        
+    }    
 }
