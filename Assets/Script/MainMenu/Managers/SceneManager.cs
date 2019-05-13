@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -27,8 +28,18 @@ public class SceneManager : Singleton<SceneManager> {
                 break;
         }
         if(str != null) {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(str);
+            Fader fader = GameObject.Find("FaderCanvas/Fader").GetComponent<Fader>();
+            if(fader == null) {
+                UnityEngine.SceneManagement.SceneManager.LoadScene(str);
+            }
+            else {
+                fader.StartFade(Fader.FadeDirection.In, delegate {
+                    UnityEngine.SceneManagement.SceneManager.LoadScene(str);
+                });
+            }
         }
+
+
     }
 
     public enum Scene {
