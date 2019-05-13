@@ -21,6 +21,8 @@ public class PlayMangement : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        player.card = (player.race == true) ? plantCard : zombieCard;
+        enemyPlayer.card = (enemyPlayer.race == true) ? plantCard : zombieCard;
     }
     private void OnDestroy()
     {
