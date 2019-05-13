@@ -7,7 +7,7 @@ public class HeaderLoader : MonoBehaviour {
     // Start is called before the first frame update
     void Start() {
         GameObject _header = Instantiate(header, transform);
-        _header.transform.SetAsFirstSibling();
+        _header.transform.SetAsLastSibling();
     }
 
     // Update is called once per frame

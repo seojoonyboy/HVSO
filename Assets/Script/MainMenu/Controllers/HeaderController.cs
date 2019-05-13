@@ -15,15 +15,15 @@ public class HeaderController : MonoBehaviour {
     }
 
     public void OnOptionBtnClicked() {
-
+        OptionPanel.SetActive(true);
     }
 
     public void OnFriendBtnClicked() {
-
+        MyFriendPanel.SetActive(true);
     }
 
     public void OnShopBtnClicked() {
-
+        ShopPanel.SetActive(true);
     }
 
     public void SetMyResource() {
