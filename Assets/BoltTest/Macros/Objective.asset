@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1893448595, guid: a040fb66244a7f54289914d98ea4ef7d, type: 3}
+  m_Name: Objective
+  m_EditorClassIdentifier: 
+  _data:
+    _json: '{"graph":{"variables":{"collection":{"$content":[],"$version":"A"},"$version":"A"},"controlInputDefinitions":[],"controlOutputDefinitions":[],"valueInputDefinitions":[],"valueOutputDefinitions":[],"title":null,"summary":null,"pan":{"x":-41.0,"y":-119.0},"zoom":1.0,"elements":[{"chainable":false,"member":{"name":"LoadScene","parameterTypes":["System.String"],"targetType":"UnityEngine.SceneManagement.SceneManager","targetTypeName":"UnityEngine.SceneManagement.SceneManager","$version":"A"},"defaultValues":{"%sceneName":{"$content":"","$type":"System.String"}},"position":{"x":241.0,"y":-146.0},"guid":"20440824-f1c0-4e70-aadb-d01b7b16df7c","$version":"A","$type":"Bolt.InvokeMember","$id":"9"},{"nest":{"source":"Macro","macro":0,"embed":null},"defaultValues":{"tag":{"$content":"Player","$type":"System.String"}},"position":{"x":-134.0,"y":-288.0},"guid":"7cbd44db-10d3-4983-aa6b-be4dde5fdf92","$version":"A","$type":"Bolt.SuperUnit","$id":"12"},{"specifyFallback":false,"kind":"Object","defaultValues":{"name":{"$content":"Scene","$type":"System.String"},"object":null},"position":{"x":-77.0,"y":-73.0},"guid":"64c28387-ab19-4479-bf49-f0843b3d58ef","$version":"A","$type":"Bolt.GetVariable","$id":"15"},{"sourceUnit":{"$ref":"12"},"sourceKey":"target","destinationUnit":{"$ref":"9"},"destinationKey":"enter","guid":"f5c3ba91-3857-4b97-b3d0-1b6f11b5fd07","$type":"Bolt.ControlConnection"},{"sourceUnit":{"$ref":"15"},"sourceKey":"value","destinationUnit":{"$ref":"9"},"destinationKey":"%sceneName","guid":"ae991d39-982b-4d3e-9d12-4cf622a9cdc8","$type":"Bolt.ValueConnection"}],"$version":"A"}}'
+    _objectReferences:
+    - {fileID: 11400000, guid: f66318345a79cf14897899d703bdfac8, type: 2}
