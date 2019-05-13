@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class MissionSelectSceneController : MonoBehaviour {
     [SerializeField] GameObject Fader;
+    [SerializeField] Transform stageParent;
 
     // Start is called before the first frame update
     void Start() {
@@ -18,5 +19,13 @@ public class MissionSelectSceneController : MonoBehaviour {
     // Update is called once per frame
     void Update() {
 
+    }
+
+    public void OnMissionStart() {
+        SceneManager.Instance.LoadScene(SceneManager.Scene.MISSION_INGAME);
+    }
+
+    public void OnBackBtn() {
+        SceneManager.Instance.LoadScene(SceneManager.Scene.MAIN_SCENE);
     }
 }

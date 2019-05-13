@@ -26,6 +26,9 @@ public class SceneManager : Singleton<SceneManager> {
             case Scene.COLLECTION_SCENE:
                 str = "CollectionScene";
                 break;
+            case Scene.MISSION_INGAME:
+                str = "IngameScene";
+                break;
         }
         if(str != null) {
             Fader fader = GameObject.Find("FaderCanvas/Fader").GetComponent<Fader>();
@@ -45,6 +48,7 @@ public class SceneManager : Singleton<SceneManager> {
     public enum Scene {
         MAIN_SCENE,
         COLLECTION_SCENE,
-        MISSION_SELECT_SCENE
+        MISSION_SELECT_SCENE,
+        MISSION_INGAME
     }
 }
