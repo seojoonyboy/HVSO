@@ -20,6 +20,9 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        if(Vector3.Distance(transform.position, startPos) < 1.0f){
+
+        }
         transform.position = startPos;
     }
 
