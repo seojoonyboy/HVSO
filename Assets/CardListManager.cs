@@ -22,6 +22,6 @@ public class CardListManager : MonoBehaviour
     public void OpenCardList(int cardnum) {
         transform.GetComponent<Image>().enabled = true;
         animator.SetBool("Hide", false);
-        hss.GoToScreen(transform.GetSiblingIndex());
+        hss.GoToScreen(cardnum);
     }
 }
