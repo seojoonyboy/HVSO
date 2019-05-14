@@ -9,16 +9,16 @@ public class TestPhase : MonoBehaviour {
 
     IEnumerator Start() {
         yield return new WaitForSeconds(3.0f);
-        CustomEvent.Trigger(phaseManager, "EndTurn", "Plant");
+        CustomEvent.Trigger(phaseManager, "EndTurn");
         PrintCurrentSceneName();
         yield return new WaitForSeconds(3.0f);
-        CustomEvent.Trigger(phaseManager, "EndTurn", "Secret");
+        CustomEvent.Trigger(phaseManager, "EndTurn");
         PrintCurrentSceneName();
         yield return new WaitForSeconds(3.0f);
-        CustomEvent.Trigger(phaseManager, "EndTurn", "Battle");
+        CustomEvent.Trigger(phaseManager, "EndTurn");
         PrintCurrentSceneName();
         yield return new WaitForSeconds(3.0f);
-        CustomEvent.Trigger(phaseManager, "EndTurn", "Zombie");
+        CustomEvent.Trigger(phaseManager, "EndTurn");
         PrintCurrentSceneName();
     }
 
