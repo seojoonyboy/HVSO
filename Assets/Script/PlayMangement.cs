@@ -81,8 +81,4 @@ public class PlayMangement : MonoBehaviour
         }
 
     }
-
-
-
-
 }
