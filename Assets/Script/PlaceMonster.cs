@@ -25,24 +25,23 @@ public class PlaceMonster : MonoBehaviour
         if(isPlayer == true) {
             PlayerController enemy = PlayMangement.instance.enemyPlayer;
 
-            if (enemy.transform.Find("PlaceMentLine_2").GetChild(x).childCount != 0)
-                enemy.transform.Find("PlaceMentLine_2").GetChild(x).GetChild(0).GetComponent<PlaceMonster>().unit.HP -= unit.power;
-            else if (enemy.transform.Find("PlaceMentLine_1").GetChild(x).childCount != 0)
-                enemy.transform.Find("PlaceMentLine_1").GetChild(x).GetChild(0).GetComponent<PlaceMonster>().unit.HP -= unit.power;
+            if (enemy.transform.Find("Line_2").GetChild(x).childCount != 0)
+                enemy.transform.Find("Line_2").GetChild(x).GetChild(0).GetComponent<PlaceMonster>().unit.HP -= unit.power;
+            else if (enemy.transform.Find("Line_1").GetChild(x).childCount != 0)
+                enemy.transform.Find("Line_1").GetChild(x).GetChild(0).GetComponent<PlaceMonster>().unit.HP -= unit.power;
             else
                 enemy.HP -= unit.power;
         }
         else {
             PlayerController player = PlayMangement.instance.player;
 
-            if (player.transform.Find("PlaceMentLine_2").GetChild(x).childCount != 0)
-                player.transform.Find("PlaceMentLine_2").GetChild(x).GetChild(0).GetComponent<PlaceMonster>().unit.HP -= unit.power;
-            else if (player.transform.Find("PlaceMentLine_1").GetChild(x).childCount != 0)
-                player.transform.Find("PlaceMentLine_1").GetChild(x).GetChild(0).GetComponent<PlaceMonster>().unit.HP -= unit.power;
+            if (player.transform.Find("Line_2").GetChild(x).childCount != 0)
+                player.transform.Find("Line_2").GetChild(x).GetChild(0).GetComponent<PlaceMonster>().unit.HP -= unit.power;
+            else if (player.transform.Find("Line_1").GetChild(x).childCount != 0)
+                player.transform.Find("Line_1").GetChild(x).GetChild(0).GetComponent<PlaceMonster>().unit.HP -= unit.power;
             else
                 player.HP -= unit.power;
         }
-
     }
 
 
