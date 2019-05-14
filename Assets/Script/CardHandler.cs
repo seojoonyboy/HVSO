@@ -15,6 +15,7 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
     public void Start() {
         csm = GameObject.Find("Canvas").transform.GetChild(3).GetComponent<CardListManager>();
+        csm.AddCardInfo();
     }
 
     public void OnBeginDrag(PointerEventData eventData)

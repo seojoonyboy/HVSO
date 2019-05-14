@@ -18,6 +18,10 @@ public class CardListManager : MonoBehaviour
         hss = transform.GetComponentInChildren<HorizontalScrollSnap>();
     }
 
+    public void AddCardInfo() {
+        GameObject newcard =  Instantiate(cardPrefab);
+        hss.AddChild(newcard);
+    }
 
     public void OpenCardList(int cardnum) {
         transform.GetComponent<Image>().enabled = true;
