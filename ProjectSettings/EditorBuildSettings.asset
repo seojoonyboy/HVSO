@@ -9,18 +9,24 @@ EditorBuildSettings:
     path: Assets/Scenes/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
-    path: Assets/BoltTest/Scenes/Level1.unity
-    guid: 80e5ff8fdbb5a084296e97e2731f0bd0
+    path: Assets/Scenes/MenuScene.unity
+    guid: 31d8bab600a0e984fbdb0644ad9c8706
   - enabled: 1
-    path: Assets/BoltTest/Scenes/Level2.unity
-    guid: d0f1403920648594b866544daef165af
+    path: Assets/Scenes/MissionSelectScene.unity
+    guid: fe5cd1f182b3a56409440dd3dc6e8c22
   - enabled: 1
-    path: Assets/BoltTest/Scenes/Level3.unity
-    guid: 899e2f9ff7821344489cd9cb15bf1f89
+    path: Assets/Scenes/IngameScene.unity
+    guid: c779ba3ba45fa784db6cf4f02fed5d79
   - enabled: 1
-    path: Assets/BoltTest/Scenes/Level4.unity
-    guid: 3a9fc8842018d014cb7ce22ded4c574c
+    path: Assets/Scenes/PhaseBoltTest.unity
+    guid: 2253c71ce12486045b52053a17fe195c
   - enabled: 1
-    path: Assets/BoltTest/Scenes/HUD.unity
-    guid: 279a8870345208046b22f7aa2b7fe228
+    path: Assets/Scenes/PVP_ReadyScene.unity
+    guid: f0670715b49638148b2efdf399770948
+  - enabled: 1
+    path: Assets/Scenes/DeckSettingScene.unity
+    guid: 44b18fde80a602a48958bdba01a6809a
+  - enabled: 1
+    path: Assets/Scenes/CollectionScene.unity
+    guid: 74d03884f30387847bb1d1a2de30b95c
   m_configObjects: {}
