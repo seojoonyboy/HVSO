@@ -97,10 +97,8 @@ public class PlayMangement : MonoBehaviour
                 enemyPlayer.transform.Find("Line_2").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().AttackMonster();
                 yield return new WaitForSeconds(0.5f);
             }
-
-
-
             line++;
         }
+        StopCoroutine("battleCoroutine");
     }
 }
