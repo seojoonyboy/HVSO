@@ -49,15 +49,14 @@ public class SceneManager : Singleton<SceneManager> {
         }
 
         if(numberOfScene != -1) {
-            Fader fader = GameObject.Find("FaderCanvas/Fader").GetComponent<Fader>();
-            if(fader == null) {
-                //UnityEngine.SceneManagement.SceneManager.LoadScene(str);
-                LoadNextScene(numberOfScene);
-            }
-            else {
+            try {
+                Fader fader = GameObject.Find("FaderCanvas/Fader").GetComponent<Fader>();
                 fader.StartFade(Fader.FadeDirection.In, delegate {
                     LoadNextScene(numberOfScene);
                 });
+            }
+            catch(NullReferenceException ex) {
+                LoadNextScene(numberOfScene);
             }
         }
     }

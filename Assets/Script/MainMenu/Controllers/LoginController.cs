@@ -21,7 +21,9 @@ public class LoginController : MonoBehaviour {
     }
 
     public void OnSignInModal() {
-        Modal.instantiate("로그인 되었습니다.", Modal.Type.CHECK);
+        Modal.instantiate("로그인이 되었습니다.", Modal.Type.CHECK, ()=> {
+            SceneManager.Instance.LoadScene(SceneManager.Scene.MAIN_SCENE);
+        });
     }
 
     public void OnSignUpModal() {

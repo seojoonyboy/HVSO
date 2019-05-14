@@ -6,11 +6,14 @@ using UnityEngine;
 
 public class AccountManager : Singleton<AccountManager> {
     protected AccountManager() { }
-    public string DEVICEID { get; private set; }
-    NetworkManager networkManager;
 
     public delegate void Callback();
     private Callback callback = null;
+
+    public string DEVICEID { get; private set; }
+    public UserClassInput userData { get; private set; }
+
+    NetworkManager networkManager;
 
     private void Awake() {
         DEVICEID = SystemInfo.deviceUniqueIdentifier;
@@ -86,7 +89,11 @@ public class AccountManager : Singleton<AccountManager> {
                 + response.errorMessage);
         }
         else {
+            userData = dataModules.JsonReader.Read<UserClassInput>(response.data);
 
+            Modal.instantiate("회원가입이 완료되었습니다.", Modal.Type.CHECK, () => {
+                SceneManager.Instance.LoadScene(SceneManager.Scene.MAIN_SCENE);
+            });
         }
     }
 
