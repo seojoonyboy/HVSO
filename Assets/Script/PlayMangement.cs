@@ -1,3 +1,4 @@
+using Bolt;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -80,9 +81,6 @@ public class PlayMangement : MonoBehaviour
             enemyPlayer.transform.GetChild(0).GetChild(i).GetChild(0).GetComponent<PlaceMonster>().AttackMonster();
         }
 
+        Debug.Log("Start Battle");
     }
-
-
-
-
 }
