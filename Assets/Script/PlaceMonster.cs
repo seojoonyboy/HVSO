@@ -9,6 +9,8 @@ public class PlaceMonster : MonoBehaviour
 {
     public Unit unit;
     public bool isPlayer;
+    public GameObject atkPrefab;
+
     public int x;
     public int y;
 
@@ -22,25 +24,47 @@ public class PlaceMonster : MonoBehaviour
     }
 
     public void AttackMonster() {
-        if(isPlayer == true) {
+        if (isPlayer == true) {
             PlayerController enemy = PlayMangement.instance.enemyPlayer;
+            GameObject target;
+            GameObject shoot = Instantiate(atkPrefab);
 
-            if (enemy.transform.Find("Line_2").GetChild(x).childCount != 0)
-                enemy.transform.Find("Line_2").GetChild(x).GetChild(0).GetComponent<PlaceMonster>().unit.HP -= unit.power;
-            else if (enemy.transform.Find("Line_1").GetChild(x).childCount != 0)
-                enemy.transform.Find("Line_1").GetChild(x).GetChild(0).GetComponent<PlaceMonster>().unit.HP -= unit.power;
-            else
-                enemy.HP -= unit.power;
+            if (enemy.transform.Find("Line_2").GetChild(x).childCount != 0) {
+                target = enemy.transform.Find("Line_2").GetChild(x).GetChild(0).gameObject;
+                target.GetComponent<PlaceMonster>().unit.HP -= unit.power;               
+            }
+            else if (enemy.transform.Find("Line_1").GetChild(x).childCount != 0) {
+                target = enemy.transform.Find("Line_1").GetChild(x).GetChild(0).gameObject;
+                target.GetComponent<PlaceMonster>().unit.HP -= unit.power;
+            }
+            else {
+                target = enemy.transform.gameObject;
+                enemy.HP.Value -= unit.power;
+            }
+
+            shoot.transform.position = target.transform.position;
+
+
         }
         else {
             PlayerController player = PlayMangement.instance.player;
+            GameObject target;
+            GameObject shoot = Instantiate(atkPrefab);
 
-            if (player.transform.Find("Line_2").GetChild(x).childCount != 0)
-                player.transform.Find("Line_2").GetChild(x).GetChild(0).GetComponent<PlaceMonster>().unit.HP -= unit.power;
-            else if (player.transform.Find("Line_1").GetChild(x).childCount != 0)
-                player.transform.Find("Line_1").GetChild(x).GetChild(0).GetComponent<PlaceMonster>().unit.HP -= unit.power;
-            else
-                player.HP -= unit.power;
+            if (player.transform.Find("Line_2").GetChild(x).childCount != 0) {
+                target = player.transform.Find("Line_2").GetChild(x).GetChild(0).gameObject;
+                target.GetComponent<PlaceMonster>().unit.HP -= unit.power;
+            }
+            else if (player.transform.Find("Line_1").GetChild(x).childCount != 0) {
+                target = player.transform.Find("Line_1").GetChild(x).GetChild(0).gameObject;
+                target.GetComponent<PlaceMonster>().unit.HP -= unit.power;
+            }
+            else {
+                target = player.transform.gameObject;
+                player.HP.Value -= unit.power;
+            }
+
+            shoot.transform.position = target.transform.position;
         }
     }
 

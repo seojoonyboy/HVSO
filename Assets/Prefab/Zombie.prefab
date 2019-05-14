@@ -383,11 +383,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unit:
     race: 0
+    id: 0
     HP: 1
     power: 1
     cost: 0
     placeable: 0
     waterPlace: 0
+  isPlayer: 0
+  atkPrefab: {fileID: 7336064471842183720, guid: 3e045bcc4cf2a0b4c8cb5f4676e7e1c9,
+    type: 3}
+  x: 0
+  y: 0
 --- !u!1 &6680432397128563989
 GameObject:
   m_ObjectHideFlags: 0

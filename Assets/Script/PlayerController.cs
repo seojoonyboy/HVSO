@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UniRx;
 
 public class PlayerController : MonoBehaviour
 {
@@ -11,9 +12,10 @@ public class PlayerController : MonoBehaviour
                                               {0,0,0,0,0 }};
     public GameObject card;
     public GameObject playerUI;
-    public int HP = 20;
-    public int resource = 0;
 
+
+    public ReactiveProperty<int> HP;
+    public ReactiveProperty<int> resource = new ReactiveProperty<int>(2);
 
     private void Start()
     {
@@ -27,13 +29,24 @@ public class PlayerController : MonoBehaviour
                 getCard.transform.SetParent(playerUI.transform.Find("CardSlot"));
             }
         }
-
         playerUI.transform.Find("PlayerResource").GetComponent<Image>().sprite = (race == true) ? PlayMangement.instance.plantResourceIcon : PlayMangement.instance.zombieResourceIcon;
-
     }
-    
-    void UpdateResource() {
-        playerUI.transform.Find("PlayerResource").GetChild(0).GetComponent<Text>().text = resource.ToString();
+
+    public void SetPlayerStat(int hp) {
+        HP = new ReactiveProperty<int>(hp);
+        ObserverText();
+    }
+
+    private void ObserverText() {
+        Text HPText = playerUI.transform.Find("PlayerHealth").Find("Health").Find("Text").GetComponent<Text>();
+        Text resourceText = playerUI.transform.Find("PlayerResource").Find("Text").GetComponent<Text>();
+
+        HP.SubscribeToText(HPText).AddTo(PlayMangement.instance.transform.gameObject);
+        resource.SubscribeToText(resourceText).AddTo(PlayMangement.instance.transform.gameObject);
+    }
+
+    public void UpdateHealth() {
+        HP.Value += 2;
     }
 
 
