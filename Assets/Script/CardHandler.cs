@@ -10,6 +10,13 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     public Vector3 startPos;
     public GameObject unit;
     private bool blockButton = false;
+    CardListManager csm;
+    Animator cssAni;
+
+    public void Start() {
+        csm = GameObject.Find("Canvas").transform.GetChild(3).GetComponent<CardListManager>();
+        csm.AddCardInfo();
+    }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
@@ -30,9 +37,7 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
     public void OpenCardInfoList() {
         if (!blockButton) {
-            Transform css = GameObject.Find("Canvas").transform.GetChild(3);
-            css.GetComponentInChildren<HorizontalScrollSnap>().GoToScreen(transform.GetSiblingIndex());
-            css.gameObject.SetActive(true);
+            csm.OpenCardList(transform.GetSiblingIndex());
         }
     }
 }
