@@ -29,22 +29,22 @@ public class SceneManager : Singleton<SceneManager> {
         int numberOfScene = -1;
         switch (scene) {
             case Scene.MAIN_SCENE:
-                numberOfScene = 0;
-                break;
-            case Scene.MISSION_SELECT_SCENE:
                 numberOfScene = 1;
                 break;
-            case Scene.COLLECTION_SCENE:
-                numberOfScene = 6;
-                break;
-            case Scene.MISSION_INGAME:
+            case Scene.MISSION_SELECT_SCENE:
                 numberOfScene = 2;
                 break;
+            case Scene.COLLECTION_SCENE:
+                numberOfScene = 7;
+                break;
+            case Scene.MISSION_INGAME:
+                numberOfScene = 3;
+                break;
             case Scene.PVP_READY_SCENE:
-                numberOfScene = 4;
+                numberOfScene = 5;
                 break;
             case Scene.DECK_SETTING_SCENE:
-                numberOfScene = 5;
+                numberOfScene = 6;
                 break;
         }
 

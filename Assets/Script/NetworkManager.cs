@@ -3,13 +3,8 @@ using System.Collections;
 using UnityEngine.Networking;
 
 public class NetworkManager : Singleton<NetworkManager> {
-#if DEVELOPMENT_BUILD
     //개발용
-    //public string baseUrl = "http://ihak2devclient.fbl.kr/";
-#else
-    //릴리즈용
-    //public string baseUrl = "http://ihak2test.fbl.kr/";
-#endif
+    public string baseUrl = "http://ccdevclient.fbl.kr/";
     protected NetworkManager() { }
     public delegate void Callback(HttpResponse response);
 
