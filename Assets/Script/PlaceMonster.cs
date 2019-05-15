@@ -42,7 +42,7 @@ public class PlaceMonster : MonoBehaviour
                 enemy.PlayerTakeDamage(unit.power);
             }
 
-            shoot.transform.position = target.transform.position;
+            shoot.transform.position = new Vector3(gameObject.transform.position.x, target.transform.position.y);
 
 
         }
@@ -64,7 +64,7 @@ public class PlaceMonster : MonoBehaviour
                 player.PlayerTakeDamage(unit.power);
             }
 
-            shoot.transform.position = target.transform.position;
+            shoot.transform.position = new Vector3(gameObject.transform.position.x, target.transform.position.y);
         }
     }
 

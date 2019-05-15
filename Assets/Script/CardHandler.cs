@@ -23,19 +23,24 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+
         blockButton = true;
         startPos = transform.position;
+        
     }
 
     public void OnDrag(PointerEventData eventData)
     {
+
         transform.position = Input.mousePosition;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
+
         transform.position = startPos;
         blockButton = false;
+        
     }
 
     public void OpenCardInfoList() {
@@ -43,4 +48,20 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
             csm.OpenCardList(transform.GetSiblingIndex());
         }
     }
+
+    public void DisableCard() {
+        gameObject.transform.Find("Portrait").GetComponent<Image>().color = Color.gray;
+        gameObject.transform.Find("attack").GetComponent<Image>().color = Color.gray;
+        gameObject.transform.Find("Health").GetComponent<Image>().color = Color.gray;
+        gameObject.transform.Find("Cost").GetComponent<Image>().color = Color.gray;
+    }
+
+    public void ActivateCard() {
+        gameObject.transform.Find("Portrait").GetComponent<Image>().color = Color.white;
+        gameObject.transform.Find("attack").GetComponent<Image>().color = Color.white;
+        gameObject.transform.Find("Health").GetComponent<Image>().color = Color.white;
+        gameObject.transform.Find("Cost").GetComponent<Image>().color = Color.white;
+    }
+
+
 }
