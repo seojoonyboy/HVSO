@@ -39,7 +39,7 @@ public class PlaceMonster : MonoBehaviour
             }
             else {
                 target = enemy.transform.gameObject;
-                enemy.HP.Value -= unit.power;
+                enemy.PlayerTakeDamage(unit.power);
             }
 
             shoot.transform.position = target.transform.position;
@@ -61,7 +61,7 @@ public class PlaceMonster : MonoBehaviour
             }
             else {
                 target = player.transform.gameObject;
-                player.HP.Value -= unit.power;
+                player.PlayerTakeDamage(unit.power);
             }
 
             shoot.transform.position = target.transform.position;
