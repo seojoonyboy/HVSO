@@ -15,10 +15,8 @@ public class PlayerController : MonoBehaviour
 
 
     public ReactiveProperty<int> HP;
-    public ReactiveProperty<int> resource = new ReactiveProperty<int>(2);
-
-    [SerializeField]
-    private int shieldStack = 0;
+    public ReactiveProperty<int> resource = new ReactiveProperty<int>(2);    
+    private ReactiveProperty<int> shieldStack = new ReactiveProperty<int>(0);
     private int shieldCount = 0;
 
     private void Start()
@@ -44,9 +42,11 @@ public class PlayerController : MonoBehaviour
     private void ObserverText() {
         Text HPText = playerUI.transform.Find("PlayerHealth").Find("Health").Find("Text").GetComponent<Text>();
         Text resourceText = playerUI.transform.Find("PlayerResource").Find("Text").GetComponent<Text>();
+        Image shieldImage = playerUI.transform.Find("PlayerHealth").Find("Shield").GetComponent<Image>();
 
         HP.SubscribeToText(HPText).AddTo(PlayMangement.instance.transform.gameObject);
         resource.SubscribeToText(resourceText).AddTo(PlayMangement.instance.transform.gameObject);
+        shieldStack.Subscribe(_ => shieldImage.fillAmount = (float)shieldStack.Value / 8 ).AddTo(PlayMangement.instance.transform.gameObject);
     }
 
     public void UpdateHealth() {
@@ -54,16 +54,18 @@ public class PlayerController : MonoBehaviour
     }
 
     public void PlayerTakeDamage(int amount) {
-        if (shieldStack < 8) {
+        if (shieldStack.Value < 8) {
             HP.Value -= amount;
-            shieldStack++;
+            shieldStack.Value++;
         }
         else {
             HP.Value += 2;
             DrawSpeicalCard();
-            shieldStack = 0;
+            shieldStack.Value = 0;
         } 
     }
+
+
 
     public void DrawSpeicalCard() {
 
