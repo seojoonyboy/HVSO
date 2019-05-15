@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Bolt;
+using System;
 
 public class TestPhase : MonoBehaviour {
     [SerializeField] GameObject phaseManager;
@@ -20,6 +21,14 @@ public class TestPhase : MonoBehaviour {
         //yield return new WaitForSeconds(3.0f);
         //CustomEvent.Trigger(phaseManager, "EndTurn");
         //PrintCurrentSceneName();
+    }
+
+    private void Awake() {
+        GetComponent<TurnChanger>().onTurnChanged.AddListener(() => OnTurnChange());
+    }
+
+    private void OnTurnChange() {
+        Debug.Log("턴이 바뀜");
     }
 
     public void PrintCurrentSceneName() {
