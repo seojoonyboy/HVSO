@@ -60,24 +60,16 @@ public class AccountManager : Singleton<AccountManager> {
 
     private void CallbackUserRequest(HttpResponse response) {
         if (response.responseCode != 200) {
-            Debug.Log(
-                response.responseCode 
-                + "에러\n"
-                + response.errorMessage);
-        }
-        else {
-            if(response.data == "null") {
-                transform
+            transform
                 .GetChild(0)
                 .GetComponent<LoginController>()
                 .OnSignUpModal();
-            }
-            else {
-                transform
+        }
+        else {
+            transform
                 .GetChild(0)
                 .GetComponent<LoginController>()
                 .OnSignInModal();
-            }
         }
     }
 
