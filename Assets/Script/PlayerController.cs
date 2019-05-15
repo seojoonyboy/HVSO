@@ -17,6 +17,10 @@ public class PlayerController : MonoBehaviour
     public ReactiveProperty<int> HP;
     public ReactiveProperty<int> resource = new ReactiveProperty<int>(2);
 
+    [SerializeField]
+    private int shieldStack = 0;
+    private int shieldCount = 0;
+
     private void Start()
     {
         for(int i = 0; i < 5; i++) {
@@ -48,6 +52,23 @@ public class PlayerController : MonoBehaviour
     public void UpdateHealth() {
         HP.Value += 2;
     }
+
+    public void PlayerTakeDamage(int amount) {
+        if (shieldStack < 8) {
+            HP.Value -= amount;
+            shieldStack++;
+        }
+        else {
+            HP.Value += 2;
+            DrawSpeicalCard();
+            shieldStack = 0;
+        } 
+    }
+
+    public void DrawSpeicalCard() {
+
+    }
+
 
 
 }
