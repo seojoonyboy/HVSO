@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
+using System.Linq;
 
 public class AccountManager : Singleton<AccountManager> {
     protected AccountManager() { }
@@ -13,6 +14,7 @@ public class AccountManager : Singleton<AccountManager> {
     public string DEVICEID { get; private set; }
     public UserClassInput userData { get; private set; }
     public List<dataModules.CardInventory> myCards { get; private set; }
+    public List<Deck> myDecks = new List<Deck>();
 
     NetworkManager networkManager;
 
@@ -115,5 +117,29 @@ public class AccountManager : Singleton<AccountManager> {
         public string deviceId;
 
         public List<dataModules.CardInventory> cardInventories;
+    }
+
+    public void SetDummyDeck() {
+        var group =
+            from card in myCards
+            group card by card.camp into newGroup
+            orderby newGroup.Key
+            select newGroup;
+
+        foreach(var _group in group) {
+            Deck deck = new Deck();
+            deck.type = _group.Key;
+
+            foreach(var card in _group) {
+                deck.cards.Add(card);
+            }
+
+            myDecks.Add(deck);
+        }
+    }
+
+    public class Deck {
+        public string type;
+        public List<dataModules.CardInventory> cards = new List<dataModules.CardInventory>();
     }
 }

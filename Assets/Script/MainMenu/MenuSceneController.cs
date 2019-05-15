@@ -7,6 +7,7 @@ public class MenuSceneController : MonoBehaviour {
     // Start is called before the first frame update
     void Start() {
         accountManager = AccountManager.Instance;
+        accountManager.SetDummyDeck();
     }
 
     // Update is called once per frame
