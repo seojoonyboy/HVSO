@@ -13,9 +13,12 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     CardListManager csm;
     Animator cssAni;
 
+    public CardData cardData;
+
     public void Start() {
+        cardData = Resources.Load("CardDatas/ac10001", typeof(CardData)) as CardData;
         csm = GameObject.Find("Canvas").transform.GetChild(3).GetComponent<CardListManager>();
-        csm.AddCardInfo();
+        csm.AddCardInfo(cardData);
     }
 
     public void OnBeginDrag(PointerEventData eventData)
