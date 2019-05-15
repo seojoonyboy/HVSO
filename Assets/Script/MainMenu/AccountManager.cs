@@ -59,6 +59,7 @@ public class AccountManager : Singleton<AccountManager> {
             .Append("api/users/")
             .Append(DEVICEID);
 
+        Debug.Log(url.ToString());
         if (needPopup) {
             networkManager.request("GET", url.ToString(), CallbackUserRequestWithPopup, false);
         }

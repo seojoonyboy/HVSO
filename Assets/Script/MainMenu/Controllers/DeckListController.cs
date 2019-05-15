@@ -12,7 +12,7 @@ public class DeckListController : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
-
+        CreateDummyDecks();
     }
 
     // Update is called once per frame
@@ -20,11 +20,24 @@ public class DeckListController : MonoBehaviour {
 
     }
 
-    public void CreateAllDecks() {
-
+    /// <summary>
+    /// 고정 덱 생성
+    /// </summary>
+    public void CreateDummyDecks() {
+        ClearDecks();
+        var decks = AccountManager.Instance.myDecks;
+        for(int i=0; i<decks.Count; i++) {
+            GameObject newDeckPanel = Instantiate(DeckGroupPrefab, Content);
+        }
     }
 
-    public void CreateAllDecks(string hero) {
+    public void CreateDecks() {
+        foreach(Transform tf in Content) {
+            Destroy(tf.gameObject);
+        }
+    }
+
+    public void CreateDecks(string hero) {
         ClearDecks();
     }
 
@@ -49,5 +62,9 @@ public class DeckListController : MonoBehaviour {
         GameObject target = selectedDeck;
         if (target == null) return;
         target.GetComponent<dataModules.BooleanIndex>().isOn = false;
+    }
+
+    public void OnBackButton() {
+        SceneManager.Instance.LoadLastScene();
     }
 }
