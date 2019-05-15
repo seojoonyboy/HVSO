@@ -11,15 +11,15 @@ public class TestPhase : MonoBehaviour {
         yield return new WaitForSeconds(3.0f);
         CustomEvent.Trigger(phaseManager, "EndTurn");
         PrintCurrentSceneName();
-        yield return new WaitForSeconds(3.0f);
-        CustomEvent.Trigger(phaseManager, "EndTurn");
-        PrintCurrentSceneName();
-        yield return new WaitForSeconds(3.0f);
-        CustomEvent.Trigger(phaseManager, "EndTurn");
-        PrintCurrentSceneName();
-        yield return new WaitForSeconds(3.0f);
-        CustomEvent.Trigger(phaseManager, "EndTurn");
-        PrintCurrentSceneName();
+        //yield return new WaitForSeconds(3.0f);
+        //CustomEvent.Trigger(phaseManager, "EndTurn");
+        //PrintCurrentSceneName();
+        //yield return new WaitForSeconds(3.0f);
+        //CustomEvent.Trigger(phaseManager, "EndTurn");
+        //PrintCurrentSceneName();
+        //yield return new WaitForSeconds(3.0f);
+        //CustomEvent.Trigger(phaseManager, "EndTurn");
+        //PrintCurrentSceneName();
     }
 
     public void PrintCurrentSceneName() {
