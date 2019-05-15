@@ -37,8 +37,8 @@ public class Fader : MonoBehaviour {
                 SetColorImage(ref alpha, fadeDirection);
                 yield return null;
             }
+            fadeOutUIImage.color = new Color(fadeOutUIImage.color.r, fadeOutUIImage.color.g, fadeOutUIImage.color.b, 255f);
         }
-
         callback.Invoke();
     }
 
