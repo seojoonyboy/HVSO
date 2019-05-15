@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
 {
     public bool race;
     public bool isPlayer;
+    private bool myTurn = false;
     public int[,] placement = new int[2,5] { {0,0,0,0,0 },
                                               {0,0,0,0,0 }};
     public GameObject card;
@@ -18,6 +19,10 @@ public class PlayerController : MonoBehaviour
     public ReactiveProperty<int> resource = new ReactiveProperty<int>(2);    
     private ReactiveProperty<int> shieldStack = new ReactiveProperty<int>(0);
     private int shieldCount = 0;
+
+    public bool getPlayerTurn {
+        get { return myTurn; }
+    }
 
     private void Start()
     {
@@ -65,10 +70,34 @@ public class PlayerController : MonoBehaviour
         } 
     }
 
-
-
     public void DrawSpeicalCard() {
 
+    }
+
+    public void ReleaseTurn() {
+        if (myTurn == true)
+            PlayMangement.instance.GetPlayerTurnRelease();
+    }
+
+
+    public void ActivePlayer() {
+        myTurn = true;      
+        if(isPlayer == true) {
+            Transform cardSlot = playerUI.transform.Find("CardSlot");
+            for (int i = 0; i<cardSlot.childCount; i++) {
+                cardSlot.GetChild(i).GetComponent<CardHandler>().ActivateCard();
+            }            
+        }
+    }
+
+    public void DisablePlayer() {
+        myTurn = false;      
+        if (isPlayer == true) {
+            Transform cardSlot = playerUI.transform.Find("CardSlot");
+            for (int i = 0; i < cardSlot.childCount; i++) {
+                cardSlot.GetChild(i).GetComponent<CardHandler>().DisableCard();
+            }
+        }
     }
 
 

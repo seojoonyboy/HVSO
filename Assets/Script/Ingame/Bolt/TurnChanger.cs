@@ -22,6 +22,7 @@ public class TurnChanger : MonoBehaviour {
         ).Set("CurrentTurn", turn.ToString());
 
         onTurnChanged.Invoke();
+        Debug.Log(index);
     }
 
     public enum TurnType {

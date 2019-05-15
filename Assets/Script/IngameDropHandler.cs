@@ -15,7 +15,7 @@ public class IngameDropHandler : MonoBehaviour, IDropHandler
 
     public void OnDrop(PointerEventData eventData)
     {
-        if (placedMonster == null) {
+        if (placedMonster == null && PlayMangement.instance.player.getPlayerTurn == true) {
             placedMonster = Instantiate(eventData.pointerDrag.gameObject.GetComponent<CardHandler>().unit);
             placedMonster.transform.SetParent(ingameParent.transform);
             placedMonster.transform.position = ingameParent.transform.position;
