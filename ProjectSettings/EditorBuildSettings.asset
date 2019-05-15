@@ -24,7 +24,7 @@ EditorBuildSettings:
     path: Assets/Scenes/PVP_ReadyScene.unity
     guid: f0670715b49638148b2efdf399770948
   - enabled: 1
-    path: Assets/Scenes/DeckSettingScene.unity
+    path: Assets/Scenes/DeckListScene.unity
     guid: 44b18fde80a602a48958bdba01a6809a
   - enabled: 1
     path: Assets/Scenes/CollectionScene.unity
