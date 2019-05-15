@@ -14,7 +14,6 @@ public class LoginController : MonoBehaviour {
     // Update is called once per frame
     void Update() {
 
-
     }
 
     public void OnStartButton() {
@@ -24,6 +23,7 @@ public class LoginController : MonoBehaviour {
     public void OnSignInModal() {
         Modal.instantiate("로그인이 되었습니다.", Modal.Type.CHECK, ()=> {
             SceneManager.Instance.LoadScene(SceneManager.Scene.MAIN_SCENE);
+            AccountManager.Instance.RequestMyCardInventory();
         });
     }
 

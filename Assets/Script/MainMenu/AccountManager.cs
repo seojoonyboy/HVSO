@@ -12,10 +12,12 @@ public class AccountManager : Singleton<AccountManager> {
 
     public string DEVICEID { get; private set; }
     public UserClassInput userData { get; private set; }
+    public List<dataModules.CardInventory> myCards { get; private set; }
 
     NetworkManager networkManager;
 
     private void Awake() {
+        DontDestroyOnLoad(gameObject);
         DEVICEID = SystemInfo.deviceUniqueIdentifier;
     }
 
@@ -46,7 +48,7 @@ public class AccountManager : Singleton<AccountManager> {
         networkManager.request("PUT", url.ToString(), json, CallbackSignUp, false);
     }
 
-    private void RequestUserInfo() {
+    private void RequestUserInfo(bool needPopup = true) {
         StringBuilder url = new StringBuilder();
         string base_url = networkManager.baseUrl;
 
@@ -55,10 +57,15 @@ public class AccountManager : Singleton<AccountManager> {
             .Append("api/users/")
             .Append(DEVICEID);
 
-        networkManager.request("GET", url.ToString(), CallbackUserRequest, false);
+        if (needPopup) {
+            networkManager.request("GET", url.ToString(), CallbackUserRequestWithPopup, false);
+        }
+        else {
+            networkManager.request("GET", url.ToString(), CallbackUserRequest, false);
+        }
     }
 
-    private void CallbackUserRequest(HttpResponse response) {
+    private void CallbackUserRequestWithPopup(HttpResponse response) {
         if (response.responseCode != 200) {
             transform
                 .GetChild(0)
@@ -70,6 +77,16 @@ public class AccountManager : Singleton<AccountManager> {
                 .GetChild(0)
                 .GetComponent<LoginController>()
                 .OnSignInModal();
+
+            userData = dataModules.JsonReader.Read<UserClassInput>(response.data);
+        }
+    }
+
+    private void CallbackUserRequest(HttpResponse response) {
+        if (response.responseCode != 200) { }
+        else {
+            userData = dataModules.JsonReader.Read<UserClassInput>(response.data);
+            myCards = userData.cardInventories;
         }
     }
 
@@ -89,8 +106,14 @@ public class AccountManager : Singleton<AccountManager> {
         }
     }
 
+    public void RequestMyCardInventory() {
+        RequestUserInfo(false);
+    }
+
     public class UserClassInput {
         public string nickName;
         public string deviceId;
+
+        public List<dataModules.CardInventory> cardInventories;
     }
 }
