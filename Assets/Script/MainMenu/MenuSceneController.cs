@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MenuSceneController : MonoBehaviour {
+    AccountManager accountManager;
     // Start is called before the first frame update
     void Start() {
-
+        accountManager = AccountManager.Instance;
+        accountManager.SetDummyDeck();
     }
 
     // Update is called once per frame

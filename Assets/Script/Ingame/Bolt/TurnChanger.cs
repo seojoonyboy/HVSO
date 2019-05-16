@@ -6,7 +6,7 @@ using UnityEngine.Events;
 
 public class TurnChanger : MonoBehaviour {
     public UnityEvent onTurnChanged;
-
+    public UnityEvent onPrepareTurn;
     // Start is called before the first frame update
     private int index = -1;
     TurnType turn;
@@ -23,6 +23,21 @@ public class TurnChanger : MonoBehaviour {
 
         onTurnChanged.Invoke();
         Debug.Log(index);
+    }
+
+    /// <summary>
+    /// 준비 턴(멀리건 처리 턴)
+    /// Machine 전용 함수
+    /// </summary>
+    public void OnPrepareTurn() {
+        onPrepareTurn.Invoke();
+        Debug.Log("준비 턴");
+        //StartCoroutine(TestNextTurn());
+    }
+
+    IEnumerator TestNextTurn() {
+        yield return new WaitForSeconds(3.0f);
+        CustomEvent.Trigger(gameObject, "EndTurn");
     }
 
     public enum TurnType {

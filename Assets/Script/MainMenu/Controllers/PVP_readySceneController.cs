@@ -20,4 +20,8 @@ public class PVP_readySceneController : MonoBehaviour {
     public void OnBackButton() {
         SceneManager.Instance.LoadScene(SceneManager.Scene.MAIN_SCENE);
     }
+
+    public void OnDeckListButton() {
+        SceneManager.Instance.LoadScene(SceneManager.Scene.DECK_LIST_SCNE);
+    }
 }

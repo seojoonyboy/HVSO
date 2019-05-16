@@ -35,16 +35,19 @@ public class SceneManager : Singleton<SceneManager> {
                 numberOfScene = 2;
                 break;
             case Scene.COLLECTION_SCENE:
-                numberOfScene = 7;
+                numberOfScene = 6;
                 break;
             case Scene.MISSION_INGAME:
                 numberOfScene = 3;
                 break;
             case Scene.PVP_READY_SCENE:
+                numberOfScene = 4;
+                break;
+            case Scene.DECK_LIST_SCNE:
                 numberOfScene = 5;
                 break;
             case Scene.DECK_SETTING_SCENE:
-                numberOfScene = 6;
+                numberOfScene = 7;
                 break;
         }
 
@@ -109,6 +112,7 @@ public class SceneManager : Singleton<SceneManager> {
         MISSION_SELECT_SCENE,
         MISSION_INGAME,
         PVP_READY_SCENE,
+        DECK_LIST_SCNE,
         DECK_SETTING_SCENE
     }
 }

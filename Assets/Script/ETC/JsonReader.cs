@@ -9,4 +9,22 @@ namespace dataModules {
             return (T)Convert.ChangeType(JsonConvert.DeserializeObject<T>(data), typeof(T));
         }
     }
+
+    public class CardInventory {
+        public int id;
+        public string rarelity;
+        public string camp;
+        public string type;
+        public string name;
+        public int cost;
+        public int? attack;
+        public int? hp;
+        public bool isHeroCard;
+        public int cardCount;
+        public string cardId;
+        public string createdAt;
+        public string updatedAt;
+        public string[] cardCategories;
+        public string[] cardClasses;
+    }
 }
