@@ -146,12 +146,20 @@ public class AccountManager : Singleton<AccountManager> {
             foreach(var card in _group) {
                 deck.cards.Add(card);
             }
-
             myDecks.Add(deck);
+        }
+
+        try {
+            myDecks[0].heroName = "수비대장 제로드";
+            myDecks[1].heroName = "족장 크라쿠스";
+        }
+        catch(ArgumentException ex) {
+            Debug.LogError("사용자 덱이 정상적으로 세팅되지 않았습니다.");
         }
     }
 
     public class Deck {
+        public string heroName;
         public string type;
         public List<dataModules.CardInventory> cards = new List<dataModules.CardInventory>();
     }
