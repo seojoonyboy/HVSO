@@ -12,7 +12,8 @@ public class PlayerController : MonoBehaviour
     public int[,] placement = new int[2,5] { {0,0,0,0,0 },
                                               {0,0,0,0,0 }};
     public GameObject card;
-    public GameObject playerUI;
+    public GameObject back;
+    public GameObject playerUI;    
 
 
     public ReactiveProperty<int> HP;
@@ -26,18 +27,25 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        for(int i = 0; i < 5; i++) {
-            if(isPlayer == true) {
-                GameObject getCard = Instantiate(card);
-                getCard.transform.SetParent(playerUI.transform.Find("CardSlot"));
-            }
-            else {
-                GameObject getCard = (race == true) ? Instantiate(PlayMangement.instance.plantBack) : Instantiate(PlayMangement.instance.zombieBack);
-                getCard.transform.SetParent(playerUI.transform.Find("CardSlot"));
-            }
-        }
-        playerUI.transform.Find("PlayerResource").GetComponent<Image>().sprite = (race == true) ? PlayMangement.instance.plantResourceIcon : PlayMangement.instance.zombieResourceIcon;
+        
     }
+
+    public IEnumerator GenerateCard() {
+        int i = 0;
+        while(i < 5) {
+            yield return new WaitForSeconds(0.5f);
+            GameObject setCard = Instantiate(card);
+            setCard.transform.SetParent(playerUI.transform.Find("CardSlot"));
+            setCard.SetActive(true);
+
+            GameObject enemyCard = Instantiate(PlayMangement.instance.enemyPlayer.back);
+            enemyCard.transform.SetParent(PlayMangement.instance.enemyPlayer.playerUI.transform.Find("CardSlot"));
+            enemyCard.SetActive(true);
+            i++;            
+        }
+        StopCoroutine("GenerateCard");
+    }
+
 
     public void SetPlayerStat(int hp) {
         HP = new ReactiveProperty<int>(hp);

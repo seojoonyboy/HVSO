@@ -8,11 +8,11 @@ public class PlayMangement : MonoBehaviour
 {
     public PlayerController player, enemyPlayer;
 
-    public GameObject plantCard, plantBack;
-    public GameObject zombieCard, zombieBack;
+    public GameObject card, back;
+    public GameObject plant, zombie;
     public Sprite plantResourceIcon, zombieResourceIcon;
 
-
+    public GameObject cardDB;
     Camera cam;
     public GameObject uiSlot;
 
@@ -21,9 +21,8 @@ public class PlayMangement : MonoBehaviour
 
     private void Awake()
     {
-        instance = this;
-        player.card = (player.race == true) ? plantCard : zombieCard;
-        enemyPlayer.card = (enemyPlayer.race == true) ? plantCard : zombieCard;
+        instance = this;        
+        SetPlayerCard();
         gameObject.GetComponent<TurnChanger>().onTurnChanged.AddListener(() => ChangeTurn());
     }
     private void OnDestroy()
@@ -33,10 +32,25 @@ public class PlayMangement : MonoBehaviour
 
     private void Start()
     {
-        cam = Camera.main;
+        cam = Camera.main;        
         RequestStartData();
         SetPlayerSlot();
         DistributeResource();
+    }
+
+    public void SetPlayerCard() {
+        if (player.race == true) {
+            player.card = cardDB.transform.Find("Plant").gameObject;
+            player.back = cardDB.transform.Find("PlantsBackCard").gameObject;
+            enemyPlayer.card = cardDB.transform.Find("Zombie").gameObject;
+            enemyPlayer.back = cardDB.transform.Find("ZombieBackCard").gameObject;
+        }
+        else {
+            player.card = cardDB.transform.Find("Zombie").gameObject;
+            player.back = cardDB.transform.Find("ZombieBackCard").gameObject;
+            enemyPlayer.card = cardDB.transform.Find("Plant").gameObject;
+            enemyPlayer.back = cardDB.transform.Find("PlantsBackCard").gameObject;
+        }
     }
     
 
@@ -53,6 +67,7 @@ public class PlayMangement : MonoBehaviour
     public void RequestStartData() {
         player.SetPlayerStat(20);
         enemyPlayer.SetPlayerStat(20);
+        StartCoroutine(player.GenerateCard());
     }
 
     public void DistributeResource() {
@@ -66,7 +81,7 @@ public class PlayMangement : MonoBehaviour
         while(i < 4) {
             yield return new WaitForSeconds(0.5f);
             if (enemyPlayer.transform.GetChild(0).GetChild(i).childCount != 0) { i++; continue; }
-            GameObject monster = (enemyPlayer.race == true) ? Instantiate(plantCard.GetComponent<CardHandler>().unit) : Instantiate(zombieCard.GetComponent<CardHandler>().unit);
+            GameObject monster = Instantiate(enemyPlayer.card.GetComponent<CardHandler>().unit);
             monster.transform.SetParent(enemyPlayer.transform.GetChild(0).GetChild(i));
             monster.transform.position = enemyPlayer.transform.GetChild(0).GetChild(i).position;
             i++;            
