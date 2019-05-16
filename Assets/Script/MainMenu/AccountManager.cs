@@ -14,6 +14,8 @@ public class AccountManager : Singleton<AccountManager> {
     public string DEVICEID { get; private set; }
     public UserClassInput userData { get; private set; }
     public List<dataModules.CardInventory> myCards { get; private set; }
+    public Dictionary<string, dataModules.HeroInventory> myHeroInventories { get; private set; }
+
     public List<Deck> myDecks = new List<Deck>();
     public CardDataPackage cardPackage;
 
@@ -102,6 +104,7 @@ public class AccountManager : Singleton<AccountManager> {
         else {
             userData = dataModules.JsonReader.Read<UserClassInput>(response.data);
             myCards = userData.cardInventories;
+            SetHeroInventories(userData.heroInventories);
         }
     }
 
@@ -130,6 +133,7 @@ public class AccountManager : Singleton<AccountManager> {
         public string deviceId;
 
         public List<dataModules.CardInventory> cardInventories;
+        public List<dataModules.HeroInventory> heroInventories;
     }
 
     public void SetDummyDeck() {
@@ -150,7 +154,6 @@ public class AccountManager : Singleton<AccountManager> {
             foreach (var card in _group) {
                 deck.cards.Add(card);
                 cardPackage.data.Add(card.cardId, SetCardData(card));
-                Debug.Log("");
             }
             myDecks.Add(deck);
         }
@@ -161,6 +164,13 @@ public class AccountManager : Singleton<AccountManager> {
         }
         catch (ArgumentException ex) {
             Debug.LogError("사용자 덱이 정상적으로 세팅되지 않았습니다.");
+        }
+    }
+
+    private void SetHeroInventories(List<dataModules.HeroInventory> data) {
+        myHeroInventories = new Dictionary<string, dataModules.HeroInventory>();
+        foreach (dataModules.HeroInventory inventory in data) {
+            myHeroInventories[inventory.name] = inventory;
         }
     }
 
