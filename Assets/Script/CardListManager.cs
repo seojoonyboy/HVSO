@@ -18,17 +18,14 @@ public class CardListManager : MonoBehaviour
         animator = transform.GetComponentInChildren<Animator>();
         animator.SetBool("Hide", true);
         hss = transform.GetComponentInChildren<HorizontalScrollSnap>();
-        //hss.transform.GetComponent<RectTransform>().position = new Vector3(0, Screen.height * 0.05f, 0);
-        //hss.transform.GetComponent<RectTransform>().sizeDelta = new Vector2(Screen.width * 0.8f, Screen.height * 0.375f);
     }
 
-    public void AddCardInfo(CardData data) {
+    public void AddCardInfo(CardDataPackage data) {
         GameObject newcard =  Instantiate(cardPrefab);
         SetCardInfo(newcard, data);
         GameObject newcardInfo = Instantiate(infoPrefab, contentParent);
         SetCardClassInfo(newcardInfo, data);
         hss.AddChild(newcard);
-        //newcard.GetComponent<RectTransform>().localScale = new Vector3(Screen.width / 1080.0f, Screen.height / 1920.0f, 1);
     }
 
     public void OpenCardList(int cardnum) {
@@ -37,29 +34,29 @@ public class CardListManager : MonoBehaviour
         hss.GoToScreen(cardnum);
     }
 
-    public void SetCardInfo(GameObject obj, CardData data) {
-        obj.transform.GetChild(0).GetComponent<Text>().text = data.name;
-        if (data.hp != null)
-            obj.transform.GetChild(1).GetChild(1).GetChild(0).GetComponent<Text>().text = data.hp.ToString();
-        else
-            obj.transform.GetChild(1).GetChild(1).gameObject.SetActive(false);
+    public void SetCardInfo(GameObject obj, CardDataPackage data) {
+        //obj.transform.GetChild(0).GetComponent<Text>().text = data.name;
+        //if (data.hp != null)
+        //    obj.transform.GetChild(1).GetChild(1).GetChild(0).GetComponent<Text>().text = data.hp.ToString();
+        //else
+        //    obj.transform.GetChild(1).GetChild(1).gameObject.SetActive(false);
 
-        if (data.attack != null)
-            obj.transform.GetChild(1).GetChild(2).GetChild(0).GetComponent<Text>().text = data.attack.ToString();
-        else
-            obj.transform.GetChild(1).GetChild(2).gameObject.SetActive(false);
+        //if (data.attack != null)
+        //    obj.transform.GetChild(1).GetChild(2).GetChild(0).GetComponent<Text>().text = data.attack.ToString();
+        //else
+        //    obj.transform.GetChild(1).GetChild(2).gameObject.SetActive(false);
 
-        obj.transform.GetChild(1).GetChild(3).GetChild(0).GetComponent<Text>().text = data.cost.ToString();
+        //obj.transform.GetChild(1).GetChild(3).GetChild(0).GetComponent<Text>().text = data.cost.ToString();
 
-        if (data.class_2.ToString() == "none")
-            obj.transform.GetChild(3).gameObject.SetActive(false);
+        //if (data.class_2.ToString() == "none")
+        //    obj.transform.GetChild(3).gameObject.SetActive(false);
     }
 
-    public void SetCardClassInfo(GameObject obj, CardData data) {
-        obj.transform.GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetComponent<Text>().text = data.class_1.ToString();
-        if (data.class_2.ToString() != "none")
-            obj.transform.GetChild(1).GetChild(0).GetChild(0).GetChild(0).GetComponent<Text>().text = data.class_1.ToString();
-        else
-            obj.transform.GetChild(1).gameObject.SetActive(false);
+    public void SetCardClassInfo(GameObject obj, CardDataPackage data) {
+        //obj.transform.GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetComponent<Text>().text = data.class_1.ToString();
+        //if (data.class_2.ToString() != "none")
+        //    obj.transform.GetChild(1).GetChild(0).GetChild(0).GetChild(0).GetComponent<Text>().text = data.class_1.ToString();
+        //else
+        //    obj.transform.GetChild(1).gameObject.SetActive(false);
     }
 }
