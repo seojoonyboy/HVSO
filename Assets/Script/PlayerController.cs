@@ -17,7 +17,8 @@ public class PlayerController : MonoBehaviour
 
 
     public ReactiveProperty<int> HP;
-    public ReactiveProperty<int> resource = new ReactiveProperty<int>(2);    
+    public ReactiveProperty<int> resource = new ReactiveProperty<int>(2);
+    public ReactiveProperty<bool> isPicking = new ReactiveProperty<bool>(false);
     private ReactiveProperty<int> shieldStack = new ReactiveProperty<int>(0);
     private int shieldCount = 0;
 
@@ -64,14 +65,6 @@ public class PlayerController : MonoBehaviour
 
     public void SetPlayerStat(int hp) {
         HP = new ReactiveProperty<int>(hp);
-
-        if(race == true) {
-
-        }
-        else {
-
-        }
-
         ObserverText();
     }
 
@@ -82,6 +75,7 @@ public class PlayerController : MonoBehaviour
 
         HP.SubscribeToText(HPText).AddTo(PlayMangement.instance.transform.gameObject);
         resource.SubscribeToText(resourceText).AddTo(PlayMangement.instance.transform.gameObject);
+        isPicking.Subscribe(_ => HighLightCardSlot());
         shieldStack.Subscribe(_ => shieldImage.fillAmount = (float)shieldStack.Value / 8 ).AddTo(PlayMangement.instance.transform.gameObject);
     }
 
@@ -129,6 +123,32 @@ public class PlayerController : MonoBehaviour
                 cardSlot.GetChild(i).GetComponent<CardHandler>().DisableCard();
             }
         }
+    }
+
+    public void HighLightCardSlot() {
+        Transform slotToUI = playerUI.transform.parent.Find("IngamePanel").Find("PlayerSlot");
+
+        if (myTurn == true) {
+            if (isPicking.Value == true) {
+                for (int i = 0; i < slotToUI.childCount; i++) {
+                    for (int j = 0; j < slotToUI.GetChild(i).childCount; j++) {
+                        if (transform.GetChild(i).GetChild(j).childCount == 0) {
+                            slotToUI.GetChild(i).GetChild(j).GetComponent<Image>().enabled = true;
+                        }
+                    }
+                }
+            }
+            else  {
+                for (int i = 0; i < slotToUI.childCount; i++) {
+                    for (int j = 0; j < slotToUI.GetChild(i).childCount; j++) {
+                        if (transform.GetChild(i).GetChild(j).childCount == 0) {
+                            slotToUI.GetChild(i).GetChild(j).GetComponent<Image>().enabled = false;
+                        }
+                    }
+                }
+            }
+        }
+
     }
 
 

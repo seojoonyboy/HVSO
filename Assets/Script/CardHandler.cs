@@ -23,6 +23,15 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
             cardData = cardDataPackage.data[cardID];
         else
             Debug.Log("NoData");
+
+        if (cardDataPackage.data[cardID].camp == "human") {
+
+        }
+        else if (cardDataPackage.data[cardID].camp == "orc") {
+
+        }
+
+
         csm = GameObject.Find("Canvas").transform.GetChild(3).GetComponent<CardListManager>();
         csm.AddCardInfo(cardData);
     }
@@ -32,7 +41,7 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
         blockButton = true;
         startPos = transform.position;
-        
+        PlayMangement.instance.player.isPicking.Value = true;
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -46,7 +55,7 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
         transform.position = startPos;
         blockButton = false;
-        
+        PlayMangement.instance.player.isPicking.Value = false;
     }
 
     public void OpenCardInfoList() {

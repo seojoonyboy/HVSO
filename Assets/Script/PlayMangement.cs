@@ -180,7 +180,6 @@ public class PlayMangement : MonoBehaviour
             }
             line++;
         }
-        line = 0;
         CustomEvent.Trigger(gameObject, "EndTurn");
         StopCoroutine("battleCoroutine");
     }
