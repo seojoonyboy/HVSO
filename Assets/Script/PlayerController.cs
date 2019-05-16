@@ -43,12 +43,20 @@ public class PlayerController : MonoBehaviour
             enemyCard.SetActive(true);
             i++;            
         }
-        StopCoroutine("GenerateCard");
+        StartCoroutine(PlayMangement.instance.WaitSecond());
     }
 
 
     public void SetPlayerStat(int hp) {
         HP = new ReactiveProperty<int>(hp);
+
+        if(race == true) {
+
+        }
+        else {
+
+        }
+
         ObserverText();
     }
 

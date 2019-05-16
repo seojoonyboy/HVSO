@@ -9,8 +9,8 @@ public class PlayMangement : MonoBehaviour
     public PlayerController player, enemyPlayer;
 
     public GameObject card, back;
-    public GameObject plant, zombie;
     public Sprite plantResourceIcon, zombieResourceIcon;
+    public Sprite humanBtn, orcBtn;
 
     public GameObject cardDB;
     Camera cam;
@@ -24,6 +24,7 @@ public class PlayMangement : MonoBehaviour
         instance = this;        
         SetPlayerCard();
         gameObject.GetComponent<TurnChanger>().onTurnChanged.AddListener(() => ChangeTurn());
+        gameObject.GetComponent<TurnChanger>().onPrepareTurn.AddListener(() => DistributeCard());
     }
     private void OnDestroy()
     {
@@ -36,7 +37,8 @@ public class PlayMangement : MonoBehaviour
         RequestStartData();
         SetPlayerSlot();
         DistributeResource();
-    }
+
+    }    
 
     public void SetPlayerCard() {
         if (player.race == true) {
@@ -51,6 +53,10 @@ public class PlayMangement : MonoBehaviour
             enemyPlayer.card = cardDB.transform.Find("Plant").gameObject;
             enemyPlayer.back = cardDB.transform.Find("PlantsBackCard").gameObject;
         }
+    }
+
+    public void DistributeCard() {
+        StartCoroutine(player.GenerateCard());
     }
     
 
@@ -67,7 +73,7 @@ public class PlayMangement : MonoBehaviour
     public void RequestStartData() {
         player.SetPlayerStat(20);
         enemyPlayer.SetPlayerStat(20);
-        StartCoroutine(player.GenerateCard());
+        
     }
 
     public void DistributeResource() {
@@ -140,10 +146,9 @@ public class PlayMangement : MonoBehaviour
         StartCoroutine("battleCoroutine");
     }
 
-    IEnumerator WaitSecond() {
+    public IEnumerator WaitSecond() {
         yield return new WaitForSeconds(2f);
         CustomEvent.Trigger(gameObject, "EndTurn");
-        StopCoroutine("WaitSecond");
     }
 
     public void GetPlayerTurnRelease() {
