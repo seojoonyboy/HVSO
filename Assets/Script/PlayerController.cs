@@ -27,7 +27,22 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
+        if(isPlayer == true && race == true) {
+            playerUI.transform.Find("ReleaseTurnBtn").GetComponent<Image>().sprite = PlayMangement.instance.humanBtn;
+            playerUI.transform.Find("PlayerResource").GetComponent<Image>().sprite = PlayMangement.instance.plantResourceIcon;
+        }
+        else if(isPlayer == true && race == false) {
+            playerUI.transform.Find("ReleaseTurnBtn").GetComponent<Image>().sprite = PlayMangement.instance.orcBtn;
+            playerUI.transform.Find("PlayerResource").GetComponent<Image>().sprite = PlayMangement.instance.zombieResourceIcon;
+        }
         
+        if(isPlayer == false && race == true) {
+            playerUI.transform.Find("PlayerResource").GetComponent<Image>().sprite = PlayMangement.instance.plantResourceIcon;
+        }
+        else if (isPlayer == false && race == false) {
+            playerUI.transform.Find("PlayerResource").GetComponent<Image>().sprite = PlayMangement.instance.zombieResourceIcon;
+        }
+
     }
 
     public IEnumerator GenerateCard() {
@@ -43,12 +58,20 @@ public class PlayerController : MonoBehaviour
             enemyCard.SetActive(true);
             i++;            
         }
-        StopCoroutine("GenerateCard");
+        StartCoroutine(PlayMangement.instance.WaitSecond());
     }
 
 
     public void SetPlayerStat(int hp) {
         HP = new ReactiveProperty<int>(hp);
+
+        if(race == true) {
+
+        }
+        else {
+
+        }
+
         ObserverText();
     }
 

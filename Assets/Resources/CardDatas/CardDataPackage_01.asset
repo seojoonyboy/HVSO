@@ -9,19 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: daec035cad6b344439149d597eb4a543, type: 3}
-  m_Name: ac10001
+  m_Script: {fileID: 11500000, guid: 084b603658e201847903b0b83bec6460, type: 3}
+  m_Name: CardDataPackage_01
   m_EditorClassIdentifier: 
-  id: ac10001
-  rarelity: 0
-  camp: 0
-  type: 0
-  class_1: 1
-  class_2: 0
-  category_1: 1
-  category_2: 0
-  name: "\uBC29\uD328\uBCD1"
-  cost: 1
-  attack: 0
-  hp: 3
-  hero_chk: 0
+  ClientVersion: 

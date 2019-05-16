@@ -1,23 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System;
 
-[CreateAssetMenu]
-public class CardData : ScriptableObject{
-
-    public new string id;
-    public Rarelity rarelity;
-    public Camp camp;
-    public CardType type;
-    public UnitClass class_1;
-    public UnitClass class_2;
-    public Category category_1;
-    public Category category_2;
+public class CardData {
+    //public new string id;
+    public string rarelity;
+    public string camp;
+    public string type;
+    public string class_1;
+    public string class_2;
+    public string category_1;
+    public string category_2;
     public string name;
     public int cost;
-    public string attack;
-    public string hp;
+    public int? attack;
+    public int? hp;
     public bool hero_chk;
 
 
