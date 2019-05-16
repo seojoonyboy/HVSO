@@ -23,8 +23,8 @@ public class PVP_ready_togglePanel : TogglePanel {
     //TODO : 선택된 덱과 매칭 종류 관리
     
     void Start() {
-        casualPanelClickOpen.OpenCloseObjectAnimation();
-        plantDeckClickOpen.OpenCloseObjectAnimation();
+        //casualPanelClickOpen.OpenCloseObjectAnimation();
+        //plantDeckClickOpen.OpenCloseObjectAnimation();
     }
 
     public void InitializeCasualPanel() {
