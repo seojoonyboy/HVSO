@@ -15,12 +15,14 @@ public class AccountManager : Singleton<AccountManager> {
     public UserClassInput userData { get; private set; }
     public List<dataModules.CardInventory> myCards { get; private set; }
     public List<Deck> myDecks = new List<Deck>();
+    public CardDataPackage cardPackage;
 
     NetworkManager networkManager;
 
     private void Awake() {
         DontDestroyOnLoad(gameObject);
         DEVICEID = SystemInfo.deviceUniqueIdentifier;
+        cardPackage = Resources.Load("CardDatas/CardDataPackage_01") as CardDataPackage;
     }
 
     // Start is called before the first frame update
@@ -139,12 +141,14 @@ public class AccountManager : Singleton<AccountManager> {
             orderby newGroup.Key
             select newGroup;
 
-        foreach(var _group in group) {
+        foreach (var _group in group) {
             Deck deck = new Deck();
             deck.type = _group.Key;
 
-            foreach(var card in _group) {
+            foreach (var card in _group) {
                 deck.cards.Add(card);
+                cardPackage.data.Add(card.cardId, SetCardData(card));
+                Debug.Log("");
             }
             myDecks.Add(deck);
         }
@@ -153,9 +157,33 @@ public class AccountManager : Singleton<AccountManager> {
             myDecks[0].heroName = "수비대장 제로드";
             myDecks[1].heroName = "족장 크라쿠스";
         }
-        catch(ArgumentException ex) {
+        catch (ArgumentException ex) {
             Debug.LogError("사용자 덱이 정상적으로 세팅되지 않았습니다.");
         }
+    }
+
+    public CardData SetCardData(dataModules.CardInventory card) {
+        CardData data = new CardData();
+        data.rarelity = card.rarelity;
+        data.type = card.type;
+        data.camp = card.camp;
+        data.class_1 = card.cardClasses[0];
+        if (card.cardClasses.Length == 2)
+            data.class_2 = card.cardClasses[1];
+
+        if (card.cardCategories.Length > 0) {
+            data.category_1 = card.cardCategories[0];
+            if (card.cardCategories.Length == 2)
+                data.category_2 = card.cardCategories[1];
+        }
+
+        data.name = card.name;
+        data.cost = card.cost;
+        data.attack = card.attack;
+        data.hp = card.hp;
+        data.hero_chk = card.isHeroCard;
+
+        return data;
     }
 
     public class Deck {
