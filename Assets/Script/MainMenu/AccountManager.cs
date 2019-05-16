@@ -15,12 +15,14 @@ public class AccountManager : Singleton<AccountManager> {
     public UserClassInput userData { get; private set; }
     public List<dataModules.CardInventory> myCards { get; private set; }
     public List<Deck> myDecks = new List<Deck>();
+    public CardDataPackage cardPackage;
 
     NetworkManager networkManager;
 
     private void Awake() {
         DontDestroyOnLoad(gameObject);
         DEVICEID = SystemInfo.deviceUniqueIdentifier;
+        cardPackage = Resources.Load("CardDatas/CardDataPackage_01") as CardDataPackage;
     }
 
     // Start is called before the first frame update
@@ -145,11 +147,32 @@ public class AccountManager : Singleton<AccountManager> {
 
             foreach(var card in _group) {
                 deck.cards.Add(card);
+                cardPackage.data.Add(card.cardId, SetCardData(card));
+                Debug.Log("");
             }
 
             myDecks.Add(deck);
         }
     }
+
+    public CardData SetCardData(dataModules.CardInventory card) {
+        CardData data = new CardData();
+        data.rarelity = card.rarelity;
+        data.type = card.type;
+        data.class_1 = card.cardClasses[0];
+        if(card.cardClasses.Length == 2)
+            data.class_2 = card.cardClasses[1];
+        data.category_1 = card.cardCategories[0];
+        if (card.cardCategories.Length == 2)
+            data.category_2 = card.cardCategories[1];
+        data.name = card.name;
+        data.cost = card.cost;
+        data.attack = card.attack;
+        data.hp = card.hp;
+        data.hero_chk = card.isHeroCard;
+
+        return data;
+}
 
     public class Deck {
         public string type;
