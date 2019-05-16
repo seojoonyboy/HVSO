@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class DeckListController : MonoBehaviour {
-    GameObject selectedDeck;
+    public GameObject selectedDeck { get; private set; }
 
     [SerializeField] GameObject 
         DeckPrefab, 
@@ -46,6 +46,8 @@ public class DeckListController : MonoBehaviour {
 
             deck.GetComponent<Button>().onClick.AddListener(() => { OnClickDeck(deck); });
             allDeckObjects.Add(deck);
+
+            deck.GetComponent<IntergerIndex>().Id = i;
         }
 
         for(int i=0; i< 10-decks.Count; i++) {

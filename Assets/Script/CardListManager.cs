@@ -48,7 +48,7 @@ public class CardListManager : MonoBehaviour
 
         obj.transform.GetChild(1).GetChild(3).GetChild(0).GetComponent<Text>().text = data.cost.ToString();
 
-        if (data.class_2 != null)
+        if (data.class_2 == null)
             obj.transform.GetChild(3).gameObject.SetActive(false);
     }
 
