@@ -70,10 +70,15 @@ public class AccountManager : Singleton<AccountManager> {
 
     private void CallbackUserRequestWithPopup(HttpResponse response) {
         if (response.responseCode != 200) {
-            transform
+            if (!response.request.isNetworkError) {
+                transform
                 .GetChild(0)
                 .GetComponent<LoginController>()
                 .OnSignUpModal();
+            }
+            else {
+                OccurErrorModal(response.responseCode);
+            }
         }
         else {
             transform
@@ -83,6 +88,11 @@ public class AccountManager : Singleton<AccountManager> {
 
             userData = dataModules.JsonReader.Read<UserClassInput>(response.data);
         }
+    }
+
+    private void OccurErrorModal(long errorCode) {
+        Modal.instantiate("네트워크 오류가 발생하였습니다. 다시 시도해 주세요.", Modal.Type.CHECK);
+        NoneIngameSceneEventHandler.Instance.PostNotification(NoneIngameSceneEventHandler.EVENT_TYPE.NETWORK_EROR_OCCURED, this, errorCode);
     }
 
     private void CallbackUserRequest(HttpResponse response) {
@@ -121,6 +131,8 @@ public class AccountManager : Singleton<AccountManager> {
     }
 
     public void SetDummyDeck() {
+        if (myCards == null) return;
+
         var group =
             from card in myCards
             group card by card.camp into newGroup
