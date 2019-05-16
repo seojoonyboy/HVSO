@@ -141,6 +141,8 @@ public class AccountManager : Singleton<AccountManager> {
             orderby newGroup.Key
             select newGroup;
 
+        cardPackage.data.Clear();
+
         foreach (var _group in group) {
             Deck deck = new Deck();
             deck.type = _group.Key;
