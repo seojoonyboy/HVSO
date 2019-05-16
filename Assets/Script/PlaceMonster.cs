@@ -29,7 +29,7 @@ public class PlaceMonster : MonoBehaviour
         UpdateStat();
 
         Observable.EveryUpdate().Where(_ => isPlayer== true  && attacking == true).Subscribe(_ => MoveToTarget()).AddTo(this);
-        Observable.EveryUpdate().Where(_ => isPlayer == true && attacking == false && gameObject.transform.position.y != unitLocation.y).Subscribe(_ => ReturnPosition()).AddTo(this);
+        Observable.EveryUpdate().Where(_ => isPlayer == true && attacking == false && gameObject.transform.position != unitLocation).Subscribe(_ => ReturnPosition()).AddTo(this);
 
     }
 
@@ -38,7 +38,6 @@ public class PlaceMonster : MonoBehaviour
     public void AttackMonster() {
         if (isPlayer == true) {
             PlayerController enemy = PlayMangement.instance.enemyPlayer;
-            GameObject shoot = Instantiate(atkPrefab);
 
             if (enemy.transform.Find("Line_2").GetChild(x).childCount != 0) {
                 myTarget = enemy.transform.Find("Line_2").GetChild(x).GetChild(0).gameObject;
@@ -52,13 +51,10 @@ public class PlaceMonster : MonoBehaviour
                 myTarget = enemy.transform.gameObject;
                 enemy.PlayerTakeDamage(unit.power);
             }
-
             
-            shoot.transform.position = new Vector3(gameObject.transform.position.x, myTarget.transform.position.y);
         }
         else {
             PlayerController player = PlayMangement.instance.player;
-            GameObject shoot = Instantiate(atkPrefab);
 
             if (player.transform.Find("Line_2").GetChild(x).childCount != 0) {
                 myTarget = player.transform.Find("Line_2").GetChild(x).GetChild(0).gameObject;
@@ -72,8 +68,6 @@ public class PlaceMonster : MonoBehaviour
                 myTarget = player.transform.gameObject;
                 player.PlayerTakeDamage(unit.power);
             }
-
-            shoot.transform.position = new Vector3(gameObject.transform.position.x, myTarget.transform.position.y);
         }
     }
 
@@ -104,7 +98,7 @@ public class PlaceMonster : MonoBehaviour
     }
 
     private void ReturnPosition() {
-        transform.Translate((unitLocation - gameObject.transform.position).normalized * 5f * Time.deltaTime, Space.Self);
+        gameObject.transform.position = Vector3.Lerp(transform.position, unitLocation, 2f * Time.deltaTime);
 
     }
 

@@ -53,20 +53,20 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8096687585883114719}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.5372549}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 917857947829267716, guid: 64ec6dcb7d29fa146bc5436d3f2e95e7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 149e76f9f1b6c469f8712c2523df3383, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -87,4 +87,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58231ff4fde0e654f8445d306b282a32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  placed: {fileID: 0}
+  placedMonster: {fileID: 0}
+  ingameParent: {fileID: 0}

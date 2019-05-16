@@ -21,7 +21,7 @@ public class IngameDropHandler : MonoBehaviour, IDropHandler
             placedMonster.transform.position = ingameParent.transform.position;
             placedMonster.GetComponent<PlaceMonster>().isPlayer = true;
             //PlayMangement.instance.player.placement[gameObject.transform.parent.GetSiblingIndex(), gameObject.transform.GetSiblingIndex()] = placedMonster.GetComponent<PlaceMonster>().unit.id;
-            Debug.Log(PlayMangement.instance.player.placement);
+            PlayMangement.instance.player.isPicking.Value = false;
             Destroy(eventData.pointerDrag.gameObject);
         }
     }
