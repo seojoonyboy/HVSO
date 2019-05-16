@@ -10,8 +10,8 @@ public class ToggleHandler : MonoBehaviour {
     protected AccountManager accountManager;
 
     [SerializeField] public BattleReadySceneController controller;
-    // Start is called before the first frame update
-    void Start() {
+
+    void Awake() {
         toggle = GetComponent<Toggle>();
         id = GetComponent<IntergerIndex>().Id;
         accountManager = AccountManager.Instance;

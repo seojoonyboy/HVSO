@@ -259,7 +259,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1272190236}
+      - m_Target: {fileID: 0}
         m_MethodName: OnStartButton
         m_Mode: 1
         m_Arguments:
@@ -921,6 +921,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 1272190237}
+  heroPortraitParent: {fileID: 957877551}
+  deckParent: {fileID: 1894312082}
+  portraitPrefab: {fileID: 620459545956244289, guid: 702ec7475a74cc942ab37d98429984a1,
+    type: 3}
+  deckPrefab: {fileID: 126595527319031875, guid: 4ca3ab49164aaf44f9851e46dd4f7012,
+    type: 3}
+  heroGroupPrefab: {fileID: 7361425695276937358, guid: 55e61b8089e31a040a26f2b5ceef6a4f,
+    type: 3}
+  deckGroupPrefab: {fileID: 2941686791058438997, guid: 14797f345e928b74aad0aeb04abe0781,
+    type: 3}
 --- !u!114 &351603521
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1017,7 +1027,7 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Toggle+ToggleEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  m_IsOn: 1
+  m_IsOn: 0
 --- !u!114 &351603524
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1447,7 +1457,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1272190236}
+      - m_Target: {fileID: 0}
         m_MethodName: OnBackButton
         m_Mode: 1
         m_Arguments:
@@ -1878,6 +1888,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 1272190237}
+  heroPortraitParent: {fileID: 957877551}
+  deckParent: {fileID: 1894312082}
+  portraitPrefab: {fileID: 620459545956244289, guid: 702ec7475a74cc942ab37d98429984a1,
+    type: 3}
+  deckPrefab: {fileID: 126595527319031875, guid: 4ca3ab49164aaf44f9851e46dd4f7012,
+    type: 3}
+  heroGroupPrefab: {fileID: 7361425695276937358, guid: 55e61b8089e31a040a26f2b5ceef6a4f,
+    type: 3}
+  deckGroupPrefab: {fileID: 2941686791058438997, guid: 14797f345e928b74aad0aeb04abe0781,
+    type: 3}
 --- !u!114 &854770029
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1974,7 +1994,7 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Toggle+ToggleEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  m_IsOn: 0
+  m_IsOn: 1
 --- !u!114 &854770032
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2459,7 +2479,6 @@ GameObject:
   - component: {fileID: 1272190232}
   - component: {fileID: 1272190231}
   - component: {fileID: 1272190235}
-  - component: {fileID: 1272190236}
   - component: {fileID: 1272190237}
   m_Layer: 5
   m_Name: Canvas
@@ -2561,18 +2580,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   header: {fileID: 3141205610856264726, guid: 958776b7f33de4e4ab8a577785856062, type: 3}
---- !u!114 &1272190236
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1272190230}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 416b649423324404caecf9ac01c61960, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1272190237
 MonoBehaviour:
   m_ObjectHideFlags: 0
