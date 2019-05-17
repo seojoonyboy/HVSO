@@ -97,7 +97,7 @@ public class PlayMangement : MonoBehaviour
             cardID = "ac10009";
 
 
-        while (enemyPlayer.playerUI.transform.Find("CardSlot").childCount > 2) {
+        while (enemyPlayer.playerUI.transform.Find("CardSlot").childCount > 2 || i < 4) {
             yield return new WaitForSeconds(0.5f);
             if (enemyPlayer.transform.GetChild(0).GetChild(i).childCount != 0) { i++; continue; }
             if (cardDataPackage.data.ContainsKey(cardID) == false) { i++; continue; }
