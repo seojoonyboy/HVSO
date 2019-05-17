@@ -8,8 +8,8 @@ public class TestPhase : MonoBehaviour {
     [SerializeField] GameObject phaseManager;
 
     private void Start() {
-        string selectedRace = Variables.Saved.Get("SelectedRace").ToString();
-        Debug.Log(selectedRace);
+        //string selectedRace = Variables.Saved.Get("SelectedRace").ToString();
+        //Debug.Log(selectedRace);
     }
 
     private void Awake() {
