@@ -4,7 +4,7 @@ using UnityEngine;
 using dataModules;
 using UnityEngine.UI;
 
-public class RaceTypeToggleHandler : ToggleHandler {
+public class RaceTypeToggleHandler : MonoBehaviour {
     [SerializeField] Transform heroPortraitParent, deckParent;
 
     [Space(10)]
@@ -14,28 +14,37 @@ public class RaceTypeToggleHandler : ToggleHandler {
     [Space(10)]
     [SerializeField] GameObject heroGroupPrefab;
     [SerializeField] GameObject deckGroupPrefab;
+    [SerializeField] BattleReadySceneController controller;
+    AccountManager accountManager;
+    int id;
 
-    public override void OnValueChanged() {
-        base.OnValueChanged();
+    private void Awake() {
+        accountManager = AccountManager.Instance;
+        id = GetComponent<IntergerIndex>().Id;
+    }
 
-        if (toggle.isOn) {
-            var type = (BattleReadySceneController.RaceType)id;
-            controller.ChangeRaceType(type);
-            var decks = accountManager.myDecks;
-            int deckIndex = 0;
+    public void SwitchOn() {
+        transform.Find("Selected").gameObject.SetActive(true);
+        var type = (BattleReadySceneController.RaceType)id;
+        controller.ChangeRaceType(type);
+        var decks = accountManager.myDecks;
+        int deckIndex = 0;
 
-            switch (type) {
-                case BattleReadySceneController.RaceType.HUMAN:
-                    deckIndex = 0;
-                    break;
-                case BattleReadySceneController.RaceType.ORC:
-                    deckIndex = 1;
-                    break;
-            }
-
-            var selectedDeck = decks[deckIndex];
-            CreateDummyList(ref selectedDeck);
+        switch (type) {
+            case BattleReadySceneController.RaceType.HUMAN:
+                deckIndex = 0;
+                break;
+            case BattleReadySceneController.RaceType.ORC:
+                deckIndex = 1;
+                break;
         }
+
+        var selectedDeck = decks[deckIndex];
+        CreateDummyList(ref selectedDeck);
+    }
+
+    public void SwitchOff() {
+        transform.Find("Selected").gameObject.SetActive(false);
     }
 
     private void CreateDummyList(ref AccountManager.Deck deck) {

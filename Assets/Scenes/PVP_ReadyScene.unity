@@ -912,9 +912,10 @@ GameObject:
   - component: {fileID: 351603519}
   - component: {fileID: 351603522}
   - component: {fileID: 351603521}
-  - component: {fileID: 351603523}
   - component: {fileID: 351603524}
   - component: {fileID: 351603520}
+  - component: {fileID: 351603525}
+  - component: {fileID: 351603523}
   m_Layer: 5
   m_Name: HumanButton
   m_TagString: Untagged
@@ -955,7 +956,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa5cd6c97f628404d9b4943e7e5e6ef2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controller: {fileID: 1272190237}
   heroPortraitParent: {fileID: 957877551}
   deckParent: {fileID: 1894312082}
   portraitPrefab: {fileID: 620459545956244289, guid: 702ec7475a74cc942ab37d98429984a1,
@@ -966,6 +966,7 @@ MonoBehaviour:
     type: 3}
   deckGroupPrefab: {fileID: 2941686791058438997, guid: 14797f345e928b74aad0aeb04abe0781,
     type: 3}
+  controller: {fileID: 1272190237}
 --- !u!114 &351603521
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1012,7 +1013,33 @@ MonoBehaviour:
   m_GameObject: {fileID: 351603518}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 2109663825, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: d20843e03cf02ba48aed85569e3d972d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isOn: 0
+--- !u!114 &351603524
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 351603518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91b7d63d3b2c60648af2faf70e99ec89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Id: 0
+--- !u!114 &351603525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 351603518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
@@ -1043,39 +1070,11 @@ MonoBehaviour:
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 351603521}
-  toggleTransition: 1
-  graphic: {fileID: 0}
-  m_Group: {fileID: 1194158571}
-  onValueChanged:
+  m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 351603520}
-        m_MethodName: OnValueChanged
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEngine.UI.Toggle+ToggleEvent, UnityEngine.UI, Version=1.0.0.0,
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  m_IsOn: 1
---- !u!114 &351603524
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 351603518}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91b7d63d3b2c60648af2faf70e99ec89, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Id: 0
 --- !u!1 &473933057
 GameObject:
   m_ObjectHideFlags: 0
@@ -1879,9 +1878,9 @@ GameObject:
   - component: {fileID: 854770027}
   - component: {fileID: 854770030}
   - component: {fileID: 854770029}
-  - component: {fileID: 854770031}
   - component: {fileID: 854770032}
   - component: {fileID: 854770028}
+  - component: {fileID: 854770031}
   m_Layer: 5
   m_Name: OrcButton
   m_TagString: Untagged
@@ -1922,7 +1921,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa5cd6c97f628404d9b4943e7e5e6ef2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controller: {fileID: 1272190237}
   heroPortraitParent: {fileID: 957877551}
   deckParent: {fileID: 1894312082}
   portraitPrefab: {fileID: 620459545956244289, guid: 702ec7475a74cc942ab37d98429984a1,
@@ -1933,6 +1931,7 @@ MonoBehaviour:
     type: 3}
   deckGroupPrefab: {fileID: 2941686791058438997, guid: 14797f345e928b74aad0aeb04abe0781,
     type: 3}
+  controller: {fileID: 1272190237}
 --- !u!114 &854770029
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1979,7 +1978,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 854770026}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 2109663825, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
@@ -2010,26 +2009,11 @@ MonoBehaviour:
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 854770029}
-  toggleTransition: 1
-  graphic: {fileID: 0}
-  m_Group: {fileID: 1194158571}
-  onValueChanged:
+  m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 854770028}
-        m_MethodName: OnValueChanged
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEngine.UI.Toggle+ToggleEvent, UnityEngine.UI, Version=1.0.0.0,
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  m_IsOn: 0
 --- !u!114 &854770032
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2606,6 +2590,8 @@ GameObject:
   - component: {fileID: 1194158570}
   - component: {fileID: 1194158569}
   - component: {fileID: 1194158571}
+  - component: {fileID: 1194158573}
+  - component: {fileID: 1194158572}
   m_Layer: 5
   m_Name: Buttons
   m_TagString: Untagged
@@ -2686,6 +2672,42 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AllowSwitchOff: 0
+--- !u!114 &1194158572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1194158567}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -57143145, guid: a040fb66244a7f54289914d98ea4ef7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _data:
+    _json: '{"nest":{"source":"Embed","macro":null,"embed":{"variables":{"collection":{"$content":[],"$version":"A"},"$version":"A"},"controlInputDefinitions":[],"controlOutputDefinitions":[],"valueInputDefinitions":[],"valueOutputDefinitions":[],"title":null,"summary":null,"pan":{"x":535.8414,"y":10.16783},"zoom":0.5999999,"elements":[{"coroutine":false,"defaultValues":{},"position":{"x":-69.0,"y":-316.0},"guid":"14826735-3af5-455b-9d5c-2f0525511c3b","$version":"A","$type":"Bolt.Start","$id":"10"},{"coroutine":false,"defaultValues":{"target":{"$content":0,"$type":"UnityEngine.GameObject"}},"position":{"x":-155.0,"y":-226.0},"guid":"413ab590-1f10-4452-9262-ece1649b6527","$version":"A","$type":"Bolt.OnButtonClick","$id":"12"},{"chainable":false,"member":{"name":"GetComponent","parameterTypes":["System.Type"],"targetType":"UnityEngine.GameObject","targetTypeName":"UnityEngine.GameObject","$version":"A"},"defaultValues":{"target":{"$content":1,"$type":"UnityEngine.GameObject"},"%type":{"$content":"RaceTypeToggleHandler","$type":"System.RuntimeType"}},"position":{"x":118.0,"y":-230.0},"guid":"8c208e47-bf1f-4558-9e52-81711cbe1565","$version":"A","$type":"Bolt.InvokeMember","$id":"14"},{"coroutine":false,"defaultValues":{"target":{"$content":2,"$type":"UnityEngine.GameObject"}},"position":{"x":-147.0,"y":71.0},"guid":"429509e0-1e9f-4f45-82e4-4a584c47f094","$version":"A","$type":"Bolt.OnButtonClick","$id":"17"},{"chainable":false,"member":{"name":"GetComponent","parameterTypes":["System.Type"],"targetType":"UnityEngine.GameObject","targetTypeName":"UnityEngine.GameObject","$version":"A"},"defaultValues":{"target":{"$content":3,"$type":"UnityEngine.GameObject"},"%type":{"$content":"RaceTypeToggleHandler","$type":"System.RuntimeType"}},"position":{"x":115.0,"y":84.0},"guid":"a07d4c74-568a-4235-bebb-4903c37af318","$version":"A","$type":"Bolt.InvokeMember","$id":"19"},{"chainable":false,"member":{"name":"SwitchOn","parameterTypes":[],"targetType":"RaceTypeToggleHandler","targetTypeName":"RaceTypeToggleHandler","$version":"A"},"defaultValues":{"target":null},"position":{"x":554.0,"y":-203.0},"guid":"697e69a5-cf4c-4842-b9a5-e1cce080690e","$version":"A","$type":"Bolt.InvokeMember","$id":"22"},{"chainable":false,"member":{"name":"SwitchOn","parameterTypes":[],"targetType":"RaceTypeToggleHandler","targetTypeName":"RaceTypeToggleHandler","$version":"A"},"defaultValues":{"target":null},"position":{"x":546.0,"y":107.0},"guid":"d791eeb1-a89c-49dd-9914-8d4d4204850c","$version":"A","$type":"Bolt.InvokeMember","$id":"25"},{"chainable":false,"member":{"name":"SwitchOff","parameterTypes":[],"targetType":"RaceTypeToggleHandler","targetTypeName":"RaceTypeToggleHandler","$version":"A"},"defaultValues":{"target":null},"position":{"x":980.0,"y":-217.0},"guid":"2dd9b98f-04c8-4443-b34e-a837728933e8","$version":"A","$type":"Bolt.InvokeMember","$id":"28"},{"type":"UnityEngine.GameObject","value":{"$content":4,"$type":"UnityEngine.GameObject"},"defaultValues":{},"position":{"x":772.0,"y":-118.0},"guid":"669b18b3-fd1b-4c8a-8a0a-491642c027f0","$version":"A","$type":"Bolt.Literal","$id":"31"},{"type":"UnityEngine.GameObject","value":{"$content":5,"$type":"UnityEngine.GameObject"},"defaultValues":{},"position":{"x":761.0,"y":261.0},"guid":"f24f1dff-5864-4416-87e0-0158217ed13a","$version":"A","$type":"Bolt.Literal","$id":"33"},{"chainable":false,"member":{"name":"SwitchOff","parameterTypes":[],"targetType":"RaceTypeToggleHandler","targetTypeName":"RaceTypeToggleHandler","$version":"A"},"defaultValues":{"target":null},"position":{"x":969.0,"y":162.0},"guid":"ab1011d6-c961-46df-b91f-efb6bfbd77ae","$version":"A","$type":"Bolt.InvokeMember","$id":"35"},{"sourceUnit":{"$ref":"12"},"sourceKey":"trigger","destinationUnit":{"$ref":"14"},"destinationKey":"enter","guid":"299843ca-5d05-4a87-9a6b-282122a04151","$type":"Bolt.ControlConnection"},{"sourceUnit":{"$ref":"17"},"sourceKey":"trigger","destinationUnit":{"$ref":"19"},"destinationKey":"enter","guid":"8aef878b-2b8d-497c-bd7c-85232d20d200","$type":"Bolt.ControlConnection"},{"sourceUnit":{"$ref":"10"},"sourceKey":"trigger","destinationUnit":{"$ref":"14"},"destinationKey":"enter","guid":"50acfa9f-07cf-43ba-a7aa-ed2cbf2e9e5b","$type":"Bolt.ControlConnection"},{"sourceUnit":{"$ref":"14"},"sourceKey":"exit","destinationUnit":{"$ref":"22"},"destinationKey":"enter","guid":"60328be7-dbc3-46ba-9b4c-41b6605dfc8c","$type":"Bolt.ControlConnection"},{"sourceUnit":{"$ref":"19"},"sourceKey":"exit","destinationUnit":{"$ref":"25"},"destinationKey":"enter","guid":"77a2d761-d7b7-4f29-8183-75305b979a79","$type":"Bolt.ControlConnection"},{"sourceUnit":{"$ref":"22"},"sourceKey":"exit","destinationUnit":{"$ref":"28"},"destinationKey":"enter","guid":"a4fc15b7-5e42-4b57-956d-8251d5aa569b","$type":"Bolt.ControlConnection"},{"sourceUnit":{"$ref":"25"},"sourceKey":"exit","destinationUnit":{"$ref":"35"},"destinationKey":"enter","guid":"b21e8083-6494-430f-9621-681e781f914e","$type":"Bolt.ControlConnection"},{"sourceUnit":{"$ref":"19"},"sourceKey":"result","destinationUnit":{"$ref":"25"},"destinationKey":"target","guid":"58e13f81-65fd-4e8b-82e2-4378bd158da9","$type":"Bolt.ValueConnection"},{"sourceUnit":{"$ref":"31"},"sourceKey":"output","destinationUnit":{"$ref":"28"},"destinationKey":"target","guid":"170d1d8d-b5ad-4625-9c84-38b670c15ce9","$type":"Bolt.ValueConnection"},{"sourceUnit":{"$ref":"14"},"sourceKey":"result","destinationUnit":{"$ref":"22"},"destinationKey":"target","guid":"314aef6a-7e6f-4b53-8be5-b7c7deada4e5","$type":"Bolt.ValueConnection"},{"sourceUnit":{"$ref":"33"},"sourceKey":"output","destinationUnit":{"$ref":"35"},"destinationKey":"target","guid":"270920b7-0679-45e8-a8fd-deb481792198","$type":"Bolt.ValueConnection"}],"$version":"A"}}}'
+    _objectReferences:
+    - {fileID: 351603518}
+    - {fileID: 351603518}
+    - {fileID: 854770026}
+    - {fileID: 854770026}
+    - {fileID: 854770026}
+    - {fileID: 351603518}
+--- !u!114 &1194158573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1194158567}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1465209106, guid: c8d0ad23af520fe46aabe2b1fecf6462, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _data:
+    _json: '{"declarations":{"collection":{"$content":[],"$version":"A"},"$version":"A"}}'
+    _objectReferences: []
 --- !u!1 &1256665163
 GameObject:
   m_ObjectHideFlags: 0
@@ -2929,8 +2951,8 @@ MonoBehaviour:
   - {fileID: 2002198697}
   - {fileID: 520905484}
   raceTypeToggles:
-  - {fileID: 351603523}
-  - {fileID: 854770031}
+  - {fileID: 0}
+  - {fileID: 0}
   CardListModal: {fileID: 1040422010}
   CardInfoModal: {fileID: 1079069152}
 --- !u!1 &1314655533
