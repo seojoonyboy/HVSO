@@ -52,6 +52,10 @@ public class PlayerController : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
             GameObject setCard = Instantiate(card);
             setCard.transform.SetParent(playerUI.transform.Find("CardSlot"));
+            if(race == true) 
+                setCard.GetComponent<CardHandler>().DrawCard("ac10009");            
+            else
+                setCard.GetComponent<CardHandler>().DrawCard("ac10014");
             setCard.SetActive(true);
 
             GameObject enemyCard = Instantiate(PlayMangement.instance.enemyPlayer.back);

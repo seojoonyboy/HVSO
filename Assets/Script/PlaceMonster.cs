@@ -28,8 +28,8 @@ public class PlaceMonster : MonoBehaviour
         unitLocation = gameObject.transform.position;
         UpdateStat();
 
-        Observable.EveryUpdate().Where(_ => isPlayer== true  && attacking == true).Subscribe(_ => MoveToTarget()).AddTo(this);
-        Observable.EveryUpdate().Where(_ => isPlayer == true && attacking == false && gameObject.transform.position != unitLocation).Subscribe(_ => ReturnPosition()).AddTo(this);
+        Observable.EveryUpdate().Where(_ => attacking == true).Subscribe(_ => MoveToTarget()).AddTo(this);
+        Observable.EveryUpdate().Where(_ => attacking == false && gameObject.transform.position != unitLocation).Subscribe(_ => ReturnPosition()).AddTo(this);
 
     }
 
@@ -38,7 +38,6 @@ public class PlaceMonster : MonoBehaviour
     public void AttackMonster() {
         if (isPlayer == true) {
             PlayerController enemy = PlayMangement.instance.enemyPlayer;
-
             if (enemy.transform.Find("Line_2").GetChild(x).childCount != 0) {
                 myTarget = enemy.transform.Find("Line_2").GetChild(x).GetChild(0).gameObject;
                 RequestAttackUnit(myTarget, unit.power);
@@ -55,7 +54,6 @@ public class PlaceMonster : MonoBehaviour
         }
         else {
             PlayerController player = PlayMangement.instance.player;
-
             if (player.transform.Find("Line_2").GetChild(x).childCount != 0) {
                 myTarget = player.transform.Find("Line_2").GetChild(x).GetChild(0).gameObject;
                 RequestAttackUnit(myTarget, unit.power);
@@ -93,7 +91,7 @@ public class PlaceMonster : MonoBehaviour
     private void MoveToTarget() {
         transform.Translate((myTarget.transform.position - gameObject.transform.position).normalized * 5f * Time.deltaTime, Space.Self);
 
-        if (transform.position.y >= myTarget.transform.position.y - 1f)
+        if (Vector3.Distance(transform.position, myTarget.transform.position) < 0.5f)
             attacking = false;
     }
 

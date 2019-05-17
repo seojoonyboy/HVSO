@@ -9,32 +9,34 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 {
     public Vector3 startPos;
     public GameObject unit;
+    public Sprite unitSprite;
     private bool blockButton = false;
     CardListManager csm;
     Animator cssAni;
-    string cardID = "ac10001";
+    private string cardID;
 
     public CardData cardData;
     public CardDataPackage cardDataPackage;
 
     public void Start() {
+    }
+
+    public void DrawCard(string ID) {
         cardDataPackage = Resources.Load("CardDatas/CardDataPackage_01") as CardDataPackage;
-        if (cardDataPackage.data.ContainsKey(cardID))
+        cardID = ID;
+
+        if (cardDataPackage.data.ContainsKey(cardID)) {
             cardData = cardDataPackage.data[cardID];
+            unitSprite = Resources.Load <Sprite> ("Sprite/" + cardID);
+        }
         else
             Debug.Log("NoData");
-
-        if (cardDataPackage.data[cardID].camp == "human") {
-
-        }
-        else if (cardDataPackage.data[cardID].camp == "orc") {
-
-        }
 
 
         csm = GameObject.Find("Canvas").transform.GetChild(3).GetComponent<CardListManager>();
         csm.AddCardInfo(cardData);
     }
+
 
     public void OnBeginDrag(PointerEventData eventData)
     {

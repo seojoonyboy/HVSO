@@ -54,6 +54,10 @@ public class RaceTypeToggleHandler : ToggleHandler {
         _hero.transform.Find("Name").GetComponent<Text>().text = deck.heroName;
 
         _deck.GetComponent<Button>().onClick.AddListener(() => { controller.OnClickDeck(_deck); });
+
+        _deck.transform.Find("InfoPanel/InfoButton").GetComponent<Button>().onClick.AddListener(() => {
+            //controller.OnClickCardListModal();
+        });
     }
 
     private void CreateList() {

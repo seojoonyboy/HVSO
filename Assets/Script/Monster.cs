@@ -9,7 +9,10 @@ namespace Monster
     public class Unit
     {
         public bool race;
+        public string rarelity;
+        public string type;
         public string id;
+        public string name;
         public int HP;
         public int power;
         public int cost;
