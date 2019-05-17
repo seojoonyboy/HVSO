@@ -75,6 +75,8 @@ public class PlayerController : MonoBehaviour
             setCard.GetComponent<CardHandler>().DrawCard("ac10014");
         setCard.SetActive(true);
 
+        setCard.GetComponent<CardHandler>().DisableCard();
+
         GameObject enemyCard = Instantiate(PlayMangement.instance.enemyPlayer.back);
         enemyCard.transform.SetParent(PlayMangement.instance.enemyPlayer.playerUI.transform.Find("CardSlot"));
         enemyCard.SetActive(true);

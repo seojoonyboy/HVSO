@@ -100,10 +100,17 @@ public class PlaceMonster : MonoBehaviour
             attacking = false;
             PlaceMonster placeMonster = myTarget.GetComponent<PlaceMonster>();
 
-            if (placeMonster != null)
-                RequestAttackUnit(myTarget, unit.power);
-            else
-                myTarget.GetComponent<PlayerController>().PlayerTakeDamage(unit.power);
+            if (unit.power > 0) {
+                if (unit.power <= 4)
+                    SoundManager.Instance.PlaySound(SoundType.NORMAL_ATTACK);
+                else if (unit.power > 4)
+                    SoundManager.Instance.PlaySound(SoundType.LARGE_ATTACK);
+
+                if (placeMonster != null)
+                    RequestAttackUnit(myTarget, unit.power);
+                else
+                    myTarget.GetComponent<PlayerController>().PlayerTakeDamage(unit.power);
+            }
         }
     }
 
