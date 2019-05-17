@@ -170,7 +170,7 @@ public class AccountManager : Singleton<AccountManager> {
     private void SetHeroInventories(List<dataModules.HeroInventory> data) {
         myHeroInventories = new Dictionary<string, dataModules.HeroInventory>();
         foreach (dataModules.HeroInventory inventory in data) {
-            myHeroInventories[inventory.name] = inventory;
+            myHeroInventories[inventory.heroId] = inventory;
         }
     }
 
