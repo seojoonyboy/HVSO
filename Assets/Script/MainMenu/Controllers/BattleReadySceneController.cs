@@ -4,9 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Bolt;
 
 public class BattleReadySceneController : MonoBehaviour {
-    public Toggle[] battleTypeToggles, raceTypeToggles;
+    public Toggle[] battleTypeToggles;
 
     BattleType selectedBattleType;
     RaceType raceType;
@@ -15,11 +16,6 @@ public class BattleReadySceneController : MonoBehaviour {
     public GameObject selectedDeck { get; private set; }
 
     public GameObject CardListModal, CardInfoModal;
-
-    void Start() {
-        battleTypeToggles[0].isOn = true;
-        raceTypeToggles[0].isOn = true;
-    }
 
     void Update() {
         if (Input.GetMouseButtonDown(0)) {
@@ -46,6 +42,7 @@ public class BattleReadySceneController : MonoBehaviour {
 
     public void OnStartButton() {
         SceneManager.Instance.LoadScene(SceneManager.Scene.MISSION_INGAME);
+        //SceneManager.Instance.LoadScene(SceneManager.Scene.MAIN_SCENE);
     }
 
     public void OnBackButton() {
@@ -61,6 +58,8 @@ public class BattleReadySceneController : MonoBehaviour {
     }
 
     public void ChangeRaceType(RaceType type) {
+        Variables.Saved.Set("SelectedRace", type);
+        Debug.Log(type);
         raceType = type;
     }
 
