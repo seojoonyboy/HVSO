@@ -160,7 +160,9 @@ public class AccountManager : Singleton<AccountManager> {
 
         try {
             myDecks[0].heroName = "수비대장 제로드";
+            myDecks[0].deckName = "왕국 수비대";
             myDecks[1].heroName = "족장 크라쿠스";
+            myDecks[1].deckName = "암흑주술 부족";
         }
         catch (ArgumentException ex) {
             Debug.LogError("사용자 덱이 정상적으로 세팅되지 않았습니다.");
@@ -200,6 +202,7 @@ public class AccountManager : Singleton<AccountManager> {
 
     public class Deck {
         public string heroName;
+        public string deckName;
         public string type;
         public List<dataModules.CardInventory> cards = new List<dataModules.CardInventory>();
     }
