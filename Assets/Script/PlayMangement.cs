@@ -114,6 +114,8 @@ public class PlayMangement : MonoBehaviour
             Destroy(enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(0).gameObject);
             i++;
         }
+
+        yield return new WaitForSeconds(1f);
         enemyPlayer.ReleaseTurn();
         StopCoroutine("EnemySummonMonster");
     }
