@@ -44,7 +44,7 @@ public class PlayMangement : MonoBehaviour
         if (player.race == true) {
             player.card = cardDB.transform.Find("Card").gameObject;
             player.back = cardDB.transform.Find("HumanBackCard").gameObject;
-            enemyPlayer.card = cardDB.transform.Find("Card").gameObject;
+            enemyPlayer.card = cardDB.transform.Find("Card").gameObject; ;
             enemyPlayer.back = cardDB.transform.Find("OrcBackCard").gameObject;
         }
         else {

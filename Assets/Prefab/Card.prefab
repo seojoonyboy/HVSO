@@ -403,7 +403,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startPos: {x: 0, y: 0, z: 0}
-  unit: {fileID: 263219040671222754, guid: 8ce7e4957a27de74fa02a8a048f763e2, type: 3}
+  unit: {fileID: 4549778766762803919, guid: e809507ac2ad94f4ea3612c5aa4ea070, type: 3}
+  unitSprite: {fileID: 0}
+  cardData:
+    rarelity: 
+    camp: 
+    type: 
+    class_1: 
+    class_2: 
+    category_1: 
+    category_2: 
+    name: 
+    cost: 0
+    hero_chk: 0
   cardDataPackage: {fileID: 0}
 --- !u!114 &7955089074257254658
 MonoBehaviour:
