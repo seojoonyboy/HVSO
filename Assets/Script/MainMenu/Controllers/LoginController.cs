@@ -20,6 +20,8 @@ public class LoginController : MonoBehaviour {
     public void OnStartButton() {
         AccountManager.Instance.isUserExist();
         loadingModal = LoadingModal.instantiate();
+
+        //SoundManager.Instance.PlaySound(SoundType.FIRST_TURN);
     }
 
     public void OnSignInModal() {
