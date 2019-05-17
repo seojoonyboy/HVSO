@@ -14,6 +14,8 @@ public class BattleReadySceneController : MonoBehaviour {
     List<GameObject> allDeckObjects = new List<GameObject>();
     public GameObject selectedDeck { get; private set; }
 
+    public GameObject CardListModal, CardInfoModal;
+
     void Start() {
         battleTypeToggles[0].isOn = true;
         raceTypeToggles[0].isOn = true;
@@ -107,5 +109,13 @@ public class BattleReadySceneController : MonoBehaviour {
             }
             selectedDeck = null;
         }
+    }
+
+    public void OnClickCardListModal() {
+        CardListModal.SetActive(true);
+    }
+
+    public void OffCardListModal() {
+        CardListModal.SetActive(false);
     }
 }
