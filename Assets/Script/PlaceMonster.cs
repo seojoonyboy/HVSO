@@ -91,7 +91,7 @@ public class PlaceMonster : MonoBehaviour
     private void MoveToTarget() {
         transform.Translate((myTarget.transform.position - gameObject.transform.position).normalized * 5f * Time.deltaTime, Space.Self);
 
-        if (transform.position.y >= myTarget.transform.position.y - 1f)
+        if (Vector3.Distance(transform.position, myTarget.transform.position) < 0.5f)
             attacking = false;
     }
 
