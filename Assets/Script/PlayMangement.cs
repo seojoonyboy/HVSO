@@ -83,14 +83,35 @@ public class PlayMangement : MonoBehaviour
 
 
     IEnumerator EnemySummonMonster() {
-        int i = 0;        
-        while(i < 4) {
+        int i = 0;
+        CardData cardData;
+        CardDataPackage cardDataPackage = Resources.Load("CardDatas/CardDataPackage_01") as CardDataPackage;
+        string cardID;
+
+        if (enemyPlayer.race == false)
+            cardID = "ac10014";
+        else
+            cardID = "ac10009";
+
+
+        while (enemyPlayer.playerUI.transform.Find("CardSlot").childCount > 2) {
             yield return new WaitForSeconds(0.5f);
             if (enemyPlayer.transform.GetChild(0).GetChild(i).childCount != 0) { i++; continue; }
+            if (cardDataPackage.data.ContainsKey(cardID) == false) { i++; continue; }
+
+            cardData = cardDataPackage.data[cardID];
+
             GameObject monster = Instantiate(enemyPlayer.card.GetComponent<CardHandler>().unit);
             monster.transform.SetParent(enemyPlayer.transform.GetChild(0).GetChild(i));
             monster.transform.position = enemyPlayer.transform.GetChild(0).GetChild(i).position;
-            i++;            
+
+            monster.GetComponent<PlaceMonster>().unit.HP = (int)cardData.hp;
+            monster.GetComponent<PlaceMonster>().unit.power = (int)cardData.attack;
+            monster.GetComponent<PlaceMonster>().unit.name = cardData.name;
+            monster.GetComponent<PlaceMonster>().unit.type = cardData.type;
+
+            Destroy(enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(0).gameObject);
+            i++;
         }
         enemyPlayer.ReleaseTurn();
         StopCoroutine("EnemySummonMonster");
