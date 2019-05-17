@@ -21,6 +21,9 @@ public class PlayMangement : MonoBehaviour
 
     private void Awake()
     {
+        //string selectedRace = Variables.Saved.Get("SelectedRace").ToString();
+
+
         instance = this;        
         SetPlayerCard();
         gameObject.GetComponent<TurnChanger>().onTurnChanged.AddListener(() => ChangeTurn());
