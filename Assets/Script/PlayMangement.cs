@@ -184,43 +184,43 @@ public class PlayMangement : MonoBehaviour
             if (player.race == false) {
                 if (player.transform.Find("Line_1").GetChild(line).childCount != 0) {
                     player.transform.Find("Line_1").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().AttackMonster();
-                    yield return new WaitForSeconds(0.5f);
+                    yield return new WaitForSeconds(1f);
                 }
 
                 if (player.transform.Find("Line_2").GetChild(line).childCount != 0) {
                     player.transform.Find("Line_2").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().AttackMonster();
-                    yield return new WaitForSeconds(0.5f);
+                    yield return new WaitForSeconds(1f);
                 }
 
                 if (enemyPlayer.transform.Find("Line_1").GetChild(line).childCount != 0) {
                     enemyPlayer.transform.Find("Line_1").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().AttackMonster();
-                    yield return new WaitForSeconds(0.5f);
+                    yield return new WaitForSeconds(1f);
                 }
 
                 if (enemyPlayer.transform.Find("Line_2").GetChild(line).childCount != 0) {
                     enemyPlayer.transform.Find("Line_2").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().AttackMonster();
-                    yield return new WaitForSeconds(0.5f);
+                    yield return new WaitForSeconds(1f);
                 }
             }
 
             else {
                 if (enemyPlayer.transform.Find("Line_1").GetChild(line).childCount != 0) {
                     enemyPlayer.transform.Find("Line_1").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().AttackMonster();
-                    yield return new WaitForSeconds(0.5f);
+                    yield return new WaitForSeconds(1f);
                 }
 
                 if (enemyPlayer.transform.Find("Line_2").GetChild(line).childCount != 0) {
                     enemyPlayer.transform.Find("Line_2").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().AttackMonster();
-                    yield return new WaitForSeconds(0.5f);
+                    yield return new WaitForSeconds(1f);
                 }
                 if (player.transform.Find("Line_1").GetChild(line).childCount != 0) {
                     player.transform.Find("Line_1").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().AttackMonster();
-                    yield return new WaitForSeconds(0.5f);
+                    yield return new WaitForSeconds(1f);
                 }
 
                 if (player.transform.Find("Line_2").GetChild(line).childCount != 0) {
                     player.transform.Find("Line_2").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().AttackMonster();
-                    yield return new WaitForSeconds(0.5f);
+                    yield return new WaitForSeconds(1f);
                 }
             }
             
