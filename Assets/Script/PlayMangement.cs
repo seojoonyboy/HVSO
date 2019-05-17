@@ -90,6 +90,8 @@ public class PlayMangement : MonoBehaviour
         CardData cardData;
         CardDataPackage cardDataPackage = Resources.Load("CardDatas/CardDataPackage_01") as CardDataPackage;
         string cardID;
+        int enemyCardCount = enemyPlayer.playerUI.transform.Find("CardSlot").childCount;
+
 
         if (enemyPlayer.race == false)
             cardID = "ac10014";
@@ -97,10 +99,12 @@ public class PlayMangement : MonoBehaviour
             cardID = "ac10009";
 
 
-        while (i < 4) {
-            if (enemyPlayer.playerUI.transform.Find("CardSlot").childCount <= 0) { break; }
+        while (i < enemyCardCount) {
+            if (enemyCardCount < 1) break;
+            if (i >= 3) break;
             if (enemyPlayer.transform.GetChild(0).GetChild(i).childCount != 0) { i++; continue; }
             if (cardDataPackage.data.ContainsKey(cardID) == false) { i++; continue; }
+            
 
             yield return new WaitForSeconds(0.5f);
             cardData = cardDataPackage.data[cardID];
@@ -229,7 +233,16 @@ public class PlayMangement : MonoBehaviour
                     yield return new WaitForSeconds(1f);
                 }
             }
-            
+
+            if (player.transform.Find("Line_1").GetChild(line).childCount != 0) 
+                player.transform.Find("Line_1").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().CheckHP();  
+            if (player.transform.Find("Line_2").GetChild(line).childCount != 0) 
+                player.transform.Find("Line_2").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().CheckHP();
+            if (enemyPlayer.transform.Find("Line_1").GetChild(line).childCount != 0) 
+                enemyPlayer.transform.Find("Line_1").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().CheckHP();
+            if (enemyPlayer.transform.Find("Line_2").GetChild(line).childCount != 0) 
+                enemyPlayer.transform.Find("Line_2").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().CheckHP();
+
 
 
             line++;

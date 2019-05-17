@@ -94,9 +94,9 @@ public class PlaceMonster : MonoBehaviour
     }
 
     private void MoveToTarget() {
-        transform.Translate((myTarget.transform.position - gameObject.transform.position).normalized * 5f * Time.deltaTime, Space.Self);
+        transform.Translate((new Vector3(0,myTarget.transform.position.y) - new Vector3(0,gameObject.transform.position.y)).normalized * 11f * Time.deltaTime, Space.Self);
 
-        if (Vector3.Distance(transform.position, myTarget.transform.position) < 0.5f) {
+        if (Vector3.Distance(new Vector3 (0,transform.position.y), new Vector3(0,myTarget.transform.position.y)) < 0.5f) {
             attacking = false;
             PlaceMonster placeMonster = myTarget.GetComponent<PlaceMonster>();
 
@@ -108,8 +108,19 @@ public class PlaceMonster : MonoBehaviour
     }
 
     private void ReturnPosition() {
-        gameObject.transform.position = Vector3.Lerp(transform.position, unitLocation, 2f * Time.deltaTime);
+        gameObject.transform.position = Vector3.Lerp(transform.position, unitLocation, 3f * Time.deltaTime);
 
+    }
+
+    public void CheckHP() {
+        if ( unit.HP <= 0 ) {
+            StartCoroutine("WaitMonsterDead");
+        }
+    }
+
+    IEnumerator WaitMonsterDead() {
+        yield return new WaitForSeconds(0.1f);
+        Destroy(gameObject);
     }
 
 }

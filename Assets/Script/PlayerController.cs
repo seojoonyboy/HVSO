@@ -134,20 +134,16 @@ public class PlayerController : MonoBehaviour
 
         if (myTurn == true) {
             if (isPicking.Value == true) {
-                for (int i = 0; i < slotToUI.childCount; i++) {
-                    for (int j = 0; j < slotToUI.GetChild(i).childCount; j++) {
-                        if (transform.GetChild(i).GetChild(j).childCount == 0) {
-                            slotToUI.GetChild(i).GetChild(j).GetComponent<Image>().enabled = true;
-                        }
+                for (int i = 0; i < slotToUI.GetChild(0).childCount; i++) {
+                    if (transform.GetChild(0).GetChild(i).childCount == 0) {
+                        slotToUI.GetChild(0).GetChild(i).GetComponent<Image>().enabled = true;
                     }
                 }
             }
             else  {
-                for (int i = 0; i < slotToUI.childCount; i++) {
-                    for (int j = 0; j < slotToUI.GetChild(i).childCount; j++) {
-                        if (transform.GetChild(i).GetChild(j).childCount == 0) {
-                            slotToUI.GetChild(i).GetChild(j).GetComponent<Image>().enabled = false;
-                        }
+                for (int i = 0; i < slotToUI.GetChild(0).childCount; i++) {
+                    if (transform.GetChild(0).GetChild(i).childCount == 0) {
+                        slotToUI.GetChild(0).GetChild(i).GetComponent<Image>().enabled = false;
                     }
                 }
             }
