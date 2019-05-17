@@ -21,7 +21,7 @@ public class LoginController : MonoBehaviour {
         AccountManager.Instance.isUserExist();
         loadingModal = LoadingModal.instantiate();
 
-        //SoundManager.Instance.PlaySound(SoundType.FIRST_TURN);
+        SoundManager.Instance.PlaySound(SoundType.FIRST_TURN);
     }
 
     public void OnSignInModal() {

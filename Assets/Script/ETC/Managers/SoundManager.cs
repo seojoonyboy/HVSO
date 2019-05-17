@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Sirenix.OdinInspector;
 
-public class SoundManager : SerializedMonoBehaviour {
+public class SoundManager : MonoBehaviour {
     public Dictionary<SoundType, AudioSource> sounds;
 
     private static SoundManager _instance;
@@ -21,6 +20,13 @@ public class SoundManager : SerializedMonoBehaviour {
 
     void Awake() {
         _instance = GetComponent<SoundManager>();
+
+        sounds = new Dictionary<SoundType, AudioSource>();
+        sounds[SoundType.FIRST_TURN] = transform.GetChild(0).GetComponent<AudioSource>();
+        sounds[SoundType.LARGE_ATTACK] = transform.GetChild(1).GetComponent<AudioSource>();
+        sounds[SoundType.NEXT_TURN] = transform.GetChild(2).GetComponent<AudioSource>();
+        sounds[SoundType.NORMAL_ATTACK] = transform.GetChild(3).GetComponent<AudioSource>();
+
         DontDestroyOnLoad(gameObject);    
     }
 
