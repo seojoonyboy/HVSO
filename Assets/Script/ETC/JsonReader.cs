@@ -27,4 +27,15 @@ namespace dataModules {
         public string[] cardCategories;
         public string[] cardClasses;
     }
+
+    public class HeroInventory {
+        public string[] heroClasses;
+        public int id;
+        public string camp;
+        public string name;
+        public string heroId;
+        public string createAt;
+        public string updateAt;
+        public CardInventory[] heroCards;
+    }
 }
