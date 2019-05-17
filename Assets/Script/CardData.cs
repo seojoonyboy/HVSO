@@ -1,4 +1,5 @@
 
+[System.Serializable]
 public class CardData {
     //public new string id;
     public string rarelity;

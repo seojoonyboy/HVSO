@@ -35,21 +35,32 @@ public class CardListManager : MonoBehaviour
     }
 
     public void SetCardInfo(GameObject obj, CardData data) {
-        obj.transform.GetChild(0).GetComponent<Text>().text = data.name;
+        Transform info = obj.transform.GetChild(0);
+        info.Find("Name/NameText").GetComponent<Text>().text = data.name;
         if (data.hp != null)
-            obj.transform.GetChild(1).GetChild(1).GetChild(0).GetComponent<Text>().text = data.hp.ToString();
+            info.Find("HP/HpText").GetComponent<Text>().text = data.hp.ToString();
         else
-            obj.transform.GetChild(1).GetChild(1).gameObject.SetActive(false);
+            info.Find("HP").gameObject.SetActive(false);
 
         if (data.attack != null)
-            obj.transform.GetChild(1).GetChild(2).GetChild(0).GetComponent<Text>().text = data.attack.ToString();
+            info.Find("Attack/AttackText").GetComponent<Text>().text = data.attack.ToString();
         else
-            obj.transform.GetChild(1).GetChild(2).gameObject.SetActive(false);
+            info.Find("Attack").gameObject.SetActive(false);
 
-        obj.transform.GetChild(1).GetChild(3).GetChild(0).GetComponent<Text>().text = data.cost.ToString();
+        if (data.category_1 != null)
+            info.Find("Category_1").GetComponent<Text>().text = data.category_1.ToString();
+        else
+            info.Find("Category_1").gameObject.SetActive(false);
+
+        if (data.category_2 != null)
+            info.Find("Category_2").GetComponent<Text>().text = data.category_2.ToString();
+        else
+            info.Find("Category_2").gameObject.SetActive(false);
+
+        info.Find("Cost/CostText").GetComponent<Text>().text = data.cost.ToString();
 
         if (data.class_2 == null)
-            obj.transform.GetChild(3).gameObject.SetActive(false);
+            obj.transform.Find("Class2Button").gameObject.SetActive(false);
     }
 
     public void SetCardClassInfo(GameObject obj, CardData data) {
