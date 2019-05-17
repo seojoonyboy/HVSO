@@ -12,29 +12,30 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     private bool blockButton = false;
     CardListManager csm;
     Animator cssAni;
-    string cardID = "ac10001";
+    private string cardID;
 
     public CardData cardData;
     public CardDataPackage cardDataPackage;
 
     public void Start() {
+        DrawCard();
+    }
+
+    public void DrawCard() {
         cardDataPackage = Resources.Load("CardDatas/CardDataPackage_01") as CardDataPackage;
-        if (cardDataPackage.data.ContainsKey(cardID))
+        cardID = "ac10009";
+
+        if (cardDataPackage.data.ContainsKey(cardID)) {
             cardData = cardDataPackage.data[cardID];
+        }
         else
             Debug.Log("NoData");
-
-        if (cardDataPackage.data[cardID].camp == "human") {
-
-        }
-        else if (cardDataPackage.data[cardID].camp == "orc") {
-
-        }
 
 
         csm = GameObject.Find("Canvas").transform.GetChild(3).GetComponent<CardListManager>();
         csm.AddCardInfo(cardData);
     }
+
 
     public void OnBeginDrag(PointerEventData eventData)
     {
