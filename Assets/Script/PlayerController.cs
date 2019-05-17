@@ -73,13 +73,13 @@ public class PlayerController : MonoBehaviour
     }
 
     private void ObserverText() {
-        Text HPText = playerUI.transform.Find("PlayerHealth").Find("Health").Find("Text").GetComponent<Text>();
-        Text resourceText = playerUI.transform.Find("PlayerResource").Find("Text").GetComponent<Text>();
-        Image shieldImage = playerUI.transform.Find("PlayerHealth").Find("Shield").GetComponent<Image>();
+        Text HPText = playerUI.transform.Find("PlayerHealth/Health/Text").GetComponent<Text>();
+        Text resourceText = playerUI.transform.Find("PlayerResource/Text").GetComponent<Text>();
+        Image shieldImage = playerUI.transform.Find("PlayerHealth/Shield/Gage").GetComponent<Image>();
 
         HP.SubscribeToText(HPText).AddTo(PlayMangement.instance.transform.gameObject);
         resource.SubscribeToText(resourceText).AddTo(PlayMangement.instance.transform.gameObject);
-        isPicking.Subscribe(_ => HighLightCardSlot());
+        isPicking.Subscribe(_ => HighLightCardSlot()).AddTo(PlayMangement.instance.transform.gameObject);
         shieldStack.Subscribe(_ => shieldImage.fillAmount = (float)shieldStack.Value / 8 ).AddTo(PlayMangement.instance.transform.gameObject);
     }
 
