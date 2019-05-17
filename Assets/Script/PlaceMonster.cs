@@ -18,7 +18,8 @@ public class PlaceMonster : MonoBehaviour
 
     public Vector3 unitLocation;
     public bool attacking = false;
-    public float count = 0f;
+    public int atkCount = 1;
+    public int atkRange = 1;
 
     private void Start()
     {
@@ -50,7 +51,7 @@ public class PlaceMonster : MonoBehaviour
                 myTarget = enemy.transform.gameObject;
                 enemy.PlayerTakeDamage(unit.power);
             }
-            
+
         }
         else {
             PlayerController player = PlayMangement.instance.player;
@@ -68,6 +69,16 @@ public class PlaceMonster : MonoBehaviour
             }
         }
     }
+
+    private void SingleAttack() {
+
+    }
+
+    private void MultipleAttack() {
+
+    }
+
+
 
     public void RequestAttackUnit(GameObject target, int amount) {
         attacking = true;
