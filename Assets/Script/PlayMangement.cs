@@ -100,7 +100,7 @@ public class PlayMangement : MonoBehaviour
 
 
         while (i < enemyCardCount) {
-            if (enemyCardCount < 1) break;
+            if (enemyCardCount < 0) break;
             if (i >= 3) break;
             if (enemyPlayer.transform.GetChild(0).GetChild(i).childCount != 0) { i++; continue; }
             if (cardDataPackage.data.ContainsKey(cardID) == false) { i++; continue; }
@@ -247,7 +247,9 @@ public class PlayMangement : MonoBehaviour
 
             line++;
         }
+        yield return new WaitForSeconds(1f);
         CustomEvent.Trigger(gameObject, "EndTurn");
+        player.EndTurnDraw();
         StopCoroutine("battleCoroutine");
     }
 }

@@ -66,6 +66,22 @@ public class PlayerController : MonoBehaviour
         StartCoroutine(PlayMangement.instance.WaitSecond());
     }
 
+    public void EndTurnDraw() {
+        GameObject setCard = Instantiate(card);
+        setCard.transform.SetParent(playerUI.transform.Find("CardSlot"));
+        if (race == true)
+            setCard.GetComponent<CardHandler>().DrawCard("ac10009");
+        else
+            setCard.GetComponent<CardHandler>().DrawCard("ac10014");
+        setCard.SetActive(true);
+
+        setCard.GetComponent<CardHandler>().DisableCard();
+
+        GameObject enemyCard = Instantiate(PlayMangement.instance.enemyPlayer.back);
+        enemyCard.transform.SetParent(PlayMangement.instance.enemyPlayer.playerUI.transform.Find("CardSlot"));
+        enemyCard.SetActive(true);
+    }
+
 
     public void SetPlayerStat(int hp) {
         HP = new ReactiveProperty<int>(hp);
