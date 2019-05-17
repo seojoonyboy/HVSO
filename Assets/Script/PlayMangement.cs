@@ -42,16 +42,16 @@ public class PlayMangement : MonoBehaviour
 
     public void SetPlayerCard() {
         if (player.race == true) {
-            player.card = cardDB.transform.Find("Plant").gameObject;
-            player.back = cardDB.transform.Find("PlantsBackCard").gameObject;
-            enemyPlayer.card = cardDB.transform.Find("Zombie").gameObject;
-            enemyPlayer.back = cardDB.transform.Find("ZombieBackCard").gameObject;
+            player.card = cardDB.transform.Find("Card").gameObject;
+            player.back = cardDB.transform.Find("HumanBackCard").gameObject;
+            enemyPlayer.card = cardDB.transform.Find("Card").gameObject;
+            enemyPlayer.back = cardDB.transform.Find("OrcBackCard").gameObject;
         }
         else {
-            player.card = cardDB.transform.Find("Zombie").gameObject;
-            player.back = cardDB.transform.Find("ZombieBackCard").gameObject;
-            enemyPlayer.card = cardDB.transform.Find("Plant").gameObject;
-            enemyPlayer.back = cardDB.transform.Find("PlantsBackCard").gameObject;
+            player.card = cardDB.transform.Find("Card").gameObject;
+            player.back = cardDB.transform.Find("OrcBackCard").gameObject;
+            enemyPlayer.card = cardDB.transform.Find("Card").gameObject;
+            enemyPlayer.back = cardDB.transform.Find("HumanBackCard").gameObject;
         }
     }
 
@@ -109,6 +109,7 @@ public class PlayMangement : MonoBehaviour
             monster.GetComponent<PlaceMonster>().unit.power = (int)cardData.attack;
             monster.GetComponent<PlaceMonster>().unit.name = cardData.name;
             monster.GetComponent<PlaceMonster>().unit.type = cardData.type;
+            monster.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprite/" + cardID);
 
             Destroy(enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(0).gameObject);
             i++;

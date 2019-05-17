@@ -1,7 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class IngameDropHandler : MonoBehaviour, IDropHandler
 {
@@ -27,10 +26,12 @@ public class IngameDropHandler : MonoBehaviour, IDropHandler
             placedMonster.GetComponent<PlaceMonster>().unit.name = cardHandler.cardData.name;
             placedMonster.GetComponent<PlaceMonster>().unit.HP = (int)cardHandler.cardData.hp;
             placedMonster.GetComponent<PlaceMonster>().unit.power = (int)cardHandler.cardData.attack;
-            placedMonster.GetComponent<PlaceMonster>().unit.type = cardHandler.cardData.type;           
+            placedMonster.GetComponent<PlaceMonster>().unit.type = cardHandler.cardData.type;
 
+            placedMonster.GetComponent<SpriteRenderer>().sprite = cardHandler.unitSprite;
+            placedMonster.name = placedMonster.GetComponent<PlaceMonster>().unit.name;
 
-
+            GetComponent<Image>().enabled = false;
             PlayMangement.instance.player.isPicking.Value = false;
             Destroy(eventData.pointerDrag.gameObject);
         }

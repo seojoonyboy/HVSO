@@ -9,6 +9,7 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 {
     public Vector3 startPos;
     public GameObject unit;
+    public Sprite unitSprite;
     private bool blockButton = false;
     CardListManager csm;
     Animator cssAni;
@@ -18,15 +19,15 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     public CardDataPackage cardDataPackage;
 
     public void Start() {
-        DrawCard();
     }
 
-    public void DrawCard() {
+    public void DrawCard(string ID) {
         cardDataPackage = Resources.Load("CardDatas/CardDataPackage_01") as CardDataPackage;
-        cardID = "ac10009";
+        cardID = ID;
 
         if (cardDataPackage.data.ContainsKey(cardID)) {
             cardData = cardDataPackage.data[cardID];
+            unitSprite = Resources.Load <Sprite> ("Sprite/" + cardID);
         }
         else
             Debug.Log("NoData");
