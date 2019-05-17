@@ -108,7 +108,7 @@ public class PlaceMonster : MonoBehaviour
     }
 
     private void ReturnPosition() {
-        gameObject.transform.position = Vector3.Lerp(transform.position, unitLocation, 3f * Time.deltaTime);
+        gameObject.transform.position = Vector3.Lerp(transform.position, unitLocation, 5f * Time.deltaTime);
 
     }
 
