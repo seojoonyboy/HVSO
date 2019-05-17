@@ -32,6 +32,9 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         else
             Debug.Log("NoData");
 
+        transform.Find("Health").Find("Text").GetComponent<Text>().text = cardData.hp.ToString();
+        transform.Find("attack").Find("Text").GetComponent<Text>().text = cardData.attack.ToString();
+        transform.Find("Cost").Find("Text").GetComponent<Text>().text = cardData.cost.ToString();
 
         csm = GameObject.Find("Canvas").transform.GetChild(3).GetComponent<CardListManager>();
         csm.AddCardInfo(cardData);

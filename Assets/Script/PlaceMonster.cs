@@ -41,32 +41,27 @@ public class PlaceMonster : MonoBehaviour
             PlayerController enemy = PlayMangement.instance.enemyPlayer;
             if (enemy.transform.Find("Line_2").GetChild(x).childCount != 0) {
                 myTarget = enemy.transform.Find("Line_2").GetChild(x).GetChild(0).gameObject;
-                RequestAttackUnit(myTarget, unit.power);
             }
             else if (enemy.transform.Find("Line_1").GetChild(x).childCount != 0) {
                 myTarget = enemy.transform.Find("Line_1").GetChild(x).GetChild(0).gameObject;
-                RequestAttackUnit(myTarget, unit.power);
             }
             else {
                 myTarget = enemy.transform.gameObject;
-                enemy.PlayerTakeDamage(unit.power);
             }
-
+            attacking = true;
         }
         else {
             PlayerController player = PlayMangement.instance.player;
             if (player.transform.Find("Line_2").GetChild(x).childCount != 0) {
                 myTarget = player.transform.Find("Line_2").GetChild(x).GetChild(0).gameObject;
-                RequestAttackUnit(myTarget, unit.power);
             }
             else if (player.transform.Find("Line_1").GetChild(x).childCount != 0) {
                 myTarget = player.transform.Find("Line_1").GetChild(x).GetChild(0).gameObject;
-                RequestAttackUnit(myTarget, unit.power);
             }
             else {
-                myTarget = player.transform.gameObject;
-                player.PlayerTakeDamage(unit.power);
+                myTarget = player.transform.gameObject;                
             }
+            attacking = true;
         }
     }
 
@@ -80,8 +75,7 @@ public class PlaceMonster : MonoBehaviour
 
 
 
-    public void RequestAttackUnit(GameObject target, int amount) {
-        attacking = true;
+    public void RequestAttackUnit(GameObject target, int amount) {        
         target.GetComponent<PlaceMonster>().unit.HP -= amount;
         target.GetComponent<PlaceMonster>().UpdateStat();
     }
@@ -102,8 +96,15 @@ public class PlaceMonster : MonoBehaviour
     private void MoveToTarget() {
         transform.Translate((myTarget.transform.position - gameObject.transform.position).normalized * 5f * Time.deltaTime, Space.Self);
 
-        if (Vector3.Distance(transform.position, myTarget.transform.position) < 0.5f)
+        if (Vector3.Distance(transform.position, myTarget.transform.position) < 0.5f) {
             attacking = false;
+            PlaceMonster placeMonster = myTarget.GetComponent<PlaceMonster>();
+
+            if (placeMonster != null)
+                RequestAttackUnit(myTarget, unit.power);
+            else
+                myTarget.GetComponent<PlayerController>().PlayerTakeDamage(unit.power);
+        }
     }
 
     private void ReturnPosition() {
