@@ -19,6 +19,8 @@ public class PlayMangement : MonoBehaviour
     public bool isGame = true;
     public static PlayMangement instance { get; private set; }
 
+    public bool turnOn = false;
+
     private void Awake()
     {
         //string selectedRace = Variables.Saved.Get("SelectedRace").ToString();
@@ -132,7 +134,7 @@ public class PlayMangement : MonoBehaviour
         string currentTurn = Variables.Scene(
                 UnityEngine.SceneManagement.SceneManager.GetActiveScene()
             ).Get("CurrentTurn").ToString();
-
+        Debug.Log(currentTurn);
         switch (currentTurn) {
             case "ZOMBIE":
                 if(player.race == false) {
@@ -180,11 +182,14 @@ public class PlayMangement : MonoBehaviour
 
     public IEnumerator WaitSecond() {
         yield return new WaitForSeconds(2f);
-        CustomEvent.Trigger(gameObject, "EndTurn");
+        //Debug.Log("Triggering EndTurn");
+        //CustomEvent.Trigger(gameObject, "EndTurn");
+        turnOn = true;
     }
 
     public void GetPlayerTurnRelease() {
-        CustomEvent.Trigger(gameObject, "EndTurn");
+        //CustomEvent.Trigger(gameObject, "EndTurn");
+        turnOn = true;
     }
 
 
@@ -248,7 +253,8 @@ public class PlayMangement : MonoBehaviour
             line++;
         }
         yield return new WaitForSeconds(1f);
-        CustomEvent.Trigger(gameObject, "EndTurn");
+        //CustomEvent.Trigger(gameObject, "EndTurn");
+        turnOn = true;
         player.EndTurnDraw();
         StopCoroutine("battleCoroutine");
     }

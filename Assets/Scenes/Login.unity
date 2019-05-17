@@ -223,93 +223,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeb62e306db49f542a6df3adb486cbd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects:
-    - {fileID: 149194207}
-    - {fileID: 1245720503}
-    - {fileID: 2145034335}
-    - {fileID: 388386828}
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes:
-    - Name: sounds
-      Entry: 7
-      Data: 0|System.Collections.Generic.Dictionary`2[[SoundType, Assembly-CSharp],[UnityEngine.AudioSource,
-        UnityEngine.AudioModule]], mscorlib
-    - Name: comparer
-      Entry: 7
-      Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[SoundType, Assembly-CSharp]],
-        mscorlib
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 12
-      Data: 4
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 0
-    - Name: $v
-      Entry: 10
-      Data: 0
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 1
-    - Name: $v
-      Entry: 10
-      Data: 1
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 2
-    - Name: $v
-      Entry: 10
-      Data: 2
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 3
-    - Name: $v
-      Entry: 10
-      Data: 3
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
 --- !u!4 &134716701
 Transform:
   m_ObjectHideFlags: 0
@@ -1325,6 +1238,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: FirstTurn
       objectReference: {fileID: 0}
+    - target: {fileID: 6956617767010792529, guid: 7790db58d2e0f3840bb8ccfb0ddca20c,
+        type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6956617767010792528, guid: 7790db58d2e0f3840bb8ccfb0ddca20c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1378,11 +1296,6 @@ PrefabInstance:
     - target: {fileID: 6956617767010792528, guid: 7790db58d2e0f3840bb8ccfb0ddca20c,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6956617767010792529, guid: 7790db58d2e0f3840bb8ccfb0ddca20c,
-        type: 3}
-      propertyPath: m_PlayOnAwake
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1740,6 +1653,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: LargeAttack
       objectReference: {fileID: 0}
+    - target: {fileID: 6956617767010792529, guid: 9bfb12d11555d404f8632f86d00ffaa1,
+        type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6956617767010792528, guid: 9bfb12d11555d404f8632f86d00ffaa1,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1793,11 +1711,6 @@ PrefabInstance:
     - target: {fileID: 6956617767010792528, guid: 9bfb12d11555d404f8632f86d00ffaa1,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6956617767010792529, guid: 9bfb12d11555d404f8632f86d00ffaa1,
-        type: 3}
-      propertyPath: m_PlayOnAwake
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
