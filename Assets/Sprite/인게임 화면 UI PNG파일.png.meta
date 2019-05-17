@@ -1,0 +1,784 @@
+fileFormatVersion: 2
+guid: e8f083f21cbf7e74db197cd38f4d26ae
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -2809960808755668064
+    second: IngameUI_NotPlayerTurn
+  - first:
+      213: -4069646505111616270
+    second: IngameUI_TurnTable
+  - first:
+      213: -1471176957262749646
+    second: IngameUI_TurnArrow_Playable
+  - first:
+      213: 2165125950584553028
+    second: IngameUI_TurnArrow_NotPlayable
+  - first:
+      213: -8188091599676845417
+    second: IngameUI_PlayerSkill_Frame
+  - first:
+      213: 1828881955801769377
+    second: IngameUI_EnemySkill_Frame
+  - first:
+      213: 8247205929506456290
+    second: IngameUI_PlayerTurn
+  - first:
+      213: 4162925870804614345
+    second: IngameUI_Player_Human
+  - first:
+      213: 9062705481532589769
+    second: IngameUI_Player_Orc
+  - first:
+      213: -1055607482200893426
+    second: IngameUI_Player_OrcSpc
+  - first:
+      213: 7740596771495818417
+    second: IngameUI_PlayerSkill_BG
+  - first:
+      213: 4157860876030521239
+    second: IngameUI_EnemySkill_BG
+  - first:
+      213: 5491589344791157100
+    second: IngameUI_Enemy_Human
+  - first:
+      213: -8282425694789621005
+    second: IngameUI_Enemy_Orc
+  - first:
+      213: -3196941051801505907
+    second: IngameUI_Enemy_OrcSpc
+  - first:
+      213: 7933225459886578434
+    second: IngameUI_Battle
+  - first:
+      213: 3717674698047423600
+    second: IngameUI_PlayerSkill_Devide
+  - first:
+      213: -7972114387451690530
+    second: IngameUI_EnemySkill_Devide
+  - first:
+      213: 130767124979242468
+    second: IngameUI_OrcCard
+  - first:
+      213: 520420735977276746
+    second: IngameUI_PlayerSkill_Gage
+  - first:
+      213: 783936587948488502
+    second: IngameUI_EnemySkill_Gage
+  - first:
+      213: -8948385854791388505
+    second: IngameUI_EnemySkill_Count
+  - first:
+      213: -2974445963657214583
+    second: IngameUI_PlayerSkill_Count
+  - first:
+      213: 8903080513185812369
+    second: IngameUI_Skill_Used
+  - first:
+      213: -5963128631271114091
+    second: IngameUI_HummanCost
+  - first:
+      213: 9221329880406913035
+    second: IngameUI_OrcCost
+  - first:
+      213: -3058378425576493340
+    second: IngameUI_OptionBtn
+  - first:
+      213: 6003959102716561550
+    second: IngameUI_HP
+  externalObjects: {}
+  serializedVersion: 10
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 2
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: IngameUI_NotPlayerTurn
+      rect:
+        serializedVersion: 2
+        x: 610
+        y: 690
+        width: 189
+        height: 190
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b43f6bc45c9128446a89226c26a85180
+      internalID: -2809960808755668064
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IngameUI_TurnTable
+      rect:
+        serializedVersion: 2
+        x: 861
+        y: 763
+        width: 247
+        height: 136
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b31ee0fbb3fa4a1478dbee9f8ab0882a
+      internalID: -4069646505111616270
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IngameUI_TurnArrow_Playable
+      rect:
+        serializedVersion: 2
+        x: 1189
+        y: 767
+        width: 48
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bc5754e23cce06441b5110212b8365ac
+      internalID: -1471176957262749646
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IngameUI_TurnArrow_NotPlayable
+      rect:
+        serializedVersion: 2
+        x: 1254
+        y: 767
+        width: 48
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4b92d27778deef74c8f303ef257cbcee
+      internalID: 2165125950584553028
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IngameUI_PlayerSkill_Frame
+      rect:
+        serializedVersion: 2
+        x: 1484
+        y: 785
+        width: 180
+        height: 218
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 35711a4dbb728d043bb7e8beb90dbd65
+      internalID: -8188091599676845417
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IngameUI_EnemySkill_Frame
+      rect:
+        serializedVersion: 2
+        x: 1772
+        y: 801
+        width: 185
+        height: 186
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e59971c5a16442a4287259bb726e1987
+      internalID: 1828881955801769377
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IngameUI_PlayerTurn
+      rect:
+        serializedVersion: 2
+        x: 604
+        y: 459
+        width: 189
+        height: 190
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aabc2712b798e984c8b84970b2a9d522
+      internalID: 8247205929506456290
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IngameUI_Player_Human
+      rect:
+        serializedVersion: 2
+        x: 897
+        y: 614
+        width: 87
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1b89cca810b543045bd84ce0a8d54f49
+      internalID: 4162925870804614345
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IngameUI_Player_Orc
+      rect:
+        serializedVersion: 2
+        x: 1009
+        y: 608
+        width: 124
+        height: 109
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e2d119e466e77814baf19026668f9f93
+      internalID: 9062705481532589769
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IngameUI_Player_OrcSpc
+      rect:
+        serializedVersion: 2
+        x: 1154
+        y: 614
+        width: 101
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 42282c630b7c3f74aade7c5db9f0f0ff
+      internalID: -1055607482200893426
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IngameUI_PlayerSkill_BG
+      rect:
+        serializedVersion: 2
+        x: 1506
+        y: 586
+        width: 136
+        height: 165
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 26459476d18f7c94c968a6ae86ae9db4
+      internalID: 7740596771495818417
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IngameUI_EnemySkill_BG
+      rect:
+        serializedVersion: 2
+        x: 1799
+        y: 592
+        width: 143
+        height: 143
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 129e0b2a5411a914599ac38356edae1d
+      internalID: 4157860876030521239
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IngameUI_Enemy_Human
+      rect:
+        serializedVersion: 2
+        x: 897
+        y: 472
+        width: 87
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4267b214f496e6349b99e829dc95359c
+      internalID: 5491589344791157100
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IngameUI_Enemy_Orc
+      rect:
+        serializedVersion: 2
+        x: 1011
+        y: 467
+        width: 124
+        height: 109
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ed52e13620fa23f46a5c45ac65a2f9fe
+      internalID: -8282425694789621005
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IngameUI_Enemy_OrcSpc
+      rect:
+        serializedVersion: 2
+        x: 1149
+        y: 466
+        width: 101
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 117ccdf3d5fbecf499a906810f6eec69
+      internalID: -3196941051801505907
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IngameUI_Battle
+      rect:
+        serializedVersion: 2
+        x: 1286
+        y: 466
+        width: 88
+        height: 88
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 54351756b30dfa646a2a4646562df19b
+      internalID: 7933225459886578434
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IngameUI_PlayerSkill_Devide
+      rect:
+        serializedVersion: 2
+        x: 1517
+        y: 406
+        width: 125
+        height: 160
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 59e564dc8ef22ee4da82df20fa669f90
+      internalID: 3717674698047423600
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IngameUI_EnemySkill_Devide
+      rect:
+        serializedVersion: 2
+        x: 1818
+        y: 415
+        width: 141
+        height: 142
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dea39752e4565dc419f6badd95fb50ca
+      internalID: -7972114387451690530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IngameUI_OrcCard
+      rect:
+        serializedVersion: 2
+        x: 28
+        y: 334
+        width: 182
+        height: 127
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 60f34b3b5e31c1849b06d57b306dad60
+      internalID: 130767124979242468
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IngameUI_PlayerSkill_Gage
+      rect:
+        serializedVersion: 2
+        x: 1519
+        y: 230
+        width: 120
+        height: 146
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b122b92714aad0641b206627d04511f3
+      internalID: 520420735977276746
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IngameUI_EnemySkill_Gage
+      rect:
+        serializedVersion: 2
+        x: 1834
+        y: 230
+        width: 125
+        height: 126
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8efafb9c5cfb6c24fbadc0d7e1ffe4f0
+      internalID: 783936587948488502
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IngameUI_EnemySkill_Count
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 235
+        width: 43
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b16be56dc73b69346a71c96901345032
+      internalID: -8948385854791388505
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IngameUI_PlayerSkill_Count
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 235
+        width: 43
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7bcb6a4002f8e984183a307be8dc8aab
+      internalID: -2974445963657214583
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IngameUI_Skill_Used
+      rect:
+        serializedVersion: 2
+        x: 181
+        y: 235
+        width: 43
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5c9c8832dcad23544b25149d36a56559
+      internalID: 8903080513185812369
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IngameUI_HummanCost
+      rect:
+        serializedVersion: 2
+        x: 47
+        y: 28
+        width: 111
+        height: 126
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3554d9cac2263be458ed0164654450fc
+      internalID: -5963128631271114091
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IngameUI_OrcCost
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 27
+        width: 136
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8697d4bf9e9b04346ba2191713cae59a
+      internalID: 9221329880406913035
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IngameUI_OptionBtn
+      rect:
+        serializedVersion: 2
+        x: 369
+        y: 38
+        width: 99
+        height: 105
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3bf0528656fe7ae438a63a0f7cecef38
+      internalID: -3058378425576493340
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IngameUI_HP
+      rect:
+        serializedVersion: 2
+        x: 510
+        y: 46
+        width: 103
+        height: 94
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bbe98f66a1a3b4e44b519e502e1176a0
+      internalID: 6003959102716561550
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5429a12d1d75b33459c0f9d3685b5137
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
