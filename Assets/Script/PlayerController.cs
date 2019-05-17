@@ -28,21 +28,21 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        if(isPlayer == true && race == true) {
-            playerUI.transform.Find("ReleaseTurnBtn").GetComponent<Image>().sprite = PlayMangement.instance.humanBtn;
-            playerUI.transform.Find("PlayerResource").GetComponent<Image>().sprite = PlayMangement.instance.plantResourceIcon;
-        }
-        else if(isPlayer == true && race == false) {
-            playerUI.transform.Find("ReleaseTurnBtn").GetComponent<Image>().sprite = PlayMangement.instance.orcBtn;
-            playerUI.transform.Find("PlayerResource").GetComponent<Image>().sprite = PlayMangement.instance.zombieResourceIcon;
-        }
+        //if(isPlayer == true && race == true) {
+        //    playerUI.transform.Find("ReleaseTurnBtn").GetComponent<Image>().sprite = PlayMangement.instance.humanBtn;
+        //    playerUI.transform.Find("PlayerResource").GetComponent<Image>().sprite = PlayMangement.instance.plantResourceIcon;
+        //}
+        //else if(isPlayer == true && race == false) {
+        //    playerUI.transform.Find("ReleaseTurnBtn").GetComponent<Image>().sprite = PlayMangement.instance.orcBtn;
+        //    playerUI.transform.Find("PlayerResource").GetComponent<Image>().sprite = PlayMangement.instance.zombieResourceIcon;
+        //}
         
-        if(isPlayer == false && race == true) {
-            playerUI.transform.Find("PlayerResource").GetComponent<Image>().sprite = PlayMangement.instance.plantResourceIcon;
-        }
-        else if (isPlayer == false && race == false) {
-            playerUI.transform.Find("PlayerResource").GetComponent<Image>().sprite = PlayMangement.instance.zombieResourceIcon;
-        }
+        //if(isPlayer == false && race == true) {
+        //    playerUI.transform.Find("PlayerResource").GetComponent<Image>().sprite = PlayMangement.instance.plantResourceIcon;
+        //}
+        //else if (isPlayer == false && race == false) {
+        //    playerUI.transform.Find("PlayerResource").GetComponent<Image>().sprite = PlayMangement.instance.zombieResourceIcon;
+        //}
 
     }
 
@@ -52,6 +52,10 @@ public class PlayerController : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
             GameObject setCard = Instantiate(card);
             setCard.transform.SetParent(playerUI.transform.Find("CardSlot"));
+            if(race == true) 
+                setCard.GetComponent<CardHandler>().DrawCard("ac10009");            
+            else
+                setCard.GetComponent<CardHandler>().DrawCard("ac10014");
             setCard.SetActive(true);
 
             GameObject enemyCard = Instantiate(PlayMangement.instance.enemyPlayer.back);
