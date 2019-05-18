@@ -24,6 +24,7 @@ public class AccountManager : Singleton<AccountManager> {
     private void Awake() {
         DontDestroyOnLoad(gameObject);
         DEVICEID = SystemInfo.deviceUniqueIdentifier;
+        DEVICEID = "112";
         cardPackage = Resources.Load("CardDatas/CardDataPackage_01") as CardDataPackage;
     }
 
@@ -103,6 +104,7 @@ public class AccountManager : Singleton<AccountManager> {
         if (response.responseCode != 200) { }
         else {
             userData = dataModules.JsonReader.Read<UserClassInput>(response.data);
+
             myCards = userData.cardInventories;
             SetHeroInventories(userData.heroInventories);
         }
@@ -117,6 +119,9 @@ public class AccountManager : Singleton<AccountManager> {
         }
         else {
             userData = dataModules.JsonReader.Read<UserClassInput>(response.data);
+
+            myCards = userData.cardInventories;
+            SetHeroInventories(userData.heroInventories);
 
             Modal.instantiate("회원가입이 완료되었습니다.", Modal.Type.CHECK, () => {
                 SceneManager.Instance.LoadScene(SceneManager.Scene.MAIN_SCENE);
