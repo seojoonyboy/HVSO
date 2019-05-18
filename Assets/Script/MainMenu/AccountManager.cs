@@ -24,7 +24,6 @@ public class AccountManager : Singleton<AccountManager> {
     private void Awake() {
         DontDestroyOnLoad(gameObject);
         DEVICEID = SystemInfo.deviceUniqueIdentifier;
-        DEVICEID = "112";
         cardPackage = Resources.Load("CardDatas/CardDataPackage_01") as CardDataPackage;
     }
 
