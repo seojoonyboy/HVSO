@@ -19,8 +19,6 @@ public class PlayMangement : MonoBehaviour
     public bool isGame = true;
     public static PlayMangement instance { get; private set; }
 
-    public bool turnOn = false;
-
     private void Awake()
     {
         //string selectedRace = Variables.Saved.Get("SelectedRace").ToString();
@@ -183,13 +181,11 @@ public class PlayMangement : MonoBehaviour
     public IEnumerator WaitSecond() {
         yield return new WaitForSeconds(2f);
         //Debug.Log("Triggering EndTurn");
-        //CustomEvent.Trigger(gameObject, "EndTurn");
-        turnOn = true;
+        CustomEvent.Trigger(gameObject, "EndTurn");
     }
 
     public void GetPlayerTurnRelease() {
-        //CustomEvent.Trigger(gameObject, "EndTurn");
-        turnOn = true;
+        CustomEvent.Trigger(gameObject, "EndTurn");
     }
 
 
@@ -253,8 +249,7 @@ public class PlayMangement : MonoBehaviour
             line++;
         }
         yield return new WaitForSeconds(1f);
-        //CustomEvent.Trigger(gameObject, "EndTurn");
-        turnOn = true;
+        CustomEvent.Trigger(gameObject, "EndTurn");
         player.EndTurnDraw();
         StopCoroutine("battleCoroutine");
     }
