@@ -18,12 +18,15 @@ public class PlayMangement : MonoBehaviour
 
     public bool isGame = true;
     public static PlayMangement instance { get; private set; }
+    public GameObject backGround;
+    public GameObject onCanvasPosGroup;
+
 
     private void Awake()
     {
         //string selectedRace = Variables.Saved.Get("SelectedRace").ToString();
 
-
+        SetWorldScale();
         instance = this;        
         SetPlayerCard();
         gameObject.GetComponent<TurnChanger>().onTurnChanged.AddListener(() => ChangeTurn());
@@ -41,7 +44,16 @@ public class PlayMangement : MonoBehaviour
         SetPlayerSlot();
         DistributeResource();
 
-    }    
+    }
+
+    private void SetWorldScale() {
+        SpriteRenderer backSprite = backGround.GetComponent<SpriteRenderer>();
+        float height = Camera.main.orthographicSize * 2, width = height / Screen.height * Screen.width;
+
+        backGround.transform.localScale = new Vector3(width / backSprite.sprite.bounds.size.x, height/backSprite.sprite.bounds.size.y, 1);
+
+    }
+
 
     public void SetPlayerCard() {
         if (player.race == true) {
