@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Linq;
 using UnityEngine.UI;
 
-public class AccountManager : Singleton<AccountManager> {
+public partial class AccountManager : Singleton<AccountManager> {
     protected AccountManager() { }
 
     public delegate void Callback();
@@ -34,95 +34,9 @@ public class AccountManager : Singleton<AccountManager> {
         networkManager = NetworkManager.Instance;
     }
 
-    // Update is called once per frame
-    void Update() {
-
-    }
-
-    public void SignUp(string inputText) {
-        UserClassInput userInfo = new UserClassInput();
-        userInfo.nickName = inputText;
-        userInfo.deviceId = DEVICEID;
-
-        string json = JsonUtility.ToJson(userInfo);
-        StringBuilder url = new StringBuilder();
-
-        url.Append(networkManager.baseUrl)
-            .Append("api/users");
-        networkManager.request("PUT", url.ToString(), json, CallbackSignUp, false);
-    }
-
-    public void RequestUserInfo(NetworkManager.Callback callback, NetworkManager.CallbackRetryOccured retryOccured) {
-        StringBuilder url = new StringBuilder();
-        string base_url = networkManager.baseUrl;
-
-        url
-            .Append(base_url)
-            .Append("api/users/")
-            .Append(DEVICEID);
-
-        networkManager.request("GET", url.ToString(), callback, retryOccured);
-    }
-
     private void OccurErrorModal(long errorCode) {
         Modal.instantiate("네트워크 오류가 발생하였습니다. 다시 시도해 주세요.", Modal.Type.CHECK);
         NoneIngameSceneEventHandler.Instance.PostNotification(NoneIngameSceneEventHandler.EVENT_TYPE.NETWORK_EROR_OCCURED, this, errorCode);
-    }
-
-    private void CallbackUserRequest(HttpResponse response) {
-        if (response.responseCode != 200) {
-            Modal.instantiate("유저 정보를 불러오는데 실패하였습니다. \n 재접속을 해주세요.", Modal.Type.CHECK);
-
-            Destroy(loadingModal);
-        }
-        else {
-            userData = dataModules.JsonReader.Read<UserClassInput>(response.data);
-
-            myCards = userData.cardInventories;
-            SetHeroInventories(userData.heroInventories);
-
-            SetDummyDeck();
-
-            Destroy(loadingModal);
-            SceneManager.Instance.LoadScene(SceneManager.Scene.MAIN_SCENE);
-        }
-    }
-
-    private void CallbackSignUp(HttpResponse response) {
-        if (response.responseCode != 200) {
-            Debug.Log(
-                response.responseCode
-                + "에러\n"
-                + response.errorMessage);
-        }
-        else {
-            userData = dataModules.JsonReader.Read<UserClassInput>(response.data);
-
-            myCards = userData.cardInventories;
-            SetHeroInventories(userData.heroInventories);
-
-            Modal.instantiate("회원가입이 완료되었습니다.", Modal.Type.CHECK, () => {
-                SceneManager.Instance.LoadScene(SceneManager.Scene.MAIN_SCENE);
-            });
-        }
-    }
-
-    public void RequestMyCardInventory() {
-        RequestUserInfo(CallbackUserRequest, OnRetry);
-        loadingModal = LoadingModal.instantiate();
-        loadingModal.transform.Find("Panel/AdditionalMessage").GetComponent<Text>().text = "개인 정보를 불러오는중...";
-    }
-
-    private void OnRetry(string msg) {
-        loadingModal.transform.GetChild(0).GetComponent<UIModule.LoadingTextEffect>().AddAdditionalMsg(msg);
-    }
-
-    public class UserClassInput {
-        public string nickName;
-        public string deviceId;
-
-        public List<dataModules.CardInventory> cardInventories;
-        public List<dataModules.HeroInventory> heroInventories;
     }
 
     public void SetDummyDeck() {
@@ -189,10 +103,132 @@ public class AccountManager : Singleton<AccountManager> {
         return data;
     }
 
+    public class UserClassInput {
+        public string nickName;
+        public string deviceId;
+
+        public List<dataModules.CardInventory> cardInventories;
+        public List<dataModules.HeroInventory> heroInventories;
+    }
+
     public class Deck {
         public string heroName;
         public string deckName;
         public string type;
         public List<dataModules.CardInventory> cards = new List<dataModules.CardInventory>();
+    }
+}
+
+/// <summary>
+/// SignIn / SignUp 관련 처리
+/// </summary>
+public partial class AccountManager {
+    public void SignUp(string inputText) {
+        UserClassInput userInfo = new UserClassInput();
+        userInfo.nickName = inputText;
+        userInfo.deviceId = DEVICEID;
+
+        string json = JsonUtility.ToJson(userInfo);
+        StringBuilder url = new StringBuilder();
+
+        url.Append(networkManager.baseUrl)
+            .Append("api/users");
+        networkManager.request("PUT", url.ToString(), json, CallbackSignUp, false);
+    }
+
+    public void RequestUserInfo(NetworkManager.Callback callback, NetworkManager.CallbackRetryOccured retryOccured) {
+        StringBuilder url = new StringBuilder();
+        string base_url = networkManager.baseUrl;
+
+        url
+            .Append(base_url)
+            .Append("api/users/")
+            .Append(DEVICEID);
+
+        networkManager.request("GET", url.ToString(), callback, retryOccured);
+    }
+
+    private void CallbackSignUp(HttpResponse response) {
+        if (response.responseCode != 200) {
+            Debug.Log(
+                response.responseCode
+                + "에러\n"
+                + response.errorMessage);
+        }
+        else {
+            userData = dataModules.JsonReader.Read<UserClassInput>(response.data);
+
+            myCards = userData.cardInventories;
+            SetHeroInventories(userData.heroInventories);
+
+            Modal.instantiate("회원가입이 완료되었습니다.", Modal.Type.CHECK, () => {
+                SceneManager.Instance.LoadScene(SceneManager.Scene.MAIN_SCENE);
+            });
+        }
+    }
+}
+
+/// <summary>
+/// Login 이후 CardsInventories 관련 처리
+/// </summary>
+public partial class AccountManager {
+    public void RequestMyCardInventory() {
+        RequestUserInfo(CallbackUserRequest, OnRetry);
+        loadingModal = LoadingModal.instantiate();
+        loadingModal.transform.Find("Panel/AdditionalMessage").GetComponent<Text>().text = "개인 정보를 불러오는중...";
+    }
+
+    private void CallbackUserRequest(HttpResponse response) {
+        if (response.responseCode != 200) {
+            Modal.instantiate("유저 정보를 불러오는데 실패하였습니다.", Modal.Type.CHECK);
+
+            Destroy(loadingModal);
+        }
+        else {
+            userData = dataModules.JsonReader.Read<UserClassInput>(response.data);
+
+            myCards = userData.cardInventories;
+            SetHeroInventories(userData.heroInventories);
+
+            SetDummyDeck();
+
+            Destroy(loadingModal);
+            SceneManager.Instance.LoadScene(SceneManager.Scene.MAIN_SCENE);
+        }
+    }
+
+    private void OnRetry(string msg) {
+        loadingModal.transform.GetChild(0).GetComponent<UIModule.LoadingTextEffect>().AddAdditionalMsg(msg);
+    }
+}
+
+/// <summary>
+/// Login 이후 Deck 관련 처리
+/// </summary>
+public partial class AccountManager {
+    public void RequestHumanDecks(NetworkManager.Callback callback, NetworkManager.CallbackRetryOccured retryOccured) {
+        StringBuilder url = new StringBuilder();
+        string base_url = networkManager.baseUrl;
+
+        url
+            .Append(base_url)
+            .Append("api/users/")
+            .Append(DEVICEID)
+            .Append("/decks/human");
+
+        networkManager.request("GET", url.ToString(), callback, retryOccured);
+    }
+
+    public void RequestOrcDecks(NetworkManager.Callback callback, NetworkManager.CallbackRetryOccured retryOccured) {
+        StringBuilder url = new StringBuilder();
+        string base_url = networkManager.baseUrl;
+
+        url
+            .Append(base_url)
+            .Append("api/users/")
+            .Append(DEVICEID)
+            .Append("/decks/orc");
+
+        networkManager.request("GET", url.ToString(), callback, retryOccured);
     }
 }

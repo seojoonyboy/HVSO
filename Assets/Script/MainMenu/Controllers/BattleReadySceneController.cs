@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Bolt;
+using System;
 
 public class BattleReadySceneController : MonoBehaviour {
     public Toggle[] battleTypeToggles;
@@ -16,9 +17,51 @@ public class BattleReadySceneController : MonoBehaviour {
     public GameObject selectedDeck { get; private set; }
 
     public GameObject CardListModal, CardInfoModal;
+    GameObject loadingModal;
+
+    public HumanDecks humanDecks;
+    public OrcDecks orcDecks;
 
     void Start() {
-        battleTypeToggles[0].GetComponent<ToggleHandler>().OnValueChanged();
+        DataLoad();
+    }
+
+    public void DataLoad() {
+        AccountManager.Instance.RequestHumanDecks(OnReqHumanDecks, OnRetryReq);
+        loadingModal = LoadingModal.instantiate();
+        loadingModal.transform.Find("Panel/AdditionalMessage").GetComponent<Text>().text = "덱 정보를 불러오는중...Human Decks";
+    }
+
+    private void OnRetryReq(string msg) {
+        loadingModal.transform.GetChild(0).GetComponent<UIModule.LoadingTextEffect>().AddAdditionalMsg(msg);
+    }
+
+    private void OnReqHumanDecks(HttpResponse response) {
+        if(response.responseCode == 200) {
+            humanDecks = JsonReader.Read<HumanDecks>(response.data);
+
+            AccountManager.Instance.RequestOrcDecks(OnReqOrcDecks, OnRetryReq);
+            loadingModal.transform.Find("Panel/AdditionalMessage").GetComponent<Text>().text = "덱 정보를 불러오는중...Orc Decks";
+        }
+        else {
+            Modal.instantiate("데이터를 정상적으로 불러오지 못했습니다.\n다시 요청합니까?", Modal.Type.YESNO, ()=> {
+                DataLoad();
+            });
+        }
+    }
+
+    private void OnReqOrcDecks(HttpResponse response) {
+        Destroy(loadingModal);
+        if (response.responseCode == 200) {
+            orcDecks = JsonReader.Read<OrcDecks>(response.data);
+
+            battleTypeToggles[0].GetComponent<ToggleHandler>().OnValueChanged();
+        }
+        else {
+            Modal.instantiate("데이터를 정상적으로 불러오지 못했습니다.\n다시 요청합니까?", Modal.Type.YESNO, () => {
+                DataLoad();
+            });
+        }
     }
 
     void Update() {
