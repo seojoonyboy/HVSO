@@ -33,17 +33,14 @@ public class PlayerController : MonoBehaviour
 
     private void SetUnitSlot() {
         for(int i = 0; i< transform.childCount; i++) {
-            for(int j = 0; j<transform.GetChild(i).childCount; j++) {
-                /*
+            for(int j = 0; j<transform.GetChild(i).childCount; j++) {                
                 transform.GetChild(i).GetChild(j).position = new Vector3(PlayMangement.instance.backGround.transform.GetChild(j).position.x, transform.GetChild(i).GetChild(j).position.y, 0);
-
 
                 if(isPlayer == true) {
                     GameObject slot = Instantiate(PlayMangement.instance.uiSlot);
                     slot.transform.SetParent(playerUI.transform.parent.Find("IngamePanel").Find("PlayerSlot").GetChild(i));
                     slot.transform.position = Camera.main.WorldToScreenPoint(transform.GetChild(i).GetChild(j).position);
-                }
-                */
+                }                
             }
         }
     }
