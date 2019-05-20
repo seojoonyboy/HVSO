@@ -18,8 +18,7 @@ public class IngameDropHandler : MonoBehaviour, IDropHandler
 
             CardHandler cardHandler = eventData.pointerDrag.gameObject.GetComponent<CardHandler>();
 
-            placedMonster = Instantiate(cardHandler.unit);
-            placedMonster.transform.SetParent(ingameParent.transform);
+            placedMonster = Instantiate(cardHandler.unit, ingameParent.transform);
             placedMonster.transform.position = ingameParent.transform.position;
             placedMonster.GetComponent<PlaceMonster>().isPlayer = true;
 
