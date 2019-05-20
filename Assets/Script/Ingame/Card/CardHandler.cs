@@ -65,7 +65,11 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
     public void OpenCardInfoList() {
         if (!blockButton) {
-            csm.OpenCardList(transform.GetSiblingIndex());
+            if(transform.parent.name == "CardSlot_1")
+                csm.OpenCardList(transform.GetSiblingIndex());
+            else {
+                csm.OpenCardList(GameObject.Find("CardSlot_2").transform.childCount + transform.GetSiblingIndex());
+            }
         }
     }
 
@@ -83,5 +87,5 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         gameObject.transform.Find("Cost").GetComponent<Image>().color = Color.white;
     }
 
-
+    
 }

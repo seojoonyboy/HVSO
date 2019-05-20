@@ -41,7 +41,6 @@ public class PlayMangement : MonoBehaviour
     {
         cam = Camera.main;        
         RequestStartData();
-        SetPlayerSlot();
         DistributeResource();
 
     }
@@ -50,7 +49,7 @@ public class PlayMangement : MonoBehaviour
         SpriteRenderer backSprite = backGround.GetComponent<SpriteRenderer>();
         float height = Camera.main.orthographicSize * 2, width = height / Screen.height * Screen.width;
 
-        backGround.transform.localScale = new Vector3(width / backSprite.sprite.bounds.size.x, height/backSprite.sprite.bounds.size.y, 1);
+        backGround.transform.localScale = new Vector3(width / backSprite.sprite.bounds.size.x, width / backSprite.sprite.bounds.size.x, 1);
 
     }
 
@@ -73,17 +72,7 @@ public class PlayMangement : MonoBehaviour
     public void DistributeCard() {
         StartCoroutine(player.GenerateCard());
     }
-    
-
-    public void SetPlayerSlot() {
-        for (int i = 0; i < player.transform.childCount; i++) {
-            for (int j = 0; j < player.transform.GetChild(i).childCount; j++) {
-                GameObject slot = Instantiate(uiSlot);
-                slot.transform.SetParent(player.playerUI.transform.parent.Find("IngamePanel").Find("PlayerSlot").GetChild(i));
-                slot.transform.position = cam.WorldToScreenPoint(player.transform.GetChild(i).GetChild(j).position);
-            }
-        }
-    }
+        
 
     public void RequestStartData() {
         player.SetPlayerStat(20);
@@ -114,12 +103,15 @@ public class PlayMangement : MonoBehaviour
         while (i < enemyCardCount) {
             if (enemyCardCount < 0) break;
             if (i >= 3) break;
+            if (isGame == false) break;
             if (enemyPlayer.transform.GetChild(0).GetChild(i).childCount != 0) { i++; continue; }
             if (cardDataPackage.data.ContainsKey(cardID) == false) { i++; continue; }
             
 
             yield return new WaitForSeconds(0.5f);
             cardData = cardDataPackage.data[cardID];
+
+            if (enemyPlayer.resource.Value < cardData.cost) break;
 
             GameObject monster = Instantiate(enemyPlayer.card.GetComponent<CardHandler>().unit);
             monster.transform.SetParent(enemyPlayer.transform.GetChild(0).GetChild(i));
@@ -131,6 +123,7 @@ public class PlayMangement : MonoBehaviour
             monster.GetComponent<PlaceMonster>().unit.type = cardData.type;
             monster.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprite/" + cardID);
 
+            enemyPlayer.resource.Value -= cardData.cost;
             Destroy(enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(0).gameObject);
             i++;
         }
@@ -141,6 +134,8 @@ public class PlayMangement : MonoBehaviour
     }
 
     public void ChangeTurn() {
+        if (isGame == false) return;
+
         string currentTurn = Variables.Scene(
                 UnityEngine.SceneManagement.SceneManager.GetActiveScene()
             ).Get("CurrentTurn").ToString();
@@ -257,10 +252,11 @@ public class PlayMangement : MonoBehaviour
                 enemyPlayer.transform.Find("Line_2").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().CheckHP();
 
 
-
+            if (isGame == false) break;
             line++;
         }
         yield return new WaitForSeconds(1f);
+        DistributeResource();
         CustomEvent.Trigger(gameObject, "EndTurn");
         player.EndTurnDraw();
         StopCoroutine("battleCoroutine");
