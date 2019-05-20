@@ -4,10 +4,17 @@ using UnityEngine;
 
 public class CardDeckPositionManager : MonoBehaviour
 {
+    Transform slot_1;
+    Transform slot_2;
+    private int cardNum = 0;
+    List<GameObject> cardList;
     // Start is called before the first frame update
     void Start()
     {
-        
+        cardList = new List<GameObject>();
+        slot_1 = transform.GetChild(0);
+        slot_2 = transform.GetChild(1);
+        slot_2.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -16,9 +23,92 @@ public class CardDeckPositionManager : MonoBehaviour
         
     }
 
-    public void AddCard() {
-        if(transform.childCount < 4) {
-
+    public void AddCard(GameObject card) {
+        cardNum++;
+        if (cardNum == 11) {
+            Debug.Log("Card Number Out Of Range!!");
+            return;
         }
+        if (cardNum < 5) {
+            card.transform.SetParent(slot_1);
+        }
+        else {
+            switch (cardNum) {
+                case 5:
+                    slot_2.gameObject.SetActive(true);
+                    ChangeSlotHeight(0.9f);
+                    slot_1.GetChild(3).SetParent(slot_2);
+                    card.transform.SetParent(slot_2);
+                    break;
+                case 7:
+                    slot_2.GetChild(2).SetParent(slot_1);
+                    card.transform.SetParent(slot_2);
+                    break;
+                case 9:
+                    ChangeSlotHeight(0.79f);
+                    slot_2.GetChild(3).SetParent(slot_1);
+                    card.transform.SetParent(slot_2);
+                    break;
+                default:
+                    card.transform.SetParent(slot_2);
+                    break;
+            }
+        }
+        cardList.Add(card);
+        card.transform.localScale = new Vector3(1, 1, 1);
+    }
+
+    public void DestroyCard(int index) {
+        cardNum--;
+        if (cardNum == -1) {
+            Debug.Log("Card Number Out Of Range!!");
+            return;
+        }
+        Destroy(cardList[index]);
+        cardList.RemoveAt(index);
+        switch (cardNum) {
+            case 9:
+                if (index < 5) slot_2.GetChild(0).SetParent(slot_1);
+                break;
+            case 8:
+                if (index > 4) {
+                    slot_1.GetChild(3).SetParent(slot_2);
+                    slot_2.GetChild(3).SetAsFirstSibling();
+                }
+                break;
+            case 7:
+                if (index < 4) slot_2.GetChild(0).SetParent(slot_1);
+                ChangeSlotHeight(0.9f);
+                break;
+            case 6:
+                if (index > 3) {
+                    slot_1.GetChild(2).SetParent(slot_2);
+                    slot_2.GetChild(2).SetAsFirstSibling();
+                }
+                break;
+            case 5:
+                if (index < 3) slot_2.GetChild(0).SetParent(slot_1);
+                break;
+            case 4:
+                if (index < 3) {
+                    slot_2.GetChild(1).SetParent(slot_1);
+                    slot_2.GetChild(0).SetParent(slot_1);
+                }
+                else {
+                    if(slot_2.GetChild(0))
+                        slot_2.GetChild(0).SetParent(slot_1);
+                    else
+                        slot_2.GetChild(1).SetParent(slot_1);
+                }
+                slot_2.gameObject.SetActive(false);
+                ChangeSlotHeight(1.0f);
+                break;
+            default:
+                break;
+        }
+    }
+
+    void ChangeSlotHeight(float rate) {
+        transform.GetComponent<RectTransform>().localScale = new Vector2(rate, rate);
     }
 }
