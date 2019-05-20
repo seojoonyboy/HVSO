@@ -15,7 +15,12 @@ public class IngameDropHandler : MonoBehaviour, IDropHandler
     public void OnDrop(PointerEventData eventData)
     {
         if (placedMonster == null && PlayMangement.instance.player.getPlayerTurn == true) {
-
+            int cardIndex = 0;
+            if (eventData.pointerDrag.gameObject.transform.parent.name == "CardSlot_1")
+                cardIndex = eventData.pointerDrag.gameObject.transform.GetSiblingIndex();
+            else {
+                cardIndex = GameObject.Find("CardSlot_2").transform.childCount + eventData.pointerDrag.gameObject.transform.GetSiblingIndex();
+            }
             CardHandler cardHandler = eventData.pointerDrag.gameObject.GetComponent<CardHandler>();
 
             placedMonster = Instantiate(cardHandler.unit, ingameParent.transform);
@@ -32,7 +37,9 @@ public class IngameDropHandler : MonoBehaviour, IDropHandler
 
             GetComponent<Image>().enabled = false;
             PlayMangement.instance.player.isPicking.Value = false;
-            Destroy(eventData.pointerDrag.gameObject);
+            
+            GameObject.Find("Player").transform.GetChild(0).GetComponent<PlayerController>().cdpm.DestroyCard(cardIndex);
+            Debug.Log(cardIndex + " 번째 카드 제거");
         }
     }
 
