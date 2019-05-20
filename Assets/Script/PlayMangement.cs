@@ -72,15 +72,7 @@ public class PlayMangement : MonoBehaviour
     public void DistributeCard() {
         StartCoroutine(player.GenerateCard());
     }
-    
-
-    public void SetPlayerSlot() {
-        for (int i = 0; i < player.transform.childCount; i++) {
-            for (int j = 0; j < player.transform.GetChild(i).childCount; j++) {
-                
-            }
-        }
-    }
+        
 
     public void RequestStartData() {
         player.SetPlayerStat(20);
@@ -111,12 +103,15 @@ public class PlayMangement : MonoBehaviour
         while (i < enemyCardCount) {
             if (enemyCardCount < 0) break;
             if (i >= 3) break;
+            if (isGame == false) break;
             if (enemyPlayer.transform.GetChild(0).GetChild(i).childCount != 0) { i++; continue; }
             if (cardDataPackage.data.ContainsKey(cardID) == false) { i++; continue; }
             
 
             yield return new WaitForSeconds(0.5f);
             cardData = cardDataPackage.data[cardID];
+
+            if (enemyPlayer.resource.Value < cardData.cost) break;
 
             GameObject monster = Instantiate(enemyPlayer.card.GetComponent<CardHandler>().unit);
             monster.transform.SetParent(enemyPlayer.transform.GetChild(0).GetChild(i));
@@ -128,6 +123,7 @@ public class PlayMangement : MonoBehaviour
             monster.GetComponent<PlaceMonster>().unit.type = cardData.type;
             monster.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprite/" + cardID);
 
+            enemyPlayer.resource.Value -= cardData.cost;
             Destroy(enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(0).gameObject);
             i++;
         }
@@ -256,10 +252,11 @@ public class PlayMangement : MonoBehaviour
                 enemyPlayer.transform.Find("Line_2").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().CheckHP();
 
 
-
+            if (isGame == false) break;
             line++;
         }
         yield return new WaitForSeconds(1f);
+        DistributeResource();
         CustomEvent.Trigger(gameObject, "EndTurn");
         player.EndTurnDraw();
         StopCoroutine("battleCoroutine");

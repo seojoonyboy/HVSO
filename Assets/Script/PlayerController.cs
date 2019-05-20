@@ -61,6 +61,8 @@ public class PlayerController : MonoBehaviour
     }
 
     public void EndTurnDraw() {
+        if (PlayMangement.instance.isGame == false) return;
+
         GameObject setCard = Instantiate(card);
         DrawPlayerCard(setCard);
         setCard.GetComponent<CardHandler>().DisableCard();
@@ -96,7 +98,9 @@ public class PlayerController : MonoBehaviour
         var ObserveShield = shieldStack.Subscribe(_ => shieldImage.fillAmount = (float)shieldStack.Value / 8).AddTo(PlayMangement.instance.transform.gameObject);
 
         var gameOverDispose = HP.Where(x => x <= 0)
-                              .Subscribe(_ => { ObserveHP.Dispose();
+                              .Subscribe(_ => {
+                                               PlayerDefeat();
+                                               ObserveHP.Dispose();
                                                ObserveResource.Dispose();
                                                ObserveCardPick.Dispose();
                                                ObserveShield.Dispose(); })
@@ -106,11 +110,17 @@ public class PlayerController : MonoBehaviour
     public void UpdateHealth() {
         HP.Value += 2;
     }
+    
+
 
     public void PlayerTakeDamage(int amount) {
         if (shieldStack.Value < 8) {
-            HP.Value -= amount;
-            shieldStack.Value++;
+            if (HP.Value >= amount) {
+                HP.Value -= amount;
+                shieldStack.Value++;
+            }
+            else
+                HP.Value = 0;
         }
         else {
             HP.Value += 2;
@@ -156,6 +166,11 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+
+    public void PlayerDefeat() {
+        PlayMangement.instance.isGame = false;
+    }
+
 
     public void HighLightCardSlot() {
         Transform slotToUI = playerUI.transform.parent.Find("IngamePanel").Find("PlayerSlot");
