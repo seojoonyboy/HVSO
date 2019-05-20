@@ -132,6 +132,7 @@ public class PlayMangement : MonoBehaviour
         string currentTurn = Variables.Scene(
                 UnityEngine.SceneManagement.SceneManager.GetActiveScene()
             ).Get("CurrentTurn").ToString();
+        Debug.Log(currentTurn);
 
         switch (currentTurn) {
             case "ZOMBIE":
