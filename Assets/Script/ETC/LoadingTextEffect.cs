@@ -8,6 +8,7 @@ namespace UIModule {
         IEnumerator coroutine;
         Text targetText;
         Text timeText;
+        Text additionalText;
 
         string[] effectArr = new string[] { "불러오는 중...", "불러오는 중..", "불러오는 중." };
 
@@ -15,6 +16,7 @@ namespace UIModule {
         void Awake() {
             timeText = transform.Find("Time").GetComponent<Text>();
             targetText = transform.Find("Text").GetComponent<Text>();
+            additionalText = transform.Find("AdditionalMessage").GetComponent<Text>();
         }
 
         void Start() {
@@ -51,6 +53,10 @@ namespace UIModule {
 
         public void OffEffect() {
             StopCoroutine(coroutine);
+        }
+
+        public void AddAdditionalMsg(string msg) {
+            additionalText.text = msg;
         }
     }
 }

@@ -3,17 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MenuSceneController : MonoBehaviour {
-    AccountManager accountManager;
-    // Start is called before the first frame update
-    void Start() {
-        accountManager = AccountManager.Instance;
-        accountManager.SetDummyDeck();
-    }
-
-    // Update is called once per frame
-    void Update() {
-
-    }
 
     /// <summary>
     /// 싱글플레이 미션 버튼 클릭 (식물, 좀비)

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.UI;
 
 public class AccountManager : Singleton<AccountManager> {
     protected AccountManager() { }
@@ -20,6 +21,7 @@ public class AccountManager : Singleton<AccountManager> {
     public CardDataPackage cardPackage;
 
     NetworkManager networkManager;
+    GameObject loadingModal;
 
     private void Awake() {
         DontDestroyOnLoad(gameObject);
@@ -37,10 +39,6 @@ public class AccountManager : Singleton<AccountManager> {
 
     }
 
-    public void isUserExist() {
-        RequestUserInfo();
-    }
-
     public void SignUp(string inputText) {
         UserClassInput userInfo = new UserClassInput();
         userInfo.nickName = inputText;
@@ -54,7 +52,7 @@ public class AccountManager : Singleton<AccountManager> {
         networkManager.request("PUT", url.ToString(), json, CallbackSignUp, false);
     }
 
-    private void RequestUserInfo(bool needPopup = true) {
+    public void RequestUserInfo(NetworkManager.Callback callback, NetworkManager.CallbackRetryOccured retryOccured) {
         StringBuilder url = new StringBuilder();
         string base_url = networkManager.baseUrl;
 
@@ -63,35 +61,7 @@ public class AccountManager : Singleton<AccountManager> {
             .Append("api/users/")
             .Append(DEVICEID);
 
-        Debug.Log(url.ToString());
-        if (needPopup) {
-            networkManager.request("GET", url.ToString(), CallbackUserRequestWithPopup, false);
-        }
-        else {
-            networkManager.request("GET", url.ToString(), CallbackUserRequest, false);
-        }
-    }
-
-    private void CallbackUserRequestWithPopup(HttpResponse response) {
-        if (response.responseCode != 200) {
-            if (!response.request.isNetworkError) {
-                transform
-                .GetChild(0)
-                .GetComponent<LoginController>()
-                .OnSignUpModal();
-            }
-            else {
-                OccurErrorModal(response.responseCode);
-            }
-        }
-        else {
-            transform
-                .GetChild(0)
-                .GetComponent<LoginController>()
-                .OnSignInModal();
-
-            userData = dataModules.JsonReader.Read<UserClassInput>(response.data);
-        }
+        networkManager.request("GET", url.ToString(), callback, retryOccured);
     }
 
     private void OccurErrorModal(long errorCode) {
@@ -100,12 +70,21 @@ public class AccountManager : Singleton<AccountManager> {
     }
 
     private void CallbackUserRequest(HttpResponse response) {
-        if (response.responseCode != 200) { }
+        if (response.responseCode != 200) {
+            Modal.instantiate("유저 정보를 불러오는데 실패하였습니다. \n 재접속을 해주세요.", Modal.Type.CHECK);
+
+            Destroy(loadingModal);
+        }
         else {
             userData = dataModules.JsonReader.Read<UserClassInput>(response.data);
 
             myCards = userData.cardInventories;
             SetHeroInventories(userData.heroInventories);
+
+            SetDummyDeck();
+
+            Destroy(loadingModal);
+            SceneManager.Instance.LoadScene(SceneManager.Scene.MAIN_SCENE);
         }
     }
 
@@ -129,7 +108,13 @@ public class AccountManager : Singleton<AccountManager> {
     }
 
     public void RequestMyCardInventory() {
-        RequestUserInfo(false);
+        RequestUserInfo(CallbackUserRequest, OnRetry);
+        loadingModal = LoadingModal.instantiate();
+        loadingModal.transform.Find("Panel/AdditionalMessage").GetComponent<Text>().text = "개인 정보를 불러오는중...";
+    }
+
+    private void OnRetry(string msg) {
+        loadingModal.transform.GetChild(0).GetComponent<UIModule.LoadingTextEffect>().AddAdditionalMsg(msg);
     }
 
     public class UserClassInput {

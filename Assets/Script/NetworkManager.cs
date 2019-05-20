@@ -1,12 +1,18 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.Networking;
+using System.Collections.Generic;
 
-public class NetworkManager : Singleton<NetworkManager> {
+public partial class NetworkManager : Singleton<NetworkManager> {
     //개발용
     public string baseUrl = "http://ccdevclient.fbl.kr/";
     protected NetworkManager() { }
     public delegate void Callback(HttpResponse response);
+    public delegate void CallbackRetryOccured(string msg);
+
+    private void Awake() {
+        DontDestroyOnLoad(gameObject);
+    }
 
     public void request(string method, string url, WWWForm data, Callback callback, bool neeAuthor = true) {
         StartCoroutine(_request(method, url, data, callback, neeAuthor));
@@ -52,6 +58,7 @@ public class NetworkManager : Singleton<NetworkManager> {
         }
     }
 
+    //overload
     IEnumerator _request(string method, string url, string data, Callback callback, bool needAuthor = true) {
         UnityWebRequest _www;
         switch (method) {
@@ -82,6 +89,36 @@ public class NetworkManager : Singleton<NetworkManager> {
             yield return www.SendWebRequest();
             callback(new HttpResponse(www));
         }
+    }
+}
+
+public partial class NetworkManager {
+    public GameObject subReqPrefab;
+
+    //overload
+    /// <summary>
+    /// 다중 요청 시도
+    /// </summary>
+    /// <param name="method">POST/GET/PUT/DELETE</param>
+    /// <param name="url">URL</param>
+    /// <param name="data"></param>
+    /// <param name="callback"></param>
+    /// <param name="needAuthor"></param>
+    /// <param name="tryCount"></param>
+    /// <returns></returns>
+    public void request(string method, string url, Callback callback, CallbackRetryOccured retryMessageCallback, bool needAuthor = true, int tryCount = 3) {
+        WWWForm data = null;
+
+        GameObject subReqObj = Instantiate(subReqPrefab, transform);
+        NetworkModules.Request subReq = subReqObj.GetComponent<NetworkModules.Request>();
+
+        subReq.StartRequest(
+            method: method,
+            url: url,
+            data: data,
+            tryCount: tryCount,
+            callback: callback,
+            retryMessageCallback: retryMessageCallback);
     }
 }
 
