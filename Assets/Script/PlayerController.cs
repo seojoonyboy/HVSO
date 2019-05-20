@@ -28,22 +28,21 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        //if(isPlayer == true && race == true) {
-        //    playerUI.transform.Find("ReleaseTurnBtn").GetComponent<Image>().sprite = PlayMangement.instance.humanBtn;
-        //    playerUI.transform.Find("PlayerResource").GetComponent<Image>().sprite = PlayMangement.instance.plantResourceIcon;
-        //}
-        //else if(isPlayer == true && race == false) {
-        //    playerUI.transform.Find("ReleaseTurnBtn").GetComponent<Image>().sprite = PlayMangement.instance.orcBtn;
-        //    playerUI.transform.Find("PlayerResource").GetComponent<Image>().sprite = PlayMangement.instance.zombieResourceIcon;
-        //}
-        
-        //if(isPlayer == false && race == true) {
-        //    playerUI.transform.Find("PlayerResource").GetComponent<Image>().sprite = PlayMangement.instance.plantResourceIcon;
-        //}
-        //else if (isPlayer == false && race == false) {
-        //    playerUI.transform.Find("PlayerResource").GetComponent<Image>().sprite = PlayMangement.instance.zombieResourceIcon;
-        //}
+        SetUnitSlot();
+    }
 
+    private void SetUnitSlot() {
+        for(int i = 0; i< transform.childCount; i++) {
+            for(int j = 0; j<transform.GetChild(i).childCount; j++) {
+                transform.GetChild(i).GetChild(j).position = new Vector3(PlayMangement.instance.backGround.transform.GetChild(j).position.x, transform.GetChild(i).GetChild(j).position.y, 0);
+
+                if(isPlayer == true) {
+                    GameObject slot = Instantiate(PlayMangement.instance.uiSlot);
+                    slot.transform.SetParent(playerUI.transform.parent.Find("IngamePanel").Find("PlayerSlot").GetChild(i));
+                    slot.transform.position = Camera.main.WorldToScreenPoint(transform.GetChild(i).GetChild(j).position);
+                }
+            }
+        }
     }
 
     public IEnumerator GenerateCard() {
@@ -93,10 +92,17 @@ public class PlayerController : MonoBehaviour
         Text resourceText = playerUI.transform.Find("PlayerResource/Text").GetComponent<Text>();
         Image shieldImage = playerUI.transform.Find("PlayerHealth/Shield/Gage").GetComponent<Image>();
 
-        HP.SubscribeToText(HPText).AddTo(PlayMangement.instance.transform.gameObject);
-        resource.SubscribeToText(resourceText).AddTo(PlayMangement.instance.transform.gameObject);
-        isPicking.Subscribe(_ => HighLightCardSlot()).AddTo(PlayMangement.instance.transform.gameObject);
-        shieldStack.Subscribe(_ => shieldImage.fillAmount = (float)shieldStack.Value / 8 ).AddTo(PlayMangement.instance.transform.gameObject);
+        var ObserveHP = HP.SubscribeToText(HPText).AddTo(PlayMangement.instance.transform.gameObject);
+        var ObserveResource = resource.SubscribeToText(resourceText).AddTo(PlayMangement.instance.transform.gameObject);
+        var ObserveCardPick = isPicking.Subscribe(_ => HighLightCardSlot()).AddTo(PlayMangement.instance.transform.gameObject);
+        var ObserveShield = shieldStack.Subscribe(_ => shieldImage.fillAmount = (float)shieldStack.Value / 8).AddTo(PlayMangement.instance.transform.gameObject);
+
+        var gameOverDispose = HP.Where(x => x <= 0)
+                              .Subscribe(_ => { ObserveHP.Dispose();
+                                               ObserveResource.Dispose();
+                                               ObserveCardPick.Dispose();
+                                               ObserveShield.Dispose(); })
+                              .AddTo(PlayMangement.instance.transform.gameObject);
     }
 
     public void UpdateHealth() {

@@ -41,7 +41,6 @@ public class PlayMangement : MonoBehaviour
     {
         cam = Camera.main;        
         RequestStartData();
-        SetPlayerSlot();
         DistributeResource();
 
     }
@@ -50,7 +49,7 @@ public class PlayMangement : MonoBehaviour
         SpriteRenderer backSprite = backGround.GetComponent<SpriteRenderer>();
         float height = Camera.main.orthographicSize * 2, width = height / Screen.height * Screen.width;
 
-        backGround.transform.localScale = new Vector3(width / backSprite.sprite.bounds.size.x, height/backSprite.sprite.bounds.size.y, 1);
+        backGround.transform.localScale = new Vector3(width / backSprite.sprite.bounds.size.x, width / backSprite.sprite.bounds.size.x, 1);
 
     }
 
@@ -78,9 +77,7 @@ public class PlayMangement : MonoBehaviour
     public void SetPlayerSlot() {
         for (int i = 0; i < player.transform.childCount; i++) {
             for (int j = 0; j < player.transform.GetChild(i).childCount; j++) {
-                GameObject slot = Instantiate(uiSlot);
-                slot.transform.SetParent(player.playerUI.transform.parent.Find("IngamePanel").Find("PlayerSlot").GetChild(i));
-                slot.transform.position = cam.WorldToScreenPoint(player.transform.GetChild(i).GetChild(j).position);
+                
             }
         }
     }
@@ -141,6 +138,8 @@ public class PlayMangement : MonoBehaviour
     }
 
     public void ChangeTurn() {
+        if (isGame == false) return;
+
         string currentTurn = Variables.Scene(
                 UnityEngine.SceneManagement.SceneManager.GetActiveScene()
             ).Get("CurrentTurn").ToString();
