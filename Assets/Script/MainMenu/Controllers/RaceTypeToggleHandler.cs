@@ -59,7 +59,7 @@ public class RaceTypeToggleHandler : MonoBehaviour {
         _deck.transform.Find("Deactive").gameObject.SetActive(false);
         _hero.transform.Find("Deactive").gameObject.SetActive(false);
 
-        _deck.transform.Find("Text").GetComponent<Text>().text = deck.heroName + "덱";
+        _deck.transform.Find("Text").GetComponent<Text>().text = deck.deckName + "덱";
         _hero.transform.Find("Name").GetComponent<Text>().text = deck.heroName;
 
         _deck.GetComponent<Button>().onClick.AddListener(() => { controller.OnClickDeck(_deck); });

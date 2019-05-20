@@ -103,6 +103,7 @@ public class AccountManager : Singleton<AccountManager> {
         if (response.responseCode != 200) { }
         else {
             userData = dataModules.JsonReader.Read<UserClassInput>(response.data);
+
             myCards = userData.cardInventories;
             SetHeroInventories(userData.heroInventories);
         }
@@ -117,6 +118,9 @@ public class AccountManager : Singleton<AccountManager> {
         }
         else {
             userData = dataModules.JsonReader.Read<UserClassInput>(response.data);
+
+            myCards = userData.cardInventories;
+            SetHeroInventories(userData.heroInventories);
 
             Modal.instantiate("회원가입이 완료되었습니다.", Modal.Type.CHECK, () => {
                 SceneManager.Instance.LoadScene(SceneManager.Scene.MAIN_SCENE);
@@ -160,7 +164,9 @@ public class AccountManager : Singleton<AccountManager> {
 
         try {
             myDecks[0].heroName = "수비대장 제로드";
+            myDecks[0].deckName = "왕국 수비대";
             myDecks[1].heroName = "족장 크라쿠스";
+            myDecks[1].deckName = "암흑주술 부족";
         }
         catch (ArgumentException ex) {
             Debug.LogError("사용자 덱이 정상적으로 세팅되지 않았습니다.");
@@ -200,6 +206,7 @@ public class AccountManager : Singleton<AccountManager> {
 
     public class Deck {
         public string heroName;
+        public string deckName;
         public string type;
         public List<dataModules.CardInventory> cards = new List<dataModules.CardInventory>();
     }

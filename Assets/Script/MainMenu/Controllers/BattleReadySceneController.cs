@@ -17,6 +17,10 @@ public class BattleReadySceneController : MonoBehaviour {
 
     public GameObject CardListModal, CardInfoModal;
 
+    void Start() {
+        battleTypeToggles[0].GetComponent<ToggleHandler>().OnValueChanged();
+    }
+
     void Update() {
         if (Input.GetMouseButtonDown(0)) {
             GraphicRaycaster gr = this.GetComponent<GraphicRaycaster>();

@@ -133,7 +133,6 @@ public class PlayMangement : MonoBehaviour
                 UnityEngine.SceneManagement.SceneManager.GetActiveScene()
             ).Get("CurrentTurn").ToString();
         Debug.Log(currentTurn);
-
         switch (currentTurn) {
             case "ZOMBIE":
                 if(player.race == false) {
@@ -181,6 +180,7 @@ public class PlayMangement : MonoBehaviour
 
     public IEnumerator WaitSecond() {
         yield return new WaitForSeconds(2f);
+        //Debug.Log("Triggering EndTurn");
         CustomEvent.Trigger(gameObject, "EndTurn");
     }
 
