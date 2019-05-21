@@ -18,33 +18,124 @@ public class RaceTypeToggleHandler : MonoBehaviour {
     AccountManager accountManager;
     int id;
 
+    private const int PORTRAIT_SLOT_NUM_PER_PAGE = 8;
+    private const int DECK_SLOT_NUM_PER_PAGE = 8;
+
     private void Awake() {
         accountManager = AccountManager.Instance;
         id = GetComponent<IntergerIndex>().Id;
     }
 
-    public void SwitchOn() {
+    public void Init() {
         transform.Find("Selected").gameObject.SetActive(true);
         var type = (BattleReadySceneController.RaceType)id;
-        controller.ChangeRaceType(type);
-        var decks = accountManager.myDecks;
-        int deckIndex = 0;
+        controller.ChangeRaceType(type);        //Send To Machine Variables
 
-        switch (type) {
-            case BattleReadySceneController.RaceType.HUMAN:
-                deckIndex = 0;
-                break;
-            case BattleReadySceneController.RaceType.ORC:
-                deckIndex = 1;
-                break;
-        }
+        ClearList();
+        CreateHeroList(type);
+        CreateBasicDeckList(type);
+    }
 
-        var selectedDeck = decks[deckIndex];
-        CreateDummyList(ref selectedDeck);
+    //Called By Bolt Machine
+    public void SwitchOn() {
+        Init();
+        //var selectedDeck = decks[deckIndex];
+        //CreateDummyList(ref selectedDeck);
     }
 
     public void SwitchOff() {
         transform.Find("Selected").gameObject.SetActive(false);
+    }
+
+    private void CreateHeroList(BattleReadySceneController.RaceType type) {
+        List<Hero> selectedHeroes;
+        switch (type) {
+            case BattleReadySceneController.RaceType.HUMAN:
+                selectedHeroes = controller.humanDecks.heros;
+                break;
+            case BattleReadySceneController.RaceType.ORC:
+                selectedHeroes = controller.orcDecks.heros;
+                break;
+            default:
+                selectedHeroes = null;
+                break;
+        }
+        if (selectedHeroes == null) return;
+
+        var pageNum = TotalPortraitPages(ref selectedHeroes);
+
+        int item_count = 0;
+        int slot_count = 0;
+
+        for(int i=0; i<pageNum; i++) {
+            GameObject page = Instantiate(heroGroupPrefab, heroPortraitParent);
+            if (slot_count == PORTRAIT_SLOT_NUM_PER_PAGE) {
+                slot_count = 0;
+                continue;
+            }
+
+            for(int j=0; j<PORTRAIT_SLOT_NUM_PER_PAGE; j++) {
+                if (item_count > selectedHeroes.Count - 1) break;
+                Transform target_portrait = page.transform.GetChild(slot_count);
+
+                target_portrait.transform.Find("Deactive").gameObject.SetActive(false);
+                target_portrait.transform.Find("Name").GetComponent<Text>().text = selectedHeroes[item_count].name;
+
+                target_portrait.GetComponent<Data>().data = selectedHeroes[item_count];
+                target_portrait.GetComponent<IntergerIndex>().Id = item_count;
+
+                item_count++;
+                slot_count++;
+            }
+        }
+    }
+
+    private void CreateBasicDeckList(BattleReadySceneController.RaceType type) {
+        List<Deck> basicDecks;
+        switch (type) {
+            case BattleReadySceneController.RaceType.HUMAN:
+                basicDecks = controller.humanDecks.basicDecks;
+                break;
+            case BattleReadySceneController.RaceType.ORC:
+                basicDecks = controller.orcDecks.basicDecks;
+                break;
+            default:
+                basicDecks = null;
+                break;
+        }
+
+        if (basicDecks == null) return;
+
+        var pageNum = TotalDeckPages(ref basicDecks);
+
+        int item_count = 0;
+        int slot_count = 0;
+
+        for (int i = 0; i < pageNum; i++) {
+            GameObject page = Instantiate(deckGroupPrefab, deckParent);
+            if (slot_count == PORTRAIT_SLOT_NUM_PER_PAGE) {
+                slot_count = 0;
+                continue;
+            }
+
+            for (int j = 0; j < PORTRAIT_SLOT_NUM_PER_PAGE; j++) {
+                if (item_count > basicDecks.Count - 1) break;
+                Transform target_deck_slot = page.transform.GetChild(slot_count);
+
+                target_deck_slot.transform.Find("Deactive").gameObject.SetActive(false);
+                target_deck_slot.transform.Find("Name").GetComponent<Text>().text = basicDecks[item_count].name;
+
+                target_deck_slot.GetComponent<Data>().data = basicDecks[item_count];
+                target_deck_slot.GetComponent<IntergerIndex>().Id = item_count;
+
+                target_deck_slot.GetComponent<Button>().onClick.AddListener(() => {
+                    controller.OnClickDeck(target_deck_slot.gameObject);
+                });
+
+                item_count++;
+                slot_count++;
+            }
+        }
     }
 
     private void CreateDummyList(ref AccountManager.Deck deck) {
@@ -69,9 +160,12 @@ public class RaceTypeToggleHandler : MonoBehaviour {
         });
     }
 
-    private void CreateList() {
-        ClearList();
+    private int TotalPortraitPages(ref List<Hero> heroes) {
+        return Mathf.CeilToInt((float)heroes.Count / PORTRAIT_SLOT_NUM_PER_PAGE); 
+    }
 
+    private int TotalDeckPages(ref List<Deck> decks) {
+        return Mathf.CeilToInt((float)decks.Count / DECK_SLOT_NUM_PER_PAGE);
     }
 
     private void ClearList() {
