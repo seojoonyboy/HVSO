@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class PlayMangement : MonoBehaviour
+public partial class PlayMangement : MonoBehaviour
 {
     public PlayerController player, enemyPlayer;
     public GameObject card, back;
@@ -43,6 +43,7 @@ public class PlayMangement : MonoBehaviour
         RequestStartData();
         DistributeResource();
 
+        StartCoroutine(DisconnectTest());
     }
 
     private void SetWorldScale() {
@@ -260,5 +261,29 @@ public class PlayMangement : MonoBehaviour
         CustomEvent.Trigger(gameObject, "EndTurn");
         player.EndTurnDraw();
         StopCoroutine("battleCoroutine");
+    }
+}
+
+/// <summary>
+/// Socket 관련 처리
+/// </summary>
+public partial class PlayMangement {
+    public IngameEventHandler eventHandler;
+    public IngameEventHandler EventHandler {
+        get {
+            return eventHandler;
+        }
+    }
+
+    public void DisconnectSocket() {
+        Destroy(FindObjectOfType<BattleConnector>().gameObject);
+        EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.REMOVE_SOCKET_CONNECTOR, this);
+    }
+
+    IEnumerator DisconnectTest() {
+        yield return new WaitForSeconds(8.0f);
+        DisconnectSocket();
+
+        Debug.Log("소켓 커넥터 파괴됨");
     }
 }

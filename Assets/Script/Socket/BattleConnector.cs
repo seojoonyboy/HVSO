@@ -6,6 +6,7 @@ using BestHTTP;
 using System;
 using UnityEngine.UI;
 using Bolt;
+using UnityEngine.Events;
 
 public class BattleConnector : MonoBehaviour {
     public string url = "";
@@ -13,9 +14,11 @@ public class BattleConnector : MonoBehaviour {
     [SerializeField] Text message;
     [SerializeField] GameObject machine;
 
+    public UnityEvent OnReceiveSocketMessage;
+    public UnityEvent OnSocketClose;
+
     void Awake() {
-        //BestHTTP.HTTPManager.Logger.Level = BestHTTP.Logger.Loglevels.All;
-        //OpenSocket("null");
+        DontDestroyOnLoad(gameObject);
     }
 
     void GetRoom() {
@@ -42,8 +45,13 @@ public class BattleConnector : MonoBehaviour {
 
     //Receive Socket Message
     void ReceiveMessage(WebSocket webSocket, string message) {
+        OnReceiveSocketMessage.Invoke();
+
         Debug.Log(message);
-        if (message.CompareTo("closing") == 0) webSocket.Close();
+        if (message.CompareTo("closing") == 0) {
+            OnSocketClose.Invoke();
+            webSocket.Close();
+        }
     }
 
     void Error(WebSocket webSocket, Exception ex) {
@@ -51,7 +59,7 @@ public class BattleConnector : MonoBehaviour {
     }
 
     void OnDisable() {
-        webSocket.Close();
+        //webSocket.Close();
     }
 
     /// <summary>
