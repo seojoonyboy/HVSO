@@ -29,4 +29,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/DeckSettingScene.unity
     guid: 6327d55bf92735448a27bb6b08b463b3
+  - enabled: 1
+    path: Assets/Scenes/BatttleConnectScene.unity
+    guid: 415b01736ab45214492edf053155ecf6
   m_configObjects: {}

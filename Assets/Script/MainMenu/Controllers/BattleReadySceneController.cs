@@ -9,6 +9,7 @@ using System;
 
 public class BattleReadySceneController : MonoBehaviour {
     public Toggle[] battleTypeToggles;
+    public Button[] raceTypeButtons;
 
     BattleType selectedBattleType;
     RaceType raceType;
@@ -56,6 +57,7 @@ public class BattleReadySceneController : MonoBehaviour {
             orcDecks = JsonReader.Read<OrcDecks>(response.data);
 
             battleTypeToggles[0].GetComponent<ToggleHandler>().OnValueChanged();
+            raceTypeButtons[0].onClick.Invoke();
         }
         else {
             Modal.instantiate("데이터를 정상적으로 불러오지 못했습니다.\n다시 요청합니까?", Modal.Type.YESNO, () => {
@@ -88,7 +90,7 @@ public class BattleReadySceneController : MonoBehaviour {
     }
 
     public void OnStartButton() {
-        SceneManager.Instance.LoadScene(SceneManager.Scene.MISSION_INGAME);
+        SceneManager.Instance.LoadScene(SceneManager.Scene.CONNECT_MATCHING_SCENE);
         //SceneManager.Instance.LoadScene(SceneManager.Scene.MAIN_SCENE);
     }
 

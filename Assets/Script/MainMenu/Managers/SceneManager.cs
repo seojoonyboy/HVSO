@@ -49,6 +49,9 @@ public class SceneManager : Singleton<SceneManager> {
             case Scene.DECK_SETTING_SCENE:
                 numberOfScene = 7;
                 break;
+            case Scene.CONNECT_MATCHING_SCENE:
+                numberOfScene = 8;
+                break;
         }
 
         if(numberOfScene != -1) {
@@ -113,6 +116,7 @@ public class SceneManager : Singleton<SceneManager> {
         MISSION_INGAME,
         PVP_READY_SCENE,
         DECK_LIST_SCNE,
-        DECK_SETTING_SCENE
+        DECK_SETTING_SCENE,
+        CONNECT_MATCHING_SCENE
     }
 }
