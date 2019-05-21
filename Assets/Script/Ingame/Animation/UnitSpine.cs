@@ -23,6 +23,10 @@ public class UnitSpine : MonoBehaviour
     protected SkeletonAnimation skeletonAnimation;
     protected Spine.AnimationState spineAnimationState;
     protected Skeleton skeleton;
+    
+    public float atkDuration {
+        get { return skeletonAnimation.Skeleton.Data.FindAnimation("ATTACK").Duration; }
+    }
 
 
     private void Awake() {
@@ -34,26 +38,34 @@ public class UnitSpine : MonoBehaviour
         skeletonAnimation = GetComponent<SkeletonAnimation>();
         spineAnimationState = skeletonAnimation.AnimationState;
         skeleton = skeletonAnimation.Skeleton;
+        
     }
 
     public virtual void Appear() {
-        spineAnimationState.SetAnimation(0, appearAnimationName, false);
+        TrackEntry entry;
+        entry = spineAnimationState.SetAnimation(0, appearAnimationName, false);
         currentAnimationName = appearAnimationName;
+        entry.Complete += Idle;        
     }
 
-    public virtual void Idle() {
+    public virtual void Idle(TrackEntry trackEntry = null) {
         spineAnimationState.SetAnimation(0, idleAnimationName, true);
         currentAnimationName = idleAnimationName;
     }
 
     public virtual void Attack() {
-        spineAnimationState.SetAnimation(0, attackAnimationName, false);
+        TrackEntry entry;
+        entry = spineAnimationState.SetAnimation(0, attackAnimationName, false);
         currentAnimationName = attackAnimationName;
+        entry.Complete += Idle;
     }
 
+
     public virtual void Hit() {
-        spineAnimationState.SetAnimation(0, hitAnimationName, false);
+        TrackEntry entry;
+        entry = spineAnimationState.SetAnimation(0, hitAnimationName, false);
         currentAnimationName = hitAnimationName;
+        entry.Complete += Idle;
     }
 
 

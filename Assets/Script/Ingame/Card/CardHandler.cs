@@ -9,8 +9,7 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 {
     public Vector3 startPos;
     public GameObject unit;
-    public Sprite unitSprite;
-    public Spine.Unity.SkeletonDataAsset skeletonDataAsset;
+    public GameObject skeleton;
     private bool blockButton = false;
     CardListManager csm;
     Animator cssAni;
@@ -28,7 +27,7 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
         if (cardDataPackage.data.ContainsKey(cardID)) {
             cardData = cardDataPackage.data[cardID];
-            skeletonDataAsset = Resources.Load <Spine.Unity.SkeletonDataAsset> ("Sprite/" + cardID + "/" + cardID + "_SkeletonData");
+            skeleton = Resources.Load <GameObject> ("Sprite/" + cardID + "/Skeleton_" + cardID);
         }
         else
             Debug.Log("NoData");

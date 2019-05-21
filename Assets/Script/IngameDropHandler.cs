@@ -32,9 +32,12 @@ public class IngameDropHandler : MonoBehaviour, IDropHandler
             placedMonster.GetComponent<PlaceMonster>().unit.power = (int)cardHandler.cardData.attack;
             placedMonster.GetComponent<PlaceMonster>().unit.type = cardHandler.cardData.type;
 
-            placedMonster.GetComponent<SpriteRenderer>().sprite = cardHandler.unitSprite;
+            GameObject skeleton = Instantiate(cardHandler.skeleton, placedMonster.transform);
+            skeleton.name = "skeleton";
             placedMonster.name = placedMonster.GetComponent<PlaceMonster>().unit.name;
 
+            placedMonster.GetComponent<PlaceMonster>().Init();
+            placedMonster.GetComponent<PlaceMonster>().SpawnUnit();
             GetComponent<Image>().enabled = false;
             PlayMangement.instance.player.isPicking.Value = false;
             PlayMangement.instance.player.resource.Value -= cardHandler.cardData.cost;

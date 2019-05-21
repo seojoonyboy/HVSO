@@ -441,8 +441,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4549778766403784237}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.5, y: -0.45, z: 0}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 1}
+  m_LocalPosition: {x: 0.38, y: 0, z: 0}
+  m_LocalScale: {x: 0.25, y: 0.25, z: 1}
   m_Children:
   - {fileID: 4549778766327495862}
   m_Father: {fileID: 4549778766762803916}
@@ -522,8 +522,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4549778766705282185}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.45, z: 0}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.25, y: 0.25, z: 1}
   m_Children:
   - {fileID: 4549778766304053453}
   m_Father: {fileID: 4549778766762803916}
@@ -684,8 +684,6 @@ MonoBehaviour:
     placeable: 0
     waterPlace: 0
   isPlayer: 0
-  atkPrefab: {fileID: 4339525684732304086, guid: 106bf5452d87e9a479592598e8e7dac8,
-    type: 3}
   unitLocation: {x: 0, y: 0, z: 0}
   attacking: 0
   atkCount: 1
