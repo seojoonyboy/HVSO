@@ -87,4 +87,9 @@ Assets/InputAsset/Ludiq/Assemblies/sqlite3.dll
 
 # Odin
 Assets/Plugins/Sirenx/Demos/
+Assets/Plugins/Sirenx/Demos/!.Attributes Overview.unitypackage
+Assets/Plugins/Sirenx/Demos/!.Custom Attribute Processors.unitypackage
+Assets/Plugins/Sirenx/Demos/!.Custom Drawers.unitypackage
+Assets/Plugins/Sirenx/Demos/!.Editor Windows.unitypackage
+Assets/Plugins/Sirenx/Demos/!.Sample - RPG Editor
 Assets/Plugins/Sirenx/Demos.meta

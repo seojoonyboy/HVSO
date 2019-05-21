@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class PlayMangement : MonoBehaviour
+public partial class PlayMangement : MonoBehaviour
 {
     public PlayerController player, enemyPlayer;
     public GameObject card, back;
@@ -43,6 +43,7 @@ public class PlayMangement : MonoBehaviour
         RequestStartData();
         DistributeResource();
 
+        StartCoroutine(DisconnectTest());
     }
 
     private void SetWorldScale() {
@@ -92,12 +93,13 @@ public class PlayMangement : MonoBehaviour
         CardDataPackage cardDataPackage = AccountManager.Instance.cardPackage;
         string cardID;
         int enemyCardCount = enemyPlayer.playerUI.transform.Find("CardSlot").childCount;
+        GameObject skeleton;
 
 
         if (enemyPlayer.race == false)
-            cardID = "ac10014";
+            cardID = "ac10012";
         else
-            cardID = "ac10009";
+            cardID = "ac10001";
 
 
         while (i < enemyCardCount) {
@@ -110,18 +112,24 @@ public class PlayMangement : MonoBehaviour
 
             yield return new WaitForSeconds(0.5f);
             cardData = cardDataPackage.data[cardID];
+            skeleton = Resources.Load<GameObject>("Sprite/" + cardID + "/Skeleton_" + cardID);
 
             if (enemyPlayer.resource.Value < cardData.cost) break;
 
             GameObject monster = Instantiate(enemyPlayer.card.GetComponent<CardHandler>().unit);
+            
             monster.transform.SetParent(enemyPlayer.transform.GetChild(0).GetChild(i));
             monster.transform.position = enemyPlayer.transform.GetChild(0).GetChild(i).position;
+            GameObject monsterSkeleton = Instantiate(skeleton, monster.transform);
+            monsterSkeleton.name = "skeleton";
 
             monster.GetComponent<PlaceMonster>().unit.HP = (int)cardData.hp;
             monster.GetComponent<PlaceMonster>().unit.power = (int)cardData.attack;
             monster.GetComponent<PlaceMonster>().unit.name = cardData.name;
             monster.GetComponent<PlaceMonster>().unit.type = cardData.type;
-            monster.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprite/" + cardID);
+
+            monster.GetComponent<PlaceMonster>().Init();
+            monster.GetComponent<PlaceMonster>().SpawnUnit();
 
             enemyPlayer.resource.Value -= cardData.cost;
             Destroy(enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(0).gameObject);
@@ -202,43 +210,43 @@ public class PlayMangement : MonoBehaviour
             if (player.race == false) {
                 if (player.transform.Find("Line_1").GetChild(line).childCount != 0) {
                     player.transform.Find("Line_1").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().AttackMonster();
-                    yield return new WaitForSeconds(1f);
+                    yield return new WaitForSeconds(1f + player.transform.Find("Line_1").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().atkTime);
                 }
 
                 if (player.transform.Find("Line_2").GetChild(line).childCount != 0) {
                     player.transform.Find("Line_2").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().AttackMonster();
-                    yield return new WaitForSeconds(1f);
+                    yield return new WaitForSeconds(1f + player.transform.Find("Line_2").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().atkTime);
                 }
 
                 if (enemyPlayer.transform.Find("Line_1").GetChild(line).childCount != 0) {
                     enemyPlayer.transform.Find("Line_1").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().AttackMonster();
-                    yield return new WaitForSeconds(1f);
+                    yield return new WaitForSeconds(1f + enemyPlayer.transform.Find("Line_1").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().atkTime);
                 }
 
                 if (enemyPlayer.transform.Find("Line_2").GetChild(line).childCount != 0) {
                     enemyPlayer.transform.Find("Line_2").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().AttackMonster();
-                    yield return new WaitForSeconds(1f);
+                    yield return new WaitForSeconds(1f + enemyPlayer.transform.Find("Line_2").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().atkTime);
                 }
             }
 
             else {
                 if (enemyPlayer.transform.Find("Line_1").GetChild(line).childCount != 0) {
                     enemyPlayer.transform.Find("Line_1").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().AttackMonster();
-                    yield return new WaitForSeconds(1f);
+                    yield return new WaitForSeconds(1f + enemyPlayer.transform.Find("Line_1").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().atkTime);
                 }
 
                 if (enemyPlayer.transform.Find("Line_2").GetChild(line).childCount != 0) {
                     enemyPlayer.transform.Find("Line_2").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().AttackMonster();
-                    yield return new WaitForSeconds(1f);
+                    yield return new WaitForSeconds(1f + enemyPlayer.transform.Find("Line_2").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().atkTime);
                 }
                 if (player.transform.Find("Line_1").GetChild(line).childCount != 0) {
                     player.transform.Find("Line_1").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().AttackMonster();
-                    yield return new WaitForSeconds(1f);
+                    yield return new WaitForSeconds(1f + player.transform.Find("Line_1").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().atkTime);
                 }
 
                 if (player.transform.Find("Line_2").GetChild(line).childCount != 0) {
                     player.transform.Find("Line_2").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().AttackMonster();
-                    yield return new WaitForSeconds(1f);
+                    yield return new WaitForSeconds(1f + player.transform.Find("Line_2").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().atkTime);
                 }
             }
 
@@ -260,5 +268,29 @@ public class PlayMangement : MonoBehaviour
         CustomEvent.Trigger(gameObject, "EndTurn");
         player.EndTurnDraw();
         StopCoroutine("battleCoroutine");
+    }
+}
+
+/// <summary>
+/// Socket 관련 처리
+/// </summary>
+public partial class PlayMangement {
+    public IngameEventHandler eventHandler;
+    public IngameEventHandler EventHandler {
+        get {
+            return eventHandler;
+        }
+    }
+
+    public void DisconnectSocket() {
+        Destroy(FindObjectOfType<BattleConnector>().gameObject);
+        EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.REMOVE_SOCKET_CONNECTOR, this);
+    }
+
+    IEnumerator DisconnectTest() {
+        yield return new WaitForSeconds(8.0f);
+        DisconnectSocket();
+
+        Debug.Log("소켓 커넥터 파괴됨");
     }
 }

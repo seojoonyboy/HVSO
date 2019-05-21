@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using System.Collections;
 using UnityEngine.Networking;
@@ -85,6 +86,8 @@ public partial class NetworkManager : Singleton<NetworkManager> {
 
 public partial class NetworkManager {
     public GameObject subReqPrefab;
+    //TODO : Queue(FIFO)의 형태로 Network 요청을 쌓아 처리하도록 수정
+    Queue networkQueue = new Queue();
 
     //overload
     /// <summary>
