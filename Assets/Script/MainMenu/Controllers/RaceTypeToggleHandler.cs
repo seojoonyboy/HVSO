@@ -128,10 +128,6 @@ public class RaceTypeToggleHandler : MonoBehaviour {
                 target_deck_slot.GetComponent<Data>().data = basicDecks[item_count];
                 target_deck_slot.GetComponent<IntergerIndex>().Id = item_count;
 
-                target_deck_slot.GetComponent<Button>().onClick.AddListener(() => {
-                    controller.OnClickDeck(target_deck_slot.gameObject);
-                });
-
                 item_count++;
                 slot_count++;
             }
@@ -152,8 +148,6 @@ public class RaceTypeToggleHandler : MonoBehaviour {
 
         _deck.transform.Find("Text").GetComponent<Text>().text = deck.deckName + "덱";
         _hero.transform.Find("Name").GetComponent<Text>().text = deck.heroName;
-
-        _deck.GetComponent<Button>().onClick.AddListener(() => { controller.OnClickDeck(_deck); });
 
         _deck.transform.Find("InfoPanel/InfoButton").GetComponent<Button>().onClick.AddListener(() => {
             //controller.OnClickCardListModal();

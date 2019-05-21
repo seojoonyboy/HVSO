@@ -56,6 +56,7 @@ public class BattleReadySceneController : MonoBehaviour {
         if (response.responseCode == 200) {
             orcDecks = JsonReader.Read<OrcDecks>(response.data);
 
+            battleTypeToggles[0].GetComponent<Toggle>().isOn = true;
             battleTypeToggles[0].GetComponent<ToggleHandler>().OnValueChanged();
             raceTypeButtons[0].onClick.Invoke();
         }
@@ -123,28 +124,8 @@ public class BattleReadySceneController : MonoBehaviour {
         ORC = 1
     }
 
-    public void OnClickDeck(GameObject target) {
-        bool isOn = target.GetComponent<dataModules.BooleanIndex>().isOn;
-        if (isOn) return;
+    public void OnClickModifyButton(GameObject target) {
 
-        foreach (GameObject obj in allDeckObjects) {
-            if (target == obj) continue;
-
-            if (obj.GetComponent<BooleanIndex>().isOn) {
-                EasyTween itween = obj.transform.Find("Animations/OnClose").GetComponent<EasyTween>();
-                itween.OpenCloseObjectAnimation();
-
-                obj.GetComponent<BooleanIndex>().isOn = false;
-            }
-        }
-
-        selectedDeck = target;
-        target.GetComponent<dataModules.BooleanIndex>().isOn = true;
-
-        selectedDeck
-            .transform.Find("Animations/OnClick")
-            .GetComponent<EasyTween>()
-            .OpenCloseObjectAnimation();
     }
 
     public void OffClickDeck() {
