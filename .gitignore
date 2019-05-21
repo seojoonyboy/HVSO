@@ -7,8 +7,6 @@
 [Bb]uild/
 [Bb]uilds/
 Assets/AssetStoreTools*
-Assets/Plugins/Sirenix/Assemblies/
-Assets/Plugins/Sirenix/Demos/
 
 # Visual Studio cache directory
 .vs/
