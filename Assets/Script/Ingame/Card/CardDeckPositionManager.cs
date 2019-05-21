@@ -1,3 +1,4 @@
+using Bolt;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,10 +9,15 @@ public class CardDeckPositionManager : MonoBehaviour
     Transform slot_2;
     private int cardNum = 0;
     List<GameObject> cardList;
+    List<GameObject> firstDrawList;
+    [SerializeField] GameObject cardPrefab;
+    [SerializeField] Transform firstDrawWindow;
+    
     // Start is called before the first frame update
     void Start()
     {
         cardList = new List<GameObject>();
+        firstDrawList = new List<GameObject>();
         slot_1 = transform.GetChild(0);
         slot_2 = transform.GetChild(1);
         slot_2.gameObject.SetActive(false);
@@ -22,8 +28,51 @@ public class CardDeckPositionManager : MonoBehaviour
     {
         
     }
+    public void FirstCardDraw() {
+        GameObject card = Instantiate(cardPrefab);
+        firstDrawList.Add(card);
+        card.transform.SetParent(firstDrawWindow);
+        card.SetActive(true);
+        card.GetComponent<CardHandler>().DrawCard("ac10009", true);
+        card.transform.localScale = new Vector3(1, 1, 1);
+        card.transform.Find("CardContent/ChangeButton").gameObject.SetActive(true);
+    }
 
-    public void AddCard(GameObject card) {
+    public void FirstAdditionalCardDraw() {
+        GameObject card = Instantiate(cardPrefab);
+        card.transform.SetParent(firstDrawWindow.parent);
+        firstDrawList.Add(card);
+        card.SetActive(true);
+        card.GetComponent<CardHandler>().DrawCard("ac10009");
+        card.transform.localPosition = new Vector3(0, 0, 0);
+        card.transform.localScale = new Vector3(1.7f, 1.7f, 1);
+    }
+
+    public void FirstDrawCardChange() {
+        firstDrawWindow.parent.GetChild(1).gameObject.SetActive(false);
+        StartCoroutine(DrawChangedCards());
+    }
+
+    IEnumerator DrawChangedCards() {
+        yield return new WaitForSeconds(0.5f);
+        FirstAdditionalCardDraw();
+        while (firstDrawList.Count != 0) {
+            yield return new WaitForSeconds(0.5f);
+            //firstDrawList[0].GetComponent<CardHandler>().RedrawSelf();
+            AddCard(firstDrawList[0]);
+            firstDrawList.RemoveAt(0);
+        }
+        yield return new WaitForSeconds(0.5f);
+        firstDrawWindow.parent.gameObject.SetActive(false);
+        CustomEvent.Trigger(GameObject.Find("GameManager"), "EndTurn");
+    }
+
+    public void AddCard(GameObject cardobj = null) {
+        GameObject card;
+        if (cardobj == null)
+            card = Instantiate(cardPrefab);
+        else
+            card = cardobj;
         cardNum++;
         if (cardNum == 11) {
             Debug.Log("Card Number Out Of Range!!");
@@ -55,7 +104,9 @@ public class CardDeckPositionManager : MonoBehaviour
             }
         }
         cardList.Add(card);
+        card.GetComponent<CardHandler>().RedrawSelf();
         card.transform.localScale = new Vector3(1, 1, 1);
+        card.SetActive(true);
     }
 
     public void DestroyCard(int index) {

@@ -89,7 +89,7 @@ public class PlayMangement : MonoBehaviour
     IEnumerator EnemySummonMonster() {
         int i = 0;
         CardData cardData;
-        CardDataPackage cardDataPackage = Resources.Load("CardDatas/CardDataPackage_01") as CardDataPackage;
+        CardDataPackage cardDataPackage = AccountManager.Instance.cardPackage;
         string cardID;
         int enemyCardCount = enemyPlayer.playerUI.transform.Find("CardSlot").childCount;
 
@@ -186,7 +186,7 @@ public class PlayMangement : MonoBehaviour
     }
 
     public IEnumerator WaitSecond() {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(5f);
         //Debug.Log("Triggering EndTurn");
         CustomEvent.Trigger(gameObject, "EndTurn");
     }

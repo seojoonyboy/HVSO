@@ -26,7 +26,7 @@ public partial class AccountManager : Singleton<AccountManager> {
     private void Awake() {
         DontDestroyOnLoad(gameObject);
         DEVICEID = SystemInfo.deviceUniqueIdentifier;
-        cardPackage = Resources.Load("CardDatas/CardDataPackage_01") as CardDataPackage;
+        //cardPackage = Resources.Load("CardDatas/CardDataPackage_01") as CardDataPackage;
     }
 
     // Start is called before the first frame update
