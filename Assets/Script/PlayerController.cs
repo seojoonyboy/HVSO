@@ -65,9 +65,8 @@ public class PlayerController : MonoBehaviour
     public void EndTurnDraw() {
         if (PlayMangement.instance.isGame == false) return;
 
-        GameObject setCard = Instantiate(card);
-        DrawPlayerCard(setCard);
-        setCard.GetComponent<CardHandler>().DisableCard();
+        cdpm.AddCard();
+        //setCard.GetComponent<CardHandler>().DisableCard();
 
         GameObject enemyCard = Instantiate(PlayMangement.instance.enemyPlayer.back);
         enemyCard.transform.SetParent(PlayMangement.instance.enemyPlayer.playerUI.transform.Find("CardSlot"));

@@ -28,7 +28,7 @@ RectTransform:
   m_GameObject: {fileID: 361423484920335043}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.69461805, y: 0.69461805, z: 0.69461805}
   m_Children:
   - {fileID: 848299993127203438}
   m_Father: {fileID: 0}
@@ -61,7 +61,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPos: {x: 0, y: 0, z: 0}
   unit: {fileID: 4549778766762803919, guid: e809507ac2ad94f4ea3612c5aa4ea070, type: 3}
-  unitSprite: {fileID: 0}
+  skeleton: {fileID: 0}
   firstDraw: 0
   changeSelected: 0
   cardData:
@@ -115,7 +115,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 848299993127203432}
+  m_TargetGraphic: {fileID: 0}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
@@ -385,15 +385,9 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 1063356283279494180, guid: 7aafd5186b74b7f4498e6b8e10e92f4f,
-        type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: -7537660489572634210, guid: 9143280ee48a2f94bacf505bb65a4fca,
-        type: 3}
     m_RemovedComponents:
-    - {fileID: 7955089074257254658, guid: 7aafd5186b74b7f4498e6b8e10e92f4f, type: 3}
     - {fileID: 1063356283279494181, guid: 7aafd5186b74b7f4498e6b8e10e92f4f, type: 3}
+    - {fileID: 7955089074257254658, guid: 7aafd5186b74b7f4498e6b8e10e92f4f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 7aafd5186b74b7f4498e6b8e10e92f4f, type: 3}
 --- !u!224 &848299993127203438 stripped
 RectTransform:
@@ -401,15 +395,3 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 361423485318069836}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &848299993127203432 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1063356283279494180, guid: 7aafd5186b74b7f4498e6b8e10e92f4f,
-    type: 3}
-  m_PrefabInstance: {fileID: 361423485318069836}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

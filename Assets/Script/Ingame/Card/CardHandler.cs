@@ -79,7 +79,10 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     }
 
     public void RedrawSelf() {
-        DrawCard(cardID);
+        if(cardID == null)
+            DrawCard("ac10001");
+        else
+            DrawCard(cardID);
         firstDraw = false;
         transform.Find("CardContent/ChangeButton").gameObject.SetActive(false);
         csm = GameObject.Find("Canvas").transform.Find("CardInfoList").GetComponent<CardListManager>();
