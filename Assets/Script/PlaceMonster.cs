@@ -95,6 +95,7 @@ public class PlaceMonster : MonoBehaviour
 
     private void MoveToTarget() {
         transform.Translate((new Vector3(0,myTarget.transform.position.y) - new Vector3(0,gameObject.transform.position.y)).normalized * 11f * Time.deltaTime, Space.Self);
+        //iTween.MoveTo(gameObject, iTween.Hash("x", gameObject.transform.position.x, "y", myTarget.transform.position.y, "z", gameObject.transform.position.z, "time", 0.5f, "easetype", iTween.EaseType.easeInOutBack));
 
         if (Vector3.Distance(new Vector3 (0,transform.position.y), new Vector3(0,myTarget.transform.position.y)) < 0.5f) {
             attacking = false;
