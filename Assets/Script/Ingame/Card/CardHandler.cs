@@ -33,9 +33,9 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         else
             Debug.Log("NoData");
 
-        transform.Find("Health").Find("Text").GetComponent<Text>().text = cardData.hp.ToString();
-        transform.Find("attack").Find("Text").GetComponent<Text>().text = cardData.attack.ToString();
-        transform.Find("Cost").Find("Text").GetComponent<Text>().text = cardData.cost.ToString();
+        transform.GetChild(0).Find("Health").Find("Text").GetComponent<Text>().text = cardData.hp.ToString();
+        transform.GetChild(0).Find("attack").Find("Text").GetComponent<Text>().text = cardData.attack.ToString();
+        transform.GetChild(0).Find("Cost").Find("Text").GetComponent<Text>().text = cardData.cost.ToString();
 
         csm = GameObject.Find("Canvas").transform.GetChild(3).GetComponent<CardListManager>();
         csm.AddCardInfo(cardData);
@@ -75,17 +75,17 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     }
 
     public void DisableCard() {
-        gameObject.transform.Find("Portrait").GetComponent<Image>().color = Color.gray;
-        gameObject.transform.Find("attack").GetComponent<Image>().color = Color.gray;
-        gameObject.transform.Find("Health").GetComponent<Image>().color = Color.gray;
-        gameObject.transform.Find("Cost").GetComponent<Image>().color = Color.gray;
+        gameObject.transform.GetChild(0).Find("Portrait").GetComponent<Image>().color = Color.gray;
+        gameObject.transform.GetChild(0).Find("attack").GetComponent<Image>().color = Color.gray;
+        gameObject.transform.GetChild(0).Find("Health").GetComponent<Image>().color = Color.gray;
+        gameObject.transform.GetChild(0).Find("Cost").GetComponent<Image>().color = Color.gray;
     }
 
     public void ActivateCard() {
-        gameObject.transform.Find("Portrait").GetComponent<Image>().color = Color.white;
-        gameObject.transform.Find("attack").GetComponent<Image>().color = Color.white;
-        gameObject.transform.Find("Health").GetComponent<Image>().color = Color.white;
-        gameObject.transform.Find("Cost").GetComponent<Image>().color = Color.white;
+        gameObject.transform.GetChild(0).Find("Portrait").GetComponent<Image>().color = Color.white;
+        gameObject.transform.GetChild(0).Find("attack").GetComponent<Image>().color = Color.white;
+        gameObject.transform.GetChild(0).Find("Health").GetComponent<Image>().color = Color.white;
+        gameObject.transform.GetChild(0).Find("Cost").GetComponent<Image>().color = Color.white;
     }
 
     

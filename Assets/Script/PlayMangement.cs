@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class PlayMangement : MonoBehaviour
 {
     public PlayerController player, enemyPlayer;
-
     public GameObject card, back;
     public Sprite plantResourceIcon, zombieResourceIcon;
     public Sprite humanBtn, orcBtn;
