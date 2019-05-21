@@ -14,49 +14,40 @@ public partial class NetworkManager : Singleton<NetworkManager> {
         DontDestroyOnLoad(gameObject);
     }
 
-    public void request(string method, string url, WWWForm data, Callback callback, bool neeAuthor = true) {
-        StartCoroutine(_request(method, url, data, callback, neeAuthor));
-    }
-
     public void request(string method, string url, string data, Callback callback, bool neeAuthor = true) {
         StartCoroutine(_request(method, url, data, callback, neeAuthor));
     }
 
-    public void request(string method, string url, Callback callback, bool neeAuthor = true) {
-        WWWForm data = null;
-        request(method, url, data, callback, neeAuthor);
-    }
+    //IEnumerator _request(string method, string url, WWWForm data, Callback callback, bool needAuthor = true){
+    //    UnityWebRequest _www;
+    //    switch(method){
+    //        case "POST":
+    //            _www = UnityWebRequest.Post(url, data);
+    //            break;
+    //        case "PUT":
+    //            _www = UnityWebRequest.Put(url,data.data);
+    //            _www.SetRequestHeader("Content-Type", "application/json");
+    //            break;
+    //        case "DELETE":
+    //            _www = UnityWebRequest.Delete(url);
+    //            break;
+    //        case "GET":
+    //        default:
+    //            _www = UnityWebRequest.Get(url);
+    //            break;
+    //    }
+    //    _www.timeout = 10;
 
-    IEnumerator _request(string method, string url, WWWForm data, Callback callback, bool needAuthor = true){
-        UnityWebRequest _www;
-        switch(method){
-            case "POST":
-                _www = UnityWebRequest.Post(url, data);
-                break;
-            case "PUT":
-                _www = UnityWebRequest.Put(url,data.data);
-                _www.SetRequestHeader("Content-Type", "application/json");
-                break;
-            case "DELETE":
-                _www = UnityWebRequest.Delete(url);
-                break;
-            case "GET":
-            default:
-                _www = UnityWebRequest.Get(url);
-                break;
-        }
-        _www.timeout = 10;
+    //    if (needAuthor) {
+    //        //_www.SetRequestHeader("Authorization", "Token " + GameManager.Instance.userStore.userTokenId);
+    //        //_www.downloadHandler = new DownloadHandlerBuffer();
+    //    }
 
-        if (needAuthor) {
-            //_www.SetRequestHeader("Authorization", "Token " + GameManager.Instance.userStore.userTokenId);
-            //_www.downloadHandler = new DownloadHandlerBuffer();
-        }
-
-        using(UnityWebRequest www = _www){
-            yield return www.SendWebRequest();
-            callback(new HttpResponse(www));
-        }
-    }
+    //    using(UnityWebRequest www = _www){
+    //        yield return www.SendWebRequest();
+    //        callback(new HttpResponse(www));
+    //    }
+    //}
 
     //overload
     IEnumerator _request(string method, string url, string data, Callback callback, bool needAuthor = true) {
