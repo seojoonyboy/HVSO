@@ -83,3 +83,8 @@ Backups/
 
 # End of https://www.gitignore.io/api/unity,visualstudiocode
 Assets/InputAsset/Ludiq/Assemblies/sqlite3.dll
+
+
+# Odin
+Assets/Plugins/Sirenx/Demos/
+Assets/Plugins/Sirenx/Demos.meta
