@@ -10,7 +10,6 @@ public class PlaceMonster : MonoBehaviour
 {
     public Monster.Unit unit;
     public bool isPlayer;
-    public GameObject atkPrefab;
 
     private int x;
     private int y;
@@ -20,6 +19,18 @@ public class PlaceMonster : MonoBehaviour
     public bool attacking = false;
     public int atkCount = 1;
     public int atkRange = 1;
+
+    protected UnitSpine unitSpine;
+
+    public enum UnitState {
+        NONE,
+        APPEAR,
+        IDLE,
+        ATTACK,
+        HIT,
+        DEAD
+    };
+
 
     private void Start()
     {
@@ -31,7 +42,6 @@ public class PlaceMonster : MonoBehaviour
 
         Observable.EveryUpdate().Where(_ => attacking == true).Subscribe(_ => MoveToTarget()).AddTo(this);
         Observable.EveryUpdate().Where(_ => attacking == false && gameObject.transform.position != unitLocation).Subscribe(_ => ReturnPosition()).AddTo(this);
-
     }
 
 
