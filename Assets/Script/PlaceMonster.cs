@@ -16,7 +16,6 @@ public class PlaceMonster : MonoBehaviour
     private GameObject myTarget;
 
     public Vector3 unitLocation;
-    public bool attacking = false;
     public int atkCount = 1;
     public int atkRange = 1;
 
@@ -45,11 +44,10 @@ public class PlaceMonster : MonoBehaviour
         unitLocation = gameObject.transform.position;
         UpdateStat();
 
-        Observable.EveryUpdate().Where(_ => attacking == true && unit.power > 0).Subscribe(_ => MoveToTarget()).AddTo(this);
+        //Observable.EveryUpdate().Where(_ => attacking == true && unit.power > 0).Subscribe(_ => MoveToTarget()).AddTo(this);
         
         unitSpine = transform.Find("skeleton").GetComponent<UnitSpine>();
-        unitSpine.attackCallback += SingleAttack;
-        Observable.EveryUpdate().Where(_ => attacking == false && gameObject.transform.position != unitLocation).Delay(System.TimeSpan.FromSeconds(unitSpine.atkDuration)).Subscribe(_ => ReturnPosition()).AddTo(this);
+        unitSpine.attackCallback += SingleAttack;        
     }
 
     public void SpawnUnit() {
@@ -69,7 +67,7 @@ public class PlaceMonster : MonoBehaviour
             else {
                 myTarget = enemy.transform.gameObject;
             }
-            attacking = true;
+            MoveToTarget();
         }
         else {
             PlayerController player = PlayMangement.instance.player;
@@ -82,8 +80,13 @@ public class PlaceMonster : MonoBehaviour
             else {
                 myTarget = player.transform.gameObject;                
             }
-            attacking = true;
+            MoveToTarget();
         }
+    }
+
+    public void UnitTryAttack() {
+        if (unit.power <= 0) return;
+        SetState(UnitState.ATTACK);
     }
 
     public void SingleAttack() {
@@ -101,6 +104,8 @@ public class PlaceMonster : MonoBehaviour
             else
                 myTarget.GetComponent<PlayerController>().PlayerTakeDamage(unit.power);
         }
+
+        ReturnPosition();
     }
 
     public void MultipleAttack() {
@@ -129,20 +134,15 @@ public class PlaceMonster : MonoBehaviour
     }
 
     private void MoveToTarget() {
-        transform.Translate((new Vector3(0,myTarget.transform.position.y) - new Vector3(0,gameObject.transform.position.y)).normalized * 30f * Time.deltaTime, Space.Self);
-        //iTween.MoveTo(gameObject, iTween.Hash("x", gameObject.transform.position.x, "y", myTarget.transform.position.y, "z", gameObject.transform.position.z, "time", 0.5f, "easetype", iTween.EaseType.easeInOutBack));
-        
+        if (unit.power <= 0) return;
 
-        if (Vector3.Distance(new Vector3 (0,transform.position.y), new Vector3(0,myTarget.transform.position.y)) < 0.5f) {
-            attacking = false;            
-            SetState(UnitState.ATTACK);            
-        }
+        iTween.MoveTo(gameObject, iTween.Hash("x", gameObject.transform.position.x, "y", myTarget.transform.position.y, "z", gameObject.transform.position.z, "time", 0.3f , "easetype", iTween.EaseType.easeInOutExpo, "oncomplete", "UnitTryAttack", "oncompletetarget", gameObject));
     }
     
 
 
     private void ReturnPosition() {
-        gameObject.transform.position = Vector3.Lerp(transform.position, unitLocation, 30f * Time.deltaTime);
+        iTween.MoveTo(gameObject, iTween.Hash("x", unitLocation.x, "y", unitLocation.y, "z", unitLocation.z, "time", 0.3f, "delay", 0.5f, "easetype", iTween.EaseType.easeInOutExpo));
     }
 
     public void CheckHP() {
