@@ -24,7 +24,6 @@ public partial class PlayMangement : MonoBehaviour
 
     private void Awake()
     {
-        Debug.Log("Awake");
         socketHandler = FindObjectOfType<BattleConnector>();
         StartCoroutine(SendReadyToSocket());
         //string selectedRace = Variables.Saved.Get("SelectedRace").ToString();
@@ -46,7 +45,6 @@ public partial class PlayMangement : MonoBehaviour
         RequestStartData();
         DistributeResource();
 
-        SetSocketManager();
         //StartCoroutine(DisconnectTest());
     }
 
