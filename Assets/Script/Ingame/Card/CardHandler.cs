@@ -5,8 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.UI.Extensions;
 
-public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
-{
+public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
     public Vector3 startPos;
     public GameObject unit;
     public GameObject skeleton;
@@ -21,6 +20,7 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     public CardDataPackage cardDataPackage;
 
     public void Start() {
+
     }
 
     public void DrawCard(string ID, bool first = false) {
@@ -29,7 +29,7 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
         if (cardDataPackage.data.ContainsKey(cardID)) {
             cardData = cardDataPackage.data[cardID];
-            skeleton = Resources.Load <GameObject> ("Sprite/" + cardID + "/Skeleton_" + cardID);
+            skeleton = Resources.Load<GameObject>("Sprite/" + cardID + "/Skeleton_" + cardID);
         }
         else
             Debug.Log("NoData");
@@ -42,22 +42,19 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     }
 
 
-    public void OnBeginDrag(PointerEventData eventData)
-    {
+    public void OnBeginDrag(PointerEventData eventData) {
         if (firstDraw) return;
         blockButton = true;
         startPos = transform.position;
         PlayMangement.instance.player.isPicking.Value = true;
     }
 
-    public void OnDrag(PointerEventData eventData)
-    {
+    public void OnDrag(PointerEventData eventData) {
         if (firstDraw) return;
         transform.position = Input.mousePosition;
     }
 
-    public void OnEndDrag(PointerEventData eventData)
-    {
+    public void OnEndDrag(PointerEventData eventData) {
         if (firstDraw) return;
         transform.position = startPos;
         blockButton = false;
@@ -79,7 +76,7 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     }
 
     public void RedrawSelf() {
-        if(cardID == null)
+        if (cardID == null)
             DrawCard("ac10001");
         else
             DrawCard(cardID);
@@ -108,5 +105,5 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         gameObject.transform.GetChild(0).Find("Cost").GetComponent<Image>().color = Color.white;
     }
 
-    
+
 }

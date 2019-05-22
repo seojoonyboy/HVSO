@@ -18,7 +18,7 @@ public class DeckListController : MonoBehaviour {
     List<GameObject> allDeckObjects = new List<GameObject>();
     // Start is called before the first frame update
     void Start() {
-        CreateDummyDecks();
+        //CreateDummyDecks();
     }
 
     // Update is called once per frame

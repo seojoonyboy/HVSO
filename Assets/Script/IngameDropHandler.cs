@@ -2,18 +2,15 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class IngameDropHandler : MonoBehaviour, IDropHandler
-{
+public class IngameDropHandler : MonoBehaviour, IDropHandler {
     public GameObject placedMonster;
     public GameObject ingameParent;
 
-    private void Start()
-    {
+    private void Start() {
         ingameParent = PlayMangement.instance.player.transform.GetChild(gameObject.transform.parent.GetSiblingIndex()).GetChild(gameObject.transform.GetSiblingIndex()).transform.gameObject;
     }
 
-    public void OnDrop(PointerEventData eventData)
-    {
+    public void OnDrop(PointerEventData eventData) {
         if (placedMonster == null && PlayMangement.instance.player.getPlayerTurn == true && PlayMangement.instance.player.resource.Value >= eventData.pointerDrag.gameObject.GetComponent<CardHandler>().cardData.cost) {
             int cardIndex = 0;
             if (eventData.pointerDrag.gameObject.transform.parent.name == "CardSlot_1")
@@ -41,12 +38,12 @@ public class IngameDropHandler : MonoBehaviour, IDropHandler
             GetComponent<Image>().enabled = false;
             PlayMangement.instance.player.isPicking.Value = false;
             PlayMangement.instance.player.resource.Value -= cardHandler.cardData.cost;
-            
+
             GameObject.Find("Player").transform.GetChild(0).GetComponent<PlayerController>().cdpm.DestroyCard(cardIndex);
             Debug.Log(cardIndex + " 번째 카드 제거");
         }
     }
 
-    
+
 
 }

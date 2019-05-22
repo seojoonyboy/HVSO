@@ -43,7 +43,8 @@ public partial class PlayMangement : MonoBehaviour
         RequestStartData();
         DistributeResource();
 
-        StartCoroutine(DisconnectTest());
+        SetSocketManager();
+        //StartCoroutine(DisconnectTest());
     }
 
     private void SetWorldScale() {
@@ -282,9 +283,25 @@ public partial class PlayMangement {
         }
     }
 
+    [SerializeField] BattleConnector socketConnector;
+    public BattleConnector SocketManager {
+        get {
+            return socketConnector;
+        }
+        private set {
+            socketConnector = value;
+        }
+    }
+
+    private void SetSocketManager() {
+        SocketManager = GameObject.FindObjectOfType<BattleConnector>();
+    }
+
     public void DisconnectSocket() {
         Destroy(FindObjectOfType<BattleConnector>().gameObject);
         EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.REMOVE_SOCKET_CONNECTOR, this);
+
+        //SocketManager.OnReceiveSocketMessage.AddListener(() => Debug.Log("On Socket Message Received"));
     }
 
     IEnumerator DisconnectTest() {
