@@ -45,9 +45,10 @@ public class PlaceMonster : MonoBehaviour
         unitLocation = gameObject.transform.position;
         UpdateStat();
 
-        Observable.EveryUpdate().Where(_ => attacking == true).Subscribe(_ => MoveToTarget()).AddTo(this);
+        Observable.EveryUpdate().Where(_ => attacking == true && unit.power > 0).Subscribe(_ => MoveToTarget()).AddTo(this);
         
         unitSpine = transform.Find("skeleton").GetComponent<UnitSpine>();
+        unitSpine.attackCallback += SingleAttack;
         Observable.EveryUpdate().Where(_ => attacking == false && gameObject.transform.position != unitLocation).Delay(System.TimeSpan.FromSeconds(unitSpine.atkDuration)).Subscribe(_ => ReturnPosition()).AddTo(this);
     }
 
@@ -56,7 +57,7 @@ public class PlaceMonster : MonoBehaviour
     }
 
 
-    public void AttackMonster() {
+    public void GetTarget() {
         if (isPlayer == true) {
             PlayerController enemy = PlayMangement.instance.enemyPlayer;
             if (enemy.transform.Find("Line_2").GetChild(x).childCount != 0) {
@@ -85,11 +86,24 @@ public class PlaceMonster : MonoBehaviour
         }
     }
 
-    private void SingleAttack() {
+    public void SingleAttack() {
+        PlaceMonster placeMonster = myTarget.GetComponent<PlaceMonster>();
 
+        if (unit.power > 0) {
+            if (unit.power <= 4)
+                SoundManager.Instance.PlaySound(SoundType.NORMAL_ATTACK);
+            else if (unit.power > 4)
+                SoundManager.Instance.PlaySound(SoundType.LARGE_ATTACK);
+
+            if (placeMonster != null) {
+                RequestAttackUnit(myTarget, unit.power);
+            }
+            else
+                myTarget.GetComponent<PlayerController>().PlayerTakeDamage(unit.power);
+        }
     }
 
-    private void MultipleAttack() {
+    public void MultipleAttack() {
 
     }
 
@@ -120,28 +134,15 @@ public class PlaceMonster : MonoBehaviour
         
 
         if (Vector3.Distance(new Vector3 (0,transform.position.y), new Vector3(0,myTarget.transform.position.y)) < 0.5f) {
-            attacking = false;
-            PlaceMonster placeMonster = myTarget.GetComponent<PlaceMonster>();
-            SetState(UnitState.ATTACK);
-
-            if (unit.power > 0) {
-                if (unit.power <= 4)
-                    SoundManager.Instance.PlaySound(SoundType.NORMAL_ATTACK);
-                else if (unit.power > 4)
-                    SoundManager.Instance.PlaySound(SoundType.LARGE_ATTACK);
-
-                if (placeMonster != null) {
-                    RequestAttackUnit(myTarget, unit.power);
-                }
-                else
-                    myTarget.GetComponent<PlayerController>().PlayerTakeDamage(unit.power);
-            }
+            attacking = false;            
+            SetState(UnitState.ATTACK);            
         }
     }
+    
+
 
     private void ReturnPosition() {
         gameObject.transform.position = Vector3.Lerp(transform.position, unitLocation, 30f * Time.deltaTime);
-
     }
 
     public void CheckHP() {
@@ -176,6 +177,7 @@ public class PlaceMonster : MonoBehaviour
                 break;
         }
     }
+
 
 
 }

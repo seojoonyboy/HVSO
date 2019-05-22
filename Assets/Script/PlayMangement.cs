@@ -209,43 +209,43 @@ public partial class PlayMangement : MonoBehaviour
         while (line < 5) {
             if (player.race == false) {
                 if (player.transform.Find("Line_1").GetChild(line).childCount != 0) {
-                    player.transform.Find("Line_1").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().AttackMonster();
+                    player.transform.Find("Line_1").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().GetTarget();
                     yield return new WaitForSeconds(1f + player.transform.Find("Line_1").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().atkTime);
                 }
 
                 if (player.transform.Find("Line_2").GetChild(line).childCount != 0) {
-                    player.transform.Find("Line_2").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().AttackMonster();
+                    player.transform.Find("Line_2").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().GetTarget();
                     yield return new WaitForSeconds(1f + player.transform.Find("Line_2").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().atkTime);
                 }
 
                 if (enemyPlayer.transform.Find("Line_1").GetChild(line).childCount != 0) {
-                    enemyPlayer.transform.Find("Line_1").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().AttackMonster();
+                    enemyPlayer.transform.Find("Line_1").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().GetTarget();
                     yield return new WaitForSeconds(1f + enemyPlayer.transform.Find("Line_1").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().atkTime);
                 }
 
                 if (enemyPlayer.transform.Find("Line_2").GetChild(line).childCount != 0) {
-                    enemyPlayer.transform.Find("Line_2").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().AttackMonster();
+                    enemyPlayer.transform.Find("Line_2").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().GetTarget();
                     yield return new WaitForSeconds(1f + enemyPlayer.transform.Find("Line_2").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().atkTime);
                 }
             }
 
             else {
                 if (enemyPlayer.transform.Find("Line_1").GetChild(line).childCount != 0) {
-                    enemyPlayer.transform.Find("Line_1").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().AttackMonster();
+                    enemyPlayer.transform.Find("Line_1").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().GetTarget();
                     yield return new WaitForSeconds(1f + enemyPlayer.transform.Find("Line_1").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().atkTime);
                 }
 
                 if (enemyPlayer.transform.Find("Line_2").GetChild(line).childCount != 0) {
-                    enemyPlayer.transform.Find("Line_2").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().AttackMonster();
+                    enemyPlayer.transform.Find("Line_2").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().GetTarget();
                     yield return new WaitForSeconds(1f + enemyPlayer.transform.Find("Line_2").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().atkTime);
                 }
                 if (player.transform.Find("Line_1").GetChild(line).childCount != 0) {
-                    player.transform.Find("Line_1").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().AttackMonster();
+                    player.transform.Find("Line_1").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().GetTarget();
                     yield return new WaitForSeconds(1f + player.transform.Find("Line_1").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().atkTime);
                 }
 
                 if (player.transform.Find("Line_2").GetChild(line).childCount != 0) {
-                    player.transform.Find("Line_2").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().AttackMonster();
+                    player.transform.Find("Line_2").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().GetTarget();
                     yield return new WaitForSeconds(1f + player.transform.Find("Line_2").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().atkTime);
                 }
             }
