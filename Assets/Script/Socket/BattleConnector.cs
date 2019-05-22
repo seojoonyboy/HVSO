@@ -18,6 +18,7 @@ public class BattleConnector : MonoBehaviour {
 
     public UnityEvent OnReceiveSocketMessage;
     public UnityEvent OnSocketClose;
+    private BattleConnectorAI battleAI;
 
     void Awake() {
         DontDestroyOnLoad(gameObject);
@@ -65,12 +66,17 @@ public class BattleConnector : MonoBehaviour {
         OnReceiveSocketMessage.Invoke();
 
         ReceiveFormat result = JsonReader.Read<ReceiveFormat>(message);
+        if(result.method == "created") {
+            battleAI = gameObject.AddComponent<BattleConnectorAI>();
+            battleAI.gameUuidId = result.args[0];
+            battleAI.OpenSocket();
+        }
         if(result.method == "begin_ready") {
             this.message.text = "대전 상대를 찾았습니다.";
             CustomEvent.Trigger(machine, "PlayStartBattleAnim");
             return;
         }
-        Debug.Log(message);
+        Debug.Log("Client : " + message);
         //if (message.CompareTo("closing") == 0) {
         //    OnSocketClose.Invoke();
         //    webSocket.Close();
