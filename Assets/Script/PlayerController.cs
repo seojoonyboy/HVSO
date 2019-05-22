@@ -51,7 +51,8 @@ public class PlayerController : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
             //GameObject setCard = Instantiate(card);
             //DrawPlayerCard(setCard);
-            cdpm.FirstCardDraw();
+            //cdpm.FirstCardDraw();
+            StartCoroutine(cdpm.FirstDraw());
             
 
             GameObject enemyCard = Instantiate(PlayMangement.instance.enemyPlayer.back);
@@ -146,10 +147,12 @@ public class PlayerController : MonoBehaviour
             Transform cardSlot_1 = playerUI.transform.Find("CardHand").GetChild(0);
             Transform cardSlot_2 = playerUI.transform.Find("CardHand").GetChild(1);
             for (int i = 0; i< cardSlot_1.childCount; i++) {
-                cardSlot_1.GetChild(i).GetComponent<CardHandler>().ActivateCard();
+                if (cardSlot_1.GetChild(i).gameObject.activeSelf)
+                    cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().ActivateCard();
             }
             for (int i = 0; i < cardSlot_2.childCount; i++) {
-                cardSlot_2.GetChild(i).GetComponent<CardHandler>().ActivateCard();
+                if (cardSlot_2.GetChild(i).gameObject.activeSelf)
+                    cardSlot_2.GetChild(i).GetChild(0).GetComponent<CardHandler>().ActivateCard();
             }
         }
     }
@@ -160,10 +163,12 @@ public class PlayerController : MonoBehaviour
             Transform cardSlot_1 = playerUI.transform.Find("CardHand").GetChild(0);
             Transform cardSlot_2 = playerUI.transform.Find("CardHand").GetChild(1);
             for (int i = 0; i < cardSlot_1.childCount; i++) {
-                cardSlot_1.GetChild(i).GetComponent<CardHandler>().DisableCard();
+                if(cardSlot_1.GetChild(i).gameObject.activeSelf)
+                    cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().DisableCard();
             }
             for (int i = 0; i < cardSlot_2.childCount; i++) {
-                cardSlot_2.GetChild(i).GetComponent<CardHandler>().DisableCard();
+                if (cardSlot_2.GetChild(i).gameObject.activeSelf)
+                    cardSlot_2.GetChild(i).GetChild(0).GetComponent<CardHandler>().DisableCard();
             }
         }
     }
