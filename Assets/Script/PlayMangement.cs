@@ -113,7 +113,7 @@ public partial class PlayMangement : MonoBehaviour
 
             yield return new WaitForSeconds(0.5f);
             cardData = cardDataPackage.data[cardID];
-            skeleton = Resources.Load<GameObject>("Sprite/" + cardID + "/Skeleton_" + cardID);
+            skeleton = Resources.Load<GameObject>("Skeleton/Skeleton_" + cardID);
 
             if (enemyPlayer.resource.Value < cardData.cost) break;
 

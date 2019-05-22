@@ -33,7 +33,7 @@ public class CardDeckPositionManager : MonoBehaviour
         firstDrawList.Add(card);
         card.transform.SetParent(firstDrawWindow);
         card.SetActive(true);
-        card.GetComponent<CardHandler>().DrawCard("ac10001", true);
+        card.GetComponent<CardHandler>().DrawCard("ac10003", true);
         card.transform.localScale = new Vector3(1, 1, 1);
         card.transform.Find("CardContent/ChangeButton").gameObject.SetActive(true);
         if(firstDrawList.Count == 4)

@@ -1,0 +1,83 @@
+
+ac10003.png
+size: 512,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+L_leg
+  rotate: true
+  xy: 233, 11
+  size: 55, 80
+  orig: 55, 80
+  offset: 0, 0
+  index: -1
+L_low_arm
+  rotate: true
+  xy: 323, 134
+  size: 120, 158
+  orig: 120, 158
+  offset: 0, 0
+  index: -1
+L_upper_arm
+  rotate: false
+  xy: 410, 21
+  size: 69, 51
+  orig: 69, 51
+  offset: 0, 0
+  index: -1
+R_arm
+  rotate: true
+  xy: 132, 4
+  size: 62, 99
+  orig: 62, 99
+  offset: 0, 0
+  index: -1
+R_leg
+  rotate: true
+  xy: 328, 17
+  size: 55, 80
+  orig: 55, 80
+  offset: 0, 0
+  index: -1
+arrow_ac
+  rotate: false
+  xy: 166, 127
+  size: 155, 127
+  orig: 155, 127
+  offset: 0, 0
+  index: -1
+arrow_oj
+  rotate: true
+  xy: 166, 68
+  size: 57, 160
+  orig: 57, 160
+  offset: 0, 0
+  index: -1
+body
+  rotate: false
+  xy: 2, 2
+  size: 128, 111
+  orig: 128, 111
+  offset: 0, 0
+  index: -1
+eye
+  rotate: true
+  xy: 483, 183
+  size: 71, 24
+  orig: 71, 24
+  offset: 0, 0
+  index: -1
+helmet
+  rotate: false
+  xy: 2, 115
+  size: 162, 139
+  orig: 162, 139
+  offset: 0, 0
+  index: -1
+shadow
+  rotate: false
+  xy: 328, 74
+  size: 175, 58
+  orig: 175, 58
+  offset: 0, 0
+  index: -1
