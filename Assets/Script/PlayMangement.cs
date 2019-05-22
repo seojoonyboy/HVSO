@@ -328,7 +328,7 @@ public partial class PlayMangement {
         yield return new WaitForSeconds(1.0f);
 
         Debug.Log("Client_ready 전송");
-        SocketFormat.SendFormat format = new SocketFormat.SendFormat("client_ready", new string[] { });
-        SocketHandler.SendToSocket(format);
+        //SocketFormat.SendFormat format = new SocketFormat.SendFormat("client_ready", new string[] { });
+        //SocketHandler.SendToSocket(format);
     }
 }
