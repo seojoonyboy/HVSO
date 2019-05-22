@@ -15,6 +15,8 @@ public class UnitSpine : MonoBehaviour
     public string attackAnimationName;
     [SpineAnimation]
     public string hitAnimationName;
+    [SpineEvent]
+    public string attackEventName;
 
     protected string currentAnimationName;
 
@@ -25,9 +27,11 @@ public class UnitSpine : MonoBehaviour
     protected Skeleton skeleton;
     
     public UnityAction attackCallback;
+
+    public GameObject arrow;
     
     public float atkDuration {
-        get { return skeletonAnimation.Skeleton.Data.FindAnimation("ATTACK").Duration; }
+        get { return skeletonAnimation.Skeleton.Data.FindAnimation(attackAnimationName).Duration; }
     }
 
 
@@ -41,6 +45,13 @@ public class UnitSpine : MonoBehaviour
         spineAnimationState = skeletonAnimation.AnimationState;
         spineAnimationState.Event += AnimationEvent;
         skeleton = skeletonAnimation.Skeleton;
+
+        if(arrow != null && transform.parent.GetComponent<PlaceMonster>().isPlayer == true) {
+            attackAnimationName = skeletonAnimation.Skeleton.Data.FindAnimation("ATTACK_UP").Name;
+        }
+        else if(arrow != null && transform.parent.GetComponent<PlaceMonster>().isPlayer == false) {
+            attackAnimationName = skeletonAnimation.Skeleton.Data.FindAnimation("ATTACK_DOWN").Name;
+        }
         
     }
 
@@ -72,7 +83,7 @@ public class UnitSpine : MonoBehaviour
     }
 
     public void AnimationEvent(TrackEntry entry, Spine.Event e) {
-        if(e.Data.Name == "HIT") {
+        if(e.Data.Name == attackEventName) {
             if (attackCallback != null) attackCallback();
         }
     }

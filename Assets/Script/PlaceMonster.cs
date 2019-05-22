@@ -13,7 +13,7 @@ public class PlaceMonster : MonoBehaviour
 
     private int x;
     private int y;
-    private GameObject myTarget;
+    public GameObject myTarget;
 
     public Vector3 unitLocation;
     public int atkCount = 1;
@@ -47,7 +47,14 @@ public class PlaceMonster : MonoBehaviour
         //Observable.EveryUpdate().Where(_ => attacking == true && unit.power > 0).Subscribe(_ => MoveToTarget()).AddTo(this);
         
         unitSpine = transform.Find("skeleton").GetComponent<UnitSpine>();
-        unitSpine.attackCallback += SingleAttack;        
+        unitSpine.attackCallback += SuccessAttack;
+
+        if(unitSpine.arrow != null) {
+            GameObject arrow = Instantiate(unitSpine.arrow, transform);
+            arrow.transform.position = gameObject.transform.position;
+            arrow.name = "arrow";
+            arrow.SetActive(false);
+        }
     }
 
     public void SpawnUnit() {
@@ -85,27 +92,49 @@ public class PlaceMonster : MonoBehaviour
     }
 
     public void UnitTryAttack() {
-        if (unit.power <= 0) return;
-        SetState(UnitState.ATTACK);
+        if (unit.power <= 0) return;        
+        SetState(UnitState.ATTACK);        
     }
 
+    public void SuccessAttack() {
+
+        if (unitSpine.arrow != null) {
+            GameObject arrow = transform.Find("arrow").gameObject;
+            arrow.transform.position = transform.position;
+            arrow.SetActive(true);
+            iTween.MoveTo(arrow, iTween.Hash("x", gameObject.transform.position.x, "y", myTarget.transform.position.y, "z", gameObject.transform.position.z, "time", 0.2f, "easetype", iTween.EaseType.easeOutExpo, "oncomplete", "SingleAttack", "oncompletetarget", gameObject));
+            
+        }            
+        else
+            SingleAttack();
+    }
+
+
     public void SingleAttack() {
-        PlaceMonster placeMonster = myTarget.GetComponent<PlaceMonster>();
+        PlaceMonster placeMonster = myTarget.GetComponent<PlaceMonster>(); ;
+        
 
-        if (unit.power > 0) {
-            if (unit.power <= 4)
-                SoundManager.Instance.PlaySound(SoundType.NORMAL_ATTACK);
-            else if (unit.power > 4)
-                SoundManager.Instance.PlaySound(SoundType.LARGE_ATTACK);
-
+        if (unit.power > 0) {         
             if (placeMonster != null) {
                 RequestAttackUnit(myTarget, unit.power);
             }
             else
                 myTarget.GetComponent<PlayerController>().PlayerTakeDamage(unit.power);
+
+            if (unit.power <= 4)
+                SoundManager.Instance.PlaySound(SoundType.NORMAL_ATTACK);
+            else if (unit.power > 4)
+                SoundManager.Instance.PlaySound(SoundType.LARGE_ATTACK);
         }
 
-        ReturnPosition();
+
+        if (unitSpine.arrow != null) {
+            GameObject arrow = transform.Find("arrow").gameObject;
+            arrow.SetActive(false);
+        }
+        else
+            ReturnPosition();
+
     }
 
     public void MultipleAttack() {
@@ -136,7 +165,11 @@ public class PlaceMonster : MonoBehaviour
     private void MoveToTarget() {
         if (unit.power <= 0) return;
 
-        iTween.MoveTo(gameObject, iTween.Hash("x", gameObject.transform.position.x, "y", myTarget.transform.position.y, "z", gameObject.transform.position.z, "time", 0.3f , "easetype", iTween.EaseType.easeInOutExpo, "oncomplete", "UnitTryAttack", "oncompletetarget", gameObject));
+        if (unitSpine.arrow != null)
+            UnitTryAttack();        
+        else {
+            iTween.MoveTo(gameObject, iTween.Hash("x", gameObject.transform.position.x, "y", myTarget.transform.position.y, "z", gameObject.transform.position.z, "time", 0.3f, "easetype", iTween.EaseType.easeInOutExpo, "oncomplete", "UnitTryAttack", "oncompletetarget", gameObject));
+        }
     }
     
 

@@ -29,7 +29,7 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
         if (cardDataPackage.data.ContainsKey(cardID)) {
             cardData = cardDataPackage.data[cardID];
-            skeleton = Resources.Load<GameObject>("Sprite/" + cardID + "/Skeleton_" + cardID);
+            skeleton = Resources.Load<GameObject>("Skeleton/Skeleton_" + cardID);
         }
         else
             Debug.Log("NoData");

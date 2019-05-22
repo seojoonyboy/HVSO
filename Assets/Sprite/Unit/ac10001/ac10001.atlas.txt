@@ -18,7 +18,7 @@ L_eye
   orig: 13, 25
   offset: 0, 0
   index: -1
-L_reg
+L_leg
   rotate: true
   xy: 305, 2
   size: 51, 78
@@ -32,7 +32,7 @@ R_eye
   orig: 15, 25
   offset: 0, 0
   index: -1
-R_reg
+R_leg
   rotate: true
   xy: 390, 58
   size: 51, 78
