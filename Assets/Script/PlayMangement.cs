@@ -24,6 +24,9 @@ public partial class PlayMangement : MonoBehaviour
 
     private void Awake()
     {
+        Debug.Log("Awake");
+        socketHandler = FindObjectOfType<BattleConnector>();
+        StartCoroutine(SendReadyToSocket());
         //string selectedRace = Variables.Saved.Get("SelectedRace").ToString();
 
         SetWorldScale();
@@ -282,6 +285,16 @@ public partial class PlayMangement {
         }
     }
 
+    public BattleConnector socketHandler;
+    public BattleConnector SocketHandler {
+        get {
+            return socketHandler;
+        }
+        private set {
+            socketHandler = value;
+        }
+    }
+
     public void DisconnectSocket() {
         Destroy(FindObjectOfType<BattleConnector>().gameObject);
         EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.REMOVE_SOCKET_CONNECTOR, this);
@@ -289,8 +302,16 @@ public partial class PlayMangement {
 
     IEnumerator DisconnectTest() {
         yield return new WaitForSeconds(8.0f);
-        DisconnectSocket();
+        //DisconnectSocket();
 
         Debug.Log("소켓 커넥터 파괴됨");
+    }
+
+    IEnumerator SendReadyToSocket() {
+        yield return new WaitForSeconds(1.0f);
+
+        Debug.Log("Client_ready 전송");
+        SocketFormat.SendFormat format = new SocketFormat.SendFormat("client_ready", new string[] { });
+        SocketHandler.SendToSocket(format);
     }
 }

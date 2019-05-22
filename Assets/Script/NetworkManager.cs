@@ -6,7 +6,8 @@ using System.Collections.Generic;
 
 public partial class NetworkManager : Singleton<NetworkManager> {
     //개발용
-    public string baseUrl = "http://ccdevclient.fbl.kr/";
+    //[HideInInspector] public string baseUrl = "http://ccdevclient.fbl.kr/";
+    public string baseUrl = "http://192.168.1.23/";
     protected NetworkManager() { }
     public delegate void Callback(HttpResponse response);
     public delegate void CallbackRetryOccured(string msg);
