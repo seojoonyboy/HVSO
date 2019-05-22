@@ -7,6 +7,8 @@ using UnityEngine;
 /// 공격력이 X 이상인 적 유닛 Y개 처치
 /// </summary>
 public class Ability_cs10026 : Ability {
+    public GameObject selectedTarget;
+
     public override void OnDrop() {
 
     }
