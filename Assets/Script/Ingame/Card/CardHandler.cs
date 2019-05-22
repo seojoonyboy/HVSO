@@ -87,11 +87,12 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     }
 
     public void RedrawCard() {
-        DrawCard("ac10008");
+        DrawCard("ac10002");
         transform.Find("ChangeButton").gameObject.SetActive(false);
     }
 
     public void DisableCard() {
+        gameObject.transform.Find("GlowEffect").GetComponent<Image>().enabled = false;
         gameObject.transform.Find("Portrait").GetComponent<Image>().color = Color.gray;
         gameObject.transform.Find("attack").GetComponent<Image>().color = Color.gray;
         gameObject.transform.Find("Health").GetComponent<Image>().color = Color.gray;
@@ -99,10 +100,20 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     }
 
     public void ActivateCard() {
-        gameObject.transform.Find("Portrait").GetComponent<Image>().color = Color.white;
-        gameObject.transform.Find("attack").GetComponent<Image>().color = Color.white;
-        gameObject.transform.Find("Health").GetComponent<Image>().color = Color.white;
-        gameObject.transform.Find("Cost").GetComponent<Image>().color = Color.white;
+        if (PlayMangement.instance.player.resource.Value >= cardData.cost) {
+            gameObject.transform.Find("GlowEffect").GetComponent<Image>().enabled = true;
+            gameObject.transform.Find("Portrait").GetComponent<Image>().color = Color.white;
+            gameObject.transform.Find("attack").GetComponent<Image>().color = Color.white;
+            gameObject.transform.Find("Health").GetComponent<Image>().color = Color.white;
+            gameObject.transform.Find("Cost").GetComponent<Image>().color = Color.white;
+        }
+        else {
+            gameObject.transform.Find("GlowEffect").GetComponent<Image>().enabled = false;
+            gameObject.transform.Find("Portrait").GetComponent<Image>().color = Color.gray;
+            gameObject.transform.Find("attack").GetComponent<Image>().color = Color.gray;
+            gameObject.transform.Find("Health").GetComponent<Image>().color = Color.gray;
+            gameObject.transform.Find("Cost").GetComponent<Image>().color = Color.gray;
+        }
     }
 
 

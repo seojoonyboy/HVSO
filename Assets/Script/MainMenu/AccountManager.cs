@@ -26,7 +26,7 @@ public partial class AccountManager : Singleton<AccountManager> {
     private void Awake() {
         DontDestroyOnLoad(gameObject);
         DEVICEID = SystemInfo.deviceUniqueIdentifier;
-        //cardPackage = Resources.Load("CardDatas/CardDataPackage_01") as CardDataPackage;
+        cardPackage = Resources.Load("CardDatas/CardDataPackage_01") as CardDataPackage;
     }
 
     // Start is called before the first frame update
@@ -48,16 +48,10 @@ public partial class AccountManager : Singleton<AccountManager> {
             orderby newGroup.Key
             select newGroup;
 
-        cardPackage.data.Clear();
-
         foreach (var _group in group) {
             Deck deck = new Deck();
             deck.type = _group.Key;
 
-            foreach (var card in _group) {
-                deck.cards.Add(card);
-                cardPackage.data.Add(card.cardId, SetCardData(card));
-            }
             myDecks.Add(deck);
         }
 
@@ -79,28 +73,59 @@ public partial class AccountManager : Singleton<AccountManager> {
         }
     }
 
-    public CardData SetCardData(dataModules.CardInventory card) {
-        CardData data = new CardData();
-        data.rarelity = card.rarelity;
-        data.type = card.type;
-        data.camp = card.camp;
-        data.class_1 = card.cardClasses[0];
-        if (card.cardClasses.Length == 2)
-            data.class_2 = card.cardClasses[1];
+    public void SetCardData() {
+        foreach (var card in myCards) {
+            if (!cardPackage.data.ContainsKey(card.cardId)) {
+                CardData data = new CardData();
+                data.rarelity = card.rarelity;
+                data.type = card.type;
+                data.camp = card.camp;
+                data.class_1 = card.cardClasses[0];
+                if (card.cardClasses.Length == 2)
+                    data.class_2 = card.cardClasses[1];
 
-        if (card.cardCategories.Length > 0) {
-            data.category_1 = card.cardCategories[0];
-            if (card.cardCategories.Length == 2)
-                data.category_2 = card.cardCategories[1];
+                if (card.cardCategories.Length > 0) {
+                    data.category_1 = card.cardCategories[0];
+                    if (card.cardCategories.Length == 2)
+                        data.category_2 = card.cardCategories[1];
+                }
+
+                data.name = card.name;
+                data.cost = card.cost;
+                data.attack = card.attack;
+                data.hp = card.hp;
+                data.hero_chk = card.isHeroCard;
+                cardPackage.data.Add(card.cardId, data);
+            }
         }
+        foreach (var cards in myHeroInventories) {
+            foreach(var card in cards.Value.heroCards) {
+                if (!cardPackage.data.ContainsKey(card.cardId)) {
+                    CardData data = new CardData();
+                    data.rarelity = card.rarelity;
+                    data.type = card.type;
+                    data.camp = card.camp;
+                    data.class_1 = card.cardClasses[0];
+                    if (card.cardClasses.Length == 2)
+                        data.class_2 = card.cardClasses[1];
+                    if (card.cardCategories.Length > 0) {
+                        data.category_1 = card.cardCategories[0];
+                        if (card.cardCategories.Length == 2)
+                            data.category_2 = card.cardCategories[1];
+                    }
+                    data.name = card.name;
+                    data.cost = card.cost;
+                    data.attack = card.attack;
+                    data.hp = card.hp;
+                    data.hero_chk = card.isHeroCard;
+                    cardPackage.data.Add(card.cardId, data);
+                }
+            }
+        }
+    }
 
-        data.name = card.name;
-        data.cost = card.cost;
-        data.attack = card.attack;
-        data.hp = card.hp;
-        data.hero_chk = card.isHeroCard;
+    public void SetCardPackage() {
 
-        return data;
     }
 
     public class UserClassInput {
@@ -160,6 +185,7 @@ public partial class AccountManager {
 
             myCards = userData.cardInventories;
             SetHeroInventories(userData.heroInventories);
+            SetCardData();
 
             Modal.instantiate("회원가입이 완료되었습니다.", Modal.Type.CHECK, () => {
                 SceneManager.Instance.LoadScene(SceneManager.Scene.MAIN_SCENE);
@@ -189,7 +215,7 @@ public partial class AccountManager {
 
             myCards = userData.cardInventories;
             SetHeroInventories(userData.heroInventories);
-
+            SetCardData();
             SetDummyDeck();
 
             Destroy(loadingModal);

@@ -48,10 +48,7 @@ public class PlayerController : MonoBehaviour
     public IEnumerator GenerateCard() {
         int i = 0;
         while(i < 4) {
-            yield return new WaitForSeconds(0.5f);
-            //GameObject setCard = Instantiate(card);
-            //DrawPlayerCard(setCard);
-            //cdpm.FirstCardDraw();
+            yield return new WaitForSeconds(0.3f);
             StartCoroutine(cdpm.FirstDraw());
             
 
@@ -60,14 +57,12 @@ public class PlayerController : MonoBehaviour
             enemyCard.SetActive(true);
             i++;            
         }
-        //StartCoroutine(PlayMangement.instance.WaitSecond());
     }
 
     public void EndTurnDraw() {
         if (PlayMangement.instance.isGame == false) return;
 
         cdpm.AddCard();
-        //setCard.GetComponent<CardHandler>().DisableCard();
 
         GameObject enemyCard = Instantiate(PlayMangement.instance.enemyPlayer.back);
         enemyCard.transform.SetParent(PlayMangement.instance.enemyPlayer.playerUI.transform.Find("CardSlot"));
