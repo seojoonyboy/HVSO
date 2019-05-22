@@ -38,9 +38,9 @@ public class IngameDropHandler : MonoBehaviour, IDropHandler {
             GetComponent<Image>().enabled = false;
             PlayMangement.instance.player.isPicking.Value = false;
             PlayMangement.instance.player.resource.Value -= cardHandler.cardData.cost;
+            PlayMangement.instance.player.ActivePlayer();
 
             GameObject.Find("Player").transform.GetChild(0).GetComponent<PlayerController>().cdpm.DestroyCard(cardIndex);
-            Debug.Log(cardIndex + " 번째 카드 제거");
         }
     }
 

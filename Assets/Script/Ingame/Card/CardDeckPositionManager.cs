@@ -27,18 +27,6 @@ public class CardDeckPositionManager : MonoBehaviour
         ChangeSlotHeight(0.9f);
     }
 
-    public void FirstCardDraw() {
-        GameObject card = Instantiate(cardPrefab, cardSpawnPos);
-        firstDrawList.Add(card);
-        card.transform.SetParent(firstDrawWindow);
-        card.SetActive(true);
-        card.GetComponent<CardHandler>().DrawCard("ac10001", true);
-        card.transform.localScale = new Vector3(1, 1, 1);
-        card.transform.Find("ChangeButton").gameObject.SetActive(true);
-        if(firstDrawList.Count == 4)
-            firstDrawWindow.parent.Find("FinishButton").gameObject.SetActive(true);
-    }
-
     public IEnumerator FirstDraw() {
         GameObject card = Instantiate(cardPrefab, cardSpawnPos);
         card.transform.SetParent(firstDrawWindow);
@@ -76,8 +64,7 @@ public class CardDeckPositionManager : MonoBehaviour
     IEnumerator DrawChangedCards() {
         firstDrawWindow.parent.gameObject.GetComponent<Image>().enabled = false;
         while (firstDrawList.Count != 0) {
-            yield return new WaitForSeconds(0.5f);
-            //firstDrawList[0].GetComponent<CardHandler>().RedrawSelf();
+            yield return new WaitForSeconds(0.2f);
             AddCard(firstDrawList[0]);
             firstDrawList.RemoveAt(0);
         }
@@ -176,7 +163,7 @@ public class CardDeckPositionManager : MonoBehaviour
         card.transform.SetParent(target);
         card.GetComponent<CardHandler>().RedrawSelf();
         card.transform.localScale = new Vector3(1, 1, 1);
-        //card.SetActive(true);
+        card.GetComponent<CardHandler>().DisableCard();
 
     }
 
