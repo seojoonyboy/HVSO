@@ -49,8 +49,10 @@ public class CardDeckPositionManager : MonoBehaviour
         card.transform.localScale = new Vector3(1, 1, 1);
         yield return new WaitForSeconds(0.5f);
         card.transform.Find("ChangeButton").gameObject.SetActive(true);
-        if (firstDrawList.Count == 4)
+        if (firstDrawList.Count == 4) {
+            yield return new WaitForSeconds(0.5f);
             firstDrawWindow.parent.Find("FinishButton").gameObject.SetActive(true);
+        }
     }
 
     public void FirstAdditionalCardDraw() {
@@ -65,12 +67,14 @@ public class CardDeckPositionManager : MonoBehaviour
 
     public void FirstDrawCardChange() {
         firstDrawWindow.parent.Find("FinishButton").gameObject.SetActive(false);
+        foreach(GameObject cards in firstDrawList) {
+            cards.transform.Find("ChangeButton").gameObject.SetActive(false);
+        }
         StartCoroutine(DrawChangedCards());
     }
 
     IEnumerator DrawChangedCards() {
-        yield return new WaitForSeconds(0.5f);
-        //FirstAdditionalCardDraw();
+        firstDrawWindow.parent.gameObject.GetComponent<Image>().enabled = false;
         while (firstDrawList.Count != 0) {
             yield return new WaitForSeconds(0.5f);
             //firstDrawList[0].GetComponent<CardHandler>().RedrawSelf();
@@ -79,7 +83,6 @@ public class CardDeckPositionManager : MonoBehaviour
         }
         yield return new WaitForSeconds(0.5f);
         AddCard();
-        firstDrawWindow.parent.gameObject.GetComponent<Image>().enabled = false;
         yield return new WaitForSeconds(3.0f);
         CustomEvent.Trigger(GameObject.Find("GameManager"), "EndTurn");
     }
@@ -164,6 +167,7 @@ public class CardDeckPositionManager : MonoBehaviour
 
     IEnumerator SendCardToHand(GameObject card, Transform target) {
         if (!firstDraw) {
+            card.transform.localScale = new Vector3(1.5f, 1.5f, 1.0f);
             iTween.MoveTo(card, firstDrawWindow.position, 0.5f);
             yield return new WaitForSeconds(0.5f);
         }

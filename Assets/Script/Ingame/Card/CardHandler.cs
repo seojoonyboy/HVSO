@@ -87,7 +87,7 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     }
 
     public void RedrawCard() {
-        DrawCard("ac10008");
+        DrawCard("ac10002");
         transform.Find("ChangeButton").gameObject.SetActive(false);
     }
 
