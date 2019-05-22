@@ -91,8 +91,9 @@ public class BattleReadySceneController : MonoBehaviour {
     }
 
     public void OnStartButton() {
-        SceneManager.Instance.LoadScene(SceneManager.Scene.CONNECT_MATCHING_SCENE);
+        //SceneManager.Instance.LoadScene(SceneManager.Scene.CONNECT_MATCHING_SCENE);
         //SceneManager.Instance.LoadScene(SceneManager.Scene.MAIN_SCENE);
+        SceneManager.Instance.LoadScene(SceneManager.Scene.MISSION_INGAME);
     }
 
     public void OnBackButton() {

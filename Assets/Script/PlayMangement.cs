@@ -283,7 +283,7 @@ public partial class PlayMangement {
     }
 
     public void DisconnectSocket() {
-        Destroy(FindObjectOfType<BattleConnector>().gameObject);
+        //Destroy(FindObjectOfType<BattleConnector>().gameObject);
         EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.REMOVE_SOCKET_CONNECTOR, this);
     }
 
