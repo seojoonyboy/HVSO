@@ -34,9 +34,9 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         else
             Debug.Log("NoData");
 
-        transform.Find("CardContent/Health").Find("Text").GetComponent<Text>().text = cardData.hp.ToString();
-        transform.Find("CardContent/attack").Find("Text").GetComponent<Text>().text = cardData.attack.ToString();
-        transform.Find("CardContent/Cost").Find("Text").GetComponent<Text>().text = cardData.cost.ToString();
+        transform.Find("Health").Find("Text").GetComponent<Text>().text = cardData.hp.ToString();
+        transform.Find("attack").Find("Text").GetComponent<Text>().text = cardData.attack.ToString();
+        transform.Find("Cost").Find("Text").GetComponent<Text>().text = cardData.cost.ToString();
 
         if (first) firstDraw = true;
     }
@@ -66,11 +66,11 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
             return;
         }
         if (!blockButton) {
-            if (transform.parent.name == "CardSlot_1") {
+            if (transform.parent.parent.name == "CardSlot_1") {
                 csm.OpenCardList(transform.GetSiblingIndex());
             }
             else {
-                csm.OpenCardList(GameObject.Find("CardSlot_1").transform.childCount + transform.GetSiblingIndex());
+                csm.OpenCardList(GameObject.Find("CardSlot_1").transform.childCount + transform.parent.GetSiblingIndex());
             }
         }
     }
@@ -81,28 +81,39 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         else
             DrawCard(cardID);
         firstDraw = false;
-        transform.Find("CardContent/ChangeButton").gameObject.SetActive(false);
+        transform.Find("ChangeButton").gameObject.SetActive(false);
         csm = GameObject.Find("Canvas").transform.Find("CardInfoList").GetComponent<CardListManager>();
         csm.AddCardInfo(cardData);
     }
 
     public void RedrawCard() {
-        DrawCard("ac10008");
-        transform.Find("CardContent/ChangeButton").gameObject.SetActive(false);
+        DrawCard("ac10002");
+        transform.Find("ChangeButton").gameObject.SetActive(false);
     }
 
     public void DisableCard() {
-        gameObject.transform.GetChild(0).Find("Portrait").GetComponent<Image>().color = Color.gray;
-        gameObject.transform.GetChild(0).Find("attack").GetComponent<Image>().color = Color.gray;
-        gameObject.transform.GetChild(0).Find("Health").GetComponent<Image>().color = Color.gray;
-        gameObject.transform.GetChild(0).Find("Cost").GetComponent<Image>().color = Color.gray;
+        gameObject.transform.Find("GlowEffect").GetComponent<Image>().enabled = false;
+        gameObject.transform.Find("Portrait").GetComponent<Image>().color = Color.gray;
+        gameObject.transform.Find("attack").GetComponent<Image>().color = Color.gray;
+        gameObject.transform.Find("Health").GetComponent<Image>().color = Color.gray;
+        gameObject.transform.Find("Cost").GetComponent<Image>().color = Color.gray;
     }
 
     public void ActivateCard() {
-        gameObject.transform.GetChild(0).Find("Portrait").GetComponent<Image>().color = Color.white;
-        gameObject.transform.GetChild(0).Find("attack").GetComponent<Image>().color = Color.white;
-        gameObject.transform.GetChild(0).Find("Health").GetComponent<Image>().color = Color.white;
-        gameObject.transform.GetChild(0).Find("Cost").GetComponent<Image>().color = Color.white;
+        if (PlayMangement.instance.player.resource.Value >= cardData.cost) {
+            gameObject.transform.Find("GlowEffect").GetComponent<Image>().enabled = true;
+            gameObject.transform.Find("Portrait").GetComponent<Image>().color = Color.white;
+            gameObject.transform.Find("attack").GetComponent<Image>().color = Color.white;
+            gameObject.transform.Find("Health").GetComponent<Image>().color = Color.white;
+            gameObject.transform.Find("Cost").GetComponent<Image>().color = Color.white;
+        }
+        else {
+            gameObject.transform.Find("GlowEffect").GetComponent<Image>().enabled = false;
+            gameObject.transform.Find("Portrait").GetComponent<Image>().color = Color.gray;
+            gameObject.transform.Find("attack").GetComponent<Image>().color = Color.gray;
+            gameObject.transform.Find("Health").GetComponent<Image>().color = Color.gray;
+            gameObject.transform.Find("Cost").GetComponent<Image>().color = Color.gray;
+        }
     }
 
 

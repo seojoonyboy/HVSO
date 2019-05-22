@@ -48,10 +48,8 @@ public class PlayerController : MonoBehaviour
     public IEnumerator GenerateCard() {
         int i = 0;
         while(i < 4) {
-            yield return new WaitForSeconds(0.5f);
-            //GameObject setCard = Instantiate(card);
-            //DrawPlayerCard(setCard);
-            cdpm.FirstCardDraw();
+            yield return new WaitForSeconds(0.3f);
+            StartCoroutine(cdpm.FirstDraw());
             
 
             GameObject enemyCard = Instantiate(PlayMangement.instance.enemyPlayer.back);
@@ -59,14 +57,12 @@ public class PlayerController : MonoBehaviour
             enemyCard.SetActive(true);
             i++;            
         }
-        //StartCoroutine(PlayMangement.instance.WaitSecond());
     }
 
     public void EndTurnDraw() {
         if (PlayMangement.instance.isGame == false) return;
 
         cdpm.AddCard();
-        //setCard.GetComponent<CardHandler>().DisableCard();
 
         GameObject enemyCard = Instantiate(PlayMangement.instance.enemyPlayer.back);
         enemyCard.transform.SetParent(PlayMangement.instance.enemyPlayer.playerUI.transform.Find("CardSlot"));
@@ -146,10 +142,12 @@ public class PlayerController : MonoBehaviour
             Transform cardSlot_1 = playerUI.transform.Find("CardHand").GetChild(0);
             Transform cardSlot_2 = playerUI.transform.Find("CardHand").GetChild(1);
             for (int i = 0; i< cardSlot_1.childCount; i++) {
-                cardSlot_1.GetChild(i).GetComponent<CardHandler>().ActivateCard();
+                if (cardSlot_1.GetChild(i).gameObject.activeSelf)
+                    cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().ActivateCard();
             }
             for (int i = 0; i < cardSlot_2.childCount; i++) {
-                cardSlot_2.GetChild(i).GetComponent<CardHandler>().ActivateCard();
+                if (cardSlot_2.GetChild(i).gameObject.activeSelf)
+                    cardSlot_2.GetChild(i).GetChild(0).GetComponent<CardHandler>().ActivateCard();
             }
         }
     }
@@ -160,10 +158,12 @@ public class PlayerController : MonoBehaviour
             Transform cardSlot_1 = playerUI.transform.Find("CardHand").GetChild(0);
             Transform cardSlot_2 = playerUI.transform.Find("CardHand").GetChild(1);
             for (int i = 0; i < cardSlot_1.childCount; i++) {
-                cardSlot_1.GetChild(i).GetComponent<CardHandler>().DisableCard();
+                if(cardSlot_1.GetChild(i).gameObject.activeSelf)
+                    cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().DisableCard();
             }
             for (int i = 0; i < cardSlot_2.childCount; i++) {
-                cardSlot_2.GetChild(i).GetComponent<CardHandler>().DisableCard();
+                if (cardSlot_2.GetChild(i).gameObject.activeSelf)
+                    cardSlot_2.GetChild(i).GetChild(0).GetComponent<CardHandler>().DisableCard();
             }
         }
     }

@@ -13,10 +13,10 @@ public class IngameDropHandler : MonoBehaviour, IDropHandler {
     public void OnDrop(PointerEventData eventData) {
         if (placedMonster == null && PlayMangement.instance.player.getPlayerTurn == true && PlayMangement.instance.player.resource.Value >= eventData.pointerDrag.gameObject.GetComponent<CardHandler>().cardData.cost) {
             int cardIndex = 0;
-            if (eventData.pointerDrag.gameObject.transform.parent.name == "CardSlot_1")
-                cardIndex = eventData.pointerDrag.gameObject.transform.GetSiblingIndex();
+            if (eventData.pointerDrag.gameObject.transform.parent.parent.name == "CardSlot_1")
+                cardIndex = eventData.pointerDrag.gameObject.transform.parent.GetSiblingIndex();
             else {
-                cardIndex = GameObject.Find("CardSlot_2").transform.childCount + eventData.pointerDrag.gameObject.transform.GetSiblingIndex();
+                cardIndex = GameObject.Find("CardSlot_2").transform.childCount + eventData.pointerDrag.gameObject.transform.parent.GetSiblingIndex();
             }
             CardHandler cardHandler = eventData.pointerDrag.gameObject.GetComponent<CardHandler>();
 
@@ -38,9 +38,9 @@ public class IngameDropHandler : MonoBehaviour, IDropHandler {
             GetComponent<Image>().enabled = false;
             PlayMangement.instance.player.isPicking.Value = false;
             PlayMangement.instance.player.resource.Value -= cardHandler.cardData.cost;
+            PlayMangement.instance.player.ActivePlayer();
 
             GameObject.Find("Player").transform.GetChild(0).GetComponent<PlayerController>().cdpm.DestroyCard(cardIndex);
-            Debug.Log(cardIndex + " 번째 카드 제거");
         }
     }
 

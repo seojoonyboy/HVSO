@@ -7,51 +7,80 @@ using System;
 using UnityEngine.UI;
 using Bolt;
 using UnityEngine.Events;
+using dataModules;
+using SocketFormat;
 
 public class BattleConnector : MonoBehaviour {
-    public string url = "";
+    private string url = "ws://192.168.1.23/game";
     WebSocket webSocket;
     [SerializeField] Text message;
     [SerializeField] GameObject machine;
 
     public UnityEvent OnReceiveSocketMessage;
     public UnityEvent OnSocketClose;
+    private BattleConnectorAI battleAI;
 
     void Awake() {
         DontDestroyOnLoad(gameObject);
     }
 
-    void GetRoom() {
-        HTTPRequest request = new HTTPRequest(new Uri(url), OnRequestFinished);
-        request.Send();
-    }
+    //void GetRoom() {
+    //    HTTPRequest request = new HTTPRequest(new Uri(url), OnRequestFinished);
+    //    request.Send();
+    //}
 
-    void OnRequestFinished(HTTPRequest request, HTTPResponse response) {
-        if (response.IsSuccess) OpenSocket(response.DataAsText);
-    }
+    //void OnRequestFinished(HTTPRequest request, HTTPResponse response) {
+    //    if (response.IsSuccess) OpenSocket();
+    //}
 
-    void OpenSocket(string room) {
+    public void OpenSocket() {
         string url = string.Format("{0}", this.url);
         webSocket = new WebSocket(new Uri(url));
         webSocket.OnOpen += OnOpen;
         webSocket.OnMessage += ReceiveMessage;
         webSocket.Open();
+
+        message.text = "대전상대를 찾는중...";
     }
 
     //Connected
     void OnOpen(WebSocket webSocket) {
-        this.webSocket.Send("{\"join_game\"}");
+        SendFormat format = new SendFormat();
+        format.method = "join_game";
+        string playerId = AccountManager.Instance.DEVICEID;
+        string deckId = "deck1001";
+        format.args = new string[] {"solo", playerId, "basic", deckId };
+
+        string json = JsonUtility.ToJson(format);
+        this.webSocket.Send(json);
+    }
+
+    public void SendToSocket(SendFormat data) {
+        Debug.Log("Sending...");
+        string json = JsonUtility.ToJson(data);
+        webSocket.Send(json);
     }
 
     //Receive Socket Message
     void ReceiveMessage(WebSocket webSocket, string message) {
         OnReceiveSocketMessage.Invoke();
 
-        Debug.Log(message);
-        if (message.CompareTo("closing") == 0) {
-            OnSocketClose.Invoke();
-            webSocket.Close();
+        ReceiveFormat result = JsonReader.Read<ReceiveFormat>(message);
+        if(result.method == "created") {
+            battleAI = gameObject.AddComponent<BattleConnectorAI>();
+            battleAI.gameUuidId = result.args[0];
+            battleAI.OpenSocket();
         }
+        if(result.method == "begin_ready") {
+            this.message.text = "대전 상대를 찾았습니다.";
+            CustomEvent.Trigger(machine, "PlayStartBattleAnim");
+            return;
+        }
+        Debug.Log("Client : " + message);
+        //if (message.CompareTo("closing") == 0) {
+        //    OnSocketClose.Invoke();
+        //    webSocket.Close();
+        //}
     }
 
     void Error(WebSocket webSocket, Exception ex) {
@@ -60,27 +89,6 @@ public class BattleConnector : MonoBehaviour {
 
     void OnDisable() {
         //webSocket.Close();
-    }
-
-    /// <summary>
-    /// 테스트 코드
-    /// </summary>
-    /// <returns></returns>
-    private IEnumerator Start() {
-        yield return StartCoroutine(DummyOpenSocket());
-    }
-
-    public IEnumerator DummyOpenSocket() {
-        yield return new WaitForSeconds(3.0f);
-        message.text = "대전상대를 찾는중...";
-        yield return new WaitForSeconds(3.0f);
-        StartCoroutine(DummyOnOpen());
-    }
-
-    IEnumerator DummyOnOpen() {
-        message.text = "대전 상대를 찾았습니다.";
-        yield return new WaitForSeconds(3.0f);
-        CustomEvent.Trigger(machine, "PlayStartBattleAnim");
     }
 
     public void StartBattle() {

@@ -24,26 +24,27 @@ public partial class PlayMangement : MonoBehaviour
 
     private void Awake()
     {
+        socketHandler = FindObjectOfType<BattleConnector>();
+        StartCoroutine(SendReadyToSocket());
         //string selectedRace = Variables.Saved.Get("SelectedRace").ToString();
 
         SetWorldScale();
-        instance = this;        
+        instance = this;
         SetPlayerCard();
         gameObject.GetComponent<TurnChanger>().onTurnChanged.AddListener(() => ChangeTurn());
         gameObject.GetComponent<TurnChanger>().onPrepareTurn.AddListener(() => DistributeCard());
     }
     private void OnDestroy()
     {
-        instance = null; 
-    }    
+        instance = null;
+    }
 
     private void Start()
     {
-        cam = Camera.main;        
+        cam = Camera.main;
         RequestStartData();
         DistributeResource();
 
-        SetSocketManager();
         //StartCoroutine(DisconnectTest());
     }
 
@@ -74,12 +75,12 @@ public partial class PlayMangement : MonoBehaviour
     public void DistributeCard() {
         StartCoroutine(player.GenerateCard());
     }
-        
+
 
     public void RequestStartData() {
         player.SetPlayerStat(20);
         enemyPlayer.SetPlayerStat(20);
-        
+
     }
 
     public void DistributeResource() {
@@ -109,7 +110,7 @@ public partial class PlayMangement : MonoBehaviour
             if (isGame == false) break;
             if (enemyPlayer.transform.GetChild(0).GetChild(i).childCount != 0) { i++; continue; }
             if (cardDataPackage.data.ContainsKey(cardID) == false) { i++; continue; }
-            
+
 
             yield return new WaitForSeconds(0.5f);
             cardData = cardDataPackage.data[cardID];
@@ -118,7 +119,7 @@ public partial class PlayMangement : MonoBehaviour
             if (enemyPlayer.resource.Value < cardData.cost) break;
 
             GameObject monster = Instantiate(enemyPlayer.card.GetComponent<CardHandler>().unit);
-            
+
             monster.transform.SetParent(enemyPlayer.transform.GetChild(0).GetChild(i));
             monster.transform.position = enemyPlayer.transform.GetChild(0).GetChild(i).position;
             GameObject monsterSkeleton = Instantiate(skeleton, monster.transform);
@@ -158,7 +159,7 @@ public partial class PlayMangement : MonoBehaviour
                 else {
                     player.DisablePlayer();
                     enemyPlayer.ActivePlayer();
-                    StartCoroutine("EnemySummonMonster");                    
+                    StartCoroutine("EnemySummonMonster");
                 }
                 break;
 
@@ -182,14 +183,14 @@ public partial class PlayMangement : MonoBehaviour
                 else {
                     player.DisablePlayer();
                     StartCoroutine("WaitSecond");
-                }                
+                }
                 break;
             case "BATTLE":
                 StartBattle();
                 break;
         }
     }
-    
+
     public void StartBattle() {
         StartCoroutine("battleCoroutine");
     }
@@ -267,13 +268,13 @@ public partial class PlayMangement : MonoBehaviour
                 }
             }
 
-            if (player.transform.Find("Line_1").GetChild(line).childCount != 0) 
-                player.transform.Find("Line_1").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().CheckHP();  
-            if (player.transform.Find("Line_2").GetChild(line).childCount != 0) 
+            if (player.transform.Find("Line_1").GetChild(line).childCount != 0)
+                player.transform.Find("Line_1").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().CheckHP();
+            if (player.transform.Find("Line_2").GetChild(line).childCount != 0)
                 player.transform.Find("Line_2").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().CheckHP();
-            if (enemyPlayer.transform.Find("Line_1").GetChild(line).childCount != 0) 
+            if (enemyPlayer.transform.Find("Line_1").GetChild(line).childCount != 0)
                 enemyPlayer.transform.Find("Line_1").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().CheckHP();
-            if (enemyPlayer.transform.Find("Line_2").GetChild(line).childCount != 0) 
+            if (enemyPlayer.transform.Find("Line_2").GetChild(line).childCount != 0)
                 enemyPlayer.transform.Find("Line_2").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().CheckHP();
 
 
@@ -299,22 +300,18 @@ public partial class PlayMangement {
         }
     }
 
-    [SerializeField] BattleConnector socketConnector;
-    public BattleConnector SocketManager {
+    public BattleConnector socketHandler;
+    public BattleConnector SocketHandler {
         get {
-            return socketConnector;
+            return socketHandler;
         }
         private set {
-            socketConnector = value;
+            socketHandler = value;
         }
-    }
-
-    private void SetSocketManager() {
-        SocketManager = GameObject.FindObjectOfType<BattleConnector>();
     }
 
     public void DisconnectSocket() {
-        Destroy(FindObjectOfType<BattleConnector>().gameObject);
+        //Destroy(FindObjectOfType<BattleConnector>().gameObject);
         EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.REMOVE_SOCKET_CONNECTOR, this);
 
         //SocketManager.OnReceiveSocketMessage.AddListener(() => Debug.Log("On Socket Message Received"));
@@ -322,8 +319,16 @@ public partial class PlayMangement {
 
     IEnumerator DisconnectTest() {
         yield return new WaitForSeconds(8.0f);
-        DisconnectSocket();
+        //DisconnectSocket();
 
         Debug.Log("소켓 커넥터 파괴됨");
+    }
+
+    IEnumerator SendReadyToSocket() {
+        yield return new WaitForSeconds(1.0f);
+
+        Debug.Log("Client_ready 전송");
+        //SocketFormat.SendFormat format = new SocketFormat.SendFormat("client_ready", new string[] { });
+        //SocketHandler.SendToSocket(format);
     }
 }
