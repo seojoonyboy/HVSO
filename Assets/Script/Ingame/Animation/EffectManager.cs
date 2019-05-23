@@ -11,4 +11,5 @@ public class EffectManager
     public GameObject middileAttackEffect;
     public GameObject highAttackEffect;
     public GameObject explosionEffect;
+    public GameObject deadEffect;
 }

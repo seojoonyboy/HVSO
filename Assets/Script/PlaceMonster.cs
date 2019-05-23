@@ -55,6 +55,13 @@ public class PlaceMonster : MonoBehaviour
             arrow.name = "arrow";
             arrow.SetActive(false);
         }
+
+        if(isPlayer == true) 
+            unit.race = (PlayMangement.instance.player.race == true ) ? true : false;        
+        else
+            unit.race = (PlayMangement.instance.enemyPlayer.race == true) ? true : false;
+
+
     }
 
     public void SpawnUnit() {
@@ -123,13 +130,13 @@ public class PlaceMonster : MonoBehaviour
 
             if (unit.power <= 4) {
                 GameObject effect = Instantiate(PlayMangement.instance.effectManager.lowAttackEffect);
-                effect.transform.position = myTarget.transform.position;
+                effect.transform.position = (placeMonster != null) ? myTarget.transform.position : new Vector3(gameObject.transform.position.x, myTarget.transform.position.y, 0);
                 Destroy(effect, effect.GetComponent<ParticleSystem>().main.duration - 0.2f);
                 SoundManager.Instance.PlaySound(SoundType.NORMAL_ATTACK);
             }
             else if (unit.power > 4) {
                 GameObject effect =  (unit.power < 6)  ? Instantiate(PlayMangement.instance.effectManager.middileAttackEffect) : Instantiate(PlayMangement.instance.effectManager.highAttackEffect);
-                effect.transform.position = myTarget.transform.position;
+                effect.transform.position = (placeMonster != null) ? myTarget.transform.position : new Vector3(gameObject.transform.position.x, myTarget.transform.position.y, 0);
                 Destroy(effect, effect.GetComponent<ParticleSystem>().main.duration - 0.2f);
                 SoundManager.Instance.PlaySound(SoundType.LARGE_ATTACK);
             }
@@ -188,14 +195,15 @@ public class PlaceMonster : MonoBehaviour
 
     public void CheckHP() {
         if ( unit.HP <= 0 ) {
-            StartCoroutine("WaitMonsterDead");
+            GameObject tomb = Resources.Load<GameObject>("Skeleton/Skeleton_Dead");
+            GameObject dropTomb = Instantiate(tomb);
+            dropTomb.transform.position = transform.position;
+
+            dropTomb.GetComponent<DeadSpine>().target = gameObject;
+            dropTomb.GetComponent<DeadSpine>().StartAnimation(unit.race);
         }
     }
-
-    IEnumerator WaitMonsterDead() {
-        yield return new WaitForSeconds(0.1f);
-        Destroy(gameObject);
-    }
+    
 
     protected void SetState(UnitState state) {
         timeUpdate = null;

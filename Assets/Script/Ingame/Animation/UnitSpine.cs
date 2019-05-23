@@ -15,12 +15,24 @@ public class UnitSpine : MonoBehaviour
     public string attackAnimationName;
     [SpineAnimation]
     public string hitAnimationName;
+
+    [SpineAnimation]
+    public string rangeUpAttackName;
+    [SpineAnimation]
+    public string rangeDownAttackName;
+    [SpineAnimation]
+    public string generalAttackName;
+    
+
     [SpineEvent]
     public string attackEventName;
 
     protected string currentAnimationName;
 
-    private Transform hitEffect;
+
+    
+    
+
 
     protected SkeletonAnimation skeletonAnimation;
     protected Spine.AnimationState spineAnimationState;
@@ -47,10 +59,16 @@ public class UnitSpine : MonoBehaviour
         skeleton = skeletonAnimation.Skeleton;
 
         if(arrow != null && transform.parent.GetComponent<PlaceMonster>().isPlayer == true) {
-            attackAnimationName = skeletonAnimation.Skeleton.Data.FindAnimation("ATTACK_UP").Name;
+            if (rangeUpAttackName != "")
+                attackAnimationName = rangeUpAttackName;
+            else
+                attackAnimationName = generalAttackName;
         }
         else if(arrow != null && transform.parent.GetComponent<PlaceMonster>().isPlayer == false) {
-            attackAnimationName = skeletonAnimation.Skeleton.Data.FindAnimation("ATTACK_DOWN").Name;
+            if (rangeDownAttackName != "")
+                attackAnimationName = rangeDownAttackName;
+            else
+                attackAnimationName = generalAttackName;
         }
     }
 

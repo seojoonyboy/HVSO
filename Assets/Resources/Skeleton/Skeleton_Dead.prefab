@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3894992327050807989
+--- !u!1 &4985483695556585209
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,25 +8,25 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1938386042226514205}
-  - component: {fileID: 4273218990236970554}
-  - component: {fileID: 4316709379581552214}
-  - component: {fileID: 7994463497671111955}
-  - component: {fileID: 7865791174423710639}
+  - component: {fileID: 31066248470637144}
+  - component: {fileID: 5069438689216002083}
+  - component: {fileID: 7559748512609939150}
+  - component: {fileID: 2643834817346975853}
+  - component: {fileID: 4389578165151399518}
   m_Layer: 0
-  m_Name: Skeleton_ac10012
+  m_Name: Skeleton_Dead
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1938386042226514205
+--- !u!4 &31066248470637144
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3894992327050807989}
+  m_GameObject: {fileID: 4985483695556585209}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -34,21 +34,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &4273218990236970554
+--- !u!33 &5069438689216002083
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3894992327050807989}
+  m_GameObject: {fileID: 4985483695556585209}
   m_Mesh: {fileID: 0}
---- !u!23 &4316709379581552214
+--- !u!23 &7559748512609939150
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3894992327050807989}
+  m_GameObject: {fileID: 4985483695556585209}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -59,7 +59,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e0be60036f639ac4cb971643695c77c3, type: 2}
+  - {fileID: 2100000, guid: c9b3d6702b466e340bcd669894bcb5ff, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -79,19 +79,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 50
---- !u!114 &7994463497671111955
+--- !u!114 &2643834817346975853
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3894992327050807989}
+  m_GameObject: {fileID: 4985483695556585209}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: 0edce86924c36d5448a05e1412e8dd8e, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: ffb292b1056f3c445a043515dd497438, type: 2}
   initialSkinName: 
   initialFlipX: 0
   initialFlipY: 0
@@ -111,27 +111,23 @@ MonoBehaviour:
     materialsInsideMask: []
     materialsOutsideMask: []
   disableRenderingOnOverride: 1
-  _animationName: IDLE
-  loop: 1
+  _animationName: dead
+  loop: 0
   timeScale: 1
---- !u!114 &7865791174423710639
+--- !u!114 &4389578165151399518
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3894992327050807989}
+  m_GameObject: {fileID: 4985483695556585209}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 402d528f8e3bb3d44a9c066506e0db5d, type: 3}
+  m_Script: {fileID: 11500000, guid: 08fe11f9ea80b464699a87129ad86fe6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idleAnimationName: IDLE
-  appearAnimationName: APPEAR
-  attackAnimationName: ATTACK
-  hitAnimationName: HIT
-  rangeUpAttackName: 
-  rangeDownAttackName: 
-  generalAttackName: ATTACK
-  attackEventName: ATTACK
-  arrow: {fileID: 0}
+  DeadAnimationName: dead
+  deadEventName: APPEAR
+  humanTomb: human
+  orcTomb: orc
+  target: {fileID: 0}

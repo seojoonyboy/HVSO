@@ -101,7 +101,7 @@ public partial class PlayMangement : MonoBehaviour
 
 
         if (enemyPlayer.race == false)
-            cardID = "ac10012";
+            cardID = "ac10013";
         else
             cardID = "ac10001";
 
