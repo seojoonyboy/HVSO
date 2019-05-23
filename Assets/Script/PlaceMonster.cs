@@ -145,6 +145,7 @@ public class PlaceMonster : MonoBehaviour
 
         if (unitSpine.arrow != null) {
             GameObject arrow = transform.Find("arrow").gameObject;
+            arrow.transform.position = transform.position;
             arrow.SetActive(false);
         }
         else

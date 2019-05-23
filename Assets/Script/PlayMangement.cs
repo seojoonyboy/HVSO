@@ -113,7 +113,7 @@ public partial class PlayMangement : MonoBehaviour
 
 
         if (enemyPlayer.race == false)
-            cardID = "ac1001"+Random.Range(1,4);
+            cardID = "ac1001"+Random.Range(1,5);
         else
             cardID = "ac10001";
 
