@@ -55,7 +55,15 @@ public partial class PlayMangement : MonoBehaviour
         SpriteRenderer backSprite = backGround.GetComponent<SpriteRenderer>();
         float height = Camera.main.orthographicSize * 2, width = height / Screen.height * Screen.width;       
 
-        backGround.transform.localScale = new Vector3(width / backSprite.sprite.bounds.size.x, width / backSprite.sprite.bounds.size.x, 1);        
+        backGround.transform.localScale = new Vector3(width / backSprite.sprite.bounds.size.x, width / backSprite.sprite.bounds.size.x, 1);
+        
+        for(int i = 0; i < player.transform.childCount; i++) {
+            for(int j = 0; j < player.transform.GetChild(i).childCount; j++) {
+                player.transform.GetChild(i).GetChild(j).position = new Vector3(backGround.transform.GetChild(j).position.x, player.transform.GetChild(i).GetChild(j).position.y,0) ;
+                enemyPlayer.transform.GetChild(i).GetChild(j).position = new Vector3(backGround.transform.GetChild(j).position.x, enemyPlayer.transform.GetChild(i).GetChild(j).position.y, 0);
+
+            }
+        }
     }
 
 
