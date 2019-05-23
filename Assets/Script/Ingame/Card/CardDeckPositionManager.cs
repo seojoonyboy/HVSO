@@ -23,6 +23,8 @@ public class CardDeckPositionManager : MonoBehaviour
         firstDrawList = new List<GameObject>();
         slot_1 = transform.GetChild(0);
         slot_2 = transform.GetChild(1);
+        if(Screen.height > 1920.0f)
+            slot_1.transform.localScale = slot_2.transform.localScale = new Vector3(1920.0f / Screen.height, 1920.0f / Screen.height, 1);
         slot_2.gameObject.SetActive(true);
         ChangeSlotHeight(0.9f);
     }
@@ -57,11 +59,11 @@ public class CardDeckPositionManager : MonoBehaviour
         foreach(GameObject cards in firstDrawList) {
             cards.transform.Find("ChangeButton").gameObject.SetActive(false);
         }
+        firstDrawWindow.parent.Find("FinishButton").gameObject.SetActive(false);
         StartCoroutine(DrawChangedCards());
     }
 
     IEnumerator DrawChangedCards() {
-        firstDrawWindow.parent.Find("FinishButton").gameObject.SetActive(false);
         firstDrawWindow.parent.gameObject.GetComponent<Image>().enabled = false;
         while (firstDrawList.Count != 0) {
             yield return new WaitForSeconds(0.2f);
@@ -124,6 +126,10 @@ public class CardDeckPositionManager : MonoBehaviour
                 case 7:
                     slot_1.GetChild(3).gameObject.SetActive(true);
                     slot_2.GetChild(0).GetChild(0).SetParent(slot_1.GetChild(3));
+                    slot_1.GetChild(3).GetChild(0).localPosition = new Vector3(0, 0, 0);
+                    slot_2.GetChild(0).gameObject.SetActive(false);
+                    slot_2.GetChild(0).SetAsLastSibling();
+                    slot_2.GetChild(2).gameObject.SetActive(true);
                     target = slot_2.GetChild(2);
                     break;
                 case 8:
@@ -134,6 +140,10 @@ public class CardDeckPositionManager : MonoBehaviour
                     ChangeSlotHeight(0.79f);
                     slot_1.GetChild(4).gameObject.SetActive(true);
                     slot_2.GetChild(0).GetChild(0).SetParent(slot_1.GetChild(4));
+                    slot_1.GetChild(4).GetChild(0).localPosition = new Vector3(0, 0, 0);
+                    slot_2.GetChild(0).gameObject.SetActive(false);
+                    slot_2.GetChild(0).SetAsLastSibling();
+                    slot_2.GetChild(3).gameObject.SetActive(true);
                     target = slot_2.GetChild(3);
                     break;
                 case 10:

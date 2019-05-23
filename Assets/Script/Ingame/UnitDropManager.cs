@@ -53,6 +53,9 @@ public partial class UnitDropManager : Singleton<UnitDropManager> {
                 unitLine[i][0].GetChild(0).position = new Vector3(unitLine[i][0].position.x, unitLine[i][0].position.y, 0);
             if(unitLine[i][1].childCount > 0)
                 unitLine[i][1].GetChild(0).position = new Vector3(unitLine[i][0].position.x, unitLine[i][1].position.y, 0);
+            slotLine[i].GetChild(0).GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 155.0f / 255.0f);
+            slotLine[i].GetChild(1).GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 155.0f / 255.0f);
+            slotLine[i].GetChild(2).GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 155.0f / 255.0f);
             slotLine[i].GetChild(0).gameObject.SetActive(false);
             slotLine[i].GetChild(1).gameObject.SetActive(false);
             slotLine[i].GetChild(2).gameObject.SetActive(false);
@@ -126,6 +129,5 @@ public partial class UnitDropManager : Singleton<UnitDropManager> {
         PlayMangement.instance.player.ActivePlayer();
 
         GameObject.Find("Player").transform.GetChild(0).GetComponent<PlayerController>().cdpm.DestroyCard(cardIndex);
-        HighLightSlot(target, false);
     }
 }
