@@ -301,6 +301,37 @@ public partial class PlayMangement : MonoBehaviour
 }
 
 /// <summary>
+/// 승패 적용
+/// </summary>
+public partial class PlayMangement {
+
+    public GameObject resultUI;
+
+
+    public void GetBattleResult() {
+        isGame = false;
+
+        resultUI.SetActive(true);
+
+        if (player.HP.Value <= 0) {
+            resultUI.transform.Find("LoseWindow").gameObject.SetActive(true);
+        }
+        else if(enemyPlayer.HP.Value <= 0) {
+            resultUI.transform.Find("VictoryWindow").gameObject.SetActive(true);
+        }
+    }
+
+    public void OnReturnBtn() {
+        SceneManager.Instance.LoadScene(SceneManager.Scene.MAIN_SCENE);
+    }
+
+
+}
+
+
+
+
+/// <summary>
 /// Socket 관련 처리
 /// </summary>
 public partial class PlayMangement {

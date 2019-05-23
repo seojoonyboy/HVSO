@@ -82,12 +82,12 @@ public class PlayerController : MonoBehaviour
 
         var gameOverDispose = HP.Where(x => x <= 0)
                               .Subscribe(_ => {
-                                               PlayerDefeat();
+                                               PlayMangement.instance.GetBattleResult();
                                                ObserveHP.Dispose();
                                                ObserveResource.Dispose();
                                                ObserveCardPick.Dispose();
                                                ObserveShield.Dispose(); })
-                              .AddTo(PlayMangement.instance.transform.gameObject);
+                              .AddTo(PlayMangement.instance.transform.gameObject);        
     }
 
     public void UpdateHealth() {
@@ -153,10 +153,7 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
-
-    public void PlayerDefeat() {
-        PlayMangement.instance.isGame = false;
-    }
+    
 
 
     public void HighLightCardSlot() {
