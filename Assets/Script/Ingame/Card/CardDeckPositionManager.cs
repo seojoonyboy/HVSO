@@ -33,7 +33,7 @@ public class CardDeckPositionManager : MonoBehaviour
         GameObject card = Instantiate(cardPrefab, cardSpawnPos);
         card.transform.SetParent(firstDrawWindow);
         card.SetActive(true);
-        card.GetComponent<CardHandler>().DrawCard("ac10002", true);
+        card.GetComponent<CardHandler>().DrawCard("ac1000"+ Random.Range(1,5), true);
         iTween.MoveTo(card, firstDrawWindow.GetChild(firstDrawList.Count).position, 0.5f);
         firstDrawList.Add(card);
         card.transform.localScale = new Vector3(1, 1, 1);

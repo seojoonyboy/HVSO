@@ -64,6 +64,10 @@ public partial class PlayMangement : MonoBehaviour
 
             }
         }
+
+        player.transform.position = backGround.transform.Find("Player_1").position;
+        enemyPlayer.transform.position = backGround.transform.Find("Player_2").position;
+
     }
 
 
@@ -109,7 +113,7 @@ public partial class PlayMangement : MonoBehaviour
 
 
         if (enemyPlayer.race == false)
-            cardID = "ac10013";
+            cardID = "ac1001"+Random.Range(1,4);
         else
             cardID = "ac10001";
 
