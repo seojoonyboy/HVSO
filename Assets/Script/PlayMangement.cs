@@ -65,8 +65,8 @@ public partial class PlayMangement : MonoBehaviour
             }
         }
 
-        player.transform.position = backGround.transform.Find("Player_1").position;
-        enemyPlayer.transform.position = backGround.transform.Find("Player_2").position;
+        player.transform.position = backGround.transform.Find("Player_1Pos").position;
+        enemyPlayer.transform.position = backGround.transform.Find("Player_2Pos").position;
 
     }
 
