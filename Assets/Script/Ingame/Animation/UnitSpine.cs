@@ -52,7 +52,6 @@ public class UnitSpine : MonoBehaviour
         else if(arrow != null && transform.parent.GetComponent<PlaceMonster>().isPlayer == false) {
             attackAnimationName = skeletonAnimation.Skeleton.Data.FindAnimation("ATTACK_DOWN").Name;
         }
-        
     }
 
     public virtual void Appear() {
@@ -86,6 +85,14 @@ public class UnitSpine : MonoBehaviour
         if(e.Data.Name == attackEventName) {
             if (attackCallback != null) attackCallback();
         }
+
+        if(e.Data.Name == "APPEAR") {
+            GameObject effect = Instantiate(PlayMangement.instance.effectManager.appearEffect, transform);
+            effect.transform.position = transform.position;
+            Destroy(effect.gameObject, effect.GetComponent<ParticleSystem>().main.duration - 0.2f);
+        }
+
+
     }
 
 

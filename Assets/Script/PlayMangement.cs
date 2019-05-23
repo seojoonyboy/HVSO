@@ -10,17 +10,17 @@ public partial class PlayMangement : MonoBehaviour
     public PlayerController player, enemyPlayer;
     public GameObject card, back;
     public Sprite plantResourceIcon, zombieResourceIcon;
-    public Sprite humanBtn, orcBtn;
 
     public GameObject cardDB;
     Camera cam;
     public GameObject uiSlot;
-
     public bool isGame = true;
     public static PlayMangement instance { get; private set; }
     public GameObject backGround;
     public GameObject onCanvasPosGroup;
-
+    public EffectManager effectManager;
+    
+    
 
     private void Awake()
     {
@@ -33,6 +33,9 @@ public partial class PlayMangement : MonoBehaviour
         SetPlayerCard();
         gameObject.GetComponent<TurnChanger>().onTurnChanged.AddListener(() => ChangeTurn());
         gameObject.GetComponent<TurnChanger>().onPrepareTurn.AddListener(() => DistributeCard());
+        GameObject backGroundEffect = Instantiate(effectManager.backGroundEffect);
+        backGroundEffect.transform.position = transform.position;
+
     }
     private void OnDestroy()
     {
@@ -50,10 +53,9 @@ public partial class PlayMangement : MonoBehaviour
 
     private void SetWorldScale() {
         SpriteRenderer backSprite = backGround.GetComponent<SpriteRenderer>();
-        float height = Camera.main.orthographicSize * 2, width = height / Screen.height * Screen.width;
+        float height = Camera.main.orthographicSize * 2, width = height / Screen.height * Screen.width;       
 
-        backGround.transform.localScale = new Vector3(width / backSprite.sprite.bounds.size.x, width / backSprite.sprite.bounds.size.x, 1);
-
+        backGround.transform.localScale = new Vector3(width / backSprite.sprite.bounds.size.x, width / backSprite.sprite.bounds.size.x, 1);        
     }
 
 

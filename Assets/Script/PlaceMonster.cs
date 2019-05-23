@@ -121,10 +121,18 @@ public class PlaceMonster : MonoBehaviour
             else
                 myTarget.GetComponent<PlayerController>().PlayerTakeDamage(unit.power);
 
-            if (unit.power <= 4)
+            if (unit.power <= 4) {
+                GameObject effect = Instantiate(PlayMangement.instance.effectManager.lowAttackEffect);
+                effect.transform.position = myTarget.transform.position;
+                Destroy(effect, effect.GetComponent<ParticleSystem>().main.duration - 0.2f);
                 SoundManager.Instance.PlaySound(SoundType.NORMAL_ATTACK);
-            else if (unit.power > 4)
+            }
+            else if (unit.power > 4) {
+                GameObject effect =  (unit.power < 6)  ? Instantiate(PlayMangement.instance.effectManager.middileAttackEffect) : Instantiate(PlayMangement.instance.effectManager.highAttackEffect);
+                effect.transform.position = myTarget.transform.position;
+                Destroy(effect, effect.GetComponent<ParticleSystem>().main.duration - 0.2f);
                 SoundManager.Instance.PlaySound(SoundType.LARGE_ATTACK);
+            }
         }
 
 
