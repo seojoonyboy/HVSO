@@ -208,6 +208,7 @@ public partial class PlayMangement : MonoBehaviour
 
     IEnumerator battleCoroutine() {
         int line = 0;
+        yield return new WaitForSeconds(1.1f);
         while (line < 5) {
             if (player.race == false) {
                 if (player.transform.Find("Line_1").GetChild(line).childCount != 0) {

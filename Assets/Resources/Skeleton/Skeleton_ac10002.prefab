@@ -128,7 +128,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   idleAnimationName: IDLE
   appearAnimationName: APPEAR
-  attackAnimationName: ATTACK
+  attackAnimationName: ATTACK_DOWN
   hitAnimationName: HIT
-  attackEventName: ATTACK
+  attackEventName: SHOT
   arrow: {fileID: 8772910390587079578, guid: 5136ef28d4cb3264b9bca34467918c9e, type: 3}
