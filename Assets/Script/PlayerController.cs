@@ -28,21 +28,7 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        SetUnitSlot();
-    }
-
-    private void SetUnitSlot() {
-        for(int i = 0; i< transform.childCount; i++) {
-            for(int j = 0; j<transform.GetChild(i).childCount; j++) {                
-                transform.GetChild(i).GetChild(j).position = new Vector3(PlayMangement.instance.backGround.transform.GetChild(j).position.x, transform.GetChild(i).GetChild(j).position.y, 0);
-
-                if(isPlayer == true) {
-                    GameObject slot = Instantiate(PlayMangement.instance.uiSlot);
-                    slot.transform.SetParent(playerUI.transform.parent.Find("IngamePanel").Find("PlayerSlot").GetChild(i));
-                    slot.transform.position = Camera.main.WorldToScreenPoint(transform.GetChild(i).GetChild(j).position);
-                }                
-            }
-        }
+        UnitDropManager.Instance.SetUnitDropPos();
     }
 
     public IEnumerator GenerateCard() {
@@ -174,24 +160,24 @@ public class PlayerController : MonoBehaviour
 
 
     public void HighLightCardSlot() {
-        Transform slotToUI = playerUI.transform.parent.Find("IngamePanel").Find("PlayerSlot");
+        //Transform slotToUI = playerUI.transform.parent.Find("IngamePanel").Find("PlayerSlot");
 
-        if (myTurn == true) {
-            if (isPicking.Value == true) {
-                for (int i = 0; i < slotToUI.GetChild(0).childCount; i++) {
-                    if (transform.GetChild(0).GetChild(i).childCount == 0) {
-                        slotToUI.GetChild(0).GetChild(i).GetComponent<Image>().enabled = true;
-                    }
-                }
-            }
-            else  {
-                for (int i = 0; i < slotToUI.GetChild(0).childCount; i++) {
-                    if (transform.GetChild(0).GetChild(i).childCount == 0) {
-                        slotToUI.GetChild(0).GetChild(i).GetComponent<Image>().enabled = false;
-                    }
-                }
-            }
-        }
+        //if (myTurn == true) {
+        //    if (isPicking.Value == true) {
+        //        for (int i = 0; i < slotToUI.GetChild(0).childCount; i++) {
+        //            if (transform.GetChild(0).GetChild(i).childCount == 0) {
+        //                slotToUI.GetChild(0).GetChild(i).GetComponent<Image>().enabled = true;
+        //            }
+        //        }
+        //    }
+        //    else  {
+        //        for (int i = 0; i < slotToUI.GetChild(0).childCount; i++) {
+        //            if (transform.GetChild(0).GetChild(i).childCount == 0) {
+        //                slotToUI.GetChild(0).GetChild(i).GetComponent<Image>().enabled = false;
+        //            }
+        //        }
+        //    }
+        //}
 
     }
 

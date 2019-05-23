@@ -16,6 +16,9 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     Animator cssAni;
     private string cardID;
 
+    private bool highlighted = false;
+    private Transform highlightedSlot;
+
     public CardData cardData;
     public CardDataPackage cardDataPackage;
 
@@ -47,11 +50,30 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         blockButton = true;
         startPos = transform.position;
         PlayMangement.instance.player.isPicking.Value = true;
+        UnitDropManager.Instance.ShowDropableSlot(cardData, true);
     }
 
     public void OnDrag(PointerEventData eventData) {
         if (firstDraw) return;
         transform.position = Input.mousePosition;
+        CheckHighlight();
+    }
+
+    public void CheckHighlight() {
+        if (!highlighted) {
+            highlightedSlot = CheckSlot();
+            if (highlightedSlot != null) {
+                highlighted = true;
+                UnitDropManager.Instance.HighLightSlot(highlightedSlot, highlighted);
+            }
+        }
+        else {
+            if (highlightedSlot != CheckSlot()) {
+                highlighted = false;
+                UnitDropManager.Instance.HighLightSlot(highlightedSlot, highlighted);
+                highlightedSlot = null;
+            }
+        }
     }
 
     public void OnEndDrag(PointerEventData eventData) {
@@ -59,6 +81,21 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         transform.position = startPos;
         blockButton = false;
         PlayMangement.instance.player.isPicking.Value = false;
+        if (PlayMangement.instance.player.getPlayerTurn == true && PlayMangement.instance.player.resource.Value >= cardData.cost)
+            UnitDropManager.Instance.DropUnit(gameObject, CheckSlot());
+        UnitDropManager.Instance.HideDropableSlot();
+    }
+
+    private Transform CheckSlot() {
+        Vector3 origin = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Ray2D ray = new Ray2D(origin, Vector2.zero);
+
+        RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
+        if (hit.collider != null && hit.transform.gameObject.layer == 12) {
+            return hit.transform;
+        }
+
+        return null;
     }
 
     public void OpenCardInfoList() {

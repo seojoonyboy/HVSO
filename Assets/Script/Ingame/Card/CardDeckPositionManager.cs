@@ -54,7 +54,6 @@ public class CardDeckPositionManager : MonoBehaviour
     }
 
     public void FirstDrawCardChange() {
-        firstDrawWindow.parent.Find("FinishButton").gameObject.SetActive(false);
         foreach(GameObject cards in firstDrawList) {
             cards.transform.Find("ChangeButton").gameObject.SetActive(false);
         }
@@ -62,6 +61,7 @@ public class CardDeckPositionManager : MonoBehaviour
     }
 
     IEnumerator DrawChangedCards() {
+        firstDrawWindow.parent.Find("FinishButton").gameObject.SetActive(false);
         firstDrawWindow.parent.gameObject.GetComponent<Image>().enabled = false;
         while (firstDrawList.Count != 0) {
             yield return new WaitForSeconds(0.2f);
