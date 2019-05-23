@@ -5,6 +5,7 @@ using UnityEngine;
 public partial class UnitDropManager : Singleton<UnitDropManager> {
     Transform[] slotLine;
     Transform[][] unitLine;
+    Transform[][] enemyUnitLine;
 
     public void SetUnitDropPos() {
         slotLine = new Transform[5];
@@ -13,13 +14,17 @@ public partial class UnitDropManager : Singleton<UnitDropManager> {
             slotLine[i] = mapSlotLines.GetChild(i);
         }
         unitLine = new Transform[5][];
+        enemyUnitLine = new Transform[5][];
         for (int i = 0; i < 5; i++) {
             unitLine[i] = new Transform[2];
+            enemyUnitLine[i] = new Transform[2];
         }
         Transform unitSlotLines = PlayMangement.instance.player.transform;
         for (int i = 0; i < 5; i++) {
             unitLine[i][0] = unitSlotLines.GetChild(0).GetChild(i);
             unitLine[i][1] = unitSlotLines.GetChild(1).GetChild(i);
+            enemyUnitLine[i][0] = unitSlotLines.parent.GetChild(1).GetChild(0).GetChild(i);
+            enemyUnitLine[i][1] = unitSlotLines.parent.GetChild(1).GetChild(1).GetChild(i);
         }
     }
 
@@ -63,27 +68,42 @@ public partial class UnitDropManager : Singleton<UnitDropManager> {
     }
 
     public void HighLightSlot(Transform target, bool highlighted) {
+        int index = target.GetSiblingIndex();
+        int lineNum = target.parent.GetSiblingIndex();
+        GameObject fightEffect = slotLine[lineNum].GetChild(3).gameObject;
+        Animator ani = fightEffect.GetComponent<Animator>();
         if (highlighted) {
             target.GetComponent<SpriteRenderer>().color = new Color(163.0f / 255.0f, 236.0f / 255.0f, 27.0f / 255.0f, 155.0f / 255.0f);
-            int index = target.GetSiblingIndex();
             if (index > 0) {
-                int lineNum = target.parent.GetSiblingIndex();
                 if (index == 1) unitLine[lineNum][0].GetChild(0).position = unitLine[lineNum][0].position;
                 else unitLine[lineNum][0].GetChild(0).position = unitLine[lineNum][1].position;
             }
+            if(enemyUnitLine[lineNum][1].childCount > 0) {
+                //ani.SetTrigger("1_to_2");
+            }
+            else if (enemyUnitLine[lineNum][0].childCount > 0) {
+                if(unitLine[lineNum][0].childCount > 0)
+                    ani.SetTrigger("2_to_1");
+                else
+                    ani.SetTrigger("1_to_1");
+            }
+            else {
+                ani.SetTrigger("1_to_hero");
+            }
+            
         }
         else {
             target.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 155.0f / 255.0f);
-            int index = target.GetSiblingIndex();
             if (index > 0) {
-                int lineNum = target.parent.GetSiblingIndex();
                 unitLine[lineNum][0].GetChild(0).position = new Vector3(unitLine[lineNum][0].position.x, unitLine[lineNum][0].position.y + 0.5f, 0);
             }
+            ani.SetTrigger("to_idle");
         }
     }
 
     public void DropUnit(GameObject card, Transform target) {
         if (target == null || target.childCount > 0) return;
+        HighLightSlot(target, false);
         int cardIndex = 0;
         if (card.transform.parent.parent.name == "CardSlot_1")
             cardIndex = card.transform.parent.GetSiblingIndex();
