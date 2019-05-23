@@ -35,6 +35,7 @@ public partial class PlayMangement : MonoBehaviour
         gameObject.GetComponent<TurnChanger>().onPrepareTurn.AddListener(() => DistributeCard());
         GameObject backGroundEffect = Instantiate(effectManager.backGroundEffect);
         backGroundEffect.transform.position = transform.position;
+        SetCamera();
 
     }
     private void OnDestroy()
@@ -327,6 +328,38 @@ public partial class PlayMangement {
 
     public void OnReturnBtn() {
         SceneManager.Instance.LoadScene(SceneManager.Scene.MAIN_SCENE);
+    }
+
+
+}
+
+/// <summary>
+/// 카메라 처리
+/// </summary>
+
+public partial class PlayMangement {
+    public Camera ingameCamera;
+    public Vector3 cameraPos;
+
+    public void SetCamera() {
+        ingameCamera = Camera.main;
+        cameraPos = Camera.main.transform.position;
+    }
+    
+
+    public IEnumerator cameraShake(float time) {
+        float timer = 0;
+        float cameraSize = ingameCamera.orthographicSize;
+        while (timer <= time) {
+            
+
+            ingameCamera.transform.position = (Vector3)Random.insideUnitCircle * 0.1f + cameraPos;
+
+            timer += Time.deltaTime;
+            yield return null;
+        }
+        ingameCamera.orthographicSize = cameraSize;
+        ingameCamera.transform.position = cameraPos;
     }
 
 
