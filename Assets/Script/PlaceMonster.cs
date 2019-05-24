@@ -140,7 +140,13 @@ public class PlaceMonster : MonoBehaviour
                 effect.transform.position = (placeMonster != null) ? myTarget.transform.position : new Vector3(gameObject.transform.position.x, myTarget.transform.position.y, 0);
                 Destroy(effect, effect.GetComponent<ParticleSystem>().main.duration - 0.2f);
                 StartCoroutine(PlayMangement.instance.cameraShake(unitSpine.atkDuration / 2));
-                SoundManager.Instance.PlaySound(SoundType.LARGE_ATTACK);
+
+                if(unit.power > 4 && unit.power <= 6) {
+                    SoundManager.Instance.PlaySound(SoundType.MIDDLE_ATTACK);
+                }
+                if(unit.power > 6) {
+                    SoundManager.Instance.PlaySound(SoundType.LARGE_ATTACK);
+                }
             }
         }
 
