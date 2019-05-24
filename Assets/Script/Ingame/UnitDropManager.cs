@@ -105,6 +105,7 @@ public partial class UnitDropManager : Singleton<UnitDropManager> {
     public void DropUnit(GameObject card, Transform target) {
         if (target == null || target.childCount > 0) return;
         HighLightSlot(target, false);
+        HideDropableSlot();
         int cardIndex = 0;
         if (card.transform.parent.parent.name == "CardSlot_1")
             cardIndex = card.transform.parent.GetSiblingIndex();
