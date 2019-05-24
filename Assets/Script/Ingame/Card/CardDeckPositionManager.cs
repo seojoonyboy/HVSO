@@ -27,7 +27,7 @@ public class CardDeckPositionManager : MonoBehaviour
         //    slot_1.transform.localScale = slot_2.transform.localScale = new Vector3(1920.0f / Screen.height, 1920.0f / Screen.height, 1);
         slot_2.gameObject.SetActive(true);
         ChangeSlotHeight(0.9f);
-        PlayMangement.instance.socketHandler.OnReceiveSocketMessage.AddListener(() => AddCard());
+        //PlayMangement.instance.socketHandler.OnReceiveSocketMessage.AddListener(() => AddCard());
     }
 
     public IEnumerator FirstDraw() {
