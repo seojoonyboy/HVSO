@@ -102,7 +102,7 @@ public class PlayerController : MonoBehaviour
 
 
     public void PlayerTakeDamage(int amount) {
-        if (shieldStack.Value < 8) {
+        if (shieldStack.Value < 7) {
             if (HP.Value >= amount) {
                 HP.Value -= amount;
                 shieldStack.Value++;
@@ -111,7 +111,6 @@ public class PlayerController : MonoBehaviour
                 HP.Value = 0;
         }
         else {
-            HP.Value += 2;
             DrawSpeicalCard();
             shieldStack.Value = 0;
         } 
