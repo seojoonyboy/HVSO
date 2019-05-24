@@ -55,6 +55,7 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
     public void OnBeginDrag(PointerEventData eventData) {
         if (firstDraw) return;
+        if (Input.touchCount > 1) return;
         if (PlayMangement.instance.player.drawCard) return;
         blockButton = PlayMangement.instance.player.drawCard = true;
         startPos = transform.parent.position;
