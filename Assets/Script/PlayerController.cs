@@ -16,6 +16,10 @@ public class PlayerController : MonoBehaviour
     public GameObject playerUI;
     [SerializeField] public CardDeckPositionManager cdpm;
 
+    public GameObject backLine;
+    public GameObject frontLine;
+
+
     public ReactiveProperty<int> HP;
     public ReactiveProperty<int> resource = new ReactiveProperty<int>(2);
     public ReactiveProperty<bool> isPicking = new ReactiveProperty<bool>(false);
@@ -77,7 +81,6 @@ public class PlayerController : MonoBehaviour
 
         var ObserveHP = HP.SubscribeToText(HPText).AddTo(PlayMangement.instance.transform.gameObject);
         var ObserveResource = resource.SubscribeToText(resourceText).AddTo(PlayMangement.instance.transform.gameObject);
-        var ObserveCardPick = isPicking.Subscribe(_ => HighLightCardSlot()).AddTo(PlayMangement.instance.transform.gameObject);
         var ObserveShield = shieldStack.Subscribe(_ => shieldImage.fillAmount = (float)shieldStack.Value / 8).AddTo(PlayMangement.instance.transform.gameObject);
 
         var gameOverDispose = HP.Where(x => x <= 0)
@@ -85,7 +88,6 @@ public class PlayerController : MonoBehaviour
                                                PlayMangement.instance.GetBattleResult();
                                                ObserveHP.Dispose();
                                                ObserveResource.Dispose();
-                                               ObserveCardPick.Dispose();
                                                ObserveShield.Dispose(); })
                               .AddTo(PlayMangement.instance.transform.gameObject);        
     }
@@ -155,28 +157,7 @@ public class PlayerController : MonoBehaviour
     }
     
 
-
-    public void HighLightCardSlot() {
-        //Transform slotToUI = playerUI.transform.parent.Find("IngamePanel").Find("PlayerSlot");
-
-        //if (myTurn == true) {
-        //    if (isPicking.Value == true) {
-        //        for (int i = 0; i < slotToUI.GetChild(0).childCount; i++) {
-        //            if (transform.GetChild(0).GetChild(i).childCount == 0) {
-        //                slotToUI.GetChild(0).GetChild(i).GetComponent<Image>().enabled = true;
-        //            }
-        //        }
-        //    }
-        //    else  {
-        //        for (int i = 0; i < slotToUI.GetChild(0).childCount; i++) {
-        //            if (transform.GetChild(0).GetChild(i).childCount == 0) {
-        //                slotToUI.GetChild(0).GetChild(i).GetComponent<Image>().enabled = false;
-        //            }
-        //        }
-        //    }
-        //}
-
-    }
+    
 
 
 

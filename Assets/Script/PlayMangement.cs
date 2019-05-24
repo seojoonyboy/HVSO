@@ -58,12 +58,11 @@ public partial class PlayMangement : MonoBehaviour
 
         backGround.transform.localScale = new Vector3(width / backSprite.sprite.bounds.size.x, width / backSprite.sprite.bounds.size.x, 1);
         
-        for(int i = 0; i < player.transform.childCount; i++) {
-            for(int j = 0; j < player.transform.GetChild(i).childCount; j++) {
-                player.transform.GetChild(i).GetChild(j).position = new Vector3(backGround.transform.GetChild(j).position.x, player.transform.GetChild(i).GetChild(j).position.y,0) ;
-                enemyPlayer.transform.GetChild(i).GetChild(j).position = new Vector3(backGround.transform.GetChild(j).position.x, enemyPlayer.transform.GetChild(i).GetChild(j).position.y, 0);
-
-            }
+        for(int i = 0; i < player.frontLine.transform.childCount; i++) {
+            player.backLine.transform.GetChild(i).position = new Vector3(backGround.transform.GetChild(i).position.x, player.backLine.transform.GetChild(i).position.y, 0);
+            player.frontLine.transform.GetChild(i).position = new Vector3(backGround.transform.GetChild(i).position.x, player.frontLine.transform.GetChild(i).position.y, 0);
+            enemyPlayer.backLine.transform.GetChild(i).position = new Vector3(backGround.transform.GetChild(i).position.x, player.backLine.transform.GetChild(i).position.y, 0);
+            enemyPlayer.frontLine.transform.GetChild(i).position = new Vector3(backGround.transform.GetChild(i).position.x, player.frontLine.transform.GetChild(i).position.y, 0);
         }
 
         player.transform.position = backGround.transform.Find("Player_1Pos").position;
@@ -226,72 +225,72 @@ public partial class PlayMangement : MonoBehaviour
         yield return new WaitForSeconds(1.1f);
         while (line < 5) {
             if (player.race == false) {
-                if (player.transform.Find("Line_1").GetChild(line).childCount != 0) {
-                    player.transform.Find("Line_1").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().GetTarget();
+                if (player.backLine.transform.GetChild(line).childCount != 0) {
+                    player.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().GetTarget();
 
-                    if (player.transform.Find("Line_1").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().unit.power > 0)
-                        yield return new WaitForSeconds(1.1f + player.transform.Find("Line_1").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().atkTime);
+                    if (player.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().unit.power > 0)
+                        yield return new WaitForSeconds(1.1f + player.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().atkTime);
                 }
 
-                if (player.transform.Find("Line_2").GetChild(line).childCount != 0) {
-                    player.transform.Find("Line_2").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().GetTarget();
+                if (player.frontLine.transform.GetChild(line).childCount != 0) {
+                    player.frontLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().GetTarget();
 
-                    if (player.transform.Find("Line_2").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().unit.power > 0)
-                        yield return new WaitForSeconds(1.1f + player.transform.Find("Line_2").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().atkTime);
+                    if (player.frontLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().unit.power > 0)
+                        yield return new WaitForSeconds(1.1f + player.frontLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().atkTime);
                 }
 
-                if (enemyPlayer.transform.Find("Line_1").GetChild(line).childCount != 0) {
-                    enemyPlayer.transform.Find("Line_1").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().GetTarget();
+                if (enemyPlayer.backLine.transform.GetChild(line).childCount != 0) {
+                    enemyPlayer.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().GetTarget();
 
-                    if (enemyPlayer.transform.Find("Line_1").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().unit.power > 0)
-                        yield return new WaitForSeconds(1.1f + enemyPlayer.transform.Find("Line_1").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().atkTime);
+                    if (enemyPlayer.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().unit.power > 0)
+                        yield return new WaitForSeconds(1.1f + enemyPlayer.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().atkTime);
                 }
 
-                if (enemyPlayer.transform.Find("Line_2").GetChild(line).childCount != 0) {
-                    enemyPlayer.transform.Find("Line_2").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().GetTarget();
+                if (enemyPlayer.frontLine.transform.GetChild(line).childCount != 0) {
+                    enemyPlayer.frontLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().GetTarget();
 
-                    if (enemyPlayer.transform.Find("Line_2").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().unit.power > 0)
-                        yield return new WaitForSeconds(1.1f + enemyPlayer.transform.Find("Line_2").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().atkTime);
+                    if (enemyPlayer.frontLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().unit.power > 0)
+                        yield return new WaitForSeconds(1.1f + enemyPlayer.frontLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().atkTime);
                 }
             }
 
             else {
-                if (enemyPlayer.transform.Find("Line_1").GetChild(line).childCount != 0) {
-                    enemyPlayer.transform.Find("Line_1").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().GetTarget();
+                if (enemyPlayer.backLine.transform.GetChild(line).childCount != 0) {
+                    enemyPlayer.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().GetTarget();
 
-                    if (enemyPlayer.transform.Find("Line_1").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().unit.power > 0)
-                        yield return new WaitForSeconds(1.1f + enemyPlayer.transform.Find("Line_1").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().atkTime);
+                    if (enemyPlayer.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().unit.power > 0)
+                        yield return new WaitForSeconds(1.1f + enemyPlayer.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().atkTime);
                 }
 
-                if (enemyPlayer.transform.Find("Line_2").GetChild(line).childCount != 0) {
-                    enemyPlayer.transform.Find("Line_2").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().GetTarget();
+                if (enemyPlayer.frontLine.transform.GetChild(line).childCount != 0) {
+                    enemyPlayer.frontLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().GetTarget();
 
-                    if (enemyPlayer.transform.Find("Line_2").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().unit.power > 0)
-                        yield return new WaitForSeconds(1.1f + enemyPlayer.transform.Find("Line_2").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().atkTime);
+                    if (enemyPlayer.frontLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().unit.power > 0)
+                        yield return new WaitForSeconds(1.1f + enemyPlayer.frontLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().atkTime);
                 }
-                if (player.transform.Find("Line_1").GetChild(line).childCount != 0) {
-                    player.transform.Find("Line_1").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().GetTarget();
+                if (player.backLine.transform.GetChild(line).childCount != 0) {
+                    player.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().GetTarget();
 
-                    if (player.transform.Find("Line_1").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().unit.power > 0)
-                        yield return new WaitForSeconds(1.1f + player.transform.Find("Line_1").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().atkTime);
+                    if (player.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().unit.power > 0)
+                        yield return new WaitForSeconds(1.1f + player.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().atkTime);
                 }
 
-                if (player.transform.Find("Line_2").GetChild(line).childCount != 0) {
-                    player.transform.Find("Line_2").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().GetTarget();
+                if (player.frontLine.transform.GetChild(line).childCount != 0) {
+                    player.frontLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().GetTarget();
 
-                    if (player.transform.Find("Line_2").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().unit.power > 0)
-                        yield return new WaitForSeconds(1.1f + player.transform.Find("Line_2").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().atkTime);
+                    if (player.frontLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().unit.power > 0)
+                        yield return new WaitForSeconds(1.1f + player.frontLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().atkTime);
                 }
             }
 
-            if (player.transform.Find("Line_1").GetChild(line).childCount != 0)
-                player.transform.Find("Line_1").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().CheckHP();
-            if (player.transform.Find("Line_2").GetChild(line).childCount != 0)
-                player.transform.Find("Line_2").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().CheckHP();
-            if (enemyPlayer.transform.Find("Line_1").GetChild(line).childCount != 0)
-                enemyPlayer.transform.Find("Line_1").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().CheckHP();
-            if (enemyPlayer.transform.Find("Line_2").GetChild(line).childCount != 0)
-                enemyPlayer.transform.Find("Line_2").GetChild(line).GetChild(0).GetComponent<PlaceMonster>().CheckHP();
+            if (player.backLine.transform.GetChild(line).childCount != 0)
+                player.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().CheckHP();
+            if (player.frontLine.transform.GetChild(line).childCount != 0)
+                player.frontLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().CheckHP();
+            if (enemyPlayer.backLine.transform.GetChild(line).childCount != 0)
+                enemyPlayer.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().CheckHP();
+            if (enemyPlayer.frontLine.transform.GetChild(line).childCount != 0)
+                enemyPlayer.frontLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().CheckHP();
 
 
             if (isGame == false) break;
