@@ -43,7 +43,4 @@ public class IngameDropHandler : MonoBehaviour, IDropHandler {
             GameObject.Find("Player").transform.GetChild(0).GetComponent<PlayerController>().cdpm.DestroyCard(cardIndex);
         }
     }
-
-
-
 }

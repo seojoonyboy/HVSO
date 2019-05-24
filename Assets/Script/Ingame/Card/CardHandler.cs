@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.UI.Extensions;
+using System;
+using SkillModules;
 
 public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
     public Vector3 startPos;
@@ -32,6 +34,11 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
         if (cardDataPackage.data.ContainsKey(cardID)) {
             cardData = cardDataPackage.data[cardID];
+            foreach(var skill in cardData.skills) {
+                foreach(var effect in skill.effects) {
+                    gameObject.AddComponent(Type.GetType("SkillModules.Ability_" + effect.method));
+                }
+            }
             skeleton = Resources.Load<GameObject>("Skeleton/Skeleton_" + cardID);
         }
         else
