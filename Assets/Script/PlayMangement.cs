@@ -34,7 +34,7 @@ public partial class PlayMangement : MonoBehaviour
         gameObject.GetComponent<TurnChanger>().onTurnChanged.AddListener(() => ChangeTurn());
         gameObject.GetComponent<TurnChanger>().onPrepareTurn.AddListener(() => DistributeCard());
         GameObject backGroundEffect = Instantiate(effectManager.backGroundEffect);
-        backGroundEffect.transform.position = transform.position;
+        backGroundEffect.transform.position = backGround.transform.Find("ParticlePosition").position;
         SetCamera();
 
     }
@@ -61,17 +61,25 @@ public partial class PlayMangement : MonoBehaviour
         Vector3 canvasScale = canvas.transform.localScale;
         canvas.transform.localScale = new Vector3(canvasScale.x * backGround.transform.localScale.x, canvasScale.y * backGround.transform.localScale.y, 1);
 
+        player.transform.position = backGround.transform.Find("PlayerPosition").Find("Player_1Pos").position;
+        enemyPlayer.transform.position = backGround.transform.Find("PlayerPosition").Find("Player_2Pos").position;
 
         for (int i = 0; i < player.frontLine.transform.childCount; i++) {
             player.backLine.transform.GetChild(i).position = new Vector3(backGround.transform.GetChild(i).position.x, player.backLine.transform.position.y, 0);
             player.frontLine.transform.GetChild(i).position = new Vector3(backGround.transform.GetChild(i).position.x, player.frontLine.transform.position.y, 0);
             enemyPlayer.backLine.transform.GetChild(i).position = new Vector3(backGround.transform.GetChild(i).position.x, enemyPlayer.backLine.transform.position.y, 0);
             enemyPlayer.frontLine.transform.GetChild(i).position = new Vector3(backGround.transform.GetChild(i).position.x, enemyPlayer.frontLine.transform.position.y, 0);
+        }    
+
+        player.backLine.transform.position = backGround.transform.Find("Line_Y_Position").Find("Player1_BackLine").position;
+        player.frontLine.transform.position = backGround.transform.Find("Line_Y_Position").Find("Player1_FrontLine").position;
+        enemyPlayer.backLine.transform.position = backGround.transform.Find("Line_Y_Position").Find("Player2_BackLine").position;
+        enemyPlayer.frontLine.transform.position = backGround.transform.Find("Line_Y_Position").Find("Player2_FrontLine").position;
+
+        for(int i = 0; i < player.frontLine.transform.childCount; i++) {
+            Vector3 pos = backGround.transform.GetChild(i).position;
+            backGround.transform.GetChild(i).position = new Vector3(pos.x, player.backLine.transform.position.y, 0);
         }
-
-        player.transform.position = backGround.transform.Find("Player_1Pos").position;
-        enemyPlayer.transform.position = backGround.transform.Find("Player_2Pos").position;
-
     }
 
 

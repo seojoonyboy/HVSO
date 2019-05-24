@@ -20,6 +20,8 @@ public partial class AccountManager : Singleton<AccountManager> {
     public List<Deck> myDecks = new List<Deck>();
     public CardDataPackage cardPackage;
 
+    public ResourceManager resource;
+
     NetworkManager networkManager;
     GameObject loadingModal;
 
@@ -27,6 +29,7 @@ public partial class AccountManager : Singleton<AccountManager> {
         DontDestroyOnLoad(gameObject);
         DEVICEID = SystemInfo.deviceUniqueIdentifier;
         cardPackage = Resources.Load("CardDatas/CardDataPackage_01") as CardDataPackage;
+        resource = transform.GetComponent<ResourceManager>();
     }
 
     // Start is called before the first frame update

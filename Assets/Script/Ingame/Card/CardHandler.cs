@@ -39,6 +39,7 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
                     gameObject.AddComponent(Type.GetType("SkillModules.Ability_" + effect.method));
                 }
             }
+            transform.Find("Portrait").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardPortraite[cardID];
             skeleton = Resources.Load<GameObject>("Skeleton/Skeleton_" + cardID);
         }
         else
@@ -79,6 +80,7 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         else {
             highlighted = false;
             UnitDropManager.Instance.HighLightSlot(highlightedSlot, highlighted);
+            UnitDropManager.Instance.HideDropableSlot();
             highlightedSlot = null;
         }
 
@@ -134,9 +136,9 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         }
     }
 
-    public void RedrawSelf() {
+    public void RedrawCard() {
         if (cardID == null)
-            DrawCard("ac10001");
+            DrawCard("ac1000" + UnityEngine.Random.Range(1, 5));
         else
             DrawCard(cardID);
         firstDraw = false;
@@ -145,8 +147,9 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         csm.AddCardInfo(cardData);
     }
 
-    public void RedrawCard() {
-        DrawCard("ac10002");
+    public void RedrawButton() {
+        
+        DrawCard("ac1000" + UnityEngine.Random.Range(1, 5));
         transform.Find("ChangeButton").gameObject.SetActive(false);
     }
 

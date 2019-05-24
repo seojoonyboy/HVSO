@@ -4,8 +4,14 @@ namespace SocketFormat {
         public SendFormat() : base() { }
     }
     public class ReceiveFormat : Base {
-        public ReceiveFormat(string method, string[] args) : base(method, args) { }
+        public ReceiveFormat(string method, string[] args, GameState gameState, string error) : base(method, args) {
+            this.gameState = gameState;
+            this.error = error;
+         }
         public ReceiveFormat() : base() { }
+
+        public GameState gameState;
+        public object error;
     }
 
     public class Base {

@@ -27,7 +27,7 @@ public class CardDeckPositionManager : MonoBehaviour
         //    slot_1.transform.localScale = slot_2.transform.localScale = new Vector3(1920.0f / Screen.height, 1920.0f / Screen.height, 1);
         slot_2.gameObject.SetActive(true);
         ChangeSlotHeight(0.9f);
-        PlayMangement.instance.socketHandler.OnReceiveSocketMessage.AddListener(() => AddCard());
+        //PlayMangement.instance.socketHandler.OnReceiveSocketMessage.AddListener(() => AddCard());
     }
 
     public IEnumerator FirstDraw() {
@@ -61,7 +61,9 @@ public class CardDeckPositionManager : MonoBehaviour
             cards.transform.Find("ChangeButton").gameObject.SetActive(false);
         }
         StartCoroutine(DrawChangedCards());
+        firstDrawWindow.parent.Find("FinishButton").GetComponent<Button>().enabled = false;
         firstDrawWindow.parent.Find("FinishButton").GetComponent<Image>().enabled = false;
+        firstDrawWindow.parent.Find("FinishButton").GetChild(0).gameObject.SetActive(false);
         firstDrawWindow.parent.Find("FinishButton").gameObject.SetActive(false);
     }
 
@@ -99,7 +101,7 @@ public class CardDeckPositionManager : MonoBehaviour
                 firstDraw = false;
             }
             cardList.Add(card);
-            card.GetComponent<CardHandler>().RedrawSelf();
+            card.GetComponent<CardHandler>().RedrawCard();
             card.transform.localScale = new Vector3(1, 1, 1);
             if (target != null) {
                 StartCoroutine(SendCardToHand(card, target));
@@ -158,7 +160,7 @@ public class CardDeckPositionManager : MonoBehaviour
             }
         }
         cardList.Add(card);
-        card.GetComponent<CardHandler>().RedrawSelf();
+        card.GetComponent<CardHandler>().RedrawCard();
         card.transform.localScale = new Vector3(1, 1, 1);
         if(target != null)
             StartCoroutine(SendCardToHand(card, target));
@@ -173,7 +175,7 @@ public class CardDeckPositionManager : MonoBehaviour
 
         iTween.MoveTo(card, target.position, 0.4f);
         card.transform.SetParent(target);
-        card.GetComponent<CardHandler>().RedrawSelf();
+        card.GetComponent<CardHandler>().RedrawCard();
         card.transform.localScale = new Vector3(1, 1, 1);
         card.GetComponent<CardHandler>().DisableCard();
 

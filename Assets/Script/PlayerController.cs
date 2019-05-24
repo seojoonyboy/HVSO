@@ -37,9 +37,10 @@ public class PlayerController : MonoBehaviour
 
     public IEnumerator GenerateCard() {
         int i = 0;
-        while(i < 4) {
+        while(i < 5) {
             yield return new WaitForSeconds(0.3f);
-            StartCoroutine(cdpm.FirstDraw());
+            if(i < 4)
+                StartCoroutine(cdpm.FirstDraw());
             
 
             GameObject enemyCard = Instantiate(PlayMangement.instance.enemyPlayer.back);
