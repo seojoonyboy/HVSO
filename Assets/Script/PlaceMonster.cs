@@ -72,11 +72,11 @@ public class PlaceMonster : MonoBehaviour
     public void GetTarget() {
         if (isPlayer == true) {
             PlayerController enemy = PlayMangement.instance.enemyPlayer;
-            if (enemy.transform.Find("Line_2").GetChild(x).childCount != 0) {
-                myTarget = enemy.transform.Find("Line_2").GetChild(x).GetChild(0).gameObject;
+            if (enemy.frontLine.transform.GetChild(x).childCount != 0) {
+                myTarget = enemy.frontLine.transform.GetChild(x).GetChild(0).gameObject;
             }
-            else if (enemy.transform.Find("Line_1").GetChild(x).childCount != 0) {
-                myTarget = enemy.transform.Find("Line_1").GetChild(x).GetChild(0).gameObject;
+            else if (enemy.backLine.transform.GetChild(x).childCount != 0) {
+                myTarget = enemy.backLine.transform.GetChild(x).GetChild(0).gameObject;
             }
             else {
                 myTarget = enemy.transform.gameObject;
@@ -85,11 +85,11 @@ public class PlaceMonster : MonoBehaviour
         }
         else {
             PlayerController player = PlayMangement.instance.player;
-            if (player.transform.Find("Line_2").GetChild(x).childCount != 0) {
-                myTarget = player.transform.Find("Line_2").GetChild(x).GetChild(0).gameObject;
+            if (player.frontLine.transform.GetChild(x).childCount != 0) {
+                myTarget = player.frontLine.transform.GetChild(x).GetChild(0).gameObject;
             }
-            else if (player.transform.Find("Line_1").GetChild(x).childCount != 0) {
-                myTarget = player.transform.Find("Line_1").GetChild(x).GetChild(0).gameObject;
+            else if (player.backLine.transform.GetChild(x).childCount != 0) {
+                myTarget = player.backLine.transform.GetChild(x).GetChild(0).gameObject;
             }
             else {
                 myTarget = player.transform.gameObject;                
