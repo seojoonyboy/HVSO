@@ -128,7 +128,7 @@ public class PlaceMonster : MonoBehaviour
             else
                 myTarget.GetComponent<PlayerController>().PlayerTakeDamage(unit.power);
 
-            if (unit.power <= 4) {
+            if (unit.power <= 3) {
                 GameObject effect = Instantiate(PlayMangement.instance.effectManager.lowAttackEffect);
                 effect.transform.position = (placeMonster != null) ? myTarget.transform.position : new Vector3(gameObject.transform.position.x, myTarget.transform.position.y, 0);
                 Destroy(effect, effect.GetComponent<ParticleSystem>().main.duration - 0.2f);
