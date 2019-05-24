@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
 
     public GameObject backLine;
     public GameObject frontLine;
+    public bool drawCard = false;
 
 
     public ReactiveProperty<int> HP;
@@ -121,7 +122,7 @@ public class PlayerController : MonoBehaviour
     }
 
     public void ReleaseTurn() {
-        if (myTurn == true)
+        if (myTurn == true && !drawCard)
             PlayMangement.instance.GetPlayerTurnRelease();
     }
 
