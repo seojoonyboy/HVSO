@@ -24,6 +24,8 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     public CardData cardData;
     public CardDataPackage cardDataPackage;
 
+    static GameObject itsDragging;
+
     public void Start() {
 
     }
@@ -57,6 +59,7 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         if (firstDraw) return;
         if (Input.touchCount > 1) return;
         if (PlayMangement.instance.player.drawCard) return;
+        itsDragging = gameObject;
         blockButton = PlayMangement.instance.player.drawCard = true;
         startPos = transform.parent.position;
         PlayMangement.instance.player.isPicking.Value = true;
@@ -65,6 +68,7 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
     public void OnDrag(PointerEventData eventData) {
         if (firstDraw) return;
+        if (gameObject != itsDragging) return;
         Vector3 cardScreenPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         transform.position = new Vector3(cardScreenPos.x, cardScreenPos.y + 0.3f, cardScreenPos.z);
         CheckHighlight();
@@ -73,7 +77,7 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
     public void OnEndDrag(PointerEventData eventData) {
         if (firstDraw) return;
-        //transform.position = startPos;
+        if (gameObject != itsDragging) return;
         iTween.MoveTo(gameObject, startPos, 0.3f);
         blockButton = PlayMangement.instance.player.drawCard = false;
         PlayMangement.instance.player.isPicking.Value = false;
