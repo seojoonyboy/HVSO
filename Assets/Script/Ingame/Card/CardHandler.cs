@@ -55,7 +55,7 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
     public void OnDrag(PointerEventData eventData) {
         if (firstDraw) return;
-        transform.position = Input.mousePosition;
+        transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         CheckHighlight();
     }
 

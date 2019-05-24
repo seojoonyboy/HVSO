@@ -57,8 +57,12 @@ public partial class PlayMangement : MonoBehaviour
         float height = Camera.main.orthographicSize * 2, width = height / Screen.height * Screen.width;       
 
         backGround.transform.localScale = new Vector3(width / backSprite.sprite.bounds.size.x, width / backSprite.sprite.bounds.size.x, 1);
-        
-        for(int i = 0; i < player.frontLine.transform.childCount; i++) {
+        GameObject canvas = GameObject.Find("Canvas");
+        Vector3 canvasScale = canvas.transform.localScale;
+        canvas.transform.localScale = new Vector3(canvasScale.x * backGround.transform.localScale.x, canvasScale.y * backGround.transform.localScale.y, 1);
+
+
+        for (int i = 0; i < player.frontLine.transform.childCount; i++) {
             player.backLine.transform.GetChild(i).position = new Vector3(backGround.transform.GetChild(i).position.x, player.backLine.transform.position.y, 0);
             player.frontLine.transform.GetChild(i).position = new Vector3(backGround.transform.GetChild(i).position.x, player.frontLine.transform.position.y, 0);
             enemyPlayer.backLine.transform.GetChild(i).position = new Vector3(backGround.transform.GetChild(i).position.x, enemyPlayer.backLine.transform.position.y, 0);
