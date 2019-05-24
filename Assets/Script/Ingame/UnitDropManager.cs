@@ -68,6 +68,7 @@ public partial class UnitDropManager : Singleton<UnitDropManager> {
     }
 
     public void HighLightSlot(Transform target, bool highlighted) {
+        if (target == null) return;
         int index = target.GetSiblingIndex();
         int lineNum = target.parent.GetSiblingIndex();
         GameObject fightEffect = slotLine[lineNum].GetChild(3).gameObject;

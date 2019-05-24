@@ -79,6 +79,7 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         else {
             highlighted = false;
             UnitDropManager.Instance.HighLightSlot(highlightedSlot, highlighted);
+            UnitDropManager.Instance.HideDropableSlot();
             highlightedSlot = null;
         }
 
