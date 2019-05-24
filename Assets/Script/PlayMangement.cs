@@ -19,6 +19,8 @@ public partial class PlayMangement : MonoBehaviour
     public GameObject backGround;
     public GameObject onCanvasPosGroup;
     public EffectManager effectManager;
+
+    private int turn = 0;
     
     
 
@@ -110,8 +112,8 @@ public partial class PlayMangement : MonoBehaviour
     }
 
     public void DistributeResource() {
-        player.resource.Value  += 2;
-        enemyPlayer.resource.Value  += 2;
+        player.resource.Value  = turn + 1;
+        enemyPlayer.resource.Value  = turn + 1;
     }
 
 
@@ -309,6 +311,7 @@ public partial class PlayMangement : MonoBehaviour
             line++;
         }
         yield return new WaitForSeconds(1f);
+        turn++;
         DistributeResource();
         CustomEvent.Trigger(gameObject, "EndTurn");
         player.EndTurnDraw();
