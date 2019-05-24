@@ -11,36 +11,36 @@ public class IngameDropHandler : MonoBehaviour, IDropHandler {
     }
 
     public void OnDrop(PointerEventData eventData) {
-        if (placedMonster == null && PlayMangement.instance.player.getPlayerTurn == true && PlayMangement.instance.player.resource.Value >= eventData.pointerDrag.gameObject.GetComponent<CardHandler>().cardData.cost) {
-            int cardIndex = 0;
-            if (eventData.pointerDrag.gameObject.transform.parent.parent.name == "CardSlot_1")
-                cardIndex = eventData.pointerDrag.gameObject.transform.parent.GetSiblingIndex();
-            else {
-                cardIndex = GameObject.Find("CardSlot_2").transform.childCount + eventData.pointerDrag.gameObject.transform.parent.GetSiblingIndex();
-            }
-            CardHandler cardHandler = eventData.pointerDrag.gameObject.GetComponent<CardHandler>();
+        //if (placedMonster == null && PlayMangement.instance.player.getPlayerTurn == true && PlayMangement.instance.player.resource.Value >= eventData.pointerDrag.gameObject.GetComponent<CardHandler>().cardData.cost) {
+        //    int cardIndex = 0;
+        //    if (eventData.pointerDrag.gameObject.transform.parent.parent.name == "CardSlot_1")
+        //        cardIndex = eventData.pointerDrag.gameObject.transform.parent.GetSiblingIndex();
+        //    else {
+        //        cardIndex = GameObject.Find("CardSlot_2").transform.childCount + eventData.pointerDrag.gameObject.transform.parent.GetSiblingIndex();
+        //    }
+        //    CardHandler cardHandler = eventData.pointerDrag.gameObject.GetComponent<CardHandler>();
 
-            placedMonster = Instantiate(cardHandler.unit, ingameParent.transform);
-            placedMonster.transform.position = ingameParent.transform.position;
-            placedMonster.GetComponent<PlaceMonster>().isPlayer = true;
+        //    placedMonster = Instantiate(cardHandler.unit, ingameParent.transform);
+        //    placedMonster.transform.position = ingameParent.transform.position;
+        //    placedMonster.GetComponent<PlaceMonster>().isPlayer = true;
 
-            placedMonster.GetComponent<PlaceMonster>().unit.name = cardHandler.cardData.name;
-            placedMonster.GetComponent<PlaceMonster>().unit.HP = (int)cardHandler.cardData.hp;
-            placedMonster.GetComponent<PlaceMonster>().unit.power = (int)cardHandler.cardData.attack;
-            placedMonster.GetComponent<PlaceMonster>().unit.type = cardHandler.cardData.type;
+        //    placedMonster.GetComponent<PlaceMonster>().unit.name = cardHandler.cardData.name;
+        //    placedMonster.GetComponent<PlaceMonster>().unit.HP = (int)cardHandler.cardData.hp;
+        //    placedMonster.GetComponent<PlaceMonster>().unit.power = (int)cardHandler.cardData.attack;
+        //    placedMonster.GetComponent<PlaceMonster>().unit.type = cardHandler.cardData.type;
 
-            GameObject skeleton = Instantiate(cardHandler.skeleton, placedMonster.transform);
-            skeleton.name = "skeleton";
-            placedMonster.name = placedMonster.GetComponent<PlaceMonster>().unit.name;
+        //    GameObject skeleton = Instantiate(cardHandler.skeleton, placedMonster.transform);
+        //    skeleton.name = "skeleton";
+        //    placedMonster.name = placedMonster.GetComponent<PlaceMonster>().unit.name;
 
-            placedMonster.GetComponent<PlaceMonster>().Init();
-            placedMonster.GetComponent<PlaceMonster>().SpawnUnit();
-            GetComponent<Image>().enabled = false;
-            PlayMangement.instance.player.isPicking.Value = false;
-            PlayMangement.instance.player.resource.Value -= cardHandler.cardData.cost;
-            PlayMangement.instance.player.ActivePlayer();
+        //    placedMonster.GetComponent<PlaceMonster>().Init();
+        //    placedMonster.GetComponent<PlaceMonster>().SpawnUnit();
+        //    GetComponent<Image>().enabled = false;
+        //    PlayMangement.instance.player.isPicking.Value = false;
+        //    PlayMangement.instance.player.resource.Value -= cardHandler.cardData.cost;
+        //    PlayMangement.instance.player.ActivePlayer();
 
-            GameObject.Find("Player").transform.GetChild(0).GetComponent<PlayerController>().cdpm.DestroyCard(cardIndex);
-        }
+        //    //GameObject.Find("Player").transform.GetChild(0).GetComponent<PlayerController>().cdpm.DestroyCard(cardIndex);
+        //}
     }
 }
