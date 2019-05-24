@@ -1,13 +1,16 @@
 fileFormatVersion: 2
-guid: 2e4acd96c26092142a64ba4d08c3dbff
+guid: 77faba35c0f23ff47920abc37bb20dad
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4022400322290192599
-    second: Green
+      213: -1922417273455563661
+    second: Panel
   - first:
-      213: 5627140899447397344
-    second: Blue
+      213: -8182425218339159240
+    second: ShortLine
+  - first:
+      213: 3907466458871289192
+    second: LongLine
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -66,7 +69,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 2
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 1024
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -77,7 +80,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
   - serializedVersion: 2
     buildTarget: Standalone
-    maxTextureSize: 2048
+    maxTextureSize: 1024
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -88,7 +91,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
   - serializedVersion: 2
     buildTarget: iPhone
-    maxTextureSize: 2048
+    maxTextureSize: 1024
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -99,7 +102,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
   - serializedVersion: 2
     buildTarget: Android
-    maxTextureSize: 2048
+    maxTextureSize: 1024
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -112,43 +115,64 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Green
+      name: Panel
       rect:
         serializedVersion: 2
-        x: 98
-        y: 181
-        width: 220
-        height: 176
+        x: 325
+        y: 152
+        width: 967
+        height: 568
       alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 105, y: 140, z: 105, w: 240}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a58d62acc69d0ed42ba1221f8d6d4702
-      internalID: 4022400322290192599
+      spriteID: 44b5a52028c2c5b43917f65484dbb197
+      internalID: -1922417273455563661
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Blue
+      name: ShortLine
       rect:
         serializedVersion: 2
-        x: 374
-        y: 181
-        width: 220
-        height: 175
+        x: 1390
+        y: 123
+        width: 68
+        height: 342
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 72c71528b8cee3540a547cb87db720d5
-      internalID: 5627140899447397344
+      spriteID: f648f13cee89c4a449578346bf27cbf1
+      internalID: -8182425218339159240
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LongLine
+      rect:
+        serializedVersion: 2
+        x: 1499
+        y: 123
+        width: 68
+        height: 647
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1c9f8bb1818bcc148acf696162399a17
+      internalID: 3907466458871289192
       vertices: []
       indices: 
       edges: []
@@ -156,7 +180,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 4826f093dba0aa042aade1573a108008
+    spriteID: c568b7da0b4692c47964a68cd710ba50
     internalID: 0
     vertices: []
     indices: 

@@ -1,13 +1,25 @@
 fileFormatVersion: 2
-guid: de36548e0e53f36439da92f9de6324e1
+guid: 99c962812380058448fe5f6b3c0ddec0
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8423185402928313258
-    second: Main_Icon
+      213: -4227124954110140176
+    second: BattleText
   - first:
-      213: 1172317754026530869
-    second: Text
+      213: -6086934270031072648
+    second: Banner
+  - first:
+      213: -1922417273455563661
+    second: Panel
+  - first:
+      213: -4428536950790817387
+    second: TextAreaPanel
+  - first:
+      213: -6778814305684239521
+    second: BannerText
+  - first:
+      213: -408305625927626907
+    second: InnerTextArea
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -112,43 +124,85 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Main_Icon
+      name: BannerText
       rect:
         serializedVersion: 2
-        x: 600
-        y: 340
-        width: 845
-        height: 374
+        x: 505
+        y: 892
+        width: 265
+        height: 97
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9da961589b424f745b761878c9c0c887
-      internalID: -8423185402928313258
+      spriteID: b32da80485fb602429ec1136bec01f47
+      internalID: -6778814305684239521
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Text
+      name: Banner
       rect:
         serializedVersion: 2
-        x: 1556
-        y: 380
-        width: 332
-        height: 148
+        x: 241
+        y: 522
+        width: 775
+        height: 326
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 74c0dd24375ccc24d998c79dd6ec634e
-      internalID: 1172317754026530869
+      spriteID: 38ee795e3bdc3ba498abf65ffcff424c
+      internalID: -6086934270031072648
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Panel
+      rect:
+        serializedVersion: 2
+        x: 132
+        y: 69
+        width: 967
+        height: 385
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 120, y: 140, z: 120, w: 120}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a2cd4cfc3f8bddb46b610d994723b04d
+      internalID: -1922417273455563661
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: InnerTextArea
+      rect:
+        serializedVersion: 2
+        x: 1180
+        y: 181
+        width: 715
+        height: 97
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 30, y: 30, z: 30, w: 30}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 71f894e69d9b7bd49bf732d5ccdb1a4b
+      internalID: -408305625927626907
       vertices: []
       indices: 
       edges: []
@@ -156,7 +210,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 0205ecf058396344f8f25f2eae9529e6
+    spriteID: c60c1bb59eb097549aa80b5bcf5ef155
     internalID: 0
     vertices: []
     indices: 
