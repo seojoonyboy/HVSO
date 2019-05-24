@@ -119,6 +119,7 @@ public class CardDeckPositionManager : MonoBehaviour
                     ChangeSlotHeight(0.9f);
                     slot_2.GetChild(0).gameObject.SetActive(true);
                     slot_1.GetChild(3).GetChild(0).SetParent(slot_2.GetChild(0));
+                    slot_2.GetChild(0).GetChild(0).localPosition = new Vector3(0, 0, 0);
                     slot_1.GetChild(3).gameObject.SetActive(false);
                     slot_2.GetChild(1).gameObject.SetActive(true);
                     target = slot_2.GetChild(1);
@@ -169,11 +170,12 @@ public class CardDeckPositionManager : MonoBehaviour
     IEnumerator SendCardToHand(GameObject card, Transform target) {
         if (!firstDraw) {
             card.transform.localScale = new Vector3(1.5f, 1.5f, 1.0f);
-            iTween.MoveTo(card, firstDrawWindow.position, 0.5f);
+            iTween.MoveTo(card, firstDrawWindow.position, 0.4f);
             yield return new WaitForSeconds(0.5f);
         }
 
-        iTween.MoveTo(card, target.position, 0.4f);
+        iTween.MoveTo(card, target.position, 0.3f);
+        yield return new WaitForSeconds(0.3f);
         card.transform.SetParent(target);
         card.GetComponent<CardHandler>().RedrawCard();
         card.transform.localScale = new Vector3(1, 1, 1);
@@ -191,15 +193,15 @@ public class CardDeckPositionManager : MonoBehaviour
         switch (cardNum) {
             case 9:
                 if (index < 5) {
-                    slot_1.GetChild(4).SetParent(slot_2);
                     slot_2.GetChild(0).SetParent(slot_1);
+                    slot_1.GetChild(4).SetParent(slot_2);
                 }
                 break;
             case 8:
                 if (index > 4) {
                     slot_1.GetChild(4).SetParent(slot_2);
-                    slot_2.GetChild(4).SetAsFirstSibling();
-                    slot_2.GetChild(4).SetParent(slot_1);
+                    slot_2.GetChild(5).SetAsFirstSibling();
+                    slot_2.GetChild(5).SetParent(slot_1);
                 }
                 break;
             case 7:
