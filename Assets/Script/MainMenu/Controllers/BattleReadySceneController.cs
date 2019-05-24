@@ -56,8 +56,8 @@ public class BattleReadySceneController : MonoBehaviour {
         if (response.responseCode == 200) {
             orcDecks = JsonReader.Read<OrcDecks>(response.data);
 
-            battleTypeToggles[0].GetComponent<Toggle>().isOn = true;
-            battleTypeToggles[0].GetComponent<ToggleHandler>().OnValueChanged();
+            //battleTypeToggles[0].GetComponent<Toggle>().isOn = true;
+            //battleTypeToggles[0].GetComponent<ToggleHandler>().OnValueChanged();
             raceTypeButtons[0].onClick.Invoke();
         }
         else {
@@ -69,15 +69,15 @@ public class BattleReadySceneController : MonoBehaviour {
 
     void Update() {
         if (Input.GetMouseButtonDown(0)) {
-            GraphicRaycaster gr = this.GetComponent<GraphicRaycaster>();
-            PointerEventData ped = new PointerEventData(null);
-            ped.position = Input.mousePosition;
-            List<RaycastResult> results = new List<RaycastResult>();
-            gr.Raycast(ped, results);
+            //GraphicRaycaster gr = this.GetComponent<GraphicRaycaster>();
+            //PointerEventData ped = new PointerEventData(null);
+            //ped.position = Input.mousePosition;
+            //List<RaycastResult> results = new List<RaycastResult>();
+            //gr.Raycast(ped, results);
 
-            if (selectedDeck != null && isNoneDeckClicked(results)) {
-                OffClickDeck();
-            }
+            //if (selectedDeck != null && isNoneDeckClicked(results)) {
+            //    OffClickDeck();
+            //}
         }
     }
 
