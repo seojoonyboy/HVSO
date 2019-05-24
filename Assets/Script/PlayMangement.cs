@@ -76,6 +76,10 @@ public partial class PlayMangement : MonoBehaviour
         enemyPlayer.backLine.transform.position = backGround.transform.Find("Line_Y_Position").Find("Player2_BackLine").position;
         enemyPlayer.frontLine.transform.position = backGround.transform.Find("Line_Y_Position").Find("Player2_FrontLine").position;
 
+        for(int i = 0; i < player.frontLine.transform.childCount; i++) {
+            Vector3 pos = backGround.transform.GetChild(i).position;
+            backGround.transform.GetChild(i).position = new Vector3(pos.x, player.backLine.transform.position.y, 0);
+        }
     }
 
 
