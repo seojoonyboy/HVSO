@@ -59,22 +59,6 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         CheckHighlight();
     }
 
-    public void CheckHighlight() {
-        if (!highlighted) {
-            highlightedSlot = CheckSlot();
-            if (highlightedSlot != null) {
-                highlighted = true;
-                UnitDropManager.Instance.HighLightSlot(highlightedSlot, highlighted);
-            }
-        }
-        else {
-            if (highlightedSlot != CheckSlot()) {
-                highlighted = false;
-                UnitDropManager.Instance.HighLightSlot(highlightedSlot, highlighted);
-                highlightedSlot = null;
-            }
-        }
-    }
 
     public void OnEndDrag(PointerEventData eventData) {
         if (firstDraw) return;
@@ -83,7 +67,35 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         PlayMangement.instance.player.isPicking.Value = false;
         if (PlayMangement.instance.player.getPlayerTurn == true && PlayMangement.instance.player.resource.Value >= cardData.cost)
             UnitDropManager.Instance.DropUnit(gameObject, CheckSlot());
+        else {
+            highlighted = false;
+            UnitDropManager.Instance.HighLightSlot(highlightedSlot, highlighted);
+            highlightedSlot = null;
+        }
+
         UnitDropManager.Instance.HideDropableSlot();
+    }
+
+    public void CheckHighlight() {
+        if (!highlighted) {
+            highlightedSlot = CheckSlot();
+            if (highlightedSlot != null) {
+                highlighted = true;
+                transform.Find("GlowEffect").GetComponent<Image>().color = new Color(163.0f / 255.0f, 236.0f / 255.0f, 27.0f / 255.0f);
+                UnitDropManager.Instance.HighLightSlot(highlightedSlot, highlighted);
+            }
+        }
+        else {
+            if (highlightedSlot != CheckSlot()) {
+                highlighted = false;
+                if (PlayMangement.instance.player.getPlayerTurn == true && PlayMangement.instance.player.resource.Value >= cardData.cost)
+                    transform.Find("GlowEffect").GetComponent<Image>().color = new Color(1, 1, 107.0f / 255.0f);
+                else
+                    transform.Find("GlowEffect").GetComponent<Image>().color = new Color(1, 1, 1);
+                UnitDropManager.Instance.HighLightSlot(highlightedSlot, highlighted);
+                highlightedSlot = null;
+            }
+        }
     }
 
     private Transform CheckSlot() {
@@ -129,27 +141,28 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     }
 
     public void DisableCard() {
-        gameObject.transform.Find("GlowEffect").GetComponent<Image>().enabled = false;
-        gameObject.transform.Find("Portrait").GetComponent<Image>().color = Color.gray;
-        gameObject.transform.Find("attack").GetComponent<Image>().color = Color.gray;
-        gameObject.transform.Find("Health").GetComponent<Image>().color = Color.gray;
-        gameObject.transform.Find("Cost").GetComponent<Image>().color = Color.gray;
+        transform.Find("GlowEffect").GetComponent<Image>().enabled = false;
+        transform.Find("Portrait").GetComponent<Image>().color = Color.gray;
+        transform.Find("attack").GetComponent<Image>().color = Color.gray;
+        transform.Find("Health").GetComponent<Image>().color = Color.gray;
+        transform.Find("Cost").GetComponent<Image>().color = Color.gray;
     }
 
     public void ActivateCard() {
         if (PlayMangement.instance.player.resource.Value >= cardData.cost) {
-            gameObject.transform.Find("GlowEffect").GetComponent<Image>().enabled = true;
-            gameObject.transform.Find("Portrait").GetComponent<Image>().color = Color.white;
-            gameObject.transform.Find("attack").GetComponent<Image>().color = Color.white;
-            gameObject.transform.Find("Health").GetComponent<Image>().color = Color.white;
-            gameObject.transform.Find("Cost").GetComponent<Image>().color = Color.white;
+            transform.Find("GlowEffect").GetComponent<Image>().enabled = true;
+            transform.Find("GlowEffect").GetComponent<Image>().color = new Color(1, 1, 107.0f / 255.0f);
+            transform.Find("Portrait").GetComponent<Image>().color = Color.white;
+            transform.Find("attack").GetComponent<Image>().color = Color.white;
+            transform.Find("Health").GetComponent<Image>().color = Color.white;
+            transform.Find("Cost").GetComponent<Image>().color = Color.white;            
         }
         else {
-            gameObject.transform.Find("GlowEffect").GetComponent<Image>().enabled = false;
-            gameObject.transform.Find("Portrait").GetComponent<Image>().color = Color.gray;
-            gameObject.transform.Find("attack").GetComponent<Image>().color = Color.gray;
-            gameObject.transform.Find("Health").GetComponent<Image>().color = Color.gray;
-            gameObject.transform.Find("Cost").GetComponent<Image>().color = Color.gray;
+            transform.Find("GlowEffect").GetComponent<Image>().enabled = false;
+            transform.Find("Portrait").GetComponent<Image>().color = Color.gray;
+            transform.Find("attack").GetComponent<Image>().color = Color.gray;
+            transform.Find("Health").GetComponent<Image>().color = Color.gray;
+            transform.Find("Cost").GetComponent<Image>().color = Color.gray;
         }
     }
 

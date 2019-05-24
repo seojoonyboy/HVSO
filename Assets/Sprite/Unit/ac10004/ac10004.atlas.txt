@@ -1,0 +1,83 @@
+
+ac10004.png
+size: 1024,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+L_leg
+  rotate: false
+  xy: 722, 187
+  size: 56, 67
+  orig: 56, 67
+  offset: 0, 0
+  index: -1
+L_upper_arm
+  rotate: false
+  xy: 2, 28
+  size: 159, 145
+  orig: 159, 145
+  offset: 0, 0
+  index: -1
+R_arm
+  rotate: false
+  xy: 323, 29
+  size: 58, 102
+  orig: 58, 102
+  offset: 0, 0
+  index: -1
+R_leg
+  rotate: false
+  xy: 780, 187
+  size: 54, 67
+  orig: 54, 67
+  offset: 0, 0
+  index: -1
+body
+  rotate: false
+  xy: 418, 140
+  size: 122, 114
+  orig: 122, 114
+  offset: 0, 0
+  index: -1
+dog_body
+  rotate: false
+  xy: 257, 133
+  size: 159, 121
+  orig: 159, 121
+  offset: 0, 0
+  index: -1
+dog_head
+  rotate: true
+  xy: 542, 143
+  size: 111, 120
+  orig: 111, 120
+  offset: 0, 0
+  index: -1
+dog_tail
+  rotate: false
+  xy: 664, 159
+  size: 56, 95
+  orig: 56, 95
+  offset: 0, 0
+  index: -1
+eyeblow
+  rotate: false
+  xy: 2, 9
+  size: 91, 17
+  orig: 91, 17
+  offset: 0, 0
+  index: -1
+helmet
+  rotate: false
+  xy: 163, 2
+  size: 158, 129
+  orig: 158, 129
+  offset: 0, 0
+  index: -1
+shadow
+  rotate: false
+  xy: 2, 175
+  size: 253, 79
+  orig: 253, 79
+  offset: 0, 0
+  index: -1

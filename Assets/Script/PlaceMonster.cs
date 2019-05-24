@@ -132,12 +132,14 @@ public class PlaceMonster : MonoBehaviour
                 GameObject effect = Instantiate(PlayMangement.instance.effectManager.lowAttackEffect);
                 effect.transform.position = (placeMonster != null) ? myTarget.transform.position : new Vector3(gameObject.transform.position.x, myTarget.transform.position.y, 0);
                 Destroy(effect, effect.GetComponent<ParticleSystem>().main.duration - 0.2f);
+                StartCoroutine(PlayMangement.instance.cameraShake(unitSpine.atkDuration / 2));
                 SoundManager.Instance.PlaySound(SoundType.NORMAL_ATTACK);
             }
             else if (unit.power > 4) {
                 GameObject effect =  (unit.power < 6)  ? Instantiate(PlayMangement.instance.effectManager.middileAttackEffect) : Instantiate(PlayMangement.instance.effectManager.highAttackEffect);
                 effect.transform.position = (placeMonster != null) ? myTarget.transform.position : new Vector3(gameObject.transform.position.x, myTarget.transform.position.y, 0);
                 Destroy(effect, effect.GetComponent<ParticleSystem>().main.duration - 0.2f);
+                StartCoroutine(PlayMangement.instance.cameraShake(unitSpine.atkDuration / 2));
                 SoundManager.Instance.PlaySound(SoundType.LARGE_ATTACK);
             }
         }
@@ -145,6 +147,7 @@ public class PlaceMonster : MonoBehaviour
 
         if (unitSpine.arrow != null) {
             GameObject arrow = transform.Find("arrow").gameObject;
+            arrow.transform.position = transform.position;
             arrow.SetActive(false);
         }
         else
