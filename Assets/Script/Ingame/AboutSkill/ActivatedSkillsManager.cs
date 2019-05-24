@@ -7,8 +7,8 @@ using Sirenix.OdinInspector;
 /// Set Instance
 /// </summary>
 public partial class ActivatedSkillsManager : SerializedBehaviour {
-    ActivatedSkillsManager _instance;
-    public ActivatedSkillsManager Instance {
+    static ActivatedSkillsManager _instance;
+    public static ActivatedSkillsManager Instance {
         get {
             return _instance;
         }
