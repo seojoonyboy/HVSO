@@ -26,6 +26,7 @@ public class SoundManager : MonoBehaviour {
         sounds[SoundType.LARGE_ATTACK] = transform.GetChild(1).GetComponent<AudioSource>();
         sounds[SoundType.NEXT_TURN] = transform.GetChild(2).GetComponent<AudioSource>();
         sounds[SoundType.NORMAL_ATTACK] = transform.GetChild(3).GetComponent<AudioSource>();
+        sounds[SoundType.MIDDLE_ATTACK] = transform.GetChild(4).GetComponent<AudioSource>();
 
         DontDestroyOnLoad(gameObject);    
     }
@@ -40,5 +41,6 @@ public enum SoundType {
     NEXT_TURN,
     FIRST_TURN,
     NORMAL_ATTACK,
+    MIDDLE_ATTACK,
     LARGE_ATTACK
 }

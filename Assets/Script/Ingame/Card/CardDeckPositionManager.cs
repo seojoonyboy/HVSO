@@ -101,7 +101,7 @@ public class CardDeckPositionManager : MonoBehaviour
                 firstDraw = false;
             }
             cardList.Add(card);
-            card.GetComponent<CardHandler>().RedrawSelf();
+            card.GetComponent<CardHandler>().RedrawCard();
             card.transform.localScale = new Vector3(1, 1, 1);
             if (target != null) {
                 StartCoroutine(SendCardToHand(card, target));
@@ -160,7 +160,7 @@ public class CardDeckPositionManager : MonoBehaviour
             }
         }
         cardList.Add(card);
-        card.GetComponent<CardHandler>().RedrawSelf();
+        card.GetComponent<CardHandler>().RedrawCard();
         card.transform.localScale = new Vector3(1, 1, 1);
         if(target != null)
             StartCoroutine(SendCardToHand(card, target));
@@ -175,7 +175,7 @@ public class CardDeckPositionManager : MonoBehaviour
 
         iTween.MoveTo(card, target.position, 0.4f);
         card.transform.SetParent(target);
-        card.GetComponent<CardHandler>().RedrawSelf();
+        card.GetComponent<CardHandler>().RedrawCard();
         card.transform.localScale = new Vector3(1, 1, 1);
         card.GetComponent<CardHandler>().DisableCard();
 

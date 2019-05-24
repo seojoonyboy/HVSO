@@ -11,27 +11,18 @@ using dataModules;
 using SocketFormat;
 
 public class BattleConnector : MonoBehaviour {
-    private string url = "ws://192.168.1.23/game";
+    private string url = "ws://ccdevclient.fbl.kr/game";
     WebSocket webSocket;
     [SerializeField] Text message;
     [SerializeField] GameObject machine;
 
     public UnityEvent OnReceiveSocketMessage;
     public UnityEvent OnSocketClose;
-    private BattleConnectorAI battleAI;
+    public GameState gameState;
 
     void Awake() {
         DontDestroyOnLoad(gameObject);
     }
-
-    //void GetRoom() {
-    //    HTTPRequest request = new HTTPRequest(new Uri(url), OnRequestFinished);
-    //    request.Send();
-    //}
-
-    //void OnRequestFinished(HTTPRequest request, HTTPResponse response) {
-    //    if (response.IsSuccess) OpenSocket();
-    //}
 
     public void OpenSocket() {
         string url = string.Format("{0}", this.url);
@@ -44,54 +35,51 @@ public class BattleConnector : MonoBehaviour {
     }
 
     //Connected
-    void OnOpen(WebSocket webSocket) {
-        SendFormat format = new SendFormat();
-        format.method = "join_game";
+    private void OnOpen(WebSocket webSocket) {
         string playerId = AccountManager.Instance.DEVICEID;
         string deckId = "deck1001";
-        format.args = new string[] {"solo", playerId, "basic", deckId };
-
-        string json = JsonUtility.ToJson(format);
-        this.webSocket.Send(json);
-    }
-
-    public void SendToSocket(SendFormat data) {
-        Debug.Log("Sending...");
-        string json = JsonUtility.ToJson(data);
-        webSocket.Send(json);
+        string[] args = new string[] {"solo", playerId, "basic", deckId };
+        SendMethod("join_game", args);
     }
 
     //Receive Socket Message
-    void ReceiveMessage(WebSocket webSocket, string message) {
+    private void ReceiveMessage(WebSocket webSocket, string message) {
         OnReceiveSocketMessage.Invoke();
-
+        Debug.Log("Client : " + message);
         ReceiveFormat result = JsonReader.Read<ReceiveFormat>(message);
-        if(result.method == "created") {
-            battleAI = gameObject.AddComponent<BattleConnectorAI>();
-            battleAI.gameUuidId = result.args[0];
-            battleAI.OpenSocket();
-        }
+        if(result.gameState != null) gameState = result.gameState;
         if(result.method == "begin_ready") {
             this.message.text = "대전 상대를 찾았습니다.";
             CustomEvent.Trigger(machine, "PlayStartBattleAnim");
-            return;
+            SendMethod("client_ready");
         }
-        Debug.Log("Client : " + message);
-        //if (message.CompareTo("closing") == 0) {
-        //    OnSocketClose.Invoke();
-        //    webSocket.Close();
-        //}
+        else if(result.method == "begin_mulligan") {
+            //int change_cardItemId = result.gameState.players.human.deck.handCards[0].itemId;
+            //string[] args = new string[]{change_cardItemId.ToString()};
+            //SendMethod("hand_change", args);
+        }
+        else if(result.method == "hand_changed") {
+            
+        }
     }
+
+
 
     void Error(WebSocket webSocket, Exception ex) {
         Debug.Log(ex);
     }
 
     void OnDisable() {
-        //webSocket.Close();
+        webSocket.Close();
     }
 
     public void StartBattle() {
         SceneManager.Instance.LoadScene(SceneManager.Scene.MISSION_INGAME);
+    }
+
+    private void SendMethod(string method, string[] args = null) {
+        if(args == null) args = new string[]{};
+        SendFormat format = new SendFormat(method, args);
+        webSocket.Send(JsonUtility.ToJson(format));
     }
 }
