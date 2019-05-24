@@ -34,7 +34,7 @@ public partial class PlayMangement : MonoBehaviour
         gameObject.GetComponent<TurnChanger>().onTurnChanged.AddListener(() => ChangeTurn());
         gameObject.GetComponent<TurnChanger>().onPrepareTurn.AddListener(() => DistributeCard());
         GameObject backGroundEffect = Instantiate(effectManager.backGroundEffect);
-        backGroundEffect.transform.position = transform.position;
+        backGroundEffect.transform.position = backGround.transform.Find("ParticlePosition").position;
         SetCamera();
 
     }
