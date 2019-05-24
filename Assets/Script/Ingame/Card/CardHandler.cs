@@ -48,21 +48,23 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     public void OnBeginDrag(PointerEventData eventData) {
         if (firstDraw) return;
         blockButton = true;
-        startPos = transform.position;
+        startPos = transform.parent.position;
         PlayMangement.instance.player.isPicking.Value = true;
         UnitDropManager.Instance.ShowDropableSlot(cardData, true);
     }
 
     public void OnDrag(PointerEventData eventData) {
         if (firstDraw) return;
-        transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector3 cardScreenPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        transform.position = new Vector3(cardScreenPos.x, cardScreenPos.y + 0.3f, cardScreenPos.z);
         CheckHighlight();
     }
 
 
     public void OnEndDrag(PointerEventData eventData) {
         if (firstDraw) return;
-        transform.position = startPos;
+        //transform.position = startPos;
+        iTween.MoveTo(gameObject, startPos, 0.3f);
         blockButton = false;
         PlayMangement.instance.player.isPicking.Value = false;
         if (PlayMangement.instance.player.getPlayerTurn == true && PlayMangement.instance.player.resource.Value >= cardData.cost)
@@ -100,6 +102,7 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
     private Transform CheckSlot() {
         Vector3 origin = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        origin = new Vector3(origin.x, origin.y + 0.3f, origin.z);
         Ray2D ray = new Ray2D(origin, Vector2.zero);
 
         RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
