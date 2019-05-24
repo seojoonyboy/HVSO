@@ -14,7 +14,7 @@ public class CardData {
     public int? attack;
     public int? hp;
     public bool hero_chk;
-
+    public dataModules.Skill[] skills;
 
     public enum Rarelity {
         common,
