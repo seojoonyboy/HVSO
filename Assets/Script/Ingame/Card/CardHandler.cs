@@ -55,7 +55,7 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
     public void OnBeginDrag(PointerEventData eventData) {
         if (firstDraw) return;
-        blockButton = true;
+        blockButton = PlayMangement.instance.player.drawCard = true;
         startPos = transform.parent.position;
         PlayMangement.instance.player.isPicking.Value = true;
         UnitDropManager.Instance.ShowDropableSlot(cardData, true);
@@ -73,7 +73,7 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         if (firstDraw) return;
         //transform.position = startPos;
         iTween.MoveTo(gameObject, startPos, 0.3f);
-        blockButton = false;
+        blockButton = PlayMangement.instance.player.drawCard = false;
         PlayMangement.instance.player.isPicking.Value = false;
         if (PlayMangement.instance.player.getPlayerTurn == true && PlayMangement.instance.player.resource.Value >= cardData.cost)
             UnitDropManager.Instance.DropUnit(gameObject, CheckSlot());
