@@ -61,7 +61,9 @@ public class CardDeckPositionManager : MonoBehaviour
             cards.transform.Find("ChangeButton").gameObject.SetActive(false);
         }
         StartCoroutine(DrawChangedCards());
+        firstDrawWindow.parent.Find("FinishButton").GetComponent<Button>().enabled = false;
         firstDrawWindow.parent.Find("FinishButton").GetComponent<Image>().enabled = false;
+        firstDrawWindow.parent.Find("FinishButton").GetChild(0).gameObject.SetActive(false);
         firstDrawWindow.parent.Find("FinishButton").gameObject.SetActive(false);
     }
 
