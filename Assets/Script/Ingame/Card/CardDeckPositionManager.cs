@@ -163,7 +163,9 @@ public class CardDeckPositionManager : MonoBehaviour
         cardList.Add(card);
         card.GetComponent<CardHandler>().RedrawCard();
         card.transform.localScale = new Vector3(1, 1, 1);
-        if(target != null)
+        LayoutRebuilder.ForceRebuildLayoutImmediate(slot_1.GetComponent<RectTransform>());
+        LayoutRebuilder.ForceRebuildLayoutImmediate(slot_2.GetComponent<RectTransform>());
+        if (target != null)
             StartCoroutine(SendCardToHand(card, target));
     }
 
@@ -247,6 +249,8 @@ public class CardDeckPositionManager : MonoBehaviour
                 break;
         }
         cardList[index].transform.parent.gameObject.SetActive(false);
+        LayoutRebuilder.ForceRebuildLayoutImmediate(slot_1.GetComponent<RectTransform>());
+        LayoutRebuilder.ForceRebuildLayoutImmediate(slot_2.GetComponent<RectTransform>());
         Destroy(cardList[index]);
         cardList.RemoveAt(index);
     }
