@@ -57,6 +57,7 @@ public class PlayerController : MonoBehaviour
 
         GameObject enemyCard = Instantiate(PlayMangement.instance.enemyPlayer.back);
         enemyCard.transform.SetParent(PlayMangement.instance.enemyPlayer.playerUI.transform.Find("CardSlot"));
+        enemyCard.transform.localScale = new Vector3(1, 1, 1);
         enemyCard.SetActive(true);
     }
 
