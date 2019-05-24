@@ -67,6 +67,11 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         PlayMangement.instance.player.isPicking.Value = false;
         if (PlayMangement.instance.player.getPlayerTurn == true && PlayMangement.instance.player.resource.Value >= cardData.cost)
             UnitDropManager.Instance.DropUnit(gameObject, CheckSlot());
+        else {
+            highlighted = false;
+            UnitDropManager.Instance.HighLightSlot(highlightedSlot, highlighted);
+            highlightedSlot = null;
+        }
 
         UnitDropManager.Instance.HideDropableSlot();
     }
