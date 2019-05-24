@@ -17,11 +17,9 @@ public class Ability : MonoBehaviour {
 
     public virtual void InitData(object data) { }
 
-    protected virtual void BeginCardPlay() { }
+    protected virtual void BeginCardPlay() {
+
+    }
     protected virtual void EndCardPlay() { }
     protected virtual void OnAttack() { }
-
-    public virtual IEnumerator OnBeginDrag() {
-        yield return null;
-    }
 }
