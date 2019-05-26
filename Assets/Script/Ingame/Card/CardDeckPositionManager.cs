@@ -34,7 +34,11 @@ public class CardDeckPositionManager : MonoBehaviour
         GameObject card = Instantiate(cardPrefab, cardSpawnPos);
         card.transform.SetParent(firstDrawWindow);
         card.SetActive(true);
-        card.GetComponent<CardHandler>().DrawCard("ac1000"+ Random.Range(1,5), true);
+
+        string cardID = "ac1000" + Random.Range(1, 5);
+        card.GetComponent<CardHandler>().DrawCard(cardID, true);
+        AddAbilityInCardPrefab(cardID, ref card);
+
         iTween.MoveTo(card, firstDrawWindow.GetChild(firstDrawList.Count).position, 0.5f);
         firstDrawList.Add(card);
         card.transform.localScale = new Vector3(1, 1, 1);
@@ -51,9 +55,29 @@ public class CardDeckPositionManager : MonoBehaviour
         card.transform.SetParent(firstDrawWindow.parent);
         firstDrawList.Add(card);
         card.SetActive(true);
-        card.GetComponent<CardHandler>().DrawCard("ac10001");
+        string cardID = "ac10001";
+        card.GetComponent<CardHandler>().DrawCard(cardID);
         card.transform.localPosition = new Vector3(0, 0, 0);
         card.transform.localScale = new Vector3(1.7f, 1.7f, 1);
+
+        AddAbilityInCardPrefab(cardID, ref card);
+    }
+
+    /// <summary>
+    /// 카드 특수효과 컴포넌트 추가
+    /// </summary>
+    /// <param name="cardID"></param>
+    /// <param name="card"></param>
+    public void AddAbilityInCardPrefab(string cardID, ref GameObject card) {
+        CardDataPackage cardDataPackage = AccountManager.Instance.cardPackage;
+        if (cardDataPackage.data.ContainsKey(cardID)) {
+            CardData cardData = cardDataPackage.data[cardID];
+            foreach (var skill in cardData.skills) {
+                foreach (var effect in skill.effects) {
+                    card.AddComponent(System.Type.GetType("SkillModules.Ability_" + effect.method));
+                }
+            }
+        }
     }
 
     public void FirstDrawCardChange() {
@@ -82,8 +106,9 @@ public class CardDeckPositionManager : MonoBehaviour
 
     public void AddCard(GameObject cardobj = null) {
         GameObject card;
-        if (cardobj == null)
+        if (cardobj == null) {
             card = Instantiate(cardPrefab, cardSpawnPos);
+        }
         else
             card = cardobj;
         card.SetActive(true);

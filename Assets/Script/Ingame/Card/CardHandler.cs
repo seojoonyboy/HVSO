@@ -36,11 +36,6 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
         if (cardDataPackage.data.ContainsKey(cardID)) {
             cardData = cardDataPackage.data[cardID];
-            foreach(var skill in cardData.skills) {
-                foreach(var effect in skill.effects) {
-                    gameObject.AddComponent(Type.GetType("SkillModules.Ability_" + effect.method));
-                }
-            }
             transform.Find("Portrait").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardPortraite[cardID];
             skeleton = Resources.Load<GameObject>("Skeleton/Skeleton_" + cardID);
         }
@@ -143,8 +138,21 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     }
 
     public void RedrawCard() {
-        if (cardID == null)
-            DrawCard("ac1000" + UnityEngine.Random.Range(1, 5));
+        if (cardID == null) {
+            string id = "ac1000" + UnityEngine.Random.Range(1, 5);
+            DrawCard(id);
+
+
+            CardDataPackage cardDataPackage = AccountManager.Instance.cardPackage;
+            if (cardDataPackage.data.ContainsKey(id)) {
+                CardData cardData = cardDataPackage.data[id];
+                foreach (var skill in cardData.skills) {
+                    foreach (var effect in skill.effects) {
+                        gameObject.AddComponent(System.Type.GetType("SkillModules.Ability_" + effect.method));
+                    }
+                }
+            }
+        }
         else
             DrawCard(cardID);
         firstDraw = false;

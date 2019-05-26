@@ -65,10 +65,15 @@ public class PlayerController : MonoBehaviour
 
     public void DrawPlayerCard(GameObject card) {
         cdpm.AddCard();
-        if (race == true)
-            card.GetComponent<CardHandler>().DrawCard("ac1000" + Random.Range(1,5));
-        else
-            card.GetComponent<CardHandler>().DrawCard("ac10012");
+        string cardID;
+        if (race == true) {
+            cardID = "ac1000";
+            card.GetComponent<CardHandler>().DrawCard(cardID + Random.Range(1, 5));
+        }
+        else {
+            cardID = "ac10012";
+            card.GetComponent<CardHandler>().DrawCard(cardID);
+        }
         card.SetActive(true);
     }
 
