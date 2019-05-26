@@ -4,14 +4,8 @@ using UnityEngine;
 
 namespace SkillModules {
     public class Ability_gain : Ability {
-        // Start is called before the first frame update
-        void Start() {
-
-        }
-
-        // Update is called once per frame
-        void Update() {
-
+        public override void EndCardPlay() {
+            Debug.Log("버프를 줄 대상을 골라주세요.");
         }
     }
 }

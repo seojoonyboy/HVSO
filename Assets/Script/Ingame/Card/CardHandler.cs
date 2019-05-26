@@ -97,6 +97,11 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         }
 
         UnitDropManager.Instance.HideDropableSlot();
+
+        var abilities = GetComponents<Ability>();
+        foreach (Ability ability in abilities) {
+            ability.EndCardPlay();
+        }
     }
 
     public void CheckHighlight() {
@@ -159,7 +164,8 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
                 CardData cardData = cardDataPackage.data[id];
                 foreach (var skill in cardData.skills) {
                     foreach (var effect in skill.effects) {
-                        gameObject.AddComponent(System.Type.GetType("SkillModules.Ability_" + effect.method));
+                        var newComp = gameObject.AddComponent(System.Type.GetType("SkillModules.Ability_" + effect.method));
+                        ((Ability)newComp).InitData(skill);
                     }
                 }
             }

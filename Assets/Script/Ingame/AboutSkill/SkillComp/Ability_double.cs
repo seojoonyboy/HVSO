@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace SkillModules {
-    public class Ability_double : MonoBehaviour {
+    public class Ability_double : Ability {
 
     }
 }

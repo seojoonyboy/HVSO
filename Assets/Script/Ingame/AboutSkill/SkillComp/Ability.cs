@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using dataModules;
 
 /// <summary>
 /// 카드 고유 능력 처리에 대한 스크립트
@@ -12,12 +13,14 @@ public class Ability : MonoBehaviour {
     public UnityEvent<object> OnBeginDragFinished;
 
     public bool isChangeDropableSlot = false;
-
+    dataModules.Skill skillData;
     void Awake() {
         skillManager = ActivatedSkillsManager.Instance;    
     }
 
-    public virtual void InitData(object data) { }
+    public virtual void InitData(Skill data) {
+        skillData = data;
+    }
 
     public virtual void BeginCardPlay() {
 

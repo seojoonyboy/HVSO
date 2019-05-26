@@ -74,7 +74,8 @@ public class CardDeckPositionManager : MonoBehaviour
             CardData cardData = cardDataPackage.data[cardID];
             foreach (var skill in cardData.skills) {
                 foreach (var effect in skill.effects) {
-                    card.AddComponent(System.Type.GetType("SkillModules.Ability_" + effect.method));
+                    var newComp = card.AddComponent(System.Type.GetType("SkillModules.Ability_" + effect.method));
+                    ((Ability)newComp).InitData(skill);
                 }
             }
         }
