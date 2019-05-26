@@ -58,7 +58,18 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         blockButton = PlayMangement.instance.player.drawCard = true;
         startPos = transform.parent.position;
         PlayMangement.instance.player.isPicking.Value = true;
-        UnitDropManager.Instance.ShowDropableSlot(cardData, true);
+
+        var abilities = GetComponents<Ability>();
+        bool isNormalDropableSlot = true;
+        foreach(Ability ability in abilities) {
+            ability.BeginCardPlay();
+            if (ability.isChangeDropableSlot) {
+                isNormalDropableSlot = false;
+            }
+        }
+        if (isNormalDropableSlot) {
+            UnitDropManager.Instance.ShowDropableSlot(cardData, true);
+        }
     }
 
     public void OnDrag(PointerEventData eventData) {

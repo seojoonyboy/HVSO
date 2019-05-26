@@ -11,15 +11,17 @@ public class Ability : MonoBehaviour {
     public UnityEvent<object> OnDropFinished;
     public UnityEvent<object> OnBeginDragFinished;
 
+    public bool isChangeDropableSlot = false;
+
     void Awake() {
         skillManager = ActivatedSkillsManager.Instance;    
     }
 
     public virtual void InitData(object data) { }
 
-    protected virtual void BeginCardPlay() {
+    public virtual void BeginCardPlay() {
 
     }
-    protected virtual void EndCardPlay() { }
-    protected virtual void OnAttack() { }
+    public virtual void EndCardPlay() { }
+    public virtual void OnAttack() { }
 }

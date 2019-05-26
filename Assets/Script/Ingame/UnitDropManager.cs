@@ -52,6 +52,17 @@ public partial class UnitDropManager : Singleton<UnitDropManager> {
         }
     }
 
+    public void ShowDropableSlot(FieldType type) {
+        switch (type) {
+            case FieldType.FOOTSLOG:
+                slotLine[4].GetChild(0).gameObject.SetActive(true);
+                break;
+            case FieldType.HILL:
+                slotLine[0].GetChild(0).gameObject.SetActive(true);
+                break;
+        }
+    }
+
     public void HideDropableSlot() {
         for (int i = 0; i < 5; i++) {
             if (unitLine[i][0].childCount > 0)
@@ -152,4 +163,9 @@ public partial class UnitDropManager : Singleton<UnitDropManager> {
 
         GameObject.Find("Player").transform.GetChild(0).GetComponent<PlayerController>().cdpm.DestroyCard(cardIndex);
     }
+}
+
+public enum FieldType {
+    FOOTSLOG,
+    HILL
 }
