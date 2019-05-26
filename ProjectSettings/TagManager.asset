@@ -22,7 +22,7 @@ TagManager:
   - Items
   - Enemy
   - UnitSlot
-  - 
+  - PlayerUnit
   - 
   - 
   - 
@@ -47,4 +47,7 @@ TagManager:
     locked: 0
   - name: Items
     uniqueID: 4003150781
+    locked: 0
+  - name: UI
+    uniqueID: 1191610499
     locked: 0
