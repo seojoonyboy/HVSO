@@ -20,12 +20,14 @@ public class CardListManager : MonoBehaviour
         hss = transform.GetComponentInChildren<HorizontalScrollSnap>();
     }
 
-    public void AddCardInfo(CardData data) {
+    public void AddCardInfo(CardData data, string id) {
         GameObject newcard =  Instantiate(cardPrefab);
         SetCardInfo(newcard, data);
         GameObject newcardInfo = Instantiate(infoPrefab, contentParent);
         SetCardClassInfo(newcardInfo, data);
         hss.AddChild(newcard);
+        GameObject unitImage = Instantiate(AccountManager.Instance.resource.cardSkeleton[id], newcard.transform.Find("Info/UnitImage"));
+        unitImage.transform.localScale = new Vector3(500, 500, 0);
     }
 
     public void RemoveCardInfo(int index) {

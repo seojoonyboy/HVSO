@@ -15,7 +15,7 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     public bool firstDraw = false;
     public bool changeSelected = false;
     Animator cssAni;
-    private string cardID;
+    public string cardID;
 
     private bool highlighted = false;
     private Transform highlightedSlot;
@@ -161,8 +161,10 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
                 foreach (var skill in cardData.skills) {
                     foreach (var effect in skill.effects) {
                         var newComp = gameObject.AddComponent(System.Type.GetType("SkillModules.Ability_" + effect.method));
-                        ((Ability)newComp).InitData(skill);
-                        ((Ability)newComp).isPlayer = true;
+                        if(newComp != null) {
+                            ((Ability)newComp).InitData(skill);
+                            ((Ability)newComp).isPlayer = true;
+                        }
                     }
                 }
             }

@@ -77,8 +77,10 @@ public class CardDeckPositionManager : MonoBehaviour
             foreach (var skill in cardData.skills) {
                 foreach (var effect in skill.effects) {
                     var newComp = card.AddComponent(System.Type.GetType("SkillModules.Ability_" + effect.method));
-                    ((Ability)newComp).InitData(skill);
-                    ((Ability)newComp).isPlayer = true;
+                    if(newComp != null) {
+                        ((Ability)newComp).InitData(skill);
+                        ((Ability)newComp).isPlayer = true;
+                    }
                 }
             }
         }
@@ -212,7 +214,7 @@ public class CardDeckPositionManager : MonoBehaviour
         card.transform.localScale = new Vector3(1, 1, 1);
         card.GetComponent<CardHandler>().DisableCard();
         CardListManager csm = GameObject.Find("Canvas").transform.Find("CardInfoList").GetComponent<CardListManager>();
-        csm.AddCardInfo(card.GetComponent<CardHandler>().cardData);
+        csm.AddCardInfo(card.GetComponent<CardHandler>().cardData, card.GetComponent<CardHandler>().cardID);
     }
 
     public void DestroyCard(int index) {
