@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UniRx;
-
+using TMPro;
 public class PlayerController : MonoBehaviour
 {
     public bool race;
@@ -84,12 +84,12 @@ public class PlayerController : MonoBehaviour
     }
 
     private void ObserverText() {
-        Text HPText = playerUI.transform.Find("PlayerHealth/Health/Text").GetComponent<Text>();
-        Text resourceText = playerUI.transform.Find("PlayerResource/Text").GetComponent<Text>();
+        TextMeshProUGUI HPText = playerUI.transform.Find("PlayerHealth/Health/Text").GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI resourceText = playerUI.transform.Find("PlayerResource/Text").GetComponent<TextMeshProUGUI>();
         Image shieldImage = playerUI.transform.Find("PlayerHealth/Shield/Gage").GetComponent<Image>();
 
-        var ObserveHP = HP.SubscribeToText(HPText).AddTo(PlayMangement.instance.transform.gameObject);
-        var ObserveResource = resource.SubscribeToText(resourceText).AddTo(PlayMangement.instance.transform.gameObject);
+        var ObserveHP = HP.SubscribeToText(HPText.text).AddTo(PlayMangement.instance.transform.gameObject);
+        var ObserveResource = resource.SubscribeToText(resourceText.text).AddTo(PlayMangement.instance.transform.gameObject);
         var ObserveShield = shieldStack.Subscribe(_ => shieldImage.fillAmount = (float)shieldStack.Value / 8).AddTo(PlayMangement.instance.transform.gameObject);
 
         var gameOverDispose = HP.Where(x => x <= 0)

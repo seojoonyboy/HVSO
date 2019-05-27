@@ -121,7 +121,12 @@ public partial class UnitDropManager : Singleton<UnitDropManager> {
         if (card.transform.parent.parent.name == "CardSlot_1")
             cardIndex = card.transform.parent.GetSiblingIndex();
         else {
-            cardIndex = GameObject.Find("CardSlot_2").transform.childCount + card.transform.parent.GetSiblingIndex();
+            Transform slot1 = card.transform.parent.parent.parent.GetChild(0);
+            for (int i = 0; i < 5; i++) {
+                if (slot1.GetChild(i).gameObject.activeSelf)
+                    cardIndex++;
+            }
+            cardIndex += card.transform.parent.GetSiblingIndex();
         }
         CardHandler cardHandler = card.GetComponent<CardHandler>();
         int frontOrBack = 0; //뒤에 배치시 0, 앞에 배치시 1, 기본 뒤에 배치
