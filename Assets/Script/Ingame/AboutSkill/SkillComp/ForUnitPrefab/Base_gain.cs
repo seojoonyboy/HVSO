@@ -9,7 +9,7 @@ using UnityEngine.Events;
 /// <summary>
 /// Unit Prefab에 부탁되는 Component
 /// </summary>
-public partial class Base_gain : SerializedBehaviour {
+public partial class Base_gain : SerializedMonoBehaviour {
     public Skill skillData;
     IngameEventHandler eventHandler;
     protected Dictionary<IngameEventHandler.EVENT_TYPE, UnityEvent> EventDelegates;

@@ -22,7 +22,7 @@ public class Ability : MonoBehaviour {
     }
 
     public virtual void BeginCardPlay() { }
-    public virtual void EndCardPlay(GameObject card) {
+    public virtual void EndCardPlay(ref GameObject card) {
         Debug.Log("EndCardPlay In Abilty");
     }
     public virtual void OnAttack() { }

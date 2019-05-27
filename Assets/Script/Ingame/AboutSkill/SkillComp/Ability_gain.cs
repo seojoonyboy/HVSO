@@ -4,13 +4,13 @@ using UnityEngine;
 
 namespace SkillModules {
     public class Ability_gain : Ability {
-        public override void EndCardPlay(GameObject card) {
-            base.EndCardPlay(card);
+        public override void EndCardPlay(ref GameObject card) {
+            base.EndCardPlay(ref card);
 
             foreach(var cond in skillData.activate.conditions) {
                 var newComp = card.AddComponent(System.Type.GetType("SkillModules." + cond.method));
 
-                Debug.Log(cond.method);
+                Debug.Log(cond.method); 
             }
         }
 

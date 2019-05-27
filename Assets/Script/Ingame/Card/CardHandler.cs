@@ -92,7 +92,7 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
             GameObject unitPref = UnitDropManager.Instance.DropUnit(gameObject, CheckSlot());
 
             var abilities = GetComponents<Ability>();
-            foreach (Ability ability in abilities) { ability.EndCardPlay(unitPref); }
+            foreach (Ability ability in abilities) { ability.EndCardPlay(ref unitPref); }
 
             PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, true);
         }
