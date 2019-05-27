@@ -209,7 +209,8 @@ public class CardDeckPositionManager : MonoBehaviour
         card.GetComponent<CardHandler>().RedrawCard();
         card.transform.localScale = new Vector3(1, 1, 1);
         card.GetComponent<CardHandler>().DisableCard();
-
+        CardListManager csm = GameObject.Find("Canvas").transform.Find("CardInfoList").GetComponent<CardListManager>();
+        csm.AddCardInfo(card.GetComponent<CardHandler>().cardData);
     }
 
     public void DestroyCard(int index) {
@@ -280,6 +281,8 @@ public class CardDeckPositionManager : MonoBehaviour
         LayoutRebuilder.ForceRebuildLayoutImmediate(slot_2.GetComponent<RectTransform>());
         Destroy(cardList[index]);
         cardList.RemoveAt(index);
+        CardListManager csm = GameObject.Find("Canvas").transform.Find("CardInfoList").GetComponent<CardListManager>();
+        csm.RemoveCardInfo(index);
     }
 
     void ChangeSlotHeight(float rate) {
