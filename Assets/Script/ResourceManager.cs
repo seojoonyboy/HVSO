@@ -9,4 +9,5 @@ using Sirenix.OdinInspector;
 public class ResourceManager : SerializedMonoBehaviour
 {
     public Dictionary<string, Sprite> cardPortraite;
+    public Dictionary<string, GameObject> cardSkeleton;
 }

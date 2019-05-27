@@ -28,6 +28,13 @@ public class CardListManager : MonoBehaviour
         hss.AddChild(newcard);
     }
 
+    public void RemoveCardInfo(int index) {
+        GameObject remove;
+        hss.RemoveChild(index, out remove);
+        Destroy(remove);
+        Destroy(contentParent.GetChild(index).gameObject);
+    }
+
     public void OpenCardList(int cardnum) {
         transform.GetComponent<Image>().enabled = true;
         animator.SetBool("Hide", false);
