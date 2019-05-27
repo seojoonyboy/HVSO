@@ -443,8 +443,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 400, y: 0}
-  m_SizeDelta: {x: 313, y: 412}
+  m_AnchoredPosition: {x: 240, y: 0}
+  m_SizeDelta: {x: 385, y: 260}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &937820751
 MonoBehaviour:
@@ -466,7 +466,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 8949080283056740730, guid: cb4c30b6779177946825fb9b70700981,
+  m_Sprite: {fileID: -3894663610080912122, guid: 9143280ee48a2f94bacf505bb65a4fca,
     type: 3}
   m_Type: 0
   m_PreserveAspect: 0
@@ -785,7 +785,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 1172317754026530869, guid: de36548e0e53f36439da92f9de6324e1,
+  m_Sprite: {fileID: -6778814305684239521, guid: 99c962812380058448fe5f6b3c0ddec0,
     type: 3}
   m_Type: 0
   m_PreserveAspect: 1
@@ -830,15 +830,15 @@ RectTransform:
   m_GameObject: {fileID: 1441317681}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: -1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 210741110}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -400, y: 0}
-  m_SizeDelta: {x: 406, y: 424}
+  m_AnchoredPosition: {x: -240, y: 0}
+  m_SizeDelta: {x: 385, y: 265}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1441317683
 MonoBehaviour:
@@ -860,7 +860,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 9218317636938306734, guid: cb4c30b6779177946825fb9b70700981,
+  m_Sprite: {fileID: -5060970298748657211, guid: 9143280ee48a2f94bacf505bb65a4fca,
     type: 3}
   m_Type: 0
   m_PreserveAspect: 0
