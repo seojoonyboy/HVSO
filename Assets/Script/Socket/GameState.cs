@@ -1,5 +1,6 @@
 using Newtonsoft.Json;
 using dataModules;
+using System.Collections.Generic;
 
 namespace SocketFormat {
     public class GameState {
@@ -33,6 +34,18 @@ namespace SocketFormat {
         public int resource;
         public Deck deck;
         public Hero hero;
+
+        public string[] CardsId { 
+            get {
+                List<string> ids = new List<string>();
+                foreach(Card card in deck.handCards) ids.Add(card.id);
+                return ids.ToArray();
+            }
+        }
+
+        public string newCardId { 
+            get { return deck.handCards[deck.handCards.Length-1].id; }
+        }
     }
 
     public class User {

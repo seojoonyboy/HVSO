@@ -54,13 +54,18 @@ public class BattleConnector : MonoBehaviour {
             SendMethod("client_ready");
         }
         else if(result.method == "begin_mulligan") {
-            //int change_cardItemId = result.gameState.players.human.deck.handCards[0].itemId;
-            //string[] args = new string[]{change_cardItemId.ToString()};
-            //SendMethod("hand_change", args);
+            //ChangeCard(gameState.players.human.CardsId[0]);
+            //TODO : 카드 리스트 보여줌 (데이터 전송?)
         }
         else if(result.method == "hand_changed") {
-            
+            string newCardId = gameState.players.human.newCardId;
+            //TODO : 교체된 카드를 알려줌
         }
+    }
+
+    public void ChangeCard(string itemId) {
+        string[] args = new string[]{itemId};
+        SendMethod("hand_change", args);
     }
 
 
