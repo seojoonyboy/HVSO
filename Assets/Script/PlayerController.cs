@@ -46,6 +46,7 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
+        Init();
         UnitDropManager.Instance.SetUnitDropPos();
     }
 

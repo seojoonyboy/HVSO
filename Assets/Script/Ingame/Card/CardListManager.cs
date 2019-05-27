@@ -28,6 +28,7 @@ public class CardListManager : MonoBehaviour
         hss.AddChild(newcard);
         if (data.type == "unit") {
             GameObject unitImage = Instantiate(AccountManager.Instance.resource.cardSkeleton[id], newcard.transform.Find("Info/UnitImage"));
+            unitImage.GetComponent<UnitSpine>().isPreview = true;
             unitImage.transform.localScale = new Vector3(500, 500, 0);
         }
     }

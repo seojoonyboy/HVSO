@@ -19,19 +19,17 @@ public class HeroSpine : MonoBehaviour
     public string dummyAnimation;
 
     protected SkeletonAnimation skeletonAnimation;
-    protected Spine.AnimationState spineAnimationState;
     protected Skeleton skeleton;
 
     protected string currentAnimationName;
 
-    private void Awake() {
+    private void Start() {
         Init();
     }
 
     public virtual void Init() {
         skeletonAnimation = GetComponent<SkeletonAnimation>();
-        spineAnimationState = skeletonAnimation.AnimationState;
-        spineAnimationState.Event += AnimationEvent;
+        skeletonAnimation.AnimationState.Event += AnimationEvent;
         skeleton = skeletonAnimation.Skeleton;
 
     }
@@ -41,20 +39,20 @@ public class HeroSpine : MonoBehaviour
     }
 
     public virtual void Idle(TrackEntry trackEntry = null) {
-        spineAnimationState.SetAnimation(0, idleAnimationName, true);
+        skeletonAnimation.AnimationState.SetAnimation(0, idleAnimationName, true);
         currentAnimationName = idleAnimationName;
     }
 
     public virtual void Hit() {
         TrackEntry entry;
-        entry = spineAnimationState.SetAnimation(0, hitAnimationName, false);
+        entry = skeletonAnimation.AnimationState.SetAnimation(0, hitAnimationName, false);
         currentAnimationName = hitAnimationName;
         entry.Complete += Idle;
     }
 
     public virtual void Attack() {
         TrackEntry entry;
-        entry = spineAnimationState.SetAnimation(0, attackAnimationName, false);
+        entry = skeletonAnimation.AnimationState.SetAnimation(0, attackAnimationName, false);
         currentAnimationName = attackAnimationName;
         entry.Complete += Idle;
     }
