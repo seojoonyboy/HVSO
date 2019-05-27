@@ -5,12 +5,25 @@ using UnityEngine;
 namespace SkillModules {
     public class Ability_gain : Ability {
         public override void EndCardPlay() {
-            Debug.Log("버프를 줄 대상을 골라주세요.");
+            
+        }
 
-            PlaceMonster[] units = FindObjectsOfType<PlaceMonster>();
-            foreach(PlaceMonster monster in units) {
-                if(monster.isPlayer && monster.gameObject != gameObject) {
-                    //monster.transform.Find("ClickableUI").gameObject.SetActive(true);
+        void Update() {
+            if (Input.GetMouseButtonDown(0)) {
+                Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+                LayerMask mask = (1 << LayerMask.NameToLayer("PlayerUnit")) | (1 << LayerMask.NameToLayer("EnemyUnit"));
+                RaycastHit2D[] hits = Physics2D.RaycastAll(
+                    new Vector2(mousePos.x, mousePos.y),
+                    Vector2.zero,
+                    Mathf.Infinity,
+                    mask
+                );
+
+                if (hits != null) {
+                    foreach(RaycastHit2D hit in hits) {
+                        Debug.Log(hit.collider.gameObject.name + "감지됨");
+                    }
                 }
             }
         }

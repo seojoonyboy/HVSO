@@ -21,9 +21,7 @@ public class Ability : MonoBehaviour {
         skillData = data;
     }
 
-    public virtual void BeginCardPlay() {
-
-    }
+    public virtual void BeginCardPlay() { }
     public virtual void EndCardPlay() { }
     public virtual void OnAttack() { }
 }

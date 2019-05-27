@@ -67,6 +67,8 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
         UnitDropManager.Instance.ShowDropableSlot(cardData, true);
 
+        var abilities = GetComponents<Ability>();
+        foreach (Ability ability in abilities) { ability.BeginCardPlay(); }
         //args : (bool)아군인가
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_CARD_PLAY, this, true);
     }
@@ -88,6 +90,10 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         PlayMangement.instance.player.isPicking.Value = false;
         if (PlayMangement.instance.player.getPlayerTurn == true && PlayMangement.instance.player.resource.Value >= cardData.cost) {
             UnitDropManager.Instance.DropUnit(gameObject, CheckSlot());
+
+            var abilities = GetComponents<Ability>();
+            foreach (Ability ability in abilities) { ability.BeginCardPlay(); }
+
             PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, true);
         }
         else {
