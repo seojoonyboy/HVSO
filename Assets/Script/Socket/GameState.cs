@@ -35,16 +35,16 @@ namespace SocketFormat {
         public Deck deck;
         public Hero hero;
 
-        public string[] CardsId { 
+        public Card[] FirstCards { 
             get {
-                List<string> ids = new List<string>();
-                foreach(Card card in deck.handCards) ids.Add(card.id);
+                List<Card> ids = new List<Card>();
+                foreach(Card card in deck.handCards) ids.Add(card);
                 return ids.ToArray();
             }
         }
 
-        public string newCardId { 
-            get { return deck.handCards[deck.handCards.Length-1].id; }
+        public Card newCard { 
+            get { return deck.handCards[deck.handCards.Length-1]; }
         }
     }
 

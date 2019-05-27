@@ -37,9 +37,9 @@ public class CardDeckPositionManager : MonoBehaviour
 
 
         //string cardID = "ac1000" + Random.Range(1, 5);
-        string cardID = PlayMangement.instance.socketHandler.gameState.players.human.CardsId[firstDrawList.Count];
-        card.GetComponent<CardHandler>().DrawCard(cardID, true);
-        AddAbilityInCardPrefab(cardID, ref card);
+        SocketFormat.Card socketCard = PlayMangement.instance.socketHandler.gameState.players.human.FirstCards[firstDrawList.Count];
+        card.GetComponent<CardHandler>().DrawCard(socketCard.id, socketCard.itemId, true);
+        AddAbilityInCardPrefab(socketCard.id, ref card);
 
         iTween.MoveTo(card, firstDrawWindow.GetChild(firstDrawList.Count).position, 0.5f);
         firstDrawList.Add(card);

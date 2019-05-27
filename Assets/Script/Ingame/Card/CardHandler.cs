@@ -16,6 +16,13 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     public bool changeSelected = false;
     Animator cssAni;
     public string cardID;
+    private int _itemID;
+    private int itemID { 
+        get {return _itemID;}
+        set {if(value < 0) Debug.Log("something wrong itemId");
+             _itemID = value;
+        }
+    }
 
     private bool highlighted = false;
     private Transform highlightedSlot;
@@ -29,10 +36,10 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
     }
 
-    public void DrawCard(string ID, bool first = false) {
+    public void DrawCard(string ID, int itemID = -1, bool first = false) {
         cardDataPackage = AccountManager.Instance.cardPackage;
         cardID = ID;
-
+        this.itemID = itemID;
         if (cardDataPackage.data.ContainsKey(cardID)) {
             cardData = cardDataPackage.data[cardID];
             transform.Find("Portrait").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardPortraite[cardID];
@@ -176,7 +183,9 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     }
 
     public void RedrawButton() {
-        DrawCard("ac1000" + UnityEngine.Random.Range(1, 5));
+        //DrawCard("ac1000" + UnityEngine.Random.Range(1, 5));
+        PlayMangement.instance.socketHandler.HandchangeCallback = DrawCard;
+        PlayMangement.instance.socketHandler.ChangeCard(itemID);
         transform.Find("ChangeButton").gameObject.SetActive(false);
     }
 

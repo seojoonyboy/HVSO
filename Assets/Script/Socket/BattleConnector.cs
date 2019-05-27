@@ -18,7 +18,9 @@ public class BattleConnector : MonoBehaviour {
 
     public UnityEvent OnReceiveSocketMessage;
     public UnityEvent OnSocketClose;
+    public UnityAction<string, int, bool> HandchangeCallback;
     public GameState gameState;
+    private string raceName;
 
     void Awake() {
         DontDestroyOnLoad(gameObject);
@@ -45,8 +47,8 @@ public class BattleConnector : MonoBehaviour {
     //Receive Socket Message
     private void ReceiveMessage(WebSocket webSocket, string message) {
         OnReceiveSocketMessage.Invoke();
-        Debug.Log("Client : " + message);
         ReceiveFormat result = JsonReader.Read<ReceiveFormat>(message);
+        Debug.Log(result.gameState);
         if(result.gameState != null) gameState = result.gameState;
         if(result.method == "begin_ready") {
             this.message.text = "대전 상대를 찾았습니다.";
@@ -54,21 +56,25 @@ public class BattleConnector : MonoBehaviour {
             SendMethod("client_ready");
         }
         else if(result.method == "begin_mulligan") {
-            ChangeCard(gameState.players.human.CardsId[0]);
+            //ChangeCard(gameState.players.human.FirstCards[0].id);
             //TODO : 카드 리스트 보여줌 (데이터 전송?)
         }
         else if(result.method == "hand_changed") {
-            string newCardId = gameState.players.human.newCardId;
-            //TODO : 교체된 카드를 알려줌
+            if(PlayMangement.instance == null) return; //임시
+            bool isOrc = PlayMangement.instance.player.race;
+            raceName = isOrc ? "orc" : "human";
+            if(result.args[0].CompareTo(raceName) == 0) return;
+            Card newCard = gameState.players.human.newCard;
+            Debug.Log("Card id : "+ newCard.id + "  Card itemId : " + newCard.itemId);
+            HandchangeCallback(newCard.id, newCard.itemId, false);
+            HandchangeCallback = null;
         }
     }
 
-    public void ChangeCard(string itemId) {
-        string[] args = new string[]{itemId};
+    public void ChangeCard(int itemId) {
+        string[] args = new string[]{itemId.ToString()};
         SendMethod("hand_change", args);
     }
-
-
 
     void Error(WebSocket webSocket, Exception ex) {
         Debug.Log(ex);
