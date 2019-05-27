@@ -193,7 +193,7 @@ public class PlaceMonster : MonoBehaviour
             UnitTryAttack();        
         else {
             iTween.MoveTo(gameObject, iTween.Hash("x", gameObject.transform.position.x, "y", myTarget.transform.position.y, "z", gameObject.transform.position.z, "time", 0.3f, "easetype", iTween.EaseType.easeInOutExpo, "oncomplete", "UnitTryAttack", "oncompletetarget", gameObject));
-            iTween.MoveTo(myTarget, iTween.Hash("x", myTarget.transform.position.x - 0.1f, "y", myTarget.transform.position.y, "z", myTarget.transform.position.z, "time", 0.2f, "easetype", iTween.EaseType.easeInOutExpo));
+            //iTween.MoveTo(myTarget, iTween.Hash("x", myTarget.transform.position.x - 0.1f, "y", myTarget.transform.position.y, "z", myTarget.transform.position.z, "time", 0.2f, "easetype", iTween.EaseType.easeInOutExpo));
         }
     }
 
