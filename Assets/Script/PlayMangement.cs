@@ -386,7 +386,7 @@ public partial class PlayMangement {
 /// Socket 관련 처리
 /// </summary>
 public partial class PlayMangement {
-    public IngameEventHandler eventHandler;
+    [SerializeField] IngameEventHandler eventHandler;
     public IngameEventHandler EventHandler {
         get {
             return eventHandler;
@@ -400,6 +400,20 @@ public partial class PlayMangement {
         }
         private set {
             socketHandler = value;
+        }
+    }
+
+    [SerializeField] ActivatedSkillsManager player1SkillsManager;
+    public ActivatedSkillsManager Player1SkillsManager {
+        get {
+            return player1SkillsManager;
+        }
+    }
+
+    [SerializeField] ActivatedSkillsManager player2SkillsManager;
+    public ActivatedSkillsManager Player2SkillsManager {
+        get {
+            return player2SkillsManager;
         }
     }
 

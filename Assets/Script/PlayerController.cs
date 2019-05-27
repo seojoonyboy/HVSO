@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
 
     public GameObject backLine;
     public GameObject frontLine;
-    public bool drawCard = false;
+    public bool dragCard = false;
 
 
     public ReactiveProperty<int> HP;
@@ -38,7 +38,7 @@ public class PlayerController : MonoBehaviour
 
     public IEnumerator GenerateCard() {
         int i = 0;
-        while(i < 5) {
+        while (i < 5) {
             yield return new WaitForSeconds(0.3f);
             if(i < 4)
                 StartCoroutine(cdpm.FirstDraw());
@@ -138,7 +138,7 @@ public class PlayerController : MonoBehaviour
     }
 
     public void ReleaseTurn() {
-        if (myTurn == true && !drawCard)
+        if (myTurn == true && !dragCard)
             PlayMangement.instance.GetPlayerTurnRelease();
     }
 

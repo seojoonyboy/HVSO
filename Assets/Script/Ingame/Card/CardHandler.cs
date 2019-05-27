@@ -14,7 +14,6 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     private bool blockButton = false;
     public bool firstDraw = false;
     public bool changeSelected = false;
-    CardListManager csm;
     Animator cssAni;
     private string cardID;
 
@@ -53,23 +52,16 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     public void OnBeginDrag(PointerEventData eventData) {
         if (firstDraw) return;
         if (Input.touchCount > 1) return;
-        if (PlayMangement.instance.player.drawCard) return;
+        if (PlayMangement.instance.player.dragCard) return;
         itsDragging = gameObject;
-        blockButton = PlayMangement.instance.player.drawCard = true;
+        blockButton = PlayMangement.instance.player.dragCard = true;
         startPos = transform.parent.position;
         PlayMangement.instance.player.isPicking.Value = true;
 
-        var abilities = GetComponents<Ability>();
-        bool isNormalDropableSlot = true;
-        foreach(Ability ability in abilities) {
-            ability.BeginCardPlay();
-            if (ability.isChangeDropableSlot) {
-                isNormalDropableSlot = false;
-            }
-        }
-        if (isNormalDropableSlot) {
-            UnitDropManager.Instance.ShowDropableSlot(cardData, true);
-        }
+        UnitDropManager.Instance.ShowDropableSlot(cardData, true);
+
+        //args : (bool)아군인가
+        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_CARD_PLAY, this, true);
     }
 
     public void OnDrag(PointerEventData eventData) {
@@ -85,10 +77,12 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         if (firstDraw) return;
         if (gameObject != itsDragging) return;
         iTween.MoveTo(gameObject, startPos, 0.3f);
-        blockButton = PlayMangement.instance.player.drawCard = false;
+        blockButton = PlayMangement.instance.player.dragCard = false;
         PlayMangement.instance.player.isPicking.Value = false;
-        if (PlayMangement.instance.player.getPlayerTurn == true && PlayMangement.instance.player.resource.Value >= cardData.cost)
+        if (PlayMangement.instance.player.getPlayerTurn == true && PlayMangement.instance.player.resource.Value >= cardData.cost) {
             UnitDropManager.Instance.DropUnit(gameObject, CheckSlot());
+            PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, true);
+        }
         else {
             highlighted = false;
             UnitDropManager.Instance.HighLightSlot(highlightedSlot, highlighted);
@@ -97,11 +91,6 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         }
 
         UnitDropManager.Instance.HideDropableSlot();
-
-        var abilities = GetComponents<Ability>();
-        foreach (Ability ability in abilities) {
-            ability.EndCardPlay();
-        }
     }
 
     public void CheckHighlight() {
@@ -144,11 +133,19 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
             return;
         }
         if (!blockButton) {
+            CardListManager csm = GameObject.Find("Canvas").transform.Find("CardInfoList").GetComponent<CardListManager>();
             if (transform.parent.parent.name == "CardSlot_1") {
-                csm.OpenCardList(transform.GetSiblingIndex());
+                csm.OpenCardList(transform.parent.GetSiblingIndex());
             }
             else {
-                csm.OpenCardList(GameObject.Find("CardSlot_1").transform.childCount + transform.parent.GetSiblingIndex());
+                int cardIndex = 0;
+                Transform slot1 = transform.parent.parent.parent.GetChild(0);
+                for (int i = 0; i < 5; i++) {
+                    if (slot1.GetChild(i).gameObject.activeSelf)
+                        cardIndex++;
+                }
+                cardIndex += transform.parent.GetSiblingIndex();
+                csm.OpenCardList(cardIndex);
             }
         }
     }
@@ -158,7 +155,6 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
             string id = "ac1000" + UnityEngine.Random.Range(1, 5);
             DrawCard(id);
 
-
             CardDataPackage cardDataPackage = AccountManager.Instance.cardPackage;
             if (cardDataPackage.data.ContainsKey(id)) {
                 CardData cardData = cardDataPackage.data[id];
@@ -166,6 +162,7 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
                     foreach (var effect in skill.effects) {
                         var newComp = gameObject.AddComponent(System.Type.GetType("SkillModules.Ability_" + effect.method));
                         ((Ability)newComp).InitData(skill);
+                        ((Ability)newComp).isPlayer = true;
                     }
                 }
             }
@@ -174,12 +171,9 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
             DrawCard(cardID);
         firstDraw = false;
         transform.Find("ChangeButton").gameObject.SetActive(false);
-        csm = GameObject.Find("Canvas").transform.Find("CardInfoList").GetComponent<CardListManager>();
-        csm.AddCardInfo(cardData);
     }
 
     public void RedrawButton() {
-        
         DrawCard("ac1000" + UnityEngine.Random.Range(1, 5));
         transform.Find("ChangeButton").gameObject.SetActive(false);
     }
