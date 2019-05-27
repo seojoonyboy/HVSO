@@ -26,8 +26,10 @@ public class CardListManager : MonoBehaviour
         GameObject newcardInfo = Instantiate(infoPrefab, contentParent);
         SetCardClassInfo(newcardInfo, data);
         hss.AddChild(newcard);
-        GameObject unitImage = Instantiate(AccountManager.Instance.resource.cardSkeleton[id], newcard.transform.Find("Info/UnitImage"));
-        unitImage.transform.localScale = new Vector3(500, 500, 0);
+        if (data.type == "unit") {
+            GameObject unitImage = Instantiate(AccountManager.Instance.resource.cardSkeleton[id], newcard.transform.Find("Info/UnitImage"));
+            unitImage.transform.localScale = new Vector3(500, 500, 0);
+        }
     }
 
     public void RemoveCardInfo(int index) {
