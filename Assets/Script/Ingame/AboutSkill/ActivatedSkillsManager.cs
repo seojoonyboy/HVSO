@@ -30,9 +30,6 @@ public partial class ActivatedSkillsManager : SerializedMonoBehaviour {
             TriggerSkills(event_type);
             Debug.Log("플레이어1의 " + event_type.ToString() + "이벤트 발생");
         }
-        else {
-            Debug.Log("플레이어2의 " + event_type.ToString() + "이벤트 발생");
-        }
     }
 
     /// <summary>

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UniRx;
-
+using TMPro;
 public class PlayerController : MonoBehaviour
 {
     public bool race;
@@ -83,15 +83,12 @@ public class PlayerController : MonoBehaviour
         ObserverText();
     }
 
-    private void ObserverText() {
-        Text HPText = playerUI.transform.Find("PlayerHealth/Health/Text").GetComponent<Text>();
-        Text resourceText = playerUI.transform.Find("PlayerResource/Text").GetComponent<Text>();
+    private void ObserverText() {       
         Image shieldImage = playerUI.transform.Find("PlayerHealth/Shield/Gage").GetComponent<Image>();
 
-        var ObserveHP = HP.SubscribeToText(HPText).AddTo(PlayMangement.instance.transform.gameObject);
-        var ObserveResource = resource.SubscribeToText(resourceText).AddTo(PlayMangement.instance.transform.gameObject);
+        var ObserveHP = HP.Subscribe(_=> ChangedHP()).AddTo(PlayMangement.instance.transform.gameObject);
+        var ObserveResource = resource.Subscribe(_=> ChangedResource()).AddTo(PlayMangement.instance.transform.gameObject);
         var ObserveShield = shieldStack.Subscribe(_ => shieldImage.fillAmount = (float)shieldStack.Value / 8).AddTo(PlayMangement.instance.transform.gameObject);
-
         var gameOverDispose = HP.Where(x => x <= 0)
                               .Subscribe(_ => {
                                                PlayMangement.instance.GetBattleResult();
@@ -100,6 +97,20 @@ public class PlayerController : MonoBehaviour
                                                ObserveShield.Dispose(); })
                               .AddTo(PlayMangement.instance.transform.gameObject);        
     }
+
+    private void ChangedHP() {
+        TextMeshProUGUI HPText = playerUI.transform.Find("PlayerHealth/Health/Text").GetComponent<TextMeshProUGUI>();
+        HPText.text = HP.Value.ToString();
+    }
+
+    private void ChangedResource() {
+        TextMeshProUGUI resourceText = playerUI.transform.Find("PlayerResource/Text").GetComponent<TextMeshProUGUI>();
+        resourceText.text = resource.Value.ToString();
+    }
+
+
+
+
 
     public void UpdateHealth() {
         HP.Value += 2;
