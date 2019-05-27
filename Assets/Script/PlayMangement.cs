@@ -403,20 +403,6 @@ public partial class PlayMangement {
         }
     }
 
-    [SerializeField] ActivatedSkillsManager player1SkillsManager;
-    public ActivatedSkillsManager Player1SkillsManager {
-        get {
-            return player1SkillsManager;
-        }
-    }
-
-    [SerializeField] ActivatedSkillsManager player2SkillsManager;
-    public ActivatedSkillsManager Player2SkillsManager {
-        get {
-            return player2SkillsManager;
-        }
-    }
-
     public void DisconnectSocket() {
         //Destroy(FindObjectOfType<BattleConnector>().gameObject);
         EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.REMOVE_SOCKET_CONNECTOR, this);
