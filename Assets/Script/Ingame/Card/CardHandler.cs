@@ -59,17 +59,10 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         startPos = transform.parent.position;
         PlayMangement.instance.player.isPicking.Value = true;
 
-        var abilities = GetComponents<Ability>();
-        bool isNormalDropableSlot = true;
-        foreach(Ability ability in abilities) {
-            ability.BeginCardPlay();
-            if (ability.isChangeDropableSlot) {
-                isNormalDropableSlot = false;
-            }
-        }
-        if (isNormalDropableSlot) {
-            UnitDropManager.Instance.ShowDropableSlot(cardData, true);
-        }
+        UnitDropManager.Instance.ShowDropableSlot(cardData, true);
+
+        //args : (bool)아군인가
+        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_CARD_PLAY, this, true);
     }
 
     public void OnDrag(PointerEventData eventData) {
@@ -87,8 +80,10 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         iTween.MoveTo(gameObject, startPos, 0.3f);
         blockButton = PlayMangement.instance.player.drawCard = false;
         PlayMangement.instance.player.isPicking.Value = false;
-        if (PlayMangement.instance.player.getPlayerTurn == true && PlayMangement.instance.player.resource.Value >= cardData.cost)
+        if (PlayMangement.instance.player.getPlayerTurn == true && PlayMangement.instance.player.resource.Value >= cardData.cost) {
             UnitDropManager.Instance.DropUnit(gameObject, CheckSlot());
+            PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, true);
+        }
         else {
             highlighted = false;
             UnitDropManager.Instance.HighLightSlot(highlightedSlot, highlighted);
@@ -97,11 +92,6 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         }
 
         UnitDropManager.Instance.HideDropableSlot();
-
-        var abilities = GetComponents<Ability>();
-        foreach (Ability ability in abilities) {
-            ability.EndCardPlay();
-        }
     }
 
     public void CheckHighlight() {
@@ -166,6 +156,7 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
                     foreach (var effect in skill.effects) {
                         var newComp = gameObject.AddComponent(System.Type.GetType("SkillModules.Ability_" + effect.method));
                         ((Ability)newComp).InitData(skill);
+                        ((Ability)newComp).isPlayer = true;
                     }
                 }
             }

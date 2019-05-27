@@ -55,6 +55,24 @@ public class IngameEventHandler : MonoBehaviour {
     }
 
     public enum EVENT_TYPE {
-        REMOVE_SOCKET_CONNECTOR
+        REMOVE_SOCKET_CONNECTOR,
+
+        BEGIN_ORC_PRE_TURN,
+        END_ORC_PRE_TURN,
+
+        BEGIN_HUMAN_TURN,
+        END_HUMAN_TURN,
+
+        BEGIN_ORC_POST_TURN,
+        END_ORC_POST_TURN,
+
+        BEGIN_BATTLE_TURN,
+        END_BATTLE_TURN,
+
+        BEGIN_CARD_PLAY,
+        END_CARD_PLAY,
+
+        BEGIN_ATTACK,
+        END_ATTACK
     }
 }
