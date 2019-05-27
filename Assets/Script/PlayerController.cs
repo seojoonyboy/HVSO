@@ -27,6 +27,14 @@ public class PlayerController : MonoBehaviour
     private ReactiveProperty<int> shieldStack = new ReactiveProperty<int>(0);
     private int shieldCount = 0;
 
+    protected HeroSpine heroSpine;
+
+    public enum HeroState {
+        IDLE,
+        ATTACK,
+        HIT
+    }
+
     public bool getPlayerTurn {
         get { return myTurn; }
     }
