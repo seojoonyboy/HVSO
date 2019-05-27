@@ -38,7 +38,7 @@ public class PlayerController : MonoBehaviour
 
     public IEnumerator GenerateCard() {
         int i = 0;
-        while(i < 5) {
+        while (i < 5) {
             yield return new WaitForSeconds(0.3f);
             if(i < 4)
                 StartCoroutine(cdpm.FirstDraw());

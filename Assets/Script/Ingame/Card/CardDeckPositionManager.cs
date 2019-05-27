@@ -35,7 +35,9 @@ public class CardDeckPositionManager : MonoBehaviour
         card.transform.SetParent(firstDrawWindow);
         card.SetActive(true);
 
-        string cardID = "ac1000" + Random.Range(1, 5);
+
+        //string cardID = "ac1000" + Random.Range(1, 5);
+        string cardID = PlayMangement.instance.socketHandler.gameState.players.human.CardsId[firstDrawList.Count];
         card.GetComponent<CardHandler>().DrawCard(cardID, true);
         AddAbilityInCardPrefab(cardID, ref card);
 

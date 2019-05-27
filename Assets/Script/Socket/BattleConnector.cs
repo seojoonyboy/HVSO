@@ -54,7 +54,7 @@ public class BattleConnector : MonoBehaviour {
             SendMethod("client_ready");
         }
         else if(result.method == "begin_mulligan") {
-            //ChangeCard(gameState.players.human.CardsId[0]);
+            ChangeCard(gameState.players.human.CardsId[0]);
             //TODO : 카드 리스트 보여줌 (데이터 전송?)
         }
         else if(result.method == "hand_changed") {

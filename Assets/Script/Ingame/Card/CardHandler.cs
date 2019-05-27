@@ -174,7 +174,6 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     }
 
     public void RedrawButton() {
-        
         DrawCard("ac1000" + UnityEngine.Random.Range(1, 5));
         transform.Find("ChangeButton").gameObject.SetActive(false);
     }
