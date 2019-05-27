@@ -43,7 +43,7 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         if (cardDataPackage.data.ContainsKey(cardID)) {
             cardData = cardDataPackage.data[cardID];
             transform.Find("Portrait").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardPortraite[cardID];
-            skeleton = Resources.Load<GameObject>("Skeleton/Skeleton_" + cardID);
+            skeleton = AccountManager.Instance.resource.cardSkeleton[cardID];
         }
         else
             Debug.Log("NoData");

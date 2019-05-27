@@ -15,6 +15,8 @@ public class UnitSpine : MonoBehaviour
     public string attackAnimationName;
     [SpineAnimation]
     public string hitAnimationName;
+    [SpineAnimation]
+    public string previewAnimationName;
 
     [SpineAnimation]
     public string rangeUpAttackName;
@@ -22,7 +24,9 @@ public class UnitSpine : MonoBehaviour
     public string rangeDownAttackName;
     [SpineAnimation]
     public string generalAttackName;
+
     
+
 
     [SpineEvent]
     public string attackEventName;
@@ -40,6 +44,7 @@ public class UnitSpine : MonoBehaviour
     
     public UnityAction attackCallback;
 
+    public bool isPreview = false;
     public GameObject arrow;
     
     public float atkDuration {
@@ -57,6 +62,13 @@ public class UnitSpine : MonoBehaviour
         spineAnimationState = skeletonAnimation.AnimationState;
         spineAnimationState.Event += AnimationEvent;
         skeleton = skeletonAnimation.Skeleton;
+
+        if(isPreview == true) {
+            previewAnimationName = idleAnimationName;
+            Preview();
+            return;
+        }
+
 
         if(arrow != null && transform.parent.GetComponent<PlaceMonster>().isPlayer == true) {
             if (rangeUpAttackName != "")
@@ -98,6 +110,12 @@ public class UnitSpine : MonoBehaviour
         currentAnimationName = hitAnimationName;
         entry.Complete += Idle;
     }
+
+    public virtual void Preview() {
+        spineAnimationState.SetAnimation(0, idleAnimationName, true);
+        currentAnimationName = previewAnimationName;
+    }
+
 
     public void AnimationEvent(TrackEntry entry, Spine.Event e) {
         if(e.Data.Name == attackEventName) {

@@ -27,12 +27,26 @@ public class PlayerController : MonoBehaviour
     private ReactiveProperty<int> shieldStack = new ReactiveProperty<int>(0);
     private int shieldCount = 0;
 
+    protected HeroSpine heroSpine;
+
+    public enum HeroState {
+        IDLE,
+        ATTACK,
+        HIT
+    }
+
     public bool getPlayerTurn {
         get { return myTurn; }
     }
 
+    public void Init() {
+        if (transform.childCount > 2)
+            heroSpine = transform.Find("HeroSkeleton").GetComponent<HeroSpine>();
+    }
+
     private void Start()
     {
+        Init();
         UnitDropManager.Instance.SetUnitDropPos();
     }
 
@@ -122,6 +136,7 @@ public class PlayerController : MonoBehaviour
         if (shieldStack.Value < 7) {
             if (HP.Value >= amount) {
                 HP.Value -= amount;
+                SetState(HeroState.HIT);
                 shieldStack.Value++;
             }
             else
@@ -175,6 +190,23 @@ public class PlayerController : MonoBehaviour
         }
     }
     
+
+    protected void SetState(HeroState state) {
+        if (heroSpine == null) return;
+
+        switch (state) {
+            case HeroState.IDLE:
+                heroSpine.Idle();
+                break;
+            case HeroState.HIT:
+                heroSpine.Hit();
+                break;
+            case HeroState.ATTACK:
+                heroSpine.Attack();
+                break;
+        }
+
+    }
 
     
 
