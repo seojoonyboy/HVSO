@@ -89,10 +89,10 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         blockButton = PlayMangement.instance.player.dragCard = false;
         PlayMangement.instance.player.isPicking.Value = false;
         if (PlayMangement.instance.player.getPlayerTurn == true && PlayMangement.instance.player.resource.Value >= cardData.cost) {
-            UnitDropManager.Instance.DropUnit(gameObject, CheckSlot());
+            GameObject unitPref = UnitDropManager.Instance.DropUnit(gameObject, CheckSlot());
 
             var abilities = GetComponents<Ability>();
-            foreach (Ability ability in abilities) { ability.BeginCardPlay(); }
+            foreach (Ability ability in abilities) { ability.EndCardPlay(unitPref); }
 
             PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, true);
         }
