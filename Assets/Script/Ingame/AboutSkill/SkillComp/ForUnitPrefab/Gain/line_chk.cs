@@ -15,5 +15,9 @@ namespace SkillModules {
         private void OnEndCardPlay() {
 
         }
+
+        public override void Update() {
+            //base.Update();
+        }
     }
 }

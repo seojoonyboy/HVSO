@@ -65,7 +65,12 @@ public partial class Base_gain : SerializedMonoBehaviour {
                     int.TryParse(effectData.args[0], out atkBuff);
                     int.TryParse(effectData.args[1], out hpBuff);
 
-                    Debug.Log(hit.collider.gameObject.name + "에게 " + atkBuff + "," + hpBuff + "부여");
+                    //Debug.Log(hit.collider.gameObject.name + "에게 " + atkBuff + "," + hpBuff + "부여");
+
+                    PlaceMonster placeMonster = hit.collider.gameObject.GetComponent<PlaceMonster>();
+                    if(placeMonster != null) {
+                        placeMonster.RequestChangeStat(atkBuff, hpBuff);
+                    }
                     OffUI();
                 }
             }

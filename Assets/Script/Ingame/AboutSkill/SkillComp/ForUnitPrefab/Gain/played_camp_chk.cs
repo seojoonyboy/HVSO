@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace SkillModules {
-    public class played_ctg_chk : Base_gain {
+    public class played_camp_chk : Base_gain {
         public override void Init() {
             base.Init();
 
@@ -15,6 +15,9 @@ namespace SkillModules {
         private void OnEndCardPlay() {
 
         }
-    }
 
+        public override void Update() {
+            //base.Update();
+        }
+    }
 }
