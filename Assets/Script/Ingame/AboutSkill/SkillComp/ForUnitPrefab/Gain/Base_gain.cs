@@ -11,6 +11,8 @@ using TMPro;
 /// </summary>
 public partial class Base_gain : SerializedMonoBehaviour {
     public Effect effectData;
+    public Skill totalData;
+
     IngameEventHandler eventHandler;
     protected Dictionary<IngameEventHandler.EVENT_TYPE, UnityEvent> EventDelegates;
     List<UnityEvent> unityEvents = new List<UnityEvent>();
@@ -45,7 +47,11 @@ public partial class Base_gain : SerializedMonoBehaviour {
         EventDelegates[event_type].Invoke();
     }
 
-    public virtual void Update() {
+    void Update() {
+        GetMouseButtonDownEvent();
+    }
+
+    public virtual void GetMouseButtonDownEvent() {
         if (Input.GetMouseButtonDown(0)) {
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
@@ -68,7 +74,7 @@ public partial class Base_gain : SerializedMonoBehaviour {
                     //Debug.Log(hit.collider.gameObject.name + "에게 " + atkBuff + "," + hpBuff + "부여");
 
                     PlaceMonster placeMonster = hit.collider.gameObject.GetComponent<PlaceMonster>();
-                    if(placeMonster != null) {
+                    if (placeMonster != null) {
                         placeMonster.RequestChangeStat(atkBuff, hpBuff);
                     }
                     OffUI();

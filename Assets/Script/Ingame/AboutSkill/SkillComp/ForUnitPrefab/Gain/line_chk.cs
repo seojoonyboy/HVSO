@@ -5,7 +5,7 @@ using UnityEngine;
 namespace SkillModules {
     public class line_chk : Base_gain {
         public override void Init() {
-            base.Init();
+            //base.Init();
 
             EventDelegates[IngameEventHandler.EVENT_TYPE.END_CARD_PLAY].AddListener(() => {
                 OnEndCardPlay();
@@ -16,8 +16,8 @@ namespace SkillModules {
 
         }
 
-        public override void Update() {
-            //base.Update();
+        public override void GetMouseButtonDownEvent() {
+
         }
     }
 }
