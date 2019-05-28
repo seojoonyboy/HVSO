@@ -33,6 +33,8 @@ public partial class Base_gain : SerializedMonoBehaviour {
         foreach(GameObject unit in fieldUnits) {
             unit.transform.Find("ClickableUI").gameObject.SetActive(true);
         }
+
+        PlayMangement.instance.blockPanel.SetActive(true);
     }
 
     private void OnEventOccured(Enum Event_Type, Component Sender, object Param) {
