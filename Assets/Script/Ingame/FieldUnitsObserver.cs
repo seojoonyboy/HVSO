@@ -14,4 +14,12 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
     public void UnitRemoved(int row, int col) {
         units[row, col] = null;
     }
+
+    public List<GameObject> GetAllFieldUnits() {
+        List<GameObject> _units = new List<GameObject>();
+        foreach(GameObject unit in units) {
+            if(unit != null) _units.Add(unit);
+        }
+        return _units;
+    }
 }

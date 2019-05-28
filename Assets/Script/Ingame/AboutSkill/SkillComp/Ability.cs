@@ -16,9 +16,11 @@ public class Ability : MonoBehaviour {
     public bool isPlayer = true;
 
     protected Skill skillData;
+    protected Effect effectData;
 
-    public virtual void InitData(Skill data) {
+    public virtual void InitData(Skill data, Effect effectData) {
         skillData = data;
+        this.effectData = effectData;
     }
 
     public virtual void BeginCardPlay() { }
