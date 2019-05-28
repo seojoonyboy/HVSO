@@ -43,13 +43,21 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         if (cardDataPackage.data.ContainsKey(cardID)) {
             cardData = cardDataPackage.data[cardID];
             transform.Find("Portrait").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardPortraite[cardID];
+            transform.Find("BackGround").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground[cardData.type + "_" + cardData.rarelity];
             skeleton = AccountManager.Instance.resource.cardSkeleton[cardID];
         }
         else
             Debug.Log("NoData");
-
-        transform.Find("Health").Find("Text").GetComponent<Text>().text = cardData.hp.ToString();
-        transform.Find("attack").Find("Text").GetComponent<Text>().text = cardData.attack.ToString();
+        if (cardData.type == "unit") {
+            transform.Find("Health").gameObject.SetActive(true);
+            transform.Find("attack").gameObject.SetActive(true);
+            transform.Find("Health").Find("Text").GetComponent<Text>().text = cardData.hp.ToString();
+            transform.Find("attack").Find("Text").GetComponent<Text>().text = cardData.attack.ToString();
+        }
+        else {
+            transform.Find("Health").gameObject.SetActive(false);
+            transform.Find("attack").gameObject.SetActive(false);
+        }
         transform.Find("Cost").Find("Text").GetComponent<Text>().text = cardData.cost.ToString();
 
         if (first) firstDraw = true;
