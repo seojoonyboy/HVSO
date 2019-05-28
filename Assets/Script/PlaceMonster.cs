@@ -109,8 +109,13 @@ public class PlaceMonster : MonoBehaviour
             GameObject arrow = transform.Find("arrow").gameObject;
             arrow.transform.position = transform.position;
             arrow.SetActive(true);
-            iTween.MoveTo(arrow, iTween.Hash("x", gameObject.transform.position.x, "y", myTarget.transform.position.y, "z", gameObject.transform.position.z, "time", 0.2f, "easetype", iTween.EaseType.easeOutExpo, "oncomplete", "SingleAttack", "oncompletetarget", gameObject));
-            
+            PlaceMonster placeMonster = myTarget.GetComponent<PlaceMonster>();
+
+            if (placeMonster != null)
+                iTween.MoveTo(arrow, iTween.Hash("x", gameObject.transform.position.x, "y", myTarget.transform.position.y, "z", gameObject.transform.position.z, "time", 0.2f, "easetype", iTween.EaseType.easeOutExpo, "oncomplete", "SingleAttack", "oncompletetarget", gameObject));
+            else
+                iTween.MoveTo(arrow, iTween.Hash("x", gameObject.transform.position.x, "y", myTarget.GetComponent<PlayerController>().wallPosition.y, "z", gameObject.transform.position.z, "time", 0.2f, "easetype", iTween.EaseType.easeOutExpo, "oncomplete", "SingleAttack", "oncompletetarget", gameObject));
+
         }            
         else
             SingleAttack();
@@ -118,8 +123,8 @@ public class PlaceMonster : MonoBehaviour
 
 
     public void SingleAttack() {
-        PlaceMonster placeMonster = myTarget.GetComponent<PlaceMonster>(); ;
-        
+        PlaceMonster placeMonster = myTarget.GetComponent<PlaceMonster>();
+
 
         if (unit.power > 0) {         
             if (placeMonster != null) {
@@ -130,14 +135,14 @@ public class PlaceMonster : MonoBehaviour
 
             if (unit.power <= 3) {
                 GameObject effect = Instantiate(PlayMangement.instance.effectManager.lowAttackEffect);
-                effect.transform.position = (placeMonster != null) ? myTarget.transform.position : new Vector3(gameObject.transform.position.x, myTarget.transform.position.y, 0);
+                effect.transform.position = (placeMonster != null) ? myTarget.transform.position : new Vector3(gameObject.transform.position.x, myTarget.GetComponent<PlayerController>().wallPosition.y, 0);
                 Destroy(effect, effect.GetComponent<ParticleSystem>().main.duration - 0.2f);
                 StartCoroutine(PlayMangement.instance.cameraShake(unitSpine.atkDuration / 2));
                 SoundManager.Instance.PlaySound(SoundType.NORMAL_ATTACK);
             }
             else if (unit.power > 4) {
                 GameObject effect =  (unit.power < 6)  ? Instantiate(PlayMangement.instance.effectManager.middileAttackEffect) : Instantiate(PlayMangement.instance.effectManager.highAttackEffect);
-                effect.transform.position = (placeMonster != null) ? myTarget.transform.position : new Vector3(gameObject.transform.position.x, myTarget.transform.position.y, 0);
+                effect.transform.position = (placeMonster != null) ? myTarget.transform.position : new Vector3(gameObject.transform.position.x, myTarget.GetComponent<PlayerController>().wallPosition.y, 0);
                 Destroy(effect, effect.GetComponent<ParticleSystem>().main.duration - 0.2f);
                 StartCoroutine(PlayMangement.instance.cameraShake(unitSpine.atkDuration / 2));
 
@@ -156,8 +161,11 @@ public class PlaceMonster : MonoBehaviour
             arrow.transform.position = transform.position;
             arrow.SetActive(false);
         }
-        else
+        else {
             ReturnPosition();
+            if (placeMonster != null)
+                myTarget.GetComponent<PlaceMonster>().ReturnPosition();
+        }
 
     }
 
@@ -188,12 +196,24 @@ public class PlaceMonster : MonoBehaviour
 
     private void MoveToTarget() {
         if (unit.power <= 0) return;
+        PlaceMonster placeMonster = myTarget.GetComponent<PlaceMonster>();
 
         if (unitSpine.arrow != null)
             UnitTryAttack();        
         else {
-            iTween.MoveTo(gameObject, iTween.Hash("x", gameObject.transform.position.x, "y", myTarget.transform.position.y, "z", gameObject.transform.position.z, "time", 0.3f, "easetype", iTween.EaseType.easeInOutExpo, "oncomplete", "UnitTryAttack", "oncompletetarget", gameObject));
-            //iTween.MoveTo(myTarget, iTween.Hash("x", myTarget.transform.position.x - 0.1f, "y", myTarget.transform.position.y, "z", myTarget.transform.position.z, "time", 0.2f, "easetype", iTween.EaseType.easeInOutExpo));
+            if (placeMonster != null) {
+                if (isPlayer == false) {
+                    iTween.MoveTo(gameObject, iTween.Hash("x", gameObject.transform.position.x + 0.3f, "y", myTarget.transform.position.y, "z", gameObject.transform.position.z, "time", 0.3f, "easetype", iTween.EaseType.easeInOutExpo, "oncomplete", "UnitTryAttack", "oncompletetarget", gameObject));
+                    iTween.MoveTo(myTarget, iTween.Hash("x", myTarget.transform.position.x - 0.3f, "y", myTarget.transform.position.y, "z", myTarget.transform.position.z, "time", 0.2f, "easetype", iTween.EaseType.easeInOutExpo));
+                }
+                else {                    
+                    iTween.MoveTo(gameObject, iTween.Hash("x", gameObject.transform.position.x - 0.3f, "y", myTarget.transform.position.y, "z", gameObject.transform.position.z, "time", 0.3f, "easetype", iTween.EaseType.easeInOutExpo, "oncomplete", "UnitTryAttack", "oncompletetarget", gameObject));
+                    iTween.MoveTo(myTarget, iTween.Hash("x", myTarget.transform.position.x + 0.3f, "y", myTarget.transform.position.y, "z", myTarget.transform.position.z, "time", 0.2f, "easetype", iTween.EaseType.easeInOutExpo));
+                }
+            }
+            else {
+                iTween.MoveTo(gameObject, iTween.Hash("x", gameObject.transform.position.x, "y", myTarget.GetComponent<PlayerController>().unitClosePosition.y, "z", gameObject.transform.position.z, "time", 0.3f, "easetype", iTween.EaseType.easeInOutExpo, "oncomplete", "UnitTryAttack", "oncompletetarget", gameObject));
+            }
         }
     }
 
@@ -202,7 +222,7 @@ public class PlaceMonster : MonoBehaviour
 
     private void ReturnPosition() {
         iTween.MoveTo(gameObject, iTween.Hash("x", unitLocation.x, "y", unitLocation.y, "z", unitLocation.z, "time", 0.3f, "delay", 0.5f, "easetype", iTween.EaseType.easeInOutExpo));
-        //iTween.MoveTo(myTarget, iTween.Hash("x", myTarget.GetComponent<PlaceMonster>().unitLocation.x, "y", myTarget.GetComponent<PlaceMonster>().unitLocation.y, "z", myTarget.GetComponent<PlaceMonster>().unitLocation.z, "time", 0.2f, "easetype", iTween.EaseType.easeInOutExpo));
+        
     }
 
     public void CheckHP() {
