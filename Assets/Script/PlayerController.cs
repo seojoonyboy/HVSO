@@ -23,6 +23,8 @@ public class PlayerController : MonoBehaviour
     public GameObject frontLine;
     public bool dragCard = false;
 
+    public Vector3 unitClosePosition;
+    public Vector3 wallPosition;
 
     public ReactiveProperty<int> HP;
     public ReactiveProperty<int> resource = new ReactiveProperty<int>(2);

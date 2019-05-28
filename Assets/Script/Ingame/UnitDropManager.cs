@@ -141,6 +141,7 @@ public partial class UnitDropManager : Singleton<UnitDropManager> {
             case 2:
                 unitLine[lineNum][0].GetChild(0).SetParent(unitLine[lineNum][1]);
                 unitLine[lineNum][1].GetChild(0).position = unitLine[lineNum][1].position;
+                unitLine[lineNum][1].GetChild(0).GetComponent<PlaceMonster>().unitLocation = unitLine[lineNum][1].position;
                 break;
             default:
                 break;
@@ -157,6 +158,7 @@ public partial class UnitDropManager : Singleton<UnitDropManager> {
 
         GameObject skeleton = Instantiate(cardHandler.skeleton, placedMonster.transform);
         skeleton.name = "skeleton";
+        skeleton.transform.localScale = new Vector3(-1, 1, 1);
         placedMonster.name = placedMonster.GetComponent<PlaceMonster>().unit.name;
 
         placedMonster.GetComponent<PlaceMonster>().Init();

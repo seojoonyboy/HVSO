@@ -67,6 +67,12 @@ public partial class PlayMangement : MonoBehaviour
         player.transform.position = backGround.transform.Find("PlayerPosition").Find("Player_1Pos").position;
         enemyPlayer.transform.position = backGround.transform.Find("PlayerPosition").Find("Player_2Pos").position;
 
+        player.wallPosition = backGround.transform.Find("PlayerPosition").Find("Player_1Wall").position;
+        enemyPlayer.wallPosition = backGround.transform.Find("PlayerPosition").Find("Player_2Wall").position;
+
+        player.unitClosePosition = backGround.transform.Find("PlayerPosition").Find("Player_1Close").position;
+        enemyPlayer.unitClosePosition = backGround.transform.Find("PlayerPosition").Find("Player_2Close").position;
+
         for (int i = 0; i < player.frontLine.transform.childCount; i++) {
             player.backLine.transform.GetChild(i).position = new Vector3(backGround.transform.GetChild(i).position.x, player.backLine.transform.position.y, 0);
             player.frontLine.transform.GetChild(i).position = new Vector3(backGround.transform.GetChild(i).position.x, player.frontLine.transform.position.y, 0);
