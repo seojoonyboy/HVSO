@@ -11,7 +11,7 @@ using dataModules;
 using SocketFormat;
 using System.Reflection;
 
-public class BattleConnector : MonoBehaviour {
+public partial class BattleConnector : MonoBehaviour {
     private string url = "ws://ccdevclient.fbl.kr/game";
     WebSocket webSocket;
     [SerializeField] Text message;
@@ -25,7 +25,10 @@ public class BattleConnector : MonoBehaviour {
     private bool dequeueing = true;
     public Queue<ReceiveFormat> queue = new Queue<ReceiveFormat>();
 
+    private Type thisType;
+
     void Awake() {
+        thisType = this.GetType();
         DontDestroyOnLoad(gameObject);
     }
 
@@ -54,59 +57,9 @@ public class BattleConnector : MonoBehaviour {
         queue.Enqueue(result);
     }
 
-    private void FixedUpdate() {
-        if(!dequeueing) return;
-        if(queue.Count == 0) return;
-        DequeueSocket();
-    }
-    
-    private void DequeueSocket() {
-        ReceiveFormat result = queue.Dequeue();
-        if(result.gameState != null) gameState = result.gameState;
-        
-        switch(result.method) {
-            case "begin_ready" : BeginReady(); break;
-            case "end_ready" : break;
-            case "begin_mulligan" : break;
-            case "hand_changed" : HandChanged(result.args[0]); break;
-            case "end_mulligan" : break;
-            case "begin_turn_start" : break;
-            case "end_turn_start" : break;
-            case "begin_orc_pre_turn" : break;
-            case "begin_human_turn" : break;
-            case "begin_orc_post_turn" : break;
-            case "begin_battle_turn" : break;
-            case "end_battle_turn" : break;
-            case "line_battle" : break;
-            case "map_clear" : break;
-            case "opponent_connection_closed" : break;
-            case "begin_end_game" : break;
-            case "end_end_game" : break;
-            default :
-            Debug.Log(result.gameState + " method is not set");
-            break;
-        }
-    }
-    private void BeginReady() {
-        this.message.text = "대전 상대를 찾았습니다.";
-        CustomEvent.Trigger(machine, "PlayStartBattleAnim");
-        SendMethod("client_ready");
-    }
-
     public void ChangeCard(int itemId) {
         string[] args = new string[]{itemId.ToString()};
         SendMethod("hand_change", args);
-    }
-
-    public void HandChanged(string argsName) {
-        if(PlayMangement.instance == null) return; //임시
-        bool isOrc = PlayMangement.instance.player.race;
-        raceName = isOrc ? "orc" : "human";
-        if(argsName.CompareTo(raceName) == 0) return;
-        Card newCard = gameState.players.human.newCard;
-        Debug.Log("Card id : "+ newCard.id + "  Card itemId : " + newCard.itemId);
-        HandchangeCallback(newCard.id, newCard.itemId, false);
-        HandchangeCallback = null;
     }
 
     public void MulliganEnd() {
@@ -118,7 +71,7 @@ public class BattleConnector : MonoBehaviour {
     }
 
     void Error(WebSocket webSocket, Exception ex) {
-        Debug.Log(ex);
+        Debug.LogWarning(ex);
     }
 
     void OnDisable() {
@@ -134,4 +87,114 @@ public class BattleConnector : MonoBehaviour {
         SendFormat format = new SendFormat(method, args);
         webSocket.Send(JsonUtility.ToJson(format));
     }
+
+    private string[] ConvertObjectArrayToStringArray(object[] objs) {
+        string[] result = Array.ConvertAll<object, string>(objs, ConvertObjectToString);
+        return result;
+    }
+
+    private string ConvertObjectToString(object obj) {
+        return obj?.ToString() ?? string.Empty;
+    }
+}
+
+/// <summary>
+/// 서버로부터 데이터를 받아올 때 reflection으로 string을 함수로 바로 발동하게 하는 부분
+/// </summary>
+public partial class BattleConnector : MonoBehaviour {
+
+    private void FixedUpdate() {
+        if(!dequeueing) return;
+        if(queue.Count == 0) return;
+        DequeueSocket();
+    }
+    
+    private void DequeueSocket() {
+        ReceiveFormat result = queue.Dequeue();
+        if(result.gameState != null) {
+            gameState = result.gameState;
+            Debug.Log("WebSocket gameState changed");
+        }
+        if(result.method == null) return;
+        MethodInfo theMethod = thisType.GetMethod(result.method);
+        if(theMethod == null) return;
+        theMethod.Invoke(this, result.args);
+    }
+
+    public void begin_ready() {
+        this.message.text = "대전 상대를 찾았습니다.";
+        CustomEvent.Trigger(machine, "PlayStartBattleAnim");
+        SendMethod("client_ready");
+    }
+
+    public void begin_mulligan() {
+        Debug.Log("WebSocket State : begin_mulligan");
+    }
+
+    public void hand_changed(string arg) {
+        if(PlayMangement.instance == null) return; //임시
+
+        bool isOrc = PlayMangement.instance.player.race;
+        raceName = isOrc ? "orc" : "human";
+
+        if(arg.CompareTo(raceName) == 0) return;
+
+        Card newCard = gameState.players.human.newCard;
+        Debug.Log("Card id : "+ newCard.id + "  Card itemId : " + newCard.itemId);
+        HandchangeCallback(newCard.id, newCard.itemId, false);
+        HandchangeCallback = null;
+    }
+
+    public void end_mulligan() {
+        Debug.Log("WebSocket State : end_mulligan");
+    }
+
+    public void begin_turn_start() {
+        Debug.Log("WebSocket State : begin_turn_start");
+    }
+    
+    public void end_turn_start() {
+        Debug.Log("WebSocket State : end_turn_start");
+    }
+
+    public void begin_orc_pre_turn() {
+        Debug.Log("WebSocket State : begin_orc_pre_turn");
+    }
+
+    public void begin_human_turn() {
+        Debug.Log("WebSocket State : begin_human_turn");
+    }
+
+    public void begin_orc_post_turn() {
+        Debug.Log("WebSocket State : begin_orc_post_turn");
+    }
+
+    public void begin_battle_turn() {
+        Debug.Log("WebSocket State : begin_battle_turn");
+    }
+
+    public void end_battle_turn() {
+        Debug.Log("WebSocket State : end_battle_turn");
+    }
+
+    public void line_battle() {
+        Debug.Log("WebSocket State : line_battle");
+    }
+
+    public void map_clear() {
+        Debug.Log("WebSocket State : map_clear");
+    }
+
+    public void opponent_connection_closed() {
+        Debug.Log("WebSocket State : opponent_connection_closed");
+    }
+
+    public void begin_end_game() {
+        Debug.Log("WebSocket State : begin_end_game");
+    }
+
+    public void end_end_game() {
+        Debug.Log("WebSocket State : end_end_game");
+    }
+
 }

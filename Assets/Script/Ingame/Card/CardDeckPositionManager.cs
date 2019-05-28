@@ -97,6 +97,7 @@ public class CardDeckPositionManager : MonoBehaviour {
     }
 
     IEnumerator DrawChangedCards() {
+        PlayMangement.instance.socketHandler.MulliganEnd();
         firstDrawWindow.parent.gameObject.GetComponent<Image>().enabled = false;
         while (firstDrawList.Count != 0) {
             yield return new WaitForSeconds(0.2f);
