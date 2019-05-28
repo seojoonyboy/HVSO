@@ -108,6 +108,7 @@ public class CardDeckPositionManager : MonoBehaviour {
         yield return new WaitForSeconds(3.0f);
         PlayMangement.instance.player.isMulligan = false;
         CustomEvent.Trigger(GameObject.Find("GameManager"), "EndTurn");
+        firstDrawWindow.gameObject.SetActive(false);
     }
 
     public void AddCard(GameObject cardobj = null) {
