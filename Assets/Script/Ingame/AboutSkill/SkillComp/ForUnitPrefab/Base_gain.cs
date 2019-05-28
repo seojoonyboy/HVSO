@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
 using UnityEngine.Events;
-
+using TMPro;
 /// <summary>
 /// Unit Prefab에 부탁되는 Component
 /// </summary>
@@ -30,11 +30,14 @@ public partial class Base_gain : SerializedMonoBehaviour {
         var self = fieldUnits.Find(x => x == gameObject);
         fieldUnits.Remove(self);
 
-        foreach(GameObject unit in fieldUnits) {
-            unit.transform.Find("ClickableUI").gameObject.SetActive(true);
+        if(fieldUnits.Count > 0) {
+            foreach (GameObject unit in fieldUnits) {
+                unit.transform.Find("ClickableUI").gameObject.SetActive(true);
+            }
+            GameObject blockPanel = PlayMangement.instance.blockPanel;
+            blockPanel.SetActive(true);
+            blockPanel.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "부여 대상을 지정하세요";
         }
-
-        PlayMangement.instance.blockPanel.SetActive(true);
     }
 
     private void OnEventOccured(Enum Event_Type, Component Sender, object Param) {
@@ -73,6 +76,8 @@ public partial class Base_gain : SerializedMonoBehaviour {
         foreach (GameObject unit in fieldUnits) {
             unit.transform.Find("ClickableUI").gameObject.SetActive(false);
         }
+
+        PlayMangement.instance.blockPanel.SetActive(false);
     }
 }
 
