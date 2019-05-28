@@ -105,7 +105,18 @@ public class CardDeckPositionManager : MonoBehaviour {
             firstDrawList.RemoveAt(0);
         }
         yield return new WaitForSeconds(0.5f);
-        AddCard();
+        
+
+        //영웅카드 뽑기
+        GameObject card = Instantiate(cardPrefab, cardSpawnPos);
+        card.transform.SetParent(firstDrawWindow);
+        card.SetActive(true);
+        string herocardID = PlayMangement.instance.socketHandler.gameState.players.human.newCard.id;
+        int itemID = PlayMangement.instance.socketHandler.gameState.players.human.newCard.itemId;
+        card.GetComponent<CardHandler>().DrawCard(herocardID, itemID, true);
+        AddCard(card);
+
+
         yield return new WaitForSeconds(3.0f);
         PlayMangement.instance.player.isMulligan = false;
         CustomEvent.Trigger(GameObject.Find("GameManager"), "EndTurn");
