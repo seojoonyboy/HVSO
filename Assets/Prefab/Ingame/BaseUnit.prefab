@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2836977127537776541}
   - component: {fileID: 6493220618626411810}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: ClickableUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 4549778766304053448}
   - component: {fileID: 4549778766304053451}
   - component: {fileID: 4549778766304053450}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -300,7 +300,7 @@ GameObject:
   - component: {fileID: 4549778766327495861}
   - component: {fileID: 4549778766327495860}
   - component: {fileID: 4549778766327495863}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -505,7 +505,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4549778766403784234}
   - component: {fileID: 4549778766403784235}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: HP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -586,7 +586,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4549778766705282182}
   - component: {fileID: 4549778766705282183}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: ATK
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -668,7 +668,7 @@ GameObject:
   - component: {fileID: 4549778766762803916}
   - component: {fileID: 4549778766762803914}
   - component: {fileID: 4549778766762803917}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: BaseUnit
   m_TagString: Untagged
   m_Icon: {fileID: 0}

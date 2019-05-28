@@ -15,15 +15,15 @@ public class Ability : MonoBehaviour {
 
     public bool isPlayer = true;
 
-    Skill skillData;
+    protected Skill skillData;
 
     public virtual void InitData(Skill data) {
         skillData = data;
     }
 
-    public virtual void BeginCardPlay() {
-
+    public virtual void BeginCardPlay() { }
+    public virtual void EndCardPlay(ref GameObject card) {
+        Debug.Log("EndCardPlay In Abilty");
     }
-    public virtual void EndCardPlay() { }
     public virtual void OnAttack() { }
 }

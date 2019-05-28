@@ -113,8 +113,8 @@ public partial class UnitDropManager : Singleton<UnitDropManager> {
         }
     }
 
-    public void DropUnit(GameObject card, Transform target) {
-        if (target == null || target.childCount > 0) return;
+    public GameObject DropUnit(GameObject card, Transform target) {
+        if (target == null || target.childCount > 0) return null;
         HighLightSlot(target, false);
         HideDropableSlot();
         int cardIndex = 0;
@@ -167,6 +167,8 @@ public partial class UnitDropManager : Singleton<UnitDropManager> {
         PlayMangement.instance.player.ActivePlayer();
 
         GameObject.Find("Player").transform.GetChild(0).GetComponent<PlayerController>().cdpm.DestroyCard(cardIndex);
+
+        return placedMonster;
     }
 }
 

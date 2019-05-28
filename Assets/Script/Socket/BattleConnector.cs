@@ -9,6 +9,7 @@ using Bolt;
 using UnityEngine.Events;
 using dataModules;
 using SocketFormat;
+using System.Reflection;
 
 public class BattleConnector : MonoBehaviour {
     private string url = "ws://ccdevclient.fbl.kr/game";
@@ -21,6 +22,8 @@ public class BattleConnector : MonoBehaviour {
     public UnityAction<string, int, bool> HandchangeCallback;
     public GameState gameState;
     private string raceName;
+    private bool dequeueing = true;
+    public Queue<ReceiveFormat> queue = new Queue<ReceiveFormat>();
 
     void Awake() {
         DontDestroyOnLoad(gameObject);
@@ -48,32 +51,70 @@ public class BattleConnector : MonoBehaviour {
     private void ReceiveMessage(WebSocket webSocket, string message) {
         OnReceiveSocketMessage.Invoke();
         ReceiveFormat result = JsonReader.Read<ReceiveFormat>(message);
-        Debug.Log(result.gameState);
+        queue.Enqueue(result);
+    }
+
+    private void FixedUpdate() {
+        if(!dequeueing) return;
+        if(queue.Count == 0) return;
+        DequeueSocket();
+    }
+    
+    private void DequeueSocket() {
+        ReceiveFormat result = queue.Dequeue();
         if(result.gameState != null) gameState = result.gameState;
-        if(result.method == "begin_ready") {
-            this.message.text = "대전 상대를 찾았습니다.";
-            CustomEvent.Trigger(machine, "PlayStartBattleAnim");
-            SendMethod("client_ready");
+        
+        switch(result.method) {
+            case "begin_ready" : BeginReady(); break;
+            case "end_ready" : break;
+            case "begin_mulligan" : break;
+            case "hand_changed" : HandChanged(result.args[0]); break;
+            case "end_mulligan" : break;
+            case "begin_turn_start" : break;
+            case "end_turn_start" : break;
+            case "begin_orc_pre_turn" : break;
+            case "begin_human_turn" : break;
+            case "begin_orc_post_turn" : break;
+            case "begin_battle_turn" : break;
+            case "end_battle_turn" : break;
+            case "line_battle" : break;
+            case "map_clear" : break;
+            case "opponent_connection_closed" : break;
+            case "begin_end_game" : break;
+            case "end_end_game" : break;
+            default :
+            Debug.Log(result.gameState + " method is not set");
+            break;
         }
-        else if(result.method == "begin_mulligan") {
-            //ChangeCard(gameState.players.human.FirstCards[0].id);
-            //TODO : 카드 리스트 보여줌 (데이터 전송?)
-        }
-        else if(result.method == "hand_changed") {
-            if(PlayMangement.instance == null) return; //임시
-            bool isOrc = PlayMangement.instance.player.race;
-            raceName = isOrc ? "orc" : "human";
-            if(result.args[0].CompareTo(raceName) == 0) return;
-            Card newCard = gameState.players.human.newCard;
-            Debug.Log("Card id : "+ newCard.id + "  Card itemId : " + newCard.itemId);
-            HandchangeCallback(newCard.id, newCard.itemId, false);
-            HandchangeCallback = null;
-        }
+    }
+    private void BeginReady() {
+        this.message.text = "대전 상대를 찾았습니다.";
+        CustomEvent.Trigger(machine, "PlayStartBattleAnim");
+        SendMethod("client_ready");
     }
 
     public void ChangeCard(int itemId) {
         string[] args = new string[]{itemId.ToString()};
         SendMethod("hand_change", args);
+    }
+
+    public void HandChanged(string argsName) {
+        if(PlayMangement.instance == null) return; //임시
+        bool isOrc = PlayMangement.instance.player.race;
+        raceName = isOrc ? "orc" : "human";
+        if(argsName.CompareTo(raceName) == 0) return;
+        Card newCard = gameState.players.human.newCard;
+        Debug.Log("Card id : "+ newCard.id + "  Card itemId : " + newCard.itemId);
+        HandchangeCallback(newCard.id, newCard.itemId, false);
+        HandchangeCallback = null;
+    }
+
+    public void MulliganEnd() {
+        SendMethod("end_mulligan");
+    }
+
+    public void TurnOver() {
+        SendMethod("turn_over");
     }
 
     void Error(WebSocket webSocket, Exception ex) {

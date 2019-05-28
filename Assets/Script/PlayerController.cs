@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
 {
     public bool race;
     public bool isPlayer;
+    public bool isMulligan = true;
     private bool myTurn = false;
     public int[,] placement = new int[2,5] { {0,0,0,0,0 },
                                               {0,0,0,0,0 }};
@@ -73,7 +74,7 @@ public class PlayerController : MonoBehaviour
     public void EndTurnDraw() {
         if (PlayMangement.instance.isGame == false) return;
 
-        cdpm.AddCard();
+        //cdpm.AddCard();
 
         GameObject enemyCard = Instantiate(PlayMangement.instance.enemyPlayer.back);
         enemyCard.transform.SetParent(PlayMangement.instance.enemyPlayer.playerUI.transform.Find("CardSlot"));
