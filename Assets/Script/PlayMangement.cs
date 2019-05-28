@@ -15,6 +15,7 @@ public partial class PlayMangement : MonoBehaviour
     Camera cam;
     public GameObject uiSlot;
     public bool isGame = true;
+    public bool isFirst = true;
     public static PlayMangement instance { get; private set; }
     public GameObject backGround;
     public GameObject onCanvasPosGroup;
@@ -167,7 +168,12 @@ public partial class PlayMangement : MonoBehaviour
         }
 
         yield return new WaitForSeconds(1f);
-        enemyPlayer.ReleaseTurn();
+        if (isFirst) {
+            isFirst = false;
+            enemyPlayer.ReleaseTurn();
+            player.ActivePlayer();
+        }
+        else instance.player.cdpm.AddCard();
         StopCoroutine("EnemySummonMonster");
     }
 
@@ -181,7 +187,7 @@ public partial class PlayMangement : MonoBehaviour
         switch (currentTurn) {
             case "ZOMBIE":
                 if(player.race == false) {
-                    player.ActivePlayer();
+                    //player.ActivePlayer();
                     enemyPlayer.DisablePlayer();
                 }
                 else {
@@ -193,7 +199,7 @@ public partial class PlayMangement : MonoBehaviour
 
             case "PLANT":
                 if(player.race == true) {
-                    player.ActivePlayer();
+                    //player.ActivePlayer();
                     enemyPlayer.DisablePlayer();
                 }
                 else {

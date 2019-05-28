@@ -4,21 +4,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CardDeckPositionManager : MonoBehaviour
-{
+public class CardDeckPositionManager : MonoBehaviour {
     Transform slot_1;
     Transform slot_2;
     private bool firstDraw = true;
     private int cardNum = 0;
+    private int drawingCardNum = 0;
+    public bool isDrawing = false;
     List<GameObject> cardList;
     List<GameObject> firstDrawList;
     [SerializeField] GameObject cardPrefab;
     [SerializeField] Transform cardSpawnPos;
     [SerializeField] Transform firstDrawWindow;
-    
+
+
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         cardList = new List<GameObject>();
         firstDrawList = new List<GameObject>();
         slot_1 = transform.GetChild(0);
@@ -35,8 +36,6 @@ public class CardDeckPositionManager : MonoBehaviour
         card.transform.SetParent(firstDrawWindow);
         card.SetActive(true);
 
-
-        //string cardID = "ac1000" + Random.Range(1, 5);
         SocketFormat.Card socketCard = PlayMangement.instance.socketHandler.gameState.players.human.FirstCards[firstDrawList.Count];
         card.GetComponent<CardHandler>().DrawCard(socketCard.id, socketCard.itemId, true);
         AddAbilityInCardPrefab(socketCard.id, ref card);
@@ -77,7 +76,7 @@ public class CardDeckPositionManager : MonoBehaviour
             foreach (var skill in cardData.skills) {
                 foreach (var effect in skill.effects) {
                     var newComp = card.AddComponent(System.Type.GetType("SkillModules.Ability_" + effect.method));
-                    if(newComp != null) {
+                    if (newComp != null) {
                         ((Ability)newComp).InitData(skill);
                         ((Ability)newComp).isPlayer = true;
                     }
@@ -107,6 +106,7 @@ public class CardDeckPositionManager : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         AddCard();
         yield return new WaitForSeconds(3.0f);
+        PlayMangement.instance.player.isMulligan = false;
         CustomEvent.Trigger(GameObject.Find("GameManager"), "EndTurn");
     }
 
@@ -135,6 +135,7 @@ public class CardDeckPositionManager : MonoBehaviour
             card.GetComponent<CardHandler>().RedrawCard();
             card.transform.localScale = new Vector3(1, 1, 1);
             if (target != null) {
+                isDrawing = false;
                 StartCoroutine(SendCardToHand(card, target));
             }
             return;
@@ -196,11 +197,21 @@ public class CardDeckPositionManager : MonoBehaviour
         card.transform.localScale = new Vector3(1, 1, 1);
         LayoutRebuilder.ForceRebuildLayoutImmediate(slot_1.GetComponent<RectTransform>());
         LayoutRebuilder.ForceRebuildLayoutImmediate(slot_2.GetComponent<RectTransform>());
-        if (target != null)
+        if (target != null) {
+            isDrawing = true;
             StartCoroutine(SendCardToHand(card, target));
+        }
     }
 
+
     IEnumerator SendCardToHand(GameObject card, Transform target) {
+        drawingCardNum++;
+        if (isDrawing) {
+            PlayMangement.instance.enemyPlayer.ReleaseTurn();
+            while (isDrawing) {
+                yield return new WaitForSeconds(0.1f);
+            }
+        }
         if (!firstDraw) {
             card.transform.localScale = new Vector3(1.5f, 1.5f, 1.0f);
             iTween.MoveTo(card, firstDrawWindow.position, 0.4f);
@@ -210,11 +221,13 @@ public class CardDeckPositionManager : MonoBehaviour
         iTween.MoveTo(card, target.position, 0.3f);
         yield return new WaitForSeconds(0.3f);
         card.transform.SetParent(target);
-        card.GetComponent<CardHandler>().RedrawCard();
         card.transform.localScale = new Vector3(1, 1, 1);
         card.GetComponent<CardHandler>().DisableCard();
         CardListManager csm = GameObject.Find("Canvas").transform.Find("CardInfoList").GetComponent<CardListManager>();
         csm.AddCardInfo(card.GetComponent<CardHandler>().cardData, card.GetComponent<CardHandler>().cardID);
+        drawingCardNum--;
+        if(!PlayMangement.instance.player.isMulligan && drawingCardNum == 0)
+            PlayMangement.instance.player.ActivePlayer();
     }
 
     public void DestroyCard(int index) {
