@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UniRx;
 using TMPro;
+using System;
+
 public class PlayerController : MonoBehaviour
 {
     public bool race;
@@ -21,6 +23,8 @@ public class PlayerController : MonoBehaviour
     public GameObject frontLine;
     public bool dragCard = false;
 
+    public Vector3 unitClosePosition;
+    public Vector3 wallPosition;
 
     public ReactiveProperty<int> HP;
     public ReactiveProperty<int> resource = new ReactiveProperty<int>(2);
@@ -43,6 +47,8 @@ public class PlayerController : MonoBehaviour
     public void Init() {
         if (transform.childCount > 2)
             heroSpine = transform.Find("HeroSkeleton").GetComponent<HeroSpine>();
+
+        Debug.Log(Camera.main.aspect);
     }
 
     private void Start()
@@ -83,7 +89,7 @@ public class PlayerController : MonoBehaviour
         string cardID;
         if (race == true) {
             cardID = "ac1000";
-            card.GetComponent<CardHandler>().DrawCard(cardID + Random.Range(1, 5));
+            card.GetComponent<CardHandler>().DrawCard(cardID + UnityEngine.Random.Range(1, 5));
         }
         else {
             cardID = "ac10012";
