@@ -86,13 +86,11 @@ public partial class AccountManager : Singleton<AccountManager> {
                 data.class_1 = card.cardClasses[0];
                 if (card.cardClasses.Length == 2)
                     data.class_2 = card.cardClasses[1];
-
                 if (card.cardCategories.Length > 0) {
                     data.category_1 = card.cardCategories[0];
                     if (card.cardCategories.Length == 2)
                         data.category_2 = card.cardCategories[1];
                 }
-
                 data.name = card.name;
                 data.cost = card.cost;
                 data.attack = card.attack;

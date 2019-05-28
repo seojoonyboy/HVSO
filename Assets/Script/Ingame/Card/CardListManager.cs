@@ -9,6 +9,7 @@ public class CardListManager : MonoBehaviour
     [SerializeField] GameObject cardPrefab;
     [SerializeField] Transform contentParent;
     [SerializeField] GameObject infoPrefab;
+    [SerializeField] Transform mulliganList;
     Animator animator;
     HorizontalScrollSnap hss;
     // Start is called before the first frame update
@@ -31,6 +32,23 @@ public class CardListManager : MonoBehaviour
             unitImage.GetComponent<UnitSpine>().isPreview = true;
             unitImage.transform.localScale = new Vector3(500, 500, 0);
         }
+    }
+
+    public void AddMulliganCardInfo(CardData data, string id) {
+        GameObject newcard = Instantiate(cardPrefab, mulliganList);
+        SetCardInfo(newcard, data);
+        GameObject newcardInfo = Instantiate(infoPrefab, contentParent);
+        SetCardClassInfo(newcardInfo, data);
+        if (data.type == "unit") {
+            GameObject unitImage = Instantiate(AccountManager.Instance.resource.cardSkeleton[id], newcard.transform.Find("Info/UnitImage"));
+            unitImage.GetComponent<UnitSpine>().isPreview = true;
+            unitImage.transform.localScale = new Vector3(500, 500, 0);
+        }
+        newcard.SetActive(false);
+    }
+
+    public void OpenMulliganCardList(int cardnum) {
+        mulliganList.GetChild(cardnum).gameObject.SetActive(true);
     }
 
     public void RemoveCardInfo(int index) {

@@ -11,6 +11,7 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     public Vector3 startPos;
     public GameObject unit;
     public GameObject skeleton;
+    CardListManager csm;
     private bool blockButton = false;
     public bool firstDraw = false;
     public bool changeSelected = false;
@@ -32,8 +33,8 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
     static GameObject itsDragging;
 
-    public void Start() {
-
+    public void Awake() {
+        csm = GameObject.Find("Canvas").transform.Find("CardInfoList").GetComponent<CardListManager>();
     }
 
     public void DrawCard(string ID, int itemID = -1, bool first = false) {
@@ -64,6 +65,7 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         if (first) {
             transform.Find("GlowEffect").GetComponent<Image>().enabled = true;
             transform.Find("GlowEffect").GetComponent<Image>().color = new Color(1, 1, 107.0f / 255.0f);
+            csm.AddMulliganCardInfo(cardData, cardID);
             firstDraw = true;
         }
     }
@@ -156,10 +158,10 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
     public void OpenCardInfoList() {
         if (firstDraw) {
+            csm.OpenMulliganCardList(transform.GetSiblingIndex() - 5);
             return;
         }
         if (!blockButton) {
-            CardListManager csm = GameObject.Find("Canvas").transform.Find("CardInfoList").GetComponent<CardListManager>();
             if (transform.parent.parent.name == "CardSlot_1") {
                 csm.OpenCardList(transform.parent.GetSiblingIndex());
             }
