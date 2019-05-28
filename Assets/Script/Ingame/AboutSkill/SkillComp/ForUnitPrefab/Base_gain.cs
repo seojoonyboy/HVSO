@@ -13,7 +13,7 @@ public partial class Base_gain : SerializedMonoBehaviour {
     public Skill skillData;
     IngameEventHandler eventHandler;
     protected Dictionary<IngameEventHandler.EVENT_TYPE, UnityEvent> EventDelegates;
-    List<UnityEvent> unityEvents;
+    List<UnityEvent> unityEvents = new List<UnityEvent>();
     
     void Start() {
         eventHandler = PlayMangement.instance.EventHandler;

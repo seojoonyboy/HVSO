@@ -170,6 +170,7 @@ public partial class UnitDropManager : Singleton<UnitDropManager> {
 
         GameObject.Find("Player").transform.GetChild(0).GetComponent<PlayerController>().cdpm.DestroyCard(cardIndex);
 
+        PlayMangement.instance.PlayerUnitsObserver.UnitAdded(placedMonster, lineNum, frontOrBack);
         return placedMonster;
     }
 }

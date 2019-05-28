@@ -10,4 +10,5 @@ public class ResourceManager : SerializedMonoBehaviour
 {
     public Dictionary<string, Sprite> cardPortraite;
     public Dictionary<string, GameObject> cardSkeleton;
+    public Dictionary<string, Sprite> cardBackground;
 }

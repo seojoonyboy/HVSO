@@ -168,6 +168,8 @@ public partial class PlayMangement : MonoBehaviour
             monster.GetComponent<PlaceMonster>().Init();
             monster.GetComponent<PlaceMonster>().SpawnUnit();
 
+            EnemyUnitsObserver.UnitAdded(monster, i, 0);
+
             enemyPlayer.resource.Value -= cardData.cost;
             Destroy(enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(0).gameObject);
             i++;
@@ -412,6 +414,20 @@ public partial class PlayMangement {
         }
         private set {
             socketHandler = value;
+        }
+    }
+
+    [SerializeField] FieldUnitsObserver playerUnitsObserver;
+    public FieldUnitsObserver PlayerUnitsObserver {
+        get {
+            return playerUnitsObserver;
+        }
+    }
+
+    [SerializeField] FieldUnitsObserver enemyUnitsObserver;
+    public FieldUnitsObserver EnemyUnitsObserver {
+        get {
+            return enemyUnitsObserver;
         }
     }
 
