@@ -1,0 +1,76 @@
+
+ac10005.png
+size: 512,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+L_leg
+  rotate: true
+  xy: 363, 55
+  size: 41, 72
+  orig: 41, 72
+  offset: 0, 0
+  index: -1
+R_leg
+  rotate: true
+  xy: 363, 55
+  size: 41, 72
+  orig: 41, 72
+  offset: 0, 0
+  index: -1
+L_low_arm
+  rotate: true
+  xy: 2, 122
+  size: 120, 288
+  orig: 120, 288
+  offset: 0, 0
+  index: -1
+L_upper_arm
+  rotate: true
+  xy: 363, 2
+  size: 51, 95
+  orig: 51, 95
+  offset: 0, 0
+  index: -1
+R_arm
+  rotate: true
+  xy: 266, 37
+  size: 59, 95
+  orig: 59, 95
+  offset: 0, 0
+  index: -1
+back_hair
+  rotate: false
+  xy: 2, 13
+  size: 155, 107
+  orig: 155, 107
+  offset: 0, 0
+  index: -1
+body
+  rotate: false
+  xy: 159, 14
+  size: 105, 106
+  orig: 105, 106
+  offset: 0, 0
+  index: -1
+eye
+  rotate: false
+  xy: 266, 8
+  size: 67, 27
+  orig: 67, 27
+  offset: 0, 0
+  index: -1
+helmet
+  rotate: false
+  xy: 292, 98
+  size: 158, 144
+  orig: 158, 144
+  offset: 0, 0
+  index: -1
+shadow
+  rotate: true
+  xy: 452, 67
+  size: 175, 58
+  orig: 175, 58
+  offset: 0, 0
+  index: -1

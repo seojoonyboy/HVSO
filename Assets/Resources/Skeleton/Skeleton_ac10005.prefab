@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1867121984551054046
+--- !u!1 &4350649675874226833
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,25 +8,25 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6676859238444344959}
-  - component: {fileID: 1917659519753483268}
-  - component: {fileID: 3760287662343004905}
-  - component: {fileID: 8680247714993976394}
-  - component: {fileID: 8914834171561298074}
+  - component: {fileID: 8728324911784304176}
+  - component: {fileID: 4545575087441923147}
+  - component: {fileID: 1271982042147920550}
+  - component: {fileID: 6773319383155903493}
+  - component: {fileID: 6790899557979320533}
   m_Layer: 0
-  m_Name: Skeleton_ac10004
+  m_Name: Skeleton_ac10005
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6676859238444344959
+--- !u!4 &8728324911784304176
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1867121984551054046}
+  m_GameObject: {fileID: 4350649675874226833}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -34,21 +34,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &1917659519753483268
+--- !u!33 &4545575087441923147
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1867121984551054046}
+  m_GameObject: {fileID: 4350649675874226833}
   m_Mesh: {fileID: 0}
---- !u!23 &3760287662343004905
+--- !u!23 &1271982042147920550
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1867121984551054046}
+  m_GameObject: {fileID: 4350649675874226833}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -59,7 +59,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8ef660352593dc847a46ed1152ae7461, type: 2}
+  - {fileID: 2100000, guid: 7b42d7454ba1a8248a86ecb878ba441f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -79,19 +79,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 50
---- !u!114 &8680247714993976394
+--- !u!114 &6773319383155903493
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1867121984551054046}
+  m_GameObject: {fileID: 4350649675874226833}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: b10b53c3d63c57a42a15dbd63404fe5d, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: ac591577d6e708f46acf0dff09986d50, type: 2}
   initialSkinName: 
   initialFlipX: 0
   initialFlipY: 0
@@ -114,13 +114,13 @@ MonoBehaviour:
   _animationName: IDLE
   loop: 1
   timeScale: 1
---- !u!114 &8914834171561298074
+--- !u!114 &6790899557979320533
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1867121984551054046}
+  m_GameObject: {fileID: 4350649675874226833}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 402d528f8e3bb3d44a9c066506e0db5d, type: 3}
@@ -128,12 +128,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   idleAnimationName: IDLE
   appearAnimationName: APPEAR
-  attackAnimationName: ATTACK
+  attackAnimationName: 
   hitAnimationName: HIT
   previewAnimationName: 
-  rangeUpAttackName: 
-  rangeDownAttackName: 
-  generalAttackName: ATTACK
+  rangeUpAttackName: ATTACK_UP
+  rangeDownAttackName: ATTACK_DOWN
+  generalAttackName: 
   attackEventName: SHOT
   isPreview: 0
-  arrow: {fileID: 2753944476047113115, guid: 403f8fe5c9b6d6c4d8c6044a8d3700ab, type: 3}
+  arrow: {fileID: 144206, guid: eecfd95aa06159440b824635d22e0f24, type: 3}

@@ -130,8 +130,10 @@ MonoBehaviour:
   appearAnimationName: APPEAR
   attackAnimationName: ATTACK
   hitAnimationName: HIT
+  previewAnimationName: 
   rangeUpAttackName: 
   rangeDownAttackName: 
   generalAttackName: ATTACK
   attackEventName: ATTACK
+  isPreview: 0
   arrow: {fileID: 0}

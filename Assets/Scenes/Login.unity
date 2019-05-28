@@ -1599,6 +1599,7 @@ MonoBehaviour:
     - {fileID: 3894992327050807989, guid: 76500ebaf9f4a3641be4e44047f3d32d, type: 3}
     - {fileID: 714773748952885305, guid: a50894349ffcabe43a2d55f0c9f68dcd, type: 3}
     - {fileID: 3102800645621571900, guid: b74287251225ac047868380d537f5c05, type: 3}
+    - {fileID: 4350649675874226833, guid: 178af926b510b384ea39d75ed4e64488, type: 3}
     - {fileID: 21300000, guid: 3f210173572de5244889f79854ea8fff, type: 3}
     - {fileID: 21300000, guid: c5ab4bfccae6eb34db8de17bbfa6d0fb, type: 3}
     - {fileID: 21300000, guid: dc7c17faf446e6a43bfeb8304e5749bd, type: 3}
@@ -2084,7 +2085,7 @@ MonoBehaviour:
       Data: ac10005
     - Name: $v
       Entry: 10
-      Data: 10
+      Data: 17
     - Name: 
       Entry: 8
       Data: 
@@ -2344,7 +2345,7 @@ MonoBehaviour:
       Data: unit_common
     - Name: $v
       Entry: 10
-      Data: 17
+      Data: 18
     - Name: 
       Entry: 8
       Data: 
@@ -2356,7 +2357,7 @@ MonoBehaviour:
       Data: unit_legend
     - Name: $v
       Entry: 10
-      Data: 18
+      Data: 19
     - Name: 
       Entry: 8
       Data: 
@@ -2368,7 +2369,7 @@ MonoBehaviour:
       Data: unit_uncommon
     - Name: $v
       Entry: 10
-      Data: 19
+      Data: 20
     - Name: 
       Entry: 8
       Data: 
@@ -2380,7 +2381,7 @@ MonoBehaviour:
       Data: unit_rare
     - Name: $v
       Entry: 10
-      Data: 20
+      Data: 21
     - Name: 
       Entry: 8
       Data: 
@@ -2392,7 +2393,7 @@ MonoBehaviour:
       Data: unit_superrare
     - Name: $v
       Entry: 10
-      Data: 21
+      Data: 22
     - Name: 
       Entry: 8
       Data: 
@@ -2404,7 +2405,7 @@ MonoBehaviour:
       Data: magic_common
     - Name: $v
       Entry: 10
-      Data: 22
+      Data: 23
     - Name: 
       Entry: 8
       Data: 
@@ -2416,7 +2417,7 @@ MonoBehaviour:
       Data: magic_uncommon
     - Name: $v
       Entry: 10
-      Data: 22
+      Data: 23
     - Name: 
       Entry: 8
       Data: 
@@ -2428,7 +2429,7 @@ MonoBehaviour:
       Data: magic_rare
     - Name: $v
       Entry: 10
-      Data: 22
+      Data: 23
     - Name: 
       Entry: 8
       Data: 
@@ -2440,7 +2441,7 @@ MonoBehaviour:
       Data: magic_superrare
     - Name: $v
       Entry: 10
-      Data: 22
+      Data: 23
     - Name: 
       Entry: 8
       Data: 
@@ -2452,7 +2453,7 @@ MonoBehaviour:
       Data: magic_legend
     - Name: $v
       Entry: 10
-      Data: 22
+      Data: 23
     - Name: 
       Entry: 8
       Data: 
