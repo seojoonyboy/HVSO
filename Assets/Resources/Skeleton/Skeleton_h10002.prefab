@@ -113,7 +113,7 @@ MonoBehaviour:
   disableRenderingOnOverride: 1
   _animationName: IDLE
   loop: 1
-  timeScale: 1
+  timeScale: 0.6
 --- !u!114 &4665474635955655073
 MonoBehaviour:
   m_ObjectHideFlags: 0

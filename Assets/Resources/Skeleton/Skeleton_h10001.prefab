@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &714773748952885305
+--- !u!1 &4110237383026691544
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,25 +8,25 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2666183512723078033}
-  - component: {fileID: 336413266931027126}
-  - component: {fileID: 292347350627517658}
-  - component: {fileID: 5842472889242310559}
-  - component: {fileID: 5966793930934429987}
+  - component: {fileID: 1576596492491595376}
+  - component: {fileID: 3767881187183110487}
+  - component: {fileID: 3814475984525336891}
+  - component: {fileID: 7058758874570519166}
+  - component: {fileID: 296727284746208088}
   m_Layer: 0
-  m_Name: Skeleton_ac10013
+  m_Name: Skeleton_h10001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2666183512723078033
+--- !u!4 &1576596492491595376
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 714773748952885305}
+  m_GameObject: {fileID: 4110237383026691544}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -34,21 +34,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &336413266931027126
+--- !u!33 &3767881187183110487
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 714773748952885305}
+  m_GameObject: {fileID: 4110237383026691544}
   m_Mesh: {fileID: 0}
---- !u!23 &292347350627517658
+--- !u!23 &3814475984525336891
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 714773748952885305}
+  m_GameObject: {fileID: 4110237383026691544}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -59,7 +59,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4342a0f8b2f349f458ea69991c57d7d6, type: 2}
+  - {fileID: 2100000, guid: d051de4a6aacfaf4798b00cfc6d9328d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -78,20 +78,20 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 50
---- !u!114 &5842472889242310559
+  m_SortingOrder: 9
+--- !u!114 &7058758874570519166
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 714773748952885305}
+  m_GameObject: {fileID: 4110237383026691544}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: ae79de0fa3b6f6a44a2ff83f4c5299df, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: 93745d85bc1853448b86af09d9fc321d, type: 2}
   initialSkinName: 
   initialFlipX: 0
   initialFlipY: 0
@@ -113,27 +113,20 @@ MonoBehaviour:
   disableRenderingOnOverride: 1
   _animationName: IDLE
   loop: 1
-  timeScale: 1
---- !u!114 &5966793930934429987
+  timeScale: 0.6
+--- !u!114 &296727284746208088
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 714773748952885305}
+  m_GameObject: {fileID: 4110237383026691544}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 402d528f8e3bb3d44a9c066506e0db5d, type: 3}
+  m_Script: {fileID: 11500000, guid: b764922eceef9a040a16806befe62c74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   idleAnimationName: IDLE
-  appearAnimationName: APPEAR
   attackAnimationName: ATTACK
   hitAnimationName: HIT
-  previewAnimationName: 
-  rangeUpAttackName: 
-  rangeDownAttackName: 
-  generalAttackName: ATTACK
-  attackEventName: SHOT
-  isPreview: 0
-  arrow: {fileID: 8366574016604891916, guid: 490182c9a4d608142b1dd4faf0a4b091, type: 3}
+  dummyAnimation: 

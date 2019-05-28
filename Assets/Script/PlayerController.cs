@@ -48,7 +48,7 @@ public class PlayerController : MonoBehaviour
         if (transform.childCount > 2)
             heroSpine = transform.Find("HeroSkeleton").GetComponent<HeroSpine>();
 
-        Debug.Log(Camera.main.aspect);
+        Debug.Log(heroSpine);
     }
 
     private void Start()
