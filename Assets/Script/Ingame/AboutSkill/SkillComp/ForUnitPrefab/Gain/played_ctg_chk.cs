@@ -10,6 +10,8 @@ namespace SkillModules {
             EventDelegates[IngameEventHandler.EVENT_TYPE.END_CARD_PLAY].AddListener(() => {
                 OnEndCardPlay();
             });
+
+            SetMyActivateCondition("played_ctg_chk");
         }
 
         private void OnEndCardPlay() {

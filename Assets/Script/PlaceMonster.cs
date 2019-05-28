@@ -11,8 +11,8 @@ public class PlaceMonster : MonoBehaviour
     public Monster.Unit unit;
     public bool isPlayer;
 
-    private int x;
-    private int y;
+    public int x { get; private set; }
+    public int y { get; private set; }
     public GameObject myTarget;
 
     public Vector3 unitLocation;

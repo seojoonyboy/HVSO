@@ -12,23 +12,29 @@ using TMPro;
 public partial class Base_gain : SerializedMonoBehaviour {
     public Effect effectData;
     public Skill totalData;
+    public Condition condition;
 
     IngameEventHandler eventHandler;
     protected Dictionary<IngameEventHandler.EVENT_TYPE, UnityEvent> EventDelegates;
     List<UnityEvent> unityEvents = new List<UnityEvent>();
 
     List<GameObject> fieldUnits = new List<GameObject>();
+    protected FieldUnitsObserver 
+        playerUnitsObserver, 
+        enemyUnitsObserver;
+
     void Start() {
         eventHandler = PlayMangement.instance.EventHandler;
 
         RemoveListeners();
         AddListeners();
 
+        GetObservers();
         Init();
     }
 
     public virtual void Init() {
-        fieldUnits = PlayMangement.instance.PlayerUnitsObserver.GetAllFieldUnits();
+        fieldUnits = playerUnitsObserver.GetAllFieldUnits();
         var self = fieldUnits.Find(x => x == gameObject);
         fieldUnits.Remove(self);
 
@@ -40,6 +46,11 @@ public partial class Base_gain : SerializedMonoBehaviour {
             blockPanel.SetActive(true);
             blockPanel.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "부여 대상을 지정하세요";
         }
+    }
+
+    private void GetObservers() {
+        playerUnitsObserver = PlayMangement.instance.PlayerUnitsObserver;
+        enemyUnitsObserver = PlayMangement.instance.EnemyUnitsObserver;
     }
 
     private void OnEventOccured(Enum Event_Type, Component Sender, object Param) {
@@ -80,6 +91,12 @@ public partial class Base_gain : SerializedMonoBehaviour {
                     OffUI();
                 }
             }
+        }
+    }
+
+    public void SetMyActivateCondition(string keyword) {
+        foreach(Condition condition in totalData.activate.conditions) {
+            if (condition.method == keyword) this.condition = condition;
         }
     }
 

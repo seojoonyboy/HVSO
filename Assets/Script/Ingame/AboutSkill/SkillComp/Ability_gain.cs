@@ -8,16 +8,23 @@ namespace SkillModules {
         public override void EndCardPlay(ref GameObject unitPrefab) {
             base.EndCardPlay(ref unitPrefab);
 
-            foreach(var cond in skillData.activate.conditions) {
+            ConditionHandler handler = unitPrefab.AddComponent<ConditionHandler>();
+            handler.skillData = skillData;
+
+            foreach (var cond in skillData.activate.conditions) {
                 var newComp = unitPrefab.AddComponent(System.Type.GetType("SkillModules." + cond.method));
                 if(newComp != null) {
                     ((Base_gain)newComp).effectData = effectData;
                     ((Base_gain)newComp).totalData = skillData;
+
+                    handler.conditions.Add(new ConditionHandler.Set(false, ((Base_gain)newComp)));
                 }
                 else {
                     Base_gain base_Gain = unitPrefab.AddComponent<Base_gain>();
                     base_Gain.effectData = effectData;
                     base_Gain.totalData = skillData;
+
+                    handler.conditions.Add(new ConditionHandler.Set(false, base_Gain));
                 }
             }
         }

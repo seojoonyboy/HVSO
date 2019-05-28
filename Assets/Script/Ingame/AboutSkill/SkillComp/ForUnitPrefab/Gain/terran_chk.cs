@@ -10,6 +10,8 @@ namespace SkillModules {
             EventDelegates[IngameEventHandler.EVENT_TYPE.END_CARD_PLAY].AddListener(() => {
                 OnEndCardPlay();
             });
+
+            SetMyActivateCondition("terran_chk");
         }
 
         private void OnEndCardPlay() {
