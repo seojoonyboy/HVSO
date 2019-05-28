@@ -39,6 +39,7 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     public void DrawCard(string ID, int itemID = -1, bool first = false) {
         cardDataPackage = AccountManager.Instance.cardPackage;
         cardID = ID;
+        cardID = "ac10010";    //테스트 코드
         this.itemID = itemID;
         if (cardDataPackage.data.ContainsKey(cardID)) {
             cardData = cardDataPackage.data[cardID];
@@ -183,7 +184,7 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
                     foreach (var effect in skill.effects) {
                         var newComp = gameObject.AddComponent(System.Type.GetType("SkillModules.Ability_" + effect.method));
                         if(newComp != null) {
-                            ((Ability)newComp).InitData(skill);
+                            ((Ability)newComp).InitData(skill, effect);
                             ((Ability)newComp).isPlayer = true;
                         }
                     }

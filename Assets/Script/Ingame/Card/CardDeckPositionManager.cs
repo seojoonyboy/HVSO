@@ -77,7 +77,7 @@ public class CardDeckPositionManager : MonoBehaviour {
                 foreach (var effect in skill.effects) {
                     var newComp = card.AddComponent(System.Type.GetType("SkillModules.Ability_" + effect.method));
                     if (newComp != null) {
-                        ((Ability)newComp).InitData(skill);
+                        ((Ability)newComp).InitData(skill, effect);
                         ((Ability)newComp).isPlayer = true;
                     }
                 }
