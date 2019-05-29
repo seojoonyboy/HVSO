@@ -33,8 +33,8 @@ public partial class CardDropManager : Singleton<CardDropManager> {
 /// 유닛 처리
 /// </summary>
 public partial class CardDropManager { 
-    public void ShowDropableSlot(List<string> skills = null) {
-        if (skills == null) {
+    public void ShowDropableSlot(CardData card) {
+        if (card.attributes.Length == 0) {
             for (int i = 0; i < 5; i++) {
                 if (slotLine[i].GetComponent<Terrain>().terrain == PlayMangement.LineState.forest) continue;
                 if (unitLine[i][0].childCount == 0) {
@@ -46,8 +46,10 @@ public partial class CardDropManager {
 
         bool forrestAble = false;
         bool chainAble = false;
-        if (skills.Contains("footslog")) forrestAble = true;
-        if (skills.Contains("chain")) chainAble = true;
+        for (int i = 0; i < card.attributes.Length; i++) {
+            if (card.attributes[i] == "footslog") forrestAble = true;
+            else if (card.attributes[i] == "chain") chainAble = true;
+        }
 
         for (int i = 0; i < 5; i++) {
             if (slotLine[i].GetComponent<Terrain>().terrain == PlayMangement.LineState.forest && !forrestAble) continue;
@@ -61,7 +63,7 @@ public partial class CardDropManager {
                     slotLine[i].GetChild(0).gameObject.SetActive(true);
                 }
                 else {
-                    if (unitLine[i][i].childCount == 0) {
+                    if (unitLine[i][1].childCount == 0) {
                         unitLine[i][0].GetChild(0).position = new Vector3(unitLine[i][0].position.x, unitLine[i][0].GetChild(0).position.y + 0.5f, 0);
                         slotLine[i].GetChild(1).gameObject.SetActive(true);
                         slotLine[i].GetChild(2).gameObject.SetActive(true);

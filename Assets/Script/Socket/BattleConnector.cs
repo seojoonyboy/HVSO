@@ -20,6 +20,7 @@ public partial class BattleConnector : MonoBehaviour {
     public UnityEvent OnReceiveSocketMessage;
     public UnityEvent OnSocketClose;
     public UnityAction<string, int, bool> HandchangeCallback;
+    private Coroutine pingpong;
 
     void Awake() {
         thisType = this.GetType();
@@ -42,10 +43,20 @@ public partial class BattleConnector : MonoBehaviour {
         string deckId = "deck1001";
         string[] args = new string[] {"solo", playerId, "basic", deckId };
         SendMethod("join_game", args);
+        pingpong = StartCoroutine("Heartbeat");
+    }
+
+    IEnumerator Heartbeat() {
+        WaitForSeconds beatTime = new WaitForSeconds(25f);
+        while(true) {
+            yield return beatTime;
+            SendMethod("ping");
+        }
     }
 
     //Receive Socket Message
     private void ReceiveMessage(WebSocket webSocket, string message) {
+        Debug.Log(message);
         OnReceiveSocketMessage.Invoke();
         ReceiveFormat result = JsonReader.Read<ReceiveFormat>(message);
         queue.Enqueue(result);
@@ -69,6 +80,7 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     void OnDisable() {
+        StopCoroutine(pingpong);
         webSocket.Close();
     }
 
@@ -113,7 +125,6 @@ public partial class BattleConnector : MonoBehaviour {
         status = result.method;
         if(result.gameState != null) {
             gameState = result.gameState;
-            Debug.Log("WebSocket gameState changed");
         }
         if(result.method == null) return;
         MethodInfo theMethod = thisType.GetMethod(result.method);
@@ -147,11 +158,8 @@ public partial class BattleConnector : MonoBehaviour {
 
     public void end_mulligan() {
         Debug.Log("WebSocket State : end_mulligan");
-        //TODO : 이 때 새로운 카드가 들어옵니다.
         dequeueing = false;
         getNewCard = true;
-        Card humanHeroNewCard = gameState.players.human.newCard;
-        Card orcHeroNewCard = gameState.players.orc.newCard;
     }
 
     public void begin_turn_start() {
@@ -168,6 +176,7 @@ public partial class BattleConnector : MonoBehaviour {
 
     public void begin_human_turn() {
         Debug.Log("WebSocket State : begin_human_turn");
+        TurnOver();
     }
 
     public void begin_orc_post_turn() {
@@ -176,17 +185,20 @@ public partial class BattleConnector : MonoBehaviour {
 
     public void begin_battle_turn() {
         Debug.Log("WebSocket State : begin_battle_turn");
+        Invoke("TurnOver", 3f);
     }
 
     public void end_battle_turn() {
         Debug.Log("WebSocket State : end_battle_turn");
     }
 
-    public void line_battle() {
+    public void line_battle(string line) {
+        int line_num = int.Parse(line);
         Debug.Log("WebSocket State : line_battle");
     }
 
-    public void map_clear() {
+    public void map_clear(string line) {
+        int line_num = int.Parse(line);
         Debug.Log("WebSocket State : map_clear");
     }
 
@@ -196,10 +208,17 @@ public partial class BattleConnector : MonoBehaviour {
 
     public void begin_end_game() {
         Debug.Log("WebSocket State : begin_end_game");
+        //TODO : 여기서 카드 추가 됩니다.
     }
 
     public void end_end_game() {
         Debug.Log("WebSocket State : end_end_game");
+    }
+
+    public void card_played() {
+        Debug.Log("WebSocket State : card_played");
+        Debug.Log(gameState.lastUse.target.args[1]);
+        Debug.Log(gameState.lastUse.cardItem.id);
     }
 
 }
