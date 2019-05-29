@@ -35,8 +35,8 @@ public class CardHandDeckManager : MonoBehaviour {
         GameObject card = Instantiate(cardPrefab, cardSpawnPos);
         card.transform.SetParent(firstDrawParent);
         card.SetActive(true);
-
-        SocketFormat.Card socketCard = PlayMangement.instance.socketHandler.gameState.players.human.FirstCards[firstDrawList.Count];
+        bool race = PlayMangement.instance.player.race;
+        SocketFormat.Card socketCard = PlayMangement.instance.socketHandler.gameState.players.myPlayer(race).FirstCards[firstDrawList.Count];
         card.GetComponent<CardHandler>().DrawCard(socketCard.id, socketCard.itemId, true);
         AddAbilityInCardPrefab(socketCard.id, ref card);
 
@@ -105,14 +105,15 @@ public class CardHandDeckManager : MonoBehaviour {
             firstDrawList.RemoveAt(0);
         }
         yield return new WaitForSeconds(0.5f);
-        
+        yield return PlayMangement.instance.socketHandler.WaitGetCard();
 
         //영웅카드 뽑기
         GameObject card = Instantiate(cardPrefab, cardSpawnPos);
         card.transform.SetParent(firstDrawParent);
         card.SetActive(true);
-        string herocardID = PlayMangement.instance.socketHandler.gameState.players.human.newCard.id;
-        int itemID = PlayMangement.instance.socketHandler.gameState.players.human.newCard.itemId;
+        bool race = PlayMangement.instance.player.race;
+        string herocardID = PlayMangement.instance.socketHandler.gameState.players.myPlayer(race).newCard.id;
+        int itemID = PlayMangement.instance.socketHandler.gameState.players.myPlayer(race).newCard.itemId;
         card.GetComponent<CardHandler>().DrawCard(herocardID, itemID, true);
         AddCard(card);
 
