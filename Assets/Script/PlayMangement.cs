@@ -134,7 +134,7 @@ public partial class PlayMangement : MonoBehaviour
 
 
         if (enemyPlayer.race == false)
-            cardID = "ac1001"+Random.Range(1,5);
+            cardID = "ac10018";
         else
             cardID = "ac10001";
 
@@ -149,7 +149,7 @@ public partial class PlayMangement : MonoBehaviour
 
             yield return new WaitForSeconds(0.5f);
             cardData = cardDataPackage.data[cardID];
-            skeleton = Resources.Load<GameObject>("Skeleton/Skeleton_" + cardID);
+            skeleton = AccountManager.Instance.resource.cardSkeleton[cardID];
 
             if (enemyPlayer.resource.Value < cardData.cost) break;
 
