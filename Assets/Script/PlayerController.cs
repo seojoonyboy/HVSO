@@ -48,6 +48,8 @@ public class PlayerController : MonoBehaviour
         if (transform.childCount > 2)
             heroSpine = transform.Find("HeroSkeleton").GetComponent<HeroSpine>();
 
+
+        shieldCount = 3;
         Debug.Log(heroSpine);
     }
 
@@ -144,7 +146,9 @@ public class PlayerController : MonoBehaviour
             if (HP.Value >= amount) {
                 HP.Value -= amount;
                 SetState(HeroState.HIT);
-                shieldStack.Value++;
+
+                if (shieldCount > 0)
+                    shieldStack.Value++;
             }
             else
                 HP.Value = 0;
@@ -152,6 +156,7 @@ public class PlayerController : MonoBehaviour
         else {
             DrawSpeicalCard();
             shieldStack.Value = 0;
+            shieldCount--;
         } 
     }
 

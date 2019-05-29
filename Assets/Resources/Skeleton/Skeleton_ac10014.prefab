@@ -130,6 +130,7 @@ MonoBehaviour:
   appearAnimationName: APPEAR
   attackAnimationName: ATTACK
   hitAnimationName: HIT
+  previewAnimationName: 
   rangeUpAttackName: 
   rangeDownAttackName: 
   generalAttackName: ATTACK
