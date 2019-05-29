@@ -5,7 +5,7 @@ using dataModules;
 
 namespace SkillModules {
     public class ConditionChecker : MonoBehaviour {
-        public Activate data;
+        public Skill data;
         public bool isPlayer;
 
         protected FieldUnitsObserver playerUnitsObserver;
@@ -15,7 +15,7 @@ namespace SkillModules {
             return false;
         }
 
-        public virtual void Init(Activate data, bool isPlayer) {
+        public virtual void Init(Skill data, bool isPlayer) {
             this.data = data;
             this.isPlayer = isPlayer;
 

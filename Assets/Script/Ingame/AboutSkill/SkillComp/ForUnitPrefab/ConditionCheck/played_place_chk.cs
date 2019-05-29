@@ -8,7 +8,7 @@ namespace SkillModules {
     public class played_place_chk : ConditionChecker {
         public override bool IsConditionSatisfied(bool isPlayerUnitGenerated, GameObject summonedObj) {
             bool result = false;
-            foreach(Condition condition in data.conditions) {
+            foreach(Condition condition in data.activate.conditions) {
                 if(condition.method == "behind") {
                     result = CheckBehind();
                 }
