@@ -349,17 +349,67 @@ public partial class PlayMangement {
         resultUI.SetActive(true);
 
         if (player.HP.Value <= 0) {
-            resultUI.transform.Find("LoseWindow").gameObject.SetActive(true);
+            if (player.race)
+                SetResultWindow("lose", "human");
+            else
+                SetResultWindow("lose", "orc");
         }
         else if(enemyPlayer.HP.Value <= 0) {
-            resultUI.transform.Find("VictoryWindow").gameObject.SetActive(true);
+            if (player.race)
+                SetResultWindow("win", "human");
+            else
+                SetResultWindow("win", "orc");
         }
     }
 
     public void OnReturnBtn() {
-        SceneManager.Instance.LoadScene(SceneManager.Scene.MAIN_SCENE);
+        if (resultUI.transform.GetChild(0).gameObject.activeSelf) {
+            resultUI.transform.GetChild(0).gameObject.SetActive(false);
+            resultUI.transform.GetChild(1).gameObject.SetActive(true);
+        }
+        else if (resultUI.transform.GetChild(1).gameObject.activeSelf) {
+            SceneManager.Instance.LoadScene(SceneManager.Scene.MAIN_SCENE);
+        }
     }
 
+    private void SetResultWindow(string result, string race) {
+        Transform baseWindow = resultUI.transform.GetChild(0);
+        Transform resourceWindow = resultUI.transform.GetChild(1);
+        baseWindow.gameObject.SetActive(true);
+        switch (result) {
+            case "win":
+                if (race == "human") {
+                    baseWindow.Find("ResultCharacter/ResultHuman").gameObject.SetActive(true);
+                    resourceWindow.Find("ResourceResultRibon/HumanRibon").gameObject.SetActive(true);
+                }
+                else {
+                    baseWindow.Find("ResultCharacter/ResultOrc").gameObject.SetActive(true);
+                    resourceWindow.Find("ResourceResultRibon/OrcRibon").gameObject.SetActive(true);
+                }
+                baseWindow.Find("ShineEffect/WinShineEffect").gameObject.SetActive(true);
+                resourceWindow.Find("ShineEffect/WinShineEffect").gameObject.SetActive(true);
+                baseWindow.Find("ResultCharacter/ResultText/WinText").gameObject.SetActive(true);
+                resourceWindow.Find("ResultText/WinText").gameObject.SetActive(true);
+                break;
+            case "lose":
+                if (race == "human") {
+                    baseWindow.Find("ResultCharacter/ResultHuman").gameObject.SetActive(true);
+                }
+                else {
+                    baseWindow.Find("ResultCharacter/ResultOrc").gameObject.SetActive(true);
+                }
+                baseWindow.Find("ShineEffect/LoseShineEffect").gameObject.SetActive(true);
+                resourceWindow.Find("ShineEffect/LoseShineEffect").gameObject.SetActive(true);
+                baseWindow.Find("ResultCharacter/LoseRibon").gameObject.SetActive(true);
+                resourceWindow.Find("LoseRibon").gameObject.SetActive(true);
+                baseWindow.Find("ResultCharacter/ResultText/LoseText").gameObject.SetActive(true);
+                resourceWindow.Find("ResultText/LoseText").gameObject.SetActive(true);
+                break;
+            default:
+                break;
+        }
+
+    }
 
 }
 
