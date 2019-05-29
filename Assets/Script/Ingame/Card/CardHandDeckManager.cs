@@ -9,7 +9,6 @@ public class CardHandDeckManager : MonoBehaviour {
     Transform slot_2;
     private bool firstDraw = true;
     private int cardNum = 0;
-    private int drawingCardNum = 0;
     public bool isDrawing = false;
     List<GameObject> cardList;
     List<GameObject> firstDrawList;
@@ -195,13 +194,6 @@ public class CardHandDeckManager : MonoBehaviour {
 
 
     IEnumerator SendCardToHand(GameObject card, Transform target) {
-        drawingCardNum++;
-        //if (isDrawing) {
-        //    PlayMangement.instance.enemyPlayer.ReleaseTurn();
-        //    while (isDrawing) {
-        //        yield return new WaitForSeconds(0.1f);
-        //    }
-        //}
         if (!firstDraw) {
             card.transform.localScale = new Vector3(1.5f, 1.5f, 1.0f);
             iTween.MoveTo(card, firstDrawParent.position, 0.4f);
@@ -215,9 +207,6 @@ public class CardHandDeckManager : MonoBehaviour {
         card.GetComponent<CardHandler>().DisableCard();
         CardListManager csm = GameObject.Find("Canvas").transform.Find("CardInfoList").GetComponent<CardListManager>();
         csm.AddCardInfo(card.GetComponent<CardHandler>().cardData, card.GetComponent<CardHandler>().cardID);
-        drawingCardNum--;
-        if(!PlayMangement.instance.player.isMulligan && drawingCardNum == 0)
-            PlayMangement.instance.player.ActivePlayer();
     }
 
     public void DestroyCard(int index) {
