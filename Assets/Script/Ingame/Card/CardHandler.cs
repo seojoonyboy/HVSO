@@ -79,9 +79,8 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         blockButton = PlayMangement.instance.player.dragCard = true;
         startPos = transform.parent.position;
         PlayMangement.instance.player.isPicking.Value = true;
-
-        UnitDropManager.Instance.ShowDropableSlot(cardData, true);
-
+        if(cardData.type == "unit")
+            CardDropManager.Instance.ShowDropableSlot();
         var abilities = GetComponents<Ability>();
         foreach (Ability ability in abilities) { ability.BeginCardPlay(); }
         //args : (bool)아군인가
@@ -104,7 +103,7 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         blockButton = PlayMangement.instance.player.dragCard = false;
         PlayMangement.instance.player.isPicking.Value = false;
         if (PlayMangement.instance.player.getPlayerTurn == true && PlayMangement.instance.player.resource.Value >= cardData.cost) {
-            GameObject unitPref = UnitDropManager.Instance.DropUnit(gameObject, CheckSlot());
+            GameObject unitPref = CardDropManager.Instance.DropUnit(gameObject, CheckSlot());
 
             var abilities = GetComponents<Ability>();
             foreach (Ability ability in abilities) { ability.EndCardPlay(ref unitPref); }
@@ -113,12 +112,12 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         }
         else {
             highlighted = false;
-            UnitDropManager.Instance.HighLightSlot(highlightedSlot, highlighted);
-            UnitDropManager.Instance.HideDropableSlot();
+            CardDropManager.Instance.HighLightSlot(highlightedSlot, highlighted);
+            CardDropManager.Instance.HideDropableSlot();
             highlightedSlot = null;
         }
 
-        UnitDropManager.Instance.HideDropableSlot();
+        CardDropManager.Instance.HideDropableSlot();
     }
 
     public void CheckHighlight() {
@@ -127,7 +126,7 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
             if (highlightedSlot != null) {
                 highlighted = true;
                 transform.Find("GlowEffect").GetComponent<Image>().color = new Color(163.0f / 255.0f, 236.0f / 255.0f, 27.0f / 255.0f);
-                UnitDropManager.Instance.HighLightSlot(highlightedSlot, highlighted);
+                CardDropManager.Instance.HighLightSlot(highlightedSlot, highlighted);
             }
         }
         else {
@@ -137,7 +136,7 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
                     transform.Find("GlowEffect").GetComponent<Image>().color = new Color(1, 1, 107.0f / 255.0f);
                 else
                     transform.Find("GlowEffect").GetComponent<Image>().color = new Color(1, 1, 1);
-                UnitDropManager.Instance.HighLightSlot(highlightedSlot, highlighted);
+                CardDropManager.Instance.HighLightSlot(highlightedSlot, highlighted);
                 highlightedSlot = null;
             }
         }
