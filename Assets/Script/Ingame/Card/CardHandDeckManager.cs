@@ -23,13 +23,14 @@ public class CardHandDeckManager : MonoBehaviour {
         firstDrawList = new List<GameObject>();
         slot_1 = transform.GetChild(0);
         slot_2 = transform.GetChild(1);
-        //if(Screen.height > 1920.0f)
-        //    slot_1.transform.localScale = slot_2.transform.localScale = new Vector3(1920.0f / Screen.height, 1920.0f / Screen.height, 1);
         slot_2.gameObject.SetActive(true);
         ChangeSlotHeight(0.9f);
-        //PlayMangement.instance.socketHandler.OnReceiveSocketMessage.AddListener(() => AddCard());
     }
 
+    /// <summary>
+    /// 게임 시작시 멀리건 실행 함수
+    /// </summary>
+    /// <returns></returns>
     public IEnumerator FirstDraw() {
         GameObject card = Instantiate(cardPrefab, cardSpawnPos);
         card.transform.SetParent(firstDrawParent);
@@ -49,17 +50,10 @@ public class CardHandDeckManager : MonoBehaviour {
         }
     }
 
-    public void FirstAdditionalCardDraw() {
-        GameObject card = Instantiate(cardPrefab);
-        card.transform.SetParent(firstDrawParent.parent);
-        firstDrawList.Add(card);
-        card.SetActive(true);
-        string cardID = "ac10001";
-        card.GetComponent<CardHandler>().DrawCard(cardID);
-        card.transform.localPosition = new Vector3(0, 0, 0);
-        card.transform.localScale = new Vector3(1.7f, 1.7f, 1);
-    }
 
+    /// <summary>
+    /// 멀리건 완료 버튼 클릭 함수
+    /// </summary>
     public void FirstDrawCardChange() {
         foreach (GameObject cards in firstDrawList) 
             cards.transform.Find("ChangeButton").gameObject.SetActive(false);
@@ -71,6 +65,10 @@ public class CardHandDeckManager : MonoBehaviour {
         firstDrawParent.parent.Find("FinishButton").gameObject.SetActive(false);
     }
 
+    /// <summary>
+    /// 멀리건 완료시 실행 함수(선택한 카드들 드로우)
+    /// </summary>
+    /// <returns></returns>
     IEnumerator DrawChangedCards() {
         firstDrawParent.parent.gameObject.GetComponent<Image>().enabled = false;
         PlayMangement.instance.socketHandler.MulliganEnd();
@@ -83,14 +81,15 @@ public class CardHandDeckManager : MonoBehaviour {
         yield return PlayMangement.instance.socketHandler.WaitGetCard();
 
         //영웅카드 뽑기
-        GameObject card = Instantiate(cardPrefab, cardSpawnPos);
-        card.transform.SetParent(firstDrawParent);
-        card.SetActive(true);
-        bool race = PlayMangement.instance.player.race;
-        string herocardID = PlayMangement.instance.socketHandler.gameState.players.myPlayer(race).newCard.id;
-        int itemID = PlayMangement.instance.socketHandler.gameState.players.myPlayer(race).newCard.itemId;
-        card.GetComponent<CardHandler>().DrawCard(herocardID, itemID, true);
-        AddCard(card);
+        //GameObject card = Instantiate(cardPrefab, cardSpawnPos);
+        //card.transform.SetParent(firstDrawParent);
+        //card.SetActive(true);
+        //bool race = PlayMangement.instance.player.race;
+        //string herocardID = PlayMangement.instance.socketHandler.gameState.players.myPlayer(race).newCard.id;
+        //int itemID = PlayMangement.instance.socketHandler.gameState.players.myPlayer(race).newCard.itemId;
+        //card.GetComponent<CardHandler>().DrawCard(herocardID, itemID, true);
+        //AddCard(card);
+        AddCard();
 
 
         yield return new WaitForSeconds(3.0f);
@@ -103,6 +102,8 @@ public class CardHandDeckManager : MonoBehaviour {
         GameObject card;
         if (cardobj == null) {
             card = Instantiate(cardPrefab, cardSpawnPos);
+            string id = "ac1000" + UnityEngine.Random.Range(1, 10);
+            card.GetComponent<CardHandler>().DrawCard(id);
         }
         else
             card = cardobj;
@@ -121,7 +122,6 @@ public class CardHandDeckManager : MonoBehaviour {
                 firstDraw = false;
             }
             cardList.Add(card);
-            card.GetComponent<CardHandler>().RedrawCard();
             card.transform.localScale = new Vector3(1, 1, 1);
             if (target != null) {
                 isDrawing = false;
@@ -182,8 +182,6 @@ public class CardHandDeckManager : MonoBehaviour {
             }
         }
         cardList.Add(card);
-        card.GetComponent<CardHandler>().RedrawCard();
-        card.transform.localScale = new Vector3(1, 1, 1);
         LayoutRebuilder.ForceRebuildLayoutImmediate(slot_1.GetComponent<RectTransform>());
         LayoutRebuilder.ForceRebuildLayoutImmediate(slot_2.GetComponent<RectTransform>());
         if (target != null) {

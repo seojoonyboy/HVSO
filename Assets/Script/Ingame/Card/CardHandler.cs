@@ -185,17 +185,6 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         }
     }
 
-    public void RedrawCard() {
-        if (cardID == null) {
-            string id = "ac1000" + UnityEngine.Random.Range(1, 5);
-            DrawCard(id);
-        }
-        else
-            DrawCard(cardID);
-        firstDraw = false;
-        transform.Find("ChangeButton").gameObject.SetActive(false);
-    }
-
     public void RedrawButton() {
         //DrawCard("ac1000" + UnityEngine.Random.Range(1, 5));
         PlayMangement.instance.socketHandler.HandchangeCallback = DrawCard;

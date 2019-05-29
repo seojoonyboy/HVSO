@@ -347,8 +347,9 @@ public partial class PlayMangement : MonoBehaviour
         yield return new WaitForSeconds(1f);
         turn++;
         DistributeResource();
-        CustomEvent.Trigger(gameObject, "EndTurn");
         player.EndTurnDraw();
+        yield return new WaitForSeconds(2.0f);
+        CustomEvent.Trigger(gameObject, "EndTurn");
         StopCoroutine("battleCoroutine");
     }
 }
