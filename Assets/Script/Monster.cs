@@ -14,10 +14,11 @@ namespace IngameClass
         public string name;
         public int HP;
         public int currentHP;
-        public int power;
+        public int attack;
         public int cost;
         public int placeable;
         public bool waterPlace;
+        public string attackRange;
     }
     
 

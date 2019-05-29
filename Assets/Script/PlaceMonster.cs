@@ -99,7 +99,7 @@ public class PlaceMonster : MonoBehaviour
     }
 
     public void UnitTryAttack() {
-        if (unit.power <= 0) return;        
+        if (unit.attack <= 0) return;        
         SetState(UnitState.ATTACK);        
     }
 
@@ -126,30 +126,30 @@ public class PlaceMonster : MonoBehaviour
         PlaceMonster placeMonster = myTarget.GetComponent<PlaceMonster>();
 
 
-        if (unit.power > 0) {         
+        if (unit.attack > 0) {         
             if (placeMonster != null) {
-                RequestAttackUnit(myTarget, unit.power);
+                RequestAttackUnit(myTarget, unit.attack);
             }
             else
-                myTarget.GetComponent<PlayerController>().PlayerTakeDamage(unit.power);
+                myTarget.GetComponent<PlayerController>().PlayerTakeDamage(unit.attack);
 
-            if (unit.power <= 3) {
+            if (unit.attack <= 3) {
                 GameObject effect = Instantiate(PlayMangement.instance.effectManager.lowAttackEffect);
                 effect.transform.position = (placeMonster != null) ? myTarget.transform.position : new Vector3(gameObject.transform.position.x, myTarget.GetComponent<PlayerController>().wallPosition.y, 0);
                 Destroy(effect, effect.GetComponent<ParticleSystem>().main.duration - 0.2f);
                 StartCoroutine(PlayMangement.instance.cameraShake(unitSpine.atkDuration / 2));
                 SoundManager.Instance.PlaySound(SoundType.NORMAL_ATTACK);
             }
-            else if (unit.power > 4) {
-                GameObject effect =  (unit.power < 6)  ? Instantiate(PlayMangement.instance.effectManager.middileAttackEffect) : Instantiate(PlayMangement.instance.effectManager.highAttackEffect);
+            else if (unit.attack > 4) {
+                GameObject effect =  (unit.attack < 6)  ? Instantiate(PlayMangement.instance.effectManager.middileAttackEffect) : Instantiate(PlayMangement.instance.effectManager.highAttackEffect);
                 effect.transform.position = (placeMonster != null) ? myTarget.transform.position : new Vector3(gameObject.transform.position.x, myTarget.GetComponent<PlayerController>().wallPosition.y, 0);
                 Destroy(effect, effect.GetComponent<ParticleSystem>().main.duration - 0.2f);
                 StartCoroutine(PlayMangement.instance.cameraShake(unitSpine.atkDuration / 2));
 
-                if(unit.power > 4 && unit.power <= 6) {
+                if(unit.attack > 4 && unit.attack <= 6) {
                     SoundManager.Instance.PlaySound(SoundType.MIDDLE_ATTACK);
                 }
-                if(unit.power > 6) {
+                if(unit.attack > 6) {
                     SoundManager.Instance.PlaySound(SoundType.LARGE_ATTACK);
                 }
             }
@@ -182,7 +182,7 @@ public class PlaceMonster : MonoBehaviour
     }
 
     public void RequestChangePower(int amount) {
-        unit.power += amount;
+        unit.attack += amount;
         UpdateStat();
     }
 
@@ -192,7 +192,7 @@ public class PlaceMonster : MonoBehaviour
     }
 
     public void RequestChangeStat(int power = 0, int hp = 0) {
-        unit.power += power;
+        unit.attack += power;
         unit.currentHP += hp;
     }
 
@@ -202,11 +202,11 @@ public class PlaceMonster : MonoBehaviour
             transform.Find("HP").GetComponentInChildren<TextMeshPro>().text = unit.currentHP.ToString();
         else
             transform.Find("HP").GetComponentInChildren<TextMeshPro>().text = 0.ToString();
-        transform.Find("ATK").GetComponentInChildren<TextMeshPro>().text = unit.power.ToString();
+        transform.Find("ATK").GetComponentInChildren<TextMeshPro>().text = unit.attack.ToString();
     }
 
     private void MoveToTarget() {
-        if (unit.power <= 0) return;
+        if (unit.attack <= 0) return;
         PlaceMonster placeMonster = myTarget.GetComponent<PlaceMonster>();
 
         if (unitSpine.arrow != null)

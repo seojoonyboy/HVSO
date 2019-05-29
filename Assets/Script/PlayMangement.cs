@@ -162,7 +162,7 @@ public partial class PlayMangement : MonoBehaviour
 
             monster.GetComponent<PlaceMonster>().unit.HP = (int)cardData.hp;
             monster.GetComponent<PlaceMonster>().unit.currentHP = (int)cardData.hp;
-            monster.GetComponent<PlaceMonster>().unit.power = (int)cardData.attack;
+            monster.GetComponent<PlaceMonster>().unit.attack = (int)cardData.attack;
             monster.GetComponent<PlaceMonster>().unit.name = cardData.name;
             monster.GetComponent<PlaceMonster>().unit.type = cardData.type;
 
@@ -258,28 +258,28 @@ public partial class PlayMangement : MonoBehaviour
                 if (player.backLine.transform.GetChild(line).childCount != 0) {
                     player.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().GetTarget();
 
-                    if (player.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().unit.power > 0)
+                    if (player.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().unit.attack > 0)
                         yield return new WaitForSeconds(1.1f + player.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().atkTime);
                 }
 
                 if (player.frontLine.transform.GetChild(line).childCount != 0) {
                     player.frontLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().GetTarget();
 
-                    if (player.frontLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().unit.power > 0)
+                    if (player.frontLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().unit.attack > 0)
                         yield return new WaitForSeconds(1.1f + player.frontLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().atkTime);
                 }
 
                 if (enemyPlayer.backLine.transform.GetChild(line).childCount != 0) {
                     enemyPlayer.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().GetTarget();
 
-                    if (enemyPlayer.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().unit.power > 0)
+                    if (enemyPlayer.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().unit.attack > 0)
                         yield return new WaitForSeconds(1.1f + enemyPlayer.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().atkTime);
                 }
 
                 if (enemyPlayer.frontLine.transform.GetChild(line).childCount != 0) {
                     enemyPlayer.frontLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().GetTarget();
 
-                    if (enemyPlayer.frontLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().unit.power > 0)
+                    if (enemyPlayer.frontLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().unit.attack > 0)
                         yield return new WaitForSeconds(1.1f + enemyPlayer.frontLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().atkTime);
                 }
             }
@@ -288,27 +288,27 @@ public partial class PlayMangement : MonoBehaviour
                 if (enemyPlayer.backLine.transform.GetChild(line).childCount != 0) {
                     enemyPlayer.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().GetTarget();
 
-                    if (enemyPlayer.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().unit.power > 0)
+                    if (enemyPlayer.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().unit.attack > 0)
                         yield return new WaitForSeconds(1.1f + enemyPlayer.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().atkTime);
                 }
 
                 if (enemyPlayer.frontLine.transform.GetChild(line).childCount != 0) {
                     enemyPlayer.frontLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().GetTarget();
 
-                    if (enemyPlayer.frontLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().unit.power > 0)
+                    if (enemyPlayer.frontLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().unit.attack > 0)
                         yield return new WaitForSeconds(1.1f + enemyPlayer.frontLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().atkTime);
                 }
                 if (player.backLine.transform.GetChild(line).childCount != 0) {
                     player.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().GetTarget();
 
-                    if (player.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().unit.power > 0)
+                    if (player.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().unit.attack > 0)
                         yield return new WaitForSeconds(1.1f + player.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().atkTime);
                 }
 
                 if (player.frontLine.transform.GetChild(line).childCount != 0) {
                     player.frontLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().GetTarget();
 
-                    if (player.frontLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().unit.power > 0)
+                    if (player.frontLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().unit.attack > 0)
                         yield return new WaitForSeconds(1.1f + player.frontLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().atkTime);
                 }
             }
