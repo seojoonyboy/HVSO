@@ -95,6 +95,7 @@ public partial class AccountManager : Singleton<AccountManager> {
                 data.cost = card.cost;
                 data.attack = card.attack;
                 data.hp = card.hp;
+                data.attackRange = card.attackRange;
                 data.hero_chk = card.isHeroCard;
                 data.skills = card.skills;
                 cardPackage.data.Add(card.cardId, data);

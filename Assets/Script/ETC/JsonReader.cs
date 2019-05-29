@@ -72,6 +72,7 @@ namespace dataModules {
         public int cost;
         public int? attack;
         public int? hp;
+        public string attackRange;
         public bool isHeroCard;
         public string cardId;
     }
