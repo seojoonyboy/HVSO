@@ -24,6 +24,10 @@ namespace SocketFormat {
     public class Players {
         public Player orc;
         public Player human;
+
+        public Player myPlayer(bool race) {
+            return race ? human : orc;
+        }
     }
 
     public class Player {

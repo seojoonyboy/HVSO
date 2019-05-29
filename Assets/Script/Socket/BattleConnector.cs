@@ -20,12 +20,6 @@ public partial class BattleConnector : MonoBehaviour {
     public UnityEvent OnReceiveSocketMessage;
     public UnityEvent OnSocketClose;
     public UnityAction<string, int, bool> HandchangeCallback;
-    public GameState gameState;
-    private string raceName;
-    private bool dequeueing = true;
-    public Queue<ReceiveFormat> queue = new Queue<ReceiveFormat>();
-
-    private Type thisType;
 
     void Awake() {
         thisType = this.GetType();
@@ -102,6 +96,11 @@ public partial class BattleConnector : MonoBehaviour {
 /// 서버로부터 데이터를 받아올 때 reflection으로 string을 함수로 바로 발동하게 하는 부분
 /// </summary>
 public partial class BattleConnector : MonoBehaviour {
+    public GameState gameState;
+    private string raceName;
+    private bool dequeueing = true;
+    public Queue<ReceiveFormat> queue = new Queue<ReceiveFormat>();
+    private Type thisType;
 
     private void FixedUpdate() {
         if(!dequeueing) return;
@@ -111,6 +110,7 @@ public partial class BattleConnector : MonoBehaviour {
     
     private void DequeueSocket() {
         ReceiveFormat result = queue.Dequeue();
+        status = result.method;
         if(result.gameState != null) {
             gameState = result.gameState;
             Debug.Log("WebSocket gameState changed");
@@ -134,10 +134,10 @@ public partial class BattleConnector : MonoBehaviour {
     public void hand_changed(string arg) {
         if(PlayMangement.instance == null) return; //임시
 
-        bool isOrc = PlayMangement.instance.player.race;
-        raceName = isOrc ? "orc" : "human";
+        bool isHuman = PlayMangement.instance.player.race;
+        raceName = isHuman ? "human" : "orc";
 
-        if(arg.CompareTo(raceName) == 0) return;
+        if(arg.CompareTo(raceName) != 0) return;
 
         Card newCard = gameState.players.human.newCard;
         Debug.Log("Card id : "+ newCard.id + "  Card itemId : " + newCard.itemId);
@@ -147,6 +147,11 @@ public partial class BattleConnector : MonoBehaviour {
 
     public void end_mulligan() {
         Debug.Log("WebSocket State : end_mulligan");
+        //TODO : 이 때 새로운 카드가 들어옵니다.
+        dequeueing = false;
+        getNewCard = true;
+        Card humanHeroNewCard = gameState.players.human.newCard;
+        Card orcHeroNewCard = gameState.players.orc.newCard;
     }
 
     public void begin_turn_start() {
@@ -195,6 +200,23 @@ public partial class BattleConnector : MonoBehaviour {
 
     public void end_end_game() {
         Debug.Log("WebSocket State : end_end_game");
+    }
+
+}
+
+/// <summary>
+/// 클라이언트로부터 데이터를 가져올 때
+/// </summary>
+public partial class BattleConnector : MonoBehaviour {
+    private string status;
+    private bool getNewCard = false;
+
+    public IEnumerator WaitGetCard() {
+        while(!getNewCard) {
+            yield return new WaitForFixedUpdate();
+        }
+        getNewCard = false;
+        dequeueing = true;
     }
 
 }
