@@ -39,7 +39,7 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     public void DrawCard(string ID, int itemID = -1, bool first = false) {
         cardDataPackage = AccountManager.Instance.cardPackage;
         cardID = ID;
-        cardID = "ac10010";    //테스트 코드
+        //cardID = "ac10010";    //테스트 코드
         this.itemID = itemID;
         if (cardDataPackage.data.ContainsKey(cardID)) {
             cardData = cardDataPackage.data[cardID];
@@ -61,7 +61,11 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         }
         transform.Find("Cost").Find("Text").GetComponent<Text>().text = cardData.cost.ToString();
 
-        if (first) firstDraw = true;
+        if (first) {
+            transform.Find("GlowEffect").GetComponent<Image>().enabled = true;
+            transform.Find("GlowEffect").GetComponent<Image>().color = new Color(1, 1, 107.0f / 255.0f);
+            firstDraw = true;
+        }
     }
 
 
@@ -202,6 +206,7 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         PlayMangement.instance.socketHandler.HandchangeCallback = DrawCard;
         PlayMangement.instance.socketHandler.ChangeCard(itemID);
         transform.Find("ChangeButton").gameObject.SetActive(false);
+        transform.Find("GlowEffect").GetComponent<Image>().enabled = false;
     }
 
     public void DisableCard() {

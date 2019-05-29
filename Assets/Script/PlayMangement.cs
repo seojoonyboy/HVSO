@@ -22,7 +22,7 @@ public partial class PlayMangement : MonoBehaviour
     public EffectManager effectManager;
 
     private int turn = 0;
-    
+    public GameObject blockPanel;
     
 
     private void Awake()
