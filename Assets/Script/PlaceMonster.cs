@@ -238,7 +238,7 @@ public class PlaceMonster : MonoBehaviour
 
     public void CheckHP() {
         if ( unit.currentHP <= 0 ) {
-            GameObject tomb = Resources.Load<GameObject>("Skeleton/Skeleton_Dead");
+            GameObject tomb = AccountManager.Instance.resource.unitDeadObject;
             GameObject dropTomb = Instantiate(tomb);
             dropTomb.transform.position = transform.position;
 

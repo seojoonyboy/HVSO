@@ -2467,6 +2467,8 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+  unitDeadObject: {fileID: 4985483695556585209, guid: c7f3c75ff72d1444a8ab0cfeef0207de,
+    type: 3}
 --- !u!1 &1876041233
 GameObject:
   m_ObjectHideFlags: 0
