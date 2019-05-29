@@ -19,10 +19,6 @@ namespace IngameClass
         public int placeable;
         public bool waterPlace;
     }
-
-    [System.Serializable]
-    public class Terrain {
-        public int terrainState;
-    }
+    
 
 }
