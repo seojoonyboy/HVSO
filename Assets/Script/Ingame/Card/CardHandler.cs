@@ -79,9 +79,7 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         blockButton = PlayMangement.instance.player.dragCard = true;
         startPos = transform.parent.position;
         PlayMangement.instance.player.isPicking.Value = true;
-
-        UnitDropManager.Instance.ShowDropableSlot(cardData, true);
-
+        UnitDropManager.Instance.ShowDropableSlot(cardData);
         var abilities = GetComponents<Ability>();
         foreach (Ability ability in abilities) { ability.BeginCardPlay(); }
         //args : (bool)아군인가
