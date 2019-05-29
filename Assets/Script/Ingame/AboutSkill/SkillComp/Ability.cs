@@ -11,18 +11,16 @@ using SkillModules;
 /// </summary>
 public partial class Ability : MonoBehaviour {
     public bool isPlayer = true;
-
     protected Skill skillData;
 
-    private void Start() {
+    public virtual void InitData(Skill data, bool isPlayer) {
+        eventHandler = PlayMangement.instance.EventHandler;
         RemoveListeners();
         AddListeners();
-    }
 
-    public virtual void InitData(Skill data, bool isPlayer) {
         skillData = data;
 
-        IngameEventHandler.EVENT_TYPE _eventType = ((IngameEventHandler.EVENT_TYPE)Enum.Parse(typeof(IngameEventHandler.EVENT_TYPE), skillData.activate.trigger));
+        IngameEventHandler.EVENT_TYPE _eventType = ((IngameEventHandler.EVENT_TYPE)Enum.Parse(typeof(IngameEventHandler.EVENT_TYPE), skillData.activate.trigger.ToUpper()));
         EventDelegates[_eventType].AddListener(OnEventCallback);
         
         foreach(var condition in data.activate.conditions) {
