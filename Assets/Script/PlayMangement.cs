@@ -39,6 +39,7 @@ public partial class PlayMangement : MonoBehaviour
         GameObject backGroundEffect = Instantiate(effectManager.backGroundEffect);
         backGroundEffect.transform.position = backGround.transform.Find("ParticlePosition").position;
         SetCamera();
+        InitTurnTable();
 
     }
     private void OnDestroy()
@@ -231,6 +232,7 @@ public partial class PlayMangement : MonoBehaviour
                 StartBattle();
                 break;
         }
+        SetTurnTable(currentTurn);
     }
 
     public void StartBattle() {
@@ -451,5 +453,52 @@ public partial class PlayMangement {
         Debug.Log("Client_ready 전송");
         //SocketFormat.SendFormat format = new SocketFormat.SendFormat("client_ready", new string[] { });
         //SocketHandler.SendToSocket(format);
+    }
+}
+
+public partial class PlayMangement {
+    [SerializeField] Transform turnTable;
+    private GameObject releaseTurnBtn;
+    private GameObject nonplayableTurnArrow;
+    private GameObject playableTurnArrow;
+    private Transform turnIcon;
+
+    private void InitTurnTable() {
+        releaseTurnBtn = turnTable.GetChild(2).gameObject;
+        nonplayableTurnArrow = turnTable.GetChild(3).GetChild(0).gameObject;
+        playableTurnArrow = turnTable.GetChild(3).GetChild(1).gameObject;
+        if (player.race)
+            turnIcon = turnTable.GetChild(4);
+        else
+            turnIcon = turnTable.GetChild(5);
+        turnIcon.GetChild(0).gameObject.SetActive(true);
+        nonplayableTurnArrow.SetActive(true);
+    }
+
+    private void SetTurnTable(string currentTurn) {
+        switch (currentTurn) {
+            case "ZOMBIE":
+                turnIcon.GetChild(3).gameObject.SetActive(false);
+                turnIcon.GetChild(0).gameObject.SetActive(true);
+                break;
+            case "PLANT":
+                turnIcon.GetChild(0).gameObject.SetActive(false);
+                turnIcon.GetChild(1).gameObject.SetActive(true);
+                releaseTurnBtn.SetActive(true);
+                nonplayableTurnArrow.SetActive(false);
+                playableTurnArrow.SetActive(true);
+                break;
+            case "SECRET":
+                turnIcon.GetChild(1).gameObject.SetActive(false);
+                turnIcon.GetChild(2).gameObject.SetActive(true);
+                releaseTurnBtn.SetActive(false);
+                playableTurnArrow.SetActive(false);
+                nonplayableTurnArrow.SetActive(true);
+                break;
+            case "BATTLE":
+                turnIcon.GetChild(2).gameObject.SetActive(false);
+                turnIcon.GetChild(3).gameObject.SetActive(true);
+                break;
+        }
     }
 }
