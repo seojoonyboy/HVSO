@@ -80,7 +80,7 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         startPos = transform.parent.position;
         PlayMangement.instance.player.isPicking.Value = true;
         if(cardData.type == "unit")
-            CardDropManager.Instance.ShowDropableSlot();
+            CardDropManager.Instance.ShowDropableSlot(cardData);
         var abilities = GetComponents<Ability>();
         foreach (Ability ability in abilities) { ability.BeginCardPlay(); }
         //args : (bool)아군인가
