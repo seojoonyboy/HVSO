@@ -1,0 +1,62 @@
+
+ac10008.png
+size: 1024,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+L_leg
+  rotate: true
+  xy: 326, 100
+  size: 71, 81
+  orig: 71, 81
+  offset: 0, 0
+  index: -1
+L_low_arm
+  rotate: false
+  xy: 701, 127
+  size: 96, 120
+  orig: 96, 120
+  offset: 0, 0
+  index: -1
+L_upper_arm
+  rotate: false
+  xy: 2, 16
+  size: 157, 231
+  orig: 157, 231
+  offset: 0, 0
+  index: -1
+R_arm
+  rotate: true
+  xy: 161, 2
+  size: 96, 160
+  orig: 96, 160
+  offset: 0, 0
+  index: -1
+R_leg
+  rotate: false
+  xy: 323, 18
+  size: 71, 80
+  orig: 71, 80
+  offset: 0, 0
+  index: -1
+body
+  rotate: false
+  xy: 161, 100
+  size: 163, 147
+  orig: 163, 147
+  offset: 0, 0
+  index: -1
+head
+  rotate: false
+  xy: 551, 103
+  size: 148, 144
+  orig: 148, 144
+  offset: 0, 0
+  index: -1
+shadow
+  rotate: false
+  xy: 326, 173
+  size: 223, 74
+  orig: 223, 74
+  offset: 0, 0
+  index: -1
