@@ -11,8 +11,8 @@ public class PlaceMonster : MonoBehaviour
     public Monster.Unit unit;
     public bool isPlayer;
 
-    private int x;
-    private int y;
+    public int x { get; private set; }
+    public int y { get; private set; }
     public GameObject myTarget;
 
     public Vector3 unitLocation;
@@ -185,7 +185,18 @@ public class PlaceMonster : MonoBehaviour
         unit.power += amount;
         UpdateStat();
     }
-    
+
+    public void RequestChangeHp(int amount) {
+        unit.HP += amount;
+        UpdateStat();
+    }
+
+    public void RequestChangeStat(int power = 0, int hp = 0) {
+        unit.power += power;
+        unit.HP += hp;
+    }
+
+
     public void UpdateStat() {
         if (unit.HP > 0)
             transform.Find("HP").GetComponentInChildren<TextMeshPro>().text = unit.HP.ToString();

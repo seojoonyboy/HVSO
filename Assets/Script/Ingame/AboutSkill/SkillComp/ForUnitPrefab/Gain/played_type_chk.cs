@@ -3,16 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace SkillModules {
-    public class terran_chk : Base_gain {
+    public class played_type_chk : Base_gain {
         public override void Init() {
-            base.Init();
+            //base.Init();
 
             EventDelegates[IngameEventHandler.EVENT_TYPE.END_CARD_PLAY].AddListener(() => {
                 OnEndCardPlay();
             });
+
+            SetMyActivateCondition("played_type_chk");
         }
 
         private void OnEndCardPlay() {
+
+        }
+
+        public override void GetMouseButtonDownEvent() {
 
         }
     }

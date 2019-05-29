@@ -22,4 +22,32 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
         }
         return _units;
     }
+
+    /// <summary>
+    /// 한줄 반환
+    /// </summary>
+    /// <param name="row">row</param>
+    /// <returns></returns>
+    public List<GameObject> GetAllFieldUnits(int row) {
+        List<GameObject> _units = new List<GameObject>();
+        for (int i=0; i<2; i++) {
+            if(units[row, i] != null) {
+                _units.Add(units[row, i]);
+            }
+        }
+        return _units;
+    }
+
+    public Pos GetMyRow(GameObject gameObject) {
+        Pos pos = new Pos();
+        pos.col = gameObject.GetComponent<PlaceMonster>().x;
+        pos.row = gameObject.GetComponent<PlaceMonster>().y;
+
+        return pos;
+    }
+}
+
+public struct Pos {
+    public int row;
+    public int col;
 }

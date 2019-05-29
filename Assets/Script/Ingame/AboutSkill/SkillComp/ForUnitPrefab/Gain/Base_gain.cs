@@ -11,22 +11,30 @@ using TMPro;
 /// </summary>
 public partial class Base_gain : SerializedMonoBehaviour {
     public Effect effectData;
+    public Skill totalData;
+    public Condition condition;
+
     IngameEventHandler eventHandler;
     protected Dictionary<IngameEventHandler.EVENT_TYPE, UnityEvent> EventDelegates;
     List<UnityEvent> unityEvents = new List<UnityEvent>();
 
     List<GameObject> fieldUnits = new List<GameObject>();
+    protected FieldUnitsObserver 
+        playerUnitsObserver, 
+        enemyUnitsObserver;
+
     void Start() {
         eventHandler = PlayMangement.instance.EventHandler;
 
         RemoveListeners();
         AddListeners();
 
+        GetObservers();
         Init();
     }
 
     public virtual void Init() {
-        fieldUnits = PlayMangement.instance.PlayerUnitsObserver.GetAllFieldUnits();
+        fieldUnits = playerUnitsObserver.GetAllFieldUnits();
         var self = fieldUnits.Find(x => x == gameObject);
         fieldUnits.Remove(self);
 
@@ -40,12 +48,21 @@ public partial class Base_gain : SerializedMonoBehaviour {
         }
     }
 
+    private void GetObservers() {
+        playerUnitsObserver = PlayMangement.instance.PlayerUnitsObserver;
+        enemyUnitsObserver = PlayMangement.instance.EnemyUnitsObserver;
+    }
+
     private void OnEventOccured(Enum Event_Type, Component Sender, object Param) {
         var event_type = (IngameEventHandler.EVENT_TYPE)Event_Type;
         EventDelegates[event_type].Invoke();
     }
 
-    public virtual void Update() {
+    void Update() {
+        GetMouseButtonDownEvent();
+    }
+
+    public virtual void GetMouseButtonDownEvent() {
         if (Input.GetMouseButtonDown(0)) {
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
@@ -65,10 +82,21 @@ public partial class Base_gain : SerializedMonoBehaviour {
                     int.TryParse(effectData.args[0], out atkBuff);
                     int.TryParse(effectData.args[1], out hpBuff);
 
-                    Debug.Log(hit.collider.gameObject.name + "에게 " + atkBuff + "," + hpBuff + "부여");
+                    //Debug.Log(hit.collider.gameObject.name + "에게 " + atkBuff + "," + hpBuff + "부여");
+
+                    PlaceMonster placeMonster = hit.collider.gameObject.GetComponent<PlaceMonster>();
+                    if (placeMonster != null) {
+                        placeMonster.RequestChangeStat(atkBuff, hpBuff);
+                    }
                     OffUI();
                 }
             }
+        }
+    }
+
+    public void SetMyActivateCondition(string keyword) {
+        foreach(Condition condition in totalData.activate.conditions) {
+            if (condition.method == keyword) this.condition = condition;
         }
     }
 
