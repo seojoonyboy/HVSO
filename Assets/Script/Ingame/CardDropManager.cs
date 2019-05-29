@@ -180,8 +180,9 @@ public partial class CardDropManager {
         placedMonster.GetComponent<PlaceMonster>().unit.attackRange = cardHandler.cardData.attackRange;
         placedMonster.GetComponent<PlaceMonster>().unit.cost = cardHandler.cardData.cost;
         placedMonster.GetComponent<PlaceMonster>().unit.rarelity = cardHandler.cardData.rarelity;
+        placedMonster.GetComponent<PlaceMonster>().unit.id = cardHandler.cardData.cardId;
 
-        if(cardHandler.cardData.category_2 != "") {
+        if (cardHandler.cardData.category_2 != "") {
             placedMonster.GetComponent<PlaceMonster>().unit.cardCategories = new string[2];
             placedMonster.GetComponent<PlaceMonster>().unit.cardCategories[0] = cardHandler.cardData.category_1;
             placedMonster.GetComponent<PlaceMonster>().unit.cardCategories[1] = cardHandler.cardData.category_2;
