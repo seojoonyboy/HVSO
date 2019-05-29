@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CardDeckPositionManager : MonoBehaviour {
+public class CardHandDeckManager : MonoBehaviour {
     Transform slot_1;
     Transform slot_2;
     private bool firstDraw = true;

@@ -9,7 +9,7 @@ namespace SkillModules {
         }
 
         public override void BeginCardPlay() {
-            UnitDropManager.Instance.ShowDropableSlot(FieldType.FOOTSLOG);
+            CardDropManager.Instance.ShowDropableSlot(FieldType.FOOTSLOG);
         }
     }
 }

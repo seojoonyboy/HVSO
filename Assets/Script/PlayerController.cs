@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour
     public GameObject card;
     public GameObject back;
     public GameObject playerUI;
-    [SerializeField] public CardDeckPositionManager cdpm;
+    [SerializeField] public CardHandDeckManager cdpm;
 
     public GameObject backLine;
     public GameObject frontLine;
@@ -54,7 +54,7 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         Init();
-        UnitDropManager.Instance.SetUnitDropPos();
+        CardDropManager.Instance.SetUnitDropPos();
     }
 
     public IEnumerator GenerateCard() {
