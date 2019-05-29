@@ -502,3 +502,16 @@ public partial class PlayMangement {
         }
     }
 }
+
+/// <summary>
+/// 지형처리
+/// </summary>
+
+public partial class PlayMangement {
+    public enum LineState {
+        hill,
+        flat,
+        forest,
+        water
+    }
+}

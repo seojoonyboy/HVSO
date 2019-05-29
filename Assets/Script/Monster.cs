@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace Monster
+namespace IngameClass
 {
     [System.Serializable]
-    public class Unit
-    {
+    public class Unit{
         public bool race;
         public string rarelity;
         public string type;
@@ -20,4 +19,10 @@ namespace Monster
         public int placeable;
         public bool waterPlace;
     }
+
+    [System.Serializable]
+    public class Terrain {
+        public int terrainState;
+    }
+
 }

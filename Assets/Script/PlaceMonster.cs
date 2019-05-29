@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
-using Monster;
+using IngameClass;
 using TMPro;
 
 
 public class PlaceMonster : MonoBehaviour
 {
-    public Monster.Unit unit;
+    public IngameClass.Unit unit;
     public bool isPlayer;
 
     public int x { get; private set; }
