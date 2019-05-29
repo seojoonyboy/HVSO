@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class UnitDropManager : Singleton<UnitDropManager> {
-    Transform[] slotLine;
-    Transform[][] unitLine;
-    Transform[][] enemyUnitLine;
+public partial class CardDropManager : Singleton<CardDropManager> {
+    protected Transform[] slotLine;
+    protected Transform[][] unitLine;
+    protected Transform[][] enemyUnitLine;
 
     public void SetUnitDropPos() {
         slotLine = new Transform[5];
@@ -27,9 +27,14 @@ public partial class UnitDropManager : Singleton<UnitDropManager> {
             enemyUnitLine[i][1] = unitSlotLines.parent.GetChild(1).GetChild(1).GetChild(i);
         }
     }
+}
 
-    public void ShowDropableSlot(CardData card, List<string> skills = null) {
-        if(skills == null) {
+/// <summary>
+/// 유닛 처리
+/// </summary>
+public partial class CardDropManager { 
+    public void ShowDropableSlot(List<string> skills = null) {
+        if (skills == null) {
             for (int i = 0; i < 5; i++) {
                 if (slotLine[i].GetComponent<Terrain>().terrain == PlayMangement.LineState.forest) continue;
                 if (unitLine[i][0].childCount == 0) {
@@ -57,6 +62,7 @@ public partial class UnitDropManager : Singleton<UnitDropManager> {
                 }
                 else {
                     if (unitLine[i][i].childCount == 0) {
+                        unitLine[i][0].GetChild(0).position = new Vector3(unitLine[i][0].position.x, unitLine[i][0].GetChild(0).position.y + 0.5f, 0);
                         slotLine[i].GetChild(1).gameObject.SetActive(true);
                         slotLine[i].GetChild(2).gameObject.SetActive(true);
                     }
@@ -80,7 +86,7 @@ public partial class UnitDropManager : Singleton<UnitDropManager> {
         for (int i = 0; i < 5; i++) {
             if (unitLine[i][0].childCount > 0)
                 unitLine[i][0].GetChild(0).position = new Vector3(unitLine[i][0].position.x, unitLine[i][0].position.y, 0);
-            if(unitLine[i][1].childCount > 0)
+            if (unitLine[i][1].childCount > 0)
                 unitLine[i][1].GetChild(0).position = new Vector3(unitLine[i][0].position.x, unitLine[i][1].position.y, 0);
             slotLine[i].GetChild(0).GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 155.0f / 255.0f);
             slotLine[i].GetChild(1).GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 155.0f / 255.0f);
@@ -103,11 +109,11 @@ public partial class UnitDropManager : Singleton<UnitDropManager> {
                 if (index == 1) unitLine[lineNum][0].GetChild(0).position = unitLine[lineNum][0].position;
                 else unitLine[lineNum][0].GetChild(0).position = unitLine[lineNum][1].position;
             }
-            if(enemyUnitLine[lineNum][1].childCount > 0) {
+            if (enemyUnitLine[lineNum][1].childCount > 0) {
                 //ani.SetTrigger("1_to_2");
             }
             else if (enemyUnitLine[lineNum][0].childCount > 0) {
-                if(unitLine[lineNum][0].childCount > 0)
+                if (unitLine[lineNum][0].childCount > 0)
                     ani.SetTrigger("2_to_1");
                 else
                     ani.SetTrigger("1_to_1");
@@ -115,7 +121,7 @@ public partial class UnitDropManager : Singleton<UnitDropManager> {
             else {
                 ani.SetTrigger("1_to_hero");
             }
-            
+
         }
         else {
             target.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 155.0f / 255.0f);
@@ -189,7 +195,15 @@ public partial class UnitDropManager : Singleton<UnitDropManager> {
     }
 }
 
-public enum FieldType {
+/// <summary>
+/// 마법 처리
+/// </summary>
+public partial class CardDropManager {
+    //public override void ShowDropableSlot(List<string> skills = null) {
+    //}
+}
+
+    public enum FieldType {
     FOOTSLOG,
     HILL
 }
