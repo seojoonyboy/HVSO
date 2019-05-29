@@ -15,7 +15,7 @@ public class CardDeckPositionManager : MonoBehaviour {
     List<GameObject> firstDrawList;
     [SerializeField] GameObject cardPrefab;
     [SerializeField] Transform cardSpawnPos;
-    [SerializeField] Transform firstDrawWindow;
+    [SerializeField] Transform firstDrawParent;
 
 
     // Start is called before the first frame update
@@ -33,27 +33,27 @@ public class CardDeckPositionManager : MonoBehaviour {
 
     public IEnumerator FirstDraw() {
         GameObject card = Instantiate(cardPrefab, cardSpawnPos);
-        card.transform.SetParent(firstDrawWindow);
+        card.transform.SetParent(firstDrawParent);
         card.SetActive(true);
 
         SocketFormat.Card socketCard = PlayMangement.instance.socketHandler.gameState.players.human.FirstCards[firstDrawList.Count];
         card.GetComponent<CardHandler>().DrawCard(socketCard.id, socketCard.itemId, true);
         AddAbilityInCardPrefab(socketCard.id, ref card);
 
-        iTween.MoveTo(card, firstDrawWindow.GetChild(firstDrawList.Count).position, 0.5f);
+        iTween.MoveTo(card, firstDrawParent.GetChild(firstDrawList.Count).position, 0.5f);
         firstDrawList.Add(card);
-        card.transform.localScale = new Vector3(1, 1, 1);
+        card.transform.localScale = new Vector3(1.15f, 1.15f, 1);
         yield return new WaitForSeconds(0.5f);
         card.transform.Find("ChangeButton").gameObject.SetActive(true);
         if (firstDrawList.Count == 4) {
             yield return new WaitForSeconds(0.5f);
-            firstDrawWindow.parent.Find("FinishButton").gameObject.SetActive(true);
+            firstDrawParent.parent.Find("FinishButton").gameObject.SetActive(true);
         }
     }
 
     public void FirstAdditionalCardDraw() {
         GameObject card = Instantiate(cardPrefab);
-        card.transform.SetParent(firstDrawWindow.parent);
+        card.transform.SetParent(firstDrawParent.parent);
         firstDrawList.Add(card);
         card.SetActive(true);
         string cardID = "ac10001";
@@ -86,19 +86,19 @@ public class CardDeckPositionManager : MonoBehaviour {
     }
 
     public void FirstDrawCardChange() {
-        foreach (GameObject cards in firstDrawList) {
+        foreach (GameObject cards in firstDrawList) 
             cards.transform.Find("ChangeButton").gameObject.SetActive(false);
-        }
         StartCoroutine(DrawChangedCards());
-        firstDrawWindow.parent.Find("FinishButton").GetComponent<Button>().enabled = false;
-        firstDrawWindow.parent.Find("FinishButton").GetComponent<Image>().enabled = false;
-        firstDrawWindow.parent.Find("FinishButton").GetChild(0).gameObject.SetActive(false);
-        firstDrawWindow.parent.Find("FinishButton").gameObject.SetActive(false);
+        firstDrawParent.GetChild(4).gameObject.SetActive(false);
+        firstDrawParent.parent.Find("FinishButton").GetComponent<Button>().enabled = false;
+        firstDrawParent.parent.Find("FinishButton").GetComponent<Image>().enabled = false;
+        firstDrawParent.parent.Find("FinishButton").GetChild(0).gameObject.SetActive(false);
+        firstDrawParent.parent.Find("FinishButton").gameObject.SetActive(false);
     }
 
     IEnumerator DrawChangedCards() {
+        firstDrawParent.parent.gameObject.GetComponent<Image>().enabled = false;
         PlayMangement.instance.socketHandler.MulliganEnd();
-        firstDrawWindow.parent.gameObject.GetComponent<Image>().enabled = false;
         while (firstDrawList.Count != 0) {
             yield return new WaitForSeconds(0.2f);
             AddCard(firstDrawList[0]);
@@ -109,7 +109,7 @@ public class CardDeckPositionManager : MonoBehaviour {
 
         //영웅카드 뽑기
         GameObject card = Instantiate(cardPrefab, cardSpawnPos);
-        card.transform.SetParent(firstDrawWindow);
+        card.transform.SetParent(firstDrawParent);
         card.SetActive(true);
         string herocardID = PlayMangement.instance.socketHandler.gameState.players.human.newCard.id;
         int itemID = PlayMangement.instance.socketHandler.gameState.players.human.newCard.itemId;
@@ -120,7 +120,7 @@ public class CardDeckPositionManager : MonoBehaviour {
         yield return new WaitForSeconds(3.0f);
         PlayMangement.instance.player.isMulligan = false;
         CustomEvent.Trigger(GameObject.Find("GameManager"), "EndTurn");
-        firstDrawWindow.gameObject.SetActive(false);
+        firstDrawParent.gameObject.SetActive(false);
     }
 
     public void AddCard(GameObject cardobj = null) {
@@ -227,7 +227,7 @@ public class CardDeckPositionManager : MonoBehaviour {
         }
         if (!firstDraw) {
             card.transform.localScale = new Vector3(1.5f, 1.5f, 1.0f);
-            iTween.MoveTo(card, firstDrawWindow.position, 0.4f);
+            iTween.MoveTo(card, firstDrawParent.position, 0.4f);
             yield return new WaitForSeconds(0.5f);
         }
 
