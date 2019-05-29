@@ -165,6 +165,7 @@ public partial class PlayMangement : MonoBehaviour
             monster.GetComponent<PlaceMonster>().unit.attack = (int)cardData.attack;
             monster.GetComponent<PlaceMonster>().unit.name = cardData.name;
             monster.GetComponent<PlaceMonster>().unit.type = cardData.type;
+            monster.GetComponent<PlaceMonster>().unit.attackRange = cardData.attackRange;
 
             monster.GetComponent<PlaceMonster>().Init();
             monster.GetComponent<PlaceMonster>().SpawnUnit();

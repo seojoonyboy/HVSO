@@ -105,7 +105,7 @@ public class PlaceMonster : MonoBehaviour
 
     public void SuccessAttack() {
 
-        if (unit.type == "distance") {
+        if (unit.attackRange == "distance") {
             GameObject arrow = transform.Find("arrow").gameObject;
             arrow.transform.position = transform.position;
             arrow.SetActive(true);
@@ -156,7 +156,7 @@ public class PlaceMonster : MonoBehaviour
         }
 
 
-        if (unit.type == "distance") {
+        if (unit.attackRange == "distance") {
             GameObject arrow = transform.Find("arrow").gameObject;
             arrow.transform.position = transform.position;
             arrow.SetActive(false);
@@ -209,7 +209,7 @@ public class PlaceMonster : MonoBehaviour
         if (unit.attack <= 0) return;
         PlaceMonster placeMonster = myTarget.GetComponent<PlaceMonster>();
 
-        if (unit.type == "distance")
+        if (unit.attackRange == "distance")
             UnitTryAttack();        
         else {
             if (placeMonster != null) {
