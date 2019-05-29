@@ -220,12 +220,12 @@ public class CardHandDeckManager : MonoBehaviour {
 
     IEnumerator SendCardToHand(GameObject card, Transform target) {
         drawingCardNum++;
-        if (isDrawing) {
-            PlayMangement.instance.enemyPlayer.ReleaseTurn();
-            while (isDrawing) {
-                yield return new WaitForSeconds(0.1f);
-            }
-        }
+        //if (isDrawing) {
+        //    PlayMangement.instance.enemyPlayer.ReleaseTurn();
+        //    while (isDrawing) {
+        //        yield return new WaitForSeconds(0.1f);
+        //    }
+        //}
         if (!firstDraw) {
             card.transform.localScale = new Vector3(1.5f, 1.5f, 1.0f);
             iTween.MoveTo(card, firstDrawParent.position, 0.4f);

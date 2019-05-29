@@ -183,7 +183,7 @@ public partial class PlayMangement : MonoBehaviour
             enemyPlayer.ReleaseTurn();
             player.ActivePlayer();
         }
-        else instance.player.cdpm.AddCard();
+        //else instance.player.cdpm.AddCard();
         StopCoroutine("EnemySummonMonster");
     }
 
