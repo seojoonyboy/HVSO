@@ -3,29 +3,74 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using dataModules;
+using System;
+using SkillModules;
 
 /// <summary>
 /// 카드 고유 능력 처리에 대한 스크립트
 /// </summary>
-public class Ability : MonoBehaviour {
-    public UnityEvent<object> OnDropFinished;
-    public UnityEvent<object> OnBeginDragFinished;
-
-    public bool isChangeDropableSlot = false;
-
+public partial class Ability : MonoBehaviour {
     public bool isPlayer = true;
 
     protected Skill skillData;
-    protected Effect effectData;
 
-    public virtual void InitData(Skill data, Effect effectData) {
+    private void Start() {
+        RemoveListeners();
+        AddListeners();
+    }
+
+    public virtual void InitData(Skill data, bool isPlayer) {
         skillData = data;
-        this.effectData = effectData;
+
+        IngameEventHandler.EVENT_TYPE _eventType = ((IngameEventHandler.EVENT_TYPE)Enum.Parse(typeof(IngameEventHandler.EVENT_TYPE), skillData.activate.trigger));
+        EventDelegates[_eventType].AddListener(OnEventCallback);
+        
+        foreach(var condition in data.activate.conditions) {
+            var newComp = gameObject.AddComponent(System.Type.GetType("SkillModules." + condition.method));
+
+            if(newComp != null) {
+                ((ConditionChecker)newComp).Init(data.activate, isPlayer);
+            }
+        }
     }
 
-    public virtual void BeginCardPlay() { }
-    public virtual void EndCardPlay(ref GameObject card) {
-        Debug.Log("EndCardPlay In Abilty");
+    protected virtual void OnEventCallback(object parm) {
+
     }
-    public virtual void OnAttack() { }
+}
+
+/// <summary>
+/// 이벤트 관련 처리
+/// </summary>
+public partial class Ability {
+    IngameEventHandler eventHandler;
+    protected Dictionary<IngameEventHandler.EVENT_TYPE, MyObjectEvent> EventDelegates;
+    List<MyObjectEvent> unityEvents = new List<MyObjectEvent>();
+
+    public class MyObjectEvent : UnityEvent<object> { }
+
+    void AddListeners() {
+        EventDelegates = new Dictionary<IngameEventHandler.EVENT_TYPE, MyObjectEvent>();
+        foreach (IngameEventHandler.EVENT_TYPE value in Enum.GetValues(typeof(IngameEventHandler.EVENT_TYPE))) {
+            eventHandler.AddListener(value, OnEventOccured);
+            MyObjectEvent newEvent = new MyObjectEvent();
+            unityEvents.Add(newEvent);
+            EventDelegates[value] = newEvent;
+        }
+    }
+
+    void OnEventOccured(Enum Event_Type, Component Sender, object Param) {
+        var event_type = (IngameEventHandler.EVENT_TYPE)Event_Type;
+        EventDelegates[event_type].Invoke(Param);
+    }
+
+    void AddListenersToDict(IngameEventHandler.EVENT_TYPE type) {
+        foreach (IngameEventHandler.EVENT_TYPE value in Enum.GetValues(typeof(IngameEventHandler.EVENT_TYPE))) {
+            eventHandler.RemoveListener(value, OnEventOccured);
+        }
+    }
+
+    void RemoveListeners() {
+        unityEvents.Clear();
+    }
 }

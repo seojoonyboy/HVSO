@@ -38,7 +38,7 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
         return _units;
     }
 
-    public Pos GetMyRow(GameObject gameObject) {
+    public Pos GetMyPos(GameObject gameObject) {
         Pos pos = new Pos();
         pos.col = gameObject.GetComponent<PlaceMonster>().x;
         pos.row = gameObject.GetComponent<PlaceMonster>().y;

@@ -82,10 +82,8 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
         UnitDropManager.Instance.ShowDropableSlot(cardData, true);
 
-        var abilities = GetComponents<Ability>();
-        foreach (Ability ability in abilities) { ability.BeginCardPlay(); }
-        //args : (bool)아군인가
-        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_CARD_PLAY, this, true);
+        object[] parms = new object[] { true, gameObject };
+        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_CARD_PLAY, this, parms);
     }
 
     public void OnDrag(PointerEventData eventData) {
@@ -105,11 +103,20 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         PlayMangement.instance.player.isPicking.Value = false;
         if (PlayMangement.instance.player.getPlayerTurn == true && PlayMangement.instance.player.resource.Value >= cardData.cost) {
             GameObject unitPref = UnitDropManager.Instance.DropUnit(gameObject, CheckSlot());
+            foreach (dataModules.Skill skill in cardData.skills) {
+                foreach (var effect in skill.effects) {
+                    var newComp = unitPref.AddComponent(Type.GetType("SkillModules.Ability_" + effect.method));
+                    if (newComp == null) {
+                        Debug.LogError(effect.method + "에 해당하는 컴포넌트를 찾을 수 없습니다.");
+                    }
+                    else {
+                        ((Ability)newComp).InitData(skill, true);
+                    }
+                }
+            }
 
-            var abilities = GetComponents<Ability>();
-            foreach (Ability ability in abilities) { ability.EndCardPlay(ref unitPref); }
-
-            PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, true);
+            object[] parms = new object[] { true, unitPref };
+            PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
         }
         else {
             highlighted = false;
@@ -182,20 +189,6 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         if (cardID == null) {
             string id = "ac1000" + UnityEngine.Random.Range(1, 5);
             DrawCard(id);
-
-            CardDataPackage cardDataPackage = AccountManager.Instance.cardPackage;
-            if (cardDataPackage.data.ContainsKey(id)) {
-                CardData cardData = cardDataPackage.data[id];
-                foreach (var skill in cardData.skills) {
-                    foreach (var effect in skill.effects) {
-                        var newComp = gameObject.AddComponent(System.Type.GetType("SkillModules.Ability_" + effect.method));
-                        if(newComp != null) {
-                            ((Ability)newComp).InitData(skill, effect);
-                            ((Ability)newComp).isPlayer = true;
-                        }
-                    }
-                }
-            }
         }
         else
             DrawCard(cardID);

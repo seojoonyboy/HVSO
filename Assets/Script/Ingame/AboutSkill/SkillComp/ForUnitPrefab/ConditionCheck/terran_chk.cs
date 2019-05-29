@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace SkillModules {
-    public class Ability_footslog : Ability {
+    public class terran_chk : ConditionChecker {
 
     }
 }

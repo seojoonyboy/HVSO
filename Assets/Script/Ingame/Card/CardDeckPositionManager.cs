@@ -38,7 +38,6 @@ public class CardDeckPositionManager : MonoBehaviour {
 
         SocketFormat.Card socketCard = PlayMangement.instance.socketHandler.gameState.players.human.FirstCards[firstDrawList.Count];
         card.GetComponent<CardHandler>().DrawCard(socketCard.id, socketCard.itemId, true);
-        AddAbilityInCardPrefab(socketCard.id, ref card);
 
         iTween.MoveTo(card, firstDrawParent.GetChild(firstDrawList.Count).position, 0.5f);
         firstDrawList.Add(card);
@@ -60,29 +59,6 @@ public class CardDeckPositionManager : MonoBehaviour {
         card.GetComponent<CardHandler>().DrawCard(cardID);
         card.transform.localPosition = new Vector3(0, 0, 0);
         card.transform.localScale = new Vector3(1.7f, 1.7f, 1);
-
-        AddAbilityInCardPrefab(cardID, ref card);
-    }
-
-    /// <summary>
-    /// 카드 특수효과 컴포넌트 추가
-    /// </summary>
-    /// <param name="cardID"></param>
-    /// <param name="card"></param>
-    public void AddAbilityInCardPrefab(string cardID, ref GameObject card) {
-        CardDataPackage cardDataPackage = AccountManager.Instance.cardPackage;
-        if (cardDataPackage.data.ContainsKey(cardID)) {
-            CardData cardData = cardDataPackage.data[cardID];
-            foreach (var skill in cardData.skills) {
-                foreach (var effect in skill.effects) {
-                    var newComp = card.AddComponent(System.Type.GetType("SkillModules.Ability_" + effect.method));
-                    if (newComp != null) {
-                        ((Ability)newComp).InitData(skill, effect);
-                        ((Ability)newComp).isPlayer = true;
-                    }
-                }
-            }
-        }
     }
 
     public void FirstDrawCardChange() {

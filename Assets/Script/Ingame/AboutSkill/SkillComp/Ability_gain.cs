@@ -5,26 +5,16 @@ using dataModules;
 
 namespace SkillModules {
     public class Ability_gain : Ability {
-        public override void EndCardPlay(ref GameObject unitPrefab) {
-            base.EndCardPlay(ref unitPrefab);
+        protected override void OnEventCallback(object parm) {
+            var checkers = GetComponents<ConditionChecker>();
 
-            ConditionHandler handler = unitPrefab.AddComponent<ConditionHandler>();
-            handler.skillData = skillData;
+            object[] parms = (object[])parm;
+            bool isPlayer = (bool)parms[0];
+            GameObject summonedObj = (GameObject)parms[1];
 
-            foreach (var cond in skillData.activate.conditions) {
-                var newComp = unitPrefab.AddComponent(System.Type.GetType("SkillModules." + cond.method));
-                if(newComp != null) {
-                    ((Base_gain)newComp).effectData = effectData;
-                    ((Base_gain)newComp).totalData = skillData;
-
-                    handler.conditions.Add(new ConditionHandler.Set(false, ((Base_gain)newComp)));
-                }
-                else {
-                    Base_gain base_Gain = unitPrefab.AddComponent<Base_gain>();
-                    base_Gain.effectData = effectData;
-                    base_Gain.totalData = skillData;
-
-                    handler.conditions.Add(new ConditionHandler.Set(false, base_Gain));
+            foreach (ConditionChecker checker in checkers) {
+                if (!checker.IsConditionSatisfied(isPlayer, summonedObj)) {
+                    Debug.Log("조건 불만족");
                 }
             }
         }
