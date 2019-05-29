@@ -153,6 +153,7 @@ public partial class UnitDropManager : Singleton<UnitDropManager> {
 
         placedMonster.GetComponent<PlaceMonster>().unit.name = cardHandler.cardData.name;
         placedMonster.GetComponent<PlaceMonster>().unit.HP = (int)cardHandler.cardData.hp;
+        placedMonster.GetComponent<PlaceMonster>().unit.currentHP = (int)cardHandler.cardData.hp;
         placedMonster.GetComponent<PlaceMonster>().unit.power = (int)cardHandler.cardData.attack;
         placedMonster.GetComponent<PlaceMonster>().unit.type = cardHandler.cardData.type;
 

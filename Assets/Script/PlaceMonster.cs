@@ -176,7 +176,7 @@ public class PlaceMonster : MonoBehaviour
 
 
     public void RequestAttackUnit(GameObject target, int amount) {
-        target.GetComponent<PlaceMonster>().unit.HP -= amount;
+        target.GetComponent<PlaceMonster>().unit.currentHP -= amount;
         target.GetComponent<PlaceMonster>().UpdateStat();
         target.GetComponent<PlaceMonster>().SetState(UnitState.HIT);
     }
@@ -187,19 +187,19 @@ public class PlaceMonster : MonoBehaviour
     }
 
     public void RequestChangeHp(int amount) {
-        unit.HP += amount;
+        unit.currentHP += amount;
         UpdateStat();
     }
 
     public void RequestChangeStat(int power = 0, int hp = 0) {
         unit.power += power;
-        unit.HP += hp;
+        unit.currentHP += hp;
     }
 
 
     public void UpdateStat() {
-        if (unit.HP > 0)
-            transform.Find("HP").GetComponentInChildren<TextMeshPro>().text = unit.HP.ToString();
+        if (unit.currentHP > 0)
+            transform.Find("HP").GetComponentInChildren<TextMeshPro>().text = unit.currentHP.ToString();
         else
             transform.Find("HP").GetComponentInChildren<TextMeshPro>().text = 0.ToString();
         transform.Find("ATK").GetComponentInChildren<TextMeshPro>().text = unit.power.ToString();
@@ -237,7 +237,7 @@ public class PlaceMonster : MonoBehaviour
     }
 
     public void CheckHP() {
-        if ( unit.HP <= 0 ) {
+        if ( unit.currentHP <= 0 ) {
             GameObject tomb = Resources.Load<GameObject>("Skeleton/Skeleton_Dead");
             GameObject dropTomb = Instantiate(tomb);
             dropTomb.transform.position = transform.position;

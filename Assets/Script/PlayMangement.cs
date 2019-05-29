@@ -160,6 +160,7 @@ public partial class PlayMangement : MonoBehaviour
             monsterSkeleton.name = "skeleton";
 
             monster.GetComponent<PlaceMonster>().unit.HP = (int)cardData.hp;
+            monster.GetComponent<PlaceMonster>().unit.currentHP = (int)cardData.hp;
             monster.GetComponent<PlaceMonster>().unit.power = (int)cardData.attack;
             monster.GetComponent<PlaceMonster>().unit.name = cardData.name;
             monster.GetComponent<PlaceMonster>().unit.type = cardData.type;
