@@ -2,6 +2,8 @@
 [System.Serializable]
 public class CardData {
     //public new string id;
+    public string[] attackTypes;
+    public string[] attributes;
     public string rarelity;
     public string camp;
     public string type;

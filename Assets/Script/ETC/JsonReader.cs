@@ -62,6 +62,8 @@ namespace dataModules {
     }
 
     public class BaseCard {
+        public string[] attackTypes;
+        public string[] attributes;
         public string[] cardCategories;
         public string[] cardClasses;
         public int id;
