@@ -80,7 +80,7 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         startPos = transform.parent.position;
         PlayMangement.instance.player.isPicking.Value = true;
 
-        UnitDropManager.Instance.ShowDropableSlot(cardData, true);
+        CardDropManager.Instance.ShowDropableSlot(cardData);
 
         object[] parms = new object[] { true, gameObject };
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_CARD_PLAY, this, parms);
@@ -102,7 +102,7 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         blockButton = PlayMangement.instance.player.dragCard = false;
         PlayMangement.instance.player.isPicking.Value = false;
         if (PlayMangement.instance.player.getPlayerTurn == true && PlayMangement.instance.player.resource.Value >= cardData.cost) {
-            GameObject unitPref = UnitDropManager.Instance.DropUnit(gameObject, CheckSlot());
+            GameObject unitPref = CardDropManager.Instance.DropUnit(gameObject, CheckSlot());
             foreach (dataModules.Skill skill in cardData.skills) {
                 foreach (var effect in skill.effects) {
                     var newComp = unitPref.AddComponent(Type.GetType("SkillModules.Ability_" + effect.method));
