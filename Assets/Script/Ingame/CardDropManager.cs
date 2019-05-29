@@ -176,6 +176,19 @@ public partial class CardDropManager {
         placedMonster.GetComponent<PlaceMonster>().unit.attack = (int)cardHandler.cardData.attack;
         placedMonster.GetComponent<PlaceMonster>().unit.type = cardHandler.cardData.type;
         placedMonster.GetComponent<PlaceMonster>().unit.attackRange = cardHandler.cardData.attackRange;
+        placedMonster.GetComponent<PlaceMonster>().unit.cost = cardHandler.cardData.cost;
+        placedMonster.GetComponent<PlaceMonster>().unit.rarelity = cardHandler.cardData.rarelity;
+
+        if(cardHandler.cardData.category_2 != "") {
+            placedMonster.GetComponent<PlaceMonster>().unit.cardCategories = new string[2];
+            placedMonster.GetComponent<PlaceMonster>().unit.cardCategories[0] = cardHandler.cardData.category_1;
+            placedMonster.GetComponent<PlaceMonster>().unit.cardCategories[1] = cardHandler.cardData.category_2;
+        }
+        else {
+            placedMonster.GetComponent<PlaceMonster>().unit.cardCategories = new string[1];
+            placedMonster.GetComponent<PlaceMonster>().unit.cardCategories[0] = cardHandler.cardData.category_1;
+        }
+
 
         GameObject skeleton = Instantiate(cardHandler.skeleton, placedMonster.transform);
         skeleton.name = "skeleton";

@@ -9,6 +9,7 @@ namespace IngameClass
     public class Unit{
         public bool race;
         public string rarelity;
+        public string[] cardCategories; 
         public string type;
         public string id;
         public string name;
