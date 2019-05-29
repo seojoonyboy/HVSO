@@ -166,6 +166,20 @@ public partial class PlayMangement : MonoBehaviour
             monster.GetComponent<PlaceMonster>().unit.name = cardData.name;
             monster.GetComponent<PlaceMonster>().unit.type = cardData.type;
             monster.GetComponent<PlaceMonster>().unit.attackRange = cardData.attackRange;
+            monster.GetComponent<PlaceMonster>().unit.cost = cardData.cost;
+            monster.GetComponent<PlaceMonster>().unit.rarelity = cardData.rarelity;
+            monster.GetComponent<PlaceMonster>().unit.id = cardData.cardId;
+
+            if (cardData.category_2 != "") {
+                monster.GetComponent<PlaceMonster>().unit.cardCategories = new string[2];
+                monster.GetComponent<PlaceMonster>().unit.cardCategories[0] = cardData.category_1;
+                monster.GetComponent<PlaceMonster>().unit.cardCategories[1] = cardData.category_2;
+            }
+            else {
+                monster.GetComponent<PlaceMonster>().unit.cardCategories = new string[1];
+                monster.GetComponent<PlaceMonster>().unit.cardCategories[0] = cardData.category_1;
+            }
+
 
             monster.GetComponent<PlaceMonster>().Init();
             monster.GetComponent<PlaceMonster>().SpawnUnit();
