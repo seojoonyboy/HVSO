@@ -18,7 +18,7 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     Animator cssAni;
     public string cardID;
     private int _itemID;
-    private int itemID { 
+    private int itemID {
         get {return _itemID;}
         set {if(value < 0) Debug.Log("something wrong itemId");
              _itemID = value;
@@ -120,12 +120,12 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         }
         else {
             highlighted = false;
-            UnitDropManager.Instance.HighLightSlot(highlightedSlot, highlighted);
-            UnitDropManager.Instance.HideDropableSlot();
+            CardDropManager.Instance.HighLightSlot(highlightedSlot, highlighted);
+            CardDropManager.Instance.HideDropableSlot();
             highlightedSlot = null;
         }
 
-        UnitDropManager.Instance.HideDropableSlot();
+        CardDropManager.Instance.HideDropableSlot();
     }
 
     public void CheckHighlight() {
@@ -134,7 +134,7 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
             if (highlightedSlot != null) {
                 highlighted = true;
                 transform.Find("GlowEffect").GetComponent<Image>().color = new Color(163.0f / 255.0f, 236.0f / 255.0f, 27.0f / 255.0f);
-                UnitDropManager.Instance.HighLightSlot(highlightedSlot, highlighted);
+                CardDropManager.Instance.HighLightSlot(highlightedSlot, highlighted);
             }
         }
         else {
@@ -144,7 +144,7 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
                     transform.Find("GlowEffect").GetComponent<Image>().color = new Color(1, 1, 107.0f / 255.0f);
                 else
                     transform.Find("GlowEffect").GetComponent<Image>().color = new Color(1, 1, 1);
-                UnitDropManager.Instance.HighLightSlot(highlightedSlot, highlighted);
+                CardDropManager.Instance.HighLightSlot(highlightedSlot, highlighted);
                 highlightedSlot = null;
             }
         }
@@ -219,7 +219,7 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
             transform.Find("Portrait").GetComponent<Image>().color = Color.white;
             transform.Find("attack").GetComponent<Image>().color = Color.white;
             transform.Find("Health").GetComponent<Image>().color = Color.white;
-            transform.Find("Cost").GetComponent<Image>().color = Color.white;            
+            transform.Find("Cost").GetComponent<Image>().color = Color.white;
         }
         else {
             transform.Find("GlowEffect").GetComponent<Image>().enabled = false;

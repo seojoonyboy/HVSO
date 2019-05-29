@@ -8,6 +8,10 @@ namespace SocketFormat {
         public string gameId;
         public Map map;
         public Players players;
+        public int turnCount;
+        public PlayHistory[] playHistory;
+
+        public PlayHistory lastUse { get { return playHistory[0]; }}
     }
 
     public class Map {
@@ -17,13 +21,27 @@ namespace SocketFormat {
 
     public class Line {
         public string terrain;
-        public Card[] orc;
-        public Card[] human;
+        public Unit[] orc;
+        public Unit[] human;
+    }
+
+    public class PlayHistory {
+        public Card cardItem;
+        public Target target;
+    }
+
+    public class Target {
+        public string method;
+        public string[] args;
     }
 
     public class Players {
         public Player orc;
         public Player human;
+
+        public Player myPlayer(bool race) {
+            return race ? human : orc;
+        }
     }
 
     public class Player {
@@ -61,6 +79,10 @@ namespace SocketFormat {
     public class Card : CardInventory {
         public string id;
         public int itemId;
+    }
+
+    public class Unit : Card {
+        public int currentHp;
     }
 
     public class Hero {

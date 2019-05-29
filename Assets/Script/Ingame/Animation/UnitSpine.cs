@@ -43,8 +43,7 @@ public class UnitSpine : MonoBehaviour
     protected Skeleton skeleton;
     
     public UnityAction attackCallback;
-
-    public bool isPreview = false;
+    
     public GameObject arrow;
     
     public float atkDuration {
@@ -63,11 +62,16 @@ public class UnitSpine : MonoBehaviour
         spineAnimationState.Event += AnimationEvent;
         skeleton = skeletonAnimation.Skeleton;
 
-        if(isPreview == true) {
+        PlaceMonster placeMonster = transform.parent.GetComponent<PlaceMonster>();
+
+
+        if(placeMonster == null) {
             previewAnimationName = idleAnimationName;
             Preview();
             return;
         }
+
+        
 
 
         if(arrow != null && transform.parent.GetComponent<PlaceMonster>().isPlayer == true) {

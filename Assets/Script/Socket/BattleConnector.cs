@@ -20,12 +20,7 @@ public partial class BattleConnector : MonoBehaviour {
     public UnityEvent OnReceiveSocketMessage;
     public UnityEvent OnSocketClose;
     public UnityAction<string, int, bool> HandchangeCallback;
-    public GameState gameState;
-    private string raceName;
-    private bool dequeueing = true;
-    public Queue<ReceiveFormat> queue = new Queue<ReceiveFormat>();
-
-    private Type thisType;
+    private Coroutine pingpong;
 
     void Awake() {
         thisType = this.GetType();
@@ -48,10 +43,20 @@ public partial class BattleConnector : MonoBehaviour {
         string deckId = "deck1001";
         string[] args = new string[] {"solo", playerId, "basic", deckId };
         SendMethod("join_game", args);
+        pingpong = StartCoroutine("Heartbeat");
+    }
+
+    IEnumerator Heartbeat() {
+        WaitForSeconds beatTime = new WaitForSeconds(25f);
+        while(true) {
+            yield return beatTime;
+            SendMethod("ping");
+        }
     }
 
     //Receive Socket Message
     private void ReceiveMessage(WebSocket webSocket, string message) {
+        Debug.Log(message);
         OnReceiveSocketMessage.Invoke();
         ReceiveFormat result = JsonReader.Read<ReceiveFormat>(message);
         queue.Enqueue(result);
@@ -75,6 +80,7 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     void OnDisable() {
+        StopCoroutine(pingpong);
         webSocket.Close();
     }
 
@@ -102,6 +108,11 @@ public partial class BattleConnector : MonoBehaviour {
 /// 서버로부터 데이터를 받아올 때 reflection으로 string을 함수로 바로 발동하게 하는 부분
 /// </summary>
 public partial class BattleConnector : MonoBehaviour {
+    public GameState gameState;
+    private string raceName;
+    private bool dequeueing = true;
+    public Queue<ReceiveFormat> queue = new Queue<ReceiveFormat>();
+    private Type thisType;
 
     private void FixedUpdate() {
         if(!dequeueing) return;
@@ -111,9 +122,9 @@ public partial class BattleConnector : MonoBehaviour {
     
     private void DequeueSocket() {
         ReceiveFormat result = queue.Dequeue();
+        status = result.method;
         if(result.gameState != null) {
             gameState = result.gameState;
-            Debug.Log("WebSocket gameState changed");
         }
         if(result.method == null) return;
         MethodInfo theMethod = thisType.GetMethod(result.method);
@@ -134,10 +145,10 @@ public partial class BattleConnector : MonoBehaviour {
     public void hand_changed(string arg) {
         if(PlayMangement.instance == null) return; //임시
 
-        bool isOrc = PlayMangement.instance.player.race;
-        raceName = isOrc ? "orc" : "human";
+        bool isHuman = PlayMangement.instance.player.race;
+        raceName = isHuman ? "human" : "orc";
 
-        if(arg.CompareTo(raceName) == 0) return;
+        if(arg.CompareTo(raceName) != 0) return;
 
         Card newCard = gameState.players.human.newCard;
         Debug.Log("Card id : "+ newCard.id + "  Card itemId : " + newCard.itemId);
@@ -147,6 +158,8 @@ public partial class BattleConnector : MonoBehaviour {
 
     public void end_mulligan() {
         Debug.Log("WebSocket State : end_mulligan");
+        dequeueing = false;
+        getNewCard = true;
     }
 
     public void begin_turn_start() {
@@ -163,6 +176,7 @@ public partial class BattleConnector : MonoBehaviour {
 
     public void begin_human_turn() {
         Debug.Log("WebSocket State : begin_human_turn");
+        TurnOver();
     }
 
     public void begin_orc_post_turn() {
@@ -171,17 +185,20 @@ public partial class BattleConnector : MonoBehaviour {
 
     public void begin_battle_turn() {
         Debug.Log("WebSocket State : begin_battle_turn");
+        Invoke("TurnOver", 3f);
     }
 
     public void end_battle_turn() {
         Debug.Log("WebSocket State : end_battle_turn");
     }
 
-    public void line_battle() {
+    public void line_battle(string line) {
+        int line_num = int.Parse(line);
         Debug.Log("WebSocket State : line_battle");
     }
 
-    public void map_clear() {
+    public void map_clear(string line) {
+        int line_num = int.Parse(line);
         Debug.Log("WebSocket State : map_clear");
     }
 
@@ -191,10 +208,34 @@ public partial class BattleConnector : MonoBehaviour {
 
     public void begin_end_game() {
         Debug.Log("WebSocket State : begin_end_game");
+        //TODO : 여기서 카드 추가 됩니다.
     }
 
     public void end_end_game() {
         Debug.Log("WebSocket State : end_end_game");
+    }
+
+    public void card_played() {
+        Debug.Log("WebSocket State : card_played");
+        Debug.Log(gameState.lastUse.target.args[1]);
+        Debug.Log(gameState.lastUse.cardItem.id);
+    }
+
+}
+
+/// <summary>
+/// 클라이언트로부터 데이터를 가져올 때
+/// </summary>
+public partial class BattleConnector : MonoBehaviour {
+    private string status;
+    private bool getNewCard = false;
+
+    public IEnumerator WaitGetCard() {
+        while(!getNewCard) {
+            yield return new WaitForFixedUpdate();
+        }
+        getNewCard = false;
+        dequeueing = true;
     }
 
 }

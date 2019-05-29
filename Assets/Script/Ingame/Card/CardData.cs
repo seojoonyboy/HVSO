@@ -2,6 +2,8 @@
 [System.Serializable]
 public class CardData {
     //public new string id;
+    public string[] attackTypes;
+    public string[] attributes;
     public string rarelity;
     public string camp;
     public string type;
@@ -13,6 +15,7 @@ public class CardData {
     public int cost;
     public int? attack;
     public int? hp;
+    public string attackRange;
     public bool hero_chk;
     public dataModules.Skill[] skills;
 

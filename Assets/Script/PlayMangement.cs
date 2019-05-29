@@ -134,7 +134,7 @@ public partial class PlayMangement : MonoBehaviour
 
 
         if (enemyPlayer.race == false)
-            cardID = "ac1001"+Random.Range(1,5);
+            cardID = "ac10018";
         else
             cardID = "ac10001";
 
@@ -149,7 +149,7 @@ public partial class PlayMangement : MonoBehaviour
 
             yield return new WaitForSeconds(0.5f);
             cardData = cardDataPackage.data[cardID];
-            skeleton = Resources.Load<GameObject>("Skeleton/Skeleton_" + cardID);
+            skeleton = AccountManager.Instance.resource.cardSkeleton[cardID];
 
             if (enemyPlayer.resource.Value < cardData.cost) break;
 
@@ -162,9 +162,10 @@ public partial class PlayMangement : MonoBehaviour
 
             monster.GetComponent<PlaceMonster>().unit.HP = (int)cardData.hp;
             monster.GetComponent<PlaceMonster>().unit.currentHP = (int)cardData.hp;
-            monster.GetComponent<PlaceMonster>().unit.power = (int)cardData.attack;
+            monster.GetComponent<PlaceMonster>().unit.attack = (int)cardData.attack;
             monster.GetComponent<PlaceMonster>().unit.name = cardData.name;
             monster.GetComponent<PlaceMonster>().unit.type = cardData.type;
+            monster.GetComponent<PlaceMonster>().unit.attackRange = cardData.attackRange;
 
             monster.GetComponent<PlaceMonster>().Init();
             monster.GetComponent<PlaceMonster>().SpawnUnit();
@@ -258,28 +259,28 @@ public partial class PlayMangement : MonoBehaviour
                 if (player.backLine.transform.GetChild(line).childCount != 0) {
                     player.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().GetTarget();
 
-                    if (player.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().unit.power > 0)
+                    if (player.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().unit.attack > 0)
                         yield return new WaitForSeconds(1.1f + player.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().atkTime);
                 }
 
                 if (player.frontLine.transform.GetChild(line).childCount != 0) {
                     player.frontLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().GetTarget();
 
-                    if (player.frontLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().unit.power > 0)
+                    if (player.frontLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().unit.attack > 0)
                         yield return new WaitForSeconds(1.1f + player.frontLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().atkTime);
                 }
 
                 if (enemyPlayer.backLine.transform.GetChild(line).childCount != 0) {
                     enemyPlayer.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().GetTarget();
 
-                    if (enemyPlayer.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().unit.power > 0)
+                    if (enemyPlayer.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().unit.attack > 0)
                         yield return new WaitForSeconds(1.1f + enemyPlayer.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().atkTime);
                 }
 
                 if (enemyPlayer.frontLine.transform.GetChild(line).childCount != 0) {
                     enemyPlayer.frontLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().GetTarget();
 
-                    if (enemyPlayer.frontLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().unit.power > 0)
+                    if (enemyPlayer.frontLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().unit.attack > 0)
                         yield return new WaitForSeconds(1.1f + enemyPlayer.frontLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().atkTime);
                 }
             }
@@ -288,27 +289,27 @@ public partial class PlayMangement : MonoBehaviour
                 if (enemyPlayer.backLine.transform.GetChild(line).childCount != 0) {
                     enemyPlayer.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().GetTarget();
 
-                    if (enemyPlayer.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().unit.power > 0)
+                    if (enemyPlayer.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().unit.attack > 0)
                         yield return new WaitForSeconds(1.1f + enemyPlayer.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().atkTime);
                 }
 
                 if (enemyPlayer.frontLine.transform.GetChild(line).childCount != 0) {
                     enemyPlayer.frontLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().GetTarget();
 
-                    if (enemyPlayer.frontLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().unit.power > 0)
+                    if (enemyPlayer.frontLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().unit.attack > 0)
                         yield return new WaitForSeconds(1.1f + enemyPlayer.frontLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().atkTime);
                 }
                 if (player.backLine.transform.GetChild(line).childCount != 0) {
                     player.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().GetTarget();
 
-                    if (player.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().unit.power > 0)
+                    if (player.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().unit.attack > 0)
                         yield return new WaitForSeconds(1.1f + player.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().atkTime);
                 }
 
                 if (player.frontLine.transform.GetChild(line).childCount != 0) {
                     player.frontLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().GetTarget();
 
-                    if (player.frontLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().unit.power > 0)
+                    if (player.frontLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().unit.attack > 0)
                         yield return new WaitForSeconds(1.1f + player.frontLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().atkTime);
                 }
             }
@@ -349,17 +350,67 @@ public partial class PlayMangement {
         resultUI.SetActive(true);
 
         if (player.HP.Value <= 0) {
-            resultUI.transform.Find("LoseWindow").gameObject.SetActive(true);
+            if (player.race)
+                SetResultWindow("lose", "human");
+            else
+                SetResultWindow("lose", "orc");
         }
         else if(enemyPlayer.HP.Value <= 0) {
-            resultUI.transform.Find("VictoryWindow").gameObject.SetActive(true);
+            if (player.race)
+                SetResultWindow("win", "human");
+            else
+                SetResultWindow("win", "orc");
         }
     }
 
     public void OnReturnBtn() {
-        SceneManager.Instance.LoadScene(SceneManager.Scene.MAIN_SCENE);
+        if (resultUI.transform.GetChild(0).gameObject.activeSelf) {
+            resultUI.transform.GetChild(0).gameObject.SetActive(false);
+            resultUI.transform.GetChild(1).gameObject.SetActive(true);
+        }
+        else if (resultUI.transform.GetChild(1).gameObject.activeSelf) {
+            SceneManager.Instance.LoadScene(SceneManager.Scene.MAIN_SCENE);
+        }
     }
 
+    private void SetResultWindow(string result, string race) {
+        Transform baseWindow = resultUI.transform.GetChild(0);
+        Transform resourceWindow = resultUI.transform.GetChild(1);
+        baseWindow.gameObject.SetActive(true);
+        switch (result) {
+            case "win":
+                if (race == "human") {
+                    baseWindow.Find("ResultCharacter/ResultHuman").gameObject.SetActive(true);
+                    resourceWindow.Find("ResourceResultRibon/HumanRibon").gameObject.SetActive(true);
+                }
+                else {
+                    baseWindow.Find("ResultCharacter/ResultOrc").gameObject.SetActive(true);
+                    resourceWindow.Find("ResourceResultRibon/OrcRibon").gameObject.SetActive(true);
+                }
+                baseWindow.Find("ShineEffect/WinShineEffect").gameObject.SetActive(true);
+                resourceWindow.Find("ShineEffect/WinShineEffect").gameObject.SetActive(true);
+                baseWindow.Find("ResultCharacter/ResultText/WinText").gameObject.SetActive(true);
+                resourceWindow.Find("ResultText/WinText").gameObject.SetActive(true);
+                break;
+            case "lose":
+                if (race == "human") {
+                    baseWindow.Find("ResultCharacter/ResultHuman").gameObject.SetActive(true);
+                }
+                else {
+                    baseWindow.Find("ResultCharacter/ResultOrc").gameObject.SetActive(true);
+                }
+                baseWindow.Find("ShineEffect/LoseShineEffect").gameObject.SetActive(true);
+                resourceWindow.Find("ShineEffect/LoseShineEffect").gameObject.SetActive(true);
+                baseWindow.Find("ResultCharacter/LoseRibon").gameObject.SetActive(true);
+                resourceWindow.Find("LoseRibon").gameObject.SetActive(true);
+                baseWindow.Find("ResultCharacter/ResultText/LoseText").gameObject.SetActive(true);
+                resourceWindow.Find("ResultText/LoseText").gameObject.SetActive(true);
+                break;
+            default:
+                break;
+        }
+
+    }
 
 }
 

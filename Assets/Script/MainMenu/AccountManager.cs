@@ -80,6 +80,8 @@ public partial class AccountManager : Singleton<AccountManager> {
         foreach (var card in myCards) {
             if (!cardPackage.data.ContainsKey(card.cardId)) {
                 CardData data = new CardData();
+                data.attackTypes = card.attackTypes;
+                data.attributes = card.attributes;
                 data.rarelity = card.rarelity;
                 data.type = card.type;
                 data.camp = card.camp;
@@ -95,6 +97,7 @@ public partial class AccountManager : Singleton<AccountManager> {
                 data.cost = card.cost;
                 data.attack = card.attack;
                 data.hp = card.hp;
+                data.attackRange = card.attackRange;
                 data.hero_chk = card.isHeroCard;
                 data.skills = card.skills;
                 cardPackage.data.Add(card.cardId, data);
