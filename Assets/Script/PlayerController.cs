@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour
         }
         else {
             Instantiate(AccountManager.Instance.resource.raceUiPrefabs["ORC"][0], playerUI.transform.Find("PlayerHealth"));
-            Instantiate(AccountManager.Instance.resource.raceUiPrefabs["ORC"][1], playerUI.transform.Find("PlayerResource")
+            Instantiate(AccountManager.Instance.resource.raceUiPrefabs["ORC"][1], playerUI.transform.Find("PlayerResource"));
         }
 
         if (transform.childCount > 2)
