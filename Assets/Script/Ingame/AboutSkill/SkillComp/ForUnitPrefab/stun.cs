@@ -5,7 +5,7 @@ using UnityEngine;
 namespace SkillModules {
     public class stun : Attribute {
         int turn;
-        int Turn {
+        public int Turn {
             get {
                 return turn;
             }
@@ -17,16 +17,16 @@ namespace SkillModules {
             }
         }
 
-        public override void Init() {
-            Turn = 1;
-        }
-
-        public void AddTurn() {
+        public override void Accumulate() {
             Turn++;
         }
 
-        public void ReduceTurn() {
+        public override void Subtraction() {
             Turn--;
+        }
+
+        public override void Init() {
+            Turn = 1;
         }
     }
 }

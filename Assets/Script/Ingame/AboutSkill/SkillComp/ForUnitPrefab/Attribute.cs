@@ -16,4 +16,18 @@ public class Attribute : MonoBehaviour {
     public virtual void Init() {
 
     }
+
+    /// <summary>
+    /// 스킬 누적 처리
+    /// </summary>
+    public virtual void Accumulate() {
+
+    }
+
+    /// <summary>
+    /// 스킬 차감 처리
+    /// </summary>
+    public virtual void Subtraction() {
+
+    }
 }

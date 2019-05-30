@@ -169,7 +169,14 @@ public class PlaceMonster : MonoBehaviour {
         PlaceMonster targetMonster = myTarget.GetComponent<PlaceMonster>();
         if (unit.attack > 0) {
             if (targetMonster != null) {
-                RequestAttackUnit(myTarget, unit.attack);
+
+                //스턴이 있으면 공격을 못함
+                if(GetComponent<SkillModules.stun>() != null) {
+                    GetComponent<SkillModules.stun>().Subtraction();
+                }
+                else {
+                    RequestAttackUnit(myTarget, unit.attack);
+                }
             }
             else
                 myTarget.GetComponent<PlayerController>().PlayerTakeDamage(unit.attack);
