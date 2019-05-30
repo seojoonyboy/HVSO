@@ -49,11 +49,43 @@ public class PlayerController : MonoBehaviour
         string race = Variables.Saved.Get("SelectedRace").ToString();
         if (race == "HUMAN") isHuman = isPlayer;
         else isHuman = !isPlayer;
-        Instantiate(AccountManager.Instance.resource.raceUiPrefabs[race][0], playerUI.transform.Find("PlayerHealth"));
-        Instantiate(AccountManager.Instance.resource.raceUiPrefabs[race][1], playerUI.transform.Find("PlayerResource"));
+        if (isHuman) {
+            Instantiate(AccountManager.Instance.resource.raceUiPrefabs["HUMAN"][0], playerUI.transform.Find("PlayerHealth"));
+            Instantiate(AccountManager.Instance.resource.raceUiPrefabs["HUMAN"][1], playerUI.transform.Find("PlayerResource"));
+        }
+        else {
+            Instantiate(AccountManager.Instance.resource.raceUiPrefabs["ORC"][0], playerUI.transform.Find("PlayerHealth"));
+            Instantiate(AccountManager.Instance.resource.raceUiPrefabs["ORC"][1], playerUI.transform.Find("PlayerResource"));
+        }
 
-        if (transform.childCount > 2)
-            heroSpine = transform.Find("HeroSkeleton").GetComponent<HeroSpine>();
+        if(isHuman == true) {
+            string heroID = "h10001";
+            GameObject hero = Instantiate(AccountManager.Instance.resource.heroSkeleton[heroID], transform);
+            hero.transform.SetAsLastSibling();
+            heroSpine = hero.GetComponent<HeroSpine>();
+
+            if (isPlayer == true) {
+                hero.transform.localScale = new Vector3(-1, 1, 1);
+                heroSpine.GetComponent<MeshRenderer>().sortingOrder = 12;
+            }
+            else
+                heroSpine.GetComponent<MeshRenderer>().sortingOrder = 8;
+
+        }
+        else {
+            string heroID = "h10002";
+            GameObject hero = Instantiate(AccountManager.Instance.resource.heroSkeleton[heroID], transform);
+            hero.transform.SetAsLastSibling();
+            heroSpine = hero.GetComponent<HeroSpine>();
+
+            if (isPlayer == true) {
+                hero.transform.localScale = new Vector3(-1, 1, 1);
+                heroSpine.GetComponent<MeshRenderer>().sortingOrder = 12;
+            }
+            else
+                heroSpine.GetComponent<MeshRenderer>().sortingOrder = 8;
+        }
+
 
         shieldCount = 3;
         Debug.Log(heroSpine);
@@ -82,8 +114,9 @@ public class PlayerController : MonoBehaviour
 
     public void EndTurnDraw() {
         if (PlayMangement.instance.isGame == false) return;
-
-        cdpm.AddCard();
+        bool race = PlayMangement.instance.player.isHuman;
+        SocketFormat.Card cardData = PlayMangement.instance.socketHandler.gameState.players.myPlayer(race).newCard;
+        cdpm.AddCard(cardData: cardData);
 
         GameObject enemyCard = Instantiate(PlayMangement.instance.enemyPlayer.back);
         enemyCard.transform.SetParent(PlayMangement.instance.enemyPlayer.playerUI.transform.Find("CardSlot"));
@@ -164,8 +197,11 @@ public class PlayerController : MonoBehaviour
     }
 
     public void ReleaseTurn() {
-        if (myTurn == true && !dragCard)
+        if (myTurn == true && !dragCard) {
             PlayMangement.instance.GetPlayerTurnRelease();
+            if(isHuman == PlayMangement.instance.player.isHuman)
+                PlayMangement.instance.socketHandler.TurnOver();
+        }
     }
 
 
