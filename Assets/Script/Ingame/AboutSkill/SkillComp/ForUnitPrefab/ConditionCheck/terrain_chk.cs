@@ -4,7 +4,7 @@ using UnityEngine;
 using dataModules;
 
 namespace SkillModules {
-    public class terran_chk : ConditionChecker {
+    public class terrain_chk : ConditionChecker {
         public override bool IsConditionSatisfied(bool isPlayerUnitGenerated, GameObject summonedObj) {
             bool isTerrainValid = false;
 

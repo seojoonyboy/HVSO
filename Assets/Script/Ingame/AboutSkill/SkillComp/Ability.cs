@@ -27,7 +27,7 @@ public partial class Ability : MonoBehaviour {
             var newComp = gameObject.AddComponent(System.Type.GetType("SkillModules." + condition.method));
 
             if(newComp != null) {
-                ((ConditionChecker)newComp).Init(data, isPlayer);
+                ((ConditionChecker)newComp).Init(data, condition, isPlayer);
             }
         }
     }
