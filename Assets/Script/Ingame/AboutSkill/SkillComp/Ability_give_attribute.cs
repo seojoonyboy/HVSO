@@ -2,7 +2,6 @@ using dataModules;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
 
 namespace SkillModules {
     /// <summary>
@@ -10,18 +9,16 @@ namespace SkillModules {
     /// </summary>
     public class Ability_give_attribute : Ability {
         protected override void OnEventCallback(object parm) {
+            var checkers = GetComponents<ConditionChecker>();
+
             object[] parms = (object[])parm;
             bool isPlayer = (bool)parms[0];
-            GameObject unit = (GameObject)parms[1];
+            GameObject summonedObj = (GameObject)parms[1];
 
-            GameObject attackTarget = unit.GetComponent<PlaceMonster>().myTarget;
-            string attributeName = skillData.effects[0].args[0];
-            foreach (var target in skillData.targets) {
-                if(target.method == "attack_target") {
-                    var newComp = attackTarget.AddComponent(System.Type.GetType("SkillModules." + attributeName));
-                    if(newComp != null) {
-                        ((Attribute)newComp).Init();
-                    }
+            if(summonedObj == gameObject) {
+                foreach(Effect effect in skillData.effects) {
+                    string[] args = effect.args;
+                    Debug.Log("적에게 " + args[0] + "을 부여함");
                 }
             }
         }

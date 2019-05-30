@@ -220,9 +220,6 @@ public class PlaceMonster : MonoBehaviour {
         target.GetComponent<PlaceMonster>().unit.currentHP -= amount;
         target.GetComponent<PlaceMonster>().UpdateStat();
         target.GetComponent<PlaceMonster>().SetState(UnitState.HIT);
-
-        object[] parms = new object[] {isPlayer, gameObject };
-        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_ATTACK, this, parms);
     }
 
     public void RequestChangePower(int amount) {
@@ -333,7 +330,7 @@ public class PlaceMonster : MonoBehaviour {
 
 
     public class Buff {
-        public GameObject origin;   //ë°œìƒì§€
+        public GameObject origin;   //¹ß»ıÁö
         public int atk;
         public int hp;
 
