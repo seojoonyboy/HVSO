@@ -18,7 +18,7 @@ public partial class CardHandler : MonoBehaviour {
     Animator cssAni;
     public string cardID;
     protected int _itemID;
-    private int itemID {
+    public int itemID {
         get {return _itemID;}
         set {if(value < 0) Debug.Log("something wrong itemId");
              _itemID = value;

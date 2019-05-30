@@ -169,8 +169,14 @@ public partial class CardDropManager {
             cardIndex += card.transform.parent.GetSiblingIndex();
         }
         CardHandler cardHandler = card.GetComponent<CardHandler>();
-        int frontOrBack = 0; //뒤에 배치시 0, 앞에 배치시 1, 기본 뒤에 배치
+        int frontOrBack = 1; //뒤에 배치시 0, 앞에 배치시 1, 기본 뒤에 배치 //TODO : 서버에서 앞에서 배치하는걸 위주로 작업해서 기본적으로 앞으로 했습니다.
         int lineNum = target.parent.GetSiblingIndex();
+        string[] args = {cardHandler.itemID.ToString(), 
+                        "place", 
+                        lineNum.ToString(), 
+                        PlayMangement.instance.player.isHuman ? "human" : "orc", 
+                        frontOrBack == 1 ? "front" : "near"};
+        PlayMangement.instance.socketHandler.UseCard(args);
 
         switch (target.GetSiblingIndex()) {
             case 0:

@@ -79,6 +79,10 @@ public partial class BattleConnector : MonoBehaviour {
         SendMethod("turn_over");
     }
 
+    public void UseCard(string[] args) {
+        SendMethod("play_card", args);
+    }
+
     void Error(WebSocket webSocket, Exception ex) {
         Debug.LogWarning(ex);
     }
@@ -249,7 +253,10 @@ public partial class BattleConnector : MonoBehaviour {
 
     public void card_played() {
         Debug.Log("WebSocket State : card_played");
-        useCardList.historyQueue.Enqueue(gameState.lastUse);
+        string enemyCamp = PlayMangement.instance.enemyPlayer.isHuman ? "human" : "orc";
+        string cardCamp = gameState.lastUse.cardItem.camp;
+        bool isEnemyCard = cardCamp.CompareTo(enemyCamp) == 0;
+        if(isEnemyCard) useCardList.historyQueue.Enqueue(gameState.lastUse);
     }
 
 }
