@@ -197,12 +197,15 @@ public partial class PlayMangement : MonoBehaviour
             i++;
         }
 
-        yield return new WaitForSeconds(1f);
-        if (isFirst) {
-            isFirst = false;
-            enemyPlayer.ReleaseTurn();
-            player.ActivePlayer();
-        }
+        yield return new WaitForSeconds(1.0f);
+        //if (isFirst) {
+        //    isFirst = false;
+        //    enemyPlayer.ReleaseTurn();
+        //}
+        //else {
+        //    enemyPlayer.ReleaseTurn();
+        //}
+        enemyPlayer.ReleaseTurn();
         //else instance.player.cdpm.AddCard();
         StopCoroutine("EnemySummonMonster");
     }
@@ -217,7 +220,7 @@ public partial class PlayMangement : MonoBehaviour
         switch (currentTurn) {
             case "ZOMBIE":
                 if(player.race == false) {
-                    //player.ActivePlayer();
+                    player.ActivePlayer();
                     enemyPlayer.DisablePlayer();
                 }
                 else {
@@ -229,7 +232,7 @@ public partial class PlayMangement : MonoBehaviour
 
             case "PLANT":
                 if(player.race == true) {
-                    //player.ActivePlayer();
+                    player.ActivePlayer();
                     enemyPlayer.DisablePlayer();
                 }
                 else {
@@ -406,8 +409,9 @@ public partial class PlayMangement : MonoBehaviour
         yield return new WaitForSeconds(1f);
         turn++;
         DistributeResource();
-        CustomEvent.Trigger(gameObject, "EndTurn");
         player.EndTurnDraw();
+        yield return new WaitForSeconds(2.0f);
+        CustomEvent.Trigger(gameObject, "EndTurn");
         StopCoroutine("battleCoroutine");
     }
 }

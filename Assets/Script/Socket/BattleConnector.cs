@@ -56,7 +56,7 @@ public partial class BattleConnector : MonoBehaviour {
 
     //Receive Socket Message
     private void ReceiveMessage(WebSocket webSocket, string message) {
-        Debug.Log(message);
+        //Debug.Log(message);
         OnReceiveSocketMessage.Invoke();
         ReceiveFormat result = JsonReader.Read<ReceiveFormat>(message);
         queue.Enqueue(result);
@@ -104,9 +104,7 @@ public partial class BattleConnector : MonoBehaviour {
     }
 }
 
-/// <summary>
 /// 서버로부터 데이터를 받아올 때 reflection으로 string을 함수로 바로 발동하게 하는 부분
-/// </summary>
 public partial class BattleConnector : MonoBehaviour {
     public GameState gameState;
     private string raceName;
@@ -136,6 +134,10 @@ public partial class BattleConnector : MonoBehaviour {
         this.message.text = "대전 상대를 찾았습니다.";
         CustomEvent.Trigger(machine, "PlayStartBattleAnim");
         SendMethod("client_ready");
+    }
+
+    public void end_ready() {
+        Debug.Log("WebSocket State : end_ready");
     }
 
     public void begin_mulligan() {
@@ -174,18 +176,30 @@ public partial class BattleConnector : MonoBehaviour {
         Debug.Log("WebSocket State : begin_orc_pre_turn");
     }
 
+    public void end_orc_pre_turn() {
+        Debug.Log("WebSocket State : end_orc_pre_turn");
+    }
+
     public void begin_human_turn() {
         Debug.Log("WebSocket State : begin_human_turn");
-        TurnOver();
+        //TurnOver();
+    }
+
+    public void end_human_turn() {
+        Debug.Log("WebSocket State : end_human_turn");
     }
 
     public void begin_orc_post_turn() {
         Debug.Log("WebSocket State : begin_orc_post_turn");
     }
 
+    public void end_orc_post_turn() {
+        Debug.Log("WebSocket State : end_orc_post_turn");
+    }
+
     public void begin_battle_turn() {
         Debug.Log("WebSocket State : begin_battle_turn");
-        Invoke("TurnOver", 3f);
+        //Invoke("TurnOver", 3f);
     }
 
     public void end_battle_turn() {
@@ -202,13 +216,24 @@ public partial class BattleConnector : MonoBehaviour {
         Debug.Log("WebSocket State : map_clear");
     }
 
+    public void begin_end_turn() {
+        Debug.Log("WebSocket State : begin_end_turn");
+    }
+
+    public void end_end_turn() {
+        Debug.Log("WebSocket State : end_end_turn");
+        //추가 카드 주기
+        //dequeueing = false;
+        //getNewCard = true;
+    }
+
     public void opponent_connection_closed() {
         Debug.Log("WebSocket State : opponent_connection_closed");
     }
 
     public void begin_end_game() {
         Debug.Log("WebSocket State : begin_end_game");
-        //TODO : 여기서 카드 추가 됩니다.
+        
     }
 
     public void end_end_game() {
@@ -223,9 +248,7 @@ public partial class BattleConnector : MonoBehaviour {
 
 }
 
-/// <summary>
 /// 클라이언트로부터 데이터를 가져올 때
-/// </summary>
 public partial class BattleConnector : MonoBehaviour {
     private string status;
     private bool getNewCard = false;

@@ -24,6 +24,7 @@ public class PlaceMonster : MonoBehaviour
     protected UnitSpine unitSpine;
 
     private float currentTime;
+    List<Buff> buffList = new List<Buff>();
 
     public float atkTime {
         get { return unitSpine.atkDuration; }
@@ -235,8 +236,19 @@ public class PlaceMonster : MonoBehaviour
     public void RequestChangeStat(int power = 0, int hp = 0) {
         unit.attack += power;
         unit.currentHP += hp;
+        UpdateStat();
     }
 
+    public void AddBuff(Buff buff) {
+        buffList.Add(buff);
+        RequestChangeStat(buff.atk, buff.hp);
+    }
+
+    public void RemoveBuff(GameObject origin) {
+        var selectBuff = buffList.Find(x => x.origin == origin);
+        if (selectBuff == null) return;
+        RequestChangeStat(-selectBuff.atk, -selectBuff.hp);
+    }
 
     public void UpdateStat() {
         if (unit.currentHP > 0)
@@ -319,5 +331,15 @@ public class PlaceMonster : MonoBehaviour
     }
 
 
+    public class Buff {
+        public GameObject origin;   //발생지
+        public int atk;
+        public int hp;
 
+        public Buff(GameObject origin, int atk, int hp) {
+            this.origin = origin;
+            this.atk = atk;
+            this.hp = hp;
+        }
+    }
 }
