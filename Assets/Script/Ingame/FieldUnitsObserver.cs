@@ -35,7 +35,12 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
 
         target.transform.SetParent(transform.GetChild(col).GetChild(row));
         target.transform.localPosition = Vector3.zero;
-        target.GetComponent<PlaceMonster>().unitLocation = transform.GetChild(col).GetChild(row).position;
+
+        target.GetComponent<PlaceMonster>().ChangePosition(
+            row, 
+            col, 
+            transform.GetChild(col).GetChild(row).position
+        );
         units[prevPos.row, prevPos.col] = null;
     }
 

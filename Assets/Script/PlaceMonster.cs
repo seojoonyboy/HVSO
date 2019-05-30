@@ -250,7 +250,12 @@ public class PlaceMonster : MonoBehaviour {
         EndAttack();
     }
 
+    public void ChangePosition(int x, int y, Vector3 unitLocation) {
+        this.x = x;
+        this.y = y;
 
+        this.unitLocation = unitLocation;
+    }
 
 
     public void EndAttack() {
