@@ -6,15 +6,9 @@ using UnityEngine;
 namespace SkillModules {
     public class played_camp_chk : ConditionChecker {
         public override bool IsConditionSatisfied(bool isPlayerUnitGenerated, GameObject summonedObj) {
-            bool isFieldValid = false;
             bool isCampValid = false;
 
-            if (data.activate.scope == "playing") {
-                if (summonedObj == gameObject) isFieldValid = true;
-            }
-            else {
-                isFieldValid = true;
-            }
+            if (!isScopeValid(summonedObj)) return false;
 
             foreach (Condition condition in data.activate.conditions) {
                 foreach (string arg in condition.args) {
@@ -26,9 +20,8 @@ namespace SkillModules {
                     }
                 }
             }
-            Debug.Log("진영 조건에서 Scope 처리 결과 : " + isFieldValid);
-            Debug.Log("진영 조건에서 진영 처리 결과 : " + isFieldValid);
-            return (isFieldValid & isCampValid);
+            Debug.Log("진영 조건에서 진영 처리 결과 : " + isCampValid);
+            return isCampValid;
         }
     }
 }

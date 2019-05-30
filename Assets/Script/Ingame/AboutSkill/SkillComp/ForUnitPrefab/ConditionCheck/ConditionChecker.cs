@@ -40,7 +40,15 @@ namespace SkillModules {
                     return false;
                 }
             }
-            Debug.Log("Scope 조건 만족함");
+            else if(data.activate.scope == "field") {
+                if (summonedObj == gameObject) {
+                    Debug.Log("Scope 조건 불만족");
+                    return false;
+                }
+                Debug.Log("Scope 조건 만족");
+                return true;
+            }
+            Debug.Log("Scope 조건 불만족");
             return true;
         }
     }

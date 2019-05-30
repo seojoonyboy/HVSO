@@ -40,6 +40,14 @@ namespace SkillModules {
                         GetComponent<PlaceMonster>().RemoveBuff(gameObject);
                     }
                 }
+
+                if((target.method == "played") && (target.args[0] == "my")) {
+                    if (isPlayer) {
+                        if (isConditionSatisfied) {
+                            GetComponent<PlaceMonster>().AddBuff(new PlaceMonster.Buff(gameObject, atk, hp));
+                        }
+                    }
+                }
             }
         }
     }
