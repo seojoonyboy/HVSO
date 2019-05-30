@@ -136,11 +136,9 @@ public partial class CardHandler : MonoBehaviour {
     }
 
     public void RedrawButton() {
-        //DrawCard("ac1000" + UnityEngine.Random.Range(1, 5));
-        PlayMangement.instance.socketHandler.HandchangeCallback = DrawCard;
+        CardHandDeckManager handManager = FindObjectOfType<CardHandDeckManager>();
+        PlayMangement.instance.socketHandler.HandchangeCallback = handManager.RedrawCallback;
         PlayMangement.instance.socketHandler.ChangeCard(itemID);
-        transform.Find("ChangeButton").gameObject.SetActive(false);
-        transform.Find("GlowEffect").GetComponent<Image>().enabled = false;
     }
 
     public void DisableCard() {

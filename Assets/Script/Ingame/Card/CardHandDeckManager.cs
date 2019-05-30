@@ -302,4 +302,33 @@ public class CardHandDeckManager : MonoBehaviour {
     void ChangeSlotHeight(float rate) {
         transform.GetComponent<RectTransform>().localScale = new Vector2(rate, rate);
     }
+
+    public void RedrawCallback(string ID, int itemID = -1, bool first = false) {
+        SocketFormat.GameState state = PlayMangement.instance.socketHandler.gameState;
+        SocketFormat.Card[] cards = state.players.myPlayer(PlayMangement.instance.player.isHuman).deck.handCards;
+        int index = -1;
+        for(int i = 0; i < cards.Length; i++) {
+            if(cards[i].itemId == itemID) index = i;
+        }
+        GameObject beforeCardObject = firstDrawList[index];
+
+        GameObject card;
+        if (cards[index].type == "unit")
+            card = Instantiate(unitCardPrefab, firstDrawParent);
+        else
+            card = Instantiate(magicCardPrefab, firstDrawParent);
+        string id;
+        int itemId = -1;
+        if(cards[index].isHeroCard)
+            id = cards[index].cardId;
+        else
+            id = cards[index].id;
+        itemId = cards[index].itemId;
+        card.GetComponent<CardHandler>().DrawCard(id, itemId);
+
+        card.transform.position = beforeCardObject.transform.position;
+        card.transform.localScale = beforeCardObject.transform.localScale;
+        Destroy(beforeCardObject);
+        firstDrawList[index] = card;
+    }
 }
