@@ -1611,6 +1611,10 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 619fbd9159fe5164da628a6cd32fab96, type: 3}
     - {fileID: 21300000, guid: 92ddc4f0784c92f49b303709cb1a7b42, type: 3}
     - {fileID: 1411881466876716912, guid: 81cbdbe2b8846dd4eb6187ee1c5ce711, type: 3}
+    - {fileID: 3856163850324625839, guid: 9385d2fe74077bc47850c371850b9947, type: 3}
+    - {fileID: 5295120286612665779, guid: a8fff3bb27589304c982f7f7909b3ece, type: 3}
+    - {fileID: 5155577732532556144, guid: 9ef289f95be76604d99c978f161fa917, type: 3}
+    - {fileID: 4740072577441177279, guid: 3f5dbd94788dd3c49bcc2270d46b95c6, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -2459,6 +2463,80 @@ MonoBehaviour:
     - Name: $v
       Entry: 10
       Data: 28
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: raceUiPrefabs
+      Entry: 7
+      Data: 6|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.GameObject[],
+        UnityEngine.CoreModule]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 7|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: HUMAN
+    - Name: $v
+      Entry: 7
+      Data: 8|UnityEngine.GameObject[], UnityEngine.CoreModule
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 10
+      Data: 29
+    - Name: 
+      Entry: 10
+      Data: 30
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ORC
+    - Name: $v
+      Entry: 7
+      Data: 9|UnityEngine.GameObject[], UnityEngine.CoreModule
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 10
+      Data: 31
+    - Name: 
+      Entry: 10
+      Data: 32
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
