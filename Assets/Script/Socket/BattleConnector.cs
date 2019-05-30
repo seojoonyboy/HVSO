@@ -62,6 +62,10 @@ public partial class BattleConnector : MonoBehaviour {
         queue.Enqueue(result);
     }
 
+    public void ClientReady() {
+        SendMethod("client_ready");
+    }
+
     public void ChangeCard(int itemId) {
         string[] args = new string[]{itemId.ToString()};
         SendMethod("hand_change", args);
@@ -133,7 +137,6 @@ public partial class BattleConnector : MonoBehaviour {
     public void begin_ready() {
         this.message.text = "대전 상대를 찾았습니다.";
         CustomEvent.Trigger(machine, "PlayStartBattleAnim");
-        SendMethod("client_ready");
     }
 
     public void end_ready() {
@@ -182,7 +185,6 @@ public partial class BattleConnector : MonoBehaviour {
 
     public void begin_human_turn() {
         Debug.Log("WebSocket State : begin_human_turn");
-        //TurnOver();
     }
 
     public void end_human_turn() {
@@ -218,13 +220,12 @@ public partial class BattleConnector : MonoBehaviour {
 
     public void begin_end_turn() {
         Debug.Log("WebSocket State : begin_end_turn");
+        dequeueing = false;
+        getNewCard = true;
     }
 
     public void end_end_turn() {
         Debug.Log("WebSocket State : end_end_turn");
-        //추가 카드 주기
-        //dequeueing = false;
-        //getNewCard = true;
     }
 
     public void opponent_connection_closed() {
@@ -242,8 +243,8 @@ public partial class BattleConnector : MonoBehaviour {
 
     public void card_played() {
         Debug.Log("WebSocket State : card_played");
-        Debug.Log(gameState.lastUse.target.args[1]);
-        Debug.Log(gameState.lastUse.cardItem.id);
+        //useCard = true;
+        //dequeueing = false;
     }
 
 }
@@ -252,6 +253,7 @@ public partial class BattleConnector : MonoBehaviour {
 public partial class BattleConnector : MonoBehaviour {
     private string status;
     private bool getNewCard = false;
+    //private bool useCard = false;
 
     public IEnumerator WaitGetCard() {
         while(!getNewCard) {
@@ -261,4 +263,16 @@ public partial class BattleConnector : MonoBehaviour {
         dequeueing = true;
     }
 
+    // public IEnumerator WaitUseCard() {
+    //     while(!useCard) {
+    //         yield return new WaitForFixedUpdate();
+    //     }
+    //     useCard = false;
+    //     dequeueing = true;
+    // }
+
+    // private void checkMyTurn(bool isHuman) {
+    //     if(PlayMangement.instance.player.isHuman != isHuman)
+    //         dequeueing = false;
+    // }
 }

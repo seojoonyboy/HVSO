@@ -82,8 +82,9 @@ public class PlayerController : MonoBehaviour
 
     public void EndTurnDraw() {
         if (PlayMangement.instance.isGame == false) return;
-
-        cdpm.AddCard();
+        bool race = PlayMangement.instance.player.isHuman;
+        SocketFormat.Card cardData = PlayMangement.instance.socketHandler.gameState.players.myPlayer(race).newCard;
+        cdpm.AddCard(cardData: cardData);
 
         GameObject enemyCard = Instantiate(PlayMangement.instance.enemyPlayer.back);
         enemyCard.transform.SetParent(PlayMangement.instance.enemyPlayer.playerUI.transform.Find("CardSlot"));
@@ -164,8 +165,11 @@ public class PlayerController : MonoBehaviour
     }
 
     public void ReleaseTurn() {
-        if (myTurn == true && !dragCard)
+        if (myTurn == true && !dragCard) {
             PlayMangement.instance.GetPlayerTurnRelease();
+            if(isHuman == PlayMangement.instance.player.isHuman)
+                PlayMangement.instance.socketHandler.TurnOver();
+        }
     }
 
 
