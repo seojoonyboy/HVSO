@@ -306,29 +306,38 @@ public class CardHandDeckManager : MonoBehaviour {
     public void RedrawCallback(string ID, int itemID = -1, bool first = false) {
         SocketFormat.GameState state = PlayMangement.instance.socketHandler.gameState;
         SocketFormat.Card[] cards = state.players.myPlayer(PlayMangement.instance.player.isHuman).deck.handCards;
+        SocketFormat.Card newCard = state.players.myPlayer(PlayMangement.instance.player.isHuman).newCard;
         int index = -1;
-        for(int i = 0; i < cards.Length; i++) {
-            if(cards[i].itemId == itemID) index = i;
+        for(int i = 0; i < firstDrawList.Count; i++) {
+            bool sameCard = false;
+            for(int j = 0; j < cards.Length; j++) {
+                if(cards[j].itemId == firstDrawList[i].GetComponent<CardHandler>().itemID) {
+                    sameCard = true;
+                    break;
+                }
+            }
+            if(!sameCard) index = i;
         }
         GameObject beforeCardObject = firstDrawList[index];
 
         GameObject card;
-        if (cards[index].type == "unit")
+        if (newCard.type == "unit")
             card = Instantiate(unitCardPrefab, firstDrawParent);
         else
             card = Instantiate(magicCardPrefab, firstDrawParent);
         string id;
         int itemId = -1;
-        if(cards[index].isHeroCard)
-            id = cards[index].cardId;
+        if(newCard.isHeroCard)
+            id = newCard.cardId;
         else
-            id = cards[index].id;
-        itemId = cards[index].itemId;
+            id = newCard.id;
+        itemId = newCard.itemId;
         card.GetComponent<CardHandler>().DrawCard(id, itemId);
 
         card.transform.position = beforeCardObject.transform.position;
         card.transform.localScale = beforeCardObject.transform.localScale;
         Destroy(beforeCardObject);
         firstDrawList[index] = card;
+        card.SetActive(true);
     }
 }
