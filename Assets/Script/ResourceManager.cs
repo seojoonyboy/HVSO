@@ -12,5 +12,6 @@ public class ResourceManager : SerializedMonoBehaviour
     public Dictionary<string, GameObject> cardSkeleton;
     public Dictionary<string, Sprite> cardBackground;
     public Dictionary<string, GameObject[]> raceUiPrefabs;
+    public Dictionary<string, GameObject> heroSkeleton;
     public GameObject unitDeadObject;
 }
