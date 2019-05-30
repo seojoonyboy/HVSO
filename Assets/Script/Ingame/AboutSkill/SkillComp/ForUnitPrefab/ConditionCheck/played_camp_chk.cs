@@ -2,6 +2,7 @@ using dataModules;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 namespace SkillModules {
     public class played_camp_chk : ConditionChecker {
