@@ -28,8 +28,7 @@ public partial class PlayMangement : MonoBehaviour
     private void Awake()
     {
         socketHandler = FindObjectOfType<BattleConnector>();
-        StartCoroutine(SendReadyToSocket());
-        //string selectedRace = Variables.Saved.Get("SelectedRace").ToString();
+        socketHandler.ClientReady();
 
         SetWorldScale();
         instance = this;
@@ -149,7 +148,7 @@ public partial class PlayMangement : MonoBehaviour
     IEnumerator EnemySummonMonster() {
         #region socket use Card
         while(!socketHandler.cardPlayFinish()) {
-            yield return socketHandler.WaitUseCard();
+            yield return socketHandler.useCardList.WaitNext();
             Debug.Log("card summon!");
             //TODO : 유닛 소환인지 마법 사용인지 파악을 할 필요가 있음
             SocketFormat.PlayHistory history = socketHandler.getHistory();
@@ -161,7 +160,9 @@ public partial class PlayMangement : MonoBehaviour
         #endregion
 
         yield return new WaitForSeconds(1.0f);
-
+        
+        string log = Newtonsoft.Json.JsonConvert.SerializeObject(socketHandler.gameState.players.enemyPlayer(enemyPlayer.isHuman).deck.handCards);
+        Debug.Log(string.Format("적의 핸드 리스트 : {0}", log));
         enemyPlayer.ReleaseTurn();
         StopCoroutine("EnemySummonMonster");
     }
@@ -305,7 +306,9 @@ public partial class PlayMangement : MonoBehaviour
         int line = 0;
         yield return new WaitForSeconds(1.1f);
         while (line < 5) {
+            yield return WaitSocketData(socketHandler.lineBattleList, line, true);
             yield return battleLine(line);
+            yield return WaitSocketData(socketHandler.mapClearList, line, false);
             if (isGame == false) break;
             line++;
         }
@@ -356,6 +359,20 @@ public partial class PlayMangement : MonoBehaviour
             placeMonster.atkCount = 0;
         }
         yield return null;
+    }
+
+    IEnumerator WaitSocketData(SocketFormat.QueueSocketList<SocketFormat.GameState> queueList, int line, bool isBattle) {
+        yield return queueList.WaitNext();
+        SocketFormat.GameState state = queueList.Dequeue();
+        string mapData = Newtonsoft.Json.JsonConvert.SerializeObject(state.map.lines[line]);
+        string heroData = Newtonsoft.Json.JsonConvert.SerializeObject(state.players.human.hero);
+        string heroData2 = Newtonsoft.Json.JsonConvert.SerializeObject(state.players.orc.hero);
+        Debug.Log(isBattle ? "======= 싸운 후 State =======" : "======= 에너지 체크 후 State =======");
+        Debug.Log(string.Format("{0}번째줄 맵 : {1}", line, mapData));
+        Debug.Log(string.Format("{0}번째줄 휴먼 플레이어 상태 : {1}", line, heroData));
+        Debug.Log(string.Format("{0}번째줄 오크 플레이어 상태 : {1}", line, heroData2));
+        Debug.Log("=======================================");
+        //TODO : 데이터 체크 및 데이터 동기화 필요
     }
 }
 
@@ -519,13 +536,6 @@ public partial class PlayMangement {
         //DisconnectSocket();
 
         Debug.Log("소켓 커넥터 파괴됨");
-    }
-
-    IEnumerator SendReadyToSocket() {
-        yield return new WaitForSeconds(1.0f);
-
-        Debug.Log("Client_ready 전송");
-        socketHandler.ClientReady();
     }
 }
 
