@@ -5,10 +5,11 @@ using UnityEngine.UI;
 using UniRx;
 using TMPro;
 using System;
+using Bolt;
 
 public class PlayerController : MonoBehaviour
 {
-    public bool race;
+    public bool isHuman;
     public bool isPlayer;
     public bool isMulligan = true;
     private bool myTurn = false;
@@ -45,9 +46,14 @@ public class PlayerController : MonoBehaviour
     }
 
     public void Init() {
+        string race = Variables.Saved.Get("SelectedRace").ToString();
+        if (race == "HUMAN") isHuman = isPlayer;
+        else isHuman = !isPlayer;
+        Instantiate(AccountManager.Instance.resource.raceUiPrefabs[race][0], playerUI.transform.Find("PlayerHealth"));
+        Instantiate(AccountManager.Instance.resource.raceUiPrefabs[race][1], playerUI.transform.Find("PlayerResource"));
+
         if (transform.childCount > 2)
             heroSpine = transform.Find("HeroSkeleton").GetComponent<HeroSpine>();
-
 
         shieldCount = 3;
         Debug.Log(heroSpine);
@@ -65,7 +71,6 @@ public class PlayerController : MonoBehaviour
             yield return new WaitForSeconds(0.3f);
             if(i < 4)
                 StartCoroutine(cdpm.FirstDraw());
-            
 
             GameObject enemyCard = Instantiate(PlayMangement.instance.enemyPlayer.back);
             enemyCard.transform.SetParent(PlayMangement.instance.enemyPlayer.playerUI.transform.Find("CardSlot"));
@@ -89,7 +94,7 @@ public class PlayerController : MonoBehaviour
     public void DrawPlayerCard(GameObject card) {
         cdpm.AddCard();
         string cardID;
-        if (race == true) {
+        if (isHuman == true) {
             cardID = "ac1000";
             card.GetComponent<CardHandler>().DrawCard(cardID + UnityEngine.Random.Range(1, 5));
         }
@@ -107,7 +112,7 @@ public class PlayerController : MonoBehaviour
     }
 
     private void ObserverText() {       
-        Image shieldImage = playerUI.transform.Find("PlayerHealth/Shield/Gage").GetComponent<Image>();
+        Image shieldImage = playerUI.transform.Find("PlayerHealth").GetChild(0).GetChild(0).GetChild(1).GetComponent<Image>();
 
         var ObserveHP = HP.Subscribe(_=> ChangedHP()).AddTo(PlayMangement.instance.transform.gameObject);
         var ObserveResource = resource.Subscribe(_=> ChangedResource()).AddTo(PlayMangement.instance.transform.gameObject);
@@ -122,24 +127,18 @@ public class PlayerController : MonoBehaviour
     }
 
     private void ChangedHP() {
-        TextMeshProUGUI HPText = playerUI.transform.Find("PlayerHealth/Health/Text").GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI HPText = playerUI.transform.Find("PlayerHealth").GetChild(0).GetChild(1).GetChild(0).GetComponent<TextMeshProUGUI>();
         HPText.text = HP.Value.ToString();
     }
 
     private void ChangedResource() {
-        TextMeshProUGUI resourceText = playerUI.transform.Find("PlayerResource/Text").GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI resourceText = playerUI.transform.Find("PlayerResource").GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>();
         resourceText.text = resource.Value.ToString();
     }
-
-
-
-
 
     public void UpdateHealth() {
         HP.Value += 2;
     }
-    
-
 
     public void PlayerTakeDamage(int amount) {
         if (shieldStack.Value < 7) {
@@ -217,11 +216,5 @@ public class PlayerController : MonoBehaviour
                 heroSpine.Attack();
                 break;
         }
-
     }
-
-    
-
-
-
 }

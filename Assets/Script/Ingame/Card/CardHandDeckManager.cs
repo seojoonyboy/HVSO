@@ -35,11 +35,13 @@ public class CardHandDeckManager : MonoBehaviour {
         GameObject card = Instantiate(cardPrefab, cardSpawnPos);
         card.transform.SetParent(firstDrawParent);
         card.SetActive(true);
-        bool race = PlayMangement.instance.player.race;
+        card.transform.rotation = new Quaternion(0, 0, 540, card.transform.rotation.w);
+        bool race = PlayMangement.instance.player.isHuman;
         SocketFormat.Card socketCard = PlayMangement.instance.socketHandler.gameState.players.myPlayer(race).FirstCards[firstDrawList.Count];
         card.GetComponent<CardHandler>().DrawCard(socketCard.id, socketCard.itemId, true);
 
         iTween.MoveTo(card, firstDrawParent.GetChild(firstDrawList.Count).position, 0.5f);
+        iTween.RotateTo(card, new Vector3(0, 0, 0), 0.5f);
         firstDrawList.Add(card);
         card.transform.localScale = new Vector3(1.15f, 1.15f, 1);
         yield return new WaitForSeconds(0.5f);
@@ -122,7 +124,8 @@ public class CardHandDeckManager : MonoBehaviour {
                 firstDraw = false;
             }
             cardList.Add(card);
-            card.transform.localScale = new Vector3(1, 1, 1);
+            //card.transform.localScale = new Vector3(1, 1, 1);
+            card.transform.Find("GlowEffect").GetComponent<Image>().enabled = false;
             if (target != null) {
                 isDrawing = false;
                 StartCoroutine(SendCardToHand(card, target));
@@ -193,16 +196,18 @@ public class CardHandDeckManager : MonoBehaviour {
 
     IEnumerator SendCardToHand(GameObject card, Transform target) {
         if (!firstDraw) {
-            card.transform.localScale = new Vector3(1.5f, 1.5f, 1.0f);
+            //card.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+            card.transform.rotation = new Quaternion(0, 0, 180, card.transform.rotation.w);
             iTween.MoveTo(card, firstDrawParent.position, 0.4f);
+            iTween.RotateTo(card, new Vector3(0, 0, 0), 0.5f);
             yield return new WaitForSeconds(0.5f);
         }
-
-        iTween.MoveTo(card, target.position, 0.3f);
-        yield return new WaitForSeconds(0.3f);
         card.transform.SetParent(target);
-        card.transform.localScale = new Vector3(1, 1, 1);
+        iTween.MoveTo(card, iTween.Hash("x", target.position.x, "y", target.position.y, "time" ,0.5f, "easetype" , iTween.EaseType.easeInOutQuart));
+        iTween.ScaleTo(card, new Vector3(1.0f, 1.0f, 1.0f), 0.5f);
+        yield return new WaitForSeconds(0.5f);
         card.GetComponent<CardHandler>().DisableCard();
+        card.GetComponent<CardHandler>().FIRSTDRAW = false;
         CardListManager csm = GameObject.Find("Canvas").transform.Find("CardInfoList").GetComponent<CardListManager>();
         csm.AddCardInfo(card.GetComponent<CardHandler>().cardData, card.GetComponent<CardHandler>().cardID);
     }

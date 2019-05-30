@@ -13,7 +13,7 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     public GameObject skeleton;
     CardListManager csm;
     private bool blockButton = false;
-    public bool firstDraw = false;
+    private bool firstDraw = false;
     public bool changeSelected = false;
     Animator cssAni;
     public string cardID;
@@ -32,6 +32,11 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     public CardDataPackage cardDataPackage;
 
     static GameObject itsDragging;
+
+    public bool FIRSTDRAW {
+        get { return firstDraw; }
+        set { firstDraw = value; }
+    }
 
     public void Awake() {
         csm = GameObject.Find("Canvas").transform.Find("CardInfoList").GetComponent<CardListManager>();
