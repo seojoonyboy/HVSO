@@ -104,13 +104,13 @@ public partial class PlayMangement : MonoBehaviour
 
     public void SetPlayerCard() {
         if (player.isHuman == true) {
-            player.card = cardDB.transform.Find("Card").gameObject;
+            //player.card = cardDB.transform.Find("Card").gameObject;
             player.back = cardDB.transform.Find("HumanBackCard").gameObject;
             enemyPlayer.card = cardDB.transform.Find("Card").gameObject; ;
             enemyPlayer.back = cardDB.transform.Find("OrcBackCard").gameObject;
         }
         else {
-            player.card = cardDB.transform.Find("Card").gameObject;
+            //player.card = cardDB.transform.Find("Card").gameObject;
             player.back = cardDB.transform.Find("OrcBackCard").gameObject;
             enemyPlayer.card = cardDB.transform.Find("Card").gameObject;
             enemyPlayer.back = cardDB.transform.Find("HumanBackCard").gameObject;

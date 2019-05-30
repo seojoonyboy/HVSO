@@ -12,7 +12,8 @@ public class CardHandDeckManager : MonoBehaviour {
     public bool isDrawing = false;
     List<GameObject> cardList;
     List<GameObject> firstDrawList;
-    [SerializeField] GameObject cardPrefab;
+    [SerializeField] GameObject unitCardPrefab;
+    [SerializeField] GameObject magicCardPrefab;
     [SerializeField] Transform cardSpawnPos;
     [SerializeField] Transform firstDrawParent;
 
@@ -32,12 +33,16 @@ public class CardHandDeckManager : MonoBehaviour {
     /// </summary>
     /// <returns></returns>
     public IEnumerator FirstDraw() {
-        GameObject card = Instantiate(cardPrefab, cardSpawnPos);
+        bool race = PlayMangement.instance.player.isHuman;
+        SocketFormat.Card socketCard = PlayMangement.instance.socketHandler.gameState.players.myPlayer(race).FirstCards[firstDrawList.Count];
+        GameObject card = new GameObject();
+        if (socketCard.type == "unit")
+            card = Instantiate(unitCardPrefab, cardSpawnPos);
+        else
+            card = Instantiate(magicCardPrefab, cardSpawnPos);
         card.transform.SetParent(firstDrawParent);
         card.SetActive(true);
         card.transform.rotation = new Quaternion(0, 0, 540, card.transform.rotation.w);
-        bool race = PlayMangement.instance.player.isHuman;
-        SocketFormat.Card socketCard = PlayMangement.instance.socketHandler.gameState.players.myPlayer(race).FirstCards[firstDrawList.Count];
         card.GetComponent<CardHandler>().DrawCard(socketCard.id, socketCard.itemId, true);
 
         iTween.MoveTo(card, firstDrawParent.GetChild(firstDrawList.Count).position, 0.5f);
@@ -99,7 +104,10 @@ public class CardHandDeckManager : MonoBehaviour {
     public void AddCard(GameObject cardobj = null, SocketFormat.Card cardData = null) {
         GameObject card;
         if (cardobj == null) {
-            card = Instantiate(cardPrefab, cardSpawnPos);
+            if (cardData.type == "unit")
+                card = Instantiate(unitCardPrefab, cardSpawnPos);
+            else
+                card = Instantiate(magicCardPrefab, cardSpawnPos);
             string id;
             int itemId = -1;
             if(cardData == null)
