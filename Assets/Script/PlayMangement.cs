@@ -519,7 +519,7 @@ public partial class PlayMangement {
             default:
                 break;
         }
-
+        resourceWindow.gameObject.SetActive(false);
     }
 
 }
