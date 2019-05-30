@@ -49,8 +49,14 @@ public class PlayerController : MonoBehaviour
         string race = Variables.Saved.Get("SelectedRace").ToString();
         if (race == "HUMAN") isHuman = isPlayer;
         else isHuman = !isPlayer;
-        Instantiate(AccountManager.Instance.resource.raceUiPrefabs[race][0], playerUI.transform.Find("PlayerHealth"));
-        Instantiate(AccountManager.Instance.resource.raceUiPrefabs[race][1], playerUI.transform.Find("PlayerResource"));
+        if (isHuman) {
+            Instantiate(AccountManager.Instance.resource.raceUiPrefabs["HUMAN"][0], playerUI.transform.Find("PlayerHealth"));
+            Instantiate(AccountManager.Instance.resource.raceUiPrefabs["HUMAN"][1], playerUI.transform.Find("PlayerResource"));
+        }
+        else {
+            Instantiate(AccountManager.Instance.resource.raceUiPrefabs["ORC"][0], playerUI.transform.Find("PlayerHealth"));
+            Instantiate(AccountManager.Instance.resource.raceUiPrefabs["ORC"][1], playerUI.transform.Find("PlayerResource")
+        }
 
         if (transform.childCount > 2)
             heroSpine = transform.Find("HeroSkeleton").GetComponent<HeroSpine>();
