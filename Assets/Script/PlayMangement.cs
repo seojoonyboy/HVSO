@@ -301,136 +301,11 @@ public partial class PlayMangement : MonoBehaviour
         CustomEvent.Trigger(gameObject, "EndTurn");
     }
 
-
     IEnumerator battleCoroutine() {
         int line = 0;
         yield return new WaitForSeconds(1.1f);
         while (line < 5) {
-            if (player.isHuman == false) {
-                if (player.backLine.transform.GetChild(line).childCount != 0) {
-                    PlaceMonster placeMonster = player.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>();
-                    
-                    while(placeMonster.atkCount < placeMonster.maxAtkCount) {
-                        if (placeMonster.unit.attack <= 0)
-                            break;
-
-                        placeMonster.GetTarget();
-                        yield return new WaitForSeconds(1.1f + placeMonster.atkTime);
-
-                    }
-                    placeMonster.atkCount = 0;
-                }
-
-                if (player.frontLine.transform.GetChild(line).childCount != 0) {
-                    PlaceMonster placeMonster = player.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>();
-
-                    while (placeMonster.atkCount < placeMonster.maxAtkCount) {
-                        if (placeMonster.unit.attack <= 0)
-                            break;
-
-                        placeMonster.GetTarget();
-                        yield return new WaitForSeconds(1.1f + placeMonster.atkTime);
-
-                    }
-                    placeMonster.atkCount = 0;
-                }
-
-                if (enemyPlayer.backLine.transform.GetChild(line).childCount != 0) {
-                    PlaceMonster placeMonster = enemyPlayer.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>();
-
-                    while (placeMonster.atkCount < placeMonster.maxAtkCount) {
-                        if (placeMonster.unit.attack <= 0)
-                            break;
-
-                        placeMonster.GetTarget();
-                        yield return new WaitForSeconds(1.1f + placeMonster.atkTime);
-
-                    }
-                    placeMonster.atkCount = 0;
-                }
-
-                if (enemyPlayer.frontLine.transform.GetChild(line).childCount != 0) {
-                    PlaceMonster placeMonster = enemyPlayer.frontLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>();
-
-                    while (placeMonster.atkCount < placeMonster.maxAtkCount) {
-                        if (placeMonster.unit.attack <= 0)
-                            break;
-
-                        placeMonster.GetTarget();
-                        yield return new WaitForSeconds(1.1f + placeMonster.atkTime);
-
-                    }
-                    placeMonster.atkCount = 0;
-                }
-            }
-
-            else {
-                if (enemyPlayer.backLine.transform.GetChild(line).childCount != 0) {
-                    PlaceMonster placeMonster = enemyPlayer.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>();
-
-                    while (placeMonster.atkCount < placeMonster.maxAtkCount) {
-                        if (placeMonster.unit.attack <= 0)
-                            break;
-
-                        placeMonster.GetTarget();
-                        yield return new WaitForSeconds(1.1f + placeMonster.atkTime);
-
-                    }
-                    placeMonster.atkCount = 0;
-                }
-
-                if (enemyPlayer.frontLine.transform.GetChild(line).childCount != 0) {
-                    PlaceMonster placeMonster = enemyPlayer.frontLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>();
-
-                    while (placeMonster.atkCount < placeMonster.maxAtkCount) {
-                        if (placeMonster.unit.attack <= 0)
-                            break;
-
-                        placeMonster.GetTarget();
-                        yield return new WaitForSeconds(1.1f + placeMonster.atkTime);
-
-                    }
-                    placeMonster.atkCount = 0;
-                }
-                if (player.backLine.transform.GetChild(line).childCount != 0) {
-                    PlaceMonster placeMonster = player.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>();
-
-                    while (placeMonster.atkCount < placeMonster.maxAtkCount) {
-                        if (placeMonster.unit.attack <= 0)
-                            break;
-
-                        placeMonster.GetTarget();
-                        yield return new WaitForSeconds(1.1f + placeMonster.atkTime);
-
-                    }
-                    placeMonster.atkCount = 0;
-                }
-
-                if (player.frontLine.transform.GetChild(line).childCount != 0) {
-                    PlaceMonster placeMonster = player.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>();
-
-                    while (placeMonster.atkCount < placeMonster.maxAtkCount) {
-                        if (placeMonster.unit.attack <= 0)
-                            break;
-
-                        placeMonster.GetTarget();
-                        yield return new WaitForSeconds(1.1f + placeMonster.atkTime);
-
-                    }
-                    placeMonster.atkCount = 0;
-                }
-            }
-
-            if (player.backLine.transform.GetChild(line).childCount != 0)
-                player.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().CheckHP();
-            if (player.frontLine.transform.GetChild(line).childCount != 0)
-                player.frontLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().CheckHP();
-            if (enemyPlayer.backLine.transform.GetChild(line).childCount != 0)
-                enemyPlayer.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().CheckHP();
-            if (enemyPlayer.frontLine.transform.GetChild(line).childCount != 0)
-                enemyPlayer.frontLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().CheckHP();
-
-
+            yield return battleLine(line);
             if (isGame == false) break;
             line++;
         }
@@ -443,6 +318,44 @@ public partial class PlayMangement : MonoBehaviour
         yield return new WaitForSeconds(2.0f);
         CustomEvent.Trigger(gameObject, "EndTurn");
         StopCoroutine("battleCoroutine");
+    }
+
+    IEnumerator battleLine(int line) {
+        if (player.isHuman == false) {
+            yield return battleUnit(player.backLine, line);
+            yield return battleUnit(player.frontLine, line);
+            yield return battleUnit(enemyPlayer.backLine, line);
+            yield return battleUnit(enemyPlayer.frontLine, line);
+        }
+        else {
+            yield return battleUnit(enemyPlayer.backLine, line);
+            yield return battleUnit(enemyPlayer.frontLine, line);
+            yield return battleUnit(player.backLine, line);
+            yield return battleUnit(player.frontLine, line);
+        }
+
+        if (player.backLine.transform.GetChild(line).childCount != 0)
+            player.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().CheckHP();
+        if (player.frontLine.transform.GetChild(line).childCount != 0)
+            player.frontLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().CheckHP();
+        if (enemyPlayer.backLine.transform.GetChild(line).childCount != 0)
+            enemyPlayer.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().CheckHP();
+        if (enemyPlayer.frontLine.transform.GetChild(line).childCount != 0)
+            enemyPlayer.frontLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().CheckHP();
+    }
+
+    IEnumerator battleUnit(GameObject lineObject, int line) {
+        if(lineObject.transform.GetChild(line).childCount != 0) {
+            PlaceMonster placeMonster = lineObject.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>();
+                while(placeMonster.atkCount < placeMonster.maxAtkCount) {
+                    if (placeMonster.unit.attack <= 0)
+                        break;
+                    placeMonster.GetTarget();
+                    yield return new WaitForSeconds(1.1f + placeMonster.atkTime);
+                }
+            placeMonster.atkCount = 0;
+        }
+        yield return null;
     }
 }
 
