@@ -35,7 +35,7 @@ public class CardHandDeckManager : MonoBehaviour {
     public IEnumerator FirstDraw() {
         bool race = PlayMangement.instance.player.isHuman;
         SocketFormat.Card socketCard = PlayMangement.instance.socketHandler.gameState.players.myPlayer(race).FirstCards[firstDrawList.Count];
-        GameObject card = new GameObject();
+        GameObject card;
         if (socketCard.type == "unit")
             card = Instantiate(unitCardPrefab, cardSpawnPos);
         else

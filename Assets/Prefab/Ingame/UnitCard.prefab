@@ -361,7 +361,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 991091471213767536}
         m_MethodName: RedrawButton
         m_Mode: 1
         m_Arguments:
@@ -639,7 +639,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5741662016261881369
 RectTransform:
   m_ObjectHideFlags: 0
@@ -772,7 +772,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startPos: {x: 0, y: 0, z: 0}
-  unit: {fileID: 0}
+  unit: {fileID: 4549778766762803919, guid: e809507ac2ad94f4ea3612c5aa4ea070, type: 3}
   skeleton: {fileID: 0}
   changeSelected: 0
   cardID: 
