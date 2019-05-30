@@ -92,7 +92,7 @@ public class CardHandDeckManager : MonoBehaviour {
         //영웅카드 뽑기
         bool isHuman = PlayMangement.instance.player.isHuman;
         SocketFormat.Card cardData = PlayMangement.instance.socketHandler.gameState.players.myPlayer(isHuman).newCard;
-        AddCard(cardData: cardData);
+        AddCard(null, cardData);
 
 
         yield return new WaitForSeconds(3.0f);
@@ -113,7 +113,10 @@ public class CardHandDeckManager : MonoBehaviour {
             if(cardData == null)
                 id = "ac1000" + UnityEngine.Random.Range(1, 10);
             else {
-                id = cardData.id;
+                if(cardData.isHeroCard)
+                    id = cardData.cardId;
+                else
+                    id = cardData.id;
                 itemId = cardData.itemId;
             }
             card.GetComponent<CardHandler>().DrawCard(id, itemId);

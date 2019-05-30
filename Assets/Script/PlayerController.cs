@@ -116,7 +116,7 @@ public class PlayerController : MonoBehaviour
         if (PlayMangement.instance.isGame == false) return;
         bool race = PlayMangement.instance.player.isHuman;
         SocketFormat.Card cardData = PlayMangement.instance.socketHandler.gameState.players.myPlayer(race).newCard;
-        cdpm.AddCard(cardData: cardData);
+        cdpm.AddCard(null, cardData);
 
         GameObject enemyCard = Instantiate(PlayMangement.instance.enemyPlayer.back);
         enemyCard.transform.SetParent(PlayMangement.instance.enemyPlayer.playerUI.transform.Find("CardSlot"));
