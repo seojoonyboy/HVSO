@@ -49,6 +49,7 @@ public partial class PlayMangement : MonoBehaviour
     private void Start()
     {
         cam = Camera.main;
+        SetBackGround();
         RequestStartData();
         DistributeResource();
         //StartCoroutine(DisconnectTest());
@@ -86,6 +87,17 @@ public partial class PlayMangement : MonoBehaviour
         for(int i = 0; i < player.frontLine.transform.childCount; i++) {
             Vector3 pos = backGround.transform.GetChild(i).position;
             backGround.transform.GetChild(i).position = new Vector3(pos.x, player.backLine.transform.position.y, 0);
+        }      
+    }
+
+    private void SetBackGround() {
+        if (player.isHuman == true) {
+            GameObject raceSprite = Instantiate(AccountManager.Instance.resource.raceUiPrefabs["HUMAN_BACKGROUND"][0], backGround.transform);
+            raceSprite.transform.SetAsLastSibling();
+        }
+        else {
+            GameObject raceSprite = Instantiate(AccountManager.Instance.resource.raceUiPrefabs["ORC_BACKGROUND"][0], backGround.transform);
+            raceSprite.transform.SetAsLastSibling();
         }
     }
 

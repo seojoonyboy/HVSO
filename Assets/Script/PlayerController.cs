@@ -52,8 +52,34 @@ public class PlayerController : MonoBehaviour
         Instantiate(AccountManager.Instance.resource.raceUiPrefabs[race][0], playerUI.transform.Find("PlayerHealth"));
         Instantiate(AccountManager.Instance.resource.raceUiPrefabs[race][1], playerUI.transform.Find("PlayerResource"));
 
-        if (transform.childCount > 2)
-            heroSpine = transform.Find("HeroSkeleton").GetComponent<HeroSpine>();
+        if(isHuman == true) {
+            string heroID = "h10001";
+            GameObject hero = Instantiate(AccountManager.Instance.resource.heroSkeleton[heroID], transform);
+            hero.transform.SetAsLastSibling();
+            heroSpine = hero.GetComponent<HeroSpine>();
+
+            if (isPlayer == true) {
+                hero.transform.localScale = new Vector3(-1, 1, 1);
+                heroSpine.GetComponent<MeshRenderer>().sortingOrder = 12;
+            }
+            else
+                heroSpine.GetComponent<MeshRenderer>().sortingOrder = 8;
+
+        }
+        else {
+            string heroID = "h10002";
+            GameObject hero = Instantiate(AccountManager.Instance.resource.heroSkeleton[heroID], transform);
+            hero.transform.SetAsLastSibling();
+            heroSpine = hero.GetComponent<HeroSpine>();
+
+            if (isPlayer == true) {
+                hero.transform.localScale = new Vector3(-1, 1, 1);
+                heroSpine.GetComponent<MeshRenderer>().sortingOrder = 12;
+            }
+            else
+                heroSpine.GetComponent<MeshRenderer>().sortingOrder = 8;
+        }
+
 
         shieldCount = 3;
         Debug.Log(heroSpine);
