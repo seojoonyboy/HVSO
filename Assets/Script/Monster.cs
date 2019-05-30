@@ -14,7 +14,7 @@ namespace IngameClass
         public string id;
         public string name;
         public string[] attackType;
-        public string[] atrributes;
+        public string[] attributes;
         public int HP;
         public int currentHP;
         public int attack;
