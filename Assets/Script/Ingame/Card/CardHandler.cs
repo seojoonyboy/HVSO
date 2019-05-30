@@ -45,7 +45,7 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     public void DrawCard(string ID, int itemID = -1, bool first = false) {
         cardDataPackage = AccountManager.Instance.cardPackage;
         cardID = ID;
-        //cardID = "ac10010";    //테스트 코드
+        cardID = "ac10008";    //테스트 코드
         this.itemID = itemID;
         if (cardDataPackage.data.ContainsKey(cardID)) {
             cardData = cardDataPackage.data[cardID];
@@ -108,20 +108,21 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         PlayMangement.instance.player.isPicking.Value = false;
         if (PlayMangement.instance.player.getPlayerTurn == true && PlayMangement.instance.player.resource.Value >= cardData.cost) {
             GameObject unitPref = CardDropManager.Instance.DropUnit(gameObject, CheckSlot());
-            foreach (dataModules.Skill skill in cardData.skills) {
-                foreach (var effect in skill.effects) {
-                    var newComp = unitPref.AddComponent(Type.GetType("SkillModules.Ability_" + effect.method));
-                    if (newComp == null) {
-                        Debug.LogError(effect.method + "에 해당하는 컴포넌트를 찾을 수 없습니다.");
-                    }
-                    else {
-                        ((Ability)newComp).InitData(skill, true);
+            if (unitPref != null) {
+                foreach (dataModules.Skill skill in cardData.skills) {
+                    foreach (var effect in skill.effects) {
+                        var newComp = unitPref.AddComponent(Type.GetType("SkillModules.Ability_" + effect.method));
+                        if (newComp == null) {
+                            Debug.LogError(effect.method + "에 해당하는 컴포넌트를 찾을 수 없습니다.");
+                        }
+                        else {
+                            ((Ability)newComp).InitData(skill, true);
+                        }
                     }
                 }
+                object[] parms = new object[] { true, unitPref };
+                PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
             }
-
-            object[] parms = new object[] { true, unitPref };
-            PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
         }
         else {
             highlighted = false;

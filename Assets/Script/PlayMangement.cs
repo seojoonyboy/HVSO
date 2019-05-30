@@ -121,6 +121,18 @@ public partial class PlayMangement : MonoBehaviour
         enemyPlayer.resource.Value  = turn + 1;
     }
 
+    public void OnBlockPanel(string msg) {
+        blockPanel.SetActive(true);
+        blockPanel
+            .transform
+            .GetChild(0)
+            .GetComponent<TMPro.TextMeshProUGUI>()
+            .text = msg;
+    }
+
+    public void OffBlockPanel() {
+        blockPanel.SetActive(false);
+    }
 
     IEnumerator EnemySummonMonster() {
         int i = 0;

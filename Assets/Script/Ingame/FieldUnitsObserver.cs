@@ -15,10 +15,34 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
         units[row, col] = null;
     }
 
+    public void UnitChangePosition(GameObject target, int row, int col) {
+        Pos prevPos = GetMyPos(target);
+        units[row, col] = target;
+
+        //Debug.Log("Row : " + row);
+        //Debug.Log("Col : " + col);
+        Vector2 targetPos = transform.GetChild(col).GetChild(row).position;
+        iTween.MoveTo(
+            target,
+            new Vector2(targetPos.x, targetPos.y),
+            1.0f
+        );
+        StartCoroutine(UnitChangeCoroutine(target, prevPos, row, col));
+    }
+
+    IEnumerator UnitChangeCoroutine(GameObject target, Pos prevPos, int row, int col) {
+        yield return new WaitForSeconds(1.0f);
+
+        target.transform.SetParent(transform.GetChild(col).GetChild(row));
+        target.transform.localPosition = Vector3.zero;
+        target.GetComponent<PlaceMonster>().unitLocation = transform.GetChild(col).GetChild(row).position;
+        units[prevPos.row, prevPos.col] = null;
+    }
+
     public List<GameObject> GetAllFieldUnits() {
         List<GameObject> _units = new List<GameObject>();
-        foreach(GameObject unit in units) {
-            if(unit != null) _units.Add(unit);
+        foreach (GameObject unit in units) {
+            if (unit != null) _units.Add(unit);
         }
         return _units;
     }
@@ -30,8 +54,8 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
     /// <returns></returns>
     public List<GameObject> GetAllFieldUnits(int row) {
         List<GameObject> _units = new List<GameObject>();
-        for (int i=0; i<2; i++) {
-            if(units[row, i] != null) {
+        for (int i = 0; i < 2; i++) {
+            if (units[row, i] != null) {
                 _units.Add(units[row, i]);
             }
         }
@@ -40,8 +64,8 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
 
     public Pos GetMyPos(GameObject gameObject) {
         Pos pos = new Pos();
-        pos.col = gameObject.GetComponent<PlaceMonster>().x;
-        pos.row = gameObject.GetComponent<PlaceMonster>().y;
+        pos.row = gameObject.GetComponent<PlaceMonster>().x;
+        pos.col = gameObject.GetComponent<PlaceMonster>().y;
 
         return pos;
     }
