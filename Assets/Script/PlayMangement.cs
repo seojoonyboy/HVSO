@@ -129,7 +129,7 @@ public partial class PlayMangement : MonoBehaviour
     }
 
     public void DistributeResource() {
-        player.resource.Value  = turn + 1 + 10;
+        player.resource.Value  = turn + 1;
         enemyPlayer.resource.Value  = turn + 1;
     }
 

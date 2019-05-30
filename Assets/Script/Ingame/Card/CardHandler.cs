@@ -45,7 +45,7 @@ public partial class CardHandler : MonoBehaviour {
     public void DrawCard(string ID, int itemID = -1, bool first = false) {
         cardDataPackage = AccountManager.Instance.cardPackage;
         cardID = ID;
-        cardID = "ac10002";    //테스트 코드
+        //cardID = "ac10008";    //테스트 코드
         this.itemID = itemID;
         if (cardDataPackage.data.ContainsKey(cardID)) {
             cardData = cardDataPackage.data[cardID];

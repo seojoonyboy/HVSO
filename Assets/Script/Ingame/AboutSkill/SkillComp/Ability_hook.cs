@@ -78,6 +78,8 @@ namespace SkillModules {
                         foreach (GameObject unit in allEnemyUnitList) {
                             unit.transform.Find("ClickableUI").gameObject.SetActive(false);
                         }
+                        selectedTarget.GetComponent<PlaceMonster>().myTarget = gameObject;
+                        Debug.Log("x : " + gameObject.GetComponent<PlaceMonster>().x);
                         enemyUnitsObserver.UnitChangePosition(selectedTarget, myPos.row, 0);
                     }
                     PlayMangement.instance.OffBlockPanel();
