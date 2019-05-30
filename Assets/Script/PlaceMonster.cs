@@ -16,8 +16,8 @@ public class PlaceMonster : MonoBehaviour
     public GameObject myTarget;
 
     public Vector3 unitLocation;
-    public int atkCount = 1;
-    public int atkRange = 1;
+    public int atkCount = 0;
+    public int maxAtkCount = 0;
 
     protected delegate void TimeUpdate(float time);
     protected TimeUpdate timeUpdate;
@@ -40,6 +40,7 @@ public class PlaceMonster : MonoBehaviour
     public void Init() {
         x = transform.parent.GetSiblingIndex();
         y = transform.parent.parent.GetSiblingIndex();
+        atkCount = 0;
 
         unitLocation = gameObject.transform.position;
         UpdateStat();
@@ -49,7 +50,12 @@ public class PlaceMonster : MonoBehaviour
         unitSpine = transform.Find("skeleton").GetComponent<UnitSpine>();
         unitSpine.attackCallback += SuccessAttack;
 
-        if(unit.attackRange == "distance") {
+        if (unit.attackType.Length > 0 && unit.attackType[0] == "double")
+            maxAtkCount = 2;
+        else
+            maxAtkCount = 1;
+
+        if (unit.attackRange == "distance") {
             GameObject arrow = Instantiate(unitSpine.arrow, transform);
             arrow.transform.position = gameObject.transform.position;
             arrow.name = "arrow";
@@ -57,9 +63,9 @@ public class PlaceMonster : MonoBehaviour
         }
 
         if(isPlayer == true) 
-            unit.race = (PlayMangement.instance.player.race == true ) ? true : false;        
+            unit.ishuman = (PlayMangement.instance.player.race == true ) ? true : false;        
         else
-            unit.race = (PlayMangement.instance.enemyPlayer.race == true) ? true : false;
+            unit.ishuman = (PlayMangement.instance.enemyPlayer.race == true) ? true : false;
 
 
     }
@@ -70,6 +76,8 @@ public class PlaceMonster : MonoBehaviour
 
 
     public void GetTarget() {
+        if(atkCount > 0) { GetAnotherTarget(); return; }
+
         if (isPlayer == true) {
             PlayerController enemy = PlayMangement.instance.enemyPlayer;
             if (enemy.frontLine.transform.GetChild(x).childCount != 0) {
@@ -81,7 +89,6 @@ public class PlaceMonster : MonoBehaviour
             else {
                 myTarget = enemy.transform.gameObject;
             }
-            MoveToTarget();
         }
         else {
             PlayerController player = PlayMangement.instance.player;
@@ -93,10 +100,46 @@ public class PlaceMonster : MonoBehaviour
             }
             else {
                 myTarget = player.transform.gameObject;                
-            }
-            MoveToTarget();
+            }            
         }
+
+        MoveToTarget();
     }
+
+    public void GetAnotherTarget() {
+        PlaceMonster targetMonster = myTarget.GetComponent<PlaceMonster>();
+        if(targetMonster != null) {
+            targetMonster.CheckHP();
+        }
+
+        if (isPlayer == true) {
+            PlayerController enemy = PlayMangement.instance.enemyPlayer;
+            if (enemy.frontLine.transform.GetChild(x).childCount != 0 && enemy.frontLine.transform.GetChild(x).GetChild(0).GetComponent<PlaceMonster>().unit.currentHP > 0) {
+                myTarget = enemy.frontLine.transform.GetChild(x).GetChild(0).gameObject;
+            }
+            else if (enemy.backLine.transform.GetChild(x).childCount != 0 && enemy.backLine.transform.GetChild(x).GetChild(0).GetComponent<PlaceMonster>().unit.currentHP > 0) {
+                myTarget = enemy.backLine.transform.GetChild(x).GetChild(0).gameObject;
+            }
+            else {
+                myTarget = enemy.transform.gameObject;
+            }
+        }
+        else {
+            PlayerController player = PlayMangement.instance.player;
+            if (player.frontLine.transform.GetChild(x).childCount != 0 && player.frontLine.transform.GetChild(x).GetChild(0).GetComponent<PlaceMonster>().unit.currentHP > 0) {
+                myTarget = player.frontLine.transform.GetChild(x).GetChild(0).gameObject;
+            }
+            else if (player.backLine.transform.GetChild(x).childCount != 0 && player.backLine.transform.GetChild(x).GetChild(0).GetComponent<PlaceMonster>().unit.currentHP > 0) {
+                myTarget = player.backLine.transform.GetChild(x).GetChild(0).gameObject;
+            }
+            else {
+                myTarget = player.transform.gameObject;
+            }
+        }
+        MoveToTarget();
+    }
+
+
 
     public void UnitTryAttack() {
         if (unit.attack <= 0) return;        
@@ -109,9 +152,9 @@ public class PlaceMonster : MonoBehaviour
             GameObject arrow = transform.Find("arrow").gameObject;
             arrow.transform.position = transform.position;
             arrow.SetActive(true);
-            PlaceMonster placeMonster = myTarget.GetComponent<PlaceMonster>();
+            PlaceMonster targetMonster = myTarget.GetComponent<PlaceMonster>();
 
-            if (placeMonster != null)
+            if (targetMonster != null)
                 iTween.MoveTo(arrow, iTween.Hash("x", gameObject.transform.position.x, "y", myTarget.transform.position.y, "z", gameObject.transform.position.z, "time", 0.2f, "easetype", iTween.EaseType.easeOutExpo, "oncomplete", "SingleAttack", "oncompletetarget", gameObject));
             else
                 iTween.MoveTo(arrow, iTween.Hash("x", gameObject.transform.position.x, "y", myTarget.GetComponent<PlayerController>().wallPosition.y, "z", gameObject.transform.position.z, "time", 0.2f, "easetype", iTween.EaseType.easeOutExpo, "oncomplete", "SingleAttack", "oncompletetarget", gameObject));
@@ -123,11 +166,9 @@ public class PlaceMonster : MonoBehaviour
 
 
     public void SingleAttack() {
-        PlaceMonster placeMonster = myTarget.GetComponent<PlaceMonster>();
-
-
+        PlaceMonster targetMonster = myTarget.GetComponent<PlaceMonster>();
         if (unit.attack > 0) {         
-            if (placeMonster != null) {
+            if (targetMonster != null) {
                 RequestAttackUnit(myTarget, unit.attack);
             }
             else
@@ -135,14 +176,14 @@ public class PlaceMonster : MonoBehaviour
 
             if (unit.attack <= 3) {
                 GameObject effect = Instantiate(PlayMangement.instance.effectManager.lowAttackEffect);
-                effect.transform.position = (placeMonster != null) ? myTarget.transform.position : new Vector3(gameObject.transform.position.x, myTarget.GetComponent<PlayerController>().wallPosition.y, 0);
+                effect.transform.position = (targetMonster != null) ? myTarget.transform.position : new Vector3(gameObject.transform.position.x, myTarget.GetComponent<PlayerController>().wallPosition.y, 0);
                 Destroy(effect, effect.GetComponent<ParticleSystem>().main.duration - 0.2f);
                 StartCoroutine(PlayMangement.instance.cameraShake(unitSpine.atkDuration / 2));
                 SoundManager.Instance.PlaySound(SoundType.NORMAL_ATTACK);
             }
             else if (unit.attack > 4) {
                 GameObject effect =  (unit.attack < 6)  ? Instantiate(PlayMangement.instance.effectManager.middileAttackEffect) : Instantiate(PlayMangement.instance.effectManager.highAttackEffect);
-                effect.transform.position = (placeMonster != null) ? myTarget.transform.position : new Vector3(gameObject.transform.position.x, myTarget.GetComponent<PlayerController>().wallPosition.y, 0);
+                effect.transform.position = (targetMonster != null) ? myTarget.transform.position : new Vector3(gameObject.transform.position.x, myTarget.GetComponent<PlayerController>().wallPosition.y, 0);
                 Destroy(effect, effect.GetComponent<ParticleSystem>().main.duration - 0.2f);
                 StartCoroutine(PlayMangement.instance.cameraShake(unitSpine.atkDuration / 2));
 
@@ -154,8 +195,13 @@ public class PlaceMonster : MonoBehaviour
                 }
             }
         }
+        EndAttack();
+    }
 
+    public void EndAttack() {
+        atkCount++;
 
+        PlaceMonster targetMonster = myTarget.GetComponent<PlaceMonster>();
         if (unit.attackRange == "distance") {
             GameObject arrow = transform.Find("arrow").gameObject;
             arrow.transform.position = transform.position;
@@ -163,14 +209,9 @@ public class PlaceMonster : MonoBehaviour
         }
         else {
             ReturnPosition();
-            if (placeMonster != null)
+            if (targetMonster != null)
                 myTarget.GetComponent<PlaceMonster>().ReturnPosition();
         }
-
-    }
-
-    public void MultipleAttack() {
-
     }
 
 
@@ -250,7 +291,7 @@ public class PlaceMonster : MonoBehaviour
             }
 
             dropTomb.GetComponent<DeadSpine>().target = gameObject;
-            dropTomb.GetComponent<DeadSpine>().StartAnimation(unit.race);
+            dropTomb.GetComponent<DeadSpine>().StartAnimation(unit.ishuman);
         }
     }
     

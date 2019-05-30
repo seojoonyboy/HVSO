@@ -7,12 +7,14 @@ namespace IngameClass
 {
     [System.Serializable]
     public class Unit{
-        public bool race;
+        public bool ishuman;
         public string rarelity;
         public string[] cardCategories; 
         public string type;
         public string id;
         public string name;
+        public string[] attackType;
+        public string[] atrributes;
         public int HP;
         public int currentHP;
         public int attack;
