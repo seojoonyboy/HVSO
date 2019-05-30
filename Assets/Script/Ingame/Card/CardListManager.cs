@@ -9,6 +9,7 @@ public class CardListManager : MonoBehaviour
     [SerializeField] GameObject cardPrefab;
     [SerializeField] Transform contentParent;
     [SerializeField] GameObject infoPrefab;
+    [SerializeField] GameObject firstInfoPrefab;
     [SerializeField] Transform mulliganList;
     Animator animator;
     HorizontalScrollSnap hss;
