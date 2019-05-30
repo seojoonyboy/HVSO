@@ -6,15 +6,9 @@ using dataModules;
 namespace SkillModules {
     public class terran_chk : ConditionChecker {
         public override bool IsConditionSatisfied(bool isPlayerUnitGenerated, GameObject summonedObj) {
-            bool isFieldValid = false;
             bool isTerrainValid = false;
 
-            if (data.activate.scope == "playing") {
-                if (summonedObj == gameObject) isFieldValid = true;
-            }
-            else {
-                isFieldValid = true;
-            }
+            if (!isScopeValid(summonedObj)) return false;
 
             var terrain = summonedObj.transform.parent.GetComponent<Terrain>().terrain;
             foreach (Condition condition in data.activate.conditions) {
@@ -27,9 +21,8 @@ namespace SkillModules {
                     }
                 }
             }
-            Debug.Log("진영 조건에서 Scope 처리 결과 : " + isFieldValid);
-            Debug.Log("지형 조건에서 지형 처리 결과 : " + isFieldValid);
-            return (isFieldValid & isTerrainValid);
+            Debug.Log("지형 조건에서 지형 처리 결과 : " + isTerrainValid);
+            return isTerrainValid;
         }
     }
 }

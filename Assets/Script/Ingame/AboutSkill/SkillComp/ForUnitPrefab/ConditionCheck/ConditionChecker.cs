@@ -28,6 +28,21 @@ namespace SkillModules {
                 enemyUnitsObserver = PlayMangement.instance.PlayerUnitsObserver;
             }
         }
+
+        public bool isScopeValid(GameObject summonedObj) {
+            if(data.activate.scope == "playing") {
+                if (summonedObj == gameObject) {
+                    Debug.Log("Scope 조건 만족함");
+                    return true;
+                }
+                else {
+                    Debug.Log("Scope 조건 불만족");
+                    return false;
+                }
+            }
+            Debug.Log("Scope 조건 만족함");
+            return true;
+        }
     }
 }
 

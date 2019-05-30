@@ -12,9 +12,33 @@ namespace SkillModules {
             bool isPlayer = (bool)parms[0];
             GameObject summonedObj = (GameObject)parms[1];
 
+            bool isConditionSatisfied = false;
             foreach (ConditionChecker checker in checkers) {
                 if (!checker.IsConditionSatisfied(isPlayer, summonedObj)) {
-                    Debug.Log("조건 불만족");
+                    isConditionSatisfied = false;
+                }
+                else {
+                    isConditionSatisfied = true;
+                }
+            }
+
+            string[] args = skillData.effects[0].args;
+            int atk = 0;
+            int hp = 0;
+
+            int.TryParse(args[0], out atk);
+            int.TryParse(args[1], out hp);
+
+            foreach (var target in skillData.targets) {
+                if (target.method == "self") {
+                    if (isConditionSatisfied) {
+                        Debug.Log("Gain 버프");
+                        GetComponent<PlaceMonster>().AddBuff(new PlaceMonster.Buff(gameObject, atk, hp));
+                    }
+                    else {
+                        Debug.Log("Gain 버프 해제");
+                        GetComponent<PlaceMonster>().RemoveBuff(gameObject);
+                    }
                 }
             }
         }
