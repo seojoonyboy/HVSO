@@ -1605,6 +1605,7 @@ MonoBehaviour:
     - {fileID: 4350649675874226833, guid: 178af926b510b384ea39d75ed4e64488, type: 3}
     - {fileID: 1266990869046621765, guid: dd009c7ee388afc4cb3cb03b151f96c8, type: 3}
     - {fileID: 8528381502351284761, guid: 910f1d59f8d2937479945046ad89aef5, type: 3}
+    - {fileID: 2268531501482141160, guid: 0de567ffb23e0cd439a942dd238214f6, type: 3}
     - {fileID: 21300000, guid: 3f210173572de5244889f79854ea8fff, type: 3}
     - {fileID: 21300000, guid: c5ab4bfccae6eb34db8de17bbfa6d0fb, type: 3}
     - {fileID: 21300000, guid: dc7c17faf446e6a43bfeb8304e5749bd, type: 3}
@@ -1617,6 +1618,8 @@ MonoBehaviour:
     - {fileID: 4740072577441177279, guid: 3f5dbd94788dd3c49bcc2270d46b95c6, type: 3}
     - {fileID: 1116291826027638739, guid: 88899153f748e60418b8b05032c62958, type: 3}
     - {fileID: 1989782938946582620, guid: aae8feba8b2f4b847930c3d618ae33c9, type: 3}
+    - {fileID: 4110237383026691544, guid: b3535f41460df084eb78263c25cf25e5, type: 3}
+    - {fileID: 9055411249258159905, guid: 855d0a2f70bc2d04bbbd52241c33282b, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -2216,7 +2219,7 @@ MonoBehaviour:
       Data: ac10019
     - Name: $v
       Entry: 10
-      Data: 16
+      Data: 23
     - Name: 
       Entry: 8
       Data: 
@@ -2356,7 +2359,7 @@ MonoBehaviour:
       Data: unit_common
     - Name: $v
       Entry: 10
-      Data: 23
+      Data: 24
     - Name: 
       Entry: 8
       Data: 
@@ -2368,7 +2371,7 @@ MonoBehaviour:
       Data: unit_legend
     - Name: $v
       Entry: 10
-      Data: 24
+      Data: 25
     - Name: 
       Entry: 8
       Data: 
@@ -2380,7 +2383,7 @@ MonoBehaviour:
       Data: unit_uncommon
     - Name: $v
       Entry: 10
-      Data: 25
+      Data: 26
     - Name: 
       Entry: 8
       Data: 
@@ -2392,7 +2395,7 @@ MonoBehaviour:
       Data: unit_rare
     - Name: $v
       Entry: 10
-      Data: 26
+      Data: 27
     - Name: 
       Entry: 8
       Data: 
@@ -2404,7 +2407,7 @@ MonoBehaviour:
       Data: unit_superrare
     - Name: $v
       Entry: 10
-      Data: 27
+      Data: 28
     - Name: 
       Entry: 8
       Data: 
@@ -2416,7 +2419,7 @@ MonoBehaviour:
       Data: magic_common
     - Name: $v
       Entry: 10
-      Data: 28
+      Data: 29
     - Name: 
       Entry: 8
       Data: 
@@ -2428,7 +2431,7 @@ MonoBehaviour:
       Data: magic_uncommon
     - Name: $v
       Entry: 10
-      Data: 28
+      Data: 29
     - Name: 
       Entry: 8
       Data: 
@@ -2440,7 +2443,7 @@ MonoBehaviour:
       Data: magic_rare
     - Name: $v
       Entry: 10
-      Data: 28
+      Data: 29
     - Name: 
       Entry: 8
       Data: 
@@ -2452,7 +2455,7 @@ MonoBehaviour:
       Data: magic_superrare
     - Name: $v
       Entry: 10
-      Data: 28
+      Data: 29
     - Name: 
       Entry: 8
       Data: 
@@ -2464,7 +2467,7 @@ MonoBehaviour:
       Data: magic_legend
     - Name: $v
       Entry: 10
-      Data: 28
+      Data: 29
     - Name: 
       Entry: 8
       Data: 
@@ -2502,10 +2505,10 @@ MonoBehaviour:
       Data: 2
     - Name: 
       Entry: 10
-      Data: 29
+      Data: 30
     - Name: 
       Entry: 10
-      Data: 30
+      Data: 31
     - Name: 
       Entry: 13
       Data: 
@@ -2529,10 +2532,10 @@ MonoBehaviour:
       Data: 2
     - Name: 
       Entry: 10
-      Data: 31
+      Data: 32
     - Name: 
       Entry: 10
-      Data: 32
+      Data: 33
     - Name: 
       Entry: 13
       Data: 
@@ -2556,7 +2559,7 @@ MonoBehaviour:
       Data: 1
     - Name: 
       Entry: 10
-      Data: 33
+      Data: 34
     - Name: 
       Entry: 13
       Data: 
@@ -2580,13 +2583,57 @@ MonoBehaviour:
       Data: 1
     - Name: 
       Entry: 10
-      Data: 34
+      Data: 35
     - Name: 
       Entry: 13
       Data: 
     - Name: 
       Entry: 8
       Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: heroSkeleton
+      Entry: 7
+      Data: 12|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.GameObject,
+        UnityEngine.CoreModule]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 13|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: h10001
+    - Name: $v
+      Entry: 10
+      Data: 36
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: h10002
+    - Name: $v
+      Entry: 10
+      Data: 37
     - Name: 
       Entry: 8
       Data: 
