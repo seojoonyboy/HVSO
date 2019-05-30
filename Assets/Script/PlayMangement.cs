@@ -104,13 +104,13 @@ public partial class PlayMangement : MonoBehaviour
 
     public void SetPlayerCard() {
         if (player.isHuman == true) {
-            player.card = cardDB.transform.Find("Card").gameObject;
+            //player.card = cardDB.transform.Find("Card").gameObject;
             player.back = cardDB.transform.Find("HumanBackCard").gameObject;
             enemyPlayer.card = cardDB.transform.Find("Card").gameObject; ;
             enemyPlayer.back = cardDB.transform.Find("OrcBackCard").gameObject;
         }
         else {
-            player.card = cardDB.transform.Find("Card").gameObject;
+            //player.card = cardDB.transform.Find("Card").gameObject;
             player.back = cardDB.transform.Find("OrcBackCard").gameObject;
             enemyPlayer.card = cardDB.transform.Find("Card").gameObject;
             enemyPlayer.back = cardDB.transform.Find("HumanBackCard").gameObject;
@@ -133,95 +133,106 @@ public partial class PlayMangement : MonoBehaviour
         enemyPlayer.resource.Value  = turn + 1;
     }
 
+    public void OnBlockPanel(string msg) {
+        blockPanel.SetActive(true);
+        blockPanel
+            .transform
+            .GetChild(0)
+            .GetComponent<TMPro.TextMeshProUGUI>()
+            .text = msg;
+    }
+
+    public void OffBlockPanel() {
+        blockPanel.SetActive(false);
+    }
 
     IEnumerator EnemySummonMonster() {
-        int i = 0;
-        CardData cardData;
-        CardDataPackage cardDataPackage = AccountManager.Instance.cardPackage;
-        string cardID;
-        int enemyCardCount = enemyPlayer.playerUI.transform.Find("CardSlot").childCount;
-        GameObject skeleton;
-
-
-        if (enemyPlayer.isHuman == false)
-            cardID = "ac10018";
-        else
-            cardID = "ac10001";
-
-
-        while (i < enemyCardCount) {
-            if (enemyCardCount < 0) break;
-            if (i >= 3) break;
-            if (isGame == false) break;
-            if (enemyPlayer.transform.GetChild(0).GetChild(i).childCount != 0) { i++; continue; }
-            if (cardDataPackage.data.ContainsKey(cardID) == false) { i++; continue; }
-
-
-            yield return new WaitForSeconds(0.5f);
-            cardData = cardDataPackage.data[cardID];
-            skeleton = AccountManager.Instance.resource.cardSkeleton[cardID];
-
-            if (enemyPlayer.resource.Value < cardData.cost) break;
-
-            GameObject monster = Instantiate(enemyPlayer.card.GetComponent<CardHandler>().unit);
-
-            monster.transform.SetParent(enemyPlayer.transform.GetChild(0).GetChild(i));
-            monster.transform.position = enemyPlayer.transform.GetChild(0).GetChild(i).position;
-            GameObject monsterSkeleton = Instantiate(skeleton, monster.transform);
-            monsterSkeleton.name = "skeleton";
-
-            monster.GetComponent<PlaceMonster>().unit.HP = (int)cardData.hp;
-            monster.GetComponent<PlaceMonster>().unit.currentHP = (int)cardData.hp;
-            monster.GetComponent<PlaceMonster>().unit.attack = (int)cardData.attack;
-            monster.GetComponent<PlaceMonster>().unit.name = cardData.name;
-            monster.GetComponent<PlaceMonster>().unit.type = cardData.type;
-            monster.GetComponent<PlaceMonster>().unit.attackRange = cardData.attackRange;
-            monster.GetComponent<PlaceMonster>().unit.cost = cardData.cost;
-            monster.GetComponent<PlaceMonster>().unit.rarelity = cardData.rarelity;
-            monster.GetComponent<PlaceMonster>().unit.id = cardData.cardId;
-
-            if (cardData.category_2 != "") {
-                monster.GetComponent<PlaceMonster>().unit.cardCategories = new string[2];
-                monster.GetComponent<PlaceMonster>().unit.cardCategories[0] = cardData.category_1;
-                monster.GetComponent<PlaceMonster>().unit.cardCategories[1] = cardData.category_2;
-            }
-            else {
-                monster.GetComponent<PlaceMonster>().unit.cardCategories = new string[1];
-                monster.GetComponent<PlaceMonster>().unit.cardCategories[0] = cardData.category_1;
-            }
-
-            if (cardData.attackTypes.Length > 0) {
-                monster.GetComponent<PlaceMonster>().unit.attackType = new string[cardData.attackTypes.Length];
-                monster.GetComponent<PlaceMonster>().unit.attackType = cardData.attackTypes;
-                
-            }
-
-
-            monster.GetComponent<PlaceMonster>().Init();
-            monster.GetComponent<PlaceMonster>().SpawnUnit();
-
-            EnemyUnitsObserver.UnitAdded(monster, i, 0);
-
-            enemyPlayer.resource.Value -= cardData.cost;
-            Destroy(enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(0).gameObject);
-            i++;
-        }
-
         #region socket use Card
-        /*while(true) {
+        while(!socketHandler.cardPlayFinish()) {
             yield return socketHandler.WaitUseCard();
-            //TODO : 카드 소환
             Debug.Log("card summon!");
-            SocketFormat.PlayHistory history = socketHandler.gameState.lastUse;
-            Debug.Log("summon pos : " + history.target.args[1]);
-            Debug.Log("summon id : " + history.cardItem.id);
-        }*/
+            //TODO : 유닛 소환인지 마법 사용인지 파악을 할 필요가 있음
+            SocketFormat.PlayHistory history = socketHandler.getHistory();
+            if(history != null)
+                if(history.cardItem.type.CompareTo("unit")==0) SummonMonster(history);
+                else SummonMagic(history);
+            yield return new WaitForSeconds(0.5f);
+        }
         #endregion
 
         yield return new WaitForSeconds(1.0f);
 
         enemyPlayer.ReleaseTurn();
         StopCoroutine("EnemySummonMonster");
+    }
+
+    private void SummonMagic(SocketFormat.PlayHistory history) {
+        int i = int.Parse(history.target.args[0]);
+        CardData cardData;
+        CardDataPackage cardDataPackage = AccountManager.Instance.cardPackage;
+        int enemyCardCount = enemyPlayer.playerUI.transform.Find("CardSlot").childCount;
+        
+        string id = history.cardItem.isHeroCard ? history.cardItem.cardId : history.cardItem.id;
+
+        cardData = cardDataPackage.data[id];
+        Debug.Log("use Magic Card" + history.cardItem.name);
+        enemyPlayer.resource.Value -= cardData.cost;
+        Destroy(enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(0).gameObject);
+    }
+
+    private void SummonMonster(SocketFormat.PlayHistory history) {
+        int i = int.Parse(history.target.args[0]);
+        CardData cardData;
+        CardDataPackage cardDataPackage = AccountManager.Instance.cardPackage;
+        int enemyCardCount = enemyPlayer.playerUI.transform.Find("CardSlot").childCount;
+        GameObject skeleton;
+
+        string id = history.cardItem.isHeroCard ? history.cardItem.cardId : history.cardItem.id;
+
+        cardData = cardDataPackage.data[id];
+        skeleton = AccountManager.Instance.resource.cardSkeleton[id];
+
+        GameObject monster = Instantiate(enemyPlayer.card.GetComponent<CardHandler>().unit);
+
+        monster.transform.SetParent(enemyPlayer.transform.GetChild(0).GetChild(i));
+        monster.transform.position = enemyPlayer.transform.GetChild(0).GetChild(i).position;
+        GameObject monsterSkeleton = Instantiate(skeleton, monster.transform);
+        monsterSkeleton.name = "skeleton";
+
+        monster.GetComponent<PlaceMonster>().unit.HP = (int)cardData.hp;
+        monster.GetComponent<PlaceMonster>().unit.currentHP = (int)cardData.hp;
+        monster.GetComponent<PlaceMonster>().unit.attack = (int)cardData.attack;
+        monster.GetComponent<PlaceMonster>().unit.name = cardData.name;
+        monster.GetComponent<PlaceMonster>().unit.type = cardData.type;
+        monster.GetComponent<PlaceMonster>().unit.attackRange = cardData.attackRange;
+        monster.GetComponent<PlaceMonster>().unit.cost = cardData.cost;
+        monster.GetComponent<PlaceMonster>().unit.rarelity = cardData.rarelity;
+        monster.GetComponent<PlaceMonster>().unit.id = cardData.cardId;
+
+        if (cardData.category_2 != "") {
+            monster.GetComponent<PlaceMonster>().unit.cardCategories = new string[2];
+            monster.GetComponent<PlaceMonster>().unit.cardCategories[0] = cardData.category_1;
+            monster.GetComponent<PlaceMonster>().unit.cardCategories[1] = cardData.category_2;
+        }
+        else {
+            monster.GetComponent<PlaceMonster>().unit.cardCategories = new string[1];
+            monster.GetComponent<PlaceMonster>().unit.cardCategories[0] = cardData.category_1;
+        }
+
+        if (cardData.attackTypes.Length > 0) {
+            monster.GetComponent<PlaceMonster>().unit.attackType = new string[cardData.attackTypes.Length];
+            monster.GetComponent<PlaceMonster>().unit.attackType = cardData.attackTypes;
+            
+        }
+
+
+        monster.GetComponent<PlaceMonster>().Init();
+        monster.GetComponent<PlaceMonster>().SpawnUnit();
+
+        EnemyUnitsObserver.UnitAdded(monster, i, 0);
+
+        enemyPlayer.resource.Value -= cardData.cost;
+        Destroy(enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(0).gameObject);
     }
 
     public void ChangeTurn() {

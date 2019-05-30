@@ -7,17 +7,17 @@ using UnityEngine.UI.Extensions;
 using System;
 using SkillModules;
 
-public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
+public partial class CardHandler : MonoBehaviour {
     public Vector3 startPos;
     public GameObject unit;
     public GameObject skeleton;
     CardListManager csm;
-    private bool blockButton = false;
-    private bool firstDraw = false;
+    protected bool blockButton = false;
+    protected bool firstDraw = false;
     public bool changeSelected = false;
     Animator cssAni;
     public string cardID;
-    private int _itemID;
+    protected int _itemID;
     private int itemID {
         get {return _itemID;}
         set {if(value < 0) Debug.Log("something wrong itemId");
@@ -25,13 +25,13 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         }
     }
 
-    private bool highlighted = false;
-    private Transform highlightedSlot;
+    protected bool highlighted = false;
+    protected Transform highlightedSlot;
 
     public CardData cardData;
     public CardDataPackage cardDataPackage;
 
-    static GameObject itsDragging;
+    protected static GameObject itsDragging;
 
     public bool FIRSTDRAW {
         get { return firstDraw; }
@@ -45,7 +45,7 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     public void DrawCard(string ID, int itemID = -1, bool first = false) {
         cardDataPackage = AccountManager.Instance.cardPackage;
         cardID = ID;
-        //cardID = "ac10010";    //테스트 코드
+        //cardID = "ac10008";    //테스트 코드
         this.itemID = itemID;
         if (cardDataPackage.data.ContainsKey(cardID)) {
             cardData = cardDataPackage.data[cardID];
@@ -76,62 +76,7 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     }
 
 
-    public void OnBeginDrag(PointerEventData eventData) {
-        if (firstDraw) return;
-        if (Input.touchCount > 1) return;
-        if (PlayMangement.instance.player.dragCard) return;
-        itsDragging = gameObject;
-        blockButton = PlayMangement.instance.player.dragCard = true;
-        startPos = transform.parent.position;
-        PlayMangement.instance.player.isPicking.Value = true;
-
-        CardDropManager.Instance.ShowDropableSlot(cardData);
-
-        object[] parms = new object[] { true, gameObject };
-        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_CARD_PLAY, this, parms);
-    }
-
-    public void OnDrag(PointerEventData eventData) {
-        if (firstDraw) return;
-        if (gameObject != itsDragging) return;
-        Vector3 cardScreenPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        transform.position = new Vector3(cardScreenPos.x, cardScreenPos.y + 0.3f, cardScreenPos.z);
-        CheckHighlight();
-    }
-
-
-    public void OnEndDrag(PointerEventData eventData) {
-        if (firstDraw) return;
-        if (gameObject != itsDragging) return;
-        iTween.MoveTo(gameObject, startPos, 0.3f);
-        blockButton = PlayMangement.instance.player.dragCard = false;
-        PlayMangement.instance.player.isPicking.Value = false;
-        if (PlayMangement.instance.player.getPlayerTurn == true && PlayMangement.instance.player.resource.Value >= cardData.cost) {
-            GameObject unitPref = CardDropManager.Instance.DropUnit(gameObject, CheckSlot());
-            foreach (dataModules.Skill skill in cardData.skills) {
-                foreach (var effect in skill.effects) {
-                    var newComp = unitPref.AddComponent(Type.GetType("SkillModules.Ability_" + effect.method));
-                    if (newComp == null) {
-                        Debug.LogError(effect.method + "에 해당하는 컴포넌트를 찾을 수 없습니다.");
-                    }
-                    else {
-                        ((Ability)newComp).InitData(skill, true);
-                    }
-                }
-            }
-
-            object[] parms = new object[] { true, unitPref };
-            PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
-        }
-        else {
-            highlighted = false;
-            CardDropManager.Instance.HighLightSlot(highlightedSlot, highlighted);
-            CardDropManager.Instance.HideDropableSlot();
-            highlightedSlot = null;
-        }
-
-        CardDropManager.Instance.HideDropableSlot();
-    }
+    
 
     public void CheckHighlight() {
         if (!highlighted) {
@@ -155,7 +100,7 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         }
     }
 
-    private Transform CheckSlot() {
+    protected Transform CheckSlot() {
         Vector3 origin = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         origin = new Vector3(origin.x, origin.y + 0.3f, origin.z);
         Ray2D ray = new Ray2D(origin, Vector2.zero);
@@ -223,6 +168,5 @@ public class CardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
             transform.Find("Cost").GetComponent<Image>().color = Color.gray;
         }
     }
-
-
 }
+

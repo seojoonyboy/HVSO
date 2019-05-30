@@ -12,7 +12,8 @@ public class CardHandDeckManager : MonoBehaviour {
     public bool isDrawing = false;
     List<GameObject> cardList;
     List<GameObject> firstDrawList;
-    [SerializeField] GameObject cardPrefab;
+    [SerializeField] GameObject unitCardPrefab;
+    [SerializeField] GameObject magicCardPrefab;
     [SerializeField] Transform cardSpawnPos;
     [SerializeField] Transform firstDrawParent;
 
@@ -32,12 +33,16 @@ public class CardHandDeckManager : MonoBehaviour {
     /// </summary>
     /// <returns></returns>
     public IEnumerator FirstDraw() {
-        GameObject card = Instantiate(cardPrefab, cardSpawnPos);
+        bool race = PlayMangement.instance.player.isHuman;
+        SocketFormat.Card socketCard = PlayMangement.instance.socketHandler.gameState.players.myPlayer(race).FirstCards[firstDrawList.Count];
+        GameObject card;
+        if (socketCard.type == "unit")
+            card = Instantiate(unitCardPrefab, cardSpawnPos);
+        else
+            card = Instantiate(magicCardPrefab, cardSpawnPos);
         card.transform.SetParent(firstDrawParent);
         card.SetActive(true);
         card.transform.rotation = new Quaternion(0, 0, 540, card.transform.rotation.w);
-        bool race = PlayMangement.instance.player.isHuman;
-        SocketFormat.Card socketCard = PlayMangement.instance.socketHandler.gameState.players.myPlayer(race).FirstCards[firstDrawList.Count];
         card.GetComponent<CardHandler>().DrawCard(socketCard.id, socketCard.itemId, true);
 
         iTween.MoveTo(card, firstDrawParent.GetChild(firstDrawList.Count).position, 0.5f);
@@ -73,6 +78,8 @@ public class CardHandDeckManager : MonoBehaviour {
     /// <returns></returns>
     IEnumerator DrawChangedCards() {
         firstDrawParent.parent.gameObject.GetComponent<Image>().enabled = false;
+        CardListManager csm = GameObject.Find("Canvas").transform.Find("CardInfoList").GetComponent<CardListManager>();
+        csm.DeleteMulliganClassInfo();
         PlayMangement.instance.socketHandler.MulliganEnd();
         while (firstDrawList.Count != 0) {
             yield return new WaitForSeconds(0.2f);
@@ -85,7 +92,7 @@ public class CardHandDeckManager : MonoBehaviour {
         //영웅카드 뽑기
         bool isHuman = PlayMangement.instance.player.isHuman;
         SocketFormat.Card cardData = PlayMangement.instance.socketHandler.gameState.players.myPlayer(isHuman).newCard;
-        AddCard(cardData: cardData);
+        AddCard(null, cardData);
 
 
         yield return new WaitForSeconds(3.0f);
@@ -97,13 +104,19 @@ public class CardHandDeckManager : MonoBehaviour {
     public void AddCard(GameObject cardobj = null, SocketFormat.Card cardData = null) {
         GameObject card;
         if (cardobj == null) {
-            card = Instantiate(cardPrefab, cardSpawnPos);
+            if (cardData.type == "unit")
+                card = Instantiate(unitCardPrefab, cardSpawnPos);
+            else
+                card = Instantiate(magicCardPrefab, cardSpawnPos);
             string id;
             int itemId = -1;
             if(cardData == null)
                 id = "ac1000" + UnityEngine.Random.Range(1, 10);
             else {
-                id = cardData.id;
+                if(cardData.isHeroCard)
+                    id = cardData.cardId;
+                else
+                    id = cardData.id;
                 itemId = cardData.itemId;
             }
             card.GetComponent<CardHandler>().DrawCard(id, itemId);

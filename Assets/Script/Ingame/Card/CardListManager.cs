@@ -9,6 +9,7 @@ public class CardListManager : MonoBehaviour
     [SerializeField] GameObject cardPrefab;
     [SerializeField] Transform contentParent;
     [SerializeField] GameObject infoPrefab;
+    [SerializeField] GameObject firstInfoPrefab;
     [SerializeField] Transform mulliganList;
     Animator animator;
     HorizontalScrollSnap hss;
@@ -35,7 +36,7 @@ public class CardListManager : MonoBehaviour
     }
 
     public void AddMulliganCardInfo(CardData data, string id) {
-        GameObject newcard = Instantiate(cardPrefab, mulliganList);
+        GameObject newcard = Instantiate(firstInfoPrefab, mulliganList);
         SetCardInfo(newcard, data);
         GameObject newcardInfo = Instantiate(infoPrefab, contentParent);
         SetCardClassInfo(newcardInfo, data);
@@ -45,6 +46,12 @@ public class CardListManager : MonoBehaviour
             unitImage.transform.localScale = new Vector3(500, 500, 0);
         }
         newcard.SetActive(false);
+    }
+
+    public void DeleteMulliganClassInfo() {
+        for (int i = 0; i < 4; i++) {
+            contentParent.GetChild(0).SetParent(mulliganList);
+        }
     }
 
     public void OpenMulliganCardList(int cardnum) {

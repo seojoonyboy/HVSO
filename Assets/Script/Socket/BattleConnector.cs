@@ -40,7 +40,7 @@ public partial class BattleConnector : MonoBehaviour {
     //Connected
     private void OnOpen(WebSocket webSocket) {
         string playerId = AccountManager.Instance.DEVICEID;
-        string deckId = "deck1001";
+        string deckId = Variables.Saved.Get("SelectedRace").ToString().CompareTo("HUMAN") == 0 ? "deck1001" : "deck1002";
         string[] args = new string[] {"solo", playerId, "basic", deckId };
         SendMethod("join_game", args);
         pingpong = StartCoroutine("Heartbeat");
@@ -155,7 +155,7 @@ public partial class BattleConnector : MonoBehaviour {
 
         if(arg.CompareTo(raceName) != 0) return;
 
-        Card newCard = gameState.players.human.newCard;
+        Card newCard = gameState.players.myPlayer(isHuman).newCard;
         Debug.Log("Card id : "+ newCard.id + "  Card itemId : " + newCard.itemId);
         HandchangeCallback(newCard.id, newCard.itemId, false);
         HandchangeCallback = null;
@@ -177,26 +177,32 @@ public partial class BattleConnector : MonoBehaviour {
 
     public void begin_orc_pre_turn() {
         Debug.Log("WebSocket State : begin_orc_pre_turn");
+        checkMyTurn(false);
     }
 
     public void end_orc_pre_turn() {
         Debug.Log("WebSocket State : end_orc_pre_turn");
+        useCardList.isDone = true;
     }
 
     public void begin_human_turn() {
         Debug.Log("WebSocket State : begin_human_turn");
+        checkMyTurn(true);
     }
 
     public void end_human_turn() {
         Debug.Log("WebSocket State : end_human_turn");
+        useCardList.isDone = true;
     }
 
     public void begin_orc_post_turn() {
         Debug.Log("WebSocket State : begin_orc_post_turn");
+        checkMyTurn(false);
     }
 
     public void end_orc_post_turn() {
         Debug.Log("WebSocket State : end_orc_post_turn");
+        useCardList.isDone = true;
     }
 
     public void begin_battle_turn() {
@@ -243,8 +249,7 @@ public partial class BattleConnector : MonoBehaviour {
 
     public void card_played() {
         Debug.Log("WebSocket State : card_played");
-        //useCard = true;
-        //dequeueing = false;
+        useCardList.historyQueue.Enqueue(gameState.lastUse);
     }
 
 }
@@ -253,7 +258,7 @@ public partial class BattleConnector : MonoBehaviour {
 public partial class BattleConnector : MonoBehaviour {
     private string status;
     private bool getNewCard = false;
-    //private bool useCard = false;
+    public UseCardList useCardList = new UseCardList();
 
     public IEnumerator WaitGetCard() {
         while(!getNewCard) {
@@ -263,16 +268,37 @@ public partial class BattleConnector : MonoBehaviour {
         dequeueing = true;
     }
 
-    // public IEnumerator WaitUseCard() {
-    //     while(!useCard) {
-    //         yield return new WaitForFixedUpdate();
-    //     }
-    //     useCard = false;
-    //     dequeueing = true;
-    // }
+    public IEnumerator WaitUseCard() {
+        while(!useCardList.allDone) {
+            yield return new WaitForFixedUpdate();
+            if(useCardList.historyQueue.Count != 0) break;
+        }
+    }
 
-    // private void checkMyTurn(bool isHuman) {
-    //     if(PlayMangement.instance.player.isHuman != isHuman)
-    //         dequeueing = false;
-    // }
+    public bool cardPlayFinish() {
+        return useCardList.allDone;
+    }
+
+    public PlayHistory getHistory() {
+        if(useCardList.historyQueue.Count == 0) return null;
+        return useCardList.historyQueue.Dequeue();
+    }
+
+    private void checkMyTurn(bool isHuman) {
+        if(PlayMangement.instance.player.isHuman != isHuman)
+            useCardList.isDone = false;
+    }
+}
+namespace SocketFormat {
+    public class UseCardList {
+        public bool isDone;
+        public Queue<PlayHistory> historyQueue;
+
+        public UseCardList() {
+            isDone = true;
+            historyQueue = new Queue<PlayHistory>();
+        }
+
+        public bool allDone { get { return isDone && historyQueue.Count == 0;}}
+    }   
 }
