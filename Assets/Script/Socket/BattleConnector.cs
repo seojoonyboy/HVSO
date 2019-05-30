@@ -147,7 +147,7 @@ public partial class BattleConnector : MonoBehaviour {
     public void hand_changed(string arg) {
         if(PlayMangement.instance == null) return; //임시
 
-        bool isHuman = PlayMangement.instance.player.race;
+        bool isHuman = PlayMangement.instance.player.isHuman;
         raceName = isHuman ? "human" : "orc";
 
         if(arg.CompareTo(raceName) != 0) return;

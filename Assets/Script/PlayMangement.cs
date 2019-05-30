@@ -40,7 +40,6 @@ public partial class PlayMangement : MonoBehaviour
         backGroundEffect.transform.position = backGround.transform.Find("ParticlePosition").position;
         SetCamera();
         InitTurnTable();
-
     }
     private void OnDestroy()
     {
@@ -52,7 +51,6 @@ public partial class PlayMangement : MonoBehaviour
         cam = Camera.main;
         RequestStartData();
         DistributeResource();
-
         //StartCoroutine(DisconnectTest());
     }
 
@@ -93,7 +91,7 @@ public partial class PlayMangement : MonoBehaviour
 
 
     public void SetPlayerCard() {
-        if (player.race == true) {
+        if (player.isHuman == true) {
             player.card = cardDB.transform.Find("Card").gameObject;
             player.back = cardDB.transform.Find("HumanBackCard").gameObject;
             enemyPlayer.card = cardDB.transform.Find("Card").gameObject; ;
@@ -133,7 +131,7 @@ public partial class PlayMangement : MonoBehaviour
         GameObject skeleton;
 
 
-        if (enemyPlayer.race == false)
+        if (enemyPlayer.isHuman == false)
             cardID = "ac10018";
         else
             cardID = "ac10001";
@@ -213,7 +211,7 @@ public partial class PlayMangement : MonoBehaviour
         Debug.Log(currentTurn);
         switch (currentTurn) {
             case "ZOMBIE":
-                if(player.race == false) {
+                if(player.isHuman == false) {
                     player.ActivePlayer();
                     enemyPlayer.DisablePlayer();
                 }
@@ -225,7 +223,7 @@ public partial class PlayMangement : MonoBehaviour
                 break;
 
             case "PLANT":
-                if(player.race == true) {
+                if(player.isHuman == true) {
                     player.ActivePlayer();
                     enemyPlayer.DisablePlayer();
                 }
@@ -237,7 +235,7 @@ public partial class PlayMangement : MonoBehaviour
                 break;
 
             case "SECRET":
-                if (player.race == false) {
+                if (player.isHuman == false) {
                     player.ActivePlayer();
                     enemyPlayer.DisablePlayer();
                 }
@@ -250,7 +248,10 @@ public partial class PlayMangement : MonoBehaviour
                 StartBattle();
                 break;
         }
-        SetTurnTable(currentTurn);
+        if (player.isHuman)
+            SetHumanTurnTable(currentTurn);
+        else
+            SetOrcTurnTable(currentTurn);
     }
 
     public void StartBattle() {
@@ -272,7 +273,7 @@ public partial class PlayMangement : MonoBehaviour
         int line = 0;
         yield return new WaitForSeconds(1.1f);
         while (line < 5) {
-            if (player.race == false) {
+            if (player.isHuman == false) {
                 if (player.backLine.transform.GetChild(line).childCount != 0) {
                     player.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().GetTarget();
 
@@ -368,13 +369,13 @@ public partial class PlayMangement {
         resultUI.SetActive(true);
 
         if (player.HP.Value <= 0) {
-            if (player.race)
+            if (player.isHuman)
                 SetResultWindow("lose", "human");
             else
                 SetResultWindow("lose", "orc");
         }
         else if(enemyPlayer.HP.Value <= 0) {
-            if (player.race)
+            if (player.isHuman)
                 SetResultWindow("win", "human");
             else
                 SetResultWindow("win", "orc");
@@ -532,19 +533,30 @@ public partial class PlayMangement {
     private GameObject playableTurnArrow;
     private Transform turnIcon;
 
-    private void InitTurnTable() {
+    public void InitTurnTable() {
+        string race = Variables.Saved.Get("SelectedRace").ToString();
+        bool isHuman;
+        if (race == "HUMAN") isHuman = true;
+        else isHuman = false;
         releaseTurnBtn = turnTable.GetChild(2).gameObject;
         nonplayableTurnArrow = turnTable.GetChild(3).GetChild(0).gameObject;
         playableTurnArrow = turnTable.GetChild(3).GetChild(1).gameObject;
-        if (player.race)
+        if (isHuman) {
             turnIcon = turnTable.GetChild(4);
-        else
+            turnTable.GetChild(1).GetChild(0).gameObject.SetActive(true);
+            turnTable.GetChild(2).GetChild(0).gameObject.SetActive(true);
+        }
+        else {
             turnIcon = turnTable.GetChild(5);
+            turnTable.GetChild(1).GetChild(1).gameObject.SetActive(true);
+            turnTable.GetChild(2).GetChild(1).gameObject.SetActive(true);
+        }
+        turnIcon.gameObject.SetActive(true);
         turnIcon.GetChild(0).gameObject.SetActive(true);
         nonplayableTurnArrow.SetActive(true);
     }
 
-    private void SetTurnTable(string currentTurn) {
+    private void SetHumanTurnTable(string currentTurn) {
         switch (currentTurn) {
             case "ZOMBIE":
                 turnIcon.GetChild(3).gameObject.SetActive(false);
@@ -567,6 +579,39 @@ public partial class PlayMangement {
             case "BATTLE":
                 turnIcon.GetChild(2).gameObject.SetActive(false);
                 turnIcon.GetChild(3).gameObject.SetActive(true);
+                break;
+        }
+    }
+
+    private void SetOrcTurnTable(string currentTurn) {
+        switch (currentTurn) {
+            case "ZOMBIE":
+                turnIcon.GetChild(3).gameObject.SetActive(false);
+                turnIcon.GetChild(0).gameObject.SetActive(true);
+                releaseTurnBtn.SetActive(true);
+                nonplayableTurnArrow.SetActive(true);
+                playableTurnArrow.SetActive(false);
+                break;
+            case "PLANT":
+                turnIcon.GetChild(0).gameObject.SetActive(false);
+                turnIcon.GetChild(1).gameObject.SetActive(true);
+                releaseTurnBtn.SetActive(false);
+                playableTurnArrow.SetActive(true);
+                nonplayableTurnArrow.SetActive(false);
+                break;
+            case "SECRET":
+                turnIcon.GetChild(1).gameObject.SetActive(false);
+                turnIcon.GetChild(2).gameObject.SetActive(true);
+                releaseTurnBtn.SetActive(true);
+                nonplayableTurnArrow.SetActive(true);
+                playableTurnArrow.SetActive(false);
+                break;
+            case "BATTLE":
+                turnIcon.GetChild(2).gameObject.SetActive(false);
+                turnIcon.GetChild(3).gameObject.SetActive(true);
+                releaseTurnBtn.SetActive(false);
+                playableTurnArrow.SetActive(true);
+                nonplayableTurnArrow.SetActive(false);
                 break;
         }
     }

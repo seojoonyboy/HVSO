@@ -57,9 +57,9 @@ public class PlaceMonster : MonoBehaviour
         }
 
         if(isPlayer == true) 
-            unit.race = (PlayMangement.instance.player.race == true ) ? true : false;        
+            unit.race = (PlayMangement.instance.player.isHuman == true ) ? true : false;        
         else
-            unit.race = (PlayMangement.instance.enemyPlayer.race == true) ? true : false;
+            unit.race = (PlayMangement.instance.enemyPlayer.isHuman == true) ? true : false;
 
 
     }
