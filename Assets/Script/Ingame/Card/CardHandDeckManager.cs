@@ -83,15 +83,9 @@ public class CardHandDeckManager : MonoBehaviour {
         yield return PlayMangement.instance.socketHandler.WaitGetCard();
 
         //영웅카드 뽑기
-        //GameObject card = Instantiate(cardPrefab, cardSpawnPos);
-        //card.transform.SetParent(firstDrawParent);
-        //card.SetActive(true);
-        //bool race = PlayMangement.instance.player.race;
-        //string herocardID = PlayMangement.instance.socketHandler.gameState.players.myPlayer(race).newCard.id;
-        //int itemID = PlayMangement.instance.socketHandler.gameState.players.myPlayer(race).newCard.itemId;
-        //card.GetComponent<CardHandler>().DrawCard(herocardID, itemID, true);
-        //AddCard(card);
-        AddCard();
+        bool isHuman = PlayMangement.instance.player.isHuman;
+        SocketFormat.Card cardData = PlayMangement.instance.socketHandler.gameState.players.myPlayer(isHuman).newCard;
+        AddCard(cardData: cardData);
 
 
         yield return new WaitForSeconds(3.0f);
@@ -100,12 +94,19 @@ public class CardHandDeckManager : MonoBehaviour {
         firstDrawParent.gameObject.SetActive(false);
     }
 
-    public void AddCard(GameObject cardobj = null) {
+    public void AddCard(GameObject cardobj = null, SocketFormat.Card cardData = null) {
         GameObject card;
         if (cardobj == null) {
             card = Instantiate(cardPrefab, cardSpawnPos);
-            string id = "ac1000" + UnityEngine.Random.Range(1, 10);
-            card.GetComponent<CardHandler>().DrawCard(id);
+            string id;
+            int itemId = -1;
+            if(cardData == null)
+                id = "ac1000" + UnityEngine.Random.Range(1, 10);
+            else {
+                id = cardData.id;
+                itemId = cardData.itemId;
+            }
+            card.GetComponent<CardHandler>().DrawCard(id, itemId);
         }
         else
             card = cardobj;

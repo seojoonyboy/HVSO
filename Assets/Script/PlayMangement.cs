@@ -207,16 +207,20 @@ public partial class PlayMangement : MonoBehaviour
             i++;
         }
 
+        #region socket use Card
+        /*while(true) {
+            yield return socketHandler.WaitUseCard();
+            //TODO : 카드 소환
+            Debug.Log("card summon!");
+            SocketFormat.PlayHistory history = socketHandler.gameState.lastUse;
+            Debug.Log("summon pos : " + history.target.args[1]);
+            Debug.Log("summon id : " + history.cardItem.id);
+        }*/
+        #endregion
+
         yield return new WaitForSeconds(1.0f);
-        //if (isFirst) {
-        //    isFirst = false;
-        //    enemyPlayer.ReleaseTurn();
-        //}
-        //else {
-        //    enemyPlayer.ReleaseTurn();
-        //}
+
         enemyPlayer.ReleaseTurn();
-        //else instance.player.cdpm.AddCard();
         StopCoroutine("EnemySummonMonster");
     }
 
@@ -420,7 +424,9 @@ public partial class PlayMangement : MonoBehaviour
             line++;
         }
         yield return new WaitForSeconds(1f);
+        PlayMangement.instance.socketHandler.TurnOver();
         turn++;
+        yield return PlayMangement.instance.socketHandler.WaitGetCard();
         DistributeResource();
         player.EndTurnDraw();
         yield return new WaitForSeconds(2.0f);
@@ -595,8 +601,7 @@ public partial class PlayMangement {
         yield return new WaitForSeconds(1.0f);
 
         Debug.Log("Client_ready 전송");
-        //SocketFormat.SendFormat format = new SocketFormat.SendFormat("client_ready", new string[] { });
-        //SocketHandler.SendToSocket(format);
+        socketHandler.ClientReady();
     }
 }
 
