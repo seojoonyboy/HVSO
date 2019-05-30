@@ -48,6 +48,12 @@ public class CardListManager : MonoBehaviour
         newcard.SetActive(false);
     }
 
+    public void DeleteMulliganClassInfo() {
+        for (int i = 0; i < 4; i++) {
+            contentParent.GetChild(0).SetParent(mulliganList);
+        }
+    }
+
     public void OpenMulliganCardList(int cardnum) {
         mulliganList.GetChild(cardnum).gameObject.SetActive(true);
     }
