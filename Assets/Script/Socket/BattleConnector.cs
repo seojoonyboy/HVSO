@@ -239,6 +239,16 @@ public partial class BattleConnector : MonoBehaviour {
         Debug.Log("WebSocket State : map_clear");
     }
 
+    public void begin_shild_turn(string camp, string itemId) {
+        Debug.Log("WebSocket State : begin_shild_turn");
+        dequeueing = false;
+        getNewCard = true;
+    }
+
+    public void end_shild_turn() {
+        Debug.Log("WebSocket State : end_shild_turn");
+    }
+
     public void begin_end_turn() {
         Debug.Log("WebSocket State : begin_end_turn");
         dequeueing = false;
