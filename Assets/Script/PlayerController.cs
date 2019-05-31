@@ -181,28 +181,22 @@ public class PlayerController : MonoBehaviour
     }
 
     public void PlayerTakeDamage(int amount) {
+        Queue<SocketFormat.Hero> heroShildData = isHuman ? PlayMangement.instance.socketHandler.humanData : PlayMangement.instance.socketHandler.orcData;
+        SocketFormat.Hero data = heroShildData.Peek();
         if (shieldStack.Value < 7) {
             if (HP.Value >= amount) {
                 HP.Value -= amount;
                 SetState(HeroState.HIT);
-
-                if (shieldCount > 0) {
-                    Queue<SocketFormat.Hero> heroShildData = isHuman ? PlayMangement.instance.socketHandler.humanData : PlayMangement.instance.socketHandler.orcData;
-                    shieldStack.Value = heroShildData.Peek().shildGauge;
-                }
+                if (shieldCount > 0) shieldStack.Value = data.shildGauge;
             }
-            else
-                HP.Value = 0;
+            else HP.Value = 0;
         }
-        else {
-            DrawSpeicalCard();
+        else if(shieldCount != data.shildCount) {
+            shieldStack.Value = 8;
+            StartCoroutine(PlayMangement.instance.DrawSpecialCard(isHuman));
             shieldStack.Value = 0;
             shieldCount--;
         } 
-    }
-
-    public void DrawSpeicalCard() {
-        Debug.Log("Hero Card Draw Need");
     }
 
     public void ReleaseTurn() {

@@ -25,6 +25,7 @@ public partial class PlayMangement : MonoBehaviour {
     private int turn = 0;
     public GameObject blockPanel;
     public int unitNum = 0;
+    private bool heroShieldActive = false;
 
     private void Awake()
     {
@@ -348,21 +349,26 @@ public partial class PlayMangement : MonoBehaviour {
             yield return WaitSocketData(socketHandler.lineBattleList, line, true);
             yield return battleUnit(player.backLine, line);
             yield return battleUnit(player.frontLine, line);
+            yield return HeroSpecialWait();
             shildDequeue();
             yield return WaitSocketData(socketHandler.lineBattleList, line, true);
             yield return battleUnit(enemyPlayer.backLine, line);
             yield return battleUnit(enemyPlayer.frontLine, line);
+            yield return HeroSpecialWait();
             shildDequeue();
         }
         else {
             yield return WaitSocketData(socketHandler.lineBattleList, line, true);
             yield return battleUnit(enemyPlayer.backLine, line);
             yield return battleUnit(enemyPlayer.frontLine, line);
+            yield return HeroSpecialWait();
             shildDequeue();
             yield return WaitSocketData(socketHandler.lineBattleList, line, true);
             yield return battleUnit(player.backLine, line);
             yield return battleUnit(player.frontLine, line);
+            yield return HeroSpecialWait();
             shildDequeue();
+            
         }
 
         if (player.backLine.transform.GetChild(line).childCount != 0)
@@ -401,6 +407,33 @@ public partial class PlayMangement : MonoBehaviour {
     private void shildDequeue() {
         socketHandler.humanData.Dequeue();
         socketHandler.orcData.Dequeue();
+    }
+
+    public IEnumerator HeroSpecialWait() {
+        yield return new WaitForSeconds(0.1f);
+        do {
+            yield return new WaitForFixedUpdate();
+        } while(heroShieldActive);
+    }
+
+    public IEnumerator DrawSpecialCard(bool isHuman) {
+        heroShieldActive = true;
+        bool isPlayer = (isHuman == player.isHuman);
+        if(isPlayer) {
+            CardHandDeckManager cdpm = FindObjectOfType<CardHandDeckManager>();
+            bool race = PlayMangement.instance.player.isHuman;
+            SocketFormat.Card cardData = PlayMangement.instance.socketHandler.gameState.players.myPlayer(race).newCard;
+            cdpm.AddCard(null, cardData);
+        }
+        else {
+            GameObject enemyCard = Instantiate(PlayMangement.instance.enemyPlayer.back);
+            enemyCard.transform.SetParent(PlayMangement.instance.enemyPlayer.playerUI.transform.Find("CardSlot"));
+            enemyCard.transform.localScale = new Vector3(1, 1, 1);
+            enemyCard.SetActive(true);
+        }
+        if(isPlayer) socketHandler.TurnOver();
+        yield return new WaitForSeconds(1.0f);
+        heroShieldActive = false;
     }
 }
 
