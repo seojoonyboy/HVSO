@@ -354,6 +354,7 @@ public class PlaceMonster : MonoBehaviour {
     public void RequestChangeStat(int power = 0, int hp = 0) {
         unit.attack += power;
         unit.currentHP += hp;
+        UpdateStat();
     }
 
     public void AddBuff(Buff buff) {
