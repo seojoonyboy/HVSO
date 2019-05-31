@@ -15,14 +15,19 @@ namespace SocketFormat {
         }
         
         public static void ShowBattleData(GameState state, int line, bool isBattle) {
-            string mapData = Newtonsoft.Json.JsonConvert.SerializeObject(state.map.lines[line]);
-            string heroData = Newtonsoft.Json.JsonConvert.SerializeObject(state.players.human.hero);
-            string heroData2 = Newtonsoft.Json.JsonConvert.SerializeObject(state.players.orc.hero);
+            string mapData = JsonConvert.SerializeObject(state.map.lines[line]);
+            string heroData = JsonConvert.SerializeObject(state.players.human.hero);
+            string heroData2 = JsonConvert.SerializeObject(state.players.orc.hero);
             Debug.Log(isBattle ? "======= 싸운 후 State =======" : "======= 에너지 체크 후 State =======");
             Debug.Log(string.Format("{0}번째줄 맵 : {1}", line, mapData));
             Debug.Log(string.Format("{0}번째줄 휴먼 플레이어 상태 : {1}", line, heroData));
             Debug.Log(string.Format("{0}번째줄 오크 플레이어 상태 : {1}", line, heroData2));
             Debug.Log("=======================================");
+        }
+
+        public static void SummonCardData(PlayHistory history) {
+            string historyData = JsonConvert.SerializeObject(history);
+            Debug.Log(string.Format("사용 된 카드 : {0}", historyData));
         }
     }  
 }
