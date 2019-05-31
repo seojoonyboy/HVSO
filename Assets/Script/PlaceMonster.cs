@@ -79,8 +79,8 @@ public class PlaceMonster : MonoBehaviour {
     public void GetTarget() {
         //stun이 있으면 공격을 못함
         if (GetComponent<SkillModules.stun>() != null) {
-            //SkipAttack();
-            //return;
+            SkipAttack();
+            return;
         }
 
         if (atkCount > 0) { GetAnotherTarget(); return; }
@@ -311,12 +311,18 @@ public class PlaceMonster : MonoBehaviour {
 
 
     public void RequestAttackUnit(GameObject target, int amount) {
-        target.GetComponent<PlaceMonster>().unit.currentHP -= amount;
-        target.GetComponent<PlaceMonster>().UpdateStat();
-        target.GetComponent<PlaceMonster>().SetState(UnitState.HIT);
+        PlaceMonster targetMonster = target.GetComponent<PlaceMonster>();
 
-        object[] parms = new object[] {isPlayer, gameObject };
-        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_ATTACK, this, parms);
+        if (targetMonster != null) {
+            targetMonster.unit.currentHP -= amount;
+            targetMonster.UpdateStat();
+            targetMonster.SetState(UnitState.HIT);
+
+
+
+            object[] parms = new object[] { isPlayer, gameObject };
+            PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_ATTACK, this, parms);
+        }
     }
 
     public void RequestChangePower(int amount) {

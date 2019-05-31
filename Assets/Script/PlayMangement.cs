@@ -354,7 +354,7 @@ public partial class PlayMangement : MonoBehaviour
                     if (placeMonster.unit.attack <= 0)
                         break;
                     placeMonster.GetTarget();
-                    yield return new WaitForSeconds(1.1f + placeMonster.atkTime);
+                yield return new WaitForSeconds(1.1f + placeMonster.atkTime);
                 }
             placeMonster.atkCount = 0;
         }
