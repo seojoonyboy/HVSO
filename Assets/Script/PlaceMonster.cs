@@ -77,6 +77,12 @@ public class PlaceMonster : MonoBehaviour {
 
 
     public void GetTarget() {
+        //stun이 있으면 공격을 못함
+        if (GetComponent<SkillModules.stun>() != null) {
+            //SkipAttack();
+            //return;
+        }
+
         if (atkCount > 0) { GetAnotherTarget(); return; }
 
         if(unit.attackType.Length > 0 && unit.attackType[0] == "through") {
@@ -272,6 +278,10 @@ public class PlaceMonster : MonoBehaviour {
             if (targetMonster != null)
                 myTarget.GetComponent<PlaceMonster>().ReturnPosition();
         }
+    }
+
+    private void SkipAttack() {
+        atkCount++;
     }
 
     public void AttackEffect(GameObject target = null) {
