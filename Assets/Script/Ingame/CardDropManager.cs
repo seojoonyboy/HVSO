@@ -253,7 +253,10 @@ public partial class CardDropManager {
         //GetComponent<Image>().enabled = false;
         PlayMangement.instance.player.isPicking.Value = false;
         PlayMangement.instance.player.resource.Value -= cardHandler.cardData.cost;
-        PlayMangement.instance.player.ActivePlayer();
+        if(PlayMangement.instance.player.isHuman)
+            PlayMangement.instance.player.ActivePlayer();
+        else
+            PlayMangement.instance.player.ActiveOrcTurn();
 
         GameObject.Find("Player").transform.GetChild(0).GetComponent<PlayerController>().cdpm.DestroyCard(cardIndex);
 

@@ -15,6 +15,7 @@ public partial class CardHandler : MonoBehaviour {
     protected bool blockButton = false;
     protected bool firstDraw = false;
     public bool changeSelected = false;
+    protected bool isDropable = false;
     Animator cssAni;
     public string cardID;
     protected int _itemID;
@@ -185,6 +186,7 @@ public partial class CardHandler : MonoBehaviour {
     }
 
     public void DisableCard() {
+        isDropable = false;
         transform.Find("GlowEffect").GetComponent<Image>().enabled = false;
         transform.Find("Portrait").GetComponent<Image>().color = Color.gray;
         transform.Find("attack").GetComponent<Image>().color = Color.gray;
@@ -194,6 +196,7 @@ public partial class CardHandler : MonoBehaviour {
 
     public void ActivateCard() {
         if (PlayMangement.instance.player.resource.Value >= cardData.cost) {
+            isDropable = true;
             transform.Find("GlowEffect").GetComponent<Image>().enabled = true;
             transform.Find("GlowEffect").GetComponent<Image>().color = new Color(1, 1, 107.0f / 255.0f);
             transform.Find("Portrait").GetComponent<Image>().color = Color.white;
@@ -202,6 +205,7 @@ public partial class CardHandler : MonoBehaviour {
             transform.Find("Cost").GetComponent<Image>().color = Color.white;
         }
         else {
+            isDropable = false;
             transform.Find("GlowEffect").GetComponent<Image>().enabled = false;
             transform.Find("Portrait").GetComponent<Image>().color = Color.gray;
             transform.Find("attack").GetComponent<Image>().color = Color.gray;
