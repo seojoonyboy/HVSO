@@ -186,7 +186,7 @@ public partial class PlayMangement : MonoBehaviour {
         CardDataPackage cardDataPackage = AccountManager.Instance.cardPackage;
         int enemyCardCount = enemyPlayer.playerUI.transform.Find("CardSlot").childCount;
         
-        string id = history.cardItem.isHeroCard ? history.cardItem.cardId : history.cardItem.id;
+        string id = history.cardItem.id;
 
         cardData = cardDataPackage.data[id];
         Debug.Log("use Magic Card" + history.cardItem.name);
@@ -201,7 +201,7 @@ public partial class PlayMangement : MonoBehaviour {
         int enemyCardCount = enemyPlayer.playerUI.transform.Find("CardSlot").childCount;
         GameObject skeleton;
 
-        string id = history.cardItem.isHeroCard ? history.cardItem.cardId : history.cardItem.id;
+        string id = history.cardItem.id;
 
         cardData = cardDataPackage.data[id];
         skeleton = AccountManager.Instance.resource.cardSkeleton[id];
