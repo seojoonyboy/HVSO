@@ -24,7 +24,6 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
 
         object[] parms = new object[] { true, gameObject };
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_CARD_PLAY, this, parms);
-
     }
 
     public void OnDrag(PointerEventData eventData) {
@@ -49,6 +48,8 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
 
             object[] parms = new object[] { true, gameObject };
             PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
+
+            if (GetComponents<Ability>() == null) UseCard();
         }
         else {
             highlighted = false;
@@ -58,5 +59,21 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         }
         
         OffLineHighlight();
+    }
+
+    public void UseCard() {
+        int cardIndex = 0;
+        if (transform.parent.parent.name == "CardSlot_1")
+            cardIndex = transform.parent.GetSiblingIndex();
+        else {
+            Transform slot1 = transform.parent.parent.parent.GetChild(0);
+            for (int i = 0; i < 5; i++) {
+                if (slot1.GetChild(i).gameObject.activeSelf)
+                    cardIndex++;
+            }
+            cardIndex += transform.parent.GetSiblingIndex();
+        }
+
+        PlayMangement.instance.player.cdpm.DestroyCard(cardIndex);
     }
 }
