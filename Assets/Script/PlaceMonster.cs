@@ -1,8 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UniRx;
-using IngameClass;
+using UnityEngine.Events;
 using TMPro;
 
 
@@ -24,6 +23,7 @@ public class PlaceMonster : MonoBehaviour {
     protected UnitSpine unitSpine;
 
     private float currentTime;
+    private bool instanceAttack = false;
     List<Buff> buffList = new List<Buff>();
 
     public float atkTime {
@@ -68,7 +68,7 @@ public class PlaceMonster : MonoBehaviour {
         else
             unit.ishuman = (PlayMangement.instance.enemyPlayer.isHuman == true) ? true : false;
 
-
+        
     }
 
     public void SpawnUnit() {
@@ -256,6 +256,12 @@ public class PlaceMonster : MonoBehaviour {
         EndAttack();
     }
 
+    public void InstanceAttack() {
+        instanceAttack = true;
+        GetTarget();
+    }
+
+
     public void ChangePosition(int x, int y, Vector3 unitLocation) {
         this.x = x;
         this.y = y;
@@ -265,7 +271,11 @@ public class PlaceMonster : MonoBehaviour {
 
 
     public void EndAttack() {
-        atkCount++;
+        if (instanceAttack == true) {
+            instanceAttack = false;
+        }
+        else
+            atkCount++;
 
         PlaceMonster targetMonster = myTarget.GetComponent<PlaceMonster>();
         if (unit.attackRange == "distance") {

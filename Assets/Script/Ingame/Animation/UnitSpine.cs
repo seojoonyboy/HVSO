@@ -92,7 +92,7 @@ public class UnitSpine : MonoBehaviour
         TrackEntry entry;
         entry = spineAnimationState.SetAnimation(0, appearAnimationName, false);
         currentAnimationName = appearAnimationName;
-        entry.Complete += Idle;        
+        entry.Complete += Idle;
     }
 
     public virtual void Idle(TrackEntry trackEntry = null) {
@@ -129,6 +129,7 @@ public class UnitSpine : MonoBehaviour
         if(e.Data.Name == "APPEAR") {
             GameObject effect = Instantiate(PlayMangement.instance.effectManager.appearEffect, transform);
             effect.transform.position = transform.position;
+            testAttack();
             Destroy(effect.gameObject, effect.GetComponent<ParticleSystem>().main.duration - 0.2f);
         }
 
