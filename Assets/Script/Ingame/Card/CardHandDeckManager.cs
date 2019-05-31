@@ -137,6 +137,10 @@ public class CardHandDeckManager : MonoBehaviour {
                 itemId = cardData.itemId;
             }
             card.GetComponent<CardHandler>().DrawCard(id, itemId);
+
+            if(cardData.type == "magic") {
+                AddMagicAttribute(ref card);
+            }
         }
         else
             card = cardobj;
