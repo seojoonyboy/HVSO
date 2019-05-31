@@ -82,6 +82,9 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
             cardIndex += transform.parent.GetSiblingIndex();
         }
 
+        PlayMangement.instance.player.isPicking.Value = false;
+        PlayMangement.instance.player.resource.Value -= cardData.cost;
+
         PlayMangement.instance.player.cdpm.DestroyCard(cardIndex);
     }
 }
