@@ -56,6 +56,7 @@ public class CardListManager : MonoBehaviour
     }
 
     public void OpenCardList(int cardnum) {
+        PlayMangement.instance.infoOn = true;
         transform.GetComponent<Image>().enabled = true;
         animator.SetBool("Hide", false);
         hss.GoToScreen(cardnum);
@@ -121,6 +122,7 @@ public class CardListManager : MonoBehaviour
                     GameObject selectedTarget = hit.collider.gameObject.GetComponentInParent<PlaceMonster>().gameObject;
                     string objName = hit.collider.gameObject.GetComponentInParent<PlaceMonster>().myUnitNum.ToString() + "unit";
                     transform.GetChild(1).Find(objName).gameObject.SetActive(true);
+                    PlayMangement.instance.infoOn = true;
                 }
             }
         }
