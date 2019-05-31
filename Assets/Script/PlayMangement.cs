@@ -16,6 +16,7 @@ public partial class PlayMangement : MonoBehaviour {
     public GameObject canvas;
     public bool isGame = true;
     public bool isFirst = true;
+    public bool infoOn = false;
     public static PlayMangement instance { get; private set; }
     public GameObject backGround;
     public GameObject onCanvasPosGroup;
@@ -55,7 +56,7 @@ public partial class PlayMangement : MonoBehaviour {
     }
 
     private void Update() {
-        if (Input.GetMouseButtonDown(0)) {
+        if (!infoOn && Input.GetMouseButtonDown(0)) {
             canvas.transform.GetChild(3).GetComponent<CardListManager>().OpenUnitInfoWindow(Input.mousePosition);
         }
     }
