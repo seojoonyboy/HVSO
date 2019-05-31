@@ -51,14 +51,22 @@ public partial class PlayMangement : MonoBehaviour
         SetBackGround();
         RequestStartData();
         DistributeResource();
+
         //StartCoroutine(DisconnectTest());
     }
 
     private void SetWorldScale() {
         SpriteRenderer backSprite = backGround.GetComponent<SpriteRenderer>();
-        float height = Camera.main.orthographicSize * 2, width = height / Screen.height * Screen.width;       
+        float ratio = (float)Screen.height / Screen.width;
+        Debug.Log(ratio);
 
-        backGround.transform.localScale = new Vector3(width / backSprite.sprite.bounds.size.x, width / backSprite.sprite.bounds.size.x, 1);
+        float height = Camera.main.orthographicSize * 2, width = height / Screen.height * Screen.width;
+
+        if (ratio > 1.77f)
+            backGround.transform.localScale = new Vector3(width / backSprite.sprite.bounds.size.x, width / backSprite.sprite.bounds.size.x, 1);
+        else
+            backGround.transform.localScale = new Vector3(height / backSprite.sprite.bounds.size.y, height / backSprite.sprite.bounds.size.y, 1); ;
+        
         GameObject canvas = GameObject.Find("Canvas");
         Vector3 canvasScale = canvas.transform.localScale;
         canvas.transform.localScale = new Vector3(canvasScale.x * backGround.transform.localScale.x, canvasScale.y * backGround.transform.localScale.y, 1);

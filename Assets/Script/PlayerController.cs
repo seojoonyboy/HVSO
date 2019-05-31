@@ -132,11 +132,13 @@ public class PlayerController : MonoBehaviour
             card.GetComponent<CardHandler>().DrawCard(cardID + UnityEngine.Random.Range(1, 5));
         }
         else {
-            cardID = "ac10012";
-            card.GetComponent<CardHandler>().DrawCard(cardID);
+            cardID = "ac1001";
+            card.GetComponent<CardHandler>().DrawCard(cardID + UnityEngine.Random.Range(1, 5));
         }
         card.SetActive(true);
     }
+    
+
 
 
     public void SetPlayerStat(int hp) {
