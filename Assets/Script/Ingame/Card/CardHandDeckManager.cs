@@ -99,8 +99,6 @@ public class CardHandDeckManager : MonoBehaviour {
     /// <returns></returns>
     IEnumerator DrawChangedCards() {
         firstDrawParent.parent.gameObject.GetComponent<Image>().enabled = false;
-        CardListManager csm = GameObject.Find("Canvas").transform.Find("CardInfoList").GetComponent<CardListManager>();
-        csm.DeleteMulliganClassInfo();
         PlayMangement.instance.socketHandler.MulliganEnd();
         while (firstDrawList.Count != 0) {
             yield return new WaitForSeconds(0.2f);
