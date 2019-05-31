@@ -99,8 +99,6 @@ public class CardHandDeckManager : MonoBehaviour {
     /// <returns></returns>
     IEnumerator DrawChangedCards() {
         firstDrawParent.parent.gameObject.GetComponent<Image>().enabled = false;
-        CardListManager csm = GameObject.Find("Canvas").transform.Find("CardInfoList").GetComponent<CardListManager>();
-        csm.DeleteMulliganClassInfo();
         PlayMangement.instance.socketHandler.MulliganEnd();
         while (firstDrawList.Count != 0) {
             yield return new WaitForSeconds(0.2f);
@@ -134,10 +132,7 @@ public class CardHandDeckManager : MonoBehaviour {
             if(cardData == null)
                 id = "ac1000" + UnityEngine.Random.Range(1, 10);
             else {
-                if(cardData.isHeroCard)
-                    id = cardData.cardId;
-                else
-                    id = cardData.id;
+                id = cardData.id;
                 itemId = cardData.itemId;
             }
             card.GetComponent<CardHandler>().DrawCard(id, itemId);
@@ -348,10 +343,7 @@ public class CardHandDeckManager : MonoBehaviour {
             card = Instantiate(magicCardPrefab, firstDrawParent);
         string id;
         int itemId = -1;
-        if(newCard.isHeroCard)
-            id = newCard.cardId;
-        else
-            id = newCard.id;
+        id = newCard.id;
         itemId = newCard.itemId;
         card.GetComponent<CardHandler>().DrawCard(id, itemId);
 

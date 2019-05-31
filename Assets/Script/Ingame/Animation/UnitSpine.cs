@@ -92,7 +92,7 @@ public class UnitSpine : MonoBehaviour
         TrackEntry entry;
         entry = spineAnimationState.SetAnimation(0, appearAnimationName, false);
         currentAnimationName = appearAnimationName;
-        entry.Complete += Idle;        
+        entry.Complete += Idle;
     }
 
     public virtual void Idle(TrackEntry trackEntry = null) {

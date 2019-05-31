@@ -1608,6 +1608,7 @@ MonoBehaviour:
     - {fileID: 4350649675874226833, guid: 178af926b510b384ea39d75ed4e64488, type: 3}
     - {fileID: 1266990869046621765, guid: dd009c7ee388afc4cb3cb03b151f96c8, type: 3}
     - {fileID: 1688239738932414927, guid: 0a0adb61de9b7554ca4ce72d8da225da, type: 3}
+    - {fileID: 4666501618885207138, guid: b4f3152a96ce7884eb549e3264127789, type: 3}
     - {fileID: 8528381502351284761, guid: 910f1d59f8d2937479945046ad89aef5, type: 3}
     - {fileID: 2268531501482141160, guid: 0de567ffb23e0cd439a942dd238214f6, type: 3}
     - {fileID: 5853843162628053905, guid: 8518ccbef1757cf47b251af5c800209a, type: 3}
@@ -2164,7 +2165,7 @@ MonoBehaviour:
       Data: ac10010
     - Name: $v
       Entry: 10
-      Data: 16
+      Data: 26
     - Name: 
       Entry: 8
       Data: 
@@ -2212,7 +2213,7 @@ MonoBehaviour:
       Data: ac10018
     - Name: $v
       Entry: 10
-      Data: 26
+      Data: 27
     - Name: 
       Entry: 8
       Data: 
@@ -2224,7 +2225,7 @@ MonoBehaviour:
       Data: ac10019
     - Name: $v
       Entry: 10
-      Data: 27
+      Data: 28
     - Name: 
       Entry: 8
       Data: 
@@ -2236,7 +2237,7 @@ MonoBehaviour:
       Data: ac10020
     - Name: $v
       Entry: 10
-      Data: 28
+      Data: 29
     - Name: 
       Entry: 8
       Data: 
@@ -2364,7 +2365,7 @@ MonoBehaviour:
       Data: unit_common
     - Name: $v
       Entry: 10
-      Data: 29
+      Data: 30
     - Name: 
       Entry: 8
       Data: 
@@ -2376,7 +2377,7 @@ MonoBehaviour:
       Data: unit_legend
     - Name: $v
       Entry: 10
-      Data: 30
+      Data: 31
     - Name: 
       Entry: 8
       Data: 
@@ -2388,7 +2389,7 @@ MonoBehaviour:
       Data: unit_uncommon
     - Name: $v
       Entry: 10
-      Data: 31
+      Data: 32
     - Name: 
       Entry: 8
       Data: 
@@ -2400,7 +2401,7 @@ MonoBehaviour:
       Data: unit_rare
     - Name: $v
       Entry: 10
-      Data: 32
+      Data: 33
     - Name: 
       Entry: 8
       Data: 
@@ -2412,7 +2413,7 @@ MonoBehaviour:
       Data: unit_superrare
     - Name: $v
       Entry: 10
-      Data: 33
+      Data: 34
     - Name: 
       Entry: 8
       Data: 
@@ -2424,7 +2425,7 @@ MonoBehaviour:
       Data: magic_common
     - Name: $v
       Entry: 10
-      Data: 34
+      Data: 35
     - Name: 
       Entry: 8
       Data: 
@@ -2436,7 +2437,7 @@ MonoBehaviour:
       Data: magic_uncommon
     - Name: $v
       Entry: 10
-      Data: 34
+      Data: 35
     - Name: 
       Entry: 8
       Data: 
@@ -2448,7 +2449,7 @@ MonoBehaviour:
       Data: magic_rare
     - Name: $v
       Entry: 10
-      Data: 34
+      Data: 35
     - Name: 
       Entry: 8
       Data: 
@@ -2460,7 +2461,7 @@ MonoBehaviour:
       Data: magic_superrare
     - Name: $v
       Entry: 10
-      Data: 34
+      Data: 35
     - Name: 
       Entry: 8
       Data: 
@@ -2472,7 +2473,7 @@ MonoBehaviour:
       Data: magic_legend
     - Name: $v
       Entry: 10
-      Data: 34
+      Data: 35
     - Name: 
       Entry: 8
       Data: 
@@ -2510,10 +2511,10 @@ MonoBehaviour:
       Data: 2
     - Name: 
       Entry: 10
-      Data: 35
+      Data: 36
     - Name: 
       Entry: 10
-      Data: 36
+      Data: 37
     - Name: 
       Entry: 13
       Data: 
@@ -2537,10 +2538,10 @@ MonoBehaviour:
       Data: 2
     - Name: 
       Entry: 10
-      Data: 37
+      Data: 38
     - Name: 
       Entry: 10
-      Data: 38
+      Data: 39
     - Name: 
       Entry: 13
       Data: 
@@ -2564,7 +2565,7 @@ MonoBehaviour:
       Data: 1
     - Name: 
       Entry: 10
-      Data: 39
+      Data: 40
     - Name: 
       Entry: 13
       Data: 
@@ -2588,7 +2589,7 @@ MonoBehaviour:
       Data: 1
     - Name: 
       Entry: 10
-      Data: 40
+      Data: 41
     - Name: 
       Entry: 13
       Data: 
@@ -2626,7 +2627,7 @@ MonoBehaviour:
       Data: h10001
     - Name: $v
       Entry: 10
-      Data: 41
+      Data: 42
     - Name: 
       Entry: 8
       Data: 
@@ -2638,7 +2639,7 @@ MonoBehaviour:
       Data: h10002
     - Name: $v
       Entry: 10
-      Data: 42
+      Data: 43
     - Name: 
       Entry: 8
       Data: 
