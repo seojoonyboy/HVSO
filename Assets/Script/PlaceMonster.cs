@@ -18,6 +18,7 @@ public class PlaceMonster : MonoBehaviour {
     public int atkCount = 0;
     public int maxAtkCount = 0;
     public int addAttackPower = 0;
+    public int myUnitNum = 0;
 
     protected delegate void TimeUpdate(float time);
     protected TimeUpdate timeUpdate;
@@ -38,7 +39,7 @@ public class PlaceMonster : MonoBehaviour {
         DEAD
     };
 
-    public void Init() {
+    public void Init(CardData data) {
         x = transform.parent.GetSiblingIndex();
         y = transform.parent.parent.GetSiblingIndex();
         atkCount = 0;
@@ -68,7 +69,8 @@ public class PlaceMonster : MonoBehaviour {
         else
             unit.ishuman = (PlayMangement.instance.enemyPlayer.isHuman == true) ? true : false;
 
-
+        myUnitNum = PlayMangement.instance.unitNum++;
+        GameObject.Find("CardInfoList").GetComponent<CardListManager>().SetFeildUnitInfo(data, myUnitNum);
     }
 
     public void SpawnUnit() {

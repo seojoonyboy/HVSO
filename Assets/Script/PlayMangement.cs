@@ -5,8 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public partial class PlayMangement : MonoBehaviour
-{
+public partial class PlayMangement : MonoBehaviour {
     public PlayerController player, enemyPlayer;
     public GameObject card, back;
     public Sprite plantResourceIcon, zombieResourceIcon;
@@ -14,6 +13,7 @@ public partial class PlayMangement : MonoBehaviour
     public GameObject cardDB;
     Camera cam;
     public GameObject uiSlot;
+    public GameObject canvas;
     public bool isGame = true;
     public bool isFirst = true;
     public static PlayMangement instance { get; private set; }
@@ -23,7 +23,7 @@ public partial class PlayMangement : MonoBehaviour
 
     private int turn = 0;
     public GameObject blockPanel;
-    
+    public int unitNum = 0;
 
     private void Awake()
     {
@@ -54,12 +54,25 @@ public partial class PlayMangement : MonoBehaviour
         //StartCoroutine(DisconnectTest());
     }
 
+    private void Update() {
+        if (Input.GetMouseButtonDown(0)) {
+            canvas.transform.GetChild(3).GetComponent<CardListManager>().OpenUnitInfoWindow(Input.mousePosition);
+        }
+    }
+
     private void SetWorldScale() {
         SpriteRenderer backSprite = backGround.GetComponent<SpriteRenderer>();
-        float height = Camera.main.orthographicSize * 2, width = height / Screen.height * Screen.width;       
+        float ratio = (float)Screen.height / Screen.width;
+        Debug.Log(ratio);
 
-        backGround.transform.localScale = new Vector3(width / backSprite.sprite.bounds.size.x, width / backSprite.sprite.bounds.size.x, 1);
-        GameObject canvas = GameObject.Find("Canvas");
+        float height = Camera.main.orthographicSize * 2, width = height / Screen.height * Screen.width;
+
+        if (ratio > 1.77f)
+            backGround.transform.localScale = new Vector3(width / backSprite.sprite.bounds.size.x, width / backSprite.sprite.bounds.size.x, 1);
+        else
+            backGround.transform.localScale = new Vector3(height / backSprite.sprite.bounds.size.y, height / backSprite.sprite.bounds.size.y, 1); ;
+
+        canvas = GameObject.Find("Canvas");
         Vector3 canvasScale = canvas.transform.localScale;
         canvas.transform.localScale = new Vector3(canvasScale.x * backGround.transform.localScale.x, canvasScale.y * backGround.transform.localScale.y, 1);
 
@@ -227,7 +240,7 @@ public partial class PlayMangement : MonoBehaviour
         }
 
 
-        monster.GetComponent<PlaceMonster>().Init();
+        monster.GetComponent<PlaceMonster>().Init(cardData);
         monster.GetComponent<PlaceMonster>().SpawnUnit();
 
         EnemyUnitsObserver.UnitAdded(monster, i, 0);
@@ -328,17 +341,21 @@ public partial class PlayMangement : MonoBehaviour
             yield return WaitSocketData(socketHandler.lineBattleList, line, true);
             yield return battleUnit(player.backLine, line);
             yield return battleUnit(player.frontLine, line);
+            shildDequeue();
             yield return WaitSocketData(socketHandler.lineBattleList, line, true);
             yield return battleUnit(enemyPlayer.backLine, line);
             yield return battleUnit(enemyPlayer.frontLine, line);
+            shildDequeue();
         }
         else {
             yield return WaitSocketData(socketHandler.lineBattleList, line, true);
             yield return battleUnit(enemyPlayer.backLine, line);
             yield return battleUnit(enemyPlayer.frontLine, line);
+            shildDequeue();
             yield return WaitSocketData(socketHandler.lineBattleList, line, true);
             yield return battleUnit(player.backLine, line);
             yield return battleUnit(player.frontLine, line);
+            shildDequeue();
         }
 
         if (player.backLine.transform.GetChild(line).childCount != 0)
@@ -372,6 +389,11 @@ public partial class PlayMangement : MonoBehaviour
         Debug.Log("쌓인 데이터 리스트 : " + queueList.Count);
         SocketFormat.DebugSocketData.ShowBattleData(state, line, isBattle);
         //TODO : 데이터 체크 및 데이터 동기화 필요
+    }
+
+    private void shildDequeue() {
+        socketHandler.humanData.Dequeue();
+        socketHandler.orcData.Dequeue();
     }
 }
 

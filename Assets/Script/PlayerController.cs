@@ -132,11 +132,13 @@ public class PlayerController : MonoBehaviour
             card.GetComponent<CardHandler>().DrawCard(cardID + UnityEngine.Random.Range(1, 5));
         }
         else {
-            cardID = "ac10012";
-            card.GetComponent<CardHandler>().DrawCard(cardID);
+            cardID = "ac1001";
+            card.GetComponent<CardHandler>().DrawCard(cardID + UnityEngine.Random.Range(1, 5));
         }
         card.SetActive(true);
     }
+    
+
 
 
     public void SetPlayerStat(int hp) {
@@ -179,8 +181,10 @@ public class PlayerController : MonoBehaviour
                 HP.Value -= amount;
                 SetState(HeroState.HIT);
 
-                if (shieldCount > 0)
-                    shieldStack.Value++;
+                if (shieldCount > 0) {
+                    Queue<SocketFormat.Hero> heroShildData = isHuman ? PlayMangement.instance.socketHandler.humanData : PlayMangement.instance.socketHandler.orcData;
+                    shieldStack.Value = heroShildData.Peek().shildGauge;
+                }
             }
             else
                 HP.Value = 0;
@@ -193,7 +197,7 @@ public class PlayerController : MonoBehaviour
     }
 
     public void DrawSpeicalCard() {
-
+        Debug.Log("Hero Card Draw Need");
     }
 
     public void ReleaseTurn() {

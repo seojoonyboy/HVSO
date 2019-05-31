@@ -243,17 +243,12 @@ public partial class CardDropManager {
 
         }
 
-
-
-
-
-
         GameObject skeleton = Instantiate(cardHandler.skeleton, placedMonster.transform);
         skeleton.name = "skeleton";
         skeleton.transform.localScale = new Vector3(-1, 1, 1);
         placedMonster.name = placedMonster.GetComponent<PlaceMonster>().unit.name;
 
-        placedMonster.GetComponent<PlaceMonster>().Init();
+        placedMonster.GetComponent<PlaceMonster>().Init(cardHandler.cardData);
         placedMonster.GetComponent<PlaceMonster>().SpawnUnit();
         //GetComponent<Image>().enabled = false;
         PlayMangement.instance.player.isPicking.Value = false;
