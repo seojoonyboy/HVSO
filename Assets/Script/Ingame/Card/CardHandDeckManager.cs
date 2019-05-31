@@ -38,12 +38,18 @@ public class CardHandDeckManager : MonoBehaviour {
         GameObject card;
         if (socketCard.type == "unit")
             card = Instantiate(unitCardPrefab, cardSpawnPos);
-        else
+        else {
             card = Instantiate(magicCardPrefab, cardSpawnPos);
+        }
+            
         card.transform.SetParent(firstDrawParent);
         card.SetActive(true);
         card.transform.rotation = new Quaternion(0, 0, 540, card.transform.rotation.w);
         card.GetComponent<CardHandler>().DrawCard(socketCard.id, socketCard.itemId, true);
+
+        if(socketCard.type == "magic") {
+            AddMagicAttribute(ref card);
+        }
 
         iTween.MoveTo(card, firstDrawParent.GetChild(firstDrawList.Count).position, 0.5f);
         iTween.RotateTo(card, new Vector3(0, 0, 0), 0.5f);
@@ -54,6 +60,21 @@ public class CardHandDeckManager : MonoBehaviour {
         if (firstDrawList.Count == 4) {
             yield return new WaitForSeconds(0.5f);
             firstDrawParent.parent.Find("FinishButton").gameObject.SetActive(true);
+        }
+    }
+
+    void AddMagicAttribute(ref GameObject card) {
+        var cardData = card.GetComponent<CardHandler>().cardData;
+        foreach (dataModules.Skill skill in cardData.skills) {
+            foreach (var effect in skill.effects) {
+                var newComp = card.AddComponent(System.Type.GetType("SkillModules.Ability_" + effect.method));
+                if (newComp == null) {
+                    Debug.LogError(effect.method + "에 해당하는 컴포넌트를 찾을 수 없습니다.");
+                }
+                else {
+                    ((Ability)newComp).InitData(skill, true);
+                }
+            }
         }
     }
 
