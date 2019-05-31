@@ -324,6 +324,7 @@ public partial class PlayMangement : MonoBehaviour
     }
 
     IEnumerator battleLine(int line) {
+        backGround.transform.GetChild(line).Find("BattleLineEffect").gameObject.SetActive(true);
         if (player.isHuman == false) {
             yield return battleUnit(player.backLine, line);
             yield return battleUnit(player.frontLine, line);
@@ -345,6 +346,7 @@ public partial class PlayMangement : MonoBehaviour
             enemyPlayer.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().CheckHP();
         if (enemyPlayer.frontLine.transform.GetChild(line).childCount != 0)
             enemyPlayer.frontLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().CheckHP();
+        backGround.transform.GetChild(line).Find("BattleLineEffect").gameObject.SetActive(false);
     }
 
     IEnumerator battleUnit(GameObject lineObject, int line) {
