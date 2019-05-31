@@ -25,8 +25,6 @@ public class CardListManager : MonoBehaviour
     public void AddCardInfo(CardData data, string id) {
         GameObject newcard =  Instantiate(cardPrefab);
         SetCardInfo(newcard, data);
-        GameObject newcardInfo = Instantiate(infoPrefab, contentParent);
-        SetCardClassInfo(newcardInfo, data);
         hss.AddChild(newcard);
         if (data.type == "unit") {
             GameObject unitImage = Instantiate(AccountManager.Instance.resource.cardSkeleton[id], newcard.transform.Find("Info/UnitImage"));
@@ -38,8 +36,6 @@ public class CardListManager : MonoBehaviour
     public void AddMulliganCardInfo(CardData data, string id) {
         GameObject newcard = Instantiate(firstInfoPrefab, mulliganList);
         SetCardInfo(newcard, data);
-        GameObject newcardInfo = Instantiate(infoPrefab, contentParent);
-        SetCardClassInfo(newcardInfo, data);
         if (data.type == "unit") {
             GameObject unitImage = Instantiate(AccountManager.Instance.resource.cardSkeleton[id], newcard.transform.Find("Info/UnitImage"));
             Destroy(unitImage.GetComponent<UnitSpine>());
@@ -48,11 +44,6 @@ public class CardListManager : MonoBehaviour
         newcard.SetActive(false);
     }
 
-    public void DeleteMulliganClassInfo() {
-        for (int i = 0; i < 4; i++) {
-            contentParent.GetChild(0).SetParent(mulliganList);
-        }
-    }
 
     public void OpenMulliganCardList(int cardnum) {
         mulliganList.GetChild(cardnum).gameObject.SetActive(true);
@@ -62,7 +53,6 @@ public class CardListManager : MonoBehaviour
         GameObject remove;
         hss.RemoveChild(index, out remove);
         Destroy(remove);
-        Destroy(contentParent.GetChild(index).gameObject);
     }
 
     public void OpenCardList(int cardnum) {
@@ -96,15 +86,40 @@ public class CardListManager : MonoBehaviour
 
         info.Find("Cost/CostText").GetComponent<Text>().text = data.cost.ToString();
 
+        obj.transform.Find("Class1Button").name = data.class_1;
         if (data.class_2 == null)
             obj.transform.Find("Class2Button").gameObject.SetActive(false);
+        else
+            obj.transform.Find("Class2Button").name = data.class_2;
     }
 
-    public void SetCardClassInfo(GameObject obj, CardData data) {
-        obj.transform.GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetComponent<Text>().text = data.class_1.ToString();
-        if (data.class_2 != null)
-            obj.transform.GetChild(1).GetChild(0).GetChild(0).GetChild(0).GetComponent<Text>().text = data.class_1.ToString();
-        else
-            obj.transform.GetChild(1).gameObject.SetActive(false);
+
+    public void OpenUnitInfoWindow(Vector3 inputPos) {
+        if (Input.GetMouseButtonDown(0)) {
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(inputPos);
+
+            LayerMask mask = (1 << LayerMask.NameToLayer("UnitInfo"));
+            RaycastHit2D[] hits = Physics2D.RaycastAll(
+                new Vector2(mousePos.x, mousePos.y),
+                Vector2.zero,
+                Mathf.Infinity,
+                mask
+            );
+
+            if (hits != null) {
+                foreach (RaycastHit2D hit in hits) {
+                    GameObject selectedTarget = hit.collider.gameObject.GetComponentInParent<PlaceMonster>().gameObject;
+                    string objName = hit.collider.gameObject.GetComponentInParent<PlaceMonster>().myUnitNum.ToString() + "unit";
+                    transform.GetChild(1).Find(objName).gameObject.SetActive(true);
+                }
+            }
+        }
+    }
+
+    public void SetFeildUnitInfo(CardData data, int unitNum) {
+        GameObject info = Instantiate(firstInfoPrefab, transform.Find("FieldUnitInfo"));
+        info.name = unitNum.ToString() + "unit";
+        SetCardInfo(info, data);
+        info.SetActive(false);
     }
 }

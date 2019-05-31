@@ -52,7 +52,7 @@ namespace SocketFormat {
         public User user;
         public string state;
         public string camp;
-        public int resource;
+        public int? resource;
         public Deck deck;
         public Hero hero;
 
@@ -98,6 +98,6 @@ namespace SocketFormat {
         public int maxHp;
         public int currentHp;
         public int shildCount;
-        public string shildGauge;
+        public int shildGauge;
     }
 }

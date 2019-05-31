@@ -16,12 +16,12 @@ namespace SocketFormat {
         
         public static void ShowBattleData(GameState state, int line, bool isBattle) {
             string mapData = JsonConvert.SerializeObject(state.map.lines[line]);
-            string heroData = JsonConvert.SerializeObject(state.players.human.hero);
-            string heroData2 = JsonConvert.SerializeObject(state.players.orc.hero);
+            Hero human = state.players.human.hero;
+            Hero orc = state.players.orc.hero;
             Debug.Log(isBattle ? "======= 싸운 후 State =======" : "======= 에너지 체크 후 State =======");
             Debug.Log(string.Format("{0}번째줄 맵 : {1}", line, mapData));
-            Debug.Log(string.Format("{0}번째줄 휴먼 플레이어 상태 : {1}", line, heroData));
-            Debug.Log(string.Format("{0}번째줄 오크 플레이어 상태 : {1}", line, heroData2));
+            Debug.Log(string.Format("휴먼 체력 : {0}, 방어갯수 : {1}, 방어게이지 : {2}", human.currentHp, human.shildCount, human.shildGauge));
+            Debug.Log(string.Format("오크 체력 : {0}, 방어갯수 : {1}, 방어게이지 : {2}", orc.currentHp, orc.shildCount, orc.shildGauge));
             Debug.Log("=======================================");
         }
 
