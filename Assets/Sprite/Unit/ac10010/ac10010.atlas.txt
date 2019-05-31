@@ -1,0 +1,83 @@
+
+ac10010.png
+size: 1024,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+L_arm
+  rotate: true
+  xy: 639, 157
+  size: 97, 153
+  orig: 97, 153
+  offset: 0, 0
+  index: -1
+L_attack_arm
+  rotate: false
+  xy: 406, 71
+  size: 161, 107
+  orig: 161, 107
+  offset: 0, 0
+  index: -1
+L_leg
+  rotate: false
+  xy: 713, 62
+  size: 72, 93
+  orig: 72, 93
+  offset: 0, 0
+  index: -1
+R_arm
+  rotate: true
+  xy: 241, 9
+  size: 85, 152
+  orig: 85, 152
+  offset: 0, 0
+  index: -1
+R_leg
+  rotate: true
+  xy: 918, 183
+  size: 71, 92
+  orig: 71, 92
+  offset: 0, 0
+  index: -1
+body
+  rotate: true
+  xy: 569, 2
+  size: 153, 142
+  orig: 153, 142
+  offset: 0, 0
+  index: -1
+hand_effect(1)
+  rotate: false
+  xy: 395, 7
+  size: 70, 62
+  orig: 70, 62
+  offset: 0, 0
+  index: -1
+hand_effect(2)
+  rotate: true
+  xy: 794, 175
+  size: 79, 122
+  orig: 79, 122
+  offset: 0, 0
+  index: -1
+head
+  rotate: false
+  xy: 241, 96
+  size: 163, 158
+  orig: 163, 158
+  offset: 0, 0
+  index: -1
+magic_effect
+  rotate: false
+  xy: 2, 5
+  size: 237, 249
+  orig: 237, 249
+  offset: 0, 0
+  index: -1
+shadow
+  rotate: false
+  xy: 406, 180
+  size: 231, 74
+  orig: 231, 74
+  offset: 0, 0
+  index: -1
