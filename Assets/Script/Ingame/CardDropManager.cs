@@ -66,7 +66,7 @@ public partial class CardDropManager {
                         slotLine[i].GetChild(0).gameObject.SetActive(true);
                     }
                     else {
-                        string[] attribute = unitLine[i][0].GetChild(0).GetComponent<CardHandler>().cardData.attributes;
+                        string[] attribute = unitLine[i][0].GetChild(0).GetComponent<PlaceMonster>().unit.attributes;
                         for (int j = 0; j < attribute.Length; j++) {
                             if (attribute[j] == "chain") {
                                 unitLine[i][0].GetChild(0).position = new Vector3(unitLine[i][0].position.x, unitLine[i][0].GetChild(0).position.y + 0.5f, 0);
@@ -169,22 +169,19 @@ public partial class CardDropManager {
             cardIndex += card.transform.parent.GetSiblingIndex();
         }
         CardHandler cardHandler = card.GetComponent<CardHandler>();
-        int frontOrBack = 1; //뒤에 배치시 0, 앞에 배치시 1, 기본 뒤에 배치 //TODO : 서버에서 앞에서 배치하는걸 위주로 작업해서 기본적으로 앞으로 했습니다.
+        int frontOrBack = 0; //뒤에 배치시 0, 앞에 배치시 1, 기본 뒤에 배치 //TODO : 서버에서 앞에서 배치하는걸 위주로 작업해서 기본적으로 앞으로 했습니다.
+        string posMessage = "front";
         int lineNum = target.parent.GetSiblingIndex();
-        string[] args = {cardHandler.itemID.ToString(), 
-                        "place", 
-                        lineNum.ToString(), 
-                        PlayMangement.instance.player.isHuman ? "human" : "orc", 
-                        frontOrBack == 1 ? "front" : "near"};
-        PlayMangement.instance.socketHandler.UseCard(args);
-
         switch (target.GetSiblingIndex()) {
             case 0:
+                posMessage = "front";
                 break;
             case 1:
+                posMessage = "front";
                 frontOrBack = 1;
                 break;
             case 2:
+                posMessage = "near";
                 unitLine[lineNum][0].GetChild(0).SetParent(unitLine[lineNum][1]);
                 unitLine[lineNum][1].GetChild(0).position = unitLine[lineNum][1].position;
                 unitLine[lineNum][1].GetChild(0).GetComponent<PlaceMonster>().unitLocation = unitLine[lineNum][1].position;
@@ -192,6 +189,12 @@ public partial class CardDropManager {
             default:
                 break;
         }
+        string[] args = {cardHandler.itemID.ToString(),
+                        "place",
+                        lineNum.ToString(),
+                        PlayMangement.instance.player.isHuman ? "human" : "orc",
+                        posMessage};
+        PlayMangement.instance.socketHandler.UseCard(args);
 
         GameObject placedMonster = Instantiate(cardHandler.unit, unitLine[lineNum][frontOrBack]);
         placedMonster.transform.position = unitLine[lineNum][frontOrBack].position;
