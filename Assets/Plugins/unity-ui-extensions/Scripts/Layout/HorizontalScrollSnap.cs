@@ -74,7 +74,7 @@ namespace UnityEngine.UI.Extensions
             int _offset = 0;
             float _dimension = 0;
             float currentXPosition = 0;
-            var pageStepValue = _childSize = (int)panelDimensions.width * ((PageStep == 0) ? 3 : PageStep);
+            var pageStepValue = _childSize = (int)panelDimensions.width * ((PageStep == 0) ? 5 : PageStep);
 
 
             for (int i = 0; i < _screensContainer.transform.childCount; i++)
