@@ -185,7 +185,7 @@ public partial class CardDropManager {
             cardIndex += card.transform.parent.GetSiblingIndex();
         }
         CardHandler cardHandler = card.GetComponent<CardHandler>();
-        int frontOrBack = 0; //뒤에 배치시 0, 앞에 배치시 1, 기본 뒤에 배치 //TODO : 서버에서 앞에서 배치하는걸 위주로 작업해서 기본적으로 앞으로 했습니다.
+        int frontOrBack = 0; //뒤에 배치시 0, 앞에 배치시 1, 기본 뒤에 배치
         string posMessage = "front";
         int lineNum = target.parent.GetSiblingIndex();
         switch (target.GetSiblingIndex()) {
