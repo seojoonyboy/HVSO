@@ -83,6 +83,7 @@ public class CardHandDeckManager : MonoBehaviour {
     /// 멀리건 완료 버튼 클릭 함수
     /// </summary>
     public void FirstDrawCardChange() {
+        PlayMangement.instance.isFirst = false;
         foreach (GameObject cards in firstDrawList) 
             cards.transform.Find("ChangeButton").gameObject.SetActive(false);
         StartCoroutine(DrawChangedCards());
@@ -346,7 +347,10 @@ public class CardHandDeckManager : MonoBehaviour {
         id = newCard.id;
         itemId = newCard.itemId;
         card.GetComponent<CardHandler>().DrawCard(id, itemId);
-
+        GameObject infoList = GameObject.Find("CardInfoList");
+        infoList.GetComponent<CardListManager>().AddMulliganCardInfo(card.GetComponent<CardHandler>().cardData, id);
+        Destroy(firstDrawParent.parent.Find("FirstCardInfoList").GetChild(index).gameObject);
+        firstDrawParent.parent.Find("FirstCardInfoList").GetChild(3).SetSiblingIndex(index);
         card.transform.position = beforeCardObject.transform.position;
         card.transform.localScale = beforeCardObject.transform.localScale;
         Destroy(beforeCardObject);

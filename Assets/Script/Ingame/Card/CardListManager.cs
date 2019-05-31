@@ -63,7 +63,9 @@ public class CardListManager : MonoBehaviour
 
     public void SetCardInfo(GameObject obj, CardData data) {
         Transform info = obj.transform.GetChild(0);
+        info.Find("Name").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites[data.rarelity + "_ribon"];
         info.Find("Name/NameText").GetComponent<Text>().text = data.name;
+        info.Find("UnitDialogue").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites[data.rarelity + "_flag"];
         if (data.hp != null)
             info.Find("HP/HpText").GetComponent<Text>().text = data.hp.ToString();
         else
@@ -86,11 +88,17 @@ public class CardListManager : MonoBehaviour
 
         info.Find("Cost/CostText").GetComponent<Text>().text = data.cost.ToString();
 
+        obj.transform.Find("Class1Button").GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[data.class_1];
         obj.transform.Find("Class1Button").name = data.class_1;
         if (data.class_2 == null)
             obj.transform.Find("Class2Button").gameObject.SetActive(false);
-        else
+        else {
+            obj.transform.Find("Class2Button").GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[data.class_2];
             obj.transform.Find("Class2Button").name = data.class_2;
+        }
+        if(data.skills.Length != 0) {
+            info.Find("SkillInfo").GetComponent<Text>().text = data.skills[0].desc;
+        }
     }
 
 
