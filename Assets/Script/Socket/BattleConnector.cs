@@ -219,7 +219,7 @@ public partial class BattleConnector : MonoBehaviour {
         Debug.Log("WebSocket State : end_battle_turn");
     }
 
-    public void line_battle(string line) {
+    public void line_battle(string line, string camp) {
         int line_num = int.Parse(line);
         lineBattleList.Enqueue(gameState);
         lineBattleList.checkCount();

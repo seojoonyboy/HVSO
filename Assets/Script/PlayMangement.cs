@@ -154,23 +154,23 @@ public partial class PlayMangement : MonoBehaviour
     }
 
     IEnumerator EnemySummonMonster() {
+        yield return new WaitForSeconds(1.0f);
         #region socket use Card
         while(!socketHandler.cardPlayFinish()) {
             yield return socketHandler.useCardList.WaitNext();
-            Debug.Log("card summon!");
             //TODO : 유닛 소환인지 마법 사용인지 파악을 할 필요가 있음
             SocketFormat.PlayHistory history = socketHandler.getHistory();
-            if(history != null)
+            if(history != null) {
                 if(history.cardItem.type.CompareTo("unit")==0) SummonMonster(history);
                 else SummonMagic(history);
+                SocketFormat.DebugSocketData.SummonCardData(history);
+            }
             yield return new WaitForSeconds(0.5f);
         }
         #endregion
 
         yield return new WaitForSeconds(1.0f);
-        
-        string log = Newtonsoft.Json.JsonConvert.SerializeObject(socketHandler.gameState.players.enemyPlayer(enemyPlayer.isHuman).deck.handCards);
-        Debug.Log(string.Format("적의 핸드 리스트 : {0}", log));
+        SocketFormat.DebugSocketData.ShowHandCard(socketHandler.gameState.players.enemyPlayer(enemyPlayer.isHuman).deck.handCards);
         enemyPlayer.ReleaseTurn();
         StopCoroutine("EnemySummonMonster");
     }
@@ -314,7 +314,6 @@ public partial class PlayMangement : MonoBehaviour
         int line = 0;
         yield return new WaitForSeconds(1.1f);
         while (line < 5) {
-            yield return WaitSocketData(socketHandler.lineBattleList, line, true);
             yield return battleLine(line);
             yield return WaitSocketData(socketHandler.mapClearList, line, false);
             if (isGame == false) break;
@@ -334,14 +333,18 @@ public partial class PlayMangement : MonoBehaviour
     IEnumerator battleLine(int line) {
         backGround.transform.GetChild(line).Find("BattleLineEffect").gameObject.SetActive(true);
         if (player.isHuman == false) {
+            yield return WaitSocketData(socketHandler.lineBattleList, line, true);
             yield return battleUnit(player.backLine, line);
             yield return battleUnit(player.frontLine, line);
+            yield return WaitSocketData(socketHandler.lineBattleList, line, true);
             yield return battleUnit(enemyPlayer.backLine, line);
             yield return battleUnit(enemyPlayer.frontLine, line);
         }
         else {
+            yield return WaitSocketData(socketHandler.lineBattleList, line, true);
             yield return battleUnit(enemyPlayer.backLine, line);
             yield return battleUnit(enemyPlayer.frontLine, line);
+            yield return WaitSocketData(socketHandler.lineBattleList, line, true);
             yield return battleUnit(player.backLine, line);
             yield return battleUnit(player.frontLine, line);
         }
@@ -374,14 +377,8 @@ public partial class PlayMangement : MonoBehaviour
     IEnumerator WaitSocketData(SocketFormat.QueueSocketList<SocketFormat.GameState> queueList, int line, bool isBattle) {
         yield return queueList.WaitNext();
         SocketFormat.GameState state = queueList.Dequeue();
-        string mapData = Newtonsoft.Json.JsonConvert.SerializeObject(state.map.lines[line]);
-        string heroData = Newtonsoft.Json.JsonConvert.SerializeObject(state.players.human.hero);
-        string heroData2 = Newtonsoft.Json.JsonConvert.SerializeObject(state.players.orc.hero);
-        Debug.Log(isBattle ? "======= 싸운 후 State =======" : "======= 에너지 체크 후 State =======");
-        Debug.Log(string.Format("{0}번째줄 맵 : {1}", line, mapData));
-        Debug.Log(string.Format("{0}번째줄 휴먼 플레이어 상태 : {1}", line, heroData));
-        Debug.Log(string.Format("{0}번째줄 오크 플레이어 상태 : {1}", line, heroData2));
-        Debug.Log("=======================================");
+        Debug.Log("쌓인 데이터 리스트 : " + queueList.Count);
+        SocketFormat.DebugSocketData.ShowBattleData(state, line, isBattle);
         //TODO : 데이터 체크 및 데이터 동기화 필요
     }
 }
