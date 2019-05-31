@@ -346,10 +346,7 @@ public class CardHandDeckManager : MonoBehaviour {
             card = Instantiate(magicCardPrefab, firstDrawParent);
         string id;
         int itemId = -1;
-        if(newCard.isHeroCard)
-            id = newCard.cardId;
-        else
-            id = newCard.id;
+        id = newCard.id;
         itemId = newCard.itemId;
         card.GetComponent<CardHandler>().DrawCard(id, itemId);
 
