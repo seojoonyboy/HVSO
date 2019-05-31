@@ -5,8 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public partial class PlayMangement : MonoBehaviour
-{
+public partial class PlayMangement : MonoBehaviour {
     public PlayerController player, enemyPlayer;
     public GameObject card, back;
     public Sprite plantResourceIcon, zombieResourceIcon;
@@ -14,6 +13,7 @@ public partial class PlayMangement : MonoBehaviour
     public GameObject cardDB;
     Camera cam;
     public GameObject uiSlot;
+    public GameObject canvas;
     public bool isGame = true;
     public bool isFirst = true;
     public static PlayMangement instance { get; private set; }
@@ -23,7 +23,7 @@ public partial class PlayMangement : MonoBehaviour
 
     private int turn = 0;
     public GameObject blockPanel;
-    
+    public int unitNum = 0;
 
     private void Awake()
     {
@@ -51,8 +51,13 @@ public partial class PlayMangement : MonoBehaviour
         SetBackGround();
         RequestStartData();
         DistributeResource();
-
         //StartCoroutine(DisconnectTest());
+    }
+
+    private void Update() {
+        if (Input.GetMouseButtonDown(0)) {
+            canvas.transform.GetChild(3).GetComponent<CardListManager>().OpenUnitInfoWindow(Input.mousePosition);
+        }
     }
 
     private void SetWorldScale() {
@@ -66,8 +71,8 @@ public partial class PlayMangement : MonoBehaviour
             backGround.transform.localScale = new Vector3(width / backSprite.sprite.bounds.size.x, width / backSprite.sprite.bounds.size.x, 1);
         else
             backGround.transform.localScale = new Vector3(height / backSprite.sprite.bounds.size.y, height / backSprite.sprite.bounds.size.y, 1); ;
-        
-        GameObject canvas = GameObject.Find("Canvas");
+
+        canvas = GameObject.Find("Canvas");
         Vector3 canvasScale = canvas.transform.localScale;
         canvas.transform.localScale = new Vector3(canvasScale.x * backGround.transform.localScale.x, canvasScale.y * backGround.transform.localScale.y, 1);
 
@@ -235,7 +240,7 @@ public partial class PlayMangement : MonoBehaviour
         }
 
 
-        monster.GetComponent<PlaceMonster>().Init();
+        monster.GetComponent<PlaceMonster>().Init(cardData);
         monster.GetComponent<PlaceMonster>().SpawnUnit();
 
         EnemyUnitsObserver.UnitAdded(monster, i, 0);

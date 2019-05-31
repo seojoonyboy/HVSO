@@ -72,15 +72,14 @@ MonoBehaviour:
     m_FontStyle: 2
     m_BestFit: 1
     m_MinSize: 10
-    m_MaxSize: 100
+    m_MaxSize: 50
     m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\"\uB0B4 \uB4A4\uC5D0 \uC228\uC5B4\uB77C!\n\uB098\uC758 \uBC29\uD328\uB294
-    \uBB34\uC801\uC774\uB2C8!\""
+  m_Text: Unit Dialog
 --- !u!114 &7938605163085753801
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1198,8 +1197,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uC774 \uB4A4\uC5D0 \uC788\uB294 \uC720\uB2DB\uC740 \uBC29\uC5B4+2\uB97C
-    \uC5BB\uC2B5\uB2C8\uB2E4."
+  m_Text: Skill Info
 --- !u!114 &8863686304404707835
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -107,4 +107,33 @@ public class CardListManager : MonoBehaviour
         else
             obj.transform.GetChild(1).gameObject.SetActive(false);
     }
+
+    public void OpenUnitInfoWindow(Vector3 inputPos) {
+        if (Input.GetMouseButtonDown(0)) {
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(inputPos);
+
+            LayerMask mask = (1 << LayerMask.NameToLayer("UnitInfo"));
+            RaycastHit2D[] hits = Physics2D.RaycastAll(
+                new Vector2(mousePos.x, mousePos.y),
+                Vector2.zero,
+                Mathf.Infinity,
+                mask
+            );
+
+            if (hits != null) {
+                foreach (RaycastHit2D hit in hits) {
+                    GameObject selectedTarget = hit.collider.gameObject.GetComponentInParent<PlaceMonster>().gameObject;
+                    string objName = hit.collider.gameObject.GetComponentInParent<PlaceMonster>().myUnitNum.ToString() + "unit";
+                    transform.GetChild(1).Find(objName).gameObject.SetActive(true);
+                }
+            }
+        }
+    }
+
+    public void SetFeildUnitInfo(CardData data, int unitNum) {
+        GameObject info = Instantiate(firstInfoPrefab, transform.Find("FieldUnitInfo"));
+        info.name = unitNum.ToString() + "unit";
+        SetCardInfo(info, data);
+        info.SetActive(false);
+    }
 }
