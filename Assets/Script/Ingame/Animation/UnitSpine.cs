@@ -129,7 +129,6 @@ public class UnitSpine : MonoBehaviour
         if(e.Data.Name == "APPEAR") {
             GameObject effect = Instantiate(PlayMangement.instance.effectManager.appearEffect, transform);
             effect.transform.position = transform.position;
-            testAttack();
             Destroy(effect.gameObject, effect.GetComponent<ParticleSystem>().main.duration - 0.2f);
         }
 
