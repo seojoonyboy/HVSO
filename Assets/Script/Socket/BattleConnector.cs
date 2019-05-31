@@ -211,7 +211,8 @@ public partial class BattleConnector : MonoBehaviour {
 
     public void begin_battle_turn() {
         Debug.Log("WebSocket State : begin_battle_turn");
-        //Invoke("TurnOver", 3f);
+        lineBattleList.isDone = false;
+        mapClearList.isDone = false;
     }
 
     public void end_battle_turn() {
@@ -220,11 +221,15 @@ public partial class BattleConnector : MonoBehaviour {
 
     public void line_battle(string line) {
         int line_num = int.Parse(line);
+        lineBattleList.Enqueue(gameState);
+        lineBattleList.checkCount();
         Debug.Log("WebSocket State : line_battle");
     }
 
     public void map_clear(string line) {
         int line_num = int.Parse(line);
+        mapClearList.Enqueue(gameState);
+        mapClearList.checkCount();
         Debug.Log("WebSocket State : map_clear");
     }
 
@@ -256,7 +261,7 @@ public partial class BattleConnector : MonoBehaviour {
         string enemyCamp = PlayMangement.instance.enemyPlayer.isHuman ? "human" : "orc";
         string cardCamp = gameState.lastUse.cardItem.camp;
         bool isEnemyCard = cardCamp.CompareTo(enemyCamp) == 0;
-        if(isEnemyCard) useCardList.historyQueue.Enqueue(gameState.lastUse);
+        if(isEnemyCard) useCardList.Enqueue(gameState.lastUse);
     }
 
 }
@@ -265,7 +270,9 @@ public partial class BattleConnector : MonoBehaviour {
 public partial class BattleConnector : MonoBehaviour {
     private string status;
     private bool getNewCard = false;
-    public UseCardList useCardList = new UseCardList();
+    public QueueSocketList<PlayHistory> useCardList = new QueueSocketList<PlayHistory>();
+    public QueueSocketList<GameState> lineBattleList = new QueueSocketList<GameState>();
+    public QueueSocketList<GameState> mapClearList = new QueueSocketList<GameState>();
 
     public IEnumerator WaitGetCard() {
         while(!getNewCard) {
@@ -275,37 +282,57 @@ public partial class BattleConnector : MonoBehaviour {
         dequeueing = true;
     }
 
-    public IEnumerator WaitUseCard() {
-        while(!useCardList.allDone) {
-            yield return new WaitForFixedUpdate();
-            if(useCardList.historyQueue.Count != 0) break;
-        }
-    }
-
     public bool cardPlayFinish() {
         return useCardList.allDone;
     }
 
     public PlayHistory getHistory() {
-        if(useCardList.historyQueue.Count == 0) return null;
-        return useCardList.historyQueue.Dequeue();
+        return useCardList.Dequeue();
     }
 
     private void checkMyTurn(bool isHuman) {
         if(PlayMangement.instance.player.isHuman != isHuman)
             useCardList.isDone = false;
     }
+
+    public GameState getStateList(bool isBattleEnd) {
+        return isBattleEnd ? mapClearList.Dequeue() : lineBattleList.Dequeue();
+    }
 }
 namespace SocketFormat {
-    public class UseCardList {
+    public class QueueSocketList<T> {
         public bool isDone;
-        public Queue<PlayHistory> historyQueue;
+        private Queue<T> queue;
+        private int totalCount;
 
-        public UseCardList() {
+        public QueueSocketList() {
             isDone = true;
-            historyQueue = new Queue<PlayHistory>();
+            queue = new Queue<T>();
+            totalCount = 0;
         }
 
-        public bool allDone { get { return isDone && historyQueue.Count == 0;}}
-    }   
+        public void Enqueue(T value) {
+            totalCount++;
+            queue.Enqueue(value);
+        }
+
+        public T Dequeue() {
+            if(queue.Count == 0) return default(T);
+            return queue.Dequeue();
+        }
+
+        public void checkCount() {
+            if(totalCount == 5) isDone = true;
+        }
+        public int Count { get { return queue.Count; } }
+
+        public bool allDone { get { return isDone && queue.Count == 0; } }
+
+        public IEnumerator WaitNext() {
+            while(allDone) {
+                yield return new WaitForFixedUpdate();
+                if(Count != 0) break;
+            }
+        }
+    }
 }

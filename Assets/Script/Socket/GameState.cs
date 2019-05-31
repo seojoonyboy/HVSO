@@ -42,6 +42,9 @@ namespace SocketFormat {
         public Player myPlayer(bool race) {
             return race ? human : orc;
         }
+        public Player enemyPlayer(bool race) {
+            return race ? human : orc;
+        } 
     }
 
     public class Player {
@@ -77,7 +80,9 @@ namespace SocketFormat {
     }
 
     public class Card : CardInventory {
+        #pragma warning disable CS0108
         public string id;
+        #pragma warning restore CS0108
         public int itemId;
     }
 
