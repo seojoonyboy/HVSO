@@ -66,11 +66,17 @@ public partial class PlayMangement : MonoBehaviour {
         Debug.Log(ratio);
 
         float height = Camera.main.orthographicSize * 2, width = height / Screen.height * Screen.width;
+        float backgroundScale;
 
-        if (ratio > 1.77f)
-            backGround.transform.localScale = new Vector3(width / backSprite.sprite.bounds.size.x, width / backSprite.sprite.bounds.size.x, 1);
-        else
-            backGround.transform.localScale = new Vector3(height / backSprite.sprite.bounds.size.y, height / backSprite.sprite.bounds.size.y, 1); ;
+        if (ratio > 1.77f) {
+            backgroundScale = width / backSprite.sprite.bounds.size.x;
+            backGround.transform.localScale = new Vector3(backgroundScale, backgroundScale, 1);
+        }
+        else {
+            backgroundScale = height / backSprite.sprite.bounds.size.y;
+            backGround.transform.localScale = new Vector3(backgroundScale, backgroundScale, 1); ;
+        }
+        Debug.Log(Mathf.RoundToInt((float) 1f / backgroundScale));
 
         canvas = GameObject.Find("Canvas");
         Vector3 canvasScale = canvas.transform.localScale;
