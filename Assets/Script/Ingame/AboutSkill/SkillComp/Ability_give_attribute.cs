@@ -54,11 +54,39 @@ namespace SkillModules {
                     foreach(Target target in skillData.targets) {
                         //적을 지목
                         if((target.method == "played_target") && (target.args.ToList().Contains("enemy"))) {
-                            
+                            Transform result = CheckUnit();
+                            if(result != null) {
+                                Debug.Log("적이 감지되었습니다.");
+                                GetComponent<MagicDragHandler>().UseCard();
+                            }
+                        }
+
+                        else if((target.method == "played_target") && (target.args.ToList().Contains("my"))){
+                            Transform result = CheckUnit();
+                            if(result != null) {
+                                Debug.Log("아군이 감지되었습니다.");
+                                GetComponent<MagicDragHandler>().UseCard();
+                            }
                         }
                     }
                 }
             }
+        }
+
+        Transform CheckUnit() {
+            Vector3 origin = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            origin = new Vector3(origin.x, origin.y, origin.z);
+            Ray2D ray = new Ray2D(origin, Vector2.zero);
+
+            RaycastHit2D[] hits = Physics2D.RaycastAll(ray.origin, ray.direction, Mathf.Infinity);
+
+            foreach(RaycastHit2D hit in hits) {
+                if(hit.transform.GetComponentInParent<PlaceMonster>() != null) {
+                    Debug.Log(hit.collider.name);
+                    return hit.transform.GetComponentInParent<PlaceMonster>().transform;
+                }
+            }
+            return null;
         }
     }
 }
