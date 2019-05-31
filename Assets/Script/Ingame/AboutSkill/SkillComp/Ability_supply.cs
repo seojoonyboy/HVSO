@@ -28,6 +28,7 @@ namespace SkillModules {
                     playMangement.player.cdpm.AddCard(null, cards[i]);
                 }
             });
+            GetComponent<MagicDragHandler>().AttributeUsed(GetComponent<Ability_supply>());
         }
     }
 }

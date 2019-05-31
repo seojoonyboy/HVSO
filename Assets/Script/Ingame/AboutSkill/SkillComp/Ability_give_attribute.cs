@@ -57,7 +57,11 @@ namespace SkillModules {
                             Transform result = CheckUnit();
                             if(result != null) {
                                 Debug.Log("적이 감지되었습니다.");
-                                GetComponent<MagicDragHandler>().UseCard();
+                                string attributeName = skillData.effects[0].args[0];
+                                if(attributeName == "stun") {
+                                    result.gameObject.AddComponent<stun>();
+                                }
+                                GetComponent<MagicDragHandler>().AttributeUsed(GetComponent<Ability_give_attribute>());
                             }
                         }
 
@@ -65,7 +69,7 @@ namespace SkillModules {
                             Transform result = CheckUnit();
                             if(result != null) {
                                 Debug.Log("아군이 감지되었습니다.");
-                                GetComponent<MagicDragHandler>().UseCard();
+                                GetComponent<MagicDragHandler>().AttributeUsed(GetComponent<Ability_give_attribute>());
                             }
                         }
                     }

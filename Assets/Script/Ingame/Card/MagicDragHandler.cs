@@ -61,6 +61,11 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         OffLineHighlight();
     }
 
+    public void AttributeUsed(MonoBehaviour behaviour) {
+        Destroy(behaviour);
+        if (GetComponents<Ability>() == null) UseCard();
+    }
+
     public void UseCard() {
         int cardIndex = 0;
         if (transform.parent.parent.name == "CardSlot_1")
