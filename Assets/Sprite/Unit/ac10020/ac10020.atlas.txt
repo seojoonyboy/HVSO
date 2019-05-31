@@ -1,0 +1,69 @@
+
+ac10020.png
+size: 1024,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+L_arm
+  rotate: true
+  xy: 608, 41
+  size: 99, 102
+  orig: 99, 102
+  offset: 0, 0
+  index: -1
+L_leg
+  rotate: false
+  xy: 712, 44
+  size: 74, 96
+  orig: 74, 96
+  offset: 0, 0
+  index: -1
+R_arm
+  rotate: true
+  xy: 840, 116
+  size: 102, 105
+  orig: 102, 105
+  offset: 0, 0
+  index: -1
+R_leg
+  rotate: false
+  xy: 947, 123
+  size: 75, 95
+  orig: 75, 95
+  offset: 0, 0
+  index: -1
+body
+  rotate: false
+  xy: 282, 49
+  size: 158, 169
+  orig: 158, 169
+  offset: 0, 0
+  index: -1
+eye
+  rotate: true
+  xy: 442, 2
+  size: 70, 89
+  orig: 70, 89
+  offset: 0, 0
+  index: -1
+head
+  rotate: false
+  xy: 442, 74
+  size: 164, 144
+  orig: 164, 144
+  offset: 0, 0
+  index: -1
+shadow
+  rotate: false
+  xy: 608, 142
+  size: 230, 76
+  orig: 230, 76
+  offset: 0, 0
+  index: -1
+weapon
+  rotate: true
+  xy: 2, 33
+  size: 185, 278
+  orig: 185, 278
+  offset: 0, 0
+  index: -1
