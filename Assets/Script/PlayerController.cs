@@ -230,6 +230,38 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void ActiveOrcTurn() {
+        myTurn = true;
+        if (isPlayer == true) {
+            Transform cardSlot_1 = playerUI.transform.Find("CardHand").GetChild(0);
+            Transform cardSlot_2 = playerUI.transform.Find("CardHand").GetChild(1);
+            for (int i = 0; i < cardSlot_1.childCount; i++) {
+                if (cardSlot_1.GetChild(i).gameObject.activeSelf && cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().cardData.type == "unit")
+                    cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().ActivateCard();
+            }
+            for (int i = 0; i < cardSlot_2.childCount; i++) {
+                if (cardSlot_2.GetChild(i).gameObject.activeSelf && cardSlot_2.GetChild(i).GetChild(0).GetComponent<CardHandler>().cardData.type == "unit")
+                    cardSlot_2.GetChild(i).GetChild(0).GetComponent<CardHandler>().ActivateCard();
+            }
+        }
+    }
+
+    public void ActiveOrcSpecTurn() {
+        myTurn = true;
+        if (isPlayer == true) {
+            Transform cardSlot_1 = playerUI.transform.Find("CardHand").GetChild(0);
+            Transform cardSlot_2 = playerUI.transform.Find("CardHand").GetChild(1);
+            for (int i = 0; i < cardSlot_1.childCount; i++) {
+                if (cardSlot_1.GetChild(i).gameObject.activeSelf && cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().cardData.type == "magic")
+                    cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().ActivateCard();
+            }
+            for (int i = 0; i < cardSlot_2.childCount; i++) {
+                if (cardSlot_2.GetChild(i).gameObject.activeSelf && cardSlot_2.GetChild(i).GetChild(0).GetComponent<CardHandler>().cardData.type == "magic")
+                    cardSlot_2.GetChild(i).GetChild(0).GetComponent<CardHandler>().ActivateCard();
+            }
+        }
+    }
+
     public void DisablePlayer() {
         myTurn = false;
         if (isPlayer == true) {

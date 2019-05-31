@@ -280,8 +280,8 @@ public class CardHandDeckManager : MonoBehaviour {
             case 6:
                 if (index > 3) {
                     slot_1.GetChild(3).SetParent(slot_2);
-                    slot_2.GetChild(2).SetAsFirstSibling();
                     slot_2.GetChild(4).SetParent(slot_1);
+                    slot_2.GetChild(4).SetAsFirstSibling();
                 }
                 break;
             case 5:

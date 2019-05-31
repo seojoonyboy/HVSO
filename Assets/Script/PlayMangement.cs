@@ -264,7 +264,7 @@ public partial class PlayMangement : MonoBehaviour {
         switch (currentTurn) {
             case "ZOMBIE":
                 if(player.isHuman == false) {
-                    player.ActivePlayer();
+                    player.ActiveOrcTurn();
                     enemyPlayer.DisablePlayer();
                 }
                 else {
@@ -288,7 +288,7 @@ public partial class PlayMangement : MonoBehaviour {
 
             case "SECRET":
                 if (player.isHuman == false) {
-                    player.ActivePlayer();
+                    player.ActiveOrcSpecTurn();
                     enemyPlayer.DisablePlayer();
                 }
                 else {
@@ -297,6 +297,7 @@ public partial class PlayMangement : MonoBehaviour {
                 }
                 break;
             case "BATTLE":
+                player.DisablePlayer();
                 StartBattle();
                 break;
         }

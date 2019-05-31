@@ -38,7 +38,12 @@ public partial class UnitDragHandler : CardHandler, IBeginDragHandler, IDragHand
         iTween.MoveTo(gameObject, startPos, 0.3f);
         blockButton = PlayMangement.instance.player.dragCard = false;
         PlayMangement.instance.player.isPicking.Value = false;
-        if (PlayMangement.instance.player.getPlayerTurn == true && PlayMangement.instance.player.resource.Value >= cardData.cost) {
+        if (!isDropable) {
+            highlighted = false;
+            CardDropManager.Instance.HighLightSlot(highlightedSlot, highlighted);
+            highlightedSlot = null;
+        }
+        else {
             GameObject unitPref = CardDropManager.Instance.DropUnit(gameObject, CheckSlot());
             if (unitPref != null) {
                 foreach (dataModules.Skill skill in cardData.skills) {
@@ -55,12 +60,6 @@ public partial class UnitDragHandler : CardHandler, IBeginDragHandler, IDragHand
                 object[] parms = new object[] { true, unitPref };
                 PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
             }
-        }
-        else {
-            highlighted = false;
-            CardDropManager.Instance.HighLightSlot(highlightedSlot, highlighted);
-            CardDropManager.Instance.HideDropableSlot();
-            highlightedSlot = null;
         }
 
         CardDropManager.Instance.HideDropableSlot();
