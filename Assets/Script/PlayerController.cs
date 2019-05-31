@@ -71,12 +71,14 @@ public class PlayerController : MonoBehaviour
             else
                 heroSpine.GetComponent<MeshRenderer>().sortingOrder = 8;
 
+            hero.transform.localScale = PlayMangement.instance.backGround.transform.localScale;
         }
         else {
             string heroID = "h10002";
             GameObject hero = Instantiate(AccountManager.Instance.resource.heroSkeleton[heroID], transform);
             hero.transform.SetAsLastSibling();
             heroSpine = hero.GetComponent<HeroSpine>();
+            
 
             if (isPlayer == true) {
                 hero.transform.localScale = new Vector3(-1, 1, 1);
@@ -84,12 +86,15 @@ public class PlayerController : MonoBehaviour
             }
             else
                 heroSpine.GetComponent<MeshRenderer>().sortingOrder = 8;
+
+            hero.transform.localScale = PlayMangement.instance.backGround.transform.localScale;
         }
 
 
         shieldCount = 3;
         Debug.Log(heroSpine);
     }
+    
 
     private void Start()
     {

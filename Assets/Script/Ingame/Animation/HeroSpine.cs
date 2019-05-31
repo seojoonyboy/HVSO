@@ -31,7 +31,6 @@ public class HeroSpine : MonoBehaviour
         skeletonAnimation = GetComponent<SkeletonAnimation>();
         skeletonAnimation.AnimationState.Event += AnimationEvent;
         skeleton = skeletonAnimation.Skeleton;
-
     }
 
     public void AnimationEvent(TrackEntry entry, Spine.Event e) {
@@ -58,9 +57,5 @@ public class HeroSpine : MonoBehaviour
         currentAnimationName = attackAnimationName;
         entry.Complete += Idle;
     }
-
-
-
-
 
 }
