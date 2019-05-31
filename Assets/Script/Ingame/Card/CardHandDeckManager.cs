@@ -48,6 +48,7 @@ public class CardHandDeckManager : MonoBehaviour {
         card.GetComponent<CardHandler>().DrawCard(socketCard.id, socketCard.itemId, true);
 
         if(socketCard.type == "magic") {
+            card.transform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = socketCard.name;
             AddMagicAttribute(ref card);
         }
 
@@ -123,6 +124,7 @@ public class CardHandDeckManager : MonoBehaviour {
 
     public void AddCard(GameObject cardobj = null, SocketFormat.Card cardData = null) {
         GameObject card;
+
         if (cardobj == null) {
             if (cardData.type == "unit")
                 card = Instantiate(unitCardPrefab, cardSpawnPos);
@@ -139,6 +141,7 @@ public class CardHandDeckManager : MonoBehaviour {
             card.GetComponent<CardHandler>().DrawCard(id, itemId);
 
             if(cardData.type == "magic") {
+                card.transform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.name;
                 AddMagicAttribute(ref card);
             }
         }
