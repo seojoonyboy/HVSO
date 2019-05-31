@@ -132,10 +132,7 @@ public class CardHandDeckManager : MonoBehaviour {
             if(cardData == null)
                 id = "ac1000" + UnityEngine.Random.Range(1, 10);
             else {
-                if(cardData.isHeroCard)
-                    id = cardData.cardId;
-                else
-                    id = cardData.id;
+                id = cardData.id;
                 itemId = cardData.itemId;
             }
             card.GetComponent<CardHandler>().DrawCard(id, itemId);
