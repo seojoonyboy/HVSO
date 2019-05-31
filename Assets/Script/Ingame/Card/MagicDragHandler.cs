@@ -43,7 +43,12 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         iTween.MoveTo(gameObject, startPos, 0.3f);
         blockButton = PlayMangement.instance.player.dragCard = false;
         PlayMangement.instance.player.isPicking.Value = false;
-        if (PlayMangement.instance.player.getPlayerTurn == true && PlayMangement.instance.player.resource.Value >= cardData.cost) {
+        if(!isDropable) {
+            highlighted = false;
+            CardDropManager.Instance.HighLightSlot(highlightedSlot, highlighted);
+            highlightedSlot = null;
+        }
+        else {
             selectedLine = highlightedLine;
 
             object[] parms = new object[] { true, gameObject };
@@ -51,19 +56,17 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
 
             if (GetComponents<Ability>() == null) UseCard();
         }
-        else {
-            highlighted = false;
-            CardDropManager.Instance.HighLightSlot(highlightedSlot, highlighted);
-            CardDropManager.Instance.HideDropableSlot();
-            highlightedSlot = null;
-        }
-        
+        CardDropManager.Instance.HideDropableSlot();
         OffLineHighlight();
     }
 
     public void AttributeUsed(MonoBehaviour behaviour) {
-        Destroy(behaviour);
-        if (GetComponents<Ability>() == null) UseCard();
+        DestroyImmediate(behaviour);
+        Debug.Log(behaviour);
+        if (GetComponent<Ability>() == null) {
+            Debug.Log("카드 사용 끝남");
+            UseCard();
+        }
     }
 
     public void UseCard() {
