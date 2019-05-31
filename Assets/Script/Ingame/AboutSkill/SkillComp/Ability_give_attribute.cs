@@ -59,7 +59,8 @@ namespace SkillModules {
                                 Debug.Log("적이 감지되었습니다.");
                                 string attributeName = skillData.effects[0].args[0];
                                 if(attributeName == "stun") {
-                                    result.gameObject.AddComponent<stun>();
+                                    stun _stun = result.gameObject.AddComponent<stun>();
+                                    _stun.Init();
                                 }
                                 GetComponent<MagicDragHandler>().AttributeUsed(GetComponent<Ability_give_attribute>());
                             }
