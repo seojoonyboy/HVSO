@@ -61,6 +61,10 @@ public class PlaceMonster : MonoBehaviour {
             GameObject arrow = Instantiate(unitSpine.arrow, transform);
             arrow.transform.position = gameObject.transform.position;
             arrow.name = "arrow";
+
+            if (isPlayer == false)
+                arrow.transform.localScale = new Vector3(1, -1, 1);
+
             arrow.SetActive(false);
         }
 

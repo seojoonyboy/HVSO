@@ -63,9 +63,11 @@ public class CardListManager : MonoBehaviour
 
     public void SetCardInfo(GameObject obj, CardData data) {
         Transform info = obj.transform.GetChild(0);
-        info.Find("Name").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites[data.rarelity + "_ribon"];
         info.Find("Name/NameText").GetComponent<Text>().text = data.name;
-        info.Find("UnitDialogue").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites[data.rarelity + "_flag"];
+        if (data.rarelity != "legend") {
+            info.Find("Name").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites[data.rarelity + "_ribon"];
+            info.Find("UnitDialogue").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites[data.rarelity + "_flag"];
+        }
         if (data.hp != null)
             info.Find("HP/HpText").GetComponent<Text>().text = data.hp.ToString();
         else

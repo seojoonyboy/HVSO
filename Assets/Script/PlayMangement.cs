@@ -169,7 +169,6 @@ public partial class PlayMangement : MonoBehaviour {
         #region socket use Card
         while(!socketHandler.cardPlayFinish()) {
             yield return socketHandler.useCardList.WaitNext();
-            //TODO : 유닛 소환인지 마법 사용인지 파악을 할 필요가 있음
             SocketFormat.PlayHistory history = socketHandler.getHistory();
             if(history != null) {
                 if(history.cardItem.type.CompareTo("unit")==0) SummonMonster(history);
