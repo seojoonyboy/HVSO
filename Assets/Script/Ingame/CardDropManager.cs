@@ -131,12 +131,12 @@ public partial class CardDropManager {
                 else unitLine[lineNum][0].GetChild(0).position = unitLine[lineNum][1].position;
             }
             if (enemyUnitLine[lineNum][1].childCount > 0) {
-                //ani.SetTrigger("1_to_2");
+                ani.SetTrigger("1_to_2");
             }
             else if (enemyUnitLine[lineNum][0].childCount > 0) {
                 if (unitLine[lineNum][0].childCount > 0)
                     ani.SetTrigger("2_to_1");
-                else
+                else 
                     ani.SetTrigger("1_to_1");
             }
             else {
