@@ -6,6 +6,13 @@ using System.Linq;
 namespace SkillModules {
     public class Ability_supply : Ability {
         protected override void OnEventCallback(object parm) {
+            object[] parms = (object[])parm;
+
+            bool isPlayer = (bool)parms[0];
+            GameObject card = (GameObject)parms[1];
+
+            if (card != gameObject) return;
+
             var effectData = skillData.effects.ToList().Find(x => x.method == "supply");
             int drawNum = 0;
 
