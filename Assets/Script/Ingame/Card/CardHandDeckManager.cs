@@ -83,6 +83,7 @@ public class CardHandDeckManager : MonoBehaviour {
     /// 멀리건 완료 버튼 클릭 함수
     /// </summary>
     public void FirstDrawCardChange() {
+        PlayMangement.instance.isFirst = false;
         foreach (GameObject cards in firstDrawList) 
             cards.transform.Find("ChangeButton").gameObject.SetActive(false);
         StartCoroutine(DrawChangedCards());
@@ -132,10 +133,7 @@ public class CardHandDeckManager : MonoBehaviour {
             if(cardData == null)
                 id = "ac1000" + UnityEngine.Random.Range(1, 10);
             else {
-                if(cardData.isHeroCard)
-                    id = cardData.cardId;
-                else
-                    id = cardData.id;
+                id = cardData.id;
                 itemId = cardData.itemId;
             }
             card.GetComponent<CardHandler>().DrawCard(id, itemId);
@@ -346,13 +344,13 @@ public class CardHandDeckManager : MonoBehaviour {
             card = Instantiate(magicCardPrefab, firstDrawParent);
         string id;
         int itemId = -1;
-        if(newCard.isHeroCard)
-            id = newCard.cardId;
-        else
-            id = newCard.id;
+        id = newCard.id;
         itemId = newCard.itemId;
         card.GetComponent<CardHandler>().DrawCard(id, itemId);
-
+        GameObject infoList = GameObject.Find("CardInfoList");
+        infoList.GetComponent<CardListManager>().AddMulliganCardInfo(card.GetComponent<CardHandler>().cardData, id);
+        Destroy(firstDrawParent.parent.Find("FirstCardInfoList").GetChild(index).gameObject);
+        firstDrawParent.parent.Find("FirstCardInfoList").GetChild(3).SetSiblingIndex(index);
         card.transform.position = beforeCardObject.transform.position;
         card.transform.localScale = beforeCardObject.transform.localScale;
         Destroy(beforeCardObject);

@@ -53,7 +53,9 @@ namespace dataModules {
         public List<Item> items;
     }
 
-    public class HeroCard : BaseCard { }
+    public class HeroCard : BaseCard {
+        public Skill[] skills;
+    }
 
     public class Item : BaseCard {
         public string basicDeckId;
@@ -82,6 +84,7 @@ namespace dataModules {
     public class Skill {
         public Activate activate;
         public Deactivate deactivate;
+        public string desc;
         public Target[] targets;
         public Effect[] effects;
     }

@@ -34,7 +34,7 @@ public class PlayerController : MonoBehaviour
     private int shieldCount = 0;
 
     protected HeroSpine heroSpine;
-
+    public List<Transform> dropableLines;
     public enum HeroState {
         IDLE,
         ATTACK,

@@ -12,13 +12,21 @@ namespace SkillModules {
         protected override void OnEventCallback(object parm) {
             object[] parms = (object[])parm;
             bool isPlayer = (bool)parms[0];
-            GameObject unit = (GameObject)parms[1];
+            GameObject playedObj = (GameObject)parms[1];
 
-            if (unit == gameObject) {
-                GameObject attackTarget = unit.GetComponent<PlaceMonster>().myTarget;
-                string attributeName = skillData.effects[0].args[0];
+            bool isUnit = true;
+            if(playedObj.GetComponent<PlaceMonster>() == null) {
+                isUnit = false;
+            }
+
+            //Scope : Field
+            if (skillData.activate.scope == "field") {
                 foreach (var target in skillData.targets) {
-                    if (target.method == "attack_target") {
+                    //공격시 발동되는 것
+                    if (isUnit && target.method == "attack_target" && (playedObj == gameObject)) {
+                        GameObject attackTarget = playedObj.GetComponent<PlaceMonster>().myTarget;
+                        string attributeName = skillData.effects[0].args[0];
+
                         var comp = attackTarget.GetComponent(System.Type.GetType("SkillModules." + attributeName));
                         if (comp != null) {
                             Debug.Log(comp + "컴포넌트가 이미 존재합니다");
@@ -30,6 +38,23 @@ namespace SkillModules {
                                 ((Attribute)newComp).Init();
                                 //if(newComp.GetType() == typeof(stun))
                             }
+                        }
+                    }
+
+                    //카드를 놓았을 때 발동되는 것
+                    if (target.method == "played_target") {
+
+                    }
+                }
+            }
+            //Scope : Playing
+            else if(skillData.activate.scope == "playing") {
+                //마법 카드
+                if (!isUnit) {
+                    foreach(Target target in skillData.targets) {
+                        //적을 지목
+                        if((target.method == "played_target") && (target.args.ToList().Contains("enemy"))) {
+                            
                         }
                     }
                 }
