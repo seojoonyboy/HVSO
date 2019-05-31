@@ -20,9 +20,11 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         PlayMangement.instance.player.isPicking.Value = true;
 
         //CardDropManager.Instance.ShowDropableSlot(cardData);
+        CardDropManager.Instance.BeginCheckLines();
 
         object[] parms = new object[] { true, gameObject };
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_CARD_PLAY, this, parms);
+
     }
 
     public void OnDrag(PointerEventData eventData) {
@@ -32,7 +34,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         transform.position = new Vector3(cardScreenPos.x, cardScreenPos.y + 0.3f, cardScreenPos.z);
         //CheckHighlight();
 
-        selectedLine = CheckLine();
+        CheckLineHighlight();
     }
 
 
@@ -43,6 +45,8 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         blockButton = PlayMangement.instance.player.dragCard = false;
         PlayMangement.instance.player.isPicking.Value = false;
         if (PlayMangement.instance.player.getPlayerTurn == true && PlayMangement.instance.player.resource.Value >= cardData.cost) {
+            selectedLine = highlightedLine;
+
             object[] parms = new object[] { true, gameObject };
             PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
         }
@@ -52,7 +56,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
             CardDropManager.Instance.HideDropableSlot();
             highlightedSlot = null;
         }
-
-        CardDropManager.Instance.HideDropableSlot();
+        
+        OffLineHighlight();
     }
 }

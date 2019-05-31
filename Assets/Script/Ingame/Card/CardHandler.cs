@@ -27,6 +27,7 @@ public partial class CardHandler : MonoBehaviour {
 
     protected bool highlighted = false;
     protected Transform highlightedSlot;
+    protected Transform highlightedLine;
 
     public CardData cardData;
     public CardDataPackage cardDataPackage;
@@ -75,8 +76,31 @@ public partial class CardHandler : MonoBehaviour {
         }
     }
 
+    protected void OffLineHighlight() {
+        var lineUIParent = PlayMangement.instance.player.dropableLines;
+        foreach (Transform line in lineUIParent) {
+            line.Find("BattleLineEffect").gameObject.SetActive(false);
+            line.Find("BattleLineEffect").GetComponent<SpriteRenderer>().enabled = true;
+        }
+    }
 
-    
+    protected void CheckLineHighlight() {
+        Transform raycastedLine = CheckLine();
+        if (raycastedLine != null) {
+            if (highlightedLine == null) {
+                highlightedLine = raycastedLine;
+
+                highlightedLine.GetComponent<SpriteRenderer>().enabled = false;
+                raycastedLine.GetComponent<SpriteRenderer>().enabled = true;
+            };
+
+            if (highlightedLine != raycastedLine) {
+                highlightedLine.GetComponent<SpriteRenderer>().enabled = false;
+                raycastedLine.GetComponent<SpriteRenderer>().enabled = true;
+            }
+            highlightedLine = raycastedLine;
+        }
+    }
 
     public void CheckHighlight() {
         if (!highlighted) {
@@ -119,15 +143,16 @@ public partial class CardHandler : MonoBehaviour {
     /// <returns></returns>
     protected Transform CheckLine() {
         Vector3 origin = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        origin = new Vector3(origin.x, origin.y + 0.3f, origin.z);
+        origin = new Vector3(origin.x, origin.y, origin.z);
         Ray2D ray = new Ray2D(origin, Vector2.zero);
 
-        RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
+        LayerMask layerMask = 1 << LayerMask.NameToLayer("Line");
+        RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, Mathf.Infinity, layerMask);
+
         if (hit.collider != null && hit.transform.gameObject.layer == 15) {
-            //Debug.Log(hit.collider.name);
+            Debug.Log(hit.collider.transform.parent.name);
             return hit.transform;
         }
-
         return null;
     }
 
