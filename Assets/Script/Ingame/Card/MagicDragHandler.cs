@@ -8,6 +8,8 @@ using System;
 using SkillModules;
 
 public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHandler, IEndDragHandler {
+    public Transform selectedLine;
+
     public void OnBeginDrag(PointerEventData eventData) {
         if (firstDraw) return;
         if (Input.touchCount > 1) return;
@@ -29,6 +31,8 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         Vector3 cardScreenPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         transform.position = new Vector3(cardScreenPos.x, cardScreenPos.y + 0.3f, cardScreenPos.z);
         //CheckHighlight();
+
+        selectedLine = CheckLine();
     }
 
 
@@ -39,22 +43,8 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         blockButton = PlayMangement.instance.player.dragCard = false;
         PlayMangement.instance.player.isPicking.Value = false;
         if (PlayMangement.instance.player.getPlayerTurn == true && PlayMangement.instance.player.resource.Value >= cardData.cost) {
-            GameObject unitPref = CardDropManager.Instance.DropUnit(gameObject, CheckSlot());
-            if (unitPref != null) {
-                foreach (dataModules.Skill skill in cardData.skills) {
-                    foreach (var effect in skill.effects) {
-                        var newComp = unitPref.AddComponent(Type.GetType("SkillModules.Ability_" + effect.method));
-                        if (newComp == null) {
-                            Debug.LogError(effect.method + "에 해당하는 컴포넌트를 찾을 수 없습니다.");
-                        }
-                        else {
-                            ((Ability)newComp).InitData(skill, true);
-                        }
-                    }
-                }
-                object[] parms = new object[] { true, unitPref };
-                PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
-            }
+            object[] parms = new object[] { true, gameObject };
+            PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
         }
         else {
             highlighted = false;

@@ -113,6 +113,24 @@ public partial class CardHandler : MonoBehaviour {
         return null;
     }
 
+    /// <summary>
+    /// 마법 카드를 위한 현재 드래그 위치의 라인 검사
+    /// </summary>
+    /// <returns></returns>
+    protected Transform CheckLine() {
+        Vector3 origin = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        origin = new Vector3(origin.x, origin.y + 0.3f, origin.z);
+        Ray2D ray = new Ray2D(origin, Vector2.zero);
+
+        RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
+        if (hit.collider != null && hit.transform.gameObject.layer == 15) {
+            //Debug.Log(hit.collider.name);
+            return hit.transform;
+        }
+
+        return null;
+    }
+
     public void OpenCardInfoList() {
         if (firstDraw) {
             csm.OpenMulliganCardList(transform.GetSiblingIndex() - 5);
