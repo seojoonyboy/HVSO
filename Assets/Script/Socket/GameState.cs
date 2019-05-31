@@ -98,6 +98,6 @@ namespace SocketFormat {
         public int maxHp;
         public int currentHp;
         public int shildCount;
-        public string shildGauge;
+        public int shildGauge;
     }
 }

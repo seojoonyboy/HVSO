@@ -341,17 +341,21 @@ public partial class PlayMangement : MonoBehaviour {
             yield return WaitSocketData(socketHandler.lineBattleList, line, true);
             yield return battleUnit(player.backLine, line);
             yield return battleUnit(player.frontLine, line);
+            shildDequeue();
             yield return WaitSocketData(socketHandler.lineBattleList, line, true);
             yield return battleUnit(enemyPlayer.backLine, line);
             yield return battleUnit(enemyPlayer.frontLine, line);
+            shildDequeue();
         }
         else {
             yield return WaitSocketData(socketHandler.lineBattleList, line, true);
             yield return battleUnit(enemyPlayer.backLine, line);
             yield return battleUnit(enemyPlayer.frontLine, line);
+            shildDequeue();
             yield return WaitSocketData(socketHandler.lineBattleList, line, true);
             yield return battleUnit(player.backLine, line);
             yield return battleUnit(player.frontLine, line);
+            shildDequeue();
         }
 
         if (player.backLine.transform.GetChild(line).childCount != 0)
@@ -385,6 +389,11 @@ public partial class PlayMangement : MonoBehaviour {
         Debug.Log("쌓인 데이터 리스트 : " + queueList.Count);
         SocketFormat.DebugSocketData.ShowBattleData(state, line, isBattle);
         //TODO : 데이터 체크 및 데이터 동기화 필요
+    }
+
+    private void shildDequeue() {
+        socketHandler.humanData.Dequeue();
+        socketHandler.orcData.Dequeue();
     }
 }
 
