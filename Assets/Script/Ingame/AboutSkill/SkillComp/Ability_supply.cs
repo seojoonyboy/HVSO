@@ -11,7 +11,8 @@ namespace SkillModules {
 
             int.TryParse(effectData.args[0], out drawNum);
             for(int i=0; i<drawNum; i++) {
-                PlayMangement.instance.player.cdpm.AddCard();
+                //TODO : Socket에게 Draw 요청
+                //PlayMangement.instance.player.cdpm.AddCard();
             }
         }
     }
