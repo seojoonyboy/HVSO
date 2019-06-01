@@ -181,7 +181,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
                 observer.UnitRemoved(pos.row, pos.col);
                 Destroy(mon);
                 GameObject enemyCard = Instantiate(playMangement.enemyPlayer.back);
-                enemyCard.transform.SetParent(playMangement.enemyPlayer.playerUI.transform.Find("CardSlot"));
+                enemyCard.transform.SetParent(playMangement.enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(PlayMangement.instance.CountEnemyCard() - 1).GetChild(0));
                 enemyCard.transform.localScale = new Vector3(1, 1, 1);
                 enemyCard.SetActive(true);
                 break;
