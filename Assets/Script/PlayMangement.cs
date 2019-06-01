@@ -7,7 +7,6 @@ using UnityEngine.UI;
 
 public partial class PlayMangement : MonoBehaviour {
     public PlayerController player, enemyPlayer;
-    public GameObject card, back;
     public Sprite plantResourceIcon, zombieResourceIcon;
 
     public GameObject cardDB;
@@ -137,11 +136,6 @@ public partial class PlayMangement : MonoBehaviour {
         }
     }
 
-    public void DistributeCard() {
-        StartCoroutine(player.GenerateCard());
-    }
-
-
     public void RequestStartData() {
         player.SetPlayerStat(20);
         enemyPlayer.SetPlayerStat(20);
@@ -197,16 +191,16 @@ public partial class PlayMangement : MonoBehaviour {
         int i = int.Parse(history.target.args[0]);
         CardData cardData;
         CardDataPackage cardDataPackage = AccountManager.Instance.cardPackage;
-        int enemyCardCount = enemyPlayer.playerUI.transform.Find("CardSlot").childCount;
-        
+        int enemyCardCount = CountEnemyCard();
+
         string id = history.cardItem.id;
 
         cardData = cardDataPackage.data[id];
         Debug.Log("use Magic Card" + history.cardItem.name);
         enemyPlayer.resource.Value -= cardData.cost;
-        Destroy(enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(0).gameObject);
 
         //TODO : EVENT : END_CARD_PLAY 호출
+        Destroy(enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(enemyCardCount - 1).GetChild(0).gameObject);
         return null;
     }
 
@@ -214,7 +208,7 @@ public partial class PlayMangement : MonoBehaviour {
         int i = int.Parse(history.target.args[0]);
         CardData cardData;
         CardDataPackage cardDataPackage = AccountManager.Instance.cardPackage;
-        int enemyCardCount = enemyPlayer.playerUI.transform.Find("CardSlot").childCount;
+        int enemyCardCount = CountEnemyCard();
         GameObject skeleton;
 
         string id = history.cardItem.id;
@@ -262,8 +256,7 @@ public partial class PlayMangement : MonoBehaviour {
         EnemyUnitsObserver.UnitAdded(monster, i, 0);
 
         enemyPlayer.resource.Value -= cardData.cost;
-        Destroy(enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(0).gameObject);
-
+        Destroy(enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(enemyCardCount - 1).GetChild(0).gameObject);
         return monster;
     }
 
@@ -348,7 +341,7 @@ public partial class PlayMangement : MonoBehaviour {
         turn++;
         yield return PlayMangement.instance.socketHandler.WaitGetCard();
         DistributeResource();
-        player.EndTurnDraw();
+        EndTurnDraw();
         yield return new WaitForSeconds(2.0f);
         CustomEvent.Trigger(gameObject, "EndTurn");
         StopCoroutine("battleCoroutine");
@@ -413,6 +406,7 @@ public partial class PlayMangement : MonoBehaviour {
         SocketFormat.GameState state = queueList.Dequeue();
         Debug.Log("쌓인 데이터 리스트 : " + queueList.Count);
         SocketFormat.DebugSocketData.ShowBattleData(state, line, isBattle);
+        if(!isBattle) SocketFormat.DebugSocketData.CheckBattleSynchronization(state, line);
         //TODO : 데이터 체크 및 데이터 동기화 필요
     }
 
@@ -429,6 +423,7 @@ public partial class PlayMangement : MonoBehaviour {
     }
 
     public IEnumerator DrawSpecialCard(bool isHuman) {
+        yield return PlayMangement.instance.socketHandler.WaitGetCard();
         Debug.Log("쉴드 발동!");
         bool isPlayer = (isHuman == player.isHuman);
         if(isPlayer) {
@@ -525,6 +520,65 @@ public partial class PlayMangement {
         resourceWindow.gameObject.SetActive(false);
     }
 
+}
+
+/// <summary>
+/// 카드 드로우 작동
+/// </summary>
+public partial class PlayMangement {
+
+    public void DistributeCard() {
+        StartCoroutine(GenerateCard());
+    }
+
+    public IEnumerator GenerateCard() {
+        IngameNotice.instance.SetNotice("멀리건 시~작~");
+        int i = 0;
+        while (i < 5) {
+            yield return new WaitForSeconds(0.3f);
+            if (i < 4)
+                StartCoroutine(player.cdpm.FirstDraw());
+
+            GameObject enemyCard = new GameObject();
+            if (enemyPlayer.isHuman)
+                enemyCard = Instantiate(Resources.Load("Prefabs/HumanBackCard") as GameObject, enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(CountEnemyCard()));
+            else
+                enemyCard = Instantiate(Resources.Load("Prefabs/OrcBackCard") as GameObject, enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(CountEnemyCard()));
+            enemyCard.transform.position = player.cdpm.cardSpawnPos.position;
+            enemyCard.transform.localScale = new Vector3(1, 1, 1);
+            iTween.MoveTo(enemyCard, enemyCard.transform.parent.position, 0.3f);
+            enemyCard.SetActive(true);
+            i++;
+        }
+    }
+
+    public void EndTurnDraw() {
+        if (isGame == false) return;
+        bool race = player.isHuman;
+        SocketFormat.Card cardData = socketHandler.gameState.players.myPlayer(race).newCard;
+        player.cdpm.AddCard(null, cardData);
+
+        GameObject enemyCard = new GameObject();
+        if (enemyPlayer.isHuman)
+            enemyCard = Instantiate(Resources.Load("Prefabs/HumanBackCard") as GameObject, enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(CountEnemyCard()));
+        else
+            enemyCard = Instantiate(Resources.Load("Prefabs/OrcBackCard") as GameObject, enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(CountEnemyCard()));
+        enemyCard.transform.position = player.cdpm.cardSpawnPos.position;
+        enemyCard.transform.localScale = new Vector3(1, 1, 1);
+        iTween.MoveTo(enemyCard, enemyCard.transform.parent.position, 0.3f);
+        enemyCard.SetActive(true);
+    }
+
+    private int CountEnemyCard() {
+        int enemyNum = 0;
+        for(int i = 0; i < 10; i++){
+            if (enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(i).childCount > 0)
+                enemyNum++;
+            else
+                return enemyNum;
+        }
+        return enemyNum;
+    }
 }
 
 /// <summary>
