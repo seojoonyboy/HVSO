@@ -165,9 +165,8 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         foreach(GameObject mon in enemyList) {
             bool found = false;
             PlaceMonster mondata = mon.GetComponent<PlaceMonster>();
-            IngameClass.Unit monUnit = mondata.unit;
             foreach(SocketFormat.Unit unit in socketList) {
-                if(unit.id.CompareTo(monUnit.id) == 0) {
+                if(unit.itemId.CompareTo(mondata.itemId) == 0) {
                     found = true;
                     break;
                 }
