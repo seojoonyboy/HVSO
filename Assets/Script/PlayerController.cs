@@ -102,32 +102,7 @@ public class PlayerController : MonoBehaviour
         CardDropManager.Instance.SetUnitDropPos();
     }
 
-    public IEnumerator GenerateCard() {
-        int i = 0;
-        while (i < 5) {
-            yield return new WaitForSeconds(0.3f);
-            if(i < 4)
-                StartCoroutine(cdpm.FirstDraw());
-
-            GameObject enemyCard = Instantiate(PlayMangement.instance.enemyPlayer.back);
-            enemyCard.transform.SetParent(PlayMangement.instance.enemyPlayer.playerUI.transform.Find("CardSlot"));
-            enemyCard.transform.localScale = new Vector3(1, 1, 1);
-            enemyCard.SetActive(true);
-            i++;            
-        }
-    }
-
-    public void EndTurnDraw() {
-        if (PlayMangement.instance.isGame == false) return;
-        bool race = PlayMangement.instance.player.isHuman;
-        SocketFormat.Card cardData = PlayMangement.instance.socketHandler.gameState.players.myPlayer(race).newCard;
-        cdpm.AddCard(null, cardData);
-
-        GameObject enemyCard = Instantiate(PlayMangement.instance.enemyPlayer.back);
-        enemyCard.transform.SetParent(PlayMangement.instance.enemyPlayer.playerUI.transform.Find("CardSlot"));
-        enemyCard.transform.localScale = new Vector3(1, 1, 1);
-        enemyCard.SetActive(true);
-    }
+    
 
     public void DrawPlayerCard(GameObject card) {
         cdpm.AddCard();
