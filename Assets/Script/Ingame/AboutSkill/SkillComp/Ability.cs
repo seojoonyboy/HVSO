@@ -166,10 +166,4 @@ public partial class Ability {
     void RemoveListeners() {
         unityEvents.Clear();
     }
-
-    void OnDestroy() {
-        foreach (IngameEventHandler.EVENT_TYPE value in Enum.GetValues(typeof(IngameEventHandler.EVENT_TYPE))) {
-            eventHandler.RemoveListener(value, OnEventOccured);
-        }
-    }
 }
