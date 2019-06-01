@@ -11,7 +11,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
     public Transform selectedLine;
 
     public void OnBeginDrag(PointerEventData eventData) {
-        if (firstDraw || PlayMangement.instance.player.isMulligan) return;
+        if (firstDraw || PlayMangement.instance.isMulligan) return;
         if (Input.touchCount > 1) return;
         if (PlayMangement.instance.player.dragCard) return;
         itsDragging = gameObject;

@@ -83,7 +83,6 @@ public class CardHandDeckManager : MonoBehaviour {
     /// 멀리건 완료 버튼 클릭 함수
     /// </summary>
     public void FirstDrawCardChange() {
-        PlayMangement.instance.isFirst = false;
         foreach (GameObject cards in firstDrawList) 
             cards.transform.Find("ChangeButton").gameObject.SetActive(false);
         StartCoroutine(DrawChangedCards());
@@ -100,6 +99,7 @@ public class CardHandDeckManager : MonoBehaviour {
     /// <returns></returns>
     IEnumerator DrawChangedCards() {
         firstDrawParent.parent.gameObject.GetComponent<Image>().enabled = false;
+        PlayMangement.instance.isMulligan = false;
         PlayMangement.instance.socketHandler.MulliganEnd();
         while (firstDrawList.Count != 0) {
             yield return new WaitForSeconds(0.2f);
@@ -116,7 +116,6 @@ public class CardHandDeckManager : MonoBehaviour {
 
 
         yield return new WaitForSeconds(3.0f);
-        PlayMangement.instance.player.isMulligan = false;
         CustomEvent.Trigger(GameObject.Find("GameManager"), "EndTurn");
         firstDrawParent.gameObject.SetActive(false);
     }
@@ -358,9 +357,11 @@ public class CardHandDeckManager : MonoBehaviour {
         card.GetComponent<CardHandler>().DrawCard(id, itemId);
         GameObject infoList = GameObject.Find("CardInfoList");
         infoList.GetComponent<CardListManager>().AddMulliganCardInfo(card.GetComponent<CardHandler>().cardData, id);
-        Destroy(firstDrawParent.parent.Find("FirstCardInfoList").GetChild(index).gameObject);
-        firstDrawParent.parent.Find("FirstCardInfoList").GetChild(3).SetSiblingIndex(index);
+        Transform firstcardinfolist = firstDrawParent.parent.Find("FirstCardInfoList");
+        DestroyImmediate(firstcardinfolist.GetChild(index).gameObject);
+        firstcardinfolist.GetChild(3).SetSiblingIndex(index);
         card.transform.position = beforeCardObject.transform.position;
+        card.transform.SetSiblingIndex(index + 5);
         card.transform.localScale = beforeCardObject.transform.localScale;
         Destroy(beforeCardObject);
         firstDrawList[index] = card;

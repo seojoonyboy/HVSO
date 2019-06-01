@@ -14,7 +14,7 @@ public partial class PlayMangement : MonoBehaviour {
     public GameObject uiSlot;
     public GameObject canvas;
     public bool isGame = true;
-    public bool isFirst = true;
+    public bool isMulligan = true;
     public bool infoOn = false;
     public static PlayMangement instance { get; private set; }
     public GameObject backGround;
