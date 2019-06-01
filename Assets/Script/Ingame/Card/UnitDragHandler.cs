@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI.Extensions;
 using System;
 using SkillModules;
+using System.Linq;
 
 public partial class UnitDragHandler : CardHandler, IBeginDragHandler, IDragHandler, IEndDragHandler {
     public void OnBeginDrag(PointerEventData eventData) {
@@ -57,6 +58,11 @@ public partial class UnitDragHandler : CardHandler, IBeginDragHandler, IDragHand
                         }
                     }
                 }
+
+                if (unitPref.GetComponent<PlaceMonster>().unit.attackType.ToList().Contains("assault")) {
+                    unitPref.AddComponent<Ability_assault>();
+                }
+
                 object[] parms = new object[] { true, unitPref };
                 PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
             }

@@ -73,6 +73,8 @@ public class IngameEventHandler : MonoBehaviour {
         END_CARD_PLAY,
 
         BEGIN_ATTACK,
-        END_ATTACK
+        END_ATTACK,
+
+        LINE_BATTLE_FINISHED
     }
 }

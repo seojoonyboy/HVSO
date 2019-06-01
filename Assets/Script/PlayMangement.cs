@@ -173,7 +173,13 @@ public partial class PlayMangement : MonoBehaviour {
             yield return socketHandler.useCardList.WaitNext();
             SocketFormat.PlayHistory history = socketHandler.getHistory();
             if(history != null) {
-                if(history.cardItem.type.CompareTo("unit")==0) SummonMonster(history);
+                if (history.cardItem.type.CompareTo("unit") == 0) {
+                    GameObject summonedMonster = SummonMonster(history);
+
+                    object[] parms = new object[] { false, summonedMonster };
+                    EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
+                }
+
                 else SummonMagic(history);
                 SocketFormat.DebugSocketData.SummonCardData(history);
             }
@@ -187,7 +193,7 @@ public partial class PlayMangement : MonoBehaviour {
         StopCoroutine("EnemySummonMonster");
     }
 
-    private void SummonMagic(SocketFormat.PlayHistory history) {
+    private GameObject SummonMagic(SocketFormat.PlayHistory history) {
         int i = int.Parse(history.target.args[0]);
         CardData cardData;
         CardDataPackage cardDataPackage = AccountManager.Instance.cardPackage;
@@ -199,9 +205,12 @@ public partial class PlayMangement : MonoBehaviour {
         Debug.Log("use Magic Card" + history.cardItem.name);
         enemyPlayer.resource.Value -= cardData.cost;
         Destroy(enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(0).gameObject);
+
+        //TODO : EVENT : END_CARD_PLAY 호출
+        return null;
     }
 
-    private void SummonMonster(SocketFormat.PlayHistory history) {
+    private GameObject SummonMonster(SocketFormat.PlayHistory history) {
         int i = int.Parse(history.target.args[0]);
         CardData cardData;
         CardDataPackage cardDataPackage = AccountManager.Instance.cardPackage;
@@ -254,6 +263,8 @@ public partial class PlayMangement : MonoBehaviour {
 
         enemyPlayer.resource.Value -= cardData.cost;
         Destroy(enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(0).gameObject);
+
+        return monster;
     }
 
     public void ChangeTurn() {
@@ -380,6 +391,7 @@ public partial class PlayMangement : MonoBehaviour {
         if (enemyPlayer.frontLine.transform.GetChild(line).childCount != 0)
             enemyPlayer.frontLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().CheckHP();
         backGround.transform.GetChild(line).Find("BattleLineEffect").gameObject.SetActive(false);
+        EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.LINE_BATTLE_FINISHED, this);
     }
 
     IEnumerator battleUnit(GameObject lineObject, int line) {
