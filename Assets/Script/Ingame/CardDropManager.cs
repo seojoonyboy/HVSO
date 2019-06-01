@@ -216,6 +216,7 @@ public partial class CardDropManager {
         placedMonster.transform.position = unitLine[lineNum][frontOrBack].position;
         placedMonster.GetComponent<PlaceMonster>().isPlayer = true;
 
+        placedMonster.GetComponent<PlaceMonster>().itemId = (int)cardHandler.itemID;
         placedMonster.GetComponent<PlaceMonster>().unit.name = cardHandler.cardData.name;
         placedMonster.GetComponent<PlaceMonster>().unit.HP = (int)cardHandler.cardData.hp;
         placedMonster.GetComponent<PlaceMonster>().unit.currentHP = (int)cardHandler.cardData.hp;
