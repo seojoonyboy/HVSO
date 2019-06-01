@@ -597,7 +597,7 @@ public partial class PlayMangement {
         enemyCard.SetActive(true);
     }
 
-    private int CountEnemyCard() {
+    public int CountEnemyCard() {
         int enemyNum = 0;
         for(int i = 0; i < 10; i++){
             if (enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(i).childCount > 0)
