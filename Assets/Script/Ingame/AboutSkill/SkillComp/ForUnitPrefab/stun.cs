@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 namespace SkillModules {
     public class stun : Attribute {
@@ -27,6 +28,8 @@ namespace SkillModules {
 
         public override void Init() {
             Turn = 1;
+            GameObject statusText = GetComponent<PlaceMonster>().gameObject.transform.Find("Status").gameObject;
+            statusText.GetComponent<TextMeshPro>().text = "스턴";
         }
     }
 }

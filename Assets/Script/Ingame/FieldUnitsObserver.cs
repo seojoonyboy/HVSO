@@ -74,6 +74,23 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
 
         return pos;
     }
+
+    public void RefreshFields(Transform[][] arr) {
+        int colCnt = 0;
+        foreach(Transform[] col in arr) {
+            int rowCnt = 0;
+            foreach(Transform row in col) {
+                if(row.transform.childCount != 0) {
+                    units[colCnt, rowCnt] = row.transform.GetChild(0).gameObject;
+                }
+                else {
+                    units[colCnt, rowCnt] = null;
+                }
+                rowCnt++;
+            }
+            colCnt++;
+        }
+    }
 }
 
 public struct Pos {

@@ -9,6 +9,8 @@ public class ambush : MonoBehaviour {
     void Start() {
         eventHandler = PlayMangement.instance.EventHandler;
         GetComponent<PlaceMonster>().unitSpine.HideUnit();
+
+        AddListener();
     }
 
     void AddListener() {
@@ -16,11 +18,16 @@ public class ambush : MonoBehaviour {
     }
 
     private void OnOrcPostTurn(Enum Event_Type, Component Sender, object Param) {
+        Debug.Log("잠복 해제");
         GetComponent<PlaceMonster>().unitSpine.DetectUnit();
         Destroy(GetComponent<ambush>());
     }
 
     void RemoveListener() {
         eventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.BEGIN_ORC_POST_TURN, OnOrcPostTurn);
+    }
+
+    void OnDestroy() {
+        RemoveListener();
     }
 }

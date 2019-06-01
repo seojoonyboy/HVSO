@@ -39,15 +39,17 @@ public class Ability_assault : MonoBehaviour {
 
         if(enemies.Count == 0) {
             if (!isBuffed) {
-                Debug.Log("Assault 스킬 발동");
-                GetComponent<PlaceMonster>().RequestChangeStat(3, 0);
-                isBuffed = true;
+                if (!GetComponent<PlaceMonster>().IsBuffAlreadyExist(gameObject)) {
+                    Debug.Log("Assault 스킬 발동");
+                    GetComponent<PlaceMonster>().AddBuff(new PlaceMonster.Buff(gameObject, 3, 0));
+                    isBuffed = true;
+                }
             }
         }
         //적이 있으면 버프 다시 제거
         else {
             Debug.Log("Assault 스킬 해제");
-            GetComponent<PlaceMonster>().RequestChangeStat(-3, 0);
+            GetComponent<PlaceMonster>().RemoveBuff(gameObject);
             isBuffed = false;
         }
     }

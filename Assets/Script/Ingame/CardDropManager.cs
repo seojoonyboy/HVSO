@@ -4,8 +4,8 @@ using UnityEngine;
 
 public partial class CardDropManager : Singleton<CardDropManager> {
     protected Transform[] slotLine;
-    protected Transform[][] unitLine;
-    protected Transform[][] enemyUnitLine;
+    public Transform[][] unitLine;
+    public Transform[][] enemyUnitLine;
 
     public void SetUnitDropPos() {
         slotLine = new Transform[5];
@@ -261,7 +261,9 @@ public partial class CardDropManager {
 
         GameObject.Find("Player").transform.GetChild(0).GetComponent<PlayerController>().cdpm.DestroyCard(cardIndex);
 
-        PlayMangement.instance.PlayerUnitsObserver.UnitAdded(placedMonster, lineNum, frontOrBack);
+        //PlayMangement.instance.PlayerUnitsObserver.UnitAdded(placedMonster, lineNum, frontOrBack);
+        PlayMangement.instance.PlayerUnitsObserver.RefreshFields(unitLine);
+
         return placedMonster;
     }
 }

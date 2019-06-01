@@ -297,6 +297,7 @@ public partial class PlayMangement : MonoBehaviour {
                     enemyPlayer.ActivePlayer();
                     StartCoroutine("EnemySummonMonster");
                 }
+                EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_ORC_PRE_TURN, this, null);
                 break;
 
             case "PLANT":
@@ -309,6 +310,7 @@ public partial class PlayMangement : MonoBehaviour {
                     enemyPlayer.ActivePlayer();
                     StartCoroutine("EnemySummonMonster");
                 }
+                EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_HUMAN_TURN, this, null);
                 break;
 
             case "SECRET":
@@ -320,10 +322,12 @@ public partial class PlayMangement : MonoBehaviour {
                     player.DisablePlayer();
                     StartCoroutine("WaitSecond");
                 }
+                EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_ORC_POST_TURN, this, null);
                 break;
             case "BATTLE":
                 player.DisablePlayer();
                 StartBattle();
+                EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_BATTLE_TURN, this, null);
                 break;
         }
         if (player.isHuman)
