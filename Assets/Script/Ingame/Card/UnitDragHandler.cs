@@ -70,7 +70,7 @@ public partial class UnitDragHandler : CardHandler, IBeginDragHandler, IDragHand
                         unitPref.AddComponent<Ability_assault>();
                     }
 
-                    if (unitPref.GetComponent<PlaceMonster>().unit.attackType.ToList().Contains("ambush")) {
+                    if (unitPref.GetComponent<PlaceMonster>().unit.attackType.ToList().Contains("stealth")) {
                         unitPref.AddComponent<ambush>();
                     }
                 }
