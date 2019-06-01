@@ -132,7 +132,26 @@ public class UnitSpine : MonoBehaviour
             Destroy(effect.gameObject, effect.GetComponent<ParticleSystem>().main.duration - 0.2f);
         }
 
+        
 
+    }
+
+    public void HideUnit() {
+        skeletonAnimation.skeleton.A = 0.2f;
+        PlaceMonster placeMonster = transform.parent.GetComponent<PlaceMonster>();
+        if (placeMonster != null) {
+            transform.parent.Find("HP").gameObject.SetActive(false);
+            transform.parent.Find("ATK").gameObject.SetActive(false);
+        }
+    }
+
+    public void DetectUnit() {
+        skeletonAnimation.skeleton.A = 1f;
+        PlaceMonster placeMonster = transform.parent.GetComponent<PlaceMonster>();
+        if (placeMonster != null) {
+            transform.parent.Find("HP").gameObject.SetActive(true);
+            transform.parent.Find("ATK").gameObject.SetActive(true);
+        }
     }
 
 

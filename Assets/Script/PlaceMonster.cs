@@ -76,6 +76,7 @@ public class PlaceMonster : MonoBehaviour {
 
         myUnitNum = PlayMangement.instance.unitNum++;
         GameObject.Find("CardInfoList").GetComponent<CardListManager>().SetFeildUnitInfo(data, myUnitNum);
+        
     }
 
     public void SpawnUnit() {
