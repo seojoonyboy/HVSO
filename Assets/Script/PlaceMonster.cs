@@ -371,6 +371,8 @@ public class PlaceMonster : MonoBehaviour {
     }
 
     public void UpdateStat() {
+        CheckHP();
+
         if (unit.currentHP > 0)
             transform.Find("HP").GetComponentInChildren<TextMeshPro>().text = unit.currentHP.ToString();
         else

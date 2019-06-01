@@ -39,10 +39,12 @@ public partial class UnitDragHandler : CardHandler, IBeginDragHandler, IDragHand
         iTween.MoveTo(gameObject, startPos, 0.3f);
         blockButton = PlayMangement.instance.player.dragCard = false;
         PlayMangement.instance.player.isPicking.Value = false;
-        if (!isDropable) {
+        if (!isDropable && IsEnoughResource(cardData.cost)) {
             highlighted = false;
             CardDropManager.Instance.HighLightSlot(highlightedSlot, highlighted);
             highlightedSlot = null;
+
+            UserResource(cardData.cost);
         }
         else {
             GameObject unitPref = CardDropManager.Instance.DropUnit(gameObject, CheckSlot());

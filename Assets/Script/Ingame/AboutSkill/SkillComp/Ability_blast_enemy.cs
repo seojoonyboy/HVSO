@@ -40,7 +40,9 @@ namespace SkillModules {
                         int dmgAmount = 0;
                         int.TryParse(skillData.effects[0].args[0], out dmgAmount);
                         foreach(GameObject selectedUnit in selectedUnits) {
-                            selectedUnit.GetComponent<PlaceMonster>().RequestChangeStat(0, dmgAmount);
+                            Debug.Log(selectedUnit.name + "에게 " + dmgAmount + " 데미지 부여");
+                            selectedUnit.GetComponent<PlaceMonster>().RequestChangeStat(0, -dmgAmount);
+                            GetComponent<MagicDragHandler>().AttributeUsed(GetComponent<Ability_blast_enemy>());
                         }
                     }
                 }

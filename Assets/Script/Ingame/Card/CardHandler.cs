@@ -213,5 +213,13 @@ public partial class CardHandler : MonoBehaviour {
             transform.Find("Cost").GetComponent<Image>().color = Color.gray;
         }
     }
+
+    public bool IsEnoughResource(int cost) {
+        return PlayMangement.instance.player.resource.Value >= cost;
+    }
+
+    public void UserResource(int cost) {
+        PlayMangement.instance.player.resource.Value -= cost;
+    }
 }
 
