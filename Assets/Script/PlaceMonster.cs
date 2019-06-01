@@ -18,6 +18,7 @@ public class PlaceMonster : MonoBehaviour {
     public int maxAtkCount = 0;
     public int addAttackPower = 0;
     public int myUnitNum = 0;
+    public int itemId = -1;
 
     protected delegate void TimeUpdate(float time);
     protected TimeUpdate timeUpdate;
@@ -76,6 +77,7 @@ public class PlaceMonster : MonoBehaviour {
 
         myUnitNum = PlayMangement.instance.unitNum++;
         GameObject.Find("CardInfoList").GetComponent<CardListManager>().SetFeildUnitInfo(data, myUnitNum);
+        
     }
 
     public void SpawnUnit() {

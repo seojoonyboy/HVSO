@@ -224,6 +224,7 @@ public partial class PlayMangement : MonoBehaviour {
         GameObject monsterSkeleton = Instantiate(skeleton, monster.transform);
         monsterSkeleton.name = "skeleton";
 
+        monster.GetComponent<PlaceMonster>().itemId = history.cardItem.itemId;
         monster.GetComponent<PlaceMonster>().unit.HP = (int)cardData.hp;
         monster.GetComponent<PlaceMonster>().unit.currentHP = (int)cardData.hp;
         monster.GetComponent<PlaceMonster>().unit.attack = (int)cardData.attack;
