@@ -90,7 +90,7 @@ public class PlayerController : MonoBehaviour
             hero.transform.localScale = PlayMangement.instance.backGround.transform.localScale;
         }
 
-
+        SetShield();
         shieldCount = 3;
         Debug.Log(heroSpine);
     }
@@ -102,7 +102,19 @@ public class PlayerController : MonoBehaviour
         CardDropManager.Instance.SetUnitDropPos();
     }
 
-    
+
+    private void SetShield() {
+        GameObject shield;
+        Transform positionTransform = PlayMangement.instance.backGround.transform.Find("PlayerPosition");
+        shield = (isHuman == true) ? Instantiate(PlayMangement.instance.humanShield, transform) : Instantiate(PlayMangement.instance.orcShield, transform);
+        shield.transform.position = (isHuman == true) ? positionTransform.Find("Player_1Wall").position : positionTransform.Find("Player_2Wall").position;
+        shield.transform.localScale = PlayMangement.instance.backGround.transform.localScale;
+        shield.name = "shield";
+        shield.SetActive(false);
+        heroSpine.defenseFinish += DisableShield;
+    }
+
+
 
     public void DrawPlayerCard(GameObject card) {
         cdpm.AddCard();
@@ -170,13 +182,28 @@ public class PlayerController : MonoBehaviour
             else HP.Value = 0;
         }
         if(data.shildActivate) {
-            shieldStack.Value = 8;
-            PlayMangement.instance.heroShieldActive = true;
-            StartCoroutine(PlayMangement.instance.DrawSpecialCard(isHuman));
-            shieldStack.Value = 0;
-            shieldCount--;
+            ActiveShield();
         }
     }
+
+    public void ActiveShield() {
+        GameObject shield = transform.Find("shield").gameObject;
+        shield.SetActive(true);
+        SetState(HeroState.ATTACK);
+
+        shieldStack.Value = 8;
+        PlayMangement.instance.heroShieldActive = true;
+        StartCoroutine(PlayMangement.instance.DrawSpecialCard(isHuman));
+        shieldStack.Value = 0;
+        shieldCount--;
+    }
+
+    public void DisableShield() {
+        GameObject shield = transform.Find("shield").gameObject;
+        shield.SetActive(false);
+    }
+
+
 
     public void ReleaseTurn() {
         if (myTurn == true && !dragCard) {
