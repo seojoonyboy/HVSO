@@ -8,6 +8,8 @@ namespace SkillModules {
     public class played_ctg_chk : ConditionChecker {
         public override bool IsConditionSatisfied(bool isPlayerUnitGenerated, GameObject summonedObj) {
             bool isCtgValid = false;
+            //마법카드는 무시
+            if (summonedObj.GetComponent<PlaceMonster>() == null) return false;
 
             PlaceMonster placeMonster = summonedObj.GetComponent<PlaceMonster>();
             if (!isScopeValid(summonedObj)) return false;
