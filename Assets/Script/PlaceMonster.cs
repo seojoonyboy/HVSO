@@ -376,18 +376,12 @@ public class PlaceMonster : MonoBehaviour {
     }
 
     public void UpdateStat() {
-        CheckHP();
-
         if (unit.currentHP > 0)
             transform.Find("HP").GetComponentInChildren<TextMeshPro>().text = unit.currentHP.ToString();
         else
             transform.Find("HP").GetComponentInChildren<TextMeshPro>().text = 0.ToString();
         transform.Find("ATK").GetComponentInChildren<TextMeshPro>().text = unit.attack.ToString();
     }
-
-
-
-
 
     private void ReturnPosition() {
         iTween.MoveTo(gameObject, iTween.Hash("x", unitLocation.x, "y", unitLocation.y, "z", unitLocation.z, "time", 0.3f, "delay", 0.5f, "easetype", iTween.EaseType.easeInOutExpo));
