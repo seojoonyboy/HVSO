@@ -56,6 +56,9 @@ namespace SkillModules {
                         if((target.method == "played_target") && (target.args.ToList().Contains("enemy"))) {
                             Transform result = CheckUnit();
                             if(result != null) {
+                                if (result.GetComponent<PlaceMonster>().isPlayer) {
+                                    return;
+                                }
                                 Debug.Log("적이 감지되었습니다.");
                                 string attributeName = skillData.effects[0].args[0];
                                 if(attributeName == "stun") {
@@ -69,6 +72,9 @@ namespace SkillModules {
                         else if((target.method == "played_target") && (target.args.ToList().Contains("my"))){
                             Transform result = CheckUnit();
                             if(result != null) {
+                                if (!result.GetComponent<PlaceMonster>().isPlayer) {
+                                    return;
+                                }
                                 Debug.Log("아군이 감지되었습니다.");
                                 GetComponent<MagicDragHandler>().AttributeUsed(GetComponent<Ability_give_attribute>());
                             }
