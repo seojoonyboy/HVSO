@@ -42,6 +42,7 @@ namespace SkillModules {
                         foreach(GameObject selectedUnit in selectedUnits) {
                             Debug.Log(selectedUnit.name + "에게 " + dmgAmount + " 데미지 부여");
                             selectedUnit.GetComponent<PlaceMonster>().RequestChangeStat(0, -dmgAmount);
+                            selectedUnit.GetComponent<PlaceMonster>().TakeMagic();
                             GetComponent<MagicDragHandler>().AttributeUsed(GetComponent<Ability_blast_enemy>());
                         }
                     }
