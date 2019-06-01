@@ -13,6 +13,10 @@ namespace SkillModules {
             set {
                 turn = value;
                 if(Turn <= 0) {
+                    GameObject statusText = GetComponent<PlaceMonster>().gameObject.transform.Find("Status").gameObject;
+                    statusText.gameObject.SetActive(false);
+                    statusText.GetComponent<TextMeshPro>().text = "";
+
                     Destroy(GetComponent<stun>());
                 }
             }
@@ -29,6 +33,7 @@ namespace SkillModules {
         public override void Init() {
             Turn = 1;
             GameObject statusText = GetComponent<PlaceMonster>().gameObject.transform.Find("Status").gameObject;
+            statusText.gameObject.SetActive(true);
             statusText.GetComponent<TextMeshPro>().text = "스턴";
         }
     }
