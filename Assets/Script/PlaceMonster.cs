@@ -324,6 +324,10 @@ public class PlaceMonster : MonoBehaviour {
         }
     }
 
+    public void InstanceKilled() {
+        unit.HP = 0;
+    }
+
 
 
     public void RequestAttackUnit(GameObject target, int amount) {
