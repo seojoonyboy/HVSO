@@ -57,7 +57,7 @@ public partial class BattleConnector : MonoBehaviour {
 
     //Receive Socket Message
     private void ReceiveMessage(WebSocket webSocket, string message) {
-        //Debug.Log(message);
+        Debug.Log(message);
         OnReceiveSocketMessage.Invoke();
         ReceiveFormat result = JsonReader.Read<ReceiveFormat>(message);
         queue.Enqueue(result);
@@ -227,8 +227,8 @@ public partial class BattleConnector : MonoBehaviour {
         int line_num = int.Parse(line);
         lineBattleList.Enqueue(gameState);
         lineBattleList.checkCount();
-        humanData.Enqueue(gameState.players.human.hero);
-        orcData.Enqueue(gameState.players.orc.hero);
+        humanData.Enqueue(gameState.players.human);
+        orcData.Enqueue(gameState.players.orc);
         Debug.Log("WebSocket State : line_battle");
     }
 
@@ -290,8 +290,8 @@ public partial class BattleConnector : MonoBehaviour {
     public QueueSocketList<PlayHistory> useCardList = new QueueSocketList<PlayHistory>();
     public QueueSocketList<GameState> lineBattleList = new QueueSocketList<GameState>();
     public QueueSocketList<GameState> mapClearList = new QueueSocketList<GameState>();
-    public Queue<SocketFormat.Hero> humanData = new Queue<SocketFormat.Hero>();
-    public Queue<SocketFormat.Hero> orcData = new Queue<SocketFormat.Hero>();
+    public Queue<SocketFormat.Player> humanData = new Queue<SocketFormat.Player>();
+    public Queue<SocketFormat.Player> orcData = new Queue<SocketFormat.Player>();
 
     public IEnumerator WaitGetCard() {
         while(!getNewCard) {

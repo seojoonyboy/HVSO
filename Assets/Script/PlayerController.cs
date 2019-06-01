@@ -156,20 +156,20 @@ public class PlayerController : MonoBehaviour
     }
 
     public void PlayerTakeDamage(int amount) {
-        Queue<SocketFormat.Hero> heroShildData = isHuman ? PlayMangement.instance.socketHandler.humanData : PlayMangement.instance.socketHandler.orcData;
-        SocketFormat.Hero data;
+        Queue<SocketFormat.Player> heroShildData = isHuman ? PlayMangement.instance.socketHandler.humanData : PlayMangement.instance.socketHandler.orcData;
+        SocketFormat.Player data;
         if(heroShildData.Count != 0) data = heroShildData.Peek();
-        else data = PlayMangement.instance.socketHandler.gameState.players.myPlayer(isHuman).hero;
+        else data = PlayMangement.instance.socketHandler.gameState.players.myPlayer(isHuman);
 
-        if (shieldStack.Value < 7) {
+        if (!data.shildActivate) {
             if (HP.Value >= amount) {
                 HP.Value -= amount;
                 SetState(HeroState.HIT);
-                if (shieldCount > 0) shieldStack.Value = data.shildGauge;
+                if (shieldCount > 0) shieldStack.Value = data.hero.shildGauge;
             }
             else HP.Value = 0;
         }
-        else if(shieldCount != data.shildCount) {
+        if(data.shildActivate) {
             shieldStack.Value = 8;
             PlayMangement.instance.heroShieldActive = true;
             StartCoroutine(PlayMangement.instance.DrawSpecialCard(isHuman));

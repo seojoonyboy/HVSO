@@ -429,6 +429,7 @@ public partial class PlayMangement : MonoBehaviour {
         SocketFormat.GameState state = queueList.Dequeue();
         Debug.Log("쌓인 데이터 리스트 : " + queueList.Count);
         SocketFormat.DebugSocketData.ShowBattleData(state, line, isBattle);
+        if(!isBattle) SocketFormat.DebugSocketData.CheckBattleSynchronization(state, line);
         //TODO : 데이터 체크 및 데이터 동기화 필요
     }
 
@@ -445,6 +446,7 @@ public partial class PlayMangement : MonoBehaviour {
     }
 
     public IEnumerator DrawSpecialCard(bool isHuman) {
+        yield return PlayMangement.instance.socketHandler.WaitGetCard();
         Debug.Log("쉴드 발동!");
         bool isPlayer = (isHuman == player.isHuman);
         if(isPlayer) {
