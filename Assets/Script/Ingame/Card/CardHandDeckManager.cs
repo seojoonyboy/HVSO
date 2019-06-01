@@ -14,7 +14,7 @@ public class CardHandDeckManager : MonoBehaviour {
     List<GameObject> firstDrawList;
     [SerializeField] GameObject unitCardPrefab;
     [SerializeField] GameObject magicCardPrefab;
-    [SerializeField] Transform cardSpawnPos;
+    [SerializeField] public Transform cardSpawnPos;
     [SerializeField] Transform firstDrawParent;
 
 
