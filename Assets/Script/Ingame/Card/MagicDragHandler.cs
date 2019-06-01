@@ -127,7 +127,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         //선택한 적 1명을 {{stun}}시키고, 내 덱에서 카드 1장을 뽑음
         case "ac10022" : args = GetArgsInfo("unit", itemId, line, unitItemId); drawCard = delegate {DrawNewCards(1);}; break;
         //무작위 적 유닛 1개를 상대 핸드로 되돌림
-        case "ac10023" : args = GetArgsInfo("all", itemId, line, unitItemId); drawCard = delegate { ReturnUnitToCard(PlayMangement.instance.socketHandler.gameState);}; break;
+        case "ac10023" : args = GetArgsInfo("camp", itemId, line, unitItemId, camp.CompareTo("human") == 0? "orc" : "human") ; drawCard = delegate { ReturnUnitToCard(PlayMangement.instance.socketHandler.gameState);}; break;
         //선택한 내 유닛 하나의 공격력+2/체력+2
         case "ac10024" : args = GetArgsInfo("unit", itemId, line, unitItemId); break;
         //덱에서 카드를 2장 뽑음

@@ -468,6 +468,7 @@ public partial class PlayMangement : MonoBehaviour {
         }
         if(isPlayer) socketHandler.TurnOver();
         yield return new WaitForSeconds(1.0f);
+        heroShieldActive = false;
     }
 }
 
