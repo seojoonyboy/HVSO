@@ -46,10 +46,6 @@ namespace SkillModules {
                             Debug.Log("Gain 버프");
                             GetComponent<PlaceMonster>().AddBuff(new PlaceMonster.Buff(gameObject, atk, hp));
                         }
-                        else {
-                            Debug.Log("Gain 버프 해제");
-                            GetComponent<PlaceMonster>().RemoveBuff(gameObject);
-                        }
                     }
 
                     if ((target.method == "played") && (target.args[0] == "my")) {

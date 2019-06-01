@@ -48,6 +48,8 @@ public class TmpBuff : MonoBehaviour {
     }
 
     void OnDestroy() {
+        RemoveListener();
+
         bool isPlayer = GetComponent<PlaceMonster>().isPlayer;
 
         FieldUnitsObserver fieldUnitsObserver;
