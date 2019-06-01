@@ -25,6 +25,7 @@ public partial class PlayMangement : MonoBehaviour {
     public GameObject blockPanel;
     public int unitNum = 0;
     public bool heroShieldActive = false;
+    public GameObject humanShield, orcShield;
 
     private void Awake()
     {
