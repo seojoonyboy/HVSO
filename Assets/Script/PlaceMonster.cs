@@ -389,7 +389,7 @@ public class PlaceMonster : MonoBehaviour {
     }
 
     public void CheckHP() {
-        if (unit.currentHP <= 0) {
+        if (unit.currentHP <= 0 || GetComponent<poisonned>() != null) {
             GameObject tomb = AccountManager.Instance.resource.unitDeadObject;
             GameObject dropTomb = Instantiate(tomb);
             dropTomb.transform.position = transform.position;
