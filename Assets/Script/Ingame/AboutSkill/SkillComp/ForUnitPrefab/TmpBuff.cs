@@ -40,7 +40,7 @@ public class TmpBuff : MonoBehaviour {
             if (categories.Contains("army")) {
                 if (!unit.GetComponent<PlaceMonster>().IsBuffAlreadyExist(gameObject)) {
                     unit.GetComponent<PlaceMonster>()
-                        .AddBuff(new PlaceMonster.Buff(gameObject, 3, 0));
+                        .AddBuff(new PlaceMonster.Buff(gameObject, 2, 0));
                     Debug.Log("후방 아군에게 버프 부여");
                 }
             }

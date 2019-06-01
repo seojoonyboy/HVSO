@@ -49,24 +49,30 @@ public partial class UnitDragHandler : CardHandler, IBeginDragHandler, IDragHand
         else {
             GameObject unitPref = CardDropManager.Instance.DropUnit(gameObject, CheckSlot());
             if (unitPref != null) {
-                foreach (dataModules.Skill skill in cardData.skills) {
-                    foreach (var effect in skill.effects) {
-                        var newComp = unitPref.AddComponent(Type.GetType("SkillModules.Ability_" + effect.method));
-                        if (newComp == null) {
-                            Debug.LogError(effect.method + "에 해당하는 컴포넌트를 찾을 수 없습니다.");
-                        }
-                        else {
-                            ((Ability)newComp).InitData(skill, true);
+                if (unitPref.GetComponent<PlaceMonster>().unit.name == "방패병") {
+                    Debug.Log("방패병!!!!");
+                    unitPref.AddComponent<TmpBuff>();
+                }
+                else {
+                    foreach (dataModules.Skill skill in cardData.skills) {
+                        foreach (var effect in skill.effects) {
+                            var newComp = unitPref.AddComponent(Type.GetType("SkillModules.Ability_" + effect.method));
+                            if (newComp == null) {
+                                Debug.LogError(effect.method + "에 해당하는 컴포넌트를 찾을 수 없습니다.");
+                            }
+                            else {
+                                ((Ability)newComp).InitData(skill, true);
+                            }
                         }
                     }
-                }
 
-                if (unitPref.GetComponent<PlaceMonster>().unit.attackType.ToList().Contains("assault")) {
-                    unitPref.AddComponent<Ability_assault>();
-                }
+                    if (unitPref.GetComponent<PlaceMonster>().unit.attackType.ToList().Contains("assault")) {
+                        unitPref.AddComponent<Ability_assault>();
+                    }
 
-                if (unitPref.GetComponent<PlaceMonster>().unit.attackType.ToList().Contains("ambush")) {
-                    unitPref.AddComponent<ambush>();
+                    if (unitPref.GetComponent<PlaceMonster>().unit.attackType.ToList().Contains("ambush")) {
+                        unitPref.AddComponent<ambush>();
+                    }
                 }
 
                 object[] parms = new object[] { true, unitPref };
