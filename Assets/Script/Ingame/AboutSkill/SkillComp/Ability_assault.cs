@@ -44,6 +44,12 @@ public class Ability_assault : MonoBehaviour {
                 isBuffed = true;
             }
         }
+        //적이 있으면 버프 다시 제거
+        else {
+            Debug.Log("Assault 스킬 해제");
+            GetComponent<PlaceMonster>().RequestChangeStat(-3, 0);
+            isBuffed = false;
+        }
     }
 
     void SetObservers() {
