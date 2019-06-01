@@ -138,7 +138,35 @@ public partial class PlayMangement : MonoBehaviour {
     }
 
     public void DistributeCard() {
-        StartCoroutine(player.GenerateCard());
+        StartCoroutine(GenerateCard());
+    }
+
+    public IEnumerator GenerateCard() {
+        IngameNotice.instance.SetNotice("멀리건 시~작~");
+        int i = 0;
+        while (i < 5) {
+            yield return new WaitForSeconds(0.3f);
+            if (i < 4)
+                StartCoroutine(player.cdpm.FirstDraw());
+
+            GameObject enemyCard = Instantiate(enemyPlayer.back);
+            enemyCard.transform.SetParent(enemyPlayer.playerUI.transform.Find("CardSlot"));
+            enemyCard.transform.localScale = new Vector3(1, 1, 1);
+            enemyCard.SetActive(true);
+            i++;
+        }
+    }
+
+    public void EndTurnDraw() {
+        if (isGame == false) return;
+        bool race =player.isHuman;
+        SocketFormat.Card cardData = socketHandler.gameState.players.myPlayer(race).newCard;
+        player.cdpm.AddCard(null, cardData);
+
+        GameObject enemyCard = Instantiate(enemyPlayer.back);
+        enemyCard.transform.SetParent(enemyPlayer.playerUI.transform.Find("CardSlot"));
+        enemyCard.transform.localScale = new Vector3(1, 1, 1);
+        enemyCard.SetActive(true);
     }
 
 
@@ -337,7 +365,7 @@ public partial class PlayMangement : MonoBehaviour {
         turn++;
         yield return PlayMangement.instance.socketHandler.WaitGetCard();
         DistributeResource();
-        player.EndTurnDraw();
+        EndTurnDraw();
         yield return new WaitForSeconds(2.0f);
         CustomEvent.Trigger(gameObject, "EndTurn");
         StopCoroutine("battleCoroutine");
