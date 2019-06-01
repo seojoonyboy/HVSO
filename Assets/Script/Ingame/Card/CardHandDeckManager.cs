@@ -248,8 +248,15 @@ public class CardHandDeckManager : MonoBehaviour {
         card.GetComponent<CardHandler>().FIRSTDRAW = false;
         CardListManager csm = GameObject.Find("Canvas").transform.Find("CardInfoList").GetComponent<CardListManager>();
         csm.AddCardInfo(card.GetComponent<CardHandler>().cardData, card.GetComponent<CardHandler>().cardID);
+        InitCardPosition();
         if (PlayMangement.movingCard == card)
             PlayMangement.movingCard = null;
+    }
+
+    private void InitCardPosition() {
+        foreach(GameObject card in cardList) {
+            card.transform.localPosition = new Vector3(0, 0, 0);
+        }
     }
 
     public void DestroyCard(int index) {

@@ -564,7 +564,6 @@ public partial class PlayMangement {
     }
 
     public IEnumerator GenerateCard() {
-        IngameNotice.instance.SetNotice("멀리건 시~작~");
         int i = 0;
         while (i < 5) {
             yield return new WaitForSeconds(0.3f);
