@@ -42,7 +42,7 @@ namespace SkillModules {
                         }
                     }
                 }
-                GetComponent<MagicDragHandler>().AttributeUsed(GetComponent<Ability_over_a_kill>());
+                GetComponent<MagicDragHandler>().AttributeUsed(GetComponent<Ability_give_attack_type>());
             }
         }
     }
