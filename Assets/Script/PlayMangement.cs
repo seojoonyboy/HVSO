@@ -26,7 +26,7 @@ public partial class PlayMangement : MonoBehaviour {
     public int unitNum = 0;
     public bool heroShieldActive = false;
     public GameObject humanShield, orcShield;
-
+    public static GameObject movingCard;
     private void Awake()
     {
         socketHandler = FindObjectOfType<BattleConnector>();

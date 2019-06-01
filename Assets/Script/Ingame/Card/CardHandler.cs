@@ -158,6 +158,7 @@ public partial class CardHandler : MonoBehaviour {
     }
 
     public void OpenCardInfoList() {
+        if (PlayMangement.movingCard != null) return;
         if (firstDraw || PlayMangement.instance.isFirst) {
             csm.OpenMulliganCardList(transform.GetSiblingIndex() - 5);
             return;
