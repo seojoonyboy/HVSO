@@ -377,6 +377,10 @@ public class PlaceMonster : MonoBehaviour {
         RequestChangeStat(-selectBuff.atk, -selectBuff.hp);
     }
 
+    public bool IsBuffAlreadyExist(GameObject gameObject) {
+        return buffList.Exists(x => x.origin == gameObject);
+    }
+
     public void UpdateStat() {
         if (unit.currentHP > 0)
             transform.Find("HP").GetComponentInChildren<TextMeshPro>().text = unit.currentHP.ToString();

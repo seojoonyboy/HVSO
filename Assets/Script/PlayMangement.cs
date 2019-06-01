@@ -271,6 +271,11 @@ public partial class PlayMangement : MonoBehaviour {
 
         enemyPlayer.resource.Value -= cardData.cost;
         Destroy(enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(enemyCardCount - 1).GetChild(0).gameObject);
+
+        if(monster.GetComponent<PlaceMonster>().unit.name == "방패병") {
+            monster.AddComponent<TmpBuff>();
+        }
+
         return monster;
     }
 
