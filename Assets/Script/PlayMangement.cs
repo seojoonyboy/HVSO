@@ -185,14 +185,14 @@ public partial class PlayMangement : MonoBehaviour {
         int i = int.Parse(history.target.args[0]);
         CardData cardData;
         CardDataPackage cardDataPackage = AccountManager.Instance.cardPackage;
-        int enemyCardCount = enemyPlayer.playerUI.transform.Find("CardSlot").childCount;
-        
+        int enemyCardCount = CountEnemyCard();
+
         string id = history.cardItem.id;
 
         cardData = cardDataPackage.data[id];
         Debug.Log("use Magic Card" + history.cardItem.name);
         enemyPlayer.resource.Value -= cardData.cost;
-        Destroy(enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(0).gameObject);
+        Destroy(enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(enemyCardCount - 1).GetChild(0).gameObject);
     }
 
     private void SummonMonster(SocketFormat.PlayHistory history) {
