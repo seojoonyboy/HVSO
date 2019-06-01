@@ -22,7 +22,7 @@ public class PlaceMonster : MonoBehaviour {
 
     protected delegate void TimeUpdate(float time);
     protected TimeUpdate timeUpdate;
-    protected UnitSpine unitSpine;
+    public UnitSpine unitSpine;
 
     private float currentTime;
     private bool instanceAttack = false;

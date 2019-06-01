@@ -65,6 +65,10 @@ public partial class UnitDragHandler : CardHandler, IBeginDragHandler, IDragHand
                     unitPref.AddComponent<Ability_assault>();
                 }
 
+                if (unitPref.GetComponent<PlaceMonster>().unit.attackType.ToList().Contains("ambush")) {
+                    unitPref.AddComponent<ambush>();
+                }
+
                 object[] parms = new object[] { true, unitPref };
                 PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
             }
