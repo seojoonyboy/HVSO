@@ -58,7 +58,7 @@ public class PlayerController : MonoBehaviour
             Instantiate(AccountManager.Instance.resource.raceUiPrefabs["ORC"][1], playerUI.transform.Find("PlayerResource"));
         }
 
-        if (isHuman == true) {
+        if(isHuman == true) {
             string heroID = "h10001";
             GameObject hero = Instantiate(AccountManager.Instance.resource.heroSkeleton[heroID], transform);
             hero.transform.SetAsLastSibling();
@@ -72,14 +72,13 @@ public class PlayerController : MonoBehaviour
                 heroSpine.GetComponent<MeshRenderer>().sortingOrder = 8;
 
             hero.transform.localScale = PlayMangement.instance.backGround.transform.localScale;
-            
         }
         else {
             string heroID = "h10002";
             GameObject hero = Instantiate(AccountManager.Instance.resource.heroSkeleton[heroID], transform);
             hero.transform.SetAsLastSibling();
             heroSpine = hero.GetComponent<HeroSpine>();
-
+            
 
             if (isPlayer == true) {
                 hero.transform.localScale = new Vector3(-1, 1, 1);
@@ -90,7 +89,8 @@ public class PlayerController : MonoBehaviour
 
             hero.transform.localScale = PlayMangement.instance.backGround.transform.localScale;
         }
-        SetShield();
+
+
         shieldCount = 3;
         Debug.Log(heroSpine);
     }
@@ -102,44 +102,7 @@ public class PlayerController : MonoBehaviour
         CardDropManager.Instance.SetUnitDropPos();
     }
 
-    private void SetShield() {
-        GameObject shield;
-        Transform positionTransform = PlayMangement.instance.backGround.transform.Find("PlayerPosition");
-        shield = (isHuman == true) ? Instantiate(PlayMangement.instance.humanShield, transform) : Instantiate(PlayMangement.instance.orcShield, transform);
-        shield.transform.position = (isHuman == true) ? positionTransform.Find("Player_1Wall").position : positionTransform.Find("Player_2Wall").position;
-        shield.transform.localScale = PlayMangement.instance.backGround.transform.localScale;
-        shield.name = "shield";
-        shield.SetActive(false);
-        heroSpine.defenseFinish += DisableShield;
-    }
-
-
-    public IEnumerator GenerateCard() {
-        int i = 0;
-        while (i < 5) {
-            yield return new WaitForSeconds(0.3f);
-            if(i < 4)
-                StartCoroutine(cdpm.FirstDraw());
-
-            GameObject enemyCard = Instantiate(PlayMangement.instance.enemyPlayer.back);
-            enemyCard.transform.SetParent(PlayMangement.instance.enemyPlayer.playerUI.transform.Find("CardSlot"));
-            enemyCard.transform.localScale = new Vector3(1, 1, 1);
-            enemyCard.SetActive(true);
-            i++;            
-        }
-    }
-
-    public void EndTurnDraw() {
-        if (PlayMangement.instance.isGame == false) return;
-        bool race = PlayMangement.instance.player.isHuman;
-        SocketFormat.Card cardData = PlayMangement.instance.socketHandler.gameState.players.myPlayer(race).newCard;
-        cdpm.AddCard(null, cardData);
-
-        GameObject enemyCard = Instantiate(PlayMangement.instance.enemyPlayer.back);
-        enemyCard.transform.SetParent(PlayMangement.instance.enemyPlayer.playerUI.transform.Find("CardSlot"));
-        enemyCard.transform.localScale = new Vector3(1, 1, 1);
-        enemyCard.SetActive(true);
-    }
+    
 
     public void DrawPlayerCard(GameObject card) {
         cdpm.AddCard();
@@ -193,40 +156,27 @@ public class PlayerController : MonoBehaviour
     }
 
     public void PlayerTakeDamage(int amount) {
-        Queue<SocketFormat.Hero> heroShildData = isHuman ? PlayMangement.instance.socketHandler.humanData : PlayMangement.instance.socketHandler.orcData;
-        SocketFormat.Hero data;
+        Queue<SocketFormat.Player> heroShildData = isHuman ? PlayMangement.instance.socketHandler.humanData : PlayMangement.instance.socketHandler.orcData;
+        SocketFormat.Player data;
         if(heroShildData.Count != 0) data = heroShildData.Peek();
-        else data = PlayMangement.instance.socketHandler.gameState.players.myPlayer(isHuman).hero;
+        else data = PlayMangement.instance.socketHandler.gameState.players.myPlayer(isHuman);
 
-        if (shieldStack.Value < 7) {
+        if (!data.shildActivate) {
             if (HP.Value >= amount) {
                 HP.Value -= amount;
                 SetState(HeroState.HIT);
-                if (shieldCount > 0) shieldStack.Value = data.shildGauge;
+                if (shieldCount > 0) shieldStack.Value = data.hero.shildGauge;
             }
             else HP.Value = 0;
         }
-        else if(shieldCount != data.shildCount) {
-            ActiveShield();
+        if(data.shildActivate) {
+            shieldStack.Value = 8;
+            PlayMangement.instance.heroShieldActive = true;
+            StartCoroutine(PlayMangement.instance.DrawSpecialCard(isHuman));
+            shieldStack.Value = 0;
+            shieldCount--;
         }
     }
-    public void ActiveShield() {
-        GameObject shield = transform.Find("shield").gameObject;
-        shield.SetActive(true);
-        SetState(HeroState.ATTACK);
-
-        shieldStack.Value = 8;
-        PlayMangement.instance.heroShieldActive = true;
-        StartCoroutine(PlayMangement.instance.DrawSpecialCard(isHuman));
-        shieldStack.Value = 0;
-        shieldCount--;
-    }
-
-    public void DisableShield() {
-        GameObject shield = transform.Find("shield").gameObject;
-        shield.SetActive(false);
-    }
-
 
     public void ReleaseTurn() {
         if (myTurn == true && !dragCard) {

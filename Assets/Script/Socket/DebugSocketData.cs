@@ -29,5 +29,16 @@ namespace SocketFormat {
             string historyData = JsonConvert.SerializeObject(history);
             Debug.Log(string.Format("사용 된 카드 : {0}", historyData));
         }
+
+        public static void CheckBattleSynchronization(GameState state, int line) {
+            //GameObject[] playerUnits = PlayMangement.instance.PlayerUnitsObserver.units[line];
+            //GameObject[] enemyUnits = PlayMangement.instance.EnemyUnitsObserver.units[line];
+            foreach(Unit unit in state.map.lines[line].human) {
+
+            }
+            foreach(Unit unit in state.map.lines[line].orc) {
+
+            }
+        }
     }  
 }
