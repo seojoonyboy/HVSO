@@ -24,7 +24,7 @@ namespace SkillModules {
                         Transform selectedLine = GetComponent<MagicDragHandler>().selectedLine;
                         if (selectedLine == null) return;
 
-                        int row = selectedLine.transform.GetSiblingIndex();
+                        int row = selectedLine.transform.parent.GetSiblingIndex();
 
                         FieldUnitsObserver enemyUnitsObserver = null;
                         if (isPlayer) {
