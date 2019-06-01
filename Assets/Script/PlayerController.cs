@@ -193,6 +193,7 @@ public class PlayerController : MonoBehaviour
         }
         else if(shieldCount != data.shildCount) {
             shieldStack.Value = 8;
+            PlayMangement.instance.heroShieldActive = true;
             StartCoroutine(PlayMangement.instance.DrawSpecialCard(isHuman));
             shieldStack.Value = 0;
             shieldCount--;

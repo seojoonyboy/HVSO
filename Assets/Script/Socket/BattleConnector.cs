@@ -247,6 +247,7 @@ public partial class BattleConnector : MonoBehaviour {
 
     public void end_shild_turn() {
         Debug.Log("WebSocket State : end_shild_turn");
+        PlayMangement.instance.heroShieldActive = false;
     }
 
     public void begin_end_turn() {
