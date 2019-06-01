@@ -11,7 +11,6 @@ public class PlayerController : MonoBehaviour
 {
     public bool isHuman;
     public bool isPlayer;
-    public bool isMulligan = true;
     private bool myTurn = false;
     public int[,] placement = new int[2,5] { {0,0,0,0,0 },
                                               {0,0,0,0,0 }};

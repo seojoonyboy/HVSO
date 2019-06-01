@@ -46,7 +46,8 @@ public class CardListManager : MonoBehaviour
 
 
     public void OpenMulliganCardList(int cardnum) {
-        mulliganList.GetChild(cardnum).gameObject.SetActive(true);
+        if(PlayMangement.movingCard == null)
+            mulliganList.GetChild(cardnum).gameObject.SetActive(true);
     }
 
     public void RemoveCardInfo(int index) {
