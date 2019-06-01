@@ -62,31 +62,34 @@ public class PlayerController : MonoBehaviour
             GameObject hero = Instantiate(AccountManager.Instance.resource.heroSkeleton[heroID], transform);
             hero.transform.SetAsLastSibling();
             heroSpine = hero.GetComponent<HeroSpine>();
+            hero.transform.localScale = PlayMangement.instance.backGround.transform.localScale;
 
             if (isPlayer == true) {
-                hero.transform.localScale = new Vector3(-1, 1, 1);
+                float reverse = hero.transform.localScale.x * -1f;
+                hero.transform.localScale = new Vector3(reverse, hero.transform.localScale.y, hero.transform.localScale.z);
                 heroSpine.GetComponent<MeshRenderer>().sortingOrder = 12;
             }
             else
                 heroSpine.GetComponent<MeshRenderer>().sortingOrder = 8;
 
-            hero.transform.localScale = PlayMangement.instance.backGround.transform.localScale;
+            
         }
         else {
             string heroID = "h10002";
             GameObject hero = Instantiate(AccountManager.Instance.resource.heroSkeleton[heroID], transform);
             hero.transform.SetAsLastSibling();
             heroSpine = hero.GetComponent<HeroSpine>();
-            
+            hero.transform.localScale = PlayMangement.instance.backGround.transform.localScale;
 
             if (isPlayer == true) {
-                hero.transform.localScale = new Vector3(-1, 1, 1);
+                float reverse = hero.transform.localScale.x * -1f;
+                hero.transform.localScale = new Vector3(reverse, hero.transform.localScale.y, hero.transform.localScale.z);
                 heroSpine.GetComponent<MeshRenderer>().sortingOrder = 12;
             }
             else
                 heroSpine.GetComponent<MeshRenderer>().sortingOrder = 8;
 
-            hero.transform.localScale = PlayMangement.instance.backGround.transform.localScale;
+            
         }
 
         SetShield();
