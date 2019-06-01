@@ -104,7 +104,9 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
     private void SendSocket() {
         string[] args = null;
         string itemId = itemID.ToString();
-        string line = selectedLine.parent.GetSiblingIndex().ToString();
+        string line = string.Empty;
+        if(selectedLine != null)
+            line = selectedLine.parent.GetSiblingIndex().ToString();
         string unitItemId = string.Empty;
         string camp = cardData.camp;
         UnityEngine.Events.UnityAction drawCard = null;
@@ -180,9 +182,10 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
                 Pos pos = observer.GetMyPos(mon);
                 observer.UnitRemoved(pos.row, pos.col);
                 Destroy(mon);
-                GameObject enemyCard = Instantiate(playMangement.enemyPlayer.back);
-                enemyCard.transform.SetParent(playMangement.enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(PlayMangement.instance.CountEnemyCard() - 1).GetChild(0));
+                GameObject enemyCard = Instantiate(playMangement.player.isHuman ? playMangement.enemyPlayer.back : playMangement.player.back);
+                enemyCard.transform.SetParent(playMangement.enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(PlayMangement.instance.CountEnemyCard()));
                 enemyCard.transform.localScale = new Vector3(1, 1, 1);
+                enemyCard.transform.localPosition = new Vector3(0, 0, 0);
                 enemyCard.SetActive(true);
                 break;
             }
