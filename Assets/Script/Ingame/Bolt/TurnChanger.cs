@@ -16,6 +16,20 @@ public class TurnChanger : MonoBehaviour {
     /// </summary>
     public void NextTurn() {
         turn = (TurnType)((++index) % 4);
+        switch (turn) {
+            case TurnType.ZOMBIE:
+                PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_ORC_PRE_TURN, this, null);
+                break;
+            case TurnType.PLANT:
+                PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_HUMAN_TURN, this, null);
+                break;
+            case TurnType.SECRET:
+                PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_ORC_POST_TURN, this, null);
+                break;
+            case TurnType.BATTLE:
+                PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_BATTLE_TURN, this, null);
+                break;
+        }
         //Debug.Log(turn.ToString());
         Variables.Scene(
             UnityEngine.SceneManagement.SceneManager.GetActiveScene()
