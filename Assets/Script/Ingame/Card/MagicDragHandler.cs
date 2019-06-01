@@ -104,7 +104,9 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
     private void SendSocket() {
         string[] args = null;
         string itemId = itemID.ToString();
-        string line = selectedLine.parent.GetSiblingIndex().ToString();
+        string line = string.Empty;
+        if(selectedLine != null)
+            line = selectedLine.parent.GetSiblingIndex().ToString();
         string unitItemId = string.Empty;
         string camp = cardData.camp;
         UnityEngine.Events.UnityAction drawCard = null;
