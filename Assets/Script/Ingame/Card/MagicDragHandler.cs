@@ -94,6 +94,11 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         PlayMangement.instance.player.resource.Value -= cardData.cost;
         SendSocket();
         PlayMangement.instance.player.cdpm.DestroyCard(cardIndex);
+
+        if (PlayMangement.instance.player.isHuman)
+            PlayMangement.instance.player.ActivePlayer();
+        else
+            PlayMangement.instance.player.ActiveOrcSpecTurn();
     }
 
     private void SendSocket() {
