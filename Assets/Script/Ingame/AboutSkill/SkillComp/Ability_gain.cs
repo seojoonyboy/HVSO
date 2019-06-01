@@ -59,6 +59,19 @@ namespace SkillModules {
                             }
                         }
                     }
+                    
+                    //if((target.method == "line") && (target.args[0] == "behind")) {
+                    //    if (isPlayer) {
+                    //        //뒤쪽 라인 검사하여 부여대상에게 실제 부여 (방패병 전용)
+                    //        if (isConditionSatisfied) {
+
+                    //        }
+                    //        //버프 해제
+                    //        else {
+
+                    //        }
+                    //    }
+                    //}
                 }
             }
             //마법
