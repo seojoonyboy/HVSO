@@ -43,6 +43,7 @@ public class UnitSpine : MonoBehaviour
     protected Skeleton skeleton;
     
     public UnityAction attackCallback;
+    public UnityAction takeMagicCallback;
     
     public GameObject arrow;
     
@@ -120,6 +121,15 @@ public class UnitSpine : MonoBehaviour
         currentAnimationName = previewAnimationName;
     }
 
+    public virtual void MagicHit() {
+        TrackEntry entry;
+        entry = spineAnimationState.SetAnimation(0, hitAnimationName, false);
+        currentAnimationName = hitAnimationName;
+        entry.Complete += TakeMagicEvent;
+        entry.Complete += Idle;
+    }
+
+
 
     public void AnimationEvent(TrackEntry entry, Spine.Event e) {
         if(e.Data.Name == attackEventName) {
@@ -130,11 +140,13 @@ public class UnitSpine : MonoBehaviour
             GameObject effect = Instantiate(PlayMangement.instance.effectManager.appearEffect, transform);
             effect.transform.position = transform.position;
             Destroy(effect.gameObject, effect.GetComponent<ParticleSystem>().main.duration - 0.2f);
-        }
-
-        
-
+        }     
     }
+
+    public void TakeMagicEvent(TrackEntry entry) {
+        if (takeMagicCallback != null) takeMagicCallback();
+    }
+
 
     public void HideUnit() {
         skeletonAnimation.skeleton.A = 0.2f;

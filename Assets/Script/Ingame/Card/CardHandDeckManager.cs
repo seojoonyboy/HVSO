@@ -17,7 +17,6 @@ public class CardHandDeckManager : MonoBehaviour {
     [SerializeField] public Transform cardSpawnPos;
     [SerializeField] Transform firstDrawParent;
 
-
     // Start is called before the first frame update
     void Start() {
         cardList = new List<GameObject>();
@@ -233,6 +232,7 @@ public class CardHandDeckManager : MonoBehaviour {
 
 
     IEnumerator SendCardToHand(GameObject card, Transform target) {
+        PlayMangement.movingCard = card;
         if (!firstDraw) {
             //card.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
             card.transform.rotation = new Quaternion(0, 0, 180, card.transform.rotation.w);
@@ -249,6 +249,8 @@ public class CardHandDeckManager : MonoBehaviour {
         card.GetComponent<CardHandler>().FIRSTDRAW = false;
         CardListManager csm = GameObject.Find("Canvas").transform.Find("CardInfoList").GetComponent<CardListManager>();
         csm.AddCardInfo(card.GetComponent<CardHandler>().cardData, card.GetComponent<CardHandler>().cardID);
+        if (PlayMangement.movingCard == card)
+            PlayMangement.movingCard = null;
     }
 
     public void DestroyCard(int index) {

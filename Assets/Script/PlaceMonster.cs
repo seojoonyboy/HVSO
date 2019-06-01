@@ -37,6 +37,7 @@ public class PlaceMonster : MonoBehaviour {
         IDLE,
         ATTACK,
         HIT,
+        MAGICHIT,
         DEAD
     };
 
@@ -52,6 +53,7 @@ public class PlaceMonster : MonoBehaviour {
 
         unitSpine = transform.Find("skeleton").GetComponent<UnitSpine>();
         unitSpine.attackCallback += SuccessAttack;
+        unitSpine.takeMagicCallback += CheckHP;
 
         if (unit.attackType.Length > 0 && unit.attackType[0] == "double")
             maxAtkCount = 2;
@@ -406,6 +408,10 @@ public class PlaceMonster : MonoBehaviour {
         }
     }
 
+    public void TakeMagic() {
+        SetState(UnitState.MAGICHIT);
+    }
+
 
     protected void SetState(UnitState state) {
         timeUpdate = null;
@@ -423,6 +429,9 @@ public class PlaceMonster : MonoBehaviour {
                 break;
             case UnitState.HIT:
                 unitSpine.Hit();
+                break;
+            case UnitState.MAGICHIT:
+                unitSpine.MagicHit();
                 break;
             case UnitState.DEAD:
                 break;
