@@ -67,9 +67,10 @@ public class PlaceMonster : MonoBehaviour {
 
             arrow.SetActive(false);
         }
+        
 
-        if (isPlayer == true)
-            unit.ishuman = (PlayMangement.instance.player.isHuman == true) ? true : false;
+        if (isPlayer == true) 
+            unit.ishuman = (PlayMangement.instance.player.isHuman == true) ? true : false;        
         else
             unit.ishuman = (PlayMangement.instance.enemyPlayer.isHuman == true) ? true : false;
 
@@ -227,10 +228,7 @@ public class PlaceMonster : MonoBehaviour {
                 RequestAttackUnit(myTarget, unit.attack);
             }
             else {
-                if (unit.attackType.Length > 0 && unit.attackType[0] == "assault")
-                    myTarget.GetComponent<PlayerController>().PlayerTakeDamage(unit.attack + 2);
-                else
-                    myTarget.GetComponent<PlayerController>().PlayerTakeDamage(unit.attack);
+                myTarget.GetComponent<PlayerController>().PlayerTakeDamage(unit.attack);
             }
 
             AttackEffect(myTarget);

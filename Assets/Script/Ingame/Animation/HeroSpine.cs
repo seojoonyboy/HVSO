@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Spine.Unity;
 using Spine;
-
+using UnityEngine.Events;
 
 public class HeroSpine : MonoBehaviour
 {
@@ -23,6 +23,8 @@ public class HeroSpine : MonoBehaviour
 
     protected string currentAnimationName;
 
+    public UnityAction defenseFinish;
+    
     private void Start() {
         Init();
     }
@@ -48,14 +50,22 @@ public class HeroSpine : MonoBehaviour
         skeletonAnimation.timeScale = 1.3f;
         entry = skeletonAnimation.AnimationState.SetAnimation(0, hitAnimationName, false);
         currentAnimationName = hitAnimationName;
+        
         entry.Complete += Idle;
     }
 
     public virtual void Attack() {
         TrackEntry entry;
+        skeletonAnimation.timeScale = 1.3f;
         entry = skeletonAnimation.AnimationState.SetAnimation(0, attackAnimationName, false);
         currentAnimationName = attackAnimationName;
+        entry.Complete += DefendFinish;
         entry.Complete += Idle;
     }
+
+    public virtual void DefendFinish(TrackEntry trackEntry = null) {
+        if (defenseFinish != null) defenseFinish();
+    }
+
 
 }
