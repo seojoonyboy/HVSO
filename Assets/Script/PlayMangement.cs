@@ -25,7 +25,7 @@ public partial class PlayMangement : MonoBehaviour {
     private int turn = 0;
     public GameObject blockPanel;
     public int unitNum = 0;
-    private bool heroShieldActive = false;
+    public bool heroShieldActive = false;
 
     private void Awake()
     {
@@ -417,7 +417,7 @@ public partial class PlayMangement : MonoBehaviour {
     }
 
     public IEnumerator DrawSpecialCard(bool isHuman) {
-        heroShieldActive = true;
+        Debug.Log("쉴드 발동!");
         bool isPlayer = (isHuman == player.isHuman);
         if(isPlayer) {
             CardHandDeckManager cdpm = FindObjectOfType<CardHandDeckManager>();
@@ -433,7 +433,7 @@ public partial class PlayMangement : MonoBehaviour {
         }
         if(isPlayer) socketHandler.TurnOver();
         yield return new WaitForSeconds(1.0f);
-        heroShieldActive = false;
+        Debug.Log("서버에 카드 받았다고 보냄");
     }
 }
 
