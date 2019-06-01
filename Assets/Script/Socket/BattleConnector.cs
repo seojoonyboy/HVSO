@@ -314,6 +314,20 @@ public partial class BattleConnector : MonoBehaviour {
     public GameState getStateList(bool isBattleEnd) {
         return isBattleEnd ? mapClearList.Dequeue() : lineBattleList.Dequeue();
     }
+
+    public void DrawNewCards(int drawNum) {
+        PlayMangement playMangement = PlayMangement.instance;
+        bool isHuman = playMangement.player.isHuman;
+        SocketFormat.Card[] cards = playMangement.socketHandler.gameState.players.myPlayer(isHuman).deck.handCards;
+        StartCoroutine(DrawCardIEnumerator(cards, drawNum));
+    }
+
+    IEnumerator DrawCardIEnumerator(SocketFormat.Card[] cards, int count) {
+        for(int i = cards.Length - count; i < cards.Length; i++) {
+            PlayMangement.instance.player.cdpm.AddCard(null, cards[i]);
+            yield return new WaitForSeconds(0.6f);
+        }
+    }
 }
 namespace SocketFormat {
     public class QueueSocketList<T> {
