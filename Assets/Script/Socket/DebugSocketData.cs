@@ -42,7 +42,20 @@ namespace SocketFormat {
             List<GameObject> list = humanUnits.GetAllFieldUnits();
             list.AddRange(orcUnits.GetAllFieldUnits());
             CheckUnitsReverse(list, state.map);
-            //Hero 체력도 체크
+            
+        }
+
+        public static void CheckHeros(GameState state) {
+            PlayMangement manager = PlayMangement.instance;
+            bool isPlayerHuman = manager.player.isHuman;
+            if(state.players.myPlayer(isPlayerHuman).hero.currentHp != manager.player.HP.Value) {
+                manager.player.HP.Value = state.players.myPlayer(isPlayerHuman).hero.currentHp;
+                FoundMisMatchData("플레이어 영웅", "hp");
+            }
+            if(state.players.myPlayer(!isPlayerHuman).hero.currentHp != manager.enemyPlayer.HP.Value)  {
+                manager.enemyPlayer.HP.Value = state.players.myPlayer(!isPlayerHuman).hero.currentHp;
+                FoundMisMatchData("컴퓨터 영웅", "hp");
+            }
         }
 
         public static void CheckUnits(Unit[] units, List<GameObject> mons) {
@@ -51,7 +64,7 @@ namespace SocketFormat {
                 foreach(GameObject mon in mons) {
                     PlaceMonster mondata = mon.GetComponent<PlaceMonster>();
                     IngameClass.Unit monUnit = mondata.unit;
-                    if(monUnit.id.CompareTo(unit.id) == 0) {
+                    if(mondata.itemId.CompareTo(unit.itemId) == 0) {
                         CompareUnit(unit, monUnit);
                         foundUnit = true;
                         break;
@@ -67,14 +80,13 @@ namespace SocketFormat {
             foreach(GameObject mon in mons) {
                 bool found = false;
                 PlaceMonster mondata = mon.GetComponent<PlaceMonster>();
-                IngameClass.Unit monUnit = mondata.unit;
                 foreach(Unit unit in map.allMonster) {
-                    if(unit.id.CompareTo(monUnit.id) == 0) {
+                    if(unit.itemId.CompareTo(mondata.itemId) == 0) {
                         found = true;
                         break;
                     }
                 }
-                if(!found) FoundMisMatchData(monUnit.name, "not_found_reverse");
+                if(!found) FoundMisMatchData(mondata.unit.name, "not_found_reverse");
             }
         }
 
@@ -110,7 +122,7 @@ namespace SocketFormat {
                 log = "이 문제는 개발자가 코딩을 잘못한겁니다.";
                 break;
             }
-            Debug.Log(string.Format("{0} : {1}", name, status));
+            Debug.LogWarning(string.Format("{0} : {1}", name, log));
         }
     }  
 }

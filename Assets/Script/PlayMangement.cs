@@ -251,6 +251,18 @@ public partial class PlayMangement : MonoBehaviour {
             
         }
 
+        foreach (dataModules.Skill skill in cardData.skills) {
+            foreach (var effect in skill.effects) {
+                var newComp = monster.AddComponent(System.Type.GetType("SkillModules.Ability_" + effect.method));
+                if (newComp == null) {
+                    Debug.LogError(effect.method + "에 해당하는 컴포넌트를 찾을 수 없습니다.");
+                }
+                else {
+                    ((Ability)newComp).InitData(skill, true);
+                }
+            }
+        }
+
 
         monster.GetComponent<PlaceMonster>().Init(cardData);
         monster.GetComponent<PlaceMonster>().SpawnUnit();
@@ -416,8 +428,9 @@ public partial class PlayMangement : MonoBehaviour {
         SocketFormat.GameState state = queueList.Dequeue();
         Debug.Log("쌓인 데이터 리스트 : " + queueList.Count);
         SocketFormat.DebugSocketData.ShowBattleData(state, line, isBattle);
-        //if(!isBattle) SocketFormat.DebugSocketData.CheckBattleSynchronization(state);
-        //TODO : 데이터 체크 및 데이터 동기화 필요
+        //데이터 체크 및 데이터 동기화
+        if(!isBattle) SocketFormat.DebugSocketData.CheckBattleSynchronization(state);
+        
     }
 
     private void shildDequeue() {
@@ -450,7 +463,6 @@ public partial class PlayMangement : MonoBehaviour {
         }
         if(isPlayer) socketHandler.TurnOver();
         yield return new WaitForSeconds(1.0f);
-        Debug.Log("서버에 카드 받았다고 보냄");
     }
 }
 
