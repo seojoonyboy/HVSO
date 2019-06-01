@@ -336,7 +336,10 @@ public class PlaceMonster : MonoBehaviour {
             targetMonster.UpdateStat();
             targetMonster.SetState(UnitState.HIT);
 
-
+            //독성 능력이 있으면 상대에게 공격시 poisonned 부여
+            if(GetComponent<SkillModules.poison>() != null) {
+                target.AddComponent<poisonned>();
+            }
 
             object[] parms = new object[] { isPlayer, gameObject };
             PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_ATTACK, this, parms);
