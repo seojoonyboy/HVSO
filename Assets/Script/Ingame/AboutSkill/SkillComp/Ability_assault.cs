@@ -66,4 +66,8 @@ public class Ability_assault : MonoBehaviour {
     void RemoveListener() {
         eventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, OnEndCardPlay);
     }
+
+    void OnDestroy() {
+        eventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, OnEndCardPlay);
+    }
 }

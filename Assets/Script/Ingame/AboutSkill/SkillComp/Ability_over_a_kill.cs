@@ -40,7 +40,7 @@ namespace SkillModules {
                                 //success
                                 if(result.GetComponent<PlaceMonster>().unit.attack >= atk) {
                                     Debug.Log("공격력이 " + atk + "이상인 적 처치");
-                                    GetComponent<PlaceMonster>().InstanceKilled();
+                                    result.GetComponent<PlaceMonster>().InstanceKilled();
                                     GetComponent<MagicDragHandler>().AttributeUsed(GetComponent<Ability_over_a_kill>());
                                 }
                                 else {
