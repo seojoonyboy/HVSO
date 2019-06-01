@@ -33,6 +33,7 @@ public class Ability_assault : MonoBehaviour {
     }
 
     private void CheckEnemy() {
+        if (gameObject == null) return;
         var myPos = playerUnitsObserver.GetMyPos(gameObject);
         var enemies = enemyUnitsObserver.GetAllFieldUnits(myPos.row);
 
