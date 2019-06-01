@@ -408,6 +408,27 @@ public class PlaceMonster : MonoBehaviour {
         }
     }
 
+    public void CheckDebuff() {
+        poisonned poison = GetComponent<poisonned>();
+
+        if(poison != null) {
+            GameObject tomb = AccountManager.Instance.resource.unitDeadObject;
+            GameObject dropTomb = Instantiate(tomb);
+            dropTomb.transform.position = transform.position;
+
+            if (isPlayer) {
+                PlayMangement.instance.PlayerUnitsObserver.UnitRemoved(x, y);
+            }
+            else {
+                PlayMangement.instance.EnemyUnitsObserver.UnitRemoved(x, y);
+            }
+
+            dropTomb.GetComponent<DeadSpine>().target = gameObject;
+            dropTomb.GetComponent<DeadSpine>().StartAnimation(unit.ishuman);
+        }
+    }
+
+
     public void TakeMagic() {
         SetState(UnitState.MAGICHIT);
     }

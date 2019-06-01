@@ -377,14 +377,22 @@ public partial class PlayMangement : MonoBehaviour {
             
         }
 
-        if (player.backLine.transform.GetChild(line).childCount != 0)
+        if (player.backLine.transform.GetChild(line).childCount != 0) {
             player.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().CheckHP();
-        if (player.frontLine.transform.GetChild(line).childCount != 0)
+            player.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().CheckDebuff();
+        }
+        if (player.frontLine.transform.GetChild(line).childCount != 0) {
             player.frontLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().CheckHP();
-        if (enemyPlayer.backLine.transform.GetChild(line).childCount != 0)
+            player.frontLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().CheckDebuff();
+        }
+        if (enemyPlayer.backLine.transform.GetChild(line).childCount != 0) {
             enemyPlayer.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().CheckHP();
-        if (enemyPlayer.frontLine.transform.GetChild(line).childCount != 0)
+            enemyPlayer.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().CheckDebuff();
+        }
+        if (enemyPlayer.frontLine.transform.GetChild(line).childCount != 0) {
             enemyPlayer.frontLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().CheckHP();
+            enemyPlayer.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().CheckDebuff();
+        }
         backGround.transform.GetChild(line).Find("BattleLineEffect").gameObject.SetActive(false);
         EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.LINE_BATTLE_FINISHED, this);
     }
