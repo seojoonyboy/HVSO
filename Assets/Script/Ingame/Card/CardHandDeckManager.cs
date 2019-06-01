@@ -366,5 +366,10 @@ public class CardHandDeckManager : MonoBehaviour {
         Destroy(beforeCardObject);
         firstDrawList[index] = card;
         card.SetActive(true);
+
+        if (newCard.type == "magic") {
+            card.transform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = newCard.name;
+            AddMagicAttribute(ref card);
+        }
     }
 }
