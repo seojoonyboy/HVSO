@@ -106,7 +106,7 @@ public class PlayerController : MonoBehaviour
         GameObject shield;
         Transform positionTransform = PlayMangement.instance.backGround.transform.Find("PlayerPosition");
         shield = (isHuman == true) ? Instantiate(PlayMangement.instance.humanShield, transform) : Instantiate(PlayMangement.instance.orcShield, transform);
-        shield.transform.position = (isHuman == true) ? positionTransform.Find("Player_1Wall").position : positionTransform.Find("Player_2Wall").position;
+        shield.transform.position = (isPlayer == true) ? positionTransform.Find("Player_1Wall").position : positionTransform.Find("Player_2Wall").position;
         shield.transform.localScale = PlayMangement.instance.backGround.transform.localScale;
         shield.name = "shield";
         shield.SetActive(false);
