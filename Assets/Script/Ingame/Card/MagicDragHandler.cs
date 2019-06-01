@@ -22,6 +22,9 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         //CardDropManager.Instance.ShowDropableSlot(cardData);
         CardDropManager.Instance.BeginCheckLines();
 
+        var abilities = GetComponents<Ability>();
+        foreach (Ability ability in abilities) ability.OnBeginDrag();
+
         object[] parms = new object[] { true, gameObject };
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_CARD_PLAY, this, parms);
     }
@@ -49,6 +52,9 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
             highlightedSlot = null;
         }
         else {
+            var abilities = GetComponents<Ability>();
+            foreach (Ability ability in abilities) ability.OnEndDrag();
+
             selectedLine = highlightedLine;
 
             object[] parms = new object[] { true, gameObject };

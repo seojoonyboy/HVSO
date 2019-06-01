@@ -182,7 +182,10 @@ public class PlayerController : MonoBehaviour
 
     public void PlayerTakeDamage(int amount) {
         Queue<SocketFormat.Hero> heroShildData = isHuman ? PlayMangement.instance.socketHandler.humanData : PlayMangement.instance.socketHandler.orcData;
-        SocketFormat.Hero data = heroShildData.Peek();
+        SocketFormat.Hero data;
+        if(heroShildData.Count != 0) data = heroShildData.Peek();
+        else data = PlayMangement.instance.socketHandler.gameState.players.myPlayer(isHuman).hero;
+
         if (shieldStack.Value < 7) {
             if (HP.Value >= amount) {
                 HP.Value -= amount;
@@ -193,10 +196,11 @@ public class PlayerController : MonoBehaviour
         }
         else if(shieldCount != data.shildCount) {
             shieldStack.Value = 8;
+            PlayMangement.instance.heroShieldActive = true;
             StartCoroutine(PlayMangement.instance.DrawSpecialCard(isHuman));
             shieldStack.Value = 0;
             shieldCount--;
-        } 
+        }
     }
 
     public void ReleaseTurn() {
@@ -206,7 +210,6 @@ public class PlayerController : MonoBehaviour
                 PlayMangement.instance.socketHandler.TurnOver();
         }
     }
-
 
     public void ActivePlayer() {
         myTurn = true;      
@@ -268,6 +271,34 @@ public class PlayerController : MonoBehaviour
             for (int i = 0; i < cardSlot_2.childCount; i++) {
                 if (cardSlot_2.GetChild(i).gameObject.activeSelf)
                     cardSlot_2.GetChild(i).GetChild(0).GetComponent<CardHandler>().DisableCard();
+            }
+        }
+    }
+
+    /// <summary>
+    /// 내 핸드에 있는 해당 id의 카드들만 비활성화 시킴
+    /// </summary>
+    /// <param name="id"></param> 카드의 아이디
+    /// <param name="active"></param> true 일시 카드 활성화, false면 비활성화
+    public void SetThisCardAble(string id, bool active) {
+        if (isPlayer == true) {
+            Transform cardSlot_1 = playerUI.transform.Find("CardHand").GetChild(0);
+            Transform cardSlot_2 = playerUI.transform.Find("CardHand").GetChild(1);
+            for (int i = 0; i < cardSlot_1.childCount; i++) {
+                if (cardSlot_1.GetChild(i).GetComponent<CardHandler>().cardID == id) {
+                    if(active)
+                        cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().ActivateCard();
+                    else
+                        cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().DisableCard();
+                }
+            }
+            for (int i = 0; i < cardSlot_2.childCount; i++) {
+                if (cardSlot_2.GetChild(i).GetComponent<CardHandler>().cardID == id) {
+                    if (active)
+                        cardSlot_2.GetChild(i).GetChild(0).GetComponent<CardHandler>().ActivateCard();
+                    else
+                        cardSlot_2.GetChild(i).GetChild(0).GetComponent<CardHandler>().DisableCard();
+                }
             }
         }
     }
