@@ -211,7 +211,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
     public void ActivePlayer() {
         myTurn = true;      
         if(isPlayer == true) {
@@ -272,6 +271,34 @@ public class PlayerController : MonoBehaviour
             for (int i = 0; i < cardSlot_2.childCount; i++) {
                 if (cardSlot_2.GetChild(i).gameObject.activeSelf)
                     cardSlot_2.GetChild(i).GetChild(0).GetComponent<CardHandler>().DisableCard();
+            }
+        }
+    }
+
+    /// <summary>
+    /// 내 핸드에 있는 해당 id의 카드들만 비활성화 시킴
+    /// </summary>
+    /// <param name="id"></param> 카드의 아이디
+    /// <param name="active"></param> true 일시 카드 활성화, false면 비활성화
+    public void SetThisCardAble(string id, bool active) {
+        if (isPlayer == true) {
+            Transform cardSlot_1 = playerUI.transform.Find("CardHand").GetChild(0);
+            Transform cardSlot_2 = playerUI.transform.Find("CardHand").GetChild(1);
+            for (int i = 0; i < cardSlot_1.childCount; i++) {
+                if (cardSlot_1.GetChild(i).GetComponent<CardHandler>().cardID == id) {
+                    if(active)
+                        cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().ActivateCard();
+                    else
+                        cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().DisableCard();
+                }
+            }
+            for (int i = 0; i < cardSlot_2.childCount; i++) {
+                if (cardSlot_2.GetChild(i).GetComponent<CardHandler>().cardID == id) {
+                    if (active)
+                        cardSlot_2.GetChild(i).GetChild(0).GetComponent<CardHandler>().ActivateCard();
+                    else
+                        cardSlot_2.GetChild(i).GetChild(0).GetComponent<CardHandler>().DisableCard();
+                }
             }
         }
     }
