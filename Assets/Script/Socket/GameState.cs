@@ -17,6 +17,20 @@ namespace SocketFormat {
     public class Map {
         public string type;
         public Line[] lines;
+        public List<Unit> allMonster {
+            get {
+                List<Unit> list = new List<Unit>();
+                for(int i = 0; i < lines.Length; i++) {
+                    for(int j = 0; j < lines[i].human.Length; j++) {
+                        list.Add(lines[i].human[j]);
+                    }
+                    for(int j = 0; j < lines[i].orc.Length; j++) {
+                        list.Add(lines[i].orc[j]);
+                    }
+                }
+                return list;
+            }
+        }
     }
 
     public class Line {

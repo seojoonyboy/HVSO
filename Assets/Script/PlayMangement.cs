@@ -339,9 +339,9 @@ public partial class PlayMangement : MonoBehaviour {
             line++;
         }
         yield return new WaitForSeconds(1f);
-        PlayMangement.instance.socketHandler.TurnOver();
+        socketHandler.TurnOver();
         turn++;
-        yield return PlayMangement.instance.socketHandler.WaitGetCard();
+        yield return socketHandler.WaitGetCard();
         DistributeResource();
         EndTurnDraw();
         yield return new WaitForSeconds(2.0f);
@@ -416,7 +416,7 @@ public partial class PlayMangement : MonoBehaviour {
         SocketFormat.GameState state = queueList.Dequeue();
         Debug.Log("쌓인 데이터 리스트 : " + queueList.Count);
         SocketFormat.DebugSocketData.ShowBattleData(state, line, isBattle);
-        if(!isBattle) SocketFormat.DebugSocketData.CheckBattleSynchronization(state, line);
+        //if(!isBattle) SocketFormat.DebugSocketData.CheckBattleSynchronization(state);
         //TODO : 데이터 체크 및 데이터 동기화 필요
     }
 
@@ -433,18 +433,18 @@ public partial class PlayMangement : MonoBehaviour {
     }
 
     public IEnumerator DrawSpecialCard(bool isHuman) {
-        yield return PlayMangement.instance.socketHandler.WaitGetCard();
+        yield return socketHandler.WaitGetCard();
         Debug.Log("쉴드 발동!");
         bool isPlayer = (isHuman == player.isHuman);
         if(isPlayer) {
             CardHandDeckManager cdpm = FindObjectOfType<CardHandDeckManager>();
-            bool race = PlayMangement.instance.player.isHuman;
-            SocketFormat.Card cardData = PlayMangement.instance.socketHandler.gameState.players.myPlayer(race).newCard;
+            bool race = player.isHuman;
+            SocketFormat.Card cardData = socketHandler.gameState.players.myPlayer(race).newCard;
             cdpm.AddCard(null, cardData);
         }
         else {
-            GameObject enemyCard = Instantiate(PlayMangement.instance.enemyPlayer.back);
-            enemyCard.transform.SetParent(PlayMangement.instance.enemyPlayer.playerUI.transform.Find("CardSlot"));
+            GameObject enemyCard = Instantiate(enemyPlayer.back);
+            enemyCard.transform.SetParent(enemyPlayer.playerUI.transform.Find("CardSlot"));
             enemyCard.transform.localScale = new Vector3(1, 1, 1);
             enemyCard.SetActive(true);
         }
@@ -464,7 +464,7 @@ public partial class PlayMangement {
 
     public void GetBattleResult() {
         isGame = false;
-
+        Destroy(socketHandler);
         resultUI.SetActive(true);
 
         if (player.HP.Value <= 0) {

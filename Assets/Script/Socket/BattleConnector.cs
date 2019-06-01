@@ -57,7 +57,7 @@ public partial class BattleConnector : MonoBehaviour {
 
     //Receive Socket Message
     private void ReceiveMessage(WebSocket webSocket, string message) {
-        Debug.Log(message);
+        //Debug.Log(message);
         OnReceiveSocketMessage.Invoke();
         ReceiveFormat result = JsonReader.Read<ReceiveFormat>(message);
         queue.Enqueue(result);
@@ -229,14 +229,12 @@ public partial class BattleConnector : MonoBehaviour {
         lineBattleList.checkCount();
         humanData.Enqueue(gameState.players.human);
         orcData.Enqueue(gameState.players.orc);
-        Debug.Log("WebSocket State : line_battle");
     }
 
     public void map_clear(string line) {
         int line_num = int.Parse(line);
         mapClearList.Enqueue(gameState);
         mapClearList.checkCount();
-        Debug.Log("WebSocket State : map_clear");
     }
 
     public void begin_shild_turn(string camp, string itemId) {

@@ -30,15 +30,87 @@ namespace SocketFormat {
             Debug.Log(string.Format("사용 된 카드 : {0}", historyData));
         }
 
-        public static void CheckBattleSynchronization(GameState state, int line) {
-            //GameObject[] playerUnits = PlayMangement.instance.PlayerUnitsObserver.units[line];
-            //GameObject[] enemyUnits = PlayMangement.instance.EnemyUnitsObserver.units[line];
-            foreach(Unit unit in state.map.lines[line].human) {
-
+        public static void CheckBattleSynchronization(GameState state) {
+            PlayMangement manager = PlayMangement.instance;
+            FieldUnitsObserver humanUnits, orcUnits;
+            humanUnits = manager.player.isHuman ? manager.PlayerUnitsObserver : manager.EnemyUnitsObserver;
+            orcUnits = (!manager.player.isHuman) ? manager.PlayerUnitsObserver : manager.EnemyUnitsObserver;
+            for(int i = 0; i < state.map.lines.Length; i++) {
+                CheckUnits(state.map.lines[i].human, humanUnits.GetAllFieldUnits(i));
+                CheckUnits(state.map.lines[i].orc, orcUnits.GetAllFieldUnits(i));
             }
-            foreach(Unit unit in state.map.lines[line].orc) {
+            List<GameObject> list = humanUnits.GetAllFieldUnits();
+            list.AddRange(orcUnits.GetAllFieldUnits());
+            CheckUnitsReverse(list, state.map);
+            //Hero 체력도 체크
+        }
 
+        public static void CheckUnits(Unit[] units, List<GameObject> mons) {
+            foreach(Unit unit in units) {
+                bool foundUnit = false;
+                foreach(GameObject mon in mons) {
+                    PlaceMonster mondata = mon.GetComponent<PlaceMonster>();
+                    IngameClass.Unit monUnit = mondata.unit;
+                    if(monUnit.id.CompareTo(unit.id) == 0) {
+                        CompareUnit(unit, monUnit);
+                        foundUnit = true;
+                        break;
+                    }
+                }
+                if(!foundUnit) {
+                    FoundMisMatchData(unit.name, "not_found");
+                }
             }
+        }
+
+        public static void CheckUnitsReverse(List<GameObject> mons, Map map) {
+            foreach(GameObject mon in mons) {
+                bool found = false;
+                PlaceMonster mondata = mon.GetComponent<PlaceMonster>();
+                IngameClass.Unit monUnit = mondata.unit;
+                foreach(Unit unit in map.allMonster) {
+                    if(unit.id.CompareTo(monUnit.id) == 0) {
+                        found = true;
+                        break;
+                    }
+                }
+                if(!found) FoundMisMatchData(monUnit.name, "not_found_reverse");
+            }
+        }
+
+        public static void CompareUnit(Unit socketData, IngameClass.Unit monData) {
+            if(socketData.attack != monData.attack) {
+                FoundMisMatchData(monData.name, "attack");
+                monData.attack = socketData.attack.Value;
+            }
+            if(socketData.cost != monData.cost) {
+                FoundMisMatchData(monData.name, "cost");
+                monData.cost = socketData.cost;
+            }
+            if(socketData.currentHp != monData.currentHP) {
+                FoundMisMatchData(monData.name, "hp");
+                monData.currentHP = socketData.currentHp;
+            }
+        }
+
+        public static void FoundMisMatchData(string name, string status) {
+            string log = string.Empty;
+            switch(status) {
+                case "not_found_reverse" : log = "유닛이 클라이언트에만 존재합니다.";
+                break;
+                case "not_found" : log = "유닛이 서버에만 존재합니다.";
+                break;
+                case "attack" : log = "공격력이 다릅니다 조정 들어갑니다.";
+                break;
+                case "cost" : log = "가격이 다릅니다 조정 들어갑니다.";
+                break;
+                case "hp" : log = "체력이 다릅니다 조정 들어갑니다.";
+                break;
+                default :
+                log = "이 문제는 개발자가 코딩을 잘못한겁니다.";
+                break;
+            }
+            Debug.Log(string.Format("{0} : {1}", name, status));
         }
     }  
 }
