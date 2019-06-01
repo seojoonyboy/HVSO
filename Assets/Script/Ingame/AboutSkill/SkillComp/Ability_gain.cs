@@ -21,7 +21,7 @@ namespace SkillModules {
             if (skillData.activate.scope == "playing") {
                 if (summonedObj != gameObject) return;
             }
-
+            //유닛
             if (isUnit) {
                 bool isConditionSatisfied = false;
                 foreach (ConditionChecker checker in checkers) {
@@ -61,6 +61,7 @@ namespace SkillModules {
                     }
                 }
             }
+            //마법
             else {
                 foreach (var target in skillData.targets) {
                     if (target.method == "played_target") {
@@ -79,12 +80,21 @@ namespace SkillModules {
 
                                 int.TryParse(args[0], out atk);
                                 int.TryParse(args[1], out hp);
+
+                                Debug.Log("atk : " + atk);
+                                Debug.Log("hp : " + hp);
+
                                 result.GetComponent<PlaceMonster>().RequestChangeStat(atk, hp);
                                 GetComponent<MagicDragHandler>().AttributeUsed(GetComponent<Ability_gain>());
                             }
                         }
                     }
                 }
+            }
+
+            //1회성인지
+            if (skillData.deactivate.trigger == "immidiate"){
+
             }
         }
 

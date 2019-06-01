@@ -5,6 +5,7 @@ using UnityEngine.Events;
 using dataModules;
 using System;
 using SkillModules;
+using System.Linq;
 
 /// <summary>
 /// 카드 고유 능력 처리에 대한 스크립트
@@ -34,6 +35,100 @@ public partial class Ability : MonoBehaviour {
 
     protected virtual void OnEventCallback(object parm) {
 
+    }
+
+    public void OnPlayerUnitTargetUI() {
+        FieldUnitsObserver fieldUnitsObserver;
+        if (isPlayer) {
+            fieldUnitsObserver = PlayMangement.instance.PlayerUnitsObserver;
+        }
+        else {
+            fieldUnitsObserver = PlayMangement.instance.EnemyUnitsObserver;
+        }
+
+        var selectedUnits = fieldUnitsObserver.GetAllFieldUnits();
+
+        foreach (GameObject unit in selectedUnits) {
+            unit.transform.Find("ClickableUI").gameObject.SetActive(true);
+        }
+    }
+
+    public void OnEnemyUnitTargetUI() {
+        FieldUnitsObserver fieldUnitsObserver;
+        if (isPlayer) {
+            fieldUnitsObserver = PlayMangement.instance.EnemyUnitsObserver;
+        }
+        else {
+            fieldUnitsObserver = PlayMangement.instance.PlayerUnitsObserver;
+        }
+
+        var selectedUnits = fieldUnitsObserver.GetAllFieldUnits();
+
+        foreach (GameObject unit in selectedUnits) {
+            unit.transform.Find("ClickableUI").gameObject.SetActive(true);
+        }
+    }
+
+    public void OffPlayerUnitTargetUI() {
+        FieldUnitsObserver fieldUnitsObserver;
+        if (isPlayer) {
+            fieldUnitsObserver = PlayMangement.instance.PlayerUnitsObserver;
+        }
+        else {
+            fieldUnitsObserver = PlayMangement.instance.EnemyUnitsObserver;
+        }
+
+        var selectedUnits = fieldUnitsObserver.GetAllFieldUnits();
+
+        foreach (GameObject unit in selectedUnits) {
+            unit.transform.Find("ClickableUI").gameObject.SetActive(false);
+        }
+    }
+
+    public void OffPlayerEnemyTargetUI() {
+        FieldUnitsObserver fieldUnitsObserver;
+        if (isPlayer) {
+            fieldUnitsObserver = PlayMangement.instance.EnemyUnitsObserver;
+        }
+        else {
+            fieldUnitsObserver = PlayMangement.instance.PlayerUnitsObserver;
+        }
+
+        var selectedUnits = fieldUnitsObserver.GetAllFieldUnits();
+
+        foreach (GameObject unit in selectedUnits) {
+            unit.transform.Find("ClickableUI").gameObject.SetActive(false);
+        }
+    }
+
+    public void OnBeginDrag() {
+        //마법 카드 조작중인 경우
+        if(GetComponent<MagicDragHandler>() != null) {
+            foreach(var target in skillData.targets) {
+                List<string> args = target.args.ToList();
+                if (args.Contains("my")) {
+                    OnPlayerUnitTargetUI();
+                }
+                else if (args.Contains("enemy")) {
+                    OnEnemyUnitTargetUI();
+                }
+            }
+        }
+    }
+
+    public void OnEndDrag() {
+        //마법 카드 조작중인 경우
+        if (GetComponent<MagicDragHandler>() != null) {
+            foreach (var target in skillData.targets) {
+                List<string> args = target.args.ToList();
+                if (args.Contains("my")) {
+                    OffPlayerUnitTargetUI();
+                }
+                else if (args.Contains("enemy")) {
+                    OffPlayerEnemyTargetUI();
+                }
+            }
+        }
     }
 }
 
