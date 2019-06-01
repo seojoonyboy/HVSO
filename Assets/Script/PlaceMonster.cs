@@ -91,6 +91,7 @@ public class PlaceMonster : MonoBehaviour {
         //stun이 있으면 공격을 못함
         if (GetComponent<SkillModules.stun>() != null) {
             SkipAttack();
+            GetComponent<SkillModules.stun>().Subtraction();
             return;
         }
 
