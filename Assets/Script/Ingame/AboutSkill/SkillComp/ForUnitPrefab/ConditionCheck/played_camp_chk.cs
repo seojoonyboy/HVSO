@@ -25,11 +25,8 @@ namespace SkillModules {
                     }
                     else if(arg == "enemy") {
                         //아군 마법 카드 사용시
-                        if (summonedObj.GetComponent<PlaceMonster>() == null) {
-                            isCampValid = true;
-                        }
                         //아군 유닛 소환시
-                        else {
+                        if(summonedObj.GetComponent<PlaceMonster>() != null) {
                             if (summonedObj.GetComponent<PlaceMonster>().isPlayer != isPlayerUnitGenerated) isCampValid = true;
                         }
                     }
