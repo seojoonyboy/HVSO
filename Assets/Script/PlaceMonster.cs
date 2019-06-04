@@ -288,6 +288,7 @@ public class PlaceMonster : MonoBehaviour {
 
     public void EndAttack() {
         if (instanceAttack == true) {
+            CheckHP();
             instanceAttack = false;
         }
         else
