@@ -145,6 +145,7 @@ namespace SocketFormat {
                 CheckMonsterPosition(lines[i].human, humanUnitsObserver, i);
             }
             Debug.Log("유닛 위치 체크");
+            PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, null);
         }
 
         public static void CheckMonsterPosition(Unit[] units, FieldUnitsObserver observer, int line) {
