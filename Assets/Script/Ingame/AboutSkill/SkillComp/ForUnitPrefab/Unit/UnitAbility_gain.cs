@@ -5,6 +5,7 @@ using System.Linq;
 namespace SkillModules {
     public class UnitAbility_gain : Ability {
         protected override void OnEventCallback(object parm) {
+            if(parm == null) return;
             object[] parms = (object[])parm;
             bool isPlayer = (bool)parms[0];
             GameObject playedObj = (GameObject)parms[1];
