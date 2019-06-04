@@ -14,10 +14,24 @@ namespace SkillModules {
             foreach (Condition condition in data.activate.conditions) {
                 foreach (string arg in condition.args) {
                     if(arg == "my") {
-                        if (isPlayerUnitGenerated) isCampValid = true;
+                        //아군 마법 카드 사용시
+                        if(summonedObj.GetComponent<PlaceMonster>() == null) {
+                            if(summonedObj.GetComponent<PlaceMonster>().isPlayer == true) isCampValid = true;
+                        }
+                        //아군 유닛 소환시
+                        else {
+                            if(summonedObj.GetComponent<PlaceMonster>().isPlayer == isPlayerUnitGenerated) isCampValid = true;
+                        }
                     }
                     else if(arg == "enemy") {
-                        if (!isPlayerUnitGenerated) isCampValid = true;
+                        //아군 마법 카드 사용시
+                        if (summonedObj.GetComponent<PlaceMonster>() == null) {
+                            if (summonedObj.GetComponent<PlaceMonster>().isPlayer == false) isCampValid = true;
+                        }
+                        //아군 유닛 소환시
+                        else {
+                            if (summonedObj.GetComponent<PlaceMonster>().isPlayer != isPlayerUnitGenerated) isCampValid = true;
+                        }
                     }
                 }
             }
