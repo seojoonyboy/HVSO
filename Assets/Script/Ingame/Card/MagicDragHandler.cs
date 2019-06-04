@@ -8,6 +8,7 @@ using System;
 using SkillModules;
 using System.Linq;
 using System.Text;
+using UnityEngine.Events;
 
 public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHandler, IEndDragHandler {
     public Transform selectedLine;
@@ -93,10 +94,11 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
     }
 
     public void AttributeUsed() {
-        bool isValid = false;
-        var magicalCasts = GetComponents<MagicalCasting>();
+        bool isValid = true;
+        MagicalCasting[] magicalCasts = GetComponents<MagicalCasting>();
+        if(magicalCasts.Length == 0) return;
         foreach(MagicalCasting magicalCast in magicalCasts) {
-            isValid = magicalCast.isRequested;
+            isValid = isValid && magicalCast.isRequested;
         }
 
         if(isValid) UseCard();
@@ -117,13 +119,22 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
 
         PlayMangement.instance.player.isPicking.Value = false;
         PlayMangement.instance.player.resource.Value -= cardData.cost;
-        SendSocket();
+        SendSocket(CreateEventList());
         PlayMangement.instance.player.cdpm.DestroyCard(cardIndex);
 
         if (PlayMangement.instance.player.isHuman)
             PlayMangement.instance.player.ActivePlayer();
         else
             PlayMangement.instance.player.ActiveOrcSpecTurn();
+    }
+
+    private UnityEvent CreateEventList() {
+        UnityEvent useMagic = new UnityEvent();
+        MagicalCasting[] magicalCasts = GetComponents<MagicalCasting>();
+        foreach(MagicalCasting magicalCast in magicalCasts) {
+            useMagic.AddListener(magicalCast.UseMagic);
+        }
+        return useMagic;
     }
 
     private bool isOnlySupplyCard() {
@@ -153,7 +164,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         return num;
     }
 
-    public void SendSocket(UnityEngine.Events.UnityAction callback = null) {
+    public void SendSocket(UnityEvent callbacks = null) {
         string[] args = null;
         string itemId = itemID.ToString();
         string line = string.Empty;
@@ -161,30 +172,29 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
             line = selectedLine.parent.GetSiblingIndex().ToString();
         string unitItemId = string.Empty;
         string camp = cardData.camp;
-        UnityEngine.Events.UnityAction drawCard = null;
         PlaceMonster mon = CheckUnit();
         if(mon != null) unitItemId = mon.itemId.ToString();
         switch(cardData.cardId) {
         //선택한 유닛에게 공격력 +3 / 체력 +3
         case "ac10006" : args = GetArgsInfo("unit", itemId, line, unitItemId); break;
         //덱에서 카드 2장을 뽑음
-        case "ac10007" : args = GetArgsInfo("all", itemId, line, unitItemId); drawCard = delegate {PlayMangement.instance.socketHandler.DrawNewCards(2);}; break;
+        case "ac10007" : args = GetArgsInfo("all", itemId, line, unitItemId);  break;
         //내 유닛  해당 유닛의 공격력 +1
         case "ac10015" : args = GetArgsInfo("unit", itemId, line, unitItemId); break;
         //내 유닛 하나를 선택하여 즉시 1회 공격하게 함
         case "ac10016" : args = GetArgsInfo("unit", itemId, line, unitItemId); break;
         //덱에서 카드 2장을 뽑음
-        case "ac10017" : args = GetArgsInfo("all", itemId, line, unitItemId); drawCard = delegate {PlayMangement.instance.socketHandler.DrawNewCards(2);}; break;
+        case "ac10017" : args = GetArgsInfo("all", itemId, line, unitItemId);  break;
         //선택한 라인의 모든 적에게 피해를 5 줌
         case "ac10021" : args = GetArgsInfo("line", itemId, line, unitItemId); break;
         //선택한 적 1명을 {{stun}}시키고, 내 덱에서 카드 1장을 뽑음
-        case "ac10022" : args = GetArgsInfo("unit", itemId, line, unitItemId); drawCard = delegate {PlayMangement.instance.socketHandler.DrawNewCards(1);}; break;
+        case "ac10022" : args = GetArgsInfo("unit", itemId, line, unitItemId);  break;
         //무작위 적 유닛 1개를 상대 핸드로 되돌림
-        case "ac10023" : args = GetArgsInfo("camp", itemId, line, unitItemId, camp.CompareTo("human") == 0? "orc" : "human") ; drawCard = delegate { ReturnUnitToCard(PlayMangement.instance.socketHandler.gameState);}; break;
+        case "ac10023" : args = GetArgsInfo("camp", itemId, line, unitItemId, camp.CompareTo("human") == 0? "orc" : "human"); break;
         //선택한 내 유닛 하나의 공격력+2/체력+2
         case "ac10024" : args = GetArgsInfo("unit", itemId, line, unitItemId); break;
         //덱에서 카드를 2장 뽑음
-        case "ac10025" : args = GetArgsInfo("all", itemId, line, unitItemId); drawCard = delegate {PlayMangement.instance.socketHandler.DrawNewCards(2);}; break;
+        case "ac10025" : args = GetArgsInfo("all", itemId, line, unitItemId); break;
         //공격력이 5 이상인 적 유닛 1개를 처치함
         case "ac10026" : args = GetArgsInfo("unit", itemId, line, unitItemId); break;
         //배치된 모든 내 유닛이 {{poison}} 능력을 얻음
@@ -193,7 +203,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         case "ac10028" : args = GetArgsInfo("unit", itemId, line, unitItemId); break;
         default : Debug.LogError("wrong magic Id"); return;
         }
-        PlayMangement.instance.socketHandler.UseCard(args, drawCard);
+        PlayMangement.instance.socketHandler.UseCard(args, callbacks);
     }
 
 
@@ -205,34 +215,6 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         case "camp" : return new string[]{itemId, status, camp};
         case "line" :return new string[]{itemId, status, line};
         default : return null;
-        }
-    }
-
-    private void ReturnUnitToCard(SocketFormat.GameState state) {
-        PlayMangement playMangement = PlayMangement.instance;
-        FieldUnitsObserver observer = playMangement.EnemyUnitsObserver;
-        List<GameObject> enemyList = observer.GetAllFieldUnits();
-        List<SocketFormat.Unit> socketList = state.map.allMonster;
-        foreach(GameObject mon in enemyList) {
-            bool found = false;
-            PlaceMonster mondata = mon.GetComponent<PlaceMonster>();
-            foreach(SocketFormat.Unit unit in socketList) {
-                if(unit.itemId.CompareTo(mondata.itemId) == 0) {
-                    found = true;
-                    break;
-                }
-            }
-            if(!found) {
-                Pos pos = observer.GetMyPos(mon);
-                observer.UnitRemoved(pos.row, pos.col);
-                Destroy(mon);
-                GameObject enemyCard = Instantiate(playMangement.player.isHuman ? playMangement.enemyPlayer.back : playMangement.player.back);
-                enemyCard.transform.SetParent(playMangement.enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(PlayMangement.instance.CountEnemyCard()));
-                enemyCard.transform.localScale = new Vector3(1, 1, 1);
-                enemyCard.transform.localPosition = new Vector3(0, 0, 0);
-                enemyCard.SetActive(true);
-                break;
-            }
         }
     }
 
