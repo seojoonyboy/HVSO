@@ -105,8 +105,8 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
     }
 
     public void UseCard() {
-        CardDropManager.Instance.HighLightSlot(highlightedSlot, false);
-        CardDropManager.Instance.HideDropableSlot();
+        CardDropManager.Instance.HighLightMagicSlot(highlightedSlot, false);
+        CardDropManager.Instance.HideMagicSlot();
         int cardIndex = 0;
         if (transform.parent.parent.name == "CardSlot_1")
             cardIndex = transform.parent.GetSiblingIndex();
