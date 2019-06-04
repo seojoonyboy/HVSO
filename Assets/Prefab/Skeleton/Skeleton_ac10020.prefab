@@ -128,7 +128,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   idleAnimationName: IDLE
   appearAnimationName: APPEAR
-  attackAnimationName: ATTACK_DOWN
+  attackAnimationName: 
   hitAnimationName: HIT
   previewAnimationName: IDLE
   rangeUpAttackName: ATTACK_UP
