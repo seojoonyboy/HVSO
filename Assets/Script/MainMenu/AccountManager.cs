@@ -108,7 +108,7 @@ public partial class AccountManager : Singleton<AccountManager> {
             foreach(var card in cards.Value.heroCards) {
                 if (!cardPackage.data.ContainsKey(card.cardId)) {
                     CardData data = new CardData();
-                    data.cardId = card.cardId;
+                    data.cardId = card.cardId;                          
                     data.attackTypes = card.attackTypes;
                     data.attributes = card.attributes;
                     data.rarelity = card.rarelity;
@@ -133,7 +133,9 @@ public partial class AccountManager : Singleton<AccountManager> {
                 }
             }
         }
+        
     }
+
 
     public void SetCardPackage() {
 
