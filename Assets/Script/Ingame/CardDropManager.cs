@@ -221,12 +221,6 @@ public partial class CardDropManager {
             default:
                 break;
         }
-        string[] args = {cardHandler.itemID.ToString(),
-                        "place",
-                        lineNum.ToString(),
-                        PlayMangement.instance.player.isHuman ? "human" : "orc",
-                        posMessage};
-        PlayMangement.instance.socketHandler.UseCard(args);
 
         GameObject placedMonster = Instantiate(cardHandler.unit, unitLine[lineNum][frontOrBack]);
         placedMonster.transform.position = unitLine[lineNum][frontOrBack].position;
@@ -276,6 +270,14 @@ public partial class CardDropManager {
             PlayMangement.instance.player.ActiveOrcTurn();
         GameObject.Find("Player").transform.GetChild(0).GetComponent<PlayerController>().cdpm.DestroyCard(cardIndex);
         PlayMangement.instance.PlayerUnitsObserver.RefreshFields(unitLine);
+
+
+        string[] args = {cardHandler.itemID.ToString(),
+                        "place",
+                        lineNum.ToString(),
+                        PlayMangement.instance.player.isHuman ? "human" : "orc",
+                        posMessage};
+        PlayMangement.instance.socketHandler.UseCard(args);
 
         return placedMonster;
     }

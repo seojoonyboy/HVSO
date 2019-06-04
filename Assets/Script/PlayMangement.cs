@@ -166,7 +166,8 @@ public partial class PlayMangement : MonoBehaviour {
         #region socket use Card
         while(!socketHandler.cardPlayFinish()) {
             yield return socketHandler.useCardList.WaitNext();
-            SocketFormat.PlayHistory history = socketHandler.getHistory();
+            SocketFormat.GameState state = socketHandler.getHistory();
+            SocketFormat.PlayHistory history = state.lastUse;
             if(history != null) {
                 if (history.cardItem.type.CompareTo("unit") == 0) {
                     GameObject summonedMonster = SummonMonster(history);
@@ -178,6 +179,7 @@ public partial class PlayMangement : MonoBehaviour {
                 else SummonMagic(history);
                 SocketFormat.DebugSocketData.SummonCardData(history);
             }
+            SocketFormat.DebugSocketData.CheckMapPosition(state);
             yield return new WaitForSeconds(0.5f);
         }
         #endregion
