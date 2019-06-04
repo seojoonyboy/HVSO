@@ -128,11 +128,11 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
             PlayMangement.instance.player.ActiveOrcSpecTurn();
     }
 
-    private UnityEvent CreateEventList() {
-        UnityEvent useMagic = new UnityEvent();
+    private UnityAction CreateEventList() {
+        UnityAction useMagic = null;
         MagicalCasting[] magicalCasts = GetComponents<MagicalCasting>();
         foreach(MagicalCasting magicalCast in magicalCasts) {
-            useMagic.AddListener(magicalCast.UseMagic);
+            useMagic += magicalCast.UseMagic;
         }
         return useMagic;
     }
@@ -164,7 +164,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         return num;
     }
 
-    public void SendSocket(UnityEvent callbacks = null) {
+    public void SendSocket(UnityAction callbacks = null) {
         string[] args = null;
         string itemId = itemID.ToString();
         string line = string.Empty;

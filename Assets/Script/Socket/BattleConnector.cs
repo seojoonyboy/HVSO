@@ -20,7 +20,7 @@ public partial class BattleConnector : MonoBehaviour {
     public UnityEvent OnReceiveSocketMessage;
     public UnityEvent OnSocketClose;
     public UnityAction<string, int, bool> HandchangeCallback;
-    public Queue<UnityEvent> skillCallbacks = new Queue<UnityEvent>();
+    public Queue<UnityAction> skillCallbacks = new Queue<UnityAction>();
     private Coroutine pingpong;
 
     void Awake() {
@@ -80,7 +80,7 @@ public partial class BattleConnector : MonoBehaviour {
         SendMethod("turn_over");
     }
 
-    public void UseCard(string[] args, UnityEvent callback = null) {
+    public void UseCard(string[] args, UnityAction callback = null) {
         SendMethod("play_card", args);
         if(callback != null) skillCallbacks.Enqueue(callback);
     }
@@ -283,7 +283,10 @@ public partial class BattleConnector : MonoBehaviour {
         string cardCamp = gameState.lastUse.cardItem.camp;
         bool isEnemyCard = cardCamp.CompareTo(enemyCamp) == 0;
         if(isEnemyCard) useCardList.Enqueue(gameState.lastUse);
-        else if(skillCallbacks.Count != 0) skillCallbacks.Dequeue().Invoke();
+        else if(skillCallbacks.Count != 0) {
+
+            skillCallbacks.Dequeue().Invoke();
+        }
     }
 }
 
