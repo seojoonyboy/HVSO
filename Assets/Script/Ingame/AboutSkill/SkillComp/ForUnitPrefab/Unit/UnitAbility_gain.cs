@@ -44,7 +44,7 @@ namespace SkillModules {
                 //상대방이 카드를 쓴 경우에 따른 버프 부여
                 if (targetArgs.Contains("enemy")) {
                     //상대방이 카드를 쓸 때마다 효과
-                    if (!isPlayer) {
+                    if (isPlayer != gameObject.GetComponent<PlaceMonster>().isPlayer) {
                         gameObject.GetComponent<PlaceMonster>().RequestChangeStat(atk, hp);
                         Debug.Log("상대방이 마법을 사용함에 따른 자신에게 버프 부여");
                     }
@@ -53,7 +53,7 @@ namespace SkillModules {
                 //내가 카드를 쓴 경우에 따른 버프 부여
                 if (targetArgs.Contains("my")) {
                     //마법카드를 자신이 사용한 경우
-                    if (isPlayer) {
+                    if (isPlayer == gameObject.GetComponent<PlaceMonster>().isPlayer) {
                         gameObject.GetComponent<PlaceMonster>().RequestChangeStat(atk, hp);
                         Debug.Log("내가 마법을 사용함에 따른 자신에게 버프 부여");
                     }
