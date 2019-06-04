@@ -6,8 +6,13 @@ using UnityEngine;
 namespace SkillModules {
     public class MagicalCasting_r_return : MagicalCasting {
         public override void RequestUseMagic() {
-            isRequested = true;
-            GetComponent<MagicDragHandler>().AttributeUsed();
+            if (IsEnemyExist()) {
+                isRequested = true;
+                GetComponent<MagicDragHandler>().AttributeUsed();
+            }
+            else {
+                IngameNotice.instance.SetNotice("적이 존재하지 않습니다.");
+            }
         }
 
         public override void UseMagic() {
@@ -40,6 +45,12 @@ namespace SkillModules {
                     break;
                 }
             }
+        }
+
+        private bool IsEnemyExist() {
+            FieldUnitsObserver unitsObserver = PlayMangement.instance.PlayerUnitsObserver;
+            var selectedUnits = unitsObserver.GetAllFieldUnits();
+            return selectedUnits.Count != 0;
         }
     }
 }
