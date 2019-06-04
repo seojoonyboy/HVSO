@@ -23,11 +23,11 @@ namespace SkillModules {
             if (targetMethods.Contains("played_target")) {
                 if (targetArgs.Contains("line")) {
                     Transform selectedLine = GetComponent<MagicDragHandler>()
-                        .selectedLine;
+                        .highlightedSlot;
 
                     if (selectedLine == null) return;
 
-                    int row = selectedLine.transform.parent.GetSiblingIndex();
+                    int row = selectedLine.parent.GetSiblingIndex();
 
                     FieldUnitsObserver enemyUnitsObserver = null;
                     if (isPlayer) {
