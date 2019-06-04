@@ -63,10 +63,11 @@ public partial class UnitDragHandler : CardHandler, IBeginDragHandler, IDragHand
                             }
                         }
                     }
-
+                    /*
                     if (unitPref.GetComponent<PlaceMonster>().unit.attackType.ToList().Contains("assault")) {
                         unitPref.AddComponent<Ability_assault>();
                     }
+                    */
                     /*
                     //잠복
                     if (unitPref.GetComponent<PlaceMonster>().unit.cardCategories.ToList().Contains("stealth")) {

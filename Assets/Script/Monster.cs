@@ -17,6 +17,7 @@ namespace IngameClass
         public string[] attributes;
         public int HP;
         public int currentHP;
+        public int originalAttack;
         public int attack;
         public int cost;
         public int placeable;

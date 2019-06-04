@@ -47,7 +47,7 @@ public class PlaceMonster : MonoBehaviour {
         atkCount = 0;
 
         unitLocation = gameObject.transform.position;
-        UpdateStat();
+        
 
         //Observable.EveryUpdate().Where(_ => attacking == true && unit.power > 0).Subscribe(_ => MoveToTarget()).AddTo(this);
 
@@ -71,11 +71,13 @@ public class PlaceMonster : MonoBehaviour {
             arrow.SetActive(false);
         }
 
-        if(unit.cardCategories[0] == "stealth") 
+        if (unit.cardCategories[0] == "stealth")
             gameObject.AddComponent<ambush>();
-        
-        
-        
+
+        if (unit.cardCategories[0] == "assault")
+            gameObject.AddComponent<Ability_assault>();
+
+
 
         if (isPlayer == true) 
             unit.ishuman = (PlayMangement.instance.player.isHuman == true) ? true : false;        
@@ -84,7 +86,7 @@ public class PlaceMonster : MonoBehaviour {
 
         myUnitNum = PlayMangement.instance.unitNum++;
         GameObject.Find("CardInfoList").GetComponent<CardListManager>().SetFeildUnitInfo(data, myUnitNum);
-        
+        UpdateStat();
     }
 
     public void SpawnUnit() {
@@ -388,11 +390,29 @@ public class PlaceMonster : MonoBehaviour {
     }
 
     public void UpdateStat() {
+        TextMeshPro hpText = transform.Find("HP").GetComponentInChildren<TextMeshPro>();
+        TextMeshPro atkText = transform.Find("ATK").GetComponentInChildren<TextMeshPro>();
+
         if (unit.currentHP > 0)
-            transform.Find("HP").GetComponentInChildren<TextMeshPro>().text = unit.currentHP.ToString();
+            hpText.text = unit.currentHP.ToString();
         else
-            transform.Find("HP").GetComponentInChildren<TextMeshPro>().text = 0.ToString();
-        transform.Find("ATK").GetComponentInChildren<TextMeshPro>().text = unit.attack.ToString();
+            hpText.text = 0.ToString();
+
+        if (unit.currentHP < unit.HP)
+            hpText.color = Color.red;
+        else if (unit.currentHP > unit.HP)
+            hpText.color = Color.green;
+        else
+            hpText.color = Color.white;
+
+        atkText.text = unit.attack.ToString();
+
+        if (unit.attack < unit.originalAttack)
+            atkText.color = Color.red;
+        else if (unit.attack > unit.originalAttack)
+            atkText.color = Color.green;
+        else
+            atkText.color = Color.white;
     }
 
     private void ReturnPosition() {
