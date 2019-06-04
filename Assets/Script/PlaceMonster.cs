@@ -398,21 +398,17 @@ public class PlaceMonster : MonoBehaviour {
         else
             hpText.text = 0.ToString();
 
-        if (unit.currentHP < unit.HP)
+        if (unit.currentHP <= unit.HP)
             hpText.color = Color.red;
-        else if (unit.currentHP > unit.HP)
-            hpText.color = Color.green;
         else
-            hpText.color = Color.white;
+            hpText.color = Color.green;
 
         atkText.text = unit.attack.ToString();
 
-        if (unit.attack < unit.originalAttack)
+        if (unit.attack <= unit.originalAttack)
             atkText.color = Color.red;
-        else if (unit.attack > unit.originalAttack)
-            atkText.color = Color.green;
         else
-            atkText.color = Color.white;
+            atkText.color = Color.green;
     }
 
     private void ReturnPosition() {
