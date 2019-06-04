@@ -18,9 +18,12 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         blockButton = PlayMangement.instance.player.dragCard = true;
         startPos = transform.parent.position;
         PlayMangement.instance.player.isPicking.Value = true;
+        string target = cardData.skills[0].targets[0].args[0];
+        
+        //if()
+        CardDropManager.Instance.ShowMagicalSlot(target);
 
-        //CardDropManager.Instance.ShowDropableSlot(cardData);
-        CardDropManager.Instance.BeginCheckLines();
+        //CardDropManager.Instance.BeginCheckLines();
 
         var abilities = GetComponents<Ability>();
         foreach (Ability ability in abilities) ability.OnBeginDrag();
@@ -34,9 +37,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         if (gameObject != itsDragging) return;
         Vector3 cardScreenPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         transform.position = new Vector3(cardScreenPos.x, cardScreenPos.y + 0.3f, cardScreenPos.z);
-        //CheckHighlight();
-
-        CheckLineHighlight();
+        CheckMagicHighlight();
     }
 
 
@@ -46,26 +47,25 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         iTween.MoveTo(gameObject, startPos, 0.3f);
         blockButton = PlayMangement.instance.player.dragCard = false;
         PlayMangement.instance.player.isPicking.Value = false;
-        if(!isDropable && IsEnoughResource(cardData.cost)) {
-            UserResource(cardData.cost);
-
+        if (!isDropable) {
             highlighted = false;
-            CardDropManager.Instance.HighLightSlot(highlightedSlot, highlighted);
+            CardDropManager.Instance.HighLightMagicSlot(highlightedSlot, highlighted);
             highlightedSlot = null;
         }
         else {
-            var abilities = GetComponents<Ability>();
-            foreach (Ability ability in abilities) ability.OnEndDrag();
+            if (CheckMagicSlot() != null) {
+                var abilities = GetComponents<Ability>();
+                foreach (Ability ability in abilities) ability.OnEndDrag();
 
-            selectedLine = highlightedLine;
+                selectedLine = highlightedLine;
 
-            object[] parms = new object[] { true, gameObject };
-            PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
+                object[] parms = new object[] { true, gameObject };
+                PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
 
-            if (GetComponents<Ability>() == null) UseCard();
+                if (GetComponents<Ability>() == null) UseCard();
+            }
         }
-        CardDropManager.Instance.HideDropableSlot();
-        OffLineHighlight();
+        CardDropManager.Instance.HideMagicSlot(cardData);
     }
 
     public void AttributeUsed(MonoBehaviour behaviour) {

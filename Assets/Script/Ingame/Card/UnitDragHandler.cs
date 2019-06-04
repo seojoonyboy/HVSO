@@ -39,12 +39,10 @@ public partial class UnitDragHandler : CardHandler, IBeginDragHandler, IDragHand
         iTween.MoveTo(gameObject, startPos, 0.3f);
         blockButton = PlayMangement.instance.player.dragCard = false;
         PlayMangement.instance.player.isPicking.Value = false;
-        if (!isDropable && IsEnoughResource(cardData.cost)) {
+        if (!isDropable) {
             highlighted = false;
             CardDropManager.Instance.HighLightSlot(highlightedSlot, highlighted);
             highlightedSlot = null;
-
-            UserResource(cardData.cost);
         }
         else {
             GameObject unitPref = CardDropManager.Instance.DropUnit(gameObject, CheckSlot());
@@ -53,7 +51,7 @@ public partial class UnitDragHandler : CardHandler, IBeginDragHandler, IDragHand
                     Debug.Log("방패병!!!!");
                     unitPref.AddComponent<TmpBuff>();
                 }
-                else {
+                else {  
                     foreach (dataModules.Skill skill in cardData.skills) {
                         foreach (var effect in skill.effects) {
                             var newComp = unitPref.AddComponent(Type.GetType("SkillModules.Ability_" + effect.method));
