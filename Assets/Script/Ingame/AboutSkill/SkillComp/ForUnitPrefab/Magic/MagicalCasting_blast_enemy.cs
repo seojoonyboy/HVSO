@@ -24,7 +24,9 @@ namespace SkillModules {
 
             if (targetMethods.Contains("played_target")) {
                 if (targetArgs.Contains("line")) {
-                    Transform selectedLine = GetComponent<MagicDragHandler>().selectedLine;
+                    Transform selectedLine = GetComponent<MagicDragHandler>()
+                        .selectedLine;
+
                     if (selectedLine == null) return;
 
                     int row = selectedLine.transform.parent.GetSiblingIndex();

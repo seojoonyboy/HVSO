@@ -11,7 +11,11 @@ namespace SkillModules {
                                         select target.method;
             List<string> targets = query.ToList();
             if (targets.Contains("self")) {
-                selectedTarget = CheckUnit();
+                selectedTarget = GetComponent<MagicDragHandler>()
+                    .highlightedSlot
+                    .GetComponentInParent<PlaceMonster>()
+                    .transform;
+
                 if (selectedTarget != null) {
                     isRequested = true;
                 }
@@ -27,22 +31,6 @@ namespace SkillModules {
             int.TryParse(effect.args[1], out hp);
 
             selectedTarget.GetComponent<PlaceMonster>().RequestChangeStat(atk, hp);
-        }
-
-        Transform CheckUnit() {
-            Vector3 origin = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            origin = new Vector3(origin.x, origin.y, origin.z);
-            Ray2D ray = new Ray2D(origin, Vector2.zero);
-
-            RaycastHit2D[] hits = Physics2D.RaycastAll(ray.origin, ray.direction, Mathf.Infinity);
-
-            foreach (RaycastHit2D hit in hits) {
-                if (hit.transform.GetComponentInParent<PlaceMonster>() != null) {
-                    Debug.Log(hit.collider.name);
-                    return hit.transform.GetComponentInParent<PlaceMonster>().transform;
-                }
-            }
-            return null;
         }
     }
 }

@@ -40,22 +40,6 @@ namespace SkillModules {
             }
         }
 
-        Transform CheckUnit() {
-            Vector3 origin = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            origin = new Vector3(origin.x, origin.y, origin.z);
-            Ray2D ray = new Ray2D(origin, Vector2.zero);
-
-            RaycastHit2D[] hits = Physics2D.RaycastAll(ray.origin, ray.direction, Mathf.Infinity);
-
-            foreach (RaycastHit2D hit in hits) {
-                if (hit.transform.GetComponentInParent<PlaceMonster>() != null) {
-                    Debug.Log(hit.collider.name);
-                    return hit.transform.GetComponentInParent<PlaceMonster>().transform;
-                }
-            }
-            return null;
-        }
-
         List<GameObject> GetUnits(bool isMy) {
             List<GameObject> selectedUnits = new List<GameObject>();
 
