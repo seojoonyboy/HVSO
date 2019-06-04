@@ -170,22 +170,41 @@ public class PlayerController : MonoBehaviour
     }
 
     public void PlayerTakeDamage(int amount) {
-        Queue<SocketFormat.Player> heroShildData = isHuman ? PlayMangement.instance.socketHandler.humanData : PlayMangement.instance.socketHandler.orcData;
+        BattleConnector socketHandler = PlayMangement.instance.socketHandler;
+        Queue<SocketFormat.Player> heroShildData = isHuman ? socketHandler.humanData : socketHandler.orcData;
         SocketFormat.Player data;
         if(heroShildData.Count != 0) data = heroShildData.Peek();
-        else data = PlayMangement.instance.socketHandler.gameState.players.myPlayer(isHuman);
-
+        else data = socketHandler.gameState.players.myPlayer(isHuman);
+        SocketFormat.ShieldCharge shieldData = GetShieldData();
         if (!data.shildActivate) {
-            if (HP.Value >= amount) {
-                HP.Value -= amount;
-                SetState(HeroState.HIT);
-                if (shieldCount > 0) shieldStack.Value = data.hero.shildGauge;
+            HP.Value = data.hero.currentHp;
+            SetState(HeroState.HIT);
+            if (shieldCount > 0) {
+                if(shieldData == null)
+                    shieldStack.Value = data.hero.shildGauge;
+                else
+                    shieldStack.Value = shieldData.shieldCount;
             }
-            else HP.Value = 0;
         }
         if(data.shildActivate) {
             ActiveShield();
         }
+    }
+
+    private SocketFormat.ShieldCharge GetShieldData() {
+        BattleConnector socketHandler = PlayMangement.instance.socketHandler;
+        
+        if(socketHandler.shieldChargeQueue.Count != 0) {
+            SocketFormat.ShieldCharge shieldData = socketHandler.shieldChargeQueue.Dequeue();
+            string camp = isHuman ? "human" : "orc";
+            if(shieldData.camp.CompareTo(camp) != 0) 
+                Debug.LogError("서버에서 온 쉴드의 종족이 다릅니다.");
+            Debug.Log("쉴드 게이지 발동 : " + JsonUtility.ToJson(shieldData));
+            return shieldData;
+        }
+        else 
+            Debug.LogError("서버에서 온 쉴드 게이지가 없습니다!");
+        return null;
     }
 
     public void ActiveShield() {
@@ -193,11 +212,14 @@ public class PlayerController : MonoBehaviour
         shield.SetActive(true);
         SetState(HeroState.ATTACK);
 
+        
+
         shieldStack.Value = 8;
         PlayMangement.instance.heroShieldActive = true;
         StartCoroutine(PlayMangement.instance.DrawSpecialCard(isHuman));
         shieldStack.Value = 0;
         shieldCount--;
+        playerUI.transform.Find("PlayerHealth").GetChild(0).Find("Shield").Find("Sheilds").GetChild(shieldCount).gameObject.SetActive(false);
     }
 
     public void DisableShield() {

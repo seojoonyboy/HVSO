@@ -247,6 +247,13 @@ public partial class BattleConnector : MonoBehaviour {
         Debug.Log("WebSocket State : end_shild_turn");
     }
 
+    public void shild_guage(string camp, string gauge) {
+        ShieldCharge charge = new ShieldCharge();
+        charge.shieldCount = int.Parse(gauge);
+        charge.camp = camp;
+        shieldChargeQueue.Enqueue(charge);
+    }
+
     public void begin_end_turn() {
         Debug.Log("WebSocket State : begin_end_turn");
         dequeueing = false;
@@ -289,6 +296,7 @@ public partial class BattleConnector : MonoBehaviour {
     public QueueSocketList<GameState> mapClearList = new QueueSocketList<GameState>();
     public Queue<SocketFormat.Player> humanData = new Queue<SocketFormat.Player>();
     public Queue<SocketFormat.Player> orcData = new Queue<SocketFormat.Player>();
+    public Queue <ShieldCharge> shieldChargeQueue = new Queue<ShieldCharge>();
 
     public IEnumerator WaitGetCard() {
         while(!getNewCard) {
