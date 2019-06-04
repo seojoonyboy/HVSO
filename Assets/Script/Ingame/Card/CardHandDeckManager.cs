@@ -341,7 +341,7 @@ public class CardHandDeckManager : MonoBehaviour {
         }
         card.transform.SetParent(target);
         //iTween.MoveTo(card, iTween.Hash("x", target.position.x, "y", target.position.y, "time" ,0.5f, "easetype" , iTween.EaseType.easeInOutQuart));
-        iTween.MoveTo(card, iTween.Hash("x", target.position.x, "y", target.position.y, "time" ,0.5f, "easetype" , iTween.EaseType.easeOutBack));
+        iTween.MoveTo(card, iTween.Hash("x", target.position.x, "y", target.position.y, "time" ,0.5f, "easetype" , iTween.EaseType.easeWeakOutBack));
         iTween.ScaleTo(card, new Vector3(1.0f, 1.0f, 1.0f), 0.5f);
         yield return new WaitForSeconds(0.5f);
         card.GetComponent<CardHandler>().DisableCard();
