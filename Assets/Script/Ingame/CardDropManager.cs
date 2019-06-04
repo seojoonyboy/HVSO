@@ -21,10 +21,10 @@ public partial class CardDropManager : Singleton<CardDropManager> {
         }
         Transform unitSlotLines = PlayMangement.instance.player.transform;
         for (int i = 0; i < 5; i++) {
-            unitLine[i][0] = unitSlotLines.GetChild(0).GetChild(i);
-            unitLine[i][1] = unitSlotLines.GetChild(1).GetChild(i);
-            enemyUnitLine[i][0] = unitSlotLines.parent.GetChild(1).GetChild(0).GetChild(i);
-            enemyUnitLine[i][1] = unitSlotLines.parent.GetChild(1).GetChild(1).GetChild(i);
+            for (int j = 0; j < 2; j++) {
+                unitLine[i][j] = unitSlotLines.GetChild(j).GetChild(i);
+                enemyUnitLine[i][j] = unitSlotLines.parent.GetChild(1).GetChild(j).GetChild(i);
+            }
         }
     }
 }
@@ -109,12 +109,10 @@ public partial class CardDropManager {
                 unitLine[i][0].GetChild(0).position = new Vector3(unitLine[i][0].position.x, unitLine[i][0].position.y, 0);
             if (unitLine[i][1].childCount > 0)
                 unitLine[i][1].GetChild(0).position = new Vector3(unitLine[i][0].position.x, unitLine[i][1].position.y, 0);
-            slotLine[i].GetChild(0).GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 155.0f / 255.0f);
-            slotLine[i].GetChild(1).GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 155.0f / 255.0f);
-            slotLine[i].GetChild(2).GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 155.0f / 255.0f);
-            slotLine[i].GetChild(0).gameObject.SetActive(false);
-            slotLine[i].GetChild(1).gameObject.SetActive(false);
-            slotLine[i].GetChild(2).gameObject.SetActive(false);
+            for (int j = 0; j < 3; j++) {
+                slotLine[i].GetChild(j).GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 155.0f / 255.0f);
+                slotLine[i].GetChild(j).gameObject.SetActive(false);
+            }
         }
     }
 
@@ -128,7 +126,7 @@ public partial class CardDropManager {
 
     public void HideDropableLine() {
         var lines = PlayMangement.instance.player.dropableLines;
-        foreach(Transform line in lines) {
+        foreach (Transform line in lines) {
             line.Find("BattleLineEffect").gameObject.SetActive(false);
             line.Find("BattleLineEffect").GetComponent<SpriteRenderer>().enabled = true;
         }
@@ -152,7 +150,7 @@ public partial class CardDropManager {
             else if (enemyUnitLine[lineNum][0].childCount > 0) {
                 if (unitLine[lineNum][0].childCount > 0)
                     ani.SetTrigger("2_to_1");
-                else 
+                else
                     ani.SetTrigger("1_to_1");
             }
             else {
@@ -166,6 +164,16 @@ public partial class CardDropManager {
                 unitLine[lineNum][0].GetChild(0).position = new Vector3(unitLine[lineNum][0].position.x, unitLine[lineNum][0].position.y + 0.5f, 0);
             }
             ani.SetTrigger("to_idle");
+        }
+    }
+
+    public void HighLightMagicSlot(Transform target, bool highlighted) {
+        if (target == null) return;
+        if (target.name != "AllMagicTrigger") {
+            if(highlighted)
+                target.parent.Find("ClickableUI").GetComponent<SpriteRenderer>().color = new Color(163.0f / 255.0f, 236.0f / 255.0f, 27.0f / 255.0f, 155.0f / 255.0f);
+            else
+                target.parent.Find("ClickableUI").GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 155.0f / 255.0f);
         }
     }
 
@@ -254,7 +262,7 @@ public partial class CardDropManager {
         //GetComponent<Image>().enabled = false;
         PlayMangement.instance.player.isPicking.Value = false;
         PlayMangement.instance.player.resource.Value -= cardHandler.cardData.cost;
-        if(PlayMangement.instance.player.isHuman)
+        if (PlayMangement.instance.player.isHuman)
             PlayMangement.instance.player.ActivePlayer();
         else
             PlayMangement.instance.player.ActiveOrcTurn();
@@ -272,8 +280,99 @@ public partial class CardDropManager {
 /// 마법 처리
 /// </summary>
 public partial class CardDropManager {
-    //public override void ShowDropableSlot(List<string> skills = null) {
-    //}
+    public void ShowMagicalSlot(string target) {
+        if (target == null) return;
+        switch (target) {
+            case "my":
+                for (int i = 0; i < 5; i++) {
+                    for (int j = 0; j < 2; j++) {
+                        if (unitLine[i][j].childCount > 0) {
+                            unitLine[i][j].GetChild(0).Find("ClickableUI").gameObject.SetActive(true);
+                            unitLine[i][j].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(true);
+                        }
+                    }
+                }
+                break;
+            case "enemy":
+                for (int i = 0; i < 5; i++) {
+                    for (int j = 0; j < 2; j++) {
+                        if (enemyUnitLine[i][j].childCount > 0) {
+                            enemyUnitLine[i][j].GetChild(0).Find("ClickableUI").gameObject.SetActive(true);
+                            enemyUnitLine[i][j].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(true);
+                        }
+                    }
+                }
+                break;
+            case "line":
+                for (int i = 0; i < 5; i++) {
+                    if (enemyUnitLine[i][0].childCount > 0 || enemyUnitLine[i][1].childCount > 0)
+                        slotLine[i].Find("BattleLineEffect").gameObject.SetActive(true);
+                }
+                break;
+            case "all":
+                slotLine[2].Find("AllMagicTrigger").gameObject.SetActive(true);
+                break;
+        }
+    }
+    /// <summary>
+    /// 일정 공격력 이상의 적만 타겟팅
+    /// </summary>
+    /// <param name="target"></param>
+    /// <param name="enemyAttack"></param> 
+    public void ShowMagicalSlot(string target, int enemyAttack) {
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 2; j++) {
+                if (enemyUnitLine[i][j].childCount > 0) {
+                    if (enemyUnitLine[i][j].GetChild(0).GetComponent<PlaceMonster>().unit.attack >= enemyAttack) {
+                        enemyUnitLine[i][j].GetChild(0).Find("ClickableUI").gameObject.SetActive(true);
+                        enemyUnitLine[i][j].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(true);
+                    }
+                }
+            }
+        }
+    }
+
+
+    public void HideMagicSlot(CardData card) {
+        if (card.skills == null) return;
+        string target = card.skills[0].targets[0].args[0];
+        switch (target) {
+            case "my":
+                for (int i = 0; i < 5; i++) {
+                    for (int j = 0; j < 2; j++) {
+                        if (unitLine[i][j].childCount > 0) {
+                            unitLine[i][j].GetChild(0).Find("ClickableUI").gameObject.SetActive(false);
+                            unitLine[i][j].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(false);
+                        }
+                    }
+                }
+                break;
+            case "enemy":
+                int attackLimit = 0;
+                if (card.skills[0].activate.conditions.Length > 0)
+                    attackLimit = int.Parse(card.skills[0].activate.conditions[0].args[0]);
+                for (int i = 0; i < 5; i++) {
+                    for (int j = 0; j < 2; j++) {
+                        if (enemyUnitLine[i][j].childCount > 0) {
+                            if (enemyUnitLine[i][j].GetChild(0).GetComponent<PlaceMonster>().unit.attack >= attackLimit) {
+                                enemyUnitLine[i][j].GetChild(0).Find("ClickableUI").gameObject.SetActive(false);
+                                enemyUnitLine[i][j].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(false);
+                            }
+                        }
+                    }
+                }
+                break;
+            case "line":
+                for (int i = 0; i < 5; i++) {
+                    if (enemyUnitLine[i][0].childCount > 0 || enemyUnitLine[i][1].childCount > 0)
+                        slotLine[i].Find("BattleLineEffect").gameObject.SetActive(false);
+                }
+                break;
+            case "all":
+                slotLine[2].Find("AllMagicTrigger").gameObject.SetActive(false);
+                break;
+        }
+    }
 }
 
 public enum FieldType {
