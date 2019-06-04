@@ -170,8 +170,8 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         string[] args = null;
         string itemId = itemID.ToString();
         string line = string.Empty;
-        if(selectedLine != null)
-            line = selectedLine.parent.GetSiblingIndex().ToString();
+        if(highlightedSlot != null)
+            line = highlightedSlot.parent.GetSiblingIndex().ToString();
         string unitItemId = string.Empty;
         string camp = cardData.camp;
         PlaceMonster mon = CheckUnit();
