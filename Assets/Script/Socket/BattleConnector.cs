@@ -319,14 +319,17 @@ public partial class BattleConnector : MonoBehaviour {
         PlayMangement playMangement = PlayMangement.instance;
         bool isHuman = playMangement.player.isHuman;
         SocketFormat.Card[] cards = playMangement.socketHandler.gameState.players.myPlayer(isHuman).deck.handCards;
-        StartCoroutine(DrawCardIEnumerator(cards, drawNum));
+        //StartCoroutine(DrawCardIEnumerator(cards, drawNum));
+        DrawCardIEnumerator(cards, drawNum);
     }
 
-    IEnumerator DrawCardIEnumerator(SocketFormat.Card[] cards, int count) {
-        for(int i = cards.Length - count; i < cards.Length; i++) {
-            PlayMangement.instance.player.cdpm.AddCard(null, cards[i]);
-            yield return new WaitForSeconds(0.6f);
-        }
+    public void DrawCardIEnumerator(SocketFormat.Card[] cards, int count) {
+        //for(int i = cards.Length - count; i < cards.Length; i++) {
+        //    PlayMangement.instance.player.cdpm.AddCard(null, cards[i]);
+        //    yield return new WaitForSeconds(0.6f);
+        //}
+        StartCoroutine(PlayMangement.instance.player.cdpm.AddMultipleCard(cards));
+        //yield return new WaitForSeconds(0.3f);
     }
 }
 namespace SocketFormat {

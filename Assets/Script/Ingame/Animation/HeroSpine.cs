@@ -56,7 +56,7 @@ public class HeroSpine : MonoBehaviour
 
     public virtual void Attack() {
         TrackEntry entry;
-        skeletonAnimation.timeScale = 1.3f;
+        skeletonAnimation.timeScale = 0.8f;
         entry = skeletonAnimation.AnimationState.SetAnimation(0, attackAnimationName, false);
         currentAnimationName = attackAnimationName;
         entry.Complete += DefendFinish;

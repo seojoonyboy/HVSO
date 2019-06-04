@@ -20,9 +20,10 @@ public partial class CardHandler : MonoBehaviour {
     public string cardID;
     protected int _itemID;
     public int itemID {
-        get {return _itemID;}
-        set {if(value < 0) Debug.Log("something wrong itemId");
-             _itemID = value;
+        get { return _itemID; }
+        set {
+            if (value < 0) Debug.Log("something wrong itemId");
+            _itemID = value;
         }
     }
 
@@ -71,7 +72,7 @@ public partial class CardHandler : MonoBehaviour {
 
         if (first) {
             transform.Find("GlowEffect").GetComponent<Image>().enabled = true;
-            transform.Find("GlowEffect").GetComponent<Image>().color = new Color(1, 1, 107.0f / 255.0f);
+            transform.Find("GlowEffect").GetComponent<Image>().color = new Color(1, 1, 1);
             csm.AddMulliganCardInfo(cardData, cardID);
             firstDraw = true;
         }
@@ -109,16 +110,18 @@ public partial class CardHandler : MonoBehaviour {
             if (highlightedSlot != null) {
                 highlighted = true;
                 transform.Find("GlowEffect").GetComponent<Image>().color = new Color(163.0f / 255.0f, 236.0f / 255.0f, 27.0f / 255.0f);
+                transform.Find("GlowEffect").localScale = new Vector3(1.05f, 1.05f, 1);
                 CardDropManager.Instance.HighLightSlot(highlightedSlot, highlighted);
             }
         }
         else {
             if (highlightedSlot != CheckSlot()) {
                 highlighted = false;
-                if (PlayMangement.instance.player.getPlayerTurn == true && PlayMangement.instance.player.resource.Value >= cardData.cost)
-                    transform.Find("GlowEffect").GetComponent<Image>().color = new Color(1, 1, 107.0f / 255.0f);
+                if (isDropable)
+                    transform.Find("GlowEffect").GetComponent<Image>().color = new Color(1, 1, 1);
                 else
                     transform.Find("GlowEffect").GetComponent<Image>().color = new Color(1, 1, 1);
+                transform.Find("GlowEffect").localScale = new Vector3(1, 1, 1);
                 CardDropManager.Instance.HighLightSlot(highlightedSlot, highlighted);
                 highlightedSlot = null;
             }
@@ -136,6 +139,50 @@ public partial class CardHandler : MonoBehaviour {
         }
 
         return null;
+    }
+
+    protected Transform CheckMagicSlot() {
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        LayerMask mask = (1 << LayerMask.NameToLayer("MagicTarget"));
+        RaycastHit2D[] hits = Physics2D.RaycastAll(
+            new Vector2(mousePos.x, mousePos.y),
+            Vector2.zero,
+            Mathf.Infinity,
+            mask
+        );
+
+        if (hits != null) {
+            foreach (RaycastHit2D hit in hits) {
+                return hit.transform;
+            }
+        }
+        return null;
+    }
+
+    public void CheckMagicHighlight() {
+        if (!highlighted) {
+            highlightedSlot = CheckMagicSlot();
+            if (highlightedSlot != null) {
+                highlighted = true;
+                transform.Find("GlowEffect").GetComponent<Image>().color = new Color(163.0f / 255.0f, 236.0f / 255.0f, 27.0f / 255.0f);
+                //transform.localScale = new Vector3(0, 0, 0);
+                transform.Find("GlowEffect").localScale = new Vector3(1.05f, 1.05f, 1);
+                CardDropManager.Instance.HighLightMagicSlot(highlightedSlot, highlighted);
+            }
+        }
+        else {
+            if (highlightedSlot != CheckMagicSlot()) {
+                highlighted = false;
+                if (isDropable)
+                    transform.Find("GlowEffect").GetComponent<Image>().color = new Color(1, 1, 1);
+                else
+                    transform.Find("GlowEffect").GetComponent<Image>().color = new Color(1, 1, 1);
+                transform.Find("GlowEffect").localScale = new Vector3(1, 1, 1);
+                //transform.localScale = new Vector3(1, 1, 1);
+                CardDropManager.Instance.HighLightMagicSlot(highlightedSlot, highlighted);
+                highlightedSlot = null;
+            }
+        }
     }
 
     /// <summary>
@@ -159,7 +206,7 @@ public partial class CardHandler : MonoBehaviour {
 
     public void OpenCardInfoList() {
         if (PlayMangement.movingCard != null) return;
-        if (firstDraw || PlayMangement.instance.isMulligan) {
+        if (firstDraw && PlayMangement.instance.isMulligan) {
             csm.OpenMulliganCardList(transform.GetSiblingIndex() - 5);
             return;
         }
@@ -196,10 +243,10 @@ public partial class CardHandler : MonoBehaviour {
     }
 
     public void ActivateCard() {
-        if (PlayMangement.instance.player.resource.Value >= cardData.cost) {
+        if (PlayMangement.instance.player.resource.Value - cardData.cost >= 0) {
             isDropable = true;
             transform.Find("GlowEffect").GetComponent<Image>().enabled = true;
-            transform.Find("GlowEffect").GetComponent<Image>().color = new Color(1, 1, 107.0f / 255.0f);
+            transform.Find("GlowEffect").GetComponent<Image>().color = new Color(1, 1, 1);
             transform.Find("Portrait").GetComponent<Image>().color = Color.white;
             transform.Find("attack").GetComponent<Image>().color = Color.white;
             transform.Find("Health").GetComponent<Image>().color = Color.white;

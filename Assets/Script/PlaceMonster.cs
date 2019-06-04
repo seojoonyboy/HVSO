@@ -70,6 +70,11 @@ public class PlaceMonster : MonoBehaviour {
 
             arrow.SetActive(false);
         }
+
+        if(unit.cardCategories[0] == "stealth") 
+            gameObject.AddComponent<ambush>();
+        
+        
         
 
         if (isPlayer == true) 
@@ -312,7 +317,7 @@ public class PlaceMonster : MonoBehaviour {
             StartCoroutine(PlayMangement.instance.cameraShake(unitSpine.atkDuration / 2));
             SoundManager.Instance.PlaySound(SoundType.NORMAL_ATTACK);
         }
-        else if (unit.attack > 4) {
+        else if (unit.attack > 3) {
             GameObject effect = (unit.attack < 6) ? Instantiate(PlayMangement.instance.effectManager.middileAttackEffect) : Instantiate(PlayMangement.instance.effectManager.highAttackEffect);
             effect.transform.position = (targetMonster != null) ? target.transform.position : new Vector3(gameObject.transform.position.x, myTarget.GetComponent<PlayerController>().wallPosition.y, 0);
             Destroy(effect, effect.GetComponent<ParticleSystem>().main.duration - 0.2f);
