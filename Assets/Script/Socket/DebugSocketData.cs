@@ -42,7 +42,7 @@ namespace SocketFormat {
             List<GameObject> list = humanUnits.GetAllFieldUnits();
             list.AddRange(orcUnits.GetAllFieldUnits());
             CheckUnitsReverse(list, state.map);
-            
+            CheckHeros(state);
         }
 
         public static void CheckHeros(GameState state) {
@@ -129,6 +129,39 @@ namespace SocketFormat {
                 break;
             }
             Debug.LogWarning(string.Format("{0} : {1}", name, log));
+        }
+
+        public static void CheckMapPosition(GameState state) {
+            PlayMangement playMangement = PlayMangement.instance;
+            FieldUnitsObserver orcUnitsObserver, humanUnitsObserver;
+            orcUnitsObserver = playMangement.player.isHuman ? playMangement.EnemyUnitsObserver : playMangement.PlayerUnitsObserver;
+            humanUnitsObserver = playMangement.player.isHuman ? playMangement.PlayerUnitsObserver : playMangement.EnemyUnitsObserver;
+            List<GameObject> clientHumanLine = humanUnitsObserver.GetAllFieldUnits();
+            List<GameObject> clientOrcLine = orcUnitsObserver.GetAllFieldUnits();
+            Line[] lines = state.map.lines;
+
+            for(int i = 0; i < lines.Length; i++) {
+                CheckMonsterPosition(lines[i].orc, orcUnitsObserver, i);
+                CheckMonsterPosition(lines[i].human, humanUnitsObserver, i);
+            }
+            Debug.Log("유닛 위치 체크");
+        }
+
+        public static void CheckMonsterPosition(Unit[] units, FieldUnitsObserver observer, int line) {
+            if(units.Length == 0) return;
+            List<GameObject> mons = observer.GetAllFieldUnits();
+            foreach(Unit unit in units) {
+                GameObject mon = mons.Find(x => x.GetComponent<PlaceMonster>().itemId == unit.itemId);
+                if(mon == null) {
+                    Debug.LogError("클라이언트에서 해당 유닛이 없는 버그가 발생했습니다");
+                    return;
+                }
+                PlaceMonster monData = mon.GetComponent<PlaceMonster>();
+                Pos pos = observer.GetMyPos(mon);
+                if(pos.row == line) continue;
+
+                observer.UnitChangePosition(mon, line, 0);
+            }
         }
     }  
 }

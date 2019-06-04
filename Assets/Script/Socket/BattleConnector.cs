@@ -206,6 +206,7 @@ public partial class BattleConnector : MonoBehaviour {
     public void begin_orc_post_turn() {
         Debug.Log("WebSocket State : begin_orc_post_turn");
         checkMyTurn(false);
+        DebugSocketData.CheckMapPosition(gameState);
     }
 
     public void end_orc_post_turn() {
@@ -282,11 +283,14 @@ public partial class BattleConnector : MonoBehaviour {
         string enemyCamp = PlayMangement.instance.enemyPlayer.isHuman ? "human" : "orc";
         string cardCamp = gameState.lastUse.cardItem.camp;
         bool isEnemyCard = cardCamp.CompareTo(enemyCamp) == 0;
-        if(isEnemyCard) useCardList.Enqueue(gameState.lastUse);
-        else if(skillCallbacks.Count != 0) {
-
-            skillCallbacks.Dequeue().Invoke();
-        }
+        if(isEnemyCard) useCardList.Enqueue(gameState);
+        else if(skillCallbacks.Count != 0) skillCallbacks.Dequeue().Invoke();
+        
+        SocketFormat.Target target = gameState.lastUse.target;
+        if(target.method.CompareTo("place") != 0) return;
+        string playerCamp = PlayMangement.instance.player.isHuman ? "human" : "orc";
+        if(target.args[1].CompareTo(playerCamp) !=0 ) return;
+        DebugSocketData.CheckMapPosition(gameState);
     }
 }
 
@@ -294,7 +298,7 @@ public partial class BattleConnector : MonoBehaviour {
 public partial class BattleConnector : MonoBehaviour {
     private string status;
     private bool getNewCard = false;
-    public QueueSocketList<PlayHistory> useCardList = new QueueSocketList<PlayHistory>();
+    public QueueSocketList<GameState> useCardList = new QueueSocketList<GameState>();
     public QueueSocketList<GameState> lineBattleList = new QueueSocketList<GameState>();
     public QueueSocketList<GameState> mapClearList = new QueueSocketList<GameState>();
     public Queue<SocketFormat.Player> humanData = new Queue<SocketFormat.Player>();
@@ -313,7 +317,7 @@ public partial class BattleConnector : MonoBehaviour {
         return useCardList.allDone;
     }
 
-    public PlayHistory getHistory() {
+    public GameState getHistory() {
         return useCardList.Dequeue();
     }
 
