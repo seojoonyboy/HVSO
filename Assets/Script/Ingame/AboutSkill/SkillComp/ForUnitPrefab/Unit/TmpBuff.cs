@@ -14,6 +14,8 @@ public class TmpBuff : MonoBehaviour {
 
         RemoveListener();
         AddListener();
+
+        SearchBackLine();
     }
 
     void AddListener() {
@@ -22,6 +24,10 @@ public class TmpBuff : MonoBehaviour {
 
     private void OnTriggerEvent(Enum Event_Type, Component Sender, object Param) {
         //뒤쪽 라인 아군 검사
+        SearchBackLine();
+    }
+
+    void SearchBackLine() {
         bool isPlayer = GetComponent<PlaceMonster>().isPlayer;
 
         FieldUnitsObserver fieldUnitsObserver;
@@ -35,7 +41,7 @@ public class TmpBuff : MonoBehaviour {
         var pos = fieldUnitsObserver.GetMyPos(gameObject);
         var selectedUnits = fieldUnitsObserver.GetAllFieldUnits(pos.row);
 
-        foreach(GameObject unit in selectedUnits) {
+        foreach (GameObject unit in selectedUnits) {
             var categories = unit.GetComponent<PlaceMonster>().unit.cardCategories.ToList();
             if (categories.Contains("army")) {
                 if (!unit.GetComponent<PlaceMonster>().IsBuffAlreadyExist(gameObject)) {
