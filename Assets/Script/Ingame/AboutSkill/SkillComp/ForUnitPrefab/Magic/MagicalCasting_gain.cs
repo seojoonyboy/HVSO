@@ -18,6 +18,7 @@ namespace SkillModules {
 
                 if (selectedTarget != null) {
                     isRequested = true;
+                    GetComponent<MagicDragHandler>().AttributeUsed();
                 }
             }
         }

@@ -65,13 +65,14 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         CardDropManager.Instance.HideMagicSlot(cardData);
     }
 
-    public void AttributeUsed(MonoBehaviour behaviour) {
-        DestroyImmediate(behaviour);
-        Debug.Log(behaviour);
-        if (GetComponent<Ability>() == null) {
-            Debug.Log("카드 사용 끝남");
-            UseCard();
+    public void AttributeUsed() {
+        bool isValid = false;
+        var magicalCasts = GetComponents<MagicalCasting>();
+        foreach(MagicalCasting magicalCast in magicalCasts) {
+            isValid = magicalCast.isRequested;
         }
+
+        if(isValid) UseCard();
     }
 
     public void UseCard() {

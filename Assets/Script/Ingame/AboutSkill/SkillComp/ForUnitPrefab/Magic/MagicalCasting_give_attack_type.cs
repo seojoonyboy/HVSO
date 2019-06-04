@@ -21,6 +21,7 @@ namespace SkillModules {
 
                     if(selectedUnits.Count != 0) {
                         isRequested = true;
+                        GetComponent<MagicDragHandler>().AttributeUsed();
                     }
                 }
             }

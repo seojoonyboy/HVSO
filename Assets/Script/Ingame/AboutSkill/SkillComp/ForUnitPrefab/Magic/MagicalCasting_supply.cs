@@ -7,6 +7,7 @@ namespace SkillModules {
     public class MagicalCasting_supply : MagicalCasting {
         public override void RequestUseMagic() {
             isRequested = true;
+            GetComponent<MagicDragHandler>().AttributeUsed();
         }
 
         public override void UseMagic() {
@@ -16,7 +17,6 @@ namespace SkillModules {
             int.TryParse(query.ToList()[0], out drawNum);
 
             Debug.Log("마법 카드를 사용하여 " + drawNum + "장 드로우");
-            GetComponent<MagicDragHandler>().AttributeUsed(GetComponent<MagicalCasting_supply>());
         }
     }
 }

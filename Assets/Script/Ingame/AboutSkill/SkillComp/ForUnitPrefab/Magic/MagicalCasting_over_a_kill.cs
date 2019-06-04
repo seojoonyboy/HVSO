@@ -23,6 +23,7 @@ namespace SkillModules {
             if (selectedTarget != null && target.Contains("enemy")) {
                 if(selectedTarget.GetComponent<PlaceMonster>().unit.attack >= standard) {
                     isRequested = true;
+                    GetComponent<MagicDragHandler>().AttributeUsed();
                 }
             }
         }
