@@ -193,11 +193,14 @@ public class PlayerController : MonoBehaviour
         shield.SetActive(true);
         SetState(HeroState.ATTACK);
 
+        
+
         shieldStack.Value = 8;
         PlayMangement.instance.heroShieldActive = true;
         StartCoroutine(PlayMangement.instance.DrawSpecialCard(isHuman));
         shieldStack.Value = 0;
         shieldCount--;
+        playerUI.transform.Find("PlayerHealth").GetChild(0).Find("Shield").Find("Sheilds").GetChild(shieldCount).gameObject.SetActive(false);
     }
 
     public void DisableShield() {
