@@ -67,12 +67,12 @@ public class CardHandDeckManager : MonoBehaviour {
         var cardData = card.GetComponent<CardHandler>().cardData;
         foreach (dataModules.Skill skill in cardData.skills) {
             foreach (var effect in skill.effects) {
-                var newComp = card.AddComponent(System.Type.GetType("SkillModules.Ability_" + effect.method));
+                var newComp = card.AddComponent(System.Type.GetType("SkillModules.MagicalCasting_" + effect.method));
                 if (newComp == null) {
                     Debug.LogError(effect.method + "에 해당하는 컴포넌트를 찾을 수 없습니다.");
                 }
                 else {
-                    ((Ability)newComp).InitData(skill, true);
+                    ((SkillModules.MagicalCasting)newComp).InitData(skill, true);
                 }
             }
         }

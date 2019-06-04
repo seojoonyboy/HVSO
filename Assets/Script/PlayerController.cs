@@ -183,7 +183,7 @@ public class PlayerController : MonoBehaviour
                 if(shieldData == null)
                     shieldStack.Value = data.hero.shildGauge;
                 else
-                    shieldStack.Value = shieldData.shieldCount;
+                    shieldStack.Value += shieldData.shieldCount;
             }
         }
         if(data.shildActivate) {

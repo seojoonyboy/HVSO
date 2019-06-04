@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI.Extensions;
 using System;
 using SkillModules;
+using System.Linq;
 
 public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHandler, IEndDragHandler {
     public Transform selectedLine;
@@ -19,14 +20,15 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         startPos = transform.parent.position;
         PlayMangement.instance.player.isPicking.Value = true;
         string target = cardData.skills[0].targets[0].args[0];
-        
-        //if()
-        CardDropManager.Instance.ShowMagicalSlot(target);
+
+        if (isOnlySupplyCard()) {
+            CardDropManager.Instance.ShowMagicalSlot("all");
+        }
+        else {
+            CardDropManager.Instance.ShowMagicalSlot(target);
+        }
 
         //CardDropManager.Instance.BeginCheckLines();
-
-        var abilities = GetComponents<Ability>();
-        foreach (Ability ability in abilities) ability.OnBeginDrag();
 
         object[] parms = new object[] { true, gameObject };
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_CARD_PLAY, this, parms);
@@ -54,8 +56,8 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         }
         else {
             if (CheckMagicSlot() != null) {
-                var abilities = GetComponents<Ability>();
-                foreach (Ability ability in abilities) ability.OnEndDrag();
+                var abilities = GetComponents<MagicalCasting>();
+                foreach (MagicalCasting ability in abilities) ability.RequestUseMagic();
 
                 selectedLine = highlightedLine;
 
@@ -68,13 +70,14 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         CardDropManager.Instance.HideMagicSlot(cardData);
     }
 
-    public void AttributeUsed(MonoBehaviour behaviour) {
-        DestroyImmediate(behaviour);
-        Debug.Log(behaviour);
-        if (GetComponent<Ability>() == null) {
-            Debug.Log("카드 사용 끝남");
-            UseCard();
+    public void AttributeUsed() {
+        bool isValid = false;
+        var magicalCasts = GetComponents<MagicalCasting>();
+        foreach(MagicalCasting magicalCast in magicalCasts) {
+            isValid = magicalCast.isRequested;
         }
+
+        if(isValid) UseCard();
     }
 
     public void UseCard() {
@@ -101,7 +104,18 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
             PlayMangement.instance.player.ActiveOrcSpecTurn();
     }
 
-    private void SendSocket() {
+    private bool isOnlySupplyCard() {
+        List<MagicalCasting> abilities = GetComponents<MagicalCasting>().ToList();
+        if (abilities.Count == 1) {
+            if(abilities[0].GetType() == typeof(MagicalCasting_supply)) {
+                return true;
+            }
+            return false;
+        }
+        else return false;
+    }
+
+    public void SendSocket(UnityEngine.Events.UnityAction callback = null) {
         string[] args = null;
         string itemId = itemID.ToString();
         string line = string.Empty;
@@ -143,6 +157,8 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         }
         PlayMangement.instance.socketHandler.UseCard(args, drawCard);
     }
+
+
 
     private string[] GetArgsInfo(string status, string itemId, string line, string unitItemId, string camp = null) {
         switch(status) {

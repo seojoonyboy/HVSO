@@ -54,7 +54,7 @@ public partial class UnitDragHandler : CardHandler, IBeginDragHandler, IDragHand
                 else {  
                     foreach (dataModules.Skill skill in cardData.skills) {
                         foreach (var effect in skill.effects) {
-                            var newComp = unitPref.AddComponent(Type.GetType("SkillModules.Ability_" + effect.method));
+                            var newComp = unitPref.AddComponent(Type.GetType("SkillModules.UnitAbility_" + effect.method));
                             if (newComp == null) {
                                 Debug.LogError(effect.method + "에 해당하는 컴포넌트를 찾을 수 없습니다.");
                             }
@@ -65,7 +65,7 @@ public partial class UnitDragHandler : CardHandler, IBeginDragHandler, IDragHand
                     }
                     /*
                     if (unitPref.GetComponent<PlaceMonster>().unit.attackType.ToList().Contains("assault")) {
-                        unitPref.AddComponent<Ability_assault>();
+                        unitPref.AddComponent<UnitAbility_assault>();
                     }
                     */
                     /*
