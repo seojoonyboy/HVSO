@@ -75,7 +75,7 @@ public class PlaceMonster : MonoBehaviour {
             gameObject.AddComponent<ambush>();
 
         if (unit.cardCategories[0] == "assault")
-            gameObject.AddComponent<Ability_assault>();
+            gameObject.AddComponent<SkillModules.UnitAbility_assault>();
 
 
 
