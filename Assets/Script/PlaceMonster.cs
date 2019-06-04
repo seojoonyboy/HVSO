@@ -74,7 +74,7 @@ public class PlaceMonster : MonoBehaviour {
         if (unit.cardCategories[0] == "stealth")
             gameObject.AddComponent<ambush>();
 
-        if (unit.cardCategories[0] == "assault")
+        if (unit.attackType.Length > 0 && unit.attackType[0] == "assault")
             gameObject.AddComponent<SkillModules.UnitAbility_assault>();
 
 
@@ -257,16 +257,16 @@ public class PlaceMonster : MonoBehaviour {
 
         if (frontMonster != null) {
             RequestAttackUnit(frontMonster.transform.gameObject, unit.attack);
-            iTween.MoveTo(arrow, iTween.Hash("x", gameObject.transform.position.x, "y", myTarget.transform.position.y, "z", gameObject.transform.position.z, "time", 0.1f, "easetype", iTween.EaseType.easeOutExpo));
+            //iTween.MoveTo(arrow, iTween.Hash("x", gameObject.transform.position.x, "y", myTarget.transform.position.y, "z", gameObject.transform.position.z, "time", 0.1f, "easetype", iTween.EaseType.easeOutExpo));
             AttackEffect(frontMonster.transform.gameObject);
         }
         if (backMonster != null) {
             RequestAttackUnit(backMonster.transform.gameObject, unit.attack);
-            iTween.MoveTo(arrow, iTween.Hash("x", gameObject.transform.position.x, "y", myTarget.transform.position.y, "z", gameObject.transform.position.z, "time", 0.05f, "easetype", iTween.EaseType.easeOutExpo));
+            //iTween.MoveTo(arrow, iTween.Hash("x", gameObject.transform.position.x, "y", myTarget.transform.position.y, "z", gameObject.transform.position.z, "time", 0.05f, "easetype", iTween.EaseType.easeOutExpo));
             AttackEffect(backMonster.transform.gameObject);
         }
         targetPlayer.PlayerTakeDamage(unit.attack);
-        iTween.MoveTo(arrow, iTween.Hash("x", gameObject.transform.position.x, "y", myTarget.transform.position.y, "z", gameObject.transform.position.z, "time", 0.05f, "easetype", iTween.EaseType.easeOutExpo));
+        iTween.MoveTo(arrow, iTween.Hash("x", gameObject.transform.position.x, "y", myTarget.transform.position.y, "z", gameObject.transform.position.z, "time", 0.2f, "easetype", iTween.EaseType.easeOutExpo));
         AttackEffect(myTarget);
 
         EndAttack();

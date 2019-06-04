@@ -113,7 +113,7 @@ MonoBehaviour:
   disableRenderingOnOverride: 1
   _animationName: IDLE
   loop: 1
-  timeScale: 0.6
+  timeScale: 1
 --- !u!114 &296727284746208088
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -129,4 +129,5 @@ MonoBehaviour:
   idleAnimationName: IDLE
   attackAnimationName: ATTACK
   hitAnimationName: HIT
+  deadAnimationName: DEAD
   dummyAnimation: 
