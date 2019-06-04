@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 
 namespace SkillModules {
@@ -33,6 +34,9 @@ namespace SkillModules {
             List<string> targets = query2.ToList();
 
             foreach(string attributeName in attributeNames) {
+                GameObject status = target.gameObject.transform.Find("Status").gameObject;
+                status.gameObject.SetActive(true);
+                status.GetComponent<TextMeshPro>().text = attributeName + " 부여";
                 target.gameObject.AddComponent(System.Type.GetType("SkillModules." + attributeName));
             }
         }

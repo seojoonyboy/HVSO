@@ -310,6 +310,7 @@ public partial class CardDropManager {
                 }
                 break;
             case "all":
+            case "myall":
                 slotLine[2].Find("AllMagicTrigger").gameObject.SetActive(true);
                 break;
         }
