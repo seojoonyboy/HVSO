@@ -13,6 +13,8 @@ public class HeroSpine : MonoBehaviour
     public string attackAnimationName;
     [SpineAnimation]
     public string hitAnimationName;
+    [SpineAnimation]
+    public string deadAnimationName;
 
 
     [SpineAnimation]
@@ -40,14 +42,13 @@ public class HeroSpine : MonoBehaviour
     }
 
     public virtual void Idle(TrackEntry trackEntry = null) {
-        skeletonAnimation.timeScale = 0.6f;
+        skeletonAnimation.timeScale = 1f;
         skeletonAnimation.AnimationState.SetAnimation(0, idleAnimationName, true);
         currentAnimationName = idleAnimationName;
     }
 
     public virtual void Hit() {
         TrackEntry entry;
-        skeletonAnimation.timeScale = 1.3f;
         entry = skeletonAnimation.AnimationState.SetAnimation(0, hitAnimationName, false);
         currentAnimationName = hitAnimationName;
         
@@ -62,6 +63,13 @@ public class HeroSpine : MonoBehaviour
         entry.Complete += DefendFinish;
         entry.Complete += Idle;
     }
+
+    public virtual void Dead() {
+        TrackEntry entry;
+        entry = skeletonAnimation.AnimationState.SetAnimation(0, deadAnimationName, false);
+        currentAnimationName = hitAnimationName;
+    }
+
 
     public virtual void DefendFinish(TrackEntry trackEntry = null) {
         if (defenseFinish != null) defenseFinish();

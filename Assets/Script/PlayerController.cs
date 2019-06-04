@@ -37,7 +37,8 @@ public class PlayerController : MonoBehaviour
     public enum HeroState {
         IDLE,
         ATTACK,
-        HIT
+        HIT,
+        DEAD
     }
 
     public bool getPlayerTurn {
@@ -146,8 +147,11 @@ public class PlayerController : MonoBehaviour
         var ObserveHP = HP.Subscribe(_=> ChangedHP()).AddTo(PlayMangement.instance.transform.gameObject);
         var ObserveResource = resource.Subscribe(_=> ChangedResource()).AddTo(PlayMangement.instance.transform.gameObject);
         var ObserveShield = shieldStack.Subscribe(_ => shieldImage.fillAmount = (float)shieldStack.Value / 8).AddTo(PlayMangement.instance.transform.gameObject);
+        //var heroDown = HP.Where(x => x <= 0).Subscribe(_ => ).AddTo(PlayMangement.instance.transform.gameObject);
+
         var gameOverDispose = HP.Where(x => x <= 0)
                               .Subscribe(_ => {
+                                               SetState(HeroState.DEAD);
                                                PlayMangement.instance.GetBattleResult();
                                                ObserveHP.Dispose();
                                                ObserveResource.Dispose();
@@ -178,7 +182,10 @@ public class PlayerController : MonoBehaviour
         SocketFormat.ShieldCharge shieldData = GetShieldData();
         if (!data.shildActivate) {
             HP.Value = data.hero.currentHp;
-            SetState(HeroState.HIT);
+
+            if (HP.Value > 0)
+                SetState(HeroState.HIT);
+
             if (shieldCount > 0) {
                 if(shieldData == null)
                     shieldStack.Value = data.hero.shildGauge;
@@ -219,7 +226,7 @@ public class PlayerController : MonoBehaviour
         StartCoroutine(PlayMangement.instance.DrawSpecialCard(isHuman));
         shieldStack.Value = 0;
         shieldCount--;
-        playerUI.transform.Find("PlayerHealth").GetChild(0).Find("Shield").Find("Sheilds").GetChild(shieldCount).gameObject.SetActive(false);
+        playerUI.transform.Find("PlayerHealth").GetChild(0).Find("Shield").Find("Sheilds").GetChild(2 - shieldCount).gameObject.SetActive(false);
     }
 
     public void DisableShield() {
@@ -342,6 +349,9 @@ public class PlayerController : MonoBehaviour
                 break;
             case HeroState.ATTACK:
                 heroSpine.Attack();
+                break;
+            case HeroState.DEAD:
+                heroSpine.Dead();
                 break;
         }
     }
