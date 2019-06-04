@@ -70,6 +70,11 @@ public class PlaceMonster : MonoBehaviour {
 
             arrow.SetActive(false);
         }
+
+        if(unit.cardCategories[0] == "stealth") 
+            gameObject.AddComponent<ambush>();
+        
+        
         
 
         if (isPlayer == true) 
