@@ -253,7 +253,7 @@ public partial class PlayMangement : MonoBehaviour {
 
         foreach (dataModules.Skill skill in cardData.skills) {
             foreach (var effect in skill.effects) {
-                var newComp = monster.AddComponent(System.Type.GetType("SkillModules.Ability_" + effect.method));
+                var newComp = monster.AddComponent(System.Type.GetType("SkillModules.UnitAbility_" + effect.method));
                 if (newComp == null) {
                     Debug.LogError(effect.method + "에 해당하는 컴포넌트를 찾을 수 없습니다.");
                 }
