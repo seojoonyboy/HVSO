@@ -372,6 +372,7 @@ public partial class PlayMangement : MonoBehaviour {
 
     IEnumerator battleLine(int line) {
         backGround.transform.GetChild(line).Find("BattleLineEffect").gameObject.SetActive(true);
+        backGround.transform.GetChild(line).Find("BattleLineEffect").GetComponent<SpriteRenderer>().color = new Color(1, 98.0f / 255.0f, 31.0f / 255.0f, 155.0f / 255.0f);
         if (player.isHuman == false) {
             yield return WaitSocketData(socketHandler.lineBattleList, line, true);
             yield return battleUnit(player.backLine, line);
@@ -414,6 +415,7 @@ public partial class PlayMangement : MonoBehaviour {
             enemyPlayer.frontLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().CheckHP();
             enemyPlayer.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().CheckDebuff();
         }
+        backGround.transform.GetChild(line).Find("BattleLineEffect").GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 155.0f / 255.0f);
         backGround.transform.GetChild(line).Find("BattleLineEffect").gameObject.SetActive(false);
         EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.LINE_BATTLE_FINISHED, this);
     }

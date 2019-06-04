@@ -115,4 +115,9 @@ namespace SocketFormat {
         public int shildCount;
         public int shildGauge;
     }
+
+    public class ShieldCharge {
+        public int shieldCount;
+        public string camp;
+    }
 }
