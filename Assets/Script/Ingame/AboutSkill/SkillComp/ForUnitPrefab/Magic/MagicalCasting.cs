@@ -2,6 +2,7 @@ using dataModules;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 namespace SkillModules {
     public class MagicalCasting : MonoBehaviour {
@@ -27,11 +28,14 @@ namespace SkillModules {
         protected bool IsSubConditionValid(bool isPlayer, GameObject playedObj) {
             var checkers = GetComponents<ConditionChecker>();
 
-            bool result = true;
-            foreach (ConditionChecker condition in checkers) {
-                result = condition.IsConditionSatisfied(isPlayer, playedObj);
+            foreach(ConditionChecker checker in checkers) {
+                if (!checker.IsConditionSatisfied(isPlayer, playedObj)) {
+                    Debug.Log("최종 조건 만족이 안됨");
+                    return false;
+                }
             }
-            return result;
+            Debug.Log("모든 조건 충족됨");
+            return true;
         }
     }
 }
