@@ -15,7 +15,7 @@ namespace SkillModules {
 
             List<string> targetArgs = new List<string>();
             foreach (List<string> args in query2) {
-                targetArgs.Add(args[0]);
+                targetArgs.AddRange(args);
             }
 
             List<string> targetMethods = query.ToList();
