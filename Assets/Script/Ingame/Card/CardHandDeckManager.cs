@@ -17,7 +17,6 @@ public class CardHandDeckManager : MonoBehaviour {
     [SerializeField] public Transform cardSpawnPos;
     [SerializeField] Transform firstDrawParent;
 
-    // Start is called before the first frame update
     void Start() {
         cardList = new List<GameObject>();
         firstDrawList = new List<GameObject>();
@@ -163,11 +162,11 @@ public class CardHandDeckManager : MonoBehaviour {
                 firstDraw = false;
             }
             cardList.Add(card);
-            //card.transform.localScale = new Vector3(1, 1, 1);
             card.transform.Find("GlowEffect").GetComponent<Image>().enabled = false;
             if (target != null) {
                 isDrawing = false;
-                StartCoroutine(SendCardToHand(card, target));
+                card.transform.SetParent(target);
+                StartCoroutine(SendCardToHand(card));
             }
             return;
         }
@@ -224,17 +223,18 @@ public class CardHandDeckManager : MonoBehaviour {
             }
         }
         cardList.Add(card);
+        card.transform.SetParent(target);
         LayoutRebuilder.ForceRebuildLayoutImmediate(slot_1.GetComponent<RectTransform>());
         LayoutRebuilder.ForceRebuildLayoutImmediate(slot_2.GetComponent<RectTransform>());
         if (target != null) {
             isDrawing = true;
-            StartCoroutine(SendCardToHand(card, target));
+            StartCoroutine(SendCardToHand(card));
         }
     }
 
     public IEnumerator AddMultipleCard(SocketFormat.Card[] cardData) {
         List<GameObject> cards = new List<GameObject>();
-        List<Transform> targets = new List<Transform>();        
+        //List<Transform> targets = new List<Transform>();        
         for (int i = cardNum; i < cardData.Length; i++) {
             GameObject card;
             Transform target;
@@ -315,33 +315,30 @@ public class CardHandDeckManager : MonoBehaviour {
                 }
             }
             cards.Add(card);
-            targets.Add(target);
+            //targets.Add(target);
+            card.transform.SetParent(target);
         }
         for (int i = 0; i < cards.Count; i++) {
             cardList.Add(cards[i]);
             LayoutRebuilder.ForceRebuildLayoutImmediate(slot_1.GetComponent<RectTransform>());
             LayoutRebuilder.ForceRebuildLayoutImmediate(slot_2.GetComponent<RectTransform>());
-            if (targets[i] != null) {
-                isDrawing = true;
-                StartCoroutine(SendCardToHand(cards[i], targets[i]));
-            }
+            isDrawing = true;
+            StartCoroutine(SendCardToHand(cards[i]));
             yield return new WaitForSeconds(0.5f);
         }
     }
 
 
-    IEnumerator SendCardToHand(GameObject card, Transform target) {
+    IEnumerator SendCardToHand(GameObject card) {
         PlayMangement.movingCard = card;
         if (!firstDraw) {
-            //card.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
             card.transform.rotation = new Quaternion(0, 0, 180, card.transform.rotation.w);
             iTween.MoveTo(card, firstDrawParent.position, 0.4f);
             iTween.RotateTo(card, new Vector3(0, 0, 0), 0.5f);
             yield return new WaitForSeconds(0.5f);
         }
-        card.transform.SetParent(target);
-        //iTween.MoveTo(card, iTween.Hash("x", target.position.x, "y", target.position.y, "time" ,0.5f, "easetype" , iTween.EaseType.easeInOutQuart));
-        iTween.MoveTo(card, iTween.Hash("x", target.position.x, "y", target.position.y, "time" ,0.5f, "easetype" , iTween.EaseType.easeWeakOutBack));
+        
+        iTween.MoveTo(card, iTween.Hash("x", card.transform.parent.position.x, "y", card.transform.parent.position.y, "time" ,0.5f, "easetype" , iTween.EaseType.easeWeakOutBack));
         iTween.ScaleTo(card, new Vector3(1.0f, 1.0f, 1.0f), 0.5f);
         yield return new WaitForSeconds(0.5f);
         card.GetComponent<CardHandler>().DisableCard();

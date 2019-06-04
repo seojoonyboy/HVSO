@@ -468,9 +468,10 @@ public partial class PlayMangement : MonoBehaviour {
             cdpm.AddCard(null, cardData);
         }
         else {
-            GameObject enemyCard = Instantiate(enemyPlayer.back);
-            enemyCard.transform.SetParent(enemyPlayer.playerUI.transform.Find("CardSlot"));
+            GameObject enemyCard = Instantiate(isHuman ? player.back : enemyPlayer.back);
+            enemyCard.transform.SetParent(PlayMangement.instance.enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(PlayMangement.instance.CountEnemyCard()));
             enemyCard.transform.localScale = new Vector3(1, 1, 1);
+            enemyCard.transform.localPosition = new Vector3(0, 0, 0);
             enemyCard.SetActive(true);
         }
         if(isPlayer) socketHandler.TurnOver();
