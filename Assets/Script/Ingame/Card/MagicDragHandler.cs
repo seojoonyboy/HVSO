@@ -22,9 +22,6 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         //CardDropManager.Instance.ShowDropableSlot(cardData);
         CardDropManager.Instance.BeginCheckLines();
 
-        var abilities = GetComponents<Ability>();
-        foreach (Ability ability in abilities) ability.OnBeginDrag();
-
         object[] parms = new object[] { true, gameObject };
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_CARD_PLAY, this, parms);
     }
@@ -53,11 +50,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
             CardDropManager.Instance.HighLightSlot(highlightedSlot, highlighted);
             highlightedSlot = null;
         }
-        else {
-            var abilities = GetComponents<Ability>();
-            foreach (Ability ability in abilities) ability.OnEndDrag();
-
-            selectedLine = highlightedLine;
+        else {selectedLine = highlightedLine;
 
             object[] parms = new object[] { true, gameObject };
             PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
@@ -101,7 +94,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
             PlayMangement.instance.player.ActiveOrcSpecTurn();
     }
 
-    private void SendSocket() {
+    public void SendSocket(UnityEngine.Events.UnityAction callback = null) {
         string[] args = null;
         string itemId = itemID.ToString();
         string line = string.Empty;
@@ -143,6 +136,8 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         }
         PlayMangement.instance.socketHandler.UseCard(args, drawCard);
     }
+
+
 
     private string[] GetArgsInfo(string status, string itemId, string line, string unitItemId, string camp = null) {
         switch(status) {
