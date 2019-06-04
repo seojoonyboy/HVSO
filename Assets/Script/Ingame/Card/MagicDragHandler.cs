@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI.Extensions;
 using System;
 using SkillModules;
+using System.Linq;
 
 public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHandler, IEndDragHandler {
     public Transform selectedLine;
@@ -19,9 +20,13 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         startPos = transform.parent.position;
         PlayMangement.instance.player.isPicking.Value = true;
         string target = cardData.skills[0].targets[0].args[0];
-        
-        //if()
-        CardDropManager.Instance.ShowMagicalSlot(target);
+
+        if (isOnlySupplyCard()) {
+            CardDropManager.Instance.ShowMagicalSlot("all");
+        }
+        else {
+            CardDropManager.Instance.ShowMagicalSlot(target);
+        }
 
         //CardDropManager.Instance.BeginCheckLines();
 
@@ -97,6 +102,17 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
             PlayMangement.instance.player.ActivePlayer();
         else
             PlayMangement.instance.player.ActiveOrcSpecTurn();
+    }
+
+    private bool isOnlySupplyCard() {
+        List<MagicalCasting> abilities = GetComponents<MagicalCasting>().ToList();
+        if (abilities.Count == 1) {
+            if(abilities[0].GetType() == typeof(MagicalCasting_supply)) {
+                return true;
+            }
+            return false;
+        }
+        else return false;
     }
 
     public void SendSocket(UnityEngine.Events.UnityAction callback = null) {
