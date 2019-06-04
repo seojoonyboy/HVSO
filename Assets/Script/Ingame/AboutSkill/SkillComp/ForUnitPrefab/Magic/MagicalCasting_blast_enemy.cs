@@ -10,8 +10,8 @@ namespace SkillModules {
         public override void RequestUseMagic() {
             IEnumerable<string> query = from target in skillData.targets.ToList()
                                         select target.method;
-            IEnumerable<List<string>> query2 = from effect in skillData.effects.ToList()
-                                               select effect.args.ToList();
+            IEnumerable<List<string>> query2 = from target in skillData.targets.ToList()
+                                               select target.args.ToList();
 
             List<string> targetArgs = new List<string>();
             foreach (List<string> args in query2) {
