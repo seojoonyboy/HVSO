@@ -170,10 +170,18 @@ public partial class CardDropManager {
     public void HighLightMagicSlot(Transform target, bool highlighted) {
         if (target == null) return;
         if (target.name != "AllMagicTrigger") {
-            if(highlighted)
-                target.parent.Find("ClickableUI").GetComponent<SpriteRenderer>().color = new Color(163.0f / 255.0f, 236.0f / 255.0f, 27.0f / 255.0f, 155.0f / 255.0f);
-            else
-                target.parent.Find("ClickableUI").GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 155.0f / 255.0f);
+            if (target.name == "BattleLineEffect") {
+                if (highlighted)
+                    target.GetComponent<SpriteRenderer>().color = new Color(163.0f / 255.0f, 236.0f / 255.0f, 27.0f / 255.0f, 155.0f / 255.0f);
+                else
+                    target.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 155.0f / 255.0f);
+            }
+            else {
+                if (highlighted)
+                    target.parent.Find("ClickableUI").GetComponent<SpriteRenderer>().color = new Color(163.0f / 255.0f, 236.0f / 255.0f, 27.0f / 255.0f, 155.0f / 255.0f);
+                else
+                    target.parent.Find("ClickableUI").GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 155.0f / 255.0f);
+            }
         }
     }
 
@@ -277,8 +285,11 @@ public partial class CardDropManager {
 /// 마법 처리
 /// </summary>
 public partial class CardDropManager {
+
+    protected string magicArgs;
     public void ShowMagicalSlot(string target) {
         if (target == null) return;
+        magicArgs = target;
         switch (target) {
             case "my":
                 for (int i = 0; i < 5; i++) {
@@ -301,6 +312,7 @@ public partial class CardDropManager {
                 }
                 break;
             case "line":
+            case "enemyline":
                 for (int i = 0; i < 5; i++) {
                     if (enemyUnitLine[i][0].childCount > 0 || enemyUnitLine[i][1].childCount > 0)
                         slotLine[i].Find("BattleLineEffect").gameObject.SetActive(true);
@@ -309,6 +321,16 @@ public partial class CardDropManager {
             case "all":
             case "myall":
                 slotLine[2].Find("AllMagicTrigger").gameObject.SetActive(true);
+                break;
+            case "enemyrandom":
+                for (int i = 0; i < 5; i++) {
+                    for (int j = 0; j < 2; j++) {
+                        if (enemyUnitLine[i][j].childCount > 0) {
+                            slotLine[2].Find("AllMagicTrigger").gameObject.SetActive(true);
+                            break;
+                        }
+                    }
+                }
                 break;
         }
     }
@@ -331,10 +353,9 @@ public partial class CardDropManager {
     }
 
 
-    public void HideMagicSlot(CardData card) {
-        if (card.skills == null) return;
-        string target = card.skills[0].targets[0].args[0];
-        switch (target) {
+    public void HideMagicSlot() {
+        if (magicArgs == null) return;
+        switch (magicArgs) {
             case "my":
                 for (int i = 0; i < 5; i++) {
                     for (int j = 0; j < 2; j++) {
@@ -346,30 +367,38 @@ public partial class CardDropManager {
                 }
                 break;
             case "enemy":
-                int attackLimit = 0;
-                if (card.skills[0].activate.conditions.Length > 0)
-                    attackLimit = int.Parse(card.skills[0].activate.conditions[0].args[0]);
                 for (int i = 0; i < 5; i++) {
                     for (int j = 0; j < 2; j++) {
                         if (enemyUnitLine[i][j].childCount > 0) {
-                            if (enemyUnitLine[i][j].GetChild(0).GetComponent<PlaceMonster>().unit.attack >= attackLimit) {
-                                enemyUnitLine[i][j].GetChild(0).Find("ClickableUI").gameObject.SetActive(false);
-                                enemyUnitLine[i][j].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(false);
-                            }
+                            enemyUnitLine[i][j].GetChild(0).Find("ClickableUI").gameObject.SetActive(false);
+                            enemyUnitLine[i][j].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(false);
                         }
                     }
                 }
                 break;
             case "line":
+            case "enemyline":
                 for (int i = 0; i < 5; i++) {
                     if (enemyUnitLine[i][0].childCount > 0 || enemyUnitLine[i][1].childCount > 0)
                         slotLine[i].Find("BattleLineEffect").gameObject.SetActive(false);
                 }
                 break;
             case "all":
+            case "myall":
                 slotLine[2].Find("AllMagicTrigger").gameObject.SetActive(false);
                 break;
+            case "enemyrandom":
+                for (int i = 0; i < 5; i++) {
+                    for (int j = 0; j < 2; j++) {
+                        if (enemyUnitLine[i][j].childCount > 0) {
+                            slotLine[2].Find("AllMagicTrigger").gameObject.SetActive(false);
+                            break;
+                        }
+                    }
+                }
+                break;
         }
+        magicArgs = null;
     }
 }
 

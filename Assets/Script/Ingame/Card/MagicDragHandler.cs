@@ -90,7 +90,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
                 if (GetComponents<Ability>() == null) UseCard();
             }
         }
-        CardDropManager.Instance.HideMagicSlot(cardData);
+        CardDropManager.Instance.HideMagicSlot();
     }
 
     public void AttributeUsed() {
@@ -105,6 +105,8 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
     }
 
     public void UseCard() {
+        CardDropManager.Instance.HighLightSlot(highlightedSlot, false);
+        CardDropManager.Instance.HideDropableSlot();
         int cardIndex = 0;
         if (transform.parent.parent.name == "CardSlot_1")
             cardIndex = transform.parent.GetSiblingIndex();

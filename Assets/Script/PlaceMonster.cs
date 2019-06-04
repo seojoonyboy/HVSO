@@ -219,7 +219,7 @@ public class PlaceMonster : MonoBehaviour {
             PlaceMonster targetMonster = myTarget.GetComponent<PlaceMonster>();
 
             if (unit.attackType.Length > 0 && unit.attackType[0] == "through") {
-                PiercingAttack();
+                iTween.MoveTo(arrow, iTween.Hash("x", gameObject.transform.position.x, "y", myTarget.GetComponent<PlayerController>().wallPosition.y, "z", gameObject.transform.position.z, "time", 0.2f, "easetype", iTween.EaseType.easeOutExpo, "oncomplete", "PiercingAttack", "oncompletetarget", gameObject));
             }
             else {
                 if (targetMonster != null)
@@ -253,6 +253,7 @@ public class PlaceMonster : MonoBehaviour {
         PlaceMonster frontMonster = (targetPlayer.frontLine.transform.GetChild(x).childCount > 0) ? targetPlayer.frontLine.transform.GetChild(x).GetChild(0).GetComponent<PlaceMonster>() : null;
         PlaceMonster backMonster = (targetPlayer.backLine.transform.GetChild(x).childCount > 0) ? targetPlayer.backLine.transform.GetChild(x).GetChild(0).GetComponent<PlaceMonster>() : null;
         GameObject arrow = transform.Find("arrow").gameObject;
+        arrow.SetActive(true);
 
 
         if (frontMonster != null) {
@@ -266,7 +267,7 @@ public class PlaceMonster : MonoBehaviour {
             AttackEffect(backMonster.transform.gameObject);
         }
         targetPlayer.PlayerTakeDamage(unit.attack);
-        iTween.MoveTo(arrow, iTween.Hash("x", gameObject.transform.position.x, "y", myTarget.transform.position.y, "z", gameObject.transform.position.z, "time", 0.2f, "easetype", iTween.EaseType.easeOutExpo));
+        
         AttackEffect(myTarget);
 
         EndAttack();

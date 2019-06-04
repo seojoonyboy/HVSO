@@ -181,7 +181,7 @@ public class PlayerController : MonoBehaviour
         else data = socketHandler.gameState.players.myPlayer(isHuman);
         SocketFormat.ShieldCharge shieldData = GetShieldData();
         if (!data.shildActivate) {
-            HP.Value = data.hero.currentHp;
+            HP.Value -= amount;
 
             if (HP.Value > 0)
                 SetState(HeroState.HIT);
@@ -193,9 +193,14 @@ public class PlayerController : MonoBehaviour
                     shieldStack.Value += shieldData.shieldCount;
             }
         }
-        if(data.shildActivate) {
+        if(data.shildActivate && CheckShieldActivate(shieldData)) {
             ActiveShield();
         }
+    }
+
+    private bool CheckShieldActivate(SocketFormat.ShieldCharge shieldData) {
+        if(shieldData == null) return true;
+        return (shieldStack.Value + shieldData.shieldCount) >= 8;
     }
 
     private SocketFormat.ShieldCharge GetShieldData() {
@@ -209,7 +214,7 @@ public class PlayerController : MonoBehaviour
             Debug.Log("쉴드 게이지 발동 : " + JsonUtility.ToJson(shieldData));
             return shieldData;
         }
-        else 
+        else
             Debug.LogError("서버에서 온 쉴드 게이지가 없습니다!");
         return null;
     }
