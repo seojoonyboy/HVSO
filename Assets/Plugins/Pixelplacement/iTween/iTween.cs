@@ -126,6 +126,7 @@ public class iTween : MonoBehaviour{
 		/* GFX47 MOD END */
 		easeInBack,
 		easeOutBack,
+		easeWeakOutBack,
 		easeInOutBack,
 		/* GFX47 MOD START */
 		//elastic,
@@ -7003,6 +7004,9 @@ public class iTween : MonoBehaviour{
 		case EaseType.easeOutBack:
 			ease = new EasingFunction(easeOutBack);
 			break;
+		case EaseType.easeWeakOutBack:
+			ease = new EasingFunction(easeWeakOutBack);
+			break;
 		case EaseType.easeInOutBack:
 			ease = new EasingFunction(easeInOutBack);
 			break;
@@ -7340,6 +7344,13 @@ public class iTween : MonoBehaviour{
 
 	private float easeOutBack(float start, float end, float value){
 		float s = 1.70158f;
+		end -= start;
+		value = (value) - 1;
+		return end * ((value) * value * ((s + 1) * value + s) + 1) + start;
+	}
+
+	private float easeWeakOutBack(float start, float end, float value) {
+		float s = 0.85079f;
 		end -= start;
 		value = (value) - 1;
 		return end * ((value) * value * ((s + 1) * value + s) + 1) + start;
