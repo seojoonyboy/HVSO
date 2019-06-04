@@ -57,7 +57,7 @@ public partial class BattleConnector : MonoBehaviour {
 
     //Receive Socket Message
     private void ReceiveMessage(WebSocket webSocket, string message) {
-        //Debug.Log(message);
+        Debug.Log(message);
         OnReceiveSocketMessage.Invoke();
         ReceiveFormat result = JsonReader.Read<ReceiveFormat>(message);
         queue.Enqueue(result);
@@ -283,7 +283,10 @@ public partial class BattleConnector : MonoBehaviour {
         string cardCamp = gameState.lastUse.cardItem.camp;
         bool isEnemyCard = cardCamp.CompareTo(enemyCamp) == 0;
         if(isEnemyCard) useCardList.Enqueue(gameState.lastUse);
-        else if(skillCallbacks.Count != 0) skillCallbacks.Dequeue()();
+        else if(skillCallbacks.Count != 0) {
+
+            skillCallbacks.Dequeue().Invoke();
+        }
     }
 }
 

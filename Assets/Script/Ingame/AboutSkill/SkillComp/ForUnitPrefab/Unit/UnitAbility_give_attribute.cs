@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 
 namespace SkillModules {
@@ -42,6 +43,9 @@ namespace SkillModules {
                         if (newComp != null) {
                             Debug.Log("상대방에게 " + newComp.name + "속성 부여");
                             ((Attribute)newComp).Init();
+                            GameObject status = attackTarget.gameObject.transform.Find("Status").gameObject;
+                            status.gameObject.SetActive(true);
+                            status.GetComponent<TextMeshPro>().text = newComp.name + " 걸림";
                         }
                     }
                 }

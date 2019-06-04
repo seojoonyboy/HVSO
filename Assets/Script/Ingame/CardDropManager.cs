@@ -260,17 +260,13 @@ public partial class CardDropManager {
 
         placedMonster.GetComponent<PlaceMonster>().Init(cardHandler.cardData);
         placedMonster.GetComponent<PlaceMonster>().SpawnUnit();
-        //GetComponent<Image>().enabled = false;
         PlayMangement.instance.player.isPicking.Value = false;
         PlayMangement.instance.player.resource.Value -= cardHandler.cardData.cost;
         if (PlayMangement.instance.player.isHuman)
             PlayMangement.instance.player.ActivePlayer();
         else
             PlayMangement.instance.player.ActiveOrcTurn();
-
         GameObject.Find("Player").transform.GetChild(0).GetComponent<PlayerController>().cdpm.DestroyCard(cardIndex);
-
-        //PlayMangement.instance.PlayerUnitsObserver.UnitAdded(placedMonster, lineNum, frontOrBack);
         PlayMangement.instance.PlayerUnitsObserver.RefreshFields(unitLine);
 
         return placedMonster;
@@ -311,6 +307,7 @@ public partial class CardDropManager {
                 }
                 break;
             case "all":
+            case "myall":
                 slotLine[2].Find("AllMagicTrigger").gameObject.SetActive(true);
                 break;
         }

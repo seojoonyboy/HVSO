@@ -13,7 +13,7 @@ public class CardListManager : MonoBehaviour
     [SerializeField] Transform mulliganList;
     Animator animator;
     HorizontalScrollSnap hss;
-    // Start is called before the first frame update
+
     void Start()
     {
         transform.GetComponent<Image>().enabled = false;

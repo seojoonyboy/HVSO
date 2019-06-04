@@ -10,7 +10,7 @@ namespace SkillModules {
             IEnumerable<string> query = from target in skillData.targets.ToList()
                                         select target.method;
             List<string> targets = query.ToList();
-            if (targets.Contains("self")) {
+            if (targets.Contains("played_target")) {
                 selectedTarget = GetComponent<MagicDragHandler>()
                     .highlightedSlot
                     .GetComponentInParent<PlaceMonster>()
