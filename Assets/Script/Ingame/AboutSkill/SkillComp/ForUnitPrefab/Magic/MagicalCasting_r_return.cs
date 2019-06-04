@@ -48,7 +48,7 @@ namespace SkillModules {
         }
 
         private bool IsEnemyExist() {
-            FieldUnitsObserver unitsObserver = PlayMangement.instance.PlayerUnitsObserver;
+            FieldUnitsObserver unitsObserver = PlayMangement.instance.EnemyUnitsObserver;
             var selectedUnits = unitsObserver.GetAllFieldUnits();
             return selectedUnits.Count != 0;
         }

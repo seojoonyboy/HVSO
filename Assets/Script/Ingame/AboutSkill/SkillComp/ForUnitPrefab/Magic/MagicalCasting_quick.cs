@@ -14,14 +14,20 @@ namespace SkillModules {
             List<string> effects = query.ToList();
             List<string> args = skillData.targets[0].args.ToList();
             if (args.Contains("my")) {
-                selectedTarget = GetComponent<MagicDragHandler>()
+                try {
+                    selectedTarget = GetComponent<MagicDragHandler>()
                         .highlightedSlot
                         .GetComponentInParent<PlaceMonster>()
                         .transform;
 
-                if (selectedTarget != null) {
-                    isRequested = true;
-                    GetComponent<MagicDragHandler>().AttributeUsed();
+                    if (selectedTarget != null) {
+                        isRequested = true;
+                        GetComponent<MagicDragHandler>().AttributeUsed();
+                    }
+                }
+                catch(System.NullReferenceException ex) {
+                    isRequested = false;
+                    IngameNotice.instance.SetNotice("대상을 찾을 수 없습니다.");
                 }
             }
         }
