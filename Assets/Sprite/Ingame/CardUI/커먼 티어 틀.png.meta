@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 70071b9aa13c8044cb6041f931fa861e
+guid: c96342942df70c54a9c0d87c59600097
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -97,14 +97,14 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: e57c3f1860072e4469459f1da3743008
+    spriteID: 28bed43768f88fd45aa161bbb2eb5dbb
     internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
     secondaryTextures: []
-  spritePackingTag: CardPortrait
+  spritePackingTag: IngameUI
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
   userData: 
