@@ -342,12 +342,21 @@ public class CardHandDeckManager : MonoBehaviour {
         iTween.ScaleTo(card, new Vector3(1.0f, 1.0f, 1.0f), 0.5f);
         yield return new WaitForSeconds(0.5f);
         card.GetComponent<CardHandler>().DisableCard();
+        if (PlayMangement.instance.player.getPlayerTurn) {
+            if (!PlayMangement.instance.player.isHuman && card.GetComponent<CardHandler>().cardData.type == "unit")
+                card.GetComponent<CardHandler>().DisableCard();
+            else
+                card.GetComponent<CardHandler>().ActivateCard();
+            
+        }
         card.GetComponent<CardHandler>().FIRSTDRAW = false;
         CardListManager csm = GameObject.Find("Canvas").transform.Find("CardInfoList").GetComponent<CardListManager>();
         csm.AddCardInfo(card.GetComponent<CardHandler>().cardData, card.GetComponent<CardHandler>().cardID);
         card.transform.localPosition = new Vector3(0, 0, 0);
-        if (PlayMangement.movingCard == card)
+        if (PlayMangement.movingCard == card) {
             PlayMangement.movingCard = null;
+            InitCardPosition();
+        }
     }
 
     private void InitCardPosition() {

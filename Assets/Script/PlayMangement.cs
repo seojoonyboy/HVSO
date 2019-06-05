@@ -319,7 +319,8 @@ public partial class PlayMangement : MonoBehaviour {
 
             case "SECRET":
                 if (player.isHuman == false) {
-                    player.ActiveOrcSpecTurn();
+                    //player.ActiveOrcSpecTurn();
+                    player.ActiveOrcTurn();
                     enemyPlayer.DisablePlayer();
                 }
                 else {
