@@ -289,7 +289,11 @@ public class PlaceMonster : MonoBehaviour {
 
     public void EndAttack() {
         if (instanceAttack == true) {
-            CheckHP();
+            PlaceMonster instanceTarget = myTarget.GetComponent<PlaceMonster>();
+
+            if (instanceTarget != null)
+                myTarget.GetComponent<PlaceMonster>().CheckHP();
+
             instanceAttack = false;
         }
         else
