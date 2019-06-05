@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 
 namespace SkillModules {
@@ -35,7 +36,13 @@ namespace SkillModules {
             if (args.Contains("my")) {
                 if (args.Contains("all")) {
                     foreach(GameObject unit in selectedUnits) {
-                        unit.AddComponent(System.Type.GetType("SkillModules." + effects[0]));
+                        var comp = unit.AddComponent(System.Type.GetType("SkillModules." + effects[0]));
+                        GameObject status = unit.gameObject.transform.Find("Status").gameObject;
+                        status.gameObject.SetActive(true);
+
+                        if(comp.GetType() == typeof(poison)) {
+                            status.GetComponent<TextMeshPro>().text = "독성 부여";
+                        }
                     }
                 }
             }
