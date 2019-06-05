@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 92ddc4f0784c92f49b303709cb1a7b42
+guid: ee6e671376a3606439c1a538a55f740c
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -69,20 +69,42 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
   spriteSheet:
     serializedVersion: 2
     sprites: []
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 37e5427c8c53e0447b5fc5cbce7f8a63
+    spriteID: 9294d1491dcb7c243a7eda32c2824e89
     internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
     secondaryTextures: []
-  spritePackingTag: 
+  spritePackingTag: CardPortrait
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
   userData: 

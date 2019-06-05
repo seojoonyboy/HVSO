@@ -442,6 +442,10 @@ public partial class PlayMangement : MonoBehaviour {
         yield return queueList.WaitNext();
         SocketFormat.GameState state = queueList.Dequeue();
         Debug.Log("쌓인 데이터 리스트 : " + queueList.Count);
+        if(state == null) {
+            Debug.LogError("데이터가 없는 문제가 발생했습니다. 우선은 클라이언트에서 배틀 진행합니다.");
+            yield break;
+        }
         SocketFormat.DebugSocketData.ShowBattleData(state, line, isBattle);
         //데이터 체크 및 데이터 동기화
         if(!isBattle) SocketFormat.DebugSocketData.CheckBattleSynchronization(state);

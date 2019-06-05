@@ -5,8 +5,8 @@ format: RGBA8888
 filter: Linear,Linear
 repeat: none
 L_leg
-  rotate: false
-  xy: 218, 79
+  rotate: true
+  xy: 209, 102
   size: 52, 75
   orig: 52, 75
   offset: 0, 0
@@ -27,7 +27,7 @@ L_upper_arm
   index: -1
 R_arm
   rotate: false
-  xy: 132, 2
+  xy: 122, 2
   size: 84, 110
   orig: 84, 110
   offset: 0, 0
@@ -55,9 +55,9 @@ eye
   index: -1
 head
   rotate: true
-  xy: 2, 3
-  size: 109, 128
-  orig: 109, 128
+  xy: 2, 10
+  size: 102, 118
+  orig: 102, 118
   offset: 0, 0
   index: -1
 shadow
