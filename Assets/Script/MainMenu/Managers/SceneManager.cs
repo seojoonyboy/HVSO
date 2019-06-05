@@ -86,6 +86,9 @@ public class SceneManager : Singleton<SceneManager> {
             }
             else {
                 LoadLastScene();
+                if(PlayMangement.instance == null) return;
+                if(PlayMangement.instance.socketHandler == null) return;
+                DestroyImmediate(PlayMangement.instance.socketHandler.gameObject);
             }
         }
     }
