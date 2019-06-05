@@ -30,7 +30,7 @@ namespace SkillModules {
             CheckEnemy();
         }
 
-        private void CheckEnemy() {
+        public void CheckEnemy() {
             if (gameObject == null) return;
             var myPos = playerUnitsObserver.GetMyPos(gameObject);
             var enemies = enemyUnitsObserver.GetAllFieldUnits(myPos.row);

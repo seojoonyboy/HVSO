@@ -116,22 +116,6 @@ public partial class CardDropManager {
         }
     }
 
-    public void BeginCheckLines() {
-        var lines = PlayMangement.instance.player.dropableLines;
-        foreach (Transform line in lines) {
-            line.Find("BattleLineEffect").gameObject.SetActive(true);
-            line.Find("BattleLineEffect").GetComponent<SpriteRenderer>().enabled = false;
-        }
-    }
-
-    public void HideDropableLine() {
-        var lines = PlayMangement.instance.player.dropableLines;
-        foreach (Transform line in lines) {
-            line.Find("BattleLineEffect").gameObject.SetActive(false);
-            line.Find("BattleLineEffect").GetComponent<SpriteRenderer>().enabled = true;
-        }
-    }
-
     public void HighLightSlot(Transform target, bool highlighted) {
         if (target == null) return;
         int index = target.GetSiblingIndex();
