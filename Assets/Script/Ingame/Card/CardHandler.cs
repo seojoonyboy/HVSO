@@ -78,32 +78,6 @@ public partial class CardHandler : MonoBehaviour {
         }
     }
 
-    protected void OffLineHighlight() {
-        var lineUIParent = PlayMangement.instance.player.dropableLines;
-        foreach (Transform line in lineUIParent) {
-            line.Find("BattleLineEffect").gameObject.SetActive(false);
-            line.Find("BattleLineEffect").GetComponent<SpriteRenderer>().enabled = true;
-        }
-    }
-
-    protected void CheckLineHighlight() {
-        Transform raycastedLine = CheckLine();
-        if (raycastedLine != null) {
-            if (highlightedLine == null) {
-                highlightedLine = raycastedLine;
-
-                highlightedLine.GetComponent<SpriteRenderer>().enabled = false;
-                raycastedLine.GetComponent<SpriteRenderer>().enabled = true;
-            };
-
-            if (highlightedLine != raycastedLine) {
-                highlightedLine.GetComponent<SpriteRenderer>().enabled = false;
-                raycastedLine.GetComponent<SpriteRenderer>().enabled = true;
-            }
-            highlightedLine = raycastedLine;
-        }
-    }
-
     public void CheckHighlight() {
         if (!highlighted) {
             highlightedSlot = CheckSlot();

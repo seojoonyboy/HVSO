@@ -11,7 +11,6 @@ using System.Text;
 using UnityEngine.Events;
 
 public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHandler, IEndDragHandler {
-    public Transform selectedLine;
 
     public void OnBeginDrag(PointerEventData eventData) {
         if (firstDraw || PlayMangement.instance.isMulligan) return;
@@ -81,8 +80,6 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
             if (CheckMagicSlot() != null) {
                 var abilities = GetComponents<MagicalCasting>();
                 foreach (MagicalCasting ability in abilities) ability.RequestUseMagic();
-
-                selectedLine = highlightedLine;
 
                 object[] parms = new object[] { true, gameObject };
                 PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
