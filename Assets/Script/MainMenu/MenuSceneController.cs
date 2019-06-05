@@ -16,5 +16,7 @@ public class MenuSceneController : MonoBehaviour {
     /// </summary>
     public void OnPVPClicked() {
         SceneManager.Instance.LoadScene(SceneManager.Scene.PVP_READY_SCENE);
+
+        SoundManager.Instance.PlaySound(SoundType.FIRST_TURN);
     }
 }

@@ -93,6 +93,8 @@ public class BattleReadySceneController : MonoBehaviour {
     }
 
     public void OnStartButton() {
+        SoundManager.Instance.PlaySound(SoundType.FIRST_TURN);
+
         if (isIngameButtonClicked) {
             Debug.Log("이미 대전 시작 버튼이 눌려진 상태");
             return;
@@ -105,18 +107,22 @@ public class BattleReadySceneController : MonoBehaviour {
     }
 
     public void OnBackButton() {
+        SoundManager.Instance.PlaySound(SoundType.FIRST_TURN);
         SceneManager.Instance.LoadScene(SceneManager.Scene.MAIN_SCENE);
     }
 
     public void OnDeckListButton() {
+        SoundManager.Instance.PlaySound(SoundType.FIRST_TURN);
         SceneManager.Instance.LoadScene(SceneManager.Scene.DECK_LIST_SCNE);
     }
 
     public void ChangeBattleType(BattleType type) {
+        SoundManager.Instance.PlaySound(SoundType.FIRST_TURN);
         selectedBattleType = type;
     }
 
     public void ChangeRaceType(RaceType type) {
+        SoundManager.Instance.PlaySound(SoundType.FIRST_TURN);
         Variables.Saved.Set("SelectedRace", type);
         Debug.Log(type);
         raceType = type;
