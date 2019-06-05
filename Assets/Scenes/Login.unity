@@ -1656,21 +1656,21 @@ MonoBehaviour:
     SerializedFormat: 2
     SerializedBytes: 
     ReferencedUnityObjects:
-    - {fileID: 21300000, guid: e06c929c6a063394fa0b6b30acd1d3d7, type: 3}
-    - {fileID: 21300000, guid: 9daf2b15be63a404292ef236182b24d1, type: 3}
-    - {fileID: 21300000, guid: 7e52847bc20428644a55c0572485bf03, type: 3}
-    - {fileID: 21300000, guid: 0d6ba034359c555468b242737a2f8eaa, type: 3}
-    - {fileID: 21300000, guid: 2ed578e5d75430a4f91983a79c2fd2a5, type: 3}
-    - {fileID: 21300000, guid: c8601b81ea3bf6549addf950ef4e488d, type: 3}
-    - {fileID: 21300000, guid: 3f885c0e2bdeaa741ab26ecc0921afce, type: 3}
+    - {fileID: 21300000, guid: 6fa397ed30489394a8aebae8d281a7f7, type: 3}
+    - {fileID: 21300000, guid: 91987d8b8214dab4c9cb7cf4f6b6196f, type: 3}
+    - {fileID: 21300000, guid: c02b42458ecb2bb49ad76927c47e1d7a, type: 3}
+    - {fileID: 21300000, guid: 636fcc919fc94574abf6e25c1c768961, type: 3}
+    - {fileID: 21300000, guid: ae105a0e39aa26a49ae6e2b131258731, type: 3}
+    - {fileID: 21300000, guid: b8c86ac315b73814b9d340021622f5a4, type: 3}
+    - {fileID: 21300000, guid: 2b40e2924fda3c54da1ceca79d727b32, type: 3}
     - {fileID: 21300000, guid: ee6e671376a3606439c1a538a55f740c, type: 3}
-    - {fileID: 21300000, guid: 2cc327a537fd5df4881113bdcc5c54d7, type: 3}
+    - {fileID: 21300000, guid: 7267593228e8df044a4e798015690988, type: 3}
     - {fileID: 21300000, guid: 196c0cc5281cebc448691ec9132807d0, type: 3}
-    - {fileID: 21300000, guid: c7387f65e41b0ef4ba38051401521865, type: 3}
-    - {fileID: 21300000, guid: 67cb5693074eada4ca83029d0a813df4, type: 3}
-    - {fileID: 21300000, guid: 4753d3f95e2b53449b0a8a79be086918, type: 3}
-    - {fileID: 21300000, guid: 822e593883ba2ee48b2e54527dbdac0f, type: 3}
-    - {fileID: 21300000, guid: 6ce0e760482b7d94188259f5f4dddc55, type: 3}
+    - {fileID: 21300000, guid: 8bc8964767d0055488b99452a4af7953, type: 3}
+    - {fileID: 21300000, guid: c18b104cb79836544819439f734a64f0, type: 3}
+    - {fileID: 21300000, guid: 5770aa089cf683248b9f3c49c8a5ab6f, type: 3}
+    - {fileID: 21300000, guid: c9f5817162ac7bb448907ca0ada6bca6, type: 3}
+    - {fileID: 21300000, guid: 16a0f665147a006459d7c19e364b3945, type: 3}
     - {fileID: 21300000, guid: 0c522606cf0446d4e9dc5d6c6dc8ac0a, type: 3}
     - {fileID: 8700009915961350405, guid: 0a7e3e48696c63a4189ceb5bf378fb4d, type: 3}
     - {fileID: 9203698103005933128, guid: 83d5efd34f0f2c74799650794c92617b, type: 3}
@@ -1704,14 +1704,13 @@ MonoBehaviour:
     - {fileID: 1971978171617435583, guid: fa12a531731fb1443a4e2288f8bc2b4e, type: 3}
     - {fileID: 21300000, guid: c96342942df70c54a9c0d87c59600097, type: 3}
     - {fileID: 21300000, guid: 7c76a3d4c2ee8764e9c408926e900de7, type: 3}
-    - {fileID: 21300000, guid: dc7c17faf446e6a43bfeb8304e5749bd, type: 3}
+    - {fileID: 21300000, guid: d07a43492350bb34997c4e602f332231, type: 3}
     - {fileID: 21300000, guid: f9403e438f7d6544e9b7cc5073f28084, type: 3}
     - {fileID: 21300000, guid: 6c0ea2a3b50b28345950b5d2abb1e1fe, type: 3}
-    - {fileID: 21300000, guid: b216dd4bc615bd249b065f0e3218c448, type: 3}
-    - {fileID: 21300000, guid: fbff017e16f6fb9458e0058fe96aa2ed, type: 3}
-    - {fileID: 21300000, guid: db4808c7bc9f9234ba0159fb28916f58, type: 3}
-    - {fileID: 21300000, guid: dfa420d4b7f60214e8c553857d5845a4, type: 3}
-    - {fileID: 21300000, guid: b494c4c7e8049b641bf8f4e4f6353186, type: 3}
+    - {fileID: 21300000, guid: f5c5732aa219b5b4992e4c6953fb40af, type: 3}
+    - {fileID: 21300000, guid: df5e4f6b05019914cb2b1fec09fad041, type: 3}
+    - {fileID: 21300000, guid: a8194a4644a8b324aa1105282ec8d270, type: 3}
+    - {fileID: 21300000, guid: f5a986c9792af364a90b3a6f200d3a9d, type: 3}
     - {fileID: 3856163850324625839, guid: 9385d2fe74077bc47850c371850b9947, type: 3}
     - {fileID: 5295120286612665779, guid: a8fff3bb27589304c982f7f7909b3ece, type: 3}
     - {fileID: 5155577732532556144, guid: 9ef289f95be76604d99c978f161fa917, type: 3}
@@ -2934,7 +2933,7 @@ MonoBehaviour:
       Data: magic_legend
     - Name: $v
       Entry: 10
-      Data: 55
+      Data: 47
     - Name: 
       Entry: 8
       Data: 
@@ -2972,10 +2971,10 @@ MonoBehaviour:
       Data: 2
     - Name: 
       Entry: 10
-      Data: 56
+      Data: 55
     - Name: 
       Entry: 10
-      Data: 57
+      Data: 56
     - Name: 
       Entry: 13
       Data: 
@@ -2999,10 +2998,10 @@ MonoBehaviour:
       Data: 2
     - Name: 
       Entry: 10
-      Data: 58
+      Data: 57
     - Name: 
       Entry: 10
-      Data: 59
+      Data: 58
     - Name: 
       Entry: 13
       Data: 
@@ -3026,7 +3025,7 @@ MonoBehaviour:
       Data: 1
     - Name: 
       Entry: 10
-      Data: 60
+      Data: 59
     - Name: 
       Entry: 13
       Data: 
@@ -3050,7 +3049,7 @@ MonoBehaviour:
       Data: 1
     - Name: 
       Entry: 10
-      Data: 61
+      Data: 60
     - Name: 
       Entry: 13
       Data: 
@@ -3088,7 +3087,7 @@ MonoBehaviour:
       Data: h10001
     - Name: $v
       Entry: 10
-      Data: 62
+      Data: 61
     - Name: 
       Entry: 8
       Data: 
@@ -3100,7 +3099,7 @@ MonoBehaviour:
       Data: h10002
     - Name: $v
       Entry: 10
-      Data: 63
+      Data: 62
     - Name: 
       Entry: 8
       Data: 
@@ -3132,7 +3131,7 @@ MonoBehaviour:
       Data: order
     - Name: $v
       Entry: 10
-      Data: 64
+      Data: 63
     - Name: 
       Entry: 8
       Data: 
@@ -3144,7 +3143,7 @@ MonoBehaviour:
       Data: knowledge
     - Name: $v
       Entry: 10
-      Data: 65
+      Data: 64
     - Name: 
       Entry: 8
       Data: 
@@ -3156,7 +3155,7 @@ MonoBehaviour:
       Data: scheme
     - Name: $v
       Entry: 10
-      Data: 64
+      Data: 63
     - Name: 
       Entry: 8
       Data: 
@@ -3168,7 +3167,7 @@ MonoBehaviour:
       Data: sorcery
     - Name: $v
       Entry: 10
-      Data: 66
+      Data: 65
     - Name: 
       Entry: 8
       Data: 
@@ -3200,7 +3199,7 @@ MonoBehaviour:
       Data: common_ribon
     - Name: $v
       Entry: 10
-      Data: 67
+      Data: 66
     - Name: 
       Entry: 8
       Data: 
@@ -3212,7 +3211,7 @@ MonoBehaviour:
       Data: common_flag
     - Name: $v
       Entry: 10
-      Data: 68
+      Data: 67
     - Name: 
       Entry: 8
       Data: 
@@ -3224,7 +3223,7 @@ MonoBehaviour:
       Data: rare_flag
     - Name: $v
       Entry: 10
-      Data: 69
+      Data: 68
     - Name: 
       Entry: 8
       Data: 
@@ -3236,7 +3235,7 @@ MonoBehaviour:
       Data: rare_ribon
     - Name: $v
       Entry: 10
-      Data: 70
+      Data: 69
     - Name: 
       Entry: 8
       Data: 
@@ -3248,7 +3247,7 @@ MonoBehaviour:
       Data: superrare_ribon
     - Name: $v
       Entry: 10
-      Data: 71
+      Data: 70
     - Name: 
       Entry: 8
       Data: 
@@ -3260,7 +3259,7 @@ MonoBehaviour:
       Data: superrare_flag
     - Name: $v
       Entry: 10
-      Data: 72
+      Data: 71
     - Name: 
       Entry: 8
       Data: 
@@ -3272,7 +3271,7 @@ MonoBehaviour:
       Data: uncommon_flag
     - Name: $v
       Entry: 10
-      Data: 73
+      Data: 72
     - Name: 
       Entry: 8
       Data: 
@@ -3284,7 +3283,7 @@ MonoBehaviour:
       Data: uncommon_ribon
     - Name: $v
       Entry: 10
-      Data: 74
+      Data: 73
     - Name: 
       Entry: 8
       Data: 
