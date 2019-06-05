@@ -161,7 +161,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
 
     private int GetBlastStandardNum() {
         int num = 0;
-        int.TryParse(cardData.skills[0].effects[0].args[0], out num);
+        int.TryParse(cardData.skills[0].activate.conditions[0].args[0], out num);
         return num;
     }
 
