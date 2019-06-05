@@ -490,8 +490,14 @@ public partial class PlayMangement : MonoBehaviour {
             enemyCard.SetActive(true);
         }
         if(isPlayer) socketHandler.TurnOver();
-        yield return new WaitForSeconds(1.0f);
-        heroShieldActive = false;
+        yield return WaitShieldDone();
+        
+    }
+
+    public IEnumerator WaitShieldDone() {
+        do {
+            yield return new WaitForFixedUpdate();
+        } while(heroShieldActive);
     }
 }
 
