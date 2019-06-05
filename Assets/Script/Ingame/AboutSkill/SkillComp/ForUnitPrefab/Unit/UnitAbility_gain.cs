@@ -39,7 +39,7 @@ namespace SkillModules {
             int.TryParse(effectArgs[1], out hp);
 
             //위의 IsSubConditionValid에서 부수조건(ex. played_camp_chk, played_type_chk)을 먼저 만족하는지 처리한 상태
-
+            var name = gameObject.GetComponent<PlaceMonster>().unit.name;
             //자기 자신이 대상
             if (targetMethods.Contains("self")) {
                 //상대방이 카드를 쓴 경우에 따른 버프 부여
@@ -60,7 +60,7 @@ namespace SkillModules {
                     }
                 }
 
-                else {
+                if(targetArgs.Count == 0) {
                     gameObject.GetComponent<PlaceMonster>().RequestChangeStat(atk, hp);
                     Debug.Log("자신에게 버프 부여");
                 }
