@@ -120,8 +120,9 @@ public class CardListManager : MonoBehaviour
 
             if (hits != null) {
                 foreach (RaycastHit2D hit in hits) {
-                    GameObject selectedTarget = hit.collider.gameObject.GetComponentInParent<PlaceMonster>().gameObject;
-                    string objName = hit.collider.gameObject.GetComponentInParent<PlaceMonster>().myUnitNum.ToString() + "unit";
+                    GameObject selectedTarget = hit.collider.gameObject;
+                    if (selectedTarget.GetComponentInParent<ambush>() && !selectedTarget.GetComponentInParent<PlaceMonster>().isPlayer) return;
+                    string objName = selectedTarget.GetComponentInParent<PlaceMonster>().myUnitNum.ToString() + "unit";
                     transform.GetChild(1).Find(objName).gameObject.SetActive(true);
                     PlayMangement.instance.infoOn = true;
                 }
