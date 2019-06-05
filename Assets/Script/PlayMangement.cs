@@ -805,6 +805,10 @@ public partial class PlayMangement {
                 break;
         }
     }
+
+    public void OnNoCostEffect(bool turnOn) {
+        //releaseTurnBtn.transform.GetChild(2).gameObject.SetActive(turnOn);
+    }
 }
 
 /// <summary>

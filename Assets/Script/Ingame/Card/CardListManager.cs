@@ -27,8 +27,8 @@ public class CardListManager : MonoBehaviour
         SetCardInfo(newcard, data);
         hss.AddChild(newcard);
         if (data.type == "unit") {
-            GameObject unitImage = Instantiate(AccountManager.Instance.resource.cardSkeleton[id], newcard.transform.Find("Info"));
-            unitImage.transform.localScale = new Vector3(500, 500, 0);
+            GameObject unitImage = Instantiate(AccountManager.Instance.resource.cardPreveiwSkeleton[id], newcard.transform.Find("Info/UnitImage"));
+            unitImage.transform.localScale = new Vector3(5, 5, 0);
         }
     }
 
@@ -36,8 +36,8 @@ public class CardListManager : MonoBehaviour
         GameObject newcard = Instantiate(firstInfoPrefab, mulliganList);
         SetCardInfo(newcard, data);
         if (data.type == "unit") {
-            GameObject unitImage = Instantiate(AccountManager.Instance.resource.cardSkeleton[id], newcard.transform.Find("Info"));
-            unitImage.transform.localScale = new Vector3(500, 500, 0);
+            GameObject unitImage = Instantiate(AccountManager.Instance.resource.cardPreveiwSkeleton[id], newcard.transform.Find("Info/UnitImage"));
+            unitImage.transform.localScale = new Vector3(5, 5, 0);
         }
         newcard.SetActive(false);
     }

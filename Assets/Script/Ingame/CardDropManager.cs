@@ -248,6 +248,8 @@ public partial class CardDropManager {
         placedMonster.GetComponent<PlaceMonster>().SpawnUnit();
         PlayMangement.instance.player.isPicking.Value = false;
         PlayMangement.instance.player.resource.Value -= cardHandler.cardData.cost;
+        if (PlayMangement.instance.player.resource.Value == 0)
+            PlayMangement.instance.OnNoCostEffect(true);
         if (PlayMangement.instance.player.isHuman)
             PlayMangement.instance.player.ActivePlayer();
         else
