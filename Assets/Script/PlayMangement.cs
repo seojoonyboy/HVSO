@@ -807,7 +807,7 @@ public partial class PlayMangement {
     }
 
     public void OnNoCostEffect(bool turnOn) {
-        //releaseTurnBtn.transform.GetChild(2).gameObject.SetActive(turnOn);
+        releaseTurnBtn.transform.GetChild(2).gameObject.SetActive(turnOn);
     }
 }
 
