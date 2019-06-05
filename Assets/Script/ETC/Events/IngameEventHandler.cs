@@ -75,6 +75,7 @@ public class IngameEventHandler : MonoBehaviour {
         BEGIN_ATTACK,
         END_ATTACK,
 
-        LINE_BATTLE_FINISHED
+        LINE_BATTLE_FINISHED,
+        MONSTER_MOVED
     }
 }
