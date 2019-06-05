@@ -46,7 +46,7 @@ public class PlaceMonster : MonoBehaviour {
             PlayMangement.instance.PlayerUnitsObserver.RefreshFields(CardDropManager.Instance.unitLine);
         }
         else {
-            PlayMangement.instance.EnemyUnitsObserver.RefreshFields(CardDropManager.Instance.unitLine);
+            PlayMangement.instance.EnemyUnitsObserver.RefreshFields(CardDropManager.Instance.enemyUnitLine);
         }
     }
 
