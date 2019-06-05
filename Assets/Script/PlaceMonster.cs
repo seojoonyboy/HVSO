@@ -41,6 +41,15 @@ public class PlaceMonster : MonoBehaviour {
         DEAD
     };
 
+    void OnDestroy() {
+        if (isPlayer) {
+            PlayMangement.instance.PlayerUnitsObserver.RefreshFields(CardDropManager.Instance.unitLine);
+        }
+        else {
+            PlayMangement.instance.EnemyUnitsObserver.RefreshFields(CardDropManager.Instance.unitLine);
+        }
+    }
+
     public void Init(CardData data) {
         x = transform.parent.GetSiblingIndex();
         y = transform.parent.parent.GetSiblingIndex();
