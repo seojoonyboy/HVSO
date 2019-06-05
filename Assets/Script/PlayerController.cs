@@ -265,8 +265,11 @@ public class PlayerController : MonoBehaviour
     }
 
     public void ActiveOrcTurn() {
+        string currentTurn = Variables.Scene(
+                UnityEngine.SceneManagement.SceneManager.GetActiveScene()
+            ).Get("CurrentTurn").ToString();
         myTurn = true;
-        if (isPlayer == true) {
+        if (isPlayer == true && currentTurn == "ZOMBIE") {
             Transform cardSlot_1 = playerUI.transform.Find("CardHand").GetChild(0);
             Transform cardSlot_2 = playerUI.transform.Find("CardHand").GetChild(1);
             for (int i = 0; i < cardSlot_1.childCount; i++) {
@@ -275,6 +278,18 @@ public class PlayerController : MonoBehaviour
             }
             for (int i = 0; i < cardSlot_2.childCount; i++) {
                 if (cardSlot_2.GetChild(i).gameObject.activeSelf && cardSlot_2.GetChild(i).GetChild(0).GetComponent<CardHandler>().cardData.type == "unit")
+                    cardSlot_2.GetChild(i).GetChild(0).GetComponent<CardHandler>().ActivateCard();
+            }
+        }
+        else if(isPlayer == true && currentTurn == "SECRET") {
+            Transform cardSlot_1 = playerUI.transform.Find("CardHand").GetChild(0);
+            Transform cardSlot_2 = playerUI.transform.Find("CardHand").GetChild(1);
+            for (int i = 0; i < cardSlot_1.childCount; i++) {
+                if (cardSlot_1.GetChild(i).gameObject.activeSelf && cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().cardData.type == "magic")
+                    cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().ActivateCard();
+            }
+            for (int i = 0; i < cardSlot_2.childCount; i++) {
+                if (cardSlot_2.GetChild(i).gameObject.activeSelf && cardSlot_2.GetChild(i).GetChild(0).GetComponent<CardHandler>().cardData.type == "magic")
                     cardSlot_2.GetChild(i).GetChild(0).GetComponent<CardHandler>().ActivateCard();
             }
         }

@@ -203,8 +203,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5478224510964816762}
-  - {fileID: 8664356020833792343}
   - {fileID: 3268989860973723079}
+  - {fileID: 8664356020833792343}
   - {fileID: 6765500980543330066}
   - {fileID: 7577631283330729509}
   - {fileID: 6912527850076651809}
@@ -328,6 +328,8 @@ MonoBehaviour:
   skeleton: {fileID: 0}
   changeSelected: 0
   cardID: 
+  highlightedSlot: {fileID: 0}
+  highlightedLine: {fileID: 0}
   cardData:
     cardId: 
     attackTypes: []
@@ -344,7 +346,6 @@ MonoBehaviour:
     attackRange: 
     hero_chk: 0
   cardDataPackage: {fileID: 0}
-  selectedLine: {fileID: 0}
 --- !u!1 &1436482809760034987
 GameObject:
   m_ObjectHideFlags: 0
@@ -451,7 +452,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3967705395339146055}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -1234,7 +1235,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3967705395339146055}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
