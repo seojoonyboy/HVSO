@@ -38,17 +38,17 @@ public class LoginController : MonoBehaviour {
             }
         }
         else {
-            OnSignInModal();
+            OnSignInResultModal();
+            AccountManager.Instance.SetSignInData(response);
         }
 
         Destroy(loadingModal);
     }
 
-    public void OnSignInModal() {
+    public void OnSignInResultModal() {
         Destroy(loadingModal);
         Modal.instantiate("로그인이 되었습니다.", Modal.Type.CHECK, ()=> {
-            //SceneManager.Instance.LoadScene(SceneManager.Scene.MAIN_SCENE);
-            AccountManager.Instance.RequestMyCardInventory();
+            SceneManager.Instance.LoadScene(SceneManager.Scene.MAIN_SCENE);
         });
     }
 
