@@ -197,7 +197,7 @@ public partial class CardDropManager {
                 frontOrBack = 1;
                 break;
             case 2:
-                posMessage = "near";
+                posMessage = "rear";
                 unitLine[lineNum][0].GetChild(0).SetParent(unitLine[lineNum][1]);
                 unitLine[lineNum][1].GetChild(0).position = unitLine[lineNum][1].position;
                 unitLine[lineNum][1].GetChild(0).GetComponent<PlaceMonster>().unitLocation = unitLine[lineNum][1].position;
