@@ -135,5 +135,4 @@ MonoBehaviour:
   rangeDownAttackName: ATTACK_DOWN
   generalAttackName: 
   attackEventName: SHOT
-  isPreview: 0
   arrow: {fileID: 8772910390587079578, guid: 5136ef28d4cb3264b9bca34467918c9e, type: 3}
