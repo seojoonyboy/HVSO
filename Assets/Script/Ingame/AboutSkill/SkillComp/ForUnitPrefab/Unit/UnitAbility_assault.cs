@@ -25,6 +25,7 @@ namespace SkillModules {
             eventHandler.AddListener(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, OnEndCardPlay);
             eventHandler.AddListener(IngameEventHandler.EVENT_TYPE.END_BATTLE_TURN, OnEndCardPlay);
             eventHandler.AddListener(IngameEventHandler.EVENT_TYPE.LINE_BATTLE_FINISHED, OnEndCardPlay);
+            eventHandler.AddListener(IngameEventHandler.EVENT_TYPE.MONSTER_MOVED, OnEndCardPlay);
         }
 
         private void OnEndCardPlay(Enum Event_Type, Component Sender, object Param) {
@@ -68,12 +69,14 @@ namespace SkillModules {
             eventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, OnEndCardPlay);
             eventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.END_BATTLE_TURN, OnEndCardPlay);
             eventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.LINE_BATTLE_FINISHED, OnEndCardPlay);
+            eventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.MONSTER_MOVED, OnEndCardPlay);
         }
 
         void OnDestroy() {
             eventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, OnEndCardPlay);
             eventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.END_BATTLE_TURN, OnEndCardPlay);
             eventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.LINE_BATTLE_FINISHED, OnEndCardPlay);
+            eventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.MONSTER_MOVED, OnEndCardPlay);
         }
     }
 }

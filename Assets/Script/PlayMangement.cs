@@ -453,6 +453,7 @@ public partial class PlayMangement : MonoBehaviour {
     }
 
     private void shildDequeue() {
+        if(socketHandler.humanData.Count == 0) return;
         socketHandler.humanData.Dequeue();
         socketHandler.orcData.Dequeue();
     }
@@ -809,5 +810,9 @@ public partial class PlayMangement {
         flat,
         forest,
         water
+    }
+
+    public void SendNotification() {
+        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.MONSTER_MOVED, null, null);
     }
 }

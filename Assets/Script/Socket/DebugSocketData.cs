@@ -145,6 +145,7 @@ namespace SocketFormat {
                 CheckMonsterPosition(lines[i].human, humanUnitsObserver, i);
             }
             Debug.Log("유닛 위치 체크");
+            PlayMangement.instance.Invoke("SendNotification", 1.5f);
         }
 
         public static void CheckMonsterPosition(Unit[] units, FieldUnitsObserver observer, int line) {
@@ -161,9 +162,6 @@ namespace SocketFormat {
                 if(pos.row == line) continue;
 
                 observer.UnitChangePosition(mon, line, 0);
-                SkillModules.UnitAbility_assault skill = mon.GetComponent<SkillModules.UnitAbility_assault>();
-                if(skill != null)
-                    skill.Invoke("CheckEnemy", 1.5f);
             }
         }
     }  

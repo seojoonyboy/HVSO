@@ -287,9 +287,6 @@ public partial class BattleConnector : MonoBehaviour {
         else if(skillCallbacks.Count != 0) skillCallbacks.Dequeue().Invoke();
         
         SocketFormat.Target target = gameState.lastUse.target;
-        if(target.method.CompareTo("place") != 0) return;
-        string playerCamp = PlayMangement.instance.player.isHuman ? "human" : "orc";
-        if(target.args[1].CompareTo(playerCamp) !=0 ) return;
         DebugSocketData.CheckMapPosition(gameState);
     }
 }
