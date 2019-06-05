@@ -33,9 +33,14 @@ public partial class BattleConnector : MonoBehaviour {
         webSocket = new WebSocket(new Uri(url));
         webSocket.OnOpen += OnOpen;
         webSocket.OnMessage += ReceiveMessage;
+        webSocket.OnClosed += OnClosed;
         webSocket.Open();
 
         message.text = "대전상대를 찾는중...";
+    }
+
+    public void OnClosed(WebSocket webSocket, ushort code, string msg) {
+        Debug.LogWarning("Socket has been closed : " + code + "  message : " + msg);
     }
 
     //Connected
