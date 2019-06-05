@@ -148,6 +148,12 @@ public class PlaceMonster : MonoBehaviour {
 
     public void GetAnotherTarget() {
         PlaceMonster targetMonster = myTarget.GetComponent<PlaceMonster>();
+
+        if (unit.currentHP <= 0) {
+            atkCount = maxAtkCount;
+            return;
+        }
+
         if (targetMonster != null) {
             targetMonster.CheckHP();
         }

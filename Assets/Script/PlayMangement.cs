@@ -427,9 +427,15 @@ public partial class PlayMangement : MonoBehaviour {
         if(lineObject.transform.GetChild(line).childCount != 0) {
             PlaceMonster placeMonster = lineObject.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>();
                 while(placeMonster.atkCount < placeMonster.maxAtkCount) {
-                    if (placeMonster.unit.attack <= 0)
+
+                if (placeMonster.unit.attackType.Length > 0 && placeMonster.unit.attackType[0] == "double" && placeMonster.atkCount > 0 && placeMonster.unit.currentHP <= 0)
+                    break;
+
+                if (placeMonster.unit.attack <= 0)
                         break;
                     placeMonster.GetTarget();
+                
+                
                 yield return new WaitForSeconds(1.1f + placeMonster.atkTime);
                 }
             placeMonster.atkCount = 0;
