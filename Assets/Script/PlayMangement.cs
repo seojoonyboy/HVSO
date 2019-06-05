@@ -171,6 +171,7 @@ public partial class PlayMangement : MonoBehaviour {
             if(history != null) {
                 if (history.cardItem.type.CompareTo("unit") == 0) {
                     GameObject summonedMonster = SummonMonster(history);
+                    summonedMonster.GetComponent<PlaceMonster>().isPlayer = false;
 
                     object[] parms = new object[] { false, summonedMonster };
                     EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
