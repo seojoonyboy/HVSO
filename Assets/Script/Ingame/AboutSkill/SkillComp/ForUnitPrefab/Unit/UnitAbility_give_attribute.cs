@@ -12,7 +12,7 @@ namespace SkillModules {
             bool isPlayer = (bool)parms[0];
             GameObject playedObj = (GameObject)parms[1];
 
-            if ((skillData.activate.scope == "playing") && (playedObj != gameObject)) return;
+            if (playedObj != gameObject) return;
 
             //condition.method가 존재하지 않는 경우에는 그냥 True임.
             if (!IsSubConditionValid(isPlayer, playedObj)) return;
