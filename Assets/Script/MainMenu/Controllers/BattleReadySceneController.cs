@@ -22,9 +22,11 @@ public class BattleReadySceneController : MonoBehaviour {
 
     public HumanDecks humanDecks;
     public OrcDecks orcDecks;
+    bool isIngameButtonClicked;
 
     void Start() {
         DataLoad();
+        isIngameButtonClicked = false;
     }
 
     public void DataLoad() {
@@ -91,6 +93,12 @@ public class BattleReadySceneController : MonoBehaviour {
     }
 
     public void OnStartButton() {
+        if (isIngameButtonClicked) {
+            Debug.Log("이미 대전 시작 버튼이 눌려진 상태");
+            return;
+        }
+
+        isIngameButtonClicked = true;
         SceneManager.Instance.LoadScene(SceneManager.Scene.CONNECT_MATCHING_SCENE);
         //SceneManager.Instance.LoadScene(SceneManager.Scene.MAIN_SCENE);
         //SceneManager.Instance.LoadScene(SceneManager.Scene.MISSION_INGAME);
