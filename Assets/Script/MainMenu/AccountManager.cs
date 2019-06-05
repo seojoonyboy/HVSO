@@ -183,6 +183,7 @@ public partial class AccountManager {
             .Append("api/users/")
             .Append(DEVICEID);
 
+        Debug.Log("Request User Info");
         networkManager.request("GET", url.ToString(), callback, retryOccured);
     }
 
@@ -194,16 +195,20 @@ public partial class AccountManager {
                 + response.errorMessage);
         }
         else {
-            userData = dataModules.JsonReader.Read<UserClassInput>(response.data);
-
-            myCards = userData.cardInventories;
-            SetHeroInventories(userData.heroInventories);
-            SetCardData();
+            SetSignInData(response);
 
             Modal.instantiate("회원가입이 완료되었습니다.", Modal.Type.CHECK, () => {
                 SceneManager.Instance.LoadScene(SceneManager.Scene.MAIN_SCENE);
             });
         }
+    }
+
+    public void SetSignInData(HttpResponse response) {
+        userData = dataModules.JsonReader.Read<UserClassInput>(response.data);
+
+        myCards = userData.cardInventories;
+        SetHeroInventories(userData.heroInventories);
+        SetCardData();
     }
 }
 
