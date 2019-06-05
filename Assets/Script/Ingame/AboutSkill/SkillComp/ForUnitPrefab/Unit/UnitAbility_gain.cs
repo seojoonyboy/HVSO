@@ -88,10 +88,12 @@ namespace SkillModules {
             if (targetMethods.Contains("played")) {
                 //나에게(일단은 played이고 my인 경우는 자신으로 가정)
                 if (targetArgs.Contains("my")) {
-                    Debug.Log(gameObject + "가 자신에게 atk : " + atk + "부여");
-                    Debug.Log(gameObject + "가 자신에게 hp : " + hp + "부여");
+                    if (playedObj.GetComponent<PlaceMonster>().isPlayer && gameObject != playedObj) {
+                        Debug.Log("소환된 아군유닛 atk : " + atk + "부여");
+                        Debug.Log("소환된 아군유닛 hp : " + hp + "부여");
 
-                    gameObject.GetComponent<PlaceMonster>().RequestChangeStat(atk, hp);
+                        playedObj.GetComponent<PlaceMonster>().RequestChangeStat(atk, hp);
+                    }
                 }
             }
             
