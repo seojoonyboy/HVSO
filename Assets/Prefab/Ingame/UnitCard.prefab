@@ -773,6 +773,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPos: {x: 0, y: 0, z: 0}
   unit: {fileID: 4549778766762803919, guid: e809507ac2ad94f4ea3612c5aa4ea070, type: 3}
+  previewUnit: {fileID: 855070147762477345, guid: b1eed5e36ae207c40be53cdb6c261354,
+    type: 3}
   skeleton: {fileID: 0}
   changeSelected: 0
   cardID: 

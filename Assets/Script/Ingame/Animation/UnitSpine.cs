@@ -46,6 +46,11 @@ public class UnitSpine : MonoBehaviour
     public UnityAction takeMagicCallback;
     
     public GameObject arrow;
+
+    public SkeletonAnimation GetSkeleton {
+        get { return skeletonAnimation; }
+    }
+
     
     public float atkDuration {
         get { return skeletonAnimation.Skeleton.Data.FindAnimation(attackAnimationName).Duration; }
