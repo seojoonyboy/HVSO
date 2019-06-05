@@ -327,10 +327,10 @@ public class PlaceMonster : MonoBehaviour {
             Destroy(effect, effect.GetComponent<ParticleSystem>().main.duration - 0.2f);
             StartCoroutine(PlayMangement.instance.cameraShake(unitSpine.atkDuration / 2));
 
-            if (unit.attack > 4 && unit.attack <= 6) {
+            if (unit.attack > 3 && unit.attack <= 6) {
                 SoundManager.Instance.PlaySound(SoundType.MIDDLE_ATTACK);
             }
-            if (unit.attack > 6) {
+            else if (unit.attack > 6) {
                 SoundManager.Instance.PlaySound(SoundType.LARGE_ATTACK);
             }
         }
