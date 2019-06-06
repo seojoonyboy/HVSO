@@ -12,7 +12,7 @@ using SocketFormat;
 using System.Reflection;
 
 public partial class BattleConnector : MonoBehaviour {
-    private string url = "ws://ccdevclient.fbl.kr/game";
+    private string url = "ws://cctest.fbl.kr/game";
     WebSocket webSocket;
     [SerializeField] Text message;
     [SerializeField] GameObject machine;
@@ -53,7 +53,7 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     IEnumerator Heartbeat() {
-        WaitForSeconds beatTime = new WaitForSeconds(25f);
+        WaitForSeconds beatTime = new WaitForSeconds(10f);
         while(true) {
             yield return beatTime;
             SendMethod("ping");
