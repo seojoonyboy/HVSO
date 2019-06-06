@@ -1576,7 +1576,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e707b71a5bd805548b27e879f1982b82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseUrl: http://ccdevclient.fbl.kr/
+  baseUrl: http://cctest.fbl.kr/
   subReqPrefab: {fileID: 4832658289550080837, guid: bb450749c68bd2b489173f9067e92372,
     type: 3}
 --- !u!4 &1754231302
