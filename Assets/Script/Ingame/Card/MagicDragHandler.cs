@@ -59,8 +59,8 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
     public void OnDrag(PointerEventData eventData) {
         if (firstDraw) return;
         if (gameObject != itsDragging) return;
-        Vector3 cardScreenPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        transform.position = new Vector3(cardScreenPos.x, cardScreenPos.y + 0.3f, cardScreenPos.z);
+        //Vector3 cardScreenPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        transform.position = Input.mousePosition;
         CheckMagicHighlight();
     }
 

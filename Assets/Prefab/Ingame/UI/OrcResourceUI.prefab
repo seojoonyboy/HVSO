@@ -97,7 +97,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 350
+  m_SortingOrder: 299
   m_TargetDisplay: 0
 --- !u!1 &4740072578072827972
 GameObject:
@@ -323,7 +323,7 @@ PrefabInstance:
     - target: {fileID: 199612177522550440, guid: f15fee7ec0659d849bca5877eb437074,
         type: 3}
       propertyPath: m_SortingOrder
-      value: 349
+      value: 299
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f15fee7ec0659d849bca5877eb437074, type: 3}
