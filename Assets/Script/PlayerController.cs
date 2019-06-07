@@ -63,8 +63,10 @@ public class PlayerController : MonoBehaviour
         }
         SetParticleSize(costUI.transform.GetChild(1).GetComponent<ParticleSystem>());
         if (isPlayer) {
-            buttonParticle = playerUI.transform.Find("Turn/ReleaseTurnButton/turnbutton_feedback").gameObject;
-            SetParticleSize(buttonParticle.GetComponent<ParticleSystem>());
+            buttonParticle = playerUI.transform.Find("Turn/ReleaseTurnButton/TurnOverFeedback").gameObject;
+            buttonParticle.SetActive(false);
+            //buttonParticle = playerUI.transform.Find("Turn/ReleaseTurnButton/turnbutton_feedback").gameObject;
+            //SetParticleSize(buttonParticle.GetComponent<ParticleSystem>());
         }       
         costUI.transform.GetChild(1).gameObject.SetActive(false);
 
@@ -110,8 +112,10 @@ public class PlayerController : MonoBehaviour
     }
     
     private void SetParticleSize(ParticleSystem particle) {
-        ParticleSystem.MainModule costparticle = particle.main;
-        costparticle.startSize = 1.4f * ((float)1920 / Screen.height);
+        particle.transform.position = Camera.main.ScreenToWorldPoint(particle.transform.parent.position);
+        particle.transform.position = new Vector3(particle.transform.position.x, particle.transform.position.y, 0);
+        //ParticleSystem.MainModule costparticle = particle.main;
+        //costparticle.startSize = 1.4f * ((float)1920 / Screen.height);
     }
 
     private void Start()

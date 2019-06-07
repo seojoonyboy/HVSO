@@ -78,9 +78,9 @@ public partial class PlayMangement : MonoBehaviour {
 
 
         canvas = GameObject.Find("Canvas");
-        Vector3 canvasScale = canvas.transform.localScale;
-        canvas.GetComponent<RectTransform>().sizeDelta = new Vector2(Camera.main.pixelWidth, Camera.main.pixelHeight);
-        canvas.transform.localScale = new Vector3(width /Camera.main.pixelWidth, height/Camera.main.pixelHeight, 1);
+        //Vector3 canvasScale = canvas.transform.localScale;
+        //canvas.GetComponent<RectTransform>().sizeDelta = new Vector2(Camera.main.pixelWidth, Camera.main.pixelHeight);
+        //canvas.transform.localScale = new Vector3(width /Camera.main.pixelWidth, height/Camera.main.pixelHeight, 1);
 
 
         if (ratio > 1.77f) {
@@ -786,12 +786,12 @@ public partial class PlayMangement {
         if (isHuman) {
             turnIcon = turnTable.GetChild(4);
             turnTable.GetChild(1).GetChild(0).gameObject.SetActive(true);
-            turnTable.GetChild(2).GetChild(0).gameObject.SetActive(true);
+            turnTable.Find("ReleaseTurnButton/HumanTurnButtonImage").gameObject.SetActive(true);
         }
         else {
             turnIcon = turnTable.GetChild(5);
             turnTable.GetChild(1).GetChild(1).gameObject.SetActive(true);
-            turnTable.GetChild(2).GetChild(1).gameObject.SetActive(true);
+            turnTable.Find("ReleaseTurnButton/OrcTurnButtonImage").gameObject.SetActive(true);
         }
         for(int i = 0; i < 4; i++) {
             turnTable.GetChild(6).position = canvas.transform.GetChild(2).GetChild(3).position;
@@ -862,7 +862,7 @@ public partial class PlayMangement {
     }
 
     public void OnNoCostEffect(bool turnOn) {
-        releaseTurnBtn.transform.GetChild(2).gameObject.SetActive(turnOn);
+        releaseTurnBtn.transform.Find("TurnOverFeedback").gameObject.SetActive(turnOn);
     }
 }
 

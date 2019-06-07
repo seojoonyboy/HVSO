@@ -28,7 +28,8 @@ public partial class UnitDragHandler : CardHandler, IBeginDragHandler, IDragHand
         if (firstDraw) return;
         if (gameObject != itsDragging) return;
         Vector3 cardScreenPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        transform.position = new Vector3(cardScreenPos.x, cardScreenPos.y + 0.3f, cardScreenPos.z);
+        //transform.position = new Vector3(cardScreenPos.x, cardScreenPos.y + 0.3f, cardScreenPos.z);
+        transform.position = Input.mousePosition;
         CheckHighlight();
     }
 
