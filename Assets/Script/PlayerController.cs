@@ -219,6 +219,7 @@ public class PlayerController : MonoBehaviour
 
     private bool CheckShieldActivate(SocketFormat.ShieldCharge shieldData) {
         if(shieldData == null) return true;
+        if(shieldData.shieldCount == 0) return true;
         return (shieldStack.Value + shieldData.shieldCount) >= 8;
     }
 
