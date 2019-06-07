@@ -21,6 +21,8 @@ public class PlayerController : MonoBehaviour
 
     public GameObject backLine;
     public GameObject frontLine;
+    GameObject costUI;
+    GameObject buttonParticle;
     public bool dragCard = false;
 
     public Vector3 unitClosePosition;
@@ -33,6 +35,7 @@ public class PlayerController : MonoBehaviour
     private int shieldCount = 0;
 
     protected HeroSpine heroSpine;
+    public static int activeCardMinCost;
     public enum HeroState {
         IDLE,
         ATTACK,
@@ -50,14 +53,23 @@ public class PlayerController : MonoBehaviour
         else isHuman = !isPlayer;
         if (isHuman) {
             Instantiate(AccountManager.Instance.resource.raceUiPrefabs["HUMAN"][0], playerUI.transform.Find("PlayerHealth"));
-            Instantiate(AccountManager.Instance.resource.raceUiPrefabs["HUMAN"][1], playerUI.transform.Find("PlayerResource"));
+            costUI = Instantiate(AccountManager.Instance.resource.raceUiPrefabs["HUMAN"][1], playerUI.transform.Find("PlayerResource"));
+            costUI.GetComponent<Canvas>().overrideSorting = true;
         }
         else {
             Instantiate(AccountManager.Instance.resource.raceUiPrefabs["ORC"][0], playerUI.transform.Find("PlayerHealth"));
-            Instantiate(AccountManager.Instance.resource.raceUiPrefabs["ORC"][1], playerUI.transform.Find("PlayerResource"));
+            costUI = Instantiate(AccountManager.Instance.resource.raceUiPrefabs["ORC"][1], playerUI.transform.Find("PlayerResource"));
+            costUI.GetComponent<Canvas>().overrideSorting = true;
         }
+        SetParticleSize(costUI.transform.GetChild(1).GetComponent<ParticleSystem>());
+        if (isPlayer) {
+            buttonParticle = playerUI.transform.Find("Turn/ReleaseTurnButton/turnbutton_feedback").gameObject;
+            SetParticleSize(buttonParticle.GetComponent<ParticleSystem>());
+        }       
+        costUI.transform.GetChild(1).gameObject.SetActive(false);
 
-        if(isHuman == true) {
+
+        if (isHuman == true) {
             string heroID = "h10001";
             GameObject hero = Instantiate(AccountManager.Instance.resource.heroSkeleton[heroID], transform);
             hero.transform.SetAsLastSibling();
@@ -97,6 +109,10 @@ public class PlayerController : MonoBehaviour
         Debug.Log(heroSpine);
     }
     
+    private void SetParticleSize(ParticleSystem particle) {
+        ParticleSystem.MainModule costparticle = particle.main;
+        costparticle.startSize = 1.4f / (0.5625f / ((float)Screen.width / Screen.height));
+    }
 
     private void Start()
     {
@@ -250,6 +266,8 @@ public class PlayerController : MonoBehaviour
     }
 
     public void ActivePlayer() {
+        activeCardMinCost = 100;
+        costUI.transform.GetChild(1).gameObject.SetActive(true);
         myTurn = true;      
         if(isPlayer == true) {
             Transform cardSlot_1 = playerUI.transform.Find("CardHand").GetChild(0);
@@ -263,9 +281,16 @@ public class PlayerController : MonoBehaviour
                     cardSlot_2.GetChild(i).GetChild(0).GetComponent<CardHandler>().ActivateCard();
             }
         }
+        if (activeCardMinCost == 100) {
+            costUI.transform.GetChild(1).gameObject.SetActive(false);
+            if(isPlayer)
+                buttonParticle.SetActive(true);
+        }
     }
 
     public void ActiveOrcTurn() {
+        activeCardMinCost = 100;
+        costUI.transform.GetChild(1).gameObject.SetActive(true);
         string currentTurn = Variables.Scene(
                 UnityEngine.SceneManagement.SceneManager.GetActiveScene()
             ).Get("CurrentTurn").ToString();
@@ -294,21 +319,10 @@ public class PlayerController : MonoBehaviour
                     cardSlot_2.GetChild(i).GetChild(0).GetComponent<CardHandler>().ActivateCard();
             }
         }
-    }
-
-    public void ActiveOrcSpecTurn() {
-        myTurn = true;
-        if (isPlayer == true) {
-            Transform cardSlot_1 = playerUI.transform.Find("CardHand").GetChild(0);
-            Transform cardSlot_2 = playerUI.transform.Find("CardHand").GetChild(1);
-            for (int i = 0; i < cardSlot_1.childCount; i++) {
-                if (cardSlot_1.GetChild(i).gameObject.activeSelf && cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().cardData.type == "magic")
-                    cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().ActivateCard();
-            }
-            for (int i = 0; i < cardSlot_2.childCount; i++) {
-                if (cardSlot_2.GetChild(i).gameObject.activeSelf && cardSlot_2.GetChild(i).GetChild(0).GetComponent<CardHandler>().cardData.type == "magic")
-                    cardSlot_2.GetChild(i).GetChild(0).GetComponent<CardHandler>().ActivateCard();
-            }
+        if (activeCardMinCost == 100) {
+            costUI.transform.GetChild(1).gameObject.SetActive(false);
+            if (isPlayer)
+                buttonParticle.SetActive(true);
         }
     }
 
@@ -326,6 +340,9 @@ public class PlayerController : MonoBehaviour
                     cardSlot_2.GetChild(i).GetChild(0).GetComponent<CardHandler>().DisableCard();
             }
         }
+        costUI.transform.GetChild(1).gameObject.SetActive(false);
+        if (isPlayer)
+            buttonParticle.SetActive(false);
     }
 
     /// <summary>

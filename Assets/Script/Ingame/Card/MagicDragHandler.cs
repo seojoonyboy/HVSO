@@ -118,15 +118,13 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
 
         PlayMangement.instance.player.isPicking.Value = false;
         PlayMangement.instance.player.resource.Value -= cardData.cost;
-        if (PlayMangement.instance.player.resource.Value == 0)
-            PlayMangement.instance.OnNoCostEffect(true);
         SendSocket(CreateEventList());
         PlayMangement.instance.player.cdpm.DestroyCard(cardIndex);
 
         if (PlayMangement.instance.player.isHuman)
             PlayMangement.instance.player.ActivePlayer();
         else
-            PlayMangement.instance.player.ActiveOrcSpecTurn();
+            PlayMangement.instance.player.ActiveOrcTurn();
     }
 
     private UnityAction CreateEventList() {

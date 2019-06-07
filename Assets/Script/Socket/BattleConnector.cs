@@ -12,7 +12,11 @@ using SocketFormat;
 using System.Reflection;
 
 public partial class BattleConnector : MonoBehaviour {
+    #if UNITY_EDITOR
+    private string url = "ws://ccdevclient.fbl.kr/game";
+    #else
     private string url = "ws://cctest.fbl.kr/game";
+    #endif
     WebSocket webSocket;
     [SerializeField] Text message;
     [SerializeField] GameObject machine;
@@ -54,10 +58,12 @@ public partial class BattleConnector : MonoBehaviour {
 
     IEnumerator Heartbeat() {
         WaitForSeconds beatTime = new WaitForSeconds(10f);
-        while(true) {
+        while(webSocket.IsOpen) {
             yield return beatTime;
             SendMethod("ping");
         }
+        Debug.Log("socket closed stop Heartbeat");
+        PlayMangement.instance.SocketErrorUIOpen();
     }
 
     //Receive Socket Message
@@ -122,6 +128,7 @@ public partial class BattleConnector : MonoBehaviour {
 /// 서버로부터 데이터를 받아올 때 reflection으로 string을 함수로 바로 발동하게 하는 부분
 public partial class BattleConnector : MonoBehaviour {
     public GameState gameState;
+    public GameState orcPostState;
     private string raceName;
     private bool dequeueing = true;
     public Queue<ReceiveFormat> queue = new Queue<ReceiveFormat>();
@@ -211,7 +218,12 @@ public partial class BattleConnector : MonoBehaviour {
     public void begin_orc_post_turn() {
         Debug.Log("WebSocket State : begin_orc_post_turn");
         checkMyTurn(false);
-        DebugSocketData.CheckMapPosition(gameState);
+        orcPostState = gameState;
+    }
+
+    public void checkMapPos() {
+        DebugSocketData.CheckMapPosition(orcPostState);
+        orcPostState = null;
     }
 
     public void end_orc_post_turn() {
