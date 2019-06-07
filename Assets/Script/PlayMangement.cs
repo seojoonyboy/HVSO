@@ -502,6 +502,9 @@ public partial class PlayMangement : MonoBehaviour {
     }
 
     public IEnumerator HeroSpecialWait() {
+        Queue<SocketFormat.Player> data;
+        data = player.isHuman ? socketHandler.orcData : socketHandler.humanData;
+        if(data.Peek().shildActivate) yield break;
         yield return new WaitForSeconds(0.1f);
         do {
             yield return new WaitForFixedUpdate();
