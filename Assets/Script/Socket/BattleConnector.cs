@@ -62,7 +62,6 @@ public partial class BattleConnector : MonoBehaviour {
             yield return beatTime;
             SendMethod("ping");
         }
-        Debug.Log("socket closed stop Heartbeat");
         PlayMangement.instance.SocketErrorUIOpen();
     }
 
@@ -222,6 +221,7 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void checkMapPos() {
+        if(PlayMangement.instance.player.isHuman) return;
         DebugSocketData.CheckMapPosition(orcPostState);
         orcPostState = null;
     }
@@ -302,10 +302,22 @@ public partial class BattleConnector : MonoBehaviour {
         string cardCamp = gameState.lastUse.cardItem.camp;
         bool isEnemyCard = cardCamp.CompareTo(enemyCamp) == 0;
         if(isEnemyCard) useCardList.Enqueue(gameState);
-        else if(skillCallbacks.Count != 0) skillCallbacks.Dequeue().Invoke();
+        else if(skillCallbacks.Count != 0) {
+            if(gameState.lastUse.cardItem.id.CompareTo("ac10028")==0) {
+                StartCoroutine(AC10028(gameState));
+                return;
+            }
+            skillCallbacks.Dequeue().Invoke();
+        }
         
         SocketFormat.Target target = gameState.lastUse.target;
         DebugSocketData.CheckMapPosition(gameState);
+    }
+
+    private IEnumerator AC10028(GameState state) {
+        DebugSocketData.CheckMapPosition(state);
+        yield return new WaitForSeconds(2f);
+        skillCallbacks.Dequeue().Invoke();
     }
 }
 
