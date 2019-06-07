@@ -217,6 +217,8 @@ public partial class CardHandler : MonoBehaviour {
     public void ActivateCard() {
         if (PlayMangement.instance.player.resource.Value - cardData.cost >= 0) {
             isDropable = true;
+            if (cardData.cost <= PlayerController.activeCardMinCost)
+                PlayerController.activeCardMinCost = cardData.cost;
             transform.Find("GlowEffect").GetComponent<Image>().enabled = true;
             transform.Find("GlowEffect").GetComponent<Image>().color = new Color(1, 1, 1);
             transform.Find("Portrait").GetComponent<Image>().color = Color.white;
