@@ -356,7 +356,8 @@ public class PlaceMonster : MonoBehaviour {
     }
 
     public void InstanceKilled() {
-        unit.HP = 0;
+        unit.currentHP = 0;
+        CheckHP();
     }
 
 
