@@ -12,7 +12,7 @@ using SocketFormat;
 using System.Reflection;
 
 public partial class BattleConnector : MonoBehaviour {
-    private string url = "ws://ccdevclient.fbl.kr/game";
+    private string url = "ws://cctest.fbl.kr/game";
     WebSocket webSocket;
     [SerializeField] Text message;
     [SerializeField] GameObject machine;
@@ -33,9 +33,14 @@ public partial class BattleConnector : MonoBehaviour {
         webSocket = new WebSocket(new Uri(url));
         webSocket.OnOpen += OnOpen;
         webSocket.OnMessage += ReceiveMessage;
+        webSocket.OnClosed += OnClosed;
         webSocket.Open();
 
         message.text = "대전상대를 찾는중...";
+    }
+
+    public void OnClosed(WebSocket webSocket, ushort code, string msg) {
+        Debug.LogWarning("Socket has been closed : " + code + "  message : " + msg);
     }
 
     //Connected
@@ -48,7 +53,7 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     IEnumerator Heartbeat() {
-        WaitForSeconds beatTime = new WaitForSeconds(25f);
+        WaitForSeconds beatTime = new WaitForSeconds(10f);
         while(true) {
             yield return beatTime;
             SendMethod("ping");
@@ -246,6 +251,7 @@ public partial class BattleConnector : MonoBehaviour {
 
     public void end_shild_turn() {
         Debug.Log("WebSocket State : end_shild_turn");
+        PlayMangement.instance.heroShieldActive = false;
     }
 
     public void shild_guage(string camp, string gauge) {
