@@ -328,6 +328,7 @@ public partial class PlayMangement : MonoBehaviour {
                     StartCoroutine("WaitSecond");
                 }
                 EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_ORC_POST_TURN, this, null);
+                socketHandler.checkMapPos();
                 break;
             case "BATTLE":
                 player.DisablePlayer();
@@ -426,6 +427,7 @@ public partial class PlayMangement : MonoBehaviour {
     }
 
     IEnumerator battleUnit(GameObject lineObject, int line) {
+        if(!isGame) yield break;
         if(lineObject.transform.GetChild(line).childCount != 0) {
             PlaceMonster placeMonster = lineObject.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>();
                 while(placeMonster.atkCount < placeMonster.maxAtkCount) {
@@ -446,6 +448,7 @@ public partial class PlayMangement : MonoBehaviour {
     }
 
     IEnumerator WaitSocketData(SocketFormat.QueueSocketList<SocketFormat.GameState> queueList, int line, bool isBattle) {
+        if(!isGame) yield break;
         yield return queueList.WaitNext();
         SocketFormat.GameState state = queueList.Dequeue();
         Debug.Log("쌓인 데이터 리스트 : " + queueList.Count);
@@ -460,6 +463,7 @@ public partial class PlayMangement : MonoBehaviour {
     }
 
     private void shildDequeue() {
+        if(!isGame) return;
         if(socketHandler.humanData.Count == 0) return;
         socketHandler.humanData.Dequeue();
         socketHandler.orcData.Dequeue();
@@ -507,6 +511,7 @@ public partial class PlayMangement : MonoBehaviour {
 public partial class PlayMangement {
 
     public GameObject resultUI;
+    public GameObject SocketDisconnectedUI;
 
 
     public void GetBattleResult() {
@@ -536,6 +541,14 @@ public partial class PlayMangement {
         else if (resultUI.transform.GetChild(1).gameObject.activeSelf) {
             SceneManager.Instance.LoadScene(SceneManager.Scene.MAIN_SCENE);
         }
+    }
+
+    public void SocketErrorUIOpen() {
+        SocketDisconnectedUI.SetActive(true);
+    }
+
+    public void OnMoveSceneBtn() {
+        SceneManager.Instance.LoadScene(SceneManager.Scene.MAIN_SCENE);
     }
 
     private void SetResultWindow(string result, string race) {

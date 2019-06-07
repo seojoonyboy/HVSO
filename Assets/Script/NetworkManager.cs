@@ -5,9 +5,13 @@ using UnityEngine.Networking;
 using System.Collections.Generic;
 
 public partial class NetworkManager : Singleton<NetworkManager> {
-    //개발용
+    #if UNITY_EDITOR
+    [HideInInspector] 
     public string baseUrl = "http://ccdevclient.fbl.kr/";
-    //public string baseUrl = "http://192.168.1.23/";
+    #else
+    [HideInInspector]
+    public string baseUrl = "http://cctest.fbl.kr/";
+    #endif
     protected NetworkManager() { }
     public delegate void Callback(HttpResponse response);
     public delegate void CallbackRetryOccured(string msg);
