@@ -41,7 +41,6 @@ public partial class PlayMangement : MonoBehaviour {
         GameObject backGroundEffect = Instantiate(effectManager.backGroundEffect);
         backGroundEffect.transform.position = backGround.transform.Find("ParticlePosition").position;
         SetCamera();
-        InitTurnTable();
     }
     private void OnDestroy()
     {
@@ -54,6 +53,7 @@ public partial class PlayMangement : MonoBehaviour {
         SetBackGround();
         RequestStartData();
         DistributeResource();
+        InitTurnTable();
         //StartCoroutine(DisconnectTest());
     }
 
@@ -792,6 +792,9 @@ public partial class PlayMangement {
             turnIcon = turnTable.GetChild(5);
             turnTable.GetChild(1).GetChild(1).gameObject.SetActive(true);
             turnTable.GetChild(2).GetChild(1).gameObject.SetActive(true);
+        }
+        for(int i = 0; i < 4; i++) {
+            turnTable.GetChild(6).position = canvas.transform.GetChild(2).GetChild(3).position;
         }
         turnIcon.gameObject.SetActive(true);
         turnIcon.GetChild(0).gameObject.SetActive(true);
