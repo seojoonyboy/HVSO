@@ -111,7 +111,7 @@ public class PlayerController : MonoBehaviour
     
     private void SetParticleSize(ParticleSystem particle) {
         ParticleSystem.MainModule costparticle = particle.main;
-        costparticle.startSize = 1.4f / (0.5625f / ((float)Screen.width / Screen.height));
+        costparticle.startSize = 1.4f * ((float)1920 / Screen.height);
     }
 
     private void Start()
