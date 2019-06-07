@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f5c5732aa219b5b4992e4c6953fb40af
+guid: b216dd4bc615bd249b065f0e3218c448
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -104,7 +104,7 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-  spritePackingTag: IngameUI
+  spritePackingTag: CardBackground0607
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
   userData: 

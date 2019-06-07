@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 2b40e2924fda3c54da1ceca79d727b32
+guid: 3f885c0e2bdeaa741ab26ecc0921afce
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -104,7 +104,7 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-  spritePackingTag: CardPortrait
+  spritePackingTag: CardPortrait_0607
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
   userData: 

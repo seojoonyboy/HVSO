@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
 
     public GameObject backLine;
     public GameObject frontLine;
+    GameObject costParticle;
     public bool dragCard = false;
 
     public Vector3 unitClosePosition;
@@ -50,11 +51,13 @@ public class PlayerController : MonoBehaviour
         else isHuman = !isPlayer;
         if (isHuman) {
             Instantiate(AccountManager.Instance.resource.raceUiPrefabs["HUMAN"][0], playerUI.transform.Find("PlayerHealth"));
-            Instantiate(AccountManager.Instance.resource.raceUiPrefabs["HUMAN"][1], playerUI.transform.Find("PlayerResource"));
+            GameObject cost = Instantiate(AccountManager.Instance.resource.raceUiPrefabs["HUMAN"][1], playerUI.transform.Find("PlayerResource"));
+            cost.GetComponent<Canvas>().overrideSorting = true;
         }
         else {
             Instantiate(AccountManager.Instance.resource.raceUiPrefabs["ORC"][0], playerUI.transform.Find("PlayerHealth"));
-            Instantiate(AccountManager.Instance.resource.raceUiPrefabs["ORC"][1], playerUI.transform.Find("PlayerResource"));
+            GameObject cost = Instantiate(AccountManager.Instance.resource.raceUiPrefabs["ORC"][1], playerUI.transform.Find("PlayerResource"));
+            cost.GetComponent<Canvas>().overrideSorting = true;
         }
 
         if(isHuman == true) {
@@ -283,22 +286,6 @@ public class PlayerController : MonoBehaviour
             }
         }
         else if(isPlayer == true && currentTurn == "SECRET") {
-            Transform cardSlot_1 = playerUI.transform.Find("CardHand").GetChild(0);
-            Transform cardSlot_2 = playerUI.transform.Find("CardHand").GetChild(1);
-            for (int i = 0; i < cardSlot_1.childCount; i++) {
-                if (cardSlot_1.GetChild(i).gameObject.activeSelf && cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().cardData.type == "magic")
-                    cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().ActivateCard();
-            }
-            for (int i = 0; i < cardSlot_2.childCount; i++) {
-                if (cardSlot_2.GetChild(i).gameObject.activeSelf && cardSlot_2.GetChild(i).GetChild(0).GetComponent<CardHandler>().cardData.type == "magic")
-                    cardSlot_2.GetChild(i).GetChild(0).GetComponent<CardHandler>().ActivateCard();
-            }
-        }
-    }
-
-    public void ActiveOrcSpecTurn() {
-        myTurn = true;
-        if (isPlayer == true) {
             Transform cardSlot_1 = playerUI.transform.Find("CardHand").GetChild(0);
             Transform cardSlot_2 = playerUI.transform.Find("CardHand").GetChild(1);
             for (int i = 0; i < cardSlot_1.childCount; i++) {
