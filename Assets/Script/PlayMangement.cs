@@ -361,7 +361,6 @@ public partial class PlayMangement : MonoBehaviour {
                     StartCoroutine("WaitSecond");
                 }
                 EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_ORC_POST_TURN, this, null);
-                socketHandler.checkMapPos();
                 break;
             case "BATTLE":
                 player.DisablePlayer();

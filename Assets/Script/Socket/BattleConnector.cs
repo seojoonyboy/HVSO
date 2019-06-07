@@ -127,7 +127,6 @@ public partial class BattleConnector : MonoBehaviour {
 /// 서버로부터 데이터를 받아올 때 reflection으로 string을 함수로 바로 발동하게 하는 부분
 public partial class BattleConnector : MonoBehaviour {
     public GameState gameState;
-    public GameState orcPostState;
     private string raceName;
     private bool dequeueing = true;
     public Queue<ReceiveFormat> queue = new Queue<ReceiveFormat>();
@@ -217,13 +216,11 @@ public partial class BattleConnector : MonoBehaviour {
     public void begin_orc_post_turn() {
         Debug.Log("WebSocket State : begin_orc_post_turn");
         checkMyTurn(false);
-        orcPostState = gameState;
+        DebugSocketData.CheckMapPosition(gameState);
     }
 
     public void checkMapPos() {
         if(PlayMangement.instance.player.isHuman) return;
-        DebugSocketData.CheckMapPosition(orcPostState);
-        orcPostState = null;
     }
 
     public void end_orc_post_turn() {
