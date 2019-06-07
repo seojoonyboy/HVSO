@@ -222,8 +222,8 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void checkMapPos() {
-        DebugSocketData.CheckMapPosition(orcPostState);
-        orcPostState = null;
+        //DebugSocketData.CheckMapPosition(orcPostState);
+        //orcPostState = null;
     }
 
     public void end_orc_post_turn() {

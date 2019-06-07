@@ -80,13 +80,12 @@ public partial class PlayMangement : MonoBehaviour {
         canvas = GameObject.Find("Canvas");
         Vector3 canvasScale = canvas.transform.localScale;
         canvas.GetComponent<RectTransform>().sizeDelta = new Vector2(Camera.main.pixelWidth, Camera.main.pixelHeight);
-        canvas.transform.localScale = new Vector3((width /Camera.main.pixelWidth), (height/Camera.main.pixelHeight), 1);
+        canvas.transform.localScale = new Vector3(width /Camera.main.pixelWidth, height/Camera.main.pixelHeight, 1);
 
 
         if (ratio > 1.77f) {
             //backgroundScale = width / backSprite.sprite.bounds.size.x;
             //backGround.transform.localScale = new Vector3(backgroundScale, backgroundScale, 1);
-            backGround.transform.localScale = new Vector3(0.4f, 0.4f, 1);
             backGround.transform.localPosition = Vector3.zero;
             
 
@@ -94,8 +93,7 @@ public partial class PlayMangement : MonoBehaviour {
         else {
             //backgroundScale = height / backSprite.sprite.bounds.size.y;
             //backGround.transform.localScale = new Vector3(backgroundScale, backgroundScale, 1); ;
-            backGround.transform.localScale = new Vector3(0.48f, 0.48f, 1);
-            backGround.transform.localPosition = new Vector3(0, -0.5f, 0);
+            backGround.transform.localPosition = new Vector3(0, -0.5f, 0f);
         }
 
         player.transform.position = backGround.transform.Find("PlayerPosition").Find("Player_1Pos").position;
