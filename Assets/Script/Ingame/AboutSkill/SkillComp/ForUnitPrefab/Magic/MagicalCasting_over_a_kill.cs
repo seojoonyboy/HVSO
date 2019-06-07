@@ -9,12 +9,9 @@ namespace SkillModules {
 
         public override void RequestUseMagic() {
             selectedTarget = CheckUnit();
-
-            IEnumerable<string> query = from effect in skillData.effects.ToList()
-                                        select effect.args[0];
+            
             IEnumerable<string> query2 = from _target in skillData.targets.ToList()
                                         select _target.args[0];
-            List<string> effects = query.ToList();
             List<string> target = query2.ToList();
 
             int standard = 0;

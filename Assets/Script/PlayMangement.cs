@@ -27,6 +27,7 @@ public partial class PlayMangement : MonoBehaviour {
     public bool heroShieldActive = false;
     public GameObject humanShield, orcShield;
     public static GameObject movingCard;
+    
     private void Awake()
     {
         socketHandler = FindObjectOfType<BattleConnector>();
@@ -63,26 +64,37 @@ public partial class PlayMangement : MonoBehaviour {
     }
 
     private void SetWorldScale() {
+        
         SpriteRenderer backSprite = backGround.GetComponent<SpriteRenderer>();
         float ratio = (float)Screen.height / Screen.width;
         Debug.Log(ratio);
 
         float height = Camera.main.orthographicSize * 2, width = height / Screen.height * Screen.width;
-        float backgroundScale;
+        
 
-        if (ratio > 1.77f) {
-            backgroundScale = width / backSprite.sprite.bounds.size.x;
-            backGround.transform.localScale = new Vector3(backgroundScale, backgroundScale, 1);
-        }
-        else {
-            backgroundScale = height / backSprite.sprite.bounds.size.y;
-            backGround.transform.localScale = new Vector3(backgroundScale, backgroundScale, 1); ;
-        }
-        Debug.Log(Mathf.RoundToInt((float) 1f / backgroundScale));
+        //Rect temp = TargetCameraPos(Camera.main.orthographicSize);
+        //tempCube.transform.TransformPoint(new Vector3(temp.x, temp.y, 0));
+        //tempCube.transform.localScale = new Vector3(temp.width, temp.height, 1);
+
 
         canvas = GameObject.Find("Canvas");
         Vector3 canvasScale = canvas.transform.localScale;
-        canvas.transform.localScale = new Vector3(canvasScale.x * backGround.transform.localScale.x, canvasScale.y * backGround.transform.localScale.y, 1);
+        canvas.GetComponent<RectTransform>().sizeDelta = new Vector2(Camera.main.pixelWidth, Camera.main.pixelHeight);
+        canvas.transform.localScale = new Vector3(width /Camera.main.pixelWidth, height/Camera.main.pixelHeight, 1);
+
+
+        if (ratio > 1.77f) {
+            //backgroundScale = width / backSprite.sprite.bounds.size.x;
+            //backGround.transform.localScale = new Vector3(backgroundScale, backgroundScale, 1);
+            backGround.transform.localPosition = Vector3.zero;
+            
+
+        }
+        else {
+            //backgroundScale = height / backSprite.sprite.bounds.size.y;
+            //backGround.transform.localScale = new Vector3(backgroundScale, backgroundScale, 1); ;
+            backGround.transform.localPosition = new Vector3(0, -0.5f, 0f);
+        }
 
         player.transform.position = backGround.transform.Find("PlayerPosition").Find("Player_1Pos").position;
         player.wallPosition = backGround.transform.Find("PlayerPosition").Find("Player_1Wall").position;
@@ -109,7 +121,28 @@ public partial class PlayMangement : MonoBehaviour {
             backGround.transform.GetChild(i).position = new Vector3(pos.x, player.backLine.transform.position.y, 0);
         }      
     }
+    /*
+    public Vector3 screenTo3d(float x2, float y2, float z2) {
+        return Camera.main.ScreenToWorldPoint(new Vector3(x2, y2, z2));
+    }
 
+    public Rect TargetCameraPos(float z) {
+        Vector3 leftBottom = screenTo3d(0, 0, z);
+        Vector3 rightTop = screenTo3d(Camera.main.pixelWidth, Camera.main.pixelHeight, z);
+
+
+        //Vector3 canvasRigthTop = Camera.main.WorldToScreenPoint(rightTop);
+        //Vector3 canvasLeftBottom = Camera.main.WorldToScreenPoint(leftBottom);
+
+        //float width = canvasRigthTop.x - canvasLeftBottom.x;
+        //float height = canvasRigthTop.y - canvasLeftBottom.y;
+
+        return new Rect(leftBottom.x, rightTop.y, rightTop.x - leftBottom.x, rightTop.y - leftBottom.y);
+
+        //worldCanvas.pixelRect.Set(canvasLeftBottom.x, canvasRigthTop.y, canvasRigthTop.x - canvasLeftBottom.x, canvasRigthTop.y - canvasLeftBottom.y);
+        //return new Rect(canvasLeftBottom.x, canvasRigthTop.y, canvasRigthTop.x - canvasLeftBottom.x, canvasRigthTop.y - canvasLeftBottom.y);
+    }
+    */
     private void SetBackGround() {
         if (player.isHuman == true) {
             GameObject raceSprite = Instantiate(AccountManager.Instance.resource.raceUiPrefabs["HUMAN_BACKGROUND"][0], backGround.transform);

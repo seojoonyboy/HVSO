@@ -79,7 +79,7 @@ public class PlayerController : MonoBehaviour
             if (isPlayer == true) {
                 float reverse = hero.transform.localScale.x * -1f;
                 hero.transform.localScale = new Vector3(reverse, hero.transform.localScale.y, hero.transform.localScale.z);
-                heroSpine.GetComponent<MeshRenderer>().sortingOrder = 12;
+                heroSpine.GetComponent<MeshRenderer>().sortingOrder = 14;
             }
             else
                 heroSpine.GetComponent<MeshRenderer>().sortingOrder = 8;
@@ -96,7 +96,7 @@ public class PlayerController : MonoBehaviour
             if (isPlayer == true) {
                 float reverse = hero.transform.localScale.x * -1f;
                 hero.transform.localScale = new Vector3(reverse, hero.transform.localScale.y, hero.transform.localScale.z);
-                heroSpine.GetComponent<MeshRenderer>().sortingOrder = 12;
+                heroSpine.GetComponent<MeshRenderer>().sortingOrder = 14;
             }
             else
                 heroSpine.GetComponent<MeshRenderer>().sortingOrder = 8;
