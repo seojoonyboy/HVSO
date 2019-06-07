@@ -63,6 +63,7 @@ public partial class PlayMangement : MonoBehaviour {
     }
 
     private void SetWorldScale() {
+        
         SpriteRenderer backSprite = backGround.GetComponent<SpriteRenderer>();
         float ratio = (float)Screen.height / Screen.width;
         Debug.Log(ratio);
@@ -70,19 +71,31 @@ public partial class PlayMangement : MonoBehaviour {
         float height = Camera.main.orthographicSize * 2, width = height / Screen.height * Screen.width;
         float backgroundScale;
 
-        if (ratio > 1.77f) {
-            backgroundScale = width / backSprite.sprite.bounds.size.x;
-            backGround.transform.localScale = new Vector3(backgroundScale, backgroundScale, 1);
-        }
-        else {
-            backgroundScale = height / backSprite.sprite.bounds.size.y;
-            backGround.transform.localScale = new Vector3(backgroundScale, backgroundScale, 1); ;
-        }
-        Debug.Log(Mathf.RoundToInt((float) 1f / backgroundScale));
-
         canvas = GameObject.Find("Canvas");
         Vector3 canvasScale = canvas.transform.localScale;
+        
+       
+
+        if (ratio > 1.77f) {
+            //backgroundScale = width / backSprite.sprite.bounds.size.x;
+            //backGround.transform.localScale = new Vector3(backgroundScale, backgroundScale, 1);
+            backGround.transform.localScale = new Vector3(0.4f, 0.4f, 1);
+            backGround.transform.localPosition = Vector3.zero;
+        }
+        else {
+            //backgroundScale = height / backSprite.sprite.bounds.size.y;
+            //backGround.transform.localScale = new Vector3(backgroundScale, backgroundScale, 1); ;
+            backGround.transform.localScale = new Vector3(0.46f, 0.46f, 1);
+            backGround.transform.localPosition = new Vector3(0, -0.5f, 0);
+            
+        }
+        //Debug.Log(Mathf.RoundToInt((float) 1f / backgroundScale));
+        
+        
+        canvas.GetComponent<RectTransform>().sizeDelta = new Vector2(Camera.main.scaledPixelWidth, Camera.main.scaledPixelHeight);
         canvas.transform.localScale = new Vector3(canvasScale.x * backGround.transform.localScale.x, canvasScale.y * backGround.transform.localScale.y, 1);
+
+
 
         player.transform.position = backGround.transform.Find("PlayerPosition").Find("Player_1Pos").position;
         player.wallPosition = backGround.transform.Find("PlayerPosition").Find("Player_1Wall").position;
@@ -109,6 +122,24 @@ public partial class PlayMangement : MonoBehaviour {
             backGround.transform.GetChild(i).position = new Vector3(pos.x, player.backLine.transform.position.y, 0);
         }      
     }
+
+    public Vector3 worldtoScreen(float x2, float y2, float z2) {
+        return Camera.main.WorldToScreenPoint(new Vector3(x2, y2, z2));
+    }
+
+    public Rect bound3D(float z) {
+        Vector3 leftBottom = worldtoScreen(0, 0, z);
+        Vector3 rightTop = worldtoScreen(Camera.main.pixelWidth, Camera.main.pixelHeight, z);
+
+        return new Rect(leftBottom.x, rightTop.y, rightTop.x - leftBottom.x, rightTop.y - leftBottom.y);
+    }
+
+    public void temp() {
+        Rect a = bound3D(Camera.main.orthographicSize);
+    }
+
+
+
 
     private void SetBackGround() {
         if (player.isHuman == true) {
