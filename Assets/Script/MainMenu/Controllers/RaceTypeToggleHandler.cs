@@ -128,13 +128,10 @@ public class RaceTypeToggleHandler : MonoBehaviour {
             //}
 
             for (int j = 0; j < PORTRAIT_SLOT_NUM_PER_PAGE; j++) {
-                if (item_count > basicDecks.Count - 1) {
-                    GameObject AddDeckButton = Instantiate(AddDeckButtonPrefab, deckParent.GetChild(0));
-                    break;
-                }
-
+                if (item_count > basicDecks.Count - 1) { break; }
                 GameObject _deck = Instantiate(deckPrefab, page.transform);
-                _deck.transform.Find("Name").GetComponent<Text>().text = basicDecks[item_count].name;
+                _deck.transform.Find("Deck/Name").GetComponent<Text>().text = basicDecks[item_count].name;
+                _deck.transform.Find("Outline").GetComponent<Image>().enabled = true;
                 //Transform target_deck_slot = page.transform.GetChild(slot_count);
 
                 //target_deck_slot.transform.Find("Deactive").gameObject.SetActive(false);
@@ -146,7 +143,9 @@ public class RaceTypeToggleHandler : MonoBehaviour {
                 item_count++;
                 //slot_count++;
             }
+            GameObject AddDeckButton = Instantiate(AddDeckButtonPrefab, page.transform);
         }
+        
     }
 
     private int TotalPortraitPages(ref List<Hero> heroes) {
