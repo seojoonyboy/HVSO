@@ -45,6 +45,7 @@ public partial class PlayMangement : MonoBehaviour {
     private void OnDestroy()
     {
         instance = null;
+        Destroy(socketHandler.gameObject);
     }
 
     private void Start()
@@ -551,7 +552,6 @@ public partial class PlayMangement {
 
     public void GetBattleResult() {
         isGame = false;
-        Destroy(socketHandler);
         resultUI.SetActive(true);
 
         if (player.HP.Value <= 0) {
@@ -753,20 +753,6 @@ public partial class PlayMangement {
         get {
             return enemyUnitsObserver;
         }
-    }
-
-    public void DisconnectSocket() {
-        //Destroy(FindObjectOfType<BattleConnector>().gameObject);
-        EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.REMOVE_SOCKET_CONNECTOR, this);
-
-        //SocketManager.OnReceiveSocketMessage.AddListener(() => Debug.Log("On Socket Message Received"));
-    }
-
-    IEnumerator DisconnectTest() {
-        yield return new WaitForSeconds(8.0f);
-        //DisconnectSocket();
-
-        Debug.Log("소켓 커넥터 파괴됨");
     }
 }
 

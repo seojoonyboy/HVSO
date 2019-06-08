@@ -85,10 +85,11 @@ public class SceneManager : Singleton<SceneManager> {
                 UnityEngine.SceneManagement.SceneManager.LoadScene(mainScene);
             }
             else {
+                if(currentScene == (int)Scene.PVP_READY_SCENE) {
+                    var connector = FindObjectOfType<BattleConnector>();
+                    Destroy(connector.gameObject);
+                }
                 LoadLastScene();
-                if(PlayMangement.instance == null) return;
-                if(PlayMangement.instance.socketHandler == null) return;
-                DestroyImmediate(PlayMangement.instance.socketHandler.gameObject);
             }
         }
     }
