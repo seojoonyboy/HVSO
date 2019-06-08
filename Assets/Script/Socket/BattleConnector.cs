@@ -12,9 +12,9 @@ using SocketFormat;
 using System.Reflection;
 public partial class BattleConnector : MonoBehaviour {
     #if UNITY_EDITOR
-    private string url = "ws://ccdevclient.fbl.kr/game";
+    private string url = "wss://ccdevclient.fbl.kr/game";
     #else
-    private string url = "ws://cctest.fbl.kr/game";
+    private string url = "wss://cctest.fbl.kr/game";
     #endif
     WebSocket webSocket;
     [SerializeField] Text message;
