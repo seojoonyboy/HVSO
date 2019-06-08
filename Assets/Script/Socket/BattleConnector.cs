@@ -10,12 +10,11 @@ using UnityEngine.Events;
 using dataModules;
 using SocketFormat;
 using System.Reflection;
-
 public partial class BattleConnector : MonoBehaviour {
     #if UNITY_EDITOR
-    private string url = "ws://ccdevclient.fbl.kr/game";
+    private string url = "wss://ccdevclient.fbl.kr/game";
     #else
-    private string url = "ws://cctest.fbl.kr/game";
+    private string url = "wss://cctest.fbl.kr/game";
     #endif
     WebSocket webSocket;
     [SerializeField] Text message;
@@ -26,6 +25,7 @@ public partial class BattleConnector : MonoBehaviour {
     public UnityAction<string, int, bool> HandchangeCallback;
     public Queue<UnityAction> skillCallbacks = new Queue<UnityAction>();
     private Coroutine pingpong;
+    private bool battleGameFinish = false;
 
     void Awake() {
         thisType = this.GetType();
@@ -62,7 +62,8 @@ public partial class BattleConnector : MonoBehaviour {
             yield return beatTime;
             SendMethod("ping");
         }
-        PlayMangement.instance.SocketErrorUIOpen();
+        if(!battleGameFinish)
+            PlayMangement.instance.SocketErrorUIOpen();
     }
 
     //Receive Socket Message
@@ -236,6 +237,7 @@ public partial class BattleConnector : MonoBehaviour {
 
     public void end_battle_turn() {
         Debug.Log("WebSocket State : end_battle_turn");
+        battleGameFinish = true;
     }
 
     public void line_battle(string line, string camp) {
