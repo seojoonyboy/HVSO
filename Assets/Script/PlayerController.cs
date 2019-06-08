@@ -64,6 +64,11 @@ public class PlayerController : MonoBehaviour
         SetParticleSize(costUI.transform.GetChild(1).GetComponent<ParticleSystem>());
         if (isPlayer) {
             buttonParticle = playerUI.transform.Find("Turn/ReleaseTurnButton/TurnOverFeedback").gameObject;
+            ParticleSystem.MainModule particle = buttonParticle.GetComponent<ParticleSystem>().main;
+            if (isHuman)
+                particle.startColor = Color.blue;
+            else
+                particle.startColor = Color.red;
             buttonParticle.SetActive(false);
             //buttonParticle = playerUI.transform.Find("Turn/ReleaseTurnButton/turnbutton_feedback").gameObject;
             //SetParticleSize(buttonParticle.GetComponent<ParticleSystem>());
