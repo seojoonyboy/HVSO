@@ -24,7 +24,8 @@ public class BattleReadySceneController : MonoBehaviour {
     public OrcDecks orcDecks;
     bool isIngameButtonClicked;
 
-    void Start() {
+    IEnumerator Start() {
+        yield return null;
         DataLoad();
         isIngameButtonClicked = false;
     }

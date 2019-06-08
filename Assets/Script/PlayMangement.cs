@@ -10,7 +10,6 @@ public partial class PlayMangement : MonoBehaviour {
     public Sprite plantResourceIcon, zombieResourceIcon;
 
     public GameObject cardDB;
-    Camera cam;
     public GameObject uiSlot;
     public GameObject canvas;
     public bool isGame = true;
@@ -50,7 +49,6 @@ public partial class PlayMangement : MonoBehaviour {
 
     private void Start()
     {
-        cam = Camera.main;
         SetBackGround();
         RequestStartData();
         DistributeResource();
@@ -76,9 +74,6 @@ public partial class PlayMangement : MonoBehaviour {
         //Rect temp = TargetCameraPos(Camera.main.orthographicSize);
         //tempCube.transform.TransformPoint(new Vector3(temp.x, temp.y, 0));
         //tempCube.transform.localScale = new Vector3(temp.width, temp.height, 1);
-
-
-        canvas = GameObject.Find("Canvas");
         //Vector3 canvasScale = canvas.transform.localScale;
         //canvas.GetComponent<RectTransform>().sizeDelta = new Vector2(Camera.main.pixelWidth, Camera.main.pixelHeight);
         //canvas.transform.localScale = new Vector3(width /Camera.main.pixelWidth, height/Camera.main.pixelHeight, 1);
@@ -484,7 +479,7 @@ public partial class PlayMangement : MonoBehaviour {
         if(!isGame) yield break;
         yield return queueList.WaitNext();
         SocketFormat.GameState state = queueList.Dequeue();
-        Debug.Log("쌓인 데이터 리스트 : " + queueList.Count);
+        //Debug.Log("쌓인 데이터 리스트 : " + queueList.Count);
         if(state == null) {
             Debug.LogError("데이터가 없는 문제가 발생했습니다. 우선은 클라이언트에서 배틀 진행합니다.");
             yield break;
@@ -514,7 +509,7 @@ public partial class PlayMangement : MonoBehaviour {
 
     public IEnumerator DrawSpecialCard(bool isHuman) {
         yield return socketHandler.WaitGetCard();
-        Debug.Log("쉴드 발동!");
+        //Debug.Log("쉴드 발동!");
         bool isPlayer = (isHuman == player.isHuman);
         if(isPlayer) {
             CardHandDeckManager cdpm = FindObjectOfType<CardHandDeckManager>();
@@ -694,7 +689,6 @@ public partial class PlayMangement {
     public Vector3 cameraPos;
 
     public void SetCamera() {
-        ingameCamera = Camera.main;
         cameraPos = Camera.main.transform.position;
     }
     
