@@ -64,7 +64,9 @@ public class SceneManager : Singleton<SceneManager> {
                 break;
         }
         var currentScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
+        QualitySettings.asyncUploadTimeSlice = 4;
         StartCoroutine(LoadReadyScene(currentScene.buildIndex, numberOfScene));
+        QualitySettings.asyncUploadTimeSlice = 2;
     }
 
     AsyncOperation asyncOp;
