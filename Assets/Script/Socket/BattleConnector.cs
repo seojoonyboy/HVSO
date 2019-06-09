@@ -100,8 +100,8 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     void OnDisable() {
-        StopCoroutine(pingpong);
-        webSocket.Close();
+        if(pingpong != null) StopCoroutine(pingpong);
+        if(webSocket != null) webSocket.Close();
     }
 
     public void StartBattle() {

@@ -53,11 +53,14 @@ public class SceneManager : Singleton<SceneManager> {
             case Scene.MAIN_SCENE :
                 numberOfScene = 2;
                 break;
-            case Scene.PVP_READY_SCENE :
+            case Scene.LOADING_SCENE :
                 numberOfScene = 3;
                 break;
-            case Scene.CONNECT_MATCHING_SCENE :
+            case Scene.PVP_READY_SCENE :
                 numberOfScene = 4;
+                break;
+            case Scene.CONNECT_MATCHING_SCENE :
+                numberOfScene = 5;
                 break;
             case Scene.MISSION_INGAME :
                 numberOfScene = 1;
@@ -88,6 +91,11 @@ public class SceneManager : Singleton<SceneManager> {
         yield return PreLoadReadyScene(load);
     }
 
+    public float LoadingProgress() {
+        if(asyncOp == null) return 0f;
+        return asyncOp.progress;
+    }
+
     public enum Scene {
         MAIN_SCENE,
         COLLECTION_SCENE,
@@ -96,6 +104,7 @@ public class SceneManager : Singleton<SceneManager> {
         PVP_READY_SCENE,
         DECK_LIST_SCNE,
         DECK_SETTING_SCENE,
-        CONNECT_MATCHING_SCENE
+        CONNECT_MATCHING_SCENE,
+        LOADING_SCENE
     }
 }
