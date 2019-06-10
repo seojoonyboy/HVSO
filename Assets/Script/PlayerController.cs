@@ -64,6 +64,11 @@ public class PlayerController : MonoBehaviour
         SetParticleSize(costUI.transform.GetChild(1).GetComponent<ParticleSystem>());
         if (isPlayer) {
             buttonParticle = playerUI.transform.Find("Turn/ReleaseTurnButton/TurnOverFeedback").gameObject;
+            ParticleSystem.MainModule particle = buttonParticle.GetComponent<ParticleSystem>().main;
+            if (isHuman)
+                particle.startColor = Color.blue;
+            else
+                particle.startColor = Color.red;
             buttonParticle.SetActive(false);
             //buttonParticle = playerUI.transform.Find("Turn/ReleaseTurnButton/turnbutton_feedback").gameObject;
             //SetParticleSize(buttonParticle.GetComponent<ParticleSystem>());
@@ -197,7 +202,10 @@ public class PlayerController : MonoBehaviour
         Queue<SocketFormat.Player> heroShildData = isHuman ? socketHandler.humanData : socketHandler.orcData;
         SocketFormat.Player data;
         if(heroShildData.Count != 0) data = heroShildData.Peek();
-        else data = socketHandler.gameState.players.myPlayer(isHuman);
+        else {
+            Debug.Log("받아온 실드 데이터가 없습니다!");
+            data = socketHandler.gameState.players.myPlayer(isHuman);
+        }
         SocketFormat.ShieldCharge shieldData = GetShieldData();
         if (!data.shildActivate) {
             HP.Value -= amount;
@@ -219,6 +227,7 @@ public class PlayerController : MonoBehaviour
 
     private bool CheckShieldActivate(SocketFormat.ShieldCharge shieldData) {
         if(shieldData == null) return true;
+        if(shieldData.shieldCount == 0) return true;
         return (shieldStack.Value + shieldData.shieldCount) >= 8;
     }
 

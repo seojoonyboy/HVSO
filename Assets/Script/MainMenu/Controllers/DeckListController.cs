@@ -108,6 +108,6 @@ public class DeckListController : MonoBehaviour {
     }
 
     public void OnBackButton() {
-        SceneManager.Instance.LoadLastScene();
+        //SceneManager.Instance.LoadLastScene();
     }
 }

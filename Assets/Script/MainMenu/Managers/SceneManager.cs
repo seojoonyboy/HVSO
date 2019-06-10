@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SceneManager : Singleton<SceneManager> {
     private float secondsToLoadNextScene = 0.5f;
@@ -18,17 +19,13 @@ public class SceneManager : Singleton<SceneManager> {
     // Start is called before the first frame update
     void Start() {
         DontDestroyOnLoad(this);
-    }
-
-    // Update is called once per frame
-    void Update() {
-        BackButtonPressed();
+        StartCoroutine(PreLoadReadyScene(1));
     }
 
     public void LoadScene(Scene scene) {
         int numberOfScene = -1;
         switch (scene) {
-            case Scene.MAIN_SCENE:
+            /*case Scene.MAIN_SCENE:
                 numberOfScene = 1;
                 break;
             case Scene.MISSION_SELECT_SCENE:
@@ -52,64 +49,51 @@ public class SceneManager : Singleton<SceneManager> {
             case Scene.CONNECT_MATCHING_SCENE:
                 numberOfScene = 8;
                 break;
+            */
+            case Scene.MAIN_SCENE :
+                numberOfScene = 2;
+                break;
+            case Scene.LOADING_SCENE :
+                numberOfScene = 3;
+                break;
+            case Scene.PVP_READY_SCENE :
+                numberOfScene = 4;
+                break;
+            case Scene.CONNECT_MATCHING_SCENE :
+                numberOfScene = 5;
+                break;
+            case Scene.MISSION_INGAME :
+                numberOfScene = 1;
+                break;
         }
+        var currentScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
+        QualitySettings.asyncUploadTimeSlice = 4;
+        StartCoroutine(LoadReadyScene(currentScene.buildIndex, numberOfScene));
+        QualitySettings.asyncUploadTimeSlice = 2;
+    }
 
-        if(numberOfScene != -1) {
-            try {
-                Fader fader = GameObject.Find("FaderCanvas/Fader").GetComponent<Fader>();
-                fader.StartFade(Fader.FadeDirection.In, delegate {
-                    LoadNextScene(numberOfScene);
-                });
-            }
-            catch(NullReferenceException ex) {
-                LoadNextScene(numberOfScene);
-            }
+    AsyncOperation asyncOp;
+
+    IEnumerator PreLoadReadyScene(int load) {
+        yield return null;
+        asyncOp = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(load, UnityEngine.SceneManagement.LoadSceneMode.Additive);
+        asyncOp.allowSceneActivation = false;
+        yield return null;
+    }
+
+    IEnumerator LoadReadyScene(int unload, int load) {
+        yield return null;
+        while(!asyncOp.isDone) {
+            asyncOp.allowSceneActivation = true;
+            yield return null;
         }
+        UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(unload);
+        yield return PreLoadReadyScene(load);
     }
 
-    public void LoadNextScene(int numberOfSceneToLoad) {
-        StartCoroutine(LoadScene(numberOfSceneToLoad));
-    }
-
-    private IEnumerator LoadScene(int numberOfScene) {
-        SetLastScene(currentScene);
-
-        yield return new WaitForSeconds(secondsToLoadNextScene);
-        LoadNewScene(numberOfScene);
-    }
-
-    public void BackButtonPressed() {
-        if (Input.GetKey(KeyCode.Escape) && currentScene > mainScene) {
-            if (lastScene == 0) {
-                Debug.Log("Last scene was Splash Screen so load Main Scene instead.");
-                UnityEngine.SceneManagement.SceneManager.LoadScene(mainScene);
-            }
-            else {
-                LoadLastScene();
-                if(PlayMangement.instance == null) return;
-                if(PlayMangement.instance.socketHandler == null) return;
-                DestroyImmediate(PlayMangement.instance.socketHandler.gameObject);
-            }
-        }
-    }
-
-    public void LoadNewScene(int sceneToLoad) {
-        currentScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex;
-        sceneStack.Push(currentScene);
-        UnityEngine.SceneManagement.SceneManager.LoadScene(sceneToLoad);
-    }
-
-    public void LoadLastScene() {
-        lastScene = sceneStack.Pop();
-        UnityEngine.SceneManagement.SceneManager.LoadScene(lastScene);
-    }
-
-    public static void SetLastScene(int makeCurrentSceneTheLastScene) {
-        lastScene = makeCurrentSceneTheLastScene;
-    }
-
-    public static int GetLastScene() {
-        return lastScene;
+    public float LoadingProgress() {
+        if(asyncOp == null) return 0f;
+        return asyncOp.progress;
     }
 
     public enum Scene {
@@ -120,6 +104,7 @@ public class SceneManager : Singleton<SceneManager> {
         PVP_READY_SCENE,
         DECK_LIST_SCNE,
         DECK_SETTING_SCENE,
-        CONNECT_MATCHING_SCENE
+        CONNECT_MATCHING_SCENE,
+        LOADING_SCENE
     }
 }
