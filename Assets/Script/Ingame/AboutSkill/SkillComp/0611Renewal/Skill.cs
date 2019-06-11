@@ -6,13 +6,15 @@ using dataModules;
 
 namespace SkillModules {
     public class Skill {
-        ConditionChecker conditionChecker;
-        //Target 뭐시기
-        Ability ability;
+        private ConditionChecker conditionChecker;
+        private TargetHandler targetHandler;
+        private Ability ability;
+        private SkillHandler mySkillHandler;
         
 
         //TODO : 한줄마다의 스킬들을 초기화
-        public void Initialize(dataModules.Skill dataSkill) {
+        public void Initialize(dataModules.Skill dataSkill, SkillHandler mySkillHandler) {
+            this.mySkillHandler = mySkillHandler;
             //method들을 클래스로 가져오기
         }
 

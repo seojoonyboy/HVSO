@@ -6,14 +6,19 @@ using dataModules;
 
 namespace SkillModules {
     public class SkillHandler {
-        Skill[] skills;
+        private Skill[] skills;
+        public GameObject myObject;
+        public GameObject skillTarget;
+        public bool isPlayer;
 
         //TODO : 데이터 세팅
-        public void Initialize(CardInventory inventory) {
+        public void Initialize(CardInventory inventory, GameObject myObject, bool isPlayer) {
+            this.myObject = myObject;
+            this.isPlayer = isPlayer;
             //스킬 갯수만큼 한줄씩 넣기
             skills = new Skill[inventory.skills.Length];
             for(int i = 0; i < skills.Length; i++) {
-                skills[i].Initialize(inventory.skills[i]);
+                skills[i].Initialize(inventory.skills[i], this);
             }
         }
 
