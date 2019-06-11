@@ -13,9 +13,10 @@ public partial class UnitDragHandler : CardHandler, IBeginDragHandler, IDragHand
         if (firstDraw || PlayMangement.instance.isMulligan) return;
         if (Input.touchCount > 1) return;
         if (PlayMangement.instance.player.dragCard) return;
+        beforeDragParent = transform.parent;
+        transform.SetParent(PlayMangement.instance.cardDragCanvas);
         itsDragging = gameObject;
         blockButton = PlayMangement.instance.player.dragCard = true;
-        startPos = transform.parent.position;
         PlayMangement.instance.player.isPicking.Value = true;
 
         CardDropManager.Instance.ShowDropableSlot(cardData);
@@ -28,8 +29,9 @@ public partial class UnitDragHandler : CardHandler, IBeginDragHandler, IDragHand
         if (firstDraw) return;
         if (gameObject != itsDragging) return;
         Vector3 cardScreenPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        //transform.position = new Vector3(cardScreenPos.x, cardScreenPos.y + 0.3f, cardScreenPos.z);
-        transform.position = Input.mousePosition;
+        cardScreenPos = new Vector3(cardScreenPos.x, cardScreenPos.y + 0.3f, cardScreenPos.z);
+        Vector3 uiPos = Camera.main.WorldToScreenPoint(cardScreenPos);
+        transform.position = new Vector3(Input.mousePosition.x, uiPos.y, Input.mousePosition.z);
         CheckHighlight();
     }
 
@@ -37,7 +39,8 @@ public partial class UnitDragHandler : CardHandler, IBeginDragHandler, IDragHand
     public void OnEndDrag(PointerEventData eventData) {
         if (firstDraw) return;
         if (gameObject != itsDragging) return;
-        iTween.MoveTo(gameObject, startPos, 0.3f);
+        transform.SetParent(beforeDragParent);
+        iTween.MoveTo(gameObject, beforeDragParent.position, 0.3f);
         blockButton = PlayMangement.instance.player.dragCard = false;
         PlayMangement.instance.player.isPicking.Value = false;
         if (!isDropable) {
