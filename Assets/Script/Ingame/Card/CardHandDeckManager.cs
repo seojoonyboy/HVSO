@@ -82,8 +82,10 @@ public class CardHandDeckManager : MonoBehaviour {
     /// 멀리건 완료 버튼 클릭 함수
     /// </summary>
     public void FirstDrawCardChange() {
-        foreach (GameObject cards in firstDrawList) 
+        foreach (GameObject cards in firstDrawList) {
             cards.transform.Find("ChangeButton").gameObject.SetActive(false);
+            AddInfoToList(cards);
+        }
         StartCoroutine(DrawChangedCards());
         firstDrawParent.GetChild(4).gameObject.SetActive(false);
         firstDrawParent.parent.Find("FinishButton").GetComponent<Button>().enabled = false;
@@ -335,8 +337,9 @@ public class CardHandDeckManager : MonoBehaviour {
 
     IEnumerator SendCardToHand(GameObject card) {
         PlayMangement.movingCard = card;
-        StartCoroutine(AddCardInfoToList(card));
+        //StartCoroutine(AddCardInfoToList(card));
         if (!firstDraw) {
+            AddInfoToList(card);
             card.transform.rotation = new Quaternion(0, 0, 180, card.transform.rotation.w);
             iTween.MoveTo(card, firstDrawParent.position, 0.4f);
             iTween.RotateTo(card, new Vector3(0, 0, 0), 0.5f);
@@ -368,6 +371,11 @@ public class CardHandDeckManager : MonoBehaviour {
         CardListManager csm = PlayMangement.instance.cardInfoCanvas.Find("CardInfoList").GetComponent<CardListManager>();
         csm.AddCardInfo(card.GetComponent<CardHandler>().cardData, card.GetComponent<CardHandler>().cardID);
         yield return null;
+    }
+
+    public void AddInfoToList(GameObject card) {
+        CardListManager csm = PlayMangement.instance.cardInfoCanvas.Find("CardInfoList").GetComponent<CardListManager>();
+        csm.AddCardInfo(card.GetComponent<CardHandler>().cardData, card.GetComponent<CardHandler>().cardID);
     }
 
     private void InitCardPosition() {

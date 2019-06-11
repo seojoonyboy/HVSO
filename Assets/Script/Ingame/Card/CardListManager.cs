@@ -27,16 +27,17 @@ public class CardListManager : MonoBehaviour
     }
 
     public void AddCardInfo(CardData data, string id) {
-        //GameObject newcard =  Instantiate(cardPrefab);
         GameObject newcard = standbyInfo.GetChild(0).gameObject;
         SetCardInfo(newcard, data);
         hss.AddChild(newcard);
+        GameObject unitSpine = newcard.transform.Find("Info/UnitImage").GetChild(0).gameObject;
         if (data.type == "unit") {
-            GameObject unitSpine = newcard.transform.Find("Info/UnitImage").GetChild(0).gameObject;
             unitSpine.GetComponent<SkeletonGraphic>().skeletonDataAsset = AccountManager.Instance.resource.cardPreveiwSkeleton[id].GetComponent<SkeletonGraphic>().skeletonDataAsset;
             unitSpine.GetComponent<SkeletonGraphic>().Initialize(true);
             unitSpine.SetActive(true);
         }
+        else
+            unitSpine.SetActive(false);
     }
 
     public void AddMulliganCardInfo(CardData data, string id) {
