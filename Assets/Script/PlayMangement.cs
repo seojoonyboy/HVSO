@@ -82,16 +82,17 @@ public partial class PlayMangement : MonoBehaviour {
         if (ratio > 1.77f) {
             //backgroundScale = width / backSprite.sprite.bounds.size.x;
             //backGround.transform.localScale = new Vector3(backgroundScale, backgroundScale, 1);
-            backGround.transform.localPosition = Vector3.zero;
+            //backGround.transform.localPosition = Vector3.zero;
             
 
         }
         else {
             //backgroundScale = height / backSprite.sprite.bounds.size.y;
             //backGround.transform.localScale = new Vector3(backgroundScale, backgroundScale, 1); ;
-            backGround.transform.localPosition = new Vector3(0, -0.5f, 0f);
-        }
+            //backGround.transform.localPosition = new Vector3(0, -0.5f, 0f);
 
+        }
+        //backGround.transform.localPosition = new Vector3(0, -0.45f, 0f);
         player.transform.position = backGround.transform.Find("PlayerPosition").Find("Player_1Pos").position;
         player.wallPosition = backGround.transform.Find("PlayerPosition").Find("Player_1Wall").position;
         player.unitClosePosition = backGround.transform.Find("PlayerPosition").Find("Player_1Close").position;
@@ -117,28 +118,8 @@ public partial class PlayMangement : MonoBehaviour {
             backGround.transform.GetChild(i).position = new Vector3(pos.x, player.backLine.transform.position.y, 0);
         }      
     }
-    /*
-    public Vector3 screenTo3d(float x2, float y2, float z2) {
-        return Camera.main.ScreenToWorldPoint(new Vector3(x2, y2, z2));
-    }
-
-    public Rect TargetCameraPos(float z) {
-        Vector3 leftBottom = screenTo3d(0, 0, z);
-        Vector3 rightTop = screenTo3d(Camera.main.pixelWidth, Camera.main.pixelHeight, z);
 
 
-        //Vector3 canvasRigthTop = Camera.main.WorldToScreenPoint(rightTop);
-        //Vector3 canvasLeftBottom = Camera.main.WorldToScreenPoint(leftBottom);
-
-        //float width = canvasRigthTop.x - canvasLeftBottom.x;
-        //float height = canvasRigthTop.y - canvasLeftBottom.y;
-
-        return new Rect(leftBottom.x, rightTop.y, rightTop.x - leftBottom.x, rightTop.y - leftBottom.y);
-
-        //worldCanvas.pixelRect.Set(canvasLeftBottom.x, canvasRigthTop.y, canvasRigthTop.x - canvasLeftBottom.x, canvasRigthTop.y - canvasLeftBottom.y);
-        //return new Rect(canvasLeftBottom.x, canvasRigthTop.y, canvasRigthTop.x - canvasLeftBottom.x, canvasRigthTop.y - canvasLeftBottom.y);
-    }
-    */
     private void SetBackGround() {
         if (player.isHuman == true) {
             GameObject raceSprite = Instantiate(AccountManager.Instance.resource.raceUiPrefabs["HUMAN_BACKGROUND"][0], backGround.transform);
