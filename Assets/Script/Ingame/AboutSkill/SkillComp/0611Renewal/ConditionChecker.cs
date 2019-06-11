@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Linq;
 
 namespace SkillModules {
     public class ConditionChecker {
@@ -49,9 +50,11 @@ namespace SkillModules {
     public class skill_target_ctg_chk : ConditionChecker {
         public override bool IsConditionSatisfied() {
             if(ArgsExist()) return false;
-            if(mySkillHandler.skillTarget == null) return false;
-
-            return false;
+            GameObject target = mySkillHandler.skillTarget;
+            if(target == null) return false;
+            IngameClass.Unit unit = target.GetComponent<PlaceMonster>().unit;
+            bool exist = unit.cardCategories.ToList().Exists(x => x.CompareTo(args[0]) == 0);
+            return exist;
         }
     }
 
