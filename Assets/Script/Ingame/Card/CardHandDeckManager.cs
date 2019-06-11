@@ -71,7 +71,7 @@ public class CardHandDeckManager : MonoBehaviour {
                     Debug.LogError(effect.method + "에 해당하는 컴포넌트를 찾을 수 없습니다.");
                 }
                 else {
-                    ((SkillModules.MagicalCasting)newComp).InitData(skill, true);
+                    //((SkillModules.MagicalCasting)newComp).InitData(skill, true);
                 }
             }
         }

@@ -291,7 +291,7 @@ public partial class PlayMangement : MonoBehaviour {
                     Debug.LogError(effect.method + "에 해당하는 컴포넌트를 찾을 수 없습니다.");
                 }
                 else {
-                    ((Ability)newComp).InitData(skill, true);
+                    //((Ability)newComp).InitData(skill, true);
                 }
             }
         }
@@ -306,7 +306,7 @@ public partial class PlayMangement : MonoBehaviour {
         Destroy(enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(enemyCardCount - 1).GetChild(0).gameObject);
 
         if(monster.GetComponent<PlaceMonster>().unit.name == "방패병") {
-            monster.AddComponent<TmpBuff>();
+            //monster.AddComponent<TmpBuff>();
         }
 
         return monster;

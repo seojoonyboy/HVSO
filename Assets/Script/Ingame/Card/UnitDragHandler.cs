@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.UI.Extensions;
 using System;
-using SkillModules;
+//using SkillModules;
 using System.Linq;
 
 public partial class UnitDragHandler : CardHandler, IBeginDragHandler, IDragHandler, IEndDragHandler {
@@ -50,7 +50,7 @@ public partial class UnitDragHandler : CardHandler, IBeginDragHandler, IDragHand
             if (unitPref != null) {
                 if (unitPref.GetComponent<PlaceMonster>().unit.name == "방패병") {
                     Debug.Log("방패병!!!!");
-                    unitPref.AddComponent<TmpBuff>();
+                    //unitPref.AddComponent<TmpBuff>();
                 }
                 else {  
                     foreach (dataModules.Skill skill in cardData.skills) {
@@ -60,7 +60,7 @@ public partial class UnitDragHandler : CardHandler, IBeginDragHandler, IDragHand
                                 Debug.LogError(effect.method + "에 해당하는 컴포넌트를 찾을 수 없습니다.");
                             }
                             else {
-                                ((Ability)newComp).InitData(skill, true);
+                                //((Ability)newComp).InitData(skill, true);
                             }
                         }
                     }

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.UI.Extensions;
 using System;
-using SkillModules;
+//using SkillModules;
 using System.Linq;
 using System.Text;
 using UnityEngine.Events;
@@ -78,13 +78,13 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         }
         else {
             if (CheckMagicSlot() != null) {
-                var abilities = GetComponents<MagicalCasting>();
-                foreach (MagicalCasting ability in abilities) ability.RequestUseMagic();
+                //var abilities = GetComponents<MagicalCasting>();
+                //foreach (MagicalCasting ability in abilities) ability.RequestUseMagic();
 
                 object[] parms = new object[] { true, gameObject };
                 PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
 
-                if (GetComponents<Ability>() == null) UseCard();
+                //if (GetComponents<Ability>() == null) UseCard();
             }
         }
         CardDropManager.Instance.HideMagicSlot();
@@ -92,11 +92,11 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
 
     public void AttributeUsed() {
         bool isValid = true;
-        MagicalCasting[] magicalCasts = GetComponents<MagicalCasting>();
-        if(magicalCasts.Length == 0) return;
-        foreach(MagicalCasting magicalCast in magicalCasts) {
-            isValid = isValid && magicalCast.isRequested;
-        }
+        //MagicalCasting[] magicalCasts = GetComponents<MagicalCasting>();
+        //if(magicalCasts.Length == 0) return;
+        //foreach(MagicalCasting magicalCast in magicalCasts) {
+        //    isValid = isValid && magicalCast.isRequested;
+        //}
 
         if(isValid) UseCard();
     }
@@ -128,32 +128,34 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
     }
 
     private UnityAction CreateEventList() {
-        UnityAction useMagic = null;
-        MagicalCasting[] magicalCasts = GetComponents<MagicalCasting>();
-        foreach(MagicalCasting magicalCast in magicalCasts) {
-            useMagic += magicalCast.UseMagic;
-        }
-        return useMagic;
+        //UnityAction useMagic = null;
+        //MagicalCasting[] magicalCasts = GetComponents<MagicalCasting>();
+        //foreach(MagicalCasting magicalCast in magicalCasts) {
+        //    useMagic += magicalCast.UseMagic;
+        //}
+        //return useMagic;
+        return null;
     }
 
     private bool isOnlySupplyCard() {
-        List<MagicalCasting> abilities = GetComponents<MagicalCasting>().ToList();
-        if (abilities.Count == 1) {
-            if(abilities[0].GetType() == typeof(MagicalCasting_supply)) {
-                return true;
-            }
-            return false;
-        }
-        else return false;
+        //List<MagicalCasting> abilities = GetComponents<MagicalCasting>().ToList();
+        //if (abilities.Count == 1) {
+        //    if(abilities[0].GetType() == typeof(MagicalCasting_supply)) {
+        //        return true;
+        //    }
+        //    return false;
+        //}
+        //else return false;
+        return true;
     }
 
     private bool isBlast_EnemyExist() {
-        List<MagicalCasting> abilities = GetComponents<MagicalCasting>().ToList();
-        foreach(MagicalCasting ability in abilities) {
-            if(ability.GetType() == typeof(MagicalCasting_over_a_kill)) {
-                return true;
-            }
-        }
+        //List<MagicalCasting> abilities = GetComponents<MagicalCasting>().ToList();
+        //foreach(MagicalCasting ability in abilities) {
+        //    if(ability.GetType() == typeof(MagicalCasting_over_a_kill)) {
+        //        return true;
+        //    }
+        //}
         return false;
     }
 
