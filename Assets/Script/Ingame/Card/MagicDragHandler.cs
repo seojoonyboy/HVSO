@@ -11,6 +11,7 @@ using System.Text;
 using UnityEngine.Events;
 
 public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHandler, IEndDragHandler {
+    public bool isPlayer;
 
     public void OnBeginDrag(PointerEventData eventData) {
         if (firstDraw || PlayMangement.instance.isMulligan) return;
