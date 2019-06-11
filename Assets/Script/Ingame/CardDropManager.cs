@@ -252,7 +252,7 @@ public partial class CardDropManager {
             PlayMangement.instance.player.ActivePlayer();
         else
             PlayMangement.instance.player.ActiveOrcTurn();
-        GameObject.Find("Player").transform.GetChild(0).GetComponent<PlayerController>().cdpm.DestroyCard(cardIndex);
+        PlayMangement.instance.player.GetComponent<PlayerController>().cdpm.DestroyCard(cardIndex);
         PlayMangement.instance.PlayerUnitsObserver.RefreshFields(unitLine);
 
 

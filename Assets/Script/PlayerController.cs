@@ -6,6 +6,8 @@ using UniRx;
 using TMPro;
 using System;
 using Bolt;
+using Spine;
+using Spine.Unity;
 
 public class PlayerController : MonoBehaviour
 {
@@ -64,14 +66,11 @@ public class PlayerController : MonoBehaviour
         SetParticleSize(costUI.transform.GetChild(1).GetComponent<ParticleSystem>());
         if (isPlayer) {
             buttonParticle = playerUI.transform.Find("Turn/ReleaseTurnButton/TurnOverFeedback").gameObject;
-            ParticleSystem.MainModule particle = buttonParticle.GetComponent<ParticleSystem>().main;
+            buttonParticle.GetComponent<SkeletonGraphic>().color = new Color(85.0f / 255.0f, 136.0f / 255.0f, 1);
             if (isHuman)
-                particle.startColor = Color.blue;
+                buttonParticle.GetComponent<SkeletonGraphic>().color = new Color(85.0f / 255.0f, 136.0f / 255.0f, 1);
             else
-                particle.startColor = Color.red;
-            buttonParticle.SetActive(false);
-            //buttonParticle = playerUI.transform.Find("Turn/ReleaseTurnButton/turnbutton_feedback").gameObject;
-            //SetParticleSize(buttonParticle.GetComponent<ParticleSystem>());
+                buttonParticle.GetComponent<SkeletonGraphic>().color = new Color(1, 97.0f / 255.0f, 97.0f / 255.0f);
         }       
         costUI.transform.GetChild(1).gameObject.SetActive(false);
 

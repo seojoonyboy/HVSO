@@ -3,14 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UI.Extensions;
+using Spine;
+using Spine.Unity;
+
 
 public class CardListManager : MonoBehaviour
 {
     [SerializeField] GameObject cardPrefab;
     [SerializeField] Transform contentParent;
+    [SerializeField] Transform standbyInfo;
     [SerializeField] GameObject infoPrefab;
     [SerializeField] GameObject firstInfoPrefab;
-    [SerializeField] Transform mulliganList;
+    [SerializeField] Transform mulliganInfoList;
     Animator animator;
     HorizontalScrollSnap hss;
 
@@ -23,17 +27,20 @@ public class CardListManager : MonoBehaviour
     }
 
     public void AddCardInfo(CardData data, string id) {
-        GameObject newcard =  Instantiate(cardPrefab);
+        //GameObject newcard =  Instantiate(cardPrefab);
+        GameObject newcard = standbyInfo.GetChild(0).gameObject;
         SetCardInfo(newcard, data);
         hss.AddChild(newcard);
         if (data.type == "unit") {
-            GameObject unitImage = Instantiate(AccountManager.Instance.resource.cardPreveiwSkeleton[id], newcard.transform.Find("Info/UnitImage"));
-            unitImage.transform.localScale = new Vector3(5, 5, 0);
+            GameObject unitSpine = newcard.transform.Find("Info/UnitImage").GetChild(0).gameObject;
+            unitSpine.GetComponent<SkeletonGraphic>().skeletonDataAsset = AccountManager.Instance.resource.cardPreveiwSkeleton[id].GetComponent<SkeletonGraphic>().skeletonDataAsset;
+            unitSpine.GetComponent<SkeletonGraphic>().Initialize(true);
+            unitSpine.SetActive(true);
         }
     }
 
     public void AddMulliganCardInfo(CardData data, string id) {
-        GameObject newcard = Instantiate(firstInfoPrefab, mulliganList);
+        GameObject newcard = Instantiate(firstInfoPrefab, mulliganInfoList);
         SetCardInfo(newcard, data);
         if (data.type == "unit") {
             GameObject unitImage = Instantiate(AccountManager.Instance.resource.cardPreveiwSkeleton[id], newcard.transform.Find("Info/UnitImage"));
@@ -45,13 +52,14 @@ public class CardListManager : MonoBehaviour
 
     public void OpenMulliganCardList(int cardnum) {
         if(PlayMangement.movingCard == null)
-            mulliganList.GetChild(cardnum).gameObject.SetActive(true);
+            mulliganInfoList.GetChild(cardnum).gameObject.SetActive(true);
     }
 
     public void RemoveCardInfo(int index) {
         GameObject remove;
         hss.RemoveChild(index, out remove);
-        Destroy(remove);
+        remove.transform.SetParent(standbyInfo);
+        remove.SetActive(false);
     }
 
     public void OpenCardList(int cardnum) {
@@ -101,6 +109,7 @@ public class CardListManager : MonoBehaviour
         if(data.skills.Length != 0) {
             info.Find("SkillInfo").GetComponent<Text>().text = data.skills[0].desc;
         }
+        obj.SetActive(true);
     }
 
 

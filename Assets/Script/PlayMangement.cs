@@ -12,6 +12,8 @@ public partial class PlayMangement : MonoBehaviour {
     public GameObject cardDB;
     public GameObject uiSlot;
     public GameObject canvas;
+    public Transform cardDragCanvas;
+    public Transform cardInfoCanvas;
     public bool isGame = true;
     public bool isMulligan = true;
     public bool infoOn = false;
@@ -58,7 +60,7 @@ public partial class PlayMangement : MonoBehaviour {
 
     private void Update() {
         if (!infoOn && Input.GetMouseButtonDown(0)) {
-            canvas.transform.GetChild(3).GetComponent<CardListManager>().OpenUnitInfoWindow(Input.mousePosition);
+            cardInfoCanvas.GetChild(0).GetComponent<CardListManager>().OpenUnitInfoWindow(Input.mousePosition);
         }
     }
 
@@ -776,7 +778,7 @@ public partial class PlayMangement {
             turnTable.Find("ReleaseTurnButton/OrcTurnButtonImage").gameObject.SetActive(true);
         }
         for(int i = 0; i < 4; i++) {
-            turnTable.GetChild(6).position = canvas.transform.GetChild(2).GetChild(3).position;
+            turnTable.GetChild(6).position = canvas.transform.GetChild(2).GetChild(2).position;
         }
         turnIcon.gameObject.SetActive(true);
         turnIcon.GetChild(0).gameObject.SetActive(true);
