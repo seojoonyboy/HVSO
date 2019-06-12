@@ -158,13 +158,13 @@ public class CardListManager : MonoBehaviour
 
         info.Find("Cost/CostText").GetComponent<Text>().text = data.cost.ToString();
 
-        obj.transform.Find("Class1Button").GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[data.class_1];
-        obj.transform.Find("Class1Button").name = data.class_1;
+        obj.transform.GetChild(1).GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[data.class_1];
+        obj.transform.GetChild(1).name = data.class_1;
         if (data.class_2 == null)
-            obj.transform.Find("Class2Button").gameObject.SetActive(false);
+            obj.transform.GetChild(2).gameObject.SetActive(false);
         else {
-            obj.transform.Find("Class2Button").GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[data.class_2];
-            obj.transform.Find("Class2Button").name = data.class_2;
+            obj.transform.GetChild(2).GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[data.class_2];
+            obj.transform.GetChild(2).name = data.class_2;
         }
         if(data.skills.Length != 0) {
             info.Find("SkillInfo").GetComponent<Text>().text = data.skills[0].desc;
