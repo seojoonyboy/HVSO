@@ -6,7 +6,7 @@ using dataModules;
 
 namespace SkillModules {
     public class Skill {
-        private ConditionChecker conditionChecker;
+        private ConditionChecker[] conditionCheckers;
         private TargetHandler targetHandler;
         private Ability ability;
         private SkillHandler mySkillHandler;
@@ -17,12 +17,19 @@ namespace SkillModules {
             this.mySkillHandler = mySkillHandler;
             //TODO : method가 아닌 dataSkill의 각각의 method로 가져와야함
             string method = "something";
-            conditionChecker = MethodToClass<ConditionChecker>(method, new ConditionChecker());
+            InitCondition(dataSkill.conditions);
             targetHandler = MethodToClass<TargetHandler>(method, new TargetHandler());
             string abilityClass = string.Format("SkillModules.{0}", method);
             Component component = mySkillHandler.myObject.AddComponent(System.Type.GetType(abilityClass));
             ability = component.GetComponent<Ability>();
             ability.skillHandler = mySkillHandler;
+        }
+
+        public void InitCondition(dataModules.Condition[] conditions) {
+            conditionCheckers = new ConditionChecker[conditions.Length];
+            for(int i = 0; i < conditions.Length; i++) {
+                conditionCheckers[i] = MethodToClass<ConditionChecker>(conditions[i].method, new ConditionChecker());
+            }
         }
 
         public T MethodToClass<T>(string method, T t) {
@@ -32,7 +39,9 @@ namespace SkillModules {
 
         public bool Trigger(string trigger) {
             //컨디션 args 내용도 보내기
-            bool condition = conditionChecker.IsConditionSatisfied();
+            bool condition = true;
+            foreach(ConditionChecker checker in conditionCheckers) 
+                condition = condition && checker.IsConditionSatisfied();
             if(!condition) return false;
             //Target 가져오기
             //ability 발동하기

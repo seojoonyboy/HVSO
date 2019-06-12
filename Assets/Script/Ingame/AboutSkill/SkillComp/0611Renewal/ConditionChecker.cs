@@ -59,35 +59,19 @@ namespace SkillModules {
     }
 
     public class dmg_chk : ConditionChecker {
-        bool isTargetPlayer;
-        GameObject targetObject;
+        PlayedObject playedObject;
+        private dmg_chk() {
+            playedObject = new PlayedObject();
+        }
         public override bool IsConditionSatisfied() {
-            if(!IsValidateData(mySkillHandler.targetData)) return false;
+            if(!playedObject.IsValidateData(mySkillHandler.targetData)) return false;
             
             Pos myPos = playerObserver.GetMyPos(mySkillHandler.myObject);
-            Pos enemyPos = enemyObserver.GetMyPos(targetObject);
+            Pos enemyPos = enemyObserver.GetMyPos(playedObject.targetObject);
 
             bool isSameLine = myPos.row == enemyPos.row;
             
             return isSameLine;
-        }
-
-        private bool IsValidateData(object target) {
-            if(target == null) return false;
-            if(!target.GetType().IsArray) return false;
-            if(SetTargetData(target)) return false;
-            return true;
-        }
-
-        private bool SetTargetData(object target) {
-            object[] targets = (object[])target;
-            if(targets[0] is bool && targets[1] is GameObject) {
-                isTargetPlayer = (bool)targets[0];
-                targetObject = (GameObject)targets[1];
-                return false;
-            }
-            else
-                return true;
         }
     }
 
@@ -103,24 +87,66 @@ namespace SkillModules {
     }
 
     public class same_line : ConditionChecker {
+        FieldUnitsObserver targetObserver;
+        string subjectObserve;
+        bool argSecondExist;
+        bool value;
         public override bool IsConditionSatisfied() {
+            if(!ArgsExist()) return false;
+            subjectObserve = args[0];
+            if(args.Length > 1) argSecondExist = bool.TryParse(args[1], out value);
+            Pos myPos = mySkillHandler.isPlayer ? playerObserver.GetMyPos(mySkillHandler.myObject) : enemyObserver.GetMyPos(mySkillHandler.myObject);             
+            if(subjectObserve.CompareTo("enemy") == 0) {
+                targetObserver = mySkillHandler.isPlayer ? enemyObserver : playerObserver;
+                int unitCount = targetObserver.GetAllFieldUnits(myPos.row).Count;
+                return checkSecondArg(unitCount);
+            }
             return false;
+        }
+
+        private bool checkSecondArg(int unitCount) {
+            if(argSecondExist && !value) {
+                return unitCount == 0;    
+            }
+            return unitCount != 0;
         }
     }
 
     public class played_camp_chk : ConditionChecker {
+        PlayedObject playedObject;
+        private played_camp_chk() {
+            playedObject = new PlayedObject();
+        }
         public override bool IsConditionSatisfied() {
+            if(!ArgsExist()) return false;
+            playedObject.IsValidateData(mySkillHandler.targetData);
+            if(playedObject.targetObject.GetComponent<PlaceMonster>() == null) return false;
+            if(args[0].CompareTo("my")==0) 
+                return mySkillHandler.isPlayer == playedObject.isTargetPlayer;
+            //다른 args가 있는지
             return false;
         }
     }
 
     public class played_ctg_chk : ConditionChecker {
+        PlayedObject playedObject;
+
+        private played_ctg_chk() {
+            playedObject = new PlayedObject();
+        }
+
         public override bool IsConditionSatisfied() {
             return false;
         }
     }
 
     public class played_type_chk : ConditionChecker {
+        PlayedObject playedObject;
+        
+        private played_type_chk() {
+            playedObject = new PlayedObject();
+        }
+
         public override bool IsConditionSatisfied() {
             return false;
         }
@@ -133,15 +159,50 @@ namespace SkillModules {
     }
 
     public class has_attr : ConditionChecker {
+        PlayedObject playedObject;
+        
+        private has_attr() {
+            playedObject = new PlayedObject();
+        }
+
         public override bool IsConditionSatisfied() {
             return false;
         }
     }
 
     public class target_dmg_gte : ConditionChecker {
+        PlayedObject playedObject;
+        
+        private target_dmg_gte() {
+            playedObject = new PlayedObject();
+        }
+
         public override bool IsConditionSatisfied() {
             return false;
         }
+    }
+
+    public class PlayedObject {
+        public bool isTargetPlayer;
+        public GameObject targetObject;
+
+        public bool IsValidateData(object target) {
+            if(target == null) return false;
+            if(!target.GetType().IsArray) return false;
+            if(SetTargetData(target)) return false;
+            return true;
+        }
+
+        private bool SetTargetData(object target) {
+            object[] targets = (object[])target;
+            if(targets[0] is bool && targets[1] is GameObject) {
+                isTargetPlayer = (bool)targets[0];
+                targetObject = (GameObject)targets[1];
+                return false;
+            }
+            else
+                return true;
+        } 
     }
 
 
