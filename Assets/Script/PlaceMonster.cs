@@ -130,12 +130,14 @@ public class PlaceMonster : MonoBehaviour {
         //    return;
         //}
 
-        if (atkCount > 0) { GetAnotherTarget(); return; }
+        if (atkCount > 0) { //GetAnotherTarget(); return;
+            GetAnotherTarget();
+            return;
+        }
         PlayerController targetPlayer = (isPlayer == true) ? PlayMangement.instance.enemyPlayer : PlayMangement.instance.player;
         
-        if(unit.attackType.Length > 0) {
-            if (unit.attackType[0] == "through")
-                myTarget = targetPlayer.transform.gameObject;
+        if (unit.attackType.Length > 0 && unit.attackType[0] == "through") { 
+            myTarget = targetPlayer.transform.gameObject;
         }
         else {
             if (targetPlayer.frontLine.transform.GetChild(x).childCount != 0)
@@ -206,9 +208,8 @@ public class PlaceMonster : MonoBehaviour {
             targetMonster.CheckHP();
         }
 
-        if (unit.attackType.Length > 0) {
-            if (unit.attackType[0] == "through")
-                myTarget = targetPlayer.transform.gameObject;
+        if (unit.attackType.Length > 0 && unit.attackType[0] == "through") {
+            myTarget = targetPlayer.transform.gameObject;
         }
         else {
             if (targetPlayer.frontLine.transform.GetChild(x).childCount != 0 && targetPlayer.frontLine.transform.GetChild(x).GetChild(0).GetComponent<PlaceMonster>().unit.currentHP > 0)
