@@ -1,62 +1,91 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace SkillModules {
     public partial class Ability {
-        public virtual void Execute() { Debug.Log("Please Define Excecute Func"); }
-        public virtual void InitData(object target, object args) {
-            Debug.Log("Please Define Init Data Func");
+        public virtual void Execute(object data) { Debug.Log("Please Define Excecute Func"); }
+
+        protected void ShowFormatErrorLog(string additionalMsg = null) {
+            Debug.LogError(additionalMsg + "에게 잘못된 인자를 전달하였습니다.");
         }
     }
 
     public class gain : Ability{
-        public List<GameObject> targets;
-        public Args args;
+        public override void Execute(object data) {
+            if (data.GetType().IsArray) {
+                try {
+                    object[] tmp = (object[])data;
+                    List<GameObject> targets = (List<GameObject>)tmp[0];
+                    GainArgs args = (GainArgs)tmp[1];
 
-        public override void InitData(object target, object args) {
-            targets = new List<GameObject>();
-
-            if(target.GetType() == typeof(GameObject)) {
-                targets.Add((GameObject)target);
-            }
-            else if(target.GetType() == typeof(List<GameObject>)) {
-                targets.AddRange((List<GameObject>)target);
+                    AddBuff(ref targets, ref args);
+                }
+                catch(FormatException ex) {
+                    ShowFormatErrorLog("gain");
+                }
+                
             }
             else {
-                Debug.LogError("Target을 잘못 전달하였습니다.");
-                return;
+                ShowFormatErrorLog("gain");
             }
-
-            this.args = (Args)args;
         }
 
-        public override void Execute() {
-            if(targets == null) {
-                Debug.LogError("Ability에 Data가 정상적으로 전달되지 않았습니다.");
-                return;
-            }
+        private void AddBuff(ref List<GameObject> targets, ref GainArgs args) {
             foreach(GameObject target in targets) {
-                //target.GetComponent<PlaceMonster>().RequestChangeStat(args.atk, args.hp);
+                target.GetComponent<PlaceMonster>().RequestChangeStat(args.atk, args.hp);
             }
-        }
-
-        public struct Args {
-            public int atk;
-            public int hp;
         }
     }
 
     public class give_attribute : Ability {
-        public object target;
-        public string attrName;
+        public override void Execute(object data) {
+            if (data.GetType().IsArray) {
+                try {
+                    object[] tmp = (object[])data;
+                    List<GameObject> targets = (List<GameObject>)tmp[0];
+                    string attrName = (string)tmp[1];
 
-        public override void InitData(object target, object args) {
-
+                    AddAttr(ref targets, attrName);
+                }
+                catch(FormatException ex) {
+                    ShowFormatErrorLog("give_attribute");
+                }
+            }
+            else {
+                ShowFormatErrorLog("give_attribute");
+            }
         }
 
-        public override void Execute() {
+        private void AddAttr(ref List<GameObject> targets, string attrName) {
+            foreach(GameObject target in targets) {
+                string attr = string.Format("SkillModules.{0}", attrName);
+                var newComp = target.AddComponent(System.Type.GetType(attr));
+                if(newComp == null) {
+                    Debug.LogError(attrName + "컴포넌트를 찾을 수 없습니다.");
+                }
+            }
+        }
+    }
+
+    public class set_skill_target : Ability {
+        public override void Execute(object data) {
+            try {
+                GameObject target = (GameObject)data;
+            }
+            catch(FormatException ex) {
+                ShowFormatErrorLog("set_skill_target");
+            }
+        }
+
+        private void SetSkillTarget(ref GameObject target) {
 
         }
+    }
+
+    public struct GainArgs {
+        public int atk;
+        public int hp;
     }
 }
