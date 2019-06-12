@@ -7,6 +7,8 @@ using TMPro;
 
 public class PlaceMonster : MonoBehaviour {
     public IngameClass.Unit unit;
+    public SkillModules.SkillHandler skillHandler;
+
     public bool isPlayer;
 
     public int x { get; private set; }

@@ -12,13 +12,13 @@ namespace SkillModules {
         public bool isPlayer;
 
         //TODO : 데이터 세팅
-        public void Initialize(CardInventory inventory, GameObject myObject, bool isPlayer) {
+        public void Initialize(dataModules.Skill[] _skills, GameObject myObject, bool isPlayer) {
             this.myObject = myObject;
             this.isPlayer = isPlayer;
             //스킬 갯수만큼 한줄씩 넣기
-            skills = new Skill[inventory.skills.Length];
+            skills = new Skill[skills.Length];
             for(int i = 0; i < skills.Length; i++) {
-                skills[i].Initialize(inventory.skills[i], this);
+                skills[i].Initialize(_skills[i], this);
             }
         }
 

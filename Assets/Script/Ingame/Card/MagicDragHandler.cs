@@ -5,13 +5,14 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.UI.Extensions;
 using System;
-//using SkillModules;
+using SkillModules;
 using System.Linq;
 using System.Text;
 using UnityEngine.Events;
 
 public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHandler, IEndDragHandler {
     public bool isPlayer;
+    public SkillHandler skillHandler;
 
     public void OnBeginDrag(PointerEventData eventData) {
         if (firstDraw || PlayMangement.instance.isMulligan) return;

@@ -48,7 +48,11 @@ public partial class UnitDragHandler : CardHandler, IBeginDragHandler, IDragHand
         else {
             GameObject unitPref = CardDropManager.Instance.DropUnit(gameObject, CheckSlot());
             if (unitPref != null) {
-                //TODO : Skill 부착
+                var cardData = GetComponent<CardHandler>().cardData;
+
+                SkillModules.SkillHandler skillHandler = new SkillModules.SkillHandler();
+                skillHandler.Initialize(cardData.skills, unitPref, true);
+                unitPref.GetComponent<PlaceMonster>().skillHandler = skillHandler;
 
                 object[] parms = new object[] { true, unitPref };
                 PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);

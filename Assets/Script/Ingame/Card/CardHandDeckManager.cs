@@ -63,18 +63,11 @@ public class CardHandDeckManager : MonoBehaviour {
     }
 
     void AddMagicAttribute(ref GameObject card) {
-        //var cardData = card.GetComponent<CardHandler>().cardData;
-        //foreach (dataModules.Skill skill in cardData.skills) {
-        //    foreach (var effect in skill.effects) {
-        //        var newComp = card.AddComponent(System.Type.GetType("SkillModules.MagicalCasting_" + effect.method));
-        //        if (newComp == null) {
-        //            Debug.LogError(effect.method + "에 해당하는 컴포넌트를 찾을 수 없습니다.");
-        //        }
-        //        else {
-        //            //((SkillModules.MagicalCasting)newComp).InitData(skill, true);
-        //        }
-        //    }
-        //}
+        var cardData = card.GetComponent<CardHandler>().cardData;
+
+        SkillModules.SkillHandler skillHandler = new SkillModules.SkillHandler();
+        skillHandler.Initialize(cardData.skills, card, true);
+        card.GetComponent<MagicDragHandler>().skillHandler = skillHandler;
     }
 
 
