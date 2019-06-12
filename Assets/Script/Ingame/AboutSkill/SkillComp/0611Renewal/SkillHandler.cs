@@ -10,6 +10,7 @@ namespace SkillModules {
         public GameObject myObject;
         public GameObject skillTarget;
         public bool isPlayer;
+        public object targetData;
 
         //TODO : 데이터 세팅
         public void Initialize(dataModules.Skill[] _skills, GameObject myObject, bool isPlayer) {
@@ -24,7 +25,7 @@ namespace SkillModules {
 
         //TODO : Trigger 관리
         private void Trigger() {
-            
+            //이벤트 처리
         }
 
         IEnumerator SkillTrigger() {

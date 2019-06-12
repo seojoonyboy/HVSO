@@ -59,39 +59,89 @@ namespace SkillModules {
     }
 
     public class dmg_chk : ConditionChecker {
+        bool isTargetPlayer;
+        GameObject targetObject;
+        public override bool IsConditionSatisfied() {
+            if(!IsValidateData(mySkillHandler.targetData)) return false;
+            
+            Pos myPos = playerObserver.GetMyPos(mySkillHandler.myObject);
+            Pos enemyPos = enemyObserver.GetMyPos(targetObject);
 
+            bool isSameLine = myPos.row == enemyPos.row;
+            
+            return isSameLine;
+        }
+
+        private bool IsValidateData(object target) {
+            if(target == null) return false;
+            if(!target.GetType().IsArray) return false;
+            if(SetTargetData(target)) return false;
+            return true;
+        }
+
+        private bool SetTargetData(object target) {
+            object[] targets = (object[])target;
+            if(targets[0] is bool && targets[1] is GameObject) {
+                isTargetPlayer = (bool)targets[0];
+                targetObject = (GameObject)targets[1];
+                return false;
+            }
+            else
+                return true;
+        }
     }
 
     public class terrain_chk : ConditionChecker {
-
+        public override bool IsConditionSatisfied() {
+            string conditionTerrain = args[0];
+            FieldUnitsObserver observer = mySkillHandler.isPlayer ? playerObserver : enemyObserver;
+            observer.GetMyPos(mySkillHandler.myObject);
+            string myTerrain = mySkillHandler.myObject.GetComponentInParent<Terrain>().terrain.ToString();//.CompareTo(terrain) == 0
+            bool isConditionTerrain = myTerrain.CompareTo(conditionTerrain) == 0;
+            return isConditionTerrain;
+        }
     }
 
     public class same_line : ConditionChecker {
-
+        public override bool IsConditionSatisfied() {
+            return false;
+        }
     }
 
     public class played_camp_chk : ConditionChecker {
-
+        public override bool IsConditionSatisfied() {
+            return false;
+        }
     }
 
     public class played_ctg_chk : ConditionChecker {
-
+        public override bool IsConditionSatisfied() {
+            return false;
+        }
     }
 
     public class played_type_chk : ConditionChecker {
-
+        public override bool IsConditionSatisfied() {
+            return false;
+        }
     }
 
     public class has_empty_space : ConditionChecker {
-
+        public override bool IsConditionSatisfied() {
+            return false;
+        }
     }
 
     public class has_attr : ConditionChecker {
-
+        public override bool IsConditionSatisfied() {
+            return false;
+        }
     }
 
     public class target_dmg_gte : ConditionChecker {
-
+        public override bool IsConditionSatisfied() {
+            return false;
+        }
     }
 
 
