@@ -81,10 +81,10 @@ public class PlaceMonster : MonoBehaviour {
         }
 
         if (unit.cardCategories[0] == "stealth")
-            gameObject.AddComponent<ambush>();
+            //gameObject.AddComponent<ambush>();
 
         if (unit.attackType.Length > 0 && unit.attackType[0] == "assault")
-            gameObject.AddComponent<SkillModules.UnitAbility_assault>();
+            //gameObject.AddComponent<SkillModules.UnitAbility_assault>();
 
 
 
@@ -105,11 +105,11 @@ public class PlaceMonster : MonoBehaviour {
 
     public void GetTarget() {
         //stun이 있으면 공격을 못함
-        if (GetComponent<SkillModules.stun>() != null) {
-            SkipAttack();
-            GetComponent<SkillModules.stun>().Subtraction();
-            return;
-        }
+        //if (GetComponent<SkillModules.stun>() != null) {
+        //    SkipAttack();
+        //    GetComponent<SkillModules.stun>().Subtraction();
+        //    return;
+        //}
 
         if (atkCount > 0) { GetAnotherTarget(); return; }
 
@@ -371,9 +371,9 @@ public class PlaceMonster : MonoBehaviour {
             targetMonster.SetState(UnitState.HIT);
 
             //독성 능력이 있으면 상대에게 공격시 poisonned 부여
-            if(GetComponent<SkillModules.poison>() != null) {
-                target.AddComponent<poisonned>();
-            }
+            //if(GetComponent<SkillModules.poison>() != null) {
+            //    target.AddComponent<poisonned>();
+            //}
 
             object[] parms = new object[] { isPlayer, gameObject };
             PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_ATTACK, this, parms);
@@ -461,23 +461,23 @@ public class PlaceMonster : MonoBehaviour {
     }
 
     public void CheckDebuff() {
-        poisonned poison = GetComponent<poisonned>();
+        //poisonned poison = GetComponent<poisonned>();
 
-        if(poison != null) {
-            GameObject tomb = AccountManager.Instance.resource.unitDeadObject;
-            GameObject dropTomb = Instantiate(tomb);
-            dropTomb.transform.position = transform.position;
+        //if(poison != null) {
+        //    GameObject tomb = AccountManager.Instance.resource.unitDeadObject;
+        //    GameObject dropTomb = Instantiate(tomb);
+        //    dropTomb.transform.position = transform.position;
 
-            if (isPlayer) {
-                PlayMangement.instance.PlayerUnitsObserver.UnitRemoved(x, y);
-            }
-            else {
-                PlayMangement.instance.EnemyUnitsObserver.UnitRemoved(x, y);
-            }
+        //    if (isPlayer) {
+        //        PlayMangement.instance.PlayerUnitsObserver.UnitRemoved(x, y);
+        //    }
+        //    else {
+        //        PlayMangement.instance.EnemyUnitsObserver.UnitRemoved(x, y);
+        //    }
 
-            dropTomb.GetComponent<DeadSpine>().target = gameObject;
-            dropTomb.GetComponent<DeadSpine>().StartAnimation(unit.ishuman);
-        }
+        //    dropTomb.GetComponent<DeadSpine>().target = gameObject;
+        //    dropTomb.GetComponent<DeadSpine>().StartAnimation(unit.ishuman);
+        //}
     }
 
 

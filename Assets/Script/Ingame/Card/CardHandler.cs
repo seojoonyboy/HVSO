@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.UI.Extensions;
 using System;
-using SkillModules;
+//using SkillModules;
 
 public partial class CardHandler : MonoBehaviour {
     public GameObject unit;

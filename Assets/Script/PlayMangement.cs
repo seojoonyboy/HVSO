@@ -271,17 +271,17 @@ public partial class PlayMangement : MonoBehaviour {
             
         }
 
-        foreach (dataModules.Skill skill in cardData.skills) {
-            foreach (var effect in skill.effects) {
-                var newComp = monster.AddComponent(System.Type.GetType("SkillModules.UnitAbility_" + effect.method));
-                if (newComp == null) {
-                    Debug.LogError(effect.method + "에 해당하는 컴포넌트를 찾을 수 없습니다.");
-                }
-                else {
-                    ((Ability)newComp).InitData(skill, true);
-                }
-            }
-        }
+        //foreach (dataModules.Skill skill in cardData.skills) {
+        //    foreach (var effect in skill.effects) {
+        //        var newComp = monster.AddComponent(System.Type.GetType("SkillModules.UnitAbility_" + effect.method));
+        //        if (newComp == null) {
+        //            Debug.LogError(effect.method + "에 해당하는 컴포넌트를 찾을 수 없습니다.");
+        //        }
+        //        else {
+        //            //((Ability)newComp).InitData(skill, true);
+        //        }
+        //    }
+        //}
 
 
         monster.GetComponent<PlaceMonster>().Init(cardData);
@@ -293,7 +293,7 @@ public partial class PlayMangement : MonoBehaviour {
         Destroy(enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(enemyCardCount - 1).GetChild(0).gameObject);
 
         if(monster.GetComponent<PlaceMonster>().unit.name == "방패병") {
-            monster.AddComponent<TmpBuff>();
+            //monster.AddComponent<TmpBuff>();
         }
 
         return monster;
