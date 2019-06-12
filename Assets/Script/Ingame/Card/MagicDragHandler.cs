@@ -21,35 +21,32 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         blockButton = PlayMangement.instance.player.dragCard = true;
         startPos = transform.parent.position;
         PlayMangement.instance.player.isPicking.Value = true;
-        string target = cardData.skills[0].targets[0].args[0];
 
-        List<string> targetArgs = cardData.skills[0].targets[0].args.ToList();
-
-        if (isOnlySupplyCard()) {
-            CardDropManager.Instance.ShowMagicalSlot("all");
-        }
-        else {
-            if (isBlast_EnemyExist()) {
-                int standardNum = GetBlastStandardNum();
-                Debug.Log("공격력이 " + standardNum + "이상인 유닛만 드롭 가능한 영역으로 지정합니다.");
-                CardDropManager.Instance.ShowMagicalSlot(target, standardNum);
-            }
-            else {
-                if(targetArgs.Count == 1) {
-                    CardDropManager.Instance.ShowMagicalSlot(target);
-                }
-                else {
-                    //my & all case
-                    StringBuilder sb = new StringBuilder();
-                    foreach(var targetArg in targetArgs) {
-                        sb.Append(targetArg);
-                    }
-                    Debug.Log(sb.ToString() + "Target");
-                    CardDropManager.Instance.ShowMagicalSlot(sb.ToString());
-                }
-            }
+        //if (isOnlySupplyCard()) {
+        //    CardDropManager.Instance.ShowMagicalSlot("all");
+        //}
+        //else {
+        //    if (isBlast_EnemyExist()) {
+        //        int standardNum = GetBlastStandardNum();
+        //        Debug.Log("공격력이 " + standardNum + "이상인 유닛만 드롭 가능한 영역으로 지정합니다.");
+        //        CardDropManager.Instance.ShowMagicalSlot(target, standardNum);
+        //    }
+        //    else {
+        //        if(targetArgs.Count == 1) {
+        //            CardDropManager.Instance.ShowMagicalSlot(target);
+        //        }
+        //        else {
+        //            //my & all case
+        //            StringBuilder sb = new StringBuilder();
+        //            foreach(var targetArg in targetArgs) {
+        //                sb.Append(targetArg);
+        //            }
+        //            Debug.Log(sb.ToString() + "Target");
+        //            CardDropManager.Instance.ShowMagicalSlot(sb.ToString());
+        //        }
+        //    }
             
-        }
+        //}
 
         //CardDropManager.Instance.BeginCheckLines();
 
@@ -136,34 +133,6 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         //}
         //return useMagic;
         return null;
-    }
-
-    private bool isOnlySupplyCard() {
-        //List<MagicalCasting> abilities = GetComponents<MagicalCasting>().ToList();
-        //if (abilities.Count == 1) {
-        //    if(abilities[0].GetType() == typeof(MagicalCasting_supply)) {
-        //        return true;
-        //    }
-        //    return false;
-        //}
-        //else return false;
-        return true;
-    }
-
-    private bool isBlast_EnemyExist() {
-        //List<MagicalCasting> abilities = GetComponents<MagicalCasting>().ToList();
-        //foreach(MagicalCasting ability in abilities) {
-        //    if(ability.GetType() == typeof(MagicalCasting_over_a_kill)) {
-        //        return true;
-        //    }
-        //}
-        return false;
-    }
-
-    private int GetBlastStandardNum() {
-        int num = 0;
-        int.TryParse(cardData.skills[0].activate.conditions[0].args[0], out num);
-        return num;
     }
 
     public void SendSocket(UnityAction callbacks = null) {
