@@ -94,7 +94,7 @@ public class PlaceMonster : MonoBehaviour {
             unit.ishuman = (PlayMangement.instance.enemyPlayer.isHuman == true) ? true : false;
 
         myUnitNum = PlayMangement.instance.unitNum++;
-        PlayMangement.instance.cardInfoCanvas.Find("CardInfoList").GetComponent<CardListManager>().SetFeildUnitInfo(data, myUnitNum);
+        PlayMangement.instance.cardInfoCanvas.Find("CardInfoList").GetComponent<CardListManager>().AddFeildUnitInfo(data, myUnitNum);
         UpdateStat();
     }
 
@@ -444,6 +444,7 @@ public class PlaceMonster : MonoBehaviour {
 
     public void CheckHP() {
         if (unit.currentHP <= 0) {
+            PlayMangement.instance.cardInfoCanvas.Find("CardInfoList").GetComponent<CardListManager>().RemoveUnitInfo(myUnitNum);
             GameObject tomb = AccountManager.Instance.resource.unitDeadObject;
             GameObject dropTomb = Instantiate(tomb);
             dropTomb.transform.position = transform.position;

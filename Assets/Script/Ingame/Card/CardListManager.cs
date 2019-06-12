@@ -40,27 +40,86 @@ public class CardListManager : MonoBehaviour
             unitSpine.SetActive(false);
     }
 
-    public void AddMulliganCardInfo(CardData data, string id) {
-        GameObject newcard = Instantiate(firstInfoPrefab, mulliganInfoList);
-        SetCardInfo(newcard, data);
-        if (data.type == "unit") {
-            GameObject unitImage = Instantiate(AccountManager.Instance.resource.cardPreveiwSkeleton[id], newcard.transform.Find("Info/UnitImage"));
-            unitImage.transform.localScale = new Vector3(5, 5, 0);
+    public void AddMulliganCardInfo(CardData data, string id, int changeNum = 100) {
+        //GameObject newcard = Instantiate(firstInfoPrefab, mulliganInfoList);
+        GameObject newcard;
+        if (changeNum == 100) {
+            newcard = standbyInfo.GetChild(0).gameObject;
+            newcard.transform.SetParent(mulliganInfoList);
         }
+        else
+            newcard = mulliganInfoList.GetChild(changeNum).gameObject;
+        SetCardInfo(newcard, data);
+        GameObject unitSpine = newcard.transform.Find("Info/UnitImage").GetChild(0).gameObject;
+        if (data.type == "unit") {
+            unitSpine.GetComponent<SkeletonGraphic>().skeletonDataAsset = AccountManager.Instance.resource.cardPreveiwSkeleton[id].GetComponent<SkeletonGraphic>().skeletonDataAsset;
+            unitSpine.GetComponent<SkeletonGraphic>().Initialize(true);
+            unitSpine.SetActive(true);
+        }
+        else
+            unitSpine.SetActive(false);
+        newcard.transform.Find("Info/SimpleImage/Chain").gameObject.SetActive(false);
+        newcard.transform.position = new Vector3(0, 0, 0);
         newcard.SetActive(false);
     }
 
+    public void AddFeildUnitInfo(CardData data, int unitNum) {
+        GameObject newcard = standbyInfo.GetChild(0).gameObject;
+        newcard.name = unitNum.ToString() + "unit";
+        newcard.transform.SetParent(transform.Find("FieldUnitInfo"));
+        SetCardInfo(newcard, data);
+        newcard.transform.Find("Info/UnitImage").GetChild(0).gameObject.SetActive(false);
+    }
+
+
+    public void SendMulliganInfo() {
+        int i = 0;
+        while(i < 4) {
+            standbyInfo.GetChild(0).Find("Info/SimpleImage/Chain").gameObject.SetActive(true);
+
+            mulliganInfoList.GetChild(0).gameObject.SetActive(true);
+            hss.AddChild(mulliganInfoList.GetChild(0).gameObject);
+            i++;
+        }
+    }
 
     public void OpenMulliganCardList(int cardnum) {
-        if(PlayMangement.movingCard == null)
+        if (PlayMangement.movingCard == null) {
+            mulliganInfoList.gameObject.SetActive(true);
             mulliganInfoList.GetChild(cardnum).gameObject.SetActive(true);
+        }
+    }
+
+    public void CloseMulliganCardList() {
+        mulliganInfoList.gameObject.SetActive(false);
+        for (int i = 0; i < 4; i++) {
+            mulliganInfoList.GetChild(i).gameObject.SetActive(false);
+        }
     }
 
     public void RemoveCardInfo(int index) {
         GameObject remove;
         hss.RemoveChild(index, out remove);
         remove.transform.SetParent(standbyInfo);
+        remove.GetComponent<RectTransform>().anchorMin = new Vector2(0.5f, 0.5f);
+        remove.GetComponent<RectTransform>().anchorMax = new Vector2(0.5f, 0.5f);
+        remove.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.5f);
+        remove.transform.localScale = new Vector3(1, 1, 1);
+        remove.transform.localPosition = new Vector3(0, 0, 0);
         remove.SetActive(false);
+    }
+
+    public void RemoveUnitInfo(int index) {
+        string objName = index.ToString() + "unit";
+        Transform remove = transform.Find("FieldUnitInfo").Find(objName);
+        remove.SetParent(standbyInfo);
+        remove.GetComponent<RectTransform>().anchorMin = new Vector2(0.5f, 0.5f);
+        remove.GetComponent<RectTransform>().anchorMax = new Vector2(0.5f, 0.5f);
+        remove.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.5f);
+        remove.localScale = new Vector3(1, 1, 1);
+        remove.localPosition = new Vector3(0, 0, 0);
+        remove.name = "CardInfoPage";
+        remove.gameObject.SetActive(false);
     }
 
     public void OpenCardList(int cardnum) {
@@ -131,17 +190,20 @@ public class CardListManager : MonoBehaviour
                     GameObject selectedTarget = hit.collider.gameObject;
                     if (selectedTarget.GetComponentInParent<ambush>() && !selectedTarget.GetComponentInParent<PlaceMonster>().isPlayer) return;
                     string objName = selectedTarget.GetComponentInParent<PlaceMonster>().myUnitNum.ToString() + "unit";
-                    transform.GetChild(1).Find(objName).gameObject.SetActive(true);
+                    transform.Find("FieldUnitInfo").gameObject.SetActive(true);
+                    transform.Find("FieldUnitInfo").Find(objName).gameObject.SetActive(true);
                     PlayMangement.instance.infoOn = true;
                 }
             }
         }
     }
 
-    public void SetFeildUnitInfo(CardData data, int unitNum) {
-        GameObject info = Instantiate(firstInfoPrefab, transform.Find("FieldUnitInfo"));
-        info.name = unitNum.ToString() + "unit";
-        SetCardInfo(info, data);
-        info.SetActive(false);
+    public void CloseUnitInfoWindow() {
+        transform.Find("FieldUnitInfo").gameObject.SetActive(false);
+        for (int i = 0; i < transform.Find("FieldUnitInfo").childCount; i++) {
+            transform.Find("FieldUnitInfo").GetChild(i).gameObject.SetActive(false);
+        }
+        PlayMangement.instance.infoOn = false;
     }
+
 }

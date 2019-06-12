@@ -34,6 +34,7 @@ namespace SkillModules {
                     }
                 }
                 if(!found) {
+                    PlayMangement.instance.cardInfoCanvas.Find("CardInfoList").GetComponent<CardListManager>().RemoveUnitInfo(mon.GetComponent<PlaceMonster>().myUnitNum);
                     Pos pos = observer.GetMyPos(mon);
                     observer.UnitRemoved(pos.row, pos.col);
                     Destroy(mon);
