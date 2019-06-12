@@ -5,6 +5,8 @@ using UnityEngine;
 
 namespace SkillModules {
     public partial class Ability {
+        public SkillHandler skillHandler;
+
         public virtual void Execute(object data) { Debug.Log("Please Define Excecute Func"); }
 
         protected void ShowFormatErrorLog(string additionalMsg = null) {
@@ -73,6 +75,7 @@ namespace SkillModules {
         public override void Execute(object data) {
             try {
                 GameObject target = (GameObject)data;
+                SetSkillTarget(ref target);
             }
             catch(FormatException ex) {
                 ShowFormatErrorLog("set_skill_target");
@@ -80,7 +83,7 @@ namespace SkillModules {
         }
 
         private void SetSkillTarget(ref GameObject target) {
-
+            skillHandler.skillTarget = target;
         }
     }
 

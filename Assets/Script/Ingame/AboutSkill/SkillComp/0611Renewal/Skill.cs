@@ -22,6 +22,7 @@ namespace SkillModules {
             string abilityClass = string.Format("SkillModules.{0}", method);
             Component component = mySkillHandler.myObject.AddComponent(System.Type.GetType(abilityClass));
             ability = component.GetComponent<Ability>();
+            ability.skillHandler = mySkillHandler;
         }
 
         public T MethodToClass<T>(string method, T t) {
