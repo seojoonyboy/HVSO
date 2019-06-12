@@ -15,9 +15,9 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
         units[row, col] = null;
     }
 
-    public void UnitChangePosition(GameObject target, int row, int col) {
+    public void UnitChangePosition(GameObject target, int col, int row) {
         Pos prevPos = GetMyPos(target);
-        units[row, col] = target;
+        units[col, row] = target;
 
         //Debug.Log("Row : " + row);
         //Debug.Log("Col : " + col);
@@ -57,11 +57,11 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
     /// </summary>
     /// <param name="row">row</param>
     /// <returns></returns>
-    public List<GameObject> GetAllFieldUnits(int row) {
+    public List<GameObject> GetAllFieldUnits(int col) {
         List<GameObject> _units = new List<GameObject>();
         for (int i = 0; i < 2; i++) {
-            if (units[row, i] != null) {
-                _units.Add(units[row, i]);
+            if (units[col, i] != null) {
+                _units.Add(units[col, i]);
             }
         }
         return _units;
