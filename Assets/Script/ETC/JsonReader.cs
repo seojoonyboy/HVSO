@@ -82,38 +82,32 @@ namespace dataModules {
     }
 
     public class Skill {
-        public Activate activate;
-        public Deactivate deactivate;
-        public string desc;
-        public Target[] targets;
-        public Effect[] effects;
-    }
-
-    public class Activate : BaseActivate {
-        public string scope;
-    }
-
-    public class Deactivate : BaseActivate { }
-
-    public class BaseActivate {
+        //public int id;
+        public string cardId;
         public string trigger;
+        public string scope;
+        public string desc;
         public Condition[] conditions;
+        public Target target;
+        public Effect effect;
     }
 
     public class Target {
         public string[] args;
+        public int skillId;
         public string method;
     }
 
     public class Effect {
         public string[] args;
+        public int skillId;
         public string method;
     }
 
     public class Condition {
         public string[] args;
-        public int id;
-        public int deactiveId;
+        //public int id;
+        public int skillId;
         public string method;
     }
 }
