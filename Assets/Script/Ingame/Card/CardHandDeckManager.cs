@@ -84,8 +84,8 @@ public class CardHandDeckManager : MonoBehaviour {
     public void FirstDrawCardChange() {
         foreach (GameObject cards in firstDrawList) {
             cards.transform.Find("ChangeButton").gameObject.SetActive(false);
-            AddInfoToList(cards);
         }
+        AddInfoToList(null, true);
         StartCoroutine(DrawChangedCards());
         firstDrawParent.GetChild(4).gameObject.SetActive(false);
         firstDrawParent.parent.Find("FinishButton").GetComponent<Button>().enabled = false;
@@ -367,15 +367,13 @@ public class CardHandDeckManager : MonoBehaviour {
         }
     }
 
-    IEnumerator AddCardInfoToList(GameObject card) {
-        CardListManager csm = PlayMangement.instance.cardInfoCanvas.Find("CardInfoList").GetComponent<CardListManager>();
-        csm.AddCardInfo(card.GetComponent<CardHandler>().cardData, card.GetComponent<CardHandler>().cardID);
-        yield return null;
-    }
 
-    public void AddInfoToList(GameObject card) {
+    public void AddInfoToList(GameObject card, bool isMulligan = false) {
         CardListManager csm = PlayMangement.instance.cardInfoCanvas.Find("CardInfoList").GetComponent<CardListManager>();
-        csm.AddCardInfo(card.GetComponent<CardHandler>().cardData, card.GetComponent<CardHandler>().cardID);
+        if (isMulligan)
+            csm.SendMulliganInfo();
+        else
+            csm.AddCardInfo(card.GetComponent<CardHandler>().cardData, card.GetComponent<CardHandler>().cardID);
     }
 
     private void InitCardPosition() {
@@ -488,10 +486,10 @@ public class CardHandDeckManager : MonoBehaviour {
         itemId = newCard.itemId;
         card.GetComponent<CardHandler>().DrawCard(id, itemId);
         GameObject infoList = PlayMangement.instance.cardInfoCanvas.Find("CardInfoList").gameObject;
-        infoList.GetComponent<CardListManager>().AddMulliganCardInfo(card.GetComponent<CardHandler>().cardData, id);
-        Transform firstcardinfolist = PlayMangement.instance.cardInfoCanvas.Find("FirstCardInfoList");
-        DestroyImmediate(firstcardinfolist.GetChild(index).gameObject);
-        firstcardinfolist.GetChild(3).SetSiblingIndex(index);
+        infoList.GetComponent<CardListManager>().AddMulliganCardInfo(card.GetComponent<CardHandler>().cardData, id, index);
+        //Transform firstcardinfolist = PlayMangement.instance.cardInfoCanvas.Find("FirstCardInfoList");
+        //DestroyImmediate(firstcardinfolist.GetChild(index).gameObject);
+        //firstcardinfolist.GetChild(3).SetSiblingIndex(index);
         card.transform.position = beforeCardObject.transform.position;
         card.transform.SetSiblingIndex(index + 5);
         card.transform.localScale = beforeCardObject.transform.localScale;
