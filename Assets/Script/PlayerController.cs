@@ -82,13 +82,13 @@ public class PlayerController : MonoBehaviour
             GameObject hero = Instantiate(AccountManager.Instance.resource.heroSkeleton[heroID], transform);
             hero.transform.SetAsLastSibling();
             heroSpine = hero.GetComponent<HeroSpine>();
-            hero.transform.localScale = PlayMangement.instance.backGround.transform.localScale * 0.9f;
             
             if (isPlayer == true) {
                 float reverse = hero.transform.localScale.x * -1f;
                 hero.transform.localScale = new Vector3(reverse, hero.transform.localScale.y, hero.transform.localScale.z);
                 heroSpine.GetComponent<MeshRenderer>().sortingOrder = 14;
                 hero.transform.localPosition = new Vector3(0, 1, 0);
+                hero.transform.localScale = new Vector3(-1, 1, 1);
             }
             else
                 heroSpine.GetComponent<MeshRenderer>().sortingOrder = 8;
@@ -100,13 +100,13 @@ public class PlayerController : MonoBehaviour
             GameObject hero = Instantiate(AccountManager.Instance.resource.heroSkeleton[heroID], transform);
             hero.transform.SetAsLastSibling();
             heroSpine = hero.GetComponent<HeroSpine>();
-            hero.transform.localScale = PlayMangement.instance.backGround.transform.localScale * 0.9f;
 
             if (isPlayer == true) {
                 float reverse = hero.transform.localScale.x * -1f;
                 hero.transform.localScale = new Vector3(reverse, hero.transform.localScale.y, hero.transform.localScale.z);
                 heroSpine.GetComponent<MeshRenderer>().sortingOrder = 14;
                 hero.transform.localPosition = new Vector3(0, 1, 0);
+                hero.transform.localScale = new Vector3(-1, 1, 1);
             }
             else
                 heroSpine.GetComponent<MeshRenderer>().sortingOrder = 8;
