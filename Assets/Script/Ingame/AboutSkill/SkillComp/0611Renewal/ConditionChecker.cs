@@ -11,20 +11,10 @@ namespace SkillModules {
         protected string[] args;
         protected SkillHandler mySkillHandler;
 
-        public ConditionChecker(SkillHandler mySkillHandler) {
-            this.mySkillHandler = mySkillHandler;
-            args = new string[]{};
-            GetObserver();
-        }
-
-        public ConditionChecker(string[] args, SkillHandler mySkillHandler) {
+        public ConditionChecker(SkillHandler mySkillHandler, string[] args = null) {
             this.mySkillHandler = mySkillHandler;
             this.args = args;
-            GetObserver();
-        }
-
-        public ConditionChecker() {
-            args = new string[]{};
+            if(this.args == null) args = new string[]{};
             GetObserver();
         }
 
@@ -46,8 +36,9 @@ namespace SkillModules {
             return true;
         }
     }
-
+    
     public class skill_target_ctg_chk : ConditionChecker {
+        public skill_target_ctg_chk(SkillHandler mySkillHandler, string[] args = null) : base(mySkillHandler, args) { }
         public override bool IsConditionSatisfied() {
             if(ArgsExist()) return false;
             GameObject target = mySkillHandler.skillTarget;
@@ -60,7 +51,7 @@ namespace SkillModules {
 
     public class dmg_chk : ConditionChecker {
         PlayedObject playedObject;
-        private dmg_chk() {
+        public dmg_chk(SkillHandler mySkillHandler, string[] args = null) : base(mySkillHandler, args) { 
             playedObject = new PlayedObject();
         }
         public override bool IsConditionSatisfied() {
@@ -76,6 +67,9 @@ namespace SkillModules {
     }
 
     public class terrain_chk : ConditionChecker {
+
+        public terrain_chk(SkillHandler mySkillHandler, string[] args = null) : base(mySkillHandler, args) { }
+
         public override bool IsConditionSatisfied() {
             string conditionTerrain = args[0];
             FieldUnitsObserver observer = mySkillHandler.isPlayer ? playerObserver : enemyObserver;
@@ -91,6 +85,9 @@ namespace SkillModules {
         string subjectObserve;
         bool argSecondExist;
         bool value;
+
+        public same_line(SkillHandler mySkillHandler, string[] args = null) : base(mySkillHandler, args) { }
+
         public override bool IsConditionSatisfied() {
             if(!ArgsExist()) return false;
             subjectObserve = args[0];
@@ -114,7 +111,7 @@ namespace SkillModules {
 
     public class played_camp_chk : ConditionChecker {
         PlayedObject playedObject;
-        private played_camp_chk() {
+        public played_camp_chk(SkillHandler mySkillHandler, string[] args = null) : base(mySkillHandler, args) {
             playedObject = new PlayedObject();
         }
         public override bool IsConditionSatisfied() {
@@ -131,7 +128,7 @@ namespace SkillModules {
     public class played_ctg_chk : ConditionChecker {
         PlayedObject playedObject;
 
-        private played_ctg_chk() {
+        private played_ctg_chk(SkillHandler mySkillHandler, string[] args = null) : base(mySkillHandler, args) { 
             playedObject = new PlayedObject();
         }
 
@@ -148,7 +145,7 @@ namespace SkillModules {
     public class played_type_chk : ConditionChecker {
         PlayedObject playedObject;
         
-        private played_type_chk() {
+        private played_type_chk(SkillHandler mySkillHandler, string[] args = null) : base(mySkillHandler, args) {
             playedObject = new PlayedObject();
         }
 
@@ -163,6 +160,9 @@ namespace SkillModules {
     }
 
     public class has_empty_space : ConditionChecker {
+
+        public has_empty_space(SkillHandler mySkillHandler, string[] args = null) : base(mySkillHandler, args) { }
+
         public override bool IsConditionSatisfied() {
             bool isEnemyField = args[0].CompareTo("my") != 0;
             FieldUnitsObserver fieldObserver = (mySkillHandler.isPlayer != isEnemyField )? playerObserver : enemyObserver;
@@ -176,6 +176,9 @@ namespace SkillModules {
     }
 
     public class has_attr : ConditionChecker {
+
+        public has_attr(SkillHandler mySkillHandler, string[] args = null) : base(mySkillHandler, args) { }
+
         public override bool IsConditionSatisfied() {
             if(!ArgsExist()) return false;
             PlaceMonster myMonster = mySkillHandler.myObject.GetComponent<PlaceMonster>();
@@ -187,7 +190,7 @@ namespace SkillModules {
     public class target_dmg_gte : ConditionChecker {
         PlayedObject playedObject;
         
-        private target_dmg_gte() {
+        private target_dmg_gte(SkillHandler mySkillHandler, string[] args = null) : base(mySkillHandler, args) {
             playedObject = new PlayedObject();
         }
 

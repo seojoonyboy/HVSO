@@ -25,7 +25,7 @@ namespace SkillModules {
             mySkillHandler.RegisterTriggerEvent(state);
 
             scopeChecker = MethodToClass<ScopeChecker>(dataSkill.scope, new ScopeChecker(mySkillHandler), mySkillHandler);
-            InitCondition(dataSkill.conditions);
+            InitCondition(dataSkill.conditions, mySkillHandler);
 
             //targetHandler = MethodToClass<TargetHandler>(dataSkill.target.method, new TargetHandler(dataSkill.target.args), mySkillHandler);
             string targetClass = string.Format("SkillModules.{0}", dataSkill.target.method);
@@ -39,14 +39,16 @@ namespace SkillModules {
             ability.skillHandler = mySkillHandler;
         }
 
-        public void InitCondition(Condition[] conditions) {
+        public void InitCondition(Condition[] conditions, SkillHandler mySkillHandler) {
             conditionCheckers = new ConditionChecker[conditions.Length];
             for(int i = 0; i < conditions.Length; i++) {
-                conditionCheckers[i] = MethodToClass<ConditionChecker>(conditions[i].method, new ConditionChecker(), mySkillHandler);
+                conditionCheckers[i] = MethodToClass<ConditionChecker>(conditions[i].method, 
+                    new ConditionChecker(mySkillHandler, conditions[i].args), 
+                    mySkillHandler, conditions[i].args);
             }
         }
 
-        public T MethodToClass<T>(string method, T t, SkillHandler handler) {
+        public T MethodToClass<T>(string method, T t, SkillHandler handler, string[] args = null) {
             object result;
             string methodAdd = string.Format("SkillModules.{0}", method);
             if(string.IsNullOrEmpty(method)) {
@@ -54,7 +56,10 @@ namespace SkillModules {
             }
             else {
                 System.Type type = System.Type.GetType(methodAdd);
-                result = Activator.CreateInstance(type, handler);
+                if(args != null)
+                    result = Activator.CreateInstance(type, handler);
+                else
+                    result = Activator.CreateInstance(type, handler, args);
             }
             T resultChange = (T)result;
             return resultChange;
