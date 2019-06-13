@@ -14,10 +14,6 @@ namespace SkillModules {
         public List<GameObject> targets;
         protected FieldUnitsObserver playerUnitsObserver, enemyUnitsObserver;
 
-        public TargetHandler(string[] args) {
-            this.args = args;
-        }
-
         /// <summary>
         /// 타겟을 지정하는 단계를 시작
         /// </summary>
@@ -73,8 +69,6 @@ namespace SkillModules {
     }
 
     public class skill_target : TargetHandler {
-        public skill_target(string[] args) : base(args) { }
-
         public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback) {
             base.SelectTarget(successCallback, failedCallback);
 
@@ -92,8 +86,6 @@ namespace SkillModules {
     }
 
     public class place : TargetHandler {
-        public place(string[] args) : base(args) { }
-
         void Awake() {
             if (GetComponent<PlaceMonster>().isPlayer) {
                 playerUnitsObserver = PlayMangement.instance.PlayerUnitsObserver;
@@ -128,8 +120,6 @@ namespace SkillModules {
     }
 
     public class attack_target : TargetHandler {
-        public attack_target(string[] args) : base(args) { }
-
         public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback) {
             base.SelectTarget(successCallback, failedCallback);
 
@@ -148,8 +138,6 @@ namespace SkillModules {
     }
 
     public class self : TargetHandler {
-        public self(string[] args) : base(args) { }
-
         public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback) {
             base.SelectTarget(successCallback, failedCallback);
 
@@ -162,8 +150,6 @@ namespace SkillModules {
     }
     
     public class played_target : TargetHandler {
-        public played_target(string[] args) : base(args) { }
-
         public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback) {
             base.SelectTarget(successCallback, failedCallback);
 
@@ -184,8 +170,6 @@ namespace SkillModules {
 
     public class select : TargetHandler {
         SelectTargetFinished callback;
-        public select(string[] args) : base(args) { }
-
         private void Update() {
             if (Input.GetMouseButtonDown(0)) {
                 var selectedTarget = GetClickedAreaUnit();
@@ -212,8 +196,6 @@ namespace SkillModules {
     }
 
     public class played : TargetHandler {
-        public played(string[] args) : base(args) { }
-
         public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback) {
             base.SelectTarget(successCallback, failedCallback);
 

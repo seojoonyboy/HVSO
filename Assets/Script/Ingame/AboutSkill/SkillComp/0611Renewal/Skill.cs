@@ -27,7 +27,11 @@ namespace SkillModules {
             scopeChecker = MethodToClass<ScopeChecker>(dataSkill.scope, new ScopeChecker(mySkillHandler), mySkillHandler);
             InitCondition(dataSkill.conditions);
 
-            targetHandler = MethodToClass<TargetHandler>(dataSkill.target.method, new TargetHandler(dataSkill.target.args), mySkillHandler);
+            //targetHandler = MethodToClass<TargetHandler>(dataSkill.target.method, new TargetHandler(dataSkill.target.args), mySkillHandler);
+            string targetClass = string.Format("SkillModules.{0}", dataSkill.target.method);
+            Component targetComponent = mySkillHandler.myObject.AddComponent(System.Type.GetType(targetClass));
+            targetHandler = targetComponent.GetComponent<TargetHandler>();
+            targetHandler.args = dataSkill.target.args;
 
             string abilityClass = string.Format("SkillModules.{0}", dataSkill.effect.method);
             Component component = mySkillHandler.myObject.AddComponent(System.Type.GetType(abilityClass));
