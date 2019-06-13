@@ -136,7 +136,12 @@ namespace SkillModules {
         }
 
         public override bool IsConditionSatisfied() {
-            return false;
+            if(!ArgsExist()) return false;
+            playedObject.IsValidateData(mySkillHandler.targetData);
+            PlaceMonster playedMonster = playedObject.targetObject.GetComponent<PlaceMonster>();
+            if(playedMonster == null) return false;
+            bool isExist = playedMonster.unit.cardCategories.ToList().Exists(x => x.CompareTo(args[0]) == 0);
+            return isExist;
         }
     }
 
@@ -148,24 +153,33 @@ namespace SkillModules {
         }
 
         public override bool IsConditionSatisfied() {
-            return false;
+            if(!ArgsExist()) return false;
+            playedObject.IsValidateData(mySkillHandler.targetData);
+            PlaceMonster playedMonster = playedObject.targetObject.GetComponent<PlaceMonster>();
+            if(playedMonster == null) return false;
+            bool isExist = playedMonster.unit.type.CompareTo(args[0]) == 0;
+            return isExist;
         }
     }
 
     public class has_empty_space : ConditionChecker {
         public override bool IsConditionSatisfied() {
+            bool isEnemyField = args[0].CompareTo("my") != 0;
+            FieldUnitsObserver fieldObserver = (mySkillHandler.isPlayer != isEnemyField )? playerObserver : enemyObserver;
+            for(int i = 0; i < 5; i++) {    //나중에 줄 갯수 바뀔 때 대응을 준비해야함
+                if(fieldObserver.GetAllFieldUnits(i).Count == 0) {
+                    return true;
+                }
+            }
             return false;
         }
     }
 
     public class has_attr : ConditionChecker {
-        PlayedObject playedObject;
-        
-        private has_attr() {
-            playedObject = new PlayedObject();
-        }
-
         public override bool IsConditionSatisfied() {
+            if(!ArgsExist()) return false;
+            PlaceMonster myMonster = mySkillHandler.myObject.GetComponent<PlaceMonster>();
+            bool isExist = myMonster.unit.attributes.ToList().Exists(x => x.CompareTo(args[0]) == 0);
             return false;
         }
     }
@@ -178,7 +192,10 @@ namespace SkillModules {
         }
 
         public override bool IsConditionSatisfied() {
-            return false;
+            if(!ArgsExist()) return false;
+            playedObject.IsValidateData(mySkillHandler.targetData);
+            PlaceMonster playedMonster = playedObject.targetObject.GetComponent<PlaceMonster>();
+            return playedMonster.unit.attack >= int.Parse(args[0]);
         }
     }
 

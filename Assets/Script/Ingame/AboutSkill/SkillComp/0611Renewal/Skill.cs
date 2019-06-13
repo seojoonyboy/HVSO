@@ -43,8 +43,17 @@ namespace SkillModules {
         }
 
         public T MethodToClass<T>(string method, T t, SkillHandler handler) {
-            if(string.IsNullOrEmpty(method)) return (T)System.Activator.CreateInstance(t.GetType());
-            else return (T)System.Activator.CreateInstance(System.Type.GetType(method), handler);
+            object result;
+            string methodAdd = string.Format("SkillModules.{0}", method);
+            if(string.IsNullOrEmpty(method)) {
+                result = Activator.CreateInstance(t.GetType());
+            }
+            else {
+                System.Type type = System.Type.GetType(methodAdd);
+                result = Activator.CreateInstance(type, handler);
+            }
+            T resultChange = (T)result;
+            return resultChange;
         }
 
         public bool Trigger(IngameEventHandler.EVENT_TYPE triggerType) {
