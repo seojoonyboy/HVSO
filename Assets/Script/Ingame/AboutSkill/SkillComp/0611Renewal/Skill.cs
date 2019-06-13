@@ -56,7 +56,7 @@ namespace SkillModules {
             }
             else {
                 System.Type type = System.Type.GetType(methodAdd);
-                if(args != null)
+                if(args == null)
                     result = Activator.CreateInstance(type, handler);
                 else
                     result = Activator.CreateInstance(type, handler, args);
