@@ -5,10 +5,9 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.UI.Extensions;
 using System;
-//using SkillModules;
+using SkillModules;
 
 public partial class CardHandler : MonoBehaviour {
-    public Vector3 startPos;
     public GameObject unit;
     public GameObject skeleton;
     CardListManager csm;
@@ -19,6 +18,7 @@ public partial class CardHandler : MonoBehaviour {
     Animator cssAni;
     public string cardID;
     protected int _itemID;
+    protected Transform beforeDragParent;
     public int itemID {
         get { return _itemID; }
         set {
@@ -42,7 +42,7 @@ public partial class CardHandler : MonoBehaviour {
     }
 
     public void Awake() {
-        csm = GameObject.Find("Canvas").transform.Find("CardInfoList").GetComponent<CardListManager>();
+        csm = PlayMangement.instance.cardInfoCanvas.Find("CardInfoList").GetComponent<CardListManager>();
     }
 
     public void DrawCard(string ID, int itemID = -1, bool first = false) {

@@ -110,7 +110,7 @@ namespace UnityEngine.UI.Extensions
             if (textureSheetAnimation.enabled)
             {
                 textureSheetAnimationFrames = textureSheetAnimation.numTilesX * textureSheetAnimation.numTilesY;
-                textureSheetAnimationFrameSize = new Vector2(1f / textureSheetAnimation.numTilesX, 1f / textureSheetAnimation.numTilesY);
+                textureSheetAnimationFrameSize = new Vector2(1.0f / textureSheetAnimation.numTilesX, 1.0f / textureSheetAnimation.numTilesY);
             }
 
             return true;
@@ -196,7 +196,7 @@ namespace UnityEngine.UI.Extensions
                     float frameProgress = 1 - (particle.lifetime / particle.startLifetime);
 #endif
 
-                    frameProgress = Mathf.Repeat(frameProgress * textureSheetAnimation.cycleCount, 1);
+                    frameProgress = Mathf.Repeat(frameProgress * textureSheetAnimation.cycleCount, 1.0f);
                     int frame = 0;
 
                     switch (textureSheetAnimation.animation)

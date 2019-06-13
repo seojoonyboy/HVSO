@@ -12,6 +12,8 @@ public partial class PlayMangement : MonoBehaviour {
     public GameObject cardDB;
     public GameObject uiSlot;
     public GameObject canvas;
+    public Transform cardDragCanvas;
+    public Transform cardInfoCanvas;
     public bool isGame = true;
     public bool isMulligan = true;
     public bool infoOn = false;
@@ -58,18 +60,22 @@ public partial class PlayMangement : MonoBehaviour {
 
     private void Update() {
         if (!infoOn && Input.GetMouseButtonDown(0)) {
-            canvas.transform.GetChild(3).GetComponent<CardListManager>().OpenUnitInfoWindow(Input.mousePosition);
+            cardInfoCanvas.GetChild(0).GetComponent<CardListManager>().OpenUnitInfoWindow(Input.mousePosition);
         }
     }
 
     private void SetWorldScale() {
         
         SpriteRenderer backSprite = backGround.GetComponent<SpriteRenderer>();
-        float ratio = (float)Screen.height / Screen.width;
+        float ratio = (float)Screen.width / Screen.height;
         Debug.Log(ratio);
 
-        float height = Camera.main.orthographicSize * 2, width = height / Screen.height * Screen.width;
+        //float height = Camera.main.orthographicSize * 2, width = height / Screen.height * Screen.width;
+        if (ratio < (float)1080 / 1920)
+            ingameCamera.orthographicSize = ingameCamera.orthographicSize * (((float)1080 / 1920) / ratio);
         
+        //canvas.transform.Find("FirstDrawWindow").GetComponent<RectTransform>().sizeDelta = new Vector2(Screen.width, Screen.height);
+        //cardInfoCanvas.transform.Find("CardInfoList").GetComponent<RectTransform>().sizeDelta = new Vector2(Screen.width, Screen.height);
 
         //Rect temp = TargetCameraPos(Camera.main.orthographicSize);
         //tempCube.transform.TransformPoint(new Vector3(temp.x, temp.y, 0));
@@ -82,16 +88,17 @@ public partial class PlayMangement : MonoBehaviour {
         if (ratio > 1.77f) {
             //backgroundScale = width / backSprite.sprite.bounds.size.x;
             //backGround.transform.localScale = new Vector3(backgroundScale, backgroundScale, 1);
-            backGround.transform.localPosition = Vector3.zero;
+            //backGround.transform.localPosition = Vector3.zero;
             
 
         }
         else {
             //backgroundScale = height / backSprite.sprite.bounds.size.y;
             //backGround.transform.localScale = new Vector3(backgroundScale, backgroundScale, 1); ;
-            backGround.transform.localPosition = new Vector3(0, -0.5f, 0f);
-        }
+            //backGround.transform.localPosition = new Vector3(0, -0.5f, 0f);
 
+        }
+        //backGround.transform.localPosition = new Vector3(0, -0.45f, 0f);
         player.transform.position = backGround.transform.Find("PlayerPosition").Find("Player_1Pos").position;
         player.wallPosition = backGround.transform.Find("PlayerPosition").Find("Player_1Wall").position;
         player.unitClosePosition = backGround.transform.Find("PlayerPosition").Find("Player_1Close").position;
@@ -117,28 +124,8 @@ public partial class PlayMangement : MonoBehaviour {
             backGround.transform.GetChild(i).position = new Vector3(pos.x, player.backLine.transform.position.y, 0);
         }      
     }
-    /*
-    public Vector3 screenTo3d(float x2, float y2, float z2) {
-        return Camera.main.ScreenToWorldPoint(new Vector3(x2, y2, z2));
-    }
-
-    public Rect TargetCameraPos(float z) {
-        Vector3 leftBottom = screenTo3d(0, 0, z);
-        Vector3 rightTop = screenTo3d(Camera.main.pixelWidth, Camera.main.pixelHeight, z);
 
 
-        //Vector3 canvasRigthTop = Camera.main.WorldToScreenPoint(rightTop);
-        //Vector3 canvasLeftBottom = Camera.main.WorldToScreenPoint(leftBottom);
-
-        //float width = canvasRigthTop.x - canvasLeftBottom.x;
-        //float height = canvasRigthTop.y - canvasLeftBottom.y;
-
-        return new Rect(leftBottom.x, rightTop.y, rightTop.x - leftBottom.x, rightTop.y - leftBottom.y);
-
-        //worldCanvas.pixelRect.Set(canvasLeftBottom.x, canvasRigthTop.y, canvasRigthTop.x - canvasLeftBottom.x, canvasRigthTop.y - canvasLeftBottom.y);
-        //return new Rect(canvasLeftBottom.x, canvasRigthTop.y, canvasRigthTop.x - canvasLeftBottom.x, canvasRigthTop.y - canvasLeftBottom.y);
-    }
-    */
     private void SetBackGround() {
         if (player.isHuman == true) {
             GameObject raceSprite = Instantiate(AccountManager.Instance.resource.raceUiPrefabs["HUMAN_BACKGROUND"][0], backGround.transform);
@@ -284,17 +271,17 @@ public partial class PlayMangement : MonoBehaviour {
             
         }
 
-        //foreach (dataModules.Skill skill in cardData.skills) {
-        //    foreach (var effect in skill.effects) {
-        //        var newComp = monster.AddComponent(System.Type.GetType("SkillModules.UnitAbility_" + effect.method));
-        //        if (newComp == null) {
-        //            Debug.LogError(effect.method + "에 해당하는 컴포넌트를 찾을 수 없습니다.");
-        //        }
-        //        else {
-        //            //((Ability)newComp).InitData(skill, true);
-        //        }
-        //    }
-        //}
+        /*foreach (dataModules.Skill skill in cardData.skills) {
+            foreach (var effect in skill.effects) {
+                var newComp = monster.AddComponent(System.Type.GetType("SkillModules.UnitAbility_" + effect.method));
+                if (newComp == null) {
+                    Debug.LogError(effect.method + "에 해당하는 컴포넌트를 찾을 수 없습니다.");
+                }
+                else {
+                    ((Ability)newComp).InitData(skill, true);
+                }
+            }
+        }*/
 
 
         monster.GetComponent<PlaceMonster>().Init(cardData);
@@ -305,9 +292,9 @@ public partial class PlayMangement : MonoBehaviour {
         enemyPlayer.resource.Value -= cardData.cost;
         Destroy(enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(enemyCardCount - 1).GetChild(0).gameObject);
 
-        if(monster.GetComponent<PlaceMonster>().unit.name == "방패병") {
-            //monster.AddComponent<TmpBuff>();
-        }
+        /*if(monster.GetComponent<PlaceMonster>().unit.name == "방패병") {
+            monster.AddComponent<TmpBuff>();
+        }*/
 
         return monster;
     }
@@ -776,7 +763,7 @@ public partial class PlayMangement {
             turnTable.Find("ReleaseTurnButton/OrcTurnButtonImage").gameObject.SetActive(true);
         }
         for(int i = 0; i < 4; i++) {
-            turnTable.GetChild(6).position = canvas.transform.GetChild(2).GetChild(3).position;
+            turnTable.GetChild(6).position = canvas.transform.GetChild(2).GetChild(2).position;
         }
         turnIcon.gameObject.SetActive(true);
         turnIcon.GetChild(0).gameObject.SetActive(true);

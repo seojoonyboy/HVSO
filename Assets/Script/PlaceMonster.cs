@@ -66,10 +66,33 @@ public class PlaceMonster : MonoBehaviour {
         unitSpine.attackCallback += SuccessAttack;
         unitSpine.takeMagicCallback += CheckHP;
 
+        
         if (unit.attackType.Length > 0 && unit.attackType[0] == "double")
             maxAtkCount = 2;
         else
             maxAtkCount = 1;
+        /*
+        if (unit.attackType.Length > 0) {
+            switch (unit.attackType[0]) {
+                case "double":
+                    maxAtkCount = 2;
+                    break;
+                case "assault":
+                    break;
+                default:
+                    maxAtkCount = 1;
+                    break;
+            }
+        }
+        else
+            maxAtkCount = 1;
+        */
+
+        //if (unit.cardCategories[0] == "stealth")
+        //gameObject.AddComponent<ambush>();
+
+        //if (unit.attackType.Length > 0 && unit.attackType[0] == )
+        //gameObject.AddComponent<SkillModules.UnitAbility_assault>();
 
         if (unit.attackRange == "distance") {
             GameObject arrow = Instantiate(unitSpine.arrow, transform);
@@ -82,21 +105,13 @@ public class PlaceMonster : MonoBehaviour {
             arrow.SetActive(false);
         }
 
-        if (unit.cardCategories[0] == "stealth")
-            //gameObject.AddComponent<ambush>();
-
-        if (unit.attackType.Length > 0 && unit.attackType[0] == "assault")
-            //gameObject.AddComponent<SkillModules.UnitAbility_assault>();
-
-
-
         if (isPlayer == true) 
             unit.ishuman = (PlayMangement.instance.player.isHuman == true) ? true : false;        
         else
             unit.ishuman = (PlayMangement.instance.enemyPlayer.isHuman == true) ? true : false;
 
         myUnitNum = PlayMangement.instance.unitNum++;
-        GameObject.Find("CardInfoList").GetComponent<CardListManager>().SetFeildUnitInfo(data, myUnitNum);
+        PlayMangement.instance.cardInfoCanvas.Find("CardInfoList").GetComponent<CardListManager>().AddFeildUnitInfo(data, myUnitNum);
         UpdateStat();
     }
 
@@ -106,6 +121,7 @@ public class PlaceMonster : MonoBehaviour {
 
 
     public void GetTarget() {
+        
         //stun이 있으면 공격을 못함
         //if (GetComponent<SkillModules.stun>() != null) {
         //    SkipAttack();
@@ -113,8 +129,27 @@ public class PlaceMonster : MonoBehaviour {
         //    return;
         //}
 
-        if (atkCount > 0) { GetAnotherTarget(); return; }
+        if (atkCount > 0) { //GetAnotherTarget(); return;
+            GetAnotherTarget();
+            return;
+        }
+        PlayerController targetPlayer = (isPlayer == true) ? PlayMangement.instance.enemyPlayer : PlayMangement.instance.player;
+        
+        if (unit.attackType.Length > 0 && unit.attackType[0] == "through") { 
+            myTarget = targetPlayer.transform.gameObject;
+        }
+        else {
+            if (targetPlayer.frontLine.transform.GetChild(x).childCount != 0)
+                myTarget = targetPlayer.frontLine.transform.GetChild(x).GetChild(0).gameObject;
+            else if (targetPlayer.backLine.transform.GetChild(x).childCount != 0)
+                myTarget = targetPlayer.backLine.transform.GetChild(x).GetChild(0).gameObject;
+            else
+                myTarget = targetPlayer.transform.gameObject;
+        }
 
+
+
+        /*
         if(unit.attackType.Length > 0 && unit.attackType[0] == "through") {
             if(isPlayer == true) {
                 PlayerController enemy = PlayMangement.instance.enemyPlayer;
@@ -152,12 +187,15 @@ public class PlaceMonster : MonoBehaviour {
                 }
             }
         }
-        
+        */
+
+
 
         MoveToTarget();
     }
 
     public void GetAnotherTarget() {
+        PlayerController targetPlayer = (isPlayer == true) ? PlayMangement.instance.enemyPlayer : PlayMangement.instance.player;
         PlaceMonster targetMonster = myTarget.GetComponent<PlaceMonster>();
 
         if (unit.currentHP <= 0) {
@@ -169,6 +207,18 @@ public class PlaceMonster : MonoBehaviour {
             targetMonster.CheckHP();
         }
 
+        if (unit.attackType.Length > 0 && unit.attackType[0] == "through") {
+            myTarget = targetPlayer.transform.gameObject;
+        }
+        else {
+            if (targetPlayer.frontLine.transform.GetChild(x).childCount != 0 && targetPlayer.frontLine.transform.GetChild(x).GetChild(0).GetComponent<PlaceMonster>().unit.currentHP > 0)
+                myTarget = targetPlayer.frontLine.transform.GetChild(x).GetChild(0).gameObject;
+            else if (targetPlayer.backLine.transform.GetChild(x).childCount != 0 && targetPlayer.backLine.transform.GetChild(x).GetChild(0).GetComponent<PlaceMonster>().unit.currentHP > 0)
+                myTarget = targetPlayer.backLine.transform.GetChild(x).GetChild(0).gameObject;
+            else
+                myTarget = targetPlayer.transform.gameObject;
+        }
+        /*
         if (isPlayer == true) {
             PlayerController enemy = PlayMangement.instance.enemyPlayer;
             if (enemy.frontLine.transform.GetChild(x).childCount != 0 && enemy.frontLine.transform.GetChild(x).GetChild(0).GetComponent<PlaceMonster>().unit.currentHP > 0) {
@@ -193,6 +243,7 @@ public class PlaceMonster : MonoBehaviour {
                 myTarget = player.transform.gameObject;
             }
         }
+        */
         MoveToTarget();
     }
 
@@ -372,11 +423,6 @@ public class PlaceMonster : MonoBehaviour {
             targetMonster.UpdateStat();
             targetMonster.SetState(UnitState.HIT);
 
-            //독성 능력이 있으면 상대에게 공격시 poisonned 부여
-            //if(GetComponent<SkillModules.poison>() != null) {
-            //    target.AddComponent<poisonned>();
-            //}
-
             object[] parms = new object[] { isPlayer, gameObject };
             PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_ATTACK, this, parms);
         }
@@ -446,6 +492,7 @@ public class PlaceMonster : MonoBehaviour {
 
     public void CheckHP() {
         if (unit.currentHP <= 0) {
+            PlayMangement.instance.cardInfoCanvas.Find("CardInfoList").GetComponent<CardListManager>().RemoveUnitInfo(myUnitNum);
             GameObject tomb = AccountManager.Instance.resource.unitDeadObject;
             GameObject dropTomb = Instantiate(tomb);
             dropTomb.transform.position = transform.position;
@@ -465,21 +512,21 @@ public class PlaceMonster : MonoBehaviour {
     public void CheckDebuff() {
         //poisonned poison = GetComponent<poisonned>();
 
-        //if(poison != null) {
-        //    GameObject tomb = AccountManager.Instance.resource.unitDeadObject;
-        //    GameObject dropTomb = Instantiate(tomb);
-        //    dropTomb.transform.position = transform.position;
+        /*if(poison != null) {
+            GameObject tomb = AccountManager.Instance.resource.unitDeadObject;
+            GameObject dropTomb = Instantiate(tomb);
+            dropTomb.transform.position = transform.position;
 
-        //    if (isPlayer) {
-        //        PlayMangement.instance.PlayerUnitsObserver.UnitRemoved(x, y);
-        //    }
-        //    else {
-        //        PlayMangement.instance.EnemyUnitsObserver.UnitRemoved(x, y);
-        //    }
+            if (isPlayer) {
+                PlayMangement.instance.PlayerUnitsObserver.UnitRemoved(x, y);
+            }
+            else {
+                PlayMangement.instance.EnemyUnitsObserver.UnitRemoved(x, y);
+            }
 
-        //    dropTomb.GetComponent<DeadSpine>().target = gameObject;
-        //    dropTomb.GetComponent<DeadSpine>().StartAnimation(unit.ishuman);
-        //}
+            dropTomb.GetComponent<DeadSpine>().target = gameObject;
+            dropTomb.GetComponent<DeadSpine>().StartAnimation(unit.ishuman);
+        }*/
     }
 
 

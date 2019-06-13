@@ -323,7 +323,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f5426f4e4542684cb03ff154cbb7be9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPos: {x: 0, y: 0, z: 0}
   unit: {fileID: 0}
   skeleton: {fileID: 0}
   changeSelected: 0
@@ -1045,7 +1044,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4278190335
   m_fontColor: {r: 1, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -1072,7 +1071,6 @@ MonoBehaviour:
   m_fontSizeMax: 0
   m_fontStyle: 0
   m_textAlignment: 514
-  m_isAlignmentEnumConverted: 1
   m_characterSpacing: 0
   m_wordSpacing: 0
   m_lineSpacing: 0
@@ -1099,12 +1097,13 @@ MonoBehaviour:
   m_verticalMapping: 0
   m_uvLineOffset: 0
   m_geometrySortingOrder: 0
+  m_VertexBufferAutoSizeReduction: 1
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
-    textComponent: {fileID: 0}
+    textComponent: {fileID: 838354848664628371}
     characterCount: 10
     spriteCount: 0
     spaceCount: 1
@@ -1113,12 +1112,9 @@ MonoBehaviour:
     lineCount: 2
     pageCount: 1
     materialCount: 2
-  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 1
-  m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
   - {fileID: 0}
@@ -1201,7 +1197,7 @@ MonoBehaviour:
   m_material: {fileID: 0}
   m_sharedMaterial: {fileID: 0}
   m_isDefaultMaterial: 0
-  m_padding: 8.326087
+  m_padding: 9.076087
   m_canvasRenderer: {fileID: 1657174534926004760}
   m_TextComponent: {fileID: 838354848664628371}
   m_materialReferenceIndex: 1

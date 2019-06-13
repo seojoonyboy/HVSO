@@ -26,6 +26,7 @@ public partial class AccountManager : Singleton<AccountManager> {
     GameObject loadingModal;
 
     private void Awake() {
+        Application.targetFrameRate = 60;
         DontDestroyOnLoad(gameObject);
         DEVICEID = SystemInfo.deviceUniqueIdentifier;
         cardPackage = Resources.Load("CardDatas/CardDataPackage_01") as CardDataPackage;

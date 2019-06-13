@@ -18,36 +18,13 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         if (firstDraw || PlayMangement.instance.isMulligan) return;
         if (Input.touchCount > 1) return;
         if (PlayMangement.instance.player.dragCard) return;
+        if (cardData.skills.Length != 0)
+            CardInfoOnDrag.instance.SetCardDragInfo(null, transform.localPosition, cardData.skills[0].desc);
+        beforeDragParent = transform.parent;
+        transform.SetParent(PlayMangement.instance.cardDragCanvas);
         itsDragging = gameObject;
         blockButton = PlayMangement.instance.player.dragCard = true;
-        startPos = transform.parent.position;
         PlayMangement.instance.player.isPicking.Value = true;
-
-        //if (isOnlySupplyCard()) {
-        //    CardDropManager.Instance.ShowMagicalSlot("all");
-        //}
-        //else {
-        //    if (isBlast_EnemyExist()) {
-        //        int standardNum = GetBlastStandardNum();
-        //        Debug.Log("공격력이 " + standardNum + "이상인 유닛만 드롭 가능한 영역으로 지정합니다.");
-        //        CardDropManager.Instance.ShowMagicalSlot(target, standardNum);
-        //    }
-        //    else {
-        //        if(targetArgs.Count == 1) {
-        //            CardDropManager.Instance.ShowMagicalSlot(target);
-        //        }
-        //        else {
-        //            //my & all case
-        //            StringBuilder sb = new StringBuilder();
-        //            foreach(var targetArg in targetArgs) {
-        //                sb.Append(targetArg);
-        //            }
-        //            Debug.Log(sb.ToString() + "Target");
-        //            CardDropManager.Instance.ShowMagicalSlot(sb.ToString());
-        //        }
-        //    }
-            
-        //}
 
         //CardDropManager.Instance.BeginCheckLines();
 
@@ -58,8 +35,11 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
     public void OnDrag(PointerEventData eventData) {
         if (firstDraw) return;
         if (gameObject != itsDragging) return;
-        //Vector3 cardScreenPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        transform.position = Input.mousePosition;
+        Vector3 cardScreenPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        cardScreenPos = new Vector3(cardScreenPos.x, cardScreenPos.y + 0.3f, 0);
+        transform.position = cardScreenPos;
+        if (cardData.skills.Length != 0)
+            CardInfoOnDrag.instance.SetInfoPosOnDrag(transform.localPosition);
         CheckMagicHighlight();
     }
 
@@ -67,7 +47,8 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
     public void OnEndDrag(PointerEventData eventData) {
         if (firstDraw) return;
         if (gameObject != itsDragging) return;
-        iTween.MoveTo(gameObject, startPos, 0.3f);
+        transform.SetParent(beforeDragParent);
+        iTween.MoveTo(gameObject, beforeDragParent.position, 0.3f);
         blockButton = PlayMangement.instance.player.dragCard = false;
         PlayMangement.instance.player.isPicking.Value = false;
         if (!isDropable) {
@@ -87,53 +68,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
             }
         }
         CardDropManager.Instance.HideMagicSlot();
-    }
-
-    public void AttributeUsed() {
-        bool isValid = true;
-        //MagicalCasting[] magicalCasts = GetComponents<MagicalCasting>();
-        //if(magicalCasts.Length == 0) return;
-        //foreach(MagicalCasting magicalCast in magicalCasts) {
-        //    isValid = isValid && magicalCast.isRequested;
-        //}
-
-        if(isValid) UseCard();
-    }
-
-    public void UseCard() {
-        CardDropManager.Instance.HighLightMagicSlot(highlightedSlot, false);
-        CardDropManager.Instance.HideMagicSlot();
-        int cardIndex = 0;
-        if (transform.parent.parent.name == "CardSlot_1")
-            cardIndex = transform.parent.GetSiblingIndex();
-        else {
-            Transform slot1 = transform.parent.parent.parent.GetChild(0);
-            for (int i = 0; i < 5; i++) {
-                if (slot1.GetChild(i).gameObject.activeSelf)
-                    cardIndex++;
-            }
-            cardIndex += transform.parent.GetSiblingIndex();
-        }
-
-        PlayMangement.instance.player.isPicking.Value = false;
-        PlayMangement.instance.player.resource.Value -= cardData.cost;
-        SendSocket(CreateEventList());
-        PlayMangement.instance.player.cdpm.DestroyCard(cardIndex);
-
-        if (PlayMangement.instance.player.isHuman)
-            PlayMangement.instance.player.ActivePlayer();
-        else
-            PlayMangement.instance.player.ActiveOrcTurn();
-    }
-
-    private UnityAction CreateEventList() {
-        //UnityAction useMagic = null;
-        //MagicalCasting[] magicalCasts = GetComponents<MagicalCasting>();
-        //foreach(MagicalCasting magicalCast in magicalCasts) {
-        //    useMagic += magicalCast.UseMagic;
-        //}
-        //return useMagic;
-        return null;
+        CardInfoOnDrag.instance.OffCardDragInfo();
     }
 
     public void SendSocket(UnityAction callbacks = null) {
