@@ -38,6 +38,8 @@ public class PlayerController : MonoBehaviour
 
     protected HeroSpine heroSpine;
     public static int activeCardMinCost;
+
+    public GameObject effectObject;
     public enum HeroState {
         IDLE,
         ATTACK,

@@ -142,9 +142,10 @@ public class UnitSpine : MonoBehaviour
         }
 
         if(e.Data.Name == "APPEAR") {
-            GameObject effect = Instantiate(PlayMangement.instance.effectManager.appearEffect, transform);
+            GameObject effect = Instantiate(PlayMangement.instance.spineEffectManager.appearEffect, transform);
             effect.transform.position = transform.position;
-            Destroy(effect.gameObject, effect.GetComponent<ParticleSystem>().main.duration - 0.2f);
+            effect.GetComponent<SkeletonAnimation>().AnimationState.SetAnimation(0, "animation", false);
+            Destroy(effect.gameObject, effect.GetComponent<SkeletonAnimation>().skeleton.Data.FindAnimation("animation").Duration - 0.1f);
         }     
     }
 

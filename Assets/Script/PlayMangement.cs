@@ -21,6 +21,7 @@ public partial class PlayMangement : MonoBehaviour {
     public GameObject backGround;
     public GameObject onCanvasPosGroup;
     public EffectManager effectManager;
+    public SpineEffectManager spineEffectManager;
 
     private int turn = 0;
     public GameObject blockPanel;
