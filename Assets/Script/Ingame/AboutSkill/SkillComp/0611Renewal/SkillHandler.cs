@@ -20,8 +20,9 @@ namespace SkillModules {
             this.myObject = myObject;
             this.isPlayer = isPlayer;
             //스킬 갯수만큼 한줄씩 넣기
-            skills = new Skill[skills.Length];
+            skills = new Skill[_skills.Length];
             for(int i = 0; i < skills.Length; i++) {
+                skills[i] = new Skill();
                 skills[i].Initialize(_skills[i], this);
             }
         }
