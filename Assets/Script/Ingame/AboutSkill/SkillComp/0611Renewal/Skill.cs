@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using dataModules;
+using System;
 
 namespace SkillModules {
     public class Skill {
+        private IngameEventHandler.EVENT_TYPE myTrigger;
         private ConditionChecker[] conditionCheckers;
         private ScopeChecker scopeChecker;
         private TargetHandler targetHandler;
@@ -16,6 +18,11 @@ namespace SkillModules {
         //TODO : 한줄마다의 스킬들을 초기화
         public void Initialize(dataModules.Skill dataSkill, SkillHandler mySkillHandler) {
             this.mySkillHandler = mySkillHandler;
+
+            Type enumType = typeof(IngameEventHandler.EVENT_TYPE);
+            IngameEventHandler.EVENT_TYPE state = (IngameEventHandler.EVENT_TYPE)Enum.Parse(enumType, dataSkill.trigger.ToUpper());
+            myTrigger = state;
+            mySkillHandler.RegisterTriggerEvent(state);
 
             scopeChecker = MethodToClass<ScopeChecker>(dataSkill.scope, new ScopeChecker(mySkillHandler));
             InitCondition(dataSkill.conditions);
@@ -40,7 +47,9 @@ namespace SkillModules {
             else return (T)System.Activator.CreateInstance(System.Type.GetType(method));
         }
 
-        public bool Trigger(string trigger) {
+        public bool Trigger(IngameEventHandler.EVENT_TYPE triggerType) {
+            //trigger 검사
+            if(myTrigger != triggerType) return false;
             //scope 유효성 검사
             bool scopeCondition = scopeChecker.IsConditionSatisfied(mySkillHandler.myObject);
             if (!scopeCondition) return false;
