@@ -22,7 +22,7 @@ namespace SkillModules {
             scopeChecker = MethodToClass<ScopeChecker>(dataSkill.scope, new ScopeChecker(mySkillHandler));
             InitCondition(dataSkill.conditions);
 
-            targetHandler = MethodToClass<TargetHandler>(method, new TargetHandler());
+            targetHandler = MethodToClass<TargetHandler>(dataSkill.target.method, new TargetHandler());
 
             string abilityClass = string.Format("SkillModules.{0}", method);
             Component component = mySkillHandler.myObject.AddComponent(System.Type.GetType(abilityClass));
