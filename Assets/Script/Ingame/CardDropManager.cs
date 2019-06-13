@@ -273,54 +273,40 @@ public partial class CardDropManager {
 public partial class CardDropManager {
 
     protected string magicArgs;
-    public void ShowMagicalSlot(string target) {
+    public void ShowMagicalSlot(string[] target) {
         if (target == null) return;
-        magicArgs = target;
-        switch (target) {
-            case "my":
+        magicArgs = target[0];
+        if(magicArgs == "my")
+            ActivateTarget(unitLine, target[1]);
+        else
+            ActivateTarget(enemyUnitLine, target[1]);
+    }
+
+    private void ActivateTarget(Transform[][] units, string group) {
+        switch (group) {
+            case "unit":
                 for (int i = 0; i < 5; i++) {
                     for (int j = 0; j < 2; j++) {
-                        if (unitLine[i][j].childCount > 0) {
-                            unitLine[i][j].GetChild(0).Find("ClickableUI").gameObject.SetActive(true);
-                            unitLine[i][j].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(true);
-                        }
-                    }
-                }
-                break;
-            case "enemy":
-                for (int i = 0; i < 5; i++) {
-                    for (int j = 0; j < 2; j++) {
-                        if (enemyUnitLine[i][j].childCount > 0) {
-                            //if (enemyUnitLine[i][j].GetChild(0).GetComponent<ambush>()) continue;
-                            enemyUnitLine[i][j].GetChild(0).Find("ClickableUI").gameObject.SetActive(true);
-                            enemyUnitLine[i][j].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(true);
+                        if (units[i][j].childCount > 0) {
+                            units[i][j].GetChild(0).Find("ClickableUI").gameObject.SetActive(true);
+                            units[i][j].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(true);
                         }
                     }
                 }
                 break;
             case "line":
-            case "enemyline":
                 for (int i = 0; i < 5; i++) {
-                    if (enemyUnitLine[i][0].childCount > 0 || enemyUnitLine[i][1].childCount > 0)
+                    if (units[i][0].childCount > 0 || units[i][1].childCount > 0)
                         slotLine[i].Find("BattleLineEffect").gameObject.SetActive(true);
                 }
                 break;
+            default:
             case "all":
-            case "myall":
                 slotLine[2].Find("AllMagicTrigger").gameObject.SetActive(true);
-                break;
-            case "enemyrandom":
-                for (int i = 0; i < 5; i++) {
-                    for (int j = 0; j < 2; j++) {
-                        if (enemyUnitLine[i][j].childCount > 0) {
-                            slotLine[2].Find("AllMagicTrigger").gameObject.SetActive(true);
-                            break;
-                        }
-                    }
-                }
                 break;
         }
     }
+
     /// <summary>
     /// 일정 공격력 이상의 적만 타겟팅
     /// </summary>
