@@ -24,10 +24,10 @@ namespace SkillModules {
             myTrigger = state;
             mySkillHandler.RegisterTriggerEvent(state);
 
-            scopeChecker = MethodToClass<ScopeChecker>(dataSkill.scope, new ScopeChecker(mySkillHandler));
+            scopeChecker = MethodToClass<ScopeChecker>(dataSkill.scope, new ScopeChecker(mySkillHandler), mySkillHandler);
             InitCondition(dataSkill.conditions);
 
-            targetHandler = MethodToClass<TargetHandler>(dataSkill.target.method, new TargetHandler(dataSkill.target.args));
+            targetHandler = MethodToClass<TargetHandler>(dataSkill.target.method, new TargetHandler(dataSkill.target.args), mySkillHandler);
 
             string abilityClass = string.Format("SkillModules.{0}", dataSkill.effect.method);
             Component component = mySkillHandler.myObject.AddComponent(System.Type.GetType(abilityClass));
@@ -38,13 +38,13 @@ namespace SkillModules {
         public void InitCondition(Condition[] conditions) {
             conditionCheckers = new ConditionChecker[conditions.Length];
             for(int i = 0; i < conditions.Length; i++) {
-                conditionCheckers[i] = MethodToClass<ConditionChecker>(conditions[i].method, new ConditionChecker());
+                conditionCheckers[i] = MethodToClass<ConditionChecker>(conditions[i].method, new ConditionChecker(), mySkillHandler);
             }
         }
 
-        public T MethodToClass<T>(string method, T t) {
+        public T MethodToClass<T>(string method, T t, SkillHandler handler) {
             if(string.IsNullOrEmpty(method)) return (T)System.Activator.CreateInstance(t.GetType());
-            else return (T)System.Activator.CreateInstance(System.Type.GetType(method));
+            else return (T)System.Activator.CreateInstance(System.Type.GetType(method), handler);
         }
 
         public bool Trigger(IngameEventHandler.EVENT_TYPE triggerType) {
