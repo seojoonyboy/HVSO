@@ -105,7 +105,6 @@ public class CardHandDeckManager : MonoBehaviour {
         while (index < 4) {
             yield return new WaitForSeconds(0.2f);
             AddCard(firstDrawList[index]);
-            //firstDrawList.RemoveAt(index);
             index++;
         }
         yield return new WaitForSeconds(0.5f);
@@ -337,7 +336,6 @@ public class CardHandDeckManager : MonoBehaviour {
 
     IEnumerator SendCardToHand(GameObject card) {
         PlayMangement.movingCard = card;
-        //StartCoroutine(AddCardInfoToList(card));
         if (!firstDraw) {
             AddInfoToList(card);
             card.transform.rotation = new Quaternion(0, 0, 180, card.transform.rotation.w);
@@ -350,14 +348,12 @@ public class CardHandDeckManager : MonoBehaviour {
         iTween.ScaleTo(card, new Vector3(1.0f, 1.0f, 1.0f), 0.2f);
         
         yield return new WaitForSeconds(0.5f);
-        //card.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
         card.GetComponent<CardHandler>().DisableCard();
         if (PlayMangement.instance.player.getPlayerTurn) {
             if (!PlayMangement.instance.player.isHuman && card.GetComponent<CardHandler>().cardData.type == "unit")
                 card.GetComponent<CardHandler>().DisableCard();
             else
                 card.GetComponent<CardHandler>().ActivateCard();
-            
         }
         card.GetComponent<CardHandler>().FIRSTDRAW = false;
         card.transform.localPosition = new Vector3(0, 0, 0);
@@ -487,9 +483,6 @@ public class CardHandDeckManager : MonoBehaviour {
         card.GetComponent<CardHandler>().DrawCard(id, itemId);
         GameObject infoList = PlayMangement.instance.cardInfoCanvas.Find("CardInfoList").gameObject;
         infoList.GetComponent<CardListManager>().AddMulliganCardInfo(card.GetComponent<CardHandler>().cardData, id, index);
-        //Transform firstcardinfolist = PlayMangement.instance.cardInfoCanvas.Find("FirstCardInfoList");
-        //DestroyImmediate(firstcardinfolist.GetChild(index).gameObject);
-        //firstcardinfolist.GetChild(3).SetSiblingIndex(index);
         card.transform.position = beforeCardObject.transform.position;
         card.transform.SetSiblingIndex(index + 5);
         card.transform.localScale = beforeCardObject.transform.localScale;
