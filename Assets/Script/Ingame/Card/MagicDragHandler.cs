@@ -26,7 +26,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         blockButton = PlayMangement.instance.player.dragCard = true;
         PlayMangement.instance.player.isPicking.Value = true;
         
-        //CardDropManager.Instance.ShowMagicalSlot(cardData.skills[0].target.args);
+        CardDropManager.Instance.ShowMagicalSlot(cardData.skills[0].target.args);
 
         object[] parms = new object[] { true, gameObject };
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_CARD_PLAY, this, parms);
