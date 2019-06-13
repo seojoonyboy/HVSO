@@ -32,12 +32,21 @@ public class CardInfoOnDrag : MonoBehaviour
     [SerializeField] Transform rightEdge;
     float xWidth;
 
-    public void SetCardDragInfo(string info, Vector3 cardPos) {
+    public void SetCardDragInfo(string info, Vector3 cardPos, string skillInfo = null) {
         leftEdge.position = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 0));
         rightEdge.position = -leftEdge.position;
         transform.localPosition = new Vector3(cardPos.x, cardPos.y + 170, 0);
         xWidth = transform.GetComponent<RectTransform>().sizeDelta.x / 2.0f;
+        if (skillInfo.Length != 0) {
+            ResizeBox(skillInfo.Length);
+            transform.Find("SkillText").GetComponent<TMPro.TextMeshProUGUI>().text = skillInfo;
+        }
         gameObject.SetActive(true);
+    }
+
+    private void ResizeBox(int textLength) {
+        int lineNum = textLength / 19;
+        transform.GetComponent<RectTransform>().sizeDelta = transform.Find("SkillText").GetComponent<RectTransform>().sizeDelta = new Vector2(600, 100 + (50 * lineNum));    
     }
 
     public void SetInfoPosOnDrag(Vector3 cardPos) {
