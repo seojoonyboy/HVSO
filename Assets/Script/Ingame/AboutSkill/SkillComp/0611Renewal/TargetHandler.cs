@@ -190,7 +190,10 @@ namespace SkillModules {
             if (Input.GetMouseButtonDown(0)) {
                 var selectedTarget = GetClickedAreaUnit();
 
-                if (selectedTarget != null) callback(selectedTarget);
+                if (selectedTarget != null) {
+                    PlayMangement.instance.OffBlockPanel();
+                    callback(selectedTarget);
+                }
             }
         }
 
