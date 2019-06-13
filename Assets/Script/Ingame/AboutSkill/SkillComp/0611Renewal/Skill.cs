@@ -16,15 +16,13 @@ namespace SkillModules {
         //TODO : 한줄마다의 스킬들을 초기화
         public void Initialize(dataModules.Skill dataSkill, SkillHandler mySkillHandler) {
             this.mySkillHandler = mySkillHandler;
-            //TODO : method가 아닌 dataSkill의 각각의 method로 가져와야함
-            string method = "something";
 
             scopeChecker = MethodToClass<ScopeChecker>(dataSkill.scope, new ScopeChecker(mySkillHandler));
             InitCondition(dataSkill.conditions);
 
             targetHandler = MethodToClass<TargetHandler>(dataSkill.target.method, new TargetHandler());
 
-            string abilityClass = string.Format("SkillModules.{0}", method);
+            string abilityClass = string.Format("SkillModules.{0}", dataSkill.effect.method);
             Component component = mySkillHandler.myObject.AddComponent(System.Type.GetType(abilityClass));
             ability = component.GetComponent<Ability>();
             ability.skillHandler = mySkillHandler;
