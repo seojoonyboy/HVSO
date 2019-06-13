@@ -16,6 +16,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         if (firstDraw || PlayMangement.instance.isMulligan) return;
         if (Input.touchCount > 1) return;
         if (PlayMangement.instance.player.dragCard) return;
+        CardInfoOnDrag.instance.SetCardDragInfo(null, transform.localPosition);
         beforeDragParent = transform.parent;
         transform.SetParent(PlayMangement.instance.cardDragCanvas);
         itsDragging = gameObject;
@@ -63,6 +64,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         Vector3 cardScreenPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         cardScreenPos = new Vector3(cardScreenPos.x, cardScreenPos.y + 0.3f, 0);
         transform.position = cardScreenPos;
+        CardInfoOnDrag.instance.SetInfoPosOnDrag(transform.localPosition);
         CheckMagicHighlight();
     }
 
@@ -91,6 +93,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
             }
         }
         CardDropManager.Instance.HideMagicSlot();
+        CardInfoOnDrag.instance.OffCardDragInfo();
     }
 
     public void AttributeUsed() {
