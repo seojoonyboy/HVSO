@@ -1,82 +1,89 @@
 
 ac10003.png
-size: 512,256
+size: 1024,256
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 L_leg
   rotate: true
-  xy: 233, 11
+  xy: 909, 195
   size: 55, 80
   orig: 55, 80
   offset: 0, 0
   index: -1
 L_low_arm
   rotate: true
-  xy: 323, 134
+  xy: 477, 130
   size: 120, 158
   orig: 120, 158
   offset: 0, 0
   index: -1
 L_upper_arm
-  rotate: false
-  xy: 410, 21
+  rotate: true
+  xy: 128, 42
   size: 69, 51
   orig: 69, 51
   offset: 0, 0
   index: -1
 R_arm
   rotate: true
-  xy: 132, 4
+  xy: 810, 188
   size: 62, 99
   orig: 62, 99
   offset: 0, 0
   index: -1
 R_leg
   rotate: true
-  xy: 328, 17
+  xy: 795, 133
   size: 55, 80
   orig: 55, 80
   offset: 0, 0
   index: -1
 arrow_ac
   rotate: false
-  xy: 166, 127
+  xy: 322, 123
   size: 155, 127
   orig: 155, 127
   offset: 0, 0
   index: -1
 arrow_oj
   rotate: true
-  xy: 166, 68
+  xy: 635, 135
   size: 57, 160
   orig: 57, 160
   offset: 0, 0
   index: -1
 body
   rotate: false
-  xy: 2, 2
+  xy: 0, 0
   size: 128, 111
   orig: 128, 111
   offset: 0, 0
   index: -1
 eye
-  rotate: true
-  xy: 483, 183
+  rotate: false
+  xy: 179, 89
   size: 71, 24
   orig: 71, 24
   offset: 0, 0
   index: -1
 helmet
   rotate: false
-  xy: 2, 115
+  xy: 0, 111
   size: 162, 139
   orig: 162, 139
   offset: 0, 0
   index: -1
+helmet_2
+  rotate: false
+  xy: 162, 113
+  size: 160, 137
+  orig: 160, 137
+  offset: 0, 0
+  index: -1
 shadow
   rotate: false
-  xy: 328, 74
+  xy: 635, 192
   size: 175, 58
   orig: 175, 58
   offset: 0, 0
