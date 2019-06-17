@@ -34,9 +34,12 @@ namespace SkillModules {
             targetHandler.args = dataSkill.target.args;
 
             string abilityClass = string.Format("SkillModules.{0}", dataSkill.effect.method);
-            Component component = mySkillHandler.myObject.AddComponent(System.Type.GetType(abilityClass));
-            ability = component.GetComponent<Ability>();
+            ability = MethodToClass<Ability>(dataSkill.effect.method, new Ability());
             ability.skillHandler = mySkillHandler;
+
+            //Component component = mySkillHandler.myObject.AddComponent(System.Type.GetType(abilityClass));
+            //ability = component.GetComponent<Ability>();
+            //ability.skillHandler = mySkillHandler;
         }
 
         public void InitCondition(Condition[] conditions, SkillHandler mySkillHandler) {
@@ -48,7 +51,7 @@ namespace SkillModules {
             }
         }
 
-        public T MethodToClass<T>(string method, T t, SkillHandler handler, string[] args = null) {
+        public T MethodToClass<T>(string method, T t, SkillHandler handler = null, string[] args = null) {
             object result;
             string methodAdd = string.Format("SkillModules.{0}", method);
             if(string.IsNullOrEmpty(method)) {
@@ -56,7 +59,10 @@ namespace SkillModules {
             }
             else {
                 System.Type type = System.Type.GetType(methodAdd);
-                if(args == null)
+                if(handler == null) {
+                    return (T)Activator.CreateInstance(type);
+                }
+                if (args == null)
                     result = Activator.CreateInstance(type, handler);
                 else
                     result = Activator.CreateInstance(type, handler, args);

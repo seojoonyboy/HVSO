@@ -5,7 +5,9 @@ using SkillModules;
 using System.Linq;
 
 namespace SkillModules {
-    public partial class Ability : MonoBehaviour {
+    public partial class Ability {
+        public Ability() {
 
+        }
     }
 }

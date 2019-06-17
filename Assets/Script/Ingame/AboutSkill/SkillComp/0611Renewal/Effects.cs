@@ -14,7 +14,9 @@ namespace SkillModules {
         }
     }
 
-    public class gain : Ability{
+    public class gain : Ability {
+        public gain() : base(){ }
+
         public override void Execute(object data) {
             if (data.GetType().IsArray) {
                 try {
@@ -42,6 +44,8 @@ namespace SkillModules {
     }
 
     public class give_attribute : Ability {
+        public give_attribute() : base() { }
+
         public override void Execute(object data) {
             if (data.GetType().IsArray) {
                 try {
@@ -72,6 +76,8 @@ namespace SkillModules {
     }
 
     public class set_skill_target : Ability {
+        public set_skill_target() : base() { }
+
         public override void Execute(object data) {
             try {
                 GameObject target = (GameObject)data;
@@ -88,6 +94,8 @@ namespace SkillModules {
     }
 
     public class supply : Ability {
+        public supply() : base() { }
+
         public override void Execute(object data) {
             try {
                 int drawNum = (int)data;
@@ -100,6 +108,8 @@ namespace SkillModules {
     }
 
     public class hook : Ability {
+        public hook() : base() { }
+
         public override void Execute(object data) {
             if (data.GetType().IsArray) {
                 try {
@@ -134,6 +144,8 @@ namespace SkillModules {
     }
 
     public class quick : Ability {
+        public quick() : base() { }
+
         public override void Execute(object data) {
             try {
                 GameObject target = (GameObject)data;
@@ -146,6 +158,8 @@ namespace SkillModules {
     }
 
     public class clear_skill_target : Ability {
+        public clear_skill_target() : base() { }
+
         public override void Execute(object data) {
             try {
                 GameObject target = (GameObject)data;
@@ -158,6 +172,8 @@ namespace SkillModules {
     }
 
     public class skill_target_move : Ability {
+        public skill_target_move() : base() { }
+
         public override void Execute(object data) {
             if (data.GetType().IsArray) {
                 try {
@@ -190,6 +206,8 @@ namespace SkillModules {
     }
 
     public class self_move : Ability {
+        public self_move() : base() { }
+
         public override void Execute(object data) {
             if (data.GetType().IsArray) {
                 try {
@@ -218,11 +236,13 @@ namespace SkillModules {
             else {
                 observer = PlayMangement.instance.EnemyUnitsObserver;
             }
-            observer.UnitChangePosition(gameObject, args.col, args.row);
+            observer.UnitChangePosition(skillHandler.myObject, args.col, args.row);
         }
     }
 
     public class blast_enemy : Ability {
+        public blast_enemy() : base() { }
+
         public override void Execute(object data) {
             if (data.GetType().IsArray) {
                 try {
@@ -261,6 +281,8 @@ namespace SkillModules {
     }
 
     public class r_return : Ability {
+        public r_return() : base() { }
+
         FieldUnitsObserver playerObserver, enemyObserver;
 
         public override void Execute(object data) {
@@ -296,7 +318,7 @@ namespace SkillModules {
                 var selectedUnit = SelectRandomItem(units);
 
                 var selectedUnitPos = enemyObserver.GetMyPos(selectedUnit);
-                Destroy(selectedUnit);
+                UnityEngine.Object.Destroy(selectedUnit);
                 enemyObserver.UnitRemoved(selectedUnitPos.col, selectedUnitPos.row);
                 
                 MakeEnemyUnitToCard();
@@ -329,7 +351,7 @@ namespace SkillModules {
         private void MakeEnemyUnitToCard() {
             PlayMangement playMangement = PlayMangement.instance;
 
-            GameObject enemyCard = Instantiate(playMangement.player.isHuman ? playMangement.enemyPlayer.back : playMangement.player.back);
+            GameObject enemyCard = UnityEngine.Object.Instantiate(playMangement.player.isHuman ? playMangement.enemyPlayer.back : playMangement.player.back);
             enemyCard.transform.SetParent(playMangement.enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(playMangement.CountEnemyCard()));
             enemyCard.transform.localScale = new Vector3(1, 1, 1);
             enemyCard.transform.localPosition = new Vector3(0, 0, 0);
@@ -338,6 +360,8 @@ namespace SkillModules {
     }
 
     public class over_a_kill : Ability {
+        public over_a_kill() : base() { }
+
         public override void Execute(object data) {
             FieldUnitsObserver observer;
 
@@ -373,6 +397,8 @@ namespace SkillModules {
     }
 
     public class give_attack_type : Ability {
+        public give_attack_type() : base() { }
+
         public override void Execute(object data) {
             List<GameObject> targets = new List<GameObject>();
 
