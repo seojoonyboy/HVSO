@@ -13,8 +13,11 @@ public partial class UnitDragHandler : CardHandler, IBeginDragHandler, IDragHand
         if (firstDraw || PlayMangement.instance.isMulligan) return;
         if (Input.touchCount > 1) return;
         if (PlayMangement.instance.player.dragCard) return;
-        if(cardData.skills.Length != 0)
+        CardInfoOnDrag.instance.SetPreviewUnit(cardData.cardId);
+        if (cardData.skills.Length != 0)
             CardInfoOnDrag.instance.SetCardDragInfo(null, transform.localPosition, cardData.skills[0].desc);
+        else
+            CardInfoOnDrag.instance.SetCardDragInfo(null, transform.localPosition);
         beforeDragParent = transform.parent;
         transform.SetParent(PlayMangement.instance.cardDragCanvas);
         itsDragging = gameObject;
@@ -29,21 +32,26 @@ public partial class UnitDragHandler : CardHandler, IBeginDragHandler, IDragHand
 
     public void OnDrag(PointerEventData eventData) {
         if (firstDraw) return;
+        if (Input.touchCount > 1) return;
         if (gameObject != itsDragging) return;
         Vector3 cardScreenPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         cardScreenPos = new Vector3(cardScreenPos.x, cardScreenPos.y + 0.3f, 0);
         transform.position = cardScreenPos;
-        if (cardData.skills.Length != 0)
-            CardInfoOnDrag.instance.SetInfoPosOnDrag(transform.localPosition);
+        CheckLocation();
+        CardInfoOnDrag.instance.SetInfoPosOnDrag(transform.localPosition);
         CheckHighlight();
     }
+
+
 
 
     public void OnEndDrag(PointerEventData eventData) {
         if (firstDraw) return;
         if (gameObject != itsDragging) return;
         transform.SetParent(beforeDragParent);
+        CheckLocation(true);
         iTween.MoveTo(gameObject, beforeDragParent.position, 0.3f);
+        iTween.ScaleTo(gameObject, new Vector3(1, 1, 1), 0.3f);
         blockButton = PlayMangement.instance.player.dragCard = false;
         PlayMangement.instance.player.isPicking.Value = false;
         if (!isDropable) {
