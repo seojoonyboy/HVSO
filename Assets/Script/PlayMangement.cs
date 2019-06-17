@@ -23,6 +23,7 @@ public partial class PlayMangement : MonoBehaviour {
     public EffectManager effectManager;
     public SpineEffectManager spineEffectManager;
 
+    
     private int turn = 0;
     public GameObject blockPanel;
     public int unitNum = 0;
@@ -681,13 +682,13 @@ public partial class PlayMangement {
     }
     
 
-    public IEnumerator cameraShake(float time) {
+    public IEnumerator cameraShake(float time, int power) {
         float timer = 0;
         float cameraSize = ingameCamera.orthographicSize;
         while (timer <= time) {
             
 
-            ingameCamera.transform.position = (Vector3)Random.insideUnitCircle * 0.1f + cameraPos;
+            ingameCamera.transform.position = (Vector3)Random.insideUnitCircle * 0.1f * power + cameraPos;
 
             timer += Time.deltaTime;
             yield return null;
