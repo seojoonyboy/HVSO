@@ -72,8 +72,10 @@ namespace SkillModules {
         }
 
         public bool Trigger(IngameEventHandler.EVENT_TYPE triggerType, object parms) {
-            object[] tmp = (object[])parms;
-            GameObject obj = (GameObject)tmp[1];
+            GameObject obj = null;
+            PlayedObject parmsObject = new PlayedObject();
+            if(parmsObject.IsValidateData(parms)) 
+                obj = parmsObject.targetObject;
 
             //trigger 검사
             if(myTrigger != triggerType) return false;

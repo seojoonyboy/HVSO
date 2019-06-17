@@ -214,8 +214,7 @@ namespace SkillModules {
         }
 
         private async void WaitDone() {
-            await System.Threading.Tasks.Task.Run(() => {});
-            System.Threading.Thread.Sleep(1500);
+            await System.Threading.Tasks.Task.Delay(1500);
             skillHandler.isDone = true;
         }
     }
@@ -256,8 +255,7 @@ namespace SkillModules {
         }
 
         private async void WaitDone() {
-            await System.Threading.Tasks.Task.Run(() => {});
-            System.Threading.Thread.Sleep(1500);
+            await System.Threading.Tasks.Task.Delay(1500);
             skillHandler.isDone = true;
         }
     }
