@@ -40,6 +40,8 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         transform.position = cardScreenPos;
         if (cardData.skills.Length != 0)
             CardInfoOnDrag.instance.SetInfoPosOnDrag(transform.localPosition);
+
+        //TODO : Filter를 통해(Use Condition) 놓을 수 있는 영역 추가 제어
         CheckMagicHighlight();
     }
 
