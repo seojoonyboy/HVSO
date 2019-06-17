@@ -15,6 +15,7 @@ public partial class CardHandler : MonoBehaviour {
     protected bool firstDraw = false;
     public bool changeSelected = false;
     protected bool isDropable = false;
+    protected bool pointOnFeild = false;
     Animator cssAni;
     public string cardID;
     protected int _itemID;
@@ -98,6 +99,30 @@ public partial class CardHandler : MonoBehaviour {
                 transform.Find("GlowEffect").localScale = new Vector3(1, 1, 1);
                 CardDropManager.Instance.HighLightSlot(highlightedSlot, highlighted);
                 highlightedSlot = null;
+            }
+        }
+    }
+    protected void CheckLocation(bool off = false) {
+        if (off) {
+            pointOnFeild = false;
+            if(cardData.type == "unit")
+                CardInfoOnDrag.instance.ActivePreviewUnit(false);
+            return;
+        }
+        if (transform.localPosition.y > -350) {
+            if (!pointOnFeild) {
+                pointOnFeild = true;
+                transform.localScale = new Vector3(0, 0, 0);
+                if (cardData.type == "unit")
+                    CardInfoOnDrag.instance.ActivePreviewUnit(true);
+            }
+        }
+        else {
+            if (pointOnFeild) {
+                pointOnFeild = false;
+                transform.localScale = new Vector3(1, 1, 1);
+                if (cardData.type == "unit")
+                    CardInfoOnDrag.instance.ActivePreviewUnit(false);
             }
         }
     }
