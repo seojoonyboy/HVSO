@@ -83,9 +83,13 @@ namespace SkillModules {
             foreach(ConditionChecker checker in conditionCheckers) 
                 condition = condition && checker.IsConditionSatisfied();
             if(!condition) return false;
-
-            //Target 가져오기
-            //ability 발동하기
+            
+            targetHandler.SelectTarget(
+                delegate {
+                    ability.Execute(targetHandler.GetTarget());
+                },
+                null
+            );
             return true;
         }
     }

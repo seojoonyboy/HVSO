@@ -14,6 +14,8 @@ namespace SkillModules {
         public List<GameObject> targets;
         protected FieldUnitsObserver playerUnitsObserver, enemyUnitsObserver;
 
+        public bool isDone = false;
+
         /// <summary>
         /// 타겟을 지정하는 단계를 시작
         /// </summary>
@@ -28,7 +30,7 @@ namespace SkillModules {
         /// <param name="parms">지정된 타겟에 대한 정보</param>
         public virtual void SetTarget(object parms) { }
 
-        protected List<GameObject> GetTarget() {
+        public List<GameObject> GetTarget() {
             if(targets == null || targets.Count == 0) {
                 Debug.LogError("Target이 제대로 지정되지 않았습니다.");
             }
