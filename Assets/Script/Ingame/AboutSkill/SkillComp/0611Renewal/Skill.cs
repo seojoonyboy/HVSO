@@ -91,7 +91,8 @@ namespace SkillModules {
                 delegate {
                     ability.Execute(targetHandler.GetTarget());
                 },
-                null
+                null,
+                parms
             );
             return true;
         }

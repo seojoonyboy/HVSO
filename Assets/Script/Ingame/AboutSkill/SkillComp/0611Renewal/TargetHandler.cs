@@ -19,7 +19,7 @@ namespace SkillModules {
         /// <summary>
         /// 타겟을 지정하는 단계를 시작
         /// </summary>
-        public virtual void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback) {
+        public virtual void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback, object parms) {
             targets = new List<GameObject>();
             Logger.Log("타겟을 지정합니다.");
         }
@@ -71,14 +71,15 @@ namespace SkillModules {
     }
 
     public class skill_target : TargetHandler {
-        public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback) {
-            base.SelectTarget(successCallback, failedCallback);
+        public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback, object parms) {
+            base.SelectTarget(successCallback, failedCallback, parms);
 
             var target = GetDropAreaUnit();
             if (target == null) {
                 failedCallback("타겟을 찾을 수 없습니다.");
                 return;
             }
+            SetTarget(target);
             successCallback(target);
         }
 
@@ -99,10 +100,11 @@ namespace SkillModules {
             }
         }
 
-        public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback) {
-            base.SelectTarget(successCallback, failedCallback);
+        public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback, object parms) {
+            base.SelectTarget(successCallback, failedCallback, parms);
 
             //직접 지정하는게 없음
+            SetTarget(null);
             successCallback(null);
         }
 
@@ -122,13 +124,14 @@ namespace SkillModules {
     }
 
     public class attack_target : TargetHandler {
-        public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback) {
-            base.SelectTarget(successCallback, failedCallback);
+        public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback, object parms) {
+            base.SelectTarget(successCallback, failedCallback, parms);
 
             if(GetComponent<PlaceMonster>().myTarget == null) {
                 failedCallback("대상을 찾을 수 없습니다.");
                 return;
             }
+            SetTarget(GetComponent<PlaceMonster>().myTarget);
             successCallback(GetComponent<PlaceMonster>().myTarget);
         }
 
@@ -140,9 +143,10 @@ namespace SkillModules {
     }
 
     public class self : TargetHandler {
-        public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback) {
-            base.SelectTarget(successCallback, failedCallback);
+        public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback, object parms) {
+            base.SelectTarget(successCallback, failedCallback, parms);
 
+            SetTarget(gameObject);
             successCallback(gameObject);
         }
 
@@ -152,21 +156,82 @@ namespace SkillModules {
     }
     
     public class played_target : TargetHandler {
-        public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback) {
-            base.SelectTarget(successCallback, failedCallback);
+        public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback, object parms) {
+            base.SelectTarget(successCallback, failedCallback, parms);
 
-            var target = GetDropAreaUnit();
-            if (target == null) {
-                failedCallback("타겟을 찾을 수 없습니다.");
-                return;
-            }
-            successCallback(target);
+            object[] data = (object[])parms;
+            bool isPlayer = (bool)data[0];
+
+            if (args == null) failedCallback("Args 가 존재가지 않습니다.");
+
+            var targets = GetTarget(isPlayer, args);
+            SetTarget(targets);
+            successCallback(targets);
         }
 
         /// <summary></summary>
         /// <param name="target">내가 카드를 드롭하면서 지목한 대상</param>
         public override void SetTarget(object target) {
             targets.Add((GameObject)target);
+        }
+
+        private List<GameObject> GetTarget(bool isPlayer, string[] args) {
+            FieldUnitsObserver playerObserver, enemyObserver;
+            var playManagement = PlayMangement.instance;
+            if (isPlayer) {
+                playerObserver = playManagement.PlayerUnitsObserver;
+                enemyObserver = playManagement.EnemyUnitsObserver;
+            }
+            else {
+                playerObserver = playManagement.EnemyUnitsObserver;
+                enemyObserver = playManagement.PlayerUnitsObserver;
+            }
+
+            List<GameObject> result = new List<GameObject>();
+            if (args.Length != 2) {
+                Logger.LogError("Args가 잘못 전달되었습니다.");
+                return result;
+            }
+
+            switch (args[0]) {
+                case "my":
+                    if (args[1] == "unit") {
+                        result.Add(GetDropAreaUnit().gameObject);
+                    }
+                    else if (args[1] == "line") {
+                        var pos = playerObserver.GetMyPos(GetDropAreaUnit().gameObject);
+                        var targets = playerObserver.GetAllFieldUnits(pos.col);
+                        foreach (GameObject target in targets) {
+                            result.Add(target);
+                        }
+                    }
+                    else if(args[1] == "all") {
+                        var targets = playerObserver.GetAllFieldUnits();
+                        foreach (GameObject target in targets) {
+                            result.Add(target);
+                        }
+                    }
+                    break;
+                case "enemy":
+                    if (args[1] == "unit") {
+                        result.Add(GetDropAreaUnit().gameObject);
+                    }
+                    else if (args[1] == "line") {
+                        var pos = enemyObserver.GetMyPos(GetDropAreaUnit().gameObject);
+                        var targets = enemyObserver.GetAllFieldUnits(pos.col);
+                        foreach (GameObject target in targets) {
+                            result.Add(target);
+                        }
+                    }
+                    else if (args[1] == "all") {
+                        var targets = enemyObserver.GetAllFieldUnits();
+                        foreach (GameObject target in targets) {
+                            result.Add(target);
+                        }
+                    }
+                    break;
+            }
+            return result;
         }
     }
 
@@ -178,13 +243,15 @@ namespace SkillModules {
 
                 if (selectedTarget != null) {
                     PlayMangement.instance.OffBlockPanel();
+
+                    SetTarget(selectedTarget);
                     callback(selectedTarget);
                 }
             }
         }
 
-        public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback) {
-            base.SelectTarget(successCallback, failedCallback);
+        public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback, object parms) {
+            base.SelectTarget(successCallback, failedCallback, parms);
 
             PlayMangement.instance.OnBlockPanel("대상을 지정해 주세요.");
             callback = successCallback;
@@ -198,9 +265,10 @@ namespace SkillModules {
     }
 
     public class played : TargetHandler {
-        public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback) {
-            base.SelectTarget(successCallback, failedCallback);
+        public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback, object parms) {
+            base.SelectTarget(successCallback, failedCallback, parms);
 
+            SetTarget(null);
             successCallback(null);
         }
 
