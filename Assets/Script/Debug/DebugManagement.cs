@@ -24,13 +24,13 @@ public class DebugManagement : MonoBehaviour
         cameraPos = Camera.main.transform.position;
     }
 
-    public IEnumerator cameraShake(float time) {
+    public IEnumerator cameraShake(float time, int power) {
         float timer = 0;
         float cameraSize = ingameCamera.orthographicSize;
         while (timer <= time) {
 
 
-            ingameCamera.transform.position = (Vector3)Random.insideUnitCircle * 0.1f + cameraPos;
+            ingameCamera.transform.position = (Vector3)Random.insideUnitCircle * 0.1f * power + cameraPos;
 
             timer += Time.deltaTime;
             yield return null;

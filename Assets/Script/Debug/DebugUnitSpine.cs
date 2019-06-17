@@ -68,23 +68,18 @@ public class DebugUnitSpine : MonoBehaviour
 
         PlaceMonster placeMonster = transform.parent.GetComponent<PlaceMonster>();
 
-
-        if (placeMonster == null) {
-            previewAnimationName = idleAnimationName;
-            Preview();
-            return;
-        }
+        
 
 
 
 
-        if (arrow != null && transform.parent.GetComponent<PlaceMonster>().isPlayer == true) {
+        if (arrow != null && transform.parent.GetComponent<DebugUnit>().isPlayer == true) {
             if (rangeUpAttackName != "")
                 attackAnimationName = rangeUpAttackName;
             else
                 attackAnimationName = generalAttackName;
         }
-        else if (arrow != null && transform.parent.GetComponent<PlaceMonster>().isPlayer == false) {
+        else if (arrow != null && transform.parent.GetComponent<DebugUnit>().isPlayer == false) {
             if (rangeDownAttackName != "")
                 attackAnimationName = rangeDownAttackName;
             else

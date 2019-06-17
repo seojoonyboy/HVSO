@@ -256,7 +256,7 @@ public class DebugUnit : MonoBehaviour
             instanceAttack = false;
         }
         else
-            atkCount++;
+            atkCount = 0;
 
         DebugUnit targetMonster = myTarget.GetComponent<DebugUnit>();
         if (unit.attackRange == "distance") {
@@ -272,7 +272,7 @@ public class DebugUnit : MonoBehaviour
     }
 
     private void SkipAttack() {
-        atkCount++;
+        atkCount = 0;
     }
 
     public void AttackEffect(GameObject target = null) {
@@ -285,21 +285,22 @@ public class DebugUnit : MonoBehaviour
             effect.transform.position = (targetMonster != null) ? target.transform.position : new Vector3(gameObject.transform.position.x, myTarget.GetComponent<DebugPlayer>().wallPosition.y, 0);
             effectAnimation.AnimationState.SetAnimation(0, "animation", false);
             Destroy(effect, effectAnimation.skeleton.Data.FindAnimation("animation").Duration - 0.1f);
-            StartCoroutine(DebugManagement.instance.cameraShake(unitSpine.atkDuration / 2));
-            SoundManager.Instance.PlaySound(SoundType.NORMAL_ATTACK);
+            StartCoroutine(DebugManagement.instance.cameraShake(unitSpine.atkDuration / 2, 1));
+            //SoundManager.Instance.PlaySound(SoundType.NORMAL_ATTACK);
         }
         else if (unit.attack > 3) {
             GameObject effect = (unit.attack < 6) ? Instantiate(DebugManagement.instance.spineEffectManager.middileAttackEffect) : Instantiate(DebugManagement.instance.spineEffectManager.highAttackEffect);
             effectAnimation = effect.GetComponent<Spine.Unity.SkeletonAnimation>();
             effect.transform.position = (targetMonster != null) ? target.transform.position : new Vector3(gameObject.transform.position.x, myTarget.GetComponent<DebugPlayer>().wallPosition.y, 0);
             Destroy(effect, effectAnimation.skeleton.Data.FindAnimation("animation").Duration - 0.1f);
-            StartCoroutine(DebugManagement.instance.cameraShake(unitSpine.atkDuration / 2));
 
             if (unit.attack > 3 && unit.attack <= 6) {
-                SoundManager.Instance.PlaySound(SoundType.MIDDLE_ATTACK);
+                //SoundManager.Instance.PlaySound(SoundType.MIDDLE_ATTACK);
+                StartCoroutine(DebugManagement.instance.cameraShake(unitSpine.atkDuration / 2, 2));
             }
             else if (unit.attack > 6) {
-                SoundManager.Instance.PlaySound(SoundType.LARGE_ATTACK);
+                //SoundManager.Instance.PlaySound(SoundType.LARGE_ATTACK);
+                StartCoroutine(DebugManagement.instance.cameraShake(unitSpine.atkDuration / 2, 3));
             }
         }
     }
@@ -394,7 +395,7 @@ public class DebugUnit : MonoBehaviour
 
     public void CheckHP() {
         if (unit.currentHP <= 0) {;
-            GameObject tomb = AccountManager.Instance.resource.unitDeadObject;
+            GameObject tomb = DebugManagement.instance.unitDeadObject;
             GameObject dropTomb = Instantiate(tomb);
             dropTomb.transform.position = transform.position;
 

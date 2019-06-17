@@ -4784,8 +4784,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isHuman: 1
   isPlayer: 1
-  backLine: {fileID: 0}
-  frontLine: {fileID: 0}
+  backLine: {fileID: 3805233970992939453}
+  frontLine: {fileID: 3805233971291302725}
   unitClosePosition: {x: 0, y: -3.48, z: 0}
   wallPosition: {x: 0, y: -5.16, z: 0}
 --- !u!4 &3805233970548852422
@@ -4857,8 +4857,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isHuman: 0
   isPlayer: 0
-  backLine: {fileID: 0}
-  frontLine: {fileID: 0}
+  backLine: {fileID: 3805233970548852423}
+  frontLine: {fileID: 3805233971931438558}
   unitClosePosition: {x: 0, y: 3.7, z: 0}
   wallPosition: {x: 0, y: 5.26, z: 0}
 --- !u!4 &3805233970566464927
@@ -6432,7 +6432,7 @@ MonoBehaviour:
   addAttackPower: 0
   myUnitNum: 2
   itemId: 4
-  unitSpine: {fileID: 0}
+  unitSpine: {fileID: 6558708348680687387}
   effectObject: {fileID: 0}
 --- !u!4 &4549778766047111967
 Transform:
@@ -9005,23 +9005,23 @@ MonoBehaviour:
   player: {fileID: 3805233970514639690}
   enemyPlayer: {fileID: 3805233970566464925}
   spineEffectManager:
-    appearEffect: {fileID: 1767155497418248, guid: 0816d1ffe2cf9dc42b000108a364cb41,
+    appearEffect: {fileID: 9106616651958273357, guid: 0edcf1a9aed486748a99ea58fff73ef7,
       type: 3}
     backGroundEffect: {fileID: 1842025592213060, guid: 6c03d912ab087974282d161485c7d86b,
       type: 3}
-    buffEffect: {fileID: 1318642828430248, guid: a10681124dcad2f44ac7d8f8bdbfc352,
+    buffEffect: {fileID: 8068989366066805513, guid: c0ba21a11da227f4fbc8f8fda7f58150,
       type: 3}
-    lowAttackEffect: {fileID: 1721052809818912, guid: 376cdb4dfdabd154b890f68b4b7113f4,
+    lowAttackEffect: {fileID: 8747996444346256864, guid: a735d4f7ba402824eb8ca61ddded2da1,
       type: 3}
-    middileAttackEffect: {fileID: 1658854431535202, guid: f5c4e13dcf2b92f438e1c12ff231f75a,
+    middileAttackEffect: {fileID: 4854766183245343838, guid: ada461ce8d2c5394fb679203d033683b,
       type: 3}
-    highAttackEffect: {fileID: 1150952392404126, guid: fe850328f84c2234bb1367912046eaeb,
+    highAttackEffect: {fileID: 1191825738853433607, guid: 044a7266e2c07d344ab7088ab8b6d018,
       type: 3}
-    explosionEffect: {fileID: 1852110349452202, guid: 7bd16460cb4ed534e9ee53093aa0b6a9,
+    explosionEffect: {fileID: 1073984312607067033, guid: cf8af91dc8e062a458cd9c3cc0bf11cb,
       type: 3}
     deadEffect: {fileID: 1812146282759060, guid: 51113b58675de2e478dc6559f36dfd77,
       type: 3}
-  ingameCamera: {fileID: 0}
+  ingameCamera: {fileID: 1218213686}
   cameraPos: {x: 0, y: 0, z: 0}
   unitDeadObject: {fileID: 4985483695556585209, guid: c7f3c75ff72d1444a8ab0cfeef0207de,
     type: 3}
