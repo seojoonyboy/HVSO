@@ -50,6 +50,7 @@ public class PlaceMonster : MonoBehaviour {
         else {
             PlayMangement.instance.EnemyUnitsObserver.RefreshFields(CardDropManager.Instance.enemyUnitLine);
         }
+        skillHandler.RemoveTriggerEvent();
     }
 
     public void Init(CardData data) {

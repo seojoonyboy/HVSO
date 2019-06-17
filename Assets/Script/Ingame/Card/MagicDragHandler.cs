@@ -142,4 +142,8 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         }
         return null;
     }
+
+    private void OnDestroy() {
+        skillHandler.RemoveTriggerEvent();    
+    }
 }
