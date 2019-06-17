@@ -25,7 +25,8 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         itsDragging = gameObject;
         blockButton = PlayMangement.instance.player.dragCard = true;
         PlayMangement.instance.player.isPicking.Value = true;
-        
+
+        //TODO : Filter를 통해(Use Condition) 타겟 표시 추가 제어
         CardDropManager.Instance.ShowMagicalSlot(cardData.skills[0].target.args);
 
         object[] parms = new object[] { true, gameObject };
