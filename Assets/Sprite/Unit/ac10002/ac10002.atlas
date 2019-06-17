@@ -1,0 +1,97 @@
+
+ac10002.png
+size: 1024,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Headgear
+  rotate: false
+  xy: 0, 0
+  size: 136, 96
+  orig: 136, 96
+  offset: 0, 0
+  index: -1
+L_leg
+  rotate: false
+  xy: 959, 173
+  size: 54, 78
+  orig: 54, 78
+  offset: 0, 0
+  index: -1
+L_low_arm
+  rotate: false
+  xy: 469, 184
+  size: 206, 67
+  orig: 206, 67
+  offset: 0, 0
+  index: -1
+L_upper_arm
+  rotate: false
+  xy: 435, 28
+  size: 89, 96
+  orig: 89, 96
+  offset: 0, 0
+  index: -1
+R_arm
+  rotate: true
+  xy: 835, 162
+  size: 89, 124
+  orig: 89, 124
+  offset: 0, 0
+  index: -1
+R_leg
+  rotate: false
+  xy: 524, 48
+  size: 54, 78
+  orig: 54, 78
+  offset: 0, 0
+  index: -1
+arrow_ac
+  rotate: false
+  xy: 314, 124
+  size: 155, 127
+  orig: 155, 127
+  offset: 0, 0
+  index: -1
+arrow_oj
+  rotate: true
+  xy: 675, 194
+  size: 57, 160
+  orig: 57, 160
+  offset: 0, 0
+  index: -1
+body
+  rotate: false
+  xy: 314, 6
+  size: 121, 118
+  orig: 121, 118
+  offset: 0, 0
+  index: -1
+eye
+  rotate: false
+  xy: 578, 102
+  size: 59, 24
+  orig: 59, 24
+  offset: 0, 0
+  index: -1
+helmet
+  rotate: false
+  xy: 0, 96
+  size: 158, 155
+  orig: 158, 155
+  offset: 0, 0
+  index: -1
+helmet_2
+  rotate: false
+  xy: 158, 98
+  size: 156, 153
+  orig: 156, 153
+  offset: 0, 0
+  index: -1
+shadow
+  rotate: false
+  xy: 469, 126
+  size: 175, 58
+  orig: 175, 58
+  offset: 0, 0
+  index: -1

@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   atlasAssets:
   - {fileID: 11400000, guid: a07751acc8f933145b771a98dc0eec82, type: 2}
-  scale: 0.0065
-  skeletonJSON: {fileID: 4900000, guid: 88c97a86522f2e9408f604cabed42382, type: 3}
+  scale: 0.007
+  skeletonJSON: {fileID: 4900000, guid: a65855ee7bad7d14ca99bc478e7ad601, type: 3}
   skeletonDataModifiers: []
   fromAnimation: []
   toAnimation: []
