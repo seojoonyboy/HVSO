@@ -23,7 +23,6 @@ public partial class BattleConnector : MonoBehaviour {
     public UnityEvent OnReceiveSocketMessage;
     public UnityEvent OnSocketClose;
     public UnityAction<string, int, bool> HandchangeCallback;
-    public Queue<UnityAction> skillCallbacks = new Queue<UnityAction>();
     private Coroutine pingpong;
     private bool battleGameFinish = false;
 
@@ -92,7 +91,6 @@ public partial class BattleConnector : MonoBehaviour {
 
     public void UseCard(string[] args, UnityAction callback = null) {
         SendMethod("play_card", args);
-        if(callback != null) skillCallbacks.Enqueue(callback);
     }
 
     void Error(WebSocket webSocket, Exception ex) {
@@ -305,22 +303,7 @@ public partial class BattleConnector : MonoBehaviour {
         string cardCamp = gameState.lastUse.cardItem.camp;
         bool isEnemyCard = cardCamp.CompareTo(enemyCamp) == 0;
         if(isEnemyCard) useCardList.Enqueue(gameState);
-        else if(skillCallbacks.Count != 0) {
-            if(gameState.lastUse.cardItem.id.CompareTo("ac10028")==0) {
-                StartCoroutine(AC10028(gameState));
-                return;
-            }
-            skillCallbacks.Dequeue().Invoke();
-        }
-        
-        SocketFormat.Target target = gameState.lastUse.target;
         DebugSocketData.CheckMapPosition(gameState);
-    }
-
-    private IEnumerator AC10028(GameState state) {
-        DebugSocketData.CheckMapPosition(state);
-        yield return new WaitForSeconds(2f);
-        skillCallbacks.Dequeue().Invoke();
     }
 }
 

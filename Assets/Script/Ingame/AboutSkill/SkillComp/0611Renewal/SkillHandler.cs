@@ -13,6 +13,8 @@ namespace SkillModules {
         public bool isPlayer;
         public object targetData;
         private List<IngameEventHandler.EVENT_TYPE> triggerList;
+        public GameObject finalTarget;
+        public bool isDone;
 
         //TODO : 데이터 세팅
         public void Initialize(dataModules.Skill[] _skills, GameObject myObject, bool isPlayer) {
@@ -50,13 +52,28 @@ namespace SkillModules {
         }
 
         IEnumerator SkillTrigger(IngameEventHandler.EVENT_TYPE triggerType) {
-            bool isDone;
             foreach(Skill skill in skills) {
                 isDone = false;
                 bool active = skill.Trigger(triggerType);
                 //TODO : 해당 스킬이 완료할 때까지 대기타기 //문제는 다 됐다는걸 어떻게 알려주느냐
+                
                 if(active) yield return new WaitUntil(() => isDone);
             }
+            yield return null;
+            //TODO :  field playing card, skill 다 사용했을시 (마법카드 한정)
+            //MagicSendSocket();
+            if(targetData == null) yield break;
+            if(!targetData.GetType().IsArray) yield break;
+            if(myObject == (GameObject)(((object[])targetData)[1])) {
+                MagicSendSocket();
+            }
+        }
+
+        private void MagicSendSocket() {
+            BattleConnector connector = PlayMangement.instance.socketHandler;
+
+            //connector.UseCard();
+            //MagicDragHandler Destroy(?)
         }
         
     }

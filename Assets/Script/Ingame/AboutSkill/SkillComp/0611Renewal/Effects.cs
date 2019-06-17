@@ -34,12 +34,14 @@ namespace SkillModules {
             else {
                 ShowFormatErrorLog("gain");
             }
+            skillHandler.isDone = true;
         }
 
         private void AddBuff(ref List<GameObject> targets, ref GainArgs args) {
             foreach(GameObject target in targets) {
                 target.GetComponent<PlaceMonster>().RequestChangeStat(args.atk, args.hp);
             }
+            skillHandler.isDone = true;
         }
     }
 
@@ -62,6 +64,7 @@ namespace SkillModules {
             else {
                 ShowFormatErrorLog("give_attribute");
             }
+            skillHandler.isDone = true;
         }
 
         private void AddAttr(ref List<GameObject> targets, string attrName) {
@@ -86,6 +89,7 @@ namespace SkillModules {
             catch(FormatException ex) {
                 ShowFormatErrorLog("set_skill_target");
             }
+            skillHandler.isDone = true;
         }
 
         private void SetSkillTarget(ref GameObject target) {
@@ -104,6 +108,7 @@ namespace SkillModules {
             catch(FormatException ex) {
                 ShowFormatErrorLog("supply");
             }
+            skillHandler.isDone = true;
         }
     }
 
@@ -129,6 +134,7 @@ namespace SkillModules {
             else {
                 ShowFormatErrorLog("hook");
             }
+            skillHandler.isDone = true;
         }
 
         private void MoveUnit(ref GameObject target, ref HookArgs args, bool isPlayer) {
@@ -154,6 +160,7 @@ namespace SkillModules {
             catch(FormatException ex) {
                 ShowFormatErrorLog("quick");
             }
+            skillHandler.isDone = true;
         }
     }
 
@@ -168,6 +175,7 @@ namespace SkillModules {
             catch(FormatException ex) {
                 ShowFormatErrorLog("clear_skill_target");
             }
+            skillHandler.isDone = true;
         }
     }
 
@@ -202,6 +210,13 @@ namespace SkillModules {
                 observer = PlayMangement.instance.EnemyUnitsObserver;
             }
             observer.UnitChangePosition(target, args.col, args.row);
+            WaitDone();
+        }
+
+        private async void WaitDone() {
+            await System.Threading.Tasks.Task.Run(() => {});
+            System.Threading.Thread.Sleep(1500);
+            skillHandler.isDone = true;
         }
     }
 
@@ -237,6 +252,13 @@ namespace SkillModules {
                 observer = PlayMangement.instance.EnemyUnitsObserver;
             }
             observer.UnitChangePosition(skillHandler.myObject, args.col, args.row);
+            WaitDone();
+        }
+
+        private async void WaitDone() {
+            await System.Threading.Tasks.Task.Run(() => {});
+            System.Threading.Thread.Sleep(1500);
+            skillHandler.isDone = true;
         }
     }
 
@@ -262,6 +284,7 @@ namespace SkillModules {
             else {
                 ShowFormatErrorLog("self_move");
             }
+            skillHandler.isDone = true;
         }
 
         private void BlastEnemy(bool isPlayer, int col, int amount) {
@@ -309,6 +332,7 @@ namespace SkillModules {
             else {
                 ShowFormatErrorLog("r_return");
             }
+            skillHandler.isDone = true;
         }
 
         private void ReturnUnit(bool isPlayer) {
@@ -389,6 +413,7 @@ namespace SkillModules {
             else {
                 ShowFormatErrorLog("over_a_kill");
             }
+            skillHandler.isDone = true;
         }
 
         private void RemoveUnit(ref GameObject target) {
@@ -425,6 +450,7 @@ namespace SkillModules {
             else {
                 ShowFormatErrorLog("give_attack_type");
             }
+            skillHandler.isDone = true;
         }
 
         private void GiveAttackType(ref List<GameObject> targets, string attrName) {

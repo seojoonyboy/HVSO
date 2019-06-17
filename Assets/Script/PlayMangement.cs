@@ -846,8 +846,4 @@ public partial class PlayMangement {
         forest,
         water
     }
-
-    public void SendNotification() {
-        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.MONSTER_MOVED, null, null);
-    }
 }

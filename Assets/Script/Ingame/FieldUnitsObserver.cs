@@ -42,6 +42,7 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
             transform.GetChild(col).GetChild(row).position
         );
         units[prevPos.row, prevPos.col] = null;
+        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.FIELD_CHANGED, null, null);
     }
 
     public List<GameObject> GetAllFieldUnits() {
