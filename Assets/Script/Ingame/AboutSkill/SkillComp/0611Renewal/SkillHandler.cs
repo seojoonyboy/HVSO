@@ -48,13 +48,13 @@ namespace SkillModules {
         private void Trigger(Enum Event_Type, Component Sender, object Param = null) {
             targetData = Param;
             IngameEventHandler.EVENT_TYPE triggerType = (IngameEventHandler.EVENT_TYPE)Event_Type;
-            PlayMangement.instance.StartCoroutine(SkillTrigger(triggerType)); //이 부분 초큼...
+            PlayMangement.instance.StartCoroutine(SkillTrigger(triggerType, Param)); //이 부분 초큼...
         }
 
-        IEnumerator SkillTrigger(IngameEventHandler.EVENT_TYPE triggerType) {
+        IEnumerator SkillTrigger(IngameEventHandler.EVENT_TYPE triggerType, object parms) {
             foreach(Skill skill in skills) {
                 isDone = false;
-                bool active = skill.Trigger(triggerType);
+                bool active = skill.Trigger(triggerType, parms);
                 //TODO : 해당 스킬이 완료할 때까지 대기타기 //문제는 다 됐다는걸 어떻게 알려주느냐
                 
                 if(active) yield return new WaitUntil(() => isDone);

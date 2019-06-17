@@ -71,11 +71,14 @@ namespace SkillModules {
             return resultChange;
         }
 
-        public bool Trigger(IngameEventHandler.EVENT_TYPE triggerType) {
+        public bool Trigger(IngameEventHandler.EVENT_TYPE triggerType, object parms) {
+            object[] tmp = (object[])parms;
+            GameObject obj = (GameObject)tmp[1];
+
             //trigger 검사
             if(myTrigger != triggerType) return false;
             //scope 유효성 검사
-            bool scopeCondition = scopeChecker.IsConditionSatisfied(mySkillHandler.myObject);
+            bool scopeCondition = scopeChecker.IsConditionSatisfied(obj);
             if (!scopeCondition) return false;
 
             //컨디션 args 내용도 보내기
