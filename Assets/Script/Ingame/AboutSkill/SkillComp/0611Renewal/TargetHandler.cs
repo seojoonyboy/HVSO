@@ -19,7 +19,7 @@ namespace SkillModules {
         /// <summary>
         /// 타겟을 지정하는 단계를 시작
         /// </summary>
-        public virtual void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback, object parms) {
+        public virtual void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback) {
             targets = new List<GameObject>();
             Logger.Log("타겟을 지정합니다.");
         }
@@ -71,8 +71,8 @@ namespace SkillModules {
     }
 
     public class skill_target : TargetHandler {
-        public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback, object parms) {
-            base.SelectTarget(successCallback, failedCallback, parms);
+        public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback) {
+            base.SelectTarget(successCallback, failedCallback);
 
             var target = GetDropAreaUnit();
             if (target == null) {
@@ -100,8 +100,8 @@ namespace SkillModules {
             }
         }
 
-        public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback, object parms) {
-            base.SelectTarget(successCallback, failedCallback, parms);
+        public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback) {
+            base.SelectTarget(successCallback, failedCallback);
 
             //직접 지정하는게 없음
             SetTarget(null);
@@ -124,8 +124,8 @@ namespace SkillModules {
     }
 
     public class attack_target : TargetHandler {
-        public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback, object parms) {
-            base.SelectTarget(successCallback, failedCallback, parms);
+        public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback) {
+            base.SelectTarget(successCallback, failedCallback);
 
             if(GetComponent<PlaceMonster>().myTarget == null) {
                 failedCallback("대상을 찾을 수 없습니다.");
@@ -143,8 +143,8 @@ namespace SkillModules {
     }
 
     public class self : TargetHandler {
-        public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback, object parms) {
-            base.SelectTarget(successCallback, failedCallback, parms);
+        public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback) {
+            base.SelectTarget(successCallback, failedCallback);
 
             SetTarget(gameObject);
             successCallback(gameObject);
@@ -156,15 +156,13 @@ namespace SkillModules {
     }
     
     public class played_target : TargetHandler {
-        public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback, object parms) {
-            base.SelectTarget(successCallback, failedCallback, parms);
+        public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback) {
+            base.SelectTarget(successCallback, failedCallback);
 
-            object[] data = (object[])parms;
-            bool isPlayer = (bool)data[0];
-
+            
             if (args == null) failedCallback("Args 가 존재가지 않습니다.");
 
-            var targets = GetTarget(isPlayer, args);
+            var targets = GetTarget(GetComponent<SkillHandler>().isPlayer, args);
             SetTarget(targets);
             successCallback(targets);
         }
@@ -250,8 +248,8 @@ namespace SkillModules {
             }
         }
 
-        public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback, object parms) {
-            base.SelectTarget(successCallback, failedCallback, parms);
+        public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback) {
+            base.SelectTarget(successCallback, failedCallback);
 
             PlayMangement.instance.OnBlockPanel("대상을 지정해 주세요.");
             callback = successCallback;
@@ -265,8 +263,8 @@ namespace SkillModules {
     }
 
     public class played : TargetHandler {
-        public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback, object parms) {
-            base.SelectTarget(successCallback, failedCallback, parms);
+        public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback) {
+            base.SelectTarget(successCallback, failedCallback);
 
             SetTarget(null);
             successCallback(null);
