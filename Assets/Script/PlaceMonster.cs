@@ -415,8 +415,7 @@ public class PlaceMonster : MonoBehaviour {
     }
 
     public void InstanceKilled() {
-        unit.currentHP = 0;
-        CheckHP();
+        UnitDead();
     }
 
 
@@ -499,27 +498,31 @@ public class PlaceMonster : MonoBehaviour {
     private void ReturnPosition() {
         unitSpine.transform.GetComponent<MeshRenderer>().sortingOrder = 50;
         iTween.MoveTo(gameObject, iTween.Hash("x", unitLocation.x, "y", unitLocation.y, "z", unitLocation.z, "time", 0.3f, "delay", 0.5f, "easetype", iTween.EaseType.easeInOutExpo));
-
     }
 
     public void CheckHP() {
         if (unit.currentHP <= 0) {
-            PlayMangement.instance.cardInfoCanvas.Find("CardInfoList").GetComponent<CardListManager>().RemoveUnitInfo(myUnitNum);
-            GameObject tomb = AccountManager.Instance.resource.unitDeadObject;
-            GameObject dropTomb = Instantiate(tomb);
-            dropTomb.transform.position = transform.position;
-
-            if (isPlayer) {
-                PlayMangement.instance.PlayerUnitsObserver.UnitRemoved(x, y);
-            }
-            else {
-                PlayMangement.instance.EnemyUnitsObserver.UnitRemoved(x, y);
-            }
-
-            dropTomb.GetComponent<DeadSpine>().target = gameObject;
-            dropTomb.GetComponent<DeadSpine>().StartAnimation(unit.ishuman);
+            UnitDead();
         }
     }
+
+    public void UnitDead() {
+        PlayMangement.instance.cardInfoCanvas.Find("CardInfoList").GetComponent<CardListManager>().RemoveUnitInfo(myUnitNum);
+        GameObject tomb = AccountManager.Instance.resource.unitDeadObject;
+        GameObject dropTomb = Instantiate(tomb);
+        dropTomb.transform.position = transform.position;
+
+        if (isPlayer) {
+            PlayMangement.instance.PlayerUnitsObserver.UnitRemoved(x, y);
+        }
+        else {
+            PlayMangement.instance.EnemyUnitsObserver.UnitRemoved(x, y);
+        }
+
+        dropTomb.GetComponent<DeadSpine>().target = gameObject;
+        dropTomb.GetComponent<DeadSpine>().StartAnimation(unit.ishuman);
+    }
+
 
     public void CheckDebuff() {
         poisonned poison = GetComponent<poisonned>();

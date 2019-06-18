@@ -24,6 +24,7 @@ public class DebugPlayer : MonoBehaviour
     public Vector3 unitClosePosition;
     public Vector3 wallPosition;
 
+    [SerializeField]
     protected DebugHeroSpine heroSpine;
     public static int activeCardMinCost;
 
@@ -36,6 +37,7 @@ public class DebugPlayer : MonoBehaviour
 
     private void Start() {
         HP = new ReactiveProperty<int>(20);
+        heroSpine = transform.Find("skeleton").GetComponent<DebugHeroSpine>();
         shieldCount = 3;
     }
 
