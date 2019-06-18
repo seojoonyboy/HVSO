@@ -27,7 +27,7 @@ namespace SkillModules {
         public field(SkillHandler mySkillHandler) : base(mySkillHandler) { }
 
         public override bool IsConditionSatisfied(GameObject summonedObject) {
-            return summonedObject.GetComponent<PlaceMonster>() != null;
+            return mySkillHandler.myObject.GetComponent<PlaceMonster>() != null;
         }
     }
 

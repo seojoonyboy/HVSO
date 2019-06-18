@@ -276,12 +276,12 @@ namespace SkillModules {
                 }
                 catch (Exception ex) {
                     if (ex is ArgumentException || ex is FormatException) {
-                        ShowFormatErrorLog("self_move");
+                        ShowFormatErrorLog("blast_enemy");
                     }
                 }
             }
             else {
-                ShowFormatErrorLog("self_move");
+                ShowFormatErrorLog("blast_enemy");
             }
             skillHandler.isDone = true;
         }

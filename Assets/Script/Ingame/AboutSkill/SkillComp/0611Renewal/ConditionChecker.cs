@@ -187,18 +187,15 @@ namespace SkillModules {
     }
 
     public class target_dmg_gte : ConditionChecker {
-        PlayedObject playedObject;
         
-        public target_dmg_gte(SkillHandler mySkillHandler, string[] args = null) : base(mySkillHandler, args) {
-            playedObject = new PlayedObject();
-        }
+        public target_dmg_gte(SkillHandler mySkillHandler, string[] args = null) : base(mySkillHandler, args) { }
 
-        public override bool IsConditionSatisfied() {
+        /*public override bool IsConditionSatisfied() {
             if(!ArgsExist()) return false;
             playedObject.IsValidateData(mySkillHandler.targetData);
             PlaceMonster playedMonster = playedObject.targetObject.GetComponent<PlaceMonster>();
             return playedMonster.unit.attack >= int.Parse(args[0]);
-        }
+        }*/
     }
 
     public class PlayedObject {
