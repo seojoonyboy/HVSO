@@ -379,6 +379,7 @@ public class PlaceMonster : MonoBehaviour {
             if (targetMonster != null)
                 myTarget.GetComponent<PlaceMonster>().ReturnPosition();
         }
+        myTarget = null;
     }
 
     private void SkipAttack() {
