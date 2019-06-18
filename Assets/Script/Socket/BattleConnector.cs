@@ -66,7 +66,7 @@ public partial class BattleConnector : MonoBehaviour {
 
     //Receive Socket Message
     private void ReceiveMessage(WebSocket webSocket, string message) {
-        //Debug.Log(message);
+        Debug.Log(message);
         OnReceiveSocketMessage.Invoke();
         ReceiveFormat result = JsonReader.Read<ReceiveFormat>(message);
         queue.Enqueue(result);
@@ -90,7 +90,7 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void UseCard(string[] args, UnityAction callback = null) {
-        SendMethod("play_card", args);
+        //SendMethod("play_card", args);
     }
 
     void Error(WebSocket webSocket, Exception ex) {

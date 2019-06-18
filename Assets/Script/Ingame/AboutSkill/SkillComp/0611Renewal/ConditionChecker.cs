@@ -190,7 +190,7 @@ namespace SkillModules {
     public class target_dmg_gte : ConditionChecker {
         PlayedObject playedObject;
         
-        private target_dmg_gte(SkillHandler mySkillHandler, string[] args = null) : base(mySkillHandler, args) {
+        public target_dmg_gte(SkillHandler mySkillHandler, string[] args = null) : base(mySkillHandler, args) {
             playedObject = new PlayedObject();
         }
 
