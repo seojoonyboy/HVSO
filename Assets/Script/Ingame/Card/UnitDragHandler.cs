@@ -47,9 +47,6 @@ public partial class UnitDragHandler : CardHandler, IBeginDragHandler, IDragHand
         CheckHighlight();
     }
 
-
-
-
     public void OnEndDrag(PointerEventData eventData) {
         if (firstDraw) return;
         if (gameObject != itsDragging) return;
