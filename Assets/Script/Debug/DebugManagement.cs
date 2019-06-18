@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DebugManagement : MonoBehaviour
 {
@@ -11,9 +12,16 @@ public class DebugManagement : MonoBehaviour
     public Camera ingameCamera;
     public Vector3 cameraPos;
     public GameObject unitDeadObject;
+    public Dropdown idDropDown;
+
+    public GameObject UnitCard;
+    public GameObject MagicCard;
 
     private void Awake() {
         instance = this;
+        Dictionary<string, CardData> cardData = transform.GetComponent<DebugData>().cardData;
+        List<string> keyList = new List<string>(cardData.Keys);
+        idDropDown.AddOptions(keyList);
     }
 
     private void Start() {
@@ -37,5 +45,11 @@ public class DebugManagement : MonoBehaviour
         }
         ingameCamera.orthographicSize = cameraSize;
         ingameCamera.transform.position = cameraPos;
+    }
+
+
+    public void GenerateCard() {
+
+
     }
 }
