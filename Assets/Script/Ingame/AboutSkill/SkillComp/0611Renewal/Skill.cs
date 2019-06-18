@@ -36,6 +36,7 @@ namespace SkillModules {
             string abilityClass = string.Format("SkillModules.{0}", dataSkill.effect.method);
             ability = MethodToClass<Ability>(dataSkill.effect.method, new Ability());
             ability.skillHandler = mySkillHandler;
+            ability.args = dataSkill.effect.args;
 
             //Component component = mySkillHandler.myObject.AddComponent(System.Type.GetType(abilityClass));
             //ability = component.GetComponent<Ability>();
@@ -91,11 +92,91 @@ namespace SkillModules {
             
             targetHandler.SelectTarget(
                 delegate {
-                    ability.Execute(targetHandler.GetTarget());
+                    ability.Execute(SetExecuteData(targetHandler.GetTarget(), ability.args));
                 },
                 null
             );
             return true;
+        }
+
+        private object SetExecuteData(List<GameObject> targets, object[] targetArgs) {
+            object result = null;
+
+            if (ability.GetType() == typeof(gain)) {
+                GainArgs args = new GainArgs();
+                int.TryParse((string)targetArgs[0], out args.atk);
+                int.TryParse((string)targetArgs[1], out args.hp);
+                result = new object[] { targets, args };
+            }
+            else if(ability.GetType() == typeof(give_attribute)) {
+                string attrName = (string)targetArgs[0];
+                result = new object[] { targets, attrName };
+            }
+            else if(ability.GetType() == typeof(set_skill_target)) {
+                result = targets[0];
+            }
+            else if(ability.GetType() == typeof(supply)) {
+                int num = 0;
+                result = int.TryParse((string)targetArgs[0], out num);
+            }
+            else if(ability.GetType() == typeof(hook)) {
+                bool isPlayer = mySkillHandler.isPlayer;
+                HookArgs args = new HookArgs();
+
+                FieldUnitsObserver observer = null;
+                if (isPlayer) observer = PlayMangement.instance.PlayerUnitsObserver;
+                else observer = PlayMangement.instance.EnemyUnitsObserver;
+
+                var pos = observer.GetMyPos(mySkillHandler.myObject);
+                args.col = pos.col;
+                args.row = 0;
+
+                result = new object[] { targets[0], args, isPlayer };
+            }
+            else if(ability.GetType() == typeof(quick)) {
+                result = targets[0];
+            }
+            else if(ability.GetType() == typeof(clear_skill_target)) {
+                result = targets[0];
+            }
+            else if(ability.GetType() == typeof(skill_target_move)) {
+                bool isPlayer = mySkillHandler.isPlayer;
+                SkillTargetArgs args = new SkillTargetArgs();
+
+                args.col = targets[0].transform.parent.GetSiblingIndex();
+                args.row = 0;
+
+                result = new object[] { targets[0], args, isPlayer };
+            }
+            else if(ability.GetType() == typeof(self_move)) {
+                bool isPlayer = mySkillHandler.isPlayer;
+                SelfMoveArgs args = new SelfMoveArgs();
+
+                args.col = targets[0].transform.parent.GetSiblingIndex();
+                args.row = 0;
+
+                result = new object[] { args, isPlayer };
+            }
+            else if(ability.GetType() == typeof(blast_enemy)) {
+                bool isPlayer = mySkillHandler.isPlayer;
+                int amount = 0;
+                int.TryParse((string)ability.args[0], out amount);
+
+                result = new object[] { isPlayer, targets, amount };
+            }
+            else if(ability.GetType() == typeof(r_return)) {
+                bool isPlayer = mySkillHandler.isPlayer;
+                result = new object[] { isPlayer };
+            }
+            else if(ability.GetType() == typeof(over_a_kill)) {
+                bool isPlayer = mySkillHandler.isPlayer;
+                result = new object[] { targets[0], isPlayer };
+            }
+            else if(ability.GetType() == typeof(give_attack_type)) {
+                string attrName = (string)ability.args[0];
+                result = new object[] { targets, attrName };
+            }
+            return result;
         }
     }
 }

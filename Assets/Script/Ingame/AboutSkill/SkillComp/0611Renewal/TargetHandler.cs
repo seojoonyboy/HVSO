@@ -68,6 +68,25 @@ namespace SkillModules {
             }
             return null;
         }
+
+        protected Transform GetClickedAreaSlot() {
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            LayerMask mask = (1 << LayerMask.NameToLayer("UnitSlot"));
+
+            RaycastHit2D[] hits = Physics2D.RaycastAll(
+                new Vector2(mousePos.x, mousePos.y),
+                Vector2.zero,
+                Mathf.Infinity,
+                mask
+            );
+
+            if (hits != null) {
+                foreach (RaycastHit2D hit in hits) {
+                    return hit.transform;
+                }
+            }
+            return null;
+        }
     }
 
     public class skill_target : TargetHandler {
@@ -197,8 +216,8 @@ namespace SkillModules {
                         result.Add(GetDropAreaUnit().gameObject);
                     }
                     else if (args[1] == "line") {
-                        var pos = playerObserver.GetMyPos(GetDropAreaUnit().gameObject);
-                        var targets = playerObserver.GetAllFieldUnits(pos.col);
+                        int col = transform.parent.GetSiblingIndex();
+                        var targets = playerObserver.GetAllFieldUnits(col);
                         foreach (GameObject target in targets) {
                             result.Add(target);
                         }
@@ -215,9 +234,9 @@ namespace SkillModules {
                         result.Add(GetDropAreaUnit().gameObject);
                     }
                     else if (args[1] == "line") {
-                        var pos = enemyObserver.GetMyPos(GetDropAreaUnit().gameObject);
-                        var targets = enemyObserver.GetAllFieldUnits(pos.col);
-                        foreach (GameObject target in targets) {
+                        int col = transform.parent.GetSiblingIndex();
+                        var targets = enemyObserver.GetAllFieldUnits(col);
+                        foreach(GameObject target in targets) {
                             result.Add(target);
                         }
                     }
@@ -235,14 +254,17 @@ namespace SkillModules {
 
     public class select : TargetHandler {
         SelectTargetFinished callback;
+        string arg;
+
         private void Update() {
             if (Input.GetMouseButtonDown(0)) {
-                var selectedTarget = GetClickedAreaUnit();
+                var selectedTarget = GetClickedAreaSlot();
 
                 if (selectedTarget != null) {
                     PlayMangement.instance.OffBlockPanel();
 
-                    SetTarget(selectedTarget);
+                    CardDropManager.Instance.HideDropableSlot();
+                    SetTarget(selectedTarget.gameObject);
                     callback(selectedTarget);
                 }
             }
@@ -250,9 +272,18 @@ namespace SkillModules {
 
         public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback) {
             base.SelectTarget(successCallback, failedCallback);
+            arg = args[1];
 
-            PlayMangement.instance.OnBlockPanel("대상을 지정해 주세요.");
-            callback = successCallback;
+            switch (args[0]) {
+                case "my":
+                    if(args.Length == 2 && args[1] == "place") {
+                        PlayMangement.instance.OnBlockPanel("대상을 지정해 주세요.");
+                        callback = successCallback;
+                        CardDropManager.Instance.ShowDropableSlot(GetComponent<CardHandler>().cardData);
+                    }
+                    break;
+                //case "enemy"
+            }
         }
 
         /// <summary></summary>

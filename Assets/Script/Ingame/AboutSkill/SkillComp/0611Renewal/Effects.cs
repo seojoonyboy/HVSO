@@ -6,6 +6,7 @@ using UnityEngine;
 namespace SkillModules {
     public partial class Ability {
         public SkillHandler skillHandler;
+        public object[] args;
 
         public virtual void Execute(object data) { Debug.Log("Please Define Excecute Func"); }
 
@@ -226,7 +227,7 @@ namespace SkillModules {
             if (data.GetType().IsArray) {
                 try {
                     object[] tmp = (object[])data;
-                    HookArgs args = (HookArgs)tmp[0];
+                    SelfMoveArgs args = (SelfMoveArgs)tmp[0];
                     bool isPlayer = (bool)tmp[1];
 
                     MoveUnit(ref args, isPlayer);
@@ -242,7 +243,7 @@ namespace SkillModules {
             }
         }
 
-        private void MoveUnit(ref HookArgs args, bool isPlayer) {
+        private void MoveUnit(ref SelfMoveArgs args, bool isPlayer) {
             FieldUnitsObserver observer;
             if (isPlayer) {
                 observer = PlayMangement.instance.PlayerUnitsObserver;
@@ -268,10 +269,10 @@ namespace SkillModules {
                 try {
                     object[] tmp = (object[])data;
                     bool isPlayer = (bool)tmp[0];
-                    int col = (int)tmp[1];
+                    List<GameObject> targets = (List<GameObject>)tmp[1];
                     int amount = (int)tmp[2];
 
-                    BlastEnemy(isPlayer, col, amount);
+                    BlastEnemy(isPlayer, targets, amount);
                 }
                 catch (Exception ex) {
                     if (ex is ArgumentException || ex is FormatException) {
@@ -285,18 +286,9 @@ namespace SkillModules {
             skillHandler.isDone = true;
         }
 
-        private void BlastEnemy(bool isPlayer, int col, int amount) {
-            FieldUnitsObserver observer;
-            if (isPlayer) {
-                observer = PlayMangement.instance.EnemyUnitsObserver;
-            }
-            else {
-                observer = PlayMangement.instance.PlayerUnitsObserver;
-            }
-
-            var units = observer.GetAllFieldUnits(col);
-            foreach(GameObject unit in units) {
-                unit.GetComponent<PlaceMonster>().RequestChangeStat(-amount, 0);
+        private void BlastEnemy(bool isPlayer, List<GameObject> targets, int amount) {
+            foreach(GameObject target in targets) {
+                target.GetComponent<PlaceMonster>().RequestChangeStat(-amount, 0);
             }
         }
     }
@@ -320,6 +312,8 @@ namespace SkillModules {
                         playerObserver = PlayMangement.instance.EnemyUnitsObserver;
                         enemyObserver = PlayMangement.instance.PlayerUnitsObserver;
                     }
+
+                    ReturnUnit(isPlayer);
                 }
                 catch (Exception ex) {
                     if (ex is ArgumentException || ex is FormatException) {
@@ -475,6 +469,11 @@ namespace SkillModules {
     }
 
     public struct SkillTargetArgs {
+        public int col;
+        public int row;
+    }
+
+    public struct SelfMoveArgs {
         public int col;
         public int row;
     }
