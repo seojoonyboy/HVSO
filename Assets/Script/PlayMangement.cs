@@ -30,7 +30,8 @@ public partial class PlayMangement : MonoBehaviour {
     public bool heroShieldActive = false;
     public GameObject humanShield, orcShield;
     public static GameObject movingCard;
-    
+    public static bool dragable = true;
+
     private void Awake()
     {
         socketHandler = FindObjectOfType<BattleConnector>();
@@ -303,7 +304,6 @@ public partial class PlayMangement : MonoBehaviour {
 
     public void ChangeTurn() {
         if (isGame == false) return;
-
         string currentTurn = Variables.Scene(
                 UnityEngine.SceneManagement.SceneManager.GetActiveScene()
             ).Get("CurrentTurn").ToString();
@@ -375,6 +375,7 @@ public partial class PlayMangement : MonoBehaviour {
 
     IEnumerator battleCoroutine() {
         int line = 0;
+        dragable = false;
         yield return new WaitForSeconds(1.1f);
         while (line < 5) {
             yield return battleLine(line);
@@ -391,6 +392,7 @@ public partial class PlayMangement : MonoBehaviour {
         yield return new WaitForSeconds(2.0f);
         CustomEvent.Trigger(gameObject, "EndTurn");
         StopCoroutine("battleCoroutine");
+        dragable = true;
     }
 
     IEnumerator battleLine(int line) {

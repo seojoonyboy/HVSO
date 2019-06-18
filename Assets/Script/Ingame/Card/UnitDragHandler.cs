@@ -10,6 +10,7 @@ using System.Linq;
 
 public partial class UnitDragHandler : CardHandler, IBeginDragHandler, IDragHandler, IEndDragHandler {
     public void OnBeginDrag(PointerEventData eventData) {
+        if (!PlayMangement.dragable) return;
         if (firstDraw || PlayMangement.instance.isMulligan) return;
         if (Input.touchCount > 1) return;
         if (PlayMangement.instance.player.dragCard) return;
@@ -34,6 +35,10 @@ public partial class UnitDragHandler : CardHandler, IBeginDragHandler, IDragHand
         if (firstDraw) return;
         if (Input.touchCount > 1) return;
         if (gameObject != itsDragging) return;
+        if (!PlayMangement.dragable) {
+            OnEndDrag(null);
+            return;
+        }
         Vector3 cardScreenPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         cardScreenPos = new Vector3(cardScreenPos.x, cardScreenPos.y + 0.3f, 0);
         transform.position = cardScreenPos;
