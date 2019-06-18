@@ -93,6 +93,10 @@ public partial class BattleConnector : MonoBehaviour {
         //SendMethod("play_card", args);
     }
 
+    public void UnitSkillActivate(string[] args) {
+        //SendMethod("unit_skill_activate", args);
+    }
+
     void Error(WebSocket webSocket, Exception ex) {
         Debug.LogWarning(ex);
     }
@@ -224,6 +228,10 @@ public partial class BattleConnector : MonoBehaviour {
     public void end_orc_post_turn() {
         //Debug.Log("WebSocket State : end_orc_post_turn");
         useCardList.isDone = true;
+    }
+
+    public void unit_skill_activate() {
+        //Debug.Log("WebSocket State : unit_skill_activate");
     }
 
     public void begin_battle_turn() {

@@ -191,5 +191,9 @@ namespace SkillModules {
             if(targetHandler.args.Length < 2) return null;
             return targetHandler.args[1];
         }
+
+        public string targetCamp() {
+            return targetHandler.args[0];
+        }
     }
 }

@@ -74,7 +74,7 @@ namespace SkillModules {
 
         private void MagicSendSocket () {
             BattleConnector connector = PlayMangement.instance.socketHandler;
-            MessageFormat format = MessageForm();
+            //MessageFormat format = MessageForm();
 
             //connector.UseCard(args);
             //MonoBehaviour.Destroy(myObject);
@@ -90,6 +90,49 @@ namespace SkillModules {
             args1.args = new string[]{};
             return format;
 
+        }
+
+        private string[] ArgumentForm(string method, Skill skill) {
+            PlayerController player = isPlayer ? PlayMangement.instance.player : PlayMangement.instance.enemyPlayer;
+            bool isPlayerHuman = player.isHuman;
+            bool isOrc;
+            List<string> args = new List<string>();
+            switch(method) {
+                case "all":
+                isOrc = (skill.targetCamp().CompareTo("my") == 0) != isPlayerHuman;
+                args.Add(isOrc ? "orc" : "human");
+                break;
+                case "line":
+                args.Add(GetDropAreaLine().ToString());
+                break;
+                case "unit":
+                args.Add(GetDropAreaUnit().itemId.ToString());
+                break;
+                case "place":
+                //TODO : 나중에 선택 되는 놈은 GetDropAreaUnit()이나 GetDropAreaLine()으로 가져와지질 않는다는 문제점이 있다
+                //args.Add(GetDropAreaLine().ToString());
+                //isOrc = GetDropAreaUnit().isPlayer != isPlayerHuman;
+                //TODO : front or rear 찾기
+                break;
+                case "camp":
+                isOrc = (skill.targetCamp().CompareTo("my") == 0) != isPlayerHuman;
+                args.Add(isOrc ? "orc" : "human");
+                break;
+            }
+            return args.ToArray();
+        }
+
+        private PlaceMonster GetDropAreaUnit() {
+            return myObject.GetComponent<CardHandler>()
+                .highlightedSlot
+                .GetComponentInParent<PlaceMonster>();
+        }
+        
+        private int GetDropAreaLine() {
+            return myObject.GetComponent<CardHandler>()
+                .highlightedSlot
+                .GetComponentInParent<Terrain>()
+                .transform.GetSiblingIndex();
         }
     }
 }
