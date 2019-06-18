@@ -16,6 +16,7 @@ namespace SkillModules {
 
         public bool isDone = false;
 
+        public SkillHandler skillHandler;
         /// <summary>
         /// 타겟을 지정하는 단계를 시작
         /// </summary>
@@ -32,7 +33,7 @@ namespace SkillModules {
 
         public List<GameObject> GetTarget() {
             if(targets == null || targets.Count == 0) {
-                Debug.LogError("Target이 제대로 지정되지 않았습니다.");
+                Logger.LogError("Target이 제대로 지정되지 않았습니다.");
             }
             return targets;
         }
@@ -93,7 +94,7 @@ namespace SkillModules {
         public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback) {
             base.SelectTarget(successCallback, failedCallback);
 
-            var target = GetDropAreaUnit();
+            var target = skillHandler.skillTarget;
             if (target == null) {
                 failedCallback("타겟을 찾을 수 없습니다.");
                 return;

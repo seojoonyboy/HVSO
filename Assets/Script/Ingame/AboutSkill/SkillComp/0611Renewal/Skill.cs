@@ -33,6 +33,7 @@ namespace SkillModules {
             if(targetComponent != null) {
                 targetHandler = targetComponent.GetComponent<TargetHandler>();
                 targetHandler.args = dataSkill.target.args;
+                targetHandler.skillHandler = mySkillHandler;
             }
 
             string abilityClass = string.Format("SkillModules.{0}", dataSkill.effect.method);
@@ -75,6 +76,7 @@ namespace SkillModules {
         }
 
         public bool Trigger(IngameEventHandler.EVENT_TYPE triggerType, object parms) {
+            Logger.Log(mySkillHandler.myObject);
             GameObject obj = null;
             PlayedObject parmsObject = new PlayedObject();
             if(parmsObject.IsValidateData(parms)) 
@@ -91,12 +93,15 @@ namespace SkillModules {
             foreach(ConditionChecker checker in conditionCheckers) 
                 condition = condition && checker.IsConditionSatisfied();
             if(!condition) return false;
-            
+
             targetHandler.SelectTarget(
                 delegate {
                     ability.Execute(SetExecuteData(targetHandler.GetTarget(), ability.args));
                 },
-                null
+                delegate {
+                    Logger.Log("타겟이 없습니다.");
+                    mySkillHandler.isDone = true;
+                }
             );
             return true;
         }
