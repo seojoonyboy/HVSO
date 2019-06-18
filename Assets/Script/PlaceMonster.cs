@@ -424,7 +424,7 @@ public class PlaceMonster : MonoBehaviour {
             targetMonster.UpdateStat();
             targetMonster.SetState(UnitState.HIT);
 
-            object[] parms = new object[] { isPlayer, gameObject };
+            object[] parms = new object[] { !isPlayer, targetMonster.gameObject };
             PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_ATTACK, this, parms);
         }
     }
