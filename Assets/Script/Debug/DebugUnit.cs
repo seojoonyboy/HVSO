@@ -277,7 +277,6 @@ public class DebugUnit : MonoBehaviour
 
     public void AttackEffect(GameObject target = null) {
         DebugUnit targetMonster = target.GetComponent<DebugUnit>();
-        Spine.Unity.SkeletonAnimation effectAnimation;
         Vector3 targetPos = (targetMonster != null) ? target.transform.position : new Vector3(gameObject.transform.position.x, myTarget.GetComponent<DebugPlayer>().wallPosition.y, 0);
 
         if (unit.attack <= 3) {
@@ -286,12 +285,12 @@ public class DebugUnit : MonoBehaviour
             SoundManager.Instance.PlaySound(SoundType.NORMAL_ATTACK);
         }
         else if (unit.attack > 3) {
-            if (unit.attack > 3 && unit.attack <= 6) {
+            if (unit.attack > 3 && unit.attack <= 5) {
                 EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.HIT_MIDDLE, targetPos);
                 SoundManager.Instance.PlaySound(SoundType.MIDDLE_ATTACK);
                 StartCoroutine(DebugManagement.instance.cameraShake(unitSpine.atkDuration / 2, 2));
             }
-            else if (unit.attack > 6) {
+            else if (unit.attack > 5) {
                 EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.HIT_HIGH, targetPos);
                 SoundManager.Instance.PlaySound(SoundType.LARGE_ATTACK);
                 StartCoroutine(DebugManagement.instance.cameraShake(unitSpine.atkDuration / 2, 3));
