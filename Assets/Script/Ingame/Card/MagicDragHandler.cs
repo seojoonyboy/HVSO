@@ -63,10 +63,13 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
     }
 
     public void OnDrag(PointerEventData eventData) {
-        if (!PlayMangement.dragable) OnEndDrag(null);
         if (firstDraw) return;
         if (Input.touchCount > 1) return;
         if (gameObject != itsDragging) return;
+        if (!PlayMangement.dragable) {
+            OnEndDrag(null);
+            return;
+        }
         Vector3 cardScreenPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         cardScreenPos = new Vector3(cardScreenPos.x, cardScreenPos.y + 0.3f, 0);
         transform.position = cardScreenPos;
