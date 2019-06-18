@@ -62,6 +62,7 @@ public partial class UnitDragHandler : CardHandler, IBeginDragHandler, IDragHand
 
                 object[] parms = new object[] { true, unitPref };
                 PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
+                PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.FIELD_CHANGED, null, null);
             }
         }
 

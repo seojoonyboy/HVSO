@@ -30,8 +30,10 @@ namespace SkillModules {
             //targetHandler = MethodToClass<TargetHandler>(dataSkill.target.method, new TargetHandler(dataSkill.target.args), mySkillHandler);
             string targetClass = string.Format("SkillModules.{0}", dataSkill.target.method);
             Component targetComponent = mySkillHandler.myObject.AddComponent(System.Type.GetType(targetClass));
-            targetHandler = targetComponent.GetComponent<TargetHandler>();
-            targetHandler.args = dataSkill.target.args;
+            if(targetComponent != null) {
+                targetHandler = targetComponent.GetComponent<TargetHandler>();
+                targetHandler.args = dataSkill.target.args;
+            }
 
             string abilityClass = string.Format("SkillModules.{0}", dataSkill.effect.method);
             ability = MethodToClass<Ability>(dataSkill.effect.method, new Ability());
