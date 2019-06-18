@@ -507,6 +507,7 @@ public class PlaceMonster : MonoBehaviour {
     }
 
     public void UnitDead() {
+        unit.currentHP = 0;
         PlayMangement.instance.cardInfoCanvas.Find("CardInfoList").GetComponent<CardListManager>().RemoveUnitInfo(myUnitNum);
         GameObject tomb = AccountManager.Instance.resource.unitDeadObject;
         GameObject dropTomb = Instantiate(tomb);
