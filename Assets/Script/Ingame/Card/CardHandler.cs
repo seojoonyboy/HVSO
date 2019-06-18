@@ -29,7 +29,6 @@ public partial class CardHandler : MonoBehaviour {
 
     protected bool highlighted = false;
     public Transform highlightedSlot;
-    public Transform highlightedLine;
 
     public CardData cardData;
     public CardDataPackage cardDataPackage;

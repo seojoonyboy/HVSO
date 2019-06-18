@@ -49,6 +49,12 @@ namespace SkillModules {
                 .transform;
         }
 
+        protected int GetDropLine() {
+            Transform highlightedSlot = GetComponent<CardHandler>().highlightedSlot;
+            int row = highlightedSlot.parent.GetSiblingIndex();
+            return row;
+        }
+
         protected Transform GetClickedAreaUnit() {
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             LayerMask mask1 = (1 << LayerMask.NameToLayer("PlayerUnit"));
@@ -217,7 +223,7 @@ namespace SkillModules {
                         result.Add(GetDropAreaUnit().gameObject);
                     }
                     else if (args[1] == "line") {
-                        int col = transform.parent.GetSiblingIndex();
+                        int col = GetDropLine();
                         var targets = playerObserver.GetAllFieldUnits(col);
                         foreach (GameObject target in targets) {
                             result.Add(target);
@@ -235,7 +241,7 @@ namespace SkillModules {
                         result.Add(GetDropAreaUnit().gameObject);
                     }
                     else if (args[1] == "line") {
-                        int col = transform.parent.GetSiblingIndex();
+                        int col = GetDropLine();
                         var targets = enemyObserver.GetAllFieldUnits(col);
                         foreach(GameObject target in targets) {
                             result.Add(target);
