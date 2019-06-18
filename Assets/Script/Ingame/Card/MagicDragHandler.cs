@@ -13,6 +13,7 @@ using UnityEngine.Events;
 public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHandler, IEndDragHandler {
 
     public void OnBeginDrag(PointerEventData eventData) {
+        if (!PlayMangement.dragable) return;
         if (firstDraw || PlayMangement.instance.isMulligan) return;
         if (Input.touchCount > 1) return;
         if (PlayMangement.instance.player.dragCard) return;
@@ -62,6 +63,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
     }
 
     public void OnDrag(PointerEventData eventData) {
+        if (!PlayMangement.dragable) OnEndDrag(null);
         if (firstDraw) return;
         if (Input.touchCount > 1) return;
         if (gameObject != itsDragging) return;

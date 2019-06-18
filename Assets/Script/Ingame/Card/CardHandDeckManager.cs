@@ -129,7 +129,7 @@ public class CardHandDeckManager : MonoBehaviour {
 
     public void AddCard(GameObject cardobj = null, SocketFormat.Card cardData = null) {
         GameObject card;
-
+        PlayMangement.dragable = false;
         if (cardobj == null) {
             if (cardData.type == "unit")
                 card = Instantiate(unitCardPrefab, cardSpawnPos);
@@ -238,7 +238,8 @@ public class CardHandDeckManager : MonoBehaviour {
     }
 
     public IEnumerator AddMultipleCard(SocketFormat.Card[] cardData) {
-        List<GameObject> cards = new List<GameObject>();
+        PlayMangement.dragable = false;
+        List <GameObject> cards = new List<GameObject>();
         //List<Transform> targets = new List<Transform>();        
         for (int i = cardNum; i < cardData.Length; i++) {
             GameObject card;
@@ -376,6 +377,7 @@ public class CardHandDeckManager : MonoBehaviour {
         foreach(GameObject card in cardList) {
             card.transform.localPosition = new Vector3(0, 0, 0);
         }
+        PlayMangement.dragable = true;
     }
 
     public void DestroyCard(int index) {
