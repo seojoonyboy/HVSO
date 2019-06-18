@@ -31,7 +31,8 @@ namespace SkillModules {
             string targetClass = string.Format("SkillModules.{0}", dataSkill.target.method);
             Component targetComponent = mySkillHandler.myObject.AddComponent(System.Type.GetType(targetClass));
             if(targetComponent != null) {
-                targetHandler = targetComponent.GetComponent<TargetHandler>();
+                var lists = targetComponent.GetComponents<TargetHandler>();
+                targetHandler = lists.Last();
                 targetHandler.args = dataSkill.target.args;
                 targetHandler.skillHandler = mySkillHandler;
             }
@@ -184,6 +185,11 @@ namespace SkillModules {
                 result = new object[] { targets, attrName };
             }
             return result;
+        }
+
+        public string firstTargetArgs() {
+            if(targetHandler.args.Length < 2) return null;
+            return targetHandler.args[1];
         }
     }
 }

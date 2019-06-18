@@ -73,7 +73,6 @@ namespace SkillModules {
         public override bool IsConditionSatisfied() {
             string conditionTerrain = args[0];
             FieldUnitsObserver observer = mySkillHandler.isPlayer ? playerObserver : enemyObserver;
-            observer.GetMyPos(mySkillHandler.myObject);
             string myTerrain = mySkillHandler.myObject.GetComponentInParent<Terrain>().terrain.ToString();//.CompareTo(terrain) == 0
             bool isConditionTerrain = myTerrain.CompareTo(conditionTerrain) == 0;
             return isConditionTerrain;
