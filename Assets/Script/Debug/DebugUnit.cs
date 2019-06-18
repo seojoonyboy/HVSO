@@ -278,36 +278,29 @@ public class DebugUnit : MonoBehaviour
     public void AttackEffect(GameObject target = null) {
         DebugUnit targetMonster = target.GetComponent<DebugUnit>();
         Spine.Unity.SkeletonAnimation effectAnimation;
+        Vector3 targetPos = (targetMonster != null) ? target.transform.position : new Vector3(gameObject.transform.position.x, myTarget.GetComponent<DebugPlayer>().wallPosition.y, 0);
 
         if (unit.attack <= 3) {
-            GameObject effect = Instantiate(DebugManagement.instance.spineEffectManager.lowAttackEffect);
-            effectAnimation = effect.GetComponent<Spine.Unity.SkeletonAnimation>();
-            effect.transform.position = (targetMonster != null) ? target.transform.position : new Vector3(gameObject.transform.position.x, myTarget.GetComponent<DebugPlayer>().wallPosition.y, 0);
-            effectAnimation.AnimationState.SetAnimation(0, "animation", false);
-            Destroy(effect, effectAnimation.skeleton.Data.FindAnimation("animation").Duration - 0.1f);
+            EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.HIT_LOW, targetPos);
             StartCoroutine(DebugManagement.instance.cameraShake(unitSpine.atkDuration / 2, 1));
-            //SoundManager.Instance.PlaySound(SoundType.NORMAL_ATTACK);
+            SoundManager.Instance.PlaySound(SoundType.NORMAL_ATTACK);
         }
         else if (unit.attack > 3) {
-            GameObject effect = (unit.attack < 6) ? Instantiate(DebugManagement.instance.spineEffectManager.middileAttackEffect) : Instantiate(DebugManagement.instance.spineEffectManager.highAttackEffect);
-            effectAnimation = effect.GetComponent<Spine.Unity.SkeletonAnimation>();
-            effect.transform.position = (targetMonster != null) ? target.transform.position : new Vector3(gameObject.transform.position.x, myTarget.GetComponent<DebugPlayer>().wallPosition.y, 0);
-            Destroy(effect, effectAnimation.skeleton.Data.FindAnimation("animation").Duration - 0.1f);
-
             if (unit.attack > 3 && unit.attack <= 6) {
-                //SoundManager.Instance.PlaySound(SoundType.MIDDLE_ATTACK);
+                EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.HIT_MIDDLE, targetPos);
+                SoundManager.Instance.PlaySound(SoundType.MIDDLE_ATTACK);
                 StartCoroutine(DebugManagement.instance.cameraShake(unitSpine.atkDuration / 2, 2));
             }
             else if (unit.attack > 6) {
-                //SoundManager.Instance.PlaySound(SoundType.LARGE_ATTACK);
+                EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.HIT_HIGH, targetPos);
+                SoundManager.Instance.PlaySound(SoundType.LARGE_ATTACK);
                 StartCoroutine(DebugManagement.instance.cameraShake(unitSpine.atkDuration / 2, 3));
             }
         }
     }
 
     public void InstanceKilled() {
-        unit.currentHP = 0;
-        CheckHP();
+        UnitDead();
     }
 
 
@@ -394,22 +387,29 @@ public class DebugUnit : MonoBehaviour
     }
 
     public void CheckHP() {
-        if (unit.currentHP <= 0) {;
-            GameObject tomb = DebugManagement.instance.unitDeadObject;
-            GameObject dropTomb = Instantiate(tomb);
-            dropTomb.transform.position = transform.position;
-
-            if (isPlayer) {
-                //DebugManagement.instance.PlayerUnitsObserver.UnitRemoved(x, y);
-            }
-            else {
-                //DebugManagement.instance.EnemyUnitsObserver.UnitRemoved(x, y);
-            }
-
-            dropTomb.GetComponent<DeadSpine>().target = gameObject;
-            dropTomb.GetComponent<DeadSpine>().StartAnimation(unit.ishuman);
+        if (unit.currentHP <= 0) {
+            UnitDead();
         }
     }
+
+    public void UnitDead() {
+        unit.currentHP = 0;
+        GameObject tomb = DebugManagement.instance.unitDeadObject;
+        GameObject dropTomb = Instantiate(tomb);
+        dropTomb.transform.position = transform.position;
+
+        if (isPlayer) {
+            //DebugManagement.instance.PlayerUnitsObserver.UnitRemoved(x, y);
+        }
+        else {
+            //DebugManagement.instance.EnemyUnitsObserver.UnitRemoved(x, y);
+        }
+
+        dropTomb.GetComponent<DeadSpine>().target = gameObject;
+        dropTomb.GetComponent<DeadSpine>().StartAnimation(unit.ishuman);
+    }
+
+
 
     public void CheckDebuff() {
         poisonned poison = GetComponent<poisonned>();
