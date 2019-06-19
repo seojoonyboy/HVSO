@@ -76,6 +76,25 @@ namespace SkillModules {
             return null;
         }
 
+        protected Transform GetClickedAreaUnit(string layer) {
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            LayerMask mask = (1 << LayerMask.NameToLayer(layer));
+
+            RaycastHit2D[] hits = Physics2D.RaycastAll(
+                new Vector2(mousePos.x, mousePos.y),
+                Vector2.zero,
+                Mathf.Infinity,
+                mask
+            );
+
+            if (hits != null) {
+                foreach (RaycastHit2D hit in hits) {
+                    return hit.transform;
+                }
+            }
+            return null;
+        }
+
         protected Transform GetClickedAreaSlot() {
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             LayerMask mask = (1 << LayerMask.NameToLayer("UnitSlot"));
@@ -261,11 +280,20 @@ namespace SkillModules {
 
     public class select : TargetHandler {
         SelectTargetFinished callback;
-        string arg;
 
         private void Update() {
             if (Input.GetMouseButtonDown(0)) {
-                var selectedTarget = GetClickedAreaSlot();
+                Transform selectedTarget = null;
+                if (args[1] == "place") {
+                    selectedTarget = GetClickedAreaSlot();
+                }
+                else if(args[1] == "unit") {
+                    string layer = "PlayerUnit";
+                    if(args[0] == "enemy") {
+                        layer = "EnemyUnit";
+                    }
+                    selectedTarget = GetClickedAreaUnit(layer);
+                }
 
                 if (selectedTarget != null) {
                     PlayMangement.instance.OffBlockPanel();
@@ -279,7 +307,6 @@ namespace SkillModules {
 
         public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback) {
             base.SelectTarget(successCallback, failedCallback);
-            arg = args[1];
 
             switch (args[0]) {
                 case "my":
@@ -287,6 +314,17 @@ namespace SkillModules {
                         PlayMangement.instance.OnBlockPanel("대상을 지정해 주세요.");
                         callback = successCallback;
                         CardDropManager.Instance.ShowDropableSlot(GetComponent<CardHandler>().cardData);
+                    }
+                    if (args.Length == 2 && args[1] == "unit") {
+                        PlayMangement.instance.OnBlockPanel("대상을 지정해 주세요.");
+                        callback = successCallback;
+                        var units = PlayMangement.instance.PlayerUnitsObserver.GetAllFieldUnits();
+                        foreach(GameObject unit in units) {
+                            var ui = unit.transform.Find("ClickableUI").gameObject;
+                            if(ui != null) {
+                                ui.SetActive(true);
+                            }
+                        }
                     }
                     break;
                 //case "enemy"
