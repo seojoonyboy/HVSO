@@ -8,7 +8,6 @@ public class DebugUnitDragHandler : DebugCardHandler, IBeginDragHandler, IDragHa
 
 
     public void OnBeginDrag(PointerEventData eventData) {
-        if (PlayMangement.instance.player.dragCard) return;
         DebugCardInfoOnDrag.instance.SetPreviewUnit(cardData.cardId);
         if (cardData.skills.Length != 0)
             DebugCardInfoOnDrag.instance.SetCardDragInfo(null, transform.localPosition, cardData.skills[0].desc);
@@ -18,9 +17,9 @@ public class DebugUnitDragHandler : DebugCardHandler, IBeginDragHandler, IDragHa
         transform.SetParent(DebugManagement.Instance.cardDragCanvas);
         itsDragging = gameObject;
         blockButton = DebugManagement.Instance.player.dragCard = true;
-        PlayMangement.instance.player.isPicking.Value = true;
+        DebugManagement.Instance.player.isPicking.Value = true;
 
-        CardDropManager.Instance.ShowDropableSlot(cardData);
+        DebugCardDropManager.Instance.ShowDropableSlot(cardData);
 
         object[] parms = new object[] { true, gameObject };
     }
@@ -37,7 +36,7 @@ public class DebugUnitDragHandler : DebugCardHandler, IBeginDragHandler, IDragHa
         cardScreenPos = new Vector3(cardScreenPos.x, cardScreenPos.y + 0.3f, 0);
         transform.position = cardScreenPos;
         CheckLocation();
-        CardInfoOnDrag.instance.SetInfoPosOnDrag(transform.localPosition);
+        DebugCardInfoOnDrag.instance.SetInfoPosOnDrag(transform.localPosition);
         CheckHighlight();
     }
 
@@ -59,7 +58,7 @@ public class DebugUnitDragHandler : DebugCardHandler, IBeginDragHandler, IDragHa
             if (unitPref != null) {
                 if (unitPref.GetComponent<DebugUnit>().unit.name == "방패병") {
                     Debug.Log("방패병!!!!");
-                    unitPref.AddComponent<TmpBuff>();
+                    unitPref.AddComponent<DebugTmpBuff>();
                 }
                 else {
                     foreach (dataModules.Skill skill in cardData.skills) {
@@ -69,7 +68,7 @@ public class DebugUnitDragHandler : DebugCardHandler, IBeginDragHandler, IDragHa
                                 Debug.LogError(effect.method + "에 해당하는 컴포넌트를 찾을 수 없습니다.");
                             }
                             else {
-                                ((Ability)newComp).InitData(skill, true);
+                                //((DebugAbility)newComp).InitData(skill, true);
                             }
                         }
                     }
@@ -78,8 +77,8 @@ public class DebugUnitDragHandler : DebugCardHandler, IBeginDragHandler, IDragHa
             }
         }
 
-        CardDropManager.Instance.HideDropableSlot();
-        CardInfoOnDrag.instance.OffCardDragInfo();
+        DebugCardDropManager.Instance.HideDropableSlot();
+        DebugCardInfoOnDrag.instance.OffCardDragInfo();
     }
 
 }

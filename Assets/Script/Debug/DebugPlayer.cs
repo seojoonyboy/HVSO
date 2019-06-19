@@ -16,6 +16,7 @@ public class DebugPlayer : MonoBehaviour
     public GameObject frontLine;
     public GameObject playerUI;
     GameObject costUI;
+    public GameObject debugUnit;
 
     public ReactiveProperty<int> HP;
     public ReactiveProperty<int> resource = new ReactiveProperty<int>(2);
@@ -42,6 +43,9 @@ public class DebugPlayer : MonoBehaviour
     private void Start() {
         HP = new ReactiveProperty<int>(20);
         heroSpine = transform.Find("skeleton").GetComponent<DebugHeroSpine>();
+
+        if (isPlayer == true)
+            DebugCardDropManager.Instance.SetUnitDropPos();
         shieldCount = 3;
     }
 

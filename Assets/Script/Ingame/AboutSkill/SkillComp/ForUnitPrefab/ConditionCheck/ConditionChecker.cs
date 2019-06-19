@@ -55,5 +55,22 @@ namespace SkillModules {
             return true;
         }
     }
+
+    public class DebugConditionChecker : ConditionChecker {
+        public override void Init(Skill data, Condition condition, bool isPlayer) {
+            this.data = data;
+            this.isPlayer = isPlayer;
+            this.condition = condition;
+
+            if (isPlayer) {
+                playerUnitsObserver = DebugManagement.Instance.PlayerUnitsObserver;
+                enemyUnitsObserver = DebugManagement.Instance.EnemyUnitsObserver;
+            }
+            else {
+                playerUnitsObserver = DebugManagement.Instance.EnemyUnitsObserver;
+                enemyUnitsObserver = DebugManagement.Instance.PlayerUnitsObserver;
+            }
+        }
+    }
 }
 

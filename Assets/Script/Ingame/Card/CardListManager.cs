@@ -11,11 +11,11 @@ public class CardListManager : MonoBehaviour
 {
     [SerializeField] GameObject cardPrefab;
     [SerializeField] Transform contentParent;
-    [SerializeField] Transform standbyInfo;
+    [SerializeField] protected Transform standbyInfo;
     [SerializeField] GameObject infoPrefab;
-    [SerializeField] Transform mulliganInfoList;
+    [SerializeField] protected Transform mulliganInfoList;
     Animator animator;
-    HorizontalScrollSnap hss;
+    protected HorizontalScrollSnap hss;
 
     void Start()
     {
@@ -25,7 +25,7 @@ public class CardListManager : MonoBehaviour
         hss = transform.GetComponentInChildren<HorizontalScrollSnap>();
     }
 
-    public void AddCardInfo(CardData data, string id) {
+    public virtual void AddCardInfo(CardData data, string id) {
         GameObject newcard = standbyInfo.GetChild(0).gameObject;
         SetCardInfo(newcard, data);
         hss.AddChild(newcard);
@@ -39,7 +39,7 @@ public class CardListManager : MonoBehaviour
             unitSpine.SetActive(false);
     }
 
-    public void AddMulliganCardInfo(CardData data, string id, int changeNum = 100) {
+    public virtual void AddMulliganCardInfo(CardData data, string id, int changeNum = 100) {
         GameObject newcard;
         if (changeNum == 100) {
             newcard = standbyInfo.GetChild(0).gameObject;
@@ -126,7 +126,7 @@ public class CardListManager : MonoBehaviour
         hss.GoToScreen(cardnum);
     }
 
-    public void SetCardInfo(GameObject obj, CardData data) {
+    public virtual void SetCardInfo(GameObject obj, CardData data) {
         Transform info = obj.transform.GetChild(0);
         info.Find("Name/NameText").GetComponent<Text>().text = data.name;
         if (data.rarelity != "legend") {
@@ -170,7 +170,7 @@ public class CardListManager : MonoBehaviour
     }
 
 
-    public void OpenUnitInfoWindow(Vector3 inputPos) {
+    public virtual void OpenUnitInfoWindow(Vector3 inputPos) {
         if (Input.GetMouseButtonDown(0)) {
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(inputPos);
 
@@ -195,7 +195,7 @@ public class CardListManager : MonoBehaviour
         }
     }
 
-    public void CloseUnitInfoWindow() {
+    public virtual void CloseUnitInfoWindow() {
         transform.Find("FieldUnitInfo").gameObject.SetActive(false);
         for (int i = 0; i < transform.Find("FieldUnitInfo").childCount; i++) {
             transform.Find("FieldUnitInfo").GetChild(i).gameObject.SetActive(false);

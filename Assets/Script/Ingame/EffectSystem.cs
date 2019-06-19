@@ -7,6 +7,7 @@ public class EffectSystem : MonoBehaviour
     public static EffectSystem Instance { get; private set; }
     public Dictionary<EffectType, GameObject> effectObject;
     public SpineEffectManager spineEffectManager;
+    public GameObject deadEffect;
 
     private void Awake() {
         Instance = this;

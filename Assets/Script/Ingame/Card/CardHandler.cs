@@ -10,7 +10,7 @@ using SkillModules;
 public partial class CardHandler : MonoBehaviour {
     public GameObject unit;
     public GameObject skeleton;
-    CardListManager csm;
+    protected CardListManager csm;
     protected bool blockButton = false;
     protected bool firstDraw = false;
     public bool changeSelected = false;
@@ -46,7 +46,7 @@ public partial class CardHandler : MonoBehaviour {
         csm = PlayMangement.instance.cardInfoCanvas.Find("CardInfoList").GetComponent<CardListManager>();
     }
 
-    public void DrawCard(string ID, int itemID = -1, bool first = false) {
+    public virtual void DrawCard(string ID, int itemID = -1, bool first = false) {
         cardDataPackage = AccountManager.Instance.cardPackage;
         cardID = ID;
         //cardID = "ac10002";    //테스트 코드
@@ -79,7 +79,7 @@ public partial class CardHandler : MonoBehaviour {
         }
     }
 
-    public void CheckHighlight() {
+    public virtual void CheckHighlight() {
         if (!highlighted) {
             highlightedSlot = CheckSlot();
             if (highlightedSlot != null) {
@@ -102,7 +102,7 @@ public partial class CardHandler : MonoBehaviour {
             }
         }
     }
-    protected void CheckLocation(bool off = false) {
+    protected virtual void CheckLocation(bool off = false) {
         if (off) {
             pointOnFeild = false;
             if(cardData.type == "unit")
@@ -239,7 +239,7 @@ public partial class CardHandler : MonoBehaviour {
         transform.Find("Cost").GetComponent<Image>().color = Color.gray;
     }
 
-    public void ActivateCard() {
+    public virtual void ActivateCard() {
         if (PlayMangement.instance.player.resource.Value - cardData.cost >= 0) {
             isDropable = true;
             if (cardData.cost <= PlayerController.activeCardMinCost)

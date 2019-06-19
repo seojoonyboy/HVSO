@@ -3,70 +3,20 @@ using Spine.Unity;
 using Spine;
 using UnityEngine.Events;
 
-public class DebugUnitSpine : MonoBehaviour
+public class DebugUnitSpine : UnitSpine
 {
-    [SpineAnimation]
-    public string idleAnimationName;
-    [SpineAnimation]
-    public string appearAnimationName;
-    [SpineAnimation]
-    public string attackAnimationName;
-    [SpineAnimation]
-    public string hitAnimationName;
-    [SpineAnimation]
-    public string previewAnimationName;
-
-    [SpineAnimation]
-    public string rangeUpAttackName;
-    [SpineAnimation]
-    public string rangeDownAttackName;
-    [SpineAnimation]
-    public string generalAttackName;
-
-
-
-
-    [SpineEvent]
-    public string attackEventName;
-
-    protected string currentAnimationName;
-
-
-
-
-
-
-    protected SkeletonAnimation skeletonAnimation;
-    protected Spine.AnimationState spineAnimationState;
-    protected Skeleton skeleton;
-
-    public UnityAction attackCallback;
-    public UnityAction takeMagicCallback;
-
-    public GameObject arrow;
-
-    public SkeletonAnimation GetSkeleton {
-        get { return skeletonAnimation; }
-    }
-
-
-    public float atkDuration {
-        get { return skeletonAnimation.Skeleton.Data.FindAnimation(attackAnimationName).Duration; }
-    }
-
 
     private void Start() {
         Init();
     }
 
 
-    public virtual void Init() {
+    public override void Init() {
         skeletonAnimation = GetComponent<SkeletonAnimation>();
         spineAnimationState = skeletonAnimation.AnimationState;
         spineAnimationState.Event += AnimationEvent;
         skeleton = skeletonAnimation.Skeleton;
-
-        PlaceMonster placeMonster = transform.parent.GetComponent<PlaceMonster>();
+        
 
         
 
@@ -87,19 +37,19 @@ public class DebugUnitSpine : MonoBehaviour
         }
     }
 
-    public virtual void Appear() {
+    public override void Appear() {
         TrackEntry entry;
         entry = spineAnimationState.SetAnimation(0, appearAnimationName, false);
         currentAnimationName = appearAnimationName;
         entry.Complete += Idle;
     }
 
-    public virtual void Idle(TrackEntry trackEntry = null) {
+    public override void Idle(TrackEntry trackEntry = null) {
         spineAnimationState.SetAnimation(0, idleAnimationName, true);
         currentAnimationName = idleAnimationName;
     }
 
-    public virtual void Attack() {
+    public override void Attack() {
         TrackEntry entry;
         entry = spineAnimationState.SetAnimation(0, attackAnimationName, false);
         currentAnimationName = attackAnimationName;
@@ -107,19 +57,19 @@ public class DebugUnitSpine : MonoBehaviour
     }
 
 
-    public virtual void Hit() {
+    public override void Hit() {
         TrackEntry entry;
         entry = spineAnimationState.SetAnimation(0, hitAnimationName, false);
         currentAnimationName = hitAnimationName;
         entry.Complete += Idle;
     }
 
-    public virtual void Preview() {
+    public override void Preview() {
         spineAnimationState.SetAnimation(0, idleAnimationName, true);
         currentAnimationName = previewAnimationName;
     }
 
-    public virtual void MagicHit() {
+    public override void MagicHit() {
         TrackEntry entry;
         entry = spineAnimationState.SetAnimation(0, hitAnimationName, false);
         currentAnimationName = hitAnimationName;
@@ -129,36 +79,36 @@ public class DebugUnitSpine : MonoBehaviour
 
 
 
-    public void AnimationEvent(TrackEntry entry, Spine.Event e) {
+    public override void AnimationEvent(TrackEntry entry, Spine.Event e) {
         if (e.Data.Name == attackEventName) {
             if (attackCallback != null) attackCallback();
         }
 
         if (e.Data.Name == "APPEAR") {
-            GameObject effect = Instantiate(PlayMangement.instance.spineEffectManager.appearEffect, transform);
+            GameObject effect = Instantiate(DebugManagement.Instance.spineEffectManager.appearEffect, transform);
             effect.transform.position = transform.position;
             effect.GetComponent<SkeletonAnimation>().AnimationState.SetAnimation(0, "animation", false);
             Destroy(effect.gameObject, effect.GetComponent<SkeletonAnimation>().skeleton.Data.FindAnimation("animation").Duration - 0.1f);
         }
     }
 
-    public void TakeMagicEvent(TrackEntry entry) {
+    public override void TakeMagicEvent(TrackEntry entry) {
         if (takeMagicCallback != null) takeMagicCallback();
     }
 
 
-    public void HideUnit() {
+    public override void HideUnit() {
         skeletonAnimation.skeleton.A = 0.2f;
-        PlaceMonster placeMonster = transform.parent.GetComponent<PlaceMonster>();
+        DebugUnit placeMonster = transform.parent.GetComponent<DebugUnit>();
         if (placeMonster != null) {
             transform.parent.Find("HP").gameObject.SetActive(false);
             transform.parent.Find("ATK").gameObject.SetActive(false);
         }
     }
 
-    public void DetectUnit() {
+    public override void DetectUnit() {
         skeletonAnimation.skeleton.A = 1f;
-        PlaceMonster placeMonster = transform.parent.GetComponent<PlaceMonster>();
+        DebugUnit placeMonster = transform.parent.GetComponent<DebugUnit>();
         if (placeMonster != null) {
             transform.parent.Find("HP").gameObject.SetActive(true);
             transform.parent.Find("ATK").gameObject.SetActive(true);

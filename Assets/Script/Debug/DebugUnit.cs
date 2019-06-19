@@ -260,7 +260,7 @@ public class DebugUnit : MonoBehaviour
             instanceAttack = false;
         }
         else
-            atkCount = 0;
+            atkCount++;
 
         DebugUnit targetMonster = myTarget.GetComponent<DebugUnit>();
         if (unit.attackRange == "distance") {

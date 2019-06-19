@@ -238,12 +238,31 @@ public partial class DebugCardDropManager {
         }
 
         GameObject skeleton = Instantiate(cardHandler.skeleton, placedMonster.transform);
+        DebugUnitSpine debugUnitSpine = skeleton.AddComponent<DebugUnitSpine>();
+        UnitSpine spine = skeleton.GetComponent<UnitSpine>();
+
+        debugUnitSpine.idleAnimationName = spine.idleAnimationName;
+        debugUnitSpine.generalAttackName = spine.generalAttackName;
+        debugUnitSpine.rangeUpAttackName = spine.rangeUpAttackName;
+        debugUnitSpine.rangeDownAttackName = spine.rangeDownAttackName;
+        debugUnitSpine.appearAnimationName = spine.appearAnimationName;
+        debugUnitSpine.attackAnimationName = spine.attackAnimationName;
+        debugUnitSpine.hitAnimationName = spine.hitAnimationName;
+        debugUnitSpine.attackEventName = spine.attackEventName;
+        debugUnitSpine.arrow = spine.arrow;     
+        Destroy(skeleton.GetComponent<UnitSpine>());
+        
         skeleton.name = "skeleton";
+
+        
+
+
         skeleton.transform.localScale = new Vector3(-1, 1, 1);
         placedMonster.name = placedMonster.GetComponent<DebugUnit>().unit.name;
 
         placedMonster.GetComponent<DebugUnit>().Init(cardHandler.cardData);
         placedMonster.GetComponent<DebugUnit>().SpawnUnit();
+        DebugManagement.Instance.player.GetComponent<DebugPlayer>().cdpm.DestroyCard(cardIndex);
         DebugManagement.Instance.PlayerUnitsObserver.RefreshFields(unitLine);
 
 
@@ -254,5 +273,124 @@ public partial class DebugCardDropManager {
                         posMessage};
 
         return placedMonster;
+    }
+}
+
+public partial class DebugCardDropManager {
+
+    protected string magicArgs;
+    public void ShowMagicalSlot(string target) {
+        if (target == null) return;
+        magicArgs = target;
+        switch (target) {
+            case "my":
+                for (int i = 0; i < 5; i++) {
+                    for (int j = 0; j < 2; j++) {
+                        if (unitLine[i][j].childCount > 0) {
+                            unitLine[i][j].GetChild(0).Find("ClickableUI").gameObject.SetActive(true);
+                            unitLine[i][j].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(true);
+                        }
+                    }
+                }
+                break;
+            case "enemy":
+                for (int i = 0; i < 5; i++) {
+                    for (int j = 0; j < 2; j++) {
+                        if (enemyUnitLine[i][j].childCount > 0) {
+                            if (enemyUnitLine[i][j].GetChild(0).GetComponent<ambush>()) continue;
+                            enemyUnitLine[i][j].GetChild(0).Find("ClickableUI").gameObject.SetActive(true);
+                            enemyUnitLine[i][j].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(true);
+                        }
+                    }
+                }
+                break;
+            case "line":
+            case "enemyline":
+                for (int i = 0; i < 5; i++) {
+                    if (enemyUnitLine[i][0].childCount > 0 || enemyUnitLine[i][1].childCount > 0)
+                        slotLine[i].Find("BattleLineEffect").gameObject.SetActive(true);
+                }
+                break;
+            case "all":
+            case "myall":
+                slotLine[2].Find("AllMagicTrigger").gameObject.SetActive(true);
+                break;
+            case "enemyrandom":
+                for (int i = 0; i < 5; i++) {
+                    for (int j = 0; j < 2; j++) {
+                        if (enemyUnitLine[i][j].childCount > 0) {
+                            slotLine[2].Find("AllMagicTrigger").gameObject.SetActive(true);
+                            break;
+                        }
+                    }
+                }
+                break;
+        }
+    }
+    /// <summary>
+    /// 일정 공격력 이상의 적만 타겟팅
+    /// </summary>
+    /// <param name="target"></param>
+    /// <param name="enemyAttack"></param> 
+    public void ShowMagicalSlot(string target, int enemyAttack) {
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 2; j++) {
+                if (enemyUnitLine[i][j].childCount > 0) {
+                    if (enemyUnitLine[i][j].GetChild(0).GetComponent<PlaceMonster>().unit.attack >= enemyAttack) {
+                        enemyUnitLine[i][j].GetChild(0).Find("ClickableUI").gameObject.SetActive(true);
+                        enemyUnitLine[i][j].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(true);
+                    }
+                }
+            }
+        }
+    }
+
+
+    public void HideMagicSlot() {
+        if (magicArgs == null) return;
+        switch (magicArgs) {
+            case "my":
+                for (int i = 0; i < 5; i++) {
+                    for (int j = 0; j < 2; j++) {
+                        if (unitLine[i][j].childCount > 0) {
+                            unitLine[i][j].GetChild(0).Find("ClickableUI").gameObject.SetActive(false);
+                            unitLine[i][j].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(false);
+                        }
+                    }
+                }
+                break;
+            case "enemy":
+                for (int i = 0; i < 5; i++) {
+                    for (int j = 0; j < 2; j++) {
+                        if (enemyUnitLine[i][j].childCount > 0) {
+                            enemyUnitLine[i][j].GetChild(0).Find("ClickableUI").gameObject.SetActive(false);
+                            enemyUnitLine[i][j].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(false);
+                        }
+                    }
+                }
+                break;
+            case "line":
+            case "enemyline":
+                for (int i = 0; i < 5; i++) {
+                    if (enemyUnitLine[i][0].childCount > 0 || enemyUnitLine[i][1].childCount > 0)
+                        slotLine[i].Find("BattleLineEffect").gameObject.SetActive(false);
+                }
+                break;
+            case "all":
+            case "myall":
+                slotLine[2].Find("AllMagicTrigger").gameObject.SetActive(false);
+                break;
+            case "enemyrandom":
+                for (int i = 0; i < 5; i++) {
+                    for (int j = 0; j < 2; j++) {
+                        if (enemyUnitLine[i][j].childCount > 0) {
+                            slotLine[2].Find("AllMagicTrigger").gameObject.SetActive(false);
+                            break;
+                        }
+                    }
+                }
+                break;
+        }
+        magicArgs = null;
     }
 }

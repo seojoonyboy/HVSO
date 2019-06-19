@@ -357,9 +357,11 @@ public class DebugCardHandDeckManager : MonoBehaviour
         LayoutRebuilder.ForceRebuildLayoutImmediate(slot_2.GetComponent<RectTransform>());
         Destroy(cardList[index]);
         cardList.RemoveAt(index);
-        CardListManager csm = DebugManagement.Instance.cardInfoCanvas.Find("CardInfoList").GetComponent<CardListManager>();
-        csm.RemoveCardInfo(index);
+        //DebugCardListManager csm = DebugManagement.Instance.cardInfoCanvas.Find("CardInfoList").GetComponent<DebugCardListManager>();
+        //csm.RemoveCardInfo(index);
     }
+
+
 
     void ChangeSlotHeight(float rate) {
         transform.GetComponent<RectTransform>().localScale = new Vector2(rate, rate);

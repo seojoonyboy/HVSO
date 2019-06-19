@@ -3,40 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DebugCardHandler : MonoBehaviour
-{
-    public GameObject unit;
-    public GameObject skeleton;
-    CardListManager csm;
-    protected bool blockButton = false;
-    protected bool firstDraw = false;
-    public bool changeSelected = false;
-    protected bool isDropable = false;
-    protected bool pointOnFeild = false;
-    Animator cssAni;
-    public string cardID;
-    protected int _itemID;
-    protected Transform beforeDragParent;
-    public int itemID {
-        get { return _itemID; }
-        set {
-            if (value < 0) Debug.Log("something wrong itemId");
-            _itemID = value;
-        }
-    }
-    protected bool highlighted = false;
-    public Transform highlightedSlot;
-    public Transform highlightedLine;
-
-    public CardData cardData;
-
-    protected static GameObject itsDragging;
-
+public class DebugCardHandler : CardHandler {
     public void Awake() {
         csm = DebugManagement.Instance.cardInfoCanvas.Find("CardInfoList").GetComponent<CardListManager>();
     }
 
-    public void DrawCard(string ID, int itemID = -1, bool first = false) {
+    public override void DrawCard(string ID, int itemID = -1, bool first = false) {
         cardData = DebugData.Instance.cardData[ID];
         cardID = ID;
 
@@ -62,7 +34,7 @@ public class DebugCardHandler : MonoBehaviour
 
     }
 
-    public void ActivateCard() {
+    public override void ActivateCard() {
 
         isDropable = true;
         if (cardData.cost <= DebugPlayer.activeCardMinCost)
@@ -76,16 +48,7 @@ public class DebugCardHandler : MonoBehaviour
 
     }
 
-    public void DisableCard() {
-        isDropable = false;
-        transform.Find("GlowEffect").GetComponent<Image>().enabled = false;
-        transform.Find("Portrait").GetComponent<Image>().color = Color.gray;
-        transform.Find("attack").GetComponent<Image>().color = Color.gray;
-        transform.Find("Health").GetComponent<Image>().color = Color.gray;
-        transform.Find("Cost").GetComponent<Image>().color = Color.gray;
-    }
-
-    protected void CheckLocation(bool off = false) {
+    protected override void CheckLocation(bool off = false) {
         if (off) {
             pointOnFeild = false;
             if (cardData.type == "unit")
@@ -110,7 +73,7 @@ public class DebugCardHandler : MonoBehaviour
         }
     }
 
-    public void CheckHighlight() {
+    public override void CheckHighlight() {
         if (!highlighted) {
             highlightedSlot = CheckSlot();
             if (highlightedSlot != null) {
@@ -132,19 +95,6 @@ public class DebugCardHandler : MonoBehaviour
                 highlightedSlot = null;
             }
         }
-    }
-
-    protected Transform CheckSlot() {
-        Vector3 origin = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        origin = new Vector3(origin.x, origin.y + 0.3f, origin.z);
-        Ray2D ray = new Ray2D(origin, Vector2.zero);
-
-        RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
-        if (hit.collider != null && hit.transform.gameObject.layer == 12) {
-            return hit.transform;
-        }
-
-        return null;
     }
 
 }

@@ -63,19 +63,12 @@ public class UnitSpine : MonoBehaviour
 
 
     public virtual void Init() {
+        if (DebugManagement.Instance != null) return;
         skeletonAnimation = GetComponent<SkeletonAnimation>();
         spineAnimationState = skeletonAnimation.AnimationState;
         spineAnimationState.Event += AnimationEvent;
         skeleton = skeletonAnimation.Skeleton;
-
-        PlaceMonster placeMonster = transform.parent.GetComponent<PlaceMonster>();
-
-
-        if(placeMonster == null) {
-            previewAnimationName = idleAnimationName;
-            Preview();
-            return;
-        }
+        
 
         
 
@@ -136,7 +129,7 @@ public class UnitSpine : MonoBehaviour
 
 
 
-    public void AnimationEvent(TrackEntry entry, Spine.Event e) {
+    public virtual void AnimationEvent(TrackEntry entry, Spine.Event e) {
         if(e.Data.Name == attackEventName) {
             if (attackCallback != null) attackCallback();
         }
@@ -149,12 +142,12 @@ public class UnitSpine : MonoBehaviour
         }     
     }
 
-    public void TakeMagicEvent(TrackEntry entry) {
+    public virtual void TakeMagicEvent(TrackEntry entry) {
         if (takeMagicCallback != null) takeMagicCallback();
     }
 
 
-    public void HideUnit() {
+    public virtual void HideUnit() {
         skeletonAnimation.skeleton.A = 0.2f;
         PlaceMonster placeMonster = transform.parent.GetComponent<PlaceMonster>();
         if (placeMonster != null) {
@@ -163,7 +156,7 @@ public class UnitSpine : MonoBehaviour
         }
     }
 
-    public void DetectUnit() {
+    public virtual void DetectUnit() {
         skeletonAnimation.skeleton.A = 1f;
         PlaceMonster placeMonster = transform.parent.GetComponent<PlaceMonster>();
         if (placeMonster != null) {
