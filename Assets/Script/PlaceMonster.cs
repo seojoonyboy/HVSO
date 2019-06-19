@@ -456,6 +456,7 @@ public class PlaceMonster : MonoBehaviour {
 
     public void AddBuff(Buff buff) {
         buffList.Add(buff);
+        EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.BUFF, transform.position);
         RequestChangeStat(buff.atk, buff.hp);
     }
 
