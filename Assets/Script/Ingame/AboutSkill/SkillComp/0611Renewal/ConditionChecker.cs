@@ -152,8 +152,8 @@ namespace SkillModules {
             if(!ArgsExist()) return false;
             playedObject.IsValidateData(mySkillHandler.targetData);
             PlaceMonster playedMonster = playedObject.targetObject.GetComponent<PlaceMonster>();
-            if(playedMonster == null) return false;
-            bool isExist = playedMonster.unit.type.CompareTo(args[0]) == 0;
+            MagicDragHandler playedMagic = playedObject.targetObject.GetComponent<MagicDragHandler>();
+            bool isExist = args[0].CompareTo("magic") == 0 ? playedMagic != null : playedMonster != null;
             return isExist;
         }
     }
