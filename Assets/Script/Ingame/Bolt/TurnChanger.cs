@@ -16,7 +16,7 @@ public class TurnChanger : MonoBehaviour {
     /// </summary>
     public void NextTurn() {
         turn = (TurnType)((++index) % 4);
-        //Debug.Log(turn.ToString());
+        //Logger.Log(turn.ToString());
         Variables.Scene(
             UnityEngine.SceneManagement.SceneManager.GetActiveScene()
         ).Set("CurrentTurn", turn.ToString());
@@ -30,14 +30,14 @@ public class TurnChanger : MonoBehaviour {
     /// </summary>
     public void OnPrepareTurn() {
         onPrepareTurn.Invoke();
-        Debug.Log("준비 턴");
+        Logger.Log("준비 턴");
         //StartCoroutine(TestNextTurn());
     }
 
     IEnumerator TestNextTurn() {
         yield return new WaitForSeconds(3.0f);
         CustomEvent.Trigger(gameObject, "EndTurn");
-        //Debug.Log("턴 종료");
+        //Logger.Log("턴 종료");
     }
 
     public enum TurnType {

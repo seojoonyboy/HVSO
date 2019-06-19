@@ -9,7 +9,7 @@ public class TestPhase : MonoBehaviour {
 
     private void Start() {
         //string selectedRace = Variables.Saved.Get("SelectedRace").ToString();
-        //Debug.Log(selectedRace);
+        //Logger.Log(selectedRace);
     }
 
     private void Awake() {
@@ -17,14 +17,14 @@ public class TestPhase : MonoBehaviour {
     }
 
     private void OnTurnChange() {
-        //Debug.Log("턴이 바뀜");
+        //Logger.Log("턴이 바뀜");
     }
 
     public void PrintCurrentSceneName() {
         string currentTurn = Variables.Scene(
                 UnityEngine.SceneManagement.SceneManager.GetActiveScene()
             ).Get("CurrentTurn").ToString();
-        //Debug.Log(currentTurn);
+        //Logger.Log(currentTurn);
     }
 
     // Update is called once per frame

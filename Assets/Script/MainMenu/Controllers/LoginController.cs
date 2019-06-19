@@ -28,7 +28,7 @@ public class LoginController : MonoBehaviour {
     }
 
     private void OnResult(HttpResponse response) {
-        //Debug.Log("요청 최종 응답");
+        //Logger.Log("요청 최종 응답");
         if(response.responseCode != 200) {
             if (!response.request.isNetworkError) {
                 OnSignUpModal();

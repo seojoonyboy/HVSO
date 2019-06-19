@@ -148,7 +148,7 @@ public class CardHandDeckManager : MonoBehaviour {
         card.SetActive(true);
         cardNum++;
         if (cardNum == 11) {
-            Debug.Log("Card Number Out Of Range!!");
+            Logger.Log("Card Number Out Of Range!!");
             return;
         }
         Transform target;
@@ -258,7 +258,7 @@ public class CardHandDeckManager : MonoBehaviour {
             card.SetActive(true);
             cardNum++;
             if (cardNum == 11) {
-                Debug.Log("Card Number Out Of Range!!");
+                Logger.Log("Card Number Out Of Range!!");
             }
             if (cardNum < 5) {
                 slot_1.GetChild(cardNum - 1).gameObject.SetActive(true);
@@ -374,7 +374,7 @@ public class CardHandDeckManager : MonoBehaviour {
     public void DestroyCard(int index) {
         cardNum--;
         if (cardNum == -1) {
-            Debug.Log("Card Number Out Of Range!!");
+            Logger.Log("Card Number Out Of Range!!");
             return;
         }
         cardList[index].transform.parent.SetAsLastSibling();

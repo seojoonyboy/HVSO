@@ -7,9 +7,9 @@ using System.Collections.Generic;
 namespace SocketFormat {
     public class DebugSocketData : MonoBehaviour {
         public static void ShowHandCard(Card[] cards) {
-            //Debug.Log("적의 핸드 리스트 : ");
+            //Logger.Log("적의 핸드 리스트 : ");
             //foreach(Card card in cards) {
-            //    Debug.Log(string.Format("이름 : {0}, 가격 : {1}, 종류 : {2}, cardId : {3}, itemId : {4}, 공격력 : {5}, 체력 : {6}",
+            //    Logger.Log(string.Format("이름 : {0}, 가격 : {1}, 종류 : {2}, cardId : {3}, itemId : {4}, 공격력 : {5}, 체력 : {6}",
             //                    card.name, card.cost, card.type, card.id, card.itemId, card.attack, card.hp));
             //}
         }
@@ -18,16 +18,16 @@ namespace SocketFormat {
             string mapData = JsonConvert.SerializeObject(state.map.lines[line]);
             Hero human = state.players.human.hero;
             Hero orc = state.players.orc.hero;
-            //Debug.Log(isBattle ? "======= 싸운 후 State =======" : "======= 에너지 체크 후 State =======");
-            //Debug.Log(string.Format("{0}번째줄 맵 : {1}", line, mapData));
-            //Debug.Log(string.Format("휴먼 체력 : {0}, 방어갯수 : {1}, 방어게이지 : {2}", human.currentHp, human.shildCount, human.shildGauge));
-            //Debug.Log(string.Format("오크 체력 : {0}, 방어갯수 : {1}, 방어게이지 : {2}", orc.currentHp, orc.shildCount, orc.shildGauge));
-            //Debug.Log("=======================================");
+            //Logger.Log(isBattle ? "======= 싸운 후 State =======" : "======= 에너지 체크 후 State =======");
+            //Logger.Log(string.Format("{0}번째줄 맵 : {1}", line, mapData));
+            //Logger.Log(string.Format("휴먼 체력 : {0}, 방어갯수 : {1}, 방어게이지 : {2}", human.currentHp, human.shildCount, human.shildGauge));
+            //Logger.Log(string.Format("오크 체력 : {0}, 방어갯수 : {1}, 방어게이지 : {2}", orc.currentHp, orc.shildCount, orc.shildGauge));
+            //Logger.Log("=======================================");
         }
 
         public static void SummonCardData(PlayHistory history) {
             //string historyData = JsonConvert.SerializeObject(history);
-            //Debug.Log(string.Format("사용 된 카드 : {0}", historyData));
+            //Logger.Log(string.Format("사용 된 카드 : {0}", historyData));
         }
 
         public static void CheckBattleSynchronization(GameState state) {
@@ -128,7 +128,7 @@ namespace SocketFormat {
                 log = "이 문제는 개발자가 코딩을 잘못한겁니다.";
                 break;
             }
-            Debug.LogWarning(string.Format("{0} : {1}", name, log));
+            Logger.LogWarning(string.Format("{0} : {1}", name, log));
         }
 
         public static void CheckMapPosition(GameState state) {
@@ -144,7 +144,7 @@ namespace SocketFormat {
                 CheckMonsterPosition(lines[i].orc, orcUnitsObserver, i);
                 CheckMonsterPosition(lines[i].human, humanUnitsObserver, i);
             }
-            //Debug.Log("유닛 위치 체크");
+            //Logger.Log("유닛 위치 체크");
             PlayMangement.instance.Invoke("SendNotification", 1.5f);
         }
 
@@ -154,7 +154,7 @@ namespace SocketFormat {
             foreach(Unit unit in units) {
                 GameObject mon = mons.Find(x => x.GetComponent<PlaceMonster>().itemId == unit.itemId);
                 if(mon == null) {
-                    Debug.LogWarning("클라이언트에서 해당 유닛이 없는 버그가 발생했습니다 : " + unit.name);
+                    Logger.LogWarning("클라이언트에서 해당 유닛이 없는 버그가 발생했습니다 : " + unit.name);
                     return;
                 }
                 PlaceMonster monData = mon.GetComponent<PlaceMonster>();

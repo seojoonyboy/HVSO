@@ -43,7 +43,7 @@ namespace NetworkModules {
                 if (_www.isNetworkError) {
                     retryMessageCallback.Invoke("재요청을 시작합니다." + (tryCount - count + 1) + "회 시도중");
                     count--;
-                    Debug.Log(count);
+                    Logger.Log(count);
                     StartCoroutine(_request(method, url, data, tryCount, callback, retryMessageCallback));
                 }
                 else {

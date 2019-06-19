@@ -43,7 +43,7 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void OnClosed(WebSocket webSocket, ushort code, string msg) {
-        Debug.LogWarning("Socket has been closed : " + code + "  message : " + msg);
+        Logger.LogWarning("Socket has been closed : " + code + "  message : " + msg);
     }
 
     //Connected
@@ -66,7 +66,7 @@ public partial class BattleConnector : MonoBehaviour {
 
     //Receive Socket Message
     private void ReceiveMessage(WebSocket webSocket, string message) {
-        Debug.Log(message);
+        Logger.Log(message);
         OnReceiveSocketMessage.Invoke();
         ReceiveFormat result = JsonReader.Read<ReceiveFormat>(message);
         queue.Enqueue(result);
@@ -98,7 +98,7 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     void Error(WebSocket webSocket, Exception ex) {
-        Debug.LogWarning(ex);
+        Logger.LogWarning(ex);
     }
 
     void OnDisable() {
@@ -147,7 +147,7 @@ public partial class BattleConnector : MonoBehaviour {
             gameState = result.gameState;
         }
         if(result.error != null) 
-            Debug.LogError("WebSocket play wrong Error : " +result.error);
+            Logger.LogError("WebSocket play wrong Error : " +result.error);
         if(result.method == null) return;
         MethodInfo theMethod = thisType.GetMethod(result.method);
         if(theMethod == null) return;
@@ -160,11 +160,11 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void end_ready() {
-        //Debug.Log("WebSocket State : end_ready");
+        //Logger.Log("WebSocket State : end_ready");
     }
 
     public void begin_mulligan() {
-        //Debug.Log("WebSocket State : begin_mulligan");
+        //Logger.Log("WebSocket State : begin_mulligan");
     }
 
     public void hand_changed(string arg) {
@@ -176,47 +176,47 @@ public partial class BattleConnector : MonoBehaviour {
         if(arg.CompareTo(raceName) != 0) return;
 
         Card newCard = gameState.players.myPlayer(isHuman).newCard;
-        //Debug.Log("Card id : "+ newCard.id + "  Card itemId : " + newCard.itemId);
+        //Logger.Log("Card id : "+ newCard.id + "  Card itemId : " + newCard.itemId);
         HandchangeCallback(newCard.id, newCard.itemId, false);
         HandchangeCallback = null;
     }
 
     public void end_mulligan() {
-        //Debug.Log("WebSocket State : end_mulligan");
+        //Logger.Log("WebSocket State : end_mulligan");
         dequeueing = false;
         getNewCard = true;
     }
 
     public void begin_turn_start() {
-        //Debug.Log("WebSocket State : begin_turn_start");
+        //Logger.Log("WebSocket State : begin_turn_start");
     }
     
     public void end_turn_start() {
-        //Debug.Log("WebSocket State : end_turn_start");
+        //Logger.Log("WebSocket State : end_turn_start");
     }
 
     public void begin_orc_pre_turn() {
-        //Debug.Log("WebSocket State : begin_orc_pre_turn");
+        //Logger.Log("WebSocket State : begin_orc_pre_turn");
         checkMyTurn(false);
     }
 
     public void end_orc_pre_turn() {
-        //Debug.Log("WebSocket State : end_orc_pre_turn");
+        //Logger.Log("WebSocket State : end_orc_pre_turn");
         useCardList.isDone = true;
     }
 
     public void begin_human_turn() {
-        //Debug.Log("WebSocket State : begin_human_turn");
+        //Logger.Log("WebSocket State : begin_human_turn");
         checkMyTurn(true);
     }
 
     public void end_human_turn() {
-        //Debug.Log("WebSocket State : end_human_turn");
+        //Logger.Log("WebSocket State : end_human_turn");
         useCardList.isDone = true;
     }
 
     public void begin_orc_post_turn() {
-        //Debug.Log("WebSocket State : begin_orc_post_turn");
+        //Logger.Log("WebSocket State : begin_orc_post_turn");
         checkMyTurn(false);
         DebugSocketData.CheckMapPosition(gameState);
     }
@@ -226,22 +226,22 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void end_orc_post_turn() {
-        //Debug.Log("WebSocket State : end_orc_post_turn");
+        //Logger.Log("WebSocket State : end_orc_post_turn");
         useCardList.isDone = true;
     }
 
     public void unit_skill_activate() {
-        //Debug.Log("WebSocket State : unit_skill_activate");
+        //Logger.Log("WebSocket State : unit_skill_activate");
     }
 
     public void begin_battle_turn() {
-        //Debug.Log("WebSocket State : begin_battle_turn");
+        //Logger.Log("WebSocket State : begin_battle_turn");
         lineBattleList.isDone = false;
         mapClearList.isDone = false;
     }
 
     public void end_battle_turn() {
-        //Debug.Log("WebSocket State : end_battle_turn");
+        //Logger.Log("WebSocket State : end_battle_turn");
     }
 
     public void line_battle(string line, string camp) {
@@ -259,13 +259,13 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void begin_shild_turn(string camp, string itemId) {
-        //Debug.Log("WebSocket State : begin_shild_turn");
+        //Logger.Log("WebSocket State : begin_shild_turn");
         dequeueing = false;
         getNewCard = true;
     }
 
     public void end_shild_turn() {
-        //Debug.Log("WebSocket State : end_shild_turn");
+        //Logger.Log("WebSocket State : end_shild_turn");
         PlayMangement.instance.heroShieldActive = false;
     }
 
@@ -277,36 +277,36 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void begin_end_turn() {
-        //Debug.Log("WebSocket State : begin_end_turn");
+        //Logger.Log("WebSocket State : begin_end_turn");
         dequeueing = false;
         getNewCard = true;
     }
 
     public void end_end_turn() {
-        //Debug.Log("WebSocket State : end_end_turn");
+        //Logger.Log("WebSocket State : end_end_turn");
     }
 
     public void opponent_connection_closed() {
-        //Debug.Log("WebSocket State : opponent_connection_closed");
+        //Logger.Log("WebSocket State : opponent_connection_closed");
     }
 
     public void begin_end_game() {
-        //Debug.Log("WebSocket State : begin_end_game");
+        //Logger.Log("WebSocket State : begin_end_game");
         
     }
 
     public void end_end_game() {
-        //Debug.Log("WebSocket State : end_end_game");
+        //Logger.Log("WebSocket State : end_end_game");
         battleGameFinish = true;
     }
 
     public void ping() {
-        //Debug.Log("ping");
+        //Logger.Log("ping");
         SendMethod("pong");
     }
 
     public void card_played() {
-        Debug.Log("WebSocket State : card_played");
+        Logger.Log("WebSocket State : card_played");
         string enemyCamp = PlayMangement.instance.enemyPlayer.isHuman ? "human" : "orc";
         string cardCamp = gameState.lastUse.cardItem.camp;
         bool isEnemyCard = cardCamp.CompareTo(enemyCamp) == 0;

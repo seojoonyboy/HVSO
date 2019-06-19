@@ -97,7 +97,7 @@ public class BattleReadySceneController : MonoBehaviour {
         SoundManager.Instance.PlaySound(SoundType.FIRST_TURN);
 
         if (isIngameButtonClicked) {
-            Debug.Log("이미 대전 시작 버튼이 눌려진 상태");
+            Logger.Log("이미 대전 시작 버튼이 눌려진 상태");
             return;
         }
 
@@ -125,7 +125,7 @@ public class BattleReadySceneController : MonoBehaviour {
     public void ChangeRaceType(RaceType type) {
         SoundManager.Instance.PlaySound(SoundType.FIRST_TURN);
         Variables.Saved.Set("SelectedRace", type);
-        Debug.Log(type);
+        Logger.Log(type);
         raceType = type;
     }
 

@@ -8,7 +8,7 @@ namespace SkillModules {
         public SkillHandler skillHandler;
         public object[] args;
 
-        public virtual void Execute(object data) { Debug.Log("Please Define Excecute Func"); }
+        public virtual void Execute(object data) { Logger.Log("Please Define Excecute Func"); }
 
         protected void ShowFormatErrorLog(string additionalMsg = null) {
             Logger.LogError(additionalMsg + "에게 잘못된 인자를 전달하였습니다.");
@@ -73,7 +73,7 @@ namespace SkillModules {
                 string attr = string.Format("SkillModules.{0}", attrName);
                 var newComp = target.AddComponent(System.Type.GetType(attr));
                 if(newComp == null) {
-                    Debug.LogError(attrName + "컴포넌트를 찾을 수 없습니다.");
+                    Logger.LogError(attrName + "컴포넌트를 찾을 수 없습니다.");
                 }
             }
         }
@@ -103,7 +103,8 @@ namespace SkillModules {
 
         public override void Execute(object data) {
             try {
-                int drawNum = (int)data;
+                object[] tmp = (object[])data;
+                int drawNum = (int)(tmp[0]);
                 PlayMangement.instance.SocketHandler.DrawNewCards(drawNum);
             }
             catch(FormatException ex) {

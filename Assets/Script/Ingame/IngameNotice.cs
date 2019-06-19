@@ -11,7 +11,7 @@ public class IngameNotice : MonoBehaviour {
             if (_instance == null) {
                 _instance = (IngameNotice)FindObjectOfType(typeof(IngameNotice));
                 if (_instance == null) {
-                    Debug.LogWarning("아직 준비가 안됐습니다. 양해바랍니다.");
+                    Logger.LogWarning("아직 준비가 안됐습니다. 양해바랍니다.");
                 }
             }
             return _instance;

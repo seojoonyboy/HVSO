@@ -9,7 +9,7 @@ public class SoundManager : MonoBehaviour {
     public static SoundManager Instance {
         get {
             if (_instance == null) {
-                Debug.LogError("SoundManager를 찾을 수 없습니다.");
+                Logger.LogError("SoundManager를 찾을 수 없습니다.");
                 return null;
             }
             else {
