@@ -273,13 +273,15 @@ public partial class CardDropManager {
 public partial class CardDropManager {
 
     protected string magicArgs;
+    protected string magicTarget;
     public void ShowMagicalSlot(string[] target) {
         if (target == null) return;
         magicArgs = target[0];
-        if(magicArgs == "my")
-            ActivateTarget(unitLine, target[1]);
+        magicTarget = target[1];
+        if (magicArgs == "my")
+            ActivateTarget(unitLine, magicTarget);
         else
-            ActivateTarget(enemyUnitLine, target[1]);
+            ActivateTarget(enemyUnitLine, magicTarget);
     }
 
     private void ActivateTarget(Transform[][] units, string group) {
@@ -307,6 +309,40 @@ public partial class CardDropManager {
         }
     }
 
+    public void HideMagicSlot() {
+        if (magicArgs == null) return;
+        if (magicArgs == "my")
+            DeactivateTarget(unitLine, magicTarget);
+        else
+            DeactivateTarget(enemyUnitLine, magicTarget);
+        magicArgs = magicTarget = null;
+    }
+
+    private void DeactivateTarget(Transform[][] units, string group) {
+        switch (group) {
+            case "unit":
+                for (int i = 0; i < 5; i++) {
+                    for (int j = 0; j < 2; j++) {
+                        if (units[i][j].childCount > 0) {
+                            units[i][j].GetChild(0).Find("ClickableUI").gameObject.SetActive(false);
+                            units[i][j].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(false);
+                        }
+                    }
+                }
+                break;
+            case "line":
+                for (int i = 0; i < 5; i++) {
+                    if (units[i][0].childCount > 0 || units[i][1].childCount > 0)
+                        slotLine[i].Find("BattleLineEffect").gameObject.SetActive(false);
+                }
+                break;
+            default:
+            case "all":
+                slotLine[2].Find("AllMagicTrigger").gameObject.SetActive(false);
+                break;
+        }
+    }
+
     /// <summary>
     /// 일정 공격력 이상의 적만 타겟팅
     /// </summary>
@@ -323,55 +359,6 @@ public partial class CardDropManager {
                 }
             }
         }
-    }
-
-
-    public void HideMagicSlot() {
-        if (magicArgs == null) return;
-        switch (magicArgs) {
-            case "my":
-                for (int i = 0; i < 5; i++) {
-                    for (int j = 0; j < 2; j++) {
-                        if (unitLine[i][j].childCount > 0) {
-                            unitLine[i][j].GetChild(0).Find("ClickableUI").gameObject.SetActive(false);
-                            unitLine[i][j].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(false);
-                        }
-                    }
-                }
-                break;
-            case "enemy":
-                for (int i = 0; i < 5; i++) {
-                    for (int j = 0; j < 2; j++) {
-                        if (enemyUnitLine[i][j].childCount > 0) {
-                            enemyUnitLine[i][j].GetChild(0).Find("ClickableUI").gameObject.SetActive(false);
-                            enemyUnitLine[i][j].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(false);
-                        }
-                    }
-                }
-                break;
-            case "line":
-            case "enemyline":
-                for (int i = 0; i < 5; i++) {
-                    if (enemyUnitLine[i][0].childCount > 0 || enemyUnitLine[i][1].childCount > 0)
-                        slotLine[i].Find("BattleLineEffect").gameObject.SetActive(false);
-                }
-                break;
-            case "all":
-            case "myall":
-                slotLine[2].Find("AllMagicTrigger").gameObject.SetActive(false);
-                break;
-            case "enemyrandom":
-                for (int i = 0; i < 5; i++) {
-                    for (int j = 0; j < 2; j++) {
-                        if (enemyUnitLine[i][j].childCount > 0) {
-                            slotLine[2].Find("AllMagicTrigger").gameObject.SetActive(false);
-                            break;
-                        }
-                    }
-                }
-                break;
-        }
-        magicArgs = null;
     }
 }
 
