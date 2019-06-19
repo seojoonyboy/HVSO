@@ -66,7 +66,7 @@ public partial class AccountManager : Singleton<AccountManager> {
             myDecks[1].deckName = "암흑주술 부족";
         }
         catch (ArgumentException ex) {
-            Debug.LogError("사용자 덱이 정상적으로 세팅되지 않았습니다.");
+            Logger.LogError("사용자 덱이 정상적으로 세팅되지 않았습니다.");
         }
     }
 
@@ -184,13 +184,13 @@ public partial class AccountManager {
             .Append("api/users/")
             .Append(DEVICEID);
 
-        Debug.Log("Request User Info");
+        Logger.Log("Request User Info");
         networkManager.request("GET", url.ToString(), callback, retryOccured);
     }
 
     private void CallbackSignUp(HttpResponse response) {
         if (response.responseCode != 200) {
-            Debug.Log(
+            Logger.Log(
                 response.responseCode
                 + "에러\n"
                 + response.errorMessage);

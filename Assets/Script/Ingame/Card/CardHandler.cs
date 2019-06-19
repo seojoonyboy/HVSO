@@ -22,7 +22,7 @@ public partial class CardHandler : MonoBehaviour {
     public int itemID {
         get { return _itemID; }
         set {
-            if (value < 0) Debug.Log("something wrong itemId");
+            if (value < 0) Logger.Log("something wrong itemId");
             _itemID = value;
         }
     }
@@ -56,7 +56,7 @@ public partial class CardHandler : MonoBehaviour {
             skeleton = AccountManager.Instance.resource.cardSkeleton[cardID];
         }
         else
-            Debug.Log("NoData");
+            Logger.Log("NoData");
         if (cardData.type == "unit") {
             transform.Find("Health").gameObject.SetActive(true);
             transform.Find("attack").gameObject.SetActive(true);
@@ -169,7 +169,7 @@ public partial class CardHandler : MonoBehaviour {
         RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, Mathf.Infinity, layerMask);
 
         if (hit.collider != null && hit.transform.gameObject.layer == 15) {
-            Debug.Log(hit.collider.transform.parent.name);
+            Logger.Log(hit.collider.transform.parent.name);
             return hit.transform;
         }
         return null;

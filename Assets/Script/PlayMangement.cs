@@ -68,7 +68,7 @@ public partial class PlayMangement : MonoBehaviour {
         
         SpriteRenderer backSprite = backGround.GetComponent<SpriteRenderer>();
         float ratio = (float)Screen.width / Screen.height;
-        Debug.Log(ratio);
+        Logger.Log(ratio);
 
         //float height = Camera.main.orthographicSize * 2, width = height / Screen.height * Screen.width;
         if (ratio < (float)1080 / 1920)
@@ -216,7 +216,7 @@ public partial class PlayMangement : MonoBehaviour {
         string id = history.cardItem.id;
 
         cardData = cardDataPackage.data[id];
-        Debug.Log("use Magic Card" + history.cardItem.name);
+        Logger.Log("use Magic Card" + history.cardItem.name);
         enemyPlayer.resource.Value -= cardData.cost;
 
         //TODO : EVENT : END_CARD_PLAY 호출
@@ -275,7 +275,7 @@ public partial class PlayMangement : MonoBehaviour {
             foreach (var effect in skill.effects) {
                 var newComp = monster.AddComponent(System.Type.GetType("SkillModules.UnitAbility_" + effect.method));
                 if (newComp == null) {
-                    Debug.LogError(effect.method + "에 해당하는 컴포넌트를 찾을 수 없습니다.");
+                    Logger.LogError(effect.method + "에 해당하는 컴포넌트를 찾을 수 없습니다.");
                 }
                 else {
                     ((Ability)newComp).InitData(skill, true);
@@ -305,7 +305,7 @@ public partial class PlayMangement : MonoBehaviour {
         string currentTurn = Variables.Scene(
                 UnityEngine.SceneManagement.SceneManager.GetActiveScene()
             ).Get("CurrentTurn").ToString();
-        Debug.Log(currentTurn);
+        Logger.Log(currentTurn);
         switch (currentTurn) {
             case "ZOMBIE":
                 if(player.isHuman == false) {
@@ -363,7 +363,7 @@ public partial class PlayMangement : MonoBehaviour {
 
     public IEnumerator WaitSecond() {
         yield return new WaitForSeconds(5f);
-        //Debug.Log("Triggering EndTurn");
+        //Logger.Log("Triggering EndTurn");
         CustomEvent.Trigger(gameObject, "EndTurn");
     }
 
@@ -466,9 +466,9 @@ public partial class PlayMangement : MonoBehaviour {
         if(!isGame) yield break;
         yield return queueList.WaitNext();
         SocketFormat.GameState state = queueList.Dequeue();
-        //Debug.Log("쌓인 데이터 리스트 : " + queueList.Count);
+        //Logger.Log("쌓인 데이터 리스트 : " + queueList.Count);
         if(state == null) {
-            Debug.LogError("데이터가 없는 문제가 발생했습니다. 우선은 클라이언트에서 배틀 진행합니다.");
+            Logger.LogError("데이터가 없는 문제가 발생했습니다. 우선은 클라이언트에서 배틀 진행합니다.");
             yield break;
         }
         SocketFormat.DebugSocketData.ShowBattleData(state, line, isBattle);
@@ -496,7 +496,7 @@ public partial class PlayMangement : MonoBehaviour {
 
     public IEnumerator DrawSpecialCard(bool isHuman) {
         yield return socketHandler.WaitGetCard();
-        //Debug.Log("쉴드 발동!");
+        //Logger.Log("쉴드 발동!");
         bool isPlayer = (isHuman == player.isHuman);
         if(isPlayer) {
             CardHandDeckManager cdpm = FindObjectOfType<CardHandDeckManager>();

@@ -27,13 +27,13 @@ public class Modal : MonoBehaviour {
 	/// <param name="title">제목에 들어갈 내용(필요하면)(급하게 넣은 매개변수)</param>
 	public static void instantiate(string text, Type type, UnityAction function = null, string title = null) {
 		if(type == Type.INSERT) {
-			Debug.LogWarning("enum INSERT는 매개변수 하나 더 있습니다!");
+			Logger.LogWarning("enum INSERT는 매개변수 하나 더 있습니다!");
 			return;
 		}
 		GameObject modal = Resources.Load("Prefabs/ModalCanvas", typeof(GameObject)) as GameObject;
         Canvas canvas = (Canvas)FindObjectOfType(typeof(Canvas));
         if(canvas == null) {
-            Debug.LogError("no Canvas");
+            Logger.LogError("no Canvas");
             return;
         }
         Instantiate(modal).GetComponent<Modal>().SetData(text, function, type, title);
@@ -49,13 +49,13 @@ public class Modal : MonoBehaviour {
     /// <param name="function">yes 버튼 누를 경우 실행 함수</param>
     public static GameObject instantiate(string text, string descText, string inputText, Type type, UnityAction<string> function) {
 		if(type != Type.INSERT) {
-			Debug.LogWarning("enum YESNO 또는 CHECK는 매개변수를 줄여주십시오!");
+			Logger.LogWarning("enum YESNO 또는 CHECK는 매개변수를 줄여주십시오!");
 			return null;
 		}
 		GameObject modal = Resources.Load("Prefabs/ModalCanvas", typeof(GameObject)) as GameObject;
         Canvas canvas = (Canvas)FindObjectOfType(typeof(Canvas));
         if(canvas == null) {
-            Debug.LogError("no Canvas");
+            Logger.LogError("no Canvas");
             return null;
         }
         GameObject tmp = Instantiate(modal);
@@ -74,13 +74,13 @@ public class Modal : MonoBehaviour {
     /// <param name="function">yes 버튼 누를 경우 실행 함수</param>
     public static GameObject instantiateWithClose(string text, string descText, string inputText, Type type, UnityAction<string> function) {
 		if(type != Type.INSERT) {
-			Debug.LogWarning("enum YESNO 또는 CHECK는 매개변수를 줄여주십시오!");
+			Logger.LogWarning("enum YESNO 또는 CHECK는 매개변수를 줄여주십시오!");
 			return null;
 		}
 		GameObject modal = Resources.Load("Prefabs/ModalCanvas", typeof(GameObject)) as GameObject;
         Canvas canvas = (Canvas)FindObjectOfType(typeof(Canvas));
         if(canvas == null) {
-            Debug.LogError("no Canvas");
+            Logger.LogError("no Canvas");
             return null;
         }
         GameObject tmp = Instantiate(modal);
