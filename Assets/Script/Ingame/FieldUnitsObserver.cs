@@ -19,9 +19,10 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
         Pos prevPos = GetMyPos(target);
         units[col, row] = target;
 
-        //Debug.Log("Row : " + row);
-        //Debug.Log("Col : " + col);
-        Vector2 targetPos = transform.GetChild(col).GetChild(row).position;
+        Logger.Log("Row : " + row);
+        Logger.Log("Col : " + col);
+
+        Vector2 targetPos = transform.GetChild(row).GetChild(col).position;
         iTween.MoveTo(
             target,
             new Vector2(targetPos.x, targetPos.y),
@@ -33,15 +34,19 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
     IEnumerator UnitChangeCoroutine(GameObject target, Pos prevPos, int row, int col) {
         yield return new WaitForSeconds(1.0f);
 
-        target.transform.SetParent(transform.GetChild(col).GetChild(row));
+        target.transform.SetParent(transform.GetChild(row).GetChild(col));
         target.transform.localPosition = Vector3.zero;
 
         target.GetComponent<PlaceMonster>().ChangePosition(
             row, 
             col, 
-            transform.GetChild(col).GetChild(row).position
+            transform.GetChild(row).GetChild(col).position
         );
-        units[prevPos.row, prevPos.col] = null;
+
+        Logger.Log(prevPos.col);
+        Logger.Log(prevPos.row);
+
+        units[prevPos.col, prevPos.row] = null;
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.FIELD_CHANGED, null, null);
     }
 

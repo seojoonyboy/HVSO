@@ -125,7 +125,7 @@ namespace SkillModules {
             }
             else if(ability.GetType() == typeof(supply)) {
                 int num = 0;
-                result = int.TryParse((string)targetArgs[0], out num);
+                result = int.TryParse((string)ability.args[0], out num);
             }
             else if(ability.GetType() == typeof(hook)) {
                 bool isPlayer = mySkillHandler.isPlayer;
@@ -148,13 +148,14 @@ namespace SkillModules {
                 result = targets[0];
             }
             else if(ability.GetType() == typeof(skill_target_move)) {
+                GameObject slotToMove = targets[0];
                 bool isPlayer = mySkillHandler.isPlayer;
-                SkillTargetArgs args = new SkillTargetArgs();
 
+                SkillTargetArgs args = new SkillTargetArgs();
                 args.col = targets[0].transform.parent.GetSiblingIndex();
                 args.row = 0;
 
-                result = new object[] { targets[0], args, isPlayer };
+                result = new object[] { slotToMove, args, isPlayer };
             }
             else if(ability.GetType() == typeof(self_move)) {
                 bool isPlayer = mySkillHandler.isPlayer;

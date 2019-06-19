@@ -187,7 +187,9 @@ namespace SkillModules {
             if (data.GetType().IsArray) {
                 try {
                     object[] tmp = (object[])data;
-                    GameObject target = (GameObject)tmp[0];
+                    GameObject target = skillHandler.skillTarget;
+
+                    GameObject slotToMove = (GameObject)tmp[0];
                     SkillTargetArgs args = (SkillTargetArgs)tmp[1];
                     bool isPlayer = (bool)tmp[2];
 

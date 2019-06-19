@@ -215,7 +215,7 @@ namespace SkillModules {
         /// <summary></summary>
         /// <param name="target">내가 카드를 드롭하면서 지목한 대상</param>
         public override void SetTarget(object target) {
-            targets.Add((GameObject)target);
+            targets.AddRange((List<GameObject>)target);
         }
 
         private List<GameObject> GetTarget(bool isPlayer, string[] args) {
