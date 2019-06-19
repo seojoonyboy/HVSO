@@ -41,7 +41,7 @@ namespace SocketFormat {
 
     public class PlayHistory {
         public Card cardItem;
-        public Target target;
+        public Target[] targets;
     }
 
     public class Target {

@@ -208,7 +208,7 @@ public partial class PlayMangement : MonoBehaviour {
     }
 
     private GameObject SummonMagic(SocketFormat.PlayHistory history) {
-        int i = int.Parse(history.target.args[0]);
+        int i = int.Parse(history.targets[0].args[0]);
         CardData cardData;
         CardDataPackage cardDataPackage = AccountManager.Instance.cardPackage;
         int enemyCardCount = CountEnemyCard();
@@ -225,7 +225,7 @@ public partial class PlayMangement : MonoBehaviour {
     }
 
     private GameObject SummonMonster(SocketFormat.PlayHistory history) {
-        int i = int.Parse(history.target.args[0]);
+        int i = int.Parse(history.targets[0].args[0]);
         CardData cardData;
         CardDataPackage cardDataPackage = AccountManager.Instance.cardPackage;
         int enemyCardCount = CountEnemyCard();

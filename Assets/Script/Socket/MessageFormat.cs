@@ -5,7 +5,7 @@ namespace SocketFormat {
 
     public class MessageFormat {
         public int itemId;
-        public Arguments[] args;
+        public Arguments[] target;
     }
 
     public class ChangeCardFormat {
@@ -17,6 +17,11 @@ namespace SocketFormat {
 
 
     public class Arguments {
+        public Arguments(){}
+        public Arguments(string method, string[] args) {
+            this.method = method;
+            this.args = args;
+        }
         public string method;
         public string[] args;
     }

@@ -62,14 +62,15 @@ namespace SkillModules {
 
                 if (active && !isDone) yield return new WaitUntil (() => isDone);
             }
-            yield return null;
-            //TODO :  field playing card, skill 다 사용했을시 (마법카드 한정)
-            //MagicSendSocket();
-            if (targetData == null) yield break;
-            if (!targetData.GetType ().IsArray) yield break;
-            if (myObject == (GameObject) (((object[]) targetData) [1])) {
-                MagicSendSocket ();
-            }
+            if(isMagicCard()) MagicSendSocket();
+        }
+
+        private bool isMagicCard() {
+            if (targetData == null) return false;
+            if (!targetData.GetType().IsArray) return false;
+            if (myObject != (GameObject)(((object[])targetData)[1])) return false;
+            if (myObject.GetComponent<MagicDragHandler>() == null) return false;
+            return true;
         }
 
         private void MagicSendSocket () {
@@ -83,11 +84,11 @@ namespace SkillModules {
         private MessageFormat MessageForm() {
             MessageFormat format = new MessageFormat();
             format.itemId = myObject.GetComponent<MagicDragHandler>().itemID;
-            List<Arguments> args = new List<Arguments>();
-            args.Add(ArgumentForm(skills[0]));
+            List<Arguments> target = new List<Arguments>();
+            target.Add(ArgumentForm(skills[0]));
             Skill select = skills.ToList().Find(x => x.TargetSelectExist());
-            if(select != null) args.Add(ArgumentForm(select));
-            format.args = args.ToArray();
+            if(select != null) target.Add(ArgumentForm(select));
+            format.target = target.ToArray();
             return format;
         }
 

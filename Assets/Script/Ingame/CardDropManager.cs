@@ -255,13 +255,15 @@ public partial class CardDropManager {
         PlayMangement.instance.player.GetComponent<PlayerController>().cdpm.DestroyCard(cardIndex);
         PlayMangement.instance.PlayerUnitsObserver.RefreshFields(unitLine);
 
-
-        string[] args = {cardHandler.itemID.ToString(),
-                        "place",
+        SocketFormat.MessageFormat socketMessage = new SocketFormat.MessageFormat();
+        socketMessage.itemId = cardHandler.itemID;
+        string[] args = {
                         lineNum.ToString(),
                         PlayMangement.instance.player.isHuman ? "human" : "orc",
                         posMessage};
-        PlayMangement.instance.socketHandler.UseCard(args);
+        socketMessage.target = new SocketFormat.Arguments[1]{new SocketFormat.Arguments("place", args)};
+        
+        PlayMangement.instance.socketHandler.UseCard(socketMessage);
 
         return placedMonster;
     }
