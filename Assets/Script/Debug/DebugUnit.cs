@@ -44,12 +44,15 @@ public class DebugUnit : MonoBehaviour
     }
 
     private void Start() {
+    }
+
+    public void Init(CardData data) {
         x = transform.parent.GetSiblingIndex();
         y = transform.parent.parent.GetSiblingIndex();
         atkCount = 0;
 
         unitLocation = gameObject.transform.position;
-        
+
 
         unitSpine = transform.Find("skeleton").GetComponent<DebugUnitSpine>();
         unitSpine.attackCallback += SuccessAttack;
@@ -78,9 +81,10 @@ public class DebugUnit : MonoBehaviour
         if (unit.attackType.Length > 0 && unit.attackType[0] == "assault")
             gameObject.AddComponent<SkillModules.UnitAbility_assault>();
 
-        
+
         UpdateStat();
     }
+
 
     public void SpawnUnit() {
         SetState(UnitState.APPEAR);
@@ -92,7 +96,7 @@ public class DebugUnit : MonoBehaviour
             GetAnotherTarget();
             return;
         }
-        DebugPlayer targetPlayer = (isPlayer == true) ? DebugManagement.instance.enemyPlayer : DebugManagement.instance.player;
+        DebugPlayer targetPlayer = (isPlayer == true) ? DebugManagement.Instance.enemyPlayer : DebugManagement.Instance.player;
 
         if (unit.attackType.Length > 0 && unit.attackType[0] == "through") {
             myTarget = targetPlayer.transform.gameObject;
@@ -110,7 +114,7 @@ public class DebugUnit : MonoBehaviour
     }
 
     public void GetAnotherTarget() {
-        DebugPlayer targetPlayer = (isPlayer == true) ? DebugManagement.instance.enemyPlayer : DebugManagement.instance.player;
+        DebugPlayer targetPlayer = (isPlayer == true) ? DebugManagement.Instance.enemyPlayer : DebugManagement.Instance.player;
         DebugUnit targetMonster = myTarget.GetComponent<DebugUnit>();
 
         if (unit.currentHP <= 0) {
@@ -281,19 +285,19 @@ public class DebugUnit : MonoBehaviour
 
         if (unit.attack <= 3) {
             EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.HIT_LOW, targetPos);
-            StartCoroutine(DebugManagement.instance.cameraShake(unitSpine.atkDuration / 2, 1));
+            StartCoroutine(DebugManagement.Instance.cameraShake(unitSpine.atkDuration / 2, 1));
             SoundManager.Instance.PlaySound(SoundType.NORMAL_ATTACK);
         }
         else if (unit.attack > 3) {
             if (unit.attack > 3 && unit.attack <= 5) {
                 EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.HIT_MIDDLE, targetPos);
                 SoundManager.Instance.PlaySound(SoundType.MIDDLE_ATTACK);
-                StartCoroutine(DebugManagement.instance.cameraShake(unitSpine.atkDuration / 2, 2));
+                StartCoroutine(DebugManagement.Instance.cameraShake(unitSpine.atkDuration / 2, 2));
             }
             else if (unit.attack > 5) {
                 EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.HIT_HIGH, targetPos);
                 SoundManager.Instance.PlaySound(SoundType.LARGE_ATTACK);
-                StartCoroutine(DebugManagement.instance.cameraShake(unitSpine.atkDuration / 2, 3));
+                StartCoroutine(DebugManagement.Instance.cameraShake(unitSpine.atkDuration / 2, 3));
             }
         }
     }
@@ -393,7 +397,7 @@ public class DebugUnit : MonoBehaviour
 
     public void UnitDead() {
         unit.currentHP = 0;
-        GameObject tomb = DebugManagement.instance.unitDeadObject;
+        GameObject tomb = DebugManagement.Instance.unitDeadObject;
         GameObject dropTomb = Instantiate(tomb);
         dropTomb.transform.position = transform.position;
 
@@ -414,7 +418,7 @@ public class DebugUnit : MonoBehaviour
         poisonned poison = GetComponent<poisonned>();
 
         if (poison != null) {
-            GameObject tomb = DebugManagement.instance.unitDeadObject;
+            GameObject tomb = DebugManagement.Instance.unitDeadObject;
             GameObject dropTomb = Instantiate(tomb);
             dropTomb.transform.position = transform.position;
 

@@ -14,6 +14,8 @@ public class DebugPlayer : MonoBehaviour
 
     public GameObject backLine;
     public GameObject frontLine;
+    public GameObject playerUI;
+    GameObject costUI;
 
     public ReactiveProperty<int> HP;
     public ReactiveProperty<int> resource = new ReactiveProperty<int>(2);
@@ -27,6 +29,8 @@ public class DebugPlayer : MonoBehaviour
     [SerializeField]
     protected DebugHeroSpine heroSpine;
     public static int activeCardMinCost;
+    public bool dragCard = false;
+    [SerializeField] public DebugCardHandDeckManager cdpm;
 
     public enum HeroState {
         IDLE,
@@ -55,14 +59,38 @@ public class DebugPlayer : MonoBehaviour
         //var ObserveShield = shieldStack.Subscribe(_ => shieldImage.fillAmount = (float)shieldStack.Value / 8).AddTo(PlayMangement.instance.transform.gameObject);
         //var heroDown = HP.Where(x => x <= 0).Subscribe(_ => ).AddTo(PlayMangement.instance.transform.gameObject);
 
-        var gameOverDispose = HP.Where(x => x <= 0)
-                              .Subscribe(_ => {
-                                  SetState(HeroState.DEAD);
-                                  PlayMangement.instance.GetBattleResult();
-                              })
-                              .AddTo(PlayMangement.instance.transform.gameObject);
+        //var gameOverDispose = HP.Where(x => x <= 0)
+        //                      .Subscribe(_ => {
+        //                          SetState(HeroState.DEAD);
+        //                          PlayMangement.instance.GetBattleResult();
+        //                       })
+        //                      .AddTo(PlayMangement.instance.transform.gameObject);
     }
-    
+
+    public void ActivePlayer() {
+        activeCardMinCost = 100;
+        if (isPlayer == true) {
+            Transform cardSlot_1 = playerUI.transform.Find("CardHand").GetChild(0);
+            Transform cardSlot_2 = playerUI.transform.Find("CardHand").GetChild(1);
+            for (int i = 0; i < cardSlot_1.childCount; i++) {
+                if (cardSlot_1.GetChild(i).gameObject.activeSelf) {
+                    if (cardSlot_1.GetChild(i).childCount != 0)
+                        cardSlot_1.GetChild(i).GetChild(0).GetComponent<DebugCardHandler>().ActivateCard();
+                    else
+                        PlayMangement.instance.cardDragCanvas.GetChild(4).GetComponent<DebugCardHandler>().ActivateCard();
+                }
+            }
+            for (int i = 0; i < cardSlot_2.childCount; i++) {
+                if (cardSlot_2.GetChild(i).gameObject.activeSelf) {
+                    if (cardSlot_2.GetChild(i).childCount != 0)
+                        cardSlot_2.GetChild(i).GetChild(0).GetComponent<DebugCardHandler>().ActivateCard();
+                    else
+                        PlayMangement.instance.cardDragCanvas.GetChild(4).GetComponent<DebugCardHandler>().ActivateCard();
+                }
+            }
+        }
+    }
+
 
     protected void SetState(HeroState state) {
         if (heroSpine == null) return;
