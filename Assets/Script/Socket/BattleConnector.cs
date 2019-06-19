@@ -10,6 +10,9 @@ using UnityEngine.Events;
 using dataModules;
 using SocketFormat;
 using System.Reflection;
+using Newtonsoft.Json;
+using System.Linq;
+
 public partial class BattleConnector : MonoBehaviour {
     #if UNITY_EDITOR
     private string url = "wss://ccdevclient.fbl.kr/game";
@@ -68,7 +71,7 @@ public partial class BattleConnector : MonoBehaviour {
     private void ReceiveMessage(WebSocket webSocket, string message) {
         Logger.Log(message);
         OnReceiveSocketMessage.Invoke();
-        ReceiveFormat result = JsonReader.Read<ReceiveFormat>(message);
+        ReceiveFormat result = dataModules.JsonReader.Read<ReceiveFormat>(message);
         queue.Enqueue(result);
     }
 
@@ -76,9 +79,15 @@ public partial class BattleConnector : MonoBehaviour {
         SendMethod("client_ready");
     }
 
+    private class ItemIdClass {
+        public ItemIdClass(int itemId) { this.itemId = itemId.ToString(); }
+        public string itemId;
+    }
+
     public void ChangeCard(int itemId) {
-        string[] args = new string[]{itemId.ToString()};
-        SendMethod("hand_change", args);
+        ItemIdClass argClass = new ItemIdClass(itemId);
+        //argClass = null; //카드 무제한 변경 코드
+        SendMethod("hand_change", argClass);
     }
 
     public void MulliganEnd() {
@@ -110,10 +119,11 @@ public partial class BattleConnector : MonoBehaviour {
         SceneManager.Instance.LoadScene(SceneManager.Scene.MISSION_INGAME);
     }
 
-    private void SendMethod(string method, string[] args = null) {
+    private void SendMethod(string method, object args = null) {
         if(args == null) args = new string[]{};
         SendFormat format = new SendFormat(method, args);
-        webSocket.Send(JsonUtility.ToJson(format));
+        string json = JsonConvert.SerializeObject(format);
+        webSocket.Send(json);
     }
 
     private string[] ConvertObjectArrayToStringArray(object[] objs) {
@@ -151,7 +161,8 @@ public partial class BattleConnector : MonoBehaviour {
         if(result.method == null) return;
         MethodInfo theMethod = thisType.GetMethod(result.method);
         if(theMethod == null) return;
-        theMethod.Invoke(this, result.args);
+        var args = ((IEnumerable) result.args).Cast<object>().Select(x => x == null ? x : x.ToString()).ToArray();
+        theMethod.Invoke(this, args);
     }
 
     public void begin_ready() {
