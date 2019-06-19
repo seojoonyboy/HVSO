@@ -207,7 +207,7 @@ namespace SkillModules {
             
             if (args == null) failedCallback("Args 가 존재가지 않습니다.");
 
-            var targets = GetTarget(skillHandler.myObject.GetComponent<SkillHandler>().isPlayer, args);
+            var targets = GetTarget(skillHandler.isPlayer, args);
             SetTarget(targets);
             successCallback(targets);
         }
