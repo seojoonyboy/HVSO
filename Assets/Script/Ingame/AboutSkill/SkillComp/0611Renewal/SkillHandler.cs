@@ -74,30 +74,31 @@ namespace SkillModules {
 
         private void MagicSendSocket () {
             BattleConnector connector = PlayMangement.instance.socketHandler;
-            //MessageFormat format = MessageForm();
-
+            MessageFormat format = MessageForm();
+            //string args = JsonUtility.ToJson(format);
             //connector.UseCard(args);
-            //MonoBehaviour.Destroy(myObject);
+            MonoBehaviour.Destroy(myObject);
         }
 
         private MessageFormat MessageForm() {
             MessageFormat format = new MessageFormat();
             format.itemId = myObject.GetComponent<MagicDragHandler>().itemID;
-            format.args = new Arguments[]{};
-            Arguments args1 = new Arguments();
-            args1.method = skills[0].firstTargetArgs();
-            
-            args1.args = new string[]{};
+            List<Arguments> args = new List<Arguments>();
+            args.Add(ArgumentForm(skills[0]));
+            Skill select = skills.ToList().Find(x => x.TargetSelectExist());
+            if(select != null) args.Add(ArgumentForm(select));
+            format.args = args.ToArray();
             return format;
-
         }
 
-        private string[] ArgumentForm(string method, Skill skill) {
+        private Arguments ArgumentForm(Skill skill) {
+            Arguments arguments = new Arguments();
+            arguments.method = skill.firstTargetArgs();
             PlayerController player = isPlayer ? PlayMangement.instance.player : PlayMangement.instance.enemyPlayer;
             bool isPlayerHuman = player.isHuman;
             bool isOrc;
             List<string> args = new List<string>();
-            switch(method) {
+            switch(arguments.method) {
                 case "all":
                 isOrc = (skill.targetCamp().CompareTo("my") == 0) != isPlayerHuman;
                 args.Add(isOrc ? "orc" : "human");
@@ -119,7 +120,8 @@ namespace SkillModules {
                 args.Add(isOrc ? "orc" : "human");
                 break;
             }
-            return args.ToArray();
+            arguments.args = args.ToArray();
+            return arguments;
         }
 
         private PlaceMonster GetDropAreaUnit() {

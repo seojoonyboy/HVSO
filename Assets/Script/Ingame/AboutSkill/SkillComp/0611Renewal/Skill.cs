@@ -195,5 +195,9 @@ namespace SkillModules {
         public string targetCamp() {
             return targetHandler.args[0];
         }
+
+        public bool TargetSelectExist() {
+            return targetHandler.GetType().Name.Contains("select");
+        }
     }
 }
