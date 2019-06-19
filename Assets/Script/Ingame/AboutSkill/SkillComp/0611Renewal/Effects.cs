@@ -157,7 +157,12 @@ namespace SkillModules {
         public override void Execute(object data) {
             try {
                 GameObject target = (GameObject)data;
-                target.GetComponent<PlaceMonster>().InstanceAttack();
+                if(target.GetComponent<stun>() != null) {
+                    target.GetComponent<PlaceMonster>().InstanceAttack();
+                }
+                else {
+                    Logger.Log("Stun이 걸려있어 공격을 할 수 없습니다!");
+                }
             }
             catch(FormatException ex) {
                 ShowFormatErrorLog("quick");
