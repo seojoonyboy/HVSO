@@ -127,7 +127,7 @@ namespace SkillModules {
     public class played_ctg_chk : ConditionChecker {
         PlayedObject playedObject;
 
-        private played_ctg_chk(SkillHandler mySkillHandler, string[] args = null) : base(mySkillHandler, args) { 
+        public played_ctg_chk(SkillHandler mySkillHandler, string[] args = null) : base(mySkillHandler, args) { 
             playedObject = new PlayedObject();
         }
 
@@ -144,7 +144,7 @@ namespace SkillModules {
     public class played_type_chk : ConditionChecker {
         PlayedObject playedObject;
         
-        private played_type_chk(SkillHandler mySkillHandler, string[] args = null) : base(mySkillHandler, args) {
+        public played_type_chk(SkillHandler mySkillHandler, string[] args = null) : base(mySkillHandler, args) {
             playedObject = new PlayedObject();
         }
 
