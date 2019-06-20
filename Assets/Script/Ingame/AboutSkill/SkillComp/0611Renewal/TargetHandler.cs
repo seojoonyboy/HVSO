@@ -391,8 +391,23 @@ namespace SkillModules {
         public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback) {
             base.SelectTarget(successCallback, failedCallback);
 
-            SetTarget(null);
-            successCallback(null);
+            if(args[0] == "my") {
+                object[] tmp = (object[])skillHandler.targetData;
+                bool isPlayer = (bool)tmp[0];
+                GameObject summonedObject = (GameObject)tmp[1];
+
+                if(summonedObject.GetComponent<PlaceMonster>() != null) {
+                    if (skillHandler.myObject.GetComponent<PlaceMonster>() != null) {
+                        if (skillHandler.myObject.GetComponent<PlaceMonster>().isPlayer == isPlayer) {
+                            SetTarget(summonedObject);
+                            successCallback(null);
+                            return;
+                        }
+                    }
+                }
+            }
+            failedCallback("타겟을 찾을 수 없습니다");
+            Logger.Log("타겟을 찾을 수 없습니다.");
         }
 
         /// <summary></summary>
