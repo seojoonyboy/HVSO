@@ -103,8 +103,8 @@ public partial class BattleConnector : MonoBehaviour {
         SendMethod("play_card", args);
     }
 
-    public void UnitSkillActivate(string[] args) {
-        //SendMethod("unit_skill_activate", args);
+    public void UnitSkillActivate(object args) {
+        SendMethod("unit_skill_activate", args);
     }
 
     void Error(WebSocket webSocket, Exception ex) {

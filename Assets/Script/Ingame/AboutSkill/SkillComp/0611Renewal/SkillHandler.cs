@@ -60,7 +60,7 @@ namespace SkillModules {
             if(!isPlayer) return;
             if(myObject.GetComponent<PlaceMonster>() == null) return;
             BattleConnector connector = PlayMangement.instance.socketHandler;
-            MessageFormat format = MessageForm();
+            MessageFormat format = MessageForm(true);
             connector.UseCard(format);
         }
 
@@ -73,6 +73,7 @@ namespace SkillModules {
             //유닛 소환이나 마법 카드 사용 했을 때
             if(isPlayingCard()) SendSocket();
             //TODO : field에서 select 발동 했을 때
+            else if(isFieldCard()) SkillActivate();
         }
 
         private bool isPlayingCard() {
@@ -84,14 +85,40 @@ namespace SkillModules {
             return true;
         }
 
-        private void SendSocket() {
-            BattleConnector connector = PlayMangement.instance.socketHandler;
-            MessageFormat format = MessageForm();
-            connector.UseCard(format);
-            if(myObject.GetComponent<MagicDragHandler>() != null) MonoBehaviour.Destroy(myObject);
+        private bool isFieldCard() {
+            if (!isPlayer) return false;
+            if (!triggerList.Exists(x => IngameEventHandler.EVENT_TYPE.BEGIN_ORC_POST_TURN == x)) return false;
+            return true;
         }
 
-        private MessageFormat MessageForm() {
+        private void SkillActivate() {
+            BattleConnector connector = PlayMangement.instance.socketHandler;
+            MessageFormat format = MessageForm(false);
+            connector.UnitSkillActivate(format);
+        }
+
+
+        private void SendSocket() {
+            BattleConnector connector = PlayMangement.instance.socketHandler;
+            MessageFormat format = MessageForm(true);
+            connector.UseCard(format);
+            if(myObject.GetComponent<MagicDragHandler>() != null) {
+                int cardIndex = 0;
+                if (myObject.transform.parent.parent.name == "CardSlot_1")
+                    cardIndex = myObject.transform.parent.GetSiblingIndex();
+                else {
+                    Transform slot1 = myObject.transform.parent.parent.parent.GetChild(0);
+                    for (int i = 0; i < 5; i++) {
+                        if (slot1.GetChild(i).gameObject.activeSelf)
+                            cardIndex++;
+                    }
+                    cardIndex += myObject.transform.parent.GetSiblingIndex();
+                }
+                PlayMangement.instance.player.cdpm.DestroyCard(cardIndex);
+            }
+        }
+
+        private MessageFormat MessageForm(bool isEndCardPlay) {
             MessageFormat format = new MessageFormat();
             List<Arguments> targets = new List<Arguments>();
 
@@ -101,9 +128,12 @@ namespace SkillModules {
                 targets.Add(ArgumentForm(skills[0], false));
             }
             //유닛 소환
-            else {
+            else if(isEndCardPlay) {
                 format.itemId = myObject.GetComponent<PlaceMonster>().itemId;
                 targets.Add(UnitArgument());
+            }
+            else {
+                format.itemId = myObject.GetComponent<PlaceMonster>().itemId;
             }
             //Select 스킬 있을 시
             Skill select = skills.ToList().Find(x => x.TargetSelectExist());
@@ -140,34 +170,34 @@ namespace SkillModules {
             List<string> args = new List<string>();
             switch(arguments.method) {
                 case "all":
-                isOrc = (skill.targetCamp().CompareTo("my") == 0) != isPlayerHuman;
-                args.Add(isOrc ? "orc" : "human");
+                    isOrc = (skill.targetCamp().CompareTo("my") == 0) != isPlayerHuman;
+                    args.Add(isOrc ? "orc" : "human");
                 break;
                 case "line":
-                if(isSelect) {
-                    //TODO : select시 유닛 선택
-                }
-                else 
-                    args.Add(GetDropAreaLine().ToString());
+                    if(isSelect) args.Add(selectList[0].GetComponent<PlaceMonster>().x.ToString());
+                    else args.Add(GetDropAreaLine().ToString());
                 break;
                 case "unit":
-                if(isSelect) {
-                    //TODO : select시 유닛 선택
-                }
-                else
-                    args.Add(GetDropAreaUnit().itemId.ToString());
+                    int unitItemId;
+                    PlaceMonster monster;
+                    if(isSelect) monster = selectList[0].GetComponent<PlaceMonster>();
+                    else monster = GetDropAreaUnit();
+                    unitItemId = monster.itemId;
+                    args.Add(unitItemId.ToString());
+                    isOrc = monster.isPlayer != isPlayerHuman;
+                    args.Add(isOrc ? "orc" : "human");
                 break;
                 case "place":
-                    //슬롯으로 단언 해도 됨
-                    
-                    //TODO : 나중에 선택 되는 놈은 GetDropAreaUnit()이나 GetDropAreaLine()으로 가져와지질 않는다는 문제점이 있다
-                    //args.Add(GetDropAreaLine().ToString());
-                    //isOrc = GetDropAreaUnit().isPlayer != isPlayerHuman;
-                    //TODO : front or rear 찾기
+                    int line = selectList[0].transform.parent.GetSiblingIndex();
+                    args.Add(line.ToString());
+                    isOrc = skillTarget.GetComponent<PlaceMonster>().isPlayer != isPlayerHuman;
+                    args.Add(isOrc ? "orc" : "human");
+                    //TODO : 협력 몬스터랑 같이 있을 시 앞 뒤 위치 제대로 파악해야함
+                    args.Add("front");
                 break;
                 case "camp":
-                isOrc = (skill.targetCamp().CompareTo("my") == 0) != isPlayerHuman;
-                args.Add(isOrc ? "orc" : "human");
+                    isOrc = (skill.targetCamp().CompareTo("my") == 0) != isPlayerHuman;
+                    args.Add(isOrc ? "orc" : "human");
                 break;
             }
             arguments.args = args.ToArray();
