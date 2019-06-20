@@ -27,6 +27,10 @@ namespace SkillModules {
             scopeChecker = MethodToClass<ScopeChecker>(dataSkill.scope, new ScopeChecker(mySkillHandler), mySkillHandler);
             InitCondition(dataSkill.conditions, mySkillHandler);
 
+            if(mySkillHandler.myObject.GetComponent<PlaceMonster>() != null) {
+                var name = mySkillHandler.myObject.GetComponent<PlaceMonster>().unit.name;
+            }
+
             //targetHandler = MethodToClass<TargetHandler>(dataSkill.target.method, new TargetHandler(dataSkill.target.args), mySkillHandler);
             string targetClass = string.Format("SkillModules.{0}", dataSkill.target.method);
             Component targetComponent = mySkillHandler.myObject.AddComponent(System.Type.GetType(targetClass));
@@ -95,15 +99,21 @@ namespace SkillModules {
                 condition = condition && checker.IsConditionSatisfied();
             if(!condition) return false;
 
-            targetHandler.SelectTarget(
-                delegate {
-                    ability.Execute(SetExecuteData(targetHandler.GetTarget(), ability.args));
-                },
-                delegate {
-                    Logger.Log("타겟이 없습니다.");
-                    mySkillHandler.isDone = true;
-                }
-            );
+            if(targetHandler == null) {
+                ability.Execute(SetExecuteData(null, ability.args));
+            }
+            else {
+                targetHandler.SelectTarget(
+                    delegate {
+                        ability.Execute(SetExecuteData(targetHandler.GetTarget(), ability.args));
+                    },
+                    delegate {
+                        Logger.Log("타겟이 없습니다.");
+                        mySkillHandler.isDone = true;
+                    }
+                );
+            }
+            
             return true;
         }
 
@@ -145,7 +155,7 @@ namespace SkillModules {
                 result = targets[0];
             }
             else if(ability.GetType() == typeof(clear_skill_target)) {
-                result = targets[0];
+                result = mySkillHandler.skillTarget;
             }
             else if(ability.GetType() == typeof(skill_target_move)) {
                 GameObject slotToMove = targets[0];
