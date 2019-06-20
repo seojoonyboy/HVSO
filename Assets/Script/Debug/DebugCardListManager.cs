@@ -10,6 +10,7 @@ public class DebugCardListManager : CardListManager
 {
     private void Start() {
         hss = transform.GetComponentInChildren<HorizontalScrollSnap>();
+        
     }
 
     public override void AddCardInfo(CardData data, string id) {

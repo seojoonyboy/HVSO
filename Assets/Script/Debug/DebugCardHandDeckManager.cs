@@ -15,6 +15,7 @@ public class DebugCardHandDeckManager : CardHandDeckManager
         slot_2 = transform.GetChild(1);
         slot_2.gameObject.SetActive(true);
         ChangeSlotHeight(0.9f);
+        clm = PlayMangement.instance.cardInfoCanvas.Find("CardInfoList").GetComponent<CardListManager>();
     }
 
 

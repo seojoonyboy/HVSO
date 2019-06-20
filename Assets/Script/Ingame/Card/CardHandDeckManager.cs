@@ -15,8 +15,8 @@ public class CardHandDeckManager : MonoBehaviour {
     [SerializeField] protected GameObject unitCardPrefab;
     [SerializeField] protected GameObject magicCardPrefab;
     [SerializeField] public Transform cardSpawnPos;
-    [SerializeField] Transform firstDrawParent;
-    CardListManager clm;
+    [SerializeField] protected Transform firstDrawParent;
+    protected CardListManager clm;
 
     void Start() {
         cardList = new List<GameObject>();
