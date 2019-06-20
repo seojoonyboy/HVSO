@@ -152,7 +152,7 @@ namespace SkillModules {
         public override void Execute(object data) {
             try {
                 GameObject target = (GameObject)data;
-                if(target.GetComponent<stun>() != null) {
+                if(target.GetComponent<stun>() == null) {
                     target.GetComponent<PlaceMonster>().InstanceAttack();
                 }
                 else {
