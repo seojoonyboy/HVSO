@@ -88,7 +88,20 @@ namespace SkillModules {
             BattleConnector connector = PlayMangement.instance.socketHandler;
             MessageFormat format = MessageForm();
             connector.UseCard(format);
-            if(myObject.GetComponent<MagicDragHandler>() != null) MonoBehaviour.Destroy(myObject);
+            if(myObject.GetComponent<MagicDragHandler>() != null) {
+                int cardIndex = 0;
+                if (myObject.transform.parent.parent.name == "CardSlot_1")
+                    cardIndex = myObject.transform.parent.GetSiblingIndex();
+                else {
+                    Transform slot1 = myObject.transform.parent.parent.parent.GetChild(0);
+                    for (int i = 0; i < 5; i++) {
+                        if (slot1.GetChild(i).gameObject.activeSelf)
+                            cardIndex++;
+                    }
+                    cardIndex += myObject.transform.parent.GetSiblingIndex();
+                }
+                PlayMangement.instance.player.cdpm.DestroyCard(cardIndex);
+            }
         }
 
         private MessageFormat MessageForm() {
@@ -158,12 +171,12 @@ namespace SkillModules {
                     args.Add(GetDropAreaUnit().itemId.ToString());
                 break;
                 case "place":
-                    //슬롯으로 단언 해도 됨
-                    
-                    //TODO : 나중에 선택 되는 놈은 GetDropAreaUnit()이나 GetDropAreaLine()으로 가져와지질 않는다는 문제점이 있다
-                    //args.Add(GetDropAreaLine().ToString());
-                    //isOrc = GetDropAreaUnit().isPlayer != isPlayerHuman;
-                    //TODO : front or rear 찾기
+                    int line = selectList[0].transform.parent.GetSiblingIndex();
+                    args.Add(line.ToString());
+                    isOrc = skillTarget.GetComponent<PlaceMonster>().isPlayer != isPlayerHuman;
+                    args.Add(isOrc ? "orc" : "human");
+                    //TODO : 협력 몬스터랑 같이 있을 시 앞 뒤 위치 제대로 파악해야함
+                    args.Add("front");
                 break;
                 case "camp":
                 isOrc = (skill.targetCamp().CompareTo("my") == 0) != isPlayerHuman;
