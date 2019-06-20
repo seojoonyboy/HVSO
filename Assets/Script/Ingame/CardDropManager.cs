@@ -261,7 +261,7 @@ public partial class CardDropManager {
                         lineNum.ToString(),
                         PlayMangement.instance.player.isHuman ? "human" : "orc",
                         posMessage};
-        socketMessage.target = new SocketFormat.Arguments[1]{new SocketFormat.Arguments("place", args)};
+        socketMessage.targets = new SocketFormat.Arguments[1]{new SocketFormat.Arguments("place", args)};
         
         PlayMangement.instance.socketHandler.UseCard(socketMessage);
 

@@ -88,7 +88,7 @@ namespace SkillModules {
             target.Add(ArgumentForm(skills[0]));
             Skill select = skills.ToList().Find(x => x.TargetSelectExist());
             if(select != null) target.Add(ArgumentForm(select));
-            format.target = target.ToArray();
+            format.targets = target.ToArray();
             return format;
         }
 

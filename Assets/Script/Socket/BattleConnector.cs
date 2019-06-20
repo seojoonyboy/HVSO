@@ -259,7 +259,7 @@ public partial class BattleConnector : MonoBehaviour {
 
     public void line_battle(object args) {
         var json = (JObject)args;
-        string line = json["line"].ToString();
+        string line = json["lineNumber"].ToString();
         string camp = json["camp"].ToString();
         int line_num = int.Parse(line);
         lineBattleList.Enqueue(gameState);
@@ -270,7 +270,7 @@ public partial class BattleConnector : MonoBehaviour {
 
     public void map_clear(object args) {
         var json = (JObject)args;
-        string line = json["line"].ToString();
+        string line = json["lineNumber"].ToString();
         int line_num = int.Parse(line);
         mapClearList.Enqueue(gameState);
         mapClearList.checkCount();
@@ -290,7 +290,7 @@ public partial class BattleConnector : MonoBehaviour {
     public void shild_guage(object args) {
         var json = (JObject)args;
         string camp = json["camp"].ToString();
-        string gauge = json["gauge"].ToString();
+        string gauge = json["shildGet"].ToString();
         ShieldCharge charge = new ShieldCharge();
         charge.shieldCount = int.Parse(gauge);
         charge.camp = camp;

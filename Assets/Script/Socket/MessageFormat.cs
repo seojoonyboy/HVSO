@@ -5,7 +5,7 @@ namespace SocketFormat {
 
     public class MessageFormat {
         public int itemId;
-        public Arguments[] target;
+        public Arguments[] targets;
     }
 
     public class ChangeCardFormat {

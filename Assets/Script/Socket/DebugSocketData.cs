@@ -144,8 +144,6 @@ namespace SocketFormat {
                 CheckMonsterPosition(lines[i].orc, orcUnitsObserver, i);
                 CheckMonsterPosition(lines[i].human, humanUnitsObserver, i);
             }
-            //Logger.Log("유닛 위치 체크");
-            PlayMangement.instance.Invoke("SendNotification", 1.5f);
         }
 
         public static void CheckMonsterPosition(Unit[] units, FieldUnitsObserver observer, int line) {
