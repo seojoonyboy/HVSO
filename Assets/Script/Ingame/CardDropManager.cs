@@ -245,18 +245,14 @@ public partial class CardDropManager {
         }
         CardHandler cardHandler = card.GetComponent<CardHandler>();
         int frontOrBack = 0; //뒤에 배치시 0, 앞에 배치시 1, 기본 뒤에 배치
-        string posMessage = "front";
         int lineNum = target.parent.GetSiblingIndex();
         switch (target.GetSiblingIndex()) {
             case 0:
-                posMessage = "front";
                 break;
             case 1:
-                posMessage = "front";
                 frontOrBack = 1;
                 break;
             case 2:
-                posMessage = "rear";
                 unitLine[lineNum][0].GetChild(0).SetParent(unitLine[lineNum][1]);
                 unitLine[lineNum][1].GetChild(0).position = unitLine[lineNum][1].position;
                 unitLine[lineNum][1].GetChild(0).GetComponent<PlaceMonster>().unitLocation = unitLine[lineNum][1].position;
@@ -313,16 +309,6 @@ public partial class CardDropManager {
             PlayMangement.instance.player.ActiveOrcTurn();
         PlayMangement.instance.player.GetComponent<PlayerController>().cdpm.DestroyCard(cardIndex);
         PlayMangement.instance.PlayerUnitsObserver.RefreshFields(unitLine);
-
-        SocketFormat.MessageFormat socketMessage = new SocketFormat.MessageFormat();
-        socketMessage.itemId = cardHandler.itemID;
-        string[] args = {
-                        lineNum.ToString(),
-                        PlayMangement.instance.player.isHuman ? "human" : "orc",
-                        posMessage};
-        socketMessage.targets = new SocketFormat.Arguments[1]{new SocketFormat.Arguments("place", args)};
-        
-        PlayMangement.instance.socketHandler.UseCard(socketMessage);
 
         return placedMonster;
     }

@@ -30,6 +30,7 @@ namespace SkillModules {
                 skills[i] = new Skill ();
                 skills[i].Initialize (_skills[i], this);
             }
+            SummonNonEndCardTriggerMonster();
         }
 
         public void RegisterTriggerEvent (IngameEventHandler.EVENT_TYPE triggerType) {
@@ -51,53 +52,91 @@ namespace SkillModules {
         private void Trigger (Enum Event_Type, Component Sender, object Param = null) {
             targetData = Param;
             IngameEventHandler.EVENT_TYPE triggerType = (IngameEventHandler.EVENT_TYPE) Event_Type;
-            PlayMangement.instance.StartCoroutine (SkillTrigger (triggerType, Param)); //이 부분 초큼...
+            PlayMangement.instance.StartCoroutine (SkillTrigger (triggerType, Param));
+        }
+
+        private void SummonNonEndCardTriggerMonster() {
+            if(triggerList.Exists(x => IngameEventHandler.EVENT_TYPE.END_CARD_PLAY == x)) return;
+            if(!isPlayer) return;
+            if(myObject.GetComponent<PlaceMonster>() == null) return;
+            BattleConnector connector = PlayMangement.instance.socketHandler;
+            MessageFormat format = MessageForm();
+            connector.UseCard(format);
         }
 
         IEnumerator SkillTrigger (IngameEventHandler.EVENT_TYPE triggerType, object parms) {
             foreach (Skill skill in skills) {
                 isDone = false;
                 bool active = skill.Trigger (triggerType, parms);
-                //TODO : 해당 스킬이 완료할 때까지 대기타기 //문제는 다 됐다는걸 어떻게 알려주느냐
-
                 if (active && !isDone) yield return new WaitUntil (() => isDone);
             }
-            if(isMagicCard()) MagicSendSocket();
+            //유닛 소환이나 마법 카드 사용 했을 때
+            if(isPlayingCard()) SendSocket();
+            //TODO : field에서 select 발동 했을 때
         }
 
-        private bool isMagicCard() {
+        private bool isPlayingCard() {
+            if (!isPlayer) return false;
             if (targetData == null) return false;
             if (!targetData.GetType().IsArray) return false;
             if (myObject != (GameObject)(((object[])targetData)[1])) return false;
-            if (myObject.GetComponent<MagicDragHandler>() == null) return false;
+            if (!triggerList.Exists(x => IngameEventHandler.EVENT_TYPE.END_CARD_PLAY == x)) return false;
             return true;
         }
 
-        private void MagicSendSocket () {
+        private void SendSocket() {
             BattleConnector connector = PlayMangement.instance.socketHandler;
             MessageFormat format = MessageForm();
-            //string args = JsonUtility.ToJson(format);
-            //connector.UseCard(args);
-            MonoBehaviour.Destroy(myObject);
+            connector.UseCard(format);
+            if(myObject.GetComponent<MagicDragHandler>() != null) MonoBehaviour.Destroy(myObject);
         }
 
         private MessageFormat MessageForm() {
             MessageFormat format = new MessageFormat();
-            format.itemId = myObject.GetComponent<MagicDragHandler>().itemID;
-            List<Arguments> target = new List<Arguments>();
-            target.Add(ArgumentForm(skills[0]));
+            List<Arguments> targets = new List<Arguments>();
+
+            //마법 사용
+            if(myObject.GetComponent<MagicDragHandler>() != null) {
+                format.itemId = myObject.GetComponent<MagicDragHandler>().itemID;
+                targets.Add(ArgumentForm(skills[0], false));
+            }
+            //유닛 소환
+            else {
+                format.itemId = myObject.GetComponent<PlaceMonster>().itemId;
+                targets.Add(UnitArgument());
+            }
+            //Select 스킬 있을 시
             Skill select = skills.ToList().Find(x => x.TargetSelectExist());
-            if(select != null) target.Add(ArgumentForm(select));
-            format.targets = target.ToArray();
+            //Playing scope 있는 Select일 때
+            if(select != null && select.isPlayingSelect()) {
+                List<GameObject> selectList = select.GetTargetFromSelect();
+                if(selectList.Count > 0)
+                    targets.Add(ArgumentForm(select, true));
+            }
+                
+            
+            format.targets = targets.ToArray();
             return format;
         }
 
-        private Arguments ArgumentForm(Skill skill) {
+        private Arguments UnitArgument() {
+            PlayMangement manage = PlayMangement.instance;
+            
+            string camp = isPlayer != manage.player.isHuman ? "orc" : "human";
+            FieldUnitsObserver targetObserver = isPlayer ? manage.PlayerUnitsObserver : manage.EnemyUnitsObserver;
+            int line = targetObserver.GetMyPos(myObject).row;
+            var posObject = targetObserver.GetAllFieldUnits(line);
+            string placed = posObject.Count == 1 ? "front" : posObject[0] == myObject ? "back" : "front";
+            return new Arguments("place", new string[]{line.ToString(), camp, placed});
+        }
+
+        private Arguments ArgumentForm(Skill skill, bool isSelect) {
             Arguments arguments = new Arguments();
             arguments.method = skill.firstTargetArgs();
             PlayerController player = isPlayer ? PlayMangement.instance.player : PlayMangement.instance.enemyPlayer;
             bool isPlayerHuman = player.isHuman;
             bool isOrc;
+            List<GameObject> selectList = skill.GetTargetFromSelect();
             List<string> args = new List<string>();
             switch(arguments.method) {
                 case "all":
@@ -105,16 +144,26 @@ namespace SkillModules {
                 args.Add(isOrc ? "orc" : "human");
                 break;
                 case "line":
-                args.Add(GetDropAreaLine().ToString());
+                if(isSelect) {
+                    //TODO : select시 유닛 선택
+                }
+                else 
+                    args.Add(GetDropAreaLine().ToString());
                 break;
                 case "unit":
-                args.Add(GetDropAreaUnit().itemId.ToString());
+                if(isSelect) {
+                    //TODO : select시 유닛 선택
+                }
+                else
+                    args.Add(GetDropAreaUnit().itemId.ToString());
                 break;
                 case "place":
-                //TODO : 나중에 선택 되는 놈은 GetDropAreaUnit()이나 GetDropAreaLine()으로 가져와지질 않는다는 문제점이 있다
-                //args.Add(GetDropAreaLine().ToString());
-                //isOrc = GetDropAreaUnit().isPlayer != isPlayerHuman;
-                //TODO : front or rear 찾기
+                    //슬롯으로 단언 해도 됨
+                    
+                    //TODO : 나중에 선택 되는 놈은 GetDropAreaUnit()이나 GetDropAreaLine()으로 가져와지질 않는다는 문제점이 있다
+                    //args.Add(GetDropAreaLine().ToString());
+                    //isOrc = GetDropAreaUnit().isPlayer != isPlayerHuman;
+                    //TODO : front or rear 찾기
                 break;
                 case "camp":
                 isOrc = (skill.targetCamp().CompareTo("my") == 0) != isPlayerHuman;
