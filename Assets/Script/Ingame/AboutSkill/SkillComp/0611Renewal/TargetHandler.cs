@@ -282,7 +282,7 @@ namespace SkillModules {
         SelectTargetFinished callback;
 
         private void Update() {
-            if (Input.GetMouseButtonDown(0)) {
+            if (callback != null && Input.GetMouseButtonDown(0)) {
                 Transform selectedTarget = null;
                 if (args[1] == "place") {
                     selectedTarget = GetClickedAreaSlot();
