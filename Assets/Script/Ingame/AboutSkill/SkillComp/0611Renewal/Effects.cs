@@ -239,6 +239,9 @@ namespace SkillModules {
                     SelfMoveArgs args = (SelfMoveArgs)tmp[0];
                     bool isPlayer = (bool)tmp[1];
 
+                    Logger.Log(args.col);
+                    Logger.Log(args.row);
+
                     MoveUnit(ref args, isPlayer);
                 }
                 catch(Exception ex) {

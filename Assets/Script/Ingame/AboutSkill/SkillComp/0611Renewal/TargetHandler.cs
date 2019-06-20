@@ -299,6 +299,19 @@ namespace SkillModules {
                     PlayMangement.instance.OffBlockPanel();
 
                     CardDropManager.Instance.HideDropableSlot();
+                    if(args[1] == "place") {
+                        int col = selectedTarget.parent.GetSiblingIndex();
+                        int row = 0;
+                        selectedTarget = PlayMangement.instance
+                            .PlayerUnitsObserver
+                            .transform
+                            .GetChild(row)
+                            .GetChild(col)
+                            .transform;
+                    }
+
+                    Logger.Log(selectedTarget.gameObject.name);
+
                     SetTarget(selectedTarget.gameObject);
                     callback(selectedTarget);
                 }
@@ -350,6 +363,7 @@ namespace SkillModules {
         /// <summary></summary>
         /// <param name="parms">사용자가 직접 지목한 위치?</param>
         public override void SetTarget(object target) {
+            targets = new List<GameObject>();
             targets.Add((GameObject)target);
         }
 

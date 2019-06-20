@@ -168,11 +168,19 @@ namespace SkillModules {
                 result = new object[] { slotToMove, args, isPlayer };
             }
             else if(ability.GetType() == typeof(self_move)) {
-                bool isPlayer = mySkillHandler.isPlayer;
                 SelfMoveArgs args = new SelfMoveArgs();
 
-                args.col = targets[0].transform.parent.GetSiblingIndex();
-                args.row = 0;
+                //타겟이 unit인 경우
+                if (targets[0].GetComponent<PlaceMonster>() != null) {
+                    args.col = targets[0].transform.parent.GetSiblingIndex();
+                    args.row = 0;
+                }
+                //타겟이 slot인 경우
+                else {
+                    args.col = targets[0].transform.GetSiblingIndex();
+                    args.row = 0;
+                }
+                bool isPlayer = mySkillHandler.isPlayer;
 
                 result = new object[] { args, isPlayer };
             }
