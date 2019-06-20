@@ -142,7 +142,7 @@ namespace SkillModules {
             else {
                 observer = PlayMangement.instance.PlayerUnitsObserver;
             }
-            observer.UnitChangePosition(target, args.col, args.row);
+            observer.UnitChangePosition(target, args.row, args.col);
         }
     }
 

@@ -77,6 +77,8 @@ namespace SkillModules {
         }
 
         protected Transform GetClickedAreaUnit(string layer) {
+            layer = "ClickableUnit";
+
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             LayerMask mask = (1 << LayerMask.NameToLayer(layer));
 
@@ -310,7 +312,17 @@ namespace SkillModules {
                             .transform;
                     }
 
-                    Logger.Log(selectedTarget.gameObject.name);
+                    if(args[1] == "unit") {
+                        selectedTarget = selectedTarget.gameObject.GetComponentInParent<PlaceMonster>().transform;
+                        var units = PlayMangement.instance.EnemyUnitsObserver.GetAllFieldUnits();
+                        foreach (GameObject unit in units) {
+                            unit.transform.Find("ClickableUI").gameObject.SetActive(false);
+                        }
+                        units = PlayMangement.instance.PlayerUnitsObserver.GetAllFieldUnits();
+                        foreach (GameObject unit in units) {
+                            unit.transform.Find("ClickableUI").gameObject.SetActive(false);
+                        }
+                    }
 
                     SetTarget(selectedTarget.gameObject);
                     callback(selectedTarget);
@@ -344,6 +356,7 @@ namespace SkillModules {
                             PlayMangement.instance.OnBlockPanel("대상을 지정해 주세요.");
                             callback = successCallback;
                             var units = PlayMangement.instance.PlayerUnitsObserver.GetAllFieldUnits();
+
                             foreach (GameObject unit in units) {
                                 var ui = unit.transform.Find("ClickableUI").gameObject;
                                 if (ui != null) {
@@ -356,7 +369,24 @@ namespace SkillModules {
                         }
                     }
                     break;
-                //case "enemy"
+                case "enemy":
+                    if (args.Length == 2 && args[1] == "unit") {
+                        if (CanSelect(args[1])) {
+                            PlayMangement.instance.OnBlockPanel("대상을 지정해 주세요.");
+                            callback = successCallback;
+                            var units = PlayMangement.instance.EnemyUnitsObserver.GetAllFieldUnits();
+                            foreach (GameObject unit in units) {
+                                var ui = unit.transform.Find("ClickableUI").gameObject;
+                                if (ui != null) {
+                                    ui.SetActive(true);
+                                }
+                            }
+                        }
+                        else {
+                            failedCallback("타겟이 없습니다.");
+                        }
+                    }
+                    break;
             }
         }
 
