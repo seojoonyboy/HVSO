@@ -17,12 +17,12 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
 
     public void UnitChangePosition(GameObject target, int col, int row) {
         Pos prevPos = GetMyPos(target);
-        units[col, row] = target;
+        units[row, col] = target;
 
         Logger.Log("Row : " + row);
         Logger.Log("Col : " + col);
 
-        Vector2 targetPos = transform.GetChild(row).GetChild(col).position;
+        Vector2 targetPos = transform.GetChild(col).GetChild(row).position;
         iTween.MoveTo(
             target,
             new Vector2(targetPos.x, targetPos.y),
