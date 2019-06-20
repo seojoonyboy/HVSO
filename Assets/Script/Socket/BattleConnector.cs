@@ -243,8 +243,10 @@ public partial class BattleConnector : MonoBehaviour {
         useCardList.isDone = true;
     }
 
-    public void unit_skill_activate(object args) {
+    public void skill_activate(object args) {
+        //item Id가 args에 있음
         //Logger.Log("WebSocket State : unit_skill_activate");
+        //적이 skill_activate 할 경우?
     }
 
     public void begin_battle_turn(object args) {

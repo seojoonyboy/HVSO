@@ -174,18 +174,6 @@ namespace SkillModules {
         }
     }
 
-    public class has_attr : ConditionChecker {
-
-        public has_attr(SkillHandler mySkillHandler, string[] args = null) : base(mySkillHandler, args) { }
-
-        public override bool IsConditionSatisfied() {
-            if(!ArgsExist()) return false;
-            PlaceMonster myMonster = mySkillHandler.myObject.GetComponent<PlaceMonster>();
-            bool isExist = myMonster.unit.attributes.ToList().Exists(x => x.CompareTo(args[0]) == 0);
-            return isExist;
-        }
-    }
-
     public class target_dmg_gte : ConditionChecker {
         
         public target_dmg_gte(SkillHandler mySkillHandler, string[] args = null) : base(mySkillHandler, args) { }
