@@ -182,7 +182,7 @@ namespace SkillModules {
             if(!ArgsExist()) return false;
             PlaceMonster myMonster = mySkillHandler.myObject.GetComponent<PlaceMonster>();
             bool isExist = myMonster.unit.attributes.ToList().Exists(x => x.CompareTo(args[0]) == 0);
-            return false;
+            return isExist;
         }
     }
 
