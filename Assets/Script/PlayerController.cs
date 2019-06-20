@@ -205,10 +205,7 @@ public class PlayerController : MonoBehaviour
         Queue<SocketFormat.Player> heroShildData = isHuman ? socketHandler.humanData : socketHandler.orcData;
         SocketFormat.Player data;
         if(heroShildData.Count != 0) data = heroShildData.Peek();
-        else {
-            Debug.Log("받아온 실드 데이터가 없습니다!");
-            data = socketHandler.gameState.players.myPlayer(isHuman);
-        }
+        else data = socketHandler.gameState.players.myPlayer(isHuman);
         SocketFormat.ShieldCharge shieldData = GetShieldData();
         if (!data.shildActivate) {
             HP.Value -= amount;
