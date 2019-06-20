@@ -335,7 +335,7 @@ public class CardHandDeckManager : MonoBehaviour {
     }
 
 
-    protected IEnumerator SendCardToHand(GameObject card) {
+    protected virtual IEnumerator SendCardToHand(GameObject card) {
         PlayMangement.movingCard = card;
         if (!firstDraw) {
             AddInfoToList(card);

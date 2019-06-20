@@ -126,4 +126,32 @@ public class DebugCardHandDeckManager : CardHandDeckManager
             StartCoroutine(SendCardToHand(card));
         }
     }
+
+    protected override IEnumerator SendCardToHand(GameObject card) {
+        PlayMangement.movingCard = card;
+        if (!firstDraw) {
+            AddInfoToList(card);
+            card.transform.rotation = new Quaternion(0, 0, 180, card.transform.rotation.w);
+            iTween.MoveTo(card, firstDrawParent.position, 0.4f);
+            iTween.RotateTo(card, new Vector3(0, 0, 0), 0.5f);
+            yield return new WaitForSeconds(0.5f);
+        }
+
+        iTween.MoveTo(card, iTween.Hash("x", card.transform.parent.position.x, "y", card.transform.parent.position.y, "time", 0.5f, "easetype", iTween.EaseType.easeWeakOutBack));
+        iTween.ScaleTo(card, new Vector3(1.0f, 1.0f, 1.0f), 0.2f);
+
+        yield return new WaitForSeconds(0.5f);
+        card.transform.localPosition = new Vector3(0, 0, 0);
+        if (PlayMangement.movingCard == card) {
+            PlayMangement.movingCard = null;
+            InitCardPosition();
+        }
+    }
+
+    private void InitCardPosition() {
+        foreach (GameObject card in cardList) {
+            card.transform.localPosition = new Vector3(0, 0, 0);
+        }
+        PlayMangement.dragable = true;
+    }
 }

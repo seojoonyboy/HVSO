@@ -1,80 +1,16 @@
 diff a/Assets/Script/Ingame/AboutSkill/SkillComp/ForUnitPrefab/Unit/UnitAbility_assault.cs b/Assets/Script/Ingame/AboutSkill/SkillComp/ForUnitPrefab/Unit/UnitAbility_assault.cs	(rejected hunks)
-@@ -42,31 +42,62 @@
-             var myPos = playerUnitsObserver.GetMyPos(gameObject);
-             var enemies = enemyUnitsObserver.GetAllFieldUnits(myPos.row);
+@@ -9,8 +9,13 @@
+             playerUnitsObserver,
+             enemyUnitsObserver;
  
--            if (enemies.Count == 0) {
--                if (!isBuffed) {
--                    if (!GetComponent<PlaceMonster>().IsBuffAlreadyExist(gameObject)) {
--                        Debug.Log("Assault 스킬 발동");
--                        GetComponent<PlaceMonster>().AddBuff(new PlaceMonster.Buff(gameObject, 3, 0));
--                        isBuffed = true;
-+            if (debugManagement != null) {
-+                if (enemies.Count == 0) {
-+                    if (!isBuffed) {
-+                        if (!GetComponent<DebugUnit>().IsBuffAlreadyExist(gameObject)) {
-+                            Debug.Log("Assault 스킬 발동");
-+                            GetComponent<DebugUnit>().AddBuff(new DebugUnit.Buff(gameObject, 3, 0));
-+                            isBuffed = true;
-+                        }
-                     }
-                 }
-+                //적이 있으면 버프 다시 제거
-+                else if (isBuffed) {
-+                    Debug.Log("Assault 스킬 해제");
-+                    GetComponent<DebugUnit>().RemoveBuff(gameObject);
-+                    isBuffed = false;
-+                }
-             }
--            //적이 있으면 버프 다시 제거
--            else if(isBuffed){
--                Debug.Log("Assault 스킬 해제");
--                GetComponent<PlaceMonster>().RemoveBuff(gameObject);
--                isBuffed = false;
-+            else {
-+                if (enemies.Count == 0) {
-+                    if (!isBuffed) {
-+                        if (!GetComponent<PlaceMonster>().IsBuffAlreadyExist(gameObject)) {
-+                            Debug.Log("Assault 스킬 발동");
-+                            GetComponent<PlaceMonster>().AddBuff(new PlaceMonster.Buff(gameObject, 3, 0));
-+                            isBuffed = true;
-+                        }
-+                    }
-+                }
-+                //적이 있으면 버프 다시 제거
-+                else if (isBuffed) {
-+                    Debug.Log("Assault 스킬 해제");
-+                    GetComponent<PlaceMonster>().RemoveBuff(gameObject);
-+                    isBuffed = false;
-+                }
-             }
++        DebugManagement debugManagement;
+         void Awake() {
+-            eventHandler = PlayMangement.instance.EventHandler;
++            debugManagement = DebugManagement.Instance;
++            if (debugManagement != null)
++                eventHandler = DebugManagement.Instance.EventHandler;                
++            else
++                eventHandler = PlayMangement.instance.EventHandler;
          }
  
-         void SetObservers() {
--            if (GetComponent<PlaceMonster>().isPlayer) {
--                playerUnitsObserver = PlayMangement.instance.PlayerUnitsObserver;
--                enemyUnitsObserver = PlayMangement.instance.EnemyUnitsObserver;
-+            if (debugManagement != null) {
-+                if (GetComponent<DebugUnit>().isPlayer) {
-+                    playerUnitsObserver = DebugManagement.Instance.PlayerUnitsObserver;
-+                    enemyUnitsObserver = DebugManagement.Instance.EnemyUnitsObserver;
-+                }
-+                else {
-+                    playerUnitsObserver = DebugManagement.Instance.EnemyUnitsObserver;
-+                    enemyUnitsObserver = DebugManagement.Instance.PlayerUnitsObserver;
-+                }
-             }
-             else {
--                playerUnitsObserver = PlayMangement.instance.EnemyUnitsObserver;
--                enemyUnitsObserver = PlayMangement.instance.PlayerUnitsObserver;
-+                if (GetComponent<PlaceMonster>().isPlayer) {
-+                    playerUnitsObserver = PlayMangement.instance.PlayerUnitsObserver;
-+                    enemyUnitsObserver = PlayMangement.instance.EnemyUnitsObserver;
-+                }
-+                else {
-+                    playerUnitsObserver = PlayMangement.instance.EnemyUnitsObserver;
-+                    enemyUnitsObserver = PlayMangement.instance.PlayerUnitsObserver;
-+                }
-             }
-         }
- 
+         void Start() {

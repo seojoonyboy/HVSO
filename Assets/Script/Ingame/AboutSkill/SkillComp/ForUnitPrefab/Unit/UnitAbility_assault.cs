@@ -8,8 +8,7 @@ namespace SkillModules {
         FieldUnitsObserver
             playerUnitsObserver,
             enemyUnitsObserver;
-
-        DebugManagement debugManagement;
+        
         void Awake() {
             eventHandler = PlayMangement.instance.EventHandler;
         }
@@ -38,24 +37,8 @@ namespace SkillModules {
             var myPos = playerUnitsObserver.GetMyPos(gameObject);
             var enemies = enemyUnitsObserver.GetAllFieldUnits(myPos.row);
 
-            if (debugManagement != null) {
-                if (enemies.Count == 0) {
-                    if (!isBuffed) {
-                        if (!GetComponent<DebugUnit>().IsBuffAlreadyExist(gameObject)) {
-                            Debug.Log("Assault 스킬 발동");
-                            GetComponent<DebugUnit>().AddBuff(new DebugUnit.Buff(gameObject, 3, 0));
-                            isBuffed = true;
-                        }
-                    }
-                }
-                //적이 있으면 버프 다시 제거
-                else if (isBuffed) {
-                    Debug.Log("Assault 스킬 해제");
-                    GetComponent<DebugUnit>().RemoveBuff(gameObject);
-                    isBuffed = false;
-                }
-            }
-            else {
+            
+            
                 if (enemies.Count == 0) {
                     if (!isBuffed) {
                         if (!GetComponent<PlaceMonster>().IsBuffAlreadyExist(gameObject)) {
@@ -71,20 +54,19 @@ namespace SkillModules {
                     GetComponent<PlaceMonster>().RemoveBuff(gameObject);
                     isBuffed = false;
                 }
-            }
+            
         }
 
         void SetObservers() {
-            if (debugManagement != null) {
-                if (GetComponent<PlaceMonster>().isPlayer) {
-                    playerUnitsObserver = PlayMangement.instance.PlayerUnitsObserver;
-                    enemyUnitsObserver = PlayMangement.instance.EnemyUnitsObserver;
-                }
-                else {
-                    playerUnitsObserver = PlayMangement.instance.EnemyUnitsObserver;
-                    enemyUnitsObserver = PlayMangement.instance.PlayerUnitsObserver;
-                }
+            if (GetComponent<PlaceMonster>().isPlayer) {
+                playerUnitsObserver = PlayMangement.instance.PlayerUnitsObserver;
+                enemyUnitsObserver = PlayMangement.instance.EnemyUnitsObserver;
             }
+            else {
+                playerUnitsObserver = PlayMangement.instance.EnemyUnitsObserver;
+                enemyUnitsObserver = PlayMangement.instance.PlayerUnitsObserver;
+            }
+
         }
 
         void RemoveListener() {

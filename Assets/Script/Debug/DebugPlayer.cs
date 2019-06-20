@@ -13,6 +13,7 @@ public class DebugPlayer : PlayerController
 
     private void Start() {
         HP = new ReactiveProperty<int>(20);
+        resource.Value = 30;
         heroSpine = transform.Find("skeleton").GetComponent<DebugHeroSpine>();
 
         if (isPlayer == true)
