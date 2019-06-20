@@ -68,7 +68,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
             highlightedSlot = null;
         }
         else {
-            if (CheckMagicSlot() != null) {
+            if (CheckMagicSlot() != null && PlayMangement.instance.player.resource.Value >= cardData.cost) {
                 //var abilities = GetComponents<MagicalCasting>();
                 //foreach (MagicalCasting ability in abilities) ability.RequestUseMagic();
 
