@@ -15,7 +15,8 @@ public class CardHandDeckManager : MonoBehaviour {
     [SerializeField] protected GameObject unitCardPrefab;
     [SerializeField] protected GameObject magicCardPrefab;
     [SerializeField] public Transform cardSpawnPos;
-    [SerializeField] protected Transform firstDrawParent;
+    [SerializeField] Transform firstDrawParent;
+    CardListManager clm;
 
     void Start() {
         cardList = new List<GameObject>();
@@ -23,6 +24,7 @@ public class CardHandDeckManager : MonoBehaviour {
         slot_1 = transform.GetChild(0);
         slot_2 = transform.GetChild(1);
         slot_2.gameObject.SetActive(true);
+        clm = PlayMangement.instance.cardInfoCanvas.Find("CardInfoList").GetComponent<CardListManager>();
         ChangeSlotHeight(0.9f);
     }
 
@@ -88,10 +90,11 @@ public class CardHandDeckManager : MonoBehaviour {
         AddInfoToList(null, true);
         StartCoroutine(DrawChangedCards());
         firstDrawParent.GetChild(4).gameObject.SetActive(false);
-        firstDrawParent.parent.Find("FinishButton").GetComponent<Button>().enabled = false;
-        firstDrawParent.parent.Find("FinishButton").GetComponent<Image>().enabled = false;
-        firstDrawParent.parent.Find("FinishButton").GetChild(0).gameObject.SetActive(false);
-        firstDrawParent.parent.Find("FinishButton").gameObject.SetActive(false);
+        Transform finBtn = firstDrawParent.parent.Find("FinishButton");
+        finBtn.GetComponent<Button>().enabled = false;
+        finBtn.GetComponent<Image>().enabled = false;
+        finBtn.GetChild(0).gameObject.SetActive(false);
+        finBtn.gameObject.SetActive(false);
     }
 
     /// <summary>
@@ -120,9 +123,10 @@ public class CardHandDeckManager : MonoBehaviour {
         CustomEvent.Trigger(GameObject.Find("GameManager"), "EndTurn");
         PlayMangement.instance.isMulligan = false;
         firstDrawParent.gameObject.SetActive(false);
-        firstDrawParent.parent.Find("First_OrcPlay").gameObject.SetActive(true);
+        GameObject firstOrcTurnObj = firstDrawParent.parent.Find("First_OrcPlay").gameObject;
+        firstOrcTurnObj.SetActive(true);
         yield return new WaitForSeconds(1.0f);
-        firstDrawParent.parent.Find("First_OrcPlay").gameObject.SetActive(false);
+        firstOrcTurnObj.SetActive(false);
 
         SoundManager.Instance.PlaySound(SoundType.FIRST_TURN);
     }
@@ -229,8 +233,6 @@ public class CardHandDeckManager : MonoBehaviour {
         }
         cardList.Add(card);
         card.transform.SetParent(target);
-        LayoutRebuilder.ForceRebuildLayoutImmediate(slot_1.GetComponent<RectTransform>());
-        LayoutRebuilder.ForceRebuildLayoutImmediate(slot_2.GetComponent<RectTransform>());
         if (target != null) {
             isDrawing = true;
             StartCoroutine(SendCardToHand(card));
@@ -326,8 +328,6 @@ public class CardHandDeckManager : MonoBehaviour {
         }
         for (int i = 0; i < cards.Count; i++) {
             cardList.Add(cards[i]);
-            LayoutRebuilder.ForceRebuildLayoutImmediate(slot_1.GetComponent<RectTransform>());
-            LayoutRebuilder.ForceRebuildLayoutImmediate(slot_2.GetComponent<RectTransform>());
             isDrawing = true;
             StartCoroutine(SendCardToHand(cards[i]));
             yield return new WaitForSeconds(0.5f);
@@ -349,14 +349,15 @@ public class CardHandDeckManager : MonoBehaviour {
         iTween.ScaleTo(card, new Vector3(1.0f, 1.0f, 1.0f), 0.2f);
         
         yield return new WaitForSeconds(0.5f);
-        card.GetComponent<CardHandler>().DisableCard();
+        CardHandler handler = card.GetComponent<CardHandler>();
+        handler.DisableCard();
         if (PlayMangement.instance.player.getPlayerTurn) {
-            if (!PlayMangement.instance.player.isHuman && card.GetComponent<CardHandler>().cardData.type == "unit")
-                card.GetComponent<CardHandler>().DisableCard();
+            if (!PlayMangement.instance.player.isHuman && handler.cardData.type == "unit")
+                handler.DisableCard();
             else
-                card.GetComponent<CardHandler>().ActivateCard();
+                handler.ActivateCard();
         }
-        card.GetComponent<CardHandler>().FIRSTDRAW = false;
+        handler.FIRSTDRAW = false;
         card.transform.localPosition = new Vector3(0, 0, 0);
         if (PlayMangement.movingCard == card) {
             PlayMangement.movingCard = null;
@@ -366,11 +367,12 @@ public class CardHandDeckManager : MonoBehaviour {
 
 
     public void AddInfoToList(GameObject card, bool isMulligan = false) {
-        CardListManager csm = PlayMangement.instance.cardInfoCanvas.Find("CardInfoList").GetComponent<CardListManager>();
         if (isMulligan)
-            csm.SendMulliganInfo();
-        else
-            csm.AddCardInfo(card.GetComponent<CardHandler>().cardData, card.GetComponent<CardHandler>().cardID);
+            clm.SendMulliganInfo();
+        else {
+            CardHandler handler = card.GetComponent<CardHandler>();
+            clm.AddCardInfo(handler.cardData, handler.cardID);
+        }
     }
 
     private void InitCardPosition() {
@@ -444,12 +446,9 @@ public class CardHandDeckManager : MonoBehaviour {
                 break;
         }
         cardList[index].transform.parent.gameObject.SetActive(false);
-        LayoutRebuilder.ForceRebuildLayoutImmediate(slot_1.GetComponent<RectTransform>());
-        LayoutRebuilder.ForceRebuildLayoutImmediate(slot_2.GetComponent<RectTransform>());
         Destroy(cardList[index]);
         cardList.RemoveAt(index);
-        CardListManager csm = PlayMangement.instance.cardInfoCanvas.Find("CardInfoList").GetComponent<CardListManager>();
-        csm.RemoveCardInfo(index);
+        clm.RemoveCardInfo(index);
     }
 
     protected void ChangeSlotHeight(float rate) {
@@ -482,9 +481,10 @@ public class CardHandDeckManager : MonoBehaviour {
         int itemId = -1;
         id = newCard.id;
         itemId = newCard.itemId;
-        card.GetComponent<CardHandler>().DrawCard(id, itemId);
+        CardHandler handler = card.GetComponent<CardHandler>();
+        handler.DrawCard(id, itemId);
         GameObject infoList = PlayMangement.instance.cardInfoCanvas.Find("CardInfoList").gameObject;
-        infoList.GetComponent<CardListManager>().AddMulliganCardInfo(card.GetComponent<CardHandler>().cardData, id, index);
+        clm.AddMulliganCardInfo(handler.cardData, id, index);
         card.transform.position = beforeCardObject.transform.position;
         card.transform.SetSiblingIndex(index + 5);
         card.transform.localScale = beforeCardObject.transform.localScale;

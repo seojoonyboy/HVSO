@@ -10,7 +10,7 @@ using SkillModules;
 public partial class CardHandler : MonoBehaviour {
     public GameObject unit;
     public GameObject skeleton;
-    protected CardListManager csm;
+    protected CardListManager clm;
     protected bool blockButton = false;
     protected bool firstDraw = false;
     public bool changeSelected = false;
@@ -42,8 +42,8 @@ public partial class CardHandler : MonoBehaviour {
         set { firstDraw = value; }
     }
 
-    private void Awake() {
-        csm = PlayMangement.instance.cardInfoCanvas.Find("CardInfoList").GetComponent<CardListManager>();
+    public void Awake() {
+        clm = PlayMangement.instance.cardInfoCanvas.Find("CardInfoList").GetComponent<CardListManager>();
     }
 
     public virtual void DrawCard(string ID, int itemID = -1, bool first = false) {
@@ -74,7 +74,7 @@ public partial class CardHandler : MonoBehaviour {
         if (first) {
             transform.Find("GlowEffect").GetComponent<Image>().enabled = true;
             transform.Find("GlowEffect").GetComponent<Image>().color = new Color(1, 1, 1);
-            csm.AddMulliganCardInfo(cardData, cardID);
+            clm.AddMulliganCardInfo(cardData, cardID);
             firstDraw = true;
         }
     }
@@ -204,12 +204,12 @@ public partial class CardHandler : MonoBehaviour {
     public void OpenCardInfoList() {
         if (PlayMangement.movingCard != null) return;
         if (PlayMangement.instance.isMulligan && transform.parent.name == "FirstDrawParent") {
-            csm.OpenMulliganCardList(transform.GetSiblingIndex() - 5);
+            clm.OpenMulliganCardList(transform.GetSiblingIndex() - 5);
             return;
         }
         if (!blockButton) {
             if (transform.parent.parent.name == "CardSlot_1") {
-                csm.OpenCardList(transform.parent.GetSiblingIndex());
+                clm.OpenCardList(transform.parent.GetSiblingIndex());
             }
             else {
                 int cardIndex = 0;
@@ -219,7 +219,7 @@ public partial class CardHandler : MonoBehaviour {
                         cardIndex++;
                 }
                 cardIndex += transform.parent.GetSiblingIndex();
-                csm.OpenCardList(cardIndex);
+                clm.OpenCardList(cardIndex);
             }
         }
     }
