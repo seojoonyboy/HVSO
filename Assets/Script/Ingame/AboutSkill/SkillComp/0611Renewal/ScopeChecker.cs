@@ -27,6 +27,10 @@ namespace SkillModules {
         public field(SkillHandler mySkillHandler) : base(mySkillHandler) { }
 
         public override bool IsConditionSatisfied(GameObject summonedObject) {
+            PlayedObject playedObject = new PlayedObject();
+            if(playedObject.IsValidateData(mySkillHandler.targetData))
+                if(playedObject.targetObject == mySkillHandler.myObject)
+                    return false;
             return mySkillHandler.myObject.GetComponent<PlaceMonster>() != null;
         }
     }
