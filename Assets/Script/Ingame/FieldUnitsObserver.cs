@@ -46,7 +46,7 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
         Logger.Log(prevPos.col);
         Logger.Log(prevPos.row);
 
-        units[prevPos.col, prevPos.row] = null;
+        units[prevPos.row, prevPos.col] = null;
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.FIELD_CHANGED, null, null);
     }
 
