@@ -116,9 +116,11 @@ namespace SkillModules {
         public override bool IsConditionSatisfied() {
             if(!ArgsExist()) return false;
             playedObject.IsValidateData(mySkillHandler.targetData);
-            if(playedObject.targetObject.GetComponent<PlaceMonster>() == null) return false;
             if(args[0].CompareTo("my")==0) 
                 return mySkillHandler.isPlayer == playedObject.isTargetPlayer;
+            else if(args[0].CompareTo("enemy")==0) {
+                return mySkillHandler.isPlayer != playedObject.isTargetPlayer;
+            }
             //다른 args가 있는지
             return false;
         }
