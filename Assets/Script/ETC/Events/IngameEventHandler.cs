@@ -76,6 +76,7 @@ public class IngameEventHandler : MonoBehaviour {
         END_ATTACK,
 
         LINE_BATTLE_FINISHED,
-        FIELD_CHANGED
+        FIELD_CHANGED,
+        DIE
     }
 }

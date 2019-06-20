@@ -509,7 +509,10 @@ public class PlaceMonster : MonoBehaviour {
             dropTomb.GetComponent<DeadSpine>().target = gameObject;
             dropTomb.GetComponent<DeadSpine>().StartAnimation(unit.ishuman);
 
+            object[] parms = new object[]{isPlayer, gameObject};
+
             PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.FIELD_CHANGED, null, null);
+            PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.DIE, this, parms);
         }
     }
 
