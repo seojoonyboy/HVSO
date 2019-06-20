@@ -339,13 +339,13 @@ namespace SkillModules {
                         if (CanSelect(args[1])) {
                             PlayMangement.instance.OnBlockPanel("대상을 지정해 주세요.");
                             callback = successCallback;
-
-                            CardDropManager.Instance.ShowDropableSlot(
-                                skillHandler
-                                .myObject
-                                .GetComponent<PlaceMonster>()
-                                .unit.attributes
-                            );
+                            PlaceMonster myMonster = skillHandler.myObject.GetComponent<PlaceMonster>();
+                            string[] attributes; 
+                            if(myMonster != null)
+                                attributes = myMonster.unit.attributes;
+                            else
+                                attributes = GetDropAreaUnit().GetComponent<PlaceMonster>().unit.attributes;
+                            CardDropManager.Instance.ShowDropableSlot(attributes);
                         }
                         else {
                             failedCallback("자리가 없습니다.");
