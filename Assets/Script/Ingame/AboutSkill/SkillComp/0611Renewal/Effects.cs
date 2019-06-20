@@ -260,7 +260,7 @@ namespace SkillModules {
             else {
                 observer = PlayMangement.instance.EnemyUnitsObserver;
             }
-            observer.UnitChangePosition(skillHandler.myObject, args.col, args.row);
+            observer.UnitChangePosition(skillHandler.myObject, args.row, args.col);
             WaitDone();
         }
 
