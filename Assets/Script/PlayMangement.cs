@@ -191,6 +191,7 @@ public partial class PlayMangement : MonoBehaviour {
 
                     object[] parms = new object[] { false, summonedMonster };
                     EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
+                    EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.FIELD_CHANGED, null, null);
                 }
 
                 else SummonMagic(history);
@@ -295,6 +296,10 @@ public partial class PlayMangement : MonoBehaviour {
         /*if(monster.GetComponent<PlaceMonster>().unit.name == "방패병") {
             monster.AddComponent<TmpBuff>();
         }*/
+
+        SkillModules.SkillHandler skillHandler = new SkillModules.SkillHandler();
+        skillHandler.Initialize(cardData.skills, monster, true);
+        monster.GetComponent<PlaceMonster>().skillHandler = skillHandler;
 
         return monster;
     }
