@@ -429,6 +429,10 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+
+    public void PlayerUseCard() {
+        SetState(HeroState.ATTACK);
+    }
     
 
     protected void SetState(HeroState state) {

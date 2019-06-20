@@ -244,16 +244,20 @@ public partial class CardDropManager {
         skeleton.transform.localScale = new Vector3(-1, 1, 1);
         placedMonster.name = monster.unit.name;
 
+        PlayerController player = PlayMangement.instance.player;
+
         monster.Init(cardHandler.cardData);
         monster.SpawnUnit();
-        PlayMangement.instance.player.isPicking.Value = false;
-        PlayMangement.instance.player.resource.Value -= cardHandler.cardData.cost;
-        if (PlayMangement.instance.player.isHuman)
-            PlayMangement.instance.player.ActivePlayer();
+        player.isPicking.Value = false;
+        player.resource.Value -= cardHandler.cardData.cost;
+        if (player.isHuman)
+            player.ActivePlayer();
         else
-            PlayMangement.instance.player.ActiveOrcTurn();
-        PlayMangement.instance.player.GetComponent<PlayerController>().cdpm.DestroyCard(cardIndex);
+            player.ActiveOrcTurn();
+        player.cdpm.DestroyCard(cardIndex);
         PlayMangement.instance.PlayerUnitsObserver.RefreshFields(unitLine);
+        player.PlayerUseCard();
+
 
 
         string[] args = {cardHandler.itemID.ToString(),

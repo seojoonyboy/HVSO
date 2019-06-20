@@ -288,7 +288,7 @@ public partial class PlayMangement : MonoBehaviour {
 
         monsterComp.Init(cardData);
         monsterComp.SpawnUnit();
-
+        enemyPlayer.PlayerUseCard();
         EnemyUnitsObserver.UnitAdded(monster, i, 0);
 
         enemyPlayer.resource.Value -= cardData.cost;
