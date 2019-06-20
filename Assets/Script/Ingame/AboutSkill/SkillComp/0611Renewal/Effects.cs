@@ -189,7 +189,10 @@ namespace SkillModules {
                 GameObject target = skillHandler.skillTarget;
 
                 GameObject slotToMove = (GameObject)tmp[0];
-                SkillTargetArgs args = (SkillTargetArgs)tmp[1];
+                SkillTargetArgs args = new SkillTargetArgs();
+                args.col = slotToMove.transform.GetSiblingIndex();
+                args.row = slotToMove.transform.parent.GetSiblingIndex();
+                //SkillTargetArgs args = (SkillTargetArgs)tmp[1];
                 bool isPlayer = (bool)tmp[2];
 
                 MoveUnit(ref target, ref args, isPlayer);
