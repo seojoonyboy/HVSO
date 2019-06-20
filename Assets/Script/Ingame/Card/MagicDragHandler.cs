@@ -74,7 +74,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
 
                 object[] parms = new object[] { true, gameObject };
                 PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
-
+                PlayMangement.instance.player.resource.Value -= cardData.cost;
                 //if (GetComponents<Ability>() == null) UseCard();
             }
         }
