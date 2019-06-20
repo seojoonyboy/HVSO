@@ -105,7 +105,8 @@ namespace SkillModules {
 
         public override void Execute(object data) {
             try {
-                int drawNum = (int)(args[0]);
+                int drawNum = 0;
+                int.TryParse((string)args[0], out drawNum);
                 PlayMangement.instance.SocketHandler.DrawNewCards(drawNum);
             }
             catch(FormatException ex) {
