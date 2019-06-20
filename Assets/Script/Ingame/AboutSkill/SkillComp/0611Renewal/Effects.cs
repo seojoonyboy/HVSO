@@ -176,8 +176,7 @@ namespace SkillModules {
 
         public override void Execute(object data) {
             try {
-                GameObject target = (GameObject)data;
-                target.GetComponent<SkillHandler>().skillTarget = null;
+                skillHandler.skillTarget = null;
             }
             catch(FormatException ex) {
                 ShowFormatErrorLog("clear_skill_target");
