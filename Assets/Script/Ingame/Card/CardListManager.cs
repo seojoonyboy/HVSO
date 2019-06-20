@@ -31,8 +31,9 @@ public class CardListManager : MonoBehaviour
         hss.AddChild(newcard);
         GameObject unitSpine = newcard.transform.Find("Info/UnitImage").GetChild(0).gameObject;
         if (data.type == "unit") {
-            unitSpine.GetComponent<SkeletonGraphic>().skeletonDataAsset = AccountManager.Instance.resource.cardPreveiwSkeleton[id].GetComponent<SkeletonGraphic>().skeletonDataAsset;
-            unitSpine.GetComponent<SkeletonGraphic>().Initialize(true);
+            SkeletonGraphic skeleton = unitSpine.GetComponent<SkeletonGraphic>();
+            skeleton.skeletonDataAsset = AccountManager.Instance.resource.cardPreveiwSkeleton[id].GetComponent<SkeletonGraphic>().skeletonDataAsset;
+            skeleton.Initialize(true);
             unitSpine.SetActive(true);
         }
         else
@@ -50,8 +51,9 @@ public class CardListManager : MonoBehaviour
         SetCardInfo(newcard, data);
         GameObject unitSpine = newcard.transform.Find("Info/UnitImage").GetChild(0).gameObject;
         if (data.type == "unit") {
-            unitSpine.GetComponent<SkeletonGraphic>().skeletonDataAsset = AccountManager.Instance.resource.cardPreveiwSkeleton[id].GetComponent<SkeletonGraphic>().skeletonDataAsset;
-            unitSpine.GetComponent<SkeletonGraphic>().Initialize(true);
+            SkeletonGraphic skeleton = unitSpine.GetComponent<SkeletonGraphic>();
+            skeleton.skeletonDataAsset = AccountManager.Instance.resource.cardPreveiwSkeleton[id].GetComponent<SkeletonGraphic>().skeletonDataAsset;
+            skeleton.Initialize(true);
             unitSpine.SetActive(true);
         }
         else
@@ -98,9 +100,10 @@ public class CardListManager : MonoBehaviour
         GameObject remove;
         hss.RemoveChild(index, out remove);
         remove.transform.SetParent(standbyInfo);
-        remove.GetComponent<RectTransform>().anchorMin = new Vector2(0.5f, 0.5f);
-        remove.GetComponent<RectTransform>().anchorMax = new Vector2(0.5f, 0.5f);
-        remove.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.5f);
+        RectTransform recttrans = remove.GetComponent<RectTransform>();
+        recttrans.anchorMin = new Vector2(0.5f, 0.5f);
+        recttrans.anchorMax = new Vector2(0.5f, 0.5f);
+        recttrans.pivot = new Vector2(0.5f, 0.5f);
         remove.transform.localScale = new Vector3(1, 1, 1);
         remove.transform.localPosition = new Vector3(0, 0, 0);
         remove.SetActive(false);
@@ -110,9 +113,10 @@ public class CardListManager : MonoBehaviour
         string objName = index.ToString() + "unit";
         Transform remove = transform.Find("FieldUnitInfo").Find(objName);
         remove.SetParent(standbyInfo);
-        remove.GetComponent<RectTransform>().anchorMin = new Vector2(0.5f, 0.5f);
-        remove.GetComponent<RectTransform>().anchorMax = new Vector2(0.5f, 0.5f);
-        remove.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.5f);
+        RectTransform recttrans = remove.GetComponent<RectTransform>();
+        recttrans.anchorMin = new Vector2(0.5f, 0.5f);
+        recttrans.anchorMax = new Vector2(0.5f, 0.5f);
+        recttrans.pivot = new Vector2(0.5f, 0.5f);
         remove.localScale = new Vector3(1, 1, 1);
         remove.localPosition = new Vector3(0, 0, 0);
         remove.name = "CardInfoPage";

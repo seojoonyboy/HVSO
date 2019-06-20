@@ -55,8 +55,9 @@ public class CardInfoOnDrag : MonoBehaviour
     }
 
     public void SetPreviewUnit(string id) {
-        unitPreview.GetComponent<SkeletonGraphic>().skeletonDataAsset = AccountManager.Instance.resource.cardPreveiwSkeleton[id].GetComponent<SkeletonGraphic>().skeletonDataAsset;
-        unitPreview.GetComponent<SkeletonGraphic>().Initialize(true);
+        SkeletonGraphic skeleton = unitPreview.GetComponent<SkeletonGraphic>();
+        skeleton.skeletonDataAsset = AccountManager.Instance.resource.cardPreveiwSkeleton[id].GetComponent<SkeletonGraphic>().skeletonDataAsset;
+        skeleton.Initialize(true);
     }
 
     public void ActivePreviewUnit(bool active) {

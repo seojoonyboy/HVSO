@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class DebugCardHandler : CardHandler {
     public void Awake() {
-        csm = DebugManagement.Instance.cardInfoCanvas.Find("CardInfoList").GetComponent<CardListManager>();
+        clm = DebugManagement.Instance.cardInfoCanvas.Find("CardInfoList").GetComponent<CardListManager>();
     }
 
     public override void DrawCard(string ID, int itemID = -1, bool first = false) {
