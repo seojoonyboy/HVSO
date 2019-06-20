@@ -18,11 +18,11 @@ namespace SocketFormat {
 
     public class Arguments {
         public Arguments(){}
-        public Arguments(string method, string[] args) {
+        public Arguments(string method, object[] args) {
             this.method = method;
             this.args = args;
         }
         public string method;
-        public string[] args;
+        public object[] args;
     }
 }

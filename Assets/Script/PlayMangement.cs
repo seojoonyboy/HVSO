@@ -298,7 +298,7 @@ public partial class PlayMangement : MonoBehaviour {
         }*/
 
         SkillModules.SkillHandler skillHandler = new SkillModules.SkillHandler();
-        skillHandler.Initialize(cardData.skills, monster, true);
+        skillHandler.Initialize(cardData.skills, monster, false);
         monster.GetComponent<PlaceMonster>().skillHandler = skillHandler;
 
         return monster;

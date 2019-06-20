@@ -63,11 +63,11 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
     /// </summary>
     /// <param name="row">row</param>
     /// <returns></returns>
-    public List<GameObject> GetAllFieldUnits(int col) {
+    public List<GameObject> GetAllFieldUnits(int row) {
         List<GameObject> _units = new List<GameObject>();
         for (int i = 0; i < 2; i++) {
-            if (units[col, i] != null) {
-                _units.Add(units[col, i]);
+            if (units[row, i] != null) {
+                _units.Add(units[row, i]);
             }
         }
         return _units;

@@ -208,7 +208,18 @@ namespace SkillModules {
         }
 
         public bool TargetSelectExist() {
+            if(targetHandler == null) return false;
             return targetHandler.GetType().Name.Contains("select");
+        }
+
+        public bool isPlayingSelect() {
+             if(scopeChecker == null) return false;
+            return scopeChecker.GetType().Name.Contains("playing");
+        }
+
+        public List<GameObject> GetTargetFromSelect() {
+            if(targetHandler == null) return null;
+            return targetHandler.GetTarget(); 
         }
     }
 }
