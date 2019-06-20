@@ -283,6 +283,10 @@ namespace SkillModules {
     public class select : TargetHandler {
         SelectTargetFinished callback;
 
+        private void Start() {
+            if(!skillHandler.isPlayer) this.enabled = false;
+        }
+
         private void Update() {
             if (callback != null && Input.GetMouseButtonDown(0)) {
                 Transform selectedTarget = null;
@@ -332,7 +336,11 @@ namespace SkillModules {
 
         public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback) {
             base.SelectTarget(successCallback, failedCallback);
-
+            //TODO : 적일 경우 해당 소켓이 도달 할 때까지 기다리기 card_played, skill_activated
+            if(!skillHandler.isPlayer) {
+                
+                return;
+            }
             switch (args[0]) {
                 case "my":
                     if(args.Length == 2 && args[1] == "place") {
