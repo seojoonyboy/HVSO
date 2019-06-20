@@ -156,15 +156,13 @@ namespace SkillModules {
         }
 
         public override void SetTarget(object parms) {
-            string place = (string)parms;
+            string place = args[0];
             switch (place) {
                 case "rear":
                     var pos = playerUnitsObserver.GetMyPos(gameObject);
-
-                    targets.AddRange(
-                        playerUnitsObserver
-                        .GetAllFieldUnits(pos.row)
-                    );
+                    var list = playerUnitsObserver.GetAllFieldUnits(pos.row);
+                    list.Remove(gameObject);
+                    targets.AddRange(list);
                     break;
             }
         }

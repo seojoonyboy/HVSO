@@ -40,7 +40,6 @@ namespace SkillModules {
     public class skill_target_ctg_chk : ConditionChecker {
         public skill_target_ctg_chk(SkillHandler mySkillHandler, string[] args = null) : base(mySkillHandler, args) { }
         public override bool IsConditionSatisfied() {
-            if(ArgsExist()) return false;
             GameObject target = mySkillHandler.skillTarget;
             if(target == null) return false;
             IngameClass.Unit unit = target.GetComponent<PlaceMonster>().unit;
