@@ -125,7 +125,7 @@ namespace SkillModules {
             //마법 사용
             if(myObject.GetComponent<MagicDragHandler>() != null) {
                 format.itemId = myObject.GetComponent<MagicDragHandler>().itemID;
-                targets.Add(ArgumentForm(skills[0], false));
+                targets.Add(ArgumentForm(skills[0], false, isEndCardPlay));
             }
             //유닛 소환
             else if(isEndCardPlay) {
@@ -141,12 +141,12 @@ namespace SkillModules {
             if(select != null && select.isPlayingSelect()) {
                 List<GameObject> selectList = select.GetTargetFromSelect();
                 if(selectList.Count > 0)
-                    targets.Add(ArgumentForm(select, true));
+                    targets.Add(ArgumentForm(select, true, isEndCardPlay));
             }
             else if(!isEndCardPlay) {
                 List<GameObject> selectList = select.GetTargetFromSelect();
                 if(selectList.Count > 0)
-                    targets.Add(ArgumentForm(select, true));
+                    targets.Add(ArgumentForm(select, true, isEndCardPlay));
             }
             
             format.targets = targets.ToArray();
@@ -164,7 +164,7 @@ namespace SkillModules {
             return new Arguments("place", new string[]{line.ToString(), camp, placed});
         }
 
-        private Arguments ArgumentForm(Skill skill, bool isSelect) {
+        private Arguments ArgumentForm(Skill skill, bool isSelect, bool isEndCardPlay) {
             Arguments arguments = new Arguments();
             arguments.method = skill.firstTargetArgs();
             PlayerController player = isPlayer ? PlayMangement.instance.player : PlayMangement.instance.enemyPlayer;
@@ -194,7 +194,10 @@ namespace SkillModules {
                 case "place":
                     int line = selectList[0].transform.parent.GetSiblingIndex();
                     args.Add(line.ToString());
-                    isOrc = skillTarget.GetComponent<PlaceMonster>().isPlayer != isPlayerHuman;
+                    if(isEndCardPlay)
+                        isOrc = skillTarget.GetComponent<PlaceMonster>().isPlayer != isPlayerHuman;
+                    else
+                        isOrc = myObject.GetComponent<PlaceMonster>().isPlayer != isPlayerHuman;
                     args.Add(isOrc ? "orc" : "human");
                     //TODO : 협력 몬스터랑 같이 있을 시 앞 뒤 위치 제대로 파악해야함
                     args.Add("front");

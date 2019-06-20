@@ -254,6 +254,14 @@ namespace SkillModules {
         }
     }
 
+    public class clear_skill : Ability {
+        public clear_skill() : base() { }
+
+        public override void Execute(object data) {
+            skillHandler.RemoveTriggerEvent();
+        }
+    }
+
     public class blast_enemy : Ability {
         public blast_enemy() : base() { }
 
