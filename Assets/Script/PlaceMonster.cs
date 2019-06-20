@@ -24,8 +24,8 @@ public class PlaceMonster : MonoBehaviour {
     protected TimeUpdate timeUpdate;
     public UnitSpine unitSpine;
 
-    private float currentTime;
-    private bool instanceAttack = false;
+    protected float currentTime;
+    protected bool instanceAttack = false;
     List<Buff> buffList = new List<Buff>();
     public GameObject effectObject;
     public float atkTime {
@@ -254,7 +254,7 @@ public class PlaceMonster : MonoBehaviour {
     }
 
 
-    private void MoveToTarget() {
+    protected void MoveToTarget() {
         if (unit.attack <= 0) return;
         PlaceMonster placeMonster = myTarget.GetComponent<PlaceMonster>();
 

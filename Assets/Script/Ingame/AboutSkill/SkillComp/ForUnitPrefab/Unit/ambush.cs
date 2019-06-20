@@ -8,17 +8,8 @@ public class ambush : MonoBehaviour {
     DebugManagement debugManagement;
     // Start is called before the first frame update
     void Start() {
-        debugManagement = DebugManagement.Instance;
-
-        if (debugManagement != null) {
-            eventHandler = debugManagement.EventHandler;
-        }
-        else {
-            eventHandler = PlayMangement.instance.EventHandler;
-            GetComponent<PlaceMonster>().unitSpine.HideUnit();
-        }
-
-
+        eventHandler = PlayMangement.instance.EventHandler;
+        GetComponent<PlaceMonster>().unitSpine.HideUnit();
 
         AddListener();
     }

@@ -10,7 +10,7 @@ public partial class DebugCardDropManager : Singleton<DebugCardDropManager>
 
     public void SetUnitDropPos() {
         slotLine = new Transform[5];
-        Transform mapSlotLines = DebugManagement.Instance.backGround.transform;
+        Transform mapSlotLines = DebugManagement.instance.backGround.transform;
         for (int i = 0; i < 5; i++) {
             slotLine[i] = mapSlotLines.GetChild(i);
         }
@@ -20,7 +20,7 @@ public partial class DebugCardDropManager : Singleton<DebugCardDropManager>
             unitLine[i] = new Transform[2];
             enemyUnitLine[i] = new Transform[2];
         }
-        Transform unitSlotLines = DebugManagement.Instance.player.transform;
+        Transform unitSlotLines = DebugManagement.instance.player.transform;
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 2; j++) {
                 unitLine[i][j] = unitSlotLines.GetChild(j).GetChild(i);
@@ -238,19 +238,7 @@ public partial class DebugCardDropManager {
         }
 
         GameObject skeleton = Instantiate(cardHandler.skeleton, placedMonster.transform);
-        DebugUnitSpine debugUnitSpine = skeleton.AddComponent<DebugUnitSpine>();
         UnitSpine spine = skeleton.GetComponent<UnitSpine>();
-
-        debugUnitSpine.idleAnimationName = spine.idleAnimationName;
-        debugUnitSpine.generalAttackName = spine.generalAttackName;
-        debugUnitSpine.rangeUpAttackName = spine.rangeUpAttackName;
-        debugUnitSpine.rangeDownAttackName = spine.rangeDownAttackName;
-        debugUnitSpine.appearAnimationName = spine.appearAnimationName;
-        debugUnitSpine.attackAnimationName = spine.attackAnimationName;
-        debugUnitSpine.hitAnimationName = spine.hitAnimationName;
-        debugUnitSpine.attackEventName = spine.attackEventName;
-        debugUnitSpine.arrow = spine.arrow;     
-        Destroy(skeleton.GetComponent<UnitSpine>());
         
         skeleton.name = "skeleton";
 
@@ -262,14 +250,14 @@ public partial class DebugCardDropManager {
 
         placedMonster.GetComponent<DebugUnit>().Init(cardHandler.cardData);
         placedMonster.GetComponent<DebugUnit>().SpawnUnit();
-        DebugManagement.Instance.player.GetComponent<DebugPlayer>().cdpm.DestroyCard(cardIndex);
-        DebugManagement.Instance.PlayerUnitsObserver.RefreshFields(unitLine);
+        DebugManagement.instance.player.GetComponent<DebugPlayer>().debugcdpm.DestroyCard(cardIndex);
+        DebugManagement.instance.PlayerUnitsObserver.RefreshFields(unitLine);
 
 
         string[] args = {cardHandler.itemID.ToString(),
                         "place",
                         lineNum.ToString(),
-                        DebugManagement.Instance.player.isHuman ? "human" : "orc",
+                        DebugManagement.instance.player.isHuman ? "human" : "orc",
                         posMessage};
 
         return placedMonster;

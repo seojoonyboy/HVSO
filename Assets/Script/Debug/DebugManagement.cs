@@ -3,110 +3,44 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DebugManagement : MonoBehaviour
-{
-    public static DebugManagement Instance { get; private set; }
-
-    
-    public DebugPlayer player, enemyPlayer;
-    public SpineEffectManager spineEffectManager;
-    public Camera ingameCamera;
-    public Vector3 cameraPos;
+public class DebugManagement : PlayMangement
+{    
     public GameObject unitDeadObject;
     public Dropdown idDropDown;
     public Dropdown enemyIDDropDown;
-    public GameObject backGround;
 
     public GameObject enemySummonPanel;
     public GameObject UnitCard;
     public GameObject MagicCard;
 
-    public bool isGame = true;
-    public bool isMulligan = true;
-    public bool infoOn = false;
-    public static bool dragable = true;
-
-    public Transform cardDragCanvas;
-    public Transform cardInfoCanvas;
+    public GameObject debugUnit;
 
     public ResourceManager resource;
 
     private void Awake() {
-        Instance = this;
+        instance = this;
         Dictionary<string, CardData> cardData = transform.GetComponent<DebugData>().cardData;
         List<string> keyList = new List<string>(cardData.Keys);
         idDropDown.AddOptions(keyList);
         enemyIDDropDown.AddOptions(keyList);
+        player = player.GetComponent<DebugPlayer>();
+        enemyPlayer = enemyPlayer.GetComponent<DebugPlayer>();
     }
 
     private void Start() {
         SetCamera();
-    }
-
-    public void SetCamera() {
-        cameraPos = Camera.main.transform.position;
-    }
-
-    public IEnumerator cameraShake(float time, int power) {
-        float timer = 0;
-        float cameraSize = ingameCamera.orthographicSize;
-        while (timer <= time) {
-
-
-            ingameCamera.transform.position = (Vector3)Random.insideUnitCircle * 0.1f * power + cameraPos;
-
-            timer += Time.deltaTime;
-            yield return null;
-        }
-        ingameCamera.orthographicSize = cameraSize;
-        ingameCamera.transform.position = cameraPos;
-    }
-
-
-    public void GenerateCard() {
-
-
-    }
-
-    public enum LineState {
-        hill,
-        flat,
-        forest,
-        water
-    }
+    }   
 
     public void DrawCard() {
         if (isGame == false) return;
         bool race = player.isHuman;
         string text = idDropDown.options[idDropDown.value].text;
-        CardData card = DebugData.Instance.cardData[text];
+        CardData cardData = DebugData.Instance.cardData[text];
 
-        player.cdpm.AddCard(null, card);
+        player.GetComponent<DebugPlayer>().debugcdpm.AddCard(null, cardData);
     }
 
-
-    [SerializeField] DebugFieldObserver playerUnitsObserver;
-    public DebugFieldObserver PlayerUnitsObserver {
-        get {
-            return playerUnitsObserver;
-        }
-    }
-
-    [SerializeField] DebugFieldObserver enemyUnitsObserver;
-    public DebugFieldObserver EnemyUnitsObserver {
-        get {
-            return enemyUnitsObserver;
-        }
-    }
-
-    [SerializeField] IngameEventHandler eventHandler;
-    public IngameEventHandler EventHandler {
-        get {
-            return eventHandler;
-        }
-    }
-
-    public void StartBattle() {
+    public void StartDebugBattle() {
         StartCoroutine("battleCoroutine");
     }
 
@@ -129,12 +63,13 @@ public class DebugManagement : MonoBehaviour
         GameObject skeleton;
         skeleton = resource.cardSkeleton[id];
 
-        GameObject monster = Instantiate(enemyPlayer.debugUnit);
+        GameObject monster = Instantiate(debugUnit);
 
         monster.transform.SetParent(enemyPlayer.transform.GetChild(y).GetChild(x));
         monster.transform.position = enemyPlayer.transform.GetChild(y).GetChild(x).position;
         GameObject monsterSkeleton = Instantiate(skeleton, monster.transform);
 
+        /*
         DebugUnitSpine debugUnitSpine = monsterSkeleton.AddComponent<DebugUnitSpine>();
         UnitSpine spine = monsterSkeleton.GetComponent<UnitSpine>();
 
@@ -148,6 +83,7 @@ public class DebugManagement : MonoBehaviour
         debugUnitSpine.attackEventName = spine.attackEventName;
         debugUnitSpine.arrow = spine.arrow;
         Destroy(spine);
+        */
 
         monsterSkeleton.name = "skeleton";
         
@@ -198,7 +134,7 @@ public class DebugManagement : MonoBehaviour
         
 
         if (monster.GetComponent<DebugUnit>().unit.name == "방패병") {
-            monster.AddComponent<DebugTmpBuff>();
+            monster.AddComponent<TmpBuff>();
         }
 
     }

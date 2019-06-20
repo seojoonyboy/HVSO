@@ -14,10 +14,10 @@ public class DebugUnitDragHandler : DebugCardHandler, IBeginDragHandler, IDragHa
         else
             DebugCardInfoOnDrag.instance.SetCardDragInfo(null, transform.localPosition);
         beforeDragParent = transform.parent;
-        transform.SetParent(DebugManagement.Instance.cardDragCanvas);
+        transform.SetParent(DebugManagement.instance.cardDragCanvas);
         itsDragging = gameObject;
-        blockButton = DebugManagement.Instance.player.dragCard = true;
-        DebugManagement.Instance.player.isPicking.Value = true;
+        blockButton = DebugManagement.instance.player.dragCard = true;
+        DebugManagement.instance.player.isPicking.Value = true;
 
         DebugCardDropManager.Instance.ShowDropableSlot(cardData);
 
@@ -46,8 +46,8 @@ public class DebugUnitDragHandler : DebugCardHandler, IBeginDragHandler, IDragHa
         CheckLocation(true);
         iTween.MoveTo(gameObject, beforeDragParent.position, 0.3f);
         iTween.ScaleTo(gameObject, new Vector3(1, 1, 1), 0.3f);
-        blockButton = DebugManagement.Instance.player.dragCard = false;
-        DebugManagement.Instance.player.isPicking.Value = false;
+        blockButton = DebugManagement.instance.player.dragCard = false;
+        DebugManagement.instance.player.isPicking.Value = false;
         if (!isDropable) {
             highlighted = false;
             DebugCardDropManager.Instance.HighLightSlot(highlightedSlot, highlighted);
@@ -58,7 +58,7 @@ public class DebugUnitDragHandler : DebugCardHandler, IBeginDragHandler, IDragHa
             if (unitPref != null) {
                 if (unitPref.GetComponent<DebugUnit>().unit.name == "방패병") {
                     Debug.Log("방패병!!!!");
-                    unitPref.AddComponent<DebugTmpBuff>();
+                    unitPref.AddComponent<TmpBuff>();
                 }
                 else {
                     foreach (dataModules.Skill skill in cardData.skills) {

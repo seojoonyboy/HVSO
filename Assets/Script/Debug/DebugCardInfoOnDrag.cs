@@ -55,7 +55,7 @@ public class DebugCardInfoOnDrag : MonoBehaviour
     }
 
     public void SetPreviewUnit(string id) {
-        unitPreview.GetComponent<SkeletonGraphic>().skeletonDataAsset = DebugManagement.Instance.resource.cardPreveiwSkeleton[id].GetComponent<SkeletonGraphic>().skeletonDataAsset;
+        unitPreview.GetComponent<SkeletonGraphic>().skeletonDataAsset = DebugManagement.instance.GetComponent<ResourceManager>().cardPreveiwSkeleton[id].GetComponent<SkeletonGraphic>().skeletonDataAsset;
         unitPreview.GetComponent<SkeletonGraphic>().Initialize(true);
     }
 

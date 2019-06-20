@@ -11,11 +11,7 @@ namespace SkillModules {
 
         DebugManagement debugManagement;
         void Awake() {
-            debugManagement = DebugManagement.Instance;
-            if (debugManagement != null)
-                eventHandler = DebugManagement.Instance.EventHandler;                
-            else
-                eventHandler = PlayMangement.instance.EventHandler;
+            eventHandler = PlayMangement.instance.EventHandler;
         }
 
         void Start() {
@@ -80,16 +76,6 @@ namespace SkillModules {
 
         void SetObservers() {
             if (debugManagement != null) {
-                if (GetComponent<DebugUnit>().isPlayer) {
-                    playerUnitsObserver = DebugManagement.Instance.PlayerUnitsObserver;
-                    enemyUnitsObserver = DebugManagement.Instance.EnemyUnitsObserver;
-                }
-                else {
-                    playerUnitsObserver = DebugManagement.Instance.EnemyUnitsObserver;
-                    enemyUnitsObserver = DebugManagement.Instance.PlayerUnitsObserver;
-                }
-            }
-            else {
                 if (GetComponent<PlaceMonster>().isPlayer) {
                     playerUnitsObserver = PlayMangement.instance.PlayerUnitsObserver;
                     enemyUnitsObserver = PlayMangement.instance.EnemyUnitsObserver;

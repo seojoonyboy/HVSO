@@ -13,16 +13,16 @@ using UnityEngine.Events;
 public class DebugMagicDragHandler : DebugCardHandler, IBeginDragHandler, IDragHandler, IEndDragHandler {
     public void OnBeginDrag(PointerEventData eventData) {
         if (Input.touchCount > 1) return;
-        if (DebugManagement.Instance.player.dragCard) return;
+        if (DebugManagement.instance.player.dragCard) return;
         if (cardData.skills.Length != 0)
             DebugCardInfoOnDrag.instance.SetCardDragInfo(null, transform.localPosition, cardData.skills[0].desc);
         else
             DebugCardInfoOnDrag.instance.SetCardDragInfo(null, transform.localPosition);
         beforeDragParent = transform.parent;
-        transform.SetParent(DebugManagement.Instance.cardDragCanvas);
+        transform.SetParent(DebugManagement.instance.cardDragCanvas);
         itsDragging = gameObject;
-        blockButton = DebugManagement.Instance.player.dragCard = true;
-        DebugManagement.Instance.player.isPicking.Value = true;
+        blockButton = DebugManagement.instance.player.dragCard = true;
+        DebugManagement.instance.player.isPicking.Value = true;
         string target = cardData.skills[0].targets[0].args[0];
 
         List<string> targetArgs = cardData.skills[0].targets[0].args.ToList();
@@ -56,7 +56,7 @@ public class DebugMagicDragHandler : DebugCardHandler, IBeginDragHandler, IDragH
         //CardDropManager.Instance.BeginCheckLines();
 
         object[] parms = new object[] { true, gameObject };
-        DebugManagement.Instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_CARD_PLAY, this, parms);
+        DebugManagement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_CARD_PLAY, this, parms);
     }
 
     public void OnDrag(PointerEventData eventData) {
@@ -83,8 +83,8 @@ public class DebugMagicDragHandler : DebugCardHandler, IBeginDragHandler, IDragH
         CheckLocation(true);
         iTween.MoveTo(gameObject, beforeDragParent.position, 0.3f);
         iTween.ScaleTo(gameObject, new Vector3(1, 1, 1), 0.3f);
-        blockButton = DebugManagement.Instance.player.dragCard = false;
-        DebugManagement.Instance.player.isPicking.Value = false;
+        blockButton = DebugManagement.instance.player.dragCard = false;
+        DebugManagement.instance.player.isPicking.Value = false;
         if (!isDropable) {
             highlighted = false;
             DebugCardDropManager.Instance.HighLightMagicSlot(highlightedSlot, highlighted);
@@ -96,7 +96,7 @@ public class DebugMagicDragHandler : DebugCardHandler, IBeginDragHandler, IDragH
                 foreach (MagicalCasting ability in abilities) ability.RequestUseMagic();
 
                 object[] parms = new object[] { true, gameObject };
-                DebugManagement.Instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
+                DebugManagement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
 
                 if (GetComponents<DebugAbility>() == null) UseCard();
             }
@@ -131,9 +131,9 @@ public class DebugMagicDragHandler : DebugCardHandler, IBeginDragHandler, IDragH
             cardIndex += transform.parent.GetSiblingIndex();
         }
 
-        DebugManagement.Instance.player.isPicking.Value = false;
-        DebugManagement.Instance.player.resource.Value -= cardData.cost;
-        DebugManagement.Instance.player.cdpm.DestroyCard(cardIndex);
+        DebugManagement.instance.player.isPicking.Value = false;
+        DebugManagement.instance.player.resource.Value -= cardData.cost;
+        DebugManagement.instance.player.cdpm.DestroyCard(cardIndex);
         
     }
 

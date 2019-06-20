@@ -5,17 +5,17 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class CardHandDeckManager : MonoBehaviour {
-    Transform slot_1;
-    Transform slot_2;
-    private bool firstDraw = true;
-    private int cardNum = 0;
+    protected Transform slot_1;
+    protected Transform slot_2;
+    protected bool firstDraw = true;
+    protected int cardNum = 0;
     public bool isDrawing = false;
-    List<GameObject> cardList;
-    List<GameObject> firstDrawList;
-    [SerializeField] GameObject unitCardPrefab;
-    [SerializeField] GameObject magicCardPrefab;
+    protected List<GameObject> cardList;
+    protected List<GameObject> firstDrawList;
+    [SerializeField] protected GameObject unitCardPrefab;
+    [SerializeField] protected GameObject magicCardPrefab;
     [SerializeField] public Transform cardSpawnPos;
-    [SerializeField] Transform firstDrawParent;
+    [SerializeField] protected Transform firstDrawParent;
 
     void Start() {
         cardList = new List<GameObject>();
@@ -30,7 +30,7 @@ public class CardHandDeckManager : MonoBehaviour {
     /// 게임 시작시 멀리건 실행 함수
     /// </summary>
     /// <returns></returns>
-    public IEnumerator FirstDraw() {
+    public virtual IEnumerator FirstDraw() {
         bool race = PlayMangement.instance.player.isHuman;
         SocketFormat.Card socketCard = PlayMangement.instance.socketHandler.gameState.players.myPlayer(race).FirstCards[firstDrawList.Count];
         GameObject card;
@@ -62,7 +62,7 @@ public class CardHandDeckManager : MonoBehaviour {
         }
     }
 
-    void AddMagicAttribute(ref GameObject card) {
+    protected void AddMagicAttribute(ref GameObject card) {
         var cardData = card.GetComponent<CardHandler>().cardData;
         foreach (dataModules.Skill skill in cardData.skills) {
             foreach (var effect in skill.effects) {
@@ -335,7 +335,7 @@ public class CardHandDeckManager : MonoBehaviour {
     }
 
 
-    IEnumerator SendCardToHand(GameObject card) {
+    protected IEnumerator SendCardToHand(GameObject card) {
         PlayMangement.movingCard = card;
         if (!firstDraw) {
             AddInfoToList(card);
@@ -452,7 +452,7 @@ public class CardHandDeckManager : MonoBehaviour {
         csm.RemoveCardInfo(index);
     }
 
-    void ChangeSlotHeight(float rate) {
+    protected void ChangeSlotHeight(float rate) {
         transform.GetComponent<RectTransform>().localScale = new Vector2(rate, rate);
     }
 

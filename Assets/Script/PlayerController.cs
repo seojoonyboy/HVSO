@@ -200,7 +200,7 @@ public class PlayerController : MonoBehaviour
         HP.Value += 2;
     }
 
-    public void PlayerTakeDamage(int amount) {
+    public virtual void PlayerTakeDamage(int amount) {
         BattleConnector socketHandler = PlayMangement.instance.socketHandler;
         Queue<SocketFormat.Player> heroShildData = isHuman ? socketHandler.humanData : socketHandler.orcData;
         SocketFormat.Player data;

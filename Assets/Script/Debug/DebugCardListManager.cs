@@ -18,7 +18,7 @@ public class DebugCardListManager : CardListManager
         hss.AddChild(newcard);
         GameObject unitSpine = newcard.transform.Find("Info/UnitImage").GetChild(0).gameObject;
         if (data.type == "unit") {
-            unitSpine.GetComponent<SkeletonGraphic>().skeletonDataAsset = DebugManagement.Instance.resource.cardPreveiwSkeleton[id].GetComponent<SkeletonGraphic>().skeletonDataAsset;
+            unitSpine.GetComponent<SkeletonGraphic>().skeletonDataAsset = DebugManagement.instance.GetComponent<ResourceManager>().cardPreveiwSkeleton[id].GetComponent<SkeletonGraphic>().skeletonDataAsset;
             unitSpine.GetComponent<SkeletonGraphic>().Initialize(true);
             unitSpine.SetActive(true);
         }
@@ -37,7 +37,7 @@ public class DebugCardListManager : CardListManager
         SetCardInfo(newcard, data);
         GameObject unitSpine = newcard.transform.Find("Info/UnitImage").GetChild(0).gameObject;
         if (data.type == "unit") {
-            unitSpine.GetComponent<SkeletonGraphic>().skeletonDataAsset = DebugManagement.Instance.resource.cardPreveiwSkeleton[id].GetComponent<SkeletonGraphic>().skeletonDataAsset;
+            unitSpine.GetComponent<SkeletonGraphic>().skeletonDataAsset = DebugManagement.instance.GetComponent<ResourceManager>().cardPreveiwSkeleton[id].GetComponent<SkeletonGraphic>().skeletonDataAsset;
             unitSpine.GetComponent<SkeletonGraphic>().Initialize(true);
             unitSpine.SetActive(true);
         }
@@ -52,8 +52,8 @@ public class DebugCardListManager : CardListManager
         Transform info = obj.transform.GetChild(0);
         info.Find("Name/NameText").GetComponent<Text>().text = data.name;
         if (data.rarelity != "legend") {
-            info.Find("Name").GetComponent<Image>().sprite = DebugManagement.Instance.resource.infoSprites[data.rarelity + "_ribon"];
-            info.Find("UnitDialogue").GetComponent<Image>().sprite = DebugManagement.Instance.resource.infoSprites[data.rarelity + "_flag"];
+            info.Find("Name").GetComponent<Image>().sprite = DebugManagement.instance.GetComponent<ResourceManager>().infoSprites[data.rarelity + "_ribon"];
+            info.Find("UnitDialogue").GetComponent<Image>().sprite = DebugManagement.instance.GetComponent<ResourceManager>().infoSprites[data.rarelity + "_flag"];
         }
         if (data.hp != null)
             info.Find("HP/HpText").GetComponent<Text>().text = data.hp.ToString();
@@ -77,12 +77,12 @@ public class DebugCardListManager : CardListManager
 
         info.Find("Cost/CostText").GetComponent<Text>().text = data.cost.ToString();
 
-        obj.transform.GetChild(1).GetComponent<Image>().sprite = DebugManagement.Instance.resource.classImage[data.class_1];
+        obj.transform.GetChild(1).GetComponent<Image>().sprite = DebugManagement.instance.GetComponent<ResourceManager>().classImage[data.class_1];
         obj.transform.GetChild(1).name = data.class_1;
         if (data.class_2 == null)
             obj.transform.GetChild(2).gameObject.SetActive(false);
         else {
-            obj.transform.GetChild(2).GetComponent<Image>().sprite = DebugManagement.Instance.resource.classImage[data.class_2];
+            obj.transform.GetChild(2).GetComponent<Image>().sprite = DebugManagement.instance.GetComponent<ResourceManager>().classImage[data.class_2];
             obj.transform.GetChild(2).name = data.class_2;
         }
         if (data.skills.Length != 0) {
@@ -111,7 +111,7 @@ public class DebugCardListManager : CardListManager
                     string objName = selectedTarget.GetComponentInParent<PlaceMonster>().myUnitNum.ToString() + "unit";
                     transform.Find("FieldUnitInfo").gameObject.SetActive(true);
                     transform.Find("FieldUnitInfo").Find(objName).gameObject.SetActive(true);
-                    DebugManagement.Instance.infoOn = true;
+                    DebugManagement.instance.infoOn = true;
                 }
             }
         }
@@ -122,7 +122,7 @@ public class DebugCardListManager : CardListManager
         for (int i = 0; i < transform.Find("FieldUnitInfo").childCount; i++) {
             transform.Find("FieldUnitInfo").GetChild(i).gameObject.SetActive(false);
         }
-        DebugManagement.Instance.infoOn = false;
+        DebugManagement.instance.infoOn = false;
     }
 
 

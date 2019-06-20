@@ -4,8 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class DebugCardHandler : CardHandler {
-    public void Awake() {
-        csm = DebugManagement.Instance.cardInfoCanvas.Find("CardInfoList").GetComponent<CardListManager>();
+    private void Awake() {
+        csm = DebugManagement.instance.cardInfoCanvas.Find("CardInfoList").GetComponent<CardListManager>();
     }
 
     public override void DrawCard(string ID, int itemID = -1, bool first = false) {
@@ -14,9 +14,9 @@ public class DebugCardHandler : CardHandler {
 
         if (DebugData.Instance.cardData.ContainsKey(cardID)) {
             cardData = DebugData.Instance.cardData[cardID];
-            transform.Find("Portrait").GetComponent<Image>().sprite = DebugManagement.Instance.resource.cardPortraite[cardID];
-            transform.Find("BackGround").GetComponent<Image>().sprite = DebugManagement.Instance.resource.cardBackground[cardData.type + "_" + cardData.rarelity];
-            skeleton = DebugManagement.Instance.resource.cardSkeleton[cardID];
+            transform.Find("Portrait").GetComponent<Image>().sprite = DebugManagement.instance.GetComponent<ResourceManager>().cardPortraite[cardID];
+            transform.Find("BackGround").GetComponent<Image>().sprite = DebugManagement.instance.GetComponent<ResourceManager>().cardBackground[cardData.type + "_" + cardData.rarelity];
+            skeleton = DebugManagement.instance.GetComponent<ResourceManager>().cardSkeleton[cardID];
         }
         else
             Debug.Log("NoData");

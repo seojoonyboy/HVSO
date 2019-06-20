@@ -17,7 +17,7 @@ public partial class PlayMangement : MonoBehaviour {
     public bool isGame = true;
     public bool isMulligan = true;
     public bool infoOn = false;
-    public static PlayMangement instance { get; private set; }
+    public static PlayMangement instance { get; protected set; }
     public GameObject backGround;
     public GameObject onCanvasPosGroup;
     public EffectManager effectManager;
@@ -49,7 +49,8 @@ public partial class PlayMangement : MonoBehaviour {
     private void OnDestroy()
     {
         instance = null;
-        Destroy(socketHandler.gameObject);
+        if (socketHandler != null)
+            Destroy(socketHandler.gameObject);
     }
 
     private void Start()

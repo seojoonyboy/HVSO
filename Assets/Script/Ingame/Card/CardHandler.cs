@@ -42,7 +42,7 @@ public partial class CardHandler : MonoBehaviour {
         set { firstDraw = value; }
     }
 
-    public void Awake() {
+    private void Awake() {
         csm = PlayMangement.instance.cardInfoCanvas.Find("CardInfoList").GetComponent<CardListManager>();
     }
 

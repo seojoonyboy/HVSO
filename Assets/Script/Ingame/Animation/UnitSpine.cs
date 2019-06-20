@@ -63,7 +63,6 @@ public class UnitSpine : MonoBehaviour
 
 
     public virtual void Init() {
-        if (DebugManagement.Instance != null) return;
         skeletonAnimation = GetComponent<SkeletonAnimation>();
         spineAnimationState = skeletonAnimation.AnimationState;
         spineAnimationState.Event += AnimationEvent;
@@ -135,10 +134,7 @@ public class UnitSpine : MonoBehaviour
         }
 
         if(e.Data.Name == "APPEAR") {
-            GameObject effect = Instantiate(PlayMangement.instance.spineEffectManager.appearEffect, transform);
-            effect.transform.position = transform.position;
-            effect.GetComponent<SkeletonAnimation>().AnimationState.SetAnimation(0, "animation", false);
-            Destroy(effect.gameObject, effect.GetComponent<SkeletonAnimation>().skeleton.Data.FindAnimation("animation").Duration - 0.1f);
+            EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.APPEAR, transform.position);
         }     
     }
 
