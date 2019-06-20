@@ -61,7 +61,7 @@ public partial class PlayMangement : MonoBehaviour {
         //StartCoroutine(DisconnectTest());
     }
 
-    private void Update() {
+    private void FixedUpdate() {
         if (!infoOn && Input.GetMouseButtonDown(0)) {
             cardInfoCanvas.GetChild(0).GetComponent<CardListManager>().OpenUnitInfoWindow(Input.mousePosition);
         }
@@ -70,12 +70,10 @@ public partial class PlayMangement : MonoBehaviour {
     private void SetWorldScale() {
         
         SpriteRenderer backSprite = backGround.GetComponent<SpriteRenderer>();
-        float ratio = (float)Screen.width / Screen.height;
-        Debug.Log(ratio);
+        float ratio = (float)Screen.height / Screen.width;
 
-        //float height = Camera.main.orthographicSize * 2, width = height / Screen.height * Screen.width;
         if (ratio < (float)1080 / 1920)
-            ingameCamera.orthographicSize = ingameCamera.orthographicSize * (((float)1080 / 1920) / ratio);
+            ingameCamera.orthographicSize = ingameCamera.orthographicSize * (((float)1080 / 1920) * ratio);
         
         //canvas.transform.Find("FirstDrawWindow").GetComponent<RectTransform>().sizeDelta = new Vector2(Screen.width, Screen.height);
         //cardInfoCanvas.transform.Find("CardInfoList").GetComponent<RectTransform>().sizeDelta = new Vector2(Screen.width, Screen.height);
@@ -245,32 +243,32 @@ public partial class PlayMangement : MonoBehaviour {
         monster.transform.position = enemyPlayer.transform.GetChild(0).GetChild(i).position;
         GameObject monsterSkeleton = Instantiate(skeleton, monster.transform);
         monsterSkeleton.name = "skeleton";
-
-        monster.GetComponent<PlaceMonster>().itemId = history.cardItem.itemId;
-        monster.GetComponent<PlaceMonster>().unit.HP = (int)cardData.hp;
-        monster.GetComponent<PlaceMonster>().unit.currentHP = (int)cardData.hp;
-        monster.GetComponent<PlaceMonster>().unit.originalAttack = (int)cardData.attack; 
-        monster.GetComponent<PlaceMonster>().unit.attack = (int)cardData.attack;
-        monster.GetComponent<PlaceMonster>().unit.name = cardData.name;
-        monster.GetComponent<PlaceMonster>().unit.type = cardData.type;
-        monster.GetComponent<PlaceMonster>().unit.attackRange = cardData.attackRange;
-        monster.GetComponent<PlaceMonster>().unit.cost = cardData.cost;
-        monster.GetComponent<PlaceMonster>().unit.rarelity = cardData.rarelity;
-        monster.GetComponent<PlaceMonster>().unit.id = cardData.cardId;
+        PlaceMonster monsterComp = monster.GetComponent<PlaceMonster>();
+        monsterComp.itemId = history.cardItem.itemId;
+        monsterComp.unit.HP = (int)cardData.hp;
+        monsterComp.unit.currentHP = (int)cardData.hp;
+        monsterComp.unit.originalAttack = (int)cardData.attack; 
+        monsterComp.unit.attack = (int)cardData.attack;
+        monsterComp.unit.name = cardData.name;
+        monsterComp.unit.type = cardData.type;
+        monsterComp.unit.attackRange = cardData.attackRange;
+        monsterComp.unit.cost = cardData.cost;
+        monsterComp.unit.rarelity = cardData.rarelity;
+        monsterComp.unit.id = cardData.cardId;
 
         if (cardData.category_2 != "") {
-            monster.GetComponent<PlaceMonster>().unit.cardCategories = new string[2];
-            monster.GetComponent<PlaceMonster>().unit.cardCategories[0] = cardData.category_1;
-            monster.GetComponent<PlaceMonster>().unit.cardCategories[1] = cardData.category_2;
+            monsterComp.unit.cardCategories = new string[2];
+            monsterComp.unit.cardCategories[0] = cardData.category_1;
+            monsterComp.unit.cardCategories[1] = cardData.category_2;
         }
         else {
-            monster.GetComponent<PlaceMonster>().unit.cardCategories = new string[1];
-            monster.GetComponent<PlaceMonster>().unit.cardCategories[0] = cardData.category_1;
+            monsterComp.unit.cardCategories = new string[1];
+            monsterComp.unit.cardCategories[0] = cardData.category_1;
         }
 
         if (cardData.attackTypes.Length > 0) {
-            monster.GetComponent<PlaceMonster>().unit.attackType = new string[cardData.attackTypes.Length];
-            monster.GetComponent<PlaceMonster>().unit.attackType = cardData.attackTypes;
+            monsterComp.unit.attackType = new string[cardData.attackTypes.Length];
+            monsterComp.unit.attackType = cardData.attackTypes;
             
         }
 
@@ -287,15 +285,15 @@ public partial class PlayMangement : MonoBehaviour {
         }
 
 
-        monster.GetComponent<PlaceMonster>().Init(cardData);
-        monster.GetComponent<PlaceMonster>().SpawnUnit();
+        monsterComp.Init(cardData);
+        monsterComp.SpawnUnit();
 
         EnemyUnitsObserver.UnitAdded(monster, i, 0);
 
         enemyPlayer.resource.Value -= cardData.cost;
         Destroy(enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(enemyCardCount - 1).GetChild(0).gameObject);
 
-        if(monster.GetComponent<PlaceMonster>().unit.name == "방패병") {
+        if(monsterComp.unit.name == "방패병") {
             monster.AddComponent<TmpBuff>();
         }
 
@@ -396,8 +394,9 @@ public partial class PlayMangement : MonoBehaviour {
     }
 
     IEnumerator battleLine(int line) {
-        backGround.transform.GetChild(line).Find("BattleLineEffect").gameObject.SetActive(true);
-        backGround.transform.GetChild(line).Find("BattleLineEffect").GetComponent<SpriteRenderer>().color = new Color(1, 98.0f / 255.0f, 31.0f / 255.0f, 155.0f / 255.0f);
+        Transform lineEffect = backGround.transform.GetChild(line).Find("BattleLineEffect");
+        lineEffect.gameObject.SetActive(true);
+        lineEffect.GetComponent<SpriteRenderer>().color = new Color(1, 98.0f / 255.0f, 31.0f / 255.0f, 155.0f / 255.0f);
         if (player.isHuman == false) {
             yield return WaitSocketData(socketHandler.lineBattleList, line, true);
             yield return battleUnit(player.backLine, line);
@@ -423,25 +422,30 @@ public partial class PlayMangement : MonoBehaviour {
             shildDequeue();
             
         }
-
+        PlaceMonster monster;
         if (player.backLine.transform.GetChild(line).childCount != 0) {
-            player.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().CheckHP();
-            player.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().CheckDebuff();
+            monster = player.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>();
+            monster.CheckHP();
+            monster.CheckDebuff();
         }
         if (player.frontLine.transform.GetChild(line).childCount != 0) {
-            player.frontLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().CheckHP();
-            player.frontLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().CheckDebuff();
+            monster = player.frontLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>();
+            monster.CheckHP();
+            monster.CheckDebuff();
         }
         if (enemyPlayer.backLine.transform.GetChild(line).childCount != 0) {
-            enemyPlayer.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().CheckHP();
-            enemyPlayer.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().CheckDebuff();
+            monster = enemyPlayer.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>();
+            monster.CheckHP();
+            monster.CheckDebuff();
         }
         if (enemyPlayer.frontLine.transform.GetChild(line).childCount != 0) {
-            enemyPlayer.frontLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().CheckHP();
-            enemyPlayer.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>().CheckDebuff();
+            monster = enemyPlayer.frontLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>();
+            monster.CheckHP();
+            monster.CheckDebuff();
         }
-        backGround.transform.GetChild(line).Find("BattleLineEffect").GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 155.0f / 255.0f);
-        backGround.transform.GetChild(line).Find("BattleLineEffect").gameObject.SetActive(false);
+        
+        lineEffect.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 155.0f / 255.0f);
+        lineEffect.gameObject.SetActive(false);
         EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.LINE_BATTLE_FINISHED, this);
     }
 
@@ -534,7 +538,6 @@ public partial class PlayMangement {
 
     public GameObject resultUI;
     public GameObject SocketDisconnectedUI;
-
 
     public void GetBattleResult() {
         isGame = false;
@@ -683,7 +686,6 @@ public partial class PlayMangement {
         cameraPos = Camera.main.transform.position;
     }
     
-
     public IEnumerator cameraShake(float time, int power) {
         float timer = 0;
         float cameraSize = ingameCamera.orthographicSize;
