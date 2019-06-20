@@ -33,7 +33,7 @@ namespace SkillModules {
 
         public List<GameObject> GetTarget() {
             if(targets == null || targets.Count == 0) {
-                Logger.LogError("Target이 제대로 지정되지 않았습니다.");
+                Logger.Log("타겟이 없습니다.");
             }
             return targets;
         }
@@ -311,19 +311,29 @@ namespace SkillModules {
             switch (args[0]) {
                 case "my":
                     if(args.Length == 2 && args[1] == "place") {
-                        PlayMangement.instance.OnBlockPanel("대상을 지정해 주세요.");
-                        callback = successCallback;
-                        CardDropManager.Instance.ShowDropableSlot(GetComponent<CardHandler>().cardData);
+                        if (CanSelect(args[1])) {
+                            PlayMangement.instance.OnBlockPanel("대상을 지정해 주세요.");
+                            callback = successCallback;
+                            CardDropManager.Instance.ShowDropableSlot(GetComponent<CardHandler>().cardData);
+                        }
+                        else {
+                            failedCallback("자리가 없습니다.");
+                        }
                     }
                     if (args.Length == 2 && args[1] == "unit") {
-                        PlayMangement.instance.OnBlockPanel("대상을 지정해 주세요.");
-                        callback = successCallback;
-                        var units = PlayMangement.instance.PlayerUnitsObserver.GetAllFieldUnits();
-                        foreach(GameObject unit in units) {
-                            var ui = unit.transform.Find("ClickableUI").gameObject;
-                            if(ui != null) {
-                                ui.SetActive(true);
+                        if (CanSelect(args[1])) {
+                            PlayMangement.instance.OnBlockPanel("대상을 지정해 주세요.");
+                            callback = successCallback;
+                            var units = PlayMangement.instance.PlayerUnitsObserver.GetAllFieldUnits();
+                            foreach (GameObject unit in units) {
+                                var ui = unit.transform.Find("ClickableUI").gameObject;
+                                if (ui != null) {
+                                    ui.SetActive(true);
+                                }
                             }
+                        }
+                        else {
+                            failedCallback("타겟이 없습니다.");
                         }
                     }
                     break;
@@ -335,6 +345,25 @@ namespace SkillModules {
         /// <param name="parms">사용자가 직접 지목한 위치?</param>
         public override void SetTarget(object target) {
             targets.Add((GameObject)target);
+        }
+
+        private bool CanSelect(string arg) {
+            bool result = false;
+            var observer = PlayMangement.instance.PlayerUnitsObserver;
+
+            switch (arg) {
+                case "place":
+                    for(int i=0; i<5; i++) {
+                        if(observer.units[i, 0] == null) {
+                            result = true;
+                        }
+                    }
+                    break;
+                case "unit":
+                    if ((observer.GetAllFieldUnits()).Count != 0) result = true;
+                    break;
+            }
+            return result;
         }
     }
 

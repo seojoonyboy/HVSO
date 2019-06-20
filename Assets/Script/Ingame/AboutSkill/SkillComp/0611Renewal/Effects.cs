@@ -84,6 +84,8 @@ namespace SkillModules {
 
         public override void Execute(object data) {
             try {
+                if (data == null) return;
+
                 GameObject target = (GameObject)data;
                 SetSkillTarget(ref target);
             }

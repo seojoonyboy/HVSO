@@ -131,7 +131,7 @@ namespace SkillModules {
                 result = new object[] { targets, attrName };
             }
             else if(ability.GetType() == typeof(set_skill_target)) {
-                result = targets[0];
+                if (targets.Count != 0) result = targets[0];
             }
             else if(ability.GetType() == typeof(supply)) {
                 int num = 0;
