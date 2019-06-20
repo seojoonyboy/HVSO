@@ -6,77 +6,84 @@ filter: Linear,Linear
 repeat: none
 L_arm
   rotate: true
-  xy: 639, 157
+  xy: 237, 0
   size: 97, 153
   orig: 97, 153
   offset: 0, 0
   index: -1
 L_attack_arm
   rotate: false
-  xy: 406, 71
+  xy: 562, 74
   size: 161, 107
   orig: 161, 107
   offset: 0, 0
   index: -1
 L_leg
   rotate: false
-  xy: 713, 62
+  xy: 946, 162
   size: 72, 93
   orig: 72, 93
   offset: 0, 0
   index: -1
 R_arm
   rotate: true
-  xy: 241, 9
+  xy: 400, 14
   size: 85, 152
   orig: 85, 152
   offset: 0, 0
   index: -1
 R_leg
   rotate: true
-  xy: 918, 183
+  xy: 552, 3
   size: 71, 92
   orig: 71, 92
   offset: 0, 0
   index: -1
 body
-  rotate: true
-  xy: 569, 2
+  rotate: false
+  xy: 793, 113
   size: 153, 142
   orig: 153, 142
   offset: 0, 0
   index: -1
 hand_effect(1)
   rotate: false
-  xy: 395, 7
+  xy: 723, 119
   size: 70, 62
   orig: 70, 62
   offset: 0, 0
   index: -1
 hand_effect(2)
   rotate: true
-  xy: 794, 175
+  xy: 723, 34
   size: 79, 122
   orig: 79, 122
   offset: 0, 0
   index: -1
 head
   rotate: false
-  xy: 241, 96
+  xy: 237, 97
   size: 163, 158
   orig: 163, 158
   offset: 0, 0
   index: -1
+head_2
+  rotate: false
+  xy: 400, 99
+  size: 162, 156
+  orig: 162, 156
+  offset: 0, 0
+  index: -1
 magic_effect
   rotate: false
-  xy: 2, 5
+  xy: 0, 6
   size: 237, 249
   orig: 237, 249
   offset: 0, 0
   index: -1
 shadow
   rotate: false
-  xy: 406, 180
+  xy: 562, 181
   size: 231, 74
   orig: 231, 74
   offset: 0, 0

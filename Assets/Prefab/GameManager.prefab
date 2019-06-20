@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8279262149816908148}
   - component: {fileID: 8279262149816908149}
+  - component: {fileID: 8999688528475227032}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -45,12 +46,68 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   enemyPlayer: {fileID: 0}
-  plantCard: {fileID: 1063356283279494179, guid: 7aafd5186b74b7f4498e6b8e10e92f4f,
-    type: 3}
-  plantBack: {fileID: 6534810032174128870, guid: 1b13ddc46d9b1c440a8ed8fe011decb7,
-    type: 3}
-  zombieCard: {fileID: 1450336154384821409, guid: 516bd1fb6aaa9ea4590bb57f4bc51a5a,
-    type: 3}
-  zombieBack: {fileID: 9078054751815080224, guid: cc8595d618206524f947b456033d1794,
-    type: 3}
+  plantResourceIcon: {fileID: 0}
+  zombieResourceIcon: {fileID: 0}
+  cardDB: {fileID: 0}
   uiSlot: {fileID: 8096687585883114719, guid: 89c4cf0268231a244a2ed96e83d2c627, type: 3}
+  canvas: {fileID: 0}
+  cardDragCanvas: {fileID: 0}
+  cardInfoCanvas: {fileID: 0}
+  isGame: 1
+  isMulligan: 1
+  infoOn: 0
+  backGround: {fileID: 0}
+  onCanvasPosGroup: {fileID: 0}
+  effectManager:
+    appearEffect: {fileID: 0}
+    backGroundEffect: {fileID: 0}
+    buffEffect: {fileID: 0}
+    lowAttackEffect: {fileID: 0}
+    middileAttackEffect: {fileID: 0}
+    highAttackEffect: {fileID: 0}
+    explosionEffect: {fileID: 0}
+    deadEffect: {fileID: 0}
+  spineEffectManager:
+    appearEffect: {fileID: 0}
+    backGroundEffect: {fileID: 0}
+    buffEffect: {fileID: 0}
+    lowAttackEffect: {fileID: 0}
+    middileAttackEffect: {fileID: 0}
+    highAttackEffect: {fileID: 0}
+    explosionEffect: {fileID: 0}
+    deadEffect: {fileID: 0}
+  blockPanel: {fileID: 0}
+  unitNum: 0
+  heroShieldActive: 0
+  humanShield: {fileID: 0}
+  orcShield: {fileID: 0}
+  resultUI: {fileID: 0}
+  SocketDisconnectedUI: {fileID: 0}
+  ingameCamera: {fileID: 0}
+  cameraPos: {x: 0, y: 0, z: 0}
+  eventHandler: {fileID: 0}
+  socketHandler: {fileID: 0}
+  playerUnitsObserver: {fileID: 0}
+  enemyUnitsObserver: {fileID: 0}
+  turnTable: {fileID: 0}
+--- !u!114 &8999688528475227032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8279262149816908150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6dded8e06d447c44840272091f54687, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spineEffectManager:
+    appearEffect: {fileID: 0}
+    backGroundEffect: {fileID: 0}
+    buffEffect: {fileID: 0}
+    lowAttackEffect: {fileID: 0}
+    middileAttackEffect: {fileID: 0}
+    highAttackEffect: {fileID: 0}
+    explosionEffect: {fileID: 0}
+    deadEffect: {fileID: 0}

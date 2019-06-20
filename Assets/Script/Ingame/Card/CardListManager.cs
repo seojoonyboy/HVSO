@@ -11,11 +11,11 @@ public class CardListManager : MonoBehaviour
 {
     [SerializeField] GameObject cardPrefab;
     [SerializeField] Transform contentParent;
-    [SerializeField] Transform standbyInfo;
+    [SerializeField] protected Transform standbyInfo;
     [SerializeField] GameObject infoPrefab;
-    [SerializeField] Transform mulliganInfoList;
+    [SerializeField] protected Transform mulliganInfoList;
     Animator animator;
-    HorizontalScrollSnap hss;
+    protected HorizontalScrollSnap hss;
 
     void Start()
     {
@@ -25,21 +25,22 @@ public class CardListManager : MonoBehaviour
         hss = transform.GetComponentInChildren<HorizontalScrollSnap>();
     }
 
-    public void AddCardInfo(CardData data, string id) {
+    public virtual void AddCardInfo(CardData data, string id) {
         GameObject newcard = standbyInfo.GetChild(0).gameObject;
         SetCardInfo(newcard, data);
         hss.AddChild(newcard);
         GameObject unitSpine = newcard.transform.Find("Info/UnitImage").GetChild(0).gameObject;
         if (data.type == "unit") {
-            unitSpine.GetComponent<SkeletonGraphic>().skeletonDataAsset = AccountManager.Instance.resource.cardPreveiwSkeleton[id].GetComponent<SkeletonGraphic>().skeletonDataAsset;
-            unitSpine.GetComponent<SkeletonGraphic>().Initialize(true);
+            SkeletonGraphic skeleton = unitSpine.GetComponent<SkeletonGraphic>();
+            skeleton.skeletonDataAsset = AccountManager.Instance.resource.cardPreveiwSkeleton[id].GetComponent<SkeletonGraphic>().skeletonDataAsset;
+            skeleton.Initialize(true);
             unitSpine.SetActive(true);
         }
         else
             unitSpine.SetActive(false);
     }
 
-    public void AddMulliganCardInfo(CardData data, string id, int changeNum = 100) {
+    public virtual void AddMulliganCardInfo(CardData data, string id, int changeNum = 100) {
         GameObject newcard;
         if (changeNum == 100) {
             newcard = standbyInfo.GetChild(0).gameObject;
@@ -50,8 +51,9 @@ public class CardListManager : MonoBehaviour
         SetCardInfo(newcard, data);
         GameObject unitSpine = newcard.transform.Find("Info/UnitImage").GetChild(0).gameObject;
         if (data.type == "unit") {
-            unitSpine.GetComponent<SkeletonGraphic>().skeletonDataAsset = AccountManager.Instance.resource.cardPreveiwSkeleton[id].GetComponent<SkeletonGraphic>().skeletonDataAsset;
-            unitSpine.GetComponent<SkeletonGraphic>().Initialize(true);
+            SkeletonGraphic skeleton = unitSpine.GetComponent<SkeletonGraphic>();
+            skeleton.skeletonDataAsset = AccountManager.Instance.resource.cardPreveiwSkeleton[id].GetComponent<SkeletonGraphic>().skeletonDataAsset;
+            skeleton.Initialize(true);
             unitSpine.SetActive(true);
         }
         else
@@ -98,9 +100,10 @@ public class CardListManager : MonoBehaviour
         GameObject remove;
         hss.RemoveChild(index, out remove);
         remove.transform.SetParent(standbyInfo);
-        remove.GetComponent<RectTransform>().anchorMin = new Vector2(0.5f, 0.5f);
-        remove.GetComponent<RectTransform>().anchorMax = new Vector2(0.5f, 0.5f);
-        remove.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.5f);
+        RectTransform recttrans = remove.GetComponent<RectTransform>();
+        recttrans.anchorMin = new Vector2(0.5f, 0.5f);
+        recttrans.anchorMax = new Vector2(0.5f, 0.5f);
+        recttrans.pivot = new Vector2(0.5f, 0.5f);
         remove.transform.localScale = new Vector3(1, 1, 1);
         remove.transform.localPosition = new Vector3(0, 0, 0);
         remove.SetActive(false);
@@ -110,9 +113,10 @@ public class CardListManager : MonoBehaviour
         string objName = index.ToString() + "unit";
         Transform remove = transform.Find("FieldUnitInfo").Find(objName);
         remove.SetParent(standbyInfo);
-        remove.GetComponent<RectTransform>().anchorMin = new Vector2(0.5f, 0.5f);
-        remove.GetComponent<RectTransform>().anchorMax = new Vector2(0.5f, 0.5f);
-        remove.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.5f);
+        RectTransform recttrans = remove.GetComponent<RectTransform>();
+        recttrans.anchorMin = new Vector2(0.5f, 0.5f);
+        recttrans.anchorMax = new Vector2(0.5f, 0.5f);
+        recttrans.pivot = new Vector2(0.5f, 0.5f);
         remove.localScale = new Vector3(1, 1, 1);
         remove.localPosition = new Vector3(0, 0, 0);
         remove.name = "CardInfoPage";
@@ -126,7 +130,7 @@ public class CardListManager : MonoBehaviour
         hss.GoToScreen(cardnum);
     }
 
-    public void SetCardInfo(GameObject obj, CardData data) {
+    public virtual void SetCardInfo(GameObject obj, CardData data) {
         Transform info = obj.transform.GetChild(0);
         info.Find("Name/NameText").GetComponent<Text>().text = data.name;
         if (data.rarelity != "legend") {
@@ -170,7 +174,7 @@ public class CardListManager : MonoBehaviour
     }
 
 
-    public void OpenUnitInfoWindow(Vector3 inputPos) {
+    public virtual void OpenUnitInfoWindow(Vector3 inputPos) {
         if (Input.GetMouseButtonDown(0)) {
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(inputPos);
 
@@ -195,7 +199,7 @@ public class CardListManager : MonoBehaviour
         }
     }
 
-    public void CloseUnitInfoWindow() {
+    public virtual void CloseUnitInfoWindow() {
         transform.Find("FieldUnitInfo").gameObject.SetActive(false);
         for (int i = 0; i < transform.Find("FieldUnitInfo").childCount; i++) {
             transform.Find("FieldUnitInfo").GetChild(i).gameObject.SetActive(false);

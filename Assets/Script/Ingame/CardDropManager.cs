@@ -263,52 +263,56 @@ public partial class CardDropManager {
 
         GameObject placedMonster = Instantiate(cardHandler.unit, unitLine[lineNum][frontOrBack]);
         placedMonster.transform.position = unitLine[lineNum][frontOrBack].position;
-        placedMonster.GetComponent<PlaceMonster>().isPlayer = true;
-
-        placedMonster.GetComponent<PlaceMonster>().itemId = (int)cardHandler.itemID;
-        placedMonster.GetComponent<PlaceMonster>().unit.name = cardHandler.cardData.name;
-        placedMonster.GetComponent<PlaceMonster>().unit.HP = (int)cardHandler.cardData.hp;
-        placedMonster.GetComponent<PlaceMonster>().unit.currentHP = (int)cardHandler.cardData.hp;
-        placedMonster.GetComponent<PlaceMonster>().unit.originalAttack = (int)cardHandler.cardData.attack;
-        placedMonster.GetComponent<PlaceMonster>().unit.attack = (int)cardHandler.cardData.attack;
-        placedMonster.GetComponent<PlaceMonster>().unit.type = cardHandler.cardData.type;
-        placedMonster.GetComponent<PlaceMonster>().unit.attackRange = cardHandler.cardData.attackRange;
-        placedMonster.GetComponent<PlaceMonster>().unit.cost = cardHandler.cardData.cost;
-        placedMonster.GetComponent<PlaceMonster>().unit.rarelity = cardHandler.cardData.rarelity;
-        placedMonster.GetComponent<PlaceMonster>().unit.id = cardHandler.cardData.cardId;
-        placedMonster.GetComponent<PlaceMonster>().unit.attributes = cardHandler.cardData.attributes;
+        PlaceMonster monster = placedMonster.GetComponent<PlaceMonster>();
+        monster.isPlayer = true;
+        monster.itemId = (int)cardHandler.itemID;
+        monster.unit.name = cardHandler.cardData.name;
+        monster.unit.HP = (int)cardHandler.cardData.hp;
+        monster.unit.currentHP = (int)cardHandler.cardData.hp;
+        monster.unit.originalAttack = (int)cardHandler.cardData.attack;
+        monster.unit.attack = (int)cardHandler.cardData.attack;
+        monster.unit.type = cardHandler.cardData.type;
+        monster.unit.attackRange = cardHandler.cardData.attackRange;
+        monster.unit.cost = cardHandler.cardData.cost;
+        monster.unit.rarelity = cardHandler.cardData.rarelity;
+        monster.unit.id = cardHandler.cardData.cardId;
+        monster.unit.attributes = cardHandler.cardData.attributes;
 
         if (cardHandler.cardData.category_2 != "") {
-            placedMonster.GetComponent<PlaceMonster>().unit.cardCategories = new string[2];
-            placedMonster.GetComponent<PlaceMonster>().unit.cardCategories[0] = cardHandler.cardData.category_1;
-            placedMonster.GetComponent<PlaceMonster>().unit.cardCategories[1] = cardHandler.cardData.category_2;
+            monster.unit.cardCategories = new string[2];
+            monster.unit.cardCategories[0] = cardHandler.cardData.category_1;
+            monster.unit.cardCategories[1] = cardHandler.cardData.category_2;
         }
         else {
-            placedMonster.GetComponent<PlaceMonster>().unit.cardCategories = new string[1];
-            placedMonster.GetComponent<PlaceMonster>().unit.cardCategories[0] = cardHandler.cardData.category_1;
+            monster.unit.cardCategories = new string[1];
+            monster.unit.cardCategories[0] = cardHandler.cardData.category_1;
         }
 
         if (cardHandler.cardData.attackTypes.Length > 0) {
-            placedMonster.GetComponent<PlaceMonster>().unit.attackType = new string[cardHandler.cardData.attackTypes.Length];
-            placedMonster.GetComponent<PlaceMonster>().unit.attackType = cardHandler.cardData.attackTypes;
+            monster.unit.attackType = new string[cardHandler.cardData.attackTypes.Length];
+            monster.unit.attackType = cardHandler.cardData.attackTypes;
 
         }
 
         GameObject skeleton = Instantiate(cardHandler.skeleton, placedMonster.transform);
         skeleton.name = "skeleton";
         skeleton.transform.localScale = new Vector3(-1, 1, 1);
-        placedMonster.name = placedMonster.GetComponent<PlaceMonster>().unit.name;
+        placedMonster.name = monster.unit.name;
 
-        placedMonster.GetComponent<PlaceMonster>().Init(cardHandler.cardData);
-        placedMonster.GetComponent<PlaceMonster>().SpawnUnit();
-        PlayMangement.instance.player.isPicking.Value = false;
-        PlayMangement.instance.player.resource.Value -= cardHandler.cardData.cost;
-        if (PlayMangement.instance.player.isHuman)
-            PlayMangement.instance.player.ActivePlayer();
+        PlayerController player = PlayMangement.instance.player;
+
+        monster.Init(cardHandler.cardData);
+        monster.SpawnUnit();
+        player.isPicking.Value = false;
+        player.resource.Value -= cardHandler.cardData.cost;
+        if (player.isHuman)
+            player.ActivePlayer();
         else
-            PlayMangement.instance.player.ActiveOrcTurn();
-        PlayMangement.instance.player.GetComponent<PlayerController>().cdpm.DestroyCard(cardIndex);
+            player.ActiveOrcTurn();
+        player.cdpm.DestroyCard(cardIndex);
         PlayMangement.instance.PlayerUnitsObserver.RefreshFields(unitLine);
+        player.PlayerUseCard();
+
 
         return placedMonster;
     }

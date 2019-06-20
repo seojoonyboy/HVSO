@@ -1,82 +1,89 @@
 
 ac10001.png
-size: 512,256
+size: 1024,256
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 Headgear
-  rotate: true
-  xy: 405, 111
+  rotate: false
+  xy: 0, 0
   size: 136, 96
   orig: 136, 96
   offset: 0, 0
   index: -1
 L_eye
   rotate: false
-  xy: 282, 102
+  xy: 432, 108
   size: 13, 25
   orig: 13, 25
   offset: 0, 0
   index: -1
 L_leg
-  rotate: true
-  xy: 305, 2
+  rotate: false
+  xy: 677, 115
   size: 51, 78
   orig: 51, 78
   offset: 0, 0
   index: -1
 R_eye
   rotate: false
-  xy: 2, 5
+  xy: 136, 71
   size: 15, 25
   orig: 15, 25
   offset: 0, 0
   index: -1
 R_leg
   rotate: true
-  xy: 390, 58
+  xy: 811, 200
   size: 51, 78
   orig: 51, 78
   offset: 0, 0
   index: -1
 body
   rotate: false
-  xy: 282, 129
+  xy: 432, 133
   size: 121, 118
   orig: 121, 118
   offset: 0, 0
   index: -1
 face
   rotate: false
-  xy: 305, 55
+  xy: 728, 179
   size: 83, 72
   orig: 83, 72
   offset: 0, 0
   index: -1
 helmet
   rotate: false
-  xy: 2, 92
+  xy: 0, 96
   size: 158, 155
   orig: 158, 155
   offset: 0, 0
   index: -1
+helmet_2
+  rotate: false
+  xy: 158, 98
+  size: 156, 153
+  orig: 156, 153
+  offset: 0, 0
+  index: -1
 right_arm
   rotate: true
-  xy: 179, 4
+  xy: 553, 104
   size: 89, 124
   orig: 89, 124
   offset: 0, 0
   index: -1
 shadow
   rotate: false
-  xy: 2, 32
+  xy: 553, 193
   size: 175, 58
   orig: 175, 58
   offset: 0, 0
   index: -1
 shield
   rotate: false
-  xy: 162, 95
+  xy: 314, 99
   size: 118, 152
   orig: 118, 152
   offset: 0, 0

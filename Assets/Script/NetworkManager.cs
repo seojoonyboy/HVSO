@@ -5,13 +5,8 @@ using UnityEngine.Networking;
 using System.Collections.Generic;
 
 public partial class NetworkManager : Singleton<NetworkManager> {
-    #if UNITY_EDITOR
-    [HideInInspector] 
-    public string baseUrl = "https://ccdevclient.fbl.kr/";
-    #else
-    [HideInInspector]
+
     public string baseUrl = "https://cctest.fbl.kr/";
-    #endif
     protected NetworkManager() { }
     public delegate void Callback(HttpResponse response);
     public delegate void CallbackRetryOccured(string msg);

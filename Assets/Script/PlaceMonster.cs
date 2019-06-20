@@ -26,10 +26,10 @@ public class PlaceMonster : MonoBehaviour {
     protected TimeUpdate timeUpdate;
     public UnitSpine unitSpine;
 
-    private float currentTime;
-    private bool instanceAttack = false;
+    protected float currentTime;
+    protected bool instanceAttack = false;
     List<Buff> buffList = new List<Buff>();
-
+    public GameObject effectObject;
     public float atkTime {
         get { return unitSpine.atkDuration; }
     }
@@ -249,7 +249,7 @@ public class PlaceMonster : MonoBehaviour {
     }
 
 
-    private void MoveToTarget() {
+    protected void MoveToTarget() {
         if (unit.attack <= 0) return;
         PlaceMonster placeMonster = myTarget.GetComponent<PlaceMonster>();
 
@@ -258,12 +258,13 @@ public class PlaceMonster : MonoBehaviour {
         else {
             if (placeMonster != null) {
                 if (isPlayer == false) {
-                    iTween.MoveTo(gameObject, iTween.Hash("x", gameObject.transform.position.x + 0.3f, "y", myTarget.transform.position.y, "z", gameObject.transform.position.z, "time", 0.3f, "easetype", iTween.EaseType.easeInOutExpo, "oncomplete", "UnitTryAttack", "oncompletetarget", gameObject));
-                    iTween.MoveTo(myTarget, iTween.Hash("x", myTarget.transform.position.x - 0.3f, "y", myTarget.transform.position.y, "z", myTarget.transform.position.z, "time", 0.2f, "easetype", iTween.EaseType.easeInOutExpo));
+                    iTween.MoveTo(gameObject, iTween.Hash("x", gameObject.transform.position.x + 0.75f, "y", myTarget.transform.position.y, "z", gameObject.transform.position.z, "time", 0.3f, "easetype", iTween.EaseType.easeInOutExpo, "oncomplete", "UnitTryAttack", "oncompletetarget", gameObject));
+                    iTween.MoveTo(myTarget, iTween.Hash("x", myTarget.transform.position.x - 0.75f, "y", myTarget.transform.position.y, "z", myTarget.transform.position.z, "time", 0.2f, "easetype", iTween.EaseType.easeInOutExpo));
                 }
                 else {
-                    iTween.MoveTo(gameObject, iTween.Hash("x", gameObject.transform.position.x - 0.3f, "y", myTarget.transform.position.y, "z", gameObject.transform.position.z, "time", 0.3f, "easetype", iTween.EaseType.easeInOutExpo, "oncomplete", "UnitTryAttack", "oncompletetarget", gameObject));
-                    iTween.MoveTo(myTarget, iTween.Hash("x", myTarget.transform.position.x + 0.3f, "y", myTarget.transform.position.y, "z", myTarget.transform.position.z, "time", 0.2f, "easetype", iTween.EaseType.easeInOutExpo));
+                    iTween.MoveTo(gameObject, iTween.Hash("x", gameObject.transform.position.x - 0.75f, "y", myTarget.transform.position.y, "z", gameObject.transform.position.z, "time", 0.3f, "easetype", iTween.EaseType.easeInOutExpo, "oncomplete", "UnitTryAttack", "oncompletetarget", gameObject));
+                    unitSpine.transform.GetComponent<MeshRenderer>().sortingOrder = 51;
+                    iTween.MoveTo(myTarget, iTween.Hash("x", myTarget.transform.position.x + 0.75f, "y", myTarget.transform.position.y, "z", myTarget.transform.position.z, "time", 0.2f, "easetype", iTween.EaseType.easeInOutExpo));
                 }
             }
             else {
@@ -388,31 +389,29 @@ public class PlaceMonster : MonoBehaviour {
 
     public void AttackEffect(GameObject target = null) {
         PlaceMonster targetMonster = target.GetComponent<PlaceMonster>();
+        Vector3 targetPos = (targetMonster != null) ? target.transform.position : new Vector3(gameObject.transform.position.x, myTarget.GetComponent<PlayerController>().wallPosition.y, 0);
+
         if (unit.attack <= 3) {
-            GameObject effect = Instantiate(PlayMangement.instance.effectManager.lowAttackEffect);
-            effect.transform.position = (targetMonster != null) ? target.transform.position : new Vector3(gameObject.transform.position.x, myTarget.GetComponent<PlayerController>().wallPosition.y, 0);
-            Destroy(effect, effect.GetComponent<ParticleSystem>().main.duration - 0.2f);
-            StartCoroutine(PlayMangement.instance.cameraShake(unitSpine.atkDuration / 2));
+            EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.HIT_LOW, targetPos);
+            StartCoroutine(PlayMangement.instance.cameraShake(unitSpine.atkDuration / 2, 1));
             SoundManager.Instance.PlaySound(SoundType.NORMAL_ATTACK);
         }
-        else if (unit.attack > 3) {
-            GameObject effect = (unit.attack < 6) ? Instantiate(PlayMangement.instance.effectManager.middileAttackEffect) : Instantiate(PlayMangement.instance.effectManager.highAttackEffect);
-            effect.transform.position = (targetMonster != null) ? target.transform.position : new Vector3(gameObject.transform.position.x, myTarget.GetComponent<PlayerController>().wallPosition.y, 0);
-            Destroy(effect, effect.GetComponent<ParticleSystem>().main.duration - 0.2f);
-            StartCoroutine(PlayMangement.instance.cameraShake(unitSpine.atkDuration / 2));
-
-            if (unit.attack > 3 && unit.attack <= 6) {
+        else if (unit.attack > 3) {        
+            if (unit.attack > 3 && unit.attack <= 5) {
+                EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.HIT_MIDDLE, targetPos);
                 SoundManager.Instance.PlaySound(SoundType.MIDDLE_ATTACK);
+                StartCoroutine(PlayMangement.instance.cameraShake(unitSpine.atkDuration / 2, 2));
             }
-            else if (unit.attack > 6) {
+            else if (unit.attack > 5) {
+                EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.HIT_HIGH, targetPos);
                 SoundManager.Instance.PlaySound(SoundType.LARGE_ATTACK);
+                StartCoroutine(PlayMangement.instance.cameraShake(unitSpine.atkDuration / 2, 3));
             }
         }
     }
 
     public void InstanceKilled() {
-        unit.currentHP = 0;
-        CheckHP();
+        UnitDead();
     }
 
 
@@ -448,6 +447,7 @@ public class PlaceMonster : MonoBehaviour {
 
     public void AddBuff(Buff buff) {
         buffList.Add(buff);
+        EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.BUFF, transform.position);
         RequestChangeStat(buff.atk, buff.hp);
     }
 
@@ -488,33 +488,44 @@ public class PlaceMonster : MonoBehaviour {
     }
 
     private void ReturnPosition() {
+        unitSpine.transform.GetComponent<MeshRenderer>().sortingOrder = 50;
         iTween.MoveTo(gameObject, iTween.Hash("x", unitLocation.x, "y", unitLocation.y, "z", unitLocation.z, "time", 0.3f, "delay", 0.5f, "easetype", iTween.EaseType.easeInOutExpo));
-
     }
 
     public void CheckHP() {
         if (unit.currentHP <= 0) {
-            PlayMangement.instance.cardInfoCanvas.Find("CardInfoList").GetComponent<CardListManager>().RemoveUnitInfo(myUnitNum);
-            GameObject tomb = AccountManager.Instance.resource.unitDeadObject;
-            GameObject dropTomb = Instantiate(tomb);
-            dropTomb.transform.position = transform.position;
-
-            if (isPlayer) {
-                PlayMangement.instance.PlayerUnitsObserver.UnitRemoved(x, y);
-            }
-            else {
-                PlayMangement.instance.EnemyUnitsObserver.UnitRemoved(x, y);
-            }
-
-            dropTomb.GetComponent<DeadSpine>().target = gameObject;
-            dropTomb.GetComponent<DeadSpine>().StartAnimation(unit.ishuman);
-
-            object[] parms = new object[]{isPlayer, gameObject};
-
-            PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.FIELD_CHANGED, null, null);
-            PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.DIE, this, parms);
+            UnitDead();
         }
     }
+
+    public void UnitDead() {
+        unit.currentHP = 0;
+        PlayMangement.instance.cardInfoCanvas.Find("CardInfoList").GetComponent<CardListManager>().RemoveUnitInfo(myUnitNum);
+        GameObject tomb;
+        if (AccountManager.Instance.resource != null)
+            tomb = AccountManager.Instance.resource.unitDeadObject;
+        else
+            tomb = PlayMangement.instance.GetComponent<ResourceManager>().unitDeadObject;
+
+        GameObject dropTomb = Instantiate(tomb);
+        dropTomb.transform.position = transform.position;
+
+        if (isPlayer) {
+            PlayMangement.instance.PlayerUnitsObserver.UnitRemoved(x, y);
+        }
+        else {
+            PlayMangement.instance.EnemyUnitsObserver.UnitRemoved(x, y);
+        }
+
+        dropTomb.GetComponent<DeadSpine>().target = gameObject;
+        dropTomb.GetComponent<DeadSpine>().StartAnimation(unit.ishuman);
+
+        object[] parms = new object[]{isPlayer, gameObject};
+
+        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.FIELD_CHANGED, null, null);
+        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.DIE, this, parms);
+    }
+
 
     public void CheckDebuff() {
         //poisonned poison = GetComponent<poisonned>();

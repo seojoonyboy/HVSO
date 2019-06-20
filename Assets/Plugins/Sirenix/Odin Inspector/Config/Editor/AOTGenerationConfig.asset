@@ -16,7 +16,11 @@ MonoBehaviour:
   deleteDllAfterBuilds: 1
   AutomateForAllAOTPlatforms: 1
   automateForPlatforms: 0900000014000000
+<<<<<<< HEAD
   lastScan: 636950088654305307
+=======
+  lastScan: 636963865766669516
+>>>>>>> origin
   supportSerializedTypes:
   - TypeName: System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.GameObject[],
       UnityEngine.CoreModule]], mscorlib

@@ -6,77 +6,84 @@ filter: Linear,Linear
 repeat: none
 L_leg
   rotate: false
-  xy: 722, 187
+  xy: 794, 189
   size: 56, 67
   orig: 56, 67
   offset: 0, 0
   index: -1
 L_upper_arm
   rotate: false
-  xy: 2, 28
+  xy: 0, 32
   size: 159, 145
   orig: 159, 145
   offset: 0, 0
   index: -1
 R_arm
   rotate: false
-  xy: 323, 29
+  xy: 680, 154
   size: 58, 102
   orig: 58, 102
   offset: 0, 0
   index: -1
 R_leg
   rotate: false
-  xy: 780, 187
+  xy: 850, 189
   size: 54, 67
   orig: 54, 67
   offset: 0, 0
   index: -1
 body
   rotate: false
-  xy: 418, 140
+  xy: 438, 142
   size: 122, 114
   orig: 122, 114
   offset: 0, 0
   index: -1
 dog_body
-  rotate: false
-  xy: 257, 133
+  rotate: true
+  xy: 159, 18
   size: 159, 121
   orig: 159, 121
   offset: 0, 0
   index: -1
 dog_head
   rotate: true
-  xy: 542, 143
+  xy: 560, 145
   size: 111, 120
   orig: 111, 120
   offset: 0, 0
   index: -1
 dog_tail
   rotate: false
-  xy: 664, 159
+  xy: 738, 161
   size: 56, 95
   orig: 56, 95
   offset: 0, 0
   index: -1
 eyeblow
   rotate: false
-  xy: 2, 9
+  xy: 0, 15
   size: 91, 17
   orig: 91, 17
   offset: 0, 0
   index: -1
 helmet
   rotate: false
-  xy: 163, 2
+  xy: 280, 127
   size: 158, 129
   orig: 158, 129
   offset: 0, 0
   index: -1
+helmet_2
+  rotate: false
+  xy: 280, 0
+  size: 156, 127
+  orig: 156, 127
+  offset: 0, 0
+  index: -1
 shadow
   rotate: false
-  xy: 2, 175
+  xy: 0, 177
   size: 253, 79
   orig: 253, 79
   offset: 0, 0

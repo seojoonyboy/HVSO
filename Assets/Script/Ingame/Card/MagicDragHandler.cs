@@ -15,11 +15,14 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
     public SkillHandler skillHandler;
 
     public void OnBeginDrag(PointerEventData eventData) {
+        if (!PlayMangement.dragable) return;
         if (firstDraw || PlayMangement.instance.isMulligan) return;
         if (Input.touchCount > 1) return;
         if (PlayMangement.instance.player.dragCard) return;
         if (cardData.skills.Length != 0)
             CardInfoOnDrag.instance.SetCardDragInfo(null, transform.localPosition, cardData.skills[0].desc);
+        else
+            CardInfoOnDrag.instance.SetCardDragInfo(null, transform.localPosition);
         beforeDragParent = transform.parent;
         transform.SetParent(PlayMangement.instance.cardDragCanvas);
         itsDragging = gameObject;
@@ -35,14 +38,17 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
 
     public void OnDrag(PointerEventData eventData) {
         if (firstDraw) return;
+        if (Input.touchCount > 1) return;
         if (gameObject != itsDragging) return;
+        if (!PlayMangement.dragable) {
+            OnEndDrag(null);
+            return;
+        }
         Vector3 cardScreenPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         cardScreenPos = new Vector3(cardScreenPos.x, cardScreenPos.y + 0.3f, 0);
         transform.position = cardScreenPos;
-        if (cardData.skills.Length != 0)
-            CardInfoOnDrag.instance.SetInfoPosOnDrag(transform.localPosition);
-
-        //TODO : Filter를 통해(Use Condition) 놓을 수 있는 영역 추가 제어
+        CheckLocation();
+        CardInfoOnDrag.instance.SetInfoPosOnDrag(transform.localPosition);
         CheckMagicHighlight();
     }
 
@@ -51,7 +57,9 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         if (firstDraw) return;
         if (gameObject != itsDragging) return;
         transform.SetParent(beforeDragParent);
+        CheckLocation(true);
         iTween.MoveTo(gameObject, beforeDragParent.position, 0.3f);
+        iTween.ScaleTo(gameObject, new Vector3(1, 1, 1), 0.3f);
         blockButton = PlayMangement.instance.player.dragCard = false;
         PlayMangement.instance.player.isPicking.Value = false;
         if (!isDropable) {

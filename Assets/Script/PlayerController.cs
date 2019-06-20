@@ -38,6 +38,8 @@ public class PlayerController : MonoBehaviour
 
     protected HeroSpine heroSpine;
     public static int activeCardMinCost;
+
+    public GameObject effectObject;
     public enum HeroState {
         IDLE,
         ATTACK,
@@ -80,13 +82,13 @@ public class PlayerController : MonoBehaviour
             GameObject hero = Instantiate(AccountManager.Instance.resource.heroSkeleton[heroID], transform);
             hero.transform.SetAsLastSibling();
             heroSpine = hero.GetComponent<HeroSpine>();
-            hero.transform.localScale = PlayMangement.instance.backGround.transform.localScale * 0.9f;
             
             if (isPlayer == true) {
                 float reverse = hero.transform.localScale.x * -1f;
                 hero.transform.localScale = new Vector3(reverse, hero.transform.localScale.y, hero.transform.localScale.z);
                 heroSpine.GetComponent<MeshRenderer>().sortingOrder = 14;
                 hero.transform.localPosition = new Vector3(0, 1, 0);
+                hero.transform.localScale = new Vector3(-1, 1, 1);
             }
             else
                 heroSpine.GetComponent<MeshRenderer>().sortingOrder = 8;
@@ -98,13 +100,13 @@ public class PlayerController : MonoBehaviour
             GameObject hero = Instantiate(AccountManager.Instance.resource.heroSkeleton[heroID], transform);
             hero.transform.SetAsLastSibling();
             heroSpine = hero.GetComponent<HeroSpine>();
-            hero.transform.localScale = PlayMangement.instance.backGround.transform.localScale * 0.9f;
 
             if (isPlayer == true) {
                 float reverse = hero.transform.localScale.x * -1f;
                 hero.transform.localScale = new Vector3(reverse, hero.transform.localScale.y, hero.transform.localScale.z);
                 heroSpine.GetComponent<MeshRenderer>().sortingOrder = 14;
                 hero.transform.localPosition = new Vector3(0, 1, 0);
+                hero.transform.localScale = new Vector3(-1, 1, 1);
             }
             else
                 heroSpine.GetComponent<MeshRenderer>().sortingOrder = 8;
@@ -198,7 +200,7 @@ public class PlayerController : MonoBehaviour
         HP.Value += 2;
     }
 
-    public void PlayerTakeDamage(int amount) {
+    public virtual void PlayerTakeDamage(int amount) {
         BattleConnector socketHandler = PlayMangement.instance.socketHandler;
         Queue<SocketFormat.Player> heroShildData = isHuman ? socketHandler.humanData : socketHandler.orcData;
         SocketFormat.Player data;
@@ -286,13 +288,21 @@ public class PlayerController : MonoBehaviour
         if(isPlayer == true) {
             Transform cardSlot_1 = playerUI.transform.Find("CardHand").GetChild(0);
             Transform cardSlot_2 = playerUI.transform.Find("CardHand").GetChild(1);
-            for (int i = 0; i< cardSlot_1.childCount; i++) {
-                if (cardSlot_1.GetChild(i).gameObject.activeSelf)
-                    cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().ActivateCard();
+            for (int i = 0; i < cardSlot_1.childCount; i++) {
+                if (cardSlot_1.GetChild(i).gameObject.activeSelf) {
+                    if(cardSlot_1.GetChild(i).childCount != 0)
+                        cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().ActivateCard();
+                    else
+                        PlayMangement.instance.cardDragCanvas.GetChild(4).GetComponent<CardHandler>().ActivateCard();
+                }
             }
             for (int i = 0; i < cardSlot_2.childCount; i++) {
-                if (cardSlot_2.GetChild(i).gameObject.activeSelf)
-                    cardSlot_2.GetChild(i).GetChild(0).GetComponent<CardHandler>().ActivateCard();
+                if (cardSlot_2.GetChild(i).gameObject.activeSelf) {
+                    if (cardSlot_2.GetChild(i).childCount != 0)
+                        cardSlot_2.GetChild(i).GetChild(0).GetComponent<CardHandler>().ActivateCard();
+                    else
+                        PlayMangement.instance.cardDragCanvas.GetChild(4).GetComponent<CardHandler>().ActivateCard();
+                }
             }
         }
         if (activeCardMinCost == 100) {
@@ -313,24 +323,57 @@ public class PlayerController : MonoBehaviour
             Transform cardSlot_1 = playerUI.transform.Find("CardHand").GetChild(0);
             Transform cardSlot_2 = playerUI.transform.Find("CardHand").GetChild(1);
             for (int i = 0; i < cardSlot_1.childCount; i++) {
-                if (cardSlot_1.GetChild(i).gameObject.activeSelf && cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().cardData.type == "unit")
-                    cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().ActivateCard();
+                if (cardSlot_1.GetChild(i).gameObject.activeSelf) {
+                    if (cardSlot_1.GetChild(i).childCount != 0) {
+                        if (cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().cardData.type == "unit")
+                            cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().ActivateCard();
+                    }
+                    else {
+                        if (PlayMangement.instance.cardDragCanvas.GetChild(4).GetComponent<CardHandler>().cardData.type == "unit")
+                            PlayMangement.instance.cardDragCanvas.GetChild(4).GetComponent<CardHandler>().ActivateCard();
+                    }
+                }
+
             }
             for (int i = 0; i < cardSlot_2.childCount; i++) {
-                if (cardSlot_2.GetChild(i).gameObject.activeSelf && cardSlot_2.GetChild(i).GetChild(0).GetComponent<CardHandler>().cardData.type == "unit")
-                    cardSlot_2.GetChild(i).GetChild(0).GetComponent<CardHandler>().ActivateCard();
+                if (cardSlot_2.GetChild(i).gameObject.activeSelf) {
+                    if (cardSlot_2.GetChild(i).childCount != 0) {
+                        if (cardSlot_2.GetChild(i).GetChild(0).GetComponent<CardHandler>().cardData.type == "unit")
+                            cardSlot_2.GetChild(i).GetChild(0).GetComponent<CardHandler>().ActivateCard();
+                    }
+                    else {
+                        if (PlayMangement.instance.cardDragCanvas.GetChild(4).GetComponent<CardHandler>().cardData.type == "unit")
+                            PlayMangement.instance.cardDragCanvas.GetChild(4).GetComponent<CardHandler>().ActivateCard();
+                    }
+                }
             }
         }
         else if(isPlayer == true && currentTurn == "SECRET") {
             Transform cardSlot_1 = playerUI.transform.Find("CardHand").GetChild(0);
             Transform cardSlot_2 = playerUI.transform.Find("CardHand").GetChild(1);
             for (int i = 0; i < cardSlot_1.childCount; i++) {
-                if (cardSlot_1.GetChild(i).gameObject.activeSelf && cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().cardData.type == "magic")
-                    cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().ActivateCard();
+                if (cardSlot_1.GetChild(i).gameObject.activeSelf) {
+                    if (cardSlot_1.GetChild(i).childCount != 0) {
+                        if (cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().cardData.type == "magic")
+                            cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().ActivateCard();
+                    }
+                    else {
+                        if (PlayMangement.instance.cardDragCanvas.GetChild(4).GetComponent<CardHandler>().cardData.type == "magic")
+                            PlayMangement.instance.cardDragCanvas.GetChild(4).GetComponent<CardHandler>().ActivateCard();
+                    }
+                }
             }
             for (int i = 0; i < cardSlot_2.childCount; i++) {
-                if (cardSlot_2.GetChild(i).gameObject.activeSelf && cardSlot_2.GetChild(i).GetChild(0).GetComponent<CardHandler>().cardData.type == "magic")
-                    cardSlot_2.GetChild(i).GetChild(0).GetComponent<CardHandler>().ActivateCard();
+                if (cardSlot_2.GetChild(i).gameObject.activeSelf) {
+                    if (cardSlot_2.GetChild(i).childCount != 0) {
+                        if (cardSlot_2.GetChild(i).GetChild(0).GetComponent<CardHandler>().cardData.type == "magic")
+                            cardSlot_2.GetChild(i).GetChild(0).GetComponent<CardHandler>().ActivateCard();
+                    }
+                    else {
+                        if (PlayMangement.instance.cardDragCanvas.GetChild(4).GetComponent<CardHandler>().cardData.type == "magic")
+                            PlayMangement.instance.cardDragCanvas.GetChild(4).GetComponent<CardHandler>().ActivateCard();
+                    }
+                }
             }
         }
         if (activeCardMinCost == 100) {
@@ -385,6 +428,10 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void PlayerUseCard() {
+        SetState(HeroState.ATTACK);
     }
     
 

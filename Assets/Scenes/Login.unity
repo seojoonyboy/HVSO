@@ -1619,7 +1619,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e707b71a5bd805548b27e879f1982b82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseUrl: http://ccdevclient.fbl.kr/
+  baseUrl: http://cctest.fbl.kr/
   subReqPrefab: {fileID: 4832658289550080837, guid: bb450749c68bd2b489173f9067e92372,
     type: 3}
 --- !u!4 &1754231302
@@ -1763,6 +1763,8 @@ MonoBehaviour:
     - {fileID: 1989782938946582620, guid: aae8feba8b2f4b847930c3d618ae33c9, type: 3}
     - {fileID: 4110237383026691544, guid: b3535f41460df084eb78263c25cf25e5, type: 3}
     - {fileID: 9055411249258159905, guid: 855d0a2f70bc2d04bbbd52241c33282b, type: 3}
+    - {fileID: 2483683897699488394, guid: 7806922a1502b2f4b924f1ea3a2c106f, type: 3}
+    - {fileID: 3932589704576091384, guid: 31ab4ffd3ccd97543b8c0597a2f47fc3, type: 3}
     - {fileID: 21300000, guid: 12122f4c877e5a649b947fab53757ef7, type: 3}
     - {fileID: 21300000, guid: 8edceb072a72fd34ca4e7a19659d6b8a, type: 3}
     - {fileID: 21300000, guid: 9df306c8d6d4a474db992f225af74a3f, type: 3}
@@ -3122,7 +3124,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 2
+      Data: 4
     - Name: 
       Entry: 7
       Data: 
@@ -3144,6 +3146,30 @@ MonoBehaviour:
     - Name: $v
       Entry: 10
       Data: 63
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: h10003
+    - Name: $v
+      Entry: 10
+      Data: 64
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: h10004
+    - Name: $v
+      Entry: 10
+      Data: 65
     - Name: 
       Entry: 8
       Data: 
@@ -3175,7 +3201,7 @@ MonoBehaviour:
       Data: order
     - Name: $v
       Entry: 10
-      Data: 64
+      Data: 66
     - Name: 
       Entry: 8
       Data: 
@@ -3187,7 +3213,7 @@ MonoBehaviour:
       Data: knowledge
     - Name: $v
       Entry: 10
-      Data: 65
+      Data: 67
     - Name: 
       Entry: 8
       Data: 
@@ -3199,7 +3225,7 @@ MonoBehaviour:
       Data: scheme
     - Name: $v
       Entry: 10
-      Data: 64
+      Data: 66
     - Name: 
       Entry: 8
       Data: 
@@ -3211,7 +3237,7 @@ MonoBehaviour:
       Data: sorcery
     - Name: $v
       Entry: 10
-      Data: 66
+      Data: 68
     - Name: 
       Entry: 8
       Data: 
@@ -3243,7 +3269,7 @@ MonoBehaviour:
       Data: common_ribon
     - Name: $v
       Entry: 10
-      Data: 67
+      Data: 69
     - Name: 
       Entry: 8
       Data: 
@@ -3255,7 +3281,7 @@ MonoBehaviour:
       Data: common_flag
     - Name: $v
       Entry: 10
-      Data: 68
+      Data: 70
     - Name: 
       Entry: 8
       Data: 
@@ -3267,7 +3293,7 @@ MonoBehaviour:
       Data: rare_flag
     - Name: $v
       Entry: 10
-      Data: 69
+      Data: 71
     - Name: 
       Entry: 8
       Data: 
@@ -3279,7 +3305,7 @@ MonoBehaviour:
       Data: rare_ribon
     - Name: $v
       Entry: 10
-      Data: 70
+      Data: 72
     - Name: 
       Entry: 8
       Data: 
@@ -3291,7 +3317,7 @@ MonoBehaviour:
       Data: superrare_ribon
     - Name: $v
       Entry: 10
-      Data: 71
+      Data: 73
     - Name: 
       Entry: 8
       Data: 
@@ -3303,7 +3329,7 @@ MonoBehaviour:
       Data: superrare_flag
     - Name: $v
       Entry: 10
-      Data: 72
+      Data: 74
     - Name: 
       Entry: 8
       Data: 
@@ -3315,7 +3341,7 @@ MonoBehaviour:
       Data: uncommon_flag
     - Name: $v
       Entry: 10
-      Data: 73
+      Data: 75
     - Name: 
       Entry: 8
       Data: 
@@ -3327,7 +3353,7 @@ MonoBehaviour:
       Data: uncommon_ribon
     - Name: $v
       Entry: 10
-      Data: 74
+      Data: 76
     - Name: 
       Entry: 8
       Data: 

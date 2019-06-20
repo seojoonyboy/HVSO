@@ -10,11 +10,12 @@ using SkillModules;
 public partial class CardHandler : MonoBehaviour {
     public GameObject unit;
     public GameObject skeleton;
-    CardListManager csm;
+    protected CardListManager clm;
     protected bool blockButton = false;
     protected bool firstDraw = false;
     public bool changeSelected = false;
     protected bool isDropable = false;
+    protected bool pointOnFeild = false;
     Animator cssAni;
     public string cardID;
     protected int _itemID;
@@ -41,10 +42,10 @@ public partial class CardHandler : MonoBehaviour {
     }
 
     public void Awake() {
-        csm = PlayMangement.instance.cardInfoCanvas.Find("CardInfoList").GetComponent<CardListManager>();
+        clm = PlayMangement.instance.cardInfoCanvas.Find("CardInfoList").GetComponent<CardListManager>();
     }
 
-    public void DrawCard(string ID, int itemID = -1, bool first = false) {
+    public virtual void DrawCard(string ID, int itemID = -1, bool first = false) {
         cardDataPackage = AccountManager.Instance.cardPackage;
         cardID = ID;
         //cardID = "ac10002";    //테스트 코드
@@ -72,12 +73,12 @@ public partial class CardHandler : MonoBehaviour {
         if (first) {
             transform.Find("GlowEffect").GetComponent<Image>().enabled = true;
             transform.Find("GlowEffect").GetComponent<Image>().color = new Color(1, 1, 1);
-            csm.AddMulliganCardInfo(cardData, cardID);
+            clm.AddMulliganCardInfo(cardData, cardID);
             firstDraw = true;
         }
     }
 
-    public void CheckHighlight() {
+    public virtual void CheckHighlight() {
         if (!highlighted) {
             highlightedSlot = CheckSlot();
             if (highlightedSlot != null) {
@@ -97,6 +98,30 @@ public partial class CardHandler : MonoBehaviour {
                 transform.Find("GlowEffect").localScale = new Vector3(1, 1, 1);
                 CardDropManager.Instance.HighLightSlot(highlightedSlot, highlighted);
                 highlightedSlot = null;
+            }
+        }
+    }
+    protected virtual void CheckLocation(bool off = false) {
+        if (off) {
+            pointOnFeild = false;
+            if(cardData.type == "unit")
+                CardInfoOnDrag.instance.ActivePreviewUnit(false);
+            return;
+        }
+        if (transform.localPosition.y > -350) {
+            if (!pointOnFeild) {
+                pointOnFeild = true;
+                transform.localScale = new Vector3(0, 0, 0);
+                if (cardData.type == "unit")
+                    CardInfoOnDrag.instance.ActivePreviewUnit(true);
+            }
+        }
+        else {
+            if (pointOnFeild) {
+                pointOnFeild = false;
+                transform.localScale = new Vector3(1, 1, 1);
+                if (cardData.type == "unit")
+                    CardInfoOnDrag.instance.ActivePreviewUnit(false);
             }
         }
     }
@@ -178,12 +203,12 @@ public partial class CardHandler : MonoBehaviour {
     public void OpenCardInfoList() {
         if (PlayMangement.movingCard != null) return;
         if (PlayMangement.instance.isMulligan && transform.parent.name == "FirstDrawParent") {
-            csm.OpenMulliganCardList(transform.GetSiblingIndex() - 5);
+            clm.OpenMulliganCardList(transform.GetSiblingIndex() - 5);
             return;
         }
         if (!blockButton) {
             if (transform.parent.parent.name == "CardSlot_1") {
-                csm.OpenCardList(transform.parent.GetSiblingIndex());
+                clm.OpenCardList(transform.parent.GetSiblingIndex());
             }
             else {
                 int cardIndex = 0;
@@ -193,7 +218,7 @@ public partial class CardHandler : MonoBehaviour {
                         cardIndex++;
                 }
                 cardIndex += transform.parent.GetSiblingIndex();
-                csm.OpenCardList(cardIndex);
+                clm.OpenCardList(cardIndex);
             }
         }
     }
@@ -213,7 +238,7 @@ public partial class CardHandler : MonoBehaviour {
         transform.Find("Cost").GetComponent<Image>().color = Color.gray;
     }
 
-    public void ActivateCard() {
+    public virtual void ActivateCard() {
         if (PlayMangement.instance.player.resource.Value - cardData.cost >= 0) {
             isDropable = true;
             if (cardData.cost <= PlayerController.activeCardMinCost)

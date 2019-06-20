@@ -6,57 +6,64 @@ filter: Linear,Linear
 repeat: none
 L_low_arm
   rotate: true
-  xy: 236, 24
-  size: 305, 394
-  orig: 305, 394
+  xy: 509, 710
+  size: 229, 296
+  orig: 229, 296
   offset: 0, 0
   index: -1
 L_upper_arm
   rotate: false
-  xy: 592, 369
-  size: 205, 295
-  orig: 205, 295
+  xy: 0, 0
+  size: 154, 221
+  orig: 154, 221
   offset: 0, 0
   index: -1
 R_low_arm
   rotate: false
-  xy: 2, 2
-  size: 232, 690
-  orig: 232, 690
+  xy: 0, 221
+  size: 174, 518
+  orig: 174, 518
   offset: 0, 0
   index: -1
 R_upper_arm
   rotate: true
-  xy: 632, 24
-  size: 206, 280
-  orig: 206, 280
+  xy: 764, 549
+  size: 155, 210
+  orig: 155, 210
   offset: 0, 0
   index: -1
 body
   rotate: false
-  xy: 236, 331
-  size: 354, 361
-  orig: 354, 361
+  xy: 174, 468
+  size: 266, 271
+  orig: 266, 271
   offset: 0, 0
   index: -1
 face
-  rotate: true
-  xy: 682, 666
-  size: 294, 315
-  orig: 294, 315
+  rotate: false
+  xy: 174, 232
+  size: 221, 236
+  orig: 221, 236
+  offset: 0, 0
+  index: -1
+face_2
+  rotate: false
+  xy: 805, 704
+  size: 219, 235
+  orig: 219, 235
   offset: 0, 0
   index: -1
 leg
-  rotate: true
-  xy: 799, 232
-  size: 432, 217
-  orig: 432, 217
+  rotate: false
+  xy: 440, 547
+  size: 324, 163
+  orig: 324, 163
   offset: 0, 0
   index: -1
 shadow
   rotate: false
-  xy: 2, 694
-  size: 678, 266
-  orig: 678, 266
+  xy: 0, 739
+  size: 509, 200
+  orig: 509, 200
   offset: 0, 0
   index: -1
