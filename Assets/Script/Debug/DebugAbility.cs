@@ -7,7 +7,7 @@ using System;
 
 public class DebugAbility : Ability
 {
-    public override void InitData(Skill data, bool isPlayer) {
+    /*public override void InitData(dataModules.Skill data, bool isPlayer) {
 
         skillData = data;
         
@@ -19,5 +19,5 @@ public class DebugAbility : Ability
                 ((ConditionChecker)newComp).Init(data, condition, isPlayer);
             }
         }
-    }
+    }*/
 }

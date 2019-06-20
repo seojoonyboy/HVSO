@@ -23,9 +23,9 @@ public class DebugMagicDragHandler : DebugCardHandler, IBeginDragHandler, IDragH
         itsDragging = gameObject;
         blockButton = DebugManagement.instance.player.dragCard = true;
         DebugManagement.instance.player.isPicking.Value = true;
-        string target = cardData.skills[0].targets[0].args[0];
+        string target = cardData.skills[0].target.args[0];
 
-        List<string> targetArgs = cardData.skills[0].targets[0].args.ToList();
+        List<string> targetArgs = cardData.skills[0].target.args.ToList();
 
         if (isOnlySupplyCard()) {
             DebugCardDropManager.Instance.ShowMagicalSlot("all");
@@ -77,43 +77,43 @@ public class DebugMagicDragHandler : DebugCardHandler, IBeginDragHandler, IDragH
 
 
     public void OnEndDrag(PointerEventData eventData) {
-        if (firstDraw) return;
-        if (gameObject != itsDragging) return;
-        transform.SetParent(beforeDragParent);
-        CheckLocation(true);
-        iTween.MoveTo(gameObject, beforeDragParent.position, 0.3f);
-        iTween.ScaleTo(gameObject, new Vector3(1, 1, 1), 0.3f);
-        blockButton = DebugManagement.instance.player.dragCard = false;
-        DebugManagement.instance.player.isPicking.Value = false;
-        if (!isDropable) {
-            highlighted = false;
-            DebugCardDropManager.Instance.HighLightMagicSlot(highlightedSlot, highlighted);
-            highlightedSlot = null;
-        }
-        else {
-            if (CheckMagicSlot() != null) {
-                var abilities = GetComponents<MagicalCasting>();
-                foreach (MagicalCasting ability in abilities) ability.RequestUseMagic();
+        // if (firstDraw) return;
+        // if (gameObject != itsDragging) return;
+        // transform.SetParent(beforeDragParent);
+        // CheckLocation(true);
+        // iTween.MoveTo(gameObject, beforeDragParent.position, 0.3f);
+        // iTween.ScaleTo(gameObject, new Vector3(1, 1, 1), 0.3f);
+        // blockButton = DebugManagement.instance.player.dragCard = false;
+        // DebugManagement.instance.player.isPicking.Value = false;
+        // if (!isDropable) {
+        //     highlighted = false;
+        //     DebugCardDropManager.Instance.HighLightMagicSlot(highlightedSlot, highlighted);
+        //     highlightedSlot = null;
+        // }
+        // else {
+        //     if (CheckMagicSlot() != null) {
+        //         var abilities = GetComponents<MagicalCasting>();
+        //         foreach (MagicalCasting ability in abilities) ability.RequestUseMagic();
 
-                object[] parms = new object[] { true, gameObject };
-                DebugManagement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
+        //         object[] parms = new object[] { true, gameObject };
+        //         DebugManagement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
 
-                if (GetComponents<DebugAbility>() == null) UseCard();
-            }
-        }
-        DebugCardDropManager.Instance.HideMagicSlot();
-        DebugCardInfoOnDrag.instance.OffCardDragInfo();
+        //         if (GetComponents<DebugAbility>() == null) UseCard();
+        //     }
+        // }
+        // DebugCardDropManager.Instance.HideMagicSlot();
+        // DebugCardInfoOnDrag.instance.OffCardDragInfo();
     }
 
     public void AttributeUsed() {
-        bool isValid = true;
-        MagicalCasting[] magicalCasts = GetComponents<MagicalCasting>();
-        if (magicalCasts.Length == 0) return;
-        foreach (MagicalCasting magicalCast in magicalCasts) {
-            isValid = isValid && magicalCast.isRequested;
-        }
+        // bool isValid = true;
+        // MagicalCasting[] magicalCasts = GetComponents<MagicalCasting>();
+        // if (magicalCasts.Length == 0) return;
+        // foreach (MagicalCasting magicalCast in magicalCasts) {
+        //     isValid = isValid && magicalCast.isRequested;
+        // }
 
-        if (isValid) UseCard();
+        // if (isValid) UseCard();
     }
 
     public void UseCard() {
@@ -138,39 +138,42 @@ public class DebugMagicDragHandler : DebugCardHandler, IBeginDragHandler, IDragH
     }
 
     private UnityAction CreateEventList() {
-        UnityAction useMagic = null;
-        MagicalCasting[] magicalCasts = GetComponents<MagicalCasting>();
-        foreach (MagicalCasting magicalCast in magicalCasts) {
-            useMagic += magicalCast.UseMagic;
-        }
-        return useMagic;
+        // UnityAction useMagic = null;
+        // MagicalCasting[] magicalCasts = GetComponents<MagicalCasting>();
+        // foreach (MagicalCasting magicalCast in magicalCasts) {
+        //     useMagic += magicalCast.UseMagic;
+        // }
+        // return useMagic;
+        return null;
     }
 
     private bool isOnlySupplyCard() {
-        List<MagicalCasting> abilities = GetComponents<MagicalCasting>().ToList();
-        if (abilities.Count == 1) {
-            if (abilities[0].GetType() == typeof(MagicalCasting_supply)) {
-                return true;
-            }
-            return false;
-        }
-        else return false;
+        // List<MagicalCasting> abilities = GetComponents<MagicalCasting>().ToList();
+        // if (abilities.Count == 1) {
+        //     if (abilities[0].GetType() == typeof(MagicalCasting_supply)) {
+        //         return true;
+        //     }
+        //     return false;
+        // }
+        // else return false;
+        return false;
     }
 
     private bool isBlast_EnemyExist() {
-        List<MagicalCasting> abilities = GetComponents<MagicalCasting>().ToList();
-        foreach (MagicalCasting ability in abilities) {
-            if (ability.GetType() == typeof(MagicalCasting_over_a_kill)) {
-                return true;
-            }
-        }
+        // List<MagicalCasting> abilities = GetComponents<MagicalCasting>().ToList();
+        // foreach (MagicalCasting ability in abilities) {
+        //     if (ability.GetType() == typeof(MagicalCasting_over_a_kill)) {
+        //         return true;
+        //     }
+        // }
         return false;
     }
 
     private int GetBlastStandardNum() {
-        int num = 0;
-        int.TryParse(cardData.skills[0].activate.conditions[0].args[0], out num);
-        return num;
+        // int num = 0;
+        // int.TryParse(cardData.skills[0].activate.conditions[0].args[0], out num);
+        // return num;
+        return 0;
     }
 
     private string[] GetArgsInfo(string status, string itemId, string line, string unitItemId, string camp = null) {

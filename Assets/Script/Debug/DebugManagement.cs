@@ -114,28 +114,23 @@ public class DebugManagement : PlayMangement
 
         }
 
-        foreach (dataModules.Skill skill in cardData.skills) {
-            foreach (var effect in skill.effects) {
-                var newComp = monster.AddComponent(System.Type.GetType("SkillModules.UnitAbility_" + effect.method));
-                if (newComp == null) {
-                    Debug.LogError(effect.method + "에 해당하는 컴포넌트를 찾을 수 없습니다.");
-                }
-                else {
-                    //((Ability)newComp).InitData(skill, true);
-                }
-            }
-        }
+        // foreach (dataModules.Skill skill in cardData.skills) {
+        //     foreach (var effect in skill.effects) {
+        //         var newComp = monster.AddComponent(System.Type.GetType("SkillModules.UnitAbility_" + effect.method));
+        //         if (newComp == null) {
+        //             Debug.LogError(effect.method + "에 해당하는 컴포넌트를 찾을 수 없습니다.");
+        //         }
+        //         else {
+        //             //((Ability)newComp).InitData(skill, true);
+        //         }
+        //     }
+        // }
 
 
         monster.GetComponent<DebugUnit>().Init(cardData);
         monster.GetComponent<DebugUnit>().SpawnUnit();
 
         EnemyUnitsObserver.UnitAdded(monster, x, y);
-        
-
-        if (monster.GetComponent<DebugUnit>().unit.name == "방패병") {
-            monster.AddComponent<TmpBuff>();
-        }
 
     }
 
