@@ -7,22 +7,22 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
     [TableMatrix(SquareCells = true)]
     public GameObject[,] units = new GameObject[5, 2];
 
-    public void UnitAdded(GameObject target, int row, int col) {
-        units[row, col] = target;
+    public void UnitAdded(GameObject target, int col, int row) {
+        units[col, row] = target;
     }
 
-    public void UnitRemoved(int row, int col) {
-        units[row, col] = null;
+    public void UnitRemoved(int col, int row) {
+        units[col, row] = null;
     }
 
     public void UnitChangePosition(GameObject target, int col, int row) {
         Pos prevPos = GetMyPos(target);
-        units[row, col] = target;
+        units[col, row] = target;
 
         Logger.Log("Row : " + row);
         Logger.Log("Col : " + col);
 
-        Vector2 targetPos = transform.GetChild(col).GetChild(row).position;
+        Vector2 targetPos = transform.GetChild(row).GetChild(col).position;
         iTween.MoveTo(
             target,
             new Vector2(targetPos.x, targetPos.y),

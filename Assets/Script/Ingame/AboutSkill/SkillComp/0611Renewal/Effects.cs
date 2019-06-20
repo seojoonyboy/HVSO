@@ -121,19 +121,12 @@ namespace SkillModules {
 
         public override void Execute(object data) {
             if (data.GetType().IsArray) {
-                try {
-                    object[] tmp = (object[])data;
-                    GameObject target = (GameObject)tmp[0];
-                    HookArgs args = (HookArgs)tmp[1];
-                    bool isPlayer = (bool)tmp[2];
+                object[] tmp = (object[])data;
+                GameObject target = (GameObject)tmp[0];
+                HookArgs args = (HookArgs)tmp[1];
+                bool isPlayer = (bool)tmp[2];
 
-                    MoveUnit(ref target, ref args, isPlayer);
-                }
-                catch (Exception ex) {
-                    if(ex is FormatException || ex is ArgumentException ex2) {
-                        ShowFormatErrorLog("hook");
-                    }
-                }
+                MoveUnit(ref target, ref args, isPlayer);
             }
             else {
                 ShowFormatErrorLog("hook");
@@ -192,19 +185,14 @@ namespace SkillModules {
 
         public override void Execute(object data) {
             if (data.GetType().IsArray) {
-                try {
-                    object[] tmp = (object[])data;
-                    GameObject target = skillHandler.skillTarget;
+                object[] tmp = (object[])data;
+                GameObject target = skillHandler.skillTarget;
 
-                    GameObject slotToMove = (GameObject)tmp[0];
-                    SkillTargetArgs args = (SkillTargetArgs)tmp[1];
-                    bool isPlayer = (bool)tmp[2];
+                GameObject slotToMove = (GameObject)tmp[0];
+                SkillTargetArgs args = (SkillTargetArgs)tmp[1];
+                bool isPlayer = (bool)tmp[2];
 
-                    MoveUnit(ref target, ref args, isPlayer);
-                }
-                catch (FormatException ex) {
-                    ShowFormatErrorLog("skill_target_move");
-                }
+                MoveUnit(ref target, ref args, isPlayer);
             }
             else {
                 ShowFormatErrorLog("skill_target_move");
@@ -234,21 +222,14 @@ namespace SkillModules {
 
         public override void Execute(object data) {
             if (data.GetType().IsArray) {
-                try {
-                    object[] tmp = (object[])data;
-                    SelfMoveArgs args = (SelfMoveArgs)tmp[0];
-                    bool isPlayer = (bool)tmp[1];
+                object[] tmp = (object[])data;
+                SelfMoveArgs args = (SelfMoveArgs)tmp[0];
+                bool isPlayer = (bool)tmp[1];
 
-                    Logger.Log(args.col);
-                    Logger.Log(args.row);
+                Logger.Log(args.col);
+                Logger.Log(args.row);
 
-                    MoveUnit(ref args, isPlayer);
-                }
-                catch(Exception ex) {
-                    if(ex is ArgumentException || ex is FormatException) {
-                        ShowFormatErrorLog("self_move");
-                    }
-                }
+                MoveUnit(ref args, isPlayer);
             }
             else {
                 ShowFormatErrorLog("self_move");
@@ -278,19 +259,12 @@ namespace SkillModules {
 
         public override void Execute(object data) {
             if (data.GetType().IsArray) {
-                try {
-                    object[] tmp = (object[])data;
-                    bool isPlayer = (bool)tmp[0];
-                    List<GameObject> targets = (List<GameObject>)tmp[1];
-                    int amount = (int)tmp[2];
+                object[] tmp = (object[])data;
+                bool isPlayer = (bool)tmp[0];
+                List<GameObject> targets = (List<GameObject>)tmp[1];
+                int amount = (int)tmp[2];
 
-                    BlastEnemy(isPlayer, targets, amount);
-                }
-                catch (Exception ex) {
-                    if (ex is ArgumentException || ex is FormatException) {
-                        ShowFormatErrorLog("blast_enemy");
-                    }
-                }
+                BlastEnemy(isPlayer, targets, amount);
             }
             else {
                 ShowFormatErrorLog("blast_enemy");
