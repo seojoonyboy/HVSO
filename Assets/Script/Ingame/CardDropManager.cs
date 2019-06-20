@@ -92,6 +92,65 @@ public partial class CardDropManager {
         }
     }
 
+    public void ShowDropableSlot(string[] attributes) {
+        for (int i = 0; i < 5; i++) {
+            if (attributes.Length == 0) {
+                if (slotLine[i].GetComponent<Terrain>().terrain == PlayMangement.LineState.forest) continue;
+                if (unitLine[i][0].childCount == 0) {
+                    slotLine[i].GetChild(0).gameObject.SetActive(true);
+                }
+                else {
+                    string[] attribute = unitLine[i][0].GetChild(0).GetComponent<PlaceMonster>().unit.attributes;
+                    for (int j = 0; j < attribute.Length; j++) {
+                        if (attribute[j] == "chain") {
+                            unitLine[i][0].GetChild(0).position = new Vector3(unitLine[i][0].position.x, unitLine[i][0].GetChild(0).position.y + 0.5f, 0);
+                            slotLine[i].GetChild(1).gameObject.SetActive(true);
+                            slotLine[i].GetChild(2).gameObject.SetActive(true);
+                        }
+                    }
+                }
+            }
+            else {
+
+                bool forrestAble = false;
+                bool chainAble = false;
+                for (int j = 0; j < attributes.Length; j++) {
+                    if (attributes[j] == "footslog") forrestAble = true;
+                    else if (attributes[j] == "chain") chainAble = true;
+                }
+
+                if (slotLine[i].GetComponent<Terrain>().terrain == PlayMangement.LineState.forest && !forrestAble) continue;
+                if (!chainAble) {
+                    if (unitLine[i][0].childCount == 0) {
+                        slotLine[i].GetChild(0).gameObject.SetActive(true);
+                    }
+                    else {
+                        string[] attribute = unitLine[i][0].GetChild(0).GetComponent<PlaceMonster>().unit.attributes;
+                        for (int j = 0; j < attribute.Length; j++) {
+                            if (attribute[j] == "chain") {
+                                unitLine[i][0].GetChild(0).position = new Vector3(unitLine[i][0].position.x, unitLine[i][0].GetChild(0).position.y + 0.5f, 0);
+                                slotLine[i].GetChild(1).gameObject.SetActive(true);
+                                slotLine[i].GetChild(2).gameObject.SetActive(true);
+                            }
+                        }
+                    }
+                }
+                else {
+                    if (unitLine[i][0].childCount == 0) {
+                        slotLine[i].GetChild(0).gameObject.SetActive(true);
+                    }
+                    else {
+                        if (unitLine[i][1].childCount == 0) {
+                            unitLine[i][0].GetChild(0).position = new Vector3(unitLine[i][0].position.x, unitLine[i][0].GetChild(0).position.y + 0.5f, 0);
+                            slotLine[i].GetChild(1).gameObject.SetActive(true);
+                            slotLine[i].GetChild(2).gameObject.SetActive(true);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     public void ShowDropableSlot(FieldType type) {
         switch (type) {
             case FieldType.FOOTSLOG:
