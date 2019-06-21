@@ -23,7 +23,9 @@ public class PlayerController : MonoBehaviour
 
     public GameObject backLine;
     public GameObject frontLine;
-    GameObject costUI;
+    TextMeshProUGUI costText;
+    TextMeshProUGUI HPText;
+    Image shieldGauge;
     GameObject buttonParticle;
     public bool dragCard = false;
 
@@ -55,17 +57,10 @@ public class PlayerController : MonoBehaviour
         string race = Variables.Saved.Get("SelectedRace").ToString();
         if (race == "HUMAN") isHuman = isPlayer;
         else isHuman = !isPlayer;
-        if (isHuman) {
-            Instantiate(AccountManager.Instance.resource.raceUiPrefabs["HUMAN"][0], playerUI.transform.Find("PlayerHealth"));
-            costUI = Instantiate(AccountManager.Instance.resource.raceUiPrefabs["HUMAN"][1], playerUI.transform.Find("PlayerResource"));
-            costUI.GetComponent<Canvas>().overrideSorting = true;
-        }
-        else {
-            Instantiate(AccountManager.Instance.resource.raceUiPrefabs["ORC"][0], playerUI.transform.Find("PlayerHealth"));
-            costUI = Instantiate(AccountManager.Instance.resource.raceUiPrefabs["ORC"][1], playerUI.transform.Find("PlayerResource"));
-            costUI.GetComponent<Canvas>().overrideSorting = true;
-        }
-        SetParticleSize(costUI.transform.GetChild(1).GetComponent<ParticleSystem>());
+        costText = playerUI.transform.Find("PlayerResource").GetChild(0).Find("Text").GetComponent<TextMeshProUGUI>();
+        HPText = playerUI.transform.Find("PlayerHealth/HealthText").GetComponent<TextMeshProUGUI>();
+        shieldGauge = playerUI.transform.Find("PlayerHealth/Helth&Shield/SheildGauge").GetComponent<Image>();
+
         if (isPlayer) {
             buttonParticle = playerUI.transform.Find("Turn/ReleaseTurnButton/TurnOverFeedback").gameObject;
             buttonParticle.GetComponent<SkeletonGraphic>().color = new Color(85.0f / 255.0f, 136.0f / 255.0f, 1);
@@ -73,8 +68,7 @@ public class PlayerController : MonoBehaviour
                 buttonParticle.GetComponent<SkeletonGraphic>().color = new Color(85.0f / 255.0f, 136.0f / 255.0f, 1);
             else
                 buttonParticle.GetComponent<SkeletonGraphic>().color = new Color(1, 97.0f / 255.0f, 97.0f / 255.0f);
-        }       
-        costUI.transform.GetChild(1).gameObject.SetActive(false);
+        }              
 
 
         if (isHuman == true) {
@@ -122,8 +116,6 @@ public class PlayerController : MonoBehaviour
     private void SetParticleSize(ParticleSystem particle) {
         particle.transform.position = Camera.main.ScreenToWorldPoint(particle.transform.parent.position);
         particle.transform.position = new Vector3(particle.transform.position.x, particle.transform.position.y, 0);
-        //ParticleSystem.MainModule costparticle = particle.main;
-        //costparticle.startSize = 1.4f * ((float)1920 / Screen.height);
     }
 
     private void Start()
@@ -169,11 +161,11 @@ public class PlayerController : MonoBehaviour
     }
 
     private void ObserverText() {       
-        Image shieldImage = playerUI.transform.Find("PlayerHealth").GetChild(0).GetChild(0).GetChild(1).GetComponent<Image>();
+        
 
         var ObserveHP = HP.Subscribe(_=> ChangedHP()).AddTo(PlayMangement.instance.transform.gameObject);
         var ObserveResource = resource.Subscribe(_=> ChangedResource()).AddTo(PlayMangement.instance.transform.gameObject);
-        var ObserveShield = shieldStack.Subscribe(_ => shieldImage.fillAmount = (float)shieldStack.Value / 8).AddTo(PlayMangement.instance.transform.gameObject);
+        var ObserveShield = shieldStack.Subscribe(_ => shieldGauge.fillAmount = (float)shieldStack.Value / 8).AddTo(PlayMangement.instance.transform.gameObject);
         //var heroDown = HP.Where(x => x <= 0).Subscribe(_ => ).AddTo(PlayMangement.instance.transform.gameObject);
 
         var gameOverDispose = HP.Where(x => x <= 0)
@@ -187,13 +179,11 @@ public class PlayerController : MonoBehaviour
     }
 
     private void ChangedHP() {
-        TextMeshProUGUI HPText = playerUI.transform.Find("PlayerHealth").GetChild(0).GetChild(1).GetChild(0).GetComponent<TextMeshProUGUI>();
         HPText.text = HP.Value.ToString();
     }
 
     private void ChangedResource() {
-        TextMeshProUGUI resourceText = playerUI.transform.Find("PlayerResource").GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>();
-        resourceText.text = resource.Value.ToString();
+        costText.text = resource.Value.ToString();
     }
 
     public void UpdateHealth() {
@@ -259,7 +249,7 @@ public class PlayerController : MonoBehaviour
         StartCoroutine(PlayMangement.instance.DrawSpecialCard(isHuman));
         shieldStack.Value = 0;
         shieldCount--;
-        playerUI.transform.Find("PlayerHealth").GetChild(0).Find("Shield").Find("Sheilds").GetChild(2 - shieldCount).gameObject.SetActive(false);
+        playerUI.transform.Find("PlayerHealth/RemainSheild").GetChild(0).GetChild(shieldCount + 2).gameObject.SetActive(false);
     }
 
     public void DisableShield() {
@@ -280,7 +270,6 @@ public class PlayerController : MonoBehaviour
 
     public void ActivePlayer() {
         activeCardMinCost = 100;
-        costUI.transform.GetChild(1).gameObject.SetActive(true);
         myTurn = true;      
         if(isPlayer == true) {
             Transform cardSlot_1 = playerUI.transform.Find("CardHand").GetChild(0);
@@ -303,7 +292,6 @@ public class PlayerController : MonoBehaviour
             }
         }
         if (activeCardMinCost == 100) {
-            costUI.transform.GetChild(1).gameObject.SetActive(false);
             if(isPlayer)
                 buttonParticle.SetActive(true);
         }
@@ -311,7 +299,6 @@ public class PlayerController : MonoBehaviour
 
     public void ActiveOrcTurn() {
         activeCardMinCost = 100;
-        costUI.transform.GetChild(1).gameObject.SetActive(true);
         string currentTurn = Variables.Scene(
                 UnityEngine.SceneManagement.SceneManager.GetActiveScene()
             ).Get("CurrentTurn").ToString();
@@ -374,7 +361,6 @@ public class PlayerController : MonoBehaviour
             }
         }
         if (activeCardMinCost == 100) {
-            costUI.transform.GetChild(1).gameObject.SetActive(false);
             if (isPlayer)
                 buttonParticle.SetActive(true);
         }
@@ -394,7 +380,6 @@ public class PlayerController : MonoBehaviour
                     cardSlot_2.GetChild(i).GetChild(0).GetComponent<CardHandler>().DisableCard();
             }
         }
-        costUI.transform.GetChild(1).gameObject.SetActive(false);
         if (isPlayer)
             buttonParticle.SetActive(false);
     }
