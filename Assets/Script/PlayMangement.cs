@@ -62,7 +62,7 @@ public partial class PlayMangement : MonoBehaviour {
         //StartCoroutine(DisconnectTest());
     }
 
-    private void FixedUpdate() {
+    private void Update() {
         if (!infoOn && Input.GetMouseButtonDown(0)) {
             cardInfoCanvas.GetChild(0).GetComponent<CardListManager>().OpenUnitInfoWindow(Input.mousePosition);
         }
