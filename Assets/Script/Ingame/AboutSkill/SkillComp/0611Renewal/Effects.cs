@@ -288,8 +288,15 @@ namespace SkillModules {
 
         private void BlastEnemy(bool isPlayer, List<GameObject> targets, int amount) {
             foreach(GameObject target in targets) {
-                target.GetComponent<PlaceMonster>().RequestChangeStat(-amount, 0);
+                EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.EXPLOSION, target.transform.position);
+                WaitEffect(target, amount);
             }
+        }
+
+        private async void WaitEffect(GameObject target, int amount) {
+            await System.Threading.Tasks.Task.Delay(1500);
+            target.GetComponent<PlaceMonster>().RequestChangeStat(0, -amount);
+            target.GetComponent<PlaceMonster>().CheckHP();
         }
     }
 
@@ -382,25 +389,18 @@ namespace SkillModules {
             FieldUnitsObserver observer;
 
             if (data.GetType().IsArray) {
-                try {
-                    object[] tmp = (object[])data;
-                    GameObject target = (GameObject)tmp[0];
-                    bool isPlayer = (bool)tmp[1];
+                object[] tmp = (object[])data;
+                GameObject target = (GameObject)tmp[0];
+                bool isPlayer = (bool)tmp[1];
 
-                    if (isPlayer) {
-                        observer = PlayMangement.instance.EnemyUnitsObserver;
-                    }
-                    else {
-                        observer = PlayMangement.instance.PlayerUnitsObserver;
-                    }
+                if (isPlayer) {
+                    observer = PlayMangement.instance.EnemyUnitsObserver;
+                }
+                else {
+                    observer = PlayMangement.instance.PlayerUnitsObserver;
+                }
 
-                    RemoveUnit(ref target);
-                }
-                catch (Exception ex) {
-                    if (ex is ArgumentException || ex is FormatException) {
-                        ShowFormatErrorLog("over_a_kill");
-                    }
-                }
+                RemoveUnit(ref target);
             }
             else {
                 ShowFormatErrorLog("over_a_kill");
@@ -409,6 +409,7 @@ namespace SkillModules {
         }
 
         private void RemoveUnit(ref GameObject target) {
+            EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.EXPLOSION, target.transform.position);
             target.GetComponent<PlaceMonster>().InstanceKilled();
         }
     }
