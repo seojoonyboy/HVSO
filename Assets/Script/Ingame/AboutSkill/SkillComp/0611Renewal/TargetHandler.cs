@@ -319,40 +319,42 @@ namespace SkillModules {
 
                     if(args[1] == "unit") {
                         selectedTarget = selectedTarget.gameObject.GetComponentInParent<PlaceMonster>().transform;
-                        var units = PlayMangement.instance.EnemyUnitsObserver.GetAllFieldUnits();
-                        foreach (GameObject unit in units) {
-                            unit
-                                .transform
-                                .Find("ClickableUI")
-                                .gameObject
-                                .SetActive(false);
-
-                            unit
-                                .transform
-                                .Find("InfoWindowTrigger")
-                                .GetComponent<BoxCollider2D>()
-                                .enabled = true;
-                        }
-                        units = PlayMangement.instance.PlayerUnitsObserver.GetAllFieldUnits();
-                        foreach (GameObject unit in units) {
-                            unit
-                                .transform
-                                .Find("ClickableUI")
-                                .gameObject
-                                .SetActive(false);
-
-                            unit
-                                .transform
-                                .Find("InfoWindowTrigger")
-                                .GetComponent<BoxCollider2D>()
-                                .enabled = true;
-                        }
+                        
                     }
 
                     SetTarget(selectedTarget.gameObject);
                     callback(selectedTarget);
 
                     callback = null;
+
+                    var units = PlayMangement.instance.EnemyUnitsObserver.GetAllFieldUnits();
+                    foreach (GameObject unit in units) {
+                        unit
+                            .transform
+                            .Find("ClickableUI")
+                            .gameObject
+                            .SetActive(false);
+
+                        unit
+                            .transform
+                            .Find("InfoWindowTrigger")
+                            .GetComponent<BoxCollider2D>()
+                            .enabled = true;
+                    }
+                    units = PlayMangement.instance.PlayerUnitsObserver.GetAllFieldUnits();
+                    foreach (GameObject unit in units) {
+                        unit
+                            .transform
+                            .Find("ClickableUI")
+                            .gameObject
+                            .SetActive(false);
+
+                        unit
+                            .transform
+                            .Find("InfoWindowTrigger")
+                            .GetComponent<BoxCollider2D>()
+                            .enabled = true;
+                    }
                 }
             }
         }
@@ -416,6 +418,11 @@ namespace SkillModules {
                                 var ui = unit.transform.Find("ClickableUI").gameObject;
                                 if (ui != null) {
                                     ui.SetActive(true);
+                                    unit
+                                        .transform
+                                        .Find("InfoWindowTrigger")
+                                        .GetComponent<BoxCollider2D>()
+                                        .enabled = false;
                                 }
                             }
 

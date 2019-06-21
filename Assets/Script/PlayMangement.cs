@@ -285,6 +285,7 @@ public partial class PlayMangement : MonoBehaviour {
         skillHandler.Initialize(cardData.skills, monster, false);
         monster.GetComponent<PlaceMonster>().skillHandler = skillHandler;
 
+        monster.layer = 14;
         return monster;
     }
 
