@@ -115,6 +115,10 @@ namespace SkillModules {
                     cardIndex += myObject.transform.parent.GetSiblingIndex();
                 }
                 PlayMangement.instance.player.cdpm.DestroyCard(cardIndex);
+                if(PlayMangement.instance.player.isHuman)
+                    PlayMangement.instance.player.ActivePlayer();
+                else
+                    PlayMangement.instance.player.ActiveOrcTurn();
             }
         }
 
