@@ -390,10 +390,14 @@ public partial class PlayMangement : MonoBehaviour {
         }
         else {
             yield return WaitSocketData(socketHandler.lineBattleList, line, true);
+            shildDequeue();
             yield return WaitSocketData(socketHandler.lineBattleList, line, true);
+            shildDequeue();
             yield return WaitSocketData(socketHandler.mapClearList, line, false);
             yield return WaitSocketData(socketHandler.lineBattleList, line, true);
+            shildDequeue();
             yield return WaitSocketData(socketHandler.lineBattleList, line, true);
+            shildDequeue();
             yield return WaitSocketData(socketHandler.mapClearList, line, false);
         }
         ResetCount(line);
@@ -453,14 +457,11 @@ public partial class PlayMangement : MonoBehaviour {
         placeMonster.GetTarget();
         yield return new WaitForSeconds(1.1f + placeMonster.atkTime);
     }
-    static int countThing = 0;
     IEnumerator WaitSocketData(SocketFormat.QueueSocketList<SocketFormat.GameState> queueList, int line, bool isBattle) {
         if(!isGame) yield break;
         yield return queueList.WaitNext();
         SocketFormat.GameState state = queueList.Dequeue();
         //Logger.Log("쌓인 데이터 리스트 : " + queueList.Count);
-        Logger.LogError("데이터 리스트 갯수 : " + ++countThing);
-        if(countThing == 30) countThing = 0;
         if(state == null) {
             Logger.LogError("데이터가 없는 문제가 발생했습니다. 우선은 클라이언트에서 배틀 진행합니다.");
             yield break;
