@@ -511,10 +511,10 @@ public class PlaceMonster : MonoBehaviour {
         dropTomb.transform.position = transform.position;
 
         if (isPlayer) {
-            PlayMangement.instance.PlayerUnitsObserver.UnitRemoved(x, y);
+            PlayMangement.instance.PlayerUnitsObserver.UnitRemoved(y, x);
         }
         else {
-            PlayMangement.instance.EnemyUnitsObserver.UnitRemoved(x, y);
+            PlayMangement.instance.EnemyUnitsObserver.UnitRemoved(y, x);
         }
 
         dropTomb.GetComponent<DeadSpine>().target = gameObject;

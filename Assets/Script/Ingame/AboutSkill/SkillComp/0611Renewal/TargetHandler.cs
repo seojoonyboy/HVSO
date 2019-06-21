@@ -337,10 +337,12 @@ namespace SkillModules {
         public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback) {
             base.SelectTarget(successCallback, failedCallback);
             //TODO : 적일 경우 해당 소켓이 도달 할 때까지 기다리기 card_played, skill_activated
-            if(!skillHandler.isPlayer) {
-                
-                return;
+            if(!skillHandler.isPlayer) { return; }
+            
+            foreach(string arg in args) {
+                Logger.Log(arg);
             }
+
             switch (args[0]) {
                 case "my":
                     if(args.Length == 2 && args[1] == "place") {
@@ -419,10 +421,13 @@ namespace SkillModules {
                     }
                     break;
                 case "unit":
-                    if(args[1] == "enemy") {
+                    if(args[0] == "enemy") {
                         observer = PlayMangement.instance.EnemyUnitsObserver;
                     }
-                    if ((observer.GetAllFieldUnits()).Count != 0) result = true;
+                    if ((observer.GetAllFieldUnits()).Count != 0) {
+                        Logger.Log(observer.GetAllFieldUnits().Count + "개의 적이 감지됨");
+                        result = true;
+                    }
                     break;
             }
             return result;

@@ -158,7 +158,7 @@ namespace SkillModules {
             
             string camp = isPlayer != manage.player.isHuman ? "orc" : "human";
             FieldUnitsObserver targetObserver = isPlayer ? manage.PlayerUnitsObserver : manage.EnemyUnitsObserver;
-            int line = targetObserver.GetMyPos(myObject).row;
+            int line = targetObserver.GetMyPos(myObject).col;
             var posObject = targetObserver.GetAllFieldUnits(line);
             string placed = posObject.Count == 1 ? "front" : posObject[0] == myObject ? "rear" : "front";
             return new Arguments("place", new string[]{line.ToString(), camp, placed});

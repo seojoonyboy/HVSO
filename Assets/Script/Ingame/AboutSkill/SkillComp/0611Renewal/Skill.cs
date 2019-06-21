@@ -146,6 +146,10 @@ namespace SkillModules {
                 else observer = PlayMangement.instance.EnemyUnitsObserver;
 
                 var pos = observer.GetMyPos(mySkillHandler.myObject);
+
+                Logger.Log(pos.col);
+                Logger.Log(pos.row);
+
                 args.col = pos.col;
                 args.row = 0;
 

@@ -93,7 +93,7 @@ namespace SkillModules {
             Pos myPos = mySkillHandler.isPlayer ? playerObserver.GetMyPos(mySkillHandler.myObject) : enemyObserver.GetMyPos(mySkillHandler.myObject);             
             if(subjectObserve.CompareTo("enemy") == 0) {
                 targetObserver = mySkillHandler.isPlayer ? enemyObserver : playerObserver;
-                int unitCount = targetObserver.GetAllFieldUnits(myPos.row).Count;
+                int unitCount = targetObserver.GetAllFieldUnits(myPos.col).Count;
                 return checkSecondArg(unitCount);
             }
             return false;
