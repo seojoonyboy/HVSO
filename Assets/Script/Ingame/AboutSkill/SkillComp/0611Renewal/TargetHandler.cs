@@ -156,15 +156,13 @@ namespace SkillModules {
         }
 
         public override void SetTarget(object parms) {
-            string place = (string)parms;
+            string place = args[0];
             switch (place) {
                 case "rear":
                     var pos = playerUnitsObserver.GetMyPos(gameObject);
-
-                    targets.AddRange(
-                        playerUnitsObserver
-                        .GetAllFieldUnits(pos.row)
-                    );
+                    var list = playerUnitsObserver.GetAllFieldUnits(pos.row);
+                    list.Remove(gameObject);
+                    targets.AddRange(list);
                     break;
             }
         }
@@ -283,6 +281,10 @@ namespace SkillModules {
     public class select : TargetHandler {
         SelectTargetFinished callback;
 
+        private void Start() {
+            if(!skillHandler.isPlayer) this.enabled = false;
+        }
+
         private void Update() {
             if (callback != null && Input.GetMouseButtonDown(0)) {
                 Transform selectedTarget = null;
@@ -334,20 +336,24 @@ namespace SkillModules {
 
         public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback) {
             base.SelectTarget(successCallback, failedCallback);
-
+            //TODO : 적일 경우 해당 소켓이 도달 할 때까지 기다리기 card_played, skill_activated
+            if(!skillHandler.isPlayer) {
+                
+                return;
+            }
             switch (args[0]) {
                 case "my":
                     if(args.Length == 2 && args[1] == "place") {
                         if (CanSelect(args[1])) {
                             PlayMangement.instance.OnBlockPanel("대상을 지정해 주세요.");
                             callback = successCallback;
-
-                            CardDropManager.Instance.ShowDropableSlot(
-                                skillHandler
-                                .myObject
-                                .GetComponent<PlaceMonster>()
-                                .unit.attributes
-                            );
+                            PlaceMonster myMonster = skillHandler.myObject.GetComponent<PlaceMonster>();
+                            string[] attributes; 
+                            if(myMonster != null)
+                                attributes = myMonster.unit.attributes;
+                            else
+                                attributes = GetDropAreaUnit().GetComponent<PlaceMonster>().unit.attributes;
+                            CardDropManager.Instance.ShowDropableSlot(attributes);
                         }
                         else {
                             failedCallback("자리가 없습니다.");

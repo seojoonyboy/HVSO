@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class ambush : MonoBehaviour {
     IngameEventHandler eventHandler;
+    DebugManagement debugManagement;
     // Start is called before the first frame update
     void Start() {
         eventHandler = PlayMangement.instance.EventHandler;
@@ -19,7 +20,11 @@ public class ambush : MonoBehaviour {
 
     private void OnOrcPostTurn(Enum Event_Type, Component Sender, object Param) {
         Debug.Log("잠복 해제");
-        GetComponent<PlaceMonster>().unitSpine.DetectUnit();
+
+        if (debugManagement != null)
+            GetComponent<DebugUnit>().unitSpine.DetectUnit();
+        else
+            GetComponent<PlaceMonster>().unitSpine.DetectUnit();
         Destroy(GetComponent<ambush>());
     }
 

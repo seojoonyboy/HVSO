@@ -15,7 +15,7 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
         units[col, row] = null;
     }
 
-    public void UnitChangePosition(GameObject target, int col, int row) {
+    public virtual void UnitChangePosition(GameObject target, int col, int row) {
         Pos prevPos = GetMyPos(target);
         units[col, row] = target;
 
@@ -73,7 +73,7 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
         return _units;
     }
 
-    public Pos GetMyPos(GameObject gameObject) {
+    public virtual Pos GetMyPos(GameObject gameObject) {
         Pos pos = new Pos();
         pos.row = gameObject.GetComponent<PlaceMonster>().x;
         pos.col = gameObject.GetComponent<PlaceMonster>().y;

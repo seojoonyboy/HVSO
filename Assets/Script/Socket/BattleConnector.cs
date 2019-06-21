@@ -15,6 +15,7 @@ using Newtonsoft.Json.Linq;
 using System.Linq;
 
 public partial class BattleConnector : MonoBehaviour {
+
     #if UNITY_EDITOR
     private string url = "wss://ccdevclient.fbl.kr/game";
     #else

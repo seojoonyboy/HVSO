@@ -26,7 +26,12 @@ public class DeadSpine : MonoBehaviour
     public GameObject target;
 
     public void StartAnimation(bool race) {
-        GameObject deadEffect = Instantiate(PlayMangement.instance.effectManager.deadEffect);
+        GameObject deadEffect;
+        if (PlayMangement.instance != null)
+            deadEffect = Instantiate(PlayMangement.instance.effectManager.deadEffect);
+        else
+            deadEffect = Instantiate(EffectSystem.Instance.deadEffect);
+
         deadEffect.transform.position = transform.position;
         Destroy(target, 0.2f);
         Destroy(deadEffect, deadEffect.GetComponent<ParticleSystem>().main.duration - 0.1f);

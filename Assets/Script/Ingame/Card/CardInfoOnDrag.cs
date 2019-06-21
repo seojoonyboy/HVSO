@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using Spine;
+using Spine.Unity;
 
 public class CardInfoOnDrag : MonoBehaviour
 {
@@ -30,18 +33,36 @@ public class CardInfoOnDrag : MonoBehaviour
 
     [SerializeField] Transform leftEdge;
     [SerializeField] Transform rightEdge;
+    [SerializeField] Transform unitPreview;
     float xWidth;
 
     public void SetCardDragInfo(string info, Vector3 cardPos, string skillInfo = null) {
         leftEdge.position = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 0));
         rightEdge.position = -leftEdge.position;
-        transform.localPosition = new Vector3(cardPos.x, cardPos.y + 170, 0);
+        transform.localPosition = new Vector3(cardPos.x, cardPos.y + 200, 0);
         xWidth = transform.GetComponent<RectTransform>().sizeDelta.x / 2.0f;
-        if (skillInfo.Length != 0) {
+        gameObject.SetActive(true);
+        if (skillInfo != null) {
+            gameObject.GetComponent<Image>().enabled = true;
+            transform.GetChild(0).gameObject.SetActive(true);
             ResizeBox(skillInfo.Length);
             transform.Find("SkillText").GetComponent<TMPro.TextMeshProUGUI>().text = skillInfo;
         }
-        gameObject.SetActive(true);
+        else {
+            gameObject.GetComponent<Image>().enabled = false;
+            transform.GetChild(0).gameObject.SetActive(false);
+        }
+    }
+
+    public void SetPreviewUnit(string id) {
+        SkeletonGraphic skeleton = unitPreview.GetComponent<SkeletonGraphic>();
+        skeleton.skeletonDataAsset = AccountManager.Instance.resource.cardPreveiwSkeleton[id].GetComponent<SkeletonGraphic>().skeletonDataAsset;
+        skeleton.Initialize(true);
+    }
+
+    public void ActivePreviewUnit(bool active) {
+        unitPreview.gameObject.SetActive(active);
+        
     }
 
     private void ResizeBox(int textLength) {
@@ -57,11 +78,11 @@ public class CardInfoOnDrag : MonoBehaviour
         else
             xPos = transform.localPosition.x;
         if (cardPos.y + 530 < rightEdge.localPosition.y)
-            yPos = cardPos.y + 170;
+            yPos = cardPos.y + 250;
         else
-            yPos = cardPos.y - 170;
+            yPos = cardPos.y - 100;
         transform.localPosition = new Vector3(xPos, yPos, 0);
-
+        unitPreview.localPosition = cardPos;
     }
 
     public void OffCardDragInfo() {

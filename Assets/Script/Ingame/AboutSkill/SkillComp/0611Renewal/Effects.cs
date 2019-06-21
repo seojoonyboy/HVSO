@@ -84,7 +84,10 @@ namespace SkillModules {
 
         public override void Execute(object data) {
             try {
-                if (data == null) return;
+                if (data == null) {
+                    skillHandler.isDone = true;
+                    return;
+                }
 
                 GameObject target = (GameObject)data;
                 SetSkillTarget(ref target);
@@ -152,8 +155,8 @@ namespace SkillModules {
         public override void Execute(object data) {
             try {
                 GameObject target = (GameObject)data;
-                if(target.GetComponent<stun>() != null) {
-                    target.GetComponent<PlaceMonster>().InstanceAttack();
+                if(target.GetComponent<stun>() == null) {
+                    target.GetComponent<PlaceMonster>().Invoke("InstanceAttack", 0.5f);
                 }
                 else {
                     Logger.Log("Stun이 걸려있어 공격을 할 수 없습니다!");
@@ -189,7 +192,10 @@ namespace SkillModules {
                 GameObject target = skillHandler.skillTarget;
 
                 GameObject slotToMove = (GameObject)tmp[0];
-                SkillTargetArgs args = (SkillTargetArgs)tmp[1];
+                SkillTargetArgs args = new SkillTargetArgs();
+                args.col = slotToMove.transform.GetSiblingIndex();
+                args.row = slotToMove.transform.parent.GetSiblingIndex();
+                //SkillTargetArgs args = (SkillTargetArgs)tmp[1];
                 bool isPlayer = (bool)tmp[2];
 
                 MoveUnit(ref target, ref args, isPlayer);

@@ -67,15 +67,7 @@ public class UnitSpine : MonoBehaviour
         spineAnimationState = skeletonAnimation.AnimationState;
         spineAnimationState.Event += AnimationEvent;
         skeleton = skeletonAnimation.Skeleton;
-
-        PlaceMonster placeMonster = transform.parent.GetComponent<PlaceMonster>();
-
-
-        if(placeMonster == null) {
-            previewAnimationName = idleAnimationName;
-            Preview();
-            return;
-        }
+        
 
         
 
@@ -136,24 +128,22 @@ public class UnitSpine : MonoBehaviour
 
 
 
-    public void AnimationEvent(TrackEntry entry, Spine.Event e) {
+    public virtual void AnimationEvent(TrackEntry entry, Spine.Event e) {
         if(e.Data.Name == attackEventName) {
             if (attackCallback != null) attackCallback();
         }
 
         if(e.Data.Name == "APPEAR") {
-            GameObject effect = Instantiate(PlayMangement.instance.effectManager.appearEffect, transform);
-            effect.transform.position = transform.position;
-            Destroy(effect.gameObject, effect.GetComponent<ParticleSystem>().main.duration - 0.2f);
+            EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.APPEAR, transform.position);
         }     
     }
 
-    public void TakeMagicEvent(TrackEntry entry) {
+    public virtual void TakeMagicEvent(TrackEntry entry) {
         if (takeMagicCallback != null) takeMagicCallback();
     }
 
 
-    public void HideUnit() {
+    public virtual void HideUnit() {
         skeletonAnimation.skeleton.A = 0.2f;
         PlaceMonster placeMonster = transform.parent.GetComponent<PlaceMonster>();
         if (placeMonster != null) {
@@ -162,7 +152,7 @@ public class UnitSpine : MonoBehaviour
         }
     }
 
-    public void DetectUnit() {
+    public virtual void DetectUnit() {
         skeletonAnimation.skeleton.A = 1f;
         PlaceMonster placeMonster = transform.parent.GetComponent<PlaceMonster>();
         if (placeMonster != null) {

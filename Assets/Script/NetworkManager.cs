@@ -6,10 +6,8 @@ using System.Collections.Generic;
 
 public partial class NetworkManager : Singleton<NetworkManager> {
     #if UNITY_EDITOR
-    [HideInInspector] 
-    public string baseUrl = "https://ccdevclient.fbl.kr/";
+    public string baseUrl = "https://ccdevclient.fbl.kr";
     #else
-    [HideInInspector]
     public string baseUrl = "https://cctest.fbl.kr/";
     #endif
     protected NetworkManager() { }
