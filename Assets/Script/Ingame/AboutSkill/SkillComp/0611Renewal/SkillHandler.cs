@@ -212,9 +212,13 @@ namespace SkillModules {
         }
 
         private PlaceMonster GetDropAreaUnit() {
-            return myObject.GetComponent<CardHandler>()
-                .highlightedSlot
-                .GetComponentInParent<PlaceMonster>();
+            PlaceMonster unit;
+            Transform highlight = myObject.GetComponent<CardHandler>().highlightedSlot;
+            if(highlight != null)
+                unit = highlight.GetComponentInParent<PlaceMonster>();
+            else
+                unit = skillTarget.GetComponent<PlaceMonster>();
+            return unit;
         }
         
         private int GetDropAreaLine() {
