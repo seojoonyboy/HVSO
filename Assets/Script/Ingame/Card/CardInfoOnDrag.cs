@@ -34,7 +34,7 @@ public class CardInfoOnDrag : MonoBehaviour
     [SerializeField] Transform leftEdge;
     [SerializeField] Transform rightEdge;
     [SerializeField] Transform unitPreview;
-    [SerializeField] Transform crossHair;
+    [SerializeField] public Transform crossHair;
     float xWidth;
 
     public void SetCardDragInfo(string info, Vector3 cardPos, string skillInfo = null) {
