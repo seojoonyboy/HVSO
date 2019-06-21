@@ -71,10 +71,10 @@ public partial class PlayMangement : MonoBehaviour {
     private void SetWorldScale() {
         
         SpriteRenderer backSprite = backGround.GetComponent<SpriteRenderer>();
-        float ratio = (float)Screen.height / Screen.width;
+        float ratio = (float)Screen.width / Screen.height;
 
         if (ratio < (float)1080 / 1920)
-            ingameCamera.orthographicSize = ingameCamera.orthographicSize * (((float)1080 / 1920) * ratio);
+            ingameCamera.orthographicSize = ingameCamera.orthographicSize * (((float)1080 / 1920) / ratio);
         
         //canvas.transform.Find("FirstDrawWindow").GetComponent<RectTransform>().sizeDelta = new Vector2(Screen.width, Screen.height);
         //cardInfoCanvas.transform.Find("CardInfoList").GetComponent<RectTransform>().sizeDelta = new Vector2(Screen.width, Screen.height);

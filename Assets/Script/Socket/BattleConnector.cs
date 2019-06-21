@@ -335,7 +335,7 @@ public partial class BattleConnector : MonoBehaviour {
         string cardCamp = gameState.lastUse.cardItem.camp;
         bool isEnemyCard = cardCamp.CompareTo(enemyCamp) == 0;
         if(isEnemyCard) useCardList.Enqueue(gameState);
-        DebugSocketData.CheckMapPosition(gameState);
+        //DebugSocketData.CheckMapPosition(gameState);
     }
 }
 
@@ -375,18 +375,20 @@ public partial class BattleConnector : MonoBehaviour {
         return isBattleEnd ? mapClearList.Dequeue() : lineBattleList.Dequeue();
     }
 
-    public void DrawNewCards(int drawNum) {
+    public void DrawNewCards(int drawNum, int itemId) {
         PlayMangement playMangement = PlayMangement.instance;
         bool isHuman = playMangement.player.isHuman;
         int cardNum = gameState.players.myPlayer(isHuman).deck.handCards.Length - 1;
-        StartCoroutine(DrawCardIEnumerator(cardNum, drawNum));
+        StartCoroutine(DrawCardIEnumerator(itemId));
         //DrawCardIEnumerator(cards, drawNum);
     }
 
-    public IEnumerator DrawCardIEnumerator(int cardNum, int count) {
+    public IEnumerator DrawCardIEnumerator(int itemId) {
         PlayMangement playMangement = PlayMangement.instance;
         bool isHuman = playMangement.player.isHuman;
-        yield return new WaitUntil(() => gameState.players.myPlayer(isHuman).deck.handCards.Length == cardNum+count);
+        yield return new WaitUntil(() => 
+            gameState.lastUse.cardItem.itemId == itemId && 
+            ((gameState.lastUse.cardItem.camp.CompareTo("human")==0) == playMangement.player.isHuman));
         //for(int i = cards.Length - count; i < cards.Length; i++) {
         //    PlayMangement.instance.player.cdpm.AddCard(null, cards[i]);
         //    yield return new WaitForSeconds(0.6f);
