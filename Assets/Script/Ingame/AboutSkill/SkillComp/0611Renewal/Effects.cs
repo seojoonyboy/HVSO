@@ -194,8 +194,9 @@ namespace SkillModules {
 
                 GameObject slotToMove = (GameObject)tmp[0];
                 SkillTargetArgs args = new SkillTargetArgs();
+                
                 args.col = slotToMove.transform.GetSiblingIndex();
-                args.row = slotToMove.transform.parent.GetSiblingIndex();
+                args.row = 0;
                 //SkillTargetArgs args = (SkillTargetArgs)tmp[1];
                 bool isPlayer = (bool)tmp[2];
 

@@ -166,7 +166,7 @@ namespace SkillModules {
                 bool isPlayer = mySkillHandler.isPlayer;
 
                 SkillTargetArgs args = new SkillTargetArgs();
-                args.col = targets[0].transform.parent.GetSiblingIndex();
+                args.col = targets[0].transform.GetSiblingIndex();
                 args.row = 0;
 
                 result = new object[] { slotToMove, args, isPlayer };

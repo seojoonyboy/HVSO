@@ -31,6 +31,14 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
         StartCoroutine(UnitChangeCoroutine(target, prevPos, row, col));
     }
 
+    /// <summary>
+    /// 자리 이동
+    /// </summary>
+    /// <param name="target">대상</param>
+    /// <param name="prevPos">이전 위치</param>
+    /// <param name="row">새로운 위치 row</param>
+    /// <param name="col">새로운 위치 col</param>
+    /// <returns></returns>
     IEnumerator UnitChangeCoroutine(GameObject target, Pos prevPos, int row, int col) {
         yield return new WaitForSeconds(1.0f);
 
@@ -43,8 +51,8 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
             transform.GetChild(row).GetChild(col).position
         );
 
-        Logger.Log(prevPos.col);
-        Logger.Log(prevPos.row);
+        Logger.Log(string.Format("prev Pos Col : {0}",prevPos.col));
+        Logger.Log(string.Format("prev Pos Row : {0}", prevPos.row));
 
         units[prevPos.col, prevPos.row] = null;
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.FIELD_CHANGED, null, null);
@@ -64,12 +72,14 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
     /// <param name="row">row</param>
     /// <returns></returns>
     public List<GameObject> GetAllFieldUnits(int col) {
+        Debug.Log("라인 검사 : " + col);
         List<GameObject> _units = new List<GameObject>();
         for (int i = 0; i < 2; i++) {
             if (units[col, i] != null) {
                 _units.Add(units[col, i]);
             }
         }
+        Debug.Log("라인 검사 결과 : " + _units.Count);
         return _units;
     }
 
