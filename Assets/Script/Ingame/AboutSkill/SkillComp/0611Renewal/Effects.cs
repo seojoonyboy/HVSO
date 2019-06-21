@@ -290,6 +290,7 @@ namespace SkillModules {
 
         private void BlastEnemy(bool isPlayer, List<GameObject> targets, int amount) {
             foreach(GameObject target in targets) {
+                target.GetComponent<PlaceMonster>().RequestChangeStat(0, -amount);
                 EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.EXPLOSION, target.transform.position);
                 WaitEffect(target, amount);
             }
@@ -297,7 +298,6 @@ namespace SkillModules {
 
         private async void WaitEffect(GameObject target, int amount) {
             await System.Threading.Tasks.Task.Delay(1500);
-            target.GetComponent<PlaceMonster>().RequestChangeStat(0, -amount);
             target.GetComponent<PlaceMonster>().CheckHP();
         }
     }
