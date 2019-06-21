@@ -51,7 +51,7 @@ namespace SkillModules {
 
         protected int GetDropLine() {
             Transform highlightedSlot = GetComponent<CardHandler>().highlightedSlot;
-            int col = highlightedSlot.GetSiblingIndex();
+            int col = highlightedSlot.parent.GetSiblingIndex();
 
             Logger.Log(col);
 
