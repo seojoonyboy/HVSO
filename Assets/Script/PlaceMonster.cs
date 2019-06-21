@@ -57,6 +57,7 @@ public class PlaceMonster : MonoBehaviour {
     public void Init(CardData data) {
         x = transform.parent.GetSiblingIndex();
         y = transform.parent.parent.GetSiblingIndex();
+
         atkCount = 0;
 
         unitLocation = gameObject.transform.position;
@@ -410,11 +411,14 @@ public class PlaceMonster : MonoBehaviour {
         GameObject dropTomb = Instantiate(tomb);
         dropTomb.transform.position = transform.position;
 
+        Logger.Log("X : " + x);
+        Logger.Log("Y : " + y);
+
         if (isPlayer) {
-            PlayMangement.instance.PlayerUnitsObserver.UnitRemoved(y, x);
+            PlayMangement.instance.PlayerUnitsObserver.UnitRemoved(x, y);
         }
         else {
-            PlayMangement.instance.EnemyUnitsObserver.UnitRemoved(y, x);
+            PlayMangement.instance.EnemyUnitsObserver.UnitRemoved(x, y);
         }
 
         dropTomb.GetComponent<DeadSpine>().target = gameObject;

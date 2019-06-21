@@ -51,8 +51,11 @@ namespace SkillModules {
 
         protected int GetDropLine() {
             Transform highlightedSlot = GetComponent<CardHandler>().highlightedSlot;
-            int row = highlightedSlot.parent.GetSiblingIndex();
-            return row;
+            int col = highlightedSlot.GetSiblingIndex();
+
+            Logger.Log(col);
+
+            return col;
         }
 
         protected Transform GetClickedAreaUnit() {
@@ -160,7 +163,7 @@ namespace SkillModules {
             switch (place) {
                 case "rear":
                     var pos = playerUnitsObserver.GetMyPos(gameObject);
-                    var list = playerUnitsObserver.GetAllFieldUnits(pos.row);
+                    var list = playerUnitsObserver.GetAllFieldUnits(pos.col);
                     list.Remove(gameObject);
                     targets.AddRange(list);
                     break;
@@ -355,7 +358,7 @@ namespace SkillModules {
                                 attributes = myMonster.unit.attributes;
                             else
                                 attributes = GetDropAreaUnit().GetComponent<PlaceMonster>().unit.attributes;
-                            CardDropManager.Instance.ShowDropableSlot(attributes);
+                            CardDropManager.Instance.ShowDropableSlot(attributes, true);
                         }
                         else {
                             failedCallback("자리가 없습니다.");
