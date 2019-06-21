@@ -326,6 +326,8 @@ namespace SkillModules {
 
                     SetTarget(selectedTarget.gameObject);
                     callback(selectedTarget);
+
+                    callback = null;
                 }
             }
         }
