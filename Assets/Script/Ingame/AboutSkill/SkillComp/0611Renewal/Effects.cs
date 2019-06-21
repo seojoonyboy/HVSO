@@ -110,7 +110,8 @@ namespace SkillModules {
             try {
                 int drawNum = 0;
                 int.TryParse((string)args[0], out drawNum);
-                PlayMangement.instance.SocketHandler.DrawNewCards(drawNum);
+                int itemId = skillHandler.myObject.GetComponent<MagicDragHandler>().itemID;
+                PlayMangement.instance.SocketHandler.DrawNewCards(drawNum, itemId);
             }
             catch(FormatException ex) {
                 ShowFormatErrorLog("supply");
