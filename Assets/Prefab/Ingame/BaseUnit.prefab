@@ -1019,8 +1019,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 10
-  m_fontSizeBase: 10
+  m_fontSize: 16
+  m_fontSizeBase: 16
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1059,14 +1059,14 @@ MonoBehaviour:
   m_pageToDisplay: 1
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
-    textComponent: {fileID: 0}
-    characterCount: 5
+    textComponent: {fileID: 102757655610457730}
+    characterCount: 0
     spriteCount: 0
-    spaceCount: 1
-    wordCount: 2
+    spaceCount: 0
+    wordCount: 0
     linkCount: 0
-    lineCount: 1
-    pageCount: 1
+    lineCount: 0
+    pageCount: 0
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
@@ -1153,7 +1153,7 @@ GameObject:
   - component: {fileID: 1629630550888610242}
   - component: {fileID: 4855963470646390511}
   m_Layer: 13
-  m_Name: TMP SubMesh [BMHANNA_TTF SDF Material + LiberationSans SDF Atlas]
+  m_Name: TMP SubMesh [BMHANNA_TTF SDF_KOR Material + LiberationSans SDF Atlas]
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1235,7 +1235,7 @@ MonoBehaviour:
   m_material: {fileID: 0}
   m_sharedMaterial: {fileID: 0}
   m_isDefaultMaterial: 0
-  m_padding: 8.629032
+  m_padding: 9.076087
   m_renderer: {fileID: 4639516943384102664}
   m_meshFilter: {fileID: 1629630550888610242}
   m_TextComponent: {fileID: 102757655610457730}
@@ -1246,11 +1246,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4549778766762803916}
     m_Modifications:
-    - target: {fileID: 8544034429045599775, guid: 7331370235ab70642bdf53ca97543ba7,
-        type: 3}
-      propertyPath: m_Name
-      value: EffectObject
-      objectReference: {fileID: 0}
     - target: {fileID: 6519469795811311031, guid: 7331370235ab70642bdf53ca97543ba7,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1305,6 +1300,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8544034429045599775, guid: 7331370235ab70642bdf53ca97543ba7,
+        type: 3}
+      propertyPath: m_Name
+      value: EffectObject
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7331370235ab70642bdf53ca97543ba7, type: 3}
