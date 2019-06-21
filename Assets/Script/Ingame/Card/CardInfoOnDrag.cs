@@ -34,6 +34,7 @@ public class CardInfoOnDrag : MonoBehaviour
     [SerializeField] Transform leftEdge;
     [SerializeField] Transform rightEdge;
     [SerializeField] Transform unitPreview;
+    [SerializeField] Transform crossHair;
     float xWidth;
 
     public void SetCardDragInfo(string info, Vector3 cardPos, string skillInfo = null) {
@@ -62,7 +63,10 @@ public class CardInfoOnDrag : MonoBehaviour
 
     public void ActivePreviewUnit(bool active) {
         unitPreview.gameObject.SetActive(active);
-        
+    }
+
+    public void ActiveCrossHair(bool active) {
+        crossHair.gameObject.SetActive(active);
     }
 
     private void ResizeBox(int textLength) {
@@ -82,7 +86,7 @@ public class CardInfoOnDrag : MonoBehaviour
         else
             yPos = cardPos.y - 100;
         transform.localPosition = new Vector3(xPos, yPos, 0);
-        unitPreview.localPosition = cardPos;
+        unitPreview.localPosition = crossHair.localPosition = cardPos;
     }
 
     public void OffCardDragInfo() {

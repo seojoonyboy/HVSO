@@ -106,6 +106,8 @@ public partial class CardHandler : MonoBehaviour {
             pointOnFeild = false;
             if(cardData.type == "unit")
                 CardInfoOnDrag.instance.ActivePreviewUnit(false);
+            else
+                CardInfoOnDrag.instance.ActiveCrossHair(false);
             return;
         }
         if (transform.localPosition.y > -350) {
@@ -114,6 +116,8 @@ public partial class CardHandler : MonoBehaviour {
                 transform.localScale = new Vector3(0, 0, 0);
                 if (cardData.type == "unit")
                     CardInfoOnDrag.instance.ActivePreviewUnit(true);
+                else
+                    CardInfoOnDrag.instance.ActiveCrossHair(true);
             }
         }
         else {
@@ -122,6 +126,8 @@ public partial class CardHandler : MonoBehaviour {
                 transform.localScale = new Vector3(1, 1, 1);
                 if (cardData.type == "unit")
                     CardInfoOnDrag.instance.ActivePreviewUnit(false);
+                else
+                    CardInfoOnDrag.instance.ActiveCrossHair(false);
             }
         }
     }
