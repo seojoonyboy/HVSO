@@ -248,7 +248,7 @@ public partial class CardDropManager {
     }
 
     public GameObject DropUnit(GameObject card, Transform target) {
-        if (target == null || target.childCount > 0) return null;
+        if (target == null || target.childCount > 1) return null;
         HighLightSlot(target, false);
         HideDropableSlot();
         int cardIndex = 0;
