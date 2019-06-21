@@ -11,5 +11,10 @@ namespace SkillModules {
             textPro.gameObject.SetActive(true);
             textPro.text = "독성";
         }
+
+        void OnDestroy() {
+            TextMeshPro textPro = transform.Find("Status").GetComponent<TextMeshPro>();
+            textPro.gameObject.SetActive(false);
+        }
     }
 }
