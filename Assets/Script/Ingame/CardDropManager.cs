@@ -92,12 +92,14 @@ public partial class CardDropManager {
         }
     }
 
-    public void ShowDropableSlot(string[] attributes) {
+    public void ShowDropableSlot(string[] attributes, bool isSkill = false) {
         for (int i = 0; i < 5; i++) {
             if (attributes.Length == 0) {
                 if (slotLine[i].GetComponent<Terrain>().terrain == PlayMangement.LineState.forest) continue;
                 if (unitLine[i][0].childCount == 0) {
                     slotLine[i].GetChild(0).gameObject.SetActive(true);
+                    if(isSkill)
+                        slotLine[i].GetChild(0).GetChild(0).gameObject.SetActive(true);
                 }
                 else {
                     string[] attribute = unitLine[i][0].GetChild(0).GetComponent<PlaceMonster>().unit.attributes;
@@ -106,6 +108,10 @@ public partial class CardDropManager {
                             unitLine[i][0].GetChild(0).position = new Vector3(unitLine[i][0].position.x, unitLine[i][0].GetChild(0).position.y + 0.5f, 0);
                             slotLine[i].GetChild(1).gameObject.SetActive(true);
                             slotLine[i].GetChild(2).gameObject.SetActive(true);
+                            if (isSkill) {
+                                slotLine[i].GetChild(1).GetChild(0).gameObject.SetActive(true);
+                                slotLine[i].GetChild(2).GetChild(0).gameObject.SetActive(true);
+                            }
                         }
                     }
                 }
@@ -123,6 +129,8 @@ public partial class CardDropManager {
                 if (!chainAble) {
                     if (unitLine[i][0].childCount == 0) {
                         slotLine[i].GetChild(0).gameObject.SetActive(true);
+                        if (isSkill)
+                            slotLine[i].GetChild(0).GetChild(0).gameObject.SetActive(true);
                     }
                     else {
                         string[] attribute = unitLine[i][0].GetChild(0).GetComponent<PlaceMonster>().unit.attributes;
@@ -131,6 +139,10 @@ public partial class CardDropManager {
                                 unitLine[i][0].GetChild(0).position = new Vector3(unitLine[i][0].position.x, unitLine[i][0].GetChild(0).position.y + 0.5f, 0);
                                 slotLine[i].GetChild(1).gameObject.SetActive(true);
                                 slotLine[i].GetChild(2).gameObject.SetActive(true);
+                                if (isSkill) {
+                                    slotLine[i].GetChild(1).GetChild(0).gameObject.SetActive(true);
+                                    slotLine[i].GetChild(2).GetChild(0).gameObject.SetActive(true);
+                                }
                             }
                         }
                     }
@@ -138,12 +150,18 @@ public partial class CardDropManager {
                 else {
                     if (unitLine[i][0].childCount == 0) {
                         slotLine[i].GetChild(0).gameObject.SetActive(true);
-                    }
+                            if (isSkill)
+                                slotLine[i].GetChild(0).GetChild(0).gameObject.SetActive(true);
+                        }
                     else {
                         if (unitLine[i][1].childCount == 0) {
                             unitLine[i][0].GetChild(0).position = new Vector3(unitLine[i][0].position.x, unitLine[i][0].GetChild(0).position.y + 0.5f, 0);
                             slotLine[i].GetChild(1).gameObject.SetActive(true);
                             slotLine[i].GetChild(2).gameObject.SetActive(true);
+                            if (isSkill) {
+                                slotLine[i].GetChild(1).GetChild(0).gameObject.SetActive(true);
+                                slotLine[i].GetChild(2).GetChild(0).gameObject.SetActive(true);
+                            }
                         }
                     }
                 }
@@ -171,6 +189,7 @@ public partial class CardDropManager {
             for (int j = 0; j < 3; j++) {
                 slotLine[i].GetChild(j).GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 155.0f / 255.0f);
                 slotLine[i].GetChild(j).gameObject.SetActive(false);
+                slotLine[i].GetChild(j).GetChild(0).gameObject.SetActive(false);
             }
         }
     }
