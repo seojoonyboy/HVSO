@@ -132,6 +132,10 @@ public class PlaceMonster : MonoBehaviour {
             return;
         }
 
+        if(GetComponent<SkillModules.poison>() != null) {
+            myTarget.AddComponent<SkillModules.poisonned>();
+        }
+
         PlayerController targetPlayer = (isPlayer == true) ? PlayMangement.instance.enemyPlayer : PlayMangement.instance.player;
         
         if(unit.attackType.Contains("through")) {
@@ -395,6 +399,10 @@ public class PlaceMonster : MonoBehaviour {
 
     public void CheckHP() {
         if (unit.currentHP <= 0) {
+            UnitDead();
+        }
+
+        if(GetComponent<SkillModules.poisonned>() != null) {
             UnitDead();
         }
     }
