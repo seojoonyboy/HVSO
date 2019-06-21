@@ -381,7 +381,6 @@ namespace SkillModules {
                     if (args.Length == 2 && args[1] == "unit") {
                         if (CanSelect(args[1])) {
                             PlayMangement.instance.OnBlockPanel("대상을 지정해 주세요.");
-                            callback = successCallback;
                             var units = PlayMangement.instance.EnemyUnitsObserver.GetAllFieldUnits();
                             foreach (GameObject unit in units) {
                                 var ui = unit.transform.Find("ClickableUI").gameObject;
@@ -389,6 +388,8 @@ namespace SkillModules {
                                     ui.SetActive(true);
                                 }
                             }
+
+                            callback = successCallback;
                         }
                         else {
                             failedCallback("타겟이 없습니다.");
@@ -418,6 +419,9 @@ namespace SkillModules {
                     }
                     break;
                 case "unit":
+                    if(args[1] == "enemy") {
+                        observer = PlayMangement.instance.EnemyUnitsObserver;
+                    }
                     if ((observer.GetAllFieldUnits()).Count != 0) result = true;
                     break;
             }

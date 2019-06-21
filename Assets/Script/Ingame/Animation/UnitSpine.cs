@@ -135,7 +135,7 @@ public class UnitSpine : MonoBehaviour
 
         if(e.Data.Name == "APPEAR") {
             EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.APPEAR, transform.position);
-        }     
+        }
     }
 
     public virtual void TakeMagicEvent(TrackEntry entry) {

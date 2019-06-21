@@ -16,11 +16,11 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
     }
 
     public virtual void UnitChangePosition(GameObject target, int col, int row) {
-        Pos prevPos = GetMyPos(target);
-        units[col, row] = target;
-
         Logger.Log("Row : " + row);
         Logger.Log("Col : " + col);
+
+        Pos prevPos = GetMyPos(target);
+        units[col, row] = target;
 
         Vector2 targetPos = transform.GetChild(row).GetChild(col).position;
         iTween.MoveTo(
@@ -46,7 +46,7 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
         Logger.Log(prevPos.col);
         Logger.Log(prevPos.row);
 
-        units[prevPos.row, prevPos.col] = null;
+        units[prevPos.col, prevPos.row] = null;
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.FIELD_CHANGED, null, null);
     }
 
@@ -75,8 +75,8 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
 
     public virtual Pos GetMyPos(GameObject gameObject) {
         Pos pos = new Pos();
-        pos.row = gameObject.GetComponent<PlaceMonster>().x;
         pos.col = gameObject.GetComponent<PlaceMonster>().y;
+        pos.row = gameObject.GetComponent<PlaceMonster>().x;
 
         return pos;
     }

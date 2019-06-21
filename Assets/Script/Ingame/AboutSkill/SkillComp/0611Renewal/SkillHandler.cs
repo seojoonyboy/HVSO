@@ -140,7 +140,7 @@ namespace SkillModules {
             //Playing scope 있는 Select일 때
             if(select != null && select.isPlayingSelect()) {
                 List<GameObject> selectList = select.GetTargetFromSelect();
-                if(selectList.Count > 0)
+                if(selectList != null && selectList.Count > 0)
                     targets.Add(ArgumentForm(select, true, isEndCardPlay));
             }
             else if(!isEndCardPlay) {
