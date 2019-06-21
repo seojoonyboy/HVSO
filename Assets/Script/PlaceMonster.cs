@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using System.Linq;
 using TMPro;
 
 
@@ -130,13 +131,9 @@ public class PlaceMonster : MonoBehaviour {
             return;
         }
 
-        if (atkCount > 0) { //GetAnotherTarget(); return;
-            GetAnotherTarget();
-            return;
-        }
         PlayerController targetPlayer = (isPlayer == true) ? PlayMangement.instance.enemyPlayer : PlayMangement.instance.player;
         
-        if (unit.attackType.Length > 0 && unit.attackType[0] == "through") { 
+        if(unit.attackType.Contains("through")) {
             myTarget = targetPlayer.transform.gameObject;
         }
         else {
@@ -148,103 +145,6 @@ public class PlaceMonster : MonoBehaviour {
                 myTarget = targetPlayer.transform.gameObject;
         }
 
-
-
-        /*
-        if(unit.attackType.Length > 0 && unit.attackType[0] == "through") {
-            if(isPlayer == true) {
-                PlayerController enemy = PlayMangement.instance.enemyPlayer;
-                myTarget = enemy.transform.gameObject;
-            }
-            else {
-                PlayerController player = PlayMangement.instance.player;
-                myTarget = player.transform.gameObject;
-            }
-
-        }
-        else {
-            if (isPlayer == true) {
-                PlayerController enemy = PlayMangement.instance.enemyPlayer;
-                if (enemy.frontLine.transform.GetChild(x).childCount != 0) {
-                    myTarget = enemy.frontLine.transform.GetChild(x).GetChild(0).gameObject;
-                }
-                else if (enemy.backLine.transform.GetChild(x).childCount != 0) {
-                    myTarget = enemy.backLine.transform.GetChild(x).GetChild(0).gameObject;
-                }
-                else {
-                    myTarget = enemy.transform.gameObject;
-                }
-            }
-            else {
-                PlayerController player = PlayMangement.instance.player;
-                if (player.frontLine.transform.GetChild(x).childCount != 0) {
-                    myTarget = player.frontLine.transform.GetChild(x).GetChild(0).gameObject;
-                }
-                else if (player.backLine.transform.GetChild(x).childCount != 0) {
-                    myTarget = player.backLine.transform.GetChild(x).GetChild(0).gameObject;
-                }
-                else {
-                    myTarget = player.transform.gameObject;
-                }
-            }
-        }
-        */
-
-
-
-        MoveToTarget();
-    }
-
-    public void GetAnotherTarget() {
-        PlayerController targetPlayer = (isPlayer == true) ? PlayMangement.instance.enemyPlayer : PlayMangement.instance.player;
-        PlaceMonster targetMonster = myTarget.GetComponent<PlaceMonster>();
-
-        if (unit.currentHP <= 0) {
-            atkCount = maxAtkCount;
-            return;
-        }
-
-        if (targetMonster != null) {
-            targetMonster.CheckHP();
-        }
-
-        if (unit.attackType.Length > 0 && unit.attackType[0] == "through") {
-            myTarget = targetPlayer.transform.gameObject;
-        }
-        else {
-            if (targetPlayer.frontLine.transform.GetChild(x).childCount != 0 && targetPlayer.frontLine.transform.GetChild(x).GetChild(0).GetComponent<PlaceMonster>().unit.currentHP > 0)
-                myTarget = targetPlayer.frontLine.transform.GetChild(x).GetChild(0).gameObject;
-            else if (targetPlayer.backLine.transform.GetChild(x).childCount != 0 && targetPlayer.backLine.transform.GetChild(x).GetChild(0).GetComponent<PlaceMonster>().unit.currentHP > 0)
-                myTarget = targetPlayer.backLine.transform.GetChild(x).GetChild(0).gameObject;
-            else
-                myTarget = targetPlayer.transform.gameObject;
-        }
-        /*
-        if (isPlayer == true) {
-            PlayerController enemy = PlayMangement.instance.enemyPlayer;
-            if (enemy.frontLine.transform.GetChild(x).childCount != 0 && enemy.frontLine.transform.GetChild(x).GetChild(0).GetComponent<PlaceMonster>().unit.currentHP > 0) {
-                myTarget = enemy.frontLine.transform.GetChild(x).GetChild(0).gameObject;
-            }
-            else if (enemy.backLine.transform.GetChild(x).childCount != 0 && enemy.backLine.transform.GetChild(x).GetChild(0).GetComponent<PlaceMonster>().unit.currentHP > 0) {
-                myTarget = enemy.backLine.transform.GetChild(x).GetChild(0).gameObject;
-            }
-            else {
-                myTarget = enemy.transform.gameObject;
-            }
-        }
-        else {
-            PlayerController player = PlayMangement.instance.player;
-            if (player.frontLine.transform.GetChild(x).childCount != 0 && player.frontLine.transform.GetChild(x).GetChild(0).GetComponent<PlaceMonster>().unit.currentHP > 0) {
-                myTarget = player.frontLine.transform.GetChild(x).GetChild(0).gameObject;
-            }
-            else if (player.backLine.transform.GetChild(x).childCount != 0 && player.backLine.transform.GetChild(x).GetChild(0).GetComponent<PlaceMonster>().unit.currentHP > 0) {
-                myTarget = player.backLine.transform.GetChild(x).GetChild(0).gameObject;
-            }
-            else {
-                myTarget = player.transform.gameObject;
-            }
-        }
-        */
         MoveToTarget();
     }
 
