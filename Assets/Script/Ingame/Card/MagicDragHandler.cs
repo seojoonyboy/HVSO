@@ -65,10 +65,11 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         if (CheckMagicSlot() != null && PlayMangement.instance.player.resource.Value >= cardData.cost) {
             //var abilities = GetComponents<MagicalCasting>();
             //foreach (MagicalCasting ability in abilities) ability.RequestUseMagic();
-
-            object[] parms = new object[] { true, gameObject };
-            PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
             PlayMangement.instance.player.resource.Value -= cardData.cost;
+            object[] parms = new object[] { true, gameObject };
+            
+            PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
+            
             //if (GetComponents<Ability>() == null) UseCard();
         }
         highlighted = false;

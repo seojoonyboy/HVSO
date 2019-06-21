@@ -249,7 +249,7 @@ public class PlayerController : MonoBehaviour
         StartCoroutine(PlayMangement.instance.DrawSpecialCard(isHuman));
         shieldStack.Value = 0;
         shieldCount--;
-        playerUI.transform.Find("PlayerHealth/RemainSheild").GetChild(0).GetChild(shieldCount + 2).gameObject.SetActive(false);
+        playerUI.transform.Find("PlayerHealth/RemainSheild").GetChild(shieldCount + 3).gameObject.SetActive(false);
     }
 
     public void DisableShield() {
