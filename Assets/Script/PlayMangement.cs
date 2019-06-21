@@ -364,7 +364,6 @@ public partial class PlayMangement : MonoBehaviour {
         yield return new WaitForSeconds(1.1f);
         for(int line = 0; line < 5; line++) {
             yield return battleLine(line);
-            yield return WaitSocketData(socketHandler.mapClearList, line, false);
             if (isGame == false) break;
         }
         yield return new WaitForSeconds(1f);
@@ -385,9 +384,18 @@ public partial class PlayMangement : MonoBehaviour {
         lineEffect.GetComponent<SpriteRenderer>().color = new Color(1, 0.384f, 0.121f, 0.608f);
         var list = playerUnitsObserver.GetAllFieldUnits(line);
         list.AddRange(enemyUnitsObserver.GetAllFieldUnits(line));
-        if(list.Count != 0)
+        if(list.Count != 0) {
             if (player.isHuman == false) yield return whoFirstBattle(player, enemyPlayer, line);
             else yield return whoFirstBattle(enemyPlayer, player, line);
+        }
+        else {
+            yield return WaitSocketData(socketHandler.lineBattleList, line, true);
+            yield return WaitSocketData(socketHandler.lineBattleList, line, true);
+            yield return WaitSocketData(socketHandler.mapClearList, line, false);
+            yield return WaitSocketData(socketHandler.lineBattleList, line, true);
+            yield return WaitSocketData(socketHandler.lineBattleList, line, true);
+            yield return WaitSocketData(socketHandler.mapClearList, line, false);
+        }
         ResetCount(line);
         yield return new WaitForSeconds(0.2f);
         lineEffect.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.608f);
@@ -405,9 +413,11 @@ public partial class PlayMangement : MonoBehaviour {
         yield return GetBattle(first, line);
         yield return GetBattle(second, line);
         CheckUnitStatus(line);
+        yield return WaitSocketData(socketHandler.mapClearList, line, false);
         yield return GetBattle(first, line);
         yield return GetBattle(second, line);
         CheckUnitStatus(line);
+        yield return WaitSocketData(socketHandler.mapClearList, line, false);
     }
 
     IEnumerator GetBattle(PlayerController player, int line) {
@@ -443,12 +453,14 @@ public partial class PlayMangement : MonoBehaviour {
         placeMonster.GetTarget();
         yield return new WaitForSeconds(1.1f + placeMonster.atkTime);
     }
-
+    static int countThing = 0;
     IEnumerator WaitSocketData(SocketFormat.QueueSocketList<SocketFormat.GameState> queueList, int line, bool isBattle) {
         if(!isGame) yield break;
         yield return queueList.WaitNext();
         SocketFormat.GameState state = queueList.Dequeue();
         //Logger.Log("쌓인 데이터 리스트 : " + queueList.Count);
+        Logger.LogError("데이터 리스트 갯수 : " + ++countThing);
+        if(countThing == 30) countThing = 0;
         if(state == null) {
             Logger.LogError("데이터가 없는 문제가 발생했습니다. 우선은 클라이언트에서 배틀 진행합니다.");
             yield break;
