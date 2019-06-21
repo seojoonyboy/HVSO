@@ -360,7 +360,10 @@ namespace SkillModules {
         public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback) {
             base.SelectTarget(successCallback, failedCallback);
             //TODO : 적일 경우 해당 소켓이 도달 할 때까지 기다리기 card_played, skill_activated
-            if(!skillHandler.isPlayer) { return; }
+            if(!skillHandler.isPlayer) { 
+                skillHandler.isDone = true;
+                return; 
+            }
             
             foreach(string arg in args) {
                 Logger.Log(arg);

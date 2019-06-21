@@ -500,7 +500,12 @@ public partial class PlayMangement : MonoBehaviour {
             cdpm.AddCard(null, cardData);
         }
         else {
-            GameObject enemyCard = Instantiate(isHuman ? player.back : enemyPlayer.back);
+            GameObject enemyCard;
+            if (enemyPlayer.isHuman)
+                enemyCard = Instantiate(Resources.Load("Prefabs/HumanBackCard") as GameObject, enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(CountEnemyCard()));
+            else
+                enemyCard = Instantiate(Resources.Load("Prefabs/OrcBackCard") as GameObject, enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(CountEnemyCard()));
+            
             enemyCard.transform.SetParent(PlayMangement.instance.enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(PlayMangement.instance.CountEnemyCard()));
             enemyCard.transform.localScale = new Vector3(1, 1, 1);
             enemyCard.transform.localPosition = new Vector3(0, 0, 0);
@@ -619,7 +624,7 @@ public partial class PlayMangement {
             if (i < 4)
                 StartCoroutine(player.cdpm.FirstDraw());
 
-            GameObject enemyCard = new GameObject();
+            GameObject enemyCard;
             if (enemyPlayer.isHuman)
                 enemyCard = Instantiate(Resources.Load("Prefabs/HumanBackCard") as GameObject, enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(CountEnemyCard()));
             else

@@ -267,6 +267,7 @@ namespace SkillModules {
 
         public override void Execute(object data) {
             skillHandler.RemoveTriggerEvent();
+            skillHandler.isDone = true;
         }
     }
 
