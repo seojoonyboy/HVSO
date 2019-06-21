@@ -380,21 +380,16 @@ public partial class BattleConnector : MonoBehaviour {
         bool isHuman = playMangement.player.isHuman;
         int cardNum = gameState.players.myPlayer(isHuman).deck.handCards.Length - 1;
         StartCoroutine(DrawCardIEnumerator(itemId));
-        //DrawCardIEnumerator(cards, drawNum);
     }
 
     public IEnumerator DrawCardIEnumerator(int itemId) {
         PlayMangement playMangement = PlayMangement.instance;
         bool isHuman = playMangement.player.isHuman;
-        yield return new WaitUntil(() => 
-            gameState.lastUse.cardItem.itemId == itemId && 
+        yield return new WaitUntil(() =>
+            gameState.lastUse != null && gameState.lastUse.cardItem.itemId == itemId && 
             ((gameState.lastUse.cardItem.camp.CompareTo("human")==0) == playMangement.player.isHuman));
-        //for(int i = cards.Length - count; i < cards.Length; i++) {
-        //    PlayMangement.instance.player.cdpm.AddCard(null, cards[i]);
-        //    yield return new WaitForSeconds(0.6f);
-        //}
+
         StartCoroutine(PlayMangement.instance.player.cdpm.AddMultipleCard(gameState.players.myPlayer(isHuman).deck.handCards));
-        //yield return new WaitForSeconds(0.3f);
     }
 }
 namespace SocketFormat {

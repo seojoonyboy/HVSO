@@ -199,12 +199,10 @@ public partial class PlayMangement : MonoBehaviour {
                 else SummonMagic(history);
                 SocketFormat.DebugSocketData.SummonCardData(history);
             }
-            SocketFormat.DebugSocketData.CheckMapPosition(state);
+            //SocketFormat.DebugSocketData.CheckMapPosition(state);
             yield return new WaitForSeconds(0.5f);
         }
         #endregion
-
-        yield return new WaitForSeconds(1.0f);
         SocketFormat.DebugSocketData.ShowHandCard(socketHandler.gameState.players.enemyPlayer(enemyPlayer.isHuman).deck.handCards);
         enemyPlayer.ReleaseTurn();
         StopCoroutine("EnemySummonMonster");
@@ -352,7 +350,7 @@ public partial class PlayMangement : MonoBehaviour {
     }
 
     public IEnumerator WaitSecond() {
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(1f);
         //Logger.Log("Triggering EndTurn");
         CustomEvent.Trigger(gameObject, "EndTurn");
     }
@@ -362,14 +360,12 @@ public partial class PlayMangement : MonoBehaviour {
     }
 
     IEnumerator battleCoroutine() {
-        int line = 0;
         dragable = false;
         yield return new WaitForSeconds(1.1f);
-        while (line < 5) {
+        for(int line = 0; line < 5; line++) {
             yield return battleLine(line);
             yield return WaitSocketData(socketHandler.mapClearList, line, false);
             if (isGame == false) break;
-            line++;
         }
         yield return new WaitForSeconds(1f);
         socketHandler.TurnOver();
@@ -386,78 +382,66 @@ public partial class PlayMangement : MonoBehaviour {
     IEnumerator battleLine(int line) {
         Transform lineEffect = backGround.transform.GetChild(line).Find("BattleLineEffect");
         lineEffect.gameObject.SetActive(true);
-        lineEffect.GetComponent<SpriteRenderer>().color = new Color(1, 98.0f / 255.0f, 31.0f / 255.0f, 155.0f / 255.0f);
-        if (player.isHuman == false) {
-            yield return WaitSocketData(socketHandler.lineBattleList, line, true);
-            yield return battleUnit(player.backLine, line);
-            yield return battleUnit(player.frontLine, line);
-            yield return HeroSpecialWait();
-            shildDequeue();
-            yield return WaitSocketData(socketHandler.lineBattleList, line, true);
-            yield return battleUnit(enemyPlayer.backLine, line);
-            yield return battleUnit(enemyPlayer.frontLine, line);
-            yield return HeroSpecialWait();
-            shildDequeue();
-        }
-        else {
-            yield return WaitSocketData(socketHandler.lineBattleList, line, true);
-            yield return battleUnit(enemyPlayer.backLine, line);
-            yield return battleUnit(enemyPlayer.frontLine, line);
-            yield return HeroSpecialWait();
-            shildDequeue();
-            yield return WaitSocketData(socketHandler.lineBattleList, line, true);
-            yield return battleUnit(player.backLine, line);
-            yield return battleUnit(player.frontLine, line);
-            yield return HeroSpecialWait();
-            shildDequeue();
-            
-        }
-        PlaceMonster monster;
-        if (player.backLine.transform.GetChild(line).childCount != 0) {
-            monster = player.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>();
-            monster.CheckHP();
-            monster.CheckDebuff();
-        }
-        if (player.frontLine.transform.GetChild(line).childCount != 0) {
-            monster = player.frontLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>();
-            monster.CheckHP();
-            monster.CheckDebuff();
-        }
-        if (enemyPlayer.backLine.transform.GetChild(line).childCount != 0) {
-            monster = enemyPlayer.backLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>();
-            monster.CheckHP();
-            monster.CheckDebuff();
-        }
-        if (enemyPlayer.frontLine.transform.GetChild(line).childCount != 0) {
-            monster = enemyPlayer.frontLine.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>();
-            monster.CheckHP();
-            monster.CheckDebuff();
-        }
-        
-        lineEffect.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 155.0f / 255.0f);
+        lineEffect.GetComponent<SpriteRenderer>().color = new Color(1, 0.384f, 0.121f, 0.608f);
+        var list = playerUnitsObserver.GetAllFieldUnits(line);
+        list.AddRange(enemyUnitsObserver.GetAllFieldUnits(line));
+        if(list.Count != 0)
+            if (player.isHuman == false) yield return whoFirstBattle(player, enemyPlayer, line);
+            else yield return whoFirstBattle(enemyPlayer, player, line);
+        ResetCount(line);
+        yield return new WaitForSeconds(0.2f);
+        lineEffect.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.608f);
         lineEffect.gameObject.SetActive(false);
         EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.LINE_BATTLE_FINISHED, this);
     }
 
+    void ResetCount(int line) {
+        var list = playerUnitsObserver.GetAllFieldUnits(line);
+        list.AddRange(enemyUnitsObserver.GetAllFieldUnits(line));
+        list.ForEach(x => x.GetComponent<PlaceMonster>().atkCount = 0);
+    }
+
+    IEnumerator whoFirstBattle(PlayerController first, PlayerController second, int line) {
+        yield return GetBattle(first, line);
+        yield return GetBattle(second, line);
+        CheckUnitStatus(line);
+        yield return GetBattle(first, line);
+        yield return GetBattle(second, line);
+        CheckUnitStatus(line);
+    }
+
+    IEnumerator GetBattle(PlayerController player, int line) {
+        yield return WaitSocketData(socketHandler.lineBattleList, line, true);
+        yield return battleUnit(player.backLine, line);
+        yield return battleUnit(player.frontLine, line);
+        yield return HeroSpecialWait();
+        shildDequeue();
+        yield return null;
+    }
+
+    private void CheckUnitStatus(int line) {
+        CheckMonsterStatus(player.backLine.transform.GetChild(line));
+        CheckMonsterStatus(player.frontLine.transform.GetChild(line));
+        CheckMonsterStatus(enemyPlayer.backLine.transform.GetChild(line));
+        CheckMonsterStatus(enemyPlayer.frontLine.transform.GetChild(line));
+    }
+
+    private void CheckMonsterStatus(Transform monsterTransform) {
+        if(monsterTransform.childCount == 0) return;
+        
+        PlaceMonster monster = monsterTransform.GetChild(0).GetComponent<PlaceMonster>();
+        monster.CheckHP();
+        monster.CheckDebuff();
+    }
+
     IEnumerator battleUnit(GameObject lineObject, int line) {
         if(!isGame) yield break;
-        if(lineObject.transform.GetChild(line).childCount != 0) {
-            PlaceMonster placeMonster = lineObject.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>();
-                while(placeMonster.atkCount < placeMonster.maxAtkCount) {
-
-                if (placeMonster.unit.attackType.Length > 0 && placeMonster.unit.attackType[0] == "double" && placeMonster.atkCount > 0 && placeMonster.unit.currentHP <= 0)
-                    break;
-
-                if (placeMonster.unit.attack <= 0)
-                        break;
-                    placeMonster.GetTarget();
-                
-                
-                yield return new WaitForSeconds(1.1f + placeMonster.atkTime);
-                }
-            placeMonster.atkCount = 0;
-        }
-        yield return null;
+        if(lineObject.transform.GetChild(line).childCount == 0) yield break;
+        PlaceMonster placeMonster = lineObject.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>();
+        if(placeMonster.atkCount >= placeMonster.maxAtkCount) yield break;
+        if(placeMonster.unit.attack <= 0) yield break;
+        placeMonster.GetTarget();
+        yield return new WaitForSeconds(1.1f + placeMonster.atkTime);
     }
 
     IEnumerator WaitSocketData(SocketFormat.QueueSocketList<SocketFormat.GameState> queueList, int line, bool isBattle) {

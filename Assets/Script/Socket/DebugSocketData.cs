@@ -157,7 +157,7 @@ namespace SocketFormat {
                 }
                 PlaceMonster monData = mon.GetComponent<PlaceMonster>();
                 Pos pos = observer.GetMyPos(mon);
-                if(pos.row == line) continue;
+                if(pos.col == line) continue;
 
                 observer.UnitChangePosition(mon, line, 0);
             }
