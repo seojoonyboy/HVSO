@@ -62,22 +62,18 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         iTween.ScaleTo(gameObject, new Vector3(1, 1, 1), 0.3f);
         blockButton = PlayMangement.instance.player.dragCard = false;
         PlayMangement.instance.player.isPicking.Value = false;
-        if (!isDropable) {
-            highlighted = false;
-            CardDropManager.Instance.HighLightMagicSlot(highlightedSlot, highlighted);
-            highlightedSlot = null;
-        }
-        else {
-            if (CheckMagicSlot() != null && PlayMangement.instance.player.resource.Value >= cardData.cost) {
-                //var abilities = GetComponents<MagicalCasting>();
-                //foreach (MagicalCasting ability in abilities) ability.RequestUseMagic();
+        if (CheckMagicSlot() != null && PlayMangement.instance.player.resource.Value >= cardData.cost) {
+            //var abilities = GetComponents<MagicalCasting>();
+            //foreach (MagicalCasting ability in abilities) ability.RequestUseMagic();
 
-                object[] parms = new object[] { true, gameObject };
-                PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
-                PlayMangement.instance.player.resource.Value -= cardData.cost;
-                //if (GetComponents<Ability>() == null) UseCard();
-            }
+            object[] parms = new object[] { true, gameObject };
+            PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
+            PlayMangement.instance.player.resource.Value -= cardData.cost;
+            //if (GetComponents<Ability>() == null) UseCard();
         }
+        highlighted = false;
+        CardDropManager.Instance.HighLightMagicSlot(highlightedSlot, highlighted);
+        highlightedSlot = null;
         CardDropManager.Instance.HideMagicSlot();
         CardInfoOnDrag.instance.OffCardDragInfo();
     }
