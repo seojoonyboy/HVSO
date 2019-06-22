@@ -61,7 +61,7 @@ public partial class UnitDragHandler : CardHandler, IBeginDragHandler, IDragHand
             CardDropManager.Instance.HighLightSlot(highlightedSlot, highlighted);
             highlightedSlot = null;
         }
-        else {
+        else if(isMyTurn()) {
             GameObject unitPref = CardDropManager.Instance.DropUnit(gameObject, CheckSlot());
             if (unitPref != null) {
                 var cardData = GetComponent<CardHandler>().cardData;
