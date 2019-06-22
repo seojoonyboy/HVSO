@@ -461,13 +461,13 @@ namespace SkillModules {
                         observer = PlayMangement.instance.EnemyUnitsObserver;
                     }
 
-                    var units = observer.GetAllFieldUnits().ToList();
+                    var units = observer.GetAllFieldUnits();
 
                     //잠복중인 유닛은 타겟에서 제외
-                    foreach (GameObject unit in units) {
-                        var placeMonster = unit.GetComponent<PlaceMonster>();
+                    for(int i=0; i<units.Count; i++) {
+                        var placeMonster = units[i].GetComponent<PlaceMonster>();
                         if (placeMonster.GetComponent<ambush>() != null) {
-                            units.Remove(unit);
+                            units.Remove(units[i]);
                         }
                     }
 
