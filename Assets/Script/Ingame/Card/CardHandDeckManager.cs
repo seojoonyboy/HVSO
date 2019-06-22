@@ -330,6 +330,8 @@ public class CardHandDeckManager : MonoBehaviour {
 
     protected virtual IEnumerator SendCardToHand(GameObject card) {
         PlayMangement.movingCard = card;
+        CardHandler handler = card.GetComponent<CardHandler>();
+        handler.DisableCard();
         if (!firstDraw) {
             AddInfoToList(card);
             card.transform.rotation = new Quaternion(0, 0, 180, card.transform.rotation.w);
@@ -340,10 +342,7 @@ public class CardHandDeckManager : MonoBehaviour {
         
         iTween.MoveTo(card, iTween.Hash("x", card.transform.parent.position.x, "y", card.transform.parent.position.y, "time" ,0.5f, "easetype" , iTween.EaseType.easeWeakOutBack));
         iTween.ScaleTo(card, new Vector3(1.0f, 1.0f, 1.0f), 0.2f);
-        
         yield return new WaitForSeconds(0.5f);
-        CardHandler handler = card.GetComponent<CardHandler>();
-        handler.DisableCard();
         if (PlayMangement.instance.player.getPlayerTurn) {
             if (!PlayMangement.instance.player.isHuman && handler.cardData.type == "unit")
                 handler.DisableCard();
