@@ -125,6 +125,10 @@ public class CardHandDeckManager : MonoBehaviour {
     }
 
     public void AddCard(GameObject cardobj = null, SocketFormat.Card cardData = null) {
+        if (cardNum + 1 == 11) {
+            Logger.Log("Card Number Out Of Range!!");
+            return;
+        }
         GameObject card;
         PlayMangement.dragable = false;
         if (cardobj == null) {
@@ -151,10 +155,6 @@ public class CardHandDeckManager : MonoBehaviour {
             card = cardobj;
         card.SetActive(true);
         cardNum++;
-        if (cardNum == 11) {
-            Logger.Log("Card Number Out Of Range!!");
-            return;
-        }
         Transform target;
         if (firstDraw) {
             target = slot_1.GetChild(cardNum - 1);
