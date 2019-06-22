@@ -394,6 +394,10 @@ public partial class BattleConnector : MonoBehaviour {
 
         StartCoroutine(PlayMangement.instance.player.cdpm.AddMultipleCard(gameState.players.myPlayer(isHuman).deck.handCards));
     }
+
+    public IEnumerator WaitBattle() {
+        yield return new WaitUntil(() => gameState.state.CompareTo("orcPostTurn") != 0);
+    }
 }
 namespace SocketFormat {
     public class QueueSocketList<T> {

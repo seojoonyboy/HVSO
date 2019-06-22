@@ -352,6 +352,7 @@ public partial class PlayMangement : MonoBehaviour {
 
     public IEnumerator WaitSecond() {
         yield return new WaitForSeconds(1f);
+        yield return socketHandler.WaitBattle();
         //Logger.Log("Triggering EndTurn");
         CustomEvent.Trigger(gameObject, "EndTurn");
     }
