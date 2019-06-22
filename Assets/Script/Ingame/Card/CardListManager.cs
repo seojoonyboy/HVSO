@@ -69,6 +69,7 @@ public class CardListManager : MonoBehaviour
         newcard.transform.SetParent(transform.Find("FieldUnitInfo"));
         SetCardInfo(newcard, data);
         newcard.transform.Find("Info/UnitImage").GetChild(0).gameObject.SetActive(false);
+        newcard.SetActive(false);
     }
 
 
