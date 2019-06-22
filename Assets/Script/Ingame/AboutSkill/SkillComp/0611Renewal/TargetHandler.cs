@@ -461,7 +461,7 @@ namespace SkillModules {
                         observer = PlayMangement.instance.EnemyUnitsObserver;
                     }
 
-                    var units = observer.GetAllFieldUnits();
+                    var units = observer.GetAllFieldUnits().ToList();
 
                     //잠복중인 유닛은 타겟에서 제외
                     foreach (GameObject unit in units) {
