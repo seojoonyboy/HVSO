@@ -124,6 +124,7 @@ namespace SkillModules {
         private void SkillActivate() {
             BattleConnector connector = PlayMangement.instance.socketHandler;
             MessageFormat format = MessageForm(false);
+            if(format.targets.Count() == 0) return;
             connector.UnitSkillActivate(format);
         }
 

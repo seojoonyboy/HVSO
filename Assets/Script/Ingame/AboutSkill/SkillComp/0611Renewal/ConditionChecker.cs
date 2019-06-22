@@ -137,7 +137,7 @@ namespace SkillModules {
             playedObject.IsValidateData(mySkillHandler.targetData);
             PlaceMonster playedMonster = playedObject.targetObject.GetComponent<PlaceMonster>();
             if(playedMonster == null) return false;
-            bool isExist = playedMonster.unit.cardCategories.ToList().Exists(x => x != null && x.CompareTo(args[0]) == 0);
+            bool isExist = playedMonster.unit.cardCategories.ToList().Exists(x => !string.IsNullOrEmpty(x) && x.CompareTo(args[0]) == 0);
             return isExist;
         }
     }
