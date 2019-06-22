@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI.Extensions;
 using System;
 using SkillModules;
+using Bolt;
 
 public partial class CardHandler : MonoBehaviour {
     public GameObject unit;
@@ -270,6 +271,16 @@ public partial class CardHandler : MonoBehaviour {
 
     public void UserResource(int cost) {
         PlayMangement.instance.player.resource.Value -= cost;
+    }
+
+    protected bool isMyTurn() {
+        bool isHuman = PlayMangement.instance.player.isHuman;
+        string currentTurn = Variables.Scene(
+                UnityEngine.SceneManagement.SceneManager.GetActiveScene()
+            ).Get("CurrentTurn").ToString();
+        bool isHumanTurn = currentTurn.CompareTo("PLANT")==0;
+        bool isOrcTurn = currentTurn.CompareTo("ZOMBIE")==0 || currentTurn.CompareTo("SECRET")==0;
+        return isHuman ? isHumanTurn : isOrcTurn;
     }
 }
 
