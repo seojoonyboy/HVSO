@@ -52,7 +52,36 @@ namespace SkillModules {
         private void Trigger (Enum Event_Type, Component Sender, object Param = null) {
             targetData = Param;
             IngameEventHandler.EVENT_TYPE triggerType = (IngameEventHandler.EVENT_TYPE) Event_Type;
+            if(triggerType == IngameEventHandler.EVENT_TYPE.BEGIN_ORC_POST_TURN) {
+                AddOrcPostTurnUnit(triggerType, Param);
+                return;
+            }
             PlayMangement.instance.StartCoroutine (SkillTrigger (triggerType, Param));
+        }
+
+        static bool running = false;
+        static List<SkillHandler> orcList;
+
+        private void AddOrcPostTurnUnit(IngameEventHandler.EVENT_TYPE triggerType, object Param) {
+            if(orcList == null) orcList = new List<SkillHandler>();
+            orcList.Add(this);
+            PlayMangement.instance.StartCoroutine(OrcPostTurnTrigger(triggerType, Param));
+        }
+
+        private IEnumerator OrcPostTurnTrigger(IngameEventHandler.EVENT_TYPE triggerType, object Param) {
+            if(running) yield break;
+            running = true;
+            yield return new WaitForSeconds(1f);
+            orcList.Sort(compare);
+            foreach(SkillHandler x in orcList)
+                yield return x.SkillTrigger(triggerType, Param);
+            running = false;
+        }
+
+        private int compare(SkillHandler x, SkillHandler y) {
+            int X = x.myObject.GetComponent<PlaceMonster>().x;
+            int Y = y.myObject.GetComponent<PlaceMonster>().x;
+            return X.CompareTo(Y);
         }
 
         private void SummonNonEndCardTriggerMonster() {
