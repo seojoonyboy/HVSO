@@ -147,7 +147,9 @@ public class PlaceMonster : MonoBehaviour {
         }
 
         if ((GetComponent<SkillModules.poison>() != null) && (myTarget != null)) {
-            myTarget.AddComponent<SkillModules.poisonned>();
+            if(myTarget.GetComponent<PlaceMonster>() != null) {
+                myTarget.AddComponent<SkillModules.poisonned>();
+            }
         }
 
         MoveToTarget();
