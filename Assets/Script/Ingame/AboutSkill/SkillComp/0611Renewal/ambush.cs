@@ -19,12 +19,12 @@ public class ambush : MonoBehaviour {
     }
 
     private void OnOrcPostTurn(Enum Event_Type, Component Sender, object Param) {
-        Debug.Log("잠복 해제");
+        //Debug.Log("잠복 해제");
 
-        if (debugManagement != null)
-            GetComponent<DebugUnit>().unitSpine.DetectUnit();
-        else
-            GetComponent<PlaceMonster>().unitSpine.DetectUnit();
+        //if (debugManagement != null)
+        //    GetComponent<DebugUnit>().unitSpine.DetectUnit();
+        //else
+        GetComponent<PlaceMonster>().unitSpine.DetectUnit();
         Destroy(GetComponent<ambush>());
     }
 
