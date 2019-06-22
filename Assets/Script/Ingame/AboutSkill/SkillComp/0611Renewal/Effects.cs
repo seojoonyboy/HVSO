@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace SkillModules {
     public partial class Ability {
@@ -338,17 +340,38 @@ namespace SkillModules {
             skillHandler.isDone = true;
         }
 
-        private void ReturnUnit(bool isPlayer) {
+        private async void ReturnUnit(bool isPlayer) {
+            while(true) {
+                await Task.Delay(20);
+                SocketFormat.GameState state = PlayMangement.instance.socketHandler.gameState;
+                if(state.lastUse == null) continue;
+                if(state.lastUse.cardItem.skills.ToList().Exists(x => x.effect.method.CompareTo("r_return")==0))
+                    break;
+            }
+
             if (IsEnemyExist(isPlayer)) {
                 var units = enemyObserver.GetAllFieldUnits();
+                SocketFormat.GameState state = PlayMangement.instance.socketHandler.gameState;
+                PlayMangement playMangement = PlayMangement.instance;
+                List<SocketFormat.Unit> socketList = state.map.allMonster;
 
-                var selectedUnit = SelectRandomItem(units);
-
-                var selectedUnitPos = enemyObserver.GetMyPos(selectedUnit);
-                UnityEngine.Object.Destroy(selectedUnit);
-                enemyObserver.UnitRemoved(selectedUnitPos.col, selectedUnitPos.row);
-                
-                MakeEnemyUnitToCard();
+                foreach(GameObject selectedUnit in units) {
+                    bool found = false;
+                    PlaceMonster mondata = selectedUnit.GetComponent<PlaceMonster>();
+                    foreach(SocketFormat.Unit unit in socketList) {
+                        if(unit.itemId.CompareTo(mondata.itemId) == 0) {
+                            found = true;
+                            break;
+                        }
+                    }
+                    if(!found) {
+                        var selectedUnitPos = enemyObserver.GetMyPos(selectedUnit);
+                        UnityEngine.Object.Destroy(selectedUnit);
+                        enemyObserver.UnitRemoved(selectedUnitPos.col, selectedUnitPos.row);
+                        
+                        MakeEnemyUnitToCard();
+                    }
+                }
             }
             else {
                 Logger.Log("r_return 에서 적을 찾지 못했습니다.");
@@ -365,14 +388,6 @@ namespace SkillModules {
             }
             var selectedUnits = observer.GetAllFieldUnits();
             return selectedUnits.Count != 0;
-        }
-
-        private GameObject SelectRandomItem(List<GameObject> pool) {
-            System.Random random = new System.Random();
-            int index = random.Next(pool.Count);
-            var selectedUnit = pool[index];
-
-            return selectedUnit;
         }
 
         private void MakeEnemyUnitToCard() {
