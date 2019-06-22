@@ -385,12 +385,6 @@ namespace SkillModules {
 
                             //잠복중인 유닛은 타겟에서 제외
                             var units = PlayMangement.instance.PlayerUnitsObserver.GetAllFieldUnits();
-                            foreach(GameObject unit in units) {
-                                var placeMonster = unit.GetComponent<PlaceMonster>();
-                                if (placeMonster.GetComponent<ambush>() != null) {
-                                    units.Remove(unit);
-                                }
-                            }
 
                             foreach (GameObject unit in units) {
                                 var ui = unit.transform.Find("ClickableUI").gameObject;
@@ -410,14 +404,6 @@ namespace SkillModules {
                         if (CanSelect(args[1])) {
                             PlayMangement.instance.OnBlockPanel("대상을 지정해 주세요.");
                             var units = PlayMangement.instance.EnemyUnitsObserver.GetAllFieldUnits();
-
-                            //잠복중인 유닛은 타겟에서 제외
-                            foreach (GameObject unit in units) {
-                                var placeMonster = unit.GetComponent<PlaceMonster>();
-                                if (placeMonster.GetComponent<ambush>() != null) {
-                                    units.Remove(unit);
-                                }
-                            }
 
                             foreach (GameObject unit in units) {
                                 var ui = unit.transform.Find("ClickableUI").gameObject;
@@ -474,7 +460,18 @@ namespace SkillModules {
                     if(args[0] == "enemy") {
                         observer = PlayMangement.instance.EnemyUnitsObserver;
                     }
-                    if ((observer.GetAllFieldUnits()).Count != 0) {
+
+                    var units = observer.GetAllFieldUnits();
+
+                    //잠복중인 유닛은 타겟에서 제외
+                    foreach (GameObject unit in units) {
+                        var placeMonster = unit.GetComponent<PlaceMonster>();
+                        if (placeMonster.GetComponent<ambush>() != null) {
+                            units.Remove(unit);
+                        }
+                    }
+
+                    if (units.Count != 0) {
                         Logger.Log(observer.GetAllFieldUnits().Count + "개의 적이 감지됨");
                         result = true;
                     }
