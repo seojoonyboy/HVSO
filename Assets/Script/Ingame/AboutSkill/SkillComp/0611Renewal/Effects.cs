@@ -158,6 +158,7 @@ namespace SkillModules {
                 GameObject target = (GameObject)data;
                 if(target.GetComponent<stun>() == null) {
                     target.GetComponent<PlaceMonster>().Invoke("InstanceAttack", 0.5f);
+                    target.GetComponent<PlaceMonster>().Invoke("CheckHP", 2.0f);
                 }
                 else {
                     Logger.Log("Stun이 걸려있어 공격을 할 수 없습니다!");

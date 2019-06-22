@@ -71,10 +71,11 @@ public partial class BattleConnector : MonoBehaviour {
 
     //Receive Socket Message
     private void ReceiveMessage(WebSocket webSocket, string message) {
-        Logger.Log(message);
+        //Logger.Log(message);
         OnReceiveSocketMessage.Invoke();
         ReceiveFormat result = dataModules.JsonReader.Read<ReceiveFormat>(message);
         queue.Enqueue(result);
+        Logger.Log(string.Format("메소드 : {0}, args : {1}", result.method, result.args));
     }
 
     public void ClientReady() {
@@ -126,6 +127,7 @@ public partial class BattleConnector : MonoBehaviour {
         SendFormat format = new SendFormat(method, args);
         string json = JsonConvert.SerializeObject(format);
         webSocket.Send(json);
+        Logger.Log(string.Format("보내는 메시지 : {0}", json));
     }
 
     private string[] ConvertObjectArrayToStringArray(object[] objs) {
@@ -245,6 +247,7 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void skill_activate(object args) {
+        Logger.Log("유닛 스킬 발동 " + args);
         //item Id가 args에 있음
         //Logger.Log("WebSocket State : unit_skill_activate");
         //적이 skill_activate 할 경우?
