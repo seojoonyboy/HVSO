@@ -359,7 +359,7 @@ public partial class CardDropManager {
             case "unit":
                 for (int i = 0; i < 5; i++) {
                     for (int j = 0; j < 2; j++) {
-                        if (units[i][j].childCount > 0) {
+                        if (units[i][j].childCount > 0 && units[i][j].GetComponent<ambush>() == null) {
                             units[i][j].GetChild(0).Find("ClickableUI").gameObject.SetActive(true);
                             units[i][j].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(true);
                         }
