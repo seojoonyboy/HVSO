@@ -359,7 +359,7 @@ public partial class CardDropManager {
             case "unit":
                 for (int i = 0; i < 5; i++) {
                     for (int j = 0; j < 2; j++) {
-                        if (units[i][j].childCount > 0 && units[i][j].GetComponent<ambush>() == null) {
+                        if (units[i][j].childCount > 0 && units[i][j].GetChild(0).GetComponent<ambush>() == null) {
                             units[i][j].GetChild(0).Find("ClickableUI").gameObject.SetActive(true);
                             units[i][j].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(true);
                         }
@@ -368,8 +368,13 @@ public partial class CardDropManager {
                 break;
             case "line":
                 for (int i = 0; i < 5; i++) {
-                    if (units[i][0].childCount > 0 || units[i][1].childCount > 0)
+                    if (units[i][0].childCount > 0) {
+                        if(units[i][0].GetChild(0).GetComponent<ambush>() == null)
+                            slotLine[i].Find("BattleLineEffect").gameObject.SetActive(true);
+                    }
+                    if (units[i][1].childCount > 0) {
                         slotLine[i].Find("BattleLineEffect").gameObject.SetActive(true);
+                    }
                 }
                 break;
             default:
