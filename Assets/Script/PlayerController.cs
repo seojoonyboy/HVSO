@@ -279,7 +279,7 @@ public class PlayerController : MonoBehaviour
                     if(cardSlot_1.GetChild(i).childCount != 0)
                         cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().ActivateCard();
                     else
-                        PlayMangement.instance.cardDragCanvas.GetChild(4).GetComponent<CardHandler>().ActivateCard();
+                        PlayMangement.instance.cardDragCanvas.GetChild(5).GetComponent<CardHandler>().ActivateCard();
                 }
             }
             for (int i = 0; i < cardSlot_2.childCount; i++) {
@@ -287,7 +287,7 @@ public class PlayerController : MonoBehaviour
                     if (cardSlot_2.GetChild(i).childCount != 0)
                         cardSlot_2.GetChild(i).GetChild(0).GetComponent<CardHandler>().ActivateCard();
                     else
-                        PlayMangement.instance.cardDragCanvas.GetChild(4).GetComponent<CardHandler>().ActivateCard();
+                        PlayMangement.instance.cardDragCanvas.GetChild(5).GetComponent<CardHandler>().ActivateCard();
                 }
             }
         }
@@ -313,8 +313,8 @@ public class PlayerController : MonoBehaviour
                             cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().ActivateCard();
                     }
                     else {
-                        if (PlayMangement.instance.cardDragCanvas.GetChild(4).GetComponent<CardHandler>().cardData.type == "unit")
-                            PlayMangement.instance.cardDragCanvas.GetChild(4).GetComponent<CardHandler>().ActivateCard();
+                        if (PlayMangement.instance.cardDragCanvas.GetChild(5).GetComponent<CardHandler>().cardData.type == "unit")
+                            PlayMangement.instance.cardDragCanvas.GetChild(5).GetComponent<CardHandler>().ActivateCard();
                     }
                 }
 
@@ -326,8 +326,8 @@ public class PlayerController : MonoBehaviour
                             cardSlot_2.GetChild(i).GetChild(0).GetComponent<CardHandler>().ActivateCard();
                     }
                     else {
-                        if (PlayMangement.instance.cardDragCanvas.GetChild(4).GetComponent<CardHandler>().cardData.type == "unit")
-                            PlayMangement.instance.cardDragCanvas.GetChild(4).GetComponent<CardHandler>().ActivateCard();
+                        if (PlayMangement.instance.cardDragCanvas.GetChild(5).GetComponent<CardHandler>().cardData.type == "unit")
+                            PlayMangement.instance.cardDragCanvas.GetChild(5).GetComponent<CardHandler>().ActivateCard();
                     }
                 }
             }
@@ -342,8 +342,8 @@ public class PlayerController : MonoBehaviour
                             cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().ActivateCard();
                     }
                     else {
-                        if (PlayMangement.instance.cardDragCanvas.GetChild(4).GetComponent<CardHandler>().cardData.type == "magic")
-                            PlayMangement.instance.cardDragCanvas.GetChild(4).GetComponent<CardHandler>().ActivateCard();
+                        if (PlayMangement.instance.cardDragCanvas.GetChild(5).GetComponent<CardHandler>().cardData.type == "magic")
+                            PlayMangement.instance.cardDragCanvas.GetChild(5).GetComponent<CardHandler>().ActivateCard();
                     }
                 }
             }
@@ -354,8 +354,8 @@ public class PlayerController : MonoBehaviour
                             cardSlot_2.GetChild(i).GetChild(0).GetComponent<CardHandler>().ActivateCard();
                     }
                     else {
-                        if (PlayMangement.instance.cardDragCanvas.GetChild(4).GetComponent<CardHandler>().cardData.type == "magic")
-                            PlayMangement.instance.cardDragCanvas.GetChild(4).GetComponent<CardHandler>().ActivateCard();
+                        if (PlayMangement.instance.cardDragCanvas.GetChild(5).GetComponent<CardHandler>().cardData.type == "magic")
+                            PlayMangement.instance.cardDragCanvas.GetChild(5).GetComponent<CardHandler>().ActivateCard();
                     }
                 }
             }
@@ -372,12 +372,20 @@ public class PlayerController : MonoBehaviour
             Transform cardSlot_1 = playerUI.transform.Find("CardHand").GetChild(0);
             Transform cardSlot_2 = playerUI.transform.Find("CardHand").GetChild(1);
             for (int i = 0; i < cardSlot_1.childCount; i++) {
-                if(cardSlot_1.GetChild(i).gameObject.activeSelf)
-                    cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().DisableCard();
+                if (cardSlot_1.GetChild(i).gameObject.activeSelf) {
+                    if (cardSlot_1.GetChild(i).childCount != 0)
+                        cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().DisableCard();
+                    else
+                        PlayMangement.instance.cardDragCanvas.GetChild(5).GetComponent<CardHandler>().DisableCard();
+                }
             }
             for (int i = 0; i < cardSlot_2.childCount; i++) {
-                if (cardSlot_2.GetChild(i).gameObject.activeSelf)
-                    cardSlot_2.GetChild(i).GetChild(0).GetComponent<CardHandler>().DisableCard();
+                if (cardSlot_2.GetChild(i).gameObject.activeSelf) {
+                    if (cardSlot_2.GetChild(i).childCount != 0)
+                        cardSlot_2.GetChild(i).GetChild(0).GetComponent<CardHandler>().DisableCard();
+                    else
+                        PlayMangement.instance.cardDragCanvas.GetChild(5).GetComponent<CardHandler>().DisableCard();
+                }
             }
         }
         if (isPlayer)
