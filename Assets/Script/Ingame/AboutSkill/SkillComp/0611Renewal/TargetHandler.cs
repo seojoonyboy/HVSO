@@ -441,7 +441,7 @@ namespace SkillModules {
                                 //숲 지형인 경우
                                 if (observer.transform.GetChild(0).GetChild(i).GetComponent<Terrain>().terrain == PlayMangement.LineState.forest) {
                                     //유닛이 숲 지형에 갈 수 있는 경우
-                                    if (!placeMonster.unit.attributes.ToList().Contains("footslog")) {
+                                    if (placeMonster.unit.attributes.ToList().Contains("footslog")) {
                                         result = true;
                                     }
                                 }
