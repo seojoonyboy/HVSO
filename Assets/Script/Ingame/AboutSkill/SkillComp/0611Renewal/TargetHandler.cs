@@ -382,7 +382,15 @@ namespace SkillModules {
                         if (CanSelect(args[1])) {
                             PlayMangement.instance.OnBlockPanel("대상을 지정해 주세요.");
                             callback = successCallback;
+
+                            //잠복중인 유닛은 타겟에서 제외
                             var units = PlayMangement.instance.PlayerUnitsObserver.GetAllFieldUnits();
+                            foreach(GameObject unit in units) {
+                                var placeMonster = unit.GetComponent<PlaceMonster>();
+                                if (placeMonster.unit.attributes.ToList().Contains("ambush")) {
+                                    units.Remove(unit);
+                                }
+                            }
 
                             foreach (GameObject unit in units) {
                                 var ui = unit.transform.Find("ClickableUI").gameObject;
