@@ -402,7 +402,6 @@ public partial class PlayMangement : MonoBehaviour {
             yield return WaitSocketData(socketHandler.mapClearList, line, false);
         }
         ResetCount(line);
-        yield return new WaitForSeconds(0.2f);
         lineEffect.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.608f);
         lineEffect.gameObject.SetActive(false);
         EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.LINE_BATTLE_FINISHED, this);

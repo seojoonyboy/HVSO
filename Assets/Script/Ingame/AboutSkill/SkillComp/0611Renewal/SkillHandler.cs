@@ -196,7 +196,7 @@ namespace SkillModules {
                     args.Add(isOrc ? "orc" : "human");
                 break;
                 case "place":
-                    int line = selectList[0].transform.parent.GetSiblingIndex();
+                    int line = selectList[0].transform.GetSiblingIndex();
                     args.Add(line.ToString());
                     if(isEndCardPlay)
                         isOrc = skillTarget.GetComponent<PlaceMonster>().isPlayer != isPlayerHuman;
