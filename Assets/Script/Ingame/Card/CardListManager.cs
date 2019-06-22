@@ -138,23 +138,31 @@ public class CardListManager : MonoBehaviour
             info.Find("Name").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites[data.rarelity + "_ribon"];
             info.Find("UnitDialogue").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites[data.rarelity + "_flag"];
         }
-        if (data.hp != null)
+        if (data.hp != null) {
             info.Find("HP/HpText").GetComponent<Text>().text = data.hp.ToString();
+            info.Find("HP").gameObject.SetActive(true);
+        }
         else
             info.Find("HP").gameObject.SetActive(false);
 
-        if (data.attack != null)
+        if (data.attack != null) {
             info.Find("Attack/AttackText").GetComponent<Text>().text = data.attack.ToString();
+            info.Find("Attack").gameObject.SetActive(true);
+        }
         else
             info.Find("Attack").gameObject.SetActive(false);
 
-        if (data.category_1 != null)
+        if (data.category_1 != null) {
             info.Find("Category_1").GetComponent<Text>().text = data.category_1.ToString();
+            info.Find("Category_1").gameObject.SetActive(true);
+        }
         else
             info.Find("Category_1").gameObject.SetActive(false);
 
-        if (data.category_2 != null)
+        if (data.category_2 != null) {
             info.Find("Category_2").GetComponent<Text>().text = data.category_2.ToString();
+            info.Find("Category_2").gameObject.SetActive(false);
+        }
         else
             info.Find("Category_2").gameObject.SetActive(false);
 
@@ -168,9 +176,11 @@ public class CardListManager : MonoBehaviour
             obj.transform.GetChild(2).GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[data.class_2];
             obj.transform.GetChild(2).name = data.class_2;
         }
-        if(data.skills.Length != 0) {
+        if (data.skills.Length != 0) {
             info.Find("SkillInfo").GetComponent<Text>().text = data.skills[0].desc;
         }
+        else
+            info.Find("SkillInfo").GetComponent<Text>().text = null;
         obj.SetActive(true);
     }
 
