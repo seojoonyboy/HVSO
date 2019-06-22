@@ -76,6 +76,7 @@ namespace SkillModules {
             foreach(SkillHandler x in orcList)
                 yield return x.SkillTrigger(triggerType, Param);
             running = false;
+            orcList = null;
         }
 
         private int compare(SkillHandler x, SkillHandler y) {
