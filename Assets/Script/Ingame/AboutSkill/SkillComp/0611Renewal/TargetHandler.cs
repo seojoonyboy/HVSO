@@ -335,6 +335,8 @@ namespace SkillModules {
                             .Find("ClickableUI")
                             .gameObject
                             .SetActive(false);
+
+                        unit.transform.Find("MagicTargetTrigger").gameObject.SetActive(false);
                     }
                     units = PlayMangement.instance.PlayerUnitsObserver.GetAllFieldUnits();
                     foreach (GameObject unit in units) {
@@ -343,6 +345,8 @@ namespace SkillModules {
                             .Find("ClickableUI")
                             .gameObject
                             .SetActive(false);
+
+                        unit.transform.Find("MagicTargetTrigger").gameObject.SetActive(false);
                     }
                 }
             }
@@ -392,6 +396,7 @@ namespace SkillModules {
                                     ui.SetActive(true);
                                     PlayMangement.instance.infoOn = true;
                                 }
+                                unit.transform.Find("MagicTargetTrigger").gameObject.SetActive(true);
                             }
                         }
                         else {
@@ -420,6 +425,7 @@ namespace SkillModules {
                                     ui.SetActive(true);
                                     PlayMangement.instance.infoOn = true;
                                 }
+                                unit.transform.Find("MagicTargetTrigger").gameObject.SetActive(true);
                             }
 
                             callback = successCallback;
