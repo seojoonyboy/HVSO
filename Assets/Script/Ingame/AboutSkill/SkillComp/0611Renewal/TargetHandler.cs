@@ -449,8 +449,23 @@ namespace SkillModules {
                         //빈 공간인 경우
                         if(observer.units[i, 0] == null) {
                             var placeMonster = skillHandler.myObject.GetComponent<PlaceMonster>();
+                            //유닛카드인 경우
                             if (placeMonster != null) {
                                 //숲 지형인 경우
+                                if (observer.transform.GetChild(0).GetChild(i).GetComponent<Terrain>().terrain == PlayMangement.LineState.forest) {
+                                    //유닛이 숲 지형에 갈 수 있는 경우
+                                    if (placeMonster.unit.attributes.ToList().Contains("footslog")) {
+                                        result = true;
+                                    }
+                                }
+                                //숲 지형이 아닌 경우
+                                else {
+                                    result = true;
+                                }
+                            }
+                            //마법카드인 경우
+                            else {
+                                placeMonster = skillHandler.skillTarget.GetComponent<PlaceMonster>();
                                 if (observer.transform.GetChild(0).GetChild(i).GetComponent<Terrain>().terrain == PlayMangement.LineState.forest) {
                                     //유닛이 숲 지형에 갈 수 있는 경우
                                     if (placeMonster.unit.attributes.ToList().Contains("footslog")) {
