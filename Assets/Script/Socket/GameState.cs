@@ -11,7 +11,7 @@ namespace SocketFormat {
         public int turnCount;
         public PlayHistory[] playHistory;
 
-        public PlayHistory lastUse { get { return playHistory[0]; }}
+        public PlayHistory lastUse { get { return playHistory.Length == 0 ? null : playHistory[0]; }}
     }
 
     public class Map {
