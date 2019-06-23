@@ -273,14 +273,14 @@ public partial class CardHandler : MonoBehaviour {
         PlayMangement.instance.player.resource.Value -= cost;
     }
 
-    protected bool isMyTurn() {
+    protected bool isMyTurn(bool isMagic) {
         bool isHuman = PlayMangement.instance.player.isHuman;
         string currentTurn = Variables.Scene(
                 UnityEngine.SceneManagement.SceneManager.GetActiveScene()
             ).Get("CurrentTurn").ToString();
         bool isHumanTurn = currentTurn.CompareTo("PLANT")==0;
-        bool isOrcTurn = currentTurn.CompareTo("ZOMBIE")==0 || currentTurn.CompareTo("SECRET")==0;
-        return isHuman ? isHumanTurn : isOrcTurn;
+        bool isOrcPreTurn = currentTurn.CompareTo("ZOMBIE")==0;
+        bool isOrcMagicTurn = currentTurn.CompareTo("SECRET")==0;
+        return isHuman ? isHumanTurn : isMagic ? isOrcMagicTurn : isOrcPreTurn;
     }
 }
-

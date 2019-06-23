@@ -62,7 +62,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         iTween.ScaleTo(gameObject, new Vector3(1, 1, 1), 0.3f);
         blockButton = PlayMangement.instance.player.dragCard = false;
         PlayMangement.instance.player.isPicking.Value = false;
-        if (CheckMagicSlot() != null && PlayMangement.instance.player.resource.Value >= cardData.cost && isMyTurn()) {
+        if (CheckMagicSlot() != null && PlayMangement.instance.player.resource.Value >= cardData.cost && isMyTurn(true)) {
             //var abilities = GetComponents<MagicalCasting>();
             //foreach (MagicalCasting ability in abilities) ability.RequestUseMagic();
             PlayMangement.instance.player.resource.Value -= cardData.cost;
