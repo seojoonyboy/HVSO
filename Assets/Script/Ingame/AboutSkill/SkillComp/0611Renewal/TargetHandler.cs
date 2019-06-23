@@ -80,7 +80,7 @@ namespace SkillModules {
         }
 
         protected Transform GetClickedAreaUnit(string layer) {
-            layer = "ClickableUnit";
+            layer = "MagicTarget";
 
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             LayerMask mask = (1 << LayerMask.NameToLayer(layer));
