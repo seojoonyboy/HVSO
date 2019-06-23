@@ -404,7 +404,7 @@ public class PlaceMonster : MonoBehaviour {
             UnitDead();
         }
 
-        if(GetComponent<SkillModules.poisonned>() != null) {
+        else if(GetComponent<SkillModules.poisonned>() != null) {
             UnitDead();
         }
     }
