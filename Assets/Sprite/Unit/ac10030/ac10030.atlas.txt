@@ -1,0 +1,41 @@
+
+ac10030.png
+size: 256,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+fire
+  rotate: false
+  xy: 0, 62
+  size: 103, 179
+  orig: 103, 179
+  offset: 0, 0
+  index: -1
+object_back
+  rotate: true
+  xy: 214, 2
+  size: 147, 42
+  orig: 147, 42
+  offset: 0, 0
+  index: -1
+object_front
+  rotate: false
+  xy: 103, 149
+  size: 151, 92
+  orig: 151, 92
+  offset: 0, 0
+  index: -1
+shadow
+  rotate: false
+  xy: 0, 0
+  size: 164, 54
+  orig: 164, 54
+  offset: 0, 0
+  index: -1
+stone
+  rotate: true
+  xy: 103, 54
+  size: 95, 111
+  orig: 95, 111
+  offset: 0, 0
+  index: -1
