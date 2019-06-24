@@ -63,7 +63,10 @@ namespace SkillModules {
         static List<SkillHandler> orcList;
 
         private void AddOrcPostTurnUnit(IngameEventHandler.EVENT_TYPE triggerType, object Param) {
-            if(orcList == null) orcList = new List<SkillHandler>();
+            if(orcList == null) {
+                orcList = new List<SkillHandler>();
+                PlayMangement.instance.OnBlockPanel(null);
+            }
             orcList.Add(this);
             PlayMangement.instance.StartCoroutine(OrcPostTurnTrigger(triggerType, Param));
         }
@@ -99,6 +102,7 @@ namespace SkillModules {
                 isDone = false;
                 bool active = skill.Trigger (triggerType, parms);
                 if (active && !isDone) yield return new WaitUntil (() => isDone);
+                PlayMangement.instance.OffBlockPanel();
             }
             //유닛 소환이나 마법 카드 사용 했을 때
             if(isPlayingCard()) SendSocket();
