@@ -1,5 +1,5 @@
 
-ac10008.png
+ac10040.png
 size: 1024,256
 format: RGBA8888
 filter: Linear,Linear
