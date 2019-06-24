@@ -281,6 +281,68 @@ namespace SkillModules {
         }
     }
 
+    public class exclusive_played_target : TargetHandler {
+        public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback) {
+            base.SelectTarget(successCallback, failedCallback);
+
+
+            if (args == null) failedCallback("Args 가 존재가지 않습니다.");
+
+            var targets = GetTarget(skillHandler.isPlayer, args);
+            SetTarget(targets);
+            successCallback(targets);
+        }
+
+        /// <summary></summary>
+        /// <param name="target">내가 카드를 드롭하면서 지목한 대상</param>
+        public override void SetTarget(object target) {
+            targets.AddRange((List<GameObject>)target);
+        }
+
+        private List<GameObject> GetTarget(bool isPlayer, string[] args) {
+            FieldUnitsObserver playerObserver, enemyObserver;
+            var playManagement = PlayMangement.instance;
+            if (isPlayer) {
+                playerObserver = playManagement.PlayerUnitsObserver;
+                enemyObserver = playManagement.EnemyUnitsObserver;
+            }
+            else {
+                playerObserver = playManagement.EnemyUnitsObserver;
+                enemyObserver = playManagement.PlayerUnitsObserver;
+            }
+
+            List<GameObject> result = new List<GameObject>();
+            if (args.Length != 2) {
+                Logger.LogError("Args가 잘못 전달되었습니다.");
+                return result;
+            }
+
+            switch (args[0]) {
+                case "my":
+                    if (args[1] == "all") {
+                        var targets = playerObserver.GetAllFieldUnits();
+                        foreach (GameObject target in targets) {
+                            if (target != GetDropAreaUnit().gameObject) {
+                                result.Add(target);
+                            }
+                        }
+                    }
+                    break;
+                case "enemy":
+                    if (args[1] == "all") {
+                        var targets = enemyObserver.GetAllFieldUnits();
+                        foreach (GameObject target in targets) {
+                            if(target != GetDropAreaUnit().gameObject) {
+                                result.Add(target);
+                            }
+                        }
+                    }
+                    break;
+            }
+            return result;
+        }
+    }
+
     public class select : TargetHandler {
         SelectTargetFinished callback;
 
