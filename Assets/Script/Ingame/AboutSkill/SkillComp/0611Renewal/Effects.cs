@@ -401,8 +401,8 @@ namespace SkillModules {
         }
     }
 
-    public class over_a_kill : Ability {
-        public over_a_kill() : base() { }
+    public class kill : Ability {
+        public kill() : base() { }
 
         public override void Execute(object data) {
             FieldUnitsObserver observer;
@@ -422,7 +422,7 @@ namespace SkillModules {
                 RemoveUnit(ref target);
             }
             else {
-                ShowFormatErrorLog("over_a_kill");
+                ShowFormatErrorLog("kill");
             }
             skillHandler.isDone = true;
         }

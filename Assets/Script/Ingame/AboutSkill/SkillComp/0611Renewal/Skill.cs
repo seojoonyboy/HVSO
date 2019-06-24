@@ -199,7 +199,7 @@ namespace SkillModules {
                 bool isPlayer = mySkillHandler.isPlayer;
                 result = new object[] { isPlayer };
             }
-            else if(ability.GetType() == typeof(over_a_kill)) {
+            else if(ability.GetType() == typeof(kill)) {
                 bool isPlayer = mySkillHandler.isPlayer;
                 result = new object[] { targets[0], isPlayer };
             }
