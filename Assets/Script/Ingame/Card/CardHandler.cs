@@ -278,8 +278,8 @@ public partial class CardHandler : MonoBehaviour {
         string currentTurn = Variables.Scene(
                 UnityEngine.SceneManagement.SceneManager.GetActiveScene()
             ).Get("CurrentTurn").ToString();
-        bool isHumanTurn = currentTurn.CompareTo("PLANT")==0;
-        bool isOrcPreTurn = currentTurn.CompareTo("ZOMBIE")==0;
+        bool isHumanTurn = currentTurn.CompareTo("HUMAN")==0;
+        bool isOrcPreTurn = currentTurn.CompareTo("ORC")==0;
         bool isOrcMagicTurn = currentTurn.CompareTo("SECRET")==0;
         return isHuman ? isHumanTurn : isMagic ? isOrcMagicTurn : isOrcPreTurn;
     }

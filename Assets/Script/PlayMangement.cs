@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public partial class PlayMangement : MonoBehaviour {
     public PlayerController player, enemyPlayer;
-    public Sprite plantResourceIcon, zombieResourceIcon;
+    public Sprite humanResourceIcon, orcResourceIcon;
 
     public GameObject cardDB;
     public GameObject uiSlot;
@@ -296,7 +296,7 @@ public partial class PlayMangement : MonoBehaviour {
             ).Get("CurrentTurn").ToString();
         Logger.Log(currentTurn);
         switch (currentTurn) {
-            case "ZOMBIE":
+            case "ORC":
                 if(player.isHuman == false) {
                     player.ActiveOrcTurn();
                     enemyPlayer.DisablePlayer();
@@ -309,7 +309,7 @@ public partial class PlayMangement : MonoBehaviour {
                 EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_ORC_PRE_TURN, this, null);
                 break;
 
-            case "PLANT":
+            case "HUMAN":
                 if(player.isHuman == true) {
                     player.ActivePlayer();
                     enemyPlayer.DisablePlayer();
@@ -771,11 +771,11 @@ public partial class PlayMangement {
 
     private void SetHumanTurnTable(string currentTurn) {
         switch (currentTurn) {
-            case "ZOMBIE":
+            case "ORC":
                 turnIcon.GetChild(3).gameObject.SetActive(false);
                 turnIcon.GetChild(0).gameObject.SetActive(true);
                 break;
-            case "PLANT":
+            case "HUMAN":
                 turnIcon.GetChild(0).gameObject.SetActive(false);
                 turnIcon.GetChild(1).gameObject.SetActive(true);
                 releaseTurnBtn.SetActive(true);
@@ -798,14 +798,14 @@ public partial class PlayMangement {
 
     private void SetOrcTurnTable(string currentTurn) {
         switch (currentTurn) {
-            case "ZOMBIE":
+            case "ORC":
                 turnIcon.GetChild(3).gameObject.SetActive(false);
                 turnIcon.GetChild(0).gameObject.SetActive(true);
                 releaseTurnBtn.SetActive(true);
                 nonplayableTurnArrow.SetActive(true);
                 playableTurnArrow.SetActive(false);
                 break;
-            case "PLANT":
+            case "HUMAN":
                 turnIcon.GetChild(0).gameObject.SetActive(false);
                 turnIcon.GetChild(1).gameObject.SetActive(true);
                 releaseTurnBtn.SetActive(false);
