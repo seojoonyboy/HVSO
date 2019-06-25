@@ -198,6 +198,10 @@ public class PlayerController : MonoBehaviour
         else data = socketHandler.gameState.players.myPlayer(isHuman);
         SocketFormat.ShieldCharge shieldData = GetShieldData();
         if (!data.shildActivate) {
+            if (GetComponent<SkillModules.guarded>()) {
+                amount = 0;
+            }
+
             HP.Value -= amount;
 
             if (HP.Value > 0)
