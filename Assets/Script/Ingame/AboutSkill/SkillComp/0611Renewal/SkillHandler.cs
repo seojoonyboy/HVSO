@@ -52,34 +52,34 @@ namespace SkillModules {
         private void Trigger (Enum Event_Type, Component Sender, object Param = null) {
             targetData = Param;
             IngameEventHandler.EVENT_TYPE triggerType = (IngameEventHandler.EVENT_TYPE) Event_Type;
-            if(triggerType == IngameEventHandler.EVENT_TYPE.BEGIN_ORC_POST_TURN) {
-                AddOrcPostTurnUnit(triggerType, Param);
+            if(triggerType == IngameEventHandler.EVENT_TYPE.BEGIN_ORC_POST_TURN || triggerType == IngameEventHandler.EVENT_TYPE.END_BATTLE_TURN) {
+                AddTurnTriggerUnit(triggerType, Param);
                 return;
             }
             PlayMangement.instance.StartCoroutine (SkillTrigger (triggerType, Param));
         }
 
-        static bool running = false;
-        static List<SkillHandler> orcList;
+        static public bool running = false;
+        static List<SkillHandler> turnUnitList;
 
-        private void AddOrcPostTurnUnit(IngameEventHandler.EVENT_TYPE triggerType, object Param) {
-            if(orcList == null) {
-                orcList = new List<SkillHandler>();
+        private void AddTurnTriggerUnit(IngameEventHandler.EVENT_TYPE triggerType, object Param) {
+            if(turnUnitList == null) {
+                turnUnitList = new List<SkillHandler>();
                 PlayMangement.instance.OnBlockPanel(null);
             }
-            orcList.Add(this);
-            PlayMangement.instance.StartCoroutine(OrcPostTurnTrigger(triggerType, Param));
+            turnUnitList.Add(this);
+            PlayMangement.instance.StartCoroutine(TurnTrigger(triggerType, Param));
         }
 
-        private IEnumerator OrcPostTurnTrigger(IngameEventHandler.EVENT_TYPE triggerType, object Param) {
+        private IEnumerator TurnTrigger(IngameEventHandler.EVENT_TYPE triggerType, object Param) {
             if(running) yield break;
             running = true;
             yield return new WaitForSeconds(1f);
-            orcList.Sort(compare);
-            foreach(SkillHandler x in orcList)
+            turnUnitList.Sort(compare);
+            foreach(SkillHandler x in turnUnitList)
                 yield return x.SkillTrigger(triggerType, Param);
             running = false;
-            orcList = null;
+            turnUnitList = null; 
         }
 
         private int compare(SkillHandler x, SkillHandler y) {
