@@ -250,7 +250,7 @@ public partial class PlayMangement : MonoBehaviour {
         return monster;
     }
 
-    public GameObject SummonUnit(bool isPlayer, string unitID, int row, int col,int itemID = -1, int cardIndex = -1, Transform[][] args = null) {
+    public GameObject SummonUnit(bool isPlayer, string unitID, int col, int row,int itemID = -1, int cardIndex = -1, Transform[][] args = null) {
         PlayerController targetPlayer = (isPlayer == true) ? player : enemyPlayer; 
         CardDataPackage cardDataPackage = AccountManager.Instance.cardPackage;
 
@@ -258,8 +258,11 @@ public partial class PlayMangement : MonoBehaviour {
         CardData cardData;
         cardData = cardDataPackage.data[unitID];
 
-        GameObject unit = Instantiate(baseUnit, targetPlayer.transform.GetChild(col).GetChild(row));
-        unit.transform.position = targetPlayer.transform.GetChild(col).GetChild(row).position;
+        Logger.Log(col);
+        Logger.Log(row);
+
+        GameObject unit = Instantiate(baseUnit, targetPlayer.transform.GetChild(row).GetChild(col));
+        unit.transform.position = targetPlayer.transform.GetChild(row).GetChild(col).position;
         PlaceMonster placeMonster = unit.GetComponent<PlaceMonster>();
 
         placeMonster.isPlayer = isPlayer;
@@ -307,6 +310,7 @@ public partial class PlayMangement : MonoBehaviour {
             else
                 player.ActiveOrcTurn();
 
+            PlayerUnitsObserver.UnitAdded(unit, col, 0);
             playerUnitsObserver.RefreshFields(args);
             player.cdpm.DestroyCard(cardIndex);
         }
@@ -318,7 +322,7 @@ public partial class PlayMangement : MonoBehaviour {
             skillHandler.Initialize(cardData.skills, unit, false);
             unit.GetComponent<PlaceMonster>().skillHandler = skillHandler;
 
-            EnemyUnitsObserver.UnitAdded(unit, row, 0);
+            EnemyUnitsObserver.UnitAdded(unit, col, 0);
             unit.layer = 14;
         }
         targetPlayer.resource.Value -= cardData.cost;

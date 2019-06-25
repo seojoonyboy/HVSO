@@ -607,7 +607,7 @@ namespace SkillModules {
                     List<GameObject> list = observer.GetAllFieldUnits(pos.col);
                     //유닛이 존재하지 않으면 그곳에 생성
                     if(list.Count == 0) {
-                        var summonedUnit = playMangement.SummonUnit(isPlayer, cardId, pos.row, pos.col, itemId);
+                        var summonedUnit = playMangement.SummonUnit(isPlayer, cardId, pos.col, pos.row, itemId);
 
                         if (isPlayer) observer.RefreshFields(CardDropManager.Instance.unitLine);
                         else observer.RefreshFields(CardDropManager.Instance.enemyUnitLine);
