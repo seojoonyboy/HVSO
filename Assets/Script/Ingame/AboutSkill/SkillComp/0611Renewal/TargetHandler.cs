@@ -206,6 +206,25 @@ namespace SkillModules {
             targets.Add(gameObject);
         }
     }
+
+    public class hero : TargetHandler {
+        public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback, Filtering filter) {
+            base.SelectTarget(successCallback, failedCallback, filter);
+
+            switch (args[0]) {
+                case "my":
+                    SetTarget(PlayMangement.instance.player.gameObject);
+                    break;
+                case "enemy":
+                    SetTarget(PlayMangement.instance.enemyPlayer.gameObject);
+                    break;
+            }
+        }
+
+        public override void SetTarget(object parms) {
+            targets.Add((GameObject)parms);
+        }
+    }
     
     public class played_target : TargetHandler {
         public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback, Filtering filter) {

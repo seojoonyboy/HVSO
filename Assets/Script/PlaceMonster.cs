@@ -335,6 +335,8 @@ public class PlaceMonster : MonoBehaviour {
     }
 
     public void UnitTakeDamage(int amount) {
+        if(GetComponent<SkillModules.guarded>() != null) amount = 0;
+
         if (unit.currentHP >= amount)
             unit.currentHP -= amount;
         else
