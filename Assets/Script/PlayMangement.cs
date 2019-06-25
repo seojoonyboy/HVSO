@@ -230,12 +230,11 @@ public partial class PlayMangement : MonoBehaviour {
         int i = int.Parse(history.targets[0].args[0]);
         string id = history.cardItem.id;
 
-        GameObject monster = SummonUnit(false, id, 0, i);
-        EnemyUnitsObserver.UnitAdded(monster, i, 0);        
+        GameObject monster = SummonUnit(false, id, i, 0);
         return monster;
     }
 
-    public GameObject SummonUnit(bool isPlayer, string unitID, int col, int row, int cardIndex = 0) {
+    public GameObject SummonUnit(bool isPlayer, string unitID, int row, int col, int cardIndex = 0, Transform[][] args = null) {
         PlayerController targetPlayer = (isPlayer == true) ? player : enemyPlayer; 
         CardDataPackage cardDataPackage = AccountManager.Instance.cardPackage;
 
@@ -290,7 +289,8 @@ public partial class PlayMangement : MonoBehaviour {
                 player.ActivePlayer();
             else
                 player.ActiveOrcTurn();
-            
+
+            playerUnitsObserver.RefreshFields(args);
             player.cdpm.DestroyCard(cardIndex);
         }
         else {
@@ -301,6 +301,7 @@ public partial class PlayMangement : MonoBehaviour {
             skillHandler.Initialize(cardData.skills, unit, false);
             unit.GetComponent<PlaceMonster>().skillHandler = skillHandler;
 
+            EnemyUnitsObserver.UnitAdded(unit, row, 0);
             unit.layer = 14;
         }
         targetPlayer.resource.Value -= cardData.cost;

@@ -280,10 +280,7 @@ public partial class CardDropManager {
                 break;
         }
 
-        GameObject placedMonster = PlayMangement.instance.SummonUnit(true, cardHandler.cardID, frontOrBack, lineNum, cardIndex);
-        PlayMangement.instance.PlayerUnitsObserver.RefreshFields(unitLine);
-
-
+        GameObject placedMonster = PlayMangement.instance.SummonUnit(true, cardHandler.cardID, lineNum, frontOrBack, cardIndex, unitLine);
         return placedMonster;
     }
 }
