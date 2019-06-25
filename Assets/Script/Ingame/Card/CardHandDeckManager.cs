@@ -490,11 +490,14 @@ public class CardHandDeckManager : MonoBehaviour {
         }
     }
 
-    public GameObject InstantiateMagicCard(CardData data) {
+    public GameObject InstantiateMagicCard(CardData data, int itemId) {
         GameObject card = Instantiate(magicCardPrefab, cardSpawnPos);
         card.transform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = data.name;
-        card.AddComponent<MagicDragHandler>().cardData = data;
+        MagicDragHandler magic = card.AddComponent<MagicDragHandler>();
+        card.GetComponent<CardHandler>().cardData = data;
         AddMagicAttribute(ref card);
+        magic.DrawCard(data.cardId, itemId);
+        
         return card;
     }
 }

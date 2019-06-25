@@ -283,4 +283,8 @@ public partial class CardHandler : MonoBehaviour {
         bool isOrcMagicTurn = currentTurn.CompareTo("SECRET")==0;
         return isHuman ? isHumanTurn : isMagic ? isOrcMagicTurn : isOrcPreTurn;
     }
+
+    public void MoveRect(Vector2 rect) {
+        this.GetComponent<RectTransform>().anchoredPosition = rect;
+    }
 }
