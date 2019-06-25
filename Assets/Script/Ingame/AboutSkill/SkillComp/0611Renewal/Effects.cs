@@ -558,7 +558,10 @@ namespace SkillModules {
                     if (i == emptySlotCount) break;
                     bool check = false;
                     int randomRow;
-                    while(check == false) {
+                    targetPosition.col = 0;
+                    targetPosition.row = 0;
+
+                    while (check == false) {
                         randomRow = UnityEngine.Random.Range(0, 5);
                         if (unitsObserver.CheckUnitPosition(0, randomRow) == true) {
                             targetPosition.col = 0;
