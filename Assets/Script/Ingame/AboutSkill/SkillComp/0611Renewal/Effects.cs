@@ -537,54 +537,8 @@ namespace SkillModules {
     public class summon_random : Ability {
         public summon_random() : base() { }
 
-        public override void Execute(object data) {
-            
-
+        public override void Execute(object data) {          
             WaitDone();
-            // PlayerController targetPlayer;
-            // FieldUnitsObserver unitsObserver;
-            // SkillTargetArgs targetPosition;
-            // int emptySlotCount = 0;
-            
-
-            // if (data.GetType().IsArray) {
-            //     object[] tmp = (object[])data;
-            //     string unitID = (string)tmp[0];
-            //     int count = (int)tmp[1];
-            //     bool isPlayer = (bool)tmp[2];
-
-            //     if (isPlayer) {
-            //         targetPlayer = PlayMangement.instance.player;
-            //         unitsObserver = PlayMangement.instance.PlayerUnitsObserver;
-            //     }
-            //     else {
-            //         targetPlayer = PlayMangement.instance.enemyPlayer;
-            //         unitsObserver = PlayMangement.instance.EnemyUnitsObserver;
-            //     }
-
-            //     emptySlotCount = unitsObserver.CheckLineEmptyCount(0);
-
-            //     for(int i = 0; i < count; i++) {
-            //         if (i == emptySlotCount) break;
-            //         bool check = false;
-            //         int randomRow;
-            //         targetPosition.col = 0;
-            //         targetPosition.row = 0;
-
-            //         while (check == false) {
-            //             randomRow = UnityEngine.Random.Range(0, 5);
-            //             if (unitsObserver.CheckUnitPosition(0, randomRow) == true) {
-            //                 targetPosition.col = 0;
-            //                 targetPosition.row = randomRow;
-            //                 check = true;
-            //             }
-            //         }
-            //         InstanceSummon(targetPlayer, unitID, targetPosition);
-            //     }              
-            // }
-            // else {
-            //     ShowFormatErrorLog("over_a_kill");
-            // }
             skillHandler.isDone = true;
         }
 
@@ -626,6 +580,26 @@ namespace SkillModules {
 
 
     }
+
+
+    public class heal : Ability {
+        public heal() : base() { }
+
+        public override void Execute(object data) {
+            object[] tmp = (object[])data;
+            bool isPlayer = (bool)tmp[0];
+            int amount = (int)tmp[1];
+            HealPlayer((isPlayer == true) ? true : false, amount);
+            skillHandler.isDone = true;
+        }
+
+        private void HealPlayer(bool player, int amount) {
+            PlayerController targetPlayer = (player == true) ? PlayMangement.instance.player : PlayMangement.instance.enemyPlayer;
+            targetPlayer.HP.Value += amount;
+        }
+
+    }
+
 
     //skill target filtering with terrain
     public class st_filter_terrain : Ability {
