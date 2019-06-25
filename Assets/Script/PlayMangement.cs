@@ -230,11 +230,11 @@ public partial class PlayMangement : MonoBehaviour {
         int i = int.Parse(history.targets[0].args[0]);
         string id = history.cardItem.id;
 
-        GameObject monster = SummonUnit(false, id, i, 0);
+        GameObject monster = SummonUnit(false, id, i, 0, history.cardItem.itemId);
         return monster;
     }
 
-    public GameObject SummonUnit(bool isPlayer, string unitID, int row, int col, int cardIndex = 0, Transform[][] args = null) {
+    public GameObject SummonUnit(bool isPlayer, string unitID, int row, int col,int itemID, int cardIndex = 0, Transform[][] args = null) {
         PlayerController targetPlayer = (isPlayer == true) ? player : enemyPlayer; 
         CardDataPackage cardDataPackage = AccountManager.Instance.cardPackage;
 
@@ -247,6 +247,7 @@ public partial class PlayMangement : MonoBehaviour {
         PlaceMonster placeMonster = unit.GetComponent<PlaceMonster>();
 
         placeMonster.isPlayer = isPlayer;
+        placeMonster.itemId = itemID;
         placeMonster.unit.name = cardData.name;
         placeMonster.unit.HP = (int)cardData.hp;
         placeMonster.unit.currentHP = (int)cardData.hp;
