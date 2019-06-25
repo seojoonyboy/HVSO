@@ -286,7 +286,6 @@ public partial class PlayMangement : MonoBehaviour {
 
         if (isPlayer) {
             player.isPicking.Value = false;
-            player.resource.Value -= cardData.cost;
             if (player.isHuman)
                 player.ActivePlayer();
             else
@@ -296,7 +295,6 @@ public partial class PlayMangement : MonoBehaviour {
         }
         else {
             int enemyCardCount = CountEnemyCard();
-            enemyPlayer.resource.Value -= cardData.cost;
             Destroy(enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(enemyCardCount - 1).GetChild(0).gameObject);
 
             SkillModules.SkillHandler skillHandler = new SkillModules.SkillHandler();
@@ -305,7 +303,7 @@ public partial class PlayMangement : MonoBehaviour {
 
             unit.layer = 14;
         }
-
+        targetPlayer.resource.Value -= cardData.cost;
         targetPlayer.PlayerUseCard();
         return unit;
     }
