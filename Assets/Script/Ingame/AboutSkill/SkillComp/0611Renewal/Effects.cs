@@ -344,6 +344,7 @@ namespace SkillModules {
                 itemId = skillHandler.myObject.GetComponent<MagicDragHandler>().itemID;
             while(true) {
                 await Task.Delay(20);
+                state = playMangement.socketHandler.gameState;
                 if(state.lastUse == null) continue;
                 if(state.lastUse.cardItem.itemId == itemId)
                     break;
@@ -436,6 +437,7 @@ namespace SkillModules {
                 itemId = skillHandler.myObject.GetComponent<MagicDragHandler>().itemID;
             while(true) {
                 await Task.Delay(20);
+                state = playMangement.socketHandler.gameState;
                 if(state.lastUse == null) continue;
                 if(state.lastUse.cardItem.itemId == itemId)
                     break;
@@ -591,6 +593,7 @@ namespace SkillModules {
                 itemId = skillHandler.myObject.GetComponent<MagicDragHandler>().itemID;
             while(true) {
                 await Task.Delay(20);
+                state = playMangement.socketHandler.gameState;
                 if(state.lastUse == null) continue;
                 if(state.lastUse.cardItem.itemId == itemId)
                     break;
