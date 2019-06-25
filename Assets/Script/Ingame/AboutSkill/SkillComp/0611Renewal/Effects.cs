@@ -660,6 +660,7 @@ namespace SkillModules {
             if (filteredList.Count == 0) Logger.Log(terrain + "지형 속성의 유닛이 존재하지 않습니다.");
 
             skillHandler.skillTarget = filteredList;
+            skillHandler.isDone = true;
         }
     }
 
@@ -684,9 +685,25 @@ namespace SkillModules {
                     .Contains(category)
                 );
             skillHandler.skillTarget = filteredList;
+            skillHandler.isDone = true;
         }
     }
 
+    public class gain_resource : Ability {
+        public gain_resource() : base() { }
+
+        public override void Execute(object data) {
+            //data 필요없음.
+            int amount = 0;
+            int.TryParse((string)args[0], out amount);
+
+            Logger.Log("추가 자원 얻음");
+
+            PlayMangement.instance.player.resource.Value += amount;
+            //TODO : 자원 추가 효과 넣기
+            skillHandler.isDone = true;
+        }
+    }
 
     public struct GainArgs {
         public int atk;
