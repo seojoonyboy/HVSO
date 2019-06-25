@@ -660,6 +660,7 @@ namespace SkillModules {
             if (filteredList.Count == 0) Logger.Log(terrain + "지형 속성의 유닛이 존재하지 않습니다.");
 
             skillHandler.skillTarget = filteredList;
+            skillHandler.isDone = true;
         }
     }
 
@@ -684,6 +685,7 @@ namespace SkillModules {
                     .Contains(category)
                 );
             skillHandler.skillTarget = filteredList;
+            skillHandler.isDone = true;
         }
     }
 
@@ -698,8 +700,8 @@ namespace SkillModules {
             Logger.Log("추가 자원 얻음");
 
             PlayMangement.instance.player.resource.Value += amount;
-
             //TODO : 자원 추가 효과 넣기
+            skillHandler.isDone = true;
         }
     }
 
