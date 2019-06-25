@@ -187,6 +187,34 @@ namespace SkillModules {
         }*/
     }
 
+    public class my_field_ctg_chk : ConditionChecker {
+        PlayedObject playedObject;
+
+        public my_field_ctg_chk(SkillHandler skillHandler, string[] args = null) : base(skillHandler) {
+            playedObject = new PlayedObject();
+        }
+
+        public override bool IsConditionSatisfied() {
+            if (!ArgsExist()) return false;
+            playedObject.IsValidateData(mySkillHandler.targetData);
+
+            var observer = PlayMangement.instance.PlayerUnitsObserver;
+            var units = observer.GetAllFieldUnits();
+
+            //자신은 제외
+            var me = units.Find(x => x == mySkillHandler.myObject);
+            units.Remove(me);
+
+            if (units.Count == 0) return false;
+
+            foreach(GameObject unit in units) {
+                PlaceMonster placeMonster = unit.GetComponent<PlaceMonster>();
+                if (placeMonster.unit.cardCategories.ToList().Contains(args[0])) return true;
+            }
+            return false;
+        }
+    }
+
     public class PlayedObject {
         public bool isTargetPlayer;
         public GameObject targetObject;
@@ -209,6 +237,4 @@ namespace SkillModules {
                 return true;
         } 
     }
-
-
 }

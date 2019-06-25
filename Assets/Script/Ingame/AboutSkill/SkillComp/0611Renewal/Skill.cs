@@ -195,11 +195,20 @@ namespace SkillModules {
 
                 result = new object[] { isPlayer, targets, amount };
             }
+            else if(ability.GetType() == typeof(random_blast_enemy)) {
+                bool isPlayer = mySkillHandler.isPlayer;
+                int amount = 0;
+                int num = 0;
+                int.TryParse((string)ability.args[0], out amount);
+                int.TryParse((string)ability.args[1], out num);
+
+                result = new object[] { isPlayer, targets, num, amount };
+            }
             else if(ability.GetType() == typeof(r_return)) {
                 bool isPlayer = mySkillHandler.isPlayer;
                 result = new object[] { isPlayer };
             }
-            else if(ability.GetType() == typeof(over_a_kill)) {
+            else if(ability.GetType() == typeof(kill)) {
                 bool isPlayer = mySkillHandler.isPlayer;
                 result = new object[] { targets[0], isPlayer };
             }

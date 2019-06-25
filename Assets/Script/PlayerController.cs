@@ -303,7 +303,7 @@ public class PlayerController : MonoBehaviour
                 UnityEngine.SceneManagement.SceneManager.GetActiveScene()
             ).Get("CurrentTurn").ToString();
         myTurn = true;
-        if (isPlayer == true && currentTurn == "ZOMBIE") {
+        if (isPlayer == true && currentTurn == "ORC") {
             Transform cardSlot_1 = playerUI.transform.Find("CardHand").GetChild(0);
             Transform cardSlot_2 = playerUI.transform.Find("CardHand").GetChild(1);
             for (int i = 0; i < cardSlot_1.childCount; i++) {

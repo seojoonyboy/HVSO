@@ -41,8 +41,8 @@ public class TurnChanger : MonoBehaviour {
     }
 
     public enum TurnType {
-        ZOMBIE = 0,
-        PLANT = 1,
+        ORC = 0,
+        HUMAN = 1,
         SECRET = 2,
         BATTLE = 3
     }

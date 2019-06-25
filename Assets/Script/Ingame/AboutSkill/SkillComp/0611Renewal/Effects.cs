@@ -306,6 +306,56 @@ namespace SkillModules {
         }
     }
 
+    public class random_blast_enemy : Ability {
+        public random_blast_enemy() : base() { }
+
+        public override void Execute(object data) {
+            if (data.GetType().IsArray) {
+                object[] tmp = (object[])data;
+                bool isPlayer = (bool)tmp[0];
+                List<GameObject> targets = (List<GameObject>)tmp[1];
+                int num = (int)tmp[2];
+                int amount = (int)tmp[3];
+
+                var selectedItems = new List<GameObject>();
+                for (int i=0; i<num; i++) {
+                    var selectedItem = PickItem(ref targets);
+                    if(selectedItem != null) selectedItems.Add(selectedItem);
+                }
+
+                BlastEnemy(isPlayer, selectedItems, amount);
+            }
+            else {
+                ShowFormatErrorLog("blast_enemy");
+            }
+            skillHandler.isDone = true;
+        }
+
+        private GameObject PickItem(ref List<GameObject> targets) {
+            if (targets.Count == 0) return null;
+
+            var random = new System.Random();
+            var index = random.Next(targets.Count);
+
+            var selectedItem = targets[index];
+            targets.Remove(targets[index]);
+            return targets[index];
+        }
+
+        private void BlastEnemy(bool isPlayer, List<GameObject> targets, int amount) {
+            foreach (GameObject target in targets) {
+                target.GetComponent<PlaceMonster>().RequestChangeStat(0, -amount);
+                EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.EXPLOSION, target.transform.position);
+                WaitEffect(target, amount);
+            }
+        }
+
+        private async void WaitEffect(GameObject target, int amount) {
+            await System.Threading.Tasks.Task.Delay(1500);
+            target.GetComponent<PlaceMonster>().CheckHP();
+        }
+    }
+
     public class r_return : Ability {
         public r_return() : base() { }
 
@@ -401,8 +451,8 @@ namespace SkillModules {
         }
     }
 
-    public class over_a_kill : Ability {
-        public over_a_kill() : base() { }
+    public class kill : Ability {
+        public kill() : base() { }
 
         public override void Execute(object data) {
             FieldUnitsObserver observer;
@@ -422,7 +472,7 @@ namespace SkillModules {
                 RemoveUnit(ref target);
             }
             else {
-                ShowFormatErrorLog("over_a_kill");
+                ShowFormatErrorLog("kill");
             }
             skillHandler.isDone = true;
         }
