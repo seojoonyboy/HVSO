@@ -573,7 +573,7 @@ namespace SkillModules {
                 }              
             }
             else {
-                ShowFormatErrorLog("over_a_kill");
+                ShowFormatErrorLog("summon_random");
             }
             skillHandler.isDone = true;
         }
