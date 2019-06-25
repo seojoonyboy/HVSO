@@ -1,0 +1,76 @@
+
+ac10033.png
+size: 1024,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+L_arm
+  rotate: false
+  xy: 792, 51
+  size: 71, 107
+  orig: 71, 107
+  offset: 0, 0
+  index: -1
+L_leg
+  rotate: false
+  xy: 863, 77
+  size: 62, 74
+  orig: 62, 74
+  offset: 0, 0
+  index: -1
+R_arm
+  rotate: true
+  xy: 524, 0
+  size: 75, 111
+  orig: 75, 111
+  offset: 0, 0
+  index: -1
+R_leg
+  rotate: false
+  xy: 925, 78
+  size: 60, 73
+  orig: 60, 73
+  offset: 0, 0
+  index: -1
+body
+  rotate: false
+  xy: 524, 75
+  size: 152, 153
+  orig: 152, 153
+  offset: 0, 0
+  index: -1
+book
+  rotate: false
+  xy: 676, 64
+  size: 116, 94
+  orig: 116, 94
+  offset: 0, 0
+  index: -1
+head
+  rotate: false
+  xy: 0, 16
+  size: 262, 212
+  orig: 262, 212
+  offset: 0, 0
+  index: -1
+head_2
+  rotate: false
+  xy: 262, 16
+  size: 262, 212
+  orig: 262, 212
+  offset: 0, 0
+  index: -1
+head_ac
+  rotate: false
+  xy: 883, 151
+  size: 117, 77
+  orig: 117, 77
+  offset: 0, 0
+  index: -1
+shadow
+  rotate: false
+  xy: 676, 158
+  size: 207, 70
+  orig: 207, 70
+  offset: 0, 0
+  index: -1
