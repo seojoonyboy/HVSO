@@ -193,7 +193,7 @@ namespace SkillModules {
         public override void Execute(object data) {
             if (data.GetType().IsArray) {
                 object[] tmp = (object[])data;
-                GameObject target = skillHandler.skillTarget;
+                GameObject target = (GameObject)skillHandler.skillTarget;
 
                 GameObject slotToMove = (GameObject)tmp[0];
                 SkillTargetArgs args = new SkillTargetArgs();
@@ -306,6 +306,92 @@ namespace SkillModules {
         }
     }
 
+    public class random_blast_enemy : Ability {
+        public random_blast_enemy() : base() { }
+
+        public override void Execute(object data) {
+            // if (data.GetType().IsArray) {
+            //     object[] tmp = (object[])data;
+            //     bool isPlayer = (bool)tmp[0];
+            //     List<GameObject> targets = (List<GameObject>)tmp[1];
+            //     int num = (int)tmp[2];
+            //     int amount = (int)tmp[3];
+
+            //     var selectedItems = new List<GameObject>();
+            //     for (int i=0; i<num; i++) {
+            //         var selectedItem = PickItem(ref targets);
+            //         if(selectedItem != null) selectedItems.Add(selectedItem);
+            //     }
+
+            //     BlastEnemy(isPlayer, selectedItems, amount);
+            // }
+            // else {
+            //     ShowFormatErrorLog("blast_enemy");
+            // }
+            WaitDone();
+            skillHandler.isDone = true;
+        }
+
+        private async void WaitDone() {
+            int itemId;
+            PlayMangement playMangement = PlayMangement.instance;
+            SocketFormat.GameState state = playMangement.socketHandler.gameState;
+            FieldUnitsObserver observer = skillHandler.isPlayer ? playMangement.EnemyUnitsObserver : playMangement.PlayerUnitsObserver;
+
+            if(skillHandler.myObject.GetComponent<PlaceMonster>() != null) 
+                itemId = skillHandler.myObject.GetComponent<PlaceMonster>().itemId;
+            else 
+                itemId = skillHandler.myObject.GetComponent<MagicDragHandler>().itemID;
+            while(true) {
+                await Task.Delay(20);
+                state = playMangement.socketHandler.gameState;
+                if(state.lastUse == null) continue;
+                if(state.lastUse.cardItem.itemId == itemId)
+                    break;
+            }
+        
+            List<SocketFormat.Unit> socketList = state.map.allMonster;
+            List<GameObject> enemyList = observer.GetAllFieldUnits();
+            List<GameObject> targets = new List<GameObject>();
+            string cardId = (string)args[0];
+            int amount = (int)args[1];
+            
+            foreach(GameObject enemy in enemyList) {
+                PlaceMonster monData = enemy.GetComponent<PlaceMonster>();
+                bool found = false;
+                foreach(SocketFormat.Unit serverData in socketList) {
+                    //클라에 있는 유닛이랑 서버에 있는 유닛이 일치할 때
+                    if(serverData.itemId == monData.itemId) {
+                        found = true;
+                        //체력이 일치 하지 않을 떄
+                        if(serverData.currentHp != monData.unit.currentHP) {
+                            targets.Add(enemy);
+                        }
+                        break;
+                    }
+                }
+                //클라에 있는 유닛이 서버에 없을 때
+                if(!found) {
+                    targets.Add(enemy);
+                }
+            }
+            BlastEnemy(skillHandler.isPlayer, targets, amount);
+        }
+
+        private void BlastEnemy(bool isPlayer, List<GameObject> targets, int amount) {
+            foreach (GameObject target in targets) {
+                target.GetComponent<PlaceMonster>().RequestChangeStat(0, -amount);
+                EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.EXPLOSION, target.transform.position);
+                WaitEffect(target, amount);
+            }
+        }
+
+        private async void WaitEffect(GameObject target, int amount) {
+            await System.Threading.Tasks.Task.Delay(1500);
+            target.GetComponent<PlaceMonster>().CheckHP();
+        }
+    }
+
     public class r_return : Ability {
         public r_return() : base() { }
 
@@ -341,18 +427,25 @@ namespace SkillModules {
         }
 
         private async void ReturnUnit(bool isPlayer) {
+            PlayMangement playMangement = PlayMangement.instance;
+            SocketFormat.GameState state = playMangement.socketHandler.gameState;
+            int itemId;
+
+            if(skillHandler.myObject.GetComponent<PlaceMonster>() != null) 
+                itemId = skillHandler.myObject.GetComponent<PlaceMonster>().itemId;
+            else 
+                itemId = skillHandler.myObject.GetComponent<MagicDragHandler>().itemID;
             while(true) {
                 await Task.Delay(20);
-                SocketFormat.GameState state = PlayMangement.instance.socketHandler.gameState;
+                state = playMangement.socketHandler.gameState;
                 if(state.lastUse == null) continue;
-                if(state.lastUse.cardItem.skills.ToList().Exists(x => x.effect.method.CompareTo("r_return")==0))
+                if(state.lastUse.cardItem.itemId == itemId)
                     break;
             }
-
+            
             if (IsEnemyExist(isPlayer)) {
                 var units = enemyObserver.GetAllFieldUnits();
-                SocketFormat.GameState state = PlayMangement.instance.socketHandler.gameState;
-                PlayMangement playMangement = PlayMangement.instance;
+                
                 List<SocketFormat.Unit> socketList = state.map.allMonster;
 
                 foreach(GameObject selectedUnit in units) {
@@ -401,8 +494,8 @@ namespace SkillModules {
         }
     }
 
-    public class over_a_kill : Ability {
-        public over_a_kill() : base() { }
+    public class kill : Ability {
+        public kill() : base() { }
 
         public override void Execute(object data) {
             FieldUnitsObserver observer;
@@ -422,7 +515,7 @@ namespace SkillModules {
                 RemoveUnit(ref target);
             }
             else {
-                ShowFormatErrorLog("over_a_kill");
+                ShowFormatErrorLog("kill");
             }
             skillHandler.isDone = true;
         }
@@ -478,6 +571,140 @@ namespace SkillModules {
         }
     }
 
+    public class summon_random : Ability {
+        public summon_random() : base() { }
+
+        public override void Execute(object data) {          
+            WaitDone();
+            skillHandler.isDone = true;
+        }
+
+        private async void WaitDone() {
+            int itemId;
+            PlayMangement playMangement = PlayMangement.instance;
+            SocketFormat.GameState state = playMangement.socketHandler.gameState;
+            FieldUnitsObserver observer = skillHandler.isPlayer ? playMangement.PlayerUnitsObserver : playMangement.EnemyUnitsObserver;
+            bool isPlayer = skillHandler.isPlayer ? true : false;
+            string cardId = (string)args[0];
+
+            if(skillHandler.myObject.GetComponent<PlaceMonster>() != null) 
+                itemId = skillHandler.myObject.GetComponent<PlaceMonster>().itemId;
+            else 
+                itemId = skillHandler.myObject.GetComponent<MagicDragHandler>().itemID;
+            while(true) {
+                await Task.Delay(20);
+                state = playMangement.socketHandler.gameState;
+                if(state.lastUse == null) continue;
+                if(state.lastUse.cardItem.itemId == itemId)
+                    break;
+            }
+        
+            List<SocketFormat.Unit> socketList = state.map.allMonster;
+           
+            foreach(SocketFormat.Unit serverUnit in socketList) {
+                if(serverUnit.cardId.CompareTo(cardId) == 0) {
+                    Pos pos = serverUnit.pos;
+                    List<GameObject> list = observer.GetAllFieldUnits(pos.col);
+                    //유닛이 존재하지 않으면 그곳에 생성
+                    if(list.Count == 0) {
+                        var summonedUnit = playMangement.SummonUnit(isPlayer, cardId, pos.col, pos.row, itemId);
+
+                        if (isPlayer) observer.RefreshFields(CardDropManager.Instance.unitLine);
+                        else observer.RefreshFields(CardDropManager.Instance.enemyUnitLine);
+                    }
+                }
+            }
+        }
+
+
+    }
+
+
+    public class heal : Ability {
+        public heal() : base() { }
+
+        public override void Execute(object data) {
+            object[] tmp = (object[])data;
+            bool isPlayer = (bool)tmp[0];
+            int amount = (int)tmp[1];
+            HealPlayer((isPlayer == true) ? true : false, amount);
+            skillHandler.isDone = true;
+        }
+
+        private void HealPlayer(bool player, int amount) {
+            PlayerController targetPlayer = (player == true) ? PlayMangement.instance.player : PlayMangement.instance.enemyPlayer;
+            targetPlayer.HP.Value += amount;
+            Logger.Log(targetPlayer.name + "에" + amount + "만큼 회복");
+        }
+
+    }
+
+
+    //skill target filtering with terrain
+    public class st_filter_terrain : Ability {
+        public st_filter_terrain() : base() { }
+
+        public override void Execute(object data) {
+            object[] tmp = (object[])data;
+            bool isPlayer = (bool)tmp[0];
+            List<GameObject> targets = (List<GameObject>)tmp[1];
+
+            var filteredList = new List<GameObject>();
+
+            var terrain = (string)args[0];
+            switch (terrain) {
+                case "normal":
+                    filteredList = targets.FindAll(x => x.GetComponentInParent<Terrain>().terrain == PlayMangement.LineState.flat);
+                    break;
+            }
+            if (filteredList.Count == 0) Logger.Log(terrain + "지형 속성의 유닛이 존재하지 않습니다.");
+
+            skillHandler.skillTarget = filteredList;
+            skillHandler.isDone = true;
+        }
+    }
+
+    //skill target filtering with category
+    public class st_filter_ctg : Ability {
+        //TODO
+        public st_filter_ctg() : base() { }
+
+        public override void Execute(object data) {
+            object[] tmp = (object[])data;
+            bool isPlayer = (bool)tmp[0];
+            List<GameObject> targets = (List<GameObject>)tmp[1];
+
+            var filteredList = new List<GameObject>();
+            var category = (string)args[0];
+            filteredList = targets
+                .FindAll(
+                    x => x.GetComponent<PlaceMonster>()
+                    .unit
+                    .cardCategories
+                    .ToList()
+                    .Contains(category)
+                );
+            skillHandler.skillTarget = filteredList;
+            skillHandler.isDone = true;
+        }
+    }
+
+    public class gain_resource : Ability {
+        public gain_resource() : base() { }
+
+        public override void Execute(object data) {
+            //data 필요없음.
+            int amount = 0;
+            int.TryParse((string)args[0], out amount);
+
+            Logger.Log("추가 자원 얻음");
+
+            PlayMangement.instance.player.resource.Value += amount;
+            //TODO : 자원 추가 효과 넣기
+            skillHandler.isDone = true;
+        }
+    }
+
     public struct GainArgs {
         public int atk;
         public int hp;
@@ -489,6 +716,11 @@ namespace SkillModules {
     }
 
     public struct SkillTargetArgs {
+        public SkillTargetArgs(Pos pos) {
+            col = pos.col;
+            row = pos.row;
+        }
+        
         public int col;
         public int row;
     }

@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Linq;
+using SkillModules;
 
-namespace SkillModules {
+namespace TargetModules {
     public class TargetHandler : MonoBehaviour {
         public delegate void SelectTargetFinished(object parms);
         public delegate void SelectTargetFailed(string msg);
+        public delegate void Filtering(ref List<GameObject> list);
 
         public string[] args;
 
@@ -20,7 +22,7 @@ namespace SkillModules {
         /// <summary>
         /// 타겟을 지정하는 단계를 시작
         /// </summary>
-        public virtual void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback) {
+        public virtual void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback, Filtering filter) {
             targets = new List<GameObject>();
             Logger.Log("타겟을 지정합니다.");
         }
@@ -121,8 +123,8 @@ namespace SkillModules {
     }
 
     public class skill_target : TargetHandler {
-        public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback) {
-            base.SelectTarget(successCallback, failedCallback);
+        public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback, Filtering filter) {
+            base.SelectTarget(successCallback, failedCallback, filter);
 
             var target = skillHandler.skillTarget;
             if (target == null) {
@@ -134,7 +136,10 @@ namespace SkillModules {
         }
 
         public override void SetTarget(object target) {
-            targets.Add((GameObject)target);
+            if(target.GetType() == typeof(List<GameObject>)) {
+                targets.AddRange((List<GameObject>)target);
+            }
+            else targets.Add((GameObject)target);
         }
     }
 
@@ -150,8 +155,8 @@ namespace SkillModules {
             }
         }
 
-        public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback) {
-            base.SelectTarget(successCallback, failedCallback);
+        public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback, Filtering filter) {
+            base.SelectTarget(successCallback, failedCallback, filter);
 
             //직접 지정하는게 없음
             SetTarget(null);
@@ -172,8 +177,8 @@ namespace SkillModules {
     }
 
     public class attack_target : TargetHandler {
-        public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback) {
-            base.SelectTarget(successCallback, failedCallback);
+        public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback, Filtering filter) {
+            base.SelectTarget(successCallback, failedCallback, filter);
 
             if(GetComponent<PlaceMonster>().myTarget == null) {
                 failedCallback("대상을 찾을 수 없습니다.");
@@ -191,8 +196,8 @@ namespace SkillModules {
     }
 
     public class self : TargetHandler {
-        public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback) {
-            base.SelectTarget(successCallback, failedCallback);
+        public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback, Filtering filter) {
+            base.SelectTarget(successCallback, failedCallback, filter);
 
             SetTarget(gameObject);
             successCallback(gameObject);
@@ -202,10 +207,34 @@ namespace SkillModules {
             targets.Add(gameObject);
         }
     }
+
+    public class hero : TargetHandler {
+        public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback, Filtering filter) {
+            base.SelectTarget(successCallback, failedCallback, filter);
+
+            switch (args[0]) {
+                case "my":
+                    SetTarget(PlayMangement.instance.player.gameObject);
+                    successCallback(PlayMangement.instance.player.gameObject);
+                    break;
+                case "enemy":
+                    SetTarget(PlayMangement.instance.enemyPlayer.gameObject);
+                    successCallback(PlayMangement.instance.player.gameObject);
+                    break;
+                default:
+                    failedCallback(null);
+                    break;
+            }
+        }
+
+        public override void SetTarget(object parms) {
+            targets.Add((GameObject)parms);
+        }
+    }
     
     public class played_target : TargetHandler {
-        public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback) {
-            base.SelectTarget(successCallback, failedCallback);
+        public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback, Filtering filter) {
+            base.SelectTarget(successCallback, failedCallback, filter);
 
             
             if (args == null) failedCallback("Args 가 존재가지 않습니다.");
@@ -273,6 +302,68 @@ namespace SkillModules {
                         var targets = enemyObserver.GetAllFieldUnits();
                         foreach (GameObject target in targets) {
                             result.Add(target);
+                        }
+                    }
+                    break;
+            }
+            return result;
+        }
+    }
+
+    public class exclusive_played_target : TargetHandler {
+        public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback, Filtering filter) {
+            base.SelectTarget(successCallback, failedCallback, filter);
+
+
+            if (args == null) failedCallback("Args 가 존재가지 않습니다.");
+
+            var targets = GetTarget(skillHandler.isPlayer, args);
+            SetTarget(targets);
+            successCallback(targets);
+        }
+
+        /// <summary></summary>
+        /// <param name="target">내가 카드를 드롭하면서 지목한 대상</param>
+        public override void SetTarget(object target) {
+            targets.AddRange((List<GameObject>)target);
+        }
+
+        private List<GameObject> GetTarget(bool isPlayer, string[] args) {
+            FieldUnitsObserver playerObserver, enemyObserver;
+            var playManagement = PlayMangement.instance;
+            if (isPlayer) {
+                playerObserver = playManagement.PlayerUnitsObserver;
+                enemyObserver = playManagement.EnemyUnitsObserver;
+            }
+            else {
+                playerObserver = playManagement.EnemyUnitsObserver;
+                enemyObserver = playManagement.PlayerUnitsObserver;
+            }
+
+            List<GameObject> result = new List<GameObject>();
+            if (args.Length != 2) {
+                Logger.LogError("Args가 잘못 전달되었습니다.");
+                return result;
+            }
+
+            switch (args[0]) {
+                case "my":
+                    if (args[1] == "all") {
+                        var targets = playerObserver.GetAllFieldUnits();
+                        foreach (GameObject target in targets) {
+                            if (target != GetDropAreaUnit().gameObject) {
+                                result.Add(target);
+                            }
+                        }
+                    }
+                    break;
+                case "enemy":
+                    if (args[1] == "all") {
+                        var targets = enemyObserver.GetAllFieldUnits();
+                        foreach (GameObject target in targets) {
+                            if(target != GetDropAreaUnit().gameObject) {
+                                result.Add(target);
+                            }
                         }
                     }
                     break;
@@ -352,8 +443,8 @@ namespace SkillModules {
             }
         }
 
-        public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback) {
-            base.SelectTarget(successCallback, failedCallback);
+        public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback, Filtering filter) {
+            base.SelectTarget(successCallback, failedCallback, filter);
             //TODO : 적일 경우 해당 소켓이 도달 할 때까지 기다리기 card_played, skill_activated
             if(!skillHandler.isPlayer) { 
                 skillHandler.isDone = true;
@@ -389,7 +480,7 @@ namespace SkillModules {
 
                             //잠복중인 유닛은 타겟에서 제외
                             var units = PlayMangement.instance.PlayerUnitsObserver.GetAllFieldUnits();
-
+                            filter(ref units);
                             foreach (GameObject unit in units) {
                                 var ui = unit.transform.Find("ClickableUI").gameObject;
                                 if (ui != null) {
@@ -471,7 +562,8 @@ namespace SkillModules {
                             }
                             //마법카드인 경우
                             else {
-                                placeMonster = skillHandler.skillTarget.GetComponent<PlaceMonster>();
+                                var skillTarget = (GameObject)skillHandler.skillTarget;
+                                placeMonster = skillTarget.GetComponent<PlaceMonster>();
                                 if (observer.transform.GetChild(0).GetChild(i).GetComponent<Terrain>().terrain == PlayMangement.LineState.forest) {
                                     //유닛이 숲 지형에 갈 수 있는 경우
                                     if (placeMonster.unit.attributes.ToList().Contains("footslog")) {
@@ -511,9 +603,45 @@ namespace SkillModules {
         }
     }
 
+    public class same_line : TargetHandler {
+        public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback, Filtering filter) {
+            base.SelectTarget(successCallback, failedCallback, filter);
+
+            var targets = new List<GameObject>();
+            int col = skillHandler.myObject.GetComponent<PlaceMonster>().x;
+
+            if (args[0] == "enemy") {
+                if (args[1] == "unit") {
+                    //같은 라인에 있는 적 유닛들이 Target임.
+                    var observer = PlayMangement.instance.EnemyUnitsObserver;
+                    targets = observer.GetAllFieldUnits(col);
+
+                    SetTarget(targets);
+                    successCallback(targets);
+                }
+                else failedCallback(null);
+            }
+
+            else if(args[0] == "player") {
+                if(args[1] == "unit") {
+                    var observer = PlayMangement.instance.PlayerUnitsObserver;
+                    targets = observer.GetAllFieldUnits(col);
+
+                    SetTarget(targets);
+                    successCallback(targets);
+                }
+                else failedCallback(null);
+            }
+        }
+
+        public override void SetTarget(object target) {
+            targets.AddRange((List<GameObject>)(target));
+        }
+    }
+
     public class played : TargetHandler {
-        public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback) {
-            base.SelectTarget(successCallback, failedCallback);
+        public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback, Filtering filter) {
+            base.SelectTarget(successCallback, failedCallback, filter);
 
             if(args[0] == "my") {
                 object[] tmp = (object[])skillHandler.targetData;

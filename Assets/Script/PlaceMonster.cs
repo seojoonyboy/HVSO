@@ -327,14 +327,25 @@ public class PlaceMonster : MonoBehaviour {
         PlaceMonster targetMonster = target.GetComponent<PlaceMonster>();
 
         if (targetMonster != null) {
-            targetMonster.unit.currentHP -= amount;
-            targetMonster.UpdateStat();
-            targetMonster.SetState(UnitState.HIT);
+            targetMonster.UnitTakeDamage(amount);
 
             object[] parms = new object[] { !isPlayer, targetMonster.gameObject };
             PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_ATTACK, this, parms);
         }
     }
+
+    public void UnitTakeDamage(int amount) {
+        if(GetComponent<SkillModules.guarded>() != null) amount = 0;
+
+        if (unit.currentHP >= amount)
+            unit.currentHP -= amount;
+        else
+            unit.currentHP = 0;
+
+        UpdateStat();
+        SetState(UnitState.HIT);
+    }
+
 
     public void RequestChangePower(int amount) {
         unit.attack += amount;

@@ -28,6 +28,10 @@ namespace SkillModules {
             return true;
         }
 
+        public virtual void filtering(ref List<GameObject> list) {
+            return;
+        }
+
         protected bool ArgsExist() {
             if(args.Length == 0) {
                 Logger.LogError("args가 필요한 조건에 args가 존재하지 않습니다.");
@@ -40,7 +44,7 @@ namespace SkillModules {
     public class skill_target_ctg_chk : ConditionChecker {
         public skill_target_ctg_chk(SkillHandler mySkillHandler, string[] args = null) : base(mySkillHandler, args) { }
         public override bool IsConditionSatisfied() {
-            GameObject target = mySkillHandler.skillTarget;
+            GameObject target = (GameObject)mySkillHandler.skillTarget;
             if(target == null) return false;
             IngameClass.Unit unit = target.GetComponent<PlaceMonster>().unit;
             bool exist = unit.cardCategories.ToList().Exists(x => x.CompareTo(args[0]) == 0);
@@ -185,6 +189,61 @@ namespace SkillModules {
             PlaceMonster playedMonster = playedObject.targetObject.GetComponent<PlaceMonster>();
             return playedMonster.unit.attack >= int.Parse(args[0]);
         }*/
+
+        public override void filtering(ref List<GameObject> list) {
+            int power = int.Parse(args[0]);
+            list.RemoveAll(x => x.GetComponent<PlaceMonster>().unit.attack < power);
+            return;
+        }
+    }
+
+    public class my_field_ctg_chk : ConditionChecker {
+        PlayedObject playedObject;
+
+        public my_field_ctg_chk(SkillHandler skillHandler, string[] args = null) : base(skillHandler) {
+            playedObject = new PlayedObject();
+        }
+
+        public override bool IsConditionSatisfied() {
+            if (!ArgsExist()) return false;
+            playedObject.IsValidateData(mySkillHandler.targetData);
+
+            var observer = PlayMangement.instance.PlayerUnitsObserver;
+            var units = observer.GetAllFieldUnits();
+
+            //자신은 제외
+            var me = units.Find(x => x == mySkillHandler.myObject);
+            units.Remove(me);
+
+            if (units.Count == 0) return false;
+
+            foreach(GameObject unit in units) {
+                PlaceMonster placeMonster = unit.GetComponent<PlaceMonster>();
+                if (placeMonster.unit.cardCategories.ToList().Contains(args[0])) return true;
+            }
+            return false;
+        }
+    }
+
+    public class select_ctg_chk : ConditionChecker {
+        PlayedObject playedObject;
+
+        public select_ctg_chk(SkillHandler skillHandler, string[] args = null) : base(skillHandler) {
+            playedObject = new PlayedObject();
+        }
+
+        public override bool IsConditionSatisfied() {
+            if (!ArgsExist()) return false;
+            playedObject.IsValidateData(mySkillHandler.targetData);
+
+            return true;
+        }
+
+        public override void filtering(ref List<GameObject> list) {
+            string category = (string)args[0];
+            list.RemoveAll(x => (!x.GetComponent<PlaceMonster>().unit.cardCategories.ToList().Exists(y => y.CompareTo(category)==0)));
+            return;
+        }
     }
 
     public class PlayedObject {
@@ -209,6 +268,4 @@ namespace SkillModules {
                 return true;
         } 
     }
-
-
 }

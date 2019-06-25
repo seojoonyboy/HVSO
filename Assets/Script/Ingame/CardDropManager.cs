@@ -280,59 +280,7 @@ public partial class CardDropManager {
                 break;
         }
 
-        GameObject placedMonster = Instantiate(cardHandler.unit, unitLine[lineNum][frontOrBack]);
-        placedMonster.transform.position = unitLine[lineNum][frontOrBack].position;
-        PlaceMonster monster = placedMonster.GetComponent<PlaceMonster>();
-        monster.isPlayer = true;
-        monster.itemId = (int)cardHandler.itemID;
-        monster.unit.name = cardHandler.cardData.name;
-        monster.unit.HP = (int)cardHandler.cardData.hp;
-        monster.unit.currentHP = (int)cardHandler.cardData.hp;
-        monster.unit.originalAttack = (int)cardHandler.cardData.attack;
-        monster.unit.attack = (int)cardHandler.cardData.attack;
-        monster.unit.type = cardHandler.cardData.type;
-        monster.unit.attackRange = cardHandler.cardData.attackRange;
-        monster.unit.cost = cardHandler.cardData.cost;
-        monster.unit.rarelity = cardHandler.cardData.rarelity;
-        monster.unit.id = cardHandler.cardData.cardId;
-        monster.unit.attributes = cardHandler.cardData.attributes;
-
-        if (cardHandler.cardData.category_2 != "") {
-            monster.unit.cardCategories = new string[2];
-            monster.unit.cardCategories[0] = cardHandler.cardData.category_1;
-            monster.unit.cardCategories[1] = cardHandler.cardData.category_2;
-        }
-        else {
-            monster.unit.cardCategories = new string[1];
-            monster.unit.cardCategories[0] = cardHandler.cardData.category_1;
-        }
-
-        if (cardHandler.cardData.attackTypes.Length > 0) {
-            monster.unit.attackType = new string[cardHandler.cardData.attackTypes.Length];
-            monster.unit.attackType = cardHandler.cardData.attackTypes;
-
-        }
-
-        GameObject skeleton = Instantiate(cardHandler.skeleton, placedMonster.transform);
-        skeleton.name = "skeleton";
-        skeleton.transform.localScale = new Vector3(-1, 1, 1);
-        placedMonster.name = monster.unit.name;
-
-        PlayerController player = PlayMangement.instance.player;
-
-        monster.Init(cardHandler.cardData);
-        monster.SpawnUnit();
-        player.isPicking.Value = false;
-        player.resource.Value -= cardHandler.cardData.cost;
-        if (player.isHuman)
-            player.ActivePlayer();
-        else
-            player.ActiveOrcTurn();
-        player.cdpm.DestroyCard(cardIndex);
-        PlayMangement.instance.PlayerUnitsObserver.RefreshFields(unitLine);
-        player.PlayerUseCard();
-
-
+        GameObject placedMonster = PlayMangement.instance.SummonUnit(true, cardHandler.cardID, lineNum, frontOrBack, cardHandler.itemID, cardIndex, unitLine);
         return placedMonster;
     }
 }

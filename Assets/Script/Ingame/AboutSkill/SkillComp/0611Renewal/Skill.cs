@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Linq;
 using dataModules;
 using System;
+using TargetModules;
 
 namespace SkillModules {
     public class Skill {
@@ -32,7 +33,7 @@ namespace SkillModules {
             }
 
             //targetHandler = MethodToClass<TargetHandler>(dataSkill.target.method, new TargetHandler(dataSkill.target.args), mySkillHandler);
-            string targetClass = string.Format("SkillModules.{0}", dataSkill.target.method);
+            string targetClass = string.Format("TargetModules.{0}", dataSkill.target.method);
             Component targetComponent = mySkillHandler.myObject.AddComponent(System.Type.GetType(targetClass));
             if(targetComponent != null) {
                 var lists = targetComponent.GetComponents<TargetHandler>();
@@ -110,7 +111,11 @@ namespace SkillModules {
                     delegate {
                         Logger.Log("타겟이 없습니다.");
                         mySkillHandler.isDone = true;
-                    }
+                    },
+                    delegate(ref List<GameObject> list) {
+                        if(conditionCheckers.Length == 0) return;
+                        conditionCheckers[0].filtering(ref list);
+                    } 
                 );
             }
             
@@ -195,17 +200,49 @@ namespace SkillModules {
 
                 result = new object[] { isPlayer, targets, amount };
             }
+            else if(ability.GetType() == typeof(random_blast_enemy)) {
+                bool isPlayer = mySkillHandler.isPlayer;
+                int amount = 0;
+                int num = 0;
+                int.TryParse((string)ability.args[0], out amount);
+                int.TryParse((string)ability.args[1], out num);
+
+                result = new object[] { isPlayer, targets, num, amount };
+            }
             else if(ability.GetType() == typeof(r_return)) {
                 bool isPlayer = mySkillHandler.isPlayer;
                 result = new object[] { isPlayer };
             }
-            else if(ability.GetType() == typeof(over_a_kill)) {
+            else if(ability.GetType() == typeof(kill)) {
                 bool isPlayer = mySkillHandler.isPlayer;
                 result = new object[] { targets[0], isPlayer };
             }
             else if(ability.GetType() == typeof(give_attack_type)) {
                 string attrName = (string)ability.args[0];
                 result = new object[] { targets, attrName };
+            }
+            else if(ability.GetType() == typeof(summon_random)) {
+                bool isPlayer = mySkillHandler.isPlayer;
+                string unitID = (string)ability.args[0];
+                int count = (int)ability.args[1];
+                result = new object[] { unitID, count, isPlayer };
+            }
+            else if(ability.GetType() == typeof(heal)) {
+                int amount = 0;
+                bool isPlayer = mySkillHandler.isPlayer;
+                int.TryParse((string)ability.args[0], out amount);
+                result = new object[] { isPlayer, amount };
+            }
+            else if(ability.GetType() == typeof(st_filter_terrain)) {
+                bool isPlayer = mySkillHandler.isPlayer;
+                result = new object[] { isPlayer, targets };
+            }
+            else if(ability.GetType() == typeof(st_filter_ctg)) {
+                bool isPlayer = mySkillHandler.isPlayer;
+                result = new object[] { isPlayer, targets };
+            }
+            else if(ability.GetType() == typeof(gain_resource)) {
+                //혹시 무언가 필요하면...
             }
             return result;
         }
