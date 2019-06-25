@@ -521,7 +521,7 @@ public partial class PlayMangement : MonoBehaviour {
         do {
             yield return new WaitForFixedUpdate();
         } while(heroShieldActive);
-    }
+    }  
 }
 
 /// <summary>

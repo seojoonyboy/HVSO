@@ -478,6 +478,61 @@ namespace SkillModules {
         }
     }
 
+    public class summon_random : Ability {
+        public summon_random() : base() { }
+
+        public override void Execute(object data) {
+            PlayerController targetPlayer;
+            FieldUnitsObserver unitsObserver;
+            SkillTargetArgs targetPosition;
+            int emptySlotCount = 0;
+
+            if (data.GetType().IsArray) {
+                object[] tmp = (object[])data;
+                string unitID = (string)tmp[0];
+                int count = (int)tmp[1];
+                bool isPlayer = (bool)tmp[2];
+
+                if (isPlayer) {
+                    targetPlayer = PlayMangement.instance.player;
+                    unitsObserver = PlayMangement.instance.PlayerUnitsObserver;
+                }
+                else {
+                    targetPlayer = PlayMangement.instance.enemyPlayer;
+                    unitsObserver = PlayMangement.instance.EnemyUnitsObserver;
+                }
+
+                emptySlotCount = unitsObserver.CheckLineEmptyCount(0);
+
+                for(int i = 0; i < count; i++) {
+                    if (i == emptySlotCount) break;
+                    bool check = false;
+                    int randomRow;
+                    while(check == false) {
+                        randomRow = UnityEngine.Random.Range(0, 5);
+                        if (unitsObserver.CheckUnitPosition(0, randomRow) == true) {
+                            targetPosition.col = 0;
+                            targetPosition.row = randomRow;
+                            check = true;
+                        }
+                    }
+                    InstanceSummon(targetPlayer, unitID, targetPosition);
+                }              
+            }
+            else {
+                ShowFormatErrorLog("over_a_kill");
+            }
+            skillHandler.isDone = true;
+        }
+
+        public void InstanceSummon(PlayerController targetPlayer, string unitID, SkillTargetArgs targetLocation) {
+
+        }
+
+
+    }
+
+
     public struct GainArgs {
         public int atk;
         public int hp;

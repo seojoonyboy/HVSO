@@ -207,6 +207,12 @@ namespace SkillModules {
                 string attrName = (string)ability.args[0];
                 result = new object[] { targets, attrName };
             }
+            else if(ability.GetType() == typeof(summon_random)) {
+                bool isPlayer = mySkillHandler.isPlayer;
+                string unitID = (string)ability.args[0];
+                int count = (int)ability.args[1];
+                result = new object[] { unitID, count, isPlayer };
+            }
             return result;
         }
 

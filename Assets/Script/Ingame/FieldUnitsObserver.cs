@@ -31,6 +31,27 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
         StartCoroutine(UnitChangeCoroutine(target, prevPos, row, col));
     }
 
+    public virtual bool CheckUnitPosition(int col, int row) {
+        bool check = false;
+
+        if (units[col, row] == null)
+            check = true;
+        else
+            check = false;
+
+        return check;
+    }
+
+    public virtual int CheckLineEmptyCount(int col) {
+        int count = 0;
+
+        for(int i = 0; i < 5; i++) {
+            if (units[col, i] == null)
+                count++;
+        }
+        return count;
+    }
+
     /// <summary>
     /// 자리 이동
     /// </summary>
