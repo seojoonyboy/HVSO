@@ -310,36 +310,71 @@ namespace SkillModules {
         public random_blast_enemy() : base() { }
 
         public override void Execute(object data) {
-            if (data.GetType().IsArray) {
-                object[] tmp = (object[])data;
-                bool isPlayer = (bool)tmp[0];
-                List<GameObject> targets = (List<GameObject>)tmp[1];
-                int num = (int)tmp[2];
-                int amount = (int)tmp[3];
+            // if (data.GetType().IsArray) {
+            //     object[] tmp = (object[])data;
+            //     bool isPlayer = (bool)tmp[0];
+            //     List<GameObject> targets = (List<GameObject>)tmp[1];
+            //     int num = (int)tmp[2];
+            //     int amount = (int)tmp[3];
 
-                var selectedItems = new List<GameObject>();
-                for (int i=0; i<num; i++) {
-                    var selectedItem = PickItem(ref targets);
-                    if(selectedItem != null) selectedItems.Add(selectedItem);
-                }
+            //     var selectedItems = new List<GameObject>();
+            //     for (int i=0; i<num; i++) {
+            //         var selectedItem = PickItem(ref targets);
+            //         if(selectedItem != null) selectedItems.Add(selectedItem);
+            //     }
 
-                BlastEnemy(isPlayer, selectedItems, amount);
-            }
-            else {
-                ShowFormatErrorLog("blast_enemy");
-            }
+            //     BlastEnemy(isPlayer, selectedItems, amount);
+            // }
+            // else {
+            //     ShowFormatErrorLog("blast_enemy");
+            // }
+            WaitDone();
             skillHandler.isDone = true;
         }
 
-        private GameObject PickItem(ref List<GameObject> targets) {
-            if (targets.Count == 0) return null;
+        private async void WaitDone() {
+            int itemId;
+            PlayMangement playMangement = PlayMangement.instance;
+            SocketFormat.GameState state = playMangement.socketHandler.gameState;
+            FieldUnitsObserver observer = skillHandler.isPlayer ? playMangement.EnemyUnitsObserver : playMangement.PlayerUnitsObserver;
 
-            var random = new System.Random();
-            var index = random.Next(targets.Count);
-
-            var selectedItem = targets[index];
-            targets.Remove(targets[index]);
-            return targets[index];
+            if(skillHandler.myObject.GetComponent<PlaceMonster>() != null) 
+                itemId = skillHandler.myObject.GetComponent<PlaceMonster>().itemId;
+            else 
+                itemId = skillHandler.myObject.GetComponent<MagicDragHandler>().itemID;
+            while(true) {
+                await Task.Delay(20);
+                if(state.lastUse == null) continue;
+                if(state.lastUse.cardItem.itemId == itemId)
+                    break;
+            }
+        
+            List<SocketFormat.Unit> socketList = state.map.allMonster;
+            List<GameObject> enemyList = observer.GetAllFieldUnits();
+            List<GameObject> targets = new List<GameObject>();
+            string cardId = (string)args[0];
+            int amount = (int)args[1];
+            
+            foreach(GameObject enemy in enemyList) {
+                PlaceMonster monData = enemy.GetComponent<PlaceMonster>();
+                bool found = false;
+                foreach(SocketFormat.Unit serverData in socketList) {
+                    //클라에 있는 유닛이랑 서버에 있는 유닛이 일치할 때
+                    if(serverData.itemId == monData.itemId) {
+                        found = true;
+                        //체력이 일치 하지 않을 떄
+                        if(serverData.currentHp != monData.unit.currentHP) {
+                            targets.Add(enemy);
+                        }
+                        break;
+                    }
+                }
+                //클라에 있는 유닛이 서버에 없을 때
+                if(!found) {
+                    targets.Add(enemy);
+                }
+            }
+            BlastEnemy(skillHandler.isPlayer, targets, amount);
         }
 
         private void BlastEnemy(bool isPlayer, List<GameObject> targets, int amount) {
