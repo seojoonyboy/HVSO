@@ -64,6 +64,9 @@ public partial class PlayMangement : MonoBehaviour {
     }
 
     private void Update() {
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            SceneManager.Instance.LoadScene(SceneManager.Scene.MAIN_SCENE);
+        }
         if (!infoOn && Input.GetMouseButtonDown(0)) {
             cardInfoCanvas.GetChild(0).GetComponent<CardListManager>().OpenUnitInfoWindow(Input.mousePosition);
         }
@@ -197,7 +200,13 @@ public partial class PlayMangement : MonoBehaviour {
                     EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.FIELD_CHANGED, null, null);
                 }
 
-                else SummonMagic(history);
+                else {
+                    GameObject summonedMagic = SummonMagic(history);
+                    summonedMagic.GetComponent<MagicDragHandler>().isPlayer = false;
+                    object[] parms = new object[] { false, summonedMagic };
+                    EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
+                    yield return MagicActivate();
+                }
                 SocketFormat.DebugSocketData.SummonCardData(history);
             }
             //SocketFormat.DebugSocketData.CheckMapPosition(state);
@@ -206,10 +215,11 @@ public partial class PlayMangement : MonoBehaviour {
         #endregion
         SocketFormat.DebugSocketData.ShowHandCard(socketHandler.gameState.players.enemyPlayer(enemyPlayer.isHuman).deck.handCards);
         enemyPlayer.ReleaseTurn();
-        StopCoroutine("EnemySummonMonster");
     }
 
     private GameObject SummonMagic(SocketFormat.PlayHistory history) {
+        
+
         int i = int.Parse(history.targets[0].args[0]);
         CardData cardData;
         CardDataPackage cardDataPackage = AccountManager.Instance.cardPackage;
@@ -218,12 +228,18 @@ public partial class PlayMangement : MonoBehaviour {
         string id = history.cardItem.id;
 
         cardData = cardDataPackage.data[id];
+        GameObject magicCard = enemyPlayer.cdpm.InstantiateMagicCard(cardData);
+
         Logger.Log("use Magic Card" + history.cardItem.name);
         enemyPlayer.resource.Value -= cardData.cost;
 
         //TODO : EVENT : END_CARD_PLAY 호출
         Destroy(enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(enemyCardCount - 1).GetChild(0).gameObject);
         return null;
+    }
+
+    private IEnumerator MagicActivate() {
+        yield return null;
     }
 
     private GameObject SummonMonster(SocketFormat.PlayHistory history) {
@@ -398,8 +414,10 @@ public partial class PlayMangement : MonoBehaviour {
         turn++;
         yield return socketHandler.WaitGetCard();
         DistributeResource();
+        eventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_BATTLE_TURN, this, null);
         EndTurnDraw();
         yield return new WaitForSeconds(2.0f);
+        yield return new WaitUntil(() => !SkillModules.SkillHandler.running);
         CustomEvent.Trigger(gameObject, "EndTurn");
         StopCoroutine("battleCoroutine");
         dragable = true;

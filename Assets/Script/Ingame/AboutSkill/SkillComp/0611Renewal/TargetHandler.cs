@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Linq;
+using SkillModules;
 
-namespace SkillModules {
+namespace TargetModules {
     public class TargetHandler : MonoBehaviour {
         public delegate void SelectTargetFinished(object parms);
         public delegate void SelectTargetFailed(string msg);
@@ -214,9 +215,14 @@ namespace SkillModules {
             switch (args[0]) {
                 case "my":
                     SetTarget(PlayMangement.instance.player.gameObject);
+                    successCallback(PlayMangement.instance.player.gameObject);
                     break;
                 case "enemy":
                     SetTarget(PlayMangement.instance.enemyPlayer.gameObject);
+                    successCallback(PlayMangement.instance.player.gameObject);
+                    break;
+                default:
+                    failedCallback(null);
                     break;
             }
         }
@@ -594,6 +600,42 @@ namespace SkillModules {
                     break;
             }
             return result;
+        }
+    }
+
+    public class same_line : TargetHandler {
+        public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback, Filtering filter) {
+            base.SelectTarget(successCallback, failedCallback, filter);
+
+            var targets = new List<GameObject>();
+            int col = skillHandler.myObject.GetComponent<PlaceMonster>().x;
+
+            if (args[0] == "enemy") {
+                if (args[1] == "unit") {
+                    //같은 라인에 있는 적 유닛들이 Target임.
+                    var observer = PlayMangement.instance.EnemyUnitsObserver;
+                    targets = observer.GetAllFieldUnits(col);
+
+                    SetTarget(targets);
+                    successCallback(targets);
+                }
+                else failedCallback(null);
+            }
+
+            else if(args[0] == "player") {
+                if(args[1] == "unit") {
+                    var observer = PlayMangement.instance.PlayerUnitsObserver;
+                    targets = observer.GetAllFieldUnits(col);
+
+                    SetTarget(targets);
+                    successCallback(targets);
+                }
+                else failedCallback(null);
+            }
+        }
+
+        public override void SetTarget(object target) {
+            targets.AddRange((List<GameObject>)(target));
         }
     }
 

@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Linq;
 using dataModules;
 using System;
+using TargetModules;
 
 namespace SkillModules {
     public class Skill {
@@ -32,7 +33,7 @@ namespace SkillModules {
             }
 
             //targetHandler = MethodToClass<TargetHandler>(dataSkill.target.method, new TargetHandler(dataSkill.target.args), mySkillHandler);
-            string targetClass = string.Format("SkillModules.{0}", dataSkill.target.method);
+            string targetClass = string.Format("TargetModules.{0}", dataSkill.target.method);
             Component targetComponent = mySkillHandler.myObject.AddComponent(System.Type.GetType(targetClass));
             if(targetComponent != null) {
                 var lists = targetComponent.GetComponents<TargetHandler>();

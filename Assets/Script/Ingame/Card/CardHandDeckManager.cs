@@ -489,4 +489,12 @@ public class CardHandDeckManager : MonoBehaviour {
             AddMagicAttribute(ref card);
         }
     }
+
+    public GameObject InstantiateMagicCard(CardData data) {
+        GameObject card = Instantiate(magicCardPrefab, cardSpawnPos);
+        card.transform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = data.name;
+        card.AddComponent<MagicDragHandler>().cardData = data;
+        AddMagicAttribute(ref card);
+        return card;
+    }
 }
