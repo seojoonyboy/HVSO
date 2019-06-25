@@ -582,7 +582,7 @@ namespace SkillModules {
             PlayMangement playMangement = PlayMangement.instance;
             SocketFormat.GameState state = playMangement.socketHandler.gameState;
             FieldUnitsObserver observer = skillHandler.isPlayer ? playMangement.PlayerUnitsObserver : playMangement.EnemyUnitsObserver;
-            PlayerController targetPlayer = skillHandler.isPlayer ? playMangement.player : playMangement.enemyPlayer;
+            bool isPlayer = skillHandler.isPlayer ? true : false;
             string cardId = (string)args[0];
 
             if(skillHandler.myObject.GetComponent<PlaceMonster>() != null) 
@@ -603,14 +603,10 @@ namespace SkillModules {
                     Pos pos = serverUnit.pos;
                     List<GameObject> list = observer.GetAllFieldUnits(pos.col);
                     if(list.Count == 0) {
-                        InstanceSummon(targetPlayer, cardId, new SkillTargetArgs(pos));
+                        playMangement.SummonUnit(isPlayer, cardId, pos.row, pos.col, itemId);
                     }
                 }
             }
-        }
-
-        public void InstanceSummon(PlayerController targetPlayer, string unitID, SkillTargetArgs targetLocation) {
-
         }
 
 

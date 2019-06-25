@@ -234,7 +234,7 @@ public partial class PlayMangement : MonoBehaviour {
         return monster;
     }
 
-    public GameObject SummonUnit(bool isPlayer, string unitID, int row, int col,int itemID = -1, int cardIndex = 0, Transform[][] args = null) {
+    public GameObject SummonUnit(bool isPlayer, string unitID, int row, int col,int itemID = -1, int cardIndex = -1, Transform[][] args = null) {
         PlayerController targetPlayer = (isPlayer == true) ? player : enemyPlayer; 
         CardDataPackage cardDataPackage = AccountManager.Instance.cardPackage;
 
