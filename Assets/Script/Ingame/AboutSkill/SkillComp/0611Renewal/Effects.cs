@@ -193,7 +193,7 @@ namespace SkillModules {
         public override void Execute(object data) {
             if (data.GetType().IsArray) {
                 object[] tmp = (object[])data;
-                GameObject target = skillHandler.skillTarget;
+                GameObject target = (GameObject)skillHandler.skillTarget;
 
                 GameObject slotToMove = (GameObject)tmp[0];
                 SkillTargetArgs args = new SkillTargetArgs();
@@ -583,6 +583,29 @@ namespace SkillModules {
         }
 
 
+    }
+
+    //skill target filtering with terrain
+    public class st_filter_terrain : Ability {
+        public st_filter_terrain() : base() { }
+
+        public override void Execute(object data) {
+            object[] tmp = (object[])data;
+            bool isPlayer = (bool)tmp[0];
+            List<GameObject> targets = (List<GameObject>)tmp[1];
+
+            var filteredList = new List<GameObject>();
+
+            var terrain = (string)args[0];
+            switch (terrain) {
+                case "normal":
+                    filteredList = targets.FindAll(x => x.GetComponentInParent<Terrain>().terrain == PlayMangement.LineState.flat);
+                    break;
+            }
+            if (filteredList.Count == 0) Logger.Log(terrain + "지형 속성의 유닛이 존재하지 않습니다.");
+
+            skillHandler.skillTarget = filteredList;
+        }
     }
 
 

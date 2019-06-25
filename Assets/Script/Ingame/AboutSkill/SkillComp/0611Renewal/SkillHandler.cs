@@ -10,7 +10,7 @@ namespace SkillModules {
     public class SkillHandler {
         private Skill[] skills;
         public GameObject myObject;
-        public GameObject skillTarget;
+        public object skillTarget;
         public bool isPlayer;
         public object targetData;
         private List<IngameEventHandler.EVENT_TYPE> triggerList;
@@ -233,8 +233,9 @@ namespace SkillModules {
                 case "place":
                     int line = selectList[0].transform.GetSiblingIndex();
                     args.Add(line.ToString());
-                    if(isEndCardPlay)
-                        isOrc = skillTarget.GetComponent<PlaceMonster>().isPlayer != isPlayerHuman;
+                    if (isEndCardPlay) {
+                        isOrc = ((GameObject)skillTarget).GetComponent<PlaceMonster>().isPlayer != isPlayerHuman;
+                    }   
                     else
                         isOrc = myObject.GetComponent<PlaceMonster>().isPlayer != isPlayerHuman;
                     args.Add(isOrc ? "orc" : "human");
@@ -256,7 +257,7 @@ namespace SkillModules {
             if(highlight != null)
                 unit = highlight.GetComponentInParent<PlaceMonster>();
             else
-                unit = skillTarget.GetComponent<PlaceMonster>();
+                unit = ((GameObject)skillTarget).GetComponent<PlaceMonster>();
             return unit;
         }
         
