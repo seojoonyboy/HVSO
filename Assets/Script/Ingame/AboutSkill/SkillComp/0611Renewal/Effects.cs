@@ -687,6 +687,21 @@ namespace SkillModules {
         }
     }
 
+    public class gain_resource : Ability {
+        public gain_resource() : base() { }
+
+        public override void Execute(object data) {
+            //data 필요없음.
+            int amount = 0;
+            int.TryParse((string)args[0], out amount);
+
+            Logger.Log("추가 자원 얻음");
+
+            PlayMangement.instance.player.resource.Value += amount;
+
+            //TODO : 자원 추가 효과 넣기
+        }
+    }
 
     public struct GainArgs {
         public int atk;
