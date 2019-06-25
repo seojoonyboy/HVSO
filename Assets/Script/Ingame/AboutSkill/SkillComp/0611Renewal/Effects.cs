@@ -391,18 +391,24 @@ namespace SkillModules {
         }
 
         private async void ReturnUnit(bool isPlayer) {
+            PlayMangement playMangement = PlayMangement.instance;
+            SocketFormat.GameState state = playMangement.socketHandler.gameState;
+            int itemId;
+
+            if(skillHandler.myObject.GetComponent<PlaceMonster>() != null) 
+                itemId = skillHandler.myObject.GetComponent<PlaceMonster>().itemId;
+            else 
+                itemId = skillHandler.myObject.GetComponent<MagicDragHandler>().itemID;
             while(true) {
                 await Task.Delay(20);
-                SocketFormat.GameState state = PlayMangement.instance.socketHandler.gameState;
                 if(state.lastUse == null) continue;
-                if(state.lastUse.cardItem.skills.ToList().Exists(x => x.effect.method.CompareTo("r_return")==0))
+                if(state.lastUse.cardItem.itemId == itemId)
                     break;
             }
-
+            
             if (IsEnemyExist(isPlayer)) {
                 var units = enemyObserver.GetAllFieldUnits();
-                SocketFormat.GameState state = PlayMangement.instance.socketHandler.gameState;
-                PlayMangement playMangement = PlayMangement.instance;
+                
                 List<SocketFormat.Unit> socketList = state.map.allMonster;
 
                 foreach(GameObject selectedUnit in units) {
@@ -532,50 +538,86 @@ namespace SkillModules {
         public summon_random() : base() { }
 
         public override void Execute(object data) {
-            PlayerController targetPlayer;
-            FieldUnitsObserver unitsObserver;
-            SkillTargetArgs targetPosition;
-            int emptySlotCount = 0;
+            
 
-            if (data.GetType().IsArray) {
-                object[] tmp = (object[])data;
-                string unitID = (string)tmp[0];
-                int count = (int)tmp[1];
-                bool isPlayer = (bool)tmp[2];
+            WaitDone();
+            // PlayerController targetPlayer;
+            // FieldUnitsObserver unitsObserver;
+            // SkillTargetArgs targetPosition;
+            // int emptySlotCount = 0;
+            
 
-                if (isPlayer) {
-                    targetPlayer = PlayMangement.instance.player;
-                    unitsObserver = PlayMangement.instance.PlayerUnitsObserver;
-                }
-                else {
-                    targetPlayer = PlayMangement.instance.enemyPlayer;
-                    unitsObserver = PlayMangement.instance.EnemyUnitsObserver;
-                }
+            // if (data.GetType().IsArray) {
+            //     object[] tmp = (object[])data;
+            //     string unitID = (string)tmp[0];
+            //     int count = (int)tmp[1];
+            //     bool isPlayer = (bool)tmp[2];
 
-                emptySlotCount = unitsObserver.CheckLineEmptyCount(0);
+            //     if (isPlayer) {
+            //         targetPlayer = PlayMangement.instance.player;
+            //         unitsObserver = PlayMangement.instance.PlayerUnitsObserver;
+            //     }
+            //     else {
+            //         targetPlayer = PlayMangement.instance.enemyPlayer;
+            //         unitsObserver = PlayMangement.instance.EnemyUnitsObserver;
+            //     }
 
-                for(int i = 0; i < count; i++) {
-                    if (i == emptySlotCount) break;
-                    bool check = false;
-                    int randomRow;
-                    targetPosition.col = 0;
-                    targetPosition.row = 0;
+            //     emptySlotCount = unitsObserver.CheckLineEmptyCount(0);
 
-                    while (check == false) {
-                        randomRow = UnityEngine.Random.Range(0, 5);
-                        if (unitsObserver.CheckUnitPosition(0, randomRow) == true) {
-                            targetPosition.col = 0;
-                            targetPosition.row = randomRow;
-                            check = true;
-                        }
-                    }
-                    InstanceSummon(targetPlayer, unitID, targetPosition);
-                }              
-            }
-            else {
-                ShowFormatErrorLog("summon_random");
-            }
+            //     for(int i = 0; i < count; i++) {
+            //         if (i == emptySlotCount) break;
+            //         bool check = false;
+            //         int randomRow;
+            //         targetPosition.col = 0;
+            //         targetPosition.row = 0;
+
+            //         while (check == false) {
+            //             randomRow = UnityEngine.Random.Range(0, 5);
+            //             if (unitsObserver.CheckUnitPosition(0, randomRow) == true) {
+            //                 targetPosition.col = 0;
+            //                 targetPosition.row = randomRow;
+            //                 check = true;
+            //             }
+            //         }
+            //         InstanceSummon(targetPlayer, unitID, targetPosition);
+            //     }              
+            // }
+            // else {
+            //     ShowFormatErrorLog("over_a_kill");
+            // }
             skillHandler.isDone = true;
+        }
+
+        private async void WaitDone() {
+            int itemId;
+            PlayMangement playMangement = PlayMangement.instance;
+            SocketFormat.GameState state = playMangement.socketHandler.gameState;
+            FieldUnitsObserver observer = skillHandler.isPlayer ? playMangement.PlayerUnitsObserver : playMangement.EnemyUnitsObserver;
+            PlayerController targetPlayer = skillHandler.isPlayer ? playMangement.player : playMangement.enemyPlayer;
+            string cardId = (string)args[0];
+
+            if(skillHandler.myObject.GetComponent<PlaceMonster>() != null) 
+                itemId = skillHandler.myObject.GetComponent<PlaceMonster>().itemId;
+            else 
+                itemId = skillHandler.myObject.GetComponent<MagicDragHandler>().itemID;
+            while(true) {
+                await Task.Delay(20);
+                if(state.lastUse == null) continue;
+                if(state.lastUse.cardItem.itemId == itemId)
+                    break;
+            }
+        
+            List<SocketFormat.Unit> socketList = state.map.allMonster;
+           
+            foreach(SocketFormat.Unit serverUnit in socketList) {
+                if(serverUnit.cardId.CompareTo(cardId) == 0) {
+                    Pos pos = serverUnit.pos;
+                    List<GameObject> list = observer.GetAllFieldUnits(pos.col);
+                    if(list.Count == 0) {
+                        InstanceSummon(targetPlayer, cardId, new SkillTargetArgs(pos));
+                    }
+                }
+            }
         }
 
         public void InstanceSummon(PlayerController targetPlayer, string unitID, SkillTargetArgs targetLocation) {
@@ -620,6 +662,11 @@ namespace SkillModules {
     }
 
     public struct SkillTargetArgs {
+        public SkillTargetArgs(Pos pos) {
+            col = pos.col;
+            row = pos.row;
+        }
+        
         public int col;
         public int row;
     }

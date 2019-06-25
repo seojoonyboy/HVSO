@@ -1,6 +1,9 @@
 using Newtonsoft.Json;
 using dataModules;
 using System.Collections.Generic;
+using System;
+using System.Reflection;
+using System.Linq;
 
 namespace SocketFormat {
     public class GameState {
@@ -103,6 +106,26 @@ namespace SocketFormat {
 
     public class Unit : Card {
         public int currentHp;
+        public Pos pos { get; }
+
+        private Pos GetPos() {
+            Pos pos = new Pos();
+            Line[] lines = PlayMangement.instance.socketHandler.gameState.map.lines;
+            PropertyInfo info = lines[0].GetType().GetProperty(camp);
+            for(int i = 0; i < lines.Length; i++) {
+                Unit[] units = (Unit[])info.GetValue(lines[i]);
+                for(int j = 0; j < units.Length; j++) {
+                    if(units[j].itemId == itemId) {
+                        pos.col = i;
+                        pos.row = j;
+                        return pos;
+                    }
+                }
+            }
+            pos.col = -1;
+            pos.row = -1;
+            return pos;
+        }
     }
 
     public class Hero {
