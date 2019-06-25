@@ -596,6 +596,7 @@ namespace SkillModules {
         private void HealPlayer(bool player, int amount) {
             PlayerController targetPlayer = (player == true) ? PlayMangement.instance.player : PlayMangement.instance.enemyPlayer;
             targetPlayer.HP.Value += amount;
+            Debug.Log(targetPlayer.name + "에" + amount + "만큼 회복");
         }
 
     }
