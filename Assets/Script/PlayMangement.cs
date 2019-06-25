@@ -23,7 +23,8 @@ public partial class PlayMangement : MonoBehaviour {
     public EffectManager effectManager;
     public SpineEffectManager spineEffectManager;
 
-    
+
+    public GameObject baseUnit;
     private int turn = 0;
     public GameObject blockPanel;
     public int unitNum = 0;
@@ -227,66 +228,86 @@ public partial class PlayMangement : MonoBehaviour {
 
     private GameObject SummonMonster(SocketFormat.PlayHistory history) {
         int i = int.Parse(history.targets[0].args[0]);
-        CardData cardData;
-        CardDataPackage cardDataPackage = AccountManager.Instance.cardPackage;
-        int enemyCardCount = CountEnemyCard();
-        GameObject skeleton;
-
         string id = history.cardItem.id;
 
-        cardData = cardDataPackage.data[id];
-        skeleton = AccountManager.Instance.resource.cardSkeleton[id];
+        GameObject monster = SummonUnit(false, id, 0, i);
+        EnemyUnitsObserver.UnitAdded(monster, i, 0);        
+        return monster;
+    }
 
-        GameObject monster = Instantiate(enemyPlayer.card.GetComponent<CardHandler>().unit);
+    public GameObject SummonUnit(bool isPlayer, string unitID, int col, int row, int cardIndex = 0) {
+        PlayerController targetPlayer = (isPlayer == true) ? player : enemyPlayer; 
+        CardDataPackage cardDataPackage = AccountManager.Instance.cardPackage;
 
-        monster.transform.SetParent(enemyPlayer.transform.GetChild(0).GetChild(i));
-        monster.transform.position = enemyPlayer.transform.GetChild(0).GetChild(i).position;
-        GameObject monsterSkeleton = Instantiate(skeleton, monster.transform);
-        monsterSkeleton.name = "skeleton";
-        PlaceMonster monsterComp = monster.GetComponent<PlaceMonster>();
-        monsterComp.itemId = history.cardItem.itemId;
-        monsterComp.unit.HP = (int)cardData.hp;
-        monsterComp.unit.currentHP = (int)cardData.hp;
-        monsterComp.unit.originalAttack = (int)cardData.attack; 
-        monsterComp.unit.attack = (int)cardData.attack;
-        monsterComp.unit.name = cardData.name;
-        monsterComp.unit.type = cardData.type;
-        monsterComp.unit.attackRange = cardData.attackRange;
-        monsterComp.unit.cost = cardData.cost;
-        monsterComp.unit.rarelity = cardData.rarelity;
-        monsterComp.unit.id = cardData.cardId;
+        GameObject skeleton;
+        CardData cardData;
+        cardData = cardDataPackage.data[unitID];
+
+        GameObject unit = Instantiate(baseUnit, targetPlayer.transform.GetChild(col).GetChild(row));
+        unit.transform.position = targetPlayer.transform.GetChild(col).GetChild(row).position;
+        PlaceMonster placeMonster = unit.GetComponent<PlaceMonster>();
+
+        placeMonster.isPlayer = isPlayer;
+        placeMonster.unit.name = cardData.name;
+        placeMonster.unit.HP = (int)cardData.hp;
+        placeMonster.unit.currentHP = (int)cardData.hp;
+        placeMonster.unit.originalAttack = (int)cardData.attack;
+        placeMonster.unit.attack = (int)cardData.attack;
+        placeMonster.unit.type = cardData.type;
+        placeMonster.unit.attackRange = cardData.attackRange;
+        placeMonster.unit.cost = cardData.cost;
+        placeMonster.unit.rarelity = cardData.rarelity;
+        placeMonster.unit.id = cardData.cardId;
+        placeMonster.unit.attributes = cardData.attributes;
+
 
         if (cardData.category_2 != "") {
-            monsterComp.unit.cardCategories = new string[2];
-            monsterComp.unit.cardCategories[0] = cardData.category_1;
-            monsterComp.unit.cardCategories[1] = cardData.category_2;
+            placeMonster.unit.cardCategories = new string[2];
+            placeMonster.unit.cardCategories[0] = cardData.category_1;
+            placeMonster.unit.cardCategories[1] = cardData.category_2;
         }
         else {
-            monsterComp.unit.cardCategories = new string[1];
-            monsterComp.unit.cardCategories[0] = cardData.category_1;
+            placeMonster.unit.cardCategories = new string[1];
+            placeMonster.unit.cardCategories[0] = cardData.category_1;
         }
 
         if (cardData.attackTypes.Length > 0) {
-            monsterComp.unit.attackType = new string[cardData.attackTypes.Length];
-            monsterComp.unit.attackType = cardData.attackTypes;
-            
+            placeMonster.unit.attackType = new string[cardData.attackTypes.Length];
+            placeMonster.unit.attackType = cardData.attackTypes;
         }
 
+        skeleton = Instantiate(AccountManager.Instance.resource.cardSkeleton[unitID], placeMonster.transform);
+        skeleton.name = "skeleton";
+        skeleton.transform.localScale = (isPlayer == true) ? new Vector3(-1, 1, 1) : new Vector3(1,1,1);
+        placeMonster.name = cardData.name;
 
-        monsterComp.Init(cardData);
-        monsterComp.SpawnUnit();
-        enemyPlayer.PlayerUseCard();
-        EnemyUnitsObserver.UnitAdded(monster, i, 0);
+        placeMonster.Init(cardData);
+        placeMonster.SpawnUnit();
 
-        enemyPlayer.resource.Value -= cardData.cost;
-        Destroy(enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(enemyCardCount - 1).GetChild(0).gameObject);
+        if (isPlayer) {
+            player.isPicking.Value = false;
+            player.resource.Value -= cardData.cost;
+            if (player.isHuman)
+                player.ActivePlayer();
+            else
+                player.ActiveOrcTurn();
+            
+            player.cdpm.DestroyCard(cardIndex);
+        }
+        else {
+            int enemyCardCount = CountEnemyCard();
+            enemyPlayer.resource.Value -= cardData.cost;
+            Destroy(enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(enemyCardCount - 1).GetChild(0).gameObject);
 
-        SkillModules.SkillHandler skillHandler = new SkillModules.SkillHandler();
-        skillHandler.Initialize(cardData.skills, monster, false);
-        monster.GetComponent<PlaceMonster>().skillHandler = skillHandler;
+            SkillModules.SkillHandler skillHandler = new SkillModules.SkillHandler();
+            skillHandler.Initialize(cardData.skills, unit, false);
+            unit.GetComponent<PlaceMonster>().skillHandler = skillHandler;
 
-        monster.layer = 14;
-        return monster;
+            unit.layer = 14;
+        }
+
+        targetPlayer.PlayerUseCard();
+        return unit;
     }
 
     public void ChangeTurn() {
