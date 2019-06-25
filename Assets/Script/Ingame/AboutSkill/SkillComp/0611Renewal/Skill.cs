@@ -112,7 +112,10 @@ namespace SkillModules {
                         Logger.Log("타겟이 없습니다.");
                         mySkillHandler.isDone = true;
                     },
-                    conditionCheckers[0].filtering
+                    delegate(ref List<GameObject> list) {
+                        if(conditionCheckers.Length == 0) return;
+                        conditionCheckers[0].filtering(ref list);
+                    } 
                 );
             }
             
