@@ -291,7 +291,11 @@ public partial class PlayMangement : MonoBehaviour {
             else
                 player.ActiveOrcTurn();
 
-            playerUnitsObserver.RefreshFields(args);
+            if (args != null)
+                playerUnitsObserver.RefreshFields(args);
+            else
+                playerUnitsObserver.UnitAdded(unit, col, row);
+
             player.cdpm.DestroyCard(cardIndex);
         }
         else {
@@ -302,7 +306,7 @@ public partial class PlayMangement : MonoBehaviour {
             skillHandler.Initialize(cardData.skills, unit, false);
             unit.GetComponent<PlaceMonster>().skillHandler = skillHandler;
 
-            EnemyUnitsObserver.UnitAdded(unit, row, 0);
+            EnemyUnitsObserver.UnitAdded(unit, 0, row);
             unit.layer = 14;
         }
         targetPlayer.resource.Value -= cardData.cost;
