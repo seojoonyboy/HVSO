@@ -650,6 +650,30 @@ namespace SkillModules {
         }
     }
 
+    //skill target filtering with category
+    public class st_filter_ctg : Ability {
+        //TODO
+        public st_filter_ctg() : base() { }
+
+        public override void Execute(object data) {
+            object[] tmp = (object[])data;
+            bool isPlayer = (bool)tmp[0];
+            List<GameObject> targets = (List<GameObject>)tmp[1];
+
+            var filteredList = new List<GameObject>();
+            var category = (string)args[0];
+            filteredList = targets
+                .FindAll(
+                    x => x.GetComponent<PlaceMonster>()
+                    .unit
+                    .cardCategories
+                    .ToList()
+                    .Contains(category)
+                );
+            skillHandler.skillTarget = filteredList;
+        }
+    }
+
 
     public struct GainArgs {
         public int atk;

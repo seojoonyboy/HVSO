@@ -227,6 +227,10 @@ namespace SkillModules {
                 bool isPlayer = mySkillHandler.isPlayer;
                 result = new object[] { isPlayer, targets };
             }
+            else if(ability.GetType() == typeof(st_filter_ctg)) {
+                bool isPlayer = mySkillHandler.isPlayer;
+                result = new object[] { isPlayer, targets };
+            }
             return result;
         }
 
