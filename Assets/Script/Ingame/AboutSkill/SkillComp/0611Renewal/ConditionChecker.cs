@@ -215,6 +215,21 @@ namespace SkillModules {
         }
     }
 
+    public class select_ctg_chk : ConditionChecker {
+        PlayedObject playedObject;
+
+        public select_ctg_chk(SkillHandler skillHandler, string[] args = null) : base(skillHandler) {
+            playedObject = new PlayedObject();
+        }
+
+        public override bool IsConditionSatisfied() {
+            if (!ArgsExist()) return false;
+            playedObject.IsValidateData(mySkillHandler.targetData);
+
+            return true;
+        }
+    }
+
     public class PlayedObject {
         public bool isTargetPlayer;
         public GameObject targetObject;
