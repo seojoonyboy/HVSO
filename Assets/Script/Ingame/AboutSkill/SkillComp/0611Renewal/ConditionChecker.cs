@@ -40,7 +40,7 @@ namespace SkillModules {
     public class skill_target_ctg_chk : ConditionChecker {
         public skill_target_ctg_chk(SkillHandler mySkillHandler, string[] args = null) : base(mySkillHandler, args) { }
         public override bool IsConditionSatisfied() {
-            GameObject target = mySkillHandler.skillTarget;
+            GameObject target = (GameObject)mySkillHandler.skillTarget;
             if(target == null) return false;
             IngameClass.Unit unit = target.GetComponent<PlaceMonster>().unit;
             bool exist = unit.cardCategories.ToList().Exists(x => x.CompareTo(args[0]) == 0);
@@ -212,6 +212,21 @@ namespace SkillModules {
                 if (placeMonster.unit.cardCategories.ToList().Contains(args[0])) return true;
             }
             return false;
+        }
+    }
+
+    public class select_ctg_chk : ConditionChecker {
+        PlayedObject playedObject;
+
+        public select_ctg_chk(SkillHandler skillHandler, string[] args = null) : base(skillHandler) {
+            playedObject = new PlayedObject();
+        }
+
+        public override bool IsConditionSatisfied() {
+            if (!ArgsExist()) return false;
+            playedObject.IsValidateData(mySkillHandler.targetData);
+
+            return true;
         }
     }
 

@@ -134,7 +134,10 @@ namespace SkillModules {
         }
 
         public override void SetTarget(object target) {
-            targets.Add((GameObject)target);
+            if(target.GetType() == typeof(List<GameObject>)) {
+                targets.AddRange((List<GameObject>)target);
+            }
+            else targets.Add((GameObject)target);
         }
     }
 
@@ -533,7 +536,8 @@ namespace SkillModules {
                             }
                             //마법카드인 경우
                             else {
-                                placeMonster = skillHandler.skillTarget.GetComponent<PlaceMonster>();
+                                var skillTarget = (GameObject)skillHandler.skillTarget;
+                                placeMonster = skillTarget.GetComponent<PlaceMonster>();
                                 if (observer.transform.GetChild(0).GetChild(i).GetComponent<Terrain>().terrain == PlayMangement.LineState.forest) {
                                     //유닛이 숲 지형에 갈 수 있는 경우
                                     if (placeMonster.unit.attributes.ToList().Contains("footslog")) {

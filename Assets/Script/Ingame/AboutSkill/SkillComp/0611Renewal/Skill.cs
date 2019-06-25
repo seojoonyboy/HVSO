@@ -222,6 +222,10 @@ namespace SkillModules {
                 int count = (int)ability.args[1];
                 result = new object[] { unitID, count, isPlayer };
             }
+            else if(ability.GetType() == typeof(st_filter_terrain)) {
+                bool isPlayer = mySkillHandler.isPlayer;
+                result = new object[] { isPlayer, targets };
+            }
             return result;
         }
 
