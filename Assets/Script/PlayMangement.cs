@@ -309,9 +309,11 @@ public partial class PlayMangement : MonoBehaviour {
                 player.ActivePlayer();
             else
                 player.ActiveOrcTurn();
+            if (args != null)
+                playerUnitsObserver.RefreshFields(args);
+            else
+                playerUnitsObserver.UnitAdded(unit, col, row);
 
-            PlayerUnitsObserver.UnitAdded(unit, col, 0);
-            playerUnitsObserver.RefreshFields(args);
             player.cdpm.DestroyCard(cardIndex);
         }
         else {
