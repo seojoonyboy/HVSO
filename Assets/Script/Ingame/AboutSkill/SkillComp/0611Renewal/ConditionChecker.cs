@@ -28,6 +28,10 @@ namespace SkillModules {
             return true;
         }
 
+        public virtual void filtering(ref List<GameObject> list) {
+            return;
+        }
+
         protected bool ArgsExist() {
             if(args.Length == 0) {
                 Logger.LogError("args가 필요한 조건에 args가 존재하지 않습니다.");
@@ -185,6 +189,12 @@ namespace SkillModules {
             PlaceMonster playedMonster = playedObject.targetObject.GetComponent<PlaceMonster>();
             return playedMonster.unit.attack >= int.Parse(args[0]);
         }*/
+
+        public override void filtering(ref List<GameObject> list) {
+            int power = int.Parse(args[0]);
+            list.RemoveAll(x => x.GetComponent<PlaceMonster>().unit.attack < power);
+            return;
+        }
     }
 
     public class my_field_ctg_chk : ConditionChecker {
@@ -227,6 +237,12 @@ namespace SkillModules {
             playedObject.IsValidateData(mySkillHandler.targetData);
 
             return true;
+        }
+
+        public override void filtering(ref List<GameObject> list) {
+            string category = (string)args[0];
+            list.RemoveAll(x => (!x.GetComponent<PlaceMonster>().unit.cardCategories.ToList().Exists(y => y.CompareTo(category)==0)));
+            return;
         }
     }
 

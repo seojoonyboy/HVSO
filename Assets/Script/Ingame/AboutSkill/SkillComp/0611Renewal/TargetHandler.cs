@@ -8,6 +8,7 @@ namespace SkillModules {
     public class TargetHandler : MonoBehaviour {
         public delegate void SelectTargetFinished(object parms);
         public delegate void SelectTargetFailed(string msg);
+        public delegate void Filtering(ref List<GameObject> list);
 
         public string[] args;
 
@@ -20,7 +21,7 @@ namespace SkillModules {
         /// <summary>
         /// 타겟을 지정하는 단계를 시작
         /// </summary>
-        public virtual void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback) {
+        public virtual void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback, Filtering filter) {
             targets = new List<GameObject>();
             Logger.Log("타겟을 지정합니다.");
         }
@@ -121,8 +122,8 @@ namespace SkillModules {
     }
 
     public class skill_target : TargetHandler {
-        public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback) {
-            base.SelectTarget(successCallback, failedCallback);
+        public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback, Filtering filter) {
+            base.SelectTarget(successCallback, failedCallback, filter);
 
             var target = skillHandler.skillTarget;
             if (target == null) {
@@ -153,8 +154,8 @@ namespace SkillModules {
             }
         }
 
-        public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback) {
-            base.SelectTarget(successCallback, failedCallback);
+        public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback, Filtering filter) {
+            base.SelectTarget(successCallback, failedCallback, filter);
 
             //직접 지정하는게 없음
             SetTarget(null);
@@ -175,8 +176,8 @@ namespace SkillModules {
     }
 
     public class attack_target : TargetHandler {
-        public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback) {
-            base.SelectTarget(successCallback, failedCallback);
+        public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback, Filtering filter) {
+            base.SelectTarget(successCallback, failedCallback, filter);
 
             if(GetComponent<PlaceMonster>().myTarget == null) {
                 failedCallback("대상을 찾을 수 없습니다.");
@@ -194,8 +195,8 @@ namespace SkillModules {
     }
 
     public class self : TargetHandler {
-        public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback) {
-            base.SelectTarget(successCallback, failedCallback);
+        public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback, Filtering filter) {
+            base.SelectTarget(successCallback, failedCallback, filter);
 
             SetTarget(gameObject);
             successCallback(gameObject);
@@ -207,8 +208,8 @@ namespace SkillModules {
     }
     
     public class played_target : TargetHandler {
-        public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback) {
-            base.SelectTarget(successCallback, failedCallback);
+        public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback, Filtering filter) {
+            base.SelectTarget(successCallback, failedCallback, filter);
 
             
             if (args == null) failedCallback("Args 가 존재가지 않습니다.");
@@ -285,8 +286,8 @@ namespace SkillModules {
     }
 
     public class exclusive_played_target : TargetHandler {
-        public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback) {
-            base.SelectTarget(successCallback, failedCallback);
+        public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback, Filtering filter) {
+            base.SelectTarget(successCallback, failedCallback, filter);
 
 
             if (args == null) failedCallback("Args 가 존재가지 않습니다.");
@@ -417,8 +418,8 @@ namespace SkillModules {
             }
         }
 
-        public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback) {
-            base.SelectTarget(successCallback, failedCallback);
+        public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback, Filtering filter) {
+            base.SelectTarget(successCallback, failedCallback, filter);
             //TODO : 적일 경우 해당 소켓이 도달 할 때까지 기다리기 card_played, skill_activated
             if(!skillHandler.isPlayer) { 
                 skillHandler.isDone = true;
@@ -454,7 +455,7 @@ namespace SkillModules {
 
                             //잠복중인 유닛은 타겟에서 제외
                             var units = PlayMangement.instance.PlayerUnitsObserver.GetAllFieldUnits();
-
+                            filter(ref units);
                             foreach (GameObject unit in units) {
                                 var ui = unit.transform.Find("ClickableUI").gameObject;
                                 if (ui != null) {
@@ -578,8 +579,8 @@ namespace SkillModules {
     }
 
     public class played : TargetHandler {
-        public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback) {
-            base.SelectTarget(successCallback, failedCallback);
+        public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback, Filtering filter) {
+            base.SelectTarget(successCallback, failedCallback, filter);
 
             if(args[0] == "my") {
                 object[] tmp = (object[])skillHandler.targetData;

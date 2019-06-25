@@ -110,7 +110,8 @@ namespace SkillModules {
                     delegate {
                         Logger.Log("타겟이 없습니다.");
                         mySkillHandler.isDone = true;
-                    }
+                    },
+                    conditionCheckers[0].filtering
                 );
             }
             
