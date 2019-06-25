@@ -59,6 +59,8 @@ namespace SkillModules {
                     new ConditionChecker(mySkillHandler, conditions[i].args), 
                     mySkillHandler, conditions[i].args);
             }
+            if(conditionCheckers.Length == 0) return;
+            mySkillHandler.dragFiltering = conditionCheckers[0].filtering;
         }
 
         public T MethodToClass<T>(string method, T t, SkillHandler handler = null, string[] args = null) {

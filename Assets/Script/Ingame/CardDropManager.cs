@@ -292,21 +292,24 @@ public partial class CardDropManager {
 
     protected string magicArgs;
     protected string magicTarget;
-    public void ShowMagicalSlot(string[] target) {
+    public void ShowMagicalSlot(string[] target, SkillModules.SkillHandler.DragFilter dragFiltering) {
         if (target == null) return;
         magicArgs = target[0];
         magicTarget = target[1];
         if (magicArgs == "my")
-            ActivateTarget(unitLine, magicTarget);
+            ActivateTarget(unitLine, magicTarget, dragFiltering);
         else
-            ActivateTarget(enemyUnitLine, magicTarget);
+            ActivateTarget(enemyUnitLine, magicTarget, dragFiltering);
     }
 
-    private void ActivateTarget(Transform[][] units, string group) {
+    private void ActivateTarget(Transform[][] units, string group, SkillModules.SkillHandler.DragFilter dragFiltering) {
         switch (group) {
             case "unit":
                 for (int i = 0; i < 5; i++) {
                     for (int j = 0; j < 2; j++) {
+                        if(dragFiltering != null) {
+                            if(!dragFiltering(units[i][j].GetChild(0).gameObject)) continue;
+                        }
                         if (units[i][j].childCount > 0 && units[i][j].GetChild(0).GetComponent<ambush>() == null) {
                             units[i][j].GetChild(0).Find("ClickableUI").gameObject.SetActive(true);
                             units[i][j].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(true);
@@ -363,24 +366,6 @@ public partial class CardDropManager {
             case "all":
                 slotLine[2].Find("AllMagicTrigger").gameObject.SetActive(false);
                 break;
-        }
-    }
-
-    /// <summary>
-    /// 일정 공격력 이상의 적만 타겟팅
-    /// </summary>
-    /// <param name="target"></param>
-    /// <param name="enemyAttack"></param> 
-    public void ShowMagicalSlot(string target, int enemyAttack) {
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 2; j++) {
-                if (enemyUnitLine[i][j].childCount > 0) {
-                    if (enemyUnitLine[i][j].GetChild(0).GetComponent<PlaceMonster>().unit.attack >= enemyAttack) {
-                        enemyUnitLine[i][j].GetChild(0).Find("ClickableUI").gameObject.SetActive(true);
-                        enemyUnitLine[i][j].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(true);
-                    }
-                }
-            }
         }
     }
 }
