@@ -201,7 +201,8 @@ public class CardCircleManager : MonoBehaviour {
         removeCard.eulerAngles = Vector3.zero;
         removeCard.localPosition = Vector3.zero;
         cardList.RemoveAt(index);
-        clm.RemoveCardInfo(index);
+        if(removeCard.name == "MagicCard")
+            clm.RemoveCardInfo(index);
         cardNum--;
         for (int i = index; i < cardNum; i++) {
             transform.GetChild(i).GetChild(1).GetComponent<CardHandler>().CARDINDEX = i;
