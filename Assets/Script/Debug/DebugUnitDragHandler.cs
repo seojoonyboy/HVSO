@@ -13,8 +13,8 @@ public class DebugUnitDragHandler : DebugCardHandler, IBeginDragHandler, IDragHa
             DebugCardInfoOnDrag.instance.SetCardDragInfo(null, transform.localPosition, cardData.skills[0].desc);
         else
             DebugCardInfoOnDrag.instance.SetCardDragInfo(null, transform.localPosition);
-        beforeDragParent = transform.parent;
-        transform.SetParent(DebugManagement.instance.cardDragCanvas);
+        //beforeDragParent = transform.parent;
+        //transform.SetParent(DebugManagement.instance.cardDragCanvas);
         itsDragging = gameObject;
         blockButton = DebugManagement.instance.player.dragCard = true;
         DebugManagement.instance.player.isPicking.Value = true;
@@ -42,9 +42,9 @@ public class DebugUnitDragHandler : DebugCardHandler, IBeginDragHandler, IDragHa
 
     public void OnEndDrag(PointerEventData eventData) {
         if (gameObject != itsDragging) return;
-        transform.SetParent(beforeDragParent);
+        //transform.SetParent(beforeDragParent);
         CheckLocation(true);
-        iTween.MoveTo(gameObject, beforeDragParent.position, 0.3f);
+        //iTween.MoveTo(gameObject, beforeDragParent.position, 0.3f);
         iTween.ScaleTo(gameObject, new Vector3(1, 1, 1), 0.3f);
         blockButton = DebugManagement.instance.player.dragCard = false;
         DebugManagement.instance.player.isPicking.Value = false;
