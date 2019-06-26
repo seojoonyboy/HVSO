@@ -1,0 +1,69 @@
+
+ac10032.png
+size: 512,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+L_arm
+  rotate: false
+  xy: 244, 0
+  size: 67, 100
+  orig: 67, 100
+  offset: 0, 0
+  index: -1
+L_arm_2
+  rotate: true
+  xy: 344, 130
+  size: 125, 153
+  orig: 125, 153
+  offset: 0, 0
+  index: -1
+L_leg
+  rotate: false
+  xy: 127, 20
+  size: 58, 78
+  orig: 58, 78
+  offset: 0, 0
+  index: -1
+R_arm
+  rotate: true
+  xy: 0, 0
+  size: 74, 127
+  orig: 74, 127
+  offset: 0, 0
+  index: -1
+R_leg
+  rotate: false
+  xy: 185, 22
+  size: 59, 76
+  orig: 59, 76
+  offset: 0, 0
+  index: -1
+body
+  rotate: true
+  xy: 344, 5
+  size: 125, 119
+  orig: 125, 119
+  offset: 0, 0
+  index: -1
+head
+  rotate: true
+  xy: 60, 98
+  size: 157, 143
+  orig: 157, 143
+  offset: 0, 0
+  index: -1
+head_2
+  rotate: true
+  xy: 203, 100
+  size: 155, 141
+  orig: 155, 141
+  offset: 0, 0
+  index: -1
+shadow
+  rotate: true
+  xy: 0, 74
+  size: 181, 60
+  orig: 181, 60
+  offset: 0, 0
+  index: -1
