@@ -1,0 +1,83 @@
+
+ac10041.png
+size: 1024,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+L_arm
+  rotate: false
+  xy: 0, 81
+  size: 270, 158
+  orig: 270, 158
+  offset: 0, 0
+  index: -1
+L_leg
+  rotate: true
+  xy: 269, 19
+  size: 55, 80
+  orig: 55, 80
+  offset: 0, 0
+  index: -1
+R_arm
+  rotate: false
+  xy: 767, 128
+  size: 73, 111
+  orig: 73, 111
+  offset: 0, 0
+  index: -1
+R_leg
+  rotate: false
+  xy: 212, 0
+  size: 57, 81
+  orig: 57, 81
+  offset: 0, 0
+  index: -1
+body
+  rotate: false
+  xy: 626, 109
+  size: 141, 130
+  orig: 141, 130
+  offset: 0, 0
+  index: -1
+head
+  rotate: true
+  xy: 270, 74
+  size: 165, 178
+  orig: 165, 178
+  offset: 0, 0
+  index: -1
+head_2
+  rotate: true
+  xy: 448, 74
+  size: 165, 178
+  orig: 165, 178
+  offset: 0, 0
+  index: -1
+shadow
+  rotate: false
+  xy: 0, 10
+  size: 212, 71
+  orig: 212, 71
+  offset: 0, 0
+  index: -1
+weapon_1
+  rotate: false
+  xy: 970, 193
+  size: 48, 46
+  orig: 48, 46
+  offset: 0, 0
+  index: -1
+weapon_2
+  rotate: false
+  xy: 905, 148
+  size: 65, 91
+  orig: 65, 91
+  offset: 0, 0
+  index: -1
+weapon_3
+  rotate: false
+  xy: 840, 148
+  size: 65, 91
+  orig: 65, 91
+  offset: 0, 0
+  index: -1

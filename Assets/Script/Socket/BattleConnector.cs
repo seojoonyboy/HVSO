@@ -42,6 +42,7 @@ public partial class BattleConnector : MonoBehaviour {
         webSocket.OnOpen += OnOpen;
         webSocket.OnMessage += ReceiveMessage;
         webSocket.OnClosed += OnClosed;
+        webSocket.OnError += OnError;
         webSocket.Open();
 
         message.text = "대전상대를 찾는중...";
@@ -50,6 +51,10 @@ public partial class BattleConnector : MonoBehaviour {
     public void OnClosed(WebSocket webSocket, ushort code, string msg) {
         Logger.LogWarning("Socket has been closed : " + code + "  message : " + msg);
         battleGameFinish = true;
+    }
+
+    public void OnError(WebSocket webSocket, Exception ex) {
+        Logger.LogError("Socket Error message : " + ex);
     }
 
     //Connected
@@ -76,7 +81,12 @@ public partial class BattleConnector : MonoBehaviour {
         OnReceiveSocketMessage.Invoke();
         ReceiveFormat result = dataModules.JsonReader.Read<ReceiveFormat>(message);
         queue.Enqueue(result);
-        Logger.Log(string.Format("메소드 : {0}, args : {1}", result.method, result.args));
+        StartCoroutine("showMessage",result);
+    }
+
+    private IEnumerator showMessage(ReceiveFormat result) {
+        yield return null;
+        Logger.Log(string.Format("메소드 : {0}, args : {1}, map : {2}", result.method, result.args, result.gameState != null ? result.gameState.map : null));
     }
 
     public void ClientReady() {
@@ -235,7 +245,7 @@ public partial class BattleConnector : MonoBehaviour {
     public void begin_orc_post_turn(object args) {
         //Logger.Log("WebSocket State : begin_orc_post_turn");
         checkMyTurn(false);
-        DebugSocketData.CheckMapPosition(gameState);
+        //DebugSocketData.CheckMapPosition(gameState);
     }
 
     public void checkMapPos(object args) {
@@ -248,7 +258,10 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void skill_activate(object args) {
-        Logger.Log("유닛 스킬 발동 " + args);
+        if(PlayMangement.instance.enemyPlayer.isHuman) return;
+        var json = (JObject)args;
+        int itemId = int.Parse(json["itemId"].ToString());
+        unitSkillList.Enqueue(itemId);
         //item Id가 args에 있음
         //Logger.Log("WebSocket State : unit_skill_activate");
         //적이 skill_activate 할 경우?
@@ -353,6 +366,7 @@ public partial class BattleConnector : MonoBehaviour {
     public Queue<SocketFormat.Player> humanData = new Queue<SocketFormat.Player>();
     public Queue<SocketFormat.Player> orcData = new Queue<SocketFormat.Player>();
     public Queue <ShieldCharge> shieldChargeQueue = new Queue<ShieldCharge>();
+    public QueueSocketList<int> unitSkillList = new QueueSocketList<int>();
 
     public IEnumerator WaitGetCard() {
         while(!getNewCard) {
@@ -430,7 +444,7 @@ namespace SocketFormat {
         public bool allDone { get { return isDone && queue.Count == 0; } }
 
         public IEnumerator WaitNext() {
-            while(allDone) {
+            while(!isDone) {
                 yield return new WaitForFixedUpdate();
                 if(Count != 0) break;
             }
