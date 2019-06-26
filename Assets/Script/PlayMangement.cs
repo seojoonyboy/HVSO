@@ -190,6 +190,18 @@ public partial class PlayMangement : MonoBehaviour {
             yield return socketHandler.useCardList.WaitNext();
             SocketFormat.GameState state = socketHandler.getHistory();
             SocketFormat.PlayHistory history = state.lastUse;
+            #region test magic card
+            #if TEST
+            history = new SocketFormat.PlayHistory();
+            history.cardItem = new SocketFormat.Card();
+            history.targets = new SocketFormat.Target[1]{new SocketFormat.Target()};
+            history.targets[0].method = "line";
+            history.targets[0].args = new string[1]{"0"};
+            history.cardItem.id = "ac10021";
+            history.cardItem.itemId = 704;
+            history.cardItem.type = "magic";
+            #endif
+            #endregion
             if(history != null) {
                 if (history.cardItem.type.CompareTo("unit") == 0) {
                     GameObject summonedMonster = SummonMonster(history);
@@ -199,13 +211,10 @@ public partial class PlayMangement : MonoBehaviour {
                     EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
                     EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.FIELD_CHANGED, null, null);
                 }
-
                 else {
                     GameObject summonedMagic = SummonMagic(history);
                     summonedMagic.GetComponent<MagicDragHandler>().isPlayer = false;
-                    object[] parms = new object[] { false, summonedMagic };
-                    EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
-                    yield return MagicActivate();
+                    yield return MagicActivate(summonedMagic);
                 }
                 SocketFormat.DebugSocketData.SummonCardData(history);
             }
@@ -218,27 +227,36 @@ public partial class PlayMangement : MonoBehaviour {
     }
 
     private GameObject SummonMagic(SocketFormat.PlayHistory history) {
-        
-
-        int i = int.Parse(history.targets[0].args[0]);
         CardData cardData;
         CardDataPackage cardDataPackage = AccountManager.Instance.cardPackage;
-        int enemyCardCount = CountEnemyCard();
 
-        string id = history.cardItem.id;
-
-        cardData = cardDataPackage.data[id];
-        GameObject magicCard = enemyPlayer.cdpm.InstantiateMagicCard(cardData);
+        cardData = cardDataPackage.data[history.cardItem.id];
+        GameObject magicCard = player.cdpm.InstantiateMagicCard(cardData, history.cardItem.itemId);
 
         Logger.Log("use Magic Card" + history.cardItem.name);
         enemyPlayer.resource.Value -= cardData.cost;
 
-        //TODO : EVENT : END_CARD_PLAY 호출
-        Destroy(enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(enemyCardCount - 1).GetChild(0).gameObject);
-        return null;
+        Destroy(enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(CountEnemyCard() - 1).GetChild(0).gameObject);
+        return magicCard;
     }
 
-    private IEnumerator MagicActivate() {
+    private IEnumerator MagicActivate(GameObject card) {
+        card.transform.rotation = new Quaternion(0, 0, 540, card.transform.rotation.w);
+        card.SetActive(true);
+        iTween.MoveTo(card, Vector3.zero, 0.4f);
+        iTween.ValueTo(card, iTween.Hash(
+            "from", card.GetComponent<RectTransform>().anchoredPosition,
+            "to", enemyPlayer.playerUI.GetComponent<RectTransform>().anchoredPosition,
+            "speed", 0.4f,
+            "onupdatetarget", card,
+            "onupdate", "MoveRect"
+        ));
+        Logger.Log(enemyPlayer.playerUI.transform.position);
+        iTween.RotateTo(card, enemyPlayer.playerUI.transform.position, 0.5f);
+        yield return new WaitForSeconds(0.5f);
+        object[] parms = new object[] { false, card };
+        Logger.Log("소환까진 테스트");
+        //EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
         yield return null;
     }
 

@@ -30,7 +30,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         PlayMangement.instance.player.isPicking.Value = true;
 
         //TODO : Filter를 통해(Use Condition) 타겟 표시 추가 제어
-        CardDropManager.Instance.ShowMagicalSlot(cardData.skills[0].target.args);
+        CardDropManager.Instance.ShowMagicalSlot(cardData.skills[0].target.args, skillHandler.dragFiltering);
 
         object[] parms = new object[] { true, gameObject };
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_CARD_PLAY, this, parms);

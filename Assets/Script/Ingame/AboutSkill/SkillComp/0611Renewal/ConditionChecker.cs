@@ -32,6 +32,10 @@ namespace SkillModules {
             return;
         }
 
+        public virtual bool filtering(GameObject testObject) {
+            return true;
+        }
+
         protected bool ArgsExist() {
             if(args.Length == 0) {
                 Logger.LogError("args가 필요한 조건에 args가 존재하지 않습니다.");
