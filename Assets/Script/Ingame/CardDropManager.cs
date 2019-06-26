@@ -299,6 +299,7 @@ public partial class CardDropManager {
                 for (int i = 0; i < 5; i++) {
                     for (int j = 0; j < 2; j++) {
                         if(dragFiltering != null) {
+                            if(units[i][j].childCount == 0) continue;
                             if(!dragFiltering(units[i][j].GetChild(0).gameObject)) continue;
                         }
                         if (units[i][j].childCount > 0 && units[i][j].GetChild(0).GetComponent<ambush>() == null) {

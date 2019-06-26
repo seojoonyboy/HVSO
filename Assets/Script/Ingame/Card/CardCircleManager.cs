@@ -308,7 +308,7 @@ public class CardCircleManager : MonoBehaviour {
         }
     }
 
-    public GameObject InstantiateMagicCard(CardData data) {
+    public GameObject InstantiateMagicCard(CardData data, int itemId) {
         GameObject card = cardStorage.Find("MagicCards").GetChild(0).gameObject;
         card.transform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = data.name;
         card.AddComponent<MagicDragHandler>().cardData = data;

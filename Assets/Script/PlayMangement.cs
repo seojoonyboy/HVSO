@@ -214,7 +214,7 @@ public partial class PlayMangement : MonoBehaviour {
                 else {
                     GameObject summonedMagic = SummonMagic(history);
                     summonedMagic.GetComponent<MagicDragHandler>().isPlayer = false;
-                    yield return MagicActivate(summonedMagic);
+                    yield return MagicActivate(summonedMagic, history);
                 }
                 SocketFormat.DebugSocketData.SummonCardData(history);
             }
@@ -240,23 +240,56 @@ public partial class PlayMangement : MonoBehaviour {
         return magicCard;
     }
 
-    private IEnumerator MagicActivate(GameObject card) {
+    private IEnumerator MagicActivate(GameObject card, SocketFormat.PlayHistory history) {
+        //카드 등장 애니메이션
         card.transform.rotation = new Quaternion(0, 0, 540, card.transform.rotation.w);
+        card.transform.SetParent(enemyPlayer.playerUI.transform);
         card.SetActive(true);
-        iTween.MoveTo(card, Vector3.zero, 0.4f);
-        iTween.ValueTo(card, iTween.Hash(
-            "from", card.GetComponent<RectTransform>().anchoredPosition,
-            "to", enemyPlayer.playerUI.GetComponent<RectTransform>().anchoredPosition,
-            "speed", 0.4f,
-            "onupdatetarget", card,
-            "onupdate", "MoveRect"
-        ));
+        iTween.RotateTo(card, Vector3.zero, 0.5f);
+        iTween.MoveTo(card, iTween.Hash(
+            "x", card.transform.parent.position.x, 
+            "y", card.transform.parent.position.y, 
+            "time" ,0.5f, 
+            "easetype" , iTween.EaseType.easeWeakOutBack));
         Logger.Log(enemyPlayer.playerUI.transform.position);
-        iTween.RotateTo(card, enemyPlayer.playerUI.transform.position, 0.5f);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1.0f);
+        
+        //타겟 지정 애니메이션
+        for(int i = 0; i < history.targets.Length; i++) {
+            yield return EnemySettingTarget(history.targets[i]);
+        }
+        //실제 카드 사용
         object[] parms = new object[] { false, card };
-        Logger.Log("소환까진 테스트");
-        //EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
+        EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
+        
+        //카드 파괴
+        Destroy(card);
+    }
+
+    private IEnumerator EnemySettingTarget(SocketFormat.Target target) {
+        switch(target.method) {
+        case "place" :
+            //target.args[0] line, args[1] camp, args[2] front or rear
+            //근데 마법으로 place는 안나올 듯 패스!
+            break;
+        case "unit" :
+            int itemId = int.Parse(target.args[0]);
+            List<GameObject> list = enemyUnitsObserver.GetAllFieldUnits();
+            list.AddRange(playerUnitsObserver.GetAllFieldUnits());
+            GameObject unit = list.Find(x => x.GetComponent<PlaceMonster>().itemId == itemId);
+            
+            //target.args[0] itemid (유닛을 검색해야함)
+            break;
+        case "line" :
+            //target.args[0] line
+            break;
+        case "all" :
+            //보여줄게 없음
+            break;
+        case "camp" :
+            //보여줄게 없음
+            break;
+        }
         yield return null;
     }
 
