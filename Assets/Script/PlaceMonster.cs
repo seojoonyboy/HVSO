@@ -104,7 +104,7 @@ public class PlaceMonster : MonoBehaviour {
 
             if (isPlayer == false) {
                 if (arrow.gameObject.name.Contains("Dog") == true)
-                    arrow.transform.localScale = new Vector3(-1, 1, 1);
+                    arrow.transform.localScale = new Vector3(1, 1, 1);
                 else
                     arrow.transform.localScale = new Vector3(1, -1, 1);
             }
