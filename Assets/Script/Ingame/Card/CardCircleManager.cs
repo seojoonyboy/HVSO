@@ -41,7 +41,7 @@ public class CardCircleManager : MonoBehaviour {
         card.GetComponent<CardHandler>().DrawCard(socketCard.id, socketCard.itemId, true);
 
         if (socketCard.type == "magic") {
-            card.transform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = socketCard.name;
+            card.transform.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = socketCard.name;
             AddMagicAttribute(ref card);
         }
 
@@ -100,7 +100,7 @@ public class CardCircleManager : MonoBehaviour {
             card.GetComponent<CardHandler>().DrawCard(id, itemId);
 
             if (cardData.type == "magic") {
-                card.transform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.name;
+                card.transform.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.name;
                 AddMagicAttribute(ref card);
             }
         }
@@ -142,7 +142,7 @@ public class CardCircleManager : MonoBehaviour {
             card.GetComponent<CardHandler>().DrawCard(id, itemId);
 
             if (cardData[i].type == "magic") {
-                card.transform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = cardData[i].name;
+                card.transform.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData[i].name;
                 AddMagicAttribute(ref card);
             }
             Transform cardTransform = card.transform;
@@ -304,14 +304,14 @@ public class CardCircleManager : MonoBehaviour {
         card.SetActive(true);
 
         if (newCard.type == "magic") {
-            card.transform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = newCard.name;
+            card.transform.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = newCard.name;
             AddMagicAttribute(ref card);
         }
     }
 
     public GameObject InstantiateMagicCard(CardData data, int itemId) {
         GameObject card = cardStorage.Find("MagicCards").GetChild(0).gameObject;
-        card.transform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = data.name;
+        card.transform.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.name;
         MagicDragHandler magic = card.AddComponent<MagicDragHandler>();
         card.GetComponent<CardHandler>().cardData = data;
         AddMagicAttribute(ref card, false);

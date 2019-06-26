@@ -1,0 +1,772 @@
+fileFormatVersion: 2
+guid: d72b274516aabbe45879dd040f24b6bb
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -5687333133780834012
+    second: magic_common
+  - first:
+      213: 6478397235235215515
+    second: magic_uncommon
+  - first:
+      213: 5738124791091781436
+    second: magic_rare
+  - first:
+      213: -2874889198599166621
+    second: magic_superrare
+  - first:
+      213: -7405971552471106433
+    second: magic_legend
+  - first:
+      213: 986208025815204171
+    second: cardname_common
+  - first:
+      213: 7920757289177328748
+    second: cardname_uncommon
+  - first:
+      213: 8093188405861964969
+    second: cardname_rare
+  - first:
+      213: 1993220238391413756
+    second: cardname_superrare
+  - first:
+      213: 3179363311613509710
+    second: cardname_legend
+  - first:
+      213: 3928320880331616941
+    second: unit_common
+  - first:
+      213: -2455183150041713249
+    second: unit_uncommon
+  - first:
+      213: -6863767205655339939
+    second: unit_rare
+  - first:
+      213: -4972583548912739396
+    second: unit_superrare
+  - first:
+      213: 282874326346864588
+    second: unit_legend
+  - first:
+      213: 2836850807415585250
+    second: class_order
+  - first:
+      213: -2164422744647453614
+    second: class_sorcery
+  - first:
+      213: -7366354104001231206
+    second: class_scheme
+  - first:
+      213: -7888667096903380905
+    second: class_knowledge
+  - first:
+      213: -6248640042176060584
+    second: class_mana
+  - first:
+      213: 3565961466000394265
+    second: class_pusuit
+  - first:
+      213: -7039752655850412869
+    second: icon_attack
+  - first:
+      213: 5628796235762097478
+    second: icon_cost
+  - first:
+      213: 2622790989942842531
+    second: icon_health
+  - first:
+      213: 1622616908254487430
+    second: "\uC778\uAC8C\uC784 \uCE74\uB4DC_24"
+  - first:
+      213: -8393156770040630885
+    second: "\uC778\uAC8C\uC784 \uCE74\uB4DC_25"
+  - first:
+      213: 185358621350499473
+    second: "\uC778\uAC8C\uC784 \uCE74\uB4DC_26"
+  - first:
+      213: 304887672925930676
+    second: "\uC778\uAC8C\uC784 \uCE74\uB4DC_27"
+  - first:
+      213: -1859875581830828037
+    second: "\uC778\uAC8C\uC784 \uCE74\uB4DC_28"
+  - first:
+      213: 715272584347041331
+    second: "\uC778\uAC8C\uC784 \uCE74\uB4DC_29"
+  - first:
+      213: -6054117275930749305
+    second: "\uC778\uAC8C\uC784 \uCE74\uB4DC_30"
+  - first:
+      213: 8485595670026977175
+    second: "\uC778\uAC8C\uC784 \uCE74\uB4DC_31"
+  - first:
+      213: 2156194338572859422
+    second: "\uC778\uAC8C\uC784 \uCE74\uB4DC_32"
+  - first:
+      213: 7814477487306219770
+    second: "\uC778\uAC8C\uC784 \uCE74\uB4DC_33"
+  - first:
+      213: 2313457776037740278
+    second: "\uC778\uAC8C\uC784 \uCE74\uB4DC_34"
+  - first:
+      213: 4813679628644658162
+    second: "\uC778\uAC8C\uC784 \uCE74\uB4DC_35"
+  - first:
+      213: 270735233413181387
+    second: "\uC778\uAC8C\uC784 \uCE74\uB4DC_36"
+  - first:
+      213: -7714243082017315691
+    second: "\uC778\uAC8C\uC784 \uCE74\uB4DC_37"
+  - first:
+      213: 7406705043797835560
+    second: "\uC778\uAC8C\uC784 \uCE74\uB4DC_38"
+  - first:
+      213: 520887999180621696
+    second: "\uC778\uAC8C\uC784 \uCE74\uB4DC_39"
+  - first:
+      213: 1002582008044579553
+    second: "\uC778\uAC8C\uC784 \uCE74\uB4DC_40"
+  - first:
+      213: 7366394955627168120
+    second: "\uC778\uAC8C\uC784 \uCE74\uB4DC_41"
+  - first:
+      213: -3178255873332585731
+    second: "\uC778\uAC8C\uC784 \uCE74\uB4DC_42"
+  - first:
+      213: 5335556625153155689
+    second: "\uC778\uAC8C\uC784 \uCE74\uB4DC_43"
+  - first:
+      213: -7297959971356293245
+    second: "\uC778\uAC8C\uC784 \uCE74\uB4DC_44"
+  - first:
+      213: -4524910041024599215
+    second: "\uC778\uAC8C\uC784 \uCE74\uB4DC_45"
+  - first:
+      213: 5845679368307921882
+    second: "\uC778\uAC8C\uC784 \uCE74\uB4DC_46"
+  - first:
+      213: -6293041416000399435
+    second: "\uC778\uAC8C\uC784 \uCE74\uB4DC_47"
+  - first:
+      213: 3011628462162822809
+    second: "\uC778\uAC8C\uC784 \uCE74\uB4DC_48"
+  - first:
+      213: 4319424174128156064
+    second: "\uC778\uAC8C\uC784 \uCE74\uB4DC_49"
+  - first:
+      213: -138731030011910762
+    second: "\uC778\uAC8C\uC784 \uCE74\uB4DC_50"
+  - first:
+      213: 3524524551785019362
+    second: "\uC778\uAC8C\uC784 \uCE74\uB4DC_51"
+  externalObjects: {}
+  serializedVersion: 10
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 2
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: magic_common
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 744
+        width: 284
+        height: 205
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b5ce5cc7befd6644aa44463707479592
+      internalID: -5687333133780834012
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_uncommon
+      rect:
+        serializedVersion: 2
+        x: 482
+        y: 744
+        width: 284
+        height: 205
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8938a490086fe194eb583eee096db003
+      internalID: 6478397235235215515
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_rare
+      rect:
+        serializedVersion: 2
+        x: 882
+        y: 744
+        width: 284
+        height: 205
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 865a88eea2076544cb26896065d06f43
+      internalID: 5738124791091781436
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_superrare
+      rect:
+        serializedVersion: 2
+        x: 1282
+        y: 744
+        width: 284
+        height: 205
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 77f7fdfa81eae724583aeae731a05f3f
+      internalID: -2874889198599166621
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_legend
+      rect:
+        serializedVersion: 2
+        x: 1682
+        y: 744
+        width: 284
+        height: 205
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e2f7c96e36483324cba08acb05d03516
+      internalID: -7405971552471106433
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cardname_common
+      rect:
+        serializedVersion: 2
+        x: 89
+        y: 611
+        width: 275
+        height: 78
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e5c3c1420727e6f48a1ec8b25a2b0cce
+      internalID: 986208025815204171
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cardname_uncommon
+      rect:
+        serializedVersion: 2
+        x: 487
+        y: 612
+        width: 275
+        height: 78
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2390a12a139da2c4b91739d4976680d2
+      internalID: 7920757289177328748
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cardname_rare
+      rect:
+        serializedVersion: 2
+        x: 885
+        y: 610
+        width: 275
+        height: 82
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3b3457f13f405d44ab4bb0c837b132f4
+      internalID: 8093188405861964969
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cardname_superrare
+      rect:
+        serializedVersion: 2
+        x: 1282
+        y: 610
+        width: 275
+        height: 78
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 55b60cc500a0b0f4a8e4d045827dc422
+      internalID: 1993220238391413756
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cardname_legend
+      rect:
+        serializedVersion: 2
+        x: 1676
+        y: 608
+        width: 283
+        height: 84
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 87c7b2f8f81ff6c4884d727df1b0e323
+      internalID: 3179363311613509710
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: unit_common
+      rect:
+        serializedVersion: 2
+        x: 87
+        y: 317
+        width: 284
+        height: 205
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c5e3a421206207546839f73f691d0bfa
+      internalID: 3928320880331616941
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: unit_uncommon
+      rect:
+        serializedVersion: 2
+        x: 484
+        y: 317
+        width: 284
+        height: 205
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ceb6b9070df597d42b9cc1ad739b05be
+      internalID: -2455183150041713249
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: unit_rare
+      rect:
+        serializedVersion: 2
+        x: 882
+        y: 317
+        width: 286
+        height: 205
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c151e1093ed0c884da595dcafcbe5508
+      internalID: -6863767205655339939
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: unit_superrare
+      rect:
+        serializedVersion: 2
+        x: 1279
+        y: 316
+        width: 284
+        height: 204
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b83dddebc891e68469e16a4eb42f116e
+      internalID: -4972583548912739396
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: unit_legend
+      rect:
+        serializedVersion: 2
+        x: 1676
+        y: 315
+        width: 284
+        height: 205
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9011de887ed68d04a91441935d2833e0
+      internalID: 282874326346864588
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: class_order
+      rect:
+        serializedVersion: 2
+        x: 88
+        y: 160
+        width: 65
+        height: 73
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 347c9324e47da5145b246d61e955f1e5
+      internalID: 2836850807415585250
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: class_sorcery
+      rect:
+        serializedVersion: 2
+        x: 230
+        y: 160
+        width: 66
+        height: 73
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 57ab398919e38484abcff4080409987a
+      internalID: -2164422744647453614
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: class_scheme
+      rect:
+        serializedVersion: 2
+        x: 373
+        y: 160
+        width: 66
+        height: 73
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 853f92e8836a9c84e8a90a6eb1d87138
+      internalID: -7366354104001231206
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: class_knowledge
+      rect:
+        serializedVersion: 2
+        x: 515
+        y: 160
+        width: 66
+        height: 73
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7d88ac70a1f81d645956146f03ce7968
+      internalID: -7888667096903380905
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: class_mana
+      rect:
+        serializedVersion: 2
+        x: 658
+        y: 160
+        width: 66
+        height: 73
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0ac1a0c1d3fbca24a8e756e9534b2f25
+      internalID: -6248640042176060584
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: class_pusuit
+      rect:
+        serializedVersion: 2
+        x: 801
+        y: 160
+        width: 66
+        height: 73
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6a823197c2ebbcd40a77582e1cce18a8
+      internalID: 3565961466000394265
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: icon_attack
+      rect:
+        serializedVersion: 2
+        x: 1023
+        y: 154
+        width: 66
+        height: 74
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f079a1bd0db064c4ab5049b2e660cb31
+      internalID: -7039752655850412869
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: icon_cost
+      rect:
+        serializedVersion: 2
+        x: 1135
+        y: 153
+        width: 67
+        height: 76
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7038a55bbd6929341a9ef3489d566c4d
+      internalID: 5628796235762097478
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: icon_health
+      rect:
+        serializedVersion: 2
+        x: 1256
+        y: 148
+        width: 62
+        height: 79
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dea77cc493052584ca421821f0910f70
+      internalID: 2622790989942842531
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: ce8e323718db510428810f2735874cbc
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
