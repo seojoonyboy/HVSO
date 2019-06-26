@@ -77,16 +77,13 @@ public partial class CardHandler : MonoBehaviour {
         else
             Logger.Log("NoData");
         if (cardData.type == "unit") {
-            transform.Find("Health").gameObject.SetActive(true);
-            transform.Find("attack").gameObject.SetActive(true);
-            transform.Find("Health").Find("Text").GetComponent<Text>().text = cardData.hp.ToString();
-            transform.Find("attack").Find("Text").GetComponent<Text>().text = cardData.attack.ToString();
+            transform.Find("Health/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.hp.ToString();
+            transform.Find("attack/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.attack.ToString();
         }
-        else {
-            transform.Find("Health").gameObject.SetActive(false);
-            transform.Find("attack").gameObject.SetActive(false);
-        }
-        transform.Find("Cost").Find("Text").GetComponent<Text>().text = cardData.cost.ToString();
+        transform.Find("Cost/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.cost.ToString();
+        transform.Find("Class").GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[cardData.class_1];
+        transform.Find("Name").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground["name_" + cardData.rarelity];
+        transform.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.name;
 
         if (first) {
             transform.Find("GlowEffect").GetComponent<Image>().enabled = true;
@@ -128,7 +125,7 @@ public partial class CardHandler : MonoBehaviour {
                 CardInfoOnDrag.instance.ActiveCrossHair(false);
             return;
         }
-        if (transform.localPosition.y > 5000) {
+        if (transform.localPosition.y > 4750) {
             if (!pointOnFeild) {
                 pointOnFeild = true;
                 transform.localScale = new Vector3(0, 0, 0);
@@ -243,8 +240,10 @@ public partial class CardHandler : MonoBehaviour {
         isDropable = false;
         transform.Find("GlowEffect").GetComponent<Image>().enabled = false;
         transform.Find("Portrait").GetComponent<Image>().color = Color.gray;
-        transform.Find("attack").GetComponent<Image>().color = Color.gray;
-        transform.Find("Health").GetComponent<Image>().color = Color.gray;
+        if (cardData.type == "unit") {
+            transform.Find("attack").GetComponent<Image>().color = Color.gray;
+            transform.Find("Health").GetComponent<Image>().color = Color.gray;
+        }
         transform.Find("Cost").GetComponent<Image>().color = Color.gray;
     }
 
@@ -256,16 +255,20 @@ public partial class CardHandler : MonoBehaviour {
             transform.Find("GlowEffect").GetComponent<Image>().enabled = true;
             transform.Find("GlowEffect").GetComponent<Image>().color = new Color(1, 1, 1);
             transform.Find("Portrait").GetComponent<Image>().color = Color.white;
-            transform.Find("attack").GetComponent<Image>().color = Color.white;
-            transform.Find("Health").GetComponent<Image>().color = Color.white;
+            if (cardData.type == "unit") {
+                transform.Find("attack").GetComponent<Image>().color = Color.white;
+                transform.Find("Health").GetComponent<Image>().color = Color.white;
+            }
             transform.Find("Cost").GetComponent<Image>().color = Color.white;
         }
         else {
             isDropable = false;
             transform.Find("GlowEffect").GetComponent<Image>().enabled = false;
             transform.Find("Portrait").GetComponent<Image>().color = Color.gray;
-            transform.Find("attack").GetComponent<Image>().color = Color.gray;
-            transform.Find("Health").GetComponent<Image>().color = Color.gray;
+            if (cardData.type == "unit") {
+                transform.Find("attack").GetComponent<Image>().color = Color.gray;
+                transform.Find("Health").GetComponent<Image>().color = Color.gray;
+            }
             transform.Find("Cost").GetComponent<Image>().color = Color.gray;
         }
     }
