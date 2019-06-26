@@ -129,6 +129,12 @@ public class BattleReadySceneController : MonoBehaviour {
         raceType = type;
     }
 
+    public void ChangeDeck(string deckId) {
+        var msg = string.Format("{0} 선택됨", deckId);
+        Logger.Log(msg);
+        Variables.Saved.Set("SelectedDeckId", deckId);
+    }
+
     public enum BattleType {
         AI = 0,
         CASUAL = 1,

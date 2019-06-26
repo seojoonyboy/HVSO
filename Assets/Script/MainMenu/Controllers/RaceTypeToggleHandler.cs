@@ -23,6 +23,20 @@ public class RaceTypeToggleHandler : MonoBehaviour {
     AccountManager accountManager;
     int id;
 
+    //TODO : Server와 연동
+    private string leaderDeckId;
+    public string LeaderDeckId {
+        get {
+            return leaderDeckId;
+        }
+        set {
+            leaderDeckId = value;
+            controller.ChangeDeck(leaderDeckId);
+        }
+    }
+
+    private GameObject selectedDeck = null;
+
     private const int PORTRAIT_SLOT_NUM_PER_PAGE = 8;
     private const int DECK_SLOT_NUM_PER_PAGE = 8;
 
@@ -116,36 +130,50 @@ public class RaceTypeToggleHandler : MonoBehaviour {
         if (basicDecks == null) return;
 
         var pageNum = TotalDeckPages(ref basicDecks);
+        //TODO Server와 연동
+        LeaderDeckId = basicDecks[0].id;
 
-        int item_count = 0;
-        int slot_count = 0;
-
+        int item_index = 0;         //전체 Deck Index
+        GameObject lastPage = null;
         for (int i = 0; i < pageNum; i++) {
             GameObject page = Instantiate(deckGroupPrefab, deckParent);
-            //if (slot_count == PORTRAIT_SLOT_NUM_PER_PAGE) {
-            //    slot_count = 0;
-            //    continue;
-            //}
+            lastPage = page;
+            for (int j = 0; j < DECK_SLOT_NUM_PER_PAGE; j++) {
+                if (item_index > basicDecks.Count - 1) break;
 
-            for (int j = 0; j < PORTRAIT_SLOT_NUM_PER_PAGE; j++) {
-                if (item_count > basicDecks.Count - 1) { break; }
+                //덱 프리팹 생성
                 GameObject _deck = Instantiate(deckPrefab, page.transform);
-                _deck.transform.Find("Deck/Name").GetComponent<Text>().text = basicDecks[item_count].name;
-                _deck.transform.Find("Outline").GetComponent<Image>().enabled = true;
-                //Transform target_deck_slot = page.transform.GetChild(slot_count);
+                _deck.transform.Find("Deck/Name").GetComponent<Text>().text = basicDecks[item_index].name;
+                if(LeaderDeckId == basicDecks[item_index].id) {
+                    selectedDeck = _deck;
+                    _deck.transform.Find("Outline").GetComponent<Image>().enabled = true;
+                }
 
-                //target_deck_slot.transform.Find("Deactive").gameObject.SetActive(false);
-                //target_deck_slot.transform.Find("Name").GetComponent<Text>().text = basicDecks[item_count].name;
+                _deck.transform.Find("Deck").GetComponent<StringIndex>().Id = basicDecks[item_index].id;
 
-                //target_deck_slot.GetComponent<Data>().data = basicDecks[item_count];
-                //target_deck_slot.GetComponent<IntergerIndex>().Id = item_count;
+                _deck.transform.Find("Deck").GetComponent<Button>().onClick.AddListener(() => {
+                    OnDeckSelected(_deck);
+                });
 
-                item_count++;
-                //slot_count++;
+                item_index++;
             }
-            GameObject AddDeckButton = Instantiate(AddDeckButtonPrefab, page.transform);
         }
-        
+        GameObject AddDeckButton = Instantiate(AddDeckButtonPrefab, lastPage.transform);
+    }
+
+    /// <summary>
+    /// 대표 덱을 가장 앞으로 나오게 한다.
+    /// </summary>
+    /// <param name="leaderDeck"></param>
+    private void SetLeaderDeckFront(ref GameObject leaderDeck) {
+        leaderDeck.transform.SetAsFirstSibling();
+    }
+
+    public void OnDeckSelected(GameObject selectedDeck) {
+        this.selectedDeck.transform.Find("Outline").GetComponent<Image>().enabled = false;
+        selectedDeck.transform.Find("Outline").GetComponent<Image>().enabled = true;
+        LeaderDeckId = selectedDeck.transform.Find("Deck").GetComponent<StringIndex>().Id;
+        this.selectedDeck = selectedDeck;
     }
 
     private int TotalPortraitPages(ref List<Hero> heroes) {
