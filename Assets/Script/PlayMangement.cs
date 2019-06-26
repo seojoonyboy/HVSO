@@ -183,8 +183,9 @@ public partial class PlayMangement : MonoBehaviour {
         blockPanel.SetActive(false);
     }
 
-    IEnumerator EnemySummonMonster() {
-        yield return new WaitForSeconds(1.0f);
+    IEnumerator EnemyUseCard(bool isBefore) {
+        if(isBefore)
+            yield return new WaitForSeconds(1.0f);
         #region socket use Card
         while(!socketHandler.cardPlayFinish()) {
             yield return socketHandler.useCardList.WaitNext();
@@ -223,7 +224,8 @@ public partial class PlayMangement : MonoBehaviour {
         }
         #endregion
         SocketFormat.DebugSocketData.ShowHandCard(socketHandler.gameState.players.enemyPlayer(enemyPlayer.isHuman).deck.handCards);
-        enemyPlayer.ReleaseTurn();
+        if(isBefore)
+            enemyPlayer.ReleaseTurn();
     }
 
     private GameObject SummonMagic(SocketFormat.PlayHistory history) {
@@ -416,7 +418,7 @@ public partial class PlayMangement : MonoBehaviour {
                 else {
                     player.DisablePlayer();
                     enemyPlayer.ActivePlayer();
-                    StartCoroutine("EnemySummonMonster");
+                    StartCoroutine(EnemyUseCard(true));
                 }
                 EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_ORC_PRE_TURN, this, null);
                 break;
@@ -429,7 +431,7 @@ public partial class PlayMangement : MonoBehaviour {
                 else {
                     player.DisablePlayer();
                     enemyPlayer.ActivePlayer();
-                    StartCoroutine("EnemySummonMonster");
+                    StartCoroutine(EnemyUseCard(true));
                 }
                 EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_HUMAN_TURN, this, null);
                 break;
@@ -442,7 +444,7 @@ public partial class PlayMangement : MonoBehaviour {
                 }
                 else {
                     player.DisablePlayer();
-                    StartCoroutine("WaitSecond");
+                    StartCoroutine(EnemeyOrcMagicSummon());
                 }
                 EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_ORC_POST_TURN, this, null);
                 break;
@@ -462,10 +464,18 @@ public partial class PlayMangement : MonoBehaviour {
         StartCoroutine("battleCoroutine");
     }
 
-    public IEnumerator WaitSecond() {
+    public IEnumerator EnemeyOrcMagicSummon() {
         yield return new WaitForSeconds(1f);
+        //잠복 스킬 발동 중이면 해결 될 때까지 대기 상태
+        if(SkillModules.SkillHandler.running)
+           yield return new WaitUntil(() => !SkillModules.SkillHandler.running);
+        
+        //그다음 카드 사용한게 있으면 카드 사용으로 패스
+        yield return socketHandler.useCardList.WaitNext();
+        if(!socketHandler.cardPlayFinish())
+            yield return EnemyUseCard(false);
+        //서버에서 턴 넘김이 완료 될 때까지 대기
         yield return socketHandler.WaitBattle();
-        //Logger.Log("Triggering EndTurn");
         CustomEvent.Trigger(gameObject, "EndTurn");
     }
 

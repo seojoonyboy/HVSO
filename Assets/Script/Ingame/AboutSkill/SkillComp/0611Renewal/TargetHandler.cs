@@ -445,11 +445,27 @@ namespace TargetModules {
             }
         }
 
+        private IEnumerator enemyTurnSelect() {
+            //TargetData가 있으면 카드로 인한 select
+            //없으면 턴 넘김으로 인한 발동.
+            if(skillHandler.targetData == null) {
+                var list = PlayMangement.instance.socketHandler.unitSkillList;
+                yield return list.WaitNext();
+                int itemId = list.Dequeue();
+            }
+            else {
+
+            }
+            yield return null;
+            skillHandler.isDone = true;
+        }
+
         public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback, Filtering filter) {
             base.SelectTarget(successCallback, failedCallback, filter);
             //TODO : 적일 경우 해당 소켓이 도달 할 때까지 기다리기 card_played, skill_activated
             if(!skillHandler.isPlayer) { 
-                skillHandler.isDone = true;
+                //StartCoroutine(enemyTurnSelect());
+                skillHandler.isDone = true; //임시
                 return; 
             }
             
