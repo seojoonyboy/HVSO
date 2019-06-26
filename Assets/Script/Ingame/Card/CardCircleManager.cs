@@ -1,71 +1,198 @@
+using Bolt;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CardCircleManager : MonoBehaviour {
     public int cardNum = 0;
     [SerializeField] Transform cardStorage;
     [SerializeField] Transform showPos;
-    public bool dragable = true;
+    [SerializeField] protected Transform firstDrawParent;
+    [SerializeField] public Transform cardSpawnPos;
     public bool isMultiple = false;
+    public bool firstDraw = true;
+    protected List<GameObject> cardList;
+    protected List<GameObject> firstDrawList;
+    protected CardListManager clm;
+
 
 
     // Update is called once per frame
+    private void Start() {
+        firstDraw = true;
+        cardList = new List<GameObject>();
+        firstDrawList = new List<GameObject>();
+        clm = PlayMangement.instance.cardInfoCanvas.Find("CardInfoList").GetComponent<CardListManager>();
+    }
 
-    public void AddCard() {
-        if (cardNum == 10) return;
-        dragable = false;
-        cardNum++;
-        Transform cardTransform = cardStorage.GetChild(0);
-        Transform cardPos = transform.GetChild(cardNum - 1).GetChild(0);
-        cardTransform.GetComponent<CardDragAndDrop>().CARDINDEX = cardNum - 1;
+    public virtual IEnumerator FirstDraw() {
+        bool race = PlayMangement.instance.player.isHuman;
+        SocketFormat.Card socketCard = PlayMangement.instance.socketHandler.gameState.players.myPlayer(race).FirstCards[firstDrawList.Count];
+        GameObject card;
+        if (socketCard.type == "unit")
+            card = cardStorage.Find("UnitCards").GetChild(0).gameObject;
+        else {
+            card = cardStorage.Find("MagicCards").GetChild(0).gameObject;
+        }
+
+        card.transform.SetParent(firstDrawParent);
+        card.SetActive(true);
+        card.GetComponent<CardHandler>().DrawCard(socketCard.id, socketCard.itemId, true);
+
+        if (socketCard.type == "magic") {
+            card.transform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = socketCard.name;
+            AddMagicAttribute(ref card);
+        }
+
+        iTween.MoveTo(card, firstDrawParent.GetChild(firstDrawList.Count).position, 0.5f);
+        iTween.RotateTo(card, new Vector3(0, 0, 0), 0.5f);
+        firstDrawList.Add(card);
+        card.transform.localScale = new Vector3(1.15f, 1.15f, 1);
+        yield return new WaitForSeconds(0.5f);
+        card.transform.Find("ChangeButton").gameObject.SetActive(true);
+        if (firstDrawList.Count == 4) {
+            yield return new WaitForSeconds(0.5f);
+            firstDrawParent.parent.Find("FinishButton").gameObject.SetActive(true);
+        }
+    }
+
+    public void FirstDrawCardChange() {
+        foreach (GameObject cards in firstDrawList) {
+            cards.transform.Find("ChangeButton").gameObject.SetActive(false);
+        }
+        AddInfoToList(null, true);
+        StartCoroutine(DrawChangedCards());
+        firstDrawParent.GetChild(4).gameObject.SetActive(false);
+        Transform finBtn = firstDrawParent.parent.Find("FinishButton");
+        finBtn.GetComponent<Button>().enabled = false;
+        finBtn.GetComponent<Image>().enabled = false;
+        finBtn.GetChild(0).gameObject.SetActive(false);
+        finBtn.gameObject.SetActive(false);
+    }
+
+    public void AddInfoToList(GameObject card, bool isMulligan = false) {
+        if (isMulligan)
+            clm.SendMulliganInfo();
+        else {
+            CardHandler handler = card.GetComponent<CardHandler>();
+            clm.AddCardInfo(handler.cardData, handler.cardID);
+        }
+    }
+
+    public void AddCard(GameObject cardobj = null, SocketFormat.Card cardData = null) {
+        if (cardNum + 1 == 11) return;
+        PlayMangement.dragable = false;
+        GameObject card;
+        if (cardobj == null) {
+            if (cardData.type == "unit")
+                card = cardStorage.Find("UnitCards").GetChild(0).gameObject;
+            else
+                card = cardStorage.Find("MagicCards").GetChild(0).gameObject;
+            string id;
+            int itemId = -1;
+            if (cardData == null)
+                id = "ac1000" + UnityEngine.Random.Range(1, 10);
+            else {
+                id = cardData.id;
+                itemId = cardData.itemId;
+            }
+            card.GetComponent<CardHandler>().DrawCard(id, itemId);
+
+            if (cardData.type == "magic") {
+                card.transform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.name;
+                AddMagicAttribute(ref card);
+            }
+        }
+        else
+            card = cardobj;
+        if (firstDraw) {
+            if (cardNum + 1 == 5)
+                firstDraw = false;
+            card.transform.Find("GlowEffect").GetComponent<Image>().enabled = false;
+        }
+        Transform cardTransform = card.transform;
+        Transform cardPos = transform.GetChild(cardNum).GetChild(0);
+        cardTransform.GetComponent<CardHandler>().CARDINDEX = cardNum;
         cardTransform.gameObject.SetActive(true);
-        cardTransform.SetParent(transform.GetChild(cardNum - 1));
+        cardTransform.SetParent(transform.GetChild(cardNum));
+        cardNum++;
+        cardList.Add(card);
         StartCoroutine(SendCardToHand(cardTransform.gameObject, cardPos));
     }
 
-    public void AddMultipleCard() {
+    public IEnumerator SendMultipleCard(SocketFormat.Card[] cardData) {
         isMultiple = true;
-        StartCoroutine(SendMultipleCard(4));
-    }
+        for (int i = 0; i < cardData.Length; i++) {
+            if (cardNum + 1 == 11) break;
+            PlayMangement.dragable = false;
+            GameObject card;
+            if (cardData[i].type == "unit")
+                card = cardStorage.Find("UnitCards").GetChild(0).gameObject;
+            else
+                card = cardStorage.Find("MagicCards").GetChild(0).gameObject;
+            string id;
+            int itemId = -1;
+            if (cardData[i] == null)
+                id = "ac1000" + UnityEngine.Random.Range(1, 10);
+            else {
+                id = cardData[i].id;
+                itemId = cardData[i].itemId;
+            }
+            card.GetComponent<CardHandler>().DrawCard(id, itemId);
 
-    IEnumerator SendMultipleCard(int num) {
-        for (int i = 0; i < num; i++) {
-            if (cardNum == 10) break;
-            dragable = false;
-            cardNum++;
-            Transform cardTransform = cardStorage.GetChild(0);
-            Transform cardPos = transform.GetChild(cardNum - 1).GetChild(0);
-            cardTransform.GetComponent<CardDragAndDrop>().CARDINDEX = cardNum - 1;
+            if (cardData[i].type == "magic") {
+                card.transform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = cardData[i].name;
+                AddMagicAttribute(ref card);
+            }
+            Transform cardTransform = card.transform;
+            Transform cardPos = transform.GetChild(cardNum).GetChild(0);
+            cardTransform.GetComponent<CardDragAndDrop>().CARDINDEX = cardNum;
             cardTransform.gameObject.SetActive(true);
-            cardTransform.SetParent(transform.GetChild(cardNum - 1));
+            cardTransform.SetParent(transform.GetChild(cardNum));
+            cardNum++;
+            cardList.Add(card);
             StartCoroutine(SendCardToHand(cardTransform.gameObject, cardPos));
             yield return new WaitForSeconds(0.3f);
-            if (i == num - 1 || cardNum == 10)
+            if (i == cardData.Length - 1 || cardNum == 10)
                 isMultiple = false;
         }
     }
 
 
     IEnumerator SendCardToHand(GameObject card, Transform pos) {
-        iTween.MoveTo(card, showPos.position, 0.2f);
-        iTween.RotateTo(card, iTween.Hash("rotation", new Vector3(0, 0, 0), "islocal", true, "time", 0.2f));
-        iTween.ScaleTo(card, new Vector3(1.2f, 1.2f, 1), 0.2f);
-        iTween.RotateTo(gameObject, new Vector3(0, 0, (cardNum - 1) * 4), 0.2f);
-        yield return new WaitForSeconds(0.2f);
-        //card.transform.SetParent(transform.GetChild(cardNum - 1));
-        iTween.MoveTo(card, iTween.Hash("position", new Vector3(0, 4500, 0), "islocal", true, "time", 0.2f));
-        iTween.ScaleTo(card, new Vector3(1, 1, 1), 0.2f);
-        yield return new WaitForSeconds(0.2f);
+        CardHandler handler = card.GetComponent<CardHandler>();
+        handler.DisableCard();
+        if (!firstDraw) {
+            iTween.MoveTo(card, showPos.position, 0.4f);
+            iTween.RotateTo(card, iTween.Hash("rotation", new Vector3(0, 0, 0), "islocal", true, "time", 0.4f));
+            iTween.ScaleTo(card, new Vector3(1.2f, 1.2f, 1), 0.2f);
+            iTween.RotateTo(gameObject, new Vector3(0, 0, (cardNum - 1) * 4), 0.2f);
+            yield return new WaitForSeconds(0.4f);
+        }
+        iTween.MoveTo(card, iTween.Hash("position", new Vector3(0, 4500, 0), "islocal", true, "time", 0.4f));
+        iTween.ScaleTo(card, new Vector3(1, 1, 1), 0.4f);
+        yield return new WaitForSeconds(0.4f);
         card.transform.rotation = pos.rotation;
-        if (cardNum > 2 && !isMultiple)
-            iTween.RotateTo(gameObject, new Vector3(0, 0, (cardNum - 2) * 4), 0.2f);
-        yield return new WaitForSeconds(0.3f);
-        dragable = true;
+        if (cardNum > 2 && !isMultiple && !firstDraw)
+            iTween.RotateTo(gameObject, new Vector3(0, 0, (cardNum - 2) * 4), 0.4f);
+        yield return new WaitForSeconds(0.5f);
+        if (PlayMangement.instance.player.getPlayerTurn) {
+            if (!PlayMangement.instance.player.isHuman && handler.cardData.type == "unit")
+                handler.DisableCard();
+            else
+                handler.ActivateCard();
+        }
+        handler.FIRSTDRAW = false;
+        PlayMangement.dragable = true;
     }
 
-    public IEnumerator UseCard(int index) {
-        dragable = false;
+    public void DestroyCard(int index) {
+        StartCoroutine(RemoveCardToStorage(index));
+    }
+
+    private IEnumerator RemoveCardToStorage(int index) {
+        PlayMangement.dragable = false;
         Transform removeCard = transform.GetChild(index).GetChild(1);
         iTween.RotateTo(transform.GetChild(index).gameObject, iTween.Hash("rotation", new Vector3(0, 0, -4 * (cardNum - 1)), "islocal", true, "time", 0.2f));
         transform.GetChild(index).SetSiblingIndex(cardNum - 1);
@@ -73,27 +200,126 @@ public class CardCircleManager : MonoBehaviour {
         removeCard.gameObject.SetActive(false);
         removeCard.eulerAngles = Vector3.zero;
         removeCard.localPosition = Vector3.zero;
-
+        cardList.RemoveAt(index);
+        clm.RemoveCardInfo(index);
         cardNum--;
         for (int i = index; i < cardNum; i++) {
-            transform.GetChild(i).GetChild(1).GetComponent<CardDragAndDrop>().CARDINDEX = i;
+            transform.GetChild(i).GetChild(1).GetComponent<CardHandler>().CARDINDEX = i;
             iTween.RotateTo(transform.GetChild(i).gameObject, iTween.Hash("rotation", new Vector3(0, 0, -4 * i), "islocal", true, "time", 0.2f));
         }
         StartCoroutine(SortCircleAngle());
         yield return new WaitForSeconds(0.3f);
-        //dragable = true;
     }
 
     public IEnumerator SortCircleAngle() {
-        dragable = false;
+        PlayMangement.dragable = false;
         Debug.Log(transform.rotation.eulerAngles.z);
-        if (transform.rotation.eulerAngles.z > 300 && transform.rotation.eulerAngles.z < 360)
+        if (transform.rotation.eulerAngles.z > 300 && transform.rotation.eulerAngles.z < 360) {
+            if(cardNum < 3)
+                iTween.RotateTo(gameObject, new Vector3(0, 0, (cardNum - 2) * 4), 0.2f);
+            else
+                iTween.RotateTo(gameObject, new Vector3(0, 0, 4), 0.2f);
+            yield return new WaitForSeconds(0.1f);
+        }
+        else if (transform.rotation.eulerAngles.z < 4 && cardNum > 2) {
             iTween.RotateTo(gameObject, new Vector3(0, 0, 4), 0.2f);
-        else if (transform.rotation.eulerAngles.z < 4 && cardNum > 2)
-            iTween.RotateTo(gameObject, new Vector3(0, 0, 4), 0.2f);
-        else if (transform.rotation.eulerAngles.z < 60 && transform.rotation.eulerAngles.z > (cardNum - 2) * 4 && cardNum > 0)
-            iTween.RotateTo(gameObject, new Vector3(0, 0, (cardNum - 1) * 4), 0.2f);
-        yield return new WaitForSeconds(0.3f);
-        dragable = true;
+            yield return new WaitForSeconds(0.1f);
+        }
+        else if (transform.rotation.eulerAngles.z < 60 && transform.rotation.eulerAngles.z > (cardNum - 2) * 4 && cardNum > 0) {
+            if(cardNum > 1)
+                iTween.RotateTo(gameObject, new Vector3(0, 0, (cardNum - 2) * 4), 0.2f);
+            else
+                iTween.RotateTo(gameObject, new Vector3(0, 0, (cardNum - 1) * 4), 0.2f);
+            yield return new WaitForSeconds(0.1f);
+        }
+        PlayMangement.dragable = true;
+    }
+
+    IEnumerator DrawChangedCards() {
+        firstDrawParent.parent.gameObject.GetComponent<Image>().enabled = false;
+        PlayMangement.instance.socketHandler.MulliganEnd();
+        int index = 0;
+        while (index < 4) {
+            yield return new WaitForSeconds(0.2f);
+            AddCard(firstDrawList[index]);
+            index++;
+        }
+        yield return new WaitForSeconds(0.5f);
+        yield return PlayMangement.instance.socketHandler.WaitGetCard();
+
+        //영웅카드 뽑기
+        bool isHuman = PlayMangement.instance.player.isHuman;
+        SocketFormat.Card cardData = PlayMangement.instance.socketHandler.gameState.players.myPlayer(isHuman).newCard;
+        AddCard(null, cardData);
+
+
+        yield return new WaitForSeconds(3.0f);
+        CustomEvent.Trigger(GameObject.Find("GameManager"), "EndTurn");
+        PlayMangement.instance.isMulligan = false;
+        firstDrawParent.gameObject.SetActive(false);
+        GameObject firstOrcTurnObj = firstDrawParent.parent.Find("First_OrcPlay").gameObject;
+        firstOrcTurnObj.SetActive(true);
+        yield return new WaitForSeconds(1.0f);
+        firstOrcTurnObj.SetActive(false);
+
+        SoundManager.Instance.PlaySound(SoundType.FIRST_TURN);
+    }   
+
+    public void RedrawCallback(string ID, int itemID = -1, bool first = false) {
+        SocketFormat.GameState state = PlayMangement.instance.socketHandler.gameState;
+        SocketFormat.Card[] cards = state.players.myPlayer(PlayMangement.instance.player.isHuman).deck.handCards;
+        SocketFormat.Card newCard = state.players.myPlayer(PlayMangement.instance.player.isHuman).newCard;
+        int index = -1;
+        for (int i = 0; i < firstDrawList.Count; i++) {
+            bool sameCard = false;
+            for (int j = 0; j < cards.Length; j++) {
+                if (cards[j].itemId == firstDrawList[i].GetComponent<CardHandler>().itemID) {
+                    sameCard = true;
+                    break;
+                }
+            }
+            if (!sameCard) index = i;
+        }
+        GameObject beforeCardObject = firstDrawList[index];
+
+        GameObject card;
+        if (newCard.type == "unit")
+            card = cardStorage.Find("UnitCards").GetChild(0).gameObject;
+        else
+            card = cardStorage.Find("MagicCards").GetChild(0).gameObject;
+        string id;
+        int itemId = -1;
+        id = newCard.id;
+        itemId = newCard.itemId;
+        CardHandler handler = card.GetComponent<CardHandler>();
+        handler.DrawCard(id, itemId);
+        GameObject infoList = PlayMangement.instance.cardInfoCanvas.Find("CardInfoList").gameObject;
+        clm.AddMulliganCardInfo(handler.cardData, id, index);
+        card.transform.position = beforeCardObject.transform.position;
+        card.transform.SetSiblingIndex(index + 5);
+        card.transform.localScale = beforeCardObject.transform.localScale;
+        Destroy(beforeCardObject);
+        firstDrawList[index] = card;
+        card.SetActive(true);
+
+        if (newCard.type == "magic") {
+            card.transform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = newCard.name;
+            AddMagicAttribute(ref card);
+        }
+    }
+
+    public GameObject InstantiateMagicCard(CardData data) {
+        GameObject card = cardStorage.Find("MagicCards").GetChild(0).gameObject;
+        card.transform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = data.name;
+        card.AddComponent<MagicDragHandler>().cardData = data;
+        AddMagicAttribute(ref card);
+        return card;
+    }
+    protected void AddMagicAttribute(ref GameObject card) {
+        var cardData = card.GetComponent<CardHandler>().cardData;
+
+        SkillModules.SkillHandler skillHandler = new SkillModules.SkillHandler();
+        skillHandler.Initialize(cardData.skills, card, true);
+        card.GetComponent<MagicDragHandler>().skillHandler = skillHandler;
     }
 }

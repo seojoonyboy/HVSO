@@ -12,7 +12,7 @@ public partial class PlayMangement : MonoBehaviour {
     public GameObject cardDB;
     public GameObject uiSlot;
     public GameObject canvas;
-    public Transform cardDragCanvas;
+
     public Transform cardInfoCanvas;
     public bool isGame = true;
     public bool isMulligan = true;
@@ -302,7 +302,7 @@ public partial class PlayMangement : MonoBehaviour {
 
         placeMonster.Init(cardData);
         placeMonster.SpawnUnit();
-
+        targetPlayer.resource.Value -= cardData.cost;
         if (isPlayer) {
             player.isPicking.Value = false;
             if (player.isHuman)
@@ -327,7 +327,6 @@ public partial class PlayMangement : MonoBehaviour {
             EnemyUnitsObserver.UnitAdded(unit, col, 0);
             unit.layer = 14;
         }
-        targetPlayer.resource.Value -= cardData.cost;
         targetPlayer.PlayerUseCard();
         return unit;
     }
@@ -540,7 +539,7 @@ public partial class PlayMangement : MonoBehaviour {
         //Logger.Log("쉴드 발동!");
         bool isPlayer = (isHuman == player.isHuman);
         if(isPlayer) {
-            CardHandDeckManager cdpm = FindObjectOfType<CardHandDeckManager>();
+            CardCircleManager cdpm = FindObjectOfType<CardCircleManager>();
             bool race = player.isHuman;
             SocketFormat.Card cardData = socketHandler.gameState.players.myPlayer(race).newCard;
             cdpm.AddCard(null, cardData);

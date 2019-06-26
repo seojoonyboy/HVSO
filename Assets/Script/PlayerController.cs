@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
     public GameObject card;
     public GameObject back;
     public GameObject playerUI;
-    [SerializeField] public CardHandDeckManager cdpm;
+    [SerializeField] public CardCircleManager cdpm;
 
     public GameObject backLine;
     public GameObject frontLine;
@@ -276,23 +276,10 @@ public class PlayerController : MonoBehaviour
         activeCardMinCost = 100;
         myTurn = true;      
         if(isPlayer == true) {
-            Transform cardSlot_1 = playerUI.transform.Find("CardHand").GetChild(0);
-            Transform cardSlot_2 = playerUI.transform.Find("CardHand").GetChild(1);
+            Transform cardSlot_1 = cdpm.transform;
             for (int i = 0; i < cardSlot_1.childCount; i++) {
-                if (cardSlot_1.GetChild(i).gameObject.activeSelf) {
-                    if(cardSlot_1.GetChild(i).childCount != 0)
-                        cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().ActivateCard();
-                    else
-                        PlayMangement.instance.cardDragCanvas.GetChild(5).GetComponent<CardHandler>().ActivateCard();
-                }
-            }
-            for (int i = 0; i < cardSlot_2.childCount; i++) {
-                if (cardSlot_2.GetChild(i).gameObject.activeSelf) {
-                    if (cardSlot_2.GetChild(i).childCount != 0)
-                        cardSlot_2.GetChild(i).GetChild(0).GetComponent<CardHandler>().ActivateCard();
-                    else
-                        PlayMangement.instance.cardDragCanvas.GetChild(5).GetComponent<CardHandler>().ActivateCard();
-                }
+                if (cardSlot_1.GetChild(i).childCount != 1) 
+                    cardSlot_1.GetChild(i).GetChild(1).GetComponent<CardHandler>().ActivateCard();
             }
         }
         if (activeCardMinCost == 100) {
@@ -308,60 +295,23 @@ public class PlayerController : MonoBehaviour
             ).Get("CurrentTurn").ToString();
         myTurn = true;
         if (isPlayer == true && currentTurn == "ORC") {
-            Transform cardSlot_1 = playerUI.transform.Find("CardHand").GetChild(0);
-            Transform cardSlot_2 = playerUI.transform.Find("CardHand").GetChild(1);
+            Transform cardSlot_1 = cdpm.transform;
             for (int i = 0; i < cardSlot_1.childCount; i++) {
-                if (cardSlot_1.GetChild(i).gameObject.activeSelf) {
-                    if (cardSlot_1.GetChild(i).childCount != 0) {
-                        if (cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().cardData.type == "unit")
-                            cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().ActivateCard();
-                    }
-                    else {
-                        if (PlayMangement.instance.cardDragCanvas.GetChild(5).GetComponent<CardHandler>().cardData.type == "unit")
-                            PlayMangement.instance.cardDragCanvas.GetChild(5).GetComponent<CardHandler>().ActivateCard();
-                    }
+                if (cardSlot_1.GetChild(i).childCount != 1) {
+                    if (cardSlot_1.GetChild(i).GetChild(1).GetComponent<CardHandler>().cardData.type == "unit")
+                        cardSlot_1.GetChild(i).GetChild(1).GetComponent<CardHandler>().ActivateCard();
                 }
 
             }
-            for (int i = 0; i < cardSlot_2.childCount; i++) {
-                if (cardSlot_2.GetChild(i).gameObject.activeSelf) {
-                    if (cardSlot_2.GetChild(i).childCount != 0) {
-                        if (cardSlot_2.GetChild(i).GetChild(0).GetComponent<CardHandler>().cardData.type == "unit")
-                            cardSlot_2.GetChild(i).GetChild(0).GetComponent<CardHandler>().ActivateCard();
-                    }
-                    else {
-                        if (PlayMangement.instance.cardDragCanvas.GetChild(5).GetComponent<CardHandler>().cardData.type == "unit")
-                            PlayMangement.instance.cardDragCanvas.GetChild(5).GetComponent<CardHandler>().ActivateCard();
-                    }
-                }
-            }
         }
         else if(isPlayer == true && currentTurn == "SECRET") {
-            Transform cardSlot_1 = playerUI.transform.Find("CardHand").GetChild(0);
-            Transform cardSlot_2 = playerUI.transform.Find("CardHand").GetChild(1);
+            Transform cardSlot_1 = cdpm.transform;
             for (int i = 0; i < cardSlot_1.childCount; i++) {
-                if (cardSlot_1.GetChild(i).gameObject.activeSelf) {
-                    if (cardSlot_1.GetChild(i).childCount != 0) {
-                        if (cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().cardData.type == "magic")
-                            cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().ActivateCard();
-                    }
-                    else {
-                        if (PlayMangement.instance.cardDragCanvas.GetChild(5).GetComponent<CardHandler>().cardData.type == "magic")
-                            PlayMangement.instance.cardDragCanvas.GetChild(5).GetComponent<CardHandler>().ActivateCard();
-                    }
+                if (cardSlot_1.GetChild(i).childCount != 1) {
+                    if (cardSlot_1.GetChild(i).GetChild(1).GetComponent<CardHandler>().cardData.type == "magic")
+                        cardSlot_1.GetChild(i).GetChild(1).GetComponent<CardHandler>().ActivateCard();
                 }
-            }
-            for (int i = 0; i < cardSlot_2.childCount; i++) {
-                if (cardSlot_2.GetChild(i).gameObject.activeSelf) {
-                    if (cardSlot_2.GetChild(i).childCount != 0) {
-                        if (cardSlot_2.GetChild(i).GetChild(0).GetComponent<CardHandler>().cardData.type == "magic")
-                            cardSlot_2.GetChild(i).GetChild(0).GetComponent<CardHandler>().ActivateCard();
-                    }
-                    else {
-                        if (PlayMangement.instance.cardDragCanvas.GetChild(5).GetComponent<CardHandler>().cardData.type == "magic")
-                            PlayMangement.instance.cardDragCanvas.GetChild(5).GetComponent<CardHandler>().ActivateCard();
-                    }
-                }
+
             }
         }
         if (activeCardMinCost == 100) {
@@ -373,23 +323,11 @@ public class PlayerController : MonoBehaviour
     public void DisablePlayer() {
         myTurn = false;
         if (isPlayer == true) {
-            Transform cardSlot_1 = playerUI.transform.Find("CardHand").GetChild(0);
-            Transform cardSlot_2 = playerUI.transform.Find("CardHand").GetChild(1);
+            Transform cardSlot_1 = cdpm.transform;
+
             for (int i = 0; i < cardSlot_1.childCount; i++) {
-                if (cardSlot_1.GetChild(i).gameObject.activeSelf) {
-                    if (cardSlot_1.GetChild(i).childCount != 0)
-                        cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().DisableCard();
-                    else
-                        PlayMangement.instance.cardDragCanvas.GetChild(5).GetComponent<CardHandler>().DisableCard();
-                }
-            }
-            for (int i = 0; i < cardSlot_2.childCount; i++) {
-                if (cardSlot_2.GetChild(i).gameObject.activeSelf) {
-                    if (cardSlot_2.GetChild(i).childCount != 0)
-                        cardSlot_2.GetChild(i).GetChild(0).GetComponent<CardHandler>().DisableCard();
-                    else
-                        PlayMangement.instance.cardDragCanvas.GetChild(5).GetComponent<CardHandler>().DisableCard();
-                }
+                if (cardSlot_1.GetChild(i).childCount != 1)
+                    cardSlot_1.GetChild(i).GetChild(01).GetComponent<CardHandler>().DisableCard();
             }
         }
         if (isPlayer)

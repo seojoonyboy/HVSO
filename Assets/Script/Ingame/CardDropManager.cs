@@ -249,19 +249,10 @@ public partial class CardDropManager {
 
     public GameObject DropUnit(GameObject card, Transform target) {
         if (target == null || target.childCount > 1) return null;
+        card.GetComponent<CardHandler>().CARDUSED = true;
         HighLightSlot(target, false);
         HideDropableSlot();
-        int cardIndex = 0;
-        if (card.transform.parent.parent.name == "CardSlot_1")
-            cardIndex = card.transform.parent.GetSiblingIndex();
-        else {
-            Transform slot1 = card.transform.parent.parent.parent.GetChild(0);
-            for (int i = 0; i < 5; i++) {
-                if (slot1.GetChild(i).gameObject.activeSelf)
-                    cardIndex++;
-            }
-            cardIndex += card.transform.parent.GetSiblingIndex();
-        }
+        int cardIndex = card.transform.parent.GetSiblingIndex();
         CardHandler cardHandler = card.GetComponent<CardHandler>();
         int frontOrBack = 0; //뒤에 배치시 0, 앞에 배치시 1, 기본 뒤에 배치
         int lineNum = target.parent.GetSiblingIndex();

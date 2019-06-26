@@ -138,22 +138,13 @@ namespace SkillModules {
             MessageFormat format = MessageForm(true);
             connector.UseCard(format);
             if(myObject.GetComponent<MagicDragHandler>() != null) {
-                int cardIndex = 0;
-                if (myObject.transform.parent.parent.name == "CardSlot_1")
-                    cardIndex = myObject.transform.parent.GetSiblingIndex();
-                else {
-                    Transform slot1 = myObject.transform.parent.parent.parent.GetChild(0);
-                    for (int i = 0; i < 5; i++) {
-                        if (slot1.GetChild(i).gameObject.activeSelf)
-                            cardIndex++;
-                    }
-                    cardIndex += myObject.transform.parent.GetSiblingIndex();
-                }
+                int cardIndex = myObject.transform.parent.GetSiblingIndex();
                 PlayMangement.instance.player.cdpm.DestroyCard(cardIndex);
                 if(PlayMangement.instance.player.isHuman)
                     PlayMangement.instance.player.ActivePlayer();
                 else
                     PlayMangement.instance.player.ActiveOrcTurn();
+                myObject.GetComponent<MagicDragHandler>().CARDUSED = true;
             }
         }
 
