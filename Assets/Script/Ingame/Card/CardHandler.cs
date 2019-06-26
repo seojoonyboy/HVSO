@@ -17,10 +17,23 @@ public partial class CardHandler : MonoBehaviour {
     public bool changeSelected = false;
     protected bool isDropable = false;
     protected bool pointOnFeild = false;
+    protected bool cardUsed = false;
     Animator cssAni;
     public string cardID;
     protected int _itemID;
-    protected Transform beforeDragParent;
+
+    public Transform DragObserver;
+    public Transform mousLocalPos;
+    public CardCircleManager ListCircle;
+    protected int myCardIndex;
+    protected int parentIndex;
+    public int CARDINDEX {
+        set { myCardIndex = value; }
+    }
+    public bool CARDUSED {
+        set { cardUsed = value; }
+    }
+
     public int itemID {
         get { return _itemID; }
         set {
@@ -42,8 +55,12 @@ public partial class CardHandler : MonoBehaviour {
         set { firstDraw = value; }
     }
 
-    public void Awake() {
+    private void Start() {
+        DragObserver = transform.parent.parent.parent.Find("DragObserver");
+        ListCircle = transform.parent.parent.parent.Find("CardCircle").GetComponent<CardCircleManager>();
+        mousLocalPos = transform.parent.parent.parent.Find("MouseLocalPosition");
         clm = PlayMangement.instance.cardInfoCanvas.Find("CardInfoList").GetComponent<CardListManager>();
+        gameObject.SetActive(false);
     }
 
     public virtual void DrawCard(string ID, int itemID = -1, bool first = false) {
@@ -111,7 +128,7 @@ public partial class CardHandler : MonoBehaviour {
                 CardInfoOnDrag.instance.ActiveCrossHair(false);
             return;
         }
-        if (transform.localPosition.y > -350) {
+        if (transform.localPosition.y > 5000) {
             if (!pointOnFeild) {
                 pointOnFeild = true;
                 transform.localScale = new Vector3(0, 0, 0);
@@ -212,24 +229,12 @@ public partial class CardHandler : MonoBehaviour {
             return;
         }
         if (!blockButton) {
-            if (transform.parent.parent.name == "CardSlot_1") {
-                clm.OpenCardList(transform.parent.GetSiblingIndex());
-            }
-            else {
-                int cardIndex = 0;
-                Transform slot1 = transform.parent.parent.parent.GetChild(0);
-                for (int i = 0; i < 5; i++) {
-                    if (slot1.GetChild(i).gameObject.activeSelf)
-                        cardIndex++;
-                }
-                cardIndex += transform.parent.GetSiblingIndex();
-                clm.OpenCardList(cardIndex);
-            }
+            clm.OpenCardList(transform.parent.GetSiblingIndex());
         }
     }
 
     public void RedrawButton() {
-        CardHandDeckManager handManager = FindObjectOfType<CardHandDeckManager>();
+        CardCircleManager handManager = FindObjectOfType<CardCircleManager>();
         PlayMangement.instance.socketHandler.HandchangeCallback = handManager.RedrawCallback;
         PlayMangement.instance.socketHandler.ChangeCard(itemID);
     }
@@ -284,7 +289,27 @@ public partial class CardHandler : MonoBehaviour {
         return isHuman ? isHumanTurn : isMagic ? isOrcMagicTurn : isOrcPreTurn;
     }
 
-    public void MoveRect(Vector2 rect) {
-        this.GetComponent<RectTransform>().anchoredPosition = rect;
+    protected void StartDragCard() {
+        parentIndex = transform.parent.GetSiblingIndex();
+        transform.parent.SetAsLastSibling();
+        transform.localScale = new Vector3(1.15f, 1.15f, 1);
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mousePos = new Vector3(mousePos.x, mousePos.y, 0);
+        Vector3 observeMousePos = new Vector3(mousePos.x, mousePos.y, 0);
+        DragObserver.LookAt(observeMousePos, new Vector3(0, 0, 1));
+        mousLocalPos.position = transform.position;
+        ListCircle.transform.SetParent(DragObserver);
+    }
+
+    protected void OnDragCard() {
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mousePos = new Vector3(mousePos.x, mousePos.y, 0);
+        Vector3 observeMousePos = new Vector3(mousePos.x, mousePos.y, 0);
+        DragObserver.LookAt(observeMousePos, new Vector3(0, 0, 1));
+        if (mousePos.y > -6.5f)
+            transform.position = mousePos;
+        else
+            transform.localPosition = new Vector3(0, 4500, 0);
+        mousLocalPos.position = transform.position;
     }
 }

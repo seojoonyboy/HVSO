@@ -18,8 +18,8 @@ public class DebugMagicDragHandler : DebugCardHandler, IBeginDragHandler, IDragH
             DebugCardInfoOnDrag.instance.SetCardDragInfo(null, transform.localPosition, cardData.skills[0].desc);
         else
             DebugCardInfoOnDrag.instance.SetCardDragInfo(null, transform.localPosition);
-        beforeDragParent = transform.parent;
-        transform.SetParent(DebugManagement.instance.cardDragCanvas);
+        //beforeDragParent = transform.parent;
+        //transform.SetParent(DebugManagement.instance.cardDragCanvas);
         itsDragging = gameObject;
         blockButton = DebugManagement.instance.player.dragCard = true;
         DebugManagement.instance.player.isPicking.Value = true;
