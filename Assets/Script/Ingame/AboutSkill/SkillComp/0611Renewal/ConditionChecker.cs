@@ -240,12 +240,35 @@ namespace SkillModules {
             if (!ArgsExist()) return false;
             playedObject.IsValidateData(mySkillHandler.targetData);
 
-            return true;
+            PlaceMonster playedMonster = playedObject.targetObject.GetComponent<PlaceMonster>();
+            return playedMonster.unit.cardCategories.ToList().Contains(args[0]);
+        }
+
+        public override void filtering(ref List<GameObject> list) {
+            string category = args[0];
+            list.RemoveAll(x => (!x.GetComponent<PlaceMonster>().unit.cardCategories.ToList().Exists(y => y.CompareTo(category)==0)));
+            return;
+        }
+    }
+
+    public class has_attribute : ConditionChecker {
+        PlayedObject playedObject;
+
+        public has_attribute(SkillHandler skillHandler, string[] args = null) : base(skillHandler) {
+            playedObject = new PlayedObject();
+        }
+
+        public override bool IsConditionSatisfied() {
+            if (!ArgsExist()) return false;
+            playedObject.IsValidateData(mySkillHandler.targetData);
+
+            PlaceMonster playedMonster = playedObject.targetObject.GetComponent<PlaceMonster>();
+            return playedMonster.unit.attributes.ToList().Contains(args[0]);
         }
 
         public override void filtering(ref List<GameObject> list) {
             string category = (string)args[0];
-            list.RemoveAll(x => (!x.GetComponent<PlaceMonster>().unit.cardCategories.ToList().Exists(y => y.CompareTo(category)==0)));
+            list.RemoveAll(x => (!x.GetComponent<PlaceMonster>().unit.cardCategories.ToList().Exists(y => y.CompareTo(category) == 0)));
             return;
         }
     }

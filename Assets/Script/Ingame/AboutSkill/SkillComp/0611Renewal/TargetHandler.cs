@@ -235,11 +235,13 @@ namespace TargetModules {
     public class played_target : TargetHandler {
         public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback, Filtering filter) {
             base.SelectTarget(successCallback, failedCallback, filter);
-
             
             if (args == null) failedCallback("Args 가 존재가지 않습니다.");
 
             var targets = GetTarget(skillHandler.isPlayer, args);
+
+            filter(ref targets);
+
             SetTarget(targets);
             successCallback(targets);
         }
