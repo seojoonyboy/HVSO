@@ -100,11 +100,15 @@ public class PlaceMonster : MonoBehaviour {
         if (unit.attackRange == "distance") {
             GameObject arrow = Instantiate(unitSpine.arrow, transform);
             arrow.transform.position = gameObject.transform.position;
+            
+
+            if (isPlayer == false) {
+                if (arrow.gameObject.name.Contains("Dog") == true)
+                    arrow.transform.localScale = new Vector3(-1, 1, 1);
+                else
+                    arrow.transform.localScale = new Vector3(1, -1, 1);
+            }
             arrow.name = "arrow";
-
-            if (isPlayer == false)
-                arrow.transform.localScale = new Vector3(1, -1, 1);
-
             arrow.SetActive(false);
         }
 
