@@ -251,6 +251,10 @@ namespace SkillModules {
             return targetHandler.args[1];
         }
 
+        public string[] TargetArgs() {
+            return targetHandler.args;
+        }
+
         public string targetCamp() {
             return targetHandler.args[0];
         }

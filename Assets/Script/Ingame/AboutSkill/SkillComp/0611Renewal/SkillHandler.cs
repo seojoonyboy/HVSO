@@ -108,6 +108,7 @@ namespace SkillModules {
                 PlayMangement.instance.OffBlockPanel();
             }
             //유닛 소환이나 마법 카드 사용 했을 때
+            if(!isPlayer) yield break;
             if(isPlayingCard()) SendSocket();
             //TODO : field에서 select 발동 했을 때
             else if(isFieldCard()) SkillActivate();
@@ -260,6 +261,10 @@ namespace SkillModules {
                 .highlightedSlot
                 .GetComponentInParent<Terrain>()
                 .transform.GetSiblingIndex();
+        }
+
+        public string[] targetArgument() {
+            return skills[0].TargetArgs();
         }
     }
 }
