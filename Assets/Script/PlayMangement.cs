@@ -253,20 +253,20 @@ public partial class PlayMangement : MonoBehaviour {
             "easetype" , iTween.EaseType.easeWeakOutBack));
         Logger.Log(enemyPlayer.playerUI.transform.position);
         yield return new WaitForSeconds(1.0f);
-        
+        MagicDragHandler magicCard = card.GetComponent<MagicDragHandler>();
         //타겟 지정 애니메이션
-        for(int i = 0; i < history.targets.Length; i++) {
-            yield return EnemySettingTarget(history.targets[i]);
-        }
+        yield return EnemySettingTarget(history.targets[0], magicCard);
         //실제 카드 사용
         object[] parms = new object[] { false, card };
         EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
-        
+        yield return new WaitForSeconds(2f);
         //카드 파괴
         Destroy(card);
     }
 
-    private IEnumerator EnemySettingTarget(SocketFormat.Target target) {
+    private IEnumerator EnemySettingTarget(SocketFormat.Target target, MagicDragHandler magicHandler) {
+        GameObject highlightUI = null;
+        string[] args = magicHandler.skillHandler.targetArgument();
         switch(target.method) {
         case "place" :
             //target.args[0] line, args[1] camp, args[2] front or rear
@@ -274,14 +274,27 @@ public partial class PlayMangement : MonoBehaviour {
             break;
         case "unit" :
             int itemId = int.Parse(target.args[0]);
-            List<GameObject> list = enemyUnitsObserver.GetAllFieldUnits();
-            list.AddRange(playerUnitsObserver.GetAllFieldUnits());
+            List<GameObject> list;
+            if(args[0].CompareTo("my") == 0) //적 자신일 경우
+                list = enemyUnitsObserver.GetAllFieldUnits();
+            else //적의 적 (나)일 경우
+                list = playerUnitsObserver.GetAllFieldUnits();
             GameObject unit = list.Find(x => x.GetComponent<PlaceMonster>().itemId == itemId);
-            
-            //target.args[0] itemid (유닛을 검색해야함)
+            highlightUI = unit.transform.GetChild(0).Find("ClickableUI").gameObject;
+            highlightUI.SetActive(true);
+            magicHandler.highlightedSlot = highlightUI.transform;
+            highlightUI.GetComponent<Image>().color = Color.red;
             break;
         case "line" :
-            //target.args[0] line
+            int line = int.Parse(target.args[0]);
+            Terrain[] lineList = FindObjectsOfType<Terrain>();
+            int terrainLine;
+            for(int i = 0; i < lineList.Length; i++) {
+                terrainLine = lineList[i].transform.GetSiblingIndex();
+                if(terrainLine != line) continue;
+                highlightUI = lineList[i].transform.Find("BattleLineEffect").gameObject;
+                break;
+            }
             break;
         case "all" :
             //보여줄게 없음
@@ -290,7 +303,13 @@ public partial class PlayMangement : MonoBehaviour {
             //보여줄게 없음
             break;
         }
-        yield return null;
+        if(highlightUI == null) yield break;
+        highlightUI.SetActive(true);
+        magicHandler.highlightedSlot = highlightUI.transform;
+        highlightUI.GetComponent<SpriteRenderer>().color = new Color(1, 0, 0, 155.0f / 255.0f);
+        yield return new WaitForSeconds(1.5f);
+        highlightUI.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 155.0f / 255.0f);
+        highlightUI.SetActive(false);
     }
 
     private GameObject SummonMonster(SocketFormat.PlayHistory history) {

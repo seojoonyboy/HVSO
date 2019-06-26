@@ -312,15 +312,18 @@ public class CardCircleManager : MonoBehaviour {
     public GameObject InstantiateMagicCard(CardData data, int itemId) {
         GameObject card = cardStorage.Find("MagicCards").GetChild(0).gameObject;
         card.transform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = data.name;
-        card.AddComponent<MagicDragHandler>().cardData = data;
-        AddMagicAttribute(ref card);
+        MagicDragHandler magic = card.AddComponent<MagicDragHandler>();
+        card.GetComponent<CardHandler>().cardData = data;
+        AddMagicAttribute(ref card, false);
+        magic.DrawCard(data.cardId, itemId);
+        magic.enabled = false;
         return card;
     }
-    protected void AddMagicAttribute(ref GameObject card) {
+    protected void AddMagicAttribute(ref GameObject card, bool isPlayer = true) {
         var cardData = card.GetComponent<CardHandler>().cardData;
 
         SkillModules.SkillHandler skillHandler = new SkillModules.SkillHandler();
-        skillHandler.Initialize(cardData.skills, card, true);
+        skillHandler.Initialize(cardData.skills, card, isPlayer);
         card.GetComponent<MagicDragHandler>().skillHandler = skillHandler;
     }
 }

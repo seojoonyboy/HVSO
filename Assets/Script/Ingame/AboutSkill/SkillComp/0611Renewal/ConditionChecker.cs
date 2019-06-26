@@ -199,6 +199,10 @@ namespace SkillModules {
             list.RemoveAll(x => x.GetComponent<PlaceMonster>().unit.attack < power);
             return;
         }
+
+        public override bool filtering(GameObject testObject) {
+            return testObject.GetComponent<PlaceMonster>().unit.attack < int.Parse(args[0]);
+        }
     }
 
     public class my_field_ctg_chk : ConditionChecker {
