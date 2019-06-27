@@ -498,7 +498,7 @@ namespace TargetModules {
                 //유닛이 끌고오는 경우 있고 (hook), 나중에 사용되는 경우도 있고...
                 Transform selectedTarget = null;
                 //1. 사용한 카드 찾기
-                int itemId = skillHandler.myObject.GetComponent<PlaceMonster>() == null ? 
+                int itemId = skillHandler.myObject.GetComponent<PlaceMonster>() != null ? 
                     skillHandler.myObject.GetComponent<PlaceMonster>().itemId : 
                     skillHandler.myObject.GetComponent<MagicDragHandler>().itemID;
                 var play_list = server.gameState.playHistory.ToList();
