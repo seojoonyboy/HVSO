@@ -16,6 +16,7 @@ public class ResourceManager : SerializedMonoBehaviour
     public Dictionary<string, GameObject> heroSkeleton;
     public Dictionary<string, Sprite> classImage;
     public Dictionary<string, Sprite> infoSprites;
+    public Dictionary<string, Sprite> infoPortraite;
     public GameObject unitDeadObject;
     public GameObject previewUnit;
 }

@@ -107,10 +107,14 @@ public class CardCircleManager : MonoBehaviour {
         else
             card = cardobj;
         if (firstDraw) {
-            if (cardNum + 1 == 5)
+            if (cardNum + 1 == 5) {
+                AddInfoToList(card);
                 firstDraw = false;
+            }
             card.transform.Find("GlowEffect").GetComponent<Image>().enabled = false;
         }
+        else
+            AddInfoToList(card);
         Transform cardTransform = card.transform;
         Transform cardPos = transform.GetChild(cardNum).GetChild(0);
         cardTransform.GetComponent<CardHandler>().CARDINDEX = cardNum;
@@ -201,8 +205,10 @@ public class CardCircleManager : MonoBehaviour {
         removeCard.eulerAngles = Vector3.zero;
         removeCard.localPosition = Vector3.zero;
         cardList.RemoveAt(index);
-        if(removeCard.name == "MagicCard")
+        if (removeCard.name == "MagicCard")
             clm.RemoveCardInfo(index);
+        else
+            clm.AddFeildUnitInfo(index, PlayMangement.instance.unitNum - 1);
         cardNum--;
         for (int i = index; i < cardNum; i++) {
             transform.GetChild(i).GetChild(1).GetComponent<CardHandler>().CARDINDEX = i;
@@ -294,12 +300,16 @@ public class CardCircleManager : MonoBehaviour {
         itemId = newCard.itemId;
         CardHandler handler = card.GetComponent<CardHandler>();
         handler.DrawCard(id, itemId);
-        GameObject infoList = PlayMangement.instance.cardInfoCanvas.Find("CardInfoList").gameObject;
         clm.AddMulliganCardInfo(handler.cardData, id, index);
-        card.transform.position = beforeCardObject.transform.position;
+        card.transform.SetParent(firstDrawParent);
         card.transform.SetSiblingIndex(index + 5);
+        card.transform.position = beforeCardObject.transform.position;
         card.transform.localScale = beforeCardObject.transform.localScale;
-        Destroy(beforeCardObject);
+        card.transform.rotation = beforeCardObject.transform.rotation;
+        beforeCardObject.transform.SetParent(cardStorage.Find("UnitCards"));
+        beforeCardObject.transform.localPosition = Vector3.zero;
+        beforeCardObject.transform.eulerAngles = Vector3.zero;
+        beforeCardObject.SetActive(false);
         firstDrawList[index] = card;
         card.SetActive(true);
 

@@ -1795,14 +1795,55 @@ MonoBehaviour:
     - {fileID: -2164422744647453614, guid: d72b274516aabbe45879dd040f24b6bb, type: 3}
     - {fileID: 3565961466000394265, guid: d72b274516aabbe45879dd040f24b6bb, type: 3}
     - {fileID: -6248640042176060584, guid: d72b274516aabbe45879dd040f24b6bb, type: 3}
-    - {fileID: 21300000, guid: 8945166ba4ef3134cbbbac8fc0d3f582, type: 3}
-    - {fileID: 21300000, guid: 0706e76c7e685a842ab485a55367d258, type: 3}
-    - {fileID: 21300000, guid: e7d2730e7301be748bd0ec853d4f2bea, type: 3}
-    - {fileID: 21300000, guid: a833f32d580b7184190555dfc2cfc1ad, type: 3}
-    - {fileID: 21300000, guid: e06c6c960a339414eb288956e26f6fe5, type: 3}
-    - {fileID: 21300000, guid: 0460486d8c4102c44a95b8e0122d443d, type: 3}
-    - {fileID: 21300000, guid: b951dd4d1ff612047978ac295a70b4b3, type: 3}
-    - {fileID: 21300000, guid: 8a45442a9fcf8e24f96aaa7322fe9f88, type: 3}
+    - {fileID: -3440443020095221363, guid: 7fecfe2efde515747823be4298de3cd1, type: 3}
+    - {fileID: 2919293201927799646, guid: 7fecfe2efde515747823be4298de3cd1, type: 3}
+    - {fileID: -841537519532026076, guid: 7fecfe2efde515747823be4298de3cd1, type: 3}
+    - {fileID: -5621208930018107576, guid: 7fecfe2efde515747823be4298de3cd1, type: 3}
+    - {fileID: 7706455381262370707, guid: 7fecfe2efde515747823be4298de3cd1, type: 3}
+    - {fileID: 5062726313627436730, guid: 7fecfe2efde515747823be4298de3cd1, type: 3}
+    - {fileID: -7685508902814243102, guid: 7fecfe2efde515747823be4298de3cd1, type: 3}
+    - {fileID: 2385088559370877663, guid: 7fecfe2efde515747823be4298de3cd1, type: 3}
+    - {fileID: -7241241620715457995, guid: 7fecfe2efde515747823be4298de3cd1, type: 3}
+    - {fileID: -6146438084938245089, guid: 7fecfe2efde515747823be4298de3cd1, type: 3}
+    - {fileID: -3577896381456040696, guid: 7fecfe2efde515747823be4298de3cd1, type: 3}
+    - {fileID: -6249704124916188714, guid: 7fecfe2efde515747823be4298de3cd1, type: 3}
+    - {fileID: 8892280313325182227, guid: 7fecfe2efde515747823be4298de3cd1, type: 3}
+    - {fileID: -710075642464768273, guid: 7fecfe2efde515747823be4298de3cd1, type: 3}
+    - {fileID: 3986447920887533447, guid: 7fecfe2efde515747823be4298de3cd1, type: 3}
+    - {fileID: -3897977781792394465, guid: 7fecfe2efde515747823be4298de3cd1, type: 3}
+    - {fileID: -7215910071446153760, guid: 7fecfe2efde515747823be4298de3cd1, type: 3}
+    - {fileID: -8096304967036978428, guid: 7fecfe2efde515747823be4298de3cd1, type: 3}
+    - {fileID: -5291665564860064282, guid: 7fecfe2efde515747823be4298de3cd1, type: 3}
+    - {fileID: 6089914502286055788, guid: 7fecfe2efde515747823be4298de3cd1, type: 3}
+    - {fileID: -4226548967377817700, guid: 7fecfe2efde515747823be4298de3cd1, type: 3}
+    - {fileID: -8641375218864221105, guid: 7fecfe2efde515747823be4298de3cd1, type: 3}
+    - {fileID: -3965386756781439874, guid: 7fecfe2efde515747823be4298de3cd1, type: 3}
+    - {fileID: 6707853947494945215, guid: 7fecfe2efde515747823be4298de3cd1, type: 3}
+    - {fileID: 1913007842479917902, guid: 7fecfe2efde515747823be4298de3cd1, type: 3}
+    - {fileID: 5986551120315241216, guid: 7fecfe2efde515747823be4298de3cd1, type: 3}
+    - {fileID: -3108389303869757469, guid: 7fecfe2efde515747823be4298de3cd1, type: 3}
+    - {fileID: 621521891638079978, guid: d64029a42f343c942a2dcbf3f11c6797, type: 3}
+    - {fileID: 4207649919081520766, guid: d64029a42f343c942a2dcbf3f11c6797, type: 3}
+    - {fileID: -4062948375574049236, guid: d64029a42f343c942a2dcbf3f11c6797, type: 3}
+    - {fileID: -1721057493106282403, guid: d64029a42f343c942a2dcbf3f11c6797, type: 3}
+    - {fileID: -5141953200097683967, guid: d64029a42f343c942a2dcbf3f11c6797, type: 3}
+    - {fileID: 2095576310563188460, guid: 338b44f557ad43d44beb37dbb50e047f, type: 3}
+    - {fileID: 8230869663358177290, guid: d64029a42f343c942a2dcbf3f11c6797, type: 3}
+    - {fileID: -2881626163596688966, guid: d64029a42f343c942a2dcbf3f11c6797, type: 3}
+    - {fileID: 3300900309425026320, guid: d64029a42f343c942a2dcbf3f11c6797, type: 3}
+    - {fileID: -6353764650780430386, guid: 3f7dbfa56e06bce44b49b84168bedfe4, type: 3}
+    - {fileID: -5976033799484478300, guid: 3f7dbfa56e06bce44b49b84168bedfe4, type: 3}
+    - {fileID: 8063983338517583843, guid: 3f7dbfa56e06bce44b49b84168bedfe4, type: 3}
+    - {fileID: -1266849523433018938, guid: 3f7dbfa56e06bce44b49b84168bedfe4, type: 3}
+    - {fileID: -2598078480963232838, guid: 3f7dbfa56e06bce44b49b84168bedfe4, type: 3}
+    - {fileID: -4890230153378978454, guid: 3f7dbfa56e06bce44b49b84168bedfe4, type: 3}
+    - {fileID: 3872515857239951019, guid: 3f7dbfa56e06bce44b49b84168bedfe4, type: 3}
+    - {fileID: -1503164723217442884, guid: d64029a42f343c942a2dcbf3f11c6797, type: 3}
+    - {fileID: 2877965210981968403, guid: d64029a42f343c942a2dcbf3f11c6797, type: 3}
+    - {fileID: -3887066083837370067, guid: d64029a42f343c942a2dcbf3f11c6797, type: 3}
+    - {fileID: -9216420580574044333, guid: d64029a42f343c942a2dcbf3f11c6797, type: 3}
+    - {fileID: 1014161593673654987, guid: 3f7dbfa56e06bce44b49b84168bedfe4, type: 3}
+    - {fileID: -981367173463900617, guid: 3f7dbfa56e06bce44b49b84168bedfe4, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -3659,13 +3700,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 8
+      Data: 27
     - Name: 
       Entry: 7
       Data: 
     - Name: $k
       Entry: 1
-      Data: common_ribon
+      Data: frame_common
     - Name: $v
       Entry: 10
       Data: 95
@@ -3677,7 +3718,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: common_flag
+      Data: frame_uncommon
     - Name: $v
       Entry: 10
       Data: 96
@@ -3689,7 +3730,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: rare_flag
+      Data: frame_rare
     - Name: $v
       Entry: 10
       Data: 97
@@ -3701,7 +3742,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: rare_ribon
+      Data: frame_superrare
     - Name: $v
       Entry: 10
       Data: 98
@@ -3713,7 +3754,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: superrare_ribon
+      Data: frame_legend
     - Name: $v
       Entry: 10
       Data: 99
@@ -3725,7 +3766,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: superrare_flag
+      Data: class_knowledge
     - Name: $v
       Entry: 10
       Data: 100
@@ -3737,7 +3778,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: uncommon_flag
+      Data: class_mana
     - Name: $v
       Entry: 10
       Data: 101
@@ -3749,10 +3790,726 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: uncommon_ribon
+      Data: class_order
     - Name: $v
       Entry: 10
       Data: 102
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: class_pursuit
+    - Name: $v
+      Entry: 10
+      Data: 103
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: class_scheme
+    - Name: $v
+      Entry: 10
+      Data: 104
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: class_sorcery
+    - Name: $v
+      Entry: 10
+      Data: 105
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: class_icon_sorcery
+    - Name: $v
+      Entry: 10
+      Data: 106
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: class_icon_knowledge
+    - Name: $v
+      Entry: 10
+      Data: 107
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: class_icon_mana
+    - Name: $v
+      Entry: 10
+      Data: 108
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: class_icon_order
+    - Name: $v
+      Entry: 10
+      Data: 109
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: class_icon_pursuit
+    - Name: $v
+      Entry: 10
+      Data: 110
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: class_icon_scheme
+    - Name: $v
+      Entry: 10
+      Data: 111
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: dialog_common
+    - Name: $v
+      Entry: 10
+      Data: 112
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: dialog_uncommon
+    - Name: $v
+      Entry: 10
+      Data: 113
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: dialog_rare
+    - Name: $v
+      Entry: 10
+      Data: 114
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: dialog_superrare
+    - Name: $v
+      Entry: 10
+      Data: 115
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: dialog_legend
+    - Name: $v
+      Entry: 10
+      Data: 116
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: name_legend
+    - Name: $v
+      Entry: 10
+      Data: 117
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: name_common
+    - Name: $v
+      Entry: 10
+      Data: 118
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: name_uncommon
+    - Name: $v
+      Entry: 10
+      Data: 119
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: name_rare
+    - Name: $v
+      Entry: 10
+      Data: 120
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: name_superrare
+    - Name: $v
+      Entry: 10
+      Data: 121
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: infoPortraite
+      Entry: 7
+      Data: 20|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
+        UnityEngine.CoreModule]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 21|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 39
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10001
+    - Name: $v
+      Entry: 10
+      Data: 122
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10002
+    - Name: $v
+      Entry: 10
+      Data: 123
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10003
+    - Name: $v
+      Entry: 10
+      Data: 124
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10004
+    - Name: $v
+      Entry: 10
+      Data: 125
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10005
+    - Name: $v
+      Entry: 10
+      Data: 126
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10006
+    - Name: $v
+      Entry: 10
+      Data: 127
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10007
+    - Name: $v
+      Entry: 10
+      Data: 127
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10008
+    - Name: $v
+      Entry: 10
+      Data: 128
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10009
+    - Name: $v
+      Entry: 10
+      Data: 129
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10010
+    - Name: $v
+      Entry: 10
+      Data: 130
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10011
+    - Name: $v
+      Entry: 10
+      Data: 131
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10012
+    - Name: $v
+      Entry: 10
+      Data: 132
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10013
+    - Name: $v
+      Entry: 10
+      Data: 133
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10015
+    - Name: $v
+      Entry: 10
+      Data: 127
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10014
+    - Name: $v
+      Entry: 10
+      Data: 134
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10016
+    - Name: $v
+      Entry: 10
+      Data: 127
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10017
+    - Name: $v
+      Entry: 10
+      Data: 127
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10018
+    - Name: $v
+      Entry: 10
+      Data: 135
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10019
+    - Name: $v
+      Entry: 10
+      Data: 136
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10020
+    - Name: $v
+      Entry: 10
+      Data: 137
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10021
+    - Name: $v
+      Entry: 10
+      Data: 127
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10022
+    - Name: $v
+      Entry: 10
+      Data: 127
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10023
+    - Name: $v
+      Entry: 10
+      Data: 127
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10024
+    - Name: $v
+      Entry: 10
+      Data: 127
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10025
+    - Name: $v
+      Entry: 10
+      Data: 127
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10026
+    - Name: $v
+      Entry: 10
+      Data: 127
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10027
+    - Name: $v
+      Entry: 10
+      Data: 127
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10028
+    - Name: $v
+      Entry: 10
+      Data: 127
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10029
+    - Name: $v
+      Entry: 10
+      Data: 127
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10030
+    - Name: $v
+      Entry: 10
+      Data: 138
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10031
+    - Name: $v
+      Entry: 10
+      Data: 139
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10032
+    - Name: $v
+      Entry: 10
+      Data: 140
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10034
+    - Name: $v
+      Entry: 10
+      Data: 141
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10035
+    - Name: $v
+      Entry: 10
+      Data: 127
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10036
+    - Name: $v
+      Entry: 10
+      Data: 127
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10037
+    - Name: $v
+      Entry: 10
+      Data: 127
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10038
+    - Name: $v
+      Entry: 10
+      Data: 127
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10039
+    - Name: $v
+      Entry: 10
+      Data: 142
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10040
+    - Name: $v
+      Entry: 10
+      Data: 143
     - Name: 
       Entry: 8
       Data: 
@@ -3841,7 +4598,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0

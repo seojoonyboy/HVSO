@@ -114,7 +114,6 @@ public class PlaceMonster : MonoBehaviour {
             unit.ishuman = (PlayMangement.instance.enemyPlayer.isHuman == true) ? true : false;
 
         myUnitNum = PlayMangement.instance.unitNum++;
-        PlayMangement.instance.cardInfoCanvas.Find("CardInfoList").GetComponent<CardListManager>().AddFeildUnitInfo(data, myUnitNum);
         UpdateStat();
     }
 

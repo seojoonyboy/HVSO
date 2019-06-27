@@ -226,7 +226,7 @@ public partial class CardHandler : MonoBehaviour {
             return;
         }
         if (!blockButton) {
-            clm.OpenCardList(transform.parent.GetSiblingIndex());
+            clm.OpenCardInfo(transform.parent.GetSiblingIndex());
         }
     }
 
