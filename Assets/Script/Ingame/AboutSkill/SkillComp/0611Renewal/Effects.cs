@@ -112,9 +112,10 @@ namespace SkillModules {
             int drawNum = 0;
             int.TryParse((string)args[0], out drawNum);
             int itemId = skillHandler.myObject.GetComponent<MagicDragHandler>().itemID;
-
-            PlayMangement.instance.SocketHandler.DrawNewCards(drawNum, itemId);
-            PlayMangement.instance.EnemyMagicCardDraw();
+            if(skillHandler.isPlayer)
+                PlayMangement.instance.SocketHandler.DrawNewCards(drawNum, itemId);
+            else
+                PlayMangement.instance.EnemyMagicCardDraw();
 
             skillHandler.isDone = true;
         }
