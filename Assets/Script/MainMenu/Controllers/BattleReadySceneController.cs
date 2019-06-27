@@ -30,6 +30,10 @@ public class BattleReadySceneController : MonoBehaviour {
         isIngameButtonClicked = false;
     }
 
+    private void OnEnable() {
+        ChangeBattleType(0);
+    }
+
     public void DataLoad() {
         AccountManager.Instance.RequestHumanDecks(OnReqHumanDecks, OnRetryReq);
         loadingModal = LoadingModal.instantiate();
@@ -133,6 +137,20 @@ public class BattleReadySceneController : MonoBehaviour {
         var msg = string.Format("{0} 선택됨", deckId);
         Logger.Log(msg);
         Variables.Saved.Set("SelectedDeckId", deckId);
+    }
+
+    public void ChangeBattleType(int pageIndex) {
+        string type = "solo";
+        switch (pageIndex) {
+            case 0:
+            default:
+                type = "solo";
+                break;
+            case 1:
+                type = "multi";
+                break;
+        }
+        Variables.Saved.Set("SelectedBattleType", type);
     }
 
     public enum BattleType {
