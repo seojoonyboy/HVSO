@@ -1,0 +1,616 @@
+fileFormatVersion: 2
+guid: 33547c67c06a77149956fb63ca14f69d
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 5278558702833514068
+    second: turn_orc_button
+  - first:
+      213: 1007369383920575634
+    second: turn_orc_button_clicked
+  - first:
+      213: -993536051738944189
+    second: turn_button_frame
+  - first:
+      213: 2449979548101321491
+    second: turn_human_button
+  - first:
+      213: -5055614138431172375
+    second: turn_human_button_clicked
+  - first:
+      213: -6501669196329988437
+    second: turn_unplayable_button
+  - first:
+      213: 1725572581624611738
+    second: "\uD134UI PNG\uD30C\uC77C_15"
+  - first:
+      213: 5974820876543444050
+    second: turn_table_frame
+  - first:
+      213: 297166468210852962
+    second: turn_table_humanOn
+  - first:
+      213: -3040744893329599012
+    second: turn_table_orcOn
+  - first:
+      213: 6050053948457734819
+    second: turn_table_orcSpecOn
+  - first:
+      213: 2246985698561530174
+    second: turn_table_battleOn
+  - first:
+      213: -935304951288790569
+    second: turn_table_humanOff
+  - first:
+      213: -6184752192268207066
+    second: turn_table_orcOff
+  - first:
+      213: 8385311051057740953
+    second: turn_table_orcSpecOff
+  - first:
+      213: -7739064443188134547
+    second: turn_table_battleOff
+  - first:
+      213: 9509522989352702
+    second: turn_table_human
+  - first:
+      213: -4948238165692056601
+    second: turn_table_orc
+  - first:
+      213: -3637444334403717461
+    second: turn_table_battle
+  - first:
+      213: 8363425862464747456
+    second: turn_table_bg
+  - first:
+      213: 2812992389236348104
+    second: turn_text_enemyTurn
+  externalObjects: {}
+  serializedVersion: 10
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 2
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: turn_orc_button
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 724
+        width: 217
+        height: 132
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0d115c7e6db0c1b4b8aef18087222c77
+      internalID: 5278558702833514068
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: turn_orc_button_clicked
+      rect:
+        serializedVersion: 2
+        x: 306
+        y: 724
+        width: 218
+        height: 132
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 483004ee5cc42144590c66f8b989611f
+      internalID: 1007369383920575634
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: turn_button_frame
+      rect:
+        serializedVersion: 2
+        x: 586
+        y: 671
+        width: 269
+        height: 188
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ccd9be3e3a0d6834f88abea9367d8d7f
+      internalID: -993536051738944189
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: turn_human_button
+      rect:
+        serializedVersion: 2
+        x: 29
+        y: 540
+        width: 215
+        height: 131
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1ee60783f97190445b79a87d4e7f793d
+      internalID: 2449979548101321491
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: turn_human_button_clicked
+      rect:
+        serializedVersion: 2
+        x: 306
+        y: 539
+        width: 218
+        height: 132
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a5016d8cb5fe437408696c297f66c43a
+      internalID: -5055614138431172375
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: turn_unplayable_button
+      rect:
+        serializedVersion: 2
+        x: 29
+        y: 355
+        width: 217
+        height: 132
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6dbb82fc46a3f7247bdc3ed52b98189d
+      internalID: -6501669196329988437
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\uD134UI PNG\uD30C\uC77C_15"
+      rect:
+        serializedVersion: 2
+        x: 394
+        y: 370
+        width: 54
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a4b421bac04952c40a3f683f730e97ae
+      internalID: 1725572581624611738
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: turn_table_frame
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 192
+        width: 286
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d7b5d658d7854d04f88aeaf64341d9b6
+      internalID: 5974820876543444050
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: turn_table_humanOn
+      rect:
+        serializedVersion: 2
+        x: 360
+        y: 224
+        width: 37
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 19fa01c3c23b4534a88c04eb1b41ddf5
+      internalID: 297166468210852962
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: turn_table_orcOn
+      rect:
+        serializedVersion: 2
+        x: 411
+        y: 223
+        width: 45
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 89984418442535b41b39c2cd4708ad4c
+      internalID: -3040744893329599012
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: turn_table_orcSpecOn
+      rect:
+        serializedVersion: 2
+        x: 474
+        y: 224
+        width: 38
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2055fc0af6d13ca438a03d680886564c
+      internalID: 6050053948457734819
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: turn_table_battleOn
+      rect:
+        serializedVersion: 2
+        x: 526
+        y: 226
+        width: 58
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a70ed021b1a00dd48a8d877c2b1ff00e
+      internalID: 2246985698561530174
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: turn_table_humanOff
+      rect:
+        serializedVersion: 2
+        x: 641
+        y: 225
+        width: 33
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b407ba47d58c56b48ad60ab22514061e
+      internalID: -935304951288790569
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: turn_table_orcOff
+      rect:
+        serializedVersion: 2
+        x: 695
+        y: 227
+        width: 39
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7ec9776b2759e1e43aa3076ab1739612
+      internalID: -6184752192268207066
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: turn_table_orcSpecOff
+      rect:
+        serializedVersion: 2
+        x: 758
+        y: 228
+        width: 30
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 005639e6e3c60b04296639a364ae4a13
+      internalID: 8385311051057740953
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: turn_table_battleOff
+      rect:
+        serializedVersion: 2
+        x: 810
+        y: 226
+        width: 56
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 216b6b6885255b14c951b47256506a45
+      internalID: -7739064443188134547
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: turn_table_human
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 78
+        width: 74
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b60b2531a8c194148aacf1056a88dd66
+      internalID: 9509522989352702
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: turn_table_orc
+      rect:
+        serializedVersion: 2
+        x: 132
+        y: 78
+        width: 74
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d5b31ce4356455040bbe7ef33063e1b6
+      internalID: -4948238165692056601
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: turn_table_battle
+      rect:
+        serializedVersion: 2
+        x: 234
+        y: 78
+        width: 74
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3a1a74059e70c104aa276b760510627e
+      internalID: -3637444334403717461
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: turn_table_bg
+      rect:
+        serializedVersion: 2
+        x: 364
+        y: 79
+        width: 242
+        height: 81
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4660eaf50cb146743bcd83e828a5d6cf
+      internalID: 8363425862464747456
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: turn_text_enemyTurn
+      rect:
+        serializedVersion: 2
+        x: 592
+        y: 568
+        width: 129
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0ca6142139ba3d7479df93f8e56b9cbb
+      internalID: 2812992389236348104
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 1955e310f0165a14d8715c594bf35431
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
