@@ -5,8 +5,6 @@ using TMPro;
 
 public class DebugUnit : PlaceMonster
 {
-    List<Buff> buffList = new List<Buff>();
-
     void OnDestroy() {
     }
 
