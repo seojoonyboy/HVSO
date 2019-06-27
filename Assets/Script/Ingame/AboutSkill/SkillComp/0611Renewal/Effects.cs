@@ -114,7 +114,7 @@ namespace SkillModules {
             int itemId = skillHandler.myObject.GetComponent<MagicDragHandler>().itemID;
 
             PlayMangement.instance.SocketHandler.DrawNewCards(drawNum, itemId);
-            PlayMangement.instance.ShowToEnemyDrawing(drawNum);
+            //PlayMangement.instance.ShowToEnemyDrawing(drawNum);
 
             skillHandler.isDone = true;
         }
