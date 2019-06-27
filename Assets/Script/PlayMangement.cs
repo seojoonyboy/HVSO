@@ -760,7 +760,7 @@ public partial class PlayMangement {
         SocketFormat.Card cardData = socketHandler.gameState.players.myPlayer(race).newCard;
         player.cdpm.AddCard(null, cardData);
 
-        GameObject enemyCard = new GameObject();
+        GameObject enemyCard;
         if (enemyPlayer.isHuman)
             enemyCard = Instantiate(Resources.Load("Prefabs/HumanBackCard") as GameObject, enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(CountEnemyCard()));
         else
@@ -771,16 +771,19 @@ public partial class PlayMangement {
         enemyCard.SetActive(true);
     }
 
-    public void EnemyMagicCardDraw() {
-        GameObject enemyCard = new GameObject();
-        if (enemyPlayer.isHuman)
-            enemyCard = Instantiate(Resources.Load("Prefabs/HumanBackCard") as GameObject, enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(CountEnemyCard()));
-        else
-            enemyCard = Instantiate(Resources.Load("Prefabs/OrcBackCard") as GameObject, enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(CountEnemyCard()));
-        enemyCard.transform.position = player.cdpm.cardSpawnPos.position;
-        enemyCard.transform.localScale = new Vector3(1, 1, 1);
-        iTween.MoveTo(enemyCard, enemyCard.transform.parent.position, 0.3f);
-        enemyCard.SetActive(true);
+    public IEnumerator EnemyMagicCardDraw(int drawNum) {
+        for(int i = 0 ; i < drawNum; i++) {
+            GameObject enemyCard;
+            if (enemyPlayer.isHuman)
+                enemyCard = Instantiate(Resources.Load("Prefabs/HumanBackCard") as GameObject, enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(CountEnemyCard()));
+            else
+                enemyCard = Instantiate(Resources.Load("Prefabs/OrcBackCard") as GameObject, enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(CountEnemyCard()));
+            enemyCard.transform.position = player.cdpm.cardSpawnPos.position;
+            enemyCard.transform.localScale = new Vector3(1, 1, 1);
+            iTween.MoveTo(enemyCard, enemyCard.transform.parent.position, 0.3f);
+            enemyCard.SetActive(true);
+            yield return new WaitForSeconds(0.3f);
+        }
     }
 
     public int CountEnemyCard() {

@@ -115,7 +115,7 @@ namespace SkillModules {
             if(skillHandler.isPlayer)
                 PlayMangement.instance.SocketHandler.DrawNewCards(drawNum, itemId);
             else
-                PlayMangement.instance.EnemyMagicCardDraw();
+                PlayMangement.instance.StartCoroutine(PlayMangement.instance.EnemyMagicCardDraw(drawNum));
 
             skillHandler.isDone = true;
         }
