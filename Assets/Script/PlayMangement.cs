@@ -303,15 +303,13 @@ public partial class PlayMangement : MonoBehaviour {
         int i = int.Parse(history.targets[0].args[0]);
         string id = history.cardItem.id;
         bool isFront = history.targets[0].args[2].CompareTo("front")==0;
-        bool unitExist = !enemyUnitsObserver.CheckUnitPosition(i, 0);
+        bool unitExist = enemyUnitsObserver.CheckUnitPosition(i, 0);
         int j = isFront && unitExist ? 1 : 0;
         if(unitExist && !isFront) {
             Transform line_rear = enemyPlayer.transform.GetChild(0);
             Transform line_front = enemyPlayer.transform.GetChild(1);
             Transform existUnit;
             existUnit = line_rear.GetChild(i).GetChild(0);
-            existUnit.SetParent(line_front.GetChild(i));
-            existUnit.position = line_front.GetChild(i).position;
             existUnit.GetComponent<PlaceMonster>().unitLocation = line_front.GetChild(i).position;
             enemyUnitsObserver.UnitChangePosition(existUnit.gameObject, i, 1);
         }
