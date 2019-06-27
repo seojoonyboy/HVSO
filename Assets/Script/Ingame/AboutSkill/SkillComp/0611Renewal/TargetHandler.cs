@@ -547,7 +547,7 @@ namespace TargetModules {
                     var list = PlayMangement.instance.PlayerUnitsObserver.GetAllFieldUnits();
                     list.AddRange(PlayMangement.instance.EnemyUnitsObserver.GetAllFieldUnits());
                     GameObject target = list.Find(x => x.GetComponent<PlaceMonster>().itemId == targetItemId);
-                    GameObject highlightUI = target.transform.GetChild(0).Find("ClickableUI").gameObject;
+                    GameObject highlightUI = target.transform.Find("ClickableUI").gameObject;
                     //3. unitSlot에서 특정 부분 밝혀주기
                     highlightUI.SetActive(true);
                     highlightUI.GetComponent<SpriteRenderer>().color = new Color(1, 0, 0, 155.0f / 255.0f);

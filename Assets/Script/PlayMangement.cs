@@ -269,7 +269,7 @@ public partial class PlayMangement : MonoBehaviour {
             else //적의 적 (나)일 경우
                 list = playerUnitsObserver.GetAllFieldUnits();
             GameObject unit = list.Find(x => x.GetComponent<PlaceMonster>().itemId == itemId);
-            highlightUI = unit.transform.GetChild(0).Find("ClickableUI").gameObject;
+            highlightUI = unit.transform.Find("ClickableUI").gameObject;
             highlightUI.SetActive(true);
             break;
         case "line" :
