@@ -140,11 +140,11 @@ public class BattleReadySceneController : MonoBehaviour {
     }
 
     public void ChangeBattleType(int pageIndex) {
-        string type = "muiti";
+        string type = "multi";
         switch (pageIndex) {
             case 0:
             default:
-                type = "muiti";
+                type = "multi";
                 break;
             case 1:
                 type = "solo";
