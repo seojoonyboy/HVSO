@@ -218,6 +218,7 @@ public partial class PlayMangement : MonoBehaviour {
 
         cardData = cardDataPackage.data[history.cardItem.id];
         GameObject magicCard = player.cdpm.InstantiateMagicCard(cardData, history.cardItem.itemId);
+        magicCard.GetComponent<MagicDragHandler>().itemID = history.cardItem.itemId;
 
         Logger.Log("use Magic Card" + history.cardItem.name);
         enemyPlayer.resource.Value -= cardData.cost;
