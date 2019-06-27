@@ -445,27 +445,138 @@ namespace TargetModules {
             }
         }
 
-        private IEnumerator enemyTurnSelect() {
-            //TargetData가 있으면 카드로 인한 select
-            //없으면 턴 넘김으로 인한 발동.
+        private IEnumerator enemyTurnSelect(SelectTargetFinished successCallback, SelectTargetFailed failedCallback) {
+            BattleConnector server = PlayMangement.instance.socketHandler;
+            //턴 넘김으로 인한 경우 (현재 오크 잠복꾼) 위치 이동만 존재합니다.
             if(skillHandler.targetData == null) {
+                //1. 메시지 올 때까지 기다리기
+                PlayMangement.instance.OnBlockPanel("상대가 위치를 지정중입니다.");
                 var list = PlayMangement.instance.socketHandler.unitSkillList;
                 yield return list.WaitNext();
                 int itemId = list.Dequeue();
-            }
-            else {
+                var monList = server.gameState.map.allMonster;
+                SocketFormat.Unit unit = monList.Find(x => x.itemId == itemId);
+                if(unit == null) {
+                    failedCallback("상대가 위치 지정에 실패했습니다.");
+                    yield break;
+                }
+                //2. 밝혀줘야할 select 부분 찾기
+                Pos movePos = unit.pos;
+                Terrain[] terrains = FindObjectsOfType<Terrain>();
+                Transform terrainSlot = null;
+                
+                foreach(Terrain x in terrains) {
+                    if(movePos.col == x.transform.GetSiblingIndex()) {
+                        terrainSlot = x.transform.GetChild(0);
+                        break;
+                    }
+                }
 
+                //3. unitSlot에서 특정 부분 밝혀주기 아마 baseSlot 맞겠지
+                terrainSlot.gameObject.SetActive(true);
+                terrainSlot.GetChild(0).gameObject.SetActive(true);
+                terrainSlot.GetComponent<SpriteRenderer>().color = new Color(1, 0, 0, 155.0f / 255.0f);
+
+                //4.  1.5초뒤에 끄기
+                yield return new WaitForSeconds(1.5f);
+                terrainSlot.gameObject.SetActive(false);
+                terrainSlot.GetChild(0).gameObject.SetActive(false);
+                terrainSlot.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 155.0f / 255.0f);
+                
+                //5. 실제 effect 실행하러 보내기
+                Transform selectedTarget = PlayMangement.instance
+                            .PlayerUnitsObserver
+                            .transform
+                            .GetChild(movePos.row)
+                            .GetChild(movePos.col)
+                            .transform;
+                SetTarget(selectedTarget.gameObject);
+                successCallback(selectedTarget);
             }
-            yield return null;
-            skillHandler.isDone = true;
+            //타겟이 있는 경우, 카드 사용으로 경우에 따라 나눠야함
+            else {
+                //유닛이 끌고오는 경우 있고 (hook), 나중에 사용되는 경우도 있고...
+                Transform selectedTarget = null;
+                //1. 사용한 카드 찾기
+                int itemId = skillHandler.myObject.GetComponent<PlaceMonster>() == null ? 
+                    skillHandler.myObject.GetComponent<PlaceMonster>().itemId : 
+                    skillHandler.myObject.GetComponent<MagicDragHandler>().itemID;
+                var play_list = server.gameState.playHistory.ToList();
+                SocketFormat.PlayHistory played_card = play_list.Find(x => x.cardItem.itemId == itemId);
+                
+                //왠만하면은 2번째 targets가 select인 경우들인것 같다. (유닛 소환 직후 또는 마법카드 사용)
+                if(played_card.targets.Length != 2) {
+                    failedCallback("상대가 위치 지정에 실패했습니다.");
+                    yield break;
+                }
+                //2. 카드의 정보 확인 하기
+                switch(played_card.targets[1].method) {
+                case "place" :
+                    int line = int.Parse(played_card.targets[1].args[0]);
+                    Terrain[] terrains = FindObjectsOfType<Terrain>();
+                    Transform terrainSlot = null;
+                
+                    foreach(Terrain x in terrains) {
+                        if(line == x.transform.GetSiblingIndex()) {
+                            terrainSlot = x.transform.GetChild(0);
+                            break;
+                        }
+                    }
+
+                    //3. unitSlot에서 특정 부분 밝혀주기 아마 baseSlot 맞겠지
+                    terrainSlot.gameObject.SetActive(true);
+                    terrainSlot.GetChild(0).gameObject.SetActive(true);
+                    terrainSlot.GetComponent<SpriteRenderer>().color = new Color(1, 0, 0, 155.0f / 255.0f);
+
+                    //4.  1.5초뒤에 끄기
+                    yield return new WaitForSeconds(1.5f);
+                    terrainSlot.gameObject.SetActive(false);
+                    terrainSlot.GetChild(0).gameObject.SetActive(false);
+                    terrainSlot.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 155.0f / 255.0f);
+
+                    selectedTarget = PlayMangement.instance
+                            .PlayerUnitsObserver
+                            .transform
+                            .GetChild(0) //TODO : 앞뒤 구분 해야함 
+                            .GetChild(line)
+                            .transform;
+                break;
+                case "unit" :
+                    //검색
+                    int targetItemId = int.Parse(played_card.targets[1].args[0]);
+                    var list = PlayMangement.instance.PlayerUnitsObserver.GetAllFieldUnits();
+                    list.AddRange(PlayMangement.instance.EnemyUnitsObserver.GetAllFieldUnits());
+                    GameObject target = list.Find(x => x.GetComponent<PlaceMonster>().itemId == targetItemId);
+                    GameObject highlightUI = target.transform.GetChild(0).Find("ClickableUI").gameObject;
+                    //3. unitSlot에서 특정 부분 밝혀주기
+                    highlightUI.SetActive(true);
+                    highlightUI.GetComponent<SpriteRenderer>().color = new Color(1, 0, 0, 155.0f / 255.0f);
+                    //4.  1.5초뒤에 끄기
+                    yield return new WaitForSeconds(1.5f);
+                    highlightUI.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 155.0f / 255.0f);
+                    highlightUI.SetActive(false);
+                    selectedTarget = target.transform;
+                break;
+                default :
+                failedCallback("전혀 다른 select가 나왔습니다.");
+                yield break;
+                }
+                if(selectedTarget == null) {
+                    failedCallback("selectedTarget이 누락 됐습니다.");
+                    yield break;
+                }
+                SetTarget(selectedTarget.gameObject);
+                successCallback(selectedTarget);
+            }
+            
+            PlayMangement.instance.OffBlockPanel();
         }
 
         public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback, Filtering filter) {
             base.SelectTarget(successCallback, failedCallback, filter);
             //TODO : 적일 경우 해당 소켓이 도달 할 때까지 기다리기 card_played, skill_activated
             if(!skillHandler.isPlayer) { 
-                //StartCoroutine(enemyTurnSelect());
-                skillHandler.isDone = true; //임시
+                StartCoroutine(enemyTurnSelect(successCallback, failedCallback));
                 return; 
             }
             

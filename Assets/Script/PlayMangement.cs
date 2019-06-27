@@ -282,8 +282,6 @@ public partial class PlayMangement : MonoBehaviour {
             GameObject unit = list.Find(x => x.GetComponent<PlaceMonster>().itemId == itemId);
             highlightUI = unit.transform.GetChild(0).Find("ClickableUI").gameObject;
             highlightUI.SetActive(true);
-            magicHandler.highlightedSlot = highlightUI.transform;
-            highlightUI.GetComponent<Image>().color = Color.red;
             break;
         case "line" :
             int line = int.Parse(target.args[0]);
