@@ -442,52 +442,35 @@ namespace SkillModules {
                     break;
             }
             
-            if (IsEnemyExist(isPlayer)) {
-                var units = enemyObserver.GetAllFieldUnits();
-                
-                List<SocketFormat.Unit> socketList = state.map.allMonster;
+            var units = enemyObserver.GetAllFieldUnits();
+            
+            List<SocketFormat.Unit> socketList = state.map.allMonster;
 
-                foreach(GameObject selectedUnit in units) {
-                    bool found = false;
-                    PlaceMonster mondata = selectedUnit.GetComponent<PlaceMonster>();
-                    foreach(SocketFormat.Unit unit in socketList) {
-                        if(unit.itemId.CompareTo(mondata.itemId) == 0) {
-                            found = true;
-                            break;
-                        }
+            foreach(GameObject selectedUnit in units) {
+                bool found = false;
+                PlaceMonster mondata = selectedUnit.GetComponent<PlaceMonster>();
+                foreach(SocketFormat.Unit unit in socketList) {
+                    if(unit.itemId.CompareTo(mondata.itemId) == 0) {
+                        found = true;
+                        break;
                     }
-                    //server에서 사라진 유닛을 찾는다.
-                    if(!found) {
-                        var selectedUnitPos = enemyObserver.GetMyPos(selectedUnit);
-                        UnityEngine.Object.Destroy(selectedUnit);
-                        enemyObserver.UnitRemoved(selectedUnitPos.col, selectedUnitPos.row);
+                }
+                //server에서 사라진 유닛을 찾는다.
+                if(!found) {
+                    var selectedUnitPos = enemyObserver.GetMyPos(selectedUnit);
+                    UnityEngine.Object.Destroy(selectedUnit);
+                    enemyObserver.UnitRemoved(selectedUnitPos.col, selectedUnitPos.row);
 
-                        //내 유닛이 사라진 경우
-                        if (mondata.isPlayer) {
-                            MakeMyUnitToCard(mondata);
-                        }
-                        //적 유닛이 사라진 경우
-                        else {
-                            MakeEnemyUnitToCard();
-                        }
+                    //내 유닛이 사라진 경우
+                    if (mondata.isPlayer) {
+                        MakeMyUnitToCard(mondata);
+                    }
+                    //적 유닛이 사라진 경우
+                    else {
+                        MakeEnemyUnitToCard();
                     }
                 }
             }
-            else {
-                Logger.Log("r_return 에서 적을 찾지 못했습니다.");
-            }
-        }
-
-        private bool IsEnemyExist(bool isPlayer) {
-            FieldUnitsObserver observer;
-            if (isPlayer) {
-                observer = playerObserver;
-            }
-            else {
-                observer = enemyObserver;
-            }
-            var selectedUnits = observer.GetAllFieldUnits();
-            return selectedUnits.Count != 0;
         }
 
         private void MakeEnemyUnitToCard() {
