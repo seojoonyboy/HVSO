@@ -771,6 +771,18 @@ public partial class PlayMangement {
         enemyCard.SetActive(true);
     }
 
+    public void EnemyMagicCardDraw() {
+        GameObject enemyCard = new GameObject();
+        if (enemyPlayer.isHuman)
+            enemyCard = Instantiate(Resources.Load("Prefabs/HumanBackCard") as GameObject, enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(CountEnemyCard()));
+        else
+            enemyCard = Instantiate(Resources.Load("Prefabs/OrcBackCard") as GameObject, enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(CountEnemyCard()));
+        enemyCard.transform.position = player.cdpm.cardSpawnPos.position;
+        enemyCard.transform.localScale = new Vector3(1, 1, 1);
+        iTween.MoveTo(enemyCard, enemyCard.transform.parent.position, 0.3f);
+        enemyCard.SetActive(true);
+    }
+
     public int CountEnemyCard() {
         int enemyNum = 0;
         for (int i = 0; i < 10; i++) {
