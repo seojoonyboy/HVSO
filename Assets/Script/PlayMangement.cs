@@ -302,8 +302,20 @@ public partial class PlayMangement : MonoBehaviour {
     private GameObject SummonMonster(SocketFormat.PlayHistory history) {
         int i = int.Parse(history.targets[0].args[0]);
         string id = history.cardItem.id;
-
-        GameObject monster = SummonUnit(false, id, i, 0, history.cardItem.itemId);
+        bool isFront = history.targets[0].args[2].CompareTo("front")==0;
+        bool unitExist = enemyUnitsObserver.CheckUnitPosition(i, 0);
+        int j = isFront && unitExist ? 1 : 0;
+        if(unitExist && !isFront) {
+            Transform line_rear = enemyPlayer.transform.GetChild(0);
+            Transform line_front = enemyPlayer.transform.GetChild(1);
+            Transform existUnit;
+            existUnit = line_rear.GetChild(i).GetChild(0);
+            existUnit.SetParent(line_front.GetChild(i));
+            existUnit.position = line_front.GetChild(i).position;
+            existUnit.GetComponent<PlaceMonster>().unitLocation = line_front.GetChild(i).position;
+            enemyUnitsObserver.UnitChangePosition(existUnit.gameObject, i, 1);
+        }
+        GameObject monster = SummonUnit(false, id, i, j, history.cardItem.itemId);
         return monster;
     }
 
