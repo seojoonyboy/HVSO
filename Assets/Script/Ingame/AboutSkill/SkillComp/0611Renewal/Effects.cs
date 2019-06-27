@@ -481,10 +481,10 @@ namespace SkillModules {
         private bool IsEnemyExist(bool isPlayer) {
             FieldUnitsObserver observer;
             if (isPlayer) {
-                observer = enemyObserver;
+                observer = playerObserver;
             }
             else {
-                observer = playerObserver;
+                observer = enemyObserver;
             }
             var selectedUnits = observer.GetAllFieldUnits();
             return selectedUnits.Count != 0;
