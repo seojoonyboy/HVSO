@@ -189,18 +189,6 @@ public partial class PlayMangement : MonoBehaviour {
             yield return socketHandler.useCardList.WaitNext();
             SocketFormat.GameState state = socketHandler.getHistory();
             SocketFormat.PlayHistory history = state.lastUse;
-            #region test magic card
-            #if TEST
-            history = new SocketFormat.PlayHistory();
-            history.cardItem = new SocketFormat.Card();
-            history.targets = new SocketFormat.Target[1]{new SocketFormat.Target()};
-            history.targets[0].method = "line";
-            history.targets[0].args = new string[1]{"0"};
-            history.cardItem.id = "ac10021";
-            history.cardItem.itemId = 704;
-            history.cardItem.type = "magic";
-            #endif
-            #endregion
             if(history != null) {
                 if (history.cardItem.type.CompareTo("unit") == 0) {
                     GameObject summonedMonster = SummonMonster(history);
