@@ -151,7 +151,7 @@ public class CardCircleManager : MonoBehaviour {
             }
             Transform cardTransform = card.transform;
             Transform cardPos = transform.GetChild(cardNum).GetChild(0);
-            cardTransform.GetComponent<CardDragAndDrop>().CARDINDEX = cardNum;
+            cardTransform.GetComponent<CardHandler>().CARDINDEX = cardNum;
             cardTransform.gameObject.SetActive(true);
             cardTransform.SetParent(transform.GetChild(cardNum));
             cardNum++;
