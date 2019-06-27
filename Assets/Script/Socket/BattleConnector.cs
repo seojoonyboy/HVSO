@@ -61,7 +61,9 @@ public partial class BattleConnector : MonoBehaviour {
     private void OnOpen(WebSocket webSocket) {
         string playerId = AccountManager.Instance.DEVICEID;
         string deckId = Variables.Saved.Get("SelectedDeckId").ToString();
-        string[] args = new string[] {"solo", playerId, "basic", deckId };
+        string battleType = Variables.Saved.Get("SelectedBattleType").ToString();
+
+        string[] args = new string[] { battleType, playerId, "basic", deckId };
         SendMethod("join_game", args);
         pingpong = StartCoroutine("Heartbeat");
     }
