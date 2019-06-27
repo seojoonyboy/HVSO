@@ -262,7 +262,7 @@ public partial class BattleConnector : MonoBehaviour {
         unitSkillList.isDone = true;
     }
 
-    public void skill_activate(object args) {
+    public void skill_activated(object args) {
         if(PlayMangement.instance.enemyPlayer.isHuman) return;
         var json = (JObject)args;
         int itemId = int.Parse(json["itemId"].ToString());
