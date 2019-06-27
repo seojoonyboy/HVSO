@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
     TextMeshProUGUI costText;
     TextMeshProUGUI HPText;
     Image shieldGauge;
-    GameObject buttonParticle;
+    //GameObject buttonParticle;
     public bool dragCard = false;
 
     public Vector3 unitClosePosition;
@@ -61,14 +61,14 @@ public class PlayerController : MonoBehaviour
         HPText = playerUI.transform.Find("PlayerHealth/HealthText").GetComponent<TextMeshProUGUI>();
         shieldGauge = playerUI.transform.Find("PlayerHealth/Helth&Shield/SheildGauge").GetComponent<Image>();
 
-        if (isPlayer) {
-            buttonParticle = playerUI.transform.Find("Turn/ReleaseTurnButton/TurnOverFeedback").gameObject;
-            buttonParticle.GetComponent<SkeletonGraphic>().color = new Color(85.0f / 255.0f, 136.0f / 255.0f, 1);
-            if (isHuman)
-                buttonParticle.GetComponent<SkeletonGraphic>().color = new Color(85.0f / 255.0f, 136.0f / 255.0f, 1);
-            else
-                buttonParticle.GetComponent<SkeletonGraphic>().color = new Color(1, 97.0f / 255.0f, 97.0f / 255.0f);
-        }              
+        //if (isPlayer) {
+        //    buttonParticle = playerUI.transform.Find("Turn/ReleaseTurnButton/TurnOverFeedback").gameObject;
+        //    buttonParticle.GetComponent<SkeletonGraphic>().color = new Color(85.0f / 255.0f, 136.0f / 255.0f, 1);
+        //    if (isHuman)
+        //        buttonParticle.GetComponent<SkeletonGraphic>().color = new Color(85.0f / 255.0f, 136.0f / 255.0f, 1);
+        //    else
+        //        buttonParticle.GetComponent<SkeletonGraphic>().color = new Color(1, 97.0f / 255.0f, 97.0f / 255.0f);
+        //}              
 
 
         if (isHuman == true) {
@@ -265,7 +265,7 @@ public class PlayerController : MonoBehaviour
 
     public void ReleaseTurn() {
         if (myTurn == true && !dragCard) {
-            PlayMangement.instance.OnNoCostEffect(false);
+            //PlayMangement.instance.OnNoCostEffect(false);
             PlayMangement.instance.GetPlayerTurnRelease();
             if(isHuman == PlayMangement.instance.player.isHuman)
                 PlayMangement.instance.socketHandler.TurnOver();
@@ -282,10 +282,10 @@ public class PlayerController : MonoBehaviour
                     cardSlot_1.GetChild(i).GetChild(1).GetComponent<CardHandler>().ActivateCard();
             }
         }
-        if (activeCardMinCost == 100) {
-            if(isPlayer)
-                buttonParticle.SetActive(true);
-        }
+        //if (activeCardMinCost == 100) {
+        //    if(isPlayer)
+        //        buttonParticle.SetActive(true);
+        //}
     }
 
     public void ActiveOrcTurn() {
@@ -314,10 +314,10 @@ public class PlayerController : MonoBehaviour
 
             }
         }
-        if (activeCardMinCost == 100) {
-            if (isPlayer)
-                buttonParticle.SetActive(true);
-        }
+        //if (activeCardMinCost == 100) {
+        //    if (isPlayer)
+        //        buttonParticle.SetActive(true);
+        //}
     }
 
     public void DisablePlayer() {
@@ -330,8 +330,8 @@ public class PlayerController : MonoBehaviour
                     cardSlot_1.GetChild(i).GetChild(01).GetComponent<CardHandler>().DisableCard();
             }
         }
-        if (isPlayer)
-            buttonParticle.SetActive(false);
+        //if (isPlayer)
+        //    buttonParticle.SetActive(false);
     }
 
     /// <summary>

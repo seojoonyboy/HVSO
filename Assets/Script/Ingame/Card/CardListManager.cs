@@ -44,10 +44,19 @@ public class CardListManager : MonoBehaviour
         newcard.SetActive(false);
     }
 
-    public void AddFeildUnitInfo(int cardIndex, int unitNum) {
-        GameObject unitInfo = handCardInfo.GetChild(cardIndex).gameObject;
+    public void AddFeildUnitInfo(int cardIndex, int unitNum, CardData data= null) {
+        GameObject unitInfo;
+        if (data == null)
+            unitInfo = handCardInfo.GetChild(cardIndex).gameObject;
+        else {
+            unitInfo = standbyInfo.GetChild(0).gameObject;
+            unitInfo.SetActive(true);
+            SetCardInfo(unitInfo, data);
+        }
+
         unitInfo.name = unitNum.ToString() + "unit";
-        handCardInfo.GetChild(cardIndex).SetParent(transform.Find("FieldUnitInfo"));
+        unitInfo.transform.SetParent(transform.Find("FieldUnitInfo"));
+        unitInfo.SetActive(false);
     }
 
 
