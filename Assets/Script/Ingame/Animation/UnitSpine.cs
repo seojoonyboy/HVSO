@@ -136,7 +136,7 @@ public class UnitSpine : MonoBehaviour
         if(e.Data.Name == "APPEAR") {
             EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.APPEAR, transform.position);
             if (SoundManager.Instance != null)
-                SoundManager.Instance.PlaySound(SoundType.APPEAR_POOF);
+                SoundManager.Instance.PlaySound(SoundType.APPEAR_UNIT);
         }
     }
 

@@ -120,85 +120,87 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1001 &15142427
+--- !u!4 &37047417 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3252704847585688787, guid: aca0086c554259148a309df4a651ff83,
+    type: 3}
+  m_PrefabInstance: {fileID: 1857465770}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &37047418 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 3252704847585688786, guid: aca0086c554259148a309df4a651ff83,
+    type: 3}
+  m_PrefabInstance: {fileID: 1857465770}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &67123923
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 134716701}
     m_Modifications:
-    - target: {fileID: 6956617767010792542, guid: ff7dfed5d493b41458b4d3a90c4e2e54,
+    - target: {fileID: 2426007077568264079, guid: 93910006dd30d30418b3d9a4381c1016,
         type: 3}
       propertyPath: m_Name
-      value: NextTurn
+      value: AppearUnit
       objectReference: {fileID: 0}
-    - target: {fileID: 6956617767010792528, guid: ff7dfed5d493b41458b4d3a90c4e2e54,
+    - target: {fileID: 2426007077568264072, guid: 93910006dd30d30418b3d9a4381c1016,
         type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6956617767010792528, guid: ff7dfed5d493b41458b4d3a90c4e2e54,
+    - target: {fileID: 2426007077568264072, guid: 93910006dd30d30418b3d9a4381c1016,
         type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6956617767010792528, guid: ff7dfed5d493b41458b4d3a90c4e2e54,
+    - target: {fileID: 2426007077568264072, guid: 93910006dd30d30418b3d9a4381c1016,
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6956617767010792528, guid: ff7dfed5d493b41458b4d3a90c4e2e54,
+    - target: {fileID: 2426007077568264072, guid: 93910006dd30d30418b3d9a4381c1016,
         type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6956617767010792528, guid: ff7dfed5d493b41458b4d3a90c4e2e54,
+    - target: {fileID: 2426007077568264072, guid: 93910006dd30d30418b3d9a4381c1016,
         type: 3}
       propertyPath: m_LocalRotation.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6956617767010792528, guid: ff7dfed5d493b41458b4d3a90c4e2e54,
+    - target: {fileID: 2426007077568264072, guid: 93910006dd30d30418b3d9a4381c1016,
         type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6956617767010792528, guid: ff7dfed5d493b41458b4d3a90c4e2e54,
+    - target: {fileID: 2426007077568264072, guid: 93910006dd30d30418b3d9a4381c1016,
         type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 6956617767010792528, guid: ff7dfed5d493b41458b4d3a90c4e2e54,
+    - target: {fileID: 2426007077568264072, guid: 93910006dd30d30418b3d9a4381c1016,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6956617767010792528, guid: ff7dfed5d493b41458b4d3a90c4e2e54,
+    - target: {fileID: 2426007077568264072, guid: 93910006dd30d30418b3d9a4381c1016,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6956617767010792528, guid: ff7dfed5d493b41458b4d3a90c4e2e54,
+    - target: {fileID: 2426007077568264072, guid: 93910006dd30d30418b3d9a4381c1016,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6956617767010792528, guid: ff7dfed5d493b41458b4d3a90c4e2e54,
+    - target: {fileID: 2426007077568264072, guid: 93910006dd30d30418b3d9a4381c1016,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6956617767010792529, guid: ff7dfed5d493b41458b4d3a90c4e2e54,
-        type: 3}
-      propertyPath: m_PlayOnAwake
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6956617767010792529, guid: ff7dfed5d493b41458b4d3a90c4e2e54,
-        type: 3}
-      propertyPath: m_Volume
-      value: 0.5
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: ff7dfed5d493b41458b4d3a90c4e2e54, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: 93910006dd30d30418b3d9a4381c1016, type: 3}
 --- !u!1 &118938941
 GameObject:
   m_ObjectHideFlags: 0
@@ -302,6 +304,119 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeb62e306db49f542a6df3adb486cbd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects:
+    - {fileID: 319669281}
+    - {fileID: 221481689}
+    - {fileID: 1586677855}
+    - {fileID: 37047418}
+    - {fileID: 475244796}
+    - {fileID: 553179726}
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: sounds
+      Entry: 7
+      Data: 0|System.Collections.Generic.Dictionary`2[[SoundType, Assembly-CSharp],[UnityEngine.AudioSource,
+        UnityEngine.AudioModule]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[SoundType, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 6
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 1
+    - Name: $v
+      Entry: 10
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 0
+    - Name: $v
+      Entry: 10
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 2
+    - Name: $v
+      Entry: 10
+      Data: 2
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 3
+    - Name: $v
+      Entry: 10
+      Data: 3
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 4
+    - Name: $v
+      Entry: 10
+      Data: 4
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 5
+    - Name: $v
+      Entry: 10
+      Data: 5
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
 --- !u!4 &134716701
 Transform:
   m_ObjectHideFlags: 0
@@ -313,144 +428,14 @@ Transform:
   m_LocalPosition: {x: -36.081043, y: 729.76373, z: -1402.75}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1245720504}
-  - {fileID: 388386829}
-  - {fileID: 149194208}
-  - {fileID: 2145034336}
-  - {fileID: 1704471968}
-  - {fileID: 2043223396}
+  - {fileID: 553179725}
+  - {fileID: 319669280}
+  - {fileID: 475244795}
+  - {fileID: 37047417}
+  - {fileID: 221481688}
+  - {fileID: 1586677854}
   m_Father: {fileID: 0}
   m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &149194206
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 6956617767010792542, guid: ff7dfed5d493b41458b4d3a90c4e2e54,
-    type: 3}
-  m_PrefabInstance: {fileID: 15142427}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 149194208}
-  - component: {fileID: 149194207}
-  m_Layer: 0
-  m_Name: NextTurn
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!82 &149194207
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 6956617767010792529, guid: ff7dfed5d493b41458b4d3a90c4e2e54,
-    type: 3}
-  m_PrefabInstance: {fileID: 15142427}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 149194206}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 2e87a336db8ed134e8d531eee22253aa, type: 3}
-  m_PlayOnAwake: 0
-  m_Volume: 0.5
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
---- !u!4 &149194208
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 6956617767010792528, guid: ff7dfed5d493b41458b4d3a90c4e2e54,
-    type: 3}
-  m_PrefabInstance: {fileID: 15142427}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 149194206}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 134716701}
-  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &166852369
 GameObject:
@@ -526,136 +511,30 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &388386827
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 6956617767010792542, guid: 9bfb12d11555d404f8632f86d00ffaa1,
-    type: 3}
-  m_PrefabInstance: {fileID: 2113329357}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 388386829}
-  - component: {fileID: 388386828}
-  m_Layer: 0
-  m_Name: LargeAttack
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!82 &388386828
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 6956617767010792529, guid: 9bfb12d11555d404f8632f86d00ffaa1,
-    type: 3}
-  m_PrefabInstance: {fileID: 2113329357}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 388386827}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: dc792ce9098153a4881e44f0c3503dcc, type: 3}
-  m_PlayOnAwake: 0
-  m_Volume: 0.5
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
---- !u!4 &388386829
+--- !u!4 &221481688 stripped
 Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 6956617767010792528, guid: 9bfb12d11555d404f8632f86d00ffaa1,
+  m_CorrespondingSourceObject: {fileID: 9208297949019861160, guid: 1d88af52bbb2850438d032ae35cdec36,
     type: 3}
-  m_PrefabInstance: {fileID: 2113329357}
+  m_PrefabInstance: {fileID: 687309482}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 388386827}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 134716701}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &221481689 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 9208297949019861143, guid: 1d88af52bbb2850438d032ae35cdec36,
+    type: 3}
+  m_PrefabInstance: {fileID: 687309482}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &319669280 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3648892524099476682, guid: d08624c3c98a13e499f127a7a8373730,
+    type: 3}
+  m_PrefabInstance: {fileID: 556059221}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &319669281 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 3648892524099476677, guid: d08624c3c98a13e499f127a7a8373730,
+    type: 3}
+  m_PrefabInstance: {fileID: 556059221}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &417249487
 GameObject:
   m_ObjectHideFlags: 0
@@ -715,6 +594,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &475244795 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1602343834253190548, guid: 3404f8feda0006a468eef021cd044df1,
+    type: 3}
+  m_PrefabInstance: {fileID: 1618420195}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &475244796 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 1602343834253190549, guid: 3404f8feda0006a468eef021cd044df1,
+    type: 3}
+  m_PrefabInstance: {fileID: 1618420195}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &535447324
 GameObject:
   m_ObjectHideFlags: 0
@@ -789,6 +680,156 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 535447324}
   m_CullTransparentMesh: 0
+--- !u!4 &553179725 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2426007077568264072, guid: 93910006dd30d30418b3d9a4381c1016,
+    type: 3}
+  m_PrefabInstance: {fileID: 67123923}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &553179726 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 2426007077568264073, guid: 93910006dd30d30418b3d9a4381c1016,
+    type: 3}
+  m_PrefabInstance: {fileID: 67123923}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &556059221
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 134716701}
+    m_Modifications:
+    - target: {fileID: 3648892524099476676, guid: d08624c3c98a13e499f127a7a8373730,
+        type: 3}
+      propertyPath: m_Name
+      value: FirstTurn
+      objectReference: {fileID: 0}
+    - target: {fileID: 3648892524099476682, guid: d08624c3c98a13e499f127a7a8373730,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3648892524099476682, guid: d08624c3c98a13e499f127a7a8373730,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3648892524099476682, guid: d08624c3c98a13e499f127a7a8373730,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3648892524099476682, guid: d08624c3c98a13e499f127a7a8373730,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3648892524099476682, guid: d08624c3c98a13e499f127a7a8373730,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3648892524099476682, guid: d08624c3c98a13e499f127a7a8373730,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3648892524099476682, guid: d08624c3c98a13e499f127a7a8373730,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3648892524099476682, guid: d08624c3c98a13e499f127a7a8373730,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3648892524099476682, guid: d08624c3c98a13e499f127a7a8373730,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3648892524099476682, guid: d08624c3c98a13e499f127a7a8373730,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3648892524099476682, guid: d08624c3c98a13e499f127a7a8373730,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d08624c3c98a13e499f127a7a8373730, type: 3}
+--- !u!1001 &687309482
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 134716701}
+    m_Modifications:
+    - target: {fileID: 9208297949019861142, guid: 1d88af52bbb2850438d032ae35cdec36,
+        type: 3}
+      propertyPath: m_Name
+      value: NextTurn
+      objectReference: {fileID: 0}
+    - target: {fileID: 9208297949019861160, guid: 1d88af52bbb2850438d032ae35cdec36,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9208297949019861160, guid: 1d88af52bbb2850438d032ae35cdec36,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9208297949019861160, guid: 1d88af52bbb2850438d032ae35cdec36,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9208297949019861160, guid: 1d88af52bbb2850438d032ae35cdec36,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9208297949019861160, guid: 1d88af52bbb2850438d032ae35cdec36,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9208297949019861160, guid: 1d88af52bbb2850438d032ae35cdec36,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9208297949019861160, guid: 1d88af52bbb2850438d032ae35cdec36,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9208297949019861160, guid: 1d88af52bbb2850438d032ae35cdec36,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 9208297949019861160, guid: 1d88af52bbb2850438d032ae35cdec36,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9208297949019861160, guid: 1d88af52bbb2850438d032ae35cdec36,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9208297949019861160, guid: 1d88af52bbb2850438d032ae35cdec36,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1d88af52bbb2850438d032ae35cdec36, type: 3}
 --- !u!1 &937118550
 GameObject:
   m_ObjectHideFlags: 0
@@ -984,136 +1025,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!1 &1245720502
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 6956617767010792542, guid: 7790db58d2e0f3840bb8ccfb0ddca20c,
-    type: 3}
-  m_PrefabInstance: {fileID: 1694720130}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1245720504}
-  - component: {fileID: 1245720503}
-  m_Layer: 0
-  m_Name: FirstTurn
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!82 &1245720503
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 6956617767010792529, guid: 7790db58d2e0f3840bb8ccfb0ddca20c,
-    type: 3}
-  m_PrefabInstance: {fileID: 1694720130}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1245720502}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 94aefbab3b925a74ab046b9f163b1fe4, type: 3}
-  m_PlayOnAwake: 0
-  m_Volume: 0.5
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
---- !u!4 &1245720504
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 6956617767010792528, guid: 7790db58d2e0f3840bb8ccfb0ddca20c,
-    type: 3}
-  m_PrefabInstance: {fileID: 1694720130}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1245720502}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 134716701}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1278078183
 GameObject:
   m_ObjectHideFlags: 0
@@ -1263,6 +1174,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1586677854 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3469496668059977011, guid: e9e1d8cc64f9a2b43a9aadddcd845676,
+    type: 3}
+  m_PrefabInstance: {fileID: 1618373860}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &1586677855 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 3469496668059976972, guid: e9e1d8cc64f9a2b43a9aadddcd845676,
+    type: 3}
+  m_PrefabInstance: {fileID: 1618373860}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1615060696
 GameObject:
   m_ObjectHideFlags: 0
@@ -1306,291 +1229,144 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1657054421
+--- !u!1001 &1618373860
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 134716701}
     m_Modifications:
-    - target: {fileID: 6956617767010792542, guid: cf3ac72ef07008e4081de5781ae08d6e,
+    - target: {fileID: 3469496668059976973, guid: e9e1d8cc64f9a2b43a9aadddcd845676,
         type: 3}
       propertyPath: m_Name
       value: NormalAttack
       objectReference: {fileID: 0}
-    - target: {fileID: 6956617767010792528, guid: cf3ac72ef07008e4081de5781ae08d6e,
+    - target: {fileID: 3469496668059977011, guid: e9e1d8cc64f9a2b43a9aadddcd845676,
         type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6956617767010792528, guid: cf3ac72ef07008e4081de5781ae08d6e,
+    - target: {fileID: 3469496668059977011, guid: e9e1d8cc64f9a2b43a9aadddcd845676,
         type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6956617767010792528, guid: cf3ac72ef07008e4081de5781ae08d6e,
+    - target: {fileID: 3469496668059977011, guid: e9e1d8cc64f9a2b43a9aadddcd845676,
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6956617767010792528, guid: cf3ac72ef07008e4081de5781ae08d6e,
+    - target: {fileID: 3469496668059977011, guid: e9e1d8cc64f9a2b43a9aadddcd845676,
         type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6956617767010792528, guid: cf3ac72ef07008e4081de5781ae08d6e,
+    - target: {fileID: 3469496668059977011, guid: e9e1d8cc64f9a2b43a9aadddcd845676,
         type: 3}
       propertyPath: m_LocalRotation.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6956617767010792528, guid: cf3ac72ef07008e4081de5781ae08d6e,
+    - target: {fileID: 3469496668059977011, guid: e9e1d8cc64f9a2b43a9aadddcd845676,
         type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6956617767010792528, guid: cf3ac72ef07008e4081de5781ae08d6e,
+    - target: {fileID: 3469496668059977011, guid: e9e1d8cc64f9a2b43a9aadddcd845676,
         type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 6956617767010792528, guid: cf3ac72ef07008e4081de5781ae08d6e,
+    - target: {fileID: 3469496668059977011, guid: e9e1d8cc64f9a2b43a9aadddcd845676,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
-    - target: {fileID: 6956617767010792528, guid: cf3ac72ef07008e4081de5781ae08d6e,
+    - target: {fileID: 3469496668059977011, guid: e9e1d8cc64f9a2b43a9aadddcd845676,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6956617767010792528, guid: cf3ac72ef07008e4081de5781ae08d6e,
+    - target: {fileID: 3469496668059977011, guid: e9e1d8cc64f9a2b43a9aadddcd845676,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6956617767010792528, guid: cf3ac72ef07008e4081de5781ae08d6e,
+    - target: {fileID: 3469496668059977011, guid: e9e1d8cc64f9a2b43a9aadddcd845676,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6956617767010792529, guid: cf3ac72ef07008e4081de5781ae08d6e,
-        type: 3}
-      propertyPath: m_PlayOnAwake
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6956617767010792529, guid: cf3ac72ef07008e4081de5781ae08d6e,
-        type: 3}
-      propertyPath: m_Volume
-      value: 0.5
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: cf3ac72ef07008e4081de5781ae08d6e, type: 3}
---- !u!1001 &1694720130
+  m_SourcePrefab: {fileID: 100100000, guid: e9e1d8cc64f9a2b43a9aadddcd845676, type: 3}
+--- !u!1001 &1618420195
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 134716701}
     m_Modifications:
-    - target: {fileID: 6956617767010792542, guid: 7790db58d2e0f3840bb8ccfb0ddca20c,
+    - target: {fileID: 1602343834253190546, guid: 3404f8feda0006a468eef021cd044df1,
         type: 3}
       propertyPath: m_Name
-      value: FirstTurn
+      value: LargeAttack
       objectReference: {fileID: 0}
-    - target: {fileID: 6956617767010792529, guid: 7790db58d2e0f3840bb8ccfb0ddca20c,
-        type: 3}
-      propertyPath: m_PlayOnAwake
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6956617767010792529, guid: 7790db58d2e0f3840bb8ccfb0ddca20c,
-        type: 3}
-      propertyPath: m_Volume
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6956617767010792528, guid: 7790db58d2e0f3840bb8ccfb0ddca20c,
+    - target: {fileID: 1602343834253190548, guid: 3404f8feda0006a468eef021cd044df1,
         type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6956617767010792528, guid: 7790db58d2e0f3840bb8ccfb0ddca20c,
+    - target: {fileID: 1602343834253190548, guid: 3404f8feda0006a468eef021cd044df1,
         type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6956617767010792528, guid: 7790db58d2e0f3840bb8ccfb0ddca20c,
+    - target: {fileID: 1602343834253190548, guid: 3404f8feda0006a468eef021cd044df1,
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6956617767010792528, guid: 7790db58d2e0f3840bb8ccfb0ddca20c,
+    - target: {fileID: 1602343834253190548, guid: 3404f8feda0006a468eef021cd044df1,
         type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6956617767010792528, guid: 7790db58d2e0f3840bb8ccfb0ddca20c,
+    - target: {fileID: 1602343834253190548, guid: 3404f8feda0006a468eef021cd044df1,
         type: 3}
       propertyPath: m_LocalRotation.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6956617767010792528, guid: 7790db58d2e0f3840bb8ccfb0ddca20c,
+    - target: {fileID: 1602343834253190548, guid: 3404f8feda0006a468eef021cd044df1,
         type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6956617767010792528, guid: 7790db58d2e0f3840bb8ccfb0ddca20c,
+    - target: {fileID: 1602343834253190548, guid: 3404f8feda0006a468eef021cd044df1,
         type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 6956617767010792528, guid: 7790db58d2e0f3840bb8ccfb0ddca20c,
+    - target: {fileID: 1602343834253190548, guid: 3404f8feda0006a468eef021cd044df1,
         type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 6956617767010792528, guid: 7790db58d2e0f3840bb8ccfb0ddca20c,
+    - target: {fileID: 1602343834253190548, guid: 3404f8feda0006a468eef021cd044df1,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6956617767010792528, guid: 7790db58d2e0f3840bb8ccfb0ddca20c,
+    - target: {fileID: 1602343834253190548, guid: 3404f8feda0006a468eef021cd044df1,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6956617767010792528, guid: 7790db58d2e0f3840bb8ccfb0ddca20c,
+    - target: {fileID: 1602343834253190548, guid: 3404f8feda0006a468eef021cd044df1,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 7790db58d2e0f3840bb8ccfb0ddca20c, type: 3}
---- !u!1 &1704471967
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1704471968}
-  - component: {fileID: 1704471969}
-  m_Layer: 0
-  m_Name: MiddleAttack
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1704471968
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1704471967}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 134716701}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!82 &1704471969
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1704471967}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: f3cbdd30e75ba07408f78e1a9fe63e7c, type: 3}
-  m_PlayOnAwake: 0
-  m_Volume: 0.5
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
+  m_SourcePrefab: {fileID: 100100000, guid: 3404f8feda0006a468eef021cd044df1, type: 3}
 --- !u!1 &1754231300
 GameObject:
   m_ObjectHideFlags: 0
@@ -1637,6 +1413,75 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1857465770
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 134716701}
+    m_Modifications:
+    - target: {fileID: 3252704847585688812, guid: aca0086c554259148a309df4a651ff83,
+        type: 3}
+      propertyPath: m_Name
+      value: MiddleAttack
+      objectReference: {fileID: 0}
+    - target: {fileID: 3252704847585688787, guid: aca0086c554259148a309df4a651ff83,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3252704847585688787, guid: aca0086c554259148a309df4a651ff83,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3252704847585688787, guid: aca0086c554259148a309df4a651ff83,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3252704847585688787, guid: aca0086c554259148a309df4a651ff83,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3252704847585688787, guid: aca0086c554259148a309df4a651ff83,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3252704847585688787, guid: aca0086c554259148a309df4a651ff83,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3252704847585688787, guid: aca0086c554259148a309df4a651ff83,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3252704847585688787, guid: aca0086c554259148a309df4a651ff83,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3252704847585688787, guid: aca0086c554259148a309df4a651ff83,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3252704847585688787, guid: aca0086c554259148a309df4a651ff83,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3252704847585688787, guid: aca0086c554259148a309df4a651ff83,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: aca0086c554259148a309df4a651ff83, type: 3}
 --- !u!1 &1870949073
 GameObject:
   m_ObjectHideFlags: 0
@@ -1722,7 +1567,6 @@ MonoBehaviour:
     - {fileID: 2673885786309667765, guid: 59cbdc0cd7c1c454280ee48f64affa97, type: 3}
     - {fileID: 7304304000810932158, guid: a4e50bfe3d92b3642a1512df227f452b, type: 3}
     - {fileID: 8631025704114927786, guid: a4e50bfe3d92b3642a1512df227f452b, type: 3}
-    - {fileID: 21300000, guid: 7e52847bc20428644a55c0572485bf03, type: 3}
     - {fileID: 8700009915961350405, guid: 0a7e3e48696c63a4189ceb5bf378fb4d, type: 3}
     - {fileID: 9203698103005933128, guid: 83d5efd34f0f2c74799650794c92617b, type: 3}
     - {fileID: 696349020159695247, guid: 06bb44df449f59e4981796a220b7cee2, type: 3}
@@ -2353,8 +2197,8 @@ MonoBehaviour:
       Entry: 1
       Data: default
     - Name: $v
-      Entry: 10
-      Data: 22
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -2386,7 +2230,7 @@ MonoBehaviour:
       Data: ac10011
     - Name: $v
       Entry: 10
-      Data: 23
+      Data: 22
     - Name: 
       Entry: 8
       Data: 
@@ -2398,7 +2242,7 @@ MonoBehaviour:
       Data: ac10001
     - Name: $v
       Entry: 10
-      Data: 24
+      Data: 23
     - Name: 
       Entry: 8
       Data: 
@@ -2410,7 +2254,7 @@ MonoBehaviour:
       Data: ac10002
     - Name: $v
       Entry: 10
-      Data: 25
+      Data: 24
     - Name: 
       Entry: 8
       Data: 
@@ -2422,7 +2266,7 @@ MonoBehaviour:
       Data: ac10003
     - Name: $v
       Entry: 10
-      Data: 26
+      Data: 25
     - Name: 
       Entry: 8
       Data: 
@@ -2434,7 +2278,7 @@ MonoBehaviour:
       Data: ac10004
     - Name: $v
       Entry: 10
-      Data: 27
+      Data: 26
     - Name: 
       Entry: 8
       Data: 
@@ -2446,7 +2290,7 @@ MonoBehaviour:
       Data: ac10012
     - Name: $v
       Entry: 10
-      Data: 28
+      Data: 27
     - Name: 
       Entry: 8
       Data: 
@@ -2458,7 +2302,7 @@ MonoBehaviour:
       Data: ac10013
     - Name: $v
       Entry: 10
-      Data: 29
+      Data: 28
     - Name: 
       Entry: 8
       Data: 
@@ -2470,7 +2314,7 @@ MonoBehaviour:
       Data: ac10014
     - Name: $v
       Entry: 10
-      Data: 30
+      Data: 29
     - Name: 
       Entry: 8
       Data: 
@@ -2482,7 +2326,7 @@ MonoBehaviour:
       Data: ac10005
     - Name: $v
       Entry: 10
-      Data: 31
+      Data: 30
     - Name: 
       Entry: 8
       Data: 
@@ -2518,7 +2362,7 @@ MonoBehaviour:
       Data: ac10008
     - Name: $v
       Entry: 10
-      Data: 32
+      Data: 31
     - Name: 
       Entry: 8
       Data: 
@@ -2530,7 +2374,7 @@ MonoBehaviour:
       Data: ac10009
     - Name: $v
       Entry: 10
-      Data: 33
+      Data: 32
     - Name: 
       Entry: 8
       Data: 
@@ -2542,7 +2386,7 @@ MonoBehaviour:
       Data: ac10010
     - Name: $v
       Entry: 10
-      Data: 34
+      Data: 33
     - Name: 
       Entry: 8
       Data: 
@@ -2590,7 +2434,7 @@ MonoBehaviour:
       Data: ac10018
     - Name: $v
       Entry: 10
-      Data: 35
+      Data: 34
     - Name: 
       Entry: 8
       Data: 
@@ -2602,7 +2446,7 @@ MonoBehaviour:
       Data: ac10019
     - Name: $v
       Entry: 10
-      Data: 36
+      Data: 35
     - Name: 
       Entry: 8
       Data: 
@@ -2614,7 +2458,7 @@ MonoBehaviour:
       Data: ac10020
     - Name: $v
       Entry: 10
-      Data: 37
+      Data: 36
     - Name: 
       Entry: 8
       Data: 
@@ -2722,7 +2566,7 @@ MonoBehaviour:
       Data: ac10039
     - Name: $v
       Entry: 10
-      Data: 38
+      Data: 37
     - Name: 
       Entry: 8
       Data: 
@@ -2734,7 +2578,7 @@ MonoBehaviour:
       Data: ac10031
     - Name: $v
       Entry: 10
-      Data: 39
+      Data: 38
     - Name: 
       Entry: 8
       Data: 
@@ -2746,7 +2590,7 @@ MonoBehaviour:
       Data: ac10030
     - Name: $v
       Entry: 10
-      Data: 40
+      Data: 39
     - Name: 
       Entry: 8
       Data: 
@@ -2758,7 +2602,7 @@ MonoBehaviour:
       Data: ac10040
     - Name: $v
       Entry: 10
-      Data: 41
+      Data: 40
     - Name: 
       Entry: 8
       Data: 
@@ -2770,7 +2614,7 @@ MonoBehaviour:
       Data: ac10033
     - Name: $v
       Entry: 10
-      Data: 42
+      Data: 41
     - Name: 
       Entry: 8
       Data: 
@@ -2782,7 +2626,7 @@ MonoBehaviour:
       Data: ac10032
     - Name: $v
       Entry: 10
-      Data: 43
+      Data: 42
     - Name: 
       Entry: 8
       Data: 
@@ -2794,7 +2638,7 @@ MonoBehaviour:
       Data: ac10041
     - Name: $v
       Entry: 10
-      Data: 44
+      Data: 43
     - Name: 
       Entry: 8
       Data: 
@@ -2826,7 +2670,7 @@ MonoBehaviour:
       Data: ac10001
     - Name: $v
       Entry: 10
-      Data: 45
+      Data: 44
     - Name: 
       Entry: 8
       Data: 
@@ -2838,7 +2682,7 @@ MonoBehaviour:
       Data: ac10002
     - Name: $v
       Entry: 10
-      Data: 46
+      Data: 45
     - Name: 
       Entry: 8
       Data: 
@@ -2850,7 +2694,7 @@ MonoBehaviour:
       Data: ac10003
     - Name: $v
       Entry: 10
-      Data: 47
+      Data: 46
     - Name: 
       Entry: 8
       Data: 
@@ -2862,7 +2706,7 @@ MonoBehaviour:
       Data: ac10004
     - Name: $v
       Entry: 10
-      Data: 48
+      Data: 47
     - Name: 
       Entry: 8
       Data: 
@@ -2874,7 +2718,7 @@ MonoBehaviour:
       Data: ac10005
     - Name: $v
       Entry: 10
-      Data: 49
+      Data: 48
     - Name: 
       Entry: 8
       Data: 
@@ -2910,7 +2754,7 @@ MonoBehaviour:
       Data: ac10008
     - Name: $v
       Entry: 10
-      Data: 50
+      Data: 49
     - Name: 
       Entry: 8
       Data: 
@@ -2922,7 +2766,7 @@ MonoBehaviour:
       Data: ac10009
     - Name: $v
       Entry: 10
-      Data: 51
+      Data: 50
     - Name: 
       Entry: 8
       Data: 
@@ -2934,7 +2778,7 @@ MonoBehaviour:
       Data: ac10010
     - Name: $v
       Entry: 10
-      Data: 52
+      Data: 51
     - Name: 
       Entry: 8
       Data: 
@@ -2946,7 +2790,7 @@ MonoBehaviour:
       Data: ac10011
     - Name: $v
       Entry: 10
-      Data: 53
+      Data: 52
     - Name: 
       Entry: 8
       Data: 
@@ -2958,7 +2802,7 @@ MonoBehaviour:
       Data: ac10012
     - Name: $v
       Entry: 10
-      Data: 54
+      Data: 53
     - Name: 
       Entry: 8
       Data: 
@@ -2970,7 +2814,7 @@ MonoBehaviour:
       Data: ac10013
     - Name: $v
       Entry: 10
-      Data: 55
+      Data: 54
     - Name: 
       Entry: 8
       Data: 
@@ -2982,7 +2826,7 @@ MonoBehaviour:
       Data: ac10014
     - Name: $v
       Entry: 10
-      Data: 56
+      Data: 55
     - Name: 
       Entry: 8
       Data: 
@@ -3030,7 +2874,7 @@ MonoBehaviour:
       Data: ac10018
     - Name: $v
       Entry: 10
-      Data: 57
+      Data: 56
     - Name: 
       Entry: 8
       Data: 
@@ -3042,7 +2886,7 @@ MonoBehaviour:
       Data: ac10019
     - Name: $v
       Entry: 10
-      Data: 58
+      Data: 57
     - Name: 
       Entry: 8
       Data: 
@@ -3054,7 +2898,7 @@ MonoBehaviour:
       Data: ac10020
     - Name: $v
       Entry: 10
-      Data: 59
+      Data: 58
     - Name: 
       Entry: 8
       Data: 
@@ -3162,7 +3006,7 @@ MonoBehaviour:
       Data: ac10030
     - Name: $v
       Entry: 10
-      Data: 60
+      Data: 59
     - Name: 
       Entry: 8
       Data: 
@@ -3174,7 +3018,7 @@ MonoBehaviour:
       Data: ac10031
     - Name: $v
       Entry: 10
-      Data: 61
+      Data: 60
     - Name: 
       Entry: 8
       Data: 
@@ -3186,7 +3030,7 @@ MonoBehaviour:
       Data: ac10039
     - Name: $v
       Entry: 10
-      Data: 62
+      Data: 61
     - Name: 
       Entry: 8
       Data: 
@@ -3198,7 +3042,7 @@ MonoBehaviour:
       Data: ac10040
     - Name: $v
       Entry: 10
-      Data: 63
+      Data: 62
     - Name: 
       Entry: 8
       Data: 
@@ -3210,7 +3054,7 @@ MonoBehaviour:
       Data: ac10033
     - Name: $v
       Entry: 10
-      Data: 64
+      Data: 63
     - Name: 
       Entry: 8
       Data: 
@@ -3222,7 +3066,7 @@ MonoBehaviour:
       Data: ac10032
     - Name: $v
       Entry: 10
-      Data: 65
+      Data: 64
     - Name: 
       Entry: 8
       Data: 
@@ -3234,7 +3078,7 @@ MonoBehaviour:
       Data: ac10041
     - Name: $v
       Entry: 10
-      Data: 66
+      Data: 65
     - Name: 
       Entry: 8
       Data: 
@@ -3266,7 +3110,7 @@ MonoBehaviour:
       Data: unit_common
     - Name: $v
       Entry: 10
-      Data: 67
+      Data: 66
     - Name: 
       Entry: 8
       Data: 
@@ -3278,7 +3122,7 @@ MonoBehaviour:
       Data: unit_legend
     - Name: $v
       Entry: 10
-      Data: 68
+      Data: 67
     - Name: 
       Entry: 8
       Data: 
@@ -3290,7 +3134,7 @@ MonoBehaviour:
       Data: unit_uncommon
     - Name: $v
       Entry: 10
-      Data: 69
+      Data: 68
     - Name: 
       Entry: 8
       Data: 
@@ -3302,7 +3146,7 @@ MonoBehaviour:
       Data: unit_rare
     - Name: $v
       Entry: 10
-      Data: 70
+      Data: 69
     - Name: 
       Entry: 8
       Data: 
@@ -3314,7 +3158,7 @@ MonoBehaviour:
       Data: unit_superrare
     - Name: $v
       Entry: 10
-      Data: 71
+      Data: 70
     - Name: 
       Entry: 8
       Data: 
@@ -3326,7 +3170,7 @@ MonoBehaviour:
       Data: magic_common
     - Name: $v
       Entry: 10
-      Data: 72
+      Data: 71
     - Name: 
       Entry: 8
       Data: 
@@ -3338,7 +3182,7 @@ MonoBehaviour:
       Data: magic_uncommon
     - Name: $v
       Entry: 10
-      Data: 73
+      Data: 72
     - Name: 
       Entry: 8
       Data: 
@@ -3350,7 +3194,7 @@ MonoBehaviour:
       Data: magic_rare
     - Name: $v
       Entry: 10
-      Data: 74
+      Data: 73
     - Name: 
       Entry: 8
       Data: 
@@ -3362,7 +3206,7 @@ MonoBehaviour:
       Data: magic_superrare
     - Name: $v
       Entry: 10
-      Data: 75
+      Data: 74
     - Name: 
       Entry: 8
       Data: 
@@ -3374,7 +3218,7 @@ MonoBehaviour:
       Data: magic_legend
     - Name: $v
       Entry: 10
-      Data: 76
+      Data: 75
     - Name: 
       Entry: 8
       Data: 
@@ -3386,7 +3230,7 @@ MonoBehaviour:
       Data: name_common
     - Name: $v
       Entry: 10
-      Data: 77
+      Data: 76
     - Name: 
       Entry: 8
       Data: 
@@ -3398,7 +3242,7 @@ MonoBehaviour:
       Data: name_uncommon
     - Name: $v
       Entry: 10
-      Data: 78
+      Data: 77
     - Name: 
       Entry: 8
       Data: 
@@ -3410,7 +3254,7 @@ MonoBehaviour:
       Data: name_rare
     - Name: $v
       Entry: 10
-      Data: 79
+      Data: 78
     - Name: 
       Entry: 8
       Data: 
@@ -3422,7 +3266,7 @@ MonoBehaviour:
       Data: name_superrare
     - Name: $v
       Entry: 10
-      Data: 80
+      Data: 79
     - Name: 
       Entry: 8
       Data: 
@@ -3434,7 +3278,7 @@ MonoBehaviour:
       Data: name_legend
     - Name: $v
       Entry: 10
-      Data: 81
+      Data: 80
     - Name: 
       Entry: 8
       Data: 
@@ -3472,10 +3316,10 @@ MonoBehaviour:
       Data: 2
     - Name: 
       Entry: 10
-      Data: 82
+      Data: 81
     - Name: 
       Entry: 10
-      Data: 83
+      Data: 82
     - Name: 
       Entry: 13
       Data: 
@@ -3499,10 +3343,10 @@ MonoBehaviour:
       Data: 2
     - Name: 
       Entry: 10
-      Data: 84
+      Data: 83
     - Name: 
       Entry: 10
-      Data: 85
+      Data: 84
     - Name: 
       Entry: 13
       Data: 
@@ -3526,7 +3370,7 @@ MonoBehaviour:
       Data: 1
     - Name: 
       Entry: 10
-      Data: 86
+      Data: 85
     - Name: 
       Entry: 13
       Data: 
@@ -3550,7 +3394,7 @@ MonoBehaviour:
       Data: 1
     - Name: 
       Entry: 10
-      Data: 87
+      Data: 86
     - Name: 
       Entry: 13
       Data: 
@@ -3588,7 +3432,7 @@ MonoBehaviour:
       Data: h10001
     - Name: $v
       Entry: 10
-      Data: 88
+      Data: 87
     - Name: 
       Entry: 8
       Data: 
@@ -3600,7 +3444,7 @@ MonoBehaviour:
       Data: h10002
     - Name: $v
       Entry: 10
-      Data: 89
+      Data: 88
     - Name: 
       Entry: 8
       Data: 
@@ -3612,7 +3456,7 @@ MonoBehaviour:
       Data: h10003
     - Name: $v
       Entry: 10
-      Data: 90
+      Data: 89
     - Name: 
       Entry: 8
       Data: 
@@ -3624,7 +3468,7 @@ MonoBehaviour:
       Data: h10004
     - Name: $v
       Entry: 10
-      Data: 91
+      Data: 90
     - Name: 
       Entry: 8
       Data: 
@@ -3656,7 +3500,7 @@ MonoBehaviour:
       Data: order
     - Name: $v
       Entry: 10
-      Data: 92
+      Data: 91
     - Name: 
       Entry: 8
       Data: 
@@ -3668,7 +3512,7 @@ MonoBehaviour:
       Data: knowledge
     - Name: $v
       Entry: 10
-      Data: 93
+      Data: 92
     - Name: 
       Entry: 8
       Data: 
@@ -3680,7 +3524,7 @@ MonoBehaviour:
       Data: scheme
     - Name: $v
       Entry: 10
-      Data: 94
+      Data: 93
     - Name: 
       Entry: 8
       Data: 
@@ -3692,7 +3536,7 @@ MonoBehaviour:
       Data: sorcery
     - Name: $v
       Entry: 10
-      Data: 95
+      Data: 94
     - Name: 
       Entry: 8
       Data: 
@@ -3704,7 +3548,7 @@ MonoBehaviour:
       Data: mana
     - Name: $v
       Entry: 10
-      Data: 96
+      Data: 95
     - Name: 
       Entry: 8
       Data: 
@@ -3716,7 +3560,7 @@ MonoBehaviour:
       Data: pursuit
     - Name: $v
       Entry: 10
-      Data: 97
+      Data: 96
     - Name: 
       Entry: 8
       Data: 
@@ -3748,7 +3592,7 @@ MonoBehaviour:
       Data: frame_common
     - Name: $v
       Entry: 10
-      Data: 98
+      Data: 97
     - Name: 
       Entry: 8
       Data: 
@@ -3760,7 +3604,7 @@ MonoBehaviour:
       Data: frame_uncommon
     - Name: $v
       Entry: 10
-      Data: 99
+      Data: 98
     - Name: 
       Entry: 8
       Data: 
@@ -3772,7 +3616,7 @@ MonoBehaviour:
       Data: frame_rare
     - Name: $v
       Entry: 10
-      Data: 100
+      Data: 99
     - Name: 
       Entry: 8
       Data: 
@@ -3784,7 +3628,7 @@ MonoBehaviour:
       Data: frame_superrare
     - Name: $v
       Entry: 10
-      Data: 101
+      Data: 100
     - Name: 
       Entry: 8
       Data: 
@@ -3796,7 +3640,7 @@ MonoBehaviour:
       Data: frame_legend
     - Name: $v
       Entry: 10
-      Data: 102
+      Data: 101
     - Name: 
       Entry: 8
       Data: 
@@ -3808,7 +3652,7 @@ MonoBehaviour:
       Data: class_knowledge
     - Name: $v
       Entry: 10
-      Data: 103
+      Data: 102
     - Name: 
       Entry: 8
       Data: 
@@ -3820,7 +3664,7 @@ MonoBehaviour:
       Data: class_mana
     - Name: $v
       Entry: 10
-      Data: 104
+      Data: 103
     - Name: 
       Entry: 8
       Data: 
@@ -3832,7 +3676,7 @@ MonoBehaviour:
       Data: class_order
     - Name: $v
       Entry: 10
-      Data: 105
+      Data: 104
     - Name: 
       Entry: 8
       Data: 
@@ -3844,7 +3688,7 @@ MonoBehaviour:
       Data: class_pursuit
     - Name: $v
       Entry: 10
-      Data: 106
+      Data: 105
     - Name: 
       Entry: 8
       Data: 
@@ -3856,7 +3700,7 @@ MonoBehaviour:
       Data: class_scheme
     - Name: $v
       Entry: 10
-      Data: 107
+      Data: 106
     - Name: 
       Entry: 8
       Data: 
@@ -3868,7 +3712,7 @@ MonoBehaviour:
       Data: class_sorcery
     - Name: $v
       Entry: 10
-      Data: 108
+      Data: 107
     - Name: 
       Entry: 8
       Data: 
@@ -3880,7 +3724,7 @@ MonoBehaviour:
       Data: class_icon_sorcery
     - Name: $v
       Entry: 10
-      Data: 109
+      Data: 108
     - Name: 
       Entry: 8
       Data: 
@@ -3892,7 +3736,7 @@ MonoBehaviour:
       Data: class_icon_knowledge
     - Name: $v
       Entry: 10
-      Data: 110
+      Data: 109
     - Name: 
       Entry: 8
       Data: 
@@ -3904,7 +3748,7 @@ MonoBehaviour:
       Data: class_icon_mana
     - Name: $v
       Entry: 10
-      Data: 111
+      Data: 110
     - Name: 
       Entry: 8
       Data: 
@@ -3916,7 +3760,7 @@ MonoBehaviour:
       Data: class_icon_order
     - Name: $v
       Entry: 10
-      Data: 112
+      Data: 111
     - Name: 
       Entry: 8
       Data: 
@@ -3928,7 +3772,7 @@ MonoBehaviour:
       Data: class_icon_pursuit
     - Name: $v
       Entry: 10
-      Data: 113
+      Data: 112
     - Name: 
       Entry: 8
       Data: 
@@ -3940,7 +3784,7 @@ MonoBehaviour:
       Data: class_icon_scheme
     - Name: $v
       Entry: 10
-      Data: 114
+      Data: 113
     - Name: 
       Entry: 8
       Data: 
@@ -3952,7 +3796,7 @@ MonoBehaviour:
       Data: dialog_common
     - Name: $v
       Entry: 10
-      Data: 115
+      Data: 114
     - Name: 
       Entry: 8
       Data: 
@@ -3964,7 +3808,7 @@ MonoBehaviour:
       Data: dialog_uncommon
     - Name: $v
       Entry: 10
-      Data: 116
+      Data: 115
     - Name: 
       Entry: 8
       Data: 
@@ -3976,7 +3820,7 @@ MonoBehaviour:
       Data: dialog_rare
     - Name: $v
       Entry: 10
-      Data: 117
+      Data: 116
     - Name: 
       Entry: 8
       Data: 
@@ -3988,7 +3832,7 @@ MonoBehaviour:
       Data: dialog_superrare
     - Name: $v
       Entry: 10
-      Data: 118
+      Data: 117
     - Name: 
       Entry: 8
       Data: 
@@ -4000,7 +3844,7 @@ MonoBehaviour:
       Data: dialog_legend
     - Name: $v
       Entry: 10
-      Data: 119
+      Data: 118
     - Name: 
       Entry: 8
       Data: 
@@ -4012,7 +3856,7 @@ MonoBehaviour:
       Data: name_legend
     - Name: $v
       Entry: 10
-      Data: 120
+      Data: 119
     - Name: 
       Entry: 8
       Data: 
@@ -4024,7 +3868,7 @@ MonoBehaviour:
       Data: name_common
     - Name: $v
       Entry: 10
-      Data: 121
+      Data: 120
     - Name: 
       Entry: 8
       Data: 
@@ -4036,7 +3880,7 @@ MonoBehaviour:
       Data: name_uncommon
     - Name: $v
       Entry: 10
-      Data: 122
+      Data: 121
     - Name: 
       Entry: 8
       Data: 
@@ -4048,7 +3892,7 @@ MonoBehaviour:
       Data: name_rare
     - Name: $v
       Entry: 10
-      Data: 123
+      Data: 122
     - Name: 
       Entry: 8
       Data: 
@@ -4060,7 +3904,7 @@ MonoBehaviour:
       Data: name_superrare
     - Name: $v
       Entry: 10
-      Data: 124
+      Data: 123
     - Name: 
       Entry: 8
       Data: 
@@ -4092,7 +3936,7 @@ MonoBehaviour:
       Data: ac10001
     - Name: $v
       Entry: 10
-      Data: 125
+      Data: 124
     - Name: 
       Entry: 8
       Data: 
@@ -4104,7 +3948,7 @@ MonoBehaviour:
       Data: ac10002
     - Name: $v
       Entry: 10
-      Data: 126
+      Data: 125
     - Name: 
       Entry: 8
       Data: 
@@ -4116,7 +3960,7 @@ MonoBehaviour:
       Data: ac10003
     - Name: $v
       Entry: 10
-      Data: 127
+      Data: 126
     - Name: 
       Entry: 8
       Data: 
@@ -4128,7 +3972,7 @@ MonoBehaviour:
       Data: ac10004
     - Name: $v
       Entry: 10
-      Data: 128
+      Data: 127
     - Name: 
       Entry: 8
       Data: 
@@ -4140,7 +3984,7 @@ MonoBehaviour:
       Data: ac10005
     - Name: $v
       Entry: 10
-      Data: 129
+      Data: 128
     - Name: 
       Entry: 8
       Data: 
@@ -4152,7 +3996,7 @@ MonoBehaviour:
       Data: ac10006
     - Name: $v
       Entry: 10
-      Data: 130
+      Data: 129
     - Name: 
       Entry: 8
       Data: 
@@ -4164,7 +4008,7 @@ MonoBehaviour:
       Data: ac10007
     - Name: $v
       Entry: 10
-      Data: 130
+      Data: 129
     - Name: 
       Entry: 8
       Data: 
@@ -4176,7 +4020,7 @@ MonoBehaviour:
       Data: ac10008
     - Name: $v
       Entry: 10
-      Data: 131
+      Data: 130
     - Name: 
       Entry: 8
       Data: 
@@ -4188,7 +4032,7 @@ MonoBehaviour:
       Data: ac10009
     - Name: $v
       Entry: 10
-      Data: 132
+      Data: 131
     - Name: 
       Entry: 8
       Data: 
@@ -4200,7 +4044,7 @@ MonoBehaviour:
       Data: ac10010
     - Name: $v
       Entry: 10
-      Data: 133
+      Data: 132
     - Name: 
       Entry: 8
       Data: 
@@ -4212,7 +4056,7 @@ MonoBehaviour:
       Data: ac10011
     - Name: $v
       Entry: 10
-      Data: 134
+      Data: 133
     - Name: 
       Entry: 8
       Data: 
@@ -4224,7 +4068,7 @@ MonoBehaviour:
       Data: ac10012
     - Name: $v
       Entry: 10
-      Data: 135
+      Data: 134
     - Name: 
       Entry: 8
       Data: 
@@ -4236,7 +4080,7 @@ MonoBehaviour:
       Data: ac10013
     - Name: $v
       Entry: 10
-      Data: 136
+      Data: 135
     - Name: 
       Entry: 8
       Data: 
@@ -4248,7 +4092,7 @@ MonoBehaviour:
       Data: ac10015
     - Name: $v
       Entry: 10
-      Data: 130
+      Data: 129
     - Name: 
       Entry: 8
       Data: 
@@ -4260,7 +4104,7 @@ MonoBehaviour:
       Data: ac10014
     - Name: $v
       Entry: 10
-      Data: 137
+      Data: 136
     - Name: 
       Entry: 8
       Data: 
@@ -4272,7 +4116,7 @@ MonoBehaviour:
       Data: ac10016
     - Name: $v
       Entry: 10
-      Data: 130
+      Data: 129
     - Name: 
       Entry: 8
       Data: 
@@ -4284,7 +4128,7 @@ MonoBehaviour:
       Data: ac10017
     - Name: $v
       Entry: 10
-      Data: 130
+      Data: 129
     - Name: 
       Entry: 8
       Data: 
@@ -4296,7 +4140,7 @@ MonoBehaviour:
       Data: ac10018
     - Name: $v
       Entry: 10
-      Data: 138
+      Data: 137
     - Name: 
       Entry: 8
       Data: 
@@ -4308,7 +4152,7 @@ MonoBehaviour:
       Data: ac10019
     - Name: $v
       Entry: 10
-      Data: 139
+      Data: 138
     - Name: 
       Entry: 8
       Data: 
@@ -4320,7 +4164,7 @@ MonoBehaviour:
       Data: ac10020
     - Name: $v
       Entry: 10
-      Data: 140
+      Data: 139
     - Name: 
       Entry: 8
       Data: 
@@ -4332,7 +4176,7 @@ MonoBehaviour:
       Data: ac10021
     - Name: $v
       Entry: 10
-      Data: 130
+      Data: 129
     - Name: 
       Entry: 8
       Data: 
@@ -4344,7 +4188,7 @@ MonoBehaviour:
       Data: ac10022
     - Name: $v
       Entry: 10
-      Data: 130
+      Data: 129
     - Name: 
       Entry: 8
       Data: 
@@ -4356,7 +4200,7 @@ MonoBehaviour:
       Data: ac10023
     - Name: $v
       Entry: 10
-      Data: 130
+      Data: 129
     - Name: 
       Entry: 8
       Data: 
@@ -4368,7 +4212,7 @@ MonoBehaviour:
       Data: ac10024
     - Name: $v
       Entry: 10
-      Data: 130
+      Data: 129
     - Name: 
       Entry: 8
       Data: 
@@ -4380,7 +4224,7 @@ MonoBehaviour:
       Data: ac10025
     - Name: $v
       Entry: 10
-      Data: 130
+      Data: 129
     - Name: 
       Entry: 8
       Data: 
@@ -4392,7 +4236,7 @@ MonoBehaviour:
       Data: ac10026
     - Name: $v
       Entry: 10
-      Data: 130
+      Data: 129
     - Name: 
       Entry: 8
       Data: 
@@ -4404,7 +4248,7 @@ MonoBehaviour:
       Data: ac10027
     - Name: $v
       Entry: 10
-      Data: 130
+      Data: 129
     - Name: 
       Entry: 8
       Data: 
@@ -4416,7 +4260,7 @@ MonoBehaviour:
       Data: ac10028
     - Name: $v
       Entry: 10
-      Data: 130
+      Data: 129
     - Name: 
       Entry: 8
       Data: 
@@ -4428,7 +4272,7 @@ MonoBehaviour:
       Data: ac10029
     - Name: $v
       Entry: 10
-      Data: 130
+      Data: 129
     - Name: 
       Entry: 8
       Data: 
@@ -4440,7 +4284,7 @@ MonoBehaviour:
       Data: ac10030
     - Name: $v
       Entry: 10
-      Data: 141
+      Data: 140
     - Name: 
       Entry: 8
       Data: 
@@ -4452,7 +4296,7 @@ MonoBehaviour:
       Data: ac10031
     - Name: $v
       Entry: 10
-      Data: 142
+      Data: 141
     - Name: 
       Entry: 8
       Data: 
@@ -4464,7 +4308,7 @@ MonoBehaviour:
       Data: ac10032
     - Name: $v
       Entry: 10
-      Data: 143
+      Data: 142
     - Name: 
       Entry: 8
       Data: 
@@ -4476,7 +4320,7 @@ MonoBehaviour:
       Data: ac10034
     - Name: $v
       Entry: 10
-      Data: 144
+      Data: 143
     - Name: 
       Entry: 8
       Data: 
@@ -4488,7 +4332,7 @@ MonoBehaviour:
       Data: ac10035
     - Name: $v
       Entry: 10
-      Data: 130
+      Data: 129
     - Name: 
       Entry: 8
       Data: 
@@ -4500,7 +4344,7 @@ MonoBehaviour:
       Data: ac10036
     - Name: $v
       Entry: 10
-      Data: 130
+      Data: 129
     - Name: 
       Entry: 8
       Data: 
@@ -4512,7 +4356,7 @@ MonoBehaviour:
       Data: ac10037
     - Name: $v
       Entry: 10
-      Data: 130
+      Data: 129
     - Name: 
       Entry: 8
       Data: 
@@ -4524,7 +4368,7 @@ MonoBehaviour:
       Data: ac10038
     - Name: $v
       Entry: 10
-      Data: 130
+      Data: 129
     - Name: 
       Entry: 8
       Data: 
@@ -4536,7 +4380,7 @@ MonoBehaviour:
       Data: ac10039
     - Name: $v
       Entry: 10
-      Data: 145
+      Data: 144
     - Name: 
       Entry: 8
       Data: 
@@ -4548,7 +4392,7 @@ MonoBehaviour:
       Data: ac10040
     - Name: $v
       Entry: 10
-      Data: 146
+      Data: 145
     - Name: 
       Entry: 8
       Data: 
@@ -4857,339 +4701,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84f5c6973e9eaca4792c706bb7db6542, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &2043223395
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2043223396}
-  - component: {fileID: 2043223397}
-  m_Layer: 0
-  m_Name: AppearUnit
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2043223396
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2043223395}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 134716701}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!82 &2043223397
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2043223395}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 96bbf34d7aee725449bb8a5f1a46bfbb, type: 3}
-  m_PlayOnAwake: 0
-  m_Volume: 0.5
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
---- !u!1001 &2113329357
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 134716701}
-    m_Modifications:
-    - target: {fileID: 6956617767010792542, guid: 9bfb12d11555d404f8632f86d00ffaa1,
-        type: 3}
-      propertyPath: m_Name
-      value: LargeAttack
-      objectReference: {fileID: 0}
-    - target: {fileID: 6956617767010792529, guid: 9bfb12d11555d404f8632f86d00ffaa1,
-        type: 3}
-      propertyPath: m_PlayOnAwake
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6956617767010792529, guid: 9bfb12d11555d404f8632f86d00ffaa1,
-        type: 3}
-      propertyPath: m_Volume
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6956617767010792528, guid: 9bfb12d11555d404f8632f86d00ffaa1,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6956617767010792528, guid: 9bfb12d11555d404f8632f86d00ffaa1,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6956617767010792528, guid: 9bfb12d11555d404f8632f86d00ffaa1,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6956617767010792528, guid: 9bfb12d11555d404f8632f86d00ffaa1,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6956617767010792528, guid: 9bfb12d11555d404f8632f86d00ffaa1,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6956617767010792528, guid: 9bfb12d11555d404f8632f86d00ffaa1,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6956617767010792528, guid: 9bfb12d11555d404f8632f86d00ffaa1,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6956617767010792528, guid: 9bfb12d11555d404f8632f86d00ffaa1,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6956617767010792528, guid: 9bfb12d11555d404f8632f86d00ffaa1,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6956617767010792528, guid: 9bfb12d11555d404f8632f86d00ffaa1,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6956617767010792528, guid: 9bfb12d11555d404f8632f86d00ffaa1,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 9bfb12d11555d404f8632f86d00ffaa1, type: 3}
---- !u!1 &2145034334
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 6956617767010792542, guid: cf3ac72ef07008e4081de5781ae08d6e,
-    type: 3}
-  m_PrefabInstance: {fileID: 1657054421}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2145034336}
-  - component: {fileID: 2145034335}
-  m_Layer: 0
-  m_Name: NormalAttack
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!82 &2145034335
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 6956617767010792529, guid: cf3ac72ef07008e4081de5781ae08d6e,
-    type: 3}
-  m_PrefabInstance: {fileID: 1657054421}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2145034334}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 6bb3cf80a857c7648946c6269ff3d025, type: 3}
-  m_PlayOnAwake: 0
-  m_Volume: 0.5
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
---- !u!4 &2145034336
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 6956617767010792528, guid: cf3ac72ef07008e4081de5781ae08d6e,
-    type: 3}
-  m_PrefabInstance: {fileID: 1657054421}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2145034334}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 134716701}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
