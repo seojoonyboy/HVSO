@@ -187,6 +187,7 @@ public partial class PlayMangement : MonoBehaviour {
         #region socket use Card
         while(!socketHandler.cardPlayFinish()) {
             yield return socketHandler.useCardList.WaitNext();
+            if(socketHandler.useCardList.allDone) break;
             SocketFormat.GameState state = socketHandler.getHistory();
             SocketFormat.PlayHistory history = state.lastUse;
             if(history != null) {
