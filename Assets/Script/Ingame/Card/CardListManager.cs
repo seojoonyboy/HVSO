@@ -17,6 +17,10 @@ public class CardListManager : MonoBehaviour
     Transform handCardInfo;
     Animator animator;
 
+    public Transform StandbyInfo {
+        get { return standbyInfo; }
+    }
+
     void Start()
     {
         transform.GetComponent<Image>().enabled = false;
@@ -32,6 +36,13 @@ public class CardListManager : MonoBehaviour
         newcard.SetActive(false);
     }
 
+    public void AddHeroCardInfo(GameObject info) {
+        info.transform.SetParent(handCardInfo);
+        info.transform.position = Vector3.zero;
+        info.transform.localScale = new Vector3(1, 1, 1);
+        info.SetActive(false);
+    }
+
     public virtual void AddMulliganCardInfo(CardData data, string id, int changeNum = 100) {
         GameObject newcard;
         if (changeNum == 100) {
@@ -42,6 +53,13 @@ public class CardListManager : MonoBehaviour
             newcard = mulliganInfoList.GetChild(changeNum).gameObject;
         SetCardInfo(newcard, data);
         newcard.SetActive(false);
+    }
+
+    public GameObject AddHeroCardInfo(CardData data) {
+        GameObject heroInfo = StandbyInfo.GetChild(0).gameObject;
+        SetCardInfo(heroInfo, data);
+        return heroInfo;
+
     }
 
     public void AddFeildUnitInfo(int cardIndex, int unitNum, CardData data= null) {

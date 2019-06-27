@@ -22,7 +22,7 @@ public partial class PlayMangement : MonoBehaviour {
     public GameObject onCanvasPosGroup;
     public EffectManager effectManager;
     public SpineEffectManager spineEffectManager;
-
+    public CardCircleManager cardCircleManager;
 
     public GameObject baseUnit;
     private int turn = 0;
@@ -614,7 +614,7 @@ public partial class PlayMangement : MonoBehaviour {
             CardCircleManager cdpm = FindObjectOfType<CardCircleManager>();
             bool race = player.isHuman;
             SocketFormat.Card cardData = socketHandler.gameState.players.myPlayer(race).newCard;
-            cdpm.AddCard(null, cardData);
+            yield return StartCoroutine(cdpm.DrawHeroCard(cardData));
         }
         else {
             GameObject enemyCard;

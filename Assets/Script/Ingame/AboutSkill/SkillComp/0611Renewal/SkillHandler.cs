@@ -149,6 +149,7 @@ namespace SkillModules {
                 else
                     PlayMangement.instance.player.ActiveOrcTurn();
                 myObject.GetComponent<MagicDragHandler>().CARDUSED = true;
+                myObject.GetComponent<MagicDragHandler>().heroCardActivate = false;
             }
         }
 

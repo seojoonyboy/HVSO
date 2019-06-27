@@ -140,14 +140,14 @@ public class BattleReadySceneController : MonoBehaviour {
     }
 
     public void ChangeBattleType(int pageIndex) {
-        string type = "solo";
+        string type = "muiti";
         switch (pageIndex) {
             case 0:
             default:
-                type = "solo";
+                type = "muiti";
                 break;
             case 1:
-                type = "multi";
+                type = "solo";
                 break;
         }
         Variables.Saved.Set("SelectedBattleType", type);
