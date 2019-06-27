@@ -379,7 +379,7 @@ public partial class PlayMangement : MonoBehaviour {
             SkillModules.SkillHandler skillHandler = new SkillModules.SkillHandler();
             skillHandler.Initialize(cardData.skills, unit, false);
             unit.GetComponent<PlaceMonster>().skillHandler = skillHandler;
-
+            cardInfoCanvas.GetChild(0).GetComponent<CardListManager>().AddFeildUnitInfo(0, placeMonster.myUnitNum, cardData);
             EnemyUnitsObserver.UnitAdded(unit, col, 0);
             unit.layer = 14;
         }
@@ -439,9 +439,9 @@ public partial class PlayMangement : MonoBehaviour {
                 break;
         }
         if (player.isHuman)
-            SetHumanTurnTable(currentTurn);
+            StartCoroutine(SetHumanTurnTable(currentTurn));
         else
-            SetOrcTurnTable(currentTurn);
+            StartCoroutine(SetOrcTurnTable(currentTurn));
     }
 
     public void StartBattle() {
@@ -856,83 +856,49 @@ public partial class PlayMangement {
         bool isHuman;
         if (race == "HUMAN") isHuman = true;
         else isHuman = false;
-        releaseTurnBtn = turnTable.GetChild(2).gameObject;
-        nonplayableTurnArrow = turnTable.GetChild(3).GetChild(0).gameObject;
-        playableTurnArrow = turnTable.GetChild(3).GetChild(1).gameObject;
         if (isHuman) {
-            turnIcon = turnTable.GetChild(4);
-            turnTable.GetChild(1).GetChild(0).gameObject.SetActive(true);
-            turnTable.Find("ReleaseTurnButton/HumanTurnButtonImage").gameObject.SetActive(true);
+            releaseTurnBtn = turnTable.Find("HumanButton").gameObject;
+            //turnTable.GetChild(1).GetChild(0).gameObject.SetActive(true);
+            //turnTable.Find("ReleaseTurnButton/HumanTurnButtonImage").gameObject.SetActive(true);
         }
         else {
-            turnIcon = turnTable.GetChild(5);
-            turnTable.GetChild(1).GetChild(1).gameObject.SetActive(true);
-            turnTable.Find("ReleaseTurnButton/OrcTurnButtonImage").gameObject.SetActive(true);
+            releaseTurnBtn = turnTable.Find("OrcButton").gameObject;
+            //turnIcon = turnTable.GetChild(5);
+            //turnTable.GetChild(1).GetChild(1).gameObject.SetActive(true);
+            //turnTable.Find("ReleaseTurnButton/OrcTurnButtonImage").gameObject.SetActive(true);
         }
         for(int i = 0; i < 4; i++) {
-            turnTable.GetChild(6).position = canvas.transform.GetChild(2).GetChild(2).position;
+            turnTable.GetChild(7).position = canvas.transform.GetChild(2).GetChild(2).position;
         }
-        turnIcon.gameObject.SetActive(true);
-        turnIcon.GetChild(0).gameObject.SetActive(true);
-        nonplayableTurnArrow.SetActive(true);
+        //turnIcon.gameObject.SetActive(true);
+        //turnIcon.GetChild(0).gameObject.SetActive(true);
+        //nonplayableTurnArrow.SetActive(true);
     }
 
-    private void SetHumanTurnTable(string currentTurn) {
+    private IEnumerator SetHumanTurnTable(string currentTurn) {
+        yield return new WaitForSeconds(0.4f);
         switch (currentTurn) {
-            case "ORC":
-                turnIcon.GetChild(3).gameObject.SetActive(false);
-                turnIcon.GetChild(0).gameObject.SetActive(true);
-                break;
             case "HUMAN":
-                turnIcon.GetChild(0).gameObject.SetActive(false);
-                turnIcon.GetChild(1).gameObject.SetActive(true);
                 releaseTurnBtn.SetActive(true);
-                nonplayableTurnArrow.SetActive(false);
-                playableTurnArrow.SetActive(true);
                 break;
+            case "ORC":
             case "SECRET":
-                turnIcon.GetChild(1).gameObject.SetActive(false);
-                turnIcon.GetChild(2).gameObject.SetActive(true);
-                releaseTurnBtn.SetActive(false);
-                playableTurnArrow.SetActive(false);
-                nonplayableTurnArrow.SetActive(true);
-                break;
             case "BATTLE":
-                turnIcon.GetChild(2).gameObject.SetActive(false);
-                turnIcon.GetChild(3).gameObject.SetActive(true);
+                releaseTurnBtn.SetActive(false);
                 break;
         }
     }
 
-    private void SetOrcTurnTable(string currentTurn) {
+    private IEnumerator SetOrcTurnTable(string currentTurn) {
+        yield return new WaitForSeconds(0.4f);
         switch (currentTurn) {
             case "ORC":
-                turnIcon.GetChild(3).gameObject.SetActive(false);
-                turnIcon.GetChild(0).gameObject.SetActive(true);
+            case "SECRET":
                 releaseTurnBtn.SetActive(true);
-                nonplayableTurnArrow.SetActive(true);
-                playableTurnArrow.SetActive(false);
                 break;
             case "HUMAN":
-                turnIcon.GetChild(0).gameObject.SetActive(false);
-                turnIcon.GetChild(1).gameObject.SetActive(true);
-                releaseTurnBtn.SetActive(false);
-                playableTurnArrow.SetActive(true);
-                nonplayableTurnArrow.SetActive(false);
-                break;
-            case "SECRET":
-                turnIcon.GetChild(1).gameObject.SetActive(false);
-                turnIcon.GetChild(2).gameObject.SetActive(true);
-                releaseTurnBtn.SetActive(true);
-                nonplayableTurnArrow.SetActive(true);
-                playableTurnArrow.SetActive(false);
-                break;
             case "BATTLE":
-                turnIcon.GetChild(2).gameObject.SetActive(false);
-                turnIcon.GetChild(3).gameObject.SetActive(true);
                 releaseTurnBtn.SetActive(false);
-                playableTurnArrow.SetActive(true);
-                nonplayableTurnArrow.SetActive(false);
                 break;
         }
     }

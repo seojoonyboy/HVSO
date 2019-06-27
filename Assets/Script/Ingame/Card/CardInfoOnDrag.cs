@@ -70,7 +70,7 @@ public class CardInfoOnDrag : MonoBehaviour
     }
 
     private void ResizeBox(int textLength) {
-        int lineNum = textLength / 19;
+        int lineNum = textLength / 18;
         transform.GetComponent<RectTransform>().sizeDelta = transform.Find("SkillText").GetComponent<RectTransform>().sizeDelta = new Vector2(600, 100 + (50 * lineNum));    
     }
 
