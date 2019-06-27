@@ -1,0 +1,832 @@
+fileFormatVersion: 2
+guid: 7fecfe2efde515747823be4298de3cd1
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -3440443020095221363
+    second: info_common
+  - first:
+      213: 2919293201927799646
+    second: info_uncommon
+  - first:
+      213: -841537519532026076
+    second: info_rare
+  - first:
+      213: -5621208930018107576
+    second: info_supperrare
+  - first:
+      213: 7706455381262370707
+    second: info_legend
+  - first:
+      213: 6707853947494945215
+    second: info_name_common
+  - first:
+      213: 1913007842479917902
+    second: info_name_uncommon
+  - first:
+      213: 5986551120315241216
+    second: info_name_rare
+  - first:
+      213: -3108389303869757469
+    second: info_name_superrare
+  - first:
+      213: -3965386756781439874
+    second: info_name_legend
+  - first:
+      213: -8096304967036978428
+    second: info_dialog_common
+  - first:
+      213: -5291665564860064282
+    second: info_dialog_uncommon
+  - first:
+      213: 6089914502286055788
+    second: info_dialog_rare
+  - first:
+      213: -4226548967377817700
+    second: info_dialog_superrare
+  - first:
+      213: -8641375218864221105
+    second: info_dialog_legend
+  - first:
+      213: 2385088559370877663
+    second: info_class_order
+  - first:
+      213: -3577896381456040696
+    second: info_class_sorcery
+  - first:
+      213: -6146438084938245089
+    second: info_class_scheme
+  - first:
+      213: 5062726313627436730
+    second: info_class_knowledge
+  - first:
+      213: -7685508902814243102
+    second: info_class_mana
+  - first:
+      213: -7241241620715457995
+    second: info_class_pursuit
+  - first:
+      213: -5933000472084040410
+    second: info_attack
+  - first:
+      213: -8757002599777318702
+    second: info_cost
+  - first:
+      213: -3503401129259627412
+    second: info_health
+  - first:
+      213: 3986447920887533447
+    second: info_class_order_icon
+  - first:
+      213: -6249704124916188714
+    second: info_class_sorcery_icon
+  - first:
+      213: -7215910071446153760
+    second: info_class_scheme_icon
+  - first:
+      213: 8892280313325182227
+    second: info_class_knowledge_icon
+  - first:
+      213: -710075642464768273
+    second: info_class_mana_icon
+  - first:
+      213: -3897977781792394465
+    second: info_class_pursuit_icon
+  externalObjects: {}
+  serializedVersion: 10
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 2
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Standalone
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Android
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: info_common
+      rect:
+        serializedVersion: 2
+        x: 151
+        y: 1112
+        width: 447
+        height: 628
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 65dcc25722e6a5c4bb77862665aa66d4
+      internalID: -3440443020095221363
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: info_uncommon
+      rect:
+        serializedVersion: 2
+        x: 745
+        y: 1112
+        width: 447
+        height: 628
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cfad14f22f2cdbe43a1f072f3e30a806
+      internalID: 2919293201927799646
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: info_rare
+      rect:
+        serializedVersion: 2
+        x: 1344
+        y: 1112
+        width: 447
+        height: 628
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e540c3e3455b8046b0638cdce34e271
+      internalID: -841537519532026076
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: info_supperrare
+      rect:
+        serializedVersion: 2
+        x: 1942
+        y: 1112
+        width: 447
+        height: 628
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a5bb17e7faef3f84c8972d156da653d2
+      internalID: -5621208930018107576
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: info_legend
+      rect:
+        serializedVersion: 2
+        x: 2536
+        y: 1112
+        width: 447
+        height: 628
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4ddf67ab440df364baa28655bd94df8f
+      internalID: 7706455381262370707
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: info_name_common
+      rect:
+        serializedVersion: 2
+        x: 132
+        y: 918
+        width: 483
+        height: 136
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 26bd18d78553d9b4eb0bf069e63b4ae1
+      internalID: 6707853947494945215
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: info_name_uncommon
+      rect:
+        serializedVersion: 2
+        x: 728
+        y: 916
+        width: 483
+        height: 140
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a8e9ca79ef660db43b97ffd918b9abbd
+      internalID: 1913007842479917902
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: info_name_rare
+      rect:
+        serializedVersion: 2
+        x: 1323
+        y: 918
+        width: 483
+        height: 136
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f55cade8a4f66fd40a74e5448057f72d
+      internalID: 5986551120315241216
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: info_name_superrare
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 918
+        width: 483
+        height: 136
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 85b28a2539b291942bfe08566657bee8
+      internalID: -3108389303869757469
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: info_name_legend
+      rect:
+        serializedVersion: 2
+        x: 2513
+        y: 916
+        width: 485
+        height: 140
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ccb634d3bb63a4245896fc445ca925a8
+      internalID: -3965386756781439874
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: info_dialog_common
+      rect:
+        serializedVersion: 2
+        x: 177
+        y: 520
+        width: 393
+        height: 265
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d6ad89ba09b722e4d8546125664ab5d1
+      internalID: -8096304967036978428
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: info_dialog_uncommon
+      rect:
+        serializedVersion: 2
+        x: 772
+        y: 520
+        width: 392
+        height: 265
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1ff7ca03f516c3e4d9b464096b183360
+      internalID: -5291665564860064282
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: info_dialog_rare
+      rect:
+        serializedVersion: 2
+        x: 1370
+        y: 520
+        width: 393
+        height: 265
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a721deacbff7d364c973a6fb8a236fd1
+      internalID: 6089914502286055788
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: info_dialog_superrare
+      rect:
+        serializedVersion: 2
+        x: 1968
+        y: 520
+        width: 392
+        height: 265
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 558ae8814a41b22428b9e9dde2fccd44
+      internalID: -4226548967377817700
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: info_dialog_legend
+      rect:
+        serializedVersion: 2
+        x: 2562
+        y: 520
+        width: 393
+        height: 265
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c335007b512628a46b9780d6bd9d0525
+      internalID: -8641375218864221105
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: info_class_order
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 239
+        width: 113
+        height: 148
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dff78fb09f7977942b3fcfd3fef55bfc
+      internalID: 2385088559370877663
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: info_class_sorcery
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 242
+        width: 113
+        height: 148
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 339a767a2f8885b4f95a675f29ce4301
+      internalID: -3577896381456040696
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: info_class_scheme
+      rect:
+        serializedVersion: 2
+        x: 555
+        y: 239
+        width: 113
+        height: 148
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 51f452ff5ff9abf429a4f6deaa050df0
+      internalID: -6146438084938245089
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: info_class_knowledge
+      rect:
+        serializedVersion: 2
+        x: 728
+        y: 239
+        width: 113
+        height: 148
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b5afc7caec61e834eb2c405354839b04
+      internalID: 5062726313627436730
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: info_class_mana
+      rect:
+        serializedVersion: 2
+        x: 899
+        y: 239
+        width: 113
+        height: 148
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 75c91a21a5d8b28448a28975ff7a3272
+      internalID: -7685508902814243102
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: info_class_pursuit
+      rect:
+        serializedVersion: 2
+        x: 1072
+        y: 239
+        width: 113
+        height: 148
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e4c4dab863e638643beec40818b6d8b8
+      internalID: -7241241620715457995
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: info_attack
+      rect:
+        serializedVersion: 2
+        x: 1269
+        y: 252
+        width: 124
+        height: 135
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 57295a535f226904e9fa34630a7b9e15
+      internalID: -5933000472084040410
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: info_cost
+      rect:
+        serializedVersion: 2
+        x: 1459
+        y: 245
+        width: 115
+        height: 134
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3d9c3325fc7766547b06cb8cb701d5c9
+      internalID: -8757002599777318702
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: info_health
+      rect:
+        serializedVersion: 2
+        x: 1628
+        y: 244
+        width: 107
+        height: 136
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2ac0c31363193c940acbdc76b2e874e3
+      internalID: -3503401129259627412
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: info_class_order_icon
+      rect:
+        serializedVersion: 2
+        x: 220
+        y: 128
+        width: 81
+        height: 78
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7749652b08fd6dd4b9e52a0b0f84b34a
+      internalID: 3986447920887533447
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: info_class_sorcery_icon
+      rect:
+        serializedVersion: 2
+        x: 395
+        y: 130
+        width: 81
+        height: 78
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 31bf76f539dcbfa46a5cd669956634e2
+      internalID: -6249704124916188714
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: info_class_scheme_icon
+      rect:
+        serializedVersion: 2
+        x: 574
+        y: 130
+        width: 81
+        height: 78
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b03758fb1e544cd40b6b3723ce0d9f1d
+      internalID: -7215910071446153760
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: info_class_knowledge_icon
+      rect:
+        serializedVersion: 2
+        x: 745
+        y: 127
+        width: 81
+        height: 78
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 943bf3963bcdc0a4ebd9703cf1aa3d7c
+      internalID: 8892280313325182227
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: info_class_mana_icon
+      rect:
+        serializedVersion: 2
+        x: 921
+        y: 127
+        width: 81
+        height: 78
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 724260e074bdcb343a001806ced5378c
+      internalID: -710075642464768273
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: info_class_pursuit_icon
+      rect:
+        serializedVersion: 2
+        x: 1090
+        y: 130
+        width: 81
+        height: 78
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fff53c6a6a1c82b45acc8b10d4119a0f
+      internalID: -3897977781792394465
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 6bff3c942f0e6da40b5778384f3019f9
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

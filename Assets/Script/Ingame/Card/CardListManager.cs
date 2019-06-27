@@ -14,30 +14,22 @@ public class CardListManager : MonoBehaviour
     [SerializeField] protected Transform standbyInfo;
     [SerializeField] GameObject infoPrefab;
     [SerializeField] protected Transform mulliganInfoList;
+    Transform handCardInfo;
     Animator animator;
-    protected HorizontalScrollSnap hss;
 
     void Start()
     {
         transform.GetComponent<Image>().enabled = false;
         animator = transform.GetComponentInChildren<Animator>();
-        animator.SetBool("Hide", true);
-        hss = transform.GetComponentInChildren<HorizontalScrollSnap>();
+        handCardInfo = transform.Find("HandCardInfo");
     }
 
     public virtual void AddCardInfo(CardData data, string id) {
         GameObject newcard = standbyInfo.GetChild(0).gameObject;
+        newcard.SetActive(true);
         SetCardInfo(newcard, data);
-        hss.AddChild(newcard);
-        GameObject unitSpine = newcard.transform.Find("Info/UnitImage").GetChild(0).gameObject;
-        if (data.type == "unit") {
-            SkeletonGraphic skeleton = unitSpine.GetComponent<SkeletonGraphic>();
-            skeleton.skeletonDataAsset = AccountManager.Instance.resource.cardPreveiwSkeleton[id].GetComponent<SkeletonGraphic>().skeletonDataAsset;
-            skeleton.Initialize(true);
-            unitSpine.SetActive(true);
-        }
-        else
-            unitSpine.SetActive(false);
+        newcard.transform.SetParent(handCardInfo);
+        newcard.SetActive(false);
     }
 
     public virtual void AddMulliganCardInfo(CardData data, string id, int changeNum = 100) {
@@ -49,36 +41,20 @@ public class CardListManager : MonoBehaviour
         else
             newcard = mulliganInfoList.GetChild(changeNum).gameObject;
         SetCardInfo(newcard, data);
-        GameObject unitSpine = newcard.transform.Find("Info/UnitImage").GetChild(0).gameObject;
-        if (data.type == "unit") {
-            SkeletonGraphic skeleton = unitSpine.GetComponent<SkeletonGraphic>();
-            skeleton.skeletonDataAsset = AccountManager.Instance.resource.cardPreveiwSkeleton[id].GetComponent<SkeletonGraphic>().skeletonDataAsset;
-            skeleton.Initialize(true);
-            unitSpine.SetActive(true);
-        }
-        else
-            unitSpine.SetActive(false);
-        newcard.transform.Find("Info/SimpleImage/Chain").gameObject.SetActive(false);
-        newcard.transform.position = new Vector3(0, 0, 0);
         newcard.SetActive(false);
     }
 
-    public void AddFeildUnitInfo(CardData data, int unitNum) {
-        GameObject newcard = standbyInfo.GetChild(0).gameObject;
-        newcard.name = unitNum.ToString() + "unit";
-        newcard.transform.SetParent(transform.Find("FieldUnitInfo"));
-        SetCardInfo(newcard, data);
-        newcard.transform.Find("Info/UnitImage").GetChild(0).gameObject.SetActive(false);
-        newcard.SetActive(false);
+    public void AddFeildUnitInfo(int cardIndex, int unitNum) {
+        GameObject unitInfo = handCardInfo.GetChild(cardIndex).gameObject;
+        unitInfo.name = unitNum.ToString() + "unit";
+        handCardInfo.GetChild(cardIndex).SetParent(transform.Find("FieldUnitInfo"));
     }
 
 
     public void SendMulliganInfo() {
         int i = 0;
         while(i < 4) {
-            standbyInfo.GetChild(0).Find("Info/SimpleImage/Chain").gameObject.SetActive(true);
-            mulliganInfoList.GetChild(0).gameObject.SetActive(true);
-            hss.AddChild(mulliganInfoList.GetChild(0).gameObject);
+            mulliganInfoList.GetChild(0).SetParent(handCardInfo);
             i++;
         }
     }
@@ -98,15 +74,8 @@ public class CardListManager : MonoBehaviour
     }
 
     public void RemoveCardInfo(int index) {
-        GameObject remove;
-        hss.RemoveChild(index, out remove);
+        GameObject remove = handCardInfo.GetChild(index).gameObject;
         remove.transform.SetParent(standbyInfo);
-        RectTransform recttrans = remove.GetComponent<RectTransform>();
-        recttrans.anchorMin = new Vector2(0.5f, 0.5f);
-        recttrans.anchorMax = new Vector2(0.5f, 0.5f);
-        recttrans.pivot = new Vector2(0.5f, 0.5f);
-        remove.transform.localScale = new Vector3(1, 1, 1);
-        remove.transform.localPosition = new Vector3(0, 0, 0);
         remove.SetActive(false);
     }
 
@@ -114,76 +83,77 @@ public class CardListManager : MonoBehaviour
         string objName = index.ToString() + "unit";
         Transform remove = transform.Find("FieldUnitInfo").Find(objName);
         remove.SetParent(standbyInfo);
-        RectTransform recttrans = remove.GetComponent<RectTransform>();
-        recttrans.anchorMin = new Vector2(0.5f, 0.5f);
-        recttrans.anchorMax = new Vector2(0.5f, 0.5f);
-        recttrans.pivot = new Vector2(0.5f, 0.5f);
-        remove.localScale = new Vector3(1, 1, 1);
-        remove.localPosition = new Vector3(0, 0, 0);
-        remove.name = "CardInfoPage";
+        remove.name = "CardInfoWindow";
         remove.gameObject.SetActive(false);
     }
 
-    public void OpenCardList(int cardnum) {
+    public void OpenCardInfo(int cardnum) {
         PlayMangement.instance.infoOn = true;
         transform.GetComponent<Image>().enabled = true;
-        animator.SetBool("Hide", false);
-        hss.GoToScreen(cardnum);
+        //handCardInfo.gameObject.SetActive(true);
+        handCardInfo.GetChild(cardnum).gameObject.SetActive(true);
+    }
+
+    public void CloseCardInfo() {
+        PlayMangement.instance.infoOn = false;
+        transform.GetComponent<Image>().enabled = false;
+        for(int i = 0; i < handCardInfo.childCount; i++)
+            handCardInfo.GetChild(i).gameObject.SetActive(false);
     }
 
     public virtual void SetCardInfo(GameObject obj, CardData data) {
-        Transform info = obj.transform.GetChild(0);
-        info.Find("Name/NameText").GetComponent<Text>().text = data.name;
-        if (data.rarelity != "legend") {
-            info.Find("Name").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites[data.rarelity + "_ribon"];
-            info.Find("UnitDialogue").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites[data.rarelity + "_flag"];
-        }
-        if (data.hp != null) {
-            info.Find("HP/HpText").GetComponent<Text>().text = data.hp.ToString();
-            info.Find("HP").gameObject.SetActive(true);
+        Transform info = obj.transform;
+        info.Find("Frame").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["frame_" + data.rarelity];
+        info.Find("Name").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["name_" + data.rarelity];
+        info.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.name;
+        info.Find("Portrait").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoPortraite[data.cardId];
+        info.Find("Dialog").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["dialog_" + data.rarelity];
+        if (data.skills.Length != 0) {
+            info.Find("Dialog/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.skills[0].desc;
         }
         else
-            info.Find("HP").gameObject.SetActive(false);
+            info.Find("Dialog/Text").GetComponent<TMPro.TextMeshProUGUI>().text = null;
+
+        if (data.hp != null) {
+            info.Find("Health/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.hp.ToString();
+            info.Find("Health").gameObject.SetActive(true);
+        }
+        else
+            info.Find("Health").gameObject.SetActive(false);
 
         if (data.attack != null) {
-            info.Find("Attack/AttackText").GetComponent<Text>().text = data.attack.ToString();
+            info.Find("Attack/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.attack.ToString();
             info.Find("Attack").gameObject.SetActive(true);
         }
         else
             info.Find("Attack").gameObject.SetActive(false);
 
-        if (data.category_1 != null) {
-            info.Find("Category_1").GetComponent<Text>().text = data.category_1.ToString();
-            info.Find("Category_1").gameObject.SetActive(true);
-        }
-        else
-            info.Find("Category_1").gameObject.SetActive(false);
+        //if (data.category_1 != null) {
+        //    info.Find("Category_1").GetComponent<Text>().text = data.category_1.ToString();
+        //    info.Find("Category_1").gameObject.SetActive(true);
+        //}
+        //else
+        //    info.Find("Category_1").gameObject.SetActive(false);
 
-        if (data.category_2 != null) {
-            info.Find("Category_2").GetComponent<Text>().text = data.category_2.ToString();
-            info.Find("Category_2").gameObject.SetActive(false);
-        }
-        else
-            info.Find("Category_2").gameObject.SetActive(false);
+        //if (data.category_2 != null) {
+        //    info.Find("Category_2").GetComponent<Text>().text = data.category_2.ToString();
+        //    info.Find("Category_2").gameObject.SetActive(false);
+        //}
+        //else
+        //    info.Find("Category_2").gameObject.SetActive(false);
 
-        info.Find("Cost/CostText").GetComponent<Text>().text = data.cost.ToString();
+        info.Find("Cost/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.cost.ToString();
 
-        obj.transform.GetChild(1).GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[data.class_1];
-        obj.transform.GetChild(1).name = data.class_1;
-        if (data.class_2 == null)
-            obj.transform.GetChild(2).gameObject.SetActive(false);
-        else {
-            obj.transform.GetChild(2).GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[data.class_2];
-            obj.transform.GetChild(2).name = data.class_2;
-        }
-        if (data.skills.Length != 0) {
-            info.Find("SkillInfo").GetComponent<Text>().text = data.skills[0].desc;
-        }
-        else
-            info.Find("SkillInfo").GetComponent<Text>().text = null;
-        obj.SetActive(true);
+        info.Find("Class").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["class_" + data.class_1];
+        info.Find("Class/Icon").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["class_icon_" + data.class_1];
+        //if (data.class_2 == null)
+        //    obj.transform.GetChild(2).gameObject.SetActive(false);
+        //else {
+        //    obj.transform.GetChild(2).GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[data.class_2];
+        //    obj.transform.GetChild(2).name = data.class_2;
+        //}
     }
-
+    
 
     public virtual void OpenUnitInfoWindow(Vector3 inputPos) {
         if (Input.GetMouseButtonDown(0)) {

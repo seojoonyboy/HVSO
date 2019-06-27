@@ -79,8 +79,4 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         CardDropManager.Instance.HideMagicSlot();
         CardInfoOnDrag.instance.OffCardDragInfo();
     }
-
-    private void OnDestroy() {
-        //skillHandler.RemoveTriggerEvent();    
-    }
 }

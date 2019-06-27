@@ -8,6 +8,7 @@ using Spine.Unity;
 
 public class DebugCardListManager : CardListManager
 {
+    HorizontalScrollSnap hss;
     private void Start() {
         hss = transform.GetComponentInChildren<HorizontalScrollSnap>();
         

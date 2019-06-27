@@ -1,28 +1,34 @@
 fileFormatVersion: 2
-guid: 9143280ee48a2f94bacf505bb65a4fca
+guid: 3f7dbfa56e06bce44b49b84168bedfe4
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3894663610080912122
-    second: CardImage_HumanDefault
+      213: -2598078480963232838
+    second: info_ac10018
   - first:
-      213: -5060970298748657211
-    second: CardImage_OrcDefault
+      213: -6353764650780430386
+    second: info_ac10011
   - first:
-      213: -7537660489572634210
-    second: CardImage_Card
+      213: -4890230153378978454
+    second: info_ac10019
   - first:
-      213: 7879482055204904308
-    second: CardImage_HumanCost
+      213: 1014161593673654987
+    second: info_ac10039
   - first:
-      213: 4575669041807845741
-    second: CardImage_OrcCost
+      213: 3872515857239951019
+    second: info_ac10020
   - first:
-      213: 8006388839039123645
-    second: CardImage_Attack
+      213: 8063983338517583843
+    second: info_ac10013
   - first:
-      213: -6811309827601162911
-    second: CardImage_Health
+      213: -1266849523433018938
+    second: info_ac10014
+  - first:
+      213: -981367173463900617
+    second: info_ac10040
+  - first:
+      213: -5976033799484478300
+    second: info_ac10012
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -81,7 +87,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 2
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 4096
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -92,7 +98,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
   - serializedVersion: 2
     buildTarget: Standalone
-    maxTextureSize: 2048
+    maxTextureSize: 4096
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -103,7 +109,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
   - serializedVersion: 2
     buildTarget: Android
-    maxTextureSize: 2048
+    maxTextureSize: 4096
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -116,13 +122,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: CardImage_HumanDefault
+      name: info_ac10018
       rect:
         serializedVersion: 2
-        x: 99
-        y: 591
-        width: 225
-        height: 154
+        x: 80
+        y: 1052
+        width: 398
+        height: 297
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -130,20 +136,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: de453927e77ffc44282192a6315b1cab
-      internalID: -3894663610080912122
+      spriteID: a7f51f866f54e874bbca1577477e2e25
+      internalID: -2598078480963232838
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CardImage_OrcDefault
+      name: info_ac10011
       rect:
         serializedVersion: 2
-        x: 93
-        y: 360
-        width: 224
-        height: 154
+        x: 614
+        y: 1052
+        width: 399
+        height: 297
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -151,20 +157,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fe527c004d4f2744da2324a6ca1b48da
-      internalID: -5060970298748657211
+      spriteID: ae11cb837921be840adf2f56898e37e6
+      internalID: -6353764650780430386
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CardImage_Card
+      name: info_ac10019
       rect:
         serializedVersion: 2
-        x: 75
-        y: 146
-        width: 256
-        height: 185
+        x: 1150
+        y: 1052
+        width: 400
+        height: 297
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -172,20 +178,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 09e385adc4a7d7d489fdf82bef21ae64
-      internalID: -7537660489572634210
+      spriteID: fe4a7518964da6b46bbe878bbac303e8
+      internalID: -4890230153378978454
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CardImage_HumanCost
+      name: info_ac10039
       rect:
         serializedVersion: 2
-        x: 464
-        y: 260
-        width: 68
-        height: 77
+        x: 1686
+        y: 1052
+        width: 397
+        height: 297
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -193,20 +199,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1d4c7aaf6c3cca646921185b2ca5172f
-      internalID: 7879482055204904308
+      spriteID: f903d08feef981841a60ea94a4a91997
+      internalID: 1014161593673654987
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CardImage_OrcCost
+      name: info_ac10020
       rect:
         serializedVersion: 2
-        x: 592
-        y: 252
-        width: 92
-        height: 87
+        x: 83
+        y: 645
+        width: 399
+        height: 297
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -214,20 +220,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f718a5efbe342894e9d14d0d6b81a718
-      internalID: 4575669041807845741
+      spriteID: 356644642af32f94d80ffcee1606a317
+      internalID: 3872515857239951019
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CardImage_Attack
+      name: info_ac10013
       rect:
         serializedVersion: 2
-        x: 462
-        y: 131
-        width: 69
-        height: 67
+        x: 617
+        y: 650
+        width: 398
+        height: 297
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -235,20 +241,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4266579a1c4b2dc4d8353e7771a0e6e3
-      internalID: 8006388839039123645
+      spriteID: 654d5d53f03fd2f4cbfe5b57266f170e
+      internalID: 8063983338517583843
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CardImage_Health
+      name: info_ac10014
       rect:
         serializedVersion: 2
-        x: 596
-        y: 124
-        width: 78
-        height: 71
+        x: 1150
+        y: 638
+        width: 399
+        height: 297
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -256,8 +262,50 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4d96e22ee07d318469548766128db32f
-      internalID: -6811309827601162911
+      spriteID: fa1d8369535ed1946a5db2f7c0e82cc3
+      internalID: -1266849523433018938
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: info_ac10040
+      rect:
+        serializedVersion: 2
+        x: 1687
+        y: 638
+        width: 397
+        height: 297
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fcc396742595b8b4fb245aa65f3ff263
+      internalID: -981367173463900617
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: info_ac10012
+      rect:
+        serializedVersion: 2
+        x: 86
+        y: 201
+        width: 397
+        height: 298
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 43a3c03da59bce74a8a79f8d84ccc050
+      internalID: -5976033799484478300
       vertices: []
       indices: 
       edges: []
@@ -265,14 +313,14 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: c863c5b3a3c1643428427693b6b380ed
+    spriteID: 2933870f3717df04da6cd5d9f00fc85a
     internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
     secondaryTextures: []
-  spritePackingTag: IngameUI
+  spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
   userData: 
