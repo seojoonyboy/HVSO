@@ -15,6 +15,19 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
     public SkillHandler skillHandler;
 
     public void OnBeginDrag(PointerEventData eventData) {
+        if (heroCardActivate) {
+            transform.localScale = Vector3.zero;
+            if (cardData.skills.Length != 0)
+                CardInfoOnDrag.instance.SetCardDragInfo(null, mousLocalPos.localPosition, cardData.skills[0].desc);
+            else
+                CardInfoOnDrag.instance.SetCardDragInfo(null, mousLocalPos.localPosition);
+            //TODO : Filter를 통해(Use Condition) 타겟 표시 추가 제어
+            CardDropManager.Instance.ShowMagicalSlot(cardData.skills[0].target.args, skillHandler.dragFiltering);
+
+            object[] parms1 = new object[] { true, gameObject };
+            PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_CARD_PLAY, this, parms1);
+            return;
+        }
         if (!PlayMangement.dragable) return;
         if (firstDraw || PlayMangement.instance.isMulligan) return;
         if (Input.touchCount > 1) return;
@@ -35,6 +48,17 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
     }
 
     public void OnDrag(PointerEventData eventData) {
+        if (heroCardActivate) {
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            mousePos = new Vector3(mousePos.x, mousePos.y, 0);
+            transform.position = mousePos;
+            mousLocalPos.position = transform.position;
+            Debug.Log(transform.position.y);
+            CheckLocation();
+            CardInfoOnDrag.instance.SetInfoPosOnDrag(mousLocalPos.localPosition);
+            CheckMagicHighlight();
+            return;
+        }
         if (firstDraw) return;
         if (Input.touchCount > 1) return;
         if (gameObject != itsDragging) return;
@@ -50,6 +74,37 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
 
 
     public void OnEndDrag(PointerEventData eventData) {
+        if (heroCardActivate) {
+            transform.parent.SetSiblingIndex(parentIndex);
+            if (transform.position.y < -3.5f) {
+                ListCircle.AddHeroCard(gameObject);
+                heroCardActivate = false;
+            }
+            else {
+                CheckLocation(true);
+                cardUsed = false;
+
+                if (CheckMagicSlot() != null && PlayMangement.instance.player.resource.Value >= cardData.cost && isMyTurn(true)) {
+                    cardUsed = true;
+                    //var abilities = GetComponents<MagicalCasting>();
+                    //foreach (MagicalCasting ability in abilities) ability.RequestUseMagic();
+                    PlayMangement.instance.player.resource.Value -= cardData.cost;
+                    object[] parms = new object[] { true, gameObject };
+                    PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
+                    //if (GetComponents<Ability>() == null) UseCard();
+                }
+                highlighted = false;
+                CardDropManager.Instance.HighLightMagicSlot(highlightedSlot, highlighted);
+                highlightedSlot = null;
+                if (!cardUsed) {
+                    transform.localScale = new Vector3(1, 1, 1);
+                    transform.localPosition = new Vector3(0, 0, 0);
+                }
+            }
+            CardDropManager.Instance.HideMagicSlot();
+            CardInfoOnDrag.instance.OffCardDragInfo();
+            return;
+        }
         if (firstDraw) return;
         if (gameObject != itsDragging) return;
         transform.parent.SetSiblingIndex(parentIndex);

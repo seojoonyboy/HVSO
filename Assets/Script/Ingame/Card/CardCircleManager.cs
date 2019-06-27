@@ -71,7 +71,11 @@ public class CardCircleManager : MonoBehaviour {
         finBtn.gameObject.SetActive(false);
     }
 
-    public void AddInfoToList(GameObject card, bool isMulligan = false) {
+    public void AddInfoToList(GameObject card, bool isMulligan = false, bool isHero = false) {
+        if (isHero) {
+            clm.AddHeroCardInfo(card);
+            return;
+        }
         if (isMulligan)
             clm.SendMulliganInfo();
         else {
@@ -125,6 +129,32 @@ public class CardCircleManager : MonoBehaviour {
         StartCoroutine(SendCardToHand(cardTransform.gameObject, cardPos));
     }
 
+
+    public IEnumerator DrawHeroCard(SocketFormat.Card cardData = null) {
+        GameObject card = cardStorage.Find("MagicCards").GetChild(0).gameObject;
+        card.transform.SetParent(showPos.transform);
+        card.SetActive(true);
+        CardHandler handler = card.GetComponent<CardHandler>();
+        handler.DrawHeroCard(cardData);
+        iTween.MoveTo(card, showPos.position, 0.4f);
+        iTween.RotateTo(card, iTween.Hash("rotation", new Vector3(0, 0, 0), "islocal", true, "time", 0.4f));
+        yield return StartCoroutine(handler.ActiveHeroCard());
+    }
+
+    public void AddHeroCard(GameObject cardobj) {
+        if (cardNum + 1 == 11) return;
+        PlayMangement.dragable = false;
+        AddInfoToList(cardobj.transform.Find("CardInfoWindow").gameObject, false, true);
+
+        Transform cardTransform = cardobj.transform;
+        Transform cardPos = transform.GetChild(cardNum).GetChild(0);
+        cardTransform.GetComponent<CardHandler>().CARDINDEX = cardNum;
+        cardTransform.localScale = new Vector3(1, 1, 1);
+        cardNum++;
+        cardList.Add(cardobj);
+        StartCoroutine(SendCardToHand(cardTransform.gameObject, cardPos, true));
+    }
+
     public IEnumerator SendMultipleCard(SocketFormat.Card[] cardData) {
         isMultiple = true;
         for (int i = 0; i < cardData.Length; i++) {
@@ -151,7 +181,7 @@ public class CardCircleManager : MonoBehaviour {
             }
             Transform cardTransform = card.transform;
             Transform cardPos = transform.GetChild(cardNum).GetChild(0);
-            cardTransform.GetComponent<CardDragAndDrop>().CARDINDEX = cardNum;
+            cardTransform.GetComponent<CardHandler>().CARDINDEX = cardNum;
             cardTransform.gameObject.SetActive(true);
             cardTransform.SetParent(transform.GetChild(cardNum));
             cardNum++;
@@ -164,15 +194,19 @@ public class CardCircleManager : MonoBehaviour {
     }
 
 
-    IEnumerator SendCardToHand(GameObject card, Transform pos) {
+    IEnumerator SendCardToHand(GameObject card, Transform pos, bool isHero = false) {
         CardHandler handler = card.GetComponent<CardHandler>();
         handler.DisableCard();
         if (!firstDraw) {
-            iTween.MoveTo(card, showPos.position, 0.4f);
-            iTween.RotateTo(card, iTween.Hash("rotation", new Vector3(0, 0, 0), "islocal", true, "time", 0.4f));
+            if (!isHero) {
+                iTween.MoveTo(card, showPos.position, 0.4f);
+                iTween.RotateTo(card, iTween.Hash("rotation", new Vector3(0, 0, 0), "islocal", true, "time", 0.4f));
+            }
             iTween.ScaleTo(card, new Vector3(1.2f, 1.2f, 1), 0.2f);
             iTween.RotateTo(gameObject, new Vector3(0, 0, (cardNum - 1) * 4), 0.2f);
             yield return new WaitForSeconds(0.4f);
+            if(isHero)
+                card.transform.SetParent(transform.GetChild(cardNum - 1));
         }
         iTween.MoveTo(card, iTween.Hash("position", new Vector3(0, 4500, 0), "islocal", true, "time", 0.4f));
         iTween.ScaleTo(card, new Vector3(1, 1, 1), 0.4f);
@@ -222,7 +256,7 @@ public class CardCircleManager : MonoBehaviour {
         PlayMangement.dragable = false;
         Debug.Log(transform.rotation.eulerAngles.z);
         if (transform.rotation.eulerAngles.z > 300 && transform.rotation.eulerAngles.z < 360) {
-            if(cardNum < 3)
+            if (cardNum < 3)
                 iTween.RotateTo(gameObject, new Vector3(0, 0, (cardNum - 2) * 4), 0.2f);
             else
                 iTween.RotateTo(gameObject, new Vector3(0, 0, 4), 0.2f);
@@ -233,7 +267,7 @@ public class CardCircleManager : MonoBehaviour {
             yield return new WaitForSeconds(0.1f);
         }
         else if (transform.rotation.eulerAngles.z < 60 && transform.rotation.eulerAngles.z > (cardNum - 2) * 4 && cardNum > 0) {
-            if(cardNum > 1)
+            if (cardNum > 1)
                 iTween.RotateTo(gameObject, new Vector3(0, 0, (cardNum - 2) * 4), 0.2f);
             else
                 iTween.RotateTo(gameObject, new Vector3(0, 0, (cardNum - 1) * 4), 0.2f);
@@ -270,7 +304,7 @@ public class CardCircleManager : MonoBehaviour {
         firstOrcTurnObj.SetActive(false);
 
         SoundManager.Instance.PlaySound(SoundType.FIRST_TURN);
-    }   
+    }
 
     public void RedrawCallback(string ID, int itemID = -1, bool first = false) {
         SocketFormat.GameState state = PlayMangement.instance.socketHandler.gameState;
@@ -306,7 +340,7 @@ public class CardCircleManager : MonoBehaviour {
         card.transform.position = beforeCardObject.transform.position;
         card.transform.localScale = beforeCardObject.transform.localScale;
         card.transform.rotation = beforeCardObject.transform.rotation;
-        if(beforeCardObject.name == "UnitCard")
+        if (beforeCardObject.name == "UnitCard")
             beforeCardObject.transform.SetParent(cardStorage.Find("UnitCards"));
         else
             beforeCardObject.transform.SetParent(cardStorage.Find("MagicCards"));

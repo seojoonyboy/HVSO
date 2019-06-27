@@ -133,7 +133,7 @@ public partial class CardHandler : MonoBehaviour {
                 CardInfoOnDrag.instance.ActiveCrossHair(false);
             return;
         }
-        if (transform.localPosition.y > 4750) {
+        if (transform.position.y > -3.5) {
             if (!pointOnFeild) {
                 pointOnFeild = true;
                 transform.localScale = new Vector3(0, 0, 0);
@@ -228,6 +228,7 @@ public partial class CardHandler : MonoBehaviour {
     }
 
     public void OpenCardInfoList() {
+        if (heroCardActivate) return;
         if (PlayMangement.movingCard != null) return;
         if (PlayMangement.instance.isMulligan && transform.parent.name == "FirstDrawParent") {
             clm.OpenMulliganCardList(transform.GetSiblingIndex() - 5);
@@ -322,5 +323,28 @@ public partial class CardHandler : MonoBehaviour {
         else
             transform.localPosition = new Vector3(0, 4500, 0);
         mousLocalPos.position = transform.position;
+    }
+}
+
+//영웅 카드
+public partial class CardHandler : MonoBehaviour {
+
+    protected GameObject heroCardInfo;
+    public bool heroCardActivate = false;
+    public void DrawHeroCard(SocketFormat.Card data) {
+        DrawCard(data.id, data.itemId);
+        heroCardInfo = clm.AddHeroCardInfo(cardData);
+        gameObject.GetComponent<MagicDragHandler>().skillHandler = new SkillHandler();
+        gameObject.GetComponent<MagicDragHandler>().skillHandler.Initialize(data.skills, gameObject, true);
+        heroCardInfo.transform.SetParent(transform);
+        heroCardInfo.SetActive(true);
+        heroCardInfo.transform.rotation = transform.rotation;
+        heroCardInfo.transform.position = transform.position;
+        heroCardActivate = true;
+    }
+
+    public IEnumerator ActiveHeroCard() {
+        while (heroCardActivate)
+            yield return new WaitForSeconds(0.1f);
     }
 }
