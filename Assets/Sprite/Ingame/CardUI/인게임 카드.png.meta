@@ -64,7 +64,7 @@ TextureImporter:
     second: class_mana
   - first:
       213: 3565961466000394265
-    second: class_pusuit
+    second: class_pursuit
   - first:
       213: -7039752655850412869
     second: icon_attack
@@ -671,7 +671,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: class_pusuit
+      name: class_pursuit
       rect:
         serializedVersion: 2
         x: 801

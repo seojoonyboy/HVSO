@@ -66,17 +66,25 @@ public partial class CardHandler : MonoBehaviour {
     public virtual void DrawCard(string ID, int itemID = -1, bool first = false) {
         cardDataPackage = AccountManager.Instance.cardPackage;
         cardID = ID;
+
         //cardID = "ac10002";    //테스트 코드
         this.itemID = itemID;
         if (cardDataPackage.data.ContainsKey(cardID)) {
             cardData = cardDataPackage.data[cardID];
-            transform.Find("Portrait").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardPortraite[cardID];
+
+            Sprite portraitImage = null;
+            if (AccountManager.Instance.resource.cardPortraite.ContainsKey(cardID)) portraitImage = AccountManager.Instance.resource.cardPortraite[cardID];
+            else portraitImage = AccountManager.Instance.resource.cardPortraite["default"];
+
+            transform.Find("Portrait").GetComponent<Image>().sprite = portraitImage;
             transform.Find("BackGround").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground[cardData.type + "_" + cardData.rarelity];
-            skeleton = AccountManager.Instance.resource.cardSkeleton[cardID];
+
+            if(AccountManager.Instance.resource.cardSkeleton.ContainsKey("cardID")) skeleton = AccountManager.Instance.resource.cardSkeleton[cardID];
         }
         else
             Logger.Log("NoData");
         if (cardData.type == "unit") {
+            Logger.Log(cardData.name);
             transform.Find("Health/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.hp.ToString();
             transform.Find("attack/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.attack.ToString();
         }
