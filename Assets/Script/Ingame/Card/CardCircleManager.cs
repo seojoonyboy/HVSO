@@ -71,6 +71,10 @@ public class CardCircleManager : MonoBehaviour {
         finBtn.gameObject.SetActive(false);
     }
 
+    public Transform GetcardStorage() {
+        return cardStorage;
+    }
+
     public void AddInfoToList(GameObject card, bool isMulligan = false) {
         if (isMulligan)
             clm.SendMulliganInfo();

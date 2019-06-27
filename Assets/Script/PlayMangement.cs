@@ -22,7 +22,7 @@ public partial class PlayMangement : MonoBehaviour {
     public GameObject onCanvasPosGroup;
     public EffectManager effectManager;
     public SpineEffectManager spineEffectManager;
-
+    public CardCircleManager cardCircleManager;
 
     public GameObject baseUnit;
     private int turn = 0;
