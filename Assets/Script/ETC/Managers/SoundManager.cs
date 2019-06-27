@@ -26,7 +26,10 @@ public class SoundManager : SerializedMonoBehaviour {
     }
 
     public void PlaySound(SoundType type) {
-        Logger.Log(type);
+        if (!sounds.ContainsKey(type) || sounds[type] == null) {
+            Logger.LogError(string.Format("{0}에 대한 음원을 찾을 수 없습니다.", type));
+            return;
+        }
         sounds[type].Play();
     }
 }
