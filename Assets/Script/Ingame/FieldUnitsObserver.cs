@@ -34,7 +34,7 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
     public virtual bool CheckUnitPosition(int col, int row) {
         bool check = false;
 
-        if (units[col, row] == null)
+        if (units[col, row] != null)
             check = true;
         else
             check = false;
