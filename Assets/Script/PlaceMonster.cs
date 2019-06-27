@@ -361,6 +361,7 @@ public class PlaceMonster : MonoBehaviour {
 
     public void RequestChangeStat(int power = 0, int hp = 0) {
         unit.attack += power;
+        if (unit.attack < 0) unit.attack = 0;
         unit.currentHP += hp;
         UpdateStat();
     }
