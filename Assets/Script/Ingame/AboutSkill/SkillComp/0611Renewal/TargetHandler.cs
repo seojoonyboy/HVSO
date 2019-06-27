@@ -453,13 +453,13 @@ namespace TargetModules {
                 PlayMangement.instance.OnBlockPanel("상대가 위치를 지정중입니다.");
                 var list = PlayMangement.instance.socketHandler.unitSkillList;
                 yield return list.WaitNext();
-                int itemId = list.Dequeue();
-                var monList = server.gameState.map.allMonster;
-                SocketFormat.Unit unit = monList.Find(x => x.itemId == itemId);
-                if(unit == null) {
+                if(list.Count == 0) {
                     failedCallback("상대가 위치 지정에 실패했습니다.");
                     yield break;
                 }
+                int itemId = list.Dequeue();
+                var monList = server.gameState.map.allMonster;
+                SocketFormat.Unit unit = monList.Find(x => x.itemId == itemId);
                 //2. 밝혀줘야할 select 부분 찾기
                 Pos movePos = unit.pos;
                 Terrain[] terrains = FindObjectsOfType<Terrain>();
@@ -485,7 +485,7 @@ namespace TargetModules {
                 
                 //5. 실제 effect 실행하러 보내기
                 Transform selectedTarget = PlayMangement.instance
-                            .PlayerUnitsObserver
+                            .EnemyUnitsObserver
                             .transform
                             .GetChild(movePos.row)
                             .GetChild(movePos.col)

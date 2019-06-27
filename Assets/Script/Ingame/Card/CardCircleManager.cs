@@ -71,6 +71,10 @@ public class CardCircleManager : MonoBehaviour {
         finBtn.gameObject.SetActive(false);
     }
 
+    public Transform GetcardStorage() {
+        return cardStorage;
+    }
+
     public void AddInfoToList(GameObject card, bool isMulligan = false, bool isHero = false) {
         if (isHero) {
             clm.AddHeroCardInfo(card);
@@ -157,7 +161,7 @@ public class CardCircleManager : MonoBehaviour {
 
     public IEnumerator SendMultipleCard(SocketFormat.Card[] cardData) {
         isMultiple = true;
-        for (int i = 0; i < cardData.Length; i++) {
+        for (int i = cardNum; i < cardData.Length; i++) {
             if (cardNum + 1 == 11) break;
             PlayMangement.dragable = false;
             GameObject card;

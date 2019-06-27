@@ -248,6 +248,7 @@ public partial class BattleConnector : MonoBehaviour {
     public void begin_orc_post_turn(object args) {
         //Logger.Log("WebSocket State : begin_orc_post_turn");
         checkMyTurn(false);
+        unitSkillList.isDone = false;
         //DebugSocketData.CheckMapPosition(gameState);
     }
 
@@ -258,9 +259,10 @@ public partial class BattleConnector : MonoBehaviour {
     public void end_orc_post_turn(object args) {
         //Logger.Log("WebSocket State : end_orc_post_turn");
         useCardList.isDone = true;
+        unitSkillList.isDone = true;
     }
 
-    public void skill_activate(object args) {
+    public void skill_activated(object args) {
         if(PlayMangement.instance.enemyPlayer.isHuman) return;
         var json = (JObject)args;
         int itemId = int.Parse(json["itemId"].ToString());

@@ -109,15 +109,14 @@ namespace SkillModules {
         public supply() : base() { }
 
         public override void Execute(object data) {
-            try {
-                int drawNum = 0;
-                int.TryParse((string)args[0], out drawNum);
-                int itemId = skillHandler.myObject.GetComponent<MagicDragHandler>().itemID;
+            int drawNum = 0;
+            int.TryParse((string)args[0], out drawNum);
+            int itemId = skillHandler.myObject.GetComponent<MagicDragHandler>().itemID;
+            if(skillHandler.isPlayer)
                 PlayMangement.instance.SocketHandler.DrawNewCards(drawNum, itemId);
-            }
-            catch(FormatException ex) {
-                ShowFormatErrorLog("supply");
-            }
+            else
+                PlayMangement.instance.StartCoroutine(PlayMangement.instance.EnemyMagicCardDraw(drawNum));
+
             skillHandler.isDone = true;
         }
     }
@@ -457,12 +456,20 @@ namespace SkillModules {
                             break;
                         }
                     }
+                    //server에서 사라진 유닛을 찾는다.
                     if(!found) {
                         var selectedUnitPos = enemyObserver.GetMyPos(selectedUnit);
                         UnityEngine.Object.Destroy(selectedUnit);
                         enemyObserver.UnitRemoved(selectedUnitPos.col, selectedUnitPos.row);
-                        
-                        MakeEnemyUnitToCard();
+
+                        //내 유닛이 사라진 경우
+                        if (mondata.isPlayer) {
+                            MakeMyUnitToCard(mondata);
+                        }
+                        //적 유닛이 사라진 경우
+                        else {
+                            MakeEnemyUnitToCard();
+                        }
                     }
                 }
             }
@@ -474,10 +481,10 @@ namespace SkillModules {
         private bool IsEnemyExist(bool isPlayer) {
             FieldUnitsObserver observer;
             if (isPlayer) {
-                observer = enemyObserver;
+                observer = playerObserver;
             }
             else {
-                observer = playerObserver;
+                observer = enemyObserver;
             }
             var selectedUnits = observer.GetAllFieldUnits();
             return selectedUnits.Count != 0;
@@ -491,6 +498,19 @@ namespace SkillModules {
             enemyCard.transform.localScale = new Vector3(1, 1, 1);
             enemyCard.transform.localPosition = new Vector3(0, 0, 0);
             enemyCard.SetActive(true);
+        }
+
+        private void MakeMyUnitToCard(PlaceMonster placeMonster) {
+            PlayMangement playMangement = PlayMangement.instance;
+            Transform cardStorage = playMangement.cardCircleManager.GetcardStorage();
+            GameObject card = cardStorage.Find("UnitCards").GetChild(0).gameObject;
+
+            //카드가 꽉 차 있는 경우 날라감.
+            var id = placeMonster.unit.id;
+            var itemId = placeMonster.itemId;
+
+            card.GetComponent<CardHandler>().DrawCard(id, itemId);
+            playMangement.cardCircleManager.AddCard(card);
         }
     }
 
