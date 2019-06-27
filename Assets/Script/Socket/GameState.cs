@@ -106,7 +106,7 @@ namespace SocketFormat {
 
     public class Unit : Card {
         public int currentHp;
-        public Pos pos { get; }
+        public Pos pos { get{ return GetPos();} }
 
         private Pos GetPos() {
             Pos pos = new Pos();
