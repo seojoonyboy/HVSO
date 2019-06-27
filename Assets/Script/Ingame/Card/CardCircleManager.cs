@@ -306,7 +306,10 @@ public class CardCircleManager : MonoBehaviour {
         card.transform.position = beforeCardObject.transform.position;
         card.transform.localScale = beforeCardObject.transform.localScale;
         card.transform.rotation = beforeCardObject.transform.rotation;
-        beforeCardObject.transform.SetParent(cardStorage.Find("UnitCards"));
+        if(beforeCardObject.name == "UnitCard")
+            beforeCardObject.transform.SetParent(cardStorage.Find("UnitCards"));
+        else
+            beforeCardObject.transform.SetParent(cardStorage.Find("MagicCards"));
         beforeCardObject.transform.localPosition = Vector3.zero;
         beforeCardObject.transform.eulerAngles = Vector3.zero;
         beforeCardObject.SetActive(false);
