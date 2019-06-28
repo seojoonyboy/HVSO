@@ -25,6 +25,11 @@ public partial class AccountManager : Singleton<AccountManager> {
     NetworkManager networkManager;
     GameObject loadingModal;
 
+    string nickName;
+    public string NickName {
+        get { return nickName; }
+    }
+
     private void Awake() {
         Application.targetFrameRate = 60;
         DontDestroyOnLoad(gameObject);
@@ -210,6 +215,8 @@ public partial class AccountManager {
         myCards = userData.cardInventories;
         SetHeroInventories(userData.heroInventories);
         SetCardData();
+
+        nickName = userData.nickName;
     }
 }
 
