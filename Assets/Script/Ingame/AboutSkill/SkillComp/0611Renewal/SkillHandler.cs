@@ -143,15 +143,18 @@ namespace SkillModules {
             BattleConnector connector = PlayMangement.instance.socketHandler;
             MessageFormat format = MessageForm(true);
             connector.UseCard(format);
-            if(myObject.GetComponent<MagicDragHandler>() != null) {
-                int cardIndex = myObject.transform.parent.GetSiblingIndex();
-                PlayMangement.instance.player.cdpm.DestroyCard(cardIndex);
-                if(PlayMangement.instance.player.isHuman)
-                    PlayMangement.instance.player.ActivePlayer();
-                else
-                    PlayMangement.instance.player.ActiveOrcTurn();
-                myObject.GetComponent<MagicDragHandler>().CARDUSED = true;
-                myObject.GetComponent<MagicDragHandler>().heroCardActivate = false;
+            MagicDragHandler magic = myObject.GetComponent<MagicDragHandler>();
+            if(magic != null) {
+                if(!magic.heroCardActivate) {
+                    int cardIndex = myObject.transform.parent.GetSiblingIndex();
+                    PlayMangement.instance.player.cdpm.DestroyCard(cardIndex);
+                    if(PlayMangement.instance.player.isHuman)
+                        PlayMangement.instance.player.ActivePlayer();
+                    else
+                        PlayMangement.instance.player.ActiveOrcTurn();
+                }
+                magic.CARDUSED = true;
+                magic.heroCardActivate = false;
                 RemoveTriggerEvent();
             }
         }
