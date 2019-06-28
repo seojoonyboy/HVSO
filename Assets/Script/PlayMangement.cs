@@ -246,6 +246,7 @@ public partial class PlayMangement : MonoBehaviour {
         yield return EnemySettingTarget(history.targets[0], magicCard);
         //실제 카드 사용
         object[] parms = new object[] { false, card };
+        yield return StartCoroutine(cardCircleManager.ShowUsedMagicCard(100, card));
         EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
         yield return new WaitForSeconds(2f);
         //카드 파괴

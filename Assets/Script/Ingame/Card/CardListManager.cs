@@ -28,7 +28,7 @@ public class CardListManager : MonoBehaviour
         handCardInfo = transform.Find("HandCardInfo");
     }
 
-    public virtual void AddCardInfo(CardData data, string id) {
+    public virtual void AddCardInfo(CardData data) {
         GameObject newcard = standbyInfo.GetChild(0).gameObject;
         newcard.SetActive(true);
         SetCardInfo(newcard, data);
@@ -41,6 +41,13 @@ public class CardListManager : MonoBehaviour
         info.transform.position = Vector3.zero;
         info.transform.localScale = new Vector3(1, 1, 1);
         info.SetActive(false);
+    }
+
+    public void SetEnemyMagicCardInfo(CardData data) {
+        GameObject newcard = standbyInfo.GetChild(0).gameObject;
+        newcard.SetActive(true);
+        SetCardInfo(newcard, data);
+        newcard.transform.localScale = new Vector3(0.8f, 0.8f, 1);
     }
 
     public virtual void AddMulliganCardInfo(CardData data, string id, int changeNum = 100) {
@@ -102,6 +109,7 @@ public class CardListManager : MonoBehaviour
 
     public void RemoveCardInfo(int index) {
         GameObject remove = handCardInfo.GetChild(index).gameObject;
+        remove.transform.localScale = new Vector3(1, 1, 1);
         remove.transform.SetParent(standbyInfo);
         remove.SetActive(false);
     }
@@ -114,10 +122,13 @@ public class CardListManager : MonoBehaviour
         remove.gameObject.SetActive(false);
     }
 
-    public void OpenCardInfo(int cardnum) {
+    public void OpenCardInfo(int cardnum, bool showMagic = false) {
         PlayMangement.instance.infoOn = true;
-        transform.GetComponent<Image>().enabled = true;
-        //handCardInfo.gameObject.SetActive(true);
+        if (!showMagic)
+            transform.GetComponent<Image>().enabled = true;
+        else {
+            handCardInfo.GetChild(cardnum).transform.localScale = new Vector3(0.8f, 0.8f, 1);
+        }
         handCardInfo.GetChild(cardnum).gameObject.SetActive(true);
     }
 

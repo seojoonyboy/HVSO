@@ -118,7 +118,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
             //foreach (MagicalCasting ability in abilities) ability.RequestUseMagic();
             PlayMangement.instance.player.resource.Value -= cardData.cost;
             object[] parms = new object[] { true, gameObject };
-            PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
+            StartCoroutine(UseSkillCard(parms));
             //if (GetComponents<Ability>() == null) UseCard();
         }
         highlighted = false;
@@ -132,5 +132,11 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         }
         CardDropManager.Instance.HideMagicSlot();
         CardInfoOnDrag.instance.OffCardDragInfo();
+    }
+
+    IEnumerator UseSkillCard(object[] parms) {
+        PlayMangement.dragable = false;
+        yield return StartCoroutine(PlayMangement.instance.cardCircleManager.ShowUsedMagicCard(transform.parent.GetSiblingIndex()));
+        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
     }
 }
