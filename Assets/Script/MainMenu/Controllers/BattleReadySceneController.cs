@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Bolt;
 using System;
+using TMPro;
 
 public class BattleReadySceneController : MonoBehaviour {
     public Toggle[] battleTypeToggles;
@@ -23,6 +24,8 @@ public class BattleReadySceneController : MonoBehaviour {
     public HumanDecks humanDecks;
     public OrcDecks orcDecks;
     bool isIngameButtonClicked;
+
+    [SerializeField] TextMeshProUGUI pageText;
 
     IEnumerator Start() {
         yield return null;
