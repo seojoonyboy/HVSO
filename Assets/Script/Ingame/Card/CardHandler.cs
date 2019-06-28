@@ -87,6 +87,17 @@ public partial class CardHandler : MonoBehaviour {
             Logger.Log(cardData.name);
             transform.Find("Health/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.hp.ToString();
             transform.Find("attack/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.attack.ToString();
+            if (cardData.attributes.Length == 0 && cardData.attackTypes.Length == 0)
+                transform.Find("SkillIcon").gameObject.SetActive(false);
+            else {
+                transform.Find("SkillIcon").gameObject.SetActive(true);
+                if (cardData.attributes.Length != 0)
+                    transform.Find("SkillIcon").GetComponent<Image>().sprite = AccountManager.Instance.resource.skillIcons[cardData.attributes[0]];
+                if (cardData.attackTypes.Length != 0)
+                    transform.Find("SkillIcon").GetComponent<Image>().sprite = AccountManager.Instance.resource.skillIcons[cardData.attackTypes[0]];
+                if (cardData.attributes.Length != 0 && cardData.attackTypes.Length != 0)
+                    transform.Find("SkillIcon").GetComponent<Image>().sprite = AccountManager.Instance.resource.skillIcons["complex"];
+            }
         }
         transform.Find("Cost/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.cost.ToString();
         transform.Find("Class").GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[cardData.class_1];
