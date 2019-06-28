@@ -32,6 +32,41 @@ repeat: none
   orig: 302, 122
   offset: 0, 0
   index: -1
+L_eye
+  rotate: false
+  xy: 904, 162
+  size: 62, 91
+  orig: 62, 91
+  offset: 0, 0
+  index: -1
+L_eye_2
+  rotate: false
+  xy: 966, 208
+  size: 30, 45
+  orig: 30, 45
+  offset: 0, 0
+  index: -1
+R_eye
+  rotate: false
+  xy: 297, 40
+  size: 62, 91
+  orig: 62, 91
+  offset: 0, 0
+  index: -1
+R_eye_2
+  rotate: false
+  xy: 359, 86
+  size: 30, 45
+  orig: 30, 45
+  offset: 0, 0
+  index: -1
+ac_1
+  rotate: true
+  xy: 845, 16
+  size: 132, 50
+  orig: 132, 50
+  offset: 0, 0
+  index: -1
 shadow
   rotate: false
   xy: 0, 147

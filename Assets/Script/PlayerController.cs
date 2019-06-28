@@ -60,6 +60,10 @@ public class PlayerController : MonoBehaviour
         costText = playerUI.transform.Find("PlayerResource").GetChild(0).Find("Text").GetComponent<TextMeshProUGUI>();
         HPText = playerUI.transform.Find("PlayerHealth/HealthText").GetComponent<TextMeshProUGUI>();
         shieldGauge = playerUI.transform.Find("PlayerHealth/Helth&Shield/SheildGauge").GetComponent<Image>();
+        if (isHuman)
+            playerUI.transform.Find("PlayerHealth/Flag/Human").gameObject.SetActive(true);
+        else
+            playerUI.transform.Find("PlayerHealth/Flag/Orc").gameObject.SetActive(true);
 
         if (isPlayer) {
             buttonParticle = playerUI.transform.Find("TurnUI/ResourceOut").gameObject;

@@ -617,7 +617,7 @@ PlayerSettings:
   webGLWasmStreaming: 0
   scriptingDefineSymbols:
     4: ODIN_INSPECTOR
-    7: ODIN_INSPECTOR
+    7: ODIN_INSPECTOR;ENABLE_LOG
   platformArchitecture: {}
   scriptingBackend: {}
   il2cppCompilerConfiguration: {}

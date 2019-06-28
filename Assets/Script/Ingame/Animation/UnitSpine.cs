@@ -46,7 +46,9 @@ public class UnitSpine : MonoBehaviour
     public UnityAction takeMagicCallback;
     
     public GameObject arrow;
-
+    public GameObject hidingObject;
+    protected HideUnit hideUnit;
+    
     public SkeletonAnimation GetSkeleton {
         get { return skeletonAnimation; }
     }
@@ -67,10 +69,6 @@ public class UnitSpine : MonoBehaviour
         spineAnimationState = skeletonAnimation.AnimationState;
         spineAnimationState.Event += AnimationEvent;
         skeleton = skeletonAnimation.Skeleton;
-        
-
-        
-
 
         if(arrow != null && transform.parent.GetComponent<PlaceMonster>().isPlayer == true) {
             if (rangeUpAttackName != "")
@@ -162,7 +160,4 @@ public class UnitSpine : MonoBehaviour
             transform.parent.Find("ATK").gameObject.SetActive(true);
         }
     }
-
-
-
 }

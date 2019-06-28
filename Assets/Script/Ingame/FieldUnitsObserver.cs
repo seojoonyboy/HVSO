@@ -93,14 +93,14 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
     /// <param name="row">row</param>
     /// <returns></returns>
     public List<GameObject> GetAllFieldUnits(int col) {
-        Debug.Log("라인 검사 : " + col);
+        //Debug.Log("라인 검사 : " + col);
         List<GameObject> _units = new List<GameObject>();
         for (int i = 0; i < 2; i++) {
             if (units[col, i] != null) {
                 _units.Add(units[col, i]);
             }
         }
-        Debug.Log("라인 검사 결과 : " + _units.Count);
+        //Debug.Log("라인 검사 결과 : " + _units.Count);
         return _units;
     }
 
