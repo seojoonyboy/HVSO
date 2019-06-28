@@ -646,6 +646,18 @@ public partial class PlayMangement : MonoBehaviour {
     public IEnumerator WaitShieldDone() {
         do {
             yield return new WaitForFixedUpdate();
+            //스킬 사용
+            if(socketHandler.useCardList.Count != 0) {
+                SocketFormat.GameState state = socketHandler.getHistory();
+                SocketFormat.PlayHistory history = state.lastUse;
+                if (history != null) {
+                    GameObject summonedMagic = SummonMagic(history);
+                    summonedMagic.GetComponent<MagicDragHandler>().isPlayer = false;
+                    yield return MagicActivate(summonedMagic, history);
+                    SocketFormat.DebugSocketData.SummonCardData(history);
+                    yield return new WaitForSeconds(1f);
+                }
+            }
         } while (heroShieldActive);
     }
 }
