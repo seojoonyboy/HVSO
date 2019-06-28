@@ -1693,6 +1693,24 @@ MonoBehaviour:
     - {fileID: -9216420580574044333, guid: d64029a42f343c942a2dcbf3f11c6797, type: 3}
     - {fileID: 1014161593673654987, guid: 3f7dbfa56e06bce44b49b84168bedfe4, type: 3}
     - {fileID: -981367173463900617, guid: 3f7dbfa56e06bce44b49b84168bedfe4, type: 3}
+    - {fileID: 2790159024041346953, guid: 400f1c7de344fe9438a213b082c592bc, type: 3}
+    - {fileID: -6056920874341258176, guid: 400f1c7de344fe9438a213b082c592bc, type: 3}
+    - {fileID: -4011968791078693734, guid: 400f1c7de344fe9438a213b082c592bc, type: 3}
+    - {fileID: -1220476264531782571, guid: 400f1c7de344fe9438a213b082c592bc, type: 3}
+    - {fileID: -8608003354645596657, guid: 400f1c7de344fe9438a213b082c592bc, type: 3}
+    - {fileID: 5831142595408258875, guid: 400f1c7de344fe9438a213b082c592bc, type: 3}
+    - {fileID: 9061679618981072024, guid: 400f1c7de344fe9438a213b082c592bc, type: 3}
+    - {fileID: -189913307122232228, guid: 400f1c7de344fe9438a213b082c592bc, type: 3}
+    - {fileID: 6133489624935533803, guid: 400f1c7de344fe9438a213b082c592bc, type: 3}
+    - {fileID: -5054731605400218615, guid: 400f1c7de344fe9438a213b082c592bc, type: 3}
+    - {fileID: -6924724321647304355, guid: 400f1c7de344fe9438a213b082c592bc, type: 3}
+    - {fileID: 4459034281331083381, guid: 400f1c7de344fe9438a213b082c592bc, type: 3}
+    - {fileID: 8294449701062637524, guid: 400f1c7de344fe9438a213b082c592bc, type: 3}
+    - {fileID: 2498508233385234254, guid: 400f1c7de344fe9438a213b082c592bc, type: 3}
+    - {fileID: 5852064159504831964, guid: 400f1c7de344fe9438a213b082c592bc, type: 3}
+    - {fileID: 2090249059330572870, guid: 400f1c7de344fe9438a213b082c592bc, type: 3}
+    - {fileID: 2089563141439395132, guid: 400f1c7de344fe9438a213b082c592bc, type: 3}
+    - {fileID: -6393710090423158087, guid: 400f1c7de344fe9438a213b082c592bc, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -4419,6 +4437,254 @@ MonoBehaviour:
     - Name: $v
       Entry: 10
       Data: 147
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: skillIcons
+      Entry: 7
+      Data: 22|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
+        UnityEngine.CoreModule]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 23|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 19
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ambush
+    - Name: $v
+      Entry: 10
+      Data: 148
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: assault
+    - Name: $v
+      Entry: 10
+      Data: 149
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: burst
+    - Name: $v
+      Entry: 10
+      Data: 150
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: chain
+    - Name: $v
+      Entry: 10
+      Data: 151
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: charge
+    - Name: $v
+      Entry: 10
+      Data: 152
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: chase
+    - Name: $v
+      Entry: 10
+      Data: 153
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: double
+    - Name: $v
+      Entry: 10
+      Data: 154
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: footslog
+    - Name: $v
+      Entry: 10
+      Data: 155
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: fusion
+    - Name: $v
+      Entry: 10
+      Data: 156
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: nightaction
+    - Name: $v
+      Entry: 10
+      Data: 157
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: pillage
+    - Name: $v
+      Entry: 10
+      Data: 158
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: poison
+    - Name: $v
+      Entry: 10
+      Data: 159
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: prestrike
+    - Name: $v
+      Entry: 10
+      Data: 160
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: protect
+    - Name: $v
+      Entry: 10
+      Data: 161
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: steelskin
+    - Name: $v
+      Entry: 10
+      Data: 162
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: stun
+    - Name: $v
+      Entry: 10
+      Data: 163
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: supremacy
+    - Name: $v
+      Entry: 10
+      Data: 164
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: through
+    - Name: $v
+      Entry: 10
+      Data: 165
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: complex
+    - Name: $v
+      Entry: 10
+      Data: 156
     - Name: 
       Entry: 8
       Data: 

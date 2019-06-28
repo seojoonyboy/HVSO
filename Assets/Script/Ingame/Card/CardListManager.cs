@@ -185,6 +185,28 @@ public class CardListManager : MonoBehaviour
 
         info.Find("Class").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["class_" + data.class_1];
         info.Find("Class/Icon").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["class_icon_" + data.class_1];
+
+        if(data.type == "unit") {
+            if (data.attackTypes.Length == 0 && data.attributes.Length == 0) {
+                info.Find("SkillIcon1").gameObject.SetActive(false);
+                info.Find("SkillIcon2").gameObject.SetActive(false);
+            }
+            else {
+                info.Find("SkillIcon1").gameObject.SetActive(true);
+                if (data.attackTypes.Length != 0)
+                    info.Find("SkillIcon1").GetComponent<Image>().sprite = AccountManager.Instance.resource.skillIcons[data.attackTypes[0]];
+                if (data.attributes.Length != 0)
+                    info.Find("SkillIcon1").GetComponent<Image>().sprite = AccountManager.Instance.resource.skillIcons[data.attributes[0]];
+                if (data.attackTypes.Length != 0 && data.attributes.Length != 0) {
+                    info.Find("SkillIcon2").gameObject.SetActive(true);
+                    info.Find("SkillIcon2").GetComponent<Image>().sprite = AccountManager.Instance.resource.skillIcons[data.attackTypes[0]];
+                }
+            }
+        }
+        else {
+            info.Find("SkillIcon1").gameObject.SetActive(false);
+            info.Find("SkillIcon2").gameObject.SetActive(false);
+        }
         //if (data.class_2 == null)
         //    obj.transform.GetChild(2).gameObject.SetActive(false);
         //else {
