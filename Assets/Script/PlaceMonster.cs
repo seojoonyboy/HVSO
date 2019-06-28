@@ -26,6 +26,7 @@ public class PlaceMonster : MonoBehaviour {
     protected delegate void TimeUpdate(float time);
     protected TimeUpdate timeUpdate;
     public UnitSpine unitSpine;
+    public HideUnit hideSpine;
 
     protected float currentTime;
     protected bool instanceAttack = false;
@@ -40,6 +41,7 @@ public class PlaceMonster : MonoBehaviour {
         ATTACK,
         HIT,
         MAGICHIT,
+        DETECT,
         DEAD
     };
 
@@ -117,8 +119,31 @@ public class PlaceMonster : MonoBehaviour {
             unit.ishuman = (PlayMangement.instance.enemyPlayer.isHuman == true) ? true : false;
 
         myUnitNum = PlayMangement.instance.unitNum++;
+
+        if(unitSpine.hidingObject != null) {
+            GameObject hid = Instantiate(unitSpine.hidingObject, transform);
+            hid.transform.position = gameObject.transform.position;
+            hideSpine = hid.GetComponent<HideUnit>();
+            hideSpine.unitSpine = unitSpine;
+            hideSpine.Init();
+        }
         UpdateStat();
     }
+
+    public void HideUnit() {        
+        transform.Find("HP").gameObject.SetActive(false);
+        transform.Find("ATK").gameObject.SetActive(false);
+        unitSpine.gameObject.SetActive(false);
+        hideSpine.gameObject.SetActive(true);
+        hideSpine.Appear();
+    }
+
+    public void DetectUnit() {
+        transform.Find("HP").gameObject.SetActive(true);
+        transform.Find("ATK").gameObject.SetActive(true);
+        SetState(UnitState.DETECT);
+    }
+
 
     public void SpawnUnit() {
         SetState(UnitState.APPEAR);
@@ -473,8 +498,12 @@ public class PlaceMonster : MonoBehaviour {
             case UnitState.APPEAR:
                 unitSpine.Appear();
                 break;
-            case UnitState.IDLE:
-                unitSpine.Idle();
+            case UnitState.IDLE: {
+                    if (unitSpine.enabled == true)
+                        unitSpine.Idle();
+                    else
+                        hideSpine.Idle();
+                }
                 break;
             case UnitState.ATTACK:
                 unitSpine.Attack();
@@ -484,6 +513,9 @@ public class PlaceMonster : MonoBehaviour {
                 break;
             case UnitState.MAGICHIT:
                 unitSpine.MagicHit();
+                break;
+            case UnitState.DETECT:
+                hideSpine.Disappear();
                 break;
             case UnitState.DEAD:
                 break;

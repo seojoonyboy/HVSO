@@ -9,7 +9,7 @@ public class ambush : MonoBehaviour {
     // Start is called before the first frame update
     void Start() {
         eventHandler = PlayMangement.instance.EventHandler;
-        GetComponent<PlaceMonster>().unitSpine.HideUnit();
+        GetComponent<PlaceMonster>().HideUnit();
 
         AddListener();
     }
@@ -24,7 +24,7 @@ public class ambush : MonoBehaviour {
         //if (debugManagement != null)
         //    GetComponent<DebugUnit>().unitSpine.DetectUnit();
         //else
-        GetComponent<PlaceMonster>().unitSpine.DetectUnit();
+        GetComponent<PlaceMonster>().DetectUnit();
         Destroy(GetComponent<ambush>());
     }
 
