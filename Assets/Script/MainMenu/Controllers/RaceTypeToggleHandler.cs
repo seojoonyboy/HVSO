@@ -244,11 +244,11 @@ public class RaceTypeToggleHandler : MonoBehaviour {
 
     public void OnDeckSelected(GameObject selectedDeck) {
         if(this.selectedDeck != null) {
-            this.selectedDeck.transform.Find("Outline").GetComponent<Image>().enabled = false;
-            this.selectedDeck.transform.Find("Shadow").GetComponent<Image>().enabled = true;
+            this.selectedDeck.transform.Find("Outline").gameObject.SetActive(false);
+            this.selectedDeck.transform.Find("Shadow").gameObject.SetActive(true);
         }
-        selectedDeck.transform.Find("Outline").GetComponent<Image>().enabled = true;
-        selectedDeck.transform.Find("Shadow").GetComponent<Image>().enabled = false;
+        selectedDeck.transform.Find("Outline").gameObject.SetActive(true);
+        selectedDeck.transform.Find("Shadow").gameObject.SetActive(false);
 
         LeaderDeckId = selectedDeck.transform.Find("Deck").GetComponent<StringIndex>().Id;
         this.selectedDeck = selectedDeck;
