@@ -153,6 +153,9 @@ namespace SkillModules {
                     else
                         PlayMangement.instance.player.ActiveOrcTurn();
                 }
+                else {
+                    PlayMangement.instance.player.cdpm.DestroyUsedHeroCard(myObject.transform);
+                }
                 magic.CARDUSED = true;
                 magic.heroCardActivate = false;
                 RemoveTriggerEvent();
