@@ -636,6 +636,7 @@ public partial class PlayMangement : MonoBehaviour {
             enemyCard.transform.localPosition = new Vector3(0, 0, 0);
             enemyCard.SetActive(true);
         }
+        yield return new WaitForSeconds(1f);
         if (isPlayer) socketHandler.TurnOver();
         yield return WaitShieldDone();
 

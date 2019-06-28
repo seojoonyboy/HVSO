@@ -309,6 +309,16 @@ public partial class BattleConnector : MonoBehaviour {
 
     public void end_shild_turn(object args) {
         //Logger.Log("WebSocket State : end_shild_turn");
+        StartCoroutine(waitSkillDone());
+    }
+
+    private IEnumerator waitSkillDone() {
+        MagicDragHandler[] list = Resources.FindObjectsOfTypeAll<MagicDragHandler>();
+        foreach(MagicDragHandler magic in list) {
+            if(!magic.skillHandler.finallyDone) {
+                yield return new WaitUntil(() => magic.skillHandler.finallyDone);
+            }
+        }
         PlayMangement.instance.heroShieldActive = false;
     }
 

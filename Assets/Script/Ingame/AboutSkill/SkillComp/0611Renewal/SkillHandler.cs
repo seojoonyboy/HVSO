@@ -18,6 +18,7 @@ namespace SkillModules {
         public bool isDone;
         public delegate bool DragFilter(GameObject TestObject);
         public DragFilter dragFiltering;
+        public bool finallyDone = true;
         
 
         string targetType;

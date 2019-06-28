@@ -282,7 +282,7 @@ namespace SkillModules {
                 bool isPlayer = (bool)tmp[0];
                 List<GameObject> targets = (List<GameObject>)tmp[1];
                 int amount = (int)tmp[2];
-
+                skillHandler.finallyDone = false;
                 BlastEnemy(isPlayer, targets, amount);
             }
             else {
@@ -302,6 +302,7 @@ namespace SkillModules {
         private async void WaitEffect(GameObject target, int amount) {
             await System.Threading.Tasks.Task.Delay(1500);
             target.GetComponent<PlaceMonster>().CheckHP();
+            skillHandler.finallyDone = true;
         }
     }
 
@@ -327,6 +328,7 @@ namespace SkillModules {
             // else {
             //     ShowFormatErrorLog("blast_enemy");
             // }
+            skillHandler.finallyDone = false;
             WaitDone();
             skillHandler.isDone = true;
         }
@@ -388,6 +390,7 @@ namespace SkillModules {
         private async void WaitEffect(GameObject target, int amount) {
             await System.Threading.Tasks.Task.Delay(1500);
             target.GetComponent<PlaceMonster>().CheckHP();
+            skillHandler.finallyDone = true;
         }
     }
 
@@ -410,7 +413,7 @@ namespace SkillModules {
                         playerObserver = PlayMangement.instance.EnemyUnitsObserver;
                         enemyObserver = PlayMangement.instance.PlayerUnitsObserver;
                     }
-
+                    skillHandler.finallyDone = false;
                     ReturnUnit(isPlayer);
                 }
                 catch (Exception ex) {
@@ -471,6 +474,7 @@ namespace SkillModules {
                     }
                 }
             }
+            skillHandler.finallyDone = true;
         }
 
         private void MakeEnemyUnitToCard() {
@@ -577,7 +581,8 @@ namespace SkillModules {
     public class summon_random : Ability {
         public summon_random() : base() { }
 
-        public override void Execute(object data) {          
+        public override void Execute(object data) {   
+            skillHandler.finallyDone = false;       
             WaitDone();
             skillHandler.isDone = true;
         }
@@ -617,6 +622,7 @@ namespace SkillModules {
                     }
                 }
             }
+            skillHandler.finallyDone = true;
         }
 
 
