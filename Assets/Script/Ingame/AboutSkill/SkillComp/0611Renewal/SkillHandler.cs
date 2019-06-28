@@ -15,9 +15,10 @@ namespace SkillModules {
         public object targetData;
         private List<IngameEventHandler.EVENT_TYPE> triggerList;
         public GameObject finalTarget;
-        public bool isDone;
+        public bool isDone = true;
         public delegate bool DragFilter(GameObject TestObject);
         public DragFilter dragFiltering;
+        public bool finallyDone = true;
         
 
         string targetType;
@@ -108,6 +109,7 @@ namespace SkillModules {
                 PlayMangement.instance.OffBlockPanel();
             }
             //유닛 소환이나 마법 카드 사용 했을 때
+            isDone = true;
             if(!isPlayer) yield break;
             if(isPlayingCard()) SendSocket();
             //TODO : field에서 select 발동 했을 때
@@ -150,6 +152,7 @@ namespace SkillModules {
                     PlayMangement.instance.player.ActiveOrcTurn();
                 myObject.GetComponent<MagicDragHandler>().CARDUSED = true;
                 myObject.GetComponent<MagicDragHandler>().heroCardActivate = false;
+                RemoveTriggerEvent();
             }
         }
 

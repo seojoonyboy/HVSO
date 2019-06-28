@@ -16,8 +16,6 @@ public class BattleReadySceneController : MonoBehaviour {
     RaceType raceType;
 
     List<GameObject> allDeckObjects = new List<GameObject>();
-    public GameObject selectedDeck { get; private set; }
-
     public GameObject CardListModal, CardInfoModal;
     GameObject loadingModal;
 
@@ -26,6 +24,8 @@ public class BattleReadySceneController : MonoBehaviour {
     bool isIngameButtonClicked;
 
     [SerializeField] TextMeshProUGUI pageText;
+    [SerializeField] public GameObject EmptyMsgShowPanel;
+    [SerializeField] public GameObject ButtonGlowEffect;
 
     IEnumerator Start() {
         yield return null;
@@ -35,6 +35,8 @@ public class BattleReadySceneController : MonoBehaviour {
 
     private void OnEnable() {
         ChangeBattleType(0);
+        Variables.Saved.Set("SelectedDeckId", "");
+        Variables.Saved.Set("SelectedRace", RaceType.NONE);
     }
 
     public void ChangePageText(string msg) {
@@ -69,10 +71,7 @@ public class BattleReadySceneController : MonoBehaviour {
         Destroy(loadingModal);
         if (response.responseCode == 200) {
             orcDecks = JsonReader.Read<OrcDecks>(response.data);
-
-            //battleTypeToggles[0].GetComponent<Toggle>().isOn = true;
-            //battleTypeToggles[0].GetComponent<ToggleHandler>().OnValueChanged();
-            raceTypeButtons[0].onClick.Invoke();
+            //raceTypeButtons[0].onClick.Invoke();
         }
         else {
             Modal.instantiate("데이터를 정상적으로 불러오지 못했습니다.\n다시 요청합니까?", Modal.Type.YESNO, () => {
@@ -81,41 +80,30 @@ public class BattleReadySceneController : MonoBehaviour {
         }
     }
 
-    void Update() {
-        if (Input.GetMouseButtonDown(0)) {
-            //GraphicRaycaster gr = this.GetComponent<GraphicRaycaster>();
-            //PointerEventData ped = new PointerEventData(null);
-            //ped.position = Input.mousePosition;
-            //List<RaycastResult> results = new List<RaycastResult>();
-            //gr.Raycast(ped, results);
-
-            //if (selectedDeck != null && isNoneDeckClicked(results)) {
-            //    OffClickDeck();
-            //}
-        }
-    }
-
-    private bool isNoneDeckClicked(List<RaycastResult> results) {
-        foreach(RaycastResult result in results) {
-            if(result.gameObject == selectedDeck){
-                return false;
-            }
-        }
-        return true;
-    }
-
     public void OnStartButton() {
-        SoundManager.Instance.PlaySound(SoundType.FIRST_TURN);
-
         if (isIngameButtonClicked) {
             Logger.Log("이미 대전 시작 버튼이 눌려진 상태");
             return;
         }
 
-        isIngameButtonClicked = true;
-        SceneManager.Instance.LoadScene(SceneManager.Scene.CONNECT_MATCHING_SCENE);
-        //SceneManager.Instance.LoadScene(SceneManager.Scene.MAIN_SCENE);
-        //SceneManager.Instance.LoadScene(SceneManager.Scene.MISSION_INGAME);
+        string race = Variables.Saved.Get("SelectedRace").ToString().ToLower();
+        string selectedDeckId = Variables.Saved.Get("SelectedDeckId").ToString().ToLower();
+        if (race != null && !string.IsNullOrEmpty(selectedDeckId)) {
+            isIngameButtonClicked = true;
+            SceneManager.Instance.LoadScene(SceneManager.Scene.CONNECT_MATCHING_SCENE);
+        }
+        else {
+            if (race == "none") Logger.Log("종족을 선택해야 합니다.");
+            if (string.IsNullOrEmpty(selectedDeckId)) Logger.Log("덱을 선택해야 합니다.");
+
+            if(race == "none") {
+                Modal.instantiate("종족을 선택해 주세요.", Modal.Type.CHECK);
+            }
+            else if(string.IsNullOrEmpty(selectedDeckId)) {
+                Modal.instantiate("덱을 선택해 주세요.", Modal.Type.CHECK);
+            }
+        }
+        SoundManager.Instance.PlaySound(SoundType.FIRST_TURN);
     }
 
     public void OnBackButton() {
@@ -138,12 +126,16 @@ public class BattleReadySceneController : MonoBehaviour {
         Variables.Saved.Set("SelectedRace", type);
         Logger.Log(type);
         raceType = type;
+
+        if (EmptyMsgShowPanel.activeSelf) EmptyMsgShowPanel.SetActive(false);
     }
 
     public void ChangeDeck(string deckId) {
         var msg = string.Format("{0} 선택됨", deckId);
         Logger.Log(msg);
         Variables.Saved.Set("SelectedDeckId", deckId);
+
+        ButtonGlowEffect.SetActive(true);
     }
 
     public void ChangeBattleType(int pageIndex) {
@@ -168,23 +160,12 @@ public class BattleReadySceneController : MonoBehaviour {
 
     public enum RaceType {
         HUMAN = 0,
-        ORC = 1
+        ORC = 1,
+        NONE = 2
     }
 
     public void OnClickModifyButton(GameObject target) {
 
-    }
-
-    public void OffClickDeck() {
-        if (selectedDeck != null) {
-            if (selectedDeck.GetComponent<BooleanIndex>().isOn) {
-                EasyTween itween = selectedDeck.transform.Find("Animations/OnClose").GetComponent<EasyTween>();
-                itween.OpenCloseObjectAnimation();
-
-                selectedDeck.GetComponent<BooleanIndex>().isOn = false;
-            }
-            selectedDeck = null;
-        }
     }
 
     public void OnClickCardListModal() {

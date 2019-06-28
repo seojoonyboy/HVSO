@@ -23,7 +23,7 @@ public class RaceTypeToggleHandler : MonoBehaviour {
     [SerializeField] GameObject AddDeckButtonPrefab;
 
     AccountManager accountManager;
-    int id;
+    int id = 1;
 
     //TODO : Server와 연동
     private string leaderDeckId;
@@ -164,10 +164,11 @@ public class RaceTypeToggleHandler : MonoBehaviour {
         MaxPageNum = pageNum;
 
         //TODO Server와 연동
-        LeaderDeckId = basicDecks[0].id;
 
         int item_index = 0;         //전체 Deck Index
         PageIndex = 0;
+        controller.ButtonGlowEffect.SetActive(false);
+        Bolt.Variables.Saved.Set("SelectedDeckId", "");
 
         GameObject lastPage = null;
         for (int i = 0; i < pageNum; i++) {
@@ -242,8 +243,13 @@ public class RaceTypeToggleHandler : MonoBehaviour {
     }
 
     public void OnDeckSelected(GameObject selectedDeck) {
-        this.selectedDeck.transform.Find("Outline").GetComponent<Image>().enabled = false;
+        if(this.selectedDeck != null) {
+            this.selectedDeck.transform.Find("Outline").GetComponent<Image>().enabled = false;
+            this.selectedDeck.transform.Find("Shadow").GetComponent<Image>().enabled = true;
+        }
         selectedDeck.transform.Find("Outline").GetComponent<Image>().enabled = true;
+        selectedDeck.transform.Find("Shadow").GetComponent<Image>().enabled = false;
+
         LeaderDeckId = selectedDeck.transform.Find("Deck").GetComponent<StringIndex>().Id;
         this.selectedDeck = selectedDeck;
     }
