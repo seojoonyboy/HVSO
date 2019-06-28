@@ -252,6 +252,7 @@ public partial class PlayMangement : MonoBehaviour {
         //카드 파괴
         card.transform.localScale = new Vector3(1, 1, 1);
         cardCircleManager.DestroyCard(card);
+        card.GetComponent<MagicDragHandler>().skillHandler.RemoveTriggerEvent();
     }
 
     private IEnumerator EnemySettingTarget(SocketFormat.Target target, MagicDragHandler magicHandler) {
@@ -900,7 +901,7 @@ public partial class PlayMangement {
             //turnTable.Find("ReleaseTurnButton/OrcTurnButtonImage").gameObject.SetActive(true);
         }
         for (int i = 0; i < 4; i++) {
-            turnTable.GetChild(7).position = canvas.transform.GetChild(2).GetChild(2).position;
+            turnTable.Find("TurnBoard").position = canvas.transform.GetChild(2).GetChild(2).position;
         }
         //turnIcon.gameObject.SetActive(true);
         //turnIcon.GetChild(0).gameObject.SetActive(true);

@@ -89,7 +89,8 @@ public partial class BattleConnector : MonoBehaviour {
 
     private IEnumerator showMessage(ReceiveFormat result) {
         yield return null;
-        Logger.Log(string.Format("메소드 : {0}, args : {1}, map : {2}", result.method, result.args, result.gameState != null ? result.gameState.map : null));
+        Logger.Log(string.Format("메소드 : {0}, args : {1}, map : {2}", result.method, result.args, 
+        result.gameState != null ? JsonConvert.SerializeObject(result.gameState.map) : null));
     }
 
     public void ClientReady() {
@@ -112,7 +113,7 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void TurnOver() {
-        SendMethod("turn_over");
+        StartCoroutine(waitSkillDone(() => {SendMethod("turn_over");}));
     }
 
     public void UseCard(object args, UnityAction callback = null) {
@@ -309,17 +310,27 @@ public partial class BattleConnector : MonoBehaviour {
 
     public void end_shild_turn(object args) {
         //Logger.Log("WebSocket State : end_shild_turn");
-        StartCoroutine(waitSkillDone());
+        StartCoroutine(waitSkillDone(() => {PlayMangement.instance.heroShieldActive = false;}));
     }
 
-    private IEnumerator waitSkillDone() {
+    private IEnumerator waitSkillDone(UnityAction callback) {
         MagicDragHandler[] list = Resources.FindObjectsOfTypeAll<MagicDragHandler>();
         foreach(MagicDragHandler magic in list) {
-            if(!magic.skillHandler.finallyDone) {
-                yield return new WaitUntil(() => magic.skillHandler.finallyDone);
+            if(magic.skillHandler == null) continue;
+            
+            if(!(magic.skillHandler.finallyDone && magic.skillHandler.isDone)) {
+                yield return new WaitUntil(() => magic.skillHandler.finallyDone && magic.skillHandler.isDone);
             }
         }
-        PlayMangement.instance.heroShieldActive = false;
+        PlaceMonster[] list2 = FindObjectsOfType<PlaceMonster>();
+        foreach(PlaceMonster unit in list2) {
+            if(unit.skillHandler == null) continue;
+            
+            if(!(unit.skillHandler.finallyDone && unit.skillHandler.isDone)) {
+                yield return new WaitUntil(() => unit.skillHandler.finallyDone && unit.skillHandler.isDone);
+            }
+        }
+        callback();
     }
 
     public void shild_guage(object args) {
