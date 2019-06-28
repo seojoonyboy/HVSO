@@ -315,8 +315,9 @@ public partial class BattleConnector : MonoBehaviour {
     private IEnumerator waitSkillDone() {
         MagicDragHandler[] list = Resources.FindObjectsOfTypeAll<MagicDragHandler>();
         foreach(MagicDragHandler magic in list) {
+            if(magic.skillHandler == null) continue;
             if(!magic.skillHandler.finallyDone) {
-                yield return new WaitUntil(() => magic.skillHandler.finallyDone);
+                yield return new WaitUntil(() => magic.skillHandler.finallyDone && magic.skillHandler.isDone);
             }
         }
         PlayMangement.instance.heroShieldActive = false;
