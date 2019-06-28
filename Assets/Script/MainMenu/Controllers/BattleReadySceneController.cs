@@ -37,6 +37,10 @@ public class BattleReadySceneController : MonoBehaviour {
         ChangeBattleType(0);
     }
 
+    public void ChangePageText(string msg) {
+        pageText.text = msg;
+    }
+
     public void DataLoad() {
         AccountManager.Instance.RequestHumanDecks(OnReqHumanDecks, OnRetryReq);
         loadingModal = LoadingModal.instantiate();

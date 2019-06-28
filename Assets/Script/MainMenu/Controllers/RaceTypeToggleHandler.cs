@@ -46,7 +46,9 @@ public class RaceTypeToggleHandler : MonoBehaviour {
             if (pageIndex < 0) pageIndex = 0;
             if (pageIndex > MaxPageNum) pageIndex = MaxPageNum;
 
-            Logger.Log(pageIndex);
+            var text = string.Format("{0}/{1}", PageIndex + 1, MaxPageNum);
+            controller.ChangePageText(text);
+            //Logger.Log(pageIndex);
         }
     }
 
