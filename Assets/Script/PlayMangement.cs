@@ -900,7 +900,7 @@ public partial class PlayMangement {
             //turnTable.Find("ReleaseTurnButton/OrcTurnButtonImage").gameObject.SetActive(true);
         }
         for (int i = 0; i < 4; i++) {
-            turnTable.GetChild(7).position = canvas.transform.GetChild(2).GetChild(2).position;
+            turnTable.Find("TurnBoard").position = canvas.transform.GetChild(2).GetChild(2).position;
         }
         //turnIcon.gameObject.SetActive(true);
         //turnIcon.GetChild(0).gameObject.SetActive(true);
