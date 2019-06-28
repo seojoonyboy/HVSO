@@ -16,6 +16,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
 
     public void OnBeginDrag(PointerEventData eventData) {
         if (heroCardActivate) {
+            heroCardInfo.SetActive(false);
             transform.localScale = Vector3.zero;
             if (cardData.skills.Length != 0)
                 CardInfoOnDrag.instance.SetCardDragInfo(null, mousLocalPos.localPosition, cardData.skills[0].desc);
@@ -75,6 +76,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
 
     public void OnEndDrag(PointerEventData eventData) {
         if (heroCardActivate) {
+            heroCardInfo.SetActive(true);
             transform.parent.SetSiblingIndex(parentIndex);
             if (transform.position.y < -3.5f) {
                 ListCircle.AddHeroCard(gameObject);
