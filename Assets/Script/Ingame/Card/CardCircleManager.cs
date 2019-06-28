@@ -149,7 +149,6 @@ public class CardCircleManager : MonoBehaviour {
         if (cardNum + 1 == 11) return;
         PlayMangement.dragable = false;
         AddInfoToList(cardobj.transform.Find("CardInfoWindow").gameObject, false, true);
-
         Transform cardTransform = cardobj.transform;
         Transform cardPos = transform.GetChild(cardNum).GetChild(0);
         cardTransform.GetComponent<CardHandler>().CARDINDEX = cardNum;

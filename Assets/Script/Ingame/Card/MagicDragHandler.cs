@@ -84,11 +84,10 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
                 CheckLocation(true);
                 cardUsed = false;
 
-                if (CheckMagicSlot() != null && PlayMangement.instance.player.resource.Value >= cardData.cost && isMyTurn(true)) {
+                if (CheckMagicSlot() != null) {
                     cardUsed = true;
                     //var abilities = GetComponents<MagicalCasting>();
                     //foreach (MagicalCasting ability in abilities) ability.RequestUseMagic();
-                    PlayMangement.instance.player.resource.Value -= cardData.cost;
                     object[] parms = new object[] { true, gameObject };
                     PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
                     //if (GetComponents<Ability>() == null) UseCard();

@@ -462,12 +462,12 @@ namespace TargetModules {
                 SocketFormat.Unit unit = monList.Find(x => x.itemId == itemId);
                 //2. 밝혀줘야할 select 부분 찾기
                 Pos movePos = unit.pos;
-                Terrain[] terrains = FindObjectsOfType<Terrain>();
+                Terrain[] terrains = GameObject.Find("BackGround").GetComponentsInChildren<Terrain>();
                 Transform terrainSlot = null;
                 
                 foreach(Terrain x in terrains) {
                     if(movePos.col == x.transform.GetSiblingIndex()) {
-                        terrainSlot = x.transform.GetChild(0);
+                        terrainSlot = x.transform.Find("EnemyBackSlot");
                         break;
                     }
                 }
@@ -495,7 +495,6 @@ namespace TargetModules {
             }
             //타겟이 있는 경우, 카드 사용으로 경우에 따라 나눠야함
             else {
-                //유닛이 끌고오는 경우 있고 (hook), 나중에 사용되는 경우도 있고...
                 Transform selectedTarget = null;
                 //1. 사용한 카드 찾기
                 int itemId = skillHandler.myObject.GetComponent<PlaceMonster>() != null ? 
@@ -513,12 +512,16 @@ namespace TargetModules {
                 switch(played_card.targets[1].method) {
                 case "place" :
                     int line = int.Parse(played_card.targets[1].args[0]);
-                    Terrain[] terrains = FindObjectsOfType<Terrain>();
+                    bool targetCampHuman = played_card.targets[1].args[1].CompareTo("human")==0;
+                    //지정된 타겟이 아군인지 적군인지 판단용
+                    bool isTargetPlayer = PlayMangement.instance.player.isHuman == targetCampHuman;
+                    Terrain[] terrains = GameObject.Find("BackGround").GetComponentsInChildren<Terrain>();
                     Transform terrainSlot = null;
                 
                     foreach(Terrain x in terrains) {
                         if(line == x.transform.GetSiblingIndex()) {
-                            terrainSlot = x.transform.GetChild(0);
+                            if(isTargetPlayer) terrainSlot = x.transform.GetChild(0);
+                            else terrainSlot = x.transform.Find("EnemyBackSlot");
                             break;
                         }
                     }
@@ -534,8 +537,8 @@ namespace TargetModules {
                     terrainSlot.GetChild(0).gameObject.SetActive(false);
                     terrainSlot.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 155.0f / 255.0f);
 
-                    selectedTarget = PlayMangement.instance
-                            .PlayerUnitsObserver
+                    FieldUnitsObserver observer = isTargetPlayer ? PlayMangement.instance.PlayerUnitsObserver : PlayMangement.instance.EnemyUnitsObserver;
+                    selectedTarget = observer
                             .transform
                             .GetChild(0) //TODO : 앞뒤 구분 해야함 
                             .GetChild(line)

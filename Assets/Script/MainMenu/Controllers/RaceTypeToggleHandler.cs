@@ -38,7 +38,7 @@ public class RaceTypeToggleHandler : MonoBehaviour {
     private GameObject selectedDeck = null;
 
     private const int PORTRAIT_SLOT_NUM_PER_PAGE = 8;
-    private const int DECK_SLOT_NUM_PER_PAGE = 8;
+    private const int DECK_SLOT_NUM_PER_PAGE = 3;
 
     private void Awake() {
         accountManager = AccountManager.Instance;
@@ -181,7 +181,7 @@ public class RaceTypeToggleHandler : MonoBehaviour {
     }
 
     private int TotalDeckPages(ref List<Deck> decks) {
-        return Mathf.CeilToInt((float)decks.Count / DECK_SLOT_NUM_PER_PAGE);
+        return Mathf.CeilToInt((float)decks.Count / DECK_SLOT_NUM_PER_PAGE + 1);
     }
 
     private void ClearList() {
