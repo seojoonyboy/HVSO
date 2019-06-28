@@ -47,6 +47,11 @@ public class HideUnit : MonoBehaviour
         TrackEntry entry;
         entry = spineAnimationState.SetAnimation(0, disappear, false);
         currentAnimationName = disappear;
+        entry.Complete += DisappearGilli;
+    }
+
+    public void DisappearGilli(TrackEntry trackEntry = null) {
+        gameObject.SetActive(false);
     }
 
     public virtual void AnimationEvent(TrackEntry entry, Spine.Event e) {
@@ -63,7 +68,6 @@ public class HideUnit : MonoBehaviour
 
             unitSpine.transform.gameObject.SetActive(true);
             unitSpine.Appear();
-            gameObject.SetActive(false);
         }
     }
 
