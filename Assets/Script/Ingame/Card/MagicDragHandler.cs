@@ -17,6 +17,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
     public void OnBeginDrag(PointerEventData eventData) {
         if (heroCardActivate) {
             heroCardInfo.SetActive(false);
+            transform.parent.Find("HeroCardGuide").gameObject.SetActive(false);
             transform.localScale = Vector3.zero;
             if (cardData.skills.Length != 0)
                 CardInfoOnDrag.instance.SetCardDragInfo(null, mousLocalPos.localPosition, cardData.skills[0].desc);
@@ -102,6 +103,8 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
                     transform.localPosition = new Vector3(0, 0, 0);
                 }
             }
+            if(!cardUsed && heroCardActivate)
+                transform.parent.Find("HeroCardGuide").gameObject.SetActive(true);
             CardDropManager.Instance.HideMagicSlot();
             CardInfoOnDrag.instance.OffCardDragInfo();
             return;
