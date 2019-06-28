@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using dataModules;
 using UnityEngine.UI;
+using TMPro;
 
 public class RaceTypeToggleHandler : MonoBehaviour {
     [SerializeField] Transform heroPortraitParent, deckParent;
@@ -143,7 +144,7 @@ public class RaceTypeToggleHandler : MonoBehaviour {
 
                 //덱 프리팹 생성
                 GameObject _deck = Instantiate(deckPrefab, page.transform);
-                _deck.transform.Find("Deck/Name").GetComponent<Text>().text = basicDecks[item_index].name;
+                _deck.transform.Find("Deck/Name").GetComponent<TextMeshProUGUI>().text = basicDecks[item_index].name;
                 if(LeaderDeckId == basicDecks[item_index].id) {
                     selectedDeck = _deck;
                     _deck.transform.Find("Outline").GetComponent<Image>().enabled = true;
