@@ -137,6 +137,7 @@ public class CardCircleManager : MonoBehaviour {
     public IEnumerator DrawHeroCard(SocketFormat.Card cardData = null) {
         GameObject card = cardStorage.Find("MagicCards").GetChild(0).gameObject;
         card.transform.SetParent(showPos.transform);
+        showPos.Find("HeroCardGuide").gameObject.SetActive(true);
         card.SetActive(true);
         CardHandler handler = card.GetComponent<CardHandler>();
         handler.DrawHeroCard(cardData);
