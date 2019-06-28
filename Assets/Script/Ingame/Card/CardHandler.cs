@@ -248,12 +248,7 @@ public partial class CardHandler : MonoBehaviour {
     public void DisableCard() {
         isDropable = false;
         transform.Find("GlowEffect").GetComponent<Image>().enabled = false;
-        transform.Find("Portrait").GetComponent<Image>().color = Color.gray;
-        if (cardData.type == "unit") {
-            transform.Find("attack").GetComponent<Image>().color = Color.gray;
-            transform.Find("Health").GetComponent<Image>().color = Color.gray;
-        }
-        transform.Find("Cost").GetComponent<Image>().color = Color.gray;
+        transform.Find("Disabled").gameObject.SetActive(true);
     }
 
     public virtual void ActivateCard() {
@@ -263,22 +258,12 @@ public partial class CardHandler : MonoBehaviour {
                 PlayerController.activeCardMinCost = cardData.cost;
             transform.Find("GlowEffect").GetComponent<Image>().enabled = true;
             transform.Find("GlowEffect").GetComponent<Image>().color = new Color(1, 1, 1);
-            transform.Find("Portrait").GetComponent<Image>().color = Color.white;
-            if (cardData.type == "unit") {
-                transform.Find("attack").GetComponent<Image>().color = Color.white;
-                transform.Find("Health").GetComponent<Image>().color = Color.white;
-            }
-            transform.Find("Cost").GetComponent<Image>().color = Color.white;
+            transform.Find("Disabled").gameObject.SetActive(false);
         }
         else {
             isDropable = false;
             transform.Find("GlowEffect").GetComponent<Image>().enabled = false;
-            transform.Find("Portrait").GetComponent<Image>().color = Color.gray;
-            if (cardData.type == "unit") {
-                transform.Find("attack").GetComponent<Image>().color = Color.gray;
-                transform.Find("Health").GetComponent<Image>().color = Color.gray;
-            }
-            transform.Find("Cost").GetComponent<Image>().color = Color.gray;
+            transform.Find("Disabled").gameObject.SetActive(true);
         }
     }
 
