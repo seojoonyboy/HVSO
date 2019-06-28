@@ -218,6 +218,7 @@ public partial class PlayMangement : MonoBehaviour {
 
         cardData = cardDataPackage.data[history.cardItem.id];
         GameObject magicCard = player.cdpm.InstantiateMagicCard(cardData, history.cardItem.itemId);
+        magicCard.GetComponent<MagicDragHandler>().itemID = history.cardItem.itemId;
 
         Logger.Log("use Magic Card" + history.cardItem.name);
         enemyPlayer.resource.Value -= cardData.cost;
@@ -247,7 +248,7 @@ public partial class PlayMangement : MonoBehaviour {
         EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
         yield return new WaitForSeconds(2f);
         //카드 파괴
-        Destroy(card);
+        cardCircleManager.DestroyCard(card);
     }
 
     private IEnumerator EnemySettingTarget(SocketFormat.Target target, MagicDragHandler magicHandler) {

@@ -233,6 +233,14 @@ public class CardCircleManager : MonoBehaviour {
         StartCoroutine(RemoveCardToStorage(index));
     }
 
+    public void DestroyCard(GameObject card) {
+        PlayMangement.dragable = false;
+        card.transform.SetParent(cardStorage.Find("MagicCards"));
+        card.SetActive(false);
+        card.transform.localPosition = Vector3.zero;
+        card.transform.rotation = card.transform.parent.rotation;
+    }
+
     private IEnumerator RemoveCardToStorage(int index) {
         PlayMangement.dragable = false;
         Transform removeCard = transform.GetChild(index).GetChild(1);

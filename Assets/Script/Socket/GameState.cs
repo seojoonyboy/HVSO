@@ -106,14 +106,15 @@ namespace SocketFormat {
 
     public class Unit : Card {
         public int currentHp;
-        public Pos pos { get; }
+        public Pos pos { get{ return GetPos();} }
 
         private Pos GetPos() {
             Pos pos = new Pos();
             Line[] lines = PlayMangement.instance.socketHandler.gameState.map.lines;
+            bool isOrc = camp.CompareTo("orc")==0;
             PropertyInfo info = lines[0].GetType().GetProperty(camp);
             for(int i = 0; i < lines.Length; i++) {
-                Unit[] units = (Unit[])info.GetValue(lines[i]);
+                Unit[] units = isOrc ? lines[i].orc : lines[i].human;
                 for(int j = 0; j < units.Length; j++) {
                     if(units[j].itemId == itemId) {
                         pos.col = i;
