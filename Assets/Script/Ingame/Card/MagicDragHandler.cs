@@ -111,7 +111,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         blockButton = PlayMangement.instance.player.dragCard = false;
         PlayMangement.instance.player.isPicking.Value = false;
         cardUsed = false;
-        
+
         if (CheckMagicSlot() != null && PlayMangement.instance.player.resource.Value >= cardData.cost && isMyTurn(true)) {
             cardUsed = true;
             //var abilities = GetComponents<MagicalCasting>();
@@ -121,9 +121,11 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
             StartCoroutine(UseSkillCard(parms));
             //if (GetComponents<Ability>() == null) UseCard();
         }
-        highlighted = false;
-        CardDropManager.Instance.HighLightMagicSlot(highlightedSlot, highlighted);
-        highlightedSlot = null;
+        else {
+            highlighted = false;
+            CardDropManager.Instance.HighLightMagicSlot(highlightedSlot, highlighted);
+            highlightedSlot = null;
+        }
         ListCircle.transform.SetParent(DragObserver.parent);
         if (!cardUsed) {
             transform.localScale = new Vector3(1, 1, 1);
@@ -138,5 +140,8 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         PlayMangement.dragable = false;
         yield return StartCoroutine(PlayMangement.instance.cardCircleManager.ShowUsedMagicCard(transform.parent.GetSiblingIndex()));
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
+        highlighted = false;
+        CardDropManager.Instance.HighLightMagicSlot(highlightedSlot, highlighted);
+        highlightedSlot = null;
     }
 }

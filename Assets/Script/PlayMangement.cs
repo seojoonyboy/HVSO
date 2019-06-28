@@ -233,12 +233,12 @@ public partial class PlayMangement : MonoBehaviour {
         card.transform.rotation = new Quaternion(0, 0, 540, card.transform.rotation.w);
         card.transform.SetParent(enemyPlayer.playerUI.transform);
         card.SetActive(true);
-        iTween.RotateTo(card, Vector3.zero, 0.5f);
-        iTween.MoveTo(card, iTween.Hash(
-            "x", card.transform.parent.position.x,
-            "y", card.transform.parent.position.y,
-            "time", 0.5f,
-            "easetype", iTween.EaseType.easeWeakOutBack));
+        //iTween.RotateTo(card, Vector3.zero, 0.5f);
+        //iTween.MoveTo(card, iTween.Hash(
+        //    "x", card.transform.parent.position.x,
+        //    "y", card.transform.parent.position.y,
+        //    "time", 0.5f,
+        //    "easetype", iTween.EaseType.easeWeakOutBack));
         Logger.Log(enemyPlayer.playerUI.transform.position);
         yield return new WaitForSeconds(1.0f);
         MagicDragHandler magicCard = card.GetComponent<MagicDragHandler>();
@@ -250,6 +250,7 @@ public partial class PlayMangement : MonoBehaviour {
         EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
         yield return new WaitForSeconds(2f);
         //카드 파괴
+        card.transform.localScale = new Vector3(1, 1, 1);
         cardCircleManager.DestroyCard(card);
     }
 
