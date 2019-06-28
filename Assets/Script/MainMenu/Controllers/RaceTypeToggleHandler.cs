@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using dataModules;
 using UnityEngine.UI;
+using UnityEngine.UI.Extensions;
 using TMPro;
 
 public class RaceTypeToggleHandler : MonoBehaviour {
@@ -35,6 +36,24 @@ public class RaceTypeToggleHandler : MonoBehaviour {
             controller.ChangeDeck(leaderDeckId);
         }
     }
+    private int pageIndex;
+    public int PageIndex {
+        get {
+            return pageIndex;
+        }
+        set {
+            pageIndex = value;
+
+            if (pageIndex < 0) pageIndex = 0;
+            if (pageIndex > MaxPageNum) pageIndex = MaxPageNum;
+
+            var text = string.Format("{0}/{1}", PageIndex + 1, MaxPageNum);
+            controller.ChangePageText(text);
+            //Logger.Log(pageIndex);
+        }
+    }
+
+    public int MaxPageNum;
 
     private GameObject selectedDeck = null;
 
@@ -128,13 +147,28 @@ public class RaceTypeToggleHandler : MonoBehaviour {
                 break;
         }
 
+        //test code
+        //basicDecks = new List<Deck>();
+        //for(int i=0; i<10; i++) {
+        //    Deck deck = new Deck();
+        //    deck.name = i + "번째 덱";
+        //    deck.id = i.ToString();
+
+        //    basicDecks.Add(deck);
+        //}
+        //end test code
+
         if (basicDecks == null) return;
 
         var pageNum = TotalDeckPages(ref basicDecks);
+        MaxPageNum = pageNum;
+
         //TODO Server와 연동
         LeaderDeckId = basicDecks[0].id;
 
         int item_index = 0;         //전체 Deck Index
+        PageIndex = 0;
+
         GameObject lastPage = null;
         for (int i = 0; i < pageNum; i++) {
             GameObject page = Instantiate(deckGroupPrefab, deckParent);
@@ -158,8 +192,45 @@ public class RaceTypeToggleHandler : MonoBehaviour {
 
                 item_index++;
             }
+
+            if (pageIndex != i) page.SetActive(false);
         }
-        GameObject AddDeckButton = Instantiate(AddDeckButtonPrefab, lastPage.transform);
+
+        //해당 페이지에 빈 슬롯이 있는 경우
+        if(lastPage.transform.childCount <= DECK_SLOT_NUM_PER_PAGE) {
+            GameObject AddDeckButton = Instantiate(AddDeckButtonPrefab, lastPage.transform);
+        }
+        //새로 페이지를 만들어야 함
+        else {
+            GameObject page = Instantiate(deckGroupPrefab, deckParent);
+            GameObject AddDeckButton = Instantiate(AddDeckButtonPrefab, page.transform);
+        }
+
+
+        if(type == BattleReadySceneController.RaceType.HUMAN) {
+            if(id == 0) {
+                AddButtonListener();
+            }
+        }
+        else if(type == BattleReadySceneController.RaceType.ORC) {
+            if (id == 1) {
+                AddButtonListener();
+            }
+        }
+    }
+
+    private void AddButtonListener() {
+        var Button = deckParent.parent.transform.Find("PrevBtn").GetComponent<Button>();
+        Button.onClick.RemoveAllListeners();
+        Button.onClick.AddListener(() => {
+            GoToPrevPage();
+        });
+
+        Button = deckParent.parent.transform.Find("NextBtn").GetComponent<Button>();
+        Button.onClick.RemoveAllListeners();
+        Button.onClick.AddListener(() => {
+            GoToNextPage();
+        });
     }
 
     /// <summary>
@@ -182,7 +253,7 @@ public class RaceTypeToggleHandler : MonoBehaviour {
     }
 
     private int TotalDeckPages(ref List<Deck> decks) {
-        return Mathf.CeilToInt((float)decks.Count / DECK_SLOT_NUM_PER_PAGE + 1);
+        return Mathf.CeilToInt((float)decks.Count / DECK_SLOT_NUM_PER_PAGE);
     }
 
     private void ClearList() {
@@ -192,5 +263,19 @@ public class RaceTypeToggleHandler : MonoBehaviour {
         foreach(Transform tf in deckParent) {
             Destroy(tf.gameObject);
         }
+    }
+
+    public void GoToPrevPage() {
+        if (PageIndex == 0) return;
+        deckParent.GetChild(PageIndex).gameObject.SetActive(false);
+        deckParent.GetChild(--PageIndex).gameObject.SetActive(true);
+        //horizontalScrollSnap.GoToScreen(--PageIndex);
+    }
+
+    public void GoToNextPage() {
+        if (PageIndex == MaxPageNum - 1) return;
+        deckParent.GetChild(PageIndex).gameObject.SetActive(false);
+        deckParent.GetChild(++PageIndex).gameObject.SetActive(true);
+        //horizontalScrollSnap.GoToScreen(++PageIndex);
     }
 }

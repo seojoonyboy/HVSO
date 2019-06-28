@@ -84,7 +84,7 @@ public class CardCircleManager : MonoBehaviour {
             clm.SendMulliganInfo();
         else {
             CardHandler handler = card.GetComponent<CardHandler>();
-            clm.AddCardInfo(handler.cardData, handler.cardID);
+            clm.AddCardInfo(handler.cardData);
         }
     }
 
@@ -182,6 +182,7 @@ public class CardCircleManager : MonoBehaviour {
                 card.transform.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData[i].name;
                 AddMagicAttribute(ref card);
             }
+            AddInfoToList(card); 
             Transform cardTransform = card.transform;
             Transform cardPos = transform.GetChild(cardNum).GetChild(0);
             cardTransform.GetComponent<CardHandler>().CARDINDEX = cardNum;
@@ -261,6 +262,21 @@ public class CardCircleManager : MonoBehaviour {
         }
         StartCoroutine(SortCircleAngle());
         yield return new WaitForSeconds(0.3f);
+    }
+
+    public IEnumerator ShowUsedMagicCard(int index = 100, GameObject card = null) {
+        if (index == 100) {
+            clm.SetEnemyMagicCardInfo(card.GetComponent<CardHandler>().cardData);
+        }
+        else
+            clm.OpenCardInfo(index, true);
+        yield return new WaitForSeconds(1.5f);
+        if(index == 100) {
+            Transform infoWindow = clm.StandbyInfo.GetChild(0);
+            infoWindow.gameObject.SetActive(false);
+            infoWindow.localScale = new Vector3(1, 1, 1);
+        }
+        
     }
 
     public IEnumerator SortCircleAngle() {
@@ -369,6 +385,7 @@ public class CardCircleManager : MonoBehaviour {
 
     public GameObject InstantiateMagicCard(CardData data, int itemId) {
         GameObject card = cardStorage.Find("MagicCards").GetChild(0).gameObject;
+        card.transform.localScale = Vector3.zero;
         card.transform.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.name;
         MagicDragHandler magic = card.AddComponent<MagicDragHandler>();
         card.GetComponent<CardHandler>().cardData = data;

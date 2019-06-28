@@ -363,7 +363,7 @@ public class CardHandDeckManager : MonoBehaviour {
             clm.SendMulliganInfo();
         else {
             CardHandler handler = card.GetComponent<CardHandler>();
-            clm.AddCardInfo(handler.cardData, handler.cardID);
+            clm.AddCardInfo(handler.cardData);
         }
     }
 

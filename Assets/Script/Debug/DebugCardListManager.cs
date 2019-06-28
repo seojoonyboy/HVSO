@@ -14,13 +14,13 @@ public class DebugCardListManager : CardListManager
         
     }
 
-    public override void AddCardInfo(CardData data, string id) {
+    public override void AddCardInfo(CardData data) {
         GameObject newcard = standbyInfo.GetChild(0).gameObject;
         SetCardInfo(newcard, data);
         hss.AddChild(newcard);
         GameObject unitSpine = newcard.transform.Find("Info/UnitImage").GetChild(0).gameObject;
         if (data.type == "unit") {
-            unitSpine.GetComponent<SkeletonGraphic>().skeletonDataAsset = DebugManagement.instance.GetComponent<ResourceManager>().cardPreveiwSkeleton[id].GetComponent<SkeletonGraphic>().skeletonDataAsset;
+            unitSpine.GetComponent<SkeletonGraphic>().skeletonDataAsset = DebugManagement.instance.GetComponent<ResourceManager>().cardPreveiwSkeleton["ac10001"].GetComponent<SkeletonGraphic>().skeletonDataAsset;
             unitSpine.GetComponent<SkeletonGraphic>().Initialize(true);
             unitSpine.SetActive(true);
         }
