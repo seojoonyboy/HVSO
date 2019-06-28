@@ -252,6 +252,7 @@ public partial class PlayMangement : MonoBehaviour {
         //카드 파괴
         card.transform.localScale = new Vector3(1, 1, 1);
         cardCircleManager.DestroyCard(card);
+        card.GetComponent<MagicDragHandler>().skillHandler.RemoveTriggerEvent();
     }
 
     private IEnumerator EnemySettingTarget(SocketFormat.Target target, MagicDragHandler magicHandler) {

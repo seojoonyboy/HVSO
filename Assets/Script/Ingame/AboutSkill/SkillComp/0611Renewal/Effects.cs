@@ -255,12 +255,15 @@ namespace SkillModules {
                 observer = PlayMangement.instance.EnemyUnitsObserver;
             }
             observer.UnitChangePosition(skillHandler.myObject, args.col, args.row);
+            skillHandler.finallyDone = false;
             WaitDone();
         }
 
         private async void WaitDone() {
             await System.Threading.Tasks.Task.Delay(1500);
             skillHandler.isDone = true;
+            await System.Threading.Tasks.Task.Delay(500);
+            skillHandler.finallyDone = true;
         }
     }
 
