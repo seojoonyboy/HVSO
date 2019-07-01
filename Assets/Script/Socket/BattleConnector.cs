@@ -446,7 +446,7 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public IEnumerator WaitBattle() {
-        yield return new WaitUntil(() => gameState.state.CompareTo("battleTurn") == 0);
+        yield return new WaitUntil(() => (gameState.state.CompareTo("battleTurn") == 0 || gameState.state.CompareTo("shieldTurn") == 0) );
     }
 }
 namespace SocketFormat {
