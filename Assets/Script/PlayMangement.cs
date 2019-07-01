@@ -516,14 +516,14 @@ public partial class PlayMangement : MonoBehaviour {
         }
         else {
             yield return WaitSocketData(socketHandler.lineBattleList, line, true);
-            shildDequeue();
+            shieldDequeue();
             yield return WaitSocketData(socketHandler.lineBattleList, line, true);
-            shildDequeue();
+            shieldDequeue();
             yield return WaitSocketData(socketHandler.mapClearList, line, false);
             yield return WaitSocketData(socketHandler.lineBattleList, line, true);
-            shildDequeue();
+            shieldDequeue();
             yield return WaitSocketData(socketHandler.lineBattleList, line, true);
-            shildDequeue();
+            shieldDequeue();
             yield return WaitSocketData(socketHandler.mapClearList, line, false);
         }
         ResetCount(line);
@@ -554,7 +554,7 @@ public partial class PlayMangement : MonoBehaviour {
         yield return battleUnit(player.backLine, line);
         yield return battleUnit(player.frontLine, line);
         yield return HeroSpecialWait();
-        shildDequeue();
+        shieldDequeue();
         yield return null;
     }
 
@@ -597,7 +597,7 @@ public partial class PlayMangement : MonoBehaviour {
 
     }
 
-    private void shildDequeue() {
+    private void shieldDequeue() {
         if (!isGame) return;
         if (socketHandler.humanData.Count == 0) return;
         socketHandler.humanData.Dequeue();
@@ -607,7 +607,7 @@ public partial class PlayMangement : MonoBehaviour {
     public IEnumerator HeroSpecialWait() {
         Queue<SocketFormat.Player> data;
         data = player.isHuman ? socketHandler.orcData : socketHandler.humanData;
-        if (data.Peek().shildActivate) yield break;
+        if (data.Peek().shieldActivate) yield break;
         yield return new WaitForSeconds(0.1f);
         do {
             yield return new WaitForFixedUpdate();

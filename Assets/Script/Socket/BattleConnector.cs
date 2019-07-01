@@ -308,18 +308,19 @@ public partial class BattleConnector : MonoBehaviour {
         mapClearList.checkCount();
     }
 
-    public void begin_shild_turn(object args) {
-        //Logger.Log("WebSocket State : begin_shild_turn");
+    public void begin_shield_turn(object args) {
+        //Logger.Log("WebSocket State : begin_shield_turn");
         dequeueing = false;
         getNewCard = true;
     }
 
-    public void end_shild_turn(object args) {
-        //Logger.Log("WebSocket State : end_shild_turn");
-        StartCoroutine(waitSkillDone(() => {PlayMangement.instance.heroShieldActive = false;}));
+    public void end_shield_turn(object args) {
+        //Logger.Log("WebSocket State : end_shield_turn");
+        StartCoroutine(waitSkillDone(() => {PlayMangement.instance.heroShieldActive = false;}, true));
     }
 
-    private IEnumerator waitSkillDone(UnityAction callback) {
+    private IEnumerator waitSkillDone(UnityAction callback, bool isShield = false) {
+        if(isShield) yield return new WaitForSeconds(2.0f);
         MagicDragHandler[] list = Resources.FindObjectsOfTypeAll<MagicDragHandler>();
         foreach(MagicDragHandler magic in list) {
             if(magic.skillHandler == null) continue;
@@ -341,10 +342,10 @@ public partial class BattleConnector : MonoBehaviour {
         callback();
     }
 
-    public void shild_guage(object args) {
+    public void shield_guage(object args) {
         var json = (JObject)args;
         string camp = json["camp"].ToString();
-        string gauge = json["shildGet"].ToString();
+        string gauge = json["shieldGet"].ToString();
         ShieldCharge charge = new ShieldCharge();
         charge.shieldCount = int.Parse(gauge);
         charge.camp = camp;

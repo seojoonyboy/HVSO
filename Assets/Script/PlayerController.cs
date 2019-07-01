@@ -196,12 +196,12 @@ public class PlayerController : MonoBehaviour
 
     public virtual void PlayerTakeDamage(int amount) {
         BattleConnector socketHandler = PlayMangement.instance.socketHandler;
-        Queue<SocketFormat.Player> heroShildData = isHuman ? socketHandler.humanData : socketHandler.orcData;
+        Queue<SocketFormat.Player> heroshieldData = isHuman ? socketHandler.humanData : socketHandler.orcData;
         SocketFormat.Player data;
-        if(heroShildData.Count != 0) data = heroShildData.Peek();
+        if(heroshieldData.Count != 0) data = heroshieldData.Peek();
         else data = socketHandler.gameState.players.myPlayer(isHuman);
         SocketFormat.ShieldCharge shieldData = GetShieldData();
-        if (!data.shildActivate) {
+        if (!data.shieldActivate) {
             if (GetComponent<SkillModules.guarded>() != null) {
                 amount = 0;
             }
@@ -213,12 +213,12 @@ public class PlayerController : MonoBehaviour
 
             if (shieldCount > 0) {
                 if(shieldData == null)
-                    shieldStack.Value = data.hero.shildGauge;
+                    shieldStack.Value = data.hero.shieldGauge;
                 else
                     shieldStack.Value += shieldData.shieldCount;
             }
         }
-        if(data.shildActivate && CheckShieldActivate(shieldData)) {
+        if(data.shieldActivate && CheckShieldActivate(shieldData)) {
             ActiveShield();
         }
     }
