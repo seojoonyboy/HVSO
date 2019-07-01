@@ -1712,6 +1712,10 @@ MonoBehaviour:
     - {fileID: 2089563141439395132, guid: 400f1c7de344fe9438a213b082c592bc, type: 3}
     - {fileID: -6393710090423158087, guid: 400f1c7de344fe9438a213b082c592bc, type: 3}
     - {fileID: 21300000, guid: 010ebff855d41e0408610c7a67668631, type: 3}
+    - {fileID: 1709729427724246153, guid: c539191fc8014154c8965d283ce22046, type: 3}
+    - {fileID: 6810151699062994815, guid: c539191fc8014154c8965d283ce22046, type: 3}
+    - {fileID: 8206892130047878750, guid: c539191fc8014154c8965d283ce22046, type: 3}
+    - {fileID: -8682957346750947755, guid: c539191fc8014154c8965d283ce22046, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -4686,6 +4690,74 @@ MonoBehaviour:
     - Name: $v
       Entry: 10
       Data: 166
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: heroPortraite
+      Entry: 7
+      Data: 24|Ludiq.FlexibleDictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
+        UnityEngine.CoreModule]], Ludiq.Core.Runtime
+    - Name: comparer
+      Entry: 7
+      Data: 25|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 4
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: h10001
+    - Name: $v
+      Entry: 10
+      Data: 167
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: h10002
+    - Name: $v
+      Entry: 10
+      Data: 168
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: h10003
+    - Name: $v
+      Entry: 10
+      Data: 169
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: h10004
+    - Name: $v
+      Entry: 10
+      Data: 170
     - Name: 
       Entry: 8
       Data: 
