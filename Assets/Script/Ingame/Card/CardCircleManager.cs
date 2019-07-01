@@ -204,6 +204,7 @@ public class CardCircleManager : MonoBehaviour {
     IEnumerator SendCardToHand(GameObject card, Transform pos, bool isHero = false) {
         CardHandler handler = card.GetComponent<CardHandler>();
         handler.DisableCard();
+        handCardNum.text = cardNum.ToString();
         if (!firstDraw) {
             if (!isHero) {
                 iTween.MoveTo(card, showPos.position, 0.4f);
@@ -228,7 +229,6 @@ public class CardCircleManager : MonoBehaviour {
             else
                 handler.ActivateCard();
         }
-        handCardNum.text = cardNum.ToString();
         handler.FIRSTDRAW = false;
         PlayMangement.dragable = true;
 
@@ -272,6 +272,7 @@ public class CardCircleManager : MonoBehaviour {
         else
             clm.AddFeildUnitInfo(index, PlayMangement.instance.unitNum - 1);
         cardNum--;
+        handCardNum.text = cardNum.ToString();
         for (int i = index; i < cardNum; i++) {
             transform.GetChild(i).GetChild(1).GetComponent<CardHandler>().CARDINDEX = i;
             iTween.RotateTo(transform.GetChild(i).gameObject, iTween.Hash("rotation", new Vector3(0, 0, -4 * i), "islocal", true, "time", 0.2f));
