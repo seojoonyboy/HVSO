@@ -86,13 +86,14 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
             else {
                 CheckLocation(true);
                 cardUsed = false;
-
+                //영웅 실드 발동시 나온 카드를 사용 할 때만 여기로 들어옴
                 if (CheckMagicSlot() != null) {
                     cardUsed = true;
                     //var abilities = GetComponents<MagicalCasting>();
                     //foreach (MagicalCasting ability in abilities) ability.RequestUseMagic();
                     object[] parms = new object[] { true, gameObject };
                     PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
+                    skillHandler.RemoveTriggerEvent();
                     //if (GetComponents<Ability>() == null) UseCard();
                 }
                 highlighted = false;
@@ -148,5 +149,6 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         highlighted = false;
         CardDropManager.Instance.HighLightMagicSlot(highlightedSlot, highlighted);
         highlightedSlot = null;
+        skillHandler.RemoveTriggerEvent();
     }
 }
