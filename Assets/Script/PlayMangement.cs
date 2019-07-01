@@ -229,6 +229,8 @@ public partial class PlayMangement : MonoBehaviour {
     }
 
     private IEnumerator MagicActivate(GameObject card, SocketFormat.PlayHistory history) {
+        MagicDragHandler magicCard = card.GetComponent<MagicDragHandler>();
+        magicCard.skillHandler.isDone = false;
         dragable = false;
         //카드 등장 애니메이션
         card.transform.rotation = new Quaternion(0, 0, 540, card.transform.rotation.w);
@@ -242,7 +244,6 @@ public partial class PlayMangement : MonoBehaviour {
         //    "easetype", iTween.EaseType.easeWeakOutBack));
         Logger.Log(enemyPlayer.playerUI.transform.position);
         yield return new WaitForSeconds(1.0f);
-        MagicDragHandler magicCard = card.GetComponent<MagicDragHandler>();
         //타겟 지정 애니메이션
         yield return EnemySettingTarget(history.targets[0], magicCard);
         //실제 카드 사용
@@ -485,6 +486,7 @@ public partial class PlayMangement : MonoBehaviour {
     IEnumerator battleCoroutine() {
         dragable = false;
         yield return new WaitForSeconds(1.1f);
+        yield return socketHandler.WaitBattle();
         for (int line = 0; line < 5; line++) {
             yield return battleLine(line);
             if (isGame == false) break;
@@ -515,14 +517,14 @@ public partial class PlayMangement : MonoBehaviour {
         }
         else {
             yield return WaitSocketData(socketHandler.lineBattleList, line, true);
-            shildDequeue();
+            shieldDequeue();
             yield return WaitSocketData(socketHandler.lineBattleList, line, true);
-            shildDequeue();
+            shieldDequeue();
             yield return WaitSocketData(socketHandler.mapClearList, line, false);
             yield return WaitSocketData(socketHandler.lineBattleList, line, true);
-            shildDequeue();
+            shieldDequeue();
             yield return WaitSocketData(socketHandler.lineBattleList, line, true);
-            shildDequeue();
+            shieldDequeue();
             yield return WaitSocketData(socketHandler.mapClearList, line, false);
         }
         ResetCount(line);
@@ -553,7 +555,7 @@ public partial class PlayMangement : MonoBehaviour {
         yield return battleUnit(player.backLine, line);
         yield return battleUnit(player.frontLine, line);
         yield return HeroSpecialWait();
-        shildDequeue();
+        shieldDequeue();
         yield return null;
     }
 
@@ -596,7 +598,7 @@ public partial class PlayMangement : MonoBehaviour {
 
     }
 
-    private void shildDequeue() {
+    private void shieldDequeue() {
         if (!isGame) return;
         if (socketHandler.humanData.Count == 0) return;
         socketHandler.humanData.Dequeue();
@@ -606,7 +608,7 @@ public partial class PlayMangement : MonoBehaviour {
     public IEnumerator HeroSpecialWait() {
         Queue<SocketFormat.Player> data;
         data = player.isHuman ? socketHandler.orcData : socketHandler.humanData;
-        if (data.Peek().shildActivate) yield break;
+        if (data.Peek().shieldActivate) yield break;
         yield return new WaitForSeconds(0.1f);
         do {
             yield return new WaitForFixedUpdate();

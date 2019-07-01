@@ -136,3 +136,4 @@ MonoBehaviour:
   generalAttackName: ATTACK
   attackEventName: ATTACK
   arrow: {fileID: 0}
+  hidingObject: {fileID: 0}

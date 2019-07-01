@@ -7,27 +7,27 @@ using System.Collections.Generic;
 namespace SocketFormat {
     public class DebugSocketData : MonoBehaviour {
         public static void ShowHandCard(Card[] cards) {
-            //Logger.Log("적의 핸드 리스트 : ");
-            //foreach(Card card in cards) {
-            //    Logger.Log(string.Format("이름 : {0}, 가격 : {1}, 종류 : {2}, cardId : {3}, itemId : {4}, 공격력 : {5}, 체력 : {6}",
-            //                    card.name, card.cost, card.type, card.id, card.itemId, card.attack, card.hp));
-            //}
+            Logger.Log("적의 핸드 리스트 : ");
+            foreach(Card card in cards) {
+               Logger.Log(string.Format("이름 : {0}, 가격 : {1}, 종류 : {2}, cardId : {3}, itemId : {4}, 공격력 : {5}, 체력 : {6}",
+                               card.name, card.cost, card.type, card.id, card.itemId, card.attack, card.hp));
+            }
         }
         
         public static void ShowBattleData(GameState state, int line, bool isBattle) {
             string mapData = JsonConvert.SerializeObject(state.map.lines[line]);
             Hero human = state.players.human.hero;
             Hero orc = state.players.orc.hero;
-            //Logger.Log(isBattle ? "======= 싸운 후 State =======" : "======= 에너지 체크 후 State =======");
-            //Logger.Log(string.Format("{0}번째줄 맵 : {1}", line, mapData));
-            //Logger.Log(string.Format("휴먼 체력 : {0}, 방어갯수 : {1}, 방어게이지 : {2}", human.currentHp, human.shildCount, human.shildGauge));
-            //Logger.Log(string.Format("오크 체력 : {0}, 방어갯수 : {1}, 방어게이지 : {2}", orc.currentHp, orc.shildCount, orc.shildGauge));
-            //Logger.Log("=======================================");
+            Logger.Log(isBattle ? "======= 싸운 후 State =======" : "======= 에너지 체크 후 State =======");
+            Logger.Log(string.Format("{0}번째줄 맵 : {1}", line, mapData));
+            Logger.Log(string.Format("휴먼 체력 : {0}, 방어갯수 : {1}, 방어게이지 : {2}", human.currentHp, human.shieldCount, human.shieldGauge));
+            Logger.Log(string.Format("오크 체력 : {0}, 방어갯수 : {1}, 방어게이지 : {2}", orc.currentHp, orc.shieldCount, orc.shieldGauge));
+            Logger.Log("=======================================");
         }
 
         public static void SummonCardData(PlayHistory history) {
-            //string historyData = JsonConvert.SerializeObject(history);
-            //Logger.Log(string.Format("사용 된 카드 : {0}", historyData));
+            string historyData = JsonConvert.SerializeObject(history);
+            Logger.Log(string.Format("사용 된 카드 : {0}", historyData));
         }
 
         public static void CheckBattleSynchronization(GameState state) {
@@ -128,7 +128,7 @@ namespace SocketFormat {
                 log = "이 문제는 개발자가 코딩을 잘못한겁니다.";
                 break;
             }
-            Logger.LogWarning(string.Format("{0} : {1}", name, log));
+            Logger.LogError(string.Format("{0} : {1}", name, log));
         }
 
         public static void CheckMapPosition(GameState state) {

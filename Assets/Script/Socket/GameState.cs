@@ -72,7 +72,7 @@ namespace SocketFormat {
         public int resource;
         public Deck deck;
         public Hero hero;
-        public bool shildActivate;
+        public bool shieldActivate;
 
         public Card[] FirstCards { 
             get {
@@ -136,8 +136,8 @@ namespace SocketFormat {
         public string name;
         public int maxHp;
         public int currentHp;
-        public int shildCount;
-        public int shildGauge;
+        public int shieldCount;
+        public int shieldGauge;
     }
 
     public class ShieldCharge {

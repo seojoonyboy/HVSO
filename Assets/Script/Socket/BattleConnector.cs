@@ -357,24 +357,26 @@ public partial class BattleConnector : MonoBehaviour {
         mapClearList.checkCount();
     }
 
-    public void begin_shild_turn(object args) {
-        //Logger.Log("WebSocket State : begin_shild_turn");
+    public void begin_shield_turn(object args) {
+        //Logger.Log("WebSocket State : begin_shield_turn");
         dequeueing = false;
         getNewCard = true;
     }
 
-    public void end_shild_turn(object args) {
-        //Logger.Log("WebSocket State : end_shild_turn");
-        StartCoroutine(waitSkillDone(() => {PlayMangement.instance.heroShieldActive = false;}));
+    public void end_shield_turn(object args) {
+        //Logger.Log("WebSocket State : end_shield_turn");
+        StartCoroutine(waitSkillDone(() => {PlayMangement.instance.heroShieldActive = false;}, true));
     }
 
-    private IEnumerator waitSkillDone(UnityAction callback) {
+    private IEnumerator waitSkillDone(UnityAction callback, bool isShield = false) {
+        if(isShield) yield return new WaitForSeconds(2.0f);
         MagicDragHandler[] list = Resources.FindObjectsOfTypeAll<MagicDragHandler>();
         foreach(MagicDragHandler magic in list) {
             if(magic.skillHandler == null) continue;
             
             if(!(magic.skillHandler.finallyDone && magic.skillHandler.isDone)) {
                 yield return new WaitUntil(() => magic.skillHandler.finallyDone && magic.skillHandler.isDone);
+                yield return new WaitForSeconds(0.3f);
             }
         }
         PlaceMonster[] list2 = FindObjectsOfType<PlaceMonster>();
@@ -383,15 +385,16 @@ public partial class BattleConnector : MonoBehaviour {
             
             if(!(unit.skillHandler.finallyDone && unit.skillHandler.isDone)) {
                 yield return new WaitUntil(() => unit.skillHandler.finallyDone && unit.skillHandler.isDone);
+                yield return new WaitForSeconds(0.3f);
             }
         }
         callback();
     }
 
-    public void shild_guage(object args) {
+    public void shield_guage(object args) {
         var json = (JObject)args;
         string camp = json["camp"].ToString();
-        string gauge = json["shildGet"].ToString();
+        string gauge = json["shieldGet"].ToString();
         ShieldCharge charge = new ShieldCharge();
         charge.shieldCount = int.Parse(gauge);
         charge.camp = camp;
@@ -492,7 +495,7 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public IEnumerator WaitBattle() {
-        yield return new WaitUntil(() => gameState.state.CompareTo("orcPostTurn") != 0);
+        yield return new WaitUntil(() => (gameState.state.CompareTo("battleTurn") == 0 || gameState.state.CompareTo("shieldTurn") == 0) );
     }
 }
 namespace SocketFormat {

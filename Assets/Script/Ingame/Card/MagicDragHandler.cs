@@ -15,7 +15,6 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
     public SkillHandler skillHandler;
 
     public void OnBeginDrag(PointerEventData eventData) {
-        if (!PlayMangement.dragable) return;
         if (heroCardActivate) {
             heroCardInfo.SetActive(false);
             transform.parent.Find("HeroCardGuide").gameObject.SetActive(false);
@@ -31,6 +30,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
             PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_CARD_PLAY, this, parms1);
             return;
         }
+        if (!PlayMangement.dragable) return;
         if (firstDraw || PlayMangement.instance.isMulligan) return;
         if (Input.touchCount > 1) return;
         if (PlayMangement.instance.player.dragCard) return;
@@ -50,10 +50,6 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
     }
 
     public void OnDrag(PointerEventData eventData) {
-        if (!PlayMangement.dragable) {
-            OnEndDrag(null);
-            return;
-        }
         if (heroCardActivate) {
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mousePos = new Vector3(mousePos.x, mousePos.y, 0);
@@ -63,6 +59,10 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
             CheckLocation();
             CardInfoOnDrag.instance.SetInfoPosOnDrag(mousLocalPos.localPosition);
             CheckMagicHighlight();
+            return;
+        }
+        if (!PlayMangement.dragable) {
+            OnEndDrag(null);
             return;
         }
         if (firstDraw) return;
@@ -92,6 +92,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
                     //var abilities = GetComponents<MagicalCasting>();
                     //foreach (MagicalCasting ability in abilities) ability.RequestUseMagic();
                     object[] parms = new object[] { true, gameObject };
+                    skillHandler.isDone = false;
                     PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
                     skillHandler.RemoveTriggerEvent();
                     //if (GetComponents<Ability>() == null) UseCard();
@@ -143,6 +144,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
     }
 
     IEnumerator UseSkillCard(object[] parms) {
+        skillHandler.isDone = false;
         PlayMangement.dragable = false;
         yield return StartCoroutine(PlayMangement.instance.cardCircleManager.ShowUsedMagicCard(transform.parent.GetSiblingIndex()));
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
