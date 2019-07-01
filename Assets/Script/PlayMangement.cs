@@ -512,8 +512,8 @@ public partial class PlayMangement : MonoBehaviour {
         var list = playerUnitsObserver.GetAllFieldUnits(line);
         list.AddRange(enemyUnitsObserver.GetAllFieldUnits(line));
         if (list.Count != 0) {
-            if (player.isHuman == false) yield return whoFirstBattle(player, enemyPlayer, line);
-            else yield return whoFirstBattle(enemyPlayer, player, line);
+            if (player.isHuman == false) yield return whoFirstBattle(player, enemyPlayer, playerUnitsObserver, line);
+            else yield return whoFirstBattle(enemyPlayer, player, enemyUnitsObserver, line);
         }
         else {
             yield return WaitSocketData(socketHandler.lineBattleList, line, true);
@@ -539,8 +539,15 @@ public partial class PlayMangement : MonoBehaviour {
         list.ForEach(x => x.GetComponent<PlaceMonster>().atkCount = 0);
     }
 
-    IEnumerator whoFirstBattle(PlayerController first, PlayerController second, int line) {
-        yield return GetBattle(first, line);
+    IEnumerator whoFirstBattle(PlayerController first, PlayerController second, FieldUnitsObserver firstObserver, int line) {
+        var list = firstObserver.GetAllFieldUnits(line);
+        if(list.Count == 0) {
+            yield return WaitSocketData(socketHandler.lineBattleList, line, true);
+            shieldDequeue();
+        }
+        else {
+            yield return GetBattle(first, line);
+        }
         yield return GetBattle(second, line);
         CheckUnitStatus(line);
         yield return WaitSocketData(socketHandler.mapClearList, line, false);
