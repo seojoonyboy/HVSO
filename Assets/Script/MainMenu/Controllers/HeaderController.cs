@@ -29,4 +29,8 @@ public class HeaderController : MonoBehaviour {
     public void SetMyResource() {
 
     }
+
+    public void ToMainScene() {
+        SceneManager.Instance.LoadScene(SceneManager.Scene.MAIN_SCENE);
+    }
 }
