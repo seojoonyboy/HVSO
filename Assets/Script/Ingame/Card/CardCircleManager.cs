@@ -288,7 +288,7 @@ public class CardCircleManager : MonoBehaviour {
         else
             clm.OpenCardInfo(index, true);
         yield return new WaitForSeconds(1.5f);
-        if (transform.GetChild(index).GetChild(1).GetComponent<MagicDragHandler>().skillHandler.TargetSelectExist())
+        if (index != 100 && transform.GetChild(index).GetChild(1).GetComponent<MagicDragHandler>().skillHandler.TargetSelectExist())
             clm.HandCardInfo.GetChild(index).gameObject.SetActive(false);
         if (index == 100) {
             Transform infoWindow = clm.StandbyInfo.GetChild(0);
