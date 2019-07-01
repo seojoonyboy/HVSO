@@ -243,10 +243,12 @@ public class CardCircleManager : MonoBehaviour {
         infoWindow.SetParent(clm.transform.Find("InfoStandby"));
         infoWindow.localScale = new Vector3(1, 1, 1);
         infoWindow.rotation = infoWindow.parent.rotation;
+        infoWindow.gameObject.SetActive(false);
         card.SetParent(cardStorage);
+        card.localPosition = Vector3.zero;
         card.localScale = new Vector3(1, 1, 1);
         card.rotation = card.transform.parent.rotation;
-
+        card.gameObject.SetActive(false);
     }
 
     public void DestroyCard(GameObject card) {
