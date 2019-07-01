@@ -290,6 +290,7 @@ public class PlayerController : MonoBehaviour
             if (isPlayer)
                 buttonParticle.SetActive(true);
         }
+        PlayMangement.dragable = true;
     }
 
     public void ActiveOrcTurn() {
@@ -322,6 +323,7 @@ public class PlayerController : MonoBehaviour
             if (isPlayer)
                 buttonParticle.SetActive(true);
         }
+        PlayMangement.dragable = true;
     }
 
     public void DisablePlayer() {

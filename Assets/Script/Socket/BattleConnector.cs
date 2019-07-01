@@ -326,6 +326,7 @@ public partial class BattleConnector : MonoBehaviour {
             
             if(!(magic.skillHandler.finallyDone && magic.skillHandler.isDone)) {
                 yield return new WaitUntil(() => magic.skillHandler.finallyDone && magic.skillHandler.isDone);
+                yield return new WaitForSeconds(0.3f);
             }
         }
         PlaceMonster[] list2 = FindObjectsOfType<PlaceMonster>();
@@ -334,6 +335,7 @@ public partial class BattleConnector : MonoBehaviour {
             
             if(!(unit.skillHandler.finallyDone && unit.skillHandler.isDone)) {
                 yield return new WaitUntil(() => unit.skillHandler.finallyDone && unit.skillHandler.isDone);
+                yield return new WaitForSeconds(0.3f);
             }
         }
         callback();

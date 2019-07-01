@@ -229,6 +229,7 @@ public partial class PlayMangement : MonoBehaviour {
     }
 
     private IEnumerator MagicActivate(GameObject card, SocketFormat.PlayHistory history) {
+        dragable = false;
         //카드 등장 애니메이션
         card.transform.rotation = new Quaternion(0, 0, 540, card.transform.rotation.w);
         card.transform.SetParent(enemyPlayer.playerUI.transform);
@@ -446,6 +447,7 @@ public partial class PlayMangement : MonoBehaviour {
                 EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_ORC_POST_TURN, this, null);
                 break;
             case "BATTLE":
+                dragable = false;
                 player.DisablePlayer();
                 StartBattle();
                 EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_BATTLE_TURN, this, null);
@@ -483,6 +485,7 @@ public partial class PlayMangement : MonoBehaviour {
     IEnumerator battleCoroutine() {
         dragable = false;
         yield return new WaitForSeconds(1.1f);
+        yield return socketHandler.WaitBattle();
         for (int line = 0; line < 5; line++) {
             yield return battleLine(line);
             if (isGame == false) break;
