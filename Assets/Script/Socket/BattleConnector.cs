@@ -24,6 +24,7 @@ public partial class BattleConnector : MonoBehaviour {
     #endif
     WebSocket webSocket;
     [SerializeField] Text message;
+    [SerializeField] Text timer;
     [SerializeField] GameObject machine;
 
     public UnityEvent OnReceiveSocketMessage;
@@ -47,6 +48,22 @@ public partial class BattleConnector : MonoBehaviour {
         webSocket.Open();
 
         message.text = "대전상대를 찾는중...";
+        StartCoroutine(TimerOn());
+    }
+
+    private IEnumerator TimerOn() {
+        int time = 0;
+        while(time < 60) {
+            timer.text = string.Format("{0}초 대기 중...", time);
+            yield return new WaitForSeconds(1f);
+            time++;
+        }
+        message.text = "대전상대를 찾지 못했습니다.";
+        timer.text = "이전 메뉴로 돌아갑니다.";
+        webSocket.Close();
+        yield return new WaitForSeconds(3f);
+        SceneManager.Instance.LoadScene(SceneManager.Scene.PVP_READY_SCENE);
+        
     }
 
     public void OnClosed(WebSocket webSocket, ushort code, string msg) {
@@ -68,6 +85,8 @@ public partial class BattleConnector : MonoBehaviour {
         string[] args = new string[] { battleType, playerId, "basic", deckId, race };
         SendMethod("join_game", args);
         pingpong = StartCoroutine("Heartbeat");
+        StopCoroutine(TimerOn());
+        timer.text = null;
     }
 
     IEnumerator Heartbeat() {

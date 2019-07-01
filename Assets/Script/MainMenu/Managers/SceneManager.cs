@@ -19,7 +19,6 @@ public class SceneManager : Singleton<SceneManager> {
     // Start is called before the first frame update
     void Start() {
         DontDestroyOnLoad(this);
-        StartCoroutine(PreLoadReadyScene(1));
     }
 
     public void LoadScene(Scene scene) {
@@ -51,19 +50,19 @@ public class SceneManager : Singleton<SceneManager> {
                 break;
             */
             case Scene.MAIN_SCENE :
-                numberOfScene = 2;
+                numberOfScene = 1;
                 break;
             case Scene.LOADING_SCENE :
-                numberOfScene = 3;
+                numberOfScene = 2;
                 break;
             case Scene.PVP_READY_SCENE :
-                numberOfScene = 4;
+                numberOfScene = 3;
                 break;
             case Scene.CONNECT_MATCHING_SCENE :
-                numberOfScene = 5;
+                numberOfScene = 4;
                 break;
             case Scene.MISSION_INGAME :
-                numberOfScene = 1;
+                numberOfScene = 5;
                 break;
         }
         var currentScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
@@ -76,19 +75,19 @@ public class SceneManager : Singleton<SceneManager> {
 
     IEnumerator PreLoadReadyScene(int load) {
         yield return null;
-        asyncOp = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(load, UnityEngine.SceneManagement.LoadSceneMode.Additive);
-        asyncOp.allowSceneActivation = false;
+
         yield return null;
     }
 
     IEnumerator LoadReadyScene(int unload, int load) {
         yield return null;
+        asyncOp = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(load, UnityEngine.SceneManagement.LoadSceneMode.Additive);
+        asyncOp.allowSceneActivation = false;
         while(!asyncOp.isDone) {
             asyncOp.allowSceneActivation = true;
             yield return null;
         }
         UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(unload);
-        yield return PreLoadReadyScene(load);
     }
 
     public float LoadingProgress() {
