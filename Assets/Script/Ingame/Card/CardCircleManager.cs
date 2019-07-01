@@ -255,6 +255,7 @@ public class CardCircleManager : MonoBehaviour {
         card.SetActive(false);
         card.transform.localPosition = Vector3.zero;
         card.transform.rotation = card.transform.parent.rotation;
+        PlayMangement.dragable = true;
     }
 
     private IEnumerator RemoveCardToStorage(int index) {
