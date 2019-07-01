@@ -229,6 +229,8 @@ public partial class PlayMangement : MonoBehaviour {
     }
 
     private IEnumerator MagicActivate(GameObject card, SocketFormat.PlayHistory history) {
+        MagicDragHandler magicCard = card.GetComponent<MagicDragHandler>();
+        magicCard.skillHandler.isDone = false;
         dragable = false;
         //카드 등장 애니메이션
         card.transform.rotation = new Quaternion(0, 0, 540, card.transform.rotation.w);
@@ -242,7 +244,6 @@ public partial class PlayMangement : MonoBehaviour {
         //    "easetype", iTween.EaseType.easeWeakOutBack));
         Logger.Log(enemyPlayer.playerUI.transform.position);
         yield return new WaitForSeconds(1.0f);
-        MagicDragHandler magicCard = card.GetComponent<MagicDragHandler>();
         //타겟 지정 애니메이션
         yield return EnemySettingTarget(history.targets[0], magicCard);
         //실제 카드 사용
