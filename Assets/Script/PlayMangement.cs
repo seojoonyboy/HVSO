@@ -36,7 +36,6 @@ public partial class PlayMangement : MonoBehaviour {
 
     private void Awake() {
         socketHandler = FindObjectOfType<BattleConnector>();
-        socketHandler.ClientReady();
 
         SetWorldScale();
         instance = this;

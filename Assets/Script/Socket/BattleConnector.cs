@@ -56,7 +56,7 @@ public partial class BattleConnector : MonoBehaviour {
 
     private IEnumerator TimerOn() {
         int time = 0;
-        while(time < 10) {
+        while(time < 60) {
             yield return new WaitForSeconds(1f);
             if(timer != null) timer.text = string.Format("{0}초 대기 중...", time);
             time++;
@@ -226,6 +226,7 @@ public partial class BattleConnector : MonoBehaviour {
         CustomEvent.Trigger(machine, "PlayStartBattleAnim");
         StopCoroutine(timeCheck);
         SetUserInfoText();
+        ClientReady();
     }
 
     /// <summary>
@@ -527,7 +528,9 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public IEnumerator WaitBattle() {
-        yield return new WaitUntil(() => (gameState.state.CompareTo("battleTurn") == 0 || gameState.state.CompareTo("shieldTurn") == 0) );
+        yield return new WaitUntil(() => (gameState.state.CompareTo("battleTurn") == 0 || 
+                                        gameState.state.CompareTo("shieldTurn") == 0 || 
+                                        gameState.state.CompareTo("endGame") == 0) );
     }
 }
 namespace SocketFormat {
