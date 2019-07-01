@@ -158,7 +158,6 @@ namespace SkillModules {
                 }
                 magic.CARDUSED = true;
                 magic.heroCardActivate = false;
-                RemoveTriggerEvent();
             }
         }
 
@@ -275,6 +274,10 @@ namespace SkillModules {
 
         public string[] targetArgument() {
             return skills[0].TargetArgs();
+        }
+
+        public bool TargetSelectExist() {
+            return skills.ToList().Exists(x => x.TargetSelectExist());
         }
     }
 }

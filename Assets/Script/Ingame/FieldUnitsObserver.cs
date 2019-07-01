@@ -61,6 +61,7 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
     /// <param name="col">새로운 위치 col</param>
     /// <returns></returns>
     IEnumerator UnitChangeCoroutine(GameObject target, Pos prevPos, int row, int col) {
+        units[prevPos.col, prevPos.row] = null;
         yield return new WaitForSeconds(1.0f);
 
         target.transform.SetParent(transform.GetChild(row).GetChild(col));
@@ -75,7 +76,6 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
         Logger.Log(string.Format("prev Pos Col : {0}",prevPos.col));
         Logger.Log(string.Format("prev Pos Row : {0}", prevPos.row));
 
-        units[prevPos.col, prevPos.row] = null;
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.FIELD_CHANGED, null, null);
     }
 

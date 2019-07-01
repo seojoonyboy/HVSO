@@ -44,7 +44,7 @@ namespace dataModules {
     }
 
     public class Deck {
-        public bool userHas;
+        //public bool userHas;
         public int cardTotalCount;
         public string id;
         public string name;

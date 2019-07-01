@@ -239,7 +239,7 @@ public class CardCircleManager : MonoBehaviour {
     }
 
     public void DestroyUsedHeroCard(Transform card) {
-        Transform infoWindow = card.parent.Find("CardInfoWindow");
+        Transform infoWindow = card.Find("CardInfoWindow");
         infoWindow.SetParent(clm.transform.Find("InfoStandby"));
         infoWindow.localScale = new Vector3(1, 1, 1);
         infoWindow.rotation = infoWindow.parent.rotation;
@@ -288,7 +288,9 @@ public class CardCircleManager : MonoBehaviour {
         else
             clm.OpenCardInfo(index, true);
         yield return new WaitForSeconds(1.5f);
-        if(index == 100) {
+        if (index != 100 && transform.GetChild(index).GetChild(1).GetComponent<MagicDragHandler>().skillHandler.TargetSelectExist())
+            clm.HandCardInfo.GetChild(index).gameObject.SetActive(false);
+        if (index == 100) {
             Transform infoWindow = clm.StandbyInfo.GetChild(0);
             infoWindow.gameObject.SetActive(false);
             infoWindow.localScale = new Vector3(1, 1, 1);

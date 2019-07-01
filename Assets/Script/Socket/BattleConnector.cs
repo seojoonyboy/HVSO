@@ -89,8 +89,14 @@ public partial class BattleConnector : MonoBehaviour {
 
     private IEnumerator showMessage(ReceiveFormat result) {
         yield return null;
+        JObject json = null;
+        if(result.gameState != null) {
+            json = JObject.Parse(JsonConvert.SerializeObject(result.gameState.map));
+            json["lines"].Parent.Remove();
+            for(int i = 0; i < json["allMonster"].Count() ; i++) json["allMonster"][i]["skills"].Parent.Remove();
+        }
         Logger.Log(string.Format("메소드 : {0}, args : {1}, map : {2}", result.method, result.args, 
-        result.gameState != null ? JsonConvert.SerializeObject(result.gameState.map) : null));
+        result.gameState != null ? JsonConvert.SerializeObject(json, Formatting.Indented)  : null));
     }
 
     public void ClientReady() {
