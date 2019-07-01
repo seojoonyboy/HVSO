@@ -51,7 +51,7 @@ namespace SkillModules {
             GameObject target = (GameObject)mySkillHandler.skillTarget;
             if(target == null) return false;
             IngameClass.Unit unit = target.GetComponent<PlaceMonster>().unit;
-            bool exist = unit.cardCategories.ToList().Exists(x => x.CompareTo(args[0]) == 0);
+            bool exist = unit.cardCategories.ToList().Exists(x => !string.IsNullOrEmpty(x) && x.CompareTo(args[0]) == 0);
             return exist;
         }
     }
