@@ -239,7 +239,7 @@ public class CardCircleManager : MonoBehaviour {
     }
 
     public void DestroyUsedHeroCard(Transform card) {
-        Transform infoWindow = card.parent.Find("CardInfoWindow");
+        Transform infoWindow = card.Find("CardInfoWindow");
         infoWindow.SetParent(clm.transform.Find("InfoStandby"));
         infoWindow.localScale = new Vector3(1, 1, 1);
         infoWindow.rotation = infoWindow.parent.rotation;
