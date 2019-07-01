@@ -13,6 +13,7 @@ using System.Reflection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Linq;
+using TMPro;
 
 public partial class BattleConnector : MonoBehaviour {
 
@@ -194,6 +195,54 @@ public partial class BattleConnector : MonoBehaviour {
     public void begin_ready(object args) {
         this.message.text = "대전 상대를 찾았습니다.";
         CustomEvent.Trigger(machine, "PlayStartBattleAnim");
+
+        SetUserInfoText();
+    }
+
+    /// <summary>
+    /// 매칭 화면에서 유저 정보 표기
+    /// </summary>
+    private void SetUserInfoText() {
+        string race = Variables.Saved.Get("SelectedRace").ToString().ToLower();
+
+        var orcPlayerData = gameState.players.orc;
+        var orcUserData = orcPlayerData.user;
+        var humanPlayerData = gameState.players.human;
+        var humanUserData = humanPlayerData.user;
+
+        string orcPlayerNickName = orcUserData.nickName;
+        if (string.IsNullOrEmpty(orcPlayerNickName)) orcPlayerNickName = "Bot";
+
+        string orcHeroName = orcPlayerData.hero.name;
+        string humanPlayerNickName = humanUserData.nickName;
+        if (string.IsNullOrEmpty(humanPlayerNickName)) humanPlayerNickName = "Bot";
+        string humanHeroName = humanPlayerData.hero.name;
+
+        Logger.Log(orcPlayerNickName);
+        Logger.Log(humanPlayerNickName);
+
+        TextMeshProUGUI enemyNickNameTxt = machine.transform.Find("EnemyName/NickName").GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI enemyHeroNameTxt = machine.transform.Find("EnemyName/HeroName").GetComponent<TextMeshProUGUI>();
+
+        TextMeshProUGUI playerNickNameTxt = machine.transform.Find("PlayerName/NickName").GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI playerHeroNameTxt = machine.transform.Find("PlayerName/HeroName").GetComponent<TextMeshProUGUI>();
+
+        Logger.Log(race);
+
+        if (race == "human") {
+            playerHeroNameTxt.text = humanHeroName;
+            playerNickNameTxt.text = humanPlayerNickName;
+
+            enemyHeroNameTxt.text = orcHeroName;
+            enemyNickNameTxt.text = orcPlayerNickName;
+        }
+        else if (race == "orc") {
+            playerHeroNameTxt.text = orcHeroName;
+            playerNickNameTxt.text = orcPlayerNickName;
+
+            enemyHeroNameTxt.text = humanHeroName;
+            enemyNickNameTxt.text = humanPlayerNickName;
+        }
     }
 
     public void end_ready(object args) {
