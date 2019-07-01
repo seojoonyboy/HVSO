@@ -32,6 +32,7 @@ public partial class BattleConnector : MonoBehaviour {
     public UnityEvent OnSocketClose;
     public UnityAction<string, int, bool> HandchangeCallback;
     private Coroutine pingpong;
+    private Coroutine timeCheck;
     private bool battleGameFinish = false;
 
     void Awake() {
@@ -49,13 +50,13 @@ public partial class BattleConnector : MonoBehaviour {
         webSocket.Open();
 
         message.text = "대전상대를 찾는중...";
-        StartCoroutine(TimerOn());
+        timeCheck = StartCoroutine(TimerOn());
         returnButton.onClick.AddListener(BattleCancel);
     }
 
     private IEnumerator TimerOn() {
         int time = 0;
-        while(time < 60) {
+        while(time < 10) {
             yield return new WaitForSeconds(1f);
             if(timer != null) timer.text = string.Format("{0}초 대기 중...", time);
             time++;
@@ -64,14 +65,16 @@ public partial class BattleConnector : MonoBehaviour {
         timer.text = "이전 메뉴로 돌아갑니다.";
         webSocket.Close();
         yield return new WaitForSeconds(3f);
+        Destroy(gameObject);
         SceneManager.Instance.LoadScene(SceneManager.Scene.MAIN_SCENE);
         
     }
 
     private void BattleCancel() {
-        StopCoroutine("TimerOn");
+        StopCoroutine(timeCheck);
         webSocket.Close();
         returnButton.onClick.RemoveListener(BattleCancel);
+        Destroy(gameObject);
         SceneManager.Instance.LoadScene(SceneManager.Scene.MAIN_SCENE);
     }
 
@@ -221,7 +224,7 @@ public partial class BattleConnector : MonoBehaviour {
     public void begin_ready(object args) {
         this.message.text = "대전 상대를 찾았습니다.";
         CustomEvent.Trigger(machine, "PlayStartBattleAnim");
-        StopCoroutine("TimerOn");
+        StopCoroutine(timeCheck);
         SetUserInfoText();
     }
 
