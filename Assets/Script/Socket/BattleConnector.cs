@@ -65,17 +65,16 @@ public partial class BattleConnector : MonoBehaviour {
         timer.text = "이전 메뉴로 돌아갑니다.";
         webSocket.Close();
         yield return new WaitForSeconds(3f);
-        Destroy(gameObject);
         SceneManager.Instance.LoadScene(SceneManager.Scene.MAIN_SCENE);
-        
+        Destroy(gameObject);
     }
 
     private void BattleCancel() {
         StopCoroutine(timeCheck);
         webSocket.Close();
         returnButton.onClick.RemoveListener(BattleCancel);
-        Destroy(gameObject);
         SceneManager.Instance.LoadScene(SceneManager.Scene.MAIN_SCENE);
+        Destroy(gameObject);
     }
 
     public void OnClosed(WebSocket webSocket, ushort code, string msg) {

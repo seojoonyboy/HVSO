@@ -18,6 +18,9 @@ public class SceneManager : Singleton<SceneManager> {
 
     // Start is called before the first frame update
     void Start() {
+        for(int i = 1; i <= 5; i++) {
+            StartCoroutine(PreLoadReadyScene(i));
+        }
         DontDestroyOnLoad(this);
     }
 
@@ -71,28 +74,36 @@ public class SceneManager : Singleton<SceneManager> {
         QualitySettings.asyncUploadTimeSlice = 2;
     }
 
-    AsyncOperation asyncOp;
+    AsyncOperation[] asyncOps = new AsyncOperation[5];
 
     IEnumerator PreLoadReadyScene(int load) {
         yield return null;
-
+        if(load-1 < 0) yield break;
+        asyncOps[load-1] = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(load, UnityEngine.SceneManagement.LoadSceneMode.Single);
+        asyncOps[load-1].allowSceneActivation = false;
         yield return null;
     }
 
     IEnumerator LoadReadyScene(int unload, int load) {
         yield return null;
-        asyncOp = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(load, UnityEngine.SceneManagement.LoadSceneMode.Additive);
-        asyncOp.allowSceneActivation = false;
-        while(!asyncOp.isDone) {
-            asyncOp.allowSceneActivation = true;
+        if(unload-1 >= 0)
+            asyncOps[unload-1] = null;
+        if(asyncOps[load-1] == null) {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(load, UnityEngine.SceneManagement.LoadSceneMode.Single);
+            for(int i = 0; i < 5; i++) {
+                asyncOps[i] = null;
+            }
+            yield break;
+        }
+        while(!asyncOps[load-1].isDone) {
+            asyncOps[load-1].allowSceneActivation = true;
             yield return null;
         }
-        UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(unload);
     }
 
     public float LoadingProgress() {
-        if(asyncOp == null) return 0f;
-        return asyncOp.progress;
+        if(asyncOps[2] == null) return 0f;
+        return asyncOps[2].progress;
     }
 
     public enum Scene {
