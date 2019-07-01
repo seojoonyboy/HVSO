@@ -201,7 +201,7 @@ namespace SkillModules {
         }
 
         public override bool filtering(GameObject testObject) {
-            return testObject.GetComponent<PlaceMonster>().unit.attack < int.Parse(args[0]);
+            return testObject.GetComponent<PlaceMonster>().unit.attack >= int.Parse(args[0]);
         }
     }
 
