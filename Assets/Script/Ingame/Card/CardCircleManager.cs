@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class CardCircleManager : MonoBehaviour {
     public int cardNum = 0;
+    TMPro.TextMeshProUGUI handCardNum;
     [SerializeField] Transform cardStorage;
     [SerializeField] Transform showPos;
     [SerializeField] protected Transform firstDrawParent;
@@ -24,6 +25,7 @@ public class CardCircleManager : MonoBehaviour {
         cardList = new List<GameObject>();
         firstDrawList = new List<GameObject>();
         clm = PlayMangement.instance.cardInfoCanvas.Find("CardInfoList").GetComponent<CardListManager>();
+        handCardNum = transform.parent.Find("PlayerCardNum/Value").GetComponent<TMPro.TextMeshProUGUI>();
     }
 
     public virtual IEnumerator FirstDraw() {
@@ -226,12 +228,25 @@ public class CardCircleManager : MonoBehaviour {
             else
                 handler.ActivateCard();
         }
+        handCardNum.text = cardNum.ToString();
         handler.FIRSTDRAW = false;
         PlayMangement.dragable = true;
+
     }
 
     public void DestroyCard(int index) {
         StartCoroutine(RemoveCardToStorage(index));
+    }
+
+    public void DestroyUsedHeroCard(Transform card) {
+        Transform infoWindow = card.parent.Find("CardInfoWindow");
+        infoWindow.SetParent(clm.transform.Find("InfoStandby"));
+        infoWindow.localScale = new Vector3(1, 1, 1);
+        infoWindow.rotation = infoWindow.parent.rotation;
+        card.SetParent(cardStorage);
+        card.localScale = new Vector3(1, 1, 1);
+        card.rotation = card.transform.parent.rotation;
+
     }
 
     public void DestroyCard(GameObject card) {
