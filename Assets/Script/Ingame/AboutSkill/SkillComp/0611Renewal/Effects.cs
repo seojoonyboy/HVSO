@@ -168,6 +168,12 @@ namespace SkillModules {
             catch(FormatException ex) {
                 ShowFormatErrorLog("quick");
             }
+            waitDone();
+        }
+        
+
+        private async void waitDone() {
+            await Task.Delay(2100);
             skillHandler.isDone = true;
         }
     }
