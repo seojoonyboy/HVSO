@@ -52,6 +52,7 @@ public partial class BattleConnector : MonoBehaviour {
         message.text = "대전상대를 찾는중...";
         timeCheck = StartCoroutine(TimerOn());
         returnButton.onClick.AddListener(BattleCancel);
+        returnButton.gameObject.SetActive(true);
     }
 
     private IEnumerator TimerOn() {
@@ -63,6 +64,7 @@ public partial class BattleConnector : MonoBehaviour {
         }
         message.text = "대전상대를 찾지 못했습니다.";
         timer.text = "이전 메뉴로 돌아갑니다.";
+        returnButton.gameObject.SetActive(false);
         webSocket.Close();
         yield return new WaitForSeconds(3f);
         SceneManager.Instance.LoadScene(SceneManager.Scene.MAIN_SCENE);

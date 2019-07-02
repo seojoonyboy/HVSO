@@ -118,10 +118,9 @@ public class CardHandDeckManager : MonoBehaviour {
         firstDrawParent.gameObject.SetActive(false);
         GameObject firstOrcTurnObj = firstDrawParent.parent.Find("First_OrcPlay").gameObject;
         firstOrcTurnObj.SetActive(true);
+        SoundManager.Instance.PlaySound(SoundType.FIRST_TURN);
         yield return new WaitForSeconds(1.0f);
         firstOrcTurnObj.SetActive(false);
-
-        SoundManager.Instance.PlaySound(SoundType.FIRST_TURN);
     }
 
     public void AddCard(GameObject cardobj = null, SocketFormat.Card cardData = null) {

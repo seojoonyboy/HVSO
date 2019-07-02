@@ -33,6 +33,7 @@ public partial class PlayMangement : MonoBehaviour {
     public GameObject humanShield, orcShield;
     public static GameObject movingCard;
     public static bool dragable = true;
+    public string currentTurn;
 
     private void Awake() {
         socketHandler = FindObjectOfType<BattleConnector>();
@@ -403,7 +404,7 @@ public partial class PlayMangement : MonoBehaviour {
 
     public void ChangeTurn() {
         if (isGame == false) return;
-        string currentTurn = Variables.Scene(
+        currentTurn = Variables.Scene(
                 UnityEngine.SceneManagement.SceneManager.GetActiveScene()
             ).Get("CurrentTurn").ToString();
         Logger.Log(currentTurn);
@@ -525,6 +526,7 @@ public partial class PlayMangement : MonoBehaviour {
             yield return WaitSocketData(socketHandler.lineBattleList, line, true);
             shieldDequeue();
             yield return WaitSocketData(socketHandler.mapClearList, line, false);
+            yield return new WaitForSeconds(0.2f);
         }
         ResetCount(line);
         battleLineEffect.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.608f);

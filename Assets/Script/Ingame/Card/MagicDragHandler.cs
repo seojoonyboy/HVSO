@@ -62,9 +62,14 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
             return;
         }
         if (!PlayMangement.dragable) {
+            eventData.pointerDrag = null;
+            eventData.dragging = false;
             OnEndDrag(null);
             return;
         }
+
+        Logger.Log("Dragable? " + PlayMangement.dragable);
+
         if (firstDraw) return;
         if (Input.touchCount > 1) return;
         if (gameObject != itsDragging) return;
