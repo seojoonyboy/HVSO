@@ -479,13 +479,13 @@ namespace TargetModules {
                 //3. unitSlot에서 특정 부분 밝혀주기 아마 baseSlot 맞겠지
                 terrainSlot.gameObject.SetActive(true);
                 terrainSlot.GetChild(0).gameObject.SetActive(true);
-                terrainSlot.GetComponent<SpriteRenderer>().color = new Color(1, 0, 0, 155.0f / 255.0f);
+                terrainSlot.GetComponent<SpriteRenderer>().color = new Color(1, 0, 0, 0.6f);
 
                 //4.  1.5초뒤에 끄기
                 yield return new WaitForSeconds(1.5f);
                 terrainSlot.gameObject.SetActive(false);
                 terrainSlot.GetChild(0).gameObject.SetActive(false);
-                terrainSlot.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 155.0f / 255.0f);
+                terrainSlot.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.6f);
                 
                 //5. 실제 effect 실행하러 보내기
                 Transform selectedTarget = PlayMangement.instance
@@ -533,13 +533,13 @@ namespace TargetModules {
                     //3. unitSlot에서 특정 부분 밝혀주기 아마 baseSlot 맞겠지
                     terrainSlot.gameObject.SetActive(true);
                     terrainSlot.GetChild(0).gameObject.SetActive(true);
-                    terrainSlot.GetComponent<SpriteRenderer>().color = new Color(1, 0, 0, 155.0f / 255.0f);
+                    terrainSlot.GetComponent<SpriteRenderer>().color = new Color(1, 0, 0, 0.6f);
 
                     //4.  1.5초뒤에 끄기
                     yield return new WaitForSeconds(1.5f);
                     terrainSlot.gameObject.SetActive(false);
                     terrainSlot.GetChild(0).gameObject.SetActive(false);
-                    terrainSlot.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 155.0f / 255.0f);
+                    terrainSlot.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.6f);
 
                     FieldUnitsObserver observer = isTargetPlayer ? PlayMangement.instance.PlayerUnitsObserver : PlayMangement.instance.EnemyUnitsObserver;
                     selectedTarget = observer
@@ -557,10 +557,10 @@ namespace TargetModules {
                     GameObject highlightUI = target.transform.Find("ClickableUI").gameObject;
                     //3. unitSlot에서 특정 부분 밝혀주기
                     highlightUI.SetActive(true);
-                    highlightUI.GetComponent<SpriteRenderer>().color = new Color(1, 0, 0, 155.0f / 255.0f);
+                    highlightUI.GetComponent<SpriteRenderer>().color = new Color(1, 0, 0, 0.6f);
                     //4.  1.5초뒤에 끄기
                     yield return new WaitForSeconds(1.5f);
-                    highlightUI.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 155.0f / 255.0f);
+                    highlightUI.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.6f);
                     highlightUI.SetActive(false);
                     selectedTarget = target.transform;
                 break;

@@ -73,9 +73,9 @@ public class PlayerController : MonoBehaviour
         if (isPlayer) {
             buttonParticle = playerUI.transform.Find("TurnUI/ResourceOut").gameObject;
             if (isHuman)
-                buttonParticle.GetComponent<SkeletonGraphic>().color = new Color(141.0f / 255.0f, 221.0f / 255.0f, 1);
+                buttonParticle.GetComponent<SkeletonGraphic>().color = new Color(0.552f, 0.866f, 1);
             else
-                buttonParticle.GetComponent<SkeletonGraphic>().color = new Color(1, 142.0f / 255.0f, 142.0f / 255.0f);
+                buttonParticle.GetComponent<SkeletonGraphic>().color = new Color(1, 0.556f, 0.556f);
             buttonParticle.SetActive(false);
         }
 
