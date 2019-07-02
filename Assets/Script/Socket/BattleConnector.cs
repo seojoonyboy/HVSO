@@ -408,8 +408,8 @@ public partial class BattleConnector : MonoBehaviour {
         foreach(MagicDragHandler magic in list) {
             if(magic.skillHandler == null) continue;
             
-            if(!(magic.skillHandler.finallyDone && magic.skillHandler.isDone)) {
-                yield return new WaitUntil(() => magic.skillHandler.finallyDone && magic.skillHandler.isDone);
+            if(!(magic.skillHandler.finallyDone && magic.skillHandler.socketDone)) {
+                yield return new WaitUntil(() => magic.skillHandler.finallyDone && magic.skillHandler.socketDone);
                 yield return new WaitForSeconds(1.0f);
             }
         }
@@ -417,8 +417,8 @@ public partial class BattleConnector : MonoBehaviour {
         foreach(PlaceMonster unit in list2) {
             if(unit.skillHandler == null) continue;
             
-            if(!(unit.skillHandler.finallyDone && unit.skillHandler.isDone)) {
-                yield return new WaitUntil(() => unit.skillHandler.finallyDone && unit.skillHandler.isDone);
+            if(!(unit.skillHandler.finallyDone && unit.skillHandler.socketDone)) {
+                yield return new WaitUntil(() => unit.skillHandler.finallyDone && unit.skillHandler.socketDone);
                 yield return new WaitForSeconds(1.0f);
             }
         }

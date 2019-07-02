@@ -230,7 +230,7 @@ public partial class PlayMangement : MonoBehaviour {
 
     private IEnumerator MagicActivate(GameObject card, SocketFormat.PlayHistory history) {
         MagicDragHandler magicCard = card.GetComponent<MagicDragHandler>();
-        magicCard.skillHandler.isDone = false;
+        magicCard.skillHandler.socketDone = false;
         dragable = false;
         //카드 등장 애니메이션
         card.transform.rotation = new Quaternion(0, 0, 540, card.transform.rotation.w);

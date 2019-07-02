@@ -18,6 +18,7 @@ namespace SkillModules {
         public bool isDone = true;
         public delegate bool DragFilter(GameObject TestObject);
         public DragFilter dragFiltering;
+        public bool socketDone = true;
         public bool finallyDone = true;
         Transform highlight;
         
@@ -117,6 +118,7 @@ namespace SkillModules {
             if(isPlayingCard()) SendSocket();
             //TODO : field에서 select 발동 했을 때
             else if(isFieldCard()) SkillActivate();
+            socketDone = true;
         }
 
         private bool isPlayingCard() {
