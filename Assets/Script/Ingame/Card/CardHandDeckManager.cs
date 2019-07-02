@@ -371,7 +371,7 @@ public class CardHandDeckManager : MonoBehaviour {
         foreach(GameObject card in cardList) {
             card.transform.localPosition = new Vector3(0, 0, 0);
         }
-        PlayMangement.dragable = true;
+        //PlayMangement.dragable = true;
     }
 
     public void DestroyCard(int index) {

@@ -202,6 +202,7 @@ public class CardCircleManager : MonoBehaviour {
 
 
     IEnumerator SendCardToHand(GameObject card, Transform pos, bool isHero = false) {
+        PlayMangement.dragable = false;
         CardHandler handler = card.GetComponent<CardHandler>();
         handler.DisableCard();
         handCardNum.text = cardNum.ToString();
@@ -230,8 +231,8 @@ public class CardCircleManager : MonoBehaviour {
                 handler.ActivateCard();
         }
         handler.FIRSTDRAW = false;
-        PlayMangement.dragable = true;
-
+        if (Variables.Scene(UnityEngine.SceneManagement.SceneManager.GetActiveScene()).Get("CurrentTurn").ToString() != "BATTLE")
+            PlayMangement.dragable = true;
     }
 
     public void DestroyCard(int index) {
@@ -257,7 +258,8 @@ public class CardCircleManager : MonoBehaviour {
         card.SetActive(false);
         card.transform.localPosition = Vector3.zero;
         card.transform.rotation = card.transform.parent.rotation;
-        PlayMangement.dragable = true;
+        if (Variables.Scene(UnityEngine.SceneManagement.SceneManager.GetActiveScene()).Get("CurrentTurn").ToString() != "BATTLE")
+            PlayMangement.dragable = true;
     }
 
     private IEnumerator RemoveCardToStorage(int index) {
@@ -322,7 +324,8 @@ public class CardCircleManager : MonoBehaviour {
                 iTween.RotateTo(gameObject, new Vector3(0, 0, (cardNum - 1) * 4), 0.2f);
             yield return new WaitForSeconds(0.1f);
         }
-        PlayMangement.dragable = true;
+        if( Variables.Scene(UnityEngine.SceneManagement.SceneManager.GetActiveScene()).Get("CurrentTurn").ToString() != "BATTLE")
+            PlayMangement.dragable = true;
     }
 
     IEnumerator DrawChangedCards() {

@@ -290,7 +290,8 @@ public class PlayerController : MonoBehaviour
             if (isPlayer)
                 buttonParticle.SetActive(true);
         }
-        PlayMangement.dragable = true;
+        if (Variables.Scene(UnityEngine.SceneManagement.SceneManager.GetActiveScene()).Get("CurrentTurn").ToString() != "BATTLE")
+            PlayMangement.dragable = true;
     }
 
     public void ActiveOrcTurn() {
@@ -323,7 +324,8 @@ public class PlayerController : MonoBehaviour
             if (isPlayer)
                 buttonParticle.SetActive(true);
         }
-        PlayMangement.dragable = true;
+        if (Variables.Scene(UnityEngine.SceneManagement.SceneManager.GetActiveScene()).Get("CurrentTurn").ToString() != "BATTLE")
+            PlayMangement.dragable = true;
     }
 
     public void DisablePlayer() {

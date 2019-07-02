@@ -31,13 +31,13 @@ public partial class UnitDragHandler : CardHandler, IBeginDragHandler, IDragHand
     }
 
     public void OnDrag(PointerEventData eventData) {
-        if (firstDraw) return;
-        if (Input.touchCount > 1) return;
-        if (gameObject != itsDragging) return;
         if (!PlayMangement.dragable) {
             OnEndDrag(null);
             return;
         }
+        if (firstDraw) return;
+        if (Input.touchCount > 1) return;
+        if (gameObject != itsDragging) return;
         OnDragCard();
         CheckLocation();
         CardInfoOnDrag.instance.SetInfoPosOnDrag(mousLocalPos.localPosition);
