@@ -385,6 +385,8 @@ namespace TargetModules {
         private void Update() {
             if (callback != null && Input.GetMouseButtonDown(0)) {
                 Transform selectedTarget = null;
+                PlayMangement.dragable = false;
+
                 if (args[1] == "place") {
                     selectedTarget = GetClickedAreaSlot();
                 }
@@ -421,6 +423,7 @@ namespace TargetModules {
 
                     callback = null;
                     PlayMangement.instance.infoOn = false;
+                    PlayMangement.dragable = true;
 
                     var units = PlayMangement.instance.EnemyUnitsObserver.GetAllFieldUnits();
                     foreach (GameObject unit in units) {
