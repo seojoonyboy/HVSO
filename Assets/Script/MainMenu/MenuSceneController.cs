@@ -1,14 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.UI.Extensions;
 
 public class MenuSceneController : MonoBehaviour {
+    [SerializeField] Transform fixedCanvas;
+    [SerializeField] HorizontalScrollSnap windowScrollSnap;
 
-    /// <summary>
-    /// 싱글플레이 미션 버튼 클릭 (식물, 좀비)
-    /// </summary>
-    public void OnMissionClicked() {
-        SceneManager.Instance.LoadScene(SceneManager.Scene.MISSION_SELECT_SCENE);
+    private void Start() {
+        
     }
 
     /// <summary>
@@ -18,5 +19,9 @@ public class MenuSceneController : MonoBehaviour {
         SceneManager.Instance.LoadScene(SceneManager.Scene.LOADING_SCENE);
 
         SoundManager.Instance.PlaySound(SoundType.FIRST_TURN);
+    }
+
+    public void ClickMenuButton(int pageNum) {
+        windowScrollSnap.GoToScreen(pageNum);
     }
 }
