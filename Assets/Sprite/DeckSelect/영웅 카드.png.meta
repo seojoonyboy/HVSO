@@ -1,37 +1,25 @@
 fileFormatVersion: 2
-guid: 1b29d0bb25aa8d14e8682b8e7f219bbf
+guid: f2ac4f4fa8996e848a52e02efe26cf63
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4449170908943438785
-    second: 0628_Effect_Set_0
+      213: 7189428859801813838
+    second: "\uC601\uC6C5 \uCE74\uB4DC_0"
   - first:
-      213: -3547815263557740486
-    second: 0628_Effect_Set_1
+      213: 4958389169352412528
+    second: "\uC601\uC6C5 \uCE74\uB4DC_1"
   - first:
-      213: -614470931339839638
-    second: Yellow_Glow
+      213: 6759087654281769569
+    second: "\uC601\uC6C5 \uCE74\uB4DC_2"
   - first:
-      213: 1851394179608998757
-    second: DeckShadow
+      213: 1972635969057837582
+    second: "\uC601\uC6C5 \uCE74\uB4DC_3"
   - first:
-      213: 1172317754026530869
-    second: Text
+      213: 3461996188701012176
+    second: "\uC601\uC6C5 \uCE74\uB4DC_4"
   - first:
-      213: 4404110435443026395
-    second: 0628_Effect_Set_9
-  - first:
-      213: -8018800139485803916
-    second: ButtonOutline
-  - first:
-      213: 200121208646772961
-    second: OrcDeckBg
-  - first:
-      213: -7904884749239325663
-    second: HumanDeckBg
-  - first:
-      213: -8905366318408366918
-    second: AddBtnBg
+      213: -5641399100269775092
+    second: "\uC601\uC6C5 \uCE74\uB4DC_5"
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -132,215 +120,142 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 0628_Effect_Set_0
+      name: "\uC601\uC6C5 \uCE74\uB4DC_0"
       rect:
         serializedVersion: 2
-        x: 872
-        y: 2008
-        width: 4
-        height: 4
+        x: 121
+        y: 813
+        width: 285
+        height: 207
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 75cbdebf85512694a84c84efa71c5f0b
-      internalID: -4449170908943438785
+      spriteID: bf0eed30a64956a4a9e71a966b4209a2
+      internalID: 7189428859801813838
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 0628_Effect_Set_1
+      name: "\uC601\uC6C5 \uCE74\uB4DC_1"
       rect:
         serializedVersion: 2
-        x: 528
-        y: 2000
-        width: 4
-        height: 8
+        x: 121
+        y: 588
+        width: 284
+        height: 206
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 57525734d7e521a43868d5d60400dfee
-      internalID: -3547815263557740486
+      spriteID: 95b6248400cac5c4dab681d7aafc7297
+      internalID: 4958389169352412528
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Yellow_Glow
+      name: "\uC601\uC6C5 \uCE74\uB4DC_2"
       rect:
         serializedVersion: 2
-        x: 144
-        y: 884
-        width: 328
-        height: 380
+        x: 123
+        y: 497
+        width: 282
+        height: 77
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a8f1eac2dd3a2c44f82c043a6d289472
-      internalID: -614470931339839638
+      spriteID: c7174389d92b47b4a83df6048284512d
+      internalID: 6759087654281769569
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DeckShadow
+      name: "\uC601\uC6C5 \uCE74\uB4DC_3"
       rect:
         serializedVersion: 2
-        x: 556
-        y: 880
-        width: 328
-        height: 384
+        x: 126
+        y: 404
+        width: 275
+        height: 75
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 84752a5da2a10aa438506464390194d4
-      internalID: 1851394179608998757
+      spriteID: 23cc75ee15171524298e927c3bce0ba8
+      internalID: 1972635969057837582
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Text
+      name: "\uC601\uC6C5 \uCE74\uB4DC_4"
       rect:
         serializedVersion: 2
-        x: 224
-        y: 644
-        width: 576
-        height: 124
+        x: 128
+        y: 201
+        width: 259
+        height: 180
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ec2b622185a0bb444a39965fbccfb7b4
-      internalID: 1172317754026530869
+      spriteID: 000ebe9b2d0b324408384ef6caddb83a
+      internalID: 3461996188701012176
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 0628_Effect_Set_9
+      name: "\uC601\uC6C5 \uCE74\uB4DC_5"
       rect:
         serializedVersion: 2
-        x: 14
-        y: 214
-        width: 480
-        height: 292
+        x: 145
+        y: 13
+        width: 216
+        height: 165
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 74c2527ef0df1c645bdb76093bacb487
-      internalID: 4404110435443026395
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ButtonOutline
-      rect:
-        serializedVersion: 2
-        x: 556
-        y: 244
-        width: 420
-        height: 236
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a94b363469b944f4b851e298f6fa5d99
-      internalID: -8018800139485803916
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: OrcDeckBg
-      rect:
-        serializedVersion: 2
-        x: 44
-        y: 1634
-        width: 276
-        height: 317
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c8a9ff3cbca65a34f87d6388f963306f
-      internalID: 200121208646772961
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: HumanDeckBg
-      rect:
-        serializedVersion: 2
-        x: 363
-        y: 1634
-        width: 276
-        height: 317
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2906307791e52084d9faf65a75edb9fd
-      internalID: -7904884749239325663
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: AddBtnBg
-      rect:
-        serializedVersion: 2
-        x: 708
-        y: 1640
-        width: 276
-        height: 317
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e315e8276f665d64c87e9e2041111645
-      internalID: -8905366318408366918
+      spriteID: 92b74e2f812ca6249990cc8daf245bae
+      internalID: -5641399100269775092
       vertices: []
       indices: 
       edges: []
@@ -348,7 +263,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 179ea5aea0750e44ea6bd99e4d474c90
+    spriteID: 3363ca763d0a2c34ab4a28cafe4ff7cc
     internalID: 0
     vertices: []
     indices: 
