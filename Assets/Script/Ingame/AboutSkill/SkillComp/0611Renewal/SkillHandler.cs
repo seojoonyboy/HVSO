@@ -19,6 +19,7 @@ namespace SkillModules {
         public delegate bool DragFilter(GameObject TestObject);
         public DragFilter dragFiltering;
         public bool finallyDone = true;
+        Transform highlight;
         
 
         string targetType;
@@ -55,6 +56,7 @@ namespace SkillModules {
         //TODO : Trigger 관리
         private void Trigger (Enum Event_Type, Component Sender, object Param = null) {
             targetData = Param;
+            highlight = myObject.GetComponent<CardHandler>().highlightedSlot;
             IngameEventHandler.EVENT_TYPE triggerType = (IngameEventHandler.EVENT_TYPE) Event_Type;
             if(triggerType == IngameEventHandler.EVENT_TYPE.BEGIN_ORC_POST_TURN || triggerType == IngameEventHandler.EVENT_TYPE.END_BATTLE_TURN) {
                 AddTurnTriggerUnit(triggerType, Param);
@@ -257,7 +259,6 @@ namespace SkillModules {
 
         private PlaceMonster GetDropAreaUnit() {
             PlaceMonster unit;
-            Transform highlight = myObject.GetComponent<CardHandler>().highlightedSlot;
             if(highlight != null)
                 unit = highlight.GetComponentInParent<PlaceMonster>();
             else
@@ -266,8 +267,7 @@ namespace SkillModules {
         }
         
         private int GetDropAreaLine() {
-            return myObject.GetComponent<CardHandler>()
-                .highlightedSlot
+            return highlight
                 .GetComponentInParent<Terrain>()
                 .transform.GetSiblingIndex();
         }
