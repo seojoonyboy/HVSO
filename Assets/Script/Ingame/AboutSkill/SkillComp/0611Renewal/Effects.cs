@@ -159,7 +159,7 @@ namespace SkillModules {
                 GameObject target = (GameObject)data;
                 if(target.GetComponent<stun>() == null) {
                     target.GetComponent<PlaceMonster>().Invoke("InstanceAttack", 0.5f);
-                    target.GetComponent<PlaceMonster>().Invoke("CheckHP", 2.0f);
+                    target.GetComponent<PlaceMonster>().Invoke("CheckHP", 2.5f);
                 }
                 else {
                     Logger.Log("Stun이 걸려있어 공격을 할 수 없습니다!");
@@ -168,13 +168,15 @@ namespace SkillModules {
             catch(FormatException ex) {
                 ShowFormatErrorLog("quick");
             }
+            skillHandler.isDone = true;
+            skillHandler.finallyDone = false;
             waitDone();
         }
         
 
         private async void waitDone() {
-            await Task.Delay(1800);
-            skillHandler.isDone = true;
+            await Task.Delay(2500);
+            skillHandler.finallyDone = true;
         }
     }
 
