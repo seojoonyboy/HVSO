@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
     public GameObject card;
     public GameObject back;
     public GameObject playerUI;
+    Transform sheildRemain;
     [SerializeField] public CardCircleManager cdpm;
 
     public GameObject backLine;
@@ -60,11 +61,15 @@ public class PlayerController : MonoBehaviour
         costText = playerUI.transform.Find("PlayerResource").GetChild(0).Find("Text").GetComponent<TextMeshProUGUI>();
         HPText = playerUI.transform.Find("PlayerHealth/HealthText").GetComponent<TextMeshProUGUI>();
         shieldGauge = playerUI.transform.Find("PlayerHealth/Helth&Shield/SheildGauge").GetComponent<Image>();
-        if (isHuman)
+        if (isHuman) {
             playerUI.transform.Find("PlayerHealth/Flag/Human").gameObject.SetActive(true);
-        else
+            sheildRemain = playerUI.transform.Find("PlayerHealth/RemainSheild/HumanSheild");
+        }
+        else {
             playerUI.transform.Find("PlayerHealth/Flag/Orc").gameObject.SetActive(true);
-
+            sheildRemain = playerUI.transform.Find("PlayerHealth/RemainSheild/OrcSheild");
+        }
+        sheildRemain.gameObject.SetActive(true);
         if (isPlayer) {
             buttonParticle = playerUI.transform.Find("TurnUI/ResourceOut").gameObject;
             if (isHuman)
@@ -257,7 +262,7 @@ public class PlayerController : MonoBehaviour
         StartCoroutine(PlayMangement.instance.DrawSpecialCard(isHuman));
         shieldStack.Value = 0;
         shieldCount--;
-        playerUI.transform.Find("PlayerHealth/RemainSheild").GetChild(shieldCount + 3).gameObject.SetActive(false);
+        sheildRemain.GetChild(shieldCount).gameObject.SetActive(false);
     }
 
     public void DisableShield() {
