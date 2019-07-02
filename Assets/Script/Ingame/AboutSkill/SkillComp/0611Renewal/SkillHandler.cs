@@ -56,7 +56,8 @@ namespace SkillModules {
         //TODO : Trigger 관리
         private void Trigger (Enum Event_Type, Component Sender, object Param = null) {
             targetData = Param;
-            highlight = myObject.GetComponent<CardHandler>().highlightedSlot;
+            if(myObject.GetComponent<CardHandler>() != null) highlight = myObject.GetComponent<CardHandler>().highlightedSlot;
+
             IngameEventHandler.EVENT_TYPE triggerType = (IngameEventHandler.EVENT_TYPE) Event_Type;
             if(triggerType == IngameEventHandler.EVENT_TYPE.BEGIN_ORC_POST_TURN || triggerType == IngameEventHandler.EVENT_TYPE.END_BATTLE_TURN) {
                 AddTurnTriggerUnit(triggerType, Param);
