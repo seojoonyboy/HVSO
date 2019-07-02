@@ -33,6 +33,7 @@ public partial class PlayMangement : MonoBehaviour {
     public GameObject humanShield, orcShield;
     public static GameObject movingCard;
     public static bool dragable = true;
+    public string currentTurn;
 
     private void Awake() {
         socketHandler = FindObjectOfType<BattleConnector>();
@@ -403,7 +404,7 @@ public partial class PlayMangement : MonoBehaviour {
 
     public void ChangeTurn() {
         if (isGame == false) return;
-        string currentTurn = Variables.Scene(
+        currentTurn = Variables.Scene(
                 UnityEngine.SceneManagement.SceneManager.GetActiveScene()
             ).Get("CurrentTurn").ToString();
         Logger.Log(currentTurn);

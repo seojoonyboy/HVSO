@@ -295,7 +295,7 @@ public class PlayerController : MonoBehaviour
             if (isPlayer)
                 buttonParticle.SetActive(true);
         }
-        if (Variables.Scene(UnityEngine.SceneManagement.SceneManager.GetActiveScene()).Get("CurrentTurn").ToString() != "BATTLE")
+        if (PlayMangement.instance.currentTurn != "BATTLE")
             PlayMangement.dragable = true;
     }
 
@@ -329,7 +329,7 @@ public class PlayerController : MonoBehaviour
             if (isPlayer)
                 buttonParticle.SetActive(true);
         }
-        if (Variables.Scene(UnityEngine.SceneManagement.SceneManager.GetActiveScene()).Get("CurrentTurn").ToString() != "BATTLE")
+        if (PlayMangement.instance.currentTurn != "BATTLE")
             PlayMangement.dragable = true;
     }
 
