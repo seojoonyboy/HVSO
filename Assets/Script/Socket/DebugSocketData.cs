@@ -50,10 +50,12 @@ namespace SocketFormat {
             bool isPlayerHuman = manager.player.isHuman;
             if(state.players.myPlayer(isPlayerHuman).hero.currentHp != manager.player.HP.Value) {
                 manager.player.HP.Value = state.players.myPlayer(isPlayerHuman).hero.currentHp;
+                manager.player.shieldStack.Value = state.players.myPlayer(isPlayerHuman).hero.shieldGauge;
                 FoundMisMatchData("플레이어 영웅", "hp");
             }
             if(state.players.myPlayer(!isPlayerHuman).hero.currentHp != manager.enemyPlayer.HP.Value)  {
                 manager.enemyPlayer.HP.Value = state.players.myPlayer(!isPlayerHuman).hero.currentHp;
+                manager.enemyPlayer.shieldStack.Value = state.players.myPlayer(!isPlayerHuman).hero.shieldGauge;
                 FoundMisMatchData("컴퓨터 영웅", "hp");
             }
         }

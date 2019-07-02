@@ -35,7 +35,7 @@ public class PlayerController : MonoBehaviour
     public ReactiveProperty<int> HP;
     public ReactiveProperty<int> resource = new ReactiveProperty<int>(2);
     public ReactiveProperty<bool> isPicking = new ReactiveProperty<bool>(false);
-    private ReactiveProperty<int> shieldStack = new ReactiveProperty<int>(0);
+    public ReactiveProperty<int> shieldStack = new ReactiveProperty<int>(0);
     private int shieldCount = 0;
 
     protected HeroSpine heroSpine;

@@ -525,6 +525,7 @@ public partial class PlayMangement : MonoBehaviour {
             yield return WaitSocketData(socketHandler.lineBattleList, line, true);
             shieldDequeue();
             yield return WaitSocketData(socketHandler.mapClearList, line, false);
+            yield return new WaitForSeconds(0.2f);
         }
         ResetCount(line);
         battleLineEffect.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.608f);
