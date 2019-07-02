@@ -173,7 +173,7 @@ namespace SkillModules {
         
 
         private async void waitDone() {
-            await Task.Delay(2100);
+            await Task.Delay(1800);
             skillHandler.isDone = true;
         }
     }

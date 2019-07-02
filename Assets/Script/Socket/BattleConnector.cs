@@ -104,7 +104,7 @@ public partial class BattleConnector : MonoBehaviour {
             yield return beatTime;
         }
         if(!battleGameFinish)
-            PlayMangement.instance.SocketErrorUIOpen();
+            PlayMangement.instance.SocketErrorUIOpen(false);
     }
 
     //Receive Socket Message
@@ -408,7 +408,7 @@ public partial class BattleConnector : MonoBehaviour {
             
             if(!(magic.skillHandler.finallyDone && magic.skillHandler.isDone)) {
                 yield return new WaitUntil(() => magic.skillHandler.finallyDone && magic.skillHandler.isDone);
-                yield return new WaitForSeconds(0.3f);
+                yield return new WaitForSeconds(1.0f);
             }
         }
         PlaceMonster[] list2 = FindObjectsOfType<PlaceMonster>();
@@ -417,7 +417,7 @@ public partial class BattleConnector : MonoBehaviour {
             
             if(!(unit.skillHandler.finallyDone && unit.skillHandler.isDone)) {
                 yield return new WaitUntil(() => unit.skillHandler.finallyDone && unit.skillHandler.isDone);
-                yield return new WaitForSeconds(0.3f);
+                yield return new WaitForSeconds(1.0f);
             }
         }
         callback();
@@ -445,6 +445,7 @@ public partial class BattleConnector : MonoBehaviour {
 
     public void opponent_connection_closed(object args) {
         //Logger.Log("WebSocket State : opponent_connection_closed");
+        PlayMangement.instance.SocketErrorUIOpen(true);
     }
 
     public void begin_end_game(object args) {

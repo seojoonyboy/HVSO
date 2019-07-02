@@ -708,8 +708,10 @@ public partial class PlayMangement {
         }
     }
 
-    public void SocketErrorUIOpen() {
+    public void SocketErrorUIOpen(bool friendOut) {
         SocketDisconnectedUI.SetActive(true);
+        if(friendOut)
+            SocketDisconnectedUI.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "상대방이 게임을 \n 종료했습니다.";
     }
 
     public void OnMoveSceneBtn() {
