@@ -224,14 +224,17 @@ public class CardCircleManager : MonoBehaviour {
         if (cardNum > 2 && !isMultiple && !firstDraw)
             iTween.RotateTo(gameObject, new Vector3(0, 0, (cardNum - 2) * 4), 0.4f);
         yield return new WaitForSeconds(0.5f);
-        if (PlayMangement.instance.player.getPlayerTurn) {
-            if (!PlayMangement.instance.player.isHuman && handler.cardData.type == "unit")
+        if (PlayMangement.instance.currentTurn == "BATTLE") {
+            handler.DisableCard();
+        }
+        else if(!PlayMangement.instance.player.isHuman && PlayMangement.instance.currentTurn == "SECRET") {
+            if(handler.cardData.type == "unit")
                 handler.DisableCard();
             else
                 handler.ActivateCard();
         }
         handler.FIRSTDRAW = false;
-        if (Variables.Scene(UnityEngine.SceneManagement.SceneManager.GetActiveScene()).Get("CurrentTurn").ToString() != "BATTLE")
+        if (PlayMangement.instance.currentTurn != "BATTLE")
             PlayMangement.dragable = true;
     }
 
@@ -258,7 +261,7 @@ public class CardCircleManager : MonoBehaviour {
         card.SetActive(false);
         card.transform.localPosition = Vector3.zero;
         card.transform.rotation = card.transform.parent.rotation;
-        if (Variables.Scene(UnityEngine.SceneManagement.SceneManager.GetActiveScene()).Get("CurrentTurn").ToString() != "BATTLE")
+        if (PlayMangement.instance.currentTurn != "BATTLE")
             PlayMangement.dragable = true;
     }
 
@@ -324,7 +327,7 @@ public class CardCircleManager : MonoBehaviour {
                 iTween.RotateTo(gameObject, new Vector3(0, 0, (cardNum - 1) * 4), 0.2f);
             yield return new WaitForSeconds(0.1f);
         }
-        if( Variables.Scene(UnityEngine.SceneManagement.SceneManager.GetActiveScene()).Get("CurrentTurn").ToString() != "BATTLE")
+        if(PlayMangement.instance.currentTurn != "BATTLE")
             PlayMangement.dragable = true;
     }
 
