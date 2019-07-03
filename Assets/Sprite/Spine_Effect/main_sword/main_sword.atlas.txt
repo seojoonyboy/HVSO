@@ -1,0 +1,27 @@
+
+main_sword.png
+size: 1024,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+shield
+  rotate: false
+  xy: 694, 55
+  size: 245, 308
+  orig: 245, 308
+  offset: 0, 0
+  index: -1
+sword_1
+  rotate: false
+  xy: 0, 0
+  size: 347, 363
+  orig: 347, 363
+  offset: 0, 0
+  index: -1
+sword_2
+  rotate: false
+  xy: 347, 0
+  size: 347, 363
+  orig: 347, 363
+  offset: 0, 0
+  index: -1
