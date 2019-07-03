@@ -1680,6 +1680,16 @@ MonoBehaviour:
     - {fileID: 1913007842479917902, guid: 7fecfe2efde515747823be4298de3cd1, type: 3}
     - {fileID: 5986551120315241216, guid: 7fecfe2efde515747823be4298de3cd1, type: 3}
     - {fileID: -3108389303869757469, guid: 7fecfe2efde515747823be4298de3cd1, type: 3}
+    - {fileID: -6005110940493574440, guid: f32a1705d0c349843be59e29f92b5737, type: 3}
+    - {fileID: -7657271740161780897, guid: f09884bcf638d0a4889f2e7c01ab948e, type: 3}
+    - {fileID: 6529044873537541970, guid: f09884bcf638d0a4889f2e7c01ab948e, type: 3}
+    - {fileID: -8801440333682112796, guid: f09884bcf638d0a4889f2e7c01ab948e, type: 3}
+    - {fileID: 4019643208411068290, guid: f09884bcf638d0a4889f2e7c01ab948e, type: 3}
+    - {fileID: 273734422036260988, guid: f09884bcf638d0a4889f2e7c01ab948e, type: 3}
+    - {fileID: 6662898354628611399, guid: f09884bcf638d0a4889f2e7c01ab948e, type: 3}
+    - {fileID: -1605891900892313427, guid: f09884bcf638d0a4889f2e7c01ab948e, type: 3}
+    - {fileID: -1162715127489450480, guid: f09884bcf638d0a4889f2e7c01ab948e, type: 3}
+    - {fileID: -6587928249059156515, guid: f09884bcf638d0a4889f2e7c01ab948e, type: 3}
     - {fileID: 621521891638079978, guid: d64029a42f343c942a2dcbf3f11c6797, type: 3}
     - {fileID: 4207649919081520766, guid: d64029a42f343c942a2dcbf3f11c6797, type: 3}
     - {fileID: -4062948375574049236, guid: d64029a42f343c942a2dcbf3f11c6797, type: 3}
@@ -1696,12 +1706,14 @@ MonoBehaviour:
     - {fileID: -2598078480963232838, guid: 3f7dbfa56e06bce44b49b84168bedfe4, type: 3}
     - {fileID: -4890230153378978454, guid: 3f7dbfa56e06bce44b49b84168bedfe4, type: 3}
     - {fileID: 3872515857239951019, guid: 3f7dbfa56e06bce44b49b84168bedfe4, type: 3}
+    - {fileID: 4496330777409709317, guid: f32a1705d0c349843be59e29f92b5737, type: 3}
+    - {fileID: -9149147770926252160, guid: f32a1705d0c349843be59e29f92b5737, type: 3}
     - {fileID: -1503164723217442884, guid: d64029a42f343c942a2dcbf3f11c6797, type: 3}
     - {fileID: 2877965210981968403, guid: d64029a42f343c942a2dcbf3f11c6797, type: 3}
     - {fileID: -3887066083837370067, guid: d64029a42f343c942a2dcbf3f11c6797, type: 3}
-    - {fileID: -9216420580574044333, guid: d64029a42f343c942a2dcbf3f11c6797, type: 3}
     - {fileID: 1014161593673654987, guid: 3f7dbfa56e06bce44b49b84168bedfe4, type: 3}
     - {fileID: -981367173463900617, guid: 3f7dbfa56e06bce44b49b84168bedfe4, type: 3}
+    - {fileID: -9216420580574044333, guid: d64029a42f343c942a2dcbf3f11c6797, type: 3}
     - {fileID: 2790159024041346953, guid: 400f1c7de344fe9438a213b082c592bc, type: 3}
     - {fileID: -6056920874341258176, guid: 400f1c7de344fe9438a213b082c592bc, type: 3}
     - {fileID: -4011968791078693734, guid: 400f1c7de344fe9438a213b082c592bc, type: 3}
@@ -3737,7 +3749,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 27
+      Data: 39
     - Name: 
       Entry: 7
       Data: 
@@ -4063,6 +4075,150 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: hero_dialog_orc_legend
+    - Name: $v
+      Entry: 10
+      Data: 135
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: hero_dialog_human_legend
+    - Name: $v
+      Entry: 10
+      Data: 135
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: hero_frame_human_superrare
+    - Name: $v
+      Entry: 10
+      Data: 136
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: hero_dialog_human_superrare
+    - Name: $v
+      Entry: 10
+      Data: 137
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: hero_name_human_superrare
+    - Name: $v
+      Entry: 10
+      Data: 138
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: hero_name_orc_superrare
+    - Name: $v
+      Entry: 10
+      Data: 139
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: hero_dialog_orc_superrare
+    - Name: $v
+      Entry: 10
+      Data: 140
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: hero_frame_orc_superrare
+    - Name: $v
+      Entry: 10
+      Data: 141
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: hero_frame_human_legend
+    - Name: $v
+      Entry: 10
+      Data: 142
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: hero_frame_orc_legend
+    - Name: $v
+      Entry: 10
+      Data: 143
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: hero_name_orc_legend
+    - Name: $v
+      Entry: 10
+      Data: 144
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: hero_name_human_legend
+    - Name: $v
+      Entry: 10
+      Data: 144
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
       Entry: 13
       Data: 
     - Name: 
@@ -4081,145 +4237,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 39
+      Data: 40
     - Name: 
       Entry: 7
       Data: 
     - Name: $k
       Entry: 1
       Data: ac10001
-    - Name: $v
-      Entry: 10
-      Data: 135
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: ac10002
-    - Name: $v
-      Entry: 10
-      Data: 136
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: ac10003
-    - Name: $v
-      Entry: 10
-      Data: 137
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: ac10004
-    - Name: $v
-      Entry: 10
-      Data: 138
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: ac10005
-    - Name: $v
-      Entry: 10
-      Data: 139
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: ac10006
-    - Name: $v
-      Entry: 10
-      Data: 140
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: ac10007
-    - Name: $v
-      Entry: 10
-      Data: 140
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: ac10008
-    - Name: $v
-      Entry: 10
-      Data: 141
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: ac10009
-    - Name: $v
-      Entry: 10
-      Data: 142
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: ac10010
-    - Name: $v
-      Entry: 10
-      Data: 143
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: ac10011
-    - Name: $v
-      Entry: 10
-      Data: 144
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: ac10012
     - Name: $v
       Entry: 10
       Data: 145
@@ -4231,7 +4255,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: ac10013
+      Data: ac10002
     - Name: $v
       Entry: 10
       Data: 146
@@ -4243,19 +4267,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: ac10015
-    - Name: $v
-      Entry: 10
-      Data: 140
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: ac10014
+      Data: ac10003
     - Name: $v
       Entry: 10
       Data: 147
@@ -4267,31 +4279,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: ac10016
-    - Name: $v
-      Entry: 10
-      Data: 140
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: ac10017
-    - Name: $v
-      Entry: 10
-      Data: 140
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: ac10018
+      Data: ac10004
     - Name: $v
       Entry: 10
       Data: 148
@@ -4303,7 +4291,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: ac10019
+      Data: ac10005
     - Name: $v
       Entry: 10
       Data: 149
@@ -4315,7 +4303,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: ac10020
+      Data: ac10006
     - Name: $v
       Entry: 10
       Data: 150
@@ -4327,10 +4315,10 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: ac10021
+      Data: ac10007
     - Name: $v
       Entry: 10
-      Data: 140
+      Data: 150
     - Name: 
       Entry: 8
       Data: 
@@ -4339,103 +4327,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: ac10022
-    - Name: $v
-      Entry: 10
-      Data: 140
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: ac10023
-    - Name: $v
-      Entry: 10
-      Data: 140
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: ac10024
-    - Name: $v
-      Entry: 10
-      Data: 140
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: ac10025
-    - Name: $v
-      Entry: 10
-      Data: 140
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: ac10026
-    - Name: $v
-      Entry: 10
-      Data: 140
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: ac10027
-    - Name: $v
-      Entry: 10
-      Data: 140
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: ac10028
-    - Name: $v
-      Entry: 10
-      Data: 140
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: ac10029
-    - Name: $v
-      Entry: 10
-      Data: 140
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: ac10030
+      Data: ac10008
     - Name: $v
       Entry: 10
       Data: 151
@@ -4447,7 +4339,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: ac10031
+      Data: ac10009
     - Name: $v
       Entry: 10
       Data: 152
@@ -4459,7 +4351,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: ac10032
+      Data: ac10010
     - Name: $v
       Entry: 10
       Data: 153
@@ -4471,7 +4363,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: ac10034
+      Data: ac10011
     - Name: $v
       Entry: 10
       Data: 154
@@ -4483,55 +4375,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: ac10035
-    - Name: $v
-      Entry: 10
-      Data: 140
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: ac10036
-    - Name: $v
-      Entry: 10
-      Data: 140
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: ac10037
-    - Name: $v
-      Entry: 10
-      Data: 140
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: ac10038
-    - Name: $v
-      Entry: 10
-      Data: 140
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: ac10039
+      Data: ac10012
     - Name: $v
       Entry: 10
       Data: 155
@@ -4543,10 +4387,334 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: ac10040
+      Data: ac10013
     - Name: $v
       Entry: 10
       Data: 156
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10015
+    - Name: $v
+      Entry: 10
+      Data: 150
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10014
+    - Name: $v
+      Entry: 10
+      Data: 157
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10016
+    - Name: $v
+      Entry: 10
+      Data: 150
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10017
+    - Name: $v
+      Entry: 10
+      Data: 150
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10018
+    - Name: $v
+      Entry: 10
+      Data: 158
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10019
+    - Name: $v
+      Entry: 10
+      Data: 159
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10020
+    - Name: $v
+      Entry: 10
+      Data: 160
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10021
+    - Name: $v
+      Entry: 10
+      Data: 161
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10022
+    - Name: $v
+      Entry: 10
+      Data: 161
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10023
+    - Name: $v
+      Entry: 10
+      Data: 161
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10024
+    - Name: $v
+      Entry: 10
+      Data: 161
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10025
+    - Name: $v
+      Entry: 10
+      Data: 162
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10026
+    - Name: $v
+      Entry: 10
+      Data: 162
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10027
+    - Name: $v
+      Entry: 10
+      Data: 162
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10028
+    - Name: $v
+      Entry: 10
+      Data: 162
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10029
+    - Name: $v
+      Entry: 10
+      Data: 150
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10030
+    - Name: $v
+      Entry: 10
+      Data: 163
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10031
+    - Name: $v
+      Entry: 10
+      Data: 164
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10032
+    - Name: $v
+      Entry: 10
+      Data: 165
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10034
+    - Name: $v
+      Entry: 10
+      Data: 161
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10035
+    - Name: $v
+      Entry: 10
+      Data: 161
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10036
+    - Name: $v
+      Entry: 10
+      Data: 161
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10037
+    - Name: $v
+      Entry: 10
+      Data: 161
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10038
+    - Name: $v
+      Entry: 10
+      Data: 150
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10039
+    - Name: $v
+      Entry: 10
+      Data: 166
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10040
+    - Name: $v
+      Entry: 10
+      Data: 167
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10033
+    - Name: $v
+      Entry: 10
+      Data: 168
     - Name: 
       Entry: 8
       Data: 
@@ -4578,7 +4746,7 @@ MonoBehaviour:
       Data: ambush
     - Name: $v
       Entry: 10
-      Data: 157
+      Data: 169
     - Name: 
       Entry: 8
       Data: 
@@ -4590,7 +4758,7 @@ MonoBehaviour:
       Data: assault
     - Name: $v
       Entry: 10
-      Data: 158
+      Data: 170
     - Name: 
       Entry: 8
       Data: 
@@ -4602,7 +4770,7 @@ MonoBehaviour:
       Data: burst
     - Name: $v
       Entry: 10
-      Data: 159
+      Data: 171
     - Name: 
       Entry: 8
       Data: 
@@ -4614,7 +4782,7 @@ MonoBehaviour:
       Data: chain
     - Name: $v
       Entry: 10
-      Data: 160
+      Data: 172
     - Name: 
       Entry: 8
       Data: 
@@ -4626,7 +4794,7 @@ MonoBehaviour:
       Data: charge
     - Name: $v
       Entry: 10
-      Data: 161
+      Data: 173
     - Name: 
       Entry: 8
       Data: 
@@ -4638,7 +4806,7 @@ MonoBehaviour:
       Data: chase
     - Name: $v
       Entry: 10
-      Data: 162
+      Data: 174
     - Name: 
       Entry: 8
       Data: 
@@ -4650,7 +4818,7 @@ MonoBehaviour:
       Data: double
     - Name: $v
       Entry: 10
-      Data: 163
+      Data: 175
     - Name: 
       Entry: 8
       Data: 
@@ -4662,7 +4830,7 @@ MonoBehaviour:
       Data: footslog
     - Name: $v
       Entry: 10
-      Data: 164
+      Data: 176
     - Name: 
       Entry: 8
       Data: 
@@ -4674,7 +4842,7 @@ MonoBehaviour:
       Data: fusion
     - Name: $v
       Entry: 10
-      Data: 165
+      Data: 177
     - Name: 
       Entry: 8
       Data: 
@@ -4686,7 +4854,7 @@ MonoBehaviour:
       Data: nightaction
     - Name: $v
       Entry: 10
-      Data: 166
+      Data: 178
     - Name: 
       Entry: 8
       Data: 
@@ -4698,7 +4866,7 @@ MonoBehaviour:
       Data: pillage
     - Name: $v
       Entry: 10
-      Data: 167
+      Data: 179
     - Name: 
       Entry: 8
       Data: 
@@ -4710,7 +4878,7 @@ MonoBehaviour:
       Data: poison
     - Name: $v
       Entry: 10
-      Data: 168
+      Data: 180
     - Name: 
       Entry: 8
       Data: 
@@ -4722,7 +4890,7 @@ MonoBehaviour:
       Data: prestrike
     - Name: $v
       Entry: 10
-      Data: 169
+      Data: 181
     - Name: 
       Entry: 8
       Data: 
@@ -4734,7 +4902,7 @@ MonoBehaviour:
       Data: protect
     - Name: $v
       Entry: 10
-      Data: 170
+      Data: 182
     - Name: 
       Entry: 8
       Data: 
@@ -4746,7 +4914,7 @@ MonoBehaviour:
       Data: steelskin
     - Name: $v
       Entry: 10
-      Data: 171
+      Data: 183
     - Name: 
       Entry: 8
       Data: 
@@ -4758,7 +4926,7 @@ MonoBehaviour:
       Data: stun
     - Name: $v
       Entry: 10
-      Data: 172
+      Data: 184
     - Name: 
       Entry: 8
       Data: 
@@ -4770,7 +4938,7 @@ MonoBehaviour:
       Data: supremacy
     - Name: $v
       Entry: 10
-      Data: 173
+      Data: 185
     - Name: 
       Entry: 8
       Data: 
@@ -4782,7 +4950,7 @@ MonoBehaviour:
       Data: through
     - Name: $v
       Entry: 10
-      Data: 174
+      Data: 186
     - Name: 
       Entry: 8
       Data: 
@@ -4794,7 +4962,7 @@ MonoBehaviour:
       Data: complex
     - Name: $v
       Entry: 10
-      Data: 175
+      Data: 187
     - Name: 
       Entry: 8
       Data: 
@@ -4826,7 +4994,7 @@ MonoBehaviour:
       Data: h10001
     - Name: $v
       Entry: 10
-      Data: 176
+      Data: 188
     - Name: 
       Entry: 8
       Data: 
@@ -4838,7 +5006,7 @@ MonoBehaviour:
       Data: h10002
     - Name: $v
       Entry: 10
-      Data: 177
+      Data: 189
     - Name: 
       Entry: 8
       Data: 
@@ -4850,7 +5018,7 @@ MonoBehaviour:
       Data: h10003
     - Name: $v
       Entry: 10
-      Data: 178
+      Data: 190
     - Name: 
       Entry: 8
       Data: 
@@ -4862,7 +5030,7 @@ MonoBehaviour:
       Data: h10004
     - Name: $v
       Entry: 10
-      Data: 179
+      Data: 191
     - Name: 
       Entry: 8
       Data: 
