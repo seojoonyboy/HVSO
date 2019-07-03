@@ -240,7 +240,7 @@ public partial class CardDropManager {
             }
             else {
                 if (highlighted)
-                    target.parent.Find("ClickableUI").GetComponent<SpriteRenderer>().color = new Color(163.0f / 255.0f, 236.0f / 255.0f, 27.0f / 255.0f, 0.6f);
+                    target.parent.Find("ClickableUI").GetComponent<SpriteRenderer>().color = new Color(0.639f, 0.925f, 0.105f, 0.6f);
                 else
                     target.parent.Find("ClickableUI").GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.6f);
             }
