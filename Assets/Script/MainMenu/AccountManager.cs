@@ -5,6 +5,8 @@ using System.Text;
 using UnityEngine;
 using System.Linq;
 using UnityEngine.UI;
+using BestHTTP;
+using Newtonsoft.Json;
 
 public partial class AccountManager : Singleton<AccountManager> {
     protected AccountManager() { }
@@ -41,6 +43,8 @@ public partial class AccountManager : Singleton<AccountManager> {
     // Start is called before the first frame update
     void Start() {
         networkManager = NetworkManager.Instance;
+
+        //RequestDeckModify();
     }
 
     private void OccurErrorModal(long errorCode) {
@@ -48,7 +52,7 @@ public partial class AccountManager : Singleton<AccountManager> {
         NoneIngameSceneEventHandler.Instance.PostNotification(NoneIngameSceneEventHandler.EVENT_TYPE.NETWORK_EROR_OCCURED, this, errorCode);
     }
 
-    public void SetDummyDeck() {
+    public void SetMyDecks() {
         if (myCards == null) return;
 
         var group =
@@ -63,17 +67,34 @@ public partial class AccountManager : Singleton<AccountManager> {
 
             myDecks.Add(deck);
         }
-
-        try {
-            myDecks[0].heroName = "수비대장 제로드";
-            myDecks[0].deckName = "왕국 수비대";
-            myDecks[1].heroName = "족장 크라쿠스";
-            myDecks[1].deckName = "암흑주술 부족";
-        }
-        catch (ArgumentException ex) {
-            Logger.LogError("사용자 덱이 정상적으로 세팅되지 않았습니다.");
-        }
     }
+
+    //public void SetDummyDeck() {
+    //    if (myCards == null) return;
+
+    //    var group =
+    //        from card in myCards
+    //        group card by card.camp into newGroup
+    //        orderby newGroup.Key
+    //        select newGroup;
+
+    //    foreach (var _group in group) {
+    //        Deck deck = new Deck();
+    //        deck.type = _group.Key;
+
+    //        myDecks.Add(deck);
+    //    }
+
+    //    try {
+    //        myDecks[0].heroName = "수비대장 제로드";
+    //        myDecks[0].deckName = "왕국 수비대";
+    //        myDecks[1].heroName = "족장 크라쿠스";
+    //        myDecks[1].deckName = "암흑주술 부족";
+    //    }
+    //    catch (ArgumentException ex) {
+    //        Logger.LogError("사용자 덱이 정상적으로 세팅되지 않았습니다.");
+    //    }
+    //}
 
     private void SetHeroInventories(List<dataModules.HeroInventory> data) {
         myHeroInventories = new Dictionary<string, dataModules.HeroInventory>();
@@ -242,7 +263,8 @@ public partial class AccountManager {
             myCards = userData.cardInventories;
             SetHeroInventories(userData.heroInventories);
             SetCardData();
-            SetDummyDeck();
+            //SetDummyDeck();
+            SetMyDecks();
 
             Destroy(loadingModal);
             SceneManager.Instance.LoadScene(SceneManager.Scene.MAIN_SCENE);
@@ -282,5 +304,45 @@ public partial class AccountManager {
             .Append("/decks/orc");
 
         networkManager.request("GET", url.ToString(), callback, retryOccured);
+    }
+}
+
+public partial class AccountManager {
+    /// <summary>
+    /// 덱 편집 Server에 요청
+    /// </summary>
+    public void RequestDeckModify() {
+        StringBuilder sb = new StringBuilder();
+        sb
+            .Append(networkManager.baseUrl)
+            .Append("api/users/")
+            .Append(DEVICEID)
+            .Append("/decks");
+
+        BestHTTP.HTTPRequest request = new BestHTTP.HTTPRequest(
+            new Uri(sb.ToString())
+        );
+        request.MethodType = BestHTTP.HTTPMethods.Post;
+
+        NetworkManager.DeckModifyReqFormat format = new NetworkManager.DeckModifyReqFormat();
+        format.name = "Deck114";
+        format.heroId = "h10001";
+        format.camp = "human";
+
+        List<NetworkManager.DeckModifyReqFormat_Item> items = new List<NetworkManager.DeckModifyReqFormat_Item>();
+        NetworkManager.DeckModifyReqFormat_Item item = new NetworkManager.DeckModifyReqFormat_Item();
+        item.cardId = "ac10001";
+        item.cardCount = 2;
+        items.Add(item);
+        format.items = items.ToArray();
+
+        //var tmp = JsonConvert.SerializeObject(format);
+        request.RawData = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(format));
+        networkManager.Request(request, OnReceived);
+    }
+
+    private void OnReceived(HTTPRequest originalRequest, HTTPResponse response) {
+        var result = response.DataAsText;
+        Logger.Log("On Received");
     }
 }
