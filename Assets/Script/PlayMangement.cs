@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Spine;
+using Spine.Unity;
 
 
 public partial class PlayMangement : MonoBehaviour {
@@ -24,6 +26,7 @@ public partial class PlayMangement : MonoBehaviour {
     public EffectManager effectManager;
     public SpineEffectManager spineEffectManager;
     public CardCircleManager cardCircleManager;
+    public SkeletonGraphic playerMana, enemyMana;
 
     public GameObject baseUnit;
     private int turn = 0;
@@ -404,12 +407,15 @@ public partial class PlayMangement : MonoBehaviour {
 
     public void ChangeTurn() {
         if (isGame == false) return;
+        player.buttonParticle.SetActive(false);
         currentTurn = Variables.Scene(
                 UnityEngine.SceneManagement.SceneManager.GetActiveScene()
             ).Get("CurrentTurn").ToString();
         Logger.Log(currentTurn);
         switch (currentTurn) {
             case "ORC":
+                playerMana.AnimationState.SetAnimation(0, "animation", false);
+                enemyMana.AnimationState.SetAnimation(0, "animation", false);
                 if (player.isHuman == false) {
                     player.ActiveOrcTurn();
                     enemyPlayer.DisablePlayer();
@@ -454,7 +460,6 @@ public partial class PlayMangement : MonoBehaviour {
                 EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_BATTLE_TURN, this, null);
                 break;
         }
-        player.buttonParticle.SetActive(false);
         if (player.isHuman)
             StartCoroutine(SetHumanTurnTable(currentTurn));
         else
