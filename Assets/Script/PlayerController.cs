@@ -206,7 +206,11 @@ public class PlayerController : MonoBehaviour
         if(heroshieldData.Count != 0) data = heroshieldData.Peek();
         else data = socketHandler.gameState.players.myPlayer(isHuman);
         SocketFormat.ShieldCharge shieldData = GetShieldData();
-        if (!data.shieldActivate) {
+
+        if(data.shieldActivate && CheckShieldActivate(shieldData)) {
+            ActiveShield();
+        }
+        else {
             if (GetComponent<SkillModules.guarded>() != null) {
                 amount = 0;
             }
@@ -222,9 +226,6 @@ public class PlayerController : MonoBehaviour
                 else
                     shieldStack.Value += shieldData.shieldCount;
             }
-        }
-        if(data.shieldActivate && CheckShieldActivate(shieldData)) {
-            ActiveShield();
         }
     }
 
