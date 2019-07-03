@@ -1,4 +1,5 @@
 using System;
+using BestHTTP;
 using UnityEngine;
 using System.Collections;
 using UnityEngine.Networking;
@@ -138,5 +139,52 @@ public class HttpResponse {
             data = _request.downloadHandler.text;
         }
         header = _request.GetResponseHeader("Link");
+    }
+}
+
+/// <summary>
+/// BestHTTP Pro
+/// 점진적으로 기존 HTTP 요청을 모두 BestHTTP로 통합/변경 예정
+/// </summary>
+public partial class NetworkManager {
+    Queue<RequestFormat> requests = new Queue<RequestFormat>();
+    private bool dequeueing = false;
+    TimeSpan timeout = new TimeSpan(0, 0, 30);  //timeout 30초 지정 
+
+    private void FixedUpdate() {
+        if (!dequeueing) return;
+        if (requests.Count == 0) return;
+        DequeueRequest();
+    }
+
+    private void DequeueRequest() {
+        dequeueing = true;
+
+        RequestFormat selectedRequestFormat = requests.Dequeue();
+        HTTPRequest request = selectedRequestFormat.request;
+
+        request.Callback += selectedRequestFormat.callback;
+        request.Callback += (x, y) => { dequeueing = false; };
+        request.ConnectTimeout = timeout;
+        request.Send();
+    }
+
+    /// <summary>
+    /// HTTP 요청
+    /// </summary>
+    /// <param name="request">HTTPRequest에 맞는 Format 작성</param>
+    /// <param name="callback">요청 완료시 받을 Callback</param>
+    public void Request(HTTPRequest request, OnRequestFinishedDelegate callback) {
+        requests.Enqueue(new RequestFormat(request, callback));
+    }
+
+    public class RequestFormat {
+        public HTTPRequest request;
+        public OnRequestFinishedDelegate callback;
+
+        public RequestFormat(HTTPRequest request, OnRequestFinishedDelegate callback) {
+            this.request = request;
+            this.callback = callback;
+        }
     }
 }
