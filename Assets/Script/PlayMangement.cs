@@ -454,6 +454,7 @@ public partial class PlayMangement : MonoBehaviour {
                 EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_BATTLE_TURN, this, null);
                 break;
         }
+        player.buttonParticle.SetActive(false);
         if (player.isHuman)
             StartCoroutine(SetHumanTurnTable(currentTurn));
         else

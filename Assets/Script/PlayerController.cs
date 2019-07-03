@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour
     TextMeshProUGUI costText;
     TextMeshProUGUI HPText;
     Image shieldGauge;
-    GameObject buttonParticle;
+    public GameObject buttonParticle;
     public bool dragCard = false;
 
     public Vector3 unitClosePosition;
