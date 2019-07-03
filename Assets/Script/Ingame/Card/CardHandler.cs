@@ -82,14 +82,13 @@ public partial class CardHandler : MonoBehaviour {
                 transform.Find("Name").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground["name_" + cardData.rarelity];
             }
             else {
-                if (PlayMangement.instance.player.isHuman) {
-                    transform.Find("BackGround").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground["hero_" + cardData.rarelity + "_human"];
-                    transform.Find("Name").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground["hero_" + cardData.rarelity + "_human_name"];
-                }
-                else {
-                    transform.Find("BackGround").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground["hero_" + cardData.rarelity + "_orc"];
-                    transform.Find("Name").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground["hero_" + cardData.rarelity + "_orc_name"];
-                }
+                string race;
+                if (PlayMangement.instance.player.isHuman)
+                    race = "_human";
+                else
+                    race = "_orc";
+                transform.Find("BackGround").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground["hero_" + cardData.rarelity + race];
+                transform.Find("Name").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground["hero_" + cardData.rarelity + race + "_name"];
             }
 
             if (AccountManager.Instance.resource.cardSkeleton.ContainsKey("cardID")) skeleton = AccountManager.Instance.resource.cardSkeleton[cardID];
@@ -150,7 +149,7 @@ public partial class CardHandler : MonoBehaviour {
     protected virtual void CheckLocation(bool off = false) {
         if (off) {
             pointOnFeild = false;
-            if(cardData.type == "unit")
+            if (cardData.type == "unit")
                 CardInfoOnDrag.instance.ActivePreviewUnit(false);
             else
                 CardInfoOnDrag.instance.ActiveCrossHair(false);
@@ -300,9 +299,9 @@ public partial class CardHandler : MonoBehaviour {
         string currentTurn = Variables.Scene(
                 UnityEngine.SceneManagement.SceneManager.GetActiveScene()
             ).Get("CurrentTurn").ToString();
-        bool isHumanTurn = currentTurn.CompareTo("HUMAN")==0;
-        bool isOrcPreTurn = currentTurn.CompareTo("ORC")==0;
-        bool isOrcMagicTurn = currentTurn.CompareTo("SECRET")==0;
+        bool isHumanTurn = currentTurn.CompareTo("HUMAN") == 0;
+        bool isOrcPreTurn = currentTurn.CompareTo("ORC") == 0;
+        bool isOrcMagicTurn = currentTurn.CompareTo("SECRET") == 0;
         return isHuman ? isHumanTurn : isMagic ? isOrcMagicTurn : isOrcPreTurn;
     }
 
