@@ -1,40 +1,46 @@
 fileFormatVersion: 2
-guid: b67ff354cfd661a42a657368effb7987
+guid: 41b08181ded3df64b8a347c6a7ac834e
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5618026609613044863
-    second: Gold
+      213: 8569450768668895702
+    second: "\uB371\uC0DD\uC131 \uD3B8\uC9D1\uD654\uBA74 png2_0"
   - first:
-      213: 7368675135165146943
-    second: Jewel
+      213: -7083677576482927723
+    second: "\uB371\uC0DD\uC131 \uD3B8\uC9D1\uD654\uBA74 png2_1"
   - first:
-      213: 6541475979423252992
-    second: Setting
+      213: 8868056807639471138
+    second: "\uB371\uC0DD\uC131 \uD3B8\uC9D1\uD654\uBA74 png2_2"
   - first:
-      213: -4941193113615179719
-    second: Plus
+      213: 2606259926575580372
+    second: "\uB371\uC0DD\uC131 \uD3B8\uC9D1\uD654\uBA74 png2_3"
   - first:
-      213: -6138172339295865102
-    second: Guild
+      213: 280620730618374542
+    second: "\uB371\uC0DD\uC131 \uD3B8\uC9D1\uD654\uBA74 png2_4"
   - first:
-      213: 9210954512604926321
-    second: League
+      213: -8086599919808677357
+    second: "\uB371\uC0DD\uC131 \uD3B8\uC9D1\uD654\uBA74 png2_5"
   - first:
-      213: -6295969570453310473
-    second: 0626_Icon_6
+      213: -251230547425334086
+    second: "\uB371\uC0DD\uC131 \uD3B8\uC9D1\uD654\uBA74 png2_6"
   - first:
-      213: -3943109330386557476
-    second: 0626_Icon_7
+      213: -4383555621969111024
+    second: "\uB371\uC0DD\uC131 \uD3B8\uC9D1\uD654\uBA74 png2_7"
   - first:
-      213: 7851574366030154696
-    second: Mission
+      213: -2609497339286645612
+    second: "\uB371\uC0DD\uC131 \uD3B8\uC9D1\uD654\uBA74 png2_8"
   - first:
-      213: 8581146994476450455
-    second: Store
+      213: -2882805269700784645
+    second: "\uB371\uC0DD\uC131 \uD3B8\uC9D1\uD654\uBA74 png2_9"
   - first:
-      213: -7546034718124936920
-    second: Collection
+      213: 7258168139631466635
+    second: "\uB371\uC0DD\uC131 \uD3B8\uC9D1\uD654\uBA74 png2_10"
+  - first:
+      213: -8829725403956440273
+    second: "\uB371\uC0DD\uC131 \uD3B8\uC9D1\uD654\uBA74 png2_11"
+  - first:
+      213: 2184355358594980115
+    second: "\uB371\uC0DD\uC131 \uD3B8\uC9D1\uD654\uBA74 png2_12"
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -93,7 +99,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 2
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 1024
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -104,18 +110,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
   - serializedVersion: 2
     buildTarget: Standalone
-    maxTextureSize: 1024
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    androidETC2FallbackOverride: 0
-  - serializedVersion: 2
-    buildTarget: iPhone
-    maxTextureSize: 512
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -126,7 +121,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
   - serializedVersion: 2
     buildTarget: Android
-    maxTextureSize: 1024
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -139,232 +134,274 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Gold
+      name: "\uB371\uC0DD\uC131 \uD3B8\uC9D1\uD654\uBA74 png2_0"
       rect:
         serializedVersion: 2
-        x: 23
-        y: 897
-        width: 100
-        height: 96
+        x: 48
+        y: 343
+        width: 616
+        height: 101
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 732041648d5ead34db3a0798459fc198
-      internalID: 5618026609613044863
+      spriteID: 6a95f6102de67d74b80a3b21716b26ae
+      internalID: 8569450768668895702
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Jewel
+      name: "\uB371\uC0DD\uC131 \uD3B8\uC9D1\uD654\uBA74 png2_1"
       rect:
         serializedVersion: 2
-        x: 163
-        y: 893
-        width: 96
-        height: 92
+        x: 25
+        y: 144
+        width: 113
+        height: 148
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ceae453948767a946b5baaf304dbf6ed
-      internalID: 7368675135165146943
+      spriteID: c4bae7efd97f9b34eb010a46ee6e5490
+      internalID: -7083677576482927723
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Setting
+      name: "\uB371\uC0DD\uC131 \uD3B8\uC9D1\uD654\uBA74 png2_2"
       rect:
         serializedVersion: 2
-        x: 287
-        y: 881
-        width: 112
-        height: 114
+        x: 198
+        y: 144
+        width: 113
+        height: 148
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9c403ae8659e6e142a00fed73a69d301
-      internalID: 6541475979423252992
+      spriteID: b925f9e694d4bf349856100c0ddc6439
+      internalID: 8868056807639471138
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Plus
+      name: "\uB371\uC0DD\uC131 \uD3B8\uC9D1\uD654\uBA74 png2_3"
       rect:
         serializedVersion: 2
-        x: 47
-        y: 823
-        width: 52
-        height: 52
+        x: 369
+        y: 144
+        width: 113
+        height: 148
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 849186ba52f72d840abab5322e966a39
-      internalID: -4941193113615179719
+      spriteID: 90d3fa595cee41141b8d8eb5a544f45c
+      internalID: 2606259926575580372
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Guild
+      name: "\uB371\uC0DD\uC131 \uD3B8\uC9D1\uD654\uBA74 png2_4"
       rect:
         serializedVersion: 2
-        x: 27
-        y: 581
-        width: 212
-        height: 195
+        x: 542
+        y: 144
+        width: 113
+        height: 148
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 505e38f4775ec5247a5f4364def0a969
-      internalID: -6138172339295865102
+      spriteID: 3545fbe129c639f40a9fb6b35c06d64f
+      internalID: 280620730618374542
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: League
+      name: "\uB371\uC0DD\uC131 \uD3B8\uC9D1\uD654\uBA74 png2_5"
       rect:
         serializedVersion: 2
-        x: 271
-        y: 557
-        width: 186
-        height: 222
+        x: 713
+        y: 144
+        width: 113
+        height: 148
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 71c59fcd033bf2c4dbf772cd4487853a
-      internalID: 9210954512604926321
+      spriteID: 709eca2966421574a8df4d029ebaccee
+      internalID: -8086599919808677357
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 0626_Icon_6
+      name: "\uB371\uC0DD\uC131 \uD3B8\uC9D1\uD654\uBA74 png2_6"
       rect:
         serializedVersion: 2
-        x: 356
-        y: 544
-        width: 12
-        height: 12
+        x: 886
+        y: 144
+        width: 113
+        height: 148
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b74592ffa8374194bbfa64efd1a85cad
-      internalID: -6295969570453310473
+      spriteID: e85605229cfb4da49806c2cb989633b7
+      internalID: -251230547425334086
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 0626_Icon_7
-      rect:
-        serializedVersion: 2
-        x: 400
-        y: 552
-        width: 8
-        height: 8
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5ac384d54b720874abc57686fba0947c
-      internalID: -3943109330386557476
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Mission
+      name: "\uB371\uC0DD\uC131 \uD3B8\uC9D1\uD654\uBA74 png2_7"
       rect:
         serializedVersion: 2
         x: 37
-        y: 349
-        width: 174
-        height: 182
+        y: 32
+        width: 81
+        height: 78
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 290916c6654717c4fb98d900ba7c22ec
-      internalID: 7851574366030154696
+      spriteID: 7f1d937c271d51c4a8082983331839b2
+      internalID: -4383555621969111024
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Store
+      name: "\uB371\uC0DD\uC131 \uD3B8\uC9D1\uD654\uBA74 png2_8"
       rect:
         serializedVersion: 2
-        x: 249
-        y: 341
-        width: 188
-        height: 190
+        x: 210
+        y: 34
+        width: 81
+        height: 78
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 69fd843bbe376cd43b3511dc158b5999
-      internalID: 8581146994476450455
+      spriteID: 4ac66a24c60cf71438b9e0aabebfc4a0
+      internalID: -2609497339286645612
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Collection
+      name: "\uB371\uC0DD\uC131 \uD3B8\uC9D1\uD654\uBA74 png2_9"
       rect:
         serializedVersion: 2
-        x: 41
-        y: 87
-        width: 170
-        height: 212
+        x: 386
+        y: 33
+        width: 81
+        height: 78
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c0ea751353149a2488fdd5f40679bb80
-      internalID: -7546034718124936920
+      spriteID: 648ae875f5b2e5e4a9eaecfe95e3694c
+      internalID: -2882805269700784645
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\uB371\uC0DD\uC131 \uD3B8\uC9D1\uD654\uBA74 png2_10"
+      rect:
+        serializedVersion: 2
+        x: 559
+        y: 32
+        width: 81
+        height: 78
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 047deea8879f6b74aba145eace7ccdba
+      internalID: 7258168139631466635
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\uB371\uC0DD\uC131 \uD3B8\uC9D1\uD654\uBA74 png2_11"
+      rect:
+        serializedVersion: 2
+        x: 735
+        y: 32
+        width: 81
+        height: 78
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b89aa6dfb2f506541b2e4b85fc988cd7
+      internalID: -8829725403956440273
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\uB371\uC0DD\uC131 \uD3B8\uC9D1\uD654\uBA74 png2_12"
+      rect:
+        serializedVersion: 2
+        x: 904
+        y: 33
+        width: 81
+        height: 78
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8ef8067944eb5b84192deb8ec3cb4712
+      internalID: 2184355358594980115
       vertices: []
       indices: 
       edges: []
@@ -372,7 +409,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: f70d6c28cee34044a8a97a83c5ce168a
+    spriteID: a8d265ee130211142925e9973e23754e
     internalID: 0
     vertices: []
     indices: 

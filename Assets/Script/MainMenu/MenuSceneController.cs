@@ -31,6 +31,8 @@ public class MenuSceneController : MonoBehaviour {
         SoundManager.Instance.PlaySound(SoundType.FIRST_TURN);
     }
 
+
+
     public void ClickMenuButton(int pageNum) {
         buttonClicked = true;
         currentPage = pageNum;
