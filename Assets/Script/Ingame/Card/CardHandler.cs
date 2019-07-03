@@ -117,7 +117,7 @@ public partial class CardHandler : MonoBehaviour {
             highlightedSlot = CheckSlot();
             if (highlightedSlot != null) {
                 highlighted = true;
-                transform.Find("GlowEffect").GetComponent<Image>().color = new Color(163.0f / 255.0f, 236.0f / 255.0f, 27.0f / 255.0f);
+                transform.Find("GlowEffect").GetComponent<Image>().color = new Color(0.639f, 0.925f, 0.105f);
                 transform.Find("GlowEffect").localScale = new Vector3(1.05f, 1.05f, 1);
                 CardDropManager.Instance.HighLightSlot(highlightedSlot, highlighted);
             }
@@ -202,9 +202,7 @@ public partial class CardHandler : MonoBehaviour {
             highlightedSlot = CheckMagicSlot();
             if (highlightedSlot != null) {
                 highlighted = true;
-                CardInfoOnDrag.instance.crossHair.GetComponent<Image>().color = new Color(163.0f / 255.0f, 236.0f / 255.0f, 27.0f / 255.0f);
-                //transform.Find("GlowEffect").GetComponent<Image>().color = new Color(163.0f / 255.0f, 236.0f / 255.0f, 27.0f / 255.0f);
-                //transform.Find("GlowEffect").localScale = new Vector3(1.05f, 1.05f, 1);
+                CardInfoOnDrag.instance.crossHair.GetComponent<Image>().color = new Color(0.639f, 0.925f, 0.105f);
                 CardDropManager.Instance.HighLightMagicSlot(highlightedSlot, highlighted);
             }
         }
@@ -212,7 +210,6 @@ public partial class CardHandler : MonoBehaviour {
             if (highlightedSlot != CheckMagicSlot()) {
                 highlighted = false;
                 CardInfoOnDrag.instance.crossHair.GetComponent<Image>().color = new Color(1, 1, 1, 1);
-                //transform.Find("GlowEffect").localScale = new Vector3(1, 1, 1);
                 CardDropManager.Instance.HighLightMagicSlot(highlightedSlot, highlighted);
                 highlightedSlot = null;
             }

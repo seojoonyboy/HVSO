@@ -151,7 +151,7 @@ public class DebugManagement : PlayMangement
 
     IEnumerator battleLine(int line) {
         backGround.transform.GetChild(line).Find("BattleLineEffect").gameObject.SetActive(true);
-        backGround.transform.GetChild(line).Find("BattleLineEffect").GetComponent<SpriteRenderer>().color = new Color(1, 98.0f / 255.0f, 31.0f / 255.0f, 155.0f / 255.0f);
+        backGround.transform.GetChild(line).Find("BattleLineEffect").GetComponent<SpriteRenderer>().color = new Color(1, 98.0f / 255.0f, 31.0f / 255.0f, 0.6f);
         if (player.isHuman == false) {
             yield return battleUnit(player.backLine, line);
             yield return battleUnit(player.frontLine, line);
@@ -182,7 +182,7 @@ public class DebugManagement : PlayMangement
             enemyPlayer.frontLine.transform.GetChild(line).GetChild(0).GetComponent<DebugUnit>().CheckHP();
             enemyPlayer.backLine.transform.GetChild(line).GetChild(0).GetComponent<DebugUnit>().CheckDebuff();
         }
-        backGround.transform.GetChild(line).Find("BattleLineEffect").GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 155.0f / 255.0f);
+        backGround.transform.GetChild(line).Find("BattleLineEffect").GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.6f);
         backGround.transform.GetChild(line).Find("BattleLineEffect").gameObject.SetActive(false);
         EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.LINE_BATTLE_FINISHED, this);
     }

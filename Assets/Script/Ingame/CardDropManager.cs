@@ -187,7 +187,7 @@ public partial class CardDropManager {
             if (unitLine[i][1].childCount > 0)
                 unitLine[i][1].GetChild(0).position = new Vector3(unitLine[i][0].position.x, unitLine[i][1].position.y, 0);
             for (int j = 0; j < 3; j++) {
-                slotLine[i].GetChild(j).GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 155.0f / 255.0f);
+                slotLine[i].GetChild(j).GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.6f);
                 slotLine[i].GetChild(j).gameObject.SetActive(false);
                 slotLine[i].GetChild(j).GetChild(0).gameObject.SetActive(false);
             }
@@ -201,7 +201,7 @@ public partial class CardDropManager {
         GameObject fightEffect = slotLine[lineNum].GetChild(3).gameObject;
         Animator ani = fightEffect.GetComponent<Animator>();
         if (highlighted) {
-            target.GetComponent<SpriteRenderer>().color = new Color(163.0f / 255.0f, 236.0f / 255.0f, 27.0f / 255.0f, 155.0f / 255.0f);
+            target.GetComponent<SpriteRenderer>().color = new Color(0.639f, 0.925f, 0.105f, 0.6f);
             if (index > 0) {
                 if (index == 1) unitLine[lineNum][0].GetChild(0).position = unitLine[lineNum][0].position;
                 else unitLine[lineNum][0].GetChild(0).position = unitLine[lineNum][1].position;
@@ -221,7 +221,7 @@ public partial class CardDropManager {
 
         }
         else {
-            target.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 155.0f / 255.0f);
+            target.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.6f);
             if (index > 0) {
                 unitLine[lineNum][0].GetChild(0).position = new Vector3(unitLine[lineNum][0].position.x, unitLine[lineNum][0].position.y + 0.5f, 0);
             }
@@ -234,15 +234,15 @@ public partial class CardDropManager {
         if (target.name != "AllMagicTrigger") {
             if (target.name == "BattleLineEffect") {
                 if (highlighted)
-                    target.GetComponent<SpriteRenderer>().color = new Color(163.0f / 255.0f, 236.0f / 255.0f, 27.0f / 255.0f, 155.0f / 255.0f);
+                    target.GetComponent<SpriteRenderer>().color = new Color(0.639f, 0.925f, 0.105f, 0.6f);
                 else
-                    target.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 155.0f / 255.0f);
+                    target.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.6f);
             }
             else {
                 if (highlighted)
-                    target.parent.Find("ClickableUI").GetComponent<SpriteRenderer>().color = new Color(163.0f / 255.0f, 236.0f / 255.0f, 27.0f / 255.0f, 155.0f / 255.0f);
+                    target.parent.Find("ClickableUI").GetComponent<SpriteRenderer>().color = new Color(163.0f / 255.0f, 236.0f / 255.0f, 27.0f / 255.0f, 0.6f);
                 else
-                    target.parent.Find("ClickableUI").GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 155.0f / 255.0f);
+                    target.parent.Find("ClickableUI").GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.6f);
             }
         }
     }

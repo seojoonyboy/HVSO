@@ -97,7 +97,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
                     //var abilities = GetComponents<MagicalCasting>();
                     //foreach (MagicalCasting ability in abilities) ability.RequestUseMagic();
                     object[] parms = new object[] { true, gameObject };
-                    skillHandler.isDone = false;
+                    skillHandler.socketDone = false;
                     PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
                     skillHandler.RemoveTriggerEvent();
                     //if (GetComponents<Ability>() == null) UseCard();
@@ -149,7 +149,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
     }
 
     IEnumerator UseSkillCard(object[] parms) {
-        skillHandler.isDone = false;
+        skillHandler.socketDone = false;
         PlayMangement.dragable = false;
         yield return StartCoroutine(PlayMangement.instance.cardCircleManager.ShowUsedMagicCard(transform.parent.GetSiblingIndex()));
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);

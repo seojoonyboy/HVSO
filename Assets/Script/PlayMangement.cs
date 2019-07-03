@@ -230,7 +230,7 @@ public partial class PlayMangement : MonoBehaviour {
 
     private IEnumerator MagicActivate(GameObject card, SocketFormat.PlayHistory history) {
         MagicDragHandler magicCard = card.GetComponent<MagicDragHandler>();
-        magicCard.skillHandler.isDone = false;
+        magicCard.skillHandler.socketDone = false;
         dragable = false;
         //카드 등장 애니메이션
         card.transform.rotation = new Quaternion(0, 0, 540, card.transform.rotation.w);
@@ -508,7 +508,7 @@ public partial class PlayMangement : MonoBehaviour {
     IEnumerator battleLine(int line) {
         battleLineEffect = backGround.transform.GetChild(line).Find("BattleLineEffect");
         battleLineEffect.gameObject.SetActive(true);
-        battleLineEffect.GetComponent<SpriteRenderer>().color = new Color(1, 0.384f, 0.121f, 0.608f);
+        battleLineEffect.GetComponent<SpriteRenderer>().color = new Color(1, 0.545f, 0.427f, 0.6f);
         var list = playerUnitsObserver.GetAllFieldUnits(line);
         list.AddRange(enemyUnitsObserver.GetAllFieldUnits(line));
         if (list.Count != 0) {
@@ -529,7 +529,7 @@ public partial class PlayMangement : MonoBehaviour {
             yield return new WaitForSeconds(0.2f);
         }
         ResetCount(line);
-        battleLineEffect.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.608f);
+        battleLineEffect.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.6f);
         battleLineEffect.gameObject.SetActive(false);
         EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.LINE_BATTLE_FINISHED, this);
     }
@@ -631,11 +631,11 @@ public partial class PlayMangement : MonoBehaviour {
             CardCircleManager cdpm = FindObjectOfType<CardCircleManager>();
             bool race = player.isHuman;
             SocketFormat.Card cardData = socketHandler.gameState.players.myPlayer(race).newCard;
-            battleLineEffect.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.608f);
+            battleLineEffect.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.6f);
             battleLineEffect.gameObject.SetActive(false);
             yield return StartCoroutine(cdpm.DrawHeroCard(cardData));
             battleLineEffect.gameObject.SetActive(true);
-            battleLineEffect.GetComponent<SpriteRenderer>().color = new Color(1, 0.384f, 0.121f, 0.608f);
+            battleLineEffect.GetComponent<SpriteRenderer>().color = new Color(1, 0.545f, 0.427f, 0.6f);
         }
         else {
             GameObject enemyCard;
