@@ -168,7 +168,7 @@ namespace TargetModules {
             switch (place) {
                 case "rear":
                     var pos = playerUnitsObserver.GetMyPos(gameObject);
-                    if(pos.row == 1) break;
+                    if(pos.row == 0) break;
                     var list = playerUnitsObserver.GetAllFieldUnits(pos.col);
                     list.Remove(gameObject);
                     targets.AddRange(list);
