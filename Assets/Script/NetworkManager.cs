@@ -152,7 +152,7 @@ public partial class NetworkManager {
     TimeSpan timeout = new TimeSpan(0, 0, 30);  //timeout 30초 지정 
 
     private void FixedUpdate() {
-        if (!dequeueing) return;
+        if (dequeueing) return;
         if (requests.Count == 0) return;
         DequeueRequest();
     }
@@ -163,6 +163,7 @@ public partial class NetworkManager {
         RequestFormat selectedRequestFormat = requests.Dequeue();
         HTTPRequest request = selectedRequestFormat.request;
 
+        request.SetHeader("Content-Type", "application/json");
         request.Callback += selectedRequestFormat.callback;
         request.Callback += (x, y) => { dequeueing = false; };
         request.ConnectTimeout = timeout;
@@ -186,5 +187,17 @@ public partial class NetworkManager {
             this.request = request;
             this.callback = callback;
         }
+    }
+
+    public class DeckModifyReqFormat {
+        public string name;
+        public string heroId;
+        public string camp;
+        public DeckModifyReqFormat_Item[] items;
+    }
+
+    public class DeckModifyReqFormat_Item {
+        public string cardId;
+        public int cardCount;
     }
 }

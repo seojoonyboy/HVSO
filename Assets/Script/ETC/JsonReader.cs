@@ -28,11 +28,13 @@ namespace dataModules {
     public class HumanDecks {
         public List<Hero> heros;
         public List<Deck> basicDecks;
+        public List<Deck> customDecks;
     }
 
     public class OrcDecks {
         public List<Hero> heros;
         public List<Deck> basicDecks;
+        public List<Deck> customDecks;
     }
 
     public class Hero {
