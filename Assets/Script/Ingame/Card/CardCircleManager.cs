@@ -99,6 +99,12 @@ public class CardCircleManager : MonoBehaviour {
                 card = cardStorage.Find("UnitCards").GetChild(0).gameObject;
             else
                 card = cardStorage.Find("MagicCards").GetChild(0).gameObject;
+            if (cardData.isHeroCard) {
+                if(PlayMangement.instance.player.isHuman)
+                    card = cardStorage.Find("HumanHeroCards").GetChild(0).gameObject;
+                else
+                    card = cardStorage.Find("OrcHeroCards").GetChild(0).gameObject;
+            }
             string id;
             int itemId = -1;
             if (cardData == null)
@@ -137,7 +143,11 @@ public class CardCircleManager : MonoBehaviour {
 
 
     public IEnumerator DrawHeroCard(SocketFormat.Card cardData = null) {
-        GameObject card = cardStorage.Find("MagicCards").GetChild(0).gameObject;
+        GameObject card;
+        if(PlayMangement.instance.player.isHuman)
+            card = cardStorage.Find("HumanHeroCards").GetChild(0).gameObject;
+        else
+            card = cardStorage.Find("OrcHeroCards").GetChild(0).gameObject;
         card.transform.SetParent(showPos.transform);
         showPos.Find("HeroCardGuide").gameObject.SetActive(true);
         card.SetActive(true);
@@ -257,7 +267,14 @@ public class CardCircleManager : MonoBehaviour {
 
     public void DestroyCard(GameObject card) {
         PlayMangement.dragable = false;
-        card.transform.SetParent(cardStorage.Find("MagicCards"));
+        if(card.name == "MagicCard")
+            card.transform.SetParent(cardStorage.Find("MagicCards"));
+        else {
+            if(PlayMangement.instance.player.isHuman)
+                card.transform.SetParent(cardStorage.Find("HumanHeroCards"));
+            else
+                card.transform.SetParent(cardStorage.Find("OrcHeroCards"));
+        }
         card.SetActive(false);
         card.transform.localPosition = Vector3.zero;
         card.transform.rotation = card.transform.parent.rotation;
@@ -275,10 +292,10 @@ public class CardCircleManager : MonoBehaviour {
         removeCard.eulerAngles = Vector3.zero;
         removeCard.localPosition = Vector3.zero;
         cardList.RemoveAt(index);
-        if (removeCard.name == "MagicCard")
-            clm.RemoveCardInfo(index);
-        else
+        if (removeCard.name == "UnitCard")
             clm.AddFeildUnitInfo(index, PlayMangement.instance.unitNum - 1);
+        else
+            clm.RemoveCardInfo(index);
         cardNum--;
         handCardNum.text = cardNum.ToString();
         for (int i = index; i < cardNum; i++) {

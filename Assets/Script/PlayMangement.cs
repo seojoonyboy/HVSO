@@ -395,7 +395,7 @@ public partial class PlayMangement : MonoBehaviour {
             skillHandler.Initialize(cardData.skills, unit, false);
             unit.GetComponent<PlaceMonster>().skillHandler = skillHandler;
             cardInfoCanvas.GetChild(0).GetComponent<CardListManager>().AddFeildUnitInfo(0, placeMonster.myUnitNum, cardData);
-            EnemyUnitsObserver.UnitAdded(unit, col, 0);
+            EnemyUnitsObserver.UnitAdded(unit, col, row);
             unit.layer = 14;
         }
         targetPlayer.PlayerUseCard();
