@@ -20,8 +20,8 @@ public class DeckEditController : MonoBehaviour
     private GameObject deckNamePanel;
 
     private void Awake() {
-        SetObject();
-        SetHeroData();
+        //SetObject();
+        //SetHeroData();
     }
 
 
