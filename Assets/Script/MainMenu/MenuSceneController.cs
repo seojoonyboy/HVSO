@@ -10,6 +10,8 @@ using Spine.Unity;
 public class MenuSceneController : MonoBehaviour {
     [SerializeField] Transform fixedCanvas;
     [SerializeField] HorizontalScrollSnap windowScrollSnap;
+    [SerializeField] DeckSettingManager deckSettingManager;
+
     private SkeletonGraphic[] buttonSkeletons = new SkeletonGraphic[5];
     protected SkeletonGraphic selectedAnimation;
     private int currentPage;
@@ -18,6 +20,7 @@ public class MenuSceneController : MonoBehaviour {
 
     private void Awake() {
         if (decksLoader == null) decksLoader = gameObject.AddComponent<MyDecksLoader>();
+        deckSettingManager.AttachDecksLoader(ref decksLoader);
         decksLoader.Load();
     }
 

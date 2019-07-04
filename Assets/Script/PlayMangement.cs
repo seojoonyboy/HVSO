@@ -977,6 +977,10 @@ public partial class PlayMangement {
     public void OnNoCostEffect(bool turnOn) {
         releaseTurnBtn.transform.Find("TurnOverFeedback").gameObject.SetActive(turnOn);
     }
+
+    //public List<string> GetTranslatedCtgNames() {
+
+    //}
 }
 
 /// <summary>
@@ -990,4 +994,9 @@ public partial class PlayMangement {
         forest,
         water
     }
+
+    public TranslateDictionary dicts = new TranslateDictionary();
+
+    [System.Serializable]
+    public class TranslateDictionary : UnitySerializedDictionary<string, string> { }
 }

@@ -3,10 +3,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class MyDecksLoader : MonoBehaviour {
     GameObject loadingModal;
+    public UnityEvent OnLoadFinished = new UnityEvent();
 
     /// <summary>
     /// 내 덱 정보 불러오기
@@ -44,7 +46,7 @@ public class MyDecksLoader : MonoBehaviour {
 
         if (response.responseCode == 200) {
             accountManager.orcDecks = JsonReader.Read<OrcDecks>(response.data);
-
+            OnLoadFinished.Invoke();
         }
         else {
             Modal.instantiate("데이터를 정상적으로 불러오지 못했습니다.\n다시 요청합니까?", Modal.Type.YESNO, () => {

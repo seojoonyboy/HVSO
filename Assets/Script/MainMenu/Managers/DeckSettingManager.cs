@@ -8,9 +8,11 @@ public class DeckSettingManager : MonoBehaviour
     [SerializeField] Canvas orcTemplateCanvas;
     [SerializeField] Transform humanDeckList;
     [SerializeField] Transform orcDeckList;
+    MyDecksLoader decksLoader;
 
-    private void Start() {
-        SetPlayerDecks();
+    public void AttachDecksLoader(ref MyDecksLoader decksLoader) {
+        this.decksLoader = decksLoader;
+        this.decksLoader.OnLoadFinished.AddListener(() => { OnDecksInfoLoaded(); });
     }
 
     public void ClickNewDeck(DeckHandler deck) {
@@ -27,5 +29,9 @@ public class DeckSettingManager : MonoBehaviour
             humanDeckList.GetChild(0).GetComponent<DeckHandler>().SetDeck(AccountManager.Instance.humanDecks.basicDecks[0]);
             humanDeckList.GetChild(1).gameObject.SetActive(true);
         }
+    }
+
+    void OnDecksInfoLoaded() {
+        SetPlayerDecks();
     }
 }
