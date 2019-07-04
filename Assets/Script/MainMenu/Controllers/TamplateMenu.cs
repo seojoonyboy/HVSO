@@ -5,13 +5,14 @@ using UnityEngine.UI;
 using Spine.Unity;
 using Spine;
 using dataModules;
+using TMPro;
 
 public class TamplateMenu : MonoBehaviour
 {
     [SerializeField]
     private GameObject heroButtonLayout;
     private GameObject heroPortrait;
-    private Text heroName;
+    private TextMeshProUGUI heroName;
     private GameObject heroProperty;
     private GameObject heroCardGroup;
 
@@ -27,9 +28,9 @@ public class TamplateMenu : MonoBehaviour
 
         Transform heroSelect = upper.Find("HeroSelect");
 
-        heroButtonLayout = heroSelect.Find("HeroBtnLayout").gameObject;
+        heroButtonLayout = heroSelect.Find("HeroButton").gameObject;
         heroPortrait = heroSelect.Find("Portrait").gameObject;
-        heroName = heroSelect.Find("NameTamplate").GetComponentInChildren<Text>();
+        heroName = heroSelect.Find("NameTamplate").GetComponentInChildren<TextMeshProUGUI>();
         heroProperty = heroSelect.Find("HeroProperty").gameObject;
         heroCardGroup = upper.Find("HeroCard").gameObject;
 
@@ -52,7 +53,7 @@ public class TamplateMenu : MonoBehaviour
         int count = 0;
 
         foreach (Transform child in btnLayout) {
-            TamplateHeroBtn tamplateHeroBtn = child.gameObject.GetComponent<TamplateHeroBtn>();
+            TamplateHeroBtn tamplateHeroBtn = child.gameObject.AddComponent<TamplateHeroBtn>();
             Button button = child.gameObject.GetComponent<Button>();
 
             if (isHuman == true)
@@ -94,8 +95,8 @@ public class TamplateMenu : MonoBehaviour
         foreach (HeroCard card in heroData.heroCards) {
             Transform heroCardObject = heroCardGroup.transform.GetChild(cardCount);
 
-            heroCardObject.Find("NameTamplate").Find("Text").gameObject.GetComponent<Text>().text = card.name;
-            heroCardObject.Find("Mana").Find("Text").gameObject.GetComponent<Text>().text = card.cost.ToString();
+            heroCardObject.Find("Name").Find("Text").gameObject.GetComponent<TextMeshProUGUI>().text = card.name;
+            heroCardObject.Find("Cost").Find("Text").gameObject.GetComponent<TextMeshProUGUI>().text = card.cost.ToString();
             cardCount++;
         }
         previewID = heroID;
