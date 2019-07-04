@@ -503,6 +503,7 @@ public partial class PlayMangement : MonoBehaviour {
         socketHandler.TurnOver();
         turn++;
         yield return socketHandler.WaitGetCard();
+        IngameNotice.instance.CloseNotice();
         DistributeResource();
         eventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_BATTLE_TURN, this, null);
         EndTurnDraw();
@@ -656,6 +657,7 @@ public partial class PlayMangement : MonoBehaviour {
             enemyCard.transform.localScale = new Vector3(1, 1, 1);
             enemyCard.transform.localPosition = new Vector3(0, 0, 0);
             enemyCard.SetActive(true);
+            IngameNotice.instance.SetNotice("상대방의 영웅 카드 사용 여부 판단중");
         }
         yield return new WaitForSeconds(1f);
         if (isPlayer) socketHandler.TurnOver();
@@ -668,6 +670,7 @@ public partial class PlayMangement : MonoBehaviour {
             yield return new WaitForFixedUpdate();
             //스킬 사용
             if(socketHandler.useCardList.Count != 0) {
+                IngameNotice.instance.CloseNotice();
                 SocketFormat.GameState state = socketHandler.getHistory();
                 SocketFormat.PlayHistory history = state.lastUse;
                 if (history != null) {
@@ -679,6 +682,7 @@ public partial class PlayMangement : MonoBehaviour {
                 }
             }
         } while (heroShieldActive);
+        IngameNotice.instance.CloseNotice();
     }
 }
 
