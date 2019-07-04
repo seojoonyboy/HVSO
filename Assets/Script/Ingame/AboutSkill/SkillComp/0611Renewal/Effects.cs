@@ -43,6 +43,7 @@ namespace SkillModules {
         private void AddBuff(ref List<GameObject> targets, ref GainArgs args) {
             foreach(GameObject target in targets) {
                 target.GetComponent<PlaceMonster>().RequestChangeStat(args.atk, args.hp);
+                EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.BUFF, target.transform.position);
             }
             skillHandler.isDone = true;
         }
