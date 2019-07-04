@@ -194,7 +194,7 @@ namespace SkillModules {
             }
             else if(!isEndCardPlay) {
                 List<GameObject> selectList = select.GetTargetFromSelect();
-                if(selectList.Count > 0)
+                if(selectList != null && selectList.Count > 0)
                     targets.Add(ArgumentForm(select, true, isEndCardPlay));
             }
             
