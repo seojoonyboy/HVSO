@@ -10,10 +10,20 @@ using Spine.Unity;
 public class MenuSceneController : MonoBehaviour {
     [SerializeField] Transform fixedCanvas;
     [SerializeField] HorizontalScrollSnap windowScrollSnap;
+    [SerializeField] DeckSettingManager deckSettingManager;
+
     private SkeletonGraphic[] buttonSkeletons = new SkeletonGraphic[5];
     protected SkeletonGraphic selectedAnimation;
     private int currentPage;
     private bool buttonClicked;
+    public MyDecksLoader decksLoader;
+
+    private void Awake() {
+        if (decksLoader == null) decksLoader = gameObject.AddComponent<MyDecksLoader>();
+        deckSettingManager.AttachDecksLoader(ref decksLoader);
+        decksLoader.Load();
+    }
+
     private void Start() {
         currentPage = 2;
         Transform buttonsParent = fixedCanvas.Find("Footer");
@@ -30,8 +40,6 @@ public class MenuSceneController : MonoBehaviour {
 
         SoundManager.Instance.PlaySound(SoundType.FIRST_TURN);
     }
-
-
 
     public void ClickMenuButton(int pageNum) {
         buttonClicked = true;

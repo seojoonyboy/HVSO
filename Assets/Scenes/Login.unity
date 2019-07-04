@@ -1737,10 +1737,10 @@ MonoBehaviour:
     - {fileID: 2089563141439395132, guid: 400f1c7de344fe9438a213b082c592bc, type: 3}
     - {fileID: -6393710090423158087, guid: 400f1c7de344fe9438a213b082c592bc, type: 3}
     - {fileID: 21300000, guid: 010ebff855d41e0408610c7a67668631, type: 3}
-    - {fileID: 1709729427724246153, guid: c539191fc8014154c8965d283ce22046, type: 3}
-    - {fileID: 6810151699062994815, guid: c539191fc8014154c8965d283ce22046, type: 3}
-    - {fileID: 8206892130047878750, guid: c539191fc8014154c8965d283ce22046, type: 3}
-    - {fileID: -8682957346750947755, guid: c539191fc8014154c8965d283ce22046, type: 3}
+    - {fileID: -8740347094599829763, guid: 52f135f3b99c28141a870c88179a9a1a, type: 3}
+    - {fileID: -5025510588738423543, guid: 52f135f3b99c28141a870c88179a9a1a, type: 3}
+    - {fileID: 1312467189619365717, guid: 52f135f3b99c28141a870c88179a9a1a, type: 3}
+    - {fileID: -3399892814996401110, guid: 52f135f3b99c28141a870c88179a9a1a, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -5049,8 +5049,12 @@ MonoBehaviour:
       Data: 26|Ludiq.FlexibleDictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
         UnityEngine.CoreModule]], Ludiq.Core.Runtime
     - Name: comparer
-      Entry: 9
-      Data: 15
+      Entry: 7
+      Data: 27|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 12
       Data: 4

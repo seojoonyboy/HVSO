@@ -18,9 +18,6 @@ public class BattleReadySceneController : MonoBehaviour {
     List<GameObject> allDeckObjects = new List<GameObject>();
     public GameObject CardListModal, CardInfoModal;
     GameObject loadingModal;
-
-    public HumanDecks humanDecks;
-    public OrcDecks orcDecks;
     bool isIngameButtonClicked;
 
     [SerializeField] TextMeshProUGUI pageText;
@@ -29,7 +26,6 @@ public class BattleReadySceneController : MonoBehaviour {
 
     IEnumerator Start() {
         yield return null;
-        DataLoad();
         isIngameButtonClicked = false;
     }
 
@@ -41,43 +37,6 @@ public class BattleReadySceneController : MonoBehaviour {
 
     public void ChangePageText(string msg) {
         pageText.text = msg;
-    }
-
-    public void DataLoad() {
-        AccountManager.Instance.RequestHumanDecks(OnReqHumanDecks, OnRetryReq);
-        loadingModal = LoadingModal.instantiate();
-        loadingModal.transform.Find("Panel/AdditionalMessage").GetComponent<Text>().text = "덱 정보를 불러오는중...Human Decks";
-    }
-
-    private void OnRetryReq(string msg) {
-        loadingModal.transform.GetChild(0).GetComponent<UIModule.LoadingTextEffect>().AddAdditionalMsg(msg);
-    }
-
-    private void OnReqHumanDecks(HttpResponse response) {
-        if(response.responseCode == 200) {
-            humanDecks = JsonReader.Read<HumanDecks>(response.data);
-
-            AccountManager.Instance.RequestOrcDecks(OnReqOrcDecks, OnRetryReq);
-            loadingModal.transform.Find("Panel/AdditionalMessage").GetComponent<Text>().text = "덱 정보를 불러오는중...Orc Decks";
-        }
-        else {
-            Modal.instantiate("데이터를 정상적으로 불러오지 못했습니다.\n다시 요청합니까?", Modal.Type.YESNO, ()=> {
-                DataLoad();
-            });
-        }
-    }
-
-    private void OnReqOrcDecks(HttpResponse response) {
-        Destroy(loadingModal);
-        if (response.responseCode == 200) {
-            orcDecks = JsonReader.Read<OrcDecks>(response.data);
-            //raceTypeButtons[0].onClick.Invoke();
-        }
-        else {
-            Modal.instantiate("데이터를 정상적으로 불러오지 못했습니다.\n다시 요청합니까?", Modal.Type.YESNO, () => {
-                DataLoad();
-            });
-        }
     }
 
     public void OnStartButton() {

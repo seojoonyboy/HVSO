@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 using TMPro;
 
@@ -17,10 +18,12 @@ public class IngameNotice : MonoBehaviour {
             return _instance;
         }
     }
+    private UnityAction update;
 
     public void Awake() {
         _instance = this;
         gameObject.SetActive(false);
+        update = slowDown;
     }
 
     public void OnDestroy() {
@@ -32,14 +35,31 @@ public class IngameNotice : MonoBehaviour {
     private float colorAlpha;
 
     private void Update() {
+        update();
+    }
+
+    private void slowUp() {
+        noticeText.color = new Vector4(noticeText.color.r, noticeText.color.g, noticeText.color.b, colorAlpha);
+        colorAlpha += 0.005f;
+        if (colorAlpha >= 0.95f) update = slowDown;
+    }
+
+    private void slowDown() {
         noticeText.color = new Vector4(noticeText.color.r, noticeText.color.g, noticeText.color.b, colorAlpha);
         colorAlpha -= 0.005f;
-        if (colorAlpha <= 0.01f) gameObject.SetActive(false);
+        if (colorAlpha <= 0.05f) update = slowUp;
     }
 
     public void SetNotice(string text) {
         colorAlpha = 1f;
         noticeText.text = text;
         gameObject.SetActive(true);
+    }
+
+    public void CloseNotice() {
+        gameObject.SetActive(false);
+        colorAlpha = 1f;
+        noticeText.color = new Vector4(noticeText.color.r, noticeText.color.g, noticeText.color.b, colorAlpha);
+        update = slowDown;
     }
 }

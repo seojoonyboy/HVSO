@@ -488,11 +488,13 @@ public partial class BattleConnector : MonoBehaviour {
     public QueueSocketList<int> unitSkillList = new QueueSocketList<int>();
 
     public IEnumerator WaitGetCard() {
+        if(!getNewCard) IngameNotice.instance.SetNotice("서버로부터 카드를 받고 있습니다");
         while(!getNewCard) {
             yield return new WaitForFixedUpdate();
         }
         getNewCard = false;
         dequeueing = true;
+        IngameNotice.instance.CloseNotice();
     }
 
     public bool cardPlayFinish() {

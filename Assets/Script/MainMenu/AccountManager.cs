@@ -7,6 +7,7 @@ using System.Linq;
 using UnityEngine.UI;
 using BestHTTP;
 using Newtonsoft.Json;
+using dataModules;
 
 public partial class AccountManager : Singleton<AccountManager> {
     protected AccountManager() { }
@@ -17,9 +18,11 @@ public partial class AccountManager : Singleton<AccountManager> {
     public string DEVICEID { get; private set; }
     public UserClassInput userData { get; private set; }
     public List<dataModules.CardInventory> myCards { get; private set; }
-    public Dictionary<string, dataModules.HeroInventory> myHeroInventories { get; private set; }
 
-    public List<Deck> myDecks = new List<Deck>();
+    public HumanDecks humanDecks;
+    public OrcDecks orcDecks;
+
+    public Dictionary<string, dataModules.HeroInventory> myHeroInventories { get; private set; }
     public CardDataPackage cardPackage;
 
     public ResourceManager resource;
@@ -53,23 +56,6 @@ public partial class AccountManager : Singleton<AccountManager> {
     private void OccurErrorModal(long errorCode) {
         Modal.instantiate("네트워크 오류가 발생하였습니다. 다시 시도해 주세요.", Modal.Type.CHECK);
         NoneIngameSceneEventHandler.Instance.PostNotification(NoneIngameSceneEventHandler.EVENT_TYPE.NETWORK_EROR_OCCURED, this, errorCode);
-    }
-
-    public void SetMyDecks() {
-        if (myCards == null) return;
-
-        var group =
-            from card in myCards
-            group card by card.camp into newGroup
-            orderby newGroup.Key
-            select newGroup;
-
-        foreach (var _group in group) {
-            Deck deck = new Deck();
-            deck.type = _group.Key;
-
-            myDecks.Add(deck);
-        }
     }
 
     private void SetHeroInventories(List<dataModules.HeroInventory> data) {
@@ -240,7 +226,6 @@ public partial class AccountManager {
             SetHeroInventories(userData.heroInventories);
             SetCardData();
             //SetDummyDeck();
-            SetMyDecks();
 
             Destroy(loadingModal);
             SceneManager.Instance.LoadScene(SceneManager.Scene.MAIN_SCENE);

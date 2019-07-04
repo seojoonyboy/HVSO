@@ -656,6 +656,7 @@ public partial class PlayMangement : MonoBehaviour {
             enemyCard.transform.localScale = new Vector3(1, 1, 1);
             enemyCard.transform.localPosition = new Vector3(0, 0, 0);
             enemyCard.SetActive(true);
+            IngameNotice.instance.SetNotice("상대방이 영웅카드 사용 여부를 결정 중입니다");
         }
         yield return new WaitForSeconds(1f);
         if (isPlayer) socketHandler.TurnOver();
@@ -668,6 +669,7 @@ public partial class PlayMangement : MonoBehaviour {
             yield return new WaitForFixedUpdate();
             //스킬 사용
             if(socketHandler.useCardList.Count != 0) {
+                IngameNotice.instance.CloseNotice();
                 SocketFormat.GameState state = socketHandler.getHistory();
                 SocketFormat.PlayHistory history = state.lastUse;
                 if (history != null) {
@@ -679,6 +681,7 @@ public partial class PlayMangement : MonoBehaviour {
                 }
             }
         } while (heroShieldActive);
+        IngameNotice.instance.CloseNotice();
     }
 }
 
@@ -973,6 +976,10 @@ public partial class PlayMangement {
     public void OnNoCostEffect(bool turnOn) {
         releaseTurnBtn.transform.Find("TurnOverFeedback").gameObject.SetActive(turnOn);
     }
+
+    //public List<string> GetTranslatedCtgNames() {
+
+    //}
 }
 
 /// <summary>
@@ -986,4 +993,9 @@ public partial class PlayMangement {
         forest,
         water
     }
+
+    public TranslateDictionary dicts = new TranslateDictionary();
+
+    [System.Serializable]
+    public class TranslateDictionary : UnitySerializedDictionary<string, string> { }
 }
