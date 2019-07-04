@@ -11,6 +11,7 @@ public class MenuSceneController : MonoBehaviour {
     [SerializeField] Transform fixedCanvas;
     [SerializeField] HorizontalScrollSnap windowScrollSnap;
     [SerializeField] DeckSettingManager deckSettingManager;
+    [SerializeField] SkeletonGraphic battleSwordSkeleton;
 
     private SkeletonGraphic[] buttonSkeletons = new SkeletonGraphic[5];
     protected SkeletonGraphic selectedAnimation;
@@ -36,8 +37,8 @@ public class MenuSceneController : MonoBehaviour {
     /// PVP대전 버튼 클릭
     /// </summary>
     public void OnPVPClicked() {
+        battleSwordSkeleton.AnimationState.SetAnimation(0, "TOUCH", false);
         SceneManager.Instance.LoadScene(SceneManager.Scene.LOADING_SCENE);
-
         SoundManager.Instance.PlaySound(SoundType.FIRST_TURN);
     }
 
