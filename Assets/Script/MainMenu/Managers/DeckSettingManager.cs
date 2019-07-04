@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DeckSettingManager : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class DeckSettingManager : MonoBehaviour
     [SerializeField] Canvas orcTemplateCanvas;
     [SerializeField] Transform humanDeckList;
     [SerializeField] Transform orcDeckList;
+    [SerializeField] TMPro.TextMeshProUGUI humanDeckNum;
+    [SerializeField] TMPro.TextMeshProUGUI orcDeckNum;
     MyDecksLoader decksLoader;
 
     public void AttachDecksLoader(ref MyDecksLoader decksLoader) {
@@ -16,19 +19,42 @@ public class DeckSettingManager : MonoBehaviour
     }
 
     public void ClickNewDeck(DeckHandler deck) {
-        //deck.DECKID
-        if (deck.gameObject.name == "HumanEditDeck")
-            humanTemplateCanvas.gameObject.SetActive(true);
-        else
-            orcTemplateCanvas.gameObject.SetActive(true);
+        Canvas templateCanvas;
+        if (deck.gameObject.name == "HumanEditDeck") {
+            templateCanvas = humanTemplateCanvas;
+            templateCanvas.GetComponent<TemplateMenu>().ChangeHeroID("h10001");
+        }
+        else {
+            templateCanvas = orcTemplateCanvas;
+            templateCanvas.GetComponent<TemplateMenu>().ChangeHeroID("h10002");
+        }   
+        templateCanvas.gameObject.SetActive(true);
     }
 
     public void SetPlayerDecks() {
-        if (AccountManager.Instance.humanDecks.basicDecks.Count > 0) {
-            humanDeckList.GetChild(0).gameObject.SetActive(true);
-            humanDeckList.GetChild(0).GetComponent<DeckHandler>().SetDeck(AccountManager.Instance.humanDecks.basicDecks[0]);
-            humanDeckList.GetChild(1).gameObject.SetActive(true);
+        int humanDeckCount = 0;
+        int orcDeckCount = 0;
+        int humanBasicDecks = AccountManager.Instance.humanDecks.basicDecks.Count;
+        int orcBasicDecks = AccountManager.Instance.orcDecks.basicDecks.Count;
+        if (humanBasicDecks > 0) {
+            for (int i = 0; i < humanBasicDecks; i++) {
+                humanDeckList.GetChild(humanDeckCount).gameObject.SetActive(true);
+                humanDeckList.GetChild(humanDeckCount).GetComponent<DeckHandler>().SetDeck(AccountManager.Instance.humanDecks.basicDecks[i]);
+                humanDeckCount++;
+                humanDeckList.GetChild(humanDeckCount).gameObject.SetActive(true);
+            }
         }
+        if (orcBasicDecks > 0) {
+            for (int i = 0; i < orcBasicDecks; i++) {
+                orcDeckList.GetChild(orcDeckCount).gameObject.SetActive(true);
+                orcDeckList.GetChild(orcDeckCount).GetComponent<DeckHandler>().SetDeck(AccountManager.Instance.orcDecks.basicDecks[i]);
+                orcDeckCount++;
+                orcDeckList.GetChild(orcDeckCount).gameObject.SetActive(true);
+            }
+        }
+        humanDeckNum.text = humanDeckCount.ToString() + "/4";
+        orcDeckNum.text = humanDeckCount.ToString() + "/4";
+
     }
 
     void OnDecksInfoLoaded() {
