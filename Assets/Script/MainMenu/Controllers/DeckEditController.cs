@@ -1,16 +1,84 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using dataModules;
+using TMPro;
 
 public class DeckEditController : MonoBehaviour
 {
-    CardData card;
 
-    public void SettingNewDeck() {
+    public string heroID;
+    private GameObject heroInfo;
+    private GameObject heroCardGroup;
+    private GameObject heroProperty;
+
+    private GameObject settingLayout;
+    private GameObject ownCardLayout;
+    private GameObject UnReleaseCardLayout;
+
+    private GameObject deckNamePanel;
+
+    private void Awake() {
+        SetObject();
+        SetHeroData();
     }
 
-    public void SettingEditDeck() {
-    }    
+
+    public void NewDeck() {
+
+    }
+
+    public void LoadEditDeck() {
+
+    }
+
+
+
+
+    private void SetObject() {
+        deckNamePanel = transform.Find("DeckNamePanel").gameObject;
+        heroInfo = transform.Find("HeroStatus").gameObject;
+        heroCardGroup = transform.Find("HeroCard").gameObject;
+        heroProperty = transform.Find("HeroProperty").gameObject;
+
+        settingLayout = transform.Find("SetDeckLayout").Find("Content").gameObject;
+        ownCardLayout = transform.Find("OwnCard").Find("LayOut").Find("Content").gameObject;
+        UnReleaseCardLayout = transform.Find("UnReleaseCard").Find("LayOut").Find("Content").gameObject;
+    }
+
+    public void SetHeroData() {
+        if (AccountManager.Instance == null) return;
+        ResourceManager resource = AccountManager.Instance.resource;
+
+        HeroInventory heroData = AccountManager.Instance.myHeroInventories["h10001"];
+        int cardCount = 0;
+
+        heroInfo.transform.Find("Streamer").Find("Text").gameObject.GetComponent<TextMeshProUGUI>().text = heroData.name;
+
+        foreach (HeroCard card in heroData.heroCards) {
+            Transform heroCardObject = heroCardGroup.transform.GetChild(cardCount);
+
+            heroCardObject.Find("NameTemplate").Find("Text").gameObject.GetComponent<TextMeshProUGUI>().text = card.name;
+            heroCardObject.Find("Cost").Find("Text").gameObject.GetComponent<TextMeshProUGUI>().text = card.cost.ToString();
+            cardCount++;
+        }
+
+        int childcount = 0;
+        foreach (Transform child in heroProperty.transform) {
+            child.gameObject.GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[heroData.heroClasses[childcount]];
+            child.GetChild(0).GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["class_icon_" + heroData.heroClasses[childcount]];
+
+            childcount++;
+        }
+    }
+
+
+
+    public void ReturnButton() {
+
+
+    }
 
 }
 

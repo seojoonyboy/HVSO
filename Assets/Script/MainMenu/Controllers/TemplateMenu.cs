@@ -14,7 +14,6 @@ public class TemplateMenu : MonoBehaviour {
     private TextMeshProUGUI heroName;
     private GameObject heroProperty;
     private GameObject heroCardGroup;
-
     [SerializeField]
     private GameObject deckLayout;
 
@@ -25,7 +24,7 @@ public class TemplateMenu : MonoBehaviour {
         Transform footer = transform.Find("Footer");
         Transform heroSelect = upper.Find("HeroSelect");
 
-        heroButtonLayout = heroSelect.Find("HeroButton").gameObject;
+        heroButtonLayout = heroSelect.Find("HeroButton").Find("HeroBtnLayout").gameObject;
         heroPortrait = heroSelect.Find("Portrait").gameObject;
         heroName = heroSelect.Find("NameTamplate").GetComponentInChildren<TextMeshProUGUI>();
         heroProperty = heroSelect.Find("HeroProperty").gameObject;
@@ -64,6 +63,10 @@ public class TemplateMenu : MonoBehaviour {
                 preview.SetActive((count == 0) ? true : false);
                 preview.name = templateHeroBtn.heroID;
             }
+
+            if (count > 0)
+                button.enabled = false;
+
             count++;
         }
         previewID = (isHuman == true) ? "h10001" : "h10002";
@@ -72,15 +75,16 @@ public class TemplateMenu : MonoBehaviour {
     public void ChangeHeroID(string heroID) {
         string id = heroID;
         ChangeHeroSkeleton(id);
-        ChangeHeroCard(id);
+        ChangeHeroData(id);
     }
 
     private void ChangeHeroSkeleton(string heroID) {
         heroPortrait.transform.Find(previewID).gameObject.SetActive(false);
         heroPortrait.transform.Find(heroID).gameObject.SetActive(true);
+        previewID = heroID;
     }
 
-    private void ChangeHeroCard(string heroID) {
+    private void ChangeHeroData(string heroID) {
         HeroInventory heroData = AccountManager.Instance.myHeroInventories[heroID];
         int cardCount = 0;
 
@@ -91,10 +95,15 @@ public class TemplateMenu : MonoBehaviour {
             heroCardObject.Find("Cost").Find("Text").gameObject.GetComponent<TextMeshProUGUI>().text = card.cost.ToString();
             cardCount++;
         }
-        previewID = heroID;
+
+        int childcount = 0;
+        foreach (Transform child in heroProperty.transform) {
+            child.gameObject.GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[heroData.heroClasses[childcount]];
+            child.GetChild(0).GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["class_icon_" + heroData.heroClasses[childcount]];
+
+            childcount++;
+        }
     }
-
-
 
     public void SelectDeckBtn() {
 
