@@ -648,7 +648,7 @@ public partial class PlayMangement : MonoBehaviour {
 
     public IEnumerator DrawSpecialCard(bool isHuman) {
         yield return socketHandler.WaitGetCard();
-        //Logger.Log("쉴드 발동!");
+        Logger.Log("쉴드 발동!");
         bool isPlayer = (isHuman == player.isHuman);
         if (isPlayer) {
             CardCircleManager cdpm = FindObjectOfType<CardCircleManager>();
@@ -666,8 +666,6 @@ public partial class PlayMangement : MonoBehaviour {
                 enemyCard = Instantiate(Resources.Load("Prefabs/HumanBackCard") as GameObject, enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(CountEnemyCard()));
             else
                 enemyCard = Instantiate(Resources.Load("Prefabs/OrcBackCard") as GameObject, enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(CountEnemyCard()));
-
-            enemyCard.transform.SetParent(PlayMangement.instance.enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(PlayMangement.instance.CountEnemyCard()));
             enemyCard.transform.localScale = new Vector3(1, 1, 1);
             enemyCard.transform.localPosition = new Vector3(0, 0, 0);
             enemyCard.SetActive(true);
