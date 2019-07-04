@@ -7,8 +7,7 @@ using Spine;
 using dataModules;
 using TMPro;
 
-public class TamplateMenu : MonoBehaviour
-{
+public class TemplateMenu : MonoBehaviour {
     [SerializeField]
     private GameObject heroButtonLayout;
     private GameObject heroPortrait;
@@ -24,8 +23,6 @@ public class TamplateMenu : MonoBehaviour
     private void Awake() {
         Transform upper = transform.Find("Upper");
         Transform footer = transform.Find("Footer");
-
-
         Transform heroSelect = upper.Find("HeroSelect");
 
         heroButtonLayout = heroSelect.Find("HeroButton").gameObject;
@@ -33,12 +30,7 @@ public class TamplateMenu : MonoBehaviour
         heroName = heroSelect.Find("NameTamplate").GetComponentInChildren<TextMeshProUGUI>();
         heroProperty = heroSelect.Find("HeroProperty").gameObject;
         heroCardGroup = upper.Find("HeroCard").gameObject;
-
         deckLayout = footer.Find("HeroBtnLayout").gameObject;
-
-
-
-
 
         SetHeroBtnID();
     }
@@ -53,24 +45,24 @@ public class TamplateMenu : MonoBehaviour
         int count = 0;
 
         foreach (Transform child in btnLayout) {
-            TamplateHeroBtn tamplateHeroBtn = child.gameObject.AddComponent<TamplateHeroBtn>();
+            TemplateHeroBtn templateHeroBtn = child.gameObject.AddComponent<TemplateHeroBtn>();
             Button button = child.gameObject.GetComponent<Button>();
 
             if (isHuman == true)
-                tamplateHeroBtn.heroID = (child.GetSiblingIndex() == 0) ? "h10001" : "h10003";
+                templateHeroBtn.heroID = (child.GetSiblingIndex() == 0) ? "h10001" : "h10003";
             else
-                tamplateHeroBtn.heroID = (child.GetSiblingIndex() == 0) ? "h10002" : "h10004";
+                templateHeroBtn.heroID = (child.GetSiblingIndex() == 0) ? "h10002" : "h10004";
 
-            tamplateHeroBtn.menu = this;
+            templateHeroBtn.menu = this;
             if (button != null)
-                button.onClick.AddListener(delegate () { tamplateHeroBtn.HeroSelectBtn(); });
+                button.onClick.AddListener(delegate () { templateHeroBtn.HeroSelectBtn(); });
 
-            if(count < 2) {
-                GameObject skeletonData = resource.heroPreview[tamplateHeroBtn.heroID].gameObject;
+            if (count < 2) {
+                GameObject skeletonData = resource.heroPreview[templateHeroBtn.heroID].gameObject;
                 GameObject preview = Instantiate(skeletonData, heroPortrait.transform);
                 preview.transform.position = heroPortrait.transform.position;
                 preview.SetActive((count == 0) ? true : false);
-                preview.name = tamplateHeroBtn.heroID;
+                preview.name = templateHeroBtn.heroID;
             }
             count++;
         }
@@ -111,5 +103,9 @@ public class TamplateMenu : MonoBehaviour
     public void StartEditBtn() {
 
     }
-    
+
+
+    public void ReturnToMenu() {
+        gameObject.SetActive(false);
+    }
 }
