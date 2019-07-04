@@ -44,7 +44,10 @@ public partial class AccountManager : Singleton<AccountManager> {
     void Start() {
         networkManager = NetworkManager.Instance;
 
-        //RequestDeckModify();
+        //RequestDeckMake();
+        //TestModifyDeck();
+        //RequestDeckMake();
+        //RequestDeckRemove(1);
     }
 
     private void OccurErrorModal(long errorCode) {
@@ -68,33 +71,6 @@ public partial class AccountManager : Singleton<AccountManager> {
             myDecks.Add(deck);
         }
     }
-
-    //public void SetDummyDeck() {
-    //    if (myCards == null) return;
-
-    //    var group =
-    //        from card in myCards
-    //        group card by card.camp into newGroup
-    //        orderby newGroup.Key
-    //        select newGroup;
-
-    //    foreach (var _group in group) {
-    //        Deck deck = new Deck();
-    //        deck.type = _group.Key;
-
-    //        myDecks.Add(deck);
-    //    }
-
-    //    try {
-    //        myDecks[0].heroName = "수비대장 제로드";
-    //        myDecks[0].deckName = "왕국 수비대";
-    //        myDecks[1].heroName = "족장 크라쿠스";
-    //        myDecks[1].deckName = "암흑주술 부족";
-    //    }
-    //    catch (ArgumentException ex) {
-    //        Logger.LogError("사용자 덱이 정상적으로 세팅되지 않았습니다.");
-    //    }
-    //}
 
     private void SetHeroInventories(List<dataModules.HeroInventory> data) {
         myHeroInventories = new Dictionary<string, dataModules.HeroInventory>();
@@ -309,9 +285,9 @@ public partial class AccountManager {
 
 public partial class AccountManager {
     /// <summary>
-    /// 덱 편집 Server에 요청
+    /// 덱 새로 생성 Server에 요청
     /// </summary>
-    public void RequestDeckModify() {
+    public void RequestDeckMake() {
         StringBuilder sb = new StringBuilder();
         sb
             .Append(networkManager.baseUrl)
@@ -324,13 +300,13 @@ public partial class AccountManager {
         );
         request.MethodType = BestHTTP.HTTPMethods.Post;
 
-        NetworkManager.DeckModifyReqFormat format = new NetworkManager.DeckModifyReqFormat();
+        NetworkManager.AddCustomDeckReqFormat format = new NetworkManager.AddCustomDeckReqFormat();
         format.name = "Deck114";
         format.heroId = "h10001";
         format.camp = "human";
 
-        List<NetworkManager.DeckModifyReqFormat_Item> items = new List<NetworkManager.DeckModifyReqFormat_Item>();
-        NetworkManager.DeckModifyReqFormat_Item item = new NetworkManager.DeckModifyReqFormat_Item();
+        List<NetworkManager.DeckItem> items = new List<NetworkManager.DeckItem>();
+        NetworkManager.DeckItem item = new NetworkManager.DeckItem();
         item.cardId = "ac10001";
         item.cardCount = 2;
         items.Add(item);
@@ -344,5 +320,71 @@ public partial class AccountManager {
     private void OnReceived(HTTPRequest originalRequest, HTTPResponse response) {
         var result = response.DataAsText;
         Logger.Log("On Received");
+    }
+
+    /// <summary>
+    /// 덱 제거 요청
+    /// </summary>
+    /// <param name="deckId">Deck Id</param>
+    public void RequestDeckRemove(int deckId) {
+        StringBuilder sb = new StringBuilder();
+        sb
+            .Append(networkManager.baseUrl)
+            .Append("api/users/")
+            .Append(DEVICEID)
+            .Append("/decks/")
+            .Append(deckId.ToString());
+
+        BestHTTP.HTTPRequest request = new BestHTTP.HTTPRequest(
+            new Uri(sb.ToString())
+        );
+        request.MethodType = BestHTTP.HTTPMethods.Delete;
+
+        networkManager.Request(request, OnReceived);
+    }
+
+    /// <summary>
+    /// 덱 수정 요청
+    /// </summary>
+    /// <param name="data">양식 작성</param>
+    public void RequestDeckModify(NetworkManager.ModifyDeckReqFormat data, int deckId) {
+        var pairs = data.parms;
+
+        StringBuilder sb = new StringBuilder();
+        sb
+            .Append(networkManager.baseUrl)
+            .Append("api/users/")
+            .Append(DEVICEID)
+            .Append("/decks/")
+            .Append(deckId);
+
+        BestHTTP.HTTPRequest request = new BestHTTP.HTTPRequest(
+            new Uri(sb.ToString())
+        );
+        request.MethodType = HTTPMethods.Put;
+
+        foreach (NetworkManager.ModifyDeckReqArgs pair in pairs) {
+            switch (pair.fieldName) {
+                case NetworkManager.ModifyDeckReqField.NAME:
+                    request.AddField("name", (string)pair.value);
+                    break;
+                case NetworkManager.ModifyDeckReqField.ITEMS:
+                    var items = (NetworkManager.DeckItem[])pair.value;
+                    request.AddField("items", JsonConvert.SerializeObject(items));
+                    break;
+            }
+        }
+        networkManager.Request(request, OnReceived);
+    }
+
+    private void TestModifyDeck() {
+        NetworkManager.ModifyDeckReqFormat form = new NetworkManager.ModifyDeckReqFormat();
+        NetworkManager.ModifyDeckReqArgs field = new NetworkManager.ModifyDeckReqArgs();
+
+        field.fieldName = NetworkManager.ModifyDeckReqField.NAME;
+        field.value = "Modified";
+        form.parms.Add(field);
+
+        RequestDeckModify(form, 5);
     }
 }

@@ -189,15 +189,33 @@ public partial class NetworkManager {
         }
     }
 
-    public class DeckModifyReqFormat {
+    public class AddCustomDeckReqFormat {
         public string name;
         public string heroId;
         public string camp;
-        public DeckModifyReqFormat_Item[] items;
+        public DeckItem[] items;
     }
 
-    public class DeckModifyReqFormat_Item {
+    public class DeckItem {
         public string cardId;
         public int cardCount;
+    }
+
+    public class ModifyDeckReqFormat {
+        public List<ModifyDeckReqArgs> parms;
+
+        public ModifyDeckReqFormat() {
+            parms = new List<ModifyDeckReqArgs>();
+        }
+    }
+
+    public struct ModifyDeckReqArgs {
+        public ModifyDeckReqField fieldName;
+        public object value;
+    }
+
+    public enum ModifyDeckReqField {
+        NAME,
+        ITEMS
     }
 }
