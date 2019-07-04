@@ -12,6 +12,7 @@ namespace dataModules {
 
     public class CardInventory : BaseCard {
         public Skill[] skills;
+        public string flavorText;
     }
 
     /// <summary>
@@ -34,6 +35,7 @@ namespace dataModules {
         public bool isHeroCard;
         public string cardId;
         public Skill[] skills;
+        public string flavorText;
     }
 
     public class HeroInventory {
