@@ -266,6 +266,7 @@ public partial class CardDropManager {
                 unitLine[lineNum][0].GetChild(0).SetParent(unitLine[lineNum][1]);
                 unitLine[lineNum][1].GetChild(0).position = unitLine[lineNum][1].position;
                 unitLine[lineNum][1].GetChild(0).GetComponent<PlaceMonster>().unitLocation = unitLine[lineNum][1].position;
+                PlayMangement.instance.PlayerUnitsObserver.UnitChangePosition(unitLine[lineNum][1].GetChild(0).gameObject, lineNum, 1);
                 break;
             default:
                 break;

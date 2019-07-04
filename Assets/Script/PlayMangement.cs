@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Spine;
+using Spine.Unity;
 
 
 public partial class PlayMangement : MonoBehaviour {
@@ -24,6 +26,7 @@ public partial class PlayMangement : MonoBehaviour {
     public EffectManager effectManager;
     public SpineEffectManager spineEffectManager;
     public CardCircleManager cardCircleManager;
+    public SkeletonGraphic playerMana, enemyMana;
 
     public GameObject baseUnit;
     private int turn = 0;
@@ -404,12 +407,15 @@ public partial class PlayMangement : MonoBehaviour {
 
     public void ChangeTurn() {
         if (isGame == false) return;
+        player.buttonParticle.SetActive(false);
         currentTurn = Variables.Scene(
                 UnityEngine.SceneManagement.SceneManager.GetActiveScene()
             ).Get("CurrentTurn").ToString();
         Logger.Log(currentTurn);
         switch (currentTurn) {
             case "ORC":
+                playerMana.AnimationState.SetAnimation(0, "animation", false);
+                enemyMana.AnimationState.SetAnimation(0, "animation", false);
                 if (player.isHuman == false) {
                     player.ActiveOrcTurn();
                     enemyPlayer.DisablePlayer();
@@ -466,6 +472,8 @@ public partial class PlayMangement : MonoBehaviour {
 
     public IEnumerator EnemeyOrcMagicSummon() {
         yield return new WaitForSeconds(1f);
+        //서버에서 오크 마법 턴 올 때까지 대기
+        yield return new WaitUntil(() => socketHandler.gameState.state.CompareTo("orcPostTurn") == 0);
         //잠복 스킬 발동 중이면 해결 될 때까지 대기 상태
         if (SkillModules.SkillHandler.running)
             yield return new WaitUntil(() => !SkillModules.SkillHandler.running);
