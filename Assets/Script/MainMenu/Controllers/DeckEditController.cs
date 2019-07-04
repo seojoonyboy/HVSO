@@ -20,8 +20,8 @@ public class DeckEditController : MonoBehaviour
     private GameObject deckNamePanel;
 
     private void Awake() {
-        //SetObject();
-        //SetHeroData();
+        SetObject();
+        SetHeroData();
     }
 
 
@@ -32,7 +32,14 @@ public class DeckEditController : MonoBehaviour
     public void LoadEditDeck() {
 
     }
+    
+    public void ConfirmButton() {
 
+    }
+
+    public void CancelButton() {
+
+    }
 
 
 
@@ -43,8 +50,11 @@ public class DeckEditController : MonoBehaviour
         heroProperty = transform.Find("HeroProperty").gameObject;
 
         settingLayout = transform.Find("SetDeckLayout").Find("Content").gameObject;
-        ownCardLayout = transform.Find("OwnCard").Find("LayOut").Find("Content").gameObject;
-        UnReleaseCardLayout = transform.Find("UnReleaseCard").Find("LayOut").Find("Content").gameObject;
+        ownCardLayout = transform.Find("CardPanel").Find("Viewport").Find("Content").Find("OwnCard").gameObject;
+        UnReleaseCardLayout = transform.Find("CardPanel").Find("Viewport").Find("Content").Find("MissingCard").gameObject;
+
+        transform.Find("ConfirmButton").GetComponent<Button>().onClick.AddListener(delegate () { ConfirmButton(); });
+        transform.Find("CancelButton").GetComponent<Button>().onClick.AddListener(delegate () { CancelButton(); });
     }
 
     public void SetHeroData() {

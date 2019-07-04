@@ -21,7 +21,7 @@ public partial class AccountManager : Singleton<AccountManager> {
 
     public HumanDecks humanDecks;
     public OrcDecks orcDecks;
-    public List<CardInventory> allCards { get; private set; }
+    public List<CollectionCard> allCards { get; private set; }
 
     public Dictionary<string, HeroInventory> myHeroInventories { get; private set; }
     public CardDataPackage cardPackage;
