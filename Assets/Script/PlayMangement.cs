@@ -985,7 +985,6 @@ public partial class PlayMangement {
 /// <summary>
 /// 지형처리
 /// </summary>
-
 public partial class PlayMangement {
     public enum LineState {
         hill,
@@ -993,9 +992,4 @@ public partial class PlayMangement {
         forest,
         water
     }
-
-    public TranslateDictionary dicts = new TranslateDictionary();
-
-    [System.Serializable]
-    public class TranslateDictionary : UnitySerializedDictionary<string, string> { }
 }
