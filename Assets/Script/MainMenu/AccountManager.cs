@@ -17,12 +17,13 @@ public partial class AccountManager : Singleton<AccountManager> {
 
     public string DEVICEID { get; private set; }
     public UserClassInput userData { get; private set; }
-    public List<dataModules.CardInventory> myCards { get; private set; }
+    public List<CardInventory> myCards { get; private set; }
 
     public HumanDecks humanDecks;
     public OrcDecks orcDecks;
+    public List<CardInventory> allCards { get; private set; }
 
-    public Dictionary<string, dataModules.HeroInventory> myHeroInventories { get; private set; }
+    public Dictionary<string, HeroInventory> myHeroInventories { get; private set; }
     public CardDataPackage cardPackage;
 
     public ResourceManager resource;
@@ -51,6 +52,7 @@ public partial class AccountManager : Singleton<AccountManager> {
         //TestModifyDeck();
         //RequestDeckMake();
         //RequestDeckRemove(1);
+        LoadAllCards();
     }
 
     private void OccurErrorModal(long errorCode) {
@@ -371,5 +373,24 @@ public partial class AccountManager {
         form.parms.Add(field);
 
         RequestDeckModify(form, 5);
+    }
+
+    private void LoadAllCards() {
+        StringBuilder sb = new StringBuilder();
+        sb
+            .Append(networkManager.baseUrl)
+            .Append("api/cards");
+
+        BestHTTP.HTTPRequest request = new BestHTTP.HTTPRequest(
+            new Uri(sb.ToString())
+        );
+
+        request.MethodType = HTTPMethods.Get;
+        networkManager.Request(request, OnReceivedLoadAllCards);
+    }
+
+    private void OnReceivedLoadAllCards(HTTPRequest originalRequest, HTTPResponse response) {
+        var result = dataModules.JsonReader.Read<List<CollectionCard>>(response.DataAsText);
+        Logger.Log("!!");
     }
 }
