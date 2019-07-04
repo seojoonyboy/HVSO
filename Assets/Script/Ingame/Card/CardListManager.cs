@@ -217,6 +217,7 @@ public class CardListManager : MonoBehaviour
         info.Find("Type/Icon2/Icon").GetComponent<Image>().enabled = false;
         info.Find("Type/Icon1/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "";
         info.Find("Type/Icon2/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "";
+        info.Find("Flavor/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "";
 
         if (data.type == "unit") {
             if (data.attackTypes.Length != 0) {
