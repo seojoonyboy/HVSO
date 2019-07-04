@@ -50,8 +50,8 @@ namespace dataModules {
         public int cardTotalCount;
         public string id;
         public string name;
-        public string camp;
         public string flavorText;
+        public Hero hero;
         public List<Item> items;
     }
 
@@ -60,11 +60,9 @@ namespace dataModules {
     }
 
     public class Item : BaseCard {
-        public string basicDeckId;
-        public int cardHasCount;
         public int cardCount;
     }
-
+    
     public class BaseCard {
         public string[] attackTypes;
         public string[] attributes;

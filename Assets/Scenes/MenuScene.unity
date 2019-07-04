@@ -251,6 +251,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   humanTemplateCanvas: {fileID: 6973498243510524784}
   orcTemplateCanvas: {fileID: 312516436793339358}
+  humanDeckList: {fileID: 0}
+  orcDeckList: {fileID: 0}
 --- !u!1 &101886739
 GameObject:
   m_ObjectHideFlags: 0
@@ -1449,6 +1451,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: OrcEditDeck
       objectReference: {fileID: 0}
+    - target: {fileID: 4226400068346894249, guid: d26ba4ea9dc9db445869c01a6313c391,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 107799423448173174, guid: d26ba4ea9dc9db445869c01a6313c391,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1507,22 +1514,22 @@ PrefabInstance:
     - target: {fileID: 107799423448173174, guid: d26ba4ea9dc9db445869c01a6313c391,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: -20
       objectReference: {fileID: 0}
     - target: {fileID: 107799423448173174, guid: d26ba4ea9dc9db445869c01a6313c391,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -400
       objectReference: {fileID: 0}
     - target: {fileID: 107799423448173174, guid: d26ba4ea9dc9db445869c01a6313c391,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 107799423448173174, guid: d26ba4ea9dc9db445869c01a6313c391,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 107799423448173174, guid: d26ba4ea9dc9db445869c01a6313c391,
         type: 3}
@@ -1532,7 +1539,7 @@ PrefabInstance:
     - target: {fileID: 107799423448173174, guid: d26ba4ea9dc9db445869c01a6313c391,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 107799423448173174, guid: d26ba4ea9dc9db445869c01a6313c391,
         type: 3}
@@ -1542,7 +1549,7 @@ PrefabInstance:
     - target: {fileID: 107799423448173174, guid: d26ba4ea9dc9db445869c01a6313c391,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 107799423448173174, guid: d26ba4ea9dc9db445869c01a6313c391,
         type: 3}
@@ -4976,6 +4983,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fixedCanvas: {fileID: 211891241}
   windowScrollSnap: {fileID: 3805101584428545709}
+  decksLoader: {fileID: 0}
 --- !u!4 &989487035
 Transform:
   m_ObjectHideFlags: 0
@@ -8971,6 +8979,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: HumanEditDeck
       objectReference: {fileID: 0}
+    - target: {fileID: 5927040469276596087, guid: a5652ef5a1dd3e846bbddc9dc4f6cea5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1796417945398860439, guid: a5652ef5a1dd3e846bbddc9dc4f6cea5,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -9029,22 +9042,22 @@ PrefabInstance:
     - target: {fileID: 1796417945398860439, guid: a5652ef5a1dd3e846bbddc9dc4f6cea5,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: -20
       objectReference: {fileID: 0}
     - target: {fileID: 1796417945398860439, guid: a5652ef5a1dd3e846bbddc9dc4f6cea5,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -50
       objectReference: {fileID: 0}
     - target: {fileID: 1796417945398860439, guid: a5652ef5a1dd3e846bbddc9dc4f6cea5,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 1796417945398860439, guid: a5652ef5a1dd3e846bbddc9dc4f6cea5,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 1796417945398860439, guid: a5652ef5a1dd3e846bbddc9dc4f6cea5,
         type: 3}
@@ -9054,7 +9067,7 @@ PrefabInstance:
     - target: {fileID: 1796417945398860439, guid: a5652ef5a1dd3e846bbddc9dc4f6cea5,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1796417945398860439, guid: a5652ef5a1dd3e846bbddc9dc4f6cea5,
         type: 3}
@@ -9064,7 +9077,7 @@ PrefabInstance:
     - target: {fileID: 1796417945398860439, guid: a5652ef5a1dd3e846bbddc9dc4f6cea5,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1796417945398860439, guid: a5652ef5a1dd3e846bbddc9dc4f6cea5,
         type: 3}
@@ -9081,11 +9094,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 85186068}
-    - target: {fileID: 2072635281944634854, guid: a5652ef5a1dd3e846bbddc9dc4f6cea5,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -5
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a5652ef5a1dd3e846bbddc9dc4f6cea5, type: 3}
 --- !u!224 &2068288020 stripped

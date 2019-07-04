@@ -44,6 +44,7 @@ public class MyDecksLoader : MonoBehaviour {
 
         if (response.responseCode == 200) {
             accountManager.orcDecks = JsonReader.Read<OrcDecks>(response.data);
+
         }
         else {
             Modal.instantiate("데이터를 정상적으로 불러오지 못했습니다.\n다시 요청합니까?", Modal.Type.YESNO, () => {

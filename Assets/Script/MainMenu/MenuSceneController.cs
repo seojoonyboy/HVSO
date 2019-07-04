@@ -16,15 +16,17 @@ public class MenuSceneController : MonoBehaviour {
     private bool buttonClicked;
     public MyDecksLoader decksLoader;
 
+    private void Awake() {
+        if (decksLoader == null) decksLoader = gameObject.AddComponent<MyDecksLoader>();
+        decksLoader.Load();
+    }
+
     private void Start() {
         currentPage = 2;
         Transform buttonsParent = fixedCanvas.Find("Footer");
         for (int i = 0; i < fixedCanvas.Find("Footer").childCount; i++)
             buttonSkeletons[i] = buttonsParent.GetChild(i).Find("ButtonImage").GetComponent<SkeletonGraphic>();
         StartCoroutine(UpdateWindow());
-
-        if (decksLoader == null) decksLoader = gameObject.AddComponent<MyDecksLoader>();
-        decksLoader.Load();
     }
 
     /// <summary>
