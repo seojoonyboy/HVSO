@@ -503,7 +503,6 @@ public partial class PlayMangement : MonoBehaviour {
         socketHandler.TurnOver();
         turn++;
         yield return socketHandler.WaitGetCard();
-        IngameNotice.instance.CloseNotice();
         DistributeResource();
         eventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_BATTLE_TURN, this, null);
         EndTurnDraw();
@@ -657,7 +656,7 @@ public partial class PlayMangement : MonoBehaviour {
             enemyCard.transform.localScale = new Vector3(1, 1, 1);
             enemyCard.transform.localPosition = new Vector3(0, 0, 0);
             enemyCard.SetActive(true);
-            IngameNotice.instance.SetNotice("상대방의 영웅 카드 사용 여부 판단중");
+            IngameNotice.instance.SetNotice("상대방이 영웅카드 사용 여부를 결정 중입니다");
         }
         yield return new WaitForSeconds(1f);
         if (isPlayer) socketHandler.TurnOver();

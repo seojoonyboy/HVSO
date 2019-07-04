@@ -105,7 +105,6 @@ public class CardHandDeckManager : MonoBehaviour {
         }
         yield return new WaitForSeconds(0.5f);
         yield return PlayMangement.instance.socketHandler.WaitGetCard();
-        IngameNotice.instance.CloseNotice();
 
         //영웅카드 뽑기
         bool isHuman = PlayMangement.instance.player.isHuman;
