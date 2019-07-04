@@ -110,7 +110,7 @@ MonoBehaviour:
     materialsInsideMask: []
     materialsOutsideMask: []
   disableRenderingOnOverride: 1
-  _animationName: 
+  _animationName: APPEAR
   loop: 1
   timeScale: 1
 --- !u!1 &9055411249258159905

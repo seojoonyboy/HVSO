@@ -19,19 +19,19 @@ public class TemplateMenu : MonoBehaviour {
     private GameObject deckLayout;
 
     private string previewID;
-
+    public bool isHuman;
     private void Awake() {
         Transform upper = transform.Find("Upper");
         Transform footer = transform.Find("Footer");
         Transform heroSelect = upper.Find("HeroSelect");
 
-        heroButtonLayout = heroSelect.Find("HeroButton").gameObject;
+        heroButtonLayout = heroSelect.Find("HeroButton/HeroBtnLayout").gameObject;
         heroPortrait = heroSelect.Find("Portrait").gameObject;
         heroName = heroSelect.Find("NameTamplate").GetComponentInChildren<TextMeshProUGUI>();
         heroProperty = heroSelect.Find("HeroProperty").gameObject;
         heroCardGroup = upper.Find("HeroCard").gameObject;
         deckLayout = footer.Find("HeroBtnLayout").gameObject;
-
+        gameObject.SetActive(false);
         SetHeroBtnID();
     }
 
@@ -40,7 +40,7 @@ public class TemplateMenu : MonoBehaviour {
         if (AccountManager.Instance == null) return;
         ResourceManager resource = AccountManager.Instance.resource;
 
-        bool isHuman = (gameObject.name.Contains("Human") == true) ? true : false;
+        isHuman = (gameObject.name.Contains("Human") == true) ? true : false;
         Transform btnLayout = heroButtonLayout.transform;
         int count = 0;
 
@@ -54,6 +54,9 @@ public class TemplateMenu : MonoBehaviour {
                 templateHeroBtn.heroID = (child.GetSiblingIndex() == 0) ? "h10002" : "h10004";
 
             templateHeroBtn.menu = this;
+
+
+
             if (button != null)
                 button.onClick.AddListener(delegate () { templateHeroBtn.HeroSelectBtn(); });
 
@@ -64,6 +67,10 @@ public class TemplateMenu : MonoBehaviour {
                 preview.SetActive((count == 0) ? true : false);
                 preview.name = templateHeroBtn.heroID;
             }
+
+            if (count > 0)
+                button.enabled = false;
+
             count++;
         }
         previewID = (isHuman == true) ? "h10001" : "h10002";
@@ -72,29 +79,33 @@ public class TemplateMenu : MonoBehaviour {
     public void ChangeHeroID(string heroID) {
         string id = heroID;
         ChangeHeroSkeleton(id);
-        ChangeHeroCard(id);
+        ChangeHeroData(id);
     }
 
     private void ChangeHeroSkeleton(string heroID) {
         heroPortrait.transform.Find(previewID).gameObject.SetActive(false);
         heroPortrait.transform.Find(heroID).gameObject.SetActive(true);
+        previewID = heroID;
     }
 
-    private void ChangeHeroCard(string heroID) {
+    private void ChangeHeroData(string heroID) {
         HeroInventory heroData = AccountManager.Instance.myHeroInventories[heroID];
         int cardCount = 0;
 
         foreach (HeroCard card in heroData.heroCards) {
             Transform heroCardObject = heroCardGroup.transform.GetChild(cardCount);
-
-            heroCardObject.Find("Name").Find("Text").gameObject.GetComponent<TextMeshProUGUI>().text = card.name;
-            heroCardObject.Find("Cost").Find("Text").gameObject.GetComponent<TextMeshProUGUI>().text = card.cost.ToString();
+            heroCardObject.GetComponent<MenuCardHandler>().DrawCard(card.cardId, isHuman);
             cardCount++;
         }
-        previewID = heroID;
+
+        int childcount = 0;
+        foreach (Transform child in heroProperty.transform) {
+            child.gameObject.GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[heroData.heroClasses[childcount]];
+            child.GetChild(0).GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["class_icon_" + heroData.heroClasses[childcount]];
+
+            childcount++;
+        }
     }
-
-
 
     public void SelectDeckBtn() {
 

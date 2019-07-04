@@ -532,9 +532,16 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public IEnumerator WaitBattle() {
-        yield return new WaitUntil(() => (gameState.state.CompareTo("battleTurn") == 0 || 
-                                        gameState.state.CompareTo("shieldTurn") == 0 || 
-                                        gameState.state.CompareTo("endGame") == 0) );
+        bool needWaitMore = !NeedtoWaitBattle();
+        yield return new WaitUntil(() => (NeedtoWaitBattle()));
+        if(!PlayMangement.instance.player.isHuman && needWaitMore)
+            yield return new WaitForSeconds(3f);
+    }
+
+    private bool NeedtoWaitBattle() {
+        return gameState.state.CompareTo("battleTurn") == 0 || 
+                gameState.state.CompareTo("shieldTurn") == 0 || 
+                gameState.state.CompareTo("endGame") == 0;
     }
 }
 namespace SocketFormat {

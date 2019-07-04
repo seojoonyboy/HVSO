@@ -47,7 +47,9 @@ public class PlayerController : MonoBehaviour
         IDLE,
         ATTACK,
         HIT,
-        DEAD
+        DEAD,
+        THINKING,
+        THINKDONE
     }
 
     public bool getPlayerTurn {
@@ -379,6 +381,14 @@ public class PlayerController : MonoBehaviour
     public void PlayerUseCard() {
         SetState(HeroState.ATTACK);
     }
+
+    public void PlayerThinking() {
+        SetState(HeroState.THINKING);
+    }
+
+    public void PlayerThinkFinish() {
+        SetState(HeroState.THINKDONE);
+    }
     
 
     protected void SetState(HeroState state) {
@@ -396,6 +406,12 @@ public class PlayerController : MonoBehaviour
                 break;
             case HeroState.DEAD:
                 heroSpine.Dead();
+                break;
+            case HeroState.THINKING:
+                heroSpine.Thinking();
+                break;
+            case HeroState.THINKDONE:
+                heroSpine.ThinkDone();
                 break;
         }
     }

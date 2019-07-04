@@ -595,8 +595,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 4958389169352412528, guid: f2ac4f4fa8996e848a52e02efe26cf63,
-    type: 3}
+  m_Sprite: {fileID: 86538527028861475, guid: 2cc1c7e3bbf9cfd43a54ca22aa5b7879, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -671,7 +670,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 1972635969057837582, guid: f2ac4f4fa8996e848a52e02efe26cf63,
+  m_Sprite: {fileID: -6162039576716639170, guid: 2cc1c7e3bbf9cfd43a54ca22aa5b7879,
     type: 3}
   m_Type: 0
   m_PreserveAspect: 0
@@ -808,8 +807,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: OpenCardInfoList
+      - m_Target: {fileID: 5820209177169121095}
+        m_MethodName: OpenCardInfo
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -833,6 +832,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53f8d4d271cd7c44088362f55adc06b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  menuCardInfo: {fileID: 0}
 --- !u!1 &6084843097407181730
 GameObject:
   m_ObjectHideFlags: 0
