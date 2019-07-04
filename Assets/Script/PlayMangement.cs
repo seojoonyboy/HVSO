@@ -476,10 +476,19 @@ public partial class PlayMangement : MonoBehaviour {
         StartCoroutine("battleCoroutine");
     }
 
+    private bool passOrc() {
+        string turnName = socketHandler.gameState.state;
+        if(turnName.CompareTo("orcPostTurn") == 0) return true;
+        if(turnName.CompareTo("battleTurn") == 0) return true;
+        if(turnName.CompareTo("shieldTurn") == 0) return true;
+        if(turnName.CompareTo("endGame") == 0) return true;
+        return false;
+    }
+
     public IEnumerator EnemeyOrcMagicSummon() {
         yield return new WaitForSeconds(1f);
         //서버에서 오크 마법 턴 올 때까지 대기
-        yield return new WaitUntil(() => socketHandler.gameState.state.CompareTo("orcPostTurn") == 0);
+        yield return new WaitUntil(passOrc);
         //잠복 스킬 발동 중이면 해결 될 때까지 대기 상태
         if (SkillModules.SkillHandler.running)
             yield return new WaitUntil(() => !SkillModules.SkillHandler.running);
