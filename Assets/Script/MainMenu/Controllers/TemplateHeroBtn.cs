@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class TamplateHeroBtn : MonoBehaviour
+public class TemplateHeroBtn : MonoBehaviour
 {
-    public TamplateMenu menu;
+    public TemplateMenu menu;
     public string heroID;
 
     public void HeroSelectBtn() {
