@@ -225,7 +225,8 @@ public partial class PlayMangement : MonoBehaviour {
         magicCard.GetComponent<MagicDragHandler>().itemID = history.cardItem.itemId;
 
         Logger.Log("use Magic Card" + history.cardItem.name);
-        enemyPlayer.resource.Value -= cardData.cost;
+        if(!heroShieldActive)
+            enemyPlayer.resource.Value -= cardData.cost;
 
         Destroy(enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(CountEnemyCard() - 1).GetChild(0).gameObject);
         return magicCard;
