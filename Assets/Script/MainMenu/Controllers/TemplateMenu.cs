@@ -14,23 +14,24 @@ public class TemplateMenu : MonoBehaviour {
     private TextMeshProUGUI heroName;
     private GameObject heroProperty;
     private GameObject heroCardGroup;
+
     [SerializeField]
     private GameObject deckLayout;
 
     private string previewID;
-
+    public bool isHuman;
     private void Awake() {
         Transform upper = transform.Find("Upper");
         Transform footer = transform.Find("Footer");
         Transform heroSelect = upper.Find("HeroSelect");
 
-        heroButtonLayout = heroSelect.Find("HeroButton").Find("HeroBtnLayout").gameObject;
+        heroButtonLayout = heroSelect.Find("HeroButton/HeroBtnLayout").gameObject;
         heroPortrait = heroSelect.Find("Portrait").gameObject;
         heroName = heroSelect.Find("NameTamplate").GetComponentInChildren<TextMeshProUGUI>();
         heroProperty = heroSelect.Find("HeroProperty").gameObject;
         heroCardGroup = upper.Find("HeroCard").gameObject;
         deckLayout = footer.Find("HeroBtnLayout").gameObject;
-
+        gameObject.SetActive(false);
         SetHeroBtnID();
     }
 
@@ -39,7 +40,7 @@ public class TemplateMenu : MonoBehaviour {
         if (AccountManager.Instance == null) return;
         ResourceManager resource = AccountManager.Instance.resource;
 
-        bool isHuman = (gameObject.name.Contains("Human") == true) ? true : false;
+        isHuman = (gameObject.name.Contains("Human") == true) ? true : false;
         Transform btnLayout = heroButtonLayout.transform;
         int count = 0;
 
@@ -53,6 +54,9 @@ public class TemplateMenu : MonoBehaviour {
                 templateHeroBtn.heroID = (child.GetSiblingIndex() == 0) ? "h10002" : "h10004";
 
             templateHeroBtn.menu = this;
+
+
+
             if (button != null)
                 button.onClick.AddListener(delegate () { templateHeroBtn.HeroSelectBtn(); });
 
@@ -90,9 +94,7 @@ public class TemplateMenu : MonoBehaviour {
 
         foreach (HeroCard card in heroData.heroCards) {
             Transform heroCardObject = heroCardGroup.transform.GetChild(cardCount);
-
-            heroCardObject.Find("Name").Find("Text").gameObject.GetComponent<TextMeshProUGUI>().text = card.name;
-            heroCardObject.Find("Cost").Find("Text").gameObject.GetComponent<TextMeshProUGUI>().text = card.cost.ToString();
+            heroCardObject.GetComponent<MenuCardHandler>().DrawCard(card.cardId, isHuman);
             cardCount++;
         }
 
