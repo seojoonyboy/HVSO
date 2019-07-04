@@ -391,6 +391,7 @@ public partial class AccountManager {
 
     private void OnReceivedLoadAllCards(HTTPRequest originalRequest, HTTPResponse response) {
         var result = dataModules.JsonReader.Read<List<CollectionCard>>(response.DataAsText);
+        allCards = result;
         Logger.Log("!!");
     }
 }

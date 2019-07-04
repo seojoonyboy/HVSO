@@ -66,6 +66,11 @@ public class MenuCardHandler : MonoBehaviour
                     transform.Find("SkillIcon").GetComponent<Image>().sprite = AccountManager.Instance.resource.skillIcons["complex"];
             }
         }
+        else {
+            transform.Find("Health").gameObject.SetActive(false);
+            transform.Find("attack").gameObject.SetActive(false);
+            transform.Find("SkillIcon").gameObject.SetActive(false);
+        }
         transform.Find("Cost/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.cost.ToString();
         transform.Find("Class").GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[cardData.class_1];
         transform.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.name;

@@ -7,6 +7,7 @@ public class DeckSettingManager : MonoBehaviour
 {
     [SerializeField] Canvas humanTemplateCanvas;
     [SerializeField] Canvas orcTemplateCanvas;
+    [SerializeField] Canvas cardDictionaryCanvas;
     [SerializeField] Transform humanDeckList;
     [SerializeField] Transform orcDeckList;
     [SerializeField] TMPro.TextMeshProUGUI humanDeckNum;
@@ -29,6 +30,11 @@ public class DeckSettingManager : MonoBehaviour
             templateCanvas.GetComponent<TemplateMenu>().ChangeHeroID("h10002");
         }   
         templateCanvas.gameObject.SetActive(true);
+    }
+
+    public void OpenCardDictionary() {
+        cardDictionaryCanvas.gameObject.SetActive(true);
+        cardDictionaryCanvas.GetComponent<CardDictionaryManager>().SetToOrcCards();
     }
 
     public void SetPlayerDecks() {
