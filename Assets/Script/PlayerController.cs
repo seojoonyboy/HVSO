@@ -304,9 +304,7 @@ public class PlayerController : MonoBehaviour
 
     public void ActiveOrcTurn() {
         activeCardMinCost = 100;
-        string currentTurn = Variables.Scene(
-                UnityEngine.SceneManagement.SceneManager.GetActiveScene()
-            ).Get("CurrentTurn").ToString();
+        string currentTurn = PlayMangement.instance.currentTurn;
         myTurn = true;
         if (isPlayer == true && currentTurn == "ORC") {
             Transform cardSlot_1 = cdpm.transform;
