@@ -494,6 +494,7 @@ public partial class BattleConnector : MonoBehaviour {
         }
         getNewCard = false;
         dequeueing = true;
+        IngameNotice.instance.CloseNotice();
     }
 
     public bool cardPlayFinish() {
