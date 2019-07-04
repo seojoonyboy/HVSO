@@ -1493,6 +1493,7 @@ GameObject:
   - component: {fileID: 1870949075}
   - component: {fileID: 1870949074}
   - component: {fileID: 1870949076}
+  - component: {fileID: 1870949077}
   m_Layer: 0
   m_Name: AccountManager
   m_TagString: Untagged
@@ -5116,6 +5117,227 @@ MonoBehaviour:
     type: 3}
   previewUnit: {fileID: 855070147762477345, guid: b1eed5e36ae207c40be53cdb6c261354,
     type: 3}
+--- !u!114 &1870949077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1870949073}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd4d0e7a77106f047a8aab6380c5e046, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: unitCategories
+      Entry: 7
+      Data: 0|Ludiq.FlexibleDictionary`2[[System.String, mscorlib],[System.String,
+        mscorlib]], Ludiq.Core.Runtime
+    - Name: comparer
+      Entry: 7
+      Data: 1|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 15
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: merc
+    - Name: $v
+      Entry: 1
+      Data: "\uC6A9\uBCD1"
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: army
+    - Name: $v
+      Entry: 1
+      Data: "\uAD70\uC778"
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: beast
+    - Name: $v
+      Entry: 1
+      Data: "\uC57C\uC218"
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: hunter
+    - Name: $v
+      Entry: 1
+      Data: "\uC0AC\uB0E5\uAFBC"
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: underling
+    - Name: $v
+      Entry: 1
+      Data: "\uC878\uAC1C"
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: shaman
+    - Name: $v
+      Entry: 1
+      Data: "\uC8FC\uC220\uC0AC"
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: stabbing
+    - Name: $v
+      Entry: 1
+      Data: "\uC790\uAC1D"
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: rider
+    - Name: $v
+      Entry: 1
+      Data: "\uAE30\uC218"
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: stealth
+    - Name: $v
+      Entry: 1
+      Data: "\uC7A0\uC785\uC790"
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: trainer
+    - Name: $v
+      Entry: 1
+      Data: "\uC870\uB828\uC0AC"
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: wizard
+    - Name: $v
+      Entry: 1
+      Data: "\uB9C8\uBC95\uC0AC"
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: monster
+    - Name: $v
+      Entry: 1
+      Data: "\uAD34\uC218"
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: mech
+    - Name: $v
+      Entry: 1
+      Data: "\uAE30\uACC4"
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: citizen
+    - Name: $v
+      Entry: 1
+      Data: "\uC2DC\uBBFC"
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: expert
+    - Name: $v
+      Entry: 1
+      Data: "\uC804\uBB38\uAC00"
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
 --- !u!1 &1876041233
 GameObject:
   m_ObjectHideFlags: 0
