@@ -14,6 +14,28 @@ namespace dataModules {
         public Skill[] skills;
     }
 
+    /// <summary>
+    /// 모든 카드 요청시 형식
+    /// </summary>
+    public class CollectionCard {
+        public string[] attackTypes;
+        public string[] attributes;
+        public string[] cardCategories;
+        public string[] cardClasses;
+        public string id;
+        public string rarelity;
+        public string camp;
+        public string type;
+        public string name;
+        public int cost;
+        public int? attack;
+        public int? hp;
+        public string attackRange;
+        public bool isHeroCard;
+        public string cardId;
+        public Skill[] skills;
+    }
+
     public class HeroInventory {
         public string[] heroClasses;
         public int id;
