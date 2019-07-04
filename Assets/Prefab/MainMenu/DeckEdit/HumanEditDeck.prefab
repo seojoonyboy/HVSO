@@ -70,7 +70,7 @@ MonoBehaviour:
   m_material: {fileID: 0}
   m_sharedMaterial: {fileID: 0}
   m_isDefaultMaterial: 0
-  m_padding: 9.478571
+  m_padding: 0
   m_canvasRenderer: {fileID: 3470975847451384611}
   m_TextComponent: {fileID: 5121421684611493935}
   m_materialReferenceIndex: 1
@@ -425,7 +425,7 @@ MonoBehaviour:
   m_material: {fileID: 0}
   m_sharedMaterial: {fileID: 0}
   m_isDefaultMaterial: 0
-  m_padding: 9.478571
+  m_padding: 0
   m_canvasRenderer: {fileID: 5254695671650149196}
   m_TextComponent: {fileID: 8635737885872639577}
   m_materialReferenceIndex: 1
@@ -1080,6 +1080,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1796417945398860439}
+  - component: {fileID: 2068288022}
   m_Layer: 5
   m_Name: HumanEditDeck
   m_TagString: Untagged
@@ -1096,7 +1097,7 @@ RectTransform:
   m_GameObject: {fileID: 5927040469276596087}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.8, y: 0.8, z: 1}
+  m_LocalScale: {x: 0.9, y: 0.9, z: 1}
   m_Children:
   - {fileID: 4225172228214667221}
   - {fileID: 1552725654141974660}
@@ -1108,6 +1109,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2068288022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5927040469276596087}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba851055e31e4454aa1671b0d51736ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6599210042514763496
 GameObject:
   m_ObjectHideFlags: 0
@@ -1866,7 +1879,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4449845637378159989}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_MethodName: ClickNewDeck
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 2068288022}
+          m_ObjectArgumentAssemblyTypeName: DeckHandler, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!1 &9116251753750906152
