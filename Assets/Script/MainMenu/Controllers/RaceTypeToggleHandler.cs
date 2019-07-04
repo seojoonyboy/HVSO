@@ -89,12 +89,13 @@ public class RaceTypeToggleHandler : MonoBehaviour {
 
     private void CreateHeroList(BattleReadySceneController.RaceType type) {
         List<Hero> selectedHeroes;
+        AccountManager accountManager = AccountManager.Instance;
         switch (type) {
             case BattleReadySceneController.RaceType.HUMAN:
-                selectedHeroes = controller.humanDecks.heros;
+                selectedHeroes = accountManager.humanDecks.heros;
                 break;
             case BattleReadySceneController.RaceType.ORC:
-                selectedHeroes = controller.orcDecks.heros;
+                selectedHeroes = accountManager.orcDecks.heros;
                 break;
             default:
                 selectedHeroes = null;
@@ -133,13 +134,14 @@ public class RaceTypeToggleHandler : MonoBehaviour {
     private void CreateBasicDeckList(BattleReadySceneController.RaceType type) {
         List<Deck> basicDecks;
         GameObject deckPrefab = humanDeckPrefab;
+        AccountManager accountManager = AccountManager.Instance;
         switch (type) {
             case BattleReadySceneController.RaceType.HUMAN:
-                basicDecks = controller.humanDecks.basicDecks;
+                basicDecks = accountManager.humanDecks.basicDecks;
                 deckPrefab = humanDeckPrefab;
                 break;
             case BattleReadySceneController.RaceType.ORC:
-                basicDecks = controller.orcDecks.basicDecks;
+                basicDecks = accountManager.orcDecks.basicDecks;
                 deckPrefab = orcDeckPrefab;
                 break;
             default:

@@ -14,12 +14,17 @@ public class MenuSceneController : MonoBehaviour {
     protected SkeletonGraphic selectedAnimation;
     private int currentPage;
     private bool buttonClicked;
+    public MyDecksLoader decksLoader;
+
     private void Start() {
         currentPage = 2;
         Transform buttonsParent = fixedCanvas.Find("Footer");
         for (int i = 0; i < fixedCanvas.Find("Footer").childCount; i++)
             buttonSkeletons[i] = buttonsParent.GetChild(i).Find("ButtonImage").GetComponent<SkeletonGraphic>();
         StartCoroutine(UpdateWindow());
+
+        if (decksLoader == null) decksLoader = gameObject.AddComponent<MyDecksLoader>();
+        decksLoader.Load();
     }
 
     /// <summary>
@@ -30,8 +35,6 @@ public class MenuSceneController : MonoBehaviour {
 
         SoundManager.Instance.PlaySound(SoundType.FIRST_TURN);
     }
-
-
 
     public void ClickMenuButton(int pageNum) {
         buttonClicked = true;
