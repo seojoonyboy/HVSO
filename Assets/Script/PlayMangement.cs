@@ -423,6 +423,7 @@ public partial class PlayMangement : MonoBehaviour {
                 else {
                     player.DisablePlayer();
                     enemyPlayer.ActivePlayer();
+                    enemyPlayer.PlayerThinking();
                     StartCoroutine(EnemyUseCard(true));
                 }
                 EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_ORC_PRE_TURN, this, null);
@@ -432,10 +433,12 @@ public partial class PlayMangement : MonoBehaviour {
                 if (player.isHuman == true) {
                     player.ActivePlayer();
                     enemyPlayer.DisablePlayer();
+                    enemyPlayer.PlayerThinkFinish();
                 }
                 else {
                     player.DisablePlayer();
                     enemyPlayer.ActivePlayer();
+                    enemyPlayer.PlayerThinking();
                     StartCoroutine(EnemyUseCard(true));
                 }
                 EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_HUMAN_TURN, this, null);
@@ -446,9 +449,11 @@ public partial class PlayMangement : MonoBehaviour {
                     //player.ActiveOrcSpecTurn();
                     player.ActiveOrcTurn();
                     enemyPlayer.DisablePlayer();
+                    enemyPlayer.PlayerThinkFinish();
                 }
                 else {
                     player.DisablePlayer();
+                    enemyPlayer.PlayerThinking();
                     StartCoroutine(EnemeyOrcMagicSummon());
                 }
                 EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_ORC_POST_TURN, this, null);
@@ -456,6 +461,7 @@ public partial class PlayMangement : MonoBehaviour {
             case "BATTLE":
                 dragable = false;
                 player.DisablePlayer();
+                enemyPlayer.PlayerThinkFinish();
                 StartBattle();
                 EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_BATTLE_TURN, this, null);
                 break;
@@ -985,7 +991,6 @@ public partial class PlayMangement {
 /// <summary>
 /// 지형처리
 /// </summary>
-
 public partial class PlayMangement {
     public enum LineState {
         hill,
@@ -993,9 +998,4 @@ public partial class PlayMangement {
         forest,
         water
     }
-
-    public TranslateDictionary dicts = new TranslateDictionary();
-
-    [System.Serializable]
-    public class TranslateDictionary : UnitySerializedDictionary<string, string> { }
 }

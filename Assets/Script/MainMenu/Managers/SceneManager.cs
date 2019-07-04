@@ -18,9 +18,11 @@ public class SceneManager : Singleton<SceneManager> {
 
     // Start is called before the first frame update
     void Start() {
+        #if !UNITY_EDITOR
         for(int i = 1; i <= 5; i++) {
             StartCoroutine(PreLoadReadyScene(i));
         }
+        #endif
         DontDestroyOnLoad(this);
     }
 

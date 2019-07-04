@@ -7,10 +7,11 @@ using System.Collections.Generic;
 
 public partial class NetworkManager : Singleton<NetworkManager> {
     #if UNITY_EDITOR
-    public string baseUrl = "https://ccdevclient.fbl.kr";
+    private string url = "https://ccdevclient.fbl.kr/";
     #else
-    public string baseUrl = "https://cctest.fbl.kr/";
+    private string url = "https://cctest.fbl.kr/";
     #endif
+    public string baseUrl {get {return url;}}
     protected NetworkManager() { }
     public delegate void Callback(HttpResponse response);
     public delegate void CallbackRetryOccured(string msg);

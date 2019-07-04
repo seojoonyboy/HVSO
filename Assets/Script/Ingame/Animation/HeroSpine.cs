@@ -26,6 +26,7 @@ public class HeroSpine : MonoBehaviour
     protected string currentAnimationName;
 
     public UnityAction defenseFinish;
+    private bool thinking = false;
     
     private void Start() {
         Init();
@@ -73,6 +74,21 @@ public class HeroSpine : MonoBehaviour
 
     public virtual void DefendFinish(TrackEntry trackEntry = null) {
         if (defenseFinish != null) defenseFinish();
+    }
+
+    public async void Thinking() {
+        thinking = true;
+        await System.Threading.Tasks.Task.Delay(7000);
+        if(!thinking) return;
+        SkeletonAnimation thinkAni = transform.GetChild(0).GetComponent<SkeletonAnimation>();
+        thinkAni.gameObject.SetActive(true);
+        TrackEntry x = thinkAni.AnimationState.SetAnimation(0, "APPEAR", false);
+        x.Complete += (y) => thinkAni.AnimationState.SetAnimation(0, "IDLE", true);
+    }
+
+    public void ThinkDone() {
+        thinking = false;
+        transform.GetChild(0).gameObject.SetActive(false);
     }
 
 

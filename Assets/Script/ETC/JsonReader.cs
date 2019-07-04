@@ -38,11 +38,11 @@ namespace dataModules {
     }
 
     public class Hero {
-        public string[] heroClassese;
+        public string[] _heroClassese;
         public string id;
         public string camp;
         public string name;
-        public List<HeroCard> heroCards;
+        public List<HeroCard> _heroCards;
     }
 
     public class Deck {
@@ -51,7 +51,7 @@ namespace dataModules {
         public string id;
         public string name;
         public string flavorText;
-        public Hero hero;
+        public Hero _hero;
         public List<Item> items;
     }
 

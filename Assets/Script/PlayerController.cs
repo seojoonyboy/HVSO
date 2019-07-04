@@ -47,7 +47,9 @@ public class PlayerController : MonoBehaviour
         IDLE,
         ATTACK,
         HIT,
-        DEAD
+        DEAD,
+        THINKING,
+        THINKDONE
     }
 
     public bool getPlayerTurn {
@@ -302,9 +304,7 @@ public class PlayerController : MonoBehaviour
 
     public void ActiveOrcTurn() {
         activeCardMinCost = 100;
-        string currentTurn = Variables.Scene(
-                UnityEngine.SceneManagement.SceneManager.GetActiveScene()
-            ).Get("CurrentTurn").ToString();
+        string currentTurn = PlayMangement.instance.currentTurn;
         myTurn = true;
         if (isPlayer == true && currentTurn == "ORC") {
             Transform cardSlot_1 = cdpm.transform;
@@ -379,6 +379,14 @@ public class PlayerController : MonoBehaviour
     public void PlayerUseCard() {
         SetState(HeroState.ATTACK);
     }
+
+    public void PlayerThinking() {
+        SetState(HeroState.THINKING);
+    }
+
+    public void PlayerThinkFinish() {
+        SetState(HeroState.THINKDONE);
+    }
     
 
     protected void SetState(HeroState state) {
@@ -396,6 +404,12 @@ public class PlayerController : MonoBehaviour
                 break;
             case HeroState.DEAD:
                 heroSpine.Dead();
+                break;
+            case HeroState.THINKING:
+                heroSpine.Thinking();
+                break;
+            case HeroState.THINKDONE:
+                heroSpine.ThinkDone();
                 break;
         }
     }

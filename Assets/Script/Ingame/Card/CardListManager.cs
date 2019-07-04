@@ -16,6 +16,7 @@ public class CardListManager : MonoBehaviour
     [SerializeField] protected Transform mulliganInfoList;
     private Transform handCardInfo;
     Animator animator;
+    Translator translator;
 
     public Transform StandbyInfo {
         get { return standbyInfo; }
@@ -23,6 +24,10 @@ public class CardListManager : MonoBehaviour
 
     public Transform HandCardInfo {
         get { return handCardInfo; }
+    }
+
+    void Awake() {
+        translator = AccountManager.Instance.GetComponent<Translator>();
     }
 
     void Start()
@@ -51,7 +56,7 @@ public class CardListManager : MonoBehaviour
         GameObject newcard = standbyInfo.GetChild(0).gameObject;
         newcard.SetActive(true);
         SetCardInfo(newcard, data);
-        newcard.transform.localScale = new Vector3(0.8f, 0.8f, 1);
+        newcard.transform.localScale = new Vector3(1.4f, 1.4f, 1);
     }
 
     public virtual void AddMulliganCardInfo(CardData data, string id, int changeNum = 100) {
@@ -101,6 +106,8 @@ public class CardListManager : MonoBehaviour
         if (PlayMangement.movingCard == null) {
             mulliganInfoList.gameObject.SetActive(true);
             mulliganInfoList.GetChild(cardnum).gameObject.SetActive(true);
+
+            mulliganInfoList.GetChild(cardnum).localScale = new Vector3(1.4f, 1.4f, 1);
         }
     }
 
@@ -128,8 +135,10 @@ public class CardListManager : MonoBehaviour
 
     public void OpenCardInfo(int cardnum, bool showMagic = false) {
         PlayMangement.instance.infoOn = true;
-        if (!showMagic)
+        if (!showMagic) {
             transform.GetComponent<Image>().enabled = true;
+            handCardInfo.GetChild(cardnum).transform.localScale = new Vector3(1.4f, 1.4f, 1);
+        }
         else {
             handCardInfo.GetChild(cardnum).transform.localScale = new Vector3(0.8f, 0.8f, 1);
         }
@@ -217,6 +226,20 @@ public class CardListManager : MonoBehaviour
                 info.Find("SkillIcon2").gameObject.SetActive(true);
                 info.Find("SkillIcon2").GetComponent<Image>().sprite = AccountManager.Instance.resource.skillIcons[data.attackTypes[0]];
             }
+
+            List<string> categories = new List<string>();
+            if(data.category_1 != null) categories.Add(data.category_1);
+            if(data.category_2 != null) categories.Add(data.category_2);
+            var translatedCategories = translator.GetTranslatedUnitCtg(categories);
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+
+            int cnt = 0;
+            foreach (string ctg in translatedCategories) {
+                cnt++;
+                if (translatedCategories.Count != cnt) sb.Append(ctg + ", ");
+                else sb.Append(ctg);
+            }
+            info.Find("Categories/Text").GetComponent<TMPro.TextMeshProUGUI>().text = sb.ToString();
         }
         //if (data.class_2 == null)
         //    obj.transform.GetChild(2).gameObject.SetActive(false);
@@ -248,6 +271,7 @@ public class CardListManager : MonoBehaviour
                     string objName = selectedTarget.GetComponentInParent<PlaceMonster>().myUnitNum.ToString() + "unit";
                     transform.Find("FieldUnitInfo").gameObject.SetActive(true);
                     transform.Find("FieldUnitInfo").Find(objName).gameObject.SetActive(true);
+                    transform.Find("FieldUnitInfo").Find(objName).localScale = new Vector3(1.4f, 1.4f, 1);
                     PlayMangement.instance.infoOn = true;
                 }
             }
