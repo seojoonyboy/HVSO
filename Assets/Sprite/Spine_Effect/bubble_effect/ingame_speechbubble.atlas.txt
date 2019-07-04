@@ -1,0 +1,20 @@
+
+ingame_speechbubble.png
+size: 256,128
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+speechbubble_1
+  rotate: false
+  xy: 0, 17
+  size: 136, 82
+  orig: 136, 82
+  offset: 0, 0
+  index: -1
+speechbubble_2
+  rotate: false
+  xy: 0, 0
+  size: 16, 17
+  orig: 16, 17
+  offset: 0, 0
+  index: -1
