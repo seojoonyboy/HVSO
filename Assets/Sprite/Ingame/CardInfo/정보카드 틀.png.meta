@@ -734,8 +734,8 @@ TextureImporter:
       name: info_class_scheme_icon
       rect:
         serializedVersion: 2
-        x: 574
-        y: 130
+        x: 572
+        y: 126
         width: 81
         height: 78
       alignment: 0

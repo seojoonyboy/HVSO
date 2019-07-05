@@ -47,6 +47,7 @@ public class MenuCardInfo : MonoBehaviour
         transform.Find("Cost/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.cost.ToString();
         transform.Find("Class").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["class_" + data.class_1];
         transform.Find("Class/Icon").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["class_icon_" + data.class_1];
+        transform.Find("Class/Icon").GetComponent<Image>().SetNativeSize();
 
         transform.Find("SkillIcon1").gameObject.SetActive(false);
         transform.Find("SkillIcon2").gameObject.SetActive(false);
