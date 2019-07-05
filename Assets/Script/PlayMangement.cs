@@ -252,7 +252,7 @@ public partial class PlayMangement : MonoBehaviour {
         yield return EnemySettingTarget(history.targets[0], magicCard);
         //실제 카드 사용
         object[] parms = new object[] { false, card };
-        yield return StartCoroutine(cardCircleManager.ShowUsedMagicCard(100, card));
+        yield return cardCircleManager.ShowUsedMagicCard(100, card);
         EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
         yield return new WaitForSeconds(2f);
         //카드 파괴
@@ -658,7 +658,7 @@ public partial class PlayMangement : MonoBehaviour {
             SocketFormat.Card cardData = socketHandler.gameState.players.myPlayer(race).newCard;
             battleLineEffect.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.6f);
             battleLineEffect.gameObject.SetActive(false);
-            yield return StartCoroutine(cdpm.DrawHeroCard(cardData));
+            yield return cdpm.DrawHeroCard(cardData);
             battleLineEffect.gameObject.SetActive(true);
             battleLineEffect.GetComponent<SpriteRenderer>().color = new Color(1, 0.545f, 0.427f, 0.6f);
         }
