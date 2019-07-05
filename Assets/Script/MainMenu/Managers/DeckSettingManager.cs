@@ -45,7 +45,7 @@ public class DeckSettingManager : MonoBehaviour
         if (humanBasicDecks > 0) {
             for (int i = 0; i < humanBasicDecks; i++) {
                 humanDeckList.GetChild(humanDeckCount).gameObject.SetActive(true);
-                humanDeckList.GetChild(humanDeckCount).GetComponent<DeckHandler>().SetDeck(AccountManager.Instance.humanDecks.basicDecks[i]);
+                humanDeckList.GetChild(humanDeckCount).GetComponent<DeckHandler>().SetDeck(AccountManager.Instance.humanDecks.basicDecks[i], true);
                 humanDeckCount++;
                 humanDeckList.GetChild(humanDeckCount).gameObject.SetActive(true);
             }
@@ -53,7 +53,7 @@ public class DeckSettingManager : MonoBehaviour
         if (orcBasicDecks > 0) {
             for (int i = 0; i < orcBasicDecks; i++) {
                 orcDeckList.GetChild(orcDeckCount).gameObject.SetActive(true);
-                orcDeckList.GetChild(orcDeckCount).GetComponent<DeckHandler>().SetDeck(AccountManager.Instance.orcDecks.basicDecks[i]);
+                orcDeckList.GetChild(orcDeckCount).GetComponent<DeckHandler>().SetDeck(AccountManager.Instance.orcDecks.basicDecks[i], true);
                 orcDeckCount++;
                 orcDeckList.GetChild(orcDeckCount).gameObject.SetActive(true);
             }

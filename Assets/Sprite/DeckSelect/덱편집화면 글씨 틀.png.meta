@@ -1,25 +1,16 @@
 fileFormatVersion: 2
-guid: 5214f209d7c528d429f1252d232a8bbe
+guid: 03121e483d53e094c8f137a72f6c0f25
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3996424434700808864
-    second: DeckEdit_MenuBar
+      213: 8949080283056740730
+    second: Human
   - first:
-      213: -3520586976669405743
-    second: DeckEdit_CardBookButton
+      213: 4867134954650277556
+    second: Select
   - first:
-      213: 4865573179099875465
-    second: DeckEdit_Human
-  - first:
-      213: -3006712158969893111
-    second: DeckEdit_Orc
-  - first:
-      213: -949136303771262619
-    second: DeckEdit_DeleteButton
-  - first:
-      213: -1888659570270054226
-    second: DeckEdit_EditButton
+      213: -2368329816391626182
+    second: Orc
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -113,127 +104,64 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: DeckEdit_MenuBar
+      name: Human
       rect:
         serializedVersion: 2
-        x: 20
-        y: 348
-        width: 930
-        height: 135
+        x: 47
+        y: 358
+        width: 1082
+        height: 112
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 43, y: 36, z: 43, w: 37}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6083126c00099204eb0c6d24f2f18d74
-      internalID: -3996424434700808864
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: DeckEdit_CardBookButton
-      rect:
-        serializedVersion: 2
-        x: 20
-        y: 179
-        width: 301
-        height: 153
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c5950b27e6dbdfa4e856d14500e4a481
-      internalID: -3520586976669405743
+      spriteID: 432d73d0d71492d4a875cfe49e03eacb
+      internalID: 8949080283056740730
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DeckEdit_Human
+      name: Select
       rect:
         serializedVersion: 2
-        x: 424
-        y: 86
-        width: 220
-        height: 230
+        x: 46
+        y: 199
+        width: 1082
+        height: 112
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e1f258f839b57b640b615650de44a23b
-      internalID: 4865573179099875465
+      spriteID: 67dfc23e089b84146bca84a3933b33b9
+      internalID: 4867134954650277556
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DeckEdit_Orc
+      name: Orc
       rect:
         serializedVersion: 2
-        x: 680
-        y: 71
-        width: 220
-        height: 249
+        x: 44
+        y: 44
+        width: 1082
+        height: 112
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b9acac78fa7078e49b4e1b5b0e4acabf
-      internalID: -3006712158969893111
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: DeckEdit_DeleteButton
-      rect:
-        serializedVersion: 2
-        x: 20
-        y: 47
-        width: 167
-        height: 85
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3e3d1a19396bdda47aacc125791032d2
-      internalID: -949136303771262619
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: DeckEdit_EditButton
-      rect:
-        serializedVersion: 2
-        x: 206
-        y: 47
-        width: 166
-        height: 85
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 89abf21fa7627a24ba2033fd8a832659
-      internalID: -1888659570270054226
+      spriteID: 0ae9bc143e7e4c945b0befa291c21243
+      internalID: -2368329816391626182
       vertices: []
       indices: 
       edges: []
@@ -241,7 +169,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 2cb12f69d0eba20479d5c3a0352d0749
+    spriteID: a265ea25bd6fe4744aeaf84309e44d75
     internalID: 0
     vertices: []
     indices: 

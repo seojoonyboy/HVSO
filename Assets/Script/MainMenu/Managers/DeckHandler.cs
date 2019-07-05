@@ -6,13 +6,14 @@ using UnityEngine.UI;
 public class DeckHandler : MonoBehaviour
 {
     private int deckID;
-
+    private bool isBasic = false;
     public int DECKID {
         get { return deckID; }
         set { deckID = value; }
     }
 
-    public void SetDeck(dataModules.Deck deck) {
+    public void SetDeck(dataModules.Deck deck, bool basic = false) {
+        isBasic = basic;
         Transform deckInfo = transform.Find("DeckInfo");
         deckInfo.gameObject.SetActive(true);
         deckInfo.Find("Deck/Portrait").GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[deck._hero.id];
@@ -21,6 +22,7 @@ public class DeckHandler : MonoBehaviour
     }
 
     public void OpenDeckButton() {
+        if (isBasic) return;
         GameObject editButtons = transform.Find("DeckInfo/EditButtons").gameObject;
         if (editButtons.activeSelf)
             editButtons.SetActive(false);
