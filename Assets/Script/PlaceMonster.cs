@@ -59,8 +59,6 @@ public class PlaceMonster : MonoBehaviour {
         x = transform.parent.GetSiblingIndex();
         y = transform.parent.parent.GetSiblingIndex();
 
-        atkCount = 0;
-
         unitLocation = gameObject.transform.position;
         
 
@@ -154,7 +152,6 @@ public class PlaceMonster : MonoBehaviour {
 
         //stun이 있으면 공격을 못함
         if (GetComponent<SkillModules.stun>() != null) {
-            SkipAttack();
             Destroy(GetComponent<SkillModules.stun>());
             return;
         }
@@ -307,8 +304,6 @@ public class PlaceMonster : MonoBehaviour {
 
             instanceAttack = false;
         }
-        else
-            atkCount++;
 
         PlaceMonster targetMonster = myTarget.GetComponent<PlaceMonster>();
         if (unit.attackRange == "distance") {
@@ -322,10 +317,6 @@ public class PlaceMonster : MonoBehaviour {
                 myTarget.GetComponent<PlaceMonster>().ReturnPosition();
         }
         myTarget = null;
-    }
-
-    private void SkipAttack() {
-        atkCount++;
     }
 
     public void AttackEffect(GameObject target = null) {
