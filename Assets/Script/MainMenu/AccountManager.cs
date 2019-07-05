@@ -244,7 +244,7 @@ public partial class AccountManager {
 /// Login 이후 Deck 관련 처리
 /// </summary>
 public partial class AccountManager {
-    public void RequestHumanDecks(NetworkManager.Callback callback, NetworkManager.CallbackRetryOccured retryOccured) {
+    public void RequestHumanDecks(OnRequestFinishedDelegate callback = null) {
         StringBuilder url = new StringBuilder();
         string base_url = networkManager.baseUrl;
 
@@ -254,10 +254,15 @@ public partial class AccountManager {
             .Append(DEVICEID)
             .Append("/decks/human");
 
-        networkManager.request("GET", url.ToString(), callback, retryOccured);
+        HTTPRequest request = new HTTPRequest(
+            new Uri(url.ToString())
+        );
+        request.MethodType = BestHTTP.HTTPMethods.Get;
+        if (callback != null) request.Callback = callback;
+        networkManager.Request(request, OnReceived, "휴먼 덱을 불러오는중...");
     }
 
-    public void RequestOrcDecks(NetworkManager.Callback callback, NetworkManager.CallbackRetryOccured retryOccured) {
+    public void RequestOrcDecks(OnRequestFinishedDelegate callback = null) {
         StringBuilder url = new StringBuilder();
         string base_url = networkManager.baseUrl;
 
@@ -267,7 +272,12 @@ public partial class AccountManager {
             .Append(DEVICEID)
             .Append("/decks/orc");
 
-        networkManager.request("GET", url.ToString(), callback, retryOccured);
+        HTTPRequest request = new HTTPRequest(
+            new Uri(url.ToString())
+        );
+        request.MethodType = BestHTTP.HTTPMethods.Get;
+        if (callback != null) request.Callback = callback;
+        networkManager.Request(request, OnReceived, "오크 덱을 불러오는중...");
     }
 }
 
@@ -302,7 +312,7 @@ public partial class AccountManager {
 
         //var tmp = JsonConvert.SerializeObject(format);
         request.RawData = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(format));
-        networkManager.Request(request, OnReceived);
+        networkManager.Request(request, OnReceived, "새로운 덱을 생성하는중...");
     }
 
     private void OnReceived(HTTPRequest originalRequest, HTTPResponse response) {
@@ -328,7 +338,7 @@ public partial class AccountManager {
         );
         request.MethodType = BestHTTP.HTTPMethods.Delete;
 
-        networkManager.Request(request, OnReceived);
+        networkManager.Request(request, OnReceived, "덱 삭제를 요청하는 중...");
     }
 
     /// <summary>
@@ -362,7 +372,7 @@ public partial class AccountManager {
                     break;
             }
         }
-        networkManager.Request(request, OnReceived);
+        networkManager.Request(request, OnReceived, "덱 수정 요청을 전달하는중...");
     }
 
     private void TestModifyDeck() {
@@ -387,7 +397,7 @@ public partial class AccountManager {
         );
 
         request.MethodType = HTTPMethods.Get;
-        networkManager.Request(request, OnReceivedLoadAllCards);
+        networkManager.Request(request, OnReceivedLoadAllCards, "모든 카드 정보를 불러오는중...");
     }
 
     private void OnReceivedLoadAllCards(HTTPRequest originalRequest, HTTPResponse response) {
