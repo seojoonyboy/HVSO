@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using Bolt;
 using System;
 using TMPro;
+using UnityEngine.UI.Extensions;
 
 public class BattleReadySceneController : MonoBehaviour {
     public Toggle[] battleTypeToggles;
@@ -23,6 +24,7 @@ public class BattleReadySceneController : MonoBehaviour {
     [SerializeField] TextMeshProUGUI pageText;
     [SerializeField] public GameObject EmptyMsgShowPanel;
     [SerializeField] public GameObject ButtonGlowEffect;
+    [SerializeField] HorizontalScrollSnap BattleTypeHorizontalScrollSnap;
 
     IEnumerator Start() {
         yield return null;
@@ -133,5 +135,14 @@ public class BattleReadySceneController : MonoBehaviour {
 
     public void OffCardListModal() {
         CardListModal.SetActive(false);
+    }
+
+    public void NextBattleType() {
+        Logger.Log("Next Battle Type");
+        BattleTypeHorizontalScrollSnap.NextScreen();
+    }
+
+    public void PrevBattleType() {
+        BattleTypeHorizontalScrollSnap.PreviousScreen();
     }
 }
