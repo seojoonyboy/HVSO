@@ -19,9 +19,12 @@ public class DeckEditController : MonoBehaviour
 
     private GameObject deckNamePanel;
 
+    public SelectCard selectCard;
+
     private void Awake() {
         SetObject();
         SetHeroData();
+        SettingCard();
     }
 
 
@@ -38,6 +41,23 @@ public class DeckEditController : MonoBehaviour
     }
 
     public void CancelButton() {
+
+    }
+
+    private void SettingCard() {
+        AccountManager accountManager = AccountManager.Instance;
+        HeroInventory hero = accountManager.myHeroInventories[heroID];
+
+        List<CollectionCard> cardKeyList = accountManager.allCards;
+
+        int count = 0;
+        foreach(CollectionCard card in cardKeyList) { 
+            if (card.isHeroCard == true) continue;
+            if (card.camp != hero.camp) continue;
+
+
+            count++;
+        }
 
     }
 
@@ -82,14 +102,11 @@ public class DeckEditController : MonoBehaviour
             childcount++;
         }
     }
+}
 
-
-
-    public void ReturnButton() {
-
-
-    }
-
+public class SelectCard {
+    public GameObject CardLocation;
+    public GameObject card;
 }
 
 
