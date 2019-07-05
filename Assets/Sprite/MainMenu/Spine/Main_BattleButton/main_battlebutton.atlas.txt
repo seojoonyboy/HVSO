@@ -1,0 +1,216 @@
+
+main_battlebutton.png
+size: 2048,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Comp 1_00000
+  rotate: false
+  xy: 0, 796
+  size: 316, 199
+  orig: 316, 199
+  offset: 0, 0
+  index: -1
+Comp 1_00001
+  rotate: false
+  xy: 0, 597
+  size: 316, 199
+  orig: 316, 199
+  offset: 0, 0
+  index: -1
+Comp 1_00002
+  rotate: false
+  xy: 316, 796
+  size: 316, 199
+  orig: 316, 199
+  offset: 0, 0
+  index: -1
+Comp 1_00003
+  rotate: false
+  xy: 0, 398
+  size: 316, 199
+  orig: 316, 199
+  offset: 0, 0
+  index: -1
+Comp 1_00004
+  rotate: false
+  xy: 316, 597
+  size: 316, 199
+  orig: 316, 199
+  offset: 0, 0
+  index: -1
+Comp 1_00005
+  rotate: false
+  xy: 632, 796
+  size: 316, 199
+  orig: 316, 199
+  offset: 0, 0
+  index: -1
+Comp 1_00006
+  rotate: false
+  xy: 0, 199
+  size: 316, 199
+  orig: 316, 199
+  offset: 0, 0
+  index: -1
+Comp 1_00007
+  rotate: false
+  xy: 316, 398
+  size: 316, 199
+  orig: 316, 199
+  offset: 0, 0
+  index: -1
+Comp 1_00008
+  rotate: false
+  xy: 632, 597
+  size: 316, 199
+  orig: 316, 199
+  offset: 0, 0
+  index: -1
+Comp 1_00009
+  rotate: false
+  xy: 948, 796
+  size: 316, 199
+  orig: 316, 199
+  offset: 0, 0
+  index: -1
+Comp 1_00010
+  rotate: false
+  xy: 0, 0
+  size: 316, 199
+  orig: 316, 199
+  offset: 0, 0
+  index: -1
+Comp 1_00011
+  rotate: false
+  xy: 316, 199
+  size: 316, 199
+  orig: 316, 199
+  offset: 0, 0
+  index: -1
+Comp 1_00012
+  rotate: false
+  xy: 632, 398
+  size: 316, 199
+  orig: 316, 199
+  offset: 0, 0
+  index: -1
+Comp 1_00013
+  rotate: false
+  xy: 948, 597
+  size: 316, 199
+  orig: 316, 199
+  offset: 0, 0
+  index: -1
+Comp 1_00014
+  rotate: false
+  xy: 1264, 796
+  size: 316, 199
+  orig: 316, 199
+  offset: 0, 0
+  index: -1
+Comp 1_00015
+  rotate: false
+  xy: 316, 0
+  size: 316, 199
+  orig: 316, 199
+  offset: 0, 0
+  index: -1
+Comp 1_00016
+  rotate: false
+  xy: 632, 199
+  size: 316, 199
+  orig: 316, 199
+  offset: 0, 0
+  index: -1
+Comp 1_00017
+  rotate: false
+  xy: 948, 398
+  size: 316, 199
+  orig: 316, 199
+  offset: 0, 0
+  index: -1
+Comp 1_00018
+  rotate: false
+  xy: 1264, 597
+  size: 316, 199
+  orig: 316, 199
+  offset: 0, 0
+  index: -1
+Comp 1_00019
+  rotate: false
+  xy: 1580, 796
+  size: 316, 199
+  orig: 316, 199
+  offset: 0, 0
+  index: -1
+Comp 1_00020
+  rotate: false
+  xy: 632, 0
+  size: 316, 199
+  orig: 316, 199
+  offset: 0, 0
+  index: -1
+Comp 1_00021
+  rotate: false
+  xy: 948, 199
+  size: 316, 199
+  orig: 316, 199
+  offset: 0, 0
+  index: -1
+Comp 1_00022
+  rotate: false
+  xy: 1264, 398
+  size: 316, 199
+  orig: 316, 199
+  offset: 0, 0
+  index: -1
+Comp 1_00023
+  rotate: false
+  xy: 1580, 597
+  size: 316, 199
+  orig: 316, 199
+  offset: 0, 0
+  index: -1
+Comp 1_00024
+  rotate: false
+  xy: 948, 0
+  size: 316, 199
+  orig: 316, 199
+  offset: 0, 0
+  index: -1
+Comp 1_00025
+  rotate: false
+  xy: 1264, 199
+  size: 316, 199
+  orig: 316, 199
+  offset: 0, 0
+  index: -1
+Comp 1_00026
+  rotate: false
+  xy: 1580, 398
+  size: 316, 199
+  orig: 316, 199
+  offset: 0, 0
+  index: -1
+Comp 1_00027
+  rotate: false
+  xy: 1264, 0
+  size: 316, 199
+  orig: 316, 199
+  offset: 0, 0
+  index: -1
+Comp 1_00028
+  rotate: false
+  xy: 1580, 199
+  size: 316, 199
+  orig: 316, 199
+  offset: 0, 0
+  index: -1
+Comp 1_00029
+  rotate: false
+  xy: 1580, 0
+  size: 316, 199
+  orig: 316, 199
+  offset: 0, 0
+  index: -1

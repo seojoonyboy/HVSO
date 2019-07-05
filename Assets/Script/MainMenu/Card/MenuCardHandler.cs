@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using Spine;
 using Spine.Unity;
 
-public class MenuCardHandler : MonoBehaviour
-{
+public class MenuCardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
     private string cardID;
     [SerializeField] MenuCardInfo menuCardInfo;
 
@@ -79,5 +79,25 @@ public class MenuCardHandler : MonoBehaviour
     public void OpenCardInfo() {
         menuCardInfo.SetCardInfo(cardData, isHuman);
         menuCardInfo.transform.parent.gameObject.SetActive(true);
+    }
+
+
+    float clickTime;
+
+    public void OnBeginDrag(PointerEventData eventData) {
+        clickTime = 0;
+    }
+
+    public void OnDrag(PointerEventData eventData) {
+        clickTime += Time.deltaTime;
+        if (clickTime > 1.0f) {
+            OnEndDrag(null);
+            return;
+        }
+    }
+
+    public void OnEndDrag(PointerEventData eventData) {
+        clickTime = 0;
+        gameObject.SetActive(false);
     }
 }

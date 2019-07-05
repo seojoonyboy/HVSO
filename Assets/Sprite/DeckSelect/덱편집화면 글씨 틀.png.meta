@@ -1,10 +1,16 @@
 fileFormatVersion: 2
-guid: 6e884c64f280f9a418a6213b99ec517f
+guid: 03121e483d53e094c8f137a72f6c0f25
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -1872961450012859130
-    second: "\uC601\uC6C5\uC815\uBCF4\uCC3D \uBC30\uACBD\uD654\uBA74(\uD734\uBA3C)_0"
+      213: 8949080283056740730
+    second: Human
+  - first:
+      213: 4867134954650277556
+    second: Select
+  - first:
+      213: -2368329816391626182
+    second: Orc
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -98,13 +104,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "\uC601\uC6C5\uC815\uBCF4\uCC3D \uBC30\uACBD\uD654\uBA74(\uD734\uBA3C)_0"
+      name: Human
       rect:
         serializedVersion: 2
-        x: 56
-        y: 87
-        width: 1037
-        height: 687
+        x: 47
+        y: 358
+        width: 1082
+        height: 112
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -112,8 +118,50 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5f565fa8f85f16341b8d431cd6ef1e89
-      internalID: -1872961450012859130
+      spriteID: 432d73d0d71492d4a875cfe49e03eacb
+      internalID: 8949080283056740730
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Select
+      rect:
+        serializedVersion: 2
+        x: 46
+        y: 199
+        width: 1082
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 67dfc23e089b84146bca84a3933b33b9
+      internalID: 4867134954650277556
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Orc
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 44
+        width: 1082
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0ae9bc143e7e4c945b0befa291c21243
+      internalID: -2368329816391626182
       vertices: []
       indices: 
       edges: []
@@ -121,7 +169,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 16374fc4940b2184a822ba9300f41f3a
+    spriteID: a265ea25bd6fe4744aeaf84309e44d75
     internalID: 0
     vertices: []
     indices: 

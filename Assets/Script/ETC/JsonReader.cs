@@ -62,11 +62,11 @@ namespace dataModules {
     }
 
     public class Hero {
-        public string[] _heroClassese;
+        public string[] heroClasses;
         public string id;
         public string camp;
         public string name;
-        public List<HeroCard> _heroCards;
+        public List<HeroCard> heroCards;
     }
 
     public class Deck {
@@ -77,6 +77,7 @@ namespace dataModules {
         public string flavorText;
         public Hero _hero;
         public List<Item> items;
+        public bool deckValidate;
     }
 
     public class HeroCard : BaseCard {

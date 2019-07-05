@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using Bolt;
 using System;
 using TMPro;
+using UnityEngine.UI.Extensions;
 
 public class BattleReadySceneController : MonoBehaviour {
     public Toggle[] battleTypeToggles;
@@ -23,6 +24,9 @@ public class BattleReadySceneController : MonoBehaviour {
     [SerializeField] TextMeshProUGUI pageText;
     [SerializeField] public GameObject EmptyMsgShowPanel;
     [SerializeField] public GameObject ButtonGlowEffect;
+    [SerializeField] HorizontalScrollSnap BattleTypeHorizontalScrollSnap;
+
+    public Deck selectedDeck;
 
     IEnumerator Start() {
         yield return null;
@@ -48,8 +52,13 @@ public class BattleReadySceneController : MonoBehaviour {
         string race = Variables.Saved.Get("SelectedRace").ToString().ToLower();
         string selectedDeckId = Variables.Saved.Get("SelectedDeckId").ToString().ToLower();
         if (race != null && !string.IsNullOrEmpty(selectedDeckId)) {
-            isIngameButtonClicked = true;
-            SceneManager.Instance.LoadScene(SceneManager.Scene.CONNECT_MATCHING_SCENE);
+            if (selectedDeck.deckValidate) {
+                isIngameButtonClicked = true;
+                SceneManager.Instance.LoadScene(SceneManager.Scene.CONNECT_MATCHING_SCENE);
+            }
+            else {
+                Modal.instantiate("유효하지 않은 덱입니다.", Modal.Type.CHECK);
+            }
         }
         else {
             if (race == "none") Logger.Log("종족을 선택해야 합니다.");
@@ -133,5 +142,14 @@ public class BattleReadySceneController : MonoBehaviour {
 
     public void OffCardListModal() {
         CardListModal.SetActive(false);
+    }
+
+    public void NextBattleType() {
+        Logger.Log("Next Battle Type");
+        BattleTypeHorizontalScrollSnap.NextScreen();
+    }
+
+    public void PrevBattleType() {
+        BattleTypeHorizontalScrollSnap.PreviousScreen();
     }
 }
