@@ -402,7 +402,7 @@ public partial class BattleConnector : MonoBehaviour {
         StartCoroutine(waitSkillDone(() => {PlayMangement.instance.heroShieldActive = false;}, true));
     }
 
-    private IEnumerator waitSkillDone(UnityAction callback, bool isShield = false) {
+    public IEnumerator waitSkillDone(UnityAction callback, bool isShield = false) {
         if(isShield) yield return new WaitForSeconds(2.0f);
         MagicDragHandler[] list = Resources.FindObjectsOfTypeAll<MagicDragHandler>();
         foreach(MagicDragHandler magic in list) {

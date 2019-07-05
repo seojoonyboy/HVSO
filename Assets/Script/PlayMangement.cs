@@ -510,6 +510,7 @@ public partial class PlayMangement : MonoBehaviour {
     IEnumerator battleCoroutine() {
         dragable = false;
         yield return new WaitForSeconds(1.1f);
+        yield return socketHandler.waitSkillDone(()=>{});
         yield return socketHandler.WaitBattle();
         for (int line = 0; line < 5; line++) {
             yield return battleLine(line);
