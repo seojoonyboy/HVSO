@@ -328,7 +328,6 @@ public class CardCircleManager : MonoBehaviour {
 
     public IEnumerator SortCircleAngle() {
         PlayMangement.dragable = false;
-        Debug.Log(transform.rotation.eulerAngles.z);
         if (transform.rotation.eulerAngles.z > 300 && transform.rotation.eulerAngles.z < 360) {
             if (cardNum < 3)
                 iTween.RotateTo(gameObject, new Vector3(0, 0, (cardNum - 2) * 4), 0.2f);
