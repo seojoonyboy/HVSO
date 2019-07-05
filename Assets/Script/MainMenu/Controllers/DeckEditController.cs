@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using dataModules;
 using TMPro;
+using UnityEngine.EventSystems;
 
 public class DeckEditController : MonoBehaviour
 {
@@ -20,11 +21,17 @@ public class DeckEditController : MonoBehaviour
     private GameObject deckNamePanel;
 
     public SelectCard selectCard;
+    
+
 
     private void Awake() {
         SetObject();
-        SetHeroData();
-        SettingCard();
+        //SetHeroData();
+        //SettingCard();
+        SetUnitCard();
+    }
+
+    private void Update() {
     }
 
 
@@ -43,6 +50,8 @@ public class DeckEditController : MonoBehaviour
     public void CancelButton() {
 
     }
+    
+    
 
     private void SettingCard() {
         AccountManager accountManager = AccountManager.Instance;
@@ -58,7 +67,62 @@ public class DeckEditController : MonoBehaviour
 
             count++;
         }
+    }
 
+    public void OnTouchCard(SelectCard card) {
+        if (card != selectCard) {
+
+            if(selectCard.card != null) {
+                selectCard.card.transform.Find("DeletePanel").gameObject.SetActive(false);
+
+                if (selectCard.CardLocation.name.Contains("Own") == true)
+                    transform.Find("SetDeckLayout").Find("glow").gameObject.SetActive(false);
+            }
+            
+
+            selectCard = null;
+            selectCard = card;
+        }
+        //Vector3 origin = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //Ray2D ray = new Ray2D(origin, Vector2.zero);
+        //RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
+
+        string location = selectCard.CardLocation.name;
+
+        if (location.Contains("Own") == true)
+            transform.Find("SetDeckLayout").Find("glow").gameObject.SetActive(true);
+
+        if (location.Contains("SetDeck") == true)
+            selectCard.card.transform.Find("DeletePanel").gameObject.SetActive(true);
+    }
+    
+
+    public void ExpectFromDeck() {
+        if (selectCard == null) return;
+        selectCard.card.transform.SetParent(ownCardLayout.transform);
+        selectCard.card.GetComponent<EditCardHandler>().cardgroup.CardLocation = ownCardLayout;
+
+        selectCard.card.transform.Find("DeletePanel").gameObject.SetActive(false);
+        transform.Find("SetDeckLayout").Find("glow").gameObject.SetActive(false);
+
+        RefreshLine();
+    }
+
+    public void ConfirmSetDeck() {
+        if (selectCard == null) return;
+        selectCard.card.transform.SetParent(settingLayout.transform);
+        selectCard.card.GetComponent<EditCardHandler>().cardgroup.CardLocation = settingLayout;
+
+        selectCard.card.transform.Find("DeletePanel").gameObject.SetActive(false);
+        transform.Find("SetDeckLayout").Find("glow").gameObject.SetActive(false);
+
+        RefreshLine();
+    }
+
+
+    private void RefreshLine() {
+        transform.Find("CardPanel").Find("Viewport").Find("Content").GetComponent<VerticalLayoutGroup>().spacing = 1;
+        transform.Find("CardPanel").Find("Viewport").Find("Content").GetComponent<VerticalLayoutGroup>().spacing = 0;
     }
 
 
@@ -69,9 +133,9 @@ public class DeckEditController : MonoBehaviour
         heroCardGroup = transform.Find("HeroCard").gameObject;
         heroProperty = transform.Find("HeroProperty").gameObject;
 
-        settingLayout = transform.Find("SetDeckLayout").Find("Content").gameObject;
-        ownCardLayout = transform.Find("CardPanel").Find("Viewport").Find("Content").Find("OwnCard").gameObject;
-        UnReleaseCardLayout = transform.Find("CardPanel").Find("Viewport").Find("Content").Find("MissingCard").gameObject;
+        settingLayout = transform.Find("SetDeckLayout").Find("SetDeck").gameObject;
+        ownCardLayout = transform.Find("CardPanel").Find("Viewport").Find("Content").Find("OwnCard").Find("Own").gameObject;
+        UnReleaseCardLayout = transform.Find("CardPanel").Find("Viewport").Find("Content").Find("NotOwingCard").Find("NotOwing").gameObject;
 
         transform.Find("ConfirmButton").GetComponent<Button>().onClick.AddListener(delegate () { ConfirmButton(); });
         transform.Find("CancelButton").GetComponent<Button>().onClick.AddListener(delegate () { CancelButton(); });
@@ -102,8 +166,29 @@ public class DeckEditController : MonoBehaviour
             childcount++;
         }
     }
-}
 
+    public void SetUnitCard() {
+        foreach(Transform child in settingLayout.transform) {
+            child.gameObject.SetActive(true);
+            child.GetComponent<EditCardHandler>().deckEditController = this;
+            child.GetComponent<EditCardHandler>().cardgroup.card = child.gameObject;
+            child.GetComponent<EditCardHandler>().cardgroup.CardLocation = child.transform.parent.gameObject;
+        }
+
+        foreach(Transform child in ownCardLayout.transform) {
+            child.gameObject.SetActive(true);
+            child.GetComponent<EditCardHandler>().deckEditController = this;
+            child.GetComponent<EditCardHandler>().cardgroup.card = child.gameObject;
+            child.GetComponent<EditCardHandler>().cardgroup.CardLocation = child.transform.parent.gameObject;
+        }
+
+        RefreshLine();
+    }
+    
+
+
+}
+[System.Serializable]
 public class SelectCard {
     public GameObject CardLocation;
     public GameObject card;
