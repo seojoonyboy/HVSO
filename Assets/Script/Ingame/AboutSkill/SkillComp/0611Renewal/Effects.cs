@@ -453,6 +453,9 @@ namespace SkillModules {
                     if(state.SearchUseItem(itemId)) break;
                 }
             }
+            else {
+                state = playMangement.socketHandler.r_returnState;
+            }
             var units = enemyObserver.GetAllFieldUnits();
             
             List<SocketFormat.Unit> socketList = state.map.allMonster;
