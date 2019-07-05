@@ -21,6 +21,8 @@ public class CardDictionaryManager : MonoBehaviour {
 
     public void SetToHumanCards() {
         isHumanDictionary = true;
+        transform.Find("Bars/Orc").gameObject.SetActive(false);
+        transform.Find("Bars/Human").gameObject.SetActive(true);
         transform.Find("Buttons/OrcSelect").GetChild(0).gameObject.SetActive(false);
         transform.Find("Buttons/HumanSelect").GetChild(0).gameObject.SetActive(true);
         SetCardsInDictionary();
@@ -28,6 +30,8 @@ public class CardDictionaryManager : MonoBehaviour {
 
     public void SetToOrcCards() {
         isHumanDictionary = false;
+        transform.Find("Bars/Orc").gameObject.SetActive(true);
+        transform.Find("Bars/Human").gameObject.SetActive(false);
         transform.Find("Buttons/OrcSelect").GetChild(0).gameObject.SetActive(true);
         transform.Find("Buttons/HumanSelect").GetChild(0).gameObject.SetActive(false);
         SetCardsInDictionary();
@@ -119,7 +123,7 @@ public class CardDictionaryManager : MonoBehaviour {
         heroInfoWindow.Find("Class").GetChild(0).GetChild(0).GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["class_icon_" + hero.heroClasses[0]];
         heroInfoWindow.Find("Class").GetChild(1).GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["class_" + hero.heroClasses[1]];
         heroInfoWindow.Find("Class").GetChild(1).GetChild(0).GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["class_icon_" + hero.heroClasses[1]];
-        for(int i = 0; i < hero.heroCards.Count; i++) {
+        for (int i = 0; i < hero.heroCards.Count; i++) {
             heroCards.GetChild(i).GetComponent<MenuCardHandler>().DrawCard(hero.heroCards[i].cardId, isHumanDictionary);
         }
         heroCards.gameObject.SetActive(true);
