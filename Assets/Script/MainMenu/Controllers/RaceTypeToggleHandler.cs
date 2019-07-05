@@ -199,15 +199,15 @@ public class RaceTypeToggleHandler : MonoBehaviour {
             if (pageIndex != i) page.SetActive(false);
         }
 
-        //해당 페이지에 빈 슬롯이 있는 경우
-        if(lastPage.transform.childCount <= DECK_SLOT_NUM_PER_PAGE) {
-            GameObject AddDeckButton = Instantiate(AddDeckButtonPrefab, lastPage.transform);
-        }
-        //새로 페이지를 만들어야 함
-        else {
-            GameObject page = Instantiate(deckGroupPrefab, deckParent);
-            GameObject AddDeckButton = Instantiate(AddDeckButtonPrefab, page.transform);
-        }
+        ////해당 페이지에 빈 슬롯이 있는 경우
+        //if(lastPage.transform.childCount <= DECK_SLOT_NUM_PER_PAGE) {
+        //    GameObject AddDeckButton = Instantiate(AddDeckButtonPrefab, lastPage.transform);
+        //}
+        ////새로 페이지를 만들어야 함
+        //else {
+        //    GameObject page = Instantiate(deckGroupPrefab, deckParent);
+        //    GameObject AddDeckButton = Instantiate(AddDeckButtonPrefab, page.transform);
+        //}
 
 
         if(type == BattleReadySceneController.RaceType.HUMAN) {
