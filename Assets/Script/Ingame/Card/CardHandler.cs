@@ -121,6 +121,8 @@ public partial class CardHandler : MonoBehaviour {
             clm.AddMulliganCardInfo(cardData, cardID);
             firstDraw = true;
         }
+        else
+            transform.Find("ChangeButton").gameObject.SetActive(false);
     }
 
     public virtual void CheckHighlight() {

@@ -62,11 +62,11 @@ namespace dataModules {
     }
 
     public class Hero {
-        public string[] _heroClassese;
+        public string[] heroClasses;
         public string id;
         public string camp;
         public string name;
-        public List<HeroCard> _heroCards;
+        public List<HeroCard> heroCards;
     }
 
     public class Deck {

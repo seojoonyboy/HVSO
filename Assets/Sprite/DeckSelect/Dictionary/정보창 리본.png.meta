@@ -1,7 +1,19 @@
 fileFormatVersion: 2
 guid: 1e0bc1b499bdee449b4cff11fa100412
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: -3313914128358745984
+    second: "\uC815\uBCF4\uCC3D \uB9AC\uBCF8_0"
+  - first:
+      213: 8759430554454897321
+    second: "\uC815\uBCF4\uCC3D \uB9AC\uBCF8_1"
+  - first:
+      213: -3021077549383309863
+    second: "\uC815\uBCF4\uCC3D \uB9AC\uBCF8_2"
+  - first:
+      213: 2972699031141901423
+    second: "\uC815\uBCF4\uCC3D \uB9AC\uBCF8_3"
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -40,7 +52,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -69,9 +81,73 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: "\uC815\uBCF4\uCC3D \uB9AC\uBCF8_0"
+      rect:
+        serializedVersion: 2
+        x: 268
+        y: 291
+        width: 514
+        height: 148
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ba7cbc4155aed4347a649397389da8dd
+      internalID: -3313914128358745984
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\uC815\uBCF4\uCC3D \uB9AC\uBCF8_3"
+      rect:
+        serializedVersion: 2
+        x: 270
+        y: 113
+        width: 512
+        height: 149
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2c79b9913f5ec404a8989034ce7cc876
+      internalID: 2972699031141901423
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
