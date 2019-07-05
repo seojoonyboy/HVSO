@@ -477,7 +477,7 @@ public partial class PlayMangement : MonoBehaviour {
         StartCoroutine("battleCoroutine");
     }
 
-    private bool passOrc() {
+    public bool passOrc() {
         string turnName = socketHandler.gameState.state;
         if(turnName.CompareTo("orcPostTurn") == 0) return true;
         if(turnName.CompareTo("battleTurn") == 0) return true;
