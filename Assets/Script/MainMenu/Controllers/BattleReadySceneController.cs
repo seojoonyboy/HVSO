@@ -100,8 +100,15 @@ public class BattleReadySceneController : MonoBehaviour {
 
     public void ChangeDeck(string deckId) {
         var msg = string.Format("{0} 선택됨", deckId);
-        Logger.Log(msg);
         Variables.Saved.Set("SelectedDeckId", deckId);
+
+        int isNum = 0;
+        if(int.TryParse(deckId, out isNum)) {
+            Variables.Saved.Set("SelectedDeckType", "custom");
+        }
+        else {
+            Variables.Saved.Set("SelectedDeckType", "basic");
+        }
 
         ButtonGlowEffect.SetActive(true);
     }
