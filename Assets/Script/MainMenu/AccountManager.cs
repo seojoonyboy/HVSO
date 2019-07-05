@@ -92,6 +92,7 @@ public partial class AccountManager : Singleton<AccountManager> {
                 data.attackRange = card.attackRange;
                 data.hero_chk = card.isHeroCard;
                 data.skills = card.skills;
+                data.flavorText = card.flavorText;
                 cardPackage.data.Add(card.cardId, data);
             }
         }
@@ -391,6 +392,7 @@ public partial class AccountManager {
 
     private void OnReceivedLoadAllCards(HTTPRequest originalRequest, HTTPResponse response) {
         var result = dataModules.JsonReader.Read<List<CollectionCard>>(response.DataAsText);
+        allCards = result;
         Logger.Log("!!");
     }
 }

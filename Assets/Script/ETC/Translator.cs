@@ -6,6 +6,7 @@ using Sirenix.OdinInspector;
 
 public class Translator : SerializedMonoBehaviour {
     public Dictionary<string, string> unitCategories;
+    public Dictionary<string, string> skillTypeDescs;
 
     public List<string> GetTranslatedUnitCtg(List<string> data) {
         var keys = data;
@@ -20,5 +21,15 @@ public class Translator : SerializedMonoBehaviour {
             }
         }
         return values;
+    }
+
+    public string GetTranslatedSkillTypeDesc(string keyword) {
+        string result;
+
+        if (skillTypeDescs.ContainsKey(keyword)) {
+            result = skillTypeDescs[keyword];
+        }
+        else { result = ""; }
+        return result;
     }
 }
