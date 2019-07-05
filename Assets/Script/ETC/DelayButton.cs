@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class DelayButton : Button {
     public float _delay = 1f;
     WaitForSeconds _delayTimer;
+    public UnityEvent instanceCallback = new UnityEvent();
 
     public override void OnPointerClick(PointerEventData eventData) {
         StartCoroutine(DelayedClickRoutine());
@@ -19,6 +20,7 @@ public class DelayButton : Button {
     }
 
     private IEnumerator DelayedClickRoutine() {
+        instanceCallback.Invoke();
         // wait the delay time, then invoke the event
         yield return _delayTimer;
         onClick.Invoke();

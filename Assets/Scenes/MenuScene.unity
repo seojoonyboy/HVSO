@@ -659,6 +659,7 @@ GameObject:
   - component: {fileID: 145670892}
   - component: {fileID: 145670894}
   - component: {fileID: 145670891}
+  - component: {fileID: 145670895}
   m_Layer: 5
   m_Name: PVPButton
   m_TagString: Untagged
@@ -801,6 +802,25 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   _delay: 0.4
+  instanceCallback:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!114 &145670895
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 145670889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c197e3927b8fb20479d270c1583b2da8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skeleton: {fileID: 94265329}
+  animName: TOUCH
 --- !u!1 &164811197
 GameObject:
   m_ObjectHideFlags: 0
@@ -1768,6 +1788,11 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   _delay: 0
+  instanceCallback:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &363035178
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7185,6 +7210,11 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   _delay: 0
+  instanceCallback:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &1387832634
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8122,6 +8152,11 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   _delay: 0
+  instanceCallback:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &1652649060
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8517,6 +8552,11 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   _delay: 0
+  instanceCallback:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &1746957954
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9317,6 +9357,11 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   _delay: 0
+  instanceCallback:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &1913454242
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21665,12 +21710,6 @@ PrefabInstance:
       propertyPath: menuCardInfo
       value: 
       objectReference: {fileID: 5598608937137566952}
-    - target: {fileID: 7353550340180035447, guid: 1ab7a53ddbb414e47a682b6e2e0f867d,
-        type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 53554702353931185, guid: 2cc1c7e3bbf9cfd43a54ca22aa5b7879,
-        type: 3}
     - target: {fileID: 3765132720157802682, guid: 1ab7a53ddbb414e47a682b6e2e0f867d,
         type: 3}
       propertyPath: m_Enabled
@@ -21681,12 +21720,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 4949463226680229874, guid: 1ab7a53ddbb414e47a682b6e2e0f867d,
-        type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: -6162039576716639170, guid: 2cc1c7e3bbf9cfd43a54ca22aa5b7879,
-        type: 3}
     - target: {fileID: 4595737724151306446, guid: 1ab7a53ddbb414e47a682b6e2e0f867d,
         type: 3}
       propertyPath: m_Material
@@ -21702,6 +21735,18 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7353550340180035447, guid: 1ab7a53ddbb414e47a682b6e2e0f867d,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 53554702353931185, guid: 2cc1c7e3bbf9cfd43a54ca22aa5b7879,
+        type: 3}
+    - target: {fileID: 4949463226680229874, guid: 1ab7a53ddbb414e47a682b6e2e0f867d,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -6162039576716639170, guid: 2cc1c7e3bbf9cfd43a54ca22aa5b7879,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1ab7a53ddbb414e47a682b6e2e0f867d, type: 3}
 --- !u!114 &4780734686543461002 stripped

@@ -37,7 +37,7 @@ public class MenuSceneController : MonoBehaviour {
     /// PVP대전 버튼 클릭
     /// </summary>
     public void OnPVPClicked() {
-        battleSwordSkeleton.AnimationState.SetAnimation(0, "TOUCH", false);
+        //battleSwordSkeleton.AnimationState.SetAnimation(0, "TOUCH", false);
         SceneManager.Instance.LoadScene(SceneManager.Scene.LOADING_SCENE);
         SoundManager.Instance.PlaySound(SoundType.FIRST_TURN);
     }
