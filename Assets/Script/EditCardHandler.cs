@@ -1,12 +1,14 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Events;
+using System.Collections.Generic;
 
 public class EditCardHandler : MonoBehaviour, IPointerDownHandler,  IPointerClickHandler
 {
     public string cardID;
     public DeckEditController deckEditController;
     public SelectCard cardgroup;
+    
 
     public bool clicking = false;
     public float time = 0f;

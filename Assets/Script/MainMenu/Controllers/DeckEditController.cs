@@ -21,6 +21,8 @@ public class DeckEditController : MonoBehaviour
     private GameObject deckNamePanel;
 
     public SelectCard selectCard;
+
+    public Deck deck;
     
 
 
@@ -168,20 +170,22 @@ public class DeckEditController : MonoBehaviour
     }
 
     public void SetUnitCard() {
-        foreach(Transform child in settingLayout.transform) {
-            child.gameObject.SetActive(true);
-            child.GetComponent<EditCardHandler>().deckEditController = this;
-            child.GetComponent<EditCardHandler>().cardgroup.card = child.gameObject;
-            child.GetComponent<EditCardHandler>().cardgroup.CardLocation = child.transform.parent.gameObject;
-        }
+        deck = AccountManager.Instance.humanDecks.customDecks[0];
 
+        foreach(Item cards in deck.items) {
+            //child.gameObject.SetActive(true);
+            //child.GetComponent<EditCardHandler>().deckEditController = this;
+            //child.GetComponent<EditCardHandler>().cardgroup.card = child.gameObject;
+            //child.GetComponent<EditCardHandler>().cardgroup.CardLocation = child.transform.parent.gameObject;
+        }
+        /*
         foreach(Transform child in ownCardLayout.transform) {
             child.gameObject.SetActive(true);
             child.GetComponent<EditCardHandler>().deckEditController = this;
             child.GetComponent<EditCardHandler>().cardgroup.card = child.gameObject;
             child.GetComponent<EditCardHandler>().cardgroup.CardLocation = child.transform.parent.gameObject;
         }
-
+        */
         RefreshLine();
     }
     

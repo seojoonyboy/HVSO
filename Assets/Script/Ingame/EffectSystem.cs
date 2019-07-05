@@ -18,6 +18,7 @@ public class EffectSystem : MonoBehaviour
         effectObject[EffectType.HIT_MIDDLE] = spineEffectManager.middileAttackEffect;
         effectObject[EffectType.HIT_HIGH] = spineEffectManager.highAttackEffect;
         effectObject[EffectType.EXPLOSION] = spineEffectManager.explosionEffect;
+        effectObject[EffectType.CONTINUE_BUFF] = spineEffectManager.buffContinue;
     }
 
     public void ShowEffect(EffectType type, Vector3 pos) {
@@ -27,6 +28,15 @@ public class EffectSystem : MonoBehaviour
         effectAnimation.AnimationState.SetAnimation(0, "animation", false);
         Destroy(effect, effectAnimation.skeleton.Data.FindAnimation("animation").Duration - 0.1f);        
     }
+
+    public void ContinueEffect(EffectType type, Transform pos) {
+        if (effectObject.ContainsKey(type) == false || effectObject[type] == null) return;
+        GameObject effect = Instantiate(effectObject[type], pos);
+        effect.transform.position = pos.position;
+        SkeletonAnimation effectAnimation = effect.GetComponent<SkeletonAnimation>();
+        effectAnimation.AnimationState.SetAnimation(0, "animation", true);
+    }
+
 
     private void OnDestroy() {
         Instance = null;
@@ -39,7 +49,8 @@ public class EffectSystem : MonoBehaviour
         HIT_MIDDLE,
         HIT_HIGH,
         EXPLOSION,
-        DEAD
+        DEAD,
+        CONTINUE_BUFF
     }
 
 }
