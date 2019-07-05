@@ -15,6 +15,9 @@ namespace SocketFormat {
         public PlayHistory[] playHistory;
 
         public PlayHistory lastUse { get { return playHistory.Length == 0 ? null : playHistory[0]; }}
+        public bool SearchUseItem(int itemId) {
+            return playHistory.ToList().Exists(x => x.cardItem.itemId == itemId);
+        }
     }
 
     public class Map {

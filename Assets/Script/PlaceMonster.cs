@@ -440,6 +440,14 @@ public class PlaceMonster : MonoBehaviour {
     }
 
     public void UnitDead() {
+        if (isPlayer) {
+            if(PlayMangement.instance.PlayerUnitsObserver.units[x, y] == null)
+                return;
+        }
+        else {
+            if(PlayMangement.instance.EnemyUnitsObserver.units[x, y] == null)
+                return;
+        }
         unit.currentHP = 0;
         PlayMangement.instance.cardInfoCanvas.Find("CardInfoList").GetComponent<CardListManager>().RemoveUnitInfo(myUnitNum);
         GameObject tomb;
