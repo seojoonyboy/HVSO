@@ -20,6 +20,8 @@ public class TemplateMenu : MonoBehaviour {
 
     private string previewID;
     public bool isHuman;
+
+    public string heroID;
     private void Awake() {
         Transform upper = transform.Find("Upper");
         Transform footer = transform.Find("Footer");
@@ -76,8 +78,9 @@ public class TemplateMenu : MonoBehaviour {
         previewID = (isHuman == true) ? "h10001" : "h10002";
     }
 
-    public void ChangeHeroID(string heroID) {
-        string id = heroID;
+    public void ChangeHeroID(string ID) {
+        string id = ID;
+        heroID = ID;
         ChangeHeroSkeleton(id);
         ChangeHeroData(id);
     }
