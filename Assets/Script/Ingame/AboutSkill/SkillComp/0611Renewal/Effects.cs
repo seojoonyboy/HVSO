@@ -160,7 +160,6 @@ namespace SkillModules {
                 GameObject target = (GameObject)data;
                 if(target.GetComponent<stun>() == null) {
                     target.GetComponent<PlaceMonster>().Invoke("InstanceAttack", 0.5f);
-                    target.GetComponent<PlaceMonster>().Invoke("CheckHP", 2.5f);
                 }
                 else {
                     Logger.Log("Stun이 걸려있어 공격을 할 수 없습니다!");
@@ -358,9 +357,7 @@ namespace SkillModules {
             while(true) {
                 await Task.Delay(20);
                 state = playMangement.socketHandler.gameState;
-                if(state.lastUse == null) continue;
-                if(state.lastUse.cardItem.itemId == itemId)
-                    break;
+                if(state.SearchUseItem(itemId)) break;
             }
         
             List<SocketFormat.Unit> socketList = state.map.allMonster;
@@ -452,9 +449,7 @@ namespace SkillModules {
             while(true) {
                 await Task.Delay(20);
                 state = playMangement.socketHandler.gameState;
-                if(state.lastUse == null) continue;
-                if(state.lastUse.cardItem.itemId == itemId)
-                    break;
+                if(state.SearchUseItem(itemId)) break;
             }
             
             var units = enemyObserver.GetAllFieldUnits();
@@ -614,9 +609,7 @@ namespace SkillModules {
             while(true) {
                 await Task.Delay(20);
                 state = playMangement.socketHandler.gameState;
-                if(state.lastUse == null) continue;
-                if(state.lastUse.cardItem.itemId == itemId)
-                    break;
+                if(state.SearchUseItem(itemId)) break;
             }
         
             List<SocketFormat.Unit> socketList = state.map.allMonster;
