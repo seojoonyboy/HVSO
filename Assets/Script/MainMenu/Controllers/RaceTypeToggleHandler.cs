@@ -132,20 +132,30 @@ public class RaceTypeToggleHandler : MonoBehaviour {
     }
 
     private void CreateBasicDeckList(BattleReadySceneController.RaceType type) {
-        List<Deck> basicDecks;
+        List<Deck> totalDecks = new List<Deck>();
         GameObject deckPrefab = humanDeckPrefab;
+        int pageNum = 0;
+        MaxPageNum = 0;
         AccountManager accountManager = AccountManager.Instance;
         switch (type) {
             case BattleReadySceneController.RaceType.HUMAN:
-                basicDecks = accountManager.humanDecks.basicDecks;
+                totalDecks.AddRange(accountManager.humanDecks.basicDecks);
+                totalDecks.AddRange(accountManager.humanDecks.customDecks);
                 deckPrefab = humanDeckPrefab;
+
+                pageNum = TotalDeckPages(ref totalDecks);
+                MaxPageNum = pageNum;
                 break;
             case BattleReadySceneController.RaceType.ORC:
-                basicDecks = accountManager.orcDecks.basicDecks;
+                totalDecks.AddRange(accountManager.orcDecks.basicDecks);
+                totalDecks.AddRange(accountManager.orcDecks.customDecks);
                 deckPrefab = orcDeckPrefab;
+
+                pageNum = TotalDeckPages(ref totalDecks);
+                MaxPageNum = pageNum;
                 break;
             default:
-                basicDecks = null;
+                totalDecks = null;
                 break;
         }
 
@@ -159,14 +169,10 @@ public class RaceTypeToggleHandler : MonoBehaviour {
         //    basicDecks.Add(deck);
         //}
         //end test code
+        if ((int)type != id) return;
+        if (totalDecks == null) return;
 
-        if (basicDecks == null) return;
-
-        var pageNum = TotalDeckPages(ref basicDecks);
-        MaxPageNum = pageNum;
-
-        //TODO Server와 연동
-
+        Logger.Log("Total Deck Count : " + totalDecks.Count);
         int item_index = 0;         //전체 Deck Index
         PageIndex = 0;
         controller.ButtonGlowEffect.SetActive(false);
@@ -177,25 +183,26 @@ public class RaceTypeToggleHandler : MonoBehaviour {
             GameObject page = Instantiate(deckGroupPrefab, deckParent);
             lastPage = page;
             for (int j = 0; j < DECK_SLOT_NUM_PER_PAGE; j++) {
-                if (item_index > basicDecks.Count - 1) break;
+                if (item_index > totalDecks.Count - 1) break;
 
                 //덱 프리팹 생성
                 GameObject _deck = Instantiate(deckPrefab, page.transform);
-                _deck.transform.Find("Deck/Name").GetComponent<TextMeshProUGUI>().text = basicDecks[item_index].name;
-                if(LeaderDeckId == basicDecks[item_index].id) {
+                _deck.transform.Find("Deck/Name").GetComponent<TextMeshProUGUI>().text = totalDecks[item_index].name;
+                if(LeaderDeckId == totalDecks[item_index].id) {
                     selectedDeck = _deck;
+                    controller.selectedDeck = totalDecks[item_index];
+
                     _deck.transform.Find("Outline").GetComponent<Image>().enabled = true;
                 }
 
-                _deck.transform.Find("Deck").GetComponent<StringIndex>().Id = basicDecks[item_index].id;
+                _deck.transform.Find("Deck").GetComponent<StringIndex>().Id = totalDecks[item_index].id;
 
+                int _index = item_index;
                 _deck.transform.Find("Deck").GetComponent<Button>().onClick.AddListener(() => {
-                    OnDeckSelected(_deck);
+                    OnDeckSelected(_deck, totalDecks[_index]);
                 });
-
                 item_index++;
             }
-
             if (pageIndex != i) page.SetActive(false);
         }
 
@@ -224,13 +231,13 @@ public class RaceTypeToggleHandler : MonoBehaviour {
 
     private void AddButtonListener() {
         var Button = deckParent.parent.transform.Find("PrevBtn").GetComponent<Button>();
-        Button.onClick.RemoveAllListeners();
+        Button.onClick.RemoveListener(GoToPrevPage);
         Button.onClick.AddListener(() => {
             GoToPrevPage();
         });
 
         Button = deckParent.parent.transform.Find("NextBtn").GetComponent<Button>();
-        Button.onClick.RemoveAllListeners();
+        Button.onClick.RemoveListener(GoToNextPage);
         Button.onClick.AddListener(() => {
             GoToNextPage();
         });
@@ -244,7 +251,7 @@ public class RaceTypeToggleHandler : MonoBehaviour {
         leaderDeck.transform.SetAsFirstSibling();
     }
 
-    public void OnDeckSelected(GameObject selectedDeck) {
+    public void OnDeckSelected(GameObject selectedDeck, Deck data) {
         if(this.selectedDeck != null) {
             this.selectedDeck.transform.Find("Outline").gameObject.SetActive(false);
             this.selectedDeck.transform.Find("Shadow").gameObject.SetActive(true);
@@ -254,6 +261,8 @@ public class RaceTypeToggleHandler : MonoBehaviour {
 
         LeaderDeckId = selectedDeck.transform.Find("Deck").GetComponent<StringIndex>().Id;
         this.selectedDeck = selectedDeck;
+        Logger.Log(data.GetType());
+        controller.selectedDeck = data;
     }
 
     private int TotalPortraitPages(ref List<Hero> heroes) {

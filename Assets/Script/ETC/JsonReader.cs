@@ -77,6 +77,7 @@ namespace dataModules {
         public string flavorText;
         public Hero _hero;
         public List<Item> items;
+        public bool deckValidate;
     }
 
     public class HeroCard : BaseCard {
