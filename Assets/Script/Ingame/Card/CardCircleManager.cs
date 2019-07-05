@@ -287,15 +287,18 @@ public class CardCircleManager : MonoBehaviour {
         Transform removeCard = transform.GetChild(index).GetChild(1);
         iTween.RotateTo(transform.GetChild(index).gameObject, iTween.Hash("rotation", new Vector3(0, 0, -4 * (cardNum - 1)), "islocal", true, "time", 0.2f));
         transform.GetChild(index).SetSiblingIndex(cardNum - 1);
-        removeCard.SetParent(cardStorage);
+        if (removeCard.name == "UnitCard") {
+            removeCard.SetParent(cardStorage.Find("UnitCards"));
+            clm.AddFeildUnitInfo(index, PlayMangement.instance.unitNum - 1);
+        }
+        else {
+            removeCard.SetParent(cardStorage.Find("MagicCards"));
+            clm.RemoveCardInfo(index);
+        }
         removeCard.gameObject.SetActive(false);
         removeCard.eulerAngles = Vector3.zero;
         removeCard.localPosition = Vector3.zero;
         cardList.RemoveAt(index);
-        if (removeCard.name == "UnitCard")
-            clm.AddFeildUnitInfo(index, PlayMangement.instance.unitNum - 1);
-        else
-            clm.RemoveCardInfo(index);
         cardNum--;
         handCardNum.text = cardNum.ToString();
         for (int i = index; i < cardNum; i++) {
