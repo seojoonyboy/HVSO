@@ -285,7 +285,16 @@ public partial class AccountManager {
     /// <summary>
     /// 덱 새로 생성 Server에 요청
     /// </summary>
-    public void RequestDeckMake() {
+    public void RequestDeckMake(NetworkManager.AddCustomDeckReqFormat format, OnRequestFinishedDelegate callback = null) {
+        if (string.IsNullOrEmpty(format.heroId)) {
+            Logger.Log("해당 커스텀 덱의 HeroId를 지정해 주세요");
+            return;
+        }
+        if (string.IsNullOrEmpty(format.name)) {
+            Logger.Log("해당 커스텀 덱의 이름을 지정해 주세요");
+            return;
+        }
+
         StringBuilder sb = new StringBuilder();
         sb
             .Append(networkManager.baseUrl)
@@ -297,21 +306,11 @@ public partial class AccountManager {
             new Uri(sb.ToString())
         );
         request.MethodType = BestHTTP.HTTPMethods.Post;
-
-        NetworkManager.AddCustomDeckReqFormat format = new NetworkManager.AddCustomDeckReqFormat();
-        format.name = "Deck114";
-        format.heroId = "h10001";
-        format.camp = "human";
-
-        List<NetworkManager.DeckItem> items = new List<NetworkManager.DeckItem>();
-        NetworkManager.DeckItem item = new NetworkManager.DeckItem();
-        item.cardId = "ac10001";
-        item.cardCount = 2;
-        items.Add(item);
-        format.items = items.ToArray();
+        format.items = format.items.ToArray();
 
         //var tmp = JsonConvert.SerializeObject(format);
         request.RawData = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(format));
+        if (callback != null) request.Callback = callback;
         networkManager.Request(request, OnReceived, "새로운 덱을 생성하는중...");
     }
 
@@ -345,7 +344,7 @@ public partial class AccountManager {
     /// 덱 수정 요청
     /// </summary>
     /// <param name="data">양식 작성</param>
-    public void RequestDeckModify(NetworkManager.ModifyDeckReqFormat data, int deckId) {
+    public void RequestDeckModify(NetworkManager.ModifyDeckReqFormat data, int deckId, OnRequestFinishedDelegate callback = null) {
         var pairs = data.parms;
 
         StringBuilder sb = new StringBuilder();
@@ -372,6 +371,7 @@ public partial class AccountManager {
                     break;
             }
         }
+        if (callback != null) request.Callback = callback;
         networkManager.Request(request, OnReceived, "덱 수정 요청을 전달하는중...");
     }
 

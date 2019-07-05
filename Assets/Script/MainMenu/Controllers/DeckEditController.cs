@@ -5,6 +5,8 @@ using UnityEngine.UI;
 using dataModules;
 using TMPro;
 using UnityEngine.EventSystems;
+using BestHTTP;
+using System;
 
 public class DeckEditController : MonoBehaviour
 {
@@ -21,14 +23,21 @@ public class DeckEditController : MonoBehaviour
     private GameObject deckNamePanel;
 
     public SelectCard selectCard;
-    
-
+    AccountManager accountManager;
+    List<NetworkManager.DeckItem> items;
+    int deckId = -1;
 
     private void Awake() {
         SetObject();
         //SetHeroData();
         //SettingCard();
         SetUnitCard();
+
+        accountManager = AccountManager.Instance;
+    }
+
+    void Start() {
+        items = new List<NetworkManager.DeckItem>();
     }
 
     private void Update() {
@@ -44,14 +53,12 @@ public class DeckEditController : MonoBehaviour
     }
     
     public void ConfirmButton() {
-
+        
     }
 
     public void CancelButton() {
 
     }
-    
-    
 
     private void SettingCard() {
         AccountManager accountManager = AccountManager.Instance;
@@ -184,9 +191,47 @@ public class DeckEditController : MonoBehaviour
 
         RefreshLine();
     }
-    
 
+    /// <summary>
+    /// Server에게 덱 수정 요청
+    /// </summary>
+    /// <param name="data"></param>
+    /// <param name="deckId"></param>
+    void RequestModifyDeck(NetworkManager.ModifyDeckReqFormat formatData, int deckId) {
+        var fields = new List<NetworkManager.ModifyDeckReqArgs>();
+        NetworkManager.ModifyDeckReqArgs field = new NetworkManager.ModifyDeckReqArgs();
 
+        field.fieldName = NetworkManager.ModifyDeckReqField.NAME;
+        field.value = "";   //덱 이름
+        fields.Add(field);
+
+        field = new NetworkManager.ModifyDeckReqArgs();
+        field.fieldName = NetworkManager.ModifyDeckReqField.ITEMS;  //추가한 카드정보들
+        field.value = items.ToArray();
+
+        accountManager.RequestDeckModify(formatData, deckId, OnDeckModifyFinished);
+    }
+
+    private void OnDeckModifyFinished(HTTPRequest originalRequest, HTTPResponse response) {
+        //덱 수정 요청 완료
+    }
+
+    /// <summary>
+    /// Server에게 덱 새로 추가 요청(커스텀 덱)
+    /// </summary>
+    void RequestNewDeck() {
+        NetworkManager.AddCustomDeckReqFormat formatData = new NetworkManager.AddCustomDeckReqFormat();
+
+        formatData.heroId = ""; //영웅 id
+        formatData.items = items.ToArray(); //추가한 카드 정보들
+        formatData.name = "";   //덱 이름
+
+        accountManager.RequestDeckMake(formatData, OnMakeNewDeckFinished);
+    }
+
+    private void OnMakeNewDeckFinished(HTTPRequest originalRequest, HTTPResponse response) {
+        //덱 새로 생성 완료
+    }
 }
 [System.Serializable]
 public class SelectCard {
