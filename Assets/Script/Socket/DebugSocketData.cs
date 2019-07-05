@@ -20,6 +20,8 @@ namespace SocketFormat {
             Hero orc = state.players.orc.hero;
             Logger.Log(isBattle ? "======= 싸운 후 State =======" : "======= 에너지 체크 후 State =======");
             Logger.Log(string.Format("{0}번째줄 맵 : {1}", line, mapData));
+            Logger.Log(string.Format("클라이언트 유닛 뒤: {0}, {1}", PlayMangement.instance.PlayerUnitsObserver.units[line,0], PlayMangement.instance.EnemyUnitsObserver.units[line,0]));
+            Logger.Log(string.Format("클라이언트 유닛 앞: {0}, {1}", PlayMangement.instance.PlayerUnitsObserver.units[line,1], PlayMangement.instance.EnemyUnitsObserver.units[line,1]));
             Logger.Log(string.Format("휴먼 체력 : {0}, 방어갯수 : {1}, 방어게이지 : {2}", human.currentHp, human.shieldCount, human.shieldGauge));
             Logger.Log(string.Format("오크 체력 : {0}, 방어갯수 : {1}, 방어게이지 : {2}", orc.currentHp, orc.shieldCount, orc.shieldGauge));
             Logger.Log("=======================================");
@@ -49,14 +51,15 @@ namespace SocketFormat {
             PlayMangement manager = PlayMangement.instance;
             bool isPlayerHuman = manager.player.isHuman;
             if(state.players.myPlayer(isPlayerHuman).hero.currentHp != manager.player.HP.Value) {
+                FoundMisMatchData("플레이어 영웅", "hp", manager.player.HP.Value);
                 manager.player.HP.Value = state.players.myPlayer(isPlayerHuman).hero.currentHp;
                 manager.player.shieldStack.Value = state.players.myPlayer(isPlayerHuman).hero.shieldGauge;
-                FoundMisMatchData("플레이어 영웅", "hp");
             }
             if(state.players.myPlayer(!isPlayerHuman).hero.currentHp != manager.enemyPlayer.HP.Value)  {
+                FoundMisMatchData("컴퓨터 영웅", "hp", manager.enemyPlayer.HP.Value);
                 manager.enemyPlayer.HP.Value = state.players.myPlayer(!isPlayerHuman).hero.currentHp;
                 manager.enemyPlayer.shieldStack.Value = state.players.myPlayer(!isPlayerHuman).hero.shieldGauge;
-                FoundMisMatchData("컴퓨터 영웅", "hp");
+                
             }
         }
 
@@ -97,23 +100,23 @@ namespace SocketFormat {
             bool isDiff = false;
             if(socketData.attack != monData.attack) {
                 isDiff = true;
-                FoundMisMatchData(monData.name, "attack");
+                FoundMisMatchData(monData.name, "attack", monData.attack);
                 monData.attack = socketData.attack.Value;
             }
             if(socketData.cost != monData.cost) {
                 isDiff = true;
-                FoundMisMatchData(monData.name, "cost");
+                FoundMisMatchData(monData.name, "cost", monData.cost);
                 monData.cost = socketData.cost;
             }
             if(socketData.currentHp != monData.currentHP) {
                 isDiff = true;
-                FoundMisMatchData(monData.name, "hp");
+                FoundMisMatchData(monData.name, "hp", monData.currentHP);
                 monData.currentHP = socketData.currentHp;
             }
             return isDiff;
         }
 
-        public static void FoundMisMatchData(string name, string status) {
+        public static void FoundMisMatchData(string name, string status, int value = 0) {
             string log = string.Empty;
             switch(status) {
                 case "not_found_reverse" : log = "유닛이 클라이언트에만 존재합니다.";
@@ -130,7 +133,7 @@ namespace SocketFormat {
                 log = "이 문제는 개발자가 코딩을 잘못한겁니다.";
                 break;
             }
-            Logger.LogError(string.Format("{0} : {1}", name, log));
+            Logger.LogError(string.Format("{0} : {1}, 클라 수치 : {2}", name, log,value));
         }
 
         public static void CheckMapPosition(GameState state) {

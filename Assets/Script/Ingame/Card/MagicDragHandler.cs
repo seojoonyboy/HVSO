@@ -68,7 +68,6 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
             return;
         }
 
-        Logger.Log("Dragable? " + PlayMangement.dragable);
 
         if (firstDraw) return;
         if (Input.touchCount > 1) return;

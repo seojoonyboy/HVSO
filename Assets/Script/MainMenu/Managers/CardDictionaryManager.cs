@@ -96,11 +96,13 @@ public class CardDictionaryManager : MonoBehaviour {
         dataModules.Hero hero;
         Transform heroCards;
         if (isHumanDictionary) {
+            heroInfoWindow.Find("HeroCards/OrcHeroCard").gameObject.SetActive(false);
             heroCards = heroInfoWindow.Find("HeroCards/HumanHeroCard");
             hero = AccountManager.Instance.humanDecks.heros[index];
             heroInfoWindow.Find("Ribon").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["hero_name_human_superrare"];
         }
         else {
+            heroInfoWindow.Find("HeroCards/HumanHeroCard").gameObject.SetActive(false);
             heroCards = heroInfoWindow.Find("HeroCards/OrcHeroCard");
             hero = AccountManager.Instance.orcDecks.heros[index];
             heroInfoWindow.Find("Ribon").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["hero_name_orc_superrare"];
@@ -120,5 +122,6 @@ public class CardDictionaryManager : MonoBehaviour {
         for(int i = 0; i < hero.heroCards.Count; i++) {
             heroCards.GetChild(i).GetComponent<MenuCardHandler>().DrawCard(hero.heroCards[i].cardId, isHumanDictionary);
         }
+        heroCards.gameObject.SetActive(true);
     }
 }
