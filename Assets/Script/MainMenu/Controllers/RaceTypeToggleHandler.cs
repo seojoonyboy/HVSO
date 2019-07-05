@@ -191,8 +191,6 @@ public class RaceTypeToggleHandler : MonoBehaviour {
                 if(LeaderDeckId == totalDecks[item_index].id) {
                     selectedDeck = _deck;
                     controller.selectedDeck = totalDecks[item_index];
-
-                    _deck.transform.Find("Outline").GetComponent<Image>().enabled = true;
                 }
 
                 _deck.transform.Find("Deck").GetComponent<StringIndex>().Id = totalDecks[item_index].id;
@@ -261,7 +259,7 @@ public class RaceTypeToggleHandler : MonoBehaviour {
 
         LeaderDeckId = selectedDeck.transform.Find("Deck").GetComponent<StringIndex>().Id;
         this.selectedDeck = selectedDeck;
-        Logger.Log(data.GetType());
+        selectedDeck.transform.Find("Deck/Twinkle").GetComponent<DeckClickSpine>().Click();
         controller.selectedDeck = data;
     }
 
