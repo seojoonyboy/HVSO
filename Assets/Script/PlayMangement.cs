@@ -639,13 +639,9 @@ public partial class PlayMangement : MonoBehaviour {
     }
 
     public IEnumerator HeroSpecialWait() {
-        Queue<SocketFormat.Player> data;
-        data = player.isHuman ? socketHandler.orcData : socketHandler.humanData;
-        if (data.Peek().shieldActivate) yield break;
-        yield return new WaitForSeconds(0.1f);
-        do {
+        while(heroShieldActive) {
             yield return new WaitForFixedUpdate();
-        } while (heroShieldActive);
+        }
     }
 
     public IEnumerator DrawSpecialCard(bool isHuman) {
