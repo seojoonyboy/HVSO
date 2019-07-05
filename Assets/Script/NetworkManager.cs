@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.Networking;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public partial class NetworkManager : Singleton<NetworkManager> {
     #if UNITY_EDITOR
@@ -23,37 +24,6 @@ public partial class NetworkManager : Singleton<NetworkManager> {
     public void request(string method, string url, string data, Callback callback, bool neeAuthor = true) {
         StartCoroutine(_request(method, url, data, callback, neeAuthor));
     }
-
-    //IEnumerator _request(string method, string url, WWWForm data, Callback callback, bool needAuthor = true){
-    //    UnityWebRequest _www;
-    //    switch(method){
-    //        case "POST":
-    //            _www = UnityWebRequest.Post(url, data);
-    //            break;
-    //        case "PUT":
-    //            _www = UnityWebRequest.Put(url,data.data);
-    //            _www.SetRequestHeader("Content-Type", "application/json");
-    //            break;
-    //        case "DELETE":
-    //            _www = UnityWebRequest.Delete(url);
-    //            break;
-    //        case "GET":
-    //        default:
-    //            _www = UnityWebRequest.Get(url);
-    //            break;
-    //    }
-    //    _www.timeout = 10;
-
-    //    if (needAuthor) {
-    //        //_www.SetRequestHeader("Authorization", "Token " + GameManager.Instance.userStore.userTokenId);
-    //        //_www.downloadHandler = new DownloadHandlerBuffer();
-    //    }
-
-    //    using(UnityWebRequest www = _www){
-    //        yield return www.SendWebRequest();
-    //        callback(new HttpResponse(www));
-    //    }
-    //}
 
     //overload
     IEnumerator _request(string method, string url, string data, Callback callback, bool needAuthor = true) {
@@ -160,13 +130,19 @@ public partial class NetworkManager {
 
     private void DequeueRequest() {
         dequeueing = true;
+        GameObject loadingModal = LoadingModal.instantiate();
+        Text loadingMsg = loadingModal.transform.Find("Panel/AdditionalMessage").GetComponent<Text>();
 
         RequestFormat selectedRequestFormat = requests.Dequeue();
         HTTPRequest request = selectedRequestFormat.request;
+        loadingMsg.text = selectedRequestFormat.loadingMessage;
 
         request.SetHeader("Content-Type", "application/json");
         request.Callback += selectedRequestFormat.callback;
-        request.Callback += (x, y) => { dequeueing = false; };
+        request.Callback += (x, y) => {
+            dequeueing = false;
+            Destroy(loadingModal);
+        };
         request.ConnectTimeout = timeout;
         request.Send();
     }
@@ -176,17 +152,18 @@ public partial class NetworkManager {
     /// </summary>
     /// <param name="request">HTTPRequest에 맞는 Format 작성</param>
     /// <param name="callback">요청 완료시 받을 Callback</param>
-    public void Request(HTTPRequest request, OnRequestFinishedDelegate callback) {
-        requests.Enqueue(new RequestFormat(request, callback));
+    public void Request(HTTPRequest request, OnRequestFinishedDelegate callback, string msg = null) {
+        requests.Enqueue(new RequestFormat(request, callback, msg));
     }
 
     public class RequestFormat {
         public HTTPRequest request;
         public OnRequestFinishedDelegate callback;
-
-        public RequestFormat(HTTPRequest request, OnRequestFinishedDelegate callback) {
+        public string loadingMessage;
+        public RequestFormat(HTTPRequest request, OnRequestFinishedDelegate callback, string msg = null) {
             this.request = request;
             this.callback = callback;
+            loadingMessage = msg;
         }
     }
 
