@@ -297,6 +297,7 @@ public partial class CardHandler : MonoBehaviour {
     }
 
     protected bool isMyTurn(bool isMagic) {
+        if(PlayMangement.instance.heroShieldActive) return false;
         bool isHuman = PlayMangement.instance.player.isHuman;
         string currentTurn = Variables.Scene(
                 UnityEngine.SceneManagement.SceneManager.GetActiveScene()
