@@ -70,6 +70,8 @@ public class DeckEditController : MonoBehaviour
 
     public void CancelButton() {
         setCardList = null;
+        gameObject.SetActive(false);
+        templateMenu.transform.gameObject.SetActive(false);
     }
     
 
