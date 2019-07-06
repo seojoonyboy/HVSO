@@ -211,7 +211,7 @@ public class DeckEditController : MonoBehaviour
 
 
     /// <summary>
-    /// Server¿¡°Ô µ¦ ¼öÁ¤ ¿äÃ»
+    /// Serverì—ê²Œ ë± ìˆ˜ì • ìš”ì²­
     /// </summary>
     /// <param name="data"></param>
     /// <param name="deckId"></param>
@@ -228,26 +228,26 @@ public class DeckEditController : MonoBehaviour
         }
 
         field.fieldName = NetworkManager.ModifyDeckReqField.NAME;
-        field.value = deckNamePanel.transform.Find("InputField").Find("Text").GetComponent<Text>().text;   //µ¦ ÀÌ¸§
+        field.value = deckNamePanel.transform.Find("InputField").Find("Text").GetComponent<Text>().text;   //ë± ì´ë¦„
         fields.Add(field);
 
         field = new NetworkManager.ModifyDeckReqArgs();
-        field.fieldName = NetworkManager.ModifyDeckReqField.ITEMS;  //Ãß°¡ÇÑ Ä«µåÁ¤º¸µé
+        field.fieldName = NetworkManager.ModifyDeckReqField.ITEMS;  //ì¶”ê°€í•œ ì¹´ë“œì •ë³´ë“¤
         field.value = items.ToArray();
 
         AccountManager.Instance.RequestDeckModify(formatData, deckId, OnDeckModifyFinished);
     }
 
     private void OnDeckModifyFinished(HTTPRequest originalRequest, HTTPResponse response) {
-        //µ¦ ¼öÁ¤ ¿äÃ» ¿Ï·á
+        //ë± ìˆ˜ì • ìš”ì²­ ì™„ë£Œ
         if (response.StatusCode == 200) {
-            Logger.Log("µ¦ ÆíÁı¿Ï·á ¿Ï·á");
-
+            Logger.Log("ë± í¸ì§‘ì™„ë£Œ ì™„ë£Œ");
+            gameObject.SetActive(false);
         }
     }
 
     /// <summary>
-    /// Server¿¡°Ô µ¦ »õ·Î Ãß°¡ ¿äÃ»(Ä¿½ºÅÒ µ¦)
+    /// Serverì—ê²Œ ë± ìƒˆë¡œ ì¶”ê°€ ìš”ì²­(ì»¤ìŠ¤í…€ ë±)
     /// </summary>
     void RequestNewDeck() {
         NetworkManager.AddCustomDeckReqFormat formatData = new NetworkManager.AddCustomDeckReqFormat();
@@ -262,18 +262,18 @@ public class DeckEditController : MonoBehaviour
 
 
 
-        formatData.heroId = heroID; //¿µ¿õ id
-        formatData.items = items.ToArray(); //Ãß°¡ÇÑ Ä«µå Á¤º¸µé
-        formatData.name = deckNamePanel.transform.Find("InputField").Find("Text").GetComponent<Text>().text;   //µ¦ ÀÌ¸§
+        formatData.heroId = heroID; //ì˜ì›… id
+        formatData.items = items.ToArray(); //ì¶”ê°€í•œ ì¹´ë“œ ì •ë³´ë“¤
+        formatData.name = deckNamePanel.transform.Find("InputField").Find("Text").GetComponent<Text>().text;   //ë± ì´ë¦„
 
         AccountManager.Instance.RequestDeckMake(formatData, OnMakeNewDeckFinished);
     }
 
     private void OnMakeNewDeckFinished(HTTPRequest originalRequest, HTTPResponse response) {
-        //µ¦ »õ·Î »ı¼º ¿Ï·á
+        //ë± ìƒˆë¡œ ìƒì„± ì™„ë£Œ
         if (response.StatusCode == 200) {
-            Logger.Log("µ¦ »ı¼º ¿Ï·á");
-
+            Logger.Log("ë± ìƒì„± ì™„ë£Œ");
+            gameObject.SetActive(false);
         }
 
     }
