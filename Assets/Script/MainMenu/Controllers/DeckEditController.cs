@@ -216,6 +216,7 @@ public class DeckEditController : MonoBehaviour
             ownCardLayout.transform.GetChild(i).gameObject.SetActive(false);
             UnReleaseCardLayout.transform.GetChild(i).gameObject.SetActive(false);
             settingLayout.transform.GetChild(i).gameObject.SetActive(false);
+            settingLayout.transform.GetChild(i).GetComponent<EditCardHandler>().SETNUM = 0;
         }
         int ownCount = 0;
         int notOwnCount = 0;
@@ -289,6 +290,7 @@ public class DeckEditController : MonoBehaviour
             ownCardLayout.transform.GetChild(i).gameObject.SetActive(false);
             UnReleaseCardLayout.transform.GetChild(i).gameObject.SetActive(false);
             settingLayout.transform.GetChild(i).gameObject.SetActive(false);
+            settingLayout.transform.GetChild(i).GetComponent<EditCardHandler>().SETNUM = 0;
         }
         int ownCount = 0;
         int notOwnCount = 0;
