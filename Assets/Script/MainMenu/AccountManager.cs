@@ -367,11 +367,11 @@ public partial class AccountManager {
         foreach (NetworkManager.ModifyDeckReqArgs pair in pairs) {
             switch (pair.fieldName) {
                 case NetworkManager.ModifyDeckReqField.NAME:
-                    json.Add("name", (JToken)pair.value);
+                    json["name"] = new JValue(pair.value);
                     break;
                 case NetworkManager.ModifyDeckReqField.ITEMS:
                     var items = (NetworkManager.DeckItem[])pair.value;
-                    json.Add("items", JObject.Parse(JsonConvert.SerializeObject(items)));
+                    json.Add("items", JToken.Parse(JsonConvert.SerializeObject(items)));
                     break;
             }
         }
