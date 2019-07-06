@@ -81,7 +81,7 @@ public class PlayerController : MonoBehaviour
             buttonParticle.SetActive(false);
         }
         else {
-            playerUI.transform.Find("EnemyNickname").GetComponent<TMPro.TextMeshProUGUI>().text = 
+            playerUI.transform.Find("EnemyNickname").GetComponent<Text>().text = 
                 PlayMangement.instance.socketHandler.gameState.players.enemyPlayer(isHuman).user.nickName;
         }
 

@@ -5,32 +5,53 @@ using UnityEngine.UI;
 using Spine;
 using Spine.Unity;
 
-public class EditCardHandler : MonoBehaviour, IPointerDownHandler,  IPointerClickHandler
-{
+public class EditCardHandler : MonoBehaviour, IPointerDownHandler, IPointerClickHandler {
     public string cardID;
     public DeckEditController deckEditController;
 
     [SerializeField] MenuCardInfo menuCardInfo;
-    CardDataPackage cardDataPackage;
     dataModules.CollectionCard cardData;
-    GameObject skeleton;
     public GameObject beforeObject;
 
     public bool clicking = false;
     public float time = 0f;
     bool isHuman;
     public int myIndex;
+    private int setNum;
+    private int haveNum;
 
-    private void Update() {        
-        if(clicking == true) {
-            time += Time.deltaTime; 
+    public int SETNUM {
+        get { return setNum; }
+        set { setNum = value; }
+    }
 
-            if(time > 1f) {
+    public int HAVENUM {
+        get { return haveNum; }
+        set { haveNum = value; }
+    }
+
+    private void Update() {
+        if (clicking == true) {
+            time += Time.deltaTime;
+
+            if (time > 1f) {
                 clicking = false;
                 OpenCardInfo();
                 time = 0;
             }
         }
+    }
+
+    public void SetHaveNum() {
+        transform.Find("HaveNum/Value").GetComponent<TMPro.TextMeshProUGUI>().text = "x" + haveNum.ToString();
+    }
+
+    public void SetSetNum() {
+        if(setNum > 0)
+            transform.Find("HaveNum").gameObject.SetActive(true);
+        else
+            transform.Find("HaveNum").gameObject.SetActive(false);
+        transform.Find("HaveNum/Value").GetComponent<TMPro.TextMeshProUGUI>().text = "x" + setNum.ToString();
     }
 
     public void CardSet() {
@@ -63,34 +84,28 @@ public class EditCardHandler : MonoBehaviour, IPointerDownHandler,  IPointerClic
     public void DrawCard(string id, bool isHuman) {
         this.isHuman = isHuman;
         cardID = id;
-        cardDataPackage = AccountManager.Instance.cardPackage;
-        if (cardDataPackage.data.ContainsKey(cardID)) {
-            cardData = AccountManager.Instance.allCardsDic[cardID];
-            if (cardData.rarelity == "legend")
-                transform.SetAsFirstSibling();
-            Sprite portraitImage = null;
-            if (AccountManager.Instance.resource.cardPortraite.ContainsKey(cardID)) portraitImage = AccountManager.Instance.resource.cardPortraite[cardID];
-            else portraitImage = AccountManager.Instance.resource.cardPortraite["default"];
+        cardData = AccountManager.Instance.allCardsDic[cardID];
+        if (cardData.rarelity == "legend")
+            transform.SetAsFirstSibling();
+        Sprite portraitImage = null;
+        if (AccountManager.Instance.resource.cardPortraite.ContainsKey(cardID)) portraitImage = AccountManager.Instance.resource.cardPortraite[cardID];
+        else portraitImage = AccountManager.Instance.resource.cardPortraite["default"];
 
-            transform.Find("Portrait").GetComponent<Image>().sprite = portraitImage;
-            if (!cardData.isHeroCard) {
-                transform.Find("BackGround").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground[cardData.type + "_" + cardData.rarelity];
-                transform.Find("Name").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground["name_" + cardData.rarelity];
-            }
-            else {
-                string race;
-                if (isHuman)
-                    race = "_human";
-                else
-                    race = "_orc";
-                transform.Find("BackGround").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground["hero_" + cardData.rarelity + race];
-                transform.Find("Name").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground["hero_" + cardData.rarelity + race + "_name"];
-            }
-
-            if (AccountManager.Instance.resource.cardSkeleton.ContainsKey("cardID")) skeleton = AccountManager.Instance.resource.cardSkeleton[cardID];
+        transform.Find("Portrait").GetComponent<Image>().sprite = portraitImage;
+        if (!cardData.isHeroCard) {
+            transform.Find("BackGround").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground[cardData.type + "_" + cardData.rarelity];
+            transform.Find("Name").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground["name_" + cardData.rarelity];
         }
-        else
-            Logger.Log("NoData");
+        else {
+            string race;
+            if (isHuman)
+                race = "_human";
+            else
+                race = "_orc";
+            transform.Find("BackGround").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground["hero_" + cardData.rarelity + race];
+            transform.Find("Name").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground["hero_" + cardData.rarelity + race + "_name"];
+        }
+
         if (cardData.type == "unit") {
             Logger.Log(cardData.name);
             transform.Find("Health/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.hp.ToString();
@@ -115,5 +130,13 @@ public class EditCardHandler : MonoBehaviour, IPointerDownHandler,  IPointerClic
         transform.Find("Cost/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.cost.ToString();
         transform.Find("Class").GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[cardData.cardClasses[0]];
         transform.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.name;
+        if (haveNum > 0 || setNum > 0) {
+            transform.Find("HaveNum").gameObject.SetActive(true);
+            transform.Find("HaveNum/Value").GetComponent<TMPro.TextMeshProUGUI>().text = "x" + haveNum.ToString();
+        }
+        else {
+            transform.Find("Disabled").gameObject.SetActive(true);
+            transform.Find("HaveNum").gameObject.SetActive(false);
+        }
     }
 }
