@@ -133,7 +133,8 @@ public class EditCardHandler : MonoBehaviour, IPointerDownHandler, IPointerClick
         transform.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.name;
         if (haveNum > 0 || setNum > 0) {
             transform.Find("HaveNum").gameObject.SetActive(true);
-            if(haveNum > 0)
+            transform.Find("Disabled").gameObject.SetActive(false);
+            if (haveNum > 0)
                 transform.Find("HaveNum/Value").GetComponent<TMPro.TextMeshProUGUI>().text = "x" + haveNum.ToString();
             if(setNum > 0)
                 transform.Find("HaveNum/Value").GetComponent<TMPro.TextMeshProUGUI>().text = "x" + setNum.ToString();
