@@ -814,7 +814,7 @@ public partial class PlayMangement {
         bool race = player.isHuman;
         SocketFormat.Card cardData = socketHandler.gameState.players.myPlayer(race).newCard;
         player.cdpm.AddCard(null, cardData);
-
+        if(CountEnemyCard() >= 10) return;
         GameObject enemyCard;
         if (enemyPlayer.isHuman)
             enemyCard = Instantiate(Resources.Load("Prefabs/HumanBackCard") as GameObject, enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(CountEnemyCard()));
