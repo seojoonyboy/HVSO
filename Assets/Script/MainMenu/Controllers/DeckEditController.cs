@@ -174,12 +174,14 @@ public class DeckEditController : MonoBehaviour
     }
     
     public void SetDeckEdit(string heroId, bool isHuman) {
+        editing = false;
         setCardList = new Dictionary<string, GameObject>();
         setCardNum = 0;
         haveCardNum = 0;
         Transform heroCards;
         Hero heroData = null;
         this.isHuman = isHuman;
+        deckNamePanel.transform.Find("NameTemplate").GetComponent<InputField>().text = "";
         transform.Find("HeroPortrait").GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[heroId + "_button"];
         if (isHuman) {
             heroCards = transform.Find("HeroCards/Human");
