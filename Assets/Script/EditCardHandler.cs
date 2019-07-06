@@ -9,7 +9,6 @@ public class EditCardHandler : MonoBehaviour, IPointerDownHandler,  IPointerClic
 {
     public string cardID;
     public DeckEditController deckEditController;
-    public SelectCard cardgroup;
 
     [SerializeField] MenuCardInfo menuCardInfo;
     CardDataPackage cardDataPackage;
