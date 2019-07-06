@@ -18,6 +18,8 @@ public class TemplateMenu : MonoBehaviour {
     [SerializeField]
     private GameObject deckLayout;
 
+    [SerializeField] Canvas deckSettingCanves;
+
     private string previewID;
     public bool isHuman;
 
@@ -115,7 +117,8 @@ public class TemplateMenu : MonoBehaviour {
     }
 
     public void StartEditBtn() {
-
+        deckSettingCanves.GetComponent<DeckEditController>().SetDeckEdit(heroID, isHuman);
+        deckSettingCanves.gameObject.SetActive(true);
     }
 
 

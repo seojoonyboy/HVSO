@@ -201,6 +201,8 @@ public partial class PlayMangement : MonoBehaviour {
                     EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.FIELD_CHANGED, null, null);
                 }
                 else {
+                    if(history.cardItem.id.CompareTo("ac10023") == 0)
+                        socketHandler.r_returnState = state;
                     GameObject summonedMagic = SummonMagic(history);
                     summonedMagic.GetComponent<MagicDragHandler>().isPlayer = false;
                     yield return MagicActivate(summonedMagic, history);
@@ -553,16 +555,9 @@ public partial class PlayMangement : MonoBehaviour {
             yield return WaitSocketData(socketHandler.mapClearList, line, false);
             yield return new WaitForSeconds(0.2f);
         }
-        ResetCount(line);
         battleLineEffect.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.6f);
         battleLineEffect.gameObject.SetActive(false);
         EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.LINE_BATTLE_FINISHED, this);
-    }
-
-    void ResetCount(int line) {
-        var list = playerUnitsObserver.GetAllFieldUnits(line);
-        list.AddRange(enemyUnitsObserver.GetAllFieldUnits(line));
-        list.ForEach(x => x.GetComponent<PlaceMonster>().atkCount = 0);
     }
 
     IEnumerator whoFirstBattle(PlayerController first, PlayerController second, FieldUnitsObserver firstObserver, int line) {
@@ -572,21 +567,21 @@ public partial class PlayMangement : MonoBehaviour {
             shieldDequeue();
         }
         else {
-            yield return GetBattle(first, line);
+            yield return GetBattle(first, line, false);
         }
-        yield return GetBattle(second, line);
+        yield return GetBattle(second, line, false);
         CheckUnitStatus(line);
         yield return WaitSocketData(socketHandler.mapClearList, line, false);
-        yield return GetBattle(first, line);
-        yield return GetBattle(second, line);
+        yield return GetBattle(first, line, true);
+        yield return GetBattle(second, line, true);
         CheckUnitStatus(line);
         yield return WaitSocketData(socketHandler.mapClearList, line, false);
     }
 
-    IEnumerator GetBattle(PlayerController player, int line) {
+    IEnumerator GetBattle(PlayerController player, int line, bool secondAttack) {
         yield return WaitSocketData(socketHandler.lineBattleList, line, true);
-        yield return battleUnit(player.backLine, line);
-        yield return battleUnit(player.frontLine, line);
+        yield return battleUnit(player.backLine, line, secondAttack);
+        yield return battleUnit(player.frontLine, line, secondAttack);
         yield return HeroSpecialWait();
         shieldDequeue();
         yield return null;
@@ -607,11 +602,11 @@ public partial class PlayMangement : MonoBehaviour {
         monster.CheckDebuff();
     }
 
-    IEnumerator battleUnit(GameObject lineObject, int line) {
+    IEnumerator battleUnit(GameObject lineObject, int line, bool secondAttack) {
         if (!isGame) yield break;
         if (lineObject.transform.GetChild(line).childCount == 0) yield break;
         PlaceMonster placeMonster = lineObject.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>();
-        if (placeMonster.atkCount >= placeMonster.maxAtkCount) yield break;
+        if (placeMonster.maxAtkCount == 1 && secondAttack) yield break;
         if (placeMonster.unit.attack <= 0) yield break;
         placeMonster.GetTarget();
         yield return new WaitForSeconds(1.1f + placeMonster.atkTime);
@@ -683,6 +678,8 @@ public partial class PlayMangement : MonoBehaviour {
                 IngameNotice.instance.CloseNotice();
                 SocketFormat.GameState state = socketHandler.getHistory();
                 SocketFormat.PlayHistory history = state.lastUse;
+                if(history.cardItem.id.CompareTo("ac10023") == 0)
+                    socketHandler.r_returnState = state;
                 if (history != null) {
                     GameObject summonedMagic = SummonMagic(history);
                     summonedMagic.GetComponent<MagicDragHandler>().isPlayer = false;
@@ -817,7 +814,7 @@ public partial class PlayMangement {
         bool race = player.isHuman;
         SocketFormat.Card cardData = socketHandler.gameState.players.myPlayer(race).newCard;
         player.cdpm.AddCard(null, cardData);
-
+        if(CountEnemyCard() >= 10) return;
         GameObject enemyCard;
         if (enemyPlayer.isHuman)
             enemyCard = Instantiate(Resources.Load("Prefabs/HumanBackCard") as GameObject, enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(CountEnemyCard()));

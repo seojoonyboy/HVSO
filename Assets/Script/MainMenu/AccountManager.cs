@@ -22,6 +22,7 @@ public partial class AccountManager : Singleton<AccountManager> {
     public HumanDecks humanDecks;
     public OrcDecks orcDecks;
     public List<CollectionCard> allCards { get; private set; }
+    public Dictionary<string, CollectionCard> allCardsDic { get; private set; }
 
     public Dictionary<string, HeroInventory> myHeroInventories { get; private set; }
     public CardDataPackage cardPackage;
@@ -386,6 +387,24 @@ public partial class AccountManager {
         RequestDeckModify(form, 5);
     }
 
+    public void AddDummyCustomDeck() {
+        NetworkManager.AddCustomDeckReqFormat formatData = new NetworkManager.AddCustomDeckReqFormat();
+        formatData.name = "Test1000";
+        formatData.heroId = "h10001";   //수비 대장 제로드
+        formatData.camp = "human";
+        List<NetworkManager.DeckItem> items = new List<NetworkManager.DeckItem>();
+        var deck = humanDecks.basicDecks[0];
+        foreach (Item item in deck.items) {
+            NetworkManager.DeckItem _deckItem = new NetworkManager.DeckItem();
+            _deckItem.cardCount = item.cardCount;
+            _deckItem.cardId = item.cardId;
+            items.Add(_deckItem);
+        }
+        formatData.items = items.ToArray();
+
+        RequestDeckMake(formatData);
+    }
+
     private void LoadAllCards() {
         StringBuilder sb = new StringBuilder();
         sb
@@ -403,6 +422,7 @@ public partial class AccountManager {
     private void OnReceivedLoadAllCards(HTTPRequest originalRequest, HTTPResponse response) {
         var result = dataModules.JsonReader.Read<List<CollectionCard>>(response.DataAsText);
         allCards = result;
+        allCardsDic = allCards.ToDictionary(x => x.id, x => x);
         Logger.Log("!!");
     }
 }

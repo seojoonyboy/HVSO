@@ -487,6 +487,7 @@ public partial class BattleConnector : MonoBehaviour {
     public Queue<SocketFormat.Player> orcData = new Queue<SocketFormat.Player>();
     public Queue <ShieldCharge> shieldChargeQueue = new Queue<ShieldCharge>();
     public QueueSocketList<int> unitSkillList = new QueueSocketList<int>();
+    public GameState r_returnState;
 
     public IEnumerator WaitGetCard() {
         if(!getNewCard) IngameNotice.instance.SetNotice("서버로부터 카드를 받고 있습니다");

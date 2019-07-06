@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class MenuCardInfo : MonoBehaviour
 {
-    public void SetCardInfo(CardData data, bool isHuman) {
-        if (!data.hero_chk) {
+    public void SetCardInfo(dataModules.CollectionCard data, bool isHuman) {
+        if (!data.isHeroCard) {
             transform.Find("Frame").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["frame_" + data.rarelity];
             transform.Find("Name").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["name_" + data.rarelity];
             transform.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.name;
@@ -23,7 +23,7 @@ public class MenuCardInfo : MonoBehaviour
             transform.Find("Dialog").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["hero_dialog_" + race + data.rarelity];
         }
         transform.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.name;
-        if (AccountManager.Instance.resource.infoPortraite.ContainsKey(data.cardId)) transform.Find("Portrait").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoPortraite[data.cardId];
+        if (AccountManager.Instance.resource.infoPortraite.ContainsKey(data.id)) transform.Find("Portrait").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoPortraite[data.id];
         if (data.skills.Length != 0) {
             transform.Find("Dialog/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.skills[0].desc;
         }
@@ -45,8 +45,8 @@ public class MenuCardInfo : MonoBehaviour
             transform.Find("Attack").gameObject.SetActive(false);
 
         transform.Find("Cost/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.cost.ToString();
-        transform.Find("Class").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["class_" + data.class_1];
-        transform.Find("Class/Icon").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["class_icon_" + data.class_1];
+        transform.Find("Class").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["class_" + data.cardClasses[0]];
+        transform.Find("Class/Icon").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["class_icon_" + data.cardClasses[0]];
         transform.Find("Class/Icon").GetComponent<Image>().SetNativeSize();
 
         transform.Find("SkillIcon1").gameObject.SetActive(false);

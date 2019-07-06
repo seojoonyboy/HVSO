@@ -441,18 +441,22 @@ namespace SkillModules {
         private async void ReturnUnit(bool isPlayer) {
             PlayMangement playMangement = PlayMangement.instance;
             SocketFormat.GameState state = playMangement.socketHandler.gameState;
-            int itemId;
+            if(isPlayer) {
+                int itemId;
 
-            if(skillHandler.myObject.GetComponent<PlaceMonster>() != null) 
-                itemId = skillHandler.myObject.GetComponent<PlaceMonster>().itemId;
-            else 
-                itemId = skillHandler.myObject.GetComponent<MagicDragHandler>().itemID;
-            while(true) {
-                await Task.Delay(20);
-                state = playMangement.socketHandler.gameState;
-                if(state.SearchUseItem(itemId)) break;
+                if(skillHandler.myObject.GetComponent<PlaceMonster>() != null) 
+                    itemId = skillHandler.myObject.GetComponent<PlaceMonster>().itemId;
+                else 
+                    itemId = skillHandler.myObject.GetComponent<MagicDragHandler>().itemID;
+                while(true) {
+                    await Task.Delay(20);
+                    state = playMangement.socketHandler.gameState;
+                    if(state.SearchUseItem(itemId)) break;
+                }
             }
-            
+            else {
+                state = playMangement.socketHandler.r_returnState;
+            }
             var units = enemyObserver.GetAllFieldUnits();
             
             List<SocketFormat.Unit> socketList = state.map.allMonster;
