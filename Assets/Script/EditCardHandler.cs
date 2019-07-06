@@ -91,7 +91,7 @@ public class EditCardHandler : MonoBehaviour, IPointerDownHandler, IPointerClick
         Sprite portraitImage = null;
         if (AccountManager.Instance.resource.cardPortraite.ContainsKey(cardID)) portraitImage = AccountManager.Instance.resource.cardPortraite[cardID];
         else portraitImage = AccountManager.Instance.resource.cardPortraite["default"];
-
+        transform.Find("SelectedPanel").gameObject.SetActive(false);
         transform.Find("Portrait").GetComponent<Image>().sprite = portraitImage;
         if (!cardData.isHeroCard) {
             transform.Find("BackGround").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground[cardData.type + "_" + cardData.rarelity];

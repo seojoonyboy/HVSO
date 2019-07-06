@@ -42,6 +42,23 @@ public class DeckEditController : MonoBehaviour
         SetObject();
     }
 
+    private void InitCanvas() {
+        editing = false;
+        setCardList = new Dictionary<string, GameObject>();
+        setCardNum = 0;
+        haveCardNum = 0;
+        dontHaveCard = 0;
+        for (int i = 0; i < 40; i++) {
+            ownCardLayout.transform.GetChild(i).gameObject.SetActive(false);
+            UnReleaseCardLayout.transform.GetChild(i).gameObject.SetActive(false);
+            settingLayout.transform.GetChild(i).gameObject.SetActive(false);
+            settingLayout.transform.GetChild(i).GetComponent<EditCardHandler>().SETNUM = 0;
+        }
+        selectCard = null;
+        transform.Find("SetDeckLayout").Find("glow").gameObject.SetActive(false);
+        transform.Find("ExceptButton").gameObject.SetActive(true);
+    }
+
     public void ConfirmButton() {
 
         if(editing == true) {
@@ -151,7 +168,7 @@ public class DeckEditController : MonoBehaviour
     }
 
 
-    private void RefreshLine() {
+    public void RefreshLine() {
         setCardText.text = setCardNum.ToString() + "/40";
         haveCardText.text = haveCardNum.ToString() + "/" + maxHaveCard.ToString();
         Canvas.ForceUpdateCanvases();
@@ -176,11 +193,7 @@ public class DeckEditController : MonoBehaviour
     }
     
     public void SetDeckEdit(string heroId, bool isHuman) {
-        editing = false;
-        setCardList = new Dictionary<string, GameObject>();
-        setCardNum = 0;
-        haveCardNum = 0;
-        dontHaveCard = 0;
+        InitCanvas();
         Transform heroCards;
         Hero heroData = null;
         this.isHuman = isHuman;
@@ -213,12 +226,6 @@ public class DeckEditController : MonoBehaviour
     }
 
     private void SetDeckEditCards(bool isHuman) {
-        for(int i = 0; i < 40; i++) {
-            ownCardLayout.transform.GetChild(i).gameObject.SetActive(false);
-            UnReleaseCardLayout.transform.GetChild(i).gameObject.SetActive(false);
-            settingLayout.transform.GetChild(i).gameObject.SetActive(false);
-            settingLayout.transform.GetChild(i).GetComponent<EditCardHandler>().SETNUM = 0;
-        }
         int ownCount = 0;
         int notOwnCount = 0;
         CardDataPackage myCards = AccountManager.Instance.cardPackage;
@@ -248,11 +255,7 @@ public class DeckEditController : MonoBehaviour
     }
 
     public void SetCustumDeckEdit(dataModules.Deck lodedDeck) {
-        editing = true;
-        setCardList = new Dictionary<string, GameObject>();
-        setCardNum = 0;
-        haveCardNum = 0;
-        dontHaveCard = 0;
+        InitCanvas();
         Transform heroCards;
         Hero heroData = null;
         deckID = int.Parse(lodedDeck.id);
@@ -287,16 +290,10 @@ public class DeckEditController : MonoBehaviour
     }
 
     private void SetCustomDeckEditCards(dataModules.Deck lodedDeck) {
-        for (int i = 0; i < 40; i++) {
-            ownCardLayout.transform.GetChild(i).gameObject.SetActive(false);
-            UnReleaseCardLayout.transform.GetChild(i).gameObject.SetActive(false);
-            settingLayout.transform.GetChild(i).gameObject.SetActive(false);
-            settingLayout.transform.GetChild(i).GetComponent<EditCardHandler>().SETNUM = 0;
-        }
         int ownCount = 0;
         int notOwnCount = 0;
-        CardDataPackage myCards = AccountManager.Instance.cardPackage;
         int settedCardNum = 0;
+        CardDataPackage myCards = AccountManager.Instance.cardPackage;
         foreach(dataModules.Item card in lodedDeck.items) {
             EditCardHandler settedCard = settingLayout.transform.GetChild(settedCardNum).GetComponent<EditCardHandler>();
             settedCard.SETNUM = card.cardCount;

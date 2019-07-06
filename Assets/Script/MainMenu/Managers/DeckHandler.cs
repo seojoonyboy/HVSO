@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using BestHTTP;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -56,12 +58,13 @@ public class DeckHandler : MonoBehaviour
         if(customDeck != null)
             deckEditCanvas.SetCustumDeckEdit(customDeck);
         deckEditCanvas.gameObject.SetActive(true);
+        deckEditCanvas.GetComponent<DeckEditController>().RefreshLine();
         transform.Find("DeckInfo/EditButtons").gameObject.SetActive(false);
     }
 
     public void DeleteButton() {
         if (AccountManager.Instance == null) return;
-        AccountManager.Instance.RequestDeckRemove(int.Parse(DECKID));
+        AccountManager.Instance.RequestDeckRemove(int.Parse(DECKID), OnRemoved);
         transform.Find("DeckInfo/EditButtons").gameObject.SetActive(false);
         Transform deckInfo = transform.Find("DeckInfo");
         deckInfo.gameObject.SetActive(false);
@@ -69,5 +72,9 @@ public class DeckHandler : MonoBehaviour
         gameObject.SetActive(false);
         if (transform.parent.GetChild(2).gameObject.activeSelf && transform.parent.GetChild(2).Find("DeckInfo").gameObject.activeSelf)
             gameObject.SetActive(true);
+    }
+
+    private void OnRemoved(HTTPRequest originalRequest, HTTPResponse response) {
+        if (response.StatusCode == 200) deckEditCanvas.transform.parent.Find("MainMenuController").GetComponent<MenuSceneController>().decksLoader.Load();
     }
 }
