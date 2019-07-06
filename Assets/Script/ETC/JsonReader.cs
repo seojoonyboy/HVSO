@@ -12,6 +12,7 @@ namespace dataModules {
 
     public class CardInventory : BaseCard {
         public Skill[] skills;
+        public int cardCount;
         public string flavorText;
     }
 

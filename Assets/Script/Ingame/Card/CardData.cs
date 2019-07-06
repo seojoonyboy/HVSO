@@ -15,6 +15,7 @@ public class CardData {
     public int cost;
     public int? attack;
     public int? hp;
+    public int cardCount;
     public string attackRange;
     public bool hero_chk;
     public dataModules.Skill[] skills;
