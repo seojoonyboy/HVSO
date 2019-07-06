@@ -53,7 +53,7 @@ public class DeckSettingManager : MonoBehaviour
             }
         }
         if (humanCustomDecks > 0) {
-            for (int i = 0; i < humanBasicDecks; i++) {
+            for (int i = 0; i < humanCustomDecks; i++) {
                 humanDeckList.GetChild(humanDeckCount).gameObject.SetActive(true);
                 humanDeckList.GetChild(humanDeckCount).GetComponent<DeckHandler>().SetDeck(AccountManager.Instance.humanDecks.customDecks[i]);
                 humanDeckCount++;
