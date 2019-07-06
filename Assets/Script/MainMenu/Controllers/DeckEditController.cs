@@ -42,13 +42,6 @@ public class DeckEditController : MonoBehaviour
         SetObject();
     }
 
-    public void NewDeck() {
-
-    }
-
-    public void LoadEditDeck() {
-    }
-    
     public void ConfirmButton() {
         switch (editing) {
             case true:
@@ -176,25 +169,6 @@ public class DeckEditController : MonoBehaviour
         transform.Find("CancelButton").GetComponent<Button>().onClick.AddListener(delegate () { CancelButton(); });
         gameObject.SetActive(false);
     }
-
-    
-    public void SetUnitCard() {
-        foreach(Transform child in settingLayout.transform) {
-            child.gameObject.SetActive(true);
-            child.GetComponent<EditCardHandler>().deckEditController = this;
-            //child.GetComponent<EditCardHandler>().cardgroup.card = child.gameObject;
-            //child.GetComponent<EditCardHandler>().cardgroup.CardLocation = child.transform.parent.gameObject;
-        }
-
-        foreach(Transform child in ownCardLayout.transform) {
-            child.gameObject.SetActive(true);
-            child.GetComponent<EditCardHandler>().deckEditController = this;
-            //child.GetComponent<EditCardHandler>().cardgroup.card = child.gameObject;
-            //child.GetComponent<EditCardHandler>().cardgroup.CardLocation = child.transform.parent.gameObject;
-        }
-
-        RefreshLine();
-    }
     
     public void SetDeckEdit(string heroId, bool isHuman) {
         setCardList = new Dictionary<string, GameObject>();
@@ -317,6 +291,7 @@ public class DeckEditController : MonoBehaviour
             setCardNum += card.cardCount;
             setCardList.Add(card.cardId, settedCard.gameObject);
             settedCardNum++;
+            settedCard.gameObject.SetActive(true);
         }
 
         foreach (dataModules.CollectionCard card in AccountManager.Instance.allCards) {
@@ -335,8 +310,15 @@ public class DeckEditController : MonoBehaviour
                     ownCardLayout.transform.GetChild(ownCount++).gameObject.SetActive(true);
                 }
                 else {
-                    //setCardList[card.id].GetComponents<EditCardHandler>().
-                    //ownCardLayout.transform.GetChild(ownCount).GetComponent<EditCardHandler>().HAVENUM = setCardList[card.id].GetComponents<EditCardHandler>().
+                    EditCardHandler settedCard = setCardList[card.id].GetComponent<EditCardHandler>();
+                    EditCardHandler ownedCard = ownCardLayout.transform.GetChild(ownCount).GetComponent<EditCardHandler>();
+                    settedCard.beforeObject = ownedCard.gameObject;
+                    ownedCard.HAVENUM = myCards.data[card.id].cardCount - settedCard.SETNUM;
+                    ownedCard.DrawCard(card.id, isHuman);
+                    if (ownedCard.HAVENUM > 0)
+                        ownedCard.gameObject.SetActive(true);
+                    ownCount++;
+                    haveCardNum += ownedCard.HAVENUM;
                 }
             }
             else {
@@ -345,7 +327,7 @@ public class DeckEditController : MonoBehaviour
                 dontHaveCard++;
             }
         }
-        maxHaveCard = haveCardNum;
+        maxHaveCard = settedCardNum + haveCardNum;
         dontHaveCardText.text = dontHaveCard.ToString();
         RefreshLine();
     }

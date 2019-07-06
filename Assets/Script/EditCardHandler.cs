@@ -43,6 +43,7 @@ public class EditCardHandler : MonoBehaviour, IPointerDownHandler, IPointerClick
     }
 
     public void SetHaveNum() {
+        transform.Find("Disabled").gameObject.SetActive(false);
         transform.Find("HaveNum/Value").GetComponent<TMPro.TextMeshProUGUI>().text = "x" + haveNum.ToString();
     }
 
