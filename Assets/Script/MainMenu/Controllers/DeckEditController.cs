@@ -383,8 +383,10 @@ public class DeckEditController : MonoBehaviour
     /// Server에게 덱 새로 추가 요청(커스텀 덱)
     /// </summary>
     public void RequestNewDeck() {
-        if (string.IsNullOrEmpty(deckNamePanel.transform.Find("NameTemplate").Find("Text").GetComponent<Text>().text) == true)
+        if (string.IsNullOrEmpty(deckNamePanel.transform.Find("NameTemplate").Find("Text").GetComponent<Text>().text) == true) {
+            Modal.instantiate("덱 이름창에 이름을 입력하셔야합니다.", Modal.Type.CHECK);
             return;
+        }
         NetworkManager.AddCustomDeckReqFormat formatData = new NetworkManager.AddCustomDeckReqFormat();
         items = new List<NetworkManager.DeckItem>();
         foreach (var pairs in setCardList) {
