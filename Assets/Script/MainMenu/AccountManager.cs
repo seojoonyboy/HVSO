@@ -325,7 +325,7 @@ public partial class AccountManager {
     /// 덱 제거 요청
     /// </summary>
     /// <param name="deckId">Deck Id</param>
-    public void RequestDeckRemove(int deckId) {
+    public void RequestDeckRemove(int deckId, OnRequestFinishedDelegate callback = null) {
         StringBuilder sb = new StringBuilder();
         sb
             .Append(networkManager.baseUrl)
@@ -338,7 +338,7 @@ public partial class AccountManager {
             new Uri(sb.ToString())
         );
         request.MethodType = BestHTTP.HTTPMethods.Delete;
-
+        if (callback != null) request.Callback = callback;
         networkManager.Request(request, OnReceived, "덱 삭제를 요청하는 중...");
     }
 
