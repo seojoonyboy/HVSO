@@ -362,15 +362,17 @@ public class DeckEditController : MonoBehaviour
         var fields = new List<NetworkManager.ModifyDeckReqArgs>();
         NetworkManager.ModifyDeckReqArgs field = new NetworkManager.ModifyDeckReqArgs();
         NetworkManager.DeckItem data;
+        items = new List<NetworkManager.DeckItem>();
         foreach (var pairs in setCardList) {
+            int count = pairs.Value.GetComponent<EditCardHandler>().SETNUM;
             if (items.Exists(x => x.cardId == pairs.Key)) {
                 var itemCount = items.Find(x => x.cardId == pairs.Key);
-                itemCount.cardCount++;
+                itemCount.cardCount = count;
             }
             else {
                 data = new NetworkManager.DeckItem();
                 data.cardId = pairs.Key;
-                data.cardCount = 1;
+                data.cardCount = count;
                 items.Add(data);
             }
         }
@@ -425,7 +427,7 @@ public class DeckEditController : MonoBehaviour
                 items.Add(data);
             }
         }
-
+        deckNamePanel.transform.Find("NameTemplate").Find("Text").GetComponent<Text>().text = "";
         heroID = (isHuman == true) ? "h10001" : "h10003";
 
         formatData.heroId = heroID; //영웅 id
