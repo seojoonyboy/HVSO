@@ -28,5 +28,7 @@ public class MyDecksLoader : MonoBehaviour {
     private void OnOrcDeckLoadFinished(HTTPRequest originalRequest, HTTPResponse response) {
         accountManager.orcDecks = JsonReader.Read<OrcDecks>(response.DataAsText);
         OnLoadFinished.Invoke();
+
+        //accountManager.AddDummyCustomDeck();
     }
 }
