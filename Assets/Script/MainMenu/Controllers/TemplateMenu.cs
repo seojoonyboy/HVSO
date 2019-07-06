@@ -119,6 +119,7 @@ public class TemplateMenu : MonoBehaviour {
     public void StartEditBtn() {
         deckSettingCanves.GetComponent<DeckEditController>().SetDeckEdit(heroID, isHuman);
         deckSettingCanves.gameObject.SetActive(true);
+        deckSettingCanves.GetComponent<DeckEditController>().templateMenu = this;
     }
 
 
