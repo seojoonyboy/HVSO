@@ -403,7 +403,7 @@ public class DeckEditController : MonoBehaviour
             }
         }
         deckNamePanel.transform.Find("NameTemplate").Find("Text").GetComponent<Text>().text = "";
-        heroID = (isHuman == true) ? "h10001" : "h10003";
+        heroID = (isHuman == true) ? "h10001" : "h10002";
 
         formatData.heroId = heroID; //영웅 id
         formatData.items = items.ToArray(); //추가한 카드 정보들
