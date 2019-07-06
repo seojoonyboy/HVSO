@@ -20,10 +20,12 @@ public class DeckEditController : MonoBehaviour
     private GameObject deckNamePanel;
 
     public GameObject selectCard;
+    public bool editing = false;
 
     Dictionary<string, GameObject> setCardList;
     List<NetworkManager.DeckItem> items;
 
+    public int deckID = -1;
     bool isHuman;
     int setCardNum = 0;
     int haveCardNum = 0;
@@ -47,7 +49,22 @@ public class DeckEditController : MonoBehaviour
     }
     
     public void ConfirmButton() {
+        switch (editing) {
+            case true:
+                NetworkManager.ModifyDeckReqFormat form = new NetworkManager.ModifyDeckReqFormat();
+                NetworkManager.ModifyDeckReqArgs field = new NetworkManager.ModifyDeckReqArgs();
 
+                field.fieldName = NetworkManager.ModifyDeckReqField.NAME;
+                field.value = "Modified";
+                form.parms.Add(field);
+
+                RequestModifyDeck(form, deckID);
+
+                break;
+            case false:
+                RequestNewDeck();
+                break;
+        }
     }
 
     public void CancelButton() {
@@ -253,20 +270,31 @@ public class DeckEditController : MonoBehaviour
     /// </summary>
     /// <param name="data"></param>
     /// <param name="deckId"></param>
-    void RequestModifyDeck(NetworkManager.ModifyDeckReqFormat formatData, int deckId) {
+    public void RequestModifyDeck(NetworkManager.ModifyDeckReqFormat formatData, int deckId) {
         var fields = new List<NetworkManager.ModifyDeckReqArgs>();
         NetworkManager.ModifyDeckReqArgs field = new NetworkManager.ModifyDeckReqArgs();
-
+        NetworkManager.DeckItem data;
         foreach (var pairs in setCardList) {
-            //int count = pairs.Value.GetComponent<EditCardHandler>().setNum;
-            NetworkManager.DeckItem data = new NetworkManager.DeckItem();
-            data.cardId = pairs.Key;
-            data.cardCount = 0;
-            items.Add(data);
+            if (items.Exists(x => x.cardId == pairs.Key)) {
+                var itemCount = items.Find(x => x.cardId == pairs.Key);
+                itemCount.cardCount++;
+            }
+            else {
+                data = new NetworkManager.DeckItem();
+                data.cardId = pairs.Key;
+                data.cardCount = 1;
+                items.Add(data);
+            }
         }
 
         field.fieldName = NetworkManager.ModifyDeckReqField.NAME;
-        field.value = deckNamePanel.transform.Find("InputField").Find("Text").GetComponent<Text>().text;   //덱 이름
+
+        if (string.IsNullOrEmpty(deckNamePanel.transform.Find("NameTemplate").Find("Text").GetComponent<Text>().text) == true)
+            field.value = deckNamePanel.transform.Find("NameTemplate").Find("Placeholder").GetComponent<Text>().text;
+        else
+            field.value = deckNamePanel.transform.Find("NameTemplate").Find("Text").GetComponent<Text>().text;
+
+        //덱 이름
         fields.Add(field);
 
         field = new NetworkManager.ModifyDeckReqArgs();
@@ -287,22 +315,33 @@ public class DeckEditController : MonoBehaviour
     /// <summary>
     /// Server에게 덱 새로 추가 요청(커스텀 덱)
     /// </summary>
-    void RequestNewDeck() {
+    public void RequestNewDeck() {
+        if (string.IsNullOrEmpty(deckNamePanel.transform.Find("NameTemplate").Find("Text").GetComponent<Text>().text) == true)
+            return;
         NetworkManager.AddCustomDeckReqFormat formatData = new NetworkManager.AddCustomDeckReqFormat();
+        items = new List<NetworkManager.DeckItem>();
+        foreach (var pairs in setCardList) {
+            int count = pairs.Value.GetComponent<EditCardHandler>().SETNUM;
+            NetworkManager.DeckItem data;
 
-        foreach(var pairs in setCardList) {
-            //int count = pairs.Value.GetComponent<EditCardHandler>().setNum;
-            NetworkManager.DeckItem data = new NetworkManager.DeckItem();
-            data.cardId = pairs.Key;
-            data.cardCount = 0;
-            items.Add(data);
+            if (items.Exists(x => x.cardId == pairs.Key)) {
+                var itemCount = items.Find(x => x.cardId == pairs.Key);
+                itemCount.cardCount = count;
+            }
+            else {
+                data = new NetworkManager.DeckItem();
+                data.cardId = pairs.Key;
+                data.cardCount = count;
+                items.Add(data);
+            }
         }
 
-
+        heroID = (isHuman == true) ? "h10001" : "h10003";
 
         formatData.heroId = heroID; //영웅 id
         formatData.items = items.ToArray(); //추가한 카드 정보들
-        formatData.name = deckNamePanel.transform.Find("InputField").Find("Text").GetComponent<Text>().text;   //덱 이름
+        formatData.name = deckNamePanel.transform.Find("NameTemplate").Find("Text").GetComponent<Text>().text;   //덱 이름
+        formatData.camp = (isHuman == true) ? "human" : "orc";
 
         AccountManager.Instance.RequestDeckMake(formatData, OnMakeNewDeckFinished);
     }
