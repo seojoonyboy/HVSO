@@ -12,6 +12,8 @@ public class DeckSettingManager : MonoBehaviour
     [SerializeField] Transform orcDeckList;
     [SerializeField] TMPro.TextMeshProUGUI humanDeckNum;
     [SerializeField] TMPro.TextMeshProUGUI orcDeckNum;
+    public MenuSceneController menuSceneController;
+
     MyDecksLoader decksLoader;
 
     public void AttachDecksLoader(ref MyDecksLoader decksLoader) {
