@@ -43,22 +43,22 @@ public class DeckEditController : MonoBehaviour
     }
 
     public void ConfirmButton() {
-        switch (editing) {
-            case true:
-                NetworkManager.ModifyDeckReqFormat form = new NetworkManager.ModifyDeckReqFormat();
-                NetworkManager.ModifyDeckReqArgs field = new NetworkManager.ModifyDeckReqArgs();
 
-                field.fieldName = NetworkManager.ModifyDeckReqField.NAME;
-                field.value = deckNamePanel.transform.Find("NameTemplate").Find("Text").GetComponent<Text>().text;
-                form.parms.Add(field);
+        if(editing == true) {
+            NetworkManager.ModifyDeckReqFormat form = new NetworkManager.ModifyDeckReqFormat();
+            NetworkManager.ModifyDeckReqArgs field = new NetworkManager.ModifyDeckReqArgs();
 
-                RequestModifyDeck(form, deckID);
+            field.fieldName = NetworkManager.ModifyDeckReqField.NAME;
+            field.value = deckNamePanel.transform.Find("NameTemplate").Find("Text").GetComponent<Text>().text;
+            form.parms.Add(field);
 
-                break;
-            case false:
-                RequestNewDeck();
-                break;
+            RequestModifyDeck(form, deckID);
         }
+        else {
+            RequestNewDeck();
+        }
+
+
     }
 
     public void CancelButton() {
