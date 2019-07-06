@@ -274,7 +274,7 @@ public class CardListManager : MonoBehaviour
     
 
     public virtual void OpenUnitInfoWindow(Vector3 inputPos) {
-        if (Input.GetMouseButtonDown(0)) {
+        if (!PlayMangement.instance.infoOn && Input.GetMouseButtonDown(0)) {
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(inputPos);
 
             LayerMask mask = (1 << LayerMask.NameToLayer("UnitInfo"));
