@@ -241,12 +241,14 @@ public class DeckEditController : MonoBehaviour
     }
 
     public void SetCustumDeckEdit(dataModules.Deck lodedDeck) {
+        editing = true;
         setCardList = new Dictionary<string, GameObject>();
         setCardNum = 0;
         haveCardNum = 0;
         Transform heroCards;
         Hero heroData = null;
-        
+        deckID = int.Parse(lodedDeck.id);
+        deckNamePanel.transform.Find("NameTemplate").GetComponent<InputField>().text = lodedDeck.name;
         transform.Find("HeroPortrait").GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[lodedDeck.heroId + "_button"];
         if (lodedDeck.camp == "human") {
             this.isHuman = true;
@@ -344,25 +346,25 @@ public class DeckEditController : MonoBehaviour
         var fields = new List<NetworkManager.ModifyDeckReqArgs>();
         NetworkManager.ModifyDeckReqArgs field = new NetworkManager.ModifyDeckReqArgs();
         NetworkManager.DeckItem data;
+        items = new List<NetworkManager.DeckItem>();
         foreach (var pairs in setCardList) {
+            int count = pairs.Value.GetComponent<EditCardHandler>().SETNUM;
             if (items.Exists(x => x.cardId == pairs.Key)) {
                 var itemCount = items.Find(x => x.cardId == pairs.Key);
-                itemCount.cardCount++;
+                itemCount.cardCount = count;
             }
             else {
                 data = new NetworkManager.DeckItem();
                 data.cardId = pairs.Key;
-                data.cardCount = 1;
+                data.cardCount = count;
                 items.Add(data);
             }
         }
 
         field.fieldName = NetworkManager.ModifyDeckReqField.NAME;
 
-        if (string.IsNullOrEmpty(deckNamePanel.transform.Find("NameTemplate").Find("Text").GetComponent<Text>().text) == true)
-            field.value = deckNamePanel.transform.Find("NameTemplate").Find("Placeholder").GetComponent<Text>().text;
-        else
-            field.value = deckNamePanel.transform.Find("NameTemplate").Find("Text").GetComponent<Text>().text;
+
+        field.value = deckNamePanel.transform.Find("NameTemplate").Find("Text").GetComponent<Text>().text;
 
         //덱 이름
         fields.Add(field);
@@ -380,7 +382,6 @@ public class DeckEditController : MonoBehaviour
             Logger.Log("덱 편집완료 완료");
             menuSceneController.decksLoader.Load();
             gameObject.SetActive(false);
-            templateMenu.transform.gameObject.SetActive(false);
         }
     }
 
