@@ -37,10 +37,20 @@ public class DeckHandler : MonoBehaviour
 
     public void EditCustomDeck() {
         dataModules.Deck customDeck = null;
-        foreach (dataModules.Deck deck in AccountManager.Instance.humanDecks.customDecks) {
-            if (deckID == deck.id) {
-                customDeck = deck;
-                break;
+        if (isHuman) {
+            foreach (dataModules.Deck deck in AccountManager.Instance.humanDecks.customDecks) {
+                if (deckID == deck.id) {
+                    customDeck = deck;
+                    break;
+                }
+            }
+        }
+        else {
+            foreach (dataModules.Deck deck in AccountManager.Instance.orcDecks.customDecks) {
+                if (deckID == deck.id) {
+                    customDeck = deck;
+                    break;
+                }
             }
         }
         if(customDeck != null)
