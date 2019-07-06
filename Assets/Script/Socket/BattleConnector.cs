@@ -253,11 +253,11 @@ public partial class BattleConnector : MonoBehaviour {
         Logger.Log(orcPlayerNickName);
         Logger.Log(humanPlayerNickName);
 
-        TextMeshProUGUI enemyNickNameTxt = machine.transform.Find("EnemyName/NickName").GetComponent<TextMeshProUGUI>();
-        TextMeshProUGUI enemyHeroNameTxt = machine.transform.Find("EnemyName/HeroName").GetComponent<TextMeshProUGUI>();
+        Text enemyNickNameTxt = machine.transform.Find("EnemyName/NickName").GetComponent<Text>();
+        Text enemyHeroNameTxt = machine.transform.Find("EnemyName/HeroName").GetComponent<Text>();
 
-        TextMeshProUGUI playerNickNameTxt = machine.transform.Find("PlayerName/NickName").GetComponent<TextMeshProUGUI>();
-        TextMeshProUGUI playerHeroNameTxt = machine.transform.Find("PlayerName/HeroName").GetComponent<TextMeshProUGUI>();
+        Text playerNickNameTxt = machine.transform.Find("PlayerName/NickName").GetComponent<Text>();
+        Text playerHeroNameTxt = machine.transform.Find("PlayerName/HeroName").GetComponent<Text>();
 
         Logger.Log(race);
 
