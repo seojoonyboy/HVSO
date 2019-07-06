@@ -34,6 +34,9 @@ public class DeckEditController : MonoBehaviour
     TMPro.TextMeshProUGUI haveCardText;
     TMPro.TextMeshProUGUI dontHaveCardText;
 
+    public TemplateMenu templateMenu;
+
+    public MenuSceneController menuSceneController;
 
     private void Start() {
         SetObject();
@@ -391,7 +394,9 @@ public class DeckEditController : MonoBehaviour
         //덱 수정 요청 완료
         if (response.StatusCode == 200) {
             Logger.Log("덱 편집완료 완료");
+            menuSceneController.decksLoader.Load();
             gameObject.SetActive(false);
+            templateMenu.transform.gameObject.SetActive(false);
         }
     }
 
@@ -433,7 +438,9 @@ public class DeckEditController : MonoBehaviour
         //덱 새로 생성 완료
         if (response.StatusCode == 200) {
             Logger.Log("덱 생성 완료");
+            menuSceneController.decksLoader.Load();
             gameObject.SetActive(false);
+            templateMenu.transform.gameObject.SetActive(false);
         }
 
     }
