@@ -45,5 +45,6 @@ public class DeckHandler : MonoBehaviour
         }
         if(customDeck != null)
             deckEditCanvas.SetCustumDeckEdit(customDeck);
+        deckEditCanvas.gameObject.SetActive(true);
     }
 }
