@@ -79,7 +79,7 @@ public class DeckEditController : MonoBehaviour
         selectCard.GetComponent<EditCardHandler>().beforeObject.SetActive(true);
         ownCardLayout.GetComponent<Image>().enabled = false;
         ownCardLayout.GetComponent<Button>().enabled = false;
-        
+        RefreshLine();
     }
 
     public void ConfirmSetDeck() {
@@ -96,19 +96,13 @@ public class DeckEditController : MonoBehaviour
             selectCard = null;
         }
         transform.Find("SetDeckLayout").Find("glow").gameObject.SetActive(false);
-        Canvas.ForceUpdateCanvases();
-        ownCardLayout.GetComponent<ContentSizeFitter>().enabled = false;
-        ownCardLayout.GetComponent<ContentSizeFitter>().enabled = true;
-        ownCardLayout.GetComponent<GridLayoutGroup>().enabled = false;
-        ownCardLayout.GetComponent<GridLayoutGroup>().enabled = true;
         RefreshLine();
-        LayoutRebuilder.ForceRebuildLayoutImmediate(ownCardLayout.GetComponent<RectTransform>());
     }
 
 
     private void RefreshLine() {
-        transform.Find("CardPanel").Find("Viewport").Find("Content").GetComponent<VerticalLayoutGroup>().spacing = 1;
-        transform.Find("CardPanel").Find("Viewport").Find("Content").GetComponent<VerticalLayoutGroup>().spacing = 0;
+        Canvas.ForceUpdateCanvases();
+        LayoutRebuilder.ForceRebuildLayoutImmediate(transform.Find("CardPanel").Find("Viewport").Find("Content").GetComponent<RectTransform>());
     }
 
 
