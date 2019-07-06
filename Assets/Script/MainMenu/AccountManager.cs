@@ -371,7 +371,7 @@ public partial class AccountManager {
                     break;
                 case NetworkManager.ModifyDeckReqField.ITEMS:
                     var items = (NetworkManager.DeckItem[])pair.value;
-                    json.Add("items", JToken.Parse(JsonConvert.SerializeObject(items)));
+                    json.Add("items", new JRaw(JsonConvert.SerializeObject(items)));
                     break;
             }
         }
