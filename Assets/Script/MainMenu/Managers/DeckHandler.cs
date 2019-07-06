@@ -52,7 +52,12 @@ public class DeckHandler : MonoBehaviour
     public void DeleteButton() {
         if (AccountManager.Instance == null) return;
         AccountManager.Instance.RequestDeckRemove(int.Parse(DECKID));
+        transform.Find("DeckInfo/EditButtons").gameObject.SetActive(false);
+        Transform deckInfo = transform.Find("DeckInfo");
+        deckInfo.gameObject.SetActive(false);
+        transform.SetAsLastSibling();
+        gameObject.SetActive(false);
+        if (transform.parent.GetChild(2).gameObject.activeSelf && transform.parent.GetChild(2).Find("DeckInfo").gameObject.activeSelf)
+            gameObject.SetActive(true);
     }
-
-
 }

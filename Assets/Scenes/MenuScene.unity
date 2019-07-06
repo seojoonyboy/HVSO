@@ -4484,6 +4484,36 @@ PrefabInstance:
       propertyPath: deckEditCanvas
       value: 
       objectReference: {fileID: 4977418065057157113}
+    - target: {fileID: 8385502969136809795, guid: d26ba4ea9dc9db445869c01a6313c391,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8385502969136809795, guid: d26ba4ea9dc9db445869c01a6313c391,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8385502969136809795, guid: d26ba4ea9dc9db445869c01a6313c391,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8385502969136809795, guid: d26ba4ea9dc9db445869c01a6313c391,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 115407428}
+    - target: {fileID: 8385502969136809795, guid: d26ba4ea9dc9db445869c01a6313c391,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: DeleteButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 8385502969136809795, guid: d26ba4ea9dc9db445869c01a6313c391,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 7585598010036752565, guid: d26ba4ea9dc9db445869c01a6313c391,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -10954,6 +10984,36 @@ PrefabInstance:
       value: EditCustomDeck
       objectReference: {fileID: 0}
     - target: {fileID: 3314585533338238455, guid: a5652ef5a1dd3e846bbddc9dc4f6cea5,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 6025665642109763526, guid: a5652ef5a1dd3e846bbddc9dc4f6cea5,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6025665642109763526, guid: a5652ef5a1dd3e846bbddc9dc4f6cea5,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6025665642109763526, guid: a5652ef5a1dd3e846bbddc9dc4f6cea5,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6025665642109763526, guid: a5652ef5a1dd3e846bbddc9dc4f6cea5,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 305869637}
+    - target: {fileID: 6025665642109763526, guid: a5652ef5a1dd3e846bbddc9dc4f6cea5,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: DeleteButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 6025665642109763526, guid: a5652ef5a1dd3e846bbddc9dc4f6cea5,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
@@ -18046,6 +18106,36 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 6025665642109763526, guid: a5652ef5a1dd3e846bbddc9dc4f6cea5,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6025665642109763526, guid: a5652ef5a1dd3e846bbddc9dc4f6cea5,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6025665642109763526, guid: a5652ef5a1dd3e846bbddc9dc4f6cea5,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6025665642109763526, guid: a5652ef5a1dd3e846bbddc9dc4f6cea5,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 500319470}
+    - target: {fileID: 6025665642109763526, guid: a5652ef5a1dd3e846bbddc9dc4f6cea5,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: DeleteButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 6025665642109763526, guid: a5652ef5a1dd3e846bbddc9dc4f6cea5,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a5652ef5a1dd3e846bbddc9dc4f6cea5, type: 3}
 --- !u!224 &500319469 stripped
@@ -23997,6 +24087,36 @@ PrefabInstance:
       propertyPath: deckEditCanvas
       value: 
       objectReference: {fileID: 4977418065057157113}
+    - target: {fileID: 8385502969136809795, guid: d26ba4ea9dc9db445869c01a6313c391,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8385502969136809795, guid: d26ba4ea9dc9db445869c01a6313c391,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8385502969136809795, guid: d26ba4ea9dc9db445869c01a6313c391,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8385502969136809795, guid: d26ba4ea9dc9db445869c01a6313c391,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 744946170}
+    - target: {fileID: 8385502969136809795, guid: d26ba4ea9dc9db445869c01a6313c391,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: DeleteButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 8385502969136809795, guid: d26ba4ea9dc9db445869c01a6313c391,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 7585598010036752565, guid: d26ba4ea9dc9db445869c01a6313c391,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -52554,6 +52674,36 @@ PrefabInstance:
       propertyPath: deckEditCanvas
       value: 
       objectReference: {fileID: 4977418065057157113}
+    - target: {fileID: 8385502969136809795, guid: d26ba4ea9dc9db445869c01a6313c391,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8385502969136809795, guid: d26ba4ea9dc9db445869c01a6313c391,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8385502969136809795, guid: d26ba4ea9dc9db445869c01a6313c391,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8385502969136809795, guid: d26ba4ea9dc9db445869c01a6313c391,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1858725772}
+    - target: {fileID: 8385502969136809795, guid: d26ba4ea9dc9db445869c01a6313c391,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: DeleteButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 8385502969136809795, guid: d26ba4ea9dc9db445869c01a6313c391,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 7585598010036752565, guid: d26ba4ea9dc9db445869c01a6313c391,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -57305,6 +57455,36 @@ PrefabInstance:
       propertyPath: m_TargetGraphic
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 6025665642109763526, guid: a5652ef5a1dd3e846bbddc9dc4f6cea5,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6025665642109763526, guid: a5652ef5a1dd3e846bbddc9dc4f6cea5,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6025665642109763526, guid: a5652ef5a1dd3e846bbddc9dc4f6cea5,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6025665642109763526, guid: a5652ef5a1dd3e846bbddc9dc4f6cea5,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1977886220}
+    - target: {fileID: 6025665642109763526, guid: a5652ef5a1dd3e846bbddc9dc4f6cea5,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: DeleteButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 6025665642109763526, guid: a5652ef5a1dd3e846bbddc9dc4f6cea5,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a5652ef5a1dd3e846bbddc9dc4f6cea5, type: 3}
 --- !u!224 &1977886219 stripped
@@ -57313,6 +57493,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1977886218}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1977886220 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2068288022, guid: a5652ef5a1dd3e846bbddc9dc4f6cea5,
+    type: 3}
+  m_PrefabInstance: {fileID: 1977886218}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba851055e31e4454aa1671b0d51736ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1978353463
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -62611,6 +62803,36 @@ PrefabInstance:
       propertyPath: deckEditCanvas
       value: 
       objectReference: {fileID: 4977418065057157113}
+    - target: {fileID: 8385502969136809795, guid: d26ba4ea9dc9db445869c01a6313c391,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8385502969136809795, guid: d26ba4ea9dc9db445869c01a6313c391,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8385502969136809795, guid: d26ba4ea9dc9db445869c01a6313c391,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8385502969136809795, guid: d26ba4ea9dc9db445869c01a6313c391,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2122197110}
+    - target: {fileID: 8385502969136809795, guid: d26ba4ea9dc9db445869c01a6313c391,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: DeleteButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 8385502969136809795, guid: d26ba4ea9dc9db445869c01a6313c391,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 7585598010036752565, guid: d26ba4ea9dc9db445869c01a6313c391,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
