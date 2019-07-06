@@ -193,6 +193,9 @@ public class RaceTypeToggleHandler : MonoBehaviour {
                     controller.selectedDeck = totalDecks[item_index];
                 }
 
+                _deck.transform.Find("Deck/Info/Text").GetComponent<TextMeshProUGUI>().text = 
+                    totalDecks[item_index].cardTotalCount + "/40";
+
                 _deck.transform.Find("Deck").GetComponent<StringIndex>().Id = totalDecks[item_index].id;
 
                 int _index = item_index;
