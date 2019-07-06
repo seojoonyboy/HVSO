@@ -49,7 +49,7 @@ public class DeckEditController : MonoBehaviour
                 NetworkManager.ModifyDeckReqArgs field = new NetworkManager.ModifyDeckReqArgs();
 
                 field.fieldName = NetworkManager.ModifyDeckReqField.NAME;
-                field.value = "Modified";
+                field.value = deckNamePanel.transform.Find("NameTemplate").Find("Text").GetComponent<Text>().text;
                 form.parms.Add(field);
 
                 RequestModifyDeck(form, deckID);
@@ -347,6 +347,7 @@ public class DeckEditController : MonoBehaviour
         NetworkManager.ModifyDeckReqArgs field = new NetworkManager.ModifyDeckReqArgs();
         NetworkManager.DeckItem data;
         items = new List<NetworkManager.DeckItem>();
+
         foreach (var pairs in setCardList) {
             int count = pairs.Value.GetComponent<EditCardHandler>().SETNUM;
             if (items.Exists(x => x.cardId == pairs.Key)) {
@@ -359,19 +360,12 @@ public class DeckEditController : MonoBehaviour
                 data.cardCount = count;
                 items.Add(data);
             }
-        }
-
-        field.fieldName = NetworkManager.ModifyDeckReqField.NAME;
-
-
-        field.value = deckNamePanel.transform.Find("NameTemplate").Find("Text").GetComponent<Text>().text;
+        }        
 
         //덱 이름
-        fields.Add(field);
-
-        field = new NetworkManager.ModifyDeckReqArgs();
-        field.fieldName = NetworkManager.ModifyDeckReqField.ITEMS;  //추가한 카드정보들
+        field.fieldName = NetworkManager.ModifyDeckReqField.ITEMS;  
         field.value = items.ToArray();
+        formatData.parms.Add(field);
 
         AccountManager.Instance.RequestDeckModify(formatData, deckId, OnDeckModifyFinished);
     }
