@@ -332,7 +332,7 @@ public class DeckEditController : MonoBehaviour
                 dontHaveCard++;
             }
         }
-        maxHaveCard = settedCardNum + haveCardNum;
+        maxHaveCard = setCardNum + haveCardNum;
         dontHaveCardText.text = dontHaveCard.ToString();
         RefreshLine();
     }
