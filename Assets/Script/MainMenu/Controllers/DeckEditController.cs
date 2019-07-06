@@ -253,60 +253,6 @@ public class DeckEditController : MonoBehaviour
         */
         RefreshLine();
     }
-
-    /// <summary>
-    /// Server에게 덱 수정 요청
-    /// </summary>
-    /// <param name="data"></param>
-    /// <param name="deckId"></param>
-    void RequestModifyDeck(NetworkManager.ModifyDeckReqFormat formatData, int deckId) {
-        var fields = new List<NetworkManager.ModifyDeckReqArgs>();
-        NetworkManager.ModifyDeckReqArgs field = new NetworkManager.ModifyDeckReqArgs();
-
-        items = pairs;
-
-        field.fieldName = NetworkManager.ModifyDeckReqField.NAME;
-        field.value = deckNamePanel.transform.Find("InputField").Find("Text").GetComponent<Text>().text;   //덱 이름
-        fields.Add(field);
-
-        field = new NetworkManager.ModifyDeckReqArgs();
-        field.fieldName = NetworkManager.ModifyDeckReqField.ITEMS;  //추가한 카드정보들
-        field.value = items.ToArray();
-
-        accountManager.RequestDeckModify(formatData, deckId, OnDeckModifyFinished);
-    }
-
-    private void OnDeckModifyFinished(HTTPRequest originalRequest, HTTPResponse response) {
-        //덱 수정 요청 완료
-        if (response.StatusCode == 200) {
-            Logger.Log("덱 편집완료 완료");
-
-        }
-    }
-
-    /// <summary>
-    /// Server에게 덱 새로 추가 요청(커스텀 덱)
-    /// </summary>
-    void RequestNewDeck() {
-        NetworkManager.AddCustomDeckReqFormat formatData = new NetworkManager.AddCustomDeckReqFormat();
-
-        items = pairs;
-
-        formatData.heroId = heroID; //영웅 id
-        formatData.items = items.ToArray(); //추가한 카드 정보들
-        formatData.name = deckNamePanel.transform.Find("InputField").Find("Text").GetComponent<Text>().text;   //덱 이름
-
-        accountManager.RequestDeckMake(formatData, OnMakeNewDeckFinished);
-    }
-
-    private void OnMakeNewDeckFinished(HTTPRequest originalRequest, HTTPResponse response) {
-        //덱 새로 생성 완료
-        if(response.StatusCode == 200) {
-            Logger.Log("덱 생성 완료");
-
-        }
-
-    }
 }
 [System.Serializable]
 public class SelectCard {
