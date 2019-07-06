@@ -56,7 +56,7 @@ public class DeckEditController : MonoBehaviour
         }
         selectCard = null;
         transform.Find("SetDeckLayout").Find("glow").gameObject.SetActive(false);
-        transform.Find("ExceptButton").gameObject.SetActive(true);
+        transform.Find("ExceptButton").gameObject.SetActive(false);
     }
 
     public void ConfirmButton() {
