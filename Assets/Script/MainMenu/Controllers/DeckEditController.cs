@@ -176,12 +176,14 @@ public class DeckEditController : MonoBehaviour
     }
     
     public void SetDeckEdit(string heroId, bool isHuman) {
+        editing = false;
         setCardList = new Dictionary<string, GameObject>();
         setCardNum = 0;
         haveCardNum = 0;
         Transform heroCards;
         Hero heroData = null;
         this.isHuman = isHuman;
+        deckNamePanel.transform.Find("NameTemplate").GetComponent<InputField>().text = "";
         transform.Find("HeroPortrait").GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[heroId + "_button"];
         if (isHuman) {
             heroCards = transform.Find("HeroCards/Human");
@@ -214,6 +216,7 @@ public class DeckEditController : MonoBehaviour
             ownCardLayout.transform.GetChild(i).gameObject.SetActive(false);
             UnReleaseCardLayout.transform.GetChild(i).gameObject.SetActive(false);
             settingLayout.transform.GetChild(i).gameObject.SetActive(false);
+            settingLayout.transform.GetChild(i).GetComponent<EditCardHandler>().SETNUM = 0;
         }
         int ownCount = 0;
         int notOwnCount = 0;
@@ -248,6 +251,7 @@ public class DeckEditController : MonoBehaviour
         setCardList = new Dictionary<string, GameObject>();
         setCardNum = 0;
         haveCardNum = 0;
+        dontHaveCard = 0;
         Transform heroCards;
         Hero heroData = null;
         deckID = int.Parse(lodedDeck.id);
@@ -286,6 +290,7 @@ public class DeckEditController : MonoBehaviour
             ownCardLayout.transform.GetChild(i).gameObject.SetActive(false);
             UnReleaseCardLayout.transform.GetChild(i).gameObject.SetActive(false);
             settingLayout.transform.GetChild(i).gameObject.SetActive(false);
+            settingLayout.transform.GetChild(i).GetComponent<EditCardHandler>().SETNUM = 0;
         }
         int ownCount = 0;
         int notOwnCount = 0;
