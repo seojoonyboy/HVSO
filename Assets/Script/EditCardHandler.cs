@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using Spine;
 using Spine.Unity;
 
-public class EditCardHandler : MonoBehaviour, IPointerDownHandler, IPointerClickHandler {
+public class EditCardHandler : MonoBehaviour, IPointerDownHandler, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler {
     public string cardID;
     public DeckEditController deckEditController;
 
@@ -14,6 +14,7 @@ public class EditCardHandler : MonoBehaviour, IPointerDownHandler, IPointerClick
     public GameObject beforeObject;
 
     public bool clicking = false;
+    public bool pointerEnter = false;
     public float time = 0f;
     bool isHuman;
     public int myIndex;
@@ -31,7 +32,7 @@ public class EditCardHandler : MonoBehaviour, IPointerDownHandler, IPointerClick
     }
 
     private void Update() {
-        if (clicking == true) {
+        if (clicking == true && pointerEnter == true) {
             time += Time.deltaTime;
 
             if (time > 1f) {
@@ -73,6 +74,15 @@ public class EditCardHandler : MonoBehaviour, IPointerDownHandler, IPointerClick
 
         clicking = false;
         CardSet();
+        time = 0;
+    }
+
+    public void OnPointerEnter(PointerEventData eventData) {
+        pointerEnter = true;
+    }
+
+    public void OnPointerExit(PointerEventData eventData) {
+        pointerEnter = false;
         time = 0;
     }
 
