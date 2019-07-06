@@ -246,6 +246,7 @@ public class DeckEditController : MonoBehaviour
         setCardList = new Dictionary<string, GameObject>();
         setCardNum = 0;
         haveCardNum = 0;
+        dontHaveCard = 0;
         Transform heroCards;
         Hero heroData = null;
         deckID = int.Parse(lodedDeck.id);
