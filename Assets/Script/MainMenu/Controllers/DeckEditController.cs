@@ -43,7 +43,7 @@ public class DeckEditController : MonoBehaviour
     }
 
     private void InitCanvas() {
-        editing = false;
+        
         setCardList = new Dictionary<string, GameObject>();
         setCardNum = 0;
         haveCardNum = 0;
@@ -193,6 +193,7 @@ public class DeckEditController : MonoBehaviour
     }
     
     public void SetDeckEdit(string heroId, bool isHuman) {
+        editing = false;
         InitCanvas();
         Transform heroCards;
         Hero heroData = null;
@@ -255,6 +256,7 @@ public class DeckEditController : MonoBehaviour
     }
 
     public void SetCustumDeckEdit(dataModules.Deck lodedDeck) {
+        editing = true;
         InitCanvas();
         Transform heroCards;
         Hero heroData = null;
@@ -283,6 +285,10 @@ public class DeckEditController : MonoBehaviour
                 }
             }
         }
+        transform.Find("Class/Class_1/icon").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["class_icon_" + heroData.heroClasses[0]];
+        transform.Find("Class/Class_2/icon").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["class_icon_" + heroData.heroClasses[0]];
+        transform.Find("Class/Class_1").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["class_" + heroData.heroClasses[0]];
+        transform.Find("Class/Class_2").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["class_" + heroData.heroClasses[1]];
         heroCards.gameObject.SetActive(true);
         for (int i = 0; i < heroData.heroCards.Count; i++)
             heroCards.GetChild(i).GetComponent<MenuCardHandler>().DrawCard(heroData.heroCards[i].cardId, isHuman);
