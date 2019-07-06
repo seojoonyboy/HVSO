@@ -66,6 +66,8 @@ public class DeckEditController : MonoBehaviour
         gameObject.SetActive(false);
         if (templateMenu != null)
             templateMenu.transform.gameObject.SetActive(false);
+
+        deckNamePanel.transform.Find("NameTemplate").Find("Text").GetComponent<Text>().text = "";
     }
     
 
@@ -423,6 +425,7 @@ public class DeckEditController : MonoBehaviour
             menuSceneController.decksLoader.Load();
             gameObject.SetActive(false);
             templateMenu.transform.gameObject.SetActive(false);
+            deckNamePanel.transform.Find("NameTemplate").Find("Text").GetComponent<Text>().text = "";
         }
 
     }
