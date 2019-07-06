@@ -76,6 +76,8 @@ namespace dataModules {
         public string id;
         public string name;
         public string flavorText;
+        public string camp;
+        public string heroId;
         public Hero _hero;
         public List<Item> items;
         public bool deckValidate;

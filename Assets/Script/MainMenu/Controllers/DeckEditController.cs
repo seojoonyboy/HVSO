@@ -8,8 +8,6 @@ using UnityEngine.EventSystems;
 
 public class DeckEditController : MonoBehaviour
 {
-
-    public string heroID;
     private GameObject heroCardGroup;
 
     private GameObject settingLayout;
@@ -40,7 +38,6 @@ public class DeckEditController : MonoBehaviour
     }
 
     public void LoadEditDeck() {
-
     }
     
     public void ConfirmButton() {
@@ -231,6 +228,92 @@ public class DeckEditController : MonoBehaviour
                 haveCardNum += myCards.data[card.id].cardCount;
                 ownCardLayout.transform.GetChild(ownCount).GetComponent<EditCardHandler>().DrawCard(card.id, isHuman);
                 ownCardLayout.transform.GetChild(ownCount++).gameObject.SetActive(true);
+            }
+            else {
+                UnReleaseCardLayout.transform.GetChild(notOwnCount).GetComponent<EditCardHandler>().DrawCard(card.id, isHuman);
+                UnReleaseCardLayout.transform.GetChild(notOwnCount++).gameObject.SetActive(true);
+                dontHaveCard++;
+            }
+        }
+        maxHaveCard = haveCardNum;
+        dontHaveCardText.text = dontHaveCard.ToString();
+        RefreshLine();
+    }
+
+    public void SetCustumDeckEdit(dataModules.Deck lodedDeck) {
+        setCardList = new Dictionary<string, GameObject>();
+        setCardNum = 0;
+        haveCardNum = 0;
+        Transform heroCards;
+        Hero heroData = null;
+        
+        transform.Find("HeroPortrait").GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[lodedDeck.heroId + "_button"];
+        if (lodedDeck.camp == "human") {
+            this.isHuman = true;
+            heroCards = transform.Find("HeroCards/Human");
+            transform.Find("HeroCards/Orc").gameObject.SetActive(false);
+            foreach (dataModules.Hero data in AccountManager.Instance.humanDecks.heros) {
+                if (data.id == lodedDeck.heroId) {
+                    heroData = data;
+                    break;
+                }
+            }
+        }
+        else {
+            this.isHuman = false;
+            heroCards = transform.Find("HeroCards/Orc");
+            transform.Find("HeroCards/Human").gameObject.SetActive(false);
+            foreach (dataModules.Hero data in AccountManager.Instance.orcDecks.heros) {
+                if (data.id == lodedDeck.heroId) {
+                    heroData = data;
+                    break;
+                }
+            }
+        }
+        heroCards.gameObject.SetActive(true);
+        for (int i = 0; i < heroData.heroCards.Count; i++)
+            heroCards.GetChild(i).GetComponent<MenuCardHandler>().DrawCard(heroData.heroCards[i].cardId, isHuman);
+        SetCustomDeckEditCards(lodedDeck);
+    }
+
+    private void SetCustomDeckEditCards(dataModules.Deck lodedDeck) {
+        for (int i = 0; i < 40; i++) {
+            ownCardLayout.transform.GetChild(i).gameObject.SetActive(false);
+            UnReleaseCardLayout.transform.GetChild(i).gameObject.SetActive(false);
+            settingLayout.transform.GetChild(i).gameObject.SetActive(false);
+        }
+        int ownCount = 0;
+        int notOwnCount = 0;
+        CardDataPackage myCards = AccountManager.Instance.cardPackage;
+        int settedCardNum = 0;
+        foreach(dataModules.Item card in lodedDeck.items) {
+            EditCardHandler settedCard = settingLayout.transform.GetChild(settedCardNum).GetComponent<EditCardHandler>();
+            settedCard.SETNUM = card.cardCount;
+            settedCard.DrawCard(card.cardId, isHuman);
+            setCardNum += card.cardCount;
+            setCardList.Add(card.cardId, settedCard.gameObject);
+            settedCardNum++;
+        }
+
+        foreach (dataModules.CollectionCard card in AccountManager.Instance.allCards) {
+            if (card.isHeroCard) continue;
+            string race;
+            if (isHuman)
+                race = "human";
+            else
+                race = "orc";
+            if (card.camp != race) continue;
+            if (myCards.data.ContainsKey(card.id)) {
+                if (!setCardList.ContainsKey(card.id)){
+                    ownCardLayout.transform.GetChild(ownCount).GetComponent<EditCardHandler>().HAVENUM = myCards.data[card.id].cardCount;
+                    haveCardNum += myCards.data[card.id].cardCount;
+                    ownCardLayout.transform.GetChild(ownCount).GetComponent<EditCardHandler>().DrawCard(card.id, isHuman);
+                    ownCardLayout.transform.GetChild(ownCount++).gameObject.SetActive(true);
+                }
+                else {
+                    setCardList[card.id].GetComponents<EditCardHandler>().
+                    //ownCardLayout.transform.GetChild(ownCount).GetComponent<EditCardHandler>().HAVENUM = setCardList[card.id].GetComponents<EditCardHandler>().
+                }
             }
             else {
                 UnReleaseCardLayout.transform.GetChild(notOwnCount).GetComponent<EditCardHandler>().DrawCard(card.id, isHuman);

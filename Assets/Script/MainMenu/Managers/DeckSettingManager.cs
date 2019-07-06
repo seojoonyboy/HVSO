@@ -41,7 +41,9 @@ public class DeckSettingManager : MonoBehaviour
         int humanDeckCount = 0;
         int orcDeckCount = 0;
         int humanBasicDecks = AccountManager.Instance.humanDecks.basicDecks.Count;
+        int humanCustomDecks = AccountManager.Instance.humanDecks.customDecks.Count;
         int orcBasicDecks = AccountManager.Instance.orcDecks.basicDecks.Count;
+        int orcCustomDecks = AccountManager.Instance.orcDecks.customDecks.Count;
         if (humanBasicDecks > 0) {
             for (int i = 0; i < humanBasicDecks; i++) {
                 humanDeckList.GetChild(humanDeckCount).gameObject.SetActive(true);
@@ -50,10 +52,26 @@ public class DeckSettingManager : MonoBehaviour
                 humanDeckList.GetChild(humanDeckCount).gameObject.SetActive(true);
             }
         }
+        if (humanCustomDecks > 0) {
+            for (int i = 0; i < humanBasicDecks; i++) {
+                humanDeckList.GetChild(humanDeckCount).gameObject.SetActive(true);
+                humanDeckList.GetChild(humanDeckCount).GetComponent<DeckHandler>().SetDeck(AccountManager.Instance.humanDecks.customDecks[i]);
+                humanDeckCount++;
+                humanDeckList.GetChild(humanDeckCount).gameObject.SetActive(true);
+            }
+        }
         if (orcBasicDecks > 0) {
             for (int i = 0; i < orcBasicDecks; i++) {
                 orcDeckList.GetChild(orcDeckCount).gameObject.SetActive(true);
                 orcDeckList.GetChild(orcDeckCount).GetComponent<DeckHandler>().SetDeck(AccountManager.Instance.orcDecks.basicDecks[i], true);
+                orcDeckCount++;
+                orcDeckList.GetChild(orcDeckCount).gameObject.SetActive(true);
+            }
+        }
+        if (orcCustomDecks > 0) {
+            for (int i = 0; i < orcCustomDecks; i++) {
+                orcDeckList.GetChild(orcDeckCount).gameObject.SetActive(true);
+                orcDeckList.GetChild(orcDeckCount).GetComponent<DeckHandler>().SetDeck(AccountManager.Instance.orcDecks.customDecks[i]);
                 orcDeckCount++;
                 orcDeckList.GetChild(orcDeckCount).gameObject.SetActive(true);
             }
