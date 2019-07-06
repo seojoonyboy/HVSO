@@ -7,6 +7,7 @@ using System.Linq;
 using UnityEngine.UI;
 using BestHTTP;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using dataModules;
 
 public partial class AccountManager : Singleton<AccountManager> {
@@ -362,17 +363,19 @@ public partial class AccountManager {
         );
         request.MethodType = HTTPMethods.Put;
 
+        JObject json = new JObject();
         foreach (NetworkManager.ModifyDeckReqArgs pair in pairs) {
             switch (pair.fieldName) {
                 case NetworkManager.ModifyDeckReqField.NAME:
-                    request.AddField("name", (string)pair.value);
+                    json.Add("name", (JToken)pair.value);
                     break;
                 case NetworkManager.ModifyDeckReqField.ITEMS:
                     var items = (NetworkManager.DeckItem[])pair.value;
-                    request.AddField("items", JsonConvert.SerializeObject(items));
+                    json.Add("items", JObject.Parse(JsonConvert.SerializeObject(items)));
                     break;
             }
         }
+        request.RawData =  Encoding.UTF8.GetBytes(json.ToString());
         if (callback != null) request.Callback = callback;
         networkManager.Request(request, OnReceived, "덱 수정 요청을 전달하는중...");
     }
