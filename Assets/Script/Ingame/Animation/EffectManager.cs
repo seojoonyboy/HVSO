@@ -24,4 +24,5 @@ public class SpineEffectManager {
     public GameObject highAttackEffect;
     public GameObject explosionEffect;
     public GameObject deadEffect;
+    public GameObject buffContinue;
 }

@@ -8,7 +8,6 @@ using Spine.Unity;
 public class EditCardHandler : MonoBehaviour, IPointerDownHandler, IPointerClickHandler {
     public string cardID;
     public DeckEditController deckEditController;
-    public SelectCard cardgroup;
 
     [SerializeField] MenuCardInfo menuCardInfo;
     dataModules.CollectionCard cardData;

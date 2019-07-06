@@ -44,6 +44,7 @@ namespace SkillModules {
             foreach(GameObject target in targets) {
                 target.GetComponent<PlaceMonster>().RequestChangeStat(args.atk, args.hp);
                 EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.BUFF, target.transform.position);
+                EffectSystem.Instance.ContinueEffect(EffectSystem.EffectType.CONTINUE_BUFF, target.transform);
             }
             skillHandler.isDone = true;
         }
