@@ -80,6 +80,10 @@ public class PlayerController : MonoBehaviour
                 buttonParticle.GetComponent<SkeletonGraphic>().color = new Color(1, 0.556f, 0.556f);
             buttonParticle.SetActive(false);
         }
+        else {
+            playerUI.transform.Find("EnemyNickname").GetComponent<TMPro.TextMeshProUGUI>().text = 
+                PlayMangement.instance.socketHandler.gameState.players.enemyPlayer(isHuman).user.nickName;
+        }
 
 
         if (isHuman == true) {

@@ -33,7 +33,7 @@ public class DeadSpine : MonoBehaviour
             deadEffect = Instantiate(EffectSystem.Instance.deadEffect);
 
         deadEffect.transform.position = transform.position;
-        Destroy(target, 0.2f);
+        Destroy(target, 0.05f);
         Destroy(deadEffect, deadEffect.GetComponent<ParticleSystem>().main.duration - 0.1f);
 
 
