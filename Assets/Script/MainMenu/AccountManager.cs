@@ -22,6 +22,7 @@ public partial class AccountManager : Singleton<AccountManager> {
     public HumanDecks humanDecks;
     public OrcDecks orcDecks;
     public List<CollectionCard> allCards { get; private set; }
+    public Dictionary<string, CollectionCard> allCardsDic { get; private set; }
 
     public Dictionary<string, HeroInventory> myHeroInventories { get; private set; }
     public CardDataPackage cardPackage;
@@ -421,6 +422,7 @@ public partial class AccountManager {
     private void OnReceivedLoadAllCards(HTTPRequest originalRequest, HTTPResponse response) {
         var result = dataModules.JsonReader.Read<List<CollectionCard>>(response.DataAsText);
         allCards = result;
+        allCardsDic = allCards.ToDictionary(x => x.id, x => x);
         Logger.Log("!!");
     }
 }

@@ -6,12 +6,11 @@ using UnityEngine.EventSystems;
 using Spine;
 using Spine.Unity;
 
-public class MenuCardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
+public class MenuCardHandler : MonoBehaviour {
     private string cardID;
     [SerializeField] MenuCardInfo menuCardInfo;
 
-    CardDataPackage cardDataPackage;
-    CardData cardData;
+    dataModules.CollectionCard cardData;
     GameObject skeleton;
     bool isHuman;
     public string CARDID {
@@ -22,9 +21,8 @@ public class MenuCardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     public void DrawCard(string id, bool isHuman) {
         this.isHuman = isHuman;
         cardID = id;
-        cardDataPackage = AccountManager.Instance.cardPackage;
-        if (cardDataPackage.data.ContainsKey(cardID)) {
-            cardData = cardDataPackage.data[cardID];
+        if (AccountManager.Instance.allCardsDic.ContainsKey(id)) {
+            cardData = AccountManager.Instance.allCardsDic[cardID];
             if (cardData.rarelity == "legend")
                 transform.SetAsFirstSibling();
             Sprite portraitImage = null;
@@ -32,7 +30,7 @@ public class MenuCardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
             else portraitImage = AccountManager.Instance.resource.cardPortraite["default"];
 
             transform.Find("Portrait").GetComponent<Image>().sprite = portraitImage;
-            if (!cardData.hero_chk) {
+            if (!cardData.isHeroCard) {
                 transform.Find("BackGround").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground[cardData.type + "_" + cardData.rarelity];
                 transform.Find("Name").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground["name_" + cardData.rarelity];
             }
@@ -72,32 +70,16 @@ public class MenuCardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
             transform.Find("SkillIcon").gameObject.SetActive(false);
         }
         transform.Find("Cost/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.cost.ToString();
-        transform.Find("Class").GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[cardData.class_1];
+        transform.Find("Class").GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[cardData.cardClasses[0]];
         transform.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.name;
+        if (!AccountManager.Instance.cardPackage.data.ContainsKey(id))
+            transform.Find("Disabled").gameObject.SetActive(true);
+        else
+            transform.Find("Disabled").gameObject.SetActive(false);
     }
 
     public void OpenCardInfo() {
         menuCardInfo.SetCardInfo(cardData, isHuman);
         menuCardInfo.transform.parent.gameObject.SetActive(true);
-    }
-
-
-    float clickTime;
-
-    public void OnBeginDrag(PointerEventData eventData) {
-        clickTime = 0;
-    }
-
-    public void OnDrag(PointerEventData eventData) {
-        clickTime += Time.deltaTime;
-        if (clickTime > 1.0f) {
-            OnEndDrag(null);
-            return;
-        }
-    }
-
-    public void OnEndDrag(PointerEventData eventData) {
-        clickTime = 0;
-        gameObject.SetActive(false);
     }
 }
