@@ -174,6 +174,7 @@ public partial class NetworkManager {
         public DeckItem[] items;
     }
 
+    [System.Serializable]
     public class DeckItem {
         public string cardId;
         public int cardCount;

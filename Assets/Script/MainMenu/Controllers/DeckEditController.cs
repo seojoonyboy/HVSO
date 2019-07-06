@@ -15,29 +15,32 @@ public class DeckEditController : MonoBehaviour
     private GameObject heroInfo;
     private GameObject heroCardGroup;
     private GameObject heroProperty;
-
     private GameObject settingLayout;
     private GameObject ownCardLayout;
     private GameObject UnReleaseCardLayout;
-
     private GameObject deckNamePanel;
 
+    public bool editing = false;
     public SelectCard selectCard;
     AccountManager accountManager;
     List<NetworkManager.DeckItem> items;
-    int deckId = -1;
-
+    public int deckId = -1;
+    
+    public List<NetworkManager.DeckItem> pairs = new List<NetworkManager.DeckItem>();
     private void Awake() {
         SetObject();
         //SetHeroData();
         //SettingCard();
-        SetUnitCard();
+        
 
         accountManager = AccountManager.Instance;
+        SetUnitCard();
     }
 
     void Start() {
-        items = new List<NetworkManager.DeckItem>();
+        //items = new List<NetworkManager.DeckItem>();
+        
+
     }
 
     private void Update() {
@@ -45,16 +48,39 @@ public class DeckEditController : MonoBehaviour
 
 
     public void NewDeck() {
-
+        editing = false;
     }
 
-    public void LoadEditDeck() {
-
+    public void LoadEditDeck(Deck deck) {
+        editing = true;
     }
     
     public void ConfirmButton() {
-        
+        switch (editing) {
+            case true:
+                SaveEditDeck();
+                break;
+            case false:
+                SaveNewDeck();
+                break;
+        }
     }
+
+    public void SaveNewDeck() {
+        RequestNewDeck();
+    }
+
+    public void SaveEditDeck() {
+        NetworkManager.ModifyDeckReqFormat form = new NetworkManager.ModifyDeckReqFormat();
+        NetworkManager.ModifyDeckReqArgs field = new NetworkManager.ModifyDeckReqArgs();
+
+        field.fieldName = NetworkManager.ModifyDeckReqField.NAME;
+        field.value = "Modified";
+        form.parms.Add(field);
+
+        RequestModifyDeck(form, 5);
+    }
+
 
     public void CancelButton() {
 
@@ -112,17 +138,51 @@ public class DeckEditController : MonoBehaviour
         selectCard.card.transform.Find("DeletePanel").gameObject.SetActive(false);
         transform.Find("SetDeckLayout").Find("glow").gameObject.SetActive(false);
 
+        NetworkManager.DeckItem deckItem = new NetworkManager.DeckItem();
+
+        deckItem.cardId = selectCard.card.GetComponent<EditCardHandler>().cardID;
+        deckItem.cardCount = 1;
+
+        if (pairs.Exists(x=>x.cardId == deckItem.cardId)) {
+            var _item = pairs.Find(x => x.cardId == deckItem.cardId);
+            _item.cardCount--;
+
+            if (_item.cardCount <= 0)
+                pairs.Remove(_item);
+        }
         RefreshLine();
     }
 
     public void ConfirmSetDeck() {
         if (selectCard == null) return;
-        selectCard.card.transform.SetParent(settingLayout.transform);
-        selectCard.card.GetComponent<EditCardHandler>().cardgroup.CardLocation = settingLayout;
-
         selectCard.card.transform.Find("DeletePanel").gameObject.SetActive(false);
         transform.Find("SetDeckLayout").Find("glow").gameObject.SetActive(false);
 
+
+       
+
+        NetworkManager.DeckItem deckItem = new NetworkManager.DeckItem();
+        deckItem.cardId = selectCard.card.GetComponent<EditCardHandler>().cardID;
+        deckItem.cardCount = 1;
+        
+        var _item = pairs.Find(x => x.cardId == deckItem.cardId);
+
+        
+
+        if (pairs.Exists(x => x == _item)) {         
+            if (_item.cardCount < 4) {
+                
+                _item.cardCount++;
+            }
+        }
+        else {
+            selectCard.card.transform.SetParent(settingLayout.transform);
+            selectCard.card.GetComponent<EditCardHandler>().cardgroup.CardLocation = settingLayout;
+            pairs.Add(deckItem);
+        }
+        
+
+        
         RefreshLine();
     }
 
@@ -203,8 +263,10 @@ public class DeckEditController : MonoBehaviour
         var fields = new List<NetworkManager.ModifyDeckReqArgs>();
         NetworkManager.ModifyDeckReqArgs field = new NetworkManager.ModifyDeckReqArgs();
 
+        items = pairs;
+
         field.fieldName = NetworkManager.ModifyDeckReqField.NAME;
-        field.value = "";   //덱 이름
+        field.value = deckNamePanel.transform.Find("InputField").Find("Text").GetComponent<Text>().text;   //덱 이름
         fields.Add(field);
 
         field = new NetworkManager.ModifyDeckReqArgs();
@@ -216,6 +278,10 @@ public class DeckEditController : MonoBehaviour
 
     private void OnDeckModifyFinished(HTTPRequest originalRequest, HTTPResponse response) {
         //덱 수정 요청 완료
+        if (response.StatusCode == 200) {
+            Logger.Log("덱 편집완료 완료");
+
+        }
     }
 
     /// <summary>
@@ -224,15 +290,22 @@ public class DeckEditController : MonoBehaviour
     void RequestNewDeck() {
         NetworkManager.AddCustomDeckReqFormat formatData = new NetworkManager.AddCustomDeckReqFormat();
 
-        formatData.heroId = ""; //영웅 id
+        items = pairs;
+
+        formatData.heroId = heroID; //영웅 id
         formatData.items = items.ToArray(); //추가한 카드 정보들
-        formatData.name = "";   //덱 이름
+        formatData.name = deckNamePanel.transform.Find("InputField").Find("Text").GetComponent<Text>().text;   //덱 이름
 
         accountManager.RequestDeckMake(formatData, OnMakeNewDeckFinished);
     }
 
     private void OnMakeNewDeckFinished(HTTPRequest originalRequest, HTTPResponse response) {
         //덱 새로 생성 완료
+        if(response.StatusCode == 200) {
+            Logger.Log("덱 생성 완료");
+
+        }
+
     }
 }
 [System.Serializable]
