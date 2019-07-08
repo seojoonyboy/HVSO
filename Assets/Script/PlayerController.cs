@@ -261,10 +261,7 @@ public class PlayerController : MonoBehaviour
         GameObject shield = transform.Find("shield").gameObject;
         shield.SetActive(true);
         SetState(HeroState.ATTACK);
-
-        
-
-        shieldStack.Value = 8;
+        if(PlayMangement.instance.heroShieldActive) return;
         PlayMangement.instance.heroShieldActive = true;
         StartCoroutine(PlayMangement.instance.DrawSpecialCard(isHuman));
         shieldStack.Value = 0;
