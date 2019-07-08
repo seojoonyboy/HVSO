@@ -434,6 +434,7 @@ public class PlaceMonster : MonoBehaviour {
                 else {
                     if(unit.attack <= unit.originalAttack) {
                        EffectSystem.Instance.DisableEffect(transform);
+                       buffEffect = false;
                     }
                 }
             }
