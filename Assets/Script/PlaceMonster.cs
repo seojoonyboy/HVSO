@@ -195,6 +195,12 @@ public class PlaceMonster : MonoBehaviour {
             if(myTarget.GetComponent<PlaceMonster>() != null) {
                 myTarget.AddComponent<SkillModules.poisonned>();
             }
+            if(unit.attackType.Contains("through")) {
+                if (targetPlayer.frontLine.transform.GetChild(x).childCount != 0)
+                    targetPlayer.frontLine.transform.GetChild(x).GetChild(0).gameObject.AddComponent<SkillModules.poisonned>();
+                if (targetPlayer.backLine.transform.GetChild(x).childCount != 0)
+                    targetPlayer.backLine.transform.GetChild(x).GetChild(0).gameObject.AddComponent<SkillModules.poisonned>();
+            }
         }
 
         MoveToTarget();
