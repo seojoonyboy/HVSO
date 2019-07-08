@@ -43,11 +43,6 @@ namespace SkillModules {
         private void AddBuff(ref List<GameObject> targets, ref GainArgs args) {
             foreach(GameObject target in targets) {
                 target.GetComponent<PlaceMonster>().RequestChangeStat(args.atk, args.hp);
-                EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.BUFF, target.transform.position);
-                if (target.GetComponent<PlaceMonster>().buffEffect == false) {                    
-                    EffectSystem.Instance.ContinueEffect(EffectSystem.EffectType.CONTINUE_BUFF, target.transform);
-                    target.GetComponent<PlaceMonster>().buffEffect = true;
-                }
             }
             skillHandler.isDone = true;
         }
@@ -309,7 +304,6 @@ namespace SkillModules {
         private void BlastEnemy(bool isPlayer, List<GameObject> targets, int amount) {
             foreach(GameObject target in targets) {
                 target.GetComponent<PlaceMonster>().RequestChangeStat(0, -amount);
-                EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.EXPLOSION, target.transform.position);
                 WaitEffect(target, amount);
             }
         }
@@ -395,7 +389,6 @@ namespace SkillModules {
         private void BlastEnemy(bool isPlayer, List<GameObject> targets, int amount) {
             foreach (GameObject target in targets) {
                 target.GetComponent<PlaceMonster>().RequestChangeStat(0, -amount);
-                EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.EXPLOSION, target.transform.position);
                 WaitEffect(target, amount);
             }
         }
