@@ -103,6 +103,7 @@ namespace SkillModules {
             BattleConnector connector = PlayMangement.instance.socketHandler;
             MessageFormat format = MessageForm(true);
             connector.UseCard(format);
+            PlayMangement.instance.UnlockTurnOver();
         }
 
         IEnumerator SkillTrigger (IngameEventHandler.EVENT_TYPE triggerType, object parms) {
@@ -116,12 +117,11 @@ namespace SkillModules {
             isDone = true;
             socketDone = true;
 
-            PlayMangement.instance.UnlockTurnOver();
             if(!isPlayer) yield break;
             if(isPlayingCard()) SendSocket();
             //TODO : field에서 select 발동 했을 때
             else if(isFieldCard()) SkillActivate();
-            
+            if(isPlayingCard()) PlayMangement.instance.UnlockTurnOver();
         }
 
         private bool isPlayingCard() {
