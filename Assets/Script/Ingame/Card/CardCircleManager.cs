@@ -258,7 +258,10 @@ public class CardCircleManager : MonoBehaviour {
         infoWindow.localScale = new Vector3(1, 1, 1);
         infoWindow.rotation = infoWindow.parent.rotation;
         infoWindow.gameObject.SetActive(false);
-        card.SetParent(cardStorage);
+        if (PlayMangement.instance.player.isHuman)
+            card.transform.SetParent(cardStorage.Find("HumanHeroCards"));
+        else
+            card.transform.SetParent(cardStorage.Find("OrcHeroCards"));
         card.localPosition = Vector3.zero;
         card.localScale = new Vector3(1, 1, 1);
         card.rotation = card.transform.parent.rotation;
