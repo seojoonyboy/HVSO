@@ -870,6 +870,8 @@ public partial class PlayMangement {
     }
 
     public IEnumerator EnemyMagicCardDraw(int drawNum) {
+        int total = CountEnemyCard() + drawNum;
+        if(total > 10) drawNum = drawNum - (total - 10);
         for(int i = 0 ; i < drawNum; i++) {
             GameObject enemyCard;
             if (enemyPlayer.isHuman)
