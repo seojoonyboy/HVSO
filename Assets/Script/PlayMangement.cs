@@ -696,7 +696,7 @@ public partial class PlayMangement : MonoBehaviour {
 
     public void AddSkillIcon(string status, Transform UnitTransform) {
 
-        if (UnitTransform.childCount == 0) {
+        if (UnitTransform.Find("UnitTakeEffectIcon").childCount == 0) {
             GameObject Icon = Instantiate(AccountManager.Instance.resource.baseSkillIcon, UnitTransform.Find("UnitTakeEffectIcon"));
             Icon.name = status;
             Icon.transform.position = UnitTransform.Find("UnitTakeEffectIcon").position;
@@ -708,7 +708,7 @@ public partial class PlayMangement : MonoBehaviour {
     }
 
     public void DisabelSkillIcon(string status, Transform UnitTransform) {
-        if (UnitTransform.childCount < 0) return;
+        if (UnitTransform.Find("UnitTakeEffectIcon").childCount < 0) return;
         //if(AccountManager.Instance.resource.skillIcons[status] != UnitTransform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite)
         Destroy(UnitTransform.Find(status));      
     }
