@@ -38,6 +38,19 @@ public class PlaceMonster : MonoBehaviour {
         get { return unitSpine.atkDuration; }
     }
 
+    struct buffStat {
+        public bool running;
+        public int atk;
+        public int hp;
+        public void init() {
+            running = false;
+            atk = 0;
+            hp = 0;
+        }
+    }
+    private buffStat buff = new buffStat();
+
+
     public enum UnitState {
         APPEAR,
         IDLE,
@@ -49,6 +62,7 @@ public class PlaceMonster : MonoBehaviour {
     };
 
     void OnDestroy() {
+        
         if (isPlayer) {
             PlayMangement.instance.PlayerUnitsObserver.RefreshFields(CardDropManager.Instance.unitLine);
         }
@@ -386,24 +400,36 @@ public class PlaceMonster : MonoBehaviour {
     }
 
     public void RequestChangeStat(int power = 0, int hp = 0) {
+        StartCoroutine(buffEffectCoroutine(power, hp));
         unit.attack += power;
         if (unit.attack < 0) unit.attack = 0;
         unit.currentHP += hp;
-
-
-        EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.BUFF, transform.position);
-
-        if (buffEffect == false) {
-            if (unit.attack > unit.originalAttack || unit.currentHP > unit.HP) {
-                
-            }
-            else if (unit.attack <= unit.originalAttack || unit.currentHP <= unit.HP) {
-                EffectSystem.Instance.DisableEffect(transform);
-                buffEffect = false;
-            }
-        }    
-
+        
         UpdateStat();
+    }
+
+    private IEnumerator buffEffectCoroutine(int power, int hp){
+        buff.atk += power;
+        buff.hp += hp;
+        if(buff.running) yield break;
+        else buff.running = true;
+        yield return null;
+        if(buff.atk == 0 && buff.hp == 0) {
+            buff.init();
+            yield break;
+        }
+        else {
+            if(buff.hp < 0) 
+                EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.EXPLOSION, transform.position);
+            else {
+                EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.BUFF, transform.position);
+                if (gameObject.GetComponent<PlaceMonster>().buffEffect == false) {                    
+                    EffectSystem.Instance.ContinueEffect(EffectSystem.EffectType.CONTINUE_BUFF, transform);
+                    gameObject.GetComponent<PlaceMonster>().buffEffect = true;
+                }
+            }
+        }
+        buff.init();
     }
 
     public void UpdateStat() {

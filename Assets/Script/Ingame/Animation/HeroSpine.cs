@@ -80,6 +80,7 @@ public class HeroSpine : MonoBehaviour
         thinking = true;
         await System.Threading.Tasks.Task.Delay(7000);
         if(!thinking) return;
+        if(gameObject == null) return;
         SkeletonAnimation thinkAni = transform.GetChild(0).GetComponent<SkeletonAnimation>();
         thinkAni.gameObject.SetActive(true);
         TrackEntry x = thinkAni.AnimationState.SetAnimation(0, "APPEAR", false);

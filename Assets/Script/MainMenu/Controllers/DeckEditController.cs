@@ -66,7 +66,19 @@ public class DeckEditController : MonoBehaviour
             NetworkManager.ModifyDeckReqArgs field = new NetworkManager.ModifyDeckReqArgs();
 
             field.fieldName = NetworkManager.ModifyDeckReqField.NAME;
-            field.value = deckNamePanel.transform.Find("NameTemplate").Find("Text").GetComponent<Text>().text;
+
+            string inputNameVal = deckNamePanel.transform.Find("NameTemplate").Find("Text").GetComponent<Text>().text;
+            
+            
+            if (string.IsNullOrEmpty(inputNameVal)) {
+                Modal.instantiate("원하는 이름을 적어주세요", Modal.Type.CHECK);
+                return;
+            }
+            if (inputNameVal.Contains(" ")) {
+                Modal.instantiate("덱 이름의 빈 칸은 제거됩니다.", Modal.Type.CHECK);
+                inputNameVal = inputNameVal.Replace(" ", string.Empty);
+            }
+            field.value = inputNameVal;
             form.parms.Add(field);
 
             RequestModifyDeck(form, deckID);

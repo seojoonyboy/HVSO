@@ -317,7 +317,6 @@ namespace SkillModules {
         private void BlastEnemy(bool isPlayer, List<GameObject> targets, int amount) {
             foreach(GameObject target in targets) {
                 target.GetComponent<PlaceMonster>().RequestChangeStat(0, -amount);
-                EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.EXPLOSION, target.transform.position);
                 WaitEffect(target, amount);
             }
         }
@@ -403,7 +402,6 @@ namespace SkillModules {
         private void BlastEnemy(bool isPlayer, List<GameObject> targets, int amount) {
             foreach (GameObject target in targets) {
                 target.GetComponent<PlaceMonster>().RequestChangeStat(0, -amount);
-                EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.EXPLOSION, target.transform.position);
                 WaitEffect(target, amount);
             }
         }
