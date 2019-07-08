@@ -73,7 +73,7 @@ public class MenuSceneController : MonoBehaviour {
         while (true) {
             if (!buttonClicked && currentPage != windowScrollSnap.CurrentPage) {
                 currentPage = windowScrollSnap.CurrentPage;
-                SetButtonAnimation(currentPage);
+                //SetButtonAnimation(currentPage);
             }
             else {
                 if (currentPage == windowScrollSnap.CurrentPage)
