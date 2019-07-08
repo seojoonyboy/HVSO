@@ -713,6 +713,25 @@ public partial class PlayMangement : MonoBehaviour {
         Destroy(UnitTransform.Find(status));      
     }
 
+    public void AddSkillAtkProperty(string status, Transform transform) {
+        if(transform.Find("UnitAttackProperty").childCount == 0) {
+            GameObject Icon = Instantiate(AccountManager.Instance.resource.baseSkillIcon, transform.Find("UnitAttackProperty"));
+            Icon.name = status;
+            Icon.transform.position = transform.Find("UnitAttackProperty").position;
+        }
+        else {
+            GameObject sprite = transform.Find("UnitAttackProperty").gameObject;
+            sprite.GetComponent<SpriteRenderer>().sprite = AccountManager.Instance.resource.skillIcons["fusion"];
+        }
+    }
+
+    public void DisablePropertyIcon(string status, Transform transform) {
+        if (transform.Find("UnitAttackProperty").childCount < 0) return;
+        //if(AccountManager.Instance.resource.skillIcons[status] != UnitTransform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite)
+        Destroy(transform.Find(status));
+    }
+
+
 
 }
 

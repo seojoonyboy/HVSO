@@ -13,7 +13,7 @@ namespace SkillModules {
             TextMeshPro textPro = transform.Find("Status").GetComponent<TextMeshPro>();
             textPro.gameObject.SetActive(true);
             textPro.text = "보호 받음";
-            PlayMangement.instance.AddSkillIcon("protect", transform);
+           //PlayMangement.instance.AddSkillIcon("protect", transform);
 
             eventHandler = PlayMangement.instance.EventHandler;
             eventHandler.AddListener(IngameEventHandler.EVENT_TYPE.END_BATTLE_TURN, OnBattleEndTurn);
@@ -27,7 +27,7 @@ namespace SkillModules {
             TextMeshPro textPro = transform.Find("Status").GetComponent<TextMeshPro>();
             textPro.gameObject.SetActive(false);
 
-            PlayMangement.instance.DisabelSkillIcon("protect", transform);
+            //PlayMangement.instance.DisabelSkillIcon("protect", transform);
             eventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.BEGIN_ORC_PRE_TURN, OnBattleEndTurn);
         }
     }
