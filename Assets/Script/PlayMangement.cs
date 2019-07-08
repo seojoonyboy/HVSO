@@ -404,6 +404,12 @@ public partial class PlayMangement : MonoBehaviour {
             EnemyUnitsObserver.UnitAdded(unit, col, row);
             unit.layer = 14;
         }
+
+        if(placeMonster.unit.attackType.Length > 0) {
+            GameObject icon = Instantiate(AccountManager.Instance.resource.baseSkillIcon, placeMonster.gameObject.transform.Find("UnitAttackProperty"));
+            icon.GetComponent<SpriteRenderer>().sprite = AccountManager.Instance.resource.skillIcons[placeMonster.unit.attackType[0]];
+        }
+
         targetPlayer.PlayerUseCard();
         return unit;
     }
