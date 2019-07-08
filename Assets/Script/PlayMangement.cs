@@ -720,7 +720,7 @@ public partial class PlayMangement : MonoBehaviour {
             Icon.transform.position = transform.Find("UnitAttackProperty").position;
         }
         else {
-            GameObject sprite = transform.Find("UnitAttackProperty").gameObject;
+            GameObject sprite = transform.Find("UnitAttackProperty").GetChild(0).gameObject;
             sprite.GetComponent<SpriteRenderer>().sprite = AccountManager.Instance.resource.skillIcons["fusion"];
         }
     }
