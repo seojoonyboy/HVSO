@@ -403,7 +403,7 @@ public partial class BattleConnector : MonoBehaviour {
         //Logger.Log("WebSocket State : end_shield_turn");
         StartCoroutine(waitSkillDone(() => {
             PlayMangement.instance.heroShieldActive = false;
-            PlayMangement.instance.LockTurnOver();
+            PlayMangement.instance.UnlockTurnOver();
         }, true));
     }
 
