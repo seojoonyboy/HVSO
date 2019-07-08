@@ -1011,11 +1011,11 @@ public partial class PlayMangement {
     }
 
     public void LockTurnOver() {
-        releaseTurnBtn.GetComponent<Button>().enabled = false;
+        releaseTurnBtn.SetActive(false);
     }
 
     public void UnlockTurnOver() {
-        releaseTurnBtn.GetComponent<Button>().enabled = true;
+        releaseTurnBtn.SetActive(true);
     }
 
     private IEnumerator SetOrcTurnTable(string currentTurn) {

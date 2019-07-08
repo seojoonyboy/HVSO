@@ -115,6 +115,8 @@ namespace SkillModules {
             //유닛 소환이나 마법 카드 사용 했을 때
             isDone = true;
             socketDone = true;
+
+            PlayMangement.instance.UnlockTurnOver();
             if(!isPlayer) yield break;
             if(isPlayingCard()) SendSocket();
             //TODO : field에서 select 발동 했을 때
