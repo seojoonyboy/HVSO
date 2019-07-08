@@ -10,11 +10,13 @@ namespace SkillModules {
             TextMeshPro textPro = transform.Find("Status").GetComponent<TextMeshPro>();
             textPro.gameObject.SetActive(true);
             textPro.text = "스턴";
+            PlayMangement.instance.AddSkillIcon("stun", transform);
         }
 
         void OnDestroy() {
             TextMeshPro textPro = transform.Find("Status").GetComponent<TextMeshPro>();
             textPro.gameObject.SetActive(false);
+            PlayMangement.instance.DisabelSkillIcon("stun", transform);
         }
     }
 }

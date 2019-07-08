@@ -41,13 +41,21 @@ namespace SkillModules {
         }
 
         private void AddBuff(ref List<GameObject> targets, ref GainArgs args) {
-            foreach(GameObject target in targets) {
+            foreach (GameObject target in targets) {
                 target.GetComponent<PlaceMonster>().RequestChangeStat(args.atk, args.hp);
-                EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.BUFF, target.transform.position);
-                if (target.GetComponent<PlaceMonster>().buffEffect == false) {                    
+
+                if(args.atk > 0) {
+                    EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.BUFF, target.transform.position);
                     EffectSystem.Instance.ContinueEffect(EffectSystem.EffectType.CONTINUE_BUFF, target.transform);
-                    target.GetComponent<PlaceMonster>().buffEffect = true;
                 }
+                else if(args.hp > 0) {
+                    EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.BUFF, target.transform.position);
+                    EffectSystem.Instance.ContinueEffect(EffectSystem.EffectType.CONTINUE_BUFF, target.transform);
+                }
+                else {
+                    EffectSystem.Instance.DisableEffect(target.transform);
+                }
+
             }
             skillHandler.isDone = true;
         }

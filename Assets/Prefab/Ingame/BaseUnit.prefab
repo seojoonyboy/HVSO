@@ -153,6 +153,36 @@ Animation:
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
   m_CullingType: 0
+--- !u!1 &2393537200698574264
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5581557248154971032}
+  m_Layer: 13
+  m_Name: UnitTakeEffectIcon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5581557248154971032
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2393537200698574264}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.56, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4549778766762803916}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4549778766304053452
 GameObject:
   m_ObjectHideFlags: 0
@@ -761,6 +791,7 @@ Transform:
   - {fileID: 2199904772705867139}
   - {fileID: 5189883762208099343}
   - {fileID: 913061196341973131}
+  - {fileID: 5581557248154971032}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -849,7 +880,9 @@ MonoBehaviour:
   addAttackPower: 0
   myUnitNum: 0
   itemId: -1
+  buffEffect: 0
   unitSpine: {fileID: 0}
+  hideSpine: {fileID: 0}
   effectObject: {fileID: 0}
 --- !u!1 &7633947265274660232
 GameObject:

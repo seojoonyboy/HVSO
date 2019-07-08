@@ -691,6 +691,27 @@ public partial class PlayMangement : MonoBehaviour {
         } while (heroShieldActive);
         IngameNotice.instance.CloseNotice();
     }
+
+    public void AddSkillIcon(string status, Transform UnitTransform) {
+
+        if (UnitTransform.childCount == 0) {
+            GameObject Icon = Instantiate(AccountManager.Instance.resource.baseSkillIcon, UnitTransform.Find("UnitTakeEffectIcon"));
+            Icon.name = status;
+            Icon.transform.position = UnitTransform.Find("UnitTakeEffectIcon").position;
+        }
+        else {
+            GameObject sprite = UnitTransform.Find("UnitTakeEffectIcon").gameObject;
+            sprite.GetComponent<SpriteRenderer>().sprite = AccountManager.Instance.resource.skillIcons["fusion"];
+        }
+    }
+
+    public void DisabelSkillIcon(string status, Transform UnitTransform) {
+        if (UnitTransform.childCount < 0) return;
+        //if(AccountManager.Instance.resource.skillIcons[status] != UnitTransform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite)
+        Destroy(UnitTransform.Find(status));      
+    }
+
+
 }
 
 /// <summary>

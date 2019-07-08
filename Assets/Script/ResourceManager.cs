@@ -22,4 +22,5 @@ public class ResourceManager : SerializedMonoBehaviour
     public Dictionary<string, Sprite> heroPortraite;
     public GameObject unitDeadObject;
     public GameObject previewUnit;
+    public GameObject baseSkillIcon;
 }

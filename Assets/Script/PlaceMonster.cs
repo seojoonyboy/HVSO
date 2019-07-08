@@ -33,6 +33,7 @@ public class PlaceMonster : MonoBehaviour {
     protected float currentTime;
     protected bool instanceAttack = false;
     public GameObject effectObject;
+
     public float atkTime {
         get { return unitSpine.atkDuration; }
     }
@@ -388,6 +389,20 @@ public class PlaceMonster : MonoBehaviour {
         unit.attack += power;
         if (unit.attack < 0) unit.attack = 0;
         unit.currentHP += hp;
+
+
+        EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.BUFF, transform.position);
+
+        if (buffEffect == false) {
+            if (unit.attack > unit.originalAttack || unit.currentHP > unit.HP) {
+                
+            }
+            else if (unit.attack <= unit.originalAttack || unit.currentHP <= unit.HP) {
+                EffectSystem.Instance.DisableEffect(transform);
+                buffEffect = false;
+            }
+        }    
+
         UpdateStat();
     }
 

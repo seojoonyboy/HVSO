@@ -24,7 +24,7 @@ public class EffectSystem : MonoBehaviour
     public void ShowEffect(EffectType type, Vector3 pos) {
         if (effectObject.ContainsKey(type) == false || effectObject[type] == null) return;
         GameObject effect = Instantiate(effectObject[type], pos, Quaternion.identity);
-        SkeletonAnimation effectAnimation = effect.GetComponent<SkeletonAnimation>();
+        SkeletonAnimation effectAnimation = effect.GetComponent<SkeletonAnimation>();     
         effectAnimation.AnimationState.SetAnimation(0, "animation", false);
         Destroy(effect, effectAnimation.skeleton.Data.FindAnimation("animation").Duration - 0.1f);        
     }
@@ -32,9 +32,17 @@ public class EffectSystem : MonoBehaviour
     public void ContinueEffect(EffectType type, Transform pos) {
         if (effectObject.ContainsKey(type) == false || effectObject[type] == null) return;
         GameObject effect = Instantiate(effectObject[type], pos);
+        effect.name = "continueBuff";
         effect.transform.position = pos.position;
+        pos.gameObject.GetComponent<PlaceMonster>().buffEffect = true;
         SkeletonAnimation effectAnimation = effect.GetComponent<SkeletonAnimation>();
         effectAnimation.AnimationState.SetAnimation(0, "animation", true);
+    }
+
+    public void DisableEffect(Transform pos) {
+        if (pos.gameObject.GetComponent<PlaceMonster>().buffEffect == false) return;
+        pos.gameObject.GetComponent<PlaceMonster>().buffEffect = false;
+        Destroy(pos.Find("continueBuff").gameObject);
     }
 
 
