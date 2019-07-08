@@ -423,12 +423,14 @@ public class PlaceMonster : MonoBehaviour {
                 EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.EXPLOSION, transform.position);
             else {
                 EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.BUFF, transform.position);
-                if (gameObject.GetComponent<PlaceMonster>().buffEffect == false) {                    
+                if (buffEffect == false) {                    
                     EffectSystem.Instance.ContinueEffect(EffectSystem.EffectType.CONTINUE_BUFF, transform);
-                    gameObject.GetComponent<PlaceMonster>().buffEffect = true;
+                    buffEffect = true;
                 }
                 else {
-                    EffectSystem.Instance.DisableEffect(transform);
+                    if(unit.attack <= unit.originalAttack) {
+                       EffectSystem.Instance.DisableEffect(transform);
+                    }
                 }
             }
         }

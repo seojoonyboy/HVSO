@@ -41,13 +41,8 @@ namespace SkillModules {
         }
 
         private void AddBuff(ref List<GameObject> targets, ref GainArgs args) {
-            foreach (GameObject target in targets) {
+            foreach (GameObject target in targets)
                 target.GetComponent<PlaceMonster>().RequestChangeStat(args.atk, args.hp);
-
-                
-                    
-
-            }
             skillHandler.isDone = true;
         }
     }
