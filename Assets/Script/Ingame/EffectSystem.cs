@@ -34,14 +34,12 @@ public class EffectSystem : MonoBehaviour
         GameObject effect = Instantiate(effectObject[type], pos);
         effect.name = "continueBuff";
         effect.transform.position = pos.position;
-        pos.gameObject.GetComponent<PlaceMonster>().buffEffect = true;
         SkeletonAnimation effectAnimation = effect.GetComponent<SkeletonAnimation>();
         effectAnimation.AnimationState.SetAnimation(0, "animation", true);
     }
 
     public void DisableEffect(Transform pos) {
         if (pos.gameObject.GetComponent<PlaceMonster>().buffEffect == false) return;
-        pos.gameObject.GetComponent<PlaceMonster>().buffEffect = false;
         Destroy(pos.Find("continueBuff").gameObject);
     }
 

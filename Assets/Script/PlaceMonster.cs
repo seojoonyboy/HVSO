@@ -427,6 +427,9 @@ public class PlaceMonster : MonoBehaviour {
                     EffectSystem.Instance.ContinueEffect(EffectSystem.EffectType.CONTINUE_BUFF, transform);
                     gameObject.GetComponent<PlaceMonster>().buffEffect = true;
                 }
+                else {
+                    EffectSystem.Instance.DisableEffect(transform);
+                }
             }
         }
         buff.init();
