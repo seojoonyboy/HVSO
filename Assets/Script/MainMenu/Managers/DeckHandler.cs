@@ -76,7 +76,7 @@ public class DeckHandler : MonoBehaviour
 
     private void OnRemoved(HTTPRequest originalRequest, HTTPResponse response) {
         if (response.StatusCode == 200) {
-            deckEditCanvas.GetComponentInParent<DeckSettingManager>()
+            transform.GetComponentInParent<DeckSettingManager>()
                 .menuSceneController
                 .decksLoader
                 .Load();
