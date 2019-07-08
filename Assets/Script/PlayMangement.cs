@@ -201,8 +201,6 @@ public partial class PlayMangement : MonoBehaviour {
                     EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.FIELD_CHANGED, null, null);
                 }
                 else {
-                    if(history.cardItem.id.CompareTo("ac10023") == 0)
-                        socketHandler.r_returnState = state;
                     GameObject summonedMagic = SummonMagic(history);
                     summonedMagic.GetComponent<MagicDragHandler>().isPlayer = false;
                     yield return MagicActivate(summonedMagic, history);
@@ -678,8 +676,6 @@ public partial class PlayMangement : MonoBehaviour {
                 IngameNotice.instance.CloseNotice();
                 SocketFormat.GameState state = socketHandler.getHistory();
                 SocketFormat.PlayHistory history = state.lastUse;
-                if(history.cardItem.id.CompareTo("ac10023") == 0)
-                    socketHandler.r_returnState = state;
                 if (history != null) {
                     GameObject summonedMagic = SummonMagic(history);
                     summonedMagic.GetComponent<MagicDragHandler>().isPlayer = false;
