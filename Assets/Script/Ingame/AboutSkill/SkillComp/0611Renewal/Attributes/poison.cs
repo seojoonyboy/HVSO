@@ -18,7 +18,7 @@ namespace SkillModules {
             TextMeshPro textPro = transform.Find("Status").GetComponent<TextMeshPro>();
             textPro.gameObject.SetActive(false);
             //PlayMangement.instance.DisabelSkillIcon("poison", transform);
-            PlayMangement.instance.DisablePropertyIcon("poison", transform);
+            //PlayMangement.instance.DisablePropertyIcon("poison", transform);
         }
     }
 }

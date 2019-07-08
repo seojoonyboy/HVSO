@@ -728,7 +728,7 @@ public partial class PlayMangement : MonoBehaviour {
     public void DisablePropertyIcon(string status, Transform transform) {
         if (transform.Find("UnitAttackProperty").childCount < 0) return;
         //if(AccountManager.Instance.resource.skillIcons[status] != UnitTransform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite)
-        Destroy(transform.Find(status));
+        Destroy(transform.Find("UnitAttackProperty").Find(status));
     }
 
 
