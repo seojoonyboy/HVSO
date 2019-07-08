@@ -23,6 +23,8 @@ public class PlaceMonster : MonoBehaviour {
     public int myUnitNum = 0;
     public int itemId = -1;
 
+    public bool buffEffect = false;
+
     protected delegate void TimeUpdate(float time);
     protected TimeUpdate timeUpdate;
     public UnitSpine unitSpine;
