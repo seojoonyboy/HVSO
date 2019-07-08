@@ -28,8 +28,8 @@ public class MenuSceneController : MonoBehaviour {
     private void Start() {
         currentPage = 2;
         Transform buttonsParent = fixedCanvas.Find("Footer");
-        for (int i = 0; i < fixedCanvas.Find("Footer").childCount; i++)
-            buttonSkeletons[i] = buttonsParent.GetChild(i).Find("ButtonImage").GetComponent<SkeletonGraphic>();
+        //for (int i = 0; i < fixedCanvas.Find("Footer").childCount; i++)
+        //    buttonSkeletons[i] = buttonsParent.GetChild(i).Find("ButtonImage").GetComponent<SkeletonGraphic>();
         StartCoroutine(UpdateWindow());
     }
 
@@ -46,7 +46,7 @@ public class MenuSceneController : MonoBehaviour {
         buttonClicked = true;
         currentPage = pageNum;
         windowScrollSnap.GoToScreen(pageNum);
-        SetButtonAnimation(pageNum);
+        //SetButtonAnimation(pageNum);
     }
     
     private void SetButtonAnimation(int pageNum, TrackEntry trackEntry = null) {
