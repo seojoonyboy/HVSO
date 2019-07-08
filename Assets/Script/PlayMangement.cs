@@ -718,6 +718,7 @@ public partial class PlayMangement : MonoBehaviour {
             GameObject Icon = Instantiate(AccountManager.Instance.resource.baseSkillIcon, transform.Find("UnitAttackProperty"));
             Icon.name = status;
             Icon.transform.position = transform.Find("UnitAttackProperty").position;
+            Icon.GetComponent<SpriteRenderer>().sprite = AccountManager.Instance.resource.skillIcons[status];
         }
         else {
             GameObject sprite = transform.Find("UnitAttackProperty").GetChild(0).gameObject;
