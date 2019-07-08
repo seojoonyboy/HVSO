@@ -394,13 +394,17 @@ public partial class BattleConnector : MonoBehaviour {
 
     public void begin_shield_turn(object args) {
         //Logger.Log("WebSocket State : begin_shield_turn");
+        PlayMangement.instance.LockTurnOver();
         dequeueing = false;
         getNewCard = true;
     }
 
     public void end_shield_turn(object args) {
         //Logger.Log("WebSocket State : end_shield_turn");
-        StartCoroutine(waitSkillDone(() => {PlayMangement.instance.heroShieldActive = false;}, true));
+        StartCoroutine(waitSkillDone(() => {
+            PlayMangement.instance.heroShieldActive = false;
+            PlayMangement.instance.LockTurnOver();
+        }, true));
     }
 
     public IEnumerator waitSkillDone(UnityAction callback, bool isShield = false) {

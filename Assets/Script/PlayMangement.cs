@@ -1010,6 +1010,14 @@ public partial class PlayMangement {
         }
     }
 
+    public void LockTurnOver() {
+        releaseTurnBtn.GetComponent<Button>().enabled = false;
+    }
+
+    public void UnlockTurnOver() {
+        releaseTurnBtn.GetComponent<Button>().enabled = true;
+    }
+
     private IEnumerator SetOrcTurnTable(string currentTurn) {
         yield return new WaitForSeconds(0.4f);
         switch (currentTurn) {
