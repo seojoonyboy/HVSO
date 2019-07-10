@@ -141,23 +141,4 @@ public class UnitSpine : MonoBehaviour
     public virtual void TakeMagicEvent(TrackEntry entry) {
         if (takeMagicCallback != null) takeMagicCallback();
     }
-
-
-    public virtual void HideUnit() {
-        skeletonAnimation.skeleton.A = 0.2f;
-        PlaceMonster placeMonster = transform.parent.GetComponent<PlaceMonster>();
-        if (placeMonster != null) {
-            transform.parent.Find("HP").gameObject.SetActive(false);
-            transform.parent.Find("ATK").gameObject.SetActive(false);
-        }
-    }
-
-    public virtual void DetectUnit() {
-        skeletonAnimation.skeleton.A = 1f;
-        PlaceMonster placeMonster = transform.parent.GetComponent<PlaceMonster>();
-        if (placeMonster != null) {
-            transform.parent.Find("HP").gameObject.SetActive(true);
-            transform.parent.Find("ATK").gameObject.SetActive(true);
-        }
-    }
 }
