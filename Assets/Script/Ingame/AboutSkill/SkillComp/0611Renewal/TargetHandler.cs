@@ -424,6 +424,7 @@ namespace TargetModules {
                     callback = null;
                     PlayMangement.instance.infoOn = false;
                     PlayMangement.dragable = true;
+                    PlayMangement.instance.UnlockTurnOver();
 
                     var units = PlayMangement.instance.EnemyUnitsObserver.GetAllFieldUnits();
                     foreach (GameObject unit in units) {
@@ -578,10 +579,13 @@ namespace TargetModules {
             }
             
             PlayMangement.instance.OffBlockPanel();
+            PlayMangement.instance.UnlockTurnOver();
         }
 
         public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback, Filtering filter) {
             base.SelectTarget(successCallback, failedCallback, filter);
+            PlayMangement.instance.LockTurnOver();
+
             //TODO : 적일 경우 해당 소켓이 도달 할 때까지 기다리기 card_played, skill_activated
             if(!skillHandler.isPlayer) { 
                 StartCoroutine(enemyTurnSelect(successCallback, failedCallback));

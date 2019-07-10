@@ -1,22 +1,22 @@
 fileFormatVersion: 2
-guid: f179400d291d6b245894e444198cc840
+guid: 727791ca282e32040bb5ee40b88453e9
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3123407221269291226
-    second: BATTLE
+      213: 8078502863657416234
+    second: Battle
   - first:
       213: 8581146994476450455
     second: Store
   - first:
-      213: -7546034718124936920
-    second: Collection
+      213: 1041713939344559463
+    second: Modify
   - first:
       213: 9210954512604926321
     second: League
   - first:
-      213: 7851574366030154696
-    second: Mission
+      213: -4011385762147605730
+    second: Story
   - first:
       213: -6138172339295865102
     second: Guild
@@ -78,7 +78,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 2
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 1024
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -89,7 +89,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
   - serializedVersion: 2
     buildTarget: Standalone
-    maxTextureSize: 1024
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -100,7 +100,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
   - serializedVersion: 2
     buildTarget: iPhone
-    maxTextureSize: 512
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -111,7 +111,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
   - serializedVersion: 2
     buildTarget: Android
-    maxTextureSize: 1024
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -124,22 +124,22 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: BATTLE
+      name: Battle
       rect:
         serializedVersion: 2
-        x: 140
-        y: 748
+        x: 152
+        y: 856
         width: 236
-        height: 72
+        height: 68
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 94ecf2b7d6a94e041905afb5f08627c5
-      internalID: 3123407221269291226
+      spriteID: a2ef1b43540e5c44eacdb262814845b8
+      internalID: 8078502863657416234
       vertices: []
       indices: 
       edges: []
@@ -148,40 +148,40 @@ TextureImporter:
       name: Store
       rect:
         serializedVersion: 2
-        x: 214
-        y: 652
-        width: 86
-        height: 52
+        x: 223
+        y: 716
+        width: 90
+        height: 50
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b3e44beeb363cb44581493ca34e77c82
+      spriteID: 9de117bf6e3f80942af13addabaf3dbb
       internalID: 8581146994476450455
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Collection
+      name: Modify
       rect:
         serializedVersion: 2
-        x: 196
-        y: 542
-        width: 121
-        height: 51
+        x: 206
+        y: 582
+        width: 124
+        height: 54
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a8fe3cc60f9b15744a6388308d1b6863
-      internalID: -7546034718124936920
+      spriteID: 4a30dc04806dc894587cc5544e7e266a
+      internalID: 1041713939344559463
       vertices: []
       indices: 
       edges: []
@@ -190,40 +190,40 @@ TextureImporter:
       name: League
       rect:
         serializedVersion: 2
-        x: 175
-        y: 429
-        width: 163
-        height: 54
+        x: 183
+        y: 446
+        width: 167
+        height: 56
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 296accf8333645a4ca0c18fcb3ad02df
+      spriteID: 670b96d85c8dd174e94b15982f8d3bf4
       internalID: 9210954512604926321
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Mission
+      name: Story
       rect:
         serializedVersion: 2
-        x: 216
-        y: 320
-        width: 82
-        height: 50
+        x: 207
+        y: 316
+        width: 122
+        height: 54
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 439a2191eec3e1a48a996620993fbfd4
-      internalID: 7851574366030154696
+      spriteID: 266ffc5c97263804092de1e011a86c57
+      internalID: -4011385762147605730
       vertices: []
       indices: 
       edges: []
@@ -232,18 +232,18 @@ TextureImporter:
       name: Guild
       rect:
         serializedVersion: 2
-        x: 216
-        y: 212
-        width: 80
-        height: 50
+        x: 224
+        y: 184
+        width: 85
+        height: 53
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1901e95c88852f44e8157cd1fc9b10cb
+      spriteID: ad4a5f979ffb2ef4599d5888274e5f19
       internalID: -6138172339295865102
       vertices: []
       indices: 
@@ -252,7 +252,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 35b892be75a7e8d4fb5c55b4a9e08fff
+    spriteID: 527fba45d50695f4f84e9e9d2473b966
     internalID: 0
     vertices: []
     indices: 

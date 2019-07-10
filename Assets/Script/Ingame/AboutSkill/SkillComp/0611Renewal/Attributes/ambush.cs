@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class ambush : MonoBehaviour {
     IngameEventHandler eventHandler;
-    DebugManagement debugManagement;
     // Start is called before the first frame update
     void Start() {
         eventHandler = PlayMangement.instance.EventHandler;

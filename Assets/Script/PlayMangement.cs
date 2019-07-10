@@ -201,8 +201,6 @@ public partial class PlayMangement : MonoBehaviour {
                     EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.FIELD_CHANGED, null, null);
                 }
                 else {
-                    if(history.cardItem.id.CompareTo("ac10023") == 0)
-                        socketHandler.r_returnState = state;
                     GameObject summonedMagic = SummonMagic(history);
                     summonedMagic.GetComponent<MagicDragHandler>().isPlayer = false;
                     yield return MagicActivate(summonedMagic, history);
@@ -404,6 +402,12 @@ public partial class PlayMangement : MonoBehaviour {
             EnemyUnitsObserver.UnitAdded(unit, col, row);
             unit.layer = 14;
         }
+
+        if(placeMonster.unit.attackType.Length > 0) {
+            GameObject icon = Instantiate(AccountManager.Instance.resource.baseSkillIcon, placeMonster.gameObject.transform.Find("UnitAttackProperty"));
+            icon.GetComponent<SpriteRenderer>().sprite = AccountManager.Instance.resource.skillIcons[placeMonster.unit.attackType[0]];
+        }
+
         targetPlayer.PlayerUseCard();
         return unit;
     }
@@ -678,8 +682,6 @@ public partial class PlayMangement : MonoBehaviour {
                 IngameNotice.instance.CloseNotice();
                 SocketFormat.GameState state = socketHandler.getHistory();
                 SocketFormat.PlayHistory history = state.lastUse;
-                if(history.cardItem.id.CompareTo("ac10023") == 0)
-                    socketHandler.r_returnState = state;
                 if (history != null) {
                     GameObject summonedMagic = SummonMagic(history);
                     summonedMagic.GetComponent<MagicDragHandler>().isPlayer = false;
@@ -691,6 +693,47 @@ public partial class PlayMangement : MonoBehaviour {
         } while (heroShieldActive);
         IngameNotice.instance.CloseNotice();
     }
+
+    public void AddSkillIcon(string status, Transform UnitTransform) {
+
+        if (UnitTransform.Find("UnitTakeEffectIcon").childCount == 0) {
+            GameObject Icon = Instantiate(AccountManager.Instance.resource.baseSkillIcon, UnitTransform.Find("UnitTakeEffectIcon"));
+            Icon.name = status;
+            Icon.transform.position = UnitTransform.Find("UnitTakeEffectIcon").position;
+        }
+        else {
+            GameObject sprite = UnitTransform.Find("UnitTakeEffectIcon").gameObject;
+            sprite.GetComponent<SpriteRenderer>().sprite = AccountManager.Instance.resource.skillIcons["fusion"];
+        }
+    }
+
+    public void DisabelSkillIcon(string status, Transform UnitTransform) {
+        if (UnitTransform.Find("UnitTakeEffectIcon").childCount < 0) return;
+        //if(AccountManager.Instance.resource.skillIcons[status] != UnitTransform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite)
+        Destroy(UnitTransform.Find(status));      
+    }
+
+    public void AddSkillAtkProperty(string status, Transform transform) {
+        if(transform.Find("UnitAttackProperty").childCount == 0) {
+            GameObject Icon = Instantiate(AccountManager.Instance.resource.baseSkillIcon, transform.Find("UnitAttackProperty"));
+            Icon.name = status;
+            Icon.transform.position = transform.Find("UnitAttackProperty").position;
+            Icon.GetComponent<SpriteRenderer>().sprite = AccountManager.Instance.resource.skillIcons[status];
+        }
+        else {
+            GameObject sprite = transform.Find("UnitAttackProperty").GetChild(0).gameObject;
+            sprite.GetComponent<SpriteRenderer>().sprite = AccountManager.Instance.resource.skillIcons["fusion"];
+        }
+    }
+
+    public void DisablePropertyIcon(string status, Transform transform) {
+        if (transform.Find("UnitAttackProperty").childCount < 0) return;
+        //if(AccountManager.Instance.resource.skillIcons[status] != UnitTransform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite)
+        Destroy(transform.Find("UnitAttackProperty").Find(status));
+    }
+
+
+
 }
 
 /// <summary>
@@ -827,6 +870,8 @@ public partial class PlayMangement {
     }
 
     public IEnumerator EnemyMagicCardDraw(int drawNum) {
+        int total = CountEnemyCard() + drawNum;
+        if(total > 10) drawNum = drawNum - (total - 10);
         for(int i = 0 ; i < drawNum; i++) {
             GameObject enemyCard;
             if (enemyPlayer.isHuman)
@@ -965,6 +1010,14 @@ public partial class PlayMangement {
                 releaseTurnBtn.SetActive(false);
                 break;
         }
+    }
+
+    public void LockTurnOver() {
+        releaseTurnBtn.GetComponent<Button>().enabled = false;
+    }
+
+    public void UnlockTurnOver() {
+        releaseTurnBtn.GetComponent<Button>().enabled = true;
     }
 
     private IEnumerator SetOrcTurnTable(string currentTurn) {

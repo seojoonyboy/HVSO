@@ -41,14 +41,8 @@ namespace SkillModules {
         }
 
         private void AddBuff(ref List<GameObject> targets, ref GainArgs args) {
-            foreach(GameObject target in targets) {
+            foreach (GameObject target in targets)
                 target.GetComponent<PlaceMonster>().RequestChangeStat(args.atk, args.hp);
-                EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.BUFF, target.transform.position);
-                if (target.GetComponent<PlaceMonster>().buffEffect == false) {                    
-                    EffectSystem.Instance.ContinueEffect(EffectSystem.EffectType.CONTINUE_BUFF, target.transform);
-                    target.GetComponent<PlaceMonster>().buffEffect = true;
-                }
-            }
             skillHandler.isDone = true;
         }
     }
@@ -309,7 +303,6 @@ namespace SkillModules {
         private void BlastEnemy(bool isPlayer, List<GameObject> targets, int amount) {
             foreach(GameObject target in targets) {
                 target.GetComponent<PlaceMonster>().RequestChangeStat(0, -amount);
-                EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.EXPLOSION, target.transform.position);
                 WaitEffect(target, amount);
             }
         }
@@ -395,7 +388,6 @@ namespace SkillModules {
         private void BlastEnemy(bool isPlayer, List<GameObject> targets, int amount) {
             foreach (GameObject target in targets) {
                 target.GetComponent<PlaceMonster>().RequestChangeStat(0, -amount);
-                EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.EXPLOSION, target.transform.position);
                 WaitEffect(target, amount);
             }
         }
@@ -457,38 +449,31 @@ namespace SkillModules {
                     if(state.SearchUseItem(itemId)) break;
                 }
             }
-            else {
-                state = playMangement.socketHandler.r_returnState;
-            }
             var units = enemyObserver.GetAllFieldUnits();
-            
-            List<SocketFormat.Unit> socketList = state.map.allMonster;
+            PlayerController player = isPlayer ? PlayMangement.instance.player : PlayMangement.instance.enemyPlayer ;
+            List<SocketFormat.Card> socketList = state.players.enemyPlayer(!player.isHuman).deck.handCards.ToList();
 
-            foreach(GameObject selectedUnit in units) {
-                bool found = false;
-                PlaceMonster mondata = selectedUnit.GetComponent<PlaceMonster>();
-                foreach(SocketFormat.Unit unit in socketList) {
-                    if(unit.itemId.CompareTo(mondata.itemId) == 0) {
-                        found = true;
+            foreach(SocketFormat.Card card in socketList) {
+                if(card.type.CompareTo("magic")==0) continue;
+                foreach(GameObject selectedUnit in units) {
+                    PlaceMonster mondata = selectedUnit.GetComponent<PlaceMonster>();
+                    if(mondata.itemId == card.itemId) {
+                        var selectedUnitPos = enemyObserver.GetMyPos(selectedUnit);
+                        UnityEngine.Object.Destroy(selectedUnit);
+                        enemyObserver.UnitRemoved(selectedUnitPos.col, selectedUnitPos.row);
+                        //내 유닛이 사라진 경우
+                        if (mondata.isPlayer) {
+                            MakeMyUnitToCard(mondata);
+                        }
+                        //적 유닛이 사라진 경우
+                        else {
+                            MakeEnemyUnitToCard();
+                        }
                         break;
                     }
                 }
-                //server에서 사라진 유닛을 찾는다.
-                if(!found) {
-                    var selectedUnitPos = enemyObserver.GetMyPos(selectedUnit);
-                    UnityEngine.Object.Destroy(selectedUnit);
-                    enemyObserver.UnitRemoved(selectedUnitPos.col, selectedUnitPos.row);
-
-                    //내 유닛이 사라진 경우
-                    if (mondata.isPlayer) {
-                        MakeMyUnitToCard(mondata);
-                    }
-                    //적 유닛이 사라진 경우
-                    else {
-                        MakeEnemyUnitToCard();
-                    }
-                }
             }
+            
             skillHandler.finallyDone = true;
         }
 

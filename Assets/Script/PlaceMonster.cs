@@ -33,9 +33,23 @@ public class PlaceMonster : MonoBehaviour {
     protected float currentTime;
     protected bool instanceAttack = false;
     public GameObject effectObject;
+
     public float atkTime {
         get { return unitSpine.atkDuration; }
     }
+
+    struct buffStat {
+        public bool running;
+        public int atk;
+        public int hp;
+        public void init() {
+            running = false;
+            atk = 0;
+            hp = 0;
+        }
+    }
+    private buffStat buff = new buffStat();
+
 
     public enum UnitState {
         APPEAR,
@@ -48,6 +62,7 @@ public class PlaceMonster : MonoBehaviour {
     };
 
     void OnDestroy() {
+        
         if (isPlayer) {
             PlayMangement.instance.PlayerUnitsObserver.RefreshFields(CardDropManager.Instance.unitLine);
         }
@@ -133,6 +148,8 @@ public class PlaceMonster : MonoBehaviour {
     public void HideUnit() {        
         transform.Find("HP").gameObject.SetActive(false);
         transform.Find("ATK").gameObject.SetActive(false);
+        transform.Find("UnitAttackProperty").gameObject.SetActive(false);
+        //transform.Find("UnitTakeEffectIcon").gameObject.SetActive(false);
         unitSpine.gameObject.SetActive(false);
         hideSpine.gameObject.SetActive(true);
         hideSpine.Appear();
@@ -141,6 +158,8 @@ public class PlaceMonster : MonoBehaviour {
     public void DetectUnit() {
         transform.Find("HP").gameObject.SetActive(true);
         transform.Find("ATK").gameObject.SetActive(true);
+        transform.Find("UnitAttackProperty").gameObject.SetActive(true);
+        //transform.Find("UnitTakeEffectIcon").gameObject.SetActive(true);
         SetState(UnitState.DETECT);
     }
 
@@ -175,6 +194,12 @@ public class PlaceMonster : MonoBehaviour {
         if ((GetComponent<SkillModules.poison>() != null) && (myTarget != null)) {
             if(myTarget.GetComponent<PlaceMonster>() != null) {
                 myTarget.AddComponent<SkillModules.poisonned>();
+            }
+            if(unit.attackType.Contains("through")) {
+                if (targetPlayer.frontLine.transform.GetChild(x).childCount != 0)
+                    targetPlayer.frontLine.transform.GetChild(x).GetChild(0).gameObject.AddComponent<SkillModules.poisonned>();
+                if (targetPlayer.backLine.transform.GetChild(x).childCount != 0)
+                    targetPlayer.backLine.transform.GetChild(x).GetChild(0).gameObject.AddComponent<SkillModules.poisonned>();
             }
         }
 
@@ -385,10 +410,42 @@ public class PlaceMonster : MonoBehaviour {
     }
 
     public void RequestChangeStat(int power = 0, int hp = 0) {
+        StartCoroutine(buffEffectCoroutine(power, hp));
         unit.attack += power;
         if (unit.attack < 0) unit.attack = 0;
         unit.currentHP += hp;
+        
         UpdateStat();
+    }
+
+    private IEnumerator buffEffectCoroutine(int power, int hp){
+        buff.atk += power;
+        buff.hp += hp;
+        if(buff.running) yield break;
+        else buff.running = true;
+        yield return null;
+        if(buff.atk == 0 && buff.hp == 0) {
+            buff.init();
+            yield break;
+        }
+        else {
+            if(buff.hp < 0) 
+                EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.EXPLOSION, transform.position);
+            else {
+                EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.BUFF, transform.position);
+                if (buffEffect == false) {                    
+                    EffectSystem.Instance.ContinueEffect(EffectSystem.EffectType.CONTINUE_BUFF, transform);
+                    buffEffect = true;
+                }
+                else {
+                    if(unit.attack <= unit.originalAttack) {
+                       EffectSystem.Instance.DisableEffect(transform);
+                       buffEffect = false;
+                    }
+                }
+            }
+        }
+        buff.init();
     }
 
     public void UpdateStat() {

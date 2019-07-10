@@ -35,7 +35,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -510}
+  m_AnchoredPosition: {x: 0.5, y: -439}
   m_SizeDelta: {x: 483, y: 84.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7553253841319570333
@@ -380,8 +380,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -174, y: 148}
-  m_SizeDelta: {x: 120, y: 130}
+  m_AnchoredPosition: {x: -178, y: 172}
+  m_SizeDelta: {x: 103.09, y: 111.68}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8229403020951371529
 CanvasRenderer:
@@ -603,8 +603,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -174, y: 268}
-  m_SizeDelta: {x: 120, y: 130}
+  m_AnchoredPosition: {x: -178, y: 275.09998}
+  m_SizeDelta: {x: 103.09, y: 111.68}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1123037685811748481
 CanvasRenderer:
@@ -1297,7 +1297,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -15}
-  m_SizeDelta: {x: 81, y: 78}
+  m_SizeDelta: {x: 61.38, y: 59.11}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4241801604037638150
 CanvasRenderer:
@@ -1507,8 +1507,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 75
-  m_fontSizeBase: 75
+  m_fontSize: 70
+  m_fontSizeBase: 70
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1606,8 +1606,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 165, y: 259}
-  m_SizeDelta: {x: 115, y: 134}
+  m_AnchoredPosition: {x: 179.79999, y: 273.95996}
+  m_SizeDelta: {x: 97.91, y: 114.08}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4241801604352184142
 CanvasRenderer:
@@ -1817,8 +1817,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 75
-  m_fontSizeBase: 75
+  m_fontSize: 70
+  m_fontSizeBase: 70
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1975,8 +1975,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 75
-  m_fontSizeBase: 75
+  m_fontSize: 70
+  m_fontSizeBase: 70
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2074,8 +2074,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 165, y: 174}
-  m_SizeDelta: {x: 113, y: 148}
+  m_AnchoredPosition: {x: 179.8, y: 201.6}
+  m_SizeDelta: {x: 96.2, y: 125.99}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4241801604430500004
 CanvasRenderer:
@@ -2210,8 +2210,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 45
-  m_fontSizeBase: 45
+  m_fontSize: 40
+  m_fontSizeBase: 40
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2495,7 +2495,7 @@ MonoBehaviour:
   m_material: {fileID: 0}
   m_sharedMaterial: {fileID: 0}
   m_isDefaultMaterial: 0
-  m_padding: 9.379032
+  m_padding: 0
   m_canvasRenderer: {fileID: 156320075480847006}
   m_TextComponent: {fileID: 8926255433578233449}
   m_materialReferenceIndex: 1
@@ -2949,7 +2949,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: "\uD5D8\uC9C0 \uC9C0\uD615\uC5D0 \uBC30\uCE58 \uAC00\uB2A5"
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 48a6357ec1fcf7d4caf5a31ab960bf60, type: 2}
   m_sharedMaterial: {fileID: 942548942337777919, guid: 48a6357ec1fcf7d4caf5a31ab960bf60,
@@ -3019,13 +3019,13 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 8926255433578233449}
-    characterCount: 12
+    characterCount: 0
     spriteCount: 0
-    spaceCount: 3
-    wordCount: 4
+    spaceCount: 0
+    wordCount: 0
     linkCount: 0
-    lineCount: 1
-    pageCount: 1
+    lineCount: 0
+    pageCount: 0
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
@@ -3143,7 +3143,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 1
+  m_fontStyle: 3
   m_textAlignment: 514
   m_characterSpacing: 0
   m_wordSpacing: 0
