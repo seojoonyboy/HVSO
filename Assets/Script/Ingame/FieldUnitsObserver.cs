@@ -4,47 +4,65 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class FieldUnitsObserver : SerializedMonoBehaviour {
-    [TableMatrix(SquareCells = true)]
-    public GameObject[,] units = new GameObject[5, 2];
+    [TableMatrix(SquareCells = true)] public GameObject[,] orcUnits = new GameObject[5, 2];
+    [TableMatrix(SquareCells = true)] public GameObject[,] humanUnits = new GameObject[5, 2];
 
-    public void UnitAdded(GameObject target, int col, int row) {
-        units[col, row] = target;
+    public void Initialize() { }
+
+    public void UnitAdded(GameObject target, Pos pos, bool isHuman) {
+        if (isHuman) humanUnits[pos.col, pos.row] = target;
+        else orcUnits[pos.col, pos.row] = target;
     }
 
-    public void UnitRemoved(int col, int row) {
-        units[col, row] = null;
+    public void UnitRemoved(Pos pos, bool isHuman) {
+        if (isHuman) humanUnits[pos.col, pos.row] = null;
+        else orcUnits[pos.col, pos.row] = null;
     }
 
-    public virtual void UnitChangePosition(GameObject target, int col, int row) {
-        Logger.Log("Row : " + row);
-        Logger.Log("Col : " + col);
+    //TODO : 적이 호출한지, 내가 호출한지 구분해야함
+    public virtual void UnitChangePosition(GameObject target, Pos pos, bool isPlayer) {
+        Logger.Log("Col : " + pos.col);
+        Logger.Log("Row : " + pos.row);
 
         Pos prevPos = GetMyPos(target);
-        units[col, row] = target;
+        bool isHuman = target.GetComponent<PlaceMonster>().unit.ishuman;
 
-        Vector2 targetPos = transform.GetChild(row).GetChild(col).position;
+        if (isHuman) humanUnits[pos.col, pos.row] = target;
+        else orcUnits[pos.col, pos.row] = target;
+
+        Transform slotParent = null;
+        if (isPlayer) slotParent = PlayMangement.instance.player.transform;
+        else slotParent = PlayMangement.instance.enemyPlayer.transform;
+
+        Transform parent = slotParent.GetChild(pos.row).GetChild(pos.col);
+        Vector2 targetPos = parent.position;
+        
         iTween.MoveTo(
             target,
             new Vector2(targetPos.x, targetPos.y),
             1.0f
         );
-        StartCoroutine(UnitChangeCoroutine(target, prevPos, row, col));
+
+        if (isHuman) humanUnits[prevPos.col, prevPos.row] = null;
+        else orcUnits[prevPos.col, prevPos.row] = null;
+
+        StartCoroutine(UnitChangeCoroutine(target, prevPos, pos, parent));
     }
 
-    public virtual bool CheckUnitPosition(int col, int row) {
+    public bool IsUnitExist(Pos targetPos, bool isHuman) {
         bool check = false;
-
-        if (units[col, row] != null)
-            check = true;
-        else
-            check = false;
+        if (isHuman) check = humanUnits[targetPos.col, targetPos.row] != null;
+        else check = orcUnits[targetPos.col, targetPos.row] != null;
 
         return check;
     }
 
-    public virtual int CheckLineEmptyCount(int col) {
+    public int CheckLineEmptyCount(int col, bool isHuman) {
         int count = 0;
 
+        GameObject[,] units = null;
+        if (isHuman) units = humanUnits;
+        else units = orcUnits;
         for(int i = 0; i < 5; i++) {
             if (units[col, i] == null)
                 count++;
@@ -60,17 +78,16 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
     /// <param name="row">새로운 위치 row</param>
     /// <param name="col">새로운 위치 col</param>
     /// <returns></returns>
-    IEnumerator UnitChangeCoroutine(GameObject target, Pos prevPos, int row, int col) {
-        units[prevPos.col, prevPos.row] = null;
+    IEnumerator UnitChangeCoroutine(GameObject target, Pos prevPos, Pos newPos, Transform parent) {
         yield return new WaitForSeconds(1.0f);
 
-        target.transform.SetParent(transform.GetChild(row).GetChild(col));
+        target.transform.SetParent(parent);
         target.transform.localPosition = Vector3.zero;
 
         target.GetComponent<PlaceMonster>().ChangePosition(
-            col, 
-            row, 
-            transform.GetChild(row).GetChild(col).position
+            newPos.col,
+            newPos.row,
+            parent.position
         );
 
         Logger.Log(string.Format("prev Pos Col : {0}",prevPos.col));
@@ -79,29 +96,90 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.FIELD_CHANGED, null, null);
     }
 
+    /// <summary>
+    /// 필드에 존재하는 모든 유닛(적 포함)
+    /// </summary>
+    /// <returns></returns>
     public List<GameObject> GetAllFieldUnits() {
-        List<GameObject> _units = new List<GameObject>();
-        foreach (GameObject unit in units) {
-            if (unit != null) _units.Add(unit);
+        List<GameObject> result = new List<GameObject>();
+        foreach(GameObject unit in humanUnits) {
+            if (unit != null) result.Add(unit);
         }
-        return _units;
+        foreach(GameObject unit in orcUnits) {
+            if (unit != null) result.Add(unit);
+        }
+        return result;
+    }
+
+    public List<GameObject> GetAllFieldUnits(bool isHuman) {
+        GameObject[,] units = null;
+        if (isHuman) units = humanUnits;
+        else units = orcUnits;
+
+        List<GameObject> result = new List<GameObject>();
+        foreach (GameObject unit in units) {
+            if (unit != null) result.Add(unit);
+        }
+        return result;
     }
 
     /// <summary>
-    /// 한줄 반환
+    /// 한쪽 진영의 Line에 존재하는 모든 유닛
     /// </summary>
-    /// <param name="row">row</param>
+    /// <param name="col">Column</param>
     /// <returns></returns>
-    public List<GameObject> GetAllFieldUnits(int col) {
-        //Debug.Log("라인 검사 : " + col);
-        List<GameObject> _units = new List<GameObject>();
+    public List<GameObject> GetAllFieldUnits(int col, bool isHuman) {
+        List<GameObject> result = new List<GameObject>();
+        GameObject[,] units = null;
+        if (isHuman) units = humanUnits;
+        else units = orcUnits;
+
         for (int i = 0; i < 2; i++) {
             if (units[col, i] != null) {
-                _units.Add(units[col, i]);
+                result.Add(units[col, i]);
             }
         }
         //Debug.Log("라인 검사 결과 : " + _units.Count);
-        return _units;
+        return result;
+    }
+
+    /// <summary>
+    /// 한 Line에 존재하는 모든 유닛(적 포함)
+    /// </summary>
+    /// <param name="col">Column</param>
+    /// <returns></returns>
+    public List<GameObject> GetAllFieldUnits(int col) {
+        List<GameObject> result = new List<GameObject>();
+        for (int i = 0; i < 2; i++) {
+            if (humanUnits[col, i] != null) {
+                result.Add(humanUnits[col, i]);
+            }
+            if(orcUnits[col, i] != null) {
+                result.Add(orcUnits[col, i]);
+            }
+        }
+        //Debug.Log("라인 검사 결과 : " + _units.Count);
+        return result;
+    }
+
+    public GameObject GetUnit(Pos pos, bool isHuman) {
+        GameObject[,] units = null;
+        if (isHuman) units = humanUnits;
+        else units = orcUnits;
+
+        return units[pos.col, pos.row];
+    }
+
+    public Transform GetSlot(Pos pos, bool isPlayer) {
+        PlayerController controller;
+        if (isPlayer) controller = PlayMangement.instance.player;
+        else controller = PlayMangement.instance.enemyPlayer;
+
+        return controller
+            .transform
+            .GetChild(pos.row)
+            .GetChild(pos.col)
+            .transform;
     }
 
     public virtual Pos GetMyPos(GameObject gameObject) {
@@ -112,8 +190,12 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
         return pos;
     }
 
-    public void RefreshFields(Transform[][] arr) {
+    public void RefreshFields(Transform[][] arr, bool isHuman) {
         int colCnt = 0;
+        GameObject[,] units = null;
+        if (isHuman) units = humanUnits;
+        else units = orcUnits;
+
         foreach(Transform[] col in arr) {
             int rowCnt = 0;
             foreach(Transform row in col) {
@@ -128,9 +210,14 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
             colCnt++;
         }
     }
-}
 
-public struct Pos {
-    public int row;
-    public int col;
+    public struct Pos {
+        public int col;
+        public int row;
+
+        public Pos(int col, int row) {
+            this.col = col;
+            this.row = row;
+        }
+    }
 }

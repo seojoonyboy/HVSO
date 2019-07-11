@@ -130,7 +130,7 @@ namespace SkillModules {
                 HookArgs args = (HookArgs)tmp[1];
                 bool isPlayer = (bool)tmp[2];
 
-                MoveUnit(ref target, ref args, isPlayer);
+                MoveUnit(ref target, ref args, !isPlayer);
             }
             else {
                 ShowFormatErrorLog("hook");
@@ -139,14 +139,13 @@ namespace SkillModules {
         }
 
         private void MoveUnit(ref GameObject target, ref HookArgs args, bool isPlayer) {
-            FieldUnitsObserver observer;
-            if (isPlayer) {
-                observer = PlayMangement.instance.EnemyUnitsObserver;
-            }
-            else {
-                observer = PlayMangement.instance.PlayerUnitsObserver;
-            }
-            observer.UnitChangePosition(target, args.col, args.row);
+            var isHuman = PlayMangement.instance.player.isHuman;
+            var observer = PlayMangement.instance.UnitsObserver;
+            observer.UnitChangePosition(
+                target, 
+                new FieldUnitsObserver.Pos(args.col, args.row),
+                isPlayer
+            );
         }
     }
 
@@ -216,14 +215,14 @@ namespace SkillModules {
         }
 
         private void MoveUnit(ref GameObject target, ref SkillTargetArgs args, bool isPlayer) {
-            FieldUnitsObserver observer;
-            if (isPlayer) {
-                observer = PlayMangement.instance.PlayerUnitsObserver;
-            }
-            else {
-                observer = PlayMangement.instance.EnemyUnitsObserver;
-            }
-            observer.UnitChangePosition(target, args.col, args.row);
+            PlayMangement playMangement = PlayMangement.instance;
+            FieldUnitsObserver observer = playMangement.UnitsObserver;
+            observer.UnitChangePosition(
+                target, 
+                new FieldUnitsObserver.Pos(args.col, args.row),
+                isPlayer
+            );
+
             WaitDone();
         }
 
@@ -253,14 +252,14 @@ namespace SkillModules {
         }
 
         private void MoveUnit(ref SelfMoveArgs args, bool isPlayer) {
-            FieldUnitsObserver observer;
-            if (isPlayer) {
-                observer = PlayMangement.instance.PlayerUnitsObserver;
-            }
-            else {
-                observer = PlayMangement.instance.EnemyUnitsObserver;
-            }
-            observer.UnitChangePosition(skillHandler.myObject, args.col, args.row);
+            PlayMangement playMangement = PlayMangement.instance;
+            FieldUnitsObserver observer = playMangement.UnitsObserver;
+            observer.UnitChangePosition(
+                skillHandler.myObject, 
+                new FieldUnitsObserver.Pos(args.col, args.row),
+                isPlayer
+            );
+
             skillHandler.finallyDone = false;
             WaitDone();
         }
@@ -345,7 +344,7 @@ namespace SkillModules {
             int itemId;
             PlayMangement playMangement = PlayMangement.instance;
             SocketFormat.GameState state = playMangement.socketHandler.gameState;
-            FieldUnitsObserver observer = skillHandler.isPlayer ? playMangement.EnemyUnitsObserver : playMangement.PlayerUnitsObserver;
+            FieldUnitsObserver observer = playMangement.UnitsObserver;
 
             if(skillHandler.myObject.GetComponent<PlaceMonster>() != null) 
                 itemId = skillHandler.myObject.GetComponent<PlaceMonster>().itemId;
@@ -358,7 +357,7 @@ namespace SkillModules {
             }
         
             List<SocketFormat.Unit> socketList = state.map.allMonster;
-            List<GameObject> enemyList = observer.GetAllFieldUnits();
+            List<GameObject> enemyList = observer.GetAllFieldUnits(!playMangement.player.isHuman);
             List<GameObject> targets = new List<GameObject>();
             string cardId = (string)args[0];
             int amount = (int)args[1];
@@ -402,22 +401,11 @@ namespace SkillModules {
     public class r_return : Ability {
         public r_return() : base() { }
 
-        FieldUnitsObserver playerObserver, enemyObserver;
-
         public override void Execute(object data) {
             if (data.GetType().IsArray) {
                 try {
                     object[] tmp = (object[])data;
                     bool isPlayer = (bool)tmp[0];
-
-                    if (isPlayer) {
-                        playerObserver = PlayMangement.instance.PlayerUnitsObserver;
-                        enemyObserver = PlayMangement.instance.EnemyUnitsObserver;
-                    }
-                    else {
-                        playerObserver = PlayMangement.instance.EnemyUnitsObserver;
-                        enemyObserver = PlayMangement.instance.PlayerUnitsObserver;
-                    }
                     skillHandler.finallyDone = false;
                     ReturnUnit(isPlayer);
                 }
@@ -449,7 +437,7 @@ namespace SkillModules {
                     if(state.SearchUseItem(itemId)) break;
                 }
             }
-            var units = enemyObserver.GetAllFieldUnits();
+            var units = playMangement.UnitsObserver.GetAllFieldUnits(!playMangement.player.isHuman);
             PlayerController player = isPlayer ? PlayMangement.instance.player : PlayMangement.instance.enemyPlayer ;
             List<SocketFormat.Card> socketList = state.players.enemyPlayer(!player.isHuman).deck.handCards.ToList();
 
@@ -458,9 +446,13 @@ namespace SkillModules {
                 foreach(GameObject selectedUnit in units) {
                     PlaceMonster mondata = selectedUnit.GetComponent<PlaceMonster>();
                     if(mondata.itemId == card.itemId) {
-                        var selectedUnitPos = enemyObserver.GetMyPos(selectedUnit);
+                        var selectedUnitPos = playMangement.UnitsObserver.GetMyPos(selectedUnit);
                         UnityEngine.Object.Destroy(selectedUnit);
-                        enemyObserver.UnitRemoved(selectedUnitPos.col, selectedUnitPos.row);
+
+                        playMangement.UnitsObserver.UnitRemoved(
+                            new FieldUnitsObserver.Pos(selectedUnitPos.col, selectedUnitPos.row), 
+                            player.isHuman
+                        );
                         //내 유닛이 사라진 경우
                         if (mondata.isPlayer) {
                             MakeMyUnitToCard(mondata);
@@ -505,19 +497,11 @@ namespace SkillModules {
         public kill() : base() { }
 
         public override void Execute(object data) {
-            FieldUnitsObserver observer;
 
             if (data.GetType().IsArray) {
                 object[] tmp = (object[])data;
                 GameObject target = (GameObject)tmp[0];
                 bool isPlayer = (bool)tmp[1];
-
-                if (isPlayer) {
-                    observer = PlayMangement.instance.EnemyUnitsObserver;
-                }
-                else {
-                    observer = PlayMangement.instance.PlayerUnitsObserver;
-                }
 
                 RemoveUnit(ref target);
             }
@@ -591,9 +575,11 @@ namespace SkillModules {
             int itemId;
             PlayMangement playMangement = PlayMangement.instance;
             SocketFormat.GameState state = playMangement.socketHandler.gameState;
-            FieldUnitsObserver observer = skillHandler.isPlayer ? playMangement.PlayerUnitsObserver : playMangement.EnemyUnitsObserver;
+
             bool isPlayer = skillHandler.isPlayer ? true : false;
             string cardId = (string)args[0];
+
+            FieldUnitsObserver observer = PlayMangement.instance.UnitsObserver;
 
             if(skillHandler.myObject.GetComponent<PlaceMonster>() != null) 
                 itemId = skillHandler.myObject.GetComponent<PlaceMonster>().itemId;
@@ -606,17 +592,19 @@ namespace SkillModules {
             }
         
             List<SocketFormat.Unit> socketList = state.map.allMonster;
-           
+            
             foreach(SocketFormat.Unit serverUnit in socketList) {
                 if(serverUnit.cardId.CompareTo(cardId) == 0) {
-                    Pos pos = serverUnit.pos;
-                    List<GameObject> list = observer.GetAllFieldUnits(pos.col);
+                    FieldUnitsObserver.Pos pos = serverUnit.pos;
+
+                    var isHuman = PlayMangement.instance.player.isHuman;
+                    List<GameObject> list = observer.GetAllFieldUnits(pos.col, isHuman);
                     //유닛이 존재하지 않으면 그곳에 생성
                     if(list.Count == 0) {
                         var summonedUnit = playMangement.SummonUnit(isPlayer, cardId, pos.col, pos.row, itemId);
 
-                        if (isPlayer) observer.RefreshFields(CardDropManager.Instance.unitLine);
-                        else observer.RefreshFields(CardDropManager.Instance.enemyUnitLine);
+                        if (isPlayer) observer.RefreshFields(CardDropManager.Instance.unitLine, isHuman);
+                        else observer.RefreshFields(CardDropManager.Instance.enemyUnitLine, isHuman);
                     }
                 }
             }
@@ -723,7 +711,7 @@ namespace SkillModules {
     }
 
     public struct SkillTargetArgs {
-        public SkillTargetArgs(Pos pos) {
+        public SkillTargetArgs(FieldUnitsObserver.Pos pos) {
             col = pos.col;
             row = pos.row;
         }

@@ -64,10 +64,18 @@ public class PlaceMonster : MonoBehaviour {
     void OnDestroy() {
         
         if (isPlayer) {
-            PlayMangement.instance.PlayerUnitsObserver.RefreshFields(CardDropManager.Instance.unitLine);
+            PlayMangement.instance.UnitsObserver
+                .RefreshFields(
+                    CardDropManager.Instance.unitLine, 
+                    PlayMangement.instance.player.isHuman
+                );
         }
         else {
-            PlayMangement.instance.EnemyUnitsObserver.RefreshFields(CardDropManager.Instance.enemyUnitLine);
+            PlayMangement.instance.UnitsObserver
+                .RefreshFields(
+                    CardDropManager.Instance.enemyUnitLine, 
+                    !PlayMangement.instance.player.isHuman
+                );
         }
         skillHandler.RemoveTriggerEvent();
     }
@@ -464,12 +472,22 @@ public class PlaceMonster : MonoBehaviour {
     }
 
     public void UnitDead() {
+        PlayMangement playMangement = PlayMangement.instance;
+        GameObject[,] slots = null;
+        bool isHuman = playMangement.player.isHuman;
+
         if (isPlayer) {
-            if(PlayMangement.instance.PlayerUnitsObserver.units[x, y] == null)
+            if (isHuman) slots = playMangement.UnitsObserver.humanUnits;
+            else slots = playMangement.UnitsObserver.orcUnits;
+
+            if(slots[x, y] == null)
                 return;
         }
         else {
-            if(PlayMangement.instance.EnemyUnitsObserver.units[x, y] == null)
+            if (isHuman) slots = playMangement.UnitsObserver.orcUnits;
+            else slots = playMangement.UnitsObserver.humanUnits;
+
+            if (slots[x, y] == null)
                 return;
         }
         unit.currentHP = 0;
@@ -487,10 +505,10 @@ public class PlaceMonster : MonoBehaviour {
         Logger.Log("Y : " + y);
 
         if (isPlayer) {
-            PlayMangement.instance.PlayerUnitsObserver.UnitRemoved(x, y);
+            PlayMangement.instance.UnitsObserver.UnitRemoved(new FieldUnitsObserver.Pos(x, y), isHuman);
         }
         else {
-            PlayMangement.instance.EnemyUnitsObserver.UnitRemoved(x, y);
+            PlayMangement.instance.UnitsObserver.UnitRemoved(new FieldUnitsObserver.Pos(x, y), !isHuman);
         }
 
         dropTomb.GetComponent<DeadSpine>().target = gameObject;

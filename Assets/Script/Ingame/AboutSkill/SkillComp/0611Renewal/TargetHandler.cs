@@ -14,7 +14,6 @@ namespace TargetModules {
         public string[] args;
 
         public List<GameObject> targets;
-        protected FieldUnitsObserver playerUnitsObserver, enemyUnitsObserver;
 
         public bool isDone = false;
 
@@ -144,17 +143,6 @@ namespace TargetModules {
     }
 
     public class place : TargetHandler {
-        void Awake() {
-            if (GetComponent<PlaceMonster>().isPlayer) {
-                playerUnitsObserver = PlayMangement.instance.PlayerUnitsObserver;
-                enemyUnitsObserver = PlayMangement.instance.EnemyUnitsObserver;
-            }
-            else {
-                playerUnitsObserver = PlayMangement.instance.EnemyUnitsObserver;
-                enemyUnitsObserver = PlayMangement.instance.PlayerUnitsObserver;
-            }
-        }
-
         public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback, Filtering filter) {
             base.SelectTarget(successCallback, failedCallback, filter);
 
@@ -165,11 +153,13 @@ namespace TargetModules {
 
         public override void SetTarget(object parms) {
             string place = args[0];
+            var observer = PlayMangement.instance.UnitsObserver;
+            bool isHuman = PlayMangement.instance.player.isHuman;
             switch (place) {
                 case "rear":
-                    var pos = playerUnitsObserver.GetMyPos(gameObject);
+                    var pos = observer.GetMyPos(gameObject);
                     if(pos.row == 0) break;
-                    var list = playerUnitsObserver.GetAllFieldUnits(pos.col);
+                    var list = observer.GetAllFieldUnits(pos.col, isHuman);
                     list.Remove(gameObject);
                     targets.AddRange(list);
                     break;
@@ -256,14 +246,9 @@ namespace TargetModules {
         private List<GameObject> GetTarget(bool isPlayer, string[] args) {
             FieldUnitsObserver playerObserver, enemyObserver;
             var playManagement = PlayMangement.instance;
-            if (isPlayer) {
-                playerObserver = playManagement.PlayerUnitsObserver;
-                enemyObserver = playManagement.EnemyUnitsObserver;
-            }
-            else {
-                playerObserver = playManagement.EnemyUnitsObserver;
-                enemyObserver = playManagement.PlayerUnitsObserver;
-            }
+
+            var observer = PlayMangement.instance.UnitsObserver;
+            bool isHuman = PlayMangement.instance.player.isHuman;
 
             List<GameObject> result = new List<GameObject>();
             if (args.Length != 2) {
@@ -278,13 +263,13 @@ namespace TargetModules {
                     }
                     else if (args[1] == "line") {
                         int col = GetDropLine();
-                        var targets = playerObserver.GetAllFieldUnits(col);
+                        var targets = observer.GetAllFieldUnits(col, isHuman);
                         foreach (GameObject target in targets) {
                             result.Add(target);
                         }
                     }
                     else if(args[1] == "all") {
-                        var targets = playerObserver.GetAllFieldUnits();
+                        var targets = observer.GetAllFieldUnits(isHuman);
                         foreach (GameObject target in targets) {
                             result.Add(target);
                         }
@@ -296,13 +281,13 @@ namespace TargetModules {
                     }
                     else if (args[1] == "line") {
                         int col = GetDropLine();
-                        var targets = enemyObserver.GetAllFieldUnits(col);
+                        var targets = observer.GetAllFieldUnits(col, !isHuman);
                         foreach(GameObject target in targets) {
                             result.Add(target);
                         }
                     }
                     else if (args[1] == "all") {
-                        var targets = enemyObserver.GetAllFieldUnits();
+                        var targets = observer.GetAllFieldUnits(!isHuman);
                         foreach (GameObject target in targets) {
                             result.Add(target);
                         }
@@ -333,14 +318,9 @@ namespace TargetModules {
 
         private List<GameObject> GetTarget(bool isPlayer, string[] args) {
             var playManagement = PlayMangement.instance;
-            if (isPlayer) {
-                playerObserver = playManagement.PlayerUnitsObserver;
-                enemyObserver = playManagement.EnemyUnitsObserver;
-            }
-            else {
-                playerObserver = playManagement.EnemyUnitsObserver;
-                enemyObserver = playManagement.PlayerUnitsObserver;
-            }
+
+            var observer = playManagement.UnitsObserver;
+            bool isHuman = playManagement.player.isHuman;
 
             List<GameObject> result = new List<GameObject>();
             if (args.Length != 2) {
@@ -351,7 +331,7 @@ namespace TargetModules {
             switch (args[0]) {
                 case "my":
                     if (args[1] == "all") {
-                        var targets = playerObserver.GetAllFieldUnits();
+                        var targets = observer.GetAllFieldUnits(isHuman);
                         foreach (GameObject target in targets) {
                             if (target != GetDropAreaUnit().gameObject) {
                                 result.Add(target);
@@ -361,7 +341,7 @@ namespace TargetModules {
                     break;
                 case "enemy":
                     if (args[1] == "all") {
-                        var targets = enemyObserver.GetAllFieldUnits();
+                        var targets = observer.GetAllFieldUnits(!isHuman);
                         foreach (GameObject target in targets) {
                             if(target != GetDropAreaUnit().gameObject) {
                                 result.Add(target);
@@ -401,15 +381,15 @@ namespace TargetModules {
                     PlayMangement.instance.OffBlockPanel();
 
                     CardDropManager.Instance.HideDropableSlot();
-                    if(args[1] == "place") {
+                    bool isHuman = PlayMangement.instance.player.isHuman;
+
+                    if (args[1] == "place") {
                         int col = selectedTarget.parent.GetSiblingIndex();
                         int row = 0;
-                        selectedTarget = PlayMangement.instance
-                            .PlayerUnitsObserver
-                            .transform
-                            .GetChild(row)
-                            .GetChild(col)
-                            .transform;
+
+                        var observer = PlayMangement.instance.UnitsObserver;
+
+                        selectedTarget = observer.GetSlot(new FieldUnitsObserver.Pos(col, row), true);
                     }
 
                     if(args[1] == "unit") {
@@ -424,8 +404,8 @@ namespace TargetModules {
                     PlayMangement.instance.infoOn = false;
                     PlayMangement.dragable = true;
                     PlayMangement.instance.UnlockTurnOver();
-
-                    var units = PlayMangement.instance.EnemyUnitsObserver.GetAllFieldUnits();
+                    
+                    var units = PlayMangement.instance.UnitsObserver.GetAllFieldUnits(!isHuman);
                     foreach (GameObject unit in units) {
                         unit
                             .transform
@@ -435,7 +415,7 @@ namespace TargetModules {
 
                         unit.transform.Find("MagicTargetTrigger").gameObject.SetActive(false);
                     }
-                    units = PlayMangement.instance.PlayerUnitsObserver.GetAllFieldUnits();
+                    units = PlayMangement.instance.UnitsObserver.GetAllFieldUnits(isHuman);
                     foreach (GameObject unit in units) {
                         unit
                             .transform
@@ -466,7 +446,7 @@ namespace TargetModules {
                 var monList = server.gameState.map.allMonster;
                 SocketFormat.Unit unit = monList.Find(x => x.itemId == itemId);
                 //2. 밝혀줘야할 select 부분 찾기
-                Pos movePos = unit.pos;
+                FieldUnitsObserver.Pos movePos = unit.pos;
                 Terrain[] terrains = GameObject.Find("BackGround").GetComponentsInChildren<Terrain>();
                 Transform terrainSlot = null;
                 
@@ -489,12 +469,9 @@ namespace TargetModules {
                 terrainSlot.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.6f);
                 
                 //5. 실제 effect 실행하러 보내기
-                Transform selectedTarget = PlayMangement.instance
-                            .EnemyUnitsObserver
-                            .transform
-                            .GetChild(movePos.row)
-                            .GetChild(movePos.col)
-                            .transform;
+                Transform selectedTarget = PlayMangement.instance.UnitsObserver
+                    .GetUnit(movePos, !PlayMangement.instance.player.isHuman)
+                    .transform;
                 SetTarget(selectedTarget.gameObject);
                 successCallback(selectedTarget);
             }
@@ -542,19 +519,19 @@ namespace TargetModules {
                     terrainSlot.gameObject.SetActive(false);
                     terrainSlot.GetChild(0).gameObject.SetActive(false);
                     terrainSlot.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.6f);
-
-                    FieldUnitsObserver observer = isTargetPlayer ? PlayMangement.instance.PlayerUnitsObserver : PlayMangement.instance.EnemyUnitsObserver;
-                    selectedTarget = observer
-                            .transform
-                            .GetChild(0) //TODO : 앞뒤 구분 해야함 
-                            .GetChild(line)
+                    
+                    FieldUnitsObserver observer = PlayMangement.instance.UnitsObserver;
+                        selectedTarget = observer
+                            .GetUnit(new FieldUnitsObserver.Pos(line, 0), targetCampHuman)
                             .transform;
                 break;
                 case "unit" :
                     //검색
                     int targetItemId = int.Parse(played_card.targets[1].args[0]);
-                    var list = PlayMangement.instance.PlayerUnitsObserver.GetAllFieldUnits();
-                    list.AddRange(PlayMangement.instance.EnemyUnitsObserver.GetAllFieldUnits());
+                    var camp = played_card.targets[1].args[1];
+                    var list = PlayMangement.instance.UnitsObserver
+                            .GetAllFieldUnits(camp.CompareTo("human") == 0);
+                    //list.AddRange(PlayMangement.instance.EnemyUnitsObserver.GetAllFieldUnits());
                     GameObject target = list.Find(x => x.GetComponent<PlaceMonster>().itemId == targetItemId);
                     GameObject highlightUI = target.transform.Find("ClickableUI").gameObject;
                     //3. unitSlot에서 특정 부분 밝혀주기
@@ -620,7 +597,8 @@ namespace TargetModules {
                             callback = successCallback;
 
                             //잠복중인 유닛은 타겟에서 제외
-                            var units = PlayMangement.instance.PlayerUnitsObserver.GetAllFieldUnits();
+                            var units = PlayMangement.instance.UnitsObserver
+                                .GetAllFieldUnits(PlayMangement.instance.player.isHuman);
                             filter(ref units);
                             foreach (GameObject unit in units) {
                                 var ui = unit.transform.Find("ClickableUI").gameObject;
@@ -640,7 +618,7 @@ namespace TargetModules {
                     if (args.Length == 2 && args[1] == "unit") {
                         if (CanSelect(args[1])) {
                             PlayMangement.instance.OnBlockPanel("대상을 지정해 주세요.");
-                            var units = PlayMangement.instance.EnemyUnitsObserver.GetAllFieldUnits();
+                            var units = PlayMangement.instance.UnitsObserver.GetAllFieldUnits(!PlayMangement.instance.player.isHuman);
 
                             //잠복중인 유닛은 타겟에서 제외
                             for (int i = 0; i < units.Count; i++) {
@@ -679,18 +657,30 @@ namespace TargetModules {
 
         private bool CanSelect(string arg) {
             bool result = false;
-            var observer = PlayMangement.instance.PlayerUnitsObserver;
+            var observer = PlayMangement.instance.UnitsObserver;
+            bool isHuman = PlayMangement.instance.player.isHuman;
+
+            Transform slotParent = null;
+            GameObject[,] slots = null;
+            if (isHuman) {
+                slots = observer.humanUnits;
+                slotParent = PlayMangement.instance.player.transform;
+            }
+            else {
+                slots = observer.orcUnits;
+                slotParent = PlayMangement.instance.enemyPlayer.transform;
+            }
 
             switch (arg) {
                 case "place":
-                    for(int i=0; i<5; i++) {
+                    for (int i=0; i<5; i++) {
                         //빈 공간인 경우
-                        if(observer.units[i, 0] == null) {
+                        if(slots[i, 0] == null) {
                             var placeMonster = skillHandler.myObject.GetComponent<PlaceMonster>();
                             //유닛카드인 경우
                             if (placeMonster != null) {
                                 //숲 지형인 경우
-                                if (observer.transform.GetChild(0).GetChild(i).GetComponent<Terrain>().terrain == PlayMangement.LineState.forest) {
+                                if (slotParent.transform.GetChild(0).GetChild(i).GetComponent<Terrain>().terrain == PlayMangement.LineState.forest) {
                                     //유닛이 숲 지형에 갈 수 있는 경우
                                     if (placeMonster.unit.attributes.ToList().Contains("footslog")) {
                                         result = true;
@@ -705,7 +695,7 @@ namespace TargetModules {
                             else {
                                 var skillTarget = (GameObject)skillHandler.skillTarget;
                                 placeMonster = skillTarget.GetComponent<PlaceMonster>();
-                                if (observer.transform.GetChild(0).GetChild(i).GetComponent<Terrain>().terrain == PlayMangement.LineState.forest) {
+                                if (PlayMangement.instance.player.transform.GetChild(0).GetChild(i).GetComponent<Terrain>().terrain == PlayMangement.LineState.forest) {
                                     //유닛이 숲 지형에 갈 수 있는 경우
                                     if (placeMonster.unit.attributes.ToList().Contains("footslog")) {
                                         result = true;
@@ -721,10 +711,10 @@ namespace TargetModules {
                     break;
                 case "unit":
                     if(args[0] == "enemy") {
-                        observer = PlayMangement.instance.EnemyUnitsObserver;
+                        observer = PlayMangement.instance.UnitsObserver;
                     }
 
-                    var units = observer.GetAllFieldUnits();
+                    var units = observer.GetAllFieldUnits(isHuman);
 
                     //잠복중인 유닛은 타겟에서 제외
                     for(int i=0; i<units.Count; i++) {
@@ -735,7 +725,7 @@ namespace TargetModules {
                     }
 
                     if (units.Count != 0) {
-                        Logger.Log(observer.GetAllFieldUnits().Count + "개의 적이 감지됨");
+                        Logger.Log(observer.GetAllFieldUnits(isHuman).Count + "개의 적이 감지됨");
                         result = true;
                     }
                     break;
@@ -754,8 +744,8 @@ namespace TargetModules {
             if (args[0] == "enemy") {
                 if (args[1] == "unit") {
                     //같은 라인에 있는 적 유닛들이 Target임.
-                    var observer = PlayMangement.instance.EnemyUnitsObserver;
-                    targets = observer.GetAllFieldUnits(col);
+                    var observer = PlayMangement.instance.UnitsObserver;
+                    targets = observer.GetAllFieldUnits(col, !PlayMangement.instance.player.isHuman);
 
                     SetTarget(targets);
                     successCallback(targets);
@@ -765,8 +755,8 @@ namespace TargetModules {
 
             else if(args[0] == "player") {
                 if(args[1] == "unit") {
-                    var observer = PlayMangement.instance.PlayerUnitsObserver;
-                    targets = observer.GetAllFieldUnits(col);
+                    var observer = PlayMangement.instance.UnitsObserver;
+                    targets = observer.GetAllFieldUnits(col, PlayMangement.instance.player.isHuman);
 
                     SetTarget(targets);
                     successCallback(targets);

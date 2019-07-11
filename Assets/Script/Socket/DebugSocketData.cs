@@ -20,8 +20,24 @@ namespace SocketFormat {
             Hero orc = state.players.orc.hero;
             Logger.Log(isBattle ? "======= 싸운 후 State =======" : "======= 에너지 체크 후 State =======");
             Logger.Log(string.Format("{0}번째줄 맵 : {1}", line, mapData));
-            Logger.Log(string.Format("클라이언트 유닛 뒤: {0}, {1}", PlayMangement.instance.PlayerUnitsObserver.units[line,0], PlayMangement.instance.EnemyUnitsObserver.units[line,0]));
-            Logger.Log(string.Format("클라이언트 유닛 앞: {0}, {1}", PlayMangement.instance.PlayerUnitsObserver.units[line,1], PlayMangement.instance.EnemyUnitsObserver.units[line,1]));
+
+            GameObject[,] mySlots = null;
+            GameObject[,] enemySlots = null;
+
+            PlayMangement playMangement = PlayMangement.instance;
+            bool isHuman = PlayMangement.instance.player.isHuman;
+
+            if (isHuman) {
+                mySlots = playMangement.UnitsObserver.humanUnits;
+                enemySlots = playMangement.UnitsObserver.orcUnits;
+            }
+            else {
+                mySlots = playMangement.UnitsObserver.orcUnits;
+                enemySlots = playMangement.UnitsObserver.humanUnits;
+            }
+
+            Logger.Log(string.Format("클라이언트 유닛 뒤: {0}, {1}", mySlots[line,0], enemySlots[line,0]));
+            Logger.Log(string.Format("클라이언트 유닛 앞: {0}, {1}", mySlots[line,1], enemySlots[line,1]));
             Logger.Log(string.Format("휴먼 체력 : {0}, 방어갯수 : {1}, 방어게이지 : {2}", human.currentHp, human.shieldCount, human.shieldGauge));
             Logger.Log(string.Format("오크 체력 : {0}, 방어갯수 : {1}, 방어게이지 : {2}", orc.currentHp, orc.shieldCount, orc.shieldGauge));
             Logger.Log("=======================================");
@@ -34,15 +50,14 @@ namespace SocketFormat {
 
         public static void CheckBattleSynchronization(GameState state) {
             PlayMangement manager = PlayMangement.instance;
-            FieldUnitsObserver humanUnits, orcUnits;
-            humanUnits = manager.player.isHuman ? manager.PlayerUnitsObserver : manager.EnemyUnitsObserver;
-            orcUnits = (!manager.player.isHuman) ? manager.PlayerUnitsObserver : manager.EnemyUnitsObserver;
+            bool isHuman = manager.player.isHuman;
+            var observer = manager.UnitsObserver;
             for(int i = 0; i < state.map.lines.Length; i++) {
-                CheckUnits(state.map.lines[i].human, humanUnits.GetAllFieldUnits(i));
-                CheckUnits(state.map.lines[i].orc, orcUnits.GetAllFieldUnits(i));
+                CheckUnits(state.map.lines[i].human, observer.GetAllFieldUnits(i, true));
+                CheckUnits(state.map.lines[i].orc, observer.GetAllFieldUnits(i, false));
             }
-            List<GameObject> list = humanUnits.GetAllFieldUnits();
-            list.AddRange(orcUnits.GetAllFieldUnits());
+            List<GameObject> list = observer.GetAllFieldUnits(isHuman);
+            list.AddRange(observer.GetAllFieldUnits(!isHuman));
             CheckUnitsReverse(list, state.map);
             CheckHeros(state);
         }
@@ -138,22 +153,22 @@ namespace SocketFormat {
 
         public static void CheckMapPosition(GameState state) {
             PlayMangement playMangement = PlayMangement.instance;
-            FieldUnitsObserver orcUnitsObserver, humanUnitsObserver;
-            orcUnitsObserver = playMangement.player.isHuman ? playMangement.EnemyUnitsObserver : playMangement.PlayerUnitsObserver;
-            humanUnitsObserver = playMangement.player.isHuman ? playMangement.PlayerUnitsObserver : playMangement.EnemyUnitsObserver;
-            List<GameObject> clientHumanLine = humanUnitsObserver.GetAllFieldUnits();
-            List<GameObject> clientOrcLine = orcUnitsObserver.GetAllFieldUnits();
+            var observer = playMangement.UnitsObserver;
+
+            List<GameObject> clientHumanLine = observer.GetAllFieldUnits(isHuman: true);
+            List<GameObject> clientOrcLine = observer.GetAllFieldUnits(isHuman: false);
             Line[] lines = state.map.lines;
 
             for(int i = 0; i < lines.Length; i++) {
-                CheckMonsterPosition(lines[i].orc, orcUnitsObserver, i);
-                CheckMonsterPosition(lines[i].human, humanUnitsObserver, i);
+                CheckMonsterPosition(lines[i].orc, i, false);
+                CheckMonsterPosition(lines[i].human, i, true);
             }
         }
 
-        public static void CheckMonsterPosition(Unit[] units, FieldUnitsObserver observer, int line) {
-            if(units.Length == 0) return;
-            List<GameObject> mons = observer.GetAllFieldUnits();
+        public static void CheckMonsterPosition(Unit[] units, int line, bool isHuman) {
+            var observer = PlayMangement.instance.UnitsObserver;
+            if (units.Length == 0) return;
+            List<GameObject> mons = observer.GetAllFieldUnits(isHuman);
             foreach(Unit unit in units) {
                 GameObject mon = mons.Find(x => x.GetComponent<PlaceMonster>().itemId == unit.itemId);
                 if(mon == null) {
@@ -161,10 +176,10 @@ namespace SocketFormat {
                     return;
                 }
                 PlaceMonster monData = mon.GetComponent<PlaceMonster>();
-                Pos pos = observer.GetMyPos(mon);
+                FieldUnitsObserver.Pos pos = observer.GetMyPos(mon);
                 if(pos.col == line) continue;
 
-                observer.UnitChangePosition(mon, line, 0);
+                observer.UnitChangePosition(mon, new FieldUnitsObserver.Pos(line, 0), isHuman);
             }
         }
     }  
