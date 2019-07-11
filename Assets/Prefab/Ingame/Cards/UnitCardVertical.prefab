@@ -383,9 +383,10 @@ MonoBehaviour:
   skeleton: {fileID: 0}
   changeSelected: 0
   cardID: 
-  DragObserver: {fileID: 0}
-  mousLocalPos: {fileID: 0}
-  ListCircle: {fileID: 0}
+  mouseLocalPos: {fileID: 0}
+  mouseXPos: {fileID: 0}
+  cardHand: {fileID: 0}
+  handManager: {fileID: 0}
   highlightedSlot: {fileID: 0}
   cardData:
     cardId: 
@@ -759,7 +760,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 7278397992048773851}
         m_MethodName: RedrawButton
         m_Mode: 1
         m_Arguments:
