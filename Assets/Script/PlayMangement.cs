@@ -519,7 +519,6 @@ public partial class PlayMangement : MonoBehaviour {
 
         PlaceMonster monster = monsterTransform.GetChild(0).GetComponent<PlaceMonster>();
         monster.CheckHP();
-        monster.CheckDebuff();
     }
 
     IEnumerator battleUnit(GameObject lineObject, int line, bool secondAttack) {

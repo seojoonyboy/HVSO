@@ -381,17 +381,7 @@ public class PlaceMonster : MonoBehaviour {
         UpdateStat();
         SetState(UnitState.HIT);
     }
-
-
-    public void RequestChangePower(int amount) {
-        unit.attack += amount;
-        UpdateStat();
-    }
-
-    public void RequestChangeHp(int amount) {
-        unit.currentHP += amount;
-        UpdateStat();
-    }
+    
 
     public void RequestChangeStat(int power = 0, int hp = 0) {
         StartCoroutine(buffEffectCoroutine(power, hp));
@@ -511,34 +501,7 @@ public class PlaceMonster : MonoBehaviour {
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.FIELD_CHANGED, null, null);
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.DIE, this, parms);
     }
-
-
-    public void CheckDebuff() {
-        //poisonned poison = GetComponent<poisonned>();
-
-        /*if(poison != null) {
-            GameObject tomb = AccountManager.Instance.resource.unitDeadObject;
-            GameObject dropTomb = Instantiate(tomb);
-            dropTomb.transform.position = transform.position;
-
-            if (isPlayer) {
-                PlayMangement.instance.PlayerUnitsObserver.UnitRemoved(x, y);
-            }
-            else {
-                PlayMangement.instance.EnemyUnitsObserver.UnitRemoved(x, y);
-            }
-
-            dropTomb.GetComponent<DeadSpine>().target = gameObject;
-            dropTomb.GetComponent<DeadSpine>().StartAnimation(unit.ishuman);
-        }*/
-    }
-
-
-    public void TakeMagic() {
-        SetState(UnitState.MAGICHIT);
-    }
-
-
+    
     protected void SetState(UnitState state) {
         timeUpdate = null;
         currentTime = 0f;
