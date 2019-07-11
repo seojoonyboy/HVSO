@@ -70,7 +70,6 @@ public class RaceTypeToggleHandler : MonoBehaviour {
         controller.ChangeRaceType(type);        //Send To Machine Variables
 
         ClearList();
-        //CreateHeroList(type);
         CreateBasicDeckList(type);
     }
 
@@ -85,50 +84,6 @@ public class RaceTypeToggleHandler : MonoBehaviour {
     public void SwitchOff() {
         transform.Find("Selected").gameObject.SetActive(false);
         transform.Find("Unselected").gameObject.SetActive(true);
-    }
-
-    private void CreateHeroList(BattleReadySceneController.RaceType type) {
-        List<Hero> selectedHeroes;
-        AccountManager accountManager = AccountManager.Instance;
-        switch (type) {
-            case BattleReadySceneController.RaceType.HUMAN:
-                selectedHeroes = accountManager.humanDecks.heros;
-                break;
-            case BattleReadySceneController.RaceType.ORC:
-                selectedHeroes = accountManager.orcDecks.heros;
-                break;
-            default:
-                selectedHeroes = null;
-                break;
-        }
-        if (selectedHeroes == null) return;
-
-        var pageNum = TotalPortraitPages(ref selectedHeroes);
-
-        int item_count = 0;
-        int slot_count = 0;
-
-        for(int i=0; i<pageNum; i++) {
-            GameObject page = Instantiate(heroGroupPrefab, heroPortraitParent);
-            if (slot_count == PORTRAIT_SLOT_NUM_PER_PAGE) {
-                slot_count = 0;
-                continue;
-            }
-
-            for(int j=0; j<PORTRAIT_SLOT_NUM_PER_PAGE; j++) {
-                if (item_count > selectedHeroes.Count - 1) break;
-                Transform target_portrait = page.transform.GetChild(slot_count);
-
-                target_portrait.transform.Find("Deactive").gameObject.SetActive(false);
-                target_portrait.transform.Find("Name").GetComponent<Text>().text = selectedHeroes[item_count].name;
-
-                target_portrait.GetComponent<Data>().data = selectedHeroes[item_count];
-                target_portrait.GetComponent<IntergerIndex>().Id = item_count;
-
-                item_count++;
-                slot_count++;
-            }
-        }
     }
 
     private void CreateBasicDeckList(BattleReadySceneController.RaceType type) {
