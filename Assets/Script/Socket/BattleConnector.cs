@@ -1,19 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Events;
+using UnityEngine.UI;
 using UnityEngine;
 using BestHTTP.WebSocket;
-using BestHTTP;
-using System;
-using UnityEngine.UI;
 using Bolt;
-using UnityEngine.Events;
-using dataModules;
-using SocketFormat;
-using System.Reflection;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System.Linq;
-using TMPro;
+using SocketFormat;
 
 public partial class BattleConnector : MonoBehaviour {
 
@@ -28,8 +22,6 @@ public partial class BattleConnector : MonoBehaviour {
     [SerializeField] GameObject machine;
     [SerializeField] Button returnButton;
 
-    public UnityEvent OnReceiveSocketMessage;
-    public UnityEvent OnSocketClose;
     public UnityAction<string, int, bool> HandchangeCallback;
     private Coroutine pingpong;
     private Coroutine timeCheck;
@@ -98,7 +90,7 @@ public partial class BattleConnector : MonoBehaviour {
 
         string[] args = new string[] { battleType, playerId, selectedDeckType, deckId, race };
         SendMethod("join_game", args);
-        pingpong = StartCoroutine("Heartbeat");
+        pingpong = StartCoroutine(Heartbeat());
     }
 
     IEnumerator Heartbeat() {
@@ -110,26 +102,7 @@ public partial class BattleConnector : MonoBehaviour {
             PlayMangement.instance.SocketErrorUIOpen(false);
     }
 
-    //Receive Socket Message
-    private void ReceiveMessage(WebSocket webSocket, string message) {
-        //Logger.Log(message);
-        OnReceiveSocketMessage.Invoke();
-        ReceiveFormat result = dataModules.JsonReader.Read<ReceiveFormat>(message);
-        queue.Enqueue(result);
-        StartCoroutine("showMessage",result);
-    }
-
-    private IEnumerator showMessage(ReceiveFormat result) {
-        yield return null;
-        JObject json = null;
-        if(result.gameState != null) {
-            json = JObject.Parse(JsonConvert.SerializeObject(result.gameState.map));
-            json["lines"].Parent.Remove();
-            for(int i = 0; i < json["allMonster"].Count() ; i++) json["allMonster"][i]["skills"].Parent.Remove();
-        }
-        Logger.Log(string.Format("메소드 : {0}, args : {1}, map : {2}", result.method, result.args, 
-        result.gameState != null ? JsonConvert.SerializeObject(json, Formatting.Indented)  : null));
-    }
+    
 
     public void ClientReady() {
         SendMethod("client_ready");
@@ -193,296 +166,10 @@ public partial class BattleConnector : MonoBehaviour {
     }
 }
 
-/// 서버로부터 데이터를 받아올 때 reflection으로 string을 함수로 바로 발동하게 하는 부분
-public partial class BattleConnector : MonoBehaviour {
-    public GameState gameState;
-    private string raceName;
-    private bool dequeueing = true;
-    public Queue<ReceiveFormat> queue = new Queue<ReceiveFormat>();
-    private Type thisType;
 
-    private void FixedUpdate() {
-        if(!dequeueing) return;
-        if(queue.Count == 0) return;
-        DequeueSocket();
-    }
-    
-    private void DequeueSocket() {
-        ReceiveFormat result = queue.Dequeue();
-        status = result.method;
-        if(result.gameState != null) {
-            gameState = result.gameState;
-        }
-        if(result.error != null) 
-            Logger.LogError("WebSocket play wrong Error : " +result.error);
-        if(result.method == null) return;
-        MethodInfo theMethod = thisType.GetMethod(result.method);
-        if(theMethod == null) return;
-        object[] args = new object[]{result.args};
-        //var args = ((IEnumerable) result.args).Cast<object>().Select(x => x == null ? x : x.ToString()).ToArray();
-        theMethod.Invoke(this, args);
-    }
-
-    public void begin_ready(object args) {
-        this.message.text = "대전 상대를 찾았습니다.";
-        CustomEvent.Trigger(machine, "PlayStartBattleAnim");
-        StopCoroutine(timeCheck);
-        SetUserInfoText();
-        ClientReady();
-    }
-
-    /// <summary>
-    /// 매칭 화면에서 유저 정보 표기
-    /// </summary>
-    private void SetUserInfoText() {
-        string race = Variables.Saved.Get("SelectedRace").ToString().ToLower();
-
-        var orcPlayerData = gameState.players.orc;
-        var orcUserData = orcPlayerData.user;
-        var humanPlayerData = gameState.players.human;
-        var humanUserData = humanPlayerData.user;
-
-        string orcPlayerNickName = orcUserData.nickName;
-        if (string.IsNullOrEmpty(orcPlayerNickName)) orcPlayerNickName = "Bot";
-
-        string orcHeroName = orcPlayerData.hero.name;
-        string humanPlayerNickName = humanUserData.nickName;
-        if (string.IsNullOrEmpty(humanPlayerNickName)) humanPlayerNickName = "Bot";
-        string humanHeroName = humanPlayerData.hero.name;
-
-        Logger.Log(orcPlayerNickName);
-        Logger.Log(humanPlayerNickName);
-
-        Text enemyNickNameTxt = machine.transform.Find("EnemyName/NickName").GetComponent<Text>();
-        Text enemyHeroNameTxt = machine.transform.Find("EnemyName/HeroName").GetComponent<Text>();
-
-        Text playerNickNameTxt = machine.transform.Find("PlayerName/NickName").GetComponent<Text>();
-        Text playerHeroNameTxt = machine.transform.Find("PlayerName/HeroName").GetComponent<Text>();
-
-        Logger.Log(race);
-
-        if (race == "human") {
-            playerHeroNameTxt.text = humanHeroName;
-            playerNickNameTxt.text = humanPlayerNickName;
-
-            enemyHeroNameTxt.text = orcHeroName;
-            enemyNickNameTxt.text = orcPlayerNickName;
-        }
-        else if (race == "orc") {
-            playerHeroNameTxt.text = orcHeroName;
-            playerNickNameTxt.text = orcPlayerNickName;
-
-            enemyHeroNameTxt.text = humanHeroName;
-            enemyNickNameTxt.text = humanPlayerNickName;
-        }
-        timer.text = null;
-        returnButton.onClick.RemoveListener(BattleCancel);
-        returnButton.gameObject.SetActive(false);
-    }
-
-    public void end_ready(object args) {
-        //Logger.Log("WebSocket State : end_ready");
-    }
-
-    public void begin_mulligan(object args) {
-        //Logger.Log("WebSocket State : begin_mulligan");
-    }
-
-    public void hand_changed(object args) {
-        if(PlayMangement.instance == null) return; //임시
-        var json = (JObject)args;
-        bool isHuman = PlayMangement.instance.player.isHuman;
-        raceName = isHuman ? "human" : "orc";
-        
-        if(json["camp"].ToString().CompareTo(raceName) != 0) return;
-
-        Card newCard = gameState.players.myPlayer(isHuman).newCard;
-        //Logger.Log("Card id : "+ newCard.id + "  Card itemId : " + newCard.itemId);
-        HandchangeCallback(newCard.id, newCard.itemId, false);
-        HandchangeCallback = null;
-    }
-
-    public void end_mulligan(object args) {
-        //Logger.Log("WebSocket State : end_mulligan");
-        dequeueing = false;
-        getNewCard = true;
-    }
-
-    public void begin_turn_start(object args) {
-        //Logger.Log("WebSocket State : begin_turn_start");
-    }
-    
-    public void end_turn_start(object args) {
-        //Logger.Log("WebSocket State : end_turn_start");
-    }
-
-    public void begin_orc_pre_turn(object args) {
-        //Logger.Log("WebSocket State : begin_orc_pre_turn");
-        checkMyTurn(false);
-    }
-
-    public void end_orc_pre_turn(object args) {
-        //Logger.Log("WebSocket State : end_orc_pre_turn");
-        useCardList.isDone = true;
-    }
-
-    public void begin_human_turn(object args) {
-        //Logger.Log("WebSocket State : begin_human_turn");
-        checkMyTurn(true);
-    }
-
-    public void end_human_turn(object args) {
-        //Logger.Log("WebSocket State : end_human_turn");
-        useCardList.isDone = true;
-    }
-
-    public void begin_orc_post_turn(object args) {
-        //Logger.Log("WebSocket State : begin_orc_post_turn");
-        checkMyTurn(false);
-        unitSkillList.isDone = false;
-        //DebugSocketData.CheckMapPosition(gameState);
-    }
-
-    public void checkMapPos(object args) {
-        if(PlayMangement.instance.player.isHuman) return;
-    }
-
-    public void end_orc_post_turn(object args) {
-        //Logger.Log("WebSocket State : end_orc_post_turn");
-        useCardList.isDone = true;
-        unitSkillList.isDone = true;
-    }
-
-    public void skill_activated(object args) {
-        if(PlayMangement.instance.enemyPlayer.isHuman) return;
-        var json = (JObject)args;
-        int itemId = int.Parse(json["itemId"].ToString());
-        unitSkillList.Enqueue(itemId);
-        //item Id가 args에 있음
-        //Logger.Log("WebSocket State : unit_skill_activate");
-        //적이 skill_activate 할 경우?
-    }
-
-    public void begin_battle_turn(object args) {
-        //Logger.Log("WebSocket State : begin_battle_turn");
-        lineBattleList.isDone = false;
-        mapClearList.isDone = false;
-    }
-
-    public void end_battle_turn(object args) {
-        //Logger.Log("WebSocket State : end_battle_turn");
-    }
-
-    public void line_battle(object args) {
-        var json = (JObject)args;
-        string line = json["lineNumber"].ToString();
-        string camp = json["camp"].ToString();
-        int line_num = int.Parse(line);
-        lineBattleList.Enqueue(gameState);
-        lineBattleList.checkCount();
-        humanData.Enqueue(gameState.players.human);
-        orcData.Enqueue(gameState.players.orc);
-    }
-
-    public void map_clear(object args) {
-        var json = (JObject)args;
-        string line = json["lineNumber"].ToString();
-        int line_num = int.Parse(line);
-        mapClearList.Enqueue(gameState);
-        mapClearList.checkCount();
-    }
-
-    public void begin_shield_turn(object args) {
-        //Logger.Log("WebSocket State : begin_shield_turn");
-        PlayMangement.instance.LockTurnOver();
-        dequeueing = false;
-        getNewCard = true;
-    }
-
-    public void end_shield_turn(object args) {
-        //Logger.Log("WebSocket State : end_shield_turn");
-        StartCoroutine(waitSkillDone(() => {
-            PlayMangement.instance.heroShieldActive = false;
-            PlayMangement.instance.UnlockTurnOver();
-        }, true));
-    }
-
-    public IEnumerator waitSkillDone(UnityAction callback, bool isShield = false) {
-        if(isShield) yield return new WaitForSeconds(2.0f);
-        MagicDragHandler[] list = Resources.FindObjectsOfTypeAll<MagicDragHandler>();
-        foreach(MagicDragHandler magic in list) {
-            if(magic.skillHandler == null) continue;
-            
-            if(!(magic.skillHandler.finallyDone && magic.skillHandler.socketDone)) {
-                yield return new WaitUntil(() => magic.skillHandler.finallyDone && magic.skillHandler.socketDone);
-                yield return new WaitForSeconds(1.0f);
-            }
-        }
-        PlaceMonster[] list2 = FindObjectsOfType<PlaceMonster>();
-        foreach(PlaceMonster unit in list2) {
-            if(unit.skillHandler == null) continue;
-            
-            if(!(unit.skillHandler.finallyDone && unit.skillHandler.socketDone)) {
-                yield return new WaitUntil(() => unit.skillHandler.finallyDone && unit.skillHandler.socketDone);
-                yield return new WaitForSeconds(1.0f);
-            }
-        }
-        callback();
-    }
-
-    public void shield_guage(object args) {
-        var json = (JObject)args;
-        string camp = json["camp"].ToString();
-        string gauge = json["shieldGet"].ToString();
-        ShieldCharge charge = new ShieldCharge();
-        charge.shieldCount = int.Parse(gauge);
-        charge.camp = camp;
-        shieldChargeQueue.Enqueue(charge);
-    }
-
-    public void begin_end_turn(object args) {
-        //Logger.Log("WebSocket State : begin_end_turn");
-        dequeueing = false;
-        getNewCard = true;
-    }
-
-    public void end_end_turn(object args) {
-        //Logger.Log("WebSocket State : end_end_turn");
-    }
-
-    public void opponent_connection_closed(object args) {
-        //Logger.Log("WebSocket State : opponent_connection_closed");
-        PlayMangement.instance.SocketErrorUIOpen(true);
-    }
-
-    public void begin_end_game(object args) {
-        //Logger.Log("WebSocket State : begin_end_game");
-        
-    }
-
-    public void end_end_game(object args) {
-        //Logger.Log("WebSocket State : end_end_game");
-        battleGameFinish = true;
-    }
-
-    public void ping(object args) {
-        //Logger.Log("ping");
-        SendMethod("pong");
-    }
-
-    public void card_played(object args) {
-        Logger.Log("WebSocket State : card_played");
-        string enemyCamp = PlayMangement.instance.enemyPlayer.isHuman ? "human" : "orc";
-        string cardCamp = gameState.lastUse.cardItem.camp;
-        bool isEnemyCard = cardCamp.CompareTo(enemyCamp) == 0;
-        if(isEnemyCard) useCardList.Enqueue(gameState);
-        //DebugSocketData.CheckMapPosition(gameState);
-    }
-}
 
 /// 클라이언트로부터 데이터를 가져올 때
 public partial class BattleConnector : MonoBehaviour {
-    private string status;
     private bool getNewCard = false;
     public QueueSocketList<GameState> useCardList = new QueueSocketList<GameState>();
     public QueueSocketList<GameState> lineBattleList = new QueueSocketList<GameState>();
@@ -491,7 +178,6 @@ public partial class BattleConnector : MonoBehaviour {
     public Queue<SocketFormat.Player> orcData = new Queue<SocketFormat.Player>();
     public Queue <ShieldCharge> shieldChargeQueue = new Queue<ShieldCharge>();
     public QueueSocketList<int> unitSkillList = new QueueSocketList<int>();
-    public GameState r_returnState;
 
     public IEnumerator WaitGetCard() {
         if(!getNewCard) IngameNotice.instance.SetNotice("서버로부터 카드를 받고 있습니다");
