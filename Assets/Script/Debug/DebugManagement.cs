@@ -130,7 +130,7 @@ public class DebugManagement : PlayMangement
         monster.GetComponent<DebugUnit>().Init(cardData);
         monster.GetComponent<DebugUnit>().SpawnUnit();
 
-        EnemyUnitsObserver.UnitAdded(monster, x, y);
+        UnitsObserver.UnitAdded(monster, new FieldUnitsObserver.Pos(x, y), player.isHuman);
 
     }
 

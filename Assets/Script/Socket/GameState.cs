@@ -109,10 +109,10 @@ namespace SocketFormat {
 
     public class Unit : Card {
         public int currentHp;
-        public Pos pos { get{ return GetPos();} }
+        public FieldUnitsObserver.Pos pos { get{ return GetPos();} }
 
-        private Pos GetPos() {
-            Pos pos = new Pos();
+        private FieldUnitsObserver.Pos GetPos() {
+            FieldUnitsObserver.Pos pos = new FieldUnitsObserver.Pos();
             Line[] lines = PlayMangement.instance.socketHandler.gameState.map.lines;
             bool isOrc = camp.CompareTo("orc")==0;
             PropertyInfo info = lines[0].GetType().GetProperty(camp);

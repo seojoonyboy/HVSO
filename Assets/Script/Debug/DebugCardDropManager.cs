@@ -241,7 +241,7 @@ public partial class DebugCardDropManager {
         placedMonster.GetComponent<DebugUnit>().Init(cardHandler.cardData);
         placedMonster.GetComponent<DebugUnit>().SpawnUnit();
         DebugManagement.instance.player.GetComponent<DebugPlayer>().debugcdpm.DestroyCard(cardIndex);
-        DebugManagement.instance.PlayerUnitsObserver.RefreshFields(unitLine);
+        DebugManagement.instance.UnitsObserver.RefreshFields(unitLine, DebugManagement.instance.player.isHuman);
 
 
         string[] args = {cardHandler.itemID.ToString(),
