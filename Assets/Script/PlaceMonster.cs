@@ -90,22 +90,6 @@ public class PlaceMonster : MonoBehaviour {
             maxAtkCount = 2;
         else
             maxAtkCount = 1;
-        /*
-        if (unit.attackType.Length > 0) {
-            switch (unit.attackType[0]) {
-                case "double":
-                    maxAtkCount = 2;
-                    break;
-                case "assault":
-                    break;
-                default:
-                    maxAtkCount = 1;
-                    break;
-            }
-        }
-        else
-            maxAtkCount = 1;
-        */
 
         if (unit.cardCategories[0] == "stealth")
         gameObject.AddComponent<ambush>();

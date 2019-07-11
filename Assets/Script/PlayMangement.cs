@@ -325,92 +325,7 @@ public partial class PlayMangement : MonoBehaviour {
         return monster;
     }
 
-    public GameObject SummonUnit(bool isPlayer, string unitID, int col, int row, int itemID = -1, int cardIndex = -1, Transform[][] args = null) {
-        PlayerController targetPlayer = (isPlayer == true) ? player : enemyPlayer;
-        CardDataPackage cardDataPackage = AccountManager.Instance.cardPackage;
-
-        GameObject skeleton;
-        CardData cardData;
-        cardData = cardDataPackage.data[unitID];
-
-        Logger.Log(col);
-        Logger.Log(row);
-
-        GameObject unit = Instantiate(baseUnit, targetPlayer.transform.GetChild(row).GetChild(col));
-        unit.transform.position = targetPlayer.transform.GetChild(row).GetChild(col).position;
-        PlaceMonster placeMonster = unit.GetComponent<PlaceMonster>();
-
-        placeMonster.isPlayer = isPlayer;
-        placeMonster.itemId = itemID;
-        placeMonster.unit.name = cardData.name;
-        placeMonster.unit.HP = (int)cardData.hp;
-        placeMonster.unit.currentHP = (int)cardData.hp;
-        placeMonster.unit.originalAttack = (int)cardData.attack;
-        placeMonster.unit.attack = (int)cardData.attack;
-        placeMonster.unit.type = cardData.type;
-        placeMonster.unit.attackRange = cardData.attackRange;
-        placeMonster.unit.cost = cardData.cost;
-        placeMonster.unit.rarelity = cardData.rarelity;
-        placeMonster.unit.id = cardData.cardId;
-        placeMonster.unit.attributes = cardData.attributes;
-
-
-        if (cardData.category_2 != "") {
-            placeMonster.unit.cardCategories = new string[2];
-            placeMonster.unit.cardCategories[0] = cardData.category_1;
-            placeMonster.unit.cardCategories[1] = cardData.category_2;
-        }
-        else {
-            placeMonster.unit.cardCategories = new string[1];
-            placeMonster.unit.cardCategories[0] = cardData.category_1;
-        }
-
-        if (cardData.attackTypes.Length > 0) {
-            placeMonster.unit.attackType = new string[cardData.attackTypes.Length];
-            placeMonster.unit.attackType = cardData.attackTypes;
-        }
-
-        skeleton = Instantiate(AccountManager.Instance.resource.cardSkeleton[unitID], placeMonster.transform);
-        skeleton.name = "skeleton";
-        skeleton.transform.localScale = (isPlayer == true) ? new Vector3(-1, 1, 1) : new Vector3(1, 1, 1);
-        placeMonster.name = cardData.name;
-
-        placeMonster.Init(cardData);
-        placeMonster.SpawnUnit();
-        targetPlayer.resource.Value -= cardData.cost;
-        if (isPlayer) {
-            player.isPicking.Value = false;
-            if (player.isHuman)
-                player.ActivePlayer();
-            else
-                player.ActiveOrcTurn();
-            if (args != null)
-                playerUnitsObserver.RefreshFields(args);
-            else
-                playerUnitsObserver.UnitAdded(unit, col, row);
-
-            player.cdpm.DestroyCard(cardIndex);
-        }
-        else {
-            int enemyCardCount = CountEnemyCard();
-            Destroy(enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(enemyCardCount - 1).GetChild(0).gameObject);
-
-            SkillModules.SkillHandler skillHandler = new SkillModules.SkillHandler();
-            skillHandler.Initialize(cardData.skills, unit, false);
-            unit.GetComponent<PlaceMonster>().skillHandler = skillHandler;
-            cardInfoCanvas.GetChild(0).GetComponent<CardListManager>().AddFeildUnitInfo(0, placeMonster.myUnitNum, cardData);
-            EnemyUnitsObserver.UnitAdded(unit, col, row);
-            unit.layer = 14;
-        }
-
-        if(placeMonster.unit.attackType.Length > 0) {
-            GameObject icon = Instantiate(AccountManager.Instance.resource.baseSkillIcon, placeMonster.gameObject.transform.Find("UnitAttackProperty"));
-            icon.GetComponent<SpriteRenderer>().sprite = AccountManager.Instance.resource.skillIcons[placeMonster.unit.attackType[0]];
-        }
-
-        targetPlayer.PlayerUseCard();
-        return unit;
-    }
+    
 
     public void ChangeTurn() {
         if (isGame == false) return;
@@ -822,6 +737,99 @@ public partial class PlayMangement {
     }
 
 }
+
+/// <summary>
+/// 유닛 소환관련 처리
+/// </summary>
+public partial class PlayMangement {
+    public GameObject SummonUnit(bool isPlayer, string unitID, int col, int row, int itemID = -1, int cardIndex = -1, Transform[][] args = null) {
+        PlayerController targetPlayer = (isPlayer == true) ? player : enemyPlayer;
+        CardDataPackage cardDataPackage = AccountManager.Instance.cardPackage;
+
+        GameObject skeleton;
+        CardData cardData;
+        cardData = cardDataPackage.data[unitID];
+
+        Logger.Log(col);
+        Logger.Log(row);
+
+        GameObject unit = Instantiate(baseUnit, targetPlayer.transform.GetChild(row).GetChild(col));
+        unit.transform.position = targetPlayer.transform.GetChild(row).GetChild(col).position;
+        PlaceMonster placeMonster = unit.GetComponent<PlaceMonster>();
+
+        placeMonster.isPlayer = isPlayer;
+        placeMonster.itemId = itemID;
+        placeMonster.unit.name = cardData.name;
+        placeMonster.unit.HP = (int)cardData.hp;
+        placeMonster.unit.currentHP = (int)cardData.hp;
+        placeMonster.unit.originalAttack = (int)cardData.attack;
+        placeMonster.unit.attack = (int)cardData.attack;
+        placeMonster.unit.type = cardData.type;
+        placeMonster.unit.attackRange = cardData.attackRange;
+        placeMonster.unit.cost = cardData.cost;
+        placeMonster.unit.rarelity = cardData.rarelity;
+        placeMonster.unit.id = cardData.cardId;
+        placeMonster.unit.attributes = cardData.attributes;
+
+
+        if (cardData.category_2 != "") {
+            placeMonster.unit.cardCategories = new string[2];
+            placeMonster.unit.cardCategories[0] = cardData.category_1;
+            placeMonster.unit.cardCategories[1] = cardData.category_2;
+        }
+        else {
+            placeMonster.unit.cardCategories = new string[1];
+            placeMonster.unit.cardCategories[0] = cardData.category_1;
+        }
+
+        if (cardData.attackTypes.Length > 0) {
+            placeMonster.unit.attackType = new string[cardData.attackTypes.Length];
+            placeMonster.unit.attackType = cardData.attackTypes;
+        }
+
+        skeleton = Instantiate(AccountManager.Instance.resource.cardSkeleton[unitID], placeMonster.transform);
+        skeleton.name = "skeleton";
+        skeleton.transform.localScale = (isPlayer == true) ? new Vector3(-1, 1, 1) : new Vector3(1, 1, 1);
+        placeMonster.name = cardData.name;
+
+        placeMonster.Init(cardData);
+        placeMonster.SpawnUnit();
+        targetPlayer.resource.Value -= cardData.cost;
+        if (isPlayer) {
+            player.isPicking.Value = false;
+            if (player.isHuman)
+                player.ActivePlayer();
+            else
+                player.ActiveOrcTurn();
+            if (args != null)
+                playerUnitsObserver.RefreshFields(args);
+            else
+                playerUnitsObserver.UnitAdded(unit, col, row);
+
+            player.cdpm.DestroyCard(cardIndex);
+        }
+        else {
+            int enemyCardCount = CountEnemyCard();
+            Destroy(enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(enemyCardCount - 1).GetChild(0).gameObject);
+
+            SkillModules.SkillHandler skillHandler = new SkillModules.SkillHandler();
+            skillHandler.Initialize(cardData.skills, unit, false);
+            unit.GetComponent<PlaceMonster>().skillHandler = skillHandler;
+            cardInfoCanvas.GetChild(0).GetComponent<CardListManager>().AddFeildUnitInfo(0, placeMonster.myUnitNum, cardData);
+            EnemyUnitsObserver.UnitAdded(unit, col, row);
+            unit.layer = 14;
+        }
+
+        if (placeMonster.unit.attackType.Length > 0) {
+            GameObject icon = Instantiate(AccountManager.Instance.resource.baseSkillIcon, placeMonster.gameObject.transform.Find("UnitAttackProperty"));
+            icon.GetComponent<SpriteRenderer>().sprite = AccountManager.Instance.resource.skillIcons[placeMonster.unit.attackType[0]];
+        }
+
+        targetPlayer.PlayerUseCard();
+        return unit;
+    }
+}
+
 
 /// <summary>
 /// 카드 드로우 작동
