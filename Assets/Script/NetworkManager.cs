@@ -119,33 +119,7 @@ public class HttpResponse {
 /// </summary>
 public partial class NetworkManager {
     Queue<RequestFormat> requests = new Queue<RequestFormat>();
-    private bool dequeueing = false;
     TimeSpan timeout = new TimeSpan(0, 0, 30);  //timeout 30초 지정 
-
-    private void FixedUpdate() {
-        if (dequeueing) return;
-        if (requests.Count == 0) return;
-        DequeueRequest();
-    }
-
-    private void DequeueRequest() {
-        dequeueing = true;
-        GameObject loadingModal = LoadingModal.instantiate();
-        Text loadingMsg = loadingModal.transform.Find("Panel/AdditionalMessage").GetComponent<Text>();
-
-        RequestFormat selectedRequestFormat = requests.Dequeue();
-        HTTPRequest request = selectedRequestFormat.request;
-        loadingMsg.text = selectedRequestFormat.loadingMessage;
-
-        request.SetHeader("Content-Type", "application/json");
-        request.Callback += selectedRequestFormat.callback;
-        request.Callback += (x, y) => {
-            dequeueing = false;
-            Destroy(loadingModal);
-        };
-        request.ConnectTimeout = timeout;
-        request.Send();
-    }
 
     /// <summary>
     /// HTTP 요청
@@ -153,7 +127,17 @@ public partial class NetworkManager {
     /// <param name="request">HTTPRequest에 맞는 Format 작성</param>
     /// <param name="callback">요청 완료시 받을 Callback</param>
     public void Request(HTTPRequest request, OnRequestFinishedDelegate callback, string msg = null) {
-        requests.Enqueue(new RequestFormat(request, callback, msg));
+        GameObject loadingModal = LoadingModal.instantiate();
+        Text loadingMsg = loadingModal.transform.Find("Panel/AdditionalMessage").GetComponent<Text>();
+        loadingMsg.text = msg;
+
+        request.SetHeader("Content-Type", "application/json");
+        request.Callback += callback;
+        request.Callback += (x, y) => {
+            Destroy(loadingModal);
+        };
+        request.ConnectTimeout = timeout;
+        request.Send();
     }
 
     public class RequestFormat {
