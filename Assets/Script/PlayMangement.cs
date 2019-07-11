@@ -25,7 +25,8 @@ public partial class PlayMangement : MonoBehaviour {
     public GameObject onCanvasPosGroup;
     public EffectManager effectManager;
     public SpineEffectManager spineEffectManager;
-    public CardCircleManager cardCircleManager;
+    //public CardCircleManager cardCircleManager;
+    public CardHandManager cardHandManager;
     public SkeletonGraphic playerMana, enemyMana;
 
     public GameObject baseUnit;
@@ -252,12 +253,12 @@ public partial class PlayMangement : MonoBehaviour {
         yield return EnemySettingTarget(history.targets[0], magicCard);
         //실제 카드 사용
         object[] parms = new object[] { false, card };
-        yield return cardCircleManager.ShowUsedMagicCard(100, card);
+        yield return cardHandManager.ShowUsedMagicCard(100, card);
         EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
         yield return new WaitForSeconds(2f);
         //카드 파괴
         card.transform.localScale = new Vector3(1, 1, 1);
-        cardCircleManager.DestroyCard(card);
+        cardHandManager.DestroyCard(card);
         card.GetComponent<MagicDragHandler>().skillHandler.RemoveTriggerEvent();
     }
 
@@ -563,7 +564,7 @@ public partial class PlayMangement : MonoBehaviour {
         Logger.Log("쉴드 발동!");
         bool isPlayer = (isHuman == player.isHuman);
         if (isPlayer) {
-            CardCircleManager cdpm = FindObjectOfType<CardCircleManager>();
+            CardHandManager cdpm = FindObjectOfType<CardHandManager>();
             bool race = player.isHuman;
             SocketFormat.Card cardData = socketHandler.gameState.players.myPlayer(race).newCard;
             battleLineEffect.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.6f);

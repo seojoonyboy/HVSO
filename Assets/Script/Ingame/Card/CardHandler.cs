@@ -22,11 +22,13 @@ public partial class CardHandler : MonoBehaviour {
     public string cardID;
     protected int _itemID;
 
-    public Transform DragObserver;
-    public Transform mousLocalPos;
-    public CardCircleManager ListCircle;
+    
+    public Transform mouseLocalPos;
+    public Transform mouseXPos;
+    public Transform cardHand;
+    public CardHandManager handManager;
     protected int myCardIndex;
-    protected int parentIndex;
+
     public int CARDINDEX {
         set { myCardIndex = value; }
     }
@@ -56,9 +58,10 @@ public partial class CardHandler : MonoBehaviour {
     }
 
     private void Start() {
-        DragObserver = transform.parent.parent.parent.Find("DragObserver");
-        ListCircle = transform.parent.parent.parent.Find("CardCircle").GetComponent<CardCircleManager>();
-        mousLocalPos = transform.parent.parent.parent.Find("MouseLocalPosition");
+        mouseXPos = transform.parent.parent.parent.Find("MouseXposition");
+        cardHand = transform.parent.parent.parent.Find("CardHand");
+        handManager = cardHand.GetComponent<CardHandManager>();
+        mouseLocalPos = transform.parent.parent.parent.Find("MouseLocalPosition");        
         clm = PlayMangement.instance.cardInfoCanvas.Find("CardInfoList").GetComponent<CardListManager>();
         gameObject.SetActive(false);
     }
@@ -76,7 +79,10 @@ public partial class CardHandler : MonoBehaviour {
             if (AccountManager.Instance.resource.cardPortraite.ContainsKey(cardID)) portraitImage = AccountManager.Instance.resource.cardPortraite[cardID];
             else portraitImage = AccountManager.Instance.resource.cardPortraite["default"];
 
-            transform.Find("Portrait").GetComponent<Image>().sprite = portraitImage;
+            if (cardData.type == "unit")
+                transform.Find("Image/Portrait").GetComponent<Image>().sprite = portraitImage;
+            else
+                transform.Find("Portrait").GetComponent<Image>().sprite = portraitImage;
             if (!cardData.hero_chk) {
                 transform.Find("BackGround").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground[cardData.type + "_" + cardData.rarelity];
                 transform.Find("Name").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground["name_" + cardData.rarelity];
@@ -261,7 +267,7 @@ public partial class CardHandler : MonoBehaviour {
     }
 
     public void RedrawButton() {
-        CardCircleManager handManager = FindObjectOfType<CardCircleManager>();
+        CardHandManager handManager = FindObjectOfType<CardHandManager>();
         PlayMangement.instance.socketHandler.HandchangeCallback = handManager.RedrawCallback;
         PlayMangement.instance.socketHandler.ChangeCard(itemID);
     }
@@ -309,27 +315,23 @@ public partial class CardHandler : MonoBehaviour {
     }
 
     protected void StartDragCard() {
-        parentIndex = transform.parent.GetSiblingIndex();
-        transform.parent.SetAsLastSibling();
         transform.localScale = new Vector3(1.15f, 1.15f, 1);
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePos = new Vector3(mousePos.x, mousePos.y, 0);
-        Vector3 observeMousePos = new Vector3(mousePos.x, mousePos.y, 0);
-        DragObserver.LookAt(observeMousePos, new Vector3(0, 0, 1));
-        mousLocalPos.position = transform.position;
-        ListCircle.transform.SetParent(DragObserver);
+        mouseXPos.position = new Vector3(mousePos.x, 0, 0);
+        cardHand.transform.SetParent(mouseXPos);
+        mouseLocalPos.position = transform.position;
     }
 
     protected void OnDragCard() {
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePos = new Vector3(mousePos.x, mousePos.y, 0);
-        Vector3 observeMousePos = new Vector3(mousePos.x, mousePos.y, 0);
-        DragObserver.LookAt(observeMousePos, new Vector3(0, 0, 1));
+        mouseXPos.position = new Vector3(mousePos.x, 0, 0);
         if (mousePos.y > -6.5f)
             transform.position = mousePos;
         else
-            transform.localPosition = new Vector3(0, 4500, 0);
-        mousLocalPos.position = transform.position;
+            transform.localPosition = new Vector3(0, 0, 0);
+        mouseLocalPos.position = transform.position;
     }
 }
 

@@ -19,9 +19,9 @@ public partial class UnitDragHandler : CardHandler, IBeginDragHandler, IDragHand
         StartDragCard();
         CardInfoOnDrag.instance.SetPreviewUnit(cardData.cardId);
         if (cardData.skills.Length != 0)
-            CardInfoOnDrag.instance.SetCardDragInfo(null, mousLocalPos.localPosition, cardData.skills[0].desc);
+            CardInfoOnDrag.instance.SetCardDragInfo(null, mouseLocalPos.localPosition, cardData.skills[0].desc);
         else
-            CardInfoOnDrag.instance.SetCardDragInfo(null, mousLocalPos.localPosition);
+            CardInfoOnDrag.instance.SetCardDragInfo(null, mouseLocalPos.localPosition);
         itsDragging = gameObject;
         blockButton = PlayMangement.instance.player.dragCard = true;
         PlayMangement.instance.player.isPicking.Value = true;
@@ -40,14 +40,13 @@ public partial class UnitDragHandler : CardHandler, IBeginDragHandler, IDragHand
         if (gameObject != itsDragging) return;
         OnDragCard();
         CheckLocation();
-        CardInfoOnDrag.instance.SetInfoPosOnDrag(mousLocalPos.localPosition);
+        CardInfoOnDrag.instance.SetInfoPosOnDrag(mouseLocalPos.localPosition);
         CheckHighlight();
     }
 
     public void OnEndDrag(PointerEventData eventData) {
         if (firstDraw) return;
         if (gameObject != itsDragging) return;
-        transform.parent.SetSiblingIndex(parentIndex);
         CheckLocation(true);
         blockButton = PlayMangement.instance.player.dragCard = false;
         PlayMangement.instance.player.isPicking.Value = false;
@@ -71,12 +70,12 @@ public partial class UnitDragHandler : CardHandler, IBeginDragHandler, IDragHand
                 PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.FIELD_CHANGED, null, null);
             }
         }
+        handManager.transform.SetParent(mouseXPos.parent);
         if (!cardUsed) {
             transform.localScale = new Vector3(1, 1, 1);
-            transform.localPosition = new Vector3(0, 4500, 0);
-            StartCoroutine(ListCircle.SortCircleAngle());
+            transform.localPosition = new Vector3(0, 0, 0);
+            StartCoroutine(handManager.SortHandPosition());
         }
-        ListCircle.transform.SetParent(DragObserver.parent);
         CardDropManager.Instance.HideDropableSlot();
         CardInfoOnDrag.instance.OffCardDragInfo();
     }
