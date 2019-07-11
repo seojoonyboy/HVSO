@@ -20,9 +20,9 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
             transform.parent.Find("HeroCardGuide").gameObject.SetActive(false);
             transform.localScale = Vector3.zero;
             if (cardData.skills.Length != 0)
-                CardInfoOnDrag.instance.SetCardDragInfo(null, mousLocalPos.localPosition, cardData.skills[0].desc);
+                CardInfoOnDrag.instance.SetCardDragInfo(null, mouseLocalPos.localPosition, cardData.skills[0].desc);
             else
-                CardInfoOnDrag.instance.SetCardDragInfo(null, mousLocalPos.localPosition);
+                CardInfoOnDrag.instance.SetCardDragInfo(null, mouseLocalPos.localPosition);
             //TODO : Filter를 통해(Use Condition) 타겟 표시 추가 제어
             CardDropManager.Instance.ShowMagicalSlot(cardData.skills[0].target.args, skillHandler.dragFiltering);
 
@@ -36,9 +36,9 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         if (PlayMangement.instance.player.dragCard) return;
         StartDragCard();
         if (cardData.skills.Length != 0)
-            CardInfoOnDrag.instance.SetCardDragInfo(null, mousLocalPos.localPosition, cardData.skills[0].desc);
+            CardInfoOnDrag.instance.SetCardDragInfo(null, mouseLocalPos.localPosition, cardData.skills[0].desc);
         else
-            CardInfoOnDrag.instance.SetCardDragInfo(null, mousLocalPos.localPosition);
+            CardInfoOnDrag.instance.SetCardDragInfo(null, mouseLocalPos.localPosition);
         itsDragging = gameObject;
         blockButton = PlayMangement.instance.player.dragCard = true;
         PlayMangement.instance.player.isPicking.Value = true;
@@ -54,10 +54,10 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mousePos = new Vector3(mousePos.x, mousePos.y, 0);
             transform.position = mousePos;
-            mousLocalPos.position = transform.position;
+            mouseLocalPos.position = transform.position;
             Debug.Log(transform.position.y);
             CheckLocation();
-            CardInfoOnDrag.instance.SetInfoPosOnDrag(mousLocalPos.localPosition);
+            CardInfoOnDrag.instance.SetInfoPosOnDrag(mouseLocalPos.localPosition);
             CheckMagicHighlight();
             return;
         }
@@ -74,7 +74,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         if (gameObject != itsDragging) return;
         OnDragCard();
         CheckLocation();
-        CardInfoOnDrag.instance.SetInfoPosOnDrag(mousLocalPos.localPosition);
+        CardInfoOnDrag.instance.SetInfoPosOnDrag(mouseLocalPos.localPosition);
         CheckMagicHighlight();
     }
 
@@ -82,9 +82,8 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
     public void OnEndDrag(PointerEventData eventData) {
         if (heroCardActivate) {
             heroCardInfo.SetActive(true);
-            transform.parent.SetSiblingIndex(parentIndex);
             if (transform.position.y < -3.5f) {
-                ListCircle.AddHeroCard(gameObject);
+                handManager.AddHeroCard(gameObject);
                 heroCardActivate = false;
             }
             else {
@@ -119,7 +118,6 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         }
         if (firstDraw) return;
         if (gameObject != itsDragging) return;
-        transform.parent.SetSiblingIndex(parentIndex);
         CheckLocation(true);
         blockButton = PlayMangement.instance.player.dragCard = false;
         PlayMangement.instance.player.isPicking.Value = false;
@@ -139,11 +137,11 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
             CardDropManager.Instance.HighLightMagicSlot(highlightedSlot, highlighted);
             highlightedSlot = null;
         }
-        ListCircle.transform.SetParent(DragObserver.parent);
+        handManager.transform.SetParent(mouseXPos.parent);
         if (!cardUsed) {
             transform.localScale = new Vector3(1, 1, 1);
-            transform.localPosition = new Vector3(0, 4500, 0);
-            StartCoroutine(ListCircle.SortCircleAngle());
+            transform.localPosition = new Vector3(0, 0, 0);
+            StartCoroutine(handManager.SortHandPosition());
         }
         CardDropManager.Instance.HideMagicSlot();
         CardInfoOnDrag.instance.OffCardDragInfo();
@@ -153,7 +151,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         skillHandler.socketDone = false;
         PlayMangement.dragable = false;
         PlayMangement.instance.LockTurnOver();
-        yield return StartCoroutine(PlayMangement.instance.cardCircleManager.ShowUsedMagicCard(transform.parent.GetSiblingIndex()));
+        yield return StartCoroutine(PlayMangement.instance.cardHandManager.ShowUsedMagicCard(transform.parent.GetSiblingIndex()));
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
         highlighted = false;
         CardDropManager.Instance.HighLightMagicSlot(highlightedSlot, highlighted);
