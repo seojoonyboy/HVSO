@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
     public GameObject back;
     public GameObject playerUI;
     Transform sheildRemain;
-    [SerializeField] public CardCircleManager cdpm;
+    [SerializeField] public CardHandManager cdpm;
 
     public GameObject backLine;
     public GameObject frontLine;
@@ -291,8 +291,8 @@ public class PlayerController : MonoBehaviour
         if(isPlayer == true) {
             Transform cardSlot_1 = cdpm.transform;
             for (int i = 0; i < cardSlot_1.childCount; i++) {
-                if (cardSlot_1.GetChild(i).childCount != 1) 
-                    cardSlot_1.GetChild(i).GetChild(1).GetComponent<CardHandler>().ActivateCard();
+                if (cardSlot_1.GetChild(i).childCount != 0) 
+                    cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().ActivateCard();
             }
         }
         if (activeCardMinCost == 100) {
@@ -310,9 +310,9 @@ public class PlayerController : MonoBehaviour
         if (isPlayer == true && currentTurn == "ORC") {
             Transform cardSlot_1 = cdpm.transform;
             for (int i = 0; i < cardSlot_1.childCount; i++) {
-                if (cardSlot_1.GetChild(i).childCount != 1) {
-                    if (cardSlot_1.GetChild(i).GetChild(1).GetComponent<CardHandler>().cardData.type == "unit")
-                        cardSlot_1.GetChild(i).GetChild(1).GetComponent<CardHandler>().ActivateCard();
+                if (cardSlot_1.GetChild(i).childCount != 0) {
+                    if (cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().cardData.type == "unit")
+                        cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().ActivateCard();
                 }
 
             }
@@ -320,9 +320,9 @@ public class PlayerController : MonoBehaviour
         else if(isPlayer == true && currentTurn == "SECRET") {
             Transform cardSlot_1 = cdpm.transform;
             for (int i = 0; i < cardSlot_1.childCount; i++) {
-                if (cardSlot_1.GetChild(i).childCount != 1) {
-                    if (cardSlot_1.GetChild(i).GetChild(1).GetComponent<CardHandler>().cardData.type == "magic")
-                        cardSlot_1.GetChild(i).GetChild(1).GetComponent<CardHandler>().ActivateCard();
+                if (cardSlot_1.GetChild(i).childCount != 0) {
+                    if (cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().cardData.type == "magic")
+                        cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().ActivateCard();
                 }
 
             }
@@ -341,8 +341,8 @@ public class PlayerController : MonoBehaviour
             Transform cardSlot_1 = cdpm.transform;
 
             for (int i = 0; i < cardSlot_1.childCount; i++) {
-                if (cardSlot_1.GetChild(i).childCount != 1)
-                    cardSlot_1.GetChild(i).GetChild(01).GetComponent<CardHandler>().DisableCard();
+                if (cardSlot_1.GetChild(i).childCount != 0)
+                    cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().DisableCard();
             }
         }
         if (isPlayer)

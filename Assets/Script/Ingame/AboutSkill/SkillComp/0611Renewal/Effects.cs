@@ -130,7 +130,7 @@ namespace SkillModules {
                 HookArgs args = (HookArgs)tmp[1];
                 bool isPlayer = (bool)tmp[2];
 
-                MoveUnit(ref target, ref args, isPlayer);
+                MoveUnit(ref target, ref args, !isPlayer);
             }
             else {
                 ShowFormatErrorLog("hook");
@@ -481,7 +481,7 @@ namespace SkillModules {
 
         private void MakeMyUnitToCard(PlaceMonster placeMonster) {
             PlayMangement playMangement = PlayMangement.instance;
-            Transform cardStorage = playMangement.cardCircleManager.GetcardStorage();
+            Transform cardStorage = playMangement.cardHandManager.GetcardStorage();
             GameObject card = cardStorage.Find("UnitCards").GetChild(0).gameObject;
 
             //카드가 꽉 차 있는 경우 날라감.
@@ -489,7 +489,7 @@ namespace SkillModules {
             var itemId = placeMonster.itemId;
 
             card.GetComponent<CardHandler>().DrawCard(id, itemId);
-            playMangement.cardCircleManager.AddCard(card);
+            playMangement.cardHandManager.AddCard(card);
         }
     }
 

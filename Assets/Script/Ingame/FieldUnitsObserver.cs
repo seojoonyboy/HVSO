@@ -82,14 +82,12 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
         yield return new WaitForSeconds(1.0f);
 
         target.transform.SetParent(parent);
-
-        target.transform.SetParent(parent);
         target.transform.localPosition = Vector3.zero;
 
         target.GetComponent<PlaceMonster>().ChangePosition(
             newPos.col,
             newPos.row,
-            parent.GetChild(newPos.row).GetChild(newPos.col).position
+            parent.position
         );
 
         Logger.Log(string.Format("prev Pos Col : {0}",prevPos.col));

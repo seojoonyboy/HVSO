@@ -317,7 +317,6 @@ namespace TargetModules {
         }
 
         private List<GameObject> GetTarget(bool isPlayer, string[] args) {
-            FieldUnitsObserver playerObserver, enemyObserver;
             var playManagement = PlayMangement.instance;
 
             var observer = playManagement.UnitsObserver;
@@ -488,6 +487,7 @@ namespace TargetModules {
                 
                 //왠만하면은 2번째 targets가 select인 경우들인것 같다. (유닛 소환 직후 또는 마법카드 사용)
                 if(played_card.targets.Length != 2) {
+                    PlayMangement.instance.UnlockTurnOver();
                     failedCallback("상대가 위치 지정에 실패했습니다.");
                     yield break;
                 }

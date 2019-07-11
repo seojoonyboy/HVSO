@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CardCircleManager : MonoBehaviour {
+public class CardHandManager : MonoBehaviour {
     public int cardNum = 0;
     TMPro.TextMeshProUGUI handCardNum;
     [SerializeField] Transform cardStorage;
@@ -17,18 +17,17 @@ public class CardCircleManager : MonoBehaviour {
     protected List<GameObject> firstDrawList;
     protected CardListManager clm;
 
-
-
-    // Update is called once per frame
-    private void Start() {
+    // Start is called before the first frame update
+    void Start() {
         firstDraw = true;
         cardList = new List<GameObject>();
         firstDrawList = new List<GameObject>();
         clm = PlayMangement.instance.cardInfoCanvas.Find("CardInfoList").GetComponent<CardListManager>();
-        handCardNum = transform.parent.Find("PlayerCardNum/Value").GetComponent<TMPro.TextMeshProUGUI>();
+        //handCardNum = transform.parent.Find("PlayerCardNum/Value").GetComponent<TMPro.TextMeshProUGUI>();
     }
 
-    public virtual IEnumerator FirstDraw() {
+    //멀리건 실행 코루틴(교체 가능한 카드 4장 드로우)
+    public IEnumerator FirstDraw() {
         bool race = PlayMangement.instance.player.isHuman;
         SocketFormat.Card socketCard = PlayMangement.instance.socketHandler.gameState.players.myPlayer(race).FirstCards[firstDrawList.Count];
         GameObject card;
@@ -59,6 +58,7 @@ public class CardCircleManager : MonoBehaviour {
         }
     }
 
+    //머리건 종료 버튼 클릭 함수
     public void FirstDrawCardChange() {
         foreach (GameObject cards in firstDrawList) {
             cards.transform.Find("ChangeButton").gameObject.SetActive(false);
@@ -73,10 +73,18 @@ public class CardCircleManager : MonoBehaviour {
         finBtn.gameObject.SetActive(false);
     }
 
+    //카드 저장고 반환 함수
     public Transform GetcardStorage() {
         return cardStorage;
     }
 
+
+    /// <summary>
+    /// CardListManager에서 카드 정보를 추가하는 함수 호출
+    /// </summary>
+    /// <param name="card"></param> 정보를 추가할 카드 오브젝트
+    /// <param name="isMulligan"></param> 멀리건일시 true
+    /// <param name="isHero"></param> 영웅카드일시 true
     public void AddInfoToList(GameObject card, bool isMulligan = false, bool isHero = false) {
         if (isHero) {
             clm.AddHeroCardInfo(card);
@@ -90,6 +98,11 @@ public class CardCircleManager : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// 핸드에 카드를 추가하는 함수
+    /// </summary>
+    /// <param name="cardobj"></param> 멀리건일 경우 미리 뽑은 카드들을 사용
+    /// <param name="cardData"></param>
     public void AddCard(GameObject cardobj = null, SocketFormat.Card cardData = null) {
         if (cardNum + 1 == 11) return;
         PlayMangement.dragable = false;
@@ -100,7 +113,7 @@ public class CardCircleManager : MonoBehaviour {
             else
                 card = cardStorage.Find("MagicCards").GetChild(0).gameObject;
             if (cardData.isHeroCard) {
-                if(PlayMangement.instance.player.isHuman)
+                if (PlayMangement.instance.player.isHuman)
                     card = cardStorage.Find("HumanHeroCards").GetChild(0).gameObject;
                 else
                     card = cardStorage.Find("OrcHeroCards").GetChild(0).gameObject;
@@ -132,19 +145,23 @@ public class CardCircleManager : MonoBehaviour {
         else
             AddInfoToList(card);
         Transform cardTransform = card.transform;
-        Transform cardPos = transform.GetChild(cardNum).GetChild(0);
+        Transform cardPos = transform.GetChild(cardNum);
+        cardPos.gameObject.SetActive(true);
         cardTransform.GetComponent<CardHandler>().CARDINDEX = cardNum;
         cardTransform.gameObject.SetActive(true);
-        cardTransform.SetParent(transform.GetChild(cardNum));
         cardNum++;
         cardList.Add(card);
         StartCoroutine(SendCardToHand(cardTransform.gameObject, cardPos));
     }
 
-
+    /// <summary>
+    /// 쉴드 발동시 영웅카드 드로우
+    /// </summary>
+    /// <param name="cardData"></param>
+    /// <returns></returns>
     public IEnumerator DrawHeroCard(SocketFormat.Card cardData = null) {
         GameObject card;
-        if(PlayMangement.instance.player.isHuman)
+        if (PlayMangement.instance.player.isHuman)
             card = cardStorage.Find("HumanHeroCards").GetChild(0).gameObject;
         else
             card = cardStorage.Find("OrcHeroCards").GetChild(0).gameObject;
@@ -158,19 +175,71 @@ public class CardCircleManager : MonoBehaviour {
         yield return StartCoroutine(handler.ActiveHeroCard());
     }
 
+    /// <summary>
+    /// 쉴드 발동으로 뽑은 영웅카드 핸드에 추가
+    /// </summary>
+    /// <param name="cardobj"></param>
     public void AddHeroCard(GameObject cardobj) {
         if (cardNum + 1 == 11) return;
         PlayMangement.dragable = false;
         AddInfoToList(cardobj.transform.Find("CardInfoWindow").gameObject, false, true);
         Transform cardTransform = cardobj.transform;
-        Transform cardPos = transform.GetChild(cardNum).GetChild(0);
+        Transform cardPos = transform.GetChild(cardNum);
         cardTransform.GetComponent<CardHandler>().CARDINDEX = cardNum;
         cardTransform.localScale = new Vector3(1, 1, 1);
         cardNum++;
         cardList.Add(cardobj);
+        cardPos.gameObject.SetActive(true);
         StartCoroutine(SendCardToHand(cardTransform.gameObject, cardPos, true));
     }
 
+    /// <summary>
+    /// 핸드에 카드 추가되는 애니메이션
+    /// </summary>
+    /// <param name="card"></param> 카드 오브젝트
+    /// <param name="pos"></param>
+    /// <param name="isHero"></param>
+    /// <returns></returns>
+    IEnumerator SendCardToHand(GameObject card, Transform pos, bool isHero = false) {
+        PlayMangement.dragable = false;
+        CardHandler handler = card.GetComponent<CardHandler>();
+        handler.DisableCard();
+        //handCardNum.text = cardNum.ToString();
+        if (!firstDraw) {
+            if (!isHero) {
+                iTween.MoveTo(card, showPos.position, 0.4f);
+                iTween.RotateTo(card, pos.eulerAngles, 0.4f);
+            }
+            iTween.ScaleTo(card, new Vector3(1.2f, 1.2f, 1), 0.2f);
+            //iTween.RotateTo(gameObject, new Vector3(0, 0, (cardNum - 1) * 4), 0.2f);
+            yield return new WaitForSeconds(0.4f);
+        }
+        if (cardNum > 2 && !isMultiple && !firstDraw)
+            iTween.MoveTo(transform.gameObject, iTween.Hash("x", -230 * (cardNum - 4), "islocal", true, "time", 0.2f));
+        yield return new WaitForSeconds(0.3f);
+        card.transform.SetParent(pos);
+        iTween.MoveTo(card, iTween.Hash("position", new Vector3(0, 0, 0), "islocal", true, "time", 0.4f));
+        iTween.ScaleTo(card, new Vector3(1, 1, 1), 0.4f);
+        yield return new WaitForSeconds(0.5f);
+        if (PlayMangement.instance.currentTurn == "BATTLE") {
+            handler.DisableCard();
+        }
+        else if (!PlayMangement.instance.player.isHuman && PlayMangement.instance.currentTurn == "SECRET") {
+            if (handler.cardData.type == "unit")
+                handler.DisableCard();
+            else
+                handler.ActivateCard();
+        }
+        handler.FIRSTDRAW = false;
+        if (PlayMangement.instance.currentTurn != "BATTLE")
+            PlayMangement.dragable = true;
+    }
+
+    /// <summary>
+    /// 2개 이상의 카드 핸드에 추가
+    /// </summary>
+    /// <param name="cardData"></param>
+    /// <returns></returns>
     public IEnumerator SendMultipleCard(SocketFormat.Card[] cardData) {
         isMultiple = true;
         for (int i = cardNum; i < cardData.Length; i++) {
@@ -195,12 +264,11 @@ public class CardCircleManager : MonoBehaviour {
                 card.transform.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData[i].name;
                 AddMagicAttribute(ref card);
             }
-            AddInfoToList(card); 
+            AddInfoToList(card);
             Transform cardTransform = card.transform;
-            Transform cardPos = transform.GetChild(cardNum).GetChild(0);
+            Transform cardPos = transform.GetChild(cardNum);
             cardTransform.GetComponent<CardHandler>().CARDINDEX = cardNum;
             cardTransform.gameObject.SetActive(true);
-            cardTransform.SetParent(transform.GetChild(cardNum));
             cardNum++;
             cardList.Add(card);
             StartCoroutine(SendCardToHand(cardTransform.gameObject, cardPos));
@@ -210,47 +278,14 @@ public class CardCircleManager : MonoBehaviour {
         }
     }
 
-
-    IEnumerator SendCardToHand(GameObject card, Transform pos, bool isHero = false) {
-        PlayMangement.dragable = false;
-        CardHandler handler = card.GetComponent<CardHandler>();
-        handler.DisableCard();
-        handCardNum.text = cardNum.ToString();
-        if (!firstDraw) {
-            if (!isHero) {
-                iTween.MoveTo(card, showPos.position, 0.4f);
-                iTween.RotateTo(card, iTween.Hash("rotation", new Vector3(0, 0, 0), "islocal", true, "time", 0.4f));
-            }
-            iTween.ScaleTo(card, new Vector3(1.2f, 1.2f, 1), 0.2f);
-            iTween.RotateTo(gameObject, new Vector3(0, 0, (cardNum - 1) * 4), 0.2f);
-            yield return new WaitForSeconds(0.4f);
-            if(isHero)
-                card.transform.SetParent(transform.GetChild(cardNum - 1));
-        }
-        iTween.MoveTo(card, iTween.Hash("position", new Vector3(0, 4500, 0), "islocal", true, "time", 0.4f));
-        iTween.ScaleTo(card, new Vector3(1, 1, 1), 0.4f);
-        yield return new WaitForSeconds(0.4f);
-        card.transform.rotation = pos.rotation;
-        if (cardNum > 2 && !isMultiple && !firstDraw)
-            iTween.RotateTo(gameObject, new Vector3(0, 0, (cardNum - 2) * 4), 0.4f);
-        yield return new WaitForSeconds(0.5f);
-        if (PlayMangement.instance.currentTurn == "BATTLE") {
-            handler.DisableCard();
-        }
-        else if(!PlayMangement.instance.player.isHuman && PlayMangement.instance.currentTurn == "SECRET") {
-            if(handler.cardData.type == "unit")
-                handler.DisableCard();
-            else
-                handler.ActivateCard();
-        }
-        handler.FIRSTDRAW = false;
-        if (PlayMangement.instance.currentTurn != "BATTLE")
-            PlayMangement.dragable = true;
-    }
-
+    /// <summary>
+    /// 카드 제거 함수
+    /// </summary>
+    /// <param name="index"></param>
     public void DestroyCard(int index) {
         StartCoroutine(RemoveCardToStorage(index));
     }
+
 
     public void DestroyCard(GameObject card) {
         PlayMangement.dragable = false;
@@ -269,6 +304,10 @@ public class CardCircleManager : MonoBehaviour {
             PlayMangement.dragable = true;
     }
 
+    /// <summary>
+    /// 쉴드 발동 영웅카드 즉시 사용시 카드 제거 함수
+    /// </summary>
+    /// <param name="card"></param>
     public void DestroyUsedHeroCard(Transform card) {
         Transform infoWindow = card.Find("CardInfoWindow");
         infoWindow.SetParent(clm.transform.Find("InfoStandby"));
@@ -285,11 +324,16 @@ public class CardCircleManager : MonoBehaviour {
         card.gameObject.SetActive(false);
     }
 
+    /// <summary>
+    /// 사용한 카드 CardStorage로 반환
+    /// </summary>
+    /// <param name="index"></param>
+    /// <returns></returns>
     private IEnumerator RemoveCardToStorage(int index) {
         PlayMangement.dragable = false;
-        Transform removeCard = transform.GetChild(index).GetChild(1);
-        iTween.RotateTo(transform.GetChild(index).gameObject, iTween.Hash("rotation", new Vector3(0, 0, -4 * (cardNum - 1)), "islocal", true, "time", 0.2f));
-        transform.GetChild(index).SetSiblingIndex(cardNum - 1);
+        Transform removeCard = transform.GetChild(index).GetChild(0);
+        transform.GetChild(index).gameObject.SetActive(false);
+        transform.GetChild(index).SetAsLastSibling();
         if (removeCard.name == "UnitCard") {
             removeCard.SetParent(cardStorage.Find("UnitCards"));
             clm.AddFeildUnitInfo(index, PlayMangement.instance.unitNum - 1);
@@ -303,15 +347,20 @@ public class CardCircleManager : MonoBehaviour {
         removeCard.localPosition = Vector3.zero;
         cardList.RemoveAt(index);
         cardNum--;
-        handCardNum.text = cardNum.ToString();
+        //handCardNum.text = cardNum.ToString();
         for (int i = index; i < cardNum; i++) {
-            transform.GetChild(i).GetChild(1).GetComponent<CardHandler>().CARDINDEX = i;
-            iTween.RotateTo(transform.GetChild(i).gameObject, iTween.Hash("rotation", new Vector3(0, 0, -4 * i), "islocal", true, "time", 0.2f));
+            transform.GetChild(i).GetChild(0).GetComponent<CardHandler>().CARDINDEX = i;
         }
-        StartCoroutine(SortCircleAngle());
+        StartCoroutine(SortHandPosition());
         yield return new WaitForSeconds(0.3f);
     }
 
+    /// <summary>
+    /// 마법카드 사용시 카드 정보 화면 표시
+    /// </summary>
+    /// <param name="index"></param>
+    /// <param name="card"></param>
+    /// <returns></returns>
     public IEnumerator ShowUsedMagicCard(int index = 100, GameObject card = null) {
         if (index == 100) {
             clm.SetEnemyMagicCardInfo(card.GetComponent<CardHandler>().cardData);
@@ -319,40 +368,87 @@ public class CardCircleManager : MonoBehaviour {
         else
             clm.OpenCardInfo(index, true);
         yield return new WaitForSeconds(1.5f);
-        if (index != 100 && transform.GetChild(index).GetChild(1).GetComponent<MagicDragHandler>().skillHandler.TargetSelectExist())
+        if (index != 100 && transform.GetChild(index).GetChild(0).GetComponent<MagicDragHandler>().skillHandler.TargetSelectExist())
             clm.HandCardInfo.GetChild(index).gameObject.SetActive(false);
         if (index == 100) {
             Transform infoWindow = clm.StandbyInfo.GetChild(0);
             infoWindow.gameObject.SetActive(false);
             infoWindow.localScale = new Vector3(1, 1, 1);
         }
-        
     }
 
-    public IEnumerator SortCircleAngle() {
-        PlayMangement.dragable = false;
-        if (transform.rotation.eulerAngles.z > 300 && transform.rotation.eulerAngles.z < 360) {
-            if (cardNum < 3)
-                iTween.RotateTo(gameObject, new Vector3(0, 0, (cardNum - 2) * 4), 0.2f);
-            else
-                iTween.RotateTo(gameObject, new Vector3(0, 0, 4), 0.2f);
-            yield return new WaitForSeconds(0.1f);
+
+    public IEnumerator SortHandPosition() {
+        if (transform.localPosition.x > 440) {
+            switch (cardNum) {
+                case 1:
+                    iTween.MoveTo(gameObject, iTween.Hash("x", 440, "islocal", true, "time", 0.1f));
+                    break;
+                case 2:
+                    iTween.MoveTo(gameObject, iTween.Hash("x", 315, "islocal", true, "time", 0.1f));
+                    break;
+                case 3:
+                    iTween.MoveTo(gameObject, iTween.Hash("x", 200, "islocal", true, "time", 0.1f));
+                    break;
+                case 4:
+                    iTween.MoveTo(gameObject, iTween.Hash("x", 90, "islocal", true, "time", 0.1f));
+                    break;
+                default:
+                    iTween.MoveTo(gameObject, iTween.Hash("x", 0, "islocal", true, "time", 0.1f));
+                    break;
+            }
+            yield return null;
         }
-        else if (transform.rotation.eulerAngles.z < 4 && cardNum > 2) {
-            iTween.RotateTo(gameObject, new Vector3(0, 0, 4), 0.2f);
-            yield return new WaitForSeconds(0.1f);
+        switch (cardNum) {
+            case 1:
+                if (transform.localPosition.x < 440)
+                    iTween.MoveTo(gameObject, iTween.Hash("x", 440, "islocal", true, "time", 0.1f));
+                break;
+            case 2:
+                if(transform.localPosition.x < 315)
+                    iTween.MoveTo(gameObject, iTween.Hash("x", 315, "islocal", true, "time", 0.1f));
+                break;
+            case 3:
+                if (transform.localPosition.x < 200)
+                    iTween.MoveTo(gameObject, iTween.Hash("x", 200, "islocal", true, "time", 0.1f));
+                break;
+            case 4:
+                if (transform.localPosition.x < 90)
+                    iTween.MoveTo(gameObject, iTween.Hash("x", 90, "islocal", true, "time", 0.1f));
+                break;
+            case 5:
+                if (transform.localPosition.x < -60)
+                    iTween.MoveTo(gameObject, iTween.Hash("x", -60, "islocal", true, "time", 0.1f));
+                break;
+            case 6:
+                if (transform.localPosition.x < -290)
+                    iTween.MoveTo(gameObject, iTween.Hash("x", -290, "islocal", true, "time", 0.1f));
+                break;
+            case 7:
+                if (transform.localPosition.x < -520)
+                    iTween.MoveTo(gameObject, iTween.Hash("x", -520, "islocal", true, "time", 0.1f));
+                break;
+            case 8:
+                if (transform.localPosition.x < -750)
+                    iTween.MoveTo(gameObject, iTween.Hash("x", -850, "islocal", true, "time", 0.1f));
+                break;
+            case 9:
+                if (transform.localPosition.x < -980)
+                    iTween.MoveTo(gameObject, iTween.Hash("x", -980, "islocal", true, "time", 0.1f));
+                break;
+            case 10:
+                if (transform.localPosition.x < -1210)
+                    iTween.MoveTo(gameObject, iTween.Hash("x", -1210, "islocal", true, "time", 0.1f));
+                break;
         }
-        else if (transform.rotation.eulerAngles.z < 60 && transform.rotation.eulerAngles.z > (cardNum - 2) * 4 && cardNum > 0) {
-            if (cardNum > 1)
-                iTween.RotateTo(gameObject, new Vector3(0, 0, (cardNum - 2) * 4), 0.2f);
-            else
-                iTween.RotateTo(gameObject, new Vector3(0, 0, (cardNum - 1) * 4), 0.2f);
-            yield return new WaitForSeconds(0.1f);
-        }
-        if(PlayMangement.instance.currentTurn != "BATTLE")
-            PlayMangement.dragable = true;
+        yield return new WaitForSeconds(0.1f);
+        PlayMangement.dragable = true;
     }
 
+    /// <summary>
+    /// 멀리건 종료시 카드 핸드에 추가 및 멀리건 영웅카드 드로우
+    /// </summary>
+    /// <returns></returns>
     IEnumerator DrawChangedCards() {
         firstDrawParent.parent.gameObject.GetComponent<Image>().enabled = false;
         PlayMangement.instance.socketHandler.MulliganEnd();
@@ -383,6 +479,12 @@ public class CardCircleManager : MonoBehaviour {
         SoundManager.Instance.PlaySound(SoundType.FIRST_TURN);
     }
 
+    /// <summary>
+    /// 카드 교체 함수
+    /// </summary>
+    /// <param name="ID"></param>
+    /// <param name="itemID"></param>
+    /// <param name="first"></param>
     public void RedrawCallback(string ID, int itemID = -1, bool first = false) {
         SocketFormat.GameState state = PlayMangement.instance.socketHandler.gameState;
         SocketFormat.Card[] cards = state.players.myPlayer(PlayMangement.instance.player.isHuman).deck.handCards;
@@ -433,6 +535,7 @@ public class CardCircleManager : MonoBehaviour {
         }
     }
 
+
     public GameObject InstantiateMagicCard(CardData data, int itemId) {
         GameObject card = cardStorage.Find("MagicCards").GetChild(0).gameObject;
         card.transform.localScale = Vector3.zero;
@@ -444,6 +547,8 @@ public class CardCircleManager : MonoBehaviour {
         magic.enabled = false;
         return card;
     }
+
+
     protected void AddMagicAttribute(ref GameObject card, bool isPlayer = true) {
         var cardData = card.GetComponent<CardHandler>().cardData;
 
