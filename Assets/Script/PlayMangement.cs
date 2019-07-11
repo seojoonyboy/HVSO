@@ -461,9 +461,7 @@ public partial class PlayMangement : MonoBehaviour {
         battleLineEffect.GetComponent<SpriteRenderer>().color = new Color(1, 0.545f, 0.427f, 0.6f);
 
         var observer = GetComponent<FieldUnitsObserver>();
-        var list = observer.GetAllFieldUnits(line, player.isHuman);
-
-        list.AddRange(observer.GetAllFieldUnits(line, !player.isHuman));
+        var list = observer.GetAllFieldUnits(line);
         if (list.Count != 0) {
             if (player.isHuman == false) yield return whoFirstBattle(player, enemyPlayer, line);
             else yield return whoFirstBattle(enemyPlayer, player, line);
@@ -804,6 +802,8 @@ public partial class PlayMangement {
         placeMonster.Init(cardData);
         placeMonster.SpawnUnit();
         targetPlayer.resource.Value -= cardData.cost;
+        var observer = UnitsObserver;
+
         if (isPlayer) {
             player.isPicking.Value = false;
             if (player.isHuman)
@@ -811,9 +811,9 @@ public partial class PlayMangement {
             else
                 player.ActiveOrcTurn();
             if (args != null)
-                playerUnitsObserver.RefreshFields(args);
+                observer.RefreshFields(args, player.isHuman);
             else
-                playerUnitsObserver.UnitAdded(unit, col, row);
+                observer.UnitAdded(unit, new FieldUnitsObserver.Pos(col, row), player.isHuman);
 
             player.cdpm.DestroyCard(cardIndex);
         }
@@ -825,7 +825,7 @@ public partial class PlayMangement {
             skillHandler.Initialize(cardData.skills, unit, false);
             unit.GetComponent<PlaceMonster>().skillHandler = skillHandler;
             cardInfoCanvas.GetChild(0).GetComponent<CardListManager>().AddFeildUnitInfo(0, placeMonster.myUnitNum, cardData);
-            EnemyUnitsObserver.UnitAdded(unit, col, row);
+            observer.UnitAdded(unit, new FieldUnitsObserver.Pos(col, row), !player.isHuman);
             unit.layer = 14;
         }
 

@@ -98,6 +98,21 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.FIELD_CHANGED, null, null);
     }
 
+    /// <summary>
+    /// 필드에 존재하는 모든 유닛(적 포함)
+    /// </summary>
+    /// <returns></returns>
+    public List<GameObject> GetAllFieldUnits() {
+        List<GameObject> result = new List<GameObject>();
+        foreach(GameObject unit in humanUnits) {
+            if (unit != null) result.Add(unit);
+        }
+        foreach(GameObject unit in orcUnits) {
+            if (unit != null) result.Add(unit);
+        }
+        return result;
+    }
+
     public List<GameObject> GetAllFieldUnits(bool isHuman) {
         GameObject[,] units = null;
         if (isHuman) units = humanUnits;
@@ -111,12 +126,11 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
     }
 
     /// <summary>
-    /// 한줄 반환
+    /// 한쪽 진영의 Line에 존재하는 모든 유닛
     /// </summary>
-    /// <param name="row">row</param>
+    /// <param name="col">Column</param>
     /// <returns></returns>
     public List<GameObject> GetAllFieldUnits(int col, bool isHuman) {
-        //Debug.Log("라인 검사 : " + col);
         List<GameObject> result = new List<GameObject>();
         GameObject[,] units = null;
         if (isHuman) units = humanUnits;
@@ -125,6 +139,25 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
         for (int i = 0; i < 2; i++) {
             if (units[col, i] != null) {
                 result.Add(units[col, i]);
+            }
+        }
+        //Debug.Log("라인 검사 결과 : " + _units.Count);
+        return result;
+    }
+
+    /// <summary>
+    /// 한 Line에 존재하는 모든 유닛(적 포함)
+    /// </summary>
+    /// <param name="col">Column</param>
+    /// <returns></returns>
+    public List<GameObject> GetAllFieldUnits(int col) {
+        List<GameObject> result = new List<GameObject>();
+        for (int i = 0; i < 2; i++) {
+            if (humanUnits[col, i] != null) {
+                result.Add(humanUnits[col, i]);
+            }
+            if(orcUnits[col, i] != null) {
+                result.Add(orcUnits[col, i]);
             }
         }
         //Debug.Log("라인 검사 결과 : " + _units.Count);
