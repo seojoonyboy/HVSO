@@ -273,9 +273,9 @@ public partial class PlayMangement : MonoBehaviour {
                 int itemId = int.Parse(target.args[0]);
                 List<GameObject> list;
                 if (args[0].CompareTo("my") == 0) //적 자신일 경우
-                    list = enemyUnitsObserver.GetAllFieldUnits();
+                    list = UnitsObserver.GetAllFieldUnits(player.isHuman);
                 else //적의 적 (나)일 경우
-                    list = playerUnitsObserver.GetAllFieldUnits();
+                    list = UnitsObserver.GetAllFieldUnits(!player.isHuman);
                 GameObject unit = list.Find(x => x.GetComponent<PlaceMonster>().itemId == itemId);
                 highlightUI = unit.transform.Find("ClickableUI").gameObject;
                 highlightUI.SetActive(true);
@@ -307,11 +307,17 @@ public partial class PlayMangement : MonoBehaviour {
         highlightUI.SetActive(false);
     }
 
+    /// <summary>
+    /// 적의 소환
+    /// </summary>
+    /// <param name="history"></param>
+    /// <returns></returns>
     private GameObject SummonMonster(SocketFormat.PlayHistory history) {
         int i = int.Parse(history.targets[0].args[0]);
         string id = history.cardItem.id;
         bool isFront = history.targets[0].args[2].CompareTo("front")==0;
-        bool unitExist = enemyUnitsObserver.CheckUnitPosition(i, 0);
+        
+        bool unitExist = UnitsObserver.IsUnitExist(new FieldUnitsObserver.Pos(i, 0), !player.isHuman);
         int j = isFront && unitExist ? 1 : 0;
         if(unitExist && !isFront) {
             Transform line_rear = enemyPlayer.transform.GetChild(0);
@@ -319,7 +325,7 @@ public partial class PlayMangement : MonoBehaviour {
             Transform existUnit;
             existUnit = line_rear.GetChild(i).GetChild(0);
             existUnit.GetComponent<PlaceMonster>().unitLocation = line_front.GetChild(i).position;
-            enemyUnitsObserver.UnitChangePosition(existUnit.gameObject, i, 1);
+            UnitsObserver.UnitChangePosition(existUnit.gameObject, new FieldUnitsObserver.Pos(i, 1), player.isHuman);
         }
         GameObject monster = SummonUnit(false, id, i, j, history.cardItem.itemId);
         return monster;
@@ -385,9 +391,9 @@ public partial class PlayMangement : MonoBehaviour {
             else
                 player.ActiveOrcTurn();
             if (args != null)
-                playerUnitsObserver.RefreshFields(args);
+                UnitsObserver.RefreshFields(args, player.isHuman);
             else
-                playerUnitsObserver.UnitAdded(unit, col, row);
+                UnitsObserver.UnitAdded(unit, new FieldUnitsObserver.Pos(col, row), player.isHuman);
 
             player.cdpm.DestroyCard(cardIndex);
         }
@@ -399,7 +405,7 @@ public partial class PlayMangement : MonoBehaviour {
             skillHandler.Initialize(cardData.skills, unit, false);
             unit.GetComponent<PlaceMonster>().skillHandler = skillHandler;
             cardInfoCanvas.GetChild(0).GetComponent<CardListManager>().AddFeildUnitInfo(0, placeMonster.myUnitNum, cardData);
-            EnemyUnitsObserver.UnitAdded(unit, col, row);
+            UnitsObserver.UnitAdded(unit, new FieldUnitsObserver.Pos(col, row), !player.isHuman);
             unit.layer = 14;
         }
 
@@ -540,11 +546,14 @@ public partial class PlayMangement : MonoBehaviour {
         battleLineEffect = backGround.transform.GetChild(line).Find("BattleLineEffect");
         battleLineEffect.gameObject.SetActive(true);
         battleLineEffect.GetComponent<SpriteRenderer>().color = new Color(1, 0.545f, 0.427f, 0.6f);
-        var list = playerUnitsObserver.GetAllFieldUnits(line);
-        list.AddRange(enemyUnitsObserver.GetAllFieldUnits(line));
+
+        var observer = GetComponent<FieldUnitsObserver>();
+        var list = observer.GetAllFieldUnits(line, player.isHuman);
+
+        list.AddRange(observer.GetAllFieldUnits(line, !player.isHuman));
         if (list.Count != 0) {
-            if (player.isHuman == false) yield return whoFirstBattle(player, enemyPlayer, playerUnitsObserver, line);
-            else yield return whoFirstBattle(enemyPlayer, player, enemyUnitsObserver, line);
+            if (player.isHuman == false) yield return whoFirstBattle(player, enemyPlayer, line);
+            else yield return whoFirstBattle(enemyPlayer, player, line);
         }
         else {
             yield return WaitSocketData(socketHandler.lineBattleList, line, true);
@@ -564,8 +573,10 @@ public partial class PlayMangement : MonoBehaviour {
         EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.LINE_BATTLE_FINISHED, this);
     }
 
-    IEnumerator whoFirstBattle(PlayerController first, PlayerController second, FieldUnitsObserver firstObserver, int line) {
-        var list = firstObserver.GetAllFieldUnits(line);
+    IEnumerator whoFirstBattle(PlayerController first, PlayerController second, int line) {
+        var observer = GetComponent<FieldUnitsObserver>();
+        var list = observer.GetAllFieldUnits(line, player.isHuman);
+
         if(list.Count == 0) {
             yield return WaitSocketData(socketHandler.lineBattleList, line, true);
             shieldDequeue();
@@ -952,17 +963,10 @@ public partial class PlayMangement {
         }
     }
 
-    [SerializeField] FieldUnitsObserver playerUnitsObserver;
-    public FieldUnitsObserver PlayerUnitsObserver {
+    [SerializeField] FieldUnitsObserver unitsObserver;
+    public FieldUnitsObserver UnitsObserver {
         get {
-            return playerUnitsObserver;
-        }
-    }
-
-    [SerializeField] FieldUnitsObserver enemyUnitsObserver;
-    public FieldUnitsObserver EnemyUnitsObserver {
-        get {
-            return enemyUnitsObserver;
+            return unitsObserver;
         }
     }
 }

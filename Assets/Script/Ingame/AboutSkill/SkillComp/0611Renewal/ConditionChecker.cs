@@ -6,8 +6,6 @@ using System.Linq;
 
 namespace SkillModules {
     public class ConditionChecker {
-        protected static FieldUnitsObserver playerObserver;
-        protected static FieldUnitsObserver enemyObserver;
         protected string[] args;
         protected SkillHandler mySkillHandler;
 
@@ -15,13 +13,6 @@ namespace SkillModules {
             this.mySkillHandler = mySkillHandler;
             this.args = args;
             if(this.args == null) args = new string[]{};
-            GetObserver();
-        }
-
-        private void GetObserver() {
-            if(playerObserver != null) return;
-            playerObserver = PlayMangement.instance.PlayerUnitsObserver;
-            enemyObserver = PlayMangement.instance.EnemyUnitsObserver;
         }
 
         public virtual bool IsConditionSatisfied() {
@@ -63,9 +54,10 @@ namespace SkillModules {
         }
         public override bool IsConditionSatisfied() {
             if(!playedObject.IsValidateData(mySkillHandler.targetData)) return false;
-            
-            Pos myPos = playerObserver.GetMyPos(mySkillHandler.myObject);
-            Pos enemyPos = enemyObserver.GetMyPos(playedObject.targetObject);
+
+            var observer = PlayMangement.instance.UnitsObserver;
+            FieldUnitsObserver.Pos myPos = observer.GetMyPos(mySkillHandler.myObject);
+            FieldUnitsObserver.Pos enemyPos = observer.GetMyPos(playedObject.targetObject);
 
             bool isSameLine = myPos.row == enemyPos.row;
             
@@ -79,7 +71,7 @@ namespace SkillModules {
 
         public override bool IsConditionSatisfied() {
             string conditionTerrain = args[0];
-            FieldUnitsObserver observer = mySkillHandler.isPlayer ? playerObserver : enemyObserver;
+            FieldUnitsObserver observer = PlayMangement.instance.UnitsObserver;
             string myTerrain = mySkillHandler.myObject.GetComponentInParent<Terrain>().terrain.ToString();//.CompareTo(terrain) == 0
             bool isConditionTerrain = myTerrain.CompareTo(conditionTerrain) == 0;
             return isConditionTerrain;
@@ -87,7 +79,6 @@ namespace SkillModules {
     }
 
     public class same_line : ConditionChecker {
-        FieldUnitsObserver targetObserver;
         string subjectObserve;
         bool argSecondExist;
         bool value;
@@ -95,13 +86,18 @@ namespace SkillModules {
         public same_line(SkillHandler mySkillHandler, string[] args = null) : base(mySkillHandler, args) { }
 
         public override bool IsConditionSatisfied() {
+            var observer = PlayMangement.instance.UnitsObserver;
+
             if(!ArgsExist()) return false;
             subjectObserve = args[0];
             if(args.Length > 1) argSecondExist = bool.TryParse(args[1], out value);
-            Pos myPos = mySkillHandler.isPlayer ? playerObserver.GetMyPos(mySkillHandler.myObject) : enemyObserver.GetMyPos(mySkillHandler.myObject);             
+            FieldUnitsObserver.Pos myPos = observer.GetMyPos(mySkillHandler.myObject);
             if(subjectObserve.CompareTo("enemy") == 0) {
-                targetObserver = mySkillHandler.isPlayer ? enemyObserver : playerObserver;
-                int unitCount = targetObserver.GetAllFieldUnits(myPos.col).Count;
+                int unitCount = observer
+                    .GetAllFieldUnits(
+                        myPos.col, 
+                        !PlayMangement.instance.player.isHuman
+                    ).Count;
                 return checkSecondArg(unitCount);
             }
             return false;
@@ -172,10 +168,12 @@ namespace SkillModules {
         public has_empty_space(SkillHandler mySkillHandler, string[] args = null) : base(mySkillHandler, args) { }
 
         public override bool IsConditionSatisfied() {
+            var observer = PlayMangement.instance.UnitsObserver;
+            bool isHuman = PlayMangement.instance.player.isHuman;
+
             bool isEnemyField = args[0].CompareTo("my") != 0;
-            FieldUnitsObserver fieldObserver = (mySkillHandler.isPlayer != isEnemyField )? playerObserver : enemyObserver;
             for(int i = 0; i < 5; i++) {    //나중에 줄 갯수 바뀔 때 대응을 준비해야함
-                if(fieldObserver.GetAllFieldUnits(i).Count == 0) {
+                if(observer.GetAllFieldUnits(i, isHuman).Count == 0) {
                     return true;
                 }
             }
@@ -216,8 +214,10 @@ namespace SkillModules {
             if (!ArgsExist()) return false;
             playedObject.IsValidateData(mySkillHandler.targetData);
 
-            var observer = PlayMangement.instance.PlayerUnitsObserver;
-            var units = observer.GetAllFieldUnits();
+            var observer = PlayMangement.instance.UnitsObserver;
+            bool isHuman = PlayMangement.instance.player.isHuman;
+
+            var units = observer.GetAllFieldUnits(isHuman);
 
             //자신은 제외
             var me = units.Find(x => x == mySkillHandler.myObject);

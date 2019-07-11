@@ -148,9 +148,7 @@ namespace SkillModules {
                 bool isPlayer = mySkillHandler.isPlayer;
                 HookArgs args = new HookArgs();
 
-                FieldUnitsObserver observer = null;
-                if (isPlayer) observer = PlayMangement.instance.PlayerUnitsObserver;
-                else observer = PlayMangement.instance.EnemyUnitsObserver;
+                FieldUnitsObserver observer = PlayMangement.instance.UnitsObserver;
 
                 var pos = observer.GetMyPos(mySkillHandler.myObject);
 
