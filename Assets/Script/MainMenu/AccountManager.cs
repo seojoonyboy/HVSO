@@ -475,9 +475,23 @@ public partial class AccountManager {
     }
 
     private void OnReceivedLoadAllCards(HTTPRequest originalRequest, HTTPResponse response) {
-        var result = dataModules.JsonReader.Read<List<CollectionCard>>(response.DataAsText);
-        allCards = result;
-        allCardsDic = allCards.ToDictionary(x => x.id, x => x);
-        Logger.Log("!!");
+        if(response != null && response.IsSuccess) {
+            var result = dataModules.JsonReader.Read<List<CollectionCard>>(response.DataAsText);
+            allCards = result;
+            allCardsDic = allCards.ToDictionary(x => x.id, x => x);
+        }
+        else {
+            if (originalRequest.RedirectCount == networkManager.MAX_REDIRECTCOUNT) {
+                Modal.instantiate("네트워크가 불안정합니다. 잠시 후 재접속해주세요.", Modal.Type.CHECK);
+            }
+            else {
+                originalRequest.RedirectCount++;
+                networkManager.Request(
+                    originalRequest,
+                    OnReqUserInfo,
+                    "모든 카드 정보를 불러오는중... 재요청(" + originalRequest.RedirectCount + "회)"
+                );
+            }
+        }
     }
 }
