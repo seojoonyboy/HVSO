@@ -135,6 +135,7 @@ public class PlaceMonster : MonoBehaviour {
             hideSpine.Init();
         }
         UpdateStat();
+        ChangeAttackProperty();
     }
 
     public void HideUnit() {        
@@ -153,6 +154,27 @@ public class PlaceMonster : MonoBehaviour {
         transform.Find("UnitAttackProperty").gameObject.SetActive(true);
         //transform.Find("UnitTakeEffectIcon").gameObject.SetActive(true);
         SetState(UnitState.DETECT);
+    }
+
+    public void ChangeAttackProperty() {
+        if (unit.attackType.Length <= 0) {
+            transform.Find("UnitAttackProperty").gameObject.SetActive(false);
+            return;
+        }
+        SpriteRenderer iconImage = transform.Find("UnitAttackProperty/StatIcon").GetComponent<SpriteRenderer>();
+        iconImage.sprite = (unit.attackType.Length > 1) ? AccountManager.Instance.resource.skillIcons["fusion"] : AccountManager.Instance.resource.skillIcons[unit.attackType[0]];
+    }
+
+    public void AddAttackProperty(string status) {
+        transform.Find("UnitAttackProperty").gameObject.SetActive(true);
+        SpriteRenderer iconImage = transform.Find("UnitAttackProperty/StatIcon").GetComponent<SpriteRenderer>();
+
+        if (iconImage.sprite == null)
+            iconImage.sprite = AccountManager.Instance.resource.skillIcons[status];
+        else
+            iconImage.sprite = AccountManager.Instance.resource.skillIcons["fusion"];
+
+        Debug.Log(iconImage.sprite.name);
     }
 
 

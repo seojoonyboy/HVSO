@@ -617,7 +617,7 @@ public partial class PlayMangement : MonoBehaviour {
     }
 
     public void AddSkillIcon(string status, Transform UnitTransform) {
-
+        /*
         if (UnitTransform.Find("UnitTakeEffectIcon").childCount == 0) {
             GameObject Icon = Instantiate(AccountManager.Instance.resource.baseSkillIcon, UnitTransform.Find("UnitTakeEffectIcon"));
             Icon.name = status;
@@ -627,6 +627,7 @@ public partial class PlayMangement : MonoBehaviour {
             GameObject sprite = UnitTransform.Find("UnitTakeEffectIcon").gameObject;
             sprite.GetComponent<SpriteRenderer>().sprite = AccountManager.Instance.resource.skillIcons["fusion"];
         }
+        */
     }
 
     public void DisabelSkillIcon(string status, Transform UnitTransform) {
@@ -636,6 +637,7 @@ public partial class PlayMangement : MonoBehaviour {
     }
 
     public void AddSkillAtkProperty(string status, Transform transform) {
+        /*
         if(transform.Find("UnitAttackProperty").childCount == 0) {
             GameObject Icon = Instantiate(AccountManager.Instance.resource.baseSkillIcon, transform.Find("UnitAttackProperty"));
             Icon.name = status;
@@ -646,14 +648,16 @@ public partial class PlayMangement : MonoBehaviour {
             GameObject sprite = transform.Find("UnitAttackProperty").GetChild(0).gameObject;
             sprite.GetComponent<SpriteRenderer>().sprite = AccountManager.Instance.resource.skillIcons["fusion"];
         }
+        */
     }
 
+    /*
     public void DisablePropertyIcon(string status, Transform transform) {
         if (transform.Find("UnitAttackProperty").childCount < 0) return;
         //if(AccountManager.Instance.resource.skillIcons[status] != UnitTransform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite)
         Destroy(transform.Find("UnitAttackProperty").Find(status));
     }
-
+    */
 
 
 }
@@ -828,12 +832,7 @@ public partial class PlayMangement {
             observer.UnitAdded(unit, new FieldUnitsObserver.Pos(col, row), !player.isHuman);
             unit.layer = 14;
         }
-
-        if (placeMonster.unit.attackType.Length > 0) {
-            GameObject icon = Instantiate(AccountManager.Instance.resource.baseSkillIcon, placeMonster.gameObject.transform.Find("UnitAttackProperty"));
-            icon.GetComponent<SpriteRenderer>().sprite = AccountManager.Instance.resource.skillIcons[placeMonster.unit.attackType[0]];
-        }
-
+        
         targetPlayer.PlayerUseCard();
         return unit;
     }
