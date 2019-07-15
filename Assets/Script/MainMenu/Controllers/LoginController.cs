@@ -12,58 +12,9 @@ public class LoginController : MonoBehaviour {
         networkManager = NetworkManager.Instance;
     }
 
-    // Update is called once per frame
-    void Update() {
-
-    }
-
     public void OnStartButton() {
-        AccountManager.Instance.RequestUserInfo(OnResult, OnRetry);
-        loadingModal = LoadingModal.instantiate();
+        AccountManager.Instance.RequestUserInfo();
         SoundManager.Instance.PlaySound(SoundType.FIRST_TURN);
-    }
-
-    private void OnRetry(string msg) {
-        loadingModal.transform.GetChild(0).GetComponent<UIModule.LoadingTextEffect>().AddAdditionalMsg(msg);
-    }
-
-    private void OnResult(HttpResponse response) {
-        //Logger.Log("요청 최종 응답");
-        if(response.responseCode != 200) {
-            if (!response.request.isNetworkError) {
-                OnSignUpModal();
-            }
-            else {
-                OccurErrorModal(response.responseCode);
-            }
-        }
-        else {
-            OnSignInResultModal();
-            AccountManager.Instance.SetSignInData(response);
-        }
-
-        Destroy(loadingModal);
-    }
-
-    public void OnSignInResultModal() {
-        Destroy(loadingModal);
-        Modal.instantiate("로그인이 되었습니다.", Modal.Type.CHECK, ()=> {
-            SceneManager.Instance.LoadScene(SceneManager.Scene.MAIN_SCENE);
-        });
-    }
-
-    public void OnSignUpModal() {
-        Destroy(loadingModal);
-        Modal.instantiate(
-            "새로운 계정을 등록합니다.", 
-            "닉네임을 입력하세요.",
-            null,
-            Modal.Type.INSERT, 
-            SetUserReqData);
-    }
-
-    private void SetUserReqData(string inputText) {
-        AccountManager.Instance.SignUp(inputText);
     }
 
     private void OccurErrorModal(long errorCode) {

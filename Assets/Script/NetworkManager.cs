@@ -19,6 +19,7 @@ public partial class NetworkManager : Singleton<NetworkManager> {
 
     private void Awake() {
         DontDestroyOnLoad(gameObject);
+        MAX_REDIRECTCOUNT = 10;
     }
 
     public void request(string method, string url, string data, Callback callback, bool neeAuthor = true) {
@@ -120,7 +121,8 @@ public class HttpResponse {
 public partial class NetworkManager {
     Queue<RequestFormat> requests = new Queue<RequestFormat>();
     private bool dequeueing = false;
-    TimeSpan timeout = new TimeSpan(0, 0, 30);  //timeout 30초 지정 
+    TimeSpan timeout = new TimeSpan(0, 0, 5);  //timeout 10초 지정
+    public int MAX_REDIRECTCOUNT { get; private set; }
 
     private void FixedUpdate() {
         if (dequeueing) return;
@@ -138,12 +140,13 @@ public partial class NetworkManager {
         loadingMsg.text = selectedRequestFormat.loadingMessage;
 
         request.SetHeader("Content-Type", "application/json");
+        if(request.RedirectCount != 0) request.Callback = null;
         request.Callback += selectedRequestFormat.callback;
         request.Callback += (x, y) => {
             dequeueing = false;
             Destroy(loadingModal);
         };
-        request.ConnectTimeout = timeout;
+        request.Timeout = timeout;
         request.Send();
     }
 

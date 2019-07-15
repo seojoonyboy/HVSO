@@ -167,10 +167,15 @@ public partial class AccountManager {
 
         url.Append(networkManager.baseUrl)
             .Append("api/users");
-        networkManager.request("PUT", url.ToString(), json, CallbackSignUp, false);
+        //networkManager.request("PUT", url.ToString(), json, CallbackSignUp, false);
     }
 
-    public void RequestUserInfo(NetworkManager.Callback callback, NetworkManager.CallbackRetryOccured retryOccured) {
+    /// <summary>
+    /// SignIn 요청
+    /// </summary>
+    /// <param name="callback"></param>
+    /// <param name="retryOccured"></param>
+    public void RequestUserInfo() {
         StringBuilder url = new StringBuilder();
         string base_url = networkManager.baseUrl;
 
@@ -179,16 +184,67 @@ public partial class AccountManager {
             .Append("api/users/")
             .Append(DEVICEID);
 
+        //url
+        //    .Append(base_url)
+        //    .Append("api/users/")
+        //    .Append(DEVICEID)
+        //    .Append("?slow=30");
+
         Logger.Log("Request User Info");
-        networkManager.request("GET", url.ToString(), callback, retryOccured);
+        HTTPRequest request = new HTTPRequest(
+            new Uri(url.ToString())
+        );
+        request.MethodType = HTTPMethods.Get;
+        networkManager.Request(request, OnReqUserInfo, "유저 정보를 불러오는중...");
     }
 
-    private void CallbackSignUp(HttpResponse response) {
-        if (response.responseCode != 200) {
+    private void OnReqUserInfo(HTTPRequest originalRequest, HTTPResponse response) {
+        if (response != null && response.IsSuccess) {
+            SetSignInData(response);
+            OnSignInResultModal();
+        }
+        else {
+            if(originalRequest.RedirectCount == networkManager.MAX_REDIRECTCOUNT) {
+                Modal.instantiate("네트워크가 불안정합니다. 잠시 후 재접속해주세요.", Modal.Type.CHECK);
+            }
+            else {
+                originalRequest.RedirectCount++;
+                networkManager.Request(
+                    originalRequest,
+                    OnReqUserInfo,
+                    "유저 정보를 불러오는중... 재요청(" + originalRequest.RedirectCount + "회)"
+                );
+            }
+        }
+    }
+
+    public void OnSignInResultModal() {
+        Destroy(loadingModal);
+        Modal.instantiate("로그인이 되었습니다.", Modal.Type.CHECK, () => {
+            SceneManager.Instance.LoadScene(SceneManager.Scene.MAIN_SCENE);
+        });
+    }
+
+    public void OnSignUpModal() {
+        Destroy(loadingModal);
+        Modal.instantiate(
+            "새로운 계정을 등록합니다.",
+            "닉네임을 입력하세요.",
+            null,
+            Modal.Type.INSERT,
+            SetUserReqData);
+    }
+
+    private void SetUserReqData(string inputText) {
+        SignUp(inputText);
+    }
+
+    private void CallbackSignUp(HTTPResponse response) {
+        if (response.StatusCode != 200) {
             Logger.Log(
-                response.responseCode
+                response.StatusCode
                 + "에러\n"
-                + response.errorMessage);
+                + response.DataAsText.ToString());
         }
         else {
             SetSignInData(response);
@@ -199,8 +255,8 @@ public partial class AccountManager {
         }
     }
 
-    public void SetSignInData(HttpResponse response) {
-        userData = dataModules.JsonReader.Read<UserClassInput>(response.data);
+    public void SetSignInData(HTTPResponse response) {
+        userData = dataModules.JsonReader.Read<UserClassInput>(response.DataAsText.ToString());
 
         myCards = userData.cardInventories;
         SetHeroInventories(userData.heroInventories);
@@ -214,12 +270,6 @@ public partial class AccountManager {
 /// Login 이후 CardsInventories 관련 처리
 /// </summary>
 public partial class AccountManager {
-    public void RequestMyCardInventory() {
-        RequestUserInfo(CallbackUserRequest, OnRetry);
-        loadingModal = LoadingModal.instantiate();
-        loadingModal.transform.Find("Panel/AdditionalMessage").GetComponent<Text>().text = "개인 정보를 불러오는중...";
-    }
-
     private void CallbackUserRequest(HttpResponse response) {
         if (response.responseCode != 200) {
             Modal.instantiate("유저 정보를 불러오는데 실패하였습니다.", Modal.Type.CHECK);
