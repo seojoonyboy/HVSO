@@ -17,6 +17,7 @@ public class MyDecksLoader : MonoBehaviour {
     /// <param name="humanDecks">불러온 휴먼 덱 정보를 저장할 타겟 변수</param>
     /// <param name="orcDecks">불러온 오크 덱 정보를 저장할 타겟 변수</param>
     public void Load() {
+        accountManager.LoadAllCards();
         accountManager.RequestHumanDecks(OnHumanDeckLoadFinished);
         accountManager.RequestOrcDecks(OnOrcDeckLoadFinished);
     }

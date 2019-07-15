@@ -78,11 +78,7 @@ public partial class CardHandler : MonoBehaviour {
             Sprite portraitImage = null;
             if (AccountManager.Instance.resource.cardPortraite.ContainsKey(cardID)) portraitImage = AccountManager.Instance.resource.cardPortraite[cardID];
             else portraitImage = AccountManager.Instance.resource.cardPortraite["default"];
-
-            if (cardData.type == "unit")
-                transform.Find("Image/Portrait").GetComponent<Image>().sprite = portraitImage;
-            else
-                transform.Find("Portrait").GetComponent<Image>().sprite = portraitImage;
+            transform.Find("Portrait").GetComponent<Image>().sprite = portraitImage;
             if (!cardData.hero_chk) {
                 transform.Find("BackGround").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground[cardData.type + "_" + cardData.rarelity];
                 transform.Find("Name").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground["name_" + cardData.rarelity];
