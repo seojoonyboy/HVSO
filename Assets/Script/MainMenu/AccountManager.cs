@@ -50,12 +50,6 @@ public partial class AccountManager : Singleton<AccountManager> {
     // Start is called before the first frame update
     void Start() {
         networkManager = NetworkManager.Instance;
-
-        //RequestDeckMake();
-        //TestModifyDeck();
-        //RequestDeckMake();
-        //RequestDeckRemove(1);
-        LoadAllCards();
     }
 
     private void OccurErrorModal(long errorCode) {
@@ -130,11 +124,6 @@ public partial class AccountManager : Singleton<AccountManager> {
             }
         }
         
-    }
-
-
-    public void SetCardPackage() {
-
     }
 
     public class UserClassInput {
@@ -460,7 +449,7 @@ public partial class AccountManager {
         RequestDeckMake(formatData);
     }
 
-    private void LoadAllCards() {
+    public void LoadAllCards() {
         StringBuilder sb = new StringBuilder();
         sb
             .Append(networkManager.baseUrl)
