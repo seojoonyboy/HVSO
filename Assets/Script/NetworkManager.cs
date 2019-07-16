@@ -8,8 +8,7 @@ using UnityEngine.UI;
 
 public partial class NetworkManager : Singleton<NetworkManager> {
     #if UNITY_EDITOR
-    private string url = "https://cctest.fbl.kr/";
-    //private string url = "https://ccdevclient.fbl.kr/";
+    private string url = "https://ccdevclient.fbl.kr/";
     #else
     private string url = "https://cctest.fbl.kr/";
     #endif
@@ -140,7 +139,7 @@ public partial class NetworkManager {
         HTTPRequest request = selectedRequestFormat.request;
         loadingMsg.text = selectedRequestFormat.loadingMessage;
 
-        request.SetHeader("Content-Type", "application/json");
+        request.AddHeader("Content-Type", "application/json");
         if(request.RedirectCount != 0) request.Callback = null;
         request.Callback += selectedRequestFormat.callback;
         request.Callback += (x, y) => {
