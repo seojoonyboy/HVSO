@@ -5,85 +5,99 @@ format: RGBA8888
 filter: Linear,Linear
 repeat: none
 L_leg
-  rotate: false
-  xy: 794, 189
+  rotate: true
+  xy: 197, 9
   size: 56, 67
   orig: 56, 67
   offset: 0, 0
   index: -1
 L_upper_arm
   rotate: false
-  xy: 0, 32
+  xy: 302, 32
   size: 159, 145
   orig: 159, 145
   offset: 0, 0
   index: -1
 R_arm
-  rotate: false
-  xy: 680, 154
+  rotate: true
+  xy: 0, 7
   size: 58, 102
   orig: 58, 102
   offset: 0, 0
   index: -1
 R_leg
   rotate: false
-  xy: 850, 189
+  xy: 755, 61
   size: 54, 67
   orig: 54, 67
   offset: 0, 0
   index: -1
 body
   rotate: false
-  xy: 438, 142
+  xy: 896, 142
   size: 122, 114
   orig: 122, 114
   offset: 0, 0
   index: -1
 dog_body
   rotate: true
-  xy: 159, 18
+  xy: 461, 18
   size: 159, 121
   orig: 159, 121
   offset: 0, 0
   index: -1
 dog_head
   rotate: true
-  xy: 560, 145
+  xy: 896, 31
   size: 111, 120
   orig: 111, 120
   offset: 0, 0
   index: -1
 dog_tail
-  rotate: false
-  xy: 738, 161
+  rotate: true
+  xy: 102, 9
   size: 56, 95
   orig: 56, 95
   offset: 0, 0
   index: -1
+effect_1
+  rotate: true
+  xy: 0, 65
+  size: 191, 302
+  orig: 191, 302
+  offset: 0, 0
+  index: -1
 eyeblow
-  rotate: false
-  xy: 0, 15
+  rotate: true
+  xy: 738, 36
   size: 91, 17
   orig: 91, 17
   offset: 0, 0
   index: -1
 helmet
   rotate: false
-  xy: 280, 127
+  xy: 582, 127
   size: 158, 129
   orig: 158, 129
   offset: 0, 0
   index: -1
 helmet_2
   rotate: false
-  xy: 280, 0
+  xy: 582, 0
   size: 156, 127
   orig: 156, 127
   offset: 0, 0
   index: -1
+helmet_3
+  rotate: false
+  xy: 740, 128
+  size: 156, 128
+  orig: 156, 128
+  offset: 0, 0
+  index: -1
 shadow
   rotate: false
-  xy: 0, 177
+  xy: 302, 177
   size: 253, 79
   orig: 253, 79
   offset: 0, 0

@@ -1,69 +1,90 @@
 
 ac10008.png
-size: 1024,256
+size: 1024,1024
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 L_leg
-  rotate: true
-  xy: 320, 98
+  rotate: false
+  xy: 403, 497
   size: 71, 81
   orig: 71, 81
   offset: 0, 0
   index: -1
 L_low_arm
   rotate: false
-  xy: 837, 123
+  xy: 257, 78
   size: 96, 120
   orig: 96, 120
   offset: 0, 0
   index: -1
 L_upper_arm
   rotate: false
-  xy: 0, 12
+  xy: 403, 741
   size: 157, 231
   orig: 157, 231
   offset: 0, 0
   index: -1
 R_arm
   rotate: true
-  xy: 157, 0
+  xy: 706, 876
   size: 96, 160
   orig: 96, 160
   offset: 0, 0
   index: -1
 R_leg
   rotate: false
-  xy: 933, 163
+  xy: 560, 750
   size: 71, 80
   orig: 71, 80
   offset: 0, 0
   index: -1
 body
-  rotate: false
-  xy: 157, 96
+  rotate: true
+  xy: 403, 578
   size: 163, 147
   orig: 163, 147
   offset: 0, 0
   index: -1
-head
+effcet_1
   rotate: false
-  xy: 543, 99
+  xy: 0, 492
+  size: 403, 480
+  orig: 403, 480
+  offset: 0, 0
+  index: -1
+head
+  rotate: true
+  xy: 257, 344
   size: 148, 144
   orig: 148, 144
   offset: 0, 0
   index: -1
 head_2
   rotate: false
-  xy: 691, 101
+  xy: 560, 830
+  size: 146, 142
+  orig: 146, 142
+  offset: 0, 0
+  index: -1
+head_3
+  rotate: true
+  xy: 257, 198
   size: 146, 142
   orig: 146, 142
   offset: 0, 0
   index: -1
 shadow
   rotate: false
-  xy: 320, 169
+  xy: 0, 0
   size: 223, 74
   orig: 223, 74
+  offset: 0, 0
+  index: -1
+sword
+  rotate: false
+  xy: 0, 74
+  size: 257, 418
+  orig: 257, 418
   offset: 0, 0
   index: -1

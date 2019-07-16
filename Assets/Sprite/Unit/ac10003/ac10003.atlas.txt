@@ -5,50 +5,50 @@ format: RGBA8888
 filter: Linear,Linear
 repeat: none
 L_leg
-  rotate: true
-  xy: 909, 195
+  rotate: false
+  xy: 128, 31
   size: 55, 80
   orig: 55, 80
   offset: 0, 0
   index: -1
 L_low_arm
   rotate: true
-  xy: 477, 130
+  xy: 797, 130
   size: 120, 158
   orig: 120, 158
   offset: 0, 0
   index: -1
 L_upper_arm
-  rotate: true
-  xy: 128, 42
+  rotate: false
+  xy: 238, 62
   size: 69, 51
   orig: 69, 51
   offset: 0, 0
   index: -1
 R_arm
   rotate: true
-  xy: 810, 188
+  xy: 802, 68
   size: 62, 99
   orig: 62, 99
   offset: 0, 0
   index: -1
 R_leg
-  rotate: true
-  xy: 795, 133
+  rotate: false
+  xy: 183, 33
   size: 55, 80
   orig: 55, 80
   offset: 0, 0
   index: -1
 arrow_ac
   rotate: false
-  xy: 322, 123
+  xy: 642, 123
   size: 155, 127
   orig: 155, 127
   offset: 0, 0
   index: -1
 arrow_oj
   rotate: true
-  xy: 635, 135
+  xy: 642, 66
   size: 57, 160
   orig: 57, 160
   offset: 0, 0
@@ -60,9 +60,16 @@ body
   orig: 128, 111
   offset: 0, 0
   index: -1
+dust
+  rotate: false
+  xy: 901, 92
+  size: 36, 38
+  orig: 36, 38
+  offset: 0, 0
+  index: -1
 eye
   rotate: false
-  xy: 179, 89
+  xy: 307, 89
   size: 71, 24
   orig: 71, 24
   offset: 0, 0
@@ -81,9 +88,23 @@ helmet_2
   orig: 160, 137
   offset: 0, 0
   index: -1
-shadow
+helmet_3
   rotate: false
-  xy: 635, 192
+  xy: 322, 113
+  size: 160, 137
+  orig: 160, 137
+  offset: 0, 0
+  index: -1
+helmet_4
+  rotate: false
+  xy: 482, 113
+  size: 160, 137
+  orig: 160, 137
+  offset: 0, 0
+  index: -1
+shadow
+  rotate: true
+  xy: 955, 75
   size: 175, 58
   orig: 175, 58
   offset: 0, 0

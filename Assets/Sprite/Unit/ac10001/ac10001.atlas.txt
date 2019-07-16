@@ -13,42 +13,49 @@ Headgear
   index: -1
 L_eye
   rotate: false
-  xy: 432, 108
+  xy: 967, 167
   size: 13, 25
   orig: 13, 25
   offset: 0, 0
   index: -1
 L_leg
   rotate: false
-  xy: 677, 115
+  xy: 833, 115
   size: 51, 78
   orig: 51, 78
   offset: 0, 0
   index: -1
 R_eye
   rotate: false
-  xy: 136, 71
+  xy: 983, 226
   size: 15, 25
   orig: 15, 25
   offset: 0, 0
   index: -1
 R_leg
   rotate: true
-  xy: 811, 200
+  xy: 588, 82
   size: 51, 78
   orig: 51, 78
   offset: 0, 0
   index: -1
 body
   rotate: false
-  xy: 432, 133
+  xy: 588, 133
   size: 121, 118
   orig: 121, 118
   offset: 0, 0
   index: -1
+effect_1
+  rotate: false
+  xy: 884, 192
+  size: 99, 59
+  orig: 99, 59
+  offset: 0, 0
+  index: -1
 face
   rotate: false
-  xy: 728, 179
+  xy: 884, 120
   size: 83, 72
   orig: 83, 72
   offset: 0, 0
@@ -67,23 +74,30 @@ helmet_2
   orig: 156, 153
   offset: 0, 0
   index: -1
+helmet_3
+  rotate: false
+  xy: 314, 98
+  size: 156, 153
+  orig: 156, 153
+  offset: 0, 0
+  index: -1
 right_arm
   rotate: true
-  xy: 553, 104
+  xy: 709, 104
   size: 89, 124
   orig: 89, 124
   offset: 0, 0
   index: -1
 shadow
   rotate: false
-  xy: 553, 193
+  xy: 709, 193
   size: 175, 58
   orig: 175, 58
   offset: 0, 0
   index: -1
 shield
   rotate: false
-  xy: 314, 99
+  xy: 470, 99
   size: 118, 152
   orig: 118, 152
   offset: 0, 0
