@@ -39,7 +39,6 @@ public partial class AccountManager : Singleton<AccountManager> {
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
         DontDestroyOnLoad(gameObject);
         DEVICEID = SystemInfo.deviceUniqueIdentifier;
-        DEVICEID = "10044";
         cardPackage = Resources.Load("CardDatas/CardDataPackage_01") as CardDataPackage;
         resource = transform.GetComponent<ResourceManager>();
     }
