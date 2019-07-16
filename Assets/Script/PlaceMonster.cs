@@ -84,11 +84,8 @@ public class PlaceMonster : MonoBehaviour {
         x = transform.parent.GetSiblingIndex();
         y = transform.parent.parent.GetSiblingIndex();
 
-        unitLocation = gameObject.transform.position;
+        unitLocation = gameObject.transform.position;       
         
-
-        //Observable.EveryUpdate().Where(_ => attacking == true && unit.power > 0).Subscribe(_ => MoveToTarget()).AddTo(this);
-
         unitSpine = transform.Find("skeleton").GetComponent<UnitSpine>();
         unitSpine.attackCallback += SuccessAttack;
         unitSpine.takeMagicCallback += CheckHP;
@@ -102,8 +99,6 @@ public class PlaceMonster : MonoBehaviour {
         if (unit.cardCategories[0] == "stealth")
         gameObject.AddComponent<ambush>();
 
-        //if (unit.attackType.Length > 0 && unit.attackType[0] == )
-        //gameObject.AddComponent<SkillModules.UnitAbility_assault>();
 
         if (unit.attackRange == "distance") {
             GameObject arrow = Instantiate(unitSpine.arrow, transform);
@@ -142,7 +137,6 @@ public class PlaceMonster : MonoBehaviour {
         transform.Find("HP").gameObject.SetActive(false);
         transform.Find("ATK").gameObject.SetActive(false);
         transform.Find("UnitAttackProperty").gameObject.SetActive(false);
-        //transform.Find("UnitTakeEffectIcon").gameObject.SetActive(false);
         unitSpine.gameObject.SetActive(false);
         hideSpine.gameObject.SetActive(true);
         hideSpine.Appear();
@@ -168,12 +162,7 @@ public class PlaceMonster : MonoBehaviour {
     public void AddAttackProperty(string status) {
         transform.Find("UnitAttackProperty").gameObject.SetActive(true);
         SpriteRenderer iconImage = transform.Find("UnitAttackProperty/StatIcon").GetComponent<SpriteRenderer>();
-
-        if (iconImage.sprite == null)
-            iconImage.sprite = AccountManager.Instance.resource.skillIcons[status];
-        else
-            iconImage.sprite = AccountManager.Instance.resource.skillIcons["fusion"];
-
+        iconImage.sprite = (unit.attackType.Length <= 0) ? AccountManager.Instance.resource.skillIcons[status] : AccountManager.Instance.resource.skillIcons["fusion"];
         Debug.Log(iconImage.sprite.name);
     }
 

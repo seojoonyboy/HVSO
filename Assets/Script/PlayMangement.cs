@@ -148,12 +148,10 @@ public partial class PlayMangement : MonoBehaviour {
 
     public void SetPlayerCard() {
         if (player.isHuman == true) {
-            //player.card = cardDB.transform.Find("Card").gameObject;
             player.back = cardDB.transform.Find("HumanBackCard").gameObject;
             enemyPlayer.back = cardDB.transform.Find("OrcBackCard").gameObject;
         }
         else {
-            //player.card = cardDB.transform.Find("Card").gameObject;
             player.back = cardDB.transform.Find("OrcBackCard").gameObject;
             enemyPlayer.back = cardDB.transform.Find("HumanBackCard").gameObject;
         }
@@ -615,49 +613,6 @@ public partial class PlayMangement : MonoBehaviour {
         } while (heroShieldActive);
         IngameNotice.instance.CloseNotice();
     }
-
-    public void AddSkillIcon(string status, Transform UnitTransform) {
-        /*
-        if (UnitTransform.Find("UnitTakeEffectIcon").childCount == 0) {
-            GameObject Icon = Instantiate(AccountManager.Instance.resource.baseSkillIcon, UnitTransform.Find("UnitTakeEffectIcon"));
-            Icon.name = status;
-            Icon.transform.position = UnitTransform.Find("UnitTakeEffectIcon").position;
-        }
-        else {
-            GameObject sprite = UnitTransform.Find("UnitTakeEffectIcon").gameObject;
-            sprite.GetComponent<SpriteRenderer>().sprite = AccountManager.Instance.resource.skillIcons["fusion"];
-        }
-        */
-    }
-
-    public void DisabelSkillIcon(string status, Transform UnitTransform) {
-        if (UnitTransform.Find("UnitTakeEffectIcon").childCount < 0) return;
-        //if(AccountManager.Instance.resource.skillIcons[status] != UnitTransform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite)
-        Destroy(UnitTransform.Find(status));      
-    }
-
-    public void AddSkillAtkProperty(string status, Transform transform) {
-        /*
-        if(transform.Find("UnitAttackProperty").childCount == 0) {
-            GameObject Icon = Instantiate(AccountManager.Instance.resource.baseSkillIcon, transform.Find("UnitAttackProperty"));
-            Icon.name = status;
-            Icon.transform.position = transform.Find("UnitAttackProperty").position;
-            Icon.GetComponent<SpriteRenderer>().sprite = AccountManager.Instance.resource.skillIcons[status];
-        }
-        else {
-            GameObject sprite = transform.Find("UnitAttackProperty").GetChild(0).gameObject;
-            sprite.GetComponent<SpriteRenderer>().sprite = AccountManager.Instance.resource.skillIcons["fusion"];
-        }
-        */
-    }
-
-    /*
-    public void DisablePropertyIcon(string status, Transform transform) {
-        if (transform.Find("UnitAttackProperty").childCount < 0) return;
-        //if(AccountManager.Instance.resource.skillIcons[status] != UnitTransform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite)
-        Destroy(transform.Find("UnitAttackProperty").Find(status));
-    }
-    */
 
 
 }
