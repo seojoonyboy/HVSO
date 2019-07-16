@@ -41,13 +41,16 @@ namespace dataModules {
 
     public class HeroInventory {
         public string[] heroClasses;
-        public int id;
+        public string id;
         public string camp;
         public string name;
         public string heroId;
-        public string createAt;
-        public string updateAt;
         public HeroCard[] heroCards;
+    }
+
+    public class Decks {
+        public OrcDecks orc;
+        public HumanDecks human;
     }
 
     public class HumanDecks {
@@ -78,7 +81,6 @@ namespace dataModules {
         public string flavorText;
         public string camp;
         public string heroId;
-        public Hero _hero;
         public List<Item> items;
         public bool deckValidate;
     }
@@ -94,8 +96,8 @@ namespace dataModules {
     public class BaseCard {
         public string[] attackTypes;
         public string[] attributes;
-        public string[] cardCategories;
         public string[] cardClasses;
+        public string[] cardCategories;
         public int id;
         public string rarelity;
         public string camp;

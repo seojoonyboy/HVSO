@@ -18,18 +18,20 @@ public class MyDecksLoader : MonoBehaviour {
     /// <param name="orcDecks">불러온 오크 덱 정보를 저장할 타겟 변수</param>
     public void Load() {
         accountManager.LoadAllCards();
-        accountManager.RequestHumanDecks(OnHumanDeckLoadFinished);
-        accountManager.RequestOrcDecks(OnOrcDeckLoadFinished);
+        accountManager.RequestMyDecks(OnDeckLoadFinished);
     }
 
-    private void OnHumanDeckLoadFinished(HTTPRequest originalRequest, HTTPResponse response) {
-        accountManager.humanDecks = JsonReader.Read<HumanDecks>(response.DataAsText);
-    }
-
-    private void OnOrcDeckLoadFinished(HTTPRequest originalRequest, HTTPResponse response) {
-        accountManager.orcDecks = JsonReader.Read<OrcDecks>(response.DataAsText);
-        OnLoadFinished.Invoke();
-
-        //accountManager.AddDummyCustomDeck();
+    private void OnDeckLoadFinished(HTTPRequest originalRequest, HTTPResponse response) {
+        if(response != null) {
+            if(response.StatusCode == 200 || response.StatusCode == 304) {
+                var result = JsonReader.Read<Decks>(response.DataAsText);
+                accountManager.orcDecks = result.orc;
+                accountManager.humanDecks = result.human;
+                OnLoadFinished.Invoke();
+            }
+        }
+        else {
+            Logger.Log("Something is wrong");
+        }
     }
 }

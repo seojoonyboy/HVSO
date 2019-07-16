@@ -18,7 +18,7 @@ public partial class AccountManager : Singleton<AccountManager> {
 
     public string DEVICEID { get; private set; }
     public UserClassInput userData { get; private set; }
-    public List<CardInventory> myCards { get; private set; }
+    public CardInventory[] myCards { get; private set; }
 
     public HumanDecks humanDecks;
     public OrcDecks orcDecks;
@@ -32,17 +32,14 @@ public partial class AccountManager : Singleton<AccountManager> {
 
     NetworkManager networkManager;
     GameObject loadingModal;
-
-    string nickName;
-    public string NickName {
-        get { return nickName; }
-    }
+    public string NickName { get; private set; }
 
     private void Awake() {
         Application.targetFrameRate = 60;
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
         DontDestroyOnLoad(gameObject);
         DEVICEID = SystemInfo.deviceUniqueIdentifier;
+        DEVICEID = "10044";
         cardPackage = Resources.Load("CardDatas/CardDataPackage_01") as CardDataPackage;
         resource = transform.GetComponent<ResourceManager>();
     }
@@ -57,9 +54,9 @@ public partial class AccountManager : Singleton<AccountManager> {
         NoneIngameSceneEventHandler.Instance.PostNotification(NoneIngameSceneEventHandler.EVENT_TYPE.NETWORK_EROR_OCCURED, this, errorCode);
     }
 
-    private void SetHeroInventories(List<dataModules.HeroInventory> data) {
-        myHeroInventories = new Dictionary<string, dataModules.HeroInventory>();
-        foreach (dataModules.HeroInventory inventory in data) {
+    private void SetHeroInventories(HeroInventory[] data) {
+        myHeroInventories = new Dictionary<string, HeroInventory>();
+        foreach (HeroInventory inventory in data) {
             myHeroInventories[inventory.heroId] = inventory;
         }
     }
@@ -126,11 +123,12 @@ public partial class AccountManager : Singleton<AccountManager> {
     }
 
     public class UserClassInput {
+        public string[] baasicDeckUnlock;
         public string nickName;
         public string deviceId;
-
-        public List<dataModules.CardInventory> cardInventories;
-        public List<dataModules.HeroInventory> heroInventories;
+        
+        public CardInventory[] cardInventories;
+        public HeroInventory[] heroInventories;
     }
 
     public class Deck {
@@ -156,7 +154,6 @@ public partial class AccountManager {
             .Append("api/user");
 
         HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
-        request.AddHeader("Content-Type", "application/json");
         request.RawData = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(userInfo));
         request.MethodType = HTTPMethods.Post;
 
@@ -164,11 +161,11 @@ public partial class AccountManager {
     }
 
     /// <summary>
-    /// SignIn 요청
+    /// 유저 정보 요청
     /// </summary>
     /// <param name="callback"></param>
     /// <param name="retryOccured"></param>
-    public void RequestUserInfo() {
+    public void RequestUserInfo(OnRequestFinishedDelegate callback = null) {
         StringBuilder url = new StringBuilder();
         string base_url = networkManager.baseUrl;
 
@@ -187,32 +184,9 @@ public partial class AccountManager {
             new Uri(url.ToString())
         );
         request.MethodType = HTTPMethods.Get;
-        request.AddHeader("Content-Type", "application/json");
         string tokenSendFormat = string.Format("Bearer {0}", TokenId);
         request.AddHeader("authorization", tokenSendFormat);
-
-        networkManager.Request(request, ReqtUserInfoCallback, "유저 정보를 불러오는중...");
-    }
-
-    private void ReqtUserInfoCallback(HTTPRequest originalRequest, HTTPResponse response) {
-        if(response == null) {
-            //응답없음. 재요청
-            originalRequest.RedirectCount++;
-            networkManager.Request(
-                originalRequest,
-                ReqtUserInfoCallback,
-                "유저정보 재요청...(" + originalRequest.RedirectCount + "회)"
-            );
-        }
-        else {
-            if(response.StatusCode == 200) {
-                Logger.Log("OnSignInResultModal");
-                OnSignInResultModal();
-            }
-            else if(response.StatusCode == 400 && response.DataAsText.Contains("no_user")) {
-                AuthUser();
-            }
-        }
+        networkManager.Request(request, callback, "유저 정보를 불러오는중...");
     }
 
     public void OnSignInResultModal() {
@@ -234,7 +208,9 @@ public partial class AccountManager {
 
     private void CallbackSignUp(HTTPRequest originalRequest, HTTPResponse response) {
         if (response != null && response.IsSuccess) {
-            SetSignInData(response);
+            Logger.Log("회원가입 요청 완료");
+            AuthUser();
+            RequestUserInfo();
 
             Modal.instantiate("회원가입이 완료되었습니다.", Modal.Type.CHECK, () => {
                 SceneManager.Instance.LoadScene(SceneManager.Scene.MAIN_SCENE);
@@ -246,60 +222,34 @@ public partial class AccountManager {
             }
         }
     }
-
+    
     public void SetSignInData(HTTPResponse response) {
-        userData = dataModules.JsonReader.Read<UserClassInput>(response.DataAsText.ToString());
+        userData = dataModules.JsonReader.Read<UserClassInput>(response.DataAsText);
 
         myCards = userData.cardInventories;
         SetHeroInventories(userData.heroInventories);
         SetCardData();
 
-        nickName = userData.nickName;
+        NickName = userData.nickName;
     }
 }
 
-/// <summary>
-/// Login 이후 Deck 관련 처리
-/// </summary>
 public partial class AccountManager {
-    public void RequestHumanDecks(OnRequestFinishedDelegate callback = null) {
+    public void RequestMyDecks(OnRequestFinishedDelegate callback = null) {
         StringBuilder url = new StringBuilder();
         string base_url = networkManager.baseUrl;
 
         url
             .Append(base_url)
-            .Append("api/users/")
-            .Append(DEVICEID)
-            .Append("/decks/human");
+            .Append("api/decks");
 
         HTTPRequest request = new HTTPRequest(
             new Uri(url.ToString())
         );
-        request.MethodType = BestHTTP.HTTPMethods.Get;
-        if (callback != null) request.Callback = callback;
-        networkManager.Request(request, OnReceived, "휴먼 덱을 불러오는중...");
+        request.MethodType = HTTPMethods.Get;
+        request.AddHeader("authorization", TokenFormat);
+        networkManager.Request(request, callback, "내 덱을 불러오는중...");
     }
-
-    public void RequestOrcDecks(OnRequestFinishedDelegate callback = null) {
-        StringBuilder url = new StringBuilder();
-        string base_url = networkManager.baseUrl;
-
-        url
-            .Append(base_url)
-            .Append("api/users/")
-            .Append(DEVICEID)
-            .Append("/decks/orc");
-
-        HTTPRequest request = new HTTPRequest(
-            new Uri(url.ToString())
-        );
-        request.MethodType = BestHTTP.HTTPMethods.Get;
-        if (callback != null) request.Callback = callback;
-        networkManager.Request(request, OnReceived, "오크 덱을 불러오는중...");
-    }
-}
-
-public partial class AccountManager {
     /// <summary>
     /// 덱 새로 생성 Server에 요청
     /// </summary>
@@ -461,9 +411,25 @@ public partial class AccountManager {
 }
 
 public partial class AccountManager {
-    public string TokenId { get; private set; }
+    string tokenId;
+    public string TokenId {
+        get {
+            return tokenId;
+        }
+        set {
+            tokenId = value;
+            tokenFormat = string.Format("Bearer {0}", TokenId);
+        }
+    }
 
-    public void AuthUser() {
+    string tokenFormat;
+    public string TokenFormat {
+        get {
+            return tokenFormat;
+        }
+    }
+
+    public void AuthUser(OnRequestFinishedDelegate callback = null) {
         StringBuilder url = new StringBuilder();
 
         url
@@ -478,35 +444,19 @@ public partial class AccountManager {
         request.MethodType = HTTPMethods.Post;
 
         request.RawData = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(form));
-        request.Callback += AuthUserCallback;
-        request.Send();
+        if (callback != null) request.Callback = callback;
+        else request.Callback = AuthUserCallback;
+
+        networkManager.Request(request, callback);
     }
 
     private void AuthUserCallback(HTTPRequest originalRequest, HTTPResponse response) {
-        //User 존재
-        if (response.StatusCode == 200) {
-            var result = dataModules.JsonReader.Read<Token>(response.DataAsText);
-            TokenId = result.token;
-
-            //SignIn Request
-            RequestUserInfo();
-        }
-        //User 정보 없음 => 회원가입 진행
-        else if (response.StatusCode == 400 && response.DataAsText.Contains("no_user")){
-            OnSignUpModal();
-        }
-        
+        if (response.IsSuccess) SetUserToken(response);
     }
 
-    public void CheckToken() {
-        //client has no token
-        if (string.IsNullOrEmpty(TokenId)) {
-            AuthUser();
-        }
-        //client has token
-        else {
-            RequestUserInfo();
-        }
+    public void SetUserToken(HTTPResponse response) {
+        var result = dataModules.JsonReader.Read<Token>(response.DataAsText);
+        TokenId = result.token;
     }
 
     public class TokenForm {

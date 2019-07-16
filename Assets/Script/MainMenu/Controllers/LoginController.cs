@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Text;
+using BestHTTP;
 using UnityEngine;
 
 public class LoginController : MonoBehaviour {
@@ -13,8 +11,27 @@ public class LoginController : MonoBehaviour {
     }
 
     public void OnStartButton() {
-        AccountManager.Instance.CheckToken();
+        AccountManager.Instance.AuthUser(CheckTokenCallback);
         SoundManager.Instance.PlaySound(SoundType.FIRST_TURN);
+    }
+
+    private void CheckTokenCallback(HTTPRequest originalRequest, HTTPResponse response) {
+        if(response != null) {
+            AccountManager.Instance.SetUserToken(response);
+            AccountManager.Instance.RequestUserInfo(OnRequestUserInfoCallback);
+        }
+        //Timeout
+        else { }
+    }
+
+    private void OnRequestUserInfoCallback(HTTPRequest originalRequest, HTTPResponse response) {
+        if (response.StatusCode == 200 || response.StatusCode == 304) {
+            AccountManager.Instance.SetSignInData(response);
+            AccountManager.Instance.OnSignInResultModal();
+        }
+        else {
+            AccountManager.Instance.OnSignUpModal();
+        }
     }
 
     private void OccurErrorModal(long errorCode) {
