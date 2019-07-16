@@ -209,7 +209,7 @@ public class CardListManager : MonoBehaviour
         info.Find("Cost/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.cost.ToString();
 
         info.Find("Class").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["class_" + data.class_1];
-        info.Find("Class/Icon").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["class_icon_" + data.class_1];
+        //info.Find("Class/Icon").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["class_icon_" + data.class_1];
 
         info.Find("SkillIcon1").gameObject.SetActive(false);
         info.Find("SkillIcon2").gameObject.SetActive(false);

@@ -12,7 +12,8 @@ using SocketFormat;
 public partial class BattleConnector : MonoBehaviour {
 
     #if UNITY_EDITOR
-    private string url = "wss://ccdevclient.fbl.kr/game";
+    private string url = "wss://cctest.fbl.kr/game";
+    //private string url = "wss://ccdevclient.fbl.kr/game";
     #else
     private string url = "wss://cctest.fbl.kr/game";
     #endif
@@ -220,7 +221,7 @@ public partial class BattleConnector : MonoBehaviour {
             gameState.lastUse != null && gameState.lastUse.cardItem.itemId == itemId && 
             ((gameState.lastUse.cardItem.camp.CompareTo("human")==0) == playMangement.player.isHuman));
 
-        StartCoroutine(PlayMangement.instance.player.cdpm.SendMultipleCard(gameState.players.myPlayer(isHuman).deck.handCards));
+        StartCoroutine(PlayMangement.instance.player.cdpm.AddMultipleCard(gameState.players.myPlayer(isHuman).deck.handCards));
     }
 
     public IEnumerator WaitBattle() {
