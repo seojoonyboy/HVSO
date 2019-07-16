@@ -126,6 +126,10 @@ namespace dataModules {
         public string method;
     }
 
+    public class Token {
+        public string token;
+    }
+
     public class Effect {
         public string[] args;
         public int skillId;

@@ -123,7 +123,6 @@ public partial class AccountManager : Singleton<AccountManager> {
                 }
             }
         }
-        
     }
 
     public class UserClassInput {
@@ -151,12 +150,17 @@ public partial class AccountManager {
         userInfo.nickName = inputText;
         userInfo.deviceId = DEVICEID;
 
-        string json = JsonUtility.ToJson(userInfo);
         StringBuilder url = new StringBuilder();
 
         url.Append(networkManager.baseUrl)
-            .Append("api/users");
-        //networkManager.request("PUT", url.ToString(), json, CallbackSignUp, false);
+            .Append("api/user");
+
+        HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
+        request.AddHeader("Content-Type", "application/json");
+        request.RawData = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(userInfo));
+        request.MethodType = HTTPMethods.Post;
+
+        networkManager.Request(request, CallbackSignUp, "회원가입을 요청하는 중...");
     }
 
     /// <summary>
@@ -170,8 +174,7 @@ public partial class AccountManager {
 
         url
             .Append(base_url)
-            .Append("api/users/")
-            .Append(DEVICEID);
+            .Append("api/user/");
 
         //url
         //    .Append(base_url)
@@ -184,25 +187,30 @@ public partial class AccountManager {
             new Uri(url.ToString())
         );
         request.MethodType = HTTPMethods.Get;
-        networkManager.Request(request, OnReqUserInfo, "유저 정보를 불러오는중...");
+        request.AddHeader("Content-Type", "application/json");
+        string tokenSendFormat = string.Format("Bearer {0}", TokenId);
+        request.AddHeader("authorization", tokenSendFormat);
+
+        networkManager.Request(request, ReqtUserInfoCallback, "유저 정보를 불러오는중...");
     }
 
-    private void OnReqUserInfo(HTTPRequest originalRequest, HTTPResponse response) {
-        if (response != null && response.IsSuccess) {
-            SetSignInData(response);
-            OnSignInResultModal();
+    private void ReqtUserInfoCallback(HTTPRequest originalRequest, HTTPResponse response) {
+        if(response == null) {
+            //응답없음. 재요청
+            originalRequest.RedirectCount++;
+            networkManager.Request(
+                originalRequest,
+                ReqtUserInfoCallback,
+                "유저정보 재요청...(" + originalRequest.RedirectCount + "회)"
+            );
         }
         else {
-            if(originalRequest.RedirectCount == networkManager.MAX_REDIRECTCOUNT) {
-                Modal.instantiate("네트워크가 불안정합니다. 잠시 후 재접속해주세요.", Modal.Type.CHECK);
+            if(response.StatusCode == 200) {
+                Logger.Log("OnSignInResultModal");
+                OnSignInResultModal();
             }
-            else {
-                originalRequest.RedirectCount++;
-                networkManager.Request(
-                    originalRequest,
-                    OnReqUserInfo,
-                    "유저 정보를 불러오는중... 재요청(" + originalRequest.RedirectCount + "회)"
-                );
+            else if(response.StatusCode == 400 && response.DataAsText.Contains("no_user")) {
+                AuthUser();
             }
         }
     }
@@ -221,26 +229,21 @@ public partial class AccountManager {
             "닉네임을 입력하세요.",
             null,
             Modal.Type.INSERT,
-            SetUserReqData);
+            SignUp);
     }
 
-    private void SetUserReqData(string inputText) {
-        SignUp(inputText);
-    }
-
-    private void CallbackSignUp(HTTPResponse response) {
-        if (response.StatusCode != 200) {
-            Logger.Log(
-                response.StatusCode
-                + "에러\n"
-                + response.DataAsText.ToString());
-        }
-        else {
+    private void CallbackSignUp(HTTPRequest originalRequest, HTTPResponse response) {
+        if (response != null && response.IsSuccess) {
             SetSignInData(response);
 
             Modal.instantiate("회원가입이 완료되었습니다.", Modal.Type.CHECK, () => {
                 SceneManager.Instance.LoadScene(SceneManager.Scene.MAIN_SCENE);
             });
+        }
+        else {
+            if(response.DataAsText.Contains("already exist")) {
+                Modal.instantiate("이미 해당 기기의 ID가 존재합니다.", Modal.Type.CHECK);
+            }
         }
     }
 
@@ -252,34 +255,6 @@ public partial class AccountManager {
         SetCardData();
 
         nickName = userData.nickName;
-    }
-}
-
-/// <summary>
-/// Login 이후 CardsInventories 관련 처리
-/// </summary>
-public partial class AccountManager {
-    private void CallbackUserRequest(HttpResponse response) {
-        if (response.responseCode != 200) {
-            Modal.instantiate("유저 정보를 불러오는데 실패하였습니다.", Modal.Type.CHECK);
-
-            Destroy(loadingModal);
-        }
-        else {
-            userData = dataModules.JsonReader.Read<UserClassInput>(response.data);
-
-            myCards = userData.cardInventories;
-            SetHeroInventories(userData.heroInventories);
-            SetCardData();
-            //SetDummyDeck();
-
-            Destroy(loadingModal);
-            SceneManager.Instance.LoadScene(SceneManager.Scene.MAIN_SCENE);
-        }
-    }
-
-    private void OnRetry(string msg) {
-        loadingModal.transform.GetChild(0).GetComponent<UIModule.LoadingTextEffect>().AddAdditionalMsg(msg);
     }
 }
 
@@ -398,7 +373,7 @@ public partial class AccountManager {
             .Append("/decks/")
             .Append(deckId);
 
-        BestHTTP.HTTPRequest request = new BestHTTP.HTTPRequest(
+        HTTPRequest request = new HTTPRequest(
             new Uri(sb.ToString())
         );
         request.MethodType = HTTPMethods.Put;
@@ -477,10 +452,68 @@ public partial class AccountManager {
                 originalRequest.RedirectCount++;
                 networkManager.Request(
                     originalRequest,
-                    OnReqUserInfo,
+                    OnReceivedLoadAllCards,
                     "모든 카드 정보를 불러오는중... 재요청(" + originalRequest.RedirectCount + "회)"
                 );
             }
+        }
+    }
+}
+
+public partial class AccountManager {
+    public string TokenId { get; private set; }
+
+    public void AuthUser() {
+        StringBuilder url = new StringBuilder();
+
+        url
+            .Append(networkManager.baseUrl)
+            .Append("api/user/auth");
+
+        HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
+
+        TokenForm form = new TokenForm(DEVICEID);
+
+        request.AddHeader("Content-Type", "application/json");
+        request.MethodType = HTTPMethods.Post;
+
+        request.RawData = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(form));
+        request.Callback += AuthUserCallback;
+        request.Send();
+    }
+
+    private void AuthUserCallback(HTTPRequest originalRequest, HTTPResponse response) {
+        //User 존재
+        if (response.StatusCode == 200) {
+            var result = dataModules.JsonReader.Read<Token>(response.DataAsText);
+            TokenId = result.token;
+
+            //SignIn Request
+            RequestUserInfo();
+        }
+        //User 정보 없음 => 회원가입 진행
+        else if (response.StatusCode == 400 && response.DataAsText.Contains("no_user")){
+            OnSignUpModal();
+        }
+        
+    }
+
+    public void CheckToken() {
+        //client has no token
+        if (string.IsNullOrEmpty(TokenId)) {
+            AuthUser();
+        }
+        //client has token
+        else {
+            RequestUserInfo();
+        }
+    }
+
+    public class TokenForm {
+        public string deviceId;
+
+        public TokenForm(string deviceId) {
+            this.deviceId = deviceId;
         }
     }
 }

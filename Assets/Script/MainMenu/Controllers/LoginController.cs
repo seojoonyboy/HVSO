@@ -13,7 +13,7 @@ public class LoginController : MonoBehaviour {
     }
 
     public void OnStartButton() {
-        AccountManager.Instance.RequestUserInfo();
+        AccountManager.Instance.CheckToken();
         SoundManager.Instance.PlaySound(SoundType.FIRST_TURN);
     }
 
