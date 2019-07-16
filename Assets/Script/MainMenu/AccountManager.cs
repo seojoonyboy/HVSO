@@ -436,12 +436,8 @@ public partial class AccountManager {
             .Append("api/user/auth");
 
         HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
-
         TokenForm form = new TokenForm(DEVICEID);
-
-        request.AddHeader("Content-Type", "application/json");
         request.MethodType = HTTPMethods.Post;
-
         request.RawData = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(form));
         if (callback != null) request.Callback = callback;
         else request.Callback = AuthUserCallback;

@@ -17,8 +17,16 @@ public class LoginController : MonoBehaviour {
 
     private void CheckTokenCallback(HTTPRequest originalRequest, HTTPResponse response) {
         if(response != null) {
-            AccountManager.Instance.SetUserToken(response);
-            AccountManager.Instance.RequestUserInfo(OnRequestUserInfoCallback);
+            if (response.IsSuccess) {
+                AccountManager.Instance.SetUserToken(response);
+                AccountManager.Instance.RequestUserInfo(OnRequestUserInfoCallback);
+            }
+            else {
+                if (response.DataAsText.Contains("no_user")) {
+                    AccountManager.Instance.OnSignUpModal();
+                }
+                Logger.Log(response.DataAsText);
+            }
         }
         //Timeout
         else { }
