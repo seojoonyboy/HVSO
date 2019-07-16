@@ -1,76 +1,111 @@
 
 ac10009.png
-size: 1024,256
+size: 1024,512
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 L_arm
-  rotate: false
-  xy: 754, 108
+  rotate: true
+  xy: 648, 353
   size: 86, 146
   orig: 86, 146
   offset: 0, 0
   index: -1
 L_attack_arm
   rotate: false
-  xy: 0, 132
+  xy: 0, 58
   size: 207, 122
   orig: 207, 122
   offset: 0, 0
   index: -1
 L_leg
   rotate: false
-  xy: 153, 41
+  xy: 794, 348
   size: 76, 91
   orig: 76, 91
   offset: 0, 0
   index: -1
 R_arm
-  rotate: false
-  xy: 840, 108
+  rotate: true
+  xy: 873, 427
   size: 85, 146
   orig: 85, 146
   offset: 0, 0
   index: -1
 R_leg
-  rotate: true
-  xy: 925, 60
+  rotate: false
+  xy: 207, 0
   size: 76, 89
   orig: 76, 89
   offset: 0, 0
   index: -1
 body
   rotate: false
-  xy: 0, 0
+  xy: 488, 226
   size: 153, 132
   orig: 153, 132
   offset: 0, 0
   index: -1
 book
-  rotate: true
-  xy: 925, 136
+  rotate: false
+  xy: 207, 89
   size: 118, 91
   orig: 118, 91
   offset: 0, 0
   index: -1
-head
+effect_2
   rotate: false
-  xy: 432, 98
-  size: 162, 156
-  orig: 162, 156
+  xy: 641, 255
+  size: 138, 98
+  orig: 138, 98
   offset: 0, 0
   index: -1
-head_2
+eye
   rotate: false
-  xy: 594, 100
+  xy: 488, 205
+  size: 64, 21
+  orig: 64, 21
+  offset: 0, 0
+  index: -1
+head
+  rotate: false
+  xy: 328, 358
   size: 160, 154
   orig: 160, 154
   offset: 0, 0
   index: -1
+head_2
+  rotate: false
+  xy: 328, 204
+  size: 160, 154
+  orig: 160, 154
+  offset: 0, 0
+  index: -1
+head_3
+  rotate: false
+  xy: 488, 358
+  size: 160, 154
+  orig: 160, 154
+  offset: 0, 0
+  index: -1
+head_eyeblow
+  rotate: false
+  xy: 328, 180
+  size: 98, 24
+  orig: 98, 24
+  offset: 0, 0
+  index: -1
 shadow
   rotate: false
-  xy: 207, 181
+  xy: 648, 439
   size: 225, 73
   orig: 225, 73
+  offset: 0, 0
+  index: -1
+sword
+  rotate: false
+  xy: 0, 180
+  size: 328, 332
+  orig: 328, 332
   offset: 0, 0
   index: -1

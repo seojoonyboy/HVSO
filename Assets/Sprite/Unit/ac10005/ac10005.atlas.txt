@@ -6,14 +6,14 @@ filter: Linear,Linear
 repeat: none
 L_leg
   rotate: true
-  xy: 697, 155
+  xy: 933, 213
   size: 41, 72
   orig: 41, 72
   offset: 0, 0
   index: -1
 R_leg
   rotate: true
-  xy: 697, 155
+  xy: 933, 213
   size: 41, 72
   orig: 41, 72
   offset: 0, 0
@@ -27,14 +27,14 @@ L_low_arm
   index: -1
 L_upper_arm
   rotate: true
-  xy: 777, 203
+  xy: 260, 59
   size: 51, 95
   orig: 51, 95
   offset: 0, 0
   index: -1
 R_arm
   rotate: true
-  xy: 602, 137
+  xy: 836, 137
   size: 59, 95
   orig: 59, 95
   offset: 0, 0
@@ -51,6 +51,13 @@ body
   xy: 155, 28
   size: 105, 106
   orig: 105, 106
+  offset: 0, 0
+  index: -1
+effect_1
+  rotate: false
+  xy: 758, 114
+  size: 78, 82
+  orig: 78, 82
   offset: 0, 0
   index: -1
 eye
@@ -74,9 +81,16 @@ helmet_2
   orig: 156, 142
   offset: 0, 0
   index: -1
+helmet_3
+  rotate: false
+  xy: 602, 112
+  size: 156, 142
+  orig: 156, 142
+  offset: 0, 0
+  index: -1
 shadow
   rotate: false
-  xy: 602, 196
+  xy: 758, 196
   size: 175, 58
   orig: 175, 58
   offset: 0, 0

@@ -10,15 +10,14 @@ namespace SkillModules {
             TextMeshPro textPro = transform.Find("Status").GetComponent<TextMeshPro>();
             textPro.gameObject.SetActive(true);
             textPro.text = "독성";
-            //PlayMangement.instance.AddSkillIcon("poison", transform);
-            PlayMangement.instance.AddSkillAtkProperty("poison", transform);
+            gameObject.GetComponent<PlaceMonster>().AddAttackProperty("poison");
+            
         }
 
         void OnDestroy() {
             TextMeshPro textPro = transform.Find("Status").GetComponent<TextMeshPro>();
             textPro.gameObject.SetActive(false);
-            //PlayMangement.instance.DisabelSkillIcon("poison", transform);
-            //PlayMangement.instance.DisablePropertyIcon("poison", transform);
-        }
+            gameObject.GetComponent<PlaceMonster>().ChangeAttackProperty();
+        } 
     }
 }

@@ -69,8 +69,9 @@ public class UnitSpine : MonoBehaviour
         spineAnimationState = skeletonAnimation.AnimationState;
         spineAnimationState.Event += AnimationEvent;
         skeleton = skeletonAnimation.Skeleton;
+        //skeleton.SetToSetupPose();
 
-        if(arrow != null && transform.parent.GetComponent<PlaceMonster>().isPlayer == true) {
+        if (arrow != null && transform.parent.GetComponent<PlaceMonster>().isPlayer == true) {
             if (rangeUpAttackName != "")
                 attackAnimationName = rangeUpAttackName;
             else
@@ -84,7 +85,7 @@ public class UnitSpine : MonoBehaviour
         }
     }
 
-    public virtual void Appear() {
+    public virtual void Appear() {        
         TrackEntry entry;
         entry = spineAnimationState.SetAnimation(0, appearAnimationName, false);
         currentAnimationName = appearAnimationName;

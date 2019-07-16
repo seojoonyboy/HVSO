@@ -1,89 +1,124 @@
 
 ac10010.png
-size: 1024,256
+size: 1024,512
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 L_arm
-  rotate: true
-  xy: 237, 0
+  rotate: false
+  xy: 629, 200
   size: 97, 153
   orig: 97, 153
   offset: 0, 0
   index: -1
 L_attack_arm
   rotate: false
-  xy: 562, 74
+  xy: 468, 246
   size: 161, 107
   orig: 161, 107
   offset: 0, 0
   index: -1
+L_attack_arm_effect_1
+  rotate: true
+  xy: 876, 336
+  size: 173, 119
+  orig: 173, 119
+  offset: 0, 0
+  index: -1
 L_leg
-  rotate: false
-  xy: 946, 162
+  rotate: true
+  xy: 198, 66
   size: 72, 93
   orig: 72, 93
   offset: 0, 0
   index: -1
 R_arm
-  rotate: true
-  xy: 400, 14
+  rotate: false
+  xy: 726, 215
   size: 85, 152
   orig: 85, 152
   offset: 0, 0
   index: -1
 R_leg
-  rotate: true
-  xy: 552, 3
+  rotate: false
+  xy: 277, 187
   size: 71, 92
   orig: 71, 92
   offset: 0, 0
   index: -1
 body
   rotate: false
-  xy: 793, 113
+  xy: 723, 367
   size: 153, 142
   orig: 153, 142
   offset: 0, 0
   index: -1
+effcet_2
+  rotate: false
+  xy: 0, 62
+  size: 198, 198
+  orig: 198, 198
+  offset: 0, 0
+  index: -1
+eye
+  rotate: true
+  xy: 995, 442
+  size: 67, 25
+  orig: 67, 25
+  offset: 0, 0
+  index: -1
 hand_effect(1)
   rotate: false
-  xy: 723, 119
+  xy: 0, 0
   size: 70, 62
   orig: 70, 62
   offset: 0, 0
   index: -1
 hand_effect(2)
-  rotate: true
-  xy: 723, 34
+  rotate: false
+  xy: 198, 138
   size: 79, 122
   orig: 79, 122
   offset: 0, 0
   index: -1
 head
   rotate: false
-  xy: 237, 97
-  size: 163, 158
-  orig: 163, 158
-  offset: 0, 0
-  index: -1
-head_2
-  rotate: false
-  xy: 400, 99
+  xy: 237, 353
   size: 162, 156
   orig: 162, 156
   offset: 0, 0
   index: -1
+head_2
+  rotate: false
+  xy: 399, 353
+  size: 162, 156
+  orig: 162, 156
+  offset: 0, 0
+  index: -1
+head_3
+  rotate: false
+  xy: 561, 353
+  size: 162, 156
+  orig: 162, 156
+  offset: 0, 0
+  index: -1
+head_gear
+  rotate: true
+  xy: 811, 288
+  size: 79, 30
+  orig: 79, 30
+  offset: 0, 0
+  index: -1
 magic_effect
   rotate: false
-  xy: 0, 6
+  xy: 0, 260
   size: 237, 249
   orig: 237, 249
   offset: 0, 0
   index: -1
 shadow
   rotate: false
-  xy: 562, 181
+  xy: 237, 279
   size: 231, 74
   orig: 231, 74
   offset: 0, 0
