@@ -23,7 +23,7 @@ public class DeckHandler : MonoBehaviour
         else isHuman = false;
         Transform deckInfo = transform.Find("DeckInfo");
         deckInfo.gameObject.SetActive(true);
-        deckInfo.Find("Deck/Portrait").GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[deck._hero.id];
+        deckInfo.Find("Deck/Portrait").GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[deck.heroId];
         deckInfo.Find("Deck/Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = deck.name;
         deckInfo.Find("Deck/Info/Text").GetComponent<TMPro.TextMeshProUGUI>().text = deck.cardTotalCount.ToString() + "/40";
     }
