@@ -417,7 +417,9 @@ public partial class AccountManager {
         }
     }
 
-    public void AuthUser(OnRequestFinishedDelegate callback = null) {
+    public async void AuthUser(OnRequestFinishedDelegate callback = null) {
+        OTPCode otp = new OTPCode();
+        while(!otp.isDone) await System.Threading.Tasks.Task.Delay(100);
         StringBuilder url = new StringBuilder();
 
         url
@@ -425,7 +427,7 @@ public partial class AccountManager {
             .Append("api/user/auth");
 
         HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
-        TokenForm form = new TokenForm(DEVICEID);
+        TokenForm form = new TokenForm(DEVICEID, otp.computeTotp);
         request.MethodType = HTTPMethods.Post;
         request.RawData = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(form));
         if (callback == null) callback = AuthUserCallback;
@@ -446,9 +448,11 @@ public partial class AccountManager {
 
     public class TokenForm {
         public string deviceId;
+        public int pass;
 
-        public TokenForm(string deviceId) {
+        public TokenForm(string deviceId, int pass) {
             this.deviceId = deviceId;
+            this.pass = pass;
         }
     }
 }
