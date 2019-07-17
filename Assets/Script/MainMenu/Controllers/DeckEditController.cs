@@ -208,15 +208,15 @@ public class DeckEditController : MonoBehaviour
         editing = false;
         InitCanvas();
         Transform heroCards;
-        Hero heroData = null;
+        HeroInventory heroData = null;
         this.isHuman = isHuman;
         deckNamePanel.transform.Find("NameTemplate").GetComponent<InputField>().text = "";
         transform.Find("HeroPortrait").GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[heroId + "_button"];
         if (isHuman) {
             heroCards = transform.Find("HeroCards/Human");
             transform.Find("HeroCards/Orc").gameObject.SetActive(false);
-            foreach(dataModules.Hero data in AccountManager.Instance.humanDecks.heros) {
-                if (data.id == heroId) {
+            foreach(dataModules.Templates data in AccountManager.Instance.humanTemplates) {
+                if (data.heroId == heroId) {
                     heroData = data;
                     break;
                 }
@@ -225,7 +225,7 @@ public class DeckEditController : MonoBehaviour
         else {
             heroCards = transform.Find("HeroCards/Orc");
             transform.Find("HeroCards/Human").gameObject.SetActive(false);
-            foreach (dataModules.Hero data in AccountManager.Instance.orcDecks.heros) {
+            foreach (dataModules.Templates data in AccountManager.Instance.orcTemplates) {
                 if (data.id == heroId) {
                     heroData = data;
                     break;
@@ -237,7 +237,7 @@ public class DeckEditController : MonoBehaviour
         transform.Find("Class/Class_1").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["class_" + heroData.heroClasses[0]];
         transform.Find("Class/Class_2").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["class_" + heroData.heroClasses[1]];
         heroCards.gameObject.SetActive(true);
-        for(int i = 0; i < heroData.heroCards.Count; i++)
+        for(int i = 0; i < heroData.heroCards.Length; i++)
             heroCards.GetChild(i).GetComponent<MenuCardHandler>().DrawCard(heroData.heroCards[i].cardId, isHuman);
         SetDeckEditCards(isHuman);
     }
@@ -275,7 +275,7 @@ public class DeckEditController : MonoBehaviour
         editing = true;
         InitCanvas();
         Transform heroCards;
-        Hero heroData = null;
+        HeroInventory heroData = null;
         deckID = loadedDeck.id;
         deckNamePanel.transform.Find("NameTemplate").GetComponent<InputField>().text = loadedDeck.name;
         transform.Find("HeroPortrait").GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[loadedDeck.heroId + "_button"];
@@ -283,8 +283,8 @@ public class DeckEditController : MonoBehaviour
             this.isHuman = true;
             heroCards = transform.Find("HeroCards/Human");
             transform.Find("HeroCards/Orc").gameObject.SetActive(false);
-            foreach (dataModules.Hero data in AccountManager.Instance.humanDecks.heros) {
-                if (data.id == loadedDeck.heroId) {
+            foreach (dataModules.HeroInventory data in AccountManager.Instance.humanTemplates) {
+                if (data.heroId == loadedDeck.heroId) {
                     heroData = data;
                     break;
                 }
@@ -294,8 +294,8 @@ public class DeckEditController : MonoBehaviour
             this.isHuman = false;
             heroCards = transform.Find("HeroCards/Orc");
             transform.Find("HeroCards/Human").gameObject.SetActive(false);
-            foreach (dataModules.Hero data in AccountManager.Instance.orcDecks.heros) {
-                if (data.id == loadedDeck.heroId) {
+            foreach (dataModules.HeroInventory data in AccountManager.Instance.orcTemplates) {
+                if (data.heroId == loadedDeck.heroId) {
                     heroData = data;
                     break;
                 }
@@ -306,7 +306,7 @@ public class DeckEditController : MonoBehaviour
         transform.Find("Class/Class_1").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["class_" + heroData.heroClasses[0]];
         transform.Find("Class/Class_2").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["class_" + heroData.heroClasses[1]];
         heroCards.gameObject.SetActive(true);
-        for (int i = 0; i < heroData.heroCards.Count; i++)
+        for (int i = 0; i < heroData.heroCards.Length; i++)
             heroCards.GetChild(i).GetComponent<MenuCardHandler>().DrawCard(heroData.heroCards[i].cardId, isHuman);
         SetCustomDeckEditCards(loadedDeck);
     }

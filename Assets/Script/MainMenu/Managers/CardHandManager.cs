@@ -59,7 +59,7 @@ public class CardHandManager : MonoBehaviour {
         }
     }
 
-    //머리건 종료 버튼 클릭 함수
+    //멀리건 종료 버튼 클릭 함수
     public void FirstDrawCardChange() {
         foreach (GameObject cards in firstDrawList) {
             cards.transform.Find("ChangeButton").gameObject.SetActive(false);
@@ -156,7 +156,7 @@ public class CardHandManager : MonoBehaviour {
     }
 
     /// <summary>
-    /// 2개 이상의 카드 핸드에 추가
+    /// 2장 이상의 카드 핸드에 추가
     /// </summary>
     /// <param name="cardData"></param>
     /// <returns></returns>
@@ -290,7 +290,7 @@ public class CardHandManager : MonoBehaviour {
     }
 
     /// <summary>
-    /// 핸드에 카드 추가되는 애니메이션
+    /// 2장 이상의 카드가 핸드에 카드 추가되는 애니메이션
     /// </summary>
     /// <param name="card"></param> 카드 오브젝트
     /// <param name="pos"></param>

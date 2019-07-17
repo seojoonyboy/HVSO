@@ -68,7 +68,7 @@ public class CardDictionaryManager : MonoBehaviour {
         int count = 0;
 
         if (isHumanDictionary) {
-            foreach (dataModules.Hero card in AccountManager.Instance.humanDecks.heros) {
+            foreach (dataModules.Templates card in AccountManager.Instance.humanTemplates) {
                 heroCards.GetChild(count).GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[card.id + "_button"];
                 heroCards.GetChild(count).Find("Empty").gameObject.SetActive(false);
                 heroCards.GetChild(count).Find("Disable").gameObject.SetActive(false);
@@ -77,7 +77,7 @@ public class CardDictionaryManager : MonoBehaviour {
             }
         }
         else {
-            foreach (dataModules.Hero card in AccountManager.Instance.orcDecks.heros) {
+            foreach (dataModules.Templates card in AccountManager.Instance.orcTemplates) {
 
                 heroCards.GetChild(count).GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[card.id + "_button"];
                 heroCards.GetChild(count).Find("Empty").gameObject.SetActive(false);
@@ -97,18 +97,18 @@ public class CardDictionaryManager : MonoBehaviour {
     }
 
     public void SetHeroInfoWindow(int index) {
-        dataModules.Hero hero;
+        dataModules.Templates hero;
         Transform heroCards;
         if (isHumanDictionary) {
             heroInfoWindow.Find("HeroCards/OrcHeroCard").gameObject.SetActive(false);
             heroCards = heroInfoWindow.Find("HeroCards/HumanHeroCard");
-            hero = AccountManager.Instance.humanDecks.heros[index];
+            hero = AccountManager.Instance.humanTemplates[index];
             heroInfoWindow.Find("Ribon").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["hero_name_human_superrare"];
         }
         else {
             heroInfoWindow.Find("HeroCards/HumanHeroCard").gameObject.SetActive(false);
             heroCards = heroInfoWindow.Find("HeroCards/OrcHeroCard");
-            hero = AccountManager.Instance.orcDecks.heros[index];
+            hero = AccountManager.Instance.orcTemplates[index];
             heroInfoWindow.Find("Ribon").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["hero_name_orc_superrare"];
         }
         heroInfoWindow.Find("BackGroundImage/Human").gameObject.SetActive(isHumanDictionary);
@@ -123,7 +123,7 @@ public class CardDictionaryManager : MonoBehaviour {
         heroInfoWindow.Find("Class").GetChild(0).GetChild(0).GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["class_icon_" + hero.heroClasses[0]];
         heroInfoWindow.Find("Class").GetChild(1).GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["class_" + hero.heroClasses[1]];
         heroInfoWindow.Find("Class").GetChild(1).GetChild(0).GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["class_icon_" + hero.heroClasses[1]];
-        for (int i = 0; i < hero.heroCards.Count; i++) {
+        for (int i = 0; i < hero.heroCards.Length; i++) {
             heroCards.GetChild(i).GetComponent<MenuCardHandler>().DrawCard(hero.heroCards[i].cardId, isHumanDictionary);
         }
         heroCards.gameObject.SetActive(true);
