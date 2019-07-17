@@ -39,8 +39,4 @@ public class LoginController : MonoBehaviour {
             AccountManager.Instance.OnSignUpModal();
         }
     }
-
-    private void OccurErrorModal(long errorCode) {
-        Modal.instantiate("네트워크 오류가 발생하였습니다. 다시 시도해 주세요.", Modal.Type.CHECK);
-    }
 }
