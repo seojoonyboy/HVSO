@@ -94,16 +94,14 @@ public class RaceTypeToggleHandler : MonoBehaviour {
         AccountManager accountManager = AccountManager.Instance;
         switch (type) {
             case BattleReadySceneController.RaceType.HUMAN:
-                totalDecks.AddRange(accountManager.humanDecks.basicDecks);
-                totalDecks.AddRange(accountManager.humanDecks.customDecks);
+                totalDecks.AddRange(accountManager.humanDecks);
                 deckPrefab = humanDeckPrefab;
 
                 pageNum = TotalDeckPages(ref totalDecks);
                 MaxPageNum = pageNum;
                 break;
             case BattleReadySceneController.RaceType.ORC:
-                totalDecks.AddRange(accountManager.orcDecks.basicDecks);
-                totalDecks.AddRange(accountManager.orcDecks.customDecks);
+                totalDecks.AddRange(accountManager.orcDecks);
                 deckPrefab = orcDeckPrefab;
 
                 pageNum = TotalDeckPages(ref totalDecks);
