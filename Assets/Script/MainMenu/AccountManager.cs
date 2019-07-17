@@ -61,7 +61,7 @@ public partial class AccountManager : Singleton<AccountManager> {
     }
 
     public void SetCardData() {
-        foreach (var card in myCards) {
+        foreach (CardInventory card in myCards) {
             if (!cardPackage.data.ContainsKey(card.cardId)) {
                 CardData data = new CardData();
                 data.cardId = card.cardId;
@@ -90,7 +90,7 @@ public partial class AccountManager : Singleton<AccountManager> {
                 cardPackage.data.Add(card.cardId, data);
             }
         }
-        foreach (var cards in myHeroInventories) {
+        foreach (KeyValuePair<string, HeroInventory> cards in myHeroInventories) {
             foreach(var card in cards.Value.heroCards) {
                 if (!cardPackage.data.ContainsKey(card.cardId)) {
                     CardData data = new CardData();
@@ -380,7 +380,7 @@ public partial class AccountManager {
             .Append(networkManager.baseUrl)
             .Append("api/cards");
 
-        BestHTTP.HTTPRequest request = new BestHTTP.HTTPRequest(
+        HTTPRequest request = new HTTPRequest(
             new Uri(sb.ToString())
         );
 
@@ -400,22 +400,14 @@ public partial class AccountManager {
 public partial class AccountManager {
     string tokenId;
     public string TokenId {
-        get {
-            return tokenId;
-        }
+        get => tokenId;
         set {
             tokenId = value;
-            tokenFormat = string.Format("Bearer {0}", TokenId);
-            Logger.Log(TokenId);
+            TokenFormat = string.Format("Bearer {0}", TokenId);
+            //Logger.Log(TokenId);
         }
     }
-
-    string tokenFormat;
-    public string TokenFormat {
-        get {
-            return tokenFormat;
-        }
-    }
+    public string TokenFormat { get; private set; }
 
     public void AuthUser(OnRequestFinishedDelegate callback = null) {
         StringBuilder url = new StringBuilder();
@@ -441,7 +433,7 @@ public partial class AccountManager {
     public void SetUserToken(HTTPResponse response) {
         var result = dataModules.JsonReader.Read<Token>(response.DataAsText);
         TokenId = result.token;
-        Logger.Log("Token 재발행");
+        //Logger.Log("Token 재발행");
     }
 
     public class TokenForm {
