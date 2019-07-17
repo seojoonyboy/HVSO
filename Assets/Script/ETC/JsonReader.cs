@@ -98,7 +98,7 @@ namespace dataModules {
         public string[] attributes;
         public string[] cardClasses;
         public string[] cardCategories;
-        public int id;
+        public string id;
         public string rarelity;
         public string camp;
         public string type;

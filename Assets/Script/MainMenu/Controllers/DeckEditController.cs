@@ -24,7 +24,7 @@ public class DeckEditController : MonoBehaviour
     Dictionary<string, GameObject> setCardList;
     List<NetworkManager.DeckItem> items;
 
-    public int deckID = -1;
+    public string deckID = null;
     bool isHuman;
     int setCardNum = 0;
     int haveCardNum = 0;
@@ -271,20 +271,20 @@ public class DeckEditController : MonoBehaviour
         RefreshLine();
     }
 
-    public void SetCustumDeckEdit(dataModules.Deck lodedDeck) {
+    public void SetCustumDeckEdit(dataModules.Deck loadedDeck) {
         editing = true;
         InitCanvas();
         Transform heroCards;
         Hero heroData = null;
-        deckID = int.Parse(lodedDeck.id);
-        deckNamePanel.transform.Find("NameTemplate").GetComponent<InputField>().text = lodedDeck.name;
-        transform.Find("HeroPortrait").GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[lodedDeck.heroId + "_button"];
-        if (lodedDeck.camp == "human") {
+        deckID = loadedDeck.id;
+        deckNamePanel.transform.Find("NameTemplate").GetComponent<InputField>().text = loadedDeck.name;
+        transform.Find("HeroPortrait").GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[loadedDeck.heroId + "_button"];
+        if (loadedDeck.camp == "human") {
             this.isHuman = true;
             heroCards = transform.Find("HeroCards/Human");
             transform.Find("HeroCards/Orc").gameObject.SetActive(false);
             foreach (dataModules.Hero data in AccountManager.Instance.humanDecks.heros) {
-                if (data.id == lodedDeck.heroId) {
+                if (data.id == loadedDeck.heroId) {
                     heroData = data;
                     break;
                 }
@@ -295,7 +295,7 @@ public class DeckEditController : MonoBehaviour
             heroCards = transform.Find("HeroCards/Orc");
             transform.Find("HeroCards/Human").gameObject.SetActive(false);
             foreach (dataModules.Hero data in AccountManager.Instance.orcDecks.heros) {
-                if (data.id == lodedDeck.heroId) {
+                if (data.id == loadedDeck.heroId) {
                     heroData = data;
                     break;
                 }
@@ -308,7 +308,7 @@ public class DeckEditController : MonoBehaviour
         heroCards.gameObject.SetActive(true);
         for (int i = 0; i < heroData.heroCards.Count; i++)
             heroCards.GetChild(i).GetComponent<MenuCardHandler>().DrawCard(heroData.heroCards[i].cardId, isHuman);
-        SetCustomDeckEditCards(lodedDeck);
+        SetCustomDeckEditCards(loadedDeck);
     }
 
     private void SetCustomDeckEditCards(dataModules.Deck lodedDeck) {
@@ -370,7 +370,7 @@ public class DeckEditController : MonoBehaviour
     /// </summary>
     /// <param name="data"></param>
     /// <param name="deckId"></param>
-    public void RequestModifyDeck(NetworkManager.ModifyDeckReqFormat formatData, int deckId) {
+    public void RequestModifyDeck(NetworkManager.ModifyDeckReqFormat formatData, string deckId) {
         var fields = new List<NetworkManager.ModifyDeckReqArgs>();
         NetworkManager.ModifyDeckReqArgs field = new NetworkManager.ModifyDeckReqArgs();
         NetworkManager.DeckItem data;

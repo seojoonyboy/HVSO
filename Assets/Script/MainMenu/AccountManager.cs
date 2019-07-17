@@ -183,8 +183,7 @@ public partial class AccountManager {
             new Uri(url.ToString())
         );
         request.MethodType = HTTPMethods.Get;
-        string tokenSendFormat = string.Format("Bearer {0}", TokenId);
-        request.AddHeader("authorization", tokenSendFormat);
+        request.AddHeader("authorization", TokenFormat);
         networkManager.Request(request, callback, "유저 정보를 불러오는중...");
     }
 
@@ -265,14 +264,14 @@ public partial class AccountManager {
         StringBuilder sb = new StringBuilder();
         sb
             .Append(networkManager.baseUrl)
-            .Append("api/users/")
-            .Append(DEVICEID)
-            .Append("/decks");
+            .Append("api/decks");
 
-        BestHTTP.HTTPRequest request = new BestHTTP.HTTPRequest(
+        HTTPRequest request = new HTTPRequest(
             new Uri(sb.ToString())
         );
         request.MethodType = BestHTTP.HTTPMethods.Post;
+        request.AddHeader("authorization", TokenFormat);
+
         format.items = format.items.ToArray();
 
         //var tmp = JsonConvert.SerializeObject(format);
@@ -282,27 +281,35 @@ public partial class AccountManager {
     }
 
     private void OnReceived(HTTPRequest originalRequest, HTTPResponse response) {
-        var result = response.DataAsText;
-        Logger.Log("On Received");
+        if (response.IsSuccess) {
+            if(response.StatusCode == 200 || response.StatusCode == 304) {
+                var result = response.DataAsText;
+            }
+        }
+        if (response.DataAsText.Contains("invalid_token")) {
+            Logger.LogError("invalid_token");
+            AuthUser();
+            networkManager.Request(originalRequest, OnReceived);
+        }
     }
 
     /// <summary>
     /// 덱 제거 요청
     /// </summary>
     /// <param name="deckId">Deck Id</param>
-    public void RequestDeckRemove(int deckId, OnRequestFinishedDelegate callback = null) {
+    public void RequestDeckRemove(string deckId, OnRequestFinishedDelegate callback = null) {
         StringBuilder sb = new StringBuilder();
         sb
             .Append(networkManager.baseUrl)
-            .Append("api/users/")
-            .Append(DEVICEID)
-            .Append("/decks/")
-            .Append(deckId.ToString());
+            .Append("api/decks/")
+            .Append(deckId);
 
-        BestHTTP.HTTPRequest request = new BestHTTP.HTTPRequest(
+        HTTPRequest request = new HTTPRequest(
             new Uri(sb.ToString())
         );
         request.MethodType = BestHTTP.HTTPMethods.Delete;
+        request.AddHeader("authorization", TokenFormat);
+
         if (callback != null) request.Callback = callback;
         networkManager.Request(request, OnReceived, "덱 삭제를 요청하는 중...");
     }
@@ -311,15 +318,13 @@ public partial class AccountManager {
     /// 덱 수정 요청
     /// </summary>
     /// <param name="data">양식 작성</param>
-    public void RequestDeckModify(NetworkManager.ModifyDeckReqFormat data, int deckId, OnRequestFinishedDelegate callback = null) {
+    public void RequestDeckModify(NetworkManager.ModifyDeckReqFormat data, string deckId, OnRequestFinishedDelegate callback = null) {
         var pairs = data.parms;
 
         StringBuilder sb = new StringBuilder();
         sb
             .Append(networkManager.baseUrl)
-            .Append("api/users/")
-            .Append(DEVICEID)
-            .Append("/decks/")
+            .Append("api/decks/")
             .Append(deckId);
 
         HTTPRequest request = new HTTPRequest(
@@ -340,6 +345,7 @@ public partial class AccountManager {
             }
         }
         request.RawData =  Encoding.UTF8.GetBytes(json.ToString());
+        request.AddHeader("authorization", TokenFormat);
         if (callback != null) request.Callback = callback;
         networkManager.Request(request, OnReceived, "덱 수정 요청을 전달하는중...");
     }
@@ -352,7 +358,7 @@ public partial class AccountManager {
         field.value = "Modified";
         form.parms.Add(field);
 
-        RequestDeckModify(form, 5);
+        //RequestDeckModify(form, 5);
     }
 
     public void AddDummyCustomDeck() {
@@ -418,6 +424,7 @@ public partial class AccountManager {
         set {
             tokenId = value;
             tokenFormat = string.Format("Bearer {0}", TokenId);
+            Logger.Log(TokenId);
         }
     }
 
@@ -452,6 +459,7 @@ public partial class AccountManager {
     public void SetUserToken(HTTPResponse response) {
         var result = dataModules.JsonReader.Read<Token>(response.DataAsText);
         TokenId = result.token;
+        Logger.Log("Token 재발행");
     }
 
     public class TokenForm {

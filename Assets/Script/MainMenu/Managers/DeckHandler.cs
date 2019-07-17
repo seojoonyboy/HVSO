@@ -64,7 +64,7 @@ public class DeckHandler : MonoBehaviour
 
     public void DeleteButton() {
         if (AccountManager.Instance == null) return;
-        AccountManager.Instance.RequestDeckRemove(int.Parse(DECKID), OnRemoved);
+        AccountManager.Instance.RequestDeckRemove(DECKID, OnRemoved);
         transform.Find("DeckInfo/EditButtons").gameObject.SetActive(false);
         Transform deckInfo = transform.Find("DeckInfo");
         deckInfo.gameObject.SetActive(false);
