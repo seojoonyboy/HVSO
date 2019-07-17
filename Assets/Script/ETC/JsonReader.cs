@@ -61,6 +61,10 @@ namespace dataModules {
         public List<HeroCard> heroCards;
     }
 
+    public class Templates : HeroInventory {
+        public List<Deck> templates;
+    }
+
     public class Deck {
         //public bool userHas;
         public int cardTotalCount;
@@ -71,6 +75,10 @@ namespace dataModules {
         public string heroId;
         public List<Item> items;
         public bool deckValidate;
+    }
+
+    public class Template {
+
     }
 
     public class HeroCard : BaseCard {

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using BestHTTP;
 using dataModules;
 using UnityEngine;
@@ -19,6 +20,8 @@ public class MyDecksLoader : MonoBehaviour {
     public void Load() {
         accountManager.LoadAllCards();
         accountManager.RequestMyDecks(OnDeckLoadFinished);
+        accountManager.RequestHumanTemplates(OnOrcTemplateLoadFinished);
+        accountManager.RequestOrcTemplates(OnHumanTemplateLoadFinished);
     }
 
     private void OnDeckLoadFinished(HTTPRequest originalRequest, HTTPResponse response) {
@@ -32,6 +35,24 @@ public class MyDecksLoader : MonoBehaviour {
         }
         else {
             Logger.Log("Something is wrong");
+        }
+    }
+
+    private void OnOrcTemplateLoadFinished(HTTPRequest originalRequest, HTTPResponse response) {
+        if (response.IsSuccess) {
+            if(response.StatusCode == 200 || response.StatusCode == 304) {
+                var result = JsonReader.Read<List<Templates>>(response.DataAsText);
+                accountManager.orcTemplates = result;
+            }
+        }
+    }
+
+    private void OnHumanTemplateLoadFinished(HTTPRequest originalRequest, HTTPResponse response) {
+        if (response.IsSuccess) {
+            if (response.StatusCode == 200 || response.StatusCode == 304) {
+                var result = JsonReader.Read<List<Templates>>(response.DataAsText);
+                accountManager.humanTemplates = result;
+            }
         }
     }
 }

@@ -22,6 +22,10 @@ public partial class AccountManager : Singleton<AccountManager> {
 
     public List<dataModules.Deck> humanDecks;
     public List<dataModules.Deck> orcDecks;
+
+    public List<Templates> humanTemplates;
+    public List<Templates> orcTemplates;
+
     public List<CollectionCard> allCards { get; private set; }
     public Dictionary<string, CollectionCard> allCardsDic { get; private set; }
 
@@ -343,6 +347,32 @@ public partial class AccountManager {
         request.AddHeader("authorization", TokenFormat);
         if (callback != null) request.Callback = callback;
         networkManager.Request(request, OnReceived, "덱 수정 요청을 전달하는중...");
+    }
+
+    public void RequestHumanTemplates(OnRequestFinishedDelegate callback = null) {
+        StringBuilder sb = new StringBuilder();
+        sb
+            .Append(networkManager.baseUrl)
+            .Append("api/decks/templates/human");
+
+        HTTPRequest request = new HTTPRequest(new Uri(sb.ToString()));
+        request.MethodType = HTTPMethods.Get;
+        request.AddHeader("authorization", TokenFormat);
+
+        networkManager.Request(request, callback, "Human 템플릿을 불러오는중...");
+    }
+
+    public void RequestOrcTemplates(OnRequestFinishedDelegate callback = null) {
+        StringBuilder sb = new StringBuilder();
+        sb
+            .Append(networkManager.baseUrl)
+            .Append("api/decks/templates/orc");
+
+        HTTPRequest request = new HTTPRequest(new Uri(sb.ToString()));
+        request.MethodType = HTTPMethods.Get;
+        request.AddHeader("authorization", TokenFormat);
+
+        networkManager.Request(request, callback, "Human 템플릿을 불러오는중...");
     }
 
     private void TestModifyDeck() {
