@@ -20,8 +20,8 @@ public partial class AccountManager : Singleton<AccountManager> {
     public UserClassInput userData { get; private set; }
     public CardInventory[] myCards { get; private set; }
 
-    public HumanDecks humanDecks;
-    public OrcDecks orcDecks;
+    public List<dataModules.Deck> humanDecks;
+    public List<dataModules.Deck> orcDecks;
     public List<CollectionCard> allCards { get; private set; }
     public Dictionary<string, CollectionCard> allCardsDic { get; private set; }
 
@@ -357,21 +357,21 @@ public partial class AccountManager {
     }
 
     public void AddDummyCustomDeck() {
-        NetworkManager.AddCustomDeckReqFormat formatData = new NetworkManager.AddCustomDeckReqFormat();
-        formatData.name = "Test1000";
-        formatData.heroId = "h10001";   //수비 대장 제로드
-        formatData.camp = "human";
-        List<NetworkManager.DeckItem> items = new List<NetworkManager.DeckItem>();
-        var deck = humanDecks.basicDecks[0];
-        foreach (Item item in deck.items) {
-            NetworkManager.DeckItem _deckItem = new NetworkManager.DeckItem();
-            _deckItem.cardCount = item.cardCount;
-            _deckItem.cardId = item.cardId;
-            items.Add(_deckItem);
-        }
-        formatData.items = items.ToArray();
+        //NetworkManager.AddCustomDeckReqFormat formatData = new NetworkManager.AddCustomDeckReqFormat();
+        //formatData.name = "Test1000";
+        //formatData.heroId = "h10001";   //수비 대장 제로드
+        //formatData.camp = "human";
+        //List<NetworkManager.DeckItem> items = new List<NetworkManager.DeckItem>();
+        //var deck = humanDecks.basicDecks[0];
+        //foreach (Item item in deck.items) {
+        //    NetworkManager.DeckItem _deckItem = new NetworkManager.DeckItem();
+        //    _deckItem.cardCount = item.cardCount;
+        //    _deckItem.cardId = item.cardId;
+        //    items.Add(_deckItem);
+        //}
+        //formatData.items = items.ToArray();
 
-        RequestDeckMake(formatData);
+        //RequestDeckMake(formatData);
     }
 
     public void LoadAllCards() {

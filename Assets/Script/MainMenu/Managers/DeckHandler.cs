@@ -40,7 +40,7 @@ public class DeckHandler : MonoBehaviour
     public void EditCustomDeck() {
         dataModules.Deck customDeck = null;
         if (isHuman) {
-            foreach (dataModules.Deck deck in AccountManager.Instance.humanDecks.customDecks) {
+            foreach (dataModules.Deck deck in AccountManager.Instance.humanDecks) {
                 if (deckID == deck.id) {
                     customDeck = deck;
                     break;
@@ -48,7 +48,7 @@ public class DeckHandler : MonoBehaviour
             }
         }
         else {
-            foreach (dataModules.Deck deck in AccountManager.Instance.orcDecks.customDecks) {
+            foreach (dataModules.Deck deck in AccountManager.Instance.orcDecks) {
                 if (deckID == deck.id) {
                     customDeck = deck;
                     break;

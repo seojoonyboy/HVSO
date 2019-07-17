@@ -49,20 +49,8 @@ namespace dataModules {
     }
 
     public class Decks {
-        public OrcDecks orc;
-        public HumanDecks human;
-    }
-
-    public class HumanDecks {
-        public List<Hero> heros;
-        public List<Deck> basicDecks;
-        public List<Deck> customDecks;
-    }
-
-    public class OrcDecks {
-        public List<Hero> heros;
-        public List<Deck> basicDecks;
-        public List<Deck> customDecks;
+        public List<Deck> orc;
+        public List<Deck> human;
     }
 
     public class Hero {
