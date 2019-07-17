@@ -98,6 +98,11 @@ namespace BestHTTP
         #endregion
 
         #region Properties
+        /// <summary>
+        /// Feedbackloop custom message
+        /// </summary>
+        /// <value></value>
+        public string LoadingMessage { get; set; }
 
         /// <summary>
         /// The original request's Uri.
