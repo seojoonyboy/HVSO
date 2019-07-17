@@ -151,7 +151,25 @@ public partial class NetworkManager {
     }
 
     private void CheckCondition(HTTPRequest request, HTTPResponse response) {
-        if(response.DataAsText.Contains("invalid_token")) {
+        //timeout에 따른 재요청
+        if(response == null) {
+            FinishRequest(request, response);
+
+            HTTPRequest re_request = new HTTPRequest(request.Uri);
+            re_request.MethodType = request.MethodType;
+            re_request.RedirectCount = ++request.RedirectCount;
+            re_request.AddHeader("authorization", AccountManager.Instance.TokenFormat);
+
+            request.Callback -= CheckCondition;
+            request.Callback -= FinishRequest;
+
+            Request(re_request, request.Callback, re_request.LoadingMessage);
+
+            dequeueing = false;
+            throw new ArgumentOutOfRangeException("TimeOut Request", "요청대기시간이 초과되었습니다.");
+        }
+        //token이 존재하지 않아 token 갱신 이후 재요청
+        else if(response.DataAsText.Contains("invalid_token")) {
             FinishRequest(request, response);
             AccountManager.Instance.AuthUser((a, b) => {
                 AccountManager.Instance.AuthUserCallback(a, b);

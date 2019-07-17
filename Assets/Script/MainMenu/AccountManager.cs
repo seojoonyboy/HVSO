@@ -286,11 +286,6 @@ public partial class AccountManager {
                 var result = response.DataAsText;
             }
         }
-        if (response.DataAsText.Contains("invalid_token")) {
-            Logger.LogError("invalid_token");
-            AuthUser();
-            networkManager.Request(originalRequest, OnReceived);
-        }
     }
 
     /// <summary>
@@ -399,19 +394,6 @@ public partial class AccountManager {
             allCards = result;
             allCardsDic = allCards.ToDictionary(x => x.id, x => x);
         }
-        else {
-            if (originalRequest.RedirectCount == networkManager.MAX_REDIRECTCOUNT) {
-                Modal.instantiate("네트워크가 불안정합니다. 잠시 후 재접속해주세요.", Modal.Type.CHECK);
-            }
-            else {
-                originalRequest.RedirectCount++;
-                networkManager.Request(
-                    originalRequest,
-                    OnReceivedLoadAllCards,
-                    "모든 카드 정보를 불러오는중... 재요청(" + originalRequest.RedirectCount + "회)"
-                );
-            }
-        }
     }
 }
 
@@ -453,6 +435,7 @@ public partial class AccountManager {
 
     public void AuthUserCallback(HTTPRequest originalRequest, HTTPResponse response) {
         if (response.IsSuccess) SetUserToken(response);
+        else Logger.LogError("Token을 요청하는 과정에서 문제가 발생하였음");
     }
 
     public void SetUserToken(HTTPResponse response) {

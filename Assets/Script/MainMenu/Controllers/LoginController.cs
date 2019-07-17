@@ -28,8 +28,6 @@ public class LoginController : MonoBehaviour {
                 Logger.Log(response.DataAsText);
             }
         }
-        //Timeout
-        else { }
     }
 
     private void OnRequestUserInfoCallback(HTTPRequest originalRequest, HTTPResponse response) {
