@@ -87,7 +87,7 @@ namespace SkillModules {
 
         public override bool IsConditionSatisfied() {
             var observer = PlayMangement.instance.UnitsObserver;
-
+            PlayerController opponent = mySkillHandler.isPlayer ? PlayMangement.instance.enemyPlayer : PlayMangement.instance.player;
             if(!ArgsExist()) return false;
             subjectObserve = args[0];
             if(args.Length > 1) argSecondExist = bool.TryParse(args[1], out value);
@@ -96,7 +96,7 @@ namespace SkillModules {
                 int unitCount = observer
                     .GetAllFieldUnits(
                         myPos.col, 
-                        !PlayMangement.instance.player.isHuman
+                        opponent.isHuman
                     ).Count;
                 return checkSecondArg(unitCount);
             }

@@ -16,6 +16,11 @@ public class OTPCode {
 
     private Totp totp;
     public bool isDone;
+    public int computeTotp {
+        get {
+            return int.Parse(totp.ComputeTotp());
+        }
+    }
         
 
     public OTPCode() {
@@ -35,14 +40,15 @@ public class OTPCode {
         DateTime convertTime = ConvertFromUnixTimestamp(serverTime);
         TimeCorrection aa = new TimeCorrection(convertTime);
         totp = new Totp(secretKey, timeCorrection:aa);
-        string computeTotp = totp.ComputeTotp();
-        PostOTP(computeTotp);
+        
+        isDone = true;
+        //string computeTotp = totp.ComputeTotp();
+        //PostOTP(computeTotp);
     }
 
     private void PostOTP(string computeTotp) {
         JObject body = new JObject();
         body.Add("pass", new JRaw(computeTotp));
-        isDone = true;
     }
 
     static DateTime ConvertFromUnixTimestamp(double timestamp) {
