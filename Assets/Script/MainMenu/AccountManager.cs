@@ -452,7 +452,7 @@ public partial class AccountManager {
         networkManager.Request(request, callback);
     }
 
-    private void AuthUserCallback(HTTPRequest originalRequest, HTTPResponse response) {
+    public void AuthUserCallback(HTTPRequest originalRequest, HTTPResponse response) {
         if (response.IsSuccess) SetUserToken(response);
     }
 
