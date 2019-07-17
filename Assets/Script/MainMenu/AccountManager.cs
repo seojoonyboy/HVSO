@@ -446,8 +446,7 @@ public partial class AccountManager {
         TokenForm form = new TokenForm(DEVICEID);
         request.MethodType = HTTPMethods.Post;
         request.RawData = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(form));
-        if (callback != null) request.Callback = callback;
-        else request.Callback = AuthUserCallback;
+        if (callback == null) callback = AuthUserCallback;
 
         networkManager.Request(request, callback);
     }
