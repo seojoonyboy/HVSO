@@ -122,6 +122,7 @@ public partial class NetworkManager {
     Queue<RequestFormat> requests = new Queue<RequestFormat>();
     private bool dequeueing = false;
     TimeSpan timeout = new TimeSpan(0, 0, 30);  //timeout 10초 지정
+    private GameObject loadingModal;
     public int MAX_REDIRECTCOUNT { get; private set; }
 
     private void FixedUpdate() {
@@ -132,7 +133,7 @@ public partial class NetworkManager {
 
     private void DequeueRequest() {
         dequeueing = true;
-        GameObject loadingModal = LoadingModal.instantiate();
+        loadingModal = LoadingModal.instantiate();
         Text loadingMsg = loadingModal.transform.Find("Panel/AdditionalMessage").GetComponent<Text>();
 
         RequestFormat selectedRequestFormat = requests.Dequeue();
@@ -142,35 +143,35 @@ public partial class NetworkManager {
 
         request.AddHeader("Content-Type", "application/json");
         if(request.RedirectCount != 0) request.Callback = null;
-        request.Callback += (x, y) => {
-            Debug.Log(y.DataAsText);
-            if(y.DataAsText.Contains("invalid_token")) {
-                DestoryModal(loadingModal);
-                AccountManager.Instance.AuthUser((a, b) => {
-                    AccountManager.Instance.AuthUserCallback(a, b);
-                    x.RedirectCount++;
-                    HTTPRequest re_request = new HTTPRequest(x.Uri);
-                    re_request.MethodType = x.MethodType;
-                    re_request.AddHeader("authorization", AccountManager.Instance.TokenFormat);
-                    Request(re_request, (OnRequestFinishedDelegate)x.Callback.GetInvocationList()[0], re_request.LoadingMessage); 
-                });
-                dequeueing = false;
-                throw new ArgumentOutOfRangeException("Token Invalid", "토큰이 존재하지 않습니다.");
-            }
-            Debug.Log("토큰 무사히 받음");
-            //Debug.Log(loadingMsg.text);
-        };
+        request.Callback += CheckCondition;
         request.Callback += selectedRequestFormat.callback;
-        request.Callback += (x, y) => {
-            dequeueing = false;
-            DestoryModal(loadingModal);
-        };
+        request.Callback += FinishRequest;
         request.Timeout = timeout;
         request.Send();
     }
 
-    private void DestoryModal(GameObject loadingModal) {
+    private void CheckCondition(HTTPRequest request, HTTPResponse response) {
+        if(response.DataAsText.Contains("invalid_token")) {
+            FinishRequest(request, response);
+            AccountManager.Instance.AuthUser((a, b) => {
+                AccountManager.Instance.AuthUserCallback(a, b);
+                HTTPRequest re_request = new HTTPRequest(request.Uri);
+                re_request.MethodType = request.MethodType;
+                re_request.RedirectCount = ++request.RedirectCount;
+                re_request.AddHeader("authorization", AccountManager.Instance.TokenFormat);
+                request.Callback -= CheckCondition;
+                request.Callback -= FinishRequest;
+                Request(re_request, request.Callback, re_request.LoadingMessage); 
+            });
+            dequeueing = false;
+            throw new ArgumentOutOfRangeException("Token Invalid", "토큰이 존재하지 않습니다.");
+        }
+    }
+
+    private void FinishRequest(HTTPRequest request, HTTPResponse response) {
+        dequeueing = false;
         Destroy(loadingModal);
+        loadingModal = null;
     }
 
     /// <summary>
