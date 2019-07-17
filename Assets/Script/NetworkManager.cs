@@ -121,7 +121,7 @@ public class HttpResponse {
 public partial class NetworkManager {
     Queue<RequestFormat> requests = new Queue<RequestFormat>();
     private bool dequeueing = false;
-    TimeSpan timeout = new TimeSpan(0, 0, 30);  //timeout 10초 지정
+    TimeSpan timeout = new TimeSpan(0, 0, 30);  //timeout 30초 지정
     private GameObject loadingModal;
     public int MAX_REDIRECTCOUNT { get; private set; }
 
