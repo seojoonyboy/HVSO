@@ -77,10 +77,6 @@ namespace dataModules {
         public bool deckValidate;
     }
 
-    public class Template {
-
-    }
-
     public class HeroCard : BaseCard {
         public Skill[] skills;
     }
