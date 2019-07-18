@@ -17,7 +17,7 @@ public partial class AccountManager : Singleton<AccountManager> {
     private Callback callback = null;
 
     public string DEVICEID { get; private set; }
-    public UserClassInput userData { get; private set; }
+    public UserInfo userData { get; private set; }
     public CardInventory[] myCards { get; private set; }
 
     public List<dataModules.Deck> humanDecks;
@@ -125,7 +125,10 @@ public partial class AccountManager : Singleton<AccountManager> {
         }
     }
 
-    public class UserClassInput {
+    /// <summary>
+    /// 회원가입, 로그인시 유저 정보 처리를 위한 클래스
+    /// </summary>
+    public class UserInfo {
         public string[] baasicDeckUnlock;
         public string nickName;
         public string deviceId;
@@ -140,7 +143,7 @@ public partial class AccountManager : Singleton<AccountManager> {
 /// </summary>
 public partial class AccountManager {
     public void SignUp(string inputText) {
-        UserClassInput userInfo = new UserClassInput();
+        UserInfo userInfo = new UserInfo();
         userInfo.nickName = inputText;
         userInfo.deviceId = DEVICEID;
 
@@ -219,7 +222,7 @@ public partial class AccountManager {
     }
     
     public void SetSignInData(HTTPResponse response) {
-        userData = dataModules.JsonReader.Read<UserClassInput>(response.DataAsText);
+        userData = dataModules.JsonReader.Read<UserInfo>(response.DataAsText);
 
         myCards = userData.cardInventories;
         SetHeroInventories(userData.heroInventories);
