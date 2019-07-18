@@ -102,7 +102,12 @@ public partial class NetworkManager : MonoBehaviour {
         Destroy(loadingModal);
         loadingModal = null;
     }
+}
 
+/// <summary>
+/// 요청 전용 양식 클래스
+/// </summary>
+public partial class NetworkManager {
     public class RequestFormat {
         public HTTPRequest request;
         public OnRequestFinishedDelegate callback;
@@ -118,13 +123,7 @@ public partial class NetworkManager : MonoBehaviour {
         public string name;
         public string heroId;
         public string camp;
-        public DeckItem[] items;
-    }
-
-    [System.Serializable]
-    public class DeckItem {
-        public string cardId;
-        public int cardCount;
+        public DeckEditController.DeckItem[] items;
     }
 
     public class ModifyDeckReqFormat {

@@ -22,7 +22,7 @@ public class DeckEditController : MonoBehaviour
     public bool editing = false;
 
     Dictionary<string, GameObject> setCardList;
-    List<NetworkManager.DeckItem> items;
+    List<DeckItem> items;
 
     public string deckID = null;
     bool isHuman;
@@ -373,8 +373,8 @@ public class DeckEditController : MonoBehaviour
     public void RequestModifyDeck(NetworkManager.ModifyDeckReqFormat formatData, string deckId) {
         var fields = new List<NetworkManager.ModifyDeckReqArgs>();
         NetworkManager.ModifyDeckReqArgs field = new NetworkManager.ModifyDeckReqArgs();
-        NetworkManager.DeckItem data;
-        items = new List<NetworkManager.DeckItem>();
+        DeckItem data;
+        items = new List<DeckItem>();
 
         foreach (var pairs in setCardList) {
             int count = pairs.Value.GetComponent<EditCardHandler>().SETNUM;
@@ -383,7 +383,7 @@ public class DeckEditController : MonoBehaviour
                 itemCount.cardCount = count;
             }
             else {
-                data = new NetworkManager.DeckItem();
+                data = new DeckItem();
                 data.cardId = pairs.Key;
                 data.cardCount = count;
                 items.Add(data);
@@ -412,21 +412,21 @@ public class DeckEditController : MonoBehaviour
     /// </summary>
     public void RequestNewDeck() {
         if (string.IsNullOrEmpty(deckNamePanel.transform.Find("NameTemplate").Find("Text").GetComponent<Text>().text) == true) {
-            Modal.instantiate("덱 이름창에 이름을 입력하셔야합니다.", Modal.Type.CHECK);
+            Modal.instantiate("덱 이름을 입력해 주세요.", Modal.Type.CHECK);
             return;
         }
         NetworkManager.AddCustomDeckReqFormat formatData = new NetworkManager.AddCustomDeckReqFormat();
-        items = new List<NetworkManager.DeckItem>();
+        items = new List<DeckItem>();
         foreach (var pairs in setCardList) {
             int count = pairs.Value.GetComponent<EditCardHandler>().SETNUM;
-            NetworkManager.DeckItem data;
+            DeckItem data;
 
             if (items.Exists(x => x.cardId == pairs.Key)) {
                 var itemCount = items.Find(x => x.cardId == pairs.Key);
                 itemCount.cardCount = count;
             }
             else {
-                data = new NetworkManager.DeckItem();
+                data = new DeckItem();
                 data.cardId = pairs.Key;
                 data.cardCount = count;
                 items.Add(data);
@@ -453,5 +453,11 @@ public class DeckEditController : MonoBehaviour
             deckNamePanel.transform.Find("NameTemplate").Find("Text").GetComponent<Text>().text = "";
         }
 
+    }
+
+    [System.Serializable]
+    public class DeckItem {
+        public string cardId;
+        public int cardCount;
     }
 }
