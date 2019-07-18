@@ -284,7 +284,7 @@ public class DeckEditController : MonoBehaviour
             heroCards = transform.Find("HeroCards/Human");
             transform.Find("HeroCards/Orc").gameObject.SetActive(false);
             foreach (dataModules.HeroInventory data in AccountManager.Instance.humanTemplates) {
-                if (data.heroId == loadedDeck.heroId) {
+                if (data.id == loadedDeck.heroId) {
                     heroData = data;
                     break;
                 }
@@ -295,7 +295,7 @@ public class DeckEditController : MonoBehaviour
             heroCards = transform.Find("HeroCards/Orc");
             transform.Find("HeroCards/Human").gameObject.SetActive(false);
             foreach (dataModules.HeroInventory data in AccountManager.Instance.orcTemplates) {
-                if (data.heroId == loadedDeck.heroId) {
+                if (data.id == loadedDeck.heroId) {
                     heroData = data;
                     break;
                 }
