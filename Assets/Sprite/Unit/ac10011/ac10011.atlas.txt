@@ -1,75 +1,96 @@
 
 ac10011.png
-size: 1024,256
+size: 1024,512
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 L_leg
-  rotate: false
-  xy: 938, 112
+  rotate: true
+  xy: 496, 270
   size: 82, 110
   orig: 82, 110
   offset: 0, 0
   index: -1
 L_low_arm
   rotate: true
-  xy: 543, 93
+  xy: 0, 0
   size: 129, 171
   orig: 129, 171
   offset: 0, 0
   index: -1
 R_arm
-  rotate: true
-  xy: 714, 92
+  rotate: false
+  xy: 835, 354
   size: 130, 155
   orig: 130, 155
   offset: 0, 0
   index: -1
 R_leg
-  rotate: false
-  xy: 938, 0
+  rotate: true
+  xy: 384, 274
   size: 78, 112
   orig: 78, 112
   offset: 0, 0
   index: -1
 body
-  rotate: false
-  xy: 384, 53
+  rotate: true
+  xy: 666, 350
   size: 159, 169
   orig: 159, 169
   offset: 0, 0
   index: -1
+effect_1
+  rotate: true
+  xy: 384, 421
+  size: 88, 282
+  orig: 88, 282
+  offset: 0, 0
+  index: -1
+effect_2
+  rotate: true
+  xy: 965, 410
+  size: 99, 59
+  orig: 99, 59
+  offset: 0, 0
+  index: -1
 eye
   rotate: false
-  xy: 0, 9
+  xy: 965, 388
   size: 14, 22
   orig: 14, 22
   offset: 0, 0
   index: -1
 eyeblow
-  rotate: false
-  xy: 543, 81
+  rotate: true
+  xy: 171, 84
   size: 45, 12
   orig: 45, 12
   offset: 0, 0
   index: -1
 helmet
   rotate: false
-  xy: 0, 31
+  xy: 0, 318
   size: 193, 191
   orig: 193, 191
   offset: 0, 0
   index: -1
 helmet_2
   rotate: false
-  xy: 193, 33
+  xy: 0, 129
+  size: 191, 189
+  orig: 191, 189
+  offset: 0, 0
+  index: -1
+helmet_3
+  rotate: false
+  xy: 193, 320
   size: 191, 189
   orig: 191, 189
   offset: 0, 0
   index: -1
 shadow
-  rotate: true
-  xy: 869, 14
+  rotate: false
+  xy: 384, 352
   size: 208, 69
   orig: 208, 69
   offset: 0, 0

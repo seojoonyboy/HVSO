@@ -6,70 +6,84 @@ filter: Linear,Linear
 repeat: none
 L_arm
   rotate: true
-  xy: 760, 91
+  xy: 360, 0
   size: 83, 127
   orig: 83, 127
   offset: 0, 0
   index: -1
 L_leg
   rotate: true
-  xy: 887, 97
+  xy: 487, 6
   size: 77, 93
   orig: 77, 93
   offset: 0, 0
   index: -1
 R_leg
   rotate: true
-  xy: 887, 97
+  xy: 487, 6
   size: 77, 93
   orig: 77, 93
   offset: 0, 0
   index: -1
 L_low_arm
   rotate: true
-  xy: 392, 81
+  xy: 392, 83
   size: 169, 189
   orig: 169, 189
   offset: 0, 0
   index: -1
 L_upper_arm
-  rotate: true
-  xy: 130, 5
+  rotate: false
+  xy: 945, 187
   size: 79, 65
   orig: 79, 65
   offset: 0, 0
   index: -1
 R_arm
   rotate: true
-  xy: 0, 0
+  xy: 230, 4
   size: 84, 130
   orig: 84, 130
   offset: 0, 0
   index: -1
 body
   rotate: false
-  xy: 581, 118
+  xy: 766, 120
   size: 179, 132
   orig: 179, 132
   offset: 0, 0
   index: -1
+effect_1
+  rotate: true
+  xy: 766, 62
+  size: 58, 103
+  orig: 58, 103
+  offset: 0, 0
+  index: -1
 helmet
   rotate: false
-  xy: 0, 84
+  xy: 0, 86
   size: 197, 166
   orig: 197, 166
   offset: 0, 0
   index: -1
 helmet_2
   rotate: false
-  xy: 197, 86
+  xy: 197, 88
   size: 195, 164
   orig: 195, 164
   offset: 0, 0
   index: -1
+helmet_3
+  rotate: false
+  xy: 581, 88
+  size: 185, 164
+  orig: 185, 164
+  offset: 0, 0
+  index: -1
 shadow
   rotate: false
-  xy: 760, 174
+  xy: 0, 10
   size: 230, 76
   orig: 230, 76
   offset: 0, 0

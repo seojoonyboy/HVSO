@@ -1,75 +1,89 @@
 
 ac10012.png
-size: 512,256
+size: 1024,256
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 L_leg
-  rotate: false
-  xy: 346, 17
+  rotate: true
+  xy: 377, 38
   size: 52, 75
   orig: 52, 75
   offset: 0, 0
   index: -1
 L_low_arm
   rotate: false
-  xy: 398, 37
+  xy: 308, 29
   size: 69, 61
   orig: 69, 61
   offset: 0, 0
   index: -1
 L_upper_arm
   rotate: false
-  xy: 0, 110
+  xy: 488, 108
   size: 205, 139
   orig: 205, 139
   offset: 0, 0
   index: -1
 R_arm
-  rotate: false
-  xy: 118, 0
+  rotate: true
+  xy: 144, 0
   size: 84, 110
   orig: 84, 110
   offset: 0, 0
   index: -1
 R_leg
-  rotate: true
-  xy: 390, 98
+  rotate: false
+  xy: 254, 7
   size: 54, 77
   orig: 54, 77
   offset: 0, 0
   index: -1
 body
   rotate: false
-  xy: 390, 152
+  xy: 878, 32
   size: 112, 97
   orig: 112, 97
   offset: 0, 0
   index: -1
-eye
+effect_!
   rotate: true
-  xy: 467, 106
+  xy: 0, 84
+  size: 163, 298
+  orig: 163, 298
+  offset: 0, 0
+  index: -1
+eye
+  rotate: false
+  xy: 488, 90
   size: 46, 18
   orig: 46, 18
   offset: 0, 0
   index: -1
 head
-  rotate: true
-  xy: 0, 8
+  rotate: false
+  xy: 878, 129
   size: 102, 118
   orig: 102, 118
   offset: 0, 0
   index: -1
 head_2
   rotate: true
-  xy: 205, 92
+  xy: 693, 90
   size: 157, 185
   orig: 157, 185
   offset: 0, 0
   index: -1
+head_3
+  rotate: true
+  xy: 298, 90
+  size: 157, 190
+  orig: 157, 190
+  offset: 0, 0
+  index: -1
 shadow
   rotate: false
-  xy: 202, 41
+  xy: 0, 33
   size: 144, 51
   orig: 144, 51
   offset: 0, 0

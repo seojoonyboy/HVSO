@@ -1,68 +1,96 @@
 
 ac10013.png
-size: 1024,256
+size: 1024,512
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 L_leg
-  rotate: true
-  xy: 208, 73
+  rotate: false
+  xy: 881, 242
   size: 64, 85
   orig: 64, 85
   offset: 0, 0
   index: -1
 L_low_arm
   rotate: true
-  xy: 0, 137
+  xy: 259, 258
   size: 119, 302
   orig: 119, 302
   offset: 0, 0
   index: -1
 L_upper_arm
-  rotate: true
-  xy: 0, 0
+  rotate: false
+  xy: 813, 234
   size: 68, 93
   orig: 68, 93
   offset: 0, 0
   index: -1
 R_arm
   rotate: false
-  xy: 875, 130
+  xy: 724, 201
   size: 89, 126
   orig: 89, 126
   offset: 0, 0
   index: -1
 R_leg
-  rotate: true
-  xy: 93, 6
+  rotate: false
+  xy: 945, 247
   size: 62, 80
   orig: 62, 80
   offset: 0, 0
   index: -1
 body
   rotate: false
-  xy: 712, 106
+  xy: 561, 177
   size: 163, 150
   orig: 163, 150
   offset: 0, 0
   index: -1
-helmet
+effect_1
+  rotate: false
+  xy: 0, 0
+  size: 36, 39
+  orig: 36, 39
+  offset: 0, 0
+  index: -1
+effect_2
   rotate: true
-  xy: 302, 75
+  xy: 259, 377
+  size: 129, 311
+  orig: 129, 311
+  offset: 0, 0
+  index: -1
+effect_3
+  rotate: false
+  xy: 0, 245
+  size: 259, 261
+  orig: 259, 261
+  offset: 0, 0
+  index: -1
+helmet
+  rotate: false
+  xy: 0, 39
   size: 181, 206
   orig: 181, 206
   offset: 0, 0
   index: -1
 helmet_2
   rotate: true
-  xy: 508, 77
+  xy: 570, 327
+  size: 179, 204
+  orig: 179, 204
+  offset: 0, 0
+  index: -1
+helmet_3
+  rotate: true
+  xy: 774, 327
   size: 179, 204
   orig: 179, 204
   offset: 0, 0
   index: -1
 shadow
-  rotate: false
-  xy: 0, 68
+  rotate: true
+  xy: 181, 37
   size: 208, 69
   orig: 208, 69
   offset: 0, 0
