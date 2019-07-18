@@ -25,7 +25,7 @@ public class DeckHandler : MonoBehaviour
         deckInfo.gameObject.SetActive(true);
         deckInfo.Find("Deck/Portrait").GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[deck.heroId];
         deckInfo.Find("Deck/Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = deck.name;
-        deckInfo.Find("Deck/Info/Text").GetComponent<TMPro.TextMeshProUGUI>().text = deck.cardTotalCount.ToString() + "/40";
+        deckInfo.Find("Deck/Info/Text").GetComponent<TMPro.TextMeshProUGUI>().text = deck.totalCardCount.ToString() + "/40";
     }
 
     public void OpenDeckButton() {

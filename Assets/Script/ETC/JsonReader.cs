@@ -67,7 +67,7 @@ namespace dataModules {
 
     public class Deck {
         //public bool userHas;
-        public int cardTotalCount;
+        public int totalCardCount;
         public string id;
         public string name;
         public string flavorText;
