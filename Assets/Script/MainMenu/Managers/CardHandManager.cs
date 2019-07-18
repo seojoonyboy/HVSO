@@ -141,7 +141,7 @@ public class CardHandManager : MonoBehaviour {
                 AddInfoToList(card);
                 firstDraw = false;
             }
-            card.transform.Find("GlowEffect").GetComponent<Image>().enabled = false;
+            card.GetComponent<CardHandler>().DisableCard();
         }
         else
             AddInfoToList(card);

@@ -67,7 +67,7 @@ namespace dataModules {
 
     public class Deck {
         //public bool userHas;
-        public int cardTotalCount;
+        public int totalCardCount;
         public string id;
         public string name;
         public string flavorText;
@@ -75,10 +75,6 @@ namespace dataModules {
         public string heroId;
         public List<Item> items;
         public bool deckValidate;
-    }
-
-    public class Template {
-
     }
 
     public class HeroCard : BaseCard {

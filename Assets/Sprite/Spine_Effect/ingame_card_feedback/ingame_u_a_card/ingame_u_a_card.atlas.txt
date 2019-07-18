@@ -1,0 +1,13 @@
+
+ingame_u_a_card.png
+size: 512,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+h_magic_card
+  rotate: false
+  xy: 0, 0
+  size: 258, 329
+  orig: 258, 329
+  offset: 0, 0
+  index: -1
