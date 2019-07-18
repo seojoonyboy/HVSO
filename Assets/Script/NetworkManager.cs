@@ -1,8 +1,6 @@
 using System;
 using BestHTTP;
 using UnityEngine;
-using System.Collections;
-using UnityEngine.Networking;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
