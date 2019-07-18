@@ -44,6 +44,8 @@ public class DeckSettingManager : MonoBehaviour
         int orcDeckCount = 0;
         int humanCustomDecks = AccountManager.Instance.humanDecks.Count;
         int orcCustomDecks = AccountManager.Instance.orcDecks.Count;
+        humanDeckList.GetChild(humanDeckCount).gameObject.SetActive(true);
+        orcDeckList.GetChild(orcDeckCount).gameObject.SetActive(true);
         if (humanCustomDecks > 0) {
             for (int i = 0; i < humanCustomDecks; i++) {
                 humanDeckList.GetChild(humanDeckCount).gameObject.SetActive(true);
