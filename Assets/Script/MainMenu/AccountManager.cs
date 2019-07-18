@@ -133,13 +133,6 @@ public partial class AccountManager : Singleton<AccountManager> {
         public CardInventory[] cardInventories;
         public HeroInventory[] heroInventories;
     }
-
-    public class Deck {
-        public string heroName;
-        public string deckName;
-        public string type;
-        public List<dataModules.CardInventory> cards = new List<dataModules.CardInventory>();
-    }
 }
 
 /// <summary>
