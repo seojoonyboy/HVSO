@@ -67,7 +67,7 @@ public partial class NetworkManager : Singleton<NetworkManager> {
             FinishRequest(request, response);
             if (request.RedirectCount == MAX_REDIRECTCOUNT) {
                 Modal.instantiate("Server가 불안정합니다. 잠시후 다시 접속해주세요.", Modal.Type.CHECK, () => {
-                    SceneManager.Instance.LoadScene(SceneManager.Scene.MAIN_SCENE);
+                    //Application.Quit();
                 });
                 dequeueing = false;
                 throw new ArgumentOutOfRangeException("Max Redirect", "Redirect Count 초과");
