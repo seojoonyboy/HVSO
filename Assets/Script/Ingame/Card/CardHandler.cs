@@ -118,8 +118,17 @@ public partial class CardHandler : MonoBehaviour {
         transform.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.name;
 
         if (first) {
-            transform.Find("GlowEffect").GetComponent<Image>().enabled = true;
-            transform.Find("GlowEffect").GetComponent<Image>().color = new Color(1, 1, 1);
+            if (gameObject.name == "UnitCard") {
+                if (transform.Find("SkillIcon").gameObject.activeSelf) {
+                    transform.Find("GlowEffect/HaveAbility").gameObject.SetActive(true);
+                }
+                else {
+                    transform.Find("GlowEffect/NonAbility").gameObject.SetActive(true);
+                }
+            }
+            else {
+                transform.Find("GlowEffect").gameObject.SetActive(true);
+            }
             clm.AddMulliganCardInfo(cardData, cardID);
             firstDraw = true;
         }
@@ -132,19 +141,12 @@ public partial class CardHandler : MonoBehaviour {
             highlightedSlot = CheckSlot();
             if (highlightedSlot != null) {
                 highlighted = true;
-                transform.Find("GlowEffect").GetComponent<Image>().color = new Color(0.639f, 0.925f, 0.105f);
-                transform.Find("GlowEffect").localScale = new Vector3(1.05f, 1.05f, 1);
                 CardDropManager.Instance.HighLightSlot(highlightedSlot, highlighted);
             }
         }
         else {
             if (highlightedSlot != CheckSlot()) {
                 highlighted = false;
-                if (isDropable)
-                    transform.Find("GlowEffect").GetComponent<Image>().color = new Color(1, 1, 1);
-                else
-                    transform.Find("GlowEffect").GetComponent<Image>().color = new Color(1, 1, 1);
-                transform.Find("GlowEffect").localScale = new Vector3(1, 1, 1);
                 CardDropManager.Instance.HighLightSlot(highlightedSlot, highlighted);
                 highlightedSlot = null;
             }
@@ -270,8 +272,20 @@ public partial class CardHandler : MonoBehaviour {
 
     public void DisableCard() {
         isDropable = false;
-        transform.Find("GlowEffect").GetComponent<Image>().enabled = false;
-        transform.Find("Disabled").gameObject.SetActive(true);
+        if (gameObject.name == "UnitCard") {
+            if (transform.Find("SkillIcon").gameObject.activeSelf) {
+                transform.Find("GlowEffect/HaveAbility").gameObject.SetActive(false);
+                transform.Find("Disabled/HaveAbility").gameObject.SetActive(true);
+            }
+            else {
+                transform.Find("GlowEffect/NonAbility").gameObject.SetActive(false);
+                transform.Find("Disabled/NonAbility").gameObject.SetActive(true);
+            }
+        }
+        else {
+            transform.Find("GlowEffect").gameObject.SetActive(false);
+            transform.Find("Disabled").gameObject.SetActive(true);
+        }
     }
 
     public virtual void ActivateCard() {
@@ -279,14 +293,23 @@ public partial class CardHandler : MonoBehaviour {
             isDropable = true;
             if (cardData.cost <= PlayerController.activeCardMinCost)
                 PlayerController.activeCardMinCost = cardData.cost;
-            transform.Find("GlowEffect").GetComponent<Image>().enabled = true;
-            transform.Find("GlowEffect").GetComponent<Image>().color = new Color(1, 1, 1);
-            transform.Find("Disabled").gameObject.SetActive(false);
+            if (gameObject.name == "UnitCard") {
+                if (transform.Find("SkillIcon").gameObject.activeSelf) {
+                    transform.Find("GlowEffect/HaveAbility").gameObject.SetActive(true);
+                    transform.Find("Disabled/HaveAbility").gameObject.SetActive(false);
+                }
+                else {
+                    transform.Find("GlowEffect/NonAbility").gameObject.SetActive(true);
+                    transform.Find("Disabled/NonAbility").gameObject.SetActive(false);
+                }
+            }
+            else {
+                transform.Find("GlowEffect").gameObject.SetActive(true);
+                transform.Find("Disabled").gameObject.SetActive(false);
+            }
         }
         else {
-            isDropable = false;
-            transform.Find("GlowEffect").GetComponent<Image>().enabled = false;
-            transform.Find("Disabled").gameObject.SetActive(true);
+            DisableCard();
         }
     }
 
