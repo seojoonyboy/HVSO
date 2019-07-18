@@ -8,9 +8,11 @@ using UnityEngine.UI;
 public class DeckHandler : MonoBehaviour
 {
     [SerializeField] DeckEditController deckEditCanvas;
+    [SerializeField] TemplateMenu templateCanvas;
     private string deckID;
     private bool isBasic = false;
     private bool isHuman;
+    public dataModules.Deck templateDeck;
     public string DECKID {
         get { return deckID; }
         set { deckID = value; }
@@ -28,6 +30,17 @@ public class DeckHandler : MonoBehaviour
         deckInfo.Find("Deck/Info/Text").GetComponent<TMPro.TextMeshProUGUI>().text = deck.totalCardCount.ToString() + "/40";
     }
 
+    public void SetTemplateDeck(dataModules.Deck deck) {
+        templateDeck = deck;
+        deckID = deck.id;
+        if (deck.camp == "human") isHuman = true;
+        else isHuman = false;
+        Transform deckInfo = transform.Find("DeckInfo");
+        deckInfo.Find("Portrait").GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[deck.heroId];
+        deckInfo.Find("DeckName").GetComponent<TMPro.TextMeshProUGUI>().text = deck.name;
+        deckInfo.Find("Capacity").GetComponent<TMPro.TextMeshProUGUI>().text = deck.cardTotalCount.ToString() + "/40";
+    }
+
     public void OpenDeckButton() {
         if (isBasic) return;
         GameObject editButtons = transform.Find("DeckInfo/EditButtons").gameObject;
@@ -35,6 +48,24 @@ public class DeckHandler : MonoBehaviour
             editButtons.SetActive(false);
         else
             editButtons.SetActive(true);
+    }
+
+    public void CloseDeckButton() {
+        if (isBasic) return;
+        GameObject editButtons = transform.Find("DeckInfo/EditButtons").gameObject;
+        editButtons.SetActive(false);
+    }
+
+    public void SelectTemplateDeck() {
+        transform.Find("Selected").gameObject.SetActive(true);
+        templateCanvas.selectedDeck = this;
+        templateCanvas.transform.Find("CancelSelect").gameObject.SetActive(true);
+        templateCanvas.transform.Find("DeckEditBtn").gameObject.SetActive(true);
+    }
+
+    public void CancelSelect() {
+        transform.Find("Selected").gameObject.SetActive(false);
+        templateCanvas.selectedDeck = null;
     }
 
     public void EditCustomDeck() {

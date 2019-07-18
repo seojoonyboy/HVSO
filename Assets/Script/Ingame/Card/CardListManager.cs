@@ -154,23 +154,15 @@ public class CardListManager : MonoBehaviour
 
     public virtual void SetCardInfo(GameObject obj, CardData data) {
         Transform info = obj.transform;
-        if (!data.hero_chk) {
-            info.Find("Frame").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["frame_" + data.rarelity];
-            info.Find("Name").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["name_" + data.rarelity];
-            info.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.name;
-            info.Find("Dialog").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["dialog_" + data.rarelity];
-        }
-        else {
-            string race;
-            if (PlayMangement.instance.player.isHuman)
-                race = "human_";
-            else
-                race = "orc_";
-            info.Find("Frame").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["hero_frame_" + race + data.rarelity];
-            info.Find("Name").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["hero_name_" + race + data.rarelity];
-            info.Find("Dialog").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["hero_dialog_" + race + data.rarelity];
-        }
+        string race;
+        if (PlayMangement.instance.player.isHuman)
+            race = "human_";
+        else
+            race = "orc_";
+        info.Find("Frame").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["frame_" + race];
+        info.Find("Dialog").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["dialog_" + race];
         info.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.name;
+
         if (AccountManager.Instance.resource.infoPortraite.ContainsKey(data.cardId)) info.Find("Portrait").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoPortraite[data.cardId];
         if (data.skills.Length != 0) {
             info.Find("Dialog/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.skills[0].desc;
@@ -208,8 +200,7 @@ public class CardListManager : MonoBehaviour
 
         info.Find("Cost/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.cost.ToString();
 
-        info.Find("Class").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["class_" + data.class_1];
-        //info.Find("Class/Icon").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["class_icon_" + data.class_1];
+        info.Find("Class").GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[data.class_1];
 
         info.Find("SkillIcon1").gameObject.SetActive(false);
         info.Find("SkillIcon2").gameObject.SetActive(false);

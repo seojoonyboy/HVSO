@@ -22,8 +22,9 @@ public class TemplateMenu : MonoBehaviour {
 
     private string previewID;
     public bool isHuman;
-
     public string heroID;
+    public DeckHandler selectedDeck;
+
     private void Awake() {
         Transform upper = transform.Find("Upper");
         Transform footer = transform.Find("Footer");
@@ -80,11 +81,35 @@ public class TemplateMenu : MonoBehaviour {
         previewID = (isHuman == true) ? "h10001" : "h10002";
     }
 
+    public void SetTemplateDecks() {
+        for(int i = 0; i < 3; i++) {
+            transform.Find("Footer/HeroBtnLayout").GetChild(i).gameObject.SetActive(false);
+        }
+        List<Templates> templates;
+        if (isHuman) 
+            templates = AccountManager.Instance.humanTemplates;
+        else
+            templates = AccountManager.Instance.orcTemplates;
+        foreach(Templates heros in templates) {
+            if(heros.id == heroID) {
+                int count = 0;
+                foreach (Deck deck in heros.templates) {
+                    GameObject templateDeck = transform.Find("Footer/HeroBtnLayout").GetChild(count).gameObject;
+                    templateDeck.SetActive(true);
+                    templateDeck.GetComponent<DeckHandler>().SetTemplateDeck(deck);
+                    count++;
+                }
+                break;
+            }
+        }
+    }
+
     public void ChangeHeroID(string ID) {
         string id = ID;
         heroID = ID;
         ChangeHeroSkeleton(id);
         ChangeHeroData(id);
+        SetTemplateDecks();
     }
 
     private void ChangeHeroSkeleton(string heroID) {
@@ -118,10 +143,23 @@ public class TemplateMenu : MonoBehaviour {
 
     public void StartEditBtn() {
         DeckEditController deckEditCtrl = deckSettingCanves.GetComponent<DeckEditController>();
-        deckEditCtrl.SetDeckEdit(heroID, isHuman);
+        if (selectedDeck.gameObject.name == "FreeDeckBtn") {
+            deckEditCtrl.SetDeckEdit(heroID, isHuman);
+        }
+        else {
+            deckEditCtrl.SetCustumDeckEdit(selectedDeck.templateDeck);
+        }
         deckEditCtrl.gameObject.SetActive(true);
         deckEditCtrl.RefreshLine();
         deckEditCtrl.templateMenu = this;
+        CancelSelectDeck();
+    }
+
+    public void CancelSelectDeck() {
+        if(selectedDeck != null) 
+            selectedDeck.CancelSelect();
+        transform.Find("CancelSelect").gameObject.SetActive(false);
+        transform.Find("DeckEditBtn").gameObject.SetActive(false);
     }
 
 
