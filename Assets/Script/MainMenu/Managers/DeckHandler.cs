@@ -38,7 +38,7 @@ public class DeckHandler : MonoBehaviour
         Transform deckInfo = transform.Find("DeckInfo");
         deckInfo.Find("Portrait").GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[deck.heroId];
         deckInfo.Find("DeckName").GetComponent<TMPro.TextMeshProUGUI>().text = deck.name;
-        deckInfo.Find("Capacity").GetComponent<TMPro.TextMeshProUGUI>().text = deck.cardTotalCount.ToString() + "/40";
+        deckInfo.Find("Capacity").GetComponent<TMPro.TextMeshProUGUI>().text = deck.totalCardCount.ToString() + "/40";
     }
 
     public void OpenDeckButton() {
