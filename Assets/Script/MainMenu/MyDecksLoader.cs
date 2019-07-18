@@ -20,8 +20,8 @@ public class MyDecksLoader : MonoBehaviour {
     public void Load() {
         accountManager.LoadAllCards();
         accountManager.RequestMyDecks(OnDeckLoadFinished);
-        accountManager.RequestHumanTemplates(OnHumanTemplateLoadFinished);
-        accountManager.RequestOrcTemplates(OnOrcTemplateLoadFinished);
+        accountManager.RequestHumanTemplates(OnOrcTemplateLoadFinished);
+        accountManager.RequestOrcTemplates(OnHumanTemplateLoadFinished);
     }
 
     private void OnDeckLoadFinished(HTTPRequest originalRequest, HTTPResponse response) {
