@@ -119,10 +119,8 @@ public class CardDictionaryManager : MonoBehaviour {
         Transform heroSpine = heroInfoWindow.Find("HeroSpines/" + hero.id);
         heroSpine.gameObject.SetActive(true);
         heroSpine.SetAsFirstSibling();
-        heroInfoWindow.Find("Class").GetChild(0).GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["class_" + hero.heroClasses[0]];
-        heroInfoWindow.Find("Class").GetChild(0).GetChild(0).GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["class_icon_" + hero.heroClasses[0]];
-        heroInfoWindow.Find("Class").GetChild(1).GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["class_" + hero.heroClasses[1]];
-        heroInfoWindow.Find("Class").GetChild(1).GetChild(0).GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["class_icon_" + hero.heroClasses[1]];
+        heroInfoWindow.Find("Class").GetChild(0).GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[hero.heroClasses[0]];
+        heroInfoWindow.Find("Class").GetChild(1).GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[hero.heroClasses[1]];
         for (int i = 0; i < hero.heroCards.Length; i++) {
             heroCards.GetChild(i).GetComponent<MenuCardHandler>().DrawCard(hero.heroCards[i].cardId, isHumanDictionary);
         }
