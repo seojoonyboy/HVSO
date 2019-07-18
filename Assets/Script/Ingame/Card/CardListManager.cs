@@ -56,7 +56,7 @@ public class CardListManager : MonoBehaviour
         GameObject newcard = standbyInfo.GetChild(0).gameObject;
         newcard.SetActive(true);
         SetCardInfo(newcard, data);
-        newcard.transform.localScale = new Vector3(1.4f, 1.4f, 1);
+        //newcard.transform.localScale = new Vector3(1.4f, 1.4f, 1);
     }
 
     public virtual void AddMulliganCardInfo(CardData data, string id, int changeNum = 100) {
@@ -107,7 +107,7 @@ public class CardListManager : MonoBehaviour
             mulliganInfoList.gameObject.SetActive(true);
             mulliganInfoList.GetChild(cardnum).gameObject.SetActive(true);
 
-            mulliganInfoList.GetChild(cardnum).localScale = new Vector3(1.4f, 1.4f, 1);
+            //mulliganInfoList.GetChild(cardnum).localScale = new Vector3(1.4f, 1.4f, 1);
         }
     }
 
@@ -137,7 +137,7 @@ public class CardListManager : MonoBehaviour
         PlayMangement.instance.infoOn = true;
         if (!showMagic) {
             transform.GetComponent<Image>().enabled = true;
-            handCardInfo.GetChild(cardnum).transform.localScale = new Vector3(1.4f, 1.4f, 1);
+            //handCardInfo.GetChild(cardnum).transform.localScale = new Vector3(1.4f, 1.4f, 1);
         }
         else {
             handCardInfo.GetChild(cardnum).transform.localScale = new Vector3(0.8f, 0.8f, 1);
@@ -156,9 +156,9 @@ public class CardListManager : MonoBehaviour
         Transform info = obj.transform;
         string race;
         if (PlayMangement.instance.player.isHuman)
-            race = "human_";
+            race = "human";
         else
-            race = "orc_";
+            race = "orc";
         info.Find("Frame").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["frame_" + race];
         info.Find("Dialog").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["dialog_" + race];
         info.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.name;
@@ -200,7 +200,7 @@ public class CardListManager : MonoBehaviour
 
         info.Find("Cost/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.cost.ToString();
 
-        info.Find("Class").GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[data.class_1];
+        info.Find("Class_1").GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[data.class_1];
 
         info.Find("SkillIcon1").gameObject.SetActive(false);
         info.Find("SkillIcon2").gameObject.SetActive(false);
@@ -285,7 +285,7 @@ public class CardListManager : MonoBehaviour
                     string objName = selectedTarget.GetComponentInParent<PlaceMonster>().myUnitNum.ToString() + "unit";
                     transform.Find("FieldUnitInfo").gameObject.SetActive(true);
                     transform.Find("FieldUnitInfo").Find(objName).gameObject.SetActive(true);
-                    transform.Find("FieldUnitInfo").Find(objName).localScale = new Vector3(1.4f, 1.4f, 1);
+                    //transform.Find("FieldUnitInfo").Find(objName).localScale = new Vector3(1.4f, 1.4f, 1);
                     PlayMangement.instance.infoOn = true;
                 }
             }
