@@ -86,9 +86,9 @@ public partial class BattleConnector : MonoBehaviour {
         string deckId = Variables.Saved.Get("SelectedDeckId").ToString();
         string battleType = Variables.Saved.Get("SelectedBattleType").ToString();
         string race = Variables.Saved.Get("SelectedRace").ToString().ToLower();
-        string selectedDeckType = Variables.Saved.Get("SelectedDeckType").ToString();
+        //string selectedDeckType = Variables.Saved.Get("SelectedDeckType").ToString();
 
-        string[] args = new string[] { battleType, playerId, selectedDeckType, deckId, race };
+        string[] args = new string[] { battleType, playerId, "custom", deckId, race };
         SendMethod("join_game", args);
         pingpong = StartCoroutine(Heartbeat());
     }
