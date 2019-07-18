@@ -9,7 +9,6 @@ using Spine.Unity;
 
 public partial class PlayMangement : MonoBehaviour {
     public PlayerController player, enemyPlayer;
-    public Sprite humanResourceIcon, orcResourceIcon;
 
     public GameObject cardDB;
     public GameObject uiSlot;
@@ -784,7 +783,8 @@ public partial class PlayMangement {
             skillHandler.Initialize(cardData.skills, unit, false);
             unit.GetComponent<PlaceMonster>().skillHandler = skillHandler;
             cardInfoCanvas.GetChild(0).GetComponent<CardListManager>().AddFeildUnitInfo(0, placeMonster.myUnitNum, cardData);
-            observer.UnitAdded(unit, new FieldUnitsObserver.Pos(col, row), !player.isHuman);
+            observer.UnitAdded(unit, new FieldUnitsObserver.Pos(col, row), enemyPlayer.isHuman);
+            //observer.RefreshFields(args, enemyPlayer.isHuman);
             unit.layer = 14;
         }
         

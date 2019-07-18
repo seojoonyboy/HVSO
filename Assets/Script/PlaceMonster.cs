@@ -19,20 +19,15 @@ public class PlaceMonster : MonoBehaviour {
     public Vector3 unitLocation;
     public int atkCount = 0;
     public int maxAtkCount = 0;
-    public int addAttackPower = 0;
     public int myUnitNum = 0;
     public int itemId = -1;
 
     public bool buffEffect = false;
-
-    protected delegate void TimeUpdate(float time);
-    protected TimeUpdate timeUpdate;
+    
     public UnitSpine unitSpine;
     public HideUnit hideSpine;
-
-    protected float currentTime;
+    
     protected bool instanceAttack = false;
-    public GameObject effectObject;
 
     public float atkTime {
         get { return unitSpine.atkDuration; }
@@ -532,8 +527,6 @@ public class PlaceMonster : MonoBehaviour {
     }
     
     protected void SetState(UnitState state) {
-        timeUpdate = null;
-        currentTime = 0f;
 
         switch (state) {
             case UnitState.APPEAR:
