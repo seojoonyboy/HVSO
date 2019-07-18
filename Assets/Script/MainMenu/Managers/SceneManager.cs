@@ -29,31 +29,9 @@ public class SceneManager : Singleton<SceneManager> {
     public void LoadScene(Scene scene) {
         int numberOfScene = -1;
         switch (scene) {
-            /*case Scene.MAIN_SCENE:
-                numberOfScene = 1;
+            case Scene.LOGIN:
+                numberOfScene = 0;
                 break;
-            case Scene.MISSION_SELECT_SCENE:
-                numberOfScene = 2;
-                break;
-            case Scene.COLLECTION_SCENE:
-                numberOfScene = 6;
-                break;
-            case Scene.MISSION_INGAME:
-                numberOfScene = 3;
-                break;
-            case Scene.PVP_READY_SCENE:
-                numberOfScene = 4;
-                break;
-            case Scene.DECK_LIST_SCNE:
-                numberOfScene = 5;
-                break;
-            case Scene.DECK_SETTING_SCENE:
-                numberOfScene = 7;
-                break;
-            case Scene.CONNECT_MATCHING_SCENE:
-                numberOfScene = 8;
-                break;
-            */
             case Scene.MAIN_SCENE :
                 numberOfScene = 1;
                 break;
@@ -117,6 +95,7 @@ public class SceneManager : Singleton<SceneManager> {
         DECK_LIST_SCNE,
         DECK_SETTING_SCENE,
         CONNECT_MATCHING_SCENE,
-        LOADING_SCENE
+        LOADING_SCENE,
+        LOGIN
     }
 }
