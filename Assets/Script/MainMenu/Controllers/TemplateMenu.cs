@@ -106,7 +106,7 @@ public class TemplateMenu : MonoBehaviour {
         int childcount = 0;
         foreach (Transform child in heroProperty.transform) {
             child.gameObject.GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[heroData.heroClasses[childcount]];
-            child.GetChild(0).GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["class_icon_" + heroData.heroClasses[childcount]];
+            //child.GetChild(0).GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["class_icon_" + heroData.heroClasses[childcount]];
 
             childcount++;
         }
@@ -117,11 +117,11 @@ public class TemplateMenu : MonoBehaviour {
     }
 
     public void StartEditBtn() {
-        DeckEditController decEditCtrl = deckSettingCanves.GetComponent<DeckEditController>();
-        decEditCtrl.SetDeckEdit(heroID, isHuman);
-        decEditCtrl.gameObject.SetActive(true);
-        decEditCtrl.RefreshLine();
-        decEditCtrl.templateMenu = this;
+        DeckEditController deckEditCtrl = deckSettingCanves.GetComponent<DeckEditController>();
+        deckEditCtrl.SetDeckEdit(heroID, isHuman);
+        deckEditCtrl.gameObject.SetActive(true);
+        deckEditCtrl.RefreshLine();
+        deckEditCtrl.templateMenu = this;
     }
 
 

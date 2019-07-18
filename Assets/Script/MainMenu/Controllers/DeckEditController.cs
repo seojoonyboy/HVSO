@@ -216,7 +216,7 @@ public class DeckEditController : MonoBehaviour
             heroCards = transform.Find("HeroCards/Human");
             transform.Find("HeroCards/Orc").gameObject.SetActive(false);
             foreach(dataModules.Templates data in AccountManager.Instance.humanTemplates) {
-                if (data.heroId == heroId) {
+                if (data.id == heroId) {
                     heroData = data;
                     break;
                 }
@@ -232,8 +232,8 @@ public class DeckEditController : MonoBehaviour
                 }
             }
         }
-        transform.Find("Class/Class_1/icon").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["class_icon_" + heroData.heroClasses[0]];
-        transform.Find("Class/Class_2/icon").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["class_icon_" + heroData.heroClasses[1]];
+        //transform.Find("Class/Class_1/icon").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["class_icon_" + heroData.heroClasses[0]];
+        //transform.Find("Class/Class_2/icon").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["class_icon_" + heroData.heroClasses[1]];
         transform.Find("Class/Class_1").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["class_" + heroData.heroClasses[0]];
         transform.Find("Class/Class_2").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["class_" + heroData.heroClasses[1]];
         heroCards.gameObject.SetActive(true);
@@ -301,8 +301,8 @@ public class DeckEditController : MonoBehaviour
                 }
             }
         }
-        transform.Find("Class/Class_1/icon").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["class_icon_" + heroData.heroClasses[0]];
-        transform.Find("Class/Class_2/icon").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["class_icon_" + heroData.heroClasses[1]];
+        //transform.Find("Class/Class_1/icon").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["class_icon_" + heroData.heroClasses[0]];
+        //transform.Find("Class/Class_2/icon").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["class_icon_" + heroData.heroClasses[1]];
         transform.Find("Class/Class_1").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["class_" + heroData.heroClasses[0]];
         transform.Find("Class/Class_2").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["class_" + heroData.heroClasses[1]];
         heroCards.gameObject.SetActive(true);

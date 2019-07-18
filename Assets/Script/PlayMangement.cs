@@ -945,25 +945,43 @@ public partial class PlayMangement {
         else isHuman = false;
         if (isHuman) {
             releaseTurnBtn = turnTable.Find("HumanButton").gameObject;
-            //turnTable.GetChild(1).GetChild(0).gameObject.SetActive(true);
-            //turnTable.Find("ReleaseTurnButton/HumanTurnButtonImage").gameObject.SetActive(true);
         }
         else {
             releaseTurnBtn = turnTable.Find("OrcButton").gameObject;
-            //turnIcon = turnTable.GetChild(5);
-            //turnTable.GetChild(1).GetChild(1).gameObject.SetActive(true);
-            //turnTable.Find("ReleaseTurnButton/OrcTurnButtonImage").gameObject.SetActive(true);
         }
         for (int i = 0; i < 4; i++) {
             turnTable.Find("TurnBoard").position = canvas.transform.GetChild(2).GetChild(2).position;
         }
-        //turnIcon.gameObject.SetActive(true);
-        //turnIcon.GetChild(0).gameObject.SetActive(true);
-        //nonplayableTurnArrow.SetActive(true);
+    }
+
+    public void SetTurnButton() {
+        switch (currentTurn) {
+            case "ORC":
+                if (player.isHuman)
+                    releaseTurnBtn.SetActive(false);
+                else
+                    releaseTurnBtn.SetActive(true);
+                break;
+            case "HUMAN":
+                if (player.isHuman)
+                    releaseTurnBtn.SetActive(true);
+                else
+                    releaseTurnBtn.SetActive(false);
+                break;
+            case "SECRET":
+                if (player.isHuman)
+                    releaseTurnBtn.SetActive(false);
+                else
+                    releaseTurnBtn.SetActive(true);
+                break;
+            case "BATTLE":
+                releaseTurnBtn.SetActive(false);
+                break;
+        }
     }
 
     private IEnumerator SetHumanTurnTable(string currentTurn) {
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(1.0f);
         switch (currentTurn) {
             case "HUMAN":
                 releaseTurnBtn.SetActive(true);
@@ -985,7 +1003,7 @@ public partial class PlayMangement {
     }
 
     private IEnumerator SetOrcTurnTable(string currentTurn) {
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(1.0f);
         switch (currentTurn) {
             case "ORC":
             case "SECRET":
