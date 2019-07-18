@@ -7,7 +7,7 @@ using UnityEngine.UI;
 /// <summary>
 /// BestHTTP Pro
 /// </summary>
-public partial class NetworkManager : MonoBehaviour {
+public partial class NetworkManager : Singleton<NetworkManager> {
 #if UNITY_EDITOR
     private string url = "https://ccdevclient.fbl.kr/";
 #else
