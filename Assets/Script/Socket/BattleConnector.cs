@@ -34,7 +34,7 @@ public partial class BattleConnector : MonoBehaviour {
 
     public void OpenSocket() {
         string url = string.Format("{0}", this.url);
-        webSocket = new WebSocket(new Uri(url));
+        webSocket = new WebSocket(new Uri(string.Format("{0}?token={1}", url, AccountManager.Instance.TokenId)));
         webSocket.OnOpen += OnOpen;
         webSocket.OnMessage += ReceiveMessage;
         webSocket.OnClosed += OnClosed;
@@ -82,13 +82,13 @@ public partial class BattleConnector : MonoBehaviour {
 
     //Connected
     private void OnOpen(WebSocket webSocket) {
-        string playerId = AccountManager.Instance.DEVICEID;
+        //string playerId = AccountManager.Instance.DEVICEID;
         string deckId = Variables.Saved.Get("SelectedDeckId").ToString();
         string battleType = Variables.Saved.Get("SelectedBattleType").ToString();
         string race = Variables.Saved.Get("SelectedRace").ToString().ToLower();
-        string selectedDeckType = Variables.Saved.Get("SelectedDeckType").ToString();
+        //string selectedDeckType = Variables.Saved.Get("SelectedDeckType").ToString();
 
-        string[] args = new string[] { battleType, playerId, selectedDeckType, deckId, race };
+        string[] args = new string[] { battleType, deckId, race };
         SendMethod("join_game", args);
         pingpong = StartCoroutine(Heartbeat());
     }
