@@ -131,8 +131,8 @@ MonoBehaviour:
   attackAnimationName: 
   hitAnimationName: HIT
   previewAnimationName: 
-  rangeUpAttackName: ATTACK
-  rangeDownAttackName: ATTACK2
+  rangeUpAttackName: ATTACK_UP
+  rangeDownAttackName: ATTACK_DOWN
   generalAttackName: 
   attackEventName: SHOT
   arrow: {fileID: 144206, guid: eecfd95aa06159440b824635d22e0f24, type: 3}
