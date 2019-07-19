@@ -24,8 +24,8 @@ public class UnitSpine : MonoBehaviour
     public string rangeDownAttackName;
     [SpineAnimation]
     public string generalAttackName;
-
-    
+    [SpineAnimation]
+    public string deClockAnimationName;
 
 
     [SpineEvent]
@@ -116,6 +116,14 @@ public class UnitSpine : MonoBehaviour
         spineAnimationState.SetAnimation(0, idleAnimationName, true);
         currentAnimationName = previewAnimationName;
     }
+
+    public virtual void Declocking() {
+        TrackEntry entry;
+        entry = spineAnimationState.SetAnimation(0, deClockAnimationName, false);
+        currentAnimationName = deClockAnimationName;
+        entry.Complete += Idle;
+    }
+
 
     public virtual void MagicHit() {
         TrackEntry entry;
