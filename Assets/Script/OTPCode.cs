@@ -40,8 +40,11 @@ public class OTPCode {
         DateTime convertTime = ConvertFromUnixTimestamp(serverTime);
         TimeCorrection aa = new TimeCorrection(convertTime);
         totp = new Totp(secretKey, timeCorrection:aa);
+        long b = 0;
         
-        isDone = true;
+        isDone = totp.VerifyTotp(convertTime, totp.ComputeTotp(), out b);
+        Logger.Log("OTP Check : " + isDone);
+        if(!isDone) GetServerTime();
         //string computeTotp = totp.ComputeTotp();
         //PostOTP(computeTotp);
     }
