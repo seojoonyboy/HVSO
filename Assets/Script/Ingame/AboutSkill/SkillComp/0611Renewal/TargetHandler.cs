@@ -155,7 +155,6 @@ namespace TargetModules {
             string place = args[0];
             var observer = PlayMangement.instance.UnitsObserver;
             bool isHuman = PlayMangement.instance.player.isHuman;
-            isHuman = skillHandler.isPlayer ? isHuman : !isHuman;
             switch (place) {
                 case "rear":
                     var pos = observer.GetMyPos(gameObject);
@@ -524,7 +523,7 @@ namespace TargetModules {
                     
                     FieldUnitsObserver observer = PlayMangement.instance.UnitsObserver;
                         selectedTarget = observer
-                            .GetUnit(new FieldUnitsObserver.Pos(line, 0), targetCampHuman)
+                            .GetSlot(new FieldUnitsObserver.Pos(line, 0), targetCampHuman)
                             .transform;
                 break;
                 case "unit" :
