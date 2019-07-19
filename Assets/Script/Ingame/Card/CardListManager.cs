@@ -164,7 +164,6 @@ public class CardListManager : MonoBehaviour
         info.Find("Dialog").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["dialog_" + race];
         info.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.name;
 
-        if (AccountManager.Instance.resource.infoPortraite.ContainsKey(data.cardId)) info.Find("Portrait").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoPortraite[data.cardId];
         if (data.skills.Length != 0) {
             info.Find("Dialog/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.skills[0].desc;
         }
@@ -207,7 +206,14 @@ public class CardListManager : MonoBehaviour
         info.Find("SkillIcon2").gameObject.SetActive(false);
         info.Find("Flavor/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "";
 
+        info.Find("UnitPortrait").gameObject.SetActive(false);
+        info.Find("MagicPortrait").gameObject.SetActive(false);
+
         if (data.type == "unit") {
+            info.Find("UnitPortrait").gameObject.SetActive(true);
+            if (AccountManager.Instance.resource.infoPortraite.ContainsKey(data.cardId)) {
+                info.Find("UnitPortrait").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoPortraite[data.cardId];
+            }
             if (data.attackTypes.Length != 0) {
                 info.Find("SkillIcon1").gameObject.SetActive(true);
                 var image = AccountManager.Instance.resource.skillIcons[data.attackTypes[0]];
@@ -248,6 +254,13 @@ public class CardListManager : MonoBehaviour
             info.Find("Categories/Text").GetComponent<TMPro.TextMeshProUGUI>().text = sb.ToString();
 
             info.Find("Flavor/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.flavorText;
+        }
+        //마법 카드
+        else {
+            info.Find("MagicPortrait").gameObject.SetActive(true);
+            if (AccountManager.Instance.resource.cardPortraite.ContainsKey(data.cardId)) {
+                info.Find("MagicPortrait").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardPortraite[data.cardId];
+            }
         }
         //if (data.class_2 == null)
         //    obj.transform.GetChild(2).gameObject.SetActive(false);
