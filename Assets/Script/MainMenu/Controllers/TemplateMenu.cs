@@ -147,7 +147,7 @@ public class TemplateMenu : MonoBehaviour {
             deckEditCtrl.SetDeckEdit(heroID, isHuman);
         }
         else {
-            deckEditCtrl.SetCustumDeckEdit(selectedDeck.templateDeck);
+            deckEditCtrl.SetCustumDeckEdit(selectedDeck.templateDeck, true);
         }
         deckEditCtrl.gameObject.SetActive(true);
         deckEditCtrl.RefreshLine();

@@ -37,6 +37,7 @@ public class DeckEditController : MonoBehaviour
     public TemplateMenu templateMenu;
 
     public MenuSceneController menuSceneController;
+    bool isTemplate = false;
 
     private void Start() {
         SetObject();
@@ -81,7 +82,9 @@ public class DeckEditController : MonoBehaviour
             field.value = inputNameVal;
             form.parms.Add(field);
 
-            RequestModifyDeck(form, deckID);
+            //template을 통한 덱 생성도 새로운 생성 요청으로 취급 해야함.
+            if (isTemplate) RequestNewDeck();
+            else RequestModifyDeck(form, deckID);
         }
         else {
             RequestNewDeck();
@@ -271,11 +274,13 @@ public class DeckEditController : MonoBehaviour
         RefreshLine();
     }
 
-    public void SetCustumDeckEdit(dataModules.Deck loadedDeck) {
+    public void SetCustumDeckEdit(Deck loadedDeck, bool isTemplate = false) {
+        this.isTemplate = isTemplate;
         editing = true;
         InitCanvas();
         Transform heroCards;
         HeroInventory heroData = null;
+        if(!isTemplate) deckID = loadedDeck.id;
         deckID = loadedDeck.id;
         deckNamePanel.transform.Find("NameTemplate").GetComponent<InputField>().text = loadedDeck.name;
         transform.Find("HeroPortrait").GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[loadedDeck.heroId + "_button"];
