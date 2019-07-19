@@ -42,7 +42,7 @@ public class OTPCode {
         totp = new Totp(secretKey, timeCorrection:aa);
         long b = 0;
         
-        isDone = totp.VerifyTotp(convertTime, totp.ComputeTotp(), out b);
+        isDone = totp.VerifyTotp(totp.ComputeTotp(), out b);
         Logger.Log("OTP Check : " + isDone);
         if(!isDone) GetServerTime();
         //string computeTotp = totp.ComputeTotp();

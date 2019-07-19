@@ -132,6 +132,7 @@ public partial class AccountManager : Singleton<AccountManager> {
         public string[] baasicDeckUnlock;
         public string nickName;
         public string deviceId;
+        public int pass;
         
         public CardInventory[] cardInventories;
         public HeroInventory[] heroInventories;
@@ -142,10 +143,14 @@ public partial class AccountManager : Singleton<AccountManager> {
 /// SignIn / SignUp 관련 처리
 /// </summary>
 public partial class AccountManager {
-    public void SignUp(string inputText) {
+    public async void SignUp(string inputText) {
+        OTPCode otp = new OTPCode();
+        while(!otp.isDone) await System.Threading.Tasks.Task.Delay(100);
+
         UserInfo userInfo = new UserInfo();
         userInfo.nickName = inputText;
         userInfo.deviceId = DEVICEID;
+        userInfo.pass = otp.computeTotp;
 
         StringBuilder url = new StringBuilder();
 
