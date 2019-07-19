@@ -213,8 +213,13 @@ public partial class AccountManager {
         if (response != null && response.IsSuccess) {
             Logger.Log("회원가입 요청 완료");
             AuthUser();
-            RequestUserInfo();
-
+            RequestUserInfo((req, res) => {
+                if(response != null) {
+                    if (response.IsSuccess) {
+                        SetSignInData(res);
+                    }
+                }
+            });
             Modal.instantiate("회원가입이 완료되었습니다.", Modal.Type.CHECK, () => {
                 SceneManager.Instance.LoadScene(SceneManager.Scene.MAIN_SCENE);
             });
