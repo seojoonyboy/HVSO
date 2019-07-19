@@ -234,8 +234,8 @@ public class DeckEditController : MonoBehaviour
         }
         //transform.Find("Class/Class_1/icon").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["class_icon_" + heroData.heroClasses[0]];
         //transform.Find("Class/Class_2/icon").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["class_icon_" + heroData.heroClasses[1]];
-        transform.Find("Class/Class_1").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["class_" + heroData.heroClasses[0]];
-        transform.Find("Class/Class_2").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["class_" + heroData.heroClasses[1]];
+        transform.Find("Class/Class_1").GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[heroData.heroClasses[0]];
+        transform.Find("Class/Class_2").GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[heroData.heroClasses[1]];
         heroCards.gameObject.SetActive(true);
         for(int i = 0; i < heroData.heroCards.Length; i++)
             heroCards.GetChild(i).GetComponent<MenuCardHandler>().DrawCard(heroData.heroCards[i].cardId, isHuman);
@@ -303,8 +303,8 @@ public class DeckEditController : MonoBehaviour
         }
         //transform.Find("Class/Class_1/icon").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["class_icon_" + heroData.heroClasses[0]];
         //transform.Find("Class/Class_2/icon").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["class_icon_" + heroData.heroClasses[1]];
-        transform.Find("Class/Class_1").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["class_" + heroData.heroClasses[0]];
-        transform.Find("Class/Class_2").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["class_" + heroData.heroClasses[1]];
+        transform.Find("Class/Class_1").GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[heroData.heroClasses[0]];
+        transform.Find("Class/Class_2").GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[heroData.heroClasses[1]];
         heroCards.gameObject.SetActive(true);
         for (int i = 0; i < heroData.heroCards.Length; i++)
             heroCards.GetChild(i).GetComponent<MenuCardHandler>().DrawCard(heroData.heroCards[i].cardId, isHuman);
