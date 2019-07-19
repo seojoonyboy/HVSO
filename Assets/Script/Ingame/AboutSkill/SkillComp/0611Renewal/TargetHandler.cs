@@ -249,6 +249,7 @@ namespace TargetModules {
 
             var observer = PlayMangement.instance.UnitsObserver;
             bool isHuman = PlayMangement.instance.player.isHuman;
+            isHuman = isPlayer ? isHuman : !isHuman;
 
             List<GameObject> result = new List<GameObject>();
             if (args.Length != 2) {
@@ -522,7 +523,7 @@ namespace TargetModules {
                     
                     FieldUnitsObserver observer = PlayMangement.instance.UnitsObserver;
                         selectedTarget = observer
-                            .GetUnit(new FieldUnitsObserver.Pos(line, 0), targetCampHuman)
+                            .GetSlot(new FieldUnitsObserver.Pos(line, 0), targetCampHuman)
                             .transform;
                 break;
                 case "unit" :

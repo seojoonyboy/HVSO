@@ -271,9 +271,9 @@ public partial class PlayMangement : MonoBehaviour {
                 int itemId = int.Parse(target.args[0]);
                 List<GameObject> list;
                 if (args[0].CompareTo("my") == 0) //적 자신일 경우
-                    list = UnitsObserver.GetAllFieldUnits(player.isHuman);
+                    list = UnitsObserver.GetAllFieldUnits(enemyPlayer.isHuman);
                 else //적의 적 (나)일 경우
-                    list = UnitsObserver.GetAllFieldUnits(!player.isHuman);
+                    list = UnitsObserver.GetAllFieldUnits(!enemyPlayer.isHuman);
                 GameObject unit = list.Find(x => x.GetComponent<PlaceMonster>().itemId == itemId);
                 highlightUI = unit.transform.Find("ClickableUI").gameObject;
                 highlightUI.SetActive(true);
