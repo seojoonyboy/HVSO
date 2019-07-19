@@ -437,10 +437,10 @@ namespace SkillModules {
                     if(state.SearchUseItem(itemId)) break;
                 }
             }
-            var units = playMangement.UnitsObserver.GetAllFieldUnits(!playMangement.player.isHuman);
+            
             PlayerController player = isPlayer ? PlayMangement.instance.player : PlayMangement.instance.enemyPlayer ;
             List<SocketFormat.Card> socketList = state.players.enemyPlayer(!player.isHuman).deck.handCards.ToList();
-
+            var units = playMangement.UnitsObserver.GetAllFieldUnits(!player.isHuman);
             foreach(SocketFormat.Card card in socketList) {
                 if(card.type.CompareTo("magic")==0) continue;
                 foreach(GameObject selectedUnit in units) {
