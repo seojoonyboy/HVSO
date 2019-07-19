@@ -471,7 +471,7 @@ namespace TargetModules {
                 
                 //5. 실제 effect 실행하러 보내기
                 Transform selectedTarget = PlayMangement.instance.UnitsObserver
-                    .GetUnit(movePos, !PlayMangement.instance.player.isHuman)
+                    .GetSlot(movePos, !PlayMangement.instance.player.isHuman)
                     .transform;
                 SetTarget(selectedTarget.gameObject);
                 successCallback(selectedTarget);
