@@ -249,6 +249,7 @@ namespace TargetModules {
 
             var observer = PlayMangement.instance.UnitsObserver;
             bool isHuman = PlayMangement.instance.player.isHuman;
+            isHuman = isPlayer ? isHuman : !isHuman;
 
             List<GameObject> result = new List<GameObject>();
             if (args.Length != 2) {
