@@ -134,6 +134,7 @@ MonoBehaviour:
   rangeUpAttackName: 
   rangeDownAttackName: 
   generalAttackName: ATTACK
+  deClockAnimationName: 
   attackEventName: SHOT
   arrow: {fileID: 1935779955130154858, guid: 464b782de6e95da42a1a3abcf9d471d6, type: 3}
   hidingObject: {fileID: 0}

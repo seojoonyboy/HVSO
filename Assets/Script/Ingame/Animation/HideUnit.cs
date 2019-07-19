@@ -67,7 +67,7 @@ public class HideUnit : MonoBehaviour
                 SoundManager.Instance.PlaySound(SoundType.APPEAR_UNIT);
 
             unitSpine.transform.gameObject.SetActive(true);
-            unitSpine.Appear();
+            unitSpine.Declocking();
         }
     }
 
