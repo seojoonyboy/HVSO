@@ -1019,10 +1019,6 @@ public partial class PlayMangement {
     public void OnNoCostEffect(bool turnOn) {
         releaseTurnBtn.transform.Find("TurnOverFeedback").gameObject.SetActive(turnOn);
     }
-
-    //public List<string> GetTranslatedCtgNames() {
-
-    //}
 }
 
 /// <summary>

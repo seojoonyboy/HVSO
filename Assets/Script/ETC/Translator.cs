@@ -6,6 +6,8 @@ using Sirenix.OdinInspector;
 
 public class Translator : SerializedMonoBehaviour {
     public Dictionary<string, string> unitCategories;
+
+    public Dictionary<string, string> skillTypeNames;
     public Dictionary<string, string> skillTypeDescs;
 
     public List<string> GetTranslatedUnitCtg(List<string> data) {
@@ -23,6 +25,16 @@ public class Translator : SerializedMonoBehaviour {
         return values;
     }
 
+    public string GetTranslatedSkillName(string keyword) {
+        string result;
+
+        if (skillTypeNames.ContainsKey(keyword)) {
+            result = skillTypeNames[keyword];
+        }
+        else { result = ""; }
+        return result;
+    }
+
     public string GetTranslatedSkillTypeDesc(string keyword) {
         string result;
 
@@ -31,5 +43,13 @@ public class Translator : SerializedMonoBehaviour {
         }
         else { result = ""; }
         return result;
+    }
+
+    public string[] GetTranslatedSkillSet(string keyword) {
+        string name = GetTranslatedSkillName(keyword);
+        string desc = GetTranslatedSkillTypeDesc(keyword);
+
+        string[] set = new string[] { name, desc };
+        return set;
     }
 }

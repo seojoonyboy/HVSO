@@ -5475,9 +5475,221 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: skillTypeNames
+      Entry: 7
+      Data: 2|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.String,
+        mscorlib]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 3|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 16
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ambush
+    - Name: $v
+      Entry: 1
+      Data: "\uB9E4\uBCF5"
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: assault
+    - Name: $v
+      Entry: 1
+      Data: "\uAE30\uC2B5"
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: chain
+    - Name: $v
+      Entry: 1
+      Data: "\uC5F0\uACC4"
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: charge
+    - Name: $v
+      Entry: 1
+      Data: "\uB3CC\uACA9"
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: chase
+    - Name: $v
+      Entry: 1
+      Data: "\uCD94\uC801"
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: double
+    - Name: $v
+      Entry: 1
+      Data: "\uC5F0\uC18D\uACF5\uACA9"
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: footslog
+    - Name: $v
+      Entry: 1
+      Data: "\uD5D8\uC9C0 \uD589\uAD70"
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: fusion
+    - Name: $v
+      Entry: 1
+      Data: "\uACB0\uD569"
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: nightaction
+    - Name: $v
+      Entry: 1
+      Data: "\uC57C\uAC04\uC791\uC804"
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: poison
+    - Name: $v
+      Entry: 1
+      Data: "\uC720\uB3C5\uC131"
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: poisonned
+    - Name: $v
+      Entry: 1
+      Data: "\uC911\uB3C5"
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: protect
+    - Name: $v
+      Entry: 1
+      Data: "\uBCF4\uD638"
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: steelskin
+    - Name: $v
+      Entry: 1
+      Data: "\uAC15\uCCA0\uD53C\uBD80"
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: stun
+    - Name: $v
+      Entry: 1
+      Data: "\uC2A4\uD134"
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: supremacy
+    - Name: $v
+      Entry: 1
+      Data: "\uC6B0\uC138"
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: through
+    - Name: $v
+      Entry: 1
+      Data: "\uAD00\uD1B5"
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: skillTypeDescs
       Entry: 7
-      Data: 2|Ludiq.FlexibleDictionary`2[[System.String, mscorlib],[System.String,
+      Data: 4|Ludiq.FlexibleDictionary`2[[System.String, mscorlib],[System.String,
         mscorlib]], Ludiq.Core.Runtime
     - Name: comparer
       Entry: 9

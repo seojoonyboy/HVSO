@@ -17,6 +17,7 @@ public class CardListManager : MonoBehaviour
     private Transform handCardInfo;
     Animator animator;
     Translator translator;
+    [SerializeField] Transform classDescModal;
 
     public Transform StandbyInfo {
         get { return standbyInfo; }
@@ -204,10 +205,6 @@ public class CardListManager : MonoBehaviour
 
         info.Find("SkillIcon1").gameObject.SetActive(false);
         info.Find("SkillIcon2").gameObject.SetActive(false);
-        info.Find("Type/Icon1/Icon").GetComponent<Image>().enabled = false;
-        info.Find("Type/Icon2/Icon").GetComponent<Image>().enabled = false;
-        info.Find("Type/Icon1/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "";
-        info.Find("Type/Icon2/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "";
         info.Find("Flavor/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "";
 
         if (data.type == "unit") {
@@ -215,28 +212,25 @@ public class CardListManager : MonoBehaviour
                 info.Find("SkillIcon1").gameObject.SetActive(true);
                 var image = AccountManager.Instance.resource.skillIcons[data.attackTypes[0]];
                 info.Find("SkillIcon1").GetComponent<Image>().sprite = image;
-
-                info.Find("Type/Icon1/Icon").GetComponent<Image>().enabled = true;
-                info.Find("Type/Icon1/Icon").GetComponent<Image>().sprite = image;
-                info.Find("Type/Icon1/Text").GetComponent<TMPro.TextMeshProUGUI>().text = translator.GetTranslatedSkillTypeDesc(data.attackTypes[0]);
+                info.Find("SkillIcon1").GetComponent<Button>().onClick.AddListener(() => {
+                    OpenClassDescModal(data.attackTypes[0], image);
+                });
             }
             if (data.attributes.Length != 0) {
                 info.Find("SkillIcon1").gameObject.SetActive(true);
                 var image = AccountManager.Instance.resource.skillIcons[data.attributes[0]];
                 info.Find("SkillIcon1").GetComponent<Image>().sprite = image;
-
-                info.Find("Type/Icon1/Icon").GetComponent<Image>().enabled = true;
-                info.Find("Type/Icon1/Icon").GetComponent<Image>().sprite = image;
-                info.Find("Type/Icon1/Text").GetComponent<TMPro.TextMeshProUGUI>().text = translator.GetTranslatedSkillTypeDesc(data.attributes[0]);
+                info.Find("SkillIcon1").GetComponent<Button>().onClick.AddListener(() => {
+                    OpenClassDescModal(data.attributes[0], image);
+                });
             }
             if (data.attackTypes.Length != 0 && data.attributes.Length != 0) {
                 info.Find("SkillIcon2").gameObject.SetActive(true);
                 var image = AccountManager.Instance.resource.skillIcons[data.attackTypes[0]];
                 info.Find("SkillIcon2").GetComponent<Image>().sprite = image;
-
-                info.Find("Type/Icon2/Icon").GetComponent<Image>().enabled = true;
-                info.Find("Type/Icon2/Icon").GetComponent<Image>().sprite = image;
-                info.Find("Type/Icon2/Text").GetComponent<TMPro.TextMeshProUGUI>().text = translator.GetTranslatedSkillTypeDesc(data.attackTypes[0]);
+                info.Find("SkillIcon2").GetComponent<Button>().onClick.AddListener(() => {
+                    OpenClassDescModal(data.attackTypes[0], image);
+                });
             }
 
             List<string> categories = new List<string>();
@@ -261,6 +255,28 @@ public class CardListManager : MonoBehaviour
         //    obj.transform.GetChild(2).GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[data.class_2];
         //    obj.transform.GetChild(2).name = data.class_2;
         //}
+    }
+
+    public void OpenClassDescModal(string className, Sprite image) {
+        classDescModal.gameObject.SetActive(true);
+        string[] set = translator.GetTranslatedSkillSet(className);
+        SetClassDescModalData(set[0], set[1], image);
+    }
+
+    public void CloseClassDescModal() {
+        SetClassDescModalData();
+        classDescModal.gameObject.SetActive(false);
+    }
+
+    private void SetClassDescModalData(string className = "", string desc = "", Sprite sprite = null) {
+        Transform innerModal = classDescModal.Find("InnerModal");
+
+        TMPro.TextMeshProUGUI TMP_header = classDescModal.Find("Header").GetComponent<TMPro.TextMeshProUGUI>();
+        TMPro.TextMeshProUGUI TMP_desc = classDescModal.Find("Description").GetComponent<TMPro.TextMeshProUGUI>();
+
+        TMP_header.text = className;
+        TMP_desc.text = desc;
+        innerModal.Find("Portrait/Image").GetComponent<Image>().sprite = sprite;
     }
     
 
