@@ -36,7 +36,7 @@ public partial class CardDropManager {
     public void ShowDropableSlot(CardData card) {
         for (int i = 0; i < 5; i++) {
             if (card.attributes.Length == 0) {
-                if (slotLine[i].GetComponent<Terrain>().terrain == PlayMangement.LineState.forest) continue;
+                // if (slotLine[i].GetComponent<Terrain>().terrain == PlayMangement.LineState.forest) continue;
                 if (unitLine[i][0].childCount == 0) {
                     slotLine[i].GetChild(0).gameObject.SetActive(true);
                 }
@@ -60,7 +60,8 @@ public partial class CardDropManager {
                     else if (card.attributes[j] == "chain") chainAble = true;
                 }
 
-                if (slotLine[i].GetComponent<Terrain>().terrain == PlayMangement.LineState.forest && !forrestAble) continue;
+                // if (slotLine[i].GetComponent<Terrain>().terrain == PlayMangement.LineState.forest && !forrestAble) continue;
+                // if (!forrestAble) continue;
                 if (!chainAble) {
                     if (unitLine[i][0].childCount == 0) {
                         slotLine[i].GetChild(0).gameObject.SetActive(true);
@@ -95,7 +96,7 @@ public partial class CardDropManager {
     public void ShowDropableSlot(string[] attributes, bool isSkill = false) {
         for (int i = 0; i < 5; i++) {
             if (attributes.Length == 0) {
-                if (slotLine[i].GetComponent<Terrain>().terrain == PlayMangement.LineState.forest) continue;
+                // if (slotLine[i].GetComponent<Terrain>().terrain == PlayMangement.LineState.forest) continue;
                 if (unitLine[i][0].childCount == 0) {
                     slotLine[i].GetChild(0).gameObject.SetActive(true);
                     if(isSkill)
@@ -125,7 +126,8 @@ public partial class CardDropManager {
                     else if (attributes[j] == "chain") chainAble = true;
                 }
 
-                if (slotLine[i].GetComponent<Terrain>().terrain == PlayMangement.LineState.forest && !forrestAble) continue;
+                // if (slotLine[i].GetComponent<Terrain>().terrain == PlayMangement.LineState.forest && !forrestAble) continue;
+                //if (!forrestAble) continue;
                 if (!chainAble) {
                     if (unitLine[i][0].childCount == 0) {
                         slotLine[i].GetChild(0).gameObject.SetActive(true);
