@@ -282,6 +282,10 @@ public class CardHandManager : MonoBehaviour {
             else
                 handler.ActivateCard();
         }
+        else if (PlayMangement.instance.player.isHuman && PlayMangement.instance.currentTurn == "HUMAN")
+            handler.ActivateCard();
+        else
+            handler.DisableCard();
         handler.FIRSTDRAW = false;
         if (!isMultiple && !firstDraw)
             yield return SortHandPosition();
@@ -322,6 +326,10 @@ public class CardHandManager : MonoBehaviour {
             else
                 handler.ActivateCard();
         }
+        else if (PlayMangement.instance.player.isHuman && PlayMangement.instance.currentTurn == "HUMAN")
+            handler.ActivateCard();
+        else
+            handler.DisableCard();
         handler.FIRSTDRAW = false;
         if (isLast)
             yield return SortHandPosition();

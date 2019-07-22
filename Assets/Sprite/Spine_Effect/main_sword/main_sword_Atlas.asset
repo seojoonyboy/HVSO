@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6b194f808b1af6499c93410e504af42, type: 3}
   m_Name: main_sword_Atlas
   m_EditorClassIdentifier: 
-  atlasFile: {fileID: 4900000, guid: e3fe95822e66f1b45b28ef948f9dad5e, type: 3}
+  atlasFile: {fileID: 4900000, guid: 72829c09649309941ae75a0742ec1383, type: 3}
   materials:
-  - {fileID: 2100000, guid: 3db1fd09094bb5347b9002d5d49f6169, type: 2}
+  - {fileID: 2100000, guid: 99ca8d4e7127821489587514f12bd3eb, type: 2}

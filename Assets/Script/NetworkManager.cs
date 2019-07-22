@@ -3,6 +3,7 @@ using BestHTTP;
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using System.Collections;
 
 /// <summary>
 /// BestHTTP Pro
@@ -50,6 +51,7 @@ public partial class NetworkManager : Singleton<NetworkManager> {
         RequestFormat selectedRequestFormat = requests.Dequeue();
         HTTPRequest request = selectedRequestFormat.request;
         loadingMsg.text = selectedRequestFormat.loadingMessage;
+        loadingModal.SetActive(false);
         request.LoadingMessage = selectedRequestFormat.loadingMessage;
 
         request.AddHeader("Content-Type", "application/json");
@@ -59,6 +61,12 @@ public partial class NetworkManager : Singleton<NetworkManager> {
         request.Callback += FinishRequest;
         request.Timeout = timeout;
         request.Send();
+        StartCoroutine(ActivateLoadingModal(loadingModal));
+    }
+
+    IEnumerator ActivateLoadingModal(GameObject modal) {
+        yield return new WaitForSeconds(2.0f);
+        if(modal != null) modal.SetActive(true);
     }
 
     private void CheckCondition(HTTPRequest request, HTTPResponse response) {

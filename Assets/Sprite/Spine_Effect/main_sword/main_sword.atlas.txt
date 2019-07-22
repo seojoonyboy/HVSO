@@ -6,22 +6,22 @@ filter: Linear,Linear
 repeat: none
 shield
   rotate: false
-  xy: 694, 55
-  size: 245, 308
-  orig: 245, 308
+  xy: 691, 53
+  size: 242, 295
+  orig: 242, 295
   offset: 0, 0
   index: -1
 sword_1
   rotate: false
   xy: 0, 0
-  size: 347, 363
-  orig: 347, 363
+  size: 346, 348
+  orig: 346, 348
   offset: 0, 0
   index: -1
 sword_2
   rotate: false
-  xy: 347, 0
-  size: 347, 363
-  orig: 347, 363
+  xy: 346, 0
+  size: 345, 348
+  orig: 345, 348
   offset: 0, 0
   index: -1
