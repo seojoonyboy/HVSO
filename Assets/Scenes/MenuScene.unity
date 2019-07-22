@@ -32749,6 +32749,7 @@ MonoBehaviour:
   windowScrollSnap: {fileID: 3805101584428545709}
   deckSettingManager: {fileID: 85186068}
   battleSwordSkeleton: {fileID: 94265329}
+  nicknameText: {fileID: 4057350413703297282}
   decksLoader: {fileID: 0}
 --- !u!4 &989487035
 Transform:
@@ -77053,6 +77054,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 958776b7f33de4e4ab8a577785856062, type: 3}
+--- !u!114 &4057350413703297282 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4057350413118221495, guid: 958776b7f33de4e4ab8a577785856062,
+    type: 3}
+  m_PrefabInstance: {fileID: 4057350413703297281}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4436360864833916463
 GameObject:
   m_ObjectHideFlags: 0

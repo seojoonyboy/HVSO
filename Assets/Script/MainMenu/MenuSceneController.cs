@@ -12,6 +12,7 @@ public class MenuSceneController : MonoBehaviour {
     [SerializeField] HorizontalScrollSnap windowScrollSnap;
     [SerializeField] DeckSettingManager deckSettingManager;
     [SerializeField] SkeletonGraphic battleSwordSkeleton;
+    [SerializeField] TMPro.TextMeshProUGUI nicknameText;
 
     private SkeletonGraphic[] buttonSkeletons = new SkeletonGraphic[5];
     protected SkeletonGraphic selectedAnimation;
@@ -22,6 +23,9 @@ public class MenuSceneController : MonoBehaviour {
     private void Awake() {
         if (decksLoader == null) decksLoader = gameObject.AddComponent<MyDecksLoader>();
         deckSettingManager.AttachDecksLoader(ref decksLoader);
+        decksLoader.OnLoadFinished.AddListener(() => {
+            nicknameText.text = AccountManager.Instance.NickName;
+        });
         decksLoader.Load();
     }
 
