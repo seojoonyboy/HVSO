@@ -800,4 +800,35 @@ namespace TargetModules {
             targets.Add((GameObject)target);
         }
     }
+    /// <summary>
+    /// 빈 지역 가져오기인데, 서버에서 유닛을 배치해줘서 어떻게 가져와야할지 가늠이 잘 안오는중
+    /// </summary>
+    public class field : TargetHandler {
+        public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback, Filtering filter) {
+            base.SelectTarget(successCallback, failedCallback, filter);
+
+            FieldUnitsObserver observer = PlayMangement.instance.UnitsObserver;
+            bool isHuman = PlayMangement.instance.player.isHuman;
+            isHuman = skillHandler.isPlayer && isHuman;
+            isHuman = (args[0].CompareTo("my") == 0) == isHuman;
+
+            if(args[1].CompareTo("all") == 0) {
+                for(int i = 0; i < 5; i++) {
+                    List<GameObject> list = observer.GetAllFieldUnits(i, isHuman);
+                    if(list.Count == 0) {
+                        Transform unitPos = observer.GetSlot(new FieldUnitsObserver.Pos(i, 0), skillHandler.isPlayer);
+                        SetTarget(unitPos.gameObject);
+                    }
+                }
+            }
+            else {
+                Logger.LogError("only made all, " + args[1] + "need to be code");
+            }
+            successCallback(GetTarget());
+        }
+
+        public override void SetTarget(object target) {
+            targets.Add((GameObject)target);
+        }
+    }
 }
