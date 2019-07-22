@@ -282,6 +282,8 @@ public class CardHandManager : MonoBehaviour {
             else
                 handler.ActivateCard();
         }
+        else
+            handler.ActivateCard();
         handler.FIRSTDRAW = false;
         if (!isMultiple && !firstDraw)
             yield return SortHandPosition();
@@ -322,6 +324,8 @@ public class CardHandManager : MonoBehaviour {
             else
                 handler.ActivateCard();
         }
+        else
+            handler.ActivateCard();
         handler.FIRSTDRAW = false;
         if (isLast)
             yield return SortHandPosition();
