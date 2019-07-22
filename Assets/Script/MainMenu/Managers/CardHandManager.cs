@@ -324,7 +324,7 @@ public class CardHandManager : MonoBehaviour {
             else
                 handler.ActivateCard();
         }
-        else
+        else if(PlayMangement.instance.player.isHuman && PlayMangement.instance.currentTurn == "HUMAN")
             handler.ActivateCard();
         handler.FIRSTDRAW = false;
         if (isLast)
