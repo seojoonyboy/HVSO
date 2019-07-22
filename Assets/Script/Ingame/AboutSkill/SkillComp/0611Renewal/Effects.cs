@@ -306,7 +306,7 @@ namespace SkillModules {
                     unit.RequestChangeStat(0, -amount);
                     WaitEffect(target, amount);
                 } else {
-                    target.GetComponent<PlayerController>().HP.Value -= amount;
+                    target.GetComponent<PlayerController>().TakeIgnoreShieldDamage(amount);
                     skillHandler.finallyDone = true;
                 }
             }
