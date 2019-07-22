@@ -301,8 +301,14 @@ namespace SkillModules {
 
         private void BlastEnemy(bool isPlayer, List<GameObject> targets, int amount) {
             foreach(GameObject target in targets) {
-                target.GetComponent<PlaceMonster>().RequestChangeStat(0, -amount);
-                WaitEffect(target, amount);
+                PlaceMonster unit = target.GetComponent<PlaceMonster>();
+                if(unit != null) {
+                    unit.RequestChangeStat(0, -amount);
+                    WaitEffect(target, amount);
+                } else {
+                    target.GetComponent<PlayerController>().HP.Value -= amount;
+                    skillHandler.finallyDone = true;
+                }
             }
         }
 
@@ -697,6 +703,59 @@ namespace SkillModules {
             PlayMangement.instance.player.resource.Value += amount;
             //TODO : 자원 추가 효과 넣기
             skillHandler.isDone = true;
+        }
+    }
+
+    public class st_filter_attack : Ability {
+        public st_filter_attack() : base() { }
+
+        private delegate bool CompareAction(int attack, int value);
+        private CompareAction action;
+
+        public override void Execute(object data) {
+            int value = 0;
+            object[] tmp = (object[])data;
+            //bool isPlayer = (bool)tmp[0];
+            List<GameObject> targets = (List<GameObject>)tmp[1];
+            string method = (string)args[0];
+            int.TryParse((string)args[1], out value);
+            Filter(targets, method, value);
+        }
+
+        private void setCompare(string method) {
+            switch(method) {
+                case "gte"  : action = gte; break;
+                case "gt"   : action = gt;  break;
+                case "lte"  : action = lte; break;
+                case "lt"   : action = lt;  break;
+                default : Logger.LogError(method + " code doesn't exist"); break;
+            }
+        }
+
+        private void Filter(List<GameObject> targets, string method, int value) {
+            List<GameObject> filter_skill_target = new List<GameObject>();
+            foreach(GameObject unit in targets) {
+                PlaceMonster mon = unit.GetComponent<PlaceMonster>();
+                if(action(mon.unit.attack, value))
+                    filter_skill_target.Add(unit);
+            }
+            skillHandler.skillTarget = filter_skill_target;
+        }
+
+        private bool gte(int attack, int value) {
+            return attack >= value;
+        }
+
+        private bool gt(int attack, int value) {
+            return attack > value;
+        }
+
+        private bool lte(int attack, int value) {
+            return attack <= value;
+        }
+
+        private bool lt(int attack, int value) {
+            return attack < value;
         }
     }
 

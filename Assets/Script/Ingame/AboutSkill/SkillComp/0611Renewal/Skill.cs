@@ -241,6 +241,10 @@ namespace SkillModules {
             else if(ability.GetType() == typeof(gain_resource)) {
                 //혹시 무언가 필요하면...
             }
+            else if(ability.GetType() == typeof(st_filter_attack)) {
+                bool isPlayer = mySkillHandler.isPlayer;
+                result = new object[] { isPlayer, targets };
+            }
             return result;
         }
 
