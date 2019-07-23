@@ -104,7 +104,7 @@ public class DeckEditController : MonoBehaviour
     
 
     public void OnTouchCard(GameObject card) {
-        if (card.transform.Find("Disabled").gameObject.activeSelf) return;
+        if (card.GetComponent<EditCardHandler>().cardObject.Find("Disabled").gameObject.activeSelf) return;
         if (selectCard == null)
             selectCard = card;
         else {
