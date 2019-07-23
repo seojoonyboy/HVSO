@@ -68,7 +68,7 @@ public class UnitSpine : MonoBehaviour
     public virtual void Init() {
         skeletonAnimation = GetComponent<SkeletonAnimation>();
         spineAnimationState = skeletonAnimation.AnimationState;
-        //spineAnimationState.Event += AnimationEvent;
+        spineAnimationState.Event += AnimationEvent;
         skeleton = skeletonAnimation.Skeleton;
         boneFollower = transform.Find("BoneFollower").gameObject.GetComponent<BoneFollower>();
         Debug.Log(boneFollower.gameObject.transform.position.x+ " " + boneFollower.gameObject.transform.position.y);
