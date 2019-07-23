@@ -6,7 +6,7 @@ namespace IngameEditor {
 
     public class Map {
         public string type;
-        public SocketFormat.Line[] lines;
+        public Line[] lines;
     }
 
     public class Players {
@@ -15,14 +15,26 @@ namespace IngameEditor {
     }
 
     public class Player {
-        public HeroInfo resource;
-        public SocketFormat.Deck deck;
-        public int mana;
+        public Hero hero;
+        public Deck deck;
+        public int resource;
     }
 
-    public class HeroInfo {
+    public class Hero {
         public int hp;
         public int shieldGage;
+    }
+
+    public class Line {
+        public string terrain;
+        public string[] orc;
+        public string[] human;
+    }
+
+    public class Deck {
+        public string deckType;
+        public string[] heroCards;
+        public string[] handCards;
     }
 }
 

@@ -130,6 +130,10 @@ public partial class BattleConnector : MonoBehaviour {
         SendMethod("play_card", args);
     }
 
+    public void SendStartState(object args, UnityAction callback = null) {
+        SendMethod("start_state", args);
+    }
+
     public void UnitSkillActivate(object args) {
         SendMethod("unit_skill_activate", args);
     }
