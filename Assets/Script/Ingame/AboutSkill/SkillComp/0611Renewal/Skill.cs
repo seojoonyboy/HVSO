@@ -240,6 +240,10 @@ namespace SkillModules {
             }
             else if(ability.GetType() == typeof(gain_resource)) {
                 //혹시 무언가 필요하면...
+                bool isPlayer = mySkillHandler.isPlayer;
+                int amount = 0;
+                int.TryParse((string)ability.args[0], out amount);
+                result = new object[] { isPlayer, amount };
             }
             else if(ability.GetType() == typeof(st_filter_attack)) {
                 bool isPlayer = mySkillHandler.isPlayer;

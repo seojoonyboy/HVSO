@@ -695,15 +695,17 @@ namespace SkillModules {
 
         public override void Execute(object data) {
             //data 필요없음.
-            int amount = 0;
-            int.TryParse((string)args[0], out amount);
-
-            Logger.Log("추가 자원 얻음");
-
-            PlayMangement.instance.player.resource.Value += amount;
+            object[] targetData = (object[])data;
+            AdditionalResource((bool)targetData[0], (int)targetData[1]);            
             //TODO : 자원 추가 효과 넣기
             skillHandler.isDone = true;
         }
+        private void AdditionalResource(bool isPlayer, int amount) {
+            PlayerController player = (isPlayer == true) ? PlayMangement.instance.player : PlayMangement.instance.enemyPlayer;
+            player.resource.Value += amount;
+            Logger.Log("추가 자원 얻음");
+        }
+
     }
 
     public class st_filter_attack : Ability {
