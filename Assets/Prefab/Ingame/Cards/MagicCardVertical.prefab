@@ -832,8 +832,8 @@ MonoBehaviour:
   initialSkinName: 
   initialFlipX: 0
   initialFlipY: 0
-  startingAnimation: 
-  startingLoop: 0
+  startingAnimation: IDLE
+  startingLoop: 1
   timeScale: 1
   freeze: 0
   unscaledTime: 0

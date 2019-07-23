@@ -274,7 +274,19 @@ public class PlayerController : MonoBehaviour
         shield.SetActive(false);
     }
 
+    public void EffectForPlayer(int amount = 0) {
+        if (amount < 0)
+            EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.EXPLOSION, transform.position);
+        else if (amount > 0)
+            EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.BUFF, transform.position);
+        else
+            return;
+    }
 
+    public void TakeIgnoreShieldDamage(int amount) {
+        HP.Value -= amount;
+        EffectForPlayer(-amount);
+    }
 
     public void ReleaseTurn() {
         if (myTurn == true && !dragCard) {
