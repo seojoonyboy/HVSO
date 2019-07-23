@@ -275,10 +275,11 @@ public class PlayerController : MonoBehaviour
     }
 
     public void EffectForPlayer(int amount = 0) {
+        Vector3 position = new Vector3(transform.position.x, transform.position.y + 2.75f, transform.position.z);
         if (amount < 0)
-            EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.EXPLOSION, transform.position);
+            EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.EXPLOSION, position);
         else if (amount > 0)
-            EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.BUFF, transform.position);
+            EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.BUFF, position);
         else
             return;
     }
@@ -286,6 +287,7 @@ public class PlayerController : MonoBehaviour
     public void TakeIgnoreShieldDamage(int amount) {
         HP.Value -= amount;
         EffectForPlayer(-amount);
+        SetState(HeroState.HIT);
     }
 
     public void ReleaseTurn() {

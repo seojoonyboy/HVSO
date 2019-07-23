@@ -301,9 +301,13 @@ public partial class CardDropManager {
             ActivateTarget(unitLine, magicTarget, dragFiltering);
         else
             ActivateTarget(enemyUnitLine, magicTarget, dragFiltering);
+
+        if (magicArgs == "tool")
+            ActivateTarget(unitLine, magicTarget, dragFiltering, magicArgs);
+
     }
 
-    private void ActivateTarget(Transform[][] units, string group, SkillModules.SkillHandler.DragFilter dragFiltering) {
+    private void ActivateTarget(Transform[][] units, string group, SkillModules.SkillHandler.DragFilter dragFiltering, string args = null) {
         switch (group) {
             case "unit":
                 for (int i = 0; i < 5; i++) {
@@ -321,11 +325,16 @@ public partial class CardDropManager {
                 break;
             case "line":
                 for (int i = 0; i < 5; i++) {
-                    if (units[i][0].childCount > 0) {
-                        if(units[i][0].GetChild(0).GetComponent<ambush>() == null)
+                    if (args == null) {
+                        if (units[i][0].childCount > 0) {
+                            if (units[i][0].GetChild(0).GetComponent<ambush>() == null)
+                                slotLine[i].Find("BattleLineEffect").gameObject.SetActive(true);
+                        }
+                        if (units[i][1].childCount > 0) {
                             slotLine[i].Find("BattleLineEffect").gameObject.SetActive(true);
+                        }
                     }
-                    if (units[i][1].childCount > 0) {
+                    else {
                         slotLine[i].Find("BattleLineEffect").gameObject.SetActive(true);
                     }
                 }
@@ -343,10 +352,14 @@ public partial class CardDropManager {
             DeactivateTarget(unitLine, magicTarget);
         else
             DeactivateTarget(enemyUnitLine, magicTarget);
+
+        if (magicArgs == "tool")
+            DeactivateTarget(unitLine, magicTarget, magicArgs);
+
         magicArgs = magicTarget = null;
     }
 
-    private void DeactivateTarget(Transform[][] units, string group) {
+    private void DeactivateTarget(Transform[][] units, string group, string args = null) {
         switch (group) {
             case "unit":
                 for (int i = 0; i < 5; i++) {
@@ -360,8 +373,12 @@ public partial class CardDropManager {
                 break;
             case "line":
                 for (int i = 0; i < 5; i++) {
-                    if (units[i][0].childCount > 0 || units[i][1].childCount > 0)
+                    if ((units[i][0].childCount > 0 || units[i][1].childCount > 0) && args == null)
                         slotLine[i].Find("BattleLineEffect").gameObject.SetActive(false);
+
+                    if(args != null)
+                        slotLine[i].Find("BattleLineEffect").gameObject.SetActive(false);
+
                 }
                 break;
             default:
