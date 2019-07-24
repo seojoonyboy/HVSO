@@ -97,24 +97,18 @@ public class EditCardHandler : MonoBehaviour, IPointerDownHandler, IPointerClick
         this.isHuman = isHuman;
         cardID = id;
         cardData = AccountManager.Instance.allCardsDic[cardID];
-        if (cardData.type == "unit") {
-            transform.Find("MagicEditCard").gameObject.SetActive(false);
+        if (cardData.type == "unit") 
             cardObject = transform.Find("UnitEditCard");
-        }
-        else if (cardData.type == "magic") {
-            transform.Find("UnitEditCard").gameObject.SetActive(false);
+        else if (cardData.type == "magic" && !cardData.isHeroCard)
             cardObject = transform.Find("MagicEditCard");
-        }
-        else {
+        else 
             cardObject = transform;
-        }
         cardObject.gameObject.SetActive(true);
         if (cardData.rarelity == "legend")
             cardObject.SetAsFirstSibling();
         Sprite portraitImage = null;
         if (AccountManager.Instance.resource.cardPortraite.ContainsKey(cardID)) portraitImage = AccountManager.Instance.resource.cardPortraite[cardID];
         else portraitImage = AccountManager.Instance.resource.cardPortraite["default"];
-        transform.Find("SelectedPanel").gameObject.SetActive(false);
         cardObject.Find("Portrait").GetComponent<Image>().sprite = portraitImage;
         if (!cardData.isHeroCard) {
             cardObject.Find("BackGround").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground[cardData.type + "_" + cardData.rarelity];
@@ -149,27 +143,33 @@ public class EditCardHandler : MonoBehaviour, IPointerDownHandler, IPointerClick
         cardObject.Find("Cost/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.cost.ToString();
         //cardObject.Find("Class").GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[cardData.cardClasses[0]];
         cardObject.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.name;
-        if (haveNum > 0 || setNum > 0) {
-            transform.Find("HaveNum").gameObject.SetActive(true);
-            cardObject.Find("Disabled").gameObject.SetActive(false);
-            if (haveNum > 0)
-                transform.Find("HaveNum/Value").GetComponent<TMPro.TextMeshProUGUI>().text = "x" + haveNum.ToString();
-            if(setNum > 0)
-                transform.Find("HaveNum/Value").GetComponent<TMPro.TextMeshProUGUI>().text = "x" + setNum.ToString();
-        }
-        else {
-            cardObject.Find("Disabled").gameObject.SetActive(true);
-            if (cardData.type == "unit") {
-                if (cardObject.Find("SkillIcon").gameObject.activeSelf) {
-                    cardObject.Find("Disabled/HaveAbility").gameObject.SetActive(true);
-                    cardObject.Find("Disabled/NonAbility").gameObject.SetActive(false);
-                }
-                else {
-                    cardObject.Find("Disabled/HaveAbility").gameObject.SetActive(false);
-                    cardObject.Find("Disabled/NonAbility").gameObject.SetActive(true);
-                }
+        if (!cardData.isHeroCard) {
+            if (haveNum > 0 || setNum > 0) {
+                transform.Find("HaveNum").gameObject.SetActive(true);
+                cardObject.Find("Disabled").gameObject.SetActive(false);
+                if (haveNum > 0)
+                    transform.Find("HaveNum/Value").GetComponent<TMPro.TextMeshProUGUI>().text = "x" + haveNum.ToString();
+                if (setNum > 0)
+                    transform.Find("HaveNum/Value").GetComponent<TMPro.TextMeshProUGUI>().text = "x" + setNum.ToString();
             }
-            transform.Find("HaveNum").gameObject.SetActive(false);
+            else {
+                DisableCard(true);
+                transform.Find("HaveNum").gameObject.SetActive(false);
+            }
+        }
+    }
+
+    public void DisableCard(bool disable) {
+        cardObject.Find("Disabled").gameObject.SetActive(disable);
+        if (cardData.type == "unit") {
+            if (cardObject.Find("SkillIcon").gameObject.activeSelf) {
+                cardObject.Find("Disabled/HaveAbility").gameObject.SetActive(true);
+                cardObject.Find("Disabled/NonAbility").gameObject.SetActive(false);
+            }
+            else {
+                cardObject.Find("Disabled/HaveAbility").gameObject.SetActive(false);
+                cardObject.Find("Disabled/NonAbility").gameObject.SetActive(true);
+            }
         }
     }
 }

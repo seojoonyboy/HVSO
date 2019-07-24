@@ -157,7 +157,7 @@ public class MenuCardInfo : MonoBehaviour
         //마법 카드
         else {
             info.Find("MagicPortrait").gameObject.SetActive(true);
-            if (AccountManager.Instance.resource.cardPortraite.ContainsKey(data.cardId)) {
+            if (AccountManager.Instance.resource.cardPortraite.ContainsKey(data.id)) {
                 info.Find("MagicPortrait").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardPortraite[data.id];
             }
         }
