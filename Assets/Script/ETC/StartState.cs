@@ -1,5 +1,6 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
 
 namespace IngameEditor {
     public class StartState {
@@ -24,8 +25,8 @@ namespace IngameEditor {
             player = new Player();
             player.resource = 1;
             player.deck = new Deck();
-            player.deck.handCards = new string[10];
-            player.deck.heroCards = new string[4];
+            player.deck.handCards = new List<string>();
+            player.deck.heroCards = new List<string>();
             player.hero = new Hero();
             player.hero.currentHp = 20;
             player.hero.shieldGuage = 0;
@@ -67,8 +68,8 @@ namespace IngameEditor {
     }
 
     public class Deck {
-        public string[] heroCards;
-        public string[] handCards;
+        public List<string> heroCards;
+        public List<string> handCards;
     }
 
 
