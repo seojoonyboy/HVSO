@@ -41,7 +41,6 @@ public class UnitSpine : MonoBehaviour
     protected SkeletonAnimation skeletonAnimation;
     protected Spine.AnimationState spineAnimationState;
     protected Skeleton skeleton;
-    protected BoneFollower boneFollower;
 
     public UnityAction attackCallback;
     public UnityAction takeMagicCallback;
@@ -49,6 +48,10 @@ public class UnitSpine : MonoBehaviour
     public GameObject arrow;
     public GameObject hidingObject;
     protected HideUnit hideUnit;
+
+    protected Transform headbone;
+    protected Transform bodybone;
+    protected Transform rootbone;
     
     public SkeletonAnimation GetSkeleton {
         get { return skeletonAnimation; }
@@ -70,8 +73,9 @@ public class UnitSpine : MonoBehaviour
         spineAnimationState = skeletonAnimation.AnimationState;
         spineAnimationState.Event += AnimationEvent;
         skeleton = skeletonAnimation.Skeleton;
-        boneFollower = transform.Find("BoneFollower").gameObject.GetComponent<BoneFollower>();
-        Debug.Log(boneFollower.gameObject.transform.position.x+ " " + boneFollower.gameObject.transform.position.y);
+        headbone = transform.Find("effect_head");
+        bodybone = transform.Find("effect_body");
+        rootbone = transform.Find("effect_root");
         
         //skeleton.SetToSetupPose();
 
