@@ -19,6 +19,7 @@ namespace dataModules {
     /// <summary>
     /// 모든 카드 요청시 형식
     /// </summary>
+    [Serializable]
     public class CollectionCard {
         public string[] attackTypes;
         public string[] attributes;
