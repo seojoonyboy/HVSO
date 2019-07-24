@@ -5,71 +5,78 @@ format: RGBA8888
 filter: Linear,Linear
 repeat: none
 L_arm
-  rotate: false
-  xy: 705, 77
+  rotate: true
+  xy: 817, 15
   size: 99, 102
   orig: 99, 102
   offset: 0, 0
   index: -1
 L_leg
-  rotate: true
-  xy: 436, 37
+  rotate: false
+  xy: 919, 18
   size: 74, 96
   orig: 74, 96
   offset: 0, 0
   index: -1
 R_arm
-  rotate: true
-  xy: 600, 77
+  rotate: false
+  xy: 715, 75
   size: 102, 105
   orig: 102, 105
   offset: 0, 0
   index: -1
 R_leg
   rotate: true
-  xy: 278, 11
+  xy: 715, 0
   size: 75, 95
   orig: 75, 95
   offset: 0, 0
   index: -1
 body
   rotate: false
-  xy: 278, 86
+  xy: 278, 87
   size: 158, 169
   orig: 158, 169
   offset: 0, 0
   index: -1
+effect_1
+  rotate: false
+  xy: 600, 65
+  size: 115, 115
+  orig: 115, 115
+  offset: 0, 0
+  index: -1
 eye
   rotate: true
-  xy: 0, 0
+  xy: 0, 1
   size: 70, 89
   orig: 70, 89
   offset: 0, 0
   index: -1
 head
   rotate: false
-  xy: 436, 111
+  xy: 436, 112
   size: 164, 144
   orig: 164, 144
   offset: 0, 0
   index: -1
 head_2
   rotate: false
-  xy: 830, 113
+  xy: 830, 114
   size: 162, 142
   orig: 162, 142
   offset: 0, 0
   index: -1
 shadow
   rotate: false
-  xy: 600, 179
+  xy: 600, 180
   size: 230, 76
   orig: 230, 76
   offset: 0, 0
   index: -1
 weapon
   rotate: true
-  xy: 0, 70
+  xy: 0, 71
   size: 185, 278
   orig: 185, 278
   offset: 0, 0

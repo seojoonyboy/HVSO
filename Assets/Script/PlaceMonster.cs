@@ -266,7 +266,10 @@ public class PlaceMonster : MonoBehaviour {
                 RequestAttackUnit(myTarget, unit.attack);
             }
             else {
-                myTarget.GetComponent<PlayerController>().PlayerTakeDamage(unit.attack);
+                if (GetComponent<SkillModules.nightaction>() != null)
+                    myTarget.GetComponent<PlayerController>().TakeIgnoreShieldDamage(unit.attack);
+                else
+                    myTarget.GetComponent<PlayerController>().PlayerTakeDamage(unit.attack);
             }
 
             AttackEffect(myTarget);

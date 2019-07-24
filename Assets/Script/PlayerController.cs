@@ -284,9 +284,12 @@ public class PlayerController : MonoBehaviour
             return;
     }
 
-    public void TakeIgnoreShieldDamage(int amount) {
+    public void TakeIgnoreShieldDamage(int amount, bool isMagic = false) {
         HP.Value -= amount;
-        EffectForPlayer(-amount);
+
+        if (isMagic == true)
+            EffectForPlayer(-amount);
+
         SetState(HeroState.HIT);
     }
 
