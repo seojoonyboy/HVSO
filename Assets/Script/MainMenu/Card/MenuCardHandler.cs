@@ -21,61 +21,78 @@ public class MenuCardHandler : MonoBehaviour {
     public void DrawCard(string id, bool isHuman) {
         this.isHuman = isHuman;
         cardID = id;
-        if (AccountManager.Instance.allCardsDic.ContainsKey(id)) {
-            cardData = AccountManager.Instance.allCardsDic[cardID];
-            if (cardData.rarelity == "legend")
-                transform.SetAsFirstSibling();
-            Sprite portraitImage = null;
-            if (AccountManager.Instance.resource.cardPortraite.ContainsKey(cardID)) portraitImage = AccountManager.Instance.resource.cardPortraite[cardID];
-            else portraitImage = AccountManager.Instance.resource.cardPortraite["default"];
-
-            transform.Find("Portrait").GetComponent<Image>().sprite = portraitImage;
-            if (!cardData.isHeroCard) {
-                transform.Find("BackGround").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground[cardData.type + "_" + cardData.rarelity];
-                transform.Find("Name").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground["name_" + cardData.rarelity];
-            }
-            else {
-                string race;
-                if (isHuman)
-                    race = "_human";
-                else
-                    race = "_orc";
-                transform.Find("BackGround").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground["hero_" + cardData.rarelity + race];
-                transform.Find("Name").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground["hero_" + cardData.rarelity + race + "_name"];
-            }
-
-            if (AccountManager.Instance.resource.cardSkeleton.ContainsKey("cardID")) skeleton = AccountManager.Instance.resource.cardSkeleton[cardID];
+        cardData = AccountManager.Instance.allCardsDic[cardID];
+        Transform cardObject;
+        if (cardData.type == "unit") {
+            transform.Find("MagicEditCard").gameObject.SetActive(false);
+            cardObject = transform.Find("UnitEditCard");
+        }
+        else if (cardData.type == "magic" && !cardData.isHeroCard) {
+            transform.Find("UnitEditCard").gameObject.SetActive(false);
+            cardObject = transform.Find("MagicEditCard");
         }
         else
-            Logger.Log("NoData");
-        if (cardData.type == "unit") {
-            Logger.Log(cardData.name);
-            transform.Find("Health/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.hp.ToString();
-            transform.Find("attack/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.attack.ToString();
-            if (cardData.attributes.Length == 0 && cardData.attackTypes.Length == 0)
-                transform.Find("SkillIcon").gameObject.SetActive(false);
-            else {
-                transform.Find("SkillIcon").gameObject.SetActive(true);
-                if (cardData.attributes.Length != 0)
-                    transform.Find("SkillIcon").GetComponent<Image>().sprite = AccountManager.Instance.resource.skillIcons[cardData.attributes[0]];
-                if (cardData.attackTypes.Length != 0)
-                    transform.Find("SkillIcon").GetComponent<Image>().sprite = AccountManager.Instance.resource.skillIcons[cardData.attackTypes[0]];
-                if (cardData.attributes.Length != 0 && cardData.attackTypes.Length != 0)
-                    transform.Find("SkillIcon").GetComponent<Image>().sprite = AccountManager.Instance.resource.skillIcons["complex"];
-            }
+            cardObject = transform;
+        cardObject.gameObject.SetActive(true);
+        if (cardData.rarelity == "legend")
+            cardObject.SetAsFirstSibling();
+        Sprite portraitImage = null;
+        if (AccountManager.Instance.resource.cardPortraite.ContainsKey(cardID)) portraitImage = AccountManager.Instance.resource.cardPortraite[cardID];
+        else portraitImage = AccountManager.Instance.resource.cardPortraite["default"];
+        cardObject.Find("Portrait").GetComponent<Image>().sprite = portraitImage;
+        if (!cardData.isHeroCard) {
+            cardObject.Find("BackGround").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground[cardData.type + "_" + cardData.rarelity];
+            cardObject.Find("Name").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground["name_" + cardData.rarelity];
         }
         else {
-            transform.Find("Health").gameObject.SetActive(false);
-            transform.Find("attack").gameObject.SetActive(false);
-            transform.Find("SkillIcon").gameObject.SetActive(false);
+            string race;
+            if (isHuman)
+                race = "_human";
+            else
+                race = "_orc";
+            cardObject.Find("BackGround").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground["hero_" + cardData.rarelity + race];
+            cardObject.Find("Name").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground["hero_" + cardData.rarelity + race + "_name"];
         }
-        transform.Find("Cost/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.cost.ToString();
-        transform.Find("Class").GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[cardData.cardClasses[0]];
-        transform.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.name;
-        if (!AccountManager.Instance.cardPackage.data.ContainsKey(id))
-            transform.Find("Disabled").gameObject.SetActive(true);
-        else
-            transform.Find("Disabled").gameObject.SetActive(false);
+
+        if (cardData.type == "unit") {
+            Logger.Log(cardData.name);
+            cardObject.Find("Health/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.hp.ToString();
+            cardObject.Find("attack/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.attack.ToString();
+            if (cardData.attributes.Length == 0 && cardData.attackTypes.Length == 0)
+                cardObject.Find("SkillIcon").gameObject.SetActive(false);
+            else {
+                cardObject.Find("SkillIcon").gameObject.SetActive(true);
+                if (cardData.attributes.Length != 0)
+                    cardObject.Find("SkillIcon").GetComponent<Image>().sprite = AccountManager.Instance.resource.skillIcons[cardData.attributes[0]];
+                if (cardData.attackTypes.Length != 0)
+                    cardObject.Find("SkillIcon").GetComponent<Image>().sprite = AccountManager.Instance.resource.skillIcons[cardData.attackTypes[0]];
+                if (cardData.attributes.Length != 0 && cardData.attackTypes.Length != 0)
+                    cardObject.Find("SkillIcon").GetComponent<Image>().sprite = AccountManager.Instance.resource.skillIcons["complex"];
+            }
+        }
+        cardObject.Find("Cost/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.cost.ToString();
+        //cardObject.Find("Class").GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[cardData.cardClasses[0]];
+        cardObject.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.name;
+        if (cardData.isHeroCard) return;
+        if (AccountManager.Instance.cardPackage.data.ContainsKey(cardID)) {
+            transform.Find("HaveNum").gameObject.SetActive(true);
+            transform.Find("HaveNum/Value").GetComponent<TMPro.TextMeshProUGUI>().text = "x" + AccountManager.Instance.cardPackage.data[id].cardCount.ToString();
+            cardObject.Find("Disabled").gameObject.SetActive(false);
+        }
+        else {
+            cardObject.Find("Disabled").gameObject.SetActive(true);
+            if (cardData.type == "unit") {
+                if (cardObject.Find("SkillIcon").gameObject.activeSelf) {
+                    cardObject.Find("Disabled/HaveAbility").gameObject.SetActive(true);
+                    cardObject.Find("Disabled/NonAbility").gameObject.SetActive(false);
+                }
+                else {
+                    cardObject.Find("Disabled/HaveAbility").gameObject.SetActive(false);
+                    cardObject.Find("Disabled/NonAbility").gameObject.SetActive(true);
+                }
+            }
+            transform.Find("HaveNum").gameObject.SetActive(false);
+        }
     }
 
     public void OpenCardInfo() {
