@@ -18,6 +18,7 @@ public class EffectSystem : MonoBehaviour
         effectObject[EffectType.HIT_MIDDLE] = spineEffectManager.middileAttackEffect;
         effectObject[EffectType.HIT_HIGH] = spineEffectManager.highAttackEffect;
         effectObject[EffectType.EXPLOSION] = spineEffectManager.explosionEffect;
+        effectObject[EffectType.ANGRY] = spineEffectManager.angryEffect;
         effectObject[EffectType.CONTINUE_BUFF] = spineEffectManager.buffContinue;
     }
 
@@ -28,6 +29,16 @@ public class EffectSystem : MonoBehaviour
         effectAnimation.AnimationState.SetAnimation(0, "animation", false);
         Destroy(effect, effectAnimation.skeleton.Data.FindAnimation("animation").Duration - 0.1f);        
     }
+
+    public float ShowEffect(EffectType type, Transform transform) {
+        if (effectObject.ContainsKey(type) == false || effectObject[type] == null) return 0;
+        GameObject effect = Instantiate(effectObject[type], transform);
+        SkeletonAnimation effectAnimation = effect.GetComponent<SkeletonAnimation>();
+        effectAnimation.AnimationState.SetAnimation(0, "animation", false);
+        Destroy(effect, effectAnimation.skeleton.Data.FindAnimation("animation").Duration - 0.1f);
+        return effectAnimation.skeleton.Data.FindAnimation("animation").Duration - 0.1f;
+    }
+
 
     public void ContinueEffect(EffectType type, Transform pos) {
         if (effectObject.ContainsKey(type) == false || effectObject[type] == null) return;
@@ -55,6 +66,7 @@ public class EffectSystem : MonoBehaviour
         HIT_MIDDLE,
         HIT_HIGH,
         EXPLOSION,
+        ANGRY,
         DEAD,
         CONTINUE_BUFF
     }

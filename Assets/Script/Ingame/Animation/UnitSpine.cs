@@ -49,9 +49,12 @@ public class UnitSpine : MonoBehaviour
     public GameObject hidingObject;
     protected HideUnit hideUnit;
 
-    protected Transform headbone;
-    protected Transform bodybone;
-    protected Transform rootbone;
+    [HideInInspector]
+    public Transform headbone;
+    [HideInInspector]
+    public Transform bodybone;
+    [HideInInspector]
+    public Transform rootbone;
     
     public SkeletonAnimation GetSkeleton {
         get { return skeletonAnimation; }
@@ -119,6 +122,12 @@ public class UnitSpine : MonoBehaviour
         currentAnimationName = hitAnimationName;
         entry.Complete += Idle;
     }
+    
+
+    IEnumerator WaitAnimation(float amount) {
+        yield return new WaitForSeconds(amount);
+    }
+
 
     public virtual void Preview() {
         spineAnimationState.SetAnimation(0, idleAnimationName, true);
@@ -140,6 +149,7 @@ public class UnitSpine : MonoBehaviour
         entry.Complete += TakeMagicEvent;
         entry.Complete += Idle;
     }
+    
 
 
 

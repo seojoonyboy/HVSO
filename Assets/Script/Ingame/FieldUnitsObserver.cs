@@ -37,11 +37,12 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
         Transform parent = slotParent.GetChild(pos.row).GetChild(pos.col);
         Vector2 targetPos = parent.position;
         
-        iTween.MoveTo(
-            target,
-            new Vector2(targetPos.x, targetPos.y),
-            1.0f
-        );
+
+        //iTween.MoveTo(
+        //    target,
+        //    new Vector2(targetPos.x, targetPos.y),
+        //    1.0f
+        //);
 
         if (isHuman) humanUnits[prevPos.col, prevPos.row] = null;
         else orcUnits[prevPos.col, prevPos.row] = null;
@@ -82,7 +83,7 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
         yield return new WaitForSeconds(1.0f);
 
         target.transform.SetParent(parent);
-        target.transform.localPosition = Vector3.zero;
+        //target.transform.localPosition = Vector3.zero;
 
         target.GetComponent<PlaceMonster>().ChangePosition(
             newPos.col,

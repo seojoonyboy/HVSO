@@ -38,6 +38,8 @@ public partial class PlayMangement : MonoBehaviour {
     public static bool dragable = true;
     public string currentTurn;
 
+    public string magicHistroy;
+
     private void Awake() {
         socketHandler = FindObjectOfType<BattleConnector>();
 

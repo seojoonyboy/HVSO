@@ -1,0 +1,20 @@
+
+ac10016.png
+size: 128,128
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+effect_1
+  rotate: false
+  xy: 0, 49
+  size: 82, 76
+  orig: 82, 76
+  offset: 0, 0
+  index: -1
+effect_2
+  rotate: false
+  xy: 0, 0
+  size: 48, 49
+  orig: 48, 49
+  offset: 0, 0
+  index: -1

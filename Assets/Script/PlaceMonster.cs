@@ -53,6 +53,7 @@ public class PlaceMonster : MonoBehaviour {
         HIT,
         MAGICHIT,
         DETECT,
+        ANGRY,
         DEAD
     };
 
@@ -209,6 +210,9 @@ public class PlaceMonster : MonoBehaviour {
         if (unit.attack <= 0) return;
         PlaceMonster placeMonster = myTarget.GetComponent<PlaceMonster>();
 
+        
+
+
         if (unit.attackRange == "distance")
             UnitTryAttack();
         else {
@@ -233,6 +237,9 @@ public class PlaceMonster : MonoBehaviour {
 
     public void UnitTryAttack() {
         if (unit.attack <= 0) return;
+
+        
+
         SetState(UnitState.ATTACK);
     }
 
@@ -304,6 +311,17 @@ public class PlaceMonster : MonoBehaviour {
 
     public void InstanceAttack() {
         instanceAttack = true;
+
+        if (PlayMangement.instance.magicHistroy == "ac10016") {
+            float time = EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.ANGRY, unitSpine.headbone);
+            StartCoroutine(WaitEffect(time));
+        }
+        else
+            GetTarget();
+    }
+
+    IEnumerator WaitEffect(float amount) {
+        yield return new WaitForSeconds(amount);
         GetTarget();
     }
 
@@ -312,6 +330,8 @@ public class PlaceMonster : MonoBehaviour {
         this.x = x;
         this.y = y;
 
+        SetState(UnitState.APPEAR);
+        gameObject.transform.position = unitLocation;        
         this.unitLocation = unitLocation;
     }
 
@@ -528,6 +548,8 @@ public class PlaceMonster : MonoBehaviour {
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.FIELD_CHANGED, null, null);
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.DIE, this, parms);
     }
+    
+
     
     protected void SetState(UnitState state) {
 
