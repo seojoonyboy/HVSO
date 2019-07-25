@@ -77,7 +77,7 @@ public partial class PlayMangement : MonoBehaviour {
 
     private void SetWorldScale() {
 
-        SpriteRenderer backSprite = backGround.GetComponent<SpriteRenderer>();
+        //SpriteRenderer backSprite = backGround.GetComponent<SpriteRenderer>();
         float ratio = (float)Screen.width / Screen.height;
 
         if (ratio < (float)1080 / 1920)

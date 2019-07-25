@@ -334,9 +334,13 @@ public class PlaceMonster : MonoBehaviour {
 
         Vector3 portalPosition = new Vector3(unitLocation.x, unitLocation.y + 1f, unitLocation.z);
 
-        actionCall += ChangePositionEffect;
-        EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.PORTAL, portalPosition, actionCall);
-        actionCall = null;
+        if (PlayMangement.instance.magicHistroy == "ac10028") {
+            actionCall += ChangePositionEffect;
+            EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.PORTAL, portalPosition, actionCall);
+            actionCall = null;
+        }
+        else
+            ChangePositionEffect();
         
         this.unitLocation = unitLocation;
     }
