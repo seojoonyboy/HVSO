@@ -333,6 +333,7 @@ public class PlaceMonster : MonoBehaviour {
         this.y = y;
 
         Vector3 portalPosition = new Vector3(unitLocation.x, unitLocation.y + 1f, unitLocation.z);
+        this.unitLocation = unitLocation;
 
         if (PlayMangement.instance.magicHistroy == "ac10028") {
             actionCall += ChangePositionEffect;
@@ -341,8 +342,6 @@ public class PlaceMonster : MonoBehaviour {
         }
         else
             ChangePositionEffect();
-        
-        this.unitLocation = unitLocation;
     }
 
 

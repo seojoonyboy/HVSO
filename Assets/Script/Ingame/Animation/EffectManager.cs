@@ -28,4 +28,5 @@ public class SpineEffectManager {
     public GameObject buffContinue;
     public GameObject trebuchetEffect;
     public GameObject portalEffect;
+    public GameObject returnEffect;
 }

@@ -4,29 +4,18 @@ using UnityEngine;
 using Spine.Unity;
 using UnityEngine.Events;
 using Spine;
+using Sirenix.OdinInspector;
 
-public class EffectSystem : MonoBehaviour
+public class EffectSystem : SerializedMonoBehaviour
 {
     public delegate void ActionDelegate();
 
     public static EffectSystem Instance { get; private set; }
     public Dictionary<EffectType, GameObject> effectObject;
-    public SpineEffectManager spineEffectManager;
     public GameObject deadEffect;
 
     private void Awake() {
         Instance = this;
-        effectObject = new Dictionary<EffectType, GameObject>();
-        effectObject[EffectType.APPEAR] = spineEffectManager.appearEffect;
-        effectObject[EffectType.BUFF] = spineEffectManager.buffEffect;
-        effectObject[EffectType.HIT_LOW] = spineEffectManager.lowAttackEffect;
-        effectObject[EffectType.HIT_MIDDLE] = spineEffectManager.middileAttackEffect;
-        effectObject[EffectType.HIT_HIGH] = spineEffectManager.highAttackEffect;
-        effectObject[EffectType.EXPLOSION] = spineEffectManager.explosionEffect;
-        effectObject[EffectType.ANGRY] = spineEffectManager.angryEffect;
-        effectObject[EffectType.CONTINUE_BUFF] = spineEffectManager.buffContinue;
-        effectObject[EffectType.TREBUCHET] = spineEffectManager.trebuchetEffect;
-        effectObject[EffectType.PORTAL] = spineEffectManager.portalEffect;
     }
 
     public void ShowEffect(EffectType type, Vector3 pos) {
@@ -62,7 +51,7 @@ public class EffectSystem : MonoBehaviour
         GameObject effect = Instantiate(effectObject[type], transform);
         SkeletonAnimation effectAnimation = effect.GetComponent<SkeletonAnimation>();
         effectAnimation.AnimationState.SetAnimation(0, "animation", false);
-        effectAnimation.AnimationState.End += delegate (TrackEntry entry) { callBack(); Destroy(effect); };
+        effectAnimation.AnimationState.Complete += delegate (TrackEntry entry) { callBack(); Destroy(effect); };
     }
     
 
@@ -97,7 +86,8 @@ public class EffectSystem : MonoBehaviour
         DEAD,
         TREBUCHET,
         PORTAL,
-        CONTINUE_BUFF
+        CONTINUE_BUFF,
+        GETBACK
     }
 
 }
