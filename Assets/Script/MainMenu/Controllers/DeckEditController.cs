@@ -520,12 +520,12 @@ public class DeckEditController : MonoBehaviour
                 items.Add(data);
             }
         }
-        deckNamePanel.transform.Find("NameTemplate").Find("Text").GetComponent<Text>().text = "";
+        var nameVal = deckNamePanel.transform.Find("NameTemplate").Find("Text").GetComponent<Text>().text;
         heroID = (isHuman == true) ? "h10001" : "h10002";
 
         formatData.heroId = heroID; //영웅 id
         formatData.items = items.ToArray(); //추가한 카드 정보들
-        formatData.name = deckNamePanel.transform.Find("NameTemplate").Find("Text").GetComponent<Text>().text;   //덱 이름
+        formatData.name = nameVal.Replace(" ", string.Empty);
         formatData.camp = (isHuman == true) ? "human" : "orc";
 
         AccountManager.Instance.RequestDeckMake(formatData, OnMakeNewDeckFinished);
