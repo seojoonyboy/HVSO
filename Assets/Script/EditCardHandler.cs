@@ -8,10 +8,11 @@ public class EditCardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     public string cardID;
     public DeckEditController deckEditController;
 
-    [SerializeField] MenuCardInfo menuCardInfo;
+    public MenuCardInfo menuCardInfo;
     dataModules.CollectionCard cardData;
     public GameObject beforeObject;
     public Transform cardObject;
+    public Transform beforeParent;
 
     public bool clicking = false;
     public bool pointerEnter = false;
@@ -26,7 +27,9 @@ public class EditCardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     private Vector3 startLocalPos;
     private Transform mouseObject;
 
+    static GameObject draggingObject;
     public static bool dragable = true;
+    public static bool dragging = false;
 
     public int SETNUM {
         get { return setNum; }
@@ -55,7 +58,9 @@ public class EditCardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         if (Input.touchCount > 1) return;
         if (disabled) return;
         if (!dragable) return;
+        draggingObject = gameObject;
         dragable = false;
+        dragging = true;
         startPos = transform.position;
         startLocalPos = transform.localPosition;
         Vector3 mousePos = Input.mousePosition;
@@ -63,26 +68,26 @@ public class EditCardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
             mouseObject = transform.parent.parent.Find("MousePos");
             mouseObject.position = new Vector3(mousePos.x, mouseObject.position.y, 0);
             transform.parent.SetParent(mouseObject);
-            if (mousePos.y > startPos.y + 20)
+            if (mousePos.y > startPos.y + 40)
                 transform.position = new Vector3(mousePos.x, mousePos.y, 0);
-            else
-                transform.position = new Vector3(mousePos.x, startPos.y, 0);
         }
-        else
+        else {
+            beforeParent = transform.parent;
             transform.position = new Vector3(mousePos.x, mousePos.y, 0);
+            transform.SetParent(deckEditController.setCardText.transform);
+        }
 
     }
 
     public void OnDrag(PointerEventData eventData) {
         if (Input.touchCount > 1) return;
         if (disabled) return;
+        if (draggingObject != gameObject) return;
         Vector3 mousePos = Input.mousePosition;
         if (isHandCard) {
             mouseObject.position = new Vector3(mousePos.x, mouseObject.position.y, 0);
-            if (mousePos.y > startPos.y + 20)
+            if (mousePos.y > startPos.y + 40)
                 transform.position = new Vector3(mousePos.x, mousePos.y, 0);
-            else
-                transform.position = new Vector3(mousePos.x, startPos.y, 0);
         }
         else
             transform.position = new Vector3(mousePos.x, mousePos.y, 0);
@@ -90,10 +95,13 @@ public class EditCardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
     public void OnEndDrag(PointerEventData eventData) {
         if (disabled) return;
-        StartCoroutine(EndDrag());
+        if (draggingObject != gameObject) return;
+        EndDrag();
+        dragging = false;
+        draggingObject = null;
     }
 
-    IEnumerator EndDrag() {
+    void EndDrag() {
         if (isHandCard) {
             transform.parent.SetParent(mouseObject.parent);
             if (transform.localPosition.y > 280) {
@@ -104,18 +112,30 @@ public class EditCardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
                 }
             }
             else {
-                iTween.MoveTo(transform.parent.gameObject, iTween.Hash("x", 0, "islocal", true, "time", 0.2f));
                 transform.localPosition = startLocalPos;
-                yield return new WaitForSeconds(0.3f);
             }
+            SortHandPos();
         }
         else {
+            transform.SetParent(beforeParent);
             if (transform.localPosition.y < 280) {
                 deckEditController.ConfirmSetDeck(cardData.id, gameObject);
                 transform.localPosition = startLocalPos;
             }
         }
         dragable = true;
+    }
+
+    public void SortHandPos() {
+        int handCardNum = deckEditController.setCardList.Count;
+        if (handCardNum < 5)
+            iTween.MoveTo(transform.parent.gameObject, iTween.Hash("x", 0, "islocal", true, "time", 0.2f));
+        else {
+            if (transform.parent.localPosition.x > 0)
+                iTween.MoveTo(transform.parent.gameObject, iTween.Hash("x", 0, "islocal", true, "time", 0.2f));
+            if(transform.parent.localPosition.x < -240 * (handCardNum - 4))
+                iTween.MoveTo(transform.parent.gameObject, iTween.Hash("x", -240 * (handCardNum - 4), "islocal", true, "time", 0.2f));
+        }
     }
 
     public void SetHaveNum() {
@@ -144,6 +164,7 @@ public class EditCardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
 
     public void OpenCardInfo() {
+        if (dragging) return;
         menuCardInfo.SetCardInfo(cardData, isHuman);
         menuCardInfo.transform.parent.gameObject.SetActive(true);
     }
