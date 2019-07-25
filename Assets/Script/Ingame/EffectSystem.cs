@@ -62,7 +62,7 @@ public class EffectSystem : MonoBehaviour
         GameObject effect = Instantiate(effectObject[type], transform);
         SkeletonAnimation effectAnimation = effect.GetComponent<SkeletonAnimation>();
         effectAnimation.AnimationState.SetAnimation(0, "animation", false);
-        effectAnimation.AnimationState.End += delegate (TrackEntry entry) { callBack(); Destroy(effect); };
+        effectAnimation.AnimationState.Complete += delegate (TrackEntry entry) { callBack(); Destroy(effect); };
     }
     
 
