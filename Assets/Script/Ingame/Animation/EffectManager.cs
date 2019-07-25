@@ -26,4 +26,6 @@ public class SpineEffectManager {
     public GameObject deadEffect;
     public GameObject angryEffect;
     public GameObject buffContinue;
+    public GameObject trebuchetEffect;
+    public GameObject portalEffect;
 }

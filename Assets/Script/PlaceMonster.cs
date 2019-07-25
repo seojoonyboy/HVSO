@@ -28,6 +28,7 @@ public class PlaceMonster : MonoBehaviour {
     public HideUnit hideSpine;
     
     protected bool instanceAttack = false;
+    public EffectSystem.ActionDelegate actionCall;
 
     public float atkTime {
         get { return unitSpine.atkDuration; }
@@ -310,19 +311,20 @@ public class PlaceMonster : MonoBehaviour {
     }
 
     public void InstanceAttack() {
-        instanceAttack = true;
+        instanceAttack = true;        
 
         if (PlayMangement.instance.magicHistroy == "ac10016") {
-            float time = EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.ANGRY, unitSpine.headbone);
-            StartCoroutine(WaitEffect(time));
+            actionCall += GetTarget;
+            EffectSystem.Instance.ShowEffectAfterCall(EffectSystem.EffectType.ANGRY, unitSpine.headbone, actionCall);
+            actionCall -= actionCall;
         }
         else
             GetTarget();
     }
 
-    IEnumerator WaitEffect(float amount) {
-        yield return new WaitForSeconds(amount);
-        GetTarget();
+    public void ChangePositionEffect() {
+        SetState(UnitState.APPEAR);
+        gameObject.transform.position = unitLocation;
     }
 
 
@@ -330,8 +332,12 @@ public class PlaceMonster : MonoBehaviour {
         this.x = x;
         this.y = y;
 
-        SetState(UnitState.APPEAR);
-        gameObject.transform.position = unitLocation;        
+        Vector3 portalPosition = new Vector3(unitLocation.x, unitLocation.y + 1f, unitLocation.z);
+
+        actionCall += ChangePositionEffect;
+        EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.PORTAL, portalPosition, actionCall);
+        actionCall = null;
+        
         this.unitLocation = unitLocation;
     }
 
@@ -435,28 +441,42 @@ public class PlaceMonster : MonoBehaviour {
         if(buff.running) yield break;
         else buff.running = true;
         yield return null;
+
         if(buff.atk == 0 && buff.hp == 0) {
             buff.init();
             yield break;
         }
         else {
-            if(buff.hp < 0) 
-                EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.EXPLOSION, transform.position);
+            if (buff.hp < 0) {
+                if (PlayMangement.instance.magicHistroy == "ac10021") {
+                    actionCall += Hit;
+                    EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.TREBUCHET, transform.position, actionCall);
+                    actionCall -= actionCall;
+                }
+                else
+                    EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.EXPLOSION, transform.position);
+
+                
+            }
             else {
                 EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.BUFF, transform.position);
-                if (buffEffect == false) {                    
+                if (buffEffect == false) {
                     EffectSystem.Instance.ContinueEffect(EffectSystem.EffectType.CONTINUE_BUFF, transform);
                     buffEffect = true;
                 }
                 else {
-                    if(unit.attack <= unit.originalAttack) {
-                       EffectSystem.Instance.DisableEffect(transform);
-                       buffEffect = false;
+                    if (unit.attack <= unit.originalAttack) {
+                        EffectSystem.Instance.DisableEffect(transform);
+                        buffEffect = false;
                     }
                 }
             }
         }
         buff.init();
+    }
+
+    private void Hit() {
+        SetState(UnitState.HIT);
     }
 
     public void UpdateStat() {
