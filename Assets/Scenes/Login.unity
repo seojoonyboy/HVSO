@@ -5017,7 +5017,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: nightaction
+      Data: night_op
     - Name: $v
       Entry: 10
       Data: 202
@@ -5596,7 +5596,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: nightaction
+      Data: night_op
     - Name: $v
       Entry: 1
       Data: "\uC57C\uAC04\uC791\uC804"
@@ -5903,7 +5903,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: nightaction
+      Data: night_op
     - Name: $v
       Entry: 1
       Data: "\uC0C1\uB300 \uC601\uC6C5 \uACF5\uACA9\uC2DC \uC2E4\uB4DC\uAC8C\uC774\uC9C0\uB97C
