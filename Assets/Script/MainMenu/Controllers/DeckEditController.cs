@@ -64,17 +64,15 @@ public class DeckEditController : MonoBehaviour
         haveCardNum = 0;
         dontHaveCard = 0;
         currentPage = 0;
+        EditCardHandler.dragable = true;
         for (int i = 0; i < 40; i++) {
-            settingLayout.GetChild(i).gameObject.SetActive(false);
-            settingLayout.GetChild(i).Find("UnitEditCard").gameObject.SetActive(false);
-            settingLayout.GetChild(i).Find("MagicEditCard").gameObject.SetActive(false);
-            settingLayout.GetChild(i).GetComponent<EditCardHandler>().SETNUM = 0;
+            settingLayout.GetChild(i).GetComponent<EditCardHandler>().InitEditCard();
+            settingLayout.GetChild(i).GetComponent<EditCardHandler>().deckEditController = this;
         }
         for(int i = 0; i < ownCardLayout.transform.childCount; i++) {
             for (int j = 0; j < 9; j++) {
-                ownCardLayout.GetChild(i).GetChild(j).gameObject.SetActive(false);
-                ownCardLayout.GetChild(i).GetChild(j).Find("UnitEditCard").gameObject.SetActive(false);
-                ownCardLayout.GetChild(i).GetChild(j).Find("MagicEditCard").gameObject.SetActive(false);
+                ownCardLayout.GetChild(i).GetChild(j).GetComponent<EditCardHandler>().InitEditCard();
+                ownCardLayout.GetChild(i).GetChild(j).GetComponent<EditCardHandler>().deckEditController = this;
             }
         }
         ownCardLayout.GetChild(currentPage).gameObject.SetActive(true);
@@ -183,35 +181,25 @@ public class DeckEditController : MonoBehaviour
         }
     }
 
-    public void ExpectFromDeck() {
-        if (selectCard == null) return;
-        EditCardHandler cardHandler = selectCard.GetComponent<EditCardHandler>();
-        string id = cardHandler.cardID;
+    public void ExpectFromDeck(string id, GameObject card) {
+        EditCardHandler cardHandler = card.GetComponent<EditCardHandler>();
         cardHandler.SETNUM--;
         cardHandler.SetSetNum();
-        selectCard.transform.Find("SelectedPanel").gameObject.SetActive(false);
         EditCardHandler beforeCard = cardHandler.beforeObject.GetComponent<EditCardHandler>();
         beforeCard.HAVENUM++;
-        if (beforeCard.HAVENUM > 0)
-            cardHandler.beforeObject.SetActive(true);
         beforeCard.SetHaveNum();
         if (cardHandler.SETNUM == 0) {
-            beforeCard = null;
-            selectCard.transform.SetAsLastSibling();
+            cardHandler.beforeObject = null;
             setCardList.Remove(id);
-            selectCard.gameObject.SetActive(false);
         }
-        transform.Find("ExceptButton").gameObject.SetActive(false);
         setCardNum--;
         haveCardNum++;
         RefreshLine();
     }
 
-    public void ConfirmSetDeck() {
-        if (selectCard == null) return;
+    public void ConfirmSetDeck(string id, GameObject card) {
         if (setCardNum == 40) return;
-        EditCardHandler cardHandler = selectCard.GetComponent<EditCardHandler>();
-        string id = cardHandler.cardID;
+        EditCardHandler cardHandler = card.GetComponent<EditCardHandler>();
         if (!setCardList.ContainsKey(id)) {
             GameObject addedCard = settingLayout.transform.GetChild(setCardList.Count).gameObject;
             setCardList.Add(id, addedCard);
@@ -219,7 +207,7 @@ public class DeckEditController : MonoBehaviour
             addCardHandler.SETNUM++;
             addCardHandler.DrawCard(id, isHuman);
             addCardHandler.SetSetNum();
-            addCardHandler.beforeObject = selectCard;
+            addCardHandler.beforeObject = cardHandler.gameObject;
             addedCard.SetActive(true);
         }
         else {
@@ -230,11 +218,6 @@ public class DeckEditController : MonoBehaviour
         cardHandler.HAVENUM--;
         haveCardNum--;
         cardHandler.SetHaveNum();
-        selectCard.transform.Find("SelectedPanel").gameObject.SetActive(false);
-        if (cardHandler.HAVENUM == 0)
-            selectCard.SetActive(false);
-        selectCard = null;
-        transform.Find("SetDeckLayout").Find("glow").gameObject.SetActive(false);
         setCardNum++;
         RefreshLine();
     }

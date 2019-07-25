@@ -1,9 +1,8 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.Events;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
-using Spine;
-using Spine.Unity;
 
 public class EditCardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
     public string cardID;
@@ -21,7 +20,13 @@ public class EditCardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     public int myIndex;
     private int setNum;
     private int haveNum;
+    private bool isHandCard = false;
+    private bool disabled = false;
     private Vector3 startPos;
+    private Vector3 startLocalPos;
+    private Transform mouseObject;
+
+    public static bool dragable = true;
 
     public int SETNUM {
         get { return setNum; }
@@ -33,47 +38,95 @@ public class EditCardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         set { haveNum = value; }
     }
 
-    private void Update() {
-        if (clicking == true && pointerEnter == true) {
-            time += Time.deltaTime;
+    private void Start() {
+        if (transform.parent.name == "SettedDeck")
+            isHandCard = true;
+    }
 
-            if (time > 1f) {
-                clicking = false;
-                OpenCardInfo();
-                time = 0;
-            }
-        }
+    public void InitEditCard() {
+        gameObject.SetActive(false);
+        disabled = false;
+        transform.Find("UnitEditCard").gameObject.SetActive(false);
+        transform.Find("MagicEditCard").gameObject.SetActive(false);
+        GetComponent<EditCardHandler>().SETNUM = 0;
     }
 
     public void OnBeginDrag(PointerEventData eventData) {        
         if (Input.touchCount > 1) return;
-        startPos = transform.localPosition;
+        if (disabled) return;
+        if (!dragable) return;
+        dragable = false;
+        startPos = transform.position;
+        startLocalPos = transform.localPosition;
         Vector3 mousePos = Input.mousePosition;
-        transform.position = new Vector3(startPos.x, mousePos.y, 0);
+        if (isHandCard) {
+            mouseObject = transform.parent.parent.Find("MousePos");
+            mouseObject.position = new Vector3(mousePos.x, mouseObject.position.y, 0);
+            transform.parent.SetParent(mouseObject);
+            if (mousePos.y > startPos.y + 20)
+                transform.position = new Vector3(mousePos.x, mousePos.y, 0);
+            else
+                transform.position = new Vector3(mousePos.x, startPos.y, 0);
+        }
+        else
+            transform.position = new Vector3(mousePos.x, mousePos.y, 0);
+
     }
 
     public void OnDrag(PointerEventData eventData) {
         if (Input.touchCount > 1) return;
+        if (disabled) return;
         Vector3 mousePos = Input.mousePosition;
-        transform.position = new Vector3(startPos.x, mousePos.y, 0);
+        if (isHandCard) {
+            mouseObject.position = new Vector3(mousePos.x, mouseObject.position.y, 0);
+            if (mousePos.y > startPos.y + 20)
+                transform.position = new Vector3(mousePos.x, mousePos.y, 0);
+            else
+                transform.position = new Vector3(mousePos.x, startPos.y, 0);
+        }
+        else
+            transform.position = new Vector3(mousePos.x, mousePos.y, 0);
     }
 
     public void OnEndDrag(PointerEventData eventData) {
-        transform.localPosition = startPos;
+        if (disabled) return;
+        StartCoroutine(EndDrag());
     }
 
-    protected void StartDragCard() {
-        Vector3 mousePos = Input.mousePosition;
-        mousePos = new Vector3(mousePos.x, mousePos.y, 0);
-    }
-
-    protected void OnDragCard() {
-        Vector3 mousePos = Input.mousePosition;
-        mousePos = new Vector3(mousePos.x, mousePos.y, 0);
+    IEnumerator EndDrag() {
+        if (isHandCard) {
+            transform.parent.SetParent(mouseObject.parent);
+            if (transform.localPosition.y > 280) {
+                deckEditController.ExpectFromDeck(cardData.id, gameObject);
+                if (SETNUM == 0) {
+                    transform.SetAsLastSibling();
+                    gameObject.SetActive(false);
+                }
+            }
+            else {
+                iTween.MoveTo(transform.parent.gameObject, iTween.Hash("x", 0, "islocal", true, "time", 0.2f));
+                transform.localPosition = startLocalPos;
+                yield return new WaitForSeconds(0.3f);
+            }
+        }
+        else {
+            if (transform.localPosition.y < 280) {
+                deckEditController.ConfirmSetDeck(cardData.id, gameObject);
+                transform.localPosition = startLocalPos;
+            }
+        }
+        dragable = true;
     }
 
     public void SetHaveNum() {
-        cardObject.Find("Disabled").gameObject.SetActive(false);
+        if (haveNum > 0) {
+            DisableCard(false);
+            transform.Find("HaveNum").gameObject.SetActive(true);
+        }
+        else {
+            DisableCard(true);
+            transform.Find("HaveNum").gameObject.SetActive(false);
+        }
         transform.Find("HaveNum/Value").GetComponent<TMPro.TextMeshProUGUI>().text = "x" + haveNum.ToString();
     }
 
@@ -89,31 +142,6 @@ public class EditCardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         deckEditController.OnTouchCard(gameObject);
     }
 
-    public void ExepctBtn() {
-        deckEditController.ExpectFromDeck();
-    }
-
-    public void OnPointerDown(PointerEventData eventData) {
-        clicking = true;
-    }
-
-
-    public void OnPointerClick(PointerEventData eventData) {
-        if (clicking == false) return;
-
-        clicking = false;
-        CardSet();
-        time = 0;
-    }
-
-    public void OnPointerEnter(PointerEventData eventData) {
-        pointerEnter = true;
-    }
-
-    public void OnPointerExit(PointerEventData eventData) {
-        pointerEnter = false;
-        time = 0;
-    }
 
     public void OpenCardInfo() {
         menuCardInfo.SetCardInfo(cardData, isHuman);
@@ -188,6 +216,7 @@ public class EditCardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     }
 
     public void DisableCard(bool disable) {
+        disabled = disable;
         cardObject.Find("Disabled").gameObject.SetActive(disable);
         if (cardData.type == "unit") {
             if (cardObject.Find("SkillIcon").gameObject.activeSelf) {
