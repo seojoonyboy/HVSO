@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using Spine;
 using Spine.Unity;
 
-public class EditCardHandler : MonoBehaviour, IPointerDownHandler, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler {
+public class EditCardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
     public string cardID;
     public DeckEditController deckEditController;
 
@@ -21,6 +21,7 @@ public class EditCardHandler : MonoBehaviour, IPointerDownHandler, IPointerClick
     public int myIndex;
     private int setNum;
     private int haveNum;
+    private Vector3 startPos;
 
     public int SETNUM {
         get { return setNum; }
@@ -42,6 +43,33 @@ public class EditCardHandler : MonoBehaviour, IPointerDownHandler, IPointerClick
                 time = 0;
             }
         }
+    }
+
+    public void OnBeginDrag(PointerEventData eventData) {        
+        if (Input.touchCount > 1) return;
+        startPos = transform.localPosition;
+        Vector3 mousePos = Input.mousePosition;
+        transform.position = new Vector3(startPos.x, mousePos.y, 0);
+    }
+
+    public void OnDrag(PointerEventData eventData) {
+        if (Input.touchCount > 1) return;
+        Vector3 mousePos = Input.mousePosition;
+        transform.position = new Vector3(startPos.x, mousePos.y, 0);
+    }
+
+    public void OnEndDrag(PointerEventData eventData) {
+        transform.localPosition = startPos;
+    }
+
+    protected void StartDragCard() {
+        Vector3 mousePos = Input.mousePosition;
+        mousePos = new Vector3(mousePos.x, mousePos.y, 0);
+    }
+
+    protected void OnDragCard() {
+        Vector3 mousePos = Input.mousePosition;
+        mousePos = new Vector3(mousePos.x, mousePos.y, 0);
     }
 
     public void SetHaveNum() {
