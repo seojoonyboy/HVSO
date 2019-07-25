@@ -41,25 +41,25 @@ public class CardDictionaryManager : MonoBehaviour {
     }
 
     public void SetCardsInDictionary() {
-        for (int i = 0; i < cardList.childCount; i++)
-            cardList.GetChild(i).gameObject.SetActive(false);
-        int count = 0;
-        foreach (dataModules.CollectionCard card in AccountManager.Instance.allCards) {
-            if (isHumanDictionary) {
-                if (card.camp == "human" && !card.isHeroCard) {
-                    cardList.GetChild(count).gameObject.SetActive(true);
-                    cardList.GetChild(count).GetComponent<MenuCardHandler>().DrawCard(card.id, true);
-                    count++;
-                }
-            }
-            else {
-                if (card.camp == "orc" && !card.isHeroCard) {
-                    cardList.GetChild(count).gameObject.SetActive(true);
-                    cardList.GetChild(count).GetComponent<MenuCardHandler>().DrawCard(card.id, false);
-                    count++;
-                }
-            }
-        }
+        //for (int i = 0; i < cardList.childCount; i++)
+        //    cardList.GetChild(i).gameObject.SetActive(false);
+        //int count = 0;
+        //foreach (dataModules.CollectionCard card in AccountManager.Instance.allCards) {
+        //    if (isHumanDictionary) {
+        //        if (card.camp == "human" && !card.isHeroCard) {
+        //            cardList.GetChild(count).gameObject.SetActive(true);
+        //            cardList.GetChild(count).GetComponent<MenuCardHandler>().DrawCard(card.id, true);
+        //            count++;
+        //        }
+        //    }
+        //    else {
+        //        if (card.camp == "orc" && !card.isHeroCard) {
+        //            cardList.GetChild(count).gameObject.SetActive(true);
+        //            cardList.GetChild(count).GetComponent<MenuCardHandler>().DrawCard(card.id, false);
+        //            count++;
+        //        }
+        //    }
+        //}
         SetHeroButtons();
     }
 
