@@ -118,10 +118,9 @@ public class EditCardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         }
         else {
             transform.SetParent(beforeParent);
-            if (transform.localPosition.y < 280) {
+            if (transform.position.y < deckEditController.transform.Find("DeckNamePanel").position.y)
                 deckEditController.ConfirmSetDeck(cardData.id, gameObject);
-                transform.localPosition = startLocalPos;
-            }
+            transform.localPosition = startLocalPos;
         }
         dragable = true;
     }
