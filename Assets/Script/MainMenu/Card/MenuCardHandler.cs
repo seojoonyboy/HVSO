@@ -65,7 +65,9 @@ public class MenuCardHandler : MonoBehaviour {
                 if (cardData.attributes.Length != 0)
                     cardObject.Find("SkillIcon").GetComponent<Image>().sprite = AccountManager.Instance.resource.skillIcons[cardData.attributes[0]];
                 if (cardData.attackTypes.Length != 0)
-                    cardObject.Find("SkillIcon").GetComponent<Image>().sprite = AccountManager.Instance.resource.skillIcons[cardData.attackTypes[0]];
+                    if (AccountManager.Instance.resource.skillIcons.ContainsKey(cardData.attackTypes[0])) {
+                        cardObject.Find("SkillIcon").GetComponent<Image>().sprite = AccountManager.Instance.resource.skillIcons[cardData.attackTypes[0]];
+                    }
                 if (cardData.attributes.Length != 0 && cardData.attackTypes.Length != 0)
                     cardObject.Find("SkillIcon").GetComponent<Image>().sprite = AccountManager.Instance.resource.skillIcons["complex"];
             }

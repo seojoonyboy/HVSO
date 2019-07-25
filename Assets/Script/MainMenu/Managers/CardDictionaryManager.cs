@@ -21,8 +21,6 @@ public class CardDictionaryManager : MonoBehaviour {
 
     public void SetToHumanCards() {
         isHumanDictionary = true;
-        transform.Find("Bars/Orc").gameObject.SetActive(false);
-        transform.Find("Bars/Human").gameObject.SetActive(true);
         transform.Find("Buttons/OrcSelect").GetChild(0).gameObject.SetActive(false);
         transform.Find("Buttons/HumanSelect").GetChild(0).gameObject.SetActive(true);
         SetCardsInDictionary();
@@ -30,8 +28,6 @@ public class CardDictionaryManager : MonoBehaviour {
 
     public void SetToOrcCards() {
         isHumanDictionary = false;
-        transform.Find("Bars/Orc").gameObject.SetActive(true);
-        transform.Find("Bars/Human").gameObject.SetActive(false);
         transform.Find("Buttons/OrcSelect").GetChild(0).gameObject.SetActive(true);
         transform.Find("Buttons/HumanSelect").GetChild(0).gameObject.SetActive(false);
         SetCardsInDictionary();
@@ -61,28 +57,33 @@ public class CardDictionaryManager : MonoBehaviour {
     }
 
     public void SetHeroButtons() {
-        for (int i = 0; i < 8; i++) {
-            heroCards.GetChild(i).Find("Empty").gameObject.SetActive(true);
-            heroCards.GetChild(i).Find("Disable").gameObject.SetActive(true);
-        }
-        int count = 0;
-
-        if (isHumanDictionary) {
-            foreach (dataModules.Templates card in AccountManager.Instance.humanTemplates) {
-                heroCards.GetChild(count).GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[card.id + "_button"];
-                heroCards.GetChild(count).Find("Empty").gameObject.SetActive(false);
-                heroCards.GetChild(count).Find("Disable").gameObject.SetActive(false);
-                count++;
-
+        for(int i = 0; i < 4; i++) {
+            for (int j = 0; j < 3; j++) {
+                heroCards.GetChild(i).GetChild(j).GetComponent<Image>().color = new Color(82, 80, 80, 255);
             }
         }
-        else {
-            foreach (dataModules.Templates card in AccountManager.Instance.orcTemplates) {
+        
+        int count = 0;
 
-                heroCards.GetChild(count).GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[card.id + "_button"];
-                heroCards.GetChild(count).Find("Empty").gameObject.SetActive(false);
-                heroCards.GetChild(count).Find("Disable").gameObject.SetActive(false);
-                count++;
+        List<dataModules.Templates> selectedTemplates;
+        if (isHumanDictionary) {
+            
+            selectedTemplates = AccountManager.Instance.humanTemplates;
+        }
+        else {
+            selectedTemplates = AccountManager.Instance.orcTemplates;
+        }
+
+        int pageIndex = 0;
+        int slotIndex = 0;
+        foreach (dataModules.Templates card in selectedTemplates) {
+            Transform hero = heroCards.GetChild(pageIndex).GetChild(count);
+            hero.gameObject.SetActive(true);
+            hero.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = card.name;
+            slotIndex++;
+            if (slotIndex == 3) {
+                slotIndex = 0;
+                pageIndex++;
             }
         }
     }
