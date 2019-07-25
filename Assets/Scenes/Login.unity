@@ -1755,14 +1755,10 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 4287e07421b4c4a43aacbbb215bd9dad, type: 3}
     - {fileID: 21300000, guid: 6e8f0bdcac5e80d4187ed05ad2bdcee0, type: 3}
     - {fileID: 21300000, guid: 34d80abdaffe34b4e95d906408c48518, type: 3}
-    - {fileID: -8740347094599829763, guid: 52f135f3b99c28141a870c88179a9a1a, type: 3}
-    - {fileID: -5025510588738423543, guid: 52f135f3b99c28141a870c88179a9a1a, type: 3}
-    - {fileID: 1312467189619365717, guid: 52f135f3b99c28141a870c88179a9a1a, type: 3}
-    - {fileID: -3399892814996401110, guid: 52f135f3b99c28141a870c88179a9a1a, type: 3}
-    - {fileID: 7950901069433409177, guid: cfee3d9cbe6d3a24d8ac69c26762363d, type: 3}
-    - {fileID: 4319943120128849821, guid: cfee3d9cbe6d3a24d8ac69c26762363d, type: 3}
-    - {fileID: -4181674840599303106, guid: cfee3d9cbe6d3a24d8ac69c26762363d, type: 3}
-    - {fileID: -5433353595515796267, guid: cfee3d9cbe6d3a24d8ac69c26762363d, type: 3}
+    - {fileID: 21300000, guid: 3f60b8911860b6442890f90107b22be3, type: 3}
+    - {fileID: 21300000, guid: bdcf319f46989c740ba28f50fa01a832, type: 3}
+    - {fileID: 21300000, guid: adf9ed4d1d2ca4946b49569711564228, type: 3}
+    - {fileID: 21300000, guid: e3cb359f1b774c949bffc2561b38d993, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -5207,8 +5203,8 @@ MonoBehaviour:
       Entry: 1
       Data: h10001_button
     - Name: $v
-      Entry: 10
-      Data: 216
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -5219,8 +5215,8 @@ MonoBehaviour:
       Entry: 1
       Data: h10002_button
     - Name: $v
-      Entry: 10
-      Data: 217
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -5231,8 +5227,8 @@ MonoBehaviour:
       Entry: 1
       Data: h10003_button
     - Name: $v
-      Entry: 10
-      Data: 218
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -5243,8 +5239,8 @@ MonoBehaviour:
       Entry: 1
       Data: h10004_button
     - Name: $v
-      Entry: 10
-      Data: 219
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
