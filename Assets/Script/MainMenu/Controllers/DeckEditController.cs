@@ -84,6 +84,7 @@ public class DeckEditController : MonoBehaviour
         ownCardLayout.GetChild(currentPage).gameObject.SetActive(true);
         for (int i = 1; i < ownCardLayout.childCount; i++)
             ownCardLayout.GetChild(i).gameObject.SetActive(false);
+        buttons.Find("NextPageButton").gameObject.SetActive(true);
         buttons.Find("PrevPageButton").gameObject.SetActive(false);
         pagenumText.text = "1/" + ownCardLayout.childCount.ToString();
         selectCard = null;
