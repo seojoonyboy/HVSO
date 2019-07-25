@@ -9,6 +9,9 @@ public class CardDictionaryManager : MonoBehaviour {
     [SerializeField] Transform cardList;
     [SerializeField] Transform heroCards;
     [SerializeField] Transform heroInfoWindow;
+
+    [SerializeField] Sprite orcPanelBg, humanPanelBg;
+
     bool isHumanDictionary;
 
     private void Start() {
@@ -23,6 +26,8 @@ public class CardDictionaryManager : MonoBehaviour {
         isHumanDictionary = true;
         transform.Find("Buttons/OrcSelect").GetChild(0).gameObject.SetActive(false);
         transform.Find("Buttons/HumanSelect").GetChild(0).gameObject.SetActive(true);
+        heroCards.parent.Find("Background").GetComponent<Image>().sprite = humanPanelBg;
+
         SetCardsInDictionary();
     }
 
@@ -30,6 +35,8 @@ public class CardDictionaryManager : MonoBehaviour {
         isHumanDictionary = false;
         transform.Find("Buttons/OrcSelect").GetChild(0).gameObject.SetActive(true);
         transform.Find("Buttons/HumanSelect").GetChild(0).gameObject.SetActive(false);
+        heroCards.parent.Find("Background").GetComponent<Image>().sprite = orcPanelBg;
+
         SetCardsInDictionary();
     }
 
@@ -80,6 +87,8 @@ public class CardDictionaryManager : MonoBehaviour {
             Transform hero = heroCards.GetChild(pageIndex).GetChild(count);
             hero.gameObject.SetActive(true);
             hero.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = card.name;
+            hero.GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[card.id];
+
             slotIndex++;
             if (slotIndex == 3) {
                 slotIndex = 0;
