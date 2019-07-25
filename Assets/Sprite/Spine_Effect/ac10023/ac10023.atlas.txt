@@ -1,0 +1,20 @@
+
+ac10023.png
+size: 512,128
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+card
+  rotate: false
+  xy: 0, 0
+  size: 182, 127
+  orig: 182, 127
+  offset: 0, 0
+  index: -1
+dust
+  rotate: false
+  xy: 182, 35
+  size: 102, 92
+  orig: 102, 92
+  offset: 0, 0
+  index: -1

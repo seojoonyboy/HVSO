@@ -453,6 +453,7 @@ namespace SkillModules {
                     PlaceMonster mondata = selectedUnit.GetComponent<PlaceMonster>();
                     if(mondata.itemId == card.itemId) {
                         var selectedUnitPos = playMangement.UnitsObserver.GetMyPos(selectedUnit);
+                        EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.GETBACK, selectedUnit.transform.position);
                         UnityEngine.Object.Destroy(selectedUnit);
 
                         playMangement.UnitsObserver.UnitRemoved(
