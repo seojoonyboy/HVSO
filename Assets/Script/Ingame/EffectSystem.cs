@@ -2,8 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Spine.Unity;
+using UnityEngine.Events;
+using Spine;
+
 public class EffectSystem : MonoBehaviour
 {
+    public delegate void ActionDelegate();
+
     public static EffectSystem Instance { get; private set; }
     public Dictionary<EffectType, GameObject> effectObject;
     public SpineEffectManager spineEffectManager;
@@ -20,6 +25,8 @@ public class EffectSystem : MonoBehaviour
         effectObject[EffectType.EXPLOSION] = spineEffectManager.explosionEffect;
         effectObject[EffectType.ANGRY] = spineEffectManager.angryEffect;
         effectObject[EffectType.CONTINUE_BUFF] = spineEffectManager.buffContinue;
+        effectObject[EffectType.TREBUCHET] = spineEffectManager.trebuchetEffect;
+        effectObject[EffectType.PORTAL] = spineEffectManager.portalEffect;
     }
 
     public void ShowEffect(EffectType type, Vector3 pos) {
@@ -27,17 +34,37 @@ public class EffectSystem : MonoBehaviour
         GameObject effect = Instantiate(effectObject[type], pos, Quaternion.identity);
         SkeletonAnimation effectAnimation = effect.GetComponent<SkeletonAnimation>();     
         effectAnimation.AnimationState.SetAnimation(0, "animation", false);
-        Destroy(effect, effectAnimation.skeleton.Data.FindAnimation("animation").Duration - 0.1f);        
+        Destroy(effect, effectAnimation.skeleton.Data.FindAnimation("animation").Duration - 0.1f);
+        //return effectAnimation.skeleton.Data.FindAnimation("animation").Duration - 0.1f;
     }
 
-    public float ShowEffect(EffectType type, Transform transform) {
-        if (effectObject.ContainsKey(type) == false || effectObject[type] == null) return 0;
+    public void ShowEffectOnEvent(EffectType type, Vector3 pos, ActionDelegate callback) {
+        if (effectObject.ContainsKey(type) == false || effectObject[type] == null) return;
+        GameObject effect = Instantiate(effectObject[type], pos, Quaternion.identity);
+        SkeletonAnimation effectAnimation = effect.GetComponent<SkeletonAnimation>();
+        effectAnimation.AnimationState.SetAnimation(0, "animation", false);
+        effectAnimation.AnimationState.Event += delegate (TrackEntry entry, Spine.Event e) {
+            if(e.Data.Name == "ATTACK") {
+                callback();
+            }
+
+            if(e.Data.Name == "APPEAR") {
+                callback();
+            }
+
+        };
+        effectAnimation.AnimationState.End += delegate (TrackEntry entry) { Destroy(effect); };
+    }
+    
+
+    public void ShowEffectAfterCall(EffectType type, Transform transform, ActionDelegate callBack) {
+        if (effectObject.ContainsKey(type) == false || effectObject[type] == null) return;
         GameObject effect = Instantiate(effectObject[type], transform);
         SkeletonAnimation effectAnimation = effect.GetComponent<SkeletonAnimation>();
         effectAnimation.AnimationState.SetAnimation(0, "animation", false);
-        Destroy(effect, effectAnimation.skeleton.Data.FindAnimation("animation").Duration - 0.1f);
-        return effectAnimation.skeleton.Data.FindAnimation("animation").Duration - 0.1f;
+        effectAnimation.AnimationState.End += delegate (TrackEntry entry) { callBack(); Destroy(effect); };
     }
+    
 
 
     public void ContinueEffect(EffectType type, Transform pos) {
@@ -68,6 +95,8 @@ public class EffectSystem : MonoBehaviour
         EXPLOSION,
         ANGRY,
         DEAD,
+        TREBUCHET,
+        PORTAL,
         CONTINUE_BUFF
     }
 

@@ -79,7 +79,6 @@ public class UnitSpine : MonoBehaviour
         headbone = transform.Find("effect_head");
         bodybone = transform.Find("effect_body");
         rootbone = transform.Find("effect_root");
-        
         //skeleton.SetToSetupPose();
 
         if (arrow != null && transform.parent.GetComponent<PlaceMonster>().isPlayer == true) {
@@ -157,6 +156,7 @@ public class UnitSpine : MonoBehaviour
         if(e.Data.Name == attackEventName) {
             if (attackCallback != null) attackCallback();
         }
+        
 
         if(e.Data.Name == "APPEAR") {
             EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.APPEAR, transform.position);

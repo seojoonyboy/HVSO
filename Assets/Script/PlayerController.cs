@@ -42,6 +42,8 @@ public class PlayerController : MonoBehaviour
     protected HeroSpine heroSpine;
     public static int activeCardMinCost;
 
+    public EffectSystem.ActionDelegate actionCall;
+
     public GameObject effectObject;
     public enum HeroState {
         IDLE,
@@ -276,21 +278,38 @@ public class PlayerController : MonoBehaviour
 
     public void EffectForPlayer(int amount = 0) {
         Vector3 position = new Vector3(transform.position.x, transform.position.y + 2.75f, transform.position.z);
-        if (amount < 0)
-            EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.EXPLOSION, position);
+        if (amount < 0) {
+            if (PlayMangement.instance.magicHistroy == "ac10021") {
+                actionCall += MagicHit;
+                EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.TREBUCHET, transform.position, actionCall);
+                actionCall -= actionCall;
+            }
+            else
+                EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.EXPLOSION, position);
+        }
         else if (amount > 0)
             EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.BUFF, position);
         else
             return;
     }
+    
 
     public void TakeIgnoreShieldDamage(int amount, bool isMagic = false) {
         HP.Value -= amount;
 
         if (isMagic == true)
             EffectForPlayer(-amount);
+        else
+            Hit();
+    }
 
+    private void Hit() {
         SetState(HeroState.HIT);
+    }
+
+    private void MagicHit() {
+        SetState(HeroState.HIT);
+        StartCoroutine(PlayMangement.instance.cameraShake(0.8f, 3));
     }
 
     public void ReleaseTurn() {

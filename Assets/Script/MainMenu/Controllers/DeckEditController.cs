@@ -9,6 +9,7 @@ using BestHTTP;
 
 public class DeckEditController : MonoBehaviour
 {
+    [SerializeField] MenuCardInfo menuCardInfo;
     public string heroID;
 
     private Transform buttons;
@@ -21,7 +22,7 @@ public class DeckEditController : MonoBehaviour
     public GameObject selectCard;
     public bool editing = false;
 
-    Dictionary<string, GameObject> setCardList;
+    public Dictionary<string, GameObject> setCardList;
     List<DeckItem> items;
 
     public string deckID = null;
@@ -30,7 +31,7 @@ public class DeckEditController : MonoBehaviour
     int haveCardNum = 0;
     int maxHaveCard = 0;
     int dontHaveCard = 0;
-    TMPro.TextMeshProUGUI setCardText;
+    public TMPro.TextMeshProUGUI setCardText;
     TMPro.TextMeshProUGUI pagenumText;
     string maxPage;
 
@@ -65,14 +66,19 @@ public class DeckEditController : MonoBehaviour
         dontHaveCard = 0;
         currentPage = 0;
         EditCardHandler.dragable = true;
+        settingLayout.localPosition = new Vector3(0, settingLayout.localPosition.y, 0);
         for (int i = 0; i < 40; i++) {
-            settingLayout.GetChild(i).GetComponent<EditCardHandler>().InitEditCard();
-            settingLayout.GetChild(i).GetComponent<EditCardHandler>().deckEditController = this;
+            EditCardHandler cardHandler = settingLayout.GetChild(i).GetComponent<EditCardHandler>();
+            cardHandler.InitEditCard();
+            cardHandler.deckEditController = this;
+            cardHandler.menuCardInfo = this.menuCardInfo;
         }
         for(int i = 0; i < ownCardLayout.transform.childCount; i++) {
             for (int j = 0; j < 9; j++) {
-                ownCardLayout.GetChild(i).GetChild(j).GetComponent<EditCardHandler>().InitEditCard();
-                ownCardLayout.GetChild(i).GetChild(j).GetComponent<EditCardHandler>().deckEditController = this;
+                EditCardHandler cardHandler = ownCardLayout.GetChild(i).GetChild(j).GetChild(0).GetComponent<EditCardHandler>();
+                cardHandler.InitEditCard();
+                cardHandler.deckEditController = this;
+                cardHandler.menuCardInfo = this.menuCardInfo;
             }
         }
         ownCardLayout.GetChild(currentPage).gameObject.SetActive(true);
@@ -227,7 +233,7 @@ public class DeckEditController : MonoBehaviour
         setCardText.text = setCardNum.ToString() + "/40";
         //haveCardText.text = haveCardNum.ToString() + "/" + maxHaveCard.ToString();
         Canvas.ForceUpdateCanvases();
-        //LayoutRebuilder.ForceRebuildLayoutImmediate(transform.Find("CardPanel").Find("Viewport").Find("Content").GetComponent<RectTransform>());
+        LayoutRebuilder.ForceRebuildLayoutImmediate(settingLayout.GetComponent<RectTransform>());
     }
 
 
@@ -294,10 +300,11 @@ public class DeckEditController : MonoBehaviour
             if (myCards.data.ContainsKey(card.id)) {
                 ownCount++;
                 int page = ownCount / 9;
-                ownCardLayout.GetChild(page).GetChild(ownCount - (page * 9)).gameObject.SetActive(true);
-                ownCardLayout.GetChild(page).GetChild(ownCount - (page * 9)).GetComponent<EditCardHandler>().HAVENUM = myCards.data[card.id].cardCount;
+                EditCardHandler ownedCard = ownCardLayout.GetChild(page).GetChild(ownCount - (page * 9)).GetChild(0).GetComponent<EditCardHandler>();
+                ownedCard.gameObject.SetActive(true);
+                ownedCard.HAVENUM = myCards.data[card.id].cardCount;
                 haveCardNum += myCards.data[card.id].cardCount;
-                ownCardLayout.GetChild(page).GetChild(ownCount - (page * 9)).GetComponent<EditCardHandler>().DrawCard(card.id, isHuman);
+                ownedCard.DrawCard(card.id, isHuman);
                 maxHaveCard = haveCardNum;
                 RefreshLine();
             }
@@ -416,7 +423,7 @@ public class DeckEditController : MonoBehaviour
                 if (!setCardList.ContainsKey(card.id)){
                     ownCount++;
                     int page = ownCount / 9;
-                    EditCardHandler ownedCard = ownCardLayout.GetChild(page).GetChild(ownCount - (page * 9)).GetComponent<EditCardHandler>();
+                    EditCardHandler ownedCard = ownCardLayout.GetChild(page).GetChild(ownCount - (page * 9)).GetChild(0).GetComponent<EditCardHandler>();
                     ownedCard.gameObject.SetActive(true);
                     ownedCard.HAVENUM = myCards.data[card.id].cardCount;
                     haveCardNum += myCards.data[card.id].cardCount;
@@ -427,7 +434,7 @@ public class DeckEditController : MonoBehaviour
                     ownCount++;
                     int page = ownCount / 9;
                     EditCardHandler settedCard = setCardList[card.id].GetComponent<EditCardHandler>();
-                    EditCardHandler ownedCard = ownCardLayout.GetChild(page).GetChild(ownCount - (page * 9)).GetComponent<EditCardHandler>();
+                    EditCardHandler ownedCard = ownCardLayout.GetChild(page).GetChild(ownCount - (page * 9)).GetChild(0).GetComponent<EditCardHandler>();
                     ownedCard.gameObject.SetActive(true);
                     settedCard.beforeObject = ownedCard.gameObject;
                     ownedCard.HAVENUM = myCards.data[card.id].cardCount - settedCard.SETNUM;
