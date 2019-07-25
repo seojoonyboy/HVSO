@@ -42,12 +42,12 @@ public partial class PlayMangement : MonoBehaviour {
 
     private void Awake() {
         socketHandler = FindObjectOfType<BattleConnector>();
-
+        bool isTest = Variables.Saved.Get("SelectedBattleType").ToString().CompareTo("test") == 0;
         SetWorldScale();
         instance = this;
         SetPlayerCard();
-        gameObject.GetComponent<TurnChanger>().onTurnChanged.AddListener(() => ChangeTurn());
-        gameObject.GetComponent<TurnChanger>().onPrepareTurn.AddListener(() => DistributeCard());
+        gameObject.GetComponent<TurnChanger>().onTurnChanged.AddListener(ChangeTurn);
+        if(!isTest) gameObject.GetComponent<TurnChanger>().onPrepareTurn.AddListener(DistributeCard);
         GameObject backGroundEffect = Instantiate(effectManager.backGroundEffect);
         backGroundEffect.transform.position = backGround.transform.Find("ParticlePosition").position;
         SetCamera();
@@ -1020,6 +1020,10 @@ public partial class PlayMangement {
 
     public void OnNoCostEffect(bool turnOn) {
         releaseTurnBtn.transform.Find("TurnOverFeedback").gameObject.SetActive(turnOn);
+    }
+
+    public void EditorTestInit(SocketFormat.GameState state) {
+        
     }
 }
 
