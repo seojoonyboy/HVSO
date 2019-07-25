@@ -86,8 +86,11 @@ public partial class BattleConnector : MonoBehaviour {
         string deckId = Variables.Saved.Get("SelectedDeckId").ToString();
         string battleType = Variables.Saved.Get("SelectedBattleType").ToString();
         string race = Variables.Saved.Get("SelectedRace").ToString().ToLower();
-
-        string[] args = new string[] { battleType, deckId, race };
+        string[] args;
+        if(battleType.CompareTo("test") == 0)
+            args = new string[] { battleType, race };   
+        else
+            args = new string[] { battleType, deckId, race };
         SendMethod("join_game", args);
         pingpong = StartCoroutine(Heartbeat());
     }
@@ -126,11 +129,11 @@ public partial class BattleConnector : MonoBehaviour {
         StartCoroutine(waitSkillDone(() => {SendMethod("turn_over");}));
     }
 
-    public void UseCard(object args, UnityAction callback = null) {
+    public void UseCard(object args) {
         SendMethod("play_card", args);
     }
 
-    public void SendStartState(object args, UnityAction callback = null) {
+    public void SendStartState(object args) {
         SendMethod("start_state", args);
     }
 

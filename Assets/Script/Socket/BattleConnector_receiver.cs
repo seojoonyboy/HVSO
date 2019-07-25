@@ -116,7 +116,17 @@ public partial class BattleConnector : MonoBehaviour {
         returnButton.gameObject.SetActive(false);
     }
 
-    public void end_ready(object args) { }
+    public void end_ready(object args) { 
+        bool isTest = Variables.Saved.Get("SelectedBattleType").ToString().CompareTo("test") == 0;
+        if(isTest) {
+            object value = Variables.Saved.Get("Editor_startState");
+            SendStartState(value);
+        }
+    }
+
+    public void start_state(object args) {
+        PlayMangement.instance.EditorTestInit(gameState);
+    }
 
     public void begin_mulligan(object args) { }
 
