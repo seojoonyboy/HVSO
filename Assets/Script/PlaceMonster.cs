@@ -476,7 +476,7 @@ public class PlaceMonster : MonoBehaviour {
                 }
                 else {
                     if (unit.attack <= unit.originalAttack) {
-                        EffectSystem.Instance.DisableEffect(transform);
+                        EffectSystem.Instance.DisableEffect(EffectSystem.EffectType.BUFF, transform);
                         buffEffect = false;
                     }
                 }

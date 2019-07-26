@@ -59,15 +59,18 @@ public class EffectSystem : SerializedMonoBehaviour
     public void ContinueEffect(EffectType type, Transform pos) {
         if (effectObject.ContainsKey(type) == false || effectObject[type] == null) return;
         GameObject effect = Instantiate(effectObject[type], pos);
-        effect.name = "continueBuff";
+        effect.name = effectObject[type].gameObject.name;
         effect.transform.position = pos.position;
         SkeletonAnimation effectAnimation = effect.GetComponent<SkeletonAnimation>();
         effectAnimation.AnimationState.SetAnimation(0, "animation", true);
     }
 
-    public void DisableEffect(Transform pos) {
-        if (pos.gameObject.GetComponent<PlaceMonster>().buffEffect == false) return;
-        Destroy(pos.Find("continueBuff").gameObject);
+    public void DisableEffect(EffectType type, Transform pos) {
+        if (pos.childCount <= 0) return;
+        GameObject effect = pos.Find(effectObject[type].gameObject.name).gameObject;
+        if(effect != null) 
+            Destroy(effect);
+        
     }
 
 
@@ -87,7 +90,8 @@ public class EffectSystem : SerializedMonoBehaviour
         TREBUCHET,
         PORTAL,
         CONTINUE_BUFF,
-        GETBACK
+        GETBACK,
+        STUN
     }
 
 }
