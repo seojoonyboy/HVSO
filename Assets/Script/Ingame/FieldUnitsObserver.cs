@@ -51,6 +51,18 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
         if (isHuman) humanUnits[prevPos.col, prevPos.row] = null;
         else orcUnits[prevPos.col, prevPos.row] = null;
 
+        switch (cardID) {
+            case "ac10028":
+                target.GetComponent<PlaceMonster>().unitSpine.transform.gameObject.GetComponent<Spine.Unity.SkeletonAnimation>().enabled = false;
+                break;
+            case "ac10015":
+                target.GetComponent<PlaceMonster>().unitSpine.transform.gameObject.GetComponent<Spine.Unity.SkeletonAnimation>().enabled = false;
+                break;
+            default:
+                break;
+        }
+
+
         StartCoroutine(UnitChangeCoroutine(target, prevPos, pos, parent, cardID));
     }
 
