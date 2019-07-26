@@ -94,8 +94,8 @@ public class PlaceMonster : MonoBehaviour {
         else
             maxAtkCount = 1;
 
-        if (unit.cardCategories[0] == "stealth")
-        gameObject.AddComponent<ambush>();
+        if (unit.attributes.Length > 0 && unit.attributes[0] == "ambush")
+            gameObject.AddComponent<ambush>();
 
 
         if (unit.attackRange == "distance") {
@@ -128,7 +128,7 @@ public class PlaceMonster : MonoBehaviour {
         if (unit.attributes.Length > 0) {
             if (unit.attributes[0] == "ambush") {
                 unitSpine.hidingObject = AccountManager.Instance.resource.hideObject;
-                GameObject hide = Instantiate(unitSpine.hidingObject, transform);
+                GameObject hide = Instantiate(AccountManager.Instance.resource.hideObject, transform);
                 hide.transform.position = gameObject.transform.position;
                 hideSpine = hide.GetComponent<HideUnit>();
                 hideSpine.unitSpine = unitSpine;
@@ -329,10 +329,15 @@ public class PlaceMonster : MonoBehaviour {
             GetTarget();
     }
 
-    public void ChangePositionEffect() {
+    public void ChangePositionMagicEffect() {
         unitSpine.transform.gameObject.SetActive(true);
         SetState(UnitState.APPEAR);
         gameObject.transform.position = unitLocation;
+    }
+
+    public void ChangePosition() {
+        //gameObject.transform.position = unitLocation;
+        iTween.MoveTo(gameObject, unitLocation, 1.0f);
     }
 
 
@@ -344,15 +349,23 @@ public class PlaceMonster : MonoBehaviour {
         this.unitLocation = unitLocation;
         //unitSpine.transform.gameObject.SetActive(true);
         //unitSpine.transform.gameObject.GetComponent<Spine.Unity.SkeletonAnimation>().enabled = true;
+        
 
+        switch (PlayMangement.instance.magicHistroy) {
+            case "ac10028":
+                actionCall += ChangePositionMagicEffect;
+                EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.PORTAL, portalPosition, actionCall);
+                actionCall = null;
+                break;
+            case "ac10015":
+                ChangePositionMagicEffect();
+                break;
+            default:
+                ChangePosition();
+                break;
 
-        if (PlayMangement.instance.magicHistroy == "ac10028") {
-            actionCall += ChangePositionEffect;
-            EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.PORTAL, portalPosition, actionCall);
-            actionCall = null;
         }
-        else
-            ChangePositionEffect();
+
     }
 
 

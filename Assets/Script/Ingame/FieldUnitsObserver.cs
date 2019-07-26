@@ -38,13 +38,15 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
 
         Transform parent = slotParent.GetChild(pos.row).GetChild(pos.col);
         Vector2 targetPos = parent.position;
-        
 
-        //iTween.MoveTo(
-        //    target,
-        //    new Vector2(targetPos.x, targetPos.y),
-        //    1.0f
-        //);
+
+        //if (PlayMangement.instance.magicHistroy == "") {
+        //    iTween.MoveTo(
+        //        target,
+        //        new Vector2(targetPos.x, targetPos.y),
+        //        1.0f
+        //    );
+        //}
 
         if (isHuman) humanUnits[prevPos.col, prevPos.row] = null;
         else orcUnits[prevPos.col, prevPos.row] = null;
