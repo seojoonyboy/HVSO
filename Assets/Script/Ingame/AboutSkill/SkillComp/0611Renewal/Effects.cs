@@ -736,6 +736,7 @@ namespace SkillModules {
             //bool isPlayer = (bool)tmp[0];
             List<GameObject> targets = (List<GameObject>)tmp[1];
             string method = (string)args[0];
+            setCompare(method);
             int.TryParse((string)args[1], out value);
             Filter(targets, method, value);
         }
