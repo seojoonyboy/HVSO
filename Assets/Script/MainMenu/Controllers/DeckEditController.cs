@@ -13,7 +13,7 @@ public class DeckEditController : MonoBehaviour
     public string heroID;
 
     private Transform buttons;
-    private Transform settingLayout;
+    public Transform settingLayout;
     private Transform ownCardLayout;
     private Transform heroInfoWindow;
 
