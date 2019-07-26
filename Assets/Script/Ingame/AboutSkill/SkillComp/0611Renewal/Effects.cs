@@ -302,11 +302,12 @@ namespace SkillModules {
         private void BlastEnemy(bool isPlayer, List<GameObject> targets, int amount) {
             foreach(GameObject target in targets) {
                 PlaceMonster unit = target.GetComponent<PlaceMonster>();
+                string skillId = skillHandler.myObject.GetComponent<MagicDragHandler>().cardData.cardId;
                 if(unit != null) {
-                    unit.RequestChangeStat(0, -amount);
+                    unit.RequestChangeStat(0, -amount, skillId);
                     WaitEffect(target, amount);
                 } else {
-                    target.GetComponent<PlayerController>().TakeIgnoreShieldDamage(amount, true);
+                    target.GetComponent<PlayerController>().TakeIgnoreShieldDamage(amount, true, skillId);
                     skillHandler.finallyDone = true;
                 }
             }

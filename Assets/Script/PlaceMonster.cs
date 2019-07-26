@@ -453,8 +453,8 @@ public class PlaceMonster : MonoBehaviour {
     }
     
 
-    public void RequestChangeStat(int power = 0, int hp = 0) {
-        StartCoroutine(buffEffectCoroutine(power, hp));
+    public void RequestChangeStat(int power = 0, int hp = 0, string magicId = null) {
+        StartCoroutine(buffEffectCoroutine(power, hp, magicId));
         unit.attack += power;
         if (unit.attack < 0) unit.attack = 0;
         unit.currentHP += hp;
@@ -462,7 +462,7 @@ public class PlaceMonster : MonoBehaviour {
         UpdateStat();
     }
 
-    private IEnumerator buffEffectCoroutine(int power, int hp){
+    private IEnumerator buffEffectCoroutine(int power, int hp, string magicId = null){
         buff.atk += power;
         buff.hp += hp;
         if(buff.running) yield break;
@@ -475,7 +475,7 @@ public class PlaceMonster : MonoBehaviour {
         }
         else {
             if (buff.hp < 0) {
-                if (PlayMangement.instance.magicHistroy == "ac10021") {
+                if (magicId == "ac10021") {
                     actionCall += Hit;
                     EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.TREBUCHET, transform.position, actionCall);
                     actionCall -= actionCall;
