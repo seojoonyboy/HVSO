@@ -152,7 +152,6 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         PlayMangement.dragable = false;
         PlayMangement.instance.LockTurnOver();
         yield return StartCoroutine(PlayMangement.instance.cardHandManager.ShowUsedMagicCard(transform.parent.GetSiblingIndex()));
-        PlayMangement.instance.magicHistroy = cardData.cardId;
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
         highlighted = false;
         CardDropManager.Instance.HighLightMagicSlot(highlightedSlot, highlighted);

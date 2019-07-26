@@ -317,10 +317,10 @@ public class PlaceMonster : MonoBehaviour {
         EndAttack();
     }
 
-    public void InstanceAttack() {
+    public void InstanceAttack(string cardID = "") {
         instanceAttack = true;        
 
-        if (PlayMangement.instance.magicHistroy == "ac10016") {
+        if (cardID == "ac10016") {
             actionCall += GetTarget;
             EffectSystem.Instance.ShowEffectAfterCall(EffectSystem.EffectType.ANGRY, unitSpine.headbone, actionCall);
             actionCall -= actionCall;
@@ -341,7 +341,7 @@ public class PlaceMonster : MonoBehaviour {
     }
 
 
-    public void ChangePosition(int x, int y, Vector3 unitLocation) {
+    public void ChangePosition(int x, int y, Vector3 unitLocation, string cardID) {
         this.x = x;
         this.y = y;
 
@@ -351,7 +351,7 @@ public class PlaceMonster : MonoBehaviour {
         //unitSpine.transform.gameObject.GetComponent<Spine.Unity.SkeletonAnimation>().enabled = true;
         
 
-        switch (PlayMangement.instance.magicHistroy) {
+        switch (cardID) {
             case "ac10028":
                 actionCall += ChangePositionMagicEffect;
                 EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.PORTAL, portalPosition, actionCall);

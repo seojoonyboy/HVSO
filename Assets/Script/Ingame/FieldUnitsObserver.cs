@@ -20,7 +20,7 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
     }
 
     //TODO : 적이 호출한지, 내가 호출한지 구분해야함
-    public virtual void UnitChangePosition(GameObject target, Pos pos, bool isPlayer) {
+    public virtual void UnitChangePosition(GameObject target, Pos pos, bool isPlayer, string cardID = "") {
         Logger.Log("Col : " + pos.col);
         Logger.Log("Row : " + pos.row);
 
@@ -51,7 +51,7 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
         if (isHuman) humanUnits[prevPos.col, prevPos.row] = null;
         else orcUnits[prevPos.col, prevPos.row] = null;
 
-        StartCoroutine(UnitChangeCoroutine(target, prevPos, pos, parent));
+        StartCoroutine(UnitChangeCoroutine(target, prevPos, pos, parent, cardID));
     }
 
     public bool IsUnitExist(Pos targetPos, bool isHuman) {
@@ -83,7 +83,7 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
     /// <param name="row">새로운 위치 row</param>
     /// <param name="col">새로운 위치 col</param>
     /// <returns></returns>
-    IEnumerator UnitChangeCoroutine(GameObject target, Pos prevPos, Pos newPos, Transform parent) {
+    IEnumerator UnitChangeCoroutine(GameObject target, Pos prevPos, Pos newPos, Transform parent, string useCardID = "") {
         yield return new WaitForSeconds(1.0f);
 
         target.transform.SetParent(parent);
@@ -92,7 +92,8 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
         target.GetComponent<PlaceMonster>().ChangePosition(
             newPos.col,
             newPos.row,
-            parent.position
+            parent.position,
+            useCardID
         );
 
         Logger.Log(string.Format("prev Pos Col : {0}",prevPos.col));
