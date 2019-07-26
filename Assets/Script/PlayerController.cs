@@ -102,7 +102,7 @@ public class PlayerController : MonoBehaviour
                 hero.transform.localScale = new Vector3(-1, 1, 1);
             }
             else
-                heroSpine.GetComponent<MeshRenderer>().sortingOrder = 8;
+                heroSpine.GetComponent<MeshRenderer>().sortingOrder = 7;
 
             
         }
@@ -120,7 +120,7 @@ public class PlayerController : MonoBehaviour
                 hero.transform.localScale = new Vector3(-1, 1, 1);
             }
             else
-                heroSpine.GetComponent<MeshRenderer>().sortingOrder = 8;
+                heroSpine.GetComponent<MeshRenderer>().sortingOrder = 7;
 
             
         }
@@ -281,7 +281,7 @@ public class PlayerController : MonoBehaviour
         if (amount < 0) {
             if (PlayMangement.instance.magicHistroy == "ac10021") {
                 actionCall += MagicHit;
-                EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.TREBUCHET, transform.position, actionCall);
+                EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.TREBUCHET, transform.position, actionCall, transform);
                 actionCall -= actionCall;
             }
             else

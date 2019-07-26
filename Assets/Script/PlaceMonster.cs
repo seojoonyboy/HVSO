@@ -94,8 +94,8 @@ public class PlaceMonster : MonoBehaviour {
         else
             maxAtkCount = 1;
 
-        if (unit.cardCategories[0] == "stealth")
-        gameObject.AddComponent<ambush>();
+        if (unit.attributes.Length > 0 && unit.attributes[0] == "ambush")
+            gameObject.AddComponent<ambush>();
 
 
         if (unit.attackRange == "distance") {
@@ -118,21 +118,23 @@ public class PlaceMonster : MonoBehaviour {
         else
             unit.ishuman = (PlayMangement.instance.enemyPlayer.isHuman == true) ? true : false;
 
-        myUnitNum = PlayMangement.instance.unitNum++;
+        myUnitNum = PlayMangement.instance.unitNum++;        
 
-        if(unit.cardCategories.Length > 0) {
-            if(unit.cardCategories[0] == "stealth") {
+        UpdateStat();
+        ChangeAttackProperty();
+    }
+
+    public void SetHiding() {
+        if (unit.attributes.Length > 0) {
+            if (unit.attributes[0] == "ambush") {
                 unitSpine.hidingObject = AccountManager.Instance.resource.hideObject;
-                GameObject hide = Instantiate(unitSpine.hidingObject, transform);
+                GameObject hide = Instantiate(AccountManager.Instance.resource.hideObject, transform);
                 hide.transform.position = gameObject.transform.position;
                 hideSpine = hide.GetComponent<HideUnit>();
                 hideSpine.unitSpine = unitSpine;
                 hideSpine.Init();
             }
         }
-
-        UpdateStat();
-        ChangeAttackProperty();
     }
 
     public void HideUnit() {        
@@ -327,10 +329,15 @@ public class PlaceMonster : MonoBehaviour {
             GetTarget();
     }
 
-    public void ChangePositionEffect() {
+    public void ChangePositionMagicEffect() {
         unitSpine.transform.gameObject.SetActive(true);
         SetState(UnitState.APPEAR);
         gameObject.transform.position = unitLocation;
+    }
+
+    public void ChangePosition() {
+        //gameObject.transform.position = unitLocation;
+        iTween.MoveTo(gameObject, unitLocation, 1.0f);
     }
 
 
@@ -340,15 +347,25 @@ public class PlaceMonster : MonoBehaviour {
 
         Vector3 portalPosition = new Vector3(unitLocation.x, unitSpine.headbone.transform.position.y, unitLocation.z);
         this.unitLocation = unitLocation;
-        unitSpine.transform.gameObject.SetActive(false);
+        //unitSpine.transform.gameObject.SetActive(true);
+        //unitSpine.transform.gameObject.GetComponent<Spine.Unity.SkeletonAnimation>().enabled = true;
+        
 
-        if (PlayMangement.instance.magicHistroy == "ac10028") {
-            actionCall += ChangePositionEffect;
-            EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.PORTAL, portalPosition, actionCall);
-            actionCall = null;
+        switch (PlayMangement.instance.magicHistroy) {
+            case "ac10028":
+                actionCall += ChangePositionMagicEffect;
+                EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.PORTAL, portalPosition, actionCall);
+                actionCall = null;
+                break;
+            case "ac10015":
+                ChangePositionMagicEffect();
+                break;
+            default:
+                ChangePosition();
+                break;
+
         }
-        else
-            ChangePositionEffect();
+
     }
 
 
@@ -476,7 +493,7 @@ public class PlaceMonster : MonoBehaviour {
                 }
                 else {
                     if (unit.attack <= unit.originalAttack) {
-                        EffectSystem.Instance.DisableEffect(transform);
+                        EffectSystem.Instance.DisableEffect(EffectSystem.EffectType.CONTINUE_BUFF, transform);
                         buffEffect = false;
                     }
                 }
