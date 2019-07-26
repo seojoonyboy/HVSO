@@ -155,6 +155,7 @@ namespace TargetModules {
             string place = args[0];
             var observer = PlayMangement.instance.UnitsObserver;
             bool isHuman = PlayMangement.instance.player.isHuman;
+            isHuman = skillHandler.isPlayer ? isHuman : !isHuman;
             switch (place) {
                 case "rear":
                     var pos = observer.GetMyPos(gameObject);
