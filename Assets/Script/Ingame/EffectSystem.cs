@@ -45,7 +45,7 @@ public class EffectSystem : SerializedMonoBehaviour
 
         };
         PlayMangement.instance.magicHistroy = "";
-        effectAnimation.AnimationState.End += delegate (TrackEntry entry) { Destroy(effect); };
+        effectAnimation.AnimationState.End += delegate (TrackEntry entry) { Destroy(effect); if (string.IsNullOrEmpty(PlayMangement.instance.magicHistroy) == false) PlayMangement.instance.magicHistroy = "";  };
     }
     
 
@@ -53,9 +53,8 @@ public class EffectSystem : SerializedMonoBehaviour
         if (effectObject.ContainsKey(type) == false || effectObject[type] == null) return;
         GameObject effect = Instantiate(effectObject[type], transform);
         SkeletonAnimation effectAnimation = effect.GetComponent<SkeletonAnimation>();
-        effectAnimation.AnimationState.SetAnimation(0, "animation", false);
-        PlayMangement.instance.magicHistroy = "";
-        effectAnimation.AnimationState.Complete += delegate (TrackEntry entry) { callBack(); Destroy(effect); };
+        effectAnimation.AnimationState.SetAnimation(0, "animation", false);        
+        effectAnimation.AnimationState.Complete += delegate (TrackEntry entry) { callBack(); Destroy(effect); if (string.IsNullOrEmpty(PlayMangement.instance.magicHistroy) == false) PlayMangement.instance.magicHistroy = ""; };
     }
     
 
