@@ -10,6 +10,7 @@ namespace SkillModules {
         public SkillHandler skillHandler;
         public object[] args;
 
+        
         public virtual void Execute(object data) { Logger.Log("Please Define Excecute Func"); }
 
         protected void ShowFormatErrorLog(string additionalMsg = null) {
@@ -28,6 +29,7 @@ namespace SkillModules {
                     GainArgs args = (GainArgs)tmp[1];
 
                     AddBuff(ref targets, ref args);
+                   
                 }
                 catch(FormatException ex) {
                     ShowFormatErrorLog("gain");
@@ -156,7 +158,9 @@ namespace SkillModules {
             try {
                 GameObject target = (GameObject)data;
                 if(target.GetComponent<stun>() == null) {
-                    target.GetComponent<PlaceMonster>().Invoke("InstanceAttack", 0.5f);
+                    string skillID = skillHandler.myObject.GetComponent<MagicDragHandler>().cardID;
+                    InvokeAttack(target,skillID);
+                    //target.GetComponent<PlaceMonster>().Invoke("InstanceAttack", 0.5f);
                 }
                 else {
                     Logger.Log("Stun이 걸려있어 공격을 할 수 없습니다!");
@@ -168,6 +172,11 @@ namespace SkillModules {
             skillHandler.isDone = true;
             skillHandler.finallyDone = false;
             waitDone();
+        }
+
+        public async void InvokeAttack(GameObject target, string cardID) {
+            await Task.Delay(500);
+            target.GetComponent<PlaceMonster>().InstanceAttack(cardID);
         }
         
 
@@ -198,7 +207,11 @@ namespace SkillModules {
             if (data.GetType().IsArray) {
                 object[] tmp = (object[])data;
                 GameObject target = (GameObject)skillHandler.skillTarget;
-
+                string cardID;
+                if (skillHandler.myObject.GetComponent<MagicDragHandler>() != null)
+                    cardID = skillHandler.myObject.GetComponent<MagicDragHandler>().cardID;
+                else
+                    cardID = "";
                 GameObject slotToMove = (GameObject)tmp[0];
                 SkillTargetArgs args = new SkillTargetArgs();
                 
@@ -207,20 +220,21 @@ namespace SkillModules {
                 //SkillTargetArgs args = (SkillTargetArgs)tmp[1];
                 bool isPlayer = (bool)tmp[2];
 
-                MoveUnit(ref target, ref args, isPlayer);
+                MoveUnit(ref target, ref args, isPlayer, cardID);
             }
             else {
                 ShowFormatErrorLog("skill_target_move");
             }
         }
 
-        private void MoveUnit(ref GameObject target, ref SkillTargetArgs args, bool isPlayer) {
+        private void MoveUnit(ref GameObject target, ref SkillTargetArgs args, bool isPlayer, string cardID = "") {
             PlayMangement playMangement = PlayMangement.instance;
             FieldUnitsObserver observer = playMangement.UnitsObserver;
             observer.UnitChangePosition(
                 target, 
                 new FieldUnitsObserver.Pos(args.col, args.row),
-                isPlayer
+                isPlayer,
+                cardID
             );
 
             WaitDone();
