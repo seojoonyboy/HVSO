@@ -27,10 +27,12 @@ public class EffectSystem : SerializedMonoBehaviour
         //return effectAnimation.skeleton.Data.FindAnimation("animation").Duration - 0.1f;
     }
 
-    public void ShowEffectOnEvent(EffectType type, Vector3 pos, ActionDelegate callback) {
+    public void ShowEffectOnEvent(EffectType type, Vector3 pos, ActionDelegate callback, Transform playerTransform = null) {
         if (effectObject.ContainsKey(type) == false || effectObject[type] == null) return;
         GameObject effect = Instantiate(effectObject[type], pos, Quaternion.identity);
         SkeletonAnimation effectAnimation = effect.GetComponent<SkeletonAnimation>();
+        if(playerTransform != null && playerTransform.gameObject.GetComponent<PlayerController>().isPlayer == false) 
+            effect.GetComponent<MeshRenderer>().sortingOrder = 8;      
         effectAnimation.AnimationState.SetAnimation(0, "animation", false);
         effectAnimation.AnimationState.Event += delegate (TrackEntry entry, Spine.Event e) {
             if(e.Data.Name == "ATTACK") {

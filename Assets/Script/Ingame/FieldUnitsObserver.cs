@@ -26,6 +26,8 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
 
         Pos prevPos = GetMyPos(target);
         bool isHuman = target.GetComponent<PlaceMonster>().unit.ishuman;
+        //target.GetComponent<PlaceMonster>().unitSpine.gameObject.GetComponent<Spine.Unity.SkeletonAnimation>().enabled = false;
+        //target.GetComponent<PlaceMonster>().unitSpine.gameObject.SetActive(false);
 
         if (isHuman) humanUnits[pos.col, pos.row] = target;
         else orcUnits[pos.col, pos.row] = target;

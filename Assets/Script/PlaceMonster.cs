@@ -340,7 +340,9 @@ public class PlaceMonster : MonoBehaviour {
 
         Vector3 portalPosition = new Vector3(unitLocation.x, unitSpine.headbone.transform.position.y, unitLocation.z);
         this.unitLocation = unitLocation;
-        unitSpine.transform.gameObject.SetActive(false);
+        //unitSpine.transform.gameObject.SetActive(true);
+        //unitSpine.transform.gameObject.GetComponent<Spine.Unity.SkeletonAnimation>().enabled = true;
+
 
         if (PlayMangement.instance.magicHistroy == "ac10028") {
             actionCall += ChangePositionEffect;
@@ -476,7 +478,7 @@ public class PlaceMonster : MonoBehaviour {
                 }
                 else {
                     if (unit.attack <= unit.originalAttack) {
-                        EffectSystem.Instance.DisableEffect(EffectSystem.EffectType.BUFF, transform);
+                        EffectSystem.Instance.DisableEffect(EffectSystem.EffectType.CONTINUE_BUFF, transform);
                         buffEffect = false;
                     }
                 }
