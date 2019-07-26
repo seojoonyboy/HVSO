@@ -207,8 +207,11 @@ namespace SkillModules {
             if (data.GetType().IsArray) {
                 object[] tmp = (object[])data;
                 GameObject target = (GameObject)skillHandler.skillTarget;
-                string cardID = skillHandler.myObject.GetComponent<MagicDragHandler>().cardID;
-
+                string cardID;
+                if (skillHandler.myObject.GetComponent<MagicDragHandler>() != null)
+                    cardID = skillHandler.myObject.GetComponent<MagicDragHandler>().cardID;
+                else
+                    cardID = "";
                 GameObject slotToMove = (GameObject)tmp[0];
                 SkillTargetArgs args = new SkillTargetArgs();
                 
