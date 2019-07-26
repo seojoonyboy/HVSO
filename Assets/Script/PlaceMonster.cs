@@ -55,6 +55,7 @@ public class PlaceMonster : MonoBehaviour {
         MAGICHIT,
         DETECT,
         ANGRY,
+        REPLACE,
         DEAD
     };
 
@@ -119,13 +120,17 @@ public class PlaceMonster : MonoBehaviour {
 
         myUnitNum = PlayMangement.instance.unitNum++;
 
-        if(unitSpine.hidingObject != null) {
-            GameObject hid = Instantiate(unitSpine.hidingObject, transform);
-            hid.transform.position = gameObject.transform.position;
-            hideSpine = hid.GetComponent<HideUnit>();
-            hideSpine.unitSpine = unitSpine;
-            hideSpine.Init();
+        if(unit.cardCategories.Length > 0) {
+            if(unit.cardCategories[0] == "stealth") {
+                unitSpine.hidingObject = AccountManager.Instance.resource.hideObject;
+                GameObject hide = Instantiate(unitSpine.hidingObject, transform);
+                hide.transform.position = gameObject.transform.position;
+                hideSpine = hide.GetComponent<HideUnit>();
+                hideSpine.unitSpine = unitSpine;
+                hideSpine.Init();
+            }
         }
+
         UpdateStat();
         ChangeAttackProperty();
     }
@@ -323,6 +328,7 @@ public class PlaceMonster : MonoBehaviour {
     }
 
     public void ChangePositionEffect() {
+        unitSpine.transform.gameObject.SetActive(true);
         SetState(UnitState.APPEAR);
         gameObject.transform.position = unitLocation;
     }
@@ -332,8 +338,9 @@ public class PlaceMonster : MonoBehaviour {
         this.x = x;
         this.y = y;
 
-        Vector3 portalPosition = new Vector3(unitLocation.x, unitLocation.y + 1f, unitLocation.z);
+        Vector3 portalPosition = new Vector3(unitLocation.x, unitSpine.headbone.transform.position.y, unitLocation.z);
         this.unitLocation = unitLocation;
+        unitSpine.transform.gameObject.SetActive(false);
 
         if (PlayMangement.instance.magicHistroy == "ac10028") {
             actionCall += ChangePositionEffect;
@@ -598,6 +605,10 @@ public class PlaceMonster : MonoBehaviour {
                 break;
             case UnitState.DETECT:
                 hideSpine.Disappear();
+                break;
+            case UnitState.REPLACE:
+                unitSpine.Appear();
+                
                 break;
             case UnitState.DEAD:
                 break;

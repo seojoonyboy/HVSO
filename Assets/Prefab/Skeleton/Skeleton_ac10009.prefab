@@ -141,6 +141,9 @@ MonoBehaviour:
   attackEventName: ATTACK
   arrow: {fileID: 0}
   hidingObject: {fileID: 0}
+  headbone: {fileID: 0}
+  bodybone: {fileID: 0}
+  rootbone: {fileID: 0}
 --- !u!1 &2719754523422737681
 GameObject:
   m_ObjectHideFlags: 0
