@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4992229847916581984}
   - component: {fileID: 657138942495818435}
   m_Layer: 0
-  m_Name: spine_poison_attack
+  m_Name: spine_poison_get
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
