@@ -1,0 +1,13 @@
+
+Battle_deck_Selection.png
+size: 512,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+deck_light
+  rotate: true
+  xy: 0, 0
+  size: 251, 289
+  orig: 251, 289
+  offset: 0, 0
+  index: -1

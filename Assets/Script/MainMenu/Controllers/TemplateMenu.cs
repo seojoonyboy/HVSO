@@ -30,12 +30,12 @@ public class TemplateMenu : MonoBehaviour {
         Transform footer = transform.Find("Footer");
         Transform heroSelect = upper.Find("HeroSelect");
 
-        heroButtonLayout = heroSelect.Find("HeroButton/HeroBtnLayout").gameObject;
+        heroButtonLayout = transform.Find("HeroButton/HeroBtnLayout").gameObject;
         heroPortrait = heroSelect.Find("Portrait").gameObject;
         heroName = heroSelect.Find("NameTamplate").GetComponentInChildren<TextMeshProUGUI>();
         heroProperty = heroSelect.Find("HeroProperty").gameObject;
         heroCardGroup = upper.Find("HeroCard").gameObject;
-        deckLayout = footer.Find("HeroBtnLayout").gameObject;
+        deckLayout = footer.Find("DeckBtnLayout").gameObject;
         gameObject.SetActive(false);
         SetHeroBtnID();
     }
@@ -83,7 +83,7 @@ public class TemplateMenu : MonoBehaviour {
 
     public void SetTemplateDecks() {
         for(int i = 0; i < 3; i++) {
-            transform.Find("Footer/HeroBtnLayout").GetChild(i).gameObject.SetActive(false);
+            transform.Find("Footer/DeckBtnLayout").GetChild(i).gameObject.SetActive(false);
         }
         List<Templates> templates;
         if (isHuman) 
@@ -94,7 +94,7 @@ public class TemplateMenu : MonoBehaviour {
             if(heros.id == heroID) {
                 int count = 0;
                 foreach (Deck deck in heros.templates) {
-                    GameObject templateDeck = transform.Find("Footer/HeroBtnLayout").GetChild(count).gameObject;
+                    GameObject templateDeck = transform.Find("Footer/DeckBtnLayout").GetChild(count).gameObject;
                     templateDeck.SetActive(true);
                     templateDeck.GetComponent<DeckHandler>().SetTemplateDeck(deck);
                     count++;
