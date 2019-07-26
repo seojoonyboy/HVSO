@@ -51,7 +51,7 @@ public class DeckSettingManager : MonoBehaviour
                 humanDeckList.GetChild(humanDeckCount).gameObject.SetActive(true);
                 humanDeckList.GetChild(humanDeckCount).GetComponent<DeckHandler>().SetDeck(AccountManager.Instance.humanDecks[i]);
                 humanDeckCount++;
-                if(humanDeckCount < 4)
+                if(humanDeckCount < 3)
                     humanDeckList.GetChild(humanDeckCount).gameObject.SetActive(true);
             }
         }
@@ -60,12 +60,12 @@ public class DeckSettingManager : MonoBehaviour
                 orcDeckList.GetChild(orcDeckCount).gameObject.SetActive(true);
                 orcDeckList.GetChild(orcDeckCount).GetComponent<DeckHandler>().SetDeck(AccountManager.Instance.orcDecks[i]);
                 orcDeckCount++;
-                if (orcDeckCount < 4)
+                if (orcDeckCount < 3)
                     orcDeckList.GetChild(orcDeckCount).gameObject.SetActive(true);
             }
         }
-        humanDeckNum.text = humanDeckCount.ToString() + "/4";
-        orcDeckNum.text = orcDeckCount.ToString() + "/4";
+        humanDeckNum.text = humanDeckCount.ToString() + "/3";
+        orcDeckNum.text = orcDeckCount.ToString() + "/3";
 
     }
 

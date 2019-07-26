@@ -10,6 +10,7 @@ public class CardDictionaryManager : MonoBehaviour {
     [SerializeField] Transform heroCards;
     [SerializeField] Transform heroInfoWindow;
     [SerializeField] Transform cardStorage;
+    [SerializeField] TMPro.TextMeshProUGUI cardNum;
 
     [SerializeField] Sprite orcPanelBg, humanPanelBg;
 
@@ -52,6 +53,8 @@ public class CardDictionaryManager : MonoBehaviour {
             }
             cardList.GetChild(i).gameObject.SetActive(false);
         }
+        int totalCount = 0;
+        int haveCount = 0;
         foreach (dataModules.CollectionCard card in AccountManager.Instance.allCards) {
             if (card.isHeroCard) continue;
             if (isHumanDictionary && card.camp != "human") continue;
@@ -60,18 +63,22 @@ public class CardDictionaryManager : MonoBehaviour {
             Transform classSet = cardList.Find(card.cardClasses[0]).Find("Grid");
             cardObj.SetParent(classSet);
             cardObj.GetComponent<MenuCardHandler>().DrawCard(card.id, isHumanDictionary);
+            if (AccountManager.Instance.cardPackage.data.ContainsKey(card.id)) haveCount++;
             cardObj.gameObject.SetActive(true);
+            totalCount++;
         }
         for (int i = 0; i < cardList.childCount; i++) {
             Transform cardSet = cardList.GetChild(i).Find("Grid");
             if (cardSet.childCount > 0)
                 cardList.GetChild(i).gameObject.SetActive(true);
         }
+        cardNum.text = haveCount.ToString() + "/" + totalCount.ToString();
         RefreshLine();
         SetHeroButtons();
     }
 
     public void RefreshLine() {
+
         Canvas.ForceUpdateCanvases();
         LayoutRebuilder.ForceRebuildLayoutImmediate(cardList.GetComponent<RectTransform>());
     }
