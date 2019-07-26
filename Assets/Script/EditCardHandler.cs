@@ -118,8 +118,10 @@ public class EditCardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         }
         else {
             transform.SetParent(beforeParent);
-            if (transform.position.y < deckEditController.transform.Find("DeckNamePanel").position.y)
+            if (transform.position.y < deckEditController.transform.Find("DeckNamePanel").position.y) {
+                ShowAddedCardPos();
                 deckEditController.ConfirmSetDeck(cardData.id, gameObject);
+            }
             transform.localPosition = startLocalPos;
         }
         dragable = true;
@@ -134,6 +136,16 @@ public class EditCardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
                 iTween.MoveTo(transform.parent.gameObject, iTween.Hash("x", 0, "islocal", true, "time", 0.2f));
             if(transform.parent.localPosition.x < -240 * (handCardNum - 4))
                 iTween.MoveTo(transform.parent.gameObject, iTween.Hash("x", -240 * (handCardNum - 4), "islocal", true, "time", 0.2f));
+        }
+    }
+
+    public void ShowAddedCardPos() {
+        if (deckEditController.setCardList.ContainsKey(cardData.id)) return;
+        else {
+            int handCardNum = deckEditController.setCardList.Count;
+            if (handCardNum > 3) {
+                iTween.MoveTo(deckEditController.settingLayout.gameObject, iTween.Hash("x", -240 * (handCardNum - 3), "islocal", true, "time", 0.2f));
+            }
         }
     }
 
