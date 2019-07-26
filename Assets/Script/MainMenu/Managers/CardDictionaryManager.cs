@@ -9,6 +9,7 @@ public class CardDictionaryManager : MonoBehaviour {
     [SerializeField] Transform cardList;
     [SerializeField] Transform heroCards;
     [SerializeField] Transform heroInfoWindow;
+    [SerializeField] Transform cardStorage;
 
     [SerializeField] Sprite orcPanelBg, humanPanelBg;
 
@@ -41,26 +42,38 @@ public class CardDictionaryManager : MonoBehaviour {
     }
 
     public void SetCardsInDictionary() {
-        //for (int i = 0; i < cardList.childCount; i++)
-        //    cardList.GetChild(i).gameObject.SetActive(false);
-        //int count = 0;
-        //foreach (dataModules.CollectionCard card in AccountManager.Instance.allCards) {
-        //    if (isHumanDictionary) {
-        //        if (card.camp == "human" && !card.isHeroCard) {
-        //            cardList.GetChild(count).gameObject.SetActive(true);
-        //            cardList.GetChild(count).GetComponent<MenuCardHandler>().DrawCard(card.id, true);
-        //            count++;
-        //        }
-        //    }
-        //    else {
-        //        if (card.camp == "orc" && !card.isHeroCard) {
-        //            cardList.GetChild(count).gameObject.SetActive(true);
-        //            cardList.GetChild(count).GetComponent<MenuCardHandler>().DrawCard(card.id, false);
-        //            count++;
-        //        }
-        //    }
-        //}
+        for (int i = 0; i < cardList.childCount; i++) {
+            Transform cardSet = cardList.GetChild(i).Find("Grid");
+            while (cardSet.childCount != 0) {
+                cardSet.GetChild(0).GetChild(0).gameObject.SetActive(false);
+                cardSet.GetChild(0).GetChild(1).gameObject.SetActive(false);
+                cardSet.GetChild(0).gameObject.SetActive(false);
+                cardSet.GetChild(0).SetParent(cardStorage);
+            }
+            cardList.GetChild(i).gameObject.SetActive(false);
+        }
+        foreach (dataModules.CollectionCard card in AccountManager.Instance.allCards) {
+            if (card.isHeroCard) continue;
+            if (isHumanDictionary && card.camp != "human") continue;
+            if (!isHumanDictionary && card.camp != "orc") continue;
+            Transform cardObj = cardStorage.GetChild(0);
+            Transform classSet = cardList.Find(card.cardClasses[0]).Find("Grid");
+            cardObj.SetParent(classSet);
+            cardObj.GetComponent<MenuCardHandler>().DrawCard(card.id, isHumanDictionary);
+            cardObj.gameObject.SetActive(true);
+        }
+        for (int i = 0; i < cardList.childCount; i++) {
+            Transform cardSet = cardList.GetChild(i).Find("Grid");
+            if (cardSet.childCount > 0)
+                cardList.GetChild(i).gameObject.SetActive(true);
+        }
+        RefreshLine();
         SetHeroButtons();
+    }
+
+    public void RefreshLine() {
+        Canvas.ForceUpdateCanvases();
+        LayoutRebuilder.ForceRebuildLayoutImmediate(cardList.GetComponent<RectTransform>());
     }
 
     public void SetHeroButtons() {
@@ -110,16 +123,16 @@ public class CardDictionaryManager : MonoBehaviour {
         dataModules.Templates hero;
         Transform heroCards;
         if (isHumanDictionary) {
-            heroInfoWindow.Find("HeroCards/OrcHeroCard").gameObject.SetActive(false);
-            heroCards = heroInfoWindow.Find("HeroCards/HumanHeroCard");
+            heroInfoWindow.Find("HeroCards/Orc").gameObject.SetActive(false);
+            heroCards = heroInfoWindow.Find("HeroCards/Human");
             hero = AccountManager.Instance.humanTemplates[index];
-            heroInfoWindow.Find("Ribon").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["hero_name_human_superrare"];
+            //heroInfoWindow.Find("Ribon").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["hero_name_human_superrare"];
         }
         else {
-            heroInfoWindow.Find("HeroCards/HumanHeroCard").gameObject.SetActive(false);
-            heroCards = heroInfoWindow.Find("HeroCards/OrcHeroCard");
+            heroInfoWindow.Find("HeroCards/Human").gameObject.SetActive(false);
+            heroCards = heroInfoWindow.Find("HeroCards/Orc");
             hero = AccountManager.Instance.orcTemplates[index];
-            heroInfoWindow.Find("Ribon").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["hero_name_orc_superrare"];
+            //heroInfoWindow.Find("Ribon").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["hero_name_orc_superrare"];
         }
         heroInfoWindow.Find("BackGroundImage/Human").gameObject.SetActive(isHumanDictionary);
         heroInfoWindow.Find("BackGroundImage/Orc").gameObject.SetActive(!isHumanDictionary);

@@ -232,7 +232,6 @@ public class DeckEditController : MonoBehaviour
 
     public void RefreshLine() {
         setCardText.text = setCardNum.ToString() + "/40";
-        //haveCardText.text = haveCardNum.ToString() + "/" + maxHaveCard.ToString();
         Canvas.ForceUpdateCanvases();
         LayoutRebuilder.ForceRebuildLayoutImmediate(settingLayout.GetComponent<RectTransform>());
     }
