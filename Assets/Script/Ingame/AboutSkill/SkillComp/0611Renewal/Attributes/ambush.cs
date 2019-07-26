@@ -8,6 +8,7 @@ public class ambush : MonoBehaviour {
     // Start is called before the first frame update
     void Start() {
         eventHandler = PlayMangement.instance.EventHandler;
+        GetComponent<PlaceMonster>().SetHiding();
         GetComponent<PlaceMonster>().HideUnit();
 
         AddListener();

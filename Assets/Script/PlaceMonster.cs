@@ -118,10 +118,15 @@ public class PlaceMonster : MonoBehaviour {
         else
             unit.ishuman = (PlayMangement.instance.enemyPlayer.isHuman == true) ? true : false;
 
-        myUnitNum = PlayMangement.instance.unitNum++;
+        myUnitNum = PlayMangement.instance.unitNum++;        
 
-        if(unit.cardCategories.Length > 0) {
-            if(unit.cardCategories[0] == "stealth") {
+        UpdateStat();
+        ChangeAttackProperty();
+    }
+
+    public void SetHiding() {
+        if (unit.attributes.Length > 0) {
+            if (unit.attributes[0] == "ambush") {
                 unitSpine.hidingObject = AccountManager.Instance.resource.hideObject;
                 GameObject hide = Instantiate(unitSpine.hidingObject, transform);
                 hide.transform.position = gameObject.transform.position;
@@ -130,9 +135,6 @@ public class PlaceMonster : MonoBehaviour {
                 hideSpine.Init();
             }
         }
-
-        UpdateStat();
-        ChangeAttackProperty();
     }
 
     public void HideUnit() {        
