@@ -158,7 +158,7 @@ namespace SkillModules {
             try {
                 GameObject target = (GameObject)data;
                 if(target.GetComponent<stun>() == null) {
-                    string skillID = skillHandler.myObject.GetComponent<MagicDragHandler>().cardID;
+                    string skillID = skillHandler.myObject.GetComponent<MagicDragHandler>().cardData.cardId;
                     InvokeAttack(target,skillID);
                     //target.GetComponent<PlaceMonster>().Invoke("InstanceAttack", 0.5f);
                 }
@@ -209,7 +209,7 @@ namespace SkillModules {
                 GameObject target = (GameObject)skillHandler.skillTarget;
                 string cardID;
                 if (skillHandler.myObject.GetComponent<MagicDragHandler>() != null)
-                    cardID = skillHandler.myObject.GetComponent<MagicDragHandler>().cardID;
+                    cardID = skillHandler.myObject.GetComponent<MagicDragHandler>().cardData.cardId;
                 else
                     cardID = "";
                 GameObject slotToMove = (GameObject)tmp[0];
