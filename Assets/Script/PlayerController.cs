@@ -277,7 +277,7 @@ public class PlayerController : MonoBehaviour
     }
 
     public void EffectForPlayer(int amount = 0, string skillId = null) {
-        Vector3 position = new Vector3(transform.position.x, transform.position.y + 2.5f, transform.position.z);
+        Vector3 position = new Vector3(transform.position.x, transform.position.y + 2f, transform.position.z);
         if (amount < 0) {
             if (skillId == "ac10021") {
                 actionCall += MagicHit;

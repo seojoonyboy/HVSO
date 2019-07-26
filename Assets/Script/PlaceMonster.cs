@@ -330,7 +330,7 @@ public class PlaceMonster : MonoBehaviour {
     }
 
     public void ChangePositionMagicEffect() {
-        unitSpine.transform.gameObject.GetComponent<Spine.Unity.SkeletonAnimation>().enabled = true;
+        unitSpine.transform.gameObject.SetActive(true);
         SetState(UnitState.APPEAR);
         gameObject.transform.position = unitLocation;
     }
@@ -358,7 +358,6 @@ public class PlaceMonster : MonoBehaviour {
                 actionCall = null;
                 break;
             case "ac10015":
-                unitSpine.transform.gameObject.GetComponent<Spine.Unity.SkeletonAnimation>().enabled = true;
                 ChangePositionMagicEffect();
                 break;
             default:
