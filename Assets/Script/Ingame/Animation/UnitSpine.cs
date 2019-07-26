@@ -101,6 +101,7 @@ public class UnitSpine : MonoBehaviour
         currentAnimationName = appearAnimationName;
         entry.Complete += Idle;
     }
+    
 
     public virtual void Idle(TrackEntry trackEntry = null) {
         spineAnimationState.SetAnimation(0, idleAnimationName, true);
@@ -121,13 +122,7 @@ public class UnitSpine : MonoBehaviour
         currentAnimationName = hitAnimationName;
         entry.Complete += Idle;
     }
-    
-
-    IEnumerator WaitAnimation(float amount) {
-        yield return new WaitForSeconds(amount);
-    }
-
-
+     
     public virtual void Preview() {
         spineAnimationState.SetAnimation(0, idleAnimationName, true);
         currentAnimationName = previewAnimationName;

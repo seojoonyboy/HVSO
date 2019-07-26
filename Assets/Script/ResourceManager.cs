@@ -23,4 +23,5 @@ public class ResourceManager : SerializedMonoBehaviour
     public GameObject unitDeadObject;
     public GameObject previewUnit;
     public GameObject baseSkillIcon;
+    public GameObject hideObject;
 }

@@ -141,6 +141,9 @@ MonoBehaviour:
   attackEventName: SHOT
   arrow: {fileID: 8366574016604891916, guid: 490182c9a4d608142b1dd4faf0a4b091, type: 3}
   hidingObject: {fileID: 0}
+  headbone: {fileID: 0}
+  bodybone: {fileID: 0}
+  rootbone: {fileID: 0}
 --- !u!1 &840924024623994543
 GameObject:
   m_ObjectHideFlags: 0

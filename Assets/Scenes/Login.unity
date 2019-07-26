@@ -5304,6 +5304,8 @@ MonoBehaviour:
     type: 3}
   baseSkillIcon: {fileID: 1870373346961796087, guid: be06cb232f7a89745a94464a90e395db,
     type: 3}
+  hideObject: {fileID: 8875640797152268877, guid: 2bc17b51b7bdecf4a8327178491451ee,
+    type: 3}
 --- !u!114 &1870949077
 MonoBehaviour:
   m_ObjectHideFlags: 0
