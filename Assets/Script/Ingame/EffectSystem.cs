@@ -93,7 +93,8 @@ public class EffectSystem : SerializedMonoBehaviour
         PORTAL,
         CONTINUE_BUFF,
         GETBACK,
-        STUN
+        STUN,
+        POISON_GET
     }
 
 }
