@@ -276,10 +276,10 @@ public class PlayerController : MonoBehaviour
         shield.SetActive(false);
     }
 
-    public void EffectForPlayer(int amount = 0) {
+    public void EffectForPlayer(int amount = 0, string skillId = null) {
         Vector3 position = new Vector3(transform.position.x, transform.position.y + 2.75f, transform.position.z);
         if (amount < 0) {
-            if (PlayMangement.instance.magicHistroy == "ac10021") {
+            if (skillId == "ac10021") {
                 actionCall += MagicHit;
                 EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.TREBUCHET, transform.position, actionCall, transform);
                 actionCall -= actionCall;
@@ -294,11 +294,11 @@ public class PlayerController : MonoBehaviour
     }
     
 
-    public void TakeIgnoreShieldDamage(int amount, bool isMagic = false) {
+    public void TakeIgnoreShieldDamage(int amount, bool isMagic = false, string skillId= null) {
         HP.Value -= amount;
 
         if (isMagic == true)
-            EffectForPlayer(-amount);
+            EffectForPlayer(-amount, skillId);
         else
             Hit();
     }

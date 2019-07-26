@@ -203,15 +203,18 @@ namespace TargetModules {
     public class hero : TargetHandler {
         public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback, Filtering filter) {
             base.SelectTarget(successCallback, failedCallback, filter);
+            
+            GameObject playerObject = skillHandler.isPlayer ? PlayMangement.instance.player.gameObject : PlayMangement.instance.enemyPlayer.gameObject;
+            GameObject enemyPlayerObject = skillHandler.isPlayer ? PlayMangement.instance.enemyPlayer.gameObject: PlayMangement.instance.player.gameObject;
 
             switch (args[0]) {
                 case "my":
-                    SetTarget(PlayMangement.instance.player.gameObject);
-                    successCallback(PlayMangement.instance.player.gameObject);
+                    SetTarget(playerObject);
+                    successCallback(enemyPlayerObject);
                     break;
                 case "enemy":
-                    SetTarget(PlayMangement.instance.enemyPlayer.gameObject);
-                    successCallback(PlayMangement.instance.player.gameObject);
+                    SetTarget(enemyPlayerObject);
+                    successCallback(playerObject);
                     break;
                 default:
                     failedCallback(null);
