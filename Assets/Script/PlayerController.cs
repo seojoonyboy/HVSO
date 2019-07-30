@@ -313,6 +313,8 @@ public class PlayerController : MonoBehaviour
     }
 
     public void ReleaseTurn() {
+        if (isPlayer == true && PlayMangement.instance.skillAction == true) return;
+
         if (myTurn == true && !dragCard) {
             //PlayMangement.instance.OnNoCostEffect(false);
             PlayMangement.instance.GetPlayerTurnRelease();

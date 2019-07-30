@@ -38,6 +38,7 @@ public partial class PlayMangement : MonoBehaviour {
     public static bool dragable = true;
     public string currentTurn;
 
+    public bool skillAction = false;
     //public string magicHistroy;
 
     private void Awake() {
@@ -983,7 +984,7 @@ public partial class PlayMangement {
                 break;
         }
     }
-
+    
     private IEnumerator SetHumanTurnTable(string currentTurn) {
         yield return new WaitForSeconds(1.0f);
         switch (currentTurn) {

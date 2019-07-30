@@ -55,9 +55,9 @@ body
   index: -1
 effect_1
   rotate: true
-  xy: 766, 62
-  size: 58, 103
-  orig: 58, 103
+  xy: 766, 57
+  size: 63, 108
+  orig: 63, 108
   offset: 0, 0
   index: -1
 helmet
