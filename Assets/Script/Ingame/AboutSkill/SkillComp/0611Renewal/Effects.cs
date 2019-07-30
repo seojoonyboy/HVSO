@@ -158,8 +158,12 @@ namespace SkillModules {
             try {
                 GameObject target = (GameObject)data;
                 if(target.GetComponent<stun>() == null) {
-                    string skillID = skillHandler.myObject.GetComponent<MagicDragHandler>().cardData.cardId;
-                    InvokeAttack(target,skillID);
+                    if (skillHandler.myObject != null) {
+                        string skillID = (skillHandler.myObject.GetComponent<MagicDragHandler>() != null) ? skillHandler.myObject.GetComponent<MagicDragHandler>().cardData.cardId : "";
+                        InvokeAttack(target, skillID);
+                    }
+                    else
+                        InvokeAttack(target);
                     //target.GetComponent<PlaceMonster>().Invoke("InstanceAttack", 0.5f);
                 }
                 else {
@@ -174,7 +178,7 @@ namespace SkillModules {
             waitDone();
         }
 
-        public async void InvokeAttack(GameObject target, string cardID) {
+        public async void InvokeAttack(GameObject target, string cardID = "") {
             await Task.Delay(500);
             target.GetComponent<PlaceMonster>().InstanceAttack(cardID);
         }
