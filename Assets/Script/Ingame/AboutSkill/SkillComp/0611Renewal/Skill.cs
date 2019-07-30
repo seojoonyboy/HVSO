@@ -215,7 +215,7 @@ namespace SkillModules {
             }
             else if(ability.GetType() == typeof(kill)) {
                 bool isPlayer = mySkillHandler.isPlayer;
-                result = new object[] { targets[0], isPlayer };
+                result = new object[] { targets, isPlayer };
             }
             else if(ability.GetType() == typeof(give_attack_type)) {
                 string attrName = (string)ability.args[0];
