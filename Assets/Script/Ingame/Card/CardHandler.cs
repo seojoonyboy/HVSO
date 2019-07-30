@@ -117,6 +117,8 @@ public partial class CardHandler : MonoBehaviour {
         transform.Find("Class").GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[cardData.class_1];
         transform.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.name;
 
+
+
         if (first) {
             if (gameObject.name == "UnitCard") {
                 if (transform.Find("SkillIcon").gameObject.activeSelf) {
@@ -132,8 +134,14 @@ public partial class CardHandler : MonoBehaviour {
             clm.AddMulliganCardInfo(cardData, cardID);
             firstDraw = true;
         }
-        else
-            transform.Find("ChangeButton").gameObject.SetActive(false);
+        else {
+            if (firstDraw) {
+                transform.Find("ChangeButton").gameObject.SetActive(true);
+                transform.Find("ChangeButton").GetChild(0).gameObject.SetActive(true);
+            }
+            else
+                transform.Find("ChangeButton").gameObject.SetActive(false);
+        }
     }
 
     public virtual void CheckHighlight() {
