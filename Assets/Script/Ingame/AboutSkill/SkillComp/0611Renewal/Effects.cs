@@ -179,7 +179,7 @@ namespace SkillModules {
         }
 
         public async void InvokeAttack(GameObject target, string cardID = "") {
-            await Task.Delay(500);
+            await Task.Delay(800);
             target.GetComponent<PlaceMonster>().InstanceAttack(cardID);
         }
         
@@ -245,7 +245,7 @@ namespace SkillModules {
         }
 
         private async void WaitDone() {
-            await System.Threading.Tasks.Task.Delay(1500);
+            await System.Threading.Tasks.Task.Delay(1600);
             skillHandler.isDone = true;
         }
     }

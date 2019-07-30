@@ -686,9 +686,11 @@ public partial class PlayMangement {
             case "lose":
                 if (race == "human") {
                     baseWindow.Find("ResultCharacter/ResultHuman").gameObject.SetActive(true);
+                    //baseWindow.Find("ResultCharacter/ResultHuman/ResultHumanHero").gameObject.GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, "DEAD", false);
                 }
                 else {
                     baseWindow.Find("ResultCharacter/ResultOrc").gameObject.SetActive(true);
+                    //baseWindow.Find("ResultCharacter/ResultOrc/ResultOrcHero").gameObject.GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, "DEAD", false);
                 }
                 baseWindow.Find("ShineEffect/LoseShineEffect").gameObject.SetActive(true);
                 resourceWindow.Find("ShineEffect/LoseShineEffect").gameObject.SetActive(true);

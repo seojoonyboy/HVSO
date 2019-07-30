@@ -244,10 +244,7 @@ public class PlaceMonster : MonoBehaviour {
 
 
     public void UnitTryAttack() {
-        if (unit.attack <= 0) return;
-
-        
-
+        if (unit.attack <= 0) return;       
         SetState(UnitState.ATTACK);
     }
 
