@@ -21,7 +21,8 @@ namespace SkillModules {
         public bool socketDone = true;
         public bool finallyDone = true;
         Transform highlight;
-        
+        private int end_Card_Count = 0;
+        private int coroutineCount = 0;
 
         string targetType;
 
@@ -45,6 +46,9 @@ namespace SkillModules {
             bool triggerExist = triggerList.Exists (x => x == triggerType);
             if (triggerExist) return;
 
+            if (triggerType == IngameEventHandler.EVENT_TYPE.END_CARD_PLAY)
+                end_Card_Count++;
+
             triggerList.Add (triggerType);
             handler.AddListener (triggerType, Trigger);
         }
@@ -64,7 +68,14 @@ namespace SkillModules {
                 AddTurnTriggerUnit(triggerType, Param);
                 return;
             }
+
+            if (triggerType == IngameEventHandler.EVENT_TYPE.END_CARD_PLAY) {
+                coroutineCount++;
+                PlayMangement.instance.skillAction = true;
+            }
+
             PlayMangement.instance.StartCoroutine (SkillTrigger (triggerType, Param));
+
         }
 
         static public bool running = false;
@@ -108,11 +119,11 @@ namespace SkillModules {
 
         IEnumerator SkillTrigger (IngameEventHandler.EVENT_TYPE triggerType, object parms) {
             foreach (Skill skill in skills) {
-                isDone = false;
+                isDone = false;                
                 bool active = skill.Trigger (triggerType, parms);
                 if (active && !isDone) yield return new WaitUntil (() => isDone);
-                PlayMangement.instance.OffBlockPanel();
-            }
+                PlayMangement.instance.OffBlockPanel();                
+            }            
             //유닛 소환이나 마법 카드 사용 했을 때
             isDone = true;
             socketDone = true;
