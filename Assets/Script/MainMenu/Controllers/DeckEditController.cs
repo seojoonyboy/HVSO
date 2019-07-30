@@ -121,8 +121,7 @@ public class DeckEditController : MonoBehaviour
         else {
             RequestNewDeck();
         }
-
-
+        FindObjectOfType<HUDController>().SetHeader(HUDController.Type.SHOW_USER_INFO);
     }
 
     public void CancelButton() {
@@ -132,6 +131,8 @@ public class DeckEditController : MonoBehaviour
             templateMenu.transform.gameObject.SetActive(false);
 
         deckNamePanel.transform.Find("NameTemplate").Find("Text").GetComponent<Text>().text = "";
+
+        FindObjectOfType<HUDController>().SetHeader(HUDController.Type.SHOW_USER_INFO);
     }
     
 

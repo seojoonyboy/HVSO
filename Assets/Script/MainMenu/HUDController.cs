@@ -9,7 +9,8 @@ public class HUDController : MonoBehaviour {
     [SerializeField] HorizontalScrollSnap main_HorizontalScrollSnap;
     Transform
         userInfoUI,
-        backbuttonUI;
+        backbuttonUI,
+        resourceUI;
     Button backButton;
 
     public void SetHeader(Type type) {
@@ -17,11 +18,18 @@ public class HUDController : MonoBehaviour {
             case Type.RESOURCE_ONLY_WITH_BACKBUTTON:
                 userInfoUI.gameObject.SetActive(false);
                 backbuttonUI.gameObject.SetActive(true);
+                resourceUI.gameObject.SetActive(true);
                 break;
             default:
             case Type.SHOW_USER_INFO:
                 backbuttonUI.gameObject.SetActive(false);
                 userInfoUI.gameObject.SetActive(true);
+                resourceUI.gameObject.SetActive(true);
+                break;
+            case Type.HIDE:
+                resourceUI.gameObject.SetActive(false);
+                backbuttonUI.gameObject.SetActive(false);
+                userInfoUI.gameObject.SetActive(false);
                 break;
         }
     }
@@ -36,7 +44,8 @@ public class HUDController : MonoBehaviour {
     }
 
     public void SetBackButtonMsg(string msg) {
-        backbuttonUI.Find("Text").GetComponent<TMPro.TextMeshProUGUI>().text = msg;
+        backbuttonUI.Find("Text").GetComponent<TMPro.TextMeshProUGUI>().text = string.Empty;
+        //backbuttonUI.Find("Text").GetComponent<TMPro.TextMeshProUGUI>().text = msg;
     }
 
     private void Awake() {
@@ -49,6 +58,11 @@ public class HUDController : MonoBehaviour {
                     .GetChild(0)
                     .GetChild(0)
                     .Find("BackButtonUI");
+
+        resourceUI = transform
+                    .GetChild(0)
+                    .GetChild(0)
+                    .Find("Right");
 
         backButton = backbuttonUI.Find("BackButton").GetComponent<Button>();
     }

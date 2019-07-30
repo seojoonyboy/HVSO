@@ -32,8 +32,14 @@ public class DeckSettingManager : MonoBehaviour
         else {
             templateCanvas = orcTemplateCanvas;
             templateCanvas.GetComponent<TemplateMenu>().ChangeHeroID("h10002");
-        }   
+        }
         templateCanvas.gameObject.SetActive(true);
+        
+        hudController.SetHeader(HUDController.Type.RESOURCE_ONLY_WITH_BACKBUTTON);
+        hudController.SetBackButton(() => {
+            templateCanvas.GetComponent<TemplateMenu>().ReturnToMenu();
+            hudController.SetHeader(HUDController.Type.SHOW_USER_INFO);
+        });
     }
 
     public void OpenCardDictionary() {
