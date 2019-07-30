@@ -50,7 +50,7 @@ public class CardHandManager : MonoBehaviour {
         iTween.MoveTo(card, firstDrawParent.GetChild(firstDrawList.Count).position, 0.5f);
         iTween.RotateTo(card, new Vector3(0, 0, 0), 0.5f);
         firstDrawList.Add(card);
-        card.transform.localScale = new Vector3(1.15f, 1.15f, 1);
+        //card.transform.localScale = new Vector3(1.1f, 1.1f, 1);
         yield return new WaitForSeconds(0.5f);
         card.transform.Find("ChangeButton").gameObject.SetActive(true);
         if (firstDrawList.Count == 4) {
@@ -557,6 +557,7 @@ public class CardHandManager : MonoBehaviour {
         id = newCard.id;
         itemId = newCard.itemId;
         CardHandler handler = card.GetComponent<CardHandler>();
+        handler.FIRSTDRAW = true;
         handler.DrawCard(id, itemId);
         clm.AddMulliganCardInfo(handler.cardData, id, index);
         card.transform.SetParent(firstDrawParent);

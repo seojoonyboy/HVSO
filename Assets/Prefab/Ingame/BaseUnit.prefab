@@ -772,8 +772,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 100
-  m_Sprite: {fileID: 2622790989942842531, guid: d72b274516aabbe45879dd040f24b6bb,
-    type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0cd340686f5da8348bc63c6748362fa1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -853,8 +852,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 100
-  m_Sprite: {fileID: -7039752655850412869, guid: d72b274516aabbe45879dd040f24b6bb,
-    type: 3}
+  m_Sprite: {fileID: 21300000, guid: e6ec8c0ed3771ea4da07af856fbe5b66, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -988,13 +986,11 @@ MonoBehaviour:
   unitLocation: {x: 0, y: 0, z: 0}
   atkCount: 1
   maxAtkCount: 0
-  addAttackPower: 0
   myUnitNum: 0
   itemId: -1
   buffEffect: 0
   unitSpine: {fileID: 0}
   hideSpine: {fileID: 0}
-  effectObject: {fileID: 0}
 --- !u!1 &7633947265274660232
 GameObject:
   m_ObjectHideFlags: 0
@@ -1368,6 +1364,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: EffectObject
+      objectReference: {fileID: 0}
+    - target: {fileID: 8544034429045599775, guid: 7331370235ab70642bdf53ca97543ba7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6519469795811311031, guid: 7331370235ab70642bdf53ca97543ba7,
         type: 3}
