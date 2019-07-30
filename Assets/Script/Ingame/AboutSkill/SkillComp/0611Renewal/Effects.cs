@@ -526,7 +526,7 @@ namespace SkillModules {
 
             if (data.GetType().IsArray) {
                 object[] tmp = (object[])data;
-                GameObject target = (GameObject)tmp[0];
+                List<GameObject> target = (List<GameObject>)tmp[0];
                 bool isPlayer = (bool)tmp[1];
 
                 RemoveUnit(ref target);
@@ -537,9 +537,11 @@ namespace SkillModules {
             skillHandler.isDone = true;
         }
 
-        private void RemoveUnit(ref GameObject target) {
-            EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.EXPLOSION, target.transform.position);
-            target.GetComponent<PlaceMonster>().InstanceKilled();
+        private void RemoveUnit(ref List<GameObject> target) {
+            foreach(GameObject unit in target) {
+                EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.EXPLOSION, unit.transform.position);
+                unit.GetComponent<PlaceMonster>().InstanceKilled();
+            }
         }
     }
 
@@ -763,6 +765,7 @@ namespace SkillModules {
                     filter_skill_target.Add(unit);
             }
             skillHandler.skillTarget = filter_skill_target;
+            skillHandler.isDone = true;
         }
 
         private bool gte(int attack, int value) {
