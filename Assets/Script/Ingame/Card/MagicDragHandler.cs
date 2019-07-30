@@ -145,6 +145,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         }
         CardDropManager.Instance.HideMagicSlot();
         CardInfoOnDrag.instance.OffCardDragInfo();
+        PlayMangement.instance.infoOn = true;
     }
 
     IEnumerator UseSkillCard(object[] parms) {
