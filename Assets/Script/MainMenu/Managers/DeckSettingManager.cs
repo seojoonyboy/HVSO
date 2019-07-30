@@ -12,6 +12,8 @@ public class DeckSettingManager : MonoBehaviour
     [SerializeField] Transform orcDeckList;
     [SerializeField] TMPro.TextMeshProUGUI humanDeckNum;
     [SerializeField] TMPro.TextMeshProUGUI orcDeckNum;
+    [SerializeField] HUDController hudController;
+
     public MenuSceneController menuSceneController;
 
     MyDecksLoader decksLoader;
@@ -37,6 +39,13 @@ public class DeckSettingManager : MonoBehaviour
     public void OpenCardDictionary() {
         cardDictionaryCanvas.gameObject.SetActive(true);
         cardDictionaryCanvas.GetComponent<CardDictionaryManager>().SetToOrcCards();
+
+        hudController.SetBackButtonMsg("도감화면");
+
+        hudController.SetBackButton(() => {
+            cardDictionaryCanvas.GetComponent<CardDictionaryManager>().CloseDictionaryCanvas();
+            hudController.SetHeader(HUDController.Type.SHOW_USER_INFO);
+        });
     }
 
     public void SetPlayerDecks() {

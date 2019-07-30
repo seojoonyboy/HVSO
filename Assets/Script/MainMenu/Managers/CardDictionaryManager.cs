@@ -11,6 +11,7 @@ public class CardDictionaryManager : MonoBehaviour {
     [SerializeField] Transform heroInfoWindow;
     [SerializeField] Transform cardStorage;
     [SerializeField] TMPro.TextMeshProUGUI cardNum;
+    [SerializeField] HUDController hudController;
 
     [SerializeField] Sprite orcPanelBg, humanPanelBg;
 
