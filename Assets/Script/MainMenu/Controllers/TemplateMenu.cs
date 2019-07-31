@@ -165,5 +165,7 @@ public class TemplateMenu : MonoBehaviour {
 
     public void ReturnToMenu() {
         gameObject.SetActive(false);
+
+        FindObjectOfType<HUDController>().SetHeader(HUDController.Type.SHOW_USER_INFO);
     }
 }

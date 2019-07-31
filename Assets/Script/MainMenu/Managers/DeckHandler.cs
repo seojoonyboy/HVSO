@@ -91,6 +91,8 @@ public class DeckHandler : MonoBehaviour
         deckEditCanvas.gameObject.SetActive(true);
         deckEditCanvas.GetComponent<DeckEditController>().RefreshLine();
         transform.Find("DeckInfo/EditButtons").gameObject.SetActive(false);
+
+        FindObjectOfType<HUDController>().SetHeader(HUDController.Type.HIDE);
     }
 
     public void DeleteButton() {
@@ -101,6 +103,7 @@ public class DeckHandler : MonoBehaviour
         deckInfo.gameObject.SetActive(false);
         transform.SetAsLastSibling();
         gameObject.SetActive(false);
+
         if (transform.parent.GetChild(2).gameObject.activeSelf && transform.parent.GetChild(2).Find("DeckInfo").gameObject.activeSelf)
             gameObject.SetActive(true);
     }
