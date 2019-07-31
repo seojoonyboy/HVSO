@@ -7,14 +7,14 @@ repeat: none
 star
   rotate: false
   xy: 0, 0
-  size: 123, 114
-  orig: 123, 114
+  size: 95, 87
+  orig: 95, 87
   offset: 0, 0
   index: -1
 star_2
   rotate: false
-  xy: 0, 114
-  size: 371, 355
-  orig: 371, 355
+  xy: 0, 87
+  size: 360, 344
+  orig: 360, 344
   offset: 0, 0
   index: -1
