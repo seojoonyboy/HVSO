@@ -230,7 +230,6 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public IEnumerator waitSkillDone(UnityAction callback, bool isShield = false) {
-        PlayMangement.instance.skillAction = true;
         if(isShield) yield return new WaitForSeconds(2.0f);
         MagicDragHandler[] list = Resources.FindObjectsOfTypeAll<MagicDragHandler>();
         foreach(MagicDragHandler magic in list) {
@@ -250,7 +249,6 @@ public partial class BattleConnector : MonoBehaviour {
                 yield return new WaitForSeconds(1.0f);
             }
         }
-        PlayMangement.instance.skillAction = false;
         callback();
     }
 
