@@ -8,7 +8,7 @@ using SocketFormat;
 
 namespace SkillModules {
     public class SkillHandler {
-        private Skill[] skills;
+        public Skill[] skills;
         public GameObject myObject;
         public object skillTarget;
         public bool isPlayer;

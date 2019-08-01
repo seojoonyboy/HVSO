@@ -293,21 +293,20 @@ public partial class CardDropManager {
 
     protected string magicArgs;
     protected string magicTarget;
-    public void ShowMagicalSlot(string[] target, SkillModules.SkillHandler.DragFilter dragFiltering) {
+    public void ShowMagicalSlot(string[] target, SkillModules.SkillHandler.DragFilter dragFiltering, SkillModules.ConditionChecker conditionChecker = null) {
         if (target == null) return;
         magicArgs = target[0];
         magicTarget = target[1];
         if (magicArgs == "my")
-            ActivateTarget(unitLine, magicTarget, dragFiltering);
+            ActivateTarget(unitLine, magicTarget, dragFiltering: dragFiltering, conditionChecker);
         else
-            ActivateTarget(enemyUnitLine, magicTarget, dragFiltering);
+            ActivateTarget(enemyUnitLine, magicTarget, dragFiltering, conditionChecker);
 
         if (magicArgs == "tool")
-            ActivateTarget(unitLine, magicTarget, dragFiltering, magicArgs);
-
+            ActivateTarget(unitLine, magicTarget, dragFiltering, conditionChecker, magicArgs);
     }
 
-    private void ActivateTarget(Transform[][] units, string group, SkillModules.SkillHandler.DragFilter dragFiltering, string args = null) {
+    private void ActivateTarget(Transform[][] units, string group, SkillModules.SkillHandler.DragFilter dragFiltering, SkillModules.ConditionChecker conditionChecker = null, string args = null) {
         switch (group) {
             case "unit":
                 for (int i = 0; i < 5; i++) {
@@ -341,9 +340,38 @@ public partial class CardDropManager {
                 break;
             default:
             case "all":
-                slotLine[2].Find("AllMagicTrigger").gameObject.SetActive(true);
+                if (CheckConditionToUse(conditionChecker, group)) slotLine[2].Find("AllMagicTrigger").gameObject.SetActive(true);
                 break;
         }
+    }
+
+    private bool CheckConditionToUse(SkillModules.ConditionChecker conditionChecker, string scope) {
+        if (conditionChecker == null) return true;
+
+        switch (scope) {
+            case "all":
+                if(conditionChecker.args[0] == "enemy") {
+                    PlayMangement playMangement = PlayMangement.instance;
+                    bool isPlayer = playMangement.player.isPlayer;
+
+                    bool isHuman;
+                    if (isPlayer) isHuman = playMangement.player.isHuman;
+                    else isHuman = playMangement.enemyPlayer.isHuman;
+
+                    var enemyUnits = PlayMangement.instance.UnitsObserver.GetAllFieldUnits(!isHuman);
+                    
+                    if(conditionChecker.args[1] == "dmg_gte") {
+                        int atk_std = 0;
+                        int.TryParse(conditionChecker.args[2], out atk_std);
+
+                        IngameNotice.instance.SetNotice("타겟이 존재하지 않습니다.");
+                        bool result = enemyUnits.Exists(x => x.GetComponent<PlaceMonster>().unit.attack >= atk_std);
+                        return result;
+                    }
+                }
+                break;
+        }
+        return true;
     }
 
     public void HideMagicSlot() {

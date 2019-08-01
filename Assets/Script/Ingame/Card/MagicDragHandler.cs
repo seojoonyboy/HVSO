@@ -24,7 +24,15 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
             else
                 CardInfoOnDrag.instance.SetCardDragInfo(null, mouseLocalPos.localPosition);
             //TODO : Filter를 통해(Use Condition) 타겟 표시 추가 제어
-            CardDropManager.Instance.ShowMagicalSlot(cardData.skills[0].target.args, skillHandler.dragFiltering);
+            try {
+                if (skillHandler.skills[0].conditionCheckers[0] != null) {
+                    Logger.Log("ConditionChecker [0] 존재 : " + skillHandler.skills[0].conditionCheckers[0]);
+                    CardDropManager.Instance.ShowMagicalSlot(cardData.skills[0].target.args, skillHandler.dragFiltering, skillHandler.skills[0].conditionCheckers[0]);
+                }
+            }
+            catch (Exception ex) {
+                CardDropManager.Instance.ShowMagicalSlot(cardData.skills[0].target.args, skillHandler.dragFiltering);
+            }
 
             object[] parms1 = new object[] { true, gameObject };
             PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_CARD_PLAY, this, parms1);
@@ -43,7 +51,15 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         blockButton = PlayMangement.instance.player.dragCard = true;
         PlayMangement.instance.player.isPicking.Value = true;
         //TODO : Filter를 통해(Use Condition) 타겟 표시 추가 제어
-        CardDropManager.Instance.ShowMagicalSlot(cardData.skills[0].target.args, skillHandler.dragFiltering);
+        try {
+            if(skillHandler.skills[0].conditionCheckers[0] != null) {
+                Logger.Log("ConditionChecker [0] 존재 : " + skillHandler.skills[0].conditionCheckers[0]);
+                CardDropManager.Instance.ShowMagicalSlot(cardData.skills[0].target.args, skillHandler.dragFiltering, skillHandler.skills[0].conditionCheckers[0]);
+            }
+        }
+        catch(Exception ex) {
+            CardDropManager.Instance.ShowMagicalSlot(cardData.skills[0].target.args, skillHandler.dragFiltering);
+        }
 
         object[] parms = new object[] { true, gameObject };
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_CARD_PLAY, this, parms);

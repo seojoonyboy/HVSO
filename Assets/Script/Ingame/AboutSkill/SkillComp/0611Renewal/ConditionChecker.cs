@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace SkillModules {
     public class ConditionChecker {
-        protected string[] args;
+        public string[] args;
         protected SkillHandler mySkillHandler;
 
         public ConditionChecker(SkillHandler mySkillHandler, string[] args = null) {
@@ -180,6 +180,58 @@ namespace SkillModules {
             return false;
         }
     }
+
+    public class field_exist : ConditionChecker {
+        PlayedObject playedObject;
+
+        public field_exist(SkillHandler skillHandler, string[] args = null) : base(skillHandler, args) {
+            playedObject = new PlayedObject();
+        }
+
+        public override bool IsConditionSatisfied() {
+            if (!ArgsExist()) return false;
+            playedObject.IsValidateData(mySkillHandler.targetData);
+
+            string camp = args[0];
+            var playManagement = PlayMangement.instance;
+            List<GameObject> targetPool = null;
+
+            var observer = PlayMangement.instance.UnitsObserver;
+            if (camp == "player") {
+                bool isHuman = playManagement.player.isHuman;
+                targetPool = observer.GetAllFieldUnits(isHuman);
+            }
+            else if (camp == "enemy") {
+                PlayerController opponent = mySkillHandler.isPlayer ? PlayMangement.instance.enemyPlayer : PlayMangement.instance.player;
+
+                bool isHuman = playManagement.enemyPlayer.isHuman;
+                targetPool = observer.GetAllFieldUnits(opponent.isHuman);
+            }
+
+            if (targetPool == null) return false;
+
+            switch (args[1]) {
+                case "dmg_gte":
+                    int dmg = 0;
+                    int.TryParse(args[2], out dmg);
+                    if (targetPool.Exists(x => x.GetComponent<PlaceMonster>().unit.attack >= dmg)) {
+                        return true;
+                    }
+                    else return false;
+            }
+            return false;
+        }
+
+        public override void filtering(ref List<GameObject> list) {
+            switch (args[1]) {
+                case "dmg_gte":
+                    int power = int.Parse(args[2]);
+                    list.RemoveAll(x => x.GetComponent<PlaceMonster>().unit.attack < power);
+                    break;
+            }
+        }
+    }
+
 
     public class target_dmg_gte : ConditionChecker {
         

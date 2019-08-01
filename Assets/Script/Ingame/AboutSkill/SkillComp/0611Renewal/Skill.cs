@@ -9,7 +9,7 @@ using TargetModules;
 namespace SkillModules {
     public class Skill {
         private IngameEventHandler.EVENT_TYPE myTrigger;
-        private ConditionChecker[] conditionCheckers;
+        public ConditionChecker[] conditionCheckers;
         private ScopeChecker scopeChecker;
         private TargetHandler targetHandler;
         private Ability ability;
