@@ -7,6 +7,8 @@ using UnityEngine.UI.Extensions;
 using System;
 using SkillModules;
 using Bolt;
+using Spine;
+using Spine.Unity;
 
 public partial class CardHandler : MonoBehaviour {
     public GameObject unit;
@@ -74,7 +76,6 @@ public partial class CardHandler : MonoBehaviour {
         this.itemID = itemID;
         if (cardDataPackage.data.ContainsKey(cardID)) {
             cardData = cardDataPackage.data[cardID];
-
             Sprite portraitImage = null;
             if (AccountManager.Instance.resource.cardPortraite.ContainsKey(cardID)) portraitImage = AccountManager.Instance.resource.cardPortraite[cardID];
             else portraitImage = AccountManager.Instance.resource.cardPortraite["default"];
@@ -113,10 +114,11 @@ public partial class CardHandler : MonoBehaviour {
                     transform.Find("SkillIcon").GetComponent<Image>().sprite = AccountManager.Instance.resource.skillIcons["complex"];
             }
         }
+        else
+            transform.Find("GlowEffect").GetComponent<SkeletonGraphic>().color = new Color(1, 1, 1, 1);
         transform.Find("Cost/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.cost.ToString();
         transform.Find("Class").GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[cardData.class_1];
         transform.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.name;
-
 
 
         if (first) {
@@ -175,8 +177,12 @@ public partial class CardHandler : MonoBehaviour {
                 transform.localScale = new Vector3(0, 0, 0);
                 if (cardData.type == "unit")
                     CardInfoOnDrag.instance.ActivePreviewUnit(true);
-                else
-                    CardInfoOnDrag.instance.ActiveCrossHair(true);
+                else {
+                    if(cardData.skills[0].target.args[1] != "all")
+                        CardInfoOnDrag.instance.ActiveCrossHair(true);
+                    else
+                        transform.localScale = new Vector3(1, 1, 1);
+                }
             }
         }
         else {
@@ -185,8 +191,9 @@ public partial class CardHandler : MonoBehaviour {
                 transform.localScale = new Vector3(1, 1, 1);
                 if (cardData.type == "unit")
                     CardInfoOnDrag.instance.ActivePreviewUnit(false);
-                else
+                else {
                     CardInfoOnDrag.instance.ActiveCrossHair(false);
+                }
             }
         }
     }
@@ -227,14 +234,18 @@ public partial class CardHandler : MonoBehaviour {
             highlightedSlot = CheckMagicSlot();
             if (highlightedSlot != null) {
                 highlighted = true;
-                CardInfoOnDrag.instance.crossHair.GetComponent<Image>().color = new Color(0.639f, 0.925f, 0.105f);
+                CardInfoOnDrag.instance.crossHair.GetComponent<SkeletonGraphic>().Skeleton.SetSkin("3.green");
+                if (cardData.skills[0].target.args[1] == "all")
+                    transform.Find("GlowEffect").GetComponent<SkeletonGraphic>().color = new Color(0.639f, 0.925f, 0.105f);
                 CardDropManager.Instance.HighLightMagicSlot(highlightedSlot, highlighted);
             }
         }
         else {
             if (highlightedSlot != CheckMagicSlot()) {
                 highlighted = false;
-                CardInfoOnDrag.instance.crossHair.GetComponent<Image>().color = new Color(1, 1, 1, 1);
+                CardInfoOnDrag.instance.crossHair.GetComponent<SkeletonGraphic>().Skeleton.SetSkin("1.yellow");
+                if (cardData.skills[0].target.args[1] == "all")
+                    transform.Find("GlowEffect").GetComponent<SkeletonGraphic>().color = new Color(1, 1, 1, 1);
                 CardDropManager.Instance.HighLightMagicSlot(highlightedSlot, highlighted);
                 highlightedSlot = null;
             }
