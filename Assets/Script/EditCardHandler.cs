@@ -9,7 +9,7 @@ public class EditCardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     public DeckEditController deckEditController;
 
     public MenuCardInfo menuCardInfo;
-    dataModules.CollectionCard cardData;
+    public dataModules.CollectionCard cardData;
     public GameObject beforeObject;
     public Transform cardObject;
     public Transform beforeParent;
@@ -28,6 +28,7 @@ public class EditCardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     private Transform mouseObject;
 
     static GameObject draggingObject;
+    public string editBookRoot = "";
     public static bool dragable = true;
     public static bool dragging = false;
 
@@ -51,6 +52,7 @@ public class EditCardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         disabled = false;
         transform.Find("UnitEditCard").gameObject.SetActive(false);
         transform.Find("MagicEditCard").gameObject.SetActive(false);
+        editBookRoot = "";
         GetComponent<EditCardHandler>().SETNUM = 0;
     }
 
