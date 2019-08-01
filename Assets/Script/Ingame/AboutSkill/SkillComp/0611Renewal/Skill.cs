@@ -71,6 +71,10 @@ namespace SkillModules {
             }
             else {
                 System.Type type = System.Type.GetType(methodAdd);
+                if(type == null) {
+                    Logger.LogError(string.Format("{0} 클래스가 존재하지 않습니다. 기존 베이스 클래스로 대처 합니다.", methodAdd));
+                    return t;
+                }
                 if(handler == null) {
                     return (T)Activator.CreateInstance(type);
                 }

@@ -68,12 +68,6 @@ namespace SkillModules {
                 AddTurnTriggerUnit(triggerType, Param);
                 return;
             }
-
-            if (triggerType == IngameEventHandler.EVENT_TYPE.END_CARD_PLAY) {
-                coroutineCount++;
-                PlayMangement.instance.skillAction = true;
-            }
-
             PlayMangement.instance.StartCoroutine (SkillTrigger (triggerType, Param));
 
         }
