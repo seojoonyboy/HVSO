@@ -14,22 +14,30 @@ public class EffectSystem : SerializedMonoBehaviour
     public Dictionary<EffectType, GameObject> effectObject;
     public GameObject deadEffect;
 
+    public GameObject pollingGroup;
+    public GameObject spareObject;
+
     private void Awake() {
         Instance = this;
     }
 
     public void ShowEffect(EffectType type, Vector3 pos) {
         if (effectObject.ContainsKey(type) == false || effectObject[type] == null) return;
-        GameObject effect = Instantiate(effectObject[type], pos, Quaternion.identity);
+        GameObject effect = GetReadyObject(effectObject[type]);
+        effect.transform.position = pos;
+        effect.SetActive(true);
         SkeletonAnimation effectAnimation = effect.GetComponent<SkeletonAnimation>();     
         effectAnimation.AnimationState.SetAnimation(0, "animation", false);
-        Destroy(effect, effectAnimation.skeleton.Data.FindAnimation("animation").Duration - 0.1f);
+        effectAnimation.AnimationState.Complete += delegate (TrackEntry entry) {SetReadyObject(effect); };
+        //Destroy(effect, effectAnimation.skeleton.Data.FindAnimation("animation").Duration - 0.1f);
         //return effectAnimation.skeleton.Data.FindAnimation("animation").Duration - 0.1f;
     }
 
     public void ShowEffectOnEvent(EffectType type, Vector3 pos, ActionDelegate callback, Transform playerTransform = null) {
         if (effectObject.ContainsKey(type) == false || effectObject[type] == null) return;
-        GameObject effect = Instantiate(effectObject[type], pos, Quaternion.identity);
+        GameObject effect = GetReadyObject(effectObject[type]);
+        effect.transform.position = pos;
+        effect.SetActive(true);
         SkeletonAnimation effectAnimation = effect.GetComponent<SkeletonAnimation>();
         if(playerTransform != null && playerTransform.gameObject.GetComponent<PlayerController>().isPlayer == false) 
             effect.GetComponent<MeshRenderer>().sortingOrder = 8;      
@@ -44,25 +52,30 @@ public class EffectSystem : SerializedMonoBehaviour
             }
 
         };
-        effectAnimation.AnimationState.End += delegate (TrackEntry entry) { Destroy(effect); };
+        effectAnimation.AnimationState.Complete += delegate (TrackEntry entry) { SetReadyObject(effect); };
     }
     
 
-    public void ShowEffectAfterCall(EffectType type, Transform transform, ActionDelegate callBack) {
+    public void ShowEffectAfterCall(EffectType type, Transform targetTransform, ActionDelegate callBack) {
         if (effectObject.ContainsKey(type) == false || effectObject[type] == null) return;
-        GameObject effect = Instantiate(effectObject[type], transform);
+        GameObject effect = GetReadyObject(effectObject[type]);
+        effect.transform.SetParent(targetTransform);
+        effect.transform.position = targetTransform.position;
+        effect.SetActive(true);
         SkeletonAnimation effectAnimation = effect.GetComponent<SkeletonAnimation>();
         effectAnimation.AnimationState.SetAnimation(0, "animation", false);        
-        effectAnimation.AnimationState.Complete += delegate (TrackEntry entry) { callBack(); Destroy(effect); };
+        effectAnimation.AnimationState.Complete += delegate (TrackEntry entry) { callBack(); SetReadyObject(effect); };
     }
     
 
 
     public void ContinueEffect(EffectType type, Transform pos) {
         if (effectObject.ContainsKey(type) == false || effectObject[type] == null) return;
-        GameObject effect = Instantiate(effectObject[type], pos);
+        GameObject effect = GetReadyObject(effectObject[type]);
+        effect.transform.SetParent(pos);
         effect.name = effectObject[type].gameObject.name;
         effect.transform.position = pos.position;
+        effect.SetActive(true);
         SkeletonAnimation effectAnimation = effect.GetComponent<SkeletonAnimation>();
         effectAnimation.AnimationState.SetAnimation(0, "animation", true);
     }
@@ -70,10 +83,34 @@ public class EffectSystem : SerializedMonoBehaviour
     public void DisableEffect(EffectType type, Transform pos) {
         if (pos.childCount <= 0) return;
         GameObject effect = pos.Find(effectObject[type].gameObject.name).gameObject;
-        if(effect != null) 
-            Destroy(effect);
-        
+        if(effect != null)
+            SetReadyObject(effect);        
     }
+
+    public GameObject GetReadyObject(GameObject original) {
+        GameObject effectObject;
+        foreach(Transform child in pollingGroup.transform) {
+            if(child.gameObject.activeSelf == false) {
+                effectObject = child.gameObject;
+                effectObject.GetComponent<SkeletonAnimation>().skeletonDataAsset = original.GetComponent<SkeletonAnimation>().skeletonDataAsset;
+                effectObject.GetComponent<SkeletonAnimation>().timeScale = original.GetComponent<SkeletonAnimation>().timeScale;
+                effectObject.transform.localScale = original.transform.localScale;
+                //effectObject.GetComponent<MeshRenderer>().material = original.GetComponent<MeshRenderer>().material;
+                //effectObject.GetComponent<SkeletonAnimation>().skeleton.SetBonesToSetupPose();
+                return effectObject;
+            }
+        }
+        effectObject = Instantiate(spareObject);
+        return effectObject;
+    }
+
+    public void SetReadyObject(GameObject effectObject) {
+        Transform targetTransform = effectObject.transform;
+        targetTransform.SetParent(pollingGroup.transform);
+        targetTransform.SetAsLastSibling();
+        effectObject.SetActive(false);
+    }
+
 
 
     private void OnDestroy() {
