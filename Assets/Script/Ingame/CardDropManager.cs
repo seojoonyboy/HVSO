@@ -364,7 +364,7 @@ public partial class CardDropManager {
                         int atk_std = 0;
                         int.TryParse(conditionChecker.args[2], out atk_std);
 
-                        IngameNotice.instance.SetNotice("타겟이 존재하지 않습니다.");
+                        //IngameNotice.instance.SetNotice("타겟이 존재하지 않습니다.");
                         bool result = enemyUnits.Exists(x => x.GetComponent<PlaceMonster>().unit.attack >= atk_std);
                         return result;
                     }

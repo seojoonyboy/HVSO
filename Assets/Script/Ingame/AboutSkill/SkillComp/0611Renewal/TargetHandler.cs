@@ -699,7 +699,7 @@ namespace TargetModules {
                             }
                             //마법카드인 경우
                             else {
-                                var skillTarget = (GameObject)skillHandler.skillTarget;
+                                var skillTarget = ((List<GameObject>)skillHandler.skillTarget)[0];
                                 placeMonster = skillTarget.GetComponent<PlaceMonster>();
                                 //if (PlayMangement.instance.player.transform.GetChild(0).GetChild(i).GetComponent<Terrain>().terrain == PlayMangement.LineState.forest) {
                                 //    //유닛이 숲 지형에 갈 수 있는 경우

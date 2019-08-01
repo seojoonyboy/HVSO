@@ -112,6 +112,8 @@ namespace SkillModules {
             else {
                 targetHandler.SelectTarget(
                     delegate {
+                        var targets = targetHandler.GetTarget();
+                        Logger.Log(targets.Count + "개의 Target");
                         ability.Execute(SetExecuteData(targetHandler.GetTarget(), ability.args));
                     },
                     delegate {
@@ -142,7 +144,7 @@ namespace SkillModules {
                 result = new object[] { targets, attrName };
             }
             else if(ability.GetType() == typeof(set_skill_target)) {
-                if (targets.Count != 0) result = targets[0];
+                if (targets.Count != 0) result = targets;
             }
             else if(ability.GetType() == typeof(supply)) {
                 int num = 0;

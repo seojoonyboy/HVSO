@@ -92,8 +92,14 @@ namespace SkillModules {
                     return;
                 }
 
-                GameObject target = (GameObject)data;
-                SetSkillTarget(ref target);
+                if(data.GetType() == typeof(GameObject)) {
+                    GameObject target = (GameObject)data;
+                    SetSkillTarget(ref target);
+                }
+                else if(data.GetType() == typeof(List<GameObject>)) {
+                    List<GameObject> targets = (List<GameObject>)data;
+                    SetSkillTarget(ref targets);
+                }
             }
             catch(FormatException ex) {
                 ShowFormatErrorLog("set_skill_target");
@@ -103,6 +109,10 @@ namespace SkillModules {
 
         private void SetSkillTarget(ref GameObject target) {
             skillHandler.skillTarget = target;
+        }
+
+        private void SetSkillTarget(ref List<GameObject> targets) {
+            skillHandler.skillTarget = targets;
         }
     }
 
@@ -208,7 +218,7 @@ namespace SkillModules {
         public override void Execute(object data) {
             if (data.GetType().IsArray) {
                 object[] tmp = (object[])data;
-                GameObject target = (GameObject)skillHandler.skillTarget;
+                GameObject target = ((List<GameObject>)skillHandler.skillTarget)[0];
                 string cardID;
                 if (skillHandler.myObject.GetComponent<MagicDragHandler>() != null)
                     cardID = skillHandler.myObject.GetComponent<MagicDragHandler>().cardData.cardId;
