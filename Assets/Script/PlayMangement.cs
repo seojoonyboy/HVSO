@@ -778,7 +778,8 @@ public partial class PlayMangement {
             else
                 observer.UnitAdded(unit, new FieldUnitsObserver.Pos(col, row), player.isHuman);
 
-            player.cdpm.DestroyCard(cardIndex);
+            if(cardIndex != -1)
+                player.cdpm.DestroyCard(cardIndex);
         }
         else {
             int enemyCardCount = CountEnemyCard();
@@ -1026,7 +1027,44 @@ public partial class PlayMangement {
     }
 
     public void EditorTestInit(SocketFormat.GameState state) {
-        
+        EditorMapInit(state);
+        EditorCardInit(state);
+        EditorPlayerInit(state);
+        EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.FIELD_CHANGED, null, null);
+        StartCoroutine(player.cdpm.EditorSkipMulligan());
+    }
+
+    private void EditorMapInit(SocketFormat.GameState state) {
+        for(int i = 0; i < state.map.lines.Length; i++) {
+            EditorSummonUnit(i, state.map.lines[i].human, true);
+            EditorSummonUnit(i, state.map.lines[i].orc, false);
+        }
+    }
+
+    private void EditorSummonUnit(int line, SocketFormat.Unit[] units, bool isHuman) {
+        if(units.Length == 0) return;
+        Transform race = player.isHuman == isHuman ? player.transform : enemyPlayer.transform;
+        Transform line_rear = race.GetChild(0);
+        Transform line_front = race.GetChild(1);
+        GameObject unit1 = SummonUnit(player.isHuman == isHuman, units[0].id, line, 0, units[0].itemId);
+        if(units.Length == 2) return;
+        GameObject unit2 = SummonUnit(player.isHuman == isHuman, units[1].id, line, 1, units[1].itemId);
+    }
+
+    private void EditorCardInit(SocketFormat.GameState state) {
+        StartCoroutine(player.cdpm.AddMultipleCard(state.players.myPlayer(player.isHuman).deck.handCards));
+        StartCoroutine(EnemyMagicCardDraw(state.players.enemyPlayer(enemyPlayer.isHuman).deck.handCards.Length));
+    }
+
+    private void EditorPlayerInit(SocketFormat.GameState state) {
+        PlayerDataInit(player, state.players.myPlayer(player.isHuman));
+        PlayerDataInit(enemyPlayer, state.players.enemyPlayer(enemyPlayer.isHuman));
+    }
+
+    private void PlayerDataInit(PlayerController player, SocketFormat.Player data) {
+        player.HP.Value = data.hero.currentHp;
+        player.shieldStack.Value = data.hero.shieldGauge;
+        player.resource.Value = data.resource;
     }
 }
 

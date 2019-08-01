@@ -524,6 +524,19 @@ public class CardHandManager : MonoBehaviour {
         SoundManager.Instance.PlaySound(SoundType.FIRST_TURN);
     }
 
+    public IEnumerator EditorSkipMulligan() {
+        PlayMangement.instance.isMulligan = false;
+        firstDrawParent.gameObject.SetActive(false);
+        yield return new WaitForSeconds(3.0f);
+        CustomEvent.Trigger(GameObject.Find("GameManager"), "EndTurn");
+        GameObject firstOrcTurnObj = firstDrawParent.parent.Find("First_OrcPlay").gameObject;
+        firstOrcTurnObj.SetActive(true);
+        yield return new WaitForSeconds(1.0f);
+        firstOrcTurnObj.SetActive(false);
+
+        SoundManager.Instance.PlaySound(SoundType.FIRST_TURN);
+    }
+
     /// <summary>
     /// 카드 교체 함수
     /// </summary>
