@@ -39,8 +39,9 @@ namespace SkillModules {
     public class skill_target_ctg_chk : ConditionChecker {
         public skill_target_ctg_chk(SkillHandler mySkillHandler, string[] args = null) : base(mySkillHandler, args) { }
         public override bool IsConditionSatisfied() {
-            GameObject target = (GameObject)mySkillHandler.skillTarget;
-            if(target == null) return false;
+            List<GameObject> targets = (List<GameObject>)mySkillHandler.skillTarget;
+            if(targets == null) return false;
+            GameObject target = targets[0];
             IngameClass.Unit unit = target.GetComponent<PlaceMonster>().unit;
             bool exist = unit.cardCategories.ToList().Exists(x => !string.IsNullOrEmpty(x) && x.CompareTo(args[0]) == 0);
             return exist;
