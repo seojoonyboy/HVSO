@@ -25,6 +25,7 @@ public class EffectSystem : SerializedMonoBehaviour
         if (effectObject.ContainsKey(type) == false || effectObject[type] == null) return;
         GameObject effect = GetReadyObject(effectObject[type]);
         effect.transform.position = pos;
+        effect.name = effectObject[type].gameObject.name;
         effect.SetActive(true);
         SkeletonAnimation effectAnimation = effect.GetComponent<SkeletonAnimation>();     
         effectAnimation.AnimationState.SetAnimation(0, "animation", false);
@@ -38,6 +39,7 @@ public class EffectSystem : SerializedMonoBehaviour
         GameObject effect = GetReadyObject(effectObject[type]);
         effect.transform.position = pos;
         effect.SetActive(true);
+        effect.name = effectObject[type].gameObject.name;
         SkeletonAnimation effectAnimation = effect.GetComponent<SkeletonAnimation>();
         if(playerTransform != null && playerTransform.gameObject.GetComponent<PlayerController>().isPlayer == false) 
             effect.GetComponent<MeshRenderer>().sortingOrder = 8;      
@@ -61,6 +63,7 @@ public class EffectSystem : SerializedMonoBehaviour
         GameObject effect = GetReadyObject(effectObject[type]);
         effect.transform.SetParent(targetTransform);
         effect.transform.position = targetTransform.position;
+        effect.name = effectObject[type].gameObject.name;
         effect.SetActive(true);
         SkeletonAnimation effectAnimation = effect.GetComponent<SkeletonAnimation>();
         effectAnimation.AnimationState.SetAnimation(0, "animation", false);        
@@ -101,6 +104,9 @@ public class EffectSystem : SerializedMonoBehaviour
             }
         }
         effectObject = Instantiate(spareObject);
+        effectObject.GetComponent<SkeletonAnimation>().skeletonDataAsset = original.GetComponent<SkeletonAnimation>().skeletonDataAsset;
+        effectObject.GetComponent<SkeletonAnimation>().timeScale = original.GetComponent<SkeletonAnimation>().timeScale;
+        effectObject.transform.localScale = original.transform.localScale;
         return effectObject;
     }
 
