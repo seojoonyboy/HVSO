@@ -146,7 +146,7 @@ public class DeckSettingManager : MonoBehaviour
         }
         else {
             orcDeckList.GetChild(orcCurrentPage - 1).gameObject.SetActive(false);
-            orcDeckList.GetChild(orcCurrentPage).gameObject.SetActive(false);
+            orcDeckList.GetChild(orcCurrentPage).gameObject.SetActive(true);
             orcCurrentPage++;
             if (orcCurrentPage == 3 || !orcDeckList.GetChild(orcCurrentPage).GetChild(0).gameObject.activeSelf)
                 pageButtons.Find("Orc/Right").gameObject.SetActive(false);
