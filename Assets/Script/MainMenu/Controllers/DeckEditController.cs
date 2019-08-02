@@ -500,6 +500,7 @@ public class DeckEditController : MonoBehaviour
         }            
         else
             buttons.Find("NextPageButton").gameObject.SetActive(true);
+        buttons.Find("PrevPageButton").gameObject.SetActive(false);
         RefreshLine();
         transform.Find("ShowAllClass/Selected").gameObject.SetActive(true);
         transform.Find("SortToClass1/Selected").gameObject.SetActive(false);
@@ -542,6 +543,7 @@ public class DeckEditController : MonoBehaviour
         }
         else
             buttons.Find("NextPageButton").gameObject.SetActive(true);
+        buttons.Find("PrevPageButton").gameObject.SetActive(false);
         RefreshLine();
         transform.Find("ShowAllClass/Selected").gameObject.SetActive(false);
         if (classNum == 0) {
