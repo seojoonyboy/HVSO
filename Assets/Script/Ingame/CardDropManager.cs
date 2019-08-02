@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public partial class CardDropManager : Singleton<CardDropManager> {
     protected Transform[] slotLine;
@@ -350,22 +351,29 @@ public partial class CardDropManager {
 
         switch (scope) {
             case "all":
+                PlayMangement playMangement = PlayMangement.instance;
+                bool isPlayer = playMangement.player.isPlayer;
+
+                bool isHuman;
+                if (isPlayer) isHuman = playMangement.player.isHuman;
+                else isHuman = playMangement.enemyPlayer.isHuman;
+
+                var enemyUnits = PlayMangement.instance.UnitsObserver.GetAllFieldUnits(!isHuman);
+                if(enemyUnits.Count == 0) return false;
                 if(conditionChecker.args[0] == "enemy") {
-                    PlayMangement playMangement = PlayMangement.instance;
-                    bool isPlayer = playMangement.player.isPlayer;
-
-                    bool isHuman;
-                    if (isPlayer) isHuman = playMangement.player.isHuman;
-                    else isHuman = playMangement.enemyPlayer.isHuman;
-
-                    var enemyUnits = PlayMangement.instance.UnitsObserver.GetAllFieldUnits(!isHuman);
-                    
                     if(conditionChecker.args[1] == "dmg_gte") {
                         int atk_std = 0;
                         int.TryParse(conditionChecker.args[2], out atk_std);
 
                         //IngameNotice.instance.SetNotice("타겟이 존재하지 않습니다.");
                         bool result = enemyUnits.Exists(x => x.GetComponent<PlaceMonster>().unit.attack >= atk_std);
+                        return result;
+                    }
+                    else if(conditionChecker.args[1] == "without_attr") {
+                        string attr = conditionChecker.args[2];
+                        bool result = false;
+                        enemyUnits.RemoveAll(x => x.GetComponent<PlaceMonster>().unit.attributes.ToList().Exists(y => y.CompareTo(attr) == 0));
+                        result = enemyUnits.Count != 0;
                         return result;
                     }
                 }
