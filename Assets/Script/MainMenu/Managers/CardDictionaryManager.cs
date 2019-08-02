@@ -65,16 +65,16 @@ public class CardDictionaryManager : MonoBehaviour {
         for (int i = 0; i < 5; i++)
             sortingModal.Find("Buttons").GetChild(i).GetChild(0).gameObject.SetActive(true);
         sortingModal.Find("Buttons/Rarelity").GetChild(0).gameObject.SetActive(false);
-        sortingModal.Find("Buttons/Ascending").GetChild(0).gameObject.SetActive(false);
-        selectedSortOption = SortingOptions.RARELITY_ASCEND;
+        sortingModal.Find("Buttons/Descending").GetChild(0).gameObject.SetActive(false);
+        selectedSortOption = SortingOptions.RARELITY_DESCEND;
     }
 
     public void ClickCostButton() {
         for (int i = 0; i < 5; i++)
             sortingModal.Find("Buttons").GetChild(i).GetChild(0).gameObject.SetActive(true);
         sortingModal.Find("Buttons/Cost").GetChild(0).gameObject.SetActive(false);
-        sortingModal.Find("Buttons/Ascending").GetChild(0).gameObject.SetActive(false);
-        selectedSortOption = SortingOptions.COST_ASCEND;
+        sortingModal.Find("Buttons/Descending").GetChild(0).gameObject.SetActive(false);
+        selectedSortOption = SortingOptions.COST_DESCEND;
     }
 
     public void ClickAscendingButton() {

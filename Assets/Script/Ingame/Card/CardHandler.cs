@@ -113,6 +113,10 @@ public partial class CardHandler : MonoBehaviour {
                 if (cardData.attributes.Length != 0 && cardData.attackTypes.Length != 0)
                     transform.Find("SkillIcon").GetComponent<Image>().sprite = AccountManager.Instance.resource.skillIcons["complex"];
             }
+            transform.Find("GlowEffect/HaveAbility").gameObject.SetActive(false);
+            transform.Find("GlowEffect/NonAbility").gameObject.SetActive(false);
+            transform.Find("Disabled/HaveAbility").gameObject.SetActive(false);
+            transform.Find("Disabled/NonAbility").gameObject.SetActive(false);
         }
         else
             transform.Find("GlowEffect").GetComponent<SkeletonGraphic>().color = new Color(1, 1, 1, 1);
