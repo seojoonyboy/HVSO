@@ -185,13 +185,13 @@ public class RaceTypeToggleHandler : MonoBehaviour {
 
     private void AddButtonListener() {
         var Button = deckParent.parent.transform.Find("PrevBtn").GetComponent<Button>();
-        Button.onClick.RemoveListener(GoToPrevPage);
+        Button.onClick.RemoveAllListeners();
         Button.onClick.AddListener(() => {
             GoToPrevPage();
         });
 
         Button = deckParent.parent.transform.Find("NextBtn").GetComponent<Button>();
-        Button.onClick.RemoveListener(GoToNextPage);
+        Button.onClick.RemoveAllListeners();
         Button.onClick.AddListener(() => {
             GoToNextPage();
         });
