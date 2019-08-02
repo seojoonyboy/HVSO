@@ -218,6 +218,12 @@ namespace SkillModules {
                         return true;
                     }
                     else return false;
+                case "without_attr":
+                    if(targetPool.Count == 0) return false; 
+                    string attr = args[2];
+                    targetPool.RemoveAll(x => x.GetComponent<PlaceMonster>().unit.attributes.ToList().Exists(y => y.CompareTo(attr) == 0));
+                    if(targetPool.Count == 0) return false;
+                    return true;
             }
             return false;
         }
@@ -227,6 +233,9 @@ namespace SkillModules {
                 case "dmg_gte":
                     int power = int.Parse(args[2]);
                     list.RemoveAll(x => x.GetComponent<PlaceMonster>().unit.attack < power);
+                    break;
+                case "without_attr":
+                    list.RemoveAll(x => x.GetComponent<PlaceMonster>().unit.attributes.ToList().Exists(y => y.CompareTo(args[2]) == 0));
                     break;
             }
         }
