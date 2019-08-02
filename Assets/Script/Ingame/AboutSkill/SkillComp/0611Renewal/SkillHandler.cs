@@ -251,7 +251,7 @@ namespace SkillModules {
                     int line = selectList[0].transform.GetSiblingIndex();
                     args.Add(line.ToString());
                     if (isEndCardPlay) {
-                        isOrc = ((GameObject)skillTarget).GetComponent<PlaceMonster>().isPlayer != isPlayerHuman;
+                        isOrc = (((List<GameObject>)skillTarget))[0].GetComponent<PlaceMonster>().isPlayer != isPlayerHuman;
                     }   
                     else
                         isOrc = myObject.GetComponent<PlaceMonster>().isPlayer != isPlayerHuman;
@@ -273,7 +273,7 @@ namespace SkillModules {
             if(highlight != null)
                 unit = highlight.GetComponentInParent<PlaceMonster>();
             else
-                unit = ((GameObject)skillTarget).GetComponent<PlaceMonster>();
+                unit = ((List<GameObject>)skillTarget)[0].GetComponent<PlaceMonster>();
             return unit;
         }
         
