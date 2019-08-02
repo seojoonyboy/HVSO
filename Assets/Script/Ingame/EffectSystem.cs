@@ -16,6 +16,7 @@ public class EffectSystem : SerializedMonoBehaviour
 
     public GameObject pollingGroup;
     public GameObject spareObject;
+    public GameObject activeGroup;
 
     private void Awake() {
         Instance = this;
@@ -27,7 +28,7 @@ public class EffectSystem : SerializedMonoBehaviour
         effect.transform.position = pos;
         effect.name = effectObject[type].gameObject.name;
         effect.SetActive(true);
-        SkeletonAnimation effectAnimation = effect.GetComponent<SkeletonAnimation>();     
+        SkeletonAnimation effectAnimation = effect.GetComponent<SkeletonAnimation>();
         effectAnimation.AnimationState.SetAnimation(0, "animation", false);
         effectAnimation.AnimationState.Complete += delegate (TrackEntry entry) {SetReadyObject(effect); };
         //Destroy(effect, effectAnimation.skeleton.Data.FindAnimation("animation").Duration - 0.1f);
@@ -42,7 +43,7 @@ public class EffectSystem : SerializedMonoBehaviour
         effect.name = effectObject[type].gameObject.name;
         SkeletonAnimation effectAnimation = effect.GetComponent<SkeletonAnimation>();
         if(playerTransform != null && playerTransform.gameObject.GetComponent<PlayerController>().isPlayer == false) 
-            effect.GetComponent<MeshRenderer>().sortingOrder = 8;      
+            effect.GetComponent<MeshRenderer>().sortingOrder = 8;
         effectAnimation.AnimationState.SetAnimation(0, "animation", false);
         effectAnimation.AnimationState.Event += delegate (TrackEntry entry, Spine.Event e) {
             if(e.Data.Name == "ATTACK") {
@@ -64,7 +65,7 @@ public class EffectSystem : SerializedMonoBehaviour
         effect.transform.SetParent(targetTransform);
         effect.transform.position = targetTransform.position;
         effect.name = effectObject[type].gameObject.name;
-        effect.SetActive(true);
+        effect.SetActive(true);        
         SkeletonAnimation effectAnimation = effect.GetComponent<SkeletonAnimation>();
         effectAnimation.AnimationState.SetAnimation(0, "animation", false);        
         effectAnimation.AnimationState.Complete += delegate (TrackEntry entry) { callBack(); SetReadyObject(effect); };
@@ -93,27 +94,23 @@ public class EffectSystem : SerializedMonoBehaviour
     public GameObject GetReadyObject(GameObject original) {
         GameObject effectObject;
         foreach(Transform child in pollingGroup.transform) {
-            if(child.gameObject.activeSelf == false) {
+            if(child.gameObject.activeSelf == false && child.gameObject.name == original.name) {
                 effectObject = child.gameObject;
-                effectObject.GetComponent<SkeletonAnimation>().skeletonDataAsset = original.GetComponent<SkeletonAnimation>().skeletonDataAsset;
-                effectObject.GetComponent<SkeletonAnimation>().timeScale = original.GetComponent<SkeletonAnimation>().timeScale;
+                //effectObject.GetComponent<SkeletonAnimation>().skeletonDataAsset = original.GetComponent<SkeletonAnimation>().skeletonDataAsset;
+                //effectObject.GetComponent<SkeletonAnimation>().timeScale = original.GetComponent<SkeletonAnimation>().timeScale;
                 effectObject.transform.localScale = original.transform.localScale;
-                //effectObject.GetComponent<MeshRenderer>().material = original.GetComponent<MeshRenderer>().material;
-                //effectObject.GetComponent<SkeletonAnimation>().skeleton.SetBonesToSetupPose();
                 return effectObject;
             }
         }
-        effectObject = Instantiate(spareObject);
-        effectObject.GetComponent<SkeletonAnimation>().skeletonDataAsset = original.GetComponent<SkeletonAnimation>().skeletonDataAsset;
-        effectObject.GetComponent<SkeletonAnimation>().timeScale = original.GetComponent<SkeletonAnimation>().timeScale;
+        effectObject = Instantiate(original);
         effectObject.transform.localScale = original.transform.localScale;
+        effectObject.name = original.name;
         return effectObject;
     }
 
     public void SetReadyObject(GameObject effectObject) {
         Transform targetTransform = effectObject.transform;
         targetTransform.SetParent(pollingGroup.transform);
-        targetTransform.SetAsLastSibling();
         effectObject.SetActive(false);
     }
 
