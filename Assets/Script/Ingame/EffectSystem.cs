@@ -29,7 +29,6 @@ public class EffectSystem : SerializedMonoBehaviour
         effect.name = effectObject[type].gameObject.name;
         effect.SetActive(true);
         SkeletonAnimation effectAnimation = effect.GetComponent<SkeletonAnimation>();
-        effectAnimation.skeleton.SetToSetupPose();
         effectAnimation.AnimationState.SetAnimation(0, "animation", false);
         effectAnimation.AnimationState.Complete += delegate (TrackEntry entry) {SetReadyObject(effect); };
         //Destroy(effect, effectAnimation.skeleton.Data.FindAnimation("animation").Duration - 0.1f);
@@ -45,7 +44,6 @@ public class EffectSystem : SerializedMonoBehaviour
         SkeletonAnimation effectAnimation = effect.GetComponent<SkeletonAnimation>();
         if(playerTransform != null && playerTransform.gameObject.GetComponent<PlayerController>().isPlayer == false) 
             effect.GetComponent<MeshRenderer>().sortingOrder = 8;
-        effectAnimation.skeleton.SetToSetupPose();
         effectAnimation.AnimationState.SetAnimation(0, "animation", false);
         effectAnimation.AnimationState.Event += delegate (TrackEntry entry, Spine.Event e) {
             if(e.Data.Name == "ATTACK") {
@@ -69,7 +67,6 @@ public class EffectSystem : SerializedMonoBehaviour
         effect.name = effectObject[type].gameObject.name;
         effect.SetActive(true);        
         SkeletonAnimation effectAnimation = effect.GetComponent<SkeletonAnimation>();
-        effectAnimation.skeleton.SetToSetupPose();
         effectAnimation.AnimationState.SetAnimation(0, "animation", false);        
         effectAnimation.AnimationState.Complete += delegate (TrackEntry entry) { callBack(); SetReadyObject(effect); };
     }
@@ -84,7 +81,6 @@ public class EffectSystem : SerializedMonoBehaviour
         effect.transform.position = pos.position;
         effect.SetActive(true);
         SkeletonAnimation effectAnimation = effect.GetComponent<SkeletonAnimation>();
-        effectAnimation.skeleton.SetToSetupPose();
         effectAnimation.AnimationState.SetAnimation(0, "animation", true);
     }
 
