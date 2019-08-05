@@ -143,8 +143,10 @@ public class CardHandManager : MonoBehaviour {
             }
             card.GetComponent<CardHandler>().DisableCard();
         }
-        else
+        else {
             AddInfoToList(card);
+            card.transform.Find("ChangeButton").gameObject.SetActive(false);
+        }
         Transform cardTransform = card.transform;
         Transform cardPos = transform.GetChild(cardNum);
         cardPos.gameObject.SetActive(true);
@@ -180,7 +182,7 @@ public class CardHandManager : MonoBehaviour {
                 itemId = cardData[i].itemId;
             }
             card.GetComponent<CardHandler>().DrawCard(id, itemId);
-
+            card.transform.Find("ChangeButton").gameObject.SetActive(false);
             if (cardData[i].type == "magic") {
                 card.transform.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData[i].name;
                 AddMagicAttribute(ref card);
