@@ -208,14 +208,14 @@ public class RaceTypeToggleHandler : MonoBehaviour {
     public void OnDeckSelected(GameObject selectedDeck, Deck data) {
         if(this.selectedDeck != null) {
             this.selectedDeck.transform.Find("Outline").gameObject.SetActive(false);
-            //this.selectedDeck.transform.Find("Deck/Twinkle").gameObject.SetActive(false);
+            this.selectedDeck.transform.Find("Deck/Twinkle").gameObject.SetActive(false);
         }
         selectedDeck.transform.Find("Outline").gameObject.SetActive(true);
 
         LeaderDeckId = selectedDeck.transform.Find("Deck").GetComponent<StringIndex>().Id;
         this.selectedDeck = selectedDeck;
-        //GameObject twinkle = selectedDeck.transform.Find("Deck/Twinkle").gameObject;
-        //twinkle.SetActive(true);
+        GameObject twinkle = selectedDeck.transform.Find("Deck/Twinkle").gameObject;
+        twinkle.SetActive(true);
         //twinkle.GetComponent<DeckClickSpine>().Click();
         controller.selectedDeck = data;
     }
