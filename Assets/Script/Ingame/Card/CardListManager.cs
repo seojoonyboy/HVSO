@@ -204,10 +204,11 @@ public class CardListManager : MonoBehaviour
 
         info.Find("SkillIcon1").gameObject.SetActive(false);
         info.Find("SkillIcon2").gameObject.SetActive(false);
-        info.Find("Flavor/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "";
+        info.Find("Flavor/Text").GetComponent<TMPro.TextMeshProUGUI>().text = string.Empty;
 
         info.Find("UnitPortrait").gameObject.SetActive(false);
         info.Find("MagicPortrait").gameObject.SetActive(false);
+        info.Find("Categories/Text").GetComponent<TMPro.TextMeshProUGUI>().text = string.Empty;
 
         if (data.type == "unit") {
             info.Find("UnitPortrait").gameObject.SetActive(true);
