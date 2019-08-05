@@ -148,6 +148,7 @@ public partial class CardHandler : MonoBehaviour {
             else
                 transform.Find("ChangeButton").gameObject.SetActive(false);
         }
+        
     }
 
     public virtual void CheckHighlight() {
