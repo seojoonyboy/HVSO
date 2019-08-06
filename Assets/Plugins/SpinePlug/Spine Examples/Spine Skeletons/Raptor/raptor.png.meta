@@ -1,114 +1,9 @@
 fileFormatVersion: 2
 guid: 4261719a8f729a644b2dab6113d1b0ea
 TextureImporter:
-  internalIDToNameTable:
-  - first:
-      213: 21300000
-    second: back_arm
-  - first:
-      213: 21300002
-    second: back_bracer
-  - first:
-      213: 21300004
-    second: back_hand
-  - first:
-      213: 21300006
-    second: back_knee
-  - first:
-      213: 21300008
-    second: back_thigh
-  - first:
-      213: 21300010
-    second: eyes_open
-  - first:
-      213: 21300012
-    second: front_arm
-  - first:
-      213: 21300014
-    second: front_bracer
-  - first:
-      213: 21300016
-    second: front_hand
-  - first:
-      213: 21300018
-    second: front_open_hand
-  - first:
-      213: 21300020
-    second: front_thigh
-  - first:
-      213: 21300022
-    second: gun
-  - first:
-      213: 21300024
-    second: gun_nohand
-  - first:
-      213: 21300026
-    second: head
-  - first:
-      213: 21300028
-    second: lower_leg
-  - first:
-      213: 21300030
-    second: mouth_smile
-  - first:
-      213: 21300032
-    second: neck
-  - first:
-      213: 21300034
-    second: raptor_arm_back
-  - first:
-      213: 21300036
-    second: raptor_body
-  - first:
-      213: 21300038
-    second: raptor_front_arm
-  - first:
-      213: 21300040
-    second: raptor_front_leg
-  - first:
-      213: 21300042
-    second: raptor_hindleg_back
-  - first:
-      213: 21300044
-    second: raptor_horn
-  - first:
-      213: 21300046
-    second: raptor_horn_back
-  - first:
-      213: 21300048
-    second: raptor_jaw
-  - first:
-      213: 21300050
-    second: raptor_saddle_noshadow
-  - first:
-      213: 21300052
-    second: raptor_saddle_strap_front
-  - first:
-      213: 21300054
-    second: raptor_saddle_strap_rear
-  - first:
-      213: 21300056
-    second: raptor_saddle_w_shadow
-  - first:
-      213: 21300058
-    second: raptor_tongue
-  - first:
-      213: 21300060
-    second: stirrup_back
-  - first:
-      213: 21300062
-    second: stirrup_front
-  - first:
-      213: 21300064
-    second: stirrup_strap
-  - first:
-      213: 21300066
-    second: torso
-  - first:
-      213: 21300068
-    second: visor
+  fileIDToRecycleName: {}
   externalObjects: {}
-  serializedVersion: 10
+  serializedVersion: 9
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -226,7 +121,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 
-      internalID: 0
       vertices: []
       indices: 
       edges: []
@@ -247,7 +141,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 
-      internalID: 0
       vertices: []
       indices: 
       edges: []
@@ -268,7 +161,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 
-      internalID: 0
       vertices: []
       indices: 
       edges: []
@@ -289,7 +181,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 
-      internalID: 0
       vertices: []
       indices: 
       edges: []
@@ -310,7 +201,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 
-      internalID: 0
       vertices: []
       indices: 
       edges: []
@@ -331,7 +221,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 
-      internalID: 0
       vertices: []
       indices: 
       edges: []
@@ -352,7 +241,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 
-      internalID: 0
       vertices: []
       indices: 
       edges: []
@@ -373,7 +261,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 
-      internalID: 0
       vertices: []
       indices: 
       edges: []
@@ -394,7 +281,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 
-      internalID: 0
       vertices: []
       indices: 
       edges: []
@@ -415,7 +301,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 
-      internalID: 0
       vertices: []
       indices: 
       edges: []
@@ -436,7 +321,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 
-      internalID: 0
       vertices: []
       indices: 
       edges: []
@@ -457,7 +341,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 
-      internalID: 0
       vertices: []
       indices: 
       edges: []
@@ -478,7 +361,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 
-      internalID: 0
       vertices: []
       indices: 
       edges: []
@@ -499,7 +381,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 
-      internalID: 0
       vertices: []
       indices: 
       edges: []
@@ -520,7 +401,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 
-      internalID: 0
       vertices: []
       indices: 
       edges: []
@@ -541,7 +421,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 
-      internalID: 0
       vertices: []
       indices: 
       edges: []
@@ -562,7 +441,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 
-      internalID: 0
       vertices: []
       indices: 
       edges: []
@@ -583,7 +461,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 
-      internalID: 0
       vertices: []
       indices: 
       edges: []
@@ -604,7 +481,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 
-      internalID: 0
       vertices: []
       indices: 
       edges: []
@@ -625,7 +501,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 
-      internalID: 0
       vertices: []
       indices: 
       edges: []
@@ -646,7 +521,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 
-      internalID: 0
       vertices: []
       indices: 
       edges: []
@@ -667,7 +541,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 
-      internalID: 0
       vertices: []
       indices: 
       edges: []
@@ -688,7 +561,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 
-      internalID: 0
       vertices: []
       indices: 
       edges: []
@@ -709,7 +581,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 
-      internalID: 0
       vertices: []
       indices: 
       edges: []
@@ -730,7 +601,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 
-      internalID: 0
       vertices: []
       indices: 
       edges: []
@@ -751,7 +621,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 
-      internalID: 0
       vertices: []
       indices: 
       edges: []
@@ -772,7 +641,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 
-      internalID: 0
       vertices: []
       indices: 
       edges: []
@@ -793,7 +661,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 
-      internalID: 0
       vertices: []
       indices: 
       edges: []
@@ -814,7 +681,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 
-      internalID: 0
       vertices: []
       indices: 
       edges: []
@@ -835,7 +701,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 
-      internalID: 0
       vertices: []
       indices: 
       edges: []
@@ -856,7 +721,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 
-      internalID: 0
       vertices: []
       indices: 
       edges: []
@@ -877,7 +741,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 
-      internalID: 0
       vertices: []
       indices: 
       edges: []
@@ -898,7 +761,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 
-      internalID: 0
       vertices: []
       indices: 
       edges: []
@@ -919,7 +781,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 
-      internalID: 0
       vertices: []
       indices: 
       edges: []
@@ -940,7 +801,6 @@ TextureImporter:
       tessellationDetail: -1
       bones: []
       spriteID: 
-      internalID: 0
       vertices: []
       indices: 
       edges: []
@@ -949,12 +809,10 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: 
-    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
-    secondaryTextures: []
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
