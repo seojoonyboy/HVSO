@@ -1,45 +1,19 @@
 fileFormatVersion: 2
 guid: f09884bcf638d0a4889f2e7c01ab948e
 TextureImporter:
-  internalIDToNameTable:
-  - first:
-      213: -1605891900892313427
-    second: hero_Info_legend_human
-  - first:
-      213: -1162715127489450480
-    second: hero_Info_legend_orc
-  - first:
-      213: -7657271740161780897
-    second: hero_Info_superrare_human
-  - first:
-      213: 6662898354628611399
-    second: hero_Info_superrare_orc
-  - first:
-      213: -6587928249059156515
-    second: hero_Info_legend_name
-  - first:
-      213: -8801440333682112796
-    second: hero_Info_superrare_human_name
-  - first:
-      213: -261223684857086199
-    second: "\uC601\uC6C5 \uCE74\uB4DC \uD2C0_6"
-  - first:
-      213: 6765166976684226474
-    second: "\uC601\uC6C5 \uCE74\uB4DC \uD2C0_7"
-  - first:
-      213: 273734422036260988
-    second: hero_Info_superrare_orc_dialog
-  - first:
-      213: 6529044873537541970
-    second: hero_Info_superrare_human_dialog
-  - first:
-      213: 4019643208411068290
-    second: hero_Info_superrare_orc_name
-  - first:
-      213: 1297928734865386595
-    second: "\uC601\uC6C5 \uCE74\uB4DC \uD2C0_11"
+  fileIDToRecycleName:
+    21300000: hero_Info_legend_human
+    21300002: hero_Info_legend_orc
+    21300004: hero_Info_superrare_human
+    21300006: hero_Info_superrare_orc
+    21300008: hero_Info_legend_name
+    21300010: hero_Info_superrare_human_name
+    21300012: hero_Info_superrare_orc_dialog
+    21300014: hero_Info_superrare_human_dialog
+    21300016: hero_Info_superrare_orc_name
+    21300018: "\uC601\uC6C5 \uCE74\uB4DC \uD2C0_11"
   externalObjects: {}
-  serializedVersion: 10
+  serializedVersion: 9
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -146,7 +120,6 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: bd0020c28d999cd48bbedf463e8f016e
-      internalID: -1605891900892313427
       vertices: []
       indices: 
       edges: []
@@ -167,7 +140,6 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: c578aed5a1f35c1468c5d4ecf961a992
-      internalID: -1162715127489450480
       vertices: []
       indices: 
       edges: []
@@ -188,7 +160,6 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: b0d906af5a0126e40b9820c1800c4331
-      internalID: -7657271740161780897
       vertices: []
       indices: 
       edges: []
@@ -209,7 +180,6 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 4c6a66c8e2878e64bae09796f397bde7
-      internalID: 6662898354628611399
       vertices: []
       indices: 
       edges: []
@@ -230,7 +200,6 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 1f42bd14218430a41b50b17482f010fe
-      internalID: -6587928249059156515
       vertices: []
       indices: 
       edges: []
@@ -251,7 +220,6 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: e273921786d66ff44a500a03b0b07dba
-      internalID: -8801440333682112796
       vertices: []
       indices: 
       edges: []
@@ -272,7 +240,6 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 5bc7b4b3d0542d04d8a0908961e6a662
-      internalID: 273734422036260988
       vertices: []
       indices: 
       edges: []
@@ -293,7 +260,6 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 4501fee94a4d64b43a9d2f3c7c3d0f89
-      internalID: 6529044873537541970
       vertices: []
       indices: 
       edges: []
@@ -314,7 +280,6 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 2d41dd3ac6f1f7248b87cedf2478ed23
-      internalID: 4019643208411068290
       vertices: []
       indices: 
       edges: []
@@ -335,7 +300,6 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: d5b2f8a53013b1e40b6d87fe11e6325f
-      internalID: 1297928734865386595
       vertices: []
       indices: 
       edges: []
@@ -344,12 +308,10 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: 23d1a6977e57eaa4ca73a1919527187d
-    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
-    secondaryTextures: []
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

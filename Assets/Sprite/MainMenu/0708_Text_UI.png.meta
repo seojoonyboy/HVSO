@@ -1,27 +1,15 @@
 fileFormatVersion: 2
 guid: 727791ca282e32040bb5ee40b88453e9
 TextureImporter:
-  internalIDToNameTable:
-  - first:
-      213: 8078502863657416234
-    second: Battle
-  - first:
-      213: 8581146994476450455
-    second: Store
-  - first:
-      213: 1041713939344559463
-    second: Modify
-  - first:
-      213: 9210954512604926321
-    second: League
-  - first:
-      213: -4011385762147605730
-    second: Story
-  - first:
-      213: -6138172339295865102
-    second: Guild
+  fileIDToRecycleName:
+    21300000: Battle
+    21300002: Store
+    21300004: Modify
+    21300006: League
+    21300008: Story
+    21300010: Guild
   externalObjects: {}
-  serializedVersion: 10
+  serializedVersion: 9
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -139,7 +127,6 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: a2ef1b43540e5c44eacdb262814845b8
-      internalID: 8078502863657416234
       vertices: []
       indices: 
       edges: []
@@ -160,7 +147,6 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 9de117bf6e3f80942af13addabaf3dbb
-      internalID: 8581146994476450455
       vertices: []
       indices: 
       edges: []
@@ -181,7 +167,6 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 4a30dc04806dc894587cc5544e7e266a
-      internalID: 1041713939344559463
       vertices: []
       indices: 
       edges: []
@@ -202,7 +187,6 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 670b96d85c8dd174e94b15982f8d3bf4
-      internalID: 9210954512604926321
       vertices: []
       indices: 
       edges: []
@@ -223,7 +207,6 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 266ffc5c97263804092de1e011a86c57
-      internalID: -4011385762147605730
       vertices: []
       indices: 
       edges: []
@@ -244,7 +227,6 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: ad4a5f979ffb2ef4599d5888274e5f19
-      internalID: -6138172339295865102
       vertices: []
       indices: 
       edges: []
@@ -253,12 +235,10 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: 527fba45d50695f4f84e9e9d2473b966
-    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
-    secondaryTextures: []
   spritePackingTag: MenuUI
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

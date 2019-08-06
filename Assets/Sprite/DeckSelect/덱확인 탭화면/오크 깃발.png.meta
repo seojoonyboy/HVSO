@@ -1,12 +1,10 @@
 fileFormatVersion: 2
 guid: c6ef88da21e02444793a8c17ee75c089
 TextureImporter:
-  internalIDToNameTable:
-  - first:
-      213: -3964369154331460628
-    second: "\uC624\uD06C \uAE43\uBC1C_0"
+  fileIDToRecycleName:
+    21300000: "\uC624\uD06C \uAE43\uBC1C_0"
   externalObjects: {}
-  serializedVersion: 10
+  serializedVersion: 9
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -113,7 +111,6 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 2666477638215ce4a9f630ee944fd83b
-      internalID: -3964369154331460628
       vertices: []
       indices: 
       edges: []
@@ -122,12 +119,10 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: e6086c38f49ddc449b7a9513f18782e8
-    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
-    secondaryTextures: []
   spritePackingTag: DeckEditMainUI
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

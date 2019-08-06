@@ -1,12 +1,10 @@
 fileFormatVersion: 2
 guid: fe142c195e957924b821cd2ff841b1a9
 TextureImporter:
-  internalIDToNameTable:
-  - first:
-      213: -4398096583730660512
-    second: dialog_human
+  fileIDToRecycleName:
+    21300000: dialog_human
   externalObjects: {}
-  serializedVersion: 10
+  serializedVersion: 9
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -124,7 +122,6 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 1188d85bc61fca2419c4d205428218e0
-      internalID: -4398096583730660512
       vertices: []
       indices: 
       edges: []
@@ -133,12 +130,10 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: 1b2b0b21118d5784aa8e7b2216c45d5b
-    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
-    secondaryTextures: []
   spritePackingTag: IngameUI_Modal
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

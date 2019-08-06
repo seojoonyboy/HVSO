@@ -1,15 +1,11 @@
 fileFormatVersion: 2
 guid: e90e4948c557b8a428c1a709bd4c3fe6
 TextureImporter:
-  internalIDToNameTable:
-  - first:
-      213: 8581146994476450455
-    second: StoreCardText
-  - first:
-      213: 6306343129413077009
-    second: UseCardText
+  fileIDToRecycleName:
+    21300000: StoreCardText
+    21300002: UseCardText
   externalObjects: {}
-  serializedVersion: 10
+  serializedVersion: 9
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -116,7 +112,6 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: d32cdab9e1b90534a9e6458707be7dba
-      internalID: 8581146994476450455
       vertices: []
       indices: 
       edges: []
@@ -137,7 +132,6 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: cd96caae74b784f4ba34cf0939f413c3
-      internalID: 6306343129413077009
       vertices: []
       indices: 
       edges: []
@@ -146,12 +140,10 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: abbba652ff91855429e884cb2811d731
-    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
-    secondaryTextures: []
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

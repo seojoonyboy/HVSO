@@ -1,27 +1,15 @@
 fileFormatVersion: 2
 guid: 5214f209d7c528d429f1252d232a8bbe
 TextureImporter:
-  internalIDToNameTable:
-  - first:
-      213: -3996424434700808864
-    second: DeckEdit_MenuBar
-  - first:
-      213: -3520586976669405743
-    second: DeckEdit_CardBookButton
-  - first:
-      213: 4865573179099875465
-    second: DeckEdit_Human
-  - first:
-      213: -3006712158969893111
-    second: DeckEdit_Orc
-  - first:
-      213: -949136303771262619
-    second: DeckEdit_DeleteButton
-  - first:
-      213: -1888659570270054226
-    second: DeckEdit_EditButton
+  fileIDToRecycleName:
+    21300000: DeckEdit_MenuBar
+    21300002: DeckEdit_CardBookButton
+    21300004: DeckEdit_Human
+    21300006: DeckEdit_Orc
+    21300008: DeckEdit_DeleteButton
+    21300010: DeckEdit_EditButton
   externalObjects: {}
-  serializedVersion: 10
+  serializedVersion: 9
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -128,7 +116,6 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 6083126c00099204eb0c6d24f2f18d74
-      internalID: -3996424434700808864
       vertices: []
       indices: 
       edges: []
@@ -149,7 +136,6 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: c5950b27e6dbdfa4e856d14500e4a481
-      internalID: -3520586976669405743
       vertices: []
       indices: 
       edges: []
@@ -170,7 +156,6 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: e1f258f839b57b640b615650de44a23b
-      internalID: 4865573179099875465
       vertices: []
       indices: 
       edges: []
@@ -191,7 +176,6 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: b9acac78fa7078e49b4e1b5b0e4acabf
-      internalID: -3006712158969893111
       vertices: []
       indices: 
       edges: []
@@ -212,7 +196,6 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 3e3d1a19396bdda47aacc125791032d2
-      internalID: -949136303771262619
       vertices: []
       indices: 
       edges: []
@@ -233,7 +216,6 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 89abf21fa7627a24ba2033fd8a832659
-      internalID: -1888659570270054226
       vertices: []
       indices: 
       edges: []
@@ -242,12 +224,10 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: 2cb12f69d0eba20479d5c3a0352d0749
-    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
-    secondaryTextures: []
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

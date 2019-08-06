@@ -1,27 +1,15 @@
 fileFormatVersion: 2
 guid: f2ac4f4fa8996e848a52e02efe26cf63
 TextureImporter:
-  internalIDToNameTable:
-  - first:
-      213: 7189428859801813838
-    second: hero_orc_superrare
-  - first:
-      213: 4958389169352412528
-    second: hero_human_superrare
-  - first:
-      213: 6759087654281769569
-    second: hero_name_orc_superrare
-  - first:
-      213: 1972635969057837582
-    second: hero_name_human_superrare
-  - first:
-      213: 3461996188701012176
-    second: hero_human_portrait
-  - first:
-      213: -5641399100269775092
-    second: hero_orc_portrait
+  fileIDToRecycleName:
+    21300000: hero_orc_superrare
+    21300002: hero_human_superrare
+    21300004: hero_name_orc_superrare
+    21300006: hero_name_human_superrare
+    21300008: hero_human_portrait
+    21300010: hero_orc_portrait
   externalObjects: {}
-  serializedVersion: 10
+  serializedVersion: 9
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -150,7 +138,6 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: bf0eed30a64956a4a9e71a966b4209a2
-      internalID: 7189428859801813838
       vertices: []
       indices: 
       edges: []
@@ -171,7 +158,6 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 95b6248400cac5c4dab681d7aafc7297
-      internalID: 4958389169352412528
       vertices: []
       indices: 
       edges: []
@@ -192,7 +178,6 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: c7174389d92b47b4a83df6048284512d
-      internalID: 6759087654281769569
       vertices: []
       indices: 
       edges: []
@@ -213,7 +198,6 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 23cc75ee15171524298e927c3bce0ba8
-      internalID: 1972635969057837582
       vertices: []
       indices: 
       edges: []
@@ -234,7 +218,6 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 000ebe9b2d0b324408384ef6caddb83a
-      internalID: 3461996188701012176
       vertices: []
       indices: 
       edges: []
@@ -255,7 +238,6 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 92b74e2f812ca6249990cc8daf245bae
-      internalID: -5641399100269775092
       vertices: []
       indices: 
       edges: []
@@ -264,12 +246,10 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: 3363ca763d0a2c34ab4a28cafe4ff7cc
-    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
-    secondaryTextures: []
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

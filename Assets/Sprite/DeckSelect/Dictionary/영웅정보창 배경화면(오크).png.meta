@@ -1,12 +1,10 @@
 fileFormatVersion: 2
 guid: 6061f1a3b13120f449b7bc2ed15ab913
 TextureImporter:
-  internalIDToNameTable:
-  - first:
-      213: 5349842057636263538
-    second: "\uC601\uC6C5\uC815\uBCF4\uCC3D \uBC30\uACBD\uD654\uBA74(\uC624\uD06C)_0"
+  fileIDToRecycleName:
+    21300000: "\uC601\uC6C5\uC815\uBCF4\uCC3D \uBC30\uACBD\uD654\uBA74(\uC624\uD06C)_0"
   externalObjects: {}
-  serializedVersion: 10
+  serializedVersion: 9
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -113,7 +111,6 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 05d2ab19d709cdf488961e924d46346a
-      internalID: 5349842057636263538
       vertices: []
       indices: 
       edges: []
@@ -122,12 +119,10 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: 25c70c91e3175da418a268065de48349
-    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
-    secondaryTextures: []
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

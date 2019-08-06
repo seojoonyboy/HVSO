@@ -1,18 +1,12 @@
 fileFormatVersion: 2
 guid: 2cc1c7e3bbf9cfd43a54ca22aa5b7879
 TextureImporter:
-  internalIDToNameTable:
-  - first:
-      213: 86538527028861475
-    second: hero_human_legend
-  - first:
-      213: 53554702353931185
-    second: hero_orc_legend
-  - first:
-      213: -6162039576716639170
-    second: hero_name_legend
+  fileIDToRecycleName:
+    21300000: hero_human_legend
+    21300002: hero_orc_legend
+    21300004: hero_name_legend
   externalObjects: {}
-  serializedVersion: 10
+  serializedVersion: 9
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -141,7 +135,6 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 6c8c389def5c6864db48280f685e1197
-      internalID: 86538527028861475
       vertices: []
       indices: 
       edges: []
@@ -162,7 +155,6 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 4b87e14315d17c145bf33d98529925df
-      internalID: 53554702353931185
       vertices: []
       indices: 
       edges: []
@@ -183,7 +175,6 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 9f514c167e834864a922bb54fd12e838
-      internalID: -6162039576716639170
       vertices: []
       indices: 
       edges: []
@@ -192,12 +183,10 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: 97a8c0ecdac76cb45b02a5b02bac6882
-    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
-    secondaryTextures: []
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

@@ -1,72 +1,30 @@
 fileFormatVersion: 2
 guid: 33547c67c06a77149956fb63ca14f69d
 TextureImporter:
-  internalIDToNameTable:
-  - first:
-      213: 5278558702833514068
-    second: turn_orc_button
-  - first:
-      213: 1007369383920575634
-    second: turn_orc_button_clicked
-  - first:
-      213: -993536051738944189
-    second: turn_button_frame
-  - first:
-      213: 2449979548101321491
-    second: turn_human_button
-  - first:
-      213: -5055614138431172375
-    second: turn_human_button_clicked
-  - first:
-      213: -6501669196329988437
-    second: turn_unplayable_button
-  - first:
-      213: 1725572581624611738
-    second: "\uD134UI PNG\uD30C\uC77C_15"
-  - first:
-      213: 5974820876543444050
-    second: turn_table_frame
-  - first:
-      213: 297166468210852962
-    second: turn_table_humanOn
-  - first:
-      213: -3040744893329599012
-    second: turn_table_orcOn
-  - first:
-      213: 6050053948457734819
-    second: turn_table_orcSpecOn
-  - first:
-      213: 2246985698561530174
-    second: turn_table_battleOn
-  - first:
-      213: -935304951288790569
-    second: turn_table_humanOff
-  - first:
-      213: -6184752192268207066
-    second: turn_table_orcOff
-  - first:
-      213: 8385311051057740953
-    second: turn_table_orcSpecOff
-  - first:
-      213: -7739064443188134547
-    second: turn_table_battleOff
-  - first:
-      213: 9509522989352702
-    second: turn_table_human
-  - first:
-      213: -4948238165692056601
-    second: turn_table_orc
-  - first:
-      213: -3637444334403717461
-    second: turn_table_battle
-  - first:
-      213: 8363425862464747456
-    second: turn_table_bg
-  - first:
-      213: 2812992389236348104
-    second: turn_text_enemyTurn
+  fileIDToRecycleName:
+    21300000: turn_orc_button
+    21300002: turn_orc_button_clicked
+    21300004: turn_button_frame
+    21300006: turn_human_button
+    21300008: turn_human_button_clicked
+    21300010: turn_unplayable_button
+    21300012: "\uD134UI PNG\uD30C\uC77C_15"
+    21300014: turn_table_frame
+    21300016: turn_table_humanOn
+    21300018: turn_table_orcOn
+    21300020: turn_table_orcSpecOn
+    21300022: turn_table_battleOn
+    21300024: turn_table_humanOff
+    21300026: turn_table_orcOff
+    21300028: turn_table_orcSpecOff
+    21300030: turn_table_battleOff
+    21300032: turn_table_human
+    21300034: turn_table_orc
+    21300036: turn_table_battle
+    21300038: turn_table_bg
+    21300040: turn_text_enemyTurn
   externalObjects: {}
-  serializedVersion: 10
+  serializedVersion: 9
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -173,7 +131,6 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 0d115c7e6db0c1b4b8aef18087222c77
-      internalID: 5278558702833514068
       vertices: []
       indices: 
       edges: []
@@ -194,7 +151,6 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 483004ee5cc42144590c66f8b989611f
-      internalID: 1007369383920575634
       vertices: []
       indices: 
       edges: []
@@ -215,7 +171,6 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: ccd9be3e3a0d6834f88abea9367d8d7f
-      internalID: -993536051738944189
       vertices: []
       indices: 
       edges: []
@@ -236,7 +191,6 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 1ee60783f97190445b79a87d4e7f793d
-      internalID: 2449979548101321491
       vertices: []
       indices: 
       edges: []
@@ -257,7 +211,6 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: a5016d8cb5fe437408696c297f66c43a
-      internalID: -5055614138431172375
       vertices: []
       indices: 
       edges: []
@@ -278,7 +231,6 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 6dbb82fc46a3f7247bdc3ed52b98189d
-      internalID: -6501669196329988437
       vertices: []
       indices: 
       edges: []
@@ -299,7 +251,6 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: a4b421bac04952c40a3f683f730e97ae
-      internalID: 1725572581624611738
       vertices: []
       indices: 
       edges: []
@@ -320,7 +271,6 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: d7b5d658d7854d04f88aeaf64341d9b6
-      internalID: 5974820876543444050
       vertices: []
       indices: 
       edges: []
@@ -341,7 +291,6 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 19fa01c3c23b4534a88c04eb1b41ddf5
-      internalID: 297166468210852962
       vertices: []
       indices: 
       edges: []
@@ -362,7 +311,6 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 89984418442535b41b39c2cd4708ad4c
-      internalID: -3040744893329599012
       vertices: []
       indices: 
       edges: []
@@ -383,7 +331,6 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 2055fc0af6d13ca438a03d680886564c
-      internalID: 6050053948457734819
       vertices: []
       indices: 
       edges: []
@@ -404,7 +351,6 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: a70ed021b1a00dd48a8d877c2b1ff00e
-      internalID: 2246985698561530174
       vertices: []
       indices: 
       edges: []
@@ -425,7 +371,6 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: b407ba47d58c56b48ad60ab22514061e
-      internalID: -935304951288790569
       vertices: []
       indices: 
       edges: []
@@ -446,7 +391,6 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 7ec9776b2759e1e43aa3076ab1739612
-      internalID: -6184752192268207066
       vertices: []
       indices: 
       edges: []
@@ -467,7 +411,6 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 005639e6e3c60b04296639a364ae4a13
-      internalID: 8385311051057740953
       vertices: []
       indices: 
       edges: []
@@ -488,7 +431,6 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 216b6b6885255b14c951b47256506a45
-      internalID: -7739064443188134547
       vertices: []
       indices: 
       edges: []
@@ -509,7 +451,6 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: b60b2531a8c194148aacf1056a88dd66
-      internalID: 9509522989352702
       vertices: []
       indices: 
       edges: []
@@ -530,7 +471,6 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: d5b31ce4356455040bbe7ef33063e1b6
-      internalID: -4948238165692056601
       vertices: []
       indices: 
       edges: []
@@ -551,7 +491,6 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 3a1a74059e70c104aa276b760510627e
-      internalID: -3637444334403717461
       vertices: []
       indices: 
       edges: []
@@ -572,7 +511,6 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 4660eaf50cb146743bcd83e828a5d6cf
-      internalID: 8363425862464747456
       vertices: []
       indices: 
       edges: []
@@ -593,7 +531,6 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 0ca6142139ba3d7479df93f8e56b9cbb
-      internalID: 2812992389236348104
       vertices: []
       indices: 
       edges: []
@@ -602,12 +539,10 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: 1955e310f0165a14d8715c594bf35431
-    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
-    secondaryTextures: []
   spritePackingTag: IngameUI
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

@@ -1,18 +1,12 @@
 fileFormatVersion: 2
 guid: 93aabd0350043f443aa017959eef1c84
 TextureImporter:
-  internalIDToNameTable:
-  - first:
-      213: -1006710004073003231
-    second: blue
-  - first:
-      213: 2643910077437806402
-    second: red
-  - first:
-      213: -1065225307063607897
-    second: yellow
+  fileIDToRecycleName:
+    21300000: blue
+    21300002: red
+    21300004: yellow
   externalObjects: {}
-  serializedVersion: 10
+  serializedVersion: 9
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -119,7 +113,6 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 45f17d3be9bf53040852232d7e69eafa
-      internalID: -1006710004073003231
       vertices: []
       indices: 
       edges: []
@@ -140,7 +133,6 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 776a3b38a1d3e1f4faedaf92ba9dfae1
-      internalID: 2643910077437806402
       vertices: []
       indices: 
       edges: []
@@ -161,7 +153,6 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 213e00d6574ba9148ae0c056200af80a
-      internalID: -1065225307063607897
       vertices: []
       indices: 
       edges: []
@@ -170,12 +161,10 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: 62ef9b1efc6e5d445b54530a481e3244
-    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
-    secondaryTextures: []
   spritePackingTag: IngameUI
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

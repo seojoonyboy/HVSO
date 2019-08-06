@@ -1,12 +1,10 @@
 fileFormatVersion: 2
 guid: fb33edb9a9b96d74bad2aeed80493005
 TextureImporter:
-  internalIDToNameTable:
-  - first:
-      213: -4280650105420142400
-    second: UnSelectBtn_0
+  fileIDToRecycleName:
+    21300000: UnSelectBtn_0
   externalObjects: {}
-  serializedVersion: 10
+  serializedVersion: 9
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -135,7 +133,6 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 47c1279121a3344439acabd99dfd2cea
-      internalID: -4280650105420142400
       vertices: []
       indices: 
       edges: []
@@ -144,12 +141,10 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: f0c223e31b1449d4988859fb23d2afba
-    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
-    secondaryTextures: []
   spritePackingTag: BattleReady
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
