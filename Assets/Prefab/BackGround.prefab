@@ -292,7 +292,7 @@ BoxCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
+    border: {x: 0.35, y: 0.35, z: 0.35, w: 0.35}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 1.98, y: 1.98}
     newSize: {x: 1.98, y: 1.98}
@@ -960,7 +960,7 @@ BoxCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
+    border: {x: 0.35, y: 0.35, z: 0.35, w: 0.35}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 1.98, y: 1.98}
     newSize: {x: 1.98, y: 1.98}
@@ -1444,7 +1444,7 @@ BoxCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
+    border: {x: 0.35, y: 0.35, z: 0.35, w: 0.35}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 1.98, y: 1.98}
     newSize: {x: 1.98, y: 1.98}
@@ -2299,7 +2299,7 @@ BoxCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
+    border: {x: 0.35, y: 0.35, z: 0.35, w: 0.35}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 1.98, y: 1.98}
     newSize: {x: 1.98, y: 1.98}
@@ -2405,7 +2405,7 @@ BoxCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
+    border: {x: 0.35, y: 0.35, z: 0.35, w: 0.35}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 1.98, y: 1.98}
     newSize: {x: 1.98, y: 1.98}
@@ -2647,7 +2647,7 @@ BoxCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
+    border: {x: 0.35, y: 0.35, z: 0.35, w: 0.35}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 1.98, y: 1.98}
     newSize: {x: 1.98, y: 1.98}
@@ -3163,7 +3163,7 @@ BoxCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
+    border: {x: 0.35, y: 0.35, z: 0.35, w: 0.35}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 1.98, y: 1.98}
     newSize: {x: 1.98, y: 1.98}
@@ -3331,7 +3331,7 @@ BoxCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
+    border: {x: 0.35, y: 0.35, z: 0.35, w: 0.35}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 1.98, y: 1.98}
     newSize: {x: 1.98, y: 1.98}
@@ -3596,7 +3596,7 @@ BoxCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
+    border: {x: 0.35, y: 0.35, z: 0.35, w: 0.35}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 1.98, y: 1.98}
     newSize: {x: 1.98, y: 1.98}
@@ -4019,7 +4019,7 @@ BoxCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
+    border: {x: 0.35, y: 0.35, z: 0.35, w: 0.35}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 1.98, y: 1.98}
     newSize: {x: 1.98, y: 1.98}
@@ -4205,7 +4205,7 @@ BoxCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
+    border: {x: 0.35, y: 0.35, z: 0.35, w: 0.35}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 1.98, y: 1.98}
     newSize: {x: 1.98, y: 1.98}
@@ -4312,7 +4312,7 @@ BoxCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
+    border: {x: 0.35, y: 0.35, z: 0.35, w: 0.35}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 1.98, y: 1.98}
     newSize: {x: 1.98, y: 1.98}
@@ -4354,7 +4354,7 @@ Transform:
   m_Children:
   - {fileID: 3408754912758118521}
   m_Father: {fileID: 5502629524014295178}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4973469298175887721
 SpriteRenderer:
@@ -4419,7 +4419,7 @@ BoxCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
+    border: {x: 0.35, y: 0.35, z: 0.35, w: 0.35}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 1.98, y: 1.98}
     newSize: {x: 1.98, y: 1.98}
@@ -4684,7 +4684,7 @@ BoxCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
+    border: {x: 0.35, y: 0.35, z: 0.35, w: 0.35}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 1.98, y: 1.98}
     newSize: {x: 1.98, y: 1.98}
@@ -4870,7 +4870,7 @@ BoxCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
+    border: {x: 0.35, y: 0.35, z: 0.35, w: 0.35}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 1.98, y: 1.98}
     newSize: {x: 1.98, y: 1.98}
@@ -4977,7 +4977,7 @@ BoxCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
+    border: {x: 0.35, y: 0.35, z: 0.35, w: 0.35}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 1.98, y: 1.98}
     newSize: {x: 1.98, y: 1.98}
@@ -5084,7 +5084,7 @@ BoxCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
+    border: {x: 0.35, y: 0.35, z: 0.35, w: 0.35}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 1.98, y: 1.98}
     newSize: {x: 1.98, y: 1.98}
@@ -5521,7 +5521,7 @@ Transform:
   m_Children:
   - {fileID: 7412079714690880607}
   m_Father: {fileID: 5502629522448979882}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4349403359628263316
 SpriteRenderer:
@@ -5586,7 +5586,7 @@ BoxCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
+    border: {x: 0.35, y: 0.35, z: 0.35, w: 0.35}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 1.98, y: 1.98}
     newSize: {x: 1.98, y: 1.98}
@@ -5851,7 +5851,7 @@ BoxCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
+    border: {x: 0.35, y: 0.35, z: 0.35, w: 0.35}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 1.98, y: 1.98}
     newSize: {x: 1.98, y: 1.98}
@@ -6195,7 +6195,7 @@ BoxCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
+    border: {x: 0.35, y: 0.35, z: 0.35, w: 0.35}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 1.98, y: 1.98}
     newSize: {x: 1.98, y: 1.98}
@@ -6234,9 +6234,9 @@ Transform:
   m_LocalPosition: {x: 2, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 4634981383377135244}
   - {fileID: 2095725084454491019}
   - {fileID: 2131395456212720902}
-  - {fileID: 4634981383377135244}
   - {fileID: 1278821986}
   - {fileID: 1421343518}
   - {fileID: 1039034422089107563}
@@ -6444,7 +6444,7 @@ SpriteRenderer:
   m_Size: {x: 10.24, y: 7.68}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &5502629523965257616
@@ -6526,9 +6526,9 @@ Transform:
   m_LocalPosition: {x: -2.1, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 8133935404379059045}
   - {fileID: 6326638193776750963}
   - {fileID: 4599786160022305370}
-  - {fileID: 8133935404379059045}
   - {fileID: 1502146071}
   - {fileID: 1190253309}
   - {fileID: 858359757772048834}
@@ -6645,7 +6645,7 @@ BoxCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
+    border: {x: 0.35, y: 0.35, z: 0.35, w: 0.35}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 1.98, y: 1.98}
     newSize: {x: 1.98, y: 1.98}
@@ -6766,7 +6766,7 @@ Transform:
   m_Children:
   - {fileID: 513641368145546662}
   m_Father: {fileID: 5502629522448979882}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4329194638088243504
 SpriteRenderer:
@@ -6831,7 +6831,7 @@ BoxCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
+    border: {x: 0.35, y: 0.35, z: 0.35, w: 0.35}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 1.98, y: 1.98}
     newSize: {x: 1.98, y: 1.98}
@@ -6873,7 +6873,7 @@ Transform:
   m_Children:
   - {fileID: 5681718151380135805}
   m_Father: {fileID: 5502629524014295178}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4403651610694315495
 SpriteRenderer:
@@ -6938,7 +6938,7 @@ BoxCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
+    border: {x: 0.35, y: 0.35, z: 0.35, w: 0.35}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 1.98, y: 1.98}
     newSize: {x: 1.98, y: 1.98}
@@ -7059,7 +7059,7 @@ Transform:
   m_Children:
   - {fileID: 420150360084761691}
   m_Father: {fileID: 5502629522448979882}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7888466937062979921
 SpriteRenderer:
@@ -7124,7 +7124,7 @@ BoxCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
+    border: {x: 0.35, y: 0.35, z: 0.35, w: 0.35}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 1.98, y: 1.98}
     newSize: {x: 1.98, y: 1.98}
@@ -7310,7 +7310,7 @@ BoxCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
+    border: {x: 0.35, y: 0.35, z: 0.35, w: 0.35}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 1.98, y: 1.98}
     newSize: {x: 1.98, y: 1.98}
@@ -7352,7 +7352,7 @@ Transform:
   m_Children:
   - {fileID: 4696527403145645694}
   m_Father: {fileID: 5502629524014295178}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3880966175651584858
 SpriteRenderer:
@@ -7417,7 +7417,7 @@ BoxCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
+    border: {x: 0.35, y: 0.35, z: 0.35, w: 0.35}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 1.98, y: 1.98}
     newSize: {x: 1.98, y: 1.98}
@@ -7524,7 +7524,7 @@ BoxCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
+    border: {x: 0.35, y: 0.35, z: 0.35, w: 0.35}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 1.98, y: 1.98}
     newSize: {x: 1.98, y: 1.98}
@@ -7631,7 +7631,7 @@ BoxCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
+    border: {x: 0.35, y: 0.35, z: 0.35, w: 0.35}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 1.98, y: 1.98}
     newSize: {x: 1.98, y: 1.98}
@@ -7817,7 +7817,7 @@ BoxCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
+    border: {x: 0.35, y: 0.35, z: 0.35, w: 0.35}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 1.98, y: 1.98}
     newSize: {x: 1.98, y: 1.98}
