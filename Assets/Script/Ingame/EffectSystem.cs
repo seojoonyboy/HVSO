@@ -17,7 +17,6 @@ public class EffectSystem : SerializedMonoBehaviour
 
     public GameObject pollingGroup;
     public GameObject spareObject;
-    public GameObject activeGroup;
 
     private void Awake() {
         Instance = this;
@@ -50,11 +49,9 @@ public class EffectSystem : SerializedMonoBehaviour
             if(e.Data.Name == "ATTACK") {
                 callback();
             }
-
             if(e.Data.Name == "APPEAR") {
                 callback();
             }
-
         };
         effectAnimation.AnimationState.Complete += delegate (TrackEntry entry) { SetReadyObject(effect); };
     }
@@ -66,9 +63,9 @@ public class EffectSystem : SerializedMonoBehaviour
         effect.transform.SetParent(targetTransform);
         effect.transform.position = targetTransform.position;
         effect.name = effectObject[type].gameObject.name;
-        effect.SetActive(true);        
+        effect.SetActive(true);
         SkeletonAnimation effectAnimation = effect.GetComponent<SkeletonAnimation>();
-        effectAnimation.AnimationState.SetAnimation(0, "animation", false);        
+        effectAnimation.AnimationState.SetAnimation(0, "animation", false);
         effectAnimation.AnimationState.Complete += delegate (TrackEntry entry) { callBack(); SetReadyObject(effect); };
     }
     

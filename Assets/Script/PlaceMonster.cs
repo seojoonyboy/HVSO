@@ -118,8 +118,8 @@ public class PlaceMonster : MonoBehaviour {
         else
             unit.ishuman = (PlayMangement.instance.enemyPlayer.isHuman == true) ? true : false;
 
-        myUnitNum = PlayMangement.instance.unitNum++;        
-
+        myUnitNum = PlayMangement.instance.unitNum++;
+        transform.Find("ClickableUI").position = unitSpine.bodybone.position;
         UpdateStat();
         ChangeAttackProperty();
     }
