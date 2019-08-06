@@ -745,12 +745,29 @@ MonoBehaviour:
   cardID: 
   deckEditController: {fileID: 0}
   menuCardInfo: {fileID: 0}
+  cardData:
+    attackTypes: []
+    attributes: []
+    cardCategories: []
+    cardClasses: []
+    id: 
+    rarelity: 
+    camp: 
+    type: 
+    name: 
+    cost: 0
+    attackRange: 
+    isHeroCard: 0
+    cardId: 
+    flavorText: 
   beforeObject: {fileID: 0}
   cardObject: {fileID: 0}
+  beforeParent: {fileID: 0}
   clicking: 0
   pointerEnter: 0
   time: 0
   myIndex: 0
+  editBookRoot: 
 --- !u!222 &2002150135212959945
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2628,8 +2645,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 5628796235762097478, guid: d72b274516aabbe45879dd040f24b6bb,
-    type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5a6520b8da4cfbf4fa640f1f0e82d03c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
