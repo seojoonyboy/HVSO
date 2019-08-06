@@ -13,6 +13,7 @@ public class EffectSystem : SerializedMonoBehaviour
     public static EffectSystem Instance { get; private set; }
     public Dictionary<EffectType, GameObject> effectObject;
     public GameObject deadEffect;
+    public GameObject backgroundEffect;
 
     public GameObject pollingGroup;
     public GameObject spareObject;
@@ -134,7 +135,7 @@ public class EffectSystem : SerializedMonoBehaviour
         CONTINUE_BUFF,
         GETBACK,
         STUN,
-        POISON_GET
+        POISON_GET,
     }
 
 }

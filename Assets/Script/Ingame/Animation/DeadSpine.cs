@@ -26,20 +26,11 @@ public class DeadSpine : MonoBehaviour
     public GameObject target;
 
     public void StartAnimation(bool race) {
-        GameObject deadEffect;
-        if (PlayMangement.instance != null)
-            deadEffect = Instantiate(PlayMangement.instance.effectManager.deadEffect);
-        else
-            deadEffect = Instantiate(EffectSystem.Instance.deadEffect);
-
-        deadEffect.transform.position = transform.position;
-        Destroy(target, 0.05f);
-        Destroy(deadEffect, deadEffect.GetComponent<ParticleSystem>().main.duration - 0.1f);
-
+        EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.DEAD, transform.position);
 
         skeletonAnimation = GetComponent<SkeletonAnimation>();
         spineAnimationState = skeletonAnimation.AnimationState;
-        spineAnimationState.Event += AnimationEvent;
+        //spineAnimationState.Event += AnimationEvent;
         skeleton = skeletonAnimation.Skeleton;
 
         string setRace = (race == true) ? "human" : "orc";

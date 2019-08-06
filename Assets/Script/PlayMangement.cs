@@ -22,8 +22,6 @@ public partial class PlayMangement : MonoBehaviour {
     public static PlayMangement instance { get; protected set; }
     public GameObject backGround;
     public GameObject onCanvasPosGroup;
-    public EffectManager effectManager;
-    public SpineEffectManager spineEffectManager;
     //public CardCircleManager cardCircleManager;
     public CardHandManager cardHandManager;
     public SkeletonGraphic playerMana, enemyMana;
@@ -49,7 +47,7 @@ public partial class PlayMangement : MonoBehaviour {
         SetPlayerCard();
         gameObject.GetComponent<TurnChanger>().onTurnChanged.AddListener(ChangeTurn);
         if(!isTest) gameObject.GetComponent<TurnChanger>().onPrepareTurn.AddListener(DistributeCard);
-        GameObject backGroundEffect = Instantiate(effectManager.backGroundEffect);
+        GameObject backGroundEffect = Instantiate(EffectSystem.Instance.backgroundEffect);
         backGroundEffect.transform.position = backGround.transform.Find("ParticlePosition").position;
         SetCamera();
     }
