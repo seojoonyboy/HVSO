@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using Spine;
+using Spine.Unity;
 
 public partial class CardDropManager : Singleton<CardDropManager> {
     protected Transform[] slotLine;
@@ -202,7 +204,7 @@ public partial class CardDropManager {
         int index = target.GetSiblingIndex();
         int lineNum = target.parent.GetSiblingIndex();
         GameObject fightEffect = slotLine[lineNum].GetChild(3).gameObject;
-        Animator ani = fightEffect.GetComponent<Animator>();
+        //Animator ani = fightEffect.GetComponent<Animator>();
         if (highlighted) {
             target.GetComponent<SpriteRenderer>().color = new Color(0.639f, 0.925f, 0.105f, 0.6f);
             if (index > 0) {
@@ -210,25 +212,30 @@ public partial class CardDropManager {
                 else unitLine[lineNum][0].GetChild(0).position = unitLine[lineNum][1].position;
             }
             if (enemyUnitLine[lineNum][1].childCount > 0) {
-                ani.SetTrigger("1_to_2");
+                //ani.SetTrigger("1_to_2");
+                enemyUnitLine[lineNum][1].GetChild(0).Find("FightSpine").gameObject.SetActive(true);
             }
-            else if (enemyUnitLine[lineNum][0].childCount > 0) {
-                if (unitLine[lineNum][0].childCount > 0)
-                    ani.SetTrigger("2_to_1");
-                else
-                    ani.SetTrigger("1_to_1");
+            if (enemyUnitLine[lineNum][0].childCount > 0) {
+                //if (unitLine[lineNum][0].childCount > 0)
+                    //ani.SetTrigger("2_to_1");
+                //else
+                    //ani.SetTrigger("1_to_1");
+                enemyUnitLine[lineNum][0].GetChild(0).Find("FightSpine").gameObject.SetActive(true);
             }
             else {
-                ani.SetTrigger("1_to_hero");
+                //ani.SetTrigger("1_to_hero");
             }
 
         }
         else {
             target.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.6f);
-            if (index > 0) {
+            if(index > 0)
                 unitLine[lineNum][0].GetChild(0).position = new Vector3(unitLine[lineNum][0].position.x, unitLine[lineNum][0].position.y + 0.5f, 0);
-            }
-            ani.SetTrigger("to_idle");
+            if (enemyUnitLine[lineNum][0].childCount > 0)
+                enemyUnitLine[lineNum][0].GetChild(0).Find("FightSpine").gameObject.SetActive(false);
+            if (enemyUnitLine[lineNum][1].childCount > 0)
+                enemyUnitLine[lineNum][1].GetChild(0).Find("FightSpine").gameObject.SetActive(false);
+            //ani.SetTrigger("to_idle");
         }
     }
 
@@ -243,9 +250,9 @@ public partial class CardDropManager {
             }
             else {
                 if (highlighted)
-                    target.parent.Find("ClickableUI").GetComponent<SpriteRenderer>().color = new Color(0.639f, 0.925f, 0.105f, 0.6f);
+                    target.parent.Find("ClickableUI").GetComponent<SkeletonAnimation>().Skeleton.SetSkin("green");
                 else
-                    target.parent.Find("ClickableUI").GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.6f);
+                    target.parent.Find("ClickableUI").GetComponent<SkeletonAnimation>().Skeleton.SetSkin("WHITE");
             }
         }
     }

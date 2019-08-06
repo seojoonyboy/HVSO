@@ -1,0 +1,13 @@
+
+ingame_battleicon.png
+size: 128,128
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+attack
+  rotate: false
+  xy: 0, 0
+  size: 85, 81
+  orig: 85, 81
+  offset: 0, 0
+  index: -1
