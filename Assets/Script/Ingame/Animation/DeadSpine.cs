@@ -27,6 +27,7 @@ public class DeadSpine : MonoBehaviour
 
     public void StartAnimation(bool race) {
         EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.DEAD, transform.position);
+        Destroy(target, 0.05f);
 
         skeletonAnimation = GetComponent<SkeletonAnimation>();
         spineAnimationState = skeletonAnimation.AnimationState;
