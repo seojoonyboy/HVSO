@@ -64,6 +64,7 @@ namespace Haegin
             LoginErrorMessage2,
             LoginErrorTitle,
             LoginErrorMessage1,
+            StartMessage,
             Max
         }
     }

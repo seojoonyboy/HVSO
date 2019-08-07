@@ -6689,4 +6689,20 @@ MonoBehaviour:
     m_importFrom: Assets/Best HTTP (Pro)/Plugins/WebGL
     m_exportTo: 
     m_variantName: 
+  - m_assetDatabaseId: 31d8bab600a0e984fbdb0644ad9c8706
+    m_importFrom: Assets/Scenes/MenuScene.unity
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 62c2df2007567441d822f729de0a64e5
+    m_importFrom: Assets/Haegin/Text/ManagedText.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 4140988ff2cb96a4fa82a407d8254d94
+    m_importFrom: Assets/Haegin/Text/ManagedTextMeshProText.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: e13f21f1efbaf408ab10627725e0f60f
+    m_importFrom: Assets/Haegin/Text/Editor/ManagedTextEditor.cs
+    m_exportTo: 
+    m_variantName: 
   m_version: 2
