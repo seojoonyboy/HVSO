@@ -604,7 +604,7 @@ PlayerSettings:
   scriptingDefineSymbols:
     1: ODIN_INSPECTOR
     4: ODIN_INSPECTOR;ENABLE_LOG
-    7: ODIN_INSPECTOR;ENABLE_LOG
+    7: ODIN_INSPECTOR;ENABLE_LOG;DO_NOT_USE_GPRESTO
   platformArchitecture: {}
   scriptingBackend:
     Android: 1
