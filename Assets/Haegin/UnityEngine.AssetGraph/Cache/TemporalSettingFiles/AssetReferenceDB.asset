@@ -1202,7 +1202,7 @@ MonoBehaviour:
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: fe4aa8e82d6157143a610fa6b83cabb6
-    m_importFrom: Assets/GPresto/GPrestoApi.cs
+    m_importFrom: Assets/Plugins/GPresto/GPrestoApi.cs
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 21908cca7a9cb442783585bc2d638531
@@ -1807,7 +1807,7 @@ MonoBehaviour:
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 8e6bb7ee530eb444ca22485edf505656
-    m_importFrom: Assets/StreamingAssets/main.obb
+    m_importFrom: Assets/Plugins/StreamingAssets/main.obb
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: c4777500b5da6094e956c3d4f04de4db
@@ -2413,7 +2413,7 @@ MonoBehaviour:
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 4439f970c15c545b98cfb82e0728cf68
-    m_importFrom: Assets/IronSource/Scripts/IronSourceSegment.cs
+    m_importFrom: Assets/Plugins/IronSource/Scripts/IronSourceSegment.cs
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 5dd2ec80995a740fea45e09f1e32f878
@@ -2565,7 +2565,7 @@ MonoBehaviour:
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 1bbaa67142d994184844ed2864338043
-    m_importFrom: Assets/IronSource/Scripts
+    m_importFrom: Assets/Plugins/IronSource/Scripts
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 844dd871127934d2da1ce96c6b5f0514
@@ -2829,7 +2829,7 @@ MonoBehaviour:
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: c6c22e237af3a4b429d99ddc8f88d686
-    m_importFrom: Assets/IronSource/Scripts/UnsupportedPlatformAgent.cs
+    m_importFrom: Assets/Plugins/IronSource/Scripts/UnsupportedPlatformAgent.cs
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: c7f25253c1929439286b41eed219f460
@@ -2949,7 +2949,7 @@ MonoBehaviour:
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 25f6bee3130f945348db147f26deba82
-    m_importFrom: Assets/IronSource/Scripts/IronSourceConfig.cs
+    m_importFrom: Assets/Plugins/IronSource/Scripts/IronSourceConfig.cs
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: adfa90f37246c4d2597b8b36a0229c73
@@ -2969,7 +2969,7 @@ MonoBehaviour:
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: c2f4eb146ea5d49d9bf6a02a5a231c14
-    m_importFrom: Assets/IronSource/Scripts/IronSourceEvents.cs
+    m_importFrom: Assets/Plugins/IronSource/Scripts/IronSourceEvents.cs
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 11396f14e06464756b87506da9836f33
@@ -3037,7 +3037,7 @@ MonoBehaviour:
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 9c593674596bb4305a89fc4a270acdb7
-    m_importFrom: Assets/IronSource/Editor/VungleSettings.cs
+    m_importFrom: Assets/Plugins/IronSource/Editor/VungleSettings.cs
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 225dd7740a6fa4f789ea42a3b15e0369
@@ -3173,7 +3173,7 @@ MonoBehaviour:
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 80a63165fcf62425088676ebd443354f
-    m_importFrom: Assets/IronSource/Prefabs
+    m_importFrom: Assets/Plugins/IronSource/Prefabs
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 9bef7765ab118464c97ef531687c32ff
@@ -3213,7 +3213,7 @@ MonoBehaviour:
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 55962d85486a541bdba8474cc718e420
-    m_importFrom: Assets/IronSource/Scripts/AndroidAgent.cs
+    m_importFrom: Assets/Plugins/IronSource/Scripts/AndroidAgent.cs
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 66adc0956a75e4b20bd39936c78944ef
@@ -3349,7 +3349,7 @@ MonoBehaviour:
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: e6730756a946e4c5c88b392ff27fdadf
-    m_importFrom: Assets/IronSource/Scripts/IronSourceJSON.cs
+    m_importFrom: Assets/Plugins/IronSource/Scripts/IronSourceJSON.cs
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 0c3a5856685ed46f2addd1b05063fa76
@@ -3405,7 +3405,7 @@ MonoBehaviour:
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: d4e974a6eeca844bea322036d1415b64
-    m_importFrom: Assets/IronSource/Editor/AdMobSettings.cs
+    m_importFrom: Assets/Plugins/IronSource/Editor/AdMobSettings.cs
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 1dad78a67723446e3b18f50ed19aa127
@@ -3521,7 +3521,7 @@ MonoBehaviour:
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: f77bb2675ba0f4f0185e113766d378d0
-    m_importFrom: Assets/IronSource/Editor/IAdapterSettings.cs
+    m_importFrom: Assets/Plugins/IronSource/Editor/IAdapterSettings.cs
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 24527a6763b05462bad0e9c8e852f107
@@ -3585,7 +3585,7 @@ MonoBehaviour:
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: e2bd52d711f2e4ec1844df243b48d794
-    m_importFrom: Assets/IronSource/Scripts/IronSourcePlacement.cs
+    m_importFrom: Assets/Plugins/IronSource/Scripts/IronSourcePlacement.cs
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 13623bd7b7d5b407a9e8ed2bb521465b
@@ -3717,7 +3717,7 @@ MonoBehaviour:
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 67114b588012e426fbe911de2bcdd897
-    m_importFrom: Assets/IronSource/Editor/IronSourceBuildPostprocessor.cs
+    m_importFrom: Assets/Plugins/IronSource/Editor/IronSourceBuildPostprocessor.cs
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: bb6e5168f935647c69f0b2d32996adf7
@@ -4021,7 +4021,7 @@ MonoBehaviour:
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 4b77230a6930b4587b77dc16a4da49f9
-    m_importFrom: Assets/IronSource/Scripts/IronSourceIAgent.cs
+    m_importFrom: Assets/Plugins/IronSource/Scripts/IronSourceIAgent.cs
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 0e5dba0af8b274267bc17834fd5eabc4
@@ -4301,7 +4301,7 @@ MonoBehaviour:
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 2882cccbbc6c140edbef06880715458b
-    m_importFrom: Assets/IronSource/Scripts/iOSAgent.cs
+    m_importFrom: Assets/Plugins/IronSource/Scripts/iOSAgent.cs
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: f315e3ebb73c94f7bbb9cb128f87923c
@@ -4357,7 +4357,7 @@ MonoBehaviour:
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: e9fbfd2c0f4504b8187a02b5cb93a2b5
-    m_importFrom: Assets/IronSource/Scripts/IronSource.cs
+    m_importFrom: Assets/Plugins/IronSource/Scripts/IronSource.cs
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: cc0e583cd6ce74545815154cf65257e4
@@ -4585,11 +4585,11 @@ MonoBehaviour:
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 8114e99d204a245b785f5bf69dffe9e8
-    m_importFrom: Assets/IronSource/Editor/FacebookSettings.cs
+    m_importFrom: Assets/Plugins/IronSource/Editor/FacebookSettings.cs
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 660f7e9d9fc6c4ce49f220e62772d993
-    m_importFrom: Assets/IronSource/Editor
+    m_importFrom: Assets/Plugins/IronSource/Editor
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 0d3052ad941a84c10b8f9d89e1486af1
@@ -4629,7 +4629,7 @@ MonoBehaviour:
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 2db7f7fd2ab3c41b18378bc3d37a6d08
-    m_importFrom: Assets/IronSource/Scripts/IronSourceError.cs
+    m_importFrom: Assets/Plugins/IronSource/Scripts/IronSourceError.cs
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: f88db00e01a6e41729bcc9ff16f911f6
@@ -4749,7 +4749,7 @@ MonoBehaviour:
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: d23d019e1a5e84f1cad4cb1498dd3a9d
-    m_importFrom: Assets/IronSource
+    m_importFrom: Assets/Plugins/IronSource
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: a8cad29e0a94d442ca4c306612af5e4b
@@ -4909,7 +4909,7 @@ MonoBehaviour:
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: e0872585be79248ac8c6c78f7baf110a
-    m_importFrom: Assets/IronSource/Prefabs/IronSourceEventsPrefab.prefab
+    m_importFrom: Assets/Plugins/IronSource/Prefabs/IronSourceEventsPrefab.prefab
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 4558693a55c384ae39c0938c77ed3c14
@@ -4925,11 +4925,11 @@ MonoBehaviour:
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 56f275e07a2440319f9d6561ac43e9f7
-    m_importFrom: Assets/PlayServicesResolver/Editor/Google.VersionHandler.dll
+    m_importFrom: Assets/Plugins/PlayServicesResolver/Editor/Google.VersionHandler.dll
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 85695dfc1975459faa61dad3f4bf4efe
-    m_importFrom: Assets/PlayServicesResolver/Editor/Google.VersionHandler.dll.mdb
+    m_importFrom: Assets/Plugins/PlayServicesResolver/Editor/Google.VersionHandler.dll.mdb
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 7bc44e101c9c4b9997973ec71e31fb0a
@@ -4937,143 +4937,143 @@ MonoBehaviour:
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 7311924048bd457bac6d713576c952da
-    m_importFrom: Assets/Firebase/Plugins/Firebase.App.dll
+    m_importFrom: Assets/Plugins/Firebase/Plugins/Firebase.App.dll
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 49efb9703519d4364a8fc2e36b8f56a9
-    m_importFrom: Assets/Firebase/m2repository
+    m_importFrom: Assets/Plugins/Firebase/m2repository
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: b9cae8802c9904d3ab336adde3ef7c29
-    m_importFrom: Assets/Firebase/m2repository/com/google/firebase/firebase-app-unity
+    m_importFrom: Assets/Plugins/Firebase/m2repository/com/google/firebase/firebase-app-unity
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 574e602182f34f1da8e5d51ab5addb72
-    m_importFrom: Assets/Firebase/Plugins/iOS/Firebase.Analytics.dll.mdb
+    m_importFrom: Assets/Plugins/Firebase/Plugins/iOS/Firebase.Analytics.dll.mdb
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 312023813013745fc92f77635f0ea89c
-    m_importFrom: Assets/Firebase/m2repository/com/google/firebase/firebase-analytics-unity/6.1.1
+    m_importFrom: Assets/Plugins/Firebase/m2repository/com/google/firebase/firebase-analytics-unity/6.1.1
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: aa386c919cc8b4eaea4410d86ee4fc0c
-    m_importFrom: Assets/Firebase/m2repository/com/google/firebase/firebase-app-unity/6.1.1
+    m_importFrom: Assets/Plugins/Firebase/m2repository/com/google/firebase/firebase-app-unity/6.1.1
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 5f3feda1a91343759b7eb58a29b492b7
-    m_importFrom: Assets/Firebase/Plugins/iOS/Firebase.App.dll
+    m_importFrom: Assets/Plugins/Firebase/Plugins/iOS/Firebase.App.dll
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 9b97197272244860a9e3f1af9dbb06aa
-    m_importFrom: Assets/Firebase/Plugins/Firebase.TaskExtension.dll.mdb
+    m_importFrom: Assets/Plugins/Firebase/Plugins/Firebase.TaskExtension.dll.mdb
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: f23e7982607864747aae40444aba1785
-    m_importFrom: Assets/Firebase/Editor
+    m_importFrom: Assets/Plugins/Firebase/Editor
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 22925ca2dc68b46c0bbea88baf3e7c75
-    m_importFrom: Assets/Firebase/m2repository/com
+    m_importFrom: Assets/Plugins/Firebase/m2repository/com
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 816270c2a2a348e59cb9b7b096a24f50
-    m_importFrom: Assets/Firebase/Plugins/Firebase.Analytics.dll
+    m_importFrom: Assets/Plugins/Firebase/Plugins/Firebase.Analytics.dll
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 7ff47403028f34f3b97591fcdbcd3174
-    m_importFrom: Assets/Firebase/m2repository/com/google/firebase/firebase-analytics-unity
+    m_importFrom: Assets/Plugins/Firebase/m2repository/com/google/firebase/firebase-analytics-unity
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 7d3eec03d7e241a48941e038118c5e6a
-    m_importFrom: Assets/Firebase/Plugins/Firebase.Platform.dll
+    m_importFrom: Assets/Plugins/Firebase/Plugins/Firebase.Platform.dll
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: bd18eee30834e4f71bded96fd14033a9
-    m_importFrom: Assets/Parse/Plugins/dotNet45/Unity.Tasks.dll
+    m_importFrom: Assets/Plugins/Parse/Plugins/dotNet45/Unity.Tasks.dll
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 439fbfd44af84d1ca6469a0f0f6d24ed
-    m_importFrom: Assets/Firebase/Plugins/iOS/Firebase.App.dll.mdb
+    m_importFrom: Assets/Plugins/Firebase/Plugins/iOS/Firebase.App.dll.mdb
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 12925805f6004c3b83bbac1aabb3a805
-    m_importFrom: Assets/Firebase/m2repository/com/google/firebase/firebase-app-unity/6.1.1/firebase-app-unity-6.1.1.pom
+    m_importFrom: Assets/Plugins/Firebase/m2repository/com/google/firebase/firebase-app-unity/6.1.1/firebase-app-unity-6.1.1.pom
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: f22bb7d5145e41b1ace885c60f743673
-    m_importFrom: Assets/Firebase/Plugins/Firebase.Analytics.dll.mdb
+    m_importFrom: Assets/Plugins/Firebase/Plugins/Firebase.Analytics.dll.mdb
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: bc525d76c9c9e4a0a8a97534ab1b72df
-    m_importFrom: Assets/Firebase/Plugins/iOS
+    m_importFrom: Assets/Plugins/Firebase/Plugins/iOS
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 8f18ed76c0f04ce0a65736104f913ef8
-    m_importFrom: Assets/Firebase/Editor/generate_xml_from_google_services_json.py
+    m_importFrom: Assets/Plugins/Firebase/Editor/generate_xml_from_google_services_json.py
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 3ebb289656f1477fa263e62d36c6e329
-    m_importFrom: Assets/Firebase/Plugins/Google.MiniJson.dll
+    m_importFrom: Assets/Plugins/Firebase/Plugins/Google.MiniJson.dll
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: ae88c0972b7448b5b36def1716f1d711
-    m_importFrom: Assets/Firebase/Editor/generate_xml_from_google_services_json.exe
+    m_importFrom: Assets/Plugins/Firebase/Editor/generate_xml_from_google_services_json.exe
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 2afa317800fd49d2afb27eabb8a82c9c
-    m_importFrom: Assets/Firebase/m2repository/com/google/firebase/firebase-analytics-unity/6.1.1/firebase-analytics-unity-6.1.1.srcaar
+    m_importFrom: Assets/Plugins/Firebase/m2repository/com/google/firebase/firebase-analytics-unity/6.1.1/firebase-analytics-unity-6.1.1.srcaar
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 9f2edbf81053418f879076c05f816dc2
-    m_importFrom: Assets/Firebase/Editor/Firebase.Editor.dll
+    m_importFrom: Assets/Plugins/Firebase/Editor/Firebase.Editor.dll
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 68c8df498829476fb2afabc46b8b64f0
-    m_importFrom: Assets/Firebase/Editor/NOTICE
+    m_importFrom: Assets/Plugins/Firebase/Editor/NOTICE
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 87bda199f7ee4fdeb2779c5a54bff938
-    m_importFrom: Assets/Firebase/m2repository/com/google/firebase/firebase-app-unity/6.1.1/firebase-app-unity-6.1.1.srcaar
+    m_importFrom: Assets/Plugins/Firebase/m2repository/com/google/firebase/firebase-app-unity/6.1.1/firebase-app-unity-6.1.1.srcaar
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: c34e669932ff64861b0fe264b0aad946
-    m_importFrom: Assets/Firebase/m2repository/com/google
+    m_importFrom: Assets/Plugins/Firebase/m2repository/com/google
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 657ad9d9048b4c8eb351131596cc9bb8
-    m_importFrom: Assets/Firebase/Plugins/Firebase.Platform.dll.mdb
+    m_importFrom: Assets/Plugins/Firebase/Plugins/Firebase.Platform.dll.mdb
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: d3cd5d0a941c4cdc8ab4b1b684b05191
-    m_importFrom: Assets/Firebase/Editor/network_request.exe
+    m_importFrom: Assets/Plugins/Firebase/Editor/network_request.exe
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 52718a3a80d44aacb368bcc9d62dd804
-    m_importFrom: Assets/Firebase/Plugins/iOS/Firebase.Analytics.dll
+    m_importFrom: Assets/Plugins/Firebase/Plugins/iOS/Firebase.Analytics.dll
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: fc0d86fadf7e4dfba6fea54327923f95
-    m_importFrom: Assets/Firebase/Plugins/Firebase.App.dll.mdb
+    m_importFrom: Assets/Plugins/Firebase/Plugins/Firebase.App.dll.mdb
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 15661c1b99c50454db35166b669a890d
-    m_importFrom: Assets/Firebase/Plugins
+    m_importFrom: Assets/Plugins/Firebase/Plugins
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 3db0783b58c2429b9bc1f560ba323d05
-    m_importFrom: Assets/Parse/Plugins/dotNet45/Unity.Compat.dll
+    m_importFrom: Assets/Plugins/Parse/Plugins/dotNet45/Unity.Compat.dll
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 72006d7c730f347d2b5dbaf1ee3116f0
-    m_importFrom: Assets/Firebase/m2repository/com/google/firebase
+    m_importFrom: Assets/Plugins/Firebase/m2repository/com/google/firebase
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: f5d4069c578548ba9f199b46d61bf06d
-    m_importFrom: Assets/Firebase/Plugins/Firebase.TaskExtension.dll
+    m_importFrom: Assets/Plugins/Firebase/Plugins/Firebase.TaskExtension.dll
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 7f7b9cecf58b463599316e650bec7cb6
-    m_importFrom: Assets/Firebase/Editor/Firebase.Editor.dll.mdb_DISABLED
+    m_importFrom: Assets/Plugins/Firebase/Editor/Firebase.Editor.dll.mdb_DISABLED
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 6a27beecad771417eaffa12301e68b44
@@ -5081,11 +5081,11 @@ MonoBehaviour:
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: e6e32fecbfd44fab946fa160e4861924
-    m_importFrom: Assets/Firebase/Editor/network_request.py
+    m_importFrom: Assets/Plugins/Firebase/Editor/network_request.py
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 9238901d673542a5ad20c7ec8bc02be3
-    m_importFrom: Assets/Firebase/m2repository/com/google/firebase/firebase-analytics-unity/6.1.1/firebase-analytics-unity-6.1.1.pom
+    m_importFrom: Assets/Plugins/Firebase/m2repository/com/google/firebase/firebase-analytics-unity/6.1.1/firebase-analytics-unity-6.1.1.pom
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 6062384d013c94d8fb9dc59edfeffc73
@@ -5105,7 +5105,7 @@ MonoBehaviour:
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 4d7fbc9140e347ae9e63772a9b33b348
-    m_importFrom: Assets/Firebase/Editor/FirebaseAnalytics_version-6.1.1_manifest.txt
+    m_importFrom: Assets/Plugins/Firebase/Editor/FirebaseAnalytics_version-6.1.1_manifest.txt
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 15cf4892118d45b0a1e45dacd028da68
@@ -5117,11 +5117,11 @@ MonoBehaviour:
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 96337775a7c941d88ea15f8026ad6f8e
-    m_importFrom: Assets/Firebase/m2repository/com/google/firebase/firebase-app-unity/maven-metadata.xml
+    m_importFrom: Assets/Plugins/Firebase/m2repository/com/google/firebase/firebase-app-unity/maven-metadata.xml
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 9b63af95d9364af4a3d8ce58738b6223
-    m_importFrom: Assets/Firebase/Editor/AppDependencies.xml
+    m_importFrom: Assets/Plugins/Firebase/Editor/AppDependencies.xml
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 214009068900439da4a9cded17d58090
@@ -5141,7 +5141,7 @@ MonoBehaviour:
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 1e3c2da79be842cd838a9ddd70d20fa9
-    m_importFrom: Assets/Firebase/Editor/AnalyticsDependencies.xml
+    m_importFrom: Assets/Plugins/Firebase/Editor/AnalyticsDependencies.xml
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: d10fbb88129c4cefacfd40fc91c2f7bb
@@ -5149,11 +5149,11 @@ MonoBehaviour:
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 291f81d8ae2745cf913a96d116f2e3f7
-    m_importFrom: Assets/Firebase/m2repository/com/google/firebase/firebase-analytics-unity/maven-metadata.xml
+    m_importFrom: Assets/Plugins/Firebase/m2repository/com/google/firebase/firebase-analytics-unity/maven-metadata.xml
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: b3c94f797bf54952a742451759882b79
-    m_importFrom: Assets/Firebase/Editor/readme.md
+    m_importFrom: Assets/Plugins/Firebase/Editor/readme.md
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 3a2154da9a5c442b966636c6408cd1f3
@@ -5161,7 +5161,7 @@ MonoBehaviour:
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 30f4d0eb77704ba68bf8dede64390643
-    m_importFrom: Assets/Firebase/Plugins/link.xml_DISABLED
+    m_importFrom: Assets/Plugins/Firebase/Plugins/link.xml_DISABLED
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 601e8e1d2d2744929ede33676cbeccc0
@@ -5169,39 +5169,39 @@ MonoBehaviour:
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 968fd831eb674f998afac222d3a1edc3
-    m_importFrom: Assets/Firebase/Plugins/iOS/Firebase.Messaging.dll.mdb
+    m_importFrom: Assets/Plugins/Firebase/Plugins/iOS/Firebase.Messaging.dll.mdb
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 0177f1334f3944ac8ca3df55e1d98660
-    m_importFrom: Assets/Firebase/Plugins/Firebase.Messaging.dll
+    m_importFrom: Assets/Plugins/Firebase/Plugins/Firebase.Messaging.dll
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: cc96ae43359f4cf9871ced42029437b3
-    m_importFrom: Assets/Firebase/m2repository/com/google/firebase/firebase-messaging-unity/6.1.1/firebase-messaging-unity-6.1.1.srcaar
+    m_importFrom: Assets/Plugins/Firebase/m2repository/com/google/firebase/firebase-messaging-unity/6.1.1/firebase-messaging-unity-6.1.1.srcaar
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 708f3a7413ee45d8ac3346316f6957fe
-    m_importFrom: Assets/Firebase/Plugins/Firebase.Messaging.dll.mdb
+    m_importFrom: Assets/Plugins/Firebase/Plugins/Firebase.Messaging.dll.mdb
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 104bd79795964dd3a77a6fa53e729421
-    m_importFrom: Assets/Firebase/Plugins/iOS/Firebase.Messaging.dll
+    m_importFrom: Assets/Plugins/Firebase/Plugins/iOS/Firebase.Messaging.dll
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: bb98fea9a09dd449abe5f7e206637e4c
-    m_importFrom: Assets/Firebase/m2repository/com/google/firebase/firebase-messaging-unity
+    m_importFrom: Assets/Plugins/Firebase/m2repository/com/google/firebase/firebase-messaging-unity
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: a63e419ca21114b75913e54ac4f156a7
-    m_importFrom: Assets/Firebase/m2repository/com/google/firebase/firebase-messaging-unity/6.1.1
+    m_importFrom: Assets/Plugins/Firebase/m2repository/com/google/firebase/firebase-messaging-unity/6.1.1
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: b562feae2fb348faba84271ef0557d12
-    m_importFrom: Assets/Firebase/m2repository/com/google/firebase/firebase-messaging-unity/6.1.1/firebase-messaging-unity-6.1.1.pom
+    m_importFrom: Assets/Plugins/Firebase/m2repository/com/google/firebase/firebase-messaging-unity/6.1.1/firebase-messaging-unity-6.1.1.pom
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 02ff065319d14019ac9ad4561a5c0095
-    m_importFrom: Assets/Firebase/Editor/FirebaseMessaging_version-6.1.1_manifest.txt
+    m_importFrom: Assets/Plugins/Firebase/Editor/FirebaseMessaging_version-6.1.1_manifest.txt
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 33ee8d6580a8412d811e9c6eab8c2cb9
@@ -5221,7 +5221,7 @@ MonoBehaviour:
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: f6a5eb4df3694f6dac9ddc5451ac17db
-    m_importFrom: Assets/Firebase/m2repository/com/google/firebase/firebase-messaging-unity/maven-metadata.xml
+    m_importFrom: Assets/Plugins/Firebase/m2repository/com/google/firebase/firebase-messaging-unity/maven-metadata.xml
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 7ce840ce15a24d818b4eabf1809d7872
@@ -5229,7 +5229,7 @@ MonoBehaviour:
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 992fedef98ac42209a9d26d5bf364adf
-    m_importFrom: Assets/Firebase/Editor/MessagingDependencies.xml
+    m_importFrom: Assets/Plugins/Firebase/Editor/MessagingDependencies.xml
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 1a5dba117bca143f385eec64847e9f21
@@ -5269,163 +5269,163 @@ MonoBehaviour:
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 55c49760f9229402283ae97a42bb14f6
-    m_importFrom: Assets/FacebookSDK
+    m_importFrom: Assets/Plugins/FacebookSDK
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: aead30834362b490ea67fdd7fd0351c5
-    m_importFrom: Assets/FacebookSDK/SDK/Editor/iOS/fixup.projmods
+    m_importFrom: Assets/Plugins/FacebookSDK/SDK/Editor/iOS/fixup.projmods
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: cd2777d3c41b8499aa478525ef1e78a4
-    m_importFrom: Assets/FacebookSDK/SDK/Editor/iOS
+    m_importFrom: Assets/Plugins/FacebookSDK/SDK/Editor/iOS
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 434ae2042d55345a9a5110f0e55e311f
-    m_importFrom: Assets/FacebookSDK/Plugins/Gameroom
+    m_importFrom: Assets/Plugins/FacebookSDK/Plugins/Gameroom
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: bf9767141d551487c9b352763f739976
-    m_importFrom: Assets/FacebookSDK/SDK/Editor
+    m_importFrom: Assets/Plugins/FacebookSDK/SDK/Editor
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 31bee4c4bfdfc4bb2bbb1aa345d701d5
-    m_importFrom: Assets/FacebookSDK/Plugins/iOS/Facebook.Unity.Android.dll
+    m_importFrom: Assets/Plugins/FacebookSDK/Plugins/iOS/Facebook.Unity.Android.dll
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: f7668375f28e34fd282fc0e0ed920f62
-    m_importFrom: Assets/FacebookSDK/Plugins/Editor/Facebook.Unity.Editor.dll
+    m_importFrom: Assets/Plugins/FacebookSDK/Plugins/Editor/Facebook.Unity.Editor.dll
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: d6114327982274d999eb3932195c2ebd
-    m_importFrom: Assets/FacebookSDK/Plugins/Settings
+    m_importFrom: Assets/Plugins/FacebookSDK/Plugins/Settings
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 0e8ea9e7e8dc64f349b51440520c870d
-    m_importFrom: Assets/FacebookSDK/Plugins/Settings/Facebook.Unity.Settings.dll
+    m_importFrom: Assets/Plugins/FacebookSDK/Plugins/Settings/Facebook.Unity.Settings.dll
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 676319284c7ac4e7b8b75160645e7c6d
-    m_importFrom: Assets/FacebookSDK/Plugins/Canvas
+    m_importFrom: Assets/Plugins/FacebookSDK/Plugins/Canvas
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: bbc10558bd3894b4f92418ff5f83694a
-    m_importFrom: Assets/FacebookSDK/Plugins/Android/Facebook.Unity.Android.dll
+    m_importFrom: Assets/Plugins/FacebookSDK/Plugins/Android/Facebook.Unity.Android.dll
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 477ae8e84f69e4ec5bc6844fb6756b1d
-    m_importFrom: Assets/FacebookSDK/Plugins/Gameroom/FacebookNamedPipeClient.dll
+    m_importFrom: Assets/Plugins/FacebookSDK/Plugins/Gameroom/FacebookNamedPipeClient.dll
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 9db54ae921a9c4c93b50b3b92152925a
-    m_importFrom: Assets/FacebookSDK/Plugins/Canvas/Facebook.Unity.Canvas.dll
+    m_importFrom: Assets/Plugins/FacebookSDK/Plugins/Canvas/Facebook.Unity.Canvas.dll
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 057b151a6f0c24158a96e926d7ede6ac
-    m_importFrom: Assets/FacebookSDK/Plugins/iOS/Facebook.Unity.IOS.dll
+    m_importFrom: Assets/Plugins/FacebookSDK/Plugins/iOS/Facebook.Unity.IOS.dll
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: b517db7a4c9e6401bab49631fd0daafe
-    m_importFrom: Assets/FacebookSDK/Plugins/Editor
+    m_importFrom: Assets/Plugins/FacebookSDK/Plugins/Editor
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: d49ca59bd9dae4d659e1fdedcaf7d5a9
-    m_importFrom: Assets/FacebookSDK/Plugins/Gameroom/Facebook.Unity.Gameroom.dll
+    m_importFrom: Assets/Plugins/FacebookSDK/Plugins/Gameroom/Facebook.Unity.Gameroom.dll
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 0d4ce99bcd28343b4b2224a5ae27465d
-    m_importFrom: Assets/FacebookSDK/Plugins/Android
+    m_importFrom: Assets/Plugins/FacebookSDK/Plugins/Android
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 406e174c1081e4b5dac54c25069f6d00
-    m_importFrom: Assets/FacebookSDK/SDK
+    m_importFrom: Assets/Plugins/FacebookSDK/SDK
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 07b3369e9cb0843228b37fd5093096fc
-    m_importFrom: Assets/FacebookSDK/Plugins/Android/libs
+    m_importFrom: Assets/Plugins/FacebookSDK/Plugins/Android/libs
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 8e0afdde77dba402f875888ebb04905b
-    m_importFrom: Assets/FacebookSDK/Plugins/Facebook.Unity.dll
+    m_importFrom: Assets/Plugins/FacebookSDK/Plugins/Facebook.Unity.dll
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 089f033ffa0654415921659f3f996766
-    m_importFrom: Assets/FacebookSDK/Plugins/iOS
+    m_importFrom: Assets/Plugins/FacebookSDK/Plugins/iOS
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 4659853f7743c4d4483f364e1fb95ba7
-    m_importFrom: Assets/FacebookSDK/Plugins/Android/Facebook.Unity.IOS.dll
+    m_importFrom: Assets/Plugins/FacebookSDK/Plugins/Android/Facebook.Unity.IOS.dll
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: f6e0d7dfbb81b4ce1aeb15a92cb2646b
-    m_importFrom: Assets/FacebookSDK/Plugins
+    m_importFrom: Assets/Plugins/FacebookSDK/Plugins
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 9c6aff40cba424e528e65c463ee742e5
-    m_importFrom: Assets/FacebookSDK/Plugins/Canvas/CanvasJSSDKBindings.jslib
+    m_importFrom: Assets/Plugins/FacebookSDK/Plugins/Canvas/CanvasJSSDKBindings.jslib
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: fbc51482e3ca248329707d61959f9d9d
-    m_importFrom: Assets/FacebookSDK/SDK/Editor/iOS/FBUnitySDKDelegate.m
+    m_importFrom: Assets/Plugins/FacebookSDK/SDK/Editor/iOS/FBUnitySDKDelegate.m
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 7461bcc2e2c714a03a3f60d68ec79369
-    m_importFrom: Assets/FacebookSDK/SDK/Editor/iOS/FBUnitySDKDelegate.h
+    m_importFrom: Assets/Plugins/FacebookSDK/SDK/Editor/iOS/FBUnitySDKDelegate.h
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 4c29c5d59509848c4bc24c13ac976932
-    m_importFrom: Assets/FacebookSDK/SDK/Editor/iOS/FBUnityInterface.mm
+    m_importFrom: Assets/Plugins/FacebookSDK/SDK/Editor/iOS/FBUnityInterface.mm
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: b4469d6625a664618b68231ee0dcc093
-    m_importFrom: Assets/FacebookSDK/SDK/Editor/iOS/FBUnityUtility.h
+    m_importFrom: Assets/Plugins/FacebookSDK/SDK/Editor/iOS/FBUnityUtility.h
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 66952bdb75cae4c348f3d0521da59bfd
-    m_importFrom: Assets/FacebookSDK/SDK/Editor/iOS/FBSDK+Internal.h
+    m_importFrom: Assets/Plugins/FacebookSDK/SDK/Editor/iOS/FBSDK+Internal.h
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 51f4619c385224a23a3edb9092c7d49b
-    m_importFrom: Assets/FacebookSDK/link.xml
+    m_importFrom: Assets/Plugins/FacebookSDK/link.xml
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 511e95bcdad89425999ccbb3e315246a
-    m_importFrom: Assets/FacebookSDK/SDK/Editor/iOS/FBUnityInterface.h
+    m_importFrom: Assets/Plugins/FacebookSDK/SDK/Editor/iOS/FBUnityInterface.h
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 5cafb2af7ca9641f58022a816236d1ad
-    m_importFrom: Assets/FacebookSDK/SDK/Editor/iOS/FBUnityUtility.mm
+    m_importFrom: Assets/Plugins/FacebookSDK/SDK/Editor/iOS/FBUnityUtility.mm
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 07f28805b1294457cb073192ca190fec
-    m_importFrom: Assets/FacebookSDK/SDK/Resources
+    m_importFrom: Assets/Plugins/FacebookSDK/SDK/Resources
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 8a55421072a54ddd80fc4ea97d738c52
-    m_importFrom: Assets/PlayServicesResolver/Editor/Google.VersionHandlerImpl_v1.2.120.0.dll
+    m_importFrom: Assets/Plugins/PlayServicesResolver/Editor/Google.VersionHandlerImpl_v1.2.120.0.dll
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 73c5feb08f2a4581ae17ae14cdfe21b8
-    m_importFrom: Assets/PlayServicesResolver/Editor/Google.JarResolver_v1.2.120.0.dll
+    m_importFrom: Assets/Plugins/PlayServicesResolver/Editor/Google.JarResolver_v1.2.120.0.dll
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 9f138c92b26b4a29935f481a74519867
-    m_importFrom: Assets/PlayServicesResolver/Editor/Google.JarResolver_v1.2.120.0.dll.mdb
+    m_importFrom: Assets/Plugins/PlayServicesResolver/Editor/Google.JarResolver_v1.2.120.0.dll.mdb
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: edcb7885401d4ba089c2519fc25a5e01
-    m_importFrom: Assets/PlayServicesResolver/Editor/Google.IOSResolver_v1.2.120.0.dll.mdb
+    m_importFrom: Assets/Plugins/PlayServicesResolver/Editor/Google.IOSResolver_v1.2.120.0.dll.mdb
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 9a2308a82716495da08346b8c6803ae1
-    m_importFrom: Assets/PlayServicesResolver/Editor/Google.VersionHandlerImpl_v1.2.120.0.dll.mdb
+    m_importFrom: Assets/Plugins/PlayServicesResolver/Editor/Google.VersionHandlerImpl_v1.2.120.0.dll.mdb
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 1ae9a21eb8524428b6a7aa440e6ae34c
-    m_importFrom: Assets/PlayServicesResolver/Editor/Google.IOSResolver_v1.2.120.0.dll
+    m_importFrom: Assets/Plugins/PlayServicesResolver/Editor/Google.IOSResolver_v1.2.120.0.dll
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: c2daa89a63034fed99343c0d360ac771
-    m_importFrom: Assets/PlayServicesResolver/Editor/play-services-resolver_v1.2.120.0.txt
+    m_importFrom: Assets/Plugins/PlayServicesResolver/Editor/play-services-resolver_v1.2.120.0.txt
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 88474ca31b88e4826b81ae17237569b3
@@ -5441,39 +5441,39 @@ MonoBehaviour:
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: e060bd507da24a04af3efb99308e061b
-    m_importFrom: Assets/Firebase/Plugins/iOS/Firebase.DynamicLinks.dll.mdb
+    m_importFrom: Assets/Plugins/Firebase/Plugins/iOS/Firebase.DynamicLinks.dll.mdb
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 1b63d7a15a7824d149b04cba110b86f7
-    m_importFrom: Assets/Firebase/m2repository/com/google/firebase/firebase-dynamic-links-unity/6.1.1
+    m_importFrom: Assets/Plugins/Firebase/m2repository/com/google/firebase/firebase-dynamic-links-unity/6.1.1
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 8ce673c2f05c43f090011f2b30f73906
-    m_importFrom: Assets/Firebase/m2repository/com/google/firebase/firebase-dynamic-links-unity/6.1.1/firebase-dynamic-links-unity-6.1.1.pom
+    m_importFrom: Assets/Plugins/Firebase/m2repository/com/google/firebase/firebase-dynamic-links-unity/6.1.1/firebase-dynamic-links-unity-6.1.1.pom
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: d5c54c84f2e14cffa7e3e49a73ed4066
-    m_importFrom: Assets/Firebase/Plugins/Firebase.DynamicLinks.dll
+    m_importFrom: Assets/Plugins/Firebase/Plugins/Firebase.DynamicLinks.dll
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 34b33bb661f74c30af052c344b427553
-    m_importFrom: Assets/Firebase/Plugins/Firebase.DynamicLinks.dll.mdb
+    m_importFrom: Assets/Plugins/Firebase/Plugins/Firebase.DynamicLinks.dll.mdb
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 9d192809d6c749aba5f5775950a565b6
-    m_importFrom: Assets/Firebase/Plugins/iOS/Firebase.DynamicLinks.dll
+    m_importFrom: Assets/Plugins/Firebase/Plugins/iOS/Firebase.DynamicLinks.dll
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 1c757ab987d44d05bd1469e6636b6ecf
-    m_importFrom: Assets/Firebase/m2repository/com/google/firebase/firebase-dynamic-links-unity/6.1.1/firebase-dynamic-links-unity-6.1.1.srcaar
+    m_importFrom: Assets/Plugins/Firebase/m2repository/com/google/firebase/firebase-dynamic-links-unity/6.1.1/firebase-dynamic-links-unity-6.1.1.srcaar
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 4228c2acaed1f40a4a0ac7149bcf647f
-    m_importFrom: Assets/Firebase/m2repository/com/google/firebase/firebase-dynamic-links-unity
+    m_importFrom: Assets/Plugins/Firebase/m2repository/com/google/firebase/firebase-dynamic-links-unity
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: f5bb9ac0f3014dea9d9bfab87599d301
-    m_importFrom: Assets/Firebase/Editor/DynamicLinksDependencies.xml
+    m_importFrom: Assets/Plugins/Firebase/Editor/DynamicLinksDependencies.xml
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 0b06c49135eac4e0c98211e5151200d4
@@ -5481,7 +5481,7 @@ MonoBehaviour:
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: eea6b824a63446fbb0ecd9a70e18993c
-    m_importFrom: Assets/Firebase/m2repository/com/google/firebase/firebase-dynamic-links-unity/maven-metadata.xml
+    m_importFrom: Assets/Plugins/Firebase/m2repository/com/google/firebase/firebase-dynamic-links-unity/maven-metadata.xml
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 8a9635f748ba4117a462692d8b0ef499
@@ -5493,7 +5493,7 @@ MonoBehaviour:
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 1543e5f9bab73423c96b42cab90363ab
-    m_importFrom: Assets/FacebookSDK/Plugins/Editor/Dependencies.xml
+    m_importFrom: Assets/Plugins/FacebookSDK/Plugins/Editor/Dependencies.xml
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 1d3088bced1e4b6bade53213abfdbd33
@@ -5501,7 +5501,7 @@ MonoBehaviour:
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 92bf981d5271404cb44c8e7b2123b593
-    m_importFrom: Assets/Firebase/Editor/FirebaseDynamicLinks_version-6.1.1_manifest.txt
+    m_importFrom: Assets/Plugins/Firebase/Editor/FirebaseDynamicLinks_version-6.1.1_manifest.txt
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: bd4e8aefd05346a7aa154dfb02b0854f
@@ -5509,7 +5509,7 @@ MonoBehaviour:
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: acf3464d5d5aa4f64977999faf23c3eb
-    m_importFrom: Assets/FacebookSDK/SDK/Resources/FacebookSettings.asset
+    m_importFrom: Assets/Plugins/FacebookSDK/SDK/Resources/FacebookSettings.asset
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 2d4522f2c76b34f71b9288cd286f90b6
@@ -5541,19 +5541,19 @@ MonoBehaviour:
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: d693be7c646ce420986cff3118efd2ba
-    m_importFrom: Assets/FacebookSDK/Plugins/Android/libs/facebook-android-wrapper-7.17.1.aar
+    m_importFrom: Assets/Plugins/FacebookSDK/Plugins/Android/libs/facebook-android-wrapper-7.17.1.aar
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 578320c044718c94c9a5dbdd29f93abf
-    m_importFrom: Assets/GPresto/GPresto_AOS.dll
+    m_importFrom: Assets/Plugins/GPresto/GPresto_AOS.dll
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 231b8de051bcb6c41b98c8275737ab08
-    m_importFrom: Assets/GPresto/GPresto_iOS.dll
+    m_importFrom: Assets/Plugins/GPresto/GPresto_iOS.dll
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 36a3c05d4224e7b4ba2e5787ec2d2680
-    m_importFrom: Assets/GPresto/iOS/libPresto.a
+    m_importFrom: Assets/Plugins/GPresto/iOS/libPresto.a
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 0a0dd7d16cef144dd9720fffe4096826
@@ -5812,20 +5812,881 @@ MonoBehaviour:
     m_importFrom: Assets/Haegin/URLScheme/iOS/ISN_AppController+urlscheme.mm
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 50937a4791b7c4525b8e01c0d24fafde
-    m_importFrom: Assets/Firebase/m2repository/com/google/firebase/firebase-analytics-unity/6.1.1/firebase-analytics-unity-6.1.1.aar
+  - m_assetDatabaseId: 355bbcd5836a6422e9eebf3773841400
+    m_importFrom: Assets/Plugins/Firebase/google-services.json
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: b2e6d83f4115249798c6abbeff843b1a
-    m_importFrom: Assets/Firebase/m2repository/com/google/firebase/firebase-app-unity/6.1.1/firebase-app-unity-6.1.1.aar
+  - m_assetDatabaseId: f004015c0999443a3b42b824058a4d3c
+    m_importFrom: Assets/Plugins/Firebase/GoogleService-Info.plist
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 71ff6c2380e4e4c0badbaceec2481ecb
-    m_importFrom: Assets/Firebase/m2repository/com/google/firebase/firebase-dynamic-links-unity/6.1.1/firebase-dynamic-links-unity-6.1.1.aar
+  - m_assetDatabaseId: 0c75de3f949234f23a64dd9cd298fcef
+    m_importFrom: Assets/Plugins/Firebase
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 34a9ca2dcfb334d43b2a0b3026c5cd4a
-    m_importFrom: Assets/Firebase/m2repository/com/google/firebase/firebase-messaging-unity/6.1.1/firebase-messaging-unity-6.1.1.aar
+  - m_assetDatabaseId: c6f6ec32fd9faf04496b588166c93235
+    m_importFrom: Assets/Plugins/GPresto/Android/libs/x86/libATG_L.so
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 79da8d13ddf32dc45987ffe42c92781f
+    m_importFrom: Assets/Plugins/GPresto/Android/libs/armeabi-v7a
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: a3b06473cb256cc4686439d083f8180d
+    m_importFrom: Assets/Plugins/GPresto/Android/libs/armeabi-v7a/libATG_L.so
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: ebc671c3a5b3e4cecba3ef08ba7e9ec0
+    m_importFrom: Assets/Plugins/GPresto/Android/libs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 55379a95b54bd44448fd23f25729b078
+    m_importFrom: Assets/Plugins/GPresto/Editor/Newtonsoft.Json.xml
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: ead50176d628abe478006288f036eb07
+    m_importFrom: Assets/Plugins/GPresto/iOS/Presto.h
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: d27cd777a5b8b49e9a18ae0d8a7142ed
+    m_importFrom: Assets/Plugins/GPresto
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 105fd359423e64d8badf55a1845a5232
+    m_importFrom: Assets/Plugins/GPresto/Android
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: aeb08fb9e4ba748d2ad52c465b1b98ea
+    m_importFrom: Assets/Plugins/GPresto/iOS
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: cf7a55aa1e5c947b68952a8e8e20e1b2
+    m_importFrom: Assets/Plugins/GPresto/Editor
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 34843a5b0e221e74cbbb90c9b0e7e616
+    m_importFrom: Assets/Plugins/GPresto/iOS/PrestoADView.h
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 67954fac8c6144805808d9f01357a445
+    m_importFrom: Assets/Plugins/GPresto/Editor/GPresto.exe
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: d3dfcf1e21ca7864cb4ae5b355133400
+    m_importFrom: Assets/Plugins/GPresto/Android/PrestoSDK.jar
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 9e20c92ee15f5154ab0112a3d9423809
+    m_importFrom: Assets/Plugins/GPresto/Android/libs/x86
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 0bda55c3d6fbb4779bb47a94c43d2459
+    m_importFrom: Assets/Plugins/PlayServicesResolver/Editor
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: fe5c7e951063b48929f06ec20c7fcb20
+    m_importFrom: Assets/Plugins/PlayServicesResolver
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: a97225a3335484474bbd15cff9084de2
+    m_importFrom: Assets/Plugins/Parse
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 1ff84e3aa35d74af29721aa1818fc54a
+    m_importFrom: Assets/Plugins/Parse/Plugins
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: eb5baf5fdb43944afbbcfaec73284d7c
+    m_importFrom: Assets/Plugins/Parse/Plugins/dotNet45
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: e53b4dd9a29164ac19950e7de2ed6391
+    m_importFrom: Assets/Plugins/StreamingAssets
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 1c4b421b3680d42a48505bf0632fff3d
+    m_importFrom: Assets/Plugins/StreamingAssets/google-services-desktop.json
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 85187c2149c549c5b33f0cdb02836b17
+    m_importFrom: Assets/Plugins/TextMesh Pro/Resources/Shaders/TMP_SDF-Surface-Mobile.shader
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: d82c1b31c7e74239bff1220585707d2b
+    m_importFrom: Assets/Plugins/TextMesh Pro/Resources/LineBreaking Leading Characters.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 8f05276190cf498a8153f6cbe761d4e6
+    m_importFrom: Assets/Plugins/TextMesh Pro/Sprites/EmojiOne.json
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: c41005c129ba4d66911b75229fd70b45
+    m_importFrom: Assets/Plugins/TextMesh Pro/Resources/Sprite Assets/EmojiOne.asset
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: f54d1bd14bd3ca042bd867b519fee8cc
+    m_importFrom: Assets/Plugins/TextMesh Pro
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: f952c082cb03451daed3ee968ac6c63e
+    m_importFrom: Assets/Plugins/TextMesh Pro/Resources/Style Sheets/Default Style
+      Sheet.asset
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: dffef66376be4fa480fb02b19edbe903
+    m_importFrom: Assets/Plugins/TextMesh Pro/Sprites/EmojiOne.png
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 3997e2241185407d80309a82f9148466
+    m_importFrom: Assets/Plugins/TextMesh Pro/Resources/Shaders/TMPro_Properties.cginc
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 48bb5f55d8670e349b6e614913f9d910
+    m_importFrom: Assets/Plugins/TextMesh Pro/Resources/Shaders/TMP_Bitmap-Custom-Atlas.shader
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: e73a58f6e2794ae7b1b7e50b7fb811b0
+    m_importFrom: Assets/Plugins/TextMesh Pro/Resources/Fonts & Materials/LiberationSans
+      SDF - Drop Shadow.mat
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 8f586378b4e144a9851e7b34d9b748ee
+    m_importFrom: Assets/Plugins/TextMesh Pro/Resources/Fonts & Materials/LiberationSans
+      SDF.asset
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: fade42e8bc714b018fac513c043d323b
+    m_importFrom: Assets/Plugins/TextMesh Pro/Resources/LineBreaking Following Characters.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 381dcb09d5029d14897e55f98031fca5
+    m_importFrom: Assets/Plugins/TextMesh Pro/Sprites/EmojiOne Attribution.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 243e06394e614e5d99fab26083b707fa
+    m_importFrom: Assets/Plugins/TextMesh Pro/Resources
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: bc1ede39bf3643ee8e493720e4259791
+    m_importFrom: Assets/Plugins/TextMesh Pro/Resources/Shaders/TMP_SDF-Mobile Masking.shader
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 99f836c9cb9345dba2e72c4a1f2d0695
+    m_importFrom: Assets/Plugins/TextMesh Pro/Resources/Shaders
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 512a49d95c0c4332bdd98131869c23c9
+    m_importFrom: Assets/Plugins/TextMesh Pro/Resources/Sprite Assets
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 8e7e8f5a82a3a134e91c54efd2274ea9
+    m_importFrom: Assets/Plugins/TextMesh Pro/Documentation
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 1e3b057af24249748ff873be7fafee47
+    m_importFrom: Assets/Plugins/TextMesh Pro/Resources/Shaders/TMP_Bitmap-Mobile.shader
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 731f1baa9d144a9897cb1d341c2092b8
+    m_importFrom: Assets/Plugins/TextMesh Pro/Resources/Fonts & Materials
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: dd89cf5b9246416f84610a006f916af7
+    m_importFrom: Assets/Plugins/TextMesh Pro/Resources/Shaders/TMP_SDF Overlay.shader
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: d930090c0cd643c7b55f19a38538c162
+    m_importFrom: Assets/Plugins/TextMesh Pro/Resources/Shaders/TMPro_Surface.cginc
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: a02a7d8c237544f1962732b55a9aebf1
+    m_importFrom: Assets/Plugins/TextMesh Pro/Resources/Shaders/TMP_SDF-Mobile Overlay.shader
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: d0603b6d5186471b96c778c3949c7ce2
+    m_importFrom: Assets/Plugins/TextMesh Pro/Sprites
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 128e987d567d4e2c824d754223b3f3b0
+    m_importFrom: Assets/Plugins/TextMesh Pro/Resources/Shaders/TMP_Bitmap.shader
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 407bc68d299748449bbf7f48ee690f8d
+    m_importFrom: Assets/Plugins/TextMesh Pro/Resources/Shaders/TMPro.cginc
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 68e6db2ebdc24f95958faec2be5558d6
+    m_importFrom: Assets/Plugins/TextMesh Pro/Resources/Shaders/TMP_SDF.shader
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: fe393ace9b354375a9cb14cdbbc28be4
+    m_importFrom: Assets/Plugins/TextMesh Pro/Resources/Shaders/TMP_SDF-Mobile.shader
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 79459efec17a4d00a321bdcc27bbc385
+    m_importFrom: Assets/Plugins/TextMesh Pro/Resources/Fonts & Materials/LiberationSans
+      SDF - Outline.mat
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 1b8d251f9af63b746bf2f7ffe00ebb9b
+    m_importFrom: Assets/Plugins/TextMesh Pro/Documentation/TextMesh Pro User Guide
+      2016.pdf
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 4aecb92fff08436c8303b10eab8da368
+    m_importFrom: Assets/Plugins/TextMesh Pro/Resources/Style Sheets
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: cf81c85f95fe47e1a27f6ae460cf182c
+    m_importFrom: Assets/Plugins/TextMesh Pro/Resources/Shaders/TMP_Sprite.shader
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: f7ada0af4f174f0694ca6a487b8f543d
+    m_importFrom: Assets/Plugins/TextMesh Pro/Resources/Shaders/TMP_SDF-Surface.shader
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 3f5b5dff67a942289a9defa416b206f3
+    m_importFrom: Assets/Plugins/TextMesh Pro/Resources/TMP Settings.asset
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: c93e4b20636a0bc4085d9712e1ca585d
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/Statistics
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: b6aacc3094b914340b5c92347295dc21
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/agreement/srp
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: ed08c64055c2bad49888497192d9980b
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/PlatformSupport/Collections/Specialized
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: e58ef16077b4b374b806509cec119484
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/PlatformSupport/Collections/ObjectModel
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 26902280df03e254eb103b0cc513363f
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/x509/extension
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: eaefe2a013280de43aa61175fa8c119a
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SocketIO/Transports
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 1d6092b0b312e184b8d45e66dba37d60
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/PlatformSupport/TcpClient/WinRT
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 1e980ab0e11551042aa0a47cac1b3062
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/digests
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: e1e93ac0ec69bb948b0485b8ae204cee
+    m_importFrom: Assets/Best HTTP (Pro)/Examples/LitJson
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 055f8fc08106e0646a52547e1a32b372
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/ec/custom/gm
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: e64190d0765d2dc4597de64694e99b53
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/JSON
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 26e64cd0d1567634fb40b1386ba0c48d
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/Caching
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: e2d987f043f34ae48a80a57c82fa4193
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SignalR
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 3a8cd111a04391742a3eaa9a96f9a0ac
+    m_importFrom: Assets/Best HTTP (Pro)/Plugins/WebGL/BestHTTP_WebRequest.jslib
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: c593c51184e979a4d8e4bb2cc2a9b1d0
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SignalR/JsonEncoders
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 6326d041839c09a43bfda92c6aef7274
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/x509
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 5ea43e51ea443414cb46f425a92b6a69
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/misc
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: d199307194a54b9468b969b271f9b7f0
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/ec/rfc8032
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 97ce8e71bc258e84e8329127d33eb89e
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/agreement/jpake
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 0a4df581a93a3a246848f91de3e20edf
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/prng
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: be0b3f81fe633d3409f5f425d34c732b
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/edec
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 65fae491919869042be9bb2f969bf050
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/Connections
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 008d5591a2cd6704fb39796bd33ff71a
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SignalR/Authentication
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: e39155a1305d6e64c8b52cff75fe8748
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/ua
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: fee958d1244f2734fa72979d647c8b50
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/raw
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: ea3bf8e1c91bc00418e4ba58fef48e8d
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/ec/endo
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: fc7453f14fee55347b287df5490f3c4d
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/License.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: be558af1c7bddea47a6659440ff96e6d
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/rosstandart
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 2c421ef18ca1f844c8134a15061c4605
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/security
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: a0959102436299e4eba93aa086cc6f46
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/generators
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: e138652289c643d4ca6bff547a5bd4f0
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/Cookies
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: fe53b9220e298d844bd0d53106307094
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SignalRCore
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 33f43652a7e9789499bdc30289b5bc3e
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/sec
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 2613ad626d854294e8beb55d7c422bf3
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTPDocumentationEN.pdf
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 70d2cd72d4442e349a1cfa407bbcfe8d
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SocketIO
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 35397ea2ff7827c429fbd3f646b14705
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/encodings
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 0b0797c2616cd4f4bbc6332490d85557
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/util/collections
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: c39b33f2c686550498ca5741c9e33690
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/ServerSentEvents
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 1d60220356cda474badfff94d625ad9d
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/ec
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 16749723e84b3bd4ca4ba38c35399291
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/ec/rfc7748
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 5ed13563a809f06489c3e97e4da02176
+    m_importFrom: Assets/Best HTTP (Pro)/Examples/SampleSelector.unity
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: e735d6733fbcd8f46a2dbc2de051f0ce
+    m_importFrom: Assets/Best HTTP (Pro)/link_android_subset.xml
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: a53de973421193c4cbf33dbbaec90811
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/ec/multiplier
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: f34c4124bf07f0a4a99df098156d3a27
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/isismtt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 04849aa46f6e586469d9275d70387fb0
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SignalRCore/Messages
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: ce6f9ee43d9bc864dae54bd548ed363e
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/cms/ecc
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: acc326f47252d77498d6489dce7ff997
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/Forms/Implementations
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 516c3f05851fb4f418aae5d21a088d67
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/ocsp
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: e0048515318c6fb408c1cc5edd0586a2
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/ec
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 66bc493576bc81d41bec581fe1d40712
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/mozilla
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: c54419453e5665246b78dd2cc005e17a
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/x509
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 745fcd55afb34e4429897e798738aebd
+    m_importFrom: Assets/Best HTTP (Pro)/Examples/SocketIO/SocketIO Json Encoders
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: d69707652d0d406448aedf33b807bf6d
+    m_importFrom: Assets/Best HTTP (Pro)/Examples/SignalR
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: ba5cad752407f8545a6d90f346edc648
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/util
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: fe366785ac6802f418654b21d3d4e972
+    m_importFrom: Assets/Best HTTP (Pro)/ReleaseNotes.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: a78b3d8524e59be4999d414a705d774a
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/anssi
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: d69a6d859d991b64f8b842ce92e9378d
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/bsi
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 8d0ebd9539721c34daaadeafccd8ed9d
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/util/io
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 5b7983a5c52108d458439861101ff522
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/x509/store
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: ef95faa5f016dcf42829616d382ec0fd
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/util/net
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 458d0ea5f30d18d4c984273e5827384a
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/bc
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: cb0236c52dd044e75978ca1d4dffc2c3
+    m_importFrom: Assets/Best HTTP (Pro)
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: d07681f5c8c854d42b668e7c6f0a8764
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/WebSocket/Frames
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 16ca13f58cd6010428f9c56741245ebe
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/ntt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: b65683262d1a3214f857d8d7a9199f0c
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/tsp
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 90e6fc2668a091f4dba719add4667fee
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/cmp
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 3d929d360f5bba5429128c0fce7c78e9
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/macs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 6ad23146b2034f54784ce73af93d939e
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/icao
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 603b8a5653cd7d84ab97cc7367e95682
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/Logger
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: e3ba637693c35a745aeb4052cfb287cb
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/Extensions
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 25332b96083d377489f73df4e40c17c8
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/modes/gcm
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 6d952d96253d7454992111c6a4116837
+    m_importFrom: Assets/Best HTTP (Pro)/Examples/SocketIO
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 9286baa677f488b4bb493dd5436147c6
+    m_importFrom: Assets/Best HTTP (Pro)/Examples/SignalR/Authentication Providers
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 3c52f2b6f7def7e48816d97f7186277b
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/util
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 2b874ed66c4deeb4f9a5f68d9de30628
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/PlatformSupport/TcpClient
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: e9c7f1f65018a6b489b3d3892004d352
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/util
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 44025a17146cfb54bbf85c69cc3fc7d9
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/ocsp
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 5701df17f62065143b8cf179ae96e414
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/math
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 164dda27bfff2e7449444d94e5c7de32
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/PlatformSupport
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: f8b56237e32291c40859f2f1660759d9
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/PlatformSupport/Collections
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 4d3c9d4702c5ca34fa5b819f8f2c5850
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/util/zlib
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 669fa057d480bd743b202f7d12974cc9
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/kisa
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: f144c257e1a71424f951705ca53cd339
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/cms
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 7b265757931cf134392d9b1ab2925c86
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/engines
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 7208796729371c74c9d7c3398b19f8f3
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SignalR/Hubs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 377c62a7a08191a46babb9e0f98c238c
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/tls
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: af63aec738a072a448eee5c48d43e9f8
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/prng/drbg
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 519a28f7f784fe741926e76c222b9da5
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/util/date
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: facfbd283a257c247b7788a4852da32a
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/util/io/pem
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 76282f28a92d5d448879417bd0de6c37
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/x9
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 1c996438e0be72649b8abf5fbdee3f41
+    m_importFrom: Assets/Best HTTP (Pro)/Examples/SignalR/Json Encoders
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 97fdcd3872eb99b47b5b13fc86176ca5
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 35c592488a6dbbc4a96c1739cd74046c
+    m_importFrom: Assets/Best HTTP (Pro)/Examples/SignalRCore/Encoders
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 68a42d586834bc5489474f303f2686c1
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/operators
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 253673684631a1e4e99ba19279b7cb38
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/isismtt/ocsp
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 962655b8d2a40294bad978e6d458a24e
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/signers
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: c60458b835ab8c54ba3ae600588beeeb
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/paddings
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: e4b189b8db53fae40b63e2563cc658ba
+    m_importFrom: Assets/Best HTTP (Pro)/Examples/Plugin
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 7b831e0970fca74409c9458a8a6774de
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/WebSocket
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 3953c729f85a1e045892502d72f656f9
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/tsp
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 248bbf2976dfbb4459acd5d2b16b17dd
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/microsoft
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: d9b0429922c0a544c993b4880e0172a0
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/openssl
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 75de97a9b8a0a08478e4959ccc72a4a2
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/isismtt/x509
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 56badbd91a344cf49b819809ce60c94a
+    m_importFrom: Assets/Best HTTP (Pro)/Examples/HTTP
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: f2acd3f924ae69c44b7aadb54e686d44
+    m_importFrom: Assets/Best HTTP (Pro)/Plugins
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: c5b7d40a38054774bb2cee59156dd3d3
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/pkcs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: ed82682a337846d47b38e6ca7189a0c8
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SocketIO/JsonEncoders
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 867abf3a1ab01c84681b6c85becf6b6d
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/Forms
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 2bc69c4ab864f9b47b55d5556201d098
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/agreement
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 9e13e45a04503de4f9338df3df0bc63d
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/smime
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 65d7766a734038745a7014d928c85edb
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/gm
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: d9bcda6a2f10b8342b2a8ab4082e7ea7
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/esf
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: f7ff75ba203704d45bf1098536a2db5a
+    m_importFrom: Assets/Best HTTP (Pro)/Examples/SignalRCore
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: e3ca23ca4294d3b4b9a88be14d6cde49
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/cryptopro
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 0d16b3ea73dbb9648b5c61af890ff3fc
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/io
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 212c4beac220c8742966c43564131081
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/cms
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 7290ea1bd4b4b8044b8c839a0f6e38e6
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/modes
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 3f80c43b87778214daf5495f2854dfe0
+    m_importFrom: Assets/Best HTTP (Pro)/Examples/Websocket
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 09d1a73b7ec49b046a598def5fc61483
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/oiw
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: e16c007b18245954f945dea9b529da6f
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/parameters
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 3e16237bf0f5bb14e8475973550804e3
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/iana
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 31334dab2586b6c458754ba0fa30f370
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/ec/custom/djb
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: dc57aabb2dd648642bdfb021906367b1
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 4d4075eb3d5bdee4c9f373d710808d60
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/Decompression
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 421265fb97e2f904fb773f0f014a9ba1
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/crmf
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 68fd4e2cc85f3ec41b06a3e300f2e110
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/x509/qualified
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: edf4874c4cb236144b35b46e9a8037ad
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/ec/custom/sec
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 97e9578ca337d0f42a4145ade32a3a5c
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SocketIO/Events
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: a5512fac3c819e1408d5495e0b9d5eb9
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/pkix
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 93299fbc9d294004caa37d06aea06bb5
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SignalRCore/Transports
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: f13f8a0df1a5e424796c38a3c077a81c
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/ec/custom
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 09fcff0d03b2a6c4c8a625ec7c05be96
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/pkcs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 5e44072d24b360245b3b38f37c984cee
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/WebSocket/Extensions
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 38e3e44dacb703b46859a58b3956fe2e
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/gnu
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 8e4af59d5da39324490dcbe72fd54f35
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/field
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 1db0f3ad39d2daf45acf71cf68fbe8b3
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/x509/sigi
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: a3fe10bda4c195348b779c549e20e0d4
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SignalRCore/Authentication
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 8efe6cedf2832a647a33465b85e4f311
+    m_importFrom: Assets/Best HTTP (Pro)/Plugins/WebGL/BestHTTP_WebSocket.jslib
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: bedc740ef99712e40b82c0c7de92cf9c
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: c390001e221f7e1429a38eb6222413c5
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SignalR/Transports
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: e02e741e81a810c4a82a0730fa1d0d19
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/nist
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 40e69c1e558a62e4cb5a52d30eb8fdfd
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/ec/abc
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 61ccf02e2b33b974b9bc1bfd84f2610c
+    m_importFrom: Assets/Best HTTP (Pro)/Examples/Helpers
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: c9301e8ec954a2d4babaa5044b7967e8
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/PlatformSupport/FileSystem
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: d73ca49e92fed5341b3ab5351606b988
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/security/cert
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 9e87559ef678942428f064af598c1696
+    m_importFrom: Assets/Best HTTP (Pro)/Examples/SignalRCore/Authentication Providers
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: e9dc42aeefc20544bb572bce27e3b7b1
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/Authentication
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: a1c695eec32cfe44ba8bb5c6b6230161
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/util/encoders
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: be5c7e0fbad5cce469d07efe51b4bd28
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/ess
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 65f5702f015c2304e9152f0d0a52eb2f
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 3ea7772f76aa54748aa8b466ba3113a9
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SignalR/Messages
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 7ecc2a4f33b2c4248b350a81db15a2c3
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/x500
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 46e2b05f22025dd47b5d1c86ce8f0c93
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/agreement/kdf
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: ac23b06f7735b8e478ce14b0d4ac2a68
+    m_importFrom: Assets/Best HTTP (Pro)/Plugins/WebGL/BestHTTP_EventSource.jslib
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 8ce3259f985df4047a1c6f106d608f93
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/eac
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: d3b503aff0a21bf4db6cd58a4538485a
+    m_importFrom: Assets/Best HTTP (Pro)/license.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: b40fe8af30f4d1546857f2347f88102a
+    m_importFrom: Assets/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/teletrust
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: ddecb9df09ed71446ba7ca31ced7e9a5
+    m_importFrom: Assets/Best HTTP (Pro)/link.xml
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 79615ddf0d3b0fd4b9b5ebe8943947a9
+    m_importFrom: Assets/Best HTTP (Pro)/Examples
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: b48528ef6a3e52f4ba5e4335dff83841
+    m_importFrom: Assets/Best HTTP (Pro)/Plugins/WebGL
     m_exportTo: 
     m_variantName: 
   m_version: 2

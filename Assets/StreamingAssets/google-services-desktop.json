@@ -1,27 +1,27 @@
 {
   "project_info": {
-    "project_number": "158683182351",
-    "firebase_url": "https://modulesample2-99265688.firebaseio.com",
-    "project_id": "modulesample2-99265688",
-    "storage_bucket": "modulesample2-99265688.appspot.com"
+    "project_number": "551232432184",
+    "firebase_url": "https://modulesample-ed95b.firebaseio.com",
+    "project_id": "modulesample-ed95b",
+    "storage_bucket": "modulesample-ed95b.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:158683182351:android:698c6e7cd12afcd2",
+        "mobilesdk_app_id": "1:551232432184:android:4a27eecf13378008",
         "android_client_info": {
-          "package_name": "com.haegin.modulesample2"
+          "package_name": "com.haegin.modulesample"
         }
       },
       "oauth_client": [
         {
-          "client_id": "158683182351-m8tojfjorpoe52n782v8kvhc72cei35s.apps.googleusercontent.com",
+          "client_id": "551232432184-233chdikqqqj6sqsj3rihs7cq6ij4fm0.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCfZ_rzhlY5n3LD5Uy31gC-2dPPJNVb1UI"
+          "current_key": "AIzaSyALM1TDr9Zu7q8pafkE3oeXXhgLoFk2QIE"
         }
       ],
       "services": {
@@ -29,8 +29,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "551232432184-233chdikqqqj6sqsj3rihs7cq6ij4fm0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2
