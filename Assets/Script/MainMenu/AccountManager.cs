@@ -20,8 +20,8 @@ public partial class AccountManager : Singleton<AccountManager> {
     public UserInfo userData { get; private set; }
     public CardInventory[] myCards { get; private set; }
 
-    public List<dataModules.Deck> humanDecks;
-    public List<dataModules.Deck> orcDecks;
+    public List<Deck> humanDecks;
+    public List<Deck> orcDecks;
 
     public List<Templates> humanTemplates;
     public List<Templates> orcTemplates;
@@ -481,6 +481,33 @@ public partial class AccountManager {
         public TokenForm(string deviceId, int pass) {
             this.deviceId = deviceId;
             this.pass = pass;
+        }
+    }
+}
+
+public partial class AccountManager {
+    public int Exp { get; private set; }
+
+    public void ExpInc(int amount) {
+        ExpReq(amount, OnExpChanged);
+    }
+
+    private void ExpReq(int amount, OnRequestFinishedDelegate callback) {
+        StringBuilder url = new StringBuilder();
+
+        url.Append(networkManager.baseUrl)
+            .Append("api/user");
+
+        HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
+        //request.RawData = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(userInfo));
+        //request.MethodType = HTTPMethods.Post;
+
+        //networkManager.Request(request, callback, "");
+    }
+
+    private void OnExpChanged(HTTPRequest originalRequest, HTTPResponse response) {
+        if (response != null && response.IsSuccess) {
+            
         }
     }
 }
