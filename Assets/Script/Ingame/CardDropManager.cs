@@ -210,11 +210,15 @@ public partial class CardDropManager {
                 if (index == 1) unitLine[lineNum][0].GetChild(0).position = unitLine[lineNum][0].position;
                 else unitLine[lineNum][0].GetChild(0).position = unitLine[lineNum][1].position;
             }
-            if (enemyUnitLine[lineNum][1].childCount > 0) {
-                enemyUnitLine[lineNum][1].GetChild(0).Find("FightSpine").gameObject.SetActive(true);
-            }
-            if (enemyUnitLine[lineNum][0].childCount > 0) {
-                enemyUnitLine[lineNum][0].GetChild(0).Find("FightSpine").gameObject.SetActive(true);
+            if (enemyUnitLine[lineNum][0].childCount == 0 && enemyUnitLine[lineNum][1].childCount == 0)
+                PlayMangement.instance.enemyPlayer.transform.Find("FightSpine").gameObject.SetActive(true);
+            else {
+                if (enemyUnitLine[lineNum][1].childCount > 0) {
+                    enemyUnitLine[lineNum][1].GetChild(0).Find("FightSpine").gameObject.SetActive(true);
+                }
+                if (enemyUnitLine[lineNum][0].childCount > 0) {
+                    enemyUnitLine[lineNum][0].GetChild(0).Find("FightSpine").gameObject.SetActive(true);
+                }
             }
             target.parent.Find("FightGuide").gameObject.SetActive(true);
         }
@@ -222,10 +226,14 @@ public partial class CardDropManager {
             target.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.6f);
             if(index > 0)
                 unitLine[lineNum][0].GetChild(0).position = new Vector3(unitLine[lineNum][0].position.x, unitLine[lineNum][0].position.y + 0.5f, 0);
-            if (enemyUnitLine[lineNum][0].childCount > 0)
-                enemyUnitLine[lineNum][0].GetChild(0).Find("FightSpine").gameObject.SetActive(false);
-            if (enemyUnitLine[lineNum][1].childCount > 0)
-                enemyUnitLine[lineNum][1].GetChild(0).Find("FightSpine").gameObject.SetActive(false);
+            if (enemyUnitLine[lineNum][0].childCount == 0 && enemyUnitLine[lineNum][1].childCount == 0)
+                PlayMangement.instance.enemyPlayer.transform.Find("FightSpine").gameObject.SetActive(false);
+            else {
+                if (enemyUnitLine[lineNum][0].childCount > 0)
+                    enemyUnitLine[lineNum][0].GetChild(0).Find("FightSpine").gameObject.SetActive(false);
+                if (enemyUnitLine[lineNum][1].childCount > 0)
+                    enemyUnitLine[lineNum][1].GetChild(0).Find("FightSpine").gameObject.SetActive(false);
+            }
             target.parent.Find("FightGuide").gameObject.SetActive(false);
         }
     }
