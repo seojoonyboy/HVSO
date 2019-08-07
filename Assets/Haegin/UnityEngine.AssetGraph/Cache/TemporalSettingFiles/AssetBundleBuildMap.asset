@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d7cfce4400474688aa803f13d8eb448, type: 3}
+  m_Name: AssetBundleBuildMap
+  m_EditorClassIdentifier: 
+  m_assetBundles:
+  - m_assetBundleName: textdata
+    m_assetBundleVariantName: 
+    m_fullName: textdata
+    m_assets:
+    - original: Assets/Resources/ChineseSimplified.bytes
+      lower: assets/resources/chinesesimplified.bytes
+    - original: Assets/Resources/ChineseTraditional.bytes
+      lower: assets/resources/chinesetraditional.bytes
+    - original: Assets/Resources/English.bytes
+      lower: assets/resources/english.bytes
+    - original: Assets/Resources/Japanese.bytes
+      lower: assets/resources/japanese.bytes
+    - original: Assets/Resources/Korean.bytes
+      lower: assets/resources/korean.bytes
+    - original: Assets/Resources/Spanish.bytes
+      lower: assets/resources/spanish.bytes
+    m_registererId: 5d13723a-9b51-4ab2-9826-d0b915497fda
+  - m_assetBundleName: haegin_textures_common
+    m_assetBundleVariantName: 
+    m_fullName: haegin_textures_common
+    m_assets:
+    - original: Assets/Resources/Splash/HaeginSplashAtlas.png
+      lower: assets/resources/splash/haeginsplashatlas.png
+    m_registererId: 5eaf69db-b16f-4a5a-bb91-0b1310be3a89
+  - m_assetBundleName: level1_sound
+    m_assetBundleVariantName: hd
+    m_fullName: level1_sound.hd
+    m_assets:
+    - original: Assets/Haegin/Sample/Sound/BGM/hd/bgm_level1.mp3
+      lower: assets/haegin/sample/sound/bgm/hd/bgm_level1.mp3
+    m_registererId: ace9630c-7633-4e0b-8941-ff4381df1610
+  - m_assetBundleName: level1_sound
+    m_assetBundleVariantName: sd
+    m_fullName: level1_sound.sd
+    m_assets:
+    - original: Assets/Haegin/Sample/Sound/BGM/sd/bgm_level1.mp3
+      lower: assets/haegin/sample/sound/bgm/sd/bgm_level1.mp3
+    m_registererId: ace9630c-7633-4e0b-8941-ff4381df1610
+  m_version: 1

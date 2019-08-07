@@ -195,7 +195,7 @@ public partial class AccountManager {
     public void OnSignInResultModal() {
         Destroy(loadingModal);
         Modal.instantiate("로그인이 되었습니다.", Modal.Type.CHECK, () => {
-            SceneManager.Instance.LoadScene(SceneManager.Scene.MAIN_SCENE);
+            FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
         });
     }
 
@@ -221,7 +221,7 @@ public partial class AccountManager {
                 }
             });
             Modal.instantiate("회원가입이 완료되었습니다.", Modal.Type.CHECK, () => {
-                SceneManager.Instance.LoadScene(SceneManager.Scene.MAIN_SCENE);
+                FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
             });
         }
         else {

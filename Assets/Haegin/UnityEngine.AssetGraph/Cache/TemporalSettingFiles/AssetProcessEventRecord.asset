@@ -1,0 +1,178 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d9a5f17c54584a67b7fe58665965f15, type: 3}
+  m_Name: AssetProcessEventRecord
+  m_EditorClassIdentifier: 
+  m_events:
+  - m_kind: 1
+    m_timestampUtc: 131751908740096250
+    m_assetName: 
+    m_assetGuid: 
+    m_graphGuid: 9a9232360baf7411c8fdf820d3761dbf
+    m_nodeId: cb486e12-7266-4bda-ad3d-8f533f0f2f9c
+    m_nodeName: Export To Directory for Patcher
+    m_description: System.FormatException:Index (zero based) must be greater than
+      or equal to zero and less than the size of the argument list.
+    m_howToFix: See Console for detail.
+  - m_kind: 1
+    m_timestampUtc: 131751910590158150
+    m_assetName: 
+    m_assetGuid: 
+    m_graphGuid: 9a9232360baf7411c8fdf820d3761dbf
+    m_nodeId: cb486e12-7266-4bda-ad3d-8f533f0f2f9c
+    m_nodeName: Export To Directory for Patcher
+    m_description: System.IO.IOException:/Users/Shared/Unity/HaeginSample/GeneratedPatchFiles/AssetBundles/Android/base/base
+      already exists
+    m_howToFix: See Console for detail.
+  - m_kind: 1
+    m_timestampUtc: 131751995984224750
+    m_assetName: 
+    m_assetGuid: 
+    m_graphGuid: 9a9232360baf7411c8fdf820d3761dbf
+    m_nodeId: c2aaee96-5ee6-4c71-8f2a-0e6820af3674
+    m_nodeName: Build Asset Bundles - test
+    m_description: System.ArgumentException:An element with the same key already exists
+      in the dictionary.
+    m_howToFix: See Console for detail.
+  - m_kind: 1
+    m_timestampUtc: 131751998234802950
+    m_assetName: 
+    m_assetGuid: 
+    m_graphGuid: 9a9232360baf7411c8fdf820d3761dbf
+    m_nodeId: c2aaee96-5ee6-4c71-8f2a-0e6820af3674
+    m_nodeName: Build Asset Bundles - test
+    m_description: System.ArgumentException:An element with the same key already exists
+      in the dictionary.
+    m_howToFix: See Console for detail.
+  - m_kind: 1
+    m_timestampUtc: 131751998871076550
+    m_assetName: 
+    m_assetGuid: 
+    m_graphGuid: 9a9232360baf7411c8fdf820d3761dbf
+    m_nodeId: c2aaee96-5ee6-4c71-8f2a-0e6820af3674
+    m_nodeName: Build Asset Bundles - test
+    m_description: System.ArgumentException:An element with the same key already exists
+      in the dictionary.
+    m_howToFix: See Console for detail.
+  - m_kind: 1
+    m_timestampUtc: 131799396820200310
+    m_assetName: 
+    m_assetGuid: 
+    m_graphGuid: 9a9232360baf7411c8fdf820d3761dbf
+    m_nodeId: cb486e12-7266-4bda-ad3d-8f533f0f2f9c
+    m_nodeName: Export To Directory for Patcher
+    m_description: System.NullReferenceException:Object reference not set to an instance
+      of an object
+    m_howToFix: See Console for detail.
+  - m_kind: 1
+    m_timestampUtc: 131799397598302010
+    m_assetName: 
+    m_assetGuid: 
+    m_graphGuid: 9a9232360baf7411c8fdf820d3761dbf
+    m_nodeId: cb486e12-7266-4bda-ad3d-8f533f0f2f9c
+    m_nodeName: Export To Directory for Patcher
+    m_description: System.NullReferenceException:Object reference not set to an instance
+      of an object
+    m_howToFix: See Console for detail.
+  - m_kind: 1
+    m_timestampUtc: 131799398602626870
+    m_assetName: 
+    m_assetGuid: 
+    m_graphGuid: 9a9232360baf7411c8fdf820d3761dbf
+    m_nodeId: cb486e12-7266-4bda-ad3d-8f533f0f2f9c
+    m_nodeName: Export To Directory for Patcher
+    m_description: System.NullReferenceException:Object reference not set to an instance
+      of an object
+    m_howToFix: See Console for detail.
+  - m_kind: 1
+    m_timestampUtc: 131799399468764800
+    m_assetName: 
+    m_assetGuid: 
+    m_graphGuid: 9a9232360baf7411c8fdf820d3761dbf
+    m_nodeId: cb486e12-7266-4bda-ad3d-8f533f0f2f9c
+    m_nodeName: Export To Directory for Patcher
+    m_description: System.NullReferenceException:Object reference not set to an instance
+      of an object
+    m_howToFix: See Console for detail.
+  - m_kind: 1
+    m_timestampUtc: 131799399650525870
+    m_assetName: 
+    m_assetGuid: 
+    m_graphGuid: 9a9232360baf7411c8fdf820d3761dbf
+    m_nodeId: cb486e12-7266-4bda-ad3d-8f533f0f2f9c
+    m_nodeName: Export To Directory for Patcher
+    m_description: System.NullReferenceException:Object reference not set to an instance
+      of an object
+    m_howToFix: See Console for detail.
+  - m_kind: 1
+    m_timestampUtc: 131799404084009590
+    m_assetName: 
+    m_assetGuid: 
+    m_graphGuid: 9a9232360baf7411c8fdf820d3761dbf
+    m_nodeId: cb486e12-7266-4bda-ad3d-8f533f0f2f9c
+    m_nodeName: Export To Directory for Patcher
+    m_description: System.NullReferenceException:Object reference not set to an instance
+      of an object
+    m_howToFix: See Console for detail.
+  - m_kind: 1
+    m_timestampUtc: 131799434910823530
+    m_assetName: 
+    m_assetGuid: 
+    m_graphGuid: 9a9232360baf7411c8fdf820d3761dbf
+    m_nodeId: cb486e12-7266-4bda-ad3d-8f533f0f2f9c
+    m_nodeName: Export To Directory for Patcher
+    m_description: System.NullReferenceException:Object reference not set to an instance
+      of an object
+    m_howToFix: See Console for detail.
+  - m_kind: 1
+    m_timestampUtc: 131799436629984440
+    m_assetName: 
+    m_assetGuid: 
+    m_graphGuid: 9a9232360baf7411c8fdf820d3761dbf
+    m_nodeId: cb486e12-7266-4bda-ad3d-8f533f0f2f9c
+    m_nodeName: Export To Directory for Patcher
+    m_description: System.NullReferenceException:Object reference not set to an instance
+      of an object
+    m_howToFix: See Console for detail.
+  - m_kind: 1
+    m_timestampUtc: 131799446609806760
+    m_assetName: 
+    m_assetGuid: 
+    m_graphGuid: 9a9232360baf7411c8fdf820d3761dbf
+    m_nodeId: cb486e12-7266-4bda-ad3d-8f533f0f2f9c
+    m_nodeName: Export To Directory for Patcher
+    m_description: System.NullReferenceException:Object reference not set to an instance
+      of an object
+    m_howToFix: See Console for detail.
+  - m_kind: 1
+    m_timestampUtc: 131799468331677470
+    m_assetName: 
+    m_assetGuid: 
+    m_graphGuid: 9a9232360baf7411c8fdf820d3761dbf
+    m_nodeId: cb486e12-7266-4bda-ad3d-8f533f0f2f9c
+    m_nodeName: Export To Directory for Patcher
+    m_description: System.NullReferenceException:Object reference not set to an instance
+      of an object
+    m_howToFix: See Console for detail.
+  - m_kind: 1
+    m_timestampUtc: 131799471223059480
+    m_assetName: 
+    m_assetGuid: 
+    m_graphGuid: 9a9232360baf7411c8fdf820d3761dbf
+    m_nodeId: cb486e12-7266-4bda-ad3d-8f533f0f2f9c
+    m_nodeName: Export To Directory for Patcher
+    m_description: System.NullReferenceException:Object reference not set to an instance
+      of an object
+    m_howToFix: See Console for detail.
+  m_errorEventCount: 16
+  m_infoEventCount: 0
+  m_version: 1
+  m_processStartIndex: 0

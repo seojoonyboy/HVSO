@@ -67,7 +67,7 @@ public partial class PlayMangement : MonoBehaviour {
 
     private void Update() {
         if (Input.GetKeyDown(KeyCode.Escape)) {
-            SceneManager.Instance.LoadScene(SceneManager.Scene.MAIN_SCENE);
+            FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
         }
         if (!infoOn && Input.GetMouseButtonDown(0)) {
             cardInfoCanvas.GetChild(0).GetComponent<CardListManager>().OpenUnitInfoWindow(Input.mousePosition);
@@ -649,7 +649,7 @@ public partial class PlayMangement {
             resultUI.transform.GetChild(1).gameObject.SetActive(true);
         }
         else if (resultUI.transform.GetChild(1).gameObject.activeSelf) {
-            SceneManager.Instance.LoadScene(SceneManager.Scene.MAIN_SCENE);
+            FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
         }
     }
 
@@ -660,7 +660,7 @@ public partial class PlayMangement {
     }
 
     public void OnMoveSceneBtn() {
-        SceneManager.Instance.LoadScene(SceneManager.Scene.MAIN_SCENE);
+        FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
     }
 
     private void SetResultWindow(string result, string race) {

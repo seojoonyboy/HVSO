@@ -63,7 +63,7 @@ public class BattleReadySceneController : MonoBehaviour {
         if (race != null && !string.IsNullOrEmpty(selectedDeckId)) {
             if (selectedDeck.deckValidate) {
                 isIngameButtonClicked = true;
-                SceneManager.Instance.LoadScene(SceneManager.Scene.CONNECT_MATCHING_SCENE);
+                FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.CONNECT_MATCHING_SCENE);
             }
             else {
                 Modal.instantiate("유효하지 않은 덱입니다.", Modal.Type.CHECK);
@@ -85,12 +85,12 @@ public class BattleReadySceneController : MonoBehaviour {
 
     public void OnBackButton() {
         SoundManager.Instance.PlaySound(SoundType.FIRST_TURN);
-        SceneManager.Instance.LoadScene(SceneManager.Scene.MAIN_SCENE);
+        FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
     }
 
     public void OnDeckListButton() {
         SoundManager.Instance.PlaySound(SoundType.FIRST_TURN);
-        SceneManager.Instance.LoadScene(SceneManager.Scene.DECK_LIST_SCNE);
+        FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.DECK_LIST_SCNE);
     }
 
     public void ChangeBattleType(BattleType type) {

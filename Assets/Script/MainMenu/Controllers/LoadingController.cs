@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,12 +7,12 @@ using System;
 public class LoadingController : MonoBehaviour {
 
     [SerializeField] private Slider slider;
-    SceneManager manager;
+    FBL_SceneManager manager;
     
     IEnumerator Start() {
         yield return null;
-        manager = SceneManager.Instance;
-        manager.LoadScene(SceneManager.Scene.PVP_READY_SCENE);
+        manager = FBL_SceneManager.Instance;
+        manager.LoadScene(FBL_SceneManager.Scene.PVP_READY_SCENE);
     }
 
     void Update() {

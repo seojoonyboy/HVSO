@@ -59,7 +59,7 @@ public partial class BattleConnector : MonoBehaviour {
         returnButton.gameObject.SetActive(false);
         webSocket.Close();
         yield return new WaitForSeconds(3f);
-        SceneManager.Instance.LoadScene(SceneManager.Scene.MAIN_SCENE);
+        FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
         Destroy(gameObject);
     }
 
@@ -67,7 +67,7 @@ public partial class BattleConnector : MonoBehaviour {
         StopCoroutine(timeCheck);
         webSocket.Close();
         returnButton.onClick.RemoveListener(BattleCancel);
-        SceneManager.Instance.LoadScene(SceneManager.Scene.MAIN_SCENE);
+        FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
         Destroy(gameObject);
     }
 
@@ -151,7 +151,7 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void StartBattle() {
-        SceneManager.Instance.LoadScene(SceneManager.Scene.MISSION_INGAME);
+        FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MISSION_INGAME);
     }
 
     private void SendMethod(string method, object args = null) {

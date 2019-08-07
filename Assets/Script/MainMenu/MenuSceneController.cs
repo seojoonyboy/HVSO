@@ -42,7 +42,7 @@ public class MenuSceneController : MonoBehaviour {
     /// </summary>
     public void OnPVPClicked() {
         //battleSwordSkeleton.AnimationState.SetAnimation(0, "TOUCH", false);
-        SceneManager.Instance.LoadScene(SceneManager.Scene.LOADING_SCENE);
+        FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.LOADING_SCENE);
         SoundManager.Instance.PlaySound(SoundType.FIRST_TURN);
     }
 

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "551232432184",
+    "firebase_url": "https://modulesample-ed95b.firebaseio.com",
+    "project_id": "modulesample-ed95b",
+    "storage_bucket": "modulesample-ed95b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:551232432184:android:4a27eecf13378008",
+        "android_client_info": {
+          "package_name": "com.haegin.modulesample"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "551232432184-233chdikqqqj6sqsj3rihs7cq6ij4fm0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyALM1TDr9Zu7q8pafkE3oeXXhgLoFk2QIE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "551232432184-233chdikqqqj6sqsj3rihs7cq6ij4fm0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
