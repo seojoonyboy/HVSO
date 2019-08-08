@@ -244,6 +244,10 @@ public class DeckEditController : MonoBehaviour
 
     public void RefreshLine() {
         setCardText.text = setCardNum.ToString() + "/40";
+        if(setCardNum == 0)
+            transform.Find("DeckImage/EmptyHand").gameObject.SetActive(true);
+        else
+            transform.Find("DeckImage/EmptyHand").gameObject.SetActive(false);
         Canvas.ForceUpdateCanvases();
         LayoutRebuilder.ForceRebuildLayoutImmediate(settingLayout.GetComponent<RectTransform>());
     }
