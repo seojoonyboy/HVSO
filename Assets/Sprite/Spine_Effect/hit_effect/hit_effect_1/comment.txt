@@ -1,2 +1,2 @@
-scale = 2.0
-timescale = 0.012
+scale = 1.0
+timescale = 2.0

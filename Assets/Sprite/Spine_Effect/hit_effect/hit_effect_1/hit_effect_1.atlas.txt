@@ -1,6 +1,6 @@
 
 hit_effect_1.png
-size: 1024,1024
+size: 2048,1024
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
@@ -55,167 +55,161 @@ hit_effect_1_07
   index: -1
 hit_effect_1_08
   rotate: false
-  xy: 768, 768
+  xy: 256, 256
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
 hit_effect_1_09
   rotate: false
-  xy: 256, 256
+  xy: 256, 0
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
 hit_effect_1_10
   rotate: false
-  xy: 256, 0
+  xy: 512, 512
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
 hit_effect_1_11
   rotate: false
-  xy: 512, 512
+  xy: 768, 768
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
 hit_effect_1_12
   rotate: false
-  xy: 768, 512
+  xy: 512, 256
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
 hit_effect_1_13
   rotate: false
-  xy: 512, 256
+  xy: 512, 0
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
 hit_effect_1_14
   rotate: false
-  xy: 512, 0
+  xy: 768, 512
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
 hit_effect_1_15
   rotate: false
-  xy: 768, 256
+  xy: 1024, 768
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
 hit_effect_1_16
   rotate: false
-  xy: 768, 0
+  xy: 768, 256
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
-
-hit_effect_12.png
-size: 1024,1024
-format: RGBA8888
-filter: Linear,Linear
-repeat: none
 hit_effect_1_17
   rotate: false
-  xy: 0, 768
+  xy: 768, 0
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
 hit_effect_1_18
   rotate: false
-  xy: 0, 512
+  xy: 1024, 512
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
 hit_effect_1_19
   rotate: false
-  xy: 256, 768
+  xy: 1280, 768
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
 hit_effect_1_20
   rotate: false
-  xy: 0, 256
+  xy: 1024, 256
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
 hit_effect_1_21
   rotate: false
-  xy: 0, 0
+  xy: 1024, 0
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
 hit_effect_1_22
   rotate: false
-  xy: 256, 512
+  xy: 1280, 512
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
 hit_effect_1_23
   rotate: false
-  xy: 512, 768
+  xy: 1536, 768
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
 hit_effect_1_24
   rotate: false
-  xy: 768, 768
+  xy: 1792, 768
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
 hit_effect_1_25
   rotate: false
-  xy: 256, 256
+  xy: 1280, 256
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
 hit_effect_1_26
   rotate: false
-  xy: 256, 0
+  xy: 1280, 0
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
 hit_effect_1_27
   rotate: false
-  xy: 512, 512
+  xy: 1536, 512
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
 hit_effect_1_28
   rotate: false
-  xy: 768, 512
+  xy: 1792, 512
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
 hit_effect_1_29
   rotate: false
-  xy: 512, 256
+  xy: 1536, 256
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
 hit_effect_1_30
   rotate: false
-  xy: 512, 0
+  xy: 1536, 0
   size: 256, 256
   orig: 256, 256
   offset: 0, 0

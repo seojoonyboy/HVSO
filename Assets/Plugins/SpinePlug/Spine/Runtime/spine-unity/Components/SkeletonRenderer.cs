@@ -117,11 +117,14 @@ namespace Spine.Unity {
 		/// <summary>Shader property ID used for the Stencil comparison function.</summary>
 		public static readonly int STENCIL_COMP_PARAM_ID = Shader.PropertyToID("_StencilComp");
 		/// <summary>Shader property value used as Stencil comparison function for <see cref="SpriteMaskInteraction.None"/>.</summary>
-		public const UnityEngine.Rendering.CompareFunction STENCIL_COMP_MASKINTERACTION_NONE = UnityEngine.Rendering.CompareFunction.Disabled;
+		public const UnityEngine.Rendering.CompareFunction STENCIL_COMP_MASKINTERACTION_NONE = UnityEngine.Rendering.CompareFunction.Always;
 		/// <summary>Shader property value used as Stencil comparison function for <see cref="SpriteMaskInteraction.VisibleInsideMask"/>.</summary>
 		public const UnityEngine.Rendering.CompareFunction STENCIL_COMP_MASKINTERACTION_VISIBLE_INSIDE = UnityEngine.Rendering.CompareFunction.LessEqual;
 		/// <summary>Shader property value used as Stencil comparison function for <see cref="SpriteMaskInteraction.VisibleOutsideMask"/>.</summary>
 		public const UnityEngine.Rendering.CompareFunction STENCIL_COMP_MASKINTERACTION_VISIBLE_OUTSIDE = UnityEngine.Rendering.CompareFunction.Greater;
+		#if UNITY_EDITOR
+		private static bool haveStencilParametersBeenFixed = false;
+		#endif
 		#endif // #if BUILT_IN_SPRITE_MASK_COMPONENT
 		#endregion
 
@@ -288,8 +291,8 @@ namespace Spine.Unity {
 			rendererBuffers.Initialize();
 
 			skeleton = new Skeleton(skeletonData) {
-				scaleX = initialFlipX ? -1 : 1,
-				scaleY = initialFlipY ? -1 : 1
+				ScaleX = initialFlipX ? -1 : 1,
+				ScaleY = initialFlipY ? -1 : 1
 			};
 
 			if (!string.IsNullOrEmpty(initialSkinName) && !string.Equals(initialSkinName, "default", System.StringComparison.Ordinal))
@@ -303,6 +306,14 @@ namespace Spine.Unity {
 
 			if (OnRebuild != null)
 				OnRebuild(this);
+
+			#if UNITY_EDITOR
+			if (!Application.isPlaying) {
+				string errorMessage = null;
+				if (MaterialChecks.IsMaterialSetupProblematic(this, ref errorMessage))
+					Debug.LogWarningFormat("Problematic material setup at {0}: {1}", this.name, errorMessage);
+			}
+			#endif
 		}
 
 		/// <summary>
@@ -476,6 +487,12 @@ namespace Spine.Unity {
 		#if BUILT_IN_SPRITE_MASK_COMPONENT
 		private void AssignSpriteMaskMaterials()
 		{
+			#if UNITY_EDITOR
+			if (!Application.isPlaying && !UnityEditor.EditorApplication.isUpdating) {
+				EditorFixStencilCompParameters();
+			}
+			#endif
+
 			if (maskMaterials.materialsMaskDisabled.Length > 0 && maskMaterials.materialsMaskDisabled[0] != null &&
 				maskInteraction == SpriteMaskInteraction.None) {
 				this.meshRenderer.materials = maskMaterials.materialsMaskDisabled;
@@ -523,6 +540,45 @@ namespace Spine.Unity {
 			}
 			return true;
 		}
+
+		#if UNITY_EDITOR
+		private void EditorFixStencilCompParameters() {
+			if (!haveStencilParametersBeenFixed && HasAnyStencilComp0Material()) {
+				haveStencilParametersBeenFixed = true;
+				FixAllProjectMaterialsStencilCompParameters();
+			}
+		}
+
+		private void FixAllProjectMaterialsStencilCompParameters() {
+			string[] materialGUIDS = UnityEditor.AssetDatabase.FindAssets("t:material");
+			foreach (var guid in materialGUIDS) {
+				string path = UnityEditor.AssetDatabase.GUIDToAssetPath(guid);
+				if (!string.IsNullOrEmpty(path)) {
+					var mat = UnityEditor.AssetDatabase.LoadAssetAtPath<Material>(path);
+					if (mat.HasProperty(STENCIL_COMP_PARAM_ID) && mat.GetFloat(STENCIL_COMP_PARAM_ID) == 0) {
+						mat.SetFloat(STENCIL_COMP_PARAM_ID, (int)STENCIL_COMP_MASKINTERACTION_NONE);
+					}
+				}
+			}
+			UnityEditor.AssetDatabase.Refresh();
+			UnityEditor.AssetDatabase.SaveAssets();
+		}
+
+		private bool HasAnyStencilComp0Material() {
+			if (meshRenderer == null)
+				return false;
+
+			foreach (var mat in meshRenderer.sharedMaterials) {
+				if (mat != null && mat.HasProperty(STENCIL_COMP_PARAM_ID)) {
+					float currentCompValue = mat.GetFloat(STENCIL_COMP_PARAM_ID);
+					if (currentCompValue == 0)
+						return true;
+				}
+			}
+			return false;
+		}
+		#endif // UNITY_EDITOR
+
 		#endif //#if BUILT_IN_SPRITE_MASK_COMPONENT
 	}
 }

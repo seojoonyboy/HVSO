@@ -94,7 +94,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: b10b53c3d63c57a42a15dbd63404fe5d, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: e3b0dbb4b4c5fb144acfc3c5f843e2ee, type: 2}
   initialSkinName: 
   initialFlipX: 0
   initialFlipY: 0
@@ -141,6 +141,9 @@ MonoBehaviour:
   attackEventName: SHOT
   arrow: {fileID: 2753944476047113115, guid: 403f8fe5c9b6d6c4d8c6044a8d3700ab, type: 3}
   hidingObject: {fileID: 0}
+  headbone: {fileID: 0}
+  bodybone: {fileID: 0}
+  rootbone: {fileID: 0}
 --- !u!1 &7161939111749377303
 GameObject:
   m_ObjectHideFlags: 0
@@ -165,8 +168,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7161939111749377303}
-  m_LocalRotation: {x: 0, y: 0, z: 0.00000012846922, w: 1}
-  m_LocalPosition: {x: -0.000010622886, y: 0.6054533, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.00000004120072, y: 0.6054717, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6676859238444344959}
@@ -265,8 +268,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8831187173366642880}
-  m_LocalRotation: {x: 0, y: 0, z: 0.010545769, w: 0.9999444}
-  m_LocalPosition: {x: 0.20293517, y: 1.5047164, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.21577254, y: 1.5592265, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6676859238444344959}

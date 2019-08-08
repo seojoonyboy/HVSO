@@ -65,7 +65,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  skeletonDataAsset: {fileID: 11400000, guid: ac591577d6e708f46acf0dff09986d50, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: a79e3eb58f96f444bbc104f714f6a518, type: 2}
   initialSkinName: 
   initialFlipX: 0
   initialFlipY: 0

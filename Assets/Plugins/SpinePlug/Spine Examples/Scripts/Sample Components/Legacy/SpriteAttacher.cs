@@ -31,7 +31,7 @@
 
 using UnityEngine;
 using System.Collections.Generic;
-using Spine.Unity.Modules.AttachmentTools;
+using Spine.Unity.AttachmentTools;
 
 namespace Spine.Unity.Examples {
 	public class SpriteAttacher : MonoBehaviour {
@@ -170,7 +170,7 @@ namespace Spine.Unity.Examples {
 			if (skinName != "")
 				skin = skeletonData.FindSkin(skinName);
 
-			skin.AddAttachment(slotIndex, att.Name, att);
+			skin.SetAttachment(slotIndex, att.Name, att);
 
 			return att;
 		}
