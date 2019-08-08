@@ -29,6 +29,14 @@ public partial class CardDropManager : Singleton<CardDropManager> {
                 enemyUnitLine[i][j] = unitSlotLines.parent.GetChild(1).GetChild(j).GetChild(i);
             }
         }
+        StartCoroutine(SetLineGuide(mapSlotLines));
+    }
+
+    IEnumerator SetLineGuide(Transform mapSlotLines) {
+        yield return new WaitForSeconds(0.1f);
+        for (int i = 0; i < 5; i++) {
+            mapSlotLines.GetChild(i).Find("FightGuide").gameObject.SetActive(false);
+        }
     }
 }
 
@@ -221,6 +229,7 @@ public partial class CardDropManager {
                 }
             }
             target.parent.Find("FightGuide").gameObject.SetActive(true);
+            target.parent.Find("FightGuide/Straight").GetComponent<SkeletonAnimation>().AnimationName = "STRAIGHT";
         }
         else {
             target.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.6f);
