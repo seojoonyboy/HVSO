@@ -136,6 +136,10 @@ public class DeckEditController : MonoBehaviour
     }
 
     public void CancelButton() {
+        transform.Find("CancelWindow").gameObject.SetActive(true);
+    }
+
+    public void CancelEdit() {
         setCardList = null;
         gameObject.SetActive(false);
         if (templateMenu != null)
@@ -144,6 +148,10 @@ public class DeckEditController : MonoBehaviour
         deckNamePanel.transform.Find("NameTemplate").Find("Text").GetComponent<Text>().text = "";
 
         FindObjectOfType<HUDController>().SetHeader(HUDController.Type.SHOW_USER_INFO);
+    }
+
+    public void ResumeEdit() {
+        transform.Find("CancelWindow").gameObject.SetActive(false);
     }
     
 
