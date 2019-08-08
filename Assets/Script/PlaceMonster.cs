@@ -120,6 +120,7 @@ public class PlaceMonster : MonoBehaviour {
 
         myUnitNum = PlayMangement.instance.unitNum++;
         transform.Find("ClickableUI").position = unitSpine.bodybone.position;
+        transform.Find("FightSpine").position = unitSpine.bodybone.position;
         UpdateStat();
         ChangeAttackProperty();
     }

@@ -124,6 +124,8 @@ public class PlayerController : MonoBehaviour
 
             
         }
+        if (!isPlayer)
+            transform.Find("FightSpine").localPosition = new Vector3(0, 3, 0);
 
         SetShield();
         shieldCount = 3;

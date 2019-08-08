@@ -204,38 +204,37 @@ public partial class CardDropManager {
         int index = target.GetSiblingIndex();
         int lineNum = target.parent.GetSiblingIndex();
         GameObject fightEffect = slotLine[lineNum].GetChild(3).gameObject;
-        //Animator ani = fightEffect.GetComponent<Animator>();
         if (highlighted) {
             target.GetComponent<SpriteRenderer>().color = new Color(0.639f, 0.925f, 0.105f, 0.6f);
             if (index > 0) {
                 if (index == 1) unitLine[lineNum][0].GetChild(0).position = unitLine[lineNum][0].position;
                 else unitLine[lineNum][0].GetChild(0).position = unitLine[lineNum][1].position;
             }
-            if (enemyUnitLine[lineNum][1].childCount > 0) {
-                //ani.SetTrigger("1_to_2");
-                enemyUnitLine[lineNum][1].GetChild(0).Find("FightSpine").gameObject.SetActive(true);
-            }
-            if (enemyUnitLine[lineNum][0].childCount > 0) {
-                //if (unitLine[lineNum][0].childCount > 0)
-                    //ani.SetTrigger("2_to_1");
-                //else
-                    //ani.SetTrigger("1_to_1");
-                enemyUnitLine[lineNum][0].GetChild(0).Find("FightSpine").gameObject.SetActive(true);
-            }
+            if (enemyUnitLine[lineNum][0].childCount == 0 && enemyUnitLine[lineNum][1].childCount == 0)
+                PlayMangement.instance.enemyPlayer.transform.Find("FightSpine").gameObject.SetActive(true);
             else {
-                //ani.SetTrigger("1_to_hero");
+                if (enemyUnitLine[lineNum][1].childCount > 0) {
+                    enemyUnitLine[lineNum][1].GetChild(0).Find("FightSpine").gameObject.SetActive(true);
+                }
+                if (enemyUnitLine[lineNum][0].childCount > 0) {
+                    enemyUnitLine[lineNum][0].GetChild(0).Find("FightSpine").gameObject.SetActive(true);
+                }
             }
-
+            target.parent.Find("FightGuide").gameObject.SetActive(true);
         }
         else {
             target.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.6f);
             if(index > 0)
                 unitLine[lineNum][0].GetChild(0).position = new Vector3(unitLine[lineNum][0].position.x, unitLine[lineNum][0].position.y + 0.5f, 0);
-            if (enemyUnitLine[lineNum][0].childCount > 0)
-                enemyUnitLine[lineNum][0].GetChild(0).Find("FightSpine").gameObject.SetActive(false);
-            if (enemyUnitLine[lineNum][1].childCount > 0)
-                enemyUnitLine[lineNum][1].GetChild(0).Find("FightSpine").gameObject.SetActive(false);
-            //ani.SetTrigger("to_idle");
+            if (enemyUnitLine[lineNum][0].childCount == 0 && enemyUnitLine[lineNum][1].childCount == 0)
+                PlayMangement.instance.enemyPlayer.transform.Find("FightSpine").gameObject.SetActive(false);
+            else {
+                if (enemyUnitLine[lineNum][0].childCount > 0)
+                    enemyUnitLine[lineNum][0].GetChild(0).Find("FightSpine").gameObject.SetActive(false);
+                if (enemyUnitLine[lineNum][1].childCount > 0)
+                    enemyUnitLine[lineNum][1].GetChild(0).Find("FightSpine").gameObject.SetActive(false);
+            }
+            target.parent.Find("FightGuide").gameObject.SetActive(false);
         }
     }
 
