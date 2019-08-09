@@ -7,7 +7,7 @@ public class DeckSettingManager : MonoBehaviour
 {
     [SerializeField] Canvas humanTemplateCanvas;
     [SerializeField] Canvas orcTemplateCanvas;
-    [SerializeField] GameObject cardDictionaryCanvas;
+    [SerializeField] public GameObject cardDictionaryCanvas;
     [SerializeField] Transform humanDeckList;
     [SerializeField] Transform orcDeckList;
     [SerializeField] Transform pageButtons;

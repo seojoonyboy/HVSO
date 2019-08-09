@@ -351,7 +351,7 @@ namespace UnityEngine.UI.Extensions
         /// <summary>
         /// Updates the _Lerp target to the closest page and updates the pagination bullets.  Each control's update loop will then handle the move.
         /// </summary>
-        internal void ScrollToClosestElement()
+        public void ScrollToClosestElement()
         {
             _lerp = true;
             CurrentPage = GetPageforPosition(_screensContainer.localPosition);
