@@ -113,8 +113,6 @@ public class DeckSettingManager : MonoBehaviour
             pageButtons.Find("Orc/Right").gameObject.SetActive(true);
         else
             pageButtons.Find("Orc/Right").gameObject.SetActive(false);
-
-        cardDictionaryCanvas.GetComponent<CardDictionaryManager>().SetToHumanCards();
     }
 
     private void InitDecks() {
