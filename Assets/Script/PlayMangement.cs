@@ -300,9 +300,13 @@ public partial class PlayMangement : MonoBehaviour {
         if (highlightUI == null) yield break;
         highlightUI.SetActive(true);
         magicHandler.highlightedSlot = highlightUI.transform;
-        highlightUI.GetComponent<SpriteRenderer>().color = new Color(1, 0, 0, 155.0f / 255.0f);
+       
+        if(highlightUI.GetComponent<SpriteRenderer>() != null)
+            highlightUI.GetComponent<SpriteRenderer>().color = new Color(1, 0, 0, 155.0f / 255.0f);
+
         yield return new WaitForSeconds(1.5f);
-        highlightUI.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 155.0f / 255.0f);
+        if (highlightUI.GetComponent<SpriteRenderer>() != null)
+            highlightUI.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 155.0f / 255.0f);
         highlightUI.SetActive(false);
     }
 
