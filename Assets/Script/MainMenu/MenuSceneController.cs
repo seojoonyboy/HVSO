@@ -11,6 +11,7 @@ public class MenuSceneController : MonoBehaviour {
     [SerializeField] Transform fixedCanvas;
     [SerializeField] HorizontalScrollSnap windowScrollSnap;
     [SerializeField] DeckSettingManager deckSettingManager;
+    [SerializeField] CardDictionaryManager cardDictionaryManager;
     [SerializeField] SkeletonGraphic battleSwordSkeleton;
     [SerializeField] TMPro.TextMeshProUGUI nicknameText;
 

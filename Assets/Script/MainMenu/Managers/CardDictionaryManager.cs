@@ -17,6 +17,8 @@ public class CardDictionaryManager : MonoBehaviour {
 
     [SerializeField] Sprite orcPanelBg, humanPanelBg;
 
+    MyDecksLoader decksLoader;
+
     bool isHumanDictionary;
     SortingOptions selectedSortOption;
 
@@ -24,11 +26,14 @@ public class CardDictionaryManager : MonoBehaviour {
         Transform classList = cardList.Find("CardsByCost");
         for(int i = 0; i < classList.childCount; i++) 
             classList.GetChild(i).Find("Header/Info/Image").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = i.ToString();
-        gameObject.SetActive(false);
+    }
+
+    public void AttachDecksLoader(ref MyDecksLoader decksLoader) {
+        //this.decksLoader = decksLoader;
+        //this.decksLoader.OnLoadFinished.AddListener(() => { SetToHumanCards(); });
     }
 
     public void CloseDictionaryCanvas() {
-        gameObject.SetActive(false);
     }
 
     public void SetToHumanCards() {
