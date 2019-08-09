@@ -20,16 +20,13 @@ public class MenuSceneController : MonoBehaviour {
     private bool buttonClicked;
     public MyDecksLoader decksLoader;
 
-    private void Awake() {
-        if (decksLoader == null) decksLoader = gameObject.AddComponent<MyDecksLoader>();
+    private void Start() {
         deckSettingManager.AttachDecksLoader(ref decksLoader);
         decksLoader.OnLoadFinished.AddListener(() => {
             nicknameText.text = AccountManager.Instance.NickName;
         });
         decksLoader.Load();
-    }
 
-    private void Start() {
         currentPage = 2;
         Transform buttonsParent = fixedCanvas.Find("Footer");
         //for (int i = 0; i < fixedCanvas.Find("Footer").childCount; i++)

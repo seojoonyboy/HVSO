@@ -13,22 +13,27 @@ public class CardDictionaryManager : MonoBehaviour {
     [SerializeField] Transform sortingModal;
     [SerializeField] TMPro.TextMeshProUGUI cardNum;
     [SerializeField] HUDController hudController;
-    
+    [SerializeField] MyDecksLoader myDecksLoader;
 
     [SerializeField] Sprite orcPanelBg, humanPanelBg;
 
     bool isHumanDictionary;
     SortingOptions selectedSortOption;
 
+    void Awake() {
+        myDecksLoader.OnTemplateLoadFinished.AddListener(() => {
+            SetToHumanCards();
+        });
+    }
+
     private void Start() {
         Transform classList = cardList.Find("CardsByCost");
         for(int i = 0; i < classList.childCount; i++) 
             classList.GetChild(i).Find("Header/Info/Image").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = i.ToString();
-        gameObject.SetActive(false);
     }
 
     public void CloseDictionaryCanvas() {
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
     }
 
     public void SetToHumanCards() {

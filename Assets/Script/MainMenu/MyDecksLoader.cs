@@ -9,6 +9,8 @@ public class MyDecksLoader : MonoBehaviour {
     GameObject loadingModal;
     AccountManager accountManager;
     public UnityEvent OnLoadFinished = new UnityEvent();
+    public UnityEvent OnTemplateLoadFinished = new UnityEvent();
+
     void Awake() {
         accountManager = AccountManager.Instance;    
     }
@@ -45,6 +47,7 @@ public class MyDecksLoader : MonoBehaviour {
                 accountManager.orcTemplates = result;
             }
         }
+        OnTemplateLoadFinished.Invoke();
     }
 
     private void OnHumanTemplateLoadFinished(HTTPRequest originalRequest, HTTPResponse response) {
