@@ -140,6 +140,7 @@ public class DeckEditController : MonoBehaviour
     }
 
     public void CancelEdit() {
+        transform.Find("CancelWindow").gameObject.SetActive(false);
         setCardList = null;
         gameObject.SetActive(false);
         if (templateMenu != null)
