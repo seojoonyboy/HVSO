@@ -54,6 +54,7 @@ namespace UnityEngine.UI.Extensions
                     //disable the current scroll rect so it doesnt move.
                     _myScrollRect.enabled = false;
                     ParentScrollRect.OnBeginDrag(eventData);
+                    ParentScrollRect.gameObject.GetComponent<ScrollSnapBase>().OnBeginDrag(eventData);
                 }
             }
             else if (vertical > horizontal)
@@ -74,7 +75,7 @@ namespace UnityEngine.UI.Extensions
                 scrollOther = false;
                 _myScrollRect.enabled = true;
                 ParentScrollRect.gameObject.GetComponent<HorizontalScrollSnap>().OnEndDrag(eventData);
-                ParentScrollRect.gameObject.GetComponent<HorizontalScrollSnap>().ScrollToClosestElement();
+                ParentScrollRect.OnEndDrag(eventData);
             }
         }
 
