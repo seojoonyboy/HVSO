@@ -22,6 +22,12 @@ public class EffectSystem : SerializedMonoBehaviour
         Instance = this;
     }
 
+    private void Start() {
+        GameObject backEffect = Instantiate(backgroundEffect);
+        backEffect.transform.position = PlayMangement.instance.backGround.transform.Find("ParticlePosition").position;
+    }
+
+
     public void ShowEffect(EffectType type, Vector3 pos) {
         if (effectObject.ContainsKey(type) == false || effectObject[type] == null) return;
         GameObject effect = GetReadyObject(effectObject[type]);
