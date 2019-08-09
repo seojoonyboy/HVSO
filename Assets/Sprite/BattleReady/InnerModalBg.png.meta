@@ -1,9 +1,9 @@
 fileFormatVersion: 2
 guid: 7a023a6cef8be35438ccd71be393a080
 TextureImporter:
-  internalIDToNameTable: []
+  fileIDToRecycleName: {}
   externalObjects: {}
-  serializedVersion: 10
+  serializedVersion: 9
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -109,13 +109,11 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: 7c0b029ffdd01f84d90a4f1d00d2b8e1
-    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
-    secondaryTextures: []
-  spritePackingTag: 
+  spritePackingTag: BattleReady
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
   userData: 
