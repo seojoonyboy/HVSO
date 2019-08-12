@@ -250,10 +250,10 @@ public partial class PlayMangement : MonoBehaviour {
         Logger.Log(enemyPlayer.playerUI.transform.position);
         yield return new WaitForSeconds(1.0f);
         //타겟 지정 애니메이션
+        yield return cardHandManager.ShowUsedMagicCard(100, card);
         yield return EnemySettingTarget(history.targets[0], magicCard);
         //실제 카드 사용
         object[] parms = new object[] { false, card };
-        yield return cardHandManager.ShowUsedMagicCard(100, card);
         EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
         yield return new WaitForSeconds(2f);
         //카드 파괴
