@@ -33,9 +33,13 @@ public partial class CardDropManager : Singleton<CardDropManager> {
     }
 
     IEnumerator SetLineGuide(Transform mapSlotLines) {
+        for (int i = 0; i < 5; i++) {
+            mapSlotLines.GetChild(i).Find("FightGuide").localScale = Vector3.zero;
+        }
         yield return new WaitForSeconds(0.1f);
         for (int i = 0; i < 5; i++) {
             mapSlotLines.GetChild(i).Find("FightGuide").gameObject.SetActive(false);
+            mapSlotLines.GetChild(i).Find("FightGuide").localScale = Vector3.one;
         }
     }
 }
@@ -263,6 +267,17 @@ public partial class CardDropManager {
                     target.parent.Find("ClickableUI").GetComponent<SkeletonAnimation>().Skeleton.SetSkin("WHITE");
             }
         }
+        else {
+            if (highlighted) {
+                for (int i = 0; i < 5; i++)
+                    slotLine[i].Find("BattleLineEffect").GetComponent<SpriteRenderer>().color = new Color(0.639f, 0.925f, 0.105f, 0.6f);
+            }
+            else {
+                for (int i = 0; i < 5; i++)
+                    slotLine[i].Find("BattleLineEffect").GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.6f);
+            }
+
+        }
     }
 
     public GameObject DropUnit(GameObject card, Transform target) {
@@ -356,7 +371,13 @@ public partial class CardDropManager {
                 break;
             default:
             case "all":
-                if (CheckConditionToUse(conditionChecker, group)) slotLine[2].Find("AllMagicTrigger").gameObject.SetActive(true);
+                if (CheckConditionToUse(conditionChecker, group)) {
+                    slotLine[2].Find("AllMagicTrigger").gameObject.SetActive(true);
+                    for (int i = 0; i < 5; i++) {
+                        slotLine[i].Find("BattleLineEffect").gameObject.SetActive(true);
+                        slotLine[i].Find("BattleLineEffect").GetComponent<BoxCollider2D>().enabled = false;
+                    }
+                }
                 break;
         }
     }
@@ -435,6 +456,10 @@ public partial class CardDropManager {
             default:
             case "all":
                 slotLine[2].Find("AllMagicTrigger").gameObject.SetActive(false);
+                for (int i = 0; i < 5; i++) {
+                    slotLine[i].Find("BattleLineEffect").gameObject.SetActive(false);
+                    slotLine[i].Find("BattleLineEffect").GetComponent<BoxCollider2D>().enabled = true;
+                }
                 break;
         }
     }
