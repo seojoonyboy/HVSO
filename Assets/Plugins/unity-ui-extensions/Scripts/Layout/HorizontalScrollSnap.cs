@@ -35,7 +35,7 @@ namespace UnityEngine.UI.Extensions
             }
             else if (_lerp)
             {
-                _screensContainer.localPosition = Vector3.Lerp(_screensContainer.localPosition, _lerp_target, transitionSpeed * (UseTimeScale ? Time.deltaTime : Time.unscaledDeltaTime));
+                _screensContainer.localPosition = Vector3.Lerp(_screensContainer.localPosition, _lerp_target, transitionSpeed * Time.deltaTime);
                 if (Vector3.Distance(_screensContainer.localPosition, _lerp_target) < 0.1f)
                 {
                     _screensContainer.localPosition = _lerp_target;
@@ -49,7 +49,7 @@ namespace UnityEngine.UI.Extensions
             //If the container is moving check if it needs to settle on a page
             if (!_pointerDown)
             {
-                if (_scroll_rect.velocity.x > 0.01 || _scroll_rect.velocity.x < -0.01)
+                if (_scroll_rect.velocity.x > 0.01 || _scroll_rect.velocity.x < 0.01)
                 {
                     //if the pointer is released and is moving slower than the threshold, then just land on a page
                     if (IsRectMovingSlowerThanThreshold(0))
@@ -66,21 +66,21 @@ namespace UnityEngine.UI.Extensions
                                 (_scroll_rect.velocity.x < startingSpeed && _scroll_rect.velocity.x > -SwipeVelocityThreshold);
         }
 
-        public void DistributePages()
+        private void DistributePages()
         {
             _screens = _screensContainer.childCount;
             _scroll_rect.horizontalNormalizedPosition = 0;
 
-            float _offset = 0;
+            int _offset = 0;
             float _dimension = 0;
-            Rect panelDimensions = gameObject.GetComponent<RectTransform>().rect;
             float currentXPosition = 0;
-            var pageStepValue = _childSize = (int)panelDimensions.width * ((PageStep == 0) ? 3 : PageStep);
+            var pageStepValue = _childSize = (int)panelDimensions.width * ((PageStep == 0) ? 5 : PageStep);
+
 
             for (int i = 0; i < _screensContainer.transform.childCount; i++)
             {
                 RectTransform child = _screensContainer.transform.GetChild(i).gameObject.GetComponent<RectTransform>();
-                currentXPosition = _offset + i * pageStepValue;
+                currentXPosition = _offset + (int)(i * pageStepValue);
                 child.sizeDelta = new Vector2(panelDimensions.width, panelDimensions.height);
                 child.anchoredPosition = new Vector2(currentXPosition, 0f);
                 child.anchorMin = child.anchorMax = child.pivot = _childAnchorPoint;
@@ -88,7 +88,7 @@ namespace UnityEngine.UI.Extensions
 
             _dimension = currentXPosition + _offset * -1;
 
-            _screensContainer.GetComponent<RectTransform>().offsetMax = new Vector2(_dimension, 0f);
+            _screensContainer.offsetMax = new Vector2(_dimension, 0f);
         }
 
         /// <summary>
@@ -111,8 +111,7 @@ namespace UnityEngine.UI.Extensions
             GO.transform.SetParent(_screensContainer, WorldPositionStays);
             InitialiseChildObjectsFromScene();
             DistributePages();
-            if (MaskArea)
-                UpdateVisible();
+            if (MaskArea) UpdateVisible();
 
             SetScrollContainerPosition();
         }
@@ -149,8 +148,7 @@ namespace UnityEngine.UI.Extensions
             ChildRemoved = child.gameObject;
             InitialiseChildObjectsFromScene();
             DistributePages();
-            if (MaskArea)
-                UpdateVisible();
+            if (MaskArea) UpdateVisible();
 
             if (_currentPage > _screens - 1)
             {
@@ -189,8 +187,7 @@ namespace UnityEngine.UI.Extensions
             CurrentPage = 0;
             InitialiseChildObjectsFromScene();
             DistributePages();
-            if (MaskArea)
-                UpdateVisible();
+            if (MaskArea) UpdateVisible();
         }
 
         private void SetScrollContainerPosition()
@@ -207,8 +204,7 @@ namespace UnityEngine.UI.Extensions
         {
             _lerp = false;
             DistributePages();
-            if (MaskArea)
-                UpdateVisible();
+            if (MaskArea) UpdateVisible();
             SetScrollContainerPosition();
             OnCurrentScreenChange(_currentPage);
         }
@@ -225,17 +221,13 @@ namespace UnityEngine.UI.Extensions
         {
             InitialiseChildObjectsFromScene();
             DistributePages();
-            if (MaskArea)
-                UpdateVisible();
+            if (MaskArea) UpdateVisible();
 
-            if (JumpOnEnable || !RestartOnEnable)
-                SetScrollContainerPosition();
-            if (RestartOnEnable)
-                GoToScreen(StartingScreen);
+            if (JumpOnEnable || !RestartOnEnable) SetScrollContainerPosition();
+            if (RestartOnEnable) GoToScreen(StartingScreen);
         }
 
         #region Interfaces
-
         /// <summary>
         /// Release screen to swipe
         /// </summary>
@@ -247,59 +239,20 @@ namespace UnityEngine.UI.Extensions
             if (_scroll_rect.horizontal)
             {
                 var distance = Vector3.Distance(_startPosition, _screensContainer.localPosition);
-
-                if (UseHardSwipe)
+                if (UseFastSwipe && distance < panelDimensions.width && distance >= FastSwipeThreshold)
                 {
                     _scroll_rect.velocity = Vector3.zero;
-
-                    if (distance > FastSwipeThreshold)
+                    if (_startPosition.x - _screensContainer.localPosition.x > 0)
                     {
-                        if (_startPosition.x - _screensContainer.localPosition.x > 0)
-                        {
-                            NextScreen();
-                        }
-                        else
-                        {
-                            PreviousScreen();
-                        }
+                        NextScreen();
                     }
                     else
                     {
-                        ScrollToClosestElement();
-                    }
-                }
-                else
-                {
-                    if (UseFastSwipe && distance < panelDimensions.width && distance >= FastSwipeThreshold)
-                    {
-                        _scroll_rect.velocity = Vector3.zero;
-                        if (_startPosition.x - _screensContainer.localPosition.x > 0)
-                        {
-                            if (_startPosition.x - _screensContainer.localPosition.x > _childSize / 3)
-                            {
-                                ScrollToClosestElement();
-                            }
-                            else
-                            {
-                                NextScreen();
-                            }
-                        }
-                        else
-                        {
-                            if (_startPosition.x - _screensContainer.localPosition.x < -_childSize / 3)
-                            {
-                                ScrollToClosestElement();
-                            }
-                            else
-                            {
-                                PreviousScreen();
-                            }
-                        }
+                        PreviousScreen();
                     }
                 }
             }
         }
-
         #endregion
     }
 }

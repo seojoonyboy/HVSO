@@ -1,4 +1,4 @@
-/// Credit Melang
+﻿/// Credit Melang
 /// Sourced from - http://forum.unity3d.com/members/melang.593409/
 
 using System.Collections.Generic;
@@ -10,15 +10,12 @@ namespace UnityEngine.UI.Extensions
 	{
 		[SerializeField]
 		private Color m_EffectColor = new Color (0f, 0f, 0f, 0.5f);
-
+		
 		[SerializeField]
 		private Vector2 m_EffectDistance = new Vector2 (1f, -1f);
-
+		
 		[SerializeField]
 		private bool m_UseGraphicAlpha = true;
-
-		private List < UIVertex > m_Verts = new List<UIVertex>();
-
 		//
 		// Properties
 		//
@@ -37,7 +34,7 @@ namespace UnityEngine.UI.Extensions
 				}
 			}
 		}
-
+		
 		public Vector2 effectDistance
 		{
 			get
@@ -73,7 +70,7 @@ namespace UnityEngine.UI.Extensions
 				}
 			}
 		}
-
+		
 		public bool useGraphicAlpha
 		{
 			get
@@ -131,17 +128,16 @@ namespace UnityEngine.UI.Extensions
 			{
 				return;
 			}
-
-	        m_Verts.Clear();
-            vh.GetUIVertexStream(m_Verts);
+            List < UIVertex > verts = new List<UIVertex>();
+            vh.GetUIVertexStream(verts);
 
             Text foundtext = GetComponent<Text>();
-
+			
 			float best_fit_adjustment = 1f;
-
-			if (foundtext && foundtext.resizeTextForBestFit)
+			
+			if (foundtext && foundtext.resizeTextForBestFit)  
 			{
-				best_fit_adjustment = (float)foundtext.cachedTextGenerator.fontSizeUsedForBestFit / (foundtext.resizeTextMaxSize-1); //max size seems to be exclusive
+				best_fit_adjustment = (float)foundtext.cachedTextGenerator.fontSizeUsedForBestFit / (foundtext.resizeTextMaxSize-1); //max size seems to be exclusive 
 
 			}
 
@@ -149,34 +145,34 @@ namespace UnityEngine.UI.Extensions
 			float distanceY = this.effectDistance.y * best_fit_adjustment;
 
 			int start = 0;
-			int count = m_Verts.Count;
-			this.ApplyShadow (m_Verts, this.effectColor, start, m_Verts.Count, distanceX, distanceY);
+			int count = verts.Count;
+			this.ApplyShadow (verts, this.effectColor, start, verts.Count, distanceX, distanceY);
 			start = count;
-			count = m_Verts.Count;
-			this.ApplyShadow (m_Verts, this.effectColor, start, m_Verts.Count, distanceX, -distanceY);
+			count = verts.Count;
+			this.ApplyShadow (verts, this.effectColor, start, verts.Count, distanceX, -distanceY);
 			start = count;
-			count = m_Verts.Count;
-			this.ApplyShadow (m_Verts, this.effectColor, start, m_Verts.Count, -distanceX, distanceY);
+			count = verts.Count;
+			this.ApplyShadow (verts, this.effectColor, start, verts.Count, -distanceX, distanceY);
 			start = count;
-			count = m_Verts.Count;
-			this.ApplyShadow (m_Verts, this.effectColor, start, m_Verts.Count, -distanceX, -distanceY);
+			count = verts.Count;
+			this.ApplyShadow (verts, this.effectColor, start, verts.Count, -distanceX, -distanceY);
 
 			start = count;
-			count = m_Verts.Count;
-			this.ApplyShadow (m_Verts, this.effectColor, start, m_Verts.Count, distanceX, 0);
+			count = verts.Count;
+			this.ApplyShadow (verts, this.effectColor, start, verts.Count, distanceX, 0);
 			start = count;
-			count = m_Verts.Count;
-			this.ApplyShadow (m_Verts, this.effectColor, start, m_Verts.Count, -distanceX, 0);
+			count = verts.Count;
+			this.ApplyShadow (verts, this.effectColor, start, verts.Count, -distanceX, 0);
 
 			start = count;
-			count = m_Verts.Count;
-			this.ApplyShadow (m_Verts, this.effectColor, start, m_Verts.Count, 0, distanceY);
+			count = verts.Count;
+			this.ApplyShadow (verts, this.effectColor, start, verts.Count, 0, distanceY);
 			start = count;
-			count = m_Verts.Count;
-			this.ApplyShadow (m_Verts, this.effectColor, start, m_Verts.Count, 0, -distanceY);
+			count = verts.Count;
+			this.ApplyShadow (verts, this.effectColor, start, verts.Count, 0, -distanceY);
 
             vh.Clear();
-            vh.AddUIVertexTriangleStream(m_Verts);
+            vh.AddUIVertexTriangleStream(verts);
         }
 
 #if UNITY_EDITOR

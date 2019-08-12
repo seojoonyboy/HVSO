@@ -18,7 +18,7 @@ namespace UnityEngine.UI.Extensions
         //*** ATTRIBUTES ***//
         [Header("[ Settings ]")]
         [SerializeField]
-        private ScrollType scrollDirection = ScrollType.BOTH;
+        private ScrollType scrollDirection;
         [SerializeField]
         private float scrollSpeed = 10f;
 

@@ -6,7 +6,6 @@ using UnityEngine.Events;
 
 namespace UnityEngine.UI.Extensions
 {
-
     [RequireComponent(typeof(RectTransform)), DisallowMultipleComponent]
     [AddComponentMenu("UI/Extensions/Re-orderable list")]
     public class ReorderableList : MonoBehaviour
@@ -18,29 +17,18 @@ namespace UnityEngine.UI.Extensions
 
         [Tooltip("Can items be dragged from the container?")]
         public bool IsDraggable = true;
-
         [Tooltip("Should the draggable components be removed or cloned?")]
         public bool CloneDraggedObject = false;
 
         [Tooltip("Can new draggable items be dropped in to the container?")]
         public bool IsDropable = true;
-
-        [Tooltip("Should dropped items displace a current item if the list is full?\n " +
-            "Depending on the dropped items origin list, the displaced item may be added, dropped in space or deleted.")]
-        public bool IsDisplacable = false;
-
-        public int maxItems = int.MaxValue;
-
+        
 
         [Header("UI Re-orderable Events")]
         public ReorderableListHandler OnElementDropped = new ReorderableListHandler();
         public ReorderableListHandler OnElementGrabbed = new ReorderableListHandler();
         public ReorderableListHandler OnElementRemoved = new ReorderableListHandler();
         public ReorderableListHandler OnElementAdded = new ReorderableListHandler();
-        public ReorderableListHandler OnElementDisplacedFrom = new ReorderableListHandler();
-        public ReorderableListHandler OnElementDisplacedTo = new ReorderableListHandler();
-        public ReorderableListHandler OnElementDisplacedFromReturned = new ReorderableListHandler();
-        public ReorderableListHandler OnElementDisplacedToReturned = new ReorderableListHandler();
 
         private RectTransform _content;
         private ReorderableListContent _listContent;
@@ -61,7 +49,7 @@ namespace UnityEngine.UI.Extensions
         {
             Transform t = transform;
             Canvas canvas = null;
-
+        
 
             int lvlLimit = 100;
             int lvl = 0;
@@ -79,17 +67,7 @@ namespace UnityEngine.UI.Extensions
             return canvas;
         }
 
-        /// <summary>
-        /// Refresh related list content
-        /// </summary>
-        public void Refresh()
-        {
-            Destroy(_listContent);
-            _listContent = ContentLayout.gameObject.AddComponent<ReorderableListContent>();
-            _listContent.Init(this);
-        }
-
-        private void Start()
+        private void Awake()
         {
 
             if (ContentLayout == null)
@@ -107,9 +85,9 @@ namespace UnityEngine.UI.Extensions
                 return;
             }
 
-            Refresh();
+            _listContent = ContentLayout.gameObject.AddComponent<ReorderableListContent>();
+            _listContent.Init(this);
         }
-
 
         #region Nested type: ReorderableListEventStruct
 
@@ -131,7 +109,6 @@ namespace UnityEngine.UI.Extensions
         }
 
         #endregion
-
 
         #region Nested type: ReorderableListHandler
 

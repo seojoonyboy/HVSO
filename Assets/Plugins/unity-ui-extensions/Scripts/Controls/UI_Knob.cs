@@ -15,17 +15,17 @@ using UnityEngine.EventSystems;
 /// - clampOutput01 - if true the output knobValue will be clamped between 0 and 1 regardless of number of loops.
 /// - snapToPosition - snap to step. NOTE: max value will override the step.
 /// - snapStepsPerLoop - how many snap positions are in one knob loop;
-/// - OnValueChanged - event that is called every frame while rotating knob, sends <float> argument of knobValue
+/// - OnValueChanged - event that is called every frame while rotationg knob, sends <float> argument of knobValue
 /// NOTES
 /// - script works only in images rotation on Z axis;
-/// - while dragging outside of control, the rotation will be canceled
+/// - while dragging outside of control, the rotation will be cancelled
 /// </summary>
 /// 
 namespace UnityEngine.UI.Extensions
 {
     [RequireComponent(typeof(Image))]
     [AddComponentMenu("UI/Extensions/UI_Knob")]
-    public class UI_Knob : Selectable, IPointerDownHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler, IDragHandler, IInitializePotentialDragHandler
+    public class UI_Knob : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler, IBeginDragHandler, IDragHandler
     {
         public enum Direction { CW, CCW };
         [Tooltip("Direction of rotation CW - clockwise, CCW - counterClockwise")]
@@ -36,7 +36,7 @@ namespace UnityEngine.UI.Extensions
         public float maxValue = 0;
         [Tooltip("How many rotations knob can do, if higher than max value, the latter will limit max value")]
         public int loops = 1;
-        [Tooltip("Clamp output value between 0 and 1, useful with loops > 1")]
+        [Tooltip("Clamp output value between 0 and 1, usefull with loops > 1")]
         public bool clampOutput01 = false;
         [Tooltip("snap to position?")]
         public bool snapToPosition = false;
@@ -51,61 +51,43 @@ namespace UnityEngine.UI.Extensions
         private Vector2 _currentVector;
         private Quaternion _initRotation;
         private bool _canDrag = false;
-		private bool _screenSpaceOverlay;
 
-        protected override void Awake()
-        {
-			_screenSpaceOverlay = GetComponentInParent<Canvas>().rootCanvas.renderMode == RenderMode.ScreenSpaceOverlay;
-        }
-
-        public override void OnPointerUp(PointerEventData eventData)
-        {
-            _canDrag = false;
-        }
-        public override void OnPointerEnter(PointerEventData eventData)
+        //ONLY ALLOW ROTATION WITH POINTER OVER THE CONTROL
+        public void OnPointerDown(PointerEventData eventData)
         {
             _canDrag = true;
         }
-        public override void OnPointerExit(PointerEventData eventData)
+        public void OnPointerUp(PointerEventData eventData)
         {
             _canDrag = false;
         }
-
-
-        public override void OnPointerDown(PointerEventData eventData)
+        public void OnPointerEnter(PointerEventData eventData)
         {
             _canDrag = true;
-
-            base.OnPointerDown(eventData);
-
+        }
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            _canDrag = false;
+        }
+        public void OnBeginDrag(PointerEventData eventData)
+        {
+            SetInitPointerData(eventData);
+        }
+        void SetInitPointerData(PointerEventData eventData)
+        {
             _initRotation = transform.rotation;
-			if (_screenSpaceOverlay)
-            {
-				_currentVector = eventData.position - (Vector2)transform.position;
-            }
-            else
-            {
-				_currentVector = eventData.position - (Vector2)Camera.main.WorldToScreenPoint(transform.position);
-            }
+            _currentVector = eventData.position - (Vector2)transform.position;
             _initAngle = Mathf.Atan2(_currentVector.y, _currentVector.x) * Mathf.Rad2Deg;
         }
-
         public void OnDrag(PointerEventData eventData)
         {
             //CHECK IF CAN DRAG
             if (!_canDrag)
             {
+                SetInitPointerData(eventData);
                 return;
             }
-
-			if (_screenSpaceOverlay)
-			{
-				_currentVector = eventData.position - (Vector2)transform.position;
-			}
-			else
-			{
-				_currentVector = eventData.position - (Vector2)Camera.main.WorldToScreenPoint(transform.position);
-			}
+            _currentVector = eventData.position - (Vector2)transform.position;
             _currentAngle = Mathf.Atan2(_currentVector.y, _currentVector.x) * Mathf.Rad2Deg;
 
             Quaternion addRotation = Quaternion.AngleAxis(_currentAngle - _initAngle, this.transform.forward);
@@ -151,6 +133,7 @@ namespace UnityEngine.UI.Extensions
                     {
                         knobValue = 0;
                         transform.localEulerAngles = Vector3.zero;
+                        SetInitPointerData(eventData);
                         InvokeEvents(knobValue + _currentLoops);
                         return;
                     }
@@ -158,6 +141,7 @@ namespace UnityEngine.UI.Extensions
                     {
                         knobValue = 1;
                         transform.localEulerAngles = Vector3.zero;
+                        SetInitPointerData(eventData);
                         InvokeEvents(knobValue + _currentLoops);
                         return;
                     }
@@ -172,6 +156,7 @@ namespace UnityEngine.UI.Extensions
                     knobValue = maxValue;
                     float maxAngle = direction == Direction.CW ? 360f - 360f * maxValue : 360f * maxValue;
                     transform.localEulerAngles = new Vector3(0, 0, maxAngle);
+                    SetInitPointerData(eventData);
                     InvokeEvents(knobValue);
                     return;
                 }
@@ -193,11 +178,6 @@ namespace UnityEngine.UI.Extensions
             if (clampOutput01)
                 value /= loops;
             OnValueChanged.Invoke(value);
-        }
-
-        public virtual void OnInitializePotentialDrag(PointerEventData eventData)
-        {
-            eventData.useDragThreshold = false;
         }
     }
 

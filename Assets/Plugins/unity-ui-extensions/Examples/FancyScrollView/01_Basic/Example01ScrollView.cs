@@ -1,16 +1,16 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace UnityEngine.UI.Extensions.Examples
 {
     public class Example01ScrollView : FancyScrollView<Example01CellDto>
     {
         [SerializeField]
-        ScrollPositionController scrollPositionController = null;
+        ScrollPositionController scrollPositionController;
 
-        void Awake()
+        new void Awake()
         {
-            scrollPositionController.OnUpdatePosition(p => UpdatePosition(p));
+            base.Awake();
+            scrollPositionController.OnUpdatePosition.AddListener(UpdatePosition);
         }
 
         public void UpdateData(List<Example01CellDto> data)

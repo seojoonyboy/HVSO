@@ -1,17 +1,21 @@
 ﻿using System.Collections.Generic;
-using UnityEngine;
 
 namespace UnityEngine.UI.Extensions.Examples
 {
     public class Example03ScrollView : FancyScrollView<Example03CellDto, Example03ScrollViewContext>
     {
         [SerializeField]
-        ScrollPositionController scrollPositionController = null;
+        ScrollPositionController scrollPositionController;
 
-        void Awake()
+        new void Awake()
         {
-            scrollPositionController.OnUpdatePosition(p => UpdatePosition(p));
+            scrollPositionController.OnUpdatePosition.AddListener(UpdatePosition);
+
+            // Add OnItemSelected event listener
+            scrollPositionController.OnItemSelected.AddListener(CellSelected);
+
             SetContext(new Example03ScrollViewContext { OnPressedCell = OnPressedCell });
+            base.Awake();
         }
 
         public void UpdateData(List<Example03CellDto> data)
@@ -24,7 +28,15 @@ namespace UnityEngine.UI.Extensions.Examples
         void OnPressedCell(Example03ScrollViewCell cell)
         {
             scrollPositionController.ScrollTo(cell.DataIndex, 0.4f);
-            Context.SelectedIndex = cell.DataIndex;
+            context.SelectedIndex = cell.DataIndex;
+            UpdateContents();
+        }
+
+        // An event triggered when a cell is selected.
+        void CellSelected(int cellIndex)
+        {
+            // Update context.SelectedIndex and call UpdateContents for updating cell's content.
+            context.SelectedIndex = cellIndex;
             UpdateContents();
         }
     }

@@ -3,7 +3,6 @@
 /// Updated for UI / 2D - SimonDarksideJ
 
 using System;
-using System.Collections.Generic;
 
 namespace UnityEngine.UI.Extensions
 {
@@ -114,16 +113,6 @@ namespace UnityEngine.UI.Extensions
         public CableCurve(Vector2[] inputPoints)
         {
             points = inputPoints;
-            m_start = inputPoints[0];
-            m_end = inputPoints[1];
-            m_slack = 0.5f;
-            m_steps = 20;
-            m_regen = true;
-        }
-
-        public CableCurve(List<Vector2> inputPoints)
-        {
-            points = inputPoints.ToArray();
             m_start = inputPoints[0];
             m_end = inputPoints[1];
             m_slack = 0.5f;

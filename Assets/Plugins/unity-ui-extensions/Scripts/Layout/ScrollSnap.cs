@@ -136,13 +136,12 @@ namespace UnityEngine.UI.Extensions
             }
             if (_scroll_rect.horizontalScrollbar != null && _scroll_rect.horizontal)
             {
-                
-                   var hscroll = _scroll_rect.horizontalScrollbar.gameObject.GetOrAddComponent<ScrollSnapScrollbarHelper>();
+                var hscroll = _scroll_rect.horizontalScrollbar.gameObject.AddComponent<ScrollSnapScrollbarHelper>();
                 hscroll.ss = this;
             }
             if (_scroll_rect.verticalScrollbar != null && _scroll_rect.vertical)
             {
-                var vscroll = _scroll_rect.verticalScrollbar.gameObject.GetOrAddComponent<ScrollSnapScrollbarHelper>();
+                var vscroll = _scroll_rect.verticalScrollbar.gameObject.AddComponent<ScrollSnapScrollbarHelper>();
                 vscroll.ss = this;
             }
         }

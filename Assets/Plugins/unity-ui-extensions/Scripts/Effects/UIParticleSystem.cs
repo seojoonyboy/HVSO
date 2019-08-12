@@ -1,6 +1,6 @@
-/// Credit glennpow, Zarlang
+/// Credit glennpow
 /// Sourced from - http://forum.unity3d.com/threads/free-script-particle-systems-in-ui-screen-space-overlay.406862/
-/// Updated by Zarlang with a more robust implementation, including TextureSheet annimation support
+/// *Note - experimental.  Currently renders in scene view and not game view.
 
 namespace UnityEngine.UI.Extensions
 {
@@ -12,9 +12,6 @@ namespace UnityEngine.UI.Extensions
     {
         [Tooltip("Having this enabled run the system in LateUpdate rather than in Update making it faster but less precise (more clunky)")]
         public bool fixedTime = true;
-
-        [Tooltip("Enables 3d rotation for the particles")]
-        public bool use3dRotation = false;
 
         private Transform _transform;
         private ParticleSystem pSystem;
@@ -73,14 +70,11 @@ namespace UnityEngine.UI.Extensions
                 if (pRenderer != null)
                     pRenderer.enabled = false;
 
+                Shader foundShader = Shader.Find("UI Extensions/Particles/Additive");
+                Material pMaterial = new Material(foundShader);
+
                 if (material == null)
-                {
-                    var foundShader = Shader.Find("UI Extensions/Particles/Additive");
-                    if (foundShader)
-                    {
-                        material = new Material(foundShader);
-                    }
-                }
+                    material = pMaterial;
 
                 currentMaterial = material;
                 if (currentMaterial && currentMaterial.HasProperty("_MainTex"))
@@ -116,7 +110,7 @@ namespace UnityEngine.UI.Extensions
             if (textureSheetAnimation.enabled)
             {
                 textureSheetAnimationFrames = textureSheetAnimation.numTilesX * textureSheetAnimation.numTilesY;
-                textureSheetAnimationFrameSize = new Vector2(1f / textureSheetAnimation.numTilesX, 1f / textureSheetAnimation.numTilesY);
+                textureSheetAnimationFrameSize = new Vector2(1.0f / textureSheetAnimation.numTilesX, 1.0f / textureSheetAnimation.numTilesY);
             }
 
             return true;
@@ -202,7 +196,7 @@ namespace UnityEngine.UI.Extensions
                     float frameProgress = 1 - (particle.lifetime / particle.startLifetime);
 #endif
 
-                    frameProgress = Mathf.Repeat(frameProgress * textureSheetAnimation.cycleCount, 1);
+                    frameProgress = Mathf.Repeat(frameProgress * textureSheetAnimation.cycleCount, 1.0f);
                     int frame = 0;
 
                     switch (textureSheetAnimation.animation)
@@ -280,50 +274,14 @@ namespace UnityEngine.UI.Extensions
                 }
                 else
                 {
-                    if (use3dRotation)
-                    {
-                        // get particle properties
-#if UNITY_5_5_OR_NEWER
-                        Vector3 pos3d = (mainModule.simulationSpace == ParticleSystemSimulationSpace.Local ? particle.position : _transform.InverseTransformPoint(particle.position));
-#else
-                        Vector3 pos3d = (pSystem.simulationSpace == ParticleSystemSimulationSpace.Local ? particle.position : _transform.InverseTransformPoint(particle.position));
-#endif
+                    // apply rotation
+                    Vector2 right = new Vector2(Mathf.Cos(rotation), Mathf.Sin(rotation)) * size;
+                    Vector2 up = new Vector2(Mathf.Cos(rotation90), Mathf.Sin(rotation90)) * size;
 
-                        // apply scale
-#if UNITY_5_5_OR_NEWER
-                        if (mainModule.scalingMode == ParticleSystemScalingMode.Shape)
-                            position /= canvas.scaleFactor;
-#else
-                        if (pSystem.scalingMode == ParticleSystemScalingMode.Shape)
-                            position /= canvas.scaleFactor;
-#endif
-
-                        Vector3[] verts = new Vector3[4]
-                        {
-                            new Vector3(-size, -size, 0),
-                            new Vector3(-size, size, 0),
-                            new Vector3(size, size, 0),
-                            new Vector3(size, -size, 0)
-                        };
-
-                        Quaternion particleRotation = Quaternion.Euler(particle.rotation3D);
-
-                        _quad[0].position = pos3d + particleRotation * verts[0];
-                        _quad[1].position = pos3d + particleRotation * verts[1];
-                        _quad[2].position = pos3d + particleRotation * verts[2];
-                        _quad[3].position = pos3d + particleRotation * verts[3];
-                    }
-                    else
-                    {
-                        // apply rotation
-                        Vector2 right = new Vector2(Mathf.Cos(rotation), Mathf.Sin(rotation)) * size;
-                        Vector2 up = new Vector2(Mathf.Cos(rotation90), Mathf.Sin(rotation90)) * size;
-
-                        _quad[0].position = position - right - up;
-                        _quad[1].position = position - right + up;
-                        _quad[2].position = position + right + up;
-                        _quad[3].position = position + right - up;
-                    }
+                    _quad[0].position = position - right - up;
+                    _quad[1].position = position - right + up;
+                    _quad[2].position = position + right + up;
+                    _quad[3].position = position + right - up;
                 }
 
                 vh.AddUIVertexQuad(_quad);
@@ -370,12 +328,6 @@ namespace UnityEngine.UI.Extensions
                 return;
             pSystem = null;
             Initialize();
-        }
-
-        protected override void OnDestroy()
-        {
-            currentMaterial = null;
-            currentTexture = null;
         }
     }
 #endif

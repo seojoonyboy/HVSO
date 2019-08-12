@@ -31,10 +31,7 @@ namespace UnityEngine.UI.Extensions
         internal int _previousPage;
         internal int _halfNoVisibleItems;
         internal bool _moveStarted;
-        internal bool _isInfinate; // Is a UI Infinite scroller attached to the control
-        internal int _infiniteWindow; // The infinite window the control is in
-        internal float _infiniteOffset; // How much to offset a repositioning
-         private int _bottomItem, _topItem;
+        private int _bottomItem, _topItem;
 
         [Serializable]
         public class SelectionChangeStartEvent : UnityEvent { }
@@ -64,9 +61,6 @@ namespace UnityEngine.UI.Extensions
         [Tooltip("Transition speed between pages. (optional)")]
         public float transitionSpeed = 7.5f;
 
-        [Tooltip("Hard Swipe forces to swiping to the next / previous page (optional)")]
-        public Boolean UseHardSwipe = false;
-
         [Tooltip("Fast Swipe makes swiping page next / previous (optional)")]
         public Boolean UseFastSwipe = false;
 
@@ -76,13 +70,10 @@ namespace UnityEngine.UI.Extensions
         [Tooltip("Speed at which the ScrollRect will keep scrolling before slowing down and stopping (optional)")]
         public int SwipeVelocityThreshold = 100;
 
-	[Tooltip("Use time scale instead of unscaled time (optional)")]
-	public Boolean UseTimeScale = true;
-
         [Tooltip("The visible bounds area, controls which items are visible/enabled. *Note Should use a RectMask. (optional)")]
         public RectTransform MaskArea;
 
-        [Tooltip("Pixel size to buffer around Mask Area. (optional)")]
+        [Tooltip("Pixel size to buffer arround Mask Area. (optional)")]
         public float MaskBuffer = 1;
 
         public int CurrentPage
@@ -94,33 +85,6 @@ namespace UnityEngine.UI.Extensions
 
             internal set
             {
-                if (_isInfinate)
-                {
-                    //Work out which infinite window we are in
-                    float infWindow = (float)value / (float)_screensContainer.childCount;
-
-                    if (infWindow < 0)
-                    {
-                        _infiniteWindow = (int)(Math.Floor(infWindow));
-                    }
-                    else
-                    {
-                        _infiniteWindow = value / _screensContainer.childCount;
-                    }
-                    //Invert the value if negative and differentiate from Window 0
-                    _infiniteWindow = value < 0 ? (-_infiniteWindow) : _infiniteWindow;
-
-                    //Calculate the page within the child count range
-                    value = value % _screensContainer.childCount;
-                    if (value < 0)
-                    {
-                        value = _screensContainer.childCount + value;
-                    }
-                    else if (value > _screensContainer.childCount - 1)
-                    {
-                        value = value - _screensContainer.childCount;
-                    }
-                }
                 if ((value != _currentPage && value >= 0 && value < _screensContainer.childCount) || (value == 0 && _screensContainer.childCount == 0))
                 {
                     _previousPage = _currentPage;
@@ -192,8 +156,6 @@ namespace UnityEngine.UI.Extensions
 
             if (PrevButton)
                 PrevButton.GetComponent<Button>().onClick.AddListener(() => { PreviousScreen(); });
-
-            _isInfinate = GetComponent<UI_InfiniteScroll>() != null;
         }
 
         internal void InitialiseChildObjects()
@@ -301,7 +263,7 @@ namespace UnityEngine.UI.Extensions
         //Function for switching screens with buttons
         public void NextScreen()
         {
-            if (_currentPage < _screens - 1 || _isInfinate)
+            if (_currentPage < _screens - 1)
             {
                 if (!_lerp) StartScreenChange();
 
@@ -310,13 +272,12 @@ namespace UnityEngine.UI.Extensions
                 GetPositionforPage(_currentPage, ref _lerp_target);
                 ScreenChange();
             }
-
         }
 
         //Function for switching screens with buttons
         public void PreviousScreen()
         {
-            if (_currentPage > 0 || _isInfinate)
+            if (_currentPage > 0)
             {
                 if (!_lerp) StartScreenChange();
 
@@ -379,22 +340,18 @@ namespace UnityEngine.UI.Extensions
             _childPos = -_childSize * page;
             if (_isVertical)
             {
-                _infiniteOffset = _screensContainer.localPosition.y < 0 ? -_screensContainer.sizeDelta.y * _infiniteWindow : _screensContainer.sizeDelta.y * _infiniteWindow;
-                _infiniteOffset = _infiniteOffset == 0 ? 0 : _infiniteOffset < 0 ? _infiniteOffset - _childSize * _infiniteWindow : _infiniteOffset + _childSize * _infiniteWindow;
-                target.y = _childPos + _scrollStartPosition + _infiniteOffset;
+                target.y = _childPos + _scrollStartPosition;
             }
             else
             {
-                _infiniteOffset = _screensContainer.localPosition.x < 0 ? -_screensContainer.sizeDelta.x * _infiniteWindow : _screensContainer.sizeDelta.x * _infiniteWindow;
-                _infiniteOffset = _infiniteOffset == 0 ? 0 : _infiniteOffset < 0 ? _infiniteOffset - _childSize * _infiniteWindow : _infiniteOffset + _childSize * _infiniteWindow; 
-                target.x = _childPos + _scrollStartPosition + _infiniteOffset;
+                target.x = _childPos + _scrollStartPosition;
             }
         }
 
         /// <summary>
         /// Updates the _Lerp target to the closest page and updates the pagination bullets.  Each control's update loop will then handle the move.
         /// </summary>
-        internal void ScrollToClosestElement()
+        public void ScrollToClosestElement()
         {
             _lerp = true;
             CurrentPage = GetPageforPosition(_screensContainer.localPosition);
@@ -432,18 +389,14 @@ namespace UnityEngine.UI.Extensions
         /// <param name="targetScreen"></param>
         private void ToggleNavigationButtons(int targetScreen)
         {
-            //If this is using an Infinite Scroll, then don't disable
-            if (!_isInfinate)
+            if (PrevButton)
             {
-                if (PrevButton)
-                {
-                    PrevButton.GetComponent<Button>().interactable = targetScreen > 0;
-                }
+                PrevButton.GetComponent<Button>().interactable = targetScreen > 0;
+            }
 
-                if (NextButton)
-                {
-                    NextButton.GetComponent<Button>().interactable = targetScreen < _screensContainer.transform.childCount - 1;
-                }
+            if (NextButton)
+            {
+                NextButton.GetComponent<Button>().interactable = targetScreen < _screensContainer.transform.childCount - 1;
             }
         }
 
@@ -461,22 +414,19 @@ namespace UnityEngine.UI.Extensions
             {
                 Debug.LogError("ScrollRect has to be unidirectional, only use either Horizontal or Vertical on the ScrollRect, NOT both.");
             }
-            var ScrollRectContent = gameObject.GetComponent<ScrollRect>().content;
-            if (ScrollRectContent != null)
-            {
-                var children = ScrollRectContent.childCount;
-                if (children != 0 || ChildObjects != null)
-                {
-                    var childCount = ChildObjects == null || ChildObjects.Length == 0 ? children : ChildObjects.Length;
-                    if (StartingScreen > childCount - 1)
-                    {
-                        StartingScreen = childCount - 1;
-                    }
 
-                    if (StartingScreen < 0)
-                    {
-                        StartingScreen = 0;
-                    }
+            var children = gameObject.GetComponent<ScrollRect>().content.childCount;
+            if (children != 0 || ChildObjects != null)
+            {
+                var childCount = ChildObjects == null || ChildObjects.Length == 0 ? children : ChildObjects.Length;
+                if (StartingScreen > childCount - 1)
+                {
+                    StartingScreen = childCount - 1;
+                }
+
+                if (StartingScreen < 0)
+                {
+                    StartingScreen = 0;
                 }
             }
 
@@ -527,7 +477,7 @@ namespace UnityEngine.UI.Extensions
         }
 
         /// <summary>
-        /// Returns the Transform of the Current page
+        /// Returns the Transform of the Currentpage
         /// </summary>
         /// <returns>Currently selected Page Transform</returns>
         public Transform CurrentPageObject()
@@ -536,7 +486,7 @@ namespace UnityEngine.UI.Extensions
         }
 
         /// <summary>
-        /// Returns the Transform of the Current page in an out parameter for performance
+        /// Returns the Transform of the Currentpage in an out param for performance
         /// </summary>
         /// <param name="returnObject">Currently selected Page Transform</param>
         public void CurrentPageObject(out Transform returnObject)
