@@ -225,7 +225,10 @@ public class PlayerController : MonoBehaviour
                 amount = 0;
             }
 
-            HP.Value -= amount;
+            if (HP.Value >= amount)
+                HP.Value -= amount;
+            else
+                HP.Value -= HP.Value;
 
             if (HP.Value > 0)
                 SetState(HeroState.HIT);
@@ -297,7 +300,11 @@ public class PlayerController : MonoBehaviour
     
 
     public void TakeIgnoreShieldDamage(int amount, bool isMagic = false, string skillId= null) {
-        HP.Value -= amount;
+
+        if (HP.Value >= amount)
+            HP.Value -= amount;
+        else
+            HP.Value -= HP.Value;
 
         if (isMagic == true)
             EffectForPlayer(-amount, skillId);
