@@ -443,6 +443,7 @@ public class CardHandManager : MonoBehaviour {
             infoWindow.gameObject.SetActive(false);
             infoWindow.localScale = new Vector3(1, 1, 1);
         }
+
     }
 
 

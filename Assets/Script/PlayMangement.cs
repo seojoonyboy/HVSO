@@ -202,6 +202,8 @@ public partial class PlayMangement : MonoBehaviour {
                 else {
                     GameObject summonedMagic = SummonMagic(history);
                     summonedMagic.GetComponent<MagicDragHandler>().isPlayer = false;
+                    if (summonedMagic.GetComponent<MagicDragHandler>().cardData.hero_chk == true)
+                        yield return EffectSystem.Instance.HeroCutScene(enemyPlayer.isHuman);
                     yield return MagicActivate(summonedMagic, history);
                 }
                 SocketFormat.DebugSocketData.SummonCardData(history);
@@ -611,6 +613,7 @@ public partial class PlayMangement : MonoBehaviour {
                     summonedMagic.GetComponent<MagicDragHandler>().isPlayer = false;
                     yield return MagicActivate(summonedMagic, history);
                     SocketFormat.DebugSocketData.SummonCardData(history);
+                    yield return EffectSystem.Instance.HeroCutScene(enemyPlayer.isHuman);
                     yield return new WaitForSeconds(1f);
                 }
             }

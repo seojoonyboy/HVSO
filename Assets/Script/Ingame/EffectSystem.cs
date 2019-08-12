@@ -17,6 +17,7 @@ public class EffectSystem : SerializedMonoBehaviour
 
     public GameObject pollingGroup;
     public GameObject spareObject;
+    public GameObject cutSceneCanvas;
 
     private void Awake() {
         Instance = this;
@@ -116,6 +117,25 @@ public class EffectSystem : SerializedMonoBehaviour
         Transform targetTransform = effectObject.transform;
         targetTransform.SetParent(pollingGroup.transform);
         effectObject.SetActive(false);
+    }
+
+    public IEnumerator HeroCutScene(bool isHuman) {
+        SkeletonGraphic cutsceneAnimation;
+        GameObject cutsceneObject;
+        if (isHuman == true) {
+            cutsceneObject = cutSceneCanvas.transform.Find("Human").gameObject;
+            cutsceneObject.SetActive(true);
+            cutsceneAnimation = cutSceneCanvas.transform.Find("Human").gameObject.GetComponent<SkeletonGraphic>();
+        }
+        else {
+            cutsceneObject = cutSceneCanvas.transform.Find("Orc").gameObject;
+            cutsceneObject.SetActive(true);
+            cutsceneAnimation = cutSceneCanvas.transform.Find("Orc").gameObject.GetComponent<SkeletonGraphic>();
+        }
+
+        cutsceneAnimation.AnimationState.SetAnimation(0, "animation", false);
+        yield return new WaitForSeconds(cutsceneAnimation.Skeleton.Data.FindAnimation("animation").Duration);
+        cutsceneObject.SetActive(false);
     }
 
 
