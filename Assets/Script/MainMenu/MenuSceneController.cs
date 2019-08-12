@@ -9,7 +9,7 @@ using Spine.Unity;
 
 public class MenuSceneController : MonoBehaviour {
     [SerializeField] Transform fixedCanvas;
-    [SerializeField] ScrollSnap windowScrollSnap;
+    [SerializeField] HorizontalScrollSnap windowScrollSnap;
     [SerializeField] DeckSettingManager deckSettingManager;
     [SerializeField] CardDictionaryManager cardDictionaryManager;
     [SerializeField] SkeletonGraphic battleSwordSkeleton;
@@ -47,8 +47,7 @@ public class MenuSceneController : MonoBehaviour {
     public void ClickMenuButton(int pageNum) {
         buttonClicked = true;
         currentPage = pageNum;
-        windowScrollSnap.ChangePage(pageNum);
-        //windowScrollSnap.GoToScreen(pageNum);
+        windowScrollSnap.GoToScreen(pageNum);
         //SetButtonAnimation(pageNum);
     }
     
@@ -74,12 +73,12 @@ public class MenuSceneController : MonoBehaviour {
     IEnumerator UpdateWindow() {
         yield return new WaitForSeconds(1.0f);
         while (true) {
-            if (!buttonClicked && currentPage != windowScrollSnap.CurrentPage()) {
-                currentPage = windowScrollSnap.CurrentPage();
+            if (!buttonClicked && currentPage != windowScrollSnap.CurrentPage) {
+                currentPage = windowScrollSnap.CurrentPage;
                 //SetButtonAnimation(currentPage);
             }
             else {
-                if (currentPage == windowScrollSnap.CurrentPage())
+                if (currentPage == windowScrollSnap.CurrentPage)
                     buttonClicked = false;
             }
             yield return new WaitForSeconds(0.1f);
