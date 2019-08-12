@@ -14,6 +14,7 @@ namespace UnityEngine.UI.Extensions
     public class ScrollConflictManager : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
     {
         public ScrollRect ParentScrollRect;
+		public ScrollSnap ParentScrollSnap;
         private ScrollRect _myScrollRect;
         //This tracks if the other one should be scrolling instead of the current one.
         private bool scrollOther;
@@ -54,7 +55,7 @@ namespace UnityEngine.UI.Extensions
                     //disable the current scroll rect so it doesnt move.
                     _myScrollRect.enabled = false;
                     ParentScrollRect.OnBeginDrag(eventData);
-                    ParentScrollRect.gameObject.GetComponent<ScrollSnapBase>().OnBeginDrag(eventData);
+					ParentScrollSnap.OnBeginDrag(eventData);
                 }
             }
             else if (vertical > horizontal)
@@ -62,8 +63,8 @@ namespace UnityEngine.UI.Extensions
                 scrollOther = true;
                 //disable the current scroll rect so it doesnt move.
                 _myScrollRect.enabled = false;
-                //ParentScrollRect.OnBeginDrag(eventData);
-                ParentScrollRect.gameObject.GetComponent<ScrollSnapBase>().OnBeginDrag(eventData);
+                ParentScrollRect.OnBeginDrag(eventData);
+				ParentScrollSnap.OnBeginDrag(eventData);
             }
         }
 
@@ -74,8 +75,8 @@ namespace UnityEngine.UI.Extensions
             {
                 scrollOther = false;
                 _myScrollRect.enabled = true;
-                ParentScrollRect.gameObject.GetComponent<HorizontalScrollSnap>().OnEndDrag(eventData);
                 ParentScrollRect.OnEndDrag(eventData);
+				ParentScrollSnap.OnEndDrag(eventData);
             }
         }
 
@@ -85,7 +86,7 @@ namespace UnityEngine.UI.Extensions
             if (scrollOther)
             {
                 ParentScrollRect.OnDrag(eventData);
-                ParentScrollRect.gameObject.GetComponent<ScrollSnapBase>().OnDrag(eventData);
+				ParentScrollSnap.OnDrag(eventData);
             }
         }
     }
