@@ -541,10 +541,12 @@ namespace TargetModules {
                     GameObject highlightUI = target.transform.Find("ClickableUI").gameObject;
                     //3. unitSlot에서 특정 부분 밝혀주기
                     highlightUI.SetActive(true);
-                    highlightUI.GetComponent<SpriteRenderer>().color = new Color(1, 0, 0, 0.6f);
+                    if(highlightUI.GetComponent<SpriteRenderer>() != null)
+                        highlightUI.GetComponent<SpriteRenderer>().color = new Color(1, 0, 0, 0.6f);
                     //4.  1.5초뒤에 끄기
                     yield return new WaitForSeconds(1.5f);
-                    highlightUI.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.6f);
+                    if(highlightUI.GetComponent<SpriteRenderer>() != null)
+                        highlightUI.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.6f);
                     highlightUI.SetActive(false);
                     selectedTarget = target.transform;
                 break;
