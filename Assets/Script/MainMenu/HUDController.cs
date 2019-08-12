@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,7 +7,7 @@ using UnityEngine.UI;
 using UnityEngine.UI.Extensions;
 
 public class HUDController : MonoBehaviour {
-    [SerializeField] HorizontalScrollSnap main_HorizontalScrollSnap;
+    [SerializeField] ScrollSnap main_HorizontalScrollSnap;
     Transform
         userInfoUI,
         backbuttonUI,
@@ -70,16 +71,17 @@ public class HUDController : MonoBehaviour {
     // Start is called before the first frame update
     void Start() {
         SetHeader(Type.SHOW_USER_INFO);
-        main_HorizontalScrollSnap.OnSelectionChangeEndEvent.AddListener(x => OnPageChanged(x));
+        main_HorizontalScrollSnap.onPageChange += OnPageChanged();
+    }
+
+    private ScrollSnap.PageSnapChange OnPageChanged() {
+        SetHeader(Type.SHOW_USER_INFO);
+        throw new NotImplementedException();
     }
 
     // Update is called once per frame
     void Update() {
 
-    }
-
-    public void OnPageChanged(int pageNum) {
-        SetHeader(Type.SHOW_USER_INFO);
     }
 
     public enum Type {
