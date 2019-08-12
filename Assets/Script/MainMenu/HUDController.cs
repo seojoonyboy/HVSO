@@ -71,12 +71,11 @@ public class HUDController : MonoBehaviour {
     // Start is called before the first frame update
     void Start() {
         SetHeader(Type.SHOW_USER_INFO);
-        main_HorizontalScrollSnap.onPageChange += OnPageChanged();
+        main_HorizontalScrollSnap.onPageChange += OnPageChanged;
     }
 
-    private ScrollSnap.PageSnapChange OnPageChanged() {
+    private void OnPageChanged(int page) {
         SetHeader(Type.SHOW_USER_INFO);
-        throw new NotImplementedException();
     }
 
     // Update is called once per frame
