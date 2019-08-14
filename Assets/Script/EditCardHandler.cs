@@ -29,6 +29,7 @@ public class EditCardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
     static GameObject draggingObject;
     public string editBookRoot = "";
+    public static bool onAnimation = false;
     public static bool dragable = true;
     public static bool dragging = false;
 
@@ -126,7 +127,8 @@ public class EditCardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
             }
             transform.localPosition = startLocalPos;
         }
-        dragable = true;
+        if(!onAnimation)
+            dragable = true;
     }
 
     public void SortHandPos() {
@@ -142,13 +144,47 @@ public class EditCardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     }
 
     public void ShowAddedCardPos() {
-        if (deckEditController.setCardList.ContainsKey(cardData.id)) return;
+        if (deckEditController.setCardList.ContainsKey(cardData.id)) {
+            StartCoroutine(DuplicatedCardSet());
+            return;
+        }
         else {
             int handCardNum = deckEditController.setCardList.Count;
             if (handCardNum > 3) {
                 iTween.MoveTo(deckEditController.settingLayout.gameObject, iTween.Hash("x", -240 * (handCardNum - 3), "islocal", true, "time", 0.2f));
             }
         }
+    }
+
+    IEnumerator DuplicatedCardSet() {
+        onAnimation = true;
+        Transform targetCard = deckEditController.setCardList[cardData.id].transform;
+        mouseObject = targetCard.parent.parent.Find("MousePos");
+        mouseObject.transform.position = targetCard.position;
+        targetCard.parent.SetParent(mouseObject);
+        iTween.MoveTo(mouseObject.gameObject, iTween.Hash("x", 0, "islocal", true, "time", 0.2f));
+        yield return new WaitForSeconds(0.25f);
+        GameObject glowEffect;
+        if (targetCard.Find("MagicEditCard").gameObject.activeSelf) 
+            glowEffect = targetCard.Find("MagicEditCard/GlowEffect").gameObject;
+        else {
+            if (targetCard.Find("UnitEditCard/SkillIcon").gameObject.activeSelf) {
+                glowEffect = targetCard.Find("UnitEditCard/GlowEffect/HaveAbility").gameObject;
+                targetCard.Find("UnitEditCard/GlowEffect/NoneAbility").gameObject.SetActive(false);
+            }
+            else {
+                glowEffect = targetCard.Find("UnitEditCard/GlowEffect/NoneAbility").gameObject;
+                targetCard.Find("UnitEditCard/GlowEffect/HaveAbility").gameObject.SetActive(false);
+            }
+        }
+        glowEffect.SetActive(true);
+        targetCard.localScale = new Vector3(1.1f, 1.1f, 1);
+        yield return new WaitForSeconds(0.2f);
+        targetCard.localScale = Vector3.one;
+        glowEffect.SetActive(false);
+        targetCard.parent.SetParent(mouseObject.parent);
+        onAnimation = false;
+        dragable = true;
     }
 
     public void SetHaveNum() {
