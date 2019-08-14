@@ -455,6 +455,7 @@ public class CardHandManager : MonoBehaviour {
            "time", 0.5f,
            "easetype", iTween.EaseType.easeWeakOutBack));
         CardHandler handler = card.GetComponent<CardHandler>();
+        yield return new WaitForSeconds(0.5f);
         CardInfoOnDrag.instance.SetCardDragInfo(null, new Vector3(0,5,0), handler.cardData.skills.Length != 0 ? handler.cardData.skills[0].desc : null);
         
         yield return new WaitForSeconds(1.5f);
