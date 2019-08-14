@@ -1,13 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Spine.Unity;
 using UnityEngine.Events;
 using Spine;
 using Sirenix.OdinInspector;
 
-public class EffectSystem : SerializedMonoBehaviour
-{
+public class EffectSystem : SerializedMonoBehaviour {
     public delegate void ActionDelegate();
 
     public static EffectSystem Instance { get; private set; }
@@ -18,6 +18,7 @@ public class EffectSystem : SerializedMonoBehaviour
     public GameObject pollingGroup;
     public GameObject spareObject;
     public GameObject cutSceneCanvas;
+    public GameObject fadeCanvas;
 
     private void Awake() {
         Instance = this;
@@ -37,7 +38,7 @@ public class EffectSystem : SerializedMonoBehaviour
         effect.SetActive(true);
         SkeletonAnimation effectAnimation = effect.GetComponent<SkeletonAnimation>();
         effectAnimation.AnimationState.SetAnimation(0, "animation", false);
-        effectAnimation.AnimationState.Complete += delegate (TrackEntry entry) {SetReadyObject(effect); };
+        effectAnimation.AnimationState.Complete += delegate (TrackEntry entry) { SetReadyObject(effect); };
         //Destroy(effect, effectAnimation.skeleton.Data.FindAnimation("animation").Duration - 0.1f);
         //return effectAnimation.skeleton.Data.FindAnimation("animation").Duration - 0.1f;
     }
@@ -49,20 +50,20 @@ public class EffectSystem : SerializedMonoBehaviour
         effect.SetActive(true);
         effect.name = effectObject[type].gameObject.name;
         SkeletonAnimation effectAnimation = effect.GetComponent<SkeletonAnimation>();
-        if(playerTransform != null && playerTransform.gameObject.GetComponent<PlayerController>().isPlayer == false) 
+        if (playerTransform != null && playerTransform.gameObject.GetComponent<PlayerController>().isPlayer == false)
             effect.GetComponent<MeshRenderer>().sortingOrder = 8;
         effectAnimation.AnimationState.SetAnimation(0, "animation", false);
         effectAnimation.AnimationState.Event += delegate (TrackEntry entry, Spine.Event e) {
-            if(e.Data.Name == "ATTACK") {
+            if (e.Data.Name == "ATTACK") {
                 callback();
             }
-            if(e.Data.Name == "APPEAR") {
+            if (e.Data.Name == "APPEAR") {
                 callback();
             }
         };
         effectAnimation.AnimationState.Complete += delegate (TrackEntry entry) { SetReadyObject(effect); };
     }
-    
+
 
     public void ShowEffectAfterCall(EffectType type, Transform targetTransform, ActionDelegate callBack) {
         if (effectObject.ContainsKey(type) == false || effectObject[type] == null) return;
@@ -75,7 +76,7 @@ public class EffectSystem : SerializedMonoBehaviour
         effectAnimation.AnimationState.SetAnimation(0, "animation", false);
         effectAnimation.AnimationState.Complete += delegate (TrackEntry entry) { callBack(); SetReadyObject(effect); };
     }
-    
+
 
 
     public void ContinueEffect(EffectType type, Transform pos) {
@@ -92,14 +93,14 @@ public class EffectSystem : SerializedMonoBehaviour
     public void DisableEffect(EffectType type, Transform pos) {
         if (pos.childCount <= 0) return;
         GameObject effect = pos.Find(effectObject[type].gameObject.name).gameObject;
-        if(effect != null)
-            SetReadyObject(effect);        
+        if (effect != null)
+            SetReadyObject(effect);
     }
 
     public GameObject GetReadyObject(GameObject original) {
         GameObject effectObject;
-        foreach(Transform child in pollingGroup.transform) {
-            if(child.gameObject.activeSelf == false && child.gameObject.name == original.name) {
+        foreach (Transform child in pollingGroup.transform) {
+            if (child.gameObject.activeSelf == false && child.gameObject.name == original.name) {
                 effectObject = child.gameObject;
                 //effectObject.GetComponent<SkeletonAnimation>().skeletonDataAsset = original.GetComponent<SkeletonAnimation>().skeletonDataAsset;
                 //effectObject.GetComponent<SkeletonAnimation>().timeScale = original.GetComponent<SkeletonAnimation>().timeScale;
@@ -122,6 +123,7 @@ public class EffectSystem : SerializedMonoBehaviour
     public IEnumerator HeroCutScene(bool isHuman) {
         SkeletonGraphic cutsceneAnimation;
         GameObject cutsceneObject;
+        StartCoroutine(FadeOut(0f, 0.6f, 0.8f));
         if (isHuman == true) {
             cutsceneObject = cutSceneCanvas.transform.Find("Human").gameObject;
             cutsceneObject.SetActive(true);
@@ -134,8 +136,47 @@ public class EffectSystem : SerializedMonoBehaviour
         }
 
         cutsceneAnimation.AnimationState.SetAnimation(0, "animation", false);
-        yield return new WaitForSeconds(cutsceneAnimation.Skeleton.Data.FindAnimation("animation").Duration);
+        yield return new WaitForSeconds(cutsceneAnimation.Skeleton.Data.FindAnimation("animation").Duration / 2);
+        StartCoroutine(FadeIn(0.6f, 0, 0.7f));
+        yield return new WaitForSeconds(cutsceneAnimation.Skeleton.Data.FindAnimation("animation").Duration / 2);
         cutsceneObject.SetActive(false);
+    }
+
+    public IEnumerator FadeOut(float min, float max, float time) {
+        float speed = 0;
+        Image fadeObject = fadeCanvas.transform.Find("Fade").gameObject.GetComponent<Image>();
+        fadeObject.color = new Color(0, 0, 0, min);
+        fadeCanvas.SetActive(true);
+        Color fadeColor = fadeObject.color;
+        speed = (max - min) / time;
+        speed /= 10;
+
+        while (fadeObject.color.a < max) {
+            yield return new WaitForSeconds(speed / 30f);
+            fadeColor.a += speed;
+            fadeObject.color = fadeColor;
+        }
+
+        yield return null;
+    }
+
+    public IEnumerator FadeIn(float max, float min, float time) {
+        fadeCanvas.SetActive(true);
+        float speed = 0;
+        Image fadeObject = fadeCanvas.transform.Find("Fade").gameObject.GetComponent<Image>();
+        fadeObject.color = new Color(0, 0, 0, max);
+        Color fadeColor = fadeObject.color;
+        speed = (max - min) / time;
+        speed /= 10;
+
+        while (fadeObject.color.a > min) {
+            yield return new WaitForSeconds(speed / 30);
+            fadeColor.a -= speed;
+            fadeObject.color = fadeColor;
+        }
+
+        fadeCanvas.SetActive(false);
+        yield return null;
     }
 
 
