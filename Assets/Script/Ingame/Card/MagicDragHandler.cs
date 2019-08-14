@@ -113,7 +113,8 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
                     //foreach (MagicalCasting ability in abilities) ability.RequestUseMagic();
                     object[] parms = new object[] { true, gameObject };
                     skillHandler.socketDone = false;
-                    StartCoroutine(EffectSystem.Instance.HeroCutScene(PlayMangement.instance.player.isHuman));                    
+                    StartCoroutine(EffectSystem.Instance.HeroCutScene(PlayMangement.instance.player.isHuman));
+                    
                     PlayMangement.instance.LockTurnOver();
                     PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
                     skillHandler.RemoveTriggerEvent();

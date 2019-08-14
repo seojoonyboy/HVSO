@@ -138,8 +138,7 @@ public class EffectSystem : SerializedMonoBehaviour {
 
         cutsceneAnimation.AnimationState.SetAnimation(0, "animation", false);
         yield return new WaitForSeconds(cutsceneAnimation.Skeleton.Data.FindAnimation("animation").Duration / 2);
-        StartCoroutine(FadeIn(0.6f, 0, 0.7f));
-        yield return new WaitForSeconds(cutsceneAnimation.Skeleton.Data.FindAnimation("animation").Duration / 2);
+        yield return FadeIn(0.6f, 0, cutsceneAnimation.Skeleton.Data.FindAnimation("animation").Duration / 2);
         cutsceneObject.SetActive(false);
     }
 

@@ -40,5 +40,6 @@ public enum SoundType {
     NORMAL_ATTACK,
     MIDDLE_ATTACK,
     LARGE_ATTACK,
-    APPEAR_UNIT
+    APPEAR_UNIT,
+    DEAD
 }
