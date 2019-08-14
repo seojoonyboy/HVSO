@@ -263,7 +263,7 @@ public partial class PlayMangement : MonoBehaviour {
 
         yield return new WaitForSeconds(1.0f);
         //TODO : 카드 사용 정보 보여주는 처리 필요
-        //yield return cardHandManager.ShowUsedCard(100, card);
+        yield return cardHandManager.ShowUsedCard(100, card);
         ////카드 파괴
         yield return new WaitForSeconds(2f);
         card.transform.localScale = new Vector3(1, 1, 1);

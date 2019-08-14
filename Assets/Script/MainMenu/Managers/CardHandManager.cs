@@ -617,6 +617,8 @@ public class CardHandManager : MonoBehaviour {
         GameObject card = cardStorage.Find("UnitCards").GetChild(0).gameObject;
         card.transform.localScale = Vector3.zero;
         card.transform.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.name;
+        card.GetComponent<CardHandler>().cardData = data;
+
         return card;
     }
 
