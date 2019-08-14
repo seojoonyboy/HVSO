@@ -168,9 +168,9 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         skillHandler.socketDone = false;
         PlayMangement.dragable = false;
         PlayMangement.instance.LockTurnOver();
-        yield return StartCoroutine(PlayMangement.instance.cardHandManager.ShowUsedMagicCard(transform.parent.GetSiblingIndex()));
         if (cardData.hero_chk == true)
             yield return EffectSystem.Instance.HeroCutScene(PlayMangement.instance.player.isHuman);
+        yield return StartCoroutine(PlayMangement.instance.cardHandManager.ShowUsedMagicCard(transform.parent.GetSiblingIndex()));
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
         highlighted = false;
         CardDropManager.Instance.HighLightMagicSlot(highlightedSlot, highlighted);
