@@ -33,7 +33,19 @@ public partial class PlayMangement : MonoBehaviour {
     public bool heroShieldActive = false;
     public GameObject humanShield, orcShield;
     public static GameObject movingCard;
-    public static bool dragable = true;
+    public static bool _dragable = true;
+    public static bool dragable { get { 
+        return _dragable;
+        } 
+        set {
+        if(value == false) countDragable--;
+        else countDragable++;
+        _dragable = value;
+        Debug.Log("저장된 횟수 : " + countDragable);
+        } 
+    }
+
+    private static int countDragable = 0;
     public string currentTurn;
 
     public bool skillAction = false;
