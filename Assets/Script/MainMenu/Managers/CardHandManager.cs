@@ -455,6 +455,7 @@ public class CardHandManager : MonoBehaviour {
            "time", 0.5f,
            "easetype", iTween.EaseType.easeWeakOutBack));
         CardHandler handler = card.GetComponent<CardHandler>();
+        SetUsedCardInfo(ref card);
         yield return new WaitForSeconds(0.5f);
         CardInfoOnDrag.instance.SetCardDragInfo(null, new Vector3(0,5,0), handler.cardData.skills.Length != 0 ? handler.cardData.skills[0].desc : null);
         
@@ -462,6 +463,34 @@ public class CardHandManager : MonoBehaviour {
         
         card.transform.SetParent(parent);
         CardInfoOnDrag.instance.OffCardDragInfo();
+    }
+
+    public void SetUsedCardInfo(ref GameObject card) {
+        CardData cardData = card.GetComponent<CardHandler>().cardData;
+
+        Image portrait = card.transform.Find("Portrait").GetComponent<Image>();
+        TMPro.TextMeshProUGUI cost = card.transform.Find("Cost/Text").GetComponent<TMPro.TextMeshProUGUI>();
+        TMPro.TextMeshProUGUI hp = card.transform.Find("Health/Text").GetComponent<TMPro.TextMeshProUGUI>();
+        TMPro.TextMeshProUGUI atk = card.transform.Find("attack/Text").GetComponent<TMPro.TextMeshProUGUI>();
+        Image skillIcon = card.transform.Find("SkillIcon").GetComponent<Image>();
+
+        portrait.sprite = AccountManager.Instance.resource.cardPortraite[cardData.cardId];
+        cost.text = cardData.cost.ToString();
+        hp.text = cardData.hp.ToString();
+        atk.text = cardData.attack.ToString();
+
+        if (cardData.attributes.Length == 0 && cardData.attackTypes.Length == 0) skillIcon.gameObject.SetActive(false);
+
+        if (cardData.attributes.Length != 0)
+            skillIcon.sprite = AccountManager.Instance.resource.skillIcons[cardData.attributes[0]];
+        if (cardData.attackTypes.Length != 0)
+            if (AccountManager.Instance.resource.skillIcons.ContainsKey(cardData.attackTypes[0])) {
+                skillIcon.sprite = AccountManager.Instance.resource.skillIcons[cardData.attackTypes[0]];
+            }
+        if (cardData.attributes.Length != 0 && cardData.attackTypes.Length != 0)
+            skillIcon.sprite = AccountManager.Instance.resource.skillIcons["complex"];
+
+        card.transform.Find("BackGround").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground[cardData.type + "_" + cardData.rarelity];
     }
 
     public IEnumerator SortHandPosition() {
