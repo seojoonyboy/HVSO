@@ -263,7 +263,7 @@ public partial class PlayMangement : MonoBehaviour {
 
         yield return new WaitForSeconds(1.0f);
         //TODO : 카드 사용 정보 보여주는 처리 필요
-        //yield return cardHandManager.ShowUsedMagicCard(100, card);
+        //yield return cardHandManager.ShowUsedCard(100, card);
         ////카드 파괴
         yield return new WaitForSeconds(2f);
         card.transform.localScale = new Vector3(1, 1, 1);
@@ -286,16 +286,10 @@ public partial class PlayMangement : MonoBehaviour {
         card.transform.rotation = new Quaternion(0, 0, 540, card.transform.rotation.w);
         card.transform.SetParent(enemyPlayer.playerUI.transform);
         card.SetActive(true);
-        //iTween.RotateTo(card, Vector3.zero, 0.5f);
-        //iTween.MoveTo(card, iTween.Hash(
-        //    "x", card.transform.parent.position.x,
-        //    "y", card.transform.parent.position.y,
-        //    "time", 0.5f,
-        //    "easetype", iTween.EaseType.easeWeakOutBack));
         Logger.Log(enemyPlayer.playerUI.transform.position);
         yield return new WaitForSeconds(1.0f);
         //타겟 지정 애니메이션
-        yield return cardHandManager.ShowUsedMagicCard(100, card);
+        yield return cardHandManager.ShowUsedCard(100, card);
         yield return EnemySettingTarget(history.targets[0], magicCard);
         //실제 카드 사용
         object[] parms = new object[] { false, card };
