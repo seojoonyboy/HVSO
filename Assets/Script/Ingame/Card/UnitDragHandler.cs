@@ -58,7 +58,9 @@ public partial class UnitDragHandler : CardHandler, IBeginDragHandler, IDragHand
             highlightedSlot = null;
         }
         else if(isMyTurn(false)) {
-            StartCoroutine(SummonUnit(CheckSlot()));
+            Transform slot = CheckSlot();
+            if (slot != null && slot.childCount <= 1)
+                StartCoroutine(SummonUnit(slot));
         }
         handManager.transform.SetParent(mouseXPos.parent);
         if (!cardUsed) {
@@ -71,6 +73,7 @@ public partial class UnitDragHandler : CardHandler, IBeginDragHandler, IDragHand
     }
 
     IEnumerator SummonUnit(Transform slot) {
+        PlayMangement.dragable = false;
         yield return PlayMangement.instance.cardHandManager.ShowUsedCard(transform.parent.GetSiblingIndex(), gameObject);
         GameObject unitPref = CardDropManager.Instance.DropUnit(gameObject, slot);
         if (unitPref != null) {
@@ -84,5 +87,6 @@ public partial class UnitDragHandler : CardHandler, IBeginDragHandler, IDragHand
             PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
             PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.FIELD_CHANGED, null, null);
         }
+        PlayMangement.dragable = true;
     }
 }

@@ -446,14 +446,16 @@ public class CardHandManager : MonoBehaviour {
 
         if(card == null) yield break;
         Transform parent = card.transform.parent;
-        card.transform.SetParent(transform);
+        card.transform.SetParent(GetComponentInParent<Canvas>().transform);
         card.transform.localScale = Vector3.one;
-        iTween.RotateTo(card, Vector3.zero, 0.5f);
-        iTween.MoveTo(card, iTween.Hash(
-           "x", 0,
-           "y", 0,
-           "time", 0.5f,
-           "easetype", iTween.EaseType.easeWeakOutBack));
+        // iTween.RotateTo(card, Vector3.zero, 0.5f);
+        // iTween.MoveTo(card, iTween.Hash(
+        //    "x", 0,
+        //    "y", 0,
+        //    "time", 0.5f,
+        //    "easetype", iTween.EaseType.easeWeakOutBack));
+        card.transform.position = Vector3.zero;
+        card.transform.rotation = Quaternion.identity;
         CardHandler handler = card.GetComponent<CardHandler>();
         SetUsedCardInfo(ref card);
         yield return new WaitForSeconds(0.5f);

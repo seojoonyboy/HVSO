@@ -162,26 +162,10 @@ public class EditCardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         mouseObject = targetCard.parent.parent.Find("MousePos");
         mouseObject.transform.position = targetCard.position;
         targetCard.parent.SetParent(mouseObject);
-        iTween.MoveTo(mouseObject.gameObject, iTween.Hash("x", 0, "islocal", true, "time", 0.2f));
-        yield return new WaitForSeconds(0.25f);
-        GameObject glowEffect;
-        if (targetCard.Find("MagicEditCard").gameObject.activeSelf) 
-            glowEffect = targetCard.Find("MagicEditCard/GlowEffect").gameObject;
-        else {
-            if (targetCard.Find("UnitEditCard/SkillIcon").gameObject.activeSelf) {
-                glowEffect = targetCard.Find("UnitEditCard/GlowEffect/HaveAbility").gameObject;
-                targetCard.Find("UnitEditCard/GlowEffect/NoneAbility").gameObject.SetActive(false);
-            }
-            else {
-                glowEffect = targetCard.Find("UnitEditCard/GlowEffect/NoneAbility").gameObject;
-                targetCard.Find("UnitEditCard/GlowEffect/HaveAbility").gameObject.SetActive(false);
-            }
+        if (targetCard.position.x != 0) {
+            iTween.MoveTo(mouseObject.gameObject, iTween.Hash("x", 0, "islocal", true, "time", 0.2f));
+            yield return new WaitForSeconds(0.25f);
         }
-        glowEffect.SetActive(true);
-        targetCard.localScale = new Vector3(1.1f, 1.1f, 1);
-        yield return new WaitForSeconds(0.2f);
-        targetCard.localScale = Vector3.one;
-        glowEffect.SetActive(false);
         targetCard.parent.SetParent(mouseObject.parent);
         onAnimation = false;
         dragable = true;
