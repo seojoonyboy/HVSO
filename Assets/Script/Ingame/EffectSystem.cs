@@ -19,6 +19,7 @@ public class EffectSystem : SerializedMonoBehaviour {
     public GameObject spareObject;
     public GameObject cutSceneCanvas;
     public GameObject fadeCanvas;
+    public SpriteRenderer worldFade;
 
     private void Awake() {
         Instance = this;
@@ -140,6 +141,18 @@ public class EffectSystem : SerializedMonoBehaviour {
         StartCoroutine(FadeIn(0.6f, 0, 0.7f));
         yield return new WaitForSeconds(cutsceneAnimation.Skeleton.Data.FindAnimation("animation").Duration / 2);
         cutsceneObject.SetActive(false);
+    }
+
+    public void DecreaseFadeAlpha() {
+        worldFade.transform.gameObject.SetActive(true);
+        worldFade.sortingOrder = 16;
+        worldFade.color = new Color(0, 0, 0, 0.6f);
+    }
+
+    public void IncreaseFadeAlpha() {
+        worldFade.sortingOrder = 16;
+        worldFade.color = new Color(0, 0, 0, 0.6f);
+        worldFade.transform.gameObject.SetActive(false);
     }
 
     public IEnumerator FadeOut(float min, float max, float time) {
