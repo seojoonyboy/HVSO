@@ -192,15 +192,13 @@ public partial class PlayMangement : MonoBehaviour {
             SocketFormat.PlayHistory history = state.lastUse;
             if (history != null) {
                 if (history.cardItem.type.CompareTo("unit") == 0) {
-                    GameObject summonedMonster = SummonMonster(history);
-                    summonedMonster.GetComponent<PlaceMonster>().isPlayer = false;
-
-                    object[] parms = new object[] { false, summonedMonster };
-                    EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
-                    EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.FIELD_CHANGED, null, null);
+                    //카드 정보 만들기
+                    GameObject summonUnit = MakeUnitCardObj(history);
+                    //카드 정보 보여주기
+                    yield return UnitActivate(summonUnit, history);
                 }
                 else {
-                    GameObject summonedMagic = SummonMagic(history);
+                    GameObject summonedMagic = MakeMagicCardObj(history);
                     summonedMagic.GetComponent<MagicDragHandler>().isPlayer = false;
                     if (summonedMagic.GetComponent<MagicDragHandler>().cardData.hero_chk == true)
                         yield return EffectSystem.Instance.HeroCutScene(enemyPlayer.isHuman);
@@ -217,7 +215,12 @@ public partial class PlayMangement : MonoBehaviour {
             enemyPlayer.ReleaseTurn();
     }
 
-    private GameObject SummonMagic(SocketFormat.PlayHistory history) {
+    /// <summary>
+    /// 마법 카드생성(비활성화 상태로 생성)
+    /// </summary>
+    /// <param name="history"></param>
+    /// <returns></returns>
+    private GameObject MakeMagicCardObj(SocketFormat.PlayHistory history) {
         CardData cardData;
         CardDataPackage cardDataPackage = AccountManager.Instance.cardPackage;
 
@@ -231,6 +234,48 @@ public partial class PlayMangement : MonoBehaviour {
 
         Destroy(enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(CountEnemyCard() - 1).GetChild(0).gameObject);
         return magicCard;
+    }
+
+    /// <summary>
+    /// 유닛 카드생성(비활성화 상태로 생성)
+    /// </summary>
+    /// <param name="history"></param>
+    /// <returns></returns>
+    private GameObject MakeUnitCardObj(SocketFormat.PlayHistory history) {
+        CardData cardData;
+        CardDataPackage cardDataPackage = AccountManager.Instance.cardPackage;
+
+        cardData = cardDataPackage.data[history.cardItem.id];
+        GameObject unitCard = player.cdpm.InstantiateUnitCard(cardData, history.cardItem.itemId);
+        unitCard.GetComponent<UnitDragHandler>().itemID = history.cardItem.itemId;
+
+        Destroy(enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(CountEnemyCard() - 1).GetChild(0).gameObject);
+        return unitCard;
+    }
+
+    private IEnumerator UnitActivate(GameObject card, SocketFormat.PlayHistory history) {
+        UnitDragHandler unitDragHandler = card.GetComponent<UnitDragHandler>();
+        dragable = false;
+        //카드 등장 애니메이션
+        card.transform.rotation = new Quaternion(0, 0, 540, card.transform.rotation.w);
+        card.transform.SetParent(enemyPlayer.playerUI.transform);
+        card.SetActive(true);
+
+        yield return new WaitForSeconds(1.0f);
+        //TODO : 카드 사용 정보 보여주는 처리 필요
+        //yield return cardHandManager.ShowUsedMagicCard(100, card);
+        ////카드 파괴
+        yield return new WaitForSeconds(2f);
+        card.transform.localScale = new Vector3(1, 1, 1);
+        cardHandManager.DestroyCard(card);
+
+        ////실제 유닛 소환
+        GameObject summonedMonster = SummonMonster(history);
+        summonedMonster.GetComponent<PlaceMonster>().isPlayer = false;
+
+        object[] parms = new object[] { false, summonedMonster };
+        EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
+        EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.FIELD_CHANGED, null, null);
     }
 
     private IEnumerator MagicActivate(GameObject card, SocketFormat.PlayHistory history) {
@@ -609,7 +654,7 @@ public partial class PlayMangement : MonoBehaviour {
                 SocketFormat.GameState state = socketHandler.getHistory();
                 SocketFormat.PlayHistory history = state.lastUse;
                 if (history != null) {
-                    GameObject summonedMagic = SummonMagic(history);
+                    GameObject summonedMagic = MakeMagicCardObj(history);
                     summonedMagic.GetComponent<MagicDragHandler>().isPlayer = false;
                     yield return MagicActivate(summonedMagic, history);
                     SocketFormat.DebugSocketData.SummonCardData(history);

@@ -443,9 +443,7 @@ public class CardHandManager : MonoBehaviour {
             infoWindow.gameObject.SetActive(false);
             infoWindow.localScale = new Vector3(1, 1, 1);
         }
-
     }
-
 
     public IEnumerator SortHandPosition() {
         switch (cardNum) {
@@ -597,6 +595,12 @@ public class CardHandManager : MonoBehaviour {
         }
     }
 
+    public GameObject InstantiateUnitCard(CardData data, int itemId) {
+        GameObject card = cardStorage.Find("UnitCards").GetChild(0).gameObject;
+        card.transform.localScale = Vector3.zero;
+        card.transform.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.name;
+        return card;
+    }
 
     public GameObject InstantiateMagicCard(CardData data, int itemId) {
         GameObject card = cardStorage.Find("MagicCards").GetChild(0).gameObject;
