@@ -106,7 +106,6 @@ public class CardHandManager : MonoBehaviour {
     /// <param name="cardData"></param>
     public void AddCard(GameObject cardobj = null, SocketFormat.Card cardData = null) {
         if (cardNum + 1 == 11) return;
-        PlayMangement.dragable = false;
         GameObject card;
         if (cardobj == null) {
             if (cardData.type == "unit")
@@ -549,6 +548,7 @@ public class CardHandManager : MonoBehaviour {
         firstDrawParent.parent.gameObject.GetComponent<Image>().enabled = false;
         PlayMangement.instance.socketHandler.MulliganEnd();
         int index = 0;
+        PlayMangement.dragable = false;
         while (index < 4) {
             yield return new WaitForSeconds(0.2f);
             AddCard(firstDrawList[index]);
