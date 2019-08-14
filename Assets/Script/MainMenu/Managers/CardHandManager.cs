@@ -429,20 +429,39 @@ public class CardHandManager : MonoBehaviour {
     /// <param name="index"></param>
     /// <param name="card"></param>
     /// <returns></returns>
-    public IEnumerator ShowUsedMagicCard(int index = 100, GameObject card = null) {
-        if (index == 100) {
-            clm.SetEnemyMagicCardInfo(card.GetComponent<CardHandler>().cardData);
-        }
-        else
-            clm.OpenCardInfo(index, true);
+    public IEnumerator ShowUsedCard(int index = 100, GameObject card = null) {
+        // if (index == 100) {
+        //     clm.SetEnemyMagicCardInfo(card.GetComponent<CardHandler>().cardData);
+        // }
+        // else
+        //     clm.OpenCardInfo(index, true);
+        //yield return new WaitForSeconds(1.5f);
+        // if (index != 100 && transform.GetChild(index).GetChild(0).GetComponent<MagicDragHandler>().skillHandler.TargetSelectExist())
+        //     clm.HandCardInfo.GetChild(index).gameObject.SetActive(false);
+        // if (index == 100) {
+        //     Transform infoWindow = clm.StandbyInfo.GetChild(0);
+        //     infoWindow.gameObject.SetActive(false);
+        //     infoWindow.localScale = new Vector3(1, 1, 1);
+        // }
+
+        if(card == null) yield break;
+        Transform parent = card.transform.parent;
+        card.transform.SetParent(transform);
+        card.transform.localScale = Vector3.one;
+        iTween.RotateTo(card, Vector3.zero, 0.5f);
+        iTween.MoveTo(card, iTween.Hash(
+           "x", 0,
+           "y", 0,
+           "time", 0.5f,
+           "easetype", iTween.EaseType.easeWeakOutBack));
+        CardHandler handler = card.GetComponent<CardHandler>();
+        yield return new WaitForSeconds(0.5f);
+        CardInfoOnDrag.instance.SetCardDragInfo(null, new Vector3(0,5,0), handler.cardData.skills.Length != 0 ? handler.cardData.skills[0].desc : null);
+        
         yield return new WaitForSeconds(1.5f);
-        if (index != 100 && transform.GetChild(index).GetChild(0).GetComponent<MagicDragHandler>().skillHandler.TargetSelectExist())
-            clm.HandCardInfo.GetChild(index).gameObject.SetActive(false);
-        if (index == 100) {
-            Transform infoWindow = clm.StandbyInfo.GetChild(0);
-            infoWindow.gameObject.SetActive(false);
-            infoWindow.localScale = new Vector3(1, 1, 1);
-        }
+        
+        card.transform.SetParent(parent);
+        CardInfoOnDrag.instance.OffCardDragInfo();
     }
 
     public IEnumerator SortHandPosition() {
@@ -599,6 +618,8 @@ public class CardHandManager : MonoBehaviour {
         GameObject card = cardStorage.Find("UnitCards").GetChild(0).gameObject;
         card.transform.localScale = Vector3.zero;
         card.transform.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.name;
+        card.GetComponent<CardHandler>().cardData = data;
+
         return card;
     }
 
