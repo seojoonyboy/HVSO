@@ -57,18 +57,7 @@ public partial class UnitDragHandler : CardHandler, IBeginDragHandler, IDragHand
             highlightedSlot = null;
         }
         else if(isMyTurn(false)) {
-            GameObject unitPref = CardDropManager.Instance.DropUnit(gameObject, CheckSlot());
-            if (unitPref != null) {
-                var cardData = GetComponent<CardHandler>().cardData;
-
-                SkillModules.SkillHandler skillHandler = new SkillModules.SkillHandler();
-                skillHandler.Initialize(cardData.skills, unitPref, true);
-                unitPref.GetComponent<PlaceMonster>().skillHandler = skillHandler;
-
-                object[] parms = new object[] { true, unitPref };
-                PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
-                PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.FIELD_CHANGED, null, null);
-            }
+            StartCoroutine(SummonUnit(CheckSlot()));
         }
         handManager.transform.SetParent(mouseXPos.parent);
         if (!cardUsed) {
@@ -78,5 +67,21 @@ public partial class UnitDragHandler : CardHandler, IBeginDragHandler, IDragHand
         }
         CardDropManager.Instance.HideDropableSlot();
         CardInfoOnDrag.instance.OffCardDragInfo();
+    }
+
+    IEnumerator SummonUnit(Transform slot) {
+        yield return PlayMangement.instance.cardHandManager.ShowUsedCard(transform.parent.GetSiblingIndex(), gameObject);
+        GameObject unitPref = CardDropManager.Instance.DropUnit(gameObject, slot);
+        if (unitPref != null) {
+            var cardData = GetComponent<CardHandler>().cardData;
+
+            SkillModules.SkillHandler skillHandler = new SkillModules.SkillHandler();
+            skillHandler.Initialize(cardData.skills, unitPref, true);
+            unitPref.GetComponent<PlaceMonster>().skillHandler = skillHandler;
+
+            object[] parms = new object[] { true, unitPref };
+            PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
+            PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.FIELD_CHANGED, null, null);
+        }
     }
 }
