@@ -45,6 +45,7 @@ public partial class UnitDragHandler : CardHandler, IBeginDragHandler, IDragHand
     }
 
     public void OnEndDrag(PointerEventData eventData) {
+        EffectSystem.Instance.IncreaseFadeAlpha();
         if (firstDraw) return;
         if (gameObject != itsDragging) return;
         CheckLocation(true);

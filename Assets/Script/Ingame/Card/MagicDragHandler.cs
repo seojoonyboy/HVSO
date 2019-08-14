@@ -96,6 +96,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
 
 
     public void OnEndDrag(PointerEventData eventData) {
+        EffectSystem.Instance.IncreaseFadeAlpha();
         if (heroCardActivate) {
             heroCardInfo.SetActive(true);
             if (transform.position.y < -3.5f) {
