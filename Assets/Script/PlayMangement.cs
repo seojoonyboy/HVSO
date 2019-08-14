@@ -256,20 +256,20 @@ public partial class PlayMangement : MonoBehaviour {
     private IEnumerator UnitActivate(GameObject card, SocketFormat.PlayHistory history) {
         UnitDragHandler unitDragHandler = card.GetComponent<UnitDragHandler>();
         dragable = false;
-        //카드 등장 애니메이션
+
         card.transform.rotation = new Quaternion(0, 0, 540, card.transform.rotation.w);
         card.transform.SetParent(enemyPlayer.playerUI.transform);
         card.SetActive(true);
 
         yield return new WaitForSeconds(1.0f);
-        //TODO : 카드 사용 정보 보여주는 처리 필요
+        //카드 보여주기
         yield return cardHandManager.ShowUsedCard(100, card);
-        ////카드 파괴
+        //카드 파괴
         yield return new WaitForSeconds(2f);
         card.transform.localScale = new Vector3(1, 1, 1);
         cardHandManager.DestroyCard(card);
 
-        ////실제 유닛 소환
+        //실제 유닛 소환
         GameObject summonedMonster = SummonMonster(history);
         summonedMonster.GetComponent<PlaceMonster>().isPlayer = false;
 
