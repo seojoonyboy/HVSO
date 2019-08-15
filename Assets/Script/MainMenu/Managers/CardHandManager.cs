@@ -444,6 +444,7 @@ public class CardHandManager : MonoBehaviour {
         // }
 
         if(card == null) yield break;
+        PlayMangement.instance.OnBlockPanel(null);
         Transform parent = card.transform.parent;
         card.transform.SetParent(GetComponentInParent<Canvas>().transform);
         card.transform.localScale = Vector3.one;
@@ -464,6 +465,7 @@ public class CardHandManager : MonoBehaviour {
         
         card.transform.SetParent(parent);
         CardInfoOnDrag.instance.OffCardDragInfo();
+        PlayMangement.instance.OffBlockPanel();
     }
 
     public void SetUsedCardInfo(ref GameObject card) {
