@@ -92,4 +92,14 @@ public class CardInfoOnDrag : MonoBehaviour
     public void OffCardDragInfo() {
         gameObject.SetActive(false);
     }
+
+    public IEnumerator MoveCrossHair(GameObject card, Transform targetPos) {
+        card.transform.localScale = Vector3.zero;
+        crossHair.gameObject.SetActive(true);
+        crossHair.position = Vector3.zero;
+        iTween.MoveTo(crossHair.gameObject, targetPos.position, 0.5f);
+        yield return new WaitForSeconds(2.0f);
+        crossHair.gameObject.SetActive(false);
+        crossHair.position = Vector3.zero;
+    }
 }
