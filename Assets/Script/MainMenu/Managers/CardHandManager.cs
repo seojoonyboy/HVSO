@@ -471,24 +471,28 @@ public class CardHandManager : MonoBehaviour {
 
         Image portrait = card.transform.Find("Portrait").GetComponent<Image>();
         TMPro.TextMeshProUGUI cost = card.transform.Find("Cost/Text").GetComponent<TMPro.TextMeshProUGUI>();
-        TMPro.TextMeshProUGUI hp = card.transform.Find("Health/Text").GetComponent<TMPro.TextMeshProUGUI>();
-        TMPro.TextMeshProUGUI atk = card.transform.Find("attack/Text").GetComponent<TMPro.TextMeshProUGUI>();
-        Image skillIcon = card.transform.Find("SkillIcon").GetComponent<Image>();
-
-        portrait.sprite = AccountManager.Instance.resource.cardPortraite[cardData.cardId];
         cost.text = cardData.cost.ToString();
-        hp.text = cardData.hp.ToString();
-        atk.text = cardData.attack.ToString();
+        Image skillIcon = null;
+        bool isUnit = card.GetComponent<UnitDragHandler>() != null;
+        if(isUnit) {
+            TMPro.TextMeshProUGUI hp = card.transform.Find("Health/Text").GetComponent<TMPro.TextMeshProUGUI>();
+            TMPro.TextMeshProUGUI atk = card.transform.Find("attack/Text").GetComponent<TMPro.TextMeshProUGUI>();
+            hp.text = cardData.hp.ToString();
+            atk.text = cardData.attack.ToString();
+            skillIcon = card.transform.Find("SkillIcon").GetComponent<Image>();
+        }
+        
+        portrait.sprite = AccountManager.Instance.resource.cardPortraite[cardData.cardId];
 
-        if (cardData.attributes.Length == 0 && cardData.attackTypes.Length == 0) skillIcon.gameObject.SetActive(false);
+        if (cardData.attributes.Length == 0 && cardData.attackTypes.Length == 0 && isUnit) skillIcon.gameObject.SetActive(false);
 
-        if (cardData.attributes.Length != 0)
+        if (cardData.attributes.Length != 0 && isUnit)
             skillIcon.sprite = AccountManager.Instance.resource.skillIcons[cardData.attributes[0]];
-        if (cardData.attackTypes.Length != 0)
+        if (cardData.attackTypes.Length != 0 && isUnit)
             if (AccountManager.Instance.resource.skillIcons.ContainsKey(cardData.attackTypes[0])) {
                 skillIcon.sprite = AccountManager.Instance.resource.skillIcons[cardData.attackTypes[0]];
             }
-        if (cardData.attributes.Length != 0 && cardData.attackTypes.Length != 0)
+        if (cardData.attributes.Length != 0 && cardData.attackTypes.Length != 0 && isUnit)
             skillIcon.sprite = AccountManager.Instance.resource.skillIcons["complex"];
 
         card.transform.Find("BackGround").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground[cardData.type + "_" + cardData.rarelity];
@@ -536,8 +540,8 @@ public class CardHandManager : MonoBehaviour {
         if (cardNum > 4 && transform.localPosition.x > 0)
             iTween.MoveTo(gameObject, iTween.Hash("x", -0, "islocal", true, "time", 0.1f));
         yield return new WaitForSeconds(0.1f);
-        if (PlayMangement.instance.currentTurn != "BATTLE")
-            PlayMangement.dragable = true;
+        //if (PlayMangement.instance.currentTurn != "BATTLE")
+        //    PlayMangement.dragable = true;
     }
 
     /// <summary>

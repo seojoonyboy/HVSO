@@ -33,19 +33,7 @@ public partial class PlayMangement : MonoBehaviour {
     public bool heroShieldActive = false;
     public GameObject humanShield, orcShield;
     public static GameObject movingCard;
-    public static bool _dragable = true;
-    public static bool dragable { get { 
-        return _dragable;
-        } 
-        set {
-        if(value == false) countDragable--;
-        else countDragable++;
-        _dragable = value;
-        Debug.Log("저장된 횟수 : " + countDragable);
-        } 
-    }
-
-    private static int countDragable = 0;
+    public static bool dragable = true;
     public string currentTurn;
 
     public bool skillAction = false;
@@ -273,11 +261,9 @@ public partial class PlayMangement : MonoBehaviour {
         card.transform.SetParent(enemyPlayer.playerUI.transform);
         card.SetActive(true);
 
-        yield return new WaitForSeconds(1.0f);
         //카드 보여주기
         yield return cardHandManager.ShowUsedCard(100, card);
         //카드 파괴
-        yield return new WaitForSeconds(2f);
         card.transform.localScale = new Vector3(1, 1, 1);
         cardHandManager.DestroyCard(card);
 
