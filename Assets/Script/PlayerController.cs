@@ -326,6 +326,7 @@ public class PlayerController : MonoBehaviour
 
         if (myTurn == true && !dragCard) {
             //PlayMangement.instance.OnNoCostEffect(false);
+            myTurn = false;
             PlayMangement.instance.GetPlayerTurnRelease();
             if(isHuman == PlayMangement.instance.player.isHuman)
                 PlayMangement.instance.socketHandler.TurnOver();
