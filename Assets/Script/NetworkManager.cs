@@ -4,6 +4,8 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using System.Collections;
+using Haegin;
+using HaeginGame;
 
 /// <summary>
 /// BestHTTP Pro
@@ -17,9 +19,61 @@ public partial class NetworkManager : Singleton<NetworkManager> {
     public string baseUrl { get { return url; } }
     protected NetworkManager() { }
 
-    private void Awake() {
+    private WebClient webClient;
+
+    void Awake()
+    {
         DontDestroyOnLoad(gameObject);
         MAX_REDIRECTCOUNT = 10;
+        webClient = WebClient.GetInstance();
+
+        webClient.ErrorOccurred += OnErrorOccurred;
+        webClient.Processing += OnProcessing;
+        webClient.RetryOccurred += RetryOccurred;
+        webClient.RetryFailed += RetryFailed;
+        //webClient.MaintenanceStarted += OnMaintenanceStarted;
+        webClient.Logged += (string log) =>
+        {
+#if MDEBUG
+            Debug.Log("Unity   " + log);
+#endif
+        };
+
+        //ThreadSafeDispatcher.Instance.PushSystemBackKeyListener(OnSystemBackKey);
+    }
+
+    void RetryOccurred(Protocol protocol, int retryCount)
+    {
+#if MDEBUG
+        Debug.Log("Retry Occurred  " + retryCount);
+#endif
+    }
+
+    void RetryFailed(Protocol protocol)
+    {
+#if MDEBUG
+        Debug.Log("Retry Failed ");
+#endif
+    }
+
+    void OnProcessing(ReqAndRes rar)
+    {
+        if(ProtocolId.IssueJWT == rar.Res.ProtocolId) {
+            IssueJWTRes result = (IssueJWTRes)rar.Res;
+            Logger.Log(result.Token);
+            AccountManager.Instance.TokenId = result.Token;
+        }
+    }
+
+    public void OnErrorOccurred(int error)
+    {
+        #if MDEBUG
+        Debug.Log("OnErrorOccurred");
+        #endif
+    }
+
+    void Start() {
+        webClient.Request(new IssueJWTReq());
     }
 
     Queue<RequestFormat> requests = new Queue<RequestFormat>();

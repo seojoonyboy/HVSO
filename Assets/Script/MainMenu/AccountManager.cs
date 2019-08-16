@@ -233,10 +233,10 @@ public partial class AccountManager {
     
     public void SetSignInData(HTTPResponse response) {
         userData = dataModules.JsonReader.Read<UserInfo>(response.DataAsText);
-
-        myCards = userData.cardInventories;
-        SetHeroInventories(userData.heroInventories);
-        SetCardData();
+        //TODO : 인벤토리는 별도로 작업을 해야함
+        //myCards = userData.cardInventories;
+        //SetHeroInventories(userData.heroInventories);
+        //SetCardData();
 
         NickName = userData.nickName;
     }

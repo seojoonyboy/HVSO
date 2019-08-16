@@ -11,7 +11,8 @@ public class LoginController : MonoBehaviour {
     }
 
     public void OnStartButton() {
-        AccountManager.Instance.AuthUser(CheckTokenCallback);
+        //AccountManager.Instance.AuthUser(CheckTokenCallback);
+        AccountManager.Instance.RequestUserInfo(OnRequestUserInfoCallback);
         SoundManager.Instance.PlaySound(SoundType.FIRST_TURN);
     }
 

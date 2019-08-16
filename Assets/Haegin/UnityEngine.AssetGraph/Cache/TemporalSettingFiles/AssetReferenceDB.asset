@@ -1299,4 +1299,8 @@ MonoBehaviour:
     m_importFrom: ProjectSettings/EditorBuildSettings.asset
     m_exportTo: 
     m_variantName: 
+  - m_assetDatabaseId: bb7952d6fe07440b48a68080f446b79c
+    m_importFrom: Assets/Haegin/Sample/Scenes/SceneLoginController.cs
+    m_exportTo: 
+    m_variantName: 
   m_version: 2

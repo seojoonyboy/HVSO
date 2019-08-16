@@ -43,7 +43,7 @@ namespace Haegin.Resolvers
 
         static HaeginResolverGetFormatterHelper()
         {
-            lookup = new global::System.Collections.Generic.Dictionary<Type, int>(84)
+            lookup = new global::System.Collections.Generic.Dictionary<Type, int>(86)
             {
                 {typeof(global::System.Collections.Generic.List<global::HaeginGame.StoreKitTransaction>), 0 },
                 {typeof(global::System.Collections.Generic.List<global::HaeginGame.GooglePurchasedProduct>), 1 },
@@ -129,6 +129,8 @@ namespace Haegin.Resolvers
                 {typeof(global::HaeginGame.OneStorePurchasedProduct), 81 },
                 {typeof(global::HaeginGame.ConsumeOneStoreReceiptReq), 82 },
                 {typeof(global::HaeginGame.ConsumeOneStoreReceiptRes), 83 },
+                {typeof(global::HaeginGame.IssueJWTReq), 84 },
+                {typeof(global::HaeginGame.IssueJWTRes), 85 },
             };
         }
 
@@ -223,6 +225,8 @@ namespace Haegin.Resolvers
                 case 81: return new Haegin.Formatters.HaeginGame.OneStorePurchasedProductFormatter();
                 case 82: return new Haegin.Formatters.HaeginGame.ConsumeOneStoreReceiptReqFormatter();
                 case 83: return new Haegin.Formatters.HaeginGame.ConsumeOneStoreReceiptResFormatter();
+                case 84: return new Haegin.Formatters.HaeginGame.IssueJWTReqFormatter();
+                case 85: return new Haegin.Formatters.HaeginGame.IssueJWTResFormatter();
                 default: return null;
             }
         }
@@ -430,7 +434,7 @@ namespace Haegin.Formatters.HaeginGame
 
         public ProtocolFormatter()
         {
-            this.typeToKeyAndJumpMap = new Dictionary<RuntimeTypeHandle, KeyValuePair<int, int>>(24, global::MessagePack.Internal.RuntimeTypeHandleEqualityComparer.Default)
+            this.typeToKeyAndJumpMap = new Dictionary<RuntimeTypeHandle, KeyValuePair<int, int>>(25, global::MessagePack.Internal.RuntimeTypeHandleEqualityComparer.Default)
             {
                 { typeof(global::HaeginGame.MaintenanceCheckReq).TypeHandle, new KeyValuePair<int, int>(1, 0) },
                 { typeof(global::HaeginGame.MaintenanceCheckV2Req).TypeHandle, new KeyValuePair<int, int>(2, 1) },
@@ -440,24 +444,25 @@ namespace Haegin.Formatters.HaeginGame
                 { typeof(global::HaeginGame.AuthGoogleReq).TypeHandle, new KeyValuePair<int, int>(104, 5) },
                 { typeof(global::HaeginGame.AuthFacebookReq).TypeHandle, new KeyValuePair<int, int>(105, 6) },
                 { typeof(global::HaeginGame.AuthSteamReq).TypeHandle, new KeyValuePair<int, int>(106, 7) },
-                { typeof(global::HaeginGame.AliveReq).TypeHandle, new KeyValuePair<int, int>(201, 8) },
-                { typeof(global::HaeginGame.TermsListReq).TypeHandle, new KeyValuePair<int, int>(202, 9) },
-                { typeof(global::HaeginGame.TermsConfirmReq).TypeHandle, new KeyValuePair<int, int>(203, 10) },
-                { typeof(global::HaeginGame.ApnsRegisterReq).TypeHandle, new KeyValuePair<int, int>(301, 11) },
-                { typeof(global::HaeginGame.FcmRegisterReq).TypeHandle, new KeyValuePair<int, int>(302, 12) },
-                { typeof(global::HaeginGame.FcmUnregisterReq).TypeHandle, new KeyValuePair<int, int>(303, 13) },
-                { typeof(global::HaeginGame.ShopProductListReq).TypeHandle, new KeyValuePair<int, int>(401, 14) },
-                { typeof(global::HaeginGame.ConsumeAppleReceiptReq).TypeHandle, new KeyValuePair<int, int>(402, 15) },
-                { typeof(global::HaeginGame.ConsumeGoogleReceiptReq).TypeHandle, new KeyValuePair<int, int>(403, 16) },
-                { typeof(global::HaeginGame.SteamInitTransactionReq).TypeHandle, new KeyValuePair<int, int>(404, 17) },
-                { typeof(global::HaeginGame.SteamFinalizeTransactionReq).TypeHandle, new KeyValuePair<int, int>(405, 18) },
-                { typeof(global::HaeginGame.ConsumeOneStoreReceiptReq).TypeHandle, new KeyValuePair<int, int>(406, 19) },
-                { typeof(global::HaeginGame.EventListReq).TypeHandle, new KeyValuePair<int, int>(501, 20) },
-                { typeof(global::HaeginGame.NoticeReq).TypeHandle, new KeyValuePair<int, int>(502, 21) },
-                { typeof(global::HaeginGame.KeyCountReq).TypeHandle, new KeyValuePair<int, int>(601, 22) },
-                { typeof(global::HaeginGame.CouponReq).TypeHandle, new KeyValuePair<int, int>(701, 23) },
+                { typeof(global::HaeginGame.IssueJWTReq).TypeHandle, new KeyValuePair<int, int>(107, 8) },
+                { typeof(global::HaeginGame.AliveReq).TypeHandle, new KeyValuePair<int, int>(201, 9) },
+                { typeof(global::HaeginGame.TermsListReq).TypeHandle, new KeyValuePair<int, int>(202, 10) },
+                { typeof(global::HaeginGame.TermsConfirmReq).TypeHandle, new KeyValuePair<int, int>(203, 11) },
+                { typeof(global::HaeginGame.ApnsRegisterReq).TypeHandle, new KeyValuePair<int, int>(301, 12) },
+                { typeof(global::HaeginGame.FcmRegisterReq).TypeHandle, new KeyValuePair<int, int>(302, 13) },
+                { typeof(global::HaeginGame.FcmUnregisterReq).TypeHandle, new KeyValuePair<int, int>(303, 14) },
+                { typeof(global::HaeginGame.ShopProductListReq).TypeHandle, new KeyValuePair<int, int>(401, 15) },
+                { typeof(global::HaeginGame.ConsumeAppleReceiptReq).TypeHandle, new KeyValuePair<int, int>(402, 16) },
+                { typeof(global::HaeginGame.ConsumeGoogleReceiptReq).TypeHandle, new KeyValuePair<int, int>(403, 17) },
+                { typeof(global::HaeginGame.SteamInitTransactionReq).TypeHandle, new KeyValuePair<int, int>(404, 18) },
+                { typeof(global::HaeginGame.SteamFinalizeTransactionReq).TypeHandle, new KeyValuePair<int, int>(405, 19) },
+                { typeof(global::HaeginGame.ConsumeOneStoreReceiptReq).TypeHandle, new KeyValuePair<int, int>(406, 20) },
+                { typeof(global::HaeginGame.EventListReq).TypeHandle, new KeyValuePair<int, int>(501, 21) },
+                { typeof(global::HaeginGame.NoticeReq).TypeHandle, new KeyValuePair<int, int>(502, 22) },
+                { typeof(global::HaeginGame.KeyCountReq).TypeHandle, new KeyValuePair<int, int>(601, 23) },
+                { typeof(global::HaeginGame.CouponReq).TypeHandle, new KeyValuePair<int, int>(701, 24) },
             };
-            this.keyToJumpMap = new Dictionary<int, int>(24)
+            this.keyToJumpMap = new Dictionary<int, int>(25)
             {
                 { 1, 0 },
                 { 2, 1 },
@@ -467,22 +472,23 @@ namespace Haegin.Formatters.HaeginGame
                 { 104, 5 },
                 { 105, 6 },
                 { 106, 7 },
-                { 201, 8 },
-                { 202, 9 },
-                { 203, 10 },
-                { 301, 11 },
-                { 302, 12 },
-                { 303, 13 },
-                { 401, 14 },
-                { 402, 15 },
-                { 403, 16 },
-                { 404, 17 },
-                { 405, 18 },
-                { 406, 19 },
-                { 501, 20 },
-                { 502, 21 },
-                { 601, 22 },
-                { 701, 23 },
+                { 107, 8 },
+                { 201, 9 },
+                { 202, 10 },
+                { 203, 11 },
+                { 301, 12 },
+                { 302, 13 },
+                { 303, 14 },
+                { 401, 15 },
+                { 402, 16 },
+                { 403, 17 },
+                { 404, 18 },
+                { 405, 19 },
+                { 406, 20 },
+                { 501, 21 },
+                { 502, 22 },
+                { 601, 23 },
+                { 701, 24 },
             };
         }
 
@@ -521,51 +527,54 @@ namespace Haegin.Formatters.HaeginGame
                         offset += formatterResolver.GetFormatterWithVerify<global::HaeginGame.AuthSteamReq>().Serialize(ref bytes, offset, (global::HaeginGame.AuthSteamReq)value, formatterResolver);
                         break;
                     case 8:
-                        offset += formatterResolver.GetFormatterWithVerify<global::HaeginGame.AliveReq>().Serialize(ref bytes, offset, (global::HaeginGame.AliveReq)value, formatterResolver);
+                        offset += formatterResolver.GetFormatterWithVerify<global::HaeginGame.IssueJWTReq>().Serialize(ref bytes, offset, (global::HaeginGame.IssueJWTReq)value, formatterResolver);
                         break;
                     case 9:
-                        offset += formatterResolver.GetFormatterWithVerify<global::HaeginGame.TermsListReq>().Serialize(ref bytes, offset, (global::HaeginGame.TermsListReq)value, formatterResolver);
+                        offset += formatterResolver.GetFormatterWithVerify<global::HaeginGame.AliveReq>().Serialize(ref bytes, offset, (global::HaeginGame.AliveReq)value, formatterResolver);
                         break;
                     case 10:
-                        offset += formatterResolver.GetFormatterWithVerify<global::HaeginGame.TermsConfirmReq>().Serialize(ref bytes, offset, (global::HaeginGame.TermsConfirmReq)value, formatterResolver);
+                        offset += formatterResolver.GetFormatterWithVerify<global::HaeginGame.TermsListReq>().Serialize(ref bytes, offset, (global::HaeginGame.TermsListReq)value, formatterResolver);
                         break;
                     case 11:
-                        offset += formatterResolver.GetFormatterWithVerify<global::HaeginGame.ApnsRegisterReq>().Serialize(ref bytes, offset, (global::HaeginGame.ApnsRegisterReq)value, formatterResolver);
+                        offset += formatterResolver.GetFormatterWithVerify<global::HaeginGame.TermsConfirmReq>().Serialize(ref bytes, offset, (global::HaeginGame.TermsConfirmReq)value, formatterResolver);
                         break;
                     case 12:
-                        offset += formatterResolver.GetFormatterWithVerify<global::HaeginGame.FcmRegisterReq>().Serialize(ref bytes, offset, (global::HaeginGame.FcmRegisterReq)value, formatterResolver);
+                        offset += formatterResolver.GetFormatterWithVerify<global::HaeginGame.ApnsRegisterReq>().Serialize(ref bytes, offset, (global::HaeginGame.ApnsRegisterReq)value, formatterResolver);
                         break;
                     case 13:
-                        offset += formatterResolver.GetFormatterWithVerify<global::HaeginGame.FcmUnregisterReq>().Serialize(ref bytes, offset, (global::HaeginGame.FcmUnregisterReq)value, formatterResolver);
+                        offset += formatterResolver.GetFormatterWithVerify<global::HaeginGame.FcmRegisterReq>().Serialize(ref bytes, offset, (global::HaeginGame.FcmRegisterReq)value, formatterResolver);
                         break;
                     case 14:
-                        offset += formatterResolver.GetFormatterWithVerify<global::HaeginGame.ShopProductListReq>().Serialize(ref bytes, offset, (global::HaeginGame.ShopProductListReq)value, formatterResolver);
+                        offset += formatterResolver.GetFormatterWithVerify<global::HaeginGame.FcmUnregisterReq>().Serialize(ref bytes, offset, (global::HaeginGame.FcmUnregisterReq)value, formatterResolver);
                         break;
                     case 15:
-                        offset += formatterResolver.GetFormatterWithVerify<global::HaeginGame.ConsumeAppleReceiptReq>().Serialize(ref bytes, offset, (global::HaeginGame.ConsumeAppleReceiptReq)value, formatterResolver);
+                        offset += formatterResolver.GetFormatterWithVerify<global::HaeginGame.ShopProductListReq>().Serialize(ref bytes, offset, (global::HaeginGame.ShopProductListReq)value, formatterResolver);
                         break;
                     case 16:
-                        offset += formatterResolver.GetFormatterWithVerify<global::HaeginGame.ConsumeGoogleReceiptReq>().Serialize(ref bytes, offset, (global::HaeginGame.ConsumeGoogleReceiptReq)value, formatterResolver);
+                        offset += formatterResolver.GetFormatterWithVerify<global::HaeginGame.ConsumeAppleReceiptReq>().Serialize(ref bytes, offset, (global::HaeginGame.ConsumeAppleReceiptReq)value, formatterResolver);
                         break;
                     case 17:
-                        offset += formatterResolver.GetFormatterWithVerify<global::HaeginGame.SteamInitTransactionReq>().Serialize(ref bytes, offset, (global::HaeginGame.SteamInitTransactionReq)value, formatterResolver);
+                        offset += formatterResolver.GetFormatterWithVerify<global::HaeginGame.ConsumeGoogleReceiptReq>().Serialize(ref bytes, offset, (global::HaeginGame.ConsumeGoogleReceiptReq)value, formatterResolver);
                         break;
                     case 18:
-                        offset += formatterResolver.GetFormatterWithVerify<global::HaeginGame.SteamFinalizeTransactionReq>().Serialize(ref bytes, offset, (global::HaeginGame.SteamFinalizeTransactionReq)value, formatterResolver);
+                        offset += formatterResolver.GetFormatterWithVerify<global::HaeginGame.SteamInitTransactionReq>().Serialize(ref bytes, offset, (global::HaeginGame.SteamInitTransactionReq)value, formatterResolver);
                         break;
                     case 19:
-                        offset += formatterResolver.GetFormatterWithVerify<global::HaeginGame.ConsumeOneStoreReceiptReq>().Serialize(ref bytes, offset, (global::HaeginGame.ConsumeOneStoreReceiptReq)value, formatterResolver);
+                        offset += formatterResolver.GetFormatterWithVerify<global::HaeginGame.SteamFinalizeTransactionReq>().Serialize(ref bytes, offset, (global::HaeginGame.SteamFinalizeTransactionReq)value, formatterResolver);
                         break;
                     case 20:
-                        offset += formatterResolver.GetFormatterWithVerify<global::HaeginGame.EventListReq>().Serialize(ref bytes, offset, (global::HaeginGame.EventListReq)value, formatterResolver);
+                        offset += formatterResolver.GetFormatterWithVerify<global::HaeginGame.ConsumeOneStoreReceiptReq>().Serialize(ref bytes, offset, (global::HaeginGame.ConsumeOneStoreReceiptReq)value, formatterResolver);
                         break;
                     case 21:
-                        offset += formatterResolver.GetFormatterWithVerify<global::HaeginGame.NoticeReq>().Serialize(ref bytes, offset, (global::HaeginGame.NoticeReq)value, formatterResolver);
+                        offset += formatterResolver.GetFormatterWithVerify<global::HaeginGame.EventListReq>().Serialize(ref bytes, offset, (global::HaeginGame.EventListReq)value, formatterResolver);
                         break;
                     case 22:
-                        offset += formatterResolver.GetFormatterWithVerify<global::HaeginGame.KeyCountReq>().Serialize(ref bytes, offset, (global::HaeginGame.KeyCountReq)value, formatterResolver);
+                        offset += formatterResolver.GetFormatterWithVerify<global::HaeginGame.NoticeReq>().Serialize(ref bytes, offset, (global::HaeginGame.NoticeReq)value, formatterResolver);
                         break;
                     case 23:
+                        offset += formatterResolver.GetFormatterWithVerify<global::HaeginGame.KeyCountReq>().Serialize(ref bytes, offset, (global::HaeginGame.KeyCountReq)value, formatterResolver);
+                        break;
+                    case 24:
                         offset += formatterResolver.GetFormatterWithVerify<global::HaeginGame.CouponReq>().Serialize(ref bytes, offset, (global::HaeginGame.CouponReq)value, formatterResolver);
                         break;
                     default:
@@ -638,66 +647,70 @@ namespace Haegin.Formatters.HaeginGame
                     offset += readSize;
                     break;
                 case 8:
-                    result = (global::HaeginGame.Protocol)formatterResolver.GetFormatterWithVerify<global::HaeginGame.AliveReq>().Deserialize(bytes, offset, formatterResolver, out readSize);
+                    result = (global::HaeginGame.Protocol)formatterResolver.GetFormatterWithVerify<global::HaeginGame.IssueJWTReq>().Deserialize(bytes, offset, formatterResolver, out readSize);
                     offset += readSize;
                     break;
                 case 9:
-                    result = (global::HaeginGame.Protocol)formatterResolver.GetFormatterWithVerify<global::HaeginGame.TermsListReq>().Deserialize(bytes, offset, formatterResolver, out readSize);
+                    result = (global::HaeginGame.Protocol)formatterResolver.GetFormatterWithVerify<global::HaeginGame.AliveReq>().Deserialize(bytes, offset, formatterResolver, out readSize);
                     offset += readSize;
                     break;
                 case 10:
-                    result = (global::HaeginGame.Protocol)formatterResolver.GetFormatterWithVerify<global::HaeginGame.TermsConfirmReq>().Deserialize(bytes, offset, formatterResolver, out readSize);
+                    result = (global::HaeginGame.Protocol)formatterResolver.GetFormatterWithVerify<global::HaeginGame.TermsListReq>().Deserialize(bytes, offset, formatterResolver, out readSize);
                     offset += readSize;
                     break;
                 case 11:
-                    result = (global::HaeginGame.Protocol)formatterResolver.GetFormatterWithVerify<global::HaeginGame.ApnsRegisterReq>().Deserialize(bytes, offset, formatterResolver, out readSize);
+                    result = (global::HaeginGame.Protocol)formatterResolver.GetFormatterWithVerify<global::HaeginGame.TermsConfirmReq>().Deserialize(bytes, offset, formatterResolver, out readSize);
                     offset += readSize;
                     break;
                 case 12:
-                    result = (global::HaeginGame.Protocol)formatterResolver.GetFormatterWithVerify<global::HaeginGame.FcmRegisterReq>().Deserialize(bytes, offset, formatterResolver, out readSize);
+                    result = (global::HaeginGame.Protocol)formatterResolver.GetFormatterWithVerify<global::HaeginGame.ApnsRegisterReq>().Deserialize(bytes, offset, formatterResolver, out readSize);
                     offset += readSize;
                     break;
                 case 13:
-                    result = (global::HaeginGame.Protocol)formatterResolver.GetFormatterWithVerify<global::HaeginGame.FcmUnregisterReq>().Deserialize(bytes, offset, formatterResolver, out readSize);
+                    result = (global::HaeginGame.Protocol)formatterResolver.GetFormatterWithVerify<global::HaeginGame.FcmRegisterReq>().Deserialize(bytes, offset, formatterResolver, out readSize);
                     offset += readSize;
                     break;
                 case 14:
-                    result = (global::HaeginGame.Protocol)formatterResolver.GetFormatterWithVerify<global::HaeginGame.ShopProductListReq>().Deserialize(bytes, offset, formatterResolver, out readSize);
+                    result = (global::HaeginGame.Protocol)formatterResolver.GetFormatterWithVerify<global::HaeginGame.FcmUnregisterReq>().Deserialize(bytes, offset, formatterResolver, out readSize);
                     offset += readSize;
                     break;
                 case 15:
-                    result = (global::HaeginGame.Protocol)formatterResolver.GetFormatterWithVerify<global::HaeginGame.ConsumeAppleReceiptReq>().Deserialize(bytes, offset, formatterResolver, out readSize);
+                    result = (global::HaeginGame.Protocol)formatterResolver.GetFormatterWithVerify<global::HaeginGame.ShopProductListReq>().Deserialize(bytes, offset, formatterResolver, out readSize);
                     offset += readSize;
                     break;
                 case 16:
-                    result = (global::HaeginGame.Protocol)formatterResolver.GetFormatterWithVerify<global::HaeginGame.ConsumeGoogleReceiptReq>().Deserialize(bytes, offset, formatterResolver, out readSize);
+                    result = (global::HaeginGame.Protocol)formatterResolver.GetFormatterWithVerify<global::HaeginGame.ConsumeAppleReceiptReq>().Deserialize(bytes, offset, formatterResolver, out readSize);
                     offset += readSize;
                     break;
                 case 17:
-                    result = (global::HaeginGame.Protocol)formatterResolver.GetFormatterWithVerify<global::HaeginGame.SteamInitTransactionReq>().Deserialize(bytes, offset, formatterResolver, out readSize);
+                    result = (global::HaeginGame.Protocol)formatterResolver.GetFormatterWithVerify<global::HaeginGame.ConsumeGoogleReceiptReq>().Deserialize(bytes, offset, formatterResolver, out readSize);
                     offset += readSize;
                     break;
                 case 18:
-                    result = (global::HaeginGame.Protocol)formatterResolver.GetFormatterWithVerify<global::HaeginGame.SteamFinalizeTransactionReq>().Deserialize(bytes, offset, formatterResolver, out readSize);
+                    result = (global::HaeginGame.Protocol)formatterResolver.GetFormatterWithVerify<global::HaeginGame.SteamInitTransactionReq>().Deserialize(bytes, offset, formatterResolver, out readSize);
                     offset += readSize;
                     break;
                 case 19:
-                    result = (global::HaeginGame.Protocol)formatterResolver.GetFormatterWithVerify<global::HaeginGame.ConsumeOneStoreReceiptReq>().Deserialize(bytes, offset, formatterResolver, out readSize);
+                    result = (global::HaeginGame.Protocol)formatterResolver.GetFormatterWithVerify<global::HaeginGame.SteamFinalizeTransactionReq>().Deserialize(bytes, offset, formatterResolver, out readSize);
                     offset += readSize;
                     break;
                 case 20:
-                    result = (global::HaeginGame.Protocol)formatterResolver.GetFormatterWithVerify<global::HaeginGame.EventListReq>().Deserialize(bytes, offset, formatterResolver, out readSize);
+                    result = (global::HaeginGame.Protocol)formatterResolver.GetFormatterWithVerify<global::HaeginGame.ConsumeOneStoreReceiptReq>().Deserialize(bytes, offset, formatterResolver, out readSize);
                     offset += readSize;
                     break;
                 case 21:
-                    result = (global::HaeginGame.Protocol)formatterResolver.GetFormatterWithVerify<global::HaeginGame.NoticeReq>().Deserialize(bytes, offset, formatterResolver, out readSize);
+                    result = (global::HaeginGame.Protocol)formatterResolver.GetFormatterWithVerify<global::HaeginGame.EventListReq>().Deserialize(bytes, offset, formatterResolver, out readSize);
                     offset += readSize;
                     break;
                 case 22:
-                    result = (global::HaeginGame.Protocol)formatterResolver.GetFormatterWithVerify<global::HaeginGame.KeyCountReq>().Deserialize(bytes, offset, formatterResolver, out readSize);
+                    result = (global::HaeginGame.Protocol)formatterResolver.GetFormatterWithVerify<global::HaeginGame.NoticeReq>().Deserialize(bytes, offset, formatterResolver, out readSize);
                     offset += readSize;
                     break;
                 case 23:
+                    result = (global::HaeginGame.Protocol)formatterResolver.GetFormatterWithVerify<global::HaeginGame.KeyCountReq>().Deserialize(bytes, offset, formatterResolver, out readSize);
+                    offset += readSize;
+                    break;
+                case 24:
                     result = (global::HaeginGame.Protocol)formatterResolver.GetFormatterWithVerify<global::HaeginGame.CouponReq>().Deserialize(bytes, offset, formatterResolver, out readSize);
                     offset += readSize;
                     break;
@@ -719,7 +732,7 @@ namespace Haegin.Formatters.HaeginGame
 
         public ProtocolResFormatter()
         {
-            this.typeToKeyAndJumpMap = new Dictionary<RuntimeTypeHandle, KeyValuePair<int, int>>(25, global::MessagePack.Internal.RuntimeTypeHandleEqualityComparer.Default)
+            this.typeToKeyAndJumpMap = new Dictionary<RuntimeTypeHandle, KeyValuePair<int, int>>(26, global::MessagePack.Internal.RuntimeTypeHandleEqualityComparer.Default)
             {
                 { typeof(global::HaeginGame.MaintenanceCheckRes).TypeHandle, new KeyValuePair<int, int>(1, 0) },
                 { typeof(global::HaeginGame.MaintenanceCheckV2Res).TypeHandle, new KeyValuePair<int, int>(2, 1) },
@@ -730,24 +743,25 @@ namespace Haegin.Formatters.HaeginGame
                 { typeof(global::HaeginGame.AuthGoogleRes).TypeHandle, new KeyValuePair<int, int>(104, 6) },
                 { typeof(global::HaeginGame.AuthFacebookRes).TypeHandle, new KeyValuePair<int, int>(105, 7) },
                 { typeof(global::HaeginGame.AuthSteamRes).TypeHandle, new KeyValuePair<int, int>(106, 8) },
-                { typeof(global::HaeginGame.AliveRes).TypeHandle, new KeyValuePair<int, int>(201, 9) },
-                { typeof(global::HaeginGame.TermsListRes).TypeHandle, new KeyValuePair<int, int>(202, 10) },
-                { typeof(global::HaeginGame.TermsConfirmRes).TypeHandle, new KeyValuePair<int, int>(203, 11) },
-                { typeof(global::HaeginGame.ApnsRegisterRes).TypeHandle, new KeyValuePair<int, int>(301, 12) },
-                { typeof(global::HaeginGame.FcmRegisterRes).TypeHandle, new KeyValuePair<int, int>(302, 13) },
-                { typeof(global::HaeginGame.FcmUnregisterRes).TypeHandle, new KeyValuePair<int, int>(303, 14) },
-                { typeof(global::HaeginGame.ShopProductListRes).TypeHandle, new KeyValuePair<int, int>(401, 15) },
-                { typeof(global::HaeginGame.ConsumeAppleReceiptRes).TypeHandle, new KeyValuePair<int, int>(402, 16) },
-                { typeof(global::HaeginGame.ConsumeGoogleReceiptRes).TypeHandle, new KeyValuePair<int, int>(403, 17) },
-                { typeof(global::HaeginGame.SteamInitTransactionRes).TypeHandle, new KeyValuePair<int, int>(404, 18) },
-                { typeof(global::HaeginGame.SteamFinalizeTransactionRes).TypeHandle, new KeyValuePair<int, int>(405, 19) },
-                { typeof(global::HaeginGame.ConsumeOneStoreReceiptRes).TypeHandle, new KeyValuePair<int, int>(406, 20) },
-                { typeof(global::HaeginGame.EventListRes).TypeHandle, new KeyValuePair<int, int>(501, 21) },
-                { typeof(global::HaeginGame.NoticeRes).TypeHandle, new KeyValuePair<int, int>(502, 22) },
-                { typeof(global::HaeginGame.KeyCountRes).TypeHandle, new KeyValuePair<int, int>(601, 23) },
-                { typeof(global::HaeginGame.CouponRes).TypeHandle, new KeyValuePair<int, int>(701, 24) },
+                { typeof(global::HaeginGame.IssueJWTRes).TypeHandle, new KeyValuePair<int, int>(107, 9) },
+                { typeof(global::HaeginGame.AliveRes).TypeHandle, new KeyValuePair<int, int>(201, 10) },
+                { typeof(global::HaeginGame.TermsListRes).TypeHandle, new KeyValuePair<int, int>(202, 11) },
+                { typeof(global::HaeginGame.TermsConfirmRes).TypeHandle, new KeyValuePair<int, int>(203, 12) },
+                { typeof(global::HaeginGame.ApnsRegisterRes).TypeHandle, new KeyValuePair<int, int>(301, 13) },
+                { typeof(global::HaeginGame.FcmRegisterRes).TypeHandle, new KeyValuePair<int, int>(302, 14) },
+                { typeof(global::HaeginGame.FcmUnregisterRes).TypeHandle, new KeyValuePair<int, int>(303, 15) },
+                { typeof(global::HaeginGame.ShopProductListRes).TypeHandle, new KeyValuePair<int, int>(401, 16) },
+                { typeof(global::HaeginGame.ConsumeAppleReceiptRes).TypeHandle, new KeyValuePair<int, int>(402, 17) },
+                { typeof(global::HaeginGame.ConsumeGoogleReceiptRes).TypeHandle, new KeyValuePair<int, int>(403, 18) },
+                { typeof(global::HaeginGame.SteamInitTransactionRes).TypeHandle, new KeyValuePair<int, int>(404, 19) },
+                { typeof(global::HaeginGame.SteamFinalizeTransactionRes).TypeHandle, new KeyValuePair<int, int>(405, 20) },
+                { typeof(global::HaeginGame.ConsumeOneStoreReceiptRes).TypeHandle, new KeyValuePair<int, int>(406, 21) },
+                { typeof(global::HaeginGame.EventListRes).TypeHandle, new KeyValuePair<int, int>(501, 22) },
+                { typeof(global::HaeginGame.NoticeRes).TypeHandle, new KeyValuePair<int, int>(502, 23) },
+                { typeof(global::HaeginGame.KeyCountRes).TypeHandle, new KeyValuePair<int, int>(601, 24) },
+                { typeof(global::HaeginGame.CouponRes).TypeHandle, new KeyValuePair<int, int>(701, 25) },
             };
-            this.keyToJumpMap = new Dictionary<int, int>(25)
+            this.keyToJumpMap = new Dictionary<int, int>(26)
             {
                 { 1, 0 },
                 { 2, 1 },
@@ -758,22 +772,23 @@ namespace Haegin.Formatters.HaeginGame
                 { 104, 6 },
                 { 105, 7 },
                 { 106, 8 },
-                { 201, 9 },
-                { 202, 10 },
-                { 203, 11 },
-                { 301, 12 },
-                { 302, 13 },
-                { 303, 14 },
-                { 401, 15 },
-                { 402, 16 },
-                { 403, 17 },
-                { 404, 18 },
-                { 405, 19 },
-                { 406, 20 },
-                { 501, 21 },
-                { 502, 22 },
-                { 601, 23 },
-                { 701, 24 },
+                { 107, 9 },
+                { 201, 10 },
+                { 202, 11 },
+                { 203, 12 },
+                { 301, 13 },
+                { 302, 14 },
+                { 303, 15 },
+                { 401, 16 },
+                { 402, 17 },
+                { 403, 18 },
+                { 404, 19 },
+                { 405, 20 },
+                { 406, 21 },
+                { 501, 22 },
+                { 502, 23 },
+                { 601, 24 },
+                { 701, 25 },
             };
         }
 
@@ -815,51 +830,54 @@ namespace Haegin.Formatters.HaeginGame
                         offset += formatterResolver.GetFormatterWithVerify<global::HaeginGame.AuthSteamRes>().Serialize(ref bytes, offset, (global::HaeginGame.AuthSteamRes)value, formatterResolver);
                         break;
                     case 9:
-                        offset += formatterResolver.GetFormatterWithVerify<global::HaeginGame.AliveRes>().Serialize(ref bytes, offset, (global::HaeginGame.AliveRes)value, formatterResolver);
+                        offset += formatterResolver.GetFormatterWithVerify<global::HaeginGame.IssueJWTRes>().Serialize(ref bytes, offset, (global::HaeginGame.IssueJWTRes)value, formatterResolver);
                         break;
                     case 10:
-                        offset += formatterResolver.GetFormatterWithVerify<global::HaeginGame.TermsListRes>().Serialize(ref bytes, offset, (global::HaeginGame.TermsListRes)value, formatterResolver);
+                        offset += formatterResolver.GetFormatterWithVerify<global::HaeginGame.AliveRes>().Serialize(ref bytes, offset, (global::HaeginGame.AliveRes)value, formatterResolver);
                         break;
                     case 11:
-                        offset += formatterResolver.GetFormatterWithVerify<global::HaeginGame.TermsConfirmRes>().Serialize(ref bytes, offset, (global::HaeginGame.TermsConfirmRes)value, formatterResolver);
+                        offset += formatterResolver.GetFormatterWithVerify<global::HaeginGame.TermsListRes>().Serialize(ref bytes, offset, (global::HaeginGame.TermsListRes)value, formatterResolver);
                         break;
                     case 12:
-                        offset += formatterResolver.GetFormatterWithVerify<global::HaeginGame.ApnsRegisterRes>().Serialize(ref bytes, offset, (global::HaeginGame.ApnsRegisterRes)value, formatterResolver);
+                        offset += formatterResolver.GetFormatterWithVerify<global::HaeginGame.TermsConfirmRes>().Serialize(ref bytes, offset, (global::HaeginGame.TermsConfirmRes)value, formatterResolver);
                         break;
                     case 13:
-                        offset += formatterResolver.GetFormatterWithVerify<global::HaeginGame.FcmRegisterRes>().Serialize(ref bytes, offset, (global::HaeginGame.FcmRegisterRes)value, formatterResolver);
+                        offset += formatterResolver.GetFormatterWithVerify<global::HaeginGame.ApnsRegisterRes>().Serialize(ref bytes, offset, (global::HaeginGame.ApnsRegisterRes)value, formatterResolver);
                         break;
                     case 14:
-                        offset += formatterResolver.GetFormatterWithVerify<global::HaeginGame.FcmUnregisterRes>().Serialize(ref bytes, offset, (global::HaeginGame.FcmUnregisterRes)value, formatterResolver);
+                        offset += formatterResolver.GetFormatterWithVerify<global::HaeginGame.FcmRegisterRes>().Serialize(ref bytes, offset, (global::HaeginGame.FcmRegisterRes)value, formatterResolver);
                         break;
                     case 15:
-                        offset += formatterResolver.GetFormatterWithVerify<global::HaeginGame.ShopProductListRes>().Serialize(ref bytes, offset, (global::HaeginGame.ShopProductListRes)value, formatterResolver);
+                        offset += formatterResolver.GetFormatterWithVerify<global::HaeginGame.FcmUnregisterRes>().Serialize(ref bytes, offset, (global::HaeginGame.FcmUnregisterRes)value, formatterResolver);
                         break;
                     case 16:
-                        offset += formatterResolver.GetFormatterWithVerify<global::HaeginGame.ConsumeAppleReceiptRes>().Serialize(ref bytes, offset, (global::HaeginGame.ConsumeAppleReceiptRes)value, formatterResolver);
+                        offset += formatterResolver.GetFormatterWithVerify<global::HaeginGame.ShopProductListRes>().Serialize(ref bytes, offset, (global::HaeginGame.ShopProductListRes)value, formatterResolver);
                         break;
                     case 17:
-                        offset += formatterResolver.GetFormatterWithVerify<global::HaeginGame.ConsumeGoogleReceiptRes>().Serialize(ref bytes, offset, (global::HaeginGame.ConsumeGoogleReceiptRes)value, formatterResolver);
+                        offset += formatterResolver.GetFormatterWithVerify<global::HaeginGame.ConsumeAppleReceiptRes>().Serialize(ref bytes, offset, (global::HaeginGame.ConsumeAppleReceiptRes)value, formatterResolver);
                         break;
                     case 18:
-                        offset += formatterResolver.GetFormatterWithVerify<global::HaeginGame.SteamInitTransactionRes>().Serialize(ref bytes, offset, (global::HaeginGame.SteamInitTransactionRes)value, formatterResolver);
+                        offset += formatterResolver.GetFormatterWithVerify<global::HaeginGame.ConsumeGoogleReceiptRes>().Serialize(ref bytes, offset, (global::HaeginGame.ConsumeGoogleReceiptRes)value, formatterResolver);
                         break;
                     case 19:
-                        offset += formatterResolver.GetFormatterWithVerify<global::HaeginGame.SteamFinalizeTransactionRes>().Serialize(ref bytes, offset, (global::HaeginGame.SteamFinalizeTransactionRes)value, formatterResolver);
+                        offset += formatterResolver.GetFormatterWithVerify<global::HaeginGame.SteamInitTransactionRes>().Serialize(ref bytes, offset, (global::HaeginGame.SteamInitTransactionRes)value, formatterResolver);
                         break;
                     case 20:
-                        offset += formatterResolver.GetFormatterWithVerify<global::HaeginGame.ConsumeOneStoreReceiptRes>().Serialize(ref bytes, offset, (global::HaeginGame.ConsumeOneStoreReceiptRes)value, formatterResolver);
+                        offset += formatterResolver.GetFormatterWithVerify<global::HaeginGame.SteamFinalizeTransactionRes>().Serialize(ref bytes, offset, (global::HaeginGame.SteamFinalizeTransactionRes)value, formatterResolver);
                         break;
                     case 21:
-                        offset += formatterResolver.GetFormatterWithVerify<global::HaeginGame.EventListRes>().Serialize(ref bytes, offset, (global::HaeginGame.EventListRes)value, formatterResolver);
+                        offset += formatterResolver.GetFormatterWithVerify<global::HaeginGame.ConsumeOneStoreReceiptRes>().Serialize(ref bytes, offset, (global::HaeginGame.ConsumeOneStoreReceiptRes)value, formatterResolver);
                         break;
                     case 22:
-                        offset += formatterResolver.GetFormatterWithVerify<global::HaeginGame.NoticeRes>().Serialize(ref bytes, offset, (global::HaeginGame.NoticeRes)value, formatterResolver);
+                        offset += formatterResolver.GetFormatterWithVerify<global::HaeginGame.EventListRes>().Serialize(ref bytes, offset, (global::HaeginGame.EventListRes)value, formatterResolver);
                         break;
                     case 23:
-                        offset += formatterResolver.GetFormatterWithVerify<global::HaeginGame.KeyCountRes>().Serialize(ref bytes, offset, (global::HaeginGame.KeyCountRes)value, formatterResolver);
+                        offset += formatterResolver.GetFormatterWithVerify<global::HaeginGame.NoticeRes>().Serialize(ref bytes, offset, (global::HaeginGame.NoticeRes)value, formatterResolver);
                         break;
                     case 24:
+                        offset += formatterResolver.GetFormatterWithVerify<global::HaeginGame.KeyCountRes>().Serialize(ref bytes, offset, (global::HaeginGame.KeyCountRes)value, formatterResolver);
+                        break;
+                    case 25:
                         offset += formatterResolver.GetFormatterWithVerify<global::HaeginGame.CouponRes>().Serialize(ref bytes, offset, (global::HaeginGame.CouponRes)value, formatterResolver);
                         break;
                     default:
@@ -936,66 +954,70 @@ namespace Haegin.Formatters.HaeginGame
                     offset += readSize;
                     break;
                 case 9:
-                    result = (global::HaeginGame.ProtocolRes)formatterResolver.GetFormatterWithVerify<global::HaeginGame.AliveRes>().Deserialize(bytes, offset, formatterResolver, out readSize);
+                    result = (global::HaeginGame.ProtocolRes)formatterResolver.GetFormatterWithVerify<global::HaeginGame.IssueJWTRes>().Deserialize(bytes, offset, formatterResolver, out readSize);
                     offset += readSize;
                     break;
                 case 10:
-                    result = (global::HaeginGame.ProtocolRes)formatterResolver.GetFormatterWithVerify<global::HaeginGame.TermsListRes>().Deserialize(bytes, offset, formatterResolver, out readSize);
+                    result = (global::HaeginGame.ProtocolRes)formatterResolver.GetFormatterWithVerify<global::HaeginGame.AliveRes>().Deserialize(bytes, offset, formatterResolver, out readSize);
                     offset += readSize;
                     break;
                 case 11:
-                    result = (global::HaeginGame.ProtocolRes)formatterResolver.GetFormatterWithVerify<global::HaeginGame.TermsConfirmRes>().Deserialize(bytes, offset, formatterResolver, out readSize);
+                    result = (global::HaeginGame.ProtocolRes)formatterResolver.GetFormatterWithVerify<global::HaeginGame.TermsListRes>().Deserialize(bytes, offset, formatterResolver, out readSize);
                     offset += readSize;
                     break;
                 case 12:
-                    result = (global::HaeginGame.ProtocolRes)formatterResolver.GetFormatterWithVerify<global::HaeginGame.ApnsRegisterRes>().Deserialize(bytes, offset, formatterResolver, out readSize);
+                    result = (global::HaeginGame.ProtocolRes)formatterResolver.GetFormatterWithVerify<global::HaeginGame.TermsConfirmRes>().Deserialize(bytes, offset, formatterResolver, out readSize);
                     offset += readSize;
                     break;
                 case 13:
-                    result = (global::HaeginGame.ProtocolRes)formatterResolver.GetFormatterWithVerify<global::HaeginGame.FcmRegisterRes>().Deserialize(bytes, offset, formatterResolver, out readSize);
+                    result = (global::HaeginGame.ProtocolRes)formatterResolver.GetFormatterWithVerify<global::HaeginGame.ApnsRegisterRes>().Deserialize(bytes, offset, formatterResolver, out readSize);
                     offset += readSize;
                     break;
                 case 14:
-                    result = (global::HaeginGame.ProtocolRes)formatterResolver.GetFormatterWithVerify<global::HaeginGame.FcmUnregisterRes>().Deserialize(bytes, offset, formatterResolver, out readSize);
+                    result = (global::HaeginGame.ProtocolRes)formatterResolver.GetFormatterWithVerify<global::HaeginGame.FcmRegisterRes>().Deserialize(bytes, offset, formatterResolver, out readSize);
                     offset += readSize;
                     break;
                 case 15:
-                    result = (global::HaeginGame.ProtocolRes)formatterResolver.GetFormatterWithVerify<global::HaeginGame.ShopProductListRes>().Deserialize(bytes, offset, formatterResolver, out readSize);
+                    result = (global::HaeginGame.ProtocolRes)formatterResolver.GetFormatterWithVerify<global::HaeginGame.FcmUnregisterRes>().Deserialize(bytes, offset, formatterResolver, out readSize);
                     offset += readSize;
                     break;
                 case 16:
-                    result = (global::HaeginGame.ProtocolRes)formatterResolver.GetFormatterWithVerify<global::HaeginGame.ConsumeAppleReceiptRes>().Deserialize(bytes, offset, formatterResolver, out readSize);
+                    result = (global::HaeginGame.ProtocolRes)formatterResolver.GetFormatterWithVerify<global::HaeginGame.ShopProductListRes>().Deserialize(bytes, offset, formatterResolver, out readSize);
                     offset += readSize;
                     break;
                 case 17:
-                    result = (global::HaeginGame.ProtocolRes)formatterResolver.GetFormatterWithVerify<global::HaeginGame.ConsumeGoogleReceiptRes>().Deserialize(bytes, offset, formatterResolver, out readSize);
+                    result = (global::HaeginGame.ProtocolRes)formatterResolver.GetFormatterWithVerify<global::HaeginGame.ConsumeAppleReceiptRes>().Deserialize(bytes, offset, formatterResolver, out readSize);
                     offset += readSize;
                     break;
                 case 18:
-                    result = (global::HaeginGame.ProtocolRes)formatterResolver.GetFormatterWithVerify<global::HaeginGame.SteamInitTransactionRes>().Deserialize(bytes, offset, formatterResolver, out readSize);
+                    result = (global::HaeginGame.ProtocolRes)formatterResolver.GetFormatterWithVerify<global::HaeginGame.ConsumeGoogleReceiptRes>().Deserialize(bytes, offset, formatterResolver, out readSize);
                     offset += readSize;
                     break;
                 case 19:
-                    result = (global::HaeginGame.ProtocolRes)formatterResolver.GetFormatterWithVerify<global::HaeginGame.SteamFinalizeTransactionRes>().Deserialize(bytes, offset, formatterResolver, out readSize);
+                    result = (global::HaeginGame.ProtocolRes)formatterResolver.GetFormatterWithVerify<global::HaeginGame.SteamInitTransactionRes>().Deserialize(bytes, offset, formatterResolver, out readSize);
                     offset += readSize;
                     break;
                 case 20:
-                    result = (global::HaeginGame.ProtocolRes)formatterResolver.GetFormatterWithVerify<global::HaeginGame.ConsumeOneStoreReceiptRes>().Deserialize(bytes, offset, formatterResolver, out readSize);
+                    result = (global::HaeginGame.ProtocolRes)formatterResolver.GetFormatterWithVerify<global::HaeginGame.SteamFinalizeTransactionRes>().Deserialize(bytes, offset, formatterResolver, out readSize);
                     offset += readSize;
                     break;
                 case 21:
-                    result = (global::HaeginGame.ProtocolRes)formatterResolver.GetFormatterWithVerify<global::HaeginGame.EventListRes>().Deserialize(bytes, offset, formatterResolver, out readSize);
+                    result = (global::HaeginGame.ProtocolRes)formatterResolver.GetFormatterWithVerify<global::HaeginGame.ConsumeOneStoreReceiptRes>().Deserialize(bytes, offset, formatterResolver, out readSize);
                     offset += readSize;
                     break;
                 case 22:
-                    result = (global::HaeginGame.ProtocolRes)formatterResolver.GetFormatterWithVerify<global::HaeginGame.NoticeRes>().Deserialize(bytes, offset, formatterResolver, out readSize);
+                    result = (global::HaeginGame.ProtocolRes)formatterResolver.GetFormatterWithVerify<global::HaeginGame.EventListRes>().Deserialize(bytes, offset, formatterResolver, out readSize);
                     offset += readSize;
                     break;
                 case 23:
-                    result = (global::HaeginGame.ProtocolRes)formatterResolver.GetFormatterWithVerify<global::HaeginGame.KeyCountRes>().Deserialize(bytes, offset, formatterResolver, out readSize);
+                    result = (global::HaeginGame.ProtocolRes)formatterResolver.GetFormatterWithVerify<global::HaeginGame.NoticeRes>().Deserialize(bytes, offset, formatterResolver, out readSize);
                     offset += readSize;
                     break;
                 case 24:
+                    result = (global::HaeginGame.ProtocolRes)formatterResolver.GetFormatterWithVerify<global::HaeginGame.KeyCountRes>().Deserialize(bytes, offset, formatterResolver, out readSize);
+                    offset += readSize;
+                    break;
+                case 25:
                     result = (global::HaeginGame.ProtocolRes)formatterResolver.GetFormatterWithVerify<global::HaeginGame.CouponRes>().Deserialize(bytes, offset, formatterResolver, out readSize);
                     offset += readSize;
                     break;
@@ -5895,6 +5917,128 @@ namespace Haegin.Formatters.HaeginGame
             var ____result = new global::HaeginGame.ConsumeOneStoreReceiptRes();
             ____result.Products = __Products__;
             ____result.PurchasedData = __PurchasedData__;
+            ____result.ProtocolId = __ProtocolId__;
+            ____result.Result = __Result__;
+            return ____result;
+        }
+    }
+
+
+    public sealed class IssueJWTReqFormatter : global::MessagePack.Formatters.IMessagePackFormatter<global::HaeginGame.IssueJWTReq>
+    {
+
+        public int Serialize(ref byte[] bytes, int offset, global::HaeginGame.IssueJWTReq value, global::MessagePack.IFormatterResolver formatterResolver)
+        {
+            if (value == null)
+            {
+                return global::MessagePack.MessagePackBinary.WriteNil(ref bytes, offset);
+            }
+            
+            var startOffset = offset;
+            offset += global::MessagePack.MessagePackBinary.WriteFixedArrayHeaderUnsafe(ref bytes, offset, 1);
+            offset += formatterResolver.GetFormatterWithVerify<global::HaeginGame.ProtocolId>().Serialize(ref bytes, offset, value.ProtocolId, formatterResolver);
+            return offset - startOffset;
+        }
+
+        public global::HaeginGame.IssueJWTReq Deserialize(byte[] bytes, int offset, global::MessagePack.IFormatterResolver formatterResolver, out int readSize)
+        {
+            if (global::MessagePack.MessagePackBinary.IsNil(bytes, offset))
+            {
+                readSize = 1;
+                return null;
+            }
+
+            var startOffset = offset;
+            var length = global::MessagePack.MessagePackBinary.ReadArrayHeader(bytes, offset, out readSize);
+            offset += readSize;
+
+            var __ProtocolId__ = default(global::HaeginGame.ProtocolId);
+
+            for (int i = 0; i < length; i++)
+            {
+                var key = i;
+
+                switch (key)
+                {
+                    case 0:
+                        __ProtocolId__ = formatterResolver.GetFormatterWithVerify<global::HaeginGame.ProtocolId>().Deserialize(bytes, offset, formatterResolver, out readSize);
+                        break;
+                    default:
+                        readSize = global::MessagePack.MessagePackBinary.ReadNextBlock(bytes, offset);
+                        break;
+                }
+                offset += readSize;
+            }
+
+            readSize = offset - startOffset;
+
+            var ____result = new global::HaeginGame.IssueJWTReq();
+            ____result.ProtocolId = __ProtocolId__;
+            return ____result;
+        }
+    }
+
+
+    public sealed class IssueJWTResFormatter : global::MessagePack.Formatters.IMessagePackFormatter<global::HaeginGame.IssueJWTRes>
+    {
+
+        public int Serialize(ref byte[] bytes, int offset, global::HaeginGame.IssueJWTRes value, global::MessagePack.IFormatterResolver formatterResolver)
+        {
+            if (value == null)
+            {
+                return global::MessagePack.MessagePackBinary.WriteNil(ref bytes, offset);
+            }
+            
+            var startOffset = offset;
+            offset += global::MessagePack.MessagePackBinary.WriteFixedArrayHeaderUnsafe(ref bytes, offset, 3);
+            offset += formatterResolver.GetFormatterWithVerify<global::HaeginGame.ProtocolId>().Serialize(ref bytes, offset, value.ProtocolId, formatterResolver);
+            offset += formatterResolver.GetFormatterWithVerify<global::Haegin.Result>().Serialize(ref bytes, offset, value.Result, formatterResolver);
+            offset += formatterResolver.GetFormatterWithVerify<string>().Serialize(ref bytes, offset, value.Token, formatterResolver);
+            return offset - startOffset;
+        }
+
+        public global::HaeginGame.IssueJWTRes Deserialize(byte[] bytes, int offset, global::MessagePack.IFormatterResolver formatterResolver, out int readSize)
+        {
+            if (global::MessagePack.MessagePackBinary.IsNil(bytes, offset))
+            {
+                readSize = 1;
+                return null;
+            }
+
+            var startOffset = offset;
+            var length = global::MessagePack.MessagePackBinary.ReadArrayHeader(bytes, offset, out readSize);
+            offset += readSize;
+
+            var __Token__ = default(string);
+            var __ProtocolId__ = default(global::HaeginGame.ProtocolId);
+            var __Result__ = default(global::Haegin.Result);
+
+            for (int i = 0; i < length; i++)
+            {
+                var key = i;
+
+                switch (key)
+                {
+                    case 2:
+                        __Token__ = formatterResolver.GetFormatterWithVerify<string>().Deserialize(bytes, offset, formatterResolver, out readSize);
+                        break;
+                    case 0:
+                        __ProtocolId__ = formatterResolver.GetFormatterWithVerify<global::HaeginGame.ProtocolId>().Deserialize(bytes, offset, formatterResolver, out readSize);
+                        break;
+                    case 1:
+                        __Result__ = formatterResolver.GetFormatterWithVerify<global::Haegin.Result>().Deserialize(bytes, offset, formatterResolver, out readSize);
+                        break;
+                    default:
+                        readSize = global::MessagePack.MessagePackBinary.ReadNextBlock(bytes, offset);
+                        break;
+                }
+                offset += readSize;
+            }
+
+            readSize = offset - startOffset;
+
+            var ____result = new global::HaeginGame.IssueJWTRes();
+            ____result.Token = __Token__;
             ____result.ProtocolId = __ProtocolId__;
             ____result.Result = __Result__;
             return ____result;
