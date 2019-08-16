@@ -45,12 +45,9 @@ public class EditCardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         set { haveNum = value; }
     }
 
-    private void Start() {
+    public void InitEditCard() {
         if (transform.parent.name == "SettedDeck")
             isHandCard = true;
-    }
-
-    public void InitEditCard() {
         gameObject.SetActive(false);
         disabled = false;
         transform.Find("UnitEditCard").gameObject.SetActive(false);
