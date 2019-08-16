@@ -29,19 +29,6 @@ public partial class CardDropManager : Singleton<CardDropManager> {
                 enemyUnitLine[i][j] = unitSlotLines.parent.GetChild(1).GetChild(j).GetChild(i);
             }
         }
-        StartCoroutine(SetLineGuide(mapSlotLines));
-    }
-
-    IEnumerator SetLineGuide(Transform mapSlotLines) {
-        for (int i = 0; i < 5; i++) {
-            mapSlotLines.GetChild(i).Find("FightGuide").localScale = Vector3.zero;
-            mapSlotLines.GetChild(i).Find("FightGuide").gameObject.SetActive(true);
-        }
-        yield return new WaitForSeconds(0.1f);
-        for (int i = 0; i < 5; i++) {
-            mapSlotLines.GetChild(i).Find("FightGuide").gameObject.SetActive(false);
-            mapSlotLines.GetChild(i).Find("FightGuide").localScale = Vector3.one;
-        }
     }
 }
 
@@ -209,8 +196,11 @@ public partial class CardDropManager {
                 slotLine[i].GetChild(j).gameObject.SetActive(false);
                 slotLine[i].GetChild(j).GetChild(0).gameObject.SetActive(false);
             }
+            slotLine[i].Find("FightGuide").gameObject.SetActive(false);
         }
     }
+
+
 
     public void HighLightSlot(Transform target, bool highlighted) {
         if (target == null) return;
@@ -234,7 +224,10 @@ public partial class CardDropManager {
                 }
             }
             target.parent.Find("FightGuide").gameObject.SetActive(true);
-            target.parent.Find("FightGuide/Straight").GetComponent<SkeletonAnimation>().AnimationName = "STRAIGHT";
+            SkeletonAnimation spineAni = target.parent.Find("FightGuide/Straight").GetComponent<SkeletonAnimation>();
+            spineAni.Initialize(true);
+            spineAni.Update(0);
+            spineAni.AnimationName = "STRAIGHT";
         }
         else {
             target.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.6f);
