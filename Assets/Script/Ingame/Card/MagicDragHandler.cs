@@ -112,7 +112,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
                     //var abilities = GetComponents<MagicalCasting>();
                     //foreach (MagicalCasting ability in abilities) ability.RequestUseMagic();
                     object[] parms = new object[] { true, gameObject };
-                    StartCoroutine(UseSkillCardExceptInfo(parms));
+                    StartCoroutine(UseSkillCard(parms));
                     //if (GetComponents<Ability>() == null) UseCard();
                 }
                 else {
@@ -178,10 +178,10 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
     IEnumerator UseSkillCard(object[] parms) {
         skillHandler.socketDone = false;
         PlayMangement.dragable = false;
-        PlayMangement.instance.LockTurnOver();
+        PlayMangement.instance.LockTurnOver();        
+        yield return PlayMangement.instance.cardHandManager.ShowUsedCard(transform.parent.GetSiblingIndex(), gameObject);
         if (cardData.hero_chk == true)
             yield return EffectSystem.Instance.HeroCutScene(PlayMangement.instance.player.isHuman);
-        yield return PlayMangement.instance.cardHandManager.ShowUsedCard(transform.parent.GetSiblingIndex(), gameObject);
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
         highlighted = false;
         CardDropManager.Instance.HighLightMagicSlot(highlightedSlot, highlighted);
