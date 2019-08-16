@@ -35,6 +35,7 @@ public partial class CardDropManager : Singleton<CardDropManager> {
     IEnumerator SetLineGuide(Transform mapSlotLines) {
         for (int i = 0; i < 5; i++) {
             mapSlotLines.GetChild(i).Find("FightGuide").localScale = Vector3.zero;
+            mapSlotLines.GetChild(i).Find("FightGuide").gameObject.SetActive(true);
         }
         yield return new WaitForSeconds(0.1f);
         for (int i = 0; i < 5; i++) {
