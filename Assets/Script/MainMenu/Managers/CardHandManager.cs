@@ -458,10 +458,10 @@ public class CardHandManager : MonoBehaviour {
         card.transform.rotation = Quaternion.identity;
         CardHandler handler = card.GetComponent<CardHandler>();
         SetUsedCardInfo(ref card);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.25f);
         CardInfoOnDrag.instance.SetCardDragInfo(null, new Vector3(0,5,0), handler.cardData.skills.Length != 0 ? handler.cardData.skills[0].desc : null);
         
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1.0f);
         
         card.transform.SetParent(parent);
         CardInfoOnDrag.instance.OffCardDragInfo();
