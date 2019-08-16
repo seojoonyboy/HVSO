@@ -40,7 +40,7 @@ public partial class UnitDragHandler : CardHandler, IBeginDragHandler, IDragHand
         if (gameObject != itsDragging) return;
         OnDragCard();
         CheckLocation();
-        CardInfoOnDrag.instance.SetInfoPosOnDrag(mouseLocalPos.localPosition);
+        CardInfoOnDrag.instance.SetInfoPosOnDrag(mouseLocalPos.localPosition, true);
         CheckHighlight();
     }
 
