@@ -173,23 +173,20 @@ public class EditCardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     public void SetHaveNum() {
         if (haveNum > 0) {
             DisableCard(false);
-            transform.Find("HaveNum").gameObject.SetActive(true);
-            transform.Find("HaveNum").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, haveNum.ToString(), false);
+            transform.Find("HaveNum/Graphic").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, haveNum.ToString(), false);
         }
         else {
             DisableCard(true);
-            transform.Find("HaveNum").gameObject.SetActive(false);
+            transform.Find("HaveNum/Graphic").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, "NOANI", false);
         }
     }
 
     public void SetSetNum() {
         if (setNum > 0) {
-            transform.Find("HaveNum").gameObject.SetActive(true);
-            transform.Find("HaveNum").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, setNum.ToString(), false);
+            transform.Find("HaveNum/Graphic").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, setNum.ToString(), false);
         }
         else
-            transform.Find("HaveNum").gameObject.SetActive(false);
-        
+            transform.Find("HaveNum/Graphic").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, "NOANI", false);
     }
 
     public void CardSet() {
@@ -236,7 +233,7 @@ public class EditCardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         }
 
         if (cardData.type == "unit") {
-            Logger.Log(cardData.name);
+            //Logger.Log(cardData.name);
             cardObject.Find("Health/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.hp.ToString();
             cardObject.Find("attack/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.attack.ToString();
             if (cardData.attributes.Length == 0 && cardData.attackTypes.Length == 0)
@@ -256,16 +253,15 @@ public class EditCardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         //cardObject.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.name;
         if (!cardData.isHeroCard) {
             if (haveNum > 0 || setNum > 0) {
-                transform.Find("HaveNum").gameObject.SetActive(true);
                 cardObject.Find("Disabled").gameObject.SetActive(false);
                 if (haveNum > 0)
-                    transform.Find("HaveNum").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, haveNum.ToString(), false);
+                    transform.Find("HaveNum/Graphic").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, haveNum.ToString(), false);
                 if (setNum > 0)
-                    transform.Find("HaveNum").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, setNum.ToString(), false);
+                    transform.Find("HaveNum/Graphic").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, setNum.ToString(), false);
             }
             else {
                 DisableCard(true);
-                transform.Find("HaveNum").gameObject.SetActive(false);
+                transform.Find("HaveNum/Graphic").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, "NOANI", false);
             }
         }
     }
