@@ -18,7 +18,7 @@ public partial class AccountManager : Singleton<AccountManager> {
 
     public string DEVICEID { get; private set; }
     public UserInfo userData { get; private set; }
-    public CardInventory[] myCards { get; private set; }
+    public CardInventory[] myCards { get; set; }
 
     public List<dataModules.Deck> humanDecks;
     public List<dataModules.Deck> orcDecks;
@@ -57,7 +57,7 @@ public partial class AccountManager : Singleton<AccountManager> {
         NoneIngameSceneEventHandler.Instance.PostNotification(NoneIngameSceneEventHandler.EVENT_TYPE.NETWORK_EROR_OCCURED, this, errorCode);
     }
 
-    private void SetHeroInventories(HeroInventory[] data) {
+    public void SetHeroInventories(HeroInventory[] data) {
         myHeroInventories = new Dictionary<string, HeroInventory>();
         foreach (HeroInventory inventory in data) {
             myHeroInventories[inventory.heroId] = inventory;
@@ -234,11 +234,28 @@ public partial class AccountManager {
     public void SetSignInData(HTTPResponse response) {
         userData = dataModules.JsonReader.Read<UserInfo>(response.DataAsText);
 
-        myCards = userData.cardInventories;
-        SetHeroInventories(userData.heroInventories);
-        SetCardData();
+        //myCards = userData.cardInventories;
+        //SetHeroInventories(userData.heroInventories);
+        //SetCardData();
 
         NickName = userData.nickName;
+    }
+
+    //TODO : url 수정
+    public void RequestMyCards(OnRequestFinishedDelegate callback = null) {
+        StringBuilder url = new StringBuilder();
+        string base_url = networkManager.baseUrl;
+
+        url
+            .Append(base_url)
+            .Append("api/decks");
+
+        HTTPRequest request = new HTTPRequest(
+            new Uri(url.ToString())
+        );
+        request.MethodType = HTTPMethods.Get;
+        request.AddHeader("authorization", TokenFormat);
+        networkManager.Request(request, callback, "내 카드 목록을 불러오는중...");
     }
 }
 
