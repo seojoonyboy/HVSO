@@ -459,7 +459,11 @@ public class CardHandManager : MonoBehaviour {
         CardHandler handler = card.GetComponent<CardHandler>();
         SetUsedCardInfo(ref card);
         yield return new WaitForSeconds(0.25f);
-        CardInfoOnDrag.instance.SetCardDragInfo(null, new Vector3(0,5,0), handler.cardData.skills.Length != 0 ? handler.cardData.skills[0].desc : null);
+
+        if (card.GetComponent<UnitDragHandler>() != null && card.GetComponent<UnitDragHandler>().cardData.attributes.Length > 0 && card.GetComponent<UnitDragHandler>().cardData.attributes[0] == "ambush")
+            CardInfoOnDrag.instance.SetCardDragInfo(null, new Vector3(0, 5, 0), null);
+        else
+            CardInfoOnDrag.instance.SetCardDragInfo(null, new Vector3(0, 5, 0), handler.cardData.skills.Length != 0 ? handler.cardData.skills[0].desc : null);
         
         yield return new WaitForSeconds(2.0f);
         
@@ -476,27 +480,40 @@ public class CardHandManager : MonoBehaviour {
         cost.text = cardData.cost.ToString();
         Image skillIcon = null;
         bool isUnit = card.GetComponent<UnitDragHandler>() != null;
-        if(isUnit) {
+        if (isUnit) {
             TMPro.TextMeshProUGUI hp = card.transform.Find("Health/Text").GetComponent<TMPro.TextMeshProUGUI>();
             TMPro.TextMeshProUGUI atk = card.transform.Find("attack/Text").GetComponent<TMPro.TextMeshProUGUI>();
-            hp.text = cardData.hp.ToString();
-            atk.text = cardData.attack.ToString();
-            skillIcon = card.transform.Find("SkillIcon").GetComponent<Image>();
+
+            if (cardData.attributes.Length > 0 && cardData.attributes[0] == "ambush") {
+                hp.text = "-";
+                atk.text = "-";
+                skillIcon = card.transform.Find("SkillIcon").GetComponent<Image>();
+            }
+            else {
+                hp.text = cardData.hp.ToString();
+                atk.text = cardData.attack.ToString();
+                skillIcon = card.transform.Find("SkillIcon").GetComponent<Image>();
+            }
         }
 
-        if (isUnit == true && (cardData.attributes.Length > 0 && cardData.attributes[0] == "ambush")) 
-            portrait.sprite = AccountManager.Instance.resource.cardPortraite["unknown"];        
+        if (isUnit == true && (cardData.attributes.Length > 0 && cardData.attributes[0] == "ambush")) {
+            portrait.sprite = AccountManager.Instance.resource.cardPortraite["unknown"];
+        }
         else
             portrait.sprite = AccountManager.Instance.resource.cardPortraite[cardData.cardId];
 
         if (cardData.attributes.Length == 0 && cardData.attackTypes.Length == 0 && isUnit) skillIcon.gameObject.SetActive(false);
 
         if (cardData.attributes.Length != 0 && isUnit)
-            skillIcon.sprite = AccountManager.Instance.resource.skillIcons[cardData.attributes[0]];
+            if (AccountManager.Instance.resource.skillIcons.ContainsKey(cardData.attributes[0])) {
+                skillIcon.sprite = AccountManager.Instance.resource.skillIcons[cardData.attributes[0]];
+            }
+
         if (cardData.attackTypes.Length != 0 && isUnit)
             if (AccountManager.Instance.resource.skillIcons.ContainsKey(cardData.attackTypes[0])) {
                 skillIcon.sprite = AccountManager.Instance.resource.skillIcons[cardData.attackTypes[0]];
             }
+
         if (cardData.attributes.Length != 0 && cardData.attackTypes.Length != 0 && isUnit)
             skillIcon.sprite = AccountManager.Instance.resource.skillIcons["complex"];
 
