@@ -74,6 +74,7 @@ public partial class UnitDragHandler : CardHandler, IBeginDragHandler, IDragHand
 
     IEnumerator SummonUnit(Transform slot) {
         PlayMangement.dragable = false;
+
         yield return PlayMangement.instance.cardHandManager.ShowUsedCard(transform.parent.GetSiblingIndex(), gameObject);
         GameObject unitPref = CardDropManager.Instance.DropUnit(gameObject, slot);
         if (unitPref != null) {
