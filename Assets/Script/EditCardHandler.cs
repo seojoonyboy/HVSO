@@ -226,7 +226,7 @@ public class EditCardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         cardObject.Find("Portrait").GetComponent<Image>().sprite = portraitImage;
         if (!cardData.isHeroCard) {
             cardObject.Find("BackGround").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground[cardData.type + "_" + cardData.rarelity];
-            cardObject.Find("Name").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground["name_" + cardData.rarelity];
+            //cardObject.Find("Name").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground["name_" + cardData.rarelity];
         }
         else {
             string race;
@@ -235,7 +235,7 @@ public class EditCardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
             else
                 race = "_orc";
             cardObject.Find("BackGround").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground["hero_" + cardData.rarelity + race];
-            cardObject.Find("Name").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground["hero_" + cardData.rarelity + race + "_name"];
+            //cardObject.Find("Name").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground["hero_" + cardData.rarelity + race + "_name"];
         }
 
         if (cardData.type == "unit") {
@@ -256,7 +256,7 @@ public class EditCardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         }
         cardObject.Find("Cost/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.cost.ToString();
         //cardObject.Find("Class").GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[cardData.cardClasses[0]];
-        cardObject.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.name;
+        //cardObject.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.name;
         if (!cardData.isHeroCard) {
             if (haveNum > 0 || setNum > 0) {
                 transform.Find("HaveNum").gameObject.SetActive(true);
