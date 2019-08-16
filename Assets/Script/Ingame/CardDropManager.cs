@@ -205,7 +205,7 @@ public partial class CardDropManager {
             if (unitLine[i][1].childCount > 0)
                 unitLine[i][1].GetChild(0).position = new Vector3(unitLine[i][0].position.x, unitLine[i][1].position.y, 0);
             for (int j = 0; j < 3; j++) {
-                slotLine[i].GetChild(j).GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.6f);
+                slotLine[i].GetChild(j).GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1f);
                 slotLine[i].GetChild(j).gameObject.SetActive(false);
                 slotLine[i].GetChild(j).GetChild(0).gameObject.SetActive(false);
             }
@@ -218,7 +218,7 @@ public partial class CardDropManager {
         int lineNum = target.parent.GetSiblingIndex();
         GameObject fightEffect = slotLine[lineNum].GetChild(3).gameObject;
         if (highlighted) {
-            target.GetComponent<SpriteRenderer>().color = new Color(0.639f, 0.925f, 0.105f, 0.6f);
+            target.GetComponent<SpriteRenderer>().color = new Color(0.639f, 0.925f, 0.105f, 1f);
             if (index > 0) {
                 if (index == 1) unitLine[lineNum][0].GetChild(0).position = unitLine[lineNum][0].position;
                 else unitLine[lineNum][0].GetChild(0).position = unitLine[lineNum][1].position;
@@ -257,9 +257,9 @@ public partial class CardDropManager {
         if (target.name != "AllMagicTrigger") {
             if (target.name == "BattleLineEffect") {
                 if (highlighted)
-                    target.GetComponent<SpriteRenderer>().color = new Color(0.639f, 0.925f, 0.105f, 0.6f);
+                    target.GetComponent<SpriteRenderer>().color = new Color(0.639f, 0.925f, 0.105f, 1f);
                 else
-                    target.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.6f);
+                    target.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1f);
             }
             else {
                 if (highlighted)
@@ -271,11 +271,11 @@ public partial class CardDropManager {
         else {
             if (highlighted) {
                 for (int i = 0; i < 5; i++)
-                    slotLine[i].Find("BattleLineEffect").GetComponent<SpriteRenderer>().color = new Color(0.639f, 0.925f, 0.105f, 0.6f);
+                    slotLine[i].Find("BattleLineEffect").GetComponent<SpriteRenderer>().color = new Color(0.639f, 0.925f, 0.105f, 1f);
             }
             else {
                 for (int i = 0; i < 5; i++)
-                    slotLine[i].Find("BattleLineEffect").GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.6f);
+                    slotLine[i].Find("BattleLineEffect").GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1f);
             }
 
         }
