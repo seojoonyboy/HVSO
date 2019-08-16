@@ -135,6 +135,7 @@ public class EffectSystem : SerializedMonoBehaviour {
             cutsceneObject.SetActive(true);
             cutsceneAnimation = cutSceneCanvas.transform.Find("Orc").gameObject.GetComponent<SkeletonGraphic>();
         }
+        cutsceneAnimation.Skeleton.SetSlotsToSetupPose();
 
         cutsceneAnimation.AnimationState.SetAnimation(0, "animation", false);
         yield return new WaitForSeconds(cutsceneAnimation.Skeleton.Data.FindAnimation("animation").Duration / 2);

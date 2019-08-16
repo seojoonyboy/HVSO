@@ -112,17 +112,14 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
                     //var abilities = GetComponents<MagicalCasting>();
                     //foreach (MagicalCasting ability in abilities) ability.RequestUseMagic();
                     object[] parms = new object[] { true, gameObject };
-                    skillHandler.socketDone = false;
-                    StartCoroutine(EffectSystem.Instance.HeroCutScene(PlayMangement.instance.player.isHuman));
-                    
-                    PlayMangement.instance.LockTurnOver();
-                    PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
-                    skillHandler.RemoveTriggerEvent();
+                    StartCoroutine(UseSkillCardExceptInfo(parms));
                     //if (GetComponents<Ability>() == null) UseCard();
                 }
-                highlighted = false;
-                CardDropManager.Instance.HighLightMagicSlot(highlightedSlot, highlighted);
-                highlightedSlot = null;
+                else {
+                    highlighted = false;
+                    CardDropManager.Instance.HighLightMagicSlot(highlightedSlot, highlighted);
+                    highlightedSlot = null;
+                }
                 if (!cardUsed) {
                     transform.localScale = new Vector3(1, 1, 1);
                     transform.localPosition = new Vector3(0, 0, 0);
@@ -165,6 +162,18 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         CardInfoOnDrag.instance.OffCardDragInfo();
         PlayMangement.instance.infoOn = false;
     }
+
+    IEnumerator UseSkillCardExceptInfo(object[] parms) {
+        skillHandler.socketDone = false;
+        PlayMangement.instance.LockTurnOver();
+        yield return EffectSystem.Instance.HeroCutScene(PlayMangement.instance.player.isHuman);
+        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
+        highlighted = false;
+        CardDropManager.Instance.HighLightMagicSlot(highlightedSlot, highlighted);
+        highlightedSlot = null;
+        skillHandler.RemoveTriggerEvent();
+    }
+
 
     IEnumerator UseSkillCard(object[] parms) {
         skillHandler.socketDone = false;
