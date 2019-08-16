@@ -477,7 +477,7 @@ public class CardHandManager : MonoBehaviour {
 
         Image portrait = card.transform.Find("Portrait").GetComponent<Image>();
         TMPro.TextMeshProUGUI cost = card.transform.Find("Cost/Text").GetComponent<TMPro.TextMeshProUGUI>();
-        cost.text = cardData.cost.ToString();
+        
         Image skillIcon = null;
         bool isUnit = card.GetComponent<UnitDragHandler>() != null;
         if (isUnit) {
@@ -485,13 +485,15 @@ public class CardHandManager : MonoBehaviour {
             TMPro.TextMeshProUGUI atk = card.transform.Find("attack/Text").GetComponent<TMPro.TextMeshProUGUI>();
 
             if (cardData.attributes.Length > 0 && cardData.attributes[0] == "ambush") {
-                hp.text = "-";
-                atk.text = "-";
+                hp.text = "?";
+                atk.text = "?";
+                cost.text = "?";
                 skillIcon = card.transform.Find("SkillIcon").GetComponent<Image>();
             }
             else {
                 hp.text = cardData.hp.ToString();
                 atk.text = cardData.attack.ToString();
+                cost.text = cardData.cost.ToString();
                 skillIcon = card.transform.Find("SkillIcon").GetComponent<Image>();
             }
         }
