@@ -6,6 +6,15 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Haegin/Sample/Scenes/SceneOBBCheck.unity
+    guid: 3e67fb4e64b93411696ea8bc084b177f
+  - enabled: 1
+    path: Assets/Haegin/Sample/Scenes/SceneStart.unity
+    guid: 0b7e93aa509c246eb918c80e23c2dc61
+  - enabled: 1
+    path: Assets/Haegin/Sample/Scenes/SceneLogin.unity
+    guid: a5ef5873f6fac46f3b62520c389811f9
+  - enabled: 1
     path: Assets/Scenes/Login.unity
     guid: f05e98f3e64d5a14981e0ad79c23c6d1
   - enabled: 1

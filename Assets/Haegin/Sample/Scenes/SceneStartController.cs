@@ -177,7 +177,7 @@ public class SceneStartController : MonoBehaviour
 #if USE_MAINTENANCESERVER_V2
     void CheckServiceStatus()
     {
-        ServiceMaintenance.CheckStatusV2("http://10.0.2.3:56679/Gate", "DevForClient", ShowServerMaintenanceWin, OnServerMaintenanceAction, (string CommonUrl, string GameUrl, string PatchUrl) =>
+        ServiceMaintenance.CheckStatusV2("http://dev-maintenance.fbl.kr/Gate", "DevForClient", ShowServerMaintenanceWin, OnServerMaintenanceAction, (string CommonUrl, string GameUrl, string PatchUrl) =>
         {
             Debug.Log(CommonUrl);
             Debug.Log(GameUrl);
@@ -261,7 +261,7 @@ public class SceneStartController : MonoBehaviour
 #if MDEBUG
         Debug.Log("SceneStartController CheckServiceStatus 1");
 #endif
-        ServiceMaintenance.CheckStatus("http://10.0.2.3:56679/Gate", "DevForClient", ShowServerMaintenanceWin, OnServerMaintenanceAction, (string ServerUrl, string PatchUrl) =>
+        ServiceMaintenance.CheckStatus("http://dev-maintenance.fbl.kr/Gate", "DevForClient", ShowServerMaintenanceWin, OnServerMaintenanceAction, (string ServerUrl, string PatchUrl) =>
         {
 #if MDEBUG
             Debug.Log("SceneStartController CheckServiceStatus 2");
@@ -455,7 +455,14 @@ public class SceneStartController : MonoBehaviour
                                 Notification.RegisterPushNotificationDevice();
                             });
 
-                            Patch();
+                            //Patch();
+                            PromoEvents.CheckPromoEvents(OpenPromoEventWindow, () =>
+                            {
+                            #if MDEBUG
+                                Debug.Log("LoadScene SceneLogin");
+                            #endif
+                                SceneManager.LoadScene("SceneLogin", LoadSceneMode.Single);
+                            });
                         }
                         else
                         {

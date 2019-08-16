@@ -13,7 +13,7 @@ namespace Haegin
 		public static string urlScheme = "hgmodsample://";
 		public static string firebaseDynamicLink = "hgmodsample.page.link";
 		public static bool useAppsFlyer = false;
-		public static bool UseIOSGoogleMobileAds7_24_0_OR_HIGHER = true;
-		public static string oneStoreBase64EncodedPublicKey = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCE1yu9pqqIvNDj7/sCtx1jfsdADytNpSw3gaBwdhp5KvNTlNW1sI7q92x8CcZ/AJuu597s8z86UDZVVhcdreCcKDOPGbwrKGjNdUiEPqonMuhjoXCaEoUag1MV6DyBRrVNk5Hoyytzlk3m7TI2TNkysZEMrFMrriXRkIA9XP7KswIDAQAB";
+		public static bool UseIOSGoogleMobileAds7_24_0_OR_HIGHER = false;
+		public static string oneStoreBase64EncodedPublicKey = "";
 	}
 }

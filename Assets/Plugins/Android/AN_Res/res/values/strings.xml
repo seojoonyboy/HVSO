@@ -1,5 +1,5 @@
 <resources>
-	<string name="app_name">Module Sample</string>
+	<string name="app_name">HVSO</string>
 	<string name="app_id">551232432184</string>
 	<string name="fb_app_id">166749030757238</string>
 	<string name="fb_provider_auth">com.facebook.app.FacebookContentProvider166749030757238</string>
