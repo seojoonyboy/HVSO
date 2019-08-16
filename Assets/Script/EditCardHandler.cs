@@ -249,15 +249,21 @@ public class EditCardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
             }
         }
         cardObject.Find("Cost/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.cost.ToString();
-        //cardObject.Find("Class").GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[cardData.cardClasses[0]];
-        //cardObject.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.name;
         if (!cardData.isHeroCard) {
+            transform.Find("HaveNum/Graphic").GetComponent<SkeletonGraphic>().Initialize(false);
+            Spine.AnimationState aniState = transform.Find("HaveNum/Graphic").GetComponent<SkeletonGraphic>().AnimationState;
+            aniState.Update(0);
             if (haveNum > 0 || setNum > 0) {
                 cardObject.Find("Disabled").gameObject.SetActive(false);
-                if (haveNum > 0)
-                    transform.Find("HaveNum/Graphic").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, haveNum.ToString(), false);
-                if (setNum > 0)
-                    transform.Find("HaveNum/Graphic").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, setNum.ToString(), false);
+                if (haveNum > 0) {
+                    //Debug.Log("!!" + transform.Find("HaveNum/Graphic").GetComponent<SkeletonGraphic>().AnimationState);
+                    aniState.SetAnimation(0, haveNum.ToString(), false);
+                }
+                if (setNum > 0) {
+                    //Debug.Log("!!" + transform.Find("HaveNum/Graphic").GetComponent<SkeletonGraphic>().AnimationState);
+                    aniState.SetAnimation(0, setNum.ToString(), false);
+                }
+                    
             }
             else {
                 DisableCard(true);
