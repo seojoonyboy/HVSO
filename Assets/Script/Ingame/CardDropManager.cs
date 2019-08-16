@@ -240,7 +240,7 @@ public partial class CardDropManager {
             spineAni.AnimationName = "STRAIGHT";
         }
         else {
-            target.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.6f);
+            target.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1f);
             if(index > 0)
                 unitLine[lineNum][0].GetChild(0).position = new Vector3(unitLine[lineNum][0].position.x, unitLine[lineNum][0].position.y + 1.5f, 0);
             if (enemyUnitLine[lineNum][0].childCount == 0 && enemyUnitLine[lineNum][1].childCount == 0)
