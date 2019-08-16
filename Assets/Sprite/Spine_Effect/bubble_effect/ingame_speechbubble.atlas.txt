@@ -7,8 +7,8 @@ repeat: none
 speechbubble_1
   rotate: false
   xy: 0, 17
-  size: 106, 84
-  orig: 106, 84
+  size: 94, 76
+  orig: 94, 76
   offset: 0, 0
   index: -1
 speechbubble_2
