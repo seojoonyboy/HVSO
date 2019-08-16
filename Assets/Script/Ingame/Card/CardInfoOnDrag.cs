@@ -46,8 +46,8 @@ public class CardInfoOnDrag : MonoBehaviour
         if (skillInfo != null) {
             gameObject.GetComponent<Image>().enabled = true;
             transform.GetChild(0).gameObject.SetActive(true);
-            ResizeBox(skillInfo.Length);
             transform.Find("SkillText").GetComponent<TMPro.TextMeshProUGUI>().text = skillInfo;
+            ResizeBox(skillInfo.Length);
         }
         else {
             gameObject.GetComponent<Image>().enabled = false;
@@ -70,11 +70,15 @@ public class CardInfoOnDrag : MonoBehaviour
     }
 
     private void ResizeBox(int textLength) {
-        int lineNum = textLength / 18;
-        transform.GetComponent<RectTransform>().sizeDelta = transform.Find("SkillText").GetComponent<RectTransform>().sizeDelta = new Vector2(600, 100 + (50 * lineNum));    
+        int lineNum = textLength / 20;
+        TMPro.TextMeshProUGUI textMesh = transform.Find("SkillText").GetComponent<TMPro.TextMeshProUGUI>();
+        for(int i = 1; i <= lineNum; i++)
+            textMesh.text = textMesh.text.Insert(20 * i, "\n");
+        transform.GetComponent<RectTransform>().sizeDelta = new Vector2(600, 100 + (50 * lineNum));
+        transform.Find("SkillText").GetComponent<RectTransform>().sizeDelta = new Vector2(550, 100 + (50 * lineNum));
     }
 
-    public void SetInfoPosOnDrag(Vector3 cardPos) {
+    public void SetInfoPosOnDrag(Vector3 cardPos, bool isUnit = false) {
         float xPos = 0;
         float yPos = 0;
         if (cardPos.x + xWidth < rightEdge.localPosition.x && cardPos.x - xWidth > leftEdge.localPosition.x)
@@ -82,7 +86,7 @@ public class CardInfoOnDrag : MonoBehaviour
         else
             xPos = transform.localPosition.x;
         if (cardPos.y + 530 < rightEdge.localPosition.y)
-            yPos = cardPos.y + 250;
+            yPos = cardPos.y + (isUnit ? 270 : 220);
         else
             yPos = cardPos.y - 100;
         transform.localPosition = new Vector3(xPos, yPos, 0);
