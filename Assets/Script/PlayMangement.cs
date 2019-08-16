@@ -824,7 +824,7 @@ public partial class PlayMangement {
         }
         else {
             int enemyCardCount = CountEnemyCard();
-            Destroy(enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(enemyCardCount - 1).GetChild(0).gameObject);
+            //Destroy(enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(enemyCardCount - 1).GetChild(0).gameObject);
 
             SkillModules.SkillHandler skillHandler = new SkillModules.SkillHandler();
             skillHandler.Initialize(cardData.skills, unit, false);
