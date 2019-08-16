@@ -10,7 +10,8 @@ using System.Collections;
 /// </summary>
 public partial class NetworkManager : Singleton<NetworkManager> {
 #if UNITY_EDITOR
-    private string url = "https://ccdevclient.fbl.kr/";
+    //private string url = "https://ccdevclient.fbl.kr/";
+    private string url = "https://cctest.fbl.kr/";
 #else
     private string url = "https://cctest.fbl.kr/";
 #endif
