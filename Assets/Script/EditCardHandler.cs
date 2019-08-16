@@ -3,6 +3,8 @@ using UnityEngine.EventSystems;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using Spine;
+using Spine.Unity;
 
 public class EditCardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
     public string cardID;
@@ -175,20 +177,22 @@ public class EditCardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         if (haveNum > 0) {
             DisableCard(false);
             transform.Find("HaveNum").gameObject.SetActive(true);
+            transform.Find("HaveNum").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, haveNum.ToString(), false);
         }
         else {
             DisableCard(true);
             transform.Find("HaveNum").gameObject.SetActive(false);
         }
-        transform.Find("HaveNum/Value").GetComponent<TMPro.TextMeshProUGUI>().text = "x" + haveNum.ToString();
     }
 
     public void SetSetNum() {
-        if(setNum > 0)
+        if (setNum > 0) {
             transform.Find("HaveNum").gameObject.SetActive(true);
+            transform.Find("HaveNum").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, setNum.ToString(), false);
+        }
         else
             transform.Find("HaveNum").gameObject.SetActive(false);
-        transform.Find("HaveNum/Value").GetComponent<TMPro.TextMeshProUGUI>().text = "x" + setNum.ToString();
+        
     }
 
     public void CardSet() {
@@ -258,9 +262,9 @@ public class EditCardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
                 transform.Find("HaveNum").gameObject.SetActive(true);
                 cardObject.Find("Disabled").gameObject.SetActive(false);
                 if (haveNum > 0)
-                    transform.Find("HaveNum/Value").GetComponent<TMPro.TextMeshProUGUI>().text = "x" + haveNum.ToString();
+                    transform.Find("HaveNum").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, haveNum.ToString(), false);
                 if (setNum > 0)
-                    transform.Find("HaveNum/Value").GetComponent<TMPro.TextMeshProUGUI>().text = "x" + setNum.ToString();
+                    transform.Find("HaveNum").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, setNum.ToString(), false);
             }
             else {
                 DisableCard(true);
