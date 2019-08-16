@@ -1,187 +1,181 @@
 
 background_fire_effact.png
-size: 1024,1024
+size: 1024,512
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 background00
   rotate: false
-  xy: 0, 512
-  size: 256, 256
-  orig: 256, 256
+  xy: 0, 256
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
 background01
   rotate: false
-  xy: 256, 768
-  size: 256, 256
-  orig: 256, 256
+  xy: 128, 384
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
 background02
   rotate: false
-  xy: 0, 256
-  size: 256, 256
-  orig: 256, 256
+  xy: 0, 128
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
 background03
   rotate: false
   xy: 0, 0
-  size: 256, 256
-  orig: 256, 256
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
 background04
   rotate: false
-  xy: 256, 512
-  size: 256, 256
-  orig: 256, 256
+  xy: 128, 256
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
 background05
   rotate: false
-  xy: 512, 768
-  size: 256, 256
-  orig: 256, 256
+  xy: 256, 384
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
 background06
   rotate: false
-  xy: 768, 768
-  size: 256, 256
-  orig: 256, 256
+  xy: 128, 128
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
 background07
   rotate: false
-  xy: 256, 256
-  size: 256, 256
-  orig: 256, 256
+  xy: 128, 0
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
 background08
   rotate: false
-  xy: 256, 0
-  size: 256, 256
-  orig: 256, 256
+  xy: 256, 256
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
 background09
   rotate: false
-  xy: 512, 512
-  size: 256, 256
-  orig: 256, 256
+  xy: 384, 384
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
 background10
   rotate: false
-  xy: 768, 512
-  size: 256, 256
-  orig: 256, 256
+  xy: 256, 128
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
 background11
   rotate: false
-  xy: 512, 256
-  size: 256, 256
-  orig: 256, 256
+  xy: 256, 0
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
 background12
   rotate: false
-  xy: 512, 0
-  size: 256, 256
-  orig: 256, 256
+  xy: 384, 256
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
 background13
   rotate: false
-  xy: 768, 256
-  size: 256, 256
-  orig: 256, 256
+  xy: 512, 384
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
 background14
   rotate: false
-  xy: 768, 0
-  size: 256, 256
-  orig: 256, 256
+  xy: 384, 128
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
-background24
-  rotate: false
-  xy: 0, 768
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: -1
-
-background_fire_effact2.png
-size: 1024,1024
-format: RGBA8888
-filter: Linear,Linear
-repeat: none
 background15
   rotate: false
-  xy: 0, 768
-  size: 256, 256
-  orig: 256, 256
+  xy: 384, 0
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
 background16
   rotate: false
-  xy: 0, 512
-  size: 256, 256
-  orig: 256, 256
+  xy: 512, 256
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
 background17
   rotate: false
-  xy: 256, 768
-  size: 256, 256
-  orig: 256, 256
+  xy: 640, 384
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
 background18
   rotate: false
-  xy: 0, 256
-  size: 256, 256
-  orig: 256, 256
+  xy: 512, 128
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
 background19
   rotate: false
-  xy: 0, 0
-  size: 256, 256
-  orig: 256, 256
+  xy: 512, 0
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
 background20
   rotate: false
-  xy: 256, 512
-  size: 256, 256
-  orig: 256, 256
+  xy: 640, 256
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
 background21
   rotate: false
-  xy: 512, 768
-  size: 256, 256
-  orig: 256, 256
+  xy: 768, 384
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
 background22
   rotate: false
-  xy: 768, 768
-  size: 256, 256
-  orig: 256, 256
+  xy: 896, 384
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
 background23
   rotate: false
-  xy: 256, 256
-  size: 256, 256
-  orig: 256, 256
+  xy: 640, 128
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+background24
+  rotate: false
+  xy: 0, 384
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1

@@ -343,7 +343,8 @@ namespace SkillModules {
 
         private async void WaitEffect(GameObject target, int amount) {
             await System.Threading.Tasks.Task.Delay(1500);
-            target.GetComponent<PlaceMonster>().CheckHP();
+            if (target != null)
+                target.GetComponent<PlaceMonster>().CheckHP();
             skillHandler.finallyDone = true;
         }
     }

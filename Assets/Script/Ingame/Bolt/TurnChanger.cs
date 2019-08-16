@@ -21,6 +21,11 @@ public class TurnChanger : MonoBehaviour {
             UnityEngine.SceneManagement.SceneManager.GetActiveScene()
         ).Set("CurrentTurn", turn.ToString());
 
+        StartCoroutine(InvokeTurnChanged());
+    }
+
+    private IEnumerator InvokeTurnChanged() {
+        yield return new WaitForSeconds(1.0f);
         onTurnChanged.Invoke();
     }
 

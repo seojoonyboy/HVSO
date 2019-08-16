@@ -96,6 +96,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
 
 
     public void OnEndDrag(PointerEventData eventData) {
+        EffectSystem.Instance.IncreaseFadeAlpha();
         if (heroCardActivate) {
             heroCardInfo.SetActive(true);
             if (transform.position.y < -3.5f) {
@@ -111,16 +112,15 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
                     //var abilities = GetComponents<MagicalCasting>();
                     //foreach (MagicalCasting ability in abilities) ability.RequestUseMagic();
                     object[] parms = new object[] { true, gameObject };
-                    skillHandler.socketDone = false;
-
-                    PlayMangement.instance.LockTurnOver();
-                    PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
-                    skillHandler.RemoveTriggerEvent();
+                    transform.Find("CardInfoWindow").gameObject.SetActive(false);
+                    StartCoroutine(UseSkillCard(parms));
                     //if (GetComponents<Ability>() == null) UseCard();
                 }
-                highlighted = false;
-                CardDropManager.Instance.HighLightMagicSlot(highlightedSlot, highlighted);
-                highlightedSlot = null;
+                else {
+                    highlighted = false;
+                    CardDropManager.Instance.HighLightMagicSlot(highlightedSlot, highlighted);
+                    highlightedSlot = null;
+                }
                 if (!cardUsed) {
                     transform.localScale = new Vector3(1, 1, 1);
                     transform.localPosition = new Vector3(0, 0, 0);
@@ -161,18 +161,42 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         }
         CardDropManager.Instance.HideMagicSlot();
         CardInfoOnDrag.instance.OffCardDragInfo();
-        PlayMangement.instance.infoOn = true;
+        PlayMangement.instance.infoOn = false;
     }
 
-    IEnumerator UseSkillCard(object[] parms) {
+    IEnumerator UseSkillCardExceptInfo(object[] parms) {
         skillHandler.socketDone = false;
-        PlayMangement.dragable = false;
         PlayMangement.instance.LockTurnOver();
-        yield return StartCoroutine(PlayMangement.instance.cardHandManager.ShowUsedMagicCard(transform.parent.GetSiblingIndex()));
+        yield return EffectSystem.Instance.HeroCutScene(PlayMangement.instance.player.isHuman);
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
         highlighted = false;
         CardDropManager.Instance.HighLightMagicSlot(highlightedSlot, highlighted);
         highlightedSlot = null;
         skillHandler.RemoveTriggerEvent();
     }
+
+
+    IEnumerator UseSkillCard(object[] parms) {
+        skillHandler.socketDone = false;
+        PlayMangement.dragable = false;
+        PlayMangement.instance.LockTurnOver();        
+        yield return PlayMangement.instance.cardHandManager.ShowUsedCard(transform.parent.GetSiblingIndex(), gameObject);
+        if (cardData.hero_chk == true) {
+            HideCardImage();
+            yield return EffectSystem.Instance.HeroCutScene(PlayMangement.instance.player.isHuman);            
+        }
+        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
+        highlighted = false;
+        CardDropManager.Instance.HighLightMagicSlot(highlightedSlot, highlighted);
+        highlightedSlot = null;        
+        skillHandler.RemoveTriggerEvent();
+    }
+
+    private void HideCardImage() {
+        transform.Find("GlowEffect").gameObject.SetActive(false);
+        transform.Find("Portrait").gameObject.SetActive(false);
+        transform.Find("BackGround").gameObject.SetActive(false);
+        transform.Find("Cost").gameObject.SetActive(false);
+    }
+
 }

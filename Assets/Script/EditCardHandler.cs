@@ -3,6 +3,8 @@ using UnityEngine.EventSystems;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using Spine;
+using Spine.Unity;
 
 public class EditCardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
     public string cardID;
@@ -29,6 +31,7 @@ public class EditCardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
     static GameObject draggingObject;
     public string editBookRoot = "";
+    public static bool onAnimation = false;
     public static bool dragable = true;
     public static bool dragging = false;
 
@@ -126,7 +129,8 @@ public class EditCardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
             }
             transform.localPosition = startLocalPos;
         }
-        dragable = true;
+        if(!onAnimation)
+            dragable = true;
     }
 
     public void SortHandPos() {
@@ -142,7 +146,10 @@ public class EditCardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     }
 
     public void ShowAddedCardPos() {
-        if (deckEditController.setCardList.ContainsKey(cardData.id)) return;
+        if (deckEditController.setCardList.ContainsKey(cardData.id)) {
+            StartCoroutine(DuplicatedCardSet());
+            return;
+        }
         else {
             int handCardNum = deckEditController.setCardList.Count;
             if (handCardNum > 3) {
@@ -151,24 +158,41 @@ public class EditCardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         }
     }
 
+    IEnumerator DuplicatedCardSet() {
+        onAnimation = true;
+        Transform targetCard = deckEditController.setCardList[cardData.id].transform;
+        mouseObject = targetCard.parent.parent.Find("MousePos");
+        mouseObject.transform.position = targetCard.position;
+        targetCard.parent.SetParent(mouseObject);
+        if (targetCard.position.x != 0) {
+            iTween.MoveTo(mouseObject.gameObject, iTween.Hash("x", 0, "islocal", true, "time", 0.2f));
+            yield return new WaitForSeconds(0.25f);
+        }
+        targetCard.parent.SetParent(mouseObject.parent);
+        onAnimation = false;
+        dragable = true;
+    }
+
     public void SetHaveNum() {
         if (haveNum > 0) {
             DisableCard(false);
             transform.Find("HaveNum").gameObject.SetActive(true);
+            transform.Find("HaveNum").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, haveNum.ToString(), false);
         }
         else {
             DisableCard(true);
             transform.Find("HaveNum").gameObject.SetActive(false);
         }
-        transform.Find("HaveNum/Value").GetComponent<TMPro.TextMeshProUGUI>().text = "x" + haveNum.ToString();
     }
 
     public void SetSetNum() {
-        if(setNum > 0)
+        if (setNum > 0) {
             transform.Find("HaveNum").gameObject.SetActive(true);
+            transform.Find("HaveNum").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, setNum.ToString(), false);
+        }
         else
             transform.Find("HaveNum").gameObject.SetActive(false);
-        transform.Find("HaveNum/Value").GetComponent<TMPro.TextMeshProUGUI>().text = "x" + setNum.ToString();
+        
     }
 
     public void CardSet() {
@@ -202,7 +226,7 @@ public class EditCardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         cardObject.Find("Portrait").GetComponent<Image>().sprite = portraitImage;
         if (!cardData.isHeroCard) {
             cardObject.Find("BackGround").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground[cardData.type + "_" + cardData.rarelity];
-            cardObject.Find("Name").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground["name_" + cardData.rarelity];
+            //cardObject.Find("Name").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground["name_" + cardData.rarelity];
         }
         else {
             string race;
@@ -211,7 +235,7 @@ public class EditCardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
             else
                 race = "_orc";
             cardObject.Find("BackGround").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground["hero_" + cardData.rarelity + race];
-            cardObject.Find("Name").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground["hero_" + cardData.rarelity + race + "_name"];
+            //cardObject.Find("Name").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground["hero_" + cardData.rarelity + race + "_name"];
         }
 
         if (cardData.type == "unit") {
@@ -232,15 +256,15 @@ public class EditCardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         }
         cardObject.Find("Cost/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.cost.ToString();
         //cardObject.Find("Class").GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[cardData.cardClasses[0]];
-        cardObject.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.name;
+        //cardObject.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.name;
         if (!cardData.isHeroCard) {
             if (haveNum > 0 || setNum > 0) {
                 transform.Find("HaveNum").gameObject.SetActive(true);
                 cardObject.Find("Disabled").gameObject.SetActive(false);
                 if (haveNum > 0)
-                    transform.Find("HaveNum/Value").GetComponent<TMPro.TextMeshProUGUI>().text = "x" + haveNum.ToString();
+                    transform.Find("HaveNum").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, haveNum.ToString(), false);
                 if (setNum > 0)
-                    transform.Find("HaveNum/Value").GetComponent<TMPro.TextMeshProUGUI>().text = "x" + setNum.ToString();
+                    transform.Find("HaveNum").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, setNum.ToString(), false);
             }
             else {
                 DisableCard(true);

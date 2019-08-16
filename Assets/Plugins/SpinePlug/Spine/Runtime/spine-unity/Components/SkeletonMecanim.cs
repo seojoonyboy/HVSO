@@ -159,8 +159,10 @@ namespace Spine.Unity {
 			}
 
 			public void Apply (Skeleton skeleton) {
-				if (layerMixModes.Length < animator.layerCount)
+				if (layerMixModes.Length < animator.layerCount) {
 					System.Array.Resize<MixMode>(ref layerMixModes, animator.layerCount);
+					layerMixModes[animator.layerCount-1] = MixMode.SpineStyle;
+				}
 
 			#if UNITY_EDITOR
 				if (!Application.isPlaying) {
@@ -367,7 +369,7 @@ namespace Spine.Unity {
 				for (int layer = 0, n = animator.layerCount; layer < n; ++layer) {
 					var controller = animator.runtimeAnimatorController as UnityEditor.Animations.AnimatorController;
 					if (controller != null) {
-						layerBlendModes[layer] = MixBlend.Replace;
+						layerBlendModes[layer] = MixBlend.First;
 						if (layer > 0) {
 							layerBlendModes[layer] = controller.layers[layer].blendingMode == UnityEditor.Animations.AnimatorLayerBlendingMode.Additive ?
 								MixBlend.Add : MixBlend.Replace;

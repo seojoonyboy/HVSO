@@ -129,13 +129,16 @@ public partial class CardHandler : MonoBehaviour {
             if (gameObject.name == "UnitCard") {
                 if (transform.Find("SkillIcon").gameObject.activeSelf) {
                     transform.Find("GlowEffect/HaveAbility").gameObject.SetActive(true);
+                    transform.Find("GlowEffect/HaveAbility").GetComponent<SkeletonGraphic>().color = new Color(1, 1, 1, 1);
                 }
                 else {
                     transform.Find("GlowEffect/NonAbility").gameObject.SetActive(true);
+                    transform.Find("GlowEffect/NonAbility").GetComponent<SkeletonGraphic>().color = new Color(1, 1, 1, 1);
                 }
             }
             else {
                 transform.Find("GlowEffect").gameObject.SetActive(true);
+                transform.Find("GlowEffect").GetComponent<SkeletonGraphic>().color = new Color(1, 1, 1, 1);
             }
             clm.AddMulliganCardInfo(cardData, cardID);
             firstDraw = true;
@@ -364,6 +367,7 @@ public partial class CardHandler : MonoBehaviour {
         mouseXPos.position = new Vector3(mousePos.x, 0, 0);
         cardHand.transform.SetParent(mouseXPos);
         mouseLocalPos.position = transform.position;
+        EffectSystem.Instance.DecreaseFadeAlpha();
     }
 
     protected void OnDragCard() {

@@ -1,0 +1,216 @@
+
+h10001_skillcut.png
+size: 2048,2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+cut
+  rotate: false
+  xy: 2, 1402
+  size: 519, 234
+  orig: 519, 234
+  offset: 0, 0
+  index: -1
+cut_effect
+  rotate: false
+  xy: 2, 1638
+  size: 622, 237
+  orig: 622, 237
+  offset: 0, 0
+  index: -1
+idle_png/idle_16
+  rotate: false
+  xy: 1720, 1187
+  size: 315, 343
+  orig: 350, 345
+  offset: 17, 1
+  index: -1
+idle_png/idle_17
+  rotate: false
+  xy: 1726, 496
+  size: 319, 343
+  orig: 350, 345
+  offset: 15, 1
+  index: -1
+idle_png/idle_18
+  rotate: true
+  xy: 697, 182
+  size: 321, 343
+  orig: 350, 345
+  offset: 14, 1
+  index: -1
+idle_png/idle_19
+  rotate: true
+  xy: 1042, 180
+  size: 325, 343
+  orig: 350, 345
+  offset: 12, 1
+  index: -1
+idle_png/idle_20
+  rotate: true
+  xy: 1381, 511
+  size: 328, 343
+  orig: 350, 345
+  offset: 11, 1
+  index: -1
+idle_png/idle_21
+  rotate: true
+  xy: 1036, 507
+  size: 331, 343
+  orig: 350, 345
+  offset: 9, 1
+  index: -1
+idle_png/idle_22
+  rotate: false
+  xy: 1045, 840
+  size: 334, 343
+  orig: 350, 345
+  offset: 8, 1
+  index: -1
+idle_png/idle_23
+  rotate: false
+  xy: 697, 505
+  size: 337, 343
+  orig: 350, 345
+  offset: 6, 1
+  index: -1
+idle_png/idle_24
+  rotate: false
+  xy: 1379, 1187
+  size: 339, 343
+  orig: 350, 345
+  offset: 5, 1
+  index: -1
+idle_png/idle_25
+  rotate: false
+  xy: 353, 365
+  size: 342, 343
+  orig: 350, 345
+  offset: 4, 1
+  index: -1
+idle_png/idle_26
+  rotate: false
+  xy: 1671, 1532
+  size: 344, 343
+  orig: 350, 345
+  offset: 3, 1
+  index: -1
+idle_png/idle_27
+  rotate: false
+  xy: 1323, 1532
+  size: 346, 343
+  orig: 350, 345
+  offset: 2, 1
+  index: -1
+idle_png/idle_28
+  rotate: false
+  xy: 2, 19
+  size: 348, 343
+  orig: 350, 345
+  offset: 1, 1
+  index: -1
+idle_png/idle_29
+  rotate: false
+  xy: 2, 1056
+  size: 349, 344
+  orig: 350, 345
+  offset: 0, 1
+  index: -1
+idle_png/idle_30
+  rotate: false
+  xy: 2, 710
+  size: 349, 344
+  orig: 350, 345
+  offset: 0, 1
+  index: -1
+idle_png/idle_31
+  rotate: false
+  xy: 2, 364
+  size: 349, 344
+  orig: 350, 345
+  offset: 0, 1
+  index: -1
+idle_png/idle_32
+  rotate: false
+  xy: 626, 1531
+  size: 347, 344
+  orig: 350, 345
+  offset: 1, 1
+  index: -1
+idle_png/idle_33
+  rotate: false
+  xy: 975, 1531
+  size: 346, 344
+  orig: 350, 345
+  offset: 2, 1
+  index: -1
+idle_png/idle_34
+  rotate: false
+  xy: 353, 1056
+  size: 344, 344
+  orig: 350, 345
+  offset: 3, 1
+  index: -1
+idle_png/idle_35
+  rotate: false
+  xy: 353, 710
+  size: 342, 344
+  orig: 350, 345
+  offset: 4, 1
+  index: -1
+idle_png/idle_36
+  rotate: false
+  xy: 699, 1185
+  size: 339, 344
+  orig: 350, 345
+  offset: 5, 1
+  index: -1
+idle_png/idle_37
+  rotate: false
+  xy: 1040, 1185
+  size: 337, 344
+  orig: 350, 345
+  offset: 6, 1
+  index: -1
+idle_png/idle_38
+  rotate: true
+  xy: 699, 850
+  size: 333, 344
+  orig: 350, 345
+  offset: 8, 1
+  index: -1
+idle_png/idle_39
+  rotate: false
+  xy: 1381, 841
+  size: 331, 344
+  orig: 350, 345
+  offset: 9, 1
+  index: -1
+idle_png/idle_40
+  rotate: false
+  xy: 1714, 841
+  size: 327, 344
+  orig: 350, 345
+  offset: 11, 1
+  index: -1
+idle_png/idle_41
+  rotate: false
+  xy: 1387, 165
+  size: 325, 344
+  orig: 350, 345
+  offset: 12, 1
+  index: -1
+idle_png/idle_42
+  rotate: false
+  xy: 1714, 150
+  size: 321, 344
+  orig: 350, 345
+  offset: 14, 1
+  index: -1
+light
+  rotate: false
+  xy: 2, 2
+  size: 121, 15
+  orig: 121, 15
+  offset: 0, 0
+  index: -1

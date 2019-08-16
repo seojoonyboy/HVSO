@@ -104,8 +104,9 @@ namespace Spine.Unity {
 					state.ClearTrack(0);
 				} else {
 					var animationObject = skeletonDataAsset.GetSkeletonData(false).FindAnimation(value);
-					if (animationObject != null)
-						state.SetAnimation(0, animationObject, loop);
+                    if (animationObject != null) {
+                        state.SetAnimation(0, animationObject, loop);
+                    }
 				}
 			}
 		}
@@ -157,24 +158,23 @@ namespace Spine.Unity {
 			if (!string.IsNullOrEmpty(_animationName)) {
 				var animationObject = skeletonDataAsset.GetSkeletonData(false).FindAnimation(_animationName);
 				if (animationObject != null) {
-					animationObject.PoseSkeleton(skeleton, 0f);
-					skeleton.UpdateWorldTransform();
-
+					state.SetAnimation(0, animationObject, loop);
 					#if UNITY_EDITOR
-					if (Application.isPlaying) {
-					#endif
-
-						// In Unity Editor edit mode, make this block not run.
-						state.SetAnimation(0, animationObject, loop);
-
-					#if UNITY_EDITOR
-					}
+					if (!Application.isPlaying)
+						Update(0f);
 					#endif
 				}
 			}
 		}
 
 		void Update () {
+			#if UNITY_EDITOR
+			if (!Application.isPlaying) {
+				Update(0f);
+				return;
+			}
+			#endif
+
 			Update(Time.deltaTime);
 		}
 

@@ -40,11 +40,12 @@ public partial class UnitDragHandler : CardHandler, IBeginDragHandler, IDragHand
         if (gameObject != itsDragging) return;
         OnDragCard();
         CheckLocation();
-        CardInfoOnDrag.instance.SetInfoPosOnDrag(mouseLocalPos.localPosition);
+        CardInfoOnDrag.instance.SetInfoPosOnDrag(mouseLocalPos.localPosition, true);
         CheckHighlight();
     }
 
     public void OnEndDrag(PointerEventData eventData) {
+        EffectSystem.Instance.IncreaseFadeAlpha();
         if (firstDraw) return;
         if (gameObject != itsDragging) return;
         CheckLocation(true);
@@ -57,18 +58,9 @@ public partial class UnitDragHandler : CardHandler, IBeginDragHandler, IDragHand
             highlightedSlot = null;
         }
         else if(isMyTurn(false)) {
-            GameObject unitPref = CardDropManager.Instance.DropUnit(gameObject, CheckSlot());
-            if (unitPref != null) {
-                var cardData = GetComponent<CardHandler>().cardData;
-
-                SkillModules.SkillHandler skillHandler = new SkillModules.SkillHandler();
-                skillHandler.Initialize(cardData.skills, unitPref, true);
-                unitPref.GetComponent<PlaceMonster>().skillHandler = skillHandler;
-
-                object[] parms = new object[] { true, unitPref };
-                PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
-                PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.FIELD_CHANGED, null, null);
-            }
+            Transform slot = CheckSlot();
+            if (slot != null && slot.childCount <= 1)
+                StartCoroutine(SummonUnit(slot));
         }
         handManager.transform.SetParent(mouseXPos.parent);
         if (!cardUsed) {
@@ -78,5 +70,24 @@ public partial class UnitDragHandler : CardHandler, IBeginDragHandler, IDragHand
         }
         CardDropManager.Instance.HideDropableSlot();
         CardInfoOnDrag.instance.OffCardDragInfo();
+    }
+
+    IEnumerator SummonUnit(Transform slot) {
+        PlayMangement.dragable = false;
+
+        yield return PlayMangement.instance.cardHandManager.ShowUsedCard(transform.parent.GetSiblingIndex(), gameObject);
+        GameObject unitPref = CardDropManager.Instance.DropUnit(gameObject, slot);
+        if (unitPref != null) {
+            var cardData = GetComponent<CardHandler>().cardData;
+
+            SkillModules.SkillHandler skillHandler = new SkillModules.SkillHandler();
+            skillHandler.Initialize(cardData.skills, unitPref, true);
+            unitPref.GetComponent<PlaceMonster>().skillHandler = skillHandler;
+
+            object[] parms = new object[] { true, unitPref };
+            PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
+            PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.FIELD_CHANGED, null, null);
+        }
+        PlayMangement.dragable = true;
     }
 }

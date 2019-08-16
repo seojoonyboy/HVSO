@@ -136,6 +136,11 @@ public class DeckEditController : MonoBehaviour
     }
 
     public void CancelButton() {
+        transform.Find("CancelWindow").gameObject.SetActive(true);
+    }
+
+    public void CancelEdit() {
+        transform.Find("CancelWindow").gameObject.SetActive(false);
         setCardList = null;
         gameObject.SetActive(false);
         if (templateMenu != null)
@@ -144,6 +149,10 @@ public class DeckEditController : MonoBehaviour
         deckNamePanel.transform.Find("NameTemplate").Find("Text").GetComponent<Text>().text = "";
 
         FindObjectOfType<HUDController>().SetHeader(HUDController.Type.SHOW_USER_INFO);
+    }
+
+    public void ResumeEdit() {
+        transform.Find("CancelWindow").gameObject.SetActive(false);
     }
     
 
@@ -244,6 +253,10 @@ public class DeckEditController : MonoBehaviour
 
     public void RefreshLine() {
         setCardText.text = setCardNum.ToString() + "/40";
+        if(setCardNum == 0)
+            transform.Find("DeckImage/EmptyHand").gameObject.SetActive(true);
+        else
+            transform.Find("DeckImage/EmptyHand").gameObject.SetActive(false);
         Canvas.ForceUpdateCanvases();
         LayoutRebuilder.ForceRebuildLayoutImmediate(settingLayout.GetComponent<RectTransform>());
     }

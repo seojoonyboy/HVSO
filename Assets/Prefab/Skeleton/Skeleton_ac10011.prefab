@@ -24,8 +24,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4513589866841206303}
-  m_LocalRotation: {x: 0, y: 0, z: 0.0000960498, w: 1}
-  m_LocalPosition: {x: 0.0061349114, y: 2.710929, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.0087866355, y: 2.4216113, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6077583352515283629}
@@ -124,8 +124,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7464935800150296300}
-  m_LocalRotation: {x: 0, y: 0, z: 0.00000012846922, w: 1}
-  m_LocalPosition: {x: 0.001377713, y: 1.8694227, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.0020048546, y: 1.2194631, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6077583352515283629}
@@ -244,7 +244,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: 190abb725bcbdc641abc5bfc10adcea3, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: 5101b6aaa05373d409871d0e9d05ccb5, type: 2}
   initialSkinName: 
   initialFlipX: 0
   initialFlipY: 0

@@ -29,6 +29,8 @@ public class DeadSpine : MonoBehaviour
         EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.DEAD, transform.position);
         Destroy(target, 0.05f);
 
+        SoundManager.Instance.PlaySound(SoundType.DEAD);
+
         skeletonAnimation = GetComponent<SkeletonAnimation>();
         spineAnimationState = skeletonAnimation.AnimationState;
         //spineAnimationState.Event += AnimationEvent;

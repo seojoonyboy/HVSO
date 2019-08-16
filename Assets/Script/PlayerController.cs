@@ -97,7 +97,7 @@ public class PlayerController : MonoBehaviour
             if (isPlayer == true) {
                 float reverse = hero.transform.localScale.x * -1f;
                 hero.transform.localScale = new Vector3(reverse, hero.transform.localScale.y, hero.transform.localScale.z);
-                heroSpine.GetComponent<MeshRenderer>().sortingOrder = 14;
+                heroSpine.GetComponent<MeshRenderer>().sortingOrder = 19;
                 hero.transform.localPosition = new Vector3(0, 1, 0);
                 hero.transform.localScale = new Vector3(-1, 1, 1);
             }
@@ -115,7 +115,7 @@ public class PlayerController : MonoBehaviour
             if (isPlayer == true) {
                 float reverse = hero.transform.localScale.x * -1f;
                 hero.transform.localScale = new Vector3(reverse, hero.transform.localScale.y, hero.transform.localScale.z);
-                heroSpine.GetComponent<MeshRenderer>().sortingOrder = 14;
+                heroSpine.GetComponent<MeshRenderer>().sortingOrder = 19;
                 hero.transform.localPosition = new Vector3(0, 1, 0);
                 hero.transform.localScale = new Vector3(-1, 1, 1);
             }
@@ -124,6 +124,8 @@ public class PlayerController : MonoBehaviour
 
             
         }
+        if (!isPlayer)
+            transform.Find("FightSpine").localPosition = new Vector3(0, 3, 0);
 
         SetShield();
         shieldCount = 3;
@@ -223,7 +225,10 @@ public class PlayerController : MonoBehaviour
                 amount = 0;
             }
 
-            HP.Value -= amount;
+            if (HP.Value >= amount)
+                HP.Value -= amount;
+            else
+                HP.Value -= HP.Value;
 
             if (HP.Value > 0)
                 SetState(HeroState.HIT);
@@ -295,7 +300,11 @@ public class PlayerController : MonoBehaviour
     
 
     public void TakeIgnoreShieldDamage(int amount, bool isMagic = false, string skillId= null) {
-        HP.Value -= amount;
+
+        if (HP.Value >= amount)
+            HP.Value -= amount;
+        else
+            HP.Value -= HP.Value;
 
         if (isMagic == true)
             EffectForPlayer(-amount, skillId);
@@ -317,6 +326,7 @@ public class PlayerController : MonoBehaviour
 
         if (myTurn == true && !dragCard) {
             //PlayMangement.instance.OnNoCostEffect(false);
+            myTurn = false;
             PlayMangement.instance.GetPlayerTurnRelease();
             if(isHuman == PlayMangement.instance.player.isHuman)
                 PlayMangement.instance.socketHandler.TurnOver();

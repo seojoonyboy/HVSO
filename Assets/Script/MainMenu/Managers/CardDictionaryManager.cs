@@ -13,28 +13,33 @@ public class CardDictionaryManager : MonoBehaviour {
     [SerializeField] Transform sortingModal;
     [SerializeField] TMPro.TextMeshProUGUI cardNum;
     [SerializeField] HUDController hudController;
-    
+    [SerializeField] MyDecksLoader myDecksLoader;
 
     [SerializeField] Sprite orcPanelBg, humanPanelBg;
 
     bool isHumanDictionary;
     SortingOptions selectedSortOption;
 
+    void Awake() {
+        myDecksLoader.OnTemplateLoadFinished.AddListener(() => {
+            SetToHumanCards();
+        });
+    }
+
     private void Start() {
         Transform classList = cardList.Find("CardsByCost");
         for(int i = 0; i < classList.childCount; i++) 
             classList.GetChild(i).Find("Header/Info/Image").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = i.ToString();
-        gameObject.SetActive(false);
     }
 
     public void CloseDictionaryCanvas() {
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
     }
 
     public void SetToHumanCards() {
         isHumanDictionary = true;
-        transform.Find("Buttons/OrcSelect").GetChild(0).gameObject.SetActive(false);
-        transform.Find("Buttons/HumanSelect").GetChild(0).gameObject.SetActive(true);
+        transform.Find("Content/Buttons/OrcSelect").GetChild(0).gameObject.SetActive(false);
+        transform.Find("Content/Buttons/HumanSelect").GetChild(0).gameObject.SetActive(true);
         heroCards.parent.Find("Background").GetComponent<Image>().sprite = humanPanelBg;
 
         SetCardsByClass();
@@ -42,11 +47,29 @@ public class CardDictionaryManager : MonoBehaviour {
 
     public void SetToOrcCards() {
         isHumanDictionary = false;
-        transform.Find("Buttons/OrcSelect").GetChild(0).gameObject.SetActive(true);
-        transform.Find("Buttons/HumanSelect").GetChild(0).gameObject.SetActive(false);
+        transform.Find("Content/Buttons/OrcSelect").GetChild(0).gameObject.SetActive(true);
+        transform.Find("Content/Buttons/HumanSelect").GetChild(0).gameObject.SetActive(false);
         heroCards.parent.Find("Background").GetComponent<Image>().sprite = orcPanelBg;
 
         SetCardsByClass();
+    }
+
+    private void UpdateContentHeight() {
+        float tmp = 1428f;
+        Transform activatedTf = null;
+        foreach(Transform tf in cardList) {
+            if (tf.gameObject.activeSelf) {
+                activatedTf = tf;
+            }
+        }
+
+        if (activatedTf == null) return;
+        float height = activatedTf.GetComponent<RectTransform>().rect.height;
+        float result = height + tmp;
+        //Debug.Log("result : " + (result).ToString());
+        transform.Find("Content").GetComponent<RectTransform>().sizeDelta = new Vector2(1080, result);
+        activatedTf.GetComponent<RectTransform>().anchoredPosition = new Vector2(activatedTf.GetComponent<RectTransform>().anchoredPosition.x, 0);
+        GetComponent<ScrollRect>().normalizedPosition = new Vector2(0, 1);
     }
 
     public void OpenSortModal() {
@@ -150,7 +173,6 @@ public class CardDictionaryManager : MonoBehaviour {
         int totalCount = 0;
         int haveCount = 0;
         Transform classList = cardList.Find("CardsByClass");
-        cardList.parent.GetComponent<ScrollRect>().content = classList.GetComponent<RectTransform>();
         classList.gameObject.SetActive(true);
         foreach (dataModules.CollectionCard card in AccountManager.Instance.allCards) {
             if (card.isHeroCard) continue;
@@ -179,7 +201,6 @@ public class CardDictionaryManager : MonoBehaviour {
         int totalCount = 0;
         int haveCount = 0;
         Transform rarelityList = cardList.Find("CardsByRarelity");
-        cardList.parent.GetComponent<ScrollRect>().content = rarelityList.GetComponent<RectTransform>();
         rarelityList.gameObject.SetActive(true);
         if (descending) {
             rarelityList.Find("legend").SetSiblingIndex(0);
@@ -221,7 +242,6 @@ public class CardDictionaryManager : MonoBehaviour {
         int totalCount = 0;
         int haveCount = 0;
         Transform costList = cardList.Find("CardsByCost");
-        cardList.parent.GetComponent<ScrollRect>().content = costList.GetComponent<RectTransform>();
         costList.gameObject.SetActive(true);
         if (descending) {
             for (int i = 0; i < costList.childCount; i++)
@@ -253,10 +273,12 @@ public class CardDictionaryManager : MonoBehaviour {
     }
 
     public void RefreshLine() {
-
         Canvas.ForceUpdateCanvases();
-        for(int i = 0; i < 3; i++) 
+        for(int i = 0; i < 3; i++) {
             LayoutRebuilder.ForceRebuildLayoutImmediate(cardList.GetChild(i).GetComponent<RectTransform>());
+        }   
+
+        Invoke("UpdateContentHeight", 0.25f);
     }
 
     public void SetHeroButtons() {

@@ -95,7 +95,8 @@ public class UnitSpine : MonoBehaviour
         }
     }
 
-    public virtual void Appear() {        
+    public virtual void Appear() {
+        skeletonAnimation.skeleton.SetSlotsToSetupPose();
         TrackEntry entry;
         entry = spineAnimationState.SetAnimation(0, appearAnimationName, false);
         currentAnimationName = appearAnimationName;
