@@ -483,8 +483,11 @@ public class CardHandManager : MonoBehaviour {
             atk.text = cardData.attack.ToString();
             skillIcon = card.transform.Find("SkillIcon").GetComponent<Image>();
         }
-        
-        portrait.sprite = AccountManager.Instance.resource.cardPortraite[cardData.cardId];
+
+        if (isUnit == true && (cardData.attributes.Length > 0 && cardData.attributes[0] == "ambush")) 
+            portrait.sprite = AccountManager.Instance.resource.cardPortraite["unknown"];        
+        else
+            portrait.sprite = AccountManager.Instance.resource.cardPortraite[cardData.cardId];
 
         if (cardData.attributes.Length == 0 && cardData.attackTypes.Length == 0 && isUnit) skillIcon.gameObject.SetActive(false);
 
