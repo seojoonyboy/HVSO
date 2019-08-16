@@ -202,7 +202,6 @@ public class DeckEditController : MonoBehaviour
         currentPage--;
         ownCardLayout.GetChild(currentPage).gameObject.SetActive(true);
         buttons.Find("NextPageButton").gameObject.SetActive(true);
-        pagenumText.text = (currentPage + 1).ToString() + maxPage;
         if (currentPage - 1 < 0) {
             buttons.Find("PrevPageButton").gameObject.SetActive(false);
             return;
@@ -222,6 +221,9 @@ public class DeckEditController : MonoBehaviour
         }
         setCardNum--;
         haveCardNum++;
+        ownCardLayout.GetChild(currentPage).gameObject.SetActive(false);
+        currentPage = beforeCard.transform.parent.parent.GetSiblingIndex();
+        ownCardLayout.GetChild(currentPage).gameObject.SetActive(true);
         RefreshLine();
     }
 
@@ -253,7 +255,8 @@ public class DeckEditController : MonoBehaviour
 
     public void RefreshLine() {
         setCardText.text = setCardNum.ToString() + "/40";
-        if(setCardNum == 0)
+        pagenumText.text = (currentPage + 1).ToString() + maxPage;
+        if (setCardNum == 0)
             transform.Find("DeckImage/EmptyHand").gameObject.SetActive(true);
         else
             transform.Find("DeckImage/EmptyHand").gameObject.SetActive(false);
