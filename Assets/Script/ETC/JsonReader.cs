@@ -10,6 +10,11 @@ namespace dataModules {
         }
     }
 
+    public class MyCardsInfo {
+        public CardInventory[] cardInventories;
+        public HeroInventory[] heroInventories;
+    }
+
     public class CardInventory : BaseCard {
         public Skill[] skills;
         public int cardCount;

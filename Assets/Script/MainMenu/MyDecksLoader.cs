@@ -24,6 +24,19 @@ public class MyDecksLoader : MonoBehaviour {
         accountManager.RequestMyDecks(OnDeckLoadFinished);
         accountManager.RequestHumanTemplates(OnHumanTemplateLoadFinished);
         accountManager.RequestOrcTemplates(OnOrcTemplateLoadFinished);
+        accountManager.RequestInventories(OnInventoryLoadFinished);
+    }
+
+    private void OnInventoryLoadFinished(HTTPRequest originalRequest, HTTPResponse response) {
+        if(response != null) {
+            if (response.StatusCode == 200 || response.StatusCode == 304) {
+                var result = JsonReader.Read<MyCardsInfo>(response.DataAsText);
+
+                accountManager.myCards = result.cardInventories;
+                accountManager.SetHeroInventories(result.heroInventories);
+                accountManager.SetCardData();
+            }
+        }
     }
 
     private void OnDeckLoadFinished(HTTPRequest originalRequest, HTTPResponse response) {

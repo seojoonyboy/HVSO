@@ -18,7 +18,7 @@ public partial class AccountManager : Singleton<AccountManager> {
 
     public string DEVICEID { get; private set; }
     public UserInfo userData { get; private set; }
-    public CardInventory[] myCards { get; private set; }
+    public CardInventory[] myCards;
 
     public List<Deck> humanDecks;
     public List<Deck> orcDecks;
@@ -29,7 +29,7 @@ public partial class AccountManager : Singleton<AccountManager> {
     public List<CollectionCard> allCards { get; private set; }
     public Dictionary<string, CollectionCard> allCardsDic { get; private set; }
 
-    public Dictionary<string, HeroInventory> myHeroInventories { get; private set; }
+    public Dictionary<string, HeroInventory> myHeroInventories;
     public CardDataPackage cardPackage;
 
     public ResourceManager resource;
@@ -57,7 +57,7 @@ public partial class AccountManager : Singleton<AccountManager> {
         NoneIngameSceneEventHandler.Instance.PostNotification(NoneIngameSceneEventHandler.EVENT_TYPE.NETWORK_EROR_OCCURED, this, errorCode);
     }
 
-    private void SetHeroInventories(HeroInventory[] data) {
+    public void SetHeroInventories(HeroInventory[] data) {
         myHeroInventories = new Dictionary<string, HeroInventory>();
         foreach (HeroInventory inventory in data) {
             myHeroInventories[inventory.heroId] = inventory;
@@ -374,6 +374,19 @@ public partial class AccountManager {
         request.AddHeader("authorization", TokenFormat);
 
         networkManager.Request(request, callback, "Human 템플릿을 불러오는중...");
+    }
+
+    public void RequestInventories(OnRequestFinishedDelegate callback = null) {
+        StringBuilder sb = new StringBuilder();
+        sb
+            .Append(networkManager.baseUrl)
+            .Append("api/user/inventories");
+
+        HTTPRequest request = new HTTPRequest(new Uri(sb.ToString()));
+        request.MethodType = HTTPMethods.Get;
+        request.AddHeader("authorization", TokenFormat);
+
+        networkManager.Request(request, callback, "인벤토리 정보를 불러오는 중...");
     }
 
     private void TestModifyDeck() {
