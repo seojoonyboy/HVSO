@@ -38,6 +38,8 @@ public class EffectSystem : SerializedMonoBehaviour {
         effect.name = effectObject[type].gameObject.name;
         effect.SetActive(true);
         SkeletonAnimation effectAnimation = effect.GetComponent<SkeletonAnimation>();
+        effectAnimation.Initialize(true);
+        effectAnimation.Update(0);
         effectAnimation.AnimationState.SetAnimation(0, "animation", false);
         effectAnimation.AnimationState.Complete += delegate (TrackEntry entry) { SetReadyObject(effect); };
         //Destroy(effect, effectAnimation.skeleton.Data.FindAnimation("animation").Duration - 0.1f);
@@ -51,6 +53,8 @@ public class EffectSystem : SerializedMonoBehaviour {
         effect.SetActive(true);
         effect.name = effectObject[type].gameObject.name;
         SkeletonAnimation effectAnimation = effect.GetComponent<SkeletonAnimation>();
+        effectAnimation.Initialize(true);
+        effectAnimation.Update(0);
         if (playerTransform != null && playerTransform.gameObject.GetComponent<PlayerController>().isPlayer == false)
             effect.GetComponent<MeshRenderer>().sortingOrder = 8;
         effectAnimation.AnimationState.SetAnimation(0, "animation", false);
@@ -74,6 +78,8 @@ public class EffectSystem : SerializedMonoBehaviour {
         effect.name = effectObject[type].gameObject.name;
         effect.SetActive(true);
         SkeletonAnimation effectAnimation = effect.GetComponent<SkeletonAnimation>();
+        effectAnimation.Initialize(true);
+        effectAnimation.Update(0);
         effectAnimation.AnimationState.SetAnimation(0, "animation", false);
         effectAnimation.AnimationState.Complete += delegate (TrackEntry entry) { callBack(); SetReadyObject(effect); };
     }
@@ -136,7 +142,8 @@ public class EffectSystem : SerializedMonoBehaviour {
             cutsceneAnimation = cutSceneCanvas.transform.Find("Orc").gameObject.GetComponent<SkeletonGraphic>();
         }
         cutsceneAnimation.Skeleton.SetSlotsToSetupPose();
-
+        cutsceneAnimation.Initialize(true);
+        cutsceneAnimation.Update(0);
         cutsceneAnimation.AnimationState.SetAnimation(0, "animation", false);
         yield return new WaitForSeconds(cutsceneAnimation.Skeleton.Data.FindAnimation("animation").Duration / 2);
         yield return FadeIn(0.6f, 0, cutsceneAnimation.Skeleton.Data.FindAnimation("animation").Duration / 2);
