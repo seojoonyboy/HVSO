@@ -129,13 +129,9 @@ public partial class AccountManager : Singleton<AccountManager> {
     /// 회원가입, 로그인시 유저 정보 처리를 위한 클래스
     /// </summary>
     public class UserInfo {
-        public string[] baasicDeckUnlock;
         public string nickName;
         public string deviceId;
         public int pass;
-        
-        public CardInventory[] cardInventories;
-        public HeroInventory[] heroInventories;
     }
 }
 
@@ -212,7 +208,6 @@ public partial class AccountManager {
     private void CallbackSignUp(HTTPRequest originalRequest, HTTPResponse response) {
         if (response != null && response.IsSuccess) {
             Logger.Log("회원가입 요청 완료");
-            AuthUser();
             RequestUserInfo((req, res) => {
                 if(response != null) {
                     if (response.IsSuccess) {
@@ -444,29 +439,6 @@ public partial class AccountManager {
         }
     }
     public string TokenFormat { get; private set; }
-
-    public async void AuthUser(OnRequestFinishedDelegate callback = null) {
-        OTPCode otp = new OTPCode();
-        while(!otp.isDone) await System.Threading.Tasks.Task.Delay(100);
-        StringBuilder url = new StringBuilder();
-
-        url
-            .Append(networkManager.baseUrl)
-            .Append("api/user/auth");
-
-        HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
-        TokenForm form = new TokenForm(DEVICEID, otp.computeTotp);
-        request.MethodType = HTTPMethods.Post;
-        request.RawData = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(form));
-        if (callback == null) callback = AuthUserCallback;
-
-        networkManager.Request(request, callback);
-    }
-
-    public void AuthUserCallback(HTTPRequest originalRequest, HTTPResponse response) {
-        if (response.IsSuccess) SetUserToken(response);
-        else Logger.LogError("Token을 요청하는 과정에서 문제가 발생하였음");
-    }
 
     public void SetUserToken(HTTPResponse response) {
         var result = dataModules.JsonReader.Read<Token>(response.DataAsText);

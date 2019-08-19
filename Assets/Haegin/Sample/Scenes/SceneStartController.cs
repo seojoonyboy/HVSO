@@ -465,8 +465,7 @@ public class SceneStartController : MonoBehaviour
 #endif
                                 //SceneManager.LoadScene("SceneLogin", LoadSceneMode.Single);
                                 EULACanvas.gameObject.SetActive(false);
-                                LoginTypeCanvas.gameObject.SetActive(true);
-                                NetworkManager.Instance.Login();
+                                NetworkManager.Instance.Auth();
                             });
                         }
                         else

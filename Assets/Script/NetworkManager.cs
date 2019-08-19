@@ -20,7 +20,7 @@ public partial class NetworkManager : Singleton<NetworkManager> {
 
     private WebClient webClient;
 
-    public void Login() {
+    public void Auth() {
         DontDestroyOnLoad(gameObject);
         MAX_REDIRECTCOUNT = 10;
         webClient = WebClient.GetInstance();
@@ -59,7 +59,7 @@ public partial class NetworkManager : Singleton<NetworkManager> {
     {
         if(ProtocolId.IssueJWT == rar.Res.ProtocolId) {
             IssueJWTRes result = (IssueJWTRes)rar.Res;
-            Logger.Log(result.Token);
+            Logger.Log("Token : " + result.Token);
             AccountManager.Instance.TokenId = result.Token;
         }
     }
@@ -142,22 +142,6 @@ public partial class NetworkManager : Singleton<NetworkManager> {
 
             dequeueing = false;
             throw new ArgumentOutOfRangeException("TimeOut Request", "요청대기시간이 초과되었습니다.");
-        }
-        //token이 존재하지 않아 token 갱신 이후 재요청
-        else if(response.DataAsText.Contains("invalid_token")) {
-            FinishRequest(request, response);
-            AccountManager.Instance.AuthUser((a, b) => {
-                AccountManager.Instance.AuthUserCallback(a, b);
-                HTTPRequest re_request = new HTTPRequest(request.Uri);
-                re_request.MethodType = request.MethodType;
-                re_request.RedirectCount = ++request.RedirectCount;
-                re_request.AddHeader("authorization", AccountManager.Instance.TokenFormat);
-                request.Callback -= CheckCondition;
-                request.Callback -= FinishRequest;
-                Request(re_request, request.Callback, re_request.LoadingMessage); 
-            });
-            dequeueing = false;
-            throw new ArgumentOutOfRangeException("Token Invalid", "토큰이 존재하지 않습니다.");
         }
     }
 
