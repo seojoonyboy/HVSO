@@ -1,4 +1,4 @@
-﻿#define QA
+#define QA
 #define DONT_UNLOAD_BGWEBCLIENT
 using UnityEngine;
 using Haegin;
@@ -341,7 +341,8 @@ public class SceneOBBCheckController : MonoBehaviour {
             progresstext.text = TextManager.GetString(TextManager.StringTag.CompleteDownloadFiles);
             patcher.ClearEvent();
             patcher = null;
-            SceneManager.LoadScene(1, LoadSceneMode.Single);
+            //SceneManager.LoadScene(1, LoadSceneMode.Single);
+            SceneManager.LoadScene("Login", LoadSceneMode.Single);
         }
         else
         {

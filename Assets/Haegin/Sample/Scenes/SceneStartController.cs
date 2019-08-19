@@ -13,7 +13,7 @@ using System.Collections.Generic;
 
 public class SceneStartController : MonoBehaviour
 {
-    public Canvas canvas;
+    public Canvas EULACanvas, LoginTypeCanvas;
     public GameObject confirmDialog;
     public GameObject systemDialog;
     public GameObject eulaText;
@@ -101,7 +101,7 @@ public class SceneStartController : MonoBehaviour
 
     void OnNetworkError()
     {
-        UGUICommon.ShowMessageDialog(systemDialog, eulaText, canvas, TextManager.GetString(TextManager.StringTag.NetworkError), TextManager.GetString(TextManager.StringTag.NetworkErrorMessage), (UGUICommon.ButtonType buttonType) =>
+        UGUICommon.ShowMessageDialog(systemDialog, eulaText, EULACanvas, TextManager.GetString(TextManager.StringTag.NetworkError), TextManager.GetString(TextManager.StringTag.NetworkErrorMessage), (UGUICommon.ButtonType buttonType) =>
         {
             if (buttonType == UGUICommon.ButtonType.Ok)
             {
@@ -112,7 +112,7 @@ public class SceneStartController : MonoBehaviour
 
     void OnSystemBackKey()
     {
-        UGUICommon.ShowYesNoDialog(systemDialog, eulaText, canvas, TextManager.GetString(TextManager.StringTag.Quit), TextManager.GetString(TextManager.StringTag.QuitConfirm), (UGUICommon.ButtonType buttonType) =>
+        UGUICommon.ShowYesNoDialog(systemDialog, eulaText, EULACanvas, TextManager.GetString(TextManager.StringTag.Quit), TextManager.GetString(TextManager.StringTag.QuitConfirm), (UGUICommon.ButtonType buttonType) =>
         {
             if (buttonType == UGUICommon.ButtonType.Yes)
             {
@@ -124,7 +124,7 @@ public class SceneStartController : MonoBehaviour
     void OnMaintenanceStarted()
     {
         // 메인터넌스가 시작되었다.
-        UGUICommon.ShowMessageDialog(systemDialog, eulaText, canvas, TextManager.GetString(TextManager.StringTag.ServerMaintenanceTitle), TextManager.GetString(TextManager.StringTag.ServerMaintenance), (UGUICommon.ButtonType buttonType) =>
+        UGUICommon.ShowMessageDialog(systemDialog, eulaText, EULACanvas, TextManager.GetString(TextManager.StringTag.ServerMaintenanceTitle), TextManager.GetString(TextManager.StringTag.ServerMaintenance), (UGUICommon.ButtonType buttonType) =>
         {
             if (buttonType == UGUICommon.ButtonType.Ok)
             {
@@ -183,6 +183,8 @@ public class SceneStartController : MonoBehaviour
             Debug.Log(GameUrl);
             Debug.Log(PatchUrl);
 
+            NetworkManager.Instance.SetUrl(GameUrl + "/");
+
             //webClient = WebClient.GetInstance("http://10.0.2.3:80/Gate");
             webClient = WebClient.GetInstance(CommonUrl);
 
@@ -215,7 +217,7 @@ public class SceneStartController : MonoBehaviour
     {
         if (isError)
         {
-            UGUICommon.ShowYesNoDialog(systemDialog, eulaText, canvas, TextManager.GetString(TextManager.StringTag.MaintenanceNetworkError), TextManager.GetString(TextManager.StringTag.MaintenanceNetworkErrorMessage), (UGUICommon.ButtonType buttonType) =>
+            UGUICommon.ShowYesNoDialog(systemDialog, eulaText, EULACanvas, TextManager.GetString(TextManager.StringTag.MaintenanceNetworkError), TextManager.GetString(TextManager.StringTag.MaintenanceNetworkErrorMessage), (UGUICommon.ButtonType buttonType) =>
             {
                 if (buttonType == UGUICommon.ButtonType.Yes)
                 {
@@ -235,7 +237,7 @@ public class SceneStartController : MonoBehaviour
         }
         else
         {
-            ServiceCheckDialogWin = UGUICommon.ShowServiceCheckDialog(serviceCheckDialog, canvas, contents, time, onRetry);
+            ServiceCheckDialogWin = UGUICommon.ShowServiceCheckDialog(serviceCheckDialog, EULACanvas, contents, time, onRetry);
         }
     }
 
@@ -386,10 +388,10 @@ public class SceneStartController : MonoBehaviour
                         OnFinishedVersionUp();
                         break;
                     case WebClient.VersionCheckCode.UPDATE_IF_YOU_WANT:
-                        UGUICommon.ShowVersionUpWindow(updateMessage, eulaText, canvas, OnFinishedVersionUp, true, versionInfo, updateDownloadUrl);
+                        UGUICommon.ShowVersionUpWindow(updateMessage, eulaText, EULACanvas, OnFinishedVersionUp, true, versionInfo, updateDownloadUrl);
                         break;
                     case WebClient.VersionCheckCode.UPDATE_REQUIRED:
-                        UGUICommon.ShowVersionUpWindow(updateMessage, eulaText, canvas, OnFinishedVersionUp, false, versionInfo, updateDownloadUrl);
+                        UGUICommon.ShowVersionUpWindow(updateMessage, eulaText, EULACanvas, OnFinishedVersionUp, false, versionInfo, updateDownloadUrl);
                         break;
                 }
             }
@@ -460,8 +462,11 @@ public class SceneStartController : MonoBehaviour
                             {
                             #if MDEBUG
                                 Debug.Log("LoadScene SceneLogin");
-                            #endif
-                                SceneManager.LoadScene("SceneLogin", LoadSceneMode.Single);
+#endif
+                                //SceneManager.LoadScene("SceneLogin", LoadSceneMode.Single);
+                                EULACanvas.gameObject.SetActive(false);
+                                LoginTypeCanvas.gameObject.SetActive(true);
+                                NetworkManager.Instance.Login();
                             });
                         }
                         else
@@ -476,7 +481,7 @@ public class SceneStartController : MonoBehaviour
 #if MDEBUG
                     Debug.Log("=====================================    Login Fail (Retry)  =====================================   " + code + " " + blockRemainTime);
 #endif
-                    UGUICommon.ShowMessageDialog(systemDialog, eulaText, canvas, TextManager.GetString(TextManager.StringTag.LoginErrorTitle), TextManager.GetString(TextManager.StringTag.LoginErrorMessage2), (UGUICommon.ButtonType buttonType) =>
+                    UGUICommon.ShowMessageDialog(systemDialog, eulaText, EULACanvas, TextManager.GetString(TextManager.StringTag.LoginErrorTitle), TextManager.GetString(TextManager.StringTag.LoginErrorMessage2), (UGUICommon.ButtonType buttonType) =>
                     {
                         if (buttonType == UGUICommon.ButtonType.Ok)
                         {
@@ -494,7 +499,7 @@ public class SceneStartController : MonoBehaviour
                     Debug.Log("=====================================    Login Fail (Block)  =====================================   " + code + " " + blockRemainTime);
 #endif
                     // 이 경우는 블럭될 유저
-                    UGUICommon.ShowMessageDialog(systemDialog, eulaText, canvas, TextManager.GetString(TextManager.StringTag.LoginErrorTitle), TextManager.GetString(TextManager.StringTag.LoginErrorMessage2), (UGUICommon.ButtonType buttonType) =>
+                    UGUICommon.ShowMessageDialog(systemDialog, eulaText, EULACanvas, TextManager.GetString(TextManager.StringTag.LoginErrorTitle), TextManager.GetString(TextManager.StringTag.LoginErrorMessage2), (UGUICommon.ButtonType buttonType) =>
                     {
                         if (buttonType == UGUICommon.ButtonType.Ok)
                         {
@@ -510,7 +515,7 @@ public class SceneStartController : MonoBehaviour
 #if MDEBUG
                     Debug.Log("=====================================    Login Fail   =====================================   " + code + " " + blockRemainTime);
 #endif
-                    UGUICommon.ShowMessageDialog(systemDialog, eulaText, canvas, TextManager.GetString(TextManager.StringTag.LoginErrorTitle), TextManager.GetString(TextManager.StringTag.LoginErrorMessage1), (UGUICommon.ButtonType buttonType) =>
+                    UGUICommon.ShowMessageDialog(systemDialog, eulaText, EULACanvas, TextManager.GetString(TextManager.StringTag.LoginErrorTitle), TextManager.GetString(TextManager.StringTag.LoginErrorMessage1), (UGUICommon.ButtonType buttonType) =>
                     {
                         if (buttonType == UGUICommon.ButtonType.Ok)
                         {
@@ -585,7 +590,7 @@ public class SceneStartController : MonoBehaviour
     public void OpenConfirmDialog(long fileSize, PatcherAsyncBG.OnConfirm callback)
     {
         GameObject SelectDialog = (GameObject)Instantiate(confirmDialog);
-        SelectDialog.transform.SetParent(canvas.transform);
+        SelectDialog.transform.SetParent(EULACanvas.transform);
         SelectDialog.GetComponent<RectTransform>().localPosition = new Vector3(0, 0, 0);
         SelectDialog.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
         GameObject.Find("WIFIText").GetComponent<Text>().text = String.Format(TextManager.GetString(TextManager.StringTag.DownloadAssetMessage), fileSize / (1024 * 1024));
@@ -715,12 +720,12 @@ public class SceneStartController : MonoBehaviour
 
     void OpenEULADialog(string[] titles, string[] contents, bool[] isChecked, EULA.OnConfirmEULA onConfirm)
     {
-        UGUICommon.OpenEULADialog(eulaBg, canvas, titles, contents, isChecked, OpenEULADetailDialog, onConfirm);
+        UGUICommon.OpenEULADialog(eulaBg, EULACanvas, titles, contents, isChecked, OpenEULADetailDialog, onConfirm);
     }
 
     void OpenEULADetailDialog(string title, string content)
     {
-        UGUICommon.ShowEULADetailWindow(eulaDetailL, eulaDetailP, eulaText, canvas, title, content);
+        UGUICommon.ShowEULADetailWindow(eulaDetailL, eulaDetailP, eulaText, EULACanvas, title, content);
     }
 
     void OpenPromoEventWindow(string imageUrl, string destUrl, PromoEvents.OnCloseWindow onClose)
@@ -734,7 +739,7 @@ public class SceneStartController : MonoBehaviour
         {
             yield return www;
             Sprite sprite = Sprite.Create(www.texture, new Rect(0, 0, www.texture.width, www.texture.height), new Vector2(0.5f, 0.5f));
-            UGUICommon.OpenPromoEventWindow(promoEventFrame, canvas, sprite, destUrl, onClose);
+            UGUICommon.OpenPromoEventWindow(promoEventFrame, EULACanvas, sprite, destUrl, onClose);
         }
     }
 

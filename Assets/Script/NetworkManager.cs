@@ -11,18 +11,16 @@ using HaeginGame;
 /// BestHTTP Pro
 /// </summary>
 public partial class NetworkManager : Singleton<NetworkManager> {
-#if UNITY_EDITOR
-    private string url = "https://ccdevclient.fbl.kr/";
-#else
-    private string url = "https://cctest.fbl.kr/";
-#endif
-    public string baseUrl { get { return url; } }
+    public string baseUrl { get; private set; }
+    public void SetUrl(string url) {
+        this.baseUrl = url;
+    }
+
     protected NetworkManager() { }
 
     private WebClient webClient;
 
-    void Awake()
-    {
+    public void Login() {
         DontDestroyOnLoad(gameObject);
         MAX_REDIRECTCOUNT = 10;
         webClient = WebClient.GetInstance();
@@ -32,13 +30,14 @@ public partial class NetworkManager : Singleton<NetworkManager> {
         webClient.RetryOccurred += RetryOccurred;
         webClient.RetryFailed += RetryFailed;
         //webClient.MaintenanceStarted += OnMaintenanceStarted;
-        webClient.Logged += (string log) =>
-        {
+        webClient.Logged += (string log) => {
 #if MDEBUG
             Debug.Log("Unity   " + log);
 #endif
         };
 
+
+        webClient.Request(new IssueJWTReq());
         //ThreadSafeDispatcher.Instance.PushSystemBackKeyListener(OnSystemBackKey);
     }
 
@@ -70,10 +69,6 @@ public partial class NetworkManager : Singleton<NetworkManager> {
         #if MDEBUG
         Debug.Log("OnErrorOccurred");
         #endif
-    }
-
-    void Start() {
-        webClient.Request(new IssueJWTReq());
     }
 
     Queue<RequestFormat> requests = new Queue<RequestFormat>();

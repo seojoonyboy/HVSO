@@ -12,6 +12,7 @@ public class LoginController : MonoBehaviour {
 
     public void OnStartButton() {
         //AccountManager.Instance.AuthUser(CheckTokenCallback);
+        Firebase.Analytics.FirebaseAnalytics.LogEvent("Guest_Login");
         AccountManager.Instance.RequestUserInfo(OnRequestUserInfoCallback);
         SoundManager.Instance.PlaySound(SoundType.FIRST_TURN);
     }

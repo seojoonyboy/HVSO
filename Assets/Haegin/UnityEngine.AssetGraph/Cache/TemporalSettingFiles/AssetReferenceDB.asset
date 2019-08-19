@@ -1303,4 +1303,60 @@ MonoBehaviour:
     m_importFrom: Assets/Haegin/Sample/Scenes/SceneLoginController.cs
     m_exportTo: 
     m_variantName: 
+  - m_assetDatabaseId: 00000000000000006100000000000000
+    m_importFrom: ProjectSettings/GraphicsSettings.asset
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 79abefd28fa94440ba730e1b1ce5b590
+    m_importFrom: Assets/Haegin/Account/Account.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: bad026f56799a44a79c1c5b628ea7470
+    m_importFrom: Assets/Haegin/EULA/EULA.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 1a5dba117bca143f385eec64847e9f21
+    m_importFrom: Assets/Plugins/Android/Firebase/res/values/google-services.xml
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: abf37609002a64bcdae4b08d055a509e
+    m_importFrom: Assets/Haegin/Network/Web/WebClient.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: f05e98f3e64d5a14981e0ad79c23c6d1
+    m_importFrom: Assets/Scenes/Login.unity
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 2193afa2c86644b43b2d16a92ee9fb7e
+    m_importFrom: Assets/Prefab/Login/ProgressCanvas.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 8e2ec153c44c2b04bb97168e265498a9
+    m_importFrom: Assets/Prefab/Login
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 0b7e93aa509c246eb918c80e23c2dc61
+    m_importFrom: Assets/Haegin/Sample/Scenes/SceneStart.unity
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 319f8714892384c35b1e6713255e1248
+    m_importFrom: Assets/Haegin/Sample/Scenes/SceneOBBCheckController.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: e707b71a5bd805548b27e879f1982b82
+    m_importFrom: Assets/Script/NetworkManager.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 09a3483a7f72c8345af38f40c9ccbf56
+    m_importFrom: Assets/Prefab/Login/LoginTypeSelCanvas.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: a5ef5873f6fac46f3b62520c389811f9
+    m_importFrom: Assets/Haegin/Sample/Scenes/SceneLogin.unity
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 257d6c9b8fadb0945a66e17f0a79e5ca
+    m_importFrom: Assets/Script/MainMenu/Controllers/LoginController.cs
+    m_exportTo: 
+    m_variantName: 
   m_version: 2
