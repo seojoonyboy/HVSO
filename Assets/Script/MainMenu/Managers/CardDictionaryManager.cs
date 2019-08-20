@@ -16,14 +16,14 @@ public class CardDictionaryManager : MonoBehaviour {
     [SerializeField] MyDecksLoader myDecksLoader;
 
     [SerializeField] Sprite orcPanelBg, humanPanelBg;
+    MyDecksLoader decksLoader;
 
     bool isHumanDictionary;
     SortingOptions selectedSortOption;
 
-    void Awake() {
-        myDecksLoader.OnTemplateLoadFinished.AddListener(() => {
-            SetToHumanCards();
-        });
+    public void AttachDecksLoader(ref MyDecksLoader decksLoader) {
+        this.decksLoader = decksLoader;
+        this.decksLoader.OnInvenLoadFinished.AddListener(() => { SetToHumanCards(); Debug.Log("찍어보자"); });
     }
 
     private void Start() {

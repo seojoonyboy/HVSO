@@ -308,10 +308,18 @@ public partial class CardHandler : MonoBehaviour {
                 transform.Find("GlowEffect/NonAbility").gameObject.SetActive(false);
                 transform.Find("Disabled/NonAbility").gameObject.SetActive(true);
             }
+            if (!PlayMangement.instance.player.isHuman && PlayMangement.instance.currentTurn == "SECRET")
+                transform.Find("Disabled/Orc").gameObject.SetActive(true);
+            else
+                transform.Find("Disabled/Orc").gameObject.SetActive(false);
         }
         else {
             transform.Find("GlowEffect").gameObject.SetActive(false);
             transform.Find("Disabled").gameObject.SetActive(true);
+            if (!PlayMangement.instance.player.isHuman && PlayMangement.instance.currentTurn == "ORC")
+                transform.Find("Disabled/Orc").gameObject.SetActive(true);
+            else
+                transform.Find("Disabled/Orc").gameObject.SetActive(false);
         }
     }
 

@@ -361,6 +361,8 @@ public class PlayerController : MonoBehaviour
                 if (cardSlot_1.GetChild(i).childCount != 0) {
                     if (cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().cardData.type == "unit")
                         cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().ActivateCard();
+                    else
+                        cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().DisableCard();
                 }
 
             }
@@ -371,6 +373,8 @@ public class PlayerController : MonoBehaviour
                 if (cardSlot_1.GetChild(i).childCount != 0) {
                     if (cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().cardData.type == "magic")
                         cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().ActivateCard();
+                    else
+                        cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().DisableCard();
                 }
 
             }

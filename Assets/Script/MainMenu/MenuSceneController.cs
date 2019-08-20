@@ -23,6 +23,7 @@ public class MenuSceneController : MonoBehaviour {
 
     private void Start() {
         deckSettingManager.AttachDecksLoader(ref decksLoader);
+        cardDictionaryManager.AttachDecksLoader(ref decksLoader);
         decksLoader.OnLoadFinished.AddListener(() => {
             nicknameText.text = AccountManager.Instance.NickName;
         });

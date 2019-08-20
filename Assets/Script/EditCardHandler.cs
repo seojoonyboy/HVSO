@@ -106,6 +106,7 @@ public class EditCardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     void EndDrag() {
         if (isHandCard) {
             transform.parent.SetParent(mouseObject.parent);
+            transform.parent.localPosition = new Vector3(transform.parent.localPosition.x, -550, 0);
             if (transform.localPosition.y > 280) {
                 deckEditController.ExpectFromDeck(cardData.id, gameObject);
                 if (SETNUM == 0) {
