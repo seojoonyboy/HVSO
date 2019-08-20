@@ -57,6 +57,8 @@ public class IngameEventHandler : MonoBehaviour {
     public enum EVENT_TYPE {
         REMOVE_SOCKET_CONNECTOR,
 
+        END_TURN_BTN_CLICKED,
+
         BEGIN_ORC_PRE_TURN,
         END_ORC_PRE_TURN,
 

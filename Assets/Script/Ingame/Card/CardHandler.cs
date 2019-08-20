@@ -359,9 +359,7 @@ public partial class CardHandler : MonoBehaviour {
     protected bool isMyTurn(bool isMagic) {
         if(PlayMangement.instance.heroShieldActive) return false;
         bool isHuman = PlayMangement.instance.player.isHuman;
-        string currentTurn = Variables.Scene(
-                UnityEngine.SceneManagement.SceneManager.GetActiveScene()
-            ).Get("CurrentTurn").ToString();
+        string currentTurn = PlayMangement.instance.GetComponent<TurnMachine>().CurrentTurn();
         bool isHumanTurn = currentTurn.CompareTo("HUMAN") == 0;
         bool isOrcPreTurn = currentTurn.CompareTo("ORC") == 0;
         bool isOrcMagicTurn = currentTurn.CompareTo("SECRET") == 0;

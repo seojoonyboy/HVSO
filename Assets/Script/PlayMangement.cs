@@ -46,8 +46,8 @@ public partial class PlayMangement : MonoBehaviour {
         SetWorldScale();
         instance = this;
         SetPlayerCard();
-        gameObject.GetComponent<TurnChanger>().onTurnChanged.AddListener(ChangeTurn);
-        if(!isTest) gameObject.GetComponent<TurnChanger>().onPrepareTurn.AddListener(DistributeCard);
+        GetComponent<TurnMachine>().onTurnChanged.AddListener(ChangeTurn);
+        if(!isTest) GetComponent<TurnMachine>().onPrepareTurn.AddListener(DistributeCard);
         //GameObject backGroundEffect = Instantiate(EffectSystem.Instance.backgroundEffect);
         //backGroundEffect.transform.position = backGround.transform.Find("ParticlePosition").position;
         SetCamera();
@@ -385,9 +385,7 @@ public partial class PlayMangement : MonoBehaviour {
     public void ChangeTurn() {
         if (isGame == false) return;
         player.buttonParticle.SetActive(false);
-        currentTurn = Variables.Scene(
-                UnityEngine.SceneManagement.SceneManager.GetActiveScene()
-            ).Get("CurrentTurn").ToString();
+        currentTurn = GetComponent<TurnMachine>().CurrentTurn();
         Logger.Log(currentTurn);
         switch (currentTurn) {
             case "ORC":
@@ -484,11 +482,13 @@ public partial class PlayMangement : MonoBehaviour {
             yield return EnemyUseCard(false);
         //서버에서 턴 넘김이 완료 될 때까지 대기
         yield return socketHandler.WaitBattle();
-        CustomEvent.Trigger(gameObject, "EndTurn");
+        EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this);
+        //CustomEvent.Trigger(gameObject, "EndTurn");
     }
 
     public void GetPlayerTurnRelease() {
-        CustomEvent.Trigger(gameObject, "EndTurn");
+        EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this);
+        //CustomEvent.Trigger(gameObject, "EndTurn");
     }
 
     IEnumerator battleCoroutine() {
@@ -509,7 +509,8 @@ public partial class PlayMangement : MonoBehaviour {
         EndTurnDraw();
         yield return new WaitForSeconds(2.0f);
         yield return new WaitUntil(() => !SkillModules.SkillHandler.running);
-        CustomEvent.Trigger(gameObject, "EndTurn");
+        EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this);
+        //CustomEvent.Trigger(gameObject, "EndTurn");
         StopCoroutine("battleCoroutine");
         dragable = true;
     }

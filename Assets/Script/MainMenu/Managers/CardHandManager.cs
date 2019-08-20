@@ -592,7 +592,8 @@ public class CardHandManager : MonoBehaviour {
 
 
         yield return new WaitForSeconds(3.0f);
-        CustomEvent.Trigger(GameObject.Find("GameManager"), "EndTurn");
+        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this);
+        //CustomEvent.Trigger(GameObject.Find("GameManager"), "EndTurn");
         PlayMangement.instance.isMulligan = false;
         firstDrawParent.gameObject.SetActive(false);
         GameObject firstOrcTurnObj = firstDrawParent.parent.Find("First_OrcPlay").gameObject;
@@ -607,7 +608,8 @@ public class CardHandManager : MonoBehaviour {
         PlayMangement.instance.isMulligan = false;
         firstDrawParent.gameObject.SetActive(false);
         yield return new WaitForSeconds(3.0f);
-        CustomEvent.Trigger(GameObject.Find("GameManager"), "EndTurn");
+        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this);
+        //CustomEvent.Trigger(GameObject.Find("GameManager"), "EndTurn");
         GameObject firstOrcTurnObj = firstDrawParent.parent.Find("First_OrcPlay").gameObject;
         firstOrcTurnObj.SetActive(true);
         yield return new WaitForSeconds(1.0f);

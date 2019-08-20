@@ -39,12 +39,6 @@ public class TurnChanger : MonoBehaviour {
         //StartCoroutine(TestNextTurn());
     }
 
-    IEnumerator TestNextTurn() {
-        yield return new WaitForSeconds(3.0f);
-        CustomEvent.Trigger(gameObject, "EndTurn");
-        //Logger.Log("턴 종료");
-    }
-
     public enum TurnType {
         ORC = 0,
         HUMAN = 1,
