@@ -26,13 +26,13 @@ public class LoginController : MonoBehaviour {
         if (response.StatusCode == 200 || response.StatusCode == 304) {
             AccountManager.Instance.SetSignInData(response);
             AccountManager.Instance.OnSignInResultModal();
-        }
-        else {
-            //AccountManager.Instance.OnSignUpModal();
-            sceneStartController
-                .LoginTypeCanvas
-                .gameObject
-                .SetActive(true);
+
+            if(PlayerPrefs.GetInt("isFirst") == 1) {
+                sceneStartController
+                    .LoginTypeCanvas
+                    .gameObject
+                    .SetActive(true);
+            }
         }
     }
 }
