@@ -9,6 +9,7 @@ public class MyDecksLoader : MonoBehaviour {
     GameObject loadingModal;
     AccountManager accountManager;
     public UnityEvent OnLoadFinished = new UnityEvent();
+    public UnityEvent OnInvenLoadFinished = new UnityEvent();
     public UnityEvent OnTemplateLoadFinished = new UnityEvent();
 
     void Awake() {
@@ -35,6 +36,7 @@ public class MyDecksLoader : MonoBehaviour {
                 accountManager.myCards = result.cardInventories;
                 accountManager.SetHeroInventories(result.heroInventories);
                 accountManager.SetCardData();
+                OnInvenLoadFinished.Invoke();
             }
         }
     }
