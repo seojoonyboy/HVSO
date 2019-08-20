@@ -998,7 +998,7 @@ public partial class PlayMangement {
 public partial class PlayMangement {
     [SerializeField] Transform turnTable;
     SkeletonGraphic turnSpine;
-    private GameObject releaseTurnBtn;
+    public GameObject releaseTurnBtn;
     private GameObject nonplayableTurnArrow;
     private GameObject playableTurnArrow;
     private Transform turnIcon;
