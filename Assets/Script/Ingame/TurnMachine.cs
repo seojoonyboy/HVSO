@@ -10,7 +10,6 @@ public class TurnMachine : MonoBehaviour {
     IngameEventHandler eventHandler;
     private int index = -1;
     TurnType turn;
-
     void Awake() {
         eventHandler = PlayMangement.instance.EventHandler;
         eventHandler.AddListener(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, OnEndTurnBtnClicked);
@@ -28,6 +27,12 @@ public class TurnMachine : MonoBehaviour {
         turn = (TurnType)((++index) % 4);
         StartCoroutine(InvokeTurnChanged());
         Debug.Log(turn.ToString());
+        if(index != 0) StartCoroutine(PlayNextTurnSound());
+    }
+
+    private IEnumerator PlayNextTurnSound() {
+        yield return new WaitForSeconds(1.0f);
+        SoundManager.Instance.PlaySound(SoundType.NEXT_TURN);
     }
 
     private IEnumerator InvokeTurnChanged() {
