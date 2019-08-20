@@ -8,7 +8,7 @@ using Spine.Unity;
 
 
 public partial class PlayMangement : MonoBehaviour {
-    public PlayerController player, enemyPlayer;
+    public PlayerController player, enemyPlayer; 
 
     public GameObject cardDB;
     public GameObject uiSlot;
@@ -16,6 +16,7 @@ public partial class PlayMangement : MonoBehaviour {
 
     public Transform cardInfoCanvas;
     public Transform battleLineEffect;
+    bool firstTurn = true;
     public bool isGame = true;
     public bool isMulligan = true;
     public bool infoOn = false;
@@ -390,6 +391,11 @@ public partial class PlayMangement : MonoBehaviour {
         Logger.Log(currentTurn);
         switch (currentTurn) {
             case "ORC":
+                if (firstTurn) {
+                    firstTurn = false;
+                }
+                else
+                    turnSpine.AnimationState.SetAnimation(0, "1.orc_attack", false);
                 playerMana.AnimationState.SetAnimation(0, "animation", false);
                 enemyMana.AnimationState.SetAnimation(0, "animation", false);
                 if (player.isHuman == false) {
@@ -406,6 +412,7 @@ public partial class PlayMangement : MonoBehaviour {
                 break;
 
             case "HUMAN":
+                turnSpine.AnimationState.SetAnimation(0, "2.human_attack", false);
                 if (player.isHuman == true) {
                     player.ActivePlayer();
                     enemyPlayer.DisablePlayer();
@@ -421,6 +428,7 @@ public partial class PlayMangement : MonoBehaviour {
                 break;
 
             case "SECRET":
+                turnSpine.AnimationState.SetAnimation(0, "3.orc_trick", false);
                 if (player.isHuman == false) {
                     //player.ActiveOrcSpecTurn();
                     player.ActiveOrcTurn();
@@ -435,6 +443,7 @@ public partial class PlayMangement : MonoBehaviour {
                 EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_ORC_POST_TURN, this, null);
                 break;
             case "BATTLE":
+                turnSpine.AnimationState.SetAnimation(0, "4.battle", false);
                 dragable = false;
                 player.DisablePlayer();
                 enemyPlayer.PlayerThinkFinish();
@@ -988,7 +997,8 @@ public partial class PlayMangement {
 
 public partial class PlayMangement {
     [SerializeField] Transform turnTable;
-    private GameObject releaseTurnBtn;
+    SkeletonGraphic turnSpine;
+    public GameObject releaseTurnBtn;
     private GameObject nonplayableTurnArrow;
     private GameObject playableTurnArrow;
     private Transform turnIcon;
@@ -996,6 +1006,8 @@ public partial class PlayMangement {
     public void InitTurnTable() {
         string race = Variables.Saved.Get("SelectedRace").ToString();
         bool isHuman;
+
+        turnSpine = turnTable.Find("TurnSpine").GetComponent<SkeletonGraphic>();
         if (race == "HUMAN") isHuman = true;
         else isHuman = false;
         if (isHuman) {
@@ -1036,7 +1048,7 @@ public partial class PlayMangement {
     }
     
     private IEnumerator SetHumanTurnTable(string currentTurn) {
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(0.3f);
         switch (currentTurn) {
             case "HUMAN":
                 releaseTurnBtn.SetActive(true);
@@ -1058,7 +1070,7 @@ public partial class PlayMangement {
     }
 
     private IEnumerator SetOrcTurnTable(string currentTurn) {
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(0.3f);
         switch (currentTurn) {
             case "ORC":
             case "SECRET":

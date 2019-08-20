@@ -76,9 +76,10 @@ public class MenuCardHandler : MonoBehaviour {
         //cardObject.Find("Class").GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[cardData.cardClasses[0]];
         cardObject.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.name;
         if (cardData.isHeroCard) return;
+        transform.Find("HaveNum").GetComponent<SkeletonGraphic>().Initialize(false);
+        Spine.AnimationState aniState = transform.Find("HaveNum").GetComponent<SkeletonGraphic>().AnimationState;
         if (AccountManager.Instance.cardPackage.data.ContainsKey(cardID)) {
-            transform.Find("HaveNum").gameObject.SetActive(true);
-            transform.Find("HaveNum/Value").GetComponent<TMPro.TextMeshProUGUI>().text = "x" + AccountManager.Instance.cardPackage.data[id].cardCount.ToString();
+            aniState.SetAnimation(0, AccountManager.Instance.cardPackage.data[cardID].cardCount.ToString(), false);
             cardObject.Find("Disabled").gameObject.SetActive(false);
         }
         else {
@@ -93,7 +94,7 @@ public class MenuCardHandler : MonoBehaviour {
                     cardObject.Find("Disabled/NonAbility").gameObject.SetActive(true);
                 }
             }
-            transform.Find("HaveNum").gameObject.SetActive(false);
+            aniState.SetAnimation(0, "NOANI", false);
         }
     }
 
