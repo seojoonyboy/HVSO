@@ -200,8 +200,10 @@ public partial class PlayMangement : MonoBehaviour {
                 else {
                     GameObject summonedMagic = MakeMagicCardObj(history);
                     summonedMagic.GetComponent<MagicDragHandler>().isPlayer = false;
+                    /*
                     if (summonedMagic.GetComponent<MagicDragHandler>().cardData.hero_chk == true)
                         yield return EffectSystem.Instance.HeroCutScene(enemyPlayer.isHuman);
+                        */
                     yield return MagicActivate(summonedMagic, history);
                 }
                 SocketFormat.DebugSocketData.SummonCardData(history);
@@ -291,6 +293,13 @@ public partial class PlayMangement : MonoBehaviour {
         yield return EnemySettingTarget(history.targets[0], magicCard);
         //실제 카드 사용
         object[] parms = new object[] { false, card };
+        if (magicCard.cardData.hero_chk == true) {
+            card.transform.Find("GlowEffect").gameObject.SetActive(false);
+            card.transform.Find("Portrait").gameObject.SetActive(false);
+            card.transform.Find("BackGround").gameObject.SetActive(false);
+            card.transform.Find("Cost").gameObject.SetActive(false);
+            yield return EffectSystem.Instance.HeroCutScene(enemyPlayer.isHuman);
+        }
         EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
         yield return new WaitForSeconds(2f);
         //카드 파괴
@@ -649,7 +658,6 @@ public partial class PlayMangement : MonoBehaviour {
                     summonedMagic.GetComponent<MagicDragHandler>().isPlayer = false;
                     yield return MagicActivate(summonedMagic, history);
                     SocketFormat.DebugSocketData.SummonCardData(history);
-                    yield return EffectSystem.Instance.HeroCutScene(enemyPlayer.isHuman);
                     yield return new WaitForSeconds(1f);
                 }
             }
