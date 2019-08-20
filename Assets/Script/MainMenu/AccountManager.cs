@@ -139,27 +139,6 @@ public partial class AccountManager : Singleton<AccountManager> {
 /// SignIn / SignUp 관련 처리
 /// </summary>
 public partial class AccountManager {
-    public async void SignUp(string inputText) {
-        OTPCode otp = new OTPCode();
-        while(!otp.isDone) await System.Threading.Tasks.Task.Delay(100);
-
-        UserInfo userInfo = new UserInfo();
-        userInfo.nickName = inputText;
-        userInfo.deviceId = DEVICEID;
-        userInfo.pass = otp.computeTotp;
-
-        StringBuilder url = new StringBuilder();
-
-        url.Append(networkManager.baseUrl)
-            .Append("api/user");
-
-        HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
-        request.RawData = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(userInfo));
-        request.MethodType = HTTPMethods.Post;
-
-        networkManager.Request(request, CallbackSignUp, "회원가입을 요청하는 중...");
-    }
-
     /// <summary>
     /// 유저 정보 요청
     /// </summary>
@@ -193,16 +172,6 @@ public partial class AccountManager {
         Modal.instantiate("로그인이 되었습니다.", Modal.Type.CHECK, () => {
             FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
         });
-    }
-
-    public void OnSignUpModal() {
-        Destroy(loadingModal);
-        Modal.instantiate(
-            "새로운 계정을 등록합니다.",
-            "닉네임을 입력하세요.",
-            null,
-            Modal.Type.INSERT,
-            SignUp);
     }
 
     private void CallbackSignUp(HTTPRequest originalRequest, HTTPResponse response) {
