@@ -83,9 +83,9 @@ public partial class BattleConnector : MonoBehaviour {
     //Connected
     private void OnOpen(WebSocket webSocket) {
         //string playerId = AccountManager.Instance.DEVICEID;
-        string deckId = Variables.Saved.Get("SelectedDeckId").ToString();
-        string battleType = Variables.Saved.Get("SelectedBattleType").ToString();
-        string race = Variables.Saved.Get("SelectedRace").ToString().ToLower();
+        string deckId = PlayerPrefs.GetString("SelectedDeckId");
+        string battleType = PlayerPrefs.GetString("SelectedBattleType");
+        string race = PlayerPrefs.GetString("SelectedRace").ToLower();
         string[] args;
         if(battleType.CompareTo("test") == 0)
             args = new string[] { battleType, race };   

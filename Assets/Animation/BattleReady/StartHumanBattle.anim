@@ -1517,8 +1517,8 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 1.5
-    functionName: TriggerAnimationEvent
-    data: StartBattleAnimFinished
+    functionName: StartBattleAnimFinished
+    data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0

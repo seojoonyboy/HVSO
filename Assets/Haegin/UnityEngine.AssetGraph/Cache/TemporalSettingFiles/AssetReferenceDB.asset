@@ -1657,4 +1657,240 @@ MonoBehaviour:
     m_importFrom: Assets/Plugins/Assemblies/Ionic.Zip.Lite.dll
     m_exportTo: 
     m_variantName: 
+  - m_assetDatabaseId: 00fd10fcaf09d1243a64a1b65e837ecd
+    m_importFrom: Assets/Prefab/MainMenu/DeckEdit/EditCardVertical.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 079030019457dca4e8f633788e3a8986
+    m_importFrom: Assets/Prefab/Ingame/Cards/OrcHeroCardVertical.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: dd33b481277f52443a39f408d27a880d
+    m_importFrom: Assets/Prefab/Ingame/Cards/MagicCardVertical.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: bc053b853070e7d4e8e739f6e13268b7
+    m_importFrom: Assets/Prefab/MainMenu/DeckEdit/DictionaryCardVertical.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: ad2159d77cea05d498773d4ee4c4a6f1
+    m_importFrom: Assets/Prefab/Ingame/Cards/UnitCardVertical.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 12e8598f08df54e40a27b1ea93bbaa74
+    m_importFrom: Assets/Prefab/Ingame/Cards/HumanHeroCardVertical.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 82aa0b3005e11064289278b31342e94a
+    m_importFrom: Assets/Ludiq/Assemblies/Bolt.State.Runtime.pdb
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 41da203197ad0c147acdd15e974f002f
+    m_importFrom: Assets/Ludiq/Assemblies/Ionic.Zip.dll
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: e7591b9110e32ca45b2c5f1372169149
+    m_importFrom: Assets/Ludiq/Assemblies/Ludiq.Graphs.Editor.dll
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: ba3a06e12c5c6ee46aa4a47212443416
+    m_importFrom: Assets/Ludiq/Assemblies/Bolt.State.Runtime.dll.mdb
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 1eea3bf15bb7ddb4582c462beee0ad13
+    m_importFrom: Assets/Ludiq/Assemblies/Ludiq.Core.Runtime.dll
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: efc4f8221b9f2e04998ad78e9b2b01b6
+    m_importFrom: Assets/Ludiq/Assemblies/Ludiq.Graphs.Runtime.dll
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 51364af278e07a14b9f7147bd78435e7
+    m_importFrom: Assets/Ludiq/Assemblies/Bolt.Core.Runtime.dll.mdb
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 3498def2217d4284b84f775a288afa8d
+    m_importFrom: Assets/Ludiq/Assemblies/Bolt.Core.Editor.dll.mdb
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: f4ad5523360b4ac4792983b1ba3d2ab4
+    m_importFrom: Assets/Ludiq/Assemblies/Ludiq.Platforms.dll.mdb
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: c8d0ad23af520fe46aabe2b1fecf6462
+    m_importFrom: Assets/Ludiq/Assemblies/Bolt.Core.Runtime.dll
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 2f987f23a8460624b8f530b521cd7d55
+    m_importFrom: Assets/Ludiq/Assemblies/Bolt.Flow.Editor.dll.mdb
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: ee4fb5a3347cd094fadb94ee3a8d79b4
+    m_importFrom: Assets/Ludiq/Assemblies/Ludiq.Core.Editor.dll.mdb
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: e258d6f31e42f4f4abf2cddb13bafa99
+    m_importFrom: Assets/Ludiq/Assemblies/Bolt.Core.Editor.pdb
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 907ae305fd1cba34eb3cd8f1365f7d2c
+    m_importFrom: Assets/Ludiq/Assemblies/Ludiq.Graphs.Runtime.dll.mdb
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 3cc8404641a59644e9ab0448cf0653b0
+    m_importFrom: Assets/Ludiq/Assemblies/Ludiq.Core.Runtime.dll.mdb
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: a040fb66244a7f54289914d98ea4ef7d
+    m_importFrom: Assets/Ludiq/Assemblies/Bolt.Flow.Runtime.dll
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: f7e89dc65e5b6a04eaedc96ba8385fa2
+    m_importFrom: Assets/Ludiq/Assemblies/Bolt.Flow.Runtime.pdb
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 542beba75c187654e9ab57d1e8555033
+    m_importFrom: Assets/Ludiq/Assemblies/Bolt.Flow.Editor.pdb
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: e4bd5a394dc997f43b30d2972127e0c9
+    m_importFrom: Assets/Ludiq/Assemblies/Ludiq.Platforms.dll
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 68cfbad9078708a4598c48093b071b0e
+    m_importFrom: Assets/Ludiq/Assemblies/Bolt.Flow.Runtime.dll.mdb
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: f55a661a889efa44fa7ac6f5fe51c796
+    m_importFrom: Assets/Ludiq/Assemblies/Bolt.State.Editor.pdb
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 7314928a14330c04fb980214791646e9
+    m_importFrom: Assets/Ludiq/Assemblies/Bolt.Core.Editor.dll
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 34d8046b36b99224d8a6e59bd23d05c7
+    m_importFrom: Assets/Ludiq/Assemblies/Bolt.State.Editor.dll.mdb
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 188dbf6b201563f418b6fe56a54966ce
+    m_importFrom: Assets/Ludiq/Assemblies/Ludiq.Graphs.Editor.dll.mdb
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 8878d90c345be1a43ab0c9a9898ad433
+    m_importFrom: Assets/Ludiq/Assemblies/Ludiq.Core.Editor.dll
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: ca842c0cc7840b74ba553b0a5a66bf1d
+    m_importFrom: Assets/Ludiq/Assemblies/Bolt.Core.Runtime.pdb
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 25cf173c22a896d44ae550407b10ed98
+    m_importFrom: Assets/Ludiq/Assemblies/Bolt.State.Editor.dll
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: dcd2196c4e9166f499793f2007fcda35
+    m_importFrom: Assets/Ludiq/Assemblies/Bolt.State.Runtime.dll
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 8a3dc8fc3caba2146b46a526b6dd4ea7
+    m_importFrom: Assets/Ludiq/Assemblies/Ionic.Zip.defines
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 6cb65bfc2ee1c854ca1382175f3aba91
+    m_importFrom: Assets/Ludiq/Assemblies/Bolt.Flow.Editor.dll
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 1101cf4d4430ca442a64590b80415ed2
+    m_importFrom: Assets/Ludiq/Assemblies/Ludiq.Core.Editor.pdb
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: f51f8efddd086a64e816eb917017c5f7
+    m_importFrom: Assets/Ludiq/Assemblies/Ludiq.Platforms.pdb
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: bf7ebefd2b6f54049979a28f9d25f84b
+    m_importFrom: Assets/Ludiq/Assemblies/Ludiq.Core.Runtime.pdb
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 6379aa3ffcb2dc64395a524e9fe61bcf
+    m_importFrom: Assets/Ludiq/Assemblies/Ludiq.Graphs.Editor.pdb
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 1fbd5daf1f92084439845615cacaf4c7
+    m_importFrom: Assets/Ludiq/Assemblies/Ludiq.Graphs.Runtime.pdb
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 64fe56743325bae46a7ac64fc04a0a81
+    m_importFrom: Assets/Ludiq/Assemblies/Ionic.Zip.xml
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: c3dff7ba0bb80344a8edf9d7cf7b675a
+    m_importFrom: Assets/Script/Ingame/TurnMachine.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 45461cde3350f3246af18288811bae92
+    m_importFrom: Assets/Script/ETC/Events/IngameEventHandler.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: e04039ed6f656044b97f583ffadaa267
+    m_importFrom: Assets/Script/PlayMangement.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: c779ba3ba45fa784db6cf4f02fed5d79
+    m_importFrom: Assets/Scenes/IngameScene.unity
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: bd6980c0d20a9d841920ae64b730f9d8
+    m_importFrom: Assets/Script/MainMenu/Managers/CardHandManager.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 73c0bc2d8306f1345b6a7fded916b1a4
+    m_importFrom: Assets/Script/Ingame/Card/CardHandler.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: aa5cd6c97f628404d9b4943e7e5e6ef2
+    m_importFrom: Assets/Script/MainMenu/Controllers/RaceTypeToggleHandler.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: f0670715b49638148b2efdf399770948
+    m_importFrom: Assets/Scenes/BattleReadyScene.unity
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 18393d7666f64ba48bd77ad4198191a2
+    m_importFrom: Assets/Script/MainMenu/Controllers/BattleReadySceneController.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 58659f519d62696448c69914d1ede07f
+    m_importFrom: Assets/Script/Socket/BattleConnector.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 6cdb0c3b66f204206beb57256c69c4fb
+    m_importFrom: Assets/Script/Socket/BattleConnector_receiver.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 415b01736ab45214492edf053155ecf6
+    m_importFrom: Assets/Scenes/BatttleConnectScene.unity
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: f35e13368dc501c4c9e954cf82ea8f04
+    m_importFrom: Assets/Animation/BattleReady/StartHumanBattle.anim
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 5f5ffdd7d477e5c43b9ec2ba8d03348b
+    m_importFrom: Assets/Animation/BattleReady/StartOrcBattle.anim
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 07b70deb96dc34640ba9e03c986b499f
+    m_importFrom: Assets/Animation/BattleReady/Entry.anim
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 5d168eadfcda8f54b8444c0b3c357cbb
+    m_importFrom: Assets/Script/PlayerController.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 0bb85294b04b22241a7f39056d30094b
+    m_importFrom: Assets/Script/MainMenu/BattleConnectSceneAnimController.cs
+    m_exportTo: 
+    m_variantName: 
   m_version: 2

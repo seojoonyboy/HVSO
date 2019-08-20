@@ -44,8 +44,10 @@ public class BattleReadySceneController : MonoBehaviour {
 
     private void OnEnable() {
         ChangeBattleType(0);
-        Variables.Saved.Set("SelectedDeckId", "");
-        Variables.Saved.Set("SelectedRace", RaceType.NONE);
+        //Variables.Saved.Set("SelectedDeckId", "");
+        PlayerPrefs.SetString("SelectedDeckId", "");
+        //Variables.Saved.Set("SelectedRace", RaceType.NONE);
+        PlayerPrefs.SetString("SelectedRace", RaceType.NONE.ToString());
     }
 
     public void ChangePageText(string msg) {
@@ -58,8 +60,9 @@ public class BattleReadySceneController : MonoBehaviour {
             return;
         }
 
-        string race = Variables.Saved.Get("SelectedRace").ToString().ToLower();
-        string selectedDeckId = Variables.Saved.Get("SelectedDeckId").ToString().ToLower();
+        //string race = Variables.Saved.Get("SelectedRace").ToString().ToLower();
+        string race = PlayerPrefs.GetString("SelectedRace").ToLower();
+        string selectedDeckId = PlayerPrefs.GetString("SelectedDeckId").ToLower();
         if (race != null && !string.IsNullOrEmpty(selectedDeckId)) {
             if (selectedDeck.deckValidate) {
                 isIngameButtonClicked = true;
@@ -100,7 +103,8 @@ public class BattleReadySceneController : MonoBehaviour {
 
     public void ChangeRaceType(RaceType type) {
         SoundManager.Instance.PlaySound(SoundType.FIRST_TURN);
-        Variables.Saved.Set("SelectedRace", type);
+        PlayerPrefs.SetString("SelectedRace", type.ToString());
+        //Variables.Saved.Set("SelectedRace", type);
         Logger.Log(type);
         raceType = type;
 
@@ -109,14 +113,16 @@ public class BattleReadySceneController : MonoBehaviour {
 
     public void ChangeDeck(string deckId) {
         var msg = string.Format("{0} 선택됨", deckId);
-        Variables.Saved.Set("SelectedDeckId", deckId);
-
+        //Variables.Saved.Set("SelectedDeckId", deckId);
+        PlayerPrefs.SetString("SelectedDeckId", deckId);
         int isNum = 0;
         if(int.TryParse(deckId, out isNum)) {
-            Variables.Saved.Set("SelectedDeckType", "custom");
+            //Variables.Saved.Set("SelectedDeckType", "custom");
+            PlayerPrefs.SetString("SelectedDeckType", "custom");
         }
         else {
-            Variables.Saved.Set("SelectedDeckType", "basic");
+            //Variables.Saved.Set("SelectedDeckType", "basic");
+            PlayerPrefs.SetString("SelectedDeckType", "basic");
         }
 
         ButtonGlowEffect.SetActive(true);
@@ -133,7 +139,8 @@ public class BattleReadySceneController : MonoBehaviour {
                 type = "solo";
                 break;
         }
-        Variables.Saved.Set("SelectedBattleType", type);
+        PlayerPrefs.SetString("SelectedBattleType", type);
+        //Variables.Saved.Set("SelectedBattleType", type);
     }
 
     public enum BattleType {

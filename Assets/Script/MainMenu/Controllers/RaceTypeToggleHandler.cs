@@ -72,9 +72,10 @@ public class RaceTypeToggleHandler : MonoBehaviour {
         ClearList();
         CreateBasicDeckList(type);
     }
-
-    //Called By Bolt Machine
+    
     public void SwitchOn() {
+        if (GetComponent<BooleanIndex>().isOn) return;
+
         Init();
 
         transform.Find("Selected").gameObject.SetActive(true);
@@ -129,7 +130,8 @@ public class RaceTypeToggleHandler : MonoBehaviour {
         int item_index = 0;         //전체 Deck Index
         PageIndex = 0;
         controller.ButtonGlowEffect.SetActive(false);
-        Bolt.Variables.Saved.Set("SelectedDeckId", "");
+        PlayerPrefs.SetString("SelectedDeckId", "");
+        //Bolt.Variables.Saved.Set("SelectedDeckId", "");
 
         GameObject lastPage = null;
         for (int i = 0; i < pageNum; i++) {

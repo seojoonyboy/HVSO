@@ -61,7 +61,8 @@ public partial class BattleConnector : MonoBehaviour {
 
     public void begin_ready(object args) {
         this.message.text = "대전 상대를 찾았습니다.";
-        CustomEvent.Trigger(machine, "PlayStartBattleAnim");
+        FindObjectOfType<BattleConnectSceneAnimController>().PlayStartBattleAnim();
+
         StopCoroutine(timeCheck);
         SetUserInfoText();
         ClientReady();
@@ -71,7 +72,7 @@ public partial class BattleConnector : MonoBehaviour {
     /// 매칭 화면에서 유저 정보 표기
     /// </summary>
     private void SetUserInfoText() {
-        string race = Variables.Saved.Get("SelectedRace").ToString().ToLower();
+        string race = PlayerPrefs.GetString("SelectedRace").ToLower();
 
         var orcPlayerData = gameState.players.orc;
         var orcUserData = orcPlayerData.user;
@@ -117,9 +118,9 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void end_ready(object args) { 
-        bool isTest = Variables.Saved.Get("SelectedBattleType").ToString().CompareTo("test") == 0;
+        bool isTest = PlayerPrefs.GetString("SelectedBattleType").CompareTo("test") == 0;
         if(isTest) {
-            object value = Variables.Saved.Get("Editor_startState");
+            object value = PlayerPrefs.GetString("Editor_startState");
             SendStartState(value);
         }
     }
