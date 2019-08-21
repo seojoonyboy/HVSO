@@ -99,6 +99,8 @@ public class UnitSpine : MonoBehaviour
         //skeletonAnimation.skeleton.SetSlotsToSetupPose();
         skeletonAnimation.Initialize(false);
         skeletonAnimation.Update(0);
+        //spineAnimationState.Data.DefaultMix = 1;
+        //spineAnimationState.ClearTrack(0);
         TrackEntry entry;        
         entry = spineAnimationState.SetAnimation(0, appearAnimationName, false);
         currentAnimationName = appearAnimationName;

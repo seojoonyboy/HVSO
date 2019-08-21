@@ -239,7 +239,7 @@ public class PlayerController : MonoBehaviour
                 if (shieldData == null)
                     shieldStack.Value = data.hero.shieldGauge;
                 else {
-                    EffectSystem.Instance.IncreaseShieldEffect(shieldFeedBack.transform.gameObject ,shieldData.shieldCount);
+                    EffectSystem.Instance.IncreaseShieldFeedBack(shieldFeedBack.transform.gameObject ,shieldData.shieldCount);
                     shieldStack.Value += shieldData.shieldCount;
                 }
             }

@@ -141,6 +141,8 @@ public class EffectSystem : SerializedMonoBehaviour {
             cutsceneObject.SetActive(true);
             cutsceneAnimation = cutSceneCanvas.transform.Find("Orc").gameObject.GetComponent<SkeletonGraphic>();
         }
+        //cutsceneAnimation.AnimationState.ClearTrack(0);
+        //cutsceneAnimation.AnimationState.Data.DefaultMix = 1;
         cutsceneAnimation.Skeleton.SetSlotsToSetupPose();
         cutsceneAnimation.Initialize(true);
         cutsceneAnimation.Update(0);
@@ -199,7 +201,7 @@ public class EffectSystem : SerializedMonoBehaviour {
         yield return null;
     }
 
-    public void IncreaseShieldEffect(GameObject shieldFeed, int amount) {
+    public void IncreaseShieldFeedBack(GameObject shieldFeed, int amount) {
         shieldFeed.SetActive(true);
         SkeletonGraphic skeletonGraphic = shieldFeed.GetComponent<SkeletonGraphic>();
         skeletonGraphic.AnimationState.Data.DefaultMix = 1;
