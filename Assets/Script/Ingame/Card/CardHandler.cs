@@ -6,7 +6,6 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI.Extensions;
 using System;
 using SkillModules;
-using Bolt;
 using Spine;
 using Spine.Unity;
 

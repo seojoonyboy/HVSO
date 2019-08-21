@@ -5,7 +5,6 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 using UnityEngine;
 using BestHTTP.WebSocket;
-using Bolt;
 using Newtonsoft.Json;
 using SocketFormat;
 

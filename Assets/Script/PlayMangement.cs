@@ -1,4 +1,3 @@
-using Bolt;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -42,7 +41,7 @@ public partial class PlayMangement : MonoBehaviour {
 
     private void Awake() {
         socketHandler = FindObjectOfType<BattleConnector>();
-        bool isTest = Variables.Saved.Get("SelectedBattleType").ToString().CompareTo("test") == 0;
+        bool isTest = PlayerPrefs.GetString("SelectedBattleType").CompareTo("test") == 0;
         SetWorldScale();
         instance = this;
         SetPlayerCard();
@@ -1005,7 +1004,7 @@ public partial class PlayMangement {
     private Transform turnIcon;
 
     public void InitTurnTable() {
-        string race = Variables.Saved.Get("SelectedRace").ToString();
+        string race = PlayerPrefs.GetString("SelectedRace");
         bool isHuman;
 
         turnSpine = turnTable.Find("TurnSpine").GetComponent<SkeletonGraphic>();

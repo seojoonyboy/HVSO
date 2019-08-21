@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using Bolt;
 using System;
 using TMPro;
 using UnityEngine.UI.Extensions;

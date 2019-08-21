@@ -5,7 +5,6 @@ using UnityEngine.UI;
 using UniRx;
 using TMPro;
 using System;
-using Bolt;
 using Spine;
 using Spine.Unity;
 

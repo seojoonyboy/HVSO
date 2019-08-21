@@ -9,10 +9,10 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 using UnityEngine;
 using BestHTTP.WebSocket;
-using Bolt;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SocketFormat;
+using IngameEditor;
 
 /// 서버로부터 데이터를 받아올 때 reflection으로 string을 함수로 바로 발동하게 하는 부분
 public partial class BattleConnector : MonoBehaviour {
@@ -120,7 +120,7 @@ public partial class BattleConnector : MonoBehaviour {
     public void end_ready(object args) { 
         bool isTest = PlayerPrefs.GetString("SelectedBattleType").CompareTo("test") == 0;
         if(isTest) {
-            object value = PlayerPrefs.GetString("Editor_startState");
+            object value = JsonUtility.FromJson(PlayerPrefs.GetString("Editor_startState"), typeof(StartState));
             SendStartState(value);
         }
     }
