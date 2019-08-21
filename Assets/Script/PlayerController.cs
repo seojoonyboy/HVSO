@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     public GameObject card;
     public GameObject back;
     public GameObject playerUI;
+    public SkeletonGraphic shieldFeedBack;
     Transform sheildRemain;
     [SerializeField] public CardHandManager cdpm;
 
@@ -216,6 +217,8 @@ public class PlayerController : MonoBehaviour
         else data = socketHandler.gameState.players.myPlayer(isHuman);
         SocketFormat.ShieldCharge shieldData = GetShieldData();
 
+        Debug.Log("쉴드게이지!" + shieldData.shieldCount);
+
         if(data.shieldActivate && CheckShieldActivate(shieldData)) {
             ActiveShield();
         }
@@ -233,13 +236,17 @@ public class PlayerController : MonoBehaviour
                 SetState(HeroState.HIT);
 
             if (shieldCount > 0) {
-                if(shieldData == null)
+                if (shieldData == null)
                     shieldStack.Value = data.hero.shieldGauge;
-                else
+                else {
+                    EffectSystem.Instance.IncreaseShieldEffect(shieldFeedBack.transform.gameObject ,shieldData.shieldCount);
                     shieldStack.Value += shieldData.shieldCount;
+                }
             }
         }
     }
+    
+
 
     private bool CheckShieldActivate(SocketFormat.ShieldCharge shieldData) {
         if(shieldData == null) return true;

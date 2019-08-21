@@ -1,0 +1,41 @@
+
+ingame_shieldfeedback_bottom.png
+size: 1024,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Ellipse 1
+  rotate: false
+  xy: 409, 88
+  size: 130, 130
+  orig: 130, 130
+  offset: 0, 0
+  index: -1
+Glow
+  rotate: false
+  xy: 218, 27
+  size: 191, 191
+  orig: 191, 191
+  offset: 0, 0
+  index: -1
+Layer 1
+  rotate: false
+  xy: 539, 98
+  size: 103, 120
+  orig: 103, 120
+  offset: 0, 0
+  index: -1
+ring_1
+  rotate: false
+  xy: 0, 0
+  size: 218, 218
+  orig: 218, 218
+  offset: 0, 0
+  index: -1
+shield
+  rotate: false
+  xy: 642, 126
+  size: 78, 92
+  orig: 78, 92
+  offset: 0, 0
+  index: -1

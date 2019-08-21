@@ -199,6 +199,16 @@ public class EffectSystem : SerializedMonoBehaviour {
         yield return null;
     }
 
+    public void IncreaseShieldEffect(GameObject shieldFeed, int amount) {
+        shieldFeed.SetActive(true);
+        SkeletonGraphic skeletonGraphic = shieldFeed.GetComponent<SkeletonGraphic>();
+        skeletonGraphic.AnimationState.Data.DefaultMix = 1;
+        skeletonGraphic.AnimationState.ClearTrack(0);
+        TrackEntry entry;
+        entry = skeletonGraphic.AnimationState.SetAnimation(0, amount.ToString(), false);
+        skeletonGraphic.AnimationState.Complete += delegate (TrackEntry e) { shieldFeed.SetActive(false); };
+    }
+
 
 
     private void OnDestroy() {
