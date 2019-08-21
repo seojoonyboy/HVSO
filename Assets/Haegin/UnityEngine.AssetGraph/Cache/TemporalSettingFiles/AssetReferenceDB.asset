@@ -77,10 +77,6 @@ MonoBehaviour:
     m_importFrom: Assets/Plugins/Assemblies/Ludiq.Graphs.Runtime.dll
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: ed7eeaa2b07dc7340b31be3c30ef5c5b
-    m_importFrom: Assets/Ludiq/Ludiq.Core/DotNetDocumentation
-    m_exportTo: 
-    m_variantName: 
   - m_assetDatabaseId: f95ff2f20718b7846a0e432267660636
     m_importFrom: Assets/Ludiq/Bolt/Documentation/1. Introduction/1. Installation.pdf
     m_exportTo: 
@@ -166,20 +162,8 @@ MonoBehaviour:
     m_importFrom: Assets/Plugins/Assemblies/MiscUtil.defines
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: c4597b8678dd81e45b345f652fcfb3e9
-    m_importFrom: Assets/Ludiq
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 8b4c90a6bb65f8e40b033da971058502
-    m_importFrom: Assets/Ludiq/Bolt
-    m_exportTo: 
-    m_variantName: 
   - m_assetDatabaseId: 643951c6538b13042b7bd12d69b98e32
     m_importFrom: Assets/Ludiq/Ludiq
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: e1420cc6fbab428479a010e8f59e1f6e
-    m_importFrom: Assets/Ludiq/Bolt/Documentation
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: f7e89dc65e5b6a04eaedc96ba8385fa2
@@ -233,10 +217,6 @@ MonoBehaviour:
     m_variantName: 
   - m_assetDatabaseId: b0acf9c8e6322ee44a31a73eb31acad6
     m_importFrom: Assets/Ludiq/Ludiq.Graphs/Ludiq.Graphs.root
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 2c35c509c9c64574cbd7e9bb0ec16ac8
-    m_importFrom: Assets/Ludiq/Ludiq.Core
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: e4bd5a394dc997f43b30d2972127e0c9
@@ -1891,6 +1871,130 @@ MonoBehaviour:
     m_variantName: 
   - m_assetDatabaseId: 0bb85294b04b22241a7f39056d30094b
     m_importFrom: Assets/Script/MainMenu/BattleConnectSceneAnimController.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 9c96f610236e30f41af1d32d331499ea
+    m_importFrom: "Assets/Sprite/Ingame/CardUI/20190820 \uB9C8\uBC95\uCE74\uB4DC \uD2C0"
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 9b6ba260dada0ea4a871a42011f8b87d
+    m_importFrom: Assets/JsonDotNet/Assemblies/Windows/Newtonsoft.Json.dll
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 1418141139a6ac443b18cb05c0643a29
+    m_importFrom: Assets/JsonDotNet/Assemblies/Windows
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: d2a8f0021d6b47c5923d8972dfb81ef1
+    m_importFrom: Assets/Plugins/Sirenix/Assemblies/NoEmitAndNoEditor/Sirenix.Serialization.dll
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 1e0a9643dc0d4b46bf2321f72c4e503e
+    m_importFrom: Assets/Plugins/Sirenix/Assemblies/NoEmitAndNoEditor/Sirenix.Utilities.dll
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 5978f8f3dd274e848fbb7a123bde1fb9
+    m_importFrom: Assets/Plugins/Sirenix/Assemblies/NoEditor/Sirenix.Utilities.dll
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 76f828f47ce26cc43991113c6a39dbbf
+    m_importFrom: Assets/JsonDotNet/Documentation
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 577d9725f58264943855b8ac185531fe
+    m_importFrom: Assets/JsonDotNet/Assemblies
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 6206c6c5f26659b42acc03d3b65a52f4
+    m_importFrom: "Assets/Sprite/Ingame/CardUI/20190820 \uCD08\uC0C1\uD654"
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 4e7d9a07cc3f02a41a575406e7230846
+    m_importFrom: Assets/JsonDotNet/Documentation/Json Net for Unity 2.0.1.pdf
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 6a3c684705042f345975d924f6983e36
+    m_importFrom: Assets/JsonDotNet/Assemblies/AOT/Newtonsoft.Json.dll
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 17aef65a15b471f468b5fbeb4ff0c6a1
+    m_importFrom: Assets/JsonDotNet/Assemblies/Standalone/Newtonsoft.Json.dll
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 14f21d7a1e53a8c4e87b25526a7eb63c
+    m_importFrom: Assets/JsonDotNet/Assemblies/AOT
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: c86b6a0ba9e0e214988f47625d38f0ff
+    m_importFrom: "Assets/Sprite/Ingame/CardUI/20190820 \uC720\uB2DB\uCE74\uB4DC \uD2C0"
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 8ac116ab708328a4b98736dbc2154df5
+    m_importFrom: Assets/Haegin/Patch/Library
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 5651992cdad94894a3af7dc3f1da9170
+    m_importFrom: Assets/Plugins/Sirenix/Assemblies/NoEditor/Sirenix.Serialization.dll
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 9a6f8c7c1ea72ce46831c5e1b6150d0c
+    m_importFrom: Assets/JsonDotNet/JsonDotNet201Source.zip
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 01ef782d02bb1994dbe418b69432552b
+    m_importFrom: Assets/JsonDotNet/Assemblies/Standalone
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 45ea8bae02215404d876aa003fdecf10
+    m_importFrom: Assets/JsonDotNet
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 00000000000000004000000000000000
+    m_importFrom: ProjectSettings/ProjectSettings.asset
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 00000000000000006100000000000000
+    m_importFrom: ProjectSettings/GraphicsSettings.asset
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 1eb1f0012e575e843a3176867bdc1da2
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/AndroidNativePro/Android/Internal/an_vending.aar
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: b6b53f1523725f448b32cec1bf104998
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/AndroidNativePro/Android/Internal/an_gms.aar
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 06314f49bdda26043963578d60a0a7ee
+    m_importFrom: Assets/JsonDotNet/link.xml
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 6dd5d499b504371439038333a4457961
+    m_importFrom: Assets/Plugins/Sirenix/Assemblies/AOT/link.xml
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 9efdb37b4df66400ebfa5b32cb55aaeb
+    m_importFrom: Assets/Plugins/StansAssets/Settings/Resources/AN_Settings.asset
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 36f7323c55864364d8bb88c736e4bca6
+    m_importFrom: Assets/JsonDotNet/Assemblies/Windows/Newtonsoft.Json.XML
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: aadad8ac54f29e44583510294ac5c312
+    m_importFrom: Assets/JsonDotNet/Assemblies/AOT/Newtonsoft.Json.XML
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: d6807fedb8dcaf04682d2c84f0ab753f
+    m_importFrom: Assets/JsonDotNet/Assemblies/Standalone/Newtonsoft.Json.XML
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 355bbcd5836a6422e9eebf3773841400
+    m_importFrom: Assets/Plugins/Firebase/google-services.json
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: f004015c0999443a3b42b824058a4d3c
+    m_importFrom: Assets/Plugins/Firebase/GoogleService-Info.plist
     m_exportTo: 
     m_variantName: 
   m_version: 2

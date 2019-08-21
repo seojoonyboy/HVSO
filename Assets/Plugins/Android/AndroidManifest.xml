@@ -37,8 +37,8 @@
     <activity android:name="com.facebook.unity.AppInviteDialogActivity" />
     <activity android:name="com.haegin.haeginmodule.onestore.IapUnityPluginActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
     <meta-data android:name="iap:api_version" android:value="5" />
-    <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="fb166749030757238" />
-    <provider android:name="com.facebook.FacebookContentProvider" android:authorities="com.facebook.app.FacebookContentProvider166749030757238" android:exported="true" />
+    <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="fb2008915349208918" />
+    <provider android:name="com.facebook.FacebookContentProvider" android:authorities="com.facebook.app.FacebookContentProvider2008915349208918" android:exported="true" />
     <receiver android:name="com.haegin.haeginmodule.notification.UnityNotificationManager" />
     <receiver android:name="com.haegin.haeginmodule.notification.UnityNotificationActionHandler" />
     <provider android:name="com.yasirkula.unity.UnitySSContentProvider" android:authorities="com.haegin.hvso.fileprovider" android:exported="false" android:grantUriPermissions="true">

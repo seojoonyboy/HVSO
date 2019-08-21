@@ -3,10 +3,10 @@
 	<BaseProtocolNameSpace></BaseProtocolNameSpace>
 	<GameProtocolNameSpace>HaeginGame</GameProtocolNameSpace>
 	<AccountIdToCreate>ckeag1C97qEweL1lnZTVf3</AccountIdToCreate>
-	<Auth2ClientID>551232432184-233chdikqqqj6sqsj3rihs7cq6ij4fm0.apps.googleusercontent.com</Auth2ClientID>
-	<FacebookAppID>166749030757238</FacebookAppID>
-	<GoogleAppName>HVSO</GoogleAppName>
-	<GoogleAppNameKo></GoogleAppNameKo>
+	<Auth2ClientID>1031344459169-s5sivlgv71bqongnk01g3jc5oag4212a.apps.googleusercontent.com</Auth2ClientID>
+	<FacebookAppID>2008915349208918</FacebookAppID>
+	<GoogleAppName>H vs O</GoogleAppName>
+	<GoogleAppNameKo>H vs O</GoogleAppNameKo>
 	<GoogleAppNameJp></GoogleAppNameJp>
 	<GoogleAppNameZhHant></GoogleAppNameZhHant>
 	<GoogleAppNameZhHans></GoogleAppNameZhHans>
@@ -15,7 +15,7 @@
 	<GoogleAppNameIt></GoogleAppNameIt>
 	<GoogleAppNameFr></GoogleAppNameFr>
 	<GoogleAppNamePt></GoogleAppNamePt>
-	<GoogleAppID>551232432184</GoogleAppID>
+	<GoogleAppID>1031344459169</GoogleAppID>
 	<EditorAccountIdKey>AccountId</EditorAccountIdKey>
 	<PackageName>com.haegin.hvso</PackageName>
 	<ToolsReplace></ToolsReplace>

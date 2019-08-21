@@ -2,39 +2,37 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>AD_UNIT_ID_FOR_BANNER_TEST</key>
-	<string>ca-app-pub-3940256099942544/2934735716</string>
-	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
-	<string>ca-app-pub-3940256099942544/4411468910</string>
 	<key>CLIENT_ID</key>
-	<string>551232432184-si5uducladrd0e8ahq0h7647a2toujmm.apps.googleusercontent.com</string>
+	<string>1031344459169-8qckghtrm8ed16ouhpdr5h0fpp8evp75.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.551232432184-si5uducladrd0e8ahq0h7647a2toujmm</string>
+	<string>com.googleusercontent.apps.1031344459169-8qckghtrm8ed16ouhpdr5h0fpp8evp75</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>1031344459169-s5sivlgv71bqongnk01g3jc5oag4212a.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDw626RfdghRfuNRaJgtUIKP7W992WgXUA</string>
+	<string>AIzaSyCiYTp6rHJKOjs8-OdnmTcX9vSb10G4AaI</string>
 	<key>GCM_SENDER_ID</key>
-	<string>551232432184</string>
+	<string>1031344459169</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.haegin.modulesample</string>
+	<string>com.haegin.hvso</string>
 	<key>PROJECT_ID</key>
-	<string>modulesample-ed95b</string>
+	<string>h-vs-o-4053119</string>
 	<key>STORAGE_BUCKET</key>
-	<string>modulesample-ed95b.appspot.com</string>
+	<string>h-vs-o-4053119.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
-	<true></true>
+	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
 	<false></false>
 	<key>IS_APPINVITE_ENABLED</key>
-	<false></false>
+	<true></true>
 	<key>IS_GCM_ENABLED</key>
 	<true></true>
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:551232432184:ios:4a27eecf13378008</string>
+	<string>1:1031344459169:ios:6e6c46baedcb748e</string>
 	<key>DATABASE_URL</key>
-	<string>https://modulesample-ed95b.firebaseio.com</string>
+	<string>https://h-vs-o-4053119.firebaseio.com</string>
 </dict>
 </plist>

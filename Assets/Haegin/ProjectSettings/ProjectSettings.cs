@@ -3,7 +3,7 @@ namespace Haegin
 	public class ProjectSettings
 	{
 		public static string accountIdToCreate = "ckeag1C97qEweL1lnZTVf3";
-		public static string webClientOAuth2ClientId = "551232432184-233chdikqqqj6sqsj3rihs7cq6ij4fm0.apps.googleusercontent.com";
+		public static string webClientOAuth2ClientId = "1031344459169-s5sivlgv71bqongnk01g3jc5oag4212a.apps.googleusercontent.com";
 #if UNITY_EDITOR
 		public static string editorAccountIdKey = "AccountId";
 #else
