@@ -13,10 +13,6 @@ MonoBehaviour:
   m_Name: AssetReferenceDB
   m_EditorClassIdentifier: 
   m_assets:
-  - m_assetDatabaseId: 764d0bfb54778954b94de114782c440e
-    m_importFrom: Assets/Ludiq/Ludiq.Core/Generated/ProjectSettings.asset
-    m_exportTo: 
-    m_variantName: 
   - m_assetDatabaseId: 0a6b661e93c7841c9a197206d1ef513f
     m_importFrom: Assets/Haegin/UnityEngine.AssetGraph/Cache/TemporalSettingFiles/AssetReferenceDB.asset
     m_exportTo: 
@@ -33,18 +29,6 @@ MonoBehaviour:
     m_importFrom: Assets/Plugins/Assemblies/Antlr3.Runtime.dll
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: c3cd88e0c91d0b84a928eab77affe447
-    m_importFrom: Assets/Ludiq/Ludiq.Graphs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 3804c151c03f29547b6b564ccc05bde0
-    m_importFrom: Assets/Ludiq/Bolt/Documentation/1. Introduction
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: ea113381f369d2a4f92ed5735b7169a5
-    m_importFrom: Assets/Ludiq/Bolt/Documentation/2. Basic Concepts
-    m_exportTo: 
-    m_variantName: 
   - m_assetDatabaseId: 72139091d0175b14fb6fd48d7facf70e
     m_importFrom: Assets/Plugins/Assemblies/Ludiq.Platforms.defines
     m_exportTo: 
@@ -57,16 +41,8 @@ MonoBehaviour:
     m_importFrom: Assets/Plugins/Assemblies/Bolt.Flow.Runtime.defines
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 15bc0bc1d685059449413fb9463d18bb
-    m_importFrom: Assets/Ludiq/Bolt.State/Bolt.State.root
-    m_exportTo: 
-    m_variantName: 
   - m_assetDatabaseId: ba3a06e12c5c6ee46aa4a47212443416
     m_importFrom: Assets/Plugins/Assemblies/Bolt.State.Runtime.dll.mdb
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: d8b716f19631bac43951babf6d630330
-    m_importFrom: Assets/Ludiq/Bolt/Documentation/2. Basic Concepts/2. Variables.pdf
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 1eea3bf15bb7ddb4582c462beee0ad13
@@ -75,10 +51,6 @@ MonoBehaviour:
     m_variantName: 
   - m_assetDatabaseId: efc4f8221b9f2e04998ad78e9b2b01b6
     m_importFrom: Assets/Plugins/Assemblies/Ludiq.Graphs.Runtime.dll
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: f95ff2f20718b7846a0e432267660636
-    m_importFrom: Assets/Ludiq/Bolt/Documentation/1. Introduction/1. Installation.pdf
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 51364af278e07a14b9f7147bd78435e7
@@ -105,10 +77,6 @@ MonoBehaviour:
     m_importFrom: Assets/Plugins/Assemblies/Bolt.Flow.Editor.dll.mdb
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 0f1400336600a11408c348181ca0e551
-    m_importFrom: Assets/Ludiq/Bolt/Documentation/4. State Graphs/2. Transitions.pdf
-    m_exportTo: 
-    m_variantName: 
   - m_assetDatabaseId: 0d289733b6865f04ba9e26049ec9beb7
     m_importFrom: Assets/Plugins/Assemblies/Ludiq.Core.Editor.defines
     m_exportTo: 
@@ -121,33 +89,12 @@ MonoBehaviour:
     m_importFrom: Assets/Plugins/Assemblies/Bolt.Core.Editor.pdb
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: c8473324c3ee1c945aac72fd15789afd
-    m_importFrom: Assets/Ludiq/Bolt/Bolt.root
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 700a81f426a3463499283eb8216443a0
-    m_importFrom: Assets/Ludiq/Bolt/Documentation/3. Flow Graphs
-    m_exportTo: 
-    m_variantName: 
   - m_assetDatabaseId: 907ae305fd1cba34eb3cd8f1365f7d2c
     m_importFrom: Assets/Plugins/Assemblies/Ludiq.Graphs.Runtime.dll.mdb
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 4ba7c8c5b4689fb4d93c8858551bcbf0
-    m_importFrom: Assets/Ludiq/Bolt/Documentation/4. State Graphs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 08f6dac59237ee44890aab9b9070fa69
-    m_importFrom: Assets/Ludiq/Bolt/Documentation/2. Basic Concepts/3. Graphs, Machines
-      & Macros.pdf
-    m_exportTo: 
-    m_variantName: 
   - m_assetDatabaseId: aa4fb1d507da8b04abab7b4821278b38
     m_importFrom: Assets/Plugins/Assemblies
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: b38d3de5feff36e4aa4784899527445b
-    m_importFrom: Assets/Ludiq/Bolt.Flow/Bolt.Flow.root
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 3cc8404641a59644e9ab0448cf0653b0
@@ -162,45 +109,12 @@ MonoBehaviour:
     m_importFrom: Assets/Plugins/Assemblies/MiscUtil.defines
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 643951c6538b13042b7bd12d69b98e32
-    m_importFrom: Assets/Ludiq/Ludiq
-    m_exportTo: 
-    m_variantName: 
   - m_assetDatabaseId: f7e89dc65e5b6a04eaedc96ba8385fa2
     m_importFrom: Assets/Plugins/Assemblies/Bolt.Flow.Runtime.pdb
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: bc5b6e077b2606943b4cb8a949c4a152
-    m_importFrom: Assets/Ludiq/Ludiq.Core/Ludiq.Core.root
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 0a63b817943edbf4d8d484ada7d4eb7f
-    m_importFrom: Assets/Ludiq/Bolt/Documentation/4. State Graphs/1. Flow States &
-      Super States.pdf
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 329e6b17ed45bdb409906a5f377720b6
-    m_importFrom: Assets/Ludiq/Bolt/Documentation/3. Flow Graphs/4. Super Units.pdf
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 2cec1c176c535fe428bdd2a1daeae285
-    m_importFrom: Assets/Ludiq/Bolt/Documentation/4. State Graphs/3. State Units.pdf
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: b6ba47274f0a1364d875b41c66def11c
-    m_importFrom: Assets/Ludiq/Bolt.Flow
-    m_exportTo: 
-    m_variantName: 
   - m_assetDatabaseId: 542beba75c187654e9ab57d1e8555033
     m_importFrom: Assets/Plugins/Assemblies/Bolt.Flow.Editor.pdb
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: b339f318416fcd34c9f899074b188306
-    m_importFrom: Assets/Ludiq/Bolt/Documentation/1. Introduction/5. Documentation.pdf
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: f9f98d381b677f64db238f8d0706175f
-    m_importFrom: Assets/Ludiq/Bolt/Documentation/2. Basic Concepts/1. Types.pdf
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: cf63b248bde69b64b83b4d93a83abe15
@@ -211,24 +125,8 @@ MonoBehaviour:
     m_importFrom: Assets/Plugins/Assemblies/Bolt.State.Runtime.defines
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: b193a998775802f42ad10b2215f1e932
-    m_importFrom: Assets/Ludiq/Bolt/Documentation/1. Introduction/3. Windows & Shortcuts.pdf
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: b0acf9c8e6322ee44a31a73eb31acad6
-    m_importFrom: Assets/Ludiq/Ludiq.Graphs/Ludiq.Graphs.root
-    m_exportTo: 
-    m_variantName: 
   - m_assetDatabaseId: e4bd5a394dc997f43b30d2972127e0c9
     m_importFrom: Assets/Plugins/Assemblies/Ludiq.Platforms.dll
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 6063e7691d3ae01478d4f0cff81a8ce0
-    m_importFrom: Assets/Ludiq/Bolt.State
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 28679789730b0124bbc01ed5a9a63e6f
-    m_importFrom: Assets/Ludiq/Bolt.Core
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 9bd0db89ea73e5347a0d8bfe23d52a4e
@@ -251,32 +149,12 @@ MonoBehaviour:
     m_importFrom: Assets/Plugins/Assemblies/MiscUtil.dll
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 332b626aa8917d840b637d2c30ad58c1
-    m_importFrom: Assets/Ludiq/Ludiq/Ludiq.root
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 2613d36abbd154a49be660cd6fc81d1f
-    m_importFrom: Assets/Ludiq/Bolt.Core/Bolt.Core.root
-    m_exportTo: 
-    m_variantName: 
   - m_assetDatabaseId: 7314928a14330c04fb980214791646e9
     m_importFrom: Assets/Plugins/Assemblies/Bolt.Core.Editor.dll
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: cb40b39a15e6c3e48b784d5d22dfe4c4
     m_importFrom: Assets/Plugins/Assemblies/Ludiq.Graphs.Editor.defines
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 097a62fa91d14584687b70f5a4cda400
-    m_importFrom: Assets/Ludiq/Bolt/Documentation/1. Introduction/4. Updates & Backups.pdf
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 1116762bbedeefc409e73222650f19df
-    m_importFrom: Assets/Ludiq/Bolt/Documentation/1. Introduction/2. Configuration.pdf
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: d02f1c2bdd0775c41ac0406aab50453b
-    m_importFrom: Assets/Ludiq/Bolt.Core/IconMap
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 34d8046b36b99224d8a6e59bd23d05c7
@@ -299,25 +177,12 @@ MonoBehaviour:
     m_importFrom: Assets/Plugins/Assemblies/Bolt.State.Editor.dll
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 92ca735cd9c0cb945a000ee472a4edc0
-    m_importFrom: Assets/Ludiq/Bolt/Documentation/2. Basic Concepts/4. Groups.pdf
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: ac63f46cc3c952c4d9cd1aa9626d5314
-    m_importFrom: Assets/Ludiq/Bolt.Flow/IconMap
-    m_exportTo: 
-    m_variantName: 
   - m_assetDatabaseId: dcd2196c4e9166f499793f2007fcda35
     m_importFrom: Assets/Plugins/Assemblies/Bolt.State.Runtime.dll
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 6cb65bfc2ee1c854ca1382175f3aba91
     m_importFrom: Assets/Plugins/Assemblies/Bolt.Flow.Editor.dll
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: e292662dab0a2d04a85968d9bc27bd22
-    m_importFrom: Assets/Ludiq/Bolt/Documentation/3. Flow Graphs/2. Connections &
-      Relations.pdf
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 1101cf4d4430ca442a64590b80415ed2
@@ -356,169 +221,24 @@ MonoBehaviour:
     m_importFrom: Assets/Plugins/Assemblies/Ludiq.Graphs.Runtime.pdb
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: ff9165cfb397ea64f8e636b6e3d51014
-    m_importFrom: Assets/Ludiq/Bolt/Documentation/3. Flow Graphs/3. Predictive & Live
-      Debugging.pdf
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 497a6fdf2ee86d444a168b897c1237c3
-    m_importFrom: Assets/Ludiq/Bolt.State/IconMap
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 586a7bff2f300aa4fb2ae7e8bc895a32
-    m_importFrom: Assets/Ludiq/Bolt/Documentation/3. Flow Graphs/1. Units & Ports.pdf
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 1eaabc60a72932440be1bd47507b1426
-    m_importFrom: Assets/Ludiq/Bolt.Core/Generated
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 60ccbb80a20c3fd4281129c1439b83f2
-    m_importFrom: Assets/Ludiq/Bolt.Core/Generated/Variables/Resources/ApplicationVariables.asset
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 44014f21438378e4fbf875a6adc63ad2
-    m_importFrom: Assets/Ludiq/Bolt.Flow/Generated/ProjectSettings.asset
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: c5cc1bd15abc2494cbcb676d385e8118
-    m_importFrom: Assets/Ludiq/Bolt.Core/Generated/ProjectSettings.asset
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 470d16a3779aeb9448a2c8ca551ec60e
-    m_importFrom: Assets/Ludiq/Ludiq.Core/Generated
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 92161086963f4e241afe3a9eb30fe910
-    m_importFrom: Assets/Ludiq/Bolt.Core/Generated/Variables/Resources
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: c68799372de6b4545a2dace1c1f9e45e
-    m_importFrom: Assets/Ludiq/Ludiq.Graphs/Generated
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 1b4be1f75fb1b9d47b90c42b3854b523
-    m_importFrom: Assets/Ludiq/Bolt.Core/Generated/Variables
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 13185be899ba9f848bc4906f2dc5575e
-    m_importFrom: Assets/Ludiq/Bolt.State/Generated/ProjectSettings.asset
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: d525a689a9676de4c9bcbeea1ec6989d
-    m_importFrom: Assets/Ludiq/Ludiq.Graphs/Generated/ProjectSettings.asset
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 5820695a03f783349890ba8914a2ecad
-    m_importFrom: Assets/Ludiq/Bolt.Core/Generated/Variables/Resources/SavedVariables.asset
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 0129cf6bb23df2f41824eda97d16ee6e
-    m_importFrom: Assets/Ludiq/Bolt.Core/IconMap/Bolt.GlobalMessageListener.png
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 75b813cc50d303a4291ded9ea5a44135
-    m_importFrom: Assets/Ludiq/Bolt.Flow/Generated
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 6828e99f15c3c8244bda74ebc6462601
-    m_importFrom: Assets/Ludiq/Bolt.State/Generated
-    m_exportTo: 
-    m_variantName: 
   - m_assetDatabaseId: db6e9d108a643f342ac80ba7393906f6
     m_importFrom: Assets/Plugins/Assemblies/sqlite3.dll
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 10b3a8b0d5998f44ab51c17186faae90
-    m_importFrom: Assets/Ludiq/Ludiq.Core/DotNetDocumentation/System.Web.Extensions.Design.xml
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: df117fd0a48047a4c8927f9bf4f36ba2
     m_importFrom: Assets/Plugins/Assemblies/YamlDotNet.xml
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 8e9a15e0ac5cafb4d8e25dec6404f400
-    m_importFrom: Assets/Ludiq/Ludiq.Core/DotNetDocumentation/System.Data.Entity.xml
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: fe5b77214c748b64ba5033f2af1b4c34
-    m_importFrom: Assets/Ludiq/Bolt.Flow/IconMap/Bolt.FlowMachine.png
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 520f389163e53da42aa0686a251118cd
-    m_importFrom: Assets/Ludiq/Ludiq.Core/DotNetDocumentation/System.Data.Entity.Design.xml
-    m_exportTo: 
-    m_variantName: 
   - m_assetDatabaseId: 3aba9fe1ad29b42ffb0eea781318a626
     m_importFrom: Packages/com.unity.package-manager-ui/Editor/Resources/Templates/PackageManagerToolbar.uxml
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: a621bc123be9fb84ab2ff0fc3b387853
-    m_importFrom: Assets/Ludiq/Ludiq.Core/DotNetDocumentation/System.Configuration.xml
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: b28af3520c9f270429f383116bd0d368
-    m_importFrom: Assets/Ludiq/Bolt.State/IconMap/Bolt.StateMacro.png
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 169fba52aac893941b8c47a26779d188
-    m_importFrom: Assets/Ludiq/Ludiq.Core/DotNetDocumentation/System.Xml.Linq.xml
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 56928e6200baba7419f5b2e10d958ceb
-    m_importFrom: Assets/Ludiq/Ludiq.Core/DotNetDocumentation/Microsoft.Build.Conversion.v3.5.xml
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 10f89472b305369488c83525cea09397
-    m_importFrom: Assets/Ludiq/Ludiq.Core/DotNetDocumentation/Microsoft.Build.Engine.xml
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 6e90522369eead746a4975ade6c99464
-    m_importFrom: Assets/Ludiq/Ludiq.Core/DotNetDocumentation/System.DirectoryServices.AccountManagement.xml
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: bd091a2392353b34f891823635e31e63
-    m_importFrom: Assets/Ludiq/Ludiq.Core/DotNetDocumentation/System.Web.Services.xml
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 5742d193d89156f4595c712d210f61cd
-    m_importFrom: Assets/Ludiq/Ludiq.Core/DotNetDocumentation/System.Messaging.xml
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 7f818a9345006a24fb9328a53a9cd953
-    m_importFrom: Assets/Ludiq/Ludiq.Core/DotNetDocumentation/System.Windows.Presentation.xml
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 3bb1d0a3fb2d9c747bee8d6301681b14
-    m_importFrom: Assets/Ludiq/Bolt/LICENSES.txt
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 310bebb331cf47f42b7f0b57b1f5bfcf
-    m_importFrom: Assets/Ludiq/Bolt.Core/IconMap/Bolt.UnityMessageListener.png
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: c49720c31a0991d48aa5d1fcf9d6d1a6
-    m_importFrom: Assets/Ludiq/Bolt.Core/IconMap/Bolt.VariablesSaver.png
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: bbec1324b05a54939ad2fea2d7e11063
     m_importFrom: Packages/com.unity.package-manager-ui/Editor/Resources/Templates/PackageStatusBar.uxml
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 7d124344acaf9e74ca1a9343337f459b
-    m_importFrom: Assets/Ludiq/Ludiq.Core/DotNetDocumentation/System.Runtime.Serialization.xml
-    m_exportTo: 
-    m_variantName: 
   - m_assetDatabaseId: 4f768b64e6c37495699fffe3007e4379
     m_importFrom: Packages/com.unity.package-manager-ui/Editor/Resources/Templates/Alert.uxml
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 77d75284071bac94cb1a9c270273029a
-    m_importFrom: Assets/Ludiq/Ludiq.Core/DotNetDocumentation/System.AddIn.xml
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: df12b9d43ccb8ef4cb81410787379cd0
-    m_importFrom: Assets/Ludiq/Ludiq.Core/DotNetDocumentation/System.Xml.xml
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 9df784e4d6d4411449560c171e4b0baa
@@ -529,48 +249,12 @@ MonoBehaviour:
     m_importFrom: Packages/com.unity.package-manager-ui/Editor/Resources/Templates/PackageGroup.uxml
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 26c33d5594124f545b157d401ea9fb4d
-    m_importFrom: Assets/Ludiq/Ludiq.Core/DotNetDocumentation/Microsoft.Build.Utilities.v3.5.xml
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 515e8a950f3e32a449d93fef9adbd526
-    m_importFrom: Assets/Ludiq/Ludiq.Core/DotNetDocumentation/System.Web.Routing.xml
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 4593fea58b7a6da498ef8a4cc0104b1d
-    m_importFrom: Assets/Ludiq/Ludiq.Core/DotNetDocumentation/System.Data.Services.Client.xml
-    m_exportTo: 
-    m_variantName: 
   - m_assetDatabaseId: 97dff1b5ae41ee84886ae7a80ae21499
     m_importFrom: Packages/com.unity.package-manager-ui/Editor/Resources/Templates/PackageAddFromUrlField.uxml
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 62a554e5fa631bf47a982fb310f3baab
-    m_importFrom: Assets/Ludiq/Ludiq.Core/DotNetDocumentation/System.ServiceModel.Web.xml
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: eee5efe5a6d8cde4ba5b70a82c57c51b
-    m_importFrom: Assets/Ludiq/Ludiq.Core/DotNetDocumentation/System.Web.Entity.xml
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 15e1ff06ffe1666438845738979cd832
-    m_importFrom: Assets/Ludiq/Ludiq.Core/DotNetDocumentation/System.Printing.xml
-    m_exportTo: 
-    m_variantName: 
   - m_assetDatabaseId: b52bde26a83564960bcb90217f72b910
     m_importFrom: Packages/com.unity.collab-proxy/Editor/Resources/Styles/CollabHistoryLight.uss
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: fe01003620cce3440875f86c0c28cf1c
-    m_importFrom: Assets/Ludiq/Ludiq.Core/DotNetDocumentation/System.Drawing.xml
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 3048cda6f528a32428ad30beaed9139c
-    m_importFrom: Assets/Ludiq/Bolt/Documentation/0. READ ME FIRST.txt
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: a58a38079ae05464aa352099930f5a90
-    m_importFrom: Assets/Ludiq/Ludiq.Core/DotNetDocumentation/System.Runtime.Remoting.xml
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 10145f279f90346bbb61712ff585828b
@@ -581,40 +265,12 @@ MonoBehaviour:
     m_importFrom: Assets/Plugins/Assemblies/MiscUtil.xml
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 61c57a47aec3a1642a2484d4bdd40916
-    m_importFrom: Assets/Ludiq/Ludiq.Core/DotNetDocumentation/System.Configuration.Install.xml
-    m_exportTo: 
-    m_variantName: 
   - m_assetDatabaseId: 41ca7357a83a5aa47904b262ff750706
     m_importFrom: Assets/Plugins/Assemblies/Ludiq.Graphs.Runtime.xml
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 518f9f57fe921d8449a3db0957ba6895
-    m_importFrom: Assets/Ludiq/Ludiq.Core/DotNetDocumentation/System.DirectoryServices.xml
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: eb9251973398bbb488fa8239ac0be5f9
-    m_importFrom: Assets/Ludiq/Ludiq.Core/DotNetDocumentation/System.Transactions.xml
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: f4241d97facf9bf4881222c2789a4c14
-    m_importFrom: Assets/Ludiq/Bolt.Core/IconMap/Bolt.Variables.png
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 284ff7c7f10d2824494695a496a364e0
-    m_importFrom: Assets/Ludiq/Ludiq.Core/DotNetDocumentation/System.Web.DynamicData.Design.xml
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: b02f08d71cd189444abf53d17220d58d
-    m_importFrom: Assets/Ludiq/Ludiq.Core/DotNetDocumentation/mscorlib.xml
-    m_exportTo: 
-    m_variantName: 
   - m_assetDatabaseId: 93c1370867fcb45079592da39e0994c5
     m_importFrom: Packages/com.unity.package-manager-ui/Editor/Resources/Templates/PackageDetails.uxml
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 1fe98c1841a6f694ebf4ea439799b35f
-    m_importFrom: Assets/Ludiq/Ludiq.Core/DotNetDocumentation/System.Net.xml
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 2903dd28ffe416b408e81f37643f4ed4
@@ -625,10 +281,6 @@ MonoBehaviour:
     m_importFrom: Assets/Plugins/Assemblies/Bolt.Flow.Runtime.xml
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: dc3c5cb8537d7374cbe60b4ef592a953
-    m_importFrom: Assets/Ludiq/Ludiq.Core/DotNetDocumentation/System.Data.DataSetExtensions.xml
-    m_exportTo: 
-    m_variantName: 
   - m_assetDatabaseId: 3a2d94c8977984b67984caeff9fa666e
     m_importFrom: Packages/com.unity.collab-proxy/Editor/Resources/Styles/CollabHistoryCommon.uss
     m_exportTo: 
@@ -637,36 +289,8 @@ MonoBehaviour:
     m_importFrom: Assets/Plugins/Assemblies/Ludiq.Core.Runtime.xml
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 11c6b5e8960073640aa7f517393abb46
-    m_importFrom: Assets/Ludiq/Ludiq.Core/DotNetDocumentation/System.Core.xml
-    m_exportTo: 
-    m_variantName: 
   - m_assetDatabaseId: a0550e093e6f9c2498649c838cc8cd69
     m_importFrom: Assets/Plugins/Assemblies/Bolt.State.Editor.xml
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: b33b72199830c924da117a3cf9f3b69e
-    m_importFrom: Assets/Ludiq/Bolt.Flow/IconMap/Bolt.FlowMacro.png
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 8e6084392c1a2ca43a454728777a05be
-    m_importFrom: Assets/Ludiq/Ludiq.Core/DotNetDocumentation/System.Runtime.Serialization.Formatters.Soap.xml
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 35a9ed99c32180c468666651b857d8ed
-    m_importFrom: Assets/Ludiq/Ludiq.Core/DotNetDocumentation/System.Management.Instrumentation.xml
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: de2322d9f553e714fa26362043fddb7f
-    m_importFrom: Assets/Ludiq/Ludiq.Core/DotNetDocumentation/System.ComponentModel.DataAnnotations.xml
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 6aa2bf0af96c4a54db897f9b266a0d74
-    m_importFrom: Assets/Ludiq/Ludiq.Core/DotNetDocumentation/System.EnterpriseServices.xml
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 19f4161a6d747b94a81595667e587336
-    m_importFrom: Assets/Ludiq/Ludiq.Core/DotNetDocumentation/System.ServiceProcess.xml
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 9ed10b2ab7c69794eafa6c4915e29f87
@@ -681,132 +305,36 @@ MonoBehaviour:
     m_importFrom: Packages/com.unity.collab-proxy/Editor/Resources/Styles/CollabHistoryDark.uss
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 7080bf7ab73baa14d8b10e5126f57b01
-    m_importFrom: Assets/Ludiq/Ludiq.Core/DotNetDocumentation/System.Data.xml
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: d00757aabc110ef468807f44be1e2df9
-    m_importFrom: Assets/Ludiq/Ludiq.Core/DotNetDocumentation/System.Security.xml
-    m_exportTo: 
-    m_variantName: 
   - m_assetDatabaseId: 8918e6baee4c0e143b147e755bbcfa76
     m_importFrom: Assets/Plugins/Assemblies/Bolt.State.Runtime.xml
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 21763ada12b1de54a9de03382ecdf3fe
-    m_importFrom: Assets/Ludiq/Bolt.Core/IconMap/Bolt.AnimatorMessageListener.png
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: db16910b9b1fa764aaf730fac9c16085
-    m_importFrom: Assets/Ludiq/Ludiq.Core/DotNetDocumentation/System.Deployment.xml
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: abdc053b8e3644f299aedc641d609a84
     m_importFrom: Packages/com.unity.package-manager-ui/Editor/Resources/Styles/Main_Light.uss
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: e0083aab3d12ca841bbd9eb281798420
-    m_importFrom: Assets/Ludiq/Ludiq.Core/DotNetDocumentation/Microsoft.Build.Framework.xml
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: de984cbb4e6b4ea45aaba10f7fb89b5a
-    m_importFrom: Assets/Ludiq/Ludiq.Core/DotNetDocumentation/System.Web.Abstractions.xml
-    m_exportTo: 
-    m_variantName: 
   - m_assetDatabaseId: c7559cdbc33f04af1a5a42d2aa5b40a5
     m_importFrom: Packages/com.unity.package-manager-ui/Editor/Resources/Styles/Main_Dark.uss
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 1338000c8c7b5474bb43f306f2fc6597
-    m_importFrom: Assets/Ludiq/Ludiq.Core/DotNetDocumentation/System.Web.Entity.Design.xml
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: aa927c1c5296a9d4c873ff70ba5ee58b
-    m_importFrom: Assets/Ludiq/Ludiq.Core/DotNetDocumentation/System.IdentityModel.xml
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: a8586f2c00f774743abc4fa981168879
-    m_importFrom: Assets/Ludiq/Ludiq.Core/DotNetDocumentation/System.Web.Extensions.xml
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 78beaf4c6e26bf745b5bc7dfe5d007be
-    m_importFrom: Assets/Ludiq/Bolt.State/IconMap/Bolt.StateMachine.png
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 55e0bd5c97d682d469a046a89cafc769
-    m_importFrom: Assets/Ludiq/Ludiq.Core/DotNetDocumentation/System.Data.Services.Design.xml
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: cd44c1bc0fa624a39aa784af44c62180
     m_importFrom: Packages/com.unity.package-manager-ui/Editor/Resources/Templates/PackageSearchToolbar.uxml
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 76a0e1ec7ea95204f8afb10cc7b6cdab
-    m_importFrom: Assets/Ludiq/Ludiq.Core/DotNetDocumentation/System.Management.xml
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: aabc321d398b8cb479a7e7ee058a1032
-    m_importFrom: Assets/Ludiq/Ludiq.Core/DotNetDocumentation/Microsoft.VisualC.STLCLR.xml
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: cd5c667df37619541b2a6ad42e3e7d39
-    m_importFrom: Assets/Ludiq/Ludiq.Core/DotNetDocumentation/System.WorkflowServices.xml
-    m_exportTo: 
-    m_variantName: 
   - m_assetDatabaseId: 46c02d8d6499b4309ac1ec5d0b818585
     m_importFrom: Packages/com.unity.package-manager-ui/Editor/Resources/Templates/PackageList.uxml
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 1f0a19dd6e2c27d4abcc37e9ef1e4fad
-    m_importFrom: Assets/Ludiq/Ludiq.Core/DotNetDocumentation/System.Data.SqlXml.xml
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 7e1f811eb716b3844aad1127122172ed
-    m_importFrom: Assets/Ludiq/Bolt.Core/IconMap/Bolt.VariablesAsset.png
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: d8188e1e2141b9c4f94cf2b37d4da688
-    m_importFrom: Assets/Ludiq/Ludiq.Core/DotNetDocumentation/System.Web.DynamicData.xml
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: a8d9e44eff3f447db9448925617ccb44
     m_importFrom: Packages/com.unity.package-manager-ui/Editor/Resources/Templates/PackageManagerWindow.uxml
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: ed34039e44b782f4fb89e32ccc19eafd
-    m_importFrom: Assets/Ludiq/Ludiq.Core/DotNetDocumentation/System.AddIn.Contract.xml
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 8c9a41de87a31a442910940d9419686f
-    m_importFrom: Assets/Ludiq/Ludiq.Core/DotNetDocumentation/System.Data.Services.xml
-    m_exportTo: 
-    m_variantName: 
   - m_assetDatabaseId: fa9200fe25bcbbf44b0088f60ebb0447
     m_importFrom: Assets/Plugins/Assemblies/Bolt.Core.Runtime.xml
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 3c6c422f459765b46bf7a4e40e9c00d3
-    m_importFrom: Assets/Ludiq/Ludiq.Core/DotNetDocumentation/System.Windows.Forms.xml
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 6b56465f507914e4d93f5ac114970466
-    m_importFrom: Assets/Ludiq/Ludiq.Core/DotNetDocumentation/System.ServiceModel.xml
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: c7c636cff28c5544794d7afa5144a3ea
-    m_importFrom: Assets/Ludiq/Ludiq.Core/DotNetDocumentation/System.Data.Linq.xml
-    m_exportTo: 
-    m_variantName: 
   - m_assetDatabaseId: 8b5e5ccf037b3fc4192d73d164a6076c
     m_importFrom: Assets/Plugins/Assemblies/Bolt.Flow.Editor.xml
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 6f4663ef9fbdf6141ab12e8cca1ce8c7
-    m_importFrom: Assets/Ludiq/Ludiq.Core/DotNetDocumentation/System.xml
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 85b733ff25d1eee479a6d510562bd0b2
-    m_importFrom: Assets/Ludiq/Bolt.Core/IconMap/Bolt.SceneVariables.png
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 001541169adf37d4e9dc05486b84ee95
@@ -1995,6 +1523,374 @@ MonoBehaviour:
     m_variantName: 
   - m_assetDatabaseId: f004015c0999443a3b42b824058a4d3c
     m_importFrom: Assets/Plugins/Firebase/GoogleService-Info.plist
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: feb393d00a3f14bc78cf27b5b4cd0e86
+    m_importFrom: Assets/Plugins/Android/AN_Res/res/values/strings.xml
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 1a5dba117bca143f385eec64847e9f21
+    m_importFrom: Assets/Plugins/Android/Firebase/res/values/google-services.xml
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: c46a1682460de44bfaec7ecfefe2627a
+    m_importFrom: Assets/Plugins/Ionic.Zip.Lite.dll
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 25ff3f26bb3c740b4a078ff20a5e5875
+    m_importFrom: Assets/Plugins/Android/AN_Res/res/values-ko/strings.xml
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: daa893a72b926734691f2620221eb870
+    m_importFrom: Assets/StreamingAssets/google-services-desktop.json
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 38b928ee618207048a5bf003f854a994
+    m_importFrom: Assets/Plugins/Sirenix/Assemblies/AOT
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 79abefd28fa94440ba730e1b1ce5b590
+    m_importFrom: Assets/Haegin/Account/Account.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 5c102c53891779f46b7288db1794dd9b
+    m_importFrom: Assets/Script/MainMenu/Controllers/GameEditController.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: f5c803e31436d4b79ac693b55945215d
+    m_importFrom: Assets/Haegin/ProjectSettings/ProjectSettings.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: c0ae98308ab0475a9583e1ea6e82ec65
+    m_importFrom: Assets/Plugins/Android/AndroidManifest.xml
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: c3cd88e0c91d0b84a928eab77affe447
+    m_importFrom: Assets/Ludiq/Ludiq.Graphs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 5add240130b2d3b4e9b86995f3fb4e36
+    m_importFrom: Assets/Ludiq/Bolt.Flow/Generated
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 21995d3153d48a946b0bc1cd1cdeb886
+    m_importFrom: Assets/Ludiq/Bolt.Core/Generated
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 3804c151c03f29547b6b564ccc05bde0
+    m_importFrom: Assets/Ludiq/Bolt/Documentation/1. Introduction
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: ea113381f369d2a4f92ed5735b7169a5
+    m_importFrom: Assets/Ludiq/Bolt/Documentation/2. Basic Concepts
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 15bc0bc1d685059449413fb9463d18bb
+    m_importFrom: Assets/Ludiq/Bolt.State/Bolt.State.root
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: d8b716f19631bac43951babf6d630330
+    m_importFrom: Assets/Ludiq/Bolt/Documentation/2. Basic Concepts/2. Variables.pdf
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: ed7eeaa2b07dc7340b31be3c30ef5c5b
+    m_importFrom: Assets/Ludiq/Ludiq.Core/DotNetDocumentation
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: f95ff2f20718b7846a0e432267660636
+    m_importFrom: Assets/Ludiq/Bolt/Documentation/1. Introduction/1. Installation.pdf
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 0f1400336600a11408c348181ca0e551
+    m_importFrom: Assets/Ludiq/Bolt/Documentation/4. State Graphs/2. Transitions.pdf
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 3700bdc3fb903ac45b0eded16f0986b5
+    m_importFrom: Assets/Ludiq/Ludiq.Graphs/Generated
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 82f6fde3e0928e04b8bc2d09c1287945
+    m_importFrom: Assets/Ludiq/Bolt.State/Generated
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: c8473324c3ee1c945aac72fd15789afd
+    m_importFrom: Assets/Ludiq/Bolt/Bolt.root
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: be268074c35772848ad6e9b93f870a19
+    m_importFrom: Assets/Ludiq/Bolt.Flow/Generated/UnitOptions.db
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 700a81f426a3463499283eb8216443a0
+    m_importFrom: Assets/Ludiq/Bolt/Documentation/3. Flow Graphs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 4ba7c8c5b4689fb4d93c8858551bcbf0
+    m_importFrom: Assets/Ludiq/Bolt/Documentation/4. State Graphs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 08f6dac59237ee44890aab9b9070fa69
+    m_importFrom: Assets/Ludiq/Bolt/Documentation/2. Basic Concepts/3. Graphs, Machines
+      & Macros.pdf
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: aa4fb1d507da8b04abab7b4821278b38
+    m_importFrom: Assets/Ludiq/Assemblies
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: b38d3de5feff36e4aa4784899527445b
+    m_importFrom: Assets/Ludiq/Bolt.Flow/Bolt.Flow.root
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: c4597b8678dd81e45b345f652fcfb3e9
+    m_importFrom: Assets/Ludiq
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 8b4c90a6bb65f8e40b033da971058502
+    m_importFrom: Assets/Ludiq/Bolt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 643951c6538b13042b7bd12d69b98e32
+    m_importFrom: Assets/Ludiq/Ludiq
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: e1420cc6fbab428479a010e8f59e1f6e
+    m_importFrom: Assets/Ludiq/Bolt/Documentation
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: bc5b6e077b2606943b4cb8a949c4a152
+    m_importFrom: Assets/Ludiq/Ludiq.Core/Ludiq.Core.root
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 0a63b817943edbf4d8d484ada7d4eb7f
+    m_importFrom: Assets/Ludiq/Bolt/Documentation/4. State Graphs/1. Flow States &
+      Super States.pdf
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 329e6b17ed45bdb409906a5f377720b6
+    m_importFrom: Assets/Ludiq/Bolt/Documentation/3. Flow Graphs/4. Super Units.pdf
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 2cec1c176c535fe428bdd2a1daeae285
+    m_importFrom: Assets/Ludiq/Bolt/Documentation/4. State Graphs/3. State Units.pdf
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: b6ba47274f0a1364d875b41c66def11c
+    m_importFrom: Assets/Ludiq/Bolt.Flow
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: b339f318416fcd34c9f899074b188306
+    m_importFrom: Assets/Ludiq/Bolt/Documentation/1. Introduction/5. Documentation.pdf
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: f9f98d381b677f64db238f8d0706175f
+    m_importFrom: Assets/Ludiq/Bolt/Documentation/2. Basic Concepts/1. Types.pdf
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: cf63b248bde69b64b83b4d93a83abe15
+    m_importFrom: Assets/Ludiq/Assemblies/YamlDotNet.defines
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: e5415258ac1260c4191dd90fa1beaa09
+    m_importFrom: Assets/Ludiq/Ludiq.Core/Generated
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: b193a998775802f42ad10b2215f1e932
+    m_importFrom: Assets/Ludiq/Bolt/Documentation/1. Introduction/3. Windows & Shortcuts.pdf
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: b0acf9c8e6322ee44a31a73eb31acad6
+    m_importFrom: Assets/Ludiq/Ludiq.Graphs/Ludiq.Graphs.root
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 5959c5d8f5ab1c14e8c8976591d4b4f3
+    m_importFrom: Assets/Ludiq/Ludiq.Core/Generated/Property Providers
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: df4800f8ac6de4a4ebecae28d4467f3a
+    m_importFrom: Assets/Ludiq/Bolt.Core/Generated/Variables/Resources
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 2c35c509c9c64574cbd7e9bb0ec16ac8
+    m_importFrom: Assets/Ludiq/Ludiq.Core
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 6063e7691d3ae01478d4f0cff81a8ce0
+    m_importFrom: Assets/Ludiq/Bolt.State
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 28679789730b0124bbc01ed5a9a63e6f
+    m_importFrom: Assets/Ludiq/Bolt.Core
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 332b626aa8917d840b637d2c30ad58c1
+    m_importFrom: Assets/Ludiq/Ludiq/Ludiq.root
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 2613d36abbd154a49be660cd6fc81d1f
+    m_importFrom: Assets/Ludiq/Bolt.Core/Bolt.Core.root
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 097a62fa91d14584687b70f5a4cda400
+    m_importFrom: Assets/Ludiq/Bolt/Documentation/1. Introduction/4. Updates & Backups.pdf
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: c571000bc7568e643a8757e7d461b6c9
+    m_importFrom: Assets/Ludiq/Ludiq.Core/Generated/Property Providers/Editor
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 1116762bbedeefc409e73222650f19df
+    m_importFrom: Assets/Ludiq/Bolt/Documentation/1. Introduction/2. Configuration.pdf
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: d02f1c2bdd0775c41ac0406aab50453b
+    m_importFrom: Assets/Ludiq/Bolt.Core/IconMap
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 92ca735cd9c0cb945a000ee472a4edc0
+    m_importFrom: Assets/Ludiq/Bolt/Documentation/2. Basic Concepts/4. Groups.pdf
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: ac63f46cc3c952c4d9cd1aa9626d5314
+    m_importFrom: Assets/Ludiq/Bolt.Flow/IconMap
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: e292662dab0a2d04a85968d9bc27bd22
+    m_importFrom: Assets/Ludiq/Bolt/Documentation/3. Flow Graphs/2. Connections &
+      Relations.pdf
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: fd3376ae10de0ae439464275dedcb564
+    m_importFrom: Assets/Ludiq/Bolt.Core/Generated/Variables
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 01b3ea4ff305d8341bea246edd7fc565
+    m_importFrom: Assets/Ludiq/Assemblies/YamlDotNet.dll
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: ff9165cfb397ea64f8e636b6e3d51014
+    m_importFrom: Assets/Ludiq/Bolt/Documentation/3. Flow Graphs/3. Predictive & Live
+      Debugging.pdf
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 497a6fdf2ee86d444a168b897c1237c3
+    m_importFrom: Assets/Ludiq/Bolt.State/IconMap
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 586a7bff2f300aa4fb2ae7e8bc895a32
+    m_importFrom: Assets/Ludiq/Bolt/Documentation/3. Flow Graphs/1. Units & Ports.pdf
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 0129cf6bb23df2f41824eda97d16ee6e
+    m_importFrom: Assets/Ludiq/Bolt.Core/IconMap/Bolt.GlobalMessageListener.png
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: db6e9d108a643f342ac80ba7393906f6
+    m_importFrom: Assets/Ludiq/Assemblies/sqlite3.dll
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 10b3a8b0d5998f44ab51c17186faae90
+    m_importFrom: Assets/Ludiq/Ludiq.Core/DotNetDocumentation/System.Web.Extensions.Design.xml
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: df117fd0a48047a4c8927f9bf4f36ba2
+    m_importFrom: Assets/Ludiq/Assemblies/YamlDotNet.xml
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 8e9a15e0ac5cafb4d8e25dec6404f400
+    m_importFrom: Assets/Ludiq/Ludiq.Core/DotNetDocumentation/System.Data.Entity.xml
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: fe5b77214c748b64ba5033f2af1b4c34
+    m_importFrom: Assets/Ludiq/Bolt.Flow/IconMap/Bolt.FlowMachine.png
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 520f389163e53da42aa0686a251118cd
+    m_importFrom: Assets/Ludiq/Ludiq.Core/DotNetDocumentation/System.Data.Entity.Design.xml
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: a621bc123be9fb84ab2ff0fc3b387853
+    m_importFrom: Assets/Ludiq/Ludiq.Core/DotNetDocumentation/System.Configuration.xml
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: b28af3520c9f270429f383116bd0d368
+    m_importFrom: Assets/Ludiq/Bolt.State/IconMap/Bolt.StateMacro.png
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 169fba52aac893941b8c47a26779d188
+    m_importFrom: Assets/Ludiq/Ludiq.Core/DotNetDocumentation/System.Xml.Linq.xml
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 56928e6200baba7419f5b2e10d958ceb
+    m_importFrom: Assets/Ludiq/Ludiq.Core/DotNetDocumentation/Microsoft.Build.Conversion.v3.5.xml
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 10f89472b305369488c83525cea09397
+    m_importFrom: Assets/Ludiq/Ludiq.Core/DotNetDocumentation/Microsoft.Build.Engine.xml
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 6e90522369eead746a4975ade6c99464
+    m_importFrom: Assets/Ludiq/Ludiq.Core/DotNetDocumentation/System.DirectoryServices.AccountManagement.xml
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: bd091a2392353b34f891823635e31e63
+    m_importFrom: Assets/Ludiq/Ludiq.Core/DotNetDocumentation/System.Web.Services.xml
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 5742d193d89156f4595c712d210f61cd
+    m_importFrom: Assets/Ludiq/Ludiq.Core/DotNetDocumentation/System.Messaging.xml
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 7f818a9345006a24fb9328a53a9cd953
+    m_importFrom: Assets/Ludiq/Ludiq.Core/DotNetDocumentation/System.Windows.Presentation.xml
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 3bb1d0a3fb2d9c747bee8d6301681b14
+    m_importFrom: Assets/Ludiq/Bolt/LICENSES.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 310bebb331cf47f42b7f0b57b1f5bfcf
+    m_importFrom: Assets/Ludiq/Bolt.Core/IconMap/Bolt.UnityMessageListener.png
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: c49720c31a0991d48aa5d1fcf9d6d1a6
+    m_importFrom: Assets/Ludiq/Bolt.Core/IconMap/Bolt.VariablesSaver.png
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 7d124344acaf9e74ca1a9343337f459b
+    m_importFrom: Assets/Ludiq/Ludiq.Core/DotNetDocumentation/System.Runtime.Serialization.xml
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 9a3e2f80117c19f4bb39b55b0816a5ef
+    m_importFrom: Assets/Sprite/Unit/Hiding/Hiding.png
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: b79f09329dee27043ad669c6aeca5dae
+    m_importFrom: Assets/Sprite/Unit/Hiding/Hiding.skel.bytes
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: c764c456139ee0f448be3e2019161be4
+    m_importFrom: Assets/Sprite/Unit/Hiding
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: c961650efad52914e977484c2dff0459
+    m_importFrom: Assets/Sprite/Unit/Hiding/Hiding.atlas.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 83701594a6696004f88decd7182074b3
+    m_importFrom: Assets/Sprite/Unit/Hiding/Hiding_Material.mat
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: c6bfe6edc8992fb48b3c7e60df0cd102
+    m_importFrom: Assets/Sprite/Unit/Hiding/Hiding_Atlas.asset
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: dfbd0a0f4186e0947bd317177f75fdd8
+    m_importFrom: Assets/Sprite/Unit/Hiding/Hiding_SkeletonData.asset
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 2bc17b51b7bdecf4a8327178491451ee
+    m_importFrom: Assets/Prefab/Skeleton/Hiding_skeleton.prefab
     m_exportTo: 
     m_variantName: 
   m_version: 2

@@ -140,8 +140,7 @@ MonoBehaviour:
   deClockAnimationName: HIDE_APPEAR
   attackEventName: SHOT
   arrow: {fileID: 2577051221848607311, guid: cb3000eb176a220488c34311eed51378, type: 3}
-  hidingObject: {fileID: 8875640797152268877, guid: 2bc17b51b7bdecf4a8327178491451ee,
-    type: 3}
+  hidingObject: {fileID: 0}
   headbone: {fileID: 0}
   bodybone: {fileID: 0}
   rootbone: {fileID: 0}
@@ -170,7 +169,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6216668340567907962}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.060997393, y: 1.2398492, z: 0}
+  m_LocalPosition: {x: -0.042698175, y: 0.8678945, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1476238121517782832}
@@ -220,7 +219,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6685770840863088072}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.036332913, y: 2.5297995, z: 0}
+  m_LocalPosition: {x: -0.025433041, y: 1.7708597, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1476238121517782832}
