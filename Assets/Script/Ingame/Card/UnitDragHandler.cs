@@ -75,7 +75,7 @@ public partial class UnitDragHandler : CardHandler, IBeginDragHandler, IDragHand
     IEnumerator SummonUnit(Transform slot) {
         PlayMangement.dragable = false;
 
-        yield return PlayMangement.instance.cardHandManager.ShowUsedCard(transform.parent.GetSiblingIndex(), gameObject);
+        //yield return PlayMangement.instance.cardHandManager.ShowUsedCard(transform.parent.GetSiblingIndex(), gameObject);
         GameObject unitPref = CardDropManager.Instance.DropUnit(gameObject, slot);
         if (unitPref != null) {
             var cardData = GetComponent<CardHandler>().cardData;
@@ -89,5 +89,6 @@ public partial class UnitDragHandler : CardHandler, IBeginDragHandler, IDragHand
             PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.FIELD_CHANGED, null, null);
         }
         PlayMangement.dragable = true;
+        yield return 0;
     }
 }

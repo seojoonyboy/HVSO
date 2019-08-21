@@ -195,7 +195,7 @@ public partial class PlayMangement : MonoBehaviour {
                     //카드 정보 만들기
                     GameObject summonUnit = MakeUnitCardObj(history);
                     //카드 정보 보여주기
-                    yield return UnitActivate(summonUnit, history);
+                    yield return UnitActivate(history);
                 }
                 else {
                     GameObject summonedMagic = MakeMagicCardObj(history);
@@ -255,19 +255,19 @@ public partial class PlayMangement : MonoBehaviour {
         return unitCard;
     }
 
-    private IEnumerator UnitActivate(GameObject card, SocketFormat.PlayHistory history) {
-        UnitDragHandler unitDragHandler = card.GetComponent<UnitDragHandler>();
-        dragable = false;
+    private IEnumerator UnitActivate(SocketFormat.PlayHistory history) {
+        //UnitDragHandler unitDragHandler = card.GetComponent<UnitDragHandler>();
+        //dragable = false;
 
-        card.transform.rotation = new Quaternion(0, 0, 540, card.transform.rotation.w);
-        card.transform.SetParent(enemyPlayer.playerUI.transform);
-        card.SetActive(true);
+        //card.transform.rotation = new Quaternion(0, 0, 540, card.transform.rotation.w);
+        //card.transform.SetParent(enemyPlayer.playerUI.transform);
+        //card.SetActive(true);
 
-        //카드 보여주기
-        yield return cardHandManager.ShowUsedCard(100, card);
-        //카드 파괴
-        card.transform.localScale = new Vector3(1, 1, 1);
-        cardHandManager.DestroyCard(card);
+        ////카드 보여주기
+        //yield return cardHandManager.ShowUsedCard(100, card);
+        ////카드 파괴
+        //card.transform.localScale = new Vector3(1, 1, 1);
+        //cardHandManager.DestroyCard(card);
 
         //실제 유닛 소환
         GameObject summonedMonster = SummonMonster(history);
@@ -276,6 +276,7 @@ public partial class PlayMangement : MonoBehaviour {
         object[] parms = new object[] { false, summonedMonster };
         EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
         EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.FIELD_CHANGED, null, null);
+        yield return 0;
     }
 
     private IEnumerator MagicActivate(GameObject card, SocketFormat.PlayHistory history) {
