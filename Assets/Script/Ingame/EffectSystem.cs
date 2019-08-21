@@ -202,13 +202,16 @@ public class EffectSystem : SerializedMonoBehaviour {
     }
 
     public void IncreaseShieldFeedBack(GameObject shieldFeed, int amount) {
-        shieldFeed.SetActive(true);
         SkeletonGraphic skeletonGraphic = shieldFeed.GetComponent<SkeletonGraphic>();
-        skeletonGraphic.AnimationState.Data.DefaultMix = 1;
-        skeletonGraphic.AnimationState.ClearTrack(0);
+        shieldFeed.SetActive(true);
+        //skeletonGraphic.AnimationState.Data.DefaultMix = 1;
+        //skeletonGraphic.AnimationState.ClearTrack(0);
+        skeletonGraphic.Initialize(true);
+        skeletonGraphic.Update(0);        
+        skeletonGraphic.Skeleton.SetSlotsToSetupPose();
         TrackEntry entry;
         entry = skeletonGraphic.AnimationState.SetAnimation(0, amount.ToString(), false);
-        skeletonGraphic.AnimationState.Complete += delegate (TrackEntry e) { shieldFeed.SetActive(false); };
+        skeletonGraphic.AnimationState.Complete += delegate (TrackEntry e) { shieldFeed.SetActive(false); skeletonGraphic.AnimationState.ClearTrack(0); };
     }
 
 
