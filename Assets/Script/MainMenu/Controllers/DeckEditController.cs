@@ -224,6 +224,10 @@ public class DeckEditController : MonoBehaviour
         ownCardLayout.GetChild(currentPage).gameObject.SetActive(false);
         currentPage = beforeCard.transform.parent.parent.GetSiblingIndex();
         ownCardLayout.GetChild(currentPage).gameObject.SetActive(true);
+        if (currentPage > 0) buttons.Find("PrevPageButton").gameObject.SetActive(true);
+        else buttons.Find("PrevPageButton").gameObject.SetActive(false);
+        if (currentPage + 1 == lastPage) buttons.Find("NextPageButton").gameObject.SetActive(false);
+        else buttons.Find("NextPageButton").gameObject.SetActive(true);
         RefreshLine();
     }
 
