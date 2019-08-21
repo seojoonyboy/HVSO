@@ -239,7 +239,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &805486932726496209
 RectTransform:
   m_ObjectHideFlags: 0
@@ -257,8 +257,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -2, y: -2}
-  m_SizeDelta: {x: 229, y: 285}
+  m_AnchoredPosition: {x: -1.8, y: 2.1}
+  m_SizeDelta: {x: 210, y: 288}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &613490172222773699
 CanvasRenderer:
@@ -362,7 +362,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 0cef2a709d22fc145b388fb651656d9e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0f555026d861fd44ca875451e2a86519, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -725,7 +725,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 225, y: 286}
+  m_SizeDelta: {x: 211, y: 287}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2541403053875156619
 CanvasRenderer:
@@ -1264,7 +1264,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 30, y: -30}
-  m_SizeDelta: {x: 68, y: 77}
+  m_SizeDelta: {x: 95, y: 103}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9064035807030632973
 CanvasRenderer:
@@ -1294,7 +1294,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300012, guid: 88c432ee856e77f41878ace66588c121, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d7e0d39a5379ecc4dba1d97046292ee5, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1338,7 +1338,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 177, y: 236}
+  m_SizeDelta: {x: 180, y: 236}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7130338280836373052
 CanvasRenderer:
@@ -1368,8 +1368,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: -5641399100269775092, guid: f2ac4f4fa8996e848a52e02efe26cf63,
-    type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5af75275b662e394092c48468911fb09, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
