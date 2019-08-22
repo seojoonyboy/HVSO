@@ -18,7 +18,7 @@ public class FBL_SceneManager : Singleton<FBL_SceneManager> {
 
     void Start() {
 #if !UNITY_EDITOR
-        for(int i = 1; i <= 5; i++) {
+        for(int i = 2; i <= 6; i++) {
             StartCoroutine(PreLoadReadyScene(i));
         }
 #endif
