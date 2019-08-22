@@ -18,20 +18,23 @@ public class LoginController : MonoBehaviour {
 
     public void OnGuestLoginButtonClick(string param) {
         Firebase.Analytics.FirebaseAnalytics.LogEvent("Guest_Login");
-        SceneManager.LoadScene("Login", LoadSceneMode.Single);
+        FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
     }
 
     private void OnRequestUserInfoCallback(HTTPRequest originalRequest, HTTPResponse response) {
         var sceneStartController = GetComponent<SceneStartController>();
         if (response.StatusCode == 200 || response.StatusCode == 304) {
             AccountManager.Instance.SetSignInData(response);
-            AccountManager.Instance.OnSignInResultModal();
+            //AccountManager.Instance.OnSignInResultModal();
 
-            if(PlayerPrefs.GetInt("isFirst") == 1) {
+            if (PlayerPrefs.GetInt("isFirst") == 1) {
                 sceneStartController
                     .LoginTypeCanvas
                     .gameObject
                     .SetActive(true);
+            }
+            else {
+                AccountManager.Instance.OnSignInResultModal();
             }
         }
     }
