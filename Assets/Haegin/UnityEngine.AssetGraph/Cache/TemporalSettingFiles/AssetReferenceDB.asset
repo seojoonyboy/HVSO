@@ -2196,10 +2196,6 @@ MonoBehaviour:
     m_importFrom: Assets/Haegin/Patch/Source/PatcherAsyncBG.cs
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 30f4d0eb77704ba68bf8dede64390643
-    m_importFrom: Assets/Plugins/Firebase/Plugins/link.xml
-    m_exportTo: 
-    m_variantName: 
   - m_assetDatabaseId: 13ac821708bf2a741863e4e2c85ea004
     m_importFrom: Assets/Sprite/Spine_Effect/ingame_shieldgauge/ingame_shieldgauge_human/ingame_shieldgauge_human_SkeletonData.asset
     m_exportTo: 
