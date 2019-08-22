@@ -625,16 +625,22 @@ public partial class PlayMangement : MonoBehaviour {
     }
 
     public IEnumerator DrawSpecialCard(bool isHuman) {
-        yield return socketHandler.WaitGetCard();
         Logger.Log("쉴드 발동!");
         bool isPlayer = (isHuman == player.isHuman);
         if (isPlayer) {
             CardHandManager cdpm = FindObjectOfType<CardHandManager>();
             bool race = player.isHuman;
-            SocketFormat.Card cardData = socketHandler.gameState.players.myPlayer(race).newCard;
+            //SocketFormat.Card[] heroCards = socketHandler.gameState.players.myPlayer(race).deck.heroCards;
+            SocketFormat.Card[] heroCards = new SocketFormat.Card[2];
+            SocketFormat.Card dummyCard = new SocketFormat.Card();
+            dummyCard.id = "ac10002";
+            dummyCard.itemId = 1;
+            heroCards[0] = heroCards[1] = dummyCard;
+
             battleLineEffect.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.6f);
             battleLineEffect.gameObject.SetActive(false);
-            yield return cdpm.DrawHeroCard(cardData);
+            yield return cdpm.DrawHeroCard(heroCards[0]);
+            yield return cdpm.DrawHeroCard(heroCards[1]);
             battleLineEffect.gameObject.SetActive(true);
             battleLineEffect.GetComponent<SpriteRenderer>().color = new Color(1, 0.545f, 0.427f, 0.6f);
         }
