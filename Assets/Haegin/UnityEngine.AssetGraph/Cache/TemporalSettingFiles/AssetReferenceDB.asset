@@ -2188,4 +2188,24 @@ MonoBehaviour:
     m_importFrom: Assets/Plugins/Firebase/m2repository/com/google/firebase/firebase-dynamic-links-unity/6.1.1/firebase-dynamic-links-unity-6.1.1.aar
     m_exportTo: 
     m_variantName: 
+  - m_assetDatabaseId: 552cfcb3410f34d8287fac2547e2c3f4
+    m_importFrom: Assets/Plugins/Android/mainTemplate.gradle
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: d637b0c883d144e5999626a501822ae4
+    m_importFrom: Assets/Haegin/Patch/Source/PatcherAsyncBG.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 30f4d0eb77704ba68bf8dede64390643
+    m_importFrom: Assets/Plugins/Firebase/Plugins/link.xml
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 13ac821708bf2a741863e4e2c85ea004
+    m_importFrom: Assets/Sprite/Spine_Effect/ingame_shieldgauge/ingame_shieldgauge_human/ingame_shieldgauge_human_SkeletonData.asset
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 3e67fb4e64b93411696ea8bc084b177f
+    m_importFrom: Assets/Haegin/Sample/Scenes/SceneOBBCheck.unity
+    m_exportTo: 
+    m_variantName: 
   m_version: 2
