@@ -210,19 +210,36 @@ public class CardHandManager : MonoBehaviour {
     /// </summary>
     /// <param name="cardData"></param>
     /// <returns></returns>
-    public IEnumerator DrawHeroCard(SocketFormat.Card cardData = null) {
-        GameObject card;
-        if (PlayMangement.instance.player.isHuman)
-            card = cardStorage.Find("HumanHeroCards").GetChild(0).gameObject;
-        else
-            card = cardStorage.Find("OrcHeroCards").GetChild(0).gameObject;
-        card.transform.SetParent(showPos.transform);
-        showPos.Find("HeroCardGuide").gameObject.SetActive(true);
-        card.SetActive(true);
-        CardHandler handler = card.GetComponent<CardHandler>();
-        handler.DrawHeroCard(cardData);
-        iTween.MoveTo(card, showPos.position, 0.4f);
-        iTween.RotateTo(card, iTween.Hash("rotation", new Vector3(0, 0, 0), "islocal", true, "time", 0.4f));
+    public IEnumerator DrawHeroCard(SocketFormat.Card[] cards = null) {
+        GameObject leftCard, rightCard;
+
+        if (PlayMangement.instance.player.isHuman) {
+            leftCard = cardStorage.Find("HumanHeroCards").GetChild(0).gameObject;
+            rightCard = cardStorage.Find("HumanHeroCards").GetChild(1).gameObject;
+        }
+        else {
+            leftCard = cardStorage.Find("OrcHeroCards").GetChild(0).gameObject;
+            rightCard = cardStorage.Find("OrcHeroCards").GetChild(1).gameObject;
+        }
+        leftCard.transform.SetParent(showPos.Find("Left"));
+        rightCard.transform.SetParent(showPos.Find("Right"));
+
+        showPos.Find("Right/HeroCardGuide").gameObject.SetActive(true);
+        showPos.Find("Left/HeroCardGuide").gameObject.SetActive(true);
+
+        leftCard.SetActive(true);
+        rightCard.SetActive(true);
+
+        CardHandler handler = leftCard.GetComponent<CardHandler>();
+        handler.DrawHeroCard(cards[0]);
+        handler.DrawHeroCard(cards[1]);
+
+        iTween.MoveTo(leftCard, showPos.position, 0.4f);
+        iTween.RotateTo(leftCard, iTween.Hash("rotation", new Vector3(0, 0, 0), "islocal", true, "time", 0.4f));
+        yield return new WaitForSeconds(0.5f);
+        iTween.MoveTo(rightCard, showPos.position, 0.4f);
+        iTween.RotateTo(rightCard, iTween.Hash("rotation", new Vector3(0, 0, 0), "islocal", true, "time", 0.4f));
+
         yield return StartCoroutine(handler.ActiveHeroCard());
     }
 
