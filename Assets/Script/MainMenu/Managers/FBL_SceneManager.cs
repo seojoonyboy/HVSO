@@ -57,25 +57,25 @@ public class FBL_SceneManager : Singleton<FBL_SceneManager> {
 
     IEnumerator PreLoadReadyScene(int load) {
         yield return null;
-        if (load - 1 < 0) yield break;
-        asyncOps[load - 1] = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(load, UnityEngine.SceneManagement.LoadSceneMode.Single);
-        asyncOps[load - 1].allowSceneActivation = false;
+        if (load - 2 < 0) yield break;
+        asyncOps[load - 2] = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(load, UnityEngine.SceneManagement.LoadSceneMode.Single);
+        asyncOps[load - 2].allowSceneActivation = false;
         yield return null;
     }
 
     IEnumerator LoadReadyScene(int unload, int load) {
         yield return null;
-        if (unload - 1 >= 0)
-            asyncOps[unload - 1] = null;
-        if (asyncOps[load - 1] == null) {
+        if (unload - 2 >= 0)
+            asyncOps[unload - 2] = null;
+        if (asyncOps[load - 2] == null) {
             UnityEngine.SceneManagement.SceneManager.LoadScene(load, UnityEngine.SceneManagement.LoadSceneMode.Single);
             for (int i = 0; i < 5; i++) {
                 asyncOps[i] = null;
             }
             yield break;
         }
-        while (!asyncOps[load - 1].isDone) {
-            asyncOps[load - 1].allowSceneActivation = true;
+        while (!asyncOps[load - 2].isDone) {
+            asyncOps[load - 2].allowSceneActivation = true;
             yield return null;
         }
     }

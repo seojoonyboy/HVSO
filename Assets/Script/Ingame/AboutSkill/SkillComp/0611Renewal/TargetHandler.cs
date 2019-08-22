@@ -636,6 +636,11 @@ namespace TargetModules {
                                 }
                             }
 
+                            if(units.Count == 0) {
+                                failedCallback("타겟이 없습니다.");
+                                break;
+                            }
+
                             foreach (GameObject unit in units) {
                                 var ui = unit.transform.Find("ClickableUI").gameObject;
                                 if (ui != null) {

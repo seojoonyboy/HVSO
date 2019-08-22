@@ -1,0 +1,13 @@
+
+ingame_n_magic_card.png
+size: 512,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+ingame_n_magic_card
+  rotate: true
+  xy: 0, 0
+  size: 248, 315
+  orig: 248, 315
+  offset: 0, 0
+  index: -1

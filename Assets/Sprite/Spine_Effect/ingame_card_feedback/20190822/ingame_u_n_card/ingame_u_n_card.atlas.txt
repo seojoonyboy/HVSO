@@ -1,0 +1,13 @@
+
+ingame_u_n_card.png
+size: 512,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+ingame_u_n_card
+  rotate: false
+  xy: 0, 0
+  size: 257, 312
+  orig: 257, 312
+  offset: 0, 0
+  index: -1
