@@ -251,7 +251,7 @@ public partial class BattleConnector : MonoBehaviour {
         callback();
     }
 
-    public void shield_guage(object args) {
+    public void shield_gauge(object args) {
         var json = (JObject)args;
         string camp = json["camp"].ToString();
         string gauge = json["shieldGet"].ToString();

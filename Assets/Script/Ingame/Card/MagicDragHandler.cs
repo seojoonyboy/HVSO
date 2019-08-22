@@ -131,6 +131,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
                 transform.parent.Find("HeroCardGuide").gameObject.SetActive(true);
             CardDropManager.Instance.HideMagicSlot();
             CardInfoOnDrag.instance.OffCardDragInfo();
+            PlayMangement.instance.player.ConsumeShieldSteak();
             return;
         }
         if (firstDraw) return;
