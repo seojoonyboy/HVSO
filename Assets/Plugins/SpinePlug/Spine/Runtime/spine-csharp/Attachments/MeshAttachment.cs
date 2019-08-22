@@ -160,8 +160,6 @@ namespace Spine {
 			copy.regionHeight = regionHeight;
 			copy.regionOriginalWidth = regionOriginalWidth;
 			copy.regionOriginalHeight = regionOriginalHeight;
-			copy.RegionRotate = RegionRotate;
-			copy.RegionDegrees = RegionDegrees;
 			copy.Path = Path;
 			copy.r = r;
 			copy.g = g;
@@ -197,8 +195,6 @@ namespace Spine {
 			mesh.regionHeight = regionHeight;
 			mesh.regionOriginalWidth = regionOriginalWidth;
 			mesh.regionOriginalHeight = regionOriginalHeight;
-			mesh.RegionDegrees = RegionDegrees;
-			mesh.RegionRotate = RegionRotate;
 
 			mesh.Path = Path;
 			mesh.r = r;

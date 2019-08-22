@@ -484,35 +484,49 @@ namespace Spine.Unity.Editor {
 					}
 				}
 
-				var slotAttachments = new List<Skin.SkinEntry>();
-				var defaultSkinAttachments = new List<Skin.SkinEntry>();
+				var slotAttachments = new List<Attachment>();
+				var slotAttachmentNames = new List<string>();
+				var defaultSkinAttachmentNames = new List<string>();
 				var slotsItems = preview.Skeleton.Slots.Items;
 				for (int i = preview.Skeleton.Slots.Count - 1; i >= 0; i--) {
 					Slot slot = slotsItems[i];
 					EditorGUILayout.LabelField(SpineInspectorUtility.TempContent(slot.Data.Name, Icons.slot));
 					if (showAttachments) {
 						slotAttachments.Clear();
-						defaultSkinAttachments.Clear();
+						slotAttachmentNames.Clear();
+						defaultSkinAttachmentNames.Clear();
 
 						using (new SpineInspectorUtility.IndentScope()) {
 							{
-								skin.GetAttachments(i, slotAttachments);
-								if (defaultSkin != null) {
-									if (skin != defaultSkin) {
-										defaultSkin.GetAttachments(i, slotAttachments);
-										defaultSkin.GetAttachments(i, defaultSkinAttachments);
+								var skinEntries = new List<Skin.SkinEntry>();
+								skin.GetAttachments(i, skinEntries);
+								foreach (var entry in skinEntries) {
+									slotAttachments.Add(entry.Attachment);
+									slotAttachmentNames.Add(entry.Name);
+								}
+
+								if (skin != defaultSkin) {
+									skinEntries.Clear();
+									defaultSkin.GetAttachments(i, skinEntries);
+									foreach (var entry in skinEntries) {
+										slotAttachments.Add(entry.Attachment);
+										slotAttachmentNames.Add(entry.Name);
+										defaultSkinAttachmentNames.Add(entry.Name);
 									}
-									else {
-										defaultSkin.GetAttachments(i, defaultSkinAttachments);
+
+								} else {
+									skinEntries.Clear();
+									defaultSkin.GetAttachments(i, skinEntries);
+									foreach (var entry in skinEntries) {
+										defaultSkinAttachmentNames.Add(entry.Name);
 									}
-								}	
+								}
 							}
 
 							for (int a = 0; a < slotAttachments.Count; a++) {
-								var skinEntry = slotAttachments[a];
-								Attachment attachment = skinEntry.Attachment;
-								string attachmentName = skinEntry.Name;
-								bool attachmentIsFromSkin = !defaultSkinAttachments.Contains(skinEntry);
+								Attachment attachment = slotAttachments[a];
+								string attachmentName = slotAttachmentNames[a];
+								bool attachmentIsFromSkin = !defaultSkinAttachmentNames.Contains(attachmentName);
 
 								Texture2D attachmentTypeIcon = Icons.GetAttachmentIcon(attachment);
 								bool initialState = slot.Attachment == attachment;
@@ -699,8 +713,11 @@ namespace Spine.Unity.Editor {
 		SkeletonAnimation skeletonAnimation;
 		GameObject previewGameObject;
 		internal bool requiresRefresh;
+
+		#if !SPINE_UNITY_2018_PREVIEW_API
 		float animationLastTime;
-		
+		#endif
+
 		static float CurrentTime { get { return (float)EditorApplication.timeSinceStartup; } }
 
 		Action Repaint;
@@ -793,8 +810,10 @@ namespace Spine.Unity.Editor {
 
 			if (previewRenderUtility == null) {
 				previewRenderUtility = new PreviewRenderUtility(true);
+				#if !SPINE_UNITY_2018_PREVIEW_API
 				animationLastTime = CurrentTime;
-				
+				#endif
+
 				const int PreviewLayer = 30;
 				const int PreviewCameraCullingMask = 1 << PreviewLayer;
 
@@ -883,10 +902,12 @@ namespace Spine.Unity.Editor {
 
 				
 				if (!EditorApplication.isPlaying) {
+					#if !SPINE_UNITY_2018_PREVIEW_API
 					float current = CurrentTime;
 					float deltaTime = (current - animationLastTime);
 					skeletonAnimation.Update(deltaTime);
 					animationLastTime = current;
+					#endif
 					skeletonAnimation.LateUpdate();
 				}
 

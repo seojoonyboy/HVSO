@@ -34,29 +34,52 @@ using Spine;
 namespace Spine.Unity {
 	/// <summary>
 	/// Use this as a condition-blocking yield instruction for Unity Coroutines. 
-	/// The routine will pause until the AnimationState.TrackEntry fires its Complete event.
-	/// It can be configured to trigger on the End event as well to cover interruption.
-	/// <p/>
-	/// See the <see cref="http://esotericsoftware.com/spine-unity-events">Spine Unity Events documentation page</see>
-	/// and <see cref="http://esotericsoftware.com/spine-api-reference#AnimationStateListener"/>
-	/// for more information on when track events will be triggered.</summary>
-	public class WaitForSpineAnimationComplete : WaitForSpineAnimation, IEnumerator {
+	/// The routine will pause until the AnimationState.TrackEntry fires its Complete event.</summary>
+	public class WaitForSpineAnimationComplete : IEnumerator {
 		
-		public WaitForSpineAnimationComplete (Spine.TrackEntry trackEntry, bool includeEndEvent = false) :
-			base(trackEntry,
-				includeEndEvent ? (AnimationEventTypes.Complete | AnimationEventTypes.End) : AnimationEventTypes.Complete)
-		{
+		bool m_WasFired = false;
+
+		public WaitForSpineAnimationComplete (Spine.TrackEntry trackEntry) {
+			SafeSubscribe(trackEntry);
+		}
+
+		void HandleComplete (TrackEntry trackEntry) {
+			m_WasFired = true;
+		}
+
+		void SafeSubscribe (Spine.TrackEntry trackEntry) {
+			if (trackEntry == null) {
+				// Break immediately if trackEntry is null.
+				Debug.LogWarning("TrackEntry was null. Coroutine will continue immediately.");
+				m_WasFired = true;
+			} else {
+				trackEntry.Complete += HandleComplete;
+			}
 		}
 
 		#region Reuse
 		/// <summary>
 		/// One optimization high-frequency YieldInstruction returns is to cache instances to minimize GC pressure. 
 		/// Use NowWaitFor to reuse the same instance of WaitForSpineAnimationComplete.</summary>
-		public WaitForSpineAnimationComplete NowWaitFor (Spine.TrackEntry trackEntry, bool includeEndEvent = false) {
-			SafeSubscribe(trackEntry,
-				includeEndEvent ? (AnimationEventTypes.Complete | AnimationEventTypes.End) : AnimationEventTypes.Complete);
+		public WaitForSpineAnimationComplete NowWaitFor (Spine.TrackEntry trackEntry) {
+			SafeSubscribe(trackEntry);
 			return this;
 		}
 		#endregion
+
+		#region IEnumerator
+		bool IEnumerator.MoveNext () {
+			if (m_WasFired) {
+				((IEnumerator)this).Reset();	// auto-reset for YieldInstruction reuse
+				return false;
+			}
+
+			return true;
+		}
+		void IEnumerator.Reset () { m_WasFired = false; }
+		object IEnumerator.Current { get { return null; } }
+		#endregion
+
 	}
+
 }

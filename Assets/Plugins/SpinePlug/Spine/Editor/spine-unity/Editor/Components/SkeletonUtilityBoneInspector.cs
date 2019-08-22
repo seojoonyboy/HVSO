@@ -80,13 +80,17 @@ namespace Spine.Unity.Editor {
 			for(int i = 0; i < slotCount; i++){
 				Slot slot = skeletonUtility.skeletonRenderer.skeleton.Slots.Items[i];
 				if (slot.Bone == utilityBone.bone) {
-					var slotAttachments = new List<Skin.SkinEntry>();
+					var slotAttachments = new List<Attachment>();
+					var skinEntries = new List<Skin.SkinEntry>();
 					int slotIndex = skeleton.FindSlotIndex(slot.Data.Name);
-					skin.GetAttachments(slotIndex, slotAttachments);
-					
+					skin.GetAttachments(slotIndex, skinEntries);
+					foreach (var entry in skinEntries) {
+						slotAttachments.Add(entry.Attachment);
+					}
+
 					var boundingBoxes = new List<BoundingBoxAttachment>();
 					foreach (var att in slotAttachments) {
-						var boundingBoxAttachment = att.Attachment as BoundingBoxAttachment;
+						var boundingBoxAttachment = att as BoundingBoxAttachment;
 						if (boundingBoxAttachment != null)
 							boundingBoxes.Add(boundingBoxAttachment);
 					}

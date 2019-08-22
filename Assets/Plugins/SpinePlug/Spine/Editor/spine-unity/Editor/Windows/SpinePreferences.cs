@@ -89,10 +89,7 @@ namespace Spine.Unity.Editor {
 		internal const float DEFAULT_SCENE_ICONS_SCALE = 1f;
 		public const string SCENE_ICONS_SCALE_KEY = "SPINE_SCENE_ICONS_SCALE";
 
-		public const bool DEFAULT_MECANIM_EVENT_INCLUDE_FOLDERNAME = true;
-		public bool mecanimEventIncludeFolderName = DEFAULT_MECANIM_EVENT_INCLUDE_FOLDERNAME;
-
-#if NEW_PREFERENCES_SETTINGS_PROVIDER
+	#if NEW_PREFERENCES_SETTINGS_PROVIDER
 		public static void Load () {
 			SpineHandles.handleScale = EditorPrefs.GetFloat(SCENE_ICONS_SCALE_KEY, DEFAULT_SCENE_ICONS_SCALE);
 			GetOrCreateSettings();
@@ -124,11 +121,11 @@ namespace Spine.Unity.Editor {
 				EditorGUI.BeginChangeCheck();
 				EditorGUILayout.PropertyField(settings.FindProperty("showHierarchyIcons"), new GUIContent("Show Hierarchy Icons", "Show relevant icons on GameObjects with Spine Components on them. Disable this if you have large, complex scenes."));
 				if (EditorGUI.EndChangeCheck()) {
-#if NEWPLAYMODECALLBACKS
+					#if NEWPLAYMODECALLBACKS
 					SpineEditorUtilities.HierarchyHandler.IconsOnPlaymodeStateChanged(PlayModeStateChange.EnteredEditMode);
-#else
+					#else
 					SpineEditorUtilities.HierarchyHandler.IconsOnPlaymodeStateChanged();
-#endif
+					#endif
 				}
 
 				EditorGUILayout.PropertyField(settings.FindProperty("autoReloadSceneSkeletons"), new GUIContent("Auto-reload scene components", "Reloads Skeleton components in the scene whenever their SkeletonDataAsset is modified. This makes it so changes in the SkeletonDataAsset inspector are immediately reflected. This may be slow when your scenes have large numbers of SkeletonRenderers or SkeletonGraphic."));
@@ -159,12 +156,6 @@ namespace Spine.Unity.Editor {
 				}
 
 				EditorGUILayout.Space();
-				EditorGUILayout.LabelField("Mecanim Bake Settings", EditorStyles.boldLabel);
-				{
-					EditorGUILayout.PropertyField(settings.FindProperty("mecanimEventIncludeFolderName"), new GUIContent("Include Folder Name in Event", "When enabled, Mecanim events will call methods named 'FolderNameEventName', when disabled it will call 'EventName'."));
-				}
-				
-				EditorGUILayout.Space();
 				EditorGUILayout.LabelField("Handles and Gizmos", EditorStyles.boldLabel);
 				{
 					EditorGUI.BeginChangeCheck();
@@ -188,6 +179,6 @@ namespace Spine.Unity.Editor {
 			}
 			EditorGUIUtility.labelWidth = prevLabelWidth;
 		}
-#endif // NEW_PREFERENCES_SETTINGS_PROVIDER
+	#endif // NEW_PREFERENCES_SETTINGS_PROVIDER
 	}
 }

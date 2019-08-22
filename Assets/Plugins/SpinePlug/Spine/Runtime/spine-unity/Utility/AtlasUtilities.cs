@@ -289,7 +289,7 @@ namespace Spine.Unity.AttachmentTools {
 			var repackedRegions = new List<AtlasRegion>();
 			for (int i = 0, n = originalRegions.Count; i < n; i++) {
 				var oldRegion = originalRegions[i];
-				var newRegion = UVRectToAtlasRegion(rects[i], oldRegion, page);
+				var newRegion = UVRectToAtlasRegion(rects[i], oldRegion.name, page, oldRegion.offsetX, oldRegion.offsetY, oldRegion.rotate);
 				repackedRegions.Add(newRegion);
 			}
 
@@ -333,9 +333,9 @@ namespace Spine.Unity.AttachmentTools {
 			var originalRegions = new List<AtlasRegion>();
 			int newRegionIndex = 0;
 			
-			foreach (var skinEntry in skinAttachments) {
-				var originalKey = skinEntry.Key;
-				var originalAttachment = skinEntry.Value;
+			foreach (DictionaryEntry skinEntry in skinAttachments) {
+				var originalKey = (Skin.SkinEntry)skinEntry.Key;
+				var originalAttachment = (Attachment)skinEntry.Value;
 
 				Attachment newAttachment;
 				if (IsRenderable(originalAttachment)) {
@@ -381,7 +381,7 @@ namespace Spine.Unity.AttachmentTools {
 			var repackedRegions = new List<AtlasRegion>();
 			for (int i = 0, n = originalRegions.Count; i < n; i++) {
 				var oldRegion = originalRegions[i];
-				var newRegion = UVRectToAtlasRegion(rects[i], oldRegion, page);
+				var newRegion = UVRectToAtlasRegion(rects[i], oldRegion.name, page, oldRegion.offsetX, oldRegion.offsetY, oldRegion.rotate);
 				repackedRegions.Add(newRegion);
 			}
 
@@ -424,7 +424,7 @@ namespace Spine.Unity.AttachmentTools {
 			CachedRegionTextures.TryGetValue(ar, out output);
 			if (output == null) {
 				Texture2D sourceTexture = ar.GetMainTexture();
-				Rect r = ar.GetUnityRect();
+				Rect r = ar.GetUnityRect(sourceTexture.height);
 				int width = (int)r.width;
 				int height = (int)r.height;
 				output = new Texture2D(width, height, textureFormat, mipmaps) { name = ar.name };
@@ -516,13 +516,13 @@ namespace Spine.Unity.AttachmentTools {
 
 		/// <summary>
 		/// Creates a new Spine AtlasRegion according to a Unity UV Rect (x-right, y-up, uv-normalized).</summary>
-		static AtlasRegion UVRectToAtlasRegion (Rect uvRect, AtlasRegion referenceRegion, AtlasPage page) {
+		static AtlasRegion UVRectToAtlasRegion (Rect uvRect, string name, AtlasPage page, float offsetX, float offsetY, bool rotate) {			
 			var tr  = UVRectToTextureRect(uvRect, page.width, page.height);
 			var rr = tr.SpineUnityFlipRect(page.height);
 
 			int x = (int)rr.x, y = (int)rr.y;
 			int w, h;
-			if (referenceRegion.rotate) {
+			if (rotate) {
 				w = (int)rr.height;
 				h = (int)rr.width;
 			} else {
@@ -530,14 +530,9 @@ namespace Spine.Unity.AttachmentTools {
 				h = (int)rr.height;
 			}
 
-			int originalW = Mathf.RoundToInt((float)w * ((float)referenceRegion.originalWidth / (float)referenceRegion.width));
-			int originalH = Mathf.RoundToInt((float)h * ((float)referenceRegion.originalHeight / (float)referenceRegion.height));
-			int offsetX = Mathf.RoundToInt((float)referenceRegion.offsetX * ((float)w / (float)referenceRegion.width));
-			int offsetY = Mathf.RoundToInt((float)referenceRegion.offsetY * ((float)h / (float)referenceRegion.height));
-
 			return new AtlasRegion {
 				page = page,
-				name = referenceRegion.name,
+				name = name,
 
 				u = uvRect.xMin,
 				u2 = uvRect.xMax,
@@ -547,15 +542,15 @@ namespace Spine.Unity.AttachmentTools {
 				index = -1,
 
 				width = w,
-				originalWidth = originalW,
+				originalWidth = w,
 				height = h,
-				originalHeight = originalH,
+				originalHeight = h,
 				offsetX = offsetX,
 				offsetY = offsetY,
 				x = x,
 				y = y,
 
-				rotate = referenceRegion.rotate
+				rotate = rotate
 			};
 		}
 
