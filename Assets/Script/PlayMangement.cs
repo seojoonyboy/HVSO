@@ -871,7 +871,7 @@ public partial class PlayMangement {
 
     public IEnumerator GenerateCard() {
         int i = 0;
-        while (i < 5) {
+        while (i < 4) {
             yield return new WaitForSeconds(0.3f);
             if (i < 4)
                 StartCoroutine(player.cdpm.FirstDraw());

@@ -582,7 +582,8 @@ public class CardHandManager : MonoBehaviour {
             index++;
         }
         yield return new WaitForSeconds(0.5f);
-        yield return PlayMangement.instance.socketHandler.WaitGetCard();
+        #region 영웅카드 드로우 주석처리
+        /* yield return PlayMangement.instance.socketHandler.WaitGetCard();
 
         //영웅카드 뽑기
         bool isHuman = PlayMangement.instance.player.isHuman;
@@ -590,7 +591,8 @@ public class CardHandManager : MonoBehaviour {
         AddCard(null, cardData);
 
 
-        yield return new WaitForSeconds(3.0f);
+        yield return new WaitForSeconds(3.0f);*/
+        #endregion
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this);
         //CustomEvent.Trigger(GameObject.Find("GameManager"), "EndTurn");
         PlayMangement.instance.isMulligan = false;
