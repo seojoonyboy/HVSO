@@ -2717,6 +2717,16 @@ PrefabInstance:
       propertyPath: shieldFeedBack
       value: 
       objectReference: {fileID: 1374074640}
+    - target: {fileID: 3805233971008153117, guid: 0d6430e7aba1143419839532a257307e,
+        type: 3}
+      propertyPath: shieldStackGauge
+      value: 
+      objectReference: {fileID: 1240596271}
+    - target: {fileID: 3805233971008153117, guid: 0d6430e7aba1143419839532a257307e,
+        type: 3}
+      propertyPath: shieldGauge
+      value: 
+      objectReference: {fileID: 1240596271}
     - target: {fileID: 3805233971058153672, guid: 0d6430e7aba1143419839532a257307e,
         type: 3}
       propertyPath: dropableLines.Array.size
@@ -2792,6 +2802,16 @@ PrefabInstance:
       propertyPath: shieldFeedBack
       value: 
       objectReference: {fileID: 2006515894}
+    - target: {fileID: 3805233971058153672, guid: 0d6430e7aba1143419839532a257307e,
+        type: 3}
+      propertyPath: shieldStackGauge
+      value: 
+      objectReference: {fileID: 530041157}
+    - target: {fileID: 3805233971058153672, guid: 0d6430e7aba1143419839532a257307e,
+        type: 3}
+      propertyPath: shieldGauge
+      value: 
+      objectReference: {fileID: 530041157}
     - target: {fileID: 3805233971058153675, guid: 0d6430e7aba1143419839532a257307e,
         type: 3}
       propertyPath: m_LocalPosition.y
@@ -7623,7 +7643,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &379241981
 RectTransform:
   m_ObjectHideFlags: 0
