@@ -2172,4 +2172,20 @@ MonoBehaviour:
     m_importFrom: Assets/Sprite/Spine_Effect/ingame_shieldgauge/ingame_shieldgauge_human/ingame_shieldgauge_human_Atlas.asset
     m_exportTo: 
     m_variantName: 
+  - m_assetDatabaseId: bd15f672b7ca04f569ced3a166b8d525
+    m_importFrom: Assets/Plugins/Firebase/m2repository/com/google/firebase/firebase-messaging-unity/6.1.1/firebase-messaging-unity-6.1.1.aar
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 54b1a32bcc95c4e51a29644e6f641844
+    m_importFrom: Assets/Plugins/Firebase/m2repository/com/google/firebase/firebase-app-unity/6.1.1/firebase-app-unity-6.1.1.aar
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 0dd664fcefb4544eab713ff55cc714d2
+    m_importFrom: Assets/Plugins/Firebase/m2repository/com/google/firebase/firebase-analytics-unity/6.1.1/firebase-analytics-unity-6.1.1.aar
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 85776d8d14ac84c1e92539cbde358960
+    m_importFrom: Assets/Plugins/Firebase/m2repository/com/google/firebase/firebase-dynamic-links-unity/6.1.1/firebase-dynamic-links-unity-6.1.1.aar
+    m_exportTo: 
+    m_variantName: 
   m_version: 2
