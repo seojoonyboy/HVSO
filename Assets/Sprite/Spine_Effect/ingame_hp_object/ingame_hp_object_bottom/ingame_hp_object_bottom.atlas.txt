@@ -1,0 +1,209 @@
+
+ingame_hp_object_bottom.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Shape_2
+  rotate: true
+  xy: 279, 440
+  size: 72, 49
+  orig: 72, 49
+  offset: 0, 0
+  index: -1
+hp_back
+  rotate: false
+  xy: 2, 367
+  size: 145, 145
+  orig: 147, 147
+  offset: 1, 1
+  index: -1
+object_1
+  rotate: false
+  xy: 923, 914
+  size: 73, 102
+  orig: 75, 104
+  offset: 1, 1
+  index: -1
+object_2
+  rotate: true
+  xy: 923, 810
+  size: 102, 72
+  orig: 104, 74
+  offset: 1, 1
+  index: -1
+object_3
+  rotate: true
+  xy: 79, 4
+  size: 101, 72
+  orig: 103, 74
+  offset: 1, 1
+  index: -1
+object_4
+  rotate: true
+  xy: 923, 737
+  size: 71, 98
+  orig: 73, 100
+  offset: 1, 1
+  index: -1
+object_5
+  rotate: false
+  xy: 594, 587
+  size: 70, 97
+  orig: 72, 99
+  offset: 1, 1
+  index: -1
+object_6
+  rotate: false
+  xy: 594, 686
+  size: 98, 70
+  orig: 100, 72
+  offset: 1, 1
+  index: -1
+object_7
+  rotate: false
+  xy: 153, 32
+  size: 98, 73
+  orig: 100, 75
+  offset: 1, 1
+  index: -1
+object_8
+  rotate: false
+  xy: 2, 2
+  size: 75, 103
+  orig: 77, 105
+  offset: 1, 1
+  index: -1
+png/Comp 1_00000
+  rotate: false
+  xy: 533, 888
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+png/Comp 1_00001
+  rotate: false
+  xy: 2, 237
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+png/Comp 1_00002
+  rotate: false
+  xy: 149, 384
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+png/Comp 1_00003
+  rotate: false
+  xy: 663, 888
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+png/Comp 1_00004
+  rotate: false
+  xy: 2, 107
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+png/Comp 1_00005
+  rotate: false
+  xy: 793, 888
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+png/Comp 1_00006
+  rotate: false
+  xy: 348, 703
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+png/Comp 1_00007
+  rotate: false
+  xy: 334, 573
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+png/Comp 1_00008
+  rotate: false
+  xy: 334, 443
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+png/Comp 1_00009
+  rotate: false
+  xy: 533, 758
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+png/Comp 1_00010
+  rotate: false
+  xy: 663, 758
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+png/Comp 1_00011
+  rotate: false
+  xy: 793, 758
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+png/Comp 1_00012
+  rotate: false
+  xy: 132, 237
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+png/Comp 1_00013
+  rotate: false
+  xy: 132, 107
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+png/Comp 1_00014
+  rotate: false
+  xy: 464, 573
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+png/Comp 1_00015
+  rotate: false
+  xy: 464, 443
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+ring
+  rotate: false
+  xy: 2, 514
+  size: 330, 243
+  orig: 330, 243
+  offset: 0, 0
+  index: -1
+ring_2
+  rotate: false
+  xy: 348, 833
+  size: 183, 183
+  orig: 185, 185
+  offset: 1, 1
+  index: -1
+shadow
+  rotate: false
+  xy: 2, 759
+  size: 344, 257
+  orig: 346, 259
+  offset: 1, 1
+  index: -1

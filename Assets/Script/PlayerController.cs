@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour
     public GameObject frontLine;
     TextMeshProUGUI costText;
     TextMeshProUGUI HPText;
+    Transform HPGauge;
     Image shieldGauge;
     public GameObject buttonParticle;
     public bool dragCard = false;
@@ -64,14 +65,15 @@ public class PlayerController : MonoBehaviour
         else isHuman = !isPlayer;
         costText = playerUI.transform.Find("PlayerResource").GetChild(0).Find("Text").GetComponent<TextMeshProUGUI>();
         HPText = playerUI.transform.Find("PlayerHealth/HealthText").GetComponent<TextMeshProUGUI>();
+        HPGauge = playerUI.transform.Find("PlayerHealth/Helth&Shield/HpParent1/HpParent2/HpParent3/HpGage");
         shieldGauge = playerUI.transform.Find("PlayerHealth/Helth&Shield/SheildGauge").GetComponent<Image>();
         if (isHuman) {
             playerUI.transform.Find("PlayerHealth/Flag/Human").gameObject.SetActive(true);
-            sheildRemain = playerUI.transform.Find("PlayerHealth/RemainSheild/HumanSheild");
+            sheildRemain = playerUI.transform.Find("PlayerHealth/HumanSheild");
         }
         else {
             playerUI.transform.Find("PlayerHealth/Flag/Orc").gameObject.SetActive(true);
-            sheildRemain = playerUI.transform.Find("PlayerHealth/RemainSheild/OrcSheild");
+            sheildRemain = playerUI.transform.Find("PlayerHealth/OrcSheild");
         }
         sheildRemain.gameObject.SetActive(true);
         if (isPlayer) {
@@ -199,6 +201,10 @@ public class PlayerController : MonoBehaviour
 
     private void ChangedHP() {
         HPText.text = HP.Value.ToString();
+        if (HP.Value < 20)
+            HPGauge.localPosition = new Vector3(0, -((20 - HP.Value) * 6), 0);
+        else
+            HPGauge.localPosition = Vector3.zero;
     }
 
     private void ChangedResource() {
@@ -279,7 +285,7 @@ public class PlayerController : MonoBehaviour
         StartCoroutine(PlayMangement.instance.DrawSpecialCard(isHuman));
         shieldStack.Value = 0;
         shieldCount--;
-        sheildRemain.GetChild(shieldCount).gameObject.SetActive(false);
+        sheildRemain.GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, (3 - shieldCount).ToString(), false);
     }
 
     public void DisableShield() {
