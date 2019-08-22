@@ -146,8 +146,8 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void end_mulligan(object args) {
-        dequeueing = false;
-        getNewCard = true;
+        //dequeueing = false;
+        //getNewCard = true;
     }
 
     public void begin_turn_start(object args) { }

@@ -130,7 +130,7 @@ public class EffectSystem : SerializedMonoBehaviour {
     public IEnumerator HeroCutScene(bool isHuman) {
         SkeletonGraphic cutsceneAnimation;
         GameObject cutsceneObject;
-        StartCoroutine(FadeOut(0f, 0.6f, 0.8f));
+        //StartCoroutine(FadeOut(0f, 0.6f, 0.8f));
         if (isHuman == true) {
             cutsceneObject = cutSceneCanvas.transform.Find("Human").gameObject;
             cutsceneObject.SetActive(true);
@@ -147,8 +147,8 @@ public class EffectSystem : SerializedMonoBehaviour {
         cutsceneAnimation.Initialize(true);
         cutsceneAnimation.Update(0);
         cutsceneAnimation.AnimationState.SetAnimation(0, "animation", false);
-        yield return new WaitForSeconds(cutsceneAnimation.Skeleton.Data.FindAnimation("animation").Duration / 2);
-        yield return FadeIn(0.6f, 0, cutsceneAnimation.Skeleton.Data.FindAnimation("animation").Duration / 2);
+        yield return new WaitForSeconds(cutsceneAnimation.Skeleton.Data.FindAnimation("animation").Duration);
+        //yield return FadeIn(0.6f, 0, cutsceneAnimation.Skeleton.Data.FindAnimation("animation").Duration / 2);
         cutsceneObject.SetActive(false);
     }
 

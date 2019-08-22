@@ -2204,4 +2204,60 @@ MonoBehaviour:
     m_importFrom: Assets/Haegin/Sample/Scenes/SceneOBBCheck.unity
     m_exportTo: 
     m_variantName: 
+  - m_assetDatabaseId: 4c147e5023593084fbca05e9f7056372
+    m_importFrom: Assets/Sprite/Spine_cutscene/h10001/h10001_skillcut.skel.bytes
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: ae71e680077e9ad41919283b4b1473a2
+    m_importFrom: Assets/Sprite/Spine_cutscene/h10002
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: d0de8472c93589c4fbaefb917c2dc90a
+    m_importFrom: Assets/Sprite/Spine_cutscene/h10002/h10002_skillcut.atlas.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 123badb33091bc646ad6f72c98c35029
+    m_importFrom: Assets/Sprite/Spine_cutscene/h10001/h10001_skillcut.atlas.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 20e06d9a5389ef24387119c3bce3235f
+    m_importFrom: Assets/Sprite/Spine_cutscene/h10002/h10002_skillcut.png
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 73fa8e9a5fec75b4c9f93666747ca5ef
+    m_importFrom: Assets/Sprite/Spine_cutscene/h10002/h10002_skillcut.skel.bytes
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 2611ac9cdf20dc74595317a9e781ce1c
+    m_importFrom: Assets/Sprite/Spine_cutscene/h10001/h10001_skillcut.png
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: a396193e001c86748a3619d45f45dfaa
+    m_importFrom: Assets/Sprite/Spine_cutscene/h10001
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: a2b51f5f1d86259428e8d74fca0bd156
+    m_importFrom: Assets/Sprite/Spine_cutscene/h10002/h10002_skillcut_Material.mat
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: c9ccc806def916f46b2c4c8aa65214c3
+    m_importFrom: Assets/Sprite/Spine_cutscene/h10002/h10002_skillcut_Atlas.asset
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: b5dd8d310f00ca248a6546452e6e45e6
+    m_importFrom: Assets/Sprite/Spine_cutscene/h10001/h10001_skillcut_Material.mat
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: b614197328865b842987cc624139827d
+    m_importFrom: Assets/Sprite/Spine_cutscene/h10001/h10001_skillcut_Atlas.asset
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 4842d4dc1d375064898c59c7e4779576
+    m_importFrom: Assets/Sprite/Spine_cutscene/h10001/h10001_skillcut_SkeletonData.asset
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 74c5efad71deed340ba3fdd78c6a4398
+    m_importFrom: Assets/Sprite/Spine_cutscene/h10002/h10002_skillcut_SkeletonData.asset
+    m_exportTo: 
+    m_variantName: 
   m_version: 2
