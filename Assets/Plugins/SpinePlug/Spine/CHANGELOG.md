@@ -108,6 +108,7 @@
   * Renamed `Slot.AttachmentVertices` to `Slot.Deform`.
   * Changed the `.json` curve format and added more assumptions for omitted values, reducing the average size of JSON exports.
   * Renamed `Skin.AddAttachment()` to `Skin.SetAttachment()`.
+  * Removed `FindAttachmentsForSlot(int slotIndex, List<Attachment> attachments)` and `FindNamesForSlot (int slotIndex, List<string> names)` and replaced it with `Skin.GetAttachments(int slotIndex, List<SkinEntry> attachments)` which returns the combined `SkinEntry` object holding both name and attachment.
   * Removed `VertexAttachment.ApplyDeform()` and replaced it with `VertexAttachment.DeformAttachment`. The attachment set on this field is used to decide if a `DeformTimeline` should be applied to the attachment active on the slot to which the timeline is applied.
   * Removed `inheritDeform` field, getter, and setter from `MeshAttachment`.
   * Changed `.skel` binary format, added a string table. References to strings in the data resolve to this string table, reducing storage size of binary files considerably.
@@ -119,7 +120,7 @@
   * Added skin-specific bones and constraints which are only updated if the skeleton's current skin contains them.
   * Improved Skin API to make it easier to handle mix-and-match use cases.
     * Added `Skin.GetAttachments()`. Returns all attachments in the skin.
-    * Added `Skin.GetAttachments(int slotIndex, List<SkinEntry> attachments)`. Returns all attachements in the skin for the given slot index.
+    * Added `Skin.GetAttachments(int slotIndex, List<SkinEntry> attachments)`. Returns all attachements in the skin for the given slot index. This method replaces `FindAttachmentsForSlot` and `FindNamesForSlot`.
     * Added `Skin.AddSkin(Skin skin)`. Adds all attachments, bones, and skins from the specified skin to this skin.
     * Added `Skin.CopySkin(Skin skin)`. Adds all attachments, bones, and skins from the specified skin to this skin. `VertexAttachment` are shallowly copied and will retain any parent mesh relationship. All other attachment types are deep copied.
   * Added `Attachment.Copy()` to all attachment type implementations. This lets you deep copy an attachment to modify it independently from the original, i.e. when programmatically changing texture coordinates or mesh vertices.
@@ -129,7 +130,7 @@
 ### Unity
 
 * **Breaking changes**
-  * **Officially supported Unity versions are 2017.1-2019.1**.
+  * **Officially supported Unity versions are 2017.1-2019.2**.
   * **Spine `.asmdef` files are again active by default**. They have previously been deactivated to `.txt` extension which is now no longer necessary.
   * **Removed PoseSkeleton() and PoseWithAnimation()** extension methods to prevent issues where animations are not mixed out. Problem was that these methods did not set AnimationState, leaving incorrect state at e.g. attachments enabled at slots when starting subsequent animations. As a replacement you can use `AnimationState.ClearTrack(0);` followed by `var entry = AnimationState.SetAnimation(0, animation, loop); entry.TrackTime = time` to achieve similar behaviour.
   * **The `Shadow alpha cutoff` shader parameter is now respecting slot-color alpha** values at all Spine shaders. A fragment's texture color alpha is multiplied with slot-color alpha before the result is tested against the `Shadow alpha cutoff` threshold.
@@ -164,11 +165,16 @@
      
       The Project panel should now show an entry `Spine Lightweight RP Shaders` under `Packages`. If the directory is not yet listed, you will need to close and re-open Unity to have it display the directory and its contents.
     * **Usage:** The package provides two shaders specifically built for the lightweight render pipeline:
+      * `Lightweight Render Pipeline/Spine/Skeleton`, as a lightweight variant of the `Spine/Skeleton` shader,
       * `Lightweight Render Pipeline/Spine/Skeleton Lit`, as a lightweight variant of the `Spine/Skeleton Lit` shader and
       * `Lightweight Render Pipeline/Spine/Sprite`, as a lightweight variant of the `Spine/Sprite/Vertex Lit` and `Pixel Lit` shaders, which were not functioning in the lightweight render pipeline. The shaders can be assigned to materials as usual and will respect your settings of the assigned `LightweightRenderPipelineAsset` under `Project Settings - Graphics`.
     * **Restrictions** As all Spine shaders, the LWRP shaders **do not support `Premultiply alpha` (PMA) atlas textures in Linear color space**. Please export your atlas textures as `straight alpha` textures with disabled `Premultiply alpha` setting when using Linear color space. You can check the current color space via `Project Settings - Player - Other Settings - Color Space.`.
     * **Example:** You can find an example scene in the package under `com.esotericsoftware.spine.lwrp-shaders-3.8/Examples/LWRP Shaders.unity` that demonstrates usage of the LWRP shaders.
   * Added `Spine/Skeleton Lit ZWrite` shader. This variant of the `Spine/Skeleton Lit` shader writes to the depth buffer with configurable depth alpha threshold. Apart from that it is identical to `Spine/Skeleton Lit`.
+  * Additional yield instructions to wait for animation track events `End`, `Complete` and `Interrupt`.
+    * `WaitForSpineAnimationComplete` now proves an additional `bool includeEndEvent` parameter, defaults to `false` (previous behaviour).
+    * Added a new `WaitForSpineAnimationEnd` yield instruction.
+    * Added a new generic `WaitForSpineAnimation` yield instruction which can be configured to wait for any combination of animation track events. It is now used as base class for `WaitForSpineAnimationComplete` and `WaitForSpineAnimationEnd`.
 
 * **Changes of default values**
   * `SkeletonMecanim`'s `Layer Mix Mode` now defaults to `MixMode.SpineStyle` instead of `MixMode.MixAlways`.
