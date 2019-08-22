@@ -10,11 +10,9 @@ using SocketFormat;
 
 public partial class BattleConnector : MonoBehaviour {
 
-#if UNITY_EDITOR
-    private string url = "wss://ccdevclient.fbl.kr/game";
-#else
-    private string url = "wss://cctest.fbl.kr/game";
-#endif
+    private string url { get { 
+        return NetworkManager.Instance.baseUrl + "game"; } }
+    
     WebSocket webSocket;
     [SerializeField] Text message;
     [SerializeField] Text timer;
