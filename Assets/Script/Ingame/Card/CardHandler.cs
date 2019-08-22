@@ -60,7 +60,7 @@ public partial class CardHandler : MonoBehaviour {
 
     private void Start() {
         mouseXPos = transform.parent.parent.parent.Find("MouseXposition");
-        cardHand = transform.parent.parent.parent.Find("CardHand");
+        cardHand = transform.root.Find("CardHand");
         handManager = cardHand.GetComponent<CardHandManager>();
         mouseLocalPos = transform.parent.parent.parent.Find("MouseLocalPosition");        
         clm = PlayMangement.instance.cardInfoCanvas.Find("CardInfoList").GetComponent<CardListManager>();

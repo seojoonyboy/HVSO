@@ -232,13 +232,14 @@ public class CardHandManager : MonoBehaviour {
 
         CardHandler handler = leftCard.GetComponent<CardHandler>();
         handler.DrawHeroCard(cards[0]);
+        handler = rightCard.GetComponent<CardHandler>();
         handler.DrawHeroCard(cards[1]);
 
         iTween.MoveTo(leftCard, showPos.position, 0.4f);
-        iTween.RotateTo(leftCard, iTween.Hash("rotation", new Vector3(0, 0, 0), "islocal", true, "time", 0.4f));
+        iTween.RotateTo(leftCard, iTween.Hash("rotation", new Vector3(-300, 0, 0), "islocal", true, "time", 0.4f));
         yield return new WaitForSeconds(0.5f);
         iTween.MoveTo(rightCard, showPos.position, 0.4f);
-        iTween.RotateTo(rightCard, iTween.Hash("rotation", new Vector3(0, 0, 0), "islocal", true, "time", 0.4f));
+        iTween.RotateTo(rightCard, iTween.Hash("rotation", new Vector3(300, 0, 0), "islocal", true, "time", 0.4f));
 
         yield return StartCoroutine(handler.ActiveHeroCard());
     }
