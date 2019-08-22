@@ -404,7 +404,14 @@ public class CardHandManager : MonoBehaviour {
             clm.AddFeildUnitInfo(index, PlayMangement.instance.unitNum - 1);
         }
         else {
-            removeCard.SetParent(cardStorage.Find("MagicCards"));
+            if (removeCard.name == "MagicCard")
+                removeCard.SetParent(cardStorage.Find("MagicCards"));
+            else {
+                if (PlayMangement.instance.player.isHuman)
+                    removeCard.SetParent(cardStorage.Find("HumanHeroCards"));
+                else
+                    removeCard.SetParent(cardStorage.Find("OrcHeroCards"));
+            }
             clm.RemoveCardInfo(index);
         }
         removeCard.gameObject.SetActive(false);
