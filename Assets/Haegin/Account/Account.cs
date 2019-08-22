@@ -242,7 +242,11 @@ namespace Haegin
                 }
             }
 #endif
-
+            if (accountId.CompareTo(ProjectSettings.accountIdToCreate) == 0) {
+                Debug.Log("신규 게스트 생성");
+                PlayerPrefs.SetInt("isFirst", 1);
+            }
+            else PlayerPrefs.SetInt("isFirst", 0);
 #if MDEBUG
             Debug.Log("Load AccountId [" + accountId + "]");
 #endif

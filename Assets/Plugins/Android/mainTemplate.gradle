@@ -29,7 +29,7 @@ allprojects {
             url "https://maven.google.com"
         }
         maven {
-            url (unityProjectPath + "/Assets/Firebase/m2repository") // Assets/Plugins/Firebase/Editor/AnalyticsDependencies.xml:20, Assets/Plugins/Firebase/Editor/AppDependencies.xml:20, Assets/Plugins/Firebase/Editor/DynamicLinksDependencies.xml:20, Assets/Plugins/Firebase/Editor/MessagingDependencies.xml:22
+            url (unityProjectPath + "/Assets/Plugins/Firebase/m2repository") // Assets/Plugins/Firebase/Editor/AnalyticsDependencies.xml:20, Assets/Plugins/Firebase/Editor/AppDependencies.xml:20, Assets/Plugins/Firebase/Editor/DynamicLinksDependencies.xml:20, Assets/Plugins/Firebase/Editor/MessagingDependencies.xml:22
         }
         mavenLocal()
         jcenter()

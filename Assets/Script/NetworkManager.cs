@@ -36,7 +36,7 @@ public partial class NetworkManager : Singleton<NetworkManager> {
 #endif
         };
 
-
+        Debug.Log("Requesting IssueJWT");
         webClient.Request(new IssueJWTReq());
         //ThreadSafeDispatcher.Instance.PushSystemBackKeyListener(OnSystemBackKey);
     }
@@ -44,19 +44,23 @@ public partial class NetworkManager : Singleton<NetworkManager> {
     void RetryOccurred(Protocol protocol, int retryCount)
     {
 #if MDEBUG
-        Debug.Log("Retry Occurred  " + retryCount);
+        Debug.Log(protocol.ProtocolId + " : Retry Occurred  " + retryCount);
 #endif
     }
 
     void RetryFailed(Protocol protocol)
     {
 #if MDEBUG
-        Debug.Log("Retry Failed ");
+        Debug.Log(protocol.ProtocolId + " : Retry Failed ");
 #endif
     }
 
     void OnProcessing(ReqAndRes rar)
     {
+#if MDEBUG
+        Debug.Log("Processed Protocol : " + rar.Req.Protocol.ProtocolId);
+        Debug.Log("Processed Result :" + rar.Res.ProtocolId);
+#endif
         if(ProtocolId.IssueJWT == rar.Res.ProtocolId) {
             IssueJWTRes result = (IssueJWTRes)rar.Res;
             Logger.Log("Token : " + result.Token);
@@ -67,7 +71,7 @@ public partial class NetworkManager : Singleton<NetworkManager> {
     public void OnErrorOccurred(int error)
     {
         #if MDEBUG
-        Debug.Log("OnErrorOccurred");
+        Debug.Log("OnErrorOccurred " + error);
         #endif
     }
 
