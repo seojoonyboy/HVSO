@@ -1,0 +1,13 @@
+
+ingame_h_magic_card.png
+size: 512,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+ingame_h_magic_card
+  rotate: true
+  xy: 0, 0
+  size: 250, 329
+  orig: 250, 329
+  offset: 0, 0
+  index: -1
