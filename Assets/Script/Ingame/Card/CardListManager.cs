@@ -79,10 +79,9 @@ public class CardListManager : MonoBehaviour
     }
 
     public GameObject AddHeroCardInfo(CardData data) {
-        GameObject heroInfo = standbyHeroCards.GetChild(0).gameObject;
-        SetHeroCardInfo(heroInfo, data);
+        GameObject heroInfo = StandbyInfo.GetChild(0).gameObject;
+        SetCardInfo(heroInfo, data);
         return heroInfo;
-
     }
 
     public void AddFeildUnitInfo(int cardIndex, int unitNum, CardData data= null) {

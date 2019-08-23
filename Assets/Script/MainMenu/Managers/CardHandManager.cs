@@ -251,7 +251,7 @@ public class CardHandManager : MonoBehaviour {
     public void AddHeroCard(GameObject cardobj) {
         if (cardNum + 1 == 11) return;
         PlayMangement.dragable = false;
-        AddInfoToList(cardobj.transform.Find("MagicCard").gameObject, false, true);
+        AddInfoToList(cardobj.transform.Find("CardInfoWindow").gameObject, false, true);
         Transform cardTransform = cardobj.transform;
         Transform cardPos = transform.GetChild(cardNum);
         cardTransform.GetComponent<CardHandler>().CARDINDEX = cardNum;

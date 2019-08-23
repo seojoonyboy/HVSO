@@ -115,7 +115,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
                     //foreach (MagicalCasting ability in abilities) ability.RequestUseMagic();
                     object[] parms = new object[] { true, gameObject };
                     transform.Find("GlowEffect").gameObject.SetActive(false);
-                    transform.Find("MagicCard").gameObject.SetActive(false);
+                    transform.Find("CardInfoWindow").gameObject.SetActive(false);
                     StartCoroutine(UseSkillCard(parms));
                     //if (GetComponents<Ability>() == null) UseCard();
                 }
@@ -127,7 +127,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
                 if (!cardUsed) {
                     transform.localScale = new Vector3(1, 1, 1);
                     transform.localPosition = new Vector3(0, 0, 0);
-                    transform.Find("MagicCard").gameObject.SetActive(false);
+                    transform.Find("CardInfoWindow").gameObject.SetActive(false);
                     if (heroCardActivate) {
                         transform.parent.Find("HeroCardGuide").gameObject.SetActive(true);
                     }

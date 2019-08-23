@@ -398,7 +398,7 @@ public partial class CardHandler : MonoBehaviour {
         gameObject.GetComponent<MagicDragHandler>().skillHandler = new SkillHandler();
         gameObject.GetComponent<MagicDragHandler>().skillHandler.Initialize(data.skills, gameObject, true);
         heroCardInfo.transform.SetParent(transform);
-        heroCardInfo.SetActive(true);
+        //heroCardInfo.SetActive(true);
         heroCardInfo.transform.rotation = transform.rotation;
         heroCardInfo.transform.position = transform.position;
         heroCardActivate = true;
