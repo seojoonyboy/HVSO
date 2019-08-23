@@ -258,6 +258,7 @@ public class CardHandManager : MonoBehaviour {
         Transform cardTransform = cardobj.transform;
         Transform cardPos = transform.GetChild(cardNum);
         cardTransform.GetComponent<CardHandler>().CARDINDEX = cardNum;
+        PlayMangement.instance.socketHandler.KeepHeroCard(cardTransform.GetComponent<CardHandler>().itemID);
         cardTransform.localScale = new Vector3(1, 1, 1);
         cardNum++;
         cardList.Add(cardobj);

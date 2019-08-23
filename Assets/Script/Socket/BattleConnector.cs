@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using UnityEngine;
 using BestHTTP.WebSocket;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using SocketFormat;
 
 public partial class BattleConnector : MonoBehaviour {
@@ -136,6 +137,13 @@ public partial class BattleConnector : MonoBehaviour {
 
     public void UnitSkillActivate(object args) {
         SendMethod("unit_skill_activate", args);
+    }
+
+    public void KeepHeroCard(int itemId) {
+        JObject args = new JObject();
+        args["itemId"] = itemId;
+        Debug.Log(args);
+        SendMethod("keep_hero_card", args);
     }
 
     void Error(WebSocket webSocket, Exception ex) {
