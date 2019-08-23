@@ -235,11 +235,11 @@ public class CardHandManager : MonoBehaviour {
         handler = rightCard.GetComponent<CardHandler>();
         handler.DrawHeroCard(cards[1]);
 
-        iTween.MoveTo(leftCard, showPos.position, 0.4f);
-        iTween.RotateTo(leftCard, iTween.Hash("rotation", new Vector3(-300, 0, 0), "islocal", true, "time", 0.4f));
+        iTween.MoveTo(leftCard, showPos.Find("Left").position, 0.4f);
+        iTween.RotateTo(leftCard, iTween.Hash("z", 0, "islocal", true, "time", 0.4f));
         yield return new WaitForSeconds(0.5f);
-        iTween.MoveTo(rightCard, showPos.position, 0.4f);
-        iTween.RotateTo(rightCard, iTween.Hash("rotation", new Vector3(300, 0, 0), "islocal", true, "time", 0.4f));
+        iTween.MoveTo(rightCard, showPos.Find("Right").position, 0.4f);
+        iTween.RotateTo(rightCard, iTween.Hash("z", 0, "islocal", true, "time", 0.4f));
 
         yield return StartCoroutine(handler.ActiveHeroCard());
     }
@@ -251,7 +251,7 @@ public class CardHandManager : MonoBehaviour {
     public void AddHeroCard(GameObject cardobj) {
         if (cardNum + 1 == 11) return;
         PlayMangement.dragable = false;
-        AddInfoToList(cardobj.transform.Find("CardInfoWindow").gameObject, false, true);
+        AddInfoToList(cardobj.transform.Find("MagicCard").gameObject, false, true);
         Transform cardTransform = cardobj.transform;
         Transform cardPos = transform.GetChild(cardNum);
         cardTransform.GetComponent<CardHandler>().CARDINDEX = cardNum;

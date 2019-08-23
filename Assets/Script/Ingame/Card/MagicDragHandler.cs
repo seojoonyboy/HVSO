@@ -16,6 +16,8 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
 
     public void OnBeginDrag(PointerEventData eventData) {
         if (heroCardActivate) {
+            OffOppositeHeroCard();  //TODO
+
             heroCardInfo.SetActive(false);
             transform.parent.Find("HeroCardGuide").gameObject.SetActive(false);
             transform.localScale = Vector3.zero;
@@ -125,10 +127,12 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
                 if (!cardUsed) {
                     transform.localScale = new Vector3(1, 1, 1);
                     transform.localPosition = new Vector3(0, 0, 0);
+                    transform.Find("MagicCard").gameObject.SetActive(false);
+                    if (heroCardActivate) {
+                        transform.parent.Find("HeroCardGuide").gameObject.SetActive(true);
+                    }
                 }
             }
-            if(!cardUsed && heroCardActivate)
-                transform.parent.Find("HeroCardGuide").gameObject.SetActive(true);
             CardDropManager.Instance.HideMagicSlot();
             CardInfoOnDrag.instance.OffCardDragInfo();
             PlayMangement.instance.player.ConsumeShieldSteak();
@@ -165,6 +169,10 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         CardDropManager.Instance.HideMagicSlot();
         CardInfoOnDrag.instance.OffCardDragInfo();
         PlayMangement.instance.infoOn = false;
+    }
+
+    private void OffOppositeHeroCard() {
+
     }
 
     IEnumerator UseSkillCardExceptInfo(object[] parms) {
