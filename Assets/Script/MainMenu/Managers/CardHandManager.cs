@@ -135,8 +135,8 @@ public class CardHandManager : MonoBehaviour {
         else
             card = cardobj;
         if (firstDraw) {
-            if (cardNum + 1 == 5) {
-                AddInfoToList(card);
+            if (cardNum + 1 == 4) {
+                //AddInfoToList(card);
                 firstDraw = false;
             }
             card.GetComponent<CardHandler>().DisableCard();
@@ -404,7 +404,14 @@ public class CardHandManager : MonoBehaviour {
             clm.AddFeildUnitInfo(index, PlayMangement.instance.unitNum - 1);
         }
         else {
-            removeCard.SetParent(cardStorage.Find("MagicCards"));
+            if (removeCard.name == "MagicCard")
+                removeCard.SetParent(cardStorage.Find("MagicCards"));
+            else {
+                if (PlayMangement.instance.player.isHuman)
+                    removeCard.SetParent(cardStorage.Find("HumanHeroCards"));
+                else
+                    removeCard.SetParent(cardStorage.Find("OrcHeroCards"));
+            }
             clm.RemoveCardInfo(index);
         }
         removeCard.gameObject.SetActive(false);
@@ -447,14 +454,18 @@ public class CardHandManager : MonoBehaviour {
         Transform parent = card.transform.parent;
         card.transform.SetParent(GetComponentInParent<Canvas>().transform);
         card.transform.localScale = Vector3.one;
-        // iTween.RotateTo(card, Vector3.zero, 0.5f);
-        // iTween.MoveTo(card, iTween.Hash(
-        //    "x", 0,
-        //    "y", 0,
-        //    "time", 0.5f,
-        //    "easetype", iTween.EaseType.easeWeakOutBack));
-        card.transform.position = Vector3.zero;
-        card.transform.rotation = Quaternion.identity;
+        if(index == 100)
+            card.transform.position = new Vector3(0f, 50f, 0f);
+        else
+            card.transform.position = new Vector3(0f, -50f, 0f);
+        iTween.RotateTo(card, Vector3.zero, 0.5f);
+        iTween.MoveTo(card, iTween.Hash(
+            "x", 0,
+            "y", 0,
+            "time", 0.5f,
+            "easetype", iTween.EaseType.easeWeakOutBack));
+        //card.transform.position = Vector3.zero;
+        //card.transform.rotation = Quaternion.identity;
         CardHandler handler = card.GetComponent<CardHandler>();
         SetUsedCardInfo(ref card);
         yield return new WaitForSeconds(0.25f);

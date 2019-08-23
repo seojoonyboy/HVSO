@@ -1086,7 +1086,7 @@ public partial class PlayMangement {
     }
 
     public void OnNoCostEffect(bool turnOn) {
-        releaseTurnBtn.transform.Find("TurnOverFeedback").gameObject.SetActive(turnOn);
+        releaseTurnBtn.transform.Find("ResourceOut").gameObject.SetActive(turnOn);
     }
 
     public void EditorTestInit(SocketFormat.GameState state) {
