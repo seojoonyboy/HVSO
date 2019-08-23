@@ -219,8 +219,6 @@ public partial class BattleConnector : MonoBehaviour {
 
     public void begin_shield_turn(object args) {
         PlayMangement.instance.LockTurnOver();
-        dequeueing = false;
-        getNewCard = true;
     }
 
     public void end_shield_turn(object args) {
@@ -290,4 +288,6 @@ public partial class BattleConnector : MonoBehaviour {
         bool isEnemyCard = cardCamp.CompareTo(enemyCamp) == 0;
         if(isEnemyCard) useCardList.Enqueue(gameState);
     }
+
+    public void hero_card_kept(object args) { }
 }
