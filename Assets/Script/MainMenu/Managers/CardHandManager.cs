@@ -206,19 +206,43 @@ public class CardHandManager : MonoBehaviour {
     /// </summary>
     /// <param name="cardData"></param>
     /// <returns></returns>
-    public IEnumerator DrawHeroCard(SocketFormat.Card cardData = null) {
-        GameObject card;
-        if (PlayMangement.instance.player.isHuman)
-            card = cardStorage.Find("HumanHeroCards").GetChild(0).gameObject;
-        else
-            card = cardStorage.Find("OrcHeroCards").GetChild(0).gameObject;
-        card.transform.SetParent(showPos.transform);
+    public IEnumerator DrawHeroCard(SocketFormat.Card[] cards = null) {
+        GameObject leftCard, rightCard;
+
+        if (PlayMangement.instance.player.isHuman) {
+            leftCard = cardStorage.Find("HumanHeroCards").GetChild(0).gameObject;
+            rightCard = cardStorage.Find("HumanHeroCards").GetChild(1).gameObject;
+        }
+        else {
+            leftCard = cardStorage.Find("OrcHeroCards").GetChild(0).gameObject;
+            rightCard = cardStorage.Find("OrcHeroCards").GetChild(1).gameObject;
+        }
+        leftCard.transform.SetParent(showPos.Find("Left"));
+        rightCard.transform.SetParent(showPos.Find("Right"));
+
         showPos.Find("HeroCardGuide").gameObject.SetActive(true);
-        card.SetActive(true);
-        CardHandler handler = card.GetComponent<CardHandler>();
-        handler.DrawHeroCard(cardData);
-        iTween.MoveTo(card, showPos.position, 0.4f);
-        iTween.RotateTo(card, iTween.Hash("rotation", new Vector3(0, 0, 0), "islocal", true, "time", 0.4f));
+
+        leftCard.SetActive(true);
+        rightCard.SetActive(true);
+
+        ShowCardsHandler showCardsHandler = showPos.GetComponent<ShowCardsHandler>();
+        showCardsHandler.AddCard(leftCard);
+        showCardsHandler.AddCard(rightCard);
+
+        CardHandler handler = leftCard.GetComponent<CardHandler>();
+        handler.DrawHeroCard(cards[0]);
+        handler = rightCard.GetComponent<CardHandler>();
+        handler.DrawHeroCard(cards[1]);
+
+        iTween.MoveTo(leftCard, showPos.Find("Left").position, 0.4f);
+        iTween.RotateTo(leftCard, iTween.Hash("z", 0, "islocal", true, "time", 0.4f));
+        yield return new WaitForSeconds(0.5f);
+        iTween.MoveTo(rightCard, showPos.Find("Right").position, 0.4f);
+        iTween.RotateTo(rightCard, iTween.Hash("z", 0, "islocal", true, "time", 0.4f));
+
+        showCardsHandler.SetDesc(true, cards[0].skills[0].desc);
+        showCardsHandler.SetDesc(false, cards[1].skills[0].desc);
+
         yield return StartCoroutine(handler.ActiveHeroCard());
     }
 
@@ -233,6 +257,7 @@ public class CardHandManager : MonoBehaviour {
         Transform cardTransform = cardobj.transform;
         Transform cardPos = transform.GetChild(cardNum);
         cardTransform.GetComponent<CardHandler>().CARDINDEX = cardNum;
+        PlayMangement.instance.socketHandler.KeepHeroCard(cardTransform.GetComponent<CardHandler>().itemID);
         cardTransform.localScale = new Vector3(1, 1, 1);
         cardNum++;
         cardList.Add(cardobj);

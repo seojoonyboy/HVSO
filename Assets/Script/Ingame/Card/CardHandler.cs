@@ -60,7 +60,7 @@ public partial class CardHandler : MonoBehaviour {
 
     private void Start() {
         mouseXPos = transform.parent.parent.parent.Find("MouseXposition");
-        cardHand = transform.parent.parent.parent.Find("CardHand");
+        cardHand = transform.root.Find("CardHand");
         handManager = cardHand.GetComponent<CardHandManager>();
         mouseLocalPos = transform.parent.parent.parent.Find("MouseLocalPosition");        
         clm = PlayMangement.instance.cardInfoCanvas.Find("CardInfoList").GetComponent<CardListManager>();
@@ -398,7 +398,7 @@ public partial class CardHandler : MonoBehaviour {
         gameObject.GetComponent<MagicDragHandler>().skillHandler = new SkillHandler();
         gameObject.GetComponent<MagicDragHandler>().skillHandler.Initialize(data.skills, gameObject, true);
         heroCardInfo.transform.SetParent(transform);
-        heroCardInfo.SetActive(true);
+        //heroCardInfo.SetActive(true);
         heroCardInfo.transform.rotation = transform.rotation;
         heroCardInfo.transform.position = transform.position;
         heroCardActivate = true;

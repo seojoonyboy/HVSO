@@ -16,8 +16,12 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
 
     public void OnBeginDrag(PointerEventData eventData) {
         if (heroCardActivate) {
+            ShowCardsHandler showCardsHandler = GetComponentInParent<ShowCardsHandler>();
+            showCardsHandler.OffOppositeCard(gameObject);
+            showCardsHandler.HideDesc();
+
             heroCardInfo.SetActive(false);
-            transform.parent.Find("HeroCardGuide").gameObject.SetActive(false);
+            transform.parent.parent.Find("HeroCardGuide").gameObject.SetActive(false);
             transform.localScale = Vector3.zero;
             if (cardData.skills.Length != 0)
                 CardInfoOnDrag.instance.SetCardDragInfo(null, mouseLocalPos.localPosition, cardData.skills[0].desc);
@@ -98,10 +102,18 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
     public void OnEndDrag(PointerEventData eventData) {
         EffectSystem.Instance.IncreaseFadeAlpha();
         if (heroCardActivate) {
+            ShowCardsHandler showCardsHandler = GetComponentInParent<ShowCardsHandler>();
             heroCardInfo.SetActive(true);
+            //영웅 카드를 핸드로 가져오는 부분
             if (transform.position.y < -3.5f) {
                 handManager.AddHeroCard(gameObject);
                 heroCardActivate = false;
+
+                showCardsHandler.GetOppositeCard(gameObject).GetComponent<CardHandler>().heroCardActivate = false;
+                showCardsHandler.RemoveOppositeCard(gameObject);
+                showCardsHandler.RemoveCard(gameObject);
+                showCardsHandler.ClearList();
+                showCardsHandler.HideUI();
             }
             else {
                 CheckLocation(true);
@@ -109,6 +121,8 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
                 //영웅 실드 발동시 나온 카드를 사용 할 때만 여기로 들어옴
                 if (CheckMagicSlot() != null) {
                     cardUsed = true;
+                    showCardsHandler.GetOppositeCard(gameObject).GetComponent<CardHandler>().heroCardActivate = false;
+                    showCardsHandler.RemoveOppositeCard(gameObject);
                     //var abilities = GetComponents<MagicalCasting>();
                     //foreach (MagicalCasting ability in abilities) ability.RequestUseMagic();
                     object[] parms = new object[] { true, gameObject };
@@ -125,13 +139,19 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
                 if (!cardUsed) {
                     transform.localScale = new Vector3(1, 1, 1);
                     transform.localPosition = new Vector3(0, 0, 0);
+                    transform.Find("CardInfoWindow").gameObject.SetActive(false);
+                    if (heroCardActivate) {
+                        transform.parent.parent.Find("HeroCardGuide").gameObject.SetActive(true);
+                    }
+
+                    showCardsHandler.ShowDesc();
                 }
             }
-            if(!cardUsed && heroCardActivate)
-                transform.parent.Find("HeroCardGuide").gameObject.SetActive(true);
             CardDropManager.Instance.HideMagicSlot();
             CardInfoOnDrag.instance.OffCardDragInfo();
-            PlayMangement.instance.player.ConsumeShieldStack();
+            PlayMangement.instance.player.ConsumeShieldSteak();
+            showCardsHandler.ToggleAllCards();
+
             return;
         }
         if (firstDraw) return;
@@ -193,6 +213,10 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         CardDropManager.Instance.HighLightMagicSlot(highlightedSlot, highlighted);
         highlightedSlot = null;        
         skillHandler.RemoveTriggerEvent();
+        ShowCardsHandler showCardsHandler = transform.root.GetComponentInChildren<ShowCardsHandler>();
+        showCardsHandler.ClearList();
+        showCardsHandler.HideUI();
+        //GetComponentInParent<ShowCardsHandler>().RemoveCard(gameObject);
     }
 
     private void HideCardImage() {
