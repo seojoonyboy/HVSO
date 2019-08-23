@@ -2284,4 +2284,28 @@ MonoBehaviour:
     m_importFrom: Assets/Sprite/Spine_Effect/ac10023/ac10023_SkeletonData.asset
     m_exportTo: 
     m_variantName: 
+  - m_assetDatabaseId: 4e9e2b726729adc48b240f867b7fb381
+    m_importFrom: Assets/Sprite/Ingame/CardInfo/NewInfoWindow/20190823
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 31d8bab600a0e984fbdb0644ad9c8706
+    m_importFrom: Assets/Scenes/MenuScene.unity
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 1a954227eebb6b445b5be19b88a0b7be
+    m_importFrom: Assets/Script/Ingame/Card/CardListManager.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 97594addd21432f478019ff42b18dabc
+    m_importFrom: Assets/Script/Ingame/AboutSkill/SkillComp/0611Renewal/TargetHandler.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 4f7f72ff34b1efa42be76567d484b029
+    m_importFrom: Assets/Script/MainMenu/Card/MenuCardInfo.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: aa8d29ecbaa7f594bafabf7185d8e2ab
+    m_importFrom: Assets/Prefab/ClassDesc.prefab
+    m_exportTo: 
+    m_variantName: 
   m_version: 2

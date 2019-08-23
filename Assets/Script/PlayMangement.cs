@@ -652,7 +652,7 @@ public partial class PlayMangement : MonoBehaviour {
         yield return new WaitForSeconds(1f);
         if (isPlayer) socketHandler.TurnOver();
         yield return WaitShieldDone();
-        if (!isPlayer) enemyPlayer.ConsumeShieldSteak();
+        if (!isPlayer) enemyPlayer.ConsumeShieldStack();
 
     }
 
