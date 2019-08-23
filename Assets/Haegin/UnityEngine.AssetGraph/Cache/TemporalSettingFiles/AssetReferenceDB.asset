@@ -2196,116 +2196,16 @@ MonoBehaviour:
     m_importFrom: Assets/Haegin/Patch/Source/PatcherAsyncBG.cs
     m_exportTo: 
     m_variantName: 
+  - m_assetDatabaseId: 30f4d0eb77704ba68bf8dede64390643
+    m_importFrom: Assets/Plugins/Firebase/Plugins/link.xml
+    m_exportTo: 
+    m_variantName: 
   - m_assetDatabaseId: 13ac821708bf2a741863e4e2c85ea004
     m_importFrom: Assets/Sprite/Spine_Effect/ingame_shieldgauge/ingame_shieldgauge_human/ingame_shieldgauge_human_SkeletonData.asset
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 3e67fb4e64b93411696ea8bc084b177f
     m_importFrom: Assets/Haegin/Sample/Scenes/SceneOBBCheck.unity
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 4c147e5023593084fbca05e9f7056372
-    m_importFrom: Assets/Sprite/Spine_cutscene/h10001/h10001_skillcut.skel.bytes
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: ae71e680077e9ad41919283b4b1473a2
-    m_importFrom: Assets/Sprite/Spine_cutscene/h10002
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: d0de8472c93589c4fbaefb917c2dc90a
-    m_importFrom: Assets/Sprite/Spine_cutscene/h10002/h10002_skillcut.atlas.txt
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 123badb33091bc646ad6f72c98c35029
-    m_importFrom: Assets/Sprite/Spine_cutscene/h10001/h10001_skillcut.atlas.txt
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 20e06d9a5389ef24387119c3bce3235f
-    m_importFrom: Assets/Sprite/Spine_cutscene/h10002/h10002_skillcut.png
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 73fa8e9a5fec75b4c9f93666747ca5ef
-    m_importFrom: Assets/Sprite/Spine_cutscene/h10002/h10002_skillcut.skel.bytes
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 2611ac9cdf20dc74595317a9e781ce1c
-    m_importFrom: Assets/Sprite/Spine_cutscene/h10001/h10001_skillcut.png
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: a396193e001c86748a3619d45f45dfaa
-    m_importFrom: Assets/Sprite/Spine_cutscene/h10001
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: a2b51f5f1d86259428e8d74fca0bd156
-    m_importFrom: Assets/Sprite/Spine_cutscene/h10002/h10002_skillcut_Material.mat
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: c9ccc806def916f46b2c4c8aa65214c3
-    m_importFrom: Assets/Sprite/Spine_cutscene/h10002/h10002_skillcut_Atlas.asset
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: b5dd8d310f00ca248a6546452e6e45e6
-    m_importFrom: Assets/Sprite/Spine_cutscene/h10001/h10001_skillcut_Material.mat
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: b614197328865b842987cc624139827d
-    m_importFrom: Assets/Sprite/Spine_cutscene/h10001/h10001_skillcut_Atlas.asset
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 4842d4dc1d375064898c59c7e4779576
-    m_importFrom: Assets/Sprite/Spine_cutscene/h10001/h10001_skillcut_SkeletonData.asset
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 74c5efad71deed340ba3fdd78c6a4398
-    m_importFrom: Assets/Sprite/Spine_cutscene/h10002/h10002_skillcut_SkeletonData.asset
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: dd8a866d5c1fb904f83b49903bfef97c
-    m_importFrom: Assets/Script/MainMenu/AccountManager.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 978b8e859aa391048bd822a31f967f62
-    m_importFrom: Assets/Sprite/Spine_Effect/ac10023/ac10023.png
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: b18c1f0758541cc4eb5d5c25b706f9ea
-    m_importFrom: Assets/Sprite/Spine_Effect/ac10023/ac10023.skel.bytes
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 21eb3357d069a9149ad2d778cd083ba3
-    m_importFrom: Assets/Sprite/Spine_Effect/ac10023/ac10023.atlas.txt
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: f03d17a6c54c4aa449fd227287dbace3
-    m_importFrom: Assets/Sprite/Spine_Effect/ac10023/ac10023_Material.mat
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 67a8cefabfdd09647bf789bbdd0566d3
-    m_importFrom: Assets/Sprite/Spine_Effect/ac10023/ac10023_SkeletonData.asset
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 4e9e2b726729adc48b240f867b7fb381
-    m_importFrom: Assets/Sprite/Ingame/CardInfo/NewInfoWindow/20190823
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 31d8bab600a0e984fbdb0644ad9c8706
-    m_importFrom: Assets/Scenes/MenuScene.unity
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 1a954227eebb6b445b5be19b88a0b7be
-    m_importFrom: Assets/Script/Ingame/Card/CardListManager.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 97594addd21432f478019ff42b18dabc
-    m_importFrom: Assets/Script/Ingame/AboutSkill/SkillComp/0611Renewal/TargetHandler.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 4f7f72ff34b1efa42be76567d484b029
-    m_importFrom: Assets/Script/MainMenu/Card/MenuCardInfo.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: aa8d29ecbaa7f594bafabf7185d8e2ab
-    m_importFrom: Assets/Prefab/ClassDesc.prefab
     m_exportTo: 
     m_variantName: 
   m_version: 2
