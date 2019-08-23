@@ -149,7 +149,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
             }
             CardDropManager.Instance.HideMagicSlot();
             CardInfoOnDrag.instance.OffCardDragInfo();
-            PlayMangement.instance.player.ConsumeShieldSteak();
+            PlayMangement.instance.player.ConsumeShieldStack();
             showCardsHandler.ToggleAllCards();
 
             return;

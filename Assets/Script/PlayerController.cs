@@ -250,7 +250,7 @@ public class PlayerController : MonoBehaviour
                     shieldStack.Value = data.hero.shieldGauge;
                 else {
                     EffectSystem.Instance.IncreaseShieldFeedBack(shieldFeedBack.transform.gameObject ,shieldData.shieldCount);
-                    ChangeShieldSteak(shieldStack.Value, shieldData.shieldCount);
+                    ChangeShieldStack(shieldStack.Value, shieldData.shieldCount);
                 }
             }
         }
@@ -286,7 +286,7 @@ public class PlayerController : MonoBehaviour
         SetState(HeroState.ATTACK);
         if(PlayMangement.instance.heroShieldActive) return;
         PlayMangement.instance.heroShieldActive = true;
-        FullShieldSteak(shieldStack.Value);
+        FullShieldStack(shieldStack.Value);
         StartCoroutine(PlayMangement.instance.DrawSpecialCard(isHuman));
         shieldStack.Value = 0;
         shieldCount--;
@@ -448,7 +448,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void ChangeShieldSteak(int start, int amount) {
+    public void ChangeShieldStack(int start, int amount) {
         shieldStack.Value += amount;
         shieldGauge.Initialize(false);
         shieldGauge.Update(0);
@@ -463,7 +463,7 @@ public class PlayerController : MonoBehaviour
        // entry.Complete += delegate (TrackEntry trackEntry) {  };       
     }
 
-    public void FullShieldSteak(int start) {
+    public void FullShieldStack(int start) {
         int amount = 8 - start;
         shieldGauge.Initialize(false);
         shieldGauge.Update(0);
@@ -476,7 +476,7 @@ public class PlayerController : MonoBehaviour
         entry = shieldGauge.AnimationState.AddAnimation(0, "full", true, 0);
     }
 
-    public void ConsumeShieldSteak() {
+    public void ConsumeShieldStack() {
         shieldGauge.Initialize(false);
         shieldGauge.Update(0);
         TrackEntry entry;
