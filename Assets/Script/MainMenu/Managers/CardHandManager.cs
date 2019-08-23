@@ -135,8 +135,8 @@ public class CardHandManager : MonoBehaviour {
         else
             card = cardobj;
         if (firstDraw) {
-            if (cardNum + 1 == 5) {
-                AddInfoToList(card);
+            if (cardNum + 1 == 4) {
+                //AddInfoToList(card);
                 firstDraw = false;
             }
             card.GetComponent<CardHandler>().DisableCard();
