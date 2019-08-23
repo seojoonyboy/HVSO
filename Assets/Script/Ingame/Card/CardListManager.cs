@@ -241,6 +241,7 @@ public class CardListManager : MonoBehaviour
                 offBtn.eventID = EventTriggerType.PointerUp;
                 offBtn.callback.AddListener((EventData) => CloseClassDescModal());
                 info.Find("Skill&BuffRow1").GetChild(skillnum).GetComponent<EventTrigger>().triggers.Add(offBtn);
+                skillnum++;
             }
             if (data.attributes.Length != 0) {
                 info.Find("Skill&BuffRow1").GetChild(skillnum).gameObject.SetActive(true);
@@ -257,6 +258,7 @@ public class CardListManager : MonoBehaviour
                 offBtn.eventID = EventTriggerType.PointerUp;
                 offBtn.callback.AddListener((EventData) => CloseClassDescModal());
                 info.Find("Skill&BuffRow1").GetChild(skillnum).GetComponent<EventTrigger>().triggers.Add(offBtn);
+                skillnum++;
             }
 
             List<string> categories = new List<string>();
