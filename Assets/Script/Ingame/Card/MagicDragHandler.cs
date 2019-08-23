@@ -18,8 +18,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         if (heroCardActivate) {
             ShowCardsHandler showCardsHandler = GetComponentInParent<ShowCardsHandler>();
             showCardsHandler.OffOppositeCard(gameObject);
-
-            OffOppositeHeroCard();  //TODO
+            showCardsHandler.HideDesc();
 
             heroCardInfo.SetActive(false);
             transform.parent.parent.Find("HeroCardGuide").gameObject.SetActive(false);
@@ -144,6 +143,8 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
                     if (heroCardActivate) {
                         transform.parent.parent.Find("HeroCardGuide").gameObject.SetActive(true);
                     }
+
+                    showCardsHandler.ShowDesc();
                 }
             }
             CardDropManager.Instance.HideMagicSlot();
@@ -184,10 +185,6 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         CardDropManager.Instance.HideMagicSlot();
         CardInfoOnDrag.instance.OffCardDragInfo();
         PlayMangement.instance.infoOn = false;
-    }
-
-    private void OffOppositeHeroCard() {
-
     }
 
     IEnumerator UseSkillCardExceptInfo(object[] parms) {

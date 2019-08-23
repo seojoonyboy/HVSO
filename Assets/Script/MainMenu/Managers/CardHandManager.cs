@@ -244,6 +244,9 @@ public class CardHandManager : MonoBehaviour {
         iTween.MoveTo(rightCard, showPos.Find("Right").position, 0.4f);
         iTween.RotateTo(rightCard, iTween.Hash("z", 0, "islocal", true, "time", 0.4f));
 
+        showCardsHandler.SetDesc(true, cards[0].skills[0].desc);
+        showCardsHandler.SetDesc(false, cards[1].skills[0].desc);
+
         yield return StartCoroutine(handler.ActiveHeroCard());
     }
 
