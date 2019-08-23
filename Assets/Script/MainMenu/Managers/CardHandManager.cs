@@ -135,10 +135,6 @@ public class CardHandManager : MonoBehaviour {
         else
             card = cardobj;
         if (firstDraw) {
-            if (cardNum + 1 == 4) {
-                //AddInfoToList(card);
-                firstDraw = false;
-            }
             card.GetComponent<CardHandler>().DisableCard();
         }
         else {
@@ -593,6 +589,7 @@ public class CardHandManager : MonoBehaviour {
             index++;
         }
         yield return new WaitForSeconds(0.5f);
+        firstDraw = false;
         #region 영웅카드 드로우 주석처리
         /* yield return PlayMangement.instance.socketHandler.WaitGetCard();
 
