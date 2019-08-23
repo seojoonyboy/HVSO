@@ -299,6 +299,7 @@ public partial class PlayMangement : MonoBehaviour {
             card.transform.Find("Portrait").gameObject.SetActive(false);
             card.transform.Find("BackGround").gameObject.SetActive(false);
             card.transform.Find("Cost").gameObject.SetActive(false);
+            card.transform.localScale = new Vector3(1, 1, 1);
             yield return EffectSystem.Instance.HeroCutScene(enemyPlayer.isHuman);
         }
         EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);

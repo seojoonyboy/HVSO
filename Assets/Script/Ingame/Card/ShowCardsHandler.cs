@@ -82,6 +82,7 @@ public class ShowCardsHandler : MonoBehaviour {
     public void ClearList() {
         foreach(GameObject card in heroCards) {
             card.transform.localRotation = Quaternion.Euler(0, 0, 0);
+            card.transform.localScale = new Vector3(1, 1, 1);
             card.SetActive(false);
         }
         hideShowBtn.SetActive(false);
