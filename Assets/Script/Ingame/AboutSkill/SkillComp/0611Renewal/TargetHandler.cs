@@ -568,7 +568,8 @@ namespace TargetModules {
 
         public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback, Filtering filter) {
             base.SelectTarget(successCallback, failedCallback, filter);
-            transform.localScale = Vector3.zero;
+            if(GetComponent<MagicDragHandler>())
+                transform.localScale = Vector3.zero;
             PlayMangement.instance.LockTurnOver();
 
             //TODO : 적일 경우 해당 소켓이 도달 할 때까지 기다리기 card_played, skill_activated
