@@ -224,11 +224,14 @@ public class CardHandManager : MonoBehaviour {
         leftCard.transform.SetParent(showPos.Find("Left"));
         rightCard.transform.SetParent(showPos.Find("Right"));
 
-        showPos.Find("Right/HeroCardGuide").gameObject.SetActive(true);
-        showPos.Find("Left/HeroCardGuide").gameObject.SetActive(true);
+        showPos.Find("HeroCardGuide").gameObject.SetActive(true);
 
         leftCard.SetActive(true);
         rightCard.SetActive(true);
+
+        ShowCardsHandler showCardsHandler = showPos.GetComponent<ShowCardsHandler>();
+        showCardsHandler.AddCard(leftCard);
+        showCardsHandler.AddCard(rightCard);
 
         CardHandler handler = leftCard.GetComponent<CardHandler>();
         handler.DrawHeroCard(cards[0]);
