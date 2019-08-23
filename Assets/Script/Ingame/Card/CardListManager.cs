@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UI.Extensions;
+using UnityEngine.EventSystems;
 using Spine;
 using Spine.Unity;
 
@@ -155,13 +156,14 @@ public class CardListManager : MonoBehaviour
 
     public virtual void SetCardInfo(GameObject obj, CardData data) {
         Transform info = obj.transform;
-        string race;
-        if (PlayMangement.instance.player.isHuman)
-            race = "human";
-        else
-            race = "orc";
-        info.Find("Frame").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["frame_" + race];
-        info.Find("Dialog").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["dialog_" + race];
+        //string race;
+        //if (PlayMangement.instance.player.isHuman)
+        //    race = "human";
+        //else
+        //    race = "orc";
+        //info.Find("Frame").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["frame_" + race];
+        //info.Find("Dialog").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["dialog_" + race];
+        info.Find("Name").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["name_" + data.rarelity];
         info.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.name;
 
         if (data.skills.Length != 0) {
@@ -202,42 +204,59 @@ public class CardListManager : MonoBehaviour
 
         info.Find("Class_1").GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[data.class_1];
 
-        info.Find("SkillIcon1").gameObject.SetActive(false);
-        info.Find("SkillIcon2").gameObject.SetActive(false);
+        for(int i = 0; i < 5; i++) {
+            info.Find("Skill&BuffRow1").GetChild(i).gameObject.SetActive(false);
+            EventTrigger skill1 = info.Find("Skill&BuffRow1").GetChild(i).GetComponent<EventTrigger>();
+            skill1.triggers.RemoveRange(0, skill1.triggers.Count);
+
+            info.Find("Skill&BuffRow2").GetChild(i).gameObject.SetActive(false);
+            EventTrigger skill2 = info.Find("Skill&BuffRow2").GetChild(i).GetComponent<EventTrigger>();
+            skill2.triggers.RemoveRange(0, skill2.triggers.Count);
+        }
+
         info.Find("Flavor/Text").GetComponent<TMPro.TextMeshProUGUI>().text = string.Empty;
 
         info.Find("UnitPortrait").gameObject.SetActive(false);
         info.Find("MagicPortrait").gameObject.SetActive(false);
         info.Find("Categories/Text").GetComponent<TMPro.TextMeshProUGUI>().text = string.Empty;
 
+        int skillnum = 0;
         if (data.type == "unit") {
             info.Find("UnitPortrait").gameObject.SetActive(true);
             if (AccountManager.Instance.resource.infoPortraite.ContainsKey(data.cardId)) {
                 info.Find("UnitPortrait").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoPortraite[data.cardId];
             }
             if (data.attackTypes.Length != 0) {
-                info.Find("SkillIcon1").gameObject.SetActive(true);
+                info.Find("Skill&BuffRow1").GetChild(skillnum).gameObject.SetActive(true);
                 var image = AccountManager.Instance.resource.skillIcons[data.attackTypes[0]];
-                info.Find("SkillIcon1").GetComponent<Image>().sprite = image;
-                info.Find("SkillIcon1").GetComponent<Button>().onClick.AddListener(() => {
-                    OpenClassDescModal(data.attackTypes[0], image);
-                });
+                info.Find("Skill&BuffRow1").GetChild(skillnum).GetComponent<Image>().sprite = image;
+                //info.Find("Skill&BuffRow1").GetChild(skillnum).GetComponent<Button>().onClick.AddListener(() => {
+                //    OpenClassDescModal(data.attackTypes[0], image);
+                //});
+                EventTrigger.Entry onBtn = new EventTrigger.Entry();
+                onBtn.eventID = EventTriggerType.PointerDown;
+                onBtn.callback.AddListener((EventData) => OpenClassDescModal(data.attackTypes[0], image));
+                info.Find("Skill&BuffRow1").GetChild(skillnum).GetComponent<EventTrigger>().triggers.Add(onBtn);
+                EventTrigger.Entry offBtn = new EventTrigger.Entry();
+                offBtn.eventID = EventTriggerType.PointerUp;
+                offBtn.callback.AddListener((EventData) => CloseClassDescModal());
+                info.Find("Skill&BuffRow1").GetChild(skillnum).GetComponent<EventTrigger>().triggers.Add(offBtn);
             }
             if (data.attributes.Length != 0) {
-                info.Find("SkillIcon1").gameObject.SetActive(true);
+                info.Find("Skill&BuffRow1").GetChild(skillnum).gameObject.SetActive(true);
                 var image = AccountManager.Instance.resource.skillIcons[data.attributes[0]];
-                info.Find("SkillIcon1").GetComponent<Image>().sprite = image;
-                info.Find("SkillIcon1").GetComponent<Button>().onClick.AddListener(() => {
-                    OpenClassDescModal(data.attributes[0], image);
-                });
-            }
-            if (data.attackTypes.Length != 0 && data.attributes.Length != 0) {
-                info.Find("SkillIcon2").gameObject.SetActive(true);
-                var image = AccountManager.Instance.resource.skillIcons[data.attackTypes[0]];
-                info.Find("SkillIcon2").GetComponent<Image>().sprite = image;
-                info.Find("SkillIcon2").GetComponent<Button>().onClick.AddListener(() => {
-                    OpenClassDescModal(data.attackTypes[0], image);
-                });
+                info.Find("Skill&BuffRow1").GetChild(skillnum).GetComponent<Image>().sprite = image;
+                //info.Find("Skill&BuffRow1").GetChild(skillnum).GetComponent<Button>().onClick.AddListener(() => {
+                //    OpenClassDescModal(data.attributes[0], image);
+                //});
+                EventTrigger.Entry onBtn = new EventTrigger.Entry();
+                onBtn.eventID = EventTriggerType.PointerDown;
+                onBtn.callback.AddListener((EventData) => OpenClassDescModal(data.attributes[0], image));
+                info.Find("Skill&BuffRow1").GetChild(skillnum).GetComponent<EventTrigger>().triggers.Add(onBtn);
+                EventTrigger.Entry offBtn = new EventTrigger.Entry();
+                offBtn.eventID = EventTriggerType.PointerUp;
+                offBtn.callback.AddListener((EventData) => CloseClassDescModal());
+                info.Find("Skill&BuffRow1").GetChild(skillnum).GetComponent<EventTrigger>().triggers.Add(offBtn);
             }
 
             List<string> categories = new List<string>();
@@ -272,7 +291,10 @@ public class CardListManager : MonoBehaviour
     }
 
     public void OpenClassDescModal(string className, Sprite image) {
+        if (Input.touchCount > 1) return;
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         classDescModal.gameObject.SetActive(true);
+        classDescModal.position = new Vector3(mousePos.x, mousePos.y + 1.3f, 0);
         string[] set = translator.GetTranslatedSkillSet(className);
         SetClassDescModalData(set[0], set[1], image);
     }
@@ -283,14 +305,14 @@ public class CardListManager : MonoBehaviour
     }
 
     private void SetClassDescModalData(string className = "", string desc = "", Sprite sprite = null) {
-        Transform innerModal = classDescModal.Find("InnerModal");
+        //Transform innerModal = classDescModal.Find("InnerModal");
 
         TMPro.TextMeshProUGUI TMP_header = classDescModal.Find("Header").GetComponent<TMPro.TextMeshProUGUI>();
         TMPro.TextMeshProUGUI TMP_desc = classDescModal.Find("Description").GetComponent<TMPro.TextMeshProUGUI>();
 
-        TMP_header.text = className;
-        TMP_desc.text = desc;
-        innerModal.Find("Portrait/Image").GetComponent<Image>().sprite = sprite;
+        TMP_header.text = className + ": " + desc;
+        //TMP_desc.text = desc;
+        //innerModal.Find("Portrait/Image").GetComponent<Image>().sprite = sprite;
     }
     
 
