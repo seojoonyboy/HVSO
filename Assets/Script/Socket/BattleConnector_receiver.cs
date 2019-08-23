@@ -288,4 +288,6 @@ public partial class BattleConnector : MonoBehaviour {
         bool isEnemyCard = cardCamp.CompareTo(enemyCamp) == 0;
         if(isEnemyCard) useCardList.Enqueue(gameState);
     }
+
+    public void hero_card_kept(object args) { }
 }
