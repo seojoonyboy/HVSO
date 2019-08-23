@@ -159,16 +159,6 @@ public class CardListManager : MonoBehaviour
             handCardInfo.GetChild(i).gameObject.SetActive(false);
     }
 
-    private void SetHeroCardInfo(GameObject obj, CardData data) {
-        Transform info = obj.transform;
-
-        info.Find("Portrait").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardPortraite[data.cardId];
-        info.Find("Cost/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.cost.ToString();
-        //info.Find("Name").gameObject.SetActive(true);
-        //info.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.name;
-        info.Find("Class").GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[data.class_1];
-    }
-
     public virtual void SetCardInfo(GameObject obj, CardData data) {
         Transform info = obj.transform;
         //string race;

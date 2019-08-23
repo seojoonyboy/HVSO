@@ -14,6 +14,9 @@ public class ShowCardsHandler : MonoBehaviour {
 
     public void AddCard(GameObject self) {
         heroCards.Add(self);
+        if (!self.transform.Find("Portrait").gameObject.activeSelf) self.transform.Find("Portrait").gameObject.SetActive(true);
+        if (!self.transform.Find("BackGround").gameObject.activeSelf) self.transform.Find("BackGround").gameObject.SetActive(true);
+
         ShowUI();
         hideShowBtn.SetActive(true);
     }
