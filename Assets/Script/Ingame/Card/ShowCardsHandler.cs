@@ -14,7 +14,8 @@ public class ShowCardsHandler : MonoBehaviour {
 
     public void AddCard(GameObject self) {
         heroCards.Add(self);
-        if (!hideShowBtn.activeSelf) hideShowBtn.SetActive(true);
+        ShowUI();
+        hideShowBtn.SetActive(true);
     }
 
     public GameObject GetOppositeCard(GameObject self) {
@@ -60,19 +61,23 @@ public class ShowCardsHandler : MonoBehaviour {
         self.transform.localPosition = Vector3.zero;
     }
 
+    //실드 이벤트 종료 처리
     public void ClearList() {
         foreach(GameObject card in heroCards) {
             card.transform.localRotation = Quaternion.Euler(0, 0, 0);
             card.SetActive(false);
         }
+        hideShowBtn.SetActive(false);
         heroCards.Clear();
     }
 
+    //감추기 버튼 기능
     public void ShowUI() {
         ToggleAllCards();
         transform.Find("HeroCardGuide").gameObject.SetActive(true);
     }
 
+    //감추기 버튼 기능
     public void HideUI() {
         ToggleAllCards(false);
         transform.Find("HeroCardGuide").gameObject.SetActive(false);

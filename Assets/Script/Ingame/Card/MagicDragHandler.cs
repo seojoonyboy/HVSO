@@ -105,9 +105,16 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         if (heroCardActivate) {
             ShowCardsHandler showCardsHandler = GetComponentInParent<ShowCardsHandler>();
             heroCardInfo.SetActive(true);
+            //영웅 카드를 핸드로 가져오는 부분
             if (transform.position.y < -3.5f) {
                 handManager.AddHeroCard(gameObject);
                 heroCardActivate = false;
+
+                showCardsHandler.GetOppositeCard(gameObject).GetComponent<CardHandler>().heroCardActivate = false;
+                showCardsHandler.RemoveOppositeCard(gameObject);
+                showCardsHandler.RemoveCard(gameObject);
+                showCardsHandler.ClearList();
+                showCardsHandler.HideUI();
             }
             else {
                 CheckLocation(true);
@@ -209,7 +216,9 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         CardDropManager.Instance.HighLightMagicSlot(highlightedSlot, highlighted);
         highlightedSlot = null;        
         skillHandler.RemoveTriggerEvent();
-        transform.root.GetComponentInChildren<ShowCardsHandler>().ClearList();
+        ShowCardsHandler showCardsHandler = transform.root.GetComponentInChildren<ShowCardsHandler>();
+        showCardsHandler.ClearList();
+        showCardsHandler.HideUI();
         //GetComponentInParent<ShowCardsHandler>().RemoveCard(gameObject);
     }
 
