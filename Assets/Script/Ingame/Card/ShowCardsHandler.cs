@@ -5,6 +5,8 @@ using UnityEngine;
 public class ShowCardsHandler : MonoBehaviour {
     [SerializeField] List<GameObject> heroCards;
     [SerializeField] Transform cardStorage;
+    [SerializeField] GameObject hideShowBtn;
+
     // Start is called before the first frame update
     void Start() {
         heroCards = new List<GameObject>();
@@ -12,6 +14,7 @@ public class ShowCardsHandler : MonoBehaviour {
 
     public void AddCard(GameObject self) {
         heroCards.Add(self);
+        if (!hideShowBtn.activeSelf) hideShowBtn.SetActive(true);
     }
 
     public GameObject GetOppositeCard(GameObject self) {
@@ -59,8 +62,19 @@ public class ShowCardsHandler : MonoBehaviour {
 
     public void ClearList() {
         foreach(GameObject card in heroCards) {
+            card.transform.localRotation = Quaternion.Euler(0, 0, 0);
             card.SetActive(false);
         }
         heroCards.Clear();
+    }
+
+    public void ShowUI() {
+        ToggleAllCards();
+        transform.Find("HeroCardGuide").gameObject.SetActive(true);
+    }
+
+    public void HideUI() {
+        ToggleAllCards(false);
+        transform.Find("HeroCardGuide").gameObject.SetActive(false);
     }
 }
