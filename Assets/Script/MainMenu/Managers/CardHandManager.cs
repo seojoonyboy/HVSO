@@ -504,6 +504,7 @@ public class CardHandManager : MonoBehaviour {
     }
 
     public void SetUsedCardInfo(ref GameObject card) {
+        card.transform.localScale = Vector3.one;
         CardData cardData = card.GetComponent<CardHandler>().cardData;
 
         Image portrait = card.transform.Find("Portrait").GetComponent<Image>();
@@ -549,8 +550,8 @@ public class CardHandManager : MonoBehaviour {
 
         if (cardData.attributes.Length != 0 && cardData.attackTypes.Length != 0 && isUnit)
             skillIcon.sprite = AccountManager.Instance.resource.skillIcons["complex"];
-
-        card.transform.Find("BackGround").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground[cardData.type + "_" + cardData.rarelity];
+        if(!cardData.hero_chk)
+            card.transform.Find("BackGround").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground[cardData.type + "_" + cardData.rarelity];
     }
 
     public IEnumerator SortHandPosition() {
