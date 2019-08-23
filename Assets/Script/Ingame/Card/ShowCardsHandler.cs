@@ -41,11 +41,15 @@ public class ShowCardsHandler : MonoBehaviour {
     public void OnOppositeCard(GameObject self) {
         GameObject target = GetOppositeCard(self);
         target.SetActive(true);
+        target.transform.localScale = new Vector3(1.5f, 1.5f, 1.0f);
     }
 
     public void ToggleAllCards(bool isOn = true) {
         foreach(GameObject card in heroCards) {
-            if (card.activeSelf != isOn) card.SetActive(isOn);
+            if (card.activeSelf != isOn) {
+                card.SetActive(isOn);
+            }
+            card.transform.localScale = new Vector3(1.5f, 1.5f, 1.0f);
         }
     }
 
@@ -57,7 +61,8 @@ public class ShowCardsHandler : MonoBehaviour {
         else {
             target.transform.SetParent(cardStorage.Find("OrcHeroCards"));
         }
-        target.transform.localPosition = Vector3.zero;
+        target.transform.localPosition = new Vector3(0, 0, 0);
+        target.transform.localScale = new Vector3(1, 1, 1);
         //transform.localRotation = new Quaternion(0, 0, 0, 0);
     }
 
@@ -69,7 +74,8 @@ public class ShowCardsHandler : MonoBehaviour {
         else {
             self.transform.SetParent(cardStorage.Find("OrcHeroCards"));
         }
-        self.transform.localPosition = Vector3.zero;
+        self.transform.localPosition = new Vector3(0, 0, 0);
+        self.transform.localScale = new Vector3(1, 1, 1);
     }
 
     //실드 이벤트 종료 처리
