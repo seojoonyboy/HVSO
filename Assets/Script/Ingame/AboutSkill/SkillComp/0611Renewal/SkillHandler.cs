@@ -126,7 +126,10 @@ namespace SkillModules {
             if(isPlayingCard()) SendSocket();
             //TODO : field에서 select 발동 했을 때
             else if(isFieldCard()) SkillActivate();
-            if(isPlayingCard()) PlayMangement.instance.UnlockTurnOver();
+            if(isPlayingCard()) {
+                PlayMangement.instance.UnlockTurnOver();
+                myObject.SetActive(false);
+            }
         }
 
         private bool isPlayingCard() {

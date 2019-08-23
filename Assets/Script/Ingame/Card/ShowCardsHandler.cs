@@ -83,7 +83,8 @@ public class ShowCardsHandler : MonoBehaviour {
         foreach(GameObject card in heroCards) {
             card.transform.localRotation = Quaternion.Euler(0, 0, 0);
             card.transform.localScale = new Vector3(1, 1, 1);
-            card.SetActive(false);
+            if(card.GetComponent<MagicDragHandler>().skillHandler.socketDone)
+                card.SetActive(false);
         }
         hideShowBtn.SetActive(false);
         transform.Find("Left/Desc").gameObject.SetActive(false);
