@@ -158,9 +158,12 @@ public partial class PlayMangement : MonoBehaviour {
     }
 
     public void RequestStartData() {
-        player.SetPlayerStat(20);
-        enemyPlayer.SetPlayerStat(20);
+        int playerHP = 20;
+        int enemyHP = 20;
 
+
+        player.SetPlayerStat(playerHP);
+        enemyPlayer.SetPlayerStat(enemyHP);
     }
 
     public void DistributeResource() {

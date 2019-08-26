@@ -1633,30 +1633,6 @@ MonoBehaviour:
     m_importFrom: Assets/Sprite/Spine_Effect/ingame_shieldfeedback/bottom/ingame_shieldfeedback_bottom.png
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: e23d94487ef2798468f725627ce5c3a5
-    m_importFrom: Assets/Sprite/Spine_Effect/ingame_shieldfeedback/upside/ingame_shieldfeedback_upside_Material.mat
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 90a68df1e54507a498fa3f3857d1839b
-    m_importFrom: Assets/Sprite/Spine_Effect/ingame_shieldfeedback/upside/ingame_shieldfeedback_upside_Atlas.asset
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 9ae8c05a5086ed1499a098ee805a57f3
-    m_importFrom: Assets/Sprite/Spine_Effect/ingame_shieldfeedback/bottom/ingame_shieldfeedback_bottom_Material.mat
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 181e5cd7b10ff3a4c8d3f14c75a6135a
-    m_importFrom: Assets/Sprite/Spine_Effect/ingame_shieldfeedback/bottom/ingame_shieldfeedback_bottom_Atlas.asset
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 0ef818dc9244d0441b569183b4f8e9a2
-    m_importFrom: Assets/Sprite/Spine_Effect/ingame_shieldfeedback/upside/ingame_shieldfeedback_upside_SkeletonData.asset
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 6f168aecee7ecde41a1289ee5b6263fd
-    m_importFrom: Assets/Sprite/Spine_Effect/ingame_shieldfeedback/bottom/ingame_shieldfeedback_bottom_SkeletonData.asset
-    m_exportTo: 
-    m_variantName: 
   - m_assetDatabaseId: 87bdc29f7dfe4fb45ba30f1028d31f98
     m_importFrom: Assets/Prefab/Effect/Shield_feedBack_Top.prefab
     m_exportTo: 
@@ -2306,6 +2282,78 @@ MonoBehaviour:
     m_variantName: 
   - m_assetDatabaseId: aa8d29ecbaa7f594bafabf7185d8e2ab
     m_importFrom: Assets/Prefab/ClassDesc.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 3f5426f4e4542684cb03ff154cbb7be9
+    m_importFrom: Assets/Script/Ingame/Card/MagicDragHandler.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 7f07460e98f0ec941a00e90a996dacd7
+    m_importFrom: Assets/Script/Ingame/Card/ShowCardsHandler.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: e23d94487ef2798468f725627ce5c3a5
+    m_importFrom: Assets/Sprite/Spine_Effect/ingame_shieldfeedback/upside/ingame_shieldfeedback_upside_Material.mat
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 90a68df1e54507a498fa3f3857d1839b
+    m_importFrom: Assets/Sprite/Spine_Effect/ingame_shieldfeedback/upside/ingame_shieldfeedback_upside_Atlas.asset
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 9ae8c05a5086ed1499a098ee805a57f3
+    m_importFrom: Assets/Sprite/Spine_Effect/ingame_shieldfeedback/bottom/ingame_shieldfeedback_bottom_Material.mat
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 181e5cd7b10ff3a4c8d3f14c75a6135a
+    m_importFrom: Assets/Sprite/Spine_Effect/ingame_shieldfeedback/bottom/ingame_shieldfeedback_bottom_Atlas.asset
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 0ef818dc9244d0441b569183b4f8e9a2
+    m_importFrom: Assets/Sprite/Spine_Effect/ingame_shieldfeedback/upside/ingame_shieldfeedback_upside_SkeletonData.asset
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 6f168aecee7ecde41a1289ee5b6263fd
+    m_importFrom: Assets/Sprite/Spine_Effect/ingame_shieldfeedback/bottom/ingame_shieldfeedback_bottom_SkeletonData.asset
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: deb10b20ebc8cfc49bfc684773260d0c
+    m_importFrom: Assets/Sprite/Unit/ac10048/ac10048.atlas.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 7d1515f0c899bdf46a7fd04703fb1b36
+    m_importFrom: Assets/Sprite/Unit/ac10048/ac10048.skel.bytes
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 1411e93909d24834ab45280a2c17b1d4
+    m_importFrom: Assets/Sprite/Unit/ac10048
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 1a59560cefa2c104d935c8851dd80339
+    m_importFrom: Assets/Sprite/Unit/ac10048/ac10048.png
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 357f48347494aa34f9fa52bfc6b8d082
+    m_importFrom: Assets/Sprite/Unit/ac10048/ac10048_Material.mat
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: dacf95b970f4ff042b045bcd8ca20819
+    m_importFrom: Assets/Sprite/Unit/ac10048/ac10048_Atlas.asset
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 0845e36333001204db39cb35ed0c3798
+    m_importFrom: Assets/Sprite/Unit/ac10048/ac10048_SkeletonData.asset
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: ff0fb3cf3da985c438689c5b2c9b8530
+    m_importFrom: Assets/Prefab/Skeleton/Skeleton_ac10048.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: f05e98f3e64d5a14981e0ad79c23c6d1
+    m_importFrom: Assets/Scenes/Login.unity
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 313a0496fb6152d40820b357c2231c6f
+    m_importFrom: Assets/Prefab/PreviewSkeleton/PreviewUnit_ac10048.prefab
     m_exportTo: 
     m_variantName: 
   m_version: 2
