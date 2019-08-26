@@ -13,328 +13,2086 @@ MonoBehaviour:
   m_Name: AssetReferenceDB
   m_EditorClassIdentifier: 
   m_assets:
+  - m_assetDatabaseId: 2eb72520cd4ae2f44a30055928cb384c
+    m_importFrom: Assets/Haegin/Share/NativeShare/iOS/NativeShare.mm
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 1b1a9f4063c5d4378adc17a652c7097c
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCodeDisabled/MediaPlayer/ISN_MPMusicPlayerController.mm.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 2a43576061e714917a828a7279c5fe35
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/AVFoundation/ISN_AVAssetImageGenerator.mm
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: ece3e4f0a0e8c3044a1d521c43dc6a88
+    m_importFrom: Assets/Font/NanumBarunGothic.ttf
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 1defe4517a42d4d65912be620f6ccef1
+    m_importFrom: Assets/Plugins/Editor/PluginDependencies.xml
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 331f0a613ca8b4b39b6cc44d16007de6
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCodeDisabled/GameKit/ISN_GKCommunication.mm.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 14cd4c61b7bb440be9c82ec5c34f5781
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/Foundation/ISN_Foundation.h
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 25bb2f61ea1f342ca96407078d35fd4d
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/UIKit/ISN_UIImagePickerControllerDelegate.h
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 4229b5224108242588ddbf96b7ebc206
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/Utilities/JSONModelLib/JSONModel/JSONModelClassProperty.h
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 34d511725a68e479fb899f1ea3cb1ac6
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/GameKit/ISN_GKLeaderboardManager.mm
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 215145824c67447e7a914db876a2934a
+    m_importFrom: Assets/Plugins/StansAssets/Settings/Editor/Resources/ISN_EditorSettings.asset
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 15cf4892118d45b0a1e45dacd028da68
+    m_importFrom: Assets/Plugins/x86_64/Firebase/FirebaseCppApp-6.1.1.dll
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 3136f6a2874ce4bb6924b4f75a0e461e
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/GameKit/ISN_GKLocalPlayerListener.m
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 21bed4b2bc60f415f9b63af10d0b0c8d
+    m_importFrom: Assets/Resources/English.bytes
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 432cf1f2767684566bfde57861c0d846
+    m_importFrom: Assets/Resources/ChineseTraditional.bytes
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 366f804353b7644f3826bc3d4577652e
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/Foundation/ISN_NSFileManager.mm
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 02ff065319d14019ac9ad4561a5c0095
+    m_importFrom: Assets/Firebase/Editor/FirebaseMessaging_version-6.1.1_manifest.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 3302ff5351aeb2c49b64e1ceab2ce4fc
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/AndroidNativePro/AndroidDisabled/Internal/an_gms.aar.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 16ccbf6323a2344b094bc9ffc08aecd9
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCodeDisabled/GameKit/ISN_GKAchievementManager.m.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 114b98b39b7094b6d8f80d7382225a48
+    m_importFrom: Assets/Plugins/IOS/UnityViewControllerBase+iPhoneX.mm
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 378e0c746543d4567ac604d96133ce9f
+    m_importFrom: Assets/Plugins/StansAssets/Settings/Resources/ISN_Settings.asset
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 58b441b442ee949d4897132b0effbeef
+    m_importFrom: Assets/Haegin/UnityEngine.AssetGraph/Cache/TemporalSettingFiles/AssetProcessEventRecord.asset
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 07423905bc735421482245aa92b96b54
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/StoreKit/ISN_SKProductsRequestDelegate.h
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 33ee8d6580a8412d811e9c6eab8c2cb9
+    m_importFrom: Assets/Plugins/IOS/Firebase/libFirebaseCppMessaging.a
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 355bbcd5836a6422e9eebf3773841400
+    m_importFrom: Assets/Firebase/google-services.json
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 2ba5c2e5fb2cc5b4eb88dbfbf1b11083
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/AndroidNativePro/AndroidDisabled/Internal/an_vending.aar.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 2bc58ef5061cf4355979560933dfb5df
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/UIKit/ISN_UIApplication.mm
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 9a9232360baf7411c8fdf820d3761dbf
+    m_importFrom: Assets/AssetGraphData.asset
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 3ffb7186766df4185810072e7ed582ed
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/Utilities/JSONModelLib/JSONModelNetworking/JSONModel+networking.h
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 412195e63b8901646adb12ef3f33f415
+    m_importFrom: Assets/Haegin/AssetBundleManager/Resources/AssetBundleServerURL.bytes
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 24c25107e907948619e48e3c8f846586
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCodeDisabled/StoreKit/ISN_SKInAppManager.mm.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 40caea57c4e03514cac3d9619fa40b14
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/AndroidNativePro/AndroidDisabled/Maven/support-v427.1.1/com.android.support.support-v4-27.1.1.aar.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 37c645a7027dd2a4db0602dcd0e59430
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/AndroidNativePro/AndroidDisabled/Maven/support-v427.1.1/com.android.support.animated-vector-drawable-27.1.1.aar.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 1e3c2da79be842cd838a9ddd70d20fa9
+    m_importFrom: Assets/Firebase/Editor/AnalyticsDependencies.xml
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: d73f1ac79d4c75f47bd002619dc1af52
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/Tests/Scene/ISN_TestsConfig.asset
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 1bbe31d7bb2164275be001ad281b7358
+    m_importFrom: Assets/Haegin/Patch/BGWebClient/android/bgdownload.jar
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 35746618434c749849e5646807a64da3
+    m_importFrom: Assets/Plugins/IOS/UnityViewControllerBase+iPhoneX.h
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 18678a28cef624aeb89c5717c46be35b
+    m_importFrom: Assets/Haegin/UnityEngine.AssetGraph/Editor/SettingTemplate/setting.fbx
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 2e3c70485f19e674fa72abba1b00e9a8
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/AndroidNativePro/AndroidDisabled/Maven/gson-2.8.5/com.google.code.gson.gson-2.8.5.jar.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 41ac507842c6d4894ae58a9db83f4506
+    m_importFrom: Assets/Haegin/UnityEngine.AssetGraph/Cache/TemporalSettingFiles/AssetBundleBuildMap.asset
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 3ce54878e37914db3bf865ff99d73ad3
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCodeDisabled/Contacts/ISN_CNCommunication.h.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 291f81d8ae2745cf913a96d116f2e3f7
+    m_importFrom: Assets/Firebase/m2repository/com/google/firebase/firebase-analytics-unity/maven-metadata.xml
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 1bbb6df875d7943cf931418d7f177b93
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/Foundation/ISN_Foundation.m
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 15cf5099aaaaa4af586bc6db16de1b95
+    m_importFrom: Assets/Haegin/Account/Android/haegingpgs.aar
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 249bdba97d05248399a086366316e418
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCodeDisabled/Contacts/ISN_Contacts.mm.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 029d1dd92437946c49a474dacd879f3d
+    m_importFrom: Assets/Haegin/ProjectSettings/Editor/src/Network/Web/WebClient.cs.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 1543e5f9bab73423c96b42cab90363ab
+    m_importFrom: Assets/FacebookSDK/Plugins/Editor/Dependencies.xml
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 41f5f20abbcb84e9ea58aff93238f9cc
+    m_importFrom: Assets/Haegin/Notification/Android/fcm.jar
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 4558693a55c384ae39c0938c77ed3c14
+    m_importFrom: Assets/Plugins/IOS/IronSource/iOSBridge.h
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 3018c64ae7c53e24fa9dd3c2382d4de8
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/AndroidNativePro/AndroidDisabled/Maven/support-v427.1.1/com.android.support.support-fragment-27.1.1.aar.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 06066e9aac37247a4bf16e2aa53f0e4c
+    m_importFrom: Assets/FacebookSDK/Plugins/Canvas/CanvasJSSDKBindings.jslib
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 29079bba52caf4725b75f85e078fbe63
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/StoreKit/ISN_SKTransactionObserver.h
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 3a2154da9a5c442b966636c6408cd1f3
+    m_importFrom: Assets/Plugins/x86_64/Firebase/FirebaseCppAnalytics.bundle
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 43a0581b2f8014053928e462ac779aac
+    m_importFrom: Assets/Plugins/StansAssets/Settings/Resources/ISD_Settings.asset
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 2c06c23bf35b74a8ba8620a3a7eb562b
+    m_importFrom: Assets/AssetBundles/OSX/textdata.manifest
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 45f7e64be9b864b61b04f61818bad3db
+    m_importFrom: Assets/Haegin/Sample/Sound/BGM/sd/bgm_level1.mp3
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 34843a5b0e221e74cbbb90c9b0e7e616
+    m_importFrom: Assets/GPresto/iOS/PrestoADView.h
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 9efdb37b4df66400ebfa5b32cb55aaeb
+    m_importFrom: Assets/Plugins/StansAssets/Settings/Resources/AN_Settings.asset
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: bdd1b59bfb72d4f0eb7dd258828b837d
+    m_importFrom: Assets/Resources/Splash/HaeginSplash.controller
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 0a93f5eb5abac4c198ab85b592903409
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/UserNotifications/ISN_UNCommunication.h
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 1d3088bced1e4b6bade53213abfdbd33
+    m_importFrom: Assets/Plugins/x86_64/Firebase/FirebaseCppDynamicLinks.dll
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 33b359bc9d5244f5abcbaa4fafc8f170
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCodeDisabled/StoreKit/ISN_SKTransactionObserver.m.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: acf3464d5d5aa4f64977999faf23c3eb
+    m_importFrom: Assets/FacebookSDK/SDK/Resources/FacebookSettings.asset
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 36a3c05d4224e7b4ba2e5787ec2d2680
+    m_importFrom: Assets/GPresto/iOS/libPresto.a
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 30781a6d2004a45d594c0688064b1d91
+    m_importFrom: Assets/Plugins/HockeyApp/iOS/HockeyAppUnityIOS/HockeyAppUnity.h
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 2f522f6d5b2ab4a558929e7931da40a5
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCodeDisabled/ReplayKit/ISN_RPCommunication.h.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 064eca7d2dbd03841823e44ab30da92b
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/AndroidNativePro/AndroidDisabled/Maven/support-v427.1.1/android.arch.lifecycle.common-1.1.0.jar.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 24cd1b7d7d2f04b7090a94f42f72e4d5
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/UIKit/ISN_UIAlertController.mm
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 00c952edc4ec340fea38481d0ce1aa36
+    m_importFrom: Assets/Plugins/x86/libsteam_api.so
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 438c721efb6ca468f9e1251ac60c1530
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/UserNotifications/ISN_UNCommunication.mm
+    m_exportTo: 
+    m_variantName: 
   - m_assetDatabaseId: 0a6b661e93c7841c9a197206d1ef513f
     m_importFrom: Assets/Haegin/UnityEngine.AssetGraph/Cache/TemporalSettingFiles/AssetReferenceDB.asset
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 82aa0b3005e11064289278b31342e94a
-    m_importFrom: Assets/Plugins/Assemblies/Bolt.State.Runtime.pdb
+  - m_assetDatabaseId: 136f9a6e730864c14b4a6609d879bd48
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCodeDisabled/GameKit/ISN_GKPlayer.h.txt
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: fe3ed570770eeb844b960d8f95536917
-    m_importFrom: Assets/Plugins/Assemblies/Ludiq.Core.Runtime.defines
+  - m_assetDatabaseId: 12ea5c8efe5554cbd8a8ff017694f13b
+    m_importFrom: Assets/Plugins/HockeyApp/Android/HockeyAppUnityAndroid/AndroidManifest.xml
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 674a05e0f8d7dcb45a78a943d0ec715d
-    m_importFrom: Assets/Plugins/Assemblies/Antlr3.Runtime.dll
+  - m_assetDatabaseId: 22a431bef050041e1a50d9a58323646a
+    m_importFrom: Assets/Haegin/Help/WebView/iOS/WebView.mm
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 72139091d0175b14fb6fd48d7facf70e
-    m_importFrom: Assets/Plugins/Assemblies/Ludiq.Platforms.defines
+  - m_assetDatabaseId: 3d2272eecddc54c8fb336261f5b9f2e3
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/Utilities/JSONModelLib/JSONModel/JSONModelError.m
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: e7591b9110e32ca45b2c5f1372169149
-    m_importFrom: Assets/Plugins/Assemblies/Ludiq.Graphs.Editor.dll
+  - m_assetDatabaseId: 3092034f1269d47ecb3d4aee05468742
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCodeDisabled/GameKit/ISN_GKLocalPlayerListener.h.txt
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: ca5b7e917e394ad4d8cd115758dbc654
-    m_importFrom: Assets/Plugins/Assemblies/Bolt.Flow.Runtime.defines
+  - m_assetDatabaseId: 0959ac5f4256e409f8d31f143bbd4da3
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCodeDisabled/MediaPlayer/ISN_MPRemoteCommandCenter.mm.txt
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: ba3a06e12c5c6ee46aa4a47212443416
-    m_importFrom: Assets/Plugins/Assemblies/Bolt.State.Runtime.dll.mdb
+  - m_assetDatabaseId: 436bd0ffef8cb46cd8509a3d7979f951
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/GameKit/ISN_GKLocalPlayerManager.h
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 1eea3bf15bb7ddb4582c462beee0ad13
-    m_importFrom: Assets/Plugins/Assemblies/Ludiq.Core.Runtime.dll
+  - m_assetDatabaseId: 148f03ffb7bb74feba4cb0a514f985b5
+    m_importFrom: Assets/Haegin/ProjectSettings/Editor/src/IAP/OneStore/IAPManager.cs.txt
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: efc4f8221b9f2e04998ad78e9b2b01b6
-    m_importFrom: Assets/Plugins/Assemblies/Ludiq.Graphs.Runtime.dll
+  - m_assetDatabaseId: 84e836004c9ee436181153e9c01d7dc5
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/StoreKit/ISN_SKStoreReviewController.mm
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 51364af278e07a14b9f7147bd78435e7
-    m_importFrom: Assets/Plugins/Assemblies/Bolt.Core.Runtime.dll.mdb
+  - m_assetDatabaseId: 7576d51030f134873af915c0632d7817
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCodeDisabled/GameKit/ISN_GKPlayer.mm.txt
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 3498def2217d4284b84f775a288afa8d
-    m_importFrom: Assets/Plugins/Assemblies/Bolt.Core.Editor.dll.mdb
+  - m_assetDatabaseId: e4d74c1079ab8477f84f6e729d8629c1
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/Utilities/JSONModelLib/JSONModelNetworking/JSONAPI.m
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: f4ad5523360b4ac4792983b1ba3d2ab4
-    m_importFrom: Assets/Plugins/Assemblies/Ludiq.Platforms.dll.mdb
+  - m_assetDatabaseId: bb44492030b4a54439675ef704950b50
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/AndroidNativePro/AndroidDisabled/Maven/support-v427.1.1/com.android.support.customtabs-27.1.1.aar.txt
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: c8d0ad23af520fe46aabe2b1fecf6462
-    m_importFrom: Assets/Plugins/Assemblies/Bolt.Core.Runtime.dll
+  - m_assetDatabaseId: cc611230e6e0b41b2a753282ae09db87
+    m_importFrom: Assets/Haegin/Notification/Android/notification.aar
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 312ddd23edf356a4fbe02c126168a0a0
-    m_importFrom: Assets/Plugins/Assemblies/Antlr3.Runtime.defines
+  - m_assetDatabaseId: 885486303122740d3a51cfe4fd9c374a
+    m_importFrom: Assets/Plugins/HockeyApp/Android/HockeyAppUnityAndroid/hockeysdk-unity-5.1.0.aar
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 2f987f23a8460624b8f530b521cd7d55
-    m_importFrom: Assets/Plugins/Assemblies/Bolt.Flow.Editor.dll.mdb
+  - m_assetDatabaseId: c0ae98308ab0475a9583e1ea6e82ec65
+    m_importFrom: Assets/Plugins/Android/AndroidManifest.xml
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 0d289733b6865f04ba9e26049ec9beb7
-    m_importFrom: Assets/Plugins/Assemblies/Ludiq.Core.Editor.defines
+  - m_assetDatabaseId: 4ee71d30df37c4f9f8f9a66dbf264cc1
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCodeDisabled/GameKit/ISN_GKAchievementManager.h.txt
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: ee4fb5a3347cd094fadb94ee3a8d79b4
-    m_importFrom: Assets/Plugins/Assemblies/Ludiq.Core.Editor.dll.mdb
+  - m_assetDatabaseId: d1b4d550dcaf74accbd4a968f4ff288c
+    m_importFrom: Assets/Haegin/ProjectSettings/Editor/src/Network/Web/Source/ProtoWebClient.cs.txt
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: e258d6f31e42f4f4abf2cddb13bafa99
-    m_importFrom: Assets/Plugins/Assemblies/Bolt.Core.Editor.pdb
+  - m_assetDatabaseId: 57908560d3f2c4a229b4bfc0954f6c76
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/Foundation/ISN_NSCommunication.mm
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 907ae305fd1cba34eb3cd8f1365f7d2c
-    m_importFrom: Assets/Plugins/Assemblies/Ludiq.Graphs.Runtime.dll.mdb
+  - m_assetDatabaseId: f42c5c805bfbd4d35a4d14d4a2890365
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/Utilities/JSONModelLib/JSONModelLib.h
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: aa4fb1d507da8b04abab7b4821278b38
-    m_importFrom: Assets/Plugins/Assemblies
+  - m_assetDatabaseId: 4a40de900f9df423e94c542d13c2c017
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/GameKit/ISN_GKLocalPlayerListener.h
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 3cc8404641a59644e9ab0448cf0653b0
-    m_importFrom: Assets/Plugins/Assemblies/Ludiq.Core.Runtime.dll.mdb
+  - m_assetDatabaseId: f5bb9ac0f3014dea9d9bfab87599d301
+    m_importFrom: Assets/Firebase/Editor/DynamicLinksDependencies.xml
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: a040fb66244a7f54289914d98ea4ef7d
-    m_importFrom: Assets/Plugins/Assemblies/Bolt.Flow.Runtime.dll
+  - m_assetDatabaseId: 1d8200e0338dc413f8e0ddc2fe3ba05a
+    m_importFrom: Assets/Haegin/Sample/Resources/Prefabs/PromoEventFrame.prefab
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 8218757629be48a42b50cb6ebf5359de
-    m_importFrom: Assets/Plugins/Assemblies/MiscUtil.defines
+  - m_assetDatabaseId: e57e0fe0920924c429ec438c099256e0
+    m_importFrom: Assets/Haegin/ProjectSettings/Editor/src/Account/Account.cs.txt
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: f7e89dc65e5b6a04eaedc96ba8385fa2
-    m_importFrom: Assets/Plugins/Assemblies/Bolt.Flow.Runtime.pdb
+  - m_assetDatabaseId: e9907b1153dea4fcf927fb4e7ffed318
+    m_importFrom: Assets/Editor/AppGuard.zip.txt
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 542beba75c187654e9ab57d1e8555033
-    m_importFrom: Assets/Plugins/Assemblies/Bolt.Flow.Editor.pdb
+  - m_assetDatabaseId: a86a61213b5c140c383538a2e08da83d
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCodeDisabled/AVKit/ISN_AVPlayerViewController.mm.txt
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: cf63b248bde69b64b83b4d93a83abe15
-    m_importFrom: Assets/Plugins/Assemblies/YamlDotNet.defines
+  - m_assetDatabaseId: 6f8f1321e31145fab417d53ca13ceacb
+    m_importFrom: Assets/Plugins/x86_64/Firebase/libFirebaseCppApp-6.1.1.so
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 5e02b54838944ca479a11a62f8f4c347
-    m_importFrom: Assets/Plugins/Assemblies/Bolt.State.Runtime.defines
+  - m_assetDatabaseId: a97d65417b1bd463591435630699432a
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/GameKit/ISN_GKCommunication.h
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: e4bd5a394dc997f43b30d2972127e0c9
-    m_importFrom: Assets/Plugins/Assemblies/Ludiq.Platforms.dll
+  - m_assetDatabaseId: 52906251ec43346d0a03ef8ca8d86f21
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCodeDisabled/ReplayKit/ISN_RPPreviewViewControllerDelegate.h.txt
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 9bd0db89ea73e5347a0d8bfe23d52a4e
-    m_importFrom: Assets/Plugins/Assemblies/Bolt.Core.Editor.defines
+  - m_assetDatabaseId: 7fb76471c8541ac42bb17b379b91d227
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/AndroidNativePro/AndroidDisabled/Maven/support-v427.1.1/com.android.support.appcompat-v7-27.1.1.aar.txt
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 68cfbad9078708a4598c48093b071b0e
-    m_importFrom: Assets/Plugins/Assemblies/Bolt.Flow.Runtime.dll.mdb
+  - m_assetDatabaseId: c2a512811d7934444807d59c48270b45
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/Utilities/JSONModelLib/JSONModelTransformations/JSONKeyMapper.m
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: f55a661a889efa44fa7ac6f5fe51c796
-    m_importFrom: Assets/Plugins/Assemblies/Bolt.State.Editor.pdb
+  - m_assetDatabaseId: c2b04191af178451abb32eed61f2b705
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/Utilities/JSONModelLib/JSONModelTransformations/JSONValueTransformer.m
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 65c4ab1a8962ca7498a19301c32a8419
-    m_importFrom: Assets/Plugins/Assemblies/Ludiq.Graphs.Runtime.defines
+  - m_assetDatabaseId: 4d7fbc9140e347ae9e63772a9b33b348
+    m_importFrom: Assets/Firebase/Editor/FirebaseAnalytics_version-6.1.1_manifest.txt
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: a705a52aab73b6f41868728db238e95e
-    m_importFrom: Assets/Plugins/Assemblies/MiscUtil.dll
+  - m_assetDatabaseId: a30a9ab133b36473ea1e091bac8165a3
+    m_importFrom: Assets/Plugins/Steamworks.NET/redist/steam_appid.txt
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 7314928a14330c04fb980214791646e9
-    m_importFrom: Assets/Plugins/Assemblies/Bolt.Core.Editor.dll
+  - m_assetDatabaseId: bc7dc0e10f6424655a888e4984fde152
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCodeDisabled/UserNotifications/ISN_UNCommunication.h.txt
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: cb40b39a15e6c3e48b784d5d22dfe4c4
-    m_importFrom: Assets/Plugins/Assemblies/Ludiq.Graphs.Editor.defines
+  - m_assetDatabaseId: e2fe74f13a5584bf7905f109b514606e
+    m_importFrom: Assets/Haegin/AssetBundles-Browser/README.md
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 34d8046b36b99224d8a6e59bd23d05c7
-    m_importFrom: Assets/Plugins/Assemblies/Bolt.State.Editor.dll.mdb
+  - m_assetDatabaseId: 5c9aa102f38e244178abce8536cd6ecb
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCodeDisabled/StoreKit/ISN_SKTransactionObserver.h.txt
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 188dbf6b201563f418b6fe56a54966ce
-    m_importFrom: Assets/Plugins/Assemblies/Ludiq.Graphs.Editor.dll.mdb
+  - m_assetDatabaseId: c08c4702018d74c4690a665767852b9d
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/AndroidNativePro/AndroidDisabled/Maven/support-v427.1.1/com.android.support.support-vector-drawable-27.1.1.aar.txt
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 8878d90c345be1a43ab0c9a9898ad433
-    m_importFrom: Assets/Plugins/Assemblies/Ludiq.Core.Editor.dll
+  - m_assetDatabaseId: d85d0b02c8a84448393430ee334bedad
+    m_importFrom: Assets/Resources/Korean.bytes
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: ca842c0cc7840b74ba553b0a5a66bf1d
-    m_importFrom: Assets/Plugins/Assemblies/Bolt.Core.Runtime.pdb
+  - m_assetDatabaseId: bfd6d6127ae7c4290b597f5e97ac5d37
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/StoreKit/ISN_SKCommunication.m
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 25cf173c22a896d44ae550407b10ed98
-    m_importFrom: Assets/Plugins/Assemblies/Bolt.State.Editor.dll
+  - m_assetDatabaseId: 944e8332a245b4264bad5faf57337aa7
+    m_importFrom: Assets/Haegin/Sample/Resources/Prefabs/EULABg.prefab
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: dcd2196c4e9166f499793f2007fcda35
-    m_importFrom: Assets/Plugins/Assemblies/Bolt.State.Runtime.dll
+  - m_assetDatabaseId: c6f6ec32fd9faf04496b588166c93235
+    m_importFrom: Assets/GPresto/Android/libs/x86/libATG_L.so
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 6cb65bfc2ee1c854ca1382175f3aba91
-    m_importFrom: Assets/Plugins/Assemblies/Bolt.Flow.Editor.dll
+  - m_assetDatabaseId: 9962d3421509b4d5ebe2c9fee719a582
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/AVFoundation/ISN_AVAudioSession.mm
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 1101cf4d4430ca442a64590b80415ed2
-    m_importFrom: Assets/Plugins/Assemblies/Ludiq.Core.Editor.pdb
+  - m_assetDatabaseId: d2115a62a1e9240528cdd328a532d1f7
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCodeDisabled/Social/ISN_UIActivityViewController.mm.txt
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: f51f8efddd086a64e816eb917017c5f7
-    m_importFrom: Assets/Plugins/Assemblies/Ludiq.Platforms.pdb
+  - m_assetDatabaseId: fbc51482e3ca248329707d61959f9d9d
+    m_importFrom: Assets/FacebookSDK/SDK/Editor/iOS/FBUnitySDKDelegate.m
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: bf7ebefd2b6f54049979a28f9d25f84b
-    m_importFrom: Assets/Plugins/Assemblies/Ludiq.Core.Runtime.pdb
+  - m_assetDatabaseId: cd9978a24f81c4ba2a189c3c62e775ce
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/Foundation/ISN_NSBundle.mm
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 56e5b31e3f095a1499cc0cf861a03c7f
-    m_importFrom: Assets/Plugins/Assemblies/Bolt.Core.Runtime.defines
+  - m_assetDatabaseId: 858009b25ae484c2ebf7b750cdacfb91
+    m_importFrom: Assets/Haegin/Sample/Resources/Prefabs/HelpWin.prefab
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 942ed22e96027344284daaa251dcd25e
-    m_importFrom: Assets/Plugins/Assemblies/Bolt.Flow.Editor.defines
+  - m_assetDatabaseId: a7fba9b2c12074568a4ecb777b947073
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/AppDelegate/ISN_UIApplicationDelegate.mm
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 91eebc7ea97b4bb4cbd64ac272433e4e
-    m_importFrom: Assets/Plugins/Assemblies/Bolt.State.Editor.defines
+  - m_assetDatabaseId: eacb52c2bce924e23a33c76894514659
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/Utilities/InternalLogger/ISN_Logger.h
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 6379aa3ffcb2dc64395a524e9fe61bcf
-    m_importFrom: Assets/Plugins/Assemblies/Ludiq.Graphs.Editor.pdb
+  - m_assetDatabaseId: 7461bcc2e2c714a03a3f60d68ec79369
+    m_importFrom: Assets/FacebookSDK/SDK/Editor/iOS/FBUnitySDKDelegate.h
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 01b3ea4ff305d8341bea246edd7fc565
-    m_importFrom: Assets/Plugins/Assemblies/YamlDotNet.dll
+  - m_assetDatabaseId: d27f84d264aa04264a69ccc7d1087e2e
+    m_importFrom: Assets/Plugins/HockeyApp/iOS/HockeyAppUnityIOS/HockeyAppUnityWrapper.m
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 1fbd5daf1f92084439845615cacaf4c7
-    m_importFrom: Assets/Plugins/Assemblies/Ludiq.Graphs.Runtime.pdb
+  - m_assetDatabaseId: 8c9809d259fa400c84a958c7960a2bc5
+    m_importFrom: Assets/Plugins/x86_64/Firebase/FirebaseCppAnalytics.dll
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: db6e9d108a643f342ac80ba7393906f6
-    m_importFrom: Assets/Plugins/Assemblies/sqlite3.dll
+  - m_assetDatabaseId: 682b62e2da8e83e438f2a6677aedf46a
+    m_importFrom: Assets/Plugins/StansAssets/Foundation/pluginVersion.json
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: df117fd0a48047a4c8927f9bf4f36ba2
-    m_importFrom: Assets/Plugins/Assemblies/YamlDotNet.xml
+  - m_assetDatabaseId: 57e5b4f272c13400db25084f10fea6a1
+    m_importFrom: Assets/Haegin/UnityEngine.AssetGraph/Editor/SettingTemplate/readme.txt
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 3aba9fe1ad29b42ffb0eea781318a626
-    m_importFrom: Packages/com.unity.package-manager-ui/Editor/Resources/Templates/PackageManagerToolbar.uxml
+  - m_assetDatabaseId: 9f5f5503102764bbca1effe314ce7747
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/Utilities/JSONModelLib/JSONModel/JSONModel.h
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: bbec1324b05a54939ad2fea2d7e11063
-    m_importFrom: Packages/com.unity.package-manager-ui/Editor/Resources/Templates/PackageStatusBar.uxml
+  - m_assetDatabaseId: bd813e2302c7d4468a8594c4ef011248
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/GameKit/ISN_GKAchievementManager.m
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 4f768b64e6c37495699fffe3007e4379
-    m_importFrom: Packages/com.unity.package-manager-ui/Editor/Resources/Templates/Alert.uxml
+  - m_assetDatabaseId: eda34d33439cb41ddbea85b55001e2f9
+    m_importFrom: Assets/Haegin/Notification/Editor/NotificationExt/NotificationService.m
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 9df784e4d6d4411449560c171e4b0baa
-    m_importFrom: Assets/Plugins/Assemblies/Ludiq.Core.Editor.xml
+  - m_assetDatabaseId: a3b06473cb256cc4686439d083f8180d
+    m_importFrom: Assets/GPresto/Android/libs/armeabi-v7a/libATG_L.so
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 25ebe415cc14c4f4ea15c34a796b75bb
-    m_importFrom: Packages/com.unity.package-manager-ui/Editor/Resources/Templates/PackageGroup.uxml
+  - m_assetDatabaseId: c69a3b932b1544186aa92366cecdd348
+    m_importFrom: Assets/Haegin/URLScheme/Android/urlscheme.jar
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 97dff1b5ae41ee84886ae7a80ae21499
-    m_importFrom: Packages/com.unity.package-manager-ui/Editor/Resources/Templates/PackageAddFromUrlField.uxml
+  - m_assetDatabaseId: b3a3b3b3cf317483ca0ee25fb26aabe2
+    m_importFrom: Assets/Haegin/ProjectSettings/Editor/src/IAP/OneStore/Onestore_PurchaseResponse.cs.txt
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: b52bde26a83564960bcb90217f72b910
-    m_importFrom: Packages/com.unity.collab-proxy/Editor/Resources/Styles/CollabHistoryLight.uss
+  - m_assetDatabaseId: cfaa27b3f57cd4576aafe5f3c5468d85
+    m_importFrom: Assets/Resources/Spanish.bytes
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 10145f279f90346bbb61712ff585828b
-    m_importFrom: Packages/com.unity.package-manager-ui/Editor/Resources/Templates/PackageItem.uxml
+  - m_assetDatabaseId: 9a7ce3c33d0da46f5bd8342077e6408f
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/Foundation/ISN_NSCommunication.h
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 92a32f375888b804fbee1f5c60fdd723
-    m_importFrom: Assets/Plugins/Assemblies/MiscUtil.xml
+  - m_assetDatabaseId: 7b99c9d343cf24c5798c2c2269633c5b
+    m_importFrom: Assets/Haegin/Sample/Resources/Prefabs/SystemDialog.prefab
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 41ca7357a83a5aa47904b262ff750706
-    m_importFrom: Assets/Plugins/Assemblies/Ludiq.Graphs.Runtime.xml
+  - m_assetDatabaseId: eb1805e3141554bca975dbb864dd752d
+    m_importFrom: Assets/Resources/Japanese.bytes
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 93c1370867fcb45079592da39e0994c5
-    m_importFrom: Packages/com.unity.package-manager-ui/Editor/Resources/Templates/PackageDetails.uxml
+  - m_assetDatabaseId: eea6b824a63446fbb0ecd9a70e18993c
+    m_importFrom: Assets/Firebase/m2repository/com/google/firebase/firebase-dynamic-links-unity/maven-metadata.xml
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 2903dd28ffe416b408e81f37643f4ed4
-    m_importFrom: Assets/Plugins/Assemblies/Ludiq.Graphs.Editor.xml
+  - m_assetDatabaseId: de44323489d434f45b11c3ee27c8f253
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCodeDisabled/StoreKit/ISN_SKCommunication.h.txt
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 01d7a138de771484186b465bc0efc71c
-    m_importFrom: Assets/Plugins/Assemblies/Bolt.Flow.Runtime.xml
+  - m_assetDatabaseId: 5454e734b04ea45428bc8092e869b829
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/GameKit/ISN_GKAchievementManager.h
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 3a2d94c8977984b67984caeff9fa666e
-    m_importFrom: Packages/com.unity.collab-proxy/Editor/Resources/Styles/CollabHistoryCommon.uss
+  - m_assetDatabaseId: 995c7b348de57438c891b65236c1d7b2
+    m_importFrom: Assets/Haegin/UnityEngine.AssetGraph/Editor/SettingTemplate/setting.m4v
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 6dba45e8f90e21b4c877c4db03115564
-    m_importFrom: Assets/Plugins/Assemblies/Ludiq.Core.Runtime.xml
+  - m_assetDatabaseId: aa01c554245ea43a5a7f728f8d30e979
+    m_importFrom: Assets/Haegin/Sample/Resources/Prefabs/EULABg_P.prefab
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: a0550e093e6f9c2498649c838cc8cd69
-    m_importFrom: Assets/Plugins/Assemblies/Bolt.State.Editor.xml
+  - m_assetDatabaseId: b1a4bf5439e5a40208576152d2e81cb3
+    m_importFrom: Assets/Haegin/Patch/BGWebClient/iOS/BGWebClient.h
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 9ed10b2ab7c69794eafa6c4915e29f87
-    m_importFrom: Assets/Plugins/Assemblies/Bolt.Core.Editor.xml
+  - m_assetDatabaseId: 9462b164fe4764b76bac3a7224f61c40
+    m_importFrom: Assets/Haegin/Sample/Sound/BGM/hd/bgm_level1.mp3
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 7ef4f34a39f87f64cb6116ee54d83a6c
-    m_importFrom: Assets/Plugins/Assemblies/Ludiq.Platforms.xml
+  - m_assetDatabaseId: 695e9474730a8714ca8359dc6e59d712
+    m_importFrom: Assets/Plugins/StansAssets/Third-PartyNotices.txt
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 70d4d75a2877243758b0750cbc75b6eb
-    m_importFrom: Packages/com.unity.collab-proxy/Editor/Resources/Styles/CollabHistoryDark.uss
+  - m_assetDatabaseId: 59c355d40be734c2c99a20726474a7ac
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCodeDisabled/UserNotifications/ISN_UNUserNotificationCenter.mm.txt
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 8918e6baee4c0e143b147e755bbcfa76
-    m_importFrom: Assets/Plugins/Assemblies/Bolt.State.Runtime.xml
+  - m_assetDatabaseId: 606722f4094e04c0680f987458869a16
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/UIKit/ISN_UIImagePickerController.mm
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: abdc053b8e3644f299aedc641d609a84
-    m_importFrom: Packages/com.unity.package-manager-ui/Editor/Resources/Styles/Main_Light.uss
+  - m_assetDatabaseId: fe01c6f4fdd3d44f7945ed8e3d52b39c
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/Utilities/JSONModelLib/JSONModel/JSONModel.m
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: c7559cdbc33f04af1a5a42d2aa5b40a5
-    m_importFrom: Packages/com.unity.package-manager-ui/Editor/Resources/Styles/Main_Dark.uss
+  - m_assetDatabaseId: d18c9445409bb0b448c63c3abdd1cc8f
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/AndroidNativePro/Android/Core/an_core.aar
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: cd44c1bc0fa624a39aa784af44c62180
-    m_importFrom: Packages/com.unity.package-manager-ui/Editor/Resources/Templates/PackageSearchToolbar.uxml
+  - m_assetDatabaseId: 55a24e65818c44dbdb0d16170895d971
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/AndroidManifestManager/Editor/Files/default.xml
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 46c02d8d6499b4309ac1ec5d0b818585
-    m_importFrom: Packages/com.unity.package-manager-ui/Editor/Resources/Templates/PackageList.uxml
+  - m_assetDatabaseId: 96337775a7c941d88ea15f8026ad6f8e
+    m_importFrom: Assets/Firebase/m2repository/com/google/firebase/firebase-app-unity/maven-metadata.xml
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: a8d9e44eff3f447db9448925617ccb44
-    m_importFrom: Packages/com.unity.package-manager-ui/Editor/Resources/Templates/PackageManagerWindow.uxml
+  - m_assetDatabaseId: e0872585be79248ac8c6c78f7baf110a
+    m_importFrom: Assets/IronSource/Prefabs/IronSourceEventsPrefab.prefab
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: fa9200fe25bcbbf44b0088f60ebb0447
-    m_importFrom: Assets/Plugins/Assemblies/Bolt.Core.Runtime.xml
+  - m_assetDatabaseId: bda50985abccc40379363bc583eeb694
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/AndroidNativePro/Android/Internal/an_vending.aar
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 8b5e5ccf037b3fc4192d73d164a6076c
-    m_importFrom: Assets/Plugins/Assemblies/Bolt.Flow.Editor.xml
+  - m_assetDatabaseId: 55379a95b54bd44448fd23f25729b078
+    m_importFrom: Assets/GPresto/Editor/Newtonsoft.Json.xml
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 9b63af95d9364af4a3d8ce58738b6223
+    m_importFrom: Assets/Firebase/Editor/AppDependencies.xml
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: ac358fc5516f044e48ee04dcf4320326
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/GameKit/ISN_GKGameCenterViewController.mm
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 4c29c5d59509848c4bc24c13ac976932
+    m_importFrom: Assets/FacebookSDK/SDK/Editor/iOS/FBUnityInterface.mm
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: d1cb29e560137493e836bbe0f0a70a83
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/Utilities/JSONModelLib/JSONModelNetworking/JSONModel+networking.m
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: e1828bf5cab544d42a04126300701aae
+    m_importFrom: Assets/Plugins/x86_64/steam_api64.dll
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: cfbbd0062a18f44bfaa9d30a88d2b99b
+    m_importFrom: Assets/Haegin/URLScheme/iOS/ISN_AppController+urlscheme.mm
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: f849d41633c3a4d2d9047fa04d6ff7fa
+    m_importFrom: Assets/Haegin/IAP/iOS/ISN_SKInAppManager+Haegin.mm
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: cbde2b5626e474e71bfb1533504118f9
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/Documentation/ReadMe.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: b4469d6625a664618b68231ee0dcc093
+    m_importFrom: Assets/FacebookSDK/SDK/Editor/iOS/FBUnityUtility.h
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: ead50176d628abe478006288f036eb07
+    m_importFrom: Assets/GPresto/iOS/Presto.h
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: a1d403764fd2648419d427200552e24b
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/GameKit/ISN_GKPlayer.h
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: e05bd776d3cd64c3fb7599c9d34fe761
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/GameKit/ISN_GKCommunication.mm
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: befd0e7640dab314c8d9479868242a9e
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/AndroidNativePro/pluginVersion.json
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: b08b94a6f48984a65a00ccc450e28b59
+    m_importFrom: Assets/Haegin/Sample/Resources/Prefabs/ConfirmDialog.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: fbd8f2c63f0e946e69bc8792e73e9a56
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCodeDisabled/CoreLocation/ISN_CLCommunication.mm.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 840aaac66c87b894fabe1aebb1b4baab
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/AndroidNativePro/AndroidDisabled/Maven/support-v427.1.1/com.android.support.support-core-ui-27.1.1.aar.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: bf523cc64d194963aa7661e7d2944feb
+    m_importFrom: Assets/Plugins/IOS/Firebase/libFirebaseCppAnalytics.a
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 682a38d653f34a7fac4927910e646bc9
+    m_importFrom: Assets/Plugins/Android/libmessaging_unity_player_activity.jar
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 3403940736b2c4f17a261542b995818f
+    m_importFrom: Assets/Haegin/Sample/Resources/Prefabs/RequestPermission.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: e3c9a317ed9ac4a269caae92e7fdda5c
+    m_importFrom: Assets/Haegin/Patch/BGWebClient/iOS/NetworkInfo.mm
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: dfc24c17125e4a0abdae5f0814d8dfe7
+    m_importFrom: Assets/Plugins/x86_64/Firebase/libFirebaseCppAnalytics.so
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: f0b200570d3bb4ae9af3274d236650ce
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCodeDisabled/GameKit/ISN_GKCommunication.h.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: d8d44567ca31a419884621fb3c3e8218
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/API/Contacts/Internal/ISN_CNContactsEditorResponce.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: f9b925771054c46d88aea2f6b823872a
+    m_importFrom: Assets/Haegin/Sample/Resources/Prefabs/LinkDialog.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: a0ff3577c94754711b9b2e2a6a06beec
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/Utilities/JSONModelLib/JSONModel/JSONModelError.h
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: b9f45687a71fa409b9f154d442e4064e
+    m_importFrom: Assets/Haegin/ProjectSettings/Editor/src/Events/PromoEvents.cs.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 96bc6797363c24371b7ff500481c0385
+    m_importFrom: Assets/Haegin/ProjectSettings/Editor/src/IAP/IAP.cs.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 48bc47a728a51e54c8c574bac5a92b3c
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/pluginVersion.json
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 771af1c78c22c4d40b00314ee9fb6fe2
+    m_importFrom: Assets/Haegin/ProjectSettings/Editor/src/EULA/EULA.cs.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 8a9635f748ba4117a462692d8b0ef499
+    m_importFrom: Assets/Plugins/x86_64/Firebase/libFirebaseCppDynamicLinks.so
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 9878c8f7c78584823a42cef41b01a0dd
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCodeDisabled/GameKit/ISN_GKLeaderboardManager.mm.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 64b4d1282789a4f18b2389e436f4317c
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/Utilities/JSONModelLib/JSONModelNetworking/JSONHTTPClient.m
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: d07eb668b4c014f27ae4d4bb5e51d792
+    m_importFrom: Assets/Plugins/HockeyApp/iOS/HockeyAppUnityIOS/libHockeySDK-5.2.0.a
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 949d3968341b346b6a8f8eae4545d201
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCodeDisabled/Social/ISN_SocialGate.mm.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: ca8e7a68f550a4a18864d8ed040068fa
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/Utilities/JSONModelLib/JSONModelTransformations/JSONKeyMapper.h
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: d10fbb88129c4cefacfd40fc91c2f7bb
+    m_importFrom: Assets/Plugins/x86_64/Firebase/FirebaseCppApp-6.1.1.bundle
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 8a5aa6b8ee0be466095d243e095a3781
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCodeDisabled/UserNotifications/ISN_UNUserNotificationCenterDelegate.h.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 6b49f5c8f497a41bfb6371e6236c2c76
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCodeDisabled/MediaPlayer/ISN_MPMusicPlayerController.h.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 81f4ede8698495b4ab7ec6c8f20365d2
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/AndroidNativePro/AndroidDisabled/Maven/support-v427.1.1/com.android.support.support-annotations-27.1.1.jar.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 917031f89b6edba4f8953d3d822ecbf0
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/AndroidNativePro/AndroidDisabled/Maven/support-v427.1.1/com.android.support.support-compat-27.1.1.aar.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: d2a6d6f86d50443d1afa953cea97396d
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/UserNotifications/ISN_UNUserNotificationCenterDelegate.h
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: aab8aaf8016f64ffd8419249637e48f3
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCodeDisabled/StoreKit/ISN_SKProductsRequestDelegate.m.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: dcf3860954c464cc0b4dea70059f6818
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCodeDisabled/ReplayKit/ISN_RPScreenRecorder.mm.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: aa4e212905eac4a8eacf63232b9c10fd
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/Examples/Base/Sounds/beep.mp3
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: dc45fa59c1e654edb9d94e1e8125d366
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCodeDisabled/StoreKit/ISN_SKProductsRequestDelegate.h.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: fe32ba79020874ca8b27aa984679a89c
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/AndroidNativePro/Android/Internal/an_gms.aar
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: b3c94f797bf54952a742451759882b79
+    m_importFrom: Assets/Firebase/Editor/readme.md
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 899aa5a9d7c834590a8db3aaecfeef2e
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/UIKit/ISN_UIDateTime.mm
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 51c761c9f5947534cbdd7c0282968652
+    m_importFrom: Assets/Haegin/Share/NativeShare/Android/NativeShare.jar
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 4fd761d908cfc4642b17e50bda86387b
+    m_importFrom: Assets/Haegin/Sample/Resources/Prefabs/EULADetail_P.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 5c4584d9dcd204c4b961ad09b02dbb9f
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/AndroidNativePro/Editor/Dependencies/AN_Dependencies.xml
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: b2dffbd9080144448f961a3b3974fa28
+    m_importFrom: Assets/Plugins/x86_64/Firebase/FirebaseCppDynamicLinks.bundle
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: a6eed3f9c498f5f4d816abd604d40903
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/AndroidNativePro/AndroidDisabled/Maven/support-v427.1.1/android.arch.lifecycle.livedata-core-1.1.0.aar.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 47f7680a8758b4610abd8f5eb4d5ff40
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/Utilities/JSONModelLib/JSONModelTransformations/JSONValueTransformer.h
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 5b1a6f0a0bebe4d49a4c1f63be3a2310
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/StoreKit/ISN_SKInAppManager.mm
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 7f28112adc9b64101a0d2ea43de73992
+    m_importFrom: Assets/Plugins/x86_64/libsteam_api.so
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: cd90773abc02547489b0587b25adf0e6
+    m_importFrom: Assets/AssetBundles/OSX/base.manifest
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: ae3ba93a359be43028ab177bfbf6af50
+    m_importFrom: Assets/Haegin/UnityEngine.AssetGraph/Editor/SettingTemplate/setting.wav
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 6e4c2c4a056dc461bb5ee0da15693633
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/UIKit/ISN_UICommunication.h
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 7454825a437f740cf8524d8b3af1607d
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCodeDisabled/StoreKit/ISN_SKReceiptRefreshRequest.mm.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: fad5dd5a98f6f45cd8ff003a09bafaca
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCodeDisabled/Photos/ISN_PHPhotoLibrary.mm.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: e2b9506aae8ac40439a9741e0e23f4fb
+    m_importFrom: Assets/Haegin/Sample/Resources/Prefabs/EULATextPrefab.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 7545907a1302c4c27ba64bc53dc70121
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSDeploy/Documentation/ReadMe.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 510eb08a588af405aaeae799192b2970
+    m_importFrom: Assets/Haegin/Patch/BGWebClient/iOS/BGWebClient_Controller.mm
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: c2daa89a63034fed99343c0d360ac771
+    m_importFrom: Assets/PlayServicesResolver/Editor/play-services-resolver_v1.2.120.0.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 9966bdaa3d63f407ba9040190d187a3e
+    m_importFrom: Assets/Haegin/Notification/Android/me.leolin.ShortcutBadger-1.1.21.aar
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: f59947ba47c4b4cc9a53e15ee318b2fc
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/StoreKit/ISN_SKTransactionObserver.m
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: d8cb78ba95484487db2e4bad25a9cd4a
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/StoreKit/ISN_SKCommunication.h
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: a0cb50daad55abe4bb69b737e204855b
+    m_importFrom: Assets/Resources/Splash/HaeginSplash.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: e017a4eae75ff461b8cc006eb8bd9910
+    m_importFrom: Assets/Plugins/x86/steam_api.dll
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: f9b239fa3bab40a4baad1848dfa73fa6
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/AndroidNativePro/AndroidDisabled/Maven/support-v427.1.1/com.android.support.support-core-utils-27.1.1.aar.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: f151d50b2b0de4be295f7d6093841769
+    m_importFrom: Assets/Plugins/StansAssets/Foundation/API/Localization/Resources/iso_languages.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: f1e5602b129045f4aa77c0dd0c7c452a
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/AndroidNativePro/AndroidDisabled/Maven/support-v427.1.1/android.arch.lifecycle.runtime-1.1.0.aar.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 87e5205bfb3441f99d8a88bd6c9f9ff9
+    m_importFrom: Assets/Plugins/x86_64/Firebase/FirebaseCppMessaging.bundle
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 6749235bdf5886841919174e2f35718d
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/AndroidNativePro/AndroidDisabled/Maven/support-v427.1.1/android.arch.core.common-1.1.0.jar.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 97889f5b626a84ddf8b6ec8c76e6dfcb
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/Utilities/JSONModelLib/JSONModel/JSONModelClassProperty.m
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: a056ad6b8eb37400fbaf1d43b7f315e5
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/Foundation/ISN_NSUbiquitousKeyValueStore.mm
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 9e1f227b92b194116b6c68135113e04b
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/UserNotifications/ISN_UNUserNotificationCenter.mm
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: c25bde7bc7da244c7b79362ffb08f6c8
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCodeDisabled/ReplayKit/ISN_RPCommunication.m.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 82b5e48bb3d774941ba6db8c82398abe
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCodeDisabled/CoreLocation/ISN_CLCommunication.h.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 6210e19be5b144c13b25c53576ba8a06
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCodeDisabled/GameKit/ISN_GKGameCenterViewController.mm.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 55ebff9b02e15497da4f6300269c43bf
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/Foundation/ISN_NSTimeZone.mm
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: bb47fbab9eb4145b6a3c37a4f56fd146
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/UIKit/ISN_UICommunication.m
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: d9c77fab697ea4dc387bde4d37926d15
+    m_importFrom: Assets/Haegin/Help/WebView/Android/WebViewPlugin.jar
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 66952bdb75cae4c348f3d0521da59bfd
+    m_importFrom: Assets/FacebookSDK/SDK/Editor/iOS/FBSDK+Internal.h
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 68ed04ebd61ca4391baf47a92b46cee8
+    m_importFrom: Assets/Haegin/Permission/Android/unityandroidpermissions.aar
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: c3e734eb3e26d4963b1a9eb3f8ec8fbf
+    m_importFrom: Assets/Haegin/Sample/Sound/BGM/bgm_level2.mp3
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: e4ea43fbfffeb4b0f8cae30c6ffd0573
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCodeDisabled/UserNotifications/ISN_UNCommunication.mm.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 9c2915fbac8054ed79cb867316eef6c5
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/AVFoundation/ISN_AVCommunication.mm
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 65fa9d0c149f244e6ae9eefbb0bccff9
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/Utilities/InternalLogger/ISN_Logger.mm
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 6848562c8f9fb1a4ead5f8da1982ea89
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/AndroidNativePro/AndroidDisabled/Maven/support-v427.1.1/android.arch.core.runtime-1.1.0.aar.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 9047ea3cb3f394c02b2c3783ec18146c
+    m_importFrom: Assets/Haegin/AssetBundles-Browser/MANUAL.md
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 4e2e804c1f4f1402e8e355907d319d34
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/UIKit/ISN_UIImagePickerControllerDelegate.m
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: b5d9e14cdcafe45cfb54318e4a9bd449
+    m_importFrom: Assets/Haegin/Text/Editor/Library/ExcelDataReader.xml
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: e0e4295cdf3843418c0cd49fe08bcd12
+    m_importFrom: Assets/Plugins/x86_64/Firebase/libFirebaseCppMessaging.so
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: d693be7c646ce420986cff3118efd2ba
+    m_importFrom: Assets/FacebookSDK/Plugins/Android/libs/facebook-android-wrapper-7.17.1.aar
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 47c3148c0de3f4fa4b61bc157e47ac2c
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/Utilities/JSONModelLib/JSONModelNetworking/JSONHTTPClient.h
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 597a2e8c5ba7f4e2aafba342b5d80a13
+    m_importFrom: Assets/Haegin/Patch/BGWebClient/iOS/BGWebClient.mm
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 51f4619c385224a23a3edb9092c7d49b
+    m_importFrom: Assets/FacebookSDK/link.xml
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 511e95bcdad89425999ccbb3e315246a
+    m_importFrom: Assets/FacebookSDK/SDK/Editor/iOS/FBUnityInterface.h
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: c0c53ddca3a3e4cf0b019b15602b1ae6
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/GameKit/ISN_GKLocalPlayerManager.mm
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 8be7c2ec04aed4386a09ebd8a58b31f1
+    m_importFrom: Assets/Haegin/Sample/Resources/Prefabs/ServerCheckWin.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 171f66ec9adab4a18aa258ef38b97ecc
+    m_importFrom: Assets/Haegin/Sample/Resources/Prefabs/FriendInfo.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: e0a0f9fc7e8884161b0bea0f39b2736c
+    m_importFrom: Assets/Haegin/Patch/BGWebClient/iOS/BGWebClient_Controller.h
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 533d1ffc452334f90bf3fd0ff1bc30e5
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCodeDisabled/StoreKit/ISN_SKCommunication.m.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 92bf981d5271404cb44c8e7b2123b593
+    m_importFrom: Assets/Firebase/Editor/FirebaseDynamicLinks_version-6.1.1_manifest.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: a93a091d27d314027bfd4f7cd9a4215d
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/UserNotifications/ISN_UNUserNotificationCenterDelegate.mm
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 601e8e1d2d2744929ede33676cbeccc0
+    m_importFrom: Assets/Plugins/IOS/Firebase/libFirebaseCppApp.a
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: f6a5eb4df3694f6dac9ddc5451ac17db
+    m_importFrom: Assets/Firebase/m2repository/com/google/firebase/firebase-messaging-unity/maven-metadata.xml
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 811edd6d6b14b46599da5b5f0e0222cd
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCodeDisabled/StoreKit/ISN_SKStoreReviewController.mm.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: ca32a59df4c8346d2bd600e16ee86b9e
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCodeDisabled/GameKit/ISN_GKLocalPlayerManager.h.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: ef4575bd7c47c42cf9f138f94ea60d84
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/AVFoundation/ISN_AVCaptureDevice.mm
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 6d7927dd378844c439c9939ec17aa906
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCodeDisabled/GameKit/ISN_GKLocalPlayerManager.mm.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 8cf565fd2cbc043488072b03d89ff727
+    m_importFrom: Assets/Plugins/IOS/IronSource/IronSourceUnityConfig.m
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: d3dfcf1e21ca7864cb4ae5b355133400
+    m_importFrom: Assets/GPresto/Android/PrestoSDK.jar
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: d39d822e22b974fa9a64ad58cc0138c0
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCodeDisabled/UserNotifications/ISN_UNUserNotificationCenterDelegate.mm.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 7072092e3b27c4cbd9efc72f60990ed7
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCodeDisabled/Contacts/ISN_CNCommunication.m.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 5930cb3e1c4764b96a4e1a9b74e1ca78
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/GameKit/ISN_GKPlayer.mm
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 93c0284ec310e4ac5a2d9b640af36874
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/UserNotifications/ISN_UNUserNotificationCenter.h
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 578ff46ea64ad40c2bc5e89114a4aacb
+    m_importFrom: Assets/Plugins/HockeyApp/Android/HockeyAppUnityAndroid/HockeySDK-5.1.0.aar
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 784b0e6e6c2aa428da4ae5850fea5b02
+    m_importFrom: Assets/Haegin/Sample/Resources/Prefabs/EULADetail_L.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 5ba9888e71feb3c48b12be98fa7a6502
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSDeploy/pluginVersion.json
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 327ba29e6ab1a449d8abdbe681831811
+    m_importFrom: Assets/Haegin/Sample/Resources/Prefabs/UpdateMessage.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: ea9ea79e678cf4343931630ed7ab8753
+    m_importFrom: Assets/Resources/ChineseSimplified.bytes
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 704ea2bea0e934da5b3049077ac7294d
+    m_importFrom: Assets/Haegin/Sample/Resources/Prefabs/LogoutDialog.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: d89b15be9dd011e47ad15f8e9d05dc8e
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCodeDisabled/AppDelegate/ISN_UIApplicationDelegate.mm.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: f76d46be4026c499cb98635a3ae2f1be
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/StoreKit/ISN_SKReceiptRefreshRequest.mm
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 7ce840ce15a24d818b4eabf1809d7872
+    m_importFrom: Assets/Plugins/x86_64/Firebase/FirebaseCppMessaging.dll
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 756973cea62d64069af96ec666d28026
+    m_importFrom: Assets/Haegin/Text/Editor/Library/ExcelDataReader.DataSet.xml
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: b0b718ce7d9bec94e97eda504cde1a5a
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/AndroidNativePro/AndroidDisabled/Maven/support-v427.1.1/com.android.support.support-media-compat-27.1.1.aar.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 8640c9ce4e1871b489d36e6161c89c07
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/AndroidNativePro/AndroidDisabled/Internal/an_gallery.aar.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 9ca5a9de4d84a46e0b479aeacc1d4ee5
+    m_importFrom: Assets/Plugins/IOS/IronSource/iOSBridge.m
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 9ad521eea1fd244f4b706a2c46ac56d3
+    m_importFrom: Assets/Plugins/Android/vungle-android-sdk-6.3.24.aar
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 6b83b8ee5823c40438c501452807905e
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/AVFoundation/ISN_AVCommunication.h
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: bc48f6fe2dddb48ecb80cbc2555d14e4
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCodeDisabled/GameKit/ISN_GKLocalPlayerListener.m.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: bbcad20f3cf0c4ad18b25379817f30e3
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCodeDisabled/UserNotifications/ISN_UNUserNotificationCenter.h.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 946e9a3f67192463898d97643947e8a7
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/StoreKit/ISN_SKProductsRequestDelegate.m
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 6efc015f61cca4ff1951b36bb186ddcf
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCodeDisabled/ReplayKit/ISN_RPPreviewViewControllerDelegate.m.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: f4153a6f02af1aa41afd49fcb2517b2f
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/AndroidNativePro/AndroidDisabled/Maven/support-v427.1.1/com.android.support.cardview-v7-27.1.1.aar.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 6e3b8f7fb98dc4c7ea22e88cf8bea1ad
+    m_importFrom: Assets/Haegin/Notification/Editor/NotificationExt/NotificationService.h
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 70f7828f997d540c9b43725dc37f7b04
+    m_importFrom: Assets/Haegin/Sample/Resources/Prefabs/SelectDialog.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 73c9619f8063e4444845bfdbaedb6325
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/AndroidNativePro/AndroidDisabled/Maven/support-v427.1.1/android.arch.lifecycle.viewmodel-1.1.0.aar.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: a3674d9f54fe34cdc987828a3f17301b
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/Foundation/ISN_NSNotificationCenter.mm
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 5cafb2af7ca9641f58022a816236d1ad
+    m_importFrom: Assets/FacebookSDK/SDK/Editor/iOS/FBUnityUtility.mm
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: a81413afcff1f4bc794d7433cfc49778
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/Utilities/JSONModelLib/JSONModelNetworking/JSONAPI.h
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: b668c9dfc3160944f9c3969da23ffc10
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/AndroidManifestManager/pluginVersion.json
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 6fcefbdf92dea49c8ab1791dc1eb3b52
+    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/IOSNativePro/XCode/UIKit/ISN_UIDevice.mm
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: bd4e8aefd05346a7aa154dfb02b0854f
+    m_importFrom: Assets/Plugins/IOS/Firebase/libFirebaseCppDynamicLinks.a
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 992fedef98ac42209a9d26d5bf364adf
+    m_importFrom: Assets/Firebase/Editor/MessagingDependencies.xml
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 88abdfffe4da94f4ca98808bedfd1041
+    m_importFrom: Assets/Plugins/Editor/AdMobDependencies.xml
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 0000000000000000b000000000000000
+    m_importFrom: ProjectSettings/EditorBuildSettings.asset
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 1065d0405ccd14050b6dd4830e6efd9e
+    m_importFrom: Assets/Haegin/Sample/Scenes/SceneGameService.unity
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 552cfcb3410f34d8287fac2547e2c3f4
+    m_importFrom: Assets/Plugins/Android/mainTemplate.gradle
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 319f8714892384c35b1e6713255e1248
+    m_importFrom: Assets/Haegin/Sample/Scenes/SceneOBBCheckController.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 295da2a5d031a40919368b21f43f7e4f
+    m_importFrom: Assets/Haegin/Text/TextManager.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 38e894aa5ee8f46d5b356ce3324badbf
+    m_importFrom: Assets/Haegin/Text/TextManager_enum.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 00000000000000004000000000000000
+    m_importFrom: ProjectSettings/ProjectSettings.asset
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 00000000000000009000000000000000
+    m_importFrom: ProjectSettings/QualitySettings.asset
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 0000000000000000a100000000000000
+    m_importFrom: ProjectSettings/UnityConnectSettings.asset
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 00fd10fcaf09d1243a64a1b65e837ecd
+    m_importFrom: Assets/Prefab/MainMenu/DeckEdit/EditCardVertical.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 4a7535107a456744d8b65c6a7e7c797e
+    m_importFrom: Assets/Resources/Prefabs/ModalCanvas.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 94f49c20d245a9a4b9ab0632cb132089
+    m_importFrom: Assets/Prefab/Skeleton/Skeleton_ac10031.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: eba47f20465fd1a4e9683c38cf4488c9
+    m_importFrom: Assets/Resources/Prefabs/HumanBackCard.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 243b7b3056f88c64da84988a954acb44
+    m_importFrom: Assets/Prefab/PreviewSkeleton/PreviewUnit_ac10019.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: b68c226084fbc0040a566129dc514028
+    m_importFrom: Assets/Resources/Prefabs/LoadingCanvas.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 7bd16460cb4ed534e9ee53093aa0b6a9
+    m_importFrom: Assets/Prefab/Effect/NukeExplosionFire.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 65ce75600991941569988ab4538a21a6
+    m_importFrom: Assets/Plugins/unity-ui-extensions/Examples/UIVerticalScrollerDemo/Prefabs/YearsVertical.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 55e61b8089e31a040a26f2b5ceef6a4f
+    m_importFrom: Assets/Prefab/MainMenu/BattleReady/BattleReadyHeroPage.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 0ae2e990ea0b6754fa2449097d483e04
+    m_importFrom: Assets/Prefab/MainMenu/DeckEdit/CardInfoCanvas.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: dba6eb9060ee29548ae043068eff9cf9
+    m_importFrom: Assets/Prefab/Skeleton/Skeleton_ac10032.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: b5b6dc90e9a63144cb7e058135490e1e
+    m_importFrom: Assets/Prefab/PreviewSkeleton/PreviewUnit_ac10010.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 3f5a96e079cd90b4dafe71a3b4c621dc
+    m_importFrom: Assets/Plugins/unity-ui-extensions/Examples/HSS-VSS-ScrollSnap/GameObject
+      (1).prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 6d45e8f0aa19044ffb3553ca52febef2
+    m_importFrom: Assets/Plugins/unity-ui-extensions/Examples/UIVerticalScrollerDemo/Prefabs/MonthsVertical.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 079030019457dca4e8f633788e3a8986
+    m_importFrom: Assets/Prefab/Ingame/Cards/OrcHeroCardVertical.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 742f1101bf5824c4c81521521d5b8b39
+    m_importFrom: Assets/Prefab/PreviewSkeleton/PreviewUnit_ac10012.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 97ab5421875fe0c43af4be61e6dc65f2
+    m_importFrom: Assets/Prefab/Ingame/HumanShield.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: fa12a531731fb1443a4e2288f8bc2b4e
+    m_importFrom: Assets/Prefab/PreviewSkeleton/PreviewUnit_ac10020.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: b3535f41460df084eb78263c25cf25e5
+    m_importFrom: Assets/Prefab/Skeleton/Skeleton_h10001.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 2bc17b51b7bdecf4a8327178491451ee
+    m_importFrom: Assets/Prefab/Skeleton/Hiding_skeleton.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 0a0adb61de9b7554ca4ce72d8da225da
+    m_importFrom: Assets/Prefab/Skeleton/Skeleton_ac10009.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: dd33b481277f52443a39f408d27a880d
+    m_importFrom: Assets/Prefab/Ingame/Cards/MagicCardVertical.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 649285811a07aec42b3b14dec1658849
+    m_importFrom: Assets/Prefab/PreviewSkeleton/PreviewUnit_ac10009.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: c0ba21a11da227f4fbc8f8fda7f58150
+    m_importFrom: Assets/Prefab/Effect/spine_buff_effect.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: b211dcb1c69c24ebdb530112c34a0e4d
+    m_importFrom: Assets/Plugins/unity-ui-extensions/Examples/FancyScrollView/01_Basic/Cell.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: c8853cd1d04a4e34796d2e0c02c20e00
+    m_importFrom: Assets/Prefab/Skeleton/Skeleton_ac10003.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 7331370235ab70642bdf53ca97543ba7
+    m_importFrom: Assets/Prefab/Ingame/EffectObject.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 89c4cf0268231a244a2ed96e83d2c627
+    m_importFrom: Assets/Prefab/UI_SLOT.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: a10681124dcad2f44ac7d8f8bdbfc352
+    m_importFrom: Assets/Prefab/Effect/Buff_effect.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: ef634212880a5774295650865f3e9c0b
+    m_importFrom: Assets/Prefab/PreviewSkeleton/PreviewUnit_ac10001.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 2b8d1312916d1f843be90c02f09e6a9a
+    m_importFrom: Assets/Prefab/Effect/spine_ac10016_effect.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 423ca912c9e40714c823b733b4deea97
+    m_importFrom: Assets/Prefab/Ingame/VictoryWindow.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 6c03d912ab087974282d161485c7d86b
+    m_importFrom: Assets/Prefab/Effect/background_particle.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: ec6f9b1230e4a4896b7be2e60d3be758
+    m_importFrom: Assets/Plugins/unity-ui-extensions/Examples/UIVerticalScrollerDemo/Prefabs/DaysVertical.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 79f873326655de54b8ad0ea247a41995
+    m_importFrom: Assets/Prefab/PreviewSkeleton/PreviewUnit_h10002.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: d4b9e642288df9d41920f16489409f47
+    m_importFrom: Assets/Prefab/PreviewSkeleton/PreviewUnit_ac10013.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 69633f5292b79644da687c5628e9c647
+    m_importFrom: Assets/Prefab/MainMenu/MainMenu/OrcTemplateBtn.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 1d88af52bbb2850438d032ae35cdec36
+    m_importFrom: Assets/Sounds/AudioSources/NextTurn.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: b63b89a253ac4f04f920a85297f56c16
+    m_importFrom: Assets/Prefab/Ingame/UI/turnbutton_feedback.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 2193afa2c86644b43b2d16a92ee9fb7e
+    m_importFrom: Assets/Prefab/Login/ProgressCanvas.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 7c9e18b235e55a74b9e44bc2efbfdc2a
+    m_importFrom: Assets/Prefab/MainMenu/DeckEdit/EditHumanHeroCard.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 70770de2084e7ea43957505dc3c725f1
+    m_importFrom: Assets/Prefab/Ingame/UI/OrcSpriteParts.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 17309e135219a4448bd6fd4cbbcd1e04
+    m_importFrom: Assets/Prefab/BackGround.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: be06cb232f7a89745a94464a90e395db
+    m_importFrom: Assets/Prefab/Ingame/skillIcon.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 0283db33017c3b14f83590a73bd8a862
+    m_importFrom: Assets/Prefab/PreviewSkeleton/PreviewUnit_ac10039.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 88899153f748e60418b8b05032c62958
+    m_importFrom: Assets/Prefab/Ingame/UI/HumanSpriteParts_old.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: afd218539c8c4df41bd6126d498533c5
+    m_importFrom: Assets/Prefab/PreviewSkeleton/PreviewUnit_h10001.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: c3bdb95306701f74888ae5ccd62dc282
+    m_importFrom: Assets/Prefab/Ingame/Projectile/book.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 9ac13e63467140c44b79660cdc4e4c98
+    m_importFrom: Assets/Prefab/Ingame/IngameLocation.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 1a1394a3a35c7de458579c78f530ddf6
+    m_importFrom: Assets/Prefab/Effect/spine_GetBack.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 512d31b3ebc553b428f4ca87d6e93129
+    m_importFrom: Assets/Prefab/PreviewSkeleton/PreviewUnit_ac10014.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: d08624c3c98a13e499f127a7a8373730
+    m_importFrom: Assets/Sounds/AudioSources/FirstTurn.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 4ae94fc31c10f4f49b78c938bbd7face
+    m_importFrom: Assets/Plugins/unity-ui-extensions/Examples/HSS-VSS-ScrollSnap/Image.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 83d5efd34f0f2c74799650794c92617b
+    m_importFrom: Assets/Prefab/Skeleton/Skeleton_ac10001.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: f10c10e33012b4b4895a6f5473cfc838
+    m_importFrom: Assets/Prefab/PreviewSkeleton/PreviewUnit_ac10002.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 1ee012e34f6dbe640b80d32a638c58a1
+    m_importFrom: Assets/Prefab/MainMenu/DeckEdit/DeckEditCanvas.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: b1eed5e36ae207c40be53cdb6c261354
+    m_importFrom: Assets/Prefab/Ingame/PreviewUnit.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 8b5517e3041bc354e8ee4f202243552d
+    m_importFrom: Assets/Prefab/PreviewSkeleton/PreviewUnit_ac10003.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 0c97cff39f2ad5842a30bd23eb426b32
+    m_importFrom: Assets/Resources/Prefabs/CardListModal.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 74902d24c01acd44c97638c13bf23dd6
+    m_importFrom: Assets/Prefab/Ingame/Projectile/Rock.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: a50894349ffcabe43a2d55f0c9f68dcd
+    m_importFrom: Assets/Prefab/Skeleton/Skeleton_ac10013.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: f80aac343dd554b43879b31de9780ac8
+    m_importFrom: Assets/Prefab/MainMenu/BattleReady/HumanDeck.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 14797f345e928b74aad0aeb04abe0781
+    m_importFrom: Assets/Prefab/MainMenu/BattleReady/BattleReadyDeckPage.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 632d4c446183fe24284e3db3e6906c36
+    m_importFrom: Assets/Plugins/unity-ui-extensions/Examples/HSS-VSS-ScrollSnap/Vertical_Page_Prefab.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 3f5dbd94788dd3c49bcc2270d46b95c6
+    m_importFrom: Assets/Prefab/Ingame/UI/OrcResourceUI.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: a6c1daa4b484d5849aa5bb88c858e8ec
+    m_importFrom: Assets/Prefab/Ingame/ClassInfo.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: a1c97ca46112040409cc4553c9601bda
+    m_importFrom: Assets/Prefab/Skeleton/Skeleton_ac10033.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: db0bf1c424d578f4d83802621a27f39e
+    m_importFrom: Assets/Prefab/PreviewSkeleton/PreviewUnit_ac10040.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 1b13ddc46d9b1c440a8ed8fe011decb7
+    m_importFrom: Assets/Resources/Prefabs/OrcBackCard.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 1b4198e4d1b6199499652194c4f6b7e7
+    m_importFrom: Assets/Prefab/CardHand.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: c02cd8e4ea641834485f61b78ded29ae
+    m_importFrom: Assets/Prefab/MainMenu/ETC/FaderCanvas.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: b6ceb9f4009ab6b4d879dd892073120e
+    m_importFrom: Assets/Prefab/Ingame/UI/human_mana.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 089e07056aa4b4148b4eff310e0b9129
+    m_importFrom: Assets/Prefab/GameManager.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: b74287251225ac047868380d537f5c05
+    m_importFrom: Assets/Prefab/Skeleton/Skeleton_ac10014.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 106bf5452d87e9a479592598e8e7dac8
+    m_importFrom: Assets/Prefab/peanunt.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 71b11355001648444b41d17fd36c150d
+    m_importFrom: Packages/com.unity.analytics/DataPrivacy/DataPrivacyButton.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: bc053b853070e7d4e8e739f6e13268b7
+    m_importFrom: Assets/Prefab/MainMenu/DeckEdit/DictionaryCardVertical.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 9b803f85cde2c1c4db04360f0106130a
+    m_importFrom: Assets/Plugins/UITween/Prefabs/Click Effect Pref/ClickedRound.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 8d4356b513a4d57408485c97872f2821
+    m_importFrom: Assets/Prefab/MainMenu/DeckSelect/SubPanel.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: cf0165c533ea4fa49bf53a1860375f23
+    m_importFrom: Assets/Prefab/Ingame/LoseWindow.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 403f8fe5c9b6d6c4d8c6044a8d3700ab
+    m_importFrom: Assets/Prefab/Ingame/Projectile/Dog.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: a5652ef5a1dd3e846bbddc9dc4f6cea5
+    m_importFrom: Assets/Prefab/MainMenu/DeckEdit/HumanEditDeck.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 93910006dd30d30418b3d9a4381c1016
+    m_importFrom: Assets/Sounds/AudioSources/AppearUnit.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 178af926b510b384ea39d75ed4e64488
+    m_importFrom: Assets/Prefab/Skeleton/Skeleton_ac10005.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 4c340036cb65e2b4a89e357053280e45
+    m_importFrom: Assets/Plugins/unity-ui-extensions/Examples/HSS-VSS-ScrollSnap/Horizontal_page_prefab.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 6ba5923615960e04084ff2529916b979
+    m_importFrom: Assets/Prefab/Skeleton/Skeleton_ac10039.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 70fc23460b9edfa44a97f2c4664c37ff
+    m_importFrom: Assets/Prefab/Ingame/UI/button_feedback_2.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 5748744686588a841b41ff30cd7a73fa
+    m_importFrom: Assets/Prefab/Effect/Shield_feedBack_Bottom.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 044a7266e2c07d344ab7088ab8b6d018
+    m_importFrom: Assets/Prefab/Effect/spine_hit3_effect.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: c1b2e6a6bb47dcd4eb5f4a142e809020
+    m_importFrom: Assets/Prefab/Effect/spine_Portal.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: a20c13d606972a443957e88936550892
+    m_importFrom: Assets/Prefab/CardInfoWindow.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 53b194f66900add419869c57ffbe7b85
+    m_importFrom: Assets/Plugins/unity-ui-extensions/Examples/ColorPicker/Picker 2.0.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: bf86570755a1e0646831f2ddaf6ca9e3
+    m_importFrom: Assets/Prefab/MainMenu/BattleReady/AddCustomDeck.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 7ba4df1746e89f34c8201f9c02f926f9
+    m_importFrom: Assets/Prefab/Ingame/UI/HumanSpriteParts.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 984f123758fa0f442938471413d2d502
+    m_importFrom: Assets/Prefab/MainMenu/DeckEdit/DeckCreateCanvas.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 702ec7475a74cc942ab37d98429984a1
+    m_importFrom: Assets/Prefab/MainMenu/DeckSelect/Portrait.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: d4e5dc477984f1841868ccc5573ed992
+    m_importFrom: Assets/Prefab/Skeleton/Skeleton_ac10004.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 354b19677fc5ef742af69f91c044e247
+    m_importFrom: Assets/Prefab/MainMenu/DeckSelect/NewDeckBtn.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 9f335687a8637461084c79de7d4fa648
+    m_importFrom: Assets/Plugins/unity-ui-extensions/Examples/FancyScrollView/03_InfiniteScroll/Cell.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 34e1fd87ab6fa4ea9948dd561298519f
+    m_importFrom: Assets/Plugins/unity-ui-extensions/Examples/FancyScrollView/02_CellEventHandling/Cell.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 958776b7f33de4e4ab8a577785856062
+    m_importFrom: Assets/Prefab/MainMenu/ETC/MenuHUD.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 85d45cc7dbcc7490b91c0aa61f4e73c2
+    m_importFrom: Assets/Plugins/unity-ui-extensions/Examples/MenuExample/Prefabs/Menus/GameMenu.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: ad2159d77cea05d498773d4ee4c4a6f1
+    m_importFrom: Assets/Prefab/Ingame/Cards/UnitCardVertical.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 0d6430e7aba1143419839532a257307e
+    m_importFrom: Assets/Prefab/Player.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: a735d4f7ba402824eb8ca61ddded2da1
+    m_importFrom: Assets/Prefab/Effect/spine_hit1_effect.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 403e551831254594eafe50e9d684dc83
+    m_importFrom: Assets/Prefab/Skeleton/Skeleton_ac10030.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 7aafd5186b74b7f4498e6b8e10e92f4f
+    m_importFrom: Assets/Prefab/Ingame/CardBackup.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: fe850328f84c2234bb1367912046eaeb
+    m_importFrom: Assets/Prefab/Effect/hit_effect_6~.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 5136ef28d4cb3264b9bca34467918c9e
+    m_importFrom: Assets/Prefab/Ingame/Projectile/arrow_oj.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 0a7e3e48696c63a4189ceb5bf378fb4d
+    m_importFrom: Assets/Prefab/Skeleton/Skeleton_ac10011.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 51113b58675de2e478dc6559f36dfd77
+    m_importFrom: Assets/Prefab/Effect/dead_effect.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 20088798618419b49a49273257e9daaa
+    m_importFrom: Assets/Prefab/Ingame/Cards/MagicCard.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 9e0ec2a8edf8a964785bcf20b384b345
+    m_importFrom: Assets/Prefab/Ingame/Bolt/Turn.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 0df20ca899c69b74ea8c2f5a57f9eef0
+    m_importFrom: Assets/Prefab/Ingame/Cards/HumanHeroCard.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: c47c02b864a723b44ae6a4ba050482c1
+    m_importFrom: Assets/Prefab/MainMenu/DeckSelect/HeroTamplateCanvas.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 3091fbb8f50601a47a8e570363d05d82
+    m_importFrom: Assets/Prefab/PreviewSkeleton/PreviewUnit_ac10004.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 30bd5db83c639fc43a32b3c7e896c045
+    m_importFrom: Assets/Prefab/MainMenu/MainMenu/HeroTemplateBtn.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 2c0e1ed80cbe6a6468b4643a9940d8ff
+    m_importFrom: Assets/Prefab/MainMenu/DeckSelect/OrcHeroCard.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 4d71eff81dc5df64db37fa1b9409b8da
+    m_importFrom: Assets/Prefab/Ingame/IngamePanel.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 173222196f3e1f0448b383f260df7d44
+    m_importFrom: Assets/Plugins/UniRx/Examples/Sample13_ToDoItem.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 77bd10398ce33934b825ce871b1013cc
+    m_importFrom: Assets/Animation/Ingame/UI/button_feedback_0.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: bb450749c68bd2b489173f9067e92372
+    m_importFrom: Assets/Prefab/MainMenu/ETC/Request.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: e9be8b59801ec4bbe829f57f7b2b9d88
+    m_importFrom: Assets/Plugins/unity-ui-extensions/Examples/MenuExample/Prefabs/Menus/MainMenu.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 910f1d59f8d2937479945046ad89aef5
+    m_importFrom: Assets/Prefab/Skeleton/Skeleton_ac10018.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 0edcf1a9aed486748a99ea58fff73ef7
+    m_importFrom: Assets/Prefab/Effect/spine_appear_effect.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: e8f7d2a9782546142b4c1e895b01c7da
+    m_importFrom: Assets/Prefab/Skeleton/Skeleton_ac10042.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 695b74b9ee4d39649be443237fd5f88e
+    m_importFrom: Assets/Prefab/Effect/spine_Stun.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 490182c9a4d608142b1dd4faf0a4b091
+    m_importFrom: Assets/Prefab/Ingame/Projectile/magic_ob.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 11104fd9ff8884a49b96b0d3d0accb5c
+    m_importFrom: Assets/Plugins/unity-ui-extensions/Examples/MenuExample/Prefabs/Menus/OptionsMenu.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 35c3e8f9f3928534388f5c01b825bb66
+    m_importFrom: Assets/Plugins/UITween/Prefabs/ImageIns.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 9ef289f95be76604d99c978f161fa917
+    m_importFrom: Assets/Prefab/Ingame/UI/OrcHealthUI.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 7806922a1502b2f4b924f1ea3a2c106f
+    m_importFrom: Assets/Prefab/Skeleton/Skeleton_h10003.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: b4f3152a96ce7884eb549e3264127789
+    m_importFrom: Assets/Prefab/Skeleton/Skeleton_ac10010.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 17d05c4a2339f2d43949a0a942770cc7
+    m_importFrom: Assets/Prefab/Login/LoginTypeSelCanvas.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: eecfd95aa06159440b824635d22e0f24
+    m_importFrom: Assets/Prefab/Ingame/BulletFatFire.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 19b2cb5a3127f324097e549d16d4949c
+    m_importFrom: Assets/Prefab/MainMenu/DeckEdit/HumanTamplateCanvas.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 95f7bc5aa4b43ff44a7f51651ba8b24e
+    m_importFrom: Assets/Prefab/PreviewSkeleton/PreviewUnit_ac10042.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: e809507ac2ad94f4ea3612c5aa4ea070
+    m_importFrom: Assets/Prefab/Ingame/BaseUnit.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 1fa2b37a98ee35547be5ef6367081675
+    m_importFrom: Assets/Prefab/PreviewSkeleton/PreviewUnit_ac10011.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: b08bde7a1f6db3e439e2320d6ca3c007
+    m_importFrom: Assets/Prefab/PreviewSkeleton/PreviewUnit_ac10030.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: b802738a242494d488dbdaed2a8cc143
+    m_importFrom: Assets/Prefab/Ingame/Bolt/CardInfoPage.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: eb7a448a0e64db44189f6849642118ce
+    m_importFrom: Assets/Prefab/MainMenu/DeckSelect/HumanDeckBtn.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: bfac998ab29d331469b74632aabd1eae
+    m_importFrom: Assets/Prefab/CardCircle.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: d432cd8a052c847b0a9234295575210d
+    m_importFrom: Assets/Plugins/unity-ui-extensions/Examples/FancyScrollView/04_FocusOn/Cell.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 76500ebaf9f4a3641be4e44047f3d32d
+    m_importFrom: Assets/Prefab/Skeleton/Skeleton_ac10012.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: aae8feba8b2f4b847930c3d618ae33c9
+    m_importFrom: Assets/Prefab/Ingame/UI/OrcSpriteParts_old.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: d26ba4ea9dc9db445869c01a6313c391
+    m_importFrom: Assets/Prefab/MainMenu/DeckEdit/OrcEditDeck.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 3ce14eeaec0417048aa8a6ad4e7f4a44
+    m_importFrom: Assets/Prefab/MainMenu/DeckSelect/HeroEpicCard.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: fb21ba1b3aa783c4787667eac7b4b325
+    m_importFrom: Assets/Prefab/Skeleton/Skeleton_ac10040.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 5f7dc93bebf1e41e280baafd8eaa59ec
+    m_importFrom: Assets/Plugins/unity-ui-extensions/Examples/MenuExample/Prefabs/Menus/PauseMenu.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: d1e4ad3b32a4d7d438fd5f44d98e4564
+    m_importFrom: Assets/Prefab/MainMenu/DeckEdit/DeckEditCanvas_old_2.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: bdfe1d9bf02d0264ab8e064183fca72c
+    m_importFrom: Assets/Plugins/Epic Toon FX/Prefabs/Combat/Magic/Field/appear_effect
+      (1).prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: a8fff3bb27589304c982f7f7909b3ece
+    m_importFrom: Assets/Prefab/Ingame/UI/HumanResourceUI.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: eb1b77bb9856a3e4e9505f8a2f82e515
+    m_importFrom: Assets/Prefab/PreviewSkeleton/PreviewUnit_ac10032.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: f65f94cb0376e6048b83632e9d7ea8f2
+    m_importFrom: Assets/Prefab/Skeleton/Skeleton_ac10041.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: cb3000eb176a220488c34311eed51378
+    m_importFrom: Assets/Prefab/Ingame/Projectile/flyingSword.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 421e1ceb4709177439e2abb72c786b45
+    m_importFrom: Assets/Prefab/Effect/spine_Take_Trebuchet.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: aca0086c554259148a309df4a651ff83
+    m_importFrom: Assets/Sounds/AudioSources/MiddleAttack.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: e9e1d8cc64f9a2b43a9aadddcd845676
+    m_importFrom: Assets/Sounds/AudioSources/NormalAttack.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 3e045bcc4cf2a0b4c8cb5f4676e7e1c9
+    m_importFrom: Assets/Prefab/bone.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 17e19bccb5a736745be703611ef46504
+    m_importFrom: Assets/Prefab/MainMenu/MainMenu/NewTemplate.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: aa8d29ecbaa7f594bafabf7185d8e2ab
+    m_importFrom: Assets/Prefab/ClassDesc.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: cf8af91dc8e062a458cd9c3cc0bf11cb
+    m_importFrom: Assets/Prefab/Effect/spine_fire_effect.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 464b782de6e95da42a1a3abcf9d471d6
+    m_importFrom: Assets/Prefab/Ingame/Projectile/Dog_2.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: f5c4e13dcf2b92f438e1c12ff231f75a
+    m_importFrom: Assets/Prefab/Effect/hit_effect_4~5.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 1ab7a53ddbb414e47a682b6e2e0f867d
+    m_importFrom: Assets/Prefab/MainMenu/DeckEdit/EditOrcHeroCard.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 8f91e63d34e94e34c9df09dbc3818050
+    m_importFrom: Assets/Prefab/Ingame/Projectile/restrainingTrap.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 1f9ab04dbf25af0498ce954e1bdbaaa6
+    m_importFrom: Assets/Prefab/Ingame/UI/Card.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 376cdb4dfdabd154b890f68b4b7113f4
+    m_importFrom: Assets/Prefab/Effect/hit_effect_1~3.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 54188d6da6f50554a8393b034c99648e
+    m_importFrom: Assets/Prefab/MainMenu/DeckSelect/OrcDeckBtn.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 848b617df07af3345a279da7eec38bbc
+    m_importFrom: Assets/Prefab/PreviewSkeleton/PreviewUnit_ac10041.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: aca2277d7941a0d49ad8f8b2f53e7c7c
+    m_importFrom: Assets/Prefab/PreviewSkeleton/PreviewUnit_h10004.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 686d2b8dc33f08444b7944221ebb92cf
+    m_importFrom: Assets/Prefab/MainMenu/DeckSelect/DeckEditScene_old.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 6e24029d50bcb8a45ac9a6098688c685
+    m_importFrom: Assets/Prefab/Effect/spine_buff_continue.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: c28b9fdd64f96ef44b4886edd2fe0d37
+    m_importFrom: Assets/Prefab/Ingame/Cards/UnitCard.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 28d9cbed8c62e5f46a97219bede3bdaa
+    m_importFrom: Assets/Prefab/Ingame/Cards/OrcHeroCard.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 31ab4ffd3ccd97543b8c0597a2f47fc3
+    m_importFrom: Assets/Prefab/Skeleton/Skeleton_h10004.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 5617592ee912047459b98264a09ddb8a
+    m_importFrom: Assets/Plugins/unity-ui-extensions/Examples/MenuExample/Prefabs/Menus/AwesomeMenu.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 6c3daa2eb3160264a81a83774bec526a
+    m_importFrom: Assets/Prefab/PreviewSkeleton/PreviewUnit_ac10031.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 4e87224e63c3c6749a089ea769bbd7ff
+    m_importFrom: Assets/Prefab/MainMenu/DeckSelect/HeroCard.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 6838205ea18b20949be4bd33f7476b3d
+    m_importFrom: Assets/Prefab/MainMenu/DeckEdit/CardDictionaryCanvas.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 01c5d17ec89f82748856f8b54a5194ec
+    m_importFrom: Assets/Prefab/PreviewSkeleton/PreviewUnit_ac10033.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: dd009c7ee388afc4cb3cb03b151f96c8
+    m_importFrom: Assets/Prefab/Skeleton/Skeleton_ac10008.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: f15fee7ec0659d849bca5877eb437074
+    m_importFrom: Assets/Prefab/Ingame/UI/orc_mana.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 962b7b8e7f10d034d9b8d5e91357f2c3
+    m_importFrom: Assets/Prefab/MainMenu/DeckEdit/DeckEditCanvas_old.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: cc28eeaee67d3ce43912bc2d6854c204
+    m_importFrom: Assets/Prefab/Ingame/OrcShield.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 8518ccbef1757cf47b251af5c800209a
+    m_importFrom: Assets/Prefab/Skeleton/Skeleton_ac10020.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: ada461ce8d2c5394fb679203d033683b
+    m_importFrom: Assets/Prefab/Effect/spine_hit2_effect.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 291110de0ed97c9459e0374c753fc9c8
+    m_importFrom: Assets/Prefab/PreviewSkeleton/PreviewUnit_h10003.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 2fcb98de719fb7b4eb64d285e4705816
+    m_importFrom: Assets/Prefab/MainMenu/DeckEdit/OrcTamplateCanvas.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 367a65eecfc3138449fa46618667244c
+    m_importFrom: Assets/Prefab/MainMenu/DeckSelect/OrcHeroEpicCard.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 9385d2fe74077bc47850c371850b9947
+    m_importFrom: Assets/Prefab/Ingame/UI/HumanHealthUI.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 3404f8feda0006a468eef021cd044df1
+    m_importFrom: Assets/Sounds/AudioSources/LargeAttack.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: c970002f5b4658f419b354c8c433d1ee
+    m_importFrom: Assets/Prefab/MainMenu/BattleReady/OrcDeck.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: a131f62f82b61e246b6c7d052b7abdbd
+    m_importFrom: Assets/Prefab/Effect/effect_polling.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 855d0a2f70bc2d04bbbd52241c33282b
+    m_importFrom: Assets/Prefab/Skeleton/Skeleton_h10002.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: f0f89c3fccbfa4bddbac45ae1effe466
+    m_importFrom: Assets/Plugins/unity-ui-extensions/Examples/MenuExample/Prefabs/MenuSystem/MenuManager.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: c7f3c75ff72d1444a8ab0cfeef0207de
+    m_importFrom: Assets/Prefab/Skeleton/Skeleton_Dead.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 9014146f7433ebf46bc377cc605cd6b0
+    m_importFrom: Assets/Prefab/MainMenu/DeckSelect/EditingCard.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: acb35b6fef5906242bd79e674236e58e
+    m_importFrom: Assets/Prefab/Effect/spine_poison_get.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 12e8598f08df54e40a27b1ea93bbaa74
+    m_importFrom: Assets/Prefab/Ingame/Cards/HumanHeroCardVertical.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 87bdc29f7dfe4fb45ba30f1028d31f98
+    m_importFrom: Assets/Prefab/Effect/Shield_feedBack_Top.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: cb2098afc9bf2df40b95aae0b8d78184
+    m_importFrom: Assets/Prefab/Ingame/Card.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 905a6ccfe70fa1147aac7199901fc436
+    m_importFrom: Assets/Prefab/PreviewSkeleton/PreviewUnit_ac10018.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 06bb44df449f59e4981796a220b7cee2
+    m_importFrom: Assets/Prefab/Skeleton/Skeleton_ac10002.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 6d4d6edfbac14e8468582a857a3b4b83
+    m_importFrom: Assets/Prefab/PreviewSkeleton/PreviewUnit_ac10008.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 0aee01ef79194aa49ba9e168e4e57422
+    m_importFrom: Assets/Prefab/PreviewSkeleton/PreviewUnit_ac10005.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 1f3e15ef34a975f46a2e5251b58d10a7
+    m_importFrom: Assets/Prefab/Horizontal Scroll Snap.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 0816d1ffe2cf9dc42b000108a364cb41
+    m_importFrom: Assets/Prefab/Effect/appear_effect.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 0de567ffb23e0cd439a942dd238214f6
+    m_importFrom: Assets/Prefab/Skeleton/Skeleton_ac10019.prefab
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 001541169adf37d4e9dc05486b84ee95
@@ -422,8 +2180,9 @@ MonoBehaviour:
     m_importFrom: Assets/Haegin/Sample/AppIcons/Icon324B.png
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 64f13eb4d14d52f45a75c9e741dbbf8e
-    m_importFrom: Assets/Plugins/Epic Toon FX/Textures/magic_line.png
+  - m_assetDatabaseId: 4f3447a439a4f094a9ac30f079711526
+    m_importFrom: "Assets/Sprite/Spine_Effect/ingame_turnInformation/\uCD94\uAC00png/\uC624\uD06C
+      \uD134 \uBC84\uD2BC.png"
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 30cdc2c4e21a4f64aa7ebd9dace0c2e1
@@ -450,6 +2209,10 @@ MonoBehaviour:
     m_importFrom: Assets/Editor Default Resources/Firebase/fb_database.png
     m_exportTo: 
     m_variantName: 
+  - m_assetDatabaseId: 5af75275b662e394092c48468911fb09
+    m_importFrom: "Assets/Sprite/Ingame/CardUI/20190820 \uCD08\uC0C1\uD654/ac10025.png"
+    m_exportTo: 
+    m_variantName: 
   - m_assetDatabaseId: 4d4c1b75f86d848b4b9694a09d7b9cf0
     m_importFrom: Assets/Haegin/Sample/AppIcons/Icon144R.png
     m_exportTo: 
@@ -470,9 +2233,18 @@ MonoBehaviour:
     m_importFrom: Assets/Editor Default Resources/Firebase/fb_crashlytics_dark.png
     m_exportTo: 
     m_variantName: 
+  - m_assetDatabaseId: 0f555026d861fd44ca875451e2a86519
+    m_importFrom: "Assets/Sprite/Ingame/CardUI/20190820 \uB9C8\uBC95\uCE74\uB4DC \uD2C0/\uC601\uC6C5
+      \uB9C8\uBC95\uCE74\uB4DC\uD2C0.png"
+    m_exportTo: 
+    m_variantName: 
   - m_assetDatabaseId: 0a787b46b5af51440a30b06634d90cc1
     m_importFrom: "Assets/Sprite/BattleFound/SoftLaunch/\uB300\uC804\uC0C1\uB300\uB97C
       \uCC3E\uB294\uC911.png"
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 4cbbc356958d09f4cbe884af5a3da845
+    m_importFrom: "Assets/Sprite/Ingame/CardUI/20190820 \uCD08\uC0C1\uD654/ac10021.png"
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 159df8664427649628a725cd41da16ca
@@ -519,9 +2291,17 @@ MonoBehaviour:
     m_importFrom: "Assets/Sprite/\uB9AC\uC0AC\uC774\uC988_\uBC30\uACBD/\uD558\uB2E8_\uC624\uD06C\uBC30\uACBD_\uBCF4\uAD00\uC6A9.png"
     m_exportTo: 
     m_variantName: 
+  - m_assetDatabaseId: 1e9b4ad76487cfa4d943d5827c097774
+    m_importFrom: "Assets/Sprite/Ingame/CardUI/20190820 \uCD08\uC0C1\uD654/ac10028.png"
+    m_exportTo: 
+    m_variantName: 
   - m_assetDatabaseId: 2c61fdd725ba145b289c978324363767
     m_importFrom: Assets/Plugins/unity-ui-extensions/Examples/CardUI/Images/Super
       Ellipses/Shadow/SE 56R S.png
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 424b41e74f62970499ccb87a0895de49
+    m_importFrom: "Assets/Sprite/Ingame/CardUI/20190820 \uCD08\uC0C1\uD654/ac10027.png"
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 202e2b286a859c247bfddb2048bb907f
@@ -530,10 +2310,6 @@ MonoBehaviour:
     m_variantName: 
   - m_assetDatabaseId: 5a31d158d5e42e64096d5da4c26b6726
     m_importFrom: Assets/Plugins/unity-ui-extensions/Examples/Cooldown/swipe.png
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 6623b3b8bb1e243dbbf90aa3c5ff3ab9
-    m_importFrom: Assets/Haegin/Sample/AppIcons/Icon96.png
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 10e0b2e82c4a047468a3be69b66175c4
@@ -654,6 +2430,10 @@ MonoBehaviour:
     m_importFrom: Assets/Sprite/BackGround/human_down_keep.png
     m_exportTo: 
     m_variantName: 
+  - m_assetDatabaseId: 05f03fce523d0974988b35c27a900676
+    m_importFrom: "Assets/Sprite/Ingame/CardUI/20190820 \uCD08\uC0C1\uD654/ac10024.png"
+    m_exportTo: 
+    m_variantName: 
   - m_assetDatabaseId: 203e0bdef973df44ba779da032273050
     m_importFrom: Assets/Plugins/unity-ui-extensions/Examples/UICircleProgress/square.psd
     m_exportTo: 
@@ -714,11 +2494,6 @@ MonoBehaviour:
     m_importFrom: "Assets/Sprite/Ingame/CardUI/\uB9C8\uBC95\uCE74\uB4DC \uD2C0/magic_common.png"
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: bd6d8432633d60c49a84d14054819dbb
-    m_importFrom: "Assets/Sprite/BattleFound/SoftLaunch/\uB300\uC804\uC0C1\uB300 \uAC80\uC0C9/\uBE14\uB7EC
-      \uBC30\uACBD.png"
-    m_exportTo: 
-    m_variantName: 
   - m_assetDatabaseId: a64bce425fb42b340ac0a697e5cfcb07
     m_importFrom: Assets/effect_texture/0517/texture/human_mana.png
     m_exportTo: 
@@ -755,6 +2530,10 @@ MonoBehaviour:
     m_importFrom: Assets/Haegin/UnityEngine.AssetGraph/Editor/GUI/GraphicResources/OutputBG.png
     m_exportTo: 
     m_variantName: 
+  - m_assetDatabaseId: 64f13eb4d14d52f45a75c9e741dbbf8e
+    m_importFrom: Assets/Plugins/Epic Toon FX/Textures/magic_line.png
+    m_exportTo: 
+    m_variantName: 
   - m_assetDatabaseId: a759bbc4471c64da683a62963b8cbfca
     m_importFrom: Assets/Haegin/Sample/AppIcons/Icon1024.png
     m_exportTo: 
@@ -787,8 +2566,12 @@ MonoBehaviour:
     m_importFrom: Assets/Sprite/effect_texture/0517/texture/hit_07.png
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: bad16aa698ca24a99b32f380ae6d30bb
-    m_importFrom: Assets/Plugins/StansAssets/Foundation/APIModules/Public/Editor/Art/Icons/Generic/fix.png
+  - m_assetDatabaseId: 83c443a6946669340b51850291047cf8
+    m_importFrom: "Assets/Sprite/Ingame/CardUI/20190820 \uCD08\uC0C1\uD654/ac10023.png"
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 91d90257cb8b235408c59425f43c2aaa
+    m_importFrom: "Assets/Sprite/Ingame/CardUI/20190820 \uCD08\uC0C1\uD654/ac10026.png"
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 9355a4671cfe4eef90879863318d1a4b
@@ -819,6 +2602,10 @@ MonoBehaviour:
     m_importFrom: Assets/Plugins/unity-ui-extensions/Examples/Cooldown/fadeUp.png
     m_exportTo: 
     m_variantName: 
+  - m_assetDatabaseId: 6623b3b8bb1e243dbbf90aa3c5ff3ab9
+    m_importFrom: Assets/Haegin/Sample/AppIcons/Icon96.png
+    m_exportTo: 
+    m_variantName: 
   - m_assetDatabaseId: 8ef23bc8a3a604f56ac3a1a96c8cada0
     m_importFrom: Assets/Haegin/Sample/AppIcons/Icon60.png
     m_exportTo: 
@@ -840,16 +2627,8 @@ MonoBehaviour:
     m_importFrom: "Assets/Sprite/BackGround/\uC0C1\uB2E8_\uC624\uD06C.png"
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: b7678cd9fda3f43d3ac8016d218b9b53
-    m_importFrom: Assets/Haegin/ProjectSettings/Editor/NotifyIcon/drawable-xxxhdpi_notify_icon_small.png
-    m_exportTo: 
-    m_variantName: 
   - m_assetDatabaseId: acc9ff1aa6bd34a2f894c7fe48059205
     m_importFrom: Assets/Haegin/AssetBundles-Browser/UnityEngine.AssetBundles/Editor/AssetBundleBrowser/Icons/ABundleBrowserIconY1756Scene.png
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: b633c17acff9a53419cd0a1f462dca0b
-    m_importFrom: Assets/Sprite/modal_window/Modal_UI_Set.png
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 978f837acd71b4644b8c2f371e260fae
@@ -868,6 +2647,10 @@ MonoBehaviour:
     m_importFrom: Assets/Plugins/unity-ui-extensions/Examples/ColorPicker/sampler_ring.png
     m_exportTo: 
     m_variantName: 
+  - m_assetDatabaseId: 7176ecfb7c3207342a897011b894aac1
+    m_importFrom: "Assets/Sprite/Ingame/CardUI/20190820 \uCD08\uC0C1\uD654/ac10022.png"
+    m_exportTo: 
+    m_variantName: 
   - m_assetDatabaseId: a2c61e2c6e0521c4c86d9821211cbc0a
     m_importFrom: "Assets/Sprite/\uB9AC\uC0AC\uC774\uC988_\uBC30\uACBD/\uD558\uB2E8_\uC778\uAC04\uBC30\uACBD.png"
     m_exportTo: 
@@ -883,10 +2666,6 @@ MonoBehaviour:
     m_variantName: 
   - m_assetDatabaseId: 939a61ece49df1d4a861ac8ffdf08c26
     m_importFrom: "Assets/Sprite/\uB9AC\uC0AC\uC774\uC988_\uBC30\uACBD/\uC0C1\uB2E8_\uC624\uD06C\uC131\uBCBD.png"
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: b93330fc8ea08407dbc514b5101afa14
-    m_importFrom: Assets/Editor Default Resources/Firebase/firebase_lockup_dark.png
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: ad4b153dae71a0c4f9cc15ebe8c080e5
@@ -931,6 +2710,11 @@ MonoBehaviour:
       Ellipses/Shadow/SE 32R S.png
     m_exportTo: 
     m_variantName: 
+  - m_assetDatabaseId: a23c3eded88f5e643b70d44d083063d5
+    m_importFrom: "Assets/Sprite/Spine_Effect/ingame_turnInformation/\uCD94\uAC00png/\uD734\uBA3C
+      \uD134 \uBC84\uD2BC.png"
+    m_exportTo: 
+    m_variantName: 
   - m_assetDatabaseId: 872459eeed4924b4a8e64164f9f597fc
     m_importFrom: Assets/Animation/Ingame/UI/button_feedback.png
     m_exportTo: 
@@ -947,10 +2731,6 @@ MonoBehaviour:
     m_importFrom: "Assets/Sprite/\uB9AC\uC0AC\uC774\uC988_\uBC30\uACBD/\uD558\uB2E8_\uC624\uD06C\uC131\uBCBD.png"
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: b5aa3e4f7432e1c5698417cc13f85271
-    m_importFrom: Assets/Editor Default Resources/Firebase/fb_functions_dark.png
-    m_exportTo: 
-    m_variantName: 
   - m_assetDatabaseId: 6bd7e57f180384c4f9fb76b58204410a
     m_importFrom: "Assets/Sprite/Ingame/CardUI/\uC2A4\uD0AC \uC544\uC774\uCF58/burst.png"
     m_exportTo: 
@@ -965,6 +2745,11 @@ MonoBehaviour:
     m_variantName: 
   - m_assetDatabaseId: e5e2d222173523043b67a9b87073ef48
     m_importFrom: "Assets/Sprite/Ingame/CardUI/\uCE74\uB4DC 1.png"
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: bd6d8432633d60c49a84d14054819dbb
+    m_importFrom: "Assets/Sprite/BattleFound/SoftLaunch/\uB300\uC804\uC0C1\uB300 \uAC80\uC0C9/\uBE14\uB7EC
+      \uBC30\uACBD.png"
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: dc218b335b1d14cd5ae532f65042d829
@@ -1019,6 +2804,10 @@ MonoBehaviour:
     m_importFrom: Assets/Haegin/Sample/AppIcons/Icon162F.png
     m_exportTo: 
     m_variantName: 
+  - m_assetDatabaseId: bad16aa698ca24a99b32f380ae6d30bb
+    m_importFrom: Assets/Plugins/StansAssets/Foundation/APIModules/Public/Editor/Art/Icons/Generic/fix.png
+    m_exportTo: 
+    m_variantName: 
   - m_assetDatabaseId: c8e795c6111054c88bb8e4d235fe4f50
     m_importFrom: Assets/Haegin/Sample/AppIcons/Icon432F.png
     m_exportTo: 
@@ -1066,8 +2855,16 @@ MonoBehaviour:
       \uD68D\uB4DD \uBC14.png"
     m_exportTo: 
     m_variantName: 
+  - m_assetDatabaseId: b7678cd9fda3f43d3ac8016d218b9b53
+    m_importFrom: Assets/Haegin/ProjectSettings/Editor/NotifyIcon/drawable-xxxhdpi_notify_icon_small.png
+    m_exportTo: 
+    m_variantName: 
   - m_assetDatabaseId: f7e8f33a5472730408690981ace4b187
     m_importFrom: "Assets/Sprite/Ingame/CardUI/\uB9C8\uBC95\uCE74\uB4DC \uD2C0/magic_legend.png"
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: b633c17acff9a53419cd0a1f462dca0b
+    m_importFrom: Assets/Sprite/modal_window/Modal_UI_Set.png
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: de89e48a570c091498459aef30b499ed
@@ -1111,6 +2908,10 @@ MonoBehaviour:
     m_importFrom: Assets/Haegin/Sample/AppIcons/Icon167.png
     m_exportTo: 
     m_variantName: 
+  - m_assetDatabaseId: b93330fc8ea08407dbc514b5101afa14
+    m_importFrom: Assets/Editor Default Resources/Firebase/firebase_lockup_dark.png
+    m_exportTo: 
+    m_variantName: 
   - m_assetDatabaseId: c1aae98dd56b14c4b8c25360000b7e9e
     m_importFrom: Assets/Plugins/SpinePlug/Spine/Editor/spine-unity/Editor/GUI/icon-constraintPath.png
     m_exportTo: 
@@ -1141,6 +2942,10 @@ MonoBehaviour:
     m_importFrom: Assets/Plugins/unity-ui-extensions/Examples/Cooldown/sphere.png
     m_exportTo: 
     m_variantName: 
+  - m_assetDatabaseId: b5aa3e4f7432e1c5698417cc13f85271
+    m_importFrom: Assets/Editor Default Resources/Firebase/fb_functions_dark.png
+    m_exportTo: 
+    m_variantName: 
   - m_assetDatabaseId: f2ac4f4fa8996e848a52e02efe26cf63
     m_importFrom: "Assets/Sprite/Ingame/CardInfo/\uC601\uC6C5 \uCE74\uB4DC.png"
     m_exportTo: 
@@ -1153,1059 +2958,108 @@ MonoBehaviour:
     m_importFrom: Assets/Plugins/unity-ui-extensions/Examples/TextEffects/swirl.png
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: d6b58bde3b5aded4588c2b27e5c6ac1a
-    m_importFrom: Assets/Plugins/Sirenix/Odin Inspector/Config/Editor/AOTGenerationConfig.asset
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 0000000000000000a100000000000000
-    m_importFrom: ProjectSettings/UnityConnectSettings.asset
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: c46a1682460de44bfaec7ecfefe2627a
-    m_importFrom: Assets/Plugins/Assemblies/Ionic.Zip.Lite.dll
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 00fd10fcaf09d1243a64a1b65e837ecd
-    m_importFrom: Assets/Prefab/MainMenu/DeckEdit/EditCardVertical.prefab
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 079030019457dca4e8f633788e3a8986
-    m_importFrom: Assets/Prefab/Ingame/Cards/OrcHeroCardVertical.prefab
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: dd33b481277f52443a39f408d27a880d
-    m_importFrom: Assets/Prefab/Ingame/Cards/MagicCardVertical.prefab
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: bc053b853070e7d4e8e739f6e13268b7
-    m_importFrom: Assets/Prefab/MainMenu/DeckEdit/DictionaryCardVertical.prefab
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: ad2159d77cea05d498773d4ee4c4a6f1
-    m_importFrom: Assets/Prefab/Ingame/Cards/UnitCardVertical.prefab
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 12e8598f08df54e40a27b1ea93bbaa74
-    m_importFrom: Assets/Prefab/Ingame/Cards/HumanHeroCardVertical.prefab
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 82aa0b3005e11064289278b31342e94a
-    m_importFrom: Assets/Ludiq/Assemblies/Bolt.State.Runtime.pdb
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 41da203197ad0c147acdd15e974f002f
-    m_importFrom: Assets/Ludiq/Assemblies/Ionic.Zip.dll
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: e7591b9110e32ca45b2c5f1372169149
-    m_importFrom: Assets/Ludiq/Assemblies/Ludiq.Graphs.Editor.dll
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: ba3a06e12c5c6ee46aa4a47212443416
-    m_importFrom: Assets/Ludiq/Assemblies/Bolt.State.Runtime.dll.mdb
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 1eea3bf15bb7ddb4582c462beee0ad13
-    m_importFrom: Assets/Ludiq/Assemblies/Ludiq.Core.Runtime.dll
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: efc4f8221b9f2e04998ad78e9b2b01b6
-    m_importFrom: Assets/Ludiq/Assemblies/Ludiq.Graphs.Runtime.dll
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 51364af278e07a14b9f7147bd78435e7
-    m_importFrom: Assets/Ludiq/Assemblies/Bolt.Core.Runtime.dll.mdb
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 3498def2217d4284b84f775a288afa8d
-    m_importFrom: Assets/Ludiq/Assemblies/Bolt.Core.Editor.dll.mdb
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: f4ad5523360b4ac4792983b1ba3d2ab4
-    m_importFrom: Assets/Ludiq/Assemblies/Ludiq.Platforms.dll.mdb
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: c8d0ad23af520fe46aabe2b1fecf6462
-    m_importFrom: Assets/Ludiq/Assemblies/Bolt.Core.Runtime.dll
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 2f987f23a8460624b8f530b521cd7d55
-    m_importFrom: Assets/Ludiq/Assemblies/Bolt.Flow.Editor.dll.mdb
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: ee4fb5a3347cd094fadb94ee3a8d79b4
-    m_importFrom: Assets/Ludiq/Assemblies/Ludiq.Core.Editor.dll.mdb
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: e258d6f31e42f4f4abf2cddb13bafa99
-    m_importFrom: Assets/Ludiq/Assemblies/Bolt.Core.Editor.pdb
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 907ae305fd1cba34eb3cd8f1365f7d2c
-    m_importFrom: Assets/Ludiq/Assemblies/Ludiq.Graphs.Runtime.dll.mdb
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 3cc8404641a59644e9ab0448cf0653b0
-    m_importFrom: Assets/Ludiq/Assemblies/Ludiq.Core.Runtime.dll.mdb
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: a040fb66244a7f54289914d98ea4ef7d
-    m_importFrom: Assets/Ludiq/Assemblies/Bolt.Flow.Runtime.dll
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: f7e89dc65e5b6a04eaedc96ba8385fa2
-    m_importFrom: Assets/Ludiq/Assemblies/Bolt.Flow.Runtime.pdb
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 542beba75c187654e9ab57d1e8555033
-    m_importFrom: Assets/Ludiq/Assemblies/Bolt.Flow.Editor.pdb
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: e4bd5a394dc997f43b30d2972127e0c9
-    m_importFrom: Assets/Ludiq/Assemblies/Ludiq.Platforms.dll
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 68cfbad9078708a4598c48093b071b0e
-    m_importFrom: Assets/Ludiq/Assemblies/Bolt.Flow.Runtime.dll.mdb
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: f55a661a889efa44fa7ac6f5fe51c796
-    m_importFrom: Assets/Ludiq/Assemblies/Bolt.State.Editor.pdb
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 7314928a14330c04fb980214791646e9
-    m_importFrom: Assets/Ludiq/Assemblies/Bolt.Core.Editor.dll
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 34d8046b36b99224d8a6e59bd23d05c7
-    m_importFrom: Assets/Ludiq/Assemblies/Bolt.State.Editor.dll.mdb
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 188dbf6b201563f418b6fe56a54966ce
-    m_importFrom: Assets/Ludiq/Assemblies/Ludiq.Graphs.Editor.dll.mdb
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 8878d90c345be1a43ab0c9a9898ad433
-    m_importFrom: Assets/Ludiq/Assemblies/Ludiq.Core.Editor.dll
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: ca842c0cc7840b74ba553b0a5a66bf1d
-    m_importFrom: Assets/Ludiq/Assemblies/Bolt.Core.Runtime.pdb
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 25cf173c22a896d44ae550407b10ed98
-    m_importFrom: Assets/Ludiq/Assemblies/Bolt.State.Editor.dll
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: dcd2196c4e9166f499793f2007fcda35
-    m_importFrom: Assets/Ludiq/Assemblies/Bolt.State.Runtime.dll
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 8a3dc8fc3caba2146b46a526b6dd4ea7
-    m_importFrom: Assets/Ludiq/Assemblies/Ionic.Zip.defines
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 6cb65bfc2ee1c854ca1382175f3aba91
-    m_importFrom: Assets/Ludiq/Assemblies/Bolt.Flow.Editor.dll
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 1101cf4d4430ca442a64590b80415ed2
-    m_importFrom: Assets/Ludiq/Assemblies/Ludiq.Core.Editor.pdb
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: f51f8efddd086a64e816eb917017c5f7
-    m_importFrom: Assets/Ludiq/Assemblies/Ludiq.Platforms.pdb
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: bf7ebefd2b6f54049979a28f9d25f84b
-    m_importFrom: Assets/Ludiq/Assemblies/Ludiq.Core.Runtime.pdb
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 6379aa3ffcb2dc64395a524e9fe61bcf
-    m_importFrom: Assets/Ludiq/Assemblies/Ludiq.Graphs.Editor.pdb
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 1fbd5daf1f92084439845615cacaf4c7
-    m_importFrom: Assets/Ludiq/Assemblies/Ludiq.Graphs.Runtime.pdb
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 64fe56743325bae46a7ac64fc04a0a81
-    m_importFrom: Assets/Ludiq/Assemblies/Ionic.Zip.xml
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: c3dff7ba0bb80344a8edf9d7cf7b675a
-    m_importFrom: Assets/Script/Ingame/TurnMachine.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 45461cde3350f3246af18288811bae92
-    m_importFrom: Assets/Script/ETC/Events/IngameEventHandler.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: e04039ed6f656044b97f583ffadaa267
-    m_importFrom: Assets/Script/PlayMangement.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: c779ba3ba45fa784db6cf4f02fed5d79
-    m_importFrom: Assets/Scenes/IngameScene.unity
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: bd6980c0d20a9d841920ae64b730f9d8
-    m_importFrom: Assets/Script/MainMenu/Managers/CardHandManager.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 73c0bc2d8306f1345b6a7fded916b1a4
-    m_importFrom: Assets/Script/Ingame/Card/CardHandler.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: aa5cd6c97f628404d9b4943e7e5e6ef2
-    m_importFrom: Assets/Script/MainMenu/Controllers/RaceTypeToggleHandler.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: f0670715b49638148b2efdf399770948
-    m_importFrom: Assets/Scenes/BattleReadyScene.unity
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 18393d7666f64ba48bd77ad4198191a2
-    m_importFrom: Assets/Script/MainMenu/Controllers/BattleReadySceneController.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 58659f519d62696448c69914d1ede07f
-    m_importFrom: Assets/Script/Socket/BattleConnector.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 6cdb0c3b66f204206beb57256c69c4fb
-    m_importFrom: Assets/Script/Socket/BattleConnector_receiver.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 415b01736ab45214492edf053155ecf6
-    m_importFrom: Assets/Scenes/BatttleConnectScene.unity
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: f35e13368dc501c4c9e954cf82ea8f04
-    m_importFrom: Assets/Animation/BattleReady/StartHumanBattle.anim
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 5f5ffdd7d477e5c43b9ec2ba8d03348b
-    m_importFrom: Assets/Animation/BattleReady/StartOrcBattle.anim
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 07b70deb96dc34640ba9e03c986b499f
-    m_importFrom: Assets/Animation/BattleReady/Entry.anim
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 5d168eadfcda8f54b8444c0b3c357cbb
-    m_importFrom: Assets/Script/PlayerController.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 0bb85294b04b22241a7f39056d30094b
-    m_importFrom: Assets/Script/MainMenu/BattleConnectSceneAnimController.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 9c96f610236e30f41af1d32d331499ea
-    m_importFrom: "Assets/Sprite/Ingame/CardUI/20190820 \uB9C8\uBC95\uCE74\uB4DC \uD2C0"
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 9b6ba260dada0ea4a871a42011f8b87d
-    m_importFrom: Assets/JsonDotNet/Assemblies/Windows/Newtonsoft.Json.dll
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 1418141139a6ac443b18cb05c0643a29
-    m_importFrom: Assets/JsonDotNet/Assemblies/Windows
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: d2a8f0021d6b47c5923d8972dfb81ef1
-    m_importFrom: Assets/Plugins/Sirenix/Assemblies/NoEmitAndNoEditor/Sirenix.Serialization.dll
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 1e0a9643dc0d4b46bf2321f72c4e503e
-    m_importFrom: Assets/Plugins/Sirenix/Assemblies/NoEmitAndNoEditor/Sirenix.Utilities.dll
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 5978f8f3dd274e848fbb7a123bde1fb9
-    m_importFrom: Assets/Plugins/Sirenix/Assemblies/NoEditor/Sirenix.Utilities.dll
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 76f828f47ce26cc43991113c6a39dbbf
-    m_importFrom: Assets/JsonDotNet/Documentation
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 577d9725f58264943855b8ac185531fe
-    m_importFrom: Assets/JsonDotNet/Assemblies
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 6206c6c5f26659b42acc03d3b65a52f4
-    m_importFrom: "Assets/Sprite/Ingame/CardUI/20190820 \uCD08\uC0C1\uD654"
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 4e7d9a07cc3f02a41a575406e7230846
-    m_importFrom: Assets/JsonDotNet/Documentation/Json Net for Unity 2.0.1.pdf
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 6a3c684705042f345975d924f6983e36
-    m_importFrom: Assets/JsonDotNet/Assemblies/AOT/Newtonsoft.Json.dll
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 17aef65a15b471f468b5fbeb4ff0c6a1
-    m_importFrom: Assets/JsonDotNet/Assemblies/Standalone/Newtonsoft.Json.dll
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 14f21d7a1e53a8c4e87b25526a7eb63c
-    m_importFrom: Assets/JsonDotNet/Assemblies/AOT
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: c86b6a0ba9e0e214988f47625d38f0ff
-    m_importFrom: "Assets/Sprite/Ingame/CardUI/20190820 \uC720\uB2DB\uCE74\uB4DC \uD2C0"
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 8ac116ab708328a4b98736dbc2154df5
-    m_importFrom: Assets/Haegin/Patch/Library
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 5651992cdad94894a3af7dc3f1da9170
-    m_importFrom: Assets/Plugins/Sirenix/Assemblies/NoEditor/Sirenix.Serialization.dll
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 9a6f8c7c1ea72ce46831c5e1b6150d0c
-    m_importFrom: Assets/JsonDotNet/JsonDotNet201Source.zip
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 01ef782d02bb1994dbe418b69432552b
-    m_importFrom: Assets/JsonDotNet/Assemblies/Standalone
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 45ea8bae02215404d876aa003fdecf10
-    m_importFrom: Assets/JsonDotNet
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 00000000000000004000000000000000
-    m_importFrom: ProjectSettings/ProjectSettings.asset
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 00000000000000006100000000000000
-    m_importFrom: ProjectSettings/GraphicsSettings.asset
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 1eb1f0012e575e843a3176867bdc1da2
-    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/AndroidNativePro/Android/Internal/an_vending.aar
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: b6b53f1523725f448b32cec1bf104998
-    m_importFrom: Assets/Plugins/StansAssets/NativePlugins/AndroidNativePro/Android/Internal/an_gms.aar
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 06314f49bdda26043963578d60a0a7ee
-    m_importFrom: Assets/JsonDotNet/link.xml
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 6dd5d499b504371439038333a4457961
-    m_importFrom: Assets/Plugins/Sirenix/Assemblies/AOT/link.xml
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 9efdb37b4df66400ebfa5b32cb55aaeb
-    m_importFrom: Assets/Plugins/StansAssets/Settings/Resources/AN_Settings.asset
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 36f7323c55864364d8bb88c736e4bca6
-    m_importFrom: Assets/JsonDotNet/Assemblies/Windows/Newtonsoft.Json.XML
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: aadad8ac54f29e44583510294ac5c312
-    m_importFrom: Assets/JsonDotNet/Assemblies/AOT/Newtonsoft.Json.XML
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: d6807fedb8dcaf04682d2c84f0ab753f
-    m_importFrom: Assets/JsonDotNet/Assemblies/Standalone/Newtonsoft.Json.XML
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 355bbcd5836a6422e9eebf3773841400
-    m_importFrom: Assets/Plugins/Firebase/google-services.json
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: f004015c0999443a3b42b824058a4d3c
-    m_importFrom: Assets/Plugins/Firebase/GoogleService-Info.plist
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: feb393d00a3f14bc78cf27b5b4cd0e86
-    m_importFrom: Assets/Plugins/Android/AN_Res/res/values/strings.xml
+  - m_assetDatabaseId: 30f4d0eb77704ba68bf8dede64390643
+    m_importFrom: Assets/Firebase/Plugins/link.xml_DISABLED
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 1a5dba117bca143f385eec64847e9f21
     m_importFrom: Assets/Plugins/Android/Firebase/res/values/google-services.xml
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: c46a1682460de44bfaec7ecfefe2627a
-    m_importFrom: Assets/Plugins/Ionic.Zip.Lite.dll
+  - m_assetDatabaseId: 13bb68abde9b7ee4386e5c0478480bbf
+    m_importFrom: Assets/Firebase/m2repository/com/google/firebase/firebase-analytics-unity/6.1.1/firebase-analytics-unity-6.1.1.aar
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 25ff3f26bb3c740b4a078ff20a5e5875
-    m_importFrom: Assets/Plugins/Android/AN_Res/res/values-ko/strings.xml
+  - m_assetDatabaseId: 5b4abb4b7fbb84b4fa9b9e858aed7320
+    m_importFrom: Assets/Firebase/m2repository/com/google/firebase/firebase-app-unity/6.1.1/firebase-app-unity-6.1.1.aar
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: daa893a72b926734691f2620221eb870
-    m_importFrom: Assets/StreamingAssets/google-services-desktop.json
+  - m_assetDatabaseId: 3431314a66efca646845e831af67aaf4
+    m_importFrom: Assets/Firebase/m2repository/com/google/firebase/firebase-dynamic-links-unity/6.1.1/firebase-dynamic-links-unity-6.1.1.aar
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 38b928ee618207048a5bf003f854a994
-    m_importFrom: Assets/Plugins/Sirenix/Assemblies/AOT
+  - m_assetDatabaseId: ba77d6da5ee19ea4eb49897b2a4954c7
+    m_importFrom: Assets/Firebase/m2repository/com/google/firebase/firebase-messaging-unity/6.1.1/firebase-messaging-unity-6.1.1.aar
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: a5ef5873f6fac46f3b62520c389811f9
+    m_importFrom: Assets/Haegin/Sample/Scenes/SceneLogin.unity
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: bb7952d6fe07440b48a68080f446b79c
+    m_importFrom: Assets/Haegin/Sample/Scenes/SceneLoginController.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 9454298088e704a0eae4d1d8e6db78ec
+    m_importFrom: Assets/Haegin/Sample/Scenes/SceneStoreController.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 0b7e93aa509c246eb918c80e23c2dc61
+    m_importFrom: Assets/Haegin/Sample/Scenes/SceneStart.unity
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 79abefd28fa94440ba730e1b1ce5b590
     m_importFrom: Assets/Haegin/Account/Account.cs
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 5c102c53891779f46b7288db1794dd9b
-    m_importFrom: Assets/Script/MainMenu/Controllers/GameEditController.cs
+  - m_assetDatabaseId: e069b6ed86d19487b8d0eba7b749ab9e
+    m_importFrom: Assets/Haegin/Splash/HaeginSplash.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 56dfc806e4afa449f914086e92790d11
+    m_importFrom: Assets/Haegin/Network/Web/Library/HaeginResolver.cs
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: f5c803e31436d4b79ac693b55945215d
     m_importFrom: Assets/Haegin/ProjectSettings/ProjectSettings.cs
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: c0ae98308ab0475a9583e1ea6e82ec65
-    m_importFrom: Assets/Plugins/Android/AndroidManifest.xml
+  - m_assetDatabaseId: 3df61710853424899984ec046b089484
+    m_importFrom: Assets/Haegin/Network/Web/Source/ProtoWebClient.cs
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 9a3e2f80117c19f4bb39b55b0816a5ef
-    m_importFrom: Assets/Sprite/Unit/Hiding/Hiding.png
+  - m_assetDatabaseId: feb393d00a3f14bc78cf27b5b4cd0e86
+    m_importFrom: Assets/Plugins/Android/AN_Res/res/values/strings.xml
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: b79f09329dee27043ad669c6aeca5dae
-    m_importFrom: Assets/Sprite/Unit/Hiding/Hiding.skel.bytes
+  - m_assetDatabaseId: bad026f56799a44a79c1c5b628ea7470
+    m_importFrom: Assets/Haegin/EULA/EULA.cs
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: c764c456139ee0f448be3e2019161be4
-    m_importFrom: Assets/Sprite/Unit/Hiding
+  - m_assetDatabaseId: 25ff3f26bb3c740b4a078ff20a5e5875
+    m_importFrom: Assets/Plugins/Android/AN_Res/res/values-ko/strings.xml
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: c961650efad52914e977484c2dff0459
-    m_importFrom: Assets/Sprite/Unit/Hiding/Hiding.atlas.txt
+  - m_assetDatabaseId: abf37609002a64bcdae4b08d055a509e
+    m_importFrom: Assets/Haegin/Network/Web/WebClient.cs
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 83701594a6696004f88decd7182074b3
-    m_importFrom: Assets/Sprite/Unit/Hiding/Hiding_Material.mat
+  - m_assetDatabaseId: 40f2670d1df2e419a90a8121bfba03e8
+    m_importFrom: Assets/Haegin/IAP/IAP.cs
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: c6bfe6edc8992fb48b3c7e60df0cd102
-    m_importFrom: Assets/Sprite/Unit/Hiding/Hiding_Atlas.asset
+  - m_assetDatabaseId: df0d1c5e0b2ea41d99665d78106d8f8a
+    m_importFrom: Assets/Haegin/Events/PromoEvents.cs
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: dfbd0a0f4186e0947bd317177f75fdd8
-    m_importFrom: Assets/Sprite/Unit/Hiding/Hiding_SkeletonData.asset
+  - m_assetDatabaseId: 11ec3c8fe285f479e8c09679c7c406db
+    m_importFrom: Assets/Haegin/Sample/Scenes/SceneStartController.cs
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 2bc17b51b7bdecf4a8327178491451ee
-    m_importFrom: Assets/Prefab/Skeleton/Hiding_skeleton.prefab
+  - m_assetDatabaseId: d6b58bde3b5aded4588c2b27e5c6ac1a
+    m_importFrom: Assets/Plugins/Sirenix/Odin Inspector/Config/Editor/AOTGenerationConfig.asset
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 41ac5f7373871764e914f81b0ef93c2a
-    m_importFrom: Assets/Sprite/Spine_Effect/ingame_shieldfeedback/bottom/ingame_shieldfeedback_bottom.skel.bytes
+  - m_assetDatabaseId: 38b928ee618207048a5bf003f854a994
+    m_importFrom: Assets/Plugins/Sirenix/Assemblies/AOT
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: b8f0ec97cad4a614396e5a86611945af
-    m_importFrom: Assets/Sprite/Spine_Effect/ingame_shieldfeedback/upside/ingame_shieldfeedback_upside.atlas.txt
+  - m_assetDatabaseId: 88d655a266a643c42ab02a64048ab4ec
+    m_importFrom: Assets/Plugins/Sirenix/Assemblies/AOT/Sirenix.Serialization.AOTGenerated.dll
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: ade00af79f4a11e45891d8fd175f1812
-    m_importFrom: Assets/Sprite/Spine_Effect/ingame_shieldfeedback/upside/ingame_shieldfeedback_upside.png
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: ae6b4bc9b5165f148bf9f70899b2b7d8
-    m_importFrom: Assets/Sprite/Spine_Effect/ingame_shieldfeedback
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 6c1c5a2a65754f34db70dee661406225
-    m_importFrom: Assets/Sprite/Spine_Effect/ingame_shieldfeedback/bottom
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 064126cbdad7cfe40b96f67345642a2c
-    m_importFrom: Assets/Sprite/Spine_Effect/ingame_shieldfeedback/upside
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: a8a20ddb128d18845bd01f0d7696d379
-    m_importFrom: Assets/Sprite/Spine_Effect/ingame_shieldfeedback/bottom/ingame_shieldfeedback_bottom.atlas.txt
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 1060ec8cf65c76247963849f8c3c7992
-    m_importFrom: Assets/Sprite/Spine_Effect/ingame_shieldfeedback/upside/ingame_shieldfeedback_upside.skel.bytes
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 54cfdb4e49affb445bca468e34c9520a
-    m_importFrom: Assets/Sprite/Spine_Effect/ingame_shieldfeedback/bottom/ingame_shieldfeedback_bottom.png
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: e23d94487ef2798468f725627ce5c3a5
-    m_importFrom: Assets/Sprite/Spine_Effect/ingame_shieldfeedback/upside/ingame_shieldfeedback_upside_Material.mat
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 90a68df1e54507a498fa3f3857d1839b
-    m_importFrom: Assets/Sprite/Spine_Effect/ingame_shieldfeedback/upside/ingame_shieldfeedback_upside_Atlas.asset
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 9ae8c05a5086ed1499a098ee805a57f3
-    m_importFrom: Assets/Sprite/Spine_Effect/ingame_shieldfeedback/bottom/ingame_shieldfeedback_bottom_Material.mat
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 181e5cd7b10ff3a4c8d3f14c75a6135a
-    m_importFrom: Assets/Sprite/Spine_Effect/ingame_shieldfeedback/bottom/ingame_shieldfeedback_bottom_Atlas.asset
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 0ef818dc9244d0441b569183b4f8e9a2
-    m_importFrom: Assets/Sprite/Spine_Effect/ingame_shieldfeedback/upside/ingame_shieldfeedback_upside_SkeletonData.asset
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 6f168aecee7ecde41a1289ee5b6263fd
-    m_importFrom: Assets/Sprite/Spine_Effect/ingame_shieldfeedback/bottom/ingame_shieldfeedback_bottom_SkeletonData.asset
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 87bdc29f7dfe4fb45ba30f1028d31f98
-    m_importFrom: Assets/Prefab/Effect/Shield_feedBack_Top.prefab
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 5748744686588a841b41ff30cd7a73fa
-    m_importFrom: Assets/Prefab/Effect/Shield_feedBack_Bottom.prefab
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: c6dded8e06d447c44840272091f54687
-    m_importFrom: Assets/Script/Ingame/EffectSystem.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 9245d6438d6839d429ee09bdd42fa6ea
-    m_importFrom: Assets/Script/MainMenu/Controllers/DeckEditController.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 8976362aef4584945b748e345fa15b24
-    m_importFrom: Assets/Script/Ingame/Card/UnitDragHandler.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 57de3e94a44b2bf48b30203d171afec7
-    m_importFrom: "Assets/Sprite/Ingame/CardUI/\uCE74\uB4DC\uBE44\uD65C\uC131\uD654\uC774\uBBF8\uC9C0/\uB808\uC774\uC5B4
-      60.png"
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 669fb8ab581ad2b48af6d572f838f405
-    m_importFrom: "Assets/Sprite/Ingame/CardUI/\uCE74\uB4DC\uBE44\uD65C\uC131\uD654\uC774\uBBF8\uC9C0/\uB808\uC774\uC5B4
-      59.png"
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 4a70f51c45a7ec34197037e1c69c94cf
-    m_importFrom: "Assets/Sprite/Ingame/CardUI/\uCE74\uB4DC\uBE44\uD65C\uC131\uD654\uC774\uBBF8\uC9C0/\uB808\uC774\uC5B4
-      58.png"
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 402d528f8e3bb3d44a9c066506e0db5d
-    m_importFrom: Assets/Script/Ingame/Animation/UnitSpine.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 2cf831005966832449a5de742752e578
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Runtime/spine-csharp/BoneData.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: d8a1a76014a68634a8ede50af6db1cae
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Editor/spine-unity/Editor/Utility/DataReloadHandler.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 55d3827079aca3a4687535c3ede7ec5f
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Runtime/spine-csharp/ConstraintData.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: ca4b738078ed756469d5d97bcca93e6f
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Runtime/spine-csharp/Collections/OrderedDictionary.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 89cefdd024734a941952a05d2b5dff71
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Runtime/spine-csharp/Attachments/RegionAttachment.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 26947ae098a8447408d80c0c86e35b48
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Runtime/spine-unity/Components/SkeletonRendererCustomMaterials/SkeletonRendererCustomMaterials.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 05b56321b2ddd8145a888746bc6ab917
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Runtime/spine-csharp/Attachments/Attachment.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 6a9ca5213a3a4614c9a9f2e60909bc33
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Editor/spine-unity/Editor/Components/SkeletonMecanimInspector.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: f4c97e41d3d90e24bbb40d634e6cc336
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Editor/spine-unity/Editor/Utility/SpineHandles.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: ec2f0e7143c8a174994595883f4b1e33
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Runtime/spine-csharp/AnimationState.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 40d8a8f15082f3844a5c9c8c3ef2047f
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Runtime/spine-csharp/SkeletonBinary.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 49377c72c37e2c149b106c260a241f3c
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Editor/spine-unity/Editor/Utility/AssetUtility.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 94ad1e9256073264785f806086a000ba
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Runtime/spine-csharp/IkConstraintData.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 8036c6c2897d2764db92f632d2aef568
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Runtime/spine-unity/Utility/YieldInstructions/WaitForSpineTrackEntryEnd.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 2b813f63abbb6d94a80a5c050590a0be
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Runtime/spine-csharp/SkeletonData.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: e075b9a3e08e2f74fbd651c858ab16ed
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Runtime/spine-unity/Components/SkeletonRenderer.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 7df8caa3a771f464e803316a6b18c909
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Runtime/spine-csharp/Skin.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 5c70a5b35f6ff2541aed8e8346b7e4d5
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Runtime/spine-unity/Components/SkeletonRenderSeparator/SkeletonRenderSeparator.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: ca9b3ce36d70a05408e3bdd5e92c7f64
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Editor/spine-unity/Editor/Asset Types/SpineAtlasAssetInspector.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: c77d9bf384a1e9f41966464e7e3b4870
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Runtime/spine-csharp/Attachments/PathAttachment.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 8603301469b2a284db8eaa26dc60ada8
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Editor/spine-unity/Editor/Utility/Icons.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: b1ab80744ac17724dbc0d15fdb6f4727
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Runtime/spine-unity/Mesh Generation/MeshRendererBuffers.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: f834c8746034db645a52a9506ff1de89
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Runtime/spine-unity/Mesh Generation/SpineMesh.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: ed00e3a4b386a964fb0f1c7ffd5544e5
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Runtime/spine-csharp/Bone.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: b3ae20b4bcc31f645afd6f5b64f82473
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Editor/spine-unity/Editor/Components/SkeletonUtilityBoneInspector.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 8b40cfb462a8b774891e1604e5360d32
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Runtime/spine-csharp/Attachments/VertexAttachment.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: daf461e4341180341a648c07e1899528
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Runtime/spine-unity/Components/Following/PointFollower.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 687d9be457ea4eb44bf09c35c95ee5cd
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Editor/spine-unity/Editor/Windows/SkeletonBaker.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: b29e98153ec2fbd44b8f7da1b41194e8
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Editor/spine-unity/Editor/Windows/SpinePreferences.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 6d80c945a2e3436459a97b7a9a16ef46
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Editor/spine-unity/Editor/Utility/Preferences.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 916f8e6534860cc40824adfc2916baa7
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Runtime/spine-csharp/IkConstraint.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: f4692b9527684d048862210ba3f9834e
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Runtime/spine-unity/Utility/SkinUtilities.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 6974c4b5c87687140a2417201ea43066
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Runtime/spine-csharp/Slot.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 663715b5714e2db499192c8d91ef1f86
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Editor/spine-unity/Editor/Utility/SpineInspectorUtility.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 44a51df5672fe4249b6763960587a017
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Runtime/spine-csharp/IUpdatable.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: d247ba06193faa74d9335f5481b2b56c
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Runtime/spine-unity/Components/SkeletonAnimation.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 68765d262e2128e4ab49c983f3411946
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Runtime/spine-unity.asmdef
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: f1f8243645ba2e74aa3564bd956eed89
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Runtime/spine-unity/Deprecated/SlotBlendModes/SlotBlendModes.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: da44a8561fd243c43a1f77bda36de0eb
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Editor/spine-unity/Editor/Components/BoneFollowerGraphicInspector.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 3431ed563b2c62f4c8c974a99365ba52
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Runtime/spine-unity/Utility/AttachmentCloneExtensions.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 25ceef568a3dad448bf8a14fcc326964
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Runtime/spine-unity/Utility/AtlasUtilities.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 0d81cc76b52fcdf499b2db252a317726
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Editor/spine-unity/Editor/Components/SkeletonGraphicInspector.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: f9db98c60740638449864eb028fbe7ad
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Runtime/spine-unity/Components/SkeletonMecanim.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: cbec7dc66dca80a419477536c23b7a0d
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Editor/spine-unity/Modules/SlotBlendModes/Editor/SlotBlendModesEditor.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 311447d6e56727c4dad7611d5fa5afbf
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Runtime/spine-unity/Mesh Generation/MeshGenerator.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: ea85c8f6a91a6ab45881b0dbdaabb7d0
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Runtime/spine-unity/Utility/SkeletonExtensions.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 39fbfef61034ca045b5aa80088e1e8a4
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Editor/spine-unity/Editor/Components/SkeletonAnimationInspector.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 60626307629cc034bafd42c53a901fff
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Runtime/spine-csharp/Atlas.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 30e43037bf4433645ad70266f34c1c8b
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Editor/spine-unity/Modules/SkeletonRenderSeparator/Editor/SkeletonPartsRendererInspector.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: b41ddd57048a62b41951dbbfd453ab98
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Runtime/spine-csharp/Collections
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 7f726fb798ad621458c431cb9966d91d
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Runtime/spine-unity/Components/SkeletonUtility/SkeletonUtility.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 94ecc7f73dfc0484e848a0e6a1a11f2b
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Editor/spine-unity/Editor/Utility/Instantiation.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 9d836858269be96428428fb6764dfc3a
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Runtime/spine-csharp/PathConstraintData.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 7e7eac783deea004e9bc403eca68a7dc
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Runtime/spine-unity/Utility/AttachmentRegionExtensions.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: fc166d883db083e469872998172f2d38
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Runtime/spine-unity/Utility/YieldInstructions/WaitForSpineEvent.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 25086cd81e3158b439761b73d7366c47
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Editor/spine-unity/Editor/Utility/AssetDatabaseAvailabilityDetector.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 6c4ab7992894bdb44a480981b1953f76
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Runtime/spine-csharp/SkeletonJson.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: fb7099b9c6ce91740b7041dabb0752c2
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Runtime/spine-csharp/Animation.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: d0fc5db9788bce4418ad3252d43faa8a
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Editor/spine-unity/Editor/Components/SkeletonRendererInspector.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 3c5a5fe930d1ab24da154d76b24c2747
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Runtime/spine-unity/Utility/YieldInstructions/WaitForSpineAnimationEnd.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: a5b90df955eb8c2429ac67c8b2de6c5c
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Editor/spine-unity/Editor/Components/SkeletonUtilityInspector.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: e70f7f2a241d6d34aafd6a4a52a368d0
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Editor/spine-unity/Editor/Components/SkeletonRendererCustomMaterialsInspector.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: b7f7514a003143844b6d01ecc93ed4d5
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Runtime/spine-csharp/Attachments/MeshAttachment.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 2e30316a9733f8a4b8b6c362c06dfa11
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Runtime/spine-csharp/TransformConstraint.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: d85b887af7e6c3f45a2e2d2920d641bc
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Runtime/spine-unity/Components/SkeletonGraphic.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 087b328a58c93b149bb977eee3a17258
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Runtime/spine-csharp/SkeletonBounds.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 7c7e838a8ec295a4e9c53602f690f42f
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Editor/spine-unity/Editor/Components/PointFollowerInspector.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 12b0b98acbcda44468a7ae4e35000abe
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Runtime/spine-unity/SkeletonDataModifierAssets/BlendModeMaterials/BlendModeMaterialsAsset.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 868b0caae5b3e65408ece1ab400c4a99
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Editor/spine-unity/Editor/Windows/SkeletonBakingWindow.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: a1fd8daaed7b64148a34acb96ba14ce1
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Runtime/spine-unity/Components/Following/BoneFollower.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 3380954b107f38b4c85a4cdfeceace42
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Runtime/spine-csharp/Attachments/ClippingAttachment.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: b42a195b47491d34b9bcbc40898bcb29
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Runtime/spine-unity/Components/Following/BoneFollowerGraphic.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: f28cb47bc1e8b434c85e6f69b2c9e15e
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Runtime/spine-csharp/SlotData.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 0317ee9ba6e1b1e49a030268e026d372
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Runtime/spine-unity/Components/Following/BoundingBoxFollower.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 80767dcb23931c645ad70c88670ddeb6
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Editor/spine-unity/Editor/Utility/BuildSettings.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: e68fa8db689084946adce454b83e6d4a
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Runtime/spine-unity/Utility/MaterialChecks.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 731d05fbc2874c74984813ce4c5bb8df
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Runtime/spine-csharp/PathConstraint.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 12ac3c1c7546be24fb9625d3c850619d
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Runtime/spine-csharp/Skeleton.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: d2a5062cfe5dd4344831cda4723128af
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Editor/spine-unity/Modules/SkeletonRenderSeparator/Editor/SkeletonRenderSeparatorInspector.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: aef90b4c481362e42891bb46de344c1c
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Editor/spine-unity/Editor/Shaders/SpineSpriteShaderGUI.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: cf21125cbd8928844a85a3ad9002693b
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Editor/spine-unity/Editor/Menus.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 4fdde4cc4df0952468946f4f913dcb36
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Runtime/spine-csharp/Attachments/PointAttachment.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: b7edeecc9bd7dd44faabf24f29b119a0
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Runtime/spine-csharp/TransformConstraintData.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 522dbfcc6c916df4396f14f35048d185
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Runtime/spine-unity/Components/SkeletonUtility/SkeletonUtilityConstraint.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: d9be5adcaf0003849a1d181173c19635
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Runtime/spine-unity/Utility/YieldInstructions/WaitForSpineAnimation.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: cd8ad8fc0f5bce448ba26d096ab32e85
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Runtime/spine-csharp/Attachments/BoundingBoxAttachment.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: f2de282d583d4a641bf1c349f0a3eef9
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Editor/spine-unity/Editor/SpineAttributeDrawers.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 1c0b968d1e7333b499e347acb644f1c1
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Runtime/spine-unity/Components/SkeletonRenderSeparator/SkeletonPartsRenderer.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 7c1b3a9ddacb550458bb86affdf77bf5
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Editor/spine-unity/Editor/Utility/SpineMaskUtilities.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: d07866ade25bd0b44a7bb1d59bacf4cb
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Runtime/spine-unity/Mesh Generation/SkeletonRendererInstruction.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: f834d5cd806ec4645915ac315edbdc60
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Editor/spine-unity/Editor/Utility/SpineEditorUtilities.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: b238dfcde8209044b97d23f62bcaadf6
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Runtime/spine-unity/Components/SkeletonUtility/SkeletonUtilityBone.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 173464ddf4cdb6640a4dfa8a9281ad69
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Editor/spine-unity-editor.asmdef
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 3e6ff30e27c28344bad3e67d308c94cd
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Runtime/spine-csharp/Attachments/AtlasAttachmentLoader.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 9511532e80feed24881a5863f5485446
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Editor/spine-unity/Editor/Asset Types/AnimationReferenceAssetEditor.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 7093e73ff3cf6c543ac5865980070b49
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Editor/spine-unity/Editor/Windows/SkeletonDebugWindow.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: c71ca35fd6241cb49a0b0756a664fcf7
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Editor/spine-unity/Editor/Components/BoneFollowerInspector.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 01cbef8f24d105f4bafa9668d669e040
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Editor/spine-unity/Editor/Asset Types/SkeletonDataAssetInspector.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 37bbfb9fb268a644ba75052961a42b81
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Runtime/spine-csharp/EventData.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: a807dd9fb79db3545b6c2859a2bbfc0b
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Runtime/spine-unity/Utility/YieldInstructions/WaitForSpineAnimationComplete.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 670a3cefa3853bd48b5da53a424fd542
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Editor/spine-unity/Editor/Components/BoundingBoxFollowerInspector.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 3a206f1c4d5fd9e49a16634698666cfe
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/CHANGELOG.md
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: cecd0ea162097a94c89a97af6baf0a66
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Runtime/spine-unity/Shaders/Sprite/README.md
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 3d4db6c367e463c4cb5566afc490163c
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Runtime/spine-unity/Components/SkeletonRendererCustomMaterials/SkeletonRendererCustomMaterials.txt
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 80c06a67282e71043a4b1fad3e0c5654
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/version.txt
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: f0e413eeb00eabc46bde6dbd7aaaa76c
-    m_importFrom: Assets/Plugins/SpinePlug/Spine/Runtime/spine-unity/Components/SkeletonRenderSeparator/SkeletonRenderSeparator.txt
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 53ca00c05ba1a9c47a85b6497c821c16
-    m_importFrom: Assets/Sprite/Spine_Effect/ingame_hp_object_bottom/ingame_hp_object_bottom.skel.bytes
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: b80619b7670534140a0cde4ab9a89574
-    m_importFrom: Assets/Sprite/Spine_Effect/ingame_hp_object_bottom/ingame_hp_object_bottom.atlas.txt
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: baf5287a403cd344db438f51291152cd
-    m_importFrom: Assets/Sprite/Spine_Effect/ingame_hp_object_bottom
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: c6528bbd2437ce743864253bbabc6b73
-    m_importFrom: Assets/Sprite/Spine_Effect/ingame_hp_object_bottom/ingame_hp_object_bottom.png
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 328765dc60a524041b7c07711c826c1a
-    m_importFrom: Assets/Sprite/Spine_Effect/ingame_hp_object_bottom/ingame_hp_object_bottom_Atlas.asset
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 2339d83f7b3e07442bf48b3b975a4fa6
-    m_importFrom: Assets/Sprite/Spine_Effect/ingame_hp_object_bottom/ingame_hp_object_bottom_SkeletonData.asset
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: ee73b86065261444fa1c9c277b59fa01
-    m_importFrom: Assets/Sprite/Spine_Effect/ingame_shieldgauge
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 490d07e3a5e40104381c37ed0563e8a1
-    m_importFrom: Assets/Sprite/Spine_Effect/ingame_shieldgauge/ingame_shieldgauge_human/ingame_shieldgauge_human.png
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 6b226806c85c89740b89c6e6ff26690a
-    m_importFrom: Assets/Sprite/Spine_Effect/ingame_shieldgauge/ingame_shieldgauge_human/ingame_shieldgauge_human.atlas.txt
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: d03e91485e5586d428daaa7d3622f292
-    m_importFrom: Assets/Sprite/Spine_Effect/ingame_shieldgauge/ingame_shieldgauge_human/ingame_shieldgauge_human.skel.bytes
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 5cca5a5e2eea9b442831f23e1e8c8bf1
-    m_importFrom: Assets/Sprite/Spine_Effect/ingame_shieldgauge/ingame_shieldgauge_human
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: a031e631d8ba34c4fb5f29a49ab33e01
-    m_importFrom: Assets/Sprite/Spine_Effect/ingame_shieldgauge/ingame_shieldgauge_human/ingame_shieldgauge_human_Material.mat
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 2f50c1e1db2f6984fa7928e0ada823de
-    m_importFrom: Assets/Sprite/Spine_Effect/ingame_shieldgauge/ingame_shieldgauge_human/ingame_shieldgauge_human_Atlas.asset
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: bd15f672b7ca04f569ced3a166b8d525
-    m_importFrom: Assets/Plugins/Firebase/m2repository/com/google/firebase/firebase-messaging-unity/6.1.1/firebase-messaging-unity-6.1.1.aar
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 54b1a32bcc95c4e51a29644e6f641844
-    m_importFrom: Assets/Plugins/Firebase/m2repository/com/google/firebase/firebase-app-unity/6.1.1/firebase-app-unity-6.1.1.aar
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 0dd664fcefb4544eab713ff55cc714d2
-    m_importFrom: Assets/Plugins/Firebase/m2repository/com/google/firebase/firebase-analytics-unity/6.1.1/firebase-analytics-unity-6.1.1.aar
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 85776d8d14ac84c1e92539cbde358960
-    m_importFrom: Assets/Plugins/Firebase/m2repository/com/google/firebase/firebase-dynamic-links-unity/6.1.1/firebase-dynamic-links-unity-6.1.1.aar
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 552cfcb3410f34d8287fac2547e2c3f4
-    m_importFrom: Assets/Plugins/Android/mainTemplate.gradle
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: d637b0c883d144e5999626a501822ae4
-    m_importFrom: Assets/Haegin/Patch/Source/PatcherAsyncBG.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 30f4d0eb77704ba68bf8dede64390643
-    m_importFrom: Assets/Plugins/Firebase/Plugins/link.xml
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 13ac821708bf2a741863e4e2c85ea004
-    m_importFrom: Assets/Sprite/Spine_Effect/ingame_shieldgauge/ingame_shieldgauge_human/ingame_shieldgauge_human_SkeletonData.asset
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 3e67fb4e64b93411696ea8bc084b177f
-    m_importFrom: Assets/Haegin/Sample/Scenes/SceneOBBCheck.unity
+  - m_assetDatabaseId: 6dd5d499b504371439038333a4457961
+    m_importFrom: Assets/Plugins/Sirenix/Assemblies/AOT/link.xml
     m_exportTo: 
     m_variantName: 
   m_version: 2

@@ -1274,7 +1274,7 @@ namespace G.Network
 
         public void DownloadOBB(OnOpenConfirmDialog callback, int versionCode = -1, string obburl = null, int obbsize = 0)
         {
-#if !UNITY_EDITOR && UNITY_ANDROID && NO_OBB
+#if !UNITY_EDITOR && UNITY_ANDROID
 //            hasErrorBGWebClient = true;
             OpenConfirmDialog = callback;
             currentIndex = -1;
