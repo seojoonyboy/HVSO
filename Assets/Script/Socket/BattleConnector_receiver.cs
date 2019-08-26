@@ -222,14 +222,14 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void end_shield_turn(object args) {
-        StartCoroutine(waitSkillDone(() => {
-            PlayMangement.instance.heroShieldActive = false;
-            PlayMangement.instance.UnlockTurnOver();
-        }, true));
+        PlayMangement.instance.heroShieldDone.Add(true);
     }
 
     public IEnumerator waitSkillDone(UnityAction callback, bool isShield = false) {
-        if(isShield) yield return new WaitForSeconds(2.0f);
+        if(isShield) { 
+            yield return new WaitUntil(() => PlayMangement.instance.heroShieldActive);
+            yield return new WaitForSeconds(2.0f);
+        }
         MagicDragHandler[] list = Resources.FindObjectsOfTypeAll<MagicDragHandler>();
         foreach(MagicDragHandler magic in list) {
             if(magic.skillHandler == null) continue;

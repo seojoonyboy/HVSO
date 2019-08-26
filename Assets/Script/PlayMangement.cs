@@ -31,6 +31,7 @@ public partial class PlayMangement : MonoBehaviour {
     public GameObject blockPanel;
     public int unitNum = 0;
     public bool heroShieldActive = false;
+    public List<bool> heroShieldDone = new List<bool>();
     public GameObject humanShield, orcShield;
     public static GameObject movingCard;
     public static bool dragable = true;
@@ -655,6 +656,10 @@ public partial class PlayMangement : MonoBehaviour {
         yield return new WaitForSeconds(1f);
         if (isPlayer) socketHandler.TurnOver();
         yield return WaitShieldDone();
+        StartCoroutine(socketHandler.waitSkillDone(() => {
+            heroShieldActive = false;
+            UnlockTurnOver();
+        }, true));
         if (!isPlayer) enemyPlayer.ConsumeShieldStack();
 
     }
@@ -675,7 +680,8 @@ public partial class PlayMangement : MonoBehaviour {
                     yield return new WaitForSeconds(1f);
                 }
             }
-        } while (heroShieldActive);
+        } while (heroShieldDone.Count == 0);
+        heroShieldDone.RemoveAt(0);
         IngameNotice.instance.CloseNotice();
     }
 
