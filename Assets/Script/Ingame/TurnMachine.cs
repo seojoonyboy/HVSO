@@ -11,11 +11,11 @@ public class TurnMachine : MonoBehaviour {
     private int index = -1;
     TurnType turn;
     void Awake() {
-        eventHandler = PlayMangement.instance.EventHandler;
-        eventHandler.AddListener(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, OnEndTurnBtnClicked);
     }
 
     void Start() {
+        eventHandler = PlayMangement.instance.EventHandler;
+        eventHandler.AddListener(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, OnEndTurnBtnClicked);
         OnPrepareTurn();
     }
 

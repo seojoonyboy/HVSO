@@ -40,7 +40,7 @@ public class CardInfoOnDrag : MonoBehaviour
     public void SetCardDragInfo(string info, Vector3 cardPos, string skillInfo = null) {
         leftEdge.position = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 0));
         rightEdge.position = -leftEdge.position;
-        transform.localPosition = new Vector3(cardPos.x, cardPos.y + 200, 0);
+        transform.localPosition = new Vector3(cardPos.x, cardPos.y + 300, 0);
         xWidth = transform.GetComponent<RectTransform>().sizeDelta.x / 2.0f;
         gameObject.SetActive(true);
         if (skillInfo != null) {

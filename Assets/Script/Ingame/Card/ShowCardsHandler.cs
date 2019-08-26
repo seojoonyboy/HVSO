@@ -14,6 +14,9 @@ public class ShowCardsHandler : MonoBehaviour {
 
     public void AddCard(GameObject self) {
         heroCards.Add(self);
+        if (!self.transform.Find("Portrait").gameObject.activeSelf) self.transform.Find("Portrait").gameObject.SetActive(true);
+        if (!self.transform.Find("BackGround").gameObject.activeSelf) self.transform.Find("BackGround").gameObject.SetActive(true);
+
         ShowUI();
         hideShowBtn.SetActive(true);
     }
@@ -82,7 +85,9 @@ public class ShowCardsHandler : MonoBehaviour {
     public void ClearList() {
         foreach(GameObject card in heroCards) {
             card.transform.localRotation = Quaternion.Euler(0, 0, 0);
-            card.SetActive(false);
+            card.transform.localScale = new Vector3(1, 1, 1);
+            if(card.GetComponent<MagicDragHandler>().skillHandler.socketDone)
+                card.SetActive(false);
         }
         hideShowBtn.SetActive(false);
         transform.Find("Left/Desc").gameObject.SetActive(false);
