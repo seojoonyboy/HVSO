@@ -45,6 +45,7 @@ public partial class AccountManager : Singleton<AccountManager> {
         DEVICEID = SystemInfo.deviceUniqueIdentifier;
         cardPackage = Resources.Load("CardDatas/CardDataPackage_01") as CardDataPackage;
         resource = transform.GetComponent<ResourceManager>();
+        TouchEffecter.Instance.SetScript();
     }
 
     // Start is called before the first frame update
