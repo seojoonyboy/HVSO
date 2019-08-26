@@ -2356,4 +2356,40 @@ MonoBehaviour:
     m_importFrom: Assets/Prefab/PreviewSkeleton/PreviewUnit_ac10048.prefab
     m_exportTo: 
     m_variantName: 
+  - m_assetDatabaseId: a59bcbc611cde264fb1aafaa6cb503bf
+    m_importFrom: Assets/Sprite/Unit/ac10083/ac10083.png
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: d99f6bdb210a4a749ba8539ab662fd27
+    m_importFrom: Assets/Sprite/Unit/ac10083
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: c4fb6e4efafe8724995a3b211bee88e0
+    m_importFrom: Assets/Sprite/Unit/ac10083/ac10083.skel.bytes
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 90baceaed64fe5b4582e2086fd067b50
+    m_importFrom: Assets/Sprite/Unit/ac10083/ac10083.atlas.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: e57e17fa3a6c8f74ea9ade4d6c9bac6b
+    m_importFrom: Assets/Sprite/Unit/ac10083/ac10083_Material.mat
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 7f9075d69107cc0499d32ee6527e5b1c
+    m_importFrom: Assets/Sprite/Unit/ac10083/ac10083_Atlas.asset
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 819596d4670dd2a418f21ad6baffde11
+    m_importFrom: Assets/Sprite/Unit/ac10083/ac10083_SkeletonData.asset
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 2d726efe8a220d14eb5bd4736c32685f
+    m_importFrom: Assets/Prefab/Skeleton/Skeleton_ac10083.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: f8a95ef818f1f7448a36361721b57490
+    m_importFrom: Assets/Prefab/PreviewSkeleton/PreviewUnit_ac10083.prefab
+    m_exportTo: 
+    m_variantName: 
   m_version: 2
