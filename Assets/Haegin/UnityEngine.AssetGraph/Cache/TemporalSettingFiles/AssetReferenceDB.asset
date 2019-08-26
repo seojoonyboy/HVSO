@@ -2392,4 +2392,72 @@ MonoBehaviour:
     m_importFrom: Assets/Prefab/PreviewSkeleton/PreviewUnit_ac10083.prefab
     m_exportTo: 
     m_variantName: 
+  - m_assetDatabaseId: 410348006fa65414c918ff4db675e453
+    m_importFrom: Assets/Sprite/Unit/ac10051/ac10051.png
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 48da74a4735b46c4b959a1b99f03aec2
+    m_importFrom: Assets/Sprite/Unit/ac10051
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: ee084128ff8684c44b2151ad4c1b112e
+    m_importFrom: Assets/Sprite/Unit/ac10051/attack_object
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 5370f96902e65af45af6f0c695f43f0f
+    m_importFrom: Assets/Sprite/Unit/ac10051/attack_object/ac10051_object.skel.bytes
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 3f82f31d4b842b54bb126b17a1b10876
+    m_importFrom: Assets/Sprite/Unit/ac10051/attack_object/ac10051_object.atlas.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: f91802fdf4e136847abfad8518728bf0
+    m_importFrom: Assets/Sprite/Unit/ac10051/ac10051.atlas.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 25bfcf9e2d57afb45912b50745adada8
+    m_importFrom: Assets/Sprite/Unit/ac10051/ac10051.skel.bytes
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 255bcdce4d1323c49b370aa48c19b70d
+    m_importFrom: Assets/Sprite/Unit/ac10051/attack_object/ac10051_object.png
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 9f924f31350c8e84b9f0156c9369f90e
+    m_importFrom: Assets/Sprite/Unit/ac10051/attack_object/ac10051_object_Material.mat
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 2ad7cf7b054cff24fa4e44db3f27a9f8
+    m_importFrom: Assets/Sprite/Unit/ac10051/attack_object/ac10051_object_Atlas.asset
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: bd796bea54604964fbfeec1a0f56ad16
+    m_importFrom: Assets/Sprite/Unit/ac10051/ac10051_Material.mat
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 8c3f8f74db870b4488e61a65d25e3a27
+    m_importFrom: Assets/Sprite/Unit/ac10051/ac10051_Atlas.asset
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: a6e3de956b709774bad64283a8ac2e6b
+    m_importFrom: Assets/Sprite/Unit/ac10051/ac10051_SkeletonData.asset
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: b4dcb5ea4ad2c52458af22108c7c490d
+    m_importFrom: Assets/Sprite/Unit/ac10051/attack_object/ac10051_object_SkeletonData.asset
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: bd1660dff2768614d8729dcf22157f56
+    m_importFrom: Assets/Prefab/Ingame/Projectile/ac10051_bodyAttack.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 45efdafd8913dac46a0b3900b7a66bb0
+    m_importFrom: Assets/Prefab/Skeleton/Skeleton_ac10051.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: f035476a2ef066448b7b84b696a68849
+    m_importFrom: Assets/Prefab/PreviewSkeleton/PreviewUnit_ac10051.prefab
+    m_exportTo: 
+    m_variantName: 
   m_version: 2
