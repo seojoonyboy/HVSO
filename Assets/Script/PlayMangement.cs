@@ -24,6 +24,7 @@ public partial class PlayMangement : MonoBehaviour {
     public GameObject onCanvasPosGroup;
     //public CardCircleManager cardCircleManager;
     public CardHandManager cardHandManager;
+    public GameResultManager resultManager;
     public SkeletonGraphic playerMana, enemyMana;
 
     public GameObject baseUnit;
@@ -31,6 +32,7 @@ public partial class PlayMangement : MonoBehaviour {
     public GameObject blockPanel;
     public int unitNum = 0;
     public bool heroShieldActive = false;
+    public List<bool> heroShieldDone = new List<bool>();
     public GameObject humanShield, orcShield;
     public static GameObject movingCard;
     public static bool dragable = true;
@@ -684,6 +686,10 @@ public partial class PlayMangement : MonoBehaviour {
         yield return new WaitForSeconds(1f);
         if (isPlayer) socketHandler.TurnOver();
         yield return WaitShieldDone();
+        StartCoroutine(socketHandler.waitSkillDone(() => {
+            heroShieldActive = false;
+            UnlockTurnOver();
+        }, true));
         if (!isPlayer) enemyPlayer.ConsumeShieldStack();
 
     }
@@ -704,99 +710,11 @@ public partial class PlayMangement : MonoBehaviour {
                     yield return new WaitForSeconds(1f);
                 }
             }
-        } while (heroShieldActive);
+        } while (heroShieldDone.Count == 0);
+        heroShieldDone.RemoveAt(0);
         IngameNotice.instance.CloseNotice();
     }
 
-
-}
-
-/// <summary>
-/// 승패 적용
-/// </summary>
-public partial class PlayMangement {
-
-    public GameObject resultUI;
-    public GameObject SocketDisconnectedUI;
-
-    public void GetBattleResult() {
-        isGame = false;
-        resultUI.SetActive(true);
-
-        if (player.HP.Value <= 0) {
-            if (player.isHuman)
-                SetResultWindow("lose", "human");
-            else
-                SetResultWindow("lose", "orc");
-        }
-        else if (enemyPlayer.HP.Value <= 0) {
-            if (player.isHuman)
-                SetResultWindow("win", "human");
-            else
-                SetResultWindow("win", "orc");
-        }
-    }
-
-    public void OnReturnBtn() {
-        if (resultUI.transform.GetChild(0).gameObject.activeSelf) {
-            resultUI.transform.GetChild(0).gameObject.SetActive(false);
-            resultUI.transform.GetChild(1).gameObject.SetActive(true);
-        }
-        else if (resultUI.transform.GetChild(1).gameObject.activeSelf) {
-            FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
-        }
-    }
-
-    public void SocketErrorUIOpen(bool friendOut) {
-        SocketDisconnectedUI.SetActive(true);
-        if(friendOut)
-            SocketDisconnectedUI.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "상대방이 게임을 \n 종료했습니다.";
-    }
-
-    public void OnMoveSceneBtn() {
-        FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
-    }
-
-    private void SetResultWindow(string result, string race) {
-        Transform baseWindow = resultUI.transform.GetChild(0);
-        Transform resourceWindow = resultUI.transform.GetChild(1);
-        baseWindow.gameObject.SetActive(true);
-        switch (result) {
-            case "win":
-                if (race == "human") {
-                    baseWindow.Find("ResultCharacter/ResultHuman").gameObject.SetActive(true);                    
-                    resourceWindow.Find("ResourceResultRibon/HumanRibon").gameObject.SetActive(true);
-                }
-                else {
-                    baseWindow.Find("ResultCharacter/ResultOrc").gameObject.SetActive(true);
-                    resourceWindow.Find("ResourceResultRibon/OrcRibon").gameObject.SetActive(true);
-                }
-                baseWindow.Find("ShineEffect/WinShineEffect").gameObject.SetActive(true);
-                resourceWindow.Find("ShineEffect/WinShineEffect").gameObject.SetActive(true);
-                baseWindow.Find("ResultCharacter/ResultText/WinText").gameObject.SetActive(true);
-                resourceWindow.Find("ResultText/WinText").gameObject.SetActive(true);
-                break;
-            case "lose":
-                if (race == "human") {
-                    baseWindow.Find("ResultCharacter/ResultHuman").gameObject.SetActive(true);
-                    baseWindow.Find("ResultCharacter/ResultHuman/ResultHumanHero").gameObject.GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, "DEAD", false);
-                }
-                else {
-                    baseWindow.Find("ResultCharacter/ResultOrc").gameObject.SetActive(true);
-                    baseWindow.Find("ResultCharacter/ResultOrc/ResultOrcHero").gameObject.GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, "DEAD", false);
-                }
-                baseWindow.Find("ShineEffect/LoseShineEffect").gameObject.SetActive(true);
-                resourceWindow.Find("ShineEffect/LoseShineEffect").gameObject.SetActive(true);
-                baseWindow.Find("ResultCharacter/LoseRibon").gameObject.SetActive(true);
-                resourceWindow.Find("LoseRibon").gameObject.SetActive(true);
-                baseWindow.Find("ResultCharacter/ResultText/LoseText").gameObject.SetActive(true);
-                resourceWindow.Find("ResultText/LoseText").gameObject.SetActive(true);
-                break;
-            default:
-                break;
-        }
-        resourceWindow.gameObject.SetActive(false);
-    }
 
 }
 

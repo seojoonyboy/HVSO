@@ -1,0 +1,13 @@
+
+screen_toucheffect.png
+size: 128,128
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+dust
+  rotate: false
+  xy: 0, 0
+  size: 102, 92
+  orig: 102, 92
+  offset: 0, 0
+  index: -1
