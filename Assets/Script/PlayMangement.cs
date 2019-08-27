@@ -715,7 +715,23 @@ public partial class PlayMangement : MonoBehaviour {
         IngameNotice.instance.CloseNotice();
     }
 
+    public void GetBattleResult() {
+        isGame = false;
+        resultManager.gameObject.SetActive(true);
 
+        if (player.HP.Value <= 0) {
+            if (player.isHuman)
+                resultManager.SetResultWindow("lose", "human");
+            else
+                resultManager.SetResultWindow("lose", "orc");
+        }
+        else if (enemyPlayer.HP.Value <= 0) {
+            if (player.isHuman)
+                resultManager.SetResultWindow("win", "human");
+            else
+                resultManager.SetResultWindow("win", "orc");
+        }
+    }
 }
 
 /// <summary>

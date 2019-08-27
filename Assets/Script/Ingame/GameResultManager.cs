@@ -8,23 +8,7 @@ public class GameResultManager : MonoBehaviour
 {
     public GameObject SocketDisconnectedUI;
 
-    public void GetBattleResult() {
-        PlayMangement.instance.isGame = false;
-        gameObject.SetActive(true);
-
-        if (PlayMangement.instance.player.HP.Value <= 0) {
-            if (PlayMangement.instance.player.isHuman)
-                SetResultWindow("lose", "human");
-            else
-                SetResultWindow("lose", "orc");
-        }
-        else if (PlayMangement.instance.enemyPlayer.HP.Value <= 0) {
-            if (PlayMangement.instance.player.isHuman)
-                SetResultWindow("win", "human");
-            else
-                SetResultWindow("win", "orc");
-        }
-    }
+    
 
     public void OnReturnBtn() {
         if (transform.GetChild(0).gameObject.activeSelf) {
@@ -46,7 +30,7 @@ public class GameResultManager : MonoBehaviour
         FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
     }
 
-    private void SetResultWindow(string result, string race) {
+    public void SetResultWindow(string result, string race) {
         Transform baseWindow = transform.GetChild(0);
         Transform resourceWindow = transform.GetChild(1);
         baseWindow.gameObject.SetActive(true);
