@@ -45,6 +45,11 @@ public class MenuSceneController : MonoBehaviour {
         SoundManager.Instance.PlaySound(SoundType.FIRST_TURN);
     }
 
+    public void OnStoryClicked() {
+        FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MISSION_SELECT_SCENE);
+        SoundManager.Instance.PlaySound(SoundType.FIRST_TURN);
+    }
+
     public void ClickMenuButton(int pageNum) {
         buttonClicked = true;
         currentPage = pageNum;
