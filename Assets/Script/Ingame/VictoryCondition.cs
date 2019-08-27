@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
 
-
 namespace victoryModule {
     public class VictoryCondition : MonoBehaviour {
         protected PlayerController player, enemyPlayer;
@@ -16,13 +15,37 @@ namespace victoryModule {
         public virtual void SetCondition() {
             return;
         }
+
+        public virtual void GetBattleResult() {
+            return;
+        }
+
     }
 
     public class Annihilation_Match : VictoryCondition {
         public Annihilation_Match(PlayerController player_1, PlayerController player_2) : base(player_1, player_2) { }
         public override void SetCondition() {
-            player.HP.Where(x => x <= 0).Subscribe(_=> PlayMangement.instance.GetBattleResult()).AddTo(PlayMangement.instance.transform.gameObject);
-            enemyPlayer.HP.Where(x=> x<=0).Subscribe(_=>PlayMangement.instance.GetBattleResult()).AddTo(PlayMangement.instance.transform.gameObject);
+            player.HP.Where(x => x <= 0).Subscribe(_=> GetBattleResult()).AddTo(PlayMangement.instance.transform.gameObject);
+            enemyPlayer.HP.Where(x=> x<=0).Subscribe(_=> GetBattleResult()).AddTo(PlayMangement.instance.transform.gameObject);
+        }
+
+        public override void GetBattleResult() {
+            PlayMangement.instance.isGame = false;
+            GameResultManager resultManager = PlayMangement.instance.resultManager;
+            resultManager.gameObject.SetActive(true);
+
+            if (player.HP.Value <= 0) {
+                if (player.isHuman)
+                    resultManager.SetResultWindow("lose", "human");
+                else
+                    resultManager.SetResultWindow("lose", "orc");
+            }
+            else if (enemyPlayer.HP.Value <= 0) {
+                if (player.isHuman)
+                    resultManager.SetResultWindow("win", "human");
+                else
+                    resultManager.SetResultWindow("win", "orc");
+            }
         }
     }
 }
