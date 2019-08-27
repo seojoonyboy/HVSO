@@ -99,7 +99,7 @@ public partial class BattleConnector : MonoBehaviour {
             yield return beatTime;
         }
         if(!battleGameFinish)
-            PlayMangement.instance.SocketErrorUIOpen(false);
+            PlayMangement.instance.resultManager.SocketErrorUIOpen(false);
     }
 
     

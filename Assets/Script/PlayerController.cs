@@ -197,7 +197,7 @@ public class PlayerController : MonoBehaviour
         var gameOverDispose = HP.Where(x => x <= 0)
                               .Subscribe(_ => {
                                                SetState(HeroState.DEAD);
-                                               PlayMangement.instance.GetBattleResult();
+                                               PlayMangement.instance.resultManager.GetBattleResult();
                                                ObserveHP.Dispose();
                                                ObserveResource.Dispose(); })
                               .AddTo(PlayMangement.instance.transform.gameObject);        
