@@ -226,8 +226,10 @@ public class CardHandManager : MonoBehaviour {
         rightCard.SetActive(true);
 
         ShowCardsHandler showCardsHandler = showPos.GetComponent<ShowCardsHandler>();
-        showCardsHandler.AddCard(leftCard);
-        showCardsHandler.AddCard(rightCard);
+        showCardsHandler.AddCards(
+            new GameObject[] { leftCard, rightCard },
+            new string[] { cards[0].skills[0].desc, cards[1].skills[0].desc }
+        );
 
         CardHandler handler = leftCard.GetComponent<CardHandler>();
         handler.DrawHeroCard(cards[0]);
@@ -239,9 +241,6 @@ public class CardHandManager : MonoBehaviour {
         yield return new WaitForSeconds(0.5f);
         iTween.MoveTo(rightCard, showPos.Find("Right").position, 0.4f);
         iTween.RotateTo(rightCard, iTween.Hash("z", 0, "islocal", true, "time", 0.4f));
-
-        showCardsHandler.SetDesc(true, cards[0].skills[0].desc);
-        showCardsHandler.SetDesc(false, cards[1].skills[0].desc);
 
         yield return StartCoroutine(handler.ActiveHeroCard());
     }

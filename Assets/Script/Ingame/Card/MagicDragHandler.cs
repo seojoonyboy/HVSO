@@ -17,8 +17,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
     public void OnBeginDrag(PointerEventData eventData) {
         if (heroCardActivate) {
             ShowCardsHandler showCardsHandler = GetComponentInParent<ShowCardsHandler>();
-            showCardsHandler.OffOppositeCard(gameObject);
-            showCardsHandler.HideDesc();
+            showCardsHandler.Selecting(gameObject);
 
             heroCardInfo.SetActive(false);
             transform.parent.parent.Find("HeroCardGuide").gameObject.SetActive(false);
@@ -106,14 +105,10 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
             heroCardInfo.SetActive(true);
             //영웅 카드를 핸드로 가져오는 부분
             if (transform.position.y < -3.5f) {
+                showCardsHandler.FinishPlay(gameObject, true);
+
                 handManager.AddHeroCard(gameObject);
                 heroCardActivate = false;
-
-                showCardsHandler.GetOppositeCard(gameObject).GetComponent<CardHandler>().heroCardActivate = false;
-                showCardsHandler.RemoveOppositeCard(gameObject);
-                showCardsHandler.RemoveCard(gameObject);
-                showCardsHandler.ClearList();
-                showCardsHandler.HideUI();
             }
             else {
                 CheckLocation(true);
@@ -121,8 +116,10 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
                 //영웅 실드 발동시 나온 카드를 사용 할 때만 여기로 들어옴
                 if (CheckMagicSlot() != null) {
                     cardUsed = true;
-                    showCardsHandler.GetOppositeCard(gameObject).GetComponent<CardHandler>().heroCardActivate = false;
-                    showCardsHandler.RemoveOppositeCard(gameObject);
+                    showCardsHandler
+                        .GetOppositeCard(gameObject)
+                        .transform
+                        .localPosition = new Vector3(4000f, 0);
                     //var abilities = GetComponents<MagicalCasting>();
                     //foreach (MagicalCasting ability in abilities) ability.RequestUseMagic();
                     object[] parms = new object[] { true, gameObject };
@@ -214,8 +211,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         highlightedSlot = null;        
         skillHandler.RemoveTriggerEvent();
         ShowCardsHandler showCardsHandler = transform.root.GetComponentInChildren<ShowCardsHandler>();
-        showCardsHandler.ClearList();
-        showCardsHandler.HideUI();
+        showCardsHandler.FinishPlay(gameObject);
         //GetComponentInParent<ShowCardsHandler>().RemoveCard(gameObject);
     }
 

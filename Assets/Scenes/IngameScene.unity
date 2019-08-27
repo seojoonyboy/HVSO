@@ -2217,65 +2217,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 118206627}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &126482331
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 126482334}
-  - component: {fileID: 126482333}
-  - component: {fileID: 126482332}
-  m_Layer: 0
-  m_Name: Scene Variables
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &126482332
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 126482331}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 995777834, guid: c8d0ad23af520fe46aabe2b1fecf6462, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &126482333
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 126482331}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1465209106, guid: c8d0ad23af520fe46aabe2b1fecf6462, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _data:
-    _json: '{"declarations":{"collection":{"$content":[{"name":"CurrentTurn","value":{"$content":"Default","$type":"System.String"},"$version":"A"},{"name":"TurnTableStart","value":{"$content":false,"$type":"System.Boolean"},"$version":"A"},{"name":"TurnChanged","value":{"$content":false,"$type":"System.Boolean"},"$version":"A"}],"$version":"A"},"$version":"A"}}'
-    _objectReferences: []
---- !u!4 &126482334
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 126482331}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &132422558
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2788,7 +2729,7 @@ PrefabInstance:
     - target: {fileID: 3805233970232064565, guid: 0d6430e7aba1143419839532a257307e,
         type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 3805233970232064565, guid: 0d6430e7aba1143419839532a257307e,
         type: 3}
@@ -4505,7 +4446,7 @@ PrefabInstance:
     - target: {fileID: 8279262149816908148, guid: 089e07056aa4b4148b4eff310e0b9129,
         type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8279262149816908148, guid: 089e07056aa4b4148b4eff310e0b9129,
         type: 3}
@@ -5573,7 +5514,7 @@ RectTransform:
   m_Children:
   - {fileID: 618496727}
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -5864,7 +5805,7 @@ RectTransform:
   - {fileID: 1034765498}
   - {fileID: 201708495}
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -11877,7 +11818,7 @@ Transform:
   - {fileID: 1774298931}
   - {fileID: 1480098551}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &558998461
 PrefabInstance:
@@ -12452,7 +12393,7 @@ RectTransform:
   - {fileID: 4342902}
   - {fileID: 1574941605}
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -23958,7 +23899,7 @@ RectTransform:
   m_Children:
   - {fileID: 1497458233}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -39970,7 +39911,7 @@ Transform:
   - {fileID: 1653668628}
   - {fileID: 983286823}
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1899176113
 GameObject:
@@ -44343,6 +44284,7 @@ MonoBehaviour:
   heroCards: []
   cardStorage: {fileID: 1340215711007132827}
   hideShowBtn: {fileID: 1415798618}
+  cardHandManager: {fileID: 8181078053512951862}
 --- !u!224 &1340215710785019860
 RectTransform:
   m_ObjectHideFlags: 0
