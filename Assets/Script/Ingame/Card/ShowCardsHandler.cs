@@ -8,6 +8,7 @@ public class ShowCardsHandler : MonoBehaviour {
     [SerializeField] Transform cardStorage;
     [SerializeField] GameObject hideShowBtn;
     [SerializeField] CardHandManager cardHandManager;
+    [SerializeField] GameObject BgImg;
 
     // Start is called before the first frame update
     void Start() {
@@ -15,19 +16,28 @@ public class ShowCardsHandler : MonoBehaviour {
     }
 
     public void AddCards(GameObject[] cards, string[] desc) {
+        //TODO : i값 대조 말고 다른 방법으로....
         for(int i=0; i<cards.Length; i++) {
+            if(i == 0) {
+                transform
+                    .Find("Left/Desc")
+                    .gameObject.SetActive(true);
+                transform
+                    .Find("Left/Desc/Text")
+                    .GetComponent<TextMeshProUGUI>()
+                    .text = desc[i];
+            }
+            else if(i == 1) {
+                transform
+                    .Find("Right/Desc")
+                    .gameObject.SetActive(true);
+                transform
+                    .Find("Right/Desc/Text")
+                    .GetComponent<TextMeshProUGUI>()
+                    .text = desc[i];
+            }
             heroCards.Add(cards[i]);
-            transform
-                .GetChild(i)
-                .Find("Desc")
-                .gameObject.SetActive(true);
-            transform
-                .GetChild(i)
-                .Find("Desc/Text")
-                .GetComponent<TextMeshProUGUI>()
-                .text = desc[i];
         }
-
         ShowUI();
         hideShowBtn.SetActive(true);
     }
@@ -64,7 +74,8 @@ public class ShowCardsHandler : MonoBehaviour {
     }
 
     public void ToggleAllCards(bool isOn = true) {
-        foreach(GameObject card in heroCards) {
+        transform.SetAsLastSibling();
+        foreach (GameObject card in heroCards) {
             if (card.activeSelf != isOn) {
                 card.SetActive(isOn);
             }
@@ -84,6 +95,7 @@ public class ShowCardsHandler : MonoBehaviour {
     public void ShowUI() {
         ToggleAllCards();
         transform.Find("HeroCardGuide").gameObject.SetActive(true);
+        BgImg.SetActive(true);
         ShowDesc();
     }
 
@@ -91,6 +103,7 @@ public class ShowCardsHandler : MonoBehaviour {
     public void HideUI() {
         ToggleAllCards(false);
         transform.Find("HeroCardGuide").gameObject.SetActive(false);
+        BgImg.SetActive(false);
         HideDesc();
     }
 
