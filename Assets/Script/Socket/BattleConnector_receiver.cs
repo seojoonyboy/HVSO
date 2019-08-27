@@ -269,7 +269,7 @@ public partial class BattleConnector : MonoBehaviour {
     public void end_end_turn(object args) { }
 
     public void opponent_connection_closed(object args) {
-        PlayMangement.instance.SocketErrorUIOpen(true);
+        PlayMangement.instance.resultManager.SocketErrorUIOpen(true);
     }
 
     public void begin_end_game(object args) { }
