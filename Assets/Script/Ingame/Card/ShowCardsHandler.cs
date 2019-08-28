@@ -36,6 +36,10 @@ public class ShowCardsHandler : MonoBehaviour {
                     .GetComponent<TextMeshProUGUI>()
                     .text = desc[i];
             }
+            cards[i]
+                .transform
+                .Find("GlowEffect")
+                .gameObject.SetActive(true);
             heroCards.Add(cards[i]);
         }
         ShowUI();
@@ -61,7 +65,14 @@ public class ShowCardsHandler : MonoBehaviour {
     public void Selecting(GameObject activatedCard) {
         GameObject oppositeCard = GetOppositeCard(activatedCard);
         OffOppositeCard(activatedCard);
+        BgImg.SetActive(false);
         HideDesc();
+    }
+
+    public void CancelSelecting() {
+        ToggleAllCards();
+        BgImg.SetActive(true);
+        ShowDesc();
     }
 
     public GameObject GetOppositeCard(GameObject self) {
@@ -75,7 +86,6 @@ public class ShowCardsHandler : MonoBehaviour {
 
     public void ToggleAllCards(bool isOn = true) {
         transform.SetAsLastSibling();
-        BgImg.SetActive(isOn);
         foreach (GameObject card in heroCards) {
             if (card.activeSelf != isOn) {
                 card.SetActive(isOn);
