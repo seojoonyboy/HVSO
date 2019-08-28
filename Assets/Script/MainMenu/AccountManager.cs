@@ -33,6 +33,7 @@ public partial class AccountManager : Singleton<AccountManager> {
     public CardDataPackage cardPackage;
 
     public ResourceManager resource;
+    public UserResourceManager userResource;
 
     NetworkManager networkManager;
     GameObject loadingModal;

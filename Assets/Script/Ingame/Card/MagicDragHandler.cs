@@ -141,7 +141,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
                         transform.parent.parent.Find("HeroCardGuide").gameObject.SetActive(true);
                     }
 
-                    showCardsHandler.ShowDesc();
+                    showCardsHandler.CancelSelecting();
                 }
             }
             CardDropManager.Instance.HideMagicSlot();

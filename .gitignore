@@ -53,3 +53,6 @@ Assets/Plugins/Sirenx/Demos/!.Custom Drawers.unitypackage
 Assets/Plugins/Sirenx/Demos/!.Editor Windows.unitypackage
 Assets/Plugins/Sirenx/Demos/!.Sample - RPG Editor
 Assets/Plugins/Sirenx/Demos.meta
+
+# HaeginModule
+Assets/Haegin/UnityEngine.AssetGraph/Cache/
