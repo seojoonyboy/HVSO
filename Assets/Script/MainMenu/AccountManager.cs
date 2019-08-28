@@ -213,6 +213,7 @@ public partial class AccountManager {
         NickName = userData.nickName;
     }
 
+    #region supply 갱신 처리 관련 code
     public float GetRemainSupplySec() {
         //TODO : ReqUserInfo를 통한 값 가져와 return 시키기
         float sec = (float)(TimeSpan.FromMilliseconds(userData.supplyTimeRemain).TotalSeconds);
@@ -246,6 +247,7 @@ public partial class AccountManager {
                 });
             });
     }
+    #endregion
 }
 
 public partial class AccountManager {
