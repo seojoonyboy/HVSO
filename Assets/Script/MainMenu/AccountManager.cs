@@ -47,6 +47,8 @@ public partial class AccountManager : Singleton<AccountManager> {
         cardPackage = Resources.Load("CardDatas/CardDataPackage_01") as CardDataPackage;
         resource = transform.GetComponent<ResourceManager>();
         TouchEffecter.Instance.SetScript();
+
+        gameObject.AddComponent<Timer.TimerManager>();
     }
 
     // Start is called before the first frame update
@@ -131,6 +133,13 @@ public partial class AccountManager : Singleton<AccountManager> {
     /// 회원가입, 로그인시 유저 정보 처리를 위한 클래스
     /// </summary>
     public class UserInfo {
+        public int gold;
+        public double supplyTimeRemain;
+        public int supply;
+        public int supplyBox;
+        public int manaCrystal;
+        public int preSupply;
+
         public string nickName;
         public string deviceId;
         public int pass;
@@ -141,6 +150,8 @@ public partial class AccountManager : Singleton<AccountManager> {
 /// SignIn / SignUp 관련 처리
 /// </summary>
 public partial class AccountManager {
+    Timer UserReqTimer;
+    const int MAX_PRE_SUPPLY = 200;
     /// <summary>
     /// 유저 정보 요청
     /// </summary>
@@ -199,13 +210,45 @@ public partial class AccountManager {
     
     public void SetSignInData(HTTPResponse response) {
         userData = dataModules.JsonReader.Read<UserInfo>(response.DataAsText);
-        //TODO : 인벤토리는 별도로 작업을 해야함
-        //myCards = userData.cardInventories;
-        //SetHeroInventories(userData.heroInventories);
-        //SetCardData();
-
         NickName = userData.nickName;
+
+        userResource.SetResource(
+            gold: userData.gold,
+            crystal: userData.manaCrystal,
+            supplyStoreTime: (int)userData.supplyTimeRemain,
+            supplyStore: userData.preSupply,
+            supply: userData.supply,
+            supplyBox: userData.supplyBox
+        );
     }
+
+    #region supply 갱신 처리 관련 code
+    public float GetRemainSupplySec() {
+        //TODO : ReqUserInfo를 통한 값 가져와 return 시키기
+        float sec = (float)(TimeSpan.FromMilliseconds(userData.supplyTimeRemain).TotalSeconds);
+        return sec;
+    }
+
+    public void ReqInTimer(float interval) {
+        Logger.Log("Times out");
+        Timer.Cancel(UserReqTimer);
+        UserReqTimer = Timer.Register(
+            interval, 
+            () => {
+                RequestUserInfo((req, res) => {
+                    var sceneStartController = GetComponent<SceneStartController>();
+                    if (res.StatusCode == 200 || res.StatusCode == 304) {
+                        SetSignInData(res);
+                        if (userData.preSupply >= MAX_PRE_SUPPLY) {
+                            Logger.Log("Pre Supply가 가득찼습니다.");
+                            return; //TODO : preSupply가 변동되면 다시 요청 필요 
+                        }
+                        ReqInTimer(GetRemainSupplySec());
+                    }
+                });
+            });
+    }
+    #endregion
 }
 
 public partial class AccountManager {

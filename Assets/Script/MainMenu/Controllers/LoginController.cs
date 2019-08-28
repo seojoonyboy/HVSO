@@ -23,9 +23,15 @@ public class LoginController : MonoBehaviour {
 
     private void OnRequestUserInfoCallback(HTTPRequest originalRequest, HTTPResponse response) {
         var sceneStartController = GetComponent<SceneStartController>();
+        AccountManager accountManager = AccountManager.Instance;
         if (response.StatusCode == 200 || response.StatusCode == 304) {
-            AccountManager.Instance.SetSignInData(response);
-            //AccountManager.Instance.OnSignInResultModal();
+            accountManager.SetSignInData(response);
+            if (accountManager.userData.preSupply < 200 && accountManager.userData.supplyTimeRemain > 0) {
+                Invoke("ReqInTimer", (float)accountManager.userData.supplyTimeRemain);
+            }
+            else {
+                Logger.Log("Pre Supply가 가득찼습니다. Timer를 호출하지 않습니다.");
+            }
 
             if (PlayerPrefs.GetInt("isFirst") == 1) {
                 sceneStartController
@@ -34,8 +40,12 @@ public class LoginController : MonoBehaviour {
                     .SetActive(true);
             }
             else {
-                AccountManager.Instance.OnSignInResultModal();
+                accountManager.OnSignInResultModal();
             }
         }
+    }
+
+    private void ReqInTimer() {
+        AccountManager.Instance.ReqInTimer(AccountManager.Instance.GetRemainSupplySec());
     }
 }

@@ -6,7 +6,7 @@ using TMPro;
 public class ShowCardsHandler : MonoBehaviour {
     [SerializeField] List<GameObject> heroCards;
     [SerializeField] Transform cardStorage;
-    [SerializeField] GameObject hideShowBtn;
+    [SerializeField] public GameObject hideShowBtn;
     [SerializeField] CardHandManager cardHandManager;
     [SerializeField] GameObject BgImg;
 
