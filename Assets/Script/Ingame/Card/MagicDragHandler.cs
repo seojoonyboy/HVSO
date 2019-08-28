@@ -125,6 +125,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
                     object[] parms = new object[] { true, gameObject };
                     transform.Find("GlowEffect").gameObject.SetActive(false);
                     transform.Find("CardInfoWindow").gameObject.SetActive(false);
+                    showCardsHandler.hideShowBtn.SetActive(false);
                     StartCoroutine(UseSkillCard(parms));
                     //if (GetComponents<Ability>() == null) UseCard();
                 }
