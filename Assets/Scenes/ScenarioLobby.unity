@@ -2217,7 +2217,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 607384168}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2074731601}
+        m_MethodName: OnOrcButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &607384168
@@ -6042,6 +6053,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4e9a1d76df04e044af367fcc3d78472, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  human:
+    raceButton: {fileID: 2101164967}
+    activeSprite: {fileID: 21300000, guid: 3be304c4faa2dab4897f8dc6c2682320, type: 3}
+    deactiveSprite: {fileID: 21300000, guid: f1ba84a98c16aa44799de80eff51f8b7, type: 3}
+    heroSelect: {fileID: 376532161}
+    StageCanvas: {fileID: 629457293}
+  orc:
+    raceButton: {fileID: 607384165}
+    activeSprite: {fileID: 21300000, guid: d52e9bea2ef7c5d4d83044114a092a43, type: 3}
+    deactiveSprite: {fileID: 21300000, guid: f7fc61d4584319145b1a6cd5387c2cef, type: 3}
+    heroSelect: {fileID: 1749721631}
+    StageCanvas: {fileID: 1701425787}
 --- !u!114 &2074731602
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6309,7 +6332,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2101164970}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2074731601}
+        m_MethodName: OnHumanButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &2101164970
