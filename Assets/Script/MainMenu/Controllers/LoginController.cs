@@ -26,7 +26,9 @@ public class LoginController : MonoBehaviour {
         AccountManager accountManager = AccountManager.Instance;
         if (response.StatusCode == 200 || response.StatusCode == 304) {
             accountManager.SetSignInData(response);
-            accountManager.ReqInTimer(AccountManager.Instance.GetRemainSupplySec());
+            if (accountManager.userData.preSupply < 200 && accountManager.userData.supplyTimeRemain > 0) {
+                Invoke("ReqInTimer", (float)accountManager.userData.supplyTimeRemain);
+            }
 
             if (PlayerPrefs.GetInt("isFirst") == 1) {
                 sceneStartController
@@ -38,5 +40,9 @@ public class LoginController : MonoBehaviour {
                 accountManager.OnSignInResultModal();
             }
         }
+    }
+
+    private void ReqInTimer() {
+        AccountManager.Instance.ReqInTimer(AccountManager.Instance.GetRemainSupplySec());
     }
 }

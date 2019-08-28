@@ -211,6 +211,15 @@ public partial class AccountManager {
     public void SetSignInData(HTTPResponse response) {
         userData = dataModules.JsonReader.Read<UserInfo>(response.DataAsText);
         NickName = userData.nickName;
+
+        userResource.SetResource(
+            gold: userData.gold,
+            crystal: userData.manaCrystal,
+            supplyStoreTime: (int)userData.supplyTimeRemain,
+            supplyStore: userData.preSupply,
+            supply: userData.supply,
+            supplyBox: userData.supplyBox
+        );
     }
 
     #region supply 갱신 처리 관련 code
@@ -232,16 +241,8 @@ public partial class AccountManager {
                         SetSignInData(res);
                         if (userData.preSupply >= MAX_PRE_SUPPLY) {
                             Logger.Log("Pre Supply가 가득찼습니다.");
-                            return; //preSupply가 변동되면 다시 요청 필요 
+                            return; //TODO : preSupply가 변동되면 다시 요청 필요 
                         }
-                        userResource.SetResource(
-                            gold: userData.gold,
-                            crystal: userData.manaCrystal,
-                            supplyStoreTime: (int)userData.supplyTimeRemain,
-                            supplyStore: userData.preSupply,
-                            supply : userData.supply,
-                            supplyBox: userData.supplyBox
-                        );
                         ReqInTimer(GetRemainSupplySec());
                     }
                 });
