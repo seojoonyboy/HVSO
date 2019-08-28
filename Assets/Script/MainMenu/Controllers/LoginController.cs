@@ -29,6 +29,9 @@ public class LoginController : MonoBehaviour {
             if (accountManager.userData.preSupply < 200 && accountManager.userData.supplyTimeRemain > 0) {
                 Invoke("ReqInTimer", (float)accountManager.userData.supplyTimeRemain);
             }
+            else {
+                Logger.Log("Pre Supply가 가득찼습니다. Timer를 호출하지 않습니다.");
+            }
 
             if (PlayerPrefs.GetInt("isFirst") == 1) {
                 sceneStartController
