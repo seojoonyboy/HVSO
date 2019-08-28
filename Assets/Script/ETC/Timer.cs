@@ -402,7 +402,7 @@ public class Timer
     /// This will be instantiated the first time you create a timer -- you do not need to add it into the
     /// scene manually.
     /// </summary>
-    private class TimerManager : MonoBehaviour
+    public class TimerManager : MonoBehaviour
     {
         private List<Timer> _timers = new List<Timer>();
 

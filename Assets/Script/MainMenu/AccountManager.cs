@@ -47,6 +47,9 @@ public partial class AccountManager : Singleton<AccountManager> {
         cardPackage = Resources.Load("CardDatas/CardDataPackage_01") as CardDataPackage;
         resource = transform.GetComponent<ResourceManager>();
         TouchEffecter.Instance.SetScript();
+
+        gameObject.AddComponent<Timer.TimerManager>();
+        ReqInTimer(GetRemainSupplySec());
     }
 
     // Start is called before the first frame update
@@ -199,12 +202,17 @@ public partial class AccountManager {
     
     public void SetSignInData(HTTPResponse response) {
         userData = dataModules.JsonReader.Read<UserInfo>(response.DataAsText);
-        //TODO : 인벤토리는 별도로 작업을 해야함
-        //myCards = userData.cardInventories;
-        //SetHeroInventories(userData.heroInventories);
-        //SetCardData();
-
         NickName = userData.nickName;
+    }
+
+    public float GetRemainSupplySec() {
+        //TODO : ReqUserInfo를 통한 값 가져와 return 시키기
+        return 5;
+    }
+
+    public void ReqInTimer(float interval) {
+        Logger.Log("Times out");
+        Timer.Register(interval, () => { ReqInTimer(GetRemainSupplySec()); });
     }
 }
 
