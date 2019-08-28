@@ -1900,6 +1900,7 @@ GameObject:
   - component: {fileID: 1870949074}
   - component: {fileID: 1870949076}
   - component: {fileID: 1870949077}
+  - component: {fileID: 1870949078}
   m_Layer: 0
   m_Name: AccountManager
   m_TagString: Untagged
@@ -1921,6 +1922,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardPackage: {fileID: 11400000, guid: 238e481b11fd6f5498c98efc46a8b0d8, type: 2}
   resource: {fileID: 1870949076}
+  userResource: {fileID: 1870949078}
 --- !u!4 &1870949075
 Transform:
   m_ObjectHideFlags: 0
@@ -6420,6 +6422,35 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+--- !u!114 &1870949078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1870949073}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b85ed1b4ac5bb2a4192674be1ad8ada3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  gold: 0
+  crystal: 0
+  supplyStore: 0
+  timerTime: 0
+  supplyStoreTime: 0
+  supplyStoreTimer: 
+  supply: 0
+  supplyBox: 0
 --- !u!1 &1876041233
 GameObject:
   m_ObjectHideFlags: 0

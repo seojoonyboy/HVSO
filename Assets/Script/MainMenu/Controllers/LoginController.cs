@@ -23,9 +23,10 @@ public class LoginController : MonoBehaviour {
 
     private void OnRequestUserInfoCallback(HTTPRequest originalRequest, HTTPResponse response) {
         var sceneStartController = GetComponent<SceneStartController>();
+        AccountManager accountManager = AccountManager.Instance;
         if (response.StatusCode == 200 || response.StatusCode == 304) {
-            AccountManager.Instance.SetSignInData(response);
-            //AccountManager.Instance.OnSignInResultModal();
+            accountManager.SetSignInData(response);
+            accountManager.ReqInTimer(AccountManager.Instance.GetRemainSupplySec());
 
             if (PlayerPrefs.GetInt("isFirst") == 1) {
                 sceneStartController
@@ -34,7 +35,7 @@ public class LoginController : MonoBehaviour {
                     .SetActive(true);
             }
             else {
-                AccountManager.Instance.OnSignInResultModal();
+                accountManager.OnSignInResultModal();
             }
         }
     }

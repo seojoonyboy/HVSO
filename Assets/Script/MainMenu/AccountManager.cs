@@ -49,7 +49,6 @@ public partial class AccountManager : Singleton<AccountManager> {
         TouchEffecter.Instance.SetScript();
 
         gameObject.AddComponent<Timer.TimerManager>();
-        ReqInTimer(GetRemainSupplySec());
     }
 
     // Start is called before the first frame update
@@ -134,6 +133,13 @@ public partial class AccountManager : Singleton<AccountManager> {
     /// 회원가입, 로그인시 유저 정보 처리를 위한 클래스
     /// </summary>
     public class UserInfo {
+        public int gold;
+        public double supplyTimeRemain;
+        public int supply;
+        public int supplyBox;
+        public int manaCrystal;
+        public int preSupply;
+
         public string nickName;
         public string deviceId;
         public int pass;
@@ -144,6 +150,8 @@ public partial class AccountManager : Singleton<AccountManager> {
 /// SignIn / SignUp 관련 처리
 /// </summary>
 public partial class AccountManager {
+    Timer UserReqTimer;
+    const int MAX_PRE_SUPPLY = 200;
     /// <summary>
     /// 유저 정보 요청
     /// </summary>
@@ -207,12 +215,36 @@ public partial class AccountManager {
 
     public float GetRemainSupplySec() {
         //TODO : ReqUserInfo를 통한 값 가져와 return 시키기
-        return 5;
+        float sec = (float)(TimeSpan.FromMilliseconds(userData.supplyTimeRemain).TotalSeconds);
+        return sec;
     }
 
     public void ReqInTimer(float interval) {
         Logger.Log("Times out");
-        Timer.Register(interval, () => { ReqInTimer(GetRemainSupplySec()); });
+        Timer.Cancel(UserReqTimer);
+        UserReqTimer = Timer.Register(
+            interval, 
+            () => {
+                RequestUserInfo((req, res) => {
+                    var sceneStartController = GetComponent<SceneStartController>();
+                    if (res.StatusCode == 200 || res.StatusCode == 304) {
+                        SetSignInData(res);
+                        if (userData.preSupply >= MAX_PRE_SUPPLY) {
+                            Logger.Log("Pre Supply가 가득찼습니다.");
+                            return; //preSupply가 변동되면 다시 요청 필요 
+                        }
+                        userResource.SetResource(
+                            gold: userData.gold,
+                            crystal: userData.manaCrystal,
+                            supplyStoreTime: (int)userData.supplyTimeRemain,
+                            supplyStore: userData.preSupply,
+                            supply : userData.supply,
+                            supplyBox: userData.supplyBox
+                        );
+                        ReqInTimer(GetRemainSupplySec());
+                    }
+                });
+            });
     }
 }
 
