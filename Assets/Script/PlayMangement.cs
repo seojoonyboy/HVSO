@@ -39,6 +39,7 @@ public partial class PlayMangement : MonoBehaviour {
     public string currentTurn;
 
     public bool skillAction = false;
+    public victoryModule.VictoryCondition matchRule;
     //public string magicHistroy;
 
     private void Awake() {
@@ -61,10 +62,45 @@ public partial class PlayMangement : MonoBehaviour {
 
     private void Start() {
         SetBackGround();
-        RequestStartData();
+        InitGameData();
+        
+        
+        
+        //StartCoroutine(DisconnectTest());
+    }
+
+
+    //최초에 데이터를 불러드릴 함수. missionData를 임시로 놓고, 그 후에 게임의 정보들 등록
+    //체력설정 -> 승리목표 설정 -> 자원분배 -> 턴
+    private void InitGameData() {
+        object missionData = null;
+
+
+
+        RequestStartData(20,20);
+        SetVictoryCondition();
         DistributeResource();
         InitTurnTable();
-        //StartCoroutine(DisconnectTest());
+    }
+
+    //승리 조건을 설정할 함수. victoryModule이라는 namespace로 전략패턴으로 구현 계획
+    private void SetVictoryCondition(object data = null) {
+        string condition = (string)data;
+
+        switch (condition) {
+            default:
+                matchRule = new victoryModule.Annihilation_Match(player, enemyPlayer);
+                matchRule.SetCondition();
+                break;
+        }
+    }
+    // 시작전 체력부여, default 20
+    public void RequestStartData(int playerData = 20, int enemyData = 20) {
+        int playerHP = playerData;
+        int enemyHP = enemyData;
+
+        player.SetPlayerStat(playerHP);
+        enemyPlayer.SetPlayerStat(enemyHP);
     }
 
     private void Update() {
@@ -159,14 +195,7 @@ public partial class PlayMangement : MonoBehaviour {
         }
     }
 
-    public void RequestStartData() {
-        int playerHP = 20;
-        int enemyHP = 20;
-
-
-        player.SetPlayerStat(playerHP);
-        enemyPlayer.SetPlayerStat(enemyHP);
-    }
+    
 
     public void DistributeResource() {
         player.resource.Value = turn + 1;
@@ -686,7 +715,23 @@ public partial class PlayMangement : MonoBehaviour {
         IngameNotice.instance.CloseNotice();
     }
 
+    //public void GetBattleResult() {
+    //    isGame = false;
+    //    resultManager.gameObject.SetActive(true);
 
+    //    if (player.HP.Value <= 0) {
+    //        if (player.isHuman)
+    //            resultManager.SetResultWindow("lose", "human");
+    //        else
+    //            resultManager.SetResultWindow("lose", "orc");
+    //    }
+    //    else if (enemyPlayer.HP.Value <= 0) {
+    //        if (player.isHuman)
+    //            resultManager.SetResultWindow("win", "human");
+    //        else
+    //            resultManager.SetResultWindow("win", "orc");
+    //    }
+    //}
 }
 
 /// <summary>

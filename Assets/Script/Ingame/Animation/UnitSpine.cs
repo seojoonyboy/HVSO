@@ -49,6 +49,8 @@ public class UnitSpine : MonoBehaviour
     public GameObject hidingObject;
     protected HideUnit hideUnit;
 
+    public bool teleportMove;
+
     [HideInInspector]
     public Transform headbone;
     [HideInInspector]

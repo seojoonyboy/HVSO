@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour
     protected HeroSpine heroSpine;
     public static int activeCardMinCost;
 
-    public EffectSystem.ActionDelegate actionCall;
+    public EffectSystem.ActionDelegate actionCall;    
 
     public GameObject effectObject;
     public enum HeroState {
@@ -197,11 +197,12 @@ public class PlayerController : MonoBehaviour
         var gameOverDispose = HP.Where(x => x <= 0)
                               .Subscribe(_ => {
                                                SetState(HeroState.DEAD);
-                                               PlayMangement.instance.resultManager.GetBattleResult();
+                                               //PlayMangement.instance.GetBattleResult();
                                                ObserveHP.Dispose();
                                                ObserveResource.Dispose(); })
                               .AddTo(PlayMangement.instance.transform.gameObject);        
     }
+    
 
     private void ChangedHP() {
         HPText.text = HP.Value.ToString();
@@ -496,6 +497,8 @@ public class PlayerController : MonoBehaviour
     public void PlayerThinkFinish() {
         SetState(HeroState.THINKDONE);
     }
+
+    
     
 
     protected void SetState(HeroState state) {
