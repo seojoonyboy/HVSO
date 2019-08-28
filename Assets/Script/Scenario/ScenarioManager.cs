@@ -10,6 +10,7 @@ public class ScenarioManager : MonoBehaviour
 
     private void Awake() {
         Instance = this;
+        OnHumanButton();
     }
 
     private void OnDestroy() {
