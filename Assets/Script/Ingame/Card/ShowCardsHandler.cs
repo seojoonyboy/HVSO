@@ -75,6 +75,7 @@ public class ShowCardsHandler : MonoBehaviour {
 
     public void ToggleAllCards(bool isOn = true) {
         transform.SetAsLastSibling();
+        BgImg.SetActive(isOn);
         foreach (GameObject card in heroCards) {
             if (card.activeSelf != isOn) {
                 card.SetActive(isOn);

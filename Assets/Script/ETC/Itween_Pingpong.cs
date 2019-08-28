@@ -15,10 +15,6 @@ public class Itween_Pingpong : MonoBehaviour {
     void OnEnable() {
         transform.localPosition = origin;
         iTween.Stop(gameObject);
-        bool isReversedImgage = false;
-        if (transform.localScale.x < 0 || transform.localScale.y < 0) isReversedImgage = true;
-
-        if (isReversedImgage) { moveAmount *= -1; }
         iTween
             .MoveBy(
             gameObject, 
