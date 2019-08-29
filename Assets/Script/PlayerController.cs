@@ -90,54 +90,41 @@ public class PlayerController : MonoBehaviour
                 PlayMangement.instance.socketHandler.gameState.players.enemyPlayer(isHuman).user.nickName;
         }
 
-
-        if (isHuman == true) {
-            heroID = "h10001";
-            GameObject hero = Instantiate(AccountManager.Instance.resource.heroSkeleton[heroID], transform);
-            hero.transform.SetAsLastSibling();
-            heroSpine = hero.GetComponent<HeroSpine>();
-            
-            if (isPlayer == true) {
-                float reverse = hero.transform.localScale.x * -1f;
-                hero.transform.localScale = new Vector3(reverse, hero.transform.localScale.y, hero.transform.localScale.z);
-                heroSpine.GetComponent<MeshRenderer>().sortingOrder = 19;
-                hero.transform.localPosition = new Vector3(0, 1, 0);
-                hero.transform.localScale = new Vector3(-1, 1, 1);
-            }
-            else
-                heroSpine.GetComponent<MeshRenderer>().sortingOrder = 7;
-
-            
-        }
-        else {
-            heroID = "h10002";
-            GameObject hero = Instantiate(AccountManager.Instance.resource.heroSkeleton[heroID], transform);
-            hero.transform.SetAsLastSibling();
-            heroSpine = hero.GetComponent<HeroSpine>();
-
-            if (isPlayer == true) {
-                float reverse = hero.transform.localScale.x * -1f;
-                hero.transform.localScale = new Vector3(reverse, hero.transform.localScale.y, hero.transform.localScale.z);
-                heroSpine.GetComponent<MeshRenderer>().sortingOrder = 19;
-                hero.transform.localPosition = new Vector3(0, 1, 0);
-                hero.transform.localScale = new Vector3(-1, 1, 1);
-            }
-            else
-                heroSpine.GetComponent<MeshRenderer>().sortingOrder = 7;
-
-            
-        }
+        SetPlayerHero(isHuman);
         if (!isPlayer)
             transform.Find("FightSpine").localPosition = new Vector3(0, 3, 0);
-
         shieldGauge.Initialize(false);
         shieldGauge.Update(0);
         shieldGauge.Skeleton.SetSlotsToSetupPose();
-        shieldGauge.AnimationState.SetAnimation(0, "0", false);
-
+        shieldGauge.AnimationState.SetAnimation(0, "0", false);        
         SetShield();
+
         shieldCount = 3;
         Debug.Log(heroSpine);
+    }
+
+    public void SetPlayerHero(bool isHuman, string heroID = "") {
+        string id;
+        GameObject hero;
+        if(isHuman == true) 
+            id = (string.IsNullOrEmpty(heroID)) ? "h10001" : heroID;        
+        else 
+            id = (string.IsNullOrEmpty(heroID)) ? "h10002" : heroID;            
+        
+
+        hero = Instantiate(AccountManager.Instance.resource.heroSkeleton[id], transform);
+        hero.transform.SetAsLastSibling();
+        heroSpine = hero.GetComponent<HeroSpine>();
+
+        if (isPlayer == true) {
+            float reverse = hero.transform.localScale.x * -1f;
+            hero.transform.localScale = new Vector3(reverse, hero.transform.localScale.y, hero.transform.localScale.z);
+            heroSpine.GetComponent<MeshRenderer>().sortingOrder = 19;
+            hero.transform.localPosition = new Vector3(0, 1, 0);
+            hero.transform.localScale = new Vector3(-1, 1, 1);
+        }
+        else
+            heroSpine.GetComponent<MeshRenderer>().sortingOrder = 7;
     }
     
     private void SetParticleSize(ParticleSystem particle) {

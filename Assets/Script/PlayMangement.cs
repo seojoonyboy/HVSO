@@ -75,8 +75,6 @@ public partial class PlayMangement : MonoBehaviour {
     private void InitGameData() {
         object missionData = null;
 
-
-
         RequestStartData(20,20);
         SetVictoryCondition();
         DistributeResource();
