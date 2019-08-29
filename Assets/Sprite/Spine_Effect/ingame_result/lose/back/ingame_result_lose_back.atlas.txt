@@ -1,0 +1,27 @@
+
+ingame_result_lose_back.png
+size: 1024,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+branches_L
+  rotate: false
+  xy: 423, 0
+  size: 292, 476
+  orig: 292, 476
+  offset: 0, 0
+  index: -1
+branches_R
+  rotate: false
+  xy: 715, 0
+  size: 292, 476
+  orig: 292, 476
+  offset: 0, 0
+  index: -1
+light_ellipse
+  rotate: false
+  xy: 0, 36
+  size: 423, 440
+  orig: 423, 440
+  offset: 0, 0
+  index: -1
