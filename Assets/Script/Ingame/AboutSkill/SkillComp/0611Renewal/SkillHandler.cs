@@ -128,7 +128,9 @@ namespace SkillModules {
             else if(isFieldCard()) SkillActivate();
             if(isPlayingCard()) {
                 PlayMangement.instance.UnlockTurnOver();
-                if(myObject.GetComponent<MagicDragHandler>()) myObject.SetActive(false);
+                if(myObject.GetComponent<MagicDragHandler>()) {
+                    PlayMangement.instance.cardHandManager.DestroyCard(myObject);
+                }
             }
         }
 

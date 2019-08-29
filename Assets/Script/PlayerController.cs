@@ -42,6 +42,7 @@ public class PlayerController : MonoBehaviour
 
     protected HeroSpine heroSpine;
     public static int activeCardMinCost;
+    public string heroID;
 
     public EffectSystem.ActionDelegate actionCall;    
 
@@ -91,7 +92,7 @@ public class PlayerController : MonoBehaviour
 
 
         if (isHuman == true) {
-            string heroID = "h10001";
+            heroID = "h10001";
             GameObject hero = Instantiate(AccountManager.Instance.resource.heroSkeleton[heroID], transform);
             hero.transform.SetAsLastSibling();
             heroSpine = hero.GetComponent<HeroSpine>();
@@ -109,7 +110,7 @@ public class PlayerController : MonoBehaviour
             
         }
         else {
-            string heroID = "h10002";
+            heroID = "h10002";
             GameObject hero = Instantiate(AccountManager.Instance.resource.heroSkeleton[heroID], transform);
             hero.transform.SetAsLastSibling();
             heroSpine = hero.GetComponent<HeroSpine>();

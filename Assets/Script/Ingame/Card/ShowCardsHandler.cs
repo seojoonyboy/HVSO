@@ -56,9 +56,19 @@ public class ShowCardsHandler : MonoBehaviour {
             RemoveCard(oppositeCard);
         }
         
-        if (!isToHand) { RemoveCard(activatedCard); }
+        if (!isToHand) {
+            RemoveCard(activatedCard);
 
-        HideUI();
+            transform.Find("HeroCardGuide").gameObject.SetActive(false);
+            BgImg.SetActive(false);
+            HideDesc();
+        }
+        else {
+            HideUI();
+            activatedCard.SetActive(true);
+        }
+
+        heroCards.Clear();
         hideShowBtn.SetActive(false);
     }
 
@@ -98,7 +108,9 @@ public class ShowCardsHandler : MonoBehaviour {
         self.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
         if (self.GetComponent<MagicDragHandler>().skillHandler.socketDone) {
             cardHandManager.DestroyCard(self);
-            heroCards.Remove(self);
+        }
+        else {
+            self.transform.localPosition = new Vector3(4000f, 0);
         }
     }
 
