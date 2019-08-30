@@ -109,8 +109,8 @@ public class PlayerController : MonoBehaviour
         if(isHuman == true) 
             id = (string.IsNullOrEmpty(heroID)) ? "h10001" : heroID;        
         else 
-            id = (string.IsNullOrEmpty(heroID)) ? "h10002" : heroID;            
-        
+            id = (string.IsNullOrEmpty(heroID)) ? "h10002" : heroID;
+        this.heroID = id;
 
         hero = Instantiate(AccountManager.Instance.resource.heroSkeleton[id], transform);
         hero.transform.SetAsLastSibling();
