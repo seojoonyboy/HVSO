@@ -217,6 +217,9 @@ public partial class AccountManager {
         NickName = userData.nickName;
 
         userResource.SetResource(
+            lv: userData.lv,
+            exp: userData.exp,
+            nextLvExp: userData.nextLvExp,
             gold: userData.gold,
             crystal: userData.manaCrystal,
             supplyStoreTime: (int)userData.supplyTimeRemain,
