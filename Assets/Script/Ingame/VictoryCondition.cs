@@ -34,18 +34,11 @@ namespace victoryModule {
             GameResultManager resultManager = PlayMangement.instance.resultManager;
             resultManager.gameObject.SetActive(true);
 
-            if (player.HP.Value <= 0) {
-                if (player.isHuman)
-                    resultManager.SetResultWindow("lose", "human");
-                else
-                    resultManager.SetResultWindow("lose", "orc");
-            }
-            else if (enemyPlayer.HP.Value <= 0) {
-                if (player.isHuman)
-                    resultManager.SetResultWindow("win", "human");
-                else
-                    resultManager.SetResultWindow("win", "orc");
-            }
+            if (player.HP.Value <= 0) 
+                resultManager.SetResultWindow("lose", player.isHuman);
+            else if (enemyPlayer.HP.Value <= 0) 
+                resultManager.SetResultWindow("win", player.isHuman);
+                
         }
     }
 }

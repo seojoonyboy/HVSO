@@ -71,6 +71,7 @@ public class CardHandManager : MonoBehaviour {
         finBtn.GetComponent<Image>().enabled = false;
         finBtn.GetChild(0).gameObject.SetActive(false);
         finBtn.gameObject.SetActive(false);
+        //PlayMangement.instance.resultManager.SetResultWindow("lose", PlayMangement.instance.player.isHuman);
     }
 
     //카드 저장고 반환 함수

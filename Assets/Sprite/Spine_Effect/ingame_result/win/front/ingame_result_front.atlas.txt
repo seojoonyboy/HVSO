@@ -1,0 +1,76 @@
+
+ingame_result_front.png
+size: 2048,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Victory
+  rotate: false
+  xy: 1353, 359
+  size: 344, 122
+  orig: 344, 123
+  offset: 0, 1
+  index: -1
+Victory_effect1
+  rotate: false
+  xy: 997, 347
+  size: 356, 134
+  orig: 358, 136
+  offset: 1, 1
+  index: -1
+Victory_effect2
+  rotate: false
+  xy: 0, 72
+  size: 360, 139
+  orig: 362, 141
+  offset: 1, 1
+  index: -1
+Victory_human
+  rotate: false
+  xy: 1697, 284
+  size: 233, 197
+  orig: 233, 197
+  offset: 0, 0
+  index: -1
+Victory_ob
+  rotate: false
+  xy: 0, 345
+  size: 551, 136
+  orig: 551, 136
+  offset: 0, 0
+  index: -1
+Victory_ob_orc
+  rotate: false
+  xy: 0, 211
+  size: 549, 134
+  orig: 549, 134
+  offset: 0, 0
+  index: -1
+Victory_ob_shadow
+  rotate: false
+  xy: 0, 0
+  size: 271, 72
+  orig: 273, 74
+  offset: 1, 1
+  index: -1
+Victory_orc
+  rotate: false
+  xy: 360, 16
+  size: 232, 195
+  orig: 232, 195
+  offset: 0, 0
+  index: -1
+Victory_shadow
+  rotate: false
+  xy: 551, 346
+  size: 446, 135
+  orig: 446, 137
+  offset: 0, 1
+  index: -1
+star
+  rotate: false
+  xy: 592, 181
+  size: 166, 165
+  orig: 166, 165
+  offset: 0, 0
+  index: -1
