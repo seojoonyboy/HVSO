@@ -125,6 +125,8 @@ public class GameResultManager : MonoBehaviour {
                 yield return new WaitForSeconds(0.3f);
                 slider.fillAmount = 0;
                 exp = 0;
+                expValueText.text = ((int)exp).ToString();
+                lvUpValueText.text = " / " + ((int)lvExp).ToString();
             }
             yield return new WaitForSeconds(0.01f);
         }
