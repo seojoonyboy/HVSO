@@ -13,13 +13,6 @@ public class GameResultManager : MonoBehaviour
     private int supply;
     private int supplyBox;
 
-    public void SaveResourceinfo() {
-        gold = AccountManager.Instance.userResource.gold;
-        crystal = AccountManager.Instance.userResource.crystal;
-        supply = AccountManager.Instance.userResource.supply;
-        supplyBox = AccountManager.Instance.userResource.supplyBox;
-    }
-
     public void OnReturnBtn() {
         FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
     }
