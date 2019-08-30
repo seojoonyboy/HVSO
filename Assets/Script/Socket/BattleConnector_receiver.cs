@@ -21,6 +21,7 @@ public partial class BattleConnector : MonoBehaviour {
     private bool dequeueing = true;
     public Queue<ReceiveFormat> queue = new Queue<ReceiveFormat>();
     private Type thisType;
+    public ResultFormat result = null;
 
     private void ReceiveMessage(WebSocket webSocket, string message) {
         ReceiveFormat result = dataModules.JsonReader.Read<ReceiveFormat>(message);
@@ -272,7 +273,10 @@ public partial class BattleConnector : MonoBehaviour {
         PlayMangement.instance.resultManager.SocketErrorUIOpen(true);
     }
 
-    public void begin_end_game(object args) { }
+    public void begin_end_game(object args) {
+        JObject jobject = (JObject)args;
+        result = JsonConvert.DeserializeObject<ResultFormat>(jobject.ToString());
+     }
 
     public void end_end_game(object args) {
         battleGameFinish = true;
