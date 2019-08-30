@@ -102,7 +102,7 @@ public class GameResultManager : MonoBehaviour {
         float gain = getExp;
         TMPro.TextMeshProUGUI expValueText = transform.Find("RankGage/RankText/Value").GetComponent<TMPro.TextMeshProUGUI>();
         TMPro.TextMeshProUGUI lvUpValueText = transform.Find("RankGage/RankText/MaxValue").GetComponent<TMPro.TextMeshProUGUI>();
-        while (getExp > 0) {
+        while (gain > 0) {
             slider.fillAmount = exp / lvExp;
             expValueText.text = ((int)exp).ToString();
             lvUpValueText.text = ((int)lvExp).ToString();
