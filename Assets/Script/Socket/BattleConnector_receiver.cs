@@ -280,7 +280,13 @@ public partial class BattleConnector : MonoBehaviour {
 
     public void end_end_game(object args) {
         battleGameFinish = true;
-        AccountManager.Instance.RequestUserInfo();
+        AccountManager.Instance.RequestUserInfo((req, res) => {
+            if (res != null) {
+                if (res.IsSuccess) {
+                    AccountManager.Instance.SetSignInData(res);
+                }
+            }
+        });
     }
 
     public void ping(object args) {
