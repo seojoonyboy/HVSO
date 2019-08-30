@@ -133,6 +133,10 @@ public partial class AccountManager : Singleton<AccountManager> {
     /// 회원가입, 로그인시 유저 정보 처리를 위한 클래스
     /// </summary>
     public class UserInfo {
+        public uint exp;
+        public uint nextLvExp;
+        public uint lv;
+
         public int gold;
         public double supplyTimeRemain;
         public int supply;
