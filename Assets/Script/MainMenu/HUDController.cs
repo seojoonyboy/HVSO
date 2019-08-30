@@ -10,6 +10,7 @@ public class HUDController : MonoBehaviour {
     [SerializeField] TMPro.TextMeshProUGUI crystalValue;
     [SerializeField] TMPro.TextMeshProUGUI goldValue;
     [SerializeField] TMPro.TextMeshProUGUI lvValue;
+    [SerializeField] TMPro.TextMeshProUGUI expValueText;
     [SerializeField] Image expSlider;
 
     Transform
@@ -85,7 +86,8 @@ public class HUDController : MonoBehaviour {
     
     public void SetResourcesUI() {
         lvValue.text = AccountManager.Instance.userResource.lv.ToString();
-        //expSlider.fillAmount = AccountManager.Instance.userResource.exp / AccountManager.Instance.userResource.nextLvExp;
+        expSlider.fillAmount = AccountManager.Instance.userResource.exp / AccountManager.Instance.userResource.nextLvExp;
+        expValueText.text = AccountManager.Instance.userResource.exp.ToString() + "/" + AccountManager.Instance.userResource.nextLvExp;
         crystalValue.text = AccountManager.Instance.userResource.crystal.ToString();
         goldValue.text = AccountManager.Instance.userResource.gold.ToString();
     }

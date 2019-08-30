@@ -8,9 +8,10 @@ using Sirenix.OdinInspector;
 
 public class UserResourceManager : SerializedMonoBehaviour {
     // Start is called before the first frame update
-    public int lv;
-    public int exp;
-    public int nextLvExp;
+    public uint lv;
+    public uint exp;
+    public uint nextLvExp;
+
     public int gold;
     public int crystal;
     public int supplyStore;
@@ -21,7 +22,10 @@ public class UserResourceManager : SerializedMonoBehaviour {
     public int supplyBox;
     
 
-    public void SetResource(int lv, int exp, int nextLvExp, int gold, int crystal, int supplyStore, int supplyStoreTime, int supply, int supplyBox) {
+    public void SetResource(uint lv, uint exp, uint nextLvExp, int gold, int crystal, int supplyStore, int supplyStoreTime, int supply, int supplyBox) {
+        this.lv = lv;
+        this.exp = exp;
+        this.nextLvExp = nextLvExp;
         this.gold = gold;
         this.crystal = crystal;
         this.supplyStore = supplyStore;
