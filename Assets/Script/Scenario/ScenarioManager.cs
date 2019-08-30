@@ -193,6 +193,17 @@ public class ScenarioManager : MonoBehaviour
                 Modal.instantiate("유효하지 않은 덱입니다.", Modal.Type.CHECK);
             }
         }
+        else {
+            if (race == "none") Logger.Log("종족을 선택해야 합니다.");
+            if (string.IsNullOrEmpty(selectedDeckId)) Logger.Log("덱을 선택해야 합니다.");
+
+            if (race == "none") {
+                Modal.instantiate("종족을 선택해 주세요.", Modal.Type.CHECK);
+            }
+            else if (string.IsNullOrEmpty(selectedDeckId)) {
+                Modal.instantiate("덱을 선택해 주세요.", Modal.Type.CHECK);
+            }
+        }
         SoundManager.Instance.PlaySound(SoundType.FIRST_TURN);
     }
 
