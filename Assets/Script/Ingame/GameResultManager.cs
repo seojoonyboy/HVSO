@@ -88,6 +88,7 @@ public class GameResultManager : MonoBehaviour {
         yield return new WaitForSeconds(0.1f);
         Image slider = transform.Find("RankGage/RankBar").GetComponent<Image>();
         slider.fillAmount = exp / lvExp;
+        transform.Find("RankGage/LevelImage/LevelText").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userResource.lv.ToString();
         transform.Find("RankGage/RankText/Value").GetComponent<TMPro.TextMeshProUGUI>().text = ((int)exp).ToString();
         transform.Find("RankGage/RankText/MaxValue").GetComponent<TMPro.TextMeshProUGUI>().text = " / " + ((int)lvExp).ToString();
         iTween.ScaleTo(transform.Find("RankGage").gameObject, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.5f));
@@ -104,7 +105,9 @@ public class GameResultManager : MonoBehaviour {
         float gain = getExp;
         TMPro.TextMeshProUGUI expValueText = transform.Find("RankGage/RankText/Value").GetComponent<TMPro.TextMeshProUGUI>();
         TMPro.TextMeshProUGUI lvUpValueText = transform.Find("RankGage/RankText/MaxValue").GetComponent<TMPro.TextMeshProUGUI>();
-        while (gain >= 0) {
+        while (gain > 0) {
+            exp += 0.2f;
+            gain -= 0.2f;
             slider.fillAmount = exp / lvExp;
             expValueText.text = ((int)exp).ToString();
             lvUpValueText.text = " / " + ((int)lvExp).ToString();
@@ -122,8 +125,6 @@ public class GameResultManager : MonoBehaviour {
                 slider.fillAmount = 0;
                 exp = 0;
             }
-            exp += 0.2f;
-            gain -= 0.2f;
             yield return new WaitForSeconds(0.001f);
         }
     }
