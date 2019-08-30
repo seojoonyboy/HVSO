@@ -177,7 +177,11 @@ public class SceneStartController : MonoBehaviour
 #if USE_MAINTENANCESERVER_V2
     void CheckServiceStatus()
     {
+#if UNITY_EDITOR
         ServiceMaintenance.CheckStatusV2("http://dev-maintenance.fbl.kr/Gate", "DevForClient", ShowServerMaintenanceWin, OnServerMaintenanceAction, (string CommonUrl, string GameUrl, string PatchUrl) =>
+#else
+        ServiceMaintenance.CheckStatusV2("http://dev-maintenance.fbl.kr/Gate", "DevForTest", ShowServerMaintenanceWin, OnServerMaintenanceAction, (string CommonUrl, string GameUrl, string PatchUrl) =>
+#endif
         {
             Debug.Log(CommonUrl);
             Debug.Log(GameUrl);
@@ -349,7 +353,7 @@ public class SceneStartController : MonoBehaviour
 #endif
 
 
-    void StartGame()
+        void StartGame()
     {
 #if MDEBUG
         Debug.Log("ScencStartController StartGame");
