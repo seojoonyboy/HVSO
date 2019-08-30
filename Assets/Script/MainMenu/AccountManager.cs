@@ -133,6 +133,9 @@ public partial class AccountManager : Singleton<AccountManager> {
     /// 회원가입, 로그인시 유저 정보 처리를 위한 클래스
     /// </summary>
     public class UserInfo {
+        public int lv;
+        public int exp;
+        public int nextLvExp;
         public int gold;
         public double supplyTimeRemain;
         public int supply;
@@ -213,6 +216,9 @@ public partial class AccountManager {
         NickName = userData.nickName;
 
         userResource.SetResource(
+            lv: userData.lv,
+            exp: userData.exp,
+            nextLvExp: userData.nextLvExp,
             gold: userData.gold,
             crystal: userData.manaCrystal,
             supplyStoreTime: (int)userData.supplyTimeRemain,

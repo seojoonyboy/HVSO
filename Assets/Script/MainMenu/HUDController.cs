@@ -7,6 +7,11 @@ using UnityEngine.UI.Extensions;
 
 public class HUDController : MonoBehaviour {
     [SerializeField] HorizontalScrollSnap main_HorizontalScrollSnap;
+    [SerializeField] TMPro.TextMeshProUGUI crystalValue;
+    [SerializeField] TMPro.TextMeshProUGUI goldValue;
+    [SerializeField] TMPro.TextMeshProUGUI lvValue;
+    [SerializeField] Image expSlider;
+
     Transform
         userInfoUI,
         backbuttonUI,
@@ -65,6 +70,7 @@ public class HUDController : MonoBehaviour {
                     .Find("Right");
 
         backButton = backbuttonUI.Find("BackButton").GetComponent<Button>();
+        SetResourcesUI();
     }
 
     // Start is called before the first frame update
@@ -73,13 +79,15 @@ public class HUDController : MonoBehaviour {
         main_HorizontalScrollSnap.OnSelectionChangeEndEvent.AddListener(x => OnPageChanged(x));
     }
 
-    // Update is called once per frame
-    void Update() {
-
-    }
-
     public void OnPageChanged(int pageNum) {
         SetHeader(Type.SHOW_USER_INFO);
+    }
+    
+    public void SetResourcesUI() {
+        lvValue.text = AccountManager.Instance.userResource.lv.ToString();
+        //expSlider.fillAmount = AccountManager.Instance.userResource.exp / AccountManager.Instance.userResource.nextLvExp;
+        crystalValue.text = AccountManager.Instance.userResource.crystal.ToString();
+        goldValue.text = AccountManager.Instance.userResource.gold.ToString();
     }
 
     public enum Type {
