@@ -19,6 +19,7 @@ public class GameResultManager : MonoBehaviour {
     private void Awake() {
         exp = AccountManager.Instance.userResource.exp;
         lvExp = AccountManager.Instance.userResource.lvExp;
+        nextLvExp = AccountManager.Instance.userResource.nextLvExp;
         gameObject.SetActive(false);
     }
 
