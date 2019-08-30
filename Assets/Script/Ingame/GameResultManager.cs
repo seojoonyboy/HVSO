@@ -1,17 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Spine;
 using Spine.Unity;
 
-public class GameResultManager : MonoBehaviour
-{
+public class GameResultManager : MonoBehaviour {
     public GameObject SocketDisconnectedUI;
 
-    private int gold;
-    private int crystal;
-    private int supply;
-    private int supplyBox;
+    private float exp;
+    private float lvExp;
+    private float nextLvExp;
+    private int getExp = 0;
+    private int crystal = 0;
+    private int supply = 0;
+    private int supplyBox = 0;
+
+    private void Awake() {
+        exp = AccountManager.Instance.userResource.exp;
+        lvExp = AccountManager.Instance.userResource.lvExp;
+        gameObject.SetActive(false);
+    }
 
     public void OnReturnBtn() {
         FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
@@ -32,6 +41,8 @@ public class GameResultManager : MonoBehaviour
         GameObject heroSpine = transform.Find("HeroSpine/" + PlayMangement.instance.player.heroID).gameObject;
         heroSpine.SetActive(true);
         iTween.ScaleTo(heroSpine, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.3f));
+        getExp = PlayMangement.instance.socketHandler.result.reward.heroExp;
+        supply = PlayMangement.instance.socketHandler.result.reward.supply;
         StartCoroutine(SetRewards());
         SkeletonGraphic backSpine;
         SkeletonGraphic frontSpine;
@@ -40,7 +51,7 @@ public class GameResultManager : MonoBehaviour
                     heroSpine.GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, "IDLE", true);
                     backSpine = transform.Find("BackSpine/WinningBack").GetComponent<SkeletonGraphic>();
                     frontSpine = transform.Find("FrontSpine/WinningFront").GetComponent<SkeletonGraphic>();
-                    
+
                 }
                 break;
             case "lose": {
@@ -75,12 +86,43 @@ public class GameResultManager : MonoBehaviour
     IEnumerator SetRewards() {
         Transform rewards = transform.Find("ResourceRewards");
         yield return new WaitForSeconds(0.1f);
+        Image slider = transform.Find("RankGage/RankBar").GetComponent<Image>();
+        slider.fillAmount = exp / lvExp;
         iTween.ScaleTo(transform.Find("RankGage").gameObject, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.5f));
-        yield return new WaitForSeconds(0.1f);
-        iTween.ScaleTo(rewards.GetChild(0).gameObject, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.5f));
-        yield return new WaitForSeconds(0.1f);
-        iTween.ScaleTo(rewards.GetChild(1).gameObject, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.5f));
-        yield return new WaitForSeconds(0.1f);
-        iTween.ScaleTo(rewards.GetChild(2).gameObject, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.5f));
+        if (getExp > 0) StartCoroutine(GetUserExp(slider));
+        if (supply > 0) {
+            rewards.GetChild(0).gameObject.SetActive(true);
+            rewards.GetChild(0).GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = supply.ToString();
+            yield return new WaitForSeconds(0.1f);
+            iTween.ScaleTo(rewards.GetChild(0).gameObject, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.5f));
+        }
+    }
+
+    IEnumerator GetUserExp(Image slider) {
+        float gain = getExp;
+        TMPro.TextMeshProUGUI expValueText = transform.Find("RankGage/RankText/Value").GetComponent<TMPro.TextMeshProUGUI>();
+        TMPro.TextMeshProUGUI lvUpValueText = transform.Find("RankGage/RankText/MaxValue").GetComponent<TMPro.TextMeshProUGUI>();
+        while (getExp > 0) {
+            slider.fillAmount = exp / lvExp;
+            expValueText.text = ((int)exp).ToString();
+            lvUpValueText.text = ((int)lvExp).ToString();
+            if (slider.fillAmount == 1) {
+                transform.Find("RankGage/LevelImage/LevelText").GetComponent<TMPro.TextMeshProUGUI>().text = (AccountManager.Instance.userResource.lv + 1).ToString();
+                lvExp = nextLvExp;
+                slider.transform.localScale = new Vector3(1.1f, 1.1f, 1.1f);
+                yield return new WaitForSeconds(0.2f);
+                slider.transform.localScale = Vector3.one;
+                yield return new WaitForSeconds(0.2f);
+                slider.transform.localScale = new Vector3(1.1f, 1.1f, 1.1f);
+                yield return new WaitForSeconds(0.2f);
+                slider.transform.localScale = Vector3.one;
+                yield return new WaitForSeconds(0.3f);
+                slider.fillAmount = 0;
+                exp = 0;
+            }
+            exp += 0.1f;
+            gain -= 0.1f;
+            yield return new WaitForSeconds(0.001f);
+        }
     }
 }

@@ -135,6 +135,7 @@ public partial class AccountManager : Singleton<AccountManager> {
     public class UserInfo {
         public uint exp;
         public uint nextLvExp;
+        public uint lvExp;
         public uint lv;
 
         public int gold;
@@ -219,6 +220,7 @@ public partial class AccountManager {
         userResource.SetResource(
             lv: userData.lv,
             exp: userData.exp,
+            lvExp: userData.lvExp,
             nextLvExp: userData.nextLvExp,
             gold: userData.gold,
             crystal: userData.manaCrystal,

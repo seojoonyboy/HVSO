@@ -10,6 +10,7 @@ public class UserResourceManager : SerializedMonoBehaviour {
     // Start is called before the first frame update
     public uint lv;
     public uint exp;
+    public uint lvExp;
     public uint nextLvExp;
 
     public int gold;
@@ -22,9 +23,10 @@ public class UserResourceManager : SerializedMonoBehaviour {
     public int supplyBox;
     
 
-    public void SetResource(uint lv, uint exp, uint nextLvExp, int gold, int crystal, int supplyStore, int supplyStoreTime, int supply, int supplyBox) {
+    public void SetResource(uint lv, uint exp, uint lvExp, uint nextLvExp, int gold, int crystal, int supplyStore, int supplyStoreTime, int supply, int supplyBox) {
         this.lv = lv;
         this.exp = exp;
+        this.lvExp = lvExp;
         this.nextLvExp = nextLvExp;
         this.gold = gold;
         this.crystal = crystal;
