@@ -79,6 +79,7 @@ public partial class PlayMangement : MonoBehaviour {
         SetVictoryCondition();
         DistributeResource();
         InitTurnTable();
+        resultManager.SaveResourceinfo();
     }
 
     //승리 조건을 설정할 함수. victoryModule이라는 namespace로 전략패턴으로 구현 계획
