@@ -41,6 +41,10 @@ public class ScenarioManager : MonoBehaviour
 
     private void OnDestroy() {
         Instance = null;
+        PlayerPrefs.SetString("SelectedRace", "");
+        PlayerPrefs.SetString("SelectedDeckId", "");
+        PlayerPrefs.SetString("SelectedDeckType", "");
+        PlayerPrefs.SetString("SelectedBattleType", "");
     }   
     
 
