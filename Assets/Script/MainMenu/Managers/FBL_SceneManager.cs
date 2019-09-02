@@ -37,17 +37,14 @@ public class FBL_SceneManager : Singleton<FBL_SceneManager> {
             case Scene.LOADING_SCENE:
                 numberOfScene = 3;
                 break;
-            case Scene.PVP_READY_SCENE:
+            case Scene.CONNECT_MATCHING_SCENE:
                 numberOfScene = 4;
                 break;
-            case Scene.CONNECT_MATCHING_SCENE:
+            case Scene.MISSION_INGAME:
                 numberOfScene = 5;
                 break;
-            case Scene.MISSION_INGAME:
-                numberOfScene = 6;
-                break;
             case Scene.MISSION_SELECT_SCENE:
-                numberOfScene = 7;
+                numberOfScene = 6;
                 break;
         }
         var currentScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
