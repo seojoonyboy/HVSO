@@ -20,14 +20,14 @@ public class PlayerController : MonoBehaviour
     public GameObject playerUI;
     public SkeletonGraphic shieldFeedBack;
     public SkeletonGraphic shieldGauge;
-    Transform sheildRemain;
+    protected Transform sheildRemain;
     [SerializeField] public CardHandManager cdpm;
 
     public GameObject backLine;
     public GameObject frontLine;
-    TextMeshProUGUI costText;
-    TextMeshProUGUI HPText;
-    Transform HPGauge;
+    protected TextMeshProUGUI costText;
+    protected TextMeshProUGUI HPText;
+    protected Transform HPGauge;
     public GameObject buttonParticle;
     public bool dragCard = false;
 
@@ -38,7 +38,7 @@ public class PlayerController : MonoBehaviour
     public ReactiveProperty<int> resource = new ReactiveProperty<int>(2);
     public ReactiveProperty<bool> isPicking = new ReactiveProperty<bool>(false);
     public ReactiveProperty<int> shieldStack = new ReactiveProperty<int>(0);
-    private int shieldCount = 0;
+    protected int shieldCount = 0;
 
     protected HeroSpine heroSpine;
     public static int activeCardMinCost;
@@ -60,7 +60,7 @@ public class PlayerController : MonoBehaviour
         get { return myTurn; }
     }
 
-    public void Init() {
+    public virtual void Init() {
         string race = PlayerPrefs.GetString("SelectedRace");
         if (race == "HUMAN") isHuman = isPlayer;
         else isHuman = !isPlayer;
@@ -139,7 +139,7 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    private void SetShield() {
+    protected void SetShield() {
         GameObject shield;
         Transform positionTransform = PlayMangement.instance.backGround.transform.Find("PlayerPosition");
         shield = (isHuman == true) ? Instantiate(PlayMangement.instance.humanShield, transform) : Instantiate(PlayMangement.instance.orcShield, transform);

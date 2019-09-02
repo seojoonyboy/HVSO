@@ -6,8 +6,8 @@ using UnityEngine.UI;
 public class CardHandManager : MonoBehaviour {
     public int cardNum = 0;
     TMPro.TextMeshProUGUI handCardNum;
-    [SerializeField] Transform cardStorage;
-    [SerializeField] Transform showPos;
+    [SerializeField] protected Transform cardStorage;
+    [SerializeField] protected Transform showPos;
     [SerializeField] protected Transform firstDrawParent;
     [SerializeField] public Transform cardSpawnPos;
     public bool isMultiple = false;
@@ -27,7 +27,7 @@ public class CardHandManager : MonoBehaviour {
     }
 
     //멀리건 실행 코루틴(교체 가능한 카드 4장 드로우)
-    public IEnumerator FirstDraw() {
+    public virtual IEnumerator FirstDraw() {
         bool race = PlayMangement.instance.player.isHuman;
         SocketFormat.Card socketCard = PlayMangement.instance.socketHandler.gameState.players.myPlayer(race).FirstCards[firstDrawList.Count];
         GameObject card;

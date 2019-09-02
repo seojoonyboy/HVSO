@@ -110,7 +110,7 @@ public partial class PlayMangement : MonoBehaviour {
         }
     }
 
-    private void SetWorldScale() {
+    protected void SetWorldScale() {
 
         //SpriteRenderer backSprite = backGround.GetComponent<SpriteRenderer>();
         float ratio = (float)Screen.width / Screen.height;
@@ -170,7 +170,7 @@ public partial class PlayMangement : MonoBehaviour {
     }
 
 
-    private void SetBackGround() {
+    protected virtual void SetBackGround() {
         if (player.isHuman == true) {
             GameObject raceSprite = Instantiate(AccountManager.Instance.resource.raceUiPrefabs["HUMAN_BACKGROUND"][0], backGround.transform);
             raceSprite.transform.SetAsLastSibling();
@@ -829,11 +829,11 @@ public partial class PlayMangement {
 /// </summary>
 public partial class PlayMangement {
 
-    public void DistributeCard() {
+    public virtual void DistributeCard() {
         StartCoroutine(GenerateCard());
     }
 
-    public IEnumerator GenerateCard() {
+    public virtual IEnumerator GenerateCard() {
         int i = 0;
         while (i < 4) {
             yield return new WaitForSeconds(0.3f);
@@ -853,7 +853,7 @@ public partial class PlayMangement {
         }
     }
 
-    public void EndTurnDraw() {
+    public virtual void EndTurnDraw() {
         if (isGame == false) return;
         bool race = player.isHuman;
         SocketFormat.Card cardData = socketHandler.gameState.players.myPlayer(race).newCard;

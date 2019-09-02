@@ -191,7 +191,7 @@ public class ScenarioManager : MonoBehaviour
         if (race != null && !string.IsNullOrEmpty(selectedDeckId)) {
             if (selectedDeck.deckValidate) {
                 isIngameButtonClicked = true;
-                FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.CONNECT_MATCHING_SCENE);
+                FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.TUTORIAL);
             }
             else {
                 Modal.instantiate("유효하지 않은 덱입니다.", Modal.Type.CHECK);

@@ -49,6 +49,9 @@ public class FBL_SceneManager : Singleton<FBL_SceneManager> {
             case Scene.MISSION_SELECT_SCENE:
                 numberOfScene = 7;
                 break;
+            case Scene.TUTORIAL:
+                numberOfScene = 8;
+                break;
         }
         var currentScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
         QualitySettings.asyncUploadTimeSlice = 4;
@@ -56,7 +59,7 @@ public class FBL_SceneManager : Singleton<FBL_SceneManager> {
         QualitySettings.asyncUploadTimeSlice = 2;
     }
 
-    AsyncOperation[] asyncOps = new AsyncOperation[6];
+    AsyncOperation[] asyncOps = new AsyncOperation[7];
 
     IEnumerator PreLoadReadyScene(int load) {
         yield return null;
@@ -72,7 +75,7 @@ public class FBL_SceneManager : Singleton<FBL_SceneManager> {
             asyncOps[unload - 2] = null;
         if (asyncOps[load - 2] == null) {
             UnityEngine.SceneManagement.SceneManager.LoadScene(load, UnityEngine.SceneManagement.LoadSceneMode.Single);
-            for (int i = 0; i < 6; i++) {
+            for (int i = 0; i < 7; i++) {
                 asyncOps[i] = null;
             }
             yield break;
@@ -98,6 +101,7 @@ public class FBL_SceneManager : Singleton<FBL_SceneManager> {
         DECK_SETTING_SCENE,
         CONNECT_MATCHING_SCENE,
         LOADING_SCENE,
-        LOGIN
+        LOGIN,
+        TUTORIAL
     }
 }
