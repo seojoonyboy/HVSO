@@ -829,11 +829,11 @@ public partial class PlayMangement {
 /// </summary>
 public partial class PlayMangement {
 
-    public virtual void DistributeCard() {
+    public void DistributeCard() {
         StartCoroutine(GenerateCard());
     }
 
-    public virtual IEnumerator GenerateCard() {
+    public IEnumerator GenerateCard() {
         int i = 0;
         while (i < 4) {
             yield return new WaitForSeconds(0.3f);
