@@ -13,7 +13,8 @@ namespace Haegin
 		public static string urlScheme = "hgmodsample://";
 		public static string firebaseDynamicLink = "hgmodsample.page.link";
 		public static bool useAppsFlyer = false;
-		public static bool UseIOSGoogleMobileAds7_24_0_OR_HIGHER = false;
+		public static bool UseIOSGoogleMobileAds7_24_0_OR_HIGHER = true;
 		public static string oneStoreBase64EncodedPublicKey = "";
+		public static string ZendeskHelpAPPageID = "360033798014";
 	}
 }

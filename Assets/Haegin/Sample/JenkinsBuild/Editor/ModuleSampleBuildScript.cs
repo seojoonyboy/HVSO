@@ -27,6 +27,16 @@ class ModuleSampleBuildScript
         return null;
     }
 
+    static void EnableOneStore()
+	{
+		ProjectSettingsWindow.SetOneStoreSettings(true);
+	}
+
+	static void DisableOneStore()
+	{
+		ProjectSettingsWindow.SetOneStoreSettings(false);
+	}
+
     static void BuildAndroid(int versionCode)
     {
         PlayerSettings.Android.useAPKExpansionFiles = true;
@@ -55,15 +65,35 @@ class ModuleSampleBuildScript
         GenericBuild(SCENES, TARGET_DIR + "/XCode", BuildTarget.iOS, BuildOptions.None);
     }
 
+    static void PerformOneStoreAndroidBuild()
+    {
+        PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.Android, "CUSTOM_NGUI;CROSS_PLATFORM_INPUT;MOBILE_INPUT;MDEBUG;USE_SAMPLE_SCENE");
+        PlayerSettings.applicationIdentifier = "com.haegin.modulesample.onestore";
+        ProjectSettingsWindow.SetOneStoreSettings(true);
+        BuildAndroid(1);
+    }
+
     static void PerformAndroidBuild()
     {
-        PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.Android, "CUSTOM_NGUI;CROSS_PLATFORM_INPUT;MOBILE_INPUT;MDEBUG");
+        PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.Android, "CUSTOM_NGUI;CROSS_PLATFORM_INPUT;MOBILE_INPUT;MDEBUG;QA;USE_SAMPLE_SCENE");
+        PlayerSettings.applicationIdentifier = "com.haegin.modulesample";
+        ProjectSettingsWindow.SetOneStoreSettings(false);
         BuildAndroid(1);
     }
 
     static void PerformiOSBuild()
     {
-        PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.iOS, "CUSTOM_NGUI;CROSS_PLATFORM_INPUT;MOBILE_INPUT;MDEBUG");
+        PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.iOS, "CUSTOM_NGUI;CROSS_PLATFORM_INPUT;MOBILE_INPUT;MDEBUG;USE_SAMPLE_SCENE");
+        PlayerSettings.applicationIdentifier = "com.haegin.modulesample";
+        PlayerSettings.iOS.sdkVersion = iOSSdkVersion.DeviceSDK;
+        BuildiOS(1);
+    }
+
+    static void PerformiOSSimulatorBuild()
+    {
+        PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.iOS, "CUSTOM_NGUI;CROSS_PLATFORM_INPUT;MOBILE_INPUT;MDEBUG;DO_NOT_USE_GPRESTO;USE_SAMPLE_SCENE");
+        PlayerSettings.applicationIdentifier = "com.haegin.modulesample";
+        PlayerSettings.iOS.sdkVersion = iOSSdkVersion.SimulatorSDK;
         BuildiOS(1);
     }
 

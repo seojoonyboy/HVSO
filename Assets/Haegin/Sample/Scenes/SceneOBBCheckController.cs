@@ -1,4 +1,4 @@
-#define QA
+//#define QA
 #define DONT_UNLOAD_BGWEBCLIENT
 using UnityEngine;
 using Haegin;
@@ -137,7 +137,8 @@ public class SceneOBBCheckController : MonoBehaviour {
 
         UGUICommon.ShowRequestPermission(requestPermissionDialog, canvas, TextManager.GetString(TextManager.StringTag.AppPermissionsTitle1), TextManager.GetString(TextManager.StringTag.AppPermissionsInfo1), (UGUICommon.ButtonType buttonType) =>
         {
-            RequestAndroidPermission(0);
+            //RequestAndroidPermission(0);
+            SceneManager.LoadScene("Login", LoadSceneMode.Single);
         });
     }
 
@@ -269,7 +270,9 @@ public class SceneOBBCheckController : MonoBehaviour {
         patcher.ReachabilityChanged += OnReachabilityChanged;
 
 #if QA
-        patcher.DownloadOBB(OpenConfirmDialog, versionCode, "http://10.0.2.1/HaeginPatch/ModuleSample/Android/main.1.com.haegin.modulesample.obb", 133242);
+        patcher.DownloadOBB(OpenConfirmDialog, versionCode, "http://10.0.2.1/HaeginPatch/ModuleSample/Android/main.1.com.haegin.modulesample.obb");
+#elif USE_ONESTORE_IAP
+        patcher.DownloadOBB(OpenConfirmDialog, versionCode, "http://10.0.2.1/HaeginPatch/ModuleSample/Android/main.1.com.haegin.modulesample.obb");
 #else
         patcher.DownloadOBB(OpenConfirmDialog, versionCode);
 #endif
@@ -290,7 +293,9 @@ public class SceneOBBCheckController : MonoBehaviour {
         SelectDialog.GetComponent<RectTransform>().localPosition = new Vector3(0, 0, 0);
         SelectDialog.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
         GameObject.Find("Title").GetComponent<Text>().text = TextManager.GetString(TextManager.StringTag.OBBFileError);
-        GameObject.Find("WIFIText").GetComponent<Text>().text = String.Format(TextManager.GetString(TextManager.StringTag.OBBFileDownloadMessage), fileSize / (1024 * 1024));
+        long size = fileSize / (1024 * 1024);
+        if (size <= 0) size = 1;
+        GameObject.Find("WIFIText").GetComponent<Text>().text = String.Format(TextManager.GetString(TextManager.StringTag.OBBFileDownloadMessage), size);
 
         ThreadSafeDispatcher.OnSystemBackKey onSystemBack = () =>
         {

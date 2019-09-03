@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using Haegin;
 using HaeginGame;
@@ -203,8 +203,12 @@ public class SceneStoreController : MonoBehaviour
         Debug.Log("Unity : OnButtonHelpClick");
 #endif
         SetInteractableWebViewButton(false);
+#if USE_ORG_HELP
         UGUICommon.ShowHelpWindow(helpDialog, canvas, Help.HelpItem.Main, "http://haegin.kr/Help/HomerunClash/v1_1_0", "UserId", "Nickname", "AppVersion", action => {
-            if(action == UGUICommon.HelpDialogAction.Close) {
+#else
+        UGUICommon.ShowHelpWindow(helpDialog, canvas, Help.HelpItem.ZendeskMain, "http://haegin.kr", "UserId", "Nickname", "AppVersion", action => {
+#endif
+            if (action == UGUICommon.HelpDialogAction.Close) {
                 SetInteractableWebViewButton(true);
             }
         });
@@ -216,7 +220,11 @@ public class SceneStoreController : MonoBehaviour
         Debug.Log("Unity : OnButtonTOSClick");
 #endif
         SetInteractableWebViewButton(false);
+#if USE_ORG_HELP
         UGUICommon.ShowHelpWindow(helpDialog, canvas, Help.HelpItem.TermsOfService, "http://haegin.kr/Help/HomerunClash/v1_1_0", "UserId", "Nickname", "AppVersion", action => {
+#else
+        UGUICommon.ShowHelpWindow(helpDialog, canvas, Help.HelpItem.ZendeskTermsOfService, "http://haegin.kr", "UserId", "Nickname", "AppVersion", action => {
+#endif
             if (action == UGUICommon.HelpDialogAction.Close)
             {
                 SetInteractableWebViewButton(true);
@@ -230,7 +238,29 @@ public class SceneStoreController : MonoBehaviour
         Debug.Log("Unity : OnButtonPPClick");
 #endif
         SetInteractableWebViewButton(false);
+#if USE_ORG_HELP
         UGUICommon.ShowHelpWindow(helpDialog, canvas, Help.HelpItem.PrivacyPolicy, "http://haegin.kr/Help/HomerunClash/v1_1_0", "UserId", "Nickname", "AppVersion", action => {
+#else
+        UGUICommon.ShowHelpWindow(helpDialog, canvas, Help.HelpItem.ZendeskPrivacyPolicy, "http://haegin.kr", "UserId", "Nickname", "AppVersion", action => {
+#endif
+        if (action == UGUICommon.HelpDialogAction.Close)
+            {
+                SetInteractableWebViewButton(true);
+            }
+        });
+    }
+
+    public void OnButtonAPClick(string param)
+    {
+#if MDEBUG
+        Debug.Log("Unity : OnButtonAPClick");
+#endif
+        SetInteractableWebViewButton(false);
+#if USE_ORG_HELP
+        UGUICommon.ShowHelpWindow(helpDialog, canvas, Help.HelpItem.AcquirePossibility, "http://haegin.kr/Help/HomerunClash/v1_1_0", "UserId", "Nickname", "AppVersion", action => {
+#else
+        UGUICommon.ShowHelpWindow(helpDialog, canvas, Help.HelpItem.ZendeskAcquirePossibility, "http://haegin.kr", "UserId", "Nickname", "AppVersion", action => {
+#endif
             if (action == UGUICommon.HelpDialogAction.Close)
             {
                 SetInteractableWebViewButton(true);

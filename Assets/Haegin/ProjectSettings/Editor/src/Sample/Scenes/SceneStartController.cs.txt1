@@ -73,4 +73,5 @@ public class SceneStartController : MonoBehaviour
         Account.Initialize(ProjectSettings.webClientOAuth2ClientId);
 
         // 최초 씬에서 webClient를 생성
+#if USE_SAMPLE_SCENE
         

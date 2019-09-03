@@ -708,7 +708,11 @@ namespace Haegin
                 List<AN_Purchase> list = new List<AN_Purchase>();
                 foreach (AN_Purchase tpl in AN_Billing.Inventory.Purchases)
                 {
-                    if (AN_Billing.Inventory.GetProductById(tpl.ProductId).IsConsumable && tpl.PurchaseState == 0)
+#if MDEBUG
+                    Debug.Log("----------------------------------------------\n Not Yet Processed Product : " + tpl.ProductId + "\n--------------------------------------------------");
+#endif
+                    AN_Product p = AN_Billing.Inventory.GetProductById(tpl.ProductId);
+                    if (p != null && p.IsConsumable && tpl.PurchaseState == 0)
                     {
                         list.Add(tpl);
                     }

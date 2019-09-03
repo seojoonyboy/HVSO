@@ -19,6 +19,7 @@ public class ProjectSettingsWindow : EditorWindow
         It,
         Fr,
         Pt,
+        Id,
         Max
     };
 
@@ -33,6 +34,7 @@ public class ProjectSettingsWindow : EditorWindow
         "it",
         "fr",
         "pt",
+        "id",
     };
 
     public static string[] AndroidLocalizedPostfix = {
@@ -46,6 +48,7 @@ public class ProjectSettingsWindow : EditorWindow
         "it",
         "fr",
         "pt",
+        "in", // id 
     };
 
     public static string[] AppNameTitle = {
@@ -59,6 +62,7 @@ public class ProjectSettingsWindow : EditorWindow
         "App Name(이탈리아어)",
         "App Name(프랑스어)",
         "App Name(포르투갈어)",
+        "App Name(인도네시아어)",
     };
 
     public static string[] SettingItemName = {
@@ -72,14 +76,15 @@ public class ProjectSettingsWindow : EditorWindow
         "GoogleAppNameIt",
         "GoogleAppNameFr",
         "GoogleAppNamePt",
+        "GoogleAppNameId",
     };
 
-    string ProtocolName1 = "";
-    string ProtocolName2 = "HaeginGame";
-    string accountIdToCreate = "ckeag1C97qEweL1lnZTVf3";
-    string webClientOAuth2ClientId = "551232432184-233chdikqqqj6sqsj3rihs7cq6ij4fm0.apps.googleusercontent.com";
-    string FacebookAppID = "166749030757238";
-    string[] GoogleAppName = {
+    static string ProtocolName1 = "";
+    static string ProtocolName2 = "HaeginGame";
+    static string accountIdToCreate = "ckeag1C97qEweL1lnZTVf3";
+    static string webClientOAuth2ClientId = "551232432184-233chdikqqqj6sqsj3rihs7cq6ij4fm0.apps.googleusercontent.com";
+    static string FacebookAppID = "166749030757238";
+    static string[] GoogleAppName = {
         "Module Sample",  // Default 영어
         "모듈 샘플",        // 한글
         "",               // 일본어
@@ -89,84 +94,115 @@ public class ProjectSettingsWindow : EditorWindow
         "",               // 독일어 
         "",               // 이탈리아어 
         "",               // 프랑스어 
-        "",               // 포르투갈어 
+        "",               // 포르투갈어
+        "",               // 인도네시아어
     };
-    string GoogleAppID = "551232432184";
-    string BundleID = "com.haegin.modulesample";
-    string base64EncodedPublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAhyY/WIjzgbHjmJpKtvc/0G/9bm8GS6/+Xpg78KHaY43jobSfzktzvI8wgQntmpVyDS79/1EPuBjciySmvlaFuDUii4LQeb6ohOwesf3wcwhX5OjYiS+PJCher4wxXwF/1LWOg+bR+g8x+5OSREvjT0GCsDt+oEFmAUdFSC23tcqvqF2J+1HeMKDPONmElSQymiTbg+f3rBJ5d9/lpWGtZMIvZB3HlHNsaxTPQmFoT1sBQ8vmEKBS4prx4vN2uf4T/WRl4S9JQD0No0n+7AgS5nRkjfFXMjbeU/bTioWc3C52SaZeld8meTza0TQ0fCekVZSgKnU3q7hUxUV9dhRgzwIDAQAB";
-    string toolsReplaceAdd = ""; //", android:roundIcon";
-    string EditorAccountIdKey = "AccountId";
-    string URLScheme = "hgmodsample";
-    string firebaseDynamicLink = "hgmodsample.page.link";
-    string AdMobAppId = "ca-app-pub-8910195275590924~5903100277";
-    string oneStoreBase64EncodedPublicKey = "";
-    bool UseAppsFlyer = false;
-    bool SkipPermissionsDialog = false;
-
-    bool UseIOSGoogleMobileAds7_24_0_OR_HIGHER = false;
-
-    bool UseOneStoreIAP = false;
+    static string GoogleAppID = "551232432184";
+    static string BundleID = "com.haegin.modulesample";
+    static string base64EncodedPublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAhyY/WIjzgbHjmJpKtvc/0G/9bm8GS6/+Xpg78KHaY43jobSfzktzvI8wgQntmpVyDS79/1EPuBjciySmvlaFuDUii4LQeb6ohOwesf3wcwhX5OjYiS+PJCher4wxXwF/1LWOg+bR+g8x+5OSREvjT0GCsDt+oEFmAUdFSC23tcqvqF2J+1HeMKDPONmElSQymiTbg+f3rBJ5d9/lpWGtZMIvZB3HlHNsaxTPQmFoT1sBQ8vmEKBS4prx4vN2uf4T/WRl4S9JQD0No0n+7AgS5nRkjfFXMjbeU/bTioWc3C52SaZeld8meTza0TQ0fCekVZSgKnU3q7hUxUV9dhRgzwIDAQAB";
+    static string toolsReplaceAdd = ""; //", android:roundIcon";
+    static string EditorAccountIdKey = "AccountId";
+    static string URLScheme = "hgmodsample";
+    static string firebaseDynamicLink = "hgmodsample.page.link";
+    static string AdMobAppId = "ca-app-pub-8910195275590924~5903100277";
+    static string oneStoreBase64EncodedPublicKey = "";
+    static bool UseAppsFlyer = false;
+    static bool SkipPermissionsDialog = false;
+    static bool UseIOSGoogleMobileAds7_24_0_OR_HIGHER = false;
+    static bool UseOneStoreIAP = false;
+    static string ZendeskHelpUrl = "https://help-homerunclash.haegin.kr/hc";
+    static string ZendeskHelpAPPageID = "360033798014";
+    static string ZendeskHelpSupportMail = "support@homerunclash.zendesk.com";
 
     Rect notifyIcon1;
 
 
     [MenuItem("Haegin/Project Settings")]
-    public static void ShowWindow()
+    public static void ShowWindow() 
     {
-        try 
-        {
-            System.Type inspectorType = System.Type.GetType("UnityEditor.InspectorWindow,UnityEditor.dll");
-            EditorWindow.GetWindow<ProjectSettingsWindow>("Haegin Project Settings", new System.Type[] { inspectorType });
-        }
-        catch
-        {
-            EditorWindow.GetWindow<ProjectSettingsWindow>(true, "Haegin Project Settings");
-        }
-    }
+        ProjectSettingsWindow window = EditorWindow.GetWindow<ProjectSettingsWindow>(true, "Haegin Project Settings");
+    } 
 
     [MenuItem("Haegin/Delete PlayerPrefs")]
     public static void DeletePlayerPrefs()
     {
         PlayerPrefs.DeleteAll();
         PlayerPrefs.Save();
+    } 
+
+    static ProjectSettingsWindow()
+    {
+        LoadSettings();
     }
 
-    public void Awake()
+    static void LoadSettings()
     {
-        if (File.Exists(xmlpath))
+        if (File.Exists(xmlpath)) 
         {
             XmlDocument xml = new XmlDocument();
             xml.Load(xmlpath);
 
             string text;
             XmlNode node = xml.SelectSingleNode("HaeginSettings");
-            text = node["BaseProtocolNameSpace"].InnerText;
-            if (!string.IsNullOrEmpty(text))
-                ProtocolName1 = text;
-            text = node["GameProtocolNameSpace"].InnerText;
-            if (!string.IsNullOrEmpty(text))
-                ProtocolName2 = text;
-            text = node["AccountIdToCreate"].InnerText;
-            if (!string.IsNullOrEmpty(text))
-                accountIdToCreate = text;
-            text = node["Auth2ClientID"].InnerText;
-            if (!string.IsNullOrEmpty(text))
-                webClientOAuth2ClientId = text;
-            text = node["FacebookAppID"].InnerText;
-            if (!string.IsNullOrEmpty(text))
-                FacebookAppID = text;
+            try
+            {
+                text = node["BaseProtocolNameSpace"].InnerText;
+                if (!string.IsNullOrEmpty(text))
+                    ProtocolName1 = text;
+            }
+            catch { }
+            try
+            {
+                text = node["GameProtocolNameSpace"].InnerText;
+                if (!string.IsNullOrEmpty(text))
+                    ProtocolName2 = text;
+            }
+            catch { }
+            try
+            {
+                text = node["AccountIdToCreate"].InnerText;
+                if (!string.IsNullOrEmpty(text))
+                    accountIdToCreate = text;
+            }
+            catch { }
+            try
+            {
+                text = node["Auth2ClientID"].InnerText;
+                if (!string.IsNullOrEmpty(text))
+                    webClientOAuth2ClientId = text;
+            }
+            catch { }
+            try
+            {
+                text = node["FacebookAppID"].InnerText;
+                if (!string.IsNullOrEmpty(text))
+                    FacebookAppID = text;
+            }
+            catch { }
             for (int i = 0; i < (int)LocalizedName.Max; i++)
             {
-                text = node[SettingItemName[i]].InnerText;
-                if (!string.IsNullOrEmpty(text))
-                    GoogleAppName[i] = text;
+                try
+                {
+                    text = node[SettingItemName[i]].InnerText;
+                    if (!string.IsNullOrEmpty(text))
+                        GoogleAppName[i] = text;
+                }
+                catch { }
             }
-            text = node["GoogleAppID"].InnerText;
-            if (!string.IsNullOrEmpty(text))
-                GoogleAppID = text;
-            text = node["EditorAccountIdKey"].InnerText;
-            if (!string.IsNullOrEmpty(text))
-                EditorAccountIdKey = text;
+            try
+            {
+                text = node["GoogleAppID"].InnerText;
+                if (!string.IsNullOrEmpty(text))
+                    GoogleAppID = text;
+            }
+            catch { }
+            try
+            {
+                text = node["EditorAccountIdKey"].InnerText;
+                if (!string.IsNullOrEmpty(text))
+                    EditorAccountIdKey = text;
+            }
+            catch { }
             try
             {
                 text = node["URLScheme"].InnerText;
@@ -181,22 +217,34 @@ public class ProjectSettingsWindow : EditorWindow
                     firebaseDynamicLink = text;
             }
             catch { }
-            text = node["PackageName"].InnerText;
-            if (!string.IsNullOrEmpty(text))
-                BundleID = text;
-            text = node["ToolsReplace"].InnerText;
-            if (!string.IsNullOrEmpty(text))
-                toolsReplaceAdd = text;
-            text = node["GoogleBase64EncodedPublicKey"].InnerText;
-            if (!string.IsNullOrEmpty(text))
-                base64EncodedPublicKey = text;
+            try
+            {
+                text = node["PackageName"].InnerText;
+                if (!string.IsNullOrEmpty(text))
+                    BundleID = text;
+            }
+            catch { }
+            try
+            {
+                text = node["ToolsReplace"].InnerText;
+                if (!string.IsNullOrEmpty(text))
+                    toolsReplaceAdd = text;
+            }
+            catch { }
+            try
+            {
+                text = node["GoogleBase64EncodedPublicKey"].InnerText;
+                if (!string.IsNullOrEmpty(text))
+                    base64EncodedPublicKey = text;
+            }
+            catch { }
             try
             {
                 text = node["AdMobAppId"].InnerText;
                 if (!string.IsNullOrEmpty(text))
                     AdMobAppId = text;
             }
-            catch { };
+            catch { }
             try
             {
                 text = node["UseAppsFlyer"].InnerText;
@@ -204,41 +252,71 @@ public class ProjectSettingsWindow : EditorWindow
                 {
                     UseAppsFlyer = text.Equals("true", System.StringComparison.OrdinalIgnoreCase);
                 }
-            } catch { };
+            }
+            catch { }
             try
             {
                 text = node["SkipPermissionsDialog"].InnerText;
                 if (!string.IsNullOrEmpty(text))
                     SkipPermissionsDialog = text.Equals("true", System.StringComparison.OrdinalIgnoreCase);
             }
-            catch { };
+            catch { }
             try
             {
                 text = node["UseIOSGoogleMobileAds7_24_0_OR_HIGHER"].InnerText;
                 if (!string.IsNullOrEmpty(text))
                     UseIOSGoogleMobileAds7_24_0_OR_HIGHER = text.Equals("true", System.StringComparison.OrdinalIgnoreCase);
             }
-            catch { };
+            catch { }
             try
             {
                 text = node["UseOneStoreIAP"].InnerText;
                 if (!string.IsNullOrEmpty(text))
                     UseOneStoreIAP = text.Equals("true", System.StringComparison.OrdinalIgnoreCase);
             }
-            catch { };
-            text = node["OneStoreBase64EncodedPublicKey"].InnerText;
-            if (!string.IsNullOrEmpty(text))
-                oneStoreBase64EncodedPublicKey = text;
+            catch { }
+            try
+            {
+                text = node["OneStoreBase64EncodedPublicKey"].InnerText;
+                if (!string.IsNullOrEmpty(text))
+                    oneStoreBase64EncodedPublicKey = text;
+            }
+            catch { }
+            try
+            {
+                text = node["ZendeskHelpAPPageID"].InnerText;
+                if (!string.IsNullOrEmpty(text))
+                    ZendeskHelpAPPageID = text;
+            }
+            catch { }
+            try
+            {
+                text = node["ZendeskHelpUrl"].InnerText;
+                if (!string.IsNullOrEmpty(text))
+                    ZendeskHelpUrl = text;
+            }
+            catch { }
+            try
+            {
+                text = node["ZendeskHelpSupportMail"].InnerText;
+                if (!string.IsNullOrEmpty(text))
+                    ZendeskHelpSupportMail = text;
+            }
+            catch { }
+        }
+        else
+        {
+            Debug.Log("File Not Found");
         }
     }
 
     void SaveSettings()
     {
-        if (File.Exists(xmlpath))
+        if (File.Exists(xmlpath)) 
         {
             File.Delete(xmlpath);
         }
-        string[] contents = new string[21 + (int)LocalizedName.Max];
+        string[] contents = new string[24 + (int)LocalizedName.Max];
 
         contents[0] = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
         contents[1] = "<HaeginSettings>";
@@ -264,7 +342,10 @@ public class ProjectSettingsWindow : EditorWindow
         contents[17 + (int)LocalizedName.Max] = "\t<UseIOSGoogleMobileAds7_24_0_OR_HIGHER>" + UseIOSGoogleMobileAds7_24_0_OR_HIGHER + "</UseIOSGoogleMobileAds7_24_0_OR_HIGHER>";
         contents[18 + (int)LocalizedName.Max] = "\t<UseOneStoreIAP>" + UseOneStoreIAP + "</UseOneStoreIAP>";
         contents[19 + (int)LocalizedName.Max] = "\t<OneStoreBase64EncodedPublicKey>" + oneStoreBase64EncodedPublicKey + "</OneStoreBase64EncodedPublicKey>";
-        contents[20 + (int)LocalizedName.Max] = "</HaeginSettings>";
+        contents[20 + (int)LocalizedName.Max] = "\t<ZendeskHelpUrl>" + ZendeskHelpUrl + "</ZendeskHelpUrl>";
+        contents[21 + (int)LocalizedName.Max] = "\t<ZendeskHelpAPPageID>" + ZendeskHelpAPPageID + "</ZendeskHelpAPPageID>";
+        contents[22 + (int)LocalizedName.Max] = "\t<ZendeskHelpSupportMail>" + ZendeskHelpSupportMail + "</ZendeskHelpSupportMail>";
+        contents[23 + (int)LocalizedName.Max] = "</HaeginSettings>";
         File.WriteAllLines(xmlpath, contents);
     }
 
@@ -328,6 +409,13 @@ public class ProjectSettingsWindow : EditorWindow
         oneStoreBase64EncodedPublicKey = EditorGUILayout.TextField("OneStore Base64 Encoded Public Key", oneStoreBase64EncodedPublicKey);
         GUILayout.EndVertical();
 
+        GUILayout.BeginVertical("box");
+        GUILayout.Label("Zendesk HelpCenter Settings");
+        ZendeskHelpUrl = EditorGUILayout.TextField("Zendesk URL", ZendeskHelpUrl);
+        ZendeskHelpAPPageID = EditorGUILayout.TextField("아이템 획득 확률 페이지 ID", ZendeskHelpAPPageID);
+        ZendeskHelpSupportMail = EditorGUILayout.TextField("Support Mail", ZendeskHelpSupportMail);
+        GUILayout.EndVertical();
+
         if (GUILayout.Button("Apply"))
         {
             ApplyProjectSettings();
@@ -344,10 +432,24 @@ public class ProjectSettingsWindow : EditorWindow
         RegenerateModuleSource();
 		CreateBaseManifest();
         AssetDatabase.Refresh();
+        Close();
     }
 
     void CreateBaseManifest()
-	{
+    {
+        CreateBaseManifestSub(UseOneStoreIAP, BundleID);
+    }
+
+    static void CreateBaseManifestFromBuildScript(bool overrideUseOneStoreIAP, string overrideBundleID)
+    {
+        LoadSettings();
+        BundleID = overrideBundleID;
+        UseOneStoreIAP = overrideUseOneStoreIAP;
+        CreateBaseManifestSub(overrideUseOneStoreIAP, overrideBundleID);
+    }
+
+    static void CreateBaseManifestSub(bool overrideUseOneStoreIAP, string overrideBundleID)
+    { 
 		string[] filenames = new string[] {
             "AndroidManifest.xml"
         };
@@ -362,7 +464,7 @@ public class ProjectSettingsWindow : EditorWindow
             string srcstr0 = File.ReadAllText(srcpath + "0");
             string srcstr1 = File.ReadAllText(srcpath + "1");
             string srcstr2;
-            if(UseOneStoreIAP.Equals("false"))
+            if(overrideUseOneStoreIAP == false)
             {
                 srcstr2 = File.ReadAllText(srcpath + "2_1");
             }
@@ -382,7 +484,7 @@ public class ProjectSettingsWindow : EditorWindow
                 File.Delete(dstpath);
             }
             File.AppendAllText(dstpath, srcstr0);
-            File.AppendAllText(dstpath, BundleID);
+            File.AppendAllText(dstpath, overrideBundleID);
             File.AppendAllText(dstpath, srcstr1);
             File.AppendAllText(dstpath, toolsReplaceAdd);
             File.AppendAllText(dstpath, srcstr2.Replace("haeginsample", URLScheme));
@@ -390,15 +492,15 @@ public class ProjectSettingsWindow : EditorWindow
             File.AppendAllText(dstpath, srcstr3);
 			File.AppendAllText(dstpath, FacebookAppID);
             File.AppendAllText(dstpath, srcstr4);
-            File.AppendAllText(dstpath, BundleID);
+            File.AppendAllText(dstpath, overrideBundleID);
             File.AppendAllText(dstpath, srcstr5);
             File.AppendAllText(dstpath, AdMobAppId);
             File.AppendAllText(dstpath, srcstr6);
-            if(SkipPermissionsDialog.Equals("true"))
+            if(SkipPermissionsDialog)
             {
                 File.AppendAllText(dstpath, "    <meta-data android:name=\"unityplayer.SkipPermissionsDialog\" android:value=\"true\" />\n");
             }
-            if (UseAppsFlyer.Equals("true"))
+            if (UseAppsFlyer)
             {
                 File.AppendAllText(dstpath, srcstr7_1);
             }
@@ -492,7 +594,7 @@ public class ProjectSettingsWindow : EditorWindow
         }
     }
 
-    void CreateProjectSettingsCS()
+    static void CreateProjectSettingsCS()
     {
         string csPath = "Assets/Haegin/ProjectSettings/ProjectSettings.cs";
         if (File.Exists(csPath))
@@ -518,6 +620,7 @@ public class ProjectSettingsWindow : EditorWindow
             "\t\tpublic static bool useAppsFlyer = " + UseAppsFlyer.ToString().ToLower() + ";",
             "\t\tpublic static bool UseIOSGoogleMobileAds7_24_0_OR_HIGHER = " + UseIOSGoogleMobileAds7_24_0_OR_HIGHER.ToString().ToLower() + ";",
             "\t\tpublic static string oneStoreBase64EncodedPublicKey = \"" + oneStoreBase64EncodedPublicKey + "\";",
+            "\t\tpublic static string ZendeskHelpAPPageID = \"" + ZendeskHelpAPPageID + "\";",
             "\t}",
             "}"
         };
@@ -558,6 +661,21 @@ public class ProjectSettingsWindow : EditorWindow
                 addlines = addlines + "using " + ProtocolName2 + ";\n";
             }
             File.WriteAllText(dstpath, addlines);
+            File.AppendAllText(dstpath, srcstr);
+        }
+
+        {
+            string srcpath = srcDir + "Help/Help.cs.txt";
+            string dstpath = dstDir + "Help/Help.cs";
+
+            string srcstr = File.ReadAllText(srcpath);
+
+            if (File.Exists(dstpath))
+            {
+                File.Delete(dstpath);
+            }
+            srcstr = srcstr.Replace("https://help-homerunclash.haegin.kr/hc", ZendeskHelpUrl);
+            srcstr = srcstr.Replace("support@haegin.kr", ZendeskHelpSupportMail);
             File.AppendAllText(dstpath, srcstr);
         }
 
@@ -604,7 +722,15 @@ public class ProjectSettingsWindow : EditorWindow
             File.AppendAllText(dstpath, srcstr2);
         }
 
-        if(UseOneStoreIAP)
+        SetOneStoreSettings(UseOneStoreIAP, false);
+    }
+
+    public static void SetOneStoreSettings(bool UseOneStoreIAP, bool refresh = true)
+    {
+        string dstDir = "Assets/Haegin/";
+        string srcDir = "Assets/Haegin/ProjectSettings/Editor/src/";
+
+        if (UseOneStoreIAP)
         {
             if (Directory.Exists(dstDir + "IAP/OneStore"))
             {
@@ -620,11 +746,11 @@ public class ProjectSettingsWindow : EditorWindow
             for (int i = 0; i < onestore_filenames.Length; i++)
                 File.Copy(srcDir + onestore_filenames[i] + ".txt", dstDir + onestore_filenames[i]);
 
-            File.Copy(srcDir + "IAP/OneStore/iap_plugin_v17.01.00_20180226.aarsrc", dstDir + "IAP/OneStore/Android/iap_plugin_v17.01.00_20180226.aar");
+            File.Copy(srcDir + "IAP/OneStore/iap_plugin_v17.02.00_20181012.jarsrc", dstDir + "IAP/OneStore/Android/iap_plugin_v17.02.00_20181012.jar");
             File.Copy(srcDir + "IAP/OneStore/haeginonestore.aarsrc", dstDir + "IAP/OneStore/Android/haeginonestore.aar");
 
             string defines = PlayerSettings.GetScriptingDefineSymbolsForGroup(BuildTargetGroup.Android);
-            if(!defines.Contains("USE_ONESTORE_IAP"))
+            if (!defines.Contains("USE_ONESTORE_IAP"))
             {
                 PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.Android, "USE_ONESTORE_IAP;" + defines);
             }
@@ -642,6 +768,9 @@ public class ProjectSettingsWindow : EditorWindow
                 defines = defines.Replace("USE_ONESTORE_IAP;", "").Replace("USE_ONESTORE_IAP", "");
                 PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.Android, defines);
             }
-        }
+        }        
+        CreateBaseManifestFromBuildScript(UseOneStoreIAP, PlayerSettings.applicationIdentifier);
+        if (refresh)
+            AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
     }
 }

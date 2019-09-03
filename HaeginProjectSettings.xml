@@ -15,6 +15,7 @@
 	<GoogleAppNameIt></GoogleAppNameIt>
 	<GoogleAppNameFr></GoogleAppNameFr>
 	<GoogleAppNamePt></GoogleAppNamePt>
+	<GoogleAppNameId></GoogleAppNameId>
 	<GoogleAppID>1031344459169</GoogleAppID>
 	<EditorAccountIdKey>AccountId</EditorAccountIdKey>
 	<PackageName>com.haegin.hvso</PackageName>
@@ -25,7 +26,10 @@
 	<AdMobAppId>ca-app-pub-8910195275590924~5903100277</AdMobAppId>
 	<UseAppsFlyer>False</UseAppsFlyer>
 	<SkipPermissionsDialog>False</SkipPermissionsDialog>
-	<UseIOSGoogleMobileAds7_24_0_OR_HIGHER>False</UseIOSGoogleMobileAds7_24_0_OR_HIGHER>
+	<UseIOSGoogleMobileAds7_24_0_OR_HIGHER>True</UseIOSGoogleMobileAds7_24_0_OR_HIGHER>
 	<UseOneStoreIAP>False</UseOneStoreIAP>
 	<OneStoreBase64EncodedPublicKey></OneStoreBase64EncodedPublicKey>
+	<ZendeskHelpUrl>https://help-homerunclash.haegin.kr/hc</ZendeskHelpUrl>
+	<ZendeskHelpAPPageID>360033798014</ZendeskHelpAPPageID>
+	<ZendeskHelpSupportMail>support@homerunclash.zendesk.com</ZendeskHelpSupportMail>
 </HaeginSettings>

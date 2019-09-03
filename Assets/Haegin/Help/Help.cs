@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+using UnityEngine;
+using System.Collections.Generic;
 
 namespace Haegin
 {
@@ -10,9 +11,25 @@ namespace Haegin
             None,
             Main,
             PrivacyPolicy,
-            TermsOfService
+            TermsOfService,
+            AcquirePossibility,
+            ZendeskMain,
+            ZendeskPrivacyPolicy,
+            ZendeskTermsOfService,
+            ZendeskAcquirePossibility,
         }; 
-        static WebViewObject webViewObject = null;
+        public static WebViewObject webViewObject = null;
+
+        private string LanugageToLocale(string lang)
+        {
+            try
+            {
+                if (lang.Equals("Korean")) return "ko";
+                else if (lang.Equals("Japanese")) return "ja";
+            }
+            catch { }
+            return "en_us";
+        }
 
         public static void CloseWebView()
         {
@@ -78,13 +95,15 @@ namespace Haegin
                             }
                         }
                     ");
-#endif  
+#endif
                     if(userId != null && nickname != null && appversion != null)
                     {
-                        string href = "mailto:support@haegin.kr?subject=" + System.Uri.EscapeUriString("[" + Application.productName + " Inquiry]") + "&body=" + System.Uri.EscapeUriString("UserID : " + userId + "\nNick Name : " + nickname + "\nApplication Version : " + appversion + "\nDevice Model : " + SystemInfo.deviceModel + "\nDevice OS Version : " + SystemInfo.operatingSystem + "\n\n--- " + TextManager.GetString(TextManager.StringTag.EmailContent1) + " ---\n");
+                        string body = "UserID : " + userId + "\\nNick Name : " + nickname + "\\nApplication Version : " + appversion + "\\nDevice Model : " + SystemInfo.deviceModel + "\\nDevice OS Version : " + SystemInfo.operatingSystem;
+                        string href = "mailto:support@homerunclash.zendesk.com?subject=" + System.Uri.EscapeUriString("[" + Application.productName + " Inquiry]") + "&body=" + System.Uri.EscapeUriString("UserID : " + userId + "\nNick Name : " + nickname + "\nApplication Version : " + appversion + "\nDevice Model : " + SystemInfo.deviceModel + "\nDevice OS Version : " + SystemInfo.operatingSystem + "\n\n--- " + TextManager.GetString(TextManager.StringTag.EmailContent1) + " ---\n");
                         webViewObject.EvaluateJS(@"
-                            if (document.getElementById('haeginsupport') != null) { document.getElementById('haeginsupport').href='" + href + @"';
-                        }");
+                            if (document.getElementById('haeginsupport') != null) { document.getElementById('haeginsupport').href='" + href + @"'; }
+                            if (document.getElementById('request_custom_fields_360024238834') != null) { document.getElementById('request_custom_fields_360024238834').value='" + body + @"'; document.getElementById('request_custom_fields_360024238834').readOnly = 'true'; }
+                        ");
                     }
                     webViewObject.SetVisibility(true);
                     if(callback != null) 
@@ -109,32 +128,87 @@ namespace Haegin
             else 
             {
                 string prefix = "/English";
-                if (supportedLanguages != null)
+                Dictionary<string, string> lang2locale = new Dictionary<string, string>()
                 {
-                    for(int i = 0; i < supportedLanguages.Length; i++)
-                    {
-                        if(TextManager.GetLanguageSetting().Equals(supportedLanguages[i]))
+                    { "/English", "/en-us" },
+                    { "/Korean", "/ko" },
+                    { "/ChineseTraditional", "/zh-tw" },
+                    { "/Japanese", "/ja" },
+                    { "/Spanish", "/es" },
+                    { "/German", "/de" },
+                    { "/French", "/fr" },
+                    { "/Indonesian", "/id" },
+                    { "/ChineseSimplified", "/zh-cn" },
+                    { "/Portuguese", "/pt" },
+                    { "/Italian", "/it" },
+                };
+                string ZendeskBaseURL = "https://help-homerunclash.haegin.kr/hc";
+                switch (item)
+                {
+                    case HelpItem.Main:
+                    case HelpItem.PrivacyPolicy:
+                    case HelpItem.TermsOfService:
+                    case HelpItem.AcquirePossibility:
+                        if (supportedLanguages != null)
                         {
-                            prefix = "/" + supportedLanguages[i];
-                            break;
+                            for (int i = 0; i < supportedLanguages.Length; i++)
+                            {
+                                if (TextManager.GetLanguageSetting().Equals(supportedLanguages[i]))
+                                {
+                                    prefix = "/" + supportedLanguages[i];
+                                    break;
+                                }
+                            }
                         }
-                    }
-                }
-                else if (TextManager.GetLanguageSetting().Equals("Korean"))
-                {
-                    prefix = "/Korean";
+                        else if (TextManager.GetLanguageSetting().Equals("Korean"))
+                        {
+                            prefix = "/Korean";
+                        }
+                        break;
+                    case HelpItem.ZendeskMain:
+                    case HelpItem.ZendeskPrivacyPolicy:
+                    case HelpItem.ZendeskTermsOfService:
+                    case HelpItem.ZendeskAcquirePossibility:
+                        prefix = "/" + TextManager.GetLanguageSetting();
+                        if (lang2locale.ContainsKey(prefix))
+                        {
+                            prefix = lang2locale[prefix];
+                        }
+                        else
+                        {
+                            prefix = "";
+                        }
+                        break;
                 }
 
                 switch (item)
                 {
+                    case HelpItem.Main:
+                        OpenWebView(baseUrl + prefix + ".html?reload=" + Random.value, left, top, right, bottom, userId, nickname, appversion, callback);
+                        break;
                     case HelpItem.PrivacyPolicy:
                         OpenWebView(baseUrl + prefix + "_PP.html?reload=" + Random.value, left, top, right, bottom, userId, nickname, appversion, callback);
                         break;
                     case HelpItem.TermsOfService:
                         OpenWebView(baseUrl + prefix + "_ToS.html?reload=" + Random.value, left, top, right, bottom, userId, nickname, appversion, callback);
                         break;
+                    case HelpItem.AcquirePossibility:
+                        OpenWebView(baseUrl + prefix + "_AP.html?reload=" + Random.value, left, top, right, bottom, userId, nickname, appversion, callback);
+                        break;
+                    case HelpItem.ZendeskMain:
+                        OpenWebView(ZendeskBaseURL + prefix, left, top, right, bottom, userId, nickname, appversion, callback);
+                        break;
+                    case HelpItem.ZendeskPrivacyPolicy:
+                        OpenWebView("http://haegin.kr/cs" + prefix + "/PP.html?reload=" + Random.value, left, top, right, bottom, userId, nickname, appversion, callback);
+                        break;
+                    case HelpItem.ZendeskTermsOfService:
+                        OpenWebView("http://haegin.kr/cs" + prefix + "/ToS.html?reload=" + Random.value, left, top, right, bottom, userId, nickname, appversion, callback);
+                        break;
+                    case HelpItem.ZendeskAcquirePossibility:
+                        OpenWebView(ZendeskBaseURL + prefix + "/articles/" + ProjectSettings.ZendeskHelpAPPageID, left, top, right, bottom, userId, nickname, appversion, callback);
+                        break;
                     default:
-                        OpenWebView(baseUrl + prefix + ".html?reload=" + Random.value, left, top, right, bottom, userId, nickname, appversion, callback);
+                        OpenWebView(baseUrl, left, top, right, bottom, null, null, null, callback);
                         break;
                 }
             }
@@ -147,7 +221,7 @@ namespace Haegin
 
         public static void SendSupportMail(string userId, string nickname, string appversion)
         {
-            string href = "mailto:support@haegin.kr?subject=" + System.Uri.EscapeUriString("[" + Application.productName + " Inquiry]") + "&body=" + System.Uri.EscapeUriString("UserID : " + userId + "\nNick Name : " + nickname + "\nApplication Version : " + appversion + "\nDevice Model : " + SystemInfo.deviceModel + "\nDevice OS Version : " + SystemInfo.operatingSystem + "\n\n--- " + TextManager.GetString(TextManager.StringTag.EmailContent1) + " ---\n");
+            string href = "mailto:support@homerunclash.zendesk.com?subject=" + System.Uri.EscapeUriString("[" + Application.productName + " Inquiry]") + "&body=" + System.Uri.EscapeUriString("UserID : " + userId + "\nNick Name : " + nickname + "\nApplication Version : " + appversion + "\nDevice Model : " + SystemInfo.deviceModel + "\nDevice OS Version : " + SystemInfo.operatingSystem + "\n\n--- " + TextManager.GetString(TextManager.StringTag.EmailContent1) + " ---\n");
             Application.OpenURL(href);
         }
     }
