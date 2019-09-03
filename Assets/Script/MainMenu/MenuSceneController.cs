@@ -14,7 +14,7 @@ public class MenuSceneController : MonoBehaviour {
     [SerializeField] CardDictionaryManager cardDictionaryManager;
     [SerializeField] SkeletonGraphic battleSwordSkeleton;
     [SerializeField] TMPro.TextMeshProUGUI nicknameText;
-
+    [SerializeField] GameObject battleReadyPanel;   //대전 준비 화면
     private SkeletonGraphic[] buttonSkeletons = new SkeletonGraphic[5];
     protected SkeletonGraphic selectedAnimation;
     private int currentPage;
@@ -40,8 +40,7 @@ public class MenuSceneController : MonoBehaviour {
     /// PVP대전 버튼 클릭
     /// </summary>
     public void OnPVPClicked() {
-        //battleSwordSkeleton.AnimationState.SetAnimation(0, "TOUCH", false);
-        FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.LOADING_SCENE);
+        battleReadyPanel.SetActive(true);
         SoundManager.Instance.PlaySound(SoundType.FIRST_TURN);
     }
 
