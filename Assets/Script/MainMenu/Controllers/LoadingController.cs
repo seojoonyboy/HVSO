@@ -11,8 +11,8 @@ public class LoadingController : MonoBehaviour {
     
     IEnumerator Start() {
         yield return null;
-        manager = FBL_SceneManager.Instance;
-        manager.LoadScene(FBL_SceneManager.Scene.PVP_READY_SCENE);
+        //manager = FBL_SceneManager.Instance;
+        //manager.LoadScene(FBL_SceneManager.Scene.PVP_READY_SCENE);
     }
 
     void Update() {

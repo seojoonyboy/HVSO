@@ -18,7 +18,7 @@ public class FBL_SceneManager : Singleton<FBL_SceneManager> {
 
     void Start() {
 #if !UNITY_EDITOR
-        //for(int i = 2; i <= 6; i++) {
+        //for(int i = 2; i <= 5; i++) {
         //    StartCoroutine(PreLoadReadyScene(i));
         //}
 #endif
@@ -93,7 +93,6 @@ public class FBL_SceneManager : Singleton<FBL_SceneManager> {
         COLLECTION_SCENE,
         MISSION_SELECT_SCENE,
         MISSION_INGAME,
-        PVP_READY_SCENE,
         DECK_LIST_SCNE,
         DECK_SETTING_SCENE,
         CONNECT_MATCHING_SCENE,

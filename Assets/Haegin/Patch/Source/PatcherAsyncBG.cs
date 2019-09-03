@@ -1274,7 +1274,7 @@ namespace G.Network
 
         public void DownloadOBB(OnOpenConfirmDialog callback, int versionCode = -1, string obburl = null, int obbsize = 0)
         {
-#if !UNITY_EDITOR && UNITY_ANDROID && NO_OBB
+#if !UNITY_EDITOR && UNITY_ANDROID
 //            hasErrorBGWebClient = true;
             OpenConfirmDialog = callback;
             currentIndex = -1;
@@ -1334,7 +1334,14 @@ namespace G.Network
                 {
                     Directory.CreateDirectory(this.dstFolder);
                 }
+#if USE_ONESTORE_IAP
+                int count = 0;
+                string[] filename = null;
+                int[] filesize = null;
+                string[] url = null;
+#else
                 client.GetOBBDownloadInfo(ProjectSettings.base64EncodedPublicKey, (int count, string[] filename, int[] filesize, string[] url) => {
+#endif
 #if MDEBUG
                     Debug.Log("OBB Count = " + count);
 #endif
@@ -1376,7 +1383,7 @@ namespace G.Network
                         if(obburl != null)
                         {
 #if MDEBUG
-                            Debug.Log("Download OBB for QA " + obburl);
+                            Debug.Log("Download OBB from " + obburl);
 #endif
                             available = true;
                             patcherItems = new List<PatcherItem>();
@@ -1468,7 +1475,9 @@ namespace G.Network
 #if USE_NBG_WHEN_ERROR
                     }
 #endif
+#if !USE_ONESTORE_IAP
                 });
+#endif
                 return;
             }
 #endif

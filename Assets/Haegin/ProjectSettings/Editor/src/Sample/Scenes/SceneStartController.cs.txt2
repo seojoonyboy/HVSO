@@ -1,4 +1,5 @@
 ﻿
+#endif
         ThreadSafeDispatcher.Instance.PushSystemBackKeyListener(OnSystemBackKey);
 
 #if UNITY_ANDROID
@@ -289,7 +290,11 @@
         // Handshake  &  Protocol Version Check
         ushort[] clientVersion = new ushort[] { 1, 0, 0, 1 };
 #if UNITY_ANDROID
+#if UES_ONESTORE_IAP
+        string updateDownloadUrl = "onestore://common/product/bg_update/0000742060";
+#else
         string updateDownloadUrl = "https://play.google.com/store/apps/details?id=com.haegin.homerunclash";
+#endif
 #elif UNITY_IOS
         string updateDownloadUrl = "https://itunes.apple.com/app/id1345750763";
 #else
@@ -480,7 +485,9 @@
         patcher = new PatcherAsyncBG(url);
         patcher.Progressed += OnProgressed;
         patcher.FileCompleted += OnFileCompleted;
+#if USE_SAMPLE_SCENE
         patcher.AllCompleted += OnAllCompleted;
+#endif
         patcher.ErrorOccurred += OnErrorOccurred;
         patcher.TotalProgressed += OnTotalProgressed;
         patcher.ReachabilityChanged += OnReachabilityChanged;
