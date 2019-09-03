@@ -3,21 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Sirenix.OdinInspector;
 
-public class ScenarioManager : MonoBehaviour
+public class ScenarioManager : SerializedMonoBehaviour
 {
     public static ScenarioManager Instance { get; private set; }
     public ShowSelectRace human, orc;
     public string heroID;
-    public string selectStage;
-    public bool isHuman;
     public bool isIngameButtonClicked = false;
     public GameObject stageCanvas;
     public GameObject deckContent;
 
-
     private GameObject selectedDeckObject = null;
     public dataModules.Deck selectedDeck;
+
+    public bool isHuman;
+    public int chapter;
+    public int stage_number;
+
+
+    public Dictionary<int, string> stage_name;
+    
 
     private string leaderDeckId;
     public string LeaderDeckId {
@@ -58,8 +64,17 @@ public class ScenarioManager : MonoBehaviour
         orc.heroSelect.SetActive(false);
         orc.StageCanvas.SetActive(false);
 
+        if (stage_name.Count > 0)
+            stage_name.Clear();
+
         heroID = "";
-        selectStage = "";
+
+        stage_name.Add(1, "토벌");
+
+
+        for(int i = 0; i<stage_name.Count; i++) 
+            human.stageContent.transform.GetChild(i).Find("StageName").gameObject.GetComponent<TextMeshProUGUI>().text = 0.ToString() + "-" + (i+1).ToString() + " " + stage_name[i + 1];
+        
 
         human.raceButton.GetComponent<Image>().sprite = human.activeSprite;
         human.heroSelect.SetActive(true);
@@ -73,8 +88,17 @@ public class ScenarioManager : MonoBehaviour
         human.heroSelect.SetActive(false);
         human.StageCanvas.SetActive(false);
 
+        if (stage_name.Count > 0)
+            stage_name.Clear();
+
         heroID = "";
-        selectStage = "";
+
+        
+        stage_name.Add(1, "복수");
+
+        for (int i = 0; i < stage_name.Count; i++)
+            orc.stageContent.transform.GetChild(i).Find("StageName").gameObject.GetComponent<TextMeshProUGUI>().text = 0.ToString() + "-" + (i + 1).ToString() + " " + stage_name[i + 1];
+
 
         orc.raceButton.GetComponent<Image>().sprite = orc.activeSprite;
         orc.heroSelect.SetActive(true);
@@ -166,16 +190,11 @@ public class ScenarioManager : MonoBehaviour
         stageCanvas.SetActive(false);
     }
 
-    public void OnHumanTempStage() {
+    public void OnClickStage() {
         stageCanvas.SetActive(true);
         ClearDeckList();
-        CreateBasicDeckList(true);
-    }
-    
-    public void OnOrcTempStage() {
-        stageCanvas.SetActive(true);
-        ClearDeckList();
-        CreateBasicDeckList(false);
+        CreateBasicDeckList((isHuman == true) ? true : false);
+        stageCanvas.transform.Find("StagePanel/TextGroup/StageName").gameObject.GetComponent<TextMeshProUGUI>().text = chapter.ToString() + "-" + stage_number.ToString() + " " + stage_name[stage_number];
     }
 
     public void OnStartBtn() {
@@ -210,6 +229,7 @@ public class ScenarioManager : MonoBehaviour
         }
         SoundManager.Instance.PlaySound(SoundType.FIRST_TURN);
     }
+    
 
 
 
@@ -227,7 +247,7 @@ public class ShowSelectRace {
     public GameObject stageContent;
 }
 
-public class ScenarioData : MonoBehaviour {
+public class ScenarioButton : MonoBehaviour {
     protected ScenarioManager scenarioManager;
 
     private void Start() {
@@ -237,4 +257,15 @@ public class ScenarioData : MonoBehaviour {
     public virtual void OnClicked() {
         return;
     }
+}
+
+public class ChapterData {
+    public string stage_Name;
+    public ScriptData[] stage_Data;
+}
+
+public class ScriptData {
+    public string Print_text;
+    public string[] script;
+    public bool isExecute;
 }
