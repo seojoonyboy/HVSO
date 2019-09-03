@@ -287,6 +287,10 @@ public class CardListManager : MonoBehaviour
             info.Find("MagicPortrait").gameObject.SetActive(true);
             if (AccountManager.Instance.resource.cardPortraite.ContainsKey(data.cardId)) {
                 info.Find("MagicPortrait").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardPortraite[data.cardId];
+                if (!data.hero_chk)
+                    info.Find("MagicPortrait/Frame").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground["magic_" + data.rarelity];
+                else
+                    info.Find("MagicPortrait/Frame").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground["hero_legend_human"];
             }
         }
         //if (data.class_2 == null)
