@@ -1,24 +1,24 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum SafeAreaMethodType
-{
-    CanvasBased,
-    CameraBased,
-};
+//public enum SafeAreaMethodType
+//{
+//    CanvasBased,
+//    CameraBased,
+//};
 
-public enum AreaUpdateTiming
-{
-    OnReciveMessage = (1 << 0),
-    Awake = (1 << 1),
-    OnEnable = (1 << 2),
-    Start = (1 << 3),
-    Update = (1 << 4),
-    FixedUpdate = (1 << 5),
-};
+//public enum AreaUpdateTiming
+//{
+//    OnReciveMessage = (1 << 0),
+//    Awake = (1 << 1),
+//    OnEnable = (1 << 2),
+//    Start = (1 << 3),
+//    Update = (1 << 4),
+//    FixedUpdate = (1 << 5),
+//};
 
 [RequireComponent(typeof(Canvas))]
 public class SafeAreaController : MonoBehaviour
