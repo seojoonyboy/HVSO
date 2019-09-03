@@ -5,10 +5,7 @@ using System.Collections;
 public class ScenarioGameManagment : PlayMangement
 {
     public Queue<MissionRequire> missionData;
-
-    public GameObject human_BackGround;
-    public GameObject orc_BackGround;
-
+    
     private void Awake() {
         instance = this;       
         SetWorldScale();
@@ -24,17 +21,6 @@ public class ScenarioGameManagment : PlayMangement
 
     private void OnDestroy() {
         instance = null;
-    }
-
-    protected override void SetBackGround() {
-        if (player.isHuman) {
-            GameObject raceSprite = Instantiate(human_BackGround, backGround.transform);
-            raceSprite.transform.SetAsLastSibling();
-        }
-        else {
-            GameObject raceSprite = Instantiate(orc_BackGround, backGround.transform);
-            raceSprite.transform.SetAsLastSibling();
-        }
     }
 
 }

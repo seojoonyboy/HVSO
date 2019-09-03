@@ -158,7 +158,10 @@ public partial class BattleConnector : MonoBehaviour {
     public void StartBattle() {
         //TODO : FBL_SceneManager의 LoadScene 사용시 에러가 발생함. 수정 필요
         //FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MISSION_INGAME);
-        UnityEngine.SceneManagement.SceneManager.LoadScene("IngameScene", UnityEngine.SceneManagement.LoadSceneMode.Single);
+        if (PlayerPrefs.GetString("SelectedBattleType") != "Tutorial")
+            UnityEngine.SceneManagement.SceneManager.LoadScene("IngameScene", UnityEngine.SceneManagement.LoadSceneMode.Single);
+        else
+            UnityEngine.SceneManagement.SceneManager.LoadScene("TutorialScene", UnityEngine.SceneManagement.LoadSceneMode.Single);
     }
 
     private void SendMethod(string method, object args = null) {

@@ -1,0 +1,146 @@
+
+ac10086.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+A_L_leg
+  rotate: false
+  xy: 687, 600
+  size: 100, 92
+  orig: 100, 94
+  offset: 0, 1
+  index: -1
+A_R_arm
+  rotate: false
+  xy: 580, 557
+  size: 107, 139
+  orig: 107, 141
+  offset: 0, 1
+  index: -1
+A_R_leg
+  rotate: false
+  xy: 692, 692
+  size: 125, 79
+  orig: 125, 81
+  offset: 0, 1
+  index: -1
+A_body
+  rotate: false
+  xy: 426, 848
+  size: 224, 164
+  orig: 224, 166
+  offset: 0, 1
+  index: -1
+A_body_ac2
+  rotate: false
+  xy: 0, 309
+  size: 231, 147
+  orig: 231, 149
+  offset: 0, 1
+  index: -1
+A_weapon
+  rotate: true
+  xy: 342, 502
+  size: 238, 76
+  orig: 238, 78
+  offset: 0, 1
+  index: -1
+Ellipse 1 copy
+  rotate: false
+  xy: 692, 771
+  size: 130, 130
+  orig: 130, 130
+  offset: 0, 0
+  index: -1
+L_leg
+  rotate: false
+  xy: 418, 465
+  size: 85, 79
+  orig: 85, 81
+  offset: 0, 1
+  index: -1
+R_leg
+  rotate: false
+  xy: 503, 465
+  size: 82, 79
+  orig: 82, 81
+  offset: 0, 1
+  index: -1
+arm_nomal
+  rotate: false
+  xy: 0, 0
+  size: 196, 136
+  orig: 196, 138
+  offset: 0, 1
+  index: -1
+arm_weapon
+  rotate: true
+  xy: 588, 696
+  size: 152, 104
+  orig: 152, 106
+  offset: 0, 1
+  index: -1
+body
+  rotate: false
+  xy: 0, 136
+  size: 196, 173
+  orig: 196, 175
+  offset: 0, 1
+  index: -1
+body_ac
+  rotate: false
+  xy: 650, 901
+  size: 224, 111
+  orig: 224, 113
+  offset: 0, 1
+  index: -1
+effect_1
+  rotate: false
+  xy: 0, 456
+  size: 260, 284
+  orig: 260, 284
+  offset: 0, 0
+  index: -1
+effect_2
+  rotate: false
+  xy: 0, 740
+  size: 426, 272
+  orig: 426, 272
+  offset: 0, 0
+  index: -1
+effect_3
+  rotate: false
+  xy: 687, 541
+  size: 99, 59
+  orig: 99, 59
+  offset: 0, 0
+  index: -1
+head
+  rotate: false
+  xy: 426, 701
+  size: 162, 147
+  orig: 162, 149
+  offset: 0, 1
+  index: -1
+head_2
+  rotate: true
+  xy: 874, 850
+  size: 162, 147
+  orig: 162, 149
+  offset: 0, 1
+  index: -1
+head_3
+  rotate: false
+  xy: 418, 544
+  size: 162, 157
+  orig: 162, 159
+  offset: 0, 1
+  index: -1
+shadow
+  rotate: true
+  xy: 260, 486
+  size: 254, 82
+  orig: 254, 84
+  offset: 0, 1
+  index: -1
