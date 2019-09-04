@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Sirenix.OdinInspector;
+using Tutorial;
 
 public class ScenarioManager : SerializedMonoBehaviour
 {
@@ -23,7 +24,7 @@ public class ScenarioManager : SerializedMonoBehaviour
 
 
     public Dictionary<int, string> stage_name;
-    
+    public ChapterData chapterData;
 
     private string leaderDeckId;
     public string LeaderDeckId {
@@ -238,38 +239,46 @@ public class ScenarioManager : SerializedMonoBehaviour
 
 }
 
-[System.Serializable]
-public class ShowSelectRace {
-    public GameObject raceButton;
-    public Sprite activeSprite;
-    public Sprite deactiveSprite;
-    public GameObject heroSelect;
-    public GameObject StageCanvas;
-    public GameObject heroContent;
-    public GameObject stageContent;
-}
-
-public class ScenarioButton : MonoBehaviour {
-    protected ScenarioManager scenarioManager;
-
-    private void Start() {
-        scenarioManager = ScenarioManager.Instance;
+namespace Tutorial {
+    [System.Serializable]
+    public class ShowSelectRace {
+        public GameObject raceButton;
+        public Sprite activeSprite;
+        public Sprite deactiveSprite;
+        public GameObject heroSelect;
+        public GameObject StageCanvas;
+        public GameObject heroContent;
+        public GameObject stageContent;
     }
 
-    public virtual void OnClicked() {
-        return;
+    public class ScenarioButton : MonoBehaviour {
+        protected ScenarioManager scenarioManager;
+
+        private void Start() {
+            scenarioManager = ScenarioManager.Instance;
+        }
+
+        public virtual void OnClicked() {
+            return;
+        }
     }
-}
 
-public class ChapterData {
-    public int chapter;
-    public int stage_number;
-    public string stage_Name;
-    public ScriptData[] stage_Data;
-}
+    public class ChapterData {
+        public int chapter;
+        public int stage_number;
+        public string stage_Name;
+        public List<ScriptData> scripts;
+    }
 
-public class ScriptData {
-    public string Print_text;
-    public string[] script;
-    public bool isExecute;
+    public class ScriptData {
+        [MultiLineProperty(10)] public string Print_text;
+        public List<Method> methods;
+
+        public bool isExecute;
+    }
+
+    public class Method {
+        public string name;
+        public List<string> args;
+    }
 }

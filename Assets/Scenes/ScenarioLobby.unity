@@ -530,6 +530,11 @@ PrefabInstance:
       propertyPath: m_textInfo.pageCount
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5446511156392873681, guid: 958776b7f33de4e4ab8a577785856062,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 612565849317848225, guid: 958776b7f33de4e4ab8a577785856062,
         type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -544,11 +549,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_padding
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5446511156392873681, guid: 958776b7f33de4e4ab8a577785856062,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 958776b7f33de4e4ab8a577785856062, type: 3}
@@ -7488,6 +7488,222 @@ MonoBehaviour:
       Data: 0
     - Name: 
       Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: chapterData
+      Entry: 7
+      Data: 2|Tutorial.ChapterData, Assembly-CSharp
+    - Name: chapter
+      Entry: 3
+      Data: 0
+    - Name: stage_number
+      Entry: 3
+      Data: 1
+    - Name: stage_Name
+      Entry: 1
+      Data: "\uD1A0\uBC8C"
+    - Name: scripts
+      Entry: 7
+      Data: 3|System.Collections.Generic.List`1[[Tutorial.ScriptData, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 4|Tutorial.ScriptData, Assembly-CSharp
+    - Name: Print_text
+      Entry: 1
+      Data: "\uCC98\uC74C \uD578\uB4DC\uC5D0 \uB4E4\uACE0 \uC2DC\uC791\uD560 \uCE74\uB4DC\uB97C
+        \uC120\uD0DD\uD569\uB2C8\uB2E4. \uCE74\uB4DC \uC544\uB798\uCABD \uBC84\uD2BC\uC744
+        \uB20C\uB7EC \uCE74\uB4DC\uB97C \uB2E4\uC2DC \uBF51\uC744 \uC218 \uC788\uC9C0\uB9CC
+        \uAC01 \uCE74\uB4DC\uB2F9 1\uBC88\uC529 \uBC16\uC5D0 \uAD50\uCCB4\uD560 \uC218
+        \uC5C6\uC2B5\uB2C8\uB2E4."
+    - Name: methods
+      Entry: 7
+      Data: 5|System.Collections.Generic.List`1[[Tutorial.Method, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 6
+    - Name: 
+      Entry: 7
+      Data: 6|Tutorial.Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: wait_until
+    - Name: args
+      Entry: 7
+      Data: 7|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: 3.0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 8|Tutorial.Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: print_text
+    - Name: args
+      Entry: 7
+      Data: 9|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: center
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 10|Tutorial.Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: highlight
+    - Name: args
+      Entry: 7
+      Data: 11|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 1
+      Data: muligunCard
+    - Name: 
+      Entry: 1
+      Data: left-top
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 12|Tutorial.Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: wait_click
+    - Name: args
+      Entry: 7
+      Data: 13|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 1
+      Data: button
+    - Name: 
+      Entry: 1
+      Data: muligun
+    - Name: 
+      Entry: 1
+      Data: left-top
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 14|Tutorial.Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: highlight
+    - Name: args
+      Entry: 7
+      Data: 15|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 1
+      Data: button
+    - Name: 
+      Entry: 1
+      Data: endTurn
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 16|Tutorial.Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: wait_click
+    - Name: args
+      Entry: 7
+      Data: 17|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 1
+      Data: button
+    - Name: 
+      Entry: 1
+      Data: endTurn
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: isExecute
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
       Data: 
     - Name: 
       Entry: 8
