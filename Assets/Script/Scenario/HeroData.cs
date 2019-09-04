@@ -1,4 +1,5 @@
 using UnityEngine;
+using Tutorial;
 
 public class HeroData : ScenarioButton {
     public string args;
