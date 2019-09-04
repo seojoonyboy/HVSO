@@ -211,6 +211,8 @@ public class ScenarioManager : SerializedMonoBehaviour
             if (selectedDeck.deckValidate) {
                 isIngameButtonClicked = true;
                 FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.TUTORIAL);
+                ScenarioGameManagment.chapterData.chapter = chapter;
+                ScenarioGameManagment.chapterData.stage_number = stage_number;
             }
             else {
                 Modal.instantiate("유효하지 않은 덱입니다.", Modal.Type.CHECK);
@@ -260,6 +262,8 @@ public class ScenarioButton : MonoBehaviour {
 }
 
 public class ChapterData {
+    public int chapter;
+    public int stage_number;
     public string stage_Name;
     public ScriptData[] stage_Data;
 }
