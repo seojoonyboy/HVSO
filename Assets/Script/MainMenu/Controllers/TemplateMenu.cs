@@ -153,6 +153,7 @@ public class TemplateMenu : MonoBehaviour {
         deckEditCtrl.RefreshLine();
         deckEditCtrl.templateMenu = this;
         CancelSelectDeck();
+        FindObjectOfType<HUDController>().SetHeader(HUDController.Type.HIDE);
     }
 
     public void CancelSelectDeck() {

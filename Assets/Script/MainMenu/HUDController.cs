@@ -14,6 +14,7 @@ public class HUDController : MonoBehaviour {
     [SerializeField] Image expSlider;
 
     Transform
+        gradation,
         userInfoUI,
         backbuttonUI,
         resourceUI,
@@ -21,6 +22,7 @@ public class HUDController : MonoBehaviour {
     Button backButton;
 
     public void SetHeader(Type type) {
+        gradation.gameObject.SetActive(true);
         switch (type) {
             case Type.RESOURCE_ONLY_WITH_BACKBUTTON:
                 userInfoUI.gameObject.SetActive(false);
@@ -40,6 +42,7 @@ public class HUDController : MonoBehaviour {
                 backbuttonUI.gameObject.SetActive(false);
                 userInfoUI.gameObject.SetActive(false);
                 dictionaryUI.gameObject.SetActive(false);
+                gradation.gameObject.SetActive(false);
                 break;
             case Type.DICTIONARY_WINDOW:
                 backbuttonUI.gameObject.SetActive(false);
@@ -65,6 +68,8 @@ public class HUDController : MonoBehaviour {
     }
 
     private void Awake() {
+        gradation = transform.GetChild(0).GetChild(0).Find("Gradation");
+
         userInfoUI = transform
                     .GetChild(0)
                     .GetChild(0)
