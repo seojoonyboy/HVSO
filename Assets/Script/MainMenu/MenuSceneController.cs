@@ -20,6 +20,7 @@ public class MenuSceneController : MonoBehaviour {
     private int currentPage;
     private bool buttonClicked;
     public MyDecksLoader decksLoader;
+    
 
     private void Start() {
         deckSettingManager.AttachDecksLoader(ref decksLoader);
@@ -33,7 +34,7 @@ public class MenuSceneController : MonoBehaviour {
         Transform buttonsParent = fixedCanvas.Find("Footer");
         //for (int i = 0; i < fixedCanvas.Find("Footer").childCount; i++)
         //    buttonSkeletons[i] = buttonsParent.GetChild(i).Find("ButtonImage").GetComponent<SkeletonGraphic>();
-        StartCoroutine(UpdateWindow());
+        //StartCoroutine(UpdateWindow());
     }
 
     /// <summary>

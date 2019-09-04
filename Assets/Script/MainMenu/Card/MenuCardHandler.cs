@@ -9,7 +9,7 @@ using Spine.Unity;
 public class MenuCardHandler : MonoBehaviour {
     private string cardID;
     [SerializeField] MenuCardInfo menuCardInfo;
-
+    [SerializeField] GameObject exitTrigger2;
     dataModules.CollectionCard cardData;
     GameObject skeleton;
     bool isHuman;
@@ -100,6 +100,9 @@ public class MenuCardHandler : MonoBehaviour {
 
     public void OpenCardInfo() {
         menuCardInfo.SetCardInfo(cardData, isHuman);
+        menuCardInfo.gameObject.SetActive(true);
+        if (transform.parent.parent.parent.name == "HeroInfo")
+            exitTrigger2.SetActive(true);
         menuCardInfo.transform.parent.gameObject.SetActive(true);
     }
 }

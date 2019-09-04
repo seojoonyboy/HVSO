@@ -11,13 +11,13 @@ public class DeckEditController : MonoBehaviour
 {
     [SerializeField] MenuCardInfo menuCardInfo;
     [SerializeField] Transform cardStorage;
+    [SerializeField] Transform heroInfoWindow;
     public string heroID;
     HeroInventory heroData;
 
     private Transform buttons;
     public Transform settingLayout;
     private Transform ownCardLayout;
-    private Transform heroInfoWindow;
 
     private GameObject deckNamePanel;
 
@@ -52,7 +52,6 @@ public class DeckEditController : MonoBehaviour
         deckNamePanel = transform.Find("DeckNamePanel").gameObject;        
         settingLayout = transform.Find("HandDeck/Mask/SettedDeck");
         ownCardLayout = transform.Find("CardBook");
-        heroInfoWindow = transform.Find("HeroInfoWindow");
         pagenumText = transform.Find("PageNumber/Capacity").GetComponent<TMPro.TextMeshProUGUI>();
         setCardText = transform.Find("HandDeck/Capacity").GetComponent<TMPro.TextMeshProUGUI>();
         buttons = transform.Find("Buttons");
@@ -179,6 +178,7 @@ public class DeckEditController : MonoBehaviour
     }
 
     public void OpenHeroInfo() {
+        heroInfoWindow.parent.gameObject.SetActive(true);
         heroInfoWindow.gameObject.SetActive(true);
     }
     public void CloseHeroInfo() {
