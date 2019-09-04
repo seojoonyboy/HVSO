@@ -49,13 +49,13 @@ public class DeckEditController : MonoBehaviour
     }
 
     private void SetObject() {
-        deckNamePanel = transform.Find("DeckNamePanel").gameObject;        
-        settingLayout = transform.Find("HandDeck/Mask/SettedDeck");
-        ownCardLayout = transform.Find("CardBook");
-        heroInfoWindow = transform.Find("HeroInfoWindow");
-        pagenumText = transform.Find("PageNumber/Capacity").GetComponent<TMPro.TextMeshProUGUI>();
-        setCardText = transform.Find("HandDeck/Capacity").GetComponent<TMPro.TextMeshProUGUI>();
-        buttons = transform.Find("Buttons");
+        deckNamePanel = transform.Find("InnerCanvas/DeckNamePanel").gameObject;        
+        settingLayout = transform.Find("InnerCanvas/HandDeck/Mask/SettedDeck");
+        ownCardLayout = transform.Find("InnerCanvas/CardBook");
+        heroInfoWindow = transform.Find("InnerCanvas/HeroInfoWindow");
+        pagenumText = transform.Find("InnerCanvas/PageNumber/Capacity").GetComponent<TMPro.TextMeshProUGUI>();
+        setCardText = transform.Find("InnerCanvas/HandDeck/Capacity").GetComponent<TMPro.TextMeshProUGUI>();
+        buttons = transform.Find("InnerCanvas/Buttons");
 
         buttons.Find("SaveDeckButton").GetComponent<Button>().onClick.AddListener(delegate () { ConfirmButton(); });
         buttons.Find("CancelButton").GetComponent<Button>().onClick.AddListener(delegate () { CancelButton(); });
@@ -98,9 +98,9 @@ public class DeckEditController : MonoBehaviour
         buttons.Find("PrevPageButton").gameObject.SetActive(false);
         pagenumText.text = "1/" + ownCardLayout.childCount.ToString();
         selectCard = null;
-        transform.Find("ShowAllClass/Selected").gameObject.SetActive(true);
-        transform.Find("SortToClass1/Selected").gameObject.SetActive(false);
-        transform.Find("SortToClass2/Selected").gameObject.SetActive(false);
+        transform.Find("InnerCanvas/ShowAllClass/Selected").gameObject.SetActive(true);
+        transform.Find("InnerCanvas/SortToClass1/Selected").gameObject.SetActive(false);
+        transform.Find("InnerCanvas/SortToClass2/Selected").gameObject.SetActive(false);
     }
 
     public void ConfirmButton() {
@@ -136,11 +136,11 @@ public class DeckEditController : MonoBehaviour
     }
 
     public void CancelButton() {
-        transform.Find("CancelWindow").gameObject.SetActive(true);
+        transform.Find("InnerCanvas/CancelWindow").gameObject.SetActive(true);
     }
 
     public void CancelEdit() {
-        transform.Find("CancelWindow").gameObject.SetActive(false);
+        transform.Find("InnerCanvas/CancelWindow").gameObject.SetActive(false);
         setCardList = null;
         gameObject.SetActive(false);
         if (templateMenu != null)
@@ -152,7 +152,7 @@ public class DeckEditController : MonoBehaviour
     }
 
     public void ResumeEdit() {
-        transform.Find("CancelWindow").gameObject.SetActive(false);
+        transform.Find("InnerCanvas/CancelWindow").gameObject.SetActive(false);
     }
     
 
@@ -170,10 +170,10 @@ public class DeckEditController : MonoBehaviour
             }
         }
         if (selectCard.transform.parent.name == "Own")
-            transform.Find("SetDeckLayout").Find("glow").gameObject.SetActive(true);
+            transform.Find("InnerCanvas/SetDeckLayout").Find("glow").gameObject.SetActive(true);
 
         if (selectCard.transform.parent.name == "SetDeck") {
-            transform.Find("ExceptButton").gameObject.SetActive(true);
+            transform.Find("InnerCanvas/ExceptButton").gameObject.SetActive(true);
         }
         selectCard.transform.Find("SelectedPanel").gameObject.SetActive(true);
     }
@@ -261,9 +261,9 @@ public class DeckEditController : MonoBehaviour
         setCardText.text = setCardNum.ToString() + "/40";
         pagenumText.text = (currentPage + 1).ToString() + maxPage;
         if (setCardNum == 0)
-            transform.Find("DeckImage/EmptyHand").gameObject.SetActive(true);
+            transform.Find("InnerCanvas/DeckImage/EmptyHand").gameObject.SetActive(true);
         else
-            transform.Find("DeckImage/EmptyHand").gameObject.SetActive(false);
+            transform.Find("InnerCanvas/DeckImage/EmptyHand").gameObject.SetActive(false);
         Canvas.ForceUpdateCanvases();
         LayoutRebuilder.ForceRebuildLayoutImmediate(settingLayout.GetComponent<RectTransform>());
     }
