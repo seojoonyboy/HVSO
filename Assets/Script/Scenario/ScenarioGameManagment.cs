@@ -4,8 +4,8 @@ using System.Collections;
 
 public class ScenarioGameManagment : PlayMangement
 {
-    public Queue<MissionRequire> missionData;
-    
+    public static ChapterData chapterData;
+
     private void Awake() {
         instance = this;       
         SetWorldScale();
