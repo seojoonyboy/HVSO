@@ -7510,7 +7510,7 @@ MonoBehaviour:
         mscorlib
     - Name: 
       Entry: 12
-      Data: 1
+      Data: 5
     - Name: 
       Entry: 7
       Data: 4|Tutorial.ScriptData, Assembly-CSharp
@@ -7678,6 +7678,409 @@ MonoBehaviour:
     - Name: 
       Entry: 1
       Data: endTurn
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: isExecute
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 18|Tutorial.ScriptData, Assembly-CSharp
+    - Name: Print_text
+      Entry: 1
+      Data: "\uC774 \uC601\uC5ED\uC774 \uD50C\uB808\uC774\uC5B4\uC758 \uD578\uB4DC\uC785\uB2C8\uB2E4.
+        \uB77C\uC6B4\uB4DC\uAC00 \uC2DC\uC791\uD560 \uB54C 1\uC7A5\uC529 \uB4DC\uB85C\uC6B0
+        \uD558\uACE0, 10\uC7A5 \uC774\uC0C1 \uB4E4\uACE0 \uC788\uC744 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4.
+        10\uC7A5 \uC774\uC0C1\uC774 \uB41C\uB2E4\uBA74 \uB354 \uC774\uC0C1 \uB4DC\uB85C\uC6B0\uAC00
+        \uB418\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4."
+    - Name: methods
+      Entry: 7
+      Data: 19|System.Collections.Generic.List`1[[Tutorial.Method, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 7
+      Data: 20|Tutorial.Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: print_text
+    - Name: args
+      Entry: 7
+      Data: 21|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: center
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 22|Tutorial.Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: highlight
+    - Name: args
+      Entry: 7
+      Data: 23|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: hands
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 24|Tutorial.Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: wait_click
+    - Name: args
+      Entry: 7
+      Data: 25|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: screen
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: isExecute
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 26|Tutorial.ScriptData, Assembly-CSharp
+    - Name: Print_text
+      Entry: 1
+      Data: "\uB77C\uC6B4\uB4DC\uB294 \uC624\uD06C \uBC30\uCE58\uD134, \uD734\uBA3C
+        \uBC30\uCE58 \uBC0F \uB9C8\uBC95\uD134, \uC624\uD06C \uB9C8\uBC95\uD134, \uC804\uD22C\uD134\uC73C\uB85C
+        \uB098\uB258\uC5B4 \uC788\uC2B5\uB2C8\uB2E4. \uC624\uD06C\uB294 \uC720\uB2DB\uACFC
+        \uB9C8\uBC95\uC744 \uC11C\uB85C \uB2E4\uB978 \uD134\uC5D0 \uC0AC\uC6A9\uD558\uC9C0\uB9CC,
+        \uC778\uAC04\uC740 \uAC19\uC740 \uD134\uC5D0 \uD55C\uBC88\uC5D0 \uC0AC\uC6A9\uD569\uB2C8\uB2E4."
+    - Name: methods
+      Entry: 7
+      Data: 27|System.Collections.Generic.List`1[[Tutorial.Method, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 4
+    - Name: 
+      Entry: 7
+      Data: 28|Tutorial.Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: print_text
+    - Name: args
+      Entry: 7
+      Data: 29|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: center
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 30|Tutorial.Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: wait_until
+    - Name: args
+      Entry: 7
+      Data: 31|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: 3.0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 32|Tutorial.Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: highlight
+    - Name: args
+      Entry: 7
+      Data: 33|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: turnNavigator
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 34|Tutorial.Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: wait_click
+    - Name: args
+      Entry: 7
+      Data: 35|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: screen
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: isExecute
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 36|Tutorial.ScriptData, Assembly-CSharp
+    - Name: Print_text
+      Entry: 1
+      Data: "\uC774\uACF3\uC740 \uC804\uC7A5 \uC601\uC5ED\uC785\uB2C8\uB2E4. \uC804\uC7A5\uC5D0\uB294
+        \uB2E4\uC12F\uAC1C\uC758 \uB77C\uC778\uC774 \uC788\uC2B5\uB2C8\uB2E4. \uB77C\uC778\uC5D0
+        \uBC30\uCE58\uB41C \uC720\uB2DB\uC740 \uAE30\uBCF8\uC801\uC73C\uB85C \uADF8
+        \uB77C\uC778\uC5D0\uC11C\uB9CC \uC804\uD22C\uD569\uB2C8\uB2E4. \uC0C1\uB300
+        \uC720\uB2DB\uC774 \uC788\uB2E4\uBA74 \uC720\uB2DB\uC744, \uC720\uB2DB\uC774
+        \uC5C6\uB2E4\uBA74 \uC0C1\uB300 \uC601\uC6C5\uC744 \uACF5\uACA9\uD569\uB2C8\uB2E4."
+    - Name: methods
+      Entry: 7
+      Data: 37|System.Collections.Generic.List`1[[Tutorial.Method, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 7
+      Data: 38|Tutorial.Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: print_text
+    - Name: args
+      Entry: 7
+      Data: 39|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: bottom
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 40|Tutorial.Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: highlight
+    - Name: args
+      Entry: 7
+      Data: 41|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: fields
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 42|Tutorial.Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: wait_click
+    - Name: args
+      Entry: 7
+      Data: 43|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: screen
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: isExecute
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 44|Tutorial.ScriptData, Assembly-CSharp
+    - Name: Print_text
+      Entry: 1
+      Data: "\uC624\uD06C\uB294 \uC720\uB2DB\uBC30\uCE58\uC640 \uB9C8\uBC95 \uC0AC\uC6A9\uC744
+        \uBCC4\uB3C4\uC758 \uD134\uC5D0 \uC0AC\uC6A9\uD558\uBA70, \uC720\uB2DB \uBC30\uCE58\uB97C
+        \uBA3C\uC800 \uC9C4\uD589\uD569\uB2C8\uB2E4."
+    - Name: methods
+      Entry: 7
+      Data: 45|System.Collections.Generic.List`1[[Tutorial.Method, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 46|Tutorial.Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: print_text
+    - Name: args
+      Entry: 7
+      Data: 47|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: bottom
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 48|Tutorial.Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: wait_untill
+    - Name: args
+      Entry: 7
+      Data: 49|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: 8.0
     - Name: 
       Entry: 13
       Data: 
