@@ -359,6 +359,398 @@ namespace TargetModules {
         }
     }
 
+    public class pending_select : TargetHandler {
+        SelectTargetFinished callback;
+
+        private void Start() {
+            if (!skillHandler.isPlayer) this.enabled = false;
+        }
+
+        private void Update() {
+            if (callback != null && Input.GetMouseButtonDown(0)) {
+                Transform selectedTarget = null;
+                PlayMangement.dragable = false;
+
+                if (args[1] == "place") {
+                    selectedTarget = GetClickedAreaSlot();
+                }
+                else if (args[1] == "unit") {
+                    string layer = "PlayerUnit";
+                    if (args[0] == "enemy") {
+                        layer = "EnemyUnit";
+                    }
+                    selectedTarget = GetClickedAreaUnit(layer);
+                }
+
+                if (selectedTarget != null) {
+                    PlayMangement.instance.OffBlockPanel();
+
+                    CardDropManager.Instance.HideDropableSlot();
+                    bool isHuman = PlayMangement.instance.player.isHuman;
+
+                    if (args[1] == "place") {
+                        int col = selectedTarget.parent.GetSiblingIndex();
+                        int row = 0;
+
+                        var observer = PlayMangement.instance.UnitsObserver;
+
+                        selectedTarget = observer.GetSlot(new FieldUnitsObserver.Pos(col, row), true);
+                    }
+
+                    if (args[1] == "unit") {
+                        selectedTarget = selectedTarget.gameObject.GetComponentInParent<PlaceMonster>().transform;
+
+                    }
+
+                    SetTarget(selectedTarget.gameObject);
+                    callback(selectedTarget);
+
+                    callback = null;
+                    PlayMangement.instance.infoOn = false;
+                    PlayMangement.dragable = true;
+                    PlayMangement.instance.UnlockTurnOver();
+
+                    var units = PlayMangement.instance.UnitsObserver.GetAllFieldUnits(!isHuman);
+                    foreach (GameObject unit in units) {
+                        unit
+                            .transform
+                            .Find("ClickableUI")
+                            .gameObject
+                            .SetActive(false);
+
+                        unit.transform.Find("MagicTargetTrigger").gameObject.SetActive(false);
+                    }
+                    units = PlayMangement.instance.UnitsObserver.GetAllFieldUnits(isHuman);
+                    foreach (GameObject unit in units) {
+                        unit
+                            .transform
+                            .Find("ClickableUI")
+                            .gameObject
+                            .SetActive(false);
+
+                        unit.transform.Find("MagicTargetTrigger").gameObject.SetActive(false);
+                    }
+                }
+            }
+        }
+
+        private IEnumerator enemyTurnSelect(SelectTargetFinished successCallback, SelectTargetFailed failedCallback) {
+            BattleConnector server = PlayMangement.instance.socketHandler;
+            //턴 넘김으로 인한 경우 (현재 오크 잠복꾼) 위치 이동만 존재합니다.
+            if (skillHandler.targetData == null) {
+                //1. 메시지 올 때까지 기다리기
+                PlayMangement.instance.OnBlockPanel("상대가 위치를 지정중입니다.");
+                var list = PlayMangement.instance.socketHandler.unitSkillList;
+                yield return new WaitUntil(PlayMangement.instance.passOrc);
+                yield return list.WaitNext();
+                if (list.Count == 0) {
+                    failedCallback("상대가 위치 지정에 실패했습니다.");
+                    yield break;
+                }
+                int itemId = list.Dequeue();
+                var monList = server.gameState.map.allMonster;
+                SocketFormat.Unit unit = monList.Find(x => x.itemId == itemId);
+                //2. 밝혀줘야할 select 부분 찾기
+                FieldUnitsObserver.Pos movePos = unit.pos;
+                Terrain[] terrains = GameObject.Find("BackGround").GetComponentsInChildren<Terrain>();
+                Transform terrainSlot = null;
+
+                foreach (Terrain x in terrains) {
+                    if (movePos.col == x.transform.GetSiblingIndex()) {
+                        terrainSlot = x.transform.Find("EnemyBackSlot");
+                        break;
+                    }
+                }
+
+                //3. unitSlot에서 특정 부분 밝혀주기 아마 baseSlot 맞겠지
+                terrainSlot.gameObject.SetActive(true);
+                terrainSlot.GetChild(0).gameObject.SetActive(true);
+                terrainSlot.GetComponent<SpriteRenderer>().color = new Color(1, 0, 0, 0.6f);
+
+                //4.  1.5초뒤에 끄기
+                yield return new WaitForSeconds(1.5f);
+                terrainSlot.gameObject.SetActive(false);
+                terrainSlot.GetChild(0).gameObject.SetActive(false);
+                terrainSlot.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.6f);
+
+                //5. 실제 effect 실행하러 보내기
+                Transform selectedTarget = PlayMangement.instance.UnitsObserver
+                    .GetSlot(movePos, !PlayMangement.instance.player.isHuman)
+                    .transform;
+                SetTarget(selectedTarget.gameObject);
+                successCallback(selectedTarget);
+            }
+            //타겟이 있는 경우, 카드 사용으로 경우에 따라 나눠야함
+            else {
+                Transform selectedTarget = null;
+                //1. 사용한 카드 찾기
+                int itemId = skillHandler.myObject.GetComponent<PlaceMonster>() != null ?
+                    skillHandler.myObject.GetComponent<PlaceMonster>().itemId :
+                    skillHandler.myObject.GetComponent<MagicDragHandler>().itemID;
+                var play_list = server.gameState.playHistory.ToList();
+                SocketFormat.PlayHistory played_card = play_list.Find(x => x.cardItem.itemId == itemId);
+
+                //왠만하면은 2번째 targets가 select인 경우들인것 같다. (유닛 소환 직후 또는 마법카드 사용)
+                if (played_card.targets.Length != 2) {
+                    PlayMangement.instance.UnlockTurnOver();
+                    failedCallback("상대가 위치 지정에 실패했습니다.");
+                    yield break;
+                }
+                //2. 카드의 정보 확인 하기
+                switch (played_card.targets[1].method) {
+                    case "place":
+                        int line = int.Parse(played_card.targets[1].args[0]);
+                        bool targetCampHuman = played_card.targets[1].args[1].CompareTo("human") == 0;
+                        //지정된 타겟이 아군인지 적군인지 판단용
+                        bool isTargetPlayer = PlayMangement.instance.player.isHuman == targetCampHuman;
+                        Terrain[] terrains = GameObject.Find("BackGround").GetComponentsInChildren<Terrain>();
+                        Transform terrainSlot = null;
+
+                        foreach (Terrain x in terrains) {
+                            if (line == x.transform.GetSiblingIndex()) {
+                                if (isTargetPlayer) terrainSlot = x.transform.GetChild(0);
+                                else terrainSlot = x.transform.Find("EnemyBackSlot");
+                                break;
+                            }
+                        }
+
+                        //3. unitSlot에서 특정 부분 밝혀주기 아마 baseSlot 맞겠지
+                        terrainSlot.gameObject.SetActive(true);
+                        terrainSlot.GetChild(0).gameObject.SetActive(true);
+                        terrainSlot.GetComponent<SpriteRenderer>().color = new Color(1, 0, 0, 0.6f);
+
+                        //4.  1.5초뒤에 끄기
+                        yield return new WaitForSeconds(1.5f);
+                        terrainSlot.gameObject.SetActive(false);
+                        terrainSlot.GetChild(0).gameObject.SetActive(false);
+                        terrainSlot.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.6f);
+
+                        FieldUnitsObserver observer = PlayMangement.instance.UnitsObserver;
+                        selectedTarget = observer
+                            .GetSlot(new FieldUnitsObserver.Pos(line, 0), targetCampHuman)
+                            .transform;
+                        break;
+                    case "unit":
+                        //검색
+                        int targetItemId = int.Parse(played_card.targets[1].args[0]);
+                        var camp = played_card.targets[1].args[1];
+                        var list = PlayMangement.instance.UnitsObserver
+                                .GetAllFieldUnits(camp.CompareTo("human") == 0);
+                        //list.AddRange(PlayMangement.instance.EnemyUnitsObserver.GetAllFieldUnits());
+                        GameObject target = list.Find(x => x.GetComponent<PlaceMonster>().itemId == targetItemId);
+                        GameObject highlightUI = target.transform.Find("ClickableUI").gameObject;
+                        //3. unitSlot에서 특정 부분 밝혀주기
+                        highlightUI.SetActive(true);
+                        if (highlightUI.GetComponent<SpriteRenderer>() != null)
+                            highlightUI.GetComponent<SpriteRenderer>().color = new Color(1, 0, 0, 0.6f);
+                        //4.  1.5초뒤에 끄기
+                        yield return new WaitForSeconds(1.5f);
+                        if (highlightUI.GetComponent<SpriteRenderer>() != null)
+                            highlightUI.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.6f);
+                        highlightUI.SetActive(false);
+                        selectedTarget = target.transform;
+                        break;
+                    default:
+                        failedCallback("전혀 다른 select가 나왔습니다.");
+                        yield break;
+                }
+                if (selectedTarget == null) {
+                    failedCallback("selectedTarget이 누락 됐습니다.");
+                    yield break;
+                }
+                SetTarget(selectedTarget.gameObject);
+                successCallback(selectedTarget);
+            }
+
+            PlayMangement.instance.OffBlockPanel();
+            PlayMangement.instance.UnlockTurnOver();
+        }
+
+        public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback, Filtering filter) {
+            base.SelectTarget(successCallback, failedCallback, filter);
+            if (GetComponent<MagicDragHandler>()) {
+                transform.localScale = Vector3.zero;
+            }
+            PlayMangement.instance.LockTurnOver();
+
+            //TODO : 적일 경우 해당 소켓이 도달 할 때까지 기다리기 card_played, skill_activated
+            if (!skillHandler.isPlayer) {
+                StartCoroutine(enemyTurnSelect(successCallback, failedCallback));
+                return;
+            }
+
+            foreach (string arg in args) {
+                Logger.Log(arg);
+            }
+
+            switch (args[0]) {
+                case "my":
+                    if (args.Length == 2 && args[1] == "place") {
+                        if (CanSelect(args[1])) {
+                            PlayMangement.instance.OnBlockPanel("대상을 지정해 주세요.");
+                            callback = successCallback;
+                            PlaceMonster myMonster = skillHandler.myObject.GetComponent<PlaceMonster>();
+                            string[] attributes;
+                            if (myMonster != null)
+                                attributes = myMonster.unit.attributes;
+                            else
+                                attributes = GetDropAreaUnit().GetComponent<PlaceMonster>().unit.attributes;
+                            CardDropManager.Instance.ShowDropableSlot(attributes, true);
+                        }
+                        else {
+                            failedCallback("자리가 없습니다.");
+                        }
+                    }
+                    if (args.Length == 2 && args[1] == "unit") {
+                        if (CanSelect(args[1])) {
+                            PlayMangement.instance.OnBlockPanel("대상을 지정해 주세요.");
+                            callback = successCallback;
+
+                            //잠복중인 유닛은 타겟에서 제외
+                            var units = PlayMangement.instance.UnitsObserver
+                                .GetAllFieldUnits(PlayMangement.instance.player.isHuman);
+                            filter(ref units);
+                            foreach (GameObject unit in units) {
+                                var ui = unit.transform.Find("ClickableUI").gameObject;
+                                if (ui != null) {
+                                    ui.SetActive(true);
+                                    PlayMangement.instance.infoOn = true;
+                                }
+                                unit.transform.Find("MagicTargetTrigger").gameObject.SetActive(true);
+                            }
+                        }
+                        else {
+                            failedCallback("타겟이 없습니다.");
+                        }
+                    }
+                    break;
+                case "enemy":
+                    if (args.Length == 2 && args[1] == "unit") {
+                        if (CanSelect(args[1])) {
+                            PlayMangement.instance.OnBlockPanel("대상을 지정해 주세요.");
+                            var units = PlayMangement.instance.UnitsObserver.GetAllFieldUnits(!PlayMangement.instance.player.isHuman);
+
+                            //잠복중인 유닛은 타겟에서 제외
+                            for (int i = 0; i < units.Count; i++) {
+                                var placeMonster = units[i].GetComponent<PlaceMonster>();
+                                if (placeMonster.GetComponent<ambush>() != null) {
+                                    units.Remove(units[i]);
+                                    Logger.Log("잠복 유닛 감지됨");
+                                }
+                            }
+
+                            if (units.Count == 0) {
+                                failedCallback("타겟이 없습니다.");
+                                break;
+                            }
+
+                            foreach (GameObject unit in units) {
+                                var ui = unit.transform.Find("ClickableUI").gameObject;
+                                if (ui != null) {
+                                    ui.SetActive(true);
+                                    PlayMangement.instance.infoOn = true;
+                                }
+                                unit.transform.Find("MagicTargetTrigger").gameObject.SetActive(true);
+                            }
+
+                            callback = successCallback;
+                        }
+                        else {
+                            failedCallback("타겟이 없습니다.");
+                        }
+                    }
+                    break;
+            }
+        }
+
+        /// <summary></summary>
+        /// <param name="parms">사용자가 직접 지목한 위치?</param>
+        public override void SetTarget(object target) {
+            targets = new List<GameObject>();
+            targets.Add((GameObject)target);
+        }
+
+        private bool CanSelect(string arg) {
+            bool result = false;
+            var observer = PlayMangement.instance.UnitsObserver;
+            bool isHuman = PlayMangement.instance.player.isHuman;
+
+            Transform slotParent = null;
+            GameObject[,] slots = null;
+            if (isHuman) {
+                slots = observer.humanUnits;
+                slotParent = PlayMangement.instance.player.transform;
+            }
+            else {
+                slots = observer.orcUnits;
+                slotParent = PlayMangement.instance.enemyPlayer.transform;
+            }
+
+            switch (arg) {
+                case "place":
+                    for (int i = 0; i < 5; i++) {
+                        //빈 공간인 경우
+                        if (slots[i, 0] == null) {
+                            var placeMonster = skillHandler.myObject.GetComponent<PlaceMonster>();
+                            //유닛카드인 경우
+                            if (placeMonster != null) {
+                                //숲 지형인 경우
+                                //if (slotParent.transform.GetChild(0).GetChild(i).GetComponent<Terrain>().terrain == PlayMangement.LineState.forest) {
+                                //    //유닛이 숲 지형에 갈 수 있는 경우
+                                //    if (placeMonster.unit.attributes.ToList().Contains("footslog")) {
+                                //        result = true;
+                                //    }
+                                //}
+                                ////숲 지형이 아닌 경우
+                                //else {
+                                //    result = true;
+                                //}
+                                result = true;
+                            }
+                            //마법카드인 경우
+                            else {
+                                var skillTarget = ((List<GameObject>)skillHandler.skillTarget)[0];
+                                placeMonster = skillTarget.GetComponent<PlaceMonster>();
+                                //if (PlayMangement.instance.player.transform.GetChild(0).GetChild(i).GetComponent<Terrain>().terrain == PlayMangement.LineState.forest) {
+                                //    //유닛이 숲 지형에 갈 수 있는 경우
+                                //    if (placeMonster.unit.attributes.ToList().Contains("footslog")) {
+                                //        result = true;
+                                //    }
+                                //}
+                                ////숲 지형이 아닌 경우
+                                //else {
+                                //    result = true;
+                                //}
+                                result = true;
+                            }
+                        }
+                    }
+                    break;
+                case "unit":
+                    if (args[0] == "enemy") {
+                        observer = PlayMangement.instance.UnitsObserver;
+                    }
+
+                    var units = observer.GetAllFieldUnits(isHuman);
+
+                    //잠복중인 유닛은 타겟에서 제외
+                    for (int i = 0; i < units.Count; i++) {
+                        var placeMonster = units[i].GetComponent<PlaceMonster>();
+                        if (placeMonster.GetComponent<ambush>() != null) {
+                            units.Remove(units[i]);
+                        }
+                    }
+
+                    if (units.Count != 0) {
+                        Logger.Log(observer.GetAllFieldUnits(isHuman).Count + "개의 적이 감지됨");
+                        result = true;
+                    }
+                    break;
+            }
+            return result;
+        }
+    }
+
     public class select : TargetHandler {
         SelectTargetFinished callback;
 
