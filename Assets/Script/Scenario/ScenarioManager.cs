@@ -19,12 +19,10 @@ public class ScenarioManager : SerializedMonoBehaviour
     public dataModules.Deck selectedDeck;
 
     public bool isHuman;
-    public int chapter;
-    public int stage_number;
-
 
     public Dictionary<int, string> stage_name;
-    public ChapterData chapterData;
+    public List<ChapterData> human_chapterDatas, orc_chapterDatas;
+    public ChapterData selectedChapterData;
 
     private string leaderDeckId;
     public string LeaderDeckId {
@@ -191,11 +189,15 @@ public class ScenarioManager : SerializedMonoBehaviour
         stageCanvas.SetActive(false);
     }
 
-    public void OnClickStage() {
+    public void OnClickStage(ChapterData chapterData) {
         stageCanvas.SetActive(true);
         ClearDeckList();
         CreateBasicDeckList((isHuman == true) ? true : false);
-        stageCanvas.transform.Find("StagePanel/TextGroup/StageName").gameObject.GetComponent<TextMeshProUGUI>().text = chapter.ToString() + "-" + stage_number.ToString() + " " + stage_name[stage_number];
+        stageCanvas
+            .transform
+            .Find("StagePanel/TextGroup/StageName")
+            .gameObject
+            .GetComponent<TextMeshProUGUI>().text = chapterData.chapter.ToString() + "-" + chapterData.stage_number.ToString() + " " + stage_name[chapterData.stage_number];
     }
 
     public void OnStartBtn() {
@@ -212,8 +214,7 @@ public class ScenarioManager : SerializedMonoBehaviour
             if (selectedDeck.deckValidate) {
                 isIngameButtonClicked = true;
                 FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.TUTORIAL);
-                ScenarioGameManagment.chapterData.chapter = chapter;
-                ScenarioGameManagment.chapterData.stage_number = stage_number;
+                ScenarioGameManagment.chapterData = selectedChapterData;
             }
             else {
                 Modal.instantiate("유효하지 않은 덱입니다.", Modal.Type.CHECK);
@@ -258,9 +259,7 @@ namespace Tutorial {
             scenarioManager = ScenarioManager.Instance;
         }
 
-        public virtual void OnClicked() {
-            return;
-        }
+        public virtual void OnClicked() { }
     }
 
     public class ChapterData {

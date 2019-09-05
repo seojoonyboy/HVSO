@@ -47,7 +47,7 @@ public class FBL_SceneManager : Singleton<FBL_SceneManager> {
                 numberOfScene = 6;
                 break;
             case Scene.TUTORIAL:
-                numberOfScene = 8;
+                numberOfScene = 7;
                 break;
         }
         var currentScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
