@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UI.Extensions;
 using Spine;
 using Spine.Unity;
 
@@ -28,7 +29,7 @@ public class CardDictionaryManager : MonoBehaviour {
 
     private void Start() {
         Transform classList = cardList.Find("CardsByCost");
-        for(int i = 0; i < classList.childCount; i++) 
+        for (int i = 0; i < classList.childCount; i++)
             classList.GetChild(i).Find("Header/Info/Image").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = i.ToString();
     }
 
@@ -57,7 +58,7 @@ public class CardDictionaryManager : MonoBehaviour {
     private void UpdateContentHeight() {
         float tmp = 1428f;
         Transform activatedTf = null;
-        foreach(Transform tf in cardList) {
+        foreach (Transform tf in cardList) {
             if (tf.gameObject.activeSelf) {
                 activatedTf = tf;
             }
@@ -274,25 +275,25 @@ public class CardDictionaryManager : MonoBehaviour {
 
     public void RefreshLine() {
         Canvas.ForceUpdateCanvases();
-        for(int i = 0; i < 3; i++) {
+        for (int i = 0; i < 3; i++) {
             LayoutRebuilder.ForceRebuildLayoutImmediate(cardList.GetChild(i).GetComponent<RectTransform>());
-        }   
+        }
 
         Invoke("UpdateContentHeight", 0.25f);
     }
 
     public void SetHeroButtons() {
-        for(int i = 0; i < 4; i++) {
+        for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 3; j++) {
                 heroCards.GetChild(i).GetChild(j).GetComponent<Image>().color = new Color(82, 80, 80, 255);
             }
         }
-        
+
         int count = 0;
 
         List<dataModules.Templates> selectedTemplates;
         if (isHumanDictionary) {
-            
+
             selectedTemplates = AccountManager.Instance.humanTemplates;
         }
         else {
@@ -317,6 +318,7 @@ public class CardDictionaryManager : MonoBehaviour {
 
     public void OpenHeroInfoWIndow(int index) {
         SetHeroInfoWindow(index);
+        heroInfoWindow.parent.gameObject.SetActive(true);
         heroInfoWindow.gameObject.SetActive(true);
     }
 

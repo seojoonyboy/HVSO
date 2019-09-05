@@ -26,11 +26,11 @@ public class TemplateMenu : MonoBehaviour {
     public DeckHandler selectedDeck;
 
     private void Awake() {
-        Transform upper = transform.Find("Upper");
-        Transform footer = transform.Find("Footer");
+        Transform upper = transform.Find("InnerCanvas/Upper");
+        Transform footer = transform.Find("InnerCanvas/Footer");
         Transform heroSelect = upper.Find("HeroSelect");
 
-        heroButtonLayout = transform.Find("HeroButton/HeroBtnLayout").gameObject;
+        heroButtonLayout = transform.Find("InnerCanvas/HeroButton/HeroBtnLayout").gameObject;
         heroPortrait = heroSelect.Find("Portrait").gameObject;
         heroName = heroSelect.Find("NameTamplate").GetComponentInChildren<TextMeshProUGUI>();
         heroProperty = heroSelect.Find("HeroProperty").gameObject;
@@ -153,6 +153,7 @@ public class TemplateMenu : MonoBehaviour {
         deckEditCtrl.RefreshLine();
         deckEditCtrl.templateMenu = this;
         CancelSelectDeck();
+        FindObjectOfType<HUDController>().SetHeader(HUDController.Type.HIDE);
     }
 
     public void CancelSelectDeck() {
