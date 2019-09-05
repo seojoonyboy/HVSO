@@ -6,9 +6,11 @@ using Tutorial;
 public class ScenarioGameManagment : PlayMangement
 {
     public static ChapterData chapterData;
+    public static ScenarioGameManagment scenarioInstance;
 
     private void Awake() {
-        instance = this;       
+        instance = this;
+        scenarioInstance = this;
         SetWorldScale();
         SetPlayerCard();
         GetComponent<TurnMachine>().onTurnChanged.AddListener(ChangeTurn);
@@ -22,6 +24,7 @@ public class ScenarioGameManagment : PlayMangement
 
     private void OnDestroy() {
         instance = null;
+        scenarioInstance = null;
     }
 
 }
