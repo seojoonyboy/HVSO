@@ -52,7 +52,6 @@ public class DeckEditController : MonoBehaviour
         deckNamePanel = transform.Find("InnerCanvas/DeckNamePanel").gameObject;        
         settingLayout = transform.Find("InnerCanvas/HandDeck/Mask/SettedDeck");
         ownCardLayout = transform.Find("InnerCanvas/CardBook");
-        heroInfoWindow = transform.Find("InnerCanvas/HeroInfoWindow");
         pagenumText = transform.Find("InnerCanvas/PageNumber/Capacity").GetComponent<TMPro.TextMeshProUGUI>();
         setCardText = transform.Find("InnerCanvas/HandDeck/Capacity").GetComponent<TMPro.TextMeshProUGUI>();
         buttons = transform.Find("InnerCanvas/Buttons");
