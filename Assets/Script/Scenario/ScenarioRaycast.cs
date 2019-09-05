@@ -6,25 +6,10 @@ using UnityEngine.UI;
 
 public class ScenarioRaycast : MonoBehaviour , IPointerDownHandler
 {
-    //public static ScenarioRaycast Instance { get; protected set; }
-    //public GameObject targetObject;
-    //public GameObject targetLocation;
-
-    //public GameObject selectObject;
-
-    protected void Start() {
-        
-    }
-
-    protected void OnDestroy() {
-        
-    }
 
     public void OnPointerDown(PointerEventData eventData) {
 
     }
-
-
     
     //public void OnPointerDown(PointerEventData eventData) {
     //    if (selectObject == targetObject || selectObject != null)
