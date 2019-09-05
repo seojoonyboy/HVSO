@@ -7,15 +7,18 @@ using System;
 
 public class ScenarioGameManagment : PlayMangement {
     public static ChapterData chapterData;
+
     Queue<ScriptData> chapterQueue;
     ScriptData currentChapterData;
     Method currentMethod;
+    public static ScenarioGameManagment scenarioInstance;
 
     Type thisType;
 
     bool canNextChapter = true;
     private void Awake() {
         instance = this;
+        scenarioInstance = this;
         SetWorldScale();
         SetPlayerCard();
         GetComponent<TurnMachine>().onTurnChanged.AddListener(ChangeTurn);
@@ -42,6 +45,7 @@ public class ScenarioGameManagment : PlayMangement {
 
     void OnDestroy() {
         instance = null;
+        scenarioInstance = null;
     }
 
     void FixedUpdate() {
