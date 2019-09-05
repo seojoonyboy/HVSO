@@ -212,5 +212,12 @@ public class MenuCardInfo : MonoBehaviour
 
     public void CloseInfo() {
         transform.parent.gameObject.SetActive(false);
+        transform.gameObject.SetActive(false);
+        transform.parent.Find("HeroInfo").gameObject.SetActive(false);
+    }
+
+    public void CloseHeroesCardInfo() {
+        transform.gameObject.SetActive(false);
+        transform.parent.Find("ExitTrigger2").gameObject.SetActive(false);
     }
 }

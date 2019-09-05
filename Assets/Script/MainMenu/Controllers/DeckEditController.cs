@@ -11,13 +11,13 @@ public class DeckEditController : MonoBehaviour
 {
     [SerializeField] MenuCardInfo menuCardInfo;
     [SerializeField] Transform cardStorage;
+    [SerializeField] Transform heroInfoWindow;
     public string heroID;
     HeroInventory heroData;
 
     private Transform buttons;
     public Transform settingLayout;
     private Transform ownCardLayout;
-    private Transform heroInfoWindow;
 
     private GameObject deckNamePanel;
 
@@ -179,6 +179,7 @@ public class DeckEditController : MonoBehaviour
     }
 
     public void OpenHeroInfo() {
+        heroInfoWindow.parent.gameObject.SetActive(true);
         heroInfoWindow.gameObject.SetActive(true);
     }
     public void CloseHeroInfo() {
