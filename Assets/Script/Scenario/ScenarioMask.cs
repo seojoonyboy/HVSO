@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Sirenix.OdinInspector;
 
-public class ScenarioMask : MonoBehaviour
+public class ScenarioMask : SerializedMonoBehaviour
 {
-    public GameObject targetObject;
+    public static ScenarioMask Instance;
 
     public RectTransform topMask;
     public RectTransform leftMask;
@@ -15,7 +16,12 @@ public class ScenarioMask : MonoBehaviour
     public float rectWidthRadius = 0;
     public float rectHeightRadius = 0;
 
-    public void GetMaskHighlight() {
+
+    public Dictionary<string, GameObject> targetObject;
+
+
+
+    public void GetMaskHighlight(GameObject targetObject) {
         if (targetObject == null) return;
 
         RectTransform targetTransform = targetObject.GetComponent<RectTransform>();
@@ -43,10 +49,95 @@ public class ScenarioMask : MonoBehaviour
     }
 
 
+    public GameObject GetMaskingObject(string main, string sub = null) {
+
+        GameObject maskObject = targetObject[main].gameObject;
+
+        if(maskObject != null) {
+
+            if (sub == null)
+                return maskObject;
+            else {
+                if(main == "muligun_card") {
+                    switch (sub) {
+                        case "left,top":
+                            maskObject = maskObject.transform.GetChild(5).gameObject;
+                            break;
+                        case "right,top":
+                            maskObject = maskObject.transform.GetChild(6).gameObject;
+                            break;
+                        case "left,bottom":
+                            maskObject = maskObject.transform.GetChild(7).gameObject;
+                            break;
+                        case "right,bottom":
+                            maskObject = maskObject.transform.GetChild(8).gameObject;
+                            break;
+                        default:
+                            maskObject = maskObject.transform.GetChild(5).gameObject;
+                            break;                        
+                    }
+                }
+                if (main == "hand_card") {
+                    foreach(Transform cardSlot in maskObject.transform) {
+
+                        if (cardSlot.childCount < 1)
+                            continue;
+
+                        if(cardSlot.GetChild(0).GetComponent<CardHandler>().cardID == "sub") {
+                            maskObject = cardSlot.gameObject;
+                            break;
+                        }
+                    }
+
+                }
+                if (main == "mana") {
+                    //마나는 적만 있어서 텅
+                }
+                if (main == "field") {
+                    switch (sub) {
+                        case "1":
+                            maskObject = maskObject.transform.GetChild(0).gameObject;
+                            break;
+                        case "2":
+                            maskObject = maskObject.transform.GetChild(1).gameObject;
+                            break;
+                        case "3":
+                            maskObject = maskObject.transform.GetChild(2).gameObject;
+                            break;
+                        case "4":
+                            maskObject = maskObject.transform.GetChild(3).gameObject;
+                            break;
+                        case "5":
+                            maskObject = maskObject.transform.GetChild(4).gameObject;
+                            break;
+                        default:
+                            maskObject = maskObject.transform.GetChild(0).gameObject;
+                            break;
+                    }
+
+
+                }
+                if (main == "shield_num_My") {
+                    maskObject = (PlayMangement.instance.player.isHuman == true) ? maskObject.transform.Find("HumanSheild").gameObject : maskObject.transform.Find("OrcSheild").gameObject;
+                }
+                if (main == "button") 
+                    maskObject = (PlayMangement.instance.player.isHuman) ? maskObject.transform.Find("HumanButton").gameObject : maskObject.transform.Find("Orc").gameObject;
+
+            }
+        }
+        return null;
+    }
 
 
 
 
+    private void Awake() {
+        Instance = this;
+    }
+
+    private void OnDestroy() {
+        Instance = null;
+    }
 
     // Start is called before the first frame update
     void Start()
