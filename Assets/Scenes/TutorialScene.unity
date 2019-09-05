@@ -41651,6 +41651,7 @@ GameObject:
   - component: {fileID: 208885976}
   - component: {fileID: 208885978}
   - component: {fileID: 208885980}
+  - component: {fileID: 8279262150021554597}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -41706,10 +41707,20 @@ MonoBehaviour:
   unitsObserver: {fileID: 208885980}
   turnTable: {fileID: 468818648}
   releaseTurnBtn: {fileID: 0}
-  human_BackGround: {fileID: 6448272676747014017, guid: 7ba4df1746e89f34c8201f9c02f926f9,
-    type: 3}
-  orc_BackGround: {fileID: 9187917892962139258, guid: 70770de2084e7ea43957505dc3c725f1,
-    type: 3}
+--- !u!114 &8279262150021554597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8279262150021554595}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a9714640a8b9ee42bda1d6ea8bd2502, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sets: []
+  isExecute: 0
 --- !u!114 &8999688528537312077
 MonoBehaviour:
   m_ObjectHideFlags: 0

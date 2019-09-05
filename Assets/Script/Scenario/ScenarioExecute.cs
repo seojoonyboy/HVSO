@@ -3,59 +3,59 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ScenarioExecute : MonoBehaviour {
-    public ScenarioGameManagment ScenarioGame;
+    protected ScenarioExecuteHandler handler;
+    public List<string> args;
 
-    public virtual void Execute(object data = null) { }
+    public virtual void Initialize(List<string> args) {
+        this.args = args;
+        handler = GetComponent<ScenarioExecuteHandler>();
+    }
 
+    public virtual void Execute() { }
 }
 
-public class PRINT_MESSAGE : ScenarioExecute {
-    public PRINT_MESSAGE() : base() { }
+public class Print_message : ScenarioExecute {
+    public Print_message() : base() { }
 
-    public override void Execute(object data = null) {
-        
+    public override void Execute() {
+        handler.isDone = true;
+        Logger.Log("Print_message");
     }
 }
 
-public class HIGHLIGHT : ScenarioExecute {
-    public HIGHLIGHT() :base() { }
+public class Highlight : ScenarioExecute {
+    public Highlight() :base() { }
 
-    public override void Execute(object data = null) {
-        
-    }
-
-}
-
-public class WAIT_UNTIL : ScenarioExecute {
-    public WAIT_UNTIL() : base() { }
-
-    public override void Execute(object data = null) {
-        
+    public override void Execute() {
+        handler.isDone = true;
+        Logger.Log("Highlight");
     }
 
 }
 
-public class OFFHIGHLIGHT : ScenarioExecute {
-    public OFFHIGHLIGHT() : base() {}
+public class Wait_until : ScenarioExecute {
+    public Wait_until() : base() { }
 
-    public override void Execute(object data = null) {
+    public override void Execute() {
+        var parms = args;
+        float sec = 0;
+        float.TryParse(parms[0], out sec);
+        StartCoroutine(WaitSec(sec));
+    }
 
+    IEnumerator WaitSec(float sec = 0) {
+        Logger.Log("WaitSec");
+        yield return new WaitForSeconds(sec);
+        handler.isDone = true;
     }
 }
 
-public class OFFMESSAGE : ScenarioExecute {
-    public OFFMESSAGE() : base() {}
+public class Wait_click : ScenarioExecute {
+    public Wait_click() : base() { }
 
-    public override void Execute(object data = null) {
-
-    }
-}
-
-public class GOTO_NEXT : ScenarioExecute {
-    public GOTO_NEXT() : base() { }
-
-    public override void Execute(object data = null) {
-
+    public override void Execute() {
+        handler.isDone = true;
+        Logger.Log("Wait_click");
     }
 }
 
