@@ -20,6 +20,7 @@ public class HUDController : MonoBehaviour {
         resourceUI,
         dictionaryUI;
     Button backButton;
+    BoxRewardManager box;
 
     public void SetHeader(Type type) {
         gradation.gameObject.SetActive(true);
@@ -91,6 +92,7 @@ public class HUDController : MonoBehaviour {
                     .Find("DictionaryHeader");
 
         backButton = backbuttonUI.Find("BackButton").GetComponent<Button>();
+        box = transform.Find("GetReward").GetComponent<BoxRewardManager>();
         SetResourcesUI();
     }
 
@@ -117,6 +119,7 @@ public class HUDController : MonoBehaviour {
         expValueText.text = AccountManager.Instance.userResource.exp.ToString() + "/" + AccountManager.Instance.userResource.lvExp;
         crystalValue.text = AccountManager.Instance.userResource.crystal.ToString();
         goldValue.text = AccountManager.Instance.userResource.gold.ToString();
+        box.SetBoxObj();
     }
 
     public void HideDictionaryUI() {
