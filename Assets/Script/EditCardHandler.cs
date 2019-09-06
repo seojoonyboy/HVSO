@@ -121,7 +121,7 @@ public class EditCardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         }
         else {
             transform.SetParent(beforeParent);
-            if (transform.position.y < deckEditController.transform.Find("DeckNamePanel").position.y) {
+            if (transform.position.y < deckEditController.transform.Find("InnerCanvas/DeckNamePanel").position.y) {
                 ShowAddedCardPos();
                 deckEditController.ConfirmSetDeck(cardData.id, gameObject);
             }
