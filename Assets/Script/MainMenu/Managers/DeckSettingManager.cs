@@ -10,6 +10,7 @@ public class DeckSettingManager : MonoBehaviour
     [SerializeField] public GameObject cardDictionaryCanvas;
     [SerializeField] Transform humanDeckList;
     [SerializeField] Transform orcDeckList;
+    [SerializeField] Transform deckList;
     [SerializeField] Transform pageButtons;
     [SerializeField] TMPro.TextMeshProUGUI humanDeckNum;
     [SerializeField] TMPro.TextMeshProUGUI orcDeckNum;
@@ -48,17 +49,17 @@ public class DeckSettingManager : MonoBehaviour
         });
     }
 
-    public void OpenCardDictionary() {
-        cardDictionaryCanvas.gameObject.SetActive(true);
-        cardDictionaryCanvas.GetComponent<CardDictionaryManager>().SetToOrcCards();
+    //public void OpenCardDictionary() {
+    //    cardDictionaryCanvas.gameObject.SetActive(true);
+    //    cardDictionaryCanvas.GetComponent<CardDictionaryManager>().SetToOrcCards();
 
-        hudController.SetBackButtonMsg("도감화면");
+    //    hudController.SetBackButtonMsg("도감화면");
 
-        hudController.SetBackButton(() => {
-            cardDictionaryCanvas.GetComponent<CardDictionaryManager>().CloseDictionaryCanvas();
-            hudController.SetHeader(HUDController.Type.SHOW_USER_INFO);
-        });
-    }
+    //    hudController.SetBackButton(() => {
+    //        cardDictionaryCanvas.GetComponent<CardDictionaryManager>().CloseDictionaryCanvas();
+    //        hudController.SetHeader(HUDController.Type.SHOW_USER_INFO);
+    //    });
+    //}
 
     public void SetPlayerDecks() {
         int humanDeckCount = 0;
@@ -128,6 +129,13 @@ public class DeckSettingManager : MonoBehaviour
                 orcDeckList.GetChild(i).GetChild(j).Find("DeckInfo/EditButtons").gameObject.SetActive(false);
             }
         }
+
+        //for(int i = 0; i < 10; i++) {
+        //    deckList.GetChild(i).gameObject.SetActive(false);
+        //    //deckList.GetChild(i).Find("HeroImg").GetComponent<Image>().
+        //}
+
+
         humanDeckList.GetChild(0).gameObject.SetActive(true);
         orcDeckList.GetChild(0).gameObject.SetActive(true);
         humanDeckList.GetChild(0).GetChild(0).gameObject.SetActive(true);

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.UI.Extensions;
 using Spine;
 using Spine.Unity;
+using UnityEngine.Events;
 
 public class CardDictionaryManager : MonoBehaviour {
     [SerializeField] Transform cardList;
@@ -22,10 +23,14 @@ public class CardDictionaryManager : MonoBehaviour {
     bool isHumanDictionary;
     SortingOptions selectedSortOption;
 
+    public UnityEvent SetCardsFinished = new UnityEvent();
+
     public void AttachDecksLoader(ref MyDecksLoader decksLoader) {
         this.decksLoader = decksLoader;
         this.decksLoader.OnInvenLoadFinished.AddListener(() => { SetToHumanCards(); Debug.Log("찍어보자"); });
     }
+
+
 
     private void Start() {
         Transform classList = cardList.Find("CardsByCost");
@@ -44,6 +49,7 @@ public class CardDictionaryManager : MonoBehaviour {
         heroCards.parent.Find("Background").GetComponent<Image>().sprite = humanPanelBg;
 
         SetCardsByClass();
+        SetCardsFinished.Invoke();
     }
 
     public void SetToOrcCards() {

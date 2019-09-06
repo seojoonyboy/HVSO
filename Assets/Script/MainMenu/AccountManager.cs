@@ -34,6 +34,7 @@ public partial class AccountManager : Singleton<AccountManager> {
 
     public ResourceManager resource;
     public UserResourceManager userResource;
+    public RewardClass[] rewardList;
 
     NetworkManager networkManager;
     GameObject loadingModal;
@@ -412,6 +413,19 @@ public partial class AccountManager {
         networkManager.Request(request, callback, "인벤토리 정보를 불러오는 중...");
     }
 
+    public void RefreshInventories(OnRequestFinishedDelegate callback = null) {
+        StringBuilder sb = new StringBuilder();
+        sb
+            .Append(networkManager.baseUrl)
+            .Append("api/user/inventories");
+
+        HTTPRequest request = new HTTPRequest(new Uri(sb.ToString()));
+        request.MethodType = HTTPMethods.Get;
+        request.AddHeader("authorization", TokenFormat);
+
+        networkManager.Request(request, callback, "인벤토리 정보를 불러오는 중...");
+    }
+
     private void TestModifyDeck() {
         NetworkManager.ModifyDeckReqFormat form = new NetworkManager.ModifyDeckReqFormat();
         NetworkManager.ModifyDeckReqArgs field = new NetworkManager.ModifyDeckReqArgs();
@@ -441,6 +455,14 @@ public partial class AccountManager {
         //RequestDeckMake(formatData);
     }
 
+    public void SetRewardInfo(RewardClass[] rewardList) {
+        for(int i = 0; i < rewardList.Length; i++) {
+            this.rewardList[i].item = rewardList[i].item;
+            this.rewardList[i].amount = rewardList[i].amount;
+            this.rewardList[i].type = rewardList[i].type;
+        }
+    }
+
     public void LoadAllCards() {
         StringBuilder sb = new StringBuilder();
         sb
@@ -461,6 +483,29 @@ public partial class AccountManager {
             allCards = result;
             allCardsDic = allCards.ToDictionary(x => x.id, x => x);
         }
+    }
+    public void RequestRewardInfo(OnRequestFinishedDelegate callback = null) {
+        StringBuilder url = new StringBuilder();
+        string base_url = networkManager.baseUrl;
+
+        url
+            .Append(base_url)
+            .Append("api/user/openbox");
+
+        //url
+        //    .Append(base_url)
+        //    .Append("api/users/")
+        //    .Append(DEVICEID)
+        //    .Append("?slow=30");
+
+        Logger.Log("Request User Info");
+        HTTPRequest request = new HTTPRequest(
+            new Uri(url.ToString())
+        );
+        request.MethodType = HTTPMethods.Get;
+        request.AddHeader("authorization", TokenFormat);
+        networkManager.Request(request, callback, "박스 정보를 불러오는중...");
+        
     }
 }
 

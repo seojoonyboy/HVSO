@@ -40,6 +40,19 @@ public class MyDecksLoader : MonoBehaviour {
             }
         }
     }
+    private void OnInventoryRefreshFinished(HTTPRequest originalRequest, HTTPResponse response) {
+        if (response != null) {
+            if (response.StatusCode == 200 || response.StatusCode == 304) {
+                var result = JsonReader.Read<MyCardsInfo>(response.DataAsText);
+
+                accountManager.myCards = result.cardInventories;
+                accountManager.SetHeroInventories(result.heroInventories);
+                accountManager.SetCardData();
+                OnInvenLoadFinished.Invoke();
+            }
+        }
+    }
+
 
     private void OnDeckLoadFinished(HTTPRequest originalRequest, HTTPResponse response) {
         if(response != null) {

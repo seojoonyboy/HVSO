@@ -18,6 +18,23 @@ public class DeckHandler : MonoBehaviour
         set { deckID = value; }
     }
 
+    public void InitDeck() {
+        transform.Find("HeroImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.deckPortraite["empty"];
+        transform.Find("CardNum").gameObject.SetActive(false);
+        transform.Find("DeckName").gameObject.SetActive(false);
+    }
+
+    public void SetNewDeck(dataModules.Deck deck) {
+        deckID = deck.id;
+        if (deck.camp == "human") isHuman = true;
+        else isHuman = false;
+        transform.Find("HeroImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.deckPortraite[deck.heroId];
+        transform.Find("CardNum").gameObject.SetActive(true);
+        transform.Find("CardNum/Value").GetComponent<TMPro.TextMeshProUGUI>().text = deck.totalCardCount.ToString() + "/";
+        transform.Find("DeckName").gameObject.SetActive(true);
+        transform.Find("DeckName").GetComponent<TMPro.TextMeshProUGUI>().text = deck.name.ToString() + "/";
+    }
+
     public void SetDeck(dataModules.Deck deck, bool basic = false) {
         isBasic = basic;
         deckID = deck.id;
