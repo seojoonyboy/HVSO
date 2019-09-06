@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Spine;
 using Spine.Unity;
+using TMPro;
 
 
 public partial class PlayMangement : MonoBehaviour {
@@ -183,14 +184,19 @@ public partial class PlayMangement : MonoBehaviour {
 
 
     public void SetPlayerCard() {
+        GameObject enemyCard;
+
         if (player.isHuman == true) {
+            enemyCard = Resources.Load("Prefabs/OrcBackCard") as GameObject;
             player.back = cardDB.transform.Find("HumanBackCard").gameObject;
             enemyPlayer.back = cardDB.transform.Find("OrcBackCard").gameObject;
         }
         else {
+            enemyCard = Resources.Load("Prefabs/HumanBackCard") as GameObject;
             player.back = cardDB.transform.Find("OrcBackCard").gameObject;
-            enemyPlayer.back = cardDB.transform.Find("HumanBackCard").gameObject;
+            enemyPlayer.back = cardDB.transform.Find("HumanBackCard").gameObject;            
         }
+        enemyPlayer.playerUI.transform.Find("CardCount").gameObject.GetComponent<Image>().sprite = enemyCard.GetComponent<Image>().sprite;
     }
 
     
@@ -240,6 +246,8 @@ public partial class PlayMangement : MonoBehaviour {
                 }
                 SocketFormat.DebugSocketData.SummonCardData(history);
             }
+            int count = CountEnemyCard();
+            enemyPlayer.playerUI.transform.Find("CardCount").GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = "X" + " " + (count).ToString();
             //SocketFormat.DebugSocketData.CheckMapPosition(state);
             yield return new WaitForSeconds(0.5f);
         }
@@ -267,6 +275,7 @@ public partial class PlayMangement : MonoBehaviour {
             enemyPlayer.resource.Value -= cardData.cost;
 
         Destroy(enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(CountEnemyCard() - 1).GetChild(0).gameObject);
+
         return magicCard;
     }
 
@@ -331,6 +340,10 @@ public partial class PlayMangement : MonoBehaviour {
             card.transform.Find("Portrait").gameObject.SetActive(false);
             card.transform.Find("BackGround").gameObject.SetActive(false);
             card.transform.Find("Cost").gameObject.SetActive(false);
+            int count = CountEnemyCard();
+            enemyPlayer.playerUI.transform.Find("CardCount").GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = "X" + " " + (count).ToString();
+
+
             yield return EffectSystem.Instance.HeroCutScene(enemyPlayer.isHuman);
         }
         EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
@@ -679,6 +692,8 @@ public partial class PlayMangement : MonoBehaviour {
             enemyCard.transform.localScale = new Vector3(1, 1, 1);
             enemyCard.transform.localPosition = new Vector3(0, 0, 0);
             enemyCard.SetActive(true);
+            int count = CountEnemyCard();
+            enemyPlayer.playerUI.transform.Find("CardCount").GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = "X" + " " + (count).ToString();
             IngameNotice.instance.SetNotice("상대방이 영웅카드 사용 여부를 결정 중입니다");
         }
         yield return new WaitForSeconds(1f);
@@ -705,6 +720,8 @@ public partial class PlayMangement : MonoBehaviour {
                     summonedMagic.GetComponent<MagicDragHandler>().isPlayer = false;
                     yield return MagicActivate(summonedMagic, history);
                     SocketFormat.DebugSocketData.SummonCardData(history);
+                    int count = CountEnemyCard();
+                    enemyPlayer.playerUI.transform.Find("CardCount").GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = "X" + " " + (count).ToString();
                     yield return new WaitForSeconds(1f);
                 }
             }
@@ -848,7 +865,9 @@ public partial class PlayMangement {
             enemyCard.transform.position = player.cdpm.cardSpawnPos.position;
             enemyCard.transform.localScale = new Vector3(1, 1, 1);
             iTween.MoveTo(enemyCard, enemyCard.transform.parent.position, 0.3f);
-            enemyCard.SetActive(true);
+            yield return new WaitForSeconds(0.3f);
+            enemyCard.SetActive(false);
+            enemyPlayer.playerUI.transform.Find("CardCount").GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = "X" + " " + (i + 1).ToString();
             i++;
         }
     }
@@ -868,6 +887,8 @@ public partial class PlayMangement {
         enemyCard.transform.localScale = new Vector3(1, 1, 1);
         iTween.MoveTo(enemyCard, enemyCard.transform.parent.position, 0.3f);
         enemyCard.SetActive(true);
+        int count = CountEnemyCard();
+        enemyPlayer.playerUI.transform.Find("CardCount").GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = "X" + " " + (count).ToString();
     }
 
     public IEnumerator EnemyMagicCardDraw(int drawNum) {
@@ -883,6 +904,8 @@ public partial class PlayMangement {
             enemyCard.transform.localScale = new Vector3(1, 1, 1);
             iTween.MoveTo(enemyCard, enemyCard.transform.parent.position, 0.3f);
             enemyCard.SetActive(true);
+            int count = CountEnemyCard();
+            enemyPlayer.playerUI.transform.Find("CardCount").GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = "X" + " " + (count).ToString();
             yield return new WaitForSeconds(0.3f);
         }
     }
