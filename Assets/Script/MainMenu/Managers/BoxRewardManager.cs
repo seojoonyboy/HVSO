@@ -17,7 +17,6 @@ public class BoxRewardManager : MonoBehaviour
     AccountManager accountManager;
     NetworkManager networkManager;
 
-    bool isDone = false;
     public UnityEvent OnBoxLoadFinished = new UnityEvent();
 
     void Awake() {
@@ -40,16 +39,25 @@ public class BoxRewardManager : MonoBehaviour
 
     public void OpenBox() {
         if (AccountManager.Instance.userResource.supplyBox <= 0) return;
-        StartCoroutine(WaitReward());
+        WaitReward();
     }
 
     
-    IEnumerator WaitReward() {
-        isDone = false;
-        accountManager.RequestRewardInfo(OnLoadBoxRequest);
-        yield return new WaitUntil(() => isDone);
-        transform.Find("ShowBox").gameObject.SetActive(true);
-        SetRewards(accountManager.rewardList);
+    void WaitReward() {
+        accountManager.RequestRewardInfo((req, res) => {
+            if (res != null) {
+                if (res.StatusCode == 200 || res.StatusCode == 304) {
+                    var result = dataModules.JsonReader.Read<RewardClass[]>(res.DataAsText);
+
+                    accountManager.rewardList = result;
+                    accountManager.SetRewardInfo(result);
+                    OnBoxLoadFinished.Invoke();
+
+                    transform.Find("ShowBox").gameObject.SetActive(true);
+                    SetRewards(accountManager.rewardList);
+                }
+            }
+        });
     }
 
     public void GetResult() {
