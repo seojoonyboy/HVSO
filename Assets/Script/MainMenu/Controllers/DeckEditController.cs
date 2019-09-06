@@ -310,10 +310,10 @@ public class DeckEditController : MonoBehaviour
             }
         }
         Dictionary<string, Sprite> classSprite = AccountManager.Instance.resource.classImage;
-        transform.Find("SortToClass1").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[0] + "_sortbtnOff"];
-        transform.Find("SortToClass1/Selected").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[0] + "_sortbtnOn"];
-        transform.Find("SortToClass2").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[1] + "_sortbtnOff"];
-        transform.Find("SortToClass2/Selected").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[1] + "_sortbtnOn"];
+        transform.Find("InnerCanvas/SortToClass1").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[0] + "_sortbtnOff"];
+        transform.Find("InnerCanvas/SortToClass1/Selected").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[0] + "_sortbtnOn"];
+        transform.Find("InnerCanvas/SortToClass2").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[1] + "_sortbtnOff"];
+        transform.Find("InnerCanvas/SortToClass2/Selected").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[1] + "_sortbtnOn"];
         heroInfoWindow.Find("Class/Class_1").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[0]];
         heroInfoWindow.Find("Class/Class_2").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[1]];
         heroCards.gameObject.SetActive(true);
@@ -522,9 +522,9 @@ public class DeckEditController : MonoBehaviour
             buttons.Find("NextPageButton").gameObject.SetActive(true);
         buttons.Find("PrevPageButton").gameObject.SetActive(false);
         RefreshLine();
-        transform.Find("ShowAllClass/Selected").gameObject.SetActive(true);
-        transform.Find("SortToClass1/Selected").gameObject.SetActive(false);
-        transform.Find("SortToClass2/Selected").gameObject.SetActive(false);
+        transform.Find("InnerCanvas/ShowAllClass/Selected").gameObject.SetActive(true);
+        transform.Find("InnerCanvas/SortToClass1/Selected").gameObject.SetActive(false);
+        transform.Find("InnerCanvas/SortToClass2/Selected").gameObject.SetActive(false);
     }
 
     public void SortToClass(int classNum) {
@@ -565,14 +565,14 @@ public class DeckEditController : MonoBehaviour
             buttons.Find("NextPageButton").gameObject.SetActive(true);
         buttons.Find("PrevPageButton").gameObject.SetActive(false);
         RefreshLine();
-        transform.Find("ShowAllClass/Selected").gameObject.SetActive(false);
+        transform.Find("InnerCanvas/ShowAllClass/Selected").gameObject.SetActive(false);
         if (classNum == 0) {
-            transform.Find("SortToClass1/Selected").gameObject.SetActive(true);
-            transform.Find("SortToClass2/Selected").gameObject.SetActive(false);
+            transform.Find("InnerCanvas/SortToClass1/Selected").gameObject.SetActive(true);
+            transform.Find("InnerCanvas/SortToClass2/Selected").gameObject.SetActive(false);
         }
         else {
-            transform.Find("SortToClass1/Selected").gameObject.SetActive(false);
-            transform.Find("SortToClass2/Selected").gameObject.SetActive(true);
+            transform.Find("InnerCanvas/SortToClass1/Selected").gameObject.SetActive(false);
+            transform.Find("InnerCanvas/SortToClass2/Selected").gameObject.SetActive(true);
         }
     }
 
