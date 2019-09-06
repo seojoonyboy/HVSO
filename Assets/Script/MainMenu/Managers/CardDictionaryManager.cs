@@ -49,7 +49,6 @@ public class CardDictionaryManager : MonoBehaviour {
         heroCards.parent.Find("Background").GetComponent<Image>().sprite = humanPanelBg;
 
         SetCardsByClass();
-        SetCardsFinished.Invoke();
     }
 
     public void SetToOrcCards() {

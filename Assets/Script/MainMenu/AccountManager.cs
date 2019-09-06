@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
+using UnityEngine.Events;
 using System.Linq;
 using UnityEngine.UI;
 using BestHTTP;
@@ -38,6 +39,8 @@ public partial class AccountManager : Singleton<AccountManager> {
 
     NetworkManager networkManager;
     GameObject loadingModal;
+    public UnityEvent OnUserResourceRefresh = new UnityEvent();
+
     public string NickName { get; private set; }
 
     private void Awake() {
@@ -230,6 +233,25 @@ public partial class AccountManager {
             supply: userData.supply,
             supplyBox: userData.supplyBox
         );
+    }
+
+    public void SetSignInData(HTTPRequest originalRequest, HTTPResponse response) {
+        userData = dataModules.JsonReader.Read<UserInfo>(response.DataAsText);
+        NickName = userData.nickName;
+
+        userResource.SetResource(
+            lv: userData.lv,
+            exp: userData.exp,
+            lvExp: userData.lvExp,
+            nextLvExp: userData.nextLvExp,
+            gold: userData.gold,
+            crystal: userData.manaCrystal,
+            supplyStoreTime: (int)userData.supplyTimeRemain,
+            supplyStore: userData.preSupply,
+            supply: userData.supply,
+            supplyBox: userData.supplyBox
+        );
+        OnUserResourceRefresh.Invoke();
     }
 
     #region supply 갱신 처리 관련 code

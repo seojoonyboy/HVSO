@@ -54,6 +54,7 @@ public class BoxRewardManager : MonoBehaviour
                     accountManager.rewardList = result;
                     accountManager.SetRewardInfo(result);
                     OnBoxLoadFinished.Invoke();
+                    accountManager.RefreshInventories(OnInventoryRefreshFinished);
                     accountManager.RequestUserInfo(accountManager.SetSignInData);
                 }
             }
