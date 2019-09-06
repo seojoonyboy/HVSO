@@ -23,7 +23,8 @@ public class BoxRewardManager : MonoBehaviour
         accountManager = AccountManager.Instance;
         hudCanvas = transform.parent;
 
-        cardDic.SetCardsFinished.AddListener(() => StartCoroutine(ShowRewards()));
+        cardDic.SetCardsFinished.AddListener(() => transform.Find("ShowBox").gameObject.SetActive(true));
+        OnBoxLoadFinished.AddListener(() => accountManager.RefreshInventories(OnInventoryRefreshFinished));
     }
 
     public void SetBoxObj() {
@@ -39,7 +40,6 @@ public class BoxRewardManager : MonoBehaviour
 
     public void OpenBox() {
         if (AccountManager.Instance.userResource.supplyBox <= 0) return;
-        transform.Find("ShowBox").gameObject.SetActive(true);
         WaitReward();
     }
 
@@ -54,7 +54,6 @@ public class BoxRewardManager : MonoBehaviour
                     accountManager.rewardList = result;
                     accountManager.SetRewardInfo(result);
                     OnBoxLoadFinished.Invoke();
-                    accountManager.RefreshInventories(OnInventoryRefreshFinished);
                     accountManager.RequestUserInfo(accountManager.SetSignInData);
                 }
             }
@@ -63,6 +62,7 @@ public class BoxRewardManager : MonoBehaviour
 
     public void GetResult() {
         transform.Find("ShowBox/Text").gameObject.SetActive(false);
+        transform.Find("OpenBox").gameObject.SetActive(true);
         StartCoroutine(ShowRewards());
     }
 
@@ -135,18 +135,6 @@ public class BoxRewardManager : MonoBehaviour
         }
     }
 
-    
-    private void OnLoadBoxRequest(HTTPRequest originalRequest, HTTPResponse response) {
-        if (response != null) {
-            if (response.StatusCode == 200 || response.StatusCode == 304) {
-                var result = dataModules.JsonReader.Read<RewardClass[]>(response.DataAsText);
-
-                accountManager.rewardList = result;
-                accountManager.SetRewardInfo(result);
-                OnBoxLoadFinished.Invoke();
-            }
-        }
-    }
 
     public void OnInventoryRefreshFinished(HTTPRequest originalRequest, HTTPResponse response) {
         if (response != null) {

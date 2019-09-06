@@ -101,6 +101,9 @@ public partial class AccountManager : Singleton<AccountManager> {
                 data.cardCount = card.cardCount;
                 cardPackage.data.Add(card.cardId, data);
             }
+            else {
+                cardPackage.data[card.cardId].cardCount = card.cardCount;
+            }
         }
         foreach (KeyValuePair<string, HeroInventory> cards in myHeroInventories) {
             foreach(var card in cards.Value.heroCards) {
