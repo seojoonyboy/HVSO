@@ -106,6 +106,7 @@ public class BattleReadySceneController : MonoBehaviour {
             toggleHandler.ClearList();
         }
         EmptyMsgShowPanel.SetActive(true);
+        HudController.SetHeader(HUDController.Type.SHOW_USER_INFO);
 
         gameObject.SetActive(false);
     }
