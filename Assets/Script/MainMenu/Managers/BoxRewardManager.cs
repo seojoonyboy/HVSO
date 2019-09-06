@@ -25,6 +25,7 @@ public class BoxRewardManager : MonoBehaviour
     }
 
     public void OpenBox() {
+        if (AccountManager.Instance.userResource.supplyBox <= 0) return;
         transform.Find("ShowBox").gameObject.SetActive(true);
     }
 
@@ -49,11 +50,17 @@ public class BoxRewardManager : MonoBehaviour
 
     public void ExitBoxOpen() {
         Transform boxParent = transform.Find("OpenBox");
-        for (int i = 0; i < 4; i++) 
+        for (int i = 0; i < 4; i++) {
             boxParent.GetChild(i).localScale = Vector3.zero;
+        }
         boxParent.gameObject.SetActive(false);
         transform.Find("ShowBox").gameObject.SetActive(false);
         transform.Find("ExitButton").gameObject.SetActive(false);
+        boxParent.GetChild(0).GetChild(1).gameObject.SetActive(false);
+        boxParent.GetChild(1).GetChild(1).gameObject.SetActive(false);
+        boxParent.GetChild(3).Find("Card").gameObject.SetActive(true);
+        boxParent.GetChild(3).Find("Card").GetChild(1).gameObject.SetActive(false);
+        boxParent.GetChild(3).Find("Resource").gameObject.SetActive(true);
         for (int i = 0; i < 3; i++)
             boxParent.GetChild(2).GetChild(i).gameObject.SetActive(false);
         SetBoxObj();
@@ -78,6 +85,7 @@ public class BoxRewardManager : MonoBehaviour
         boxParent.GetChild(2).Find("Value").GetComponent<TMPro.TextMeshProUGUI>().text = rewardList[2].amount.ToString();
 
         if (rewardList[3].type == "card"){
+            boxParent.GetChild(3).Find("Card").gameObject.SetActive(true);
             boxParent.GetChild(3).Find("Card").GetChild(0).GetComponent<MenuCardHandler>().DrawCard(rewardList[3].item);
             if (rewardList[3].amount > 0) {
                 boxParent.GetChild(3).Find("Card").GetChild(1).gameObject.SetActive(true);
@@ -85,6 +93,7 @@ public class BoxRewardManager : MonoBehaviour
             }
         }
         else {
+            boxParent.GetChild(3).Find("Resource").gameObject.SetActive(true);
             boxParent.GetChild(3).Find("Resource").Find(rewardList[3].item).gameObject.SetActive(true);
             boxParent.GetChild(3).Find("Resource").Find("Value").GetComponent<TMPro.TextMeshProUGUI>().text = rewardList[3].amount.ToString();
         }
