@@ -122,9 +122,9 @@ namespace Crystal
         void Refresh ()
         {
             Rect safeArea = GetSafeArea ();
-
-            if (safeArea != LastSafeArea)
-                ApplySafeArea (safeArea);
+            ApplySafeArea(safeArea);
+            //if (safeArea != LastSafeArea)
+            //    ApplySafeArea(safeArea);
         }
 
         Rect GetSafeArea ()
