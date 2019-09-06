@@ -50,7 +50,6 @@ public partial class AccountManager : Singleton<AccountManager> {
         DEVICEID = SystemInfo.deviceUniqueIdentifier;
         cardPackage = Resources.Load("CardDatas/CardDataPackage_01") as CardDataPackage;
         resource = transform.GetComponent<ResourceManager>();
-        TouchEffecter.Instance.SetScript();
 
         gameObject.AddComponent<Timer.TimerManager>();
     }
