@@ -17,7 +17,6 @@ public class BoxRewardManager : MonoBehaviour
     AccountManager accountManager;
     NetworkManager networkManager;
 
-    bool isDone = false;
     public UnityEvent OnBoxLoadFinished = new UnityEvent();
 
     void Awake() {
@@ -40,18 +39,25 @@ public class BoxRewardManager : MonoBehaviour
 
     public void OpenBox() {
         if (AccountManager.Instance.userResource.supplyBox <= 0) return;
-        StartCoroutine(WaitReward());
+        transform.Find("ShowBox").gameObject.SetActive(true);
+        WaitReward();
     }
 
     
-    IEnumerator WaitReward() {
-        isDone = false;
-        accountManager.RequestRewardInfo(OnLoadBoxRequest);
-        yield return new WaitUntil(() => isDone);
-        accountManager.RequestUserInfo(accountManager.SetSignInData);
-        accountManager.RefreshInventories(OnInventoryRefreshFinished);
-        transform.Find("ShowBox").gameObject.SetActive(true);
-        SetRewards(accountManager.rewardList);
+
+    void WaitReward() {
+        accountManager.RequestRewardInfo((req, res) => {
+            if (res != null) {
+                if (res.StatusCode == 200 || res.StatusCode == 304) {
+                    var result = dataModules.JsonReader.Read<RewardClass[]>(res.DataAsText);
+
+                    accountManager.rewardList = result;
+                    accountManager.SetRewardInfo(result);
+                    OnBoxLoadFinished.Invoke();
+                    accountManager.RequestUserInfo(accountManager.SetSignInData);
+                }
+            }
+        });
     }
 
     public void GetResult() {
@@ -60,6 +66,7 @@ public class BoxRewardManager : MonoBehaviour
     }
 
     IEnumerator ShowRewards() {
+        SetRewards(accountManager.rewardList);
         Transform boxParent = transform.Find("OpenBox");
         boxParent.gameObject.SetActive(true);
         iTween.ScaleTo(boxParent.GetChild(0).gameObject, iTween.Hash("x", 1, "y", 1, "islocal", true, "time", 0.2f));
@@ -136,7 +143,6 @@ public class BoxRewardManager : MonoBehaviour
                 accountManager.rewardList = result;
                 accountManager.SetRewardInfo(result);
                 OnBoxLoadFinished.Invoke();
-                isDone = true;
             }
         }
     }
@@ -147,8 +153,8 @@ public class BoxRewardManager : MonoBehaviour
                 var result = JsonReader.Read<MyCardsInfo>(response.DataAsText);
 
                 accountManager.myCards = result.cardInventories;
-                accountManager.SetHeroInventories(result.heroInventories);
                 accountManager.SetCardData();
+                accountManager.SetHeroInventories(result.heroInventories);
                 cardDic.SetCardsFinished.Invoke();
             }
         }
