@@ -48,12 +48,13 @@ public class BoxRewardManager : MonoBehaviour
         isDone = false;
         accountManager.RequestRewardInfo(OnLoadBoxRequest);
         yield return new WaitUntil(() => isDone);
+        accountManager.RequestUserInfo(accountManager.SetSignInData);
+        accountManager.RefreshInventories(OnInventoryRefreshFinished);
         transform.Find("ShowBox").gameObject.SetActive(true);
         SetRewards(accountManager.rewardList);
     }
 
     public void GetResult() {
-        accountManager.RefreshInventories();
         transform.Find("ShowBox/Text").gameObject.SetActive(false);
         StartCoroutine(ShowRewards());
     }
@@ -69,8 +70,7 @@ public class BoxRewardManager : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         iTween.ScaleTo(boxParent.GetChild(3).gameObject, iTween.Hash("x", 1, "y", 1, "islocal", true, "time", 0.2f));
         yield return new WaitForSeconds(0.5f);
-
-        hudCanvas.GetComponent<HUDController>().SetResourcesUI();
+        cardDic.SetToHumanCards();
         transform.Find("ExitButton").gameObject.SetActive(true);
     }
 
@@ -84,7 +84,7 @@ public class BoxRewardManager : MonoBehaviour
         transform.Find("ExitButton").gameObject.SetActive(false);
         boxParent.GetChild(0).GetChild(1).gameObject.SetActive(false);
         boxParent.GetChild(1).GetChild(1).gameObject.SetActive(false);
-        boxParent.GetChild(3).Find("Card").gameObject.SetActive(true);
+        boxParent.GetChild(3).Find("Card").gameObject.SetActive(false);
         boxParent.GetChild(3).Find("Card").GetChild(1).gameObject.SetActive(false);
         boxParent.GetChild(3).Find("Resource").gameObject.SetActive(false);
         for (int i = 0; i < 3; i++) {
@@ -137,6 +137,19 @@ public class BoxRewardManager : MonoBehaviour
                 accountManager.SetRewardInfo(result);
                 OnBoxLoadFinished.Invoke();
                 isDone = true;
+            }
+        }
+    }
+
+    public void OnInventoryRefreshFinished(HTTPRequest originalRequest, HTTPResponse response) {
+        if (response != null) {
+            if (response.StatusCode == 200 || response.StatusCode == 304) {
+                var result = JsonReader.Read<MyCardsInfo>(response.DataAsText);
+
+                accountManager.myCards = result.cardInventories;
+                accountManager.SetHeroInventories(result.heroInventories);
+                accountManager.SetCardData();
+                cardDic.SetCardsFinished.Invoke();
             }
         }
     }
