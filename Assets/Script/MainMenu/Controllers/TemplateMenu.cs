@@ -83,7 +83,7 @@ public class TemplateMenu : MonoBehaviour {
 
     public void SetTemplateDecks() {
         for(int i = 0; i < 3; i++) {
-            transform.Find("Footer/DeckBtnLayout").GetChild(i).gameObject.SetActive(false);
+            transform.Find("InnerCanvas/Footer/DeckBtnLayout").GetChild(i).gameObject.SetActive(false);
         }
         List<Templates> templates;
         if (isHuman) 
@@ -94,7 +94,7 @@ public class TemplateMenu : MonoBehaviour {
             if(heros.id == heroID) {
                 int count = 0;
                 foreach (Deck deck in heros.templates) {
-                    GameObject templateDeck = transform.Find("Footer/DeckBtnLayout").GetChild(count).gameObject;
+                    GameObject templateDeck = transform.Find("InnerCanvas/Footer/DeckBtnLayout").GetChild(count).gameObject;
                     templateDeck.SetActive(true);
                     templateDeck.GetComponent<DeckHandler>().SetTemplateDeck(deck);
                     count++;
@@ -159,8 +159,8 @@ public class TemplateMenu : MonoBehaviour {
     public void CancelSelectDeck() {
         if(selectedDeck != null) 
             selectedDeck.CancelSelect();
-        transform.Find("CancelSelect").gameObject.SetActive(false);
-        transform.Find("DeckEditBtn").gameObject.SetActive(false);
+        transform.Find("InnerCanvas/CancelSelect").gameObject.SetActive(false);
+        transform.Find("InnerCanvas/DeckEditBtn").gameObject.SetActive(false);
     }
 
 

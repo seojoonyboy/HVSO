@@ -76,8 +76,8 @@ public class DeckHandler : MonoBehaviour
     public void SelectTemplateDeck() {
         transform.Find("Selected").gameObject.SetActive(true);
         templateCanvas.selectedDeck = this;
-        templateCanvas.transform.Find("CancelSelect").gameObject.SetActive(true);
-        templateCanvas.transform.Find("DeckEditBtn").gameObject.SetActive(true);
+        templateCanvas.transform.Find("InnerCanvas/CancelSelect").gameObject.SetActive(true);
+        templateCanvas.transform.Find("InnerCanvas/DeckEditBtn").gameObject.SetActive(true);
     }
 
     public void CancelSelect() {
