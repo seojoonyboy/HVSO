@@ -1,11 +1,18 @@
+using Crystal;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI.Extensions;
 
 public class SafeAreaScrollSnap : MonoBehaviour {
     List<RectTransform> rects;
-
+    HorizontalScrollSnap horizontalScrollSnap;
     private void Awake() {
+        horizontalScrollSnap = transform.parent.GetComponent<HorizontalScrollSnap>();
+        horizontalScrollSnap.OnUpdateLayoutCalled.AddListener(() => {
+            Rect rect = GetComponent<SafeArea>().GetSafeArea();
+            Refresh(rect);
+        });
         Init();
     }
 
