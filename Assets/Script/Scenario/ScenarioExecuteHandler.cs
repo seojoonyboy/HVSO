@@ -7,7 +7,6 @@ using System.Linq;
 
 public class ScenarioExecuteHandler : MonoBehaviour {
     public List<ScenarioExecute> sets;
-    public bool isExecute;
     public bool isDone = true;
 
     public void Initialize(ScriptData data) {
@@ -25,7 +24,6 @@ public class ScenarioExecuteHandler : MonoBehaviour {
         }
         yield return SkillTrigger();
     }
-
     
     IEnumerator SkillTrigger() {
         foreach(ScenarioExecute execute in sets) {
@@ -33,6 +31,6 @@ public class ScenarioExecuteHandler : MonoBehaviour {
             execute.Execute();
             yield return new WaitUntil(() => isDone);
         }
-        isExecute = true;
+        GetComponent<ScenarioGameManagment>().canNextChapter = true;
     }
 }

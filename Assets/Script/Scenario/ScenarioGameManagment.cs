@@ -15,9 +15,7 @@ public class ScenarioGameManagment : PlayMangement {
     public bool isTutorial;
 
     Type thisType;
-
-    bool canNextChapter = true;
-    
+    public bool canNextChapter = true;
 
     private void Awake() {
         instance = this;
