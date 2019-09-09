@@ -7632,7 +7632,7 @@ MonoBehaviour:
       Data: button
     - Name: 
       Entry: 1
-      Data: endTurn
+      Data: muligunEnd
     - Name: 
       Entry: 13
       Data: 
@@ -7659,7 +7659,7 @@ MonoBehaviour:
       Data: button
     - Name: 
       Entry: 1
-      Data: endTurn
+      Data: muligunEnd
     - Name: 
       Entry: 13
       Data: 
@@ -7736,7 +7736,7 @@ MonoBehaviour:
       Data: 1
     - Name: 
       Entry: 1
-      Data: screen
+      Data: hands
     - Name: 
       Entry: 13
       Data: 
@@ -7813,7 +7813,7 @@ MonoBehaviour:
       Data: 1
     - Name: 
       Entry: 1
-      Data: screen
+      Data: turnNavigator
     - Name: 
       Entry: 13
       Data: 
