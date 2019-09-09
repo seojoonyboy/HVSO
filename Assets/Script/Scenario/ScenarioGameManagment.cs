@@ -39,6 +39,7 @@ public class ScenarioGameManagment : PlayMangement {
         foreach (ScriptData scriptData in chapterData.scripts) {
             chapterQueue.Enqueue(scriptData);
         }
+        StartCoroutine(ChapterScript());
         return true;
     }
 
@@ -67,8 +68,12 @@ public class ScenarioGameManagment : PlayMangement {
     }
 
     IEnumerator ChapterScript() {
+        while(chapterQueue.Count > 0) {
+            while(chapterQueue.Peek().isExecute == false) {
+                
 
-
+            }
+        }
         yield return null;
     }
 

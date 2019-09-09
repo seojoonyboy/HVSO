@@ -105,10 +105,19 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
             heroCardInfo.SetActive(true);
             //영웅 카드를 핸드로 가져오는 부분
             if (transform.position.y < -3.5f) {
-                showCardsHandler.FinishPlay(gameObject, true);
-
-                handManager.AddHeroCard(gameObject);
-                heroCardActivate = false;
+                if (ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.isTutorial == true) {
+                    cardUsed = false;
+                    transform.localScale = new Vector3(1, 1, 1);
+                    transform.localPosition = new Vector3(0, 0, 0);
+                    transform.Find("CardInfoWindow").gameObject.SetActive(false);
+                    transform.parent.parent.Find("HeroCardGuide").gameObject.SetActive(true);
+                    showCardsHandler.CancelSelecting();
+                }
+                else {
+                    showCardsHandler.FinishPlay(gameObject, true);
+                    handManager.AddHeroCard(gameObject);
+                    heroCardActivate = false;
+                }
             }
             else {
                 CheckLocation(true);
