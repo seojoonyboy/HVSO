@@ -12,10 +12,13 @@ public class ScenarioGameManagment : PlayMangement {
     ScriptData currentChapterData;
     Method currentMethod;
     public static ScenarioGameManagment scenarioInstance;
+    public bool isTutorial;
 
     Type thisType;
 
     bool canNextChapter = true;
+    
+
     private void Awake() {
         instance = this;
         scenarioInstance = this;
@@ -62,6 +65,13 @@ public class ScenarioGameManagment : PlayMangement {
         currentChapterData = chapterQueue.Dequeue();
         GetComponent<ScenarioExecuteHandler>().Initialize(currentChapterData);
     }
+
+    IEnumerator ChapterScript() {
+
+
+        yield return null;
+    }
+
 }
 
 
