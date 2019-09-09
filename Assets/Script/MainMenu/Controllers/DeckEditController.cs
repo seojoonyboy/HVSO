@@ -441,13 +441,18 @@ public class DeckEditController : MonoBehaviour
         int settedCardNum = 0;
         CardDataPackage myCards = AccountManager.Instance.cardPackage;
         foreach(dataModules.Item card in lodedDeck.items) {
-            EditCardHandler settedCard = settingLayout.transform.GetChild(settedCardNum).GetComponent<EditCardHandler>();
-            settedCard.SETNUM = card.cardCount;
-            settedCard.DrawCard(card.cardId, isHuman);
-            setCardNum += card.cardCount;
-            setCardList.Add(card.cardId, settedCard.gameObject);
-            settedCardNum++;
-            settedCard.gameObject.SetActive(true);
+            if (myCards.data.ContainsKey(card.id)) {
+                EditCardHandler settedCard = settingLayout.transform.GetChild(settedCardNum).GetComponent<EditCardHandler>();
+                if(myCards.data[card.id].cardCount == card.cardCount)
+                    settedCard.SETNUM = card.cardCount;
+                else
+                    settedCard.SETNUM = myCards.data[card.id].cardCount;
+                settedCard.DrawCard(card.cardId, isHuman);
+                setCardNum += settedCard.SETNUM;
+                setCardList.Add(card.cardId, settedCard.gameObject);
+                settedCardNum++;
+                settedCard.gameObject.SetActive(true);
+            }
         }
 
         foreach (dataModules.CollectionCard card in AccountManager.Instance.allCards) {
@@ -459,13 +464,13 @@ public class DeckEditController : MonoBehaviour
             else
                 race = "orc";
             if (card.camp != race) continue;
+            ownCount++;
+            int page = ownCount / 9;
+            EditCardHandler ownedCard = ownCardLayout.GetChild(page).GetChild(ownCount - (page * 9)).GetChild(0).GetComponent<EditCardHandler>();
+            ownedCard.gameObject.SetActive(true);
+            ownedCard.editBookRoot = ownedCard.transform.parent.parent.name + "/" + ownedCard.transform.parent.name;
             if (myCards.data.ContainsKey(card.id)) {
-                ownCount++;
-                int page = ownCount / 9;
-                EditCardHandler ownedCard = ownCardLayout.GetChild(page).GetChild(ownCount - (page * 9)).GetChild(0).GetComponent<EditCardHandler>();
-                ownedCard.gameObject.SetActive(true);
-                ownedCard.editBookRoot = ownedCard.transform.parent.parent.name + "/" + ownedCard.transform.parent.name;
-                if (!setCardList.ContainsKey(card.id)){
+                if (!setCardList.ContainsKey(card.id)) {
                     ownedCard.HAVENUM = myCards.data[card.id].cardCount;
                     haveCardNum += myCards.data[card.id].cardCount;
                     ownedCard.DrawCard(card.id, isHuman);
@@ -478,9 +483,13 @@ public class DeckEditController : MonoBehaviour
                     ownedCard.DrawCard(card.id, isHuman);
                     if (ownedCard.HAVENUM == 0) {
                         ownedCard.DisableCard(true);
-                    }                    
+                    }
                     haveCardNum += ownedCard.HAVENUM;
                 }
+            }
+            else {
+                ownedCard.HAVENUM = 0;
+                ownedCard.DrawCard(card.id, isHuman);
             }
             maxHaveCard = setCardNum + haveCardNum;
             RefreshLine();
