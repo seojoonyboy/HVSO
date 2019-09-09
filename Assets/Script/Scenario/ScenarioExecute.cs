@@ -80,7 +80,7 @@ public class Wait_click : ScenarioExecute {
 
 
         while (handler.isDone == false) {
-
+            
             if(Input.GetMouseButton(0) == true) {
 
                 if (target == null)

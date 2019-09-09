@@ -47,8 +47,18 @@ public class ScenarioMask : SerializedMonoBehaviour
         }        
     }
 
-    public void OffHighLight() {
+    public void DisableMask() {
+        topMask.transform.gameObject.SetActive(false);
+        leftMask.transform.gameObject.SetActive(false);
+        rightMask.transform.gameObject.SetActive(false);
+        bottonMask.transform.gameObject.SetActive(false);
+    }
 
+    public void ActiveMask() {
+        topMask.transform.gameObject.SetActive(true);
+        leftMask.transform.gameObject.SetActive(true);
+        rightMask.transform.gameObject.SetActive(true);
+        bottonMask.transform.gameObject.SetActive(true);
     }
 
 
