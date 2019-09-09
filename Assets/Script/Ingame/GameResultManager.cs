@@ -8,6 +8,7 @@ using Spine.Unity;
 public class GameResultManager : MonoBehaviour {
     public GameObject SocketDisconnectedUI;
 
+    private float lv;
     private float exp;
     private float lvExp;
     private float nextLvExp;
@@ -17,6 +18,7 @@ public class GameResultManager : MonoBehaviour {
     private int supplyBox = 0;
 
     private void Awake() {
+        lv = AccountManager.Instance.userResource.lv;
         exp = AccountManager.Instance.userResource.exp;
         lvExp = AccountManager.Instance.userResource.lvExp;
         nextLvExp = AccountManager.Instance.userResource.nextLvExp;
@@ -113,7 +115,8 @@ public class GameResultManager : MonoBehaviour {
             expValueText.text = ((int)exp).ToString();
             lvUpValueText.text = " / " + ((int)lvExp).ToString();
             if (exp == (int)lvExp) {
-                transform.Find("RankGage/LevelImage/LevelText").GetComponent<TMPro.TextMeshProUGUI>().text = (AccountManager.Instance.userResource.lv + 1).ToString();
+                lv++;
+                transform.Find("RankGage/LevelImage/LevelText").GetComponent<TMPro.TextMeshProUGUI>().text = lv.ToString();
                 lvExp = nextLvExp;
                 slider.transform.localScale = new Vector3(1.1f, 1.1f, 1.1f);
                 yield return new WaitForSeconds(0.2f);

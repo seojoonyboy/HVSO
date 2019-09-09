@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.UI.Extensions;
 using Spine;
 using Spine.Unity;
+using UnityEngine.Events;
 
 public class CardDictionaryManager : MonoBehaviour {
     [SerializeField] Transform cardList;
@@ -21,16 +22,22 @@ public class CardDictionaryManager : MonoBehaviour {
 
     bool isHumanDictionary;
     SortingOptions selectedSortOption;
+    SortingOptions beforeSortOption;
+
+    public UnityEvent SetCardsFinished = new UnityEvent();
 
     public void AttachDecksLoader(ref MyDecksLoader decksLoader) {
         this.decksLoader = decksLoader;
         this.decksLoader.OnInvenLoadFinished.AddListener(() => { SetToHumanCards(); Debug.Log("찍어보자"); });
     }
 
+
+
     private void Start() {
         Transform classList = cardList.Find("CardsByCost");
         for (int i = 0; i < classList.childCount; i++)
             classList.GetChild(i).Find("Header/Info/Image").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = i.ToString();
+        selectedSortOption = SortingOptions.CLASS;
     }
 
     public void CloseDictionaryCanvas() {
@@ -77,12 +84,40 @@ public class CardDictionaryManager : MonoBehaviour {
         sortingModal.gameObject.SetActive(true);
         for (int i = 0; i < 5; i++)
             sortingModal.Find("Buttons").GetChild(i).GetChild(0).gameObject.SetActive(true);
-        sortingModal.Find("Buttons").GetChild(0).GetChild(0).gameObject.SetActive(false);
-        selectedSortOption = SortingOptions.CLASS;
+        switch (selectedSortOption) {
+            case SortingOptions.CLASS:
+                sortingModal.Find("Buttons/Class").GetChild(0).gameObject.SetActive(false);
+                break;
+            case SortingOptions.COST_ASCEND:
+                sortingModal.Find("Buttons/Cost").GetChild(0).gameObject.SetActive(false);
+                sortingModal.Find("Buttons/Ascending").GetChild(0).gameObject.SetActive(false);
+                break;
+            case SortingOptions.COST_DESCEND:
+                sortingModal.Find("Buttons/Cost").GetChild(0).gameObject.SetActive(false);
+                sortingModal.Find("Buttons/Descending").GetChild(0).gameObject.SetActive(false);
+                break;
+            case SortingOptions.RARELITY_ASCEND:
+                sortingModal.Find("Buttons/Rarelity").GetChild(0).gameObject.SetActive(false);
+                sortingModal.Find("Buttons/Ascending").GetChild(0).gameObject.SetActive(false);
+                break;
+            case SortingOptions.RARELITY_DESCEND:
+                sortingModal.Find("Buttons/Rarelity").GetChild(0).gameObject.SetActive(false);
+                sortingModal.Find("Buttons/Descending").GetChild(0).gameObject.SetActive(false);
+                break;
+        }
     }
 
     public void CloseSortModal() {
+        selectedSortOption = beforeSortOption;
         sortingModal.gameObject.SetActive(false);
+    }
+
+    public void ClickClassButton() {
+        for (int i = 0; i < 5; i++)
+            sortingModal.Find("Buttons").GetChild(i).GetChild(0).gameObject.SetActive(true);
+        sortingModal.Find("Buttons/Class").GetChild(0).gameObject.SetActive(false);
+        beforeSortOption = selectedSortOption;
+        selectedSortOption = SortingOptions.CLASS;
     }
 
     public void ClickRarelityButton() {
@@ -90,6 +125,7 @@ public class CardDictionaryManager : MonoBehaviour {
             sortingModal.Find("Buttons").GetChild(i).GetChild(0).gameObject.SetActive(true);
         sortingModal.Find("Buttons/Rarelity").GetChild(0).gameObject.SetActive(false);
         sortingModal.Find("Buttons/Descending").GetChild(0).gameObject.SetActive(false);
+        beforeSortOption = selectedSortOption;
         selectedSortOption = SortingOptions.RARELITY_DESCEND;
     }
 
@@ -98,12 +134,14 @@ public class CardDictionaryManager : MonoBehaviour {
             sortingModal.Find("Buttons").GetChild(i).GetChild(0).gameObject.SetActive(true);
         sortingModal.Find("Buttons/Cost").GetChild(0).gameObject.SetActive(false);
         sortingModal.Find("Buttons/Descending").GetChild(0).gameObject.SetActive(false);
+        beforeSortOption = selectedSortOption;
         selectedSortOption = SortingOptions.COST_DESCEND;
     }
 
     public void ClickAscendingButton() {
         if (selectedSortOption == SortingOptions.CLASS) return;
         if (!sortingModal.Find("Buttons/Ascending").GetChild(0).gameObject.activeSelf) return;
+        beforeSortOption = selectedSortOption;
         if (selectedSortOption == SortingOptions.RARELITY_DESCEND) {
             sortingModal.Find("Buttons/Ascending").GetChild(0).gameObject.SetActive(false);
             sortingModal.Find("Buttons/Descending").GetChild(0).gameObject.SetActive(true);
@@ -119,6 +157,7 @@ public class CardDictionaryManager : MonoBehaviour {
     public void ClickDescendingButton() {
         if (selectedSortOption == SortingOptions.CLASS) return;
         if (!sortingModal.Find("Buttons/Descending").GetChild(0).gameObject.activeSelf) return;
+        beforeSortOption = selectedSortOption;
         if (selectedSortOption == SortingOptions.RARELITY_ASCEND) {
             sortingModal.Find("Buttons/Ascending").GetChild(0).gameObject.SetActive(true);
             sortingModal.Find("Buttons/Descending").GetChild(0).gameObject.SetActive(false);
@@ -149,6 +188,7 @@ public class CardDictionaryManager : MonoBehaviour {
                 SetCardsByRarelity(true);
                 break;
         }
+        beforeSortOption = selectedSortOption;
         CloseSortModal();
     }
 

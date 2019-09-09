@@ -35,6 +35,8 @@ public class MenuSceneController : MonoBehaviour {
         //for (int i = 0; i < fixedCanvas.Find("Footer").childCount; i++)
         //    buttonSkeletons[i] = buttonsParent.GetChild(i).Find("ButtonImage").GetComponent<SkeletonGraphic>();
         //StartCoroutine(UpdateWindow());
+
+        TouchEffecter.Instance.SetScript();
     }
 
     /// <summary>

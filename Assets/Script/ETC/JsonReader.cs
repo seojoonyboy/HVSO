@@ -142,4 +142,8 @@ namespace dataModules {
         public int skillId;
         public string method;
     }
+
+    public class BoxInfo {
+        public List<RewardClass> rewardList;
+    }
 }

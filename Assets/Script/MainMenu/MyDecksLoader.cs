@@ -41,6 +41,7 @@ public class MyDecksLoader : MonoBehaviour {
         }
     }
 
+
     private void OnDeckLoadFinished(HTTPRequest originalRequest, HTTPResponse response) {
         if(response != null) {
             if(response.StatusCode == 200 || response.StatusCode == 304) {

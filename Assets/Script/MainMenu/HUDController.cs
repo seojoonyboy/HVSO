@@ -69,6 +69,8 @@ public class HUDController : MonoBehaviour {
     }
 
     private void Awake() {
+        AccountManager.Instance.OnUserResourceRefresh.AddListener(() => SetResourcesUI());
+
         gradation = transform.GetChild(0).GetChild(0).Find("Gradation");
 
         userInfoUI = transform

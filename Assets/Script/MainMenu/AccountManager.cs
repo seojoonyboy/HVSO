@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
+using UnityEngine.Events;
 using System.Linq;
 using UnityEngine.UI;
 using BestHTTP;
@@ -34,9 +35,12 @@ public partial class AccountManager : Singleton<AccountManager> {
 
     public ResourceManager resource;
     public UserResourceManager userResource;
+    public RewardClass[] rewardList;
 
     NetworkManager networkManager;
     GameObject loadingModal;
+    public UnityEvent OnUserResourceRefresh = new UnityEvent();
+
     public string NickName { get; private set; }
 
     private void Awake() {
@@ -46,7 +50,6 @@ public partial class AccountManager : Singleton<AccountManager> {
         DEVICEID = SystemInfo.deviceUniqueIdentifier;
         cardPackage = Resources.Load("CardDatas/CardDataPackage_01") as CardDataPackage;
         resource = transform.GetComponent<ResourceManager>();
-        TouchEffecter.Instance.SetScript();
 
         gameObject.AddComponent<Timer.TimerManager>();
     }
@@ -96,6 +99,9 @@ public partial class AccountManager : Singleton<AccountManager> {
                 data.flavorText = card.flavorText;
                 data.cardCount = card.cardCount;
                 cardPackage.data.Add(card.cardId, data);
+            }
+            else {
+                cardPackage.data[card.cardId].cardCount = card.cardCount;
             }
         }
         foreach (KeyValuePair<string, HeroInventory> cards in myHeroInventories) {
@@ -229,6 +235,25 @@ public partial class AccountManager {
             supply: userData.supply,
             supplyBox: userData.supplyBox
         );
+    }
+
+    public void SetSignInData(HTTPRequest originalRequest, HTTPResponse response) {
+        userData = dataModules.JsonReader.Read<UserInfo>(response.DataAsText);
+        NickName = userData.nickName;
+
+        userResource.SetResource(
+            lv: userData.lv,
+            exp: userData.exp,
+            lvExp: userData.lvExp,
+            nextLvExp: userData.nextLvExp,
+            gold: userData.gold,
+            crystal: userData.manaCrystal,
+            supplyStoreTime: (int)userData.supplyTimeRemain,
+            supplyStore: userData.preSupply,
+            supply: userData.supply,
+            supplyBox: userData.supplyBox
+        );
+        OnUserResourceRefresh.Invoke();
     }
 
     #region supply 갱신 처리 관련 code
@@ -412,6 +437,19 @@ public partial class AccountManager {
         networkManager.Request(request, callback, "인벤토리 정보를 불러오는 중...");
     }
 
+    public void RefreshInventories(OnRequestFinishedDelegate callback = null) {
+        StringBuilder sb = new StringBuilder();
+        sb
+            .Append(networkManager.baseUrl)
+            .Append("api/user/inventories");
+
+        HTTPRequest request = new HTTPRequest(new Uri(sb.ToString()));
+        request.MethodType = HTTPMethods.Get;
+        request.AddHeader("authorization", TokenFormat);
+
+        networkManager.Request(request, callback, "인벤토리 정보를 불러오는 중...");
+    }
+
     private void TestModifyDeck() {
         NetworkManager.ModifyDeckReqFormat form = new NetworkManager.ModifyDeckReqFormat();
         NetworkManager.ModifyDeckReqArgs field = new NetworkManager.ModifyDeckReqArgs();
@@ -441,6 +479,14 @@ public partial class AccountManager {
         //RequestDeckMake(formatData);
     }
 
+    public void SetRewardInfo(RewardClass[] rewardList) {
+        for(int i = 0; i < rewardList.Length; i++) {
+            this.rewardList[i].item = rewardList[i].item;
+            this.rewardList[i].amount = rewardList[i].amount;
+            this.rewardList[i].type = rewardList[i].type;
+        }
+    }
+
     public void LoadAllCards() {
         StringBuilder sb = new StringBuilder();
         sb
@@ -461,6 +507,29 @@ public partial class AccountManager {
             allCards = result;
             allCardsDic = allCards.ToDictionary(x => x.id, x => x);
         }
+    }
+    public void RequestRewardInfo(OnRequestFinishedDelegate callback = null) {
+        StringBuilder url = new StringBuilder();
+        string base_url = networkManager.baseUrl;
+
+        url
+            .Append(base_url)
+            .Append("api/user/openbox");
+
+        //url
+        //    .Append(base_url)
+        //    .Append("api/users/")
+        //    .Append(DEVICEID)
+        //    .Append("?slow=30");
+
+        Logger.Log("Request User Info");
+        HTTPRequest request = new HTTPRequest(
+            new Uri(url.ToString())
+        );
+        request.MethodType = HTTPMethods.Get;
+        request.AddHeader("authorization", TokenFormat);
+        networkManager.Request(request, callback, "박스 정보를 불러오는중...");
+        
     }
 }
 

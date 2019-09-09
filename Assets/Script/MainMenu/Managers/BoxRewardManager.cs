@@ -2,20 +2,39 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
+using BestHTTP;
+using dataModules;
+
 
 public class BoxRewardManager : MonoBehaviour
 {
     [SerializeField] Transform boxObject;
+    [SerializeField] CardDictionaryManager cardDic;
+    [SerializeField] TMPro.TextMeshProUGUI supplyStore;
+    [SerializeField] TMPro.TextMeshProUGUI storeTimer;
     // Start is called before the first frame update
     Transform hudCanvas;
-    void Start()
-    {
+
+    AccountManager accountManager;
+    NetworkManager networkManager;
+
+    public UnityEvent OnBoxLoadFinished = new UnityEvent();
+
+    void Awake() {
+        accountManager = AccountManager.Instance;
         hudCanvas = transform.parent;
+        accountManager.userResource.LinkTimer(storeTimer);
+
+
+        cardDic.SetCardsFinished.AddListener(() => transform.Find("ShowBox").gameObject.SetActive(true));
+        OnBoxLoadFinished.AddListener(() => accountManager.RefreshInventories(OnInventoryRefreshFinished));
     }
 
     public void SetBoxObj() {
         boxObject.Find("SupplyGauge/Value").GetComponent<Image>().fillAmount = (float)AccountManager.Instance.userResource.supply * 0.01f;
         boxObject.Find("SupplyGauge/ValueText").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userResource.supply.ToString() + "/100";
+        supplyStore.text = AccountManager.Instance.userResource.supplyStore.ToString() + "/200";
         if (AccountManager.Instance.userResource.supplyBox > 0) {
             boxObject.Find("BoxImage/BoxValue").gameObject.SetActive(true);
             boxObject.Find("BoxImage/BoxValue/BoxNum").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userResource.supplyBox.ToString();
@@ -26,15 +45,34 @@ public class BoxRewardManager : MonoBehaviour
 
     public void OpenBox() {
         if (AccountManager.Instance.userResource.supplyBox <= 0) return;
-        transform.Find("ShowBox").gameObject.SetActive(true);
+        WaitReward();
+    }
+
+    
+
+    void WaitReward() {
+        accountManager.RequestRewardInfo((req, res) => {
+            if (res != null) {
+                if (res.StatusCode == 200 || res.StatusCode == 304) {
+                    var result = dataModules.JsonReader.Read<RewardClass[]>(res.DataAsText);
+
+                    accountManager.rewardList = result;
+                    accountManager.SetRewardInfo(result);
+                    OnBoxLoadFinished.Invoke();
+                    accountManager.RequestUserInfo(accountManager.SetSignInData);
+                }
+            }
+        });
     }
 
     public void GetResult() {
         transform.Find("ShowBox/Text").gameObject.SetActive(false);
+        transform.Find("OpenBox").gameObject.SetActive(true);
         StartCoroutine(ShowRewards());
     }
 
     IEnumerator ShowRewards() {
+        SetRewards(accountManager.rewardList);
         Transform boxParent = transform.Find("OpenBox");
         boxParent.gameObject.SetActive(true);
         iTween.ScaleTo(boxParent.GetChild(0).gameObject, iTween.Hash("x", 1, "y", 1, "islocal", true, "time", 0.2f));
@@ -45,6 +83,7 @@ public class BoxRewardManager : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         iTween.ScaleTo(boxParent.GetChild(3).gameObject, iTween.Hash("x", 1, "y", 1, "islocal", true, "time", 0.2f));
         yield return new WaitForSeconds(0.5f);
+        cardDic.SetToHumanCards();
         transform.Find("ExitButton").gameObject.SetActive(true);
     }
 
@@ -58,11 +97,13 @@ public class BoxRewardManager : MonoBehaviour
         transform.Find("ExitButton").gameObject.SetActive(false);
         boxParent.GetChild(0).GetChild(1).gameObject.SetActive(false);
         boxParent.GetChild(1).GetChild(1).gameObject.SetActive(false);
-        boxParent.GetChild(3).Find("Card").gameObject.SetActive(true);
+        boxParent.GetChild(3).Find("Card").gameObject.SetActive(false);
         boxParent.GetChild(3).Find("Card").GetChild(1).gameObject.SetActive(false);
-        boxParent.GetChild(3).Find("Resource").gameObject.SetActive(true);
-        for (int i = 0; i < 3; i++)
+        boxParent.GetChild(3).Find("Resource").gameObject.SetActive(false);
+        for (int i = 0; i < 3; i++) {
             boxParent.GetChild(2).GetChild(i).gameObject.SetActive(false);
+            boxParent.GetChild(3).Find("Resource").GetChild(i).gameObject.SetActive(false);
+        }
         SetBoxObj();
     }
 
@@ -98,6 +139,21 @@ public class BoxRewardManager : MonoBehaviour
             boxParent.GetChild(3).Find("Resource").Find("Value").GetComponent<TMPro.TextMeshProUGUI>().text = rewardList[3].amount.ToString();
         }
     }
+
+
+    public void OnInventoryRefreshFinished(HTTPRequest originalRequest, HTTPResponse response) {
+        if (response != null) {
+            if (response.StatusCode == 200 || response.StatusCode == 304) {
+                var result = JsonReader.Read<MyCardsInfo>(response.DataAsText);
+
+                accountManager.myCards = result.cardInventories;
+                accountManager.SetCardData();
+                accountManager.SetHeroInventories(result.heroInventories);
+                cardDic.SetCardsFinished.Invoke();
+            }
+        }
+    }
+
 }
 
 public class RewardClass {
