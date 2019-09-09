@@ -55,8 +55,17 @@ public class Wait_click : ScenarioExecute {
     public Wait_click() : base() { }
 
     public override void Execute() {
-        handler.isDone = true;
+        StartCoroutine(WaitClick());
         Logger.Log("Wait_click");
     }
+
+    IEnumerator WaitClick() {
+        while (handler.isDone == false) {
+            if (Input.GetMouseButton(0) == true)
+                handler.isDone = true;
+        }
+        yield return null;
+    }
+
 }
 
