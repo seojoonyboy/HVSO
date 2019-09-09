@@ -12,10 +12,11 @@ public class ScenarioGameManagment : PlayMangement {
     ScriptData currentChapterData;
     Method currentMethod;
     public static ScenarioGameManagment scenarioInstance;
+    public bool isTutorial;
 
     Type thisType;
+    public bool canNextChapter = true;
 
-    bool canNextChapter = true;
     private void Awake() {
         instance = this;
         scenarioInstance = this;
@@ -36,6 +37,7 @@ public class ScenarioGameManagment : PlayMangement {
         foreach (ScriptData scriptData in chapterData.scripts) {
             chapterQueue.Enqueue(scriptData);
         }
+        ScenarioMask.Instance.gameObject.SetActive(true);
         return true;
     }
 
@@ -62,6 +64,24 @@ public class ScenarioGameManagment : PlayMangement {
         currentChapterData = chapterQueue.Dequeue();
         GetComponent<ScenarioExecuteHandler>().Initialize(currentChapterData);
     }
+
+    //IEnumerator ChapterScript() {
+    //    while(chapterQueue.Count > 0) {
+    //        while(chapterQueue.Peek().isExecute == false) {
+    //            DequeueChapter();                
+    //        }
+    //    }
+    //    yield return null;
+    //}
+
+    //IEnumerator ExecuteMethod(int methodNum) {
+    //    ScenarioExecute dataExecute = (ScenarioExecute)Activator.CreateInstance(Type.GetType(chapterQueue.Peek().methods[methodNum].name));
+    //    dataExecute.args = chapterQueue.Peek().methods[methodNum].args;
+    //    dataExecute.Execute();     
+    //    yield return new WaitUntil(() => dataExecute.handler.isDone == true);
+    //}
+
+
 }
 
 
