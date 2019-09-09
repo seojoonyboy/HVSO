@@ -37,11 +37,15 @@ public class UserResourceManager : SerializedMonoBehaviour {
         this.supplyBox = supplyBox;
     }
 
-    private void Update() {
+    void Update() {
         if (timerText != null) {
             timerTime -= Time.deltaTime;
-            if ((supplyStoreTime * 0.001f) - timerTime <= 1) {
-                SetTimer(supplyStoreTime - 1);
+            if(timerTime <= 0) {
+                AccountManager.Instance.RequestUserInfo(AccountManager.Instance.SetSignInData);
+                return;
+            }
+            if ((supplyStoreTime * 0.001f) - timerTime >= 1) {
+                SetTimer(supplyStoreTime - 1000);
             }
         }
     }
