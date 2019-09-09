@@ -21,7 +21,8 @@ public class UserResourceManager : SerializedMonoBehaviour {
     public string supplyStoreTimer;
     public int supply;
     public int supplyBox;
-    
+
+    public TMPro.TextMeshProUGUI timerText;
 
     public void SetResource(uint lv, uint exp, uint lvExp, uint nextLvExp, int gold, int crystal, int supplyStore, int supplyStoreTime, int supply, int supplyBox) {
         this.lv = lv;
@@ -37,18 +38,30 @@ public class UserResourceManager : SerializedMonoBehaviour {
     }
 
     private void Update() {
-        timerTime -= Time.deltaTime;
-        if((supplyStoreTime * 0.001f) - timerTime <= 1) {
-            SetTimer(supplyStoreTime - 1);
+        if (timerText != null) {
+            timerTime -= Time.deltaTime;
+            if ((supplyStoreTime * 0.001f) - timerTime <= 1) {
+                SetTimer(supplyStoreTime - 1);
+            }
         }
+    }
+
+    public void LinkTimer(TMPro.TextMeshProUGUI timerText) {
+        this.timerText = timerText;
     }
 
     public void SetTimer(int supplyStoreTime) {
         this.supplyStoreTime = supplyStoreTime;
         timerTime = supplyStoreTime * 0.001f;
-        int leftSecond = (int)(supplyStoreTime * 0.001);
-        int leftMinute = (int)(leftSecond * 0.0167);
-        int leftHour = (int)(leftMinute * 0.0167);
-        supplyStoreTimer = leftHour.ToString() + ":" + leftMinute.ToString() + ":" + leftSecond.ToString();
+        if (timerTime > 0) {
+            int leftSecond = (int)(supplyStoreTime * 0.001);
+            int leftMinute = (int)(leftSecond * 0.0167);
+            int leftHour = (int)(leftMinute * 0.0167);
+            supplyStoreTimer = leftHour.ToString() + ":" + leftMinute.ToString() + ":" + leftSecond.ToString() + "후 +20";
+        }
+        else
+            supplyStoreTimer = "창고 가득참";
+        if (timerText != null)
+            timerText.text = supplyStoreTimer;
     }
 }
