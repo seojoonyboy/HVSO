@@ -8735,7 +8735,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &498848608
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8892,7 +8892,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: shield_gage
+      Data: shield-gage
     - Name: $v
       Entry: 10
       Data: 6
@@ -37521,7 +37521,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1979443619
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42777,6 +42777,8 @@ MonoBehaviour:
   unitsObserver: {fileID: 208885980}
   turnTable: {fileID: 468818648}
   releaseTurnBtn: {fileID: 0}
+  isTutorial: 0
+  canNextChapter: 1
 --- !u!114 &8279262150021554597
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42790,7 +42792,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sets: []
-  isExecute: 0
   isDone: 1
 --- !u!114 &8999688528537312077
 MonoBehaviour:

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ScenarioExecute : MonoBehaviour {
     public ScenarioExecuteHandler handler;
@@ -27,7 +28,9 @@ public class Highlight : ScenarioExecute {
     public Highlight() :base() { }
 
     public override void Execute() {
-        ScenarioMask.Instance.GetMaskHighlight(ScenarioMask.Instance.targetObject[args[0]]);
+        GameObject target;
+        target = (args.Count > 1) ? ScenarioMask.Instance.GetMaskingObject(args[0], args[1]) : ScenarioMask.Instance.GetMaskingObject(args[0]);
+        ScenarioMask.Instance.GetMaskHighlight(target);
         handler.isDone = true;
         Logger.Log("Highlight");
     }
@@ -60,12 +63,60 @@ public class Wait_click : ScenarioExecute {
     }
 
     IEnumerator WaitClick() {
-        while (handler.isDone == false) {
-            if (Input.GetMouseButton(0) == true)
-                handler.isDone = true;
+        GameObject target;
+
+        if (args[0] == "screen")
+            target = null;
+        else if (args.Count > 1)
+            target = ScenarioMask.Instance.GetMaskingObject(args[0], args[1]);
+        else
+            target = ScenarioMask.Instance.GetMaskingObject(args[0]);
+
+        Button button = target.GetComponent<Button>();
+        bool buttonClick = false;
+        if(button != null) {
+            button.onClick.AddListener(delegate () { buttonClick = true; });
         }
+
+
+        while (handler.isDone == false) {
+
+            if(Input.GetMouseButton(0) == true) {
+
+                if (target == null)
+                    handler.isDone = true;
+                else {
+                    if (button != null) {
+                        handler.isDone = (buttonClick == true) ? true : false;
+                    }
+                    else {
+                        UnityEngine.EventSystems.PointerEventData clickEvent = new UnityEngine.EventSystems.PointerEventData(UnityEngine.EventSystems.EventSystem.current);
+                        if (clickEvent.pointerPress.gameObject.name == target.name)
+                            handler.isDone = true;
+                        else
+                            handler.isDone = false;
+                    }              
+                }
+            }
+        }
+
+
         yield return null;
     }
+}
 
+public class Fill_shield_gage : ScenarioExecute {
+    public Fill_shield_gage() : base() { }
+
+    public override void Execute() {
+    }
+}
+
+
+public class Summon_Force : ScenarioExecute {
+    public Summon_Force() : base() { }
+
+    public override void Execute() {
+    }
 }
 

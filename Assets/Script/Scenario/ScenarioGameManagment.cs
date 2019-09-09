@@ -38,6 +38,7 @@ public class ScenarioGameManagment : PlayMangement {
             chapterQueue.Enqueue(scriptData);
         }
         StartCoroutine(ChapterScript());
+        ScenarioMask.Instance.gameObject.SetActive(true);
         return true;
     }
 
