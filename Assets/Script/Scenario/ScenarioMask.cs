@@ -44,9 +44,13 @@ public class ScenarioMask : SerializedMonoBehaviour
             leftMask.position = left;
             rightMask.position = right;
             bottonMask.position = bottom;
-        }
-        
+        }        
     }
+
+    public void OffHighLight() {
+
+    }
+
 
 
     public GameObject GetMaskingObject(string main, string sub = null) {
@@ -58,7 +62,7 @@ public class ScenarioMask : SerializedMonoBehaviour
             if (sub == null)
                 return maskObject;
             else {
-                if(main == "muligun_card") {
+                if(main == "muligunCard" || main == "muligun_card") {
                     switch (sub) {
                         case "left,top":
                             maskObject = maskObject.transform.GetChild(5).gameObject;
@@ -88,7 +92,6 @@ public class ScenarioMask : SerializedMonoBehaviour
                             break;
                         }
                     }
-
                 }
                 if (main == "mana") {
                     //마나는 적만 있어서 텅
@@ -117,12 +120,23 @@ public class ScenarioMask : SerializedMonoBehaviour
 
 
                 }
+                if (main == "shield-gage") {
+                    maskObject = (sub == "my") ? maskObject : null;
+                }
+
                 if (main == "shield_num_My") {
                     maskObject = (PlayMangement.instance.player.isHuman == true) ? maskObject.transform.Find("HumanSheild").gameObject : maskObject.transform.Find("OrcSheild").gameObject;
                 }
-                if (main == "button") 
-                    maskObject = (PlayMangement.instance.player.isHuman) ? maskObject.transform.Find("HumanButton").gameObject : maskObject.transform.Find("Orc").gameObject;
+                if (main == "button") {
+                    if(sub == "muligunEnd") {
+                        maskObject = PlayMangement.instance.player.playerUI.transform.Find("FirstDrawWindow/FinishButton").gameObject;
+                    }
+                    if(sub == "endTurn") {
+                        maskObject = (PlayMangement.instance.player.isHuman) ? maskObject.transform.Find("HumanButton").gameObject : maskObject.transform.Find("Orc").gameObject;
+                    }
+                }
 
+                return maskObject;
             }
         }
         return null;
