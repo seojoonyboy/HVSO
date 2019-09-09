@@ -94,6 +94,7 @@ public class BoxRewardManager : MonoBehaviour
         }
         boxParent.gameObject.SetActive(false);
         transform.Find("ShowBox").gameObject.SetActive(false);
+        transform.Find("ShowBox/Text").gameObject.SetActive(true);
         transform.Find("ExitButton").gameObject.SetActive(false);
         boxParent.GetChild(0).GetChild(1).gameObject.SetActive(false);
         boxParent.GetChild(1).GetChild(1).gameObject.SetActive(false);

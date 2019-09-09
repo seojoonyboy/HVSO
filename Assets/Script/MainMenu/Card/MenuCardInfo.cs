@@ -181,6 +181,10 @@ public class MenuCardInfo : MonoBehaviour
             info.Find("MagicPortrait").gameObject.SetActive(true);
             if (AccountManager.Instance.resource.cardPortraite.ContainsKey(data.id)) {
                 info.Find("MagicPortrait").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardPortraite[data.id];
+                if(data.isHeroCard)
+                    info.Find("MagicPortrait/Frame").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground["hero_legend_human"];
+                else
+                    info.Find("MagicPortrait/Frame").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground["magic_" + data.rarelity];
             }
         }
     }

@@ -5,186 +5,136 @@ using UnityEngine.UI;
 
 public class DeckSettingManager : MonoBehaviour
 {
-    [SerializeField] Canvas humanTemplateCanvas;
-    [SerializeField] Canvas orcTemplateCanvas;
     [SerializeField] public GameObject cardDictionaryCanvas;
-    [SerializeField] Transform humanDeckList;
-    [SerializeField] Transform orcDeckList;
     [SerializeField] Transform deckList;
-    [SerializeField] Transform pageButtons;
-    [SerializeField] TMPro.TextMeshProUGUI humanDeckNum;
-    [SerializeField] TMPro.TextMeshProUGUI orcDeckNum;
+    [SerializeField] TMPro.TextMeshProUGUI deckNum;
     [SerializeField] HUDController hudController;
+    [SerializeField] HeroSelectController heroSelectController;
 
     public MenuSceneController menuSceneController;
+    public Transform selectedDeck;
 
     MyDecksLoader decksLoader;
 
-    int humanDeckPage = 0;
-    int humanCurrentPage = 0;
-    int orcDeckPage = 0;
-    int orcCurrentPage = 0;
 
     public void AttachDecksLoader(ref MyDecksLoader decksLoader) {
         this.decksLoader = decksLoader;
         this.decksLoader.OnLoadFinished.AddListener(() => { OnDecksInfoLoaded(); });
     }
 
-    public void ClickNewDeck(DeckHandler deck) {
-        Canvas templateCanvas;
-        if (deck.gameObject.name == "HumanEditDeck") {
-            templateCanvas = humanTemplateCanvas;
-            templateCanvas.GetComponent<TemplateMenu>().ChangeHeroID("h10001");
-        }
-        else {
-            templateCanvas = orcTemplateCanvas;
-            templateCanvas.GetComponent<TemplateMenu>().ChangeHeroID("h10002");
-        }
-        templateCanvas.gameObject.SetActive(true);
-        
-        hudController.SetHeader(HUDController.Type.RESOURCE_ONLY_WITH_BACKBUTTON);
-        hudController.SetBackButton(() => {
-            templateCanvas.GetComponent<TemplateMenu>().ReturnToMenu();
-            hudController.SetHeader(HUDController.Type.SHOW_USER_INFO);
-        });
-    }
-
-    //public void OpenCardDictionary() {
-    //    cardDictionaryCanvas.gameObject.SetActive(true);
-    //    cardDictionaryCanvas.GetComponent<CardDictionaryManager>().SetToOrcCards();
-
-    //    hudController.SetBackButtonMsg("도감화면");
-
-    //    hudController.SetBackButton(() => {
-    //        cardDictionaryCanvas.GetComponent<CardDictionaryManager>().CloseDictionaryCanvas();
-    //        hudController.SetHeader(HUDController.Type.SHOW_USER_INFO);
-    //    });
-    //}
-
-    public void SetPlayerDecks() {
-        int humanDeckCount = 0;
-        int orcDeckCount = 0;
-        humanDeckPage = 0;
-        orcDeckPage = 0;
-        humanCurrentPage = 1;
-        orcCurrentPage = 1;
-        int humanCustomDecks = AccountManager.Instance.humanDecks.Count;
-        int orcCustomDecks = AccountManager.Instance.orcDecks.Count;
-        InitDecks();
-
-        if (humanCustomDecks > 0) {
-            for (int i = 0; i < humanCustomDecks; i++) {
-                humanDeckList.GetChild(humanDeckPage).GetChild(humanDeckCount).gameObject.SetActive(true);
-                humanDeckList.GetChild(humanDeckPage).GetChild(humanDeckCount).GetComponent<DeckHandler>().SetDeck(AccountManager.Instance.humanDecks[i]);
-                humanDeckCount++;
-                if (humanDeckCount == 3) {
-                    humanDeckPage++;
-                    humanDeckCount = 0;
-                }
-                if (humanDeckPage < 3)
-                    humanDeckList.GetChild(humanDeckPage).GetChild(humanDeckCount).gameObject.SetActive(true);
-            }
-            if (humanDeckPage == 3)
-                humanDeckPage--;
-        }
-        if (orcCustomDecks > 0) {
-            for (int i = 0; i < orcCustomDecks; i++) {
-                orcDeckList.GetChild(orcDeckPage).GetChild(orcDeckCount).gameObject.SetActive(true);
-                orcDeckList.GetChild(orcDeckPage).GetChild(orcDeckCount).GetComponent<DeckHandler>().SetDeck(AccountManager.Instance.orcDecks[i]);
-                orcDeckCount++;
-                if (orcDeckCount == 3) {
-                    orcDeckPage++;
-                    orcDeckCount = 0;
-                }
-                if (orcDeckPage < 3)
-                    orcDeckList.GetChild(orcDeckPage).GetChild(orcDeckCount).gameObject.SetActive(true);
-            }
-            if (orcDeckPage == 3)
-                orcDeckPage--;
-        }
-        humanDeckNum.text = "1/" + (humanDeckPage + 1).ToString();
-        orcDeckNum.text = "1/" + (orcDeckPage + 1).ToString();
-        pageButtons.Find("Human/Left").gameObject.SetActive(false);
-        if (humanDeckPage > 0)
-            pageButtons.Find("Human/Right").gameObject.SetActive(true);
-        else
-            pageButtons.Find("Human/Right").gameObject.SetActive(false);
-        pageButtons.Find("Orc/Left").gameObject.SetActive(false);
-        if (orcDeckPage > 0)
-            pageButtons.Find("Orc/Right").gameObject.SetActive(true);
-        else
-            pageButtons.Find("Orc/Right").gameObject.SetActive(false);
-    }
-
-    private void InitDecks() {
+    public void RefreshLine() {
+        CloseDeckButtonsFast();
+        Canvas.ForceUpdateCanvases();
         for (int i = 0; i < 3; i++) {
-            humanDeckList.GetChild(i).gameObject.SetActive(false);
-            orcDeckList.GetChild(i).gameObject.SetActive(false);
-            for(int j = 0; j < 3; j++) {
-                humanDeckList.GetChild(i).GetChild(j).gameObject.SetActive(false);
-                humanDeckList.GetChild(i).GetChild(j).Find("DeckInfo").gameObject.SetActive(false);
-                humanDeckList.GetChild(i).GetChild(j).Find("DeckInfo/EditButtons").gameObject.SetActive(false);
-                orcDeckList.GetChild(i).GetChild(j).gameObject.SetActive(false);
-                orcDeckList.GetChild(i).GetChild(j).Find("DeckInfo").gameObject.SetActive(false);
-                orcDeckList.GetChild(i).GetChild(j).Find("DeckInfo/EditButtons").gameObject.SetActive(false);
+            LayoutRebuilder.ForceRebuildLayoutImmediate(deckList.GetComponent<RectTransform>());
+        }
+
+        Invoke("UpdateContentHeight", 0.25f);
+    }
+
+    private void UpdateContentHeight() {
+        float tmp = 700f;
+        float height = deckList.GetComponent<RectTransform>().rect.height;
+        float result = height + tmp;
+        transform.Find("DeckListParent").GetComponent<RectTransform>().sizeDelta = new Vector2(1080, result);
+        deckList.GetComponent<RectTransform>().anchoredPosition = new Vector2(deckList.GetComponent<RectTransform>().anchoredPosition.x, -300);
+        GetComponent<ScrollRect>().normalizedPosition = new Vector2(0, 1);
+    }
+
+    public void SetPlayerNewDecks() {
+        InitNewDecks();
+        int humanDecks = AccountManager.Instance.humanDecks.Count;
+        int orcDecks = AccountManager.Instance.orcDecks.Count;
+        int deckCount = humanDecks + orcDecks;
+        if(deckCount > 0) {
+            for(int i = 0; i < humanDecks; i++) {
+                deckList.GetChild(i).gameObject.SetActive(true);
+                deckList.GetChild(i).GetComponent<DeckHandler>().SetNewDeck(AccountManager.Instance.humanDecks[i]);
+            }
+            for (int i = humanDecks; i < deckCount; i++) {
+                deckList.GetChild(i).gameObject.SetActive(true);
+                deckList.GetChild(i).GetComponent<DeckHandler>().SetNewDeck(AccountManager.Instance.orcDecks[i - humanDecks]);
             }
         }
-
-        //for(int i = 0; i < 10; i++) {
-        //    deckList.GetChild(i).gameObject.SetActive(false);
-        //    //deckList.GetChild(i).Find("HeroImg").GetComponent<Image>().
-        //}
-
-
-        humanDeckList.GetChild(0).gameObject.SetActive(true);
-        orcDeckList.GetChild(0).gameObject.SetActive(true);
-        humanDeckList.GetChild(0).GetChild(0).gameObject.SetActive(true);
-        orcDeckList.GetChild(0).GetChild(0).gameObject.SetActive(true);
+        if (deckCount != 10) {
+            deckList.GetChild(deckCount).gameObject.SetActive(true);
+            deckList.GetChild(deckCount).GetChild(0).Find("NewDeck").gameObject.SetActive(true);
+        }
+        RefreshLine();
     }
 
-    public void NextPageBtn(bool isHuman) {
-        if (isHuman) {
-            humanDeckList.GetChild(humanCurrentPage - 1).gameObject.SetActive(false);
-            humanDeckList.GetChild(humanCurrentPage).gameObject.SetActive(true);
-            humanCurrentPage++;
-            if (humanCurrentPage == 3 || !humanDeckList.GetChild(humanCurrentPage).GetChild(0).gameObject.activeSelf)
-                pageButtons.Find("Human/Right").gameObject.SetActive(false);
-            pageButtons.Find("Human/Left").gameObject.SetActive(true);
-            humanDeckNum.text = humanCurrentPage.ToString() + "/" + (humanDeckPage + 1).ToString();
-        }
-        else {
-            orcDeckList.GetChild(orcCurrentPage - 1).gameObject.SetActive(false);
-            orcDeckList.GetChild(orcCurrentPage).gameObject.SetActive(true);
-            orcCurrentPage++;
-            if (orcCurrentPage == 3 || !orcDeckList.GetChild(orcCurrentPage).GetChild(0).gameObject.activeSelf)
-                pageButtons.Find("Orc/Right").gameObject.SetActive(false);
-            pageButtons.Find("Orc/Left").gameObject.SetActive(true);
-            orcDeckNum.text = orcCurrentPage.ToString() + "/" + (orcDeckPage + 1).ToString();
+    private void InitNewDecks() {
+        for (int i = 0; i < 10; i++) {
+            Transform deck = deckList.GetChild(i).GetChild(0);
+            deckList.GetChild(i).gameObject.SetActive(false);
+            deck.localPosition = new Vector3(-5, 0, 0);
+            deck.Find("HeroImg").gameObject.SetActive(false);
+            deck.Find("CardNum").gameObject.SetActive(false);
+            deck.Find("DeckName").gameObject.SetActive(false);
+            deck.Find("NewDeck").gameObject.SetActive(false);
         }
     }
 
-    public void PrevPageBtn(bool isHuman) {
-        if (isHuman) {
-            humanDeckList.GetChild(humanCurrentPage - 1).gameObject.SetActive(false);
-            humanDeckList.GetChild(humanCurrentPage - 2).gameObject.SetActive(true);
-            humanCurrentPage--;
-            if (humanCurrentPage == 1 || !humanDeckList.GetChild(humanCurrentPage - 1).GetChild(0).gameObject.activeSelf)
-                pageButtons.Find("Human/Left").gameObject.SetActive(false);
-            pageButtons.Find("Human/Right").gameObject.SetActive(true);
-            humanDeckNum.text = humanCurrentPage.ToString() + "/" + (humanDeckPage + 1).ToString();
+    public void MakeNewDeck() {
+        CloseDeckButtonsFast();
+        heroSelectController.gameObject.SetActive(true);
+        heroSelectController.SetHumanHeroes();
+        hudController.SetHeader(HUDController.Type.RESOURCE_ONLY_WITH_BACKBUTTON);
+        hudController.SetBackButton(() => ExitHeroSelect());
+    }
+
+    public void ExitHeroSelect() {
+        heroSelectController.transform.Find("HumanSelect").GetChild(0).gameObject.SetActive(false);
+        heroSelectController.transform.Find("OrcSelect").GetChild(0).gameObject.SetActive(false);
+        heroSelectController.gameObject.SetActive(false);
+        hudController.SetHeader(HUDController.Type.SHOW_USER_INFO);
+
+    }
+
+
+    public IEnumerator OpenDeckButtons(Transform deck) {
+        if (selectedDeck != null)
+            yield return CloseDeckButtons();
+        selectedDeck = deck;
+        int deckIndex = deck.GetSiblingIndex();
+        iTween.MoveTo(selectedDeck.GetChild(0).Find("Buttons").gameObject, iTween.Hash("y", -175, "islocal", true, "time", 0.3f));
+        for (int i = deckIndex + 1; i < 10; i++) {
+            if (deckList.GetChild(i).gameObject.activeSelf) {
+                iTween.MoveTo(deckList.GetChild(i).GetChild(0).gameObject, iTween.Hash("y", -175, "islocal", true, "time", 0.3f));
+            }
         }
-        else {
-            orcDeckList.GetChild(orcCurrentPage - 1).gameObject.SetActive(false);
-            orcDeckList.GetChild(orcCurrentPage - 2).gameObject.SetActive(true);
-            orcCurrentPage--;
-            if (orcCurrentPage == 1 || !orcDeckList.GetChild(orcCurrentPage-1).GetChild(0).gameObject.activeSelf)
-                pageButtons.Find("Orc/Left").gameObject.SetActive(false);
-            pageButtons.Find("Orc/Right").gameObject.SetActive(true);
-            orcDeckNum.text = orcCurrentPage.ToString() + "/" + (orcDeckPage + 1).ToString();
+        yield return new WaitForSeconds(0.4f);
+    }
+
+    public IEnumerator CloseDeckButtons() {
+        int deckIndex = 0;
+        if (selectedDeck != null) {
+            deckIndex = selectedDeck.GetSiblingIndex();
+            iTween.MoveTo(selectedDeck.GetChild(0).Find("Buttons").gameObject, iTween.Hash("y", 0, "islocal", true, "time", 0.1f));
+        }
+        for (int i = deckIndex + 1; i < 10; i++) {
+            if (deckList.GetChild(i).gameObject.activeSelf) {
+                iTween.MoveTo(deckList.GetChild(i).GetChild(0).gameObject, iTween.Hash("y", 0, "islocal", true, "time", 0.1f));
+            }
+        }
+        yield return new WaitForSeconds(0.2f);
+        selectedDeck = null;
+    }
+
+    public void CloseDeckButtonsFast() {
+        int deckIndex = 0;
+        if (selectedDeck != null) {
+            deckIndex = selectedDeck.GetSiblingIndex();
+            selectedDeck.GetChild(0).Find("Buttons").localPosition = new Vector3(-5, 0, 0);
+        }
+        for (int i = deckIndex + 1; i < 10; i++) {
+            if (deckList.GetChild(i).gameObject.activeSelf) {
+                deckList.GetChild(i).GetChild(0).localPosition = Vector3.zero;
+            }
         }
     }
 
     void OnDecksInfoLoaded() {
-        SetPlayerDecks();
+        SetPlayerNewDecks();
     }
 }
