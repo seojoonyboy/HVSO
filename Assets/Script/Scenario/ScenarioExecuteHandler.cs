@@ -11,6 +11,11 @@ public class ScenarioExecuteHandler : MonoBehaviour {
     public bool isDone = true;
 
     public void Initialize(ScriptData data) {
+        ScriptData temp = data;
+        StartCoroutine(MethodExecute(temp));        
+    }
+
+    IEnumerator MethodExecute(ScriptData data) {
         sets = new List<ScenarioExecute>();
 
         foreach (Method method in data.methods) {
@@ -18,8 +23,9 @@ public class ScenarioExecuteHandler : MonoBehaviour {
             sets.Add(exec);
             exec.Initialize(method.args);
         }
-        StartCoroutine(SkillTrigger());
+        yield return SkillTrigger();
     }
+
     
     IEnumerator SkillTrigger() {
         foreach(ScenarioExecute execute in sets) {

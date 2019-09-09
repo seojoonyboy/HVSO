@@ -70,12 +70,19 @@ public class ScenarioGameManagment : PlayMangement {
     IEnumerator ChapterScript() {
         while(chapterQueue.Count > 0) {
             while(chapterQueue.Peek().isExecute == false) {
-                
-
+                DequeueChapter();                
             }
         }
         yield return null;
     }
+
+    //IEnumerator ExecuteMethod(int methodNum) {
+    //    ScenarioExecute dataExecute = (ScenarioExecute)Activator.CreateInstance(Type.GetType(chapterQueue.Peek().methods[methodNum].name));
+    //    dataExecute.args = chapterQueue.Peek().methods[methodNum].args;
+    //    dataExecute.Execute();     
+    //    yield return new WaitUntil(() => dataExecute.handler.isDone == true);
+    //}
+
 
 }
 

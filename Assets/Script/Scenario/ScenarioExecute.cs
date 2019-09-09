@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ScenarioExecute : MonoBehaviour {
-    protected ScenarioExecuteHandler handler;
+    public ScenarioExecuteHandler handler;
     public List<string> args;
 
     public virtual void Initialize(List<string> args) {
@@ -27,6 +27,7 @@ public class Highlight : ScenarioExecute {
     public Highlight() :base() { }
 
     public override void Execute() {
+        ScenarioMask.Instance.GetMaskHighlight(ScenarioMask.Instance.targetObject[args[0]]);
         handler.isDone = true;
         Logger.Log("Highlight");
     }
