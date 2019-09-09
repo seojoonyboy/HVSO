@@ -38,6 +38,7 @@ public class UserResourceManager : SerializedMonoBehaviour {
     }
 
     void Update() {
+        if (supplyStore == 200) return;
         if (timerText != null) {
             timerTime -= Time.deltaTime;
             if(timerTime <= 0) {
