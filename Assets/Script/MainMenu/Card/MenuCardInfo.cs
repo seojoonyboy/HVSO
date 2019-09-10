@@ -4,12 +4,13 @@ using UnityEngine.EventSystems;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MenuCardInfo : MonoBehaviour
-{
+public class MenuCardInfo : MonoBehaviour {
     Translator translator;
     [SerializeField] Transform classDescModal;
+    string cardId;
 
     public virtual void SetCardInfo(dataModules.CollectionCard data, bool isHuman) {
+        cardId = data.id;
         Transform info = transform;
         translator = AccountManager.Instance.GetComponent<Translator>();
         info.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.name;
@@ -50,7 +51,6 @@ public class MenuCardInfo : MonoBehaviour
         }
 
         info.Find("Flavor/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "";
-
         info.Find("UnitPortrait").gameObject.SetActive(false);
         info.Find("MagicPortrait").gameObject.SetActive(false);
         int skillnum = 0;
@@ -108,18 +108,61 @@ public class MenuCardInfo : MonoBehaviour
                 if (info.Find("Skill&BuffRow2").GetChild(0).gameObject.activeSelf)
                     info.Find("Flavor/Text").localPosition = Vector3.zero;
             }
-
-
         }
         //마법 카드
         else {
             info.Find("MagicPortrait").gameObject.SetActive(true);
             if (AccountManager.Instance.resource.cardPortraite.ContainsKey(data.id)) {
                 info.Find("MagicPortrait").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardPortraite[data.id];
-                if(data.isHeroCard)
+                if (data.isHeroCard)
                     info.Find("MagicPortrait/Frame").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground["hero_legend_human"];
                 else
                     info.Find("MagicPortrait/Frame").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground["magic_" + data.rarelity];
+            }
+        }
+
+        if (data.isHeroCard)
+            info.Find("CreateCard").gameObject.SetActive(false);
+
+        else {
+            info.Find("CreateCard").gameObject.SetActive(true);
+            info.Find("CreateCard/Crystal/Value").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userResource.crystal.ToString();
+            int cardNum = 0;
+            if (AccountManager.Instance.cardPackage.data.ContainsKey(data.id))
+                cardNum = AccountManager.Instance.cardPackage.data[data.id].cardCount;
+            if (cardNum < 3)
+                info.Find("CreateCard/HaveNum").GetComponent<TMPro.TextMeshProUGUI>().text = cardNum.ToString();
+            else
+                info.Find("CreateCard/HaveNum").GetComponent<TMPro.TextMeshProUGUI>().text = "MAX";
+            if (cardNum == 4) {
+                info.Find("CreateCard/MakeBtn/Disabled").gameObject.SetActive(true);
+                info.Find("CreateCard/CrystalUseValue").gameObject.SetActive(false);
+            }
+            else {
+                info.Find("CreateCard/CrystalUseValue").gameObject.SetActive(true);
+                int makeCardcost = 0;
+                switch (data.rarelity) {
+                    case "common":
+                        makeCardcost = 50;
+                        break;
+                    case "uncommon":
+                        makeCardcost = 150;
+                        break;
+                    case "rare":
+                        makeCardcost = 500;
+                        break;
+                    case "superrare":
+                        makeCardcost = 1000;
+                        break;
+                    case "legend":
+                        makeCardcost = 2000;
+                        break;
+                }
+                info.Find("CreateCard/CrystalUseValue").GetComponent<TMPro.TextMeshProUGUI>().text = "-" + makeCardcost.ToString();
+                if (makeCardcost >= AccountManager.Instance.userResource.crystal)
+                    info.Find("CreateCard/MakeBtn/Disabled").gameObject.SetActive(false);
+                else
+                    info.Find("CreateCard/MakeBtn/Disabled").gameObject.SetActive(true);
             }
         }
     }
@@ -158,5 +201,10 @@ public class MenuCardInfo : MonoBehaviour
     public void CloseHeroesCardInfo() {
         transform.gameObject.SetActive(false);
         transform.parent.Find("ExitTrigger2").gameObject.SetActive(false);
+    }
+
+
+    public void MakeCard() {
+        AccountManager.Instance.RequestCardMake(cardId);
     }
 }
