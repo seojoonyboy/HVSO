@@ -58,6 +58,10 @@ namespace UnityEngine.UI.Extensions
                         ScrollToClosestElement();
                     }
                 }
+
+                var rect = _screensContainer.GetComponent<RectTransform>();
+                _screensContainer.GetComponent<RectTransform>().offsetMax = new Vector2(rect.offsetMax.x, 0);
+                _screensContainer.GetComponent<RectTransform>().offsetMin = new Vector2(rect.offsetMin.x, 0);
             }
         }
 
