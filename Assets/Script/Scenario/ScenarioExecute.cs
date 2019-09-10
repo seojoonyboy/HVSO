@@ -1,4 +1,5 @@
 using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -108,8 +109,20 @@ public class Wait_click : ScenarioExecute {
 public class wait_summon : ScenarioExecute {
     public wait_summon() : base() { }
 
+    public override void Execute() {
+        PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.UNIT_SUMMONED, CheckSummon);
+    }
     
 
+    private void CheckSummon(Enum event_type, Component Sender, object Param) {
+        string unitID = (string)Param;
+
+
+        if (unitID == args[1]) {
+            PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.UNIT_SUMMONED, CheckSummon);
+            handler.isDone = true;
+        }
+    }
 }
 
 

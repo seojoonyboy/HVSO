@@ -8782,8 +8782,6 @@ MonoBehaviour:
     - {fileID: 20249105}
     - {fileID: 398652607}
     - {fileID: 1543052410}
-    - {fileID: 241904786}
-    - {fileID: 347151944}
     - {fileID: 1172094315}
     SerializedBytesString: 
     Prefab: {fileID: 0}
@@ -8803,7 +8801,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 11
+      Data: 9
     - Name: 
       Entry: 7
       Data: 
@@ -8905,34 +8903,10 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: shield_num_Enemy
-    - Name: $v
-      Entry: 10
-      Data: 7
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: shield_num_My
-    - Name: $v
-      Entry: 10
-      Data: 8
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
       Data: fields
     - Name: $v
       Entry: 10
-      Data: 9
+      Data: 7
     - Name: 
       Entry: 8
       Data: 
