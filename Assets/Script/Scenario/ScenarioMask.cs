@@ -144,8 +144,12 @@ public class ScenarioMask : SerializedMonoBehaviour
                     maskObject = (sub == "my") ? maskObject : null;
                 }
 
-                if (main == "shield_num_My") {
-                    maskObject = (PlayMangement.instance.player.isHuman == true) ? maskObject.transform.Find("HumanSheild").gameObject : maskObject.transform.Find("OrcSheild").gameObject;
+                if (main == "shield_num") {
+                    if (sub == "my")
+                        maskObject = (PlayMangement.instance.player.isHuman == true) ? maskObject.transform.Find("HumanSheild").gameObject : maskObject.transform.Find("OrcSheild").gameObject;
+                    else
+                        maskObject = (PlayMangement.instance.enemyPlayer.isHuman == true) ? PlayMangement.instance.enemyPlayer.playerUI.transform.Find("PlayerHealth/HumanSheild").gameObject : PlayMangement.instance.enemyPlayer.playerUI.transform.Find("PlayerHealth/OrcSheild").gameObject;
+
                 }
                 if (main == "button") {
                     if (sub == "muligunEnd") {

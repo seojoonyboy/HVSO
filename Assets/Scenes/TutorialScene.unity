@@ -8783,6 +8783,7 @@ MonoBehaviour:
     - {fileID: 398652607}
     - {fileID: 1543052410}
     - {fileID: 1172094315}
+    - {fileID: 347151944}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -8801,7 +8802,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 9
+      Data: 10
     - Name: 
       Entry: 7
       Data: 
@@ -8907,6 +8908,18 @@ MonoBehaviour:
     - Name: $v
       Entry: 10
       Data: 7
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: shield-num
+    - Name: $v
+      Entry: 10
+      Data: 8
     - Name: 
       Entry: 8
       Data: 
@@ -42832,6 +42845,7 @@ MonoBehaviour:
   currentTurn: 
   skillAction: 0
   matchRule: {fileID: 0}
+  stopBattle: 0
   ingameCamera: {fileID: 1144235748}
   cameraPos: {x: 0, y: 0, z: 0}
   eventHandler: {fileID: 208885978}
