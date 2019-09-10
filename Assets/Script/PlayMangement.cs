@@ -8,7 +8,7 @@ using TMPro;
 
 
 public partial class PlayMangement : MonoBehaviour {
-    public PlayerController player, enemyPlayer; 
+    public PlayerController player, enemyPlayer;
 
     public GameObject cardDB;
     public GameObject uiSlot;
@@ -41,6 +41,8 @@ public partial class PlayMangement : MonoBehaviour {
 
     public bool skillAction = false;
     public victoryModule.VictoryCondition matchRule;
+    public bool stopBattle = false;
+
     //public string magicHistroy;
 
     private void Awake() {
@@ -50,7 +52,7 @@ public partial class PlayMangement : MonoBehaviour {
         instance = this;
         SetPlayerCard();
         GetComponent<TurnMachine>().onTurnChanged.AddListener(ChangeTurn);
-        if(!isTest) GetComponent<TurnMachine>().onPrepareTurn.AddListener(DistributeCard);
+        if (!isTest) GetComponent<TurnMachine>().onPrepareTurn.AddListener(DistributeCard);
         //GameObject backGroundEffect = Instantiate(EffectSystem.Instance.backgroundEffect);
         //backGroundEffect.transform.position = backGround.transform.Find("ParticlePosition").position;
         SetCamera();
@@ -64,9 +66,9 @@ public partial class PlayMangement : MonoBehaviour {
     private void Start() {
         SetBackGround();
         InitGameData();
-        
-        
-        
+
+
+
         //StartCoroutine(DisconnectTest());
     }
 
@@ -76,7 +78,7 @@ public partial class PlayMangement : MonoBehaviour {
     private void InitGameData() {
         object missionData = null;
 
-        RequestStartData(20,20);
+        RequestStartData(20, 20);
         SetVictoryCondition();
         DistributeResource();
         InitTurnTable();
@@ -194,12 +196,12 @@ public partial class PlayMangement : MonoBehaviour {
         else {
             enemyCard = Resources.Load("Prefabs/HumanBackCard") as GameObject;
             player.back = cardDB.transform.Find("OrcBackCard").gameObject;
-            enemyPlayer.back = cardDB.transform.Find("HumanBackCard").gameObject;            
+            enemyPlayer.back = cardDB.transform.Find("HumanBackCard").gameObject;
         }
         enemyPlayer.playerUI.transform.Find("CardCount").gameObject.GetComponent<Image>().sprite = enemyCard.GetComponent<Image>().sprite;
     }
 
-    
+
 
     public void DistributeResource() {
         player.resource.Value = turn + 1;
@@ -271,7 +273,7 @@ public partial class PlayMangement : MonoBehaviour {
         magicCard.GetComponent<MagicDragHandler>().itemID = history.cardItem.itemId;
 
         Logger.Log("use Magic Card" + history.cardItem.name);
-        if(!heroShieldActive)
+        if (!heroShieldActive)
             enemyPlayer.resource.Value -= cardData.cost;
 
         Destroy(enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(CountEnemyCard() - 1).GetChild(0).gameObject);
@@ -394,8 +396,8 @@ public partial class PlayMangement : MonoBehaviour {
         if (highlightUI == null) yield break;
         highlightUI.SetActive(true);
         magicHandler.highlightedSlot = highlightUI.transform;
-        
-        if(highlightUI.GetComponent<SpriteRenderer>() != null)
+
+        if (highlightUI.GetComponent<SpriteRenderer>() != null)
             highlightUI.GetComponent<SpriteRenderer>().color = new Color(1, 0, 0, 155.0f / 255.0f);
         yield return CardInfoOnDrag.instance.MoveCrossHair(magicHandler.gameObject, highlightUI.transform);
         if (highlightUI.GetComponent<SpriteRenderer>() != null)
@@ -411,11 +413,11 @@ public partial class PlayMangement : MonoBehaviour {
     private GameObject SummonMonster(SocketFormat.PlayHistory history) {
         int i = int.Parse(history.targets[0].args[0]);
         string id = history.cardItem.id;
-        bool isFront =  history.targets[0].args[2].CompareTo("front")==0;
-        
+        bool isFront = history.targets[0].args[2].CompareTo("front") == 0;
+
         bool unitExist = UnitsObserver.IsUnitExist(new FieldUnitsObserver.Pos(i, 0), !player.isHuman);
         int j = isFront && unitExist ? 1 : 0;
-        if(unitExist && !isFront) {
+        if (unitExist && !isFront) {
             Transform line_rear = enemyPlayer.transform.GetChild(0);
             Transform line_front = enemyPlayer.transform.GetChild(1);
             Transform existUnit;
@@ -506,10 +508,10 @@ public partial class PlayMangement : MonoBehaviour {
 
     public bool passOrc() {
         string turnName = socketHandler.gameState.state;
-        if(turnName.CompareTo("orcPostTurn") == 0) return true;
-        if(turnName.CompareTo("battleTurn") == 0) return true;
-        if(turnName.CompareTo("shieldTurn") == 0) return true;
-        if(turnName.CompareTo("endGame") == 0) return true;
+        if (turnName.CompareTo("orcPostTurn") == 0) return true;
+        if (turnName.CompareTo("battleTurn") == 0) return true;
+        if (turnName.CompareTo("shieldTurn") == 0) return true;
+        if (turnName.CompareTo("endGame") == 0) return true;
         return false;
     }
 
@@ -539,9 +541,11 @@ public partial class PlayMangement : MonoBehaviour {
     IEnumerator battleCoroutine() {
         dragable = false;
         yield return new WaitForSeconds(1.1f);
-        yield return socketHandler.waitSkillDone(()=>{});
+        yield return socketHandler.waitSkillDone(() => { });
         yield return socketHandler.WaitBattle();
         for (int line = 0; line < 5; line++) {
+            EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.LINE_BATTLE_START, this, line);
+            yield return StopBattleLine();
             yield return battleLine(line);
             if (isGame == false) break;
         }
@@ -586,7 +590,11 @@ public partial class PlayMangement : MonoBehaviour {
         }
         battleLineEffect.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.6f);
         battleLineEffect.gameObject.SetActive(false);
-        EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.LINE_BATTLE_FINISHED, this);
+        EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.LINE_BATTLE_FINISHED, this, line);
+    }
+
+    IEnumerator StopBattleLine() {
+        yield return new WaitUntil(() => stopBattle == false);
     }
 
     IEnumerator whoFirstBattle(PlayerController first, PlayerController second, int line) {

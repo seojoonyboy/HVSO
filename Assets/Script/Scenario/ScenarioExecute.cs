@@ -30,7 +30,11 @@ public class Highlight : ScenarioExecute {
 
     public override void Execute() {
         GameObject target;
-        target = (args.Count > 1) ? ScenarioMask.Instance.GetMaskingObject(args[0], args[1]) : ScenarioMask.Instance.GetMaskingObject(args[0]);
+        if (args.Count > 1) 
+            target = (args.Count > 2) ? ScenarioMask.Instance.GetMaskingObject(args[0], args[1], args[2]) : ScenarioMask.Instance.GetMaskingObject(args[0], args[1]);
+        else
+            target = ScenarioMask.Instance.GetMaskingObject(args[0]);
+
         ScenarioMask.Instance.GetMaskHighlight(target);
         handler.isDone = true;
         Logger.Log("Highlight");
@@ -125,6 +129,24 @@ public class wait_summon : ScenarioExecute {
     }
 }
 
+public class Wait_drop : ScenarioExecute {
+    public Wait_drop() : base() { }
+
+    public override void Execute() {
+        PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.MAGIC_USED, CheckMagicUse);
+    }
+
+    private void CheckMagicUse(Enum event_type, Component Sender, object Param) {
+        string magicID = (string)Param;
+
+        if(magicID == args[1]) {
+            PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.MAGIC_USED, CheckMagicUse);
+            handler.isDone = true;
+        }      
+    }
+}
+
+
 
 public class Multiple_highlight : ScenarioExecute {
     public Multiple_highlight() : base() { }
@@ -157,7 +179,6 @@ public class Wait_Drag : ScenarioExecute {
         }
         yield return null;
     }
-
 }
 
 public class Activate_Shield : ScenarioExecute {
@@ -200,6 +221,33 @@ public class End_tutorial : ScenarioExecute {
     public override void Execute() {
         ScenarioGameManagment.scenarioInstance.isTutorial = false;
     }
+}
 
+public class Battle_turn : ScenarioExecute {
+    public Battle_turn() : base() { }
+
+    int Line = 0;
+
+    public override void Execute() {
+        
+    }
+
+
+}
+
+
+public class Select_Skill_Force : ScenarioExecute {
+    public Select_Skill_Force() : base() { }
+
+    public override void Execute() {
+
+        
+    }
+
+    public void HighlightLine() {
+        GameObject targetLine;
+        targetLine = ScenarioMask.Instance.GetMaskingObject(args[0], args[1]);
+        ScenarioMask.Instance.GetMaskHighlight(targetLine);
+    }
 }
 

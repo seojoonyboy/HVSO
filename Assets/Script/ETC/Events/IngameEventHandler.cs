@@ -82,6 +82,8 @@ public class IngameEventHandler : MonoBehaviour {
         DIE,
         DO_NOTHING,
 
-        UNIT_SUMMONED
+        UNIT_SUMMONED,
+        MAGIC_USED,
+        LINE_BATTLE_START
     }
 }

@@ -209,7 +209,8 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
     IEnumerator UseSkillCard(object[] parms) {
         skillHandler.socketDone = false;
         PlayMangement.dragable = false;
-        PlayMangement.instance.LockTurnOver();        
+        PlayMangement.instance.LockTurnOver();
+        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.MAGIC_USED, this, cardData.cardId);
         yield return PlayMangement.instance.cardHandManager.ShowUsedCard(transform.parent.GetSiblingIndex(), gameObject);
         if (cardData.hero_chk == true) {
             HideCardImage();
