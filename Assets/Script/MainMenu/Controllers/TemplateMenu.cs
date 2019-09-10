@@ -24,20 +24,21 @@ public class TemplateMenu : MonoBehaviour {
     public bool isHuman;
     public string heroID;
     public DeckHandler selectedDeck;
+    bool newDeck;
 
     private void Awake() {
-        Transform upper = transform.Find("InnerCanvas/Upper");
-        Transform footer = transform.Find("InnerCanvas/Footer");
-        Transform heroSelect = upper.Find("HeroSelect");
+        //Transform upper = transform.Find("InnerCanvas/Upper");
+        //Transform footer = transform.Find("InnerCanvas/Footer");
+        //Transform heroSelect = upper.Find("HeroSelect");
 
-        heroButtonLayout = transform.Find("InnerCanvas/HeroButton/HeroBtnLayout").gameObject;
-        heroPortrait = heroSelect.Find("Portrait").gameObject;
-        heroName = heroSelect.Find("NameTamplate").GetComponentInChildren<TextMeshProUGUI>();
-        heroProperty = heroSelect.Find("HeroProperty").gameObject;
-        heroCardGroup = upper.Find("HeroCard").gameObject;
-        deckLayout = footer.Find("DeckBtnLayout").gameObject;
-        gameObject.SetActive(false);
-        SetHeroBtnID();
+        //heroButtonLayout = transform.Find("InnerCanvas/HeroButton/HeroBtnLayout").gameObject;
+        //heroPortrait = heroSelect.Find("Portrait").gameObject;
+        //heroName = heroSelect.Find("NameTamplate").GetComponentInChildren<TextMeshProUGUI>();
+        //heroProperty = heroSelect.Find("HeroProperty").gameObject;
+        //heroCardGroup = upper.Find("HeroCard").gameObject;
+        //deckLayout = footer.Find("DeckBtnLayout").gameObject;
+        //gameObject.SetActive(false);
+        //SetHeroBtnID();
     }
 
 
@@ -83,7 +84,7 @@ public class TemplateMenu : MonoBehaviour {
 
     public void SetTemplateDecks() {
         for(int i = 0; i < 3; i++) {
-            transform.Find("InnerCanvas/Footer/DeckBtnLayout").GetChild(i).gameObject.SetActive(false);
+            transform.Find("DeckList").GetChild(i).gameObject.SetActive(false);
         }
         List<Templates> templates;
         if (isHuman) 
@@ -94,9 +95,34 @@ public class TemplateMenu : MonoBehaviour {
             if(heros.id == heroID) {
                 int count = 0;
                 foreach (Deck deck in heros.templates) {
-                    GameObject templateDeck = transform.Find("InnerCanvas/Footer/DeckBtnLayout").GetChild(count).gameObject;
+                    GameObject templateDeck = transform.Find("DeckList").GetChild(count).gameObject;
                     templateDeck.SetActive(true);
-                    templateDeck.GetComponent<DeckHandler>().SetTemplateDeck(deck);
+                    templateDeck.GetComponent<DeckHandler>().SetNewTemplateDeck(deck);
+                    count++;
+                }
+                break;
+            }
+        }
+    }
+
+    public void SetTemplateNewDecks(string heroId, bool isHuman) {
+        heroID = heroId;
+        this.isHuman = isHuman;
+        for (int i = 0; i < 3; i++) {
+            transform.Find("DeckList").GetChild(i).gameObject.SetActive(false);
+        }
+        List<Templates> templates;
+        if (isHuman)
+            templates = AccountManager.Instance.humanTemplates;
+        else
+            templates = AccountManager.Instance.orcTemplates;
+        foreach (Templates heros in templates) {
+            if (heros.id == heroId) {
+                int count = 0;
+                foreach (Deck deck in heros.templates) {
+                    GameObject templateDeck = transform.Find("DeckList").GetChild(count).gameObject;
+                    templateDeck.SetActive(true);
+                    templateDeck.GetComponent<DeckHandler>().SetNewTemplateDeck(deck);
                     count++;
                 }
                 break;
@@ -143,10 +169,11 @@ public class TemplateMenu : MonoBehaviour {
 
     public void StartEditBtn() {
         DeckEditController deckEditCtrl = deckSettingCanves.GetComponent<DeckEditController>();
-        if (selectedDeck.gameObject.name == "FreeDeckBtn") {
+        if (selectedDeck == null && newDeck) {
             deckEditCtrl.SetDeckEdit(heroID, isHuman);
         }
         else {
+            if (selectedDeck == null) return;
             deckEditCtrl.SetCustumDeckEdit(selectedDeck.templateDeck, true);
         }
         deckEditCtrl.gameObject.SetActive(true);
@@ -156,11 +183,44 @@ public class TemplateMenu : MonoBehaviour {
         FindObjectOfType<HUDController>().SetHeader(HUDController.Type.HIDE);
     }
 
+    public void SelectDeck(DeckHandler deck) {
+        if (selectedDeck != null) {
+            selectedDeck.transform.Find("Selected").gameObject.SetActive(false);
+            if (selectedDeck == deck) {
+                selectedDeck = null;
+                return;
+            }
+        }
+        if (newDeck) {
+            transform.Find("DeckList/NewDeck/Selected").gameObject.SetActive(false);
+            newDeck = false;
+        }
+        selectedDeck = deck;
+        
+    }
+
+    public void SelectNewDeck() {
+        if (selectedDeck != null)
+            selectedDeck.transform.Find("Selected").gameObject.SetActive(false);
+        if (newDeck) {
+            transform.Find("DeckList/NewDeck/Selected").gameObject.SetActive(false);
+            newDeck = false;
+            return;
+        }
+        selectedDeck = null;
+        newDeck = true;
+        transform.Find("DeckList/NewDeck/Selected").gameObject.SetActive(true);
+    }
+
     public void CancelSelectDeck() {
-        if(selectedDeck != null) 
-            selectedDeck.CancelSelect();
-        transform.Find("InnerCanvas/CancelSelect").gameObject.SetActive(false);
-        transform.Find("InnerCanvas/DeckEditBtn").gameObject.SetActive(false);
+        if (selectedDeck != null) {
+            selectedDeck.transform.Find("Selected").gameObject.SetActive(false);
+            selectedDeck = null;
+        }
+        if (newDeck) {
+            transform.Find("DeckList/NewDeck/Selected").gameObject.SetActive(false);
+            newDeck = false;
+        }
     }
 
 

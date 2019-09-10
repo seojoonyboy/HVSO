@@ -28,11 +28,13 @@ public class DeckHandler : MonoBehaviour
         deckID = deck.id;
         if (deck.camp == "human") isHuman = true;
         else isHuman = false;
-        transform.Find("HeroImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.deckPortraite[deck.heroId];
-        transform.Find("CardNum").gameObject.SetActive(true);
-        transform.Find("CardNum/Value").GetComponent<TMPro.TextMeshProUGUI>().text = deck.totalCardCount.ToString() + "/";
-        transform.Find("DeckName").gameObject.SetActive(true);
-        transform.Find("DeckName").GetComponent<TMPro.TextMeshProUGUI>().text = deck.name.ToString() + "/";
+        Transform deckObj = transform.GetChild(0);
+        deckObj.Find("HeroImg").gameObject.SetActive(true);
+        deckObj.Find("HeroImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.deckPortraite[deck.heroId];
+        deckObj.Find("CardNum").gameObject.SetActive(true);
+        deckObj.Find("CardNum/Value").GetComponent<TMPro.TextMeshProUGUI>().text = deck.totalCardCount.ToString() + "/";
+        deckObj.Find("DeckName").gameObject.SetActive(true);
+        deckObj.Find("DeckName").GetComponent<TMPro.TextMeshProUGUI>().text = deck.name.ToString() + "/";
     }
 
     public void SetDeck(dataModules.Deck deck, bool basic = false) {
@@ -58,13 +60,20 @@ public class DeckHandler : MonoBehaviour
         deckInfo.Find("Capacity").GetComponent<TMPro.TextMeshProUGUI>().text = deck.totalCardCount.ToString() + "/40";
     }
 
+    public void SetNewTemplateDeck(dataModules.Deck deck) {
+        templateDeck = deck;
+        deckID = deck.id;
+        transform.Find("HeroImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.deckPortraite[deck.heroId];
+        transform.Find("CardNum/Value").GetComponent<TMPro.TextMeshProUGUI>().text = deck.totalCardCount.ToString();
+    }
+
     public void OpenDeckButton() {
-        if (isBasic) return;
-        GameObject editButtons = transform.Find("DeckInfo/EditButtons").gameObject;
-        if (editButtons.activeSelf)
-            editButtons.SetActive(false);
-        else
-            editButtons.SetActive(true);
+        DeckSettingManager deckManager = transform.parent.parent.parent.GetComponent<DeckSettingManager>();
+        if (deckManager.selectedDeck == transform) {
+            StartCoroutine(deckManager.CloseDeckButtons());
+            return;
+        }
+        StartCoroutine(deckManager.OpenDeckButtons(transform));
     }
 
     public void CloseDeckButton() {
@@ -75,9 +84,7 @@ public class DeckHandler : MonoBehaviour
 
     public void SelectTemplateDeck() {
         transform.Find("Selected").gameObject.SetActive(true);
-        templateCanvas.selectedDeck = this;
-        templateCanvas.transform.Find("InnerCanvas/CancelSelect").gameObject.SetActive(true);
-        templateCanvas.transform.Find("InnerCanvas/DeckEditBtn").gameObject.SetActive(true);
+        templateCanvas.SelectDeck(this);
     }
 
     public void CancelSelect() {
@@ -107,22 +114,20 @@ public class DeckHandler : MonoBehaviour
             deckEditCanvas.SetCustumDeckEdit(customDeck);
         deckEditCanvas.gameObject.SetActive(true);
         deckEditCanvas.GetComponent<DeckEditController>().RefreshLine();
-        transform.Find("DeckInfo/EditButtons").gameObject.SetActive(false);
+        DeckSettingManager deckManager = transform.parent.parent.parent.GetComponent<DeckSettingManager>();
+        deckManager.RefreshLine();
 
         FindObjectOfType<HUDController>().SetHeader(HUDController.Type.HIDE);
     }
 
     public void DeleteButton() {
         if (AccountManager.Instance == null) return;
+        DeckSettingManager deckManager = transform.parent.parent.parent.GetComponent<DeckSettingManager>();
+        StartCoroutine(deckManager.CloseDeckButtons());
+        //transform.GetChild(0).Find("Buttons").localPosition = new Vector3(-5, 0, 0);
         AccountManager.Instance.RequestDeckRemove(DECKID, OnRemoved);
-        transform.Find("DeckInfo/EditButtons").gameObject.SetActive(false);
-        Transform deckInfo = transform.Find("DeckInfo");
-        deckInfo.gameObject.SetActive(false);
         transform.SetAsLastSibling();
         gameObject.SetActive(false);
-
-        if (transform.parent.GetChild(2).gameObject.activeSelf && transform.parent.GetChild(2).Find("DeckInfo").gameObject.activeSelf)
-            gameObject.SetActive(true);
     }
 
     private void OnRemoved(HTTPRequest originalRequest, HTTPResponse response) {

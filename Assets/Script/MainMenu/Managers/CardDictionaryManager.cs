@@ -63,7 +63,7 @@ public class CardDictionaryManager : MonoBehaviour {
     }
 
     private void UpdateContentHeight() {
-        float tmp = 1428f;
+        float tmp = 1528f;
         Transform activatedTf = null;
         foreach (Transform tf in cardList) {
             if (tf.gameObject.activeSelf) {

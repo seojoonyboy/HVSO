@@ -136,6 +136,7 @@ public class DeckEditController : MonoBehaviour
 
     public void CancelButton() {
         transform.Find("InnerCanvas/CancelWindow").gameObject.SetActive(true);
+        //if(isTemplate)
     }
 
     public void CancelEdit() {
@@ -143,11 +144,14 @@ public class DeckEditController : MonoBehaviour
         setCardList = null;
         gameObject.SetActive(false);
         if (templateMenu != null)
-            templateMenu.transform.gameObject.SetActive(false);
+            templateMenu.transform.gameObject.SetActive(true);
 
         deckNamePanel.transform.Find("NameTemplate").Find("Text").GetComponent<Text>().text = "";
 
-        FindObjectOfType<HUDController>().SetHeader(HUDController.Type.SHOW_USER_INFO);
+        if(isTemplate)
+            FindObjectOfType<HUDController>().SetHeader(HUDController.Type.RESOURCE_ONLY_WITH_BACKBUTTON);
+        else
+            FindObjectOfType<HUDController>().SetHeader(HUDController.Type.SHOW_USER_INFO);
     }
 
     public void ResumeEdit() {
@@ -280,6 +284,7 @@ public class DeckEditController : MonoBehaviour
         this.isHuman = isHuman;
         deckNamePanel.transform.Find("NameTemplate").GetComponent<InputField>().text = "";
 
+        heroData = AccountManager.Instance.myHeroInventories[heroId];
         Transform heroSpines = heroInfoWindow.Find("HeroSpines");
         for (int i = 0; i < heroSpines.childCount; i++) 
             heroSpines.GetChild(i).gameObject.SetActive(false);
