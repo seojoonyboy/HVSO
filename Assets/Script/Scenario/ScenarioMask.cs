@@ -23,7 +23,7 @@ public class ScenarioMask : SerializedMonoBehaviour
 
     public void GetMaskHighlight(GameObject targetObject) {
         if (targetObject == null) return;
-
+        ActiveMask();
         RectTransform targetTransform = targetObject.GetComponent<RectTransform>();
 
         if (targetTransform != null) {
@@ -63,16 +63,20 @@ public class ScenarioMask : SerializedMonoBehaviour
 
 
 
-    public GameObject GetMaskingObject(string main, string sub = null) {
+    public GameObject GetMaskingObject(string main, string sub = null, string third = null) {
 
         GameObject maskObject = targetObject[main].gameObject;
 
         if(maskObject != null) {
 
-            if (sub == null)
+            if (sub == null) {
+                if(main == "hands") {
+                    maskObject = PlayMangement.instance.player.playerUI;
+                }
                 return maskObject;
+            }
             else {
-                if(main == "muligunCard" || main == "muligun_card") {
+                if (main == "muligunCard" || main == "muligun_card") {
                     switch (sub) {
                         case "left,top":
                             maskObject = maskObject.transform.GetChild(5).gameObject;
@@ -88,23 +92,25 @@ public class ScenarioMask : SerializedMonoBehaviour
                             break;
                         default:
                             maskObject = maskObject.transform.GetChild(5).gameObject;
-                            break;                        
+                            break;
                     }
                 }
                 if (main == "hand_card") {
-                    foreach(Transform cardSlot in maskObject.transform) {
+                    foreach (Transform cardSlot in maskObject.transform) {
 
                         if (cardSlot.childCount < 1)
                             continue;
 
-                        if(cardSlot.GetChild(0).GetComponent<CardHandler>().cardID == "sub") {
+                        if (cardSlot.GetChild(0).GetComponent<CardHandler>().cardID == "sub") {
                             maskObject = cardSlot.gameObject;
                             break;
                         }
                     }
                 }
                 if (main == "mana") {
-                    //마나는 적만 있어서 텅
+                    if (sub == "my") {
+                        maskObject = PlayMangement.instance.player.playerUI.transform.Find("PlayerResource/Cost").gameObject;
+                    }
                 }
                 if (main == "field") {
                     switch (sub) {
@@ -138,10 +144,10 @@ public class ScenarioMask : SerializedMonoBehaviour
                     maskObject = (PlayMangement.instance.player.isHuman == true) ? maskObject.transform.Find("HumanSheild").gameObject : maskObject.transform.Find("OrcSheild").gameObject;
                 }
                 if (main == "button") {
-                    if(sub == "muligunEnd") {
+                    if (sub == "muligunEnd") {
                         maskObject = PlayMangement.instance.player.playerUI.transform.Find("FirstDrawWindow/FinishButton").gameObject;
                     }
-                    if(sub == "endTurn") {
+                    if (sub == "endTurn") {
                         maskObject = (PlayMangement.instance.player.isHuman) ? maskObject.transform.Find("HumanButton").gameObject : maskObject.transform.Find("Orc").gameObject;
                     }
                 }
@@ -157,6 +163,7 @@ public class ScenarioMask : SerializedMonoBehaviour
 
     private void Awake() {
         Instance = this;
+        DisableMask();
     }
 
     private void OnDestroy() {
