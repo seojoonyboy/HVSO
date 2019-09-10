@@ -1923,6 +1923,11 @@ MonoBehaviour:
   cardPackage: {fileID: 11400000, guid: 238e481b11fd6f5498c98efc46a8b0d8, type: 2}
   resource: {fileID: 1870949076}
   userResource: {fileID: 1870949078}
+  OnUserResourceRefresh:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!4 &1870949075
 Transform:
   m_ObjectHideFlags: 0
@@ -1953,18 +1958,18 @@ MonoBehaviour:
     SerializedFormat: 2
     SerializedBytes: 
     ReferencedUnityObjects:
-    - {fileID: 21300000, guid: a934af4f1e7d2604d848e55f7ce8bad2, type: 3}
-    - {fileID: 21300000, guid: 2af1e18dbbf3be04bab03f62c93e8e9d, type: 3}
-    - {fileID: 21300000, guid: 49f9d05ed36f36b4baf1fb03660c70b0, type: 3}
-    - {fileID: 21300000, guid: f381f1d2c4664da4ebdfabf15eb47663, type: 3}
-    - {fileID: 21300000, guid: 36dc003c939da574580a2630b4c3be82, type: 3}
-    - {fileID: 21300000, guid: ef523216ff870684fbab64f514cad613, type: 3}
-    - {fileID: 21300000, guid: 7a1939112768bdd4ea55465c4c122d36, type: 3}
+    - {fileID: 21300000, guid: 342c05dc7f20db147874be5152953adc, type: 3}
+    - {fileID: 21300000, guid: b66c9775562f42345871ac408f21833f, type: 3}
+    - {fileID: 21300000, guid: 00d32863d3c7b7e439d84e4cc61ed5bc, type: 3}
+    - {fileID: 21300000, guid: e8c405e189238a044b554db6156cc4de, type: 3}
+    - {fileID: 21300000, guid: e530f342804e606499d0a387362028c9, type: 3}
+    - {fileID: 21300000, guid: 93844283cb980ae4493a0638986f13ee, type: 3}
+    - {fileID: 21300000, guid: bd41011e032d59b4e83f39fe5980e95e, type: 3}
     - {fileID: 21300000, guid: 7112b82860c932540a79e280e2bd261e, type: 3}
-    - {fileID: 21300000, guid: 779862189a442ff4a83dd8a5987f793d, type: 3}
+    - {fileID: 21300000, guid: 1e21ac8f3c245054798fb606f2e6ae84, type: 3}
     - {fileID: 21300000, guid: c94446eeb62ca124ba5c281f033c9387, type: 3}
     - {fileID: 21300000, guid: c58af83e81165724291aff00560a2ff4, type: 3}
-    - {fileID: 21300000, guid: 23305366b9310334b8f893a2c50fdb46, type: 3}
+    - {fileID: 21300000, guid: d3b561c441813304a846a2015624268c, type: 3}
     - {fileID: 21300000, guid: 700cf67d2d3f661429f08ae83513d941, type: 3}
     - {fileID: 21300000, guid: 94e9897d8747b5f4a94d0ab767a6334d, type: 3}
     - {fileID: 21300000, guid: d143569f2d40a7f49b32c30d5331b25b, type: 3}
@@ -7395,6 +7400,7 @@ MonoBehaviour:
   supplyStoreTimer: 
   supply: 0
   supplyBox: 0
+  timerText: {fileID: 0}
 --- !u!1 &1876041233
 GameObject:
   m_ObjectHideFlags: 0
