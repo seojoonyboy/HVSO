@@ -161,14 +161,6 @@ public class CardListManager : MonoBehaviour
 
     public virtual void SetCardInfo(GameObject obj, CardData data) {
         Transform info = obj.transform;
-        //string race;
-        //if (PlayMangement.instance.player.isHuman)
-        //    race = "human";
-        //else
-        //    race = "orc";
-        //info.Find("Frame").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["frame_" + race];
-        //info.Find("Dialog").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["dialog_" + race];
-        info.Find("Name").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["name_" + data.rarelity];
         info.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.name;
 
         if (data.skills.Length != 0) {
@@ -190,20 +182,6 @@ public class CardListManager : MonoBehaviour
         }
         else
             info.Find("Attack").gameObject.SetActive(false);
-
-        //if (data.category_1 != null) {
-        //    info.Find("Category_1").GetComponent<Text>().text = data.category_1.ToString();
-        //    info.Find("Category_1").gameObject.SetActive(true);
-        //}
-        //else
-        //    info.Find("Category_1").gameObject.SetActive(false);
-
-        //if (data.category_2 != null) {
-        //    info.Find("Category_2").GetComponent<Text>().text = data.category_2.ToString();
-        //    info.Find("Category_2").gameObject.SetActive(false);
-        //}
-        //else
-        //    info.Find("Category_2").gameObject.SetActive(false);
 
         info.Find("Cost/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.cost.ToString();
 
@@ -281,6 +259,12 @@ public class CardListManager : MonoBehaviour
             info.Find("Categories/Text").GetComponent<TMPro.TextMeshProUGUI>().text = sb.ToString();
 
             info.Find("Flavor/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.flavorText;
+            info.Find("Flavor/Text").position = info.Find("Skill&BuffRow1").position;
+            if (info.Find("Skill&BuffRow1").GetChild(0).gameObject.activeSelf) {
+                info.Find("Flavor/Text").position = info.Find("Skill&BuffRow2").position;
+                if (info.Find("Skill&BuffRow2").GetChild(0).gameObject.activeSelf)
+                    info.Find("Flavor/Text").localPosition = Vector3.zero;
+            }
         }
         //마법 카드
         else {

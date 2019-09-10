@@ -197,9 +197,9 @@ public class EditCardHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
     public void OpenCardInfo() {
         if (dragging) return;
-        menuCardInfo.SetCardInfo(cardData, isHuman);
-        menuCardInfo.gameObject.SetActive(true);
         menuCardInfo.transform.parent.gameObject.SetActive(true);
+        menuCardInfo.gameObject.SetActive(true);
+        menuCardInfo.SetCardInfo(cardData, isHuman);   
     }
 
 
