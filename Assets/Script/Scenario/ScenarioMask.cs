@@ -106,6 +106,10 @@ public class ScenarioMask : SerializedMonoBehaviour
                             break;
                         }
                     }
+                    if(third != null) {
+                        if (third == "mana")
+                            maskObject = maskObject.transform.Find("Cost").gameObject;
+                    }
                 }
                 if (main == "mana") {
                     if (sub == "my") {
