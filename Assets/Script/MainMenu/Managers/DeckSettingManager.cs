@@ -33,9 +33,10 @@ public class DeckSettingManager : MonoBehaviour
     }
 
     private void UpdateContentHeight() {
-        float tmp = 700f;
+        float tmp = -200f;
         float height = deckList.GetComponent<RectTransform>().rect.height;
         float result = height + tmp;
+        //float screenRate = Screen.height * 0.00052f;
         transform.Find("DeckListParent").GetComponent<RectTransform>().sizeDelta = new Vector2(1080, result);
         deckList.GetComponent<RectTransform>().anchoredPosition = new Vector2(deckList.GetComponent<RectTransform>().anchoredPosition.x, -300);
         GetComponent<ScrollRect>().normalizedPosition = new Vector2(0, 1);
@@ -46,6 +47,7 @@ public class DeckSettingManager : MonoBehaviour
         int humanDecks = AccountManager.Instance.humanDecks.Count;
         int orcDecks = AccountManager.Instance.orcDecks.Count;
         int deckCount = humanDecks + orcDecks;
+        transform.Find("Header/NumValue").GetComponent<TMPro.TextMeshProUGUI>().text = deckCount.ToString() + "/10";
         if(deckCount > 0) {
             for(int i = 0; i < humanDecks; i++) {
                 deckList.GetChild(i).gameObject.SetActive(true);
