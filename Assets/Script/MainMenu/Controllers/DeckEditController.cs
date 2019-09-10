@@ -131,7 +131,7 @@ public class DeckEditController : MonoBehaviour
         else {
             RequestNewDeck();
         }
-        FindObjectOfType<HUDController>().SetHeader(HUDController.Type.SHOW_USER_INFO);
+        FindObjectOfType<HUDController>().SetHeader(HUDController.Type.SHOW_USER_INFO);        
     }
 
     public void CancelButton() {
@@ -142,9 +142,10 @@ public class DeckEditController : MonoBehaviour
     public void CancelEdit() {
         transform.Find("InnerCanvas/CancelWindow").gameObject.SetActive(false);
         setCardList = null;
-        gameObject.SetActive(false);
-        if (templateMenu != null)
+        if (templateMenu != null) {
             templateMenu.transform.gameObject.SetActive(true);
+            templateMenu = null;
+        }
 
         deckNamePanel.transform.Find("NameTemplate").Find("Text").GetComponent<Text>().text = "";
 
@@ -152,6 +153,9 @@ public class DeckEditController : MonoBehaviour
             FindObjectOfType<HUDController>().SetHeader(HUDController.Type.RESOURCE_ONLY_WITH_BACKBUTTON);
         else
             FindObjectOfType<HUDController>().SetHeader(HUDController.Type.SHOW_USER_INFO);
+
+        isTemplate = false;
+        gameObject.SetActive(false);
     }
 
     public void ResumeEdit() {
@@ -281,6 +285,7 @@ public class DeckEditController : MonoBehaviour
         InitCanvas();
         Transform heroCards;
         heroData = null;
+        heroID = heroId;
         this.isHuman = isHuman;
         deckNamePanel.transform.Find("NameTemplate").GetComponent<InputField>().text = "";
 
@@ -364,7 +369,8 @@ public class DeckEditController : MonoBehaviour
         InitCanvas();
         Transform heroCards;
         heroData = null;
-        if(!isTemplate) deckID = loadedDeck.id;
+        heroID = loadedDeck.heroId;
+        if (!isTemplate) deckID = loadedDeck.id;
         deckID = loadedDeck.id;
         if (loadedDeck.camp == "human")
             isHuman = true;
@@ -661,7 +667,6 @@ public class DeckEditController : MonoBehaviour
             }
         }
         var nameVal = deckNamePanel.transform.Find("NameTemplate").Find("Text").GetComponent<Text>().text;
-        heroID = (isHuman == true) ? "h10001" : "h10002";
 
         formatData.heroId = heroID; //영웅 id
         formatData.items = items.ToArray(); //추가한 카드 정보들
@@ -677,7 +682,10 @@ public class DeckEditController : MonoBehaviour
             Logger.Log("덱 생성 완료");
             menuSceneController.decksLoader.Load();
             gameObject.SetActive(false);
-            templateMenu.transform.gameObject.SetActive(false);
+            if (templateMenu != null) {
+                templateMenu.transform.gameObject.SetActive(false);
+                templateMenu = null;
+            }
             deckNamePanel.transform.Find("NameTemplate").Find("Text").GetComponent<Text>().text = "";
         }
 
