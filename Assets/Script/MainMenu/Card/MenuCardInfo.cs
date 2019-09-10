@@ -3,15 +3,34 @@ using System.Collections.Generic;
 using UnityEngine.EventSystems;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
+using BestHTTP;
+using dataModules;
 
 public class MenuCardInfo : MonoBehaviour {
     Translator translator;
     [SerializeField] Transform classDescModal;
+    [SerializeField] CardDictionaryManager cardDic;
+    [SerializeField] HUDController hudController;
     string cardId;
+    bool isHuman;
+    AccountManager accountManager;
+    CollectionCard cardData;
+    Transform dicCard;
 
-    public virtual void SetCardInfo(dataModules.CollectionCard data, bool isHuman) {
+    public UnityEvent OnMakeCardFinished = new UnityEvent();
+
+    private void Start() {
+        accountManager = AccountManager.Instance;
+        OnMakeCardFinished.AddListener(() => AccountManager.Instance.RefreshInventories(OnInventoryRefreshFinished));
+    }
+    public virtual void SetCardInfo(CollectionCard data, bool isHuman, Transform dicCard = null) {
+        if (dicCard != null)
+            this.dicCard = dicCard;
         cardId = data.id;
+        this.isHuman = isHuman;
         Transform info = transform;
+        cardData = data;
         translator = AccountManager.Instance.GetComponent<Translator>();
         info.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.name;
 
@@ -100,6 +119,7 @@ public class MenuCardInfo : MonoBehaviour {
                 if (translatedCategories.Count != cnt) sb.Append(ctg + ", ");
                 else sb.Append(ctg);
             }
+            info.Find("Categories").gameObject.SetActive(true);
             info.Find("Categories/Text").GetComponent<TMPro.TextMeshProUGUI>().text = sb.ToString();
             info.Find("Flavor/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.flavorText;
             info.Find("Flavor/Text").position = info.Find("Skill&BuffRow1").position;
@@ -112,6 +132,7 @@ public class MenuCardInfo : MonoBehaviour {
         //마법 카드
         else {
             info.Find("MagicPortrait").gameObject.SetActive(true);
+            info.Find("Categories").gameObject.SetActive(false);
             if (AccountManager.Instance.resource.cardPortraite.ContainsKey(data.id)) {
                 info.Find("MagicPortrait").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardPortraite[data.id];
                 if (data.isHeroCard)
@@ -130,7 +151,7 @@ public class MenuCardInfo : MonoBehaviour {
             int cardNum = 0;
             if (AccountManager.Instance.cardPackage.data.ContainsKey(data.id))
                 cardNum = AccountManager.Instance.cardPackage.data[data.id].cardCount;
-            if (cardNum < 3)
+            if (cardNum <= 3)
                 info.Find("CreateCard/HaveNum").GetComponent<TMPro.TextMeshProUGUI>().text = cardNum.ToString();
             else
                 info.Find("CreateCard/HaveNum").GetComponent<TMPro.TextMeshProUGUI>().text = "MAX";
@@ -160,9 +181,9 @@ public class MenuCardInfo : MonoBehaviour {
                 }
                 info.Find("CreateCard/CrystalUseValue").GetComponent<TMPro.TextMeshProUGUI>().text = "-" + makeCardcost.ToString();
                 if (makeCardcost >= AccountManager.Instance.userResource.crystal)
-                    info.Find("CreateCard/MakeBtn/Disabled").gameObject.SetActive(false);
-                else
                     info.Find("CreateCard/MakeBtn/Disabled").gameObject.SetActive(true);
+                else
+                    info.Find("CreateCard/MakeBtn/Disabled").gameObject.SetActive(false);
             }
         }
     }
@@ -205,6 +226,28 @@ public class MenuCardInfo : MonoBehaviour {
 
 
     public void MakeCard() {
-        AccountManager.Instance.RequestCardMake(cardId);
+        accountManager.RequestCardMake(cardId, WaitRequest);
+    }
+
+    void WaitRequest(HTTPRequest originalRequest, HTTPResponse response) {
+        accountManager.RequestUserInfo((_req, _res) => {
+            accountManager.SetSignInData(_res);
+            hudController.SetResourcesUI();
+            OnMakeCardFinished.Invoke();
+        });
+    }
+
+    public void OnInventoryRefreshFinished(HTTPRequest originalRequest, HTTPResponse response) {
+        if (response != null) {
+            if (response.StatusCode == 200 || response.StatusCode == 304) {
+                var result = JsonReader.Read<MyCardsInfo>(response.DataAsText);
+
+                accountManager.myCards = result.cardInventories;
+                accountManager.SetCardData();
+                accountManager.SetHeroInventories(result.heroInventories);
+                dicCard.GetComponent<MenuCardHandler>().DrawCard(cardId, isHuman);
+                SetCardInfo(cardData, isHuman);
+            }
+        }
     }
 }

@@ -317,7 +317,7 @@ public partial class AccountManager {
         StringBuilder sb = new StringBuilder();
         sb
             .Append(networkManager.baseUrl)
-            .Append("api/user/createcard");
+            .Append("api/decks");
 
         HTTPRequest request = new HTTPRequest(
             new Uri(sb.ToString())
@@ -348,7 +348,7 @@ public partial class AccountManager {
         StringBuilder sb = new StringBuilder();
         sb
             .Append(networkManager.baseUrl)
-            .Append("api/decks");
+            .Append("api/user/createcard");
 
         HTTPRequest request = new HTTPRequest(
             new Uri(sb.ToString())
@@ -356,9 +356,7 @@ public partial class AccountManager {
         request.MethodType = BestHTTP.HTTPMethods.Post;
         request.AddHeader("authorization", TokenFormat);
 
-
-        //var tmp = JsonConvert.SerializeObject(format);
-        request.RawData = Encoding.UTF8.GetBytes(string.Format("{\"cardId\":{0}}", cardId));
+        request.RawData = Encoding.UTF8.GetBytes(string.Format("{{\"cardId\":\"{0}\"}}", cardId));
         if (callback != null) request.Callback = callback;
         networkManager.Request(request, OnReceived, "새로운 덱을 생성하는중...");
     }
