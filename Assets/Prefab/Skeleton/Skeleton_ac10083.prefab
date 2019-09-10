@@ -137,10 +137,11 @@ MonoBehaviour:
   rangeUpAttackName: 
   rangeDownAttackName: 
   generalAttackName: ATTACK
-  deClockAnimationName: 
+  deClockAnimationName: APPEAR
   attackEventName: ATTACK
   arrow: {fileID: 0}
   hidingObject: {fileID: 0}
+  teleportMove: 0
   headbone: {fileID: 0}
   bodybone: {fileID: 0}
   rootbone: {fileID: 0}

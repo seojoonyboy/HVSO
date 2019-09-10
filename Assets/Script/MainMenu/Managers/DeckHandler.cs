@@ -111,7 +111,7 @@ public class DeckHandler : MonoBehaviour
             }
         }
         if(customDeck != null)
-            deckEditCanvas.SetCustumDeckEdit(customDeck);
+            deckEditCanvas.SetCustumDeckEdit(customDeck, false);
         deckEditCanvas.gameObject.SetActive(true);
         deckEditCanvas.GetComponent<DeckEditController>().RefreshLine();
         DeckSettingManager deckManager = transform.parent.parent.parent.GetComponent<DeckSettingManager>();
