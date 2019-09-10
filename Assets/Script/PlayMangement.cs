@@ -755,6 +755,10 @@ public partial class PlayMangement : MonoBehaviour {
     //            resultManager.SetResultWindow("win", "orc");
     //    }
     //}
+
+    public void OnMoveSceneBtn() {
+        FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
+    }
 }
 
 /// <summary>
