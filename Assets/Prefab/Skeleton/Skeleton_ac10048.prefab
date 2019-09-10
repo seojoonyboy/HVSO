@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 231982279017330509}
   m_LocalRotation: {x: 0, y: 0, z: 0.69775844, w: 0.71633315}
-  m_LocalPosition: {x: -0.07368812, y: 1.1890625, z: 0}
+  m_LocalPosition: {x: -0.05158169, y: 0.83234376, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3114143626336569381}
@@ -75,7 +75,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1282419918060248148}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.029124286, y: 2.477673, z: 0}
+  m_LocalPosition: {x: -0.020387, y: 1.7343712, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3114143626336569381}
@@ -287,10 +287,11 @@ MonoBehaviour:
   rangeUpAttackName: 
   rangeDownAttackName: 
   generalAttackName: ATTACK
-  deClockAnimationName: 
+  deClockAnimationName: APPEAR
   attackEventName: ATTACK
   arrow: {fileID: 0}
   hidingObject: {fileID: 0}
+  teleportMove: 0
   headbone: {fileID: 0}
   bodybone: {fileID: 0}
   rootbone: {fileID: 0}
