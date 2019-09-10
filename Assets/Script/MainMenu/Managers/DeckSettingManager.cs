@@ -38,7 +38,7 @@ public class DeckSettingManager : MonoBehaviour
         float result = height + tmp;
         float screenRate = Screen.height * 0.00052f;
         transform.Find("DeckListParent").GetComponent<RectTransform>().sizeDelta = new Vector2(1080, result * screenRate);
-        deckList.GetComponent<RectTransform>().anchoredPosition = new Vector2(deckList.GetComponent<RectTransform>().anchoredPosition.x, -300);
+        deckList.GetComponent<RectTransform>().anchoredPosition = new Vector2(deckList.GetComponent<RectTransform>().anchoredPosition.x, -360);
         GetComponent<ScrollRect>().normalizedPosition = new Vector2(0, 1);
     }
 
