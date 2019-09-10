@@ -1,4 +1,5 @@
 using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -105,10 +106,76 @@ public class Wait_click : ScenarioExecute {
     }
 }
 
+public class wait_summon : ScenarioExecute {
+    public wait_summon() : base() { }
+
+    public override void Execute() {
+        PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.UNIT_SUMMONED, CheckSummon);
+    }
+    
+
+    private void CheckSummon(Enum event_type, Component Sender, object Param) {
+        string unitID = (string)Param;
+
+
+        if (unitID == args[1]) {
+            PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.UNIT_SUMMONED, CheckSummon);
+            handler.isDone = true;
+        }
+    }
+}
+
+
+public class Multiple_highlight : ScenarioExecute {
+    public Multiple_highlight() : base() { }
+
+    public override void Execute() {
+        Highlighting(ScenarioMask.Instance.GetMaskingObject(args[0]));
+    }
+
+    public void Highlighting(GameObject target) {
+
+    }
+
+}
+
+public class Wait_Drag : ScenarioExecute {
+    public Wait_Drag() : base() { }
+
+    public override void Execute() {
+        StartCoroutine(CheckDrag());
+    }
+
+    IEnumerator CheckDrag() {
+        while(handler.isDone == false) {
+            UnityEngine.EventSystems.PointerEventData clickEvent = new UnityEngine.EventSystems.PointerEventData(UnityEngine.EventSystems.EventSystem.current);
+
+            CardHandler card = clickEvent.pointerDrag.gameObject.GetComponent<CardHandler>();
+
+            if (card.cardID == args[1])
+                handler.isDone = true;
+        }
+        yield return null;
+    }
+
+}
+
+public class Activate_Shield : ScenarioExecute {
+    public Activate_Shield() : base() { }
+
+    public override void Execute() {
+        PlayMangement.instance.player.ActiveShield();
+    }
+}
+
+
+
 public class Fill_shield_gage : ScenarioExecute {
     public Fill_shield_gage() : base() { }
 
     public override void Execute() {
+        PlayMangement.instance.player.ChangeShieldStack(0,8);
+        PlayMangement.instance.player.FullShieldStack(8);
     }
 }
 
@@ -117,6 +184,22 @@ public class Summon_Force : ScenarioExecute {
     public Summon_Force() : base() { }
 
     public override void Execute() {
+        HighlightLine();
     }
+
+    public void HighlightLine() {
+        GameObject targetLine;
+        targetLine = ScenarioMask.Instance.GetMaskingObject(args[0], args[1]);
+        ScenarioMask.Instance.GetMaskHighlight(targetLine);
+    }
+}
+
+public class End_tutorial : ScenarioExecute {
+    public End_tutorial() : base() { }
+
+    public override void Execute() {
+        ScenarioGameManagment.scenarioInstance.isTutorial = false;
+    }
+
 }
 

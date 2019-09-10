@@ -439,6 +439,10 @@ public class PlayerController : MonoBehaviour
 
     public void ChangeShieldStack(int start, int amount) {
         shieldStack.Value += amount;
+
+        if (shieldStack.Value > 8)
+            shieldStack.Value = 8;
+
         shieldGauge.Initialize(false);
         shieldGauge.Update(0);
         //shieldGauge.Skeleton.SetSlotsToSetupPose();

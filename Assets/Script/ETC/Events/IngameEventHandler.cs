@@ -80,6 +80,8 @@ public class IngameEventHandler : MonoBehaviour {
         LINE_BATTLE_FINISHED,
         FIELD_CHANGED,
         DIE,
-        DO_NOTHING
+        DO_NOTHING,
+
+        UNIT_SUMMONED
     }
 }
