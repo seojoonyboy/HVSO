@@ -5,6 +5,8 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using BestHTTP;
 using dataModules;
+using Spine;
+using Spine.Unity;
 
 
 public class BoxRewardManager : MonoBehaviour
@@ -13,6 +15,7 @@ public class BoxRewardManager : MonoBehaviour
     [SerializeField] CardDictionaryManager cardDic;
     [SerializeField] TMPro.TextMeshProUGUI supplyStore;
     [SerializeField] TMPro.TextMeshProUGUI storeTimer;
+    [SerializeField] SkeletonGraphic boxSpine;
     // Start is called before the first frame update
     Transform hudCanvas;
 
@@ -27,7 +30,7 @@ public class BoxRewardManager : MonoBehaviour
         accountManager.userResource.LinkTimer(storeTimer);
 
 
-        cardDic.SetCardsFinished.AddListener(() => transform.Find("ShowBox").gameObject.SetActive(true));
+        cardDic.SetCardsFinished.AddListener(() => SetBoxAnimation());
         OnBoxLoadFinished.AddListener(() => accountManager.RefreshInventories(OnInventoryRefreshFinished));
     }
 
@@ -46,6 +49,15 @@ public class BoxRewardManager : MonoBehaviour
     public void OpenBox() {
         if (AccountManager.Instance.userResource.supplyBox <= 0) return;
         WaitReward();
+    }
+
+    public void SetBoxAnimation() {
+        transform.Find("ShowBox").gameObject.SetActive(true);
+        
+        boxSpine.Initialize(true);
+        boxSpine.Update(0);
+        boxSpine.AnimationState.SetAnimation(0, "01.start", false);
+        boxSpine.AnimationState.AddAnimation(1, "02.idle", true, 0.5f);
     }
     
 
@@ -66,22 +78,26 @@ public class BoxRewardManager : MonoBehaviour
 
     public void GetResult() {
         transform.Find("ShowBox/Text").gameObject.SetActive(false);
-        transform.Find("OpenBox").gameObject.SetActive(true);
+        boxSpine.AnimationState.SetAnimation(2, "03.open", false);
         StartCoroutine(ShowRewards());
     }
 
     IEnumerator ShowRewards() {
         SetRewards(accountManager.rewardList);
+        yield return new WaitForSeconds(1.2f);
         Transform boxParent = transform.Find("OpenBox");
         boxParent.gameObject.SetActive(true);
-        iTween.ScaleTo(boxParent.GetChild(0).gameObject, iTween.Hash("x", 1, "y", 1, "islocal", true, "time", 0.2f));
-        yield return new WaitForSeconds(0.2f);
-        iTween.ScaleTo(boxParent.GetChild(1).gameObject, iTween.Hash("x", 1, "y", 1, "islocal", true, "time", 0.2f));
-        yield return new WaitForSeconds(0.2f);
+        iTween.ScaleTo(boxParent.GetChild(0).gameObject, iTween.Hash("x", 1.4, "y", 1.4, "islocal", true, "time", 0.2f));
+        yield return new WaitForSeconds(0.05f);
+        iTween.ScaleTo(boxParent.GetChild(1).gameObject, iTween.Hash("x", 1.4, "y", 1.4, "islocal", true, "time", 0.2f));
+        yield return new WaitForSeconds(0.05f);
         iTween.ScaleTo(boxParent.GetChild(2).gameObject, iTween.Hash("x", 1, "y", 1, "islocal", true, "time", 0.2f));
-        yield return new WaitForSeconds(0.2f);
-        iTween.ScaleTo(boxParent.GetChild(3).gameObject, iTween.Hash("x", 1, "y", 1, "islocal", true, "time", 0.2f));
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.05f);
+        if(boxParent.GetChild(3).Find("Card").gameObject.activeSelf)
+            iTween.ScaleTo(boxParent.GetChild(3).gameObject, iTween.Hash("x", 1.4, "y", 1.4, "islocal", true, "time", 0.2f));
+        else
+            iTween.ScaleTo(boxParent.GetChild(3).gameObject, iTween.Hash("x", 1, "y", 1, "islocal", true, "time", 0.2f));
+        yield return new WaitForSeconds(0.4f);
         cardDic.SetToHumanCards();
         transform.Find("ExitButton").gameObject.SetActive(true);
     }
