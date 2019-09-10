@@ -287,6 +287,7 @@ public class DeckEditController : MonoBehaviour
         heroData = null;
         heroID = heroId;
         this.isHuman = isHuman;
+        isTemplate = true;
         deckNamePanel.transform.Find("NameTemplate").GetComponent<InputField>().text = "";
 
         heroData = AccountManager.Instance.myHeroInventories[heroId];

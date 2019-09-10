@@ -145,6 +145,7 @@ namespace SkillModules {
 
         private bool isFieldCard() {
             if (!isPlayer) return false;
+            if (!TargetSelectExist()) return false;
             if (!triggerList.Exists(x => IngameEventHandler.EVENT_TYPE.BEGIN_ORC_POST_TURN == x)) return false;
             return true;
         }

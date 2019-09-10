@@ -47,7 +47,6 @@ public class BoxRewardManager : MonoBehaviour
         if (AccountManager.Instance.userResource.supplyBox <= 0) return;
         WaitReward();
     }
-
     
 
     void WaitReward() {
@@ -108,8 +107,6 @@ public class BoxRewardManager : MonoBehaviour
         SetBoxObj();
     }
 
-
-
     public void SetRewards(RewardClass[] rewardList) {
         Transform boxParent = transform.Find("OpenBox");
         boxParent.GetChild(0).GetChild(0).GetComponent<MenuCardHandler>().DrawCard(rewardList[0].item);
@@ -154,7 +151,6 @@ public class BoxRewardManager : MonoBehaviour
             }
         }
     }
-
 }
 
 public class RewardClass {

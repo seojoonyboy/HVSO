@@ -1,0 +1,118 @@
+
+Sampledeck_button_light_1.png
+size: 1024,128
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Comp 1_00000
+  rotate: false
+  xy: 369, 64
+  size: 63, 64
+  orig: 256, 256
+  offset: 7, 96
+  index: -1
+Comp 1_00001
+  rotate: false
+  xy: 284, 0
+  size: 82, 64
+  orig: 256, 256
+  offset: 7, 96
+  index: -1
+Comp 1_00002
+  rotate: false
+  xy: 153, 0
+  size: 131, 64
+  orig: 256, 256
+  offset: 7, 96
+  index: -1
+Comp 1_00003
+  rotate: false
+  xy: 0, 64
+  size: 161, 64
+  orig: 256, 256
+  offset: 37, 96
+  index: -1
+Comp 1_00004
+  rotate: false
+  xy: 0, 0
+  size: 153, 64
+  orig: 256, 256
+  offset: 95, 96
+  index: -1
+Comp 1_00005
+  rotate: false
+  xy: 161, 64
+  size: 115, 64
+  orig: 256, 256
+  offset: 134, 96
+  index: -1
+Comp 1_00006
+  rotate: false
+  xy: 276, 64
+  size: 93, 64
+  orig: 256, 256
+  offset: 156, 96
+  index: -1
+Comp 1_00007
+  rotate: false
+  xy: 366, 0
+  size: 74, 64
+  orig: 256, 256
+  offset: 175, 96
+  index: -1
+Comp 1_00008
+  rotate: false
+  xy: 432, 64
+  size: 60, 64
+  orig: 256, 256
+  offset: 189, 96
+  index: -1
+Comp 1_00009
+  rotate: false
+  xy: 440, 0
+  size: 48, 64
+  orig: 256, 256
+  offset: 201, 96
+  index: -1
+Comp 1_00010
+  rotate: false
+  xy: 488, 0
+  size: 40, 64
+  orig: 256, 256
+  offset: 209, 96
+  index: -1
+Comp 1_00011
+  rotate: false
+  xy: 492, 64
+  size: 34, 64
+  orig: 256, 256
+  offset: 215, 96
+  index: -1
+Comp 1_00012
+  rotate: false
+  xy: 526, 64
+  size: 30, 64
+  orig: 256, 256
+  offset: 219, 96
+  index: -1
+Comp 1_00013
+  rotate: false
+  xy: 528, 0
+  size: 27, 64
+  orig: 256, 256
+  offset: 222, 96
+  index: -1
+Comp 1_00014
+  rotate: false
+  xy: 555, 0
+  size: 26, 64
+  orig: 256, 256
+  offset: 223, 96
+  index: -1
+Comp 1_00015
+  rotate: false
+  xy: 556, 64
+  size: 26, 64
+  orig: 256, 256
+  offset: 223, 96
+  index: -1

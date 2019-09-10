@@ -53,6 +53,15 @@ public class CardDictionaryManager : MonoBehaviour {
         SetCardsByClass();
     }
 
+    public void RefreshToHumanCards() {
+        isHumanDictionary = true;
+        transform.Find("Content/Buttons/OrcSelect").GetChild(0).gameObject.SetActive(false);
+        transform.Find("Content/Buttons/HumanSelect").GetChild(0).gameObject.SetActive(true);
+        heroCards.parent.Find("Background").GetComponent<Image>().sprite = humanPanelBg;
+
+        SetCardsByClass(true);
+    }
+
     public void SetToOrcCards() {
         isHumanDictionary = false;
         transform.Find("Content/Buttons/OrcSelect").GetChild(0).gameObject.SetActive(true);
@@ -60,6 +69,15 @@ public class CardDictionaryManager : MonoBehaviour {
         heroCards.parent.Find("Background").GetComponent<Image>().sprite = orcPanelBg;
 
         SetCardsByClass();
+    }
+
+    public void RefreshToOrcCards() {
+        isHumanDictionary = false;
+        transform.Find("Content/Buttons/OrcSelect").GetChild(0).gameObject.SetActive(true);
+        transform.Find("Content/Buttons/HumanSelect").GetChild(0).gameObject.SetActive(false);
+        heroCards.parent.Find("Background").GetComponent<Image>().sprite = orcPanelBg;
+
+        SetCardsByClass(true);
     }
 
     private void UpdateContentHeight() {
@@ -209,7 +227,7 @@ public class CardDictionaryManager : MonoBehaviour {
         }
     }
 
-    public void SetCardsByClass() {
+    public void SetCardsByClass(bool refresh = false) {
         InitDictionary();
         int totalCount = 0;
         int haveCount = 0;
@@ -233,7 +251,8 @@ public class CardDictionaryManager : MonoBehaviour {
                 classList.GetChild(i).gameObject.SetActive(true);
         }
         cardNum.text = haveCount.ToString() + "/" + totalCount.ToString();
-        RefreshLine();
+        if(!refresh)
+            RefreshLine();
         SetHeroButtons();
     }
 
