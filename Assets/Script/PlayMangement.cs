@@ -221,7 +221,7 @@ public partial class PlayMangement : MonoBehaviour {
         blockPanel.SetActive(false);
     }
 
-    IEnumerator EnemyUseCard(bool isBefore) {
+    public virtual IEnumerator EnemyUseCard(bool isBefore) {
         if (isBefore)
             yield return new WaitForSeconds(1.0f);
         #region socket use Card
@@ -264,7 +264,7 @@ public partial class PlayMangement : MonoBehaviour {
     /// </summary>
     /// <param name="history"></param>
     /// <returns></returns>
-    private GameObject MakeMagicCardObj(SocketFormat.PlayHistory history) {
+    protected GameObject MakeMagicCardObj(SocketFormat.PlayHistory history) {
         CardData cardData;
         CardDataPackage cardDataPackage = AccountManager.Instance.cardPackage;
 
@@ -286,7 +286,7 @@ public partial class PlayMangement : MonoBehaviour {
     /// </summary>
     /// <param name="history"></param>
     /// <returns></returns>
-    private GameObject MakeUnitCardObj(SocketFormat.PlayHistory history) {
+    protected GameObject MakeUnitCardObj(SocketFormat.PlayHistory history) {
         CardData cardData;
         CardDataPackage cardDataPackage = AccountManager.Instance.cardPackage;
 
@@ -298,7 +298,7 @@ public partial class PlayMangement : MonoBehaviour {
         return unitCard;
     }
 
-    private IEnumerator UnitActivate(SocketFormat.PlayHistory history) {
+    protected IEnumerator UnitActivate(SocketFormat.PlayHistory history) {
         //UnitDragHandler unitDragHandler = card.GetComponent<UnitDragHandler>();
         //dragable = false;
 
@@ -322,7 +322,7 @@ public partial class PlayMangement : MonoBehaviour {
         yield return 0;
     }
 
-    private IEnumerator MagicActivate(GameObject card, SocketFormat.PlayHistory history) {
+    protected IEnumerator MagicActivate(GameObject card, SocketFormat.PlayHistory history) {
         MagicDragHandler magicCard = card.GetComponent<MagicDragHandler>();
         magicCard.skillHandler.socketDone = false;
         dragable = false;
