@@ -66,6 +66,7 @@ public class DeckHandler : MonoBehaviour
         templateDeck = deck;
         deckID = deck.id;
         transform.Find("HeroImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.deckPortraite[deck.heroId];
+        transform.Find("DeckName").GetComponent<TMPro.TextMeshProUGUI>().text = deck.name.ToString();
         transform.Find("CardNum/Value").GetComponent<TMPro.TextMeshProUGUI>().text = deck.totalCardCount.ToString() + "/";
         transform.Find("Selected").gameObject.SetActive(false);
         transform.Find("SelectedBack").gameObject.SetActive(false);
