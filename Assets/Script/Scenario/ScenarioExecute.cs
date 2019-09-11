@@ -46,7 +46,9 @@ public class Highlight : ScenarioExecute {
         else
             target = scenarioMask.GetMaskingObject(args[0]);
 
-        scenarioMask.GetMaskHighlight(target);
+
+        ScenarioMask.Instance.SetHighlightImage(target);
+        ScenarioMask.Instance.GetMaskHighlight(target);
         handler.isDone = true;
         Logger.Log("Highlight");
     }
@@ -99,8 +101,10 @@ public class Wait_click : ScenarioExecute {
             
             if(Input.GetMouseButton(0) == true) {
 
-                if (target == null)
+                if (target == null) {
+                    ScenarioMask.Instance.StopEveryHighlight();
                     handler.isDone = true;
+                }
                 else {
                     if (button != null) {
                         handler.isDone = (buttonClick == true) ? true : false;
@@ -111,7 +115,7 @@ public class Wait_click : ScenarioExecute {
                             handler.isDone = true;
                         else
                             handler.isDone = false;
-                    }              
+                    }
                 }
             }
         }
@@ -163,11 +167,11 @@ public class Multiple_highlight : ScenarioExecute {
     public Multiple_highlight() : base() { }
 
     public override void Execute() {
-        Highlighting(scenarioMask.GetMaskingObject(args[0]));
-    }
-
-    public void Highlighting(GameObject target) {
-
+        //Highlighting(ScenarioMask.Instance.GetMaskingObject(args[0]));
+        for(int i = 0; i < args.Count; i++) {
+            GameObject target = ScenarioMask.Instance.GetMaskingObject(args[i]);
+            ScenarioMask.Instance.SetHighlightImage(target);
+        }
     }
 
 }
