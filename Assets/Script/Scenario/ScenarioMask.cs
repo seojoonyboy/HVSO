@@ -16,6 +16,11 @@ public class ScenarioMask : SerializedMonoBehaviour
     public float rectWidthRadius = 0;
     public float rectHeightRadius = 0;
 
+    public GameObject highlightCanvas;
+    public bool onHighlight = false;
+
+    public HighlightPingpong pingpongObject;
+
 
     public Dictionary<string, GameObject> targetObject;
 
@@ -201,14 +206,53 @@ public class ScenarioMask : SerializedMonoBehaviour
 
 
         rectWidthRadius = topMask.transform.position.x - temp[0].x;
-        rectHeightRadius = rectWidthRadius;
-        
-
-
-
-
-
-
+        rectHeightRadius = rectWidthRadius;      
     }
 
+    public int SetHighlightImage(GameObject targetObject) {
+        GameObject glowObject = GetUnactiveGlow();
+
+        if (glowObject == null) return -1;
+
+
+        glowObject.transform.position = targetObject.transform.position;
+        glowObject.transform.Find("Source").position = targetObject.transform.position;
+        Rect rect = targetObject.GetComponent<RectTransform>().rect;
+        Vector2 glowSize = rect.size * 1.1f;
+        Vector2 sourceSize = rect.size;
+        glowObject.SetActive(true);
+
+        glowObject.GetComponent<Image>().sprite = targetObject.GetComponent<Image>().sprite;
+        glowObject.transform.Find("Source").gameObject.GetComponent<Image>().sprite = targetObject.GetComponent<Image>().sprite;
+
+        HighlightPingpong pingpong = glowObject.transform.Find("Laber").gameObject.GetComponent<HighlightPingpong>();
+        pingpong.StartPingPong();
+        return pingpong.transform.GetSiblingIndex();
+    }
+
+    public GameObject GetUnactiveGlow() {
+        foreach(Transform child in highlightCanvas.transform) {
+            if(child.gameObject.activeSelf == false) {
+                return child.gameObject;
+            }
+        }
+        return null;
+    }
+
+    public void StopHighlight(int num) {
+        GameObject glowObject = highlightCanvas.transform.GetChild(num).gameObject;
+        HighlightPingpong pingpong = glowObject.transform.Find("Laber").gameObject.GetComponent<HighlightPingpong>();
+        pingpong.EndPingPong();
+    }
+
+    public void StopEveryHighlight() {
+        foreach (Transform child in highlightCanvas.transform) {
+            if (child.gameObject.activeSelf == false)
+                continue;
+
+            HighlightPingpong pingpong = child.Find("Laber").gameObject.GetComponent<HighlightPingpong>();
+            pingpong.EndPingPong();
+            child.gameObject.SetActive(false);
+        }
+    }    
 }
