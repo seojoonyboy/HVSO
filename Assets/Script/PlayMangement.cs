@@ -29,7 +29,7 @@ public partial class PlayMangement : MonoBehaviour {
     public SkeletonGraphic playerMana, enemyMana;
 
     public GameObject baseUnit;
-    private int turn = 0;
+    protected int turn = 0;
     public GameObject blockPanel;
     public int unitNum = 0;
     public bool heroShieldActive = false;
@@ -538,7 +538,7 @@ public partial class PlayMangement : MonoBehaviour {
         //CustomEvent.Trigger(gameObject, "EndTurn");
     }
 
-    IEnumerator battleCoroutine() {
+    public virtual IEnumerator battleCoroutine() {
         dragable = false;
         yield return new WaitForSeconds(1.1f);
         yield return socketHandler.waitSkillDone(() => { });
@@ -564,7 +564,7 @@ public partial class PlayMangement : MonoBehaviour {
         dragable = true;
     }
 
-    IEnumerator battleLine(int line) {
+    protected IEnumerator battleLine(int line) {
         battleLineEffect = backGround.transform.GetChild(line).Find("BattleLineEffect");
         battleLineEffect.gameObject.SetActive(true);
         battleLineEffect.GetComponent<SpriteRenderer>().color = new Color(1, 0.545f, 0.427f, 0.6f);
@@ -593,7 +593,7 @@ public partial class PlayMangement : MonoBehaviour {
         EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.LINE_BATTLE_FINISHED, this, line);
     }
 
-    IEnumerator StopBattleLine() {
+    protected IEnumerator StopBattleLine() {
         yield return new WaitUntil(() => stopBattle == false);
     }
 
@@ -971,7 +971,7 @@ public partial class PlayMangement {
 /// Socket 관련 처리
 /// </summary>
 public partial class PlayMangement {
-    [SerializeField] IngameEventHandler eventHandler;
+    [SerializeField] protected IngameEventHandler eventHandler;
     public IngameEventHandler EventHandler {
         get {
             return eventHandler;

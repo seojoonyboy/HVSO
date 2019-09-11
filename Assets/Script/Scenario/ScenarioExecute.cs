@@ -8,6 +8,16 @@ public class ScenarioExecute : MonoBehaviour {
     public ScenarioExecuteHandler handler;
     public List<string> args;
 
+    protected ScenarioMask scenarioMask;
+    protected ScenarioGameManagment scenarioGameManagment;
+    void Awake() {
+        scenarioMask = ScenarioMask.Instance;
+    }
+
+    void Start() {
+        scenarioGameManagment = ScenarioGameManagment.scenarioInstance;
+    }
+
     public virtual void Initialize(List<string> args) {
         this.args = args;
         handler = GetComponent<ScenarioExecuteHandler>();
@@ -31,11 +41,11 @@ public class Highlight : ScenarioExecute {
     public override void Execute() {
         GameObject target;
         if (args.Count > 1) 
-            target = (args.Count > 2) ? ScenarioMask.Instance.GetMaskingObject(args[0], args[1], args[2]) : ScenarioMask.Instance.GetMaskingObject(args[0], args[1]);
+            target = (args.Count > 2) ? scenarioMask.GetMaskingObject(args[0], args[1], args[2]) : scenarioMask.GetMaskingObject(args[0], args[1]);
         else
-            target = ScenarioMask.Instance.GetMaskingObject(args[0]);
+            target = scenarioMask.GetMaskingObject(args[0]);
 
-        ScenarioMask.Instance.GetMaskHighlight(target);
+        scenarioMask.GetMaskHighlight(target);
         handler.isDone = true;
         Logger.Log("Highlight");
     }
@@ -73,9 +83,9 @@ public class Wait_click : ScenarioExecute {
         if (args[0] == "screen")
             target = null;
         else if (args.Count > 1)
-            target = ScenarioMask.Instance.GetMaskingObject(args[0], args[1]);
+            target = scenarioMask.GetMaskingObject(args[0], args[1]);
         else
-            target = ScenarioMask.Instance.GetMaskingObject(args[0]);
+            target = scenarioMask.GetMaskingObject(args[0]);
 
         Button button = target.GetComponent<Button>();
         bool buttonClick = false;
@@ -152,7 +162,7 @@ public class Multiple_highlight : ScenarioExecute {
     public Multiple_highlight() : base() { }
 
     public override void Execute() {
-        Highlighting(ScenarioMask.Instance.GetMaskingObject(args[0]));
+        Highlighting(scenarioMask.GetMaskingObject(args[0]));
     }
 
     public void Highlighting(GameObject target) {
@@ -210,8 +220,8 @@ public class Summon_Force : ScenarioExecute {
 
     public void HighlightLine() {
         GameObject targetLine;
-        targetLine = ScenarioMask.Instance.GetMaskingObject(args[0], args[1]);
-        ScenarioMask.Instance.GetMaskHighlight(targetLine);
+        targetLine = scenarioMask.GetMaskingObject(args[0], args[1]);
+        scenarioMask.GetMaskHighlight(targetLine);
     }
 }
 
@@ -226,13 +236,19 @@ public class End_tutorial : ScenarioExecute {
 public class Battle_turn : ScenarioExecute {
     public Battle_turn() : base() { }
 
-    int Line = 0;
+    int Line = -1;
 
     public override void Execute() {
-        
+        switch (args[0]) {
+            case "stop":
+                int.TryParse(args[1], out Line);
+                scenarioGameManagment.StopBattle(Line);
+                break;
+            case "proceed":
+                scenarioGameManagment.BattleResume();
+                break;
+        }
     }
-
-
 }
 
 
@@ -246,8 +262,50 @@ public class Select_Skill_Force : ScenarioExecute {
 
     public void HighlightLine() {
         GameObject targetLine;
-        targetLine = ScenarioMask.Instance.GetMaskingObject(args[0], args[1]);
-        ScenarioMask.Instance.GetMaskHighlight(targetLine);
+        targetLine = scenarioMask.GetMaskingObject(args[0], args[1]);
+        scenarioMask.GetMaskHighlight(targetLine);
+    }
+}
+
+public class Enable_EndTurn : ScenarioExecute {
+    public Enable_EndTurn() : base() { }
+
+    public override void Execute() {
+        GameObject endTurn = scenarioMask.GetMaskingObject("button", "endTurn");
+        endTurn.GetComponent<Button>().enabled = true;
+    }
+}
+
+public class Disable_EndTurn : ScenarioExecute {
+    public Disable_EndTurn() : base() { }
+
+    public override void Execute() {
+        GameObject endTurn = scenarioMask.GetMaskingObject("button", "endTurn");
+        endTurn.GetComponent<Button>().enabled = false;
+    }
+}
+
+public class Disable_to_hand_herocard : ScenarioExecute {
+    public Disable_to_hand_herocard() : base() { }
+
+    public override void Execute() {
+        scenarioGameManagment.canHeroCardToHand = false;
+    }
+}
+
+public class Enable_to_hand_herocard : ScenarioExecute {
+    public Enable_to_hand_herocard() : base() { }
+
+    public override void Execute() {
+        scenarioGameManagment.canHeroCardToHand = true;
+    }
+}
+
+public class Disable_drag : ScenarioExecute {
+    public Disable_drag() : base() { }
+
+    public override void Execute() {
+        
     }
 }
 

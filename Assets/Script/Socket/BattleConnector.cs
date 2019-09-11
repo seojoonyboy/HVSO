@@ -85,10 +85,24 @@ public partial class BattleConnector : MonoBehaviour {
         string battleType = PlayerPrefs.GetString("SelectedBattleType");
         string race = PlayerPrefs.GetString("SelectedRace").ToLower();
         string[] args;
+
         if(battleType.CompareTo("test") == 0)
-            args = new string[] { battleType, race };   
-        else
-            args = new string[] { battleType, deckId, race };
+            args = new string[] { battleType, race };
+        else {
+            if (battleType == "story") {
+                //========================================================
+                //deckId 및 race 관련 처리 수정 예정
+                string stageNum = "1";
+                race = "human";
+                deckId = string.Empty;
+                args = new string[] { battleType, deckId, race, stageNum };
+                //========================================================
+            }
+            else {
+                args = new string[] { battleType, deckId, race };
+            }
+        }
+            
         SendMethod("join_game", args);
         pingpong = StartCoroutine(Heartbeat());
     }
@@ -158,7 +172,7 @@ public partial class BattleConnector : MonoBehaviour {
     public void StartBattle() {
         //TODO : FBL_SceneManager의 LoadScene 사용시 에러가 발생함. 수정 필요
         //FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MISSION_INGAME);
-        if (PlayerPrefs.GetString("SelectedBattleType") != "Tutorial")
+        if (PlayerPrefs.GetString("SelectedBattleType") != "story")
             UnityEngine.SceneManagement.SceneManager.LoadScene("IngameScene", UnityEngine.SceneManagement.LoadSceneMode.Single);
         else
             UnityEngine.SceneManagement.SceneManager.LoadScene("TutorialScene", UnityEngine.SceneManagement.LoadSceneMode.Single);
