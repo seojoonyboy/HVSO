@@ -95,31 +95,29 @@ public class TemplateMenu : MonoBehaviour {
 
     public void SelectDeck(DeckHandler deck) {
         if (selectedDeck != null) {
-            selectedDeck.transform.Find("Selected").gameObject.SetActive(false);
-            if (selectedDeck == deck) {
-                selectedDeck = null;
+            if (selectedDeck == deck) 
                 return;
-            }
+            selectedDeck.transform.Find("Selected").gameObject.SetActive(false);
+            
         }
         if (newDeck) {
             transform.Find("DeckList/NewDeck/Selected").gameObject.SetActive(false);
             newDeck = false;
         }
         selectedDeck = deck;
-        
+        transform.Find("StartEditBtn").gameObject.SetActive(true);
     }
 
     public void SelectNewDeck() {
+        Transform newDeckSelected = transform.Find("DeckList/NewDeck/Selected");
         if (selectedDeck != null)
             selectedDeck.transform.Find("Selected").gameObject.SetActive(false);
-        if (newDeck) {
-            transform.Find("DeckList/NewDeck/Selected").gameObject.SetActive(false);
-            newDeck = false;
-            return;
-        }
         selectedDeck = null;
         newDeck = true;
-        transform.Find("DeckList/NewDeck/Selected").gameObject.SetActive(true);
+        newDeckSelected.GetComponent<SkeletonGraphic>().Initialize(true);
+        newDeckSelected.GetComponent<SkeletonGraphic>().Update(0);
+        newDeckSelected.gameObject.SetActive(true);
+        transform.Find("StartEditBtn").gameObject.SetActive(true);
     }
 
     public void CancelSelectDeck() {
@@ -131,12 +129,13 @@ public class TemplateMenu : MonoBehaviour {
             transform.Find("DeckList/NewDeck/Selected").gameObject.SetActive(false);
             newDeck = false;
         }
+        transform.Find("StartEditBtn").gameObject.SetActive(false);
     }
 
 
     public void ReturnToMenu() {
         gameObject.SetActive(false);
-
+        transform.Find("StartEditBtn").gameObject.SetActive(false);
         FindObjectOfType<HUDController>().SetHeader(HUDController.Type.SHOW_USER_INFO);
     }
 }
