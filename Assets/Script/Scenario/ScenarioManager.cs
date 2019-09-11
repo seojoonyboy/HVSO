@@ -55,7 +55,11 @@ public class ScenarioManager : SerializedMonoBehaviour
 
     public void OnBackButton() {
         SoundManager.Instance.PlaySound(SoundType.FIRST_TURN);
-        FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
+        PlayerPrefs.SetString("SelectedRace", "");
+        PlayerPrefs.SetString("SelectedDeckId", "");
+        PlayerPrefs.SetString("SelectedDeckType", "");
+        PlayerPrefs.SetString("SelectedBattleType", "");
+        FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);        
     }
 
     public void OnHumanButton() {
