@@ -75,7 +75,7 @@ public partial class PlayMangement : MonoBehaviour {
 
     //최초에 데이터를 불러드릴 함수. missionData를 임시로 놓고, 그 후에 게임의 정보들 등록
     //체력설정 -> 승리목표 설정 -> 자원분배 -> 턴
-    private void InitGameData() {
+    protected void InitGameData() {
         object missionData = null;
 
         RequestStartData(20, 20);

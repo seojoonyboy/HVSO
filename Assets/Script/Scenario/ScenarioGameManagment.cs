@@ -24,6 +24,7 @@ public class ScenarioGameManagment : PlayMangement {
     int battleStopAt = 0;
 
     private void Awake() {
+        socketHandler = FindObjectOfType<BattleConnector>();
         instance = this;
         scenarioInstance = this;
         SetWorldScale();
@@ -49,6 +50,7 @@ public class ScenarioGameManagment : PlayMangement {
 
     void Start() {
         SetBackGround();
+        InitGameData();
     }
 
     void OnDestroy() {
