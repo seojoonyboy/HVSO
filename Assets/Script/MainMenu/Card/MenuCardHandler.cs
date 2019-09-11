@@ -162,7 +162,12 @@ public class MenuCardHandler : MonoBehaviour {
     public void OpenCardInfo() {
         menuCardInfo.transform.parent.gameObject.SetActive(true);
         menuCardInfo.gameObject.SetActive(true);
-        menuCardInfo.SetCardInfo(cardData, isHuman);
+        if (transform.parent.name == "Grid")
+            menuCardInfo.SetCardInfo(cardData, isHuman, transform);
+        else {
+            menuCardInfo.SetCardInfo(cardData, isHuman);
+            menuCardInfo.transform.Find("CreateCard").gameObject.SetActive(false);
+        }
         if (transform.parent.parent.parent.name == "HeroInfo")
             exitTrigger2.SetActive(true);
     }

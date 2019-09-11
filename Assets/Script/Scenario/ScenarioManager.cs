@@ -41,15 +41,15 @@ public class ScenarioManager : SerializedMonoBehaviour
     private void Awake() {
         Instance = this;
         OnHumanButton();
-        PlayerPrefs.SetString("SelectedDeckId", "");
+        //PlayerPrefs.SetString("SelectedDeckId", "");
     }
 
     private void OnDestroy() {
         Instance = null;
-        PlayerPrefs.SetString("SelectedRace", "");
-        PlayerPrefs.SetString("SelectedDeckId", "");
-        PlayerPrefs.SetString("SelectedDeckType", "");
-        PlayerPrefs.SetString("SelectedBattleType", "");
+        //PlayerPrefs.SetString("SelectedRace", "");
+        //PlayerPrefs.SetString("SelectedDeckId", "");
+        //PlayerPrefs.SetString("SelectedDeckType", "");
+        //PlayerPrefs.SetString("SelectedBattleType", "");
     }   
     
 
@@ -205,15 +205,15 @@ public class ScenarioManager : SerializedMonoBehaviour
             Logger.Log("이미 대전 시작 버튼이 눌려진 상태");
             return;
         }
-
-        PlayerPrefs.SetString("SelectedBattleType", "solo");
+        PlayerPrefs.SetString("SelectedBattleType", "story");
         string race = PlayerPrefs.GetString("SelectedRace").ToLower();
         string selectedDeckId = PlayerPrefs.GetString("SelectedDeckId").ToLower();
 
         if (race != null && !string.IsNullOrEmpty(selectedDeckId)) {
             if (selectedDeck.deckValidate) {
                 isIngameButtonClicked = true;
-                FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.TUTORIAL);
+
+                FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.CONNECT_MATCHING_SCENE);
                 ScenarioGameManagment.chapterData = selectedChapterData;
             }
             else {

@@ -105,10 +105,10 @@ public partial class AccountManager : Singleton<AccountManager> {
             }
         }
         foreach (KeyValuePair<string, HeroInventory> cards in myHeroInventories) {
-            foreach(var card in cards.Value.heroCards) {
+            foreach (var card in cards.Value.heroCards) {
                 if (!cardPackage.data.ContainsKey(card.cardId)) {
                     CardData data = new CardData();
-                    data.cardId = card.cardId;                          
+                    data.cardId = card.cardId;
                     data.attackTypes = card.attackTypes;
                     data.attributes = card.attributes;
                     data.rarelity = card.rarelity;
@@ -202,7 +202,7 @@ public partial class AccountManager {
         if (response != null && response.IsSuccess) {
             Logger.Log("회원가입 요청 완료");
             RequestUserInfo((req, res) => {
-                if(response != null) {
+                if (response != null) {
                     if (response.IsSuccess) {
                         SetSignInData(res);
                     }
@@ -213,12 +213,12 @@ public partial class AccountManager {
             });
         }
         else {
-            if(response.DataAsText.Contains("already exist")) {
+            if (response.DataAsText.Contains("already exist")) {
                 Modal.instantiate("이미 해당 기기의 ID가 존재합니다.", Modal.Type.CHECK);
             }
         }
     }
-    
+
     public void SetSignInData(HTTPResponse response) {
         userData = dataModules.JsonReader.Read<UserInfo>(response.DataAsText);
         NickName = userData.nickName;
@@ -267,7 +267,7 @@ public partial class AccountManager {
         Logger.Log("Times out");
         Timer.Cancel(UserReqTimer);
         UserReqTimer = Timer.Register(
-            interval, 
+            interval,
             () => {
                 RequestUserInfo((req, res) => {
                     var sceneStartController = GetComponent<SceneStartController>();
@@ -335,11 +335,32 @@ public partial class AccountManager {
 
     private void OnReceived(HTTPRequest originalRequest, HTTPResponse response) {
         if (response.IsSuccess) {
-            if(response.StatusCode == 200 || response.StatusCode == 304) {
+            if (response.StatusCode == 200 || response.StatusCode == 304) {
                 var result = response.DataAsText;
             }
         }
     }
+
+    /// <summary>
+    /// 카드 제작 요청
+    /// </summary>
+    public void RequestCardMake(string cardId, OnRequestFinishedDelegate callback = null) {
+        StringBuilder sb = new StringBuilder();
+        sb
+            .Append(networkManager.baseUrl)
+            .Append("api/user/createcard");
+
+        HTTPRequest request = new HTTPRequest(
+            new Uri(sb.ToString())
+        );
+        request.MethodType = BestHTTP.HTTPMethods.Post;
+        request.AddHeader("authorization", TokenFormat);
+
+        request.RawData = Encoding.UTF8.GetBytes(string.Format("{{\"cardId\":\"{0}\"}}", cardId));
+        if (callback != null) request.Callback = callback;
+        networkManager.Request(request, OnReceived, "새로운 덱을 생성하는중...");
+    }
+
 
     /// <summary>
     /// 덱 제거 요청
@@ -392,7 +413,7 @@ public partial class AccountManager {
                     break;
             }
         }
-        request.RawData =  Encoding.UTF8.GetBytes(json.ToString());
+        request.RawData = Encoding.UTF8.GetBytes(json.ToString());
         request.AddHeader("authorization", TokenFormat);
         if (callback != null) request.Callback = callback;
         networkManager.Request(request, OnReceived, "덱 수정 요청을 전달하는중...");
@@ -480,7 +501,7 @@ public partial class AccountManager {
     }
 
     public void SetRewardInfo(RewardClass[] rewardList) {
-        for(int i = 0; i < rewardList.Length; i++) {
+        for (int i = 0; i < rewardList.Length; i++) {
             this.rewardList[i].item = rewardList[i].item;
             this.rewardList[i].amount = rewardList[i].amount;
             this.rewardList[i].type = rewardList[i].type;
@@ -502,7 +523,7 @@ public partial class AccountManager {
     }
 
     private void OnReceivedLoadAllCards(HTTPRequest originalRequest, HTTPResponse response) {
-        if(response != null && response.IsSuccess) {
+        if (response != null && response.IsSuccess) {
             var result = dataModules.JsonReader.Read<List<CollectionCard>>(response.DataAsText);
             allCards = result;
             allCardsDic = allCards.ToDictionary(x => x.id, x => x);
@@ -529,7 +550,7 @@ public partial class AccountManager {
         request.MethodType = HTTPMethods.Get;
         request.AddHeader("authorization", TokenFormat);
         networkManager.Request(request, callback, "박스 정보를 불러오는중...");
-        
+
     }
 }
 
@@ -584,7 +605,7 @@ public partial class AccountManager {
 
     private void OnExpChanged(HTTPRequest originalRequest, HTTPResponse response) {
         if (response != null && response.IsSuccess) {
-            
+
         }
     }
 }

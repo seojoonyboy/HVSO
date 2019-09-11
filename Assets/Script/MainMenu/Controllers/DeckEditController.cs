@@ -117,16 +117,18 @@ public class DeckEditController : MonoBehaviour
                 Modal.instantiate("원하는 이름을 적어주세요", Modal.Type.CHECK);
                 return;
             }
-            if (inputNameVal.Contains(" ")) {
-                Modal.instantiate("덱 이름의 빈 칸은 제거됩니다.", Modal.Type.CHECK);
-                inputNameVal = inputNameVal.Replace(" ", string.Empty);
-            }
             field.value = inputNameVal;
             form.parms.Add(field);
 
             //template을 통한 덱 생성도 새로운 생성 요청으로 취급 해야함.
             if (isTemplate) RequestNewDeck();
-            else RequestModifyDeck(form, deckID);
+            else {
+                RequestModifyDeck(form, deckID);
+                if (inputNameVal.Contains(" ")) {
+                    Modal.instantiate("덱 이름의 빈 칸은 제거됩니다.", Modal.Type.CHECK);
+                    inputNameVal = inputNameVal.Replace(" ", string.Empty);
+                }
+            };
         }
         else {
             RequestNewDeck();
@@ -287,6 +289,7 @@ public class DeckEditController : MonoBehaviour
         heroData = null;
         heroID = heroId;
         this.isHuman = isHuman;
+        isTemplate = true;
         deckNamePanel.transform.Find("NameTemplate").GetComponent<InputField>().text = "";
 
         heroData = AccountManager.Instance.myHeroInventories[heroId];

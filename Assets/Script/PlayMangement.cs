@@ -29,7 +29,7 @@ public partial class PlayMangement : MonoBehaviour {
     public SkeletonGraphic playerMana, enemyMana;
 
     public GameObject baseUnit;
-    private int turn = 0;
+    protected int turn = 0;
     public GameObject blockPanel;
     public int unitNum = 0;
     public bool heroShieldActive = false;
@@ -75,7 +75,7 @@ public partial class PlayMangement : MonoBehaviour {
 
     //최초에 데이터를 불러드릴 함수. missionData를 임시로 놓고, 그 후에 게임의 정보들 등록
     //체력설정 -> 승리목표 설정 -> 자원분배 -> 턴
-    private void InitGameData() {
+    protected void InitGameData() {
         object missionData = null;
 
         RequestStartData(20, 20);
@@ -221,7 +221,7 @@ public partial class PlayMangement : MonoBehaviour {
         blockPanel.SetActive(false);
     }
 
-    IEnumerator EnemyUseCard(bool isBefore) {
+    public virtual IEnumerator EnemyUseCard(bool isBefore) {
         if (isBefore)
             yield return new WaitForSeconds(1.0f);
         #region socket use Card
@@ -264,7 +264,7 @@ public partial class PlayMangement : MonoBehaviour {
     /// </summary>
     /// <param name="history"></param>
     /// <returns></returns>
-    private GameObject MakeMagicCardObj(SocketFormat.PlayHistory history) {
+    protected GameObject MakeMagicCardObj(SocketFormat.PlayHistory history) {
         CardData cardData;
         CardDataPackage cardDataPackage = AccountManager.Instance.cardPackage;
 
@@ -286,7 +286,7 @@ public partial class PlayMangement : MonoBehaviour {
     /// </summary>
     /// <param name="history"></param>
     /// <returns></returns>
-    private GameObject MakeUnitCardObj(SocketFormat.PlayHistory history) {
+    protected GameObject MakeUnitCardObj(SocketFormat.PlayHistory history) {
         CardData cardData;
         CardDataPackage cardDataPackage = AccountManager.Instance.cardPackage;
 
@@ -298,7 +298,7 @@ public partial class PlayMangement : MonoBehaviour {
         return unitCard;
     }
 
-    private IEnumerator UnitActivate(SocketFormat.PlayHistory history) {
+    protected IEnumerator UnitActivate(SocketFormat.PlayHistory history) {
         //UnitDragHandler unitDragHandler = card.GetComponent<UnitDragHandler>();
         //dragable = false;
 
@@ -322,7 +322,7 @@ public partial class PlayMangement : MonoBehaviour {
         yield return 0;
     }
 
-    private IEnumerator MagicActivate(GameObject card, SocketFormat.PlayHistory history) {
+    protected IEnumerator MagicActivate(GameObject card, SocketFormat.PlayHistory history) {
         MagicDragHandler magicCard = card.GetComponent<MagicDragHandler>();
         magicCard.skillHandler.socketDone = false;
         dragable = false;
@@ -538,7 +538,7 @@ public partial class PlayMangement : MonoBehaviour {
         //CustomEvent.Trigger(gameObject, "EndTurn");
     }
 
-    IEnumerator battleCoroutine() {
+    public virtual IEnumerator battleCoroutine() {
         dragable = false;
         yield return new WaitForSeconds(1.1f);
         yield return socketHandler.waitSkillDone(() => { });
@@ -564,7 +564,7 @@ public partial class PlayMangement : MonoBehaviour {
         dragable = true;
     }
 
-    IEnumerator battleLine(int line) {
+    protected IEnumerator battleLine(int line) {
         battleLineEffect = backGround.transform.GetChild(line).Find("BattleLineEffect");
         battleLineEffect.gameObject.SetActive(true);
         battleLineEffect.GetComponent<SpriteRenderer>().color = new Color(1, 0.545f, 0.427f, 0.6f);
@@ -593,7 +593,7 @@ public partial class PlayMangement : MonoBehaviour {
         EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.LINE_BATTLE_FINISHED, this, line);
     }
 
-    IEnumerator StopBattleLine() {
+    protected IEnumerator StopBattleLine() {
         yield return new WaitUntil(() => stopBattle == false);
     }
 
@@ -971,7 +971,7 @@ public partial class PlayMangement {
 /// Socket 관련 처리
 /// </summary>
 public partial class PlayMangement {
-    [SerializeField] IngameEventHandler eventHandler;
+    [SerializeField] protected IngameEventHandler eventHandler;
     public IngameEventHandler EventHandler {
         get {
             return eventHandler;

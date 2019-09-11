@@ -4,6 +4,8 @@ using System.Collections;
 using Tutorial;
 using System.Reflection;
 using System;
+using TMPro;
+using UnityEngine.Events;
 
 public class ScenarioGameManagment : PlayMangement {
     public static ChapterData chapterData;
@@ -16,8 +18,13 @@ public class ScenarioGameManagment : PlayMangement {
 
     Type thisType;
     public bool canNextChapter = true;
+    public bool canHeroCardToHand = true;
+
+    bool canBattleProceed = true;
+    int battleStopAt = 0;
 
     private void Awake() {
+        socketHandler = FindObjectOfType<BattleConnector>();
         instance = this;
         scenarioInstance = this;
         SetWorldScale();
@@ -43,6 +50,7 @@ public class ScenarioGameManagment : PlayMangement {
 
     void Start() {
         SetBackGround();
+        InitGameData();
     }
 
     void OnDestroy() {
@@ -63,6 +71,86 @@ public class ScenarioGameManagment : PlayMangement {
         }
         currentChapterData = chapterQueue.Dequeue();
         GetComponent<ScenarioExecuteHandler>().Initialize(currentChapterData);
+    }
+
+    public override IEnumerator EnemyUseCard(bool isBefore) {
+        if (isBefore)
+            yield return new WaitForSeconds(1.0f);
+        //TODO : Enemy Player가 orc이고, isBefore(오크 유닛소환턴)가 true일때 소환 대기
+        //if(isBefore && !enemyPlayer.isHuman && )
+
+        #region socket use Card
+        while (!socketHandler.cardPlayFinish()) {
+            yield return socketHandler.useCardList.WaitNext();
+            if (socketHandler.useCardList.allDone) break;
+            SocketFormat.GameState state = socketHandler.getHistory();
+            SocketFormat.PlayHistory history = state.lastUse;
+            if (history != null) {
+                if (history.cardItem.type.CompareTo("unit") == 0) {
+                    //카드 정보 만들기
+                    GameObject summonUnit = MakeUnitCardObj(history);
+                    //카드 정보 보여주기
+                    yield return UnitActivate(history);
+                }
+                else {
+                    GameObject summonedMagic = MakeMagicCardObj(history);
+                    summonedMagic.GetComponent<MagicDragHandler>().isPlayer = false;
+                    /*
+                    if (summonedMagic.GetComponent<MagicDragHandler>().cardData.hero_chk == true)
+                        yield return EffectSystem.Instance.HeroCutScene(enemyPlayer.isHuman);
+                        */
+                    yield return MagicActivate(summonedMagic, history);
+                }
+                SocketFormat.DebugSocketData.SummonCardData(history);
+            }
+            int count = CountEnemyCard();
+            enemyPlayer.playerUI.transform.Find("CardCount").GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = "X" + " " + (count).ToString();
+            //SocketFormat.DebugSocketData.CheckMapPosition(state);
+            yield return new WaitForSeconds(0.5f);
+        }
+        #endregion
+        SocketFormat.DebugSocketData.ShowHandCard(socketHandler.gameState.players.enemyPlayer(enemyPlayer.isHuman).deck.handCards);
+        if (isBefore)
+            enemyPlayer.ReleaseTurn();
+    }
+
+    public override IEnumerator battleCoroutine() {
+        dragable = false;
+        yield return new WaitForSeconds(1.1f);
+        yield return socketHandler.waitSkillDone(() => { });
+        yield return socketHandler.WaitBattle();
+        for (int line = 0; line < 5; line++) {
+            #region 튜토리얼 추가 제어
+            if (!canBattleProceed && line == battleStopAt) yield return new WaitUntil(() => canBattleProceed == true);
+            #endregion
+            EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.LINE_BATTLE_START, this, line);
+            yield return StopBattleLine();
+            yield return battleLine(line);
+            if (isGame == false) break;
+        }
+        yield return new WaitForSeconds(1f);
+        socketHandler.TurnOver();
+        turn++;
+        yield return socketHandler.WaitGetCard();
+        DistributeResource();
+        eventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_BATTLE_TURN, this, null);
+        EndTurnDraw();
+        yield return new WaitForSeconds(2.0f);
+        yield return new WaitUntil(() => !SkillModules.SkillHandler.running);
+        EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this);
+        //CustomEvent.Trigger(gameObject, "EndTurn");
+        StopCoroutine("battleCoroutine");
+        dragable = true;
+    }
+
+
+    public void BattleResume() {
+        canBattleProceed = true;
+    }
+
+    public void StopBattle(int line) {
+        battleStopAt = line;
+        canBattleProceed = false;
     }
 
     //IEnumerator ChapterScript() {

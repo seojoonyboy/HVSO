@@ -1,0 +1,34 @@
+
+box_card_effect.png
+size: 1024,128
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Group 21
+  rotate: true
+  xy: 148, 4
+  size: 124, 146
+  orig: 124, 146
+  offset: 0, 0
+  index: -1
+hero
+  rotate: true
+  xy: 0, 0
+  size: 128, 148
+  orig: 128, 148
+  offset: 0, 0
+  index: -1
+item
+  rotate: false
+  xy: 437, 6
+  size: 120, 122
+  orig: 120, 122
+  offset: 0, 0
+  index: -1
+magic
+  rotate: true
+  xy: 294, 12
+  size: 116, 143
+  orig: 116, 143
+  offset: 0, 0
+  index: -1
