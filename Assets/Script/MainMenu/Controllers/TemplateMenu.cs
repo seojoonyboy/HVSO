@@ -50,6 +50,7 @@ public class TemplateMenu : MonoBehaviour {
             }
         }
         transform.Find("DeckList").Find("NewDeck/Selected").gameObject.SetActive(false);
+        transform.Find("DeckList").Find("NewDeck/SelectedBack").gameObject.SetActive(false);
     }
 
 
@@ -98,10 +99,11 @@ public class TemplateMenu : MonoBehaviour {
             if (selectedDeck == deck) 
                 return;
             selectedDeck.transform.Find("Selected").gameObject.SetActive(false);
-            
+            selectedDeck.transform.Find("SelectedBack").gameObject.SetActive(false);
         }
         if (newDeck) {
             transform.Find("DeckList/NewDeck/Selected").gameObject.SetActive(false);
+            transform.Find("DeckList/NewDeck/SelectedBack").gameObject.SetActive(false);
             newDeck = false;
         }
         selectedDeck = deck;
@@ -110,23 +112,31 @@ public class TemplateMenu : MonoBehaviour {
 
     public void SelectNewDeck() {
         Transform newDeckSelected = transform.Find("DeckList/NewDeck/Selected");
-        if (selectedDeck != null)
+        Transform newDeckSelectedBack = transform.Find("DeckList/NewDeck/SelectedBack");
+        if (selectedDeck != null) {
             selectedDeck.transform.Find("Selected").gameObject.SetActive(false);
+            selectedDeck.transform.Find("SelectedBack").gameObject.SetActive(false);
+        }
         selectedDeck = null;
         newDeck = true;
         newDeckSelected.GetComponent<SkeletonGraphic>().Initialize(true);
         newDeckSelected.GetComponent<SkeletonGraphic>().Update(0);
         newDeckSelected.gameObject.SetActive(true);
+        newDeckSelectedBack.GetComponent<SkeletonGraphic>().Initialize(true);
+        newDeckSelectedBack.GetComponent<SkeletonGraphic>().Update(0);
+        newDeckSelectedBack.gameObject.SetActive(true);
         transform.Find("StartEditBtn").gameObject.SetActive(true);
     }
 
     public void CancelSelectDeck() {
         if (selectedDeck != null) {
             selectedDeck.transform.Find("Selected").gameObject.SetActive(false);
+            selectedDeck.transform.Find("SelectedBack").gameObject.SetActive(false);
             selectedDeck = null;
         }
         if (newDeck) {
             transform.Find("DeckList/NewDeck/Selected").gameObject.SetActive(false);
+            transform.Find("DeckList/NewDeck/SelectedBack").gameObject.SetActive(false);
             newDeck = false;
         }
         transform.Find("StartEditBtn").gameObject.SetActive(false);
