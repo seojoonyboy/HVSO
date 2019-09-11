@@ -145,4 +145,15 @@ public class DeckHandler : MonoBehaviour
                 .Load();
         }
     }
+
+    public void StartAIBattle() {
+        PlayerPrefs.SetString("SelectedDeckId", deckID);
+        PlayerPrefs.SetString("SelectedBattleType", "solo");
+        string camp;
+        if (isHuman) { camp = "HUMAN"; }
+        else { camp = "ORC"; }
+        PlayerPrefs.SetString("SelectedRace", camp);
+
+        FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.CONNECT_MATCHING_SCENE);
+    }
 }
