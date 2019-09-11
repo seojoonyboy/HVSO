@@ -56,13 +56,12 @@ public class UserResourceManager : SerializedMonoBehaviour {
     }
 
     public void SetTimer(int supplyStoreTime) {
+        TimeSpan time = TimeSpan.FromMilliseconds(supplyStoreTime);
+        
         this.supplyStoreTime = supplyStoreTime;
         timerTime = supplyStoreTime * 0.001f;
         if (timerTime > 0) {
-            int leftSecond = (int)(supplyStoreTime * 0.001);
-            int leftMinute = (int)(leftSecond * 0.0167);
-            int leftHour = (int)(leftMinute * 0.0167);
-            supplyStoreTimer = leftHour.ToString() + ":" + leftMinute.ToString() + ":" + leftSecond.ToString() + "후 +20";
+            supplyStoreTimer = time.Hours.ToString() + ":" + time.Minutes.ToString() + ":" + time.Seconds.ToString() + "후 +20";
         }
         else
             supplyStoreTimer = "창고 가득참";
