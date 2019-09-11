@@ -10,6 +10,7 @@ public class ScenarioExecute : MonoBehaviour {
 
     protected ScenarioMask scenarioMask;
     protected ScenarioGameManagment scenarioGameManagment;
+
     void Awake() {
         scenarioMask = ScenarioMask.Instance;
     }
@@ -273,6 +274,8 @@ public class Enable_EndTurn : ScenarioExecute {
     public override void Execute() {
         GameObject endTurn = scenarioMask.GetMaskingObject("button", "endTurn");
         endTurn.GetComponent<Button>().enabled = true;
+
+        handler.isDone = true;
     }
 }
 
@@ -282,6 +285,8 @@ public class Disable_EndTurn : ScenarioExecute {
     public override void Execute() {
         GameObject endTurn = scenarioMask.GetMaskingObject("button", "endTurn");
         endTurn.GetComponent<Button>().enabled = false;
+
+        handler.isDone = true;
     }
 }
 
@@ -290,6 +295,8 @@ public class Disable_to_hand_herocard : ScenarioExecute {
 
     public override void Execute() {
         scenarioGameManagment.canHeroCardToHand = false;
+
+        handler.isDone = true;
     }
 }
 
@@ -298,6 +305,8 @@ public class Enable_to_hand_herocard : ScenarioExecute {
 
     public override void Execute() {
         scenarioGameManagment.canHeroCardToHand = true;
+
+        handler.isDone = true;
     }
 }
 

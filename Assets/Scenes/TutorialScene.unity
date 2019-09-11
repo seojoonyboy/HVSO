@@ -8808,7 +8808,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: muligun_card
+      Data: muligunCard
     - Name: $v
       Entry: 10
       Data: 0
@@ -42855,6 +42855,7 @@ MonoBehaviour:
   releaseTurnBtn: {fileID: 0}
   isTutorial: 0
   canNextChapter: 1
+  canHeroCardToHand: 1
 --- !u!114 &8279262150021554597
 MonoBehaviour:
   m_ObjectHideFlags: 0
