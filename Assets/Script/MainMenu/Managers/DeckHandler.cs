@@ -68,6 +68,7 @@ public class DeckHandler : MonoBehaviour
         transform.Find("HeroImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.deckPortraite[deck.heroId];
         transform.Find("CardNum/Value").GetComponent<TMPro.TextMeshProUGUI>().text = deck.totalCardCount.ToString();
         transform.Find("Selected").gameObject.SetActive(false);
+        transform.Find("SelectedBack").gameObject.SetActive(false);
     }
 
     public void OpenDeckButton() {
@@ -88,6 +89,8 @@ public class DeckHandler : MonoBehaviour
     public void SelectTemplateDeck() {
         transform.Find("Selected").GetComponent<SkeletonGraphic>().Initialize(true);
         transform.Find("Selected").gameObject.SetActive(true);
+        transform.Find("SelectedBack").GetComponent<SkeletonGraphic>().Initialize(true);
+        transform.Find("SelectedBack").gameObject.SetActive(true);
         templateCanvas.SelectDeck(this);
     }
 
