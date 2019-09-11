@@ -77,6 +77,7 @@ public class BoxRewardManager : MonoBehaviour
     }
 
     public void GetResult() {
+        transform.Find("OpenBox").gameObject.SetActive(true);
         transform.Find("ShowBox/Text").gameObject.SetActive(false);
         boxSpine.AnimationState.SetAnimation(2, "03.open", false);
         StartCoroutine(ShowRewards());
@@ -91,7 +92,6 @@ public class BoxRewardManager : MonoBehaviour
         yield return new WaitForSeconds(0.05f);
         effects.GetChild(1).gameObject.SetActive(true);
         yield return new WaitForSeconds(0.05f);
-        boxParent.gameObject.SetActive(true);
         iTween.ScaleTo(boxParent.GetChild(0).gameObject, iTween.Hash("x", 1.4, "y", 1.4, "islocal", true, "time", 0.2f));
         effects.GetChild(2).gameObject.SetActive(true);
         yield return new WaitForSeconds(0.05f);
