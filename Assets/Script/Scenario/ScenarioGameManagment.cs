@@ -131,7 +131,7 @@ public class ScenarioGameManagment : PlayMangement {
         yield return socketHandler.WaitBattle();
         for (int line = 0; line < 5; line++) {
             #region 튜토리얼 추가 제어
-            if (!canBattleProceed && line == battleStopAt) yield return new WaitUntil(() => canBattleProceed == true);
+            if (!canBattleProceed && (line == battleStopAt - 1)) yield return new WaitUntil(() => canBattleProceed == true);
             #endregion
             EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.LINE_BATTLE_START, this, line);
             yield return StopBattleLine();
