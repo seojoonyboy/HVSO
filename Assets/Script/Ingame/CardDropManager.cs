@@ -53,8 +53,10 @@ public partial class CardDropManager {
     public void ShowDropableSlot(CardData card) {
         if(ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.isTutorial) {
             int line = ScenarioGameManagment.scenarioInstance.forcedSummonAt;
-            if(line != -1) ForcedShowDropableSlot(line);
-            return;
+            if(line != -1) {
+                ForcedShowDropableSlot(line);
+                return;
+            }
         }
         for (int i = 0; i < 5; i++) {
             if (card.attributes.Length == 0) {
