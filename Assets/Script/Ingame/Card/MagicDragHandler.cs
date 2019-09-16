@@ -105,7 +105,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
             heroCardInfo.SetActive(true);
             //영웅 카드를 핸드로 가져오는 부분
             if (transform.position.y < -3.5f) {
-                if (ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.isTutorial == true) {
+                if (ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.canHeroCardToHand) {
                     cardUsed = false;
                     transform.localScale = new Vector3(1, 1, 1);
                     transform.localPosition = new Vector3(0, 0, 0);
