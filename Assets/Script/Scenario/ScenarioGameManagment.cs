@@ -19,6 +19,8 @@ public class ScenarioGameManagment : PlayMangement {
     Type thisType;
     public bool canNextChapter = true;
     public bool canHeroCardToHand = true;
+    public bool stopSummon = false;
+    public int forcedSummonAt = -1;
 
     bool canBattleProceed = true;
     int battleStopAt = 0;
@@ -79,6 +81,9 @@ public class ScenarioGameManagment : PlayMangement {
             yield return new WaitForSeconds(1.0f);
         //TODO : Enemy Player가 orc이고, isBefore(오크 유닛소환턴)가 true일때 소환 대기
         //if(isBefore && !enemyPlayer.isHuman && )
+        #region tutorial 추가 제어
+        yield return new WaitUntil(() => !stopSummon);
+        #endregion
 
         #region socket use Card
         while (!socketHandler.cardPlayFinish()) {
