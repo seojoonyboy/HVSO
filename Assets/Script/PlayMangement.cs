@@ -225,6 +225,8 @@ public partial class PlayMangement : MonoBehaviour {
     public virtual IEnumerator EnemyUseCard(bool isBefore) {
         if (isBefore)
             yield return new WaitForSeconds(1.0f);
+
+        yield return StopTurn();
         #region socket use Card
         while (!socketHandler.cardPlayFinish()) {
             yield return socketHandler.useCardList.WaitNext();

@@ -466,3 +466,11 @@ public class OffHighlight : ScenarioExecute {
         handler.isDone = true;
     }
 }
+
+public class Enable_drag : ScenarioExecute {
+    public Enable_drag() : base() { }
+
+    public override void Execute() {
+        handler.isDone = true;
+    }
+}
