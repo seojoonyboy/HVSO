@@ -9164,13 +9164,10 @@ MonoBehaviour:
       Data: 134|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
-      Data: 2
+      Data: 1
     - Name: 
       Entry: 1
-      Data: shieldArrow
-    - Name: 
-      Entry: 1
-      Data: top,bottom
+      Data: shieldArrows
     - Name: 
       Entry: 13
       Data: 
