@@ -173,6 +173,13 @@ public class ScenarioMask : SerializedMonoBehaviour
         return null;
     }
 
+    public void MaskScreen() {
+        topMask.position = Vector3.zero;
+        leftMask.position = Vector3.zero;
+        rightMask.position = Vector3.zero;
+        bottonMask.position = Vector3.zero;
+    }
+
 
 
 

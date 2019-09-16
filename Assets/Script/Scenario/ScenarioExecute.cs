@@ -54,6 +54,7 @@ public class Wait_until : ScenarioExecute {
     public Wait_until() : base() { }
 
     public override void Execute() {
+        scenarioMask.MaskScreen();
         var parms = args;
         float sec = 0;
         float.TryParse(parms[0], out sec);
