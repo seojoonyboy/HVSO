@@ -514,6 +514,7 @@ public class OffHighlight : ScenarioExecute {
     public OffHighlight() : base() { }
 
     public override void Execute() {
+        scenarioMask.DisableMask();
         handler.isDone = true;
     }
 }

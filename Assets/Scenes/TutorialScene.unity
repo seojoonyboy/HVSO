@@ -13119,7 +13119,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8181078053512951862}
+      - m_Target: {fileID: 0}
         m_MethodName: FirstDrawCardChange
         m_Mode: 1
         m_Arguments:
@@ -42294,7 +42294,7 @@ MonoBehaviour:
   playerUI: {fileID: 608035691}
   shieldFeedBack: {fileID: 2006515894}
   shieldGauge: {fileID: 530041157}
-  cdpm: {fileID: 8181078053512951862}
+  cdpm: {fileID: 0}
   backLine: {fileID: 3805233970447077016}
   frontLine: {fileID: 3805233971758294112}
   buttonParticle: {fileID: 0}
@@ -43712,7 +43712,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8181078053512951860}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d4297a69e663b5e43903621d9453807a, type: 3}
+  m_Script: {fileID: 11500000, guid: bd6980c0d20a9d841920ae64b730f9d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   cardNum: 0
