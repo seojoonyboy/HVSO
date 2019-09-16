@@ -9185,7 +9185,7 @@ MonoBehaviour:
       Data: 135|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
-      Data: Wait_Click
+      Data: Wait_click
     - Name: args
       Entry: 7
       Data: 136|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
