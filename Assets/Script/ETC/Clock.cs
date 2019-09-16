@@ -22,4 +22,8 @@ public class Clock : MonoBehaviour {
 
         _text.text = string.Format("{0:D2} : {1:D2}", min, (int)timer);
     }
+
+    public void ResetTimer() {
+        timer = 0;
+    }
 }
