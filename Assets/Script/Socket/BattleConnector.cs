@@ -219,6 +219,14 @@ public partial class BattleConnector : MonoBehaviour {
         IngameNotice.instance.CloseNotice();
     }
 
+    public IEnumerator WaitMulliganFinish() {
+        WaitForFixedUpdate fixedUpdate = new WaitForFixedUpdate();
+        if(gameState.state.CompareTo("mulligan") == 0) IngameNotice.instance.SetNotice("상대방이 카드 교체중입니다.");
+        while(gameState.state.CompareTo("mulligan") == 0)
+            yield return fixedUpdate;
+        IngameNotice.instance.CloseNotice();
+    }
+
     public bool cardPlayFinish() {
         return useCardList.allDone;
     }

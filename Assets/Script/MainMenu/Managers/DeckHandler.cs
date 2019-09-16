@@ -36,7 +36,7 @@ public class DeckHandler : MonoBehaviour
         deckObj.Find("CardNum").gameObject.SetActive(true);
         deckObj.Find("CardNum/Value").GetComponent<TMPro.TextMeshProUGUI>().text = deck.totalCardCount.ToString() + "/";
         deckObj.Find("DeckName").gameObject.SetActive(true);
-        deckObj.Find("DeckName").GetComponent<TMPro.TextMeshProUGUI>().text = deck.name.ToString() + "/";
+        deckObj.Find("DeckName").GetComponent<TMPro.TextMeshProUGUI>().text = deck.name.ToString();
     }
 
     public void SetDeck(dataModules.Deck deck, bool basic = false) {
@@ -66,7 +66,8 @@ public class DeckHandler : MonoBehaviour
         templateDeck = deck;
         deckID = deck.id;
         transform.Find("HeroImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.deckPortraite[deck.heroId];
-        transform.Find("CardNum/Value").GetComponent<TMPro.TextMeshProUGUI>().text = deck.totalCardCount.ToString();
+        transform.Find("DeckName").GetComponent<TMPro.TextMeshProUGUI>().text = deck.name.ToString();
+        transform.Find("CardNum/Value").GetComponent<TMPro.TextMeshProUGUI>().text = deck.totalCardCount.ToString() + "/";
         transform.Find("Selected").gameObject.SetActive(false);
         transform.Find("SelectedBack").gameObject.SetActive(false);
     }
@@ -144,5 +145,16 @@ public class DeckHandler : MonoBehaviour
                 .decksLoader
                 .Load();
         }
+    }
+
+    public void StartAIBattle() {
+        PlayerPrefs.SetString("SelectedDeckId", deckID);
+        PlayerPrefs.SetString("SelectedBattleType", "solo");
+        string camp;
+        if (isHuman) { camp = "HUMAN"; }
+        else { camp = "ORC"; }
+        PlayerPrefs.SetString("SelectedRace", camp);
+
+        FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.CONNECT_MATCHING_SCENE);
     }
 }
