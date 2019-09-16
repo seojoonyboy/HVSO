@@ -8960,7 +8960,7 @@ MonoBehaviour:
       Data: 117|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
-      Data: Fill_shield-gage
+      Data: Fill_shield_gage
     - Name: args
       Entry: 7
       Data: 118|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
