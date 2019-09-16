@@ -48,7 +48,7 @@ public class Highlight : ScenarioExecute {
             target = scenarioMask.GetMaskingObject(args[0]);
 
 
-        ScenarioMask.Instance.SetHighlightImage(target);
+        //ScenarioMask.Instance.SetHighlightImage(target);
         ScenarioMask.Instance.GetMaskHighlight(target);
         handler.isDone = true;
         Logger.Log("Highlight");
@@ -76,6 +76,8 @@ public class Wait_until : ScenarioExecute {
 public class Wait_click : ScenarioExecute {
     public Wait_click() : base() { }
 
+    IDisposable clickstream;
+
     public override void Execute() {
         GameObject target;
 
@@ -87,12 +89,12 @@ public class Wait_click : ScenarioExecute {
             target = scenarioMask.GetMaskingObject(args[0]);
 
 
-        Button button = target.GetComponent<Button>();
+        Button button = (target != null) ? target.GetComponent<Button>() : null;
 
 
-        IDisposable clickstream =  (button != null) ? button.OnClickAsObservable().Subscribe(_=>CheckButton())  : Observable.EveryUpdate().Where(_ => Input.GetMouseButtonDown(0)).Subscribe(_ => CheckClick(target));
-        Observable.EveryUpdate().Where(_ => handler.isDone == true).Subscribe(_ => clickstream.Dispose());
-
+        clickstream =  (button != null) ? button.OnClickAsObservable().Subscribe(_=>CheckButton())  : Observable.EveryUpdate().Where(_ => Input.GetMouseButtonDown(0)).Subscribe(_ => CheckClick(target));
+        //Observable.EveryUpdate().Where(_ => handler.isDone == true).Subscribe(_ => { clickstream.Dispose(); Debug.Log("테스트!"); });
+        
 
 
         Logger.Log("Wait_click");
@@ -101,18 +103,22 @@ public class Wait_click : ScenarioExecute {
     public void CheckClick(GameObject target) {       
         if (target == null) {
             ScenarioMask.Instance.StopEveryHighlight();
+            clickstream.Dispose();
             handler.isDone = true;
         }
         else {
             UnityEngine.EventSystems.PointerEventData clickEvent = new UnityEngine.EventSystems.PointerEventData(UnityEngine.EventSystems.EventSystem.current);
-            if (clickEvent.pointerPress.gameObject.name == target.name)
+            if (clickEvent.pointerPress.gameObject.name == target.name) {
+                clickstream.Dispose();
                 handler.isDone = true;
+            }
             else
                 handler.isDone = false;
         }
     }
 
     public void CheckButton() {
+        clickstream.Dispose();
         handler.isDone = true;
     }
 
