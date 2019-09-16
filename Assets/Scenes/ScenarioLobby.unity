@@ -8294,7 +8294,7 @@ MonoBehaviour:
       Data: 65|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
-      Data: Wait_drag
+      Data: Wait_Drag
     - Name: args
       Entry: 7
       Data: 66|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
