@@ -108,7 +108,7 @@ public class ScenarioMask : SerializedMonoBehaviour
                         if (cardSlot.childCount < 1)
                             continue;
 
-                        if (cardSlot.GetChild(0).GetComponent<CardHandler>().cardID == "sub") {
+                        if (cardSlot.GetChild(0).GetComponent<CardHandler>().cardID == sub) {
                             maskObject = cardSlot.gameObject;
                             break;
                         }
