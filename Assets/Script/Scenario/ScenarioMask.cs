@@ -173,15 +173,29 @@ public class ScenarioMask : SerializedMonoBehaviour
         return null;
     }
 
+    float defaultAlpha = 0.5f;
+
     public void MaskScreen() {
         topMask.position = Vector3.zero;
         leftMask.position = Vector3.zero;
         rightMask.position = Vector3.zero;
         bottonMask.position = Vector3.zero;
+
+        Color prevColor = topMask.transform.GetComponent<Image>().color;
+        topMask.transform.GetComponent<Image>().color = new Color(prevColor.r, prevColor.g, prevColor.b, 0.1f);
+        leftMask.transform.GetComponent<Image>().color = new Color(prevColor.r, prevColor.g, prevColor.b, 0.1f);
+        rightMask.transform.GetComponent<Image>().color = new Color(prevColor.r, prevColor.g, prevColor.b, 0.1f);
+        bottonMask.transform.GetComponent<Image>().color = new Color(prevColor.r, prevColor.g, prevColor.b, 0.1f);
     }
 
 
-
+    public void OffMaskScreen() {
+        Color prevColor = topMask.transform.GetComponent<Image>().color;
+        topMask.transform.GetComponent<Image>().color = new Color(prevColor.r, prevColor.g, prevColor.b, defaultAlpha);
+        leftMask.transform.GetComponent<Image>().color = new Color(prevColor.r, prevColor.g, prevColor.b, defaultAlpha);
+        rightMask.transform.GetComponent<Image>().color = new Color(prevColor.r, prevColor.g, prevColor.b, defaultAlpha);
+        bottonMask.transform.GetComponent<Image>().color = new Color(prevColor.r, prevColor.g, prevColor.b, defaultAlpha);
+    }
 
     private void Awake() {
         Instance = this;
