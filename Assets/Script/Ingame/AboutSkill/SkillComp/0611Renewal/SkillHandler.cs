@@ -112,6 +112,7 @@ namespace SkillModules {
         }
 
         IEnumerator SkillTrigger (IngameEventHandler.EVENT_TYPE triggerType, object parms) {
+            SendingMessage(false);
             foreach (Skill skill in skills) {
                 isDone = false;                
                 bool active = skill.Trigger (triggerType, parms);
@@ -123,15 +124,21 @@ namespace SkillModules {
             socketDone = true;
 
             if(!isPlayer) yield break;
-            if(isPlayingCard()) SendSocket();
-            //TODO : field에서 select 발동 했을 때
-            else if(isFieldCard()) SkillActivate();
+            SendingMessage(true);
+            if(isFieldCard()) SkillActivate();
             if(isPlayingCard()) {
                 PlayMangement.instance.UnlockTurnOver();
                 if(myObject.GetComponent<MagicDragHandler>()) {
                     PlayMangement.instance.cardHandManager.DestroyCard(myObject);
                 }
             }
+        }
+
+        private void SendingMessage(bool after) {
+            if(!isPlayingCard()) return;
+            if(TargetSelectExist() != after) return;
+            Logger.Log("SendSocket after Select : " + after);
+            SendSocket();
         }
 
         private bool isPlayingCard() {
