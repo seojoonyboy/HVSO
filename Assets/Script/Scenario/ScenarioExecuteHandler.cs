@@ -16,6 +16,7 @@ public class ScenarioExecuteHandler : MonoBehaviour {
     }
 
     IEnumerator MethodExecute(ScriptData data) {
+        foreach(var exec in sets) { Destroy(exec); }
         sets = new List<ScenarioExecute>();
 
         foreach (Method method in data.methods) {
