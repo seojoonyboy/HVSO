@@ -150,6 +150,7 @@ public partial class AccountManager : Singleton<AccountManager> {
         public int supplyBox;
         public int manaCrystal;
         public int preSupply;
+        public int additionalPreSupply;
 
         public string nickName;
         public string deviceId;
@@ -233,7 +234,8 @@ public partial class AccountManager {
             supplyStoreTime: (int)userData.supplyTimeRemain,
             supplyStore: userData.preSupply,
             supply: userData.supply,
-            supplyBox: userData.supplyBox
+            supplyBox: userData.supplyBox,
+            additionalPreSupply : userData.additionalPreSupply
         );
     }
 
@@ -251,7 +253,8 @@ public partial class AccountManager {
             supplyStoreTime: (int)userData.supplyTimeRemain,
             supplyStore: userData.preSupply,
             supply: userData.supply,
-            supplyBox: userData.supplyBox
+            supplyBox: userData.supplyBox,
+            additionalPreSupply: userData.additionalPreSupply
         );
         OnUserResourceRefresh.Invoke();
     }

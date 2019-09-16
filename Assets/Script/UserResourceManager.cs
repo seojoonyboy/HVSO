@@ -21,10 +21,11 @@ public class UserResourceManager : SerializedMonoBehaviour {
     public string supplyStoreTimer;
     public int supply;
     public int supplyBox;
+    public int additionalPreSupply;
 
     public TMPro.TextMeshProUGUI timerText;
 
-    public void SetResource(uint lv, uint exp, uint lvExp, uint nextLvExp, int gold, int crystal, int supplyStore, int supplyStoreTime, int supply, int supplyBox) {
+    public void SetResource(uint lv, uint exp, uint lvExp, uint nextLvExp, int gold, int crystal, int supplyStore, int supplyStoreTime, int supply, int supplyBox, int additionalPreSupply) {
         this.lv = lv;
         this.exp = exp;
         this.lvExp = lvExp;
@@ -35,6 +36,7 @@ public class UserResourceManager : SerializedMonoBehaviour {
         SetTimer(supplyStoreTime);
         this.supply = supply;
         this.supplyBox = supplyBox;
+        this.additionalPreSupply = additionalPreSupply;
     }
 
     void Update() {

@@ -16,6 +16,7 @@ public class BoxRewardManager : MonoBehaviour
     [SerializeField] TMPro.TextMeshProUGUI supplyStore;
     [SerializeField] TMPro.TextMeshProUGUI storeTimer;
     [SerializeField] SkeletonGraphic boxSpine;
+    [SerializeField] Transform additionalSupply;
     // Start is called before the first frame update
     Transform hudCanvas;
 
@@ -44,6 +45,7 @@ public class BoxRewardManager : MonoBehaviour
         }
         else
             boxObject.Find("BoxImage/BoxValue").gameObject.SetActive(false);
+        additionalSupply.Find("Value").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userResource.additionalPreSupply.ToString();
     }
 
     public void OpenBox() {
