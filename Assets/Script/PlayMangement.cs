@@ -517,6 +517,7 @@ public partial class PlayMangement : MonoBehaviour {
     }
 
     public IEnumerator EnemeyOrcMagicSummon() {
+        yield return StopTurn();
         yield return new WaitForSeconds(1f);
         //서버에서 오크 마법 턴 올 때까지 대기
         yield return new WaitUntil(passOrc);
@@ -530,7 +531,6 @@ public partial class PlayMangement : MonoBehaviour {
             yield return EnemyUseCard(false);
         //서버에서 턴 넘김이 완료 될 때까지 대기
         yield return socketHandler.WaitBattle();
-        yield return StopTurn();
         EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this);
         //CustomEvent.Trigger(gameObject, "EndTurn");
     }
