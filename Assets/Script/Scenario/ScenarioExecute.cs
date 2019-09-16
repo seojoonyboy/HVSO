@@ -125,8 +125,8 @@ public class Wait_click : ScenarioExecute {
 
 }
 
-public class wait_summon : ScenarioExecute {
-    public wait_summon() : base() { }
+public class Wait_summon : ScenarioExecute {
+    public Wait_summon() : base() { }
 
     public override void Execute() {
         PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.UNIT_SUMMONED, CheckSummon);

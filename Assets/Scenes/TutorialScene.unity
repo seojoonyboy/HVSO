@@ -13032,7 +13032,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 8181078053512951862}
         m_MethodName: FirstDrawCardChange
         m_Mode: 1
         m_Arguments:
