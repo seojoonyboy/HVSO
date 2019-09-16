@@ -66,7 +66,7 @@ public class DeckEditController : MonoBehaviour
         setCardNum = 0;
         haveCardNum = 0;
         dontHaveCard = 0;
-        currentPage = 0;
+        currentPage = 0;        
         EditCardHandler.dragable = true;
         settingLayout.localPosition = new Vector3(0, settingLayout.localPosition.y, 0);
         while (cardStorage.childCount > 0) {
