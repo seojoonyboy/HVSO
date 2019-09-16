@@ -162,10 +162,10 @@ public class Multiple_Highlight : ScenarioExecute {
 
     public override void Execute() {
         //Highlighting(ScenarioMask.Instance.GetMaskingObject(args[0]));
-        //for(int i = 0; i < args.Count; i++) {
-        //    GameObject target = ScenarioMask.Instance.GetMaskingObject(args[i]);
-        //    ScenarioMask.Instance.SetHighlightImage(target);
-        //}
+        for(int i = 0; i < args.Count; i++) {
+            GameObject target = ScenarioMask.Instance.GetMaskingObject(args[i]);
+            ScenarioMask.Instance.SetHighlightImage(target);
+        }
         handler.isDone = true;
     }
 
@@ -289,6 +289,8 @@ public class Battle_turn : ScenarioExecute {
                 scenarioGameManagment.BattleResume();
                 break;
         }
+
+        handler.isDone = true;
     }
 }
 
@@ -429,4 +431,26 @@ public class Remove_forced_drop_zone : ScenarioExecute {
 
         handler.isDone = true;
     }
+}
+
+public class Orc_post_turn : ScenarioExecute {
+    public Orc_post_turn() : base() { }
+
+    public override void Execute() {
+        scenarioMask.StopEveryHighlight();
+
+        switch (args[0]) {
+            case "stop":
+                PlayMangement.instance.stopTurn = true;
+                break;
+            case "proceed":
+                PlayMangement.instance.stopTurn = false;
+                break;
+            default:
+                break;
+        }
+        handler.isDone = true;
+    }
+
+
 }

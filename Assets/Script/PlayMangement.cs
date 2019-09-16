@@ -42,6 +42,7 @@ public partial class PlayMangement : MonoBehaviour {
     public bool skillAction = false;
     public victoryModule.VictoryCondition matchRule;
     public bool stopBattle = false;
+    public bool stopTurn = false;
 
     //public string magicHistroy;
 
@@ -529,6 +530,7 @@ public partial class PlayMangement : MonoBehaviour {
             yield return EnemyUseCard(false);
         //서버에서 턴 넘김이 완료 될 때까지 대기
         yield return socketHandler.WaitBattle();
+        yield return StopTurn();
         EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this);
         //CustomEvent.Trigger(gameObject, "EndTurn");
     }
@@ -596,6 +598,11 @@ public partial class PlayMangement : MonoBehaviour {
     protected IEnumerator StopBattleLine() {
         yield return new WaitUntil(() => stopBattle == false);
     }
+
+    protected IEnumerator StopTurn() {
+        yield return new WaitUntil(() => stopTurn == false);
+    }
+
 
     IEnumerator whoFirstBattle(PlayerController first, PlayerController second, int line) {
         var observer = GetComponent<FieldUnitsObserver>();
