@@ -796,7 +796,7 @@ namespace TargetModules {
 
                     SetTarget(selectedTarget.gameObject);
                     callback(selectedTarget);
-
+                    skillHandler.SendingMessage(true);
                     callback = null;
                     PlayMangement.instance.infoOn = false;
                     PlayMangement.dragable = true;
