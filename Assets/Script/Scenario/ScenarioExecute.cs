@@ -389,6 +389,7 @@ public class Disable_drag : ScenarioExecute {
                 }
                 break;
         }
+        handler.isDone = true;
     }
 
     public class Enable_drag : ScenarioExecute {

@@ -312,7 +312,7 @@ public class CardListManager : MonoBehaviour
     
 
     public virtual void OpenUnitInfoWindow(Vector3 inputPos) {
-        if (ScenarioGameManagment.scenarioInstance != null & ScenarioGameManagment.scenarioInstance.isTutorial == true) return;
+        if (ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.isTutorial == true) return;
 
         if (!PlayMangement.instance.infoOn && Input.GetMouseButtonDown(0)) {
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(inputPos);
