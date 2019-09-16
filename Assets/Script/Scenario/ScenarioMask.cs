@@ -99,6 +99,8 @@ public class ScenarioMask : SerializedMonoBehaviour
                             maskObject = maskObject.transform.GetChild(5).gameObject;
                             break;
                     }
+                    maskObject = maskObject.transform.Find("ChangeButton").gameObject;
+
                 }
                 if (main == "hand_card") {
                     foreach (Transform cardSlot in maskObject.transform) {
@@ -158,7 +160,7 @@ public class ScenarioMask : SerializedMonoBehaviour
                 }
                 if (main == "button") {
                     if (sub == "muligunEnd") {
-                        maskObject = PlayMangement.instance.player.playerUI.transform.Find("FirstDrawWindow/FinishButton").gameObject;
+                        maskObject = PlayMangement.instance.player.playerUI.transform.Find("FirstDrawWindow").Find("FinishButton").gameObject;
                     }
                     if (sub == "endTurn") {
                         maskObject = (PlayMangement.instance.player.isHuman) ? maskObject.transform.Find("HumanButton").gameObject : maskObject.transform.Find("Orc").gameObject;
@@ -218,7 +220,7 @@ public class ScenarioMask : SerializedMonoBehaviour
         glowObject.transform.position = targetObject.transform.position;
         glowObject.transform.Find("Source").position = targetObject.transform.position;
         Rect rect = targetObject.GetComponent<RectTransform>().rect;
-        Vector2 glowSize = rect.size * 1.1f;
+        Vector2 glowSize = rect.size;
         Vector2 sourceSize = rect.size;
         glowObject.SetActive(true);
 

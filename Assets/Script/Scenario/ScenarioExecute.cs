@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UniRx;
 
 public class ScenarioExecute : MonoBehaviour {
     public ScenarioExecuteHandler handler;
@@ -76,11 +77,6 @@ public class Wait_click : ScenarioExecute {
     public Wait_click() : base() { }
 
     public override void Execute() {
-        StartCoroutine(WaitClick());
-        Logger.Log("Wait_click");
-    }
-
-    IEnumerator WaitClick() {
         GameObject target;
 
         if (args[0] == "screen")
@@ -90,39 +86,37 @@ public class Wait_click : ScenarioExecute {
         else
             target = scenarioMask.GetMaskingObject(args[0]);
 
+
         Button button = target.GetComponent<Button>();
-        bool buttonClick = false;
-        if(button != null) {
-            button.onClick.AddListener(delegate () { buttonClick = true; });
-        }
 
 
-        while (handler.isDone == false) {
-            
-            if(Input.GetMouseButton(0) == true) {
-
-                if (target == null) {
-                    ScenarioMask.Instance.StopEveryHighlight();
-                    handler.isDone = true;
-                }
-                else {
-                    if (button != null) {
-                        handler.isDone = (buttonClick == true) ? true : false;
-                    }
-                    else {
-                        UnityEngine.EventSystems.PointerEventData clickEvent = new UnityEngine.EventSystems.PointerEventData(UnityEngine.EventSystems.EventSystem.current);
-                        if (clickEvent.pointerPress.gameObject.name == target.name)
-                            handler.isDone = true;
-                        else
-                            handler.isDone = false;
-                    }
-                }
-            }
-        }
+        IDisposable clickstream =  (button != null) ? button.OnClickAsObservable().Subscribe(_=>CheckButton())  : Observable.EveryUpdate().Where(_ => Input.GetMouseButtonDown(0)).Subscribe(_ => CheckClick(target));
+        Observable.EveryUpdate().Where(_ => handler.isDone == true).Subscribe(_ => clickstream.Dispose());
 
 
-        yield return null;
+
+        Logger.Log("Wait_click");
     }
+
+    public void CheckClick(GameObject target) {       
+        if (target == null) {
+            ScenarioMask.Instance.StopEveryHighlight();
+            handler.isDone = true;
+        }
+        else {
+            UnityEngine.EventSystems.PointerEventData clickEvent = new UnityEngine.EventSystems.PointerEventData(UnityEngine.EventSystems.EventSystem.current);
+            if (clickEvent.pointerPress.gameObject.name == target.name)
+                handler.isDone = true;
+            else
+                handler.isDone = false;
+        }
+    }
+
+    public void CheckButton() {
+        handler.isDone = true;
+    }
+
+
 }
 
 public class wait_summon : ScenarioExecute {
