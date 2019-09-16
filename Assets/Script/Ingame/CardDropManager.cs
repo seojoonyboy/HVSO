@@ -36,7 +36,26 @@ public partial class CardDropManager : Singleton<CardDropManager> {
 /// 유닛 처리
 /// </summary>
 public partial class CardDropManager {
+    /// <summary>
+    /// 튜토리얼용 강제 소환위치 지정
+    /// </summary>
+    /// <param name="line">Args는 1부터 시작</param>
+    public void ForcedShowDropableSlot(int line) {
+        Logger.Log("ForcedShowDropableSlot");
+        for(int i=0; i<5; i++) {
+            if(i == line - 1) {
+                if (unitLine[i][0].childCount == 0) {
+                    slotLine[i].GetChild(0).gameObject.SetActive(true);
+                }
+            }
+        }
+    }
     public void ShowDropableSlot(CardData card) {
+        if(ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.isTutorial) {
+            int line = ScenarioGameManagment.scenarioInstance.forcedSummonAt;
+            if(line != -1) ForcedShowDropableSlot(line);
+            return;
+        }
         for (int i = 0; i < 5; i++) {
             if (card.attributes.Length == 0) {
                 // if (slotLine[i].GetComponent<Terrain>().terrain == PlayMangement.LineState.forest) continue;

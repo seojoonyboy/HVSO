@@ -330,12 +330,66 @@ public class Stop_orc_summon : ScenarioExecute {
     }
 }
 
-
 public class Proceed_orc_summon : ScenarioExecute {
     public Proceed_orc_summon() : base() { }
 
     public override void Execute() {
         scenarioGameManagment.stopSummon = false;
+        handler.isDone = true;
+    }
+}
+
+public class Force_drop_zone : ScenarioExecute {
+    public Force_drop_zone() : base() { }
+
+    public override void Execute() {
+        if(args.Count == 0) {
+            Logger.Log("Args가 없어 skip");
+            handler.isDone = true;
+            return;
+        }
+
+        Type _type = Type.NONE;
+        int detail = -1;
+        switch (args[0]) {
+            case "unit":
+                try {
+                    int.TryParse(args[1], out detail);
+                    _type = Type.UNIT;
+                }
+                catch (ArgumentException) {
+                    Logger.Log("Unit 소환에 대한 세부 정보 없음");
+                }
+                break;
+            case "magic":
+                _type = Type.MAGIC;
+                break;
+        }
+
+        if(_type == Type.NONE || detail == -1) {
+            handler.isDone = true;
+            return;
+        }
+
+        if(_type == Type.UNIT) {
+            scenarioGameManagment.forcedSummonAt = detail;
+        }
+        handler.isDone = true;
+    }
+
+    internal enum Type {
+        UNIT,
+        MAGIC,
+        NONE
+    }
+}
+
+public class Remove_forced_drop_zone : ScenarioExecute {
+    public Remove_forced_drop_zone() : base() { }
+
+    public override void Execute() {
+        scenarioGameManagment.forcedSummonAt = -1;
+
         handler.isDone = true;
     }
 }

@@ -20,6 +20,7 @@ public class ScenarioGameManagment : PlayMangement {
     public bool canNextChapter = true;
     public bool canHeroCardToHand = true;
     public bool stopSummon = false;
+    public int forcedSummonAt = -1;
 
     bool canBattleProceed = true;
     int battleStopAt = 0;
