@@ -47,6 +47,7 @@ public partial class CardDropManager {
                     string[] attribute = unitLine[i][0].GetChild(0).GetComponent<PlaceMonster>().unit.attributes;
                     for (int j = 0; j < attribute.Length; j++) {
                         if (attribute[j] == "chain") {
+                            if(unitLine[i][1].childCount != 0) continue;
                             unitLine[i][0].GetChild(0).position = new Vector3(unitLine[i][0].position.x, unitLine[i][0].GetChild(0).position.y + 1.5f, 0);
                             unitLine[i][0].GetChild(0).Find("InfoWindowTrigger").gameObject.SetActive(false);
                             slotLine[i].GetChild(1).gameObject.SetActive(true);
@@ -70,7 +71,7 @@ public partial class CardDropManager {
                     if (unitLine[i][0].childCount == 0) {
                         slotLine[i].GetChild(0).gameObject.SetActive(true);
                     }
-                    else {
+                    else if(unitLine[i][1].childCount == 0) {
                         string[] attribute = unitLine[i][0].GetChild(0).GetComponent<PlaceMonster>().unit.attributes;
                         for (int j = 0; j < attribute.Length; j++) {
                             if (attribute[j] == "chain") {
