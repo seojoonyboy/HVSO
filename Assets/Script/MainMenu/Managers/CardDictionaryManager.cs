@@ -48,7 +48,7 @@ public class CardDictionaryManager : MonoBehaviour {
         isHumanDictionary = true;
         transform.Find("Content/Buttons/OrcSelect").GetChild(0).gameObject.SetActive(false);
         transform.Find("Content/Buttons/HumanSelect").GetChild(0).gameObject.SetActive(true);
-        heroCards.parent.Find("Background").GetComponent<Image>().sprite = humanPanelBg;
+        //heroCards.parent.parent.Find("Background").GetComponent<Image>().sprite = humanPanelBg;
 
         SetCardsByClass();
     }
@@ -57,7 +57,7 @@ public class CardDictionaryManager : MonoBehaviour {
         isHumanDictionary = true;
         transform.Find("Content/Buttons/OrcSelect").GetChild(0).gameObject.SetActive(false);
         transform.Find("Content/Buttons/HumanSelect").GetChild(0).gameObject.SetActive(true);
-        heroCards.parent.Find("Background").GetComponent<Image>().sprite = humanPanelBg;
+        //heroCards.parent.parent.Find("Background").GetComponent<Image>().sprite = humanPanelBg;
 
         SetCardsByClass(true);
     }
@@ -66,7 +66,7 @@ public class CardDictionaryManager : MonoBehaviour {
         isHumanDictionary = false;
         transform.Find("Content/Buttons/OrcSelect").GetChild(0).gameObject.SetActive(true);
         transform.Find("Content/Buttons/HumanSelect").GetChild(0).gameObject.SetActive(false);
-        heroCards.parent.Find("Background").GetComponent<Image>().sprite = orcPanelBg;
+        //heroCards.parent.parent.Find("Background").GetComponent<Image>().sprite = orcPanelBg;
 
         SetCardsByClass();
     }
@@ -75,13 +75,13 @@ public class CardDictionaryManager : MonoBehaviour {
         isHumanDictionary = false;
         transform.Find("Content/Buttons/OrcSelect").GetChild(0).gameObject.SetActive(true);
         transform.Find("Content/Buttons/HumanSelect").GetChild(0).gameObject.SetActive(false);
-        heroCards.parent.Find("Background").GetComponent<Image>().sprite = orcPanelBg;
+        //heroCards.parent.parent.Find("Background").GetComponent<Image>().sprite = orcPanelBg;
 
         SetCardsByClass(true);
     }
 
     private void UpdateContentHeight() {
-        float tmp = 1528f;
+        float tmp = 1628f;
         Transform activatedTf = null;
         foreach (Transform tf in cardList) {
             if (tf.gameObject.activeSelf) {
@@ -342,36 +342,25 @@ public class CardDictionaryManager : MonoBehaviour {
     }
 
     public void SetHeroButtons() {
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 3; j++) {
-                heroCards.GetChild(i).GetChild(j).GetComponent<Image>().color = new Color(82, 80, 80, 255);
-            }
+        for (int i = 0; i < 8; i++) {
+            heroCards.GetChild(i).gameObject.SetActive(false);
         }
 
         int count = 0;
 
         List<dataModules.Templates> selectedTemplates;
-        if (isHumanDictionary) {
-
+        if (isHumanDictionary) 
             selectedTemplates = AccountManager.Instance.humanTemplates;
-        }
-        else {
+        else 
             selectedTemplates = AccountManager.Instance.orcTemplates;
-        }
 
-        int pageIndex = 0;
-        int slotIndex = 0;
         foreach (dataModules.Templates card in selectedTemplates) {
-            Transform hero = heroCards.GetChild(pageIndex).GetChild(count);
+            Transform hero = heroCards.GetChild(count);
             hero.gameObject.SetActive(true);
-            hero.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = card.name;
-            hero.GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[card.id];
-
-            slotIndex++;
-            if (slotIndex == 3) {
-                slotIndex = 0;
-                pageIndex++;
-            }
+            hero.GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[card.id + "_button"];
+            bool haveHero = AccountManager.Instance.myHeroInventories.ContainsKey(card.id);
+            hero.Find("HeroLevel").gameObject.SetActive(haveHero);
+            hero.Find("Empty").gameObject.SetActive(!haveHero);
         }
     }
 
