@@ -118,7 +118,7 @@ public class Wait_click : ScenarioExecute {
     }
 
     public void CheckButton() {
-        clickstream.Dispose();
+        clickstream.Dispose();        
         handler.isDone = true;
     }
 
@@ -163,15 +163,16 @@ public class Wait_drop : ScenarioExecute {
 
 
 
-public class Multiple_highlight : ScenarioExecute {
-    public Multiple_highlight() : base() { }
+public class Multiple_Highlight : ScenarioExecute {
+    public Multiple_Highlight() : base() { }
 
     public override void Execute() {
         //Highlighting(ScenarioMask.Instance.GetMaskingObject(args[0]));
-        for(int i = 0; i < args.Count; i++) {
-            GameObject target = ScenarioMask.Instance.GetMaskingObject(args[i]);
-            ScenarioMask.Instance.SetHighlightImage(target);
-        }
+        //for(int i = 0; i < args.Count; i++) {
+        //    GameObject target = ScenarioMask.Instance.GetMaskingObject(args[i]);
+        //    ScenarioMask.Instance.SetHighlightImage(target);
+        //}
+        handler.isDone = true;
     }
 
 }
@@ -181,6 +182,7 @@ public class Wait_Drag : ScenarioExecute {
 
     public override void Execute() {
         StartCoroutine(CheckDrag());
+
     }
 
     IEnumerator CheckDrag() {
@@ -189,8 +191,9 @@ public class Wait_Drag : ScenarioExecute {
 
             CardHandler card = clickEvent.pointerDrag.gameObject.GetComponent<CardHandler>();
 
-            if (card.cardID == args[1])
+            if (card.cardID == args[1]) {
                 handler.isDone = true;
+            }
         }
         yield return null;
     }
@@ -201,6 +204,7 @@ public class Activate_Shield : ScenarioExecute {
 
     public override void Execute() {
         PlayMangement.instance.player.ActiveShield();
+        handler.isDone = true;
     }
 }
 
@@ -212,6 +216,7 @@ public class Fill_shield_gage : ScenarioExecute {
     public override void Execute() {
         PlayMangement.instance.player.ChangeShieldStack(0,8);
         PlayMangement.instance.player.FullShieldStack(8);
+        handler.isDone = true;
     }
 }
 
