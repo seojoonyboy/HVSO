@@ -156,6 +156,8 @@ public partial class BattleConnector : MonoBehaviour {
     public void end_turn_start(object args) { }
 
     public void begin_orc_pre_turn(object args) {
+        Clock clock = FindObjectOfType<Clock>();
+        clock.ResetTimer();
         checkMyTurn(false);
     }
 
@@ -164,6 +166,8 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void begin_human_turn(object args) {
+        Clock clock = FindObjectOfType<Clock>();
+        clock.ResetTimer();
         checkMyTurn(true);
     }
 
@@ -172,6 +176,8 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void begin_orc_post_turn(object args) {
+        Clock clock = FindObjectOfType<Clock>();
+        clock.ResetTimer();
         checkMyTurn(false);
         unitSkillList.isDone = false;
     }
@@ -193,6 +199,9 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void begin_battle_turn(object args) {
+        Clock clock = FindObjectOfType<Clock>();
+        clock.ResetTimer();
+
         lineBattleList.isDone = false;
         mapClearList.isDone = false;
     }
