@@ -9,7 +9,7 @@ public class ScenarioExecute : MonoBehaviour {
     public ScenarioExecuteHandler handler;
     public List<string> args;
 
-    protected ScenarioMask scenarioMask;
+    public ScenarioMask scenarioMask;
     protected ScenarioGameManagment scenarioGameManagment;
 
     void Awake() {
