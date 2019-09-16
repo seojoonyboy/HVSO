@@ -122,10 +122,7 @@ namespace SkillModules {
             //유닛 소환이나 마법 카드 사용 했을 때
             isDone = true;
             socketDone = true;
-
             if(!isPlayer) yield break;
-            SendingMessage(true);
-            if(isFieldCard()) SkillActivate();
             if(isPlayingCard()) {
                 PlayMangement.instance.UnlockTurnOver();
                 if(myObject.GetComponent<MagicDragHandler>()) {
@@ -134,11 +131,10 @@ namespace SkillModules {
             }
         }
 
-        private void SendingMessage(bool after) {
-            if(!isPlayingCard()) return;
+        public void SendingMessage(bool after) {
             if(TargetSelectExist() != after) return;
-            Logger.Log("SendSocket after Select : " + after);
-            SendSocket();
+            if(isPlayingCard()) SendSocket();
+            if(isFieldCard()) SkillActivate();
         }
 
         private bool isPlayingCard() {
