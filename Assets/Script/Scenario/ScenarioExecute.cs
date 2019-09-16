@@ -230,8 +230,8 @@ public class Wait_Drag : ScenarioExecute {
     //}
 }
 
-public class Activate_Shield : ScenarioExecute {
-    public Activate_Shield() : base() { }
+public class Activate_shield : ScenarioExecute {
+    public Activate_shield() : base() { }
 
     public override void Execute() {
         PlayMangement.instance.player.ActiveShield();
