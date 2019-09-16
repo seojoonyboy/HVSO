@@ -526,3 +526,25 @@ public class Enable_drag : ScenarioExecute {
         handler.isDone = true;
     }
 }
+
+public class Stop_orc_turn : ScenarioExecute {
+    public Stop_orc_turn() : base() { }
+
+    public override void Execute() {
+
+        PlayMangement.instance.stopTurn = true;
+        handler.isDone = true;
+    }
+
+}
+
+public class Proceed_orc_turn : ScenarioExecute {
+    public Proceed_orc_turn() : base() { }
+
+    public override void Execute() {
+        PlayMangement.instance.stopTurn = false;
+        handler.isDone = true;
+    }
+
+
+}
