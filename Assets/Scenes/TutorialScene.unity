@@ -43782,7 +43782,7 @@ MonoBehaviour:
   infoOn: 0
   backGround: {fileID: 1546306620}
   onCanvasPosGroup: {fileID: 20249105}
-  cardHandManager: {fileID: 0}
+  cardHandManager: {fileID: 8181078053512951862}
   resultManager: {fileID: 4342906}
   playerMana: {fileID: 604619667}
   enemyMana: {fileID: 724475409}

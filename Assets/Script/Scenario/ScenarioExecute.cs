@@ -163,10 +163,10 @@ public class Multiple_Highlight : ScenarioExecute {
 
     public override void Execute() {
         //Highlighting(ScenarioMask.Instance.GetMaskingObject(args[0]));
-        for(int i = 0; i < args.Count; i++) {
-            GameObject target = ScenarioMask.Instance.GetMaskingObject(args[i]);
-            ScenarioMask.Instance.SetHighlightImage(target);
-        }
+        //for(int i = 0; i < args.Count; i++) {
+        //    GameObject target = ScenarioMask.Instance.GetMaskingObject(args[i]);
+        //    ScenarioMask.Instance.SetHighlightImage(target);
+        //}
         handler.isDone = true;
     }
 
