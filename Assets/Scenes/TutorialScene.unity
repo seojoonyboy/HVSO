@@ -41320,7 +41320,7 @@ MonoBehaviour:
   heroCards: []
   cardStorage: {fileID: 1340215711007132827}
   hideShowBtn: {fileID: 1415798618}
-  cardHandManager: {fileID: 0}
+  cardHandManager: {fileID: 8181078053512951862}
   BgImg: {fileID: 1857409799}
 --- !u!224 &1340215710785019860
 RectTransform:
