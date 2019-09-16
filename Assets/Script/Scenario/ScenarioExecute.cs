@@ -325,7 +325,7 @@ public class Stop_orc_summon : ScenarioExecute {
     public Stop_orc_summon() : base() { }
 
     public override void Execute() {
-        scenarioGameManagment.stopSummon = true;
+        scenarioGameManagment.stopEnemySummon = true;
         handler.isDone = true;
     }
 }
@@ -334,7 +334,7 @@ public class Proceed_orc_summon : ScenarioExecute {
     public Proceed_orc_summon() : base() { }
 
     public override void Execute() {
-        scenarioGameManagment.stopSummon = false;
+        scenarioGameManagment.stopEnemySummon = false;
         handler.isDone = true;
     }
 }

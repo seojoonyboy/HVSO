@@ -19,7 +19,9 @@ public class ScenarioGameManagment : PlayMangement {
     Type thisType;
     public bool canNextChapter = true;
     public bool canHeroCardToHand = true;
-    public bool stopSummon = false;
+    public bool stopEnemySummon = false;
+    public bool stopEnemySpell = false;
+
     public int forcedSummonAt = -1;
 
     bool canBattleProceed = true;
@@ -78,11 +80,6 @@ public class ScenarioGameManagment : PlayMangement {
     public override IEnumerator EnemyUseCard(bool isBefore) {
         if (isBefore)
             yield return new WaitForSeconds(1.0f);
-        //TODO : Enemy Player가 orc이고, isBefore(오크 유닛소환턴)가 true일때 소환 대기
-        //if(isBefore && !enemyPlayer.isHuman && )
-        #region tutorial 추가 제어
-        yield return new WaitUntil(() => !stopSummon);
-        #endregion
 
         #region socket use Card
         while (!socketHandler.cardPlayFinish()) {
@@ -92,12 +89,19 @@ public class ScenarioGameManagment : PlayMangement {
             SocketFormat.PlayHistory history = state.lastUse;
             if (history != null) {
                 if (history.cardItem.type.CompareTo("unit") == 0) {
+                    #region tutorial 추가 제어
+                    yield return new WaitUntil(() => !stopEnemySummon);
+                    #endregion
+
                     //카드 정보 만들기
                     GameObject summonUnit = MakeUnitCardObj(history);
                     //카드 정보 보여주기
                     yield return UnitActivate(history);
                 }
                 else {
+                    #region tutorial 추가 제어
+                    yield return new WaitUntil(() => !stopEnemySpell);
+                    #endregion
                     GameObject summonedMagic = MakeMagicCardObj(history);
                     summonedMagic.GetComponent<MagicDragHandler>().isPlayer = false;
                     /*
