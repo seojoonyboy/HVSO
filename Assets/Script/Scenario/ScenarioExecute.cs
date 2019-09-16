@@ -457,6 +457,12 @@ public class Orc_post_turn : ScenarioExecute {
         }
         handler.isDone = true;
     }
+}
 
+public class OffHighlight : ScenarioExecute {
+    public OffHighlight() : base() { }
 
+    public override void Execute() {
+        handler.isDone = true;
+    }
 }
