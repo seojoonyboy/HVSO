@@ -175,22 +175,59 @@ public class Wait_Drag : ScenarioExecute {
     public Wait_Drag() : base() { }
 
     public override void Execute() {
-        StartCoroutine(CheckDrag());
+        //StartCoroutine(CheckDrag());
 
+        //lickStream = Observable.EveryUpdate().Where(_ => Input.GetMouseButtonDown(0)).Subscribe(_ => CheckDrag(args[1]));
+        PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.BEGIN_CARD_PLAY, CheckDrag);
     }
 
-    IEnumerator CheckDrag() {
-        while(handler.isDone == false) {
-            UnityEngine.EventSystems.PointerEventData clickEvent = new UnityEngine.EventSystems.PointerEventData(UnityEngine.EventSystems.EventSystem.current);
+    private void CheckDrag(Enum event_type, Component Sender, object Param) {
+        object[] parms = (object[])Param;
+        if(parms.Length > 1) {
+            GameObject cardObject = (GameObject)parms[1];
+            CardHandler card = cardObject.GetComponent<CardHandler>();
 
-            CardHandler card = clickEvent.pointerDrag.gameObject.GetComponent<CardHandler>();
-
-            if (card.cardID == args[1]) {
-                handler.isDone = true;
+            if(card != null) {
+                if(card.cardData.cardId == args[1]) {
+                    handler.isDone = true;
+                    PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.BEGIN_CARD_PLAY, CheckDrag);
+                }
             }
-        }
-        yield return null;
+        } 
     }
+
+
+    //private void CheckDrag(string args) {
+    //    Vector3 origin = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+    //    origin = new Vector3(origin.x, origin.y, origin.z);
+    //    Ray2D ray = new Ray2D(origin, Vector2.zero);
+    //    RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, Mathf.Infinity);
+
+    //    if(hit.collider != null && hit.transform.gameObject != null) {
+    //        CardHandler card = hit.transform.gameObject.GetComponent<CardHandler>();
+
+    //        if(card != null) {
+    //            if (card.cardData.cardId == args) {
+    //                handler.isDone = true;
+    //                clickStream.Dispose();
+    //            }             
+    //        }
+    //    }
+
+    //  }
+
+    //IEnumerator CheckDrag() {
+    //    while(handler.isDone == false) {
+    //        UnityEngine.EventSystems.PointerEventData clickEvent = new UnityEngine.EventSystems.PointerEventData(UnityEngine.EventSystems.EventSystem.current);
+
+    //        CardHandler card = (clickEvent.pointerDrag.gameObject != null) ? clickEvent.pointerDrag.gameObject.GetComponent<CardHandler>() : null;
+
+    //        if (card.cardID == args[1]) {
+    //            handler.isDone = true;
+    //        }
+    //    }
+    //    yield return null;
+    //}
 }
 
 public class Activate_Shield : ScenarioExecute {

@@ -31,6 +31,7 @@ public class ScenarioGameManagment : PlayMangement {
         socketHandler = FindObjectOfType<BattleConnector>();
         instance = this;
         scenarioInstance = this;
+        isTutorial = true;
         SetWorldScale();
         SetPlayerCard();
         GetComponent<TurnMachine>().onTurnChanged.AddListener(ChangeTurn);

@@ -279,6 +279,7 @@ public partial class CardHandler : MonoBehaviour {
     }
 
     public void OpenCardInfoList() {
+        if (ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.isTutorial == true) return;
         if (heroCardActivate) return;
         if (PlayMangement.movingCard != null) return;
         if (PlayMangement.instance.isMulligan && transform.parent.name == "FirstDrawParent") {
