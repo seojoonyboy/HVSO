@@ -12,15 +12,9 @@ public class ScenarioExecute : MonoBehaviour {
     public ScenarioMask scenarioMask;
     protected ScenarioGameManagment scenarioGameManagment;
 
-    void Awake() {
-        scenarioMask = ScenarioMask.Instance;
-    }
-
-    void Start() {
-        scenarioGameManagment = ScenarioGameManagment.scenarioInstance;
-    }
-
     public virtual void Initialize(List<string> args) {
+        scenarioMask = ScenarioMask.Instance;
+        scenarioGameManagment = ScenarioGameManagment.scenarioInstance;
         this.args = args;
         handler = GetComponent<ScenarioExecuteHandler>();
     }
@@ -327,3 +321,21 @@ public class Disable_drag : ScenarioExecute {
     }
 }
 
+public class Stop_orc_summon : ScenarioExecute {
+    public Stop_orc_summon() : base() { }
+
+    public override void Execute() {
+        scenarioGameManagment.stopSummon = true;
+        handler.isDone = true;
+    }
+}
+
+
+public class Proceed_orc_summon : ScenarioExecute {
+    public Proceed_orc_summon() : base() { }
+
+    public override void Execute() {
+        scenarioGameManagment.stopSummon = false;
+        handler.isDone = true;
+    }
+}
