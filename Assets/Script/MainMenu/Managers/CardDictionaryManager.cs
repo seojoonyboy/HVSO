@@ -81,7 +81,7 @@ public class CardDictionaryManager : MonoBehaviour {
     }
 
     private void UpdateContentHeight() {
-        float tmp = 1628f;
+        float tmp = 1328f; //영웅 슬롯이 2줄이 될 시 300+ 해주면 됨
         Transform activatedTf = null;
         foreach (Transform tf in cardList) {
             if (tf.gameObject.activeSelf) {
