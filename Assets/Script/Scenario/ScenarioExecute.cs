@@ -245,8 +245,8 @@ public class Fill_shield_gage : ScenarioExecute {
     public Fill_shield_gage() : base() { }
 
     public override void Execute() {
-        PlayMangement.instance.player.ChangeShieldStack(0,8);
-        PlayMangement.instance.player.FullShieldStack(8);
+        PlayMangement.instance.player.FullShieldStack(PlayMangement.instance.player.shieldStack.Value);
+        PlayMangement.instance.player.shieldStack.Value = 8;
         handler.isDone = true;
     }
 }
