@@ -43801,6 +43801,7 @@ MonoBehaviour:
   stopEnemySummon: 0
   stopEnemySpell: 0
   forcedSummonAt: -1
+  showCardPos: {fileID: 1340215710487915668}
 --- !u!114 &8279262150021554597
 MonoBehaviour:
   m_ObjectHideFlags: 0

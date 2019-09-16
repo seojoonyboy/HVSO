@@ -27,6 +27,8 @@ public class ScenarioGameManagment : PlayMangement {
     bool canBattleProceed = true;
     int battleStopAt = 0;
 
+    public Transform showCardPos;
+
     private void Awake() {
         socketHandler = FindObjectOfType<BattleConnector>();
         instance = this;

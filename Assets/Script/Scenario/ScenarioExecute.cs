@@ -64,6 +64,7 @@ public class Wait_until : ScenarioExecute {
     IEnumerator WaitSec(float sec = 0) {
         Logger.Log("WaitSec");
         yield return new WaitForSeconds(sec);
+        scenarioMask.OffMaskScreen();
         handler.isDone = true;
     }
 }
@@ -362,7 +363,56 @@ public class Disable_drag : ScenarioExecute {
     public Disable_drag() : base() { }
 
     public override void Execute() {
-        
+        string _target = args[0];
+        List<GameObject> targets = new List<GameObject>();
+        switch (_target) {
+            case "shieldCard":
+                string subArgs = args[1];
+                if(subArgs == "exclusive") {
+                    Transform showCardPos = scenarioGameManagment.showCardPos;
+
+                    foreach(Transform child in showCardPos.Find("Left").transform) {
+                        if (child.GetComponent<MagicDragHandler>()) {
+                            targets.Add(child.gameObject);
+                        }
+                    }
+                    foreach(Transform child in showCardPos.Find("Right").transform) {
+                        if (child.GetComponent<MagicDragHandler>()) {
+                            targets.Add(child.gameObject);
+                        }
+                    }
+
+                    targets.RemoveAll(x => x.GetComponent<MagicDragHandler>().cardData.cardId == args[2]);
+                    foreach(var card in targets) {
+                        card.GetComponent<MagicDragHandler>().enabled = false;
+                    }
+                }
+                break;
+        }
+    }
+
+    public class Enable_drag : ScenarioExecute {
+        public Enable_drag() : base() { }
+
+        public override void Execute() {
+            string _target = args[0];
+            switch (_target) {
+                case "shieldCards":
+                    Transform showCardPos = scenarioGameManagment.showCardPos;
+
+                    foreach (Transform child in showCardPos.Find("Left").transform) {
+                        if (child.GetComponent<MagicDragHandler>()) {
+                            child.GetComponent<MagicDragHandler>().enabled = true;
+                        }
+                    }
+                    foreach (Transform child in showCardPos.Find("Right").transform) {
+                        if (child.GetComponent<MagicDragHandler>()) {
+                            child.GetComponent<MagicDragHandler>().enabled = true;
+                        }
+                    }
+                    break;
+            }
+        }
     }
 }
 
