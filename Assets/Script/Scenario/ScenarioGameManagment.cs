@@ -63,6 +63,9 @@ public class ScenarioGameManagment : PlayMangement {
     void OnDestroy() {
         instance = null;
         scenarioInstance = null;
+
+        if (socketHandler != null)
+            Destroy(socketHandler.gameObject);
     }
 
     void FixedUpdate() {

@@ -8011,7 +8011,7 @@ MonoBehaviour:
       Data: 1
     - Name: 
       Entry: 1
-      Data: 2.0
+      Data: 1.0
     - Name: 
       Entry: 13
       Data: 
@@ -8169,7 +8169,7 @@ MonoBehaviour:
       Data: 1
     - Name: 
       Entry: 1
-      Data: 3.0
+      Data: 1.5
     - Name: 
       Entry: 13
       Data: 
@@ -8996,7 +8996,7 @@ MonoBehaviour:
       Data: 1
     - Name: 
       Entry: 1
-      Data: 3.0
+      Data: 1.0
     - Name: 
       Entry: 13
       Data: 
@@ -9095,7 +9095,7 @@ MonoBehaviour:
       Data: 1
     - Name: 
       Entry: 1
-      Data: 3.0
+      Data: 1.5
     - Name: 
       Entry: 13
       Data: 
