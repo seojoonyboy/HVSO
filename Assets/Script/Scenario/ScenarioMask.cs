@@ -232,25 +232,44 @@ public class ScenarioMask : SerializedMonoBehaviour
         rectHeightRadius = rectWidthRadius;      
     }
 
-    public int SetHighlightImage(GameObject targetObject) {
+    public void SetHighlightImage(GameObject targetObject) {
         GameObject glowObject = GetUnactiveGlow();
+        RectTransform glowRect = glowObject.GetComponent<RectTransform>();
+        if (glowObject == null) return;
 
-        if (glowObject == null) return -1;
-
-
-        glowObject.transform.position = targetObject.transform.position;
-        glowObject.transform.Find("Source").position = targetObject.transform.position;
-        Rect rect = targetObject.GetComponent<RectTransform>().rect;
-        Vector2 glowSize = rect.size;
-        Vector2 sourceSize = rect.size;
-        glowObject.SetActive(true);
 
         glowObject.GetComponent<Image>().sprite = targetObject.GetComponent<Image>().sprite;
-        glowObject.transform.Find("Source").gameObject.GetComponent<Image>().sprite = targetObject.GetComponent<Image>().sprite;
+        glowObject.transform.position = targetObject.transform.position;
+        Vector3[] targetPos = new Vector3[4];
+        targetObject.GetComponent<RectTransform>().GetWorldCorners(targetPos);
+        glowObject.SetActive(true);
 
-        HighlightPingpong pingpong = glowObject.transform.Find("Laber").gameObject.GetComponent<HighlightPingpong>();
-        pingpong.StartPingPong();
-        return pingpong.transform.GetSiblingIndex();
+        Debug.Log(targetPos[1]);
+        Debug.Log(targetPos[0]);
+
+        float width = targetPos[2].x - targetPos[1].x;
+        float height = targetPos[1].x - targetPos[0].y;
+
+        //Rect rect = new Rect();
+        //rect.xMin = targetPos[1].x;
+        //rect.xMax = targetPos[2].x;
+        //rect.yMin = targetPos[1].y;
+        //rect.yMax = targetPos[0].y;
+
+        //glowRect.offsetMin = targetPos[0];
+        //glowRect.offsetMax = targetPos[2];
+
+        //glowRect.rect.Set(targetPos[1].x, targetPos[1].y , width, height);
+
+        glowRect.sizeDelta = targetObject.GetComponent<RectTransform>().sizeDelta;
+        glowRect.localScale = targetObject.transform.localScale;
+
+        
+        glowObject.GetComponent<Image>().sprite = targetObject.GetComponent<Image>().sprite;
+        Animation glowAnimation = glowObject.GetComponent<Animation>();
+
+        glowAnimation.Play();
+        
     }
 
     public GameObject GetUnactiveGlow() {
@@ -273,8 +292,8 @@ public class ScenarioMask : SerializedMonoBehaviour
             if (child.gameObject.activeSelf == false)
                 continue;
 
-            HighlightPingpong pingpong = child.Find("Laber").gameObject.GetComponent<HighlightPingpong>();
-            pingpong.EndPingPong();
+            Animation glowAnimation = child.gameObject.GetComponent<Animation>();
+            glowAnimation.Stop();        
             child.gameObject.SetActive(false);
         }
     }    

@@ -17,7 +17,8 @@ public class PingpongTest : MonoBehaviour
         //iTween.ColorTo(testObject, iTween.Hash("color", color, "a", 0, "time", 1.2f,"easeType", iTween.EaseType.easeInOutSine, "loopType", "pingPong"));
         //iTween.ValueTo(gameObject, iTween.Hash("from", 1f, "to", 0f,"time", 1.2f, "easeType", iTween.EaseType.easeInOutSine, "onupdate", "UpdateColor"));
 
-        iTween.MoveTo(dummy, iTween.Hash("x", 0, "time", 1.5f, "easetype", iTween.EaseType.easeInOutElastic, "loopType", "pingPong", "onupdate", "UpdateColor"));
+        
+        iTween.MoveTo(dummy, iTween.Hash("x", 0, "time", 1.5f, "easetype", iTween.EaseType.easeInCirc, "loopType", "pingPong", "onupdate", "UpdateColor"));
 
     }
 
