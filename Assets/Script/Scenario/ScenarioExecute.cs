@@ -8,6 +8,7 @@ using UniRx;
 public class ScenarioExecute : MonoBehaviour {
     public ScenarioExecuteHandler handler;
     public List<string> args;
+    public string chapterNum;
 
     public ScenarioMask scenarioMask;
     protected ScenarioGameManagment scenarioGameManagment;
@@ -177,10 +178,11 @@ public class Wait_Drag : ScenarioExecute {
     public Wait_Drag() : base() { }
 
     public override void Execute() {
-        //StartCoroutine(CheckDrag());
+        PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.BEGIN_CARD_PLAY, CheckDrag);
+        PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.UNIT_DROP_FAIL, RollBack);
 
-        //lickStream = Observable.EveryUpdate().Where(_ => Input.GetMouseButtonDown(0)).Subscribe(_ => CheckDrag(args[1]));
         PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.BEGIN_CARD_PLAY, CheckDrag);
+        PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.UNIT_DROP_FAIL, RollBack);
     }
 
     private void CheckDrag(Enum event_type, Component Sender, object Param) {
@@ -192,44 +194,24 @@ public class Wait_Drag : ScenarioExecute {
             if(card != null) {
                 if(card.cardData.cardId == args[1]) {
                     handler.isDone = true;
-                    PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.BEGIN_CARD_PLAY, CheckDrag);
                 }
             }
         } 
     }
 
+    private void RollBack(Enum event_type, Component Sender, object Param) {
+        if(args.Count >= 3 && args[2].Contains("rollback")) {
+            Logger.Log("Rollback!");
 
-    //private void CheckDrag(string args) {
-    //    Vector3 origin = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-    //    origin = new Vector3(origin.x, origin.y, origin.z);
-    //    Ray2D ray = new Ray2D(origin, Vector2.zero);
-    //    RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, Mathf.Infinity);
+            string[] parsed = args[2].Split('_');
+            int index = -1;
+            int.TryParse(parsed[1], out index);
 
-    //    if(hit.collider != null && hit.transform.gameObject != null) {
-    //        CardHandler card = hit.transform.gameObject.GetComponent<CardHandler>();
-
-    //        if(card != null) {
-    //            if (card.cardData.cardId == args) {
-    //                handler.isDone = true;
-    //                clickStream.Dispose();
-    //            }             
-    //        }
-    //    }
-
-    //  }
-
-    //IEnumerator CheckDrag() {
-    //    while(handler.isDone == false) {
-    //        UnityEngine.EventSystems.PointerEventData clickEvent = new UnityEngine.EventSystems.PointerEventData(UnityEngine.EventSystems.EventSystem.current);
-
-    //        CardHandler card = (clickEvent.pointerDrag.gameObject != null) ? clickEvent.pointerDrag.gameObject.GetComponent<CardHandler>() : null;
-
-    //        if (card.cardID == args[1]) {
-    //            handler.isDone = true;
-    //        }
-    //    }
-    //    yield return null;
-    //}
+            if(index != -1) {
+                handler.RollBack(1);
+            }
+        }
+    }
 }
 
 public class Activate_shield : ScenarioExecute {
@@ -366,7 +348,7 @@ public class Disable_drag : ScenarioExecute {
                             targets.Add(child.gameObject);
                         }
                     }
-
+                    
                     targets.RemoveAll(x => x.GetComponent<MagicDragHandler>().cardData.cardId == args[2]);
                     foreach(var card in targets) {
                         card.GetComponent<MagicDragHandler>().enabled = false;

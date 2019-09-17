@@ -173,7 +173,7 @@ public class ScenarioMask : SerializedMonoBehaviour
         return null;
     }
 
-    float defaultAlpha = 0.5f;
+    float defaultAlpha = 0.2f;
 
     public void MaskScreen() {
         topMask.position = Vector3.zero;

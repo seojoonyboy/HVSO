@@ -84,6 +84,8 @@ public class IngameEventHandler : MonoBehaviour {
 
         UNIT_SUMMONED,
         MAGIC_USED,
-        LINE_BATTLE_START
+        LINE_BATTLE_START,
+
+        UNIT_DROP_FAIL
     }
 }

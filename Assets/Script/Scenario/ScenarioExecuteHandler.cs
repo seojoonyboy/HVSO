@@ -10,9 +10,17 @@ using System.Text;
 public class ScenarioExecuteHandler : MonoBehaviour {
     public List<ScenarioExecute> sets;
     public bool isDone = true;
+    IEnumerator coroutine;
     public void Initialize(ScriptData data) {
         ScriptData temp = data;
         StartCoroutine(MethodExecute(temp));
+    }
+
+    public void RollBack(int index) {
+        StopAllCoroutines();
+
+        List<ScenarioExecute> lists = sets.GetRange(index, sets.Count - 1);
+        StartCoroutine(RollbackedSkillTrigger(lists));
     }
 
     IEnumerator MethodExecute(ScriptData data) {
@@ -25,13 +33,28 @@ public class ScenarioExecuteHandler : MonoBehaviour {
             sets.Add(exec);
             exec.Initialize(method.args);
         }
-        yield return SkillTrigger();
+        coroutine = SkillTrigger();
+        yield return coroutine;
+    }
+
+    IEnumerator RollbackedSkillTrigger(List<ScenarioExecute> list) {
+        foreach(ScenarioExecute execute in list) {
+            isDone = false;
+            execute.Execute();
+            ScenarioGameManagment.scenarioInstance.currentExecute = execute;
+#if UNITY_EDITOR
+            ShowDebugText(execute);
+#endif
+            yield return new WaitUntil(() => isDone);
+        }
+        GetComponent<ScenarioGameManagment>().canNextChapter = true;
     }
     
     IEnumerator SkillTrigger() {
         foreach(ScenarioExecute execute in sets) {
             isDone = false;
             execute.Execute();
+            ScenarioGameManagment.scenarioInstance.currentExecute = execute;
 #if UNITY_EDITOR
             ShowDebugText(execute);
 #endif

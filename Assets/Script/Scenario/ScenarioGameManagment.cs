@@ -28,7 +28,7 @@ public class ScenarioGameManagment : PlayMangement {
     int battleStopAt = 0;
 
     public Transform showCardPos;
-
+    public ScenarioExecute currentExecute;
     private void Awake() {
         socketHandler = FindObjectOfType<BattleConnector>();
         instance = this;
@@ -63,6 +63,9 @@ public class ScenarioGameManagment : PlayMangement {
     void OnDestroy() {
         instance = null;
         scenarioInstance = null;
+
+        if (socketHandler != null)
+            Destroy(socketHandler.gameObject);
     }
 
     void FixedUpdate() {
