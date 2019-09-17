@@ -132,7 +132,10 @@ public class EditCardHandler : MonoBehaviour {
     IEnumerator DuplicatedCardSet() {
         onAnimation = true;
         Transform targetCard = deckEditController.setCardList[cardData.id].transform;
-        if (!targetCard.Find("HaveNum/Graphic").GetComponent<Renderer>().isVisible) {
+        Transform mask = targetCard.parent.parent;
+        float leftEdge = mask.position.x + mask.GetComponent<RectTransform>().rect.xMin;
+        float rightEdge = mask.position.x + mask.GetComponent<RectTransform>().rect.xMax;
+        if (targetCard.Find("HaveNum").position.x < leftEdge || targetCard.Find("HaveNum").position.x > rightEdge) {
             mouseObject = targetCard.parent.parent.Find("MousePos");
             mouseObject.transform.position = targetCard.position;
             targetCard.parent.SetParent(mouseObject);
