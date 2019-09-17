@@ -32,6 +32,7 @@ public class MenuCardInfo : MonoBehaviour {
         Transform info = transform;
         cardData = data;
         translator = AccountManager.Instance.GetComponent<Translator>();
+        info.Find("Name").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["name_" + data.rarelity];
         info.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.name;
 
         if (data.skills.Length != 0) {
@@ -131,8 +132,21 @@ public class MenuCardInfo : MonoBehaviour {
         }
         //마법 카드
         else {
+            List<string> categories = new List<string>();
+            categories.Add("magic");
+            var translatedCategories = translator.GetTranslatedUnitCtg(categories);
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+
+            int cnt = 0;
+            foreach (string ctg in translatedCategories) {
+                cnt++;
+                if (translatedCategories.Count != cnt) sb.Append(ctg + ", ");
+                else sb.Append(ctg);
+            }
+            info.Find("Categories/Text").GetComponent<TMPro.TextMeshProUGUI>().text = sb.ToString();
+
             info.Find("MagicPortrait").gameObject.SetActive(true);
-            info.Find("Categories").gameObject.SetActive(false);
+            //info.Find("Categories").gameObject.SetActive(false);
             if (AccountManager.Instance.resource.cardPortraite.ContainsKey(data.id)) {
                 info.Find("MagicPortrait").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardPortraite[data.id];
                 if (data.isHeroCard)
@@ -155,36 +169,37 @@ public class MenuCardInfo : MonoBehaviour {
                 info.Find("CreateCard/HaveNum").GetComponent<TMPro.TextMeshProUGUI>().text = cardNum.ToString();
             else
                 info.Find("CreateCard/HaveNum").GetComponent<TMPro.TextMeshProUGUI>().text = "MAX";
-            if (cardNum == 4) {
-                info.Find("CreateCard/MakeBtn/Disabled").gameObject.SetActive(true);
-                info.Find("CreateCard/CrystalUseValue").gameObject.SetActive(false);
+            int makeCardcost = 0;
+            switch (data.rarelity) {
+                case "common":
+                    makeCardcost = 50;
+                    break;
+                case "uncommon":
+                    makeCardcost = 150;
+                    break;
+                case "rare":
+                    makeCardcost = 500;
+                    break;
+                case "superrare":
+                    makeCardcost = 1000;
+                    break;
+                case "legend":
+                    makeCardcost = 2000;
+                    break;
             }
+            if (cardNum == 4)
+                info.Find("CreateCard/MakeBtn/Disabled").gameObject.SetActive(true);
             else {
-                info.Find("CreateCard/CrystalUseValue").gameObject.SetActive(true);
-                int makeCardcost = 0;
-                switch (data.rarelity) {
-                    case "common":
-                        makeCardcost = 50;
-                        break;
-                    case "uncommon":
-                        makeCardcost = 150;
-                        break;
-                    case "rare":
-                        makeCardcost = 500;
-                        break;
-                    case "superrare":
-                        makeCardcost = 1000;
-                        break;
-                    case "legend":
-                        makeCardcost = 2000;
-                        break;
-                }
-                info.Find("CreateCard/CrystalUseValue").GetComponent<TMPro.TextMeshProUGUI>().text = "-" + makeCardcost.ToString();
+                info.Find("CreateCard/MakeBtn/Disabled").gameObject.SetActive(false);
                 if (makeCardcost >= AccountManager.Instance.userResource.crystal)
                     info.Find("CreateCard/MakeBtn/Disabled").gameObject.SetActive(true);
-                else
-                    info.Find("CreateCard/MakeBtn/Disabled").gameObject.SetActive(false);
             }
+            if (cardNum == 0)
+                info.Find("CreateCard/BreakBtn/Disabled").gameObject.SetActive(true);
+            else
+                info.Find("CreateCard/BreakBtn/Disabled").gameObject.SetActive(false);
+            info.Find("CreateCard/CrystalUseValue").GetComponent<TMPro.TextMeshProUGUI>().text = "-" + makeCardcost.ToString();
+            info.Find("CreateCard/CrystalGetValue").GetComponent<TMPro.TextMeshProUGUI>().text = "+" + (makeCardcost / 2).ToString();
         }
     }
 

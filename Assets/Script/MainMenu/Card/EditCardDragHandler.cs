@@ -25,6 +25,7 @@ public class EditCardDragHandler : EditCardHandler, IBeginDragHandler, IDragHand
         if (Input.touchCount > 1) return;
         if (disabled) return;
         if (draggingObject != gameObject) return;
+        standby = false;
         if (deckEditController.setCardList.Count > 4) {
             Vector3 mousePos = Input.mousePosition;
             float mouseMoved = mousePos.x - mouseFirstXPos;

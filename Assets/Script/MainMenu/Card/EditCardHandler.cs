@@ -37,6 +37,7 @@ public class EditCardHandler : MonoBehaviour {
     protected float mouseFirstXPos;
     protected float handFirstXPos;
     protected float clickTime;
+    protected bool standby;
 
     public int SETNUM {
         get { return setNum; }
@@ -62,6 +63,20 @@ public class EditCardHandler : MonoBehaviour {
 
     public void StartClick() {
         clickTime = Time.time;
+        StartCoroutine(WaitForOpenInfo());
+    }
+
+    IEnumerator WaitForOpenInfo() {
+        standby = true;
+        while (standby) {
+            yield return new WaitForSeconds(0.1f);
+            if (Time.time - clickTime >= 0.5f) {
+                OpenCardInfo();
+                standby = false;
+                dragging = false;
+                draggingObject = null;
+            }
+        }
     }
 
     public void EndClick() {
@@ -70,6 +85,7 @@ public class EditCardHandler : MonoBehaviour {
         if (onAnimation) return;
         dragging = false;
         draggingObject = null;
+        standby = false;
         if (Time.time - clickTime < 0.5f) {
             if (isHandCard) {
                 deckEditController.ExpectFromDeck(cardData.id, gameObject);
@@ -85,8 +101,8 @@ public class EditCardHandler : MonoBehaviour {
                 deckEditController.ConfirmSetDeck(cardData.id, gameObject);
             }
         }
-        else
-            OpenCardInfo();
+        //else
+        //    OpenCardInfo();
     }
 
     IEnumerator SortHandPos() {

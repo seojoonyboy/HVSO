@@ -110,7 +110,7 @@ public class DeckEditController : MonoBehaviour
 
             field.fieldName = NetworkManager.ModifyDeckReqField.NAME;
 
-            string inputNameVal = deckNamePanel.transform.Find("NameTemplate").Find("Text").GetComponent<Text>().text;
+            string inputNameVal = deckNamePanel.transform.Find("NameTemplate").GetComponent<TMPro.TMP_InputField>().text;
             
             
             if (string.IsNullOrEmpty(inputNameVal)) {
@@ -149,7 +149,7 @@ public class DeckEditController : MonoBehaviour
             templateMenu = null;
         }
 
-        deckNamePanel.transform.Find("NameTemplate").Find("Text").GetComponent<Text>().text = "";
+        deckNamePanel.transform.Find("NameTemplate/TextArea/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "";
 
         if(isTemplate)
             FindObjectOfType<HUDController>().SetHeader(HUDController.Type.RESOURCE_ONLY_WITH_BACKBUTTON);
@@ -290,7 +290,7 @@ public class DeckEditController : MonoBehaviour
         heroID = heroId;
         this.isHuman = isHuman;
         isTemplate = true;
-        deckNamePanel.transform.Find("NameTemplate").GetComponent<InputField>().text = "";
+        deckNamePanel.transform.Find("NameTemplate").GetComponent<TMPro.TMP_InputField>().text = "";
 
         heroData = AccountManager.Instance.myHeroInventories[heroId];
         Transform heroSpines = heroInfoWindow.Find("HeroSpines");
@@ -379,7 +379,7 @@ public class DeckEditController : MonoBehaviour
             isHuman = true;
         else
             isHuman = false;
-        deckNamePanel.transform.Find("NameTemplate").GetComponent<InputField>().text = loadedDeck.name;
+        deckNamePanel.transform.Find("NameTemplate").GetComponent<TMPro.TMP_InputField>().text = loadedDeck.name;
 
         Transform heroSpines = heroInfoWindow.Find("HeroSpines");
         for (int i = 0; i < heroSpines.childCount; i++)
@@ -648,7 +648,7 @@ public class DeckEditController : MonoBehaviour
     /// Server에게 덱 새로 추가 요청(커스텀 덱)
     /// </summary>
     public void RequestNewDeck() {
-        if (string.IsNullOrEmpty(deckNamePanel.transform.Find("NameTemplate").Find("Text").GetComponent<Text>().text) == true) {
+        if (string.IsNullOrEmpty(deckNamePanel.transform.Find("NameTemplate/TextArea/Text").GetComponent<TMPro.TextMeshProUGUI>().text) == true) {
             Modal.instantiate("덱 이름을 입력해 주세요.", Modal.Type.CHECK);
             return;
         }
@@ -669,7 +669,7 @@ public class DeckEditController : MonoBehaviour
                 items.Add(data);
             }
         }
-        var nameVal = deckNamePanel.transform.Find("NameTemplate").Find("Text").GetComponent<Text>().text;
+        var nameVal = deckNamePanel.transform.Find("NameTemplate/TextArea/Text").GetComponent<TMPro.TextMeshProUGUI>().text;
 
         formatData.heroId = heroID; //영웅 id
         formatData.items = items.ToArray(); //추가한 카드 정보들
@@ -689,7 +689,7 @@ public class DeckEditController : MonoBehaviour
                 templateMenu.transform.gameObject.SetActive(false);
                 templateMenu = null;
             }
-            deckNamePanel.transform.Find("NameTemplate").Find("Text").GetComponent<Text>().text = "";
+            deckNamePanel.transform.Find("NameTemplate/TextArea/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "";
         }
 
     }
