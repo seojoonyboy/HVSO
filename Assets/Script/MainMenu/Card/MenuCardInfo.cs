@@ -169,36 +169,37 @@ public class MenuCardInfo : MonoBehaviour {
                 info.Find("CreateCard/HaveNum").GetComponent<TMPro.TextMeshProUGUI>().text = cardNum.ToString();
             else
                 info.Find("CreateCard/HaveNum").GetComponent<TMPro.TextMeshProUGUI>().text = "MAX";
-            if (cardNum == 4) {
-                info.Find("CreateCard/MakeBtn/Disabled").gameObject.SetActive(true);
-                info.Find("CreateCard/CrystalUseValue").gameObject.SetActive(false);
+            int makeCardcost = 0;
+            switch (data.rarelity) {
+                case "common":
+                    makeCardcost = 50;
+                    break;
+                case "uncommon":
+                    makeCardcost = 150;
+                    break;
+                case "rare":
+                    makeCardcost = 500;
+                    break;
+                case "superrare":
+                    makeCardcost = 1000;
+                    break;
+                case "legend":
+                    makeCardcost = 2000;
+                    break;
             }
+            if (cardNum == 4)
+                info.Find("CreateCard/MakeBtn/Disabled").gameObject.SetActive(true);
             else {
-                info.Find("CreateCard/CrystalUseValue").gameObject.SetActive(true);
-                int makeCardcost = 0;
-                switch (data.rarelity) {
-                    case "common":
-                        makeCardcost = 50;
-                        break;
-                    case "uncommon":
-                        makeCardcost = 150;
-                        break;
-                    case "rare":
-                        makeCardcost = 500;
-                        break;
-                    case "superrare":
-                        makeCardcost = 1000;
-                        break;
-                    case "legend":
-                        makeCardcost = 2000;
-                        break;
-                }
-                info.Find("CreateCard/CrystalUseValue").GetComponent<TMPro.TextMeshProUGUI>().text = "-" + makeCardcost.ToString();
+                info.Find("CreateCard/MakeBtn/Disabled").gameObject.SetActive(false);
                 if (makeCardcost >= AccountManager.Instance.userResource.crystal)
                     info.Find("CreateCard/MakeBtn/Disabled").gameObject.SetActive(true);
-                else
-                    info.Find("CreateCard/MakeBtn/Disabled").gameObject.SetActive(false);
             }
+            if (cardNum == 0)
+                info.Find("CreateCard/BreakBtn/Disabled").gameObject.SetActive(true);
+            else
+                info.Find("CreateCard/BreakBtn/Disabled").gameObject.SetActive(false);
+            info.Find("CreateCard/CrystalUseValue").GetComponent<TMPro.TextMeshProUGUI>().text = "-" + makeCardcost.ToString();
+            info.Find("CreateCard/CrystalGetValue").GetComponent<TMPro.TextMeshProUGUI>().text = "+" + (makeCardcost / 2).ToString();
         }
     }
 

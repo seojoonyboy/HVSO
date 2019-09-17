@@ -15,6 +15,7 @@ public class GameResultManager : MonoBehaviour {
     private int getExp = 0;
     private int crystal = 0;
     private int supply = 0;
+    private int additionalSupply = 0;
     private int supplyBox = 0;
 
     private void Awake() {
@@ -46,6 +47,7 @@ public class GameResultManager : MonoBehaviour {
         iTween.ScaleTo(heroSpine, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.3f));
         getExp = PlayMangement.instance.socketHandler.result.reward.heroExp;
         supply = PlayMangement.instance.socketHandler.result.reward.supply;
+        additionalSupply = PlayMangement.instance.socketHandler.result.reward.additionalSupply;
         StartCoroutine(SetRewards());
         SkeletonGraphic backSpine;
         SkeletonGraphic frontSpine;
@@ -99,6 +101,8 @@ public class GameResultManager : MonoBehaviour {
         if (supply > 0) {
             rewards.GetChild(0).gameObject.SetActive(true);
             rewards.GetChild(0).GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = supply.ToString();
+            if (additionalSupply > 0)
+                rewards.GetChild(0).GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = supply.ToString() + "+" + additionalSupply.ToString();
             yield return new WaitForSeconds(0.1f);
             iTween.ScaleTo(rewards.GetChild(0).gameObject, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.5f));
         }
