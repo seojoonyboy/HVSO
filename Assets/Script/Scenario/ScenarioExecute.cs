@@ -258,21 +258,6 @@ public class Fill_shield_gage : ScenarioExecute {
     }
 }
 
-
-public class Summon_Force : ScenarioExecute {
-    public Summon_Force() : base() { }
-
-    public override void Execute() {
-        HighlightLine();
-    }
-
-    public void HighlightLine() {
-        GameObject targetLine;
-        targetLine = scenarioMask.GetMaskingObject(args[0], args[1]);
-        scenarioMask.GetMaskHighlight(targetLine);
-    }
-}
-
 public class End_tutorial : ScenarioExecute {
     public End_tutorial() : base() { }
 
