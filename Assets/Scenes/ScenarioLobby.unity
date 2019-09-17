@@ -8375,13 +8375,16 @@ MonoBehaviour:
       Data: 72|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
-      Data: 2
+      Data: 3
     - Name: 
       Entry: 1
       Data: hand_card
     - Name: 
       Entry: 1
       Data: ac10001
+    - Name: 
+      Entry: 1
+      Data: rollback_1
     - Name: 
       Entry: 13
       Data: 

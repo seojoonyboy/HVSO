@@ -27,6 +27,8 @@ public partial class UnitDragHandler : CardHandler, IBeginDragHandler, IDragHand
         PlayMangement.instance.player.isPicking.Value = true;
         CardDropManager.Instance.ShowDropableSlot(cardData);
         object[] parms = new object[] { true, gameObject };
+
+
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_CARD_PLAY, this, parms);
     }
 
@@ -67,6 +69,9 @@ public partial class UnitDragHandler : CardHandler, IBeginDragHandler, IDragHand
             transform.localScale = new Vector3(1, 1, 1);
             transform.localPosition = new Vector3(0, 0, 0);
             StartCoroutine(handManager.SortHandPosition());
+
+            //튜토리얼에서 drop 이 실패하여 다시 핸드로 돌아온 경우 튜토리얼 재호출 처리
+            PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.UNIT_DROP_FAIL, this);
         }
         CardDropManager.Instance.HideDropableSlot();
         CardInfoOnDrag.instance.OffCardDragInfo();
