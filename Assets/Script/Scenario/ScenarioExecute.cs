@@ -533,3 +533,16 @@ public class Proceed_orc_turn : ScenarioExecute {
 
 
 }
+
+public class Wait_Battle_End : ScenarioExecute {
+    public Wait_Battle_End() : base() { }
+
+    public override void Execute() {
+        PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.END_BATTLE_TURN, CheckEnd);
+    }
+
+    private void CheckEnd(Enum event_type, Component Sender, object Param) {
+        PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.END_BATTLE_TURN, CheckEnd);
+        handler.isDone = true;
+    }
+}
