@@ -9616,16 +9616,22 @@ MonoBehaviour:
       Data: 169|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
-      Data: Wait_until
+      Data: Wait_Drag
     - Name: args
       Entry: 7
       Data: 170|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
-      Data: 1
+      Data: 3
     - Name: 
       Entry: 1
-      Data: 3.0
+      Data: hand_card
+    - Name: 
+      Entry: 1
+      Data: ac10002
+    - Name: 
+      Entry: 1
+      Data: 2
     - Name: 
       Entry: 13
       Data: 
@@ -9739,7 +9745,7 @@ MonoBehaviour:
       Data: 
     - Name: isExecute
       Entry: 5
-      Data: true
+      Data: false
     - Name: 
       Entry: 8
       Data: 
