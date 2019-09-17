@@ -32,6 +32,7 @@ public class MenuCardInfo : MonoBehaviour {
         Transform info = transform;
         cardData = data;
         translator = AccountManager.Instance.GetComponent<Translator>();
+        info.Find("Name").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["name_" + data.rarelity];
         info.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.name;
 
         if (data.skills.Length != 0) {
@@ -131,8 +132,21 @@ public class MenuCardInfo : MonoBehaviour {
         }
         //마법 카드
         else {
+            List<string> categories = new List<string>();
+            categories.Add("magic");
+            var translatedCategories = translator.GetTranslatedUnitCtg(categories);
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+
+            int cnt = 0;
+            foreach (string ctg in translatedCategories) {
+                cnt++;
+                if (translatedCategories.Count != cnt) sb.Append(ctg + ", ");
+                else sb.Append(ctg);
+            }
+            info.Find("Categories/Text").GetComponent<TMPro.TextMeshProUGUI>().text = sb.ToString();
+
             info.Find("MagicPortrait").gameObject.SetActive(true);
-            info.Find("Categories").gameObject.SetActive(false);
+            //info.Find("Categories").gameObject.SetActive(false);
             if (AccountManager.Instance.resource.cardPortraite.ContainsKey(data.id)) {
                 info.Find("MagicPortrait").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardPortraite[data.id];
                 if (data.isHeroCard)
