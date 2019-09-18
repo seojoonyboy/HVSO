@@ -28,6 +28,10 @@ public class MyDecksLoader : MonoBehaviour {
         accountManager.RequestInventories(OnInventoryLoadFinished);
     }
 
+    public void LoadOnlyDecks() {
+        accountManager.RequestMyDecks(OnDeckLoadFinished); 
+    }
+
     private void OnInventoryLoadFinished(HTTPRequest originalRequest, HTTPResponse response) {
         if(response != null) {
             if (response.StatusCode == 200 || response.StatusCode == 304) {

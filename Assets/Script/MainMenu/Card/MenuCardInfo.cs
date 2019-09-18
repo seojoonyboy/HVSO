@@ -12,6 +12,7 @@ public class MenuCardInfo : MonoBehaviour {
     [SerializeField] Transform classDescModal;
     [SerializeField] CardDictionaryManager cardDic;
     [SerializeField] HUDController hudController;
+    [SerializeField] MenuSceneController menuSceneController;
     string cardId;
     bool isHuman;
     AccountManager accountManager;
@@ -244,6 +245,11 @@ public class MenuCardInfo : MonoBehaviour {
         accountManager.RequestCardMake(cardId, WaitRequest);
     }
 
+    public void BreakCard() {
+        accountManager.RequestCardBreak(cardId, WaitRequest);
+        accountManager.cardPackage.data.Remove(cardId);
+    }
+
     void WaitRequest(HTTPRequest originalRequest, HTTPResponse response) {
         accountManager.RequestUserInfo((_req, _res) => {
             accountManager.SetSignInData(_res);
@@ -260,6 +266,7 @@ public class MenuCardInfo : MonoBehaviour {
                 accountManager.myCards = result.cardInventories;
                 accountManager.SetCardData();
                 accountManager.SetHeroInventories(result.heroInventories);
+                menuSceneController.decksLoader.LoadOnlyDecks();
                 dicCard.GetComponent<MenuCardHandler>().DrawCard(cardId, isHuman);
                 SetCardInfo(cardData, isHuman);
             }

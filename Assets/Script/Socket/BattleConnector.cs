@@ -84,15 +84,21 @@ public partial class BattleConnector : MonoBehaviour {
         string deckId = PlayerPrefs.GetString("SelectedDeckId");
         string battleType = PlayerPrefs.GetString("SelectedBattleType");
         string race = PlayerPrefs.GetString("SelectedRace").ToLower();
+        
         string[] args;
 
         if(battleType.CompareTo("test") == 0)
             args = new string[] { battleType, race };
         else {
+            Logger.Log("stageNum : " + PlayerPrefs.GetString("StageNum"));
+            if (PlayerPrefs.GetString("StageNum") != "1") {
+                PlayerPrefs.SetString("SelectedBattleType", "solo");
+                battleType = "solo";
+            }  //TODO : 튜토리얼 이외의 스토리 세팅이 되면 변경할 필요가 있음
             if (battleType == "story") {
                 //========================================================
                 //deckId 및 race 관련 처리 수정 예정
-                string stageNum = "1";
+                string stageNum = PlayerPrefs.GetString("StageNum");
                 race = "human";
                 deckId = string.Empty;
                 args = new string[] { battleType, deckId, race, stageNum };
@@ -170,8 +176,6 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void StartBattle() {
-        //TODO : FBL_SceneManager의 LoadScene 사용시 에러가 발생함. 수정 필요
-        //FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MISSION_INGAME);
         if (PlayerPrefs.GetString("SelectedBattleType") != "story")
             UnityEngine.SceneManagement.SceneManager.LoadScene("IngameScene", UnityEngine.SceneManagement.LoadSceneMode.Single);
         else

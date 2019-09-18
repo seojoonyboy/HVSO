@@ -27,6 +27,7 @@ public class StageButton : ScenarioButton {
         scenarioManager.selectedChapterData = list
             .Find(x => x.chapter == chapter && x.stage_number == stage);
 
+        PlayerPrefs.SetString("StageNum", (chapter + 1).ToString());
         scenarioManager.OnClickStage(scenarioManager.selectedChapterData, isTutorial);
     }
 }
