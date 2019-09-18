@@ -232,45 +232,40 @@ public class ScenarioMask : SerializedMonoBehaviour
         rectHeightRadius = rectWidthRadius;      
     }
 
-    public void SetHighlightImage(GameObject targetObject) {
+    public void SetHighlightImage(GameObject showObject) {
         GameObject glowObject = GetUnactiveGlow();
         RectTransform glowRect = glowObject.GetComponent<RectTransform>();
         if (glowObject == null) return;
 
+        string targetName = showObject.name;
+        GameObject targetObject = showObject;
+        Image glowImage = glowObject.GetComponent<Image>();
 
-        glowObject.GetComponent<Image>().sprite = targetObject.GetComponent<Image>().sprite;
-        glowObject.transform.position = targetObject.transform.position;
-        Vector3[] targetPos = new Vector3[4];
-        targetObject.GetComponent<RectTransform>().GetWorldCorners(targetPos);
-        glowObject.SetActive(true);
 
-        Debug.Log(targetPos[1]);
-        Debug.Log(targetPos[0]);
+        if (targetName.Contains("CardSlot") && PlayMangement.instance.isMulligan == false) {
+            targetObject = showObject.transform.GetChild(0).gameObject;
+            glowRect.gameObject.SetActive(true);
+            glowRect.position = targetObject.transform.Find("Portrait").position;
+            glowRect.sizeDelta = targetObject.transform.Find("Portrait").gameObject.GetComponent<RectTransform>().sizeDelta;
+            glowImage.sprite = targetObject.transform.Find("Portrait").gameObject.GetComponent<Image>().sprite;
 
-        float width = targetPos[2].x - targetPos[1].x;
-        float height = targetPos[1].x - targetPos[0].y;
+            glowRect.GetChild(0).gameObject.SetActive(true);
+            glowRect.GetChild(0).position = targetObject.transform.Find("BackGround").position;
+            glowRect.GetChild(0).GetComponent<RectTransform>().sizeDelta = targetObject.GetComponent<RectTransform>().sizeDelta;
+            glowRect.GetChild(0).gameObject.GetComponent<Image>().sprite = targetObject.transform.Find("BackGround").gameObject.GetComponent<Image>().sprite;
 
-        //Rect rect = new Rect();
-        //rect.xMin = targetPos[1].x;
-        //rect.xMax = targetPos[2].x;
-        //rect.yMin = targetPos[1].y;
-        //rect.yMax = targetPos[0].y;
-
-        //glowRect.offsetMin = targetPos[0];
-        //glowRect.offsetMax = targetPos[2];
-
-        //glowRect.rect.Set(targetPos[1].x, targetPos[1].y , width, height);
-
-        glowRect.sizeDelta = targetObject.GetComponent<RectTransform>().sizeDelta;
-        glowRect.localScale = targetObject.transform.localScale;
-
-        
-        glowObject.GetComponent<Image>().sprite = targetObject.GetComponent<Image>().sprite;
+        }
+        else {
+            glowRect.gameObject.SetActive(true);
+            glowRect.position = targetObject.transform.position;
+            glowRect.sizeDelta = targetObject.GetComponent<RectTransform>().sizeDelta;
+            glowImage.sprite = targetObject.GetComponent<Image>().sprite;
+        }      
         Animation glowAnimation = glowObject.GetComponent<Animation>();
-
-        glowAnimation.Play();
-        
+        glowAnimation.Play();        
     }
+    
+
 
     public GameObject GetUnactiveGlow() {
         foreach(Transform child in highlightCanvas.transform) {
@@ -295,6 +290,7 @@ public class ScenarioMask : SerializedMonoBehaviour
             Animation glowAnimation = child.gameObject.GetComponent<Animation>();
             glowAnimation.Stop();        
             child.gameObject.SetActive(false);
+            child.GetChild(0).gameObject.SetActive(false);
         }
     }    
 }

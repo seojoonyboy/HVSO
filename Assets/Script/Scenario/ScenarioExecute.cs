@@ -195,6 +195,7 @@ public class Wait_Drag : ScenarioExecute {
 
             if(card != null) {
                 if(card.cardData.cardId == args[1]) {
+                    scenarioMask.StopEveryHighlight();
                     handler.isDone = true;
                 }
             }

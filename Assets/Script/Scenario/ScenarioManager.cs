@@ -212,7 +212,7 @@ public class ScenarioManager : SerializedMonoBehaviour
             Logger.Log("이미 대전 시작 버튼이 눌려진 상태");
             return;
         }
-        PlayerPrefs.SetString("SelectedBattleType", "story");
+        PlayerPrefs.SetString("SelectedBattleType", "Solo");
         string race = PlayerPrefs.GetString("SelectedRace").ToLower();
         string selectedDeckId = PlayerPrefs.GetString("SelectedDeckId").ToLower();
 
