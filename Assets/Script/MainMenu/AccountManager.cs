@@ -364,6 +364,26 @@ public partial class AccountManager {
         networkManager.Request(request, OnReceived, "새로운 덱을 생성하는중...");
     }
 
+    /// <summary>
+    /// 카드 해체 요청
+    /// </summary>
+    public void RequestCardBreak(string cardId, OnRequestFinishedDelegate callback = null) {
+        StringBuilder sb = new StringBuilder();
+        sb
+            .Append(networkManager.baseUrl)
+            .Append("api/user/grindcard");
+
+        HTTPRequest request = new HTTPRequest(
+            new Uri(sb.ToString())
+        );
+        request.MethodType = BestHTTP.HTTPMethods.Post;
+        request.AddHeader("authorization", TokenFormat);
+
+        request.RawData = Encoding.UTF8.GetBytes(string.Format("{{\"cardId\":\"{0}\"}}", cardId));
+        if (callback != null) request.Callback = callback;
+        networkManager.Request(request, OnReceived, "새로운 덱을 생성하는중...");
+    }
+
 
     /// <summary>
     /// 덱 제거 요청
