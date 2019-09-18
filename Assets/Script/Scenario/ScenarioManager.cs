@@ -120,6 +120,8 @@ public class ScenarioManager : SerializedMonoBehaviour
 
             StageButton stageButtonComp = item.GetComponent<StageButton>();
             stageButtonComp.Init(selectedList[i].chapter, selectedList[i].stage_number, isHuman);
+
+            item.transform.Find("StageScript").GetComponent<TextMeshProUGUI>().text = selectedList[i].description;
         }
     }
 
@@ -250,6 +252,8 @@ public class ScenarioManager : SerializedMonoBehaviour
                 .Find("StagePanel/TextGroup/StageName")
                 .gameObject
                 .GetComponent<TextMeshProUGUI>().text = chapterData.chapter.ToString() + "-" + chapterData.stage_number.ToString();
+
+
         }
     }
 
@@ -326,6 +330,7 @@ namespace Tutorial {
         public int stage_number;
         public string stage_Name;
         [MultiLineProperty(10)] public string description;
+        [MultiLineProperty(5)] public string specialRule;
         public List<ScriptData> scripts;
     }
 
