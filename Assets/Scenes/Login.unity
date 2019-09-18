@@ -2100,11 +2100,11 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 27416d82aaafb4a489ed93ba7727df40, type: 3}
     - {fileID: 21300000, guid: aa585b34edd8ff8449259e83183c573a, type: 3}
     - {fileID: 21300000, guid: fe142c195e957924b821cd2ff841b1a9, type: 3}
-    - {fileID: 21300000, guid: 2c68501c94673814dbc90f50836a4ccd, type: 3}
-    - {fileID: 21300000, guid: cf3fc13f5e70a204dba42737dc685a65, type: 3}
-    - {fileID: 21300000, guid: 90a3198cfe63c984a94066eacaed2e5e, type: 3}
-    - {fileID: 21300000, guid: 291cc16200e76d9428eb1603b5276b88, type: 3}
-    - {fileID: 21300000, guid: 804a937e97617cd47bf0f6d27f95ad63, type: 3}
+    - {fileID: 21300000, guid: 74a97a681ddc4364a99f293312b8e6f1, type: 3}
+    - {fileID: 21300000, guid: 6d481875e02ba934b81591b6d8e7d9d9, type: 3}
+    - {fileID: 21300000, guid: a0f21560fedc7e64abe49580fdd9c142, type: 3}
+    - {fileID: 21300000, guid: fd1238369a3ea0c4cba31cc621828eeb, type: 3}
+    - {fileID: 21300000, guid: 59d4125f8d0c65c489a34b3dc6f0c726, type: 3}
     - {fileID: 21300000, guid: 2cf57b5b40892c64e8a9550d397f3d9d, type: 3}
     - {fileID: 21300000, guid: 4e4d2227201914441b34f077de2a64a9, type: 3}
     - {fileID: 21300000, guid: a47f85c0da6c35a44988386484132293, type: 3}
@@ -6774,7 +6774,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 15
+      Data: 16
     - Name: 
       Entry: 7
       Data: 
@@ -6952,6 +6952,18 @@ MonoBehaviour:
     - Name: $v
       Entry: 1
       Data: "\uC804\uBB38\uAC00"
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: magic
+    - Name: $v
+      Entry: 1
+      Data: "\uB9C8\uBC95"
     - Name: 
       Entry: 8
       Data: 
@@ -7430,6 +7442,7 @@ MonoBehaviour:
   supplyStoreTimer: 
   supply: 0
   supplyBox: 0
+  additionalPreSupply: 0
   timerText: {fileID: 0}
 --- !u!1 &1876041233
 GameObject:

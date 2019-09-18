@@ -43,7 +43,7 @@ public class Highlight : ScenarioExecute {
             target = scenarioMask.GetMaskingObject(args[0]);
 
 
-        //ScenarioMask.Instance.SetHighlightImage(target);
+        ScenarioMask.Instance.SetHighlightImage(target);
         ScenarioMask.Instance.GetMaskHighlight(target);
         handler.isDone = true;
         Logger.Log("Highlight");
@@ -107,6 +107,7 @@ public class Wait_click : ScenarioExecute {
             UnityEngine.EventSystems.PointerEventData clickEvent = new UnityEngine.EventSystems.PointerEventData(UnityEngine.EventSystems.EventSystem.current);
             if (clickEvent.pointerPress.gameObject.name == target.name) {
                 clickstream.Dispose();
+                scenarioMask.StopEveryHighlight();
                 handler.isDone = true;
             }
             else
@@ -115,7 +116,8 @@ public class Wait_click : ScenarioExecute {
     }
 
     public void CheckButton() {
-        clickstream.Dispose();        
+        clickstream.Dispose();
+        scenarioMask.StopEveryHighlight();
         handler.isDone = true;
     }
 

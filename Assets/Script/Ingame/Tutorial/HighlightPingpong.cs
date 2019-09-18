@@ -8,8 +8,13 @@ public class HighlightPingpong : MonoBehaviour
     [HideInInspector]
     public bool active = false;
 
-    public void StartPingPong() {
+    private void Start() {
         gameObject.transform.position = new Vector3(1, 0, 0);
+        StartPingPong();
+    }
+
+    public void StartPingPong() {
+        
         iTween.MoveTo(gameObject, iTween.Hash("x", 0, "easetype", iTween.EaseType.easeInOutElastic, "loopType", "pingPong", "onupdate", "ColorUpdate"));
 
     }

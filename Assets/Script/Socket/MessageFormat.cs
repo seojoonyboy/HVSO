@@ -33,6 +33,7 @@ namespace SocketFormat {
 
     public class Reward {
         public int supply;
+        public int additionalSupply;
         public int userExp;
         public int heroExp;
     }

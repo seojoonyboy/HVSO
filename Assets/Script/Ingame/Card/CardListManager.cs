@@ -162,6 +162,7 @@ public class CardListManager : MonoBehaviour
     public virtual void SetCardInfo(GameObject obj, CardData data) {
         Transform info = obj.transform;
         info.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.name;
+        info.Find("Name").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["name_" + data.rarelity];
 
         if (data.skills.Length != 0) {
             info.Find("Dialog/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.skills[0].desc;
@@ -268,6 +269,19 @@ public class CardListManager : MonoBehaviour
         }
         //마법 카드
         else {
+            List<string> categories = new List<string>();
+            categories.Add("magic");
+            var translatedCategories = translator.GetTranslatedUnitCtg(categories);
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+
+            int cnt = 0;
+            foreach (string ctg in translatedCategories) {
+                cnt++;
+                if (translatedCategories.Count != cnt) sb.Append(ctg + ", ");
+                else sb.Append(ctg);
+            }
+            info.Find("Categories/Text").GetComponent<TMPro.TextMeshProUGUI>().text = sb.ToString();
+
             info.Find("MagicPortrait").gameObject.SetActive(true);
             if (AccountManager.Instance.resource.cardPortraite.ContainsKey(data.cardId)) {
                 info.Find("MagicPortrait").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardPortraite[data.cardId];
