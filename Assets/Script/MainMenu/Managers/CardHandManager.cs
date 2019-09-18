@@ -596,9 +596,6 @@ public class CardHandManager : MonoBehaviour {
         if (cardNum > 4 && transform.localPosition.x > 0)
             iTween.MoveTo(gameObject, iTween.Hash("x", -0, "islocal", true, "time", 0.1f));
         yield return new WaitForSeconds(0.1f);
-
-        //튜토리얼에서 drop 이 실패하여 다시 핸드로 돌아온 경우 튜토리얼 재호출 처리
-        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.UNIT_DROP_FAIL, this);
         //if (PlayMangement.instance.currentTurn != "BATTLE")
         //    PlayMangement.dragable = true;
     }
