@@ -118,6 +118,7 @@ namespace SkillModules {
                     },
                     delegate {
                         Logger.Log("타겟이 없습니다.");
+                        if(TargetSelectExist()) mySkillHandler.SendingMessage(true);
                         mySkillHandler.isDone = true;
                     },
                     delegate(ref List<GameObject> list) {
