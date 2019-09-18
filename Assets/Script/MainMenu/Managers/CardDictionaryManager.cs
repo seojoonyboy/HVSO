@@ -28,7 +28,7 @@ public class CardDictionaryManager : MonoBehaviour {
 
     public void AttachDecksLoader(ref MyDecksLoader decksLoader) {
         this.decksLoader = decksLoader;
-        this.decksLoader.OnInvenLoadFinished.AddListener(() => { SetToHumanCards(); Debug.Log("찍어보자"); });
+        this.decksLoader.OnInvenLoadFinished.AddListener(() => { SetToHumanCards(); });
     }
 
 
