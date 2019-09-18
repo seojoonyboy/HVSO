@@ -100,9 +100,14 @@ public class GameResultManager : MonoBehaviour {
         if (getExp > 0) StartCoroutine(GetUserExp(slider));
         if (supply > 0) {
             rewards.GetChild(0).gameObject.SetActive(true);
-            rewards.GetChild(0).GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = supply.ToString();
-            if (additionalSupply > 0)
-                rewards.GetChild(0).GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = supply.ToString() + "+" + additionalSupply.ToString();
+            rewards.GetChild(0).Find("Text/Value").GetComponent<TMPro.TextMeshProUGUI>().text = supply.ToString();
+            Transform additionalSupTxt = rewards.GetChild(0).Find("Text/Additional");
+            if (additionalSupply > 0) {
+                additionalSupTxt.gameObject.SetActive(true);
+                additionalSupTxt.GetComponent<TMPro.TextMeshProUGUI>().text = "+" + additionalSupply.ToString();
+            }
+            else
+                additionalSupTxt.gameObject.SetActive(false);
             yield return new WaitForSeconds(0.1f);
             iTween.ScaleTo(rewards.GetChild(0).gameObject, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.5f));
         }
