@@ -11,6 +11,8 @@ namespace SkillModules {
         public Skill[] skills;
         public GameObject myObject;
         public object skillTarget;
+        private object additionalArgs;
+
         public bool isPlayer;
         public object targetData;
         private List<IngameEventHandler.EVENT_TYPE> triggerList;
@@ -299,6 +301,14 @@ namespace SkillModules {
 
         public bool TargetSelectExist() {
             return skills.ToList().Exists(x => x.TargetSelectExist());
+        }
+
+        public void AddAdditionalArgs(object args) {
+            additionalArgs = args;
+        }
+
+        public object GetAdditionalArgs() {
+            return additionalArgs;
         }
     }
 }

@@ -211,6 +211,20 @@ public class PlaceMonster : MonoBehaviour {
             }
         }
 
+        //pillage 능력 : 앞에 유닛이 없으면 약탈
+        if(GetComponent<SkillModules.pillage>() != null) {
+            PlayMangement playMangement = PlayMangement.instance;
+            FieldUnitsObserver observer = playMangement.UnitsObserver;
+            //앞에 적 유닛이 없는가
+            var myPos = observer.GetMyPos(gameObject);
+            bool isHuman = playMangement.player.isHuman;
+            var result = PlayMangement.instance.UnitsObserver.GetAllFieldUnits(myPos.col, !isHuman);
+            if(result.Count == 0) {
+                Logger.Log("적이 없음. pillage 발동");
+                //TODO : 적의 실드 게이지 훔치기
+            }
+        }
+
         MoveToTarget();
     }
 

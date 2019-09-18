@@ -256,6 +256,13 @@ namespace SkillModules {
                 bool isPlayer = mySkillHandler.isPlayer;
                 result = new object[] { isPlayer, targets };
             }
+            else if(ability.GetType() == typeof(set_count_in_history)) {
+                //result = 1;
+            }
+            else if(ability.GetType() == typeof(gain_mul)) {
+                bool isPlayer = mySkillHandler.isPlayer;
+                result = new object[] { isPlayer, targets };
+            }
             return result;
         }
 
