@@ -116,6 +116,7 @@ namespace SkillModules {
             foreach (Skill skill in skills) {
                 isDone = false;                
                 bool active = skill.Trigger (triggerType, parms);
+                if(!active && skill.TargetSelectExist()) SendingMessage(true);
                 if (active && !isDone) yield return new WaitUntil (() => isDone);
                 PlayMangement.instance.OffBlockPanel();                
             }            
