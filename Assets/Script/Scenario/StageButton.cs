@@ -6,10 +6,13 @@ public class StageButton : ScenarioButton {
     public int chapter;
     public int stage;
     public string camp;
+    public bool isTutorial;
 
-    public void Init(int chapter, int stage) {
+    public void Init(int chapter, int stage, bool isHuman) {
         this.chapter = chapter;
         this.stage = stage;
+        if (isHuman) camp = "human";
+        else camp = "orc";
     }
 
     public override void OnClicked() {
@@ -24,6 +27,6 @@ public class StageButton : ScenarioButton {
         scenarioManager.selectedChapterData = list
             .Find(x => x.chapter == chapter && x.stage_number == stage);
 
-        scenarioManager.OnClickStage(scenarioManager.selectedChapterData);
+        scenarioManager.OnClickStage(scenarioManager.selectedChapterData, isTutorial);
     }
 }
