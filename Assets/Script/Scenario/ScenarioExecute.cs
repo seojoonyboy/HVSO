@@ -211,6 +211,7 @@ public class Wait_Drag : ScenarioExecute {
             int.TryParse(parsed[1], out index);
 
             if(index != -1) {
+                scenarioMask.StopEveryHighlight();
                 handler.RollBack(1);
             }
         }

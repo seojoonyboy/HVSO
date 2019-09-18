@@ -20,7 +20,8 @@ public class ScenarioMask : SerializedMonoBehaviour
     public bool onHighlight = false;
 
     public HighlightPingpong pingpongObject;
-
+    public GameObject fieldGlow;
+    public GameObject defaultGlow;
 
     public Dictionary<string, GameObject> targetObject;
 
@@ -253,13 +254,22 @@ public class ScenarioMask : SerializedMonoBehaviour
             glowRect.GetChild(0).position = targetObject.transform.Find("BackGround").position;
             glowRect.GetChild(0).GetComponent<RectTransform>().sizeDelta = targetObject.GetComponent<RectTransform>().sizeDelta;
             glowRect.GetChild(0).gameObject.GetComponent<Image>().sprite = targetObject.transform.Find("BackGround").gameObject.GetComponent<Image>().sprite;
-
+        }
+        else if (targetName.Contains("Line")) {
+            targetObject = this.targetObject["fields"].transform.GetChild(targetObject.transform.GetSiblingIndex()).gameObject;
+            glowRect.gameObject.SetActive(true);
+            glowRect.position = targetObject.transform.position;
+            glowRect.localScale = targetObject.transform.localScale;
+            glowRect.sizeDelta = targetObject.GetComponent<RectTransform>().sizeDelta;
+            glowImage.sprite = targetObject.GetComponent<Image>().sprite;
+            glowRect.SetParent(fieldGlow.transform);
         }
         else {
             glowRect.gameObject.SetActive(true);
             glowRect.position = targetObject.transform.position;
+            glowRect.localScale = targetObject.transform.localScale;
             glowRect.sizeDelta = targetObject.GetComponent<RectTransform>().sizeDelta;
-            glowImage.sprite = targetObject.GetComponent<Image>().sprite;
+            glowImage.sprite = (targetObject.GetComponent<Image>() != null) ? targetObject.GetComponent<Image>().sprite : defaultGlow.GetComponent<Image>().sprite ;
         }      
         Animation glowAnimation = glowObject.GetComponent<Animation>();
         glowAnimation.Play();        
@@ -273,6 +283,9 @@ public class ScenarioMask : SerializedMonoBehaviour
                 return child.gameObject;
             }
         }
+
+        
+
         return null;
     }
 
@@ -292,5 +305,18 @@ public class ScenarioMask : SerializedMonoBehaviour
             child.gameObject.SetActive(false);
             child.GetChild(0).gameObject.SetActive(false);
         }
+
+        if(fieldGlow.transform.childCount > 0) {
+
+            foreach(Transform child in fieldGlow.transform) {
+                Animation glowAnimation = child.gameObject.GetComponent<Animation>();
+                glowAnimation.Stop();
+                child.SetParent(highlightCanvas.transform);
+                child.SetAsLastSibling();
+                child.gameObject.SetActive(false);
+            }
+
+        }
+
     }    
 }
