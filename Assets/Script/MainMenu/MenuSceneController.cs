@@ -11,7 +11,7 @@ public class MenuSceneController : MonoBehaviour {
     [SerializeField] Transform fixedCanvas;
     [SerializeField] HorizontalScrollSnap windowScrollSnap;
     [SerializeField] DeckSettingManager deckSettingManager;
-    [SerializeField] CardDictionaryManager cardDictionaryManager;
+    [SerializeField] Transform dictionaryMenu;
     [SerializeField] SkeletonGraphic battleSwordSkeleton;
     [SerializeField] TMPro.TextMeshProUGUI nicknameText;
     [SerializeField] GameObject battleReadyPanel;   //대전 준비 화면
@@ -29,13 +29,12 @@ public class MenuSceneController : MonoBehaviour {
             nicknameText.text = AccountManager.Instance.NickName;
         });
         decksLoader.Load();
-
+        AccountManager.Instance.OnCardLoadFinished.AddListener(() => SetCardNumbersPerDic());
         currentPage = 2;
         Transform buttonsParent = fixedCanvas.Find("Footer");
         //for (int i = 0; i < fixedCanvas.Find("Footer").childCount; i++)
         //    buttonSkeletons[i] = buttonsParent.GetChild(i).Find("ButtonImage").GetComponent<SkeletonGraphic>();
         //StartCoroutine(UpdateWindow());
-
         TouchEffecter.Instance.SetScript();
     }
 
@@ -76,6 +75,33 @@ public class MenuSceneController : MonoBehaviour {
 
     public void Idle(TrackEntry trackEntry = null) {
         selectedAnimation.AnimationState.SetAnimation(0, "IDLE", true);
+    }
+
+    public void SetCardNumbersPerDic() {
+        int humanTotalCards = 0;
+        int orcTotalCards = 0;
+        int myHumanCards = 0;
+        int myOrcCards = 0;
+        foreach (dataModules.CollectionCard card in AccountManager.Instance.allCards) {
+            if (!card.isHeroCard) {
+                if (card.camp == "human") {
+                    humanTotalCards++;
+                    if (AccountManager.Instance.cardPackage.data.ContainsKey(card.id)) {
+                        myHumanCards++;
+                    }
+                }
+                else {
+                    orcTotalCards++;
+                    if (AccountManager.Instance.cardPackage.data.ContainsKey(card.id)) {
+                        myOrcCards++;
+                    }
+                }
+            }
+        }
+        dictionaryMenu.Find("HumanButton/CardNum").GetComponent<TMPro.TextMeshProUGUI>().text = myHumanCards.ToString() + "/" + humanTotalCards.ToString();
+        dictionaryMenu.Find("HumanButton/NewCard").gameObject.SetActive(AccountManager.Instance.cardPackage.checkHumanCard.Count > 0);
+        dictionaryMenu.Find("OrcButton/CardNum").GetComponent<TMPro.TextMeshProUGUI>().text = myOrcCards.ToString() + "/" + orcTotalCards.ToString();
+        dictionaryMenu.Find("OrcButton/NewCard").gameObject.SetActive(AccountManager.Instance.cardPackage.checkOrcCard.Count > 0);
     }
 
     IEnumerator UpdateWindow() {
