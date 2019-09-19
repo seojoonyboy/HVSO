@@ -230,6 +230,22 @@ public partial class BattleConnector : MonoBehaviour {
         var json = (JObject)args;
         string camp = json["camp"].ToString();
         Logger.Log(camp + "측 항복");
+
+        string result = "";
+        bool isHuman = PlayMangement.instance.player.isHuman;
+
+        if ((isHuman && camp == "human") || (!isHuman && camp == "orc")) {
+            result = "lose";
+        }
+        else {
+            result = "win";
+        }
+        StartCoroutine(SetResult(result, isHuman));
+    }
+
+    IEnumerator SetResult(string result, bool isHuman) {
+        yield return new WaitForSeconds(0.5f);
+        PlayMangement.instance.resultManager.SetResultWindow(result, isHuman);
     }
 
     public IEnumerator waitSkillDone(UnityAction callback, bool isShield = false) {
