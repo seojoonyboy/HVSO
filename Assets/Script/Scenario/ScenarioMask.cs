@@ -205,8 +205,8 @@ public class ScenarioMask : SerializedMonoBehaviour
         return null;
     }
 
-    //float defaultAlpha = 0.004f;
-    float defaultAlpha = 0.2f;
+    float defaultAlpha = 0.004f;
+    //float defaultAlpha = 0.2f;
 
     public void MaskScreen() {
         ActiveMask();
@@ -216,10 +216,10 @@ public class ScenarioMask : SerializedMonoBehaviour
         bottonMask.position = Vector3.zero;
 
         Color prevColor = topMask.transform.GetComponent<Image>().color;
-        topMask.transform.GetComponent<Image>().color = new Color(prevColor.r, prevColor.g, prevColor.b, 0.1f);
-        leftMask.transform.GetComponent<Image>().color = new Color(prevColor.r, prevColor.g, prevColor.b, 0.1f);
-        rightMask.transform.GetComponent<Image>().color = new Color(prevColor.r, prevColor.g, prevColor.b, 0.1f);
-        bottonMask.transform.GetComponent<Image>().color = new Color(prevColor.r, prevColor.g, prevColor.b, 0.1f);
+        topMask.transform.GetComponent<Image>().color = new Color(prevColor.r, prevColor.g, prevColor.b, defaultAlpha);
+        leftMask.transform.GetComponent<Image>().color = new Color(prevColor.r, prevColor.g, prevColor.b, defaultAlpha);
+        rightMask.transform.GetComponent<Image>().color = new Color(prevColor.r, prevColor.g, prevColor.b, defaultAlpha);
+        bottonMask.transform.GetComponent<Image>().color = new Color(prevColor.r, prevColor.g, prevColor.b, defaultAlpha);
     }
 
 
@@ -341,11 +341,22 @@ public class ScenarioMask : SerializedMonoBehaviour
             glowObject.GetComponent<Animation>().clip = glowObject.GetComponent<Animation>().GetClip("WhiteGlowAnimation");
             Observable.EveryUpdate().TakeWhile(_ => glowRect.gameObject.activeSelf == true).Subscribe(_ => glowRect.position = targetObject.transform.position);
         }
+        else if (targetName.Contains("Player1_Panel") || targetName.Contains("Player2_Panel") || targetName.Contains("FieldUI")) {
+            glowRect.gameObject.SetActive(true);
+            glowRect.position = targetObject.transform.position;
+            glowRect.localScale = targetObject.transform.localScale;
+
+            Vector2 size = new Vector2(Camera.main.pixelWidth, targetObject.GetComponent<RectTransform>().sizeDelta.y);            
+            glowRect.sizeDelta = size;           
+            glowImage.sprite = (targetObject.GetComponent<Image>() != null) ? targetObject.GetComponent<Image>().sprite : defaultGlow.GetComponent<Image>().sprite;
+
+        }
         else {
             glowRect.gameObject.SetActive(true);
             glowRect.position = targetObject.transform.position;
             glowRect.localScale = targetObject.transform.localScale;
-            glowRect.sizeDelta = targetObject.GetComponent<RectTransform>().sizeDelta;           
+            glowRect.sizeDelta = targetObject.GetComponent<RectTransform>().sizeDelta;
+            Debug.Log(glowRect.sizeDelta);
             glowImage.sprite = (targetObject.GetComponent<Image>() != null) ? targetObject.GetComponent<Image>().sprite : defaultGlow.GetComponent<Image>().sprite;
         }      
         Animation glowAnimation = glowObject.GetComponent<Animation>();
