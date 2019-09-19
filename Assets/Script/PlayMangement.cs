@@ -66,7 +66,7 @@ public partial class PlayMangement : MonoBehaviour {
 
     private void Start() {
         SetBackGround();
-        InitGameData();
+        InitGameData(20);
 
 
 
@@ -76,7 +76,7 @@ public partial class PlayMangement : MonoBehaviour {
 
     //최초에 데이터를 불러드릴 함수. missionData를 임시로 놓고, 그 후에 게임의 정보들 등록
     //체력설정 -> 승리목표 설정 -> 자원분배 -> 턴
-    protected void InitGameData() {
+    protected void InitGameData(int hp) {
         object missionData = null;
 
         RequestStartData(20, 20);
@@ -788,6 +788,8 @@ public partial class PlayMangement {
         GameObject unit = Instantiate(baseUnit, targetPlayer.transform.GetChild(row).GetChild(col));
         unit.transform.position = targetPlayer.transform.GetChild(row).GetChild(col).position;
         PlaceMonster placeMonster = unit.GetComponent<PlaceMonster>();
+        EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.UNIT_SUMMONED, this, unitID);
+
 
         placeMonster.isPlayer = isPlayer;
         placeMonster.itemId = itemID;

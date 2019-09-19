@@ -166,6 +166,22 @@ public class Multiple_Highlight : ScenarioExecute {
     public Multiple_Highlight() : base() { }
 
     public override void Execute() {
+
+        string[] Parse;
+        GameObject target;
+
+        for (int i = 0; i< args.Count; i++) {
+            Parse = args[i].Split('-');
+
+            if (Parse.Length > 1) {
+                target = scenarioMask.GetMaskingObject(Parse[0], Parse[1]);
+            }
+            else
+                target = scenarioMask.GetMaskingObject(args[i]);
+
+            scenarioMask.SetHighlightImage(target);
+        }
+
         //Highlighting(ScenarioMask.Instance.GetMaskingObject(args[0]));
         //for(int i = 0; i < args.Count; i++) {
         //    GameObject target = ScenarioMask.Instance.GetMaskingObject(args[i]);
@@ -532,3 +548,58 @@ public class Wait_Battle_End : ScenarioExecute {
         handler.isDone = true;
     }
 }
+
+public class Block_Turn_Btn : ScenarioExecute {
+    public Block_Turn_Btn() : base() { }
+
+    public override void Execute() {
+        scenarioMask.BlockButton();
+        handler.isDone = true;
+    }
+
+}
+
+public class Unblock_Turn_Btn : ScenarioExecute {
+    public Unblock_Turn_Btn() : base() { }
+
+    public override void Execute() {
+        scenarioMask.UnblockButton();
+        handler.isDone = true;
+    }
+}
+
+public class Wait_Turn : ScenarioExecute {
+    public Wait_Turn() : base() { }
+
+    IngameEventHandler.EVENT_TYPE eventType;
+
+    public override void Execute() {
+
+        switch (args[0]) {
+            case "ORC":
+                eventType = IngameEventHandler.EVENT_TYPE.BEGIN_ORC_PRE_TURN;
+                break;
+            case "HUMAN":
+                eventType = IngameEventHandler.EVENT_TYPE.BEGIN_HUMAN_TURN;
+                break;
+            case "SECRET":
+                eventType = IngameEventHandler.EVENT_TYPE.BEGIN_ORC_POST_TURN;
+                break;
+            case "BATTLE":
+                eventType = IngameEventHandler.EVENT_TYPE.BEGIN_BATTLE_TURN;
+                break;
+
+        }
+        PlayMangement.instance.EventHandler.AddListener(eventType, CheckTurn);
+
+    }
+
+    protected void CheckTurn(Enum event_type, Component Sender, object Param) {
+        PlayMangement.instance.EventHandler.RemoveListener(event_type, CheckTurn);
+        handler.isDone = true;
+    }
+
+
+
+}
+
