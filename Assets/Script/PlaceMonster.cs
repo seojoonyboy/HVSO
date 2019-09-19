@@ -221,7 +221,7 @@ public class PlaceMonster : MonoBehaviour {
             var result = PlayMangement.instance.UnitsObserver.GetAllFieldUnits(myPos.col, !isHuman);
             if(result.Count == 0) {
                 Logger.Log("적이 없음. pillage 발동");
-                //TODO : 적의 실드 게이지 훔치기
+                playMangement.enemyPlayer.ChangeShieldCount(-2);
             }
         }
 
