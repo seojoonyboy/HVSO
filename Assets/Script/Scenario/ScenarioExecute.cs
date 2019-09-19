@@ -264,6 +264,7 @@ public class End_tutorial : ScenarioExecute {
     public End_tutorial() : base() { }
 
     public override void Execute() {
+        scenarioMask.UnmaskHeroGuide();
         ScenarioGameManagment.scenarioInstance.isTutorial = false;
     }
 }
@@ -598,8 +599,24 @@ public class Wait_Turn : ScenarioExecute {
         PlayMangement.instance.EventHandler.RemoveListener(event_type, CheckTurn);
         handler.isDone = true;
     }
+}
 
+public class Block_Screen : ScenarioExecute {
+    public Block_Screen() : base() { }
 
+    public override void Execute() {
+        scenarioMask.MaskScreen();
+        handler.isDone = true;
+    }
+}
+
+public class Unblock_Screen : ScenarioExecute {
+    public Unblock_Screen() : base() { }
+
+    public override void Execute() {
+        scenarioMask.DisableMask();
+        handler.isDone = true;
+    }
 
 }
 

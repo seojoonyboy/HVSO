@@ -163,11 +163,11 @@ public class ScenarioMask : SerializedMonoBehaviour
                     maskObject = (sub == "my") ? maskObject : null;
                 }
 
-                if (main == "shield_num") {
+                if (main == "shield-num") {
                     if (sub == "my")
-                        maskObject = (PlayMangement.instance.player.isHuman == true) ? maskObject.transform.Find("HumanSheild").gameObject : maskObject.transform.Find("OrcSheild").gameObject;
+                        maskObject = (PlayMangement.instance.player.isHuman == true) ? maskObject.transform.Find("HumanShield").gameObject : maskObject.transform.Find("OrcShield").gameObject;
                     else
-                        maskObject = (PlayMangement.instance.enemyPlayer.isHuman == true) ? PlayMangement.instance.enemyPlayer.playerUI.transform.Find("PlayerHealth/HumanSheild").gameObject : PlayMangement.instance.enemyPlayer.playerUI.transform.Find("PlayerHealth/OrcSheild").gameObject;
+                        maskObject = (PlayMangement.instance.enemyPlayer.isHuman == true) ? PlayMangement.instance.enemyPlayer.playerUI.transform.Find("PlayerHealth/ShieldUI/HumanShield").gameObject : PlayMangement.instance.enemyPlayer.playerUI.transform.Find("PlayerHealth/ShieldUI/OrcShield").gameObject;
 
                 }
                 if (main == "button") {
@@ -209,6 +209,7 @@ public class ScenarioMask : SerializedMonoBehaviour
     float defaultAlpha = 0.2f;
 
     public void MaskScreen() {
+        ActiveMask();
         topMask.position = Vector3.zero;
         leftMask.position = Vector3.zero;
         rightMask.position = Vector3.zero;
@@ -337,7 +338,7 @@ public class ScenarioMask : SerializedMonoBehaviour
             glowRect.localScale = targetObject.transform.localScale;
             glowRect.sizeDelta = targetObject.GetComponent<RectTransform>().sizeDelta;
             glowImage.sprite = targetObject.GetComponent<Image>().sprite;
-            glowImage.color = Color.black;
+            glowObject.GetComponent<Animation>().clip = glowObject.GetComponent<Animation>().GetClip("WhiteGlowAnimation");
             Observable.EveryUpdate().TakeWhile(_ => glowRect.gameObject.activeSelf == true).Subscribe(_ => glowRect.position = targetObject.transform.position);
         }
         else {
@@ -350,7 +351,13 @@ public class ScenarioMask : SerializedMonoBehaviour
         Animation glowAnimation = glowObject.GetComponent<Animation>();
         glowAnimation.Play();        
     }
-    
+    public void UnmaskHeroGuide() {
+        Color color = Color.white;
+        color.a = 1f;
+
+        GetMaskingObject("shieldArrow", "top").GetComponent<Image>().color = color;
+        GetMaskingObject("shieldArrow", "bottom").GetComponent<Image>().color = color;
+    }
 
 
     public GameObject GetUnactiveGlow() {
@@ -378,8 +385,10 @@ public class ScenarioMask : SerializedMonoBehaviour
 
             Animation glowAnimation = child.gameObject.GetComponent<Animation>();
             glowAnimation.Stop();
+            glowAnimation.clip = glowAnimation.GetClip("glowAnimation");
             child.gameObject.GetComponent<Image>().color = Color.white;
             child.localScale = Vector3.one;
+            child.position = Vector3.one * 100f;
             child.gameObject.SetActive(false);
             child.GetChild(0).gameObject.SetActive(false);
             
