@@ -788,6 +788,8 @@ public partial class PlayMangement {
         GameObject unit = Instantiate(baseUnit, targetPlayer.transform.GetChild(row).GetChild(col));
         unit.transform.position = targetPlayer.transform.GetChild(row).GetChild(col).position;
         PlaceMonster placeMonster = unit.GetComponent<PlaceMonster>();
+        EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.UNIT_SUMMONED, this, unitID);
+
 
         placeMonster.isPlayer = isPlayer;
         placeMonster.itemId = itemID;

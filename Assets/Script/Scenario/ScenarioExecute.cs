@@ -566,6 +566,39 @@ public class Unblock_Turn_Btn : ScenarioExecute {
         scenarioMask.UnblockButton();
         handler.isDone = true;
     }
+}
+
+public class Wait_Turn : ScenarioExecute {
+    public Wait_Turn() : base() { }
+
+    IngameEventHandler.EVENT_TYPE eventType;
+
+    public override void Execute() {
+
+        switch (args[0]) {
+            case "ORC":
+                eventType = IngameEventHandler.EVENT_TYPE.BEGIN_ORC_PRE_TURN;
+                break;
+            case "HUMAN":
+                eventType = IngameEventHandler.EVENT_TYPE.BEGIN_HUMAN_TURN;
+                break;
+            case "SECRET":
+                eventType = IngameEventHandler.EVENT_TYPE.BEGIN_ORC_POST_TURN;
+                break;
+            case "BATTLE":
+                eventType = IngameEventHandler.EVENT_TYPE.BEGIN_BATTLE_TURN;
+                break;
+
+        }
+        PlayMangement.instance.EventHandler.AddListener(eventType, CheckTurn);
+
+    }
+
+    protected void CheckTurn(Enum event_type, Component Sender, object Param) {
+        PlayMangement.instance.EventHandler.RemoveListener(event_type, CheckTurn);
+        handler.isDone = true;
+    }
+
 
 
 }
