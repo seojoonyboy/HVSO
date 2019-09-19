@@ -205,6 +205,7 @@ public class ScenarioMask : SerializedMonoBehaviour
         return null;
     }
 
+    //float defaultAlpha = 0.004f;
     float defaultAlpha = 0.2f;
 
     public void MaskScreen() {
