@@ -150,7 +150,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
                     if (heroCardActivate) {
                         transform.parent.parent.Find("HeroCardGuide").gameObject.SetActive(true);
                     }
-
+                    Invoke("SendEvent", 0.3f);
                     showCardsHandler.CancelSelecting();
                 }
             }
@@ -192,6 +192,11 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         CardDropManager.Instance.HideMagicSlot();
         CardInfoOnDrag.instance.OffCardDragInfo();
         PlayMangement.instance.infoOn = false;
+    }
+
+    void SendEvent() {
+        //튜토리얼에서 drop 이 실패하여 다시 핸드로 돌아온 경우 튜토리얼 재호출 처리
+        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.UNIT_DROP_FAIL, this);
     }
 
     IEnumerator UseSkillCardExceptInfo(object[] parms) {

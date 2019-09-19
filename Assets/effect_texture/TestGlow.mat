@@ -105,7 +105,7 @@ Material:
     - _GlowOuter: 0.05
     - _GlowPower: 0.75
     - _GradientScale: 5
-    - _InvFade: 1.56
+    - _InvFade: 2.94
     - _LightAngle: 3.1416
     - _LightingEnabled: 0
     - _MaskSoftnessX: 0
@@ -166,5 +166,5 @@ Material:
     - _ReflectOutlineColor: {r: 0, g: 0, b: 0, a: 1}
     - _SoftParticleFadeParams: {r: 0, g: 0, b: 0, a: 0}
     - _SpecularColor: {r: 1, g: 1, b: 1, a: 1}
-    - _TintColor: {r: 0.5, g: 0.5, b: 0.5, a: 0.5}
+    - _TintColor: {r: 0.5, g: 0.5, b: 0.5, a: 0.5019608}
     - _UnderlayColor: {r: 0, g: 0, b: 0, a: 0.5}

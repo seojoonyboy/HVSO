@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Sirenix.OdinInspector;
+using UniRx;
 
 public class ScenarioMask : SerializedMonoBehaviour
 {
@@ -22,6 +23,7 @@ public class ScenarioMask : SerializedMonoBehaviour
     public HighlightPingpong pingpongObject;
     public GameObject fieldGlow;
     public GameObject defaultGlow;
+    public GameObject blockTurnBtn;
 
     public Dictionary<string, GameObject> targetObject;
 
@@ -66,6 +68,15 @@ public class ScenarioMask : SerializedMonoBehaviour
         rightMask.transform.gameObject.SetActive(true);
         bottonMask.transform.gameObject.SetActive(true);
     }
+
+    public void BlockButton() {
+        blockTurnBtn.SetActive(true);
+    }
+
+    public void UnblockButton() {
+        blockTurnBtn.SetActive(false);
+    }
+
 
 
 
@@ -168,6 +179,26 @@ public class ScenarioMask : SerializedMonoBehaviour
                     }
                 }
 
+                if (main == "shieldArrow") {
+                    if (sub == "top")
+                        maskObject = maskObject.transform.Find("Guide_up").gameObject;
+                    else
+                        maskObject = maskObject.transform.Find("Guide_down").gameObject;
+                }
+
+                if(main == "shieldCard") {
+                    Transform left = maskObject.transform.Find("Left");
+                    Transform right = maskObject.transform.Find("Right");
+
+                    if (left.childCount > 1 && left.GetChild(1).gameObject.GetComponent<CardHandler>().cardData.cardId == sub)
+                        maskObject = left.GetChild(1).gameObject;
+
+                    if (right.childCount > 1 && right.GetChild(1).gameObject.GetComponent<CardHandler>().cardData.cardId == sub)
+                        maskObject = right.GetChild(1).gameObject;
+                }
+
+
+
                 return maskObject;
             }
         }
@@ -255,7 +286,21 @@ public class ScenarioMask : SerializedMonoBehaviour
             glowRect.GetChild(0).GetComponent<RectTransform>().sizeDelta = targetObject.GetComponent<RectTransform>().sizeDelta;
             glowRect.GetChild(0).gameObject.GetComponent<Image>().sprite = targetObject.transform.Find("BackGround").gameObject.GetComponent<Image>().sprite;
         }
-        else if (targetName.Contains("Line")) {
+        else if (targetName.Contains("HeroCard")) {
+            glowRect.gameObject.SetActive(true);
+            glowRect.position = targetObject.transform.Find("Portrait").position;
+            glowRect.sizeDelta = targetObject.transform.Find("Portrait").gameObject.GetComponent<RectTransform>().sizeDelta;
+            glowImage.sprite = targetObject.transform.Find("Portrait").gameObject.GetComponent<Image>().sprite;
+            
+
+            glowRect.GetChild(0).gameObject.SetActive(true);
+            glowRect.GetChild(0).position = targetObject.transform.Find("BackGround").position;
+            glowRect.GetChild(0).GetComponent<RectTransform>().sizeDelta = targetObject.GetComponent<RectTransform>().sizeDelta;
+            glowRect.GetChild(0).gameObject.GetComponent<Image>().sprite = targetObject.transform.Find("BackGround").gameObject.GetComponent<Image>().sprite;
+            glowRect.localScale = targetObject.transform.localScale;
+        }
+
+        else if (targetName.Contains("Line_")) {
             targetObject = this.targetObject["fields"].transform.GetChild(targetObject.transform.GetSiblingIndex()).gameObject;
             glowRect.gameObject.SetActive(true);
             glowRect.position = targetObject.transform.position;
@@ -264,12 +309,34 @@ public class ScenarioMask : SerializedMonoBehaviour
             glowImage.sprite = targetObject.GetComponent<Image>().sprite;
             glowRect.SetParent(fieldGlow.transform);
         }
-        else {
+        else if (targetName.Contains("turnUI_outLine")) {
             glowRect.gameObject.SetActive(true);
             glowRect.position = targetObject.transform.position;
             glowRect.localScale = targetObject.transform.localScale;
             glowRect.sizeDelta = targetObject.GetComponent<RectTransform>().sizeDelta;
-            glowImage.sprite = (targetObject.GetComponent<Image>() != null) ? targetObject.GetComponent<Image>().sprite : defaultGlow.GetComponent<Image>().sprite ;
+            glowImage.sprite = targetObject.GetComponent<Image>().sprite;
+
+
+            GameObject turnBtn = targetObject.transform.parent.Find("Image").gameObject;
+            glowRect.GetChild(0).gameObject.SetActive(true);
+            glowRect.GetChild(0).position = turnBtn.transform.position;
+            glowRect.GetChild(0).GetComponent<RectTransform>().sizeDelta = turnBtn.GetComponent<RectTransform>().sizeDelta;
+            glowRect.GetChild(0).gameObject.GetComponent<Image>().sprite = turnBtn.GetComponent<Image>().sprite;
+        }
+        else if (targetName.Contains("Guide_")) {
+            glowRect.gameObject.SetActive(true);
+            glowRect.localScale = targetObject.transform.localScale;
+            glowRect.sizeDelta = targetObject.GetComponent<RectTransform>().sizeDelta;
+            glowImage.sprite = targetObject.GetComponent<Image>().sprite;
+            glowImage.color = Color.black;
+            Observable.EveryUpdate().TakeWhile(_ => glowRect.gameObject.activeSelf == true).Subscribe(_ => glowRect.position = targetObject.transform.position);
+        }
+        else {
+            glowRect.gameObject.SetActive(true);
+            glowRect.position = targetObject.transform.position;
+            glowRect.localScale = targetObject.transform.localScale;
+            glowRect.sizeDelta = targetObject.GetComponent<RectTransform>().sizeDelta;           
+            glowImage.sprite = (targetObject.GetComponent<Image>() != null) ? targetObject.GetComponent<Image>().sprite : defaultGlow.GetComponent<Image>().sprite;
         }      
         Animation glowAnimation = glowObject.GetComponent<Animation>();
         glowAnimation.Play();        
@@ -301,9 +368,12 @@ public class ScenarioMask : SerializedMonoBehaviour
                 continue;
 
             Animation glowAnimation = child.gameObject.GetComponent<Animation>();
-            glowAnimation.Stop();        
+            glowAnimation.Stop();
+            child.gameObject.GetComponent<Image>().color = Color.white;
+            child.localScale = Vector3.one;
             child.gameObject.SetActive(false);
             child.GetChild(0).gameObject.SetActive(false);
+            
         }
 
         if(fieldGlow.transform.childCount > 0) {
