@@ -251,7 +251,9 @@ public class PlayerController : MonoBehaviour
     /// <param name="amount"></param>
     public void ChangeShieldCount(int amount) {
         Logger.Log("ChangeShieldCount Method 호출");
-        shieldStack.Value += amount;
+        int newVal = shieldStack.Value + amount;
+        if (newVal < 0) newVal = 0;
+        else shieldStack.Value = newVal;
     }
     
 
