@@ -281,6 +281,7 @@ public partial class BattleConnector : MonoBehaviour {
         ShieldCharge charge = new ShieldCharge();
         charge.shieldCount = int.Parse(gauge);
         charge.camp = camp;
+        if(charge.shieldCount == 0) return;
         shieldChargeQueue.Enqueue(charge);
     }
 
