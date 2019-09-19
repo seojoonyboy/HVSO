@@ -231,12 +231,20 @@ public class ScenarioMask : SerializedMonoBehaviour
 
     private void Awake() {
         Instance = this;
-        DisableMask();
+        ZeroMaskPos();
     }
 
     private void OnDestroy() {
         Instance = null;
     }
+
+    private void ZeroMaskPos() {
+        topMask.transform.position = Vector3.zero;
+        leftMask.transform.position = Vector3.zero;
+        rightMask.transform.position = Vector3.zero;
+        bottonMask.transform.position = Vector3.zero;
+    }
+
 
     // Start is called before the first frame update
     void Start()
