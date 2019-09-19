@@ -166,6 +166,10 @@ public partial class BattleConnector : MonoBehaviour {
         SendMethod("keep_hero_card", args);
     }
 
+    public void Surrend(object args) {
+        SendMethod("player_surrender", args);
+    }
+
     void Error(WebSocket webSocket, Exception ex) {
         Logger.LogWarning(ex);
     }

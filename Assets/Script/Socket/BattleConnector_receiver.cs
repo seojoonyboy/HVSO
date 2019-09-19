@@ -226,6 +226,12 @@ public partial class BattleConnector : MonoBehaviour {
         PlayMangement.instance.heroShieldDone.Add(true);
     }
 
+    public void surrender(object args) {
+        var json = (JObject)args;
+        string camp = json["camp"].ToString();
+        Logger.Log(camp + "측 항복");
+    }
+
     public IEnumerator waitSkillDone(UnityAction callback, bool isShield = false) {
         if(isShield) { 
             yield return new WaitUntil(() => PlayMangement.instance.heroShieldActive);

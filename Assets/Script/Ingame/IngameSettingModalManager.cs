@@ -27,6 +27,11 @@ public class IngameSettingModalManager : MonoBehaviour {
         OffAllModals();
     }
 
+    public void Surrend() {
+        PlayMangement.instance.SocketHandler.Surrend(null);
+        OffAllModals();
+    }
+
     private void OffAllModals() {
         quitModal.SetActive(false);
         settingModal.SetActive(false);
