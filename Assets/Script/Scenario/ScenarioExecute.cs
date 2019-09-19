@@ -615,8 +615,24 @@ public class Wait_Turn : ScenarioExecute {
         PlayMangement.instance.EventHandler.RemoveListener(event_type, CheckTurn);
         handler.isDone = true;
     }
+}
 
+public class Block_Screen : ScenarioExecute {
+    public Block_Screen() : base() { }
 
+    public override void Execute() {
+        scenarioMask.MaskScreen();
+        handler.isDone = true;
+    }
+}
+
+public class Unblock_Screen : ScenarioExecute {
+    public Unblock_Screen() : base() { }
+
+    public override void Execute() {
+        scenarioMask.OffMaskScreen();
+        handler.isDone = true;
+    }
 
 }
 

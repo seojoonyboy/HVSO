@@ -57,7 +57,7 @@ public class ScenarioGameManagment : PlayMangement {
 
     void Start() {
         SetBackGround();
-        InitGameData(10);
+        InitGameData(20,10);
     }
 
     void OnDestroy() {
