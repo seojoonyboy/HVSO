@@ -244,6 +244,15 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+
+    /// <summary>
+    /// 영웅의 실드 게이지 조정
+    /// </summary>
+    /// <param name="amount"></param>
+    public void ChangeShieldCount(int amount) {
+        Logger.Log("ChangeShieldCount Method 호출");
+        shieldStack.Value += amount;
+    }
     
 
 

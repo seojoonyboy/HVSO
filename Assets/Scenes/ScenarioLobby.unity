@@ -13352,13 +13352,16 @@ MonoBehaviour:
       Data: 159|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
-      Data: Wait_orc_pre_turn
+      Data: Wait_Turn
     - Name: args
       Entry: 7
       Data: 160|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
-      Data: 0
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: ORC
     - Name: 
       Entry: 13
       Data: 

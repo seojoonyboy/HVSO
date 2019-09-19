@@ -81,6 +81,7 @@ public class MenuCardHandler : MonoBehaviour {
         if (AccountManager.Instance.cardPackage.data.ContainsKey(cardID)) {
             aniState.SetAnimation(0, AccountManager.Instance.cardPackage.data[cardID].cardCount.ToString(), false);
             cardObject.Find("Disabled").gameObject.SetActive(false);
+            transform.Find("NewCard").gameObject.SetActive(AccountManager.Instance.newResourceInfo.checkList.Contains(cardID));
         }
         else {
             cardObject.Find("Disabled").gameObject.SetActive(true);
@@ -162,6 +163,11 @@ public class MenuCardHandler : MonoBehaviour {
     public void OpenCardInfo() {
         menuCardInfo.transform.parent.gameObject.SetActive(true);
         menuCardInfo.gameObject.SetActive(true);
+        if(gameObject.name == "DictionaryCard" && transform.Find("NewCard").gameObject.activeSelf) {
+            AccountManager.Instance.newResourceInfo.checkList.Remove(cardID);
+            AccountManager.Instance.RefreshNewCardData();
+            transform.Find("NewCard").gameObject.SetActive(false);
+        }
         if (transform.parent.name == "Grid")
             menuCardInfo.SetCardInfo(cardData, isHuman, transform);
         else {
