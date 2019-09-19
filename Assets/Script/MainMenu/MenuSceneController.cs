@@ -24,7 +24,7 @@ public class MenuSceneController : MonoBehaviour {
 
     private void Start() {
         deckSettingManager.AttachDecksLoader(ref decksLoader);
-        cardDictionaryManager.AttachDecksLoader(ref decksLoader);
+        //cardDictionaryManager.AttachDecksLoader(ref decksLoader);
         decksLoader.OnLoadFinished.AddListener(() => {
             nicknameText.text = AccountManager.Instance.NickName;
         });
@@ -91,5 +91,10 @@ public class MenuSceneController : MonoBehaviour {
             }
             yield return new WaitForSeconds(0.1f);
         }
+    }
+
+    public void OpenDictionary(bool isHuman) {
+        AccountManager.Instance.dicInfo.isHuman = isHuman;
+        FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.DICTIONARY_SCENE);
     }
 }

@@ -146,4 +146,9 @@ namespace dataModules {
     public class BoxInfo {
         public List<RewardClass> rewardList;
     }
+
+    public class NewResourceInfo {
+        public string userId;
+        public List<string> checkList;
+    }
 }
