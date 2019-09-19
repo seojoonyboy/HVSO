@@ -27,6 +27,8 @@ public class ScenarioMask : SerializedMonoBehaviour
 
     public Dictionary<string, GameObject> targetObject;
 
+    public GameObject outText;
+
 
 
     public void GetMaskHighlight(GameObject targetObject) {
@@ -418,4 +420,14 @@ public class ScenarioMask : SerializedMonoBehaviour
         }
 
     }    
+
+    public void ShowText(string word = "") {
+        outText.SetActive(true);
+    }
+
+    public void HideText() {
+        outText.SetActive(false);
+    }
+
+
 }

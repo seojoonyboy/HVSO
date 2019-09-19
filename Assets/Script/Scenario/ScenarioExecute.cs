@@ -78,8 +78,10 @@ public class Wait_click : ScenarioExecute {
     public override void Execute() {
         GameObject target;
 
-        if (args[0] == "screen")
+        if (args[0] == "screen") {
             target = null;
+            scenarioMask.ShowText();
+        }
         else if (args.Count > 1)
             target = scenarioMask.GetMaskingObject(args[0], args[1]);
         else
@@ -101,6 +103,7 @@ public class Wait_click : ScenarioExecute {
         if (target == null) {
             ScenarioMask.Instance.StopEveryHighlight();
             clickstream.Dispose();
+            scenarioMask.HideText();
             handler.isDone = true;
         }
         else {
@@ -265,6 +268,7 @@ public class End_tutorial : ScenarioExecute {
 
     public override void Execute() {
         scenarioMask.UnmaskHeroGuide();
+        scenarioMask.HideText();
         ScenarioGameManagment.scenarioInstance.isTutorial = false;
     }
 }
