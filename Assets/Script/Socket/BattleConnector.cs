@@ -90,8 +90,8 @@ public partial class BattleConnector : MonoBehaviour {
         if(battleType.CompareTo("test") == 0)
             args = new string[] { battleType, race };
         else {
-            Logger.Log("stageNum : " + PlayerPrefs.GetString("StageNum"));
-            if (PlayerPrefs.GetString("StageNum") != "1") {
+            //Logger.Log("stageNum : " + PlayerPrefs.GetString("StageNum"));
+            if (battleType == "story" && PlayerPrefs.GetString("StageNum") != "1") {
                 PlayerPrefs.SetString("SelectedBattleType", "solo");
                 battleType = "solo";
             }  //TODO : 튜토리얼 이외의 스토리 세팅이 되면 변경할 필요가 있음

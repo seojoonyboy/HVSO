@@ -35671,6 +35671,8 @@ MonoBehaviour:
   highlightCanvas: {fileID: 0}
   onHighlight: 0
   pingpongObject: {fileID: 0}
+  fieldGlow: {fileID: 0}
+  defaultGlow: {fileID: 0}
 --- !u!114 &1747044642
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39966,7 +39968,7 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 0
+  m_ChildAlignment: 4
   m_Spacing: 10
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
