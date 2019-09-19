@@ -44,6 +44,14 @@ public class ShowCardsHandler : MonoBehaviour {
         }
         ShowUI();
         hideShowBtn.SetActive(true);
+
+        if(ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.isTutorial) {
+            hideShowBtn.SetActive(false);
+            cards[1]
+                .transform
+                .Find("GlowEffect")
+                .gameObject.SetActive(false);
+        }
     }
 
     public void FinishPlay(GameObject activatedCard, bool isToHand = false) {
