@@ -347,18 +347,19 @@ public class DeckEditController : MonoBehaviour
             else
                 race = "orc";
             if (card.camp != race) continue;
+
+            ownCount++;
+            int page = ownCount / 9;
+            EditCardHandler ownedCard = ownCardLayout.GetChild(page).GetChild(ownCount - (page * 9)).GetChild(0).GetComponent<EditCardHandler>();
+            ownedCard.editBookRoot = ownedCard.transform.parent.parent.name + "/" + ownedCard.transform.parent.name;
+            ownedCard.gameObject.SetActive(true);
             if (myCards.data.ContainsKey(card.id)) {
-                ownCount++;
-                int page = ownCount / 9;
-                EditCardHandler ownedCard = ownCardLayout.GetChild(page).GetChild(ownCount - (page * 9)).GetChild(0).GetComponent<EditCardHandler>();
-                ownedCard.editBookRoot = ownedCard.transform.parent.parent.name + "/" + ownedCard.transform.parent.name;
-                ownedCard.gameObject.SetActive(true);
                 ownedCard.HAVENUM = myCards.data[card.id].cardCount;
                 haveCardNum += myCards.data[card.id].cardCount;
-                ownedCard.DrawCard(card.id, isHuman);
-                maxHaveCard = haveCardNum;
-                RefreshLine();
             }
+            ownedCard.DrawCard(card.id, isHuman);
+            maxHaveCard = haveCardNum;
+            RefreshLine();
         }
         lastPage = (ownCount / 9) + 1;
         maxPage = "/" + lastPage.ToString();
