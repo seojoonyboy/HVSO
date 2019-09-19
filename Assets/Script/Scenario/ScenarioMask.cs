@@ -163,11 +163,11 @@ public class ScenarioMask : SerializedMonoBehaviour
                     maskObject = (sub == "my") ? maskObject : null;
                 }
 
-                if (main == "shield_num") {
+                if (main == "shield-num") {
                     if (sub == "my")
-                        maskObject = (PlayMangement.instance.player.isHuman == true) ? maskObject.transform.Find("HumanSheild").gameObject : maskObject.transform.Find("OrcSheild").gameObject;
+                        maskObject = (PlayMangement.instance.player.isHuman == true) ? maskObject.transform.Find("HumanShield").gameObject : maskObject.transform.Find("OrcShield").gameObject;
                     else
-                        maskObject = (PlayMangement.instance.enemyPlayer.isHuman == true) ? PlayMangement.instance.enemyPlayer.playerUI.transform.Find("PlayerHealth/HumanSheild").gameObject : PlayMangement.instance.enemyPlayer.playerUI.transform.Find("PlayerHealth/OrcSheild").gameObject;
+                        maskObject = (PlayMangement.instance.enemyPlayer.isHuman == true) ? PlayMangement.instance.enemyPlayer.playerUI.transform.Find("PlayerHealth/ShieldUI/HumanShield").gameObject : PlayMangement.instance.enemyPlayer.playerUI.transform.Find("PlayerHealth/ShieldUI/OrcShield").gameObject;
 
                 }
                 if (main == "button") {
@@ -337,7 +337,7 @@ public class ScenarioMask : SerializedMonoBehaviour
             glowRect.localScale = targetObject.transform.localScale;
             glowRect.sizeDelta = targetObject.GetComponent<RectTransform>().sizeDelta;
             glowImage.sprite = targetObject.GetComponent<Image>().sprite;
-            glowImage.color = Color.black;
+            glowObject.GetComponent<Animation>().clip = glowObject.GetComponent<Animation>().GetClip("WhiteGlowAnimation");
             Observable.EveryUpdate().TakeWhile(_ => glowRect.gameObject.activeSelf == true).Subscribe(_ => glowRect.position = targetObject.transform.position);
         }
         else {
@@ -378,6 +378,7 @@ public class ScenarioMask : SerializedMonoBehaviour
 
             Animation glowAnimation = child.gameObject.GetComponent<Animation>();
             glowAnimation.Stop();
+            glowAnimation.clip = glowAnimation.GetClip("glowAnimation");
             child.gameObject.GetComponent<Image>().color = Color.white;
             child.localScale = Vector3.one;
             child.gameObject.SetActive(false);
