@@ -101,6 +101,7 @@ namespace SkillModules {
                 }
             }
             skillHandler.AddAdditionalArgs(result);
+            skillHandler.isDone = true;
         }
     }
 
