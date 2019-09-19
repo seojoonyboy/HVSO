@@ -404,6 +404,23 @@ public class Disable_drag : ScenarioExecute {
     }
 }
 
+public class Wait_orc_pre_turn : ScenarioExecute {
+    public Wait_orc_pre_turn() : base() { }
+
+    private void Awake() {
+        ScenarioGameManagment.scenarioInstance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.BEGIN_ORC_PRE_TURN, OnOrcPostTurn);
+    }
+
+    public override void Execute() {
+        Logger.Log("Execute Wait_orc_pre_turn");
+    }
+
+    private void OnOrcPostTurn(Enum Event_Type, Component Sender, object Param) {
+        ScenarioGameManagment.scenarioInstance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.BEGIN_ORC_PRE_TURN, OnOrcPostTurn);
+        handler.isDone = true;
+    }
+}
+
 public class Stop_orc_summon : ScenarioExecute {
     public Stop_orc_summon() : base() { }
 
