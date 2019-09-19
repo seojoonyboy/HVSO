@@ -31,7 +31,7 @@ public class BoxRewardManager : MonoBehaviour
         accountManager.userResource.LinkTimer(storeTimer);
 
 
-        cardDic.SetCardsFinished.AddListener(() => SetBoxAnimation());
+        //cardDic.SetCardsFinished.AddListener(() => SetBoxAnimation());
         OnBoxLoadFinished.AddListener(() => accountManager.RefreshInventories(OnInventoryRefreshFinished));
     }
 
@@ -71,6 +71,7 @@ public class BoxRewardManager : MonoBehaviour
 
                     accountManager.rewardList = result;
                     accountManager.SetRewardInfo(result);
+                    SetBoxAnimation();
                     OnBoxLoadFinished.Invoke();
                     accountManager.RequestUserInfo(accountManager.SetSignInData);
                 }
@@ -107,7 +108,7 @@ public class BoxRewardManager : MonoBehaviour
         else
             iTween.ScaleTo(boxParent.GetChild(3).gameObject, iTween.Hash("x", 1, "y", 1, "islocal", true, "time", 0.2f));
         yield return new WaitForSeconds(0.4f);
-        cardDic.SetToHumanCards();
+        //cardDic.SetToHumanCards();
         transform.Find("ExitButton").gameObject.SetActive(true);
     }
 
@@ -139,6 +140,7 @@ public class BoxRewardManager : MonoBehaviour
         Transform boxParent = transform.Find("OpenBox");
         Transform effects = transform.Find("EffectSpines");
         boxParent.GetChild(0).GetChild(0).GetComponent<MenuCardHandler>().DrawCard(rewardList[0].item);
+
         effects.GetChild(0).GetComponent<SkeletonGraphic>().Initialize(false);
         effects.GetChild(0).GetComponent<SkeletonGraphic>().Update(0);
         if (accountManager.allCardsDic[rewardList[0].item].type == "unit")
@@ -150,6 +152,8 @@ public class BoxRewardManager : MonoBehaviour
             boxParent.GetChild(0).GetChild(1).gameObject.SetActive(true);
             boxParent.GetChild(0).GetChild(1).Find("Value").GetComponent<TMPro.TextMeshProUGUI>().text = rewardList[0].amount.ToString();
         }
+        else
+            CheckNewCardList(rewardList[0].item);
 
         boxParent.GetChild(1).GetChild(0).GetComponent<MenuCardHandler>().DrawCard(rewardList[1].item);
         effects.GetChild(1).GetComponent<SkeletonGraphic>().Initialize(false);
@@ -163,6 +167,8 @@ public class BoxRewardManager : MonoBehaviour
             boxParent.GetChild(1).GetChild(1).gameObject.SetActive(true);
             boxParent.GetChild(1).GetChild(1).Find("Value").GetComponent<TMPro.TextMeshProUGUI>().text = rewardList[1].amount.ToString();
         }
+        else
+            CheckNewCardList(rewardList[1].item);
 
         boxParent.GetChild(2).Find(rewardList[2].item).gameObject.SetActive(true);
         boxParent.GetChild(2).Find("Value").GetComponent<TMPro.TextMeshProUGUI>().text = rewardList[2].amount.ToString();
@@ -183,6 +189,8 @@ public class BoxRewardManager : MonoBehaviour
                 boxParent.GetChild(3).Find("Card/GetCrystal").gameObject.SetActive(true);
                 boxParent.GetChild(3).Find("Card/GetCrystal").Find("Value").GetComponent<TMPro.TextMeshProUGUI>().text = rewardList[3].amount.ToString();
             }
+            else
+                CheckNewCardList(rewardList[3].item);
         }
         else {
             boxParent.GetChild(3).Find("Resource").gameObject.SetActive(true);
@@ -202,8 +210,15 @@ public class BoxRewardManager : MonoBehaviour
                 accountManager.myCards = result.cardInventories;
                 accountManager.SetCardData();
                 accountManager.SetHeroInventories(result.heroInventories);
-                cardDic.SetCardsFinished.Invoke();
+                //cardDic.SetCardsFinished.Invoke();
             }
+        }
+    }
+
+    void CheckNewCardList(string cardId) {
+        if (!accountManager.newResourceInfo.checkList.Contains(cardId)) {
+            accountManager.newResourceInfo.checkList.Add(cardId);
+            accountManager.RefreshNewCardData();
         }
     }
 }

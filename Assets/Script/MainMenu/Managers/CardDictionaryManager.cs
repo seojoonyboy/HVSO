@@ -37,7 +37,12 @@ public class CardDictionaryManager : MonoBehaviour {
         Transform classList = cardList.Find("CardsByCost");
         for (int i = 0; i < classList.childCount; i++)
             classList.GetChild(i).Find("Header/Info/Image").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = i.ToString();
-        selectedSortOption = SortingOptions.CLASS;
+        selectedSortOption = AccountManager.Instance.dicInfo.sortingState;
+        transform.Find("UIbar/Crystal/Value").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userResource.crystal.ToString();
+        if (AccountManager.Instance.dicInfo.isHuman)
+            SetToHumanCards();
+        else
+            SetToOrcCards();
     }
 
     public void CloseDictionaryCanvas() {
@@ -46,8 +51,8 @@ public class CardDictionaryManager : MonoBehaviour {
 
     public void SetToHumanCards() {
         isHumanDictionary = true;
-        transform.Find("Content/Buttons/OrcSelect").GetChild(0).gameObject.SetActive(false);
-        transform.Find("Content/Buttons/HumanSelect").GetChild(0).gameObject.SetActive(true);
+        //transform.Find("Content/Buttons/OrcSelect").GetChild(0).gameObject.SetActive(false);
+        //transform.Find("Content/Buttons/HumanSelect").GetChild(0).gameObject.SetActive(true);
         //heroCards.parent.parent.Find("Background").GetComponent<Image>().sprite = humanPanelBg;
 
         SetCardsByClass();
@@ -55,8 +60,8 @@ public class CardDictionaryManager : MonoBehaviour {
 
     public void RefreshToHumanCards() {
         isHumanDictionary = true;
-        transform.Find("Content/Buttons/OrcSelect").GetChild(0).gameObject.SetActive(false);
-        transform.Find("Content/Buttons/HumanSelect").GetChild(0).gameObject.SetActive(true);
+        //transform.Find("Content/Buttons/OrcSelect").GetChild(0).gameObject.SetActive(false);
+        //transform.Find("Content/Buttons/HumanSelect").GetChild(0).gameObject.SetActive(true);
         //heroCards.parent.parent.Find("Background").GetComponent<Image>().sprite = humanPanelBg;
 
         SetCardsByClass(true);
@@ -64,8 +69,8 @@ public class CardDictionaryManager : MonoBehaviour {
 
     public void SetToOrcCards() {
         isHumanDictionary = false;
-        transform.Find("Content/Buttons/OrcSelect").GetChild(0).gameObject.SetActive(true);
-        transform.Find("Content/Buttons/HumanSelect").GetChild(0).gameObject.SetActive(false);
+        //transform.Find("Content/Buttons/OrcSelect").GetChild(0).gameObject.SetActive(true);
+        //transform.Find("Content/Buttons/HumanSelect").GetChild(0).gameObject.SetActive(false);
         //heroCards.parent.parent.Find("Background").GetComponent<Image>().sprite = orcPanelBg;
 
         SetCardsByClass();
@@ -73,15 +78,15 @@ public class CardDictionaryManager : MonoBehaviour {
 
     public void RefreshToOrcCards() {
         isHumanDictionary = false;
-        transform.Find("Content/Buttons/OrcSelect").GetChild(0).gameObject.SetActive(true);
-        transform.Find("Content/Buttons/HumanSelect").GetChild(0).gameObject.SetActive(false);
+        //transform.Find("Content/Buttons/OrcSelect").GetChild(0).gameObject.SetActive(true);
+        //transform.Find("Content/Buttons/HumanSelect").GetChild(0).gameObject.SetActive(false);
         //heroCards.parent.parent.Find("Background").GetComponent<Image>().sprite = orcPanelBg;
 
         SetCardsByClass(true);
     }
 
     private void UpdateContentHeight() {
-        float tmp = 1328f; //영웅 슬롯이 2줄이 될 시 300+ 해주면 됨
+        float tmp = 1028f; //영웅 슬롯이 2줄이 될 시 300+ 해주면 됨
         Transform activatedTf = null;
         foreach (Transform tf in cardList) {
             if (tf.gameObject.activeSelf) {
@@ -189,6 +194,7 @@ public class CardDictionaryManager : MonoBehaviour {
     }
 
     public void ApplySortting() {
+        AccountManager.Instance.dicInfo.sortingState = selectedSortOption;
         switch (selectedSortOption) {
             case SortingOptions.CLASS:
                 SetCardsByClass();
@@ -404,6 +410,10 @@ public class CardDictionaryManager : MonoBehaviour {
         }
         heroCards.gameObject.SetActive(true);
     }
+
+    public void ExitDictionaryScene() {
+        FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
+    }
 }
 
 public enum SortingOptions {
@@ -412,4 +422,9 @@ public enum SortingOptions {
     RARELITY_DESCEND,
     COST_ASCEND,
     COST_DESCEND,
+}
+
+public class DictionaryInfo {
+    public bool isHuman;
+    public SortingOptions sortingState;
 }

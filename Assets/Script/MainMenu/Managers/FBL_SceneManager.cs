@@ -49,6 +49,9 @@ public class FBL_SceneManager : Singleton<FBL_SceneManager> {
             case Scene.TUTORIAL:
                 numberOfScene = 7;
                 break;
+            case Scene.DICTIONARY_SCENE:
+                numberOfScene = 8;
+                break;
         }
         var currentScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
         QualitySettings.asyncUploadTimeSlice = 4;
@@ -90,7 +93,6 @@ public class FBL_SceneManager : Singleton<FBL_SceneManager> {
 
     public enum Scene {
         MAIN_SCENE,
-        COLLECTION_SCENE,
         MISSION_SELECT_SCENE,
         MISSION_INGAME,
         DECK_LIST_SCNE,
@@ -98,6 +100,7 @@ public class FBL_SceneManager : Singleton<FBL_SceneManager> {
         CONNECT_MATCHING_SCENE,
         LOADING_SCENE,
         LOGIN,
-        TUTORIAL
+        TUTORIAL,
+        DICTIONARY_SCENE
     }
 }

@@ -15,6 +15,7 @@ public class MenuCardInfo : MonoBehaviour {
     [SerializeField] MenuSceneController menuSceneController;
     string cardId;
     bool isHuman;
+    bool cardCreate = false;
     AccountManager accountManager;
     CollectionCard cardData;
     Transform dicCard;
@@ -162,7 +163,6 @@ public class MenuCardInfo : MonoBehaviour {
 
         else {
             info.Find("CreateCard").gameObject.SetActive(true);
-            info.Find("CreateCard/Crystal/Value").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userResource.crystal.ToString();
             int cardNum = 0;
             if (AccountManager.Instance.cardPackage.data.ContainsKey(data.id))
                 cardNum = AccountManager.Instance.cardPackage.data[data.id].cardCount;
@@ -201,6 +201,7 @@ public class MenuCardInfo : MonoBehaviour {
                 info.Find("CreateCard/BreakBtn/Disabled").gameObject.SetActive(false);
             info.Find("CreateCard/CrystalUseValue").GetComponent<TMPro.TextMeshProUGUI>().text = "-" + makeCardcost.ToString();
             info.Find("CreateCard/CrystalGetValue").GetComponent<TMPro.TextMeshProUGUI>().text = "+" + (makeCardcost / 2).ToString();
+            info.Find("CreateCard/Crystal/Value").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userData.manaCrystal.ToString();
         }
     }
 
@@ -242,10 +243,14 @@ public class MenuCardInfo : MonoBehaviour {
 
 
     public void MakeCard() {
+        if (cardCreate) return;
+        cardCreate = true;
         accountManager.RequestCardMake(cardId, WaitRequest);
     }
 
     public void BreakCard() {
+        if (cardCreate) return;
+        cardCreate = true;
         accountManager.RequestCardBreak(cardId, WaitRequest);
         accountManager.cardPackage.data.Remove(cardId);
     }
@@ -253,7 +258,7 @@ public class MenuCardInfo : MonoBehaviour {
     void WaitRequest(HTTPRequest originalRequest, HTTPResponse response) {
         accountManager.RequestUserInfo((_req, _res) => {
             accountManager.SetSignInData(_res);
-            hudController.SetResourcesUI();
+            //hudController.SetResourcesUI();
             OnMakeCardFinished.Invoke();
         });
     }
@@ -266,9 +271,11 @@ public class MenuCardInfo : MonoBehaviour {
                 accountManager.myCards = result.cardInventories;
                 accountManager.SetCardData();
                 accountManager.SetHeroInventories(result.heroInventories);
-                menuSceneController.decksLoader.LoadOnlyDecks();
+                //menuSceneController.decksLoader.LoadOnlyDecks();
                 dicCard.GetComponent<MenuCardHandler>().DrawCard(cardId, isHuman);
                 SetCardInfo(cardData, isHuman);
+                cardDic.transform.Find("UIbar/Crystal/Value").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userResource.crystal.ToString();
+                cardCreate = false;
             }
         }
     }

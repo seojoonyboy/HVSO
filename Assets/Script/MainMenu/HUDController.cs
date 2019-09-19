@@ -46,10 +46,14 @@ public class HUDController : MonoBehaviour {
                 gradation.gameObject.SetActive(false);
                 break;
             case Type.DICTIONARY_WINDOW:
+                //backbuttonUI.gameObject.SetActive(false);
+                //userInfoUI.gameObject.SetActive(true);
+                //resourceUI.gameObject.SetActive(true);
+                //dictionaryUI.gameObject.SetActive(true);
                 backbuttonUI.gameObject.SetActive(false);
                 userInfoUI.gameObject.SetActive(true);
                 resourceUI.gameObject.SetActive(true);
-                dictionaryUI.gameObject.SetActive(true);
+                dictionaryUI.gameObject.SetActive(false);
                 break;
         }
     }
