@@ -217,11 +217,12 @@ public class PlaceMonster : MonoBehaviour {
             FieldUnitsObserver observer = playMangement.UnitsObserver;
             //앞에 적 유닛이 없는가
             var myPos = observer.GetMyPos(gameObject);
-            bool isHuman = playMangement.player.isHuman;
+            bool isHuman = isPlayer ? playMangement.player.isHuman : playMangement.enemyPlayer.isHuman;
             var result = PlayMangement.instance.UnitsObserver.GetAllFieldUnits(myPos.col, !isHuman);
             if(result.Count == 0) {
                 Logger.Log("적이 없음. pillage 발동");
-                playMangement.enemyPlayer.PillageEnemyShield(2);
+                if(isPlayer) playMangement.player.PillageEnemyShield(2);
+                else playMangement.enemyPlayer.PillageEnemyShield(2);
             }
         }
 
