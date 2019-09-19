@@ -212,7 +212,7 @@ public class PlaceMonster : MonoBehaviour {
         }
 
         //pillage 능력 : 앞에 유닛이 없으면 약탈
-        if(GetComponent<SkillModules.pillage>() != null) {
+        if(unit.attackType.Contains("pillage")) {
             PlayMangement playMangement = PlayMangement.instance;
             FieldUnitsObserver observer = playMangement.UnitsObserver;
             //앞에 적 유닛이 없는가
@@ -293,7 +293,7 @@ public class PlaceMonster : MonoBehaviour {
                 RequestAttackUnit(myTarget, unit.attack);
             }
             else {
-                if (GetComponent<SkillModules.night_op>() != null)
+                if (GetComponent<SkillModules.night_op>() != null || unit.attackType.Contains("pillage"))
                     myTarget.GetComponent<PlayerController>().TakeIgnoreShieldDamage(unit.attack);
                 else
                     myTarget.GetComponent<PlayerController>().PlayerTakeDamage(unit.attack);
