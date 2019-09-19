@@ -221,7 +221,7 @@ public class PlaceMonster : MonoBehaviour {
             var result = PlayMangement.instance.UnitsObserver.GetAllFieldUnits(myPos.col, !isHuman);
             if(result.Count == 0) {
                 Logger.Log("적이 없음. pillage 발동");
-                playMangement.enemyPlayer.ChangeShieldCount(-2);
+                playMangement.enemyPlayer.PillageEnemyShield(2);
             }
         }
 

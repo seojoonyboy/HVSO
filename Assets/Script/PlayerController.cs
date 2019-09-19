@@ -249,11 +249,24 @@ public class PlayerController : MonoBehaviour
     /// 영웅의 실드 게이지 조정
     /// </summary>
     /// <param name="amount"></param>
-    public void ChangeShieldCount(int amount) {
-        Logger.Log("ChangeShieldCount Method 호출");
-        int newVal = shieldStack.Value + amount;
-        if (newVal < 0) newVal = 0;
-        else shieldStack.Value = newVal;
+    public void PillageEnemyShield(int amount) {
+        PlayMangement playMangement = PlayMangement.instance;
+
+        var enemyShieldStack = playMangement.enemyPlayer.shieldStack;
+        int newEnemyVal = enemyShieldStack.Value - amount;
+        if (newEnemyVal < 0) newEnemyVal = 0;
+        else enemyShieldStack.Value = amount;
+
+        Logger.Log("적 실드 " + enemyShieldStack.Value + "로 바뀜(약탈)");
+
+        int newMyVal = shieldStack.Value + amount;
+        if (newMyVal > 8) newEnemyVal = 8;
+        else shieldStack.Value = newMyVal;
+
+        Logger.Log("내 실드 " + shieldStack.Value + "로 바뀜(약탈)");
+
+        playMangement.enemyPlayer.shieldGauge.AnimationState.SetAnimation(0, newEnemyVal.ToString(), false);
+        shieldGauge.AnimationState.SetAnimation(0, newMyVal.ToString(), false);
     }
     
 
