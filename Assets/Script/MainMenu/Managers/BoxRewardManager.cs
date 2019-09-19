@@ -17,6 +17,7 @@ public class BoxRewardManager : MonoBehaviour
     [SerializeField] TMPro.TextMeshProUGUI storeTimer;
     [SerializeField] SkeletonGraphic boxSpine;
     [SerializeField] Transform additionalSupply;
+    [SerializeField] MenuSceneController menuSceneController;
     // Start is called before the first frame update
     Transform hudCanvas;
 
@@ -216,10 +217,17 @@ public class BoxRewardManager : MonoBehaviour
     }
 
     void CheckNewCardList(string cardId) {
-        if (!accountManager.newResourceInfo.checkList.Contains(cardId)) {
-            accountManager.newResourceInfo.checkList.Add(cardId);
-            accountManager.RefreshNewCardData();
+        if (accountManager.allCardsDic[cardId].camp == "human") {
+            if (!accountManager.cardPackage.checkHumanCard.Contains(cardId)) {
+                accountManager.cardPackage.checkHumanCard.Add(cardId);
+            }
         }
+        else{
+            if (!accountManager.cardPackage.checkOrcCard.Contains(cardId)) {
+                accountManager.cardPackage.checkOrcCard.Add(cardId);
+            }
+        }
+        menuSceneController.SetCardNumbersPerDic();
     }
 }
 

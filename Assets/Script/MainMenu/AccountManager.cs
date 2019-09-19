@@ -32,8 +32,7 @@ public partial class AccountManager : Singleton<AccountManager> {
     public Dictionary<string, CollectionCard> allCardsDic { get; private set; }
 
     public Dictionary<string, HeroInventory> myHeroInventories;
-    public CardDataPackage cardPackage;
-    public NewResourceInfo newResourceInfo;
+    public CardDataPackage cardPackage;    
 
     public ResourceManager resource;
     public UserResourceManager userResource;
@@ -43,6 +42,7 @@ public partial class AccountManager : Singleton<AccountManager> {
     NetworkManager networkManager;
     GameObject loadingModal;
     public UnityEvent OnUserResourceRefresh = new UnityEvent();
+    public UnityEvent OnCardLoadFinished = new UnityEvent();
 
     public string NickName { get; private set; }
 
@@ -138,22 +138,6 @@ public partial class AccountManager : Singleton<AccountManager> {
         }
     }
 
-    void SetNewCardData() {
-        newResourceInfo = new NewResourceInfo();
-        string newCardData = File.ReadAllText(Application.dataPath + "/Resources/CardDatas/NewCardData.txt");
-        if (newCardData != "") {
-            newResourceInfo.userId = userData.deviceId;
-            newResourceInfo = JsonConvert.DeserializeObject<NewResourceInfo>(newCardData);
-        }
-        else
-            newResourceInfo.checkList = new List<string>();
-    }
-
-    public void RefreshNewCardData() {
-        string newCardData = JsonConvert.SerializeObject(newResourceInfo);
-        File.WriteAllText(Application.dataPath + "/Resources/CardDatas/NewCardData.txt", newCardData);
-    }
-
     /// <summary>
     /// 회원가입, 로그인시 유저 정보 처리를 위한 클래스
     /// </summary>
@@ -216,7 +200,6 @@ public partial class AccountManager {
         Modal.instantiate("로그인이 되었습니다.", Modal.Type.CHECK, () => {
             FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
         });
-        SetNewCardData();
     }
 
     private void CallbackSignUp(HTTPRequest originalRequest, HTTPResponse response) {
@@ -570,6 +553,7 @@ public partial class AccountManager {
             var result = dataModules.JsonReader.Read<List<CollectionCard>>(response.DataAsText);
             allCards = result;
             allCardsDic = allCards.ToDictionary(x => x.id, x => x);
+            OnCardLoadFinished.Invoke();
         }
     }
     public void RequestRewardInfo(OnRequestFinishedDelegate callback = null) {
