@@ -209,6 +209,7 @@ public class ScenarioMask : SerializedMonoBehaviour
     float defaultAlpha = 0.2f;
 
     public void MaskScreen() {
+        ActiveMask();
         topMask.position = Vector3.zero;
         leftMask.position = Vector3.zero;
         rightMask.position = Vector3.zero;
@@ -350,7 +351,13 @@ public class ScenarioMask : SerializedMonoBehaviour
         Animation glowAnimation = glowObject.GetComponent<Animation>();
         glowAnimation.Play();        
     }
-    
+    public void UnmaskHeroGuide() {
+        Color color = Color.white;
+        color.a = 1f;
+
+        GetMaskingObject("shieldArrow", "top").GetComponent<Image>().color = color;
+        GetMaskingObject("shieldArrow", "bottom").GetComponent<Image>().color = color;
+    }
 
 
     public GameObject GetUnactiveGlow() {
@@ -381,6 +388,7 @@ public class ScenarioMask : SerializedMonoBehaviour
             glowAnimation.clip = glowAnimation.GetClip("glowAnimation");
             child.gameObject.GetComponent<Image>().color = Color.white;
             child.localScale = Vector3.one;
+            child.position = Vector3.one * 100f;
             child.gameObject.SetActive(false);
             child.GetChild(0).gameObject.SetActive(false);
             

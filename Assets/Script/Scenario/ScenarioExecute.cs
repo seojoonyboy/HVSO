@@ -264,6 +264,7 @@ public class End_tutorial : ScenarioExecute {
     public End_tutorial() : base() { }
 
     public override void Execute() {
+        scenarioMask.UnmaskHeroGuide();
         ScenarioGameManagment.scenarioInstance.isTutorial = false;
     }
 }
@@ -613,7 +614,7 @@ public class Unblock_Screen : ScenarioExecute {
     public Unblock_Screen() : base() { }
 
     public override void Execute() {
-        scenarioMask.OffMaskScreen();
+        scenarioMask.DisableMask();
         handler.isDone = true;
     }
 
