@@ -121,7 +121,7 @@ public class ScenarioManager : SerializedMonoBehaviour
             StageButton stageButtonComp = item.GetComponent<StageButton>();
             stageButtonComp.Init(selectedList[i].chapter, selectedList[i].stage_number, isHuman);
 
-            item.transform.Find("StageScript").GetComponent<TextMeshProUGUI>().text = selectedList[i].description;
+            //item.transform.Find("StageScript").GetComponent<TextMeshProUGUI>().text = selectedList[i].description;
         }
     }
 
