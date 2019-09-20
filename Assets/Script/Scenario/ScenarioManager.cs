@@ -244,6 +244,27 @@ public class ScenarioManager : SerializedMonoBehaviour
         isTutorialSelected = isTutorial;
         if (isTutorial) {
             CreateTutorialDeck(isHuman);
+
+            stageCanvas
+                .transform
+                .Find("StagePanel/TextGroup/StageName")
+                .gameObject
+                .GetComponent<TextMeshProUGUI>().text = chapterData.chapter.ToString() + "-" + chapterData.stage_number.ToString();
+
+
+            stageCanvas
+                .transform
+                .Find("StagePanel/TextGroup/StageName")
+                .gameObject
+                .GetComponent<TextMeshProUGUI>().text = chapterData.stage_Name;
+
+
+            stageCanvas
+                .transform
+                .Find("StagePanel/TextGroup/StageScript")
+                .gameObject
+                .GetComponent<TextMeshProUGUI>().text = chapterData.description;
+
         }
         else {
             LoadMyDecks(isHuman);
@@ -254,6 +275,18 @@ public class ScenarioManager : SerializedMonoBehaviour
                 .GetComponent<TextMeshProUGUI>().text = chapterData.chapter.ToString() + "-" + chapterData.stage_number.ToString();
 
 
+            stageCanvas
+                .transform
+                .Find("StagePanel/TextGroup/StageName")
+                .gameObject
+                .GetComponent<TextMeshProUGUI>().text = chapterData.stage_Name;
+
+
+            stageCanvas
+                .transform
+                .Find("StagePanel/TextGroup/StageScript")
+                .gameObject
+                .GetComponent<TextMeshProUGUI>().text = chapterData.description;
         }
     }
 
