@@ -19,7 +19,7 @@ public class ScenarioExecuteHandler : MonoBehaviour {
     public void RollBack(int index) {
         StopAllCoroutines();
 
-        List<ScenarioExecute> lists = sets.GetRange(index, sets.Count - 1);
+        List<ScenarioExecute> lists = sets.GetRange(index, sets.Count - index);
         StartCoroutine(RollbackedSkillTrigger(lists));
     }
 
