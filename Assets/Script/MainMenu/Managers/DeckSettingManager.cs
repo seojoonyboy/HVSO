@@ -33,12 +33,9 @@ public class DeckSettingManager : MonoBehaviour
     }
 
     private void UpdateContentHeight() {
-        float tmp = -200f;
         float height = deckList.GetComponent<RectTransform>().rect.height;
-        float result = height + tmp;
-        //float screenRate = Screen.height * 0.00052f;
-        transform.Find("DeckListParent").GetComponent<RectTransform>().sizeDelta = new Vector2(1080, result);
-        deckList.GetComponent<RectTransform>().anchoredPosition = new Vector2(deckList.GetComponent<RectTransform>().anchoredPosition.x, -300);
+        transform.Find("DeckListParent").GetComponent<RectTransform>().sizeDelta = new Vector2(1080, height);
+        transform.Find("DeckListParent").GetComponent<RectTransform>().anchoredPosition = new Vector2(transform.Find("DeckListParent").GetComponent<RectTransform>().anchoredPosition.x, -height / 2);
         GetComponent<ScrollRect>().normalizedPosition = new Vector2(0, 1);
     }
 
