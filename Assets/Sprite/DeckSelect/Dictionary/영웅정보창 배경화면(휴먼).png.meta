@@ -110,7 +110,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5f565fa8f85f16341b8d431cd6ef1e89
+      spriteID: 4ebd5a806e7d8b94995f9f0a1ffa0273
       vertices: []
       indices: 
       edges: []
@@ -118,12 +118,12 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 16374fc4940b2184a822ba9300f41f3a
+    spriteID: 5373ac8c666f0d64392ca905e016c72c
     vertices: []
     indices: 
     edges: []
     weights: []
-  spritePackingTag: DictionaryUI
+  spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
   userData: 

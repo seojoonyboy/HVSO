@@ -136,6 +136,7 @@ public partial class AccountManager : Singleton<AccountManager> {
                 }
             }
         }
+        OnCardLoadFinished.Invoke();
     }
 
     /// <summary>
@@ -553,7 +554,7 @@ public partial class AccountManager {
             var result = dataModules.JsonReader.Read<List<CollectionCard>>(response.DataAsText);
             allCards = result;
             allCardsDic = allCards.ToDictionary(x => x.id, x => x);
-            OnCardLoadFinished.Invoke();
+            //OnCardLoadFinished.Invoke();
         }
     }
     public void RequestRewardInfo(OnRequestFinishedDelegate callback = null) {
