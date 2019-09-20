@@ -15,6 +15,8 @@ public class DeckHandler : MonoBehaviour
     private bool isBasic = false;
     private bool isHuman;
     public dataModules.Deck templateDeck;
+
+    dataModules.Deck deck;
     public string DECKID {
         get { return deckID; }
         set { deckID = value; }
@@ -37,6 +39,8 @@ public class DeckHandler : MonoBehaviour
         deckObj.Find("CardNum/Value").GetComponent<TMPro.TextMeshProUGUI>().text = deck.totalCardCount.ToString() + "/";
         deckObj.Find("DeckName").gameObject.SetActive(true);
         deckObj.Find("DeckName").GetComponent<TMPro.TextMeshProUGUI>().text = deck.name.ToString();
+
+        this.deck = deck;
     }
 
     public void SetDeck(dataModules.Deck deck, bool basic = false) {
@@ -148,13 +152,21 @@ public class DeckHandler : MonoBehaviour
     }
 
     public void StartAIBattle() {
-        PlayerPrefs.SetString("SelectedDeckId", deckID);
-        PlayerPrefs.SetString("SelectedBattleType", "solo");
-        string camp;
-        if (isHuman) { camp = "HUMAN"; }
-        else { camp = "ORC"; }
-        PlayerPrefs.SetString("SelectedRace", camp);
+        const int MaxCardNum = 40;
+        if (deck.deckValidate) {
+            PlayerPrefs.SetString("SelectedDeckId", deckID);
+            PlayerPrefs.SetString("SelectedBattleType", "solo");
+            string camp;
+            if (isHuman) { camp = "HUMAN"; }
+            else { camp = "ORC"; }
+            PlayerPrefs.SetString("SelectedRace", camp);
 
-        FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.CONNECT_MATCHING_SCENE);
+            FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.CONNECT_MATCHING_SCENE);
+        }
+        else {
+            if(deck.totalCardCount != MaxCardNum) {
+                Modal.instantiate("유효하지 않은 덱입니다. 카드 부족", Modal.Type.CHECK);
+            }
+        }
     }
 }
