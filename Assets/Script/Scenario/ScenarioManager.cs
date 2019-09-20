@@ -218,10 +218,10 @@ public class ScenarioManager : SerializedMonoBehaviour
             this.selectedDeckObject.transform.Find("Outline").gameObject.SetActive(false);
             this.selectedDeckObject.transform.Find("Deck/Twinkle").gameObject.SetActive(false);
         }
-        selectedDeckObject.transform.Find("Outline").gameObject.SetActive(true);
+        //selectedDeckObject.transform.Find("Outline").gameObject.SetActive(true);
         this.selectedDeckObject = selectedDeckObject;
-        GameObject twinkle = selectedDeckObject.transform.Find("Deck/Twinkle").gameObject;
-        twinkle.SetActive(true);
+        //GameObject twinkle = selectedDeckObject.transform.Find("Deck/Twinkle").gameObject;
+        //twinkle.SetActive(true);
         //twinkle.GetComponent<DeckClickSpine>().Click();
         object[] selectedInfo = new object[] { isTutorial, data };
         PlayerPrefs.SetString("SelectedDeckId", data.id);
@@ -298,6 +298,12 @@ public class ScenarioManager : SerializedMonoBehaviour
 
         PlayerPrefs.SetString("SelectedBattleType", "story");
         string race = PlayerPrefs.GetString("SelectedRace").ToLower();
+
+        if(selectedDeck == null) {
+            Modal.instantiate("유효하지 않은 덱입니다.", Modal.Type.CHECK);
+            SoundManager.Instance.PlaySound(SoundType.FIRST_TURN);
+            return;
+        }
 
         object[] selectedDeckInfo = (object[])selectedDeck;
         bool isTutorial = (bool)selectedDeckInfo[0];
