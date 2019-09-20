@@ -250,32 +250,32 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     /// <param name="amount"></param>
     public void PillageEnemyShield(int amount) {
-        const int MaxGage = 8;
+        //const int MaxGage = 8;
         PlayMangement playMangement = PlayMangement.instance;
-
-        var enemyShieldStack = isPlayer ? playMangement.enemyPlayer.shieldStack : playMangement.player.shieldStack;
+        PlayerController targetPlayer = (isPlayer == true) ? playMangement.enemyPlayer : playMangement.player;
+        int enemyShieldStack = targetPlayer.shieldStack.Value;
+        //var enemyShieldStack = isPlayer ? playMangement.enemyPlayer.shieldStack : playMangement.player.
         //내가 뺏어올 수 있는 양 계산
         int availableAmountToGet = 0;
-        if(enemyShieldStack.Value < amount) {
-            availableAmountToGet = enemyShieldStack.Value;
-        }
-        else {
-            availableAmountToGet = amount;
-        }
-        enemyShieldStack.Value -= availableAmountToGet;
+        availableAmountToGet = (enemyShieldStack < amount) ? enemyShieldStack : amount;
+        targetPlayer.DiscountShieldStack(targetPlayer.shieldStack.Value, availableAmountToGet);
 
-        Logger.Log("적 실드 " + enemyShieldStack.Value + "로 바뀜(약탈)");
+        Logger.Log("적 실드 " + targetPlayer.shieldStack.Value + "로 바뀜(약탈)");
 
-        //내가 채울 수 있는 양 계산
-        int newMyGage = shieldStack.Value + availableAmountToGet;
-        if (newMyGage > MaxGage) newMyGage = MaxGage;
-        shieldStack.Value = newMyGage;
+        ////내가 채울 수 있는 양 계산
+        ChangeShieldStack(shieldStack.Value, availableAmountToGet);
 
-        Logger.Log("내 실드 " + shieldStack.Value + "로 바뀜(약탈)");
+        //enemyShieldStack.Value -= availableAmountToGet;
+        
+        //int newMyGage = shieldStack.Value + availableAmountToGet;
+        //if (newMyGage > MaxGage) newMyGage = MaxGage;
+        //shieldStack.Value = newMyGage;
 
-        SkeletonGraphic enemyShieldGauge = isPlayer ? playMangement.enemyPlayer.shieldGauge : playMangement.player.shieldGauge;
-        enemyShieldGauge.AnimationState.SetAnimation(0, enemyShieldStack.Value.ToString(), false);
-        shieldGauge.AnimationState.SetAnimation(0, shieldStack.Value.ToString(), false);
+        //Logger.Log("내 실드 " + shieldStack.Value + "로 바뀜(약탈)");
+
+        //SkeletonGraphic enemyShieldGauge = isPlayer ? playMangement.enemyPlayer.shieldGauge : playMangement.player.shieldGauge;
+        //enemyShieldGauge.AnimationState.SetAnimation(0, enemyShieldStack.Value.ToString(), false);
+        //shieldGauge.AnimationState.SetAnimation(0, shieldStack.Value.ToString(), false);
     }
     
 
@@ -471,10 +471,7 @@ public class PlayerController : MonoBehaviour
     }
 
     public void ChangeShieldStack(int start, int amount) {
-        shieldStack.Value += amount;
-
-        if (shieldStack.Value > 8)
-            shieldStack.Value = 8;
+        shieldStack.Value = (shieldStack.Value + amount > 8) ? 8 : shieldStack.Value += amount;
 
         shieldGauge.Initialize(false);
         shieldGauge.Update(0);
@@ -488,6 +485,19 @@ public class PlayerController : MonoBehaviour
 
        // entry.Complete += delegate (TrackEntry trackEntry) {  };       
     }
+
+    public void DiscountShieldStack(int start, int amount) {
+
+        shieldStack.Value = (start >= amount) ? start - amount : 0;
+
+        shieldGauge.Initialize(false);
+        shieldGauge.Update(0);
+        shieldGauge.AnimationState.ClearTrack(0);
+        TrackEntry entry = new TrackEntry();
+
+        entry = shieldGauge.AnimationState.SetAnimation(0, shieldStack.Value.ToString(), false);
+    }
+
 
     public void FullShieldStack(int start) {
         int amount = 8 - start;
