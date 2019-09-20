@@ -250,23 +250,32 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     /// <param name="amount"></param>
     public void PillageEnemyShield(int amount) {
+        const int MaxGage = 8;
         PlayMangement playMangement = PlayMangement.instance;
 
         var enemyShieldStack = isPlayer ? playMangement.enemyPlayer.shieldStack : playMangement.player.shieldStack;
-        int newEnemyVal = enemyShieldStack.Value - amount;
-        if (newEnemyVal < 0) newEnemyVal = 0;
-        else enemyShieldStack.Value = amount;
+        //내가 뺏어올 수 있는 양 계산
+        int availableAmountToGet = 0;
+        if(enemyShieldStack.Value < amount) {
+            availableAmountToGet = enemyShieldStack.Value;
+        }
+        else {
+            availableAmountToGet = amount;
+        }
+        enemyShieldStack.Value -= availableAmountToGet;
 
         Logger.Log("적 실드 " + enemyShieldStack.Value + "로 바뀜(약탈)");
 
-        int newMyVal = shieldStack.Value + amount;
-        if (newMyVal > 8) newEnemyVal = 8;
-        else shieldStack.Value = newMyVal;
+        //내가 채울 수 있는 양 계산
+        int newMyGage = shieldStack.Value + availableAmountToGet;
+        if (newMyGage > MaxGage) newMyGage = MaxGage;
+        shieldStack.Value = newMyGage;
 
         Logger.Log("내 실드 " + shieldStack.Value + "로 바뀜(약탈)");
+
         SkeletonGraphic enemyShieldGauge = isPlayer ? playMangement.enemyPlayer.shieldGauge : playMangement.player.shieldGauge;
-        enemyShieldGauge.AnimationState.SetAnimation(0, newEnemyVal.ToString(), false);
-        shieldGauge.AnimationState.SetAnimation(0, newMyVal.ToString(), false);
+        enemyShieldGauge.AnimationState.SetAnimation(0, enemyShieldStack.Value.ToString(), false);
+        shieldGauge.AnimationState.SetAnimation(0, shieldStack.Value.ToString(), false);
     }
     
 
