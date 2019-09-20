@@ -51,7 +51,7 @@ public partial class PlayMangement : MonoBehaviour {
         bool isTest = PlayerPrefs.GetString("SelectedBattleType").CompareTo("test") == 0;
         SetWorldScale();
         instance = this;
-        SetPlayerCard();
+        
         GetComponent<TurnMachine>().onTurnChanged.AddListener(ChangeTurn);
         if (!isTest) GetComponent<TurnMachine>().onPrepareTurn.AddListener(DistributeCard);
         //GameObject backGroundEffect = Instantiate(EffectSystem.Instance.backgroundEffect);
@@ -66,6 +66,7 @@ public partial class PlayMangement : MonoBehaviour {
 
     private void Start() {
         SetBackGround();
+        SetPlayerCard();
         InitGameData(20,20);
 
 
