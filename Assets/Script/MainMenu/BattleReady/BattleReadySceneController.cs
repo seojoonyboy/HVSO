@@ -135,7 +135,7 @@ public class BattleReadySceneController : MonoBehaviour {
     }
 
     public void ChangeBattleType(int pageIndex) {
-        string type = "multi";
+        //string type = "multi";
         //switch (pageIndex) {
         //    case 0:
         //    default:
@@ -145,7 +145,7 @@ public class BattleReadySceneController : MonoBehaviour {
         //        type = "solo";
         //        break;
         //}
-        PlayerPrefs.SetString("SelectedBattleType", type);
+        //PlayerPrefs.SetString("SelectedBattleType", type);
     }
 
     public enum BattleType {
