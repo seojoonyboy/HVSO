@@ -233,6 +233,10 @@ public class Wait_Drag : ScenarioExecute {
                 scenarioMask.StopEveryHighlight();
                 handler.RollBack(1);
             }
+            else {
+                scenarioMask.StopEveryHighlight();
+                handler.RollBack(index);
+            }
         }
     }
 }
