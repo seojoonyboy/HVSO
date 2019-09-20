@@ -221,6 +221,11 @@ public class Wait_Drag : ScenarioExecute {
         } 
     }
 
+    private void OnDestroy() {
+        PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.BEGIN_CARD_PLAY, CheckDrag);
+        PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.UNIT_DROP_FAIL, RollBack);
+    }
+
     private void RollBack(Enum event_type, Component Sender, object Param) {
         if(args.Count >= 3 && args[2].Contains("rollback")) {
             Logger.Log("Rollback!");
@@ -231,11 +236,11 @@ public class Wait_Drag : ScenarioExecute {
 
             if(index != -1) {
                 scenarioMask.StopEveryHighlight();
-                handler.RollBack(1);
+                handler.RollBack(index);
             }
             else {
                 scenarioMask.StopEveryHighlight();
-                handler.RollBack(index);
+                handler.RollBack(1);
             }
         }
     }
