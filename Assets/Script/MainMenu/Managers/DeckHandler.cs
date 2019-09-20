@@ -16,7 +16,7 @@ public class DeckHandler : MonoBehaviour
     private bool isHuman;
     public dataModules.Deck templateDeck;
 
-    public dataModules.Deck deck;
+    dataModules.Deck deck;
     public string DECKID {
         get { return deckID; }
         set { deckID = value; }

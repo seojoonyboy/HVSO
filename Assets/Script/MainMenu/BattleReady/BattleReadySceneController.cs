@@ -29,15 +29,6 @@ public class BattleReadySceneController : MonoBehaviour {
     IEnumerator Start() {
         yield return null;
         isIngameButtonClicked = false;
-
-#if UNITY_EDITOR
-#else
-        Destroy(BattleTypeHorizontalScrollSnap.transform
-            .GetChild(0)
-            .GetChild(2)
-            .gameObject
-        );
-#endif
     }
 
     private void OnEnable() {

@@ -19,6 +19,9 @@ public class DeckListHandlerInBattleReady : MonoBehaviour {
         });
         ResetMyDecks();
         LoadMyDecks();
+
+        Canvas.ForceUpdateCanvases();
+        LayoutRebuilder.ForceRebuildLayoutImmediate(content.GetComponent<RectTransform>());
     }
 
     void OnDisable() {
@@ -33,28 +36,28 @@ public class DeckListHandlerInBattleReady : MonoBehaviour {
 
         for(int i = 0; i < humanDecks.Count; i++) {
             content.GetChild(i).gameObject.SetActive(true);
-            content.GetChild(i).Find("DeckObject/HeroImg").GetComponent<Image>().sprite = campImages[0];
+            content.GetChild(i).Find("HeroImg").GetComponent<Image>().sprite = campImages[0];
 
             DeckHandler deckHandler = content.GetChild(i).gameObject.GetComponent<DeckHandler>();
             deckHandler.DECKID = humanDecks[i].id;
             var deck = humanDecks[i];
-            deckHandler.deck = deck;
 
             Button button = deckHandler.GetComponent<Button>();
             button.onClick.AddListener(() => { OnDeckSelected(deckHandler.DECKID, "human", deck); });
         }
 
+        int index = 0;
         for(int i = humanDecks.Count; i < humanDecks.Count + orcDecks.Count; i++) {
             content.GetChild(i).gameObject.SetActive(true);
-            content.GetChild(i).Find("DeckObject/HeroImg").GetComponent<Image>().sprite = campImages[1];
+            content.GetChild(i).Find("HeroImg").GetComponent<Image>().sprite = campImages[1];
 
             DeckHandler deckHandler = content.GetChild(i).gameObject.GetComponent<DeckHandler>();
-            deckHandler.DECKID = orcDecks[i].id;
-            var deck = orcDecks[i];
-            deckHandler.deck = deck;
+            deckHandler.DECKID = orcDecks[index].id;
+            var deck = orcDecks[index];
 
             Button button = deckHandler.GetComponent<Button>();
             button.onClick.AddListener(() => { OnDeckSelected(deckHandler.DECKID, "orc", deck); });
+            index++;
         }
     }
 
