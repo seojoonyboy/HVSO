@@ -59,7 +59,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 533740588cb10be4aaaaa26078c80916, type: 2}
+  - {fileID: 2100000, guid: 83701594a6696004f88decd7182074b3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -111,8 +111,8 @@ MonoBehaviour:
     materialsInsideMask: []
     materialsOutsideMask: []
   disableRenderingOnOverride: 1
-  _animationName: IDLE
-  loop: 1
+  _animationName: APPEAR
+  loop: 0
   timeScale: 1
 --- !u!114 &343262209733658650
 MonoBehaviour:

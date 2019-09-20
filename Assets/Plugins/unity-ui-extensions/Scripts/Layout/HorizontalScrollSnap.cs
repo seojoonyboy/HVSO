@@ -2,15 +2,16 @@
 /// Sourced from - http://forum.unity3d.com/threads/scripts-useful-4-6-scripts-collection.264161/page-2#post-1945602
 /// Updated by ddreaper - removed dependency on a custom ScrollRect script. Now implements drag interfaces and standard Scroll Rect.
 
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 namespace UnityEngine.UI.Extensions
 {
-
     [RequireComponent(typeof(ScrollRect))]
     [AddComponentMenu("Layout/Extensions/Horizontal Scroll Snap")]
     public class HorizontalScrollSnap : ScrollSnapBase, IEndDragHandler
     {
+        public UnityEvent OnUpdateLayoutCalled = new UnityEvent();
         void Start()
         {
             _isVertical = false;
@@ -57,6 +58,10 @@ namespace UnityEngine.UI.Extensions
                         ScrollToClosestElement();
                     }
                 }
+
+                var rect = _screensContainer.GetComponent<RectTransform>();
+                _screensContainer.GetComponent<RectTransform>().offsetMax = new Vector2(rect.offsetMax.x, 0);
+                _screensContainer.GetComponent<RectTransform>().offsetMin = new Vector2(rect.offsetMin.x, 0);
             }
         }
 
@@ -211,6 +216,8 @@ namespace UnityEngine.UI.Extensions
                 UpdateVisible();
             SetScrollContainerPosition();
             OnCurrentScreenChange(_currentPage);
+
+            OnUpdateLayoutCalled.Invoke();
         }
 
         private void OnRectTransformDimensionsChange()

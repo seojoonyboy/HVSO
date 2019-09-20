@@ -16,7 +16,7 @@ MonoBehaviour:
   deleteDllAfterBuilds: 1
   AutomateForAllAOTPlatforms: 1
   automateForPlatforms: 0900000014000000
-  lastScan: 636997639176345025
+  lastScan: 637024156295383688
   supportSerializedTypes:
   - TypeName: UnityEngine.AudioSource, UnityEngine.AudioModule
     IsCustom: 0
@@ -56,14 +56,6 @@ MonoBehaviour:
       mscorlib
     IsCustom: 0
     Emit: 1
-  - TypeName: Ludiq.FlexibleDictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
-      UnityEngine.CoreModule]], Ludiq.Core.Runtime
-    IsCustom: 0
-    Emit: 1
-  - TypeName: Ludiq.FlexibleDictionary`2[[System.String, mscorlib],[System.String,
-      mscorlib]], Ludiq.Core.Runtime
-    IsCustom: 0
-    Emit: 1
   - TypeName: UnityEngine.GameObject, UnityEngine.CoreModule
     IsCustom: 0
     Emit: 1
@@ -84,9 +76,6 @@ MonoBehaviour:
     IsCustom: 0
     Emit: 1
   - TypeName: UnityEngine.Sprite, UnityEngine.CoreModule
-    IsCustom: 0
-    Emit: 1
-  - TypeName: IngameEditor.StartState, Assembly-CSharp
     IsCustom: 0
     Emit: 1
   - TypeName: System.String, mscorlib

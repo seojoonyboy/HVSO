@@ -1,4 +1,3 @@
-using Bolt;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,8 +6,8 @@ using UnityEngine.UI;
 public class CardHandManager : MonoBehaviour {
     public int cardNum = 0;
     TMPro.TextMeshProUGUI handCardNum;
-    [SerializeField] Transform cardStorage;
-    [SerializeField] Transform showPos;
+    [SerializeField] protected Transform cardStorage;
+    [SerializeField] protected Transform showPos;
     [SerializeField] protected Transform firstDrawParent;
     [SerializeField] public Transform cardSpawnPos;
     public bool isMultiple = false;
@@ -28,7 +27,7 @@ public class CardHandManager : MonoBehaviour {
     }
 
     //멀리건 실행 코루틴(교체 가능한 카드 4장 드로우)
-    public IEnumerator FirstDraw() {
+    public virtual IEnumerator FirstDraw() {
         bool race = PlayMangement.instance.player.isHuman;
         SocketFormat.Card socketCard = PlayMangement.instance.socketHandler.gameState.players.myPlayer(race).FirstCards[firstDrawList.Count];
         GameObject card;
@@ -72,6 +71,7 @@ public class CardHandManager : MonoBehaviour {
         finBtn.GetComponent<Image>().enabled = false;
         finBtn.GetChild(0).gameObject.SetActive(false);
         finBtn.gameObject.SetActive(false);
+        //PlayMangement.instance.resultManager.SetResultWindow("win", PlayMangement.instance.player.isHuman);
     }
 
     //카드 저장고 반환 함수
@@ -106,7 +106,6 @@ public class CardHandManager : MonoBehaviour {
     /// <param name="cardData"></param>
     public void AddCard(GameObject cardobj = null, SocketFormat.Card cardData = null) {
         if (cardNum + 1 == 11) return;
-        PlayMangement.dragable = false;
         GameObject card;
         if (cardobj == null) {
             if (cardData.type == "unit")
@@ -137,10 +136,6 @@ public class CardHandManager : MonoBehaviour {
         else
             card = cardobj;
         if (firstDraw) {
-            if (cardNum + 1 == 5) {
-                AddInfoToList(card);
-                firstDraw = false;
-            }
             card.GetComponent<CardHandler>().DisableCard();
         }
         else {
@@ -212,19 +207,42 @@ public class CardHandManager : MonoBehaviour {
     /// </summary>
     /// <param name="cardData"></param>
     /// <returns></returns>
-    public IEnumerator DrawHeroCard(SocketFormat.Card cardData = null) {
-        GameObject card;
-        if (PlayMangement.instance.player.isHuman)
-            card = cardStorage.Find("HumanHeroCards").GetChild(0).gameObject;
-        else
-            card = cardStorage.Find("OrcHeroCards").GetChild(0).gameObject;
-        card.transform.SetParent(showPos.transform);
+    public IEnumerator DrawHeroCard(SocketFormat.Card[] cards = null) {
+        GameObject leftCard, rightCard;
+
+        if (PlayMangement.instance.player.isHuman) {
+            leftCard = cardStorage.Find("HumanHeroCards").GetChild(0).gameObject;
+            rightCard = cardStorage.Find("HumanHeroCards").GetChild(1).gameObject;
+        }
+        else {
+            leftCard = cardStorage.Find("OrcHeroCards").GetChild(0).gameObject;
+            rightCard = cardStorage.Find("OrcHeroCards").GetChild(1).gameObject;
+        }
+        leftCard.transform.SetParent(showPos.Find("Left"));
+        rightCard.transform.SetParent(showPos.Find("Right"));
+
         showPos.Find("HeroCardGuide").gameObject.SetActive(true);
-        card.SetActive(true);
-        CardHandler handler = card.GetComponent<CardHandler>();
-        handler.DrawHeroCard(cardData);
-        iTween.MoveTo(card, showPos.position, 0.4f);
-        iTween.RotateTo(card, iTween.Hash("rotation", new Vector3(0, 0, 0), "islocal", true, "time", 0.4f));
+
+        leftCard.SetActive(true);
+        rightCard.SetActive(true);
+
+        ShowCardsHandler showCardsHandler = showPos.GetComponent<ShowCardsHandler>();
+        showCardsHandler.AddCards(
+            new GameObject[] { leftCard, rightCard },
+            new string[] { cards[0].skills[0].desc, cards[1].skills[0].desc }
+        );
+
+        CardHandler handler = leftCard.GetComponent<CardHandler>();
+        handler.DrawHeroCard(cards[0]);
+        handler = rightCard.GetComponent<CardHandler>();
+        handler.DrawHeroCard(cards[1]);
+
+        iTween.MoveTo(leftCard, showPos.Find("Left").position, 0.4f);
+        iTween.RotateTo(leftCard, iTween.Hash("z", 0, "islocal", true, "time", 0.4f));
+        yield return new WaitForSeconds(0.5f);
+        iTween.MoveTo(rightCard, showPos.Find("Right").position, 0.4f);
+        iTween.RotateTo(rightCard, iTween.Hash("z", 0, "islocal", true, "time", 0.4f));
+
         yield return StartCoroutine(handler.ActiveHeroCard());
     }
 
@@ -239,6 +257,7 @@ public class CardHandManager : MonoBehaviour {
         Transform cardTransform = cardobj.transform;
         Transform cardPos = transform.GetChild(cardNum);
         cardTransform.GetComponent<CardHandler>().CARDINDEX = cardNum;
+        PlayMangement.instance.socketHandler.KeepHeroCard(cardTransform.GetComponent<CardHandler>().itemID);
         cardTransform.localScale = new Vector3(1, 1, 1);
         cardNum++;
         cardList.Add(cardobj);
@@ -406,7 +425,14 @@ public class CardHandManager : MonoBehaviour {
             clm.AddFeildUnitInfo(index, PlayMangement.instance.unitNum - 1);
         }
         else {
-            removeCard.SetParent(cardStorage.Find("MagicCards"));
+            if (removeCard.name == "MagicCard")
+                removeCard.SetParent(cardStorage.Find("MagicCards"));
+            else {
+                if (PlayMangement.instance.player.isHuman)
+                    removeCard.SetParent(cardStorage.Find("HumanHeroCards"));
+                else
+                    removeCard.SetParent(cardStorage.Find("OrcHeroCards"));
+            }
             clm.RemoveCardInfo(index);
         }
         removeCard.gameObject.SetActive(false);
@@ -445,23 +471,87 @@ public class CardHandManager : MonoBehaviour {
         // }
 
         if(card == null) yield break;
+        PlayMangement.instance.OnBlockPanel(null);
         Transform parent = card.transform.parent;
-        card.transform.SetParent(transform);
+        card.transform.SetParent(GetComponentInParent<Canvas>().transform);
         card.transform.localScale = Vector3.one;
+        if(index == 100)
+            card.transform.position = new Vector3(0f, 50f, 0f);
+        else
+            card.transform.position = new Vector3(0f, -50f, 0f);
         iTween.RotateTo(card, Vector3.zero, 0.5f);
         iTween.MoveTo(card, iTween.Hash(
-           "x", 0,
-           "y", 0,
-           "time", 0.5f,
-           "easetype", iTween.EaseType.easeWeakOutBack));
+            "x", 0,
+            "y", 0,
+            "time", 0.5f,
+            "easetype", iTween.EaseType.easeWeakOutBack));
+        //card.transform.position = Vector3.zero;
+        //card.transform.rotation = Quaternion.identity;
         CardHandler handler = card.GetComponent<CardHandler>();
-        yield return new WaitForSeconds(0.5f);
-        CardInfoOnDrag.instance.SetCardDragInfo(null, new Vector3(0,5,0), handler.cardData.skills.Length != 0 ? handler.cardData.skills[0].desc : null);
+        SetUsedCardInfo(ref card);
+        yield return new WaitForSeconds(0.25f);
+
+        if (card.GetComponent<UnitDragHandler>() != null && card.GetComponent<UnitDragHandler>().cardData.attributes.Length > 0 && card.GetComponent<UnitDragHandler>().cardData.attributes[0] == "ambush")
+            CardInfoOnDrag.instance.SetCardDragInfo(null, new Vector3(0, 5, 0), null);
+        else
+            CardInfoOnDrag.instance.SetCardDragInfo(null, new Vector3(0, 5, 0), handler.cardData.skills.Length != 0 ? handler.cardData.skills[0].desc : null);
         
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(2.0f);
         
         card.transform.SetParent(parent);
         CardInfoOnDrag.instance.OffCardDragInfo();
+        PlayMangement.instance.OffBlockPanel();
+    }
+
+    public void SetUsedCardInfo(ref GameObject card) {
+        card.transform.localScale = Vector3.one;
+        CardData cardData = card.GetComponent<CardHandler>().cardData;
+
+        Image portrait = card.transform.Find("Portrait").GetComponent<Image>();
+        TMPro.TextMeshProUGUI cost = card.transform.Find("Cost/Text").GetComponent<TMPro.TextMeshProUGUI>();
+        
+        Image skillIcon = null;
+        bool isUnit = card.GetComponent<UnitDragHandler>() != null;
+        if (isUnit) {
+            TMPro.TextMeshProUGUI hp = card.transform.Find("Health/Text").GetComponent<TMPro.TextMeshProUGUI>();
+            TMPro.TextMeshProUGUI atk = card.transform.Find("attack/Text").GetComponent<TMPro.TextMeshProUGUI>();
+
+            if (cardData.attributes.Length > 0 && cardData.attributes[0] == "ambush") {
+                hp.text = "?";
+                atk.text = "?";
+                cost.text = "?";
+                skillIcon = card.transform.Find("SkillIcon").GetComponent<Image>();
+            }
+            else {
+                hp.text = cardData.hp.ToString();
+                atk.text = cardData.attack.ToString();
+                cost.text = cardData.cost.ToString();
+                skillIcon = card.transform.Find("SkillIcon").GetComponent<Image>();
+            }
+        }
+
+        if (isUnit == true && (cardData.attributes.Length > 0 && cardData.attributes[0] == "ambush")) {
+            portrait.sprite = AccountManager.Instance.resource.cardPortraite["unknown"];
+        }
+        else
+            portrait.sprite = AccountManager.Instance.resource.cardPortraite[cardData.cardId];
+
+        if (cardData.attributes.Length == 0 && cardData.attackTypes.Length == 0 && isUnit) skillIcon.gameObject.SetActive(false);
+
+        if (cardData.attributes.Length != 0 && isUnit)
+            if (AccountManager.Instance.resource.skillIcons.ContainsKey(cardData.attributes[0])) {
+                skillIcon.sprite = AccountManager.Instance.resource.skillIcons[cardData.attributes[0]];
+            }
+
+        if (cardData.attackTypes.Length != 0 && isUnit)
+            if (AccountManager.Instance.resource.skillIcons.ContainsKey(cardData.attackTypes[0])) {
+                skillIcon.sprite = AccountManager.Instance.resource.skillIcons[cardData.attackTypes[0]];
+            }
+
+        if (cardData.attributes.Length != 0 && cardData.attackTypes.Length != 0 && isUnit)
+            skillIcon.sprite = AccountManager.Instance.resource.skillIcons["complex"];
+        if(!cardData.hero_chk)
+            card.transform.Find("BackGround").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground[cardData.type + "_" + cardData.rarelity];
     }
 
     public IEnumerator SortHandPosition() {
@@ -506,8 +596,8 @@ public class CardHandManager : MonoBehaviour {
         if (cardNum > 4 && transform.localPosition.x > 0)
             iTween.MoveTo(gameObject, iTween.Hash("x", -0, "islocal", true, "time", 0.1f));
         yield return new WaitForSeconds(0.1f);
-        if (PlayMangement.instance.currentTurn != "BATTLE")
-            PlayMangement.dragable = true;
+        //if (PlayMangement.instance.currentTurn != "BATTLE")
+        //    PlayMangement.dragable = true;
     }
 
     /// <summary>
@@ -518,22 +608,17 @@ public class CardHandManager : MonoBehaviour {
         firstDrawParent.parent.gameObject.GetComponent<Image>().enabled = false;
         PlayMangement.instance.socketHandler.MulliganEnd();
         int index = 0;
+        PlayMangement.dragable = false;
         while (index < 4) {
             yield return new WaitForSeconds(0.2f);
             AddCard(firstDrawList[index]);
             index++;
         }
         yield return new WaitForSeconds(0.5f);
-        yield return PlayMangement.instance.socketHandler.WaitGetCard();
-
-        //영웅카드 뽑기
-        bool isHuman = PlayMangement.instance.player.isHuman;
-        SocketFormat.Card cardData = PlayMangement.instance.socketHandler.gameState.players.myPlayer(isHuman).newCard;
-        AddCard(null, cardData);
-
-
-        yield return new WaitForSeconds(3.0f);
-        CustomEvent.Trigger(GameObject.Find("GameManager"), "EndTurn");
+        firstDraw = false;
+        yield return PlayMangement.instance.socketHandler.WaitMulliganFinish();
+        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this);
+        //CustomEvent.Trigger(GameObject.Find("GameManager"), "EndTurn");
         PlayMangement.instance.isMulligan = false;
         firstDrawParent.gameObject.SetActive(false);
         GameObject firstOrcTurnObj = firstDrawParent.parent.Find("First_OrcPlay").gameObject;
@@ -548,7 +633,8 @@ public class CardHandManager : MonoBehaviour {
         PlayMangement.instance.isMulligan = false;
         firstDrawParent.gameObject.SetActive(false);
         yield return new WaitForSeconds(3.0f);
-        CustomEvent.Trigger(GameObject.Find("GameManager"), "EndTurn");
+        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this);
+        //CustomEvent.Trigger(GameObject.Find("GameManager"), "EndTurn");
         GameObject firstOrcTurnObj = firstDrawParent.parent.Find("First_OrcPlay").gameObject;
         firstOrcTurnObj.SetActive(true);
         yield return new WaitForSeconds(1.0f);

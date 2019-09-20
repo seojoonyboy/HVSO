@@ -1,0 +1,83 @@
+
+ac10048.png
+size: 1024,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+L_arm
+  rotate: true
+  xy: 695, 414
+  size: 78, 101
+  orig: 78, 101
+  offset: 0, 0
+  index: -1
+L_arm_2
+  rotate: true
+  xy: 0, 0
+  size: 160, 181
+  orig: 160, 181
+  offset: 0, 0
+  index: -1
+L_leg
+  rotate: true
+  xy: 796, 419
+  size: 73, 79
+  orig: 73, 79
+  offset: 0, 0
+  index: -1
+R_arm
+  rotate: true
+  xy: 553, 401
+  size: 91, 142
+  orig: 91, 142
+  offset: 0, 0
+  index: -1
+R_leg
+  rotate: true
+  xy: 875, 418
+  size: 74, 78
+  orig: 74, 78
+  offset: 0, 0
+  index: -1
+body
+  rotate: false
+  xy: 328, 296
+  size: 161, 123
+  orig: 161, 123
+  offset: 0, 0
+  index: -1
+head
+  rotate: false
+  xy: 181, 20
+  size: 143, 140
+  orig: 143, 140
+  offset: 0, 0
+  index: -1
+head_2
+  rotate: false
+  xy: 328, 156
+  size: 143, 140
+  orig: 143, 140
+  offset: 0, 0
+  index: -1
+head_3
+  rotate: false
+  xy: 324, 16
+  size: 143, 140
+  orig: 143, 140
+  offset: 0, 0
+  index: -1
+shadow
+  rotate: false
+  xy: 328, 419
+  size: 225, 73
+  orig: 225, 73
+  offset: 0, 0
+  index: -1
+sword
+  rotate: false
+  xy: 0, 160
+  size: 328, 332
+  orig: 328, 332
+  offset: 0, 0
+  index: -1

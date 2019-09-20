@@ -11,13 +11,13 @@ public class DeckEditController : MonoBehaviour
 {
     [SerializeField] MenuCardInfo menuCardInfo;
     [SerializeField] Transform cardStorage;
+    [SerializeField] Transform heroInfoWindow;
     public string heroID;
     HeroInventory heroData;
 
     private Transform buttons;
     public Transform settingLayout;
     private Transform ownCardLayout;
-    private Transform heroInfoWindow;
 
     private GameObject deckNamePanel;
 
@@ -49,13 +49,12 @@ public class DeckEditController : MonoBehaviour
     }
 
     private void SetObject() {
-        deckNamePanel = transform.Find("DeckNamePanel").gameObject;        
-        settingLayout = transform.Find("HandDeck/Mask/SettedDeck");
-        ownCardLayout = transform.Find("CardBook");
-        heroInfoWindow = transform.Find("HeroInfoWindow");
-        pagenumText = transform.Find("PageNumber/Capacity").GetComponent<TMPro.TextMeshProUGUI>();
-        setCardText = transform.Find("HandDeck/Capacity").GetComponent<TMPro.TextMeshProUGUI>();
-        buttons = transform.Find("Buttons");
+        deckNamePanel = transform.Find("InnerCanvas/DeckNamePanel").gameObject;        
+        settingLayout = transform.Find("InnerCanvas/HandDeck/Mask/SettedDeck");
+        ownCardLayout = transform.Find("InnerCanvas/CardBook");
+        pagenumText = transform.Find("InnerCanvas/PageNumber/Capacity").GetComponent<TMPro.TextMeshProUGUI>();
+        setCardText = transform.Find("InnerCanvas/HandDeck/Capacity").GetComponent<TMPro.TextMeshProUGUI>();
+        buttons = transform.Find("InnerCanvas/Buttons");
 
         buttons.Find("SaveDeckButton").GetComponent<Button>().onClick.AddListener(delegate () { ConfirmButton(); });
         buttons.Find("CancelButton").GetComponent<Button>().onClick.AddListener(delegate () { CancelButton(); });
@@ -67,7 +66,7 @@ public class DeckEditController : MonoBehaviour
         setCardNum = 0;
         haveCardNum = 0;
         dontHaveCard = 0;
-        currentPage = 0;
+        currentPage = 0;        
         EditCardHandler.dragable = true;
         settingLayout.localPosition = new Vector3(0, settingLayout.localPosition.y, 0);
         while (cardStorage.childCount > 0) {
@@ -98,9 +97,9 @@ public class DeckEditController : MonoBehaviour
         buttons.Find("PrevPageButton").gameObject.SetActive(false);
         pagenumText.text = "1/" + ownCardLayout.childCount.ToString();
         selectCard = null;
-        transform.Find("ShowAllClass/Selected").gameObject.SetActive(true);
-        transform.Find("SortToClass1/Selected").gameObject.SetActive(false);
-        transform.Find("SortToClass2/Selected").gameObject.SetActive(false);
+        transform.Find("InnerCanvas/ShowAllClass/Selected").gameObject.SetActive(true);
+        transform.Find("InnerCanvas/SortToClass1/Selected").gameObject.SetActive(false);
+        transform.Find("InnerCanvas/SortToClass2/Selected").gameObject.SetActive(false);
     }
 
     public void ConfirmButton() {
@@ -111,48 +110,58 @@ public class DeckEditController : MonoBehaviour
 
             field.fieldName = NetworkManager.ModifyDeckReqField.NAME;
 
-            string inputNameVal = deckNamePanel.transform.Find("NameTemplate").Find("Text").GetComponent<Text>().text;
+            string inputNameVal = deckNamePanel.transform.Find("NameTemplate").GetComponent<TMPro.TMP_InputField>().text;
             
             
             if (string.IsNullOrEmpty(inputNameVal)) {
                 Modal.instantiate("원하는 이름을 적어주세요", Modal.Type.CHECK);
                 return;
             }
-            if (inputNameVal.Contains(" ")) {
-                Modal.instantiate("덱 이름의 빈 칸은 제거됩니다.", Modal.Type.CHECK);
-                inputNameVal = inputNameVal.Replace(" ", string.Empty);
-            }
             field.value = inputNameVal;
             form.parms.Add(field);
 
             //template을 통한 덱 생성도 새로운 생성 요청으로 취급 해야함.
             if (isTemplate) RequestNewDeck();
-            else RequestModifyDeck(form, deckID);
+            else {
+                RequestModifyDeck(form, deckID);
+                if (inputNameVal.Contains(" ")) {
+                    Modal.instantiate("덱 이름의 빈 칸은 제거됩니다.", Modal.Type.CHECK);
+                    inputNameVal = inputNameVal.Replace(" ", string.Empty);
+                }
+            };
         }
         else {
             RequestNewDeck();
         }
-        FindObjectOfType<HUDController>().SetHeader(HUDController.Type.SHOW_USER_INFO);
+        FindObjectOfType<HUDController>().SetHeader(HUDController.Type.SHOW_USER_INFO);        
     }
 
     public void CancelButton() {
-        transform.Find("CancelWindow").gameObject.SetActive(true);
+        transform.Find("InnerCanvas/CancelWindow").gameObject.SetActive(true);
+        //if(isTemplate)
     }
 
     public void CancelEdit() {
-        transform.Find("CancelWindow").gameObject.SetActive(false);
+        transform.Find("InnerCanvas/CancelWindow").gameObject.SetActive(false);
         setCardList = null;
+        if (templateMenu != null) {
+            templateMenu.transform.gameObject.SetActive(true);
+            templateMenu = null;
+        }
+
+        deckNamePanel.transform.Find("NameTemplate/TextArea/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "";
+
+        if(isTemplate)
+            FindObjectOfType<HUDController>().SetHeader(HUDController.Type.RESOURCE_ONLY_WITH_BACKBUTTON);
+        else
+            FindObjectOfType<HUDController>().SetHeader(HUDController.Type.SHOW_USER_INFO);
+
+        isTemplate = false;
         gameObject.SetActive(false);
-        if (templateMenu != null)
-            templateMenu.transform.gameObject.SetActive(false);
-
-        deckNamePanel.transform.Find("NameTemplate").Find("Text").GetComponent<Text>().text = "";
-
-        FindObjectOfType<HUDController>().SetHeader(HUDController.Type.SHOW_USER_INFO);
     }
 
     public void ResumeEdit() {
-        transform.Find("CancelWindow").gameObject.SetActive(false);
+        transform.Find("InnerCanvas/CancelWindow").gameObject.SetActive(false);
     }
     
 
@@ -170,15 +179,16 @@ public class DeckEditController : MonoBehaviour
             }
         }
         if (selectCard.transform.parent.name == "Own")
-            transform.Find("SetDeckLayout").Find("glow").gameObject.SetActive(true);
+            transform.Find("InnerCanvas/SetDeckLayout").Find("glow").gameObject.SetActive(true);
 
         if (selectCard.transform.parent.name == "SetDeck") {
-            transform.Find("ExceptButton").gameObject.SetActive(true);
+            transform.Find("InnerCanvas/ExceptButton").gameObject.SetActive(true);
         }
         selectCard.transform.Find("SelectedPanel").gameObject.SetActive(true);
     }
 
     public void OpenHeroInfo() {
+        heroInfoWindow.parent.gameObject.SetActive(true);
         heroInfoWindow.gameObject.SetActive(true);
     }
     public void CloseHeroInfo() {
@@ -202,7 +212,6 @@ public class DeckEditController : MonoBehaviour
         currentPage--;
         ownCardLayout.GetChild(currentPage).gameObject.SetActive(true);
         buttons.Find("NextPageButton").gameObject.SetActive(true);
-        pagenumText.text = (currentPage + 1).ToString() + maxPage;
         if (currentPage - 1 < 0) {
             buttons.Find("PrevPageButton").gameObject.SetActive(false);
             return;
@@ -222,6 +231,13 @@ public class DeckEditController : MonoBehaviour
         }
         setCardNum--;
         haveCardNum++;
+        ownCardLayout.GetChild(currentPage).gameObject.SetActive(false);
+        currentPage = beforeCard.transform.parent.parent.GetSiblingIndex();
+        ownCardLayout.GetChild(currentPage).gameObject.SetActive(true);
+        if (currentPage > 0) buttons.Find("PrevPageButton").gameObject.SetActive(true);
+        else buttons.Find("PrevPageButton").gameObject.SetActive(false);
+        if (currentPage + 1 == lastPage) buttons.Find("NextPageButton").gameObject.SetActive(false);
+        else buttons.Find("NextPageButton").gameObject.SetActive(true);
         RefreshLine();
     }
 
@@ -253,10 +269,11 @@ public class DeckEditController : MonoBehaviour
 
     public void RefreshLine() {
         setCardText.text = setCardNum.ToString() + "/40";
-        if(setCardNum == 0)
-            transform.Find("DeckImage/EmptyHand").gameObject.SetActive(true);
+        pagenumText.text = (currentPage + 1).ToString() + maxPage;
+        if (setCardNum == 0)
+            transform.Find("InnerCanvas/DeckImage/EmptyHand").gameObject.SetActive(true);
         else
-            transform.Find("DeckImage/EmptyHand").gameObject.SetActive(false);
+            transform.Find("InnerCanvas/DeckImage/EmptyHand").gameObject.SetActive(false);
         Canvas.ForceUpdateCanvases();
         LayoutRebuilder.ForceRebuildLayoutImmediate(settingLayout.GetComponent<RectTransform>());
     }
@@ -270,9 +287,12 @@ public class DeckEditController : MonoBehaviour
         InitCanvas();
         Transform heroCards;
         heroData = null;
+        heroID = heroId;
         this.isHuman = isHuman;
-        deckNamePanel.transform.Find("NameTemplate").GetComponent<InputField>().text = "";
+        isTemplate = true;
+        deckNamePanel.transform.Find("NameTemplate").GetComponent<TMPro.TMP_InputField>().text = "";
 
+        heroData = AccountManager.Instance.myHeroInventories[heroId];
         Transform heroSpines = heroInfoWindow.Find("HeroSpines");
         for (int i = 0; i < heroSpines.childCount; i++) 
             heroSpines.GetChild(i).gameObject.SetActive(false);
@@ -303,10 +323,10 @@ public class DeckEditController : MonoBehaviour
             }
         }
         Dictionary<string, Sprite> classSprite = AccountManager.Instance.resource.classImage;
-        transform.Find("SortToClass1").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[0] + "_sortbtnOff"];
-        transform.Find("SortToClass1/Selected").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[0] + "_sortbtnOn"];
-        transform.Find("SortToClass2").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[1] + "_sortbtnOff"];
-        transform.Find("SortToClass2/Selected").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[1] + "_sortbtnOn"];
+        transform.Find("InnerCanvas/SortToClass1").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[0] + "_sortbtnOff"];
+        transform.Find("InnerCanvas/SortToClass1/Selected").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[0] + "_sortbtnOn"];
+        transform.Find("InnerCanvas/SortToClass2").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[1] + "_sortbtnOff"];
+        transform.Find("InnerCanvas/SortToClass2/Selected").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[1] + "_sortbtnOn"];
         heroInfoWindow.Find("Class/Class_1").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[0]];
         heroInfoWindow.Find("Class/Class_2").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[1]];
         heroCards.gameObject.SetActive(true);
@@ -327,18 +347,19 @@ public class DeckEditController : MonoBehaviour
             else
                 race = "orc";
             if (card.camp != race) continue;
+
+            ownCount++;
+            int page = ownCount / 9;
+            EditCardHandler ownedCard = ownCardLayout.GetChild(page).GetChild(ownCount - (page * 9)).GetChild(0).GetComponent<EditCardHandler>();
+            ownedCard.editBookRoot = ownedCard.transform.parent.parent.name + "/" + ownedCard.transform.parent.name;
+            ownedCard.gameObject.SetActive(true);
             if (myCards.data.ContainsKey(card.id)) {
-                ownCount++;
-                int page = ownCount / 9;
-                EditCardHandler ownedCard = ownCardLayout.GetChild(page).GetChild(ownCount - (page * 9)).GetChild(0).GetComponent<EditCardHandler>();
-                ownedCard.editBookRoot = ownedCard.transform.parent.parent.name + "/" + ownedCard.transform.parent.name;
-                ownedCard.gameObject.SetActive(true);
                 ownedCard.HAVENUM = myCards.data[card.id].cardCount;
                 haveCardNum += myCards.data[card.id].cardCount;
-                ownedCard.DrawCard(card.id, isHuman);
-                maxHaveCard = haveCardNum;
-                RefreshLine();
             }
+            ownedCard.DrawCard(card.id, isHuman);
+            maxHaveCard = haveCardNum;
+            RefreshLine();
         }
         lastPage = (ownCount / 9) + 1;
         maxPage = "/" + lastPage.ToString();
@@ -352,13 +373,14 @@ public class DeckEditController : MonoBehaviour
         InitCanvas();
         Transform heroCards;
         heroData = null;
-        if(!isTemplate) deckID = loadedDeck.id;
+        heroID = loadedDeck.heroId;
+        if (!isTemplate) deckID = loadedDeck.id;
         deckID = loadedDeck.id;
         if (loadedDeck.camp == "human")
             isHuman = true;
         else
             isHuman = false;
-        deckNamePanel.transform.Find("NameTemplate").GetComponent<InputField>().text = loadedDeck.name;
+        deckNamePanel.transform.Find("NameTemplate").GetComponent<TMPro.TMP_InputField>().text = loadedDeck.name;
 
         Transform heroSpines = heroInfoWindow.Find("HeroSpines");
         for (int i = 0; i < heroSpines.childCount; i++)
@@ -434,13 +456,18 @@ public class DeckEditController : MonoBehaviour
         int settedCardNum = 0;
         CardDataPackage myCards = AccountManager.Instance.cardPackage;
         foreach(dataModules.Item card in lodedDeck.items) {
-            EditCardHandler settedCard = settingLayout.transform.GetChild(settedCardNum).GetComponent<EditCardHandler>();
-            settedCard.SETNUM = card.cardCount;
-            settedCard.DrawCard(card.cardId, isHuman);
-            setCardNum += card.cardCount;
-            setCardList.Add(card.cardId, settedCard.gameObject);
-            settedCardNum++;
-            settedCard.gameObject.SetActive(true);
+            if (myCards.data.ContainsKey(card.id)) {
+                EditCardHandler settedCard = settingLayout.transform.GetChild(settedCardNum).GetComponent<EditCardHandler>();
+                if(myCards.data[card.id].cardCount >= card.cardCount)
+                    settedCard.SETNUM = card.cardCount;
+                else
+                    settedCard.SETNUM = myCards.data[card.id].cardCount;
+                settedCard.DrawCard(card.cardId, isHuman);
+                setCardNum += settedCard.SETNUM;
+                setCardList.Add(card.cardId, settedCard.gameObject);
+                settedCardNum++;
+                settedCard.gameObject.SetActive(true);
+            }
         }
 
         foreach (dataModules.CollectionCard card in AccountManager.Instance.allCards) {
@@ -452,13 +479,13 @@ public class DeckEditController : MonoBehaviour
             else
                 race = "orc";
             if (card.camp != race) continue;
+            ownCount++;
+            int page = ownCount / 9;
+            EditCardHandler ownedCard = ownCardLayout.GetChild(page).GetChild(ownCount - (page * 9)).GetChild(0).GetComponent<EditCardHandler>();
+            ownedCard.gameObject.SetActive(true);
+            ownedCard.editBookRoot = ownedCard.transform.parent.parent.name + "/" + ownedCard.transform.parent.name;
             if (myCards.data.ContainsKey(card.id)) {
-                ownCount++;
-                int page = ownCount / 9;
-                EditCardHandler ownedCard = ownCardLayout.GetChild(page).GetChild(ownCount - (page * 9)).GetChild(0).GetComponent<EditCardHandler>();
-                ownedCard.gameObject.SetActive(true);
-                ownedCard.editBookRoot = ownedCard.transform.parent.parent.name + "/" + ownedCard.transform.parent.name;
-                if (!setCardList.ContainsKey(card.id)){
+                if (!setCardList.ContainsKey(card.id)) {
                     ownedCard.HAVENUM = myCards.data[card.id].cardCount;
                     haveCardNum += myCards.data[card.id].cardCount;
                     ownedCard.DrawCard(card.id, isHuman);
@@ -471,9 +498,13 @@ public class DeckEditController : MonoBehaviour
                     ownedCard.DrawCard(card.id, isHuman);
                     if (ownedCard.HAVENUM == 0) {
                         ownedCard.DisableCard(true);
-                    }                    
+                    }
                     haveCardNum += ownedCard.HAVENUM;
                 }
+            }
+            else {
+                ownedCard.HAVENUM = 0;
+                ownedCard.DrawCard(card.id, isHuman);
             }
             maxHaveCard = setCardNum + haveCardNum;
             RefreshLine();
@@ -515,9 +546,9 @@ public class DeckEditController : MonoBehaviour
             buttons.Find("NextPageButton").gameObject.SetActive(true);
         buttons.Find("PrevPageButton").gameObject.SetActive(false);
         RefreshLine();
-        transform.Find("ShowAllClass/Selected").gameObject.SetActive(true);
-        transform.Find("SortToClass1/Selected").gameObject.SetActive(false);
-        transform.Find("SortToClass2/Selected").gameObject.SetActive(false);
+        transform.Find("InnerCanvas/ShowAllClass/Selected").gameObject.SetActive(true);
+        transform.Find("InnerCanvas/SortToClass1/Selected").gameObject.SetActive(false);
+        transform.Find("InnerCanvas/SortToClass2/Selected").gameObject.SetActive(false);
     }
 
     public void SortToClass(int classNum) {
@@ -558,14 +589,14 @@ public class DeckEditController : MonoBehaviour
             buttons.Find("NextPageButton").gameObject.SetActive(true);
         buttons.Find("PrevPageButton").gameObject.SetActive(false);
         RefreshLine();
-        transform.Find("ShowAllClass/Selected").gameObject.SetActive(false);
+        transform.Find("InnerCanvas/ShowAllClass/Selected").gameObject.SetActive(false);
         if (classNum == 0) {
-            transform.Find("SortToClass1/Selected").gameObject.SetActive(true);
-            transform.Find("SortToClass2/Selected").gameObject.SetActive(false);
+            transform.Find("InnerCanvas/SortToClass1/Selected").gameObject.SetActive(true);
+            transform.Find("InnerCanvas/SortToClass2/Selected").gameObject.SetActive(false);
         }
         else {
-            transform.Find("SortToClass1/Selected").gameObject.SetActive(false);
-            transform.Find("SortToClass2/Selected").gameObject.SetActive(true);
+            transform.Find("InnerCanvas/SortToClass1/Selected").gameObject.SetActive(false);
+            transform.Find("InnerCanvas/SortToClass2/Selected").gameObject.SetActive(true);
         }
     }
 
@@ -618,7 +649,7 @@ public class DeckEditController : MonoBehaviour
     /// Server에게 덱 새로 추가 요청(커스텀 덱)
     /// </summary>
     public void RequestNewDeck() {
-        if (string.IsNullOrEmpty(deckNamePanel.transform.Find("NameTemplate").Find("Text").GetComponent<Text>().text) == true) {
+        if (string.IsNullOrEmpty(deckNamePanel.transform.Find("NameTemplate/TextArea/Text").GetComponent<TMPro.TextMeshProUGUI>().text) == true) {
             Modal.instantiate("덱 이름을 입력해 주세요.", Modal.Type.CHECK);
             return;
         }
@@ -639,8 +670,7 @@ public class DeckEditController : MonoBehaviour
                 items.Add(data);
             }
         }
-        var nameVal = deckNamePanel.transform.Find("NameTemplate").Find("Text").GetComponent<Text>().text;
-        heroID = (isHuman == true) ? "h10001" : "h10002";
+        var nameVal = deckNamePanel.transform.Find("NameTemplate/TextArea/Text").GetComponent<TMPro.TextMeshProUGUI>().text;
 
         formatData.heroId = heroID; //영웅 id
         formatData.items = items.ToArray(); //추가한 카드 정보들
@@ -656,8 +686,11 @@ public class DeckEditController : MonoBehaviour
             Logger.Log("덱 생성 완료");
             menuSceneController.decksLoader.Load();
             gameObject.SetActive(false);
-            templateMenu.transform.gameObject.SetActive(false);
-            deckNamePanel.transform.Find("NameTemplate").Find("Text").GetComponent<Text>().text = "";
+            if (templateMenu != null) {
+                templateMenu.transform.gameObject.SetActive(false);
+                templateMenu = null;
+            }
+            deckNamePanel.transform.Find("NameTemplate/TextArea/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "";
         }
 
     }

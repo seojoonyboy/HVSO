@@ -12,6 +12,10 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
     public void UnitAdded(GameObject target, Pos pos, bool isHuman) {
         if (isHuman) humanUnits[pos.col, pos.row] = target;
         else orcUnits[pos.col, pos.row] = target;
+
+
+        //if (ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.isTutorial == true && target.GetComponent<PlaceMonster>().isPlayer == true)
+            //PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.UNIT_SUMMONED, this, target.GetComponent<PlaceMonster>().unit.id);
     }
 
     public void UnitRemoved(Pos pos, bool isHuman) {

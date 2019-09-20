@@ -49,6 +49,8 @@ public class UnitSpine : MonoBehaviour
     public GameObject hidingObject;
     protected HideUnit hideUnit;
 
+    public bool teleportMove;
+
     [HideInInspector]
     public Transform headbone;
     [HideInInspector]
@@ -95,8 +97,13 @@ public class UnitSpine : MonoBehaviour
         }
     }
 
-    public virtual void Appear() {        
-        TrackEntry entry;
+    public virtual void Appear() {
+        //skeletonAnimation.skeleton.SetSlotsToSetupPose();
+        skeletonAnimation.Initialize(false);
+        skeletonAnimation.Update(0);
+        //spineAnimationState.Data.DefaultMix = 1;
+        //spineAnimationState.ClearTrack(0);
+        TrackEntry entry;        
         entry = spineAnimationState.SetAnimation(0, appearAnimationName, false);
         currentAnimationName = appearAnimationName;
         entry.Complete += Idle;

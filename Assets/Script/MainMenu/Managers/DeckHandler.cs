@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using BestHTTP;
 using UnityEngine;
 using UnityEngine.UI;
+using Spine;
+using Spine.Unity;
 
 public class DeckHandler : MonoBehaviour
 {
@@ -13,9 +15,32 @@ public class DeckHandler : MonoBehaviour
     private bool isBasic = false;
     private bool isHuman;
     public dataModules.Deck templateDeck;
+
+    dataModules.Deck deck;
     public string DECKID {
         get { return deckID; }
         set { deckID = value; }
+    }
+
+    public void InitDeck() {
+        transform.Find("HeroImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.deckPortraite["empty"];
+        transform.Find("CardNum").gameObject.SetActive(false);
+        transform.Find("DeckName").gameObject.SetActive(false);
+    }
+
+    public void SetNewDeck(dataModules.Deck deck) {
+        deckID = deck.id;
+        if (deck.camp == "human") isHuman = true;
+        else isHuman = false;
+        Transform deckObj = transform.GetChild(0);
+        deckObj.Find("HeroImg").gameObject.SetActive(true);
+        deckObj.Find("HeroImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.deckPortraite[deck.heroId];
+        deckObj.Find("CardNum").gameObject.SetActive(true);
+        deckObj.Find("CardNum/Value").GetComponent<TMPro.TextMeshProUGUI>().text = deck.totalCardCount.ToString() + "/";
+        deckObj.Find("DeckName").gameObject.SetActive(true);
+        deckObj.Find("DeckName").GetComponent<TMPro.TextMeshProUGUI>().text = deck.name.ToString();
+
+        this.deck = deck;
     }
 
     public void SetDeck(dataModules.Deck deck, bool basic = false) {
@@ -41,13 +66,23 @@ public class DeckHandler : MonoBehaviour
         deckInfo.Find("Capacity").GetComponent<TMPro.TextMeshProUGUI>().text = deck.totalCardCount.ToString() + "/40";
     }
 
+    public void SetNewTemplateDeck(dataModules.Deck deck) {
+        templateDeck = deck;
+        deckID = deck.id;
+        transform.Find("HeroImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.deckPortraite[deck.heroId];
+        transform.Find("DeckName").GetComponent<TMPro.TextMeshProUGUI>().text = deck.name.ToString();
+        transform.Find("CardNum/Value").GetComponent<TMPro.TextMeshProUGUI>().text = deck.totalCardCount.ToString() + "/";
+        transform.Find("Selected").gameObject.SetActive(false);
+        transform.Find("SelectedBack").gameObject.SetActive(false);
+    }
+
     public void OpenDeckButton() {
-        if (isBasic) return;
-        GameObject editButtons = transform.Find("DeckInfo/EditButtons").gameObject;
-        if (editButtons.activeSelf)
-            editButtons.SetActive(false);
-        else
-            editButtons.SetActive(true);
+        DeckSettingManager deckManager = transform.parent.parent.parent.GetComponent<DeckSettingManager>();
+        if (deckManager.selectedDeck == transform) {
+            StartCoroutine(deckManager.CloseDeckButtons());
+            return;
+        }
+        StartCoroutine(deckManager.OpenDeckButtons(transform));
     }
 
     public void CloseDeckButton() {
@@ -57,10 +92,11 @@ public class DeckHandler : MonoBehaviour
     }
 
     public void SelectTemplateDeck() {
+        transform.Find("Selected").GetComponent<SkeletonGraphic>().Initialize(true);
         transform.Find("Selected").gameObject.SetActive(true);
-        templateCanvas.selectedDeck = this;
-        templateCanvas.transform.Find("CancelSelect").gameObject.SetActive(true);
-        templateCanvas.transform.Find("DeckEditBtn").gameObject.SetActive(true);
+        transform.Find("SelectedBack").GetComponent<SkeletonGraphic>().Initialize(true);
+        transform.Find("SelectedBack").gameObject.SetActive(true);
+        templateCanvas.SelectDeck(this);
     }
 
     public void CancelSelect() {
@@ -87,25 +123,23 @@ public class DeckHandler : MonoBehaviour
             }
         }
         if(customDeck != null)
-            deckEditCanvas.SetCustumDeckEdit(customDeck);
+            deckEditCanvas.SetCustumDeckEdit(customDeck, false);
         deckEditCanvas.gameObject.SetActive(true);
         deckEditCanvas.GetComponent<DeckEditController>().RefreshLine();
-        transform.Find("DeckInfo/EditButtons").gameObject.SetActive(false);
+        DeckSettingManager deckManager = transform.parent.parent.parent.GetComponent<DeckSettingManager>();
+        deckManager.RefreshLine();
 
         FindObjectOfType<HUDController>().SetHeader(HUDController.Type.HIDE);
     }
 
     public void DeleteButton() {
         if (AccountManager.Instance == null) return;
+        DeckSettingManager deckManager = transform.parent.parent.parent.GetComponent<DeckSettingManager>();
+        StartCoroutine(deckManager.CloseDeckButtons());
+        //transform.GetChild(0).Find("Buttons").localPosition = new Vector3(-5, 0, 0);
         AccountManager.Instance.RequestDeckRemove(DECKID, OnRemoved);
-        transform.Find("DeckInfo/EditButtons").gameObject.SetActive(false);
-        Transform deckInfo = transform.Find("DeckInfo");
-        deckInfo.gameObject.SetActive(false);
         transform.SetAsLastSibling();
         gameObject.SetActive(false);
-
-        if (transform.parent.GetChild(2).gameObject.activeSelf && transform.parent.GetChild(2).Find("DeckInfo").gameObject.activeSelf)
-            gameObject.SetActive(true);
     }
 
     private void OnRemoved(HTTPRequest originalRequest, HTTPResponse response) {
@@ -114,6 +148,25 @@ public class DeckHandler : MonoBehaviour
                 .menuSceneController
                 .decksLoader
                 .Load();
+        }
+    }
+
+    public void StartAIBattle() {
+        const int MaxCardNum = 40;
+        if (deck.deckValidate) {
+            PlayerPrefs.SetString("SelectedDeckId", deckID);
+            PlayerPrefs.SetString("SelectedBattleType", "solo");
+            string camp;
+            if (isHuman) { camp = "HUMAN"; }
+            else { camp = "ORC"; }
+            PlayerPrefs.SetString("SelectedRace", camp);
+
+            FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.CONNECT_MATCHING_SCENE);
+        }
+        else {
+            if(deck.totalCardCount != MaxCardNum) {
+                Modal.instantiate("유효하지 않은 덱입니다. 카드 부족", Modal.Type.CHECK);
+            }
         }
     }
 }

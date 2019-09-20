@@ -29,18 +29,6 @@ public partial class CardDropManager : Singleton<CardDropManager> {
                 enemyUnitLine[i][j] = unitSlotLines.parent.GetChild(1).GetChild(j).GetChild(i);
             }
         }
-        StartCoroutine(SetLineGuide(mapSlotLines));
-    }
-
-    IEnumerator SetLineGuide(Transform mapSlotLines) {
-        for (int i = 0; i < 5; i++) {
-            mapSlotLines.GetChild(i).Find("FightGuide").localScale = Vector3.zero;
-        }
-        yield return new WaitForSeconds(0.1f);
-        for (int i = 0; i < 5; i++) {
-            mapSlotLines.GetChild(i).Find("FightGuide").gameObject.SetActive(false);
-            mapSlotLines.GetChild(i).Find("FightGuide").localScale = Vector3.one;
-        }
     }
 }
 
@@ -48,7 +36,28 @@ public partial class CardDropManager : Singleton<CardDropManager> {
 /// 유닛 처리
 /// </summary>
 public partial class CardDropManager {
+    /// <summary>
+    /// 튜토리얼용 강제 소환위치 지정
+    /// </summary>
+    /// <param name="line">Args는 1부터 시작</param>
+    public void ForcedShowDropableSlot(int line) {
+        Logger.Log("ForcedShowDropableSlot");
+        for(int i=0; i<5; i++) {
+            if(i == line - 1) {
+                if (unitLine[i][0].childCount == 0) {
+                    slotLine[i].GetChild(0).gameObject.SetActive(true);
+                }
+            }
+        }
+    }
     public void ShowDropableSlot(CardData card) {
+        if(ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.isTutorial) {
+            int line = ScenarioGameManagment.scenarioInstance.forcedSummonAt;
+            if(line != -1) {
+                ForcedShowDropableSlot(line);
+                return;
+            }
+        }
         for (int i = 0; i < 5; i++) {
             if (card.attributes.Length == 0) {
                 // if (slotLine[i].GetComponent<Terrain>().terrain == PlayMangement.LineState.forest) continue;
@@ -59,7 +68,9 @@ public partial class CardDropManager {
                     string[] attribute = unitLine[i][0].GetChild(0).GetComponent<PlaceMonster>().unit.attributes;
                     for (int j = 0; j < attribute.Length; j++) {
                         if (attribute[j] == "chain") {
-                            unitLine[i][0].GetChild(0).position = new Vector3(unitLine[i][0].position.x, unitLine[i][0].GetChild(0).position.y + 0.5f, 0);
+                            if(unitLine[i][1].childCount != 0) continue;
+                            unitLine[i][0].GetChild(0).position = new Vector3(unitLine[i][0].position.x, unitLine[i][0].GetChild(0).position.y + 1.5f, 0);
+                            unitLine[i][0].GetChild(0).Find("InfoWindowTrigger").gameObject.SetActive(false);
                             slotLine[i].GetChild(1).gameObject.SetActive(true);
                             slotLine[i].GetChild(2).gameObject.SetActive(true);
                         }
@@ -81,11 +92,12 @@ public partial class CardDropManager {
                     if (unitLine[i][0].childCount == 0) {
                         slotLine[i].GetChild(0).gameObject.SetActive(true);
                     }
-                    else {
+                    else if(unitLine[i][1].childCount == 0) {
                         string[] attribute = unitLine[i][0].GetChild(0).GetComponent<PlaceMonster>().unit.attributes;
                         for (int j = 0; j < attribute.Length; j++) {
                             if (attribute[j] == "chain") {
-                                unitLine[i][0].GetChild(0).position = new Vector3(unitLine[i][0].position.x, unitLine[i][0].GetChild(0).position.y + 0.5f, 0);
+                                unitLine[i][0].GetChild(0).position = new Vector3(unitLine[i][0].position.x, unitLine[i][0].GetChild(0).position.y + 1.5f, 0);
+                                unitLine[i][0].GetChild(0).Find("InfoWindowTrigger").gameObject.SetActive(false);
                                 slotLine[i].GetChild(1).gameObject.SetActive(true);
                                 slotLine[i].GetChild(2).gameObject.SetActive(true);
                             }
@@ -98,7 +110,8 @@ public partial class CardDropManager {
                     }
                     else {
                         if (unitLine[i][1].childCount == 0) {
-                            unitLine[i][0].GetChild(0).position = new Vector3(unitLine[i][0].position.x, unitLine[i][0].GetChild(0).position.y + 0.5f, 0);
+                            unitLine[i][0].GetChild(0).position = new Vector3(unitLine[i][0].position.x, unitLine[i][0].GetChild(0).position.y + 1.5f, 0);
+                            unitLine[i][0].GetChild(0).Find("InfoWindowTrigger").gameObject.SetActive(false);
                             slotLine[i].GetChild(1).gameObject.SetActive(true);
                             slotLine[i].GetChild(2).gameObject.SetActive(true);
                         }
@@ -121,7 +134,8 @@ public partial class CardDropManager {
                     string[] attribute = unitLine[i][0].GetChild(0).GetComponent<PlaceMonster>().unit.attributes;
                     for (int j = 0; j < attribute.Length; j++) {
                         if (attribute[j] == "chain") {
-                            unitLine[i][0].GetChild(0).position = new Vector3(unitLine[i][0].position.x, unitLine[i][0].GetChild(0).position.y + 0.5f, 0);
+                            unitLine[i][0].GetChild(0).position = new Vector3(unitLine[i][0].position.x, unitLine[i][0].GetChild(0).position.y + 1.5f, 0);
+                            unitLine[i][0].GetChild(0).Find("InfoWindowTrigger").gameObject.SetActive(false);
                             slotLine[i].GetChild(1).gameObject.SetActive(true);
                             slotLine[i].GetChild(2).gameObject.SetActive(true);
                             if (isSkill) {
@@ -153,7 +167,8 @@ public partial class CardDropManager {
                         string[] attribute = unitLine[i][0].GetChild(0).GetComponent<PlaceMonster>().unit.attributes;
                         for (int j = 0; j < attribute.Length; j++) {
                             if (attribute[j] == "chain") {
-                                unitLine[i][0].GetChild(0).position = new Vector3(unitLine[i][0].position.x, unitLine[i][0].GetChild(0).position.y + 0.5f, 0);
+                                unitLine[i][0].GetChild(0).position = new Vector3(unitLine[i][0].position.x, unitLine[i][0].GetChild(0).position.y + 1.5f, 0);
+                                unitLine[i][0].GetChild(0).Find("InfoWindowTrigger").gameObject.SetActive(false);
                                 slotLine[i].GetChild(1).gameObject.SetActive(true);
                                 slotLine[i].GetChild(2).gameObject.SetActive(true);
                                 if (isSkill) {
@@ -172,7 +187,8 @@ public partial class CardDropManager {
                         }
                     else {
                         if (unitLine[i][1].childCount == 0) {
-                            unitLine[i][0].GetChild(0).position = new Vector3(unitLine[i][0].position.x, unitLine[i][0].GetChild(0).position.y + 0.5f, 0);
+                            unitLine[i][0].GetChild(0).position = new Vector3(unitLine[i][0].position.x, unitLine[i][0].GetChild(0).position.y + 1.5f, 0);
+                            unitLine[i][0].GetChild(0).Find("InfoWindowTrigger").gameObject.SetActive(false);
                             slotLine[i].GetChild(1).gameObject.SetActive(true);
                             slotLine[i].GetChild(2).gameObject.SetActive(true);
                             if (isSkill) {
@@ -199,17 +215,24 @@ public partial class CardDropManager {
 
     public void HideDropableSlot() {
         for (int i = 0; i < 5; i++) {
-            if (unitLine[i][0].childCount > 0)
+            if (unitLine[i][0].childCount > 0) {
                 unitLine[i][0].GetChild(0).position = new Vector3(unitLine[i][0].position.x, unitLine[i][0].position.y, 0);
-            if (unitLine[i][1].childCount > 0)
+                unitLine[i][0].GetChild(0).Find("InfoWindowTrigger").gameObject.SetActive(true);
+            }
+            if (unitLine[i][1].childCount > 0) {
                 unitLine[i][1].GetChild(0).position = new Vector3(unitLine[i][0].position.x, unitLine[i][1].position.y, 0);
+                unitLine[i][1].GetChild(0).Find("InfoWindowTrigger").gameObject.SetActive(true);
+            }
             for (int j = 0; j < 3; j++) {
-                slotLine[i].GetChild(j).GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.6f);
+                slotLine[i].GetChild(j).GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1f);
                 slotLine[i].GetChild(j).gameObject.SetActive(false);
                 slotLine[i].GetChild(j).GetChild(0).gameObject.SetActive(false);
             }
+            slotLine[i].Find("FightGuide").gameObject.SetActive(false);
         }
     }
+
+
 
     public void HighLightSlot(Transform target, bool highlighted) {
         if (target == null) return;
@@ -217,7 +240,7 @@ public partial class CardDropManager {
         int lineNum = target.parent.GetSiblingIndex();
         GameObject fightEffect = slotLine[lineNum].GetChild(3).gameObject;
         if (highlighted) {
-            target.GetComponent<SpriteRenderer>().color = new Color(0.639f, 0.925f, 0.105f, 0.6f);
+            target.GetComponent<SpriteRenderer>().color = new Color(0.639f, 0.925f, 0.105f, 1f);
             if (index > 0) {
                 if (index == 1) unitLine[lineNum][0].GetChild(0).position = unitLine[lineNum][0].position;
                 else unitLine[lineNum][0].GetChild(0).position = unitLine[lineNum][1].position;
@@ -233,12 +256,15 @@ public partial class CardDropManager {
                 }
             }
             target.parent.Find("FightGuide").gameObject.SetActive(true);
-            target.parent.Find("FightGuide/Straight").GetComponent<SkeletonAnimation>().AnimationName = "STRAIGHT";
+            SkeletonAnimation spineAni = target.parent.Find("FightGuide/Straight").GetComponent<SkeletonAnimation>();
+            spineAni.Initialize(true);
+            spineAni.Update(0);
+            spineAni.AnimationName = "STRAIGHT";
         }
         else {
-            target.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.6f);
+            target.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1f);
             if(index > 0)
-                unitLine[lineNum][0].GetChild(0).position = new Vector3(unitLine[lineNum][0].position.x, unitLine[lineNum][0].position.y + 0.5f, 0);
+                unitLine[lineNum][0].GetChild(0).position = new Vector3(unitLine[lineNum][0].position.x, unitLine[lineNum][0].position.y + 1.5f, 0);
             if (enemyUnitLine[lineNum][0].childCount == 0 && enemyUnitLine[lineNum][1].childCount == 0)
                 PlayMangement.instance.enemyPlayer.transform.Find("FightSpine").gameObject.SetActive(false);
             else {
@@ -256,9 +282,9 @@ public partial class CardDropManager {
         if (target.name != "AllMagicTrigger") {
             if (target.name == "BattleLineEffect") {
                 if (highlighted)
-                    target.GetComponent<SpriteRenderer>().color = new Color(0.639f, 0.925f, 0.105f, 0.6f);
+                    target.GetComponent<SpriteRenderer>().color = new Color(0.639f, 0.925f, 0.105f, 1f);
                 else
-                    target.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.6f);
+                    target.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1f);
             }
             else {
                 if (highlighted)
@@ -270,11 +296,11 @@ public partial class CardDropManager {
         else {
             if (highlighted) {
                 for (int i = 0; i < 5; i++)
-                    slotLine[i].Find("BattleLineEffect").GetComponent<SpriteRenderer>().color = new Color(0.639f, 0.925f, 0.105f, 0.6f);
+                    slotLine[i].Find("BattleLineEffect").GetComponent<SpriteRenderer>().color = new Color(0.639f, 0.925f, 0.105f, 1f);
             }
             else {
                 for (int i = 0; i < 5; i++)
-                    slotLine[i].Find("BattleLineEffect").GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.6f);
+                    slotLine[i].Find("BattleLineEffect").GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1f);
             }
 
         }

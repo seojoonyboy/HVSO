@@ -5,7 +5,6 @@ using UnityEngine.UI;
 using UniRx;
 using TMPro;
 using System;
-using Bolt;
 using Spine;
 using Spine.Unity;
 
@@ -19,14 +18,16 @@ public class PlayerController : MonoBehaviour
     public GameObject card;
     public GameObject back;
     public GameObject playerUI;
-    Transform sheildRemain;
+    public SkeletonGraphic shieldFeedBack;
+    public SkeletonGraphic shieldGauge;
+    protected Transform sheildRemain;
     [SerializeField] public CardHandManager cdpm;
 
     public GameObject backLine;
     public GameObject frontLine;
-    TextMeshProUGUI costText;
-    TextMeshProUGUI HPText;
-    Image shieldGauge;
+    protected TextMeshProUGUI costText;
+    protected TextMeshProUGUI HPText;
+    protected Transform HPGauge;
     public GameObject buttonParticle;
     public bool dragCard = false;
 
@@ -37,12 +38,13 @@ public class PlayerController : MonoBehaviour
     public ReactiveProperty<int> resource = new ReactiveProperty<int>(2);
     public ReactiveProperty<bool> isPicking = new ReactiveProperty<bool>(false);
     public ReactiveProperty<int> shieldStack = new ReactiveProperty<int>(0);
-    private int shieldCount = 0;
+    protected int shieldCount = 0;
 
     protected HeroSpine heroSpine;
     public static int activeCardMinCost;
+    public string heroID;
 
-    public EffectSystem.ActionDelegate actionCall;
+    public EffectSystem.ActionDelegate actionCall;    
 
     public GameObject effectObject;
     public enum HeroState {
@@ -58,20 +60,21 @@ public class PlayerController : MonoBehaviour
         get { return myTurn; }
     }
 
-    public void Init() {
-        string race = Variables.Saved.Get("SelectedRace").ToString();
+    public virtual void Init() {
+        string race = PlayerPrefs.GetString("SelectedRace");
         if (race == "HUMAN") isHuman = isPlayer;
         else isHuman = !isPlayer;
         costText = playerUI.transform.Find("PlayerResource").GetChild(0).Find("Text").GetComponent<TextMeshProUGUI>();
         HPText = playerUI.transform.Find("PlayerHealth/HealthText").GetComponent<TextMeshProUGUI>();
-        shieldGauge = playerUI.transform.Find("PlayerHealth/Helth&Shield/SheildGauge").GetComponent<Image>();
+        HPGauge = playerUI.transform.Find("PlayerHealth/Helth&Shield/HpParent1/HpParent2/HpParent3/HpGage");
+        //shieldGauge = playerUI.transform.Find("PlayerHealth/Helth&Shield/SheildGauge").GetComponent<Image>();
         if (isHuman) {
             playerUI.transform.Find("PlayerHealth/Flag/Human").gameObject.SetActive(true);
-            sheildRemain = playerUI.transform.Find("PlayerHealth/RemainSheild/HumanSheild");
+            sheildRemain = playerUI.transform.Find("PlayerHealth/HumanSheild");
         }
         else {
             playerUI.transform.Find("PlayerHealth/Flag/Orc").gameObject.SetActive(true);
-            sheildRemain = playerUI.transform.Find("PlayerHealth/RemainSheild/OrcSheild");
+            sheildRemain = playerUI.transform.Find("PlayerHealth/OrcSheild");
         }
         sheildRemain.gameObject.SetActive(true);
         if (isPlayer) {
@@ -87,49 +90,41 @@ public class PlayerController : MonoBehaviour
                 PlayMangement.instance.socketHandler.gameState.players.enemyPlayer(isHuman).user.nickName;
         }
 
-
-        if (isHuman == true) {
-            string heroID = "h10001";
-            GameObject hero = Instantiate(AccountManager.Instance.resource.heroSkeleton[heroID], transform);
-            hero.transform.SetAsLastSibling();
-            heroSpine = hero.GetComponent<HeroSpine>();
-            
-            if (isPlayer == true) {
-                float reverse = hero.transform.localScale.x * -1f;
-                hero.transform.localScale = new Vector3(reverse, hero.transform.localScale.y, hero.transform.localScale.z);
-                heroSpine.GetComponent<MeshRenderer>().sortingOrder = 14;
-                hero.transform.localPosition = new Vector3(0, 1, 0);
-                hero.transform.localScale = new Vector3(-1, 1, 1);
-            }
-            else
-                heroSpine.GetComponent<MeshRenderer>().sortingOrder = 7;
-
-            
-        }
-        else {
-            string heroID = "h10002";
-            GameObject hero = Instantiate(AccountManager.Instance.resource.heroSkeleton[heroID], transform);
-            hero.transform.SetAsLastSibling();
-            heroSpine = hero.GetComponent<HeroSpine>();
-
-            if (isPlayer == true) {
-                float reverse = hero.transform.localScale.x * -1f;
-                hero.transform.localScale = new Vector3(reverse, hero.transform.localScale.y, hero.transform.localScale.z);
-                heroSpine.GetComponent<MeshRenderer>().sortingOrder = 14;
-                hero.transform.localPosition = new Vector3(0, 1, 0);
-                hero.transform.localScale = new Vector3(-1, 1, 1);
-            }
-            else
-                heroSpine.GetComponent<MeshRenderer>().sortingOrder = 7;
-
-            
-        }
+        SetPlayerHero(isHuman);
         if (!isPlayer)
             transform.Find("FightSpine").localPosition = new Vector3(0, 3, 0);
-
+        shieldGauge.Initialize(false);
+        shieldGauge.Update(0);
+        shieldGauge.Skeleton.SetSlotsToSetupPose();
+        shieldGauge.AnimationState.SetAnimation(0, "0", false);        
         SetShield();
+
         shieldCount = 3;
         Debug.Log(heroSpine);
+    }
+
+    public void SetPlayerHero(bool isHuman, string heroID = "") {
+        string id;
+        GameObject hero;
+        if(isHuman == true) 
+            id = (string.IsNullOrEmpty(heroID)) ? "h10001" : heroID;        
+        else 
+            id = (string.IsNullOrEmpty(heroID)) ? "h10002" : heroID;
+        this.heroID = id;
+
+        hero = Instantiate(AccountManager.Instance.resource.heroSkeleton[id], transform);
+        hero.transform.SetAsLastSibling();
+        heroSpine = hero.GetComponent<HeroSpine>();
+
+        if (isPlayer == true) {
+            float reverse = hero.transform.localScale.x * -1f;
+            hero.transform.localScale = new Vector3(reverse, hero.transform.localScale.y, hero.transform.localScale.z);
+            heroSpine.GetComponent<MeshRenderer>().sortingOrder = 19;
+            hero.transform.localPosition = new Vector3(0, 1, 0);
+            hero.transform.localScale = new Vector3(-1, 1, 1);
+        }
+        else
+            heroSpine.GetComponent<MeshRenderer>().sortingOrder = 7;
     }
     
     private void SetParticleSize(ParticleSystem particle) {
@@ -144,7 +139,7 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    private void SetShield() {
+    protected void SetShield() {
         GameObject shield;
         Transform positionTransform = PlayMangement.instance.backGround.transform.Find("PlayerPosition");
         shield = (isHuman == true) ? Instantiate(PlayMangement.instance.humanShield, transform) : Instantiate(PlayMangement.instance.orcShield, transform);
@@ -184,21 +179,25 @@ public class PlayerController : MonoBehaviour
 
         var ObserveHP = HP.Subscribe(_=> ChangedHP()).AddTo(PlayMangement.instance.transform.gameObject);
         var ObserveResource = resource.Subscribe(_=> ChangedResource()).AddTo(PlayMangement.instance.transform.gameObject);
-        var ObserveShield = shieldStack.Subscribe(_ => shieldGauge.fillAmount = (float)shieldStack.Value / 8).AddTo(PlayMangement.instance.transform.gameObject);
+        //var ObserveShield = shieldStack.Subscribe(_ => shieldGauge.fillAmount = (float)shieldStack.Value / 8).AddTo(PlayMangement.instance.transform.gameObject);
         //var heroDown = HP.Where(x => x <= 0).Subscribe(_ => ).AddTo(PlayMangement.instance.transform.gameObject);
 
         var gameOverDispose = HP.Where(x => x <= 0)
                               .Subscribe(_ => {
                                                SetState(HeroState.DEAD);
-                                               PlayMangement.instance.GetBattleResult();
+                                               //PlayMangement.instance.GetBattleResult();
                                                ObserveHP.Dispose();
-                                               ObserveResource.Dispose();
-                                               ObserveShield.Dispose(); })
+                                               ObserveResource.Dispose(); })
                               .AddTo(PlayMangement.instance.transform.gameObject);        
     }
+    
 
     private void ChangedHP() {
         HPText.text = HP.Value.ToString();
+        if (HP.Value < 20)
+            HPGauge.localPosition = new Vector3(0, -((20 - HP.Value) * 6), 0);
+        else
+            HPGauge.localPosition = Vector3.zero;
     }
 
     private void ChangedResource() {
@@ -217,6 +216,8 @@ public class PlayerController : MonoBehaviour
         else data = socketHandler.gameState.players.myPlayer(isHuman);
         SocketFormat.ShieldCharge shieldData = GetShieldData();
 
+        Debug.Log("쉴드게이지!" + shieldData.shieldCount);
+
         if(data.shieldActivate && CheckShieldActivate(shieldData)) {
             ActiveShield();
         }
@@ -234,13 +235,50 @@ public class PlayerController : MonoBehaviour
                 SetState(HeroState.HIT);
 
             if (shieldCount > 0) {
-                if(shieldData == null)
+                if (shieldData == null)
                     shieldStack.Value = data.hero.shieldGauge;
-                else
-                    shieldStack.Value += shieldData.shieldCount;
+                else {
+                    EffectSystem.Instance.IncreaseShieldFeedBack(shieldFeedBack.transform.gameObject ,shieldData.shieldCount);
+                    ChangeShieldStack(shieldStack.Value, shieldData.shieldCount);
+                }
             }
         }
     }
+
+    /// <summary>
+    /// 영웅의 실드 게이지 조정
+    /// </summary>
+    /// <param name="amount"></param>
+    public void PillageEnemyShield(int amount) {
+        const int MaxGage = 8;
+        PlayMangement playMangement = PlayMangement.instance;
+
+        var enemyShieldStack = isPlayer ? playMangement.enemyPlayer.shieldStack : playMangement.player.shieldStack;
+        //내가 뺏어올 수 있는 양 계산
+        int availableAmountToGet = 0;
+        if(enemyShieldStack.Value < amount) {
+            availableAmountToGet = enemyShieldStack.Value;
+        }
+        else {
+            availableAmountToGet = amount;
+        }
+        enemyShieldStack.Value -= availableAmountToGet;
+
+        Logger.Log("적 실드 " + enemyShieldStack.Value + "로 바뀜(약탈)");
+
+        //내가 채울 수 있는 양 계산
+        int newMyGage = shieldStack.Value + availableAmountToGet;
+        if (newMyGage > MaxGage) newMyGage = MaxGage;
+        shieldStack.Value = newMyGage;
+
+        Logger.Log("내 실드 " + shieldStack.Value + "로 바뀜(약탈)");
+
+        SkeletonGraphic enemyShieldGauge = isPlayer ? playMangement.enemyPlayer.shieldGauge : playMangement.player.shieldGauge;
+        enemyShieldGauge.AnimationState.SetAnimation(0, enemyShieldStack.Value.ToString(), false);
+        shieldGauge.AnimationState.SetAnimation(0, shieldStack.Value.ToString(), false);
+    }
+    
+
 
     private bool CheckShieldActivate(SocketFormat.ShieldCharge shieldData) {
         if(shieldData == null) return true;
@@ -270,10 +308,11 @@ public class PlayerController : MonoBehaviour
         SetState(HeroState.ATTACK);
         if(PlayMangement.instance.heroShieldActive) return;
         PlayMangement.instance.heroShieldActive = true;
+        FullShieldStack(shieldStack.Value);
         StartCoroutine(PlayMangement.instance.DrawSpecialCard(isHuman));
         shieldStack.Value = 0;
         shieldCount--;
-        sheildRemain.GetChild(shieldCount).gameObject.SetActive(false);
+        
     }
 
     public void DisableShield() {
@@ -323,9 +362,12 @@ public class PlayerController : MonoBehaviour
 
     public void ReleaseTurn() {
         //if (isPlayer == true && PlayMangement.instance.skillAction == true) return;
-
         if (myTurn == true && !dragCard) {
-            //PlayMangement.instance.OnNoCostEffect(false);
+            if (isPlayer) {
+                PlayMangement.instance.releaseTurnBtn.gameObject.SetActive(false);
+                buttonParticle.SetActive(false);
+            }
+            myTurn = false;
             PlayMangement.instance.GetPlayerTurnRelease();
             if(isHuman == PlayMangement.instance.player.isHuman)
                 PlayMangement.instance.socketHandler.TurnOver();
@@ -360,6 +402,8 @@ public class PlayerController : MonoBehaviour
                 if (cardSlot_1.GetChild(i).childCount != 0) {
                     if (cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().cardData.type == "unit")
                         cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().ActivateCard();
+                    else
+                        cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().DisableCard();
                 }
 
             }
@@ -370,6 +414,8 @@ public class PlayerController : MonoBehaviour
                 if (cardSlot_1.GetChild(i).childCount != 0) {
                     if (cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().cardData.type == "magic")
                         cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().ActivateCard();
+                    else
+                        cardSlot_1.GetChild(i).GetChild(0).GetComponent<CardHandler>().DisableCard();
                 }
 
             }
@@ -424,6 +470,47 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void ChangeShieldStack(int start, int amount) {
+        shieldStack.Value += amount;
+
+        if (shieldStack.Value > 8)
+            shieldStack.Value = 8;
+
+        shieldGauge.Initialize(false);
+        shieldGauge.Update(0);
+        //shieldGauge.Skeleton.SetSlotsToSetupPose();
+        shieldGauge.AnimationState.ClearTrack(0);
+        TrackEntry entry = new TrackEntry();
+        
+
+        for (int i = 1; i <= amount; i++)
+            entry = shieldGauge.AnimationState.AddAnimation(0, (start + i).ToString(), false, 0);
+
+       // entry.Complete += delegate (TrackEntry trackEntry) {  };       
+    }
+
+    public void FullShieldStack(int start) {
+        int amount = 8 - start;
+        shieldGauge.Initialize(false);
+        shieldGauge.Update(0);
+        shieldGauge.AnimationState.ClearTrack(0);
+        TrackEntry entry = new TrackEntry();
+
+        for (int i = 1; i < amount; i++)
+            entry = shieldGauge.AnimationState.AddAnimation(0, (start + i).ToString(), false, 0);
+
+        entry = shieldGauge.AnimationState.AddAnimation(0, "full", true, 0);
+    }
+
+    public void ConsumeShieldStack() {
+        shieldGauge.Initialize(false);
+        shieldGauge.Update(0);
+        TrackEntry entry;
+        entry = shieldGauge.AnimationState.SetAnimation(0, "0", false);
+        sheildRemain.GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, (3 - shieldCount).ToString(), false);
+    }
+
+
     public void PlayerUseCard() {
         SetState(HeroState.ATTACK);
     }
@@ -435,6 +522,8 @@ public class PlayerController : MonoBehaviour
     public void PlayerThinkFinish() {
         SetState(HeroState.THINKDONE);
     }
+
+    
     
 
     protected void SetState(HeroState state) {

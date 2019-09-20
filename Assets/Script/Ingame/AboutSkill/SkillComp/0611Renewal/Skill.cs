@@ -118,6 +118,7 @@ namespace SkillModules {
                     },
                     delegate {
                         Logger.Log("타겟이 없습니다.");
+                        if(TargetSelectExist()) mySkillHandler.SendingMessage(true);
                         mySkillHandler.isDone = true;
                     },
                     delegate(ref List<GameObject> list) {
@@ -252,6 +253,13 @@ namespace SkillModules {
                 result = new object[] { isPlayer, amount };
             }
             else if(ability.GetType() == typeof(st_filter_attack)) {
+                bool isPlayer = mySkillHandler.isPlayer;
+                result = new object[] { isPlayer, targets };
+            }
+            else if(ability.GetType() == typeof(set_count_in_history)) {
+                //result = 1;
+            }
+            else if(ability.GetType() == typeof(gain_mul)) {
                 bool isPlayer = mySkillHandler.isPlayer;
                 result = new object[] { isPlayer, targets };
             }

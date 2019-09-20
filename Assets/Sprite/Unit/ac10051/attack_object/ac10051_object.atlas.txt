@@ -1,0 +1,27 @@
+
+ac10051_object.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+effect_2
+  rotate: false
+  xy: 367, 497
+  size: 348, 332
+  orig: 348, 332
+  offset: 0, 0
+  index: -1
+pose_effect_1
+  rotate: false
+  xy: 0, 389
+  size: 367, 440
+  orig: 367, 440
+  offset: 0, 0
+  index: -1
+pose_effect_2
+  rotate: true
+  xy: 0, 0
+  size: 389, 326
+  orig: 389, 326
+  offset: 0, 0
+  index: -1

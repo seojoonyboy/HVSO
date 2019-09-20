@@ -1,0 +1,83 @@
+
+ingame_turnInformation.png
+size: 2048,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+arrow
+  rotate: false
+  xy: 211, 10
+  size: 51, 53
+  orig: 51, 53
+  offset: 0, 0
+  index: -1
+attack
+  rotate: false
+  xy: 555, 182
+  size: 74, 82
+  orig: 74, 82
+  offset: 0, 0
+  index: -1
+attack_attack
+  rotate: false
+  xy: 555, 520
+  size: 540, 466
+  orig: 540, 466
+  offset: 0, 0
+  index: -1
+button_frame
+  rotate: false
+  xy: 555, 264
+  size: 255, 256
+  orig: 255, 256
+  offset: 0, 0
+  index: -1
+human
+  rotate: false
+  xy: 810, 438
+  size: 74, 82
+  orig: 74, 82
+  offset: 0, 0
+  index: -1
+human_attack
+  rotate: false
+  xy: 0, 521
+  size: 555, 465
+  orig: 555, 465
+  offset: 0, 0
+  index: -1
+icon
+  rotate: false
+  xy: 1638, 938
+  size: 188, 48
+  orig: 188, 48
+  offset: 0, 0
+  index: -1
+orc
+  rotate: false
+  xy: 1638, 856
+  size: 74, 82
+  orig: 74, 82
+  offset: 0, 0
+  index: -1
+orc_attack
+  rotate: false
+  xy: 1095, 529
+  size: 543, 457
+  orig: 543, 457
+  offset: 0, 0
+  index: -1
+orc_trick
+  rotate: false
+  xy: 0, 63
+  size: 555, 458
+  orig: 555, 458
+  offset: 0, 0
+  index: -1
+turn_frame_back
+  rotate: false
+  xy: 0, 0
+  size: 211, 63
+  orig: 211, 63
+  offset: 0, 0
+  index: -1

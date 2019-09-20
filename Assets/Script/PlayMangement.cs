@@ -1,10 +1,10 @@
-using Bolt;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Spine;
 using Spine.Unity;
+using TMPro;
 
 
 public partial class PlayMangement : MonoBehaviour {
@@ -16,6 +16,7 @@ public partial class PlayMangement : MonoBehaviour {
 
     public Transform cardInfoCanvas;
     public Transform battleLineEffect;
+    bool firstTurn = true;
     public bool isGame = true;
     public bool isMulligan = true;
     public bool infoOn = false;
@@ -24,29 +25,35 @@ public partial class PlayMangement : MonoBehaviour {
     public GameObject onCanvasPosGroup;
     //public CardCircleManager cardCircleManager;
     public CardHandManager cardHandManager;
+    public GameResultManager resultManager;
     public SkeletonGraphic playerMana, enemyMana;
 
     public GameObject baseUnit;
-    private int turn = 0;
+    protected int turn = 0;
     public GameObject blockPanel;
     public int unitNum = 0;
     public bool heroShieldActive = false;
+    public List<bool> heroShieldDone = new List<bool>();
     public GameObject humanShield, orcShield;
     public static GameObject movingCard;
     public static bool dragable = true;
     public string currentTurn;
 
     public bool skillAction = false;
+    public victoryModule.VictoryCondition matchRule;
+    public bool stopBattle = false;
+    public bool stopTurn = false;
+
     //public string magicHistroy;
 
     private void Awake() {
         socketHandler = FindObjectOfType<BattleConnector>();
-        bool isTest = Variables.Saved.Get("SelectedBattleType").ToString().CompareTo("test") == 0;
+        bool isTest = PlayerPrefs.GetString("SelectedBattleType").CompareTo("test") == 0;
         SetWorldScale();
         instance = this;
         SetPlayerCard();
-        gameObject.GetComponent<TurnChanger>().onTurnChanged.AddListener(ChangeTurn);
-        if(!isTest) gameObject.GetComponent<TurnChanger>().onPrepareTurn.AddListener(DistributeCard);
+        GetComponent<TurnMachine>().onTurnChanged.AddListener(ChangeTurn);
+        if (!isTest) GetComponent<TurnMachine>().onPrepareTurn.AddListener(DistributeCard);
         //GameObject backGroundEffect = Instantiate(EffectSystem.Instance.backgroundEffect);
         //backGroundEffect.transform.position = backGround.transform.Find("ParticlePosition").position;
         SetCamera();
@@ -59,22 +66,55 @@ public partial class PlayMangement : MonoBehaviour {
 
     private void Start() {
         SetBackGround();
-        RequestStartData();
-        DistributeResource();
-        InitTurnTable();
+        InitGameData(20,20);
+
+
+
         //StartCoroutine(DisconnectTest());
     }
 
-    private void Update() {
-        if (Input.GetKeyDown(KeyCode.Escape)) {
-            SceneManager.Instance.LoadScene(SceneManager.Scene.MAIN_SCENE);
+
+    //최초에 데이터를 불러드릴 함수. missionData를 임시로 놓고, 그 후에 게임의 정보들 등록
+    //체력설정 -> 승리목표 설정 -> 자원분배 -> 턴
+    protected void InitGameData(int playerhp, int enemyhp) {
+        object missionData = null;
+
+        RequestStartData(playerhp, enemyhp);
+        SetVictoryCondition();
+        DistributeResource();
+        InitTurnTable();
+    }
+
+    //승리 조건을 설정할 함수. victoryModule이라는 namespace로 전략패턴으로 구현 계획
+    private void SetVictoryCondition(object data = null) {
+        string condition = (string)data;
+
+        switch (condition) {
+            default:
+                matchRule = new victoryModule.Annihilation_Match(player, enemyPlayer);
+                matchRule.SetCondition();
+                break;
         }
+    }
+    // 시작전 체력부여, default 20
+    public void RequestStartData(int playerData = 20, int enemyData = 20) {
+        int playerHP = playerData;
+        int enemyHP = enemyData;
+
+        player.SetPlayerStat(playerHP);
+        enemyPlayer.SetPlayerStat(enemyHP);
+    }
+
+    private void Update() {
+        //if (Input.GetKeyDown(KeyCode.Escape)) {
+        //    FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
+        //}
         if (!infoOn && Input.GetMouseButtonDown(0)) {
             cardInfoCanvas.GetChild(0).GetComponent<CardListManager>().OpenUnitInfoWindow(Input.mousePosition);
         }
     }
 
-    private void SetWorldScale() {
+    protected void SetWorldScale() {
 
         //SpriteRenderer backSprite = backGround.GetComponent<SpriteRenderer>();
         float ratio = (float)Screen.width / Screen.height;
@@ -134,7 +174,7 @@ public partial class PlayMangement : MonoBehaviour {
     }
 
 
-    private void SetBackGround() {
+    protected virtual void SetBackGround() {
         if (player.isHuman == true) {
             GameObject raceSprite = Instantiate(AccountManager.Instance.resource.raceUiPrefabs["HUMAN_BACKGROUND"][0], backGround.transform);
             raceSprite.transform.SetAsLastSibling();
@@ -147,21 +187,22 @@ public partial class PlayMangement : MonoBehaviour {
 
 
     public void SetPlayerCard() {
+        GameObject enemyCard;
+
         if (player.isHuman == true) {
+            enemyCard = Resources.Load("Prefabs/OrcBackCard") as GameObject;
             player.back = cardDB.transform.Find("HumanBackCard").gameObject;
             enemyPlayer.back = cardDB.transform.Find("OrcBackCard").gameObject;
         }
         else {
+            enemyCard = Resources.Load("Prefabs/HumanBackCard") as GameObject;
             player.back = cardDB.transform.Find("OrcBackCard").gameObject;
             enemyPlayer.back = cardDB.transform.Find("HumanBackCard").gameObject;
         }
+        enemyPlayer.playerUI.transform.Find("CardCount").gameObject.GetComponent<Image>().sprite = enemyCard.GetComponent<Image>().sprite;
     }
 
-    public void RequestStartData() {
-        player.SetPlayerStat(20);
-        enemyPlayer.SetPlayerStat(20);
 
-    }
 
     public void DistributeResource() {
         player.resource.Value = turn + 1;
@@ -181,9 +222,11 @@ public partial class PlayMangement : MonoBehaviour {
         blockPanel.SetActive(false);
     }
 
-    IEnumerator EnemyUseCard(bool isBefore) {
+    public virtual IEnumerator EnemyUseCard(bool isBefore) {
         if (isBefore)
             yield return new WaitForSeconds(1.0f);
+
+        yield return StopTurn();
         #region socket use Card
         while (!socketHandler.cardPlayFinish()) {
             yield return socketHandler.useCardList.WaitNext();
@@ -195,17 +238,21 @@ public partial class PlayMangement : MonoBehaviour {
                     //카드 정보 만들기
                     GameObject summonUnit = MakeUnitCardObj(history);
                     //카드 정보 보여주기
-                    yield return UnitActivate(summonUnit, history);
+                    yield return UnitActivate(history);
                 }
                 else {
                     GameObject summonedMagic = MakeMagicCardObj(history);
                     summonedMagic.GetComponent<MagicDragHandler>().isPlayer = false;
+                    /*
                     if (summonedMagic.GetComponent<MagicDragHandler>().cardData.hero_chk == true)
                         yield return EffectSystem.Instance.HeroCutScene(enemyPlayer.isHuman);
+                        */
                     yield return MagicActivate(summonedMagic, history);
                 }
                 SocketFormat.DebugSocketData.SummonCardData(history);
             }
+            int count = CountEnemyCard();
+            enemyPlayer.playerUI.transform.Find("CardCount").GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = "X" + " " + (count).ToString();
             //SocketFormat.DebugSocketData.CheckMapPosition(state);
             yield return new WaitForSeconds(0.5f);
         }
@@ -220,7 +267,7 @@ public partial class PlayMangement : MonoBehaviour {
     /// </summary>
     /// <param name="history"></param>
     /// <returns></returns>
-    private GameObject MakeMagicCardObj(SocketFormat.PlayHistory history) {
+    protected GameObject MakeMagicCardObj(SocketFormat.PlayHistory history) {
         CardData cardData;
         CardDataPackage cardDataPackage = AccountManager.Instance.cardPackage;
 
@@ -229,10 +276,11 @@ public partial class PlayMangement : MonoBehaviour {
         magicCard.GetComponent<MagicDragHandler>().itemID = history.cardItem.itemId;
 
         Logger.Log("use Magic Card" + history.cardItem.name);
-        if(!heroShieldActive)
+        if (!heroShieldActive)
             enemyPlayer.resource.Value -= cardData.cost;
 
         Destroy(enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(CountEnemyCard() - 1).GetChild(0).gameObject);
+
         return magicCard;
     }
 
@@ -241,7 +289,7 @@ public partial class PlayMangement : MonoBehaviour {
     /// </summary>
     /// <param name="history"></param>
     /// <returns></returns>
-    private GameObject MakeUnitCardObj(SocketFormat.PlayHistory history) {
+    protected GameObject MakeUnitCardObj(SocketFormat.PlayHistory history) {
         CardData cardData;
         CardDataPackage cardDataPackage = AccountManager.Instance.cardPackage;
 
@@ -253,21 +301,19 @@ public partial class PlayMangement : MonoBehaviour {
         return unitCard;
     }
 
-    private IEnumerator UnitActivate(GameObject card, SocketFormat.PlayHistory history) {
-        UnitDragHandler unitDragHandler = card.GetComponent<UnitDragHandler>();
-        dragable = false;
+    protected IEnumerator UnitActivate(SocketFormat.PlayHistory history) {
+        //UnitDragHandler unitDragHandler = card.GetComponent<UnitDragHandler>();
+        //dragable = false;
 
-        card.transform.rotation = new Quaternion(0, 0, 540, card.transform.rotation.w);
-        card.transform.SetParent(enemyPlayer.playerUI.transform);
-        card.SetActive(true);
+        //card.transform.rotation = new Quaternion(0, 0, 540, card.transform.rotation.w);
+        //card.transform.SetParent(enemyPlayer.playerUI.transform);
+        //card.SetActive(true);
 
-        yield return new WaitForSeconds(1.0f);
-        //카드 보여주기
-        yield return cardHandManager.ShowUsedCard(100, card);
-        //카드 파괴
-        yield return new WaitForSeconds(2f);
-        card.transform.localScale = new Vector3(1, 1, 1);
-        cardHandManager.DestroyCard(card);
+        ////카드 보여주기
+        //yield return cardHandManager.ShowUsedCard(100, card);
+        ////카드 파괴
+        //card.transform.localScale = new Vector3(1, 1, 1);
+        //cardHandManager.DestroyCard(card);
 
         //실제 유닛 소환
         GameObject summonedMonster = SummonMonster(history);
@@ -276,9 +322,10 @@ public partial class PlayMangement : MonoBehaviour {
         object[] parms = new object[] { false, summonedMonster };
         EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
         EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.FIELD_CHANGED, null, null);
+        yield return 0;
     }
 
-    private IEnumerator MagicActivate(GameObject card, SocketFormat.PlayHistory history) {
+    protected IEnumerator MagicActivate(GameObject card, SocketFormat.PlayHistory history) {
         MagicDragHandler magicCard = card.GetComponent<MagicDragHandler>();
         magicCard.skillHandler.socketDone = false;
         dragable = false;
@@ -293,6 +340,17 @@ public partial class PlayMangement : MonoBehaviour {
         yield return EnemySettingTarget(history.targets[0], magicCard);
         //실제 카드 사용
         object[] parms = new object[] { false, card };
+        if (magicCard.cardData.hero_chk == true) {
+            card.transform.Find("GlowEffect").gameObject.SetActive(false);
+            card.transform.Find("Portrait").gameObject.SetActive(false);
+            card.transform.Find("BackGround").gameObject.SetActive(false);
+            card.transform.Find("Cost").gameObject.SetActive(false);
+            int count = CountEnemyCard();
+            enemyPlayer.playerUI.transform.Find("CardCount").GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = "X" + " " + (count).ToString();
+
+
+            yield return EffectSystem.Instance.HeroCutScene(enemyPlayer.isHuman);
+        }
         EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
         yield return new WaitForSeconds(2f);
         //카드 파괴
@@ -341,11 +399,10 @@ public partial class PlayMangement : MonoBehaviour {
         if (highlightUI == null) yield break;
         highlightUI.SetActive(true);
         magicHandler.highlightedSlot = highlightUI.transform;
-       
-        if(highlightUI.GetComponent<SpriteRenderer>() != null)
-            highlightUI.GetComponent<SpriteRenderer>().color = new Color(1, 0, 0, 155.0f / 255.0f);
 
-        yield return new WaitForSeconds(1.5f);
+        if (highlightUI.GetComponent<SpriteRenderer>() != null)
+            highlightUI.GetComponent<SpriteRenderer>().color = new Color(1, 0, 0, 155.0f / 255.0f);
+        yield return CardInfoOnDrag.instance.MoveCrossHair(magicHandler.gameObject, highlightUI.transform);
         if (highlightUI.GetComponent<SpriteRenderer>() != null)
             highlightUI.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 155.0f / 255.0f);
         highlightUI.SetActive(false);
@@ -359,11 +416,11 @@ public partial class PlayMangement : MonoBehaviour {
     private GameObject SummonMonster(SocketFormat.PlayHistory history) {
         int i = int.Parse(history.targets[0].args[0]);
         string id = history.cardItem.id;
-        bool isFront =  history.targets[0].args[2].CompareTo("front")==0;
-        
+        bool isFront = history.targets[0].args[2].CompareTo("front") == 0;
+
         bool unitExist = UnitsObserver.IsUnitExist(new FieldUnitsObserver.Pos(i, 0), !player.isHuman);
         int j = isFront && unitExist ? 1 : 0;
-        if(unitExist && !isFront) {
+        if (unitExist && !isFront) {
             Transform line_rear = enemyPlayer.transform.GetChild(0);
             Transform line_front = enemyPlayer.transform.GetChild(1);
             Transform existUnit;
@@ -378,12 +435,15 @@ public partial class PlayMangement : MonoBehaviour {
     public void ChangeTurn() {
         if (isGame == false) return;
         player.buttonParticle.SetActive(false);
-        currentTurn = Variables.Scene(
-                UnityEngine.SceneManagement.SceneManager.GetActiveScene()
-            ).Get("CurrentTurn").ToString();
+        currentTurn = GetComponent<TurnMachine>().CurrentTurn();
         Logger.Log(currentTurn);
         switch (currentTurn) {
             case "ORC":
+                if (firstTurn) {
+                    firstTurn = false;
+                }
+                else
+                    turnSpine.AnimationState.SetAnimation(0, "1.orc_attack", false);
                 playerMana.AnimationState.SetAnimation(0, "animation", false);
                 enemyMana.AnimationState.SetAnimation(0, "animation", false);
                 if (player.isHuman == false) {
@@ -400,6 +460,7 @@ public partial class PlayMangement : MonoBehaviour {
                 break;
 
             case "HUMAN":
+                turnSpine.AnimationState.SetAnimation(0, "2.human_attack", false);
                 if (player.isHuman == true) {
                     player.ActivePlayer();
                     enemyPlayer.DisablePlayer();
@@ -415,6 +476,7 @@ public partial class PlayMangement : MonoBehaviour {
                 break;
 
             case "SECRET":
+                turnSpine.AnimationState.SetAnimation(0, "3.orc_trick", false);
                 if (player.isHuman == false) {
                     //player.ActiveOrcSpecTurn();
                     player.ActiveOrcTurn();
@@ -429,6 +491,7 @@ public partial class PlayMangement : MonoBehaviour {
                 EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_ORC_POST_TURN, this, null);
                 break;
             case "BATTLE":
+                turnSpine.AnimationState.SetAnimation(0, "4.battle", false);
                 dragable = false;
                 player.DisablePlayer();
                 enemyPlayer.PlayerThinkFinish();
@@ -448,14 +511,15 @@ public partial class PlayMangement : MonoBehaviour {
 
     public bool passOrc() {
         string turnName = socketHandler.gameState.state;
-        if(turnName.CompareTo("orcPostTurn") == 0) return true;
-        if(turnName.CompareTo("battleTurn") == 0) return true;
-        if(turnName.CompareTo("shieldTurn") == 0) return true;
-        if(turnName.CompareTo("endGame") == 0) return true;
+        if (turnName.CompareTo("orcPostTurn") == 0) return true;
+        if (turnName.CompareTo("battleTurn") == 0) return true;
+        if (turnName.CompareTo("shieldTurn") == 0) return true;
+        if (turnName.CompareTo("endGame") == 0) return true;
         return false;
     }
 
     public IEnumerator EnemeyOrcMagicSummon() {
+        yield return StopTurn();
         yield return new WaitForSeconds(1f);
         //서버에서 오크 마법 턴 올 때까지 대기
         yield return new WaitUntil(passOrc);
@@ -469,19 +533,23 @@ public partial class PlayMangement : MonoBehaviour {
             yield return EnemyUseCard(false);
         //서버에서 턴 넘김이 완료 될 때까지 대기
         yield return socketHandler.WaitBattle();
-        CustomEvent.Trigger(gameObject, "EndTurn");
+        EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this);
+        //CustomEvent.Trigger(gameObject, "EndTurn");
     }
 
     public void GetPlayerTurnRelease() {
-        CustomEvent.Trigger(gameObject, "EndTurn");
+        EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this);
+        //CustomEvent.Trigger(gameObject, "EndTurn");
     }
 
-    IEnumerator battleCoroutine() {
+    public virtual IEnumerator battleCoroutine() {
         dragable = false;
         yield return new WaitForSeconds(1.1f);
-        yield return socketHandler.waitSkillDone(()=>{});
+        yield return socketHandler.waitSkillDone(() => { });
         yield return socketHandler.WaitBattle();
         for (int line = 0; line < 5; line++) {
+            EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.LINE_BATTLE_START, this, line);
+            yield return StopBattleLine();
             yield return battleLine(line);
             if (isGame == false) break;
         }
@@ -494,12 +562,13 @@ public partial class PlayMangement : MonoBehaviour {
         EndTurnDraw();
         yield return new WaitForSeconds(2.0f);
         yield return new WaitUntil(() => !SkillModules.SkillHandler.running);
-        CustomEvent.Trigger(gameObject, "EndTurn");
+        EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this);
+        //CustomEvent.Trigger(gameObject, "EndTurn");
         StopCoroutine("battleCoroutine");
         dragable = true;
     }
 
-    IEnumerator battleLine(int line) {
+    protected IEnumerator battleLine(int line) {
         battleLineEffect = backGround.transform.GetChild(line).Find("BattleLineEffect");
         battleLineEffect.gameObject.SetActive(true);
         battleLineEffect.GetComponent<SpriteRenderer>().color = new Color(1, 0.545f, 0.427f, 0.6f);
@@ -525,8 +594,17 @@ public partial class PlayMangement : MonoBehaviour {
         }
         battleLineEffect.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.6f);
         battleLineEffect.gameObject.SetActive(false);
-        EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.LINE_BATTLE_FINISHED, this);
+        EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.LINE_BATTLE_FINISHED, this, line);
     }
+
+    protected IEnumerator StopBattleLine() {
+        yield return new WaitUntil(() => stopBattle == false);
+    }
+
+    protected IEnumerator StopTurn() {
+        yield return new WaitUntil(() => stopTurn == false);
+    }
+
 
     IEnumerator whoFirstBattle(PlayerController first, PlayerController second, int line) {
         var observer = GetComponent<FieldUnitsObserver>();
@@ -609,16 +687,16 @@ public partial class PlayMangement : MonoBehaviour {
     }
 
     public IEnumerator DrawSpecialCard(bool isHuman) {
-        yield return socketHandler.WaitGetCard();
         Logger.Log("쉴드 발동!");
         bool isPlayer = (isHuman == player.isHuman);
         if (isPlayer) {
             CardHandManager cdpm = FindObjectOfType<CardHandManager>();
             bool race = player.isHuman;
-            SocketFormat.Card cardData = socketHandler.gameState.players.myPlayer(race).newCard;
+            SocketFormat.Card[] heroCards = socketHandler.gameState.players.myPlayer(race).deck.heroCards;
+
             battleLineEffect.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.6f);
             battleLineEffect.gameObject.SetActive(false);
-            yield return cdpm.DrawHeroCard(cardData);
+            yield return cdpm.DrawHeroCard(heroCards);
             battleLineEffect.gameObject.SetActive(true);
             battleLineEffect.GetComponent<SpriteRenderer>().color = new Color(1, 0.545f, 0.427f, 0.6f);
         }
@@ -631,11 +709,18 @@ public partial class PlayMangement : MonoBehaviour {
             enemyCard.transform.localScale = new Vector3(1, 1, 1);
             enemyCard.transform.localPosition = new Vector3(0, 0, 0);
             enemyCard.SetActive(true);
+            int count = CountEnemyCard();
+            enemyPlayer.playerUI.transform.Find("CardCount").GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = "X" + " " + (count).ToString();
             IngameNotice.instance.SetNotice("상대방이 영웅카드 사용 여부를 결정 중입니다");
         }
         yield return new WaitForSeconds(1f);
         if (isPlayer) socketHandler.TurnOver();
         yield return WaitShieldDone();
+        StartCoroutine(socketHandler.waitSkillDone(() => {
+            heroShieldActive = false;
+            UnlockTurnOver();
+        }, true));
+        if (!isPlayer) enemyPlayer.ConsumeShieldStack();
 
     }
 
@@ -652,104 +737,37 @@ public partial class PlayMangement : MonoBehaviour {
                     summonedMagic.GetComponent<MagicDragHandler>().isPlayer = false;
                     yield return MagicActivate(summonedMagic, history);
                     SocketFormat.DebugSocketData.SummonCardData(history);
-                    yield return EffectSystem.Instance.HeroCutScene(enemyPlayer.isHuman);
+                    int count = CountEnemyCard();
+                    enemyPlayer.playerUI.transform.Find("CardCount").GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = "X" + " " + (count).ToString();
                     yield return new WaitForSeconds(1f);
                 }
             }
-        } while (heroShieldActive);
+        } while (heroShieldDone.Count == 0);
+        heroShieldDone.RemoveAt(0);
         IngameNotice.instance.CloseNotice();
     }
 
+    //public void GetBattleResult() {
+    //    isGame = false;
+    //    resultManager.gameObject.SetActive(true);
 
-}
-
-/// <summary>
-/// 승패 적용
-/// </summary>
-public partial class PlayMangement {
-
-    public GameObject resultUI;
-    public GameObject SocketDisconnectedUI;
-
-    public void GetBattleResult() {
-        isGame = false;
-        resultUI.SetActive(true);
-
-        if (player.HP.Value <= 0) {
-            if (player.isHuman)
-                SetResultWindow("lose", "human");
-            else
-                SetResultWindow("lose", "orc");
-        }
-        else if (enemyPlayer.HP.Value <= 0) {
-            if (player.isHuman)
-                SetResultWindow("win", "human");
-            else
-                SetResultWindow("win", "orc");
-        }
-    }
-
-    public void OnReturnBtn() {
-        if (resultUI.transform.GetChild(0).gameObject.activeSelf) {
-            resultUI.transform.GetChild(0).gameObject.SetActive(false);
-            resultUI.transform.GetChild(1).gameObject.SetActive(true);
-        }
-        else if (resultUI.transform.GetChild(1).gameObject.activeSelf) {
-            SceneManager.Instance.LoadScene(SceneManager.Scene.MAIN_SCENE);
-        }
-    }
-
-    public void SocketErrorUIOpen(bool friendOut) {
-        SocketDisconnectedUI.SetActive(true);
-        if(friendOut)
-            SocketDisconnectedUI.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "상대방이 게임을 \n 종료했습니다.";
-    }
+    //    if (player.HP.Value <= 0) {
+    //        if (player.isHuman)
+    //            resultManager.SetResultWindow("lose", "human");
+    //        else
+    //            resultManager.SetResultWindow("lose", "orc");
+    //    }
+    //    else if (enemyPlayer.HP.Value <= 0) {
+    //        if (player.isHuman)
+    //            resultManager.SetResultWindow("win", "human");
+    //        else
+    //            resultManager.SetResultWindow("win", "orc");
+    //    }
+    //}
 
     public void OnMoveSceneBtn() {
-        SceneManager.Instance.LoadScene(SceneManager.Scene.MAIN_SCENE);
+        FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
     }
-
-    private void SetResultWindow(string result, string race) {
-        Transform baseWindow = resultUI.transform.GetChild(0);
-        Transform resourceWindow = resultUI.transform.GetChild(1);
-        baseWindow.gameObject.SetActive(true);
-        switch (result) {
-            case "win":
-                if (race == "human") {
-                    baseWindow.Find("ResultCharacter/ResultHuman").gameObject.SetActive(true);                    
-                    resourceWindow.Find("ResourceResultRibon/HumanRibon").gameObject.SetActive(true);
-                }
-                else {
-                    baseWindow.Find("ResultCharacter/ResultOrc").gameObject.SetActive(true);
-                    resourceWindow.Find("ResourceResultRibon/OrcRibon").gameObject.SetActive(true);
-                }
-                baseWindow.Find("ShineEffect/WinShineEffect").gameObject.SetActive(true);
-                resourceWindow.Find("ShineEffect/WinShineEffect").gameObject.SetActive(true);
-                baseWindow.Find("ResultCharacter/ResultText/WinText").gameObject.SetActive(true);
-                resourceWindow.Find("ResultText/WinText").gameObject.SetActive(true);
-                break;
-            case "lose":
-                if (race == "human") {
-                    baseWindow.Find("ResultCharacter/ResultHuman").gameObject.SetActive(true);
-                    baseWindow.Find("ResultCharacter/ResultHuman/ResultHumanHero").gameObject.GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, "DEAD", false);
-                }
-                else {
-                    baseWindow.Find("ResultCharacter/ResultOrc").gameObject.SetActive(true);
-                    baseWindow.Find("ResultCharacter/ResultOrc/ResultOrcHero").gameObject.GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, "DEAD", false);
-                }
-                baseWindow.Find("ShineEffect/LoseShineEffect").gameObject.SetActive(true);
-                resourceWindow.Find("ShineEffect/LoseShineEffect").gameObject.SetActive(true);
-                baseWindow.Find("ResultCharacter/LoseRibon").gameObject.SetActive(true);
-                resourceWindow.Find("LoseRibon").gameObject.SetActive(true);
-                baseWindow.Find("ResultCharacter/ResultText/LoseText").gameObject.SetActive(true);
-                resourceWindow.Find("ResultText/LoseText").gameObject.SetActive(true);
-                break;
-            default:
-                break;
-        }
-        resourceWindow.gameObject.SetActive(false);
-    }
-
 }
 
 /// <summary>
@@ -770,6 +788,8 @@ public partial class PlayMangement {
         GameObject unit = Instantiate(baseUnit, targetPlayer.transform.GetChild(row).GetChild(col));
         unit.transform.position = targetPlayer.transform.GetChild(row).GetChild(col).position;
         PlaceMonster placeMonster = unit.GetComponent<PlaceMonster>();
+        EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.UNIT_SUMMONED, this, unitID);
+
 
         placeMonster.isPlayer = isPlayer;
         placeMonster.itemId = itemID;
@@ -827,7 +847,7 @@ public partial class PlayMangement {
         }
         else {
             int enemyCardCount = CountEnemyCard();
-            Destroy(enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(enemyCardCount - 1).GetChild(0).gameObject);
+            //Destroy(enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(enemyCardCount - 1).GetChild(0).gameObject);
 
             SkillModules.SkillHandler skillHandler = new SkillModules.SkillHandler();
             skillHandler.Initialize(cardData.skills, unit, false);
@@ -855,7 +875,7 @@ public partial class PlayMangement {
 
     public IEnumerator GenerateCard() {
         int i = 0;
-        while (i < 5) {
+        while (i < 4) {
             yield return new WaitForSeconds(0.3f);
             if (i < 4)
                 StartCoroutine(player.cdpm.FirstDraw());
@@ -868,12 +888,14 @@ public partial class PlayMangement {
             enemyCard.transform.position = player.cdpm.cardSpawnPos.position;
             enemyCard.transform.localScale = new Vector3(1, 1, 1);
             iTween.MoveTo(enemyCard, enemyCard.transform.parent.position, 0.3f);
-            enemyCard.SetActive(true);
+            yield return new WaitForSeconds(0.3f);
+            enemyCard.SetActive(false);
+            enemyPlayer.playerUI.transform.Find("CardCount").GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = "X" + " " + (i + 1).ToString();
             i++;
         }
     }
 
-    public void EndTurnDraw() {
+    public virtual void EndTurnDraw() {
         if (isGame == false) return;
         bool race = player.isHuman;
         SocketFormat.Card cardData = socketHandler.gameState.players.myPlayer(race).newCard;
@@ -888,6 +910,8 @@ public partial class PlayMangement {
         enemyCard.transform.localScale = new Vector3(1, 1, 1);
         iTween.MoveTo(enemyCard, enemyCard.transform.parent.position, 0.3f);
         enemyCard.SetActive(true);
+        int count = CountEnemyCard();
+        enemyPlayer.playerUI.transform.Find("CardCount").GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = "X" + " " + (count).ToString();
     }
 
     public IEnumerator EnemyMagicCardDraw(int drawNum) {
@@ -903,6 +927,8 @@ public partial class PlayMangement {
             enemyCard.transform.localScale = new Vector3(1, 1, 1);
             iTween.MoveTo(enemyCard, enemyCard.transform.parent.position, 0.3f);
             enemyCard.SetActive(true);
+            int count = CountEnemyCard();
+            enemyPlayer.playerUI.transform.Find("CardCount").GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = "X" + " " + (count).ToString();
             yield return new WaitForSeconds(0.3f);
         }
     }
@@ -956,7 +982,7 @@ public partial class PlayMangement {
 /// Socket 관련 처리
 /// </summary>
 public partial class PlayMangement {
-    [SerializeField] IngameEventHandler eventHandler;
+    [SerializeField] protected IngameEventHandler eventHandler;
     public IngameEventHandler EventHandler {
         get {
             return eventHandler;
@@ -983,14 +1009,17 @@ public partial class PlayMangement {
 
 public partial class PlayMangement {
     [SerializeField] Transform turnTable;
-    private GameObject releaseTurnBtn;
+    SkeletonGraphic turnSpine;
+    public GameObject releaseTurnBtn;
     private GameObject nonplayableTurnArrow;
     private GameObject playableTurnArrow;
     private Transform turnIcon;
 
     public void InitTurnTable() {
-        string race = Variables.Saved.Get("SelectedRace").ToString();
+        string race = PlayerPrefs.GetString("SelectedRace");
         bool isHuman;
+
+        turnSpine = turnTable.Find("TurnSpine").GetComponent<SkeletonGraphic>();
         if (race == "HUMAN") isHuman = true;
         else isHuman = false;
         if (isHuman) {
@@ -1031,7 +1060,7 @@ public partial class PlayMangement {
     }
     
     private IEnumerator SetHumanTurnTable(string currentTurn) {
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(0.3f);
         switch (currentTurn) {
             case "HUMAN":
                 releaseTurnBtn.SetActive(true);
@@ -1053,7 +1082,7 @@ public partial class PlayMangement {
     }
 
     private IEnumerator SetOrcTurnTable(string currentTurn) {
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(0.3f);
         switch (currentTurn) {
             case "ORC":
             case "SECRET":
@@ -1067,7 +1096,7 @@ public partial class PlayMangement {
     }
 
     public void OnNoCostEffect(bool turnOn) {
-        releaseTurnBtn.transform.Find("TurnOverFeedback").gameObject.SetActive(turnOn);
+        releaseTurnBtn.transform.Find("ResourceOut").gameObject.SetActive(turnOn);
     }
 
     public void EditorTestInit(SocketFormat.GameState state) {

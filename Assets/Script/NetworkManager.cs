@@ -4,22 +4,75 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using System.Collections;
+using Haegin;
+using HaeginGame;
 
 /// <summary>
 /// BestHTTP Pro
 /// </summary>
 public partial class NetworkManager : Singleton<NetworkManager> {
-#if UNITY_EDITOR
-    private string url = "https://ccdevclient.fbl.kr/";
-#else
-    private string url = "https://cctest.fbl.kr/";
-#endif
-    public string baseUrl { get { return url; } }
+    public string baseUrl { get; private set; }
+    public void SetUrl(string url) {
+        this.baseUrl = url;
+    }
+
     protected NetworkManager() { }
 
-    private void Awake() {
+    private WebClient webClient;
+
+    public void Auth() {
         DontDestroyOnLoad(gameObject);
         MAX_REDIRECTCOUNT = 10;
+        webClient = WebClient.GetInstance();
+
+        webClient.ErrorOccurred += OnErrorOccurred;
+        webClient.Processing += OnProcessing;
+        webClient.RetryOccurred += RetryOccurred;
+        webClient.RetryFailed += RetryFailed;
+        //webClient.MaintenanceStarted += OnMaintenanceStarted;
+        webClient.Logged += (string log) => {
+#if MDEBUG
+            Debug.Log("Unity   " + log);
+#endif
+        };
+
+        Debug.Log("Requesting IssueJWT");
+        webClient.Request(new IssueJWTReq());
+        //ThreadSafeDispatcher.Instance.PushSystemBackKeyListener(OnSystemBackKey);
+    }
+
+    void RetryOccurred(Protocol protocol, int retryCount)
+    {
+#if MDEBUG
+        Debug.Log(protocol.ProtocolId + " : Retry Occurred  " + retryCount);
+#endif
+    }
+
+    void RetryFailed(Protocol protocol)
+    {
+#if MDEBUG
+        Debug.Log(protocol.ProtocolId + " : Retry Failed ");
+#endif
+    }
+
+    void OnProcessing(ReqAndRes rar)
+    {
+#if MDEBUG
+        Debug.Log("Processed Protocol : " + rar.Req.Protocol.ProtocolId);
+        Debug.Log("Processed Result :" + rar.Res.ProtocolId);
+#endif
+        if(ProtocolId.IssueJWT == rar.Res.ProtocolId) {
+            IssueJWTRes result = (IssueJWTRes)rar.Res;
+            Logger.Log("Token : " + result.Token);
+            AccountManager.Instance.TokenId = result.Token;
+        }
+    }
+
+    public void OnErrorOccurred(int error)
+    {
+        #if MDEBUG
+        Debug.Log("OnErrorOccurred " + error);
+        #endif
     }
 
     Queue<RequestFormat> requests = new Queue<RequestFormat>();
@@ -93,22 +146,6 @@ public partial class NetworkManager : Singleton<NetworkManager> {
 
             dequeueing = false;
             throw new ArgumentOutOfRangeException("TimeOut Request", "요청대기시간이 초과되었습니다.");
-        }
-        //token이 존재하지 않아 token 갱신 이후 재요청
-        else if(response.DataAsText.Contains("invalid_token")) {
-            FinishRequest(request, response);
-            AccountManager.Instance.AuthUser((a, b) => {
-                AccountManager.Instance.AuthUserCallback(a, b);
-                HTTPRequest re_request = new HTTPRequest(request.Uri);
-                re_request.MethodType = request.MethodType;
-                re_request.RedirectCount = ++request.RedirectCount;
-                re_request.AddHeader("authorization", AccountManager.Instance.TokenFormat);
-                request.Callback -= CheckCondition;
-                request.Callback -= FinishRequest;
-                Request(re_request, request.Callback, re_request.LoadingMessage); 
-            });
-            dequeueing = false;
-            throw new ArgumentOutOfRangeException("Token Invalid", "토큰이 존재하지 않습니다.");
         }
     }
 

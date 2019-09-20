@@ -5,10 +5,8 @@ using TMPro;
 
 namespace SkillModules {
     public class poison : MonoBehaviour { 
-        private TextMeshPro textPro;
         private void Start() {
             gameObject.GetComponent<PlaceMonster>().AddAttackProperty("poison");
-            
         }
 
         void OnDestroy() {

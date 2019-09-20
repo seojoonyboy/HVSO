@@ -1,0 +1,139 @@
+
+ac10051.png
+size: 1024,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+L_arm
+  rotate: true
+  xy: 572, 87
+  size: 116, 183
+  orig: 116, 183
+  offset: 0, 0
+  index: -1
+L_arm_2
+  rotate: true
+  xy: 367, 63
+  size: 116, 205
+  orig: 116, 205
+  offset: 0, 0
+  index: -1
+L_leg
+  rotate: false
+  xy: 936, 140
+  size: 88, 99
+  orig: 88, 99
+  offset: 0, 0
+  index: -1
+R_arm
+  rotate: true
+  xy: 755, 135
+  size: 104, 181
+  orig: 104, 181
+  offset: 0, 0
+  index: -1
+R_arm_2
+  rotate: true
+  xy: 772, 239
+  size: 104, 206
+  orig: 104, 206
+  offset: 0, 0
+  index: -1
+R_leg
+  rotate: false
+  xy: 802, 36
+  size: 89, 99
+  orig: 89, 99
+  offset: 0, 0
+  index: -1
+bird_body
+  rotate: false
+  xy: 0, 0
+  size: 84, 63
+  orig: 84, 63
+  offset: 0, 0
+  index: -1
+bird_eye_1
+  rotate: true
+  xy: 755, 87
+  size: 10, 15
+  orig: 10, 15
+  offset: 0, 0
+  index: -1
+bird_eye_2
+  rotate: false
+  xy: 745, 323
+  size: 16, 15
+  orig: 16, 15
+  offset: 0, 0
+  index: -1
+body
+  rotate: false
+  xy: 367, 344
+  size: 207, 159
+  orig: 207, 159
+  offset: 0, 0
+  index: -1
+effect_1
+  rotate: false
+  xy: 565, 203
+  size: 180, 135
+  orig: 180, 135
+  offset: 0, 0
+  index: -1
+eyelight
+  rotate: true
+  xy: 891, 45
+  size: 90, 82
+  orig: 90, 82
+  offset: 0, 0
+  index: -1
+helmet
+  rotate: false
+  xy: 367, 179
+  size: 198, 165
+  orig: 198, 165
+  offset: 0, 0
+  index: -1
+helmet_2
+  rotate: false
+  xy: 574, 338
+  size: 198, 165
+  orig: 198, 165
+  offset: 0, 0
+  index: -1
+helmet_3
+  rotate: false
+  xy: 772, 343
+  size: 198, 160
+  orig: 198, 160
+  offset: 0, 0
+  index: -1
+pose_effect_1
+  rotate: false
+  xy: 0, 63
+  size: 367, 440
+  orig: 367, 440
+  offset: 0, 0
+  index: -1
+shadow
+  rotate: false
+  xy: 572, 11
+  size: 230, 76
+  orig: 230, 76
+  offset: 0, 0
+  index: -1
+wing_1
+  rotate: false
+  xy: 970, 470
+  size: 46, 33
+  orig: 46, 33
+  offset: 0, 0
+  index: -1
+wing_2
+  rotate: false
+  xy: 755, 97
+  size: 47, 38
+  orig: 47, 38
+  offset: 0, 0
+  index: -1

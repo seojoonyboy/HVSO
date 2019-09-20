@@ -27,6 +27,8 @@ public partial class UnitDragHandler : CardHandler, IBeginDragHandler, IDragHand
         PlayMangement.instance.player.isPicking.Value = true;
         CardDropManager.Instance.ShowDropableSlot(cardData);
         object[] parms = new object[] { true, gameObject };
+
+
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_CARD_PLAY, this, parms);
     }
 
@@ -40,11 +42,12 @@ public partial class UnitDragHandler : CardHandler, IBeginDragHandler, IDragHand
         if (gameObject != itsDragging) return;
         OnDragCard();
         CheckLocation();
-        CardInfoOnDrag.instance.SetInfoPosOnDrag(mouseLocalPos.localPosition);
+        CardInfoOnDrag.instance.SetInfoPosOnDrag(mouseLocalPos.localPosition, true);
         CheckHighlight();
     }
 
     public void OnEndDrag(PointerEventData eventData) {
+        EffectSystem.Instance.IncreaseFadeAlpha();
         if (firstDraw) return;
         if (gameObject != itsDragging) return;
         CheckLocation(true);
@@ -57,20 +60,31 @@ public partial class UnitDragHandler : CardHandler, IBeginDragHandler, IDragHand
             highlightedSlot = null;
         }
         else if(isMyTurn(false)) {
-            StartCoroutine(SummonUnit(CheckSlot()));
+            Transform slot = CheckSlot();
+            if (slot != null && slot.childCount <= 1)
+                StartCoroutine(SummonUnit(slot));
         }
         handManager.transform.SetParent(mouseXPos.parent);
         if (!cardUsed) {
             transform.localScale = new Vector3(1, 1, 1);
             transform.localPosition = new Vector3(0, 0, 0);
             StartCoroutine(handManager.SortHandPosition());
+
+            Invoke("SendEvent", 0.3f);
         }
         CardDropManager.Instance.HideDropableSlot();
         CardInfoOnDrag.instance.OffCardDragInfo();
     }
 
+    void SendEvent() {
+        //튜토리얼에서 drop 이 실패하여 다시 핸드로 돌아온 경우 튜토리얼 재호출 처리
+        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.UNIT_DROP_FAIL, this);
+    }
+
     IEnumerator SummonUnit(Transform slot) {
-        yield return PlayMangement.instance.cardHandManager.ShowUsedCard(transform.parent.GetSiblingIndex(), gameObject);
+        PlayMangement.dragable = false;
+
+        //yield return PlayMangement.instance.cardHandManager.ShowUsedCard(transform.parent.GetSiblingIndex(), gameObject);
         GameObject unitPref = CardDropManager.Instance.DropUnit(gameObject, slot);
         if (unitPref != null) {
             var cardData = GetComponent<CardHandler>().cardData;
@@ -83,5 +97,7 @@ public partial class UnitDragHandler : CardHandler, IBeginDragHandler, IDragHand
             PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
             PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.FIELD_CHANGED, null, null);
         }
+        PlayMangement.dragable = true;
+        yield return 0;
     }
 }

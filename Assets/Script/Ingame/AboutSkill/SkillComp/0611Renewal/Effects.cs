@@ -82,6 +82,29 @@ namespace SkillModules {
         }
     }
 
+    public class set_count_in_history : Ability {
+        public set_count_in_history() : base() { }
+
+        public override void Execute(object data) {
+            BattleConnector battleConnector = PlayMangement.instance.SocketHandler;
+            var playHistory = battleConnector.gameState.playHistory.ToList();
+            var keywords = ((string[])args).ToList();
+
+            int result = 0;
+            foreach(SocketFormat.PlayHistory history in playHistory) {
+                var categories = history.cardItem.cardCategories.ToList();
+                foreach(string category in categories) {
+                    if (keywords.Contains(category)) {
+                        result++;
+                        break;
+                    }
+                }
+            }
+            skillHandler.AddAdditionalArgs(result);
+            skillHandler.isDone = true;
+        }
+    }
+
     public class set_skill_target : Ability {
         public set_skill_target() : base() { }
 
@@ -739,6 +762,39 @@ namespace SkillModules {
             Logger.Log("추가 자원 얻음");
         }
 
+    }
+
+    /// <summary>
+    /// 배수배만큼 버프 부여
+    /// </summary>
+    public class gain_mul : Ability {
+        public gain_mul() : base() { }
+
+        public override void Execute(object data) {
+            object[] tmp = (object[])data;
+
+            int offset_atk = 0;
+            int offset_hp = 0;
+            
+            int.TryParse((string)args[0], out offset_atk);
+            int.TryParse((string)args[1], out offset_hp);
+
+            int numInHistory = (int)skillHandler.GetAdditionalArgs();
+            List<GameObject> targets = (List<GameObject>)tmp[1];
+
+            GainArgs gainArgs = new GainArgs();
+            gainArgs.atk = offset_atk * numInHistory;
+            gainArgs.hp = offset_hp * numInHistory;
+            AddBuff(ref targets, ref gainArgs);
+        }
+
+        private void AddBuff(ref List<GameObject> targets, ref GainArgs args) {
+            if(args.atk != 0 || args.hp != 0) {
+                foreach (GameObject target in targets)
+                    target.GetComponent<PlaceMonster>().RequestChangeStat(args.atk, args.hp);
+            }
+            skillHandler.isDone = true;
+        }
     }
 
     public class st_filter_attack : Ability {

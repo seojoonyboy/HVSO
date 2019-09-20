@@ -5,17 +5,15 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 using UnityEngine;
 using BestHTTP.WebSocket;
-using Bolt;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using SocketFormat;
 
 public partial class BattleConnector : MonoBehaviour {
 
-    #if UNITY_EDITOR
-    private string url = "wss://ccdevclient.fbl.kr/game";
-    #else
-    private string url = "wss://cctest.fbl.kr/game";
-    #endif
+    private string url { get { 
+        return NetworkManager.Instance.baseUrl + "game"; } }
+    
     WebSocket webSocket;
     [SerializeField] Text message;
     [SerializeField] Text timer;
@@ -59,7 +57,7 @@ public partial class BattleConnector : MonoBehaviour {
         returnButton.gameObject.SetActive(false);
         webSocket.Close();
         yield return new WaitForSeconds(3f);
-        SceneManager.Instance.LoadScene(SceneManager.Scene.MAIN_SCENE);
+        FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
         Destroy(gameObject);
     }
 
@@ -67,7 +65,7 @@ public partial class BattleConnector : MonoBehaviour {
         StopCoroutine(timeCheck);
         webSocket.Close();
         returnButton.onClick.RemoveListener(BattleCancel);
-        SceneManager.Instance.LoadScene(SceneManager.Scene.MAIN_SCENE);
+        FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
         Destroy(gameObject);
     }
 
@@ -83,14 +81,34 @@ public partial class BattleConnector : MonoBehaviour {
     //Connected
     private void OnOpen(WebSocket webSocket) {
         //string playerId = AccountManager.Instance.DEVICEID;
-        string deckId = Variables.Saved.Get("SelectedDeckId").ToString();
-        string battleType = Variables.Saved.Get("SelectedBattleType").ToString();
-        string race = Variables.Saved.Get("SelectedRace").ToString().ToLower();
+        string deckId = PlayerPrefs.GetString("SelectedDeckId");
+        string battleType = PlayerPrefs.GetString("SelectedBattleType");
+        string race = PlayerPrefs.GetString("SelectedRace").ToLower();
+        
         string[] args;
+
         if(battleType.CompareTo("test") == 0)
-            args = new string[] { battleType, race };   
-        else
-            args = new string[] { battleType, deckId, race };
+            args = new string[] { battleType, race };
+        else {
+            //Logger.Log("stageNum : " + PlayerPrefs.GetString("StageNum"));
+            if (battleType == "story" && PlayerPrefs.GetString("StageNum") != "1") {
+                PlayerPrefs.SetString("SelectedBattleType", "solo");
+                battleType = "solo";
+            }  //TODO : 튜토리얼 이외의 스토리 세팅이 되면 변경할 필요가 있음
+            if (battleType == "story") {
+                //========================================================
+                //deckId 및 race 관련 처리 수정 예정
+                string stageNum = PlayerPrefs.GetString("StageNum");
+                race = "human";
+                deckId = string.Empty;
+                args = new string[] { battleType, deckId, race, stageNum };
+                //========================================================
+            }
+            else {
+                args = new string[] { battleType, deckId, race };
+            }
+        }
+            
         SendMethod("join_game", args);
         pingpong = StartCoroutine(Heartbeat());
     }
@@ -101,7 +119,7 @@ public partial class BattleConnector : MonoBehaviour {
             yield return beatTime;
         }
         if(!battleGameFinish)
-            PlayMangement.instance.SocketErrorUIOpen(false);
+            PlayMangement.instance.resultManager.SocketErrorUIOpen(false);
     }
 
     
@@ -141,6 +159,17 @@ public partial class BattleConnector : MonoBehaviour {
         SendMethod("unit_skill_activate", args);
     }
 
+    public void KeepHeroCard(int itemId) {
+        JObject args = new JObject();
+        args["itemId"] = itemId;
+        Debug.Log(args);
+        SendMethod("keep_hero_card", args);
+    }
+
+    public void Surrend(object args) {
+        SendMethod("player_surrender", args);
+    }
+
     void Error(WebSocket webSocket, Exception ex) {
         Logger.LogWarning(ex);
     }
@@ -151,7 +180,10 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void StartBattle() {
-        SceneManager.Instance.LoadScene(SceneManager.Scene.MISSION_INGAME);
+        if (PlayerPrefs.GetString("SelectedBattleType") != "story")
+            UnityEngine.SceneManagement.SceneManager.LoadScene("IngameScene", UnityEngine.SceneManagement.LoadSceneMode.Single);
+        else
+            UnityEngine.SceneManagement.SceneManager.LoadScene("TutorialScene", UnityEngine.SceneManagement.LoadSceneMode.Single);
     }
 
     private void SendMethod(string method, object args = null) {
@@ -192,6 +224,14 @@ public partial class BattleConnector : MonoBehaviour {
         }
         getNewCard = false;
         dequeueing = true;
+        IngameNotice.instance.CloseNotice();
+    }
+
+    public IEnumerator WaitMulliganFinish() {
+        WaitForFixedUpdate fixedUpdate = new WaitForFixedUpdate();
+        if(gameState.state.CompareTo("mulligan") == 0) IngameNotice.instance.SetNotice("상대방이 카드 교체중입니다.");
+        while(gameState.state.CompareTo("mulligan") == 0)
+            yield return fixedUpdate;
         IngameNotice.instance.CloseNotice();
     }
 

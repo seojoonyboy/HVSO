@@ -4,7 +4,6 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 using dataModules;
 using UnityEngine.UI;
-using Bolt;
 
 /// <summary>
 /// 테스트용 인게임을 위한 스크립트
@@ -361,9 +360,9 @@ namespace IngameEditor {
                 Logger.Log("Something is wrong");
             }
 
-            Variables.Saved.Set("SelectedRace", selectedRace);
-            Variables.Saved.Set("SelectedBattleType", "test");
-            Variables.Saved.Set("Editor_startState", startState);
+            PlayerPrefs.SetString("SelectedRace", selectedRace);
+            PlayerPrefs.SetString("SelectedBattleType", "test");
+            PlayerPrefs.SetString("Editor_startState", JsonUtility.ToJson(startState));
 
             //SceneManager.Instance.LoadScene(SceneManager.Scene.CONNECT_MATCHING_SCENE);
         }

@@ -1,0 +1,34 @@
+
+ingame_shieldgauge_orc.png
+size: 128,128
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+back
+  rotate: false
+  xy: 0, 42
+  size: 121, 86
+  orig: 121, 86
+  offset: 0, 0
+  index: -1
+back_1
+  rotate: false
+  xy: 66, 10
+  size: 28, 32
+  orig: 28, 32
+  offset: 0, 0
+  index: -1
+shield_1
+  rotate: false
+  xy: 0, 0
+  size: 38, 42
+  orig: 38, 42
+  offset: 0, 0
+  index: -1
+shield_light
+  rotate: false
+  xy: 38, 9
+  size: 28, 33
+  orig: 28, 33
+  offset: 0, 0
+  index: -1

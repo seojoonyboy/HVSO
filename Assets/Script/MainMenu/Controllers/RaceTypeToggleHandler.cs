@@ -67,14 +67,15 @@ public class RaceTypeToggleHandler : MonoBehaviour {
 
     public void Init() {
         var type = (BattleReadySceneController.RaceType)id;
-        controller.ChangeRaceType(type);        //Send To Machine Variables
+        controller.ChangeRaceType(type);
 
         ClearList();
         CreateBasicDeckList(type);
     }
-
-    //Called By Bolt Machine
+    
     public void SwitchOn() {
+        if (GetComponent<BooleanIndex>().isOn) return;
+
         Init();
 
         transform.Find("Selected").gameObject.SetActive(true);
@@ -111,17 +112,6 @@ public class RaceTypeToggleHandler : MonoBehaviour {
                 totalDecks = null;
                 break;
         }
-
-        //test code
-        //basicDecks = new List<Deck>();
-        //for(int i=0; i<10; i++) {
-        //    Deck deck = new Deck();
-        //    deck.name = i + "번째 덱";
-        //    deck.id = i.ToString();
-
-        //    basicDecks.Add(deck);
-        //}
-        //end test code
         if ((int)type != id) return;
         if (totalDecks == null) return;
 
@@ -129,7 +119,7 @@ public class RaceTypeToggleHandler : MonoBehaviour {
         int item_index = 0;         //전체 Deck Index
         PageIndex = 0;
         controller.ButtonGlowEffect.SetActive(false);
-        Bolt.Variables.Saved.Set("SelectedDeckId", "");
+        PlayerPrefs.SetString("SelectedDeckId", "");
 
         GameObject lastPage = null;
         for (int i = 0; i < pageNum; i++) {
@@ -228,10 +218,7 @@ public class RaceTypeToggleHandler : MonoBehaviour {
         return Mathf.CeilToInt((float)decks.Count / DECK_SLOT_NUM_PER_PAGE);
     }
 
-    private void ClearList() {
-        foreach(Transform tf in heroPortraitParent) {
-            Destroy(tf.gameObject);
-        }
+    public void ClearList() {
         foreach(Transform tf in deckParent) {
             Destroy(tf.gameObject);
         }

@@ -9,6 +9,7 @@ public class MyDecksLoader : MonoBehaviour {
     GameObject loadingModal;
     AccountManager accountManager;
     public UnityEvent OnLoadFinished = new UnityEvent();
+    public UnityEvent OnInvenLoadFinished = new UnityEvent();
     public UnityEvent OnTemplateLoadFinished = new UnityEvent();
 
     void Awake() {
@@ -21,27 +22,29 @@ public class MyDecksLoader : MonoBehaviour {
     /// <param name="orcDecks">불러온 오크 덱 정보를 저장할 타겟 변수</param>
     public void Load() {
         accountManager.LoadAllCards();
-        accountManager.RequestMyCards(OnMyCardsLoadFinished);
         accountManager.RequestMyDecks(OnDeckLoadFinished);
         accountManager.RequestHumanTemplates(OnHumanTemplateLoadFinished);
         accountManager.RequestOrcTemplates(OnOrcTemplateLoadFinished);
+        accountManager.RequestInventories(OnInventoryLoadFinished);
     }
 
-    //TODO : JsonReader에 call back 정보에 맞추어 class 새로 생성
-    private void OnMyCardsLoadFinished(HTTPRequest originalRequest, HTTPResponse response) {
-        if (response != null) {
+    public void LoadOnlyDecks() {
+        accountManager.RequestMyDecks(OnDeckLoadFinished); 
+    }
+
+    private void OnInventoryLoadFinished(HTTPRequest originalRequest, HTTPResponse response) {
+        if(response != null) {
             if (response.StatusCode == 200 || response.StatusCode == 304) {
-                var result = JsonReader.Read<AccountManager.UserInfo>(response.DataAsText);
+                var result = JsonReader.Read<MyCardsInfo>(response.DataAsText);
 
                 accountManager.myCards = result.cardInventories;
                 accountManager.SetHeroInventories(result.heroInventories);
                 accountManager.SetCardData();
+                OnInvenLoadFinished.Invoke();
             }
         }
-        else {
-            Logger.Log("Something is wrong");
-        }
     }
+
 
     private void OnDeckLoadFinished(HTTPRequest originalRequest, HTTPResponse response) {
         if(response != null) {

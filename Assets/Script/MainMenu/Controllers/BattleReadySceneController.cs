@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using Bolt;
 using System;
 using TMPro;
 using UnityEngine.UI.Extensions;
@@ -25,6 +24,8 @@ public class BattleReadySceneController : MonoBehaviour {
     [SerializeField] public GameObject EmptyMsgShowPanel;
     [SerializeField] public GameObject ButtonGlowEffect;
     [SerializeField] HorizontalScrollSnap BattleTypeHorizontalScrollSnap;
+    [SerializeField] HUDController HudController;
+    [SerializeField] HorizontalScrollSnap ScrollSnap;
 
     public Deck selectedDeck;
 
@@ -44,8 +45,20 @@ public class BattleReadySceneController : MonoBehaviour {
 
     private void OnEnable() {
         ChangeBattleType(0);
-        Variables.Saved.Set("SelectedDeckId", "");
-        Variables.Saved.Set("SelectedRace", RaceType.NONE);
+        
+        ScrollSnap.ChangePage(0);
+        PlayerPrefs.SetString("SelectedDeckId", "");
+        PlayerPrefs.SetString("SelectedRace", RaceType.NONE.ToString());
+
+        HudController.SetHeader(HUDController.Type.RESOURCE_ONLY_WITH_BACKBUTTON);
+        HudController.SetBackButton(() => {
+            OnBackButton();
+        });
+    }
+
+    void OnDisable() {
+        RectTransform rt = ScrollSnap.transform.Find("Content").GetComponent<RectTransform>();
+        rt.offsetMin = new Vector2(0, rt.offsetMin.y);
     }
 
     public void ChangePageText(string msg) {
@@ -57,13 +70,12 @@ public class BattleReadySceneController : MonoBehaviour {
             Logger.Log("이미 대전 시작 버튼이 눌려진 상태");
             return;
         }
-
-        string race = Variables.Saved.Get("SelectedRace").ToString().ToLower();
-        string selectedDeckId = Variables.Saved.Get("SelectedDeckId").ToString().ToLower();
+        string race = PlayerPrefs.GetString("SelectedRace").ToLower();
+        string selectedDeckId = PlayerPrefs.GetString("SelectedDeckId").ToLower();
         if (race != null && !string.IsNullOrEmpty(selectedDeckId)) {
             if (selectedDeck.deckValidate) {
                 isIngameButtonClicked = true;
-                SceneManager.Instance.LoadScene(SceneManager.Scene.CONNECT_MATCHING_SCENE);
+                FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.CONNECT_MATCHING_SCENE);
             }
             else {
                 Modal.instantiate("유효하지 않은 덱입니다.", Modal.Type.CHECK);
@@ -85,12 +97,18 @@ public class BattleReadySceneController : MonoBehaviour {
 
     public void OnBackButton() {
         SoundManager.Instance.PlaySound(SoundType.FIRST_TURN);
-        SceneManager.Instance.LoadScene(SceneManager.Scene.MAIN_SCENE);
-    }
 
-    public void OnDeckListButton() {
-        SoundManager.Instance.PlaySound(SoundType.FIRST_TURN);
-        SceneManager.Instance.LoadScene(SceneManager.Scene.DECK_LIST_SCNE);
+        foreach (Button btn in raceTypeButtons) {
+            GameObject obj = btn.gameObject;
+            obj.GetComponent<BooleanIndex>().isOn = false;
+            RaceTypeToggleHandler toggleHandler = obj.GetComponent<RaceTypeToggleHandler>();
+            toggleHandler.SwitchOff();
+            toggleHandler.ClearList();
+        }
+        EmptyMsgShowPanel.SetActive(true);
+        HudController.SetHeader(HUDController.Type.SHOW_USER_INFO);
+
+        gameObject.SetActive(false);
     }
 
     public void ChangeBattleType(BattleType type) {
@@ -100,7 +118,7 @@ public class BattleReadySceneController : MonoBehaviour {
 
     public void ChangeRaceType(RaceType type) {
         SoundManager.Instance.PlaySound(SoundType.FIRST_TURN);
-        Variables.Saved.Set("SelectedRace", type);
+        PlayerPrefs.SetString("SelectedRace", type.ToString());
         Logger.Log(type);
         raceType = type;
 
@@ -109,14 +127,13 @@ public class BattleReadySceneController : MonoBehaviour {
 
     public void ChangeDeck(string deckId) {
         var msg = string.Format("{0} 선택됨", deckId);
-        Variables.Saved.Set("SelectedDeckId", deckId);
-
+        PlayerPrefs.SetString("SelectedDeckId", deckId);
         int isNum = 0;
         if(int.TryParse(deckId, out isNum)) {
-            Variables.Saved.Set("SelectedDeckType", "custom");
+            PlayerPrefs.SetString("SelectedDeckType", "custom");
         }
         else {
-            Variables.Saved.Set("SelectedDeckType", "basic");
+            PlayerPrefs.SetString("SelectedDeckType", "basic");
         }
 
         ButtonGlowEffect.SetActive(true);
@@ -133,7 +150,7 @@ public class BattleReadySceneController : MonoBehaviour {
                 type = "solo";
                 break;
         }
-        Variables.Saved.Set("SelectedBattleType", type);
+        PlayerPrefs.SetString("SelectedBattleType", type);
     }
 
     public enum BattleType {
@@ -146,10 +163,6 @@ public class BattleReadySceneController : MonoBehaviour {
         HUMAN = 0,
         ORC = 1,
         NONE = 2
-    }
-
-    public void OnClickModifyButton(GameObject target) {
-
     }
 
     public void OnClickCardListModal() {

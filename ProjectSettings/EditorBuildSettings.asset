@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Haegin/Sample/Scenes/SceneOBBCheck.unity
+    guid: 3e67fb4e64b93411696ea8bc084b177f
+  - enabled: 1
     path: Assets/Scenes/Login.unity
     guid: f05e98f3e64d5a14981e0ad79c23c6d1
   - enabled: 1
@@ -15,12 +18,18 @@ EditorBuildSettings:
     path: Assets/Scenes/LoadingScene.unity
     guid: ec12b3c084020408e921c7fb3503b997
   - enabled: 1
-    path: Assets/Scenes/BattleReadyScene.unity
-    guid: f0670715b49638148b2efdf399770948
-  - enabled: 1
     path: Assets/Scenes/BatttleConnectScene.unity
     guid: 415b01736ab45214492edf053155ecf6
   - enabled: 1
     path: Assets/Scenes/IngameScene.unity
     guid: c779ba3ba45fa784db6cf4f02fed5d79
+  - enabled: 1
+    path: Assets/Scenes/ScenarioLobby.unity
+    guid: 5b678e23e10195f4ca00e5484943c6fd
+  - enabled: 1
+    path: Assets/Scenes/TutorialScene.unity
+    guid: ffe6674bdef25f24597cb70d9019b89f
+  - enabled: 1
+    path: Assets/Scenes/DictionaryScene.unity
+    guid: f68ae0f0580d01e4f8f09e9e58f0bd18
   m_configObjects: {}

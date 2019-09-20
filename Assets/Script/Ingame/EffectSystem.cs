@@ -19,6 +19,7 @@ public class EffectSystem : SerializedMonoBehaviour {
     public GameObject spareObject;
     public GameObject cutSceneCanvas;
     public GameObject fadeCanvas;
+    public SpriteRenderer worldFade;
 
     private void Awake() {
         Instance = this;
@@ -37,6 +38,8 @@ public class EffectSystem : SerializedMonoBehaviour {
         effect.name = effectObject[type].gameObject.name;
         effect.SetActive(true);
         SkeletonAnimation effectAnimation = effect.GetComponent<SkeletonAnimation>();
+        effectAnimation.Initialize(true);
+        effectAnimation.Update(0);
         effectAnimation.AnimationState.SetAnimation(0, "animation", false);
         effectAnimation.AnimationState.Complete += delegate (TrackEntry entry) { SetReadyObject(effect); };
         //Destroy(effect, effectAnimation.skeleton.Data.FindAnimation("animation").Duration - 0.1f);
@@ -50,6 +53,8 @@ public class EffectSystem : SerializedMonoBehaviour {
         effect.SetActive(true);
         effect.name = effectObject[type].gameObject.name;
         SkeletonAnimation effectAnimation = effect.GetComponent<SkeletonAnimation>();
+        effectAnimation.Initialize(true);
+        effectAnimation.Update(0);
         if (playerTransform != null && playerTransform.gameObject.GetComponent<PlayerController>().isPlayer == false)
             effect.GetComponent<MeshRenderer>().sortingOrder = 8;
         effectAnimation.AnimationState.SetAnimation(0, "animation", false);
@@ -73,6 +78,8 @@ public class EffectSystem : SerializedMonoBehaviour {
         effect.name = effectObject[type].gameObject.name;
         effect.SetActive(true);
         SkeletonAnimation effectAnimation = effect.GetComponent<SkeletonAnimation>();
+        effectAnimation.Initialize(true);
+        effectAnimation.Update(0);
         effectAnimation.AnimationState.SetAnimation(0, "animation", false);
         effectAnimation.AnimationState.Complete += delegate (TrackEntry entry) { callBack(); SetReadyObject(effect); };
     }
@@ -123,7 +130,7 @@ public class EffectSystem : SerializedMonoBehaviour {
     public IEnumerator HeroCutScene(bool isHuman) {
         SkeletonGraphic cutsceneAnimation;
         GameObject cutsceneObject;
-        StartCoroutine(FadeOut(0f, 0.6f, 0.8f));
+        //StartCoroutine(FadeOut(0f, 0.6f, 0.8f));
         if (isHuman == true) {
             cutsceneObject = cutSceneCanvas.transform.Find("Human").gameObject;
             cutsceneObject.SetActive(true);
@@ -134,12 +141,27 @@ public class EffectSystem : SerializedMonoBehaviour {
             cutsceneObject.SetActive(true);
             cutsceneAnimation = cutSceneCanvas.transform.Find("Orc").gameObject.GetComponent<SkeletonGraphic>();
         }
-
+        //cutsceneAnimation.AnimationState.ClearTrack(0);
+        //cutsceneAnimation.AnimationState.Data.DefaultMix = 1;
+        cutsceneAnimation.Skeleton.SetSlotsToSetupPose();
+        cutsceneAnimation.Initialize(true);
+        cutsceneAnimation.Update(0);
         cutsceneAnimation.AnimationState.SetAnimation(0, "animation", false);
-        yield return new WaitForSeconds(cutsceneAnimation.Skeleton.Data.FindAnimation("animation").Duration / 2);
-        StartCoroutine(FadeIn(0.6f, 0, 0.7f));
-        yield return new WaitForSeconds(cutsceneAnimation.Skeleton.Data.FindAnimation("animation").Duration / 2);
+        yield return new WaitForSeconds(cutsceneAnimation.Skeleton.Data.FindAnimation("animation").Duration);
+        //yield return FadeIn(0.6f, 0, cutsceneAnimation.Skeleton.Data.FindAnimation("animation").Duration / 2);
         cutsceneObject.SetActive(false);
+    }
+
+    public void DecreaseFadeAlpha() {
+        worldFade.transform.gameObject.SetActive(true);
+        worldFade.sortingOrder = 16;
+        worldFade.color = new Color(0, 0, 0, 0.6f);
+    }
+
+    public void IncreaseFadeAlpha() {
+        worldFade.sortingOrder = 16;
+        worldFade.color = new Color(0, 0, 0, 0.6f);
+        worldFade.transform.gameObject.SetActive(false);
     }
 
     public IEnumerator FadeOut(float min, float max, float time) {
@@ -177,6 +199,19 @@ public class EffectSystem : SerializedMonoBehaviour {
 
         fadeCanvas.SetActive(false);
         yield return null;
+    }
+
+    public void IncreaseShieldFeedBack(GameObject shieldFeed, int amount) {
+        SkeletonGraphic skeletonGraphic = shieldFeed.GetComponent<SkeletonGraphic>();
+        shieldFeed.SetActive(true);
+        //skeletonGraphic.AnimationState.Data.DefaultMix = 1;
+        //skeletonGraphic.AnimationState.ClearTrack(0);
+        skeletonGraphic.Initialize(true);
+        skeletonGraphic.Update(0);        
+        skeletonGraphic.Skeleton.SetSlotsToSetupPose();
+        TrackEntry entry;
+        entry = skeletonGraphic.AnimationState.SetAnimation(0, amount.ToString(), false);
+        skeletonGraphic.AnimationState.Complete += delegate (TrackEntry e) { shieldFeed.SetActive(false); skeletonGraphic.AnimationState.ClearTrack(0); };
     }
 
 

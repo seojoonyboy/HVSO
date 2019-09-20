@@ -11,6 +11,8 @@ namespace SkillModules {
         public Skill[] skills;
         public GameObject myObject;
         public object skillTarget;
+        private object additionalArgs;
+
         public bool isPlayer;
         public object targetData;
         private List<IngameEventHandler.EVENT_TYPE> triggerList;
@@ -112,21 +114,30 @@ namespace SkillModules {
         }
 
         IEnumerator SkillTrigger (IngameEventHandler.EVENT_TYPE triggerType, object parms) {
+            SendingMessage(false);
             foreach (Skill skill in skills) {
                 isDone = false;                
                 bool active = skill.Trigger (triggerType, parms);
+                if(!active && skill.TargetSelectExist()) SendingMessage(true);
                 if (active && !isDone) yield return new WaitUntil (() => isDone);
                 PlayMangement.instance.OffBlockPanel();                
             }            
             //유닛 소환이나 마법 카드 사용 했을 때
             isDone = true;
             socketDone = true;
-
             if(!isPlayer) yield break;
+            if(isPlayingCard()) {
+                PlayMangement.instance.UnlockTurnOver();
+                if(myObject.GetComponent<MagicDragHandler>()) {
+                    PlayMangement.instance.cardHandManager.DestroyCard(myObject);
+                }
+            }
+        }
+
+        public void SendingMessage(bool after) {
+            if(TargetSelectExist() != after) return;
             if(isPlayingCard()) SendSocket();
-            //TODO : field에서 select 발동 했을 때
-            else if(isFieldCard()) SkillActivate();
-            if(isPlayingCard()) PlayMangement.instance.UnlockTurnOver();
+            if(isFieldCard()) SkillActivate();
         }
 
         private bool isPlayingCard() {
@@ -140,6 +151,7 @@ namespace SkillModules {
 
         private bool isFieldCard() {
             if (!isPlayer) return false;
+            if (!TargetSelectExist()) return false;
             if (!triggerList.Exists(x => IngameEventHandler.EVENT_TYPE.BEGIN_ORC_POST_TURN == x)) return false;
             return true;
         }
@@ -289,6 +301,14 @@ namespace SkillModules {
 
         public bool TargetSelectExist() {
             return skills.ToList().Exists(x => x.TargetSelectExist());
+        }
+
+        public void AddAdditionalArgs(object args) {
+            additionalArgs = args;
+        }
+
+        public object GetAdditionalArgs() {
+            return additionalArgs;
         }
     }
 }

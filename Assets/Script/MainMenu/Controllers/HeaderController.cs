@@ -31,6 +31,6 @@ public class HeaderController : MonoBehaviour {
     }
 
     public void ToMainScene() {
-        SceneManager.Instance.LoadScene(SceneManager.Scene.MAIN_SCENE);
+        FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
     }
 }

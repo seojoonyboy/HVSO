@@ -359,14 +359,16 @@ namespace TargetModules {
         }
     }
 
-    public class select : TargetHandler {
-        SelectTargetFinished callback;
+    public class pending_select : select { }
 
-        private void Start() {
+    public class select : TargetHandler {
+        protected SelectTargetFinished callback;
+
+        protected void Start() {
             if(!skillHandler.isPlayer) this.enabled = false;
         }
 
-        private void Update() {
+        protected void Update() {
             if (callback != null && Input.GetMouseButtonDown(0)) {
                 Transform selectedTarget = null;
                 PlayMangement.dragable = false;
@@ -404,7 +406,7 @@ namespace TargetModules {
 
                     SetTarget(selectedTarget.gameObject);
                     callback(selectedTarget);
-
+                    skillHandler.SendingMessage(true);
                     callback = null;
                     PlayMangement.instance.infoOn = false;
                     PlayMangement.dragable = true;
@@ -434,7 +436,7 @@ namespace TargetModules {
             }
         }
 
-        private IEnumerator enemyTurnSelect(SelectTargetFinished successCallback, SelectTargetFailed failedCallback) {
+        protected IEnumerator enemyTurnSelect(SelectTargetFinished successCallback, SelectTargetFailed failedCallback) {
             BattleConnector server = PlayMangement.instance.socketHandler;
             //턴 넘김으로 인한 경우 (현재 오크 잠복꾼) 위치 이동만 존재합니다.
             if(skillHandler.targetData == null) {
@@ -568,6 +570,9 @@ namespace TargetModules {
 
         public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback, Filtering filter) {
             base.SelectTarget(successCallback, failedCallback, filter);
+            if(GetComponent<MagicDragHandler>()) {
+                transform.localScale = Vector3.zero;
+            }
             PlayMangement.instance.LockTurnOver();
 
             //TODO : 적일 경우 해당 소켓이 도달 할 때까지 기다리기 card_played, skill_activated
@@ -636,6 +641,11 @@ namespace TargetModules {
                                 }
                             }
 
+                            if(units.Count == 0) {
+                                failedCallback("타겟이 없습니다.");
+                                break;
+                            }
+
                             foreach (GameObject unit in units) {
                                 var ui = unit.transform.Find("ClickableUI").gameObject;
                                 if (ui != null) {
@@ -662,7 +672,7 @@ namespace TargetModules {
             targets.Add((GameObject)target);
         }
 
-        private bool CanSelect(string arg) {
+        protected bool CanSelect(string arg) {
             bool result = false;
             var observer = PlayMangement.instance.UnitsObserver;
             bool isHuman = PlayMangement.instance.player.isHuman;

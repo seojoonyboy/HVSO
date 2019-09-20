@@ -9,10 +9,10 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 using UnityEngine;
 using BestHTTP.WebSocket;
-using Bolt;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SocketFormat;
+using IngameEditor;
 
 /// 서버로부터 데이터를 받아올 때 reflection으로 string을 함수로 바로 발동하게 하는 부분
 public partial class BattleConnector : MonoBehaviour {
@@ -21,6 +21,7 @@ public partial class BattleConnector : MonoBehaviour {
     private bool dequeueing = true;
     public Queue<ReceiveFormat> queue = new Queue<ReceiveFormat>();
     private Type thisType;
+    public ResultFormat result = null;
 
     private void ReceiveMessage(WebSocket webSocket, string message) {
         ReceiveFormat result = dataModules.JsonReader.Read<ReceiveFormat>(message);
@@ -61,7 +62,8 @@ public partial class BattleConnector : MonoBehaviour {
 
     public void begin_ready(object args) {
         this.message.text = "대전 상대를 찾았습니다.";
-        CustomEvent.Trigger(machine, "PlayStartBattleAnim");
+        FindObjectOfType<BattleConnectSceneAnimController>().PlayStartBattleAnim();
+
         StopCoroutine(timeCheck);
         SetUserInfoText();
         ClientReady();
@@ -71,7 +73,7 @@ public partial class BattleConnector : MonoBehaviour {
     /// 매칭 화면에서 유저 정보 표기
     /// </summary>
     private void SetUserInfoText() {
-        string race = Variables.Saved.Get("SelectedRace").ToString().ToLower();
+        string race = PlayerPrefs.GetString("SelectedRace").ToLower();
 
         var orcPlayerData = gameState.players.orc;
         var orcUserData = orcPlayerData.user;
@@ -117,9 +119,9 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void end_ready(object args) { 
-        bool isTest = Variables.Saved.Get("SelectedBattleType").ToString().CompareTo("test") == 0;
+        bool isTest = PlayerPrefs.GetString("SelectedBattleType").CompareTo("test") == 0;
         if(isTest) {
-            object value = Variables.Saved.Get("Editor_startState");
+            object value = JsonUtility.FromJson(PlayerPrefs.GetString("Editor_startState"), typeof(StartState));
             SendStartState(value);
         }
     }
@@ -145,8 +147,8 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void end_mulligan(object args) {
-        dequeueing = false;
-        getNewCard = true;
+        //dequeueing = false;
+        //getNewCard = true;
     }
 
     public void begin_turn_start(object args) { }
@@ -218,19 +220,39 @@ public partial class BattleConnector : MonoBehaviour {
 
     public void begin_shield_turn(object args) {
         PlayMangement.instance.LockTurnOver();
-        dequeueing = false;
-        getNewCard = true;
     }
 
     public void end_shield_turn(object args) {
-        StartCoroutine(waitSkillDone(() => {
-            PlayMangement.instance.heroShieldActive = false;
-            PlayMangement.instance.UnlockTurnOver();
-        }, true));
+        PlayMangement.instance.heroShieldDone.Add(true);
+    }
+
+    public void surrender(object args) {
+        var json = (JObject)args;
+        string camp = json["camp"].ToString();
+        Logger.Log(camp + "측 항복");
+
+        string result = "";
+        bool isHuman = PlayMangement.instance.player.isHuman;
+
+        if ((isHuman && camp == "human") || (!isHuman && camp == "orc")) {
+            result = "lose";
+        }
+        else {
+            result = "win";
+        }
+        StartCoroutine(SetResult(result, isHuman));
+    }
+
+    IEnumerator SetResult(string result, bool isHuman) {
+        yield return new WaitForSeconds(0.5f);
+        PlayMangement.instance.resultManager.SetResultWindow(result, isHuman);
     }
 
     public IEnumerator waitSkillDone(UnityAction callback, bool isShield = false) {
-        if(isShield) yield return new WaitForSeconds(2.0f);
+        if(isShield) { 
+            yield return new WaitUntil(() => PlayMangement.instance.heroShieldActive);
+            yield return new WaitForSeconds(2.0f);
+        }
         MagicDragHandler[] list = Resources.FindObjectsOfTypeAll<MagicDragHandler>();
         foreach(MagicDragHandler magic in list) {
             if(magic.skillHandler == null) continue;
@@ -252,13 +274,14 @@ public partial class BattleConnector : MonoBehaviour {
         callback();
     }
 
-    public void shield_guage(object args) {
+    public void shield_gauge(object args) {
         var json = (JObject)args;
         string camp = json["camp"].ToString();
         string gauge = json["shieldGet"].ToString();
         ShieldCharge charge = new ShieldCharge();
         charge.shieldCount = int.Parse(gauge);
         charge.camp = camp;
+        if(charge.shieldCount == 0) return;
         shieldChargeQueue.Enqueue(charge);
     }
 
@@ -270,13 +293,23 @@ public partial class BattleConnector : MonoBehaviour {
     public void end_end_turn(object args) { }
 
     public void opponent_connection_closed(object args) {
-        PlayMangement.instance.SocketErrorUIOpen(true);
+        PlayMangement.instance.resultManager.SocketErrorUIOpen(true);
     }
 
-    public void begin_end_game(object args) { }
+    public void begin_end_game(object args) {
+        JObject jobject = (JObject)args;
+        result = JsonConvert.DeserializeObject<ResultFormat>(jobject.ToString());
+     }
 
     public void end_end_game(object args) {
         battleGameFinish = true;
+        AccountManager.Instance.RequestUserInfo((req, res) => {
+            if (res != null) {
+                if (res.IsSuccess) {
+                    AccountManager.Instance.SetSignInData(res);
+                }
+            }
+        });
     }
 
     public void ping(object args) {
@@ -289,4 +322,6 @@ public partial class BattleConnector : MonoBehaviour {
         bool isEnemyCard = cardCamp.CompareTo(enemyCamp) == 0;
         if(isEnemyCard) useCardList.Enqueue(gameState);
     }
+
+    public void hero_card_kept(object args) { }
 }

@@ -25,4 +25,16 @@ namespace SocketFormat {
         public string method;
         public object[] args;
     }
+
+    public class ResultFormat {
+        public string result;
+        public Reward reward;
+    }
+
+    public class Reward {
+        public int supply;
+        public int additionalSupply;
+        public int userExp;
+        public int heroExp;
+    }
 }

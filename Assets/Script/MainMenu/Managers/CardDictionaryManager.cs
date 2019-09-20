@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UI.Extensions;
 using Spine;
 using Spine.Unity;
+using UnityEngine.Events;
 
 public class CardDictionaryManager : MonoBehaviour {
     [SerializeField] Transform cardList;
@@ -16,20 +18,31 @@ public class CardDictionaryManager : MonoBehaviour {
     [SerializeField] MyDecksLoader myDecksLoader;
 
     [SerializeField] Sprite orcPanelBg, humanPanelBg;
+    MyDecksLoader decksLoader;
 
     bool isHumanDictionary;
     SortingOptions selectedSortOption;
+    SortingOptions beforeSortOption;
 
-    void Awake() {
-        myDecksLoader.OnTemplateLoadFinished.AddListener(() => {
-            SetToHumanCards();
-        });
+    public UnityEvent SetCardsFinished = new UnityEvent();
+
+    public void AttachDecksLoader(ref MyDecksLoader decksLoader) {
+        this.decksLoader = decksLoader;
+        this.decksLoader.OnInvenLoadFinished.AddListener(() => { SetToHumanCards(); });
     }
+
+
 
     private void Start() {
         Transform classList = cardList.Find("CardsByCost");
-        for(int i = 0; i < classList.childCount; i++) 
+        for (int i = 0; i < classList.childCount; i++)
             classList.GetChild(i).Find("Header/Info/Image").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = i.ToString();
+        selectedSortOption = AccountManager.Instance.dicInfo.sortingState;
+        transform.Find("UIbar/Crystal/Value").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userResource.crystal.ToString();
+        if (AccountManager.Instance.dicInfo.isHuman)
+            SetToHumanCards();
+        else
+            SetToOrcCards();
     }
 
     public void CloseDictionaryCanvas() {
@@ -38,26 +51,44 @@ public class CardDictionaryManager : MonoBehaviour {
 
     public void SetToHumanCards() {
         isHumanDictionary = true;
-        transform.Find("Content/Buttons/OrcSelect").GetChild(0).gameObject.SetActive(false);
-        transform.Find("Content/Buttons/HumanSelect").GetChild(0).gameObject.SetActive(true);
-        heroCards.parent.Find("Background").GetComponent<Image>().sprite = humanPanelBg;
+        //transform.Find("Content/Buttons/OrcSelect").GetChild(0).gameObject.SetActive(false);
+        //transform.Find("Content/Buttons/HumanSelect").GetChild(0).gameObject.SetActive(true);
+        //heroCards.parent.parent.Find("Background").GetComponent<Image>().sprite = humanPanelBg;
 
         SetCardsByClass();
+    }
+
+    public void RefreshToHumanCards() {
+        isHumanDictionary = true;
+        //transform.Find("Content/Buttons/OrcSelect").GetChild(0).gameObject.SetActive(false);
+        //transform.Find("Content/Buttons/HumanSelect").GetChild(0).gameObject.SetActive(true);
+        //heroCards.parent.parent.Find("Background").GetComponent<Image>().sprite = humanPanelBg;
+
+        SetCardsByClass(true);
     }
 
     public void SetToOrcCards() {
         isHumanDictionary = false;
-        transform.Find("Content/Buttons/OrcSelect").GetChild(0).gameObject.SetActive(true);
-        transform.Find("Content/Buttons/HumanSelect").GetChild(0).gameObject.SetActive(false);
-        heroCards.parent.Find("Background").GetComponent<Image>().sprite = orcPanelBg;
+        //transform.Find("Content/Buttons/OrcSelect").GetChild(0).gameObject.SetActive(true);
+        //transform.Find("Content/Buttons/HumanSelect").GetChild(0).gameObject.SetActive(false);
+        //heroCards.parent.parent.Find("Background").GetComponent<Image>().sprite = orcPanelBg;
 
         SetCardsByClass();
     }
 
+    public void RefreshToOrcCards() {
+        isHumanDictionary = false;
+        //transform.Find("Content/Buttons/OrcSelect").GetChild(0).gameObject.SetActive(true);
+        //transform.Find("Content/Buttons/HumanSelect").GetChild(0).gameObject.SetActive(false);
+        //heroCards.parent.parent.Find("Background").GetComponent<Image>().sprite = orcPanelBg;
+
+        SetCardsByClass(true);
+    }
+
     private void UpdateContentHeight() {
-        float tmp = 1428f;
+        float tmp = 1028f; //영웅 슬롯이 2줄이 될 시 300+ 해주면 됨
         Transform activatedTf = null;
-        foreach(Transform tf in cardList) {
+        foreach (Transform tf in cardList) {
             if (tf.gameObject.activeSelf) {
                 activatedTf = tf;
             }
@@ -76,12 +107,40 @@ public class CardDictionaryManager : MonoBehaviour {
         sortingModal.gameObject.SetActive(true);
         for (int i = 0; i < 5; i++)
             sortingModal.Find("Buttons").GetChild(i).GetChild(0).gameObject.SetActive(true);
-        sortingModal.Find("Buttons").GetChild(0).GetChild(0).gameObject.SetActive(false);
-        selectedSortOption = SortingOptions.CLASS;
+        switch (selectedSortOption) {
+            case SortingOptions.CLASS:
+                sortingModal.Find("Buttons/Class").GetChild(0).gameObject.SetActive(false);
+                break;
+            case SortingOptions.COST_ASCEND:
+                sortingModal.Find("Buttons/Cost").GetChild(0).gameObject.SetActive(false);
+                sortingModal.Find("Buttons/Ascending").GetChild(0).gameObject.SetActive(false);
+                break;
+            case SortingOptions.COST_DESCEND:
+                sortingModal.Find("Buttons/Cost").GetChild(0).gameObject.SetActive(false);
+                sortingModal.Find("Buttons/Descending").GetChild(0).gameObject.SetActive(false);
+                break;
+            case SortingOptions.RARELITY_ASCEND:
+                sortingModal.Find("Buttons/Rarelity").GetChild(0).gameObject.SetActive(false);
+                sortingModal.Find("Buttons/Ascending").GetChild(0).gameObject.SetActive(false);
+                break;
+            case SortingOptions.RARELITY_DESCEND:
+                sortingModal.Find("Buttons/Rarelity").GetChild(0).gameObject.SetActive(false);
+                sortingModal.Find("Buttons/Descending").GetChild(0).gameObject.SetActive(false);
+                break;
+        }
     }
 
     public void CloseSortModal() {
+        selectedSortOption = beforeSortOption;
         sortingModal.gameObject.SetActive(false);
+    }
+
+    public void ClickClassButton() {
+        for (int i = 0; i < 5; i++)
+            sortingModal.Find("Buttons").GetChild(i).GetChild(0).gameObject.SetActive(true);
+        sortingModal.Find("Buttons/Class").GetChild(0).gameObject.SetActive(false);
+        beforeSortOption = selectedSortOption;
+        selectedSortOption = SortingOptions.CLASS;
     }
 
     public void ClickRarelityButton() {
@@ -89,6 +148,7 @@ public class CardDictionaryManager : MonoBehaviour {
             sortingModal.Find("Buttons").GetChild(i).GetChild(0).gameObject.SetActive(true);
         sortingModal.Find("Buttons/Rarelity").GetChild(0).gameObject.SetActive(false);
         sortingModal.Find("Buttons/Descending").GetChild(0).gameObject.SetActive(false);
+        beforeSortOption = selectedSortOption;
         selectedSortOption = SortingOptions.RARELITY_DESCEND;
     }
 
@@ -97,12 +157,14 @@ public class CardDictionaryManager : MonoBehaviour {
             sortingModal.Find("Buttons").GetChild(i).GetChild(0).gameObject.SetActive(true);
         sortingModal.Find("Buttons/Cost").GetChild(0).gameObject.SetActive(false);
         sortingModal.Find("Buttons/Descending").GetChild(0).gameObject.SetActive(false);
+        beforeSortOption = selectedSortOption;
         selectedSortOption = SortingOptions.COST_DESCEND;
     }
 
     public void ClickAscendingButton() {
         if (selectedSortOption == SortingOptions.CLASS) return;
         if (!sortingModal.Find("Buttons/Ascending").GetChild(0).gameObject.activeSelf) return;
+        beforeSortOption = selectedSortOption;
         if (selectedSortOption == SortingOptions.RARELITY_DESCEND) {
             sortingModal.Find("Buttons/Ascending").GetChild(0).gameObject.SetActive(false);
             sortingModal.Find("Buttons/Descending").GetChild(0).gameObject.SetActive(true);
@@ -118,6 +180,7 @@ public class CardDictionaryManager : MonoBehaviour {
     public void ClickDescendingButton() {
         if (selectedSortOption == SortingOptions.CLASS) return;
         if (!sortingModal.Find("Buttons/Descending").GetChild(0).gameObject.activeSelf) return;
+        beforeSortOption = selectedSortOption;
         if (selectedSortOption == SortingOptions.RARELITY_ASCEND) {
             sortingModal.Find("Buttons/Ascending").GetChild(0).gameObject.SetActive(true);
             sortingModal.Find("Buttons/Descending").GetChild(0).gameObject.SetActive(false);
@@ -131,6 +194,7 @@ public class CardDictionaryManager : MonoBehaviour {
     }
 
     public void ApplySortting() {
+        AccountManager.Instance.dicInfo.sortingState = selectedSortOption;
         switch (selectedSortOption) {
             case SortingOptions.CLASS:
                 SetCardsByClass();
@@ -148,6 +212,7 @@ public class CardDictionaryManager : MonoBehaviour {
                 SetCardsByRarelity(true);
                 break;
         }
+        beforeSortOption = selectedSortOption;
         CloseSortModal();
     }
 
@@ -168,7 +233,7 @@ public class CardDictionaryManager : MonoBehaviour {
         }
     }
 
-    public void SetCardsByClass() {
+    public void SetCardsByClass(bool refresh = false) {
         InitDictionary();
         int totalCount = 0;
         int haveCount = 0;
@@ -192,7 +257,8 @@ public class CardDictionaryManager : MonoBehaviour {
                 classList.GetChild(i).gameObject.SetActive(true);
         }
         cardNum.text = haveCount.ToString() + "/" + totalCount.ToString();
-        RefreshLine();
+        if(!refresh)
+            RefreshLine();
         SetHeroButtons();
     }
 
@@ -274,49 +340,39 @@ public class CardDictionaryManager : MonoBehaviour {
 
     public void RefreshLine() {
         Canvas.ForceUpdateCanvases();
-        for(int i = 0; i < 3; i++) {
+        for (int i = 0; i < 3; i++) {
             LayoutRebuilder.ForceRebuildLayoutImmediate(cardList.GetChild(i).GetComponent<RectTransform>());
-        }   
+        }
 
         Invoke("UpdateContentHeight", 0.25f);
     }
 
     public void SetHeroButtons() {
-        for(int i = 0; i < 4; i++) {
-            for (int j = 0; j < 3; j++) {
-                heroCards.GetChild(i).GetChild(j).GetComponent<Image>().color = new Color(82, 80, 80, 255);
-            }
+        for (int i = 0; i < 8; i++) {
+            heroCards.GetChild(i).gameObject.SetActive(false);
         }
-        
+
         int count = 0;
 
         List<dataModules.Templates> selectedTemplates;
-        if (isHumanDictionary) {
-            
+        if (isHumanDictionary) 
             selectedTemplates = AccountManager.Instance.humanTemplates;
-        }
-        else {
+        else 
             selectedTemplates = AccountManager.Instance.orcTemplates;
-        }
 
-        int pageIndex = 0;
-        int slotIndex = 0;
         foreach (dataModules.Templates card in selectedTemplates) {
-            Transform hero = heroCards.GetChild(pageIndex).GetChild(count);
+            Transform hero = heroCards.GetChild(count);
             hero.gameObject.SetActive(true);
-            hero.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = card.name;
-            hero.GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[card.id];
-
-            slotIndex++;
-            if (slotIndex == 3) {
-                slotIndex = 0;
-                pageIndex++;
-            }
+            hero.GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[card.id + "_button"];
+            bool haveHero = AccountManager.Instance.myHeroInventories.ContainsKey(card.id);
+            hero.Find("HeroLevel").gameObject.SetActive(haveHero);
+            hero.Find("Empty").gameObject.SetActive(!haveHero);
         }
     }
 
     public void OpenHeroInfoWIndow(int index) {
         SetHeroInfoWindow(index);
+        heroInfoWindow.parent.gameObject.SetActive(true);
         heroInfoWindow.gameObject.SetActive(true);
     }
 
@@ -354,6 +410,10 @@ public class CardDictionaryManager : MonoBehaviour {
         }
         heroCards.gameObject.SetActive(true);
     }
+
+    public void ExitDictionaryScene() {
+        FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
+    }
 }
 
 public enum SortingOptions {
@@ -362,4 +422,9 @@ public enum SortingOptions {
     RARELITY_DESCEND,
     COST_ASCEND,
     COST_DESCEND,
+}
+
+public class DictionaryInfo {
+    public bool isHuman;
+    public SortingOptions sortingState;
 }

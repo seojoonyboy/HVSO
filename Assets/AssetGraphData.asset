@@ -1,0 +1,495 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eec4882d68a9346b3b5f8ecf1e38a534, type: 3}
+  m_Name: AssetGraphData
+  m_EditorClassIdentifier: 
+  m_allNodes:
+  - m_name: Load from Resources
+    m_id: 28c74c2a-bdfc-4974-9b92-dfc8d3cb57fc
+    m_x: 48
+    m_y: 96
+    m_nodeInstance:
+      m_className: UnityEngine.AssetGraph.Loader, Assembly-CSharp-Editor, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      m_instanceData: B64|eyJtX2xvYWRQYXRoIjp7Im1fdmFsdWVzIjpbeyJ0YXJnZXRHcm91cCI6MCwidmFsdWUiOiJSZXNvdXJjZXMifV19LCJtX2xvYWRQYXRoR3VpZCI6eyJtX3ZhbHVlcyI6W3sidGFyZ2V0R3JvdXAiOjAsInZhbHVlIjoiMTc0YWQ5NjIwNjcxZDQ5NGZiMGYzYmQxZDVmOWQ1MWYifV19LCJtX2lnbm9yZVBhdHRlcm5zIjpbXSwibV9yZXNwb25kVG9Bc3NldENoYW5nZSI6ZmFsc2V9
+    m_inputPoints: []
+    m_outputPoints:
+    - id: 75b5e532-51a2-425a-85e6-92d3ebc84658
+      label: +
+      parentId: 28c74c2a-bdfc-4974-9b92-dfc8d3cb57fc
+      isInput: 0
+      buttonRect:
+        serializedVersion: 2
+        x: 156
+        y: 32.5
+        width: 10
+        height: 23
+  - m_name: Split By Filter
+    m_id: a179ce26-544e-4e64-b2f3-8eb3d4c3d31c
+    m_x: 252
+    m_y: 96
+    m_nodeInstance:
+      m_className: UnityEngine.AssetGraph.Filter, Assembly-CSharp-Editor, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      m_instanceData: B64|eyJtX2ZpbHRlciI6W3sibV9pbnN0YW5jZSI6eyJtX2NsYXNzTmFtZSI6IlVuaXR5RW5naW5lLkFzc2V0R3JhcGguRmlsdGVyQnlOYW1lQW5kVHlwZSwgQXNzZW1ibHktQ1NoYXJwLUVkaXRvciwgVmVyc2lvbj0wLjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPW51bGwiLCJtX2luc3RhbmNlRGF0YSI6IkI2NHxleUp0WDJacGJIUmxja3RsZVhkdmNtUWlPaUlpTENKdFgyWnBiSFJsY2t0bGVYUjVjR1VpT2lKVVpYaDBJRzl5SUVKcGJtRnllU0lzSW0xZmRtVnljMmx2YmlJNk1YMD0ifSwibV9wb2ludElkIjoiMDAyYjk5OTEtNWIyMi00NTU3LTlkMjktYTQyMTJmNWFlMjcxIn0seyJtX2luc3RhbmNlIjp7Im1fY2xhc3NOYW1lIjoiVW5pdHlFbmdpbmUuQXNzZXRHcmFwaC5GaWx0ZXJCeU5hbWVBbmRUeXBlLCBBc3NlbWJseS1DU2hhcnAtRWRpdG9yLCBWZXJzaW9uPTAuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49bnVsbCIsIm1faW5zdGFuY2VEYXRhIjoiQjY0fGV5SnRYMlpwYkhSbGNrdGxlWGR2Y21RaU9pSWlMQ0p0WDJacGJIUmxja3RsZVhSNWNHVWlPaUpRY21WbVlXSWlMQ0p0WDNabGNuTnBiMjRpT2pGOSJ9LCJtX3BvaW50SWQiOiI5MDc5ZTFkOC04MDVlLTQ5NzgtOWRiYy1hNThhOWNhZDUxZmUifSx7Im1faW5zdGFuY2UiOnsibV9jbGFzc05hbWUiOiJVbml0eUVuZ2luZS5Bc3NldEdyYXBoLkZpbHRlckJ5TmFtZUFuZFR5cGUsIEFzc2VtYmx5LUNTaGFycC1FZGl0b3IsIFZlcnNpb249MC4wLjAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1udWxsIiwibV9pbnN0YW5jZURhdGEiOiJCNjR8ZXlKdFgyWnBiSFJsY2t0bGVYZHZjbVFpT2lJaUxDSnRYMlpwYkhSbGNrdGxlWFI1Y0dVaU9pSlVaWGgwZFhKbElpd2liVjkyWlhKemFXOXVJam94ZlE9PSJ9LCJtX3BvaW50SWQiOiIxMzJkOTkzYi0yNWYwLTQwN2YtOTZiNi0zNzVmODg1MTE5MzIifV19
+    m_inputPoints:
+    - id: cf18b86d-a62d-4d4b-ae6f-208b7e807edd
+      label: '-'
+      parentId: a179ce26-544e-4e64-b2f3-8eb3d4c3d31c
+      isInput: 1
+      buttonRect:
+        serializedVersion: 2
+        x: 0
+        y: 29.5
+        width: 21
+        height: 29
+    m_outputPoints:
+    - id: 002b9991-5b22-4557-9d29-a4212f5ae271
+      label: '[Text or Binary]'
+      parentId: a179ce26-544e-4e64-b2f3-8eb3d4c3d31c
+      isInput: 0
+      buttonRect:
+        serializedVersion: 2
+        x: 136
+        y: 32.5
+        width: 10
+        height: 23
+    - id: 9079e1d8-805e-4978-9dbc-a58a9cad51fe
+      label: '[Prefab]'
+      parentId: a179ce26-544e-4e64-b2f3-8eb3d4c3d31c
+      isInput: 0
+      buttonRect:
+        serializedVersion: 2
+        x: 136
+        y: 64.5
+        width: 10
+        height: 23
+    - id: 132d993b-25f0-407f-96b6-375f88511932
+      label: '[Texture]'
+      parentId: a179ce26-544e-4e64-b2f3-8eb3d4c3d31c
+      isInput: 0
+      buttonRect:
+        serializedVersion: 2
+        x: 136
+        y: 96.5
+        width: 10
+        height: 23
+  - m_name: Configure Bundle From Group
+    m_id: 5d13723a-9b51-4ab2-9826-d0b915497fda
+    m_x: 504
+    m_y: 24
+    m_nodeInstance:
+      m_className: UnityEngine.AssetGraph.BundleConfigurator, Assembly-CSharp-Editor,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      m_instanceData: B64|eyJtX2J1bmRsZU5hbWVUZW1wbGF0ZSI6eyJtX3ZhbHVlcyI6W3sidGFyZ2V0R3JvdXAiOjAsInZhbHVlIjoidGV4dGRhdGEifV19LCJtX3ZhcmlhbnRzIjpbXSwibV91c2VHcm91cEFzVmFyaWFudHMiOmZhbHNlfQ==
+    m_inputPoints:
+    - id: 5be2967a-26e0-413b-b85f-2571a225092e
+      label: '-'
+      parentId: 5d13723a-9b51-4ab2-9826-d0b915497fda
+      isInput: 1
+      buttonRect:
+        serializedVersion: 2
+        x: 0
+        y: 29.5
+        width: 21
+        height: 29
+    m_outputPoints:
+    - id: 45779b54-267c-4c89-a12b-954404df432e
+      label: +
+      parentId: 5d13723a-9b51-4ab2-9826-d0b915497fda
+      isInput: 0
+      buttonRect:
+        serializedVersion: 2
+        x: 204.5
+        y: 32.5
+        width: 10
+        height: 23
+  - m_name: Configure Bundle From Group
+    m_id: f13a4419-d350-4960-96fd-508967ade49a
+    m_x: 504
+    m_y: 132
+    m_nodeInstance:
+      m_className: UnityEngine.AssetGraph.BundleConfigurator, Assembly-CSharp-Editor,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      m_instanceData: B64|eyJtX2J1bmRsZU5hbWVUZW1wbGF0ZSI6eyJtX3ZhbHVlcyI6W3sidGFyZ2V0R3JvdXAiOjAsInZhbHVlIjoiaGFlZ2luX3VndWlfY29tbW9uIn1dfSwibV92YXJpYW50cyI6W10sIm1fdXNlR3JvdXBBc1ZhcmlhbnRzIjpmYWxzZX0=
+    m_inputPoints:
+    - id: 19dcc64e-b61a-41fe-a68c-d16b0f0e8bc3
+      label: '-'
+      parentId: f13a4419-d350-4960-96fd-508967ade49a
+      isInput: 1
+      buttonRect:
+        serializedVersion: 2
+        x: 0
+        y: 29.5
+        width: 21
+        height: 29
+    m_outputPoints:
+    - id: 2106d9c4-1db5-4f52-badf-a04257c62be1
+      label: +
+      parentId: f13a4419-d350-4960-96fd-508967ade49a
+      isInput: 0
+      buttonRect:
+        serializedVersion: 2
+        x: 204.5
+        y: 32.5
+        width: 10
+        height: 23
+  - m_name: Configure Bundle From Group
+    m_id: ace9630c-7633-4e0b-8941-ff4381df1610
+    m_x: 516
+    m_y: 360
+    m_nodeInstance:
+      m_className: UnityEngine.AssetGraph.BundleConfigurator, Assembly-CSharp-Editor,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      m_instanceData: B64|eyJtX2J1bmRsZU5hbWVUZW1wbGF0ZSI6eyJtX3ZhbHVlcyI6W3sidGFyZ2V0R3JvdXAiOjAsInZhbHVlIjoibGV2ZWwxX3NvdW5kIn1dfSwibV92YXJpYW50cyI6W3sibV9uYW1lIjoic2QiLCJtX3BvaW50SWQiOiI0YTM0M2MyNy0yN2EwLTRjZTEtODM5Mi1hZjMzZWU0ZTExNGQifSx7Im1fbmFtZSI6ImhkIiwibV9wb2ludElkIjoiYjdmYzQ3YWItMGY3ZC00MTVmLTljN2QtYzNjMTUxMWZmMDlmIn1dLCJtX3VzZUdyb3VwQXNWYXJpYW50cyI6ZmFsc2V9
+    m_inputPoints:
+    - id: 1c8f3285-8fc8-42fa-a26f-51f4373f957d
+      label: '-'
+      parentId: ace9630c-7633-4e0b-8941-ff4381df1610
+      isInput: 1
+      buttonRect:
+        serializedVersion: 2
+        x: 0
+        y: 29.5
+        width: 21
+        height: 29
+    - id: 4a343c27-27a0-4ce1-8392-af33ee4e114d
+      label: sd
+      parentId: ace9630c-7633-4e0b-8941-ff4381df1610
+      isInput: 1
+      buttonRect:
+        serializedVersion: 2
+        x: 0
+        y: 61.5
+        width: 21
+        height: 29
+    - id: b7fc47ab-0f7d-415f-9c7d-c3c1511ff09f
+      label: hd
+      parentId: ace9630c-7633-4e0b-8941-ff4381df1610
+      isInput: 1
+      buttonRect:
+        serializedVersion: 2
+        x: 0
+        y: 93.5
+        width: 21
+        height: 29
+    m_outputPoints:
+    - id: 3ca83f40-0f19-4ed1-86d0-a2ece7d09f10
+      label: +
+      parentId: ace9630c-7633-4e0b-8941-ff4381df1610
+      isInput: 0
+      buttonRect:
+        serializedVersion: 2
+        x: 204.5
+        y: 32.5
+        width: 10
+        height: 23
+  - m_name: Split By Filter
+    m_id: 2caaee4f-fd13-496d-84b7-6bf6ee52a711
+    m_x: 276
+    m_y: 384
+    m_nodeInstance:
+      m_className: UnityEngine.AssetGraph.Filter, Assembly-CSharp-Editor, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      m_instanceData: B64|eyJtX2ZpbHRlciI6W3sibV9pbnN0YW5jZSI6eyJtX2NsYXNzTmFtZSI6IlVuaXR5RW5naW5lLkFzc2V0R3JhcGguRmlsdGVyQnlOYW1lQW5kVHlwZSwgQXNzZW1ibHktQ1NoYXJwLUVkaXRvciwgVmVyc2lvbj0wLjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPW51bGwiLCJtX2luc3RhbmNlRGF0YSI6IkI2NHxleUp0WDJacGJIUmxja3RsZVhkdmNtUWlPaUlpTENKdFgyWnBiSFJsY2t0bGVYUjVjR1VpT2lKQmRXUnBieUlzSW0xZmRtVnljMmx2YmlJNk1YMD0ifSwibV9wb2ludElkIjoiNTljYzMxOWEtMmI4Zi00MGZhLTgxYzctNmUwZjE2NDBlMmFmIn1dfQ==
+    m_inputPoints:
+    - id: db6932be-ac22-4f09-bccf-649b1ccb335f
+      label: '-'
+      parentId: 2caaee4f-fd13-496d-84b7-6bf6ee52a711
+      isInput: 1
+      buttonRect:
+        serializedVersion: 2
+        x: 0
+        y: 29.5
+        width: 21
+        height: 29
+    m_outputPoints:
+    - id: 59cc319a-2b8f-40fa-81c7-6e0f1640e2af
+      label: '[Audio]'
+      parentId: 2caaee4f-fd13-496d-84b7-6bf6ee52a711
+      isInput: 0
+      buttonRect:
+        serializedVersion: 2
+        x: 112
+        y: 32.5
+        width: 10
+        height: 23
+  - m_name: Configure Bundle From Group
+    m_id: 5eaf69db-b16f-4a5a-bb91-0b1310be3a89
+    m_x: 504
+    m_y: 228
+    m_nodeInstance:
+      m_className: UnityEngine.AssetGraph.BundleConfigurator, Assembly-CSharp-Editor,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      m_instanceData: B64|eyJtX2J1bmRsZU5hbWVUZW1wbGF0ZSI6eyJtX3ZhbHVlcyI6W3sidGFyZ2V0R3JvdXAiOjAsInZhbHVlIjoiaGFlZ2luX3RleHR1cmVzX2NvbW1vbiJ9XX0sIm1fdmFyaWFudHMiOltdLCJtX3VzZUdyb3VwQXNWYXJpYW50cyI6ZmFsc2V9
+    m_inputPoints:
+    - id: 0c58bd2e-c376-4d99-851a-e028ec99c6a2
+      label: '-'
+      parentId: 5eaf69db-b16f-4a5a-bb91-0b1310be3a89
+      isInput: 1
+      buttonRect:
+        serializedVersion: 2
+        x: 0
+        y: 29.5
+        width: 21
+        height: 29
+    m_outputPoints:
+    - id: 11bde147-8bc8-4bb6-964a-0aab02b29115
+      label: +
+      parentId: 5eaf69db-b16f-4a5a-bb91-0b1310be3a89
+      isInput: 0
+      buttonRect:
+        serializedVersion: 2
+        x: 204.5
+        y: 32.5
+        width: 10
+        height: 23
+  - m_name: Build Asset Bundles - base
+    m_id: 1442afce-1ed5-49c2-bc8f-6685a0fed372
+    m_x: 804
+    m_y: 120
+    m_nodeInstance:
+      m_className: UnityEngine.AssetGraph.BundleBuilder, Assembly-CSharp-Editor, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      m_instanceData: B64|eyJtX2VuYWJsZWRCdW5kbGVPcHRpb25zIjp7Im1fdmFsdWVzIjpbeyJ0YXJnZXRHcm91cCI6MCwidmFsdWUiOjB9XX0sIm1fb3V0cHV0RGlyIjp7Im1fdmFsdWVzIjpbeyJ0YXJnZXRHcm91cCI6MCwidmFsdWUiOiJBc3NldEJ1bmRsZXMve1BsYXRmb3JtfS9iYXNlIn1dfSwibV9vdXRwdXRPcHRpb24iOnsibV92YWx1ZXMiOlt7InRhcmdldEdyb3VwIjowLCJ2YWx1ZSI6Mn1dfSwibV9tYW5pZmVzdE5hbWUiOnsibV92YWx1ZXMiOlt7InRhcmdldEdyb3VwIjowLCJ2YWx1ZSI6IiJ9XX0sIm1fb3ZlcndyaXRlSW1wb3J0ZXJTZXR0aW5nIjpmYWxzZX0=
+    m_inputPoints:
+    - id: e436d14f-b096-4c03-bb76-0f2151a4e240
+      label: '-'
+      parentId: 1442afce-1ed5-49c2-bc8f-6685a0fed372
+      isInput: 1
+      buttonRect:
+        serializedVersion: 2
+        x: 0
+        y: 29.5
+        width: 21
+        height: 29
+    m_outputPoints:
+    - id: c681274d-a322-45f6-8b63-9f19bcc84a6d
+      label: +
+      parentId: 1442afce-1ed5-49c2-bc8f-6685a0fed372
+      isInput: 0
+      buttonRect:
+        serializedVersion: 2
+        x: 185
+        y: 32.5
+        width: 10
+        height: 23
+  - m_name: Build Asset Bundles - level1
+    m_id: 95e62ebb-f9f9-4162-ba51-f659357acbc4
+    m_x: 840
+    m_y: 288
+    m_nodeInstance:
+      m_className: UnityEngine.AssetGraph.BundleBuilder, Assembly-CSharp-Editor, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      m_instanceData: B64|eyJtX2VuYWJsZWRCdW5kbGVPcHRpb25zIjp7Im1fdmFsdWVzIjpbeyJ0YXJnZXRHcm91cCI6MCwidmFsdWUiOjB9XX0sIm1fb3V0cHV0RGlyIjp7Im1fdmFsdWVzIjpbeyJ0YXJnZXRHcm91cCI6MCwidmFsdWUiOiJBc3NldEJ1bmRsZXMve1BsYXRmb3JtfS9sZXZlbDEifV19LCJtX291dHB1dE9wdGlvbiI6eyJtX3ZhbHVlcyI6W3sidGFyZ2V0R3JvdXAiOjAsInZhbHVlIjoyfV19LCJtX21hbmlmZXN0TmFtZSI6eyJtX3ZhbHVlcyI6W3sidGFyZ2V0R3JvdXAiOjAsInZhbHVlIjoiIn1dfSwibV9vdmVyd3JpdGVJbXBvcnRlclNldHRpbmciOmZhbHNlfQ==
+    m_inputPoints:
+    - id: 6e739d38-ab9b-436d-bd81-9f19d659e7ac
+      label: '-'
+      parentId: 95e62ebb-f9f9-4162-ba51-f659357acbc4
+      isInput: 1
+      buttonRect:
+        serializedVersion: 2
+        x: 0
+        y: 29.5
+        width: 21
+        height: 29
+    m_outputPoints:
+    - id: 9a10610f-16e5-4b1f-bee9-f7fbda363ed3
+      label: +
+      parentId: 95e62ebb-f9f9-4162-ba51-f659357acbc4
+      isInput: 0
+      buttonRect:
+        serializedVersion: 2
+        x: 191
+        y: 32.5
+        width: 10
+        height: 23
+  - m_name: Split By Filter
+    m_id: a1d6cb06-b250-40da-aa2d-c7f75ac15c26
+    m_x: 276
+    m_y: 276
+    m_nodeInstance:
+      m_className: UnityEngine.AssetGraph.Filter, Assembly-CSharp-Editor, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      m_instanceData: B64|eyJtX2ZpbHRlciI6W3sibV9pbnN0YW5jZSI6eyJtX2NsYXNzTmFtZSI6IlVuaXR5RW5naW5lLkFzc2V0R3JhcGguRmlsdGVyQnlOYW1lQW5kVHlwZSwgQXNzZW1ibHktQ1NoYXJwLUVkaXRvciwgVmVyc2lvbj0wLjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPW51bGwiLCJtX2luc3RhbmNlRGF0YSI6IkI2NHxleUp0WDJacGJIUmxja3RsZVhkdmNtUWlPaUlpTENKdFgyWnBiSFJsY2t0bGVYUjVjR1VpT2lKQmRXUnBieUlzSW0xZmRtVnljMmx2YmlJNk1YMD0ifSwibV9wb2ludElkIjoiZTQ1MTU1ZjAtZTljMi00MTNiLWEwZmItYTM5YzQ0YTVjMGExIn1dfQ==
+    m_inputPoints:
+    - id: 8c06ed15-6df0-4f80-9b83-dfbf28462f77
+      label: '-'
+      parentId: a1d6cb06-b250-40da-aa2d-c7f75ac15c26
+      isInput: 1
+      buttonRect:
+        serializedVersion: 2
+        x: 0
+        y: 29.5
+        width: 21
+        height: 29
+    m_outputPoints:
+    - id: e45155f0-e9c2-413b-a0fb-a39c44a5c0a1
+      label: '[Audio]'
+      parentId: a1d6cb06-b250-40da-aa2d-c7f75ac15c26
+      isInput: 0
+      buttonRect:
+        serializedVersion: 2
+        x: 112
+        y: 32.5
+        width: 10
+        height: 23
+  - m_name: Load from hd
+    m_id: a9967704-2c73-403e-8b5f-e06fae7357f1
+    m_x: 48
+    m_y: 348
+    m_nodeInstance:
+      m_className: UnityEngine.AssetGraph.Loader, Assembly-CSharp-Editor, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      m_instanceData: B64|eyJtX2xvYWRQYXRoIjp7Im1fdmFsdWVzIjpbeyJ0YXJnZXRHcm91cCI6MCwidmFsdWUiOiJIYWVnaW4vU2FtcGxlL1NvdW5kL0JHTS9oZCJ9XX0sIm1fbG9hZFBhdGhHdWlkIjp7Im1fdmFsdWVzIjpbeyJ0YXJnZXRHcm91cCI6MCwidmFsdWUiOiJhNTQ3YWJiNWQzYmUxNGJkNWIxM2E1ZTRiNDU4NDNjZCJ9XX0sIm1faWdub3JlUGF0dGVybnMiOltdLCJtX3Jlc3BvbmRUb0Fzc2V0Q2hhbmdlIjpmYWxzZX0=
+    m_inputPoints: []
+    m_outputPoints:
+    - id: c02f4ef0-6032-494c-9614-ed2f79f60279
+      label: +
+      parentId: a9967704-2c73-403e-8b5f-e06fae7357f1
+      isInput: 0
+      buttonRect:
+        serializedVersion: 2
+        x: 116
+        y: 32.5
+        width: 10
+        height: 23
+  - m_name: Load from sd
+    m_id: 35696fd0-a2c5-4eac-a6ea-de8571c1c61a
+    m_x: 48
+    m_y: 252
+    m_nodeInstance:
+      m_className: UnityEngine.AssetGraph.Loader, Assembly-CSharp-Editor, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      m_instanceData: B64|eyJtX2xvYWRQYXRoIjp7Im1fdmFsdWVzIjpbeyJ0YXJnZXRHcm91cCI6MCwidmFsdWUiOiJIYWVnaW4vU2FtcGxlL1NvdW5kL0JHTS9zZCJ9XX0sIm1fbG9hZFBhdGhHdWlkIjp7Im1fdmFsdWVzIjpbeyJ0YXJnZXRHcm91cCI6MCwidmFsdWUiOiJkZThkNzY5MTk4ZDczNDRlNTk2NWRiODU5YmE3ZmQ5MSJ9XX0sIm1faWdub3JlUGF0dGVybnMiOltdLCJtX3Jlc3BvbmRUb0Fzc2V0Q2hhbmdlIjpmYWxzZX0=
+    m_inputPoints: []
+    m_outputPoints:
+    - id: 7b585b46-ab77-4c51-a4bc-3d18e5d31683
+      label: +
+      parentId: 35696fd0-a2c5-4eac-a6ea-de8571c1c61a
+      isInput: 0
+      buttonRect:
+        serializedVersion: 2
+        x: 114.5
+        y: 32.5
+        width: 10
+        height: 23
+  - m_name: Export To Directory for Patcher
+    m_id: cb486e12-7266-4bda-ad3d-8f533f0f2f9c
+    m_x: 1152
+    m_y: 252
+    m_nodeInstance:
+      m_className: UnityEngine.AssetGraph.PatcherExporter, Assembly-CSharp-Editor,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      m_instanceData: B64|eyJtX29iYlBhdGgiOnsibV92YWx1ZXMiOlt7InRhcmdldEdyb3VwIjowLCJ2YWx1ZSI6ImhhZWdpbl9vYmIvIn0seyJ0YXJnZXRHcm91cCI6NCwidmFsdWUiOiJoYWVnaW5fb2JiL2lvcy8ifSx7InRhcmdldEdyb3VwIjo3LCJ2YWx1ZSI6ImhhZWdpbl9vYmIvYW5kcm9pZCJ9XX0sIm1fZXhwb3J0UGF0aCI6eyJtX3ZhbHVlcyI6W3sidGFyZ2V0R3JvdXAiOjAsInZhbHVlIjoiR2VuZXJhdGVkUGF0Y2hGaWxlcyJ9LHsidGFyZ2V0R3JvdXAiOjQsInZhbHVlIjoiR2VuZXJhdGVkUGF0Y2hGaWxlcyJ9LHsidGFyZ2V0R3JvdXAiOjcsInZhbHVlIjoiR2VuZXJhdGVkUGF0Y2hGaWxlcyJ9XX0sIm1fZXhwb3J0T3B0aW9uIjp7Im1fdmFsdWVzIjpbeyJ0YXJnZXRHcm91cCI6MCwidmFsdWUiOjB9LHsidGFyZ2V0R3JvdXAiOjQsInZhbHVlIjowfSx7InRhcmdldEdyb3VwIjo3LCJ2YWx1ZSI6MH1dfSwibV9mbGF0dGVuRGlyIjp7Im1fdmFsdWVzIjpbeyJ0YXJnZXRHcm91cCI6MCwidmFsdWUiOjB9LHsidGFyZ2V0R3JvdXAiOjQsInZhbHVlIjowfSx7InRhcmdldEdyb3VwIjo3LCJ2YWx1ZSI6MH1dfSwibV9rZXkiOnsibV92YWx1ZXMiOlt7InRhcmdldEdyb3VwIjowLCJ2YWx1ZSI6IiJ9LHsidGFyZ2V0R3JvdXAiOjcsInZhbHVlIjoiNXN3ZGNzckJIb0JZakRXaTVWWE43MiJ9XX19
+    m_inputPoints:
+    - id: 9c0b38ff-39ee-46cc-b5c5-5b63878e998b
+      label: '-'
+      parentId: cb486e12-7266-4bda-ad3d-8f533f0f2f9c
+      isInput: 1
+      buttonRect:
+        serializedVersion: 2
+        x: 0
+        y: 29.5
+        width: 21
+        height: 29
+    m_outputPoints: []
+  m_allConnections:
+  - m_id: 0e589885-c493-44e0-8aaa-35660d2e9ad1
+    m_fromNodeId: 28c74c2a-bdfc-4974-9b92-dfc8d3cb57fc
+    m_fromNodeConnectionPointId: 75b5e532-51a2-425a-85e6-92d3ebc84658
+    m_toNodeId: a179ce26-544e-4e64-b2f3-8eb3d4c3d31c
+    m_toNodeConnectionPoiontId: cf18b86d-a62d-4d4b-ae6f-208b7e807edd
+    m_label: +
+  - m_id: 95647eb2-5b80-4ed9-bb0f-f45e502430f7
+    m_fromNodeId: a179ce26-544e-4e64-b2f3-8eb3d4c3d31c
+    m_fromNodeConnectionPointId: 002b9991-5b22-4557-9d29-a4212f5ae271
+    m_toNodeId: 5d13723a-9b51-4ab2-9826-d0b915497fda
+    m_toNodeConnectionPoiontId: 5be2967a-26e0-413b-b85f-2571a225092e
+    m_label: '[Text or Binary]'
+  - m_id: 3e2ec1b2-fb39-4c5a-ba45-06b0f6b776cf
+    m_fromNodeId: a179ce26-544e-4e64-b2f3-8eb3d4c3d31c
+    m_fromNodeConnectionPointId: 9079e1d8-805e-4978-9dbc-a58a9cad51fe
+    m_toNodeId: f13a4419-d350-4960-96fd-508967ade49a
+    m_toNodeConnectionPoiontId: 19dcc64e-b61a-41fe-a68c-d16b0f0e8bc3
+    m_label: '[Prefab]'
+  - m_id: 369f7c2b-47af-4af5-afdc-03c2ac1b8969
+    m_fromNodeId: a179ce26-544e-4e64-b2f3-8eb3d4c3d31c
+    m_fromNodeConnectionPointId: 132d993b-25f0-407f-96b6-375f88511932
+    m_toNodeId: 5eaf69db-b16f-4a5a-bb91-0b1310be3a89
+    m_toNodeConnectionPoiontId: 0c58bd2e-c376-4d99-851a-e028ec99c6a2
+    m_label: '[Texture]'
+  - m_id: edd4240a-4291-4e18-af4b-69838c7f4840
+    m_fromNodeId: 5d13723a-9b51-4ab2-9826-d0b915497fda
+    m_fromNodeConnectionPointId: 45779b54-267c-4c89-a12b-954404df432e
+    m_toNodeId: 1442afce-1ed5-49c2-bc8f-6685a0fed372
+    m_toNodeConnectionPoiontId: e436d14f-b096-4c03-bb76-0f2151a4e240
+    m_label: +
+  - m_id: 8627f3b3-13d3-45a8-91fd-c2fd96426d24
+    m_fromNodeId: f13a4419-d350-4960-96fd-508967ade49a
+    m_fromNodeConnectionPointId: 2106d9c4-1db5-4f52-badf-a04257c62be1
+    m_toNodeId: 1442afce-1ed5-49c2-bc8f-6685a0fed372
+    m_toNodeConnectionPoiontId: e436d14f-b096-4c03-bb76-0f2151a4e240
+    m_label: +
+  - m_id: df539786-0252-430b-b0f5-3d51c8e05877
+    m_fromNodeId: 5eaf69db-b16f-4a5a-bb91-0b1310be3a89
+    m_fromNodeConnectionPointId: 11bde147-8bc8-4bb6-964a-0aab02b29115
+    m_toNodeId: 1442afce-1ed5-49c2-bc8f-6685a0fed372
+    m_toNodeConnectionPoiontId: e436d14f-b096-4c03-bb76-0f2151a4e240
+    m_label: +
+  - m_id: 020eaad6-3130-41e9-bdd4-4baacac75355
+    m_fromNodeId: ace9630c-7633-4e0b-8941-ff4381df1610
+    m_fromNodeConnectionPointId: 3ca83f40-0f19-4ed1-86d0-a2ece7d09f10
+    m_toNodeId: 95e62ebb-f9f9-4162-ba51-f659357acbc4
+    m_toNodeConnectionPoiontId: 6e739d38-ab9b-436d-bd81-9f19d659e7ac
+    m_label: +
+  - m_id: 492830fa-57c5-4f19-85a1-d57f37f76426
+    m_fromNodeId: 2caaee4f-fd13-496d-84b7-6bf6ee52a711
+    m_fromNodeConnectionPointId: 59cc319a-2b8f-40fa-81c7-6e0f1640e2af
+    m_toNodeId: ace9630c-7633-4e0b-8941-ff4381df1610
+    m_toNodeConnectionPoiontId: b7fc47ab-0f7d-415f-9c7d-c3c1511ff09f
+    m_label: '[Audio]'
+  - m_id: 9140bc57-b1a5-48df-b93d-b00c3af4dd9d
+    m_fromNodeId: a9967704-2c73-403e-8b5f-e06fae7357f1
+    m_fromNodeConnectionPointId: c02f4ef0-6032-494c-9614-ed2f79f60279
+    m_toNodeId: 2caaee4f-fd13-496d-84b7-6bf6ee52a711
+    m_toNodeConnectionPoiontId: db6932be-ac22-4f09-bccf-649b1ccb335f
+    m_label: +
+  - m_id: 9d4c1882-9a8a-4a93-aeff-7bf5c389d22c
+    m_fromNodeId: 35696fd0-a2c5-4eac-a6ea-de8571c1c61a
+    m_fromNodeConnectionPointId: 7b585b46-ab77-4c51-a4bc-3d18e5d31683
+    m_toNodeId: a1d6cb06-b250-40da-aa2d-c7f75ac15c26
+    m_toNodeConnectionPoiontId: 8c06ed15-6df0-4f80-9b83-dfbf28462f77
+    m_label: +
+  - m_id: 813dbafd-6b24-4872-b0a9-2547a6066603
+    m_fromNodeId: a1d6cb06-b250-40da-aa2d-c7f75ac15c26
+    m_fromNodeConnectionPointId: e45155f0-e9c2-413b-a0fb-a39c44a5c0a1
+    m_toNodeId: ace9630c-7633-4e0b-8941-ff4381df1610
+    m_toNodeConnectionPoiontId: 4a343c27-27a0-4ce1-8392-af33ee4e114d
+    m_label: '[Audio]'
+  - m_id: 845e6eb2-4b98-4611-8b19-fffe735211ed
+    m_fromNodeId: 1442afce-1ed5-49c2-bc8f-6685a0fed372
+    m_fromNodeConnectionPointId: c681274d-a322-45f6-8b63-9f19bcc84a6d
+    m_toNodeId: cb486e12-7266-4bda-ad3d-8f533f0f2f9c
+    m_toNodeConnectionPoiontId: 9c0b38ff-39ee-46cc-b5c5-5b63878e998b
+    m_label: +
+  - m_id: 05b02264-96c5-4115-9730-efd65580a159
+    m_fromNodeId: 95e62ebb-f9f9-4162-ba51-f659357acbc4
+    m_fromNodeConnectionPointId: 9a10610f-16e5-4b1f-bee9-f7fbda363ed3
+    m_toNodeId: cb486e12-7266-4bda-ad3d-8f533f0f2f9c
+    m_toNodeConnectionPoiontId: 9c0b38ff-39ee-46cc-b5c5-5b63878e998b
+    m_label: +
+  m_lastModified: 131761786528771090
+  m_version: 2
+  m_graphDescription: 
+  m_useAsAssetPostprocessor: 0
+  m_graphExecOrderPriority: 0

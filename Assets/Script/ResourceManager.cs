@@ -20,6 +20,7 @@ public class ResourceManager : SerializedMonoBehaviour
     public Dictionary<string, Sprite> infoPortraite;
     public Dictionary<string, Sprite> skillIcons;
     public Dictionary<string, Sprite> heroPortraite;
+    public Dictionary<string, Sprite> deckPortraite;
     public GameObject unitDeadObject;
     public GameObject previewUnit;
     public GameObject baseSkillIcon;

@@ -1,8 +1,10 @@
 using System;
+using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
+using UnityEngine.Events;
 using System.Linq;
 using UnityEngine.UI;
 using BestHTTP;
@@ -18,10 +20,10 @@ public partial class AccountManager : Singleton<AccountManager> {
 
     public string DEVICEID { get; private set; }
     public UserInfo userData { get; private set; }
-    public CardInventory[] myCards { get; set; }
+    public CardInventory[] myCards;
 
-    public List<dataModules.Deck> humanDecks;
-    public List<dataModules.Deck> orcDecks;
+    public List<Deck> humanDecks;
+    public List<Deck> orcDecks;
 
     public List<Templates> humanTemplates;
     public List<Templates> orcTemplates;
@@ -29,13 +31,19 @@ public partial class AccountManager : Singleton<AccountManager> {
     public List<CollectionCard> allCards { get; private set; }
     public Dictionary<string, CollectionCard> allCardsDic { get; private set; }
 
-    public Dictionary<string, HeroInventory> myHeroInventories { get; private set; }
-    public CardDataPackage cardPackage;
+    public Dictionary<string, HeroInventory> myHeroInventories;
+    public CardDataPackage cardPackage;    
 
     public ResourceManager resource;
+    public UserResourceManager userResource;
+    public RewardClass[] rewardList;
+    public DictionaryInfo dicInfo;
 
     NetworkManager networkManager;
     GameObject loadingModal;
+    public UnityEvent OnUserResourceRefresh = new UnityEvent();
+    public UnityEvent OnCardLoadFinished = new UnityEvent();
+
     public string NickName { get; private set; }
 
     private void Awake() {
@@ -45,11 +53,13 @@ public partial class AccountManager : Singleton<AccountManager> {
         DEVICEID = SystemInfo.deviceUniqueIdentifier;
         cardPackage = Resources.Load("CardDatas/CardDataPackage_01") as CardDataPackage;
         resource = transform.GetComponent<ResourceManager>();
+        gameObject.AddComponent<Timer.TimerManager>();
     }
 
     // Start is called before the first frame update
     void Start() {
         networkManager = NetworkManager.Instance;
+        dicInfo = new DictionaryInfo();
     }
 
     private void OccurErrorModal(long errorCode) {
@@ -93,12 +103,15 @@ public partial class AccountManager : Singleton<AccountManager> {
                 data.cardCount = card.cardCount;
                 cardPackage.data.Add(card.cardId, data);
             }
+            else {
+                cardPackage.data[card.cardId].cardCount = card.cardCount;
+            }
         }
         foreach (KeyValuePair<string, HeroInventory> cards in myHeroInventories) {
-            foreach(var card in cards.Value.heroCards) {
+            foreach (var card in cards.Value.heroCards) {
                 if (!cardPackage.data.ContainsKey(card.cardId)) {
                     CardData data = new CardData();
-                    data.cardId = card.cardId;                          
+                    data.cardId = card.cardId;
                     data.attackTypes = card.attackTypes;
                     data.attributes = card.attributes;
                     data.rarelity = card.rarelity;
@@ -129,13 +142,22 @@ public partial class AccountManager : Singleton<AccountManager> {
     /// 회원가입, 로그인시 유저 정보 처리를 위한 클래스
     /// </summary>
     public class UserInfo {
-        public string[] baasicDeckUnlock;
+        public uint exp;
+        public uint nextLvExp;
+        public uint lvExp;
+        public uint lv;
+
+        public int gold;
+        public double supplyTimeRemain;
+        public int supply;
+        public int supplyBox;
+        public int manaCrystal;
+        public int preSupply;
+        public int additionalPreSupply;
+
         public string nickName;
         public string deviceId;
         public int pass;
-        
-        public CardInventory[] cardInventories;
-        public HeroInventory[] heroInventories;
     }
 }
 
@@ -143,27 +165,8 @@ public partial class AccountManager : Singleton<AccountManager> {
 /// SignIn / SignUp 관련 처리
 /// </summary>
 public partial class AccountManager {
-    public async void SignUp(string inputText) {
-        OTPCode otp = new OTPCode();
-        while(!otp.isDone) await System.Threading.Tasks.Task.Delay(100);
-
-        UserInfo userInfo = new UserInfo();
-        userInfo.nickName = inputText;
-        userInfo.deviceId = DEVICEID;
-        userInfo.pass = otp.computeTotp;
-
-        StringBuilder url = new StringBuilder();
-
-        url.Append(networkManager.baseUrl)
-            .Append("api/user");
-
-        HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
-        request.RawData = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(userInfo));
-        request.MethodType = HTTPMethods.Post;
-
-        networkManager.Request(request, CallbackSignUp, "회원가입을 요청하는 중...");
-    }
-
+    Timer UserReqTimer;
+    const int MAX_PRE_SUPPLY = 200;
     /// <summary>
     /// 유저 정보 요청
     /// </summary>
@@ -195,68 +198,97 @@ public partial class AccountManager {
     public void OnSignInResultModal() {
         Destroy(loadingModal);
         Modal.instantiate("로그인이 되었습니다.", Modal.Type.CHECK, () => {
-            SceneManager.Instance.LoadScene(SceneManager.Scene.MAIN_SCENE);
+            FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
         });
-    }
-
-    public void OnSignUpModal() {
-        Destroy(loadingModal);
-        Modal.instantiate(
-            "새로운 계정을 등록합니다.",
-            "닉네임을 입력하세요.",
-            null,
-            Modal.Type.INSERT,
-            SignUp);
     }
 
     private void CallbackSignUp(HTTPRequest originalRequest, HTTPResponse response) {
         if (response != null && response.IsSuccess) {
             Logger.Log("회원가입 요청 완료");
-            AuthUser();
             RequestUserInfo((req, res) => {
-                if(response != null) {
+                if (response != null) {
                     if (response.IsSuccess) {
                         SetSignInData(res);
                     }
                 }
             });
             Modal.instantiate("회원가입이 완료되었습니다.", Modal.Type.CHECK, () => {
-                SceneManager.Instance.LoadScene(SceneManager.Scene.MAIN_SCENE);
+                FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
             });
         }
         else {
-            if(response.DataAsText.Contains("already exist")) {
+            if (response.DataAsText.Contains("already exist")) {
                 Modal.instantiate("이미 해당 기기의 ID가 존재합니다.", Modal.Type.CHECK);
             }
         }
     }
-    
+
     public void SetSignInData(HTTPResponse response) {
         userData = dataModules.JsonReader.Read<UserInfo>(response.DataAsText);
-
-        //myCards = userData.cardInventories;
-        //SetHeroInventories(userData.heroInventories);
-        //SetCardData();
-
         NickName = userData.nickName;
-    }
 
-    //TODO : url 수정
-    public void RequestMyCards(OnRequestFinishedDelegate callback = null) {
-        StringBuilder url = new StringBuilder();
-        string base_url = networkManager.baseUrl;
-
-        url
-            .Append(base_url)
-            .Append("api/decks");
-
-        HTTPRequest request = new HTTPRequest(
-            new Uri(url.ToString())
+        userResource.SetResource(
+            lv: userData.lv,
+            exp: userData.exp,
+            lvExp: userData.lvExp,
+            nextLvExp: userData.nextLvExp,
+            gold: userData.gold,
+            crystal: userData.manaCrystal,
+            supplyStoreTime: (int)userData.supplyTimeRemain,
+            supplyStore: userData.preSupply,
+            supply: userData.supply,
+            supplyBox: userData.supplyBox,
+            additionalPreSupply : userData.additionalPreSupply
         );
-        request.MethodType = HTTPMethods.Get;
-        request.AddHeader("authorization", TokenFormat);
-        networkManager.Request(request, callback, "내 카드 목록을 불러오는중...");
     }
+
+    public void SetSignInData(HTTPRequest originalRequest, HTTPResponse response) {
+        userData = dataModules.JsonReader.Read<UserInfo>(response.DataAsText);
+        NickName = userData.nickName;
+
+        userResource.SetResource(
+            lv: userData.lv,
+            exp: userData.exp,
+            lvExp: userData.lvExp,
+            nextLvExp: userData.nextLvExp,
+            gold: userData.gold,
+            crystal: userData.manaCrystal,
+            supplyStoreTime: (int)userData.supplyTimeRemain,
+            supplyStore: userData.preSupply,
+            supply: userData.supply,
+            supplyBox: userData.supplyBox,
+            additionalPreSupply: userData.additionalPreSupply
+        );
+        OnUserResourceRefresh.Invoke();
+    }
+
+    #region supply 갱신 처리 관련 code
+    public float GetRemainSupplySec() {
+        //TODO : ReqUserInfo를 통한 값 가져와 return 시키기
+        float sec = (float)(TimeSpan.FromMilliseconds(userData.supplyTimeRemain).TotalSeconds);
+        return sec;
+    }
+
+    public void ReqInTimer(float interval) {
+        Logger.Log("Times out");
+        Timer.Cancel(UserReqTimer);
+        UserReqTimer = Timer.Register(
+            interval,
+            () => {
+                RequestUserInfo((req, res) => {
+                    var sceneStartController = GetComponent<SceneStartController>();
+                    if (res.StatusCode == 200 || res.StatusCode == 304) {
+                        SetSignInData(res);
+                        if (userData.preSupply >= MAX_PRE_SUPPLY) {
+                            Logger.Log("Pre Supply가 가득찼습니다.");
+                            return; //TODO : preSupply가 변동되면 다시 요청 필요 
+                        }
+                        ReqInTimer(GetRemainSupplySec());
+                    }
+                });
+            });
+    }
+    #endregion
 }
 
 public partial class AccountManager {
@@ -309,11 +341,52 @@ public partial class AccountManager {
 
     private void OnReceived(HTTPRequest originalRequest, HTTPResponse response) {
         if (response.IsSuccess) {
-            if(response.StatusCode == 200 || response.StatusCode == 304) {
+            if (response.StatusCode == 200 || response.StatusCode == 304) {
                 var result = response.DataAsText;
             }
         }
     }
+
+    /// <summary>
+    /// 카드 제작 요청
+    /// </summary>
+    public void RequestCardMake(string cardId, OnRequestFinishedDelegate callback = null) {
+        StringBuilder sb = new StringBuilder();
+        sb
+            .Append(networkManager.baseUrl)
+            .Append("api/user/createcard");
+
+        HTTPRequest request = new HTTPRequest(
+            new Uri(sb.ToString())
+        );
+        request.MethodType = BestHTTP.HTTPMethods.Post;
+        request.AddHeader("authorization", TokenFormat);
+
+        request.RawData = Encoding.UTF8.GetBytes(string.Format("{{\"cardId\":\"{0}\"}}", cardId));
+        if (callback != null) request.Callback = callback;
+        networkManager.Request(request, OnReceived, "새로운 덱을 생성하는중...");
+    }
+
+    /// <summary>
+    /// 카드 해체 요청
+    /// </summary>
+    public void RequestCardBreak(string cardId, OnRequestFinishedDelegate callback = null) {
+        StringBuilder sb = new StringBuilder();
+        sb
+            .Append(networkManager.baseUrl)
+            .Append("api/user/grindcard");
+
+        HTTPRequest request = new HTTPRequest(
+            new Uri(sb.ToString())
+        );
+        request.MethodType = BestHTTP.HTTPMethods.Post;
+        request.AddHeader("authorization", TokenFormat);
+
+        request.RawData = Encoding.UTF8.GetBytes(string.Format("{{\"cardId\":\"{0}\"}}", cardId));
+        if (callback != null) request.Callback = callback;
+        networkManager.Request(request, OnReceived, "새로운 덱을 생성하는중...");
+    }
+
 
     /// <summary>
     /// 덱 제거 요청
@@ -366,7 +439,7 @@ public partial class AccountManager {
                     break;
             }
         }
-        request.RawData =  Encoding.UTF8.GetBytes(json.ToString());
+        request.RawData = Encoding.UTF8.GetBytes(json.ToString());
         request.AddHeader("authorization", TokenFormat);
         if (callback != null) request.Callback = callback;
         networkManager.Request(request, OnReceived, "덱 수정 요청을 전달하는중...");
@@ -398,6 +471,32 @@ public partial class AccountManager {
         networkManager.Request(request, callback, "Human 템플릿을 불러오는중...");
     }
 
+    public void RequestInventories(OnRequestFinishedDelegate callback = null) {
+        StringBuilder sb = new StringBuilder();
+        sb
+            .Append(networkManager.baseUrl)
+            .Append("api/user/inventories");
+
+        HTTPRequest request = new HTTPRequest(new Uri(sb.ToString()));
+        request.MethodType = HTTPMethods.Get;
+        request.AddHeader("authorization", TokenFormat);
+
+        networkManager.Request(request, callback, "인벤토리 정보를 불러오는 중...");
+    }
+
+    public void RefreshInventories(OnRequestFinishedDelegate callback = null) {
+        StringBuilder sb = new StringBuilder();
+        sb
+            .Append(networkManager.baseUrl)
+            .Append("api/user/inventories");
+
+        HTTPRequest request = new HTTPRequest(new Uri(sb.ToString()));
+        request.MethodType = HTTPMethods.Get;
+        request.AddHeader("authorization", TokenFormat);
+
+        networkManager.Request(request, callback, "인벤토리 정보를 불러오는 중...");
+    }
+
     private void TestModifyDeck() {
         NetworkManager.ModifyDeckReqFormat form = new NetworkManager.ModifyDeckReqFormat();
         NetworkManager.ModifyDeckReqArgs field = new NetworkManager.ModifyDeckReqArgs();
@@ -427,6 +526,14 @@ public partial class AccountManager {
         //RequestDeckMake(formatData);
     }
 
+    public void SetRewardInfo(RewardClass[] rewardList) {
+        for (int i = 0; i < rewardList.Length; i++) {
+            this.rewardList[i].item = rewardList[i].item;
+            this.rewardList[i].amount = rewardList[i].amount;
+            this.rewardList[i].type = rewardList[i].type;
+        }
+    }
+
     public void LoadAllCards() {
         StringBuilder sb = new StringBuilder();
         sb
@@ -442,11 +549,35 @@ public partial class AccountManager {
     }
 
     private void OnReceivedLoadAllCards(HTTPRequest originalRequest, HTTPResponse response) {
-        if(response != null && response.IsSuccess) {
+        if (response != null && response.IsSuccess) {
             var result = dataModules.JsonReader.Read<List<CollectionCard>>(response.DataAsText);
             allCards = result;
             allCardsDic = allCards.ToDictionary(x => x.id, x => x);
+            OnCardLoadFinished.Invoke();
         }
+    }
+    public void RequestRewardInfo(OnRequestFinishedDelegate callback = null) {
+        StringBuilder url = new StringBuilder();
+        string base_url = networkManager.baseUrl;
+
+        url
+            .Append(base_url)
+            .Append("api/user/openbox");
+
+        //url
+        //    .Append(base_url)
+        //    .Append("api/users/")
+        //    .Append(DEVICEID)
+        //    .Append("?slow=30");
+
+        Logger.Log("Request User Info");
+        HTTPRequest request = new HTTPRequest(
+            new Uri(url.ToString())
+        );
+        request.MethodType = HTTPMethods.Get;
+        request.AddHeader("authorization", TokenFormat);
+        networkManager.Request(request, callback, "박스 정보를 불러오는중...");
+
     }
 }
 
@@ -462,29 +593,6 @@ public partial class AccountManager {
     }
     public string TokenFormat { get; private set; }
 
-    public async void AuthUser(OnRequestFinishedDelegate callback = null) {
-        OTPCode otp = new OTPCode();
-        while(!otp.isDone) await System.Threading.Tasks.Task.Delay(100);
-        StringBuilder url = new StringBuilder();
-
-        url
-            .Append(networkManager.baseUrl)
-            .Append("api/user/auth");
-
-        HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
-        TokenForm form = new TokenForm(DEVICEID, otp.computeTotp);
-        request.MethodType = HTTPMethods.Post;
-        request.RawData = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(form));
-        if (callback == null) callback = AuthUserCallback;
-
-        networkManager.Request(request, callback);
-    }
-
-    public void AuthUserCallback(HTTPRequest originalRequest, HTTPResponse response) {
-        if (response.IsSuccess) SetUserToken(response);
-        else Logger.LogError("Token을 요청하는 과정에서 문제가 발생하였음");
-    }
-
     public void SetUserToken(HTTPResponse response) {
         var result = dataModules.JsonReader.Read<Token>(response.DataAsText);
         TokenId = result.token;
@@ -498,6 +606,33 @@ public partial class AccountManager {
         public TokenForm(string deviceId, int pass) {
             this.deviceId = deviceId;
             this.pass = pass;
+        }
+    }
+}
+
+public partial class AccountManager {
+    public int Exp { get; private set; }
+
+    public void ExpInc(int amount) {
+        ExpReq(amount, OnExpChanged);
+    }
+
+    private void ExpReq(int amount, OnRequestFinishedDelegate callback) {
+        StringBuilder url = new StringBuilder();
+
+        url.Append(networkManager.baseUrl)
+            .Append("api/user");
+
+        HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
+        //request.RawData = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(userInfo));
+        //request.MethodType = HTTPMethods.Post;
+
+        //networkManager.Request(request, callback, "");
+    }
+
+    private void OnExpChanged(HTTPRequest originalRequest, HTTPResponse response) {
+        if (response != null && response.IsSuccess) {
+
         }
     }
 }

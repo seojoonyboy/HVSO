@@ -24,99 +24,36 @@ public class TemplateMenu : MonoBehaviour {
     public bool isHuman;
     public string heroID;
     public DeckHandler selectedDeck;
+    bool newDeck;
 
-    private void Awake() {
-        Transform upper = transform.Find("Upper");
-        Transform footer = transform.Find("Footer");
-        Transform heroSelect = upper.Find("HeroSelect");
-
-        heroButtonLayout = transform.Find("HeroButton/HeroBtnLayout").gameObject;
-        heroPortrait = heroSelect.Find("Portrait").gameObject;
-        heroName = heroSelect.Find("NameTamplate").GetComponentInChildren<TextMeshProUGUI>();
-        heroProperty = heroSelect.Find("HeroProperty").gameObject;
-        heroCardGroup = upper.Find("HeroCard").gameObject;
-        deckLayout = footer.Find("DeckBtnLayout").gameObject;
-        gameObject.SetActive(false);
-        SetHeroBtnID();
-    }
-
-
-    public void SetHeroBtnID() {
-        if (AccountManager.Instance == null) return;
-        ResourceManager resource = AccountManager.Instance.resource;
-
-        isHuman = (gameObject.name.Contains("Human") == true) ? true : false;
-        Transform btnLayout = heroButtonLayout.transform;
-        int count = 0;
-
-        foreach (Transform child in btnLayout) {
-            TemplateHeroBtn templateHeroBtn = child.gameObject.AddComponent<TemplateHeroBtn>();
-            Button button = child.gameObject.GetComponent<Button>();
-
-            if (isHuman == true)
-                templateHeroBtn.heroID = (child.GetSiblingIndex() == 0) ? "h10001" : "h10003";
-            else
-                templateHeroBtn.heroID = (child.GetSiblingIndex() == 0) ? "h10002" : "h10004";
-
-            templateHeroBtn.menu = this;
-
-
-
-            if (button != null)
-                button.onClick.AddListener(delegate () { templateHeroBtn.HeroSelectBtn(); });
-
-            if (count < 2) {
-                GameObject skeletonData = resource.heroPreview[templateHeroBtn.heroID].gameObject;
-                GameObject preview = Instantiate(skeletonData, heroPortrait.transform);
-                preview.transform.position = heroPortrait.transform.position;
-                preview.SetActive((count == 0) ? true : false);
-                preview.name = templateHeroBtn.heroID;
-            }
-
-            if (count > 0)
-                button.enabled = false;
-
-            count++;
-        }
-        previewID = (isHuman == true) ? "h10001" : "h10002";
-    }
-
-    public void SetTemplateDecks() {
-        for(int i = 0; i < 3; i++) {
-            transform.Find("Footer/DeckBtnLayout").GetChild(i).gameObject.SetActive(false);
+    public void SetTemplateNewDecks(string heroId, bool isHuman) {
+        heroID = heroId;
+        this.isHuman = isHuman;
+        for (int i = 0; i < 3; i++) {
+            transform.Find("DeckList").GetChild(i).gameObject.SetActive(false);
         }
         List<Templates> templates;
-        if (isHuman) 
+        if (isHuman)
             templates = AccountManager.Instance.humanTemplates;
         else
             templates = AccountManager.Instance.orcTemplates;
-        foreach(Templates heros in templates) {
-            if(heros.id == heroID) {
+        foreach (Templates heros in templates) {
+            if (heros.id == heroId) {
                 int count = 0;
                 foreach (Deck deck in heros.templates) {
-                    GameObject templateDeck = transform.Find("Footer/DeckBtnLayout").GetChild(count).gameObject;
+                    GameObject templateDeck = transform.Find("DeckList").GetChild(count).gameObject;
                     templateDeck.SetActive(true);
-                    templateDeck.GetComponent<DeckHandler>().SetTemplateDeck(deck);
+                    templateDeck.GetComponent<DeckHandler>().SetNewTemplateDeck(deck);
                     count++;
                 }
                 break;
             }
         }
+        transform.Find("DeckList").Find("NewDeck/Selected").gameObject.SetActive(false);
+        transform.Find("DeckList").Find("NewDeck/SelectedBack").gameObject.SetActive(false);
     }
 
-    public void ChangeHeroID(string ID) {
-        string id = ID;
-        heroID = ID;
-        ChangeHeroSkeleton(id);
-        ChangeHeroData(id);
-        SetTemplateDecks();
-    }
 
-    private void ChangeHeroSkeleton(string heroID) {
-        heroPortrait.transform.Find(previewID).gameObject.SetActive(false);
-        heroPortrait.transform.Find(heroID).gameObject.SetActive(true);
-        previewID = heroID;
-    }
 
     private void ChangeHeroData(string heroID) {
         HeroInventory heroData = AccountManager.Instance.myHeroInventories[heroID];
@@ -143,29 +80,72 @@ public class TemplateMenu : MonoBehaviour {
 
     public void StartEditBtn() {
         DeckEditController deckEditCtrl = deckSettingCanves.GetComponent<DeckEditController>();
-        if (selectedDeck.gameObject.name == "FreeDeckBtn") {
+        if (selectedDeck == null && newDeck) {
             deckEditCtrl.SetDeckEdit(heroID, isHuman);
         }
         else {
+            if (selectedDeck == null) return;
             deckEditCtrl.SetCustumDeckEdit(selectedDeck.templateDeck, true);
         }
         deckEditCtrl.gameObject.SetActive(true);
         deckEditCtrl.RefreshLine();
         deckEditCtrl.templateMenu = this;
         CancelSelectDeck();
+        FindObjectOfType<HUDController>().SetHeader(HUDController.Type.HIDE);
+    }
+
+    public void SelectDeck(DeckHandler deck) {
+        if (selectedDeck != null) {
+            if (selectedDeck == deck) 
+                return;
+            selectedDeck.transform.Find("Selected").gameObject.SetActive(false);
+            selectedDeck.transform.Find("SelectedBack").gameObject.SetActive(false);
+        }
+        if (newDeck) {
+            transform.Find("DeckList/NewDeck/Selected").gameObject.SetActive(false);
+            transform.Find("DeckList/NewDeck/SelectedBack").gameObject.SetActive(false);
+            newDeck = false;
+        }
+        selectedDeck = deck;
+        transform.Find("StartEditBtn").gameObject.SetActive(true);
+    }
+
+    public void SelectNewDeck() {
+        Transform newDeckSelected = transform.Find("DeckList/NewDeck/Selected");
+        Transform newDeckSelectedBack = transform.Find("DeckList/NewDeck/SelectedBack");
+        if (selectedDeck != null) {
+            selectedDeck.transform.Find("Selected").gameObject.SetActive(false);
+            selectedDeck.transform.Find("SelectedBack").gameObject.SetActive(false);
+        }
+        selectedDeck = null;
+        newDeck = true;
+        newDeckSelected.GetComponent<SkeletonGraphic>().Initialize(true);
+        newDeckSelected.GetComponent<SkeletonGraphic>().Update(0);
+        newDeckSelected.gameObject.SetActive(true);
+        newDeckSelectedBack.GetComponent<SkeletonGraphic>().Initialize(true);
+        newDeckSelectedBack.GetComponent<SkeletonGraphic>().Update(0);
+        newDeckSelectedBack.gameObject.SetActive(true);
+        transform.Find("StartEditBtn").gameObject.SetActive(true);
     }
 
     public void CancelSelectDeck() {
-        if(selectedDeck != null) 
-            selectedDeck.CancelSelect();
-        transform.Find("CancelSelect").gameObject.SetActive(false);
-        transform.Find("DeckEditBtn").gameObject.SetActive(false);
+        if (selectedDeck != null) {
+            selectedDeck.transform.Find("Selected").gameObject.SetActive(false);
+            selectedDeck.transform.Find("SelectedBack").gameObject.SetActive(false);
+            selectedDeck = null;
+        }
+        if (newDeck) {
+            transform.Find("DeckList/NewDeck/Selected").gameObject.SetActive(false);
+            transform.Find("DeckList/NewDeck/SelectedBack").gameObject.SetActive(false);
+            newDeck = false;
+        }
+        transform.Find("StartEditBtn").gameObject.SetActive(false);
     }
 
 
     public void ReturnToMenu() {
         gameObject.SetActive(false);
-
+        transform.Find("StartEditBtn").gameObject.SetActive(false);
         FindObjectOfType<HUDController>().SetHeader(HUDController.Type.SHOW_USER_INFO);
     }
 }
