@@ -1,10 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class IngameSettingModalManager : MonoBehaviour {
     [SerializeField] GameObject basePanel;
     [SerializeField] GameObject settingModal, quitModal;
+    [SerializeField] Button settingBtn;
+
+    void Awake() {
+        if (settingBtn == null) return;
+        settingBtn.onClick.AddListener(() => {
+            basePanel.SetActive(true);
+            settingModal.SetActive(true);
+        });    
+    }
 
     void Update() {
         if (Input.GetKeyDown(KeyCode.Escape)) {
