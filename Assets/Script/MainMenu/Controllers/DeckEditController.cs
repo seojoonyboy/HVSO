@@ -458,7 +458,7 @@ public class DeckEditController : MonoBehaviour
         foreach(dataModules.Item card in lodedDeck.items) {
             if (myCards.data.ContainsKey(card.id)) {
                 EditCardHandler settedCard = settingLayout.transform.GetChild(settedCardNum).GetComponent<EditCardHandler>();
-                if(myCards.data[card.id].cardCount == card.cardCount)
+                if(myCards.data[card.id].cardCount >= card.cardCount)
                     settedCard.SETNUM = card.cardCount;
                 else
                     settedCard.SETNUM = myCards.data[card.id].cardCount;
