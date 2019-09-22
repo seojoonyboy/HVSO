@@ -43,7 +43,7 @@ public class DeckListHandlerInBattleReady : MonoBehaviour {
             var deck = humanDecks[i];
 
             Button button = deckHandler.GetComponent<Button>();
-            button.onClick.AddListener(() => { OnDeckSelected(deckHandler.DECKID, "human", deck); });
+            button.onClick.AddListener(() => { OnDeckSelected(deckHandler.DECKID, "HUMAN", deck); });
         }
 
         int index = 0;
@@ -56,7 +56,7 @@ public class DeckListHandlerInBattleReady : MonoBehaviour {
             var deck = orcDecks[index];
 
             Button button = deckHandler.GetComponent<Button>();
-            button.onClick.AddListener(() => { OnDeckSelected(deckHandler.DECKID, "orc", deck); });
+            button.onClick.AddListener(() => { OnDeckSelected(deckHandler.DECKID, "ORC", deck); });
             index++;
         }
     }
@@ -74,7 +74,7 @@ public class DeckListHandlerInBattleReady : MonoBehaviour {
 
         parentController.selectedDeck = deck;
 
-        Logger.Log(camp + "¿«" + deckId + "µ¶¿Ã º±≈√µ ");
+        Logger.Log(camp + "Ïùò" + deckId + "Îç±Ïù¥ ÏÑ†ÌÉùÎê®");
         gameObject.SetActive(false);
 
         parentController.OnStartButton();
