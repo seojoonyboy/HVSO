@@ -76,12 +76,24 @@ public class ScenarioGameManagment : PlayMangement {
     private void DequeueChapter() {
         canNextChapter = false;
         if(chapterQueue.Count == 0) {
-            //EndTutorial();
             return;
         }
         currentChapterData = chapterQueue.Dequeue();
         GetComponent<ScenarioExecuteHandler>().Initialize(currentChapterData);
     }
+
+    public void SkipTutorial() {
+        if (GetComponent<ScenarioExecuteHandler>().sets.Count > 0) {
+            foreach (var exec in GetComponent<ScenarioExecuteHandler>().sets) { Destroy(exec); }
+        }
+        chapterQueue.Clear();
+        canBattleProceed = true;
+        stopEnemySummon = false;
+        forcedSummonAt = -1;
+        stopTurn = false;
+        ScenarioMask.Instance.OffMaskScreen();
+    }
+
 
     public override IEnumerator EnemyUseCard(bool isBefore) {
         if (isBefore)
