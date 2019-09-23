@@ -91,7 +91,7 @@ public class ScenarioGameManagment : PlayMangement {
         stopEnemySummon = false;
         forcedSummonAt = -1;
         stopTurn = false;
-        ScenarioMask.Instance.OffMaskScreen();
+        ScenarioMask.Instance.DisableMask();
     }
 
 

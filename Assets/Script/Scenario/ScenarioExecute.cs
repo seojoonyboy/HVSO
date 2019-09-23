@@ -213,7 +213,7 @@ public class Wait_Drag : ScenarioExecute {
             CardHandler card = cardObject.GetComponent<CardHandler>();
 
             if(card != null) {
-                if(card.cardData.cardId == args[1]) {
+                if(card.cardData.id == args[1]) {
                     scenarioMask.StopEveryHighlight();
                     handler.isDone = true;
                 }
