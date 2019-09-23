@@ -20,7 +20,18 @@ public class MenuSceneController : MonoBehaviour {
     private int currentPage;
     private bool buttonClicked;
     public MyDecksLoader decksLoader;
-    
+    [SerializeField] GameObject newbiLoadingModal;
+
+    private void Awake() {
+        if (PlayerPrefs.GetInt("isFirst") == 1) {
+            var newbiComp = newbiLoadingModal.AddComponent<NewbiController>(); //첫 로그인 제어
+            newbiComp.name = "NewbiController";
+            newbiComp.Init(decksLoader, newbiLoadingModal);
+        }
+        //var newbiComp = newbiLoadingModal.AddComponent<NewbiController>(); //첫 로그인 제어
+        //newbiComp.name = "NewbiController";
+        //newbiComp.Init(decksLoader, newbiLoadingModal);
+    }
 
     private void Start() {
         deckSettingManager.AttachDecksLoader(ref decksLoader);
