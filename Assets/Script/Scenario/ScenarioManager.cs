@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using Sirenix.OdinInspector;
 using Tutorial;
+using UnityEngine.Events;
 
 public class ScenarioManager : SerializedMonoBehaviour
 {
@@ -25,9 +26,12 @@ public class ScenarioManager : SerializedMonoBehaviour
     [SerializeField] GameObject orcDeckPrefab;
     [SerializeField] GameObject humanDeckPrefab;
 
+
+    public static UnityEvent OnLobbySceneLoaded = new UnityEvent();
     private void Awake() {
         Instance = this;
         OnHumanCategories();
+        OnLobbySceneLoaded.Invoke();
         //PlayerPrefs.SetString("SelectedDeckId", "");
 #if !UNITY_EDITOR
         ScenarioMask.Instance.transform.parent.Find("DebugText").gameObject.SetActive(false);

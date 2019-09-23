@@ -25,6 +25,8 @@ public partial class BattleConnector : MonoBehaviour {
     private Coroutine timeCheck;
     private bool battleGameFinish = false;
 
+    public static UnityEvent OnOpenSocket = new UnityEvent();
+
     void Awake() {
         thisType = this.GetType();
         DontDestroyOnLoad(gameObject);
@@ -111,6 +113,8 @@ public partial class BattleConnector : MonoBehaviour {
             
         SendMethod("join_game", args);
         pingpong = StartCoroutine(Heartbeat());
+
+        OnOpenSocket.Invoke();
     }
 
     IEnumerator Heartbeat() {

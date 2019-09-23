@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using System;
 using TMPro;
 using UnityEngine.UI.Extensions;
+using UnityEngine.Events;
 
 public class BattleReadySceneController : MonoBehaviour {
     public Toggle[] battleTypeToggles;

@@ -20,7 +20,18 @@ public class MenuSceneController : MonoBehaviour {
     private int currentPage;
     private bool buttonClicked;
     public MyDecksLoader decksLoader;
-    
+    [SerializeField] GameObject newbiLoadingModal;
+
+    private void Awake() {
+        if (PlayerPrefs.GetInt("isFirst") == 1) {
+            var newbiComp = newbiLoadingModal.AddComponent<NewbiController>(); //첫 로그인 제어
+            newbiComp.name = "NewbiController";
+            newbiComp.Init(decksLoader, newbiLoadingModal);
+        }
+        //var newbiComp = newbiLoadingModal.AddComponent<NewbiController>(); //첫 로그인 제어
+        //newbiComp.name = "NewbiController";
+        //newbiComp.Init(decksLoader, newbiLoadingModal);
+    }
 
     private void Start() {
         deckSettingManager.AttachDecksLoader(ref decksLoader);
@@ -36,6 +47,10 @@ public class MenuSceneController : MonoBehaviour {
         //    buttonSkeletons[i] = buttonsParent.GetChild(i).Find("ButtonImage").GetComponent<SkeletonGraphic>();
         //StartCoroutine(UpdateWindow());
         TouchEffecter.Instance.SetScript();
+        if (AccountManager.Instance.dicInfo.inDic) {
+            windowScrollSnap.StartingScreen = 0;
+            AccountManager.Instance.dicInfo.inDic = false;
+        }
     }
 
     /// <summary>
@@ -121,6 +136,7 @@ public class MenuSceneController : MonoBehaviour {
 
     public void OpenDictionary(bool isHuman) {
         AccountManager.Instance.dicInfo.isHuman = isHuman;
+        AccountManager.Instance.dicInfo.inDic = true;
         FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.DICTIONARY_SCENE);
     }
 }
