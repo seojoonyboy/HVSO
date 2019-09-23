@@ -46,6 +46,8 @@ public class NewbiController : MonoBehaviour {
     }
 
     private void OnEventOccured(string eventName) {
+        if (PlayerPrefs.GetInt("isFirst") == 0) return;
+
         if(eventName == "OnScenarioSceneLoaded") {
             var chapterData = ScenarioManager.Instance.human_chapterDatas[0];
             ScenarioGameManagment.chapterData = chapterData;

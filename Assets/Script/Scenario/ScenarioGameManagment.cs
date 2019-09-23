@@ -60,7 +60,10 @@ public class ScenarioGameManagment : PlayMangement {
     void Start() {
         SetBackGround();
         InitGameData(20,10);
+
         settingModal.SetActive(true);
+        Destroy(FindObjectOfType<NewbiController>().gameObject);
+        PlayerPrefs.SetInt("isFirst", 0);
     }
 
     void OnDestroy() {
