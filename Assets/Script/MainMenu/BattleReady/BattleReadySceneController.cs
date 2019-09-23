@@ -100,15 +100,6 @@ public class BattleReadySceneController : MonoBehaviour {
         selectedBattleType = type;
     }
 
-    public void ChangeRaceType(RaceType type) {
-        SoundManager.Instance.PlaySound(SoundType.FIRST_TURN);
-        PlayerPrefs.SetString("SelectedRace", type.ToString());
-        Logger.Log(type);
-        raceType = type;
-
-        if (EmptyMsgShowPanel.activeSelf) EmptyMsgShowPanel.SetActive(false);
-    }
-
     /// <summary>
     /// 지금은 사용하지 않음
     /// </summary>

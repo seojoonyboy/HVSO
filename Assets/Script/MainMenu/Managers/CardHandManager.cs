@@ -505,7 +505,7 @@ public class CardHandManager : MonoBehaviour {
 
     public void SetUsedCardInfo(ref GameObject card) {
         card.transform.localScale = Vector3.one;
-        CardData cardData = card.GetComponent<CardHandler>().cardData;
+        dataModules.CollectionCard cardData = card.GetComponent<CardHandler>().cardData;
 
         Image portrait = card.transform.Find("Portrait").GetComponent<Image>();
         TMPro.TextMeshProUGUI cost = card.transform.Find("Cost/Text").GetComponent<TMPro.TextMeshProUGUI>();
@@ -534,7 +534,7 @@ public class CardHandManager : MonoBehaviour {
             portrait.sprite = AccountManager.Instance.resource.cardPortraite["unknown"];
         }
         else
-            portrait.sprite = AccountManager.Instance.resource.cardPortraite[cardData.cardId];
+            portrait.sprite = AccountManager.Instance.resource.cardPortraite[cardData.id];
 
         if (cardData.attributes.Length == 0 && cardData.attackTypes.Length == 0 && isUnit) skillIcon.gameObject.SetActive(false);
 
@@ -550,7 +550,7 @@ public class CardHandManager : MonoBehaviour {
 
         if (cardData.attributes.Length != 0 && cardData.attackTypes.Length != 0 && isUnit)
             skillIcon.sprite = AccountManager.Instance.resource.skillIcons["complex"];
-        if(!cardData.hero_chk)
+        if(!cardData.isHeroCard)
             card.transform.Find("BackGround").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground[cardData.type + "_" + cardData.rarelity];
     }
 
@@ -700,7 +700,7 @@ public class CardHandManager : MonoBehaviour {
         }
     }
 
-    public GameObject InstantiateUnitCard(CardData data, int itemId) {
+    public GameObject InstantiateUnitCard(dataModules.CollectionCard data, int itemId) {
         GameObject card = cardStorage.Find("UnitCards").GetChild(0).gameObject;
         card.transform.localScale = Vector3.zero;
         card.transform.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.name;
@@ -709,14 +709,14 @@ public class CardHandManager : MonoBehaviour {
         return card;
     }
 
-    public GameObject InstantiateMagicCard(CardData data, int itemId) {
+    public GameObject InstantiateMagicCard(dataModules.CollectionCard data, int itemId) {
         GameObject card = cardStorage.Find("MagicCards").GetChild(0).gameObject;
         card.transform.localScale = Vector3.zero;
         card.transform.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.name;
         MagicDragHandler magic = card.AddComponent<MagicDragHandler>();
         card.GetComponent<CardHandler>().cardData = data;
         AddMagicAttribute(ref card, false);
-        magic.DrawCard(data.cardId, itemId);
+        magic.DrawCard(data.id, itemId);
         magic.enabled = false;
         return card;
     }

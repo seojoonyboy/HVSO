@@ -45,7 +45,7 @@ public class CardListManager : MonoBehaviour
         handCardInfo = transform.Find("HandCardInfo");
     }
 
-    public virtual void AddCardInfo(CardData data) {
+    public virtual void AddCardInfo(dataModules.CollectionCard data) {
         GameObject newcard = standbyInfo.GetChild(0).gameObject;
         newcard.SetActive(true);
         SetCardInfo(newcard, data);
@@ -60,14 +60,14 @@ public class CardListManager : MonoBehaviour
         info.SetActive(false);
     }
 
-    public void SetEnemyMagicCardInfo(CardData data) {
+    public void SetEnemyMagicCardInfo(dataModules.CollectionCard data) {
         GameObject newcard = standbyInfo.GetChild(0).gameObject;
         newcard.SetActive(true);
         SetCardInfo(newcard, data);
         //newcard.transform.localScale = new Vector3(1.4f, 1.4f, 1);
     }
 
-    public virtual void AddMulliganCardInfo(CardData data, string id, int changeNum = 100) {
+    public virtual void AddMulliganCardInfo(dataModules.CollectionCard data, string id, int changeNum = 100) {
         GameObject newcard;
         if (changeNum == 100) {
             newcard = standbyInfo.GetChild(0).gameObject;
@@ -79,13 +79,13 @@ public class CardListManager : MonoBehaviour
         newcard.SetActive(false);
     }
 
-    public GameObject AddHeroCardInfo(CardData data) {
+    public GameObject AddHeroCardInfo(dataModules.CollectionCard data) {
         GameObject heroInfo = StandbyInfo.GetChild(0).gameObject;
         SetCardInfo(heroInfo, data);
         return heroInfo;
     }
 
-    public void AddFeildUnitInfo(int cardIndex, int unitNum, CardData data= null) {
+    public void AddFeildUnitInfo(int cardIndex, int unitNum, dataModules.CollectionCard data= null) {
         GameObject unitInfo;
         if (data == null)
             unitInfo = handCardInfo.GetChild(cardIndex).gameObject;
@@ -159,7 +159,7 @@ public class CardListManager : MonoBehaviour
             handCardInfo.GetChild(i).gameObject.SetActive(false);
     }
 
-    public virtual void SetCardInfo(GameObject obj, CardData data) {
+    public virtual void SetCardInfo(GameObject obj, dataModules.CollectionCard data) {
         Transform info = obj.transform;
         info.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.name;
         info.Find("Name").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["name_" + data.rarelity];
@@ -186,7 +186,7 @@ public class CardListManager : MonoBehaviour
 
         info.Find("Cost/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.cost.ToString();
 
-        info.Find("Class_1").GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[data.class_1];
+        info.Find("Class_1").GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[data.cardClasses[0]];
 
         for(int i = 0; i < 5; i++) {
             info.Find("Skill&BuffRow1").GetChild(i).gameObject.SetActive(false);
@@ -207,8 +207,8 @@ public class CardListManager : MonoBehaviour
         int skillnum = 0;
         if (data.type == "unit") {
             info.Find("UnitPortrait").gameObject.SetActive(true);
-            if (AccountManager.Instance.resource.infoPortraite.ContainsKey(data.cardId)) {
-                info.Find("UnitPortrait").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoPortraite[data.cardId];
+            if (AccountManager.Instance.resource.infoPortraite.ContainsKey(data.id)) {
+                info.Find("UnitPortrait").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoPortraite[data.id];
             }
             if (data.attackTypes.Length != 0) {
                 info.Find("Skill&BuffRow1").GetChild(skillnum).gameObject.SetActive(true);
@@ -246,8 +246,8 @@ public class CardListManager : MonoBehaviour
             }
 
             List<string> categories = new List<string>();
-            if(data.category_1 != null) categories.Add(data.category_1);
-            if(data.category_2 != null) categories.Add(data.category_2);
+            if(data.cardCategories[0] != null) categories.Add(data.cardCategories[0]);
+            if(data.cardCategories.Length > 1) categories.Add(data.cardCategories[1]);
             var translatedCategories = translator.GetTranslatedUnitCtg(categories);
             System.Text.StringBuilder sb = new System.Text.StringBuilder();
 
@@ -283,9 +283,9 @@ public class CardListManager : MonoBehaviour
             info.Find("Categories/Text").GetComponent<TMPro.TextMeshProUGUI>().text = sb.ToString();
 
             info.Find("MagicPortrait").gameObject.SetActive(true);
-            if (AccountManager.Instance.resource.cardPortraite.ContainsKey(data.cardId)) {
-                info.Find("MagicPortrait").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardPortraite[data.cardId];
-                if (!data.hero_chk)
+            if (AccountManager.Instance.resource.cardPortraite.ContainsKey(data.id)) {
+                info.Find("MagicPortrait").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardPortraite[data.id];
+                if (!data.isHeroCard)
                     info.Find("MagicPortrait/Frame").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground["magic_" + data.rarelity];
                 else
                     info.Find("MagicPortrait/Frame").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground["hero_legend_human"];

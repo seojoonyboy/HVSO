@@ -78,7 +78,7 @@ public class PlaceMonster : MonoBehaviour {
         skillHandler.RemoveTriggerEvent();
     }
 
-    public void Init(CardData data) {
+    public void Init(dataModules.CollectionCard data) {
         x = transform.parent.GetSiblingIndex();
         y = transform.parent.parent.GetSiblingIndex();
 

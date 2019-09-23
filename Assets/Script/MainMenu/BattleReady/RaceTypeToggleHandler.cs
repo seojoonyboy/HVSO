@@ -63,7 +63,6 @@ public class RaceTypeToggleHandler : MonoBehaviour {
 
     public void Init() {
         var type = (BattleReadySceneController.RaceType)id;
-        controller.ChangeRaceType(type);
 
         ClearList();
         CreateBasicDeckList(type);

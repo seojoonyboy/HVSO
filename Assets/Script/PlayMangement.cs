@@ -269,10 +269,8 @@ public partial class PlayMangement : MonoBehaviour {
     /// <param name="history"></param>
     /// <returns></returns>
     protected GameObject MakeMagicCardObj(SocketFormat.PlayHistory history) {
-        CardData cardData;
-        CardDataPackage cardDataPackage = AccountManager.Instance.cardPackage;
+        dataModules.CollectionCard cardData = AccountManager.Instance.allCardsDic[history.cardItem.id];
 
-        cardData = cardDataPackage.data[history.cardItem.id];
         GameObject magicCard = player.cdpm.InstantiateMagicCard(cardData, history.cardItem.itemId);
         magicCard.GetComponent<MagicDragHandler>().itemID = history.cardItem.itemId;
 
@@ -291,10 +289,8 @@ public partial class PlayMangement : MonoBehaviour {
     /// <param name="history"></param>
     /// <returns></returns>
     protected GameObject MakeUnitCardObj(SocketFormat.PlayHistory history) {
-        CardData cardData;
-        CardDataPackage cardDataPackage = AccountManager.Instance.cardPackage;
+        dataModules.CollectionCard cardData = AccountManager.Instance.allCardsDic[history.cardItem.id];
 
-        cardData = cardDataPackage.data[history.cardItem.id];
         GameObject unitCard = player.cdpm.InstantiateUnitCard(cardData, history.cardItem.itemId);
         unitCard.GetComponent<UnitDragHandler>().itemID = history.cardItem.itemId;
 
@@ -341,7 +337,7 @@ public partial class PlayMangement : MonoBehaviour {
         yield return EnemySettingTarget(history.targets[0], magicCard);
         //실제 카드 사용
         object[] parms = new object[] { false, card };
-        if (magicCard.cardData.hero_chk == true) {
+        if (magicCard.cardData.isHeroCard == true) {
             card.transform.Find("GlowEffect").gameObject.SetActive(false);
             card.transform.Find("Portrait").gameObject.SetActive(false);
             card.transform.Find("BackGround").gameObject.SetActive(false);
@@ -780,8 +776,8 @@ public partial class PlayMangement {
         CardDataPackage cardDataPackage = AccountManager.Instance.cardPackage;
 
         GameObject skeleton;
-        CardData cardData;
-        cardData = cardDataPackage.data[unitID];
+        dataModules.CollectionCard cardData;
+        cardData = AccountManager.Instance.allCardsDic[unitID];
 
         Logger.Log(col);
         Logger.Log(row);
@@ -803,18 +799,18 @@ public partial class PlayMangement {
         placeMonster.unit.attackRange = cardData.attackRange;
         placeMonster.unit.cost = cardData.cost;
         placeMonster.unit.rarelity = cardData.rarelity;
-        placeMonster.unit.id = cardData.cardId;
+        placeMonster.unit.id = cardData.id;
         placeMonster.unit.attributes = cardData.attributes;
 
 
-        if (cardData.category_2 != "") {
+        if (cardData.cardCategories.Length > 1) {
             placeMonster.unit.cardCategories = new string[2];
-            placeMonster.unit.cardCategories[0] = cardData.category_1;
-            placeMonster.unit.cardCategories[1] = cardData.category_2;
+            placeMonster.unit.cardCategories[0] = cardData.cardCategories[0];
+            placeMonster.unit.cardCategories[1] = cardData.cardCategories[1];
         }
         else {
             placeMonster.unit.cardCategories = new string[1];
-            placeMonster.unit.cardCategories[0] = cardData.category_1;
+            placeMonster.unit.cardCategories[0] = cardData.cardCategories[0];
         }
 
         if (cardData.attackTypes.Length > 0) {
