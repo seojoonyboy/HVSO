@@ -292,6 +292,7 @@ public class End_tutorial : ScenarioExecute {
                     else {
                         Modal.instantiate("에러 발생 \n" + res.DataAsText, Modal.Type.CHECK);
                     }
+                    scenarioGameManagment.settingModal.SetActive(true);
                 });
             }
         });

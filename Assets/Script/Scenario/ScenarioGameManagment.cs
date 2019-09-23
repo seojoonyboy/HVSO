@@ -29,6 +29,8 @@ public class ScenarioGameManagment : PlayMangement {
 
     public Transform showCardPos;
     public ScenarioExecute currentExecute;
+    public GameObject settingModal;
+
     private void Awake() {
         socketHandler = FindObjectOfType<BattleConnector>();
         instance = this;
