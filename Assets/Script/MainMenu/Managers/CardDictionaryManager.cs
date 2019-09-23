@@ -411,7 +411,7 @@ public class CardDictionaryManager : MonoBehaviour {
         heroCards.gameObject.SetActive(true);
     }
 
-    public void ExitDictionaryScene() {
+    public void ExitDictionaryScene() { 
         FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
     }
 }
@@ -427,4 +427,5 @@ public enum SortingOptions {
 public class DictionaryInfo {
     public bool isHuman;
     public SortingOptions sortingState;
+    public bool inDic;
 }

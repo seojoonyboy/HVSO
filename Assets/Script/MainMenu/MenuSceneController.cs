@@ -36,6 +36,10 @@ public class MenuSceneController : MonoBehaviour {
         //    buttonSkeletons[i] = buttonsParent.GetChild(i).Find("ButtonImage").GetComponent<SkeletonGraphic>();
         //StartCoroutine(UpdateWindow());
         TouchEffecter.Instance.SetScript();
+        if (AccountManager.Instance.dicInfo.inDic) {
+            windowScrollSnap.StartingScreen = 0;
+            AccountManager.Instance.dicInfo.inDic = false;
+        }
     }
 
     /// <summary>
@@ -121,6 +125,7 @@ public class MenuSceneController : MonoBehaviour {
 
     public void OpenDictionary(bool isHuman) {
         AccountManager.Instance.dicInfo.isHuman = isHuman;
+        AccountManager.Instance.dicInfo.inDic = true;
         FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.DICTIONARY_SCENE);
     }
 }
