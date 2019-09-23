@@ -60,6 +60,7 @@ public class ScenarioGameManagment : PlayMangement {
     void Start() {
         SetBackGround();
         InitGameData(20,10);
+        settingModal.SetActive(true);
     }
 
     void OnDestroy() {
