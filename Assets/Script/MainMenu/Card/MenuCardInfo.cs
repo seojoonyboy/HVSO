@@ -209,7 +209,7 @@ public class MenuCardInfo : MonoBehaviour {
         if (Input.touchCount > 1) return;
         Vector3 mousePos = Input.mousePosition;
         classDescModal.gameObject.SetActive(true);
-        classDescModal.position = new Vector3(mousePos.x + 20, mousePos.y + 150f, 0);
+        classDescModal.position = new Vector3(mousePos.x + 20, mousePos.y + 200f, 0);
         string[] set = translator.GetTranslatedSkillSet(className);
         SetClassDescModalData(set[0], set[1], image);
     }

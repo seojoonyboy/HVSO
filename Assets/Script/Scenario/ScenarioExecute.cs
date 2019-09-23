@@ -399,7 +399,7 @@ public class Disable_drag : ScenarioExecute {
                         }
                     }
                     
-                    targets.RemoveAll(x => x.GetComponent<MagicDragHandler>().cardData.cardId == args[2]);
+                    targets.RemoveAll(x => x.GetComponent<MagicDragHandler>().cardData.id == args[2]);
                     foreach(var card in targets) {
                         card.GetComponent<MagicDragHandler>().enabled = false;
                     }
