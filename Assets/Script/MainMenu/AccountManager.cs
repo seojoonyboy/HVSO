@@ -609,6 +609,29 @@ public partial class AccountManager {
             this.pass = pass;
         }
     }
+
+    public void ChangeNicknameReq(string val = "", OnRequestFinishedDelegate callback = null) {
+        StringBuilder url = new StringBuilder();
+        string base_url = networkManager.baseUrl;
+
+        url
+            .Append(base_url)
+            .Append("api/user/change_nickname");
+
+        HTTPRequest request = new HTTPRequest(
+            new Uri(url.ToString())
+        );
+        request.MethodType = HTTPMethods.Post;
+        request.AddHeader("authorization", TokenFormat);
+        NickNamechangeFormat format = new NickNamechangeFormat();
+        format.nickName = val;
+        request.RawData = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(format));
+        networkManager.Request(request, callback, "박스 정보를 불러오는중...");
+    }
+
+    public class NickNamechangeFormat {
+        public string nickName;
+    }
 }
 
 public partial class AccountManager {
