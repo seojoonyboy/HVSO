@@ -39,7 +39,7 @@ public class BoxRewardManager : MonoBehaviour
     public void SetBoxObj() {
         boxObject.Find("SupplyGauge/Value").GetComponent<Image>().fillAmount = (float)AccountManager.Instance.userResource.supply * 0.01f;
         boxObject.Find("SupplyGauge/ValueText").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userResource.supply.ToString() + "/100";
-        supplyStore.text = AccountManager.Instance.userResource.supplyStore.ToString() + "/200";
+        supplyStore.text = AccountManager.Instance.userResource.supplyStore.ToString();
         if (AccountManager.Instance.userResource.supplyBox > 0) {
             boxObject.Find("BoxImage/BoxValue").gameObject.SetActive(true);
             boxObject.Find("BoxImage/BoxValue/BoxNum").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userResource.supplyBox.ToString();
