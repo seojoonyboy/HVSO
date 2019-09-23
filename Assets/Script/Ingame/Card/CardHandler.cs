@@ -48,8 +48,7 @@ public partial class CardHandler : MonoBehaviour {
     protected bool highlighted = false;
     public Transform highlightedSlot;
 
-    public CardData cardData;
-    public CardDataPackage cardDataPackage;
+    public dataModules.CollectionCard cardData;
 
     protected static GameObject itsDragging;
 
@@ -68,18 +67,18 @@ public partial class CardHandler : MonoBehaviour {
     }
 
     public virtual void DrawCard(string ID, int itemID = -1, bool first = false) {
-        cardDataPackage = AccountManager.Instance.cardPackage;
+        Dictionary<string, dataModules.CollectionCard> cardDataPackage = AccountManager.Instance.allCardsDic;
         cardID = ID;
 
         //cardID = "ac10002";    //테스트 코드
         this.itemID = itemID;
-        if (cardDataPackage.data.ContainsKey(cardID)) {
-            cardData = cardDataPackage.data[cardID];
+        if (cardDataPackage.ContainsKey(cardID)) {
+            cardData = AccountManager.Instance.allCardsDic[cardID];
             Sprite portraitImage = null;
             if (AccountManager.Instance.resource.cardPortraite.ContainsKey(cardID)) portraitImage = AccountManager.Instance.resource.cardPortraite[cardID];
             else portraitImage = AccountManager.Instance.resource.cardPortraite["default"];
             transform.Find("Portrait").GetComponent<Image>().sprite = portraitImage;
-            if (!cardData.hero_chk) {
+            if (!cardData.isHeroCard) {
                 transform.Find("BackGround").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground[cardData.type + "_" + cardData.rarelity];
                 transform.Find("Name").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground["name_" + cardData.rarelity];
             }
@@ -120,7 +119,7 @@ public partial class CardHandler : MonoBehaviour {
         else
             transform.Find("GlowEffect").GetComponent<SkeletonGraphic>().color = new Color(1, 1, 1, 1);
         transform.Find("Cost/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.cost.ToString();
-        transform.Find("Class").GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[cardData.class_1];
+        transform.Find("Class").GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[cardData.cardClasses[0]];
         transform.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.name;
 
 

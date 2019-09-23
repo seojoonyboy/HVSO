@@ -17,7 +17,7 @@ public partial class UnitDragHandler : CardHandler, IBeginDragHandler, IDragHand
         if (Input.touchCount > 1) return;
         if (PlayMangement.instance.player.dragCard) return;
         StartDragCard();
-        CardInfoOnDrag.instance.SetPreviewUnit(cardData.cardId);
+        CardInfoOnDrag.instance.SetPreviewUnit(cardData.id);
         if (cardData.skills.Length != 0)
             CardInfoOnDrag.instance.SetCardDragInfo(null, mouseLocalPos.localPosition, cardData.skills[0].desc);
         else

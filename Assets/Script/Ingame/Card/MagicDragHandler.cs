@@ -215,9 +215,9 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         skillHandler.socketDone = false;
         PlayMangement.dragable = false;
         PlayMangement.instance.LockTurnOver();
-        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.MAGIC_USED, this, cardData.cardId);
+        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.MAGIC_USED, this, cardData.id);
         yield return PlayMangement.instance.cardHandManager.ShowUsedCard(transform.parent.GetSiblingIndex(), gameObject);
-        if (cardData.hero_chk == true) {
+        if (cardData.isHeroCard == true) {
             HideCardImage();
             yield return EffectSystem.Instance.HeroCutScene(PlayMangement.instance.player.isHuman);            
         }

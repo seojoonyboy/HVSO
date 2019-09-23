@@ -50,7 +50,7 @@ public partial class CardDropManager {
             }
         }
     }
-    public void ShowDropableSlot(CardData card) {
+    public void ShowDropableSlot(dataModules.CollectionCard card) {
         if(ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.isTutorial) {
             int line = ScenarioGameManagment.scenarioInstance.forcedSummonAt;
             if(line != -1) {
