@@ -195,4 +195,12 @@ public partial class NetworkManager {
         NAME,
         ITEMS
     }
+
+    public class ReconnectData {
+        public string gameId;
+
+        public ReconnectData(string gameId) {
+            this.gameId = gameId;
+        }
+    }
 }

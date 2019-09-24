@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using Spine;
 using Spine.Unity;
 using TMPro;
-
+using Newtonsoft.Json;
 
 public partial class PlayMangement : MonoBehaviour {
     public PlayerController player, enemyPlayer;
@@ -1135,6 +1135,15 @@ public partial class PlayMangement {
         player.HP.Value = data.hero.currentHp;
         player.shieldStack.Value = data.hero.shieldGauge;
         player.resource.Value = data.resource;
+    }
+
+    /// <summary>
+    /// socket disconnected
+    /// </summary>
+    public void Disconnected() {
+        NetworkManager.ReconnectData reconnectData = new NetworkManager.ReconnectData("gameId");
+        string data = JsonConvert.SerializeObject(reconnectData);
+        PlayerPrefs.SetString("ReconnectData", data);
     }
 }
 
