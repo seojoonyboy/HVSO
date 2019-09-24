@@ -452,6 +452,10 @@ public partial class CardDropManager {
         if (magicArgs == null) return;
         if (magicArgs == "my")
             DeactivateTarget(unitLine, magicTarget);
+        else if(magicArgs == "all") {
+            DeactivateTarget(unitLine, magicTarget);
+            DeactivateTarget(enemyUnitLine, magicTarget);
+        }
         else
             DeactivateTarget(enemyUnitLine, magicTarget);
 
