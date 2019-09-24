@@ -280,21 +280,7 @@ public class End_tutorial : ScenarioExecute {
         scenarioMask.HideText();
         ScenarioGameManagment.scenarioInstance.isTutorial = false;
 
-        Modal.instantiate("사용하실 닉네임을 입력해 주세요.", "새로운 닉네임", AccountManager.Instance.NickName, Modal.Type.INSERT, (str) => {
-            if (string.IsNullOrEmpty(str)) {
-                Modal.instantiate("빈 닉네임은 허용되지 않습니다.", Modal.Type.CHECK);
-            }
-            else {
-                AccountManager.Instance.ChangeNicknameReq(str, (req, res) => {
-                    if (res.StatusCode == 200 || res.StatusCode == 304) {
-                        Modal.instantiate("닉네임이 변경되었습니다.", Modal.Type.CHECK);
-                    }
-                    else {
-                        Modal.instantiate("에러 발생 \n" + res.DataAsText, Modal.Type.CHECK);
-                    }
-                });
-            }
-        });
+        //AccountManager.Instance.needChangeNickName = true;
     }
 }
 

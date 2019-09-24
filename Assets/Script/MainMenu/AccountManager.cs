@@ -44,7 +44,16 @@ public partial class AccountManager : Singleton<AccountManager> {
     public UnityEvent OnUserResourceRefresh = new UnityEvent();
     public UnityEvent OnCardLoadFinished = new UnityEvent();
 
-    public string NickName { get; private set; }
+    private string nickName;
+    public string NickName {
+        get {
+            return nickName;
+        }
+        set {
+            nickName = value;
+            NoneIngameSceneEventHandler.Instance.PostNotification(NoneIngameSceneEventHandler.EVENT_TYPE.NICKNAME_CHANGED, this, value);
+        }
+    }
 
     private void Awake() {
         Application.targetFrameRate = 60;
@@ -659,4 +668,6 @@ public partial class AccountManager {
 
         }
     }
+
+    public bool needChangeNickName = false;
 }
