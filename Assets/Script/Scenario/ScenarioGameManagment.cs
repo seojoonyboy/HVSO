@@ -29,6 +29,8 @@ public class ScenarioGameManagment : PlayMangement {
 
     public Transform showCardPos;
     public ScenarioExecute currentExecute;
+    public GameObject settingModal;
+
     private void Awake() {
         socketHandler = FindObjectOfType<BattleConnector>();
         instance = this;
@@ -58,6 +60,10 @@ public class ScenarioGameManagment : PlayMangement {
     void Start() {
         SetBackGround();
         InitGameData(20,10);
+
+        settingModal.SetActive(true);
+        Destroy(FindObjectOfType<NewbiController>().gameObject);
+        PlayerPrefs.SetInt("isFirst", 0);
     }
 
     void OnDestroy() {
