@@ -188,15 +188,35 @@ namespace BestHTTP.SignalRCore
         {
             if (obj == null)
                 return null;
-#if NETFX_CORE //|| NET_4_6
-            if (toType.GetTypeInfo().IsPrimitive || toType.GetTypeInfo().IsEnum)
+
+#if NETFX_CORE
+            TypeInfo typeInfo = toType.GetTypeInfo();
+#endif
+
+#if NETFX_CORE
+            if (typeInfo.IsEnum)
 #else
-            if (toType.IsPrimitive || toType.IsEnum)
+            if (toType.IsEnum)
+#endif
+                return Enum.Parse(toType, obj.ToString(), true);
+
+#if NETFX_CORE
+            if (typeInfo.IsPrimitive)
+#else
+            if (toType.IsPrimitive)
 #endif
                 return Convert.ChangeType(obj, toType);
 
             if (toType == typeof(string))
                 return obj.ToString();
+
+#if NETFX_CORE
+            if (typeInfo.IsGenericType && toType.Name == "Nullable`1")
+                return Convert.ChangeType(obj, toType.GenericTypeArguments[0]);
+#else
+            if (toType.IsGenericType && toType.Name == "Nullable`1")
+                return Convert.ChangeType(obj, toType.GetGenericArguments()[0]);
+#endif
 
             return this.Encoder.ConvertTo(toType, obj);
         }

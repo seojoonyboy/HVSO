@@ -300,11 +300,11 @@ namespace BestHTTP.WebSocket
             switch (req.State)
             {
                 case HTTPRequestStates.Finished:
-                    if (resp.IsSuccess || resp.StatusCode == 101)
-                    {
-                        // The request finished without any problem.
-                        HTTPManager.Logger.Information("WebSocket", string.Format("Request finished. Status Code: {0} Message: {1}", resp.StatusCode.ToString(), resp.Message));
+                    HTTPManager.Logger.Information("WebSocket", string.Format("Request finished. Status Code: {0} Message: {1}", resp.StatusCode.ToString(), resp.Message));
 
+                    if (resp.StatusCode == 101)
+                    {
+                        // The request upgraded successfully.
                         return;
                     }
                     else

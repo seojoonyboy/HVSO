@@ -42,7 +42,7 @@ namespace BestHTTP
             XHR_Abort(this.NativeId);
         }
 
-        protected override void ThreadFunc(object param /*null*/)
+        protected override void ThreadFunc()
         {
             // XmlHttpRequest setup
 

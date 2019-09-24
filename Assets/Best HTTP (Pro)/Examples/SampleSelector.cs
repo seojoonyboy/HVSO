@@ -113,6 +113,11 @@ namespace BestHTTP.Examples
             Samples.Add(new SampleDescriptor(typeof(AuthenticationSample), "Authentication", "Demonstrates how to use the authorization features of the Hub API to restrict certain Hubs and methods to specific users.\n\nFeatures demoed in this example:\n-Creating and using wrapper Hub classes to encapsulate hub functions and events\n-Create and use a Header-based authenticator to access protected APIs\n-SignalR over HTTPS"));
 #endif
 
+#if !BESTHTTP_DISABLE_SERVERSENT_EVENTS
+            Samples.Add(new SampleDescriptor(null, "Server-Sent Events", string.Empty) { IsLabel = true });
+            Samples.Add(new SampleDescriptor(typeof(SimpleTest), "Simple Sample", "Simple Server-Sent Events sample to demonstrate setup and basic message handling."));
+#endif
+
 #if !BESTHTTP_DISABLE_CACHING
             Samples.Add(new SampleDescriptor(null, "Plugin Samples", string.Empty) { IsLabel = true });
             Samples.Add(new SampleDescriptor(typeof(CacheMaintenanceSample), "Cache Maintenance", "With this demo you can see how you can use the HTTPCacheService's BeginMaintainence function to delete too old cached entities and keep the cache size under a specified value.\n\nFeatures demoed in this example:\n-How to set up a HTTPCacheMaintananceParams\n-How to call the BeginMaintainence function"));
