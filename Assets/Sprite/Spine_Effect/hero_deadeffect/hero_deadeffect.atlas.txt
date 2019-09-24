@@ -1,0 +1,41 @@
+
+hero_deadeffect.png
+size: 512,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Group 2 copy
+  rotate: false
+  xy: 192, 179
+  size: 75, 75
+  orig: 75, 75
+  offset: 0, 0
+  index: -1
+image_1
+  rotate: false
+  xy: 0, 62
+  size: 192, 192
+  orig: 192, 192
+  offset: 0, 0
+  index: -1
+image_2
+  rotate: false
+  xy: 267, 206
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+image_3
+  rotate: false
+  xy: 192, 107
+  size: 72, 72
+  orig: 72, 72
+  offset: 0, 0
+  index: -1
+image_33
+  rotate: false
+  xy: 0, 0
+  size: 62, 62
+  orig: 62, 62
+  offset: 0, 0
+  index: -1

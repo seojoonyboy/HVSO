@@ -244,4 +244,6 @@ MonoBehaviour:
   attackAnimationName: ATTACK
   hitAnimationName: HIT
   deadAnimationName: DEAD
+  shieldAnimationName: SHIELD
+  lastHitAnimationName: LASTHIT
   dummyAnimation: 

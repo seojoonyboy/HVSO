@@ -50,6 +50,7 @@ public class PlayerController : MonoBehaviour
     public enum HeroState {
         IDLE,
         ATTACK,
+        SHIELD,
         HIT,
         DEAD,
         THINKING,
@@ -305,7 +306,7 @@ public class PlayerController : MonoBehaviour
     public void ActiveShield() {
         GameObject shield = transform.Find("shield").gameObject;
         shield.SetActive(true);
-        SetState(HeroState.ATTACK);
+        SetState(HeroState.SHIELD);
         if(PlayMangement.instance.heroShieldActive) return;
         PlayMangement.instance.heroShieldActive = true;
         FullShieldStack(shieldStack.Value);
@@ -548,6 +549,9 @@ public class PlayerController : MonoBehaviour
                 break;
             case HeroState.ATTACK:
                 heroSpine.Attack();
+                break;
+            case HeroState.SHIELD:
+                heroSpine.Shield();
                 break;
             case HeroState.DEAD:
                 heroSpine.Dead();

@@ -15,6 +15,10 @@ public class HeroSpine : MonoBehaviour
     public string hitAnimationName;
     [SpineAnimation]
     public string deadAnimationName;
+    [SpineAnimation]
+    public string shieldAnimationName;
+    [SpineAnimation]
+    public string lastHitAnimationName;
 
 
     [SpineAnimation]
@@ -24,6 +28,8 @@ public class HeroSpine : MonoBehaviour
     protected Skeleton skeleton;
 
     protected string currentAnimationName;
+
+    protected Slot face;
 
     public UnityAction defenseFinish;
     private bool thinking = false;
@@ -36,6 +42,9 @@ public class HeroSpine : MonoBehaviour
         skeletonAnimation = GetComponent<SkeletonAnimation>();
         skeletonAnimation.AnimationState.Event += AnimationEvent;
         skeleton = skeletonAnimation.Skeleton;
+
+        skeletonAnimation.skeleton.SetAttachment("head_lowHP", null);
+        skeletonAnimation.skeleton.SetAttachment("head", "head");
     }
 
     public void AnimationEvent(TrackEntry entry, Spine.Event e) {
@@ -65,10 +74,21 @@ public class HeroSpine : MonoBehaviour
         entry.Complete += Idle;
     }
 
-    public virtual void Dead() {
+    public virtual void Shield() {
         TrackEntry entry;
-        entry = skeletonAnimation.AnimationState.SetAnimation(0, deadAnimationName, false);
-        currentAnimationName = hitAnimationName;
+        entry = skeletonAnimation.AnimationState.SetAnimation(0, shieldAnimationName, false);
+        currentAnimationName = shieldAnimationName;
+        entry.Complete += DefendFinish;
+        entry.Complete += Idle;
+    }
+
+
+    public virtual void Dead() {
+        skeletonAnimation.skeleton.SetAttachment("head_lowHP", "head2");
+        EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.HERO_DEAD, gameObject.transform.position);
+        TrackEntry entry;
+        entry = skeletonAnimation.AnimationState.SetAnimation(0, lastHitAnimationName, false);
+        currentAnimationName = deadAnimationName;
     }
 
 
