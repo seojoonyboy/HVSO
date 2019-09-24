@@ -46,8 +46,6 @@ public class NewbiController : MonoBehaviour {
     }
 
     private void OnEventOccured(string eventName) {
-        if (PlayerPrefs.GetInt("isFirst") == 0) return;
-
         if(eventName == "OnScenarioSceneLoaded") {
             var chapterData = ScenarioManager.Instance.human_chapterDatas[0];
             ScenarioGameManagment.chapterData = chapterData;
@@ -56,9 +54,6 @@ public class NewbiController : MonoBehaviour {
         }
         else if(eventName == "OnInvenLoadFinished") {
             FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MISSION_SELECT_SCENE);
-        }
-        else if(eventName == "WaitSec") {
-
         }
 
         preProcess.Remove(eventName);
@@ -109,5 +104,10 @@ public class NewbiController : MonoBehaviour {
 
         //Wait Until Ingame Muligun Begin
         AddProcess("WaitSec");
+    }
+
+    void OnDestroy() {
+        ScenarioManager.OnLobbySceneLoaded.RemoveAllListeners();
+        BattleConnector.OnOpenSocket.RemoveAllListeners();
     }
 }
