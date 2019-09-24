@@ -40,9 +40,12 @@ public class NewbiController : MonoBehaviour {
 
         if (unityEvent == null) return;
         preProcess.Add(eventName);
-        unityEvent.AddListener(() => {
+        UnityAction action = null;
+        action = () => {
             OnEventOccured(eventName);
-        });
+            unityEvent.RemoveListener(action);
+        };
+        unityEvent.AddListener(action);
     }
 
     private void OnEventOccured(string eventName) {
@@ -104,10 +107,5 @@ public class NewbiController : MonoBehaviour {
 
         //Wait Until Ingame Muligun Begin
         AddProcess("WaitSec");
-    }
-
-    void OnDestroy() {
-        ScenarioManager.OnLobbySceneLoaded.RemoveAllListeners();
-        BattleConnector.OnOpenSocket.RemoveAllListeners();
     }
 }
