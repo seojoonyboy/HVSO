@@ -43,8 +43,10 @@ namespace SkillModules {
         }
 
         private void AddBuff(ref List<GameObject> targets, ref GainArgs args) {
-            foreach (GameObject target in targets)
+            foreach (GameObject target in targets) {
                 target.GetComponent<PlaceMonster>().RequestChangeStat(args.atk, args.hp);
+                target.GetComponent<PlaceMonster>().CheckHP();  //체력이 0 이하가 되면 바로 사망 처리해야함
+            }
             skillHandler.isDone = true;
         }
     }
