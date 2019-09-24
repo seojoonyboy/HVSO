@@ -235,11 +235,13 @@ public class ScenarioManager : SerializedMonoBehaviour
 
     public void OnDeckSelected(GameObject selectedDeckObject, dataModules.Deck data, bool isTutorial) {
         if (this.selectedDeckObject != null) {
-            this.selectedDeckObject.transform.Find("Outline").gameObject.SetActive(false);
-            this.selectedDeckObject.transform.Find("Deck/Twinkle").gameObject.SetActive(false);
+            this.selectedDeckObject.transform.Find("SelectedBack").gameObject.SetActive(false);
+            this.selectedDeckObject.transform.Find("Selected").gameObject.SetActive(false);
         }
         //selectedDeckObject.transform.Find("Outline").gameObject.SetActive(true);
         this.selectedDeckObject = selectedDeckObject;
+        this.selectedDeckObject.transform.Find("SelectedBack").gameObject.SetActive(true);
+        this.selectedDeckObject.transform.Find("Selected").gameObject.SetActive(true);
         //GameObject twinkle = selectedDeckObject.transform.Find("Deck/Twinkle").gameObject;
         //twinkle.SetActive(true);
         //twinkle.GetComponent<DeckClickSpine>().Click();
