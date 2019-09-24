@@ -766,6 +766,27 @@ namespace SkillModules {
 
     }
 
+    public class hp_same_atk : Ability {
+        public hp_same_atk() : base() { }
+
+        public override void Execute(object data) {
+            object[] tmp = (object[])data;
+            bool isPlayer = (bool)tmp[0];
+
+            List<GameObject> targets = (List<GameObject>)tmp[1];
+            ChangeStat(targets);
+        }
+
+        private void ChangeStat(List<GameObject> targets) {
+            foreach(GameObject target in targets) {
+                PlaceMonster placeMonster = target.GetComponent<PlaceMonster>();
+                int prevPower = placeMonster.unit.attack;
+                placeMonster.RequestChangeStat(prevPower, prevPower);
+                placeMonster.CheckHP();
+            }
+        }
+    }
+
     /// <summary>
     /// 배수배만큼 버프 부여
     /// </summary>

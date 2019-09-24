@@ -298,6 +298,13 @@ namespace TargetModules {
                         }
                     }
                     break;
+
+                case "all":
+                    if(args[1] == "unit") {
+                        var targets = observer.GetAllFieldUnits();
+                        result.AddRange(targets);
+                    }
+                    break;
             }
             return result;
         }
