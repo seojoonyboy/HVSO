@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Crystal
 {
@@ -122,7 +123,13 @@ namespace Crystal
         void Refresh ()
         {
             Rect safeArea = GetSafeArea ();
-            ApplySafeArea(safeArea);
+            if(safeArea != LastSafeArea) {
+                ApplySafeArea(safeArea);
+                if(GetComponent<HorizontalLayoutGroup>() != null) {
+                    GetComponent<HorizontalLayoutGroup>().enabled = false;
+                    GetComponent<HorizontalLayoutGroup>().enabled = true;
+                }
+            }
         }
 
         public Rect GetSafeArea ()
