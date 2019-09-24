@@ -19,6 +19,8 @@ public class ScenarioManager : SerializedMonoBehaviour
     private GameObject selectedDeckObject = null;
     public object selectedDeck;
 
+
+    public GameObject headerMenu;
     public bool isHuman;
     public List<ChapterData> human_chapterDatas, orc_chapterDatas;
     public ChapterData selectedChapterData;
@@ -32,6 +34,7 @@ public class ScenarioManager : SerializedMonoBehaviour
         Instance = this;
         OnHumanCategories();
         OnLobbySceneLoaded.Invoke();
+        UpdateUserResource();
         //PlayerPrefs.SetString("SelectedDeckId", "");
 #if !UNITY_EDITOR
         ScenarioMask.Instance.transform.parent.Find("DebugText").gameObject.SetActive(false);
@@ -98,6 +101,19 @@ public class ScenarioManager : SerializedMonoBehaviour
             orc.StageCanvas.SetActive(true);
         }
     }
+
+    private void UpdateUserResource() {
+        TextMeshProUGUI crystalValue, goldValue;
+
+        Transform info = headerMenu.transform.Find("Right/Info");
+        crystalValue = info.Find("CrystalSlider/CrystalValue").gameObject.GetComponent<TextMeshProUGUI>();
+        goldValue = info.Find("GoldSlider/GoldValue").gameObject.GetComponent<TextMeshProUGUI>();
+
+        crystalValue.text = AccountManager.Instance.userData.manaCrystal.ToString();
+        goldValue.text = AccountManager.Instance.userData.gold.ToString();
+    }
+
+
 
     private void SetStoryListInfo() {
         Transform canvas;
