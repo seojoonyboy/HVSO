@@ -355,7 +355,7 @@ namespace SkillModules {
         private void BlastEnemy(bool isPlayer, List<GameObject> targets, int amount) {
             foreach(GameObject target in targets) {
                 PlaceMonster unit = target.GetComponent<PlaceMonster>();
-                string skillId = skillHandler.myObject.GetComponent<MagicDragHandler>().cardData.cardId;
+                string skillId = skillHandler.myObject.GetComponent<MagicDragHandler>().cardData.id;
                 if(unit != null) {
                     unit.RequestChangeStat(0, -amount, skillId);
                     WaitEffect(target, amount);
@@ -780,8 +780,8 @@ namespace SkillModules {
         private void ChangeStat(List<GameObject> targets) {
             foreach(GameObject target in targets) {
                 PlaceMonster placeMonster = target.GetComponent<PlaceMonster>();
-                int prevPower = placeMonster.unit.attack;
-                placeMonster.RequestChangeStat(prevPower, prevPower);
+                int updateHp = placeMonster.unit.attack - placeMonster.unit.currentHP;
+                placeMonster.RequestChangeStat(0, updateHp);
                 placeMonster.CheckHP();
             }
         }

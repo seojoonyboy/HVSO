@@ -235,6 +235,7 @@ public class EffectSystem : SerializedMonoBehaviour {
         GETBACK,
         STUN,
         POISON_GET,
+        HERO_DEAD
     }
 
 }
