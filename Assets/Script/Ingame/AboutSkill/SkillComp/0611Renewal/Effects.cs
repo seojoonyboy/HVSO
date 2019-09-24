@@ -775,6 +775,8 @@ namespace SkillModules {
 
             List<GameObject> targets = (List<GameObject>)tmp[1];
             ChangeStat(targets);
+
+            skillHandler.isDone = true;
         }
 
         private void ChangeStat(List<GameObject> targets) {
