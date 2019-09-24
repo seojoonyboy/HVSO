@@ -1407,6 +1407,12 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 37973376}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &37973379 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3124801813134346301, guid: 958776b7f33de4e4ab8a577785856062,
+    type: 3}
+  m_PrefabInstance: {fileID: 37973376}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &39085288
 GameObject:
   m_ObjectHideFlags: 0
@@ -52388,6 +52394,7 @@ MonoBehaviour:
   isIngameButtonClicked: 0
   stageCanvas: {fileID: 1392520022}
   deckContent: {fileID: 785387280}
+  headerMenu: {fileID: 37973379}
   isHuman: 0
   orcDeckPrefab: {fileID: 6243805219664985450, guid: 17743ad4b39fc8a4880ee88017383314,
     type: 3}
