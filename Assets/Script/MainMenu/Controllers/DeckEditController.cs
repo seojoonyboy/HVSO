@@ -224,7 +224,7 @@ public class DeckEditController : MonoBehaviour
         cardHandler.SetSetNum();
         EditCardHandler beforeCard = cardHandler.beforeObject.GetComponent<EditCardHandler>();
         beforeCard.HAVENUM++;
-        beforeCard.SetHaveNum();
+        beforeCard.SetHaveNum(true);
         if (cardHandler.SETNUM == 0) {
             cardHandler.beforeObject = null;
             setCardList.Remove(id);
@@ -250,14 +250,14 @@ public class DeckEditController : MonoBehaviour
             EditCardHandler addCardHandler = addedCard.GetComponent<EditCardHandler>();
             addCardHandler.SETNUM++;
             addCardHandler.DrawCard(id, isHuman);
-            addCardHandler.SetSetNum();
+            addCardHandler.SetSetNum(true);
             addCardHandler.beforeObject = cardHandler.gameObject;
             addedCard.SetActive(true);
         }
         else {
             EditCardHandler addCardHandler = setCardList[id].GetComponent<EditCardHandler>();
             addCardHandler.SETNUM++;
-            addCardHandler.SetSetNum();
+            addCardHandler.SetSetNum(true);
         }
         cardHandler.HAVENUM--;
         haveCardNum--;
