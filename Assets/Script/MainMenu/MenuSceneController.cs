@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.UI.Extensions;
 using Spine;
 using Spine.Unity;
-
+using System;
 
 public class MenuSceneController : MonoBehaviour {
     [SerializeField] Transform fixedCanvas;
@@ -23,21 +23,46 @@ public class MenuSceneController : MonoBehaviour {
     [SerializeField] GameObject newbiLoadingModal;
 
     private void Awake() {
+        Logger.Log("AWAKE");
         if (PlayerPrefs.GetInt("isFirst") == 1) {
             var newbiComp = newbiLoadingModal.AddComponent<NewbiController>(); //첫 로그인 제어
             newbiComp.name = "NewbiController";
             newbiComp.Init(decksLoader, newbiLoadingModal);
         }
-        //var newbiComp = newbiLoadingModal.AddComponent<NewbiController>(); //첫 로그인 제어
-        //newbiComp.name = "NewbiController";
-        //newbiComp.Init(decksLoader, newbiLoadingModal);
+
+        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.NICKNAME_CHANGED, OnNicknameChanged);
+        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.NICKNAME_CHANGED, OnNicknameChanged);
+    }
+
+    private void OnNicknameChanged(Enum Event_Type, Component Sender, object Param) {
+        nicknameText.text = (string)Param;
     }
 
     private void Start() {
+        if (AccountManager.Instance.needChangeNickName) {
+            Modal.instantiate("사용하실 닉네임을 입력해 주세요.", "새로운 닉네임", AccountManager.Instance.NickName, Modal.Type.INSERT, (str) => {
+                if (string.IsNullOrEmpty(str)) {
+                    Modal.instantiate("빈 닉네임은 허용되지 않습니다.", Modal.Type.CHECK);
+                }
+                else {
+                    AccountManager.Instance.ChangeNicknameReq(str, (req, res) => {
+                        if (res.StatusCode == 200 || res.StatusCode == 304) {
+                            Modal.instantiate("닉네임이 변경되었습니다.", Modal.Type.CHECK);
+                            AccountManager.Instance.needChangeNickName = false;
+                            AccountManager.Instance.NickName = str;
+                        }
+                        else {
+                            Modal.instantiate("에러 발생 \n" + res.DataAsText, Modal.Type.CHECK);
+                        }
+                    });
+                }
+            });
+        }
+
         deckSettingManager.AttachDecksLoader(ref decksLoader);
         //cardDictionaryManager.AttachDecksLoader(ref decksLoader);
         decksLoader.OnLoadFinished.AddListener(() => {
-            nicknameText.text = AccountManager.Instance.NickName;
+            NoneIngameSceneEventHandler.Instance.PostNotification(NoneIngameSceneEventHandler.EVENT_TYPE.NICKNAME_CHANGED, this, AccountManager.Instance.NickName);
         });
         decksLoader.Load();
         AccountManager.Instance.OnCardLoadFinished.AddListener(() => SetCardNumbersPerDic());

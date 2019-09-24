@@ -64,6 +64,7 @@ public class ScenarioGameManagment : PlayMangement {
         settingModal.SetActive(true);
         Destroy(FindObjectOfType<NewbiController>().gameObject);
         PlayerPrefs.SetInt("isFirst", 0);
+        AccountManager.Instance.needChangeNickName = true;
     }
 
     void OnDestroy() {
