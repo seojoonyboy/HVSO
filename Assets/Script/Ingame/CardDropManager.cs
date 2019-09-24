@@ -356,6 +356,10 @@ public partial class CardDropManager {
         magicTarget = target[1];
         if (magicArgs == "my")
             ActivateTarget(unitLine, magicTarget, dragFiltering: dragFiltering, conditionChecker);
+        else if(magicArgs == "all") {
+            ActivateTarget(unitLine, magicTarget, dragFiltering: dragFiltering, conditionChecker);
+            ActivateTarget(enemyUnitLine, magicTarget, dragFiltering, conditionChecker);
+        }
         else
             ActivateTarget(enemyUnitLine, magicTarget, dragFiltering, conditionChecker);
 
