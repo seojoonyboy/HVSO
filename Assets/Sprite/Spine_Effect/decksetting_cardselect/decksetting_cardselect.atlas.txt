@@ -1,0 +1,20 @@
+
+decksetting_cardselect.png
+size: 512,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Group 21
+  rotate: false
+  xy: 0, 0
+  size: 247, 291
+  orig: 247, 291
+  offset: 0, 0
+  index: -1
+magic
+  rotate: false
+  xy: 247, 6
+  size: 231, 285
+  orig: 231, 285
+  offset: 0, 0
+  index: -1
