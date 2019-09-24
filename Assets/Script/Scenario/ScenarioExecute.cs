@@ -279,6 +279,8 @@ public class End_tutorial : ScenarioExecute {
         scenarioMask.UnmaskHeroGuide();
         scenarioMask.HideText();
         ScenarioGameManagment.scenarioInstance.isTutorial = false;
+
+        //AccountManager.Instance.needChangeNickName = true;
     }
 }
 

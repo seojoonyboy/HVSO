@@ -24,6 +24,7 @@ public class UserResourceManager : SerializedMonoBehaviour {
     public int additionalPreSupply;
 
     public TMPro.TextMeshProUGUI timerText;
+    public bool timerOn;
 
     public void SetResource(uint lv, uint exp, uint lvExp, uint nextLvExp, int gold, int crystal, int supplyStore, int supplyStoreTime, int supply, int supplyBox, int additionalPreSupply) {
         this.lv = lv;
@@ -37,14 +38,17 @@ public class UserResourceManager : SerializedMonoBehaviour {
         this.supply = supply;
         this.supplyBox = supplyBox;
         this.additionalPreSupply = additionalPreSupply;
+        timerOn = true;
     }
 
     void Update() {
         if (supplyStore == 200) return;
+        if (!timerOn) return;
         if (timerText != null) {
             timerTime -= Time.deltaTime;
             if(timerTime <= 0) {
                 AccountManager.Instance.RequestUserInfo(AccountManager.Instance.SetSignInData);
+                timerOn = false;
                 return;
             }
             if ((supplyStoreTime * 0.001f) - timerTime >= 1) {

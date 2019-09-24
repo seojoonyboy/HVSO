@@ -57,6 +57,7 @@ public class NoneIngameSceneEventHandler : Singleton<NoneIngameSceneEventHandler
     }
 
     public enum EVENT_TYPE {
-        NETWORK_EROR_OCCURED
+        NETWORK_EROR_OCCURED,
+        NICKNAME_CHANGED
     }
 }

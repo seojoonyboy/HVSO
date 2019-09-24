@@ -11,6 +11,7 @@ public class HUDController : MonoBehaviour {
     [SerializeField] TMPro.TextMeshProUGUI goldValue;
     [SerializeField] TMPro.TextMeshProUGUI lvValue;
     [SerializeField] TMPro.TextMeshProUGUI expValueText;
+    [SerializeField] Transform userInfoCanvas;
     [SerializeField] Image expSlider;
 
     Transform
@@ -130,6 +131,11 @@ public class HUDController : MonoBehaviour {
 
     public void HideDictionaryUI() {
         dictionaryUI.gameObject.SetActive(false);
+    }
+
+    public void OpenUserInfo() {
+        userInfoCanvas.GetComponent<UserInfoManager>().SetUserInfo();
+        userInfoCanvas.gameObject.SetActive(true);
     }
 
     public enum Type {

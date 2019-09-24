@@ -165,10 +165,39 @@ public class EditCardHandler : MonoBehaviour {
         dragable = true;
     }
 
-    public void SetHaveNum() {
+    public void SetHaveNum(bool except = false) {
         if (haveNum > 0) {
             DisableCard(false);
             transform.Find("HaveNum/Graphic").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, haveNum.ToString(), false);
+            if (except) {
+                Color spineColor = new Color();
+                switch (cardData.rarelity) {
+                    case "common":
+                        spineColor = new Color(0.686f, 0.721f, 0.717f);
+                        break;
+                    case "uncommon":
+                        spineColor = new Color(0.447f, 0.945f, 0.227f);
+                        break;
+                    case "rare":
+                        spineColor = new Color(0.078f, 0.572f, 1f);
+                        break;
+                    case "superrare":
+                        spineColor = new Color(0.772f, 0.062f, 0.788f);
+                        break;
+                    case "legend":
+                        spineColor = new Color(1f, 0.494f, 0f);
+                        break;
+                }
+                transform.Find("CardAddEffect").GetComponent<SkeletonGraphic>().color = spineColor;
+                transform.Find("CardAddEffect").GetComponent<SkeletonGraphic>().Initialize(true);
+                transform.Find("CardAddEffect").GetComponent<SkeletonGraphic>().Update(0);
+                
+                if (cardData.type == "unit")
+                    transform.Find("CardAddEffect").GetComponent<SkeletonGraphic>().Skeleton.SetSkin("1.unit");
+                else
+                    transform.Find("CardAddEffect").GetComponent<SkeletonGraphic>().Skeleton.SetSkin("2.magic");
+                transform.Find("CardAddEffect").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, "animation", false);
+            }
         }
         else {
             DisableCard(true);
@@ -176,9 +205,38 @@ public class EditCardHandler : MonoBehaviour {
         }
     }
 
-    public void SetSetNum() {
+    public void SetSetNum(bool add = false) {
         if (setNum > 0) {
             transform.Find("HaveNum/Graphic").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, setNum.ToString(), false);
+            if (add) {
+                Color spineColor = new Color();
+                switch (cardData.rarelity) {
+                    case "common":
+                        spineColor = new Color(0.686f, 0.721f, 0.717f);
+                        break;
+                    case "uncommon":
+                        spineColor = new Color(0.447f, 0.945f, 0.227f);
+                        break;
+                    case "rare":
+                        spineColor = new Color(0.078f, 0.572f, 1f);
+                        break;
+                    case "superrare":
+                        spineColor = new Color(0.772f, 0.062f, 0.788f);
+                        break;
+                    case "legend":
+                        spineColor = new Color(1f, 0.494f, 0f);
+                        break;
+                }
+                transform.Find("CardAddEffect").GetComponent<SkeletonGraphic>().color = spineColor;
+                transform.Find("CardAddEffect").GetComponent<SkeletonGraphic>().Initialize(true);
+                transform.Find("CardAddEffect").GetComponent<SkeletonGraphic>().Update(0);
+                
+                if (cardData.type == "unit")
+                    transform.Find("CardAddEffect").GetComponent<SkeletonGraphic>().Skeleton.SetSkin("1.unit");
+                else
+                    transform.Find("CardAddEffect").GetComponent<SkeletonGraphic>().Skeleton.SetSkin("2.magic");
+                transform.Find("CardAddEffect").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, "animation", false);
+            }
         }
         else
             transform.Find("HaveNum/Graphic").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, "NOANI", false);

@@ -40,9 +40,12 @@ public class NewbiController : MonoBehaviour {
 
         if (unityEvent == null) return;
         preProcess.Add(eventName);
-        unityEvent.AddListener(() => {
+        UnityAction action = null;
+        action = () => {
             OnEventOccured(eventName);
-        });
+            unityEvent.RemoveListener(action);
+        };
+        unityEvent.AddListener(action);
     }
 
     private void OnEventOccured(string eventName) {
@@ -54,9 +57,6 @@ public class NewbiController : MonoBehaviour {
         }
         else if(eventName == "OnInvenLoadFinished") {
             FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MISSION_SELECT_SCENE);
-        }
-        else if(eventName == "WaitSec") {
-
         }
 
         preProcess.Remove(eventName);
