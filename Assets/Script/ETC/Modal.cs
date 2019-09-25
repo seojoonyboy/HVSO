@@ -88,6 +88,12 @@ public class Modal : MonoBehaviour {
         return tmp;
         //Instantiate(modal, canvas.transform, false).GetComponent<Modal>().setData(text, inputText, function);
 	}
+
+    public static GameObject instantiateReconnectModal() {
+        GameObject modal = Resources.Load("Prefabs/ReconnectCanvas", typeof(GameObject)) as GameObject;
+        return modal;
+    }
+
 	public void SetData(string text, UnityAction function, Type type, string title = null) {
 		if(type == Type.CHECK) {
 			noButton.gameObject.SetActive(false);

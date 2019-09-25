@@ -96,6 +96,8 @@ public partial class BattleConnector : MonoBehaviour {
         webSocket.OnMessage -= ReceiveMessage;
         webSocket.OnClosed -= OnClosed;
         webSocket.OnError -= OnError;
+
+        if (reconnectModal != null) Destroy(reconnectModal);
         return true;
     }
 

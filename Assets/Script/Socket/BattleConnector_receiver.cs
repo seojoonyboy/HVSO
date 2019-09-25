@@ -352,9 +352,17 @@ public partial class BattleConnector : MonoBehaviour {
 
     public void end_reconnect_ready(object args) {
         Time.timeScale = 1f;
+
+        if (reconnectModal != null) Destroy(reconnectModal);
      }
 
     public void wait_reconnect(object args) {
         Time.timeScale = 0f;
+
+        reconnectModal = Modal.instantiateReconnectModal();
     }
+}
+
+public partial class BattleConnector : MonoBehaviour {
+    GameObject reconnectModal;
 }
