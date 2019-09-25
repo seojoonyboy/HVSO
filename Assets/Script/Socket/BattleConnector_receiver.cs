@@ -42,6 +42,9 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     private void FixedUpdate() {
+        #if UNITY_EDITOR
+        if(Input.GetKeyDown(KeyCode.D)) webSocket.Close(500, "shutdown");
+        #endif
         if(!dequeueing) return;
         if(queue.Count == 0) return;
         DequeueSocket();
@@ -67,6 +70,14 @@ public partial class BattleConnector : MonoBehaviour {
         StopCoroutine(timeCheck);
         SetUserInfoText();
         ClientReady();
+        SetSaveGameId();
+    }
+
+    public void SetSaveGameId() {
+        JObject data = new JObject();
+        data["gameId"] = gameState.gameId;
+        data["camp"] = PlayerPrefs.GetString("SelectedRace").ToLower();
+        PlayerPrefs.SetString("ReconnectData", data.ToString());
     }
 
     /// <summary>
@@ -324,4 +335,14 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void hero_card_kept(object args) { }
+
+    //public void reconnect_game() { }
+
+    public void begin_reconnect_ready() { }
+
+    public void reconnect_fail() { }
+
+    public void reconnect_success() { }
+
+    public void end_reconnect_ready() { }
 }
