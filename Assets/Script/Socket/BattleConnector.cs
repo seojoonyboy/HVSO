@@ -104,7 +104,14 @@ public partial class BattleConnector : MonoBehaviour {
         if(reconnectCount >= 5) {
             PlayMangement playMangement = PlayMangement.instance;
             PlayerPrefs.DeleteKey("ReconnectData");
-            if(playMangement) playMangement.resultManager.SocketErrorUIOpen(false);
+
+            ReconnectController controller = FindObjectOfType<ReconnectController>();
+            if(controller != null) {
+                Destroy(controller);
+                Destroy(controller.gameObject);
+            }
+
+            if (playMangement) playMangement.resultManager.SocketErrorUIOpen(false);
             else FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
             return;
         }
