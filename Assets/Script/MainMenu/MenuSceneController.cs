@@ -16,7 +16,7 @@ public class MenuSceneController : MonoBehaviour {
     [SerializeField] SkeletonGraphic battleSwordSkeleton;
     [SerializeField] TMPro.TextMeshProUGUI nicknameText;
     [SerializeField] GameObject battleReadyPanel;   //대전 준비 화면
-    private SkeletonGraphic[] buttonSkeletons = new SkeletonGraphic[5];
+    [SerializeField] SkeletonGraphic menuButton;
     protected SkeletonGraphic selectedAnimation;
     private int currentPage;
     private bool buttonClicked;
@@ -39,6 +39,9 @@ public class MenuSceneController : MonoBehaviour {
             GameObject modal = Instantiate(reconnectingModal);
             modal.GetComponent<ReconnectController>().Init(decksLoader);
         }
+        menuButton.Initialize(true);
+        menuButton.Update(0);
+        ClickMenuButton(2);
 
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.NICKNAME_CHANGED, OnNicknameChanged);
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.NICKNAME_CHANGED, OnNicknameChanged);
@@ -84,6 +87,7 @@ public class MenuSceneController : MonoBehaviour {
         TouchEffecter.Instance.SetScript();
         if (AccountManager.Instance.dicInfo.inDic) {
             windowScrollSnap.StartingScreen = 0;
+            ClickMenuButton(0);
             AccountManager.Instance.dicInfo.inDic = false;
         }
     }
@@ -103,23 +107,18 @@ public class MenuSceneController : MonoBehaviour {
 
     public void ClickMenuButton(int pageNum) {
         buttonClicked = true;
+        fixedCanvas.Find("InnerCanvas/Footer").GetChild(currentPage).GetChild(0).gameObject.SetActive(false);
         currentPage = pageNum;
-        windowScrollSnap.GoToScreen(pageNum);
-        //SetButtonAnimation(pageNum);
+        windowScrollSnap.GoToScreen(currentPage);
+        menuButton.AnimationState.SetAnimation(0, "IDLE_" + (currentPage + 1).ToString(), true);
+        fixedCanvas.Find("InnerCanvas/Footer").GetChild(currentPage).GetChild(0).gameObject.SetActive(true);
     }
-    
-    private void SetButtonAnimation(int pageNum, TrackEntry trackEntry = null) {
-        TrackEntry entry;
-        for (int i = 0; i < buttonSkeletons.Length; i++) {
-            if (i == pageNum) {
-                selectedAnimation = buttonSkeletons[i];
-                entry = buttonSkeletons[i].AnimationState.SetAnimation(0, "TOUCH", false);
-                entry.Complete += Idle;
-            }
-            else {
-                entry = buttonSkeletons[i].AnimationState.SetAnimation(0, "NOANI", false);
-            }
-        }
+
+    public void ScrollSnapButtonChange() {
+        fixedCanvas.Find("InnerCanvas/Footer").GetChild(currentPage).GetChild(0).gameObject.SetActive(false);
+        currentPage = windowScrollSnap.CurrentPage;
+        menuButton.AnimationState.SetAnimation(0, "IDLE_" + (currentPage + 1).ToString(), true);
+        fixedCanvas.Find("InnerCanvas/Footer").GetChild(currentPage).GetChild(0).gameObject.SetActive(true);
     }
 
 

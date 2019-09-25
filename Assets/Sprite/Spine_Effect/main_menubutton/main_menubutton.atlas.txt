@@ -1,0 +1,55 @@
+
+main_menubutton.png
+size: 1024,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+1
+  rotate: false
+  xy: 638, 6
+  size: 130, 139
+  orig: 130, 139
+  offset: 0, 0
+  index: -1
+2
+  rotate: true
+  xy: 481, 22
+  size: 123, 155
+  orig: 123, 155
+  offset: 0, 0
+  index: -1
+3
+  rotate: true
+  xy: 770, 17
+  size: 118, 149
+  orig: 118, 149
+  offset: 0, 0
+  index: -1
+4
+  rotate: false
+  xy: 319, 2
+  size: 160, 143
+  orig: 160, 143
+  offset: 0, 0
+  index: -1
+5
+  rotate: false
+  xy: 788, 137
+  size: 159, 159
+  orig: 159, 159
+  offset: 0, 0
+  index: -1
+bar
+  rotate: false
+  xy: 2, 14
+  size: 315, 131
+  orig: 315, 131
+  offset: 0, 0
+  index: -1
+ex
+  rotate: false
+  xy: 2, 147
+  size: 784, 149
+  orig: 784, 149
+  offset: 0, 0
+  index: -1
