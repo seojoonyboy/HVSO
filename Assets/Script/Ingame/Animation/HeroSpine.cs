@@ -32,6 +32,7 @@ public class HeroSpine : MonoBehaviour
     protected Slot face;
 
     public UnityAction defenseFinish;
+    public UnityAction afterAction;
     private bool thinking = false;
     
     private void Start() {
@@ -85,10 +86,13 @@ public class HeroSpine : MonoBehaviour
 
     public virtual void Dead() {
         skeletonAnimation.skeleton.SetAttachment("head_lowHP", "head2");
-        EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.HERO_DEAD, gameObject.transform.position);
+        EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.HERO_DEAD, transform.Find("effect_body").position);
         TrackEntry entry;
         entry = skeletonAnimation.AnimationState.SetAnimation(0, lastHitAnimationName, false);
         currentAnimationName = deadAnimationName;
+
+        if (afterAction != null)
+            entry.Complete += delegate (TrackEntry temp) { afterAction(); };
     }
 
 

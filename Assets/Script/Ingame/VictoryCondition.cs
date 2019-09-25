@@ -12,9 +12,18 @@ namespace victoryModule {
             enemyPlayer = player_2;
         }
 
+        public virtual IEnumerator WaitAction() {
+            yield return null;
+        }
+
         public virtual void SetCondition() {
             return;
         }
+
+        public virtual void CheckCondition() {
+            return;
+        }
+
 
         public virtual void GetBattleResult() {
             return;
@@ -25,12 +34,20 @@ namespace victoryModule {
     public class Annihilation_Match : VictoryCondition {
         public Annihilation_Match(PlayerController player_1, PlayerController player_2) : base(player_1, player_2) { }
         public override void SetCondition() {
-            player.HP.Where(x => x <= 0).Subscribe(_=> GetBattleResult()).AddTo(PlayMangement.instance.transform.gameObject);
-            enemyPlayer.HP.Where(x=> x<=0).Subscribe(_=> GetBattleResult()).AddTo(PlayMangement.instance.transform.gameObject);
+            player.HP.TakeWhile(x => x > 0 || enemyPlayer.HP.Value > 0).Where(_ => player.HP.Value <= 0 || enemyPlayer.HP.Value <= 0).Subscribe(_ => CheckCondition());
         }
 
-        public override void GetBattleResult() {
+        public override void CheckCondition() {            
             PlayMangement.instance.isGame = false;
+            PlayMangement.instance.StopAllCoroutines();
+            PlayerController loserPlayer = (player.HP.Value <= 0) ? player : enemyPlayer;
+            loserPlayer.PlayerAddAction(delegate () { GetBattleResult(); });
+            loserPlayer.PlayerDead();
+        }
+
+
+        public override void GetBattleResult() {
+            if (PlayMangement.instance.SocketHandler.isOpponentPlayerDisconnected) return;
             GameResultManager resultManager = PlayMangement.instance.resultManager;
             resultManager.gameObject.SetActive(true);
 

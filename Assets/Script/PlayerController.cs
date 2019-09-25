@@ -175,21 +175,17 @@ public class PlayerController : MonoBehaviour
         ObserverText();
     }
 
-    private void ObserverText() {       
-        
-
-        var ObserveHP = HP.Subscribe(_=> ChangedHP()).AddTo(PlayMangement.instance.transform.gameObject);
-        var ObserveResource = resource.Subscribe(_=> ChangedResource()).AddTo(PlayMangement.instance.transform.gameObject);
+    private void ObserverText() {
+        var ObserveHP = HP.TakeWhile(_ => PlayMangement.instance.isGame == true).Subscribe(_ => ChangedHP());
+        var ObserveResource = resource.TakeWhile(_ => PlayMangement.instance.isGame == true).Subscribe(_=> ChangedResource());
         //var ObserveShield = shieldStack.Subscribe(_ => shieldGauge.fillAmount = (float)shieldStack.Value / 8).AddTo(PlayMangement.instance.transform.gameObject);
         //var heroDown = HP.Where(x => x <= 0).Subscribe(_ => ).AddTo(PlayMangement.instance.transform.gameObject);
 
-        var gameOverDispose = HP.Where(x => x <= 0)
-                              .Subscribe(_ => {
-                                               SetState(HeroState.DEAD);
-                                               //PlayMangement.instance.GetBattleResult();
-                                               ObserveHP.Dispose();
-                                               ObserveResource.Dispose(); })
-                              .AddTo(PlayMangement.instance.transform.gameObject);        
+        //var gameOverDispose = HP.Where(x => x <= 0)
+        //                      .Subscribe(_ => {
+        //                          SetState(HeroState.DEAD);
+        //                      })        
+        //                      .AddTo(PlayMangement.instance.transform.gameObject);        
     }
     
 
@@ -348,8 +344,10 @@ public class PlayerController : MonoBehaviour
 
         if (isMagic == true)
             EffectForPlayer(-amount, skillId);
-        else
-            Hit();
+        else {
+            if (HP.Value > 0)
+                Hit();
+        }
     }
 
     private void Hit() {
@@ -532,6 +530,14 @@ public class PlayerController : MonoBehaviour
 
     public void PlayerThinkFinish() {
         SetState(HeroState.THINKDONE);
+    }
+
+    public void PlayerDead() {
+        SetState(HeroState.DEAD);
+    }
+
+    public void PlayerAddAction(UnityEngine.Events.UnityAction action) {
+        heroSpine.afterAction += action;
     }
 
     
