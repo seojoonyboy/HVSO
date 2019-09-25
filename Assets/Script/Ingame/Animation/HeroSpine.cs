@@ -32,6 +32,7 @@ public class HeroSpine : MonoBehaviour
     protected Slot face;
 
     public UnityAction defenseFinish;
+    public UnityAction afterAction;
     private bool thinking = false;
     
     private void Start() {
@@ -89,6 +90,9 @@ public class HeroSpine : MonoBehaviour
         TrackEntry entry;
         entry = skeletonAnimation.AnimationState.SetAnimation(0, lastHitAnimationName, false);
         currentAnimationName = deadAnimationName;
+
+        if (afterAction != null)
+            entry.Complete += delegate (TrackEntry temp) { afterAction(); };
     }
 
 
