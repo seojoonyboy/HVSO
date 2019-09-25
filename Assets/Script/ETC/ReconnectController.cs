@@ -11,6 +11,7 @@ public class ReconnectController : MonoBehaviour {
     [SerializeField] MyDecksLoader decksLoader;
     List<string> preProcess;
     UnityEvent waitSecEvent = new UnityEvent();
+    string battleType;
 
     void Awake() {
         DontDestroyOnLoad(gameObject);
@@ -65,6 +66,7 @@ public class ReconnectController : MonoBehaviour {
         string reconnectData = PlayerPrefs.GetString("ReconnectData");
         NetworkManager.ReconnectData serializedData = dataModules.JsonReader.Read< NetworkManager.ReconnectData>(reconnectData);
         string gameId = serializedData.gameId;
+        battleType = serializedData.battleType;
 
         //User Data Setting
         AddProcess("OnLoadFinished");
