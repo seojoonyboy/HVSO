@@ -12,14 +12,13 @@ public class ReconnectTimerUI : MonoBehaviour {
     }
 
     IEnumerator MoveSceneRoutine() {
-        float elapsedTime = 0f;
-        float duration = 0f;
+        float _time = 0f;
 
-        while (elapsedTime < duration) {
+        while (true) {
             yield return 0;
-            elapsedTime += Time.unscaledDeltaTime;
-            var time = TimeSpan.FromSeconds(elapsedTime);
-            string resultText = string.Format("{0:D2}h:{1:D2}m:{2:D2}s",
+            _time += Time.unscaledDeltaTime;
+            var time = TimeSpan.FromSeconds(_time);
+            string resultText = string.Format("{0:D2}:{1:D2}:{2:D2}",
                 time.Hours,
                 time.Minutes,
                 time.Seconds);
