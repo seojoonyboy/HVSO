@@ -39,6 +39,7 @@ namespace victoryModule {
 
         public override void CheckCondition() {            
             PlayMangement.instance.isGame = false;
+            PlayMangement.instance.StopAllCoroutines();
             PlayerController loserPlayer = (player.HP.Value <= 0) ? player : enemyPlayer;
             loserPlayer.PlayerAddAction(delegate () { GetBattleResult(); });
             loserPlayer.PlayerDead();
