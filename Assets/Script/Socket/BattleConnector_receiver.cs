@@ -339,13 +339,15 @@ public partial class BattleConnector : MonoBehaviour {
 
     //public void reconnect_game() { }
 
-    public void begin_reconnect_ready() { }
+    public void begin_reconnect_ready(object args) {
+        if(gameState != null) SendMessage("reconnect_ready");
+    }
 
-    public void reconnect_fail() { }
+    public void reconnect_fail(object args) { }
 
-    public void reconnect_success() {
+    public void reconnect_success(object args) {
         reconnectCount = 0;
     }
 
-    public void end_reconnect_ready() { }
+    public void end_reconnect_ready(object args) { }
 }
