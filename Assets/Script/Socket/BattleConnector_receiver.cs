@@ -74,10 +74,11 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void SetSaveGameId() {
-        JObject data = new JObject();
-        data["gameId"] = gameState.gameId;
-        data["camp"] = PlayerPrefs.GetString("SelectedRace").ToLower();
-        PlayerPrefs.SetString("ReconnectData", data.ToString());
+        string gameId = gameState.gameId;
+        string camp = PlayerPrefs.GetString("SelectedRace").ToLower();
+        string battleType = PlayerPrefs.GetString("SelectedBattleType");
+        NetworkManager.ReconnectData data = new NetworkManager.ReconnectData(gameId, camp, battleType);
+        PlayerPrefs.SetString("ReconnectData", JsonConvert.SerializeObject(data));
     }
 
     /// <summary>
@@ -342,7 +343,9 @@ public partial class BattleConnector : MonoBehaviour {
 
     public void reconnect_fail() { }
 
-    public void reconnect_success() { }
+    public void reconnect_success() {
+        reconnectCount = 0;
+    }
 
     public void end_reconnect_ready() { }
 }
