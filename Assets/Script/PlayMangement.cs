@@ -44,6 +44,8 @@ public partial class PlayMangement : MonoBehaviour {
     public bool stopBattle = false;
     public bool stopTurn = false;
 
+    public float cameraSize;
+
     //public string magicHistroy;
 
     private void Awake() {
@@ -952,6 +954,7 @@ public partial class PlayMangement {
 
     public void SetCamera() {
         cameraPos = Camera.main.transform.position;
+        cameraSize = Camera.main.orthographicSize;
     }
 
     public IEnumerator cameraShake(float time, int power) {

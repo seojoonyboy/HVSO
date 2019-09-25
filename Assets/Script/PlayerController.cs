@@ -345,7 +345,8 @@ public class PlayerController : MonoBehaviour
         if (isMagic == true)
             EffectForPlayer(-amount, skillId);
         else {
-            Hit();
+            if (HP.Value > 0)
+                Hit();
         }
     }
 
