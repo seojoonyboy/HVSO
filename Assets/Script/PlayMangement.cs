@@ -1136,15 +1136,6 @@ public partial class PlayMangement {
         player.shieldStack.Value = data.hero.shieldGauge;
         player.resource.Value = data.resource;
     }
-
-    /// <summary>
-    /// socket disconnected
-    /// </summary>
-    public void Disconnected() {
-        NetworkManager.ReconnectData reconnectData = new NetworkManager.ReconnectData("gameId");
-        string data = JsonConvert.SerializeObject(reconnectData);
-        PlayerPrefs.SetString("ReconnectData", data);
-    }
 }
 
 /// <summary>
