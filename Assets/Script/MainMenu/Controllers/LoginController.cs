@@ -11,6 +11,10 @@ public class LoginController : MonoBehaviour {
         networkManager = NetworkManager.Instance;
     }
 
+    public void DeletePlayerPrefab() {
+        PlayerPrefs.DeleteKey("ReconnectData");
+    }
+
     public void OnStartButton() {
         AccountManager.Instance.RequestUserInfo(OnRequestUserInfoCallback);
         SoundManager.Instance.PlaySound(SoundType.FIRST_TURN);
