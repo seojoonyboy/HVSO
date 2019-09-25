@@ -309,6 +309,7 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void begin_end_game(object args) {
+        Time.timeScale = 1f;
         JObject jobject = (JObject)args;
         result = JsonConvert.DeserializeObject<ResultFormat>(jobject.ToString());
      }
@@ -340,7 +341,7 @@ public partial class BattleConnector : MonoBehaviour {
     //public void reconnect_game() { }
 
     public void begin_reconnect_ready(object args) {
-        if(gameState != null) SendMessage("reconnect_ready");
+        if(gameState != null) SendMethod("reconnect_ready");
     }
 
     public void reconnect_fail(object args) { }
@@ -349,5 +350,11 @@ public partial class BattleConnector : MonoBehaviour {
         reconnectCount = 0;
     }
 
-    public void end_reconnect_ready(object args) { }
+    public void end_reconnect_ready(object args) {
+        Time.timeScale = 1f;
+     }
+
+    public void wait_reconnect(object args) {
+        Time.timeScale = 0f;
+    }
 }
