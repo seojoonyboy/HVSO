@@ -6,6 +6,7 @@ using UnityEngine.UI.Extensions;
 using Spine;
 using Spine.Unity;
 using System;
+using Newtonsoft.Json;
 
 public class MenuSceneController : MonoBehaviour {
     [SerializeField] Transform fixedCanvas;
@@ -20,14 +21,23 @@ public class MenuSceneController : MonoBehaviour {
     private int currentPage;
     private bool buttonClicked;
     public MyDecksLoader decksLoader;
-    [SerializeField] GameObject newbiLoadingModal;
+    [SerializeField] GameObject newbiLoadingModal;  //최초 접속시 튜토리얼 강제시 등장하는 로딩 화면
+    [SerializeField] GameObject reconnectingModal;  //재접속 진행시 등장하는 로딩 화면
 
     private void Awake() {
-        Logger.Log("AWAKE");
+        #region 테스트코드
+        //NetworkManager.ReconnectData dummyData = new NetworkManager.ReconnectData("11", "human");
+        //PlayerPrefs.SetString("ReconnectData", JsonConvert.SerializeObject(dummyData));
+        #endregion
+
         if (PlayerPrefs.GetInt("isFirst") == 1) {
             var newbiComp = newbiLoadingModal.AddComponent<NewbiController>(); //첫 로그인 제어
             newbiComp.name = "NewbiController";
             newbiComp.Init(decksLoader, newbiLoadingModal);
+        }
+        else if(PlayerPrefs.GetString("ReconnectData") != string.Empty) {
+            GameObject modal = Instantiate(reconnectingModal);
+            modal.GetComponent<ReconnectController>().Init(decksLoader);
         }
 
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.NICKNAME_CHANGED, OnNicknameChanged);
