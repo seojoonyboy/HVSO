@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class DeckListHandlerInBattleReady : MonoBehaviour {
     AccountManager accountManager;
@@ -37,6 +38,8 @@ public class DeckListHandlerInBattleReady : MonoBehaviour {
         for(int i = 0; i < humanDecks.Count; i++) {
             content.GetChild(i).gameObject.SetActive(true);
             content.GetChild(i).Find("HeroImg").GetComponent<Image>().sprite = campImages[0];
+            content.GetChild(i).Find("CardNum/Value").GetComponent<TextMeshProUGUI>().text = humanDecks[i].totalCardCount + "/";
+            content.GetChild(i).Find("DeckName").GetComponent<TextMeshProUGUI>().text = humanDecks[i].name;
 
             DeckHandler deckHandler = content.GetChild(i).gameObject.GetComponent<DeckHandler>();
             deckHandler.DECKID = humanDecks[i].id;
@@ -50,6 +53,8 @@ public class DeckListHandlerInBattleReady : MonoBehaviour {
         for(int i = humanDecks.Count; i < humanDecks.Count + orcDecks.Count; i++) {
             content.GetChild(i).gameObject.SetActive(true);
             content.GetChild(i).Find("HeroImg").GetComponent<Image>().sprite = campImages[1];
+            content.GetChild(i).Find("CardNum/Value").GetComponent<TextMeshProUGUI>().text = orcDecks[index].totalCardCount + "/";
+            content.GetChild(i).Find("DeckName").GetComponent<TextMeshProUGUI>().text = orcDecks[index].name;
 
             DeckHandler deckHandler = content.GetChild(i).gameObject.GetComponent<DeckHandler>();
             deckHandler.DECKID = orcDecks[index].id;
