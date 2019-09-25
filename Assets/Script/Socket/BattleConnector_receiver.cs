@@ -363,7 +363,12 @@ public partial class BattleConnector : MonoBehaviour {
         if(gameState != null) SendMethod("reconnect_ready");
     }
 
-    public void reconnect_fail(object args) { }
+    public void reconnect_fail(object args) {
+        Time.timeScale = 1f;
+        PlayerPrefs.DeleteKey("ReconnectData");
+        if (reconnectModal != null) Destroy(reconnectModal);
+        PlayMangement.instance.resultManager.SocketErrorUIOpen(false);
+     }
 
     public void reconnect_success(object args) {
         reconnectCount = 0;
