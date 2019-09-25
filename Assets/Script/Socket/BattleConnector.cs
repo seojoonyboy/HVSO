@@ -97,7 +97,7 @@ public partial class BattleConnector : MonoBehaviour {
         webSocket.OnClosed -= OnClosed;
         webSocket.OnError -= OnError;
 
-        if (reconnectModal != null) Destroy(reconnectModal);
+        PlayerPrefs.DeleteKey("ReconnectData");
         return true;
     }
 
@@ -271,7 +271,6 @@ public partial class BattleConnector : MonoBehaviour {
             yield return new WaitForFixedUpdate();
         }
         getNewCard = false;
-        dequeueing = true;
         IngameNotice.instance.CloseNotice();
     }
 
