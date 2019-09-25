@@ -198,9 +198,13 @@ public partial class NetworkManager {
 
     public class ReconnectData {
         public string gameId;
+        public string camp;
+        public string battleType;
 
-        public ReconnectData(string gameId) {
+        public ReconnectData(string gameId, string camp, string battleType) {
             this.gameId = gameId;
+            this.camp = camp;
+            this.battleType = battleType;
         }
     }
 }

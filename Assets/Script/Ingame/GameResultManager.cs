@@ -41,6 +41,7 @@ public class GameResultManager : MonoBehaviour {
     }
 
     public void SetResultWindow(string result, bool isHuman) {
+        PlayerPrefs.DeleteKey("ReconnectData");
         gameObject.SetActive(true);
         GameObject heroSpine = transform.Find("HeroSpine/" + PlayMangement.instance.player.heroID).gameObject;
         heroSpine.SetActive(true);

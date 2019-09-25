@@ -775,13 +775,15 @@ namespace SkillModules {
 
             List<GameObject> targets = (List<GameObject>)tmp[1];
             ChangeStat(targets);
+
+            skillHandler.isDone = true;
         }
 
         private void ChangeStat(List<GameObject> targets) {
             foreach(GameObject target in targets) {
                 PlaceMonster placeMonster = target.GetComponent<PlaceMonster>();
-                int prevPower = placeMonster.unit.attack;
-                placeMonster.RequestChangeStat(prevPower, prevPower);
+                int updateHp = placeMonster.unit.attack - placeMonster.unit.currentHP;
+                placeMonster.RequestChangeStat(0, updateHp);
                 placeMonster.CheckHP();
             }
         }

@@ -78,43 +78,62 @@ public partial class BattleConnector : MonoBehaviour {
 
     public void OnError(WebSocket webSocket, Exception ex) {
         Logger.LogError("Socket Error message : " + ex);
+        Invoke("TryReconnect", 2f);
+    }
+
+    public void TryReconnect() {
+        webSocket = new WebSocket(new Uri(string.Format("{0}?token={1}", url, AccountManager.Instance.TokenId)));
+        webSocket.OnOpen += OnOpen;
+        webSocket.OnMessage += ReceiveMessage;
+        webSocket.OnClosed += OnClosed;
+        webSocket.OnError += OnError;
+        webSocket.Open();
     }
 
     //Connected
     private void OnOpen(WebSocket webSocket) {
-        //string playerId = AccountManager.Instance.DEVICEID;
+        string[] args;
+        string reconnect = PlayerPrefs.GetString("ReconnectData", null);
+        pingpong = StartCoroutine(Heartbeat());
+        if(!string.IsNullOrEmpty(reconnect)) {
+            NetworkManager.ReconnectData data = JsonConvert.DeserializeObject<NetworkManager.ReconnectData>(reconnect);
+            if(data.battleType.CompareTo("multi") == 0) {
+                args = new string[]{data.gameId, data.camp};
+                SendMethod("reconnect_game", args);
+                return;
+            }
+            PlayerPrefs.DeleteKey("ReconnectData");
+        }
+        args = SetJoinGameData();
+        SendMethod("join_game", args);
+        OnOpenSocket.Invoke();
+    }
+
+    private string[] SetJoinGameData() {
         string deckId = PlayerPrefs.GetString("SelectedDeckId");
         string battleType = PlayerPrefs.GetString("SelectedBattleType");
         string race = PlayerPrefs.GetString("SelectedRace").ToLower();
-        
-        string[] args;
 
         if(battleType.CompareTo("test") == 0)
-            args = new string[] { battleType, race };
-        else {
-            //Logger.Log("stageNum : " + PlayerPrefs.GetString("StageNum"));
-            if (battleType == "story" && PlayerPrefs.GetString("StageNum") != "1") {
-                PlayerPrefs.SetString("SelectedBattleType", "solo");
-                battleType = "solo";
-            }  //TODO : 튜토리얼 이외의 스토리 세팅이 되면 변경할 필요가 있음
-            if (battleType == "story") {
-                //========================================================
-                //deckId 및 race 관련 처리 수정 예정
-                string stageNum = PlayerPrefs.GetString("StageNum");
-                race = "human";
-                deckId = string.Empty;
-                args = new string[] { battleType, deckId, race, stageNum };
-                //========================================================
-            }
-            else {
-                args = new string[] { battleType, deckId, race };
-            }
+            return new string[] { battleType, race };
+        
+        //Logger.Log("stageNum : " + PlayerPrefs.GetString("StageNum"));
+        if (battleType == "story" && PlayerPrefs.GetString("StageNum") != "1") {
+            PlayerPrefs.SetString("SelectedBattleType", "solo");
+            battleType = "solo";
+        }  //TODO : 튜토리얼 이외의 스토리 세팅이 되면 변경할 필요가 있음
+        if (battleType == "story") {
+            //========================================================
+            //deckId 및 race 관련 처리 수정 예정
+            string stageNum = PlayerPrefs.GetString("StageNum");
+            race = "human";
+            deckId = string.Empty;
+            return new string[] { battleType, deckId, race, stageNum };
+            //========================================================
         }
-            
-        SendMethod("join_game", args);
-        pingpong = StartCoroutine(Heartbeat());
+        
+        return new string[] { battleType, deckId, race };
 
-        OnOpenSocket.Invoke();
     }
 
     IEnumerator Heartbeat() {
@@ -122,8 +141,9 @@ public partial class BattleConnector : MonoBehaviour {
         while(webSocket.IsOpen) {
             yield return beatTime;
         }
-        if(!battleGameFinish)
-            PlayMangement.instance.resultManager.SocketErrorUIOpen(false);
+        
+        if(!battleGameFinish) Logger.LogError("Heartbeat Ended");
+        //    PlayMangement.instance.resultManager.SocketErrorUIOpen(false);
     }
 
     

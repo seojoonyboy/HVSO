@@ -301,8 +301,7 @@ namespace TargetModules {
 
                 case "all":
                     if(args[1] == "unit") {
-                        var targets = observer.GetAllFieldUnits();
-                        result.AddRange(targets);
+                        result.Add(GetDropAreaUnit().gameObject);
                     }
                     break;
             }
