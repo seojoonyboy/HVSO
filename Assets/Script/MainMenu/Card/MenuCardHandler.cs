@@ -164,7 +164,8 @@ public class MenuCardHandler : MonoBehaviour {
     }
 
     public void OpenCardInfo() {
-        menuCardInfo.transform.parent.gameObject.SetActive(true);
+        if(gameObject.name != "DictionaryCard")
+            menuCardInfo.transform.parent.gameObject.SetActive(true);
         menuCardInfo.gameObject.SetActive(true);
         if(gameObject.name == "DictionaryCard" && transform.Find("NewCard").gameObject.activeSelf) {
             if(isHuman)

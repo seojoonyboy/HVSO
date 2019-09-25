@@ -14,7 +14,6 @@ public class CardDictionaryManager : MonoBehaviour {
     [SerializeField] Transform cardStorage;
     [SerializeField] Transform sortingModal;
     [SerializeField] TMPro.TextMeshProUGUI cardNum;
-    [SerializeField] HUDController hudController;
     [SerializeField] MyDecksLoader myDecksLoader;
 
     [SerializeField] Sprite orcPanelBg, humanPanelBg;
@@ -45,43 +44,23 @@ public class CardDictionaryManager : MonoBehaviour {
             SetToOrcCards();
     }
 
-    public void CloseDictionaryCanvas() {
-        //gameObject.SetActive(false);
-    }
-
     public void SetToHumanCards() {
         isHumanDictionary = true;
-        //transform.Find("Content/Buttons/OrcSelect").GetChild(0).gameObject.SetActive(false);
-        //transform.Find("Content/Buttons/HumanSelect").GetChild(0).gameObject.SetActive(true);
-        //heroCards.parent.parent.Find("Background").GetComponent<Image>().sprite = humanPanelBg;
-
         SetCardsByClass();
     }
 
     public void RefreshToHumanCards() {
         isHumanDictionary = true;
-        //transform.Find("Content/Buttons/OrcSelect").GetChild(0).gameObject.SetActive(false);
-        //transform.Find("Content/Buttons/HumanSelect").GetChild(0).gameObject.SetActive(true);
-        //heroCards.parent.parent.Find("Background").GetComponent<Image>().sprite = humanPanelBg;
-
         SetCardsByClass(true);
     }
 
     public void SetToOrcCards() {
         isHumanDictionary = false;
-        //transform.Find("Content/Buttons/OrcSelect").GetChild(0).gameObject.SetActive(true);
-        //transform.Find("Content/Buttons/HumanSelect").GetChild(0).gameObject.SetActive(false);
-        //heroCards.parent.parent.Find("Background").GetComponent<Image>().sprite = orcPanelBg;
-
         SetCardsByClass();
     }
 
     public void RefreshToOrcCards() {
         isHumanDictionary = false;
-        //transform.Find("Content/Buttons/OrcSelect").GetChild(0).gameObject.SetActive(true);
-        //transform.Find("Content/Buttons/HumanSelect").GetChild(0).gameObject.SetActive(false);
-        //heroCards.parent.parent.Find("Background").GetComponent<Image>().sprite = orcPanelBg;
-
         SetCardsByClass(true);
     }
 
