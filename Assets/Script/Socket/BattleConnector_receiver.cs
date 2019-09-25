@@ -18,14 +18,15 @@ using IngameEditor;
 public partial class BattleConnector : MonoBehaviour {
     public GameState gameState;
     private string raceName;
-    private bool dequeueing = true;
     public Queue<ReceiveFormat> queue = new Queue<ReceiveFormat>();
     private Type thisType;
     public ResultFormat result = null;
+    public bool isOpponentPlayerDisconnected = false;
 
     private void ReceiveMessage(WebSocket webSocket, string message) {
         ReceiveFormat result = dataModules.JsonReader.Read<ReceiveFormat>(message);
         queue.Enqueue(result);
+        DequeueSocket();
         StartCoroutine("showMessage",result);
     }
 
@@ -40,15 +41,11 @@ public partial class BattleConnector : MonoBehaviour {
         Logger.Log(string.Format("메소드 : {0}, args : {1}, map : {2}", result.method, result.args, 
         result.gameState != null ? JsonConvert.SerializeObject(json, Formatting.Indented)  : null));
     }
-
+    #if UNITY_EDITOR
     private void FixedUpdate() {
-        #if UNITY_EDITOR
         if(Input.GetKeyDown(KeyCode.D)) webSocket.Close(500, "shutdown");
-        #endif
-        if(!dequeueing) return;
-        if(queue.Count == 0) return;
-        DequeueSocket();
     }
+    #endif
     
     private void DequeueSocket() {
         ReceiveFormat result = queue.Dequeue();
@@ -74,10 +71,11 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void SetSaveGameId() {
-        JObject data = new JObject();
-        data["gameId"] = gameState.gameId;
-        data["camp"] = PlayerPrefs.GetString("SelectedRace").ToLower();
-        PlayerPrefs.SetString("ReconnectData", data.ToString());
+        string gameId = gameState.gameId;
+        string camp = PlayerPrefs.GetString("SelectedRace").ToLower();
+        string battleType = PlayerPrefs.GetString("SelectedBattleType");
+        NetworkManager.ReconnectData data = new NetworkManager.ReconnectData(gameId, camp, battleType);
+        PlayerPrefs.SetString("ReconnectData", JsonConvert.SerializeObject(data));
     }
 
     /// <summary>
@@ -297,7 +295,6 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void begin_end_turn(object args) {
-        dequeueing = false;
         getNewCard = true;
     }
 
@@ -308,8 +305,14 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void begin_end_game(object args) {
+        Time.timeScale = 1f;
         JObject jobject = (JObject)args;
         result = JsonConvert.DeserializeObject<ResultFormat>(jobject.ToString());
+
+        if (reconnectModal != null) {
+            Destroy(GetComponent<ReconnectController>());
+            Destroy(reconnectModal);
+        }
      }
 
     public void end_end_game(object args) {
@@ -321,6 +324,22 @@ public partial class BattleConnector : MonoBehaviour {
                 }
             }
         });
+
+        //상대방이 재접속에 최종 실패하여 게임이 종료된 경우
+        if (isOpponentPlayerDisconnected) {
+            string _result = result.result;
+
+            PlayMangement playMangement = PlayMangement.instance;
+            GameResultManager resultManager = playMangement.resultManager;
+            resultManager.gameObject.SetActive(true);
+
+            if(_result == "win") {
+                resultManager.SetResultWindow("win", playMangement.player.isHuman);
+            }
+            else {
+                resultManager.SetResultWindow("lose", playMangement.player.isHuman);
+            }
+        }
     }
 
     public void ping(object args) {
@@ -338,11 +357,39 @@ public partial class BattleConnector : MonoBehaviour {
 
     //public void reconnect_game() { }
 
-    public void begin_reconnect_ready() { }
+    public void begin_reconnect_ready(object args) {
+        if(gameState != null) SendMethod("reconnect_ready");
+    }
 
-    public void reconnect_fail() { }
+    public void reconnect_fail(object args) { }
 
-    public void reconnect_success() { }
+    public void reconnect_success(object args) {
+        reconnectCount = 0;
+    }
 
-    public void end_reconnect_ready() { }
+    /// <summary>
+    /// 양쪽 모두 reconnect가 되었을 때
+    /// </summary>
+    /// <param name="args"></param>
+    public void end_reconnect_ready(object args) {
+        Time.timeScale = 1f;
+
+        if (reconnectModal != null) Destroy(reconnectModal);
+        isOpponentPlayerDisconnected = false;
+     }
+
+    /// <summary>
+    /// 상대방의 재접속을 대기 (상대가 튕김)
+    /// </summary>
+    /// <param name="args"></param>
+    public void wait_reconnect(object args) {
+        Time.timeScale = 0f;
+
+        reconnectModal = Instantiate(Modal.instantiateReconnectModal());
+        isOpponentPlayerDisconnected = true;
+    }
+}
+
+public partial class BattleConnector : MonoBehaviour {
+    GameObject reconnectModal;
 }

@@ -21,18 +21,25 @@ public partial class BattleConnector : MonoBehaviour {
     [SerializeField] Button returnButton;
 
     public UnityAction<string, int, bool> HandchangeCallback;
-    private Coroutine pingpong;
     private Coroutine timeCheck;
     private bool battleGameFinish = false;
+    private bool isQuit = false;
+    private int reconnectCount = 0;
 
     public static UnityEvent OnOpenSocket = new UnityEvent();
 
-    void Awake() {
+    private void Awake() {
         thisType = this.GetType();
         DontDestroyOnLoad(gameObject);
+        Application.wantsToQuit += Quitting;
+    }
+
+    private void Destroy() {
+        Application.wantsToQuit -= Quitting;
     }
 
     public void OpenSocket() {
+        reconnectCount = 0;
         string url = string.Format("{0}", this.url);
         webSocket = new WebSocket(new Uri(string.Format("{0}?token={1}", url, AccountManager.Instance.TokenId)));
         webSocket.OnOpen += OnOpen;
@@ -81,7 +88,36 @@ public partial class BattleConnector : MonoBehaviour {
         Invoke("TryReconnect", 2f);
     }
 
+    private bool Quitting() {
+        Logger.Log("quitting");
+        isQuit = true;
+        webSocket.Close();
+        webSocket.OnOpen -= OnOpen;
+        webSocket.OnMessage -= ReceiveMessage;
+        webSocket.OnClosed -= OnClosed;
+        webSocket.OnError -= OnError;
+
+        PlayerPrefs.DeleteKey("ReconnectData");
+        return true;
+    }
+
     public void TryReconnect() {
+        if(isQuit) return;
+        if(reconnectCount >= 5) {
+            PlayMangement playMangement = PlayMangement.instance;
+            PlayerPrefs.DeleteKey("ReconnectData");
+
+            ReconnectController controller = FindObjectOfType<ReconnectController>();
+            if(controller != null) {
+                Destroy(controller);
+                Destroy(controller.gameObject);
+            }
+
+            if (playMangement) playMangement.resultManager.SocketErrorUIOpen(false);
+            else FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
+            return;
+        }
+        reconnectCount++;
         webSocket = new WebSocket(new Uri(string.Format("{0}?token={1}", url, AccountManager.Instance.TokenId)));
         webSocket.OnOpen += OnOpen;
         webSocket.OnMessage += ReceiveMessage;
@@ -94,10 +130,11 @@ public partial class BattleConnector : MonoBehaviour {
     private void OnOpen(WebSocket webSocket) {
         string[] args;
         string reconnect = PlayerPrefs.GetString("ReconnectData", null);
-        pingpong = StartCoroutine(Heartbeat());
         if(!string.IsNullOrEmpty(reconnect)) {
             NetworkManager.ReconnectData data = JsonConvert.DeserializeObject<NetworkManager.ReconnectData>(reconnect);
-            if(data.battleType.CompareTo("multi") == 0) {
+            bool isSameType = data.battleType.CompareTo(PlayerPrefs.GetString("SelectedBattleType")) == 0;
+            //bool isMulti = data.battleType.CompareTo("multi") == 0;
+            if(isSameType) {
                 args = new string[]{data.gameId, data.camp};
                 SendMethod("reconnect_game", args);
                 return;
@@ -135,18 +172,6 @@ public partial class BattleConnector : MonoBehaviour {
         return new string[] { battleType, deckId, race };
 
     }
-
-    IEnumerator Heartbeat() {
-        WaitForSeconds beatTime = new WaitForSeconds(10f);
-        while(webSocket.IsOpen) {
-            yield return beatTime;
-        }
-        
-        if(!battleGameFinish) Logger.LogError("Heartbeat Ended");
-        //    PlayMangement.instance.resultManager.SocketErrorUIOpen(false);
-    }
-
-    
 
     public void ClientReady() {
         SendMethod("client_ready");
@@ -199,7 +224,6 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     void OnDisable() {
-        if(pingpong != null) StopCoroutine(pingpong);
         if(webSocket != null) webSocket.Close();
     }
 
@@ -247,7 +271,6 @@ public partial class BattleConnector : MonoBehaviour {
             yield return new WaitForFixedUpdate();
         }
         getNewCard = false;
-        dequeueing = true;
         IngameNotice.instance.CloseNotice();
     }
 

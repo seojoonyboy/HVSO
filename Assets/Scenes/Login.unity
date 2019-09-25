@@ -1933,6 +1933,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+  needChangeNickName: 0
 --- !u!4 &1870949075
 Transform:
   m_ObjectHideFlags: 0
@@ -2086,11 +2087,11 @@ MonoBehaviour:
     - {fileID: 9055411249258159905, guid: 855d0a2f70bc2d04bbbd52241c33282b, type: 3}
     - {fileID: 2483683897699488394, guid: 7806922a1502b2f4b924f1ea3a2c106f, type: 3}
     - {fileID: 3932589704576091384, guid: 31ab4ffd3ccd97543b8c0597a2f47fc3, type: 3}
-    - {fileID: 21300000, guid: 1d6fb2deead75874881b2f68ef07271d, type: 3}
-    - {fileID: 21300000, guid: a6ba00b8bb6e2e34ea7d0d1f067bca14, type: 3}
-    - {fileID: 21300000, guid: 9d39e36cc88dc75458aea778c073c73b, type: 3}
-    - {fileID: 21300000, guid: 8aff9b5096d47794fb5e70de72d05721, type: 3}
-    - {fileID: 21300000, guid: e43f9a37bb662a740a94cc268cec8aed, type: 3}
+    - {fileID: 21300000, guid: 9105376db7d405545b5e651fb06547e4, type: 3}
+    - {fileID: 21300000, guid: c2e0098efb8d86d459c2537a6bb206fe, type: 3}
+    - {fileID: 21300000, guid: 33f139c6763b57349bc12f10d441154c, type: 3}
+    - {fileID: 21300000, guid: 64622e392e62cd44fb69a2f0ec097092, type: 3}
+    - {fileID: 21300000, guid: db8c9c5399271f343aa8f057b0657c15, type: 3}
     - {fileID: 21300000, guid: 47fa62a00732f9e419b90fccefec7827, type: 3}
     - {fileID: 21300000, guid: ea5e53b09fa6c7648a7ee2361a7359a7, type: 3}
     - {fileID: 21300000, guid: f81e0c744c7503a469fd8aa55fd590e9, type: 3}
@@ -7449,6 +7450,7 @@ MonoBehaviour:
   supplyBox: 0
   additionalPreSupply: 0
   timerText: {fileID: 0}
+  timerOn: 0
 --- !u!1 &1876041233
 GameObject:
   m_ObjectHideFlags: 0
