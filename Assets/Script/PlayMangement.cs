@@ -69,8 +69,14 @@ public partial class PlayMangement : MonoBehaviour {
     private void Start() {
         SetBackGround();
         SetPlayerCard();
-        InitGameData(20,20);
 
+        if (socketHandler.gameState != null) {
+            SocketFormat.Players socketStat = socketHandler.gameState.players;
+            InitGameData((player.isHuman == true) ? socketStat.human.hero.currentHp : socketStat.orc.hero.currentHp,
+                         (enemyPlayer.isHuman == true) ? socketStat.human.hero.currentHp : socketStat.orc.hero.currentHp);
+        }
+        else
+            InitGameData(20, 20);
 
 
         //StartCoroutine(DisconnectTest());

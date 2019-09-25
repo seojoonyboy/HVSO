@@ -59,7 +59,13 @@ public class ScenarioGameManagment : PlayMangement {
 
     void Start() {
         SetBackGround();
-        InitGameData(20,10);
+        if (socketHandler.gameState != null) {
+            SocketFormat.Players socketStat = socketHandler.gameState.players;
+            InitGameData((player.isHuman == true) ? socketStat.human.hero.currentHp : socketStat.orc.hero.currentHp,
+                         (enemyPlayer.isHuman == true) ? socketStat.human.hero.currentHp : socketStat.orc.hero.currentHp);
+        }
+        else
+            InitGameData(20, 20);
 
         settingModal.SetActive(true);
         Destroy(FindObjectOfType<NewbiController>().gameObject);
