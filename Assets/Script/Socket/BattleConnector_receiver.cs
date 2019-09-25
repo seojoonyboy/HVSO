@@ -160,7 +160,9 @@ public partial class BattleConnector : MonoBehaviour {
         //getNewCard = true;
     }
 
-    public void begin_turn_start(object args) { }
+    public void begin_turn_start(object args) {
+        PlayMangement.instance.SyncPlayerHp();
+    }
     
     public void end_turn_start(object args) { }
 
