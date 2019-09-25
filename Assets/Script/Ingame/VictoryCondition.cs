@@ -45,7 +45,8 @@ namespace victoryModule {
         }
 
 
-        public override void GetBattleResult() {            
+        public override void GetBattleResult() {
+            if (PlayMangement.instance.SocketHandler.isOpponentPlayerDisconnected) return;
             GameResultManager resultManager = PlayMangement.instance.resultManager;
             resultManager.gameObject.SetActive(true);
 
