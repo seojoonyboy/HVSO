@@ -18,7 +18,6 @@ using IngameEditor;
 public partial class BattleConnector : MonoBehaviour {
     public GameState gameState;
     private string raceName;
-    private bool dequeueing = true;
     public Queue<ReceiveFormat> queue = new Queue<ReceiveFormat>();
     private Type thisType;
     public ResultFormat result = null;
@@ -26,6 +25,7 @@ public partial class BattleConnector : MonoBehaviour {
     private void ReceiveMessage(WebSocket webSocket, string message) {
         ReceiveFormat result = dataModules.JsonReader.Read<ReceiveFormat>(message);
         queue.Enqueue(result);
+        DequeueSocket();
         StartCoroutine("showMessage",result);
     }
 
@@ -40,15 +40,11 @@ public partial class BattleConnector : MonoBehaviour {
         Logger.Log(string.Format("메소드 : {0}, args : {1}, map : {2}", result.method, result.args, 
         result.gameState != null ? JsonConvert.SerializeObject(json, Formatting.Indented)  : null));
     }
-
+    #if UNITY_EDITOR
     private void FixedUpdate() {
-        #if UNITY_EDITOR
         if(Input.GetKeyDown(KeyCode.D)) webSocket.Close(500, "shutdown");
-        #endif
-        if(!dequeueing) return;
-        if(queue.Count == 0) return;
-        DequeueSocket();
     }
+    #endif
     
     private void DequeueSocket() {
         ReceiveFormat result = queue.Dequeue();
@@ -74,10 +70,11 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void SetSaveGameId() {
-        JObject data = new JObject();
-        data["gameId"] = gameState.gameId;
-        data["camp"] = PlayerPrefs.GetString("SelectedRace").ToLower();
-        PlayerPrefs.SetString("ReconnectData", data.ToString());
+        string gameId = gameState.gameId;
+        string camp = PlayerPrefs.GetString("SelectedRace").ToLower();
+        string battleType = PlayerPrefs.GetString("SelectedBattleType");
+        NetworkManager.ReconnectData data = new NetworkManager.ReconnectData(gameId, camp, battleType);
+        PlayerPrefs.SetString("ReconnectData", JsonConvert.SerializeObject(data));
     }
 
     /// <summary>
@@ -297,7 +294,6 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void begin_end_turn(object args) {
-        dequeueing = false;
         getNewCard = true;
     }
 
@@ -308,6 +304,7 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void begin_end_game(object args) {
+        Time.timeScale = 1f;
         JObject jobject = (JObject)args;
         result = JsonConvert.DeserializeObject<ResultFormat>(jobject.ToString());
      }
@@ -338,11 +335,29 @@ public partial class BattleConnector : MonoBehaviour {
 
     //public void reconnect_game() { }
 
-    public void begin_reconnect_ready() { }
+    public void begin_reconnect_ready(object args) {
+        if(gameState != null) SendMethod("reconnect_ready");
+    }
 
-    public void reconnect_fail() { }
+    public void reconnect_fail(object args) { }
 
-    public void reconnect_success() { }
+    public void reconnect_success(object args) {
+        reconnectCount = 0;
+    }
 
-    public void end_reconnect_ready() { }
+    public void end_reconnect_ready(object args) {
+        Time.timeScale = 1f;
+
+        if (reconnectModal != null) Destroy(reconnectModal);
+     }
+
+    public void wait_reconnect(object args) {
+        Time.timeScale = 0f;
+
+        reconnectModal = Modal.instantiateReconnectModal();
+    }
+}
+
+public partial class BattleConnector : MonoBehaviour {
+    GameObject reconnectModal;
 }

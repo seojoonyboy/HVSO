@@ -71,6 +71,12 @@ public partial class AccountManager : Singleton<AccountManager> {
         dicInfo = new DictionaryInfo();
     }
 
+    #if UNITY_EDITOR
+    void Update() {
+        if(Input.GetKeyDown(KeyCode.F)) PlayerPrefs.DeleteKey("ReconnectData");
+    }
+    #endif
+
     private void OccurErrorModal(long errorCode) {
         Modal.instantiate("네트워크 오류가 발생하였습니다. 다시 시도해 주세요.", Modal.Type.CHECK);
         NoneIngameSceneEventHandler.Instance.PostNotification(NoneIngameSceneEventHandler.EVENT_TYPE.NETWORK_EROR_OCCURED, this, errorCode);

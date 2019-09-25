@@ -131,7 +131,7 @@ public class ScenarioManager : SerializedMonoBehaviour
             child.gameObject.SetActive(true);
         }
 
-        Transform content = canvas.Find("StageSelect/Viewport/Content");
+        Transform content = canvas.Find("HUD/StageSelect/Viewport/Content");
         for(int i=0; i < selectedList.Count; i++) {
             GameObject item = content.GetChild(i).gameObject;
             item.SetActive(true);
@@ -147,7 +147,7 @@ public class ScenarioManager : SerializedMonoBehaviour
 
     private void OffPrevStoryList() {
         if (isHuman) {
-            Transform stageSelectContent = orc.StageCanvas.transform.Find("StageSelect/Viewport/Content");
+            Transform stageSelectContent = orc.StageCanvas.transform.Find("HUD/StageSelect/Viewport/Content");
             foreach(Transform child in stageSelectContent) {
                 child.gameObject.SetActive(false);
             }
@@ -157,7 +157,7 @@ public class ScenarioManager : SerializedMonoBehaviour
             }
         }
         else {
-            Transform stageSelectContent = orc.StageCanvas.transform.Find("StageSelect/Viewport/Content");
+            Transform stageSelectContent = orc.StageCanvas.transform.Find("HUD/StageSelect/Viewport/Content");
             foreach (Transform child in stageSelectContent) {
                 child.gameObject.SetActive(false);
             }
@@ -269,21 +269,21 @@ public class ScenarioManager : SerializedMonoBehaviour
 
             stageCanvas
                 .transform
-                .Find("StagePanel/TextGroup/StageName")
+                .Find("HUD/StagePanel/TextGroup/StageName")
                 .gameObject
                 .GetComponent<TextMeshProUGUI>().text = chapterData.chapter.ToString() + "-" + chapterData.stage_number.ToString();
 
 
             stageCanvas
                 .transform
-                .Find("StagePanel/TextGroup/StageName")
+                .Find("HUD/StagePanel/TextGroup/StageName")
                 .gameObject
                 .GetComponent<TextMeshProUGUI>().text = chapterData.stage_Name;
 
 
             stageCanvas
                 .transform
-                .Find("StagePanel/TextGroup/StageScript")
+                .Find("HUD/StagePanel/TextGroup/StageScript")
                 .gameObject
                 .GetComponent<TextMeshProUGUI>().text = chapterData.description;
 
@@ -292,21 +292,21 @@ public class ScenarioManager : SerializedMonoBehaviour
             LoadMyDecks(isHuman);
             stageCanvas
                 .transform
-                .Find("StagePanel/TextGroup/StageName")
+                .Find("HUD/StagePanel/TextGroup/StageName")
                 .gameObject
                 .GetComponent<TextMeshProUGUI>().text = chapterData.chapter.ToString() + "-" + chapterData.stage_number.ToString();
 
 
             stageCanvas
                 .transform
-                .Find("StagePanel/TextGroup/StageName")
+                .Find("HUD/StagePanel/TextGroup/StageName")
                 .gameObject
                 .GetComponent<TextMeshProUGUI>().text = chapterData.stage_Name;
 
 
             stageCanvas
                 .transform
-                .Find("StagePanel/TextGroup/StageScript")
+                .Find("HUD/StagePanel/TextGroup/StageScript")
                 .gameObject
                 .GetComponent<TextMeshProUGUI>().text = chapterData.description;
         }

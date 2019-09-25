@@ -21,18 +21,25 @@ public partial class BattleConnector : MonoBehaviour {
     [SerializeField] Button returnButton;
 
     public UnityAction<string, int, bool> HandchangeCallback;
-    private Coroutine pingpong;
     private Coroutine timeCheck;
     private bool battleGameFinish = false;
+    private bool isQuit = false;
+    private int reconnectCount = 0;
 
     public static UnityEvent OnOpenSocket = new UnityEvent();
 
-    void Awake() {
+    private void Awake() {
         thisType = this.GetType();
         DontDestroyOnLoad(gameObject);
+        Application.wantsToQuit += Quitting;
+    }
+
+    private void Destroy() {
+        Application.wantsToQuit -= Quitting;
     }
 
     public void OpenSocket() {
+        reconnectCount = 0;
         string url = string.Format("{0}", this.url);
         webSocket = new WebSocket(new Uri(string.Format("{0}?token={1}", url, AccountManager.Instance.TokenId)));
         webSocket.OnOpen += OnOpen;
@@ -78,55 +85,93 @@ public partial class BattleConnector : MonoBehaviour {
 
     public void OnError(WebSocket webSocket, Exception ex) {
         Logger.LogError("Socket Error message : " + ex);
+        Invoke("TryReconnect", 2f);
+    }
+
+    private bool Quitting() {
+        Logger.Log("quitting");
+        isQuit = true;
+        webSocket.Close();
+        webSocket.OnOpen -= OnOpen;
+        webSocket.OnMessage -= ReceiveMessage;
+        webSocket.OnClosed -= OnClosed;
+        webSocket.OnError -= OnError;
+
+        PlayerPrefs.DeleteKey("ReconnectData");
+        return true;
+    }
+
+    public void TryReconnect() {
+        if(isQuit) return;
+        if(reconnectCount >= 5) {
+            PlayMangement playMangement = PlayMangement.instance;
+            PlayerPrefs.DeleteKey("ReconnectData");
+
+            ReconnectController controller = FindObjectOfType<ReconnectController>();
+            if(controller != null) {
+                Destroy(controller);
+                Destroy(controller.gameObject);
+            }
+
+            if (playMangement) playMangement.resultManager.SocketErrorUIOpen(false);
+            else FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
+            return;
+        }
+        reconnectCount++;
+        webSocket = new WebSocket(new Uri(string.Format("{0}?token={1}", url, AccountManager.Instance.TokenId)));
+        webSocket.OnOpen += OnOpen;
+        webSocket.OnMessage += ReceiveMessage;
+        webSocket.OnClosed += OnClosed;
+        webSocket.OnError += OnError;
+        webSocket.Open();
     }
 
     //Connected
     private void OnOpen(WebSocket webSocket) {
-        //string playerId = AccountManager.Instance.DEVICEID;
-        string deckId = PlayerPrefs.GetString("SelectedDeckId");
-        string battleType = PlayerPrefs.GetString("SelectedBattleType");
-        string race = PlayerPrefs.GetString("SelectedRace").ToLower();
-        
         string[] args;
-
-        if(battleType.CompareTo("test") == 0)
-            args = new string[] { battleType, race };
-        else {
-            //Logger.Log("stageNum : " + PlayerPrefs.GetString("StageNum"));
-            if (battleType == "story" && PlayerPrefs.GetString("StageNum") != "1") {
-                PlayerPrefs.SetString("SelectedBattleType", "solo");
-                battleType = "solo";
-            }  //TODO : 튜토리얼 이외의 스토리 세팅이 되면 변경할 필요가 있음
-            if (battleType == "story") {
-                //========================================================
-                //deckId 및 race 관련 처리 수정 예정
-                string stageNum = PlayerPrefs.GetString("StageNum");
-                race = "human";
-                deckId = string.Empty;
-                args = new string[] { battleType, deckId, race, stageNum };
-                //========================================================
+        string reconnect = PlayerPrefs.GetString("ReconnectData", null);
+        if(!string.IsNullOrEmpty(reconnect)) {
+            NetworkManager.ReconnectData data = JsonConvert.DeserializeObject<NetworkManager.ReconnectData>(reconnect);
+            bool isSameType = data.battleType.CompareTo(PlayerPrefs.GetString("SelectedBattleType")) == 0;
+            //bool isMulti = data.battleType.CompareTo("multi") == 0;
+            if(isSameType) {
+                args = new string[]{data.gameId, data.camp};
+                SendMethod("reconnect_game", args);
+                return;
             }
-            else {
-                args = new string[] { battleType, deckId, race };
-            }
+            PlayerPrefs.DeleteKey("ReconnectData");
         }
-            
+        args = SetJoinGameData();
         SendMethod("join_game", args);
-        pingpong = StartCoroutine(Heartbeat());
-
         OnOpenSocket.Invoke();
     }
 
-    IEnumerator Heartbeat() {
-        WaitForSeconds beatTime = new WaitForSeconds(10f);
-        while(webSocket.IsOpen) {
-            yield return beatTime;
-        }
-        if(!battleGameFinish)
-            PlayMangement.instance.resultManager.SocketErrorUIOpen(false);
-    }
+    private string[] SetJoinGameData() {
+        string deckId = PlayerPrefs.GetString("SelectedDeckId");
+        string battleType = PlayerPrefs.GetString("SelectedBattleType");
+        string race = PlayerPrefs.GetString("SelectedRace").ToLower();
 
-    
+        if(battleType.CompareTo("test") == 0)
+            return new string[] { battleType, race };
+        
+        //Logger.Log("stageNum : " + PlayerPrefs.GetString("StageNum"));
+        if (battleType == "story" && PlayerPrefs.GetString("StageNum") != "1") {
+            PlayerPrefs.SetString("SelectedBattleType", "solo");
+            battleType = "solo";
+        }  //TODO : 튜토리얼 이외의 스토리 세팅이 되면 변경할 필요가 있음
+        if (battleType == "story") {
+            //========================================================
+            //deckId 및 race 관련 처리 수정 예정
+            string stageNum = PlayerPrefs.GetString("StageNum");
+            race = "human";
+            deckId = string.Empty;
+            return new string[] { battleType, deckId, race, stageNum };
+            //========================================================
+        }
+        
+        return new string[] { battleType, deckId, race };
+
+    }
 
     public void ClientReady() {
         SendMethod("client_ready");
@@ -179,7 +224,6 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     void OnDisable() {
-        if(pingpong != null) StopCoroutine(pingpong);
         if(webSocket != null) webSocket.Close();
     }
 
@@ -227,7 +271,6 @@ public partial class BattleConnector : MonoBehaviour {
             yield return new WaitForFixedUpdate();
         }
         getNewCard = false;
-        dequeueing = true;
         IngameNotice.instance.CloseNotice();
     }
 
