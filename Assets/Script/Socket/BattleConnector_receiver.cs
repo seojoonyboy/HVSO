@@ -307,6 +307,11 @@ public partial class BattleConnector : MonoBehaviour {
         Time.timeScale = 1f;
         JObject jobject = (JObject)args;
         result = JsonConvert.DeserializeObject<ResultFormat>(jobject.ToString());
+
+        if (reconnectModal != null) {
+            Destroy(GetComponent<ReconnectController>());
+            Destroy(reconnectModal);
+        }
      }
 
     public void end_end_game(object args) {
@@ -354,7 +359,7 @@ public partial class BattleConnector : MonoBehaviour {
     public void wait_reconnect(object args) {
         Time.timeScale = 0f;
 
-        reconnectModal = Modal.instantiateReconnectModal();
+        reconnectModal = Instantiate(Modal.instantiateReconnectModal());
     }
 }
 
