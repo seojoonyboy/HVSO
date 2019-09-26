@@ -162,6 +162,7 @@ public class ShowCardsHandler : MonoBehaviour {
         try {
             var selectedCard = heroCards[rndIndex];
             selectedCard.GetComponent<MagicDragHandler>().ForceToHandHeroCards();
+            selectedCard.GetComponent<MagicDragHandler>().OnEndDrag(null);
         }
         catch(System.Exception ex) {
             Logger.LogError(ex.ToString());
