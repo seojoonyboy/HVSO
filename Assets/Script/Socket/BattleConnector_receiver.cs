@@ -56,11 +56,11 @@ public partial class BattleConnector : MonoBehaviour {
         MethodInfo theMethod = thisType.GetMethod(result.method);
         if(theMethod == null) return;
         
-        object[] args = new object[]{result.args};
+        object[] args = new object[]{result.args, result.id};
         theMethod.Invoke(this, args);
     }
 
-    public void begin_ready(object args) {
+    public void begin_ready(object args, int? id) {
         this.message.text = "대전 상대를 찾았습니다.";
         FindObjectOfType<BattleConnectSceneAnimController>().PlayStartBattleAnim();
 
@@ -126,7 +126,7 @@ public partial class BattleConnector : MonoBehaviour {
         returnButton.gameObject.SetActive(false);
     }
 
-    public void end_ready(object args) { 
+    public void end_ready(object args, int? id) { 
         bool isTest = PlayerPrefs.GetString("SelectedBattleType").CompareTo("test") == 0;
         if(isTest) {
             object value = JsonUtility.FromJson(PlayerPrefs.GetString("Editor_startState"), typeof(StartState));
@@ -136,16 +136,16 @@ public partial class BattleConnector : MonoBehaviour {
         Logger.Log("준비 턴");
     }
 
-    public void start_state(object args) {
+    public void start_state(object args, int? id) {
         PlayMangement.instance.EditorTestInit(gameState);
     }
 
-    public void begin_mulligan(object args) {
+    public void begin_mulligan(object args, int? id) {
         if(ScenarioGameManagment.scenarioInstance != null)
             PlayMangement.instance.player.GetComponent<IngameTimer>().BeginTimer(30);
     }
 
-    public void hand_changed(object args) {
+    public void hand_changed(object args, int? id) {
         if(PlayMangement.instance == null) return;
         var json = (JObject)args;
         bool isHuman = PlayMangement.instance.player.isHuman;
@@ -159,7 +159,7 @@ public partial class BattleConnector : MonoBehaviour {
         HandchangeCallback = null;
     }
 
-    public void end_mulligan(object args) {
+    public void end_mulligan(object args, int? id) {
         CardHandManager cardHandManager= PlayMangement.instance.cardHandManager;
         if(!cardHandManager.socketDone)
             cardHandManager.FirstDrawCardChange();
@@ -167,13 +167,13 @@ public partial class BattleConnector : MonoBehaviour {
         //getNewCard = true;
     }
 
-    public void begin_turn_start(object args) {
+    public void begin_turn_start(object args, int? id) {
         PlayMangement.instance.SyncPlayerHp();
     }
     
-    public void end_turn_start(object args) { }
+    public void end_turn_start(object args, int? id) { }
 
-    public void begin_orc_pre_turn(object args) {
+    public void begin_orc_pre_turn(object args, int? id) {
         PlayerController player;
         player = PlayMangement.instance.player.isHuman ? PlayMangement.instance.enemyPlayer : PlayMangement.instance.player;
         if (ScenarioGameManagment.scenarioInstance != null) {
@@ -182,7 +182,7 @@ public partial class BattleConnector : MonoBehaviour {
         checkMyTurn(false);
     }
 
-    public void end_orc_pre_turn(object args) {
+    public void end_orc_pre_turn(object args, int? id) {
         PlayerController player;
         player = PlayMangement.instance.player.isHuman ? PlayMangement.instance.enemyPlayer : PlayMangement.instance.player;
         if(ScenarioGameManagment.scenarioInstance != null) {
@@ -193,16 +193,16 @@ public partial class BattleConnector : MonoBehaviour {
         useCardList.isDone = true;
     }
 
-    public void begin_human_turn(object args) {
+    public void begin_human_turn(object args, int? id) {
         PlayerController player;
         player = PlayMangement.instance.player.isHuman ? PlayMangement.instance.player : PlayMangement.instance.enemyPlayer;
         if(ScenarioGameManagment.scenarioInstance != null) {
-            player.GetComponent<IngameTimer>().BeginTimer();
+            player.GetComponent<IngameTimer>().BeginTimer(80);
         }
         checkMyTurn(true);
     }
 
-    public void end_human_turn(object args) {
+    public void end_human_turn(object args, int? id) {
         PlayerController player;
         player = PlayMangement.instance.player.isHuman ? PlayMangement.instance.player : PlayMangement.instance.enemyPlayer;
         if(ScenarioGameManagment.scenarioInstance != null) {
@@ -213,7 +213,7 @@ public partial class BattleConnector : MonoBehaviour {
         useCardList.isDone = true;
     }
 
-    public void begin_orc_post_turn(object args) {
+    public void begin_orc_post_turn(object args, int? id) {
         PlayerController player;
         player = PlayMangement.instance.player.isHuman ? PlayMangement.instance.enemyPlayer : PlayMangement.instance.player;
         if(ScenarioGameManagment.scenarioInstance != null) {
@@ -223,7 +223,7 @@ public partial class BattleConnector : MonoBehaviour {
         unitSkillList.isDone = false;
     }
 
-    public void end_orc_post_turn(object args) {
+    public void end_orc_post_turn(object args, int? id) {
         PlayerController player;
         player = PlayMangement.instance.player.isHuman ? PlayMangement.instance.enemyPlayer : PlayMangement.instance.player;
         if(ScenarioGameManagment.scenarioInstance != null) {
@@ -235,40 +235,40 @@ public partial class BattleConnector : MonoBehaviour {
         unitSkillList.isDone = true;
     }
 
-    public void skill_activated(object args) {
+    public void skill_activated(object args, int? id) {
         if(PlayMangement.instance.enemyPlayer.isHuman) return;
         var json = (JObject)args;
         int itemId = int.Parse(json["itemId"].ToString());
         unitSkillList.Enqueue(itemId);
     }
 
-    public void begin_battle_turn(object args) {
+    public void begin_battle_turn(object args, int? id) {
         lineBattleList.isDone = false;
         mapClearList.isDone = false;
     }
 
-    public void end_battle_turn(object args) { }
+    public void end_battle_turn(object args, int? id) { }
 
-    public void line_battle(object args) {
+    public void line_battle(object args, int? id) {
         var json = (JObject)args;
         string line = json["lineNumber"].ToString();
         string camp = json["camp"].ToString();
         int line_num = int.Parse(line);
-        lineBattleList.Enqueue(gameState);
+        lineBattleList.Enqueue(gameState, id.Value);
         lineBattleList.checkCount();
         humanData.Enqueue(gameState.players.human);
         orcData.Enqueue(gameState.players.orc);
     }
 
-    public void map_clear(object args) {
+    public void map_clear(object args, int? id) {
         var json = (JObject)args;
         string line = json["lineNumber"].ToString();
         int line_num = int.Parse(line);
-        mapClearList.Enqueue(gameState);
+        mapClearList.Enqueue(gameState, id.Value);
         mapClearList.checkCount();
     }
 
-    public void begin_shield_turn(object args) {
+    public void begin_shield_turn(object args, int? id) {
         var json = (JObject)args;
         string camp = json["camp"].ToString();
         bool isHuman = PlayMangement.instance.player.isHuman;
@@ -282,7 +282,7 @@ public partial class BattleConnector : MonoBehaviour {
         }
     }
 
-    public void end_shield_turn(object args) {
+    public void end_shield_turn(object args, int? id) {
         var json = (JObject)args;
         string camp = json["camp"].ToString();
         bool isHuman = PlayMangement.instance.player.isHuman;
@@ -296,7 +296,7 @@ public partial class BattleConnector : MonoBehaviour {
         }
     }
 
-    public void surrender(object args) {
+    public void surrender(object args, int? id) {
         var json = (JObject)args;
         string camp = json["camp"].ToString();
         Logger.Log(camp + "측 항복");
@@ -344,7 +344,7 @@ public partial class BattleConnector : MonoBehaviour {
         callback();
     }
 
-    public void shield_gauge(object args) {
+    public void shield_gauge(object args, int? id) {
         var json = (JObject)args;
         string camp = json["camp"].ToString();
         string gauge = json["shieldGet"].ToString();
@@ -352,20 +352,20 @@ public partial class BattleConnector : MonoBehaviour {
         charge.shieldCount = int.Parse(gauge);
         charge.camp = camp;
         if(charge.shieldCount == 0) return;
-        shieldChargeQueue.Enqueue(charge);
+        shieldChargeQueue.Enqueue(charge, id.Value);
     }
 
-    public void begin_end_turn(object args) {
+    public void begin_end_turn(object args, int? id) {
         getNewCard = true;
     }
 
-    public void end_end_turn(object args) { }
+    public void end_end_turn(object args, int? id) { }
 
-    public void opponent_connection_closed(object args) {
+    public void opponent_connection_closed(object args, int? id) {
         PlayMangement.instance.resultManager.SocketErrorUIOpen(true);
     }
 
-    public void begin_end_game(object args) {
+    public void begin_end_game(object args, int? id) {
         Time.timeScale = 1f;
         JObject jobject = (JObject)args;
         result = JsonConvert.DeserializeObject<ResultFormat>(jobject.ToString());
@@ -376,7 +376,7 @@ public partial class BattleConnector : MonoBehaviour {
         }
      }
 
-    public void end_end_game(object args) {
+    public void end_end_game(object args, int? id) {
         battleGameFinish = true;
         AccountManager.Instance.RequestUserInfo((req, res) => {
             if (res != null) {
@@ -403,33 +403,33 @@ public partial class BattleConnector : MonoBehaviour {
         }
     }
 
-    public void ping(object args) {
+    public void ping(object args, int? id) {
         SendMethod("pong");
     }
 
-    public void card_played(object args) {
+    public void card_played(object args, int? id) {
         string enemyCamp = PlayMangement.instance.enemyPlayer.isHuman ? "human" : "orc";
         string cardCamp = gameState.lastUse.cardItem.camp;
         bool isEnemyCard = cardCamp.CompareTo(enemyCamp) == 0;
         if(isEnemyCard) useCardList.Enqueue(gameState);
     }
 
-    public void hero_card_kept(object args) { }
+    public void hero_card_kept(object args, int? id) { }
 
     //public void reconnect_game() { }
 
-    public void begin_reconnect_ready(object args) {
+    public void begin_reconnect_ready(object args, int? id) {
         if(gameState != null) SendMethod("reconnect_ready");
     }
 
-    public void reconnect_fail(object args) {
+    public void reconnect_fail(object args, int? id) {
         Time.timeScale = 1f;
         PlayerPrefs.DeleteKey("ReconnectData");
         if (reconnectModal != null) Destroy(reconnectModal);
         PlayMangement.instance.resultManager.SocketErrorUIOpen(false);
      }
 
-    public void reconnect_success(object args) {
+    public void reconnect_success(object args, int? id) {
         reconnectCount = 0;
     }
 
@@ -437,7 +437,7 @@ public partial class BattleConnector : MonoBehaviour {
     /// 양쪽 모두 reconnect가 되었을 때
     /// </summary>
     /// <param name="args"></param>
-    public void end_reconnect_ready(object args) {
+    public void end_reconnect_ready(object args, int? id) {
         Time.timeScale = 1f;
 
         if (reconnectModal != null) Destroy(reconnectModal);
@@ -448,12 +448,16 @@ public partial class BattleConnector : MonoBehaviour {
     /// 상대방의 재접속을 대기 (상대가 튕김)
     /// </summary>
     /// <param name="args"></param>
-    public void wait_reconnect(object args) {
+    public void wait_reconnect(object args, int? id) {
         Time.timeScale = 0f;
 
         reconnectModal = Instantiate(Modal.instantiateReconnectModal());
         isOpponentPlayerDisconnected = true;
     }
+
+    public void begin_resend_battle_message(object args, int? id) { }
+
+    public void end_resend_battle_message(object args, int? id) { }
 }
 
 public partial class BattleConnector : MonoBehaviour {

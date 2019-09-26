@@ -9,6 +9,7 @@ namespace SocketFormat {
             this.error = error;
          }
         public ReceiveFormat() : base() { }
+        public int? id;
 
         public GameState gameState;
         public object error;

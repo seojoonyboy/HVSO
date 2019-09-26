@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SocketFormat;
 using System.Threading.Tasks;
+using System.Linq;
 
 public partial class BattleConnector : MonoBehaviour {
 
@@ -172,7 +173,7 @@ public partial class BattleConnector : MonoBehaviour {
             return new string[] { battleType, deckId, race, stageNum };
             //========================================================
         }
-        
+        //return new string[] { "story", "", "orc", "10"};
         return new string[] { battleType, deckId, race };
 
     }
@@ -193,6 +194,7 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void MulliganEnd() {
+        PlayMangement.instance.player.GetComponent<IngameTimer>().EndTimer();
         SendMethod("end_mulligan");
     }
 
@@ -266,7 +268,7 @@ public partial class BattleConnector : MonoBehaviour {
     public QueueSocketList<GameState> mapClearList = new QueueSocketList<GameState>();
     public Queue<SocketFormat.Player> humanData = new Queue<SocketFormat.Player>();
     public Queue<SocketFormat.Player> orcData = new Queue<SocketFormat.Player>();
-    public Queue <ShieldCharge> shieldChargeQueue = new Queue<ShieldCharge>();
+    public QueueSocketList <ShieldCharge> shieldChargeQueue = new QueueSocketList<ShieldCharge>();
     public QueueSocketList<int> unitSkillList = new QueueSocketList<int>();
 
     public IEnumerator WaitGetCard() {
@@ -297,10 +299,6 @@ public partial class BattleConnector : MonoBehaviour {
     private void checkMyTurn(bool isHuman) {
         if(PlayMangement.instance.player.isHuman != isHuman)
             useCardList.isDone = false;
-    }
-
-    public GameState getStateList(bool isBattleEnd) {
-        return isBattleEnd ? mapClearList.Dequeue() : lineBattleList.Dequeue();
     }
 
     public void DrawNewCards(int drawNum, int itemId) {
@@ -337,21 +335,31 @@ namespace SocketFormat {
     public class QueueSocketList<T> {
         public bool isDone;
         private Queue<T> queue;
+        private Queue<int> id;
         private int totalCount;
 
         public QueueSocketList() {
             isDone = true;
             queue = new Queue<T>();
+            id = new Queue<int>();
             totalCount = 0;
         }
 
-        public void Enqueue(T value) {
+        public void Enqueue(T value, int id = -1) {
+            if(id != -1) {
+                if(this.id.Contains(id)) {
+                    Debug.Log(id+"id 거르기");
+                    return;
+                }
+                this.id.Enqueue(id);
+            }
             totalCount++;
             queue.Enqueue(value);
         }
 
         public T Dequeue() {
             if(queue.Count == 0) return default(T);
+            if(id.Count != 0) id.Dequeue();
             return queue.Dequeue();
         }
 
