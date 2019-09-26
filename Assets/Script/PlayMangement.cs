@@ -46,6 +46,7 @@ public partial class PlayMangement : MonoBehaviour {
 
     public float cameraSize;
 
+    public ShowCardsHandler showCardsHandler;
     //public string magicHistroy;
 
     private void Awake() {
