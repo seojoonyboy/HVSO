@@ -18,7 +18,6 @@ public class TurnMachine : MonoBehaviour {
         eventHandler = PlayMangement.instance.EventHandler;
         eventHandler.AddListener(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, OnEndTurnBtnClicked);
         player = PlayMangement.instance.player;
-        OnPrepareTurn();
     }
 
     private void OnEndTurnBtnClicked(Enum Event_Type, Component Sender, object Param) {
@@ -44,12 +43,7 @@ public class TurnMachine : MonoBehaviour {
         yield return new WaitForSeconds(1.0f);
         onTurnChanged.Invoke();
     }
-
-    private void OnPrepareTurn() {
-        onPrepareTurn.Invoke();
-        Logger.Log("준비 턴");
-    }
-
+    
     public TurnType CurrentTurn() {
         return turn;
     }
