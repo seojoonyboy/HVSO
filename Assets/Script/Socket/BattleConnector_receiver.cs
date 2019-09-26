@@ -268,9 +268,33 @@ public partial class BattleConnector : MonoBehaviour {
         mapClearList.checkCount();
     }
 
-    public void begin_shield_turn(object args) { }
+    public void begin_shield_turn(object args) {
+        var json = (JObject)args;
+        string camp = json["camp"].ToString();
+        bool isHuman = PlayMangement.instance.player.isHuman;
+        //human 실드 발동
+        if (camp == "human") {
+            if (!isHuman) PlayMangement.instance.enemyPlayer.GetComponent<IngameTimer>().PauseTimer(15);
+        }
+        //orc 실드 발동
+        else {
+            if (isHuman) PlayMangement.instance.enemyPlayer.GetComponent<IngameTimer>().PauseTimer(15);
+        }
+    }
 
-    public void end_shield_turn(object args) { }
+    public void end_shield_turn(object args) {
+        var json = (JObject)args;
+        string camp = json["camp"].ToString();
+        bool isHuman = PlayMangement.instance.player.isHuman;
+        //human 실드 발동
+        if (camp == "human") {
+            if (!isHuman) PlayMangement.instance.enemyPlayer.GetComponent<IngameTimer>().ResumeTimer();
+        }
+        //orc 실드 발동
+        else {
+            if (isHuman) PlayMangement.instance.enemyPlayer.GetComponent<IngameTimer>().ResumeTimer();
+        }
+    }
 
     public void surrender(object args) {
         var json = (JObject)args;

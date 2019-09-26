@@ -11,7 +11,7 @@ public class IngameTimer : MonoBehaviour {
 
     int currentSec;
     int decreaseAmount = 1; //pause 처리를 위함
-    IEnumerator TimerCoroutine, UICoroutine;
+    IEnumerator TimerCoroutine, UICoroutine, tmpCoroutine;
     public UnityEvent OnTimeout;        //시간 만료시 호출됨
 
     private void OnTimerUI() {
@@ -76,11 +76,26 @@ public class IngameTimer : MonoBehaviour {
         decreaseAmount = 0;
     }
 
+    public void PauseTimer(int amount) {
+        tmpCoroutine = tmpTimer(amount);
+        StartCoroutine(tmpCoroutine);
+    }
+
+    IEnumerator tmpTimer(int amount) {
+        while (amount > 0) {
+            Logger.Log("Timer : " + currentSec);
+            yield return new WaitForSeconds(1.0f);
+            amount -= 1;
+        }
+        tmpCoroutine = null;
+    }
+
     /// <summary>
     /// 타이머 재개
     /// </summary>
     public void ResumeTimer() {
         decreaseAmount = 1;
+        if (tmpCoroutine != null) StopCoroutine(tmpCoroutine);
     }
 
 #if UNITY_EDITOR
