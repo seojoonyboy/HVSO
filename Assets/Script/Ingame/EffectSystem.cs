@@ -164,6 +164,50 @@ public class EffectSystem : SerializedMonoBehaviour {
         worldFade.transform.gameObject.SetActive(false);
     }
 
+
+    public void CameraZoomIn(Transform target, float size, float time) {
+
+        Vector3 pos = new Vector3(target.position.x, target.position.y, -10);
+
+        float targetSize = size;
+        
+        iTween.ValueTo(Camera.main.gameObject, iTween.Hash("from", Camera.main.orthographicSize, "to", targetSize, "onUpdate", "UpdateSize", "time", time/2));
+        iTween.MoveTo(Camera.main.gameObject, iTween.Hash("position", pos, "time", time));
+    }
+
+    public void CameraZoomOut(float time) {
+
+        Vector3 pos = new Vector3(0, 0, -10);
+
+        iTween.ValueTo(Camera.main.gameObject, iTween.Hash("from", Camera.main.orthographicSize, "to", 9.6f, "onupdate", "UpdateSize", "time", time/2));
+        iTween.MoveTo(Camera.main.gameObject, iTween.Hash("position", pos, "time", time));
+    }
+
+    public void UpdateSize(float num) {
+        Camera.main.orthographicSize = num;
+    }
+
+
+
+    //public IEnumerator CameraZoomIn(Transform target,float size,float time) {
+    //    float speed = 0;
+    //    Camera cam = Camera.main;
+
+    //    speed = (cam.orthographicSize - size) / time * 10f;
+
+    //    while(cam.orthographicSize > size) {
+    //        yield return new WaitForSeconds(0.1f);
+    //        cam.orthographicSize -= speed;
+    //    }
+    //    yield return null;
+    //}
+
+    //public IEnumerator CameraZoomOut()
+
+
+
+
+
     public IEnumerator FadeOut(float min, float max, float time) {
         float speed = 0;
         Image fadeObject = fadeCanvas.transform.Find("Fade").gameObject.GetComponent<Image>();
