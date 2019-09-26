@@ -97,6 +97,23 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         CheckMagicHighlight();
     }
 
+    public void ForceToHandHeroCards() {
+        ShowCardsHandler showCardsHandler = GetComponentInParent<ShowCardsHandler>();
+        if (ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.isTutorial && ScenarioGameManagment.scenarioInstance.canHeroCardToHand == false) {
+            cardUsed = false;
+            transform.localScale = new Vector3(1, 1, 1);
+            transform.localPosition = new Vector3(0, 0, 0);
+            transform.Find("CardInfoWindow").gameObject.SetActive(false);
+            transform.parent.parent.Find("HeroCardGuide").gameObject.SetActive(true);
+            showCardsHandler.CancelSelecting();
+        }
+        else {
+            showCardsHandler.FinishPlay(gameObject, true);
+            handManager.AddHeroCard(gameObject);
+            heroCardActivate = false;
+        }
+    }
+
 
     public void OnEndDrag(PointerEventData eventData) {
         EffectSystem.Instance.IncreaseFadeAlpha();
@@ -105,19 +122,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
             heroCardInfo.SetActive(true);
             //영웅 카드를 핸드로 가져오는 부분
             if (transform.position.y < -3.5f) {
-                if (ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.isTutorial && ScenarioGameManagment.scenarioInstance.canHeroCardToHand == false) {
-                    cardUsed = false;
-                    transform.localScale = new Vector3(1, 1, 1);
-                    transform.localPosition = new Vector3(0, 0, 0);
-                    transform.Find("CardInfoWindow").gameObject.SetActive(false);
-                    transform.parent.parent.Find("HeroCardGuide").gameObject.SetActive(true);
-                    showCardsHandler.CancelSelecting();
-                }
-                else {
-                    showCardsHandler.FinishPlay(gameObject, true);
-                    handManager.AddHeroCard(gameObject);
-                    heroCardActivate = false;
-                }
+                ForceToHandHeroCards();
             }
             else {
                 CheckLocation(true);
@@ -158,7 +163,8 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
             CardInfoOnDrag.instance.OffCardDragInfo();
             PlayMangement.instance.player.ConsumeShieldStack();
             showCardsHandler.ToggleAllCards();
-
+            GetComponent<IngameTimer>().OnTimeout.RemoveListener(PlayMangement.instance.showCardsHandler.TimeoutShowCards);
+            GetComponent<IngameTimer>().EndTimer();
             return;
         }
         if (firstDraw) return;
@@ -229,6 +235,17 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         ShowCardsHandler showCardsHandler = transform.root.GetComponentInChildren<ShowCardsHandler>();
         showCardsHandler.FinishPlay(gameObject);
         //GetComponentInParent<ShowCardsHandler>().RemoveCard(gameObject);
+    }
+
+    public override void OnTurnChanged(Enum Event_Type, Component Sender, object Param) {
+        if (!isMyTurn) {
+            //영웅 마법 카드 선택단계인경우 둘중 무작위 한장 선택하여 핸드로 가져오기
+            if (heroCardActivate) {
+                OnEndDrag(null);
+
+                PlayMangement.instance.showCardsHandler.TimeoutShowCards();
+            }
+        }
     }
 
     private void HideCardImage() {

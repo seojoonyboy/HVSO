@@ -15,6 +15,14 @@ public class ShowCardsHandler : MonoBehaviour {
         heroCards = new List<GameObject>();
     }
 
+#if UNITY_EDITOR
+    void Update() {
+        if (heroCards != null && heroCards.Count ==2 && Input.GetKeyDown(KeyCode.Q)) {
+            TimeoutShowCards();
+        }    
+    }
+#endif
+
     public void AddCards(GameObject[] cards, string[] desc) {
         //TODO : i값 대조 말고 다른 방법으로....
         for(int i=0; i<cards.Length; i++) {
@@ -146,5 +154,22 @@ public class ShowCardsHandler : MonoBehaviour {
     public void ShowDesc() {
         transform.Find("Left/Desc").gameObject.SetActive(true);
         transform.Find("Right/Desc").gameObject.SetActive(true);
+    }
+
+    //시간초과에 의한 강제 랜덤 선택 및 핸드 추가 처리
+    public void TimeoutShowCards() {
+        int rndIndex = Random.Range(0, 1);
+        try {
+            var selectedCard = heroCards[rndIndex];
+            selectedCard.GetComponent<MagicDragHandler>().ForceToHandHeroCards();
+            selectedCard.GetComponent<MagicDragHandler>().OnEndDrag(null);
+        }
+        catch(System.Exception ex) {
+            Logger.LogError(ex.ToString());
+        }
+
+        CardInfoOnDrag.instance.OffCardDragInfo();
+        PlayMangement.instance.player.ConsumeShieldStack();
+        ToggleAllCards();
     }
 }

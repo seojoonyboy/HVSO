@@ -19,6 +19,8 @@ public partial class CardHandler : MonoBehaviour {
     protected bool isDropable = false;
     protected bool pointOnFeild = false;
     protected bool cardUsed = false;
+    protected bool isMyTurn = false;
+
     Animator cssAni;
     public string cardID;
     protected int _itemID;
@@ -66,12 +68,19 @@ public partial class CardHandler : MonoBehaviour {
         gameObject.SetActive(false);
 
         turnMachine = PlayMangement.instance.GetComponent<TurnMachine>();
-        PlayMangement.instance.EventHandler.AddListener(
-            IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, 
-            (type, sender, parm) => {
 
-            }
+        PlayMangement.instance.EventHandler.RemoveListener(
+            IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED,
+            OnTurnChanged
         );
+        PlayMangement.instance.EventHandler.AddListener(
+            IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED,
+            OnTurnChanged
+        );
+    }
+
+    public virtual void OnTurnChanged(Enum Event_Type, Component Sender, object Param) {
+        isMyTurn = turnMachine.isPlayerTurn();
     }
 
     public virtual void DrawCard(string ID, int itemID = -1, bool first = false) {

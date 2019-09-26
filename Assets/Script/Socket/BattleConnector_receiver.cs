@@ -66,7 +66,6 @@ public partial class BattleConnector : MonoBehaviour {
 
         StopCoroutine(timeCheck);
         SetUserInfoText();
-        ClientReady();
         SetSaveGameId();
     }
 
@@ -139,7 +138,9 @@ public partial class BattleConnector : MonoBehaviour {
         PlayMangement.instance.EditorTestInit(gameState);
     }
 
-    public void begin_mulligan(object args) { }
+    public void begin_mulligan(object args) {
+        PlayMangement.instance.player.GetComponent<IngameTimer>().BeginTimer(30);
+    }
 
     public void hand_changed(object args) {
         if(PlayMangement.instance == null) return;
@@ -156,6 +157,9 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void end_mulligan(object args) {
+        CardHandManager cardHandManager= PlayMangement.instance.cardHandManager;
+        if(!cardHandManager.socketDone)
+            cardHandManager.FirstDrawCardChange();
         //dequeueing = false;
         //getNewCard = true;
     }
@@ -167,31 +171,51 @@ public partial class BattleConnector : MonoBehaviour {
     public void end_turn_start(object args) { }
 
     public void begin_orc_pre_turn(object args) {
+        PlayerController player;
+        player = PlayMangement.instance.player.isHuman ? PlayMangement.instance.enemyPlayer : PlayMangement.instance.player;
+        player.GetComponent<IngameTimer>().BeginTimer();
         checkMyTurn(false);
     }
 
     public void end_orc_pre_turn(object args) {
+        PlayerController player;
+        player = PlayMangement.instance.player.isHuman ? PlayMangement.instance.enemyPlayer : PlayMangement.instance.player;
+        player.GetComponent<IngameTimer>().EndTimer();
+        if(!PlayMangement.instance.player.isHuman)
+            PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, TurnType.ORC);
         useCardList.isDone = true;
     }
 
     public void begin_human_turn(object args) {
+        PlayerController player;
+        player = PlayMangement.instance.player.isHuman ? PlayMangement.instance.player : PlayMangement.instance.enemyPlayer;
+        player.GetComponent<IngameTimer>().BeginTimer();
         checkMyTurn(true);
     }
 
     public void end_human_turn(object args) {
+        PlayerController player;
+        player = PlayMangement.instance.player.isHuman ? PlayMangement.instance.player : PlayMangement.instance.enemyPlayer;
+        player.GetComponent<IngameTimer>().EndTimer();
+        if(PlayMangement.instance.player.isHuman)
+            PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, TurnType.HUMAN);
         useCardList.isDone = true;
     }
 
     public void begin_orc_post_turn(object args) {
+        PlayerController player;
+        player = PlayMangement.instance.player.isHuman ? PlayMangement.instance.enemyPlayer : PlayMangement.instance.player;
+        player.GetComponent<IngameTimer>().BeginTimer();
         checkMyTurn(false);
         unitSkillList.isDone = false;
     }
 
-    public void checkMapPos(object args) {
-        if(PlayMangement.instance.player.isHuman) return;
-    }
-
     public void end_orc_post_turn(object args) {
+        PlayerController player;
+        player = PlayMangement.instance.player.isHuman ? PlayMangement.instance.enemyPlayer : PlayMangement.instance.player;
+        player.GetComponent<IngameTimer>().EndTimer();
+        if(!PlayMangement.instance.player.isHuman)
+            PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, TurnType.SECRET);
         useCardList.isDone = true;
         unitSkillList.isDone = true;
     }
@@ -229,13 +253,9 @@ public partial class BattleConnector : MonoBehaviour {
         mapClearList.checkCount();
     }
 
-    public void begin_shield_turn(object args) {
-        PlayMangement.instance.LockTurnOver();
-    }
+    public void begin_shield_turn(object args) { }
 
-    public void end_shield_turn(object args) {
-        PlayMangement.instance.heroShieldDone.Add(true);
-    }
+    public void end_shield_turn(object args) { }
 
     public void surrender(object args) {
         var json = (JObject)args;

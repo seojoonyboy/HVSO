@@ -22,6 +22,9 @@ public class TurnMachine : MonoBehaviour {
     }
 
     private void OnEndTurnBtnClicked(Enum Event_Type, Component Sender, object Param) {
+        if(Param != null)
+            if((TurnType)Param != turn) 
+                return;
         NextTurn();
     }
 
@@ -47,8 +50,8 @@ public class TurnMachine : MonoBehaviour {
         Logger.Log("준비 턴");
     }
 
-    public string CurrentTurn() {
-        return turn.ToString();
+    public TurnType CurrentTurn() {
+        return turn;
     }
 
     public bool isPlayerTurn() {
@@ -58,11 +61,11 @@ public class TurnMachine : MonoBehaviour {
         else
             return num == 0 || num == 2;
     }
+}
 
-    public enum TurnType {
-        ORC = 0,
-        HUMAN = 1,
-        SECRET = 2,
-        BATTLE = 3
-    }
+public enum TurnType {
+    ORC = 0,
+    HUMAN = 1,
+    SECRET = 2,
+    BATTLE = 3
 }

@@ -12,6 +12,7 @@ public class CardHandManager : MonoBehaviour {
     [SerializeField] public Transform cardSpawnPos;
     public bool isMultiple = false;
     public bool firstDraw = true;
+    public bool socketDone = false;
     private bool cardDestroyed = false;
     protected List<GameObject> cardList;
     protected List<GameObject> firstDrawList;
@@ -60,6 +61,7 @@ public class CardHandManager : MonoBehaviour {
 
     //멀리건 종료 버튼 클릭 함수
     public void FirstDrawCardChange() {
+        socketDone = true;
         foreach (GameObject cards in firstDrawList) {
             cards.transform.Find("ChangeButton").gameObject.SetActive(false);
         }
