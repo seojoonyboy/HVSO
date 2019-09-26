@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.Events;
 
 public class IngameTimer : MonoBehaviour {
     [SerializeField] GameObject timerUI;
@@ -11,6 +12,7 @@ public class IngameTimer : MonoBehaviour {
     int currentSec;
     int decreaseAmount = 1; //pause 처리를 위함
     IEnumerator TimerCoroutine, UICoroutine;
+    public UnityEvent OnTimeout;        //시간 만료시 호출됨
 
     private void OnTimerUI() {
         Logger.Log("Timer UI 시작");
@@ -62,6 +64,7 @@ public class IngameTimer : MonoBehaviour {
     /// 타이머 종료
     /// </summary>
     public void EndTimer() {
+        OnTimeout.Invoke();
         timerUI.SetActive(false);
         StopAllCoroutines();
     }
