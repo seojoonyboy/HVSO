@@ -49,7 +49,7 @@ namespace victoryModule {
 
             PlayerController loserPlayer = (result.result == "win") ? enemyPlayer : player;
             //loserPlayer.PlayerDead();
-            EffectSystem.Instance.CameraZoomIn(loserPlayer.bodyTransform, 5.6f, 1.2f);
+            //EffectSystem.Instance.CameraZoomIn(loserPlayer.bodyTransform, 5.6f, 1.2f);
             Invoke("GetBattleResult", loserPlayer.DeadAnimationTime);
         }
 
@@ -58,7 +58,7 @@ namespace victoryModule {
             GameResultManager resultManager = PlayMangement.instance.resultManager;
             resultManager.gameObject.SetActive(true);
 
-            EffectSystem.Instance.CameraZoomOut(1.2f);
+            //EffectSystem.Instance.CameraZoomOut(1.2f);
 
 
             if (player.HP.Value <= 0) 
