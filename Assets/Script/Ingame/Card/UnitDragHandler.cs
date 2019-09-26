@@ -59,7 +59,7 @@ public partial class UnitDragHandler : CardHandler, IBeginDragHandler, IDragHand
             CardDropManager.Instance.HighLightSlot(highlightedSlot, highlighted);
             highlightedSlot = null;
         }
-        else if(isMyTurn(false)) {
+        else if(turnMachine.isPlayerTurn()) {
             Transform slot = CheckSlot();
             if (slot != null && slot.childCount <= 1)
                 StartCoroutine(SummonUnit(slot));
