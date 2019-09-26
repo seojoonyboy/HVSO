@@ -168,7 +168,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         PlayMangement.instance.player.isPicking.Value = false;
         cardUsed = false;
 
-        if (CheckMagicSlot() != null && PlayMangement.instance.player.resource.Value >= cardData.cost && isMyTurn(true)) {
+        if (CheckMagicSlot() != null && PlayMangement.instance.player.resource.Value >= cardData.cost && turnMachine.isPlayerTurn()) {
             cardUsed = true;
             //var abilities = GetComponents<MagicalCasting>();
             //foreach (MagicalCasting ability in abilities) ability.RequestUseMagic();
