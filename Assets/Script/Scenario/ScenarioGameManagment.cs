@@ -146,7 +146,7 @@ public class ScenarioGameManagment : PlayMangement {
         #endregion
         SocketFormat.DebugSocketData.ShowHandCard(socketHandler.gameState.players.enemyPlayer(enemyPlayer.isHuman).deck.handCards);
         if (isBefore)
-            enemyPlayer.ReleaseTurn();
+            EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, GetComponent<TurnMachine>().CurrentTurn());
     }
 
     public override IEnumerator battleCoroutine() {
@@ -172,7 +172,7 @@ public class ScenarioGameManagment : PlayMangement {
         EndTurnDraw();
         yield return new WaitForSeconds(2.0f);
         yield return new WaitUntil(() => !SkillModules.SkillHandler.running);
-        EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this);
+        EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, TurnType.BATTLE);
         //CustomEvent.Trigger(gameObject, "EndTurn");
         StopCoroutine("battleCoroutine");
         dragable = true;
