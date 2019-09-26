@@ -57,6 +57,7 @@ public partial class PlayMangement : MonoBehaviour {
         
         GetComponent<TurnMachine>().onTurnChanged.AddListener(ChangeTurn);
         if (!isTest) GetComponent<TurnMachine>().onPrepareTurn.AddListener(DistributeCard);
+        socketHandler.ClientReady();
         //GameObject backGroundEffect = Instantiate(EffectSystem.Instance.backgroundEffect);
         //backGroundEffect.transform.position = backGround.transform.Find("ParticlePosition").position;
         SetCamera();

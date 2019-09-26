@@ -66,7 +66,6 @@ public partial class BattleConnector : MonoBehaviour {
 
         StopCoroutine(timeCheck);
         SetUserInfoText();
-        ClientReady();
         SetSaveGameId();
     }
 
@@ -139,7 +138,9 @@ public partial class BattleConnector : MonoBehaviour {
         PlayMangement.instance.EditorTestInit(gameState);
     }
 
-    public void begin_mulligan(object args) { }
+    public void begin_mulligan(object args) {
+        PlayMangement.instance.player.GetComponent<IngameTimer>().BeginTimer(30);
+    }
 
     public void hand_changed(object args) {
         if(PlayMangement.instance == null) return;
@@ -156,6 +157,9 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void end_mulligan(object args) {
+        CardHandManager cardHandManager= PlayMangement.instance.cardHandManager;
+        if(!cardHandManager.socketDone)
+            cardHandManager.FirstDrawCardChange();
         //dequeueing = false;
         //getNewCard = true;
     }
