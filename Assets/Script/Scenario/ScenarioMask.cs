@@ -193,10 +193,10 @@ public class ScenarioMask : SerializedMonoBehaviour
                     Transform left = maskObject.transform.Find("Left");
                     Transform right = maskObject.transform.Find("Right");
 
-                    if (left.childCount > 1 && left.GetChild(1).gameObject.GetComponent<CardHandler>().cardData.cardId == sub)
+                    if (left.childCount > 1 && left.GetChild(1).gameObject.GetComponent<CardHandler>().cardData.id == sub)
                         maskObject = left.GetChild(1).gameObject;
 
-                    if (right.childCount > 1 && right.GetChild(1).gameObject.GetComponent<CardHandler>().cardData.cardId == sub)
+                    if (right.childCount > 1 && right.GetChild(1).gameObject.GetComponent<CardHandler>().cardData.id == sub)
                         maskObject = right.GetChild(1).gameObject;
                 }
 
@@ -425,7 +425,7 @@ public class ScenarioMask : SerializedMonoBehaviour
     public void ShowText(string word = "") {
         outText.SetActive(true);
 
-        TextMeshProUGUI setText = outText.GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI setText = outText.transform.Find("OutText").gameObject.GetComponent<TextMeshProUGUI>();
         
 
         if (string.IsNullOrEmpty(word) == false) {

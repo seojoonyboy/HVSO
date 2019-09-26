@@ -110,7 +110,6 @@ public class Wait_click : ScenarioExecute {
 
     public void CheckClick(GameObject target) {       
         if (target == null) {
-            ScenarioMask.Instance.StopEveryHighlight();
             clickstream.Dispose();
             scenarioMask.HideText();
             handler.isDone = true;
@@ -119,7 +118,6 @@ public class Wait_click : ScenarioExecute {
             UnityEngine.EventSystems.PointerEventData clickEvent = new UnityEngine.EventSystems.PointerEventData(UnityEngine.EventSystems.EventSystem.current);
             if (clickEvent.pointerPress.gameObject.name == target.name) {
                 clickstream.Dispose();
-                scenarioMask.StopEveryHighlight();
                 handler.isDone = true;
             }
             else
@@ -133,8 +131,18 @@ public class Wait_click : ScenarioExecute {
         handler.isDone = true;
     }
 
+}
+
+public class StopHighlight : ScenarioExecute {
+    public StopHighlight() : base() { }
+
+    public override void Execute() {
+        scenarioMask.StopEveryHighlight();
+        handler.isDone = true;
+    }
 
 }
+
 
 public class Wait_summon : ScenarioExecute {
     public Wait_summon() : base() { }
