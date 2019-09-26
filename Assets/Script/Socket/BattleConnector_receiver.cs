@@ -250,15 +250,9 @@ public partial class BattleConnector : MonoBehaviour {
         mapClearList.checkCount();
     }
 
-    public void begin_shield_turn(object args) {
-        PlayMangement.instance.GetComponent<IngameTimer>().BeginTimer(15);
-        PlayMangement.instance.LockTurnOver();
-    }
+    public void begin_shield_turn(object args) { }
 
-    public void end_shield_turn(object args) {
-        PlayMangement.instance.GetComponent<IngameTimer>().EndTimer();
-        PlayMangement.instance.heroShieldDone.Add(true);
-    }
+    public void end_shield_turn(object args) { }
 
     public void surrender(object args) {
         var json = (JObject)args;
