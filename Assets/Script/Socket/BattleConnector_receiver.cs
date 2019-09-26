@@ -141,7 +141,7 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void begin_mulligan(object args, int? id) {
-        if(ScenarioGameManagment.scenarioInstance != null)
+        if(ScenarioGameManagment.scenarioInstance == null)
             PlayMangement.instance.player.GetComponent<IngameTimer>().BeginTimer(30);
     }
 
@@ -176,7 +176,7 @@ public partial class BattleConnector : MonoBehaviour {
     public void begin_orc_pre_turn(object args, int? id) {
         PlayerController player;
         player = PlayMangement.instance.player.isHuman ? PlayMangement.instance.enemyPlayer : PlayMangement.instance.player;
-        if (ScenarioGameManagment.scenarioInstance != null) {
+        if (ScenarioGameManagment.scenarioInstance == null) {
             player.GetComponent<IngameTimer>().BeginTimer();
         }
         checkMyTurn(false);
@@ -185,7 +185,7 @@ public partial class BattleConnector : MonoBehaviour {
     public void end_orc_pre_turn(object args, int? id) {
         PlayerController player;
         player = PlayMangement.instance.player.isHuman ? PlayMangement.instance.enemyPlayer : PlayMangement.instance.player;
-        if(ScenarioGameManagment.scenarioInstance != null) {
+        if(ScenarioGameManagment.scenarioInstance == null) {
             player.GetComponent<IngameTimer>().EndTimer();
         }
         if(!PlayMangement.instance.player.isHuman)
@@ -196,7 +196,7 @@ public partial class BattleConnector : MonoBehaviour {
     public void begin_human_turn(object args, int? id) {
         PlayerController player;
         player = PlayMangement.instance.player.isHuman ? PlayMangement.instance.player : PlayMangement.instance.enemyPlayer;
-        if(ScenarioGameManagment.scenarioInstance != null) {
+        if(ScenarioGameManagment.scenarioInstance == null) {
             player.GetComponent<IngameTimer>().BeginTimer(80);
         }
         checkMyTurn(true);
@@ -205,7 +205,7 @@ public partial class BattleConnector : MonoBehaviour {
     public void end_human_turn(object args, int? id) {
         PlayerController player;
         player = PlayMangement.instance.player.isHuman ? PlayMangement.instance.player : PlayMangement.instance.enemyPlayer;
-        if(ScenarioGameManagment.scenarioInstance != null) {
+        if(ScenarioGameManagment.scenarioInstance == null) {
             player.GetComponent<IngameTimer>().EndTimer();
         }
         if(PlayMangement.instance.player.isHuman)
@@ -216,7 +216,7 @@ public partial class BattleConnector : MonoBehaviour {
     public void begin_orc_post_turn(object args, int? id) {
         PlayerController player;
         player = PlayMangement.instance.player.isHuman ? PlayMangement.instance.enemyPlayer : PlayMangement.instance.player;
-        if(ScenarioGameManagment.scenarioInstance != null) {
+        if(ScenarioGameManagment.scenarioInstance == null) {
             player.GetComponent<IngameTimer>().BeginTimer();
         }
         checkMyTurn(false);
@@ -226,7 +226,7 @@ public partial class BattleConnector : MonoBehaviour {
     public void end_orc_post_turn(object args, int? id) {
         PlayerController player;
         player = PlayMangement.instance.player.isHuman ? PlayMangement.instance.enemyPlayer : PlayMangement.instance.player;
-        if(ScenarioGameManagment.scenarioInstance != null) {
+        if(ScenarioGameManagment.scenarioInstance == null) {
             player.GetComponent<IngameTimer>().EndTimer();
         }
         if(!PlayMangement.instance.player.isHuman)
