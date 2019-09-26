@@ -8,6 +8,7 @@ public class TurnMachine : MonoBehaviour {
     public UnityEvent onTurnChanged;
     public UnityEvent onPrepareTurn;
     IngameEventHandler eventHandler;
+    private PlayerController player;
     private int index = -1;
     TurnType turn;
     void Awake() {
@@ -16,6 +17,7 @@ public class TurnMachine : MonoBehaviour {
     void Start() {
         eventHandler = PlayMangement.instance.EventHandler;
         eventHandler.AddListener(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, OnEndTurnBtnClicked);
+        player = PlayMangement.instance.player;
         OnPrepareTurn();
     }
 
@@ -47,6 +49,14 @@ public class TurnMachine : MonoBehaviour {
 
     public string CurrentTurn() {
         return turn.ToString();
+    }
+
+    public bool isPlayerTurn() {
+        int num = (int)turn;
+        if(player.isHuman)
+            return num == 1;
+        else
+            return num == 0 || num == 2;
     }
 
     public enum TurnType {
