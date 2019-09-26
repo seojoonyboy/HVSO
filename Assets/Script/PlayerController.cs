@@ -34,7 +34,7 @@ public class PlayerController : MonoBehaviour
     public Vector3 unitClosePosition;
     public Vector3 wallPosition;
 
-    public ReactiveProperty<int> HP;
+    public ReactiveProperty<int> HP = new ReactiveProperty<int>(1);
     public ReactiveProperty<int> resource = new ReactiveProperty<int>(2);
     public ReactiveProperty<bool> isPicking = new ReactiveProperty<bool>(false);
     public ReactiveProperty<int> shieldStack = new ReactiveProperty<int>(0);
@@ -178,14 +178,18 @@ public class PlayerController : MonoBehaviour
     }
     
 
+    public void SetHP(int amount) {
+        HP.Value = amount;
+    }
 
 
-    public void SetPlayerStat(int hp) {
-        HP = new ReactiveProperty<int>(hp);
+
+    public void SetPlayerStat() {
         ObserverText();
     }
 
     private void ObserverText() {
+        playerUI.transform.Find("PlayerHealth/HealthText").gameObject.SetActive(true);
         var ObserveHP = HP.TakeWhile(_ => PlayMangement.instance.isGame == true).Subscribe(_ => ChangedHP());
         var ObserveResource = resource.TakeWhile(_ => PlayMangement.instance.isGame == true).Subscribe(_=> ChangedResource());
         //var ObserveShield = shieldStack.Subscribe(_ => shieldGauge.fillAmount = (float)shieldStack.Value / 8).AddTo(PlayMangement.instance.transform.gameObject);

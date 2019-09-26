@@ -71,6 +71,7 @@ public class CardHandManager : MonoBehaviour {
         finBtn.GetComponent<Image>().enabled = false;
         finBtn.GetChild(0).gameObject.SetActive(false);
         finBtn.gameObject.SetActive(false);
+        PlayMangement.instance.SetGameData();
         //PlayMangement.instance.resultManager.SetResultWindow("win", PlayMangement.instance.player.isHuman);
     }
 

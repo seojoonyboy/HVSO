@@ -166,13 +166,25 @@ public class EffectSystem : SerializedMonoBehaviour {
 
 
     public void CameraZoomIn(Transform target, float size, float time) {
-        iTween.ValueTo(Camera.main.gameObject, iTween.Hash("from", Camera.main.orthographicSize, "to", size, "onUpdate", "UpdateSize", "time", time));
-        iTween.MoveTo(Camera.main.gameObject, iTween.Hash("position", target.position, "time", time));
+
+        Vector3 pos = new Vector3(target.position.x, target.position.y, -10);
+
+        float targetSize = size;
+        
+        iTween.ValueTo(Camera.main.gameObject, iTween.Hash("from", Camera.main.orthographicSize, "to", targetSize, "onUpdate", "UpdateSize", "time", time));
+        iTween.MoveTo(Camera.main.gameObject, iTween.Hash("position", pos, "time", time));
     }
 
     public void CameraZoomOut(float time) {
-        iTween.ValueTo(Camera.main.gameObject, iTween.Hash("from", Camera.main.orthographicSize, "to", 9.6f, "onUpdate", "UpdateSize", "time", time));
-        iTween.MoveTo(Camera.main.gameObject, iTween.Hash("position", Vector3.zero, "time", time));
+
+        Vector3 pos = new Vector3(0, 0, -10);
+
+        iTween.ValueTo(Camera.main.gameObject, iTween.Hash("from", Camera.main.orthographicSize, "to", 9.6f, "onupdate", "UpdateSize", "time", time));
+        iTween.MoveTo(Camera.main.gameObject, iTween.Hash("position", pos, "time", time));
+    }
+
+    public void UpdateSize(float num) {
+        Camera.main.orthographicSize = num;
     }
 
 

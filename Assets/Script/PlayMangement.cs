@@ -75,20 +75,22 @@ public partial class PlayMangement : MonoBehaviour {
     public void SyncPlayerHp() {
         if (socketHandler.gameState != null) {
             SocketFormat.Players socketStat = socketHandler.gameState.players;
-            InitGameData((player.isHuman == true) ? socketStat.human.hero.currentHp : socketStat.orc.hero.currentHp,
+            PlayerSetHPData((player.isHuman == true) ? socketStat.human.hero.currentHp : socketStat.orc.hero.currentHp,
                          (enemyPlayer.isHuman == true) ? socketStat.human.hero.currentHp : socketStat.orc.hero.currentHp);
         }
         else
-            InitGameData(20, 20);
+            PlayerSetHPData(20, 20);
     }
 
 
-    //최초에 데이터를 불러드릴 함수. missionData를 임시로 놓고, 그 후에 게임의 정보들 등록
-    //체력설정 -> 승리목표 설정 -> 자원분배 -> 턴
-    protected void InitGameData(int playerhp, int enemyhp) {
-        object missionData = null;
+    public void SetGameData() {
+        InitGameData();
+    }
 
-        RequestStartData(playerhp, enemyhp);
+    //최초에 데이터를 불러드릴 함수. missionData를 임시로 놓고, 그 후에 게임의 정보들 등록
+    //승리목표 설정 -> 자원분배 -> 턴
+    protected void InitGameData() {
+        ObservePlayerData();
         SetVictoryCondition();
         DistributeResource();
         InitTurnTable();
@@ -100,19 +102,26 @@ public partial class PlayMangement : MonoBehaviour {
 
         switch (condition) {
             default:
-                matchRule = new victoryModule.Annihilation_Match(player, enemyPlayer);
+                //matchRule = new victoryModule.Annihilation_Match(player, enemyPlayer);
+                matchRule = gameObject.AddComponent<victoryModule.Annihilation_Match>();
+                matchRule.player = player;
+                matchRule.enemyPlayer = enemyPlayer;
                 matchRule.SetCondition();
                 break;
         }
     }
-    // 시작전 체력부여, default 20
-    public void RequestStartData(int playerData = 20, int enemyData = 20) {
-        int playerHP = playerData;
-        int enemyHP = enemyData;
 
-        player.SetPlayerStat(playerHP);
-        enemyPlayer.SetPlayerStat(enemyHP);
+    public void ObservePlayerData() {
+        player.SetPlayerStat();
+        enemyPlayer.SetPlayerStat();
     }
+
+    public void PlayerSetHPData(int playerHP, int enemyHP) {
+        player.SetHP(playerHP);
+        enemyPlayer.SetHP(enemyHP);
+    }
+
+
 
     private void Update() {
         //if (Input.GetKeyDown(KeyCode.Escape)) {

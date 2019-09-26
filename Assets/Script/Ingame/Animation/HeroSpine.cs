@@ -36,7 +36,7 @@ public class HeroSpine : MonoBehaviour
     private bool thinking = false;
     
     public float deadTime {
-        get { return skeletonAnimation.skeleton.Data.FindAnimation(deadAnimationName).Duration; }
+        get { return skeletonAnimation.skeleton.Data.FindAnimation(lastHitAnimationName).Duration; }
     }
 
 
