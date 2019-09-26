@@ -152,13 +152,23 @@ public class PlayerController : MonoBehaviour
 
     protected void SetShield() {
         GameObject shield;
-        Transform positionTransform = PlayMangement.instance.backGround.transform.Find("PlayerPosition");
-        shield = (isHuman == true) ? Instantiate(PlayMangement.instance.humanShield, transform) : Instantiate(PlayMangement.instance.orcShield, transform);
-        shield.transform.position = (isPlayer == true) ? positionTransform.Find("Player_1Wall").position : positionTransform.Find("Player_2Wall").position;
+        Transform playerTransform = PlayMangement.instance.backGround.transform.Find("PlayerPosition");
+        shield = Instantiate(EffectSystem.Instance.effectObject[EffectSystem.EffectType.HERO_SHIELD], transform);
+
+
+        SkeletonAnimation skeletonAnimation = shield.GetComponent<SkeletonAnimation>();
+        Skeleton skeleton = skeletonAnimation.skeleton;
+        skeleton.SetSkin((isHuman == true) ? "HUMAN" : "ORC");
+
+        skeletonAnimation.Initialize(false);
+        skeletonAnimation.Update(0);
+        skeletonAnimation.AnimationState.ClearTrack(0);
+
+        shield.transform.position = bodyTransform.position;
         shield.transform.localScale = PlayMangement.instance.backGround.transform.localScale;
         shield.name = "shield";
         shield.SetActive(false);
-        heroSpine.defenseFinish += DisableShield;
+        //heroSpine.defenseFinish += DisableShield;
     }
 
 
@@ -316,6 +326,16 @@ public class PlayerController : MonoBehaviour
     public void ActiveShield() {
         GameObject shield = transform.Find("shield").gameObject;
         shield.SetActive(true);
+
+
+        SkeletonAnimation skeletonAnimation = shield.GetComponent<SkeletonAnimation>();
+        skeletonAnimation.Initialize(false);
+        skeletonAnimation.Update(0);
+        skeletonAnimation.AnimationState.ClearTrack(0);
+        TrackEntry entry;
+        entry = skeletonAnimation.AnimationState.SetAnimation(0, (isPlayer == true) ? "bottom" : "upside", false);
+        entry.Complete += delegate (TrackEntry temp) { shield.SetActive(false); };
+
         SetState(HeroState.SHIELD);
         if(PlayMangement.instance.heroShieldActive) return;
         PlayMangement.instance.heroShieldActive = true;

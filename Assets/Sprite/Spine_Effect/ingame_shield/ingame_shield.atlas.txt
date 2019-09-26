@@ -1,0 +1,76 @@
+
+ingame_shield.png
+size: 1024,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Glow1
+  rotate: false
+  xy: 633, 56
+  size: 192, 192
+  orig: 192, 192
+  offset: 0, 0
+  index: -1
+H_shield1
+  rotate: false
+  xy: 633, 248
+  size: 213, 260
+  orig: 213, 260
+  offset: 0, 0
+  index: -1
+H_shield2
+  rotate: false
+  xy: 384, 216
+  size: 249, 292
+  orig: 249, 292
+  offset: 0, 0
+  index: -1
+H_shield4
+  rotate: false
+  xy: 0, 124
+  size: 384, 384
+  orig: 384, 384
+  offset: 0, 0
+  index: -1
+card
+  rotate: true
+  xy: 0, 0
+  size: 124, 158
+  orig: 124, 158
+  offset: 0, 0
+  index: -1
+card2
+  rotate: false
+  xy: 846, 350
+  size: 132, 158
+  orig: 132, 158
+  offset: 0, 0
+  index: -1
+card22
+  rotate: true
+  xy: 846, 219
+  size: 131, 158
+  orig: 131, 158
+  offset: 0, 0
+  index: -1
+card3
+  rotate: true
+  xy: 384, 37
+  size: 179, 212
+  orig: 179, 212
+  offset: 0, 0
+  index: -1
+card4
+  rotate: true
+  xy: 158, 0
+  size: 124, 158
+  orig: 124, 158
+  offset: 0, 0
+  index: -1
+card_h
+  rotate: false
+  xy: 825, 61
+  size: 124, 158
+  orig: 124, 158
+  offset: 0, 0
+  index: -1
