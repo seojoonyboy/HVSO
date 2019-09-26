@@ -8,6 +8,7 @@ using BestHTTP.WebSocket;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SocketFormat;
+using System.Threading.Tasks;
 
 public partial class BattleConnector : MonoBehaviour {
 
@@ -84,8 +85,10 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void OnError(WebSocket webSocket, Exception ex) {
+        Time.timeScale = 0;
+        reconnectModal = Instantiate(Modal.instantiateReconnectModal());
         Logger.LogError("Socket Error message : " + ex);
-        Invoke("TryReconnect", 2f);
+        TryReconnect();
     }
 
     private bool Quitting() {
@@ -101,7 +104,8 @@ public partial class BattleConnector : MonoBehaviour {
         return true;
     }
 
-    public void TryReconnect() {
+    public async void TryReconnect() {
+        await Task.Delay(2000);
         if(isQuit) return;
         if(reconnectCount >= 5) {
             PlayMangement playMangement = PlayMangement.instance;

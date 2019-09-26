@@ -59,16 +59,11 @@ public class ScenarioGameManagment : PlayMangement {
 
     void Start() {
         SetBackGround();
-        if (socketHandler.gameState != null) {
-            SocketFormat.Players socketStat = socketHandler.gameState.players;
-            InitGameData((player.isHuman == true) ? socketStat.human.hero.currentHp : socketStat.orc.hero.currentHp,
-                         (enemyPlayer.isHuman == true) ? socketStat.human.hero.currentHp : socketStat.orc.hero.currentHp);
-        }
-        else
-            InitGameData(20, 20);
 
         settingModal.SetActive(true);
-        Destroy(FindObjectOfType<NewbiController>().gameObject);
+        if (FindObjectOfType<NewbiController>() != null) {
+            Destroy(FindObjectOfType<NewbiController>().gameObject);
+        }
         PlayerPrefs.SetInt("isFirst", 0);
         AccountManager.Instance.needChangeNickName = true;
     }

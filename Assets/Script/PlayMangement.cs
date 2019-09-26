@@ -69,7 +69,10 @@ public partial class PlayMangement : MonoBehaviour {
     private void Start() {
         SetBackGround();
         SetPlayerCard();
+        //StartCoroutine(DisconnectTest());
+    }
 
+    public void SyncPlayerHp() {
         if (socketHandler.gameState != null) {
             SocketFormat.Players socketStat = socketHandler.gameState.players;
             InitGameData((player.isHuman == true) ? socketStat.human.hero.currentHp : socketStat.orc.hero.currentHp,
@@ -77,9 +80,6 @@ public partial class PlayMangement : MonoBehaviour {
         }
         else
             InitGameData(20, 20);
-
-
-        //StartCoroutine(DisconnectTest());
     }
 
 
