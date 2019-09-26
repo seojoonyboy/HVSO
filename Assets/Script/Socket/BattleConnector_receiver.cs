@@ -132,6 +132,8 @@ public partial class BattleConnector : MonoBehaviour {
             object value = JsonUtility.FromJson(PlayerPrefs.GetString("Editor_startState"), typeof(StartState));
             SendStartState(value);
         }
+        PlayMangement.instance.GetComponent<TurnMachine>().onPrepareTurn.Invoke();
+        Logger.Log("준비 턴");
     }
 
     public void start_state(object args) {
