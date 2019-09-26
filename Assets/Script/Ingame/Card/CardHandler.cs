@@ -22,7 +22,7 @@ public partial class CardHandler : MonoBehaviour {
     Animator cssAni;
     public string cardID;
     protected int _itemID;
-
+    protected TurnMachine turnMachine;
     
     public Transform mouseLocalPos;
     public Transform mouseXPos;
@@ -64,6 +64,14 @@ public partial class CardHandler : MonoBehaviour {
         mouseLocalPos = transform.parent.parent.parent.Find("MouseLocalPosition");        
         clm = PlayMangement.instance.cardInfoCanvas.Find("CardInfoList").GetComponent<CardListManager>();
         gameObject.SetActive(false);
+
+        turnMachine = PlayMangement.instance.GetComponent<TurnMachine>();
+        PlayMangement.instance.EventHandler.AddListener(
+            IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, 
+            (type, sender, parm) => {
+
+            }
+        );
     }
 
     public virtual void DrawCard(string ID, int itemID = -1, bool first = false) {
@@ -353,16 +361,6 @@ public partial class CardHandler : MonoBehaviour {
 
     public void UserResource(int cost) {
         PlayMangement.instance.player.resource.Value -= cost;
-    }
-
-    protected bool isMyTurn(bool isMagic) {
-        if(PlayMangement.instance.heroShieldActive) return false;
-        bool isHuman = PlayMangement.instance.player.isHuman;
-        string currentTurn = PlayMangement.instance.GetComponent<TurnMachine>().CurrentTurn();
-        bool isHumanTurn = currentTurn.CompareTo("HUMAN") == 0;
-        bool isOrcPreTurn = currentTurn.CompareTo("ORC") == 0;
-        bool isOrcMagicTurn = currentTurn.CompareTo("SECRET") == 0;
-        return isHuman ? isHumanTurn : isMagic ? isOrcMagicTurn : isOrcPreTurn;
     }
 
     protected void StartDragCard() {
