@@ -57,6 +57,16 @@ public class PlayerController : MonoBehaviour
         THINKDONE
     }
 
+    public float DeadAnimationTime {
+        get { return heroSpine.deadTime; }
+    }
+
+    public Transform bodyTransform {
+        get { return heroSpine.gameObject.transform.Find("effect_body"); }
+    }
+
+
+
     public bool getPlayerTurn {
         get { return myTurn; }
     }
@@ -181,11 +191,11 @@ public class PlayerController : MonoBehaviour
         //var ObserveShield = shieldStack.Subscribe(_ => shieldGauge.fillAmount = (float)shieldStack.Value / 8).AddTo(PlayMangement.instance.transform.gameObject);
         //var heroDown = HP.Where(x => x <= 0).Subscribe(_ => ).AddTo(PlayMangement.instance.transform.gameObject);
 
-        //var gameOverDispose = HP.Where(x => x <= 0)
-        //                      .Subscribe(_ => {
-        //                          SetState(HeroState.DEAD);
-        //                      })        
-        //                      .AddTo(PlayMangement.instance.transform.gameObject);        
+        var ObserveDead = HP.Where(x => x <= 0)
+                              .Subscribe(_ => {
+                                  SetState(HeroState.DEAD);
+                              })
+                              .AddTo(PlayMangement.instance.transform.gameObject);
     }
     
 

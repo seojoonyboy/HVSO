@@ -35,6 +35,11 @@ public class HeroSpine : MonoBehaviour
     public UnityAction afterAction;
     private bool thinking = false;
     
+    public float deadTime {
+        get { return skeletonAnimation.skeleton.Data.FindAnimation(deadAnimationName).Duration; }
+    }
+
+
     private void Start() {
         Init();
     }
@@ -90,9 +95,6 @@ public class HeroSpine : MonoBehaviour
         TrackEntry entry;
         entry = skeletonAnimation.AnimationState.SetAnimation(0, lastHitAnimationName, false);
         currentAnimationName = deadAnimationName;
-
-        if (afterAction != null)
-            entry.Complete += delegate (TrackEntry temp) { afterAction(); };
     }
 
 
