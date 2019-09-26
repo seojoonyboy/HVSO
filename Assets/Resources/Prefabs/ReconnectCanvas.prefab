@@ -149,8 +149,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.0014648438, y: -37.90001}
-  m_SizeDelta: {x: -190.5, y: -182.5}
+  m_AnchoredPosition: {x: 0, y: -53.2}
+  m_SizeDelta: {x: -190.5, y: -214.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &222946599012681304
 CanvasRenderer:
@@ -335,8 +335,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -48.2}
-  m_SizeDelta: {x: -190.51, y: 97.6}
+  m_AnchoredPosition: {x: 17.299988, y: -92.6}
+  m_SizeDelta: {x: -634.1, y: 73}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &222299424120238032
 CanvasRenderer:
@@ -370,7 +370,7 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 543097dc7f4786741a67b50564eeee9b, type: 3}
     m_FontSize: 57
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 0
     m_MaxSize: 80
     m_Alignment: 4
@@ -445,8 +445,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 800, y: 600}
+  m_AnchoredPosition: {x: 0, y: 59.5}
+  m_SizeDelta: {x: 911.9, y: 481.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &222803574472520144
 CanvasRenderer:
@@ -476,7 +476,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: b633c17acff9a53419cd0a1f462dca0b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2ab0254445cb9c942887178805bc370e, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -519,6 +519,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -195.1}
-  m_SizeDelta: {x: 0, y: 390.1}
+  m_AnchoredPosition: {x: 0, y: -240.57}
+  m_SizeDelta: {x: 0, y: 481.05}
   m_Pivot: {x: 0.5, y: 0.5}
