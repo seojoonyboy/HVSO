@@ -319,6 +319,8 @@ public class PlayerController : MonoBehaviour
         SetState(HeroState.SHIELD);
         if(PlayMangement.instance.heroShieldActive) return;
         PlayMangement.instance.heroShieldActive = true;
+        GetComponent<IngameTimer>().OnTimeout.AddListener(PlayMangement.instance.showCardsHandler.TimeoutShowCards);
+        GetComponent<IngameTimer>().BeginTimer(15);
         FullShieldStack(shieldStack.Value);
         StartCoroutine(PlayMangement.instance.DrawSpecialCard(isHuman));
         shieldStack.Value = 0;

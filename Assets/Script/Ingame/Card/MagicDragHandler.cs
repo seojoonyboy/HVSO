@@ -163,7 +163,8 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
             CardInfoOnDrag.instance.OffCardDragInfo();
             PlayMangement.instance.player.ConsumeShieldStack();
             showCardsHandler.ToggleAllCards();
-
+            GetComponent<IngameTimer>().OnTimeout.RemoveListener(PlayMangement.instance.showCardsHandler.TimeoutShowCards);
+            GetComponent<IngameTimer>().EndTimer();
             return;
         }
         if (firstDraw) return;
