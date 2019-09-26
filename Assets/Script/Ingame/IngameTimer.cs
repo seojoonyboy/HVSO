@@ -9,6 +9,7 @@ public class IngameTimer : MonoBehaviour {
     public int uiStartSec = 10;
 
     int currentSec;
+    int decreaseAmount = 1; //pause 처리를 위함
     IEnumerator TimerCoroutine, UICoroutine;
 
     private void OnTimerUI() {
@@ -27,7 +28,7 @@ public class IngameTimer : MonoBehaviour {
         while (currentSec > 0) {
             value.text = currentSec.ToString();
             yield return new WaitForSeconds(1.0f);
-            currentSec -= 1;
+            currentSec -= decreaseAmount;
         }
         EndTimer();
     }
@@ -42,7 +43,7 @@ public class IngameTimer : MonoBehaviour {
         while (currentSec > uiStartSec) {
             Logger.Log("Timer : " + currentSec);
             yield return new WaitForSeconds(1.0f);
-            currentSec -= 1;
+            currentSec -= decreaseAmount;
         }
 
         OnTimerUI();
@@ -63,6 +64,20 @@ public class IngameTimer : MonoBehaviour {
     public void EndTimer() {
         timerUI.SetActive(false);
         StopAllCoroutines();
+    }
+
+    /// <summary>
+    /// 타이머 일시정지 (ex. 상대 실드가 터져 잠시 대기 할때)
+    /// </summary>
+    public void PauseTimer() {
+        decreaseAmount = 0;
+    }
+
+    /// <summary>
+    /// 타이머 재개
+    /// </summary>
+    public void ResumeTimer() {
+        decreaseAmount = 1;
     }
 
 #if UNITY_EDITOR
