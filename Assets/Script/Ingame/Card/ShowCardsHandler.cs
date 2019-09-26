@@ -17,7 +17,7 @@ public class ShowCardsHandler : MonoBehaviour {
 
 #if UNITY_EDITOR
     void Update() {
-        if (Input.GetKeyDown(KeyCode.Q)) {
+        if (heroCards != null && heroCards.Count ==2 && Input.GetKeyDown(KeyCode.Q)) {
             TimeoutShowCards();
         }    
     }
@@ -166,5 +166,9 @@ public class ShowCardsHandler : MonoBehaviour {
         catch(System.Exception ex) {
             Logger.LogError(ex.ToString());
         }
+
+        CardInfoOnDrag.instance.OffCardDragInfo();
+        PlayMangement.instance.player.ConsumeShieldStack();
+        ToggleAllCards();
     }
 }
