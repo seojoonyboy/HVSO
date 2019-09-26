@@ -376,14 +376,15 @@ public class PlayerController : MonoBehaviour
     public void ReleaseTurn() {
         //if (isPlayer == true && PlayMangement.instance.skillAction == true) return;
         if (myTurn == true && !dragCard) {
+            PlayMangement playManagement = PlayMangement.instance;
             if (isPlayer) {
-                PlayMangement.instance.releaseTurnBtn.gameObject.SetActive(false);
+                playManagement.releaseTurnBtn.gameObject.SetActive(false);
                 buttonParticle.SetActive(false);
             }
             myTurn = false;
-            PlayMangement.instance.GetPlayerTurnRelease();
-            if(isHuman == PlayMangement.instance.player.isHuman)
-                PlayMangement.instance.socketHandler.TurnOver();
+            playManagement.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, playManagement.GetComponent<TurnMachine>().CurrentTurn());
+            if(isHuman == playManagement.player.isHuman)
+                playManagement.socketHandler.TurnOver();
         }
     }
 

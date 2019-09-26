@@ -171,6 +171,8 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void end_orc_pre_turn(object args) {
+        if(!PlayMangement.instance.player.isHuman)
+            PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, TurnType.ORC);
         useCardList.isDone = true;
     }
 
@@ -179,6 +181,8 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void end_human_turn(object args) {
+        if(PlayMangement.instance.player.isHuman)
+            PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, TurnType.HUMAN);
         useCardList.isDone = true;
     }
 
@@ -187,11 +191,9 @@ public partial class BattleConnector : MonoBehaviour {
         unitSkillList.isDone = false;
     }
 
-    public void checkMapPos(object args) {
-        if(PlayMangement.instance.player.isHuman) return;
-    }
-
     public void end_orc_post_turn(object args) {
+        if(!PlayMangement.instance.player.isHuman)
+            PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, TurnType.SECRET);
         useCardList.isDone = true;
         unitSkillList.isDone = true;
     }

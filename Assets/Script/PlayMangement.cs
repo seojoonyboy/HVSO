@@ -278,7 +278,7 @@ public partial class PlayMangement : MonoBehaviour {
         #endregion
         SocketFormat.DebugSocketData.ShowHandCard(socketHandler.gameState.players.enemyPlayer(enemyPlayer.isHuman).deck.handCards);
         if (isBefore)
-            enemyPlayer.ReleaseTurn();
+            EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, GetComponent<TurnMachine>().CurrentTurn());
     }
 
     /// <summary>
@@ -450,7 +450,7 @@ public partial class PlayMangement : MonoBehaviour {
     public void ChangeTurn() {
         if (isGame == false) return;
         player.buttonParticle.SetActive(false);
-        currentTurn = GetComponent<TurnMachine>().CurrentTurn();
+        currentTurn = GetComponent<TurnMachine>().CurrentTurn().ToString();
         Logger.Log(currentTurn);
         switch (currentTurn) {
             case "ORC":
@@ -548,12 +548,7 @@ public partial class PlayMangement : MonoBehaviour {
             yield return EnemyUseCard(false);
         //서버에서 턴 넘김이 완료 될 때까지 대기
         yield return socketHandler.WaitBattle();
-        EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this);
-        //CustomEvent.Trigger(gameObject, "EndTurn");
-    }
-
-    public void GetPlayerTurnRelease() {
-        EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this);
+        EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, TurnType.SECRET);
         //CustomEvent.Trigger(gameObject, "EndTurn");
     }
 
@@ -577,7 +572,7 @@ public partial class PlayMangement : MonoBehaviour {
         EndTurnDraw();
         yield return new WaitForSeconds(2.0f);
         yield return new WaitUntil(() => !SkillModules.SkillHandler.running);
-        EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this);
+        EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, TurnType.BATTLE);
         //CustomEvent.Trigger(gameObject, "EndTurn");
         StopCoroutine("battleCoroutine");
         dragable = true;
