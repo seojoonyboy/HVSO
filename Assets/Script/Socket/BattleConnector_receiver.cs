@@ -141,7 +141,8 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void begin_mulligan(object args) {
-        PlayMangement.instance.player.GetComponent<IngameTimer>().BeginTimer(30);
+        if(ScenarioGameManagment.scenarioInstance != null)
+            PlayMangement.instance.player.GetComponent<IngameTimer>().BeginTimer(30);
     }
 
     public void hand_changed(object args) {
@@ -175,14 +176,18 @@ public partial class BattleConnector : MonoBehaviour {
     public void begin_orc_pre_turn(object args) {
         PlayerController player;
         player = PlayMangement.instance.player.isHuman ? PlayMangement.instance.enemyPlayer : PlayMangement.instance.player;
-        player.GetComponent<IngameTimer>().BeginTimer();
+        if (ScenarioGameManagment.scenarioInstance != null) {
+            player.GetComponent<IngameTimer>().BeginTimer();
+        }
         checkMyTurn(false);
     }
 
     public void end_orc_pre_turn(object args) {
         PlayerController player;
         player = PlayMangement.instance.player.isHuman ? PlayMangement.instance.enemyPlayer : PlayMangement.instance.player;
-        player.GetComponent<IngameTimer>().EndTimer();
+        if(ScenarioGameManagment.scenarioInstance != null) {
+            player.GetComponent<IngameTimer>().EndTimer();
+        }
         if(!PlayMangement.instance.player.isHuman)
             PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, TurnType.ORC);
         useCardList.isDone = true;
@@ -191,14 +196,18 @@ public partial class BattleConnector : MonoBehaviour {
     public void begin_human_turn(object args) {
         PlayerController player;
         player = PlayMangement.instance.player.isHuman ? PlayMangement.instance.player : PlayMangement.instance.enemyPlayer;
-        player.GetComponent<IngameTimer>().BeginTimer();
+        if(ScenarioGameManagment.scenarioInstance != null) {
+            player.GetComponent<IngameTimer>().BeginTimer();
+        }
         checkMyTurn(true);
     }
 
     public void end_human_turn(object args) {
         PlayerController player;
         player = PlayMangement.instance.player.isHuman ? PlayMangement.instance.player : PlayMangement.instance.enemyPlayer;
-        player.GetComponent<IngameTimer>().EndTimer();
+        if(ScenarioGameManagment.scenarioInstance != null) {
+            player.GetComponent<IngameTimer>().EndTimer();
+        }
         if(PlayMangement.instance.player.isHuman)
             PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, TurnType.HUMAN);
         useCardList.isDone = true;
@@ -207,7 +216,9 @@ public partial class BattleConnector : MonoBehaviour {
     public void begin_orc_post_turn(object args) {
         PlayerController player;
         player = PlayMangement.instance.player.isHuman ? PlayMangement.instance.enemyPlayer : PlayMangement.instance.player;
-        player.GetComponent<IngameTimer>().BeginTimer();
+        if(ScenarioGameManagment.scenarioInstance != null) {
+            player.GetComponent<IngameTimer>().BeginTimer();
+        }
         checkMyTurn(false);
         unitSkillList.isDone = false;
     }
@@ -215,7 +226,9 @@ public partial class BattleConnector : MonoBehaviour {
     public void end_orc_post_turn(object args) {
         PlayerController player;
         player = PlayMangement.instance.player.isHuman ? PlayMangement.instance.enemyPlayer : PlayMangement.instance.player;
-        player.GetComponent<IngameTimer>().EndTimer();
+        if(ScenarioGameManagment.scenarioInstance != null) {
+            player.GetComponent<IngameTimer>().EndTimer();
+        }
         if(!PlayMangement.instance.player.isHuman)
             PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, TurnType.SECRET);
         useCardList.isDone = true;
