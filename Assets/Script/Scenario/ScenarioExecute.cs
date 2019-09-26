@@ -27,10 +27,20 @@ public class Print_message : ScenarioExecute {
     public Print_message() : base() { }
 
     public override void Execute() {
+        scenarioMask.ShowText(args[0]);
         handler.isDone = true;
-        Logger.Log("Print_message");
     }
 }
+
+public class Hide_message : ScenarioExecute {
+    public Hide_message() : base() { }
+
+    public override void Execute() {
+        scenarioMask.HideText();
+        handler.isDone = true;
+    }
+}
+
 
 public class Highlight : ScenarioExecute {
     public Highlight() :base() { }
@@ -80,7 +90,6 @@ public class Wait_click : ScenarioExecute {
 
         if (args[0] == "screen") {
             target = null;
-            scenarioMask.ShowText();
         }
         else if (args.Count > 1)
             target = scenarioMask.GetMaskingObject(args[0], args[1]);

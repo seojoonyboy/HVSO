@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Sirenix.OdinInspector;
 using UniRx;
+using TMPro;
 
 public class ScenarioMask : SerializedMonoBehaviour
 {
@@ -423,6 +424,16 @@ public class ScenarioMask : SerializedMonoBehaviour
 
     public void ShowText(string word = "") {
         outText.SetActive(true);
+
+        TextMeshProUGUI setText = outText.GetComponent<TextMeshProUGUI>();
+        
+
+        if (string.IsNullOrEmpty(word) == false) {
+            setText.text = word;
+        }
+        else {
+            setText.text = "터치를 누르면 진행합니다.";
+        }
     }
 
     public void HideText() {
