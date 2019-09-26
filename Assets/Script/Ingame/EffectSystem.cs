@@ -171,7 +171,7 @@ public class EffectSystem : SerializedMonoBehaviour {
 
         float targetSize = size;
         
-        iTween.ValueTo(Camera.main.gameObject, iTween.Hash("from", Camera.main.orthographicSize, "to", targetSize, "onUpdate", "UpdateSize", "time", time));
+        iTween.ValueTo(Camera.main.gameObject, iTween.Hash("from", Camera.main.orthographicSize, "to", targetSize, "onUpdate", "UpdateSize", "time", time/2));
         iTween.MoveTo(Camera.main.gameObject, iTween.Hash("position", pos, "time", time));
     }
 
@@ -179,7 +179,7 @@ public class EffectSystem : SerializedMonoBehaviour {
 
         Vector3 pos = new Vector3(0, 0, -10);
 
-        iTween.ValueTo(Camera.main.gameObject, iTween.Hash("from", Camera.main.orthographicSize, "to", 9.6f, "onupdate", "UpdateSize", "time", time));
+        iTween.ValueTo(Camera.main.gameObject, iTween.Hash("from", Camera.main.orthographicSize, "to", 9.6f, "onupdate", "UpdateSize", "time", time/2));
         iTween.MoveTo(Camera.main.gameObject, iTween.Hash("position", pos, "time", time));
     }
 
