@@ -25,7 +25,6 @@ public class TurnMachine : MonoBehaviour {
         if(Param != null)
             if((TurnType)Param != turn) 
                 return;
-        Debug.Log("same thing");
         NextTurn();
     }
 

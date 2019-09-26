@@ -186,7 +186,6 @@ public partial class BattleConnector : MonoBehaviour {
         PlayerController player;
         player = PlayMangement.instance.player.isHuman ? PlayMangement.instance.player : PlayMangement.instance.enemyPlayer;
         player.GetComponent<IngameTimer>().BeginTimer();
-        PlayMangement.instance.GetComponent<IngameTimer>().BeginTimer(80);
         checkMyTurn(true);
     }
 
