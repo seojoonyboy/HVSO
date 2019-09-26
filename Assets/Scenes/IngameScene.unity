@@ -3829,6 +3829,11 @@ MonoBehaviour:
   timerUI: {fileID: 232247389}
   value: {fileID: 104617460}
   uiStartSec: 10
+  OnTimeout:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &135949495
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3844,6 +3849,11 @@ MonoBehaviour:
   timerUI: {fileID: 284924608}
   value: {fileID: 2018674542}
   uiStartSec: 10
+  OnTimeout:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!1 &135949496 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3805233970779977359, guid: 0d6430e7aba1143419839532a257307e,
@@ -5091,6 +5101,11 @@ PrefabInstance:
       propertyPath: resultManager
       value: 
       objectReference: {fileID: 4342906}
+    - target: {fileID: 8279262149816908149, guid: 089e07056aa4b4148b4eff310e0b9129,
+        type: 3}
+      propertyPath: showCardsHandler
+      value: 
+      objectReference: {fileID: 1340215710487915672}
     - target: {fileID: 8999688528475227032, guid: 089e07056aa4b4148b4eff310e0b9129,
         type: 3}
       propertyPath: serializationData.PrefabModifications.Array.size
