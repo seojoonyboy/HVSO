@@ -237,7 +237,7 @@ public class PlayerController : MonoBehaviour
         else data = socketHandler.gameState.players.myPlayer(isHuman);
         SocketFormat.ShieldCharge shieldData = GetShieldData();
 
-        Debug.Log("쉴드게이지!" + shieldData.shieldCount);
+        if(shieldData != null) Debug.Log("쉴드게이지!" + shieldData.shieldCount);
 
         if(data.shieldActivate && CheckShieldActivate(shieldData)) {
             ActiveShield();

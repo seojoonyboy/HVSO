@@ -295,6 +295,7 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void end_shield_turn(object args, int? id) { 
+        PlayMangement.instance.heroShieldDone.Add(true);
         if(ingameTimer != null) {
             ingameTimer.ResumeTimer();
             ingameTimer = null;
