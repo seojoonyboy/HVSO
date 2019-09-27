@@ -122,14 +122,11 @@ public class HUDController : MonoBehaviour {
     // Start is called before the first frame update
     void Start() {
         SetHeader(Type.SHOW_USER_INFO);
-        main_HorizontalScrollSnap.OnSelectionPageChangedEvent.AddListener(x => OnPageChanged(x));
+        //main_HorizontalScrollSnap.OnSelectionPageChangedEvent.AddListener(x => OnPageChanged(x));
     }
 
     public void OnPageChanged(int pageNum) {
         switch (pageNum) {
-            case 0:
-                SetHeader(Type.DICTIONARY_WINDOW);
-                break;
             default:
                 SetHeader(Type.SHOW_USER_INFO);
                 break;
