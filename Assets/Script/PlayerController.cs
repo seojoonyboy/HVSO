@@ -340,8 +340,11 @@ public class PlayerController : MonoBehaviour
         if(PlayMangement.instance.heroShieldActive) return;
         PlayMangement.instance.heroShieldActive = true;
         if(isPlayer) {
-            GetComponent<IngameTimer>().OnTimeout.AddListener(PlayMangement.instance.showCardsHandler.TimeoutShowCards);
-            GetComponent<IngameTimer>().BeginTimer(15);
+
+            if (ScenarioGameManagment.scenarioInstance == null) {
+                GetComponent<IngameTimer>().OnTimeout.AddListener(PlayMangement.instance.showCardsHandler.TimeoutShowCards);
+                GetComponent<IngameTimer>().BeginTimer(15);
+            }
         }
         FullShieldStack(shieldStack.Value);
         StartCoroutine(PlayMangement.instance.DrawSpecialCard(isHuman));

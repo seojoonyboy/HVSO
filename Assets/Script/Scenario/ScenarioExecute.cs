@@ -613,19 +613,17 @@ public class Unblock_Turn_Btn : ScenarioExecute {
 public class Wait_End_Line_Battle : ScenarioExecute {
     public Wait_End_Line_Battle() : base() { }
 
+    IDisposable playerHit;
+
     public override void Execute() {
-        PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.LINE_BATTLE_FINISHED, CheckEnd);
+        //PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.LINE_BATTLE_FINISHED, CheckEnd);
+        int hp = PlayMangement.instance.player.HP.Value;
+        playerHit = PlayMangement.instance.player.HP.Where(x => x < hp).Subscribe(_ => CheckEnd());
     }
 
-    private void CheckEnd(Enum event_type, Component Sender, object Param) {
-
-        int targetLine = int.Parse(args[0])-1;
-        int getLine = (int)Param;
-
-        if (targetLine == getLine) {
-            PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.LINE_BATTLE_FINISHED, CheckEnd);
-            handler.isDone = true;
-        }
+    private void CheckEnd() {
+        playerHit.Dispose();
+        handler.isDone = true;
     }
 
 

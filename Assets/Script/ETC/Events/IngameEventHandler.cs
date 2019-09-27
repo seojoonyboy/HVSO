@@ -86,6 +86,9 @@ public class IngameEventHandler : MonoBehaviour {
         MAGIC_USED,
         LINE_BATTLE_START,
 
+        PLAYER1_HIT,
+        PLAYER2_HIT,
+
         UNIT_DROP_FAIL
     }
 }
