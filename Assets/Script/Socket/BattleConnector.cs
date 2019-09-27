@@ -36,7 +36,7 @@ public partial class BattleConnector : MonoBehaviour {
         Application.wantsToQuit += Quitting;
     }
 
-    private void Destroy() {
+    private void OnDestroy() {
         Application.wantsToQuit -= Quitting;
     }
 
@@ -97,12 +97,13 @@ public partial class BattleConnector : MonoBehaviour {
     private bool Quitting() {
         Logger.Log("quitting");
         isQuit = true;
-        webSocket.Close();
-        webSocket.OnOpen -= OnOpen;
-        webSocket.OnMessage -= ReceiveMessage;
-        webSocket.OnClosed -= OnClosed;
-        webSocket.OnError -= OnError;
-
+        if(webSocket != null) {
+            webSocket.OnOpen -= OnOpen;
+            webSocket.OnMessage -= ReceiveMessage;
+            webSocket.OnClosed -= OnClosed;
+            webSocket.OnError -= OnError;
+            webSocket.Close();
+        }
         PlayerPrefs.DeleteKey("ReconnectData");
         return true;
     }
@@ -234,7 +235,7 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     void OnDisable() {
-        if(webSocket != null) webSocket.Close();
+        if(webSocket != null) Quitting();
     }
 
     public void StartBattle() {
