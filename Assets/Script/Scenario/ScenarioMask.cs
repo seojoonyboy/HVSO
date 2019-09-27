@@ -30,7 +30,9 @@ public class ScenarioMask : SerializedMonoBehaviour
 
     public GameObject outText;
 
+    public GameObject textUP, textDown;
 
+    public Sprite arrowSprite;
 
     public void GetMaskHighlight(GameObject targetObject) {
         if (targetObject == null) return;
@@ -367,6 +369,29 @@ public class ScenarioMask : SerializedMonoBehaviour
             glowImage.sprite = (getObject.GetComponent<Image>() != null) ? getObject.GetComponent<Image>().sprite : defaultGlow.GetComponent<Image>().sprite;
 
         }
+
+        else if (targetName.Contains("Cost")) {
+            glowRect.gameObject.SetActive(true);
+
+            Vector3 pos;
+
+
+            if (getObject.transform.position.y < 0f) {
+                pos = getObject.transform.position;
+                Vector3 temp = new Vector3(1, -1, 1);
+                glowRect.localScale = temp;
+                pos.y += 1f;
+            }
+            else {                
+                pos = getObject.transform.position;
+                glowRect.localScale = Vector3.one;
+                pos.y -= 1f;
+            }
+            glowImage.sprite = arrowSprite;
+            glowRect.sizeDelta = getObject.GetComponent<RectTransform>().sizeDelta;
+            glowRect.position = pos;            
+            glowObject.GetComponent<Animation>().clip = glowObject.GetComponent<Animation>().GetClip("RedGlow");
+        }
         else {
             glowRect.gameObject.SetActive(true);
             glowRect.position = getObject.transform.position;
@@ -416,6 +441,7 @@ public class ScenarioMask : SerializedMonoBehaviour
             child.gameObject.GetComponent<Image>().color = Color.white;
             child.localScale = Vector3.one;
             child.position = Vector3.one * 100f;
+            //child.Rotate(Vector3.zero);
             child.gameObject.SetActive(false);
             child.GetChild(0).gameObject.SetActive(false);
             
@@ -448,6 +474,18 @@ public class ScenarioMask : SerializedMonoBehaviour
             setText.text = "터치를 누르면 진행합니다.";
         }
     }
+
+
+    public void SetPosText(string args = "") {
+        if(args == "bottom") {
+            outText.transform.position = textDown.transform.position;          
+        }
+        else {
+            outText.transform.position = textUP.transform.position;
+        }
+    }
+
+
 
     public void HideText() {
         outText.SetActive(false);

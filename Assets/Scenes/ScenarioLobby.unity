@@ -50600,12 +50600,15 @@ MonoBehaviour:
       Data: 236|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
-      Data: 1
+      Data: 2
     - Name: 
       Entry: 1
       Data: "\uC804\uC7A5\uC73C\uB85C \uB4DC\uB798\uADF8 \uD574\uC11C \uC989\uC2DC
         \uC0AC\uC6A9\uD560 \uC218\uB3C4 \uC788\uACE0 <br> \uD578\uB4DC\uB85C \uB4DC\uB798\uADF8\uD574\uC11C
         \uB098\uC911\uC744 \uC704\uD574 \uC544\uB084 \uC218\uB3C4 \uC788\uC2B5\uB2C8\uB2E4."
+    - Name: 
+      Entry: 1
+      Data: bottom
     - Name: 
       Entry: 13
       Data: 
@@ -50680,13 +50683,16 @@ MonoBehaviour:
       Data: 242|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
-      Data: 1
+      Data: 2
     - Name: 
       Entry: 1
       Data: "\uC601\uC6C5\uC2A4\uD0AC\uC774 \uC81C\uACF5\uB420 \uB54C \uC989\uC2DC
         \uC0AC\uC6A9\uD558\uBA74 \uB9C8\uB098\uAC00 \uC18C\uBAA8\uB418\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.
         <br> \uD558\uB098\uB97C \uC989\uC2DC \uC0AC\uC6A9\uD574\uBCF4\uB3C4\uB85D
         \uD558\uC8E0."
+    - Name: 
+      Entry: 1
+      Data: bottom
     - Name: 
       Entry: 13
       Data: 
@@ -50818,7 +50824,7 @@ MonoBehaviour:
       Data: ac10021
     - Name: 
       Entry: 1
-      Data: rollback_5
+      Data: rollback_4
     - Name: 
       Entry: 13
       Data: 
@@ -50923,34 +50929,10 @@ MonoBehaviour:
       Data: 261|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
-      Data: Enable_to_hand_herocard
-    - Name: args
-      Entry: 7
-      Data: 262|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 1
-    - Name: 
-      Entry: 1
-      Data: 
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 263|Tutorial.Method, Assembly-CSharp
-    - Name: name
-      Entry: 1
       Data: Enable_drag
     - Name: args
       Entry: 7
-      Data: 264|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 262|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
@@ -50968,16 +50950,40 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 265|Tutorial.Method, Assembly-CSharp
+      Data: 263|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Wait_Battle_End
     - Name: args
       Entry: 7
-      Data: 266|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 264|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 265|Tutorial.Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Enable_to_hand_herocard
+    - Name: args
+      Entry: 7
+      Data: 266|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: 
     - Name: 
       Entry: 13
       Data: 
