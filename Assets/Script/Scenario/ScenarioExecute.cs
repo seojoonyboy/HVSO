@@ -91,6 +91,8 @@ public class Wait_click : ScenarioExecute {
         if (args[0] == "screen") {
             target = null;
         }
+        else if (args.Count > 2)
+            target = scenarioMask.GetMaskingObject(args[0], args[1], args[2]);
         else if (args.Count > 1)
             target = scenarioMask.GetMaskingObject(args[0], args[1]);
         else
@@ -112,6 +114,13 @@ public class Wait_click : ScenarioExecute {
         if (target == null) {
             clickstream.Dispose();
             scenarioMask.HideText();
+
+
+            if (args.Count > 1 && args[1] == "off") {
+                scenarioMask.StopEveryHighlight();
+                scenarioMask.HideText();
+            }
+
             handler.isDone = true;
         }
         else {
@@ -600,6 +609,28 @@ public class Unblock_Turn_Btn : ScenarioExecute {
         handler.isDone = true;
     }
 }
+
+public class Wait_End_Line_Battle : ScenarioExecute {
+    public Wait_End_Line_Battle() : base() { }
+
+    public override void Execute() {
+        PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.LINE_BATTLE_FINISHED, CheckEnd);
+    }
+
+    private void CheckEnd(Enum event_type, Component Sender, object Param) {
+
+        int targetLine = int.Parse(args[0])-1;
+        int getLine = (int)Param;
+
+        if (targetLine == getLine) {
+            PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.LINE_BATTLE_FINISHED, CheckEnd);
+            handler.isDone = true;
+        }
+    }
+
+
+}
+
 
 public class Wait_Turn : ScenarioExecute {
     public Wait_Turn() : base() { }
