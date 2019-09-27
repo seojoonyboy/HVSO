@@ -28,6 +28,11 @@ public class Print_message : ScenarioExecute {
 
     public override void Execute() {
         scenarioMask.ShowText(args[0]);
+        if (args.Count > 1) {
+            scenarioMask.SetPosText(args[1]);
+        }
+        else
+            scenarioMask.SetPosText();
         handler.isDone = true;
     }
 }
@@ -625,8 +630,6 @@ public class Wait_End_Line_Battle : ScenarioExecute {
         playerHit.Dispose();
         handler.isDone = true;
     }
-
-
 }
 
 

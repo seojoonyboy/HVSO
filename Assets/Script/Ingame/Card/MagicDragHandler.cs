@@ -119,10 +119,23 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         EffectSystem.Instance.IncreaseFadeAlpha();
         if (heroCardActivate) {
             ShowCardsHandler showCardsHandler = GetComponentInParent<ShowCardsHandler>();
+            bool pass = false;
             heroCardInfo.SetActive(true);
             //영웅 카드를 핸드로 가져오는 부분
             if (transform.position.y < -3.5f) {
-                ForceToHandHeroCards();
+                if(ScenarioGameManagment.scenarioInstance != null & ScenarioGameManagment.scenarioInstance.canHeroCardToHand == false) {
+                    pass = true;
+                    transform.localScale = new Vector3(1, 1, 1);
+                    transform.localPosition = new Vector3(0, 0, 0);
+                    transform.Find("CardInfoWindow").gameObject.SetActive(false);
+                    if (heroCardActivate) {
+                        transform.parent.parent.Find("HeroCardGuide").gameObject.SetActive(true);
+                    }
+                    showCardsHandler.CancelSelecting();
+                    SendEvent();
+                }
+                else
+                    ForceToHandHeroCards();
             }
             else {
                 CheckLocation(true);
@@ -161,7 +174,8 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
             }
             CardDropManager.Instance.HideMagicSlot();
             CardInfoOnDrag.instance.OffCardDragInfo();
-            PlayMangement.instance.player.ConsumeShieldStack();
+            if (pass == false)
+                PlayMangement.instance.player.ConsumeShieldStack();
             showCardsHandler.ToggleAllCards();
 
             if (ScenarioGameManagment.scenarioInstance == null) {
