@@ -194,7 +194,9 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void MulliganEnd() {
-        PlayMangement.instance.player.GetComponent<IngameTimer>().EndTimer();
+        if(ScenarioGameManagment.scenarioInstance == null) {
+            PlayMangement.instance.player.GetComponent<IngameTimer>().EndTimer();
+        }
         SendMethod("end_mulligan");
     }
 
