@@ -10,6 +10,8 @@ public class DeckListHandlerInBattleReady : MonoBehaviour {
     [SerializeField] BattleReadySceneController parentController;
 
     public Sprite[] campImages;
+    [SerializeField] GameObject battleStart;
+
     void Awake() {
         accountManager = AccountManager.Instance;
     }
@@ -29,6 +31,7 @@ public class DeckListHandlerInBattleReady : MonoBehaviour {
         parentController.HudController.SetBackButton(() => {
             parentController.OnBackButton();
         });
+        battleStart.SetActive(false);
     }
 
     public void LoadMyDecks() {
@@ -80,8 +83,6 @@ public class DeckListHandlerInBattleReady : MonoBehaviour {
         parentController.selectedDeck = deck;
 
         Logger.Log(camp + "의" + deckId + "덱이 선택됨");
-        gameObject.SetActive(false);
-
-        parentController.OnStartButton();
+        battleStart.SetActive(true);
     }
 }
