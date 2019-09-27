@@ -221,6 +221,8 @@ public class CardHandManager : MonoBehaviour {
             leftCard = cardStorage.Find("OrcHeroCards").GetChild(0).gameObject;
             rightCard = cardStorage.Find("OrcHeroCards").GetChild(1).gameObject;
         }
+        leftCard.GetComponent<MagicDragHandler>().isPlayer = true;
+        rightCard.GetComponent<MagicDragHandler>().isPlayer = true;
         leftCard.transform.SetParent(showPos.Find("Left"));
         rightCard.transform.SetParent(showPos.Find("Right"));
 
