@@ -35,13 +35,9 @@ public class Modal : MonoBehaviour {
 			return;
 		}
 		GameObject modal = Resources.Load("Prefabs/ModalCanvas", typeof(GameObject)) as GameObject;
-        Canvas canvas = (Canvas)FindObjectOfType(typeof(Canvas));
-        if(canvas == null) {
-            Logger.LogError("no Canvas");
-            return;
-        }
-        modal.GetComponent<Modal>().InnerModal.GetComponent<RectTransform>().sizeDelta = new Vector2(DefaultWidth, DefaultHeight);
-        Instantiate(modal).GetComponent<Modal>().SetData(text, function, type, title);
+        GameObject tmp = Instantiate(modal);
+        tmp.GetComponent<Modal>().InnerModal.GetComponent<RectTransform>().sizeDelta = new Vector2(DefaultWidth, DefaultHeight);
+        tmp.GetComponent<Modal>().SetData(text, function, type, title);
         //Instantiate(modal, canvas.transform, false).GetComponent<Modal>().setData(text, function, type);
 	}
     /// <summary>
@@ -58,11 +54,6 @@ public class Modal : MonoBehaviour {
 			return null;
 		}
 		GameObject modal = Resources.Load("Prefabs/ModalCanvas", typeof(GameObject)) as GameObject;
-        Canvas canvas = (Canvas)FindObjectOfType(typeof(Canvas));
-        if(canvas == null) {
-            Logger.LogError("no Canvas");
-            return null;
-        }
         GameObject tmp = Instantiate(modal);
         tmp.GetComponent<Modal>().SetData(text, descText, inputText, function);
         tmp.GetComponent<Modal>().InnerModal.GetComponent<RectTransform>().sizeDelta = new Vector2(DefaultWidth, InputHeight);
