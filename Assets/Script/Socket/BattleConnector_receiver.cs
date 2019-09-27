@@ -247,7 +247,11 @@ public partial class BattleConnector : MonoBehaviour {
         mapClearList.isDone = false;
     }
 
-    public void end_battle_turn(object args, int? id) { }
+    public void end_battle_turn(object args, int? id) {
+        lineBattleList.RemoveAllId();
+        mapClearList.RemoveAllId();
+        shieldChargeQueue.RemoveAllId();
+     }
 
     public void line_battle(object args, int? id) {
         var json = (JObject)args;

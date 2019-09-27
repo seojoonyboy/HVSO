@@ -26157,8 +26157,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.000030517578, y: -74.99997}
-  m_SizeDelta: {x: 0, y: 150}
+  m_AnchoredPosition: {x: 0, y: -79.999985}
+  m_SizeDelta: {x: -70, y: 160}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1348084183
 MonoBehaviour:
@@ -26209,12 +26209,12 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 52
+  m_fontSize: 42
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 52
+  m_fontSizeMax: 42
   m_fontStyle: 1
   m_textAlignment: 514
   m_characterSpacing: 0
@@ -26326,7 +26326,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1371167860}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 058cba836c1846c3aa1c5fd2e28aea77, type: 3}
   m_Name: 
@@ -37472,7 +37472,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1817419934
 RectTransform:
   m_ObjectHideFlags: 0
@@ -37491,7 +37491,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 357}
-  m_SizeDelta: {x: 1020, y: 160}
+  m_SizeDelta: {x: 1060, y: 160}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1817419935
 MonoBehaviour:
@@ -45765,6 +45765,7 @@ MonoBehaviour:
   cardSpawnPos: {fileID: 295268607}
   isMultiple: 0
   firstDraw: 1
+  socketDone: 0
 --- !u!114 &8181078053512951863
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45882,6 +45883,7 @@ MonoBehaviour:
   stopBattle: 0
   stopTurn: 0
   cameraSize: 0
+  showCardsHandler: {fileID: 0}
   ingameCamera: {fileID: 1144235748}
   cameraPos: {x: 0, y: 0, z: 0}
   eventHandler: {fileID: 208885978}

@@ -194,7 +194,9 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void MulliganEnd() {
-        PlayMangement.instance.player.GetComponent<IngameTimer>().EndTimer();
+        if(ScenarioGameManagment.scenarioInstance == null) {
+            PlayMangement.instance.player.GetComponent<IngameTimer>().EndTimer();
+        }
         SendMethod("end_mulligan");
     }
 
@@ -359,8 +361,12 @@ namespace SocketFormat {
 
         public T Dequeue() {
             if(queue.Count == 0) return default(T);
-            if(id.Count != 0) id.Dequeue();
+            
             return queue.Dequeue();
+        }
+
+        public void RemoveAllId() {
+            id.Clear();
         }
 
         public void checkCount() {
