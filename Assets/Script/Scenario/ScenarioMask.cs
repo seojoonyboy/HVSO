@@ -337,20 +337,20 @@ public class ScenarioMask : SerializedMonoBehaviour
             glowImage.sprite = getObject.GetComponent<Image>().sprite;
             glowRect.SetParent(fieldGlow.transform);
         }
-        else if (targetName.Contains("turnUI_outLine")) {
-            glowRect.gameObject.SetActive(true);
-            glowRect.position = getObject.transform.position;
-            glowRect.localScale = getObject.transform.localScale;
-            glowRect.sizeDelta = getObject.GetComponent<RectTransform>().sizeDelta;
-            glowImage.sprite = getObject.GetComponent<Image>().sprite;
+        //else if (targetName.Contains("turnUI_outLine")) {
+        //    glowRect.gameObject.SetActive(true);
+        //    glowRect.position = getObject.transform.position;
+        //    glowRect.localScale = getObject.transform.localScale;
+        //    glowRect.sizeDelta = getObject.GetComponent<RectTransform>().sizeDelta;
+        //    glowImage.sprite = getObject.GetComponent<Image>().sprite;
 
 
-            GameObject turnBtn = getObject.transform.parent.Find("Image").gameObject;
-            glowRect.GetChild(0).gameObject.SetActive(true);
-            glowRect.GetChild(0).position = turnBtn.transform.position;
-            glowRect.GetChild(0).GetComponent<RectTransform>().sizeDelta = turnBtn.GetComponent<RectTransform>().sizeDelta;
-            glowRect.GetChild(0).gameObject.GetComponent<Image>().sprite = turnBtn.GetComponent<Image>().sprite;
-        }
+        //    GameObject turnBtn = getObject.transform.parent.Find("Image").gameObject;
+        //    glowRect.GetChild(0).gameObject.SetActive(true);
+        //    glowRect.GetChild(0).position = turnBtn.transform.position;
+        //    glowRect.GetChild(0).GetComponent<RectTransform>().sizeDelta = turnBtn.GetComponent<RectTransform>().sizeDelta;
+        //    glowRect.GetChild(0).gameObject.GetComponent<Image>().sprite = turnBtn.GetComponent<Image>().sprite;
+        //}
         else if (targetName.Contains("Guide_")) {
             glowRect.gameObject.SetActive(true);
             glowRect.localScale = getObject.transform.localScale;
@@ -369,7 +369,35 @@ public class ScenarioMask : SerializedMonoBehaviour
             glowImage.sprite = (getObject.GetComponent<Image>() != null) ? getObject.GetComponent<Image>().sprite : defaultGlow.GetComponent<Image>().sprite;
 
         }
-
+        else if (targetName.Contains("ChangeButton") || targetName.Contains("FinishButton") || targetName.Contains("HpParent1") || targetName.Contains("turnUI_outLine")) {
+            glowRect.gameObject.SetActive(true);
+            Vector3 pos;
+            if (getObject.transform.position.y < 0f) {
+                pos = getObject.transform.position;
+                Vector3 temp = new Vector3(1, -1, 1);
+                glowRect.localScale = temp;
+                pos.y += 1.4f;
+            }
+            else {
+                pos = getObject.transform.position;
+                glowRect.localScale = Vector3.one;
+                pos.y -= 1.4f;
+            }
+            glowImage.sprite = arrowSprite;
+            glowRect.sizeDelta = new Vector2(160,160);
+            glowRect.position = pos;
+        }
+        //else if (targetName.Contains("turnUI_outLine")) {
+        //    glowRect.gameObject.SetActive(true);
+        //    Vector3 pos;
+        //    pos = getObject.transform.position;
+        //    Vector3 temp = new Vector3(1, -1, 1);
+        //    glowRect.localScale = temp;
+        //    pos.y += 1.4f;
+        //    glowImage.sprite = arrowSprite;
+        //    glowRect.sizeDelta = new Vector2(160, 160);
+        //    glowRect.position = pos;
+        //}
         else if (targetName.Contains("Cost")) {
             glowRect.gameObject.SetActive(true);
 
