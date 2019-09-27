@@ -132,7 +132,7 @@ public class ScenarioMask : SerializedMonoBehaviour
                     }
                     if(third != null) {
                         if (third == "mana")
-                            maskObject = maskObject.transform.Find("Cost").gameObject;
+                            maskObject = maskObject.transform.GetChild(0).Find("Cost").gameObject;
                     }
                 }
                 if (main == "mana") {
@@ -285,54 +285,65 @@ public class ScenarioMask : SerializedMonoBehaviour
         if (glowObject == null) return;
 
         string targetName = showObject.name;
-        GameObject targetObject = showObject;
+        GameObject getObject = showObject;
         Image glowImage = glowObject.GetComponent<Image>();
 
 
         if (targetName.Contains("CardSlot") && PlayMangement.instance.isMulligan == false) {
-            targetObject = showObject.transform.GetChild(0).gameObject;
+            getObject = showObject.transform.GetChild(0).gameObject;
             glowRect.gameObject.SetActive(true);
-            glowRect.position = targetObject.transform.Find("Portrait").position;
-            glowRect.sizeDelta = targetObject.transform.Find("Portrait").gameObject.GetComponent<RectTransform>().sizeDelta;
-            glowImage.sprite = targetObject.transform.Find("Portrait").gameObject.GetComponent<Image>().sprite;
+            glowRect.position = getObject.transform.Find("Portrait").position;
+            glowRect.sizeDelta = getObject.transform.Find("Portrait").gameObject.GetComponent<RectTransform>().sizeDelta;
+            glowImage.sprite = getObject.transform.Find("Portrait").gameObject.GetComponent<Image>().sprite;
 
             glowRect.GetChild(0).gameObject.SetActive(true);
-            glowRect.GetChild(0).position = targetObject.transform.Find("BackGround").position;
-            glowRect.GetChild(0).GetComponent<RectTransform>().sizeDelta = targetObject.GetComponent<RectTransform>().sizeDelta;
-            glowRect.GetChild(0).gameObject.GetComponent<Image>().sprite = targetObject.transform.Find("BackGround").gameObject.GetComponent<Image>().sprite;
+            glowRect.GetChild(0).position = getObject.transform.Find("BackGround").position;
+            glowRect.GetChild(0).GetComponent<RectTransform>().sizeDelta = getObject.GetComponent<RectTransform>().sizeDelta;
+            glowRect.GetChild(0).gameObject.GetComponent<Image>().sprite = getObject.transform.Find("BackGround").gameObject.GetComponent<Image>().sprite;
+        }
+        else if ((targetName.Contains("UnitCard") || targetName.Contains("MagicCard")) && PlayMangement.instance.isMulligan == true) {
+            glowRect.gameObject.SetActive(true);
+            glowRect.position = getObject.transform.Find("Portrait").position;
+            glowRect.sizeDelta = getObject.transform.Find("Portrait").gameObject.GetComponent<RectTransform>().sizeDelta;
+            glowImage.sprite = getObject.transform.Find("Portrait").gameObject.GetComponent<Image>().sprite;
+
+            glowRect.GetChild(0).gameObject.SetActive(true);
+            glowRect.GetChild(0).position = getObject.transform.Find("BackGround").position;
+            glowRect.GetChild(0).GetComponent<RectTransform>().sizeDelta = getObject.GetComponent<RectTransform>().sizeDelta;
+            glowRect.GetChild(0).gameObject.GetComponent<Image>().sprite = getObject.transform.Find("BackGround").gameObject.GetComponent<Image>().sprite;
         }
         else if (targetName.Contains("HeroCard")) {
             glowRect.gameObject.SetActive(true);
-            glowRect.position = targetObject.transform.Find("Portrait").position;
-            glowRect.sizeDelta = targetObject.transform.Find("Portrait").gameObject.GetComponent<RectTransform>().sizeDelta;
-            glowImage.sprite = targetObject.transform.Find("Portrait").gameObject.GetComponent<Image>().sprite;
+            glowRect.position = getObject.transform.Find("Portrait").position;
+            glowRect.sizeDelta = getObject.transform.Find("Portrait").gameObject.GetComponent<RectTransform>().sizeDelta;
+            glowImage.sprite = getObject.transform.Find("Portrait").gameObject.GetComponent<Image>().sprite;
             
 
             glowRect.GetChild(0).gameObject.SetActive(true);
-            glowRect.GetChild(0).position = targetObject.transform.Find("BackGround").position;
-            glowRect.GetChild(0).GetComponent<RectTransform>().sizeDelta = targetObject.GetComponent<RectTransform>().sizeDelta;
-            glowRect.GetChild(0).gameObject.GetComponent<Image>().sprite = targetObject.transform.Find("BackGround").gameObject.GetComponent<Image>().sprite;
-            glowRect.localScale = targetObject.transform.localScale;
+            glowRect.GetChild(0).position = getObject.transform.Find("BackGround").position;
+            glowRect.GetChild(0).GetComponent<RectTransform>().sizeDelta = getObject.GetComponent<RectTransform>().sizeDelta;
+            glowRect.GetChild(0).gameObject.GetComponent<Image>().sprite = getObject.transform.Find("BackGround").gameObject.GetComponent<Image>().sprite;
+            glowRect.localScale = getObject.transform.localScale;
         }
 
         else if (targetName.Contains("Line_")) {
-            targetObject = this.targetObject["fields"].transform.GetChild(targetObject.transform.GetSiblingIndex()).gameObject;
+            getObject = targetObject["fields"].transform.GetChild(getObject.transform.GetSiblingIndex()).gameObject;
             glowRect.gameObject.SetActive(true);
-            glowRect.position = targetObject.transform.position;
-            glowRect.localScale = targetObject.transform.localScale;
-            glowRect.sizeDelta = targetObject.GetComponent<RectTransform>().sizeDelta;
-            glowImage.sprite = targetObject.GetComponent<Image>().sprite;
+            glowRect.position = getObject.transform.position;
+            glowRect.localScale = getObject.transform.localScale;
+            glowRect.sizeDelta = getObject.GetComponent<RectTransform>().sizeDelta;
+            glowImage.sprite = getObject.GetComponent<Image>().sprite;
             glowRect.SetParent(fieldGlow.transform);
         }
         else if (targetName.Contains("turnUI_outLine")) {
             glowRect.gameObject.SetActive(true);
-            glowRect.position = targetObject.transform.position;
-            glowRect.localScale = targetObject.transform.localScale;
-            glowRect.sizeDelta = targetObject.GetComponent<RectTransform>().sizeDelta;
-            glowImage.sprite = targetObject.GetComponent<Image>().sprite;
+            glowRect.position = getObject.transform.position;
+            glowRect.localScale = getObject.transform.localScale;
+            glowRect.sizeDelta = getObject.GetComponent<RectTransform>().sizeDelta;
+            glowImage.sprite = getObject.GetComponent<Image>().sprite;
 
 
-            GameObject turnBtn = targetObject.transform.parent.Find("Image").gameObject;
+            GameObject turnBtn = getObject.transform.parent.Find("Image").gameObject;
             glowRect.GetChild(0).gameObject.SetActive(true);
             glowRect.GetChild(0).position = turnBtn.transform.position;
             glowRect.GetChild(0).GetComponent<RectTransform>().sizeDelta = turnBtn.GetComponent<RectTransform>().sizeDelta;
@@ -340,29 +351,29 @@ public class ScenarioMask : SerializedMonoBehaviour
         }
         else if (targetName.Contains("Guide_")) {
             glowRect.gameObject.SetActive(true);
-            glowRect.localScale = targetObject.transform.localScale;
-            glowRect.sizeDelta = targetObject.GetComponent<RectTransform>().sizeDelta;
-            glowImage.sprite = targetObject.GetComponent<Image>().sprite;
+            glowRect.localScale = getObject.transform.localScale;
+            glowRect.sizeDelta = getObject.GetComponent<RectTransform>().sizeDelta;
+            glowImage.sprite = getObject.GetComponent<Image>().sprite;
             glowObject.GetComponent<Animation>().clip = glowObject.GetComponent<Animation>().GetClip("WhiteGlowAnimation");
-            Observable.EveryUpdate().TakeWhile(_ => glowRect.gameObject.activeSelf == true).Subscribe(_ => glowRect.position = targetObject.transform.position);
+            Observable.EveryUpdate().TakeWhile(_ => glowRect.gameObject.activeSelf == true).Subscribe(_ => glowRect.position = getObject.transform.position);
         }
         else if (targetName.Contains("Player1_Panel") || targetName.Contains("Player2_Panel") || targetName.Contains("FieldUI")) {
             glowRect.gameObject.SetActive(true);
-            glowRect.position = targetObject.transform.position;
-            glowRect.localScale = targetObject.transform.localScale;
+            glowRect.position = getObject.transform.position;
+            glowRect.localScale = getObject.transform.localScale;
 
-            Vector2 size = new Vector2(Camera.main.pixelWidth, targetObject.GetComponent<RectTransform>().sizeDelta.y);            
+            Vector2 size = new Vector2(Camera.main.pixelWidth, getObject.GetComponent<RectTransform>().sizeDelta.y);            
             glowRect.sizeDelta = size;           
-            glowImage.sprite = (targetObject.GetComponent<Image>() != null) ? targetObject.GetComponent<Image>().sprite : defaultGlow.GetComponent<Image>().sprite;
+            glowImage.sprite = (getObject.GetComponent<Image>() != null) ? getObject.GetComponent<Image>().sprite : defaultGlow.GetComponent<Image>().sprite;
 
         }
         else {
             glowRect.gameObject.SetActive(true);
-            glowRect.position = targetObject.transform.position;
-            glowRect.localScale = targetObject.transform.localScale;
-            glowRect.sizeDelta = targetObject.GetComponent<RectTransform>().sizeDelta;
+            glowRect.position = getObject.transform.position;
+            glowRect.localScale = getObject.transform.localScale;
+            glowRect.sizeDelta = getObject.GetComponent<RectTransform>().sizeDelta;
             Debug.Log(glowRect.sizeDelta);
-            glowImage.sprite = (targetObject.GetComponent<Image>() != null) ? targetObject.GetComponent<Image>().sprite : defaultGlow.GetComponent<Image>().sprite;
+            glowImage.sprite = (getObject.GetComponent<Image>() != null) ? getObject.GetComponent<Image>().sprite : defaultGlow.GetComponent<Image>().sprite;
         }      
         Animation glowAnimation = glowObject.GetComponent<Animation>();
         glowAnimation.Play();        
