@@ -295,8 +295,10 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void end_shield_turn(object args, int? id) { 
-        ingameTimer.ResumeTimer();
-        ingameTimer = null;
+        if(ingameTimer != null) {
+            ingameTimer.ResumeTimer();
+            ingameTimer = null;
+        }
     }
 
     public void surrender(object args, int? id) {
