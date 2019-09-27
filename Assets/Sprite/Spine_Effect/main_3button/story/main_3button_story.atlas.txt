@@ -1,0 +1,111 @@
+
+main_3button_story.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+1
+  rotate: true
+  xy: 393, 724
+  size: 110, 131
+  orig: 110, 132
+  offset: 0, 0
+  index: -1
+2
+  rotate: true
+  xy: 700, 717
+  size: 117, 155
+  orig: 117, 156
+  offset: 0, 1
+  index: -1
+3
+  rotate: true
+  xy: 0, 647
+  size: 117, 175
+  orig: 117, 177
+  offset: 0, 1
+  index: -1
+4
+  rotate: true
+  xy: 175, 636
+  size: 122, 184
+  orig: 122, 185
+  offset: 0, 1
+  index: -1
+5
+  rotate: true
+  xy: 359, 576
+  size: 144, 191
+  orig: 144, 191
+  offset: 0, 0
+  index: -1
+6
+  rotate: true
+  xy: 524, 720
+  size: 114, 176
+  orig: 114, 176
+  offset: 0, 0
+  index: -1
+7
+  rotate: true
+  xy: 240, 758
+  size: 76, 153
+  orig: 76, 154
+  offset: 0, 0
+  index: -1
+8
+  rotate: true
+  xy: 0, 767
+  size: 67, 133
+  orig: 67, 135
+  offset: 0, 1
+  index: -1
+9
+  rotate: true
+  xy: 133, 764
+  size: 70, 107
+  orig: 70, 109
+  offset: 0, 1
+  index: -1
+Glasslight
+  rotate: false
+  xy: 550, 541
+  size: 206, 176
+  orig: 206, 176
+  offset: 0, 0
+  index: -1
+compass
+  rotate: true
+  xy: 756, 416
+  size: 279, 243
+  orig: 279, 243
+  offset: 0, 0
+  index: -1
+frame
+  rotate: false
+  xy: 0, 0
+  size: 710, 246
+  orig: 710, 246
+  offset: 0, 0
+  index: -1
+light
+  rotate: false
+  xy: 855, 695
+  size: 141, 139
+  orig: 141, 141
+  offset: 0, 1
+  index: -1
+map
+  rotate: false
+  xy: 0, 246
+  size: 640, 202
+  orig: 640, 202
+  offset: 0, 0
+  index: -1
+shadow
+  rotate: false
+  xy: 0, 448
+  size: 683, 93
+  orig: 683, 94
+  offset: 0, 0
+  index: -1
