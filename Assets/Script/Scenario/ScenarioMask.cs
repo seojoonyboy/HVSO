@@ -390,7 +390,7 @@ public class ScenarioMask : SerializedMonoBehaviour
             glowImage.sprite = arrowSprite;
             glowRect.sizeDelta = getObject.GetComponent<RectTransform>().sizeDelta;
             glowRect.position = pos;            
-            glowObject.GetComponent<Animation>().clip = glowObject.GetComponent<Animation>().GetClip("RedGlow");
+            //glowObject.GetComponent<Animation>().clip = glowObject.GetComponent<Animation>().GetClip("RedGlow");
         }
         else {
             glowRect.gameObject.SetActive(true);
