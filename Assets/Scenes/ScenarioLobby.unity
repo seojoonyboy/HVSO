@@ -50027,7 +50027,7 @@ MonoBehaviour:
       Data: 191|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
-      Data: Wait_End_Line_Battle
+      Data: Wait_until
     - Name: args
       Entry: 7
       Data: 192|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
@@ -50036,7 +50036,7 @@ MonoBehaviour:
       Data: 1
     - Name: 
       Entry: 1
-      Data: 1
+      Data: 3
     - Name: 
       Entry: 13
       Data: 
