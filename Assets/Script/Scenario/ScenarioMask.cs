@@ -114,7 +114,9 @@ public class ScenarioMask : SerializedMonoBehaviour
                             maskObject = maskObject.transform.GetChild(5).gameObject;
                             break;
                     }
-                    maskObject = maskObject.transform.Find("ChangeButton").gameObject;
+
+                    if (third == "button")
+                        maskObject = maskObject.transform.Find("ChangeButton").gameObject;
 
                 }
                 if (main == "hand_card") {
