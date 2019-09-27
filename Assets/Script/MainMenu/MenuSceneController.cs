@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 
 public class MenuSceneController : MonoBehaviour {
     [SerializeField] Transform fixedCanvas;
+    [SerializeField] HUDController hudController;
     [SerializeField] HorizontalScrollSnap windowScrollSnap;
     [SerializeField] DeckSettingManager deckSettingManager;
     [SerializeField] Transform dictionaryMenu;
@@ -97,6 +98,11 @@ public class MenuSceneController : MonoBehaviour {
     /// </summary>
     public void OnPVPClicked() {
         battleReadyPanel.SetActive(true);
+        hudController.SetHeader(HUDController.Type.BATTLE_READY_CANVAS);
+        hudController.SetBackButton(() => {
+            battleReadyPanel.SetActive(false);
+            hudController.SetHeader(HUDController.Type.SHOW_USER_INFO);
+        });
         SoundManager.Instance.PlaySound(SoundType.FIRST_TURN);
     }
 

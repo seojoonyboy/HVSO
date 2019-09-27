@@ -19,6 +19,7 @@ public class HUDController : MonoBehaviour {
         userInfoUI,
         backbuttonUI,
         resourceUI,
+        battleCoinUI,
         dictionaryUI;
     Button backButton;
     BoxRewardManager box;
@@ -30,6 +31,7 @@ public class HUDController : MonoBehaviour {
                 userInfoUI.gameObject.SetActive(false);
                 backbuttonUI.gameObject.SetActive(true);
                 resourceUI.gameObject.SetActive(true);
+                battleCoinUI.gameObject.SetActive(false);
                 dictionaryUI.gameObject.SetActive(false);
                 break;
             default:
@@ -37,13 +39,14 @@ public class HUDController : MonoBehaviour {
                 backbuttonUI.gameObject.SetActive(false);
                 userInfoUI.gameObject.SetActive(true);
                 resourceUI.gameObject.SetActive(true);
+                battleCoinUI.gameObject.SetActive(false);
                 dictionaryUI.gameObject.SetActive(false);
                 break;
             case Type.HIDE:
                 resourceUI.gameObject.SetActive(false);
-                backbuttonUI.gameObject.SetActive(false);
                 userInfoUI.gameObject.SetActive(false);
                 dictionaryUI.gameObject.SetActive(false);
+                backbuttonUI.gameObject.SetActive(false);
                 gradation.gameObject.SetActive(false);
                 break;
             case Type.DICTIONARY_WINDOW:
@@ -54,6 +57,14 @@ public class HUDController : MonoBehaviour {
                 backbuttonUI.gameObject.SetActive(false);
                 userInfoUI.gameObject.SetActive(true);
                 resourceUI.gameObject.SetActive(true);
+                backbuttonUI.gameObject.SetActive(false);
+                dictionaryUI.gameObject.SetActive(false);
+                break;
+            case Type.BATTLE_READY_CANVAS:
+                backbuttonUI.gameObject.SetActive(true);
+                userInfoUI.gameObject.SetActive(false);
+                resourceUI.gameObject.SetActive(false);
+                battleCoinUI.gameObject.SetActive(true);
                 dictionaryUI.gameObject.SetActive(false);
                 break;
         }
@@ -92,6 +103,11 @@ public class HUDController : MonoBehaviour {
                     .GetChild(0)
                     .GetChild(0)
                     .Find("Right");
+
+        battleCoinUI = transform
+                    .GetChild(0)
+                    .GetChild(0)
+                    .Find("BattleCoin");
 
         dictionaryUI = transform
                     .GetChild(0)
@@ -142,6 +158,7 @@ public class HUDController : MonoBehaviour {
         SHOW_USER_INFO = 0,
         RESOURCE_ONLY_WITH_BACKBUTTON = 1,
         DICTIONARY_WINDOW = 2,
+        BATTLE_READY_CANVAS = 3,
         HIDE = 10
     }
 }
