@@ -562,7 +562,7 @@ public partial class PlayMangement : MonoBehaviour {
             EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.LINE_BATTLE_START, this, line);
             yield return StopBattleLine();
             yield return battleLine(line);
-            if (isGame == false) break;
+            if (isGame == false) yield break;
         }
         yield return new WaitForSeconds(1f);
         socketHandler.TurnOver();
