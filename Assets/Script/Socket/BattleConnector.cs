@@ -361,8 +361,12 @@ namespace SocketFormat {
 
         public T Dequeue() {
             if(queue.Count == 0) return default(T);
-            if(id.Count != 0) id.Dequeue();
+            
             return queue.Dequeue();
+        }
+
+        public void RemoveAllId() {
+            id.Clear();
         }
 
         public void checkCount() {
