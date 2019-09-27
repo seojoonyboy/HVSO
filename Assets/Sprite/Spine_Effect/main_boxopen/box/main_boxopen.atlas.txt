@@ -1,54 +1,54 @@
 
 main_boxopen.png
-size: 1024,512
+size: 512,512
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
+Background
+  rotate: false
+  xy: 339, 242
+  size: 135, 240
+  orig: 135, 240
+  offset: 0, 0
+  index: -1
 Ellipse 1
-  rotate: true
-  xy: 0, 102
-  size: 349, 381
-  orig: 349, 381
+  rotate: false
+  xy: 0, 219
+  size: 339, 263
+  orig: 339, 263
   offset: 0, 0
   index: -1
 Glow_1
   rotate: false
-  xy: 0, 0
+  xy: 403, 30
   size: 102, 102
   orig: 102, 102
   offset: 0, 0
   index: -1
 Rectangle 2
   rotate: false
-  xy: 491, 34
+  xy: 474, 354
   size: 21, 128
   orig: 21, 128
   offset: 0, 0
   index: -1
 mana
-  rotate: true
-  xy: 381, 162
-  size: 289, 324
-  orig: 292, 324
-  offset: 0, 0
-  index: -1
-mana2
-  rotate: true
-  xy: 705, 154
-  size: 297, 266
-  orig: 297, 266
+  rotate: false
+  xy: 0, 0
+  size: 295, 219
+  orig: 295, 219
   offset: 0, 0
   index: -1
 ring_1
   rotate: false
-  xy: 381, 52
+  xy: 339, 132
   size: 110, 110
   orig: 110, 110
   offset: 0, 0
   index: -1
 ring_2
   rotate: false
-  xy: 512, 54
+  xy: 295, 24
   size: 108, 108
   orig: 108, 108
   offset: 0, 0
