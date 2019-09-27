@@ -70,6 +70,9 @@ public class EditCardHandler : MonoBehaviour {
         standby = true;
         while (standby) {
             yield return new WaitForSeconds(0.1f);
+            if (Time.time - clickTime >= 0.2f) {
+                dragable = false;
+            }
             if (Time.time - clickTime >= 0.5f) {
                 OpenCardInfo();
                 standby = false;
@@ -77,6 +80,7 @@ public class EditCardHandler : MonoBehaviour {
                 draggingObject = null;
             }
         }
+        dragable = true;
     }
 
     public void EndClick() {
@@ -136,13 +140,13 @@ public class EditCardHandler : MonoBehaviour {
         else {
             int handCardNum = deckEditController.setCardList.Count;
             if (handCardNum > 3) {
-                iTween.MoveTo(deckEditController.settingLayout.gameObject, iTween.Hash("x", -240 * (handCardNum - 3), "y", -550,  "islocal", true, "time", 0.2f));
+                iTween.MoveTo(deckEditController.settingLayout.gameObject, iTween.Hash("x", -240 * (handCardNum - 3), "y", -550, "islocal", true, "time", 0.2f));
                 yield return new WaitForSeconds(0.25f);
             }
             onAnimation = false;
             dragable = true;
         }
-        
+
     }
 
     IEnumerator DuplicatedCardSet() {
@@ -191,7 +195,7 @@ public class EditCardHandler : MonoBehaviour {
                 transform.Find("CardAddEffect").GetComponent<SkeletonGraphic>().color = spineColor;
                 transform.Find("CardAddEffect").GetComponent<SkeletonGraphic>().Initialize(true);
                 transform.Find("CardAddEffect").GetComponent<SkeletonGraphic>().Update(0);
-                
+
                 if (cardData.type == "unit")
                     transform.Find("CardAddEffect").GetComponent<SkeletonGraphic>().Skeleton.SetSkin("1.unit");
                 else
@@ -230,7 +234,7 @@ public class EditCardHandler : MonoBehaviour {
                 transform.Find("CardAddEffect").GetComponent<SkeletonGraphic>().color = spineColor;
                 transform.Find("CardAddEffect").GetComponent<SkeletonGraphic>().Initialize(true);
                 transform.Find("CardAddEffect").GetComponent<SkeletonGraphic>().Update(0);
-                
+
                 if (cardData.type == "unit")
                     transform.Find("CardAddEffect").GetComponent<SkeletonGraphic>().Skeleton.SetSkin("1.unit");
                 else
@@ -260,11 +264,11 @@ public class EditCardHandler : MonoBehaviour {
         this.isHuman = isHuman;
         cardID = id;
         cardData = AccountManager.Instance.allCardsDic[cardID];
-        if (cardData.type == "unit") 
+        if (cardData.type == "unit")
             cardObject = transform.Find("UnitEditCard");
         else if (cardData.type == "magic" && !cardData.isHeroCard)
             cardObject = transform.Find("MagicEditCard");
-        else 
+        else
             cardObject = transform;
         cardObject.gameObject.SetActive(true);
         if (cardData.rarelity == "legend")
@@ -313,7 +317,7 @@ public class EditCardHandler : MonoBehaviour {
                 if (setNum > 0) {
                     aniState.SetAnimation(0, setNum.ToString(), false);
                 }
-                    
+
             }
             else {
                 DisableCard(true);

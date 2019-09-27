@@ -46,11 +46,21 @@ namespace victoryModule {
             PlayMangement.instance.stopTurn = true;
 
             SocketFormat.ResultFormat result = PlayMangement.instance.socketHandler.result;
+            if(result != null) {
+                PlayerController loserPlayer = (result.result == "win") ? enemyPlayer : player;
+                //loserPlayer.PlayerDead();
+                //EffectSystem.Instance.CameraZoomIn(loserPlayer.bodyTransform, 5.6f, 1.2f);
+                Invoke("GetBattleResult", loserPlayer.DeadAnimationTime);
+            }
+            else {
+                StartCoroutine(WaitGetResult());
+            }
+        }
 
-            PlayerController loserPlayer = (result.result == "win") ? enemyPlayer : player;
-            //loserPlayer.PlayerDead();
-            //EffectSystem.Instance.CameraZoomIn(loserPlayer.bodyTransform, 5.6f, 1.2f);
-            Invoke("GetBattleResult", loserPlayer.DeadAnimationTime);
+        private IEnumerator WaitGetResult() {
+            yield return new WaitUntil(() =>  PlayMangement.instance.socketHandler.result != null );
+            SocketFormat.ResultFormat result = PlayMangement.instance.socketHandler.result;
+            GetBattleResult();
         }
 
         public override void GetBattleResult() {
