@@ -47784,13 +47784,16 @@ MonoBehaviour:
       Data: 18|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
-      Data: 2
+      Data: 3
     - Name: 
       Entry: 1
       Data: muligunCard
     - Name: 
       Entry: 1
       Data: left,top
+    - Name: 
+      Entry: 1
+      Data: button
     - Name: 
       Entry: 13
       Data: 
