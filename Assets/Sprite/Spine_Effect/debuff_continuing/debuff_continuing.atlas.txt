@@ -1,0 +1,13 @@
+
+debuff_continuing.png
+size: 128,128
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+star
+  rotate: false
+  xy: 0, 0
+  size: 80, 113
+  orig: 80, 113
+  offset: 0, 0
+  index: -1
