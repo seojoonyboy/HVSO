@@ -1129,6 +1129,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2074731605}
     m_Modifications:
+    - target: {fileID: 3141205610856264726, guid: 958776b7f33de4e4ab8a577785856062,
+        type: 3}
+      propertyPath: m_Name
+      value: MenuHUD
+      objectReference: {fileID: 0}
+    - target: {fileID: 3141205610856264726, guid: 958776b7f33de4e4ab8a577785856062,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2403712344269389182, guid: 958776b7f33de4e4ab8a577785856062,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1233,16 +1243,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3141205610856264726, guid: 958776b7f33de4e4ab8a577785856062,
-        type: 3}
-      propertyPath: m_Name
-      value: MenuHUD
-      objectReference: {fileID: 0}
-    - target: {fileID: 3141205610856264726, guid: 958776b7f33de4e4ab8a577785856062,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2360647699000530564, guid: 958776b7f33de4e4ab8a577785856062,
         type: 3}
@@ -49231,7 +49231,7 @@ MonoBehaviour:
         mscorlib
     - Name: 
       Entry: 12
-      Data: 16
+      Data: 17
     - Name: 
       Entry: 7
       Data: 129|Tutorial.Method, Assembly-CSharp
@@ -49540,10 +49540,34 @@ MonoBehaviour:
       Data: 153|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
-      Data: Wait_click
+      Data: Orc_post_turn
     - Name: args
       Entry: 7
       Data: 154|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: stop
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 155|Tutorial.Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Wait_click
+    - Name: args
+      Entry: 7
+      Data: 156|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 2
@@ -49564,31 +49588,10 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 155|Tutorial.Method, Assembly-CSharp
-    - Name: name
-      Entry: 1
-      Data: Hide_message
-    - Name: args
-      Entry: 7
-      Data: 156|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
       Data: 157|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
-      Data: Disable_EndTurn
+      Data: Hide_message
     - Name: args
       Entry: 7
       Data: 158|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
@@ -49609,10 +49612,31 @@ MonoBehaviour:
       Data: 159|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
-      Data: StopHighlight
+      Data: Disable_EndTurn
     - Name: args
       Entry: 7
       Data: 160|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 161|Tutorial.Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: StopHighlight
+    - Name: args
+      Entry: 7
+      Data: 162|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 0
@@ -49639,7 +49663,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 161|Tutorial.ScriptData, Assembly-CSharp
+      Data: 163|Tutorial.ScriptData, Assembly-CSharp
     - Name: Print_text
       Entry: 1
       Data: "\uC624\uD06C\uB294 \uC778\uAC04\uC774 \uC720\uB2DB \uBC30\uCE58\uC640
@@ -49649,35 +49673,11 @@ MonoBehaviour:
         \uB0A8\uACA8 \uB193\uC544\uC57C \uD569\uB2C8\uB2E4."
     - Name: methods
       Entry: 7
-      Data: 162|System.Collections.Generic.List`1[[Tutorial.Method, Assembly-CSharp]],
+      Data: 164|System.Collections.Generic.List`1[[Tutorial.Method, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
-      Data: 9
-    - Name: 
-      Entry: 7
-      Data: 163|Tutorial.Method, Assembly-CSharp
-    - Name: name
-      Entry: 1
-      Data: Orc_post_turn
-    - Name: args
-      Entry: 7
-      Data: 164|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 1
-    - Name: 
-      Entry: 1
-      Data: stop
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
+      Data: 8
     - Name: 
       Entry: 7
       Data: 165|Tutorial.Method, Assembly-CSharp
