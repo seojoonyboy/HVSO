@@ -34,7 +34,7 @@ public class PlayerController : MonoBehaviour
     public Vector3 unitClosePosition;
     public Vector3 wallPosition;
 
-    public ReactiveProperty<int> HP = new ReactiveProperty<int>(1);
+    public ReactiveProperty<int> HP = new ReactiveProperty<int>(20);
     public ReactiveProperty<int> resource = new ReactiveProperty<int>(2);
     public ReactiveProperty<bool> isPicking = new ReactiveProperty<bool>(false);
     public ReactiveProperty<int> shieldStack = new ReactiveProperty<int>(0);
@@ -255,6 +255,10 @@ public class PlayerController : MonoBehaviour
             if (HP.Value > 0)
                 SetState(HeroState.HIT);
 
+            if (HP.Value > 0 && HP.Value < 8)
+                heroSpine.CriticalFace();
+
+
             if (shieldCount > 0) {
                 if (shieldData == null)
                     shieldStack.Value = data.hero.shieldGauge;
@@ -389,6 +393,10 @@ public class PlayerController : MonoBehaviour
             if (HP.Value > 0)
                 Hit();
         }
+
+        if (HP.Value > 0 && HP.Value < 8)
+            heroSpine.CriticalFace();
+
     }
 
     private void Hit() {
