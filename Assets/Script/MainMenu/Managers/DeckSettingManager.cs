@@ -37,6 +37,7 @@ public class DeckSettingManager : MonoBehaviour
         transform.Find("DeckListParent").GetComponent<RectTransform>().sizeDelta = new Vector2(1080, height);
         transform.Find("DeckListParent").GetComponent<RectTransform>().anchoredPosition = new Vector2(transform.Find("DeckListParent").GetComponent<RectTransform>().anchoredPosition.x, -height / 2);
         GetComponent<ScrollRect>().normalizedPosition = new Vector2(0, 1);
+        transform.GetComponent<ScrollRect>().enabled = deckList.GetChild(4).gameObject.activeSelf;
     }
 
     public void SetPlayerNewDecks() {

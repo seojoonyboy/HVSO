@@ -6,113 +6,113 @@ filter: Linear,Linear
 repeat: none
 Comp 2_00000
   rotate: false
-  xy: 363, 64
-  size: 61, 64
+  xy: 373, 64
+  size: 63, 64
   orig: 256, 256
-  offset: 10, 96
+  offset: 11, 96
   index: -1
 Comp 2_00001
   rotate: false
-  xy: 279, 0
-  size: 80, 64
+  xy: 283, 0
+  size: 82, 64
   orig: 256, 256
-  offset: 10, 96
+  offset: 11, 96
   index: -1
 Comp 2_00002
   rotate: false
-  xy: 151, 0
-  size: 128, 64
+  xy: 153, 0
+  size: 130, 64
   orig: 256, 256
-  offset: 10, 96
+  offset: 11, 96
   index: -1
 Comp 2_00003
   rotate: false
   xy: 0, 64
-  size: 161, 64
+  size: 167, 64
   orig: 256, 256
-  offset: 37, 96
+  offset: 34, 96
   index: -1
 Comp 2_00004
   rotate: false
   xy: 0, 0
-  size: 151, 64
+  size: 153, 64
   orig: 256, 256
-  offset: 95, 96
+  offset: 92, 96
   index: -1
 Comp 2_00005
   rotate: false
-  xy: 161, 64
-  size: 112, 64
+  xy: 167, 64
+  size: 114, 64
   orig: 256, 256
-  offset: 134, 96
+  offset: 131, 96
   index: -1
 Comp 2_00006
   rotate: false
-  xy: 273, 64
-  size: 90, 64
+  xy: 281, 64
+  size: 92, 64
   orig: 256, 256
-  offset: 156, 96
+  offset: 153, 96
   index: -1
 Comp 2_00007
   rotate: false
-  xy: 359, 0
-  size: 71, 64
+  xy: 365, 0
+  size: 73, 64
   orig: 256, 256
-  offset: 175, 96
+  offset: 172, 96
   index: -1
 Comp 2_00008
   rotate: false
-  xy: 424, 64
-  size: 57, 64
+  xy: 436, 64
+  size: 59, 64
   orig: 256, 256
-  offset: 189, 96
+  offset: 186, 96
   index: -1
 Comp 2_00009
   rotate: false
-  xy: 430, 0
-  size: 45, 64
+  xy: 438, 0
+  size: 47, 64
   orig: 256, 256
-  offset: 201, 96
+  offset: 198, 96
   index: -1
 Comp 2_00010
   rotate: false
-  xy: 475, 0
-  size: 37, 64
+  xy: 485, 0
+  size: 39, 64
   orig: 256, 256
-  offset: 209, 96
+  offset: 206, 96
   index: -1
 Comp 2_00011
   rotate: false
-  xy: 481, 64
-  size: 31, 64
+  xy: 495, 64
+  size: 33, 64
   orig: 256, 256
-  offset: 215, 96
+  offset: 212, 96
   index: -1
 Comp 2_00012
   rotate: false
-  xy: 512, 64
-  size: 27, 64
+  xy: 524, 0
+  size: 29, 64
   orig: 256, 256
-  offset: 219, 96
+  offset: 216, 96
   index: -1
 Comp 2_00013
   rotate: false
-  xy: 512, 0
-  size: 24, 64
+  xy: 528, 64
+  size: 26, 64
   orig: 256, 256
-  offset: 222, 96
+  offset: 219, 96
   index: -1
 Comp 2_00014
   rotate: false
-  xy: 536, 0
-  size: 23, 64
+  xy: 553, 0
+  size: 25, 64
   orig: 256, 256
-  offset: 223, 96
+  offset: 220, 96
   index: -1
 Comp 2_00015
   rotate: false
-  xy: 539, 64
-  size: 23, 64
+  xy: 554, 64
+  size: 25, 64
   orig: 256, 256
-  offset: 223, 96
+  offset: 220, 96
   index: -1

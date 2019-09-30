@@ -43,29 +43,6 @@ public class DeckHandler : MonoBehaviour
         this.deck = deck;
     }
 
-    public void SetDeck(dataModules.Deck deck, bool basic = false) {
-        isBasic = basic;
-        deckID = deck.id;
-        if (deck.camp == "human") isHuman = true;
-        else isHuman = false;
-        Transform deckInfo = transform.Find("DeckInfo");
-        deckInfo.gameObject.SetActive(true);
-        deckInfo.Find("Deck/Portrait").GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[deck.heroId];
-        deckInfo.Find("Deck/Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = deck.name;
-        deckInfo.Find("Deck/Info/Text").GetComponent<TMPro.TextMeshProUGUI>().text = deck.totalCardCount.ToString() + "/40";
-    }
-
-    public void SetTemplateDeck(dataModules.Deck deck) {
-        templateDeck = deck;
-        deckID = deck.id;
-        if (deck.camp == "human") isHuman = true;
-        else isHuman = false;
-        Transform deckInfo = transform.Find("DeckInfo");
-        deckInfo.Find("Portrait").GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[deck.heroId];
-        deckInfo.Find("DeckName").GetComponent<TMPro.TextMeshProUGUI>().text = deck.name;
-        deckInfo.Find("Capacity").GetComponent<TMPro.TextMeshProUGUI>().text = deck.totalCardCount.ToString() + "/40";
-    }
-
     public void SetNewTemplateDeck(dataModules.Deck deck) {
         templateDeck = deck;
         deckID = deck.id;

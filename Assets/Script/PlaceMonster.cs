@@ -493,6 +493,11 @@ public class PlaceMonster : MonoBehaviour {
                     EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.TREBUCHET, transform.position, actionCall);
                     actionCall -= actionCall;
                 }
+                else if(magicId == "ac10074") {
+                    actionCall += Hit;
+                    EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.DARK_THORN, transform.position, actionCall);
+                    actionCall -= actionCall;
+                }
                 else
                     EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.EXPLOSION, transform.position);
 
