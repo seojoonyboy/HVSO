@@ -376,7 +376,11 @@ public class ScenarioMask : SerializedMonoBehaviour
                 pos = getObject.transform.position;
                 Vector3 temp = new Vector3(1, -1, 1);
                 glowRect.localScale = temp;
-                pos.y += 1.4f;
+
+                if (targetName.Contains("HpParent1"))
+                    pos.y += 1.8f;
+                else
+                    pos.y += 1.4f;
             }
             else {
                 pos = getObject.transform.position;
@@ -386,6 +390,20 @@ public class ScenarioMask : SerializedMonoBehaviour
             glowImage.sprite = arrowSprite;
             glowRect.sizeDelta = new Vector2(160,160);
             glowRect.position = pos;
+
+
+            GameObject anotherGlowObject = GetUnactiveGlow();
+            RectTransform anotherRect = anotherGlowObject.GetComponent<RectTransform>();
+            Image anotherImage = anotherGlowObject.GetComponent<Image>();
+            anotherRect.gameObject.SetActive(true);
+            anotherRect.position = getObject.transform.position;
+            anotherRect.localScale = getObject.transform.localScale;
+            anotherRect.sizeDelta = getObject.GetComponent<RectTransform>().sizeDelta;
+            Debug.Log(anotherRect.sizeDelta);
+            anotherImage.sprite = (getObject.GetComponent<Image>() != null) ? getObject.GetComponent<Image>().sprite : defaultGlow.GetComponent<Image>().sprite;
+            Animation anothoerAnimation = anotherGlowObject.GetComponent<Animation>();
+            anothoerAnimation.Play();
+
         }
         //else if (targetName.Contains("turnUI_outLine")) {
         //    glowRect.gameObject.SetActive(true);
@@ -417,8 +435,21 @@ public class ScenarioMask : SerializedMonoBehaviour
             }
             glowImage.sprite = arrowSprite;
             glowRect.sizeDelta = getObject.GetComponent<RectTransform>().sizeDelta;
-            glowRect.position = pos;            
+            glowRect.position = pos;
             //glowObject.GetComponent<Animation>().clip = glowObject.GetComponent<Animation>().GetClip("RedGlow");
+
+            GameObject anotherGlowObject = GetUnactiveGlow();
+            RectTransform anotherRect = anotherGlowObject.GetComponent<RectTransform>();
+            Image anotherImage = anotherGlowObject.GetComponent<Image>();
+            anotherRect.gameObject.SetActive(true);
+            anotherRect.position = getObject.transform.position;
+            anotherRect.localScale = getObject.transform.localScale;
+            anotherRect.sizeDelta = getObject.GetComponent<RectTransform>().sizeDelta;
+            Debug.Log(anotherRect.sizeDelta);
+            anotherImage.sprite = (getObject.GetComponent<Image>() != null) ? getObject.GetComponent<Image>().sprite : defaultGlow.GetComponent<Image>().sprite;
+            Animation anothoerAnimation = anotherGlowObject.GetComponent<Animation>();
+            anothoerAnimation.Play();
+
         }
         else {
             glowRect.gameObject.SetActive(true);
