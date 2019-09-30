@@ -32,6 +32,13 @@ public class DeckListHandlerInBattleReady : MonoBehaviour {
             parentController.OnBackButton();
         });
         battleStart.SetActive(false);
+
+        if(selectedObj != null) {
+            selectedObj.transform.Find("BackEffect").gameObject.SetActive(false);
+            selectedObj.transform.Find("FrontEffect").gameObject.SetActive(false);
+
+            selectedObj = null;
+        }
     }
 
     public void LoadMyDecks() {
@@ -44,12 +51,13 @@ public class DeckListHandlerInBattleReady : MonoBehaviour {
             content.GetChild(i).Find("CardNum/Value").GetComponent<TextMeshProUGUI>().text = humanDecks[i].totalCardCount + "/";
             content.GetChild(i).Find("DeckName").GetComponent<TextMeshProUGUI>().text = humanDecks[i].name;
 
+            GameObject obj = content.GetChild(i).gameObject;
             DeckHandler deckHandler = content.GetChild(i).gameObject.GetComponent<DeckHandler>();
             deckHandler.DECKID = humanDecks[i].id;
             var deck = humanDecks[i];
 
             Button button = deckHandler.GetComponent<Button>();
-            button.onClick.AddListener(() => { OnDeckSelected(deckHandler.DECKID, "HUMAN", deck); });
+            button.onClick.AddListener(() => { OnDeckSelected(deckHandler.DECKID, "HUMAN", deck, obj); });
         }
 
         int index = 0;
@@ -59,12 +67,13 @@ public class DeckListHandlerInBattleReady : MonoBehaviour {
             content.GetChild(i).Find("CardNum/Value").GetComponent<TextMeshProUGUI>().text = orcDecks[index].totalCardCount + "/";
             content.GetChild(i).Find("DeckName").GetComponent<TextMeshProUGUI>().text = orcDecks[index].name;
 
+            GameObject obj = content.GetChild(i).gameObject;
             DeckHandler deckHandler = content.GetChild(i).gameObject.GetComponent<DeckHandler>();
             deckHandler.DECKID = orcDecks[index].id;
             var deck = orcDecks[index];
 
             Button button = deckHandler.GetComponent<Button>();
-            button.onClick.AddListener(() => { OnDeckSelected(deckHandler.DECKID, "ORC", deck); });
+            button.onClick.AddListener(() => { OnDeckSelected(deckHandler.DECKID, "ORC", deck, obj); });
             index++;
         }
     }
@@ -75,7 +84,14 @@ public class DeckListHandlerInBattleReady : MonoBehaviour {
         }
     }
 
-    public void OnDeckSelected(string deckId, string camp, dataModules.Deck deck) {
+    GameObject selectedObj = null;
+
+    public void OnDeckSelected(string deckId, string camp, dataModules.Deck deck, GameObject obj) {
+        if(selectedObj != null) {
+            selectedObj.transform.Find("BackEffect").gameObject.SetActive(false);
+            selectedObj.transform.Find("FrontEffect").gameObject.SetActive(false);
+        }
+
         PlayerPrefs.SetString("SelectedRace", camp);
         PlayerPrefs.SetString("SelectedDeckId", deckId);
         PlayerPrefs.SetString("SelectedBattleType", "multi");
@@ -83,6 +99,12 @@ public class DeckListHandlerInBattleReady : MonoBehaviour {
         parentController.selectedDeck = deck;
 
         Logger.Log(camp + "의" + deckId + "덱이 선택됨");
+
+        selectedObj = obj;
+
+        selectedObj.transform.Find("BackEffect").gameObject.SetActive(true);
+        selectedObj.transform.Find("FrontEffect").gameObject.SetActive(true);
+
         battleStart.SetActive(true);
     }
 }
