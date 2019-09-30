@@ -1,0 +1,62 @@
+
+ac10074.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+effect2
+  rotate: true
+  xy: 886, 414
+  size: 131, 119
+  orig: 131, 119
+  offset: 0, 0
+  index: -1
+effect3
+  rotate: true
+  xy: 445, 32
+  size: 48, 140
+  orig: 48, 140
+  offset: 0, 0
+  index: -1
+effect4
+  rotate: false
+  xy: 445, 80
+  size: 280, 237
+  orig: 280, 237
+  offset: 0, 0
+  index: -1
+ob1
+  rotate: false
+  xy: 533, 545
+  size: 436, 437
+  orig: 436, 437
+  offset: 0, 0
+  index: -1
+ob11
+  rotate: false
+  xy: 533, 317
+  size: 353, 228
+  orig: 353, 228
+  offset: 0, 0
+  index: -1
+ob2
+  rotate: false
+  xy: 0, 0
+  size: 445, 455
+  orig: 445, 455
+  offset: 0, 0
+  index: -1
+ob_ac1
+  rotate: true
+  xy: 725, 154
+  size: 163, 110
+  orig: 163, 110
+  offset: 0, 0
+  index: -1
+ob_back
+  rotate: false
+  xy: 0, 455
+  size: 533, 527
+  orig: 533, 527
+  offset: 0, 0
+  index: -1
