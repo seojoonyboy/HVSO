@@ -7,7 +7,7 @@ repeat: none
 bacK1
   rotate: false
   xy: 0, 0
-  size: 511, 170
-  orig: 511, 170
+  size: 505, 164
+  orig: 505, 164
   offset: 0, 0
   index: -1
