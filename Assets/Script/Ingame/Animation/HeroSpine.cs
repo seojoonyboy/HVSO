@@ -97,6 +97,15 @@ public class HeroSpine : MonoBehaviour
         currentAnimationName = deadAnimationName;
     }
 
+    public virtual void CriticalFace() {
+        skeletonAnimation.skeleton.SetAttachment("head_lowHP", "head2");
+    }
+
+    public virtual void NormalFace() {
+        skeletonAnimation.skeleton.SetAttachment("head_lowHP", null);
+    }
+
+
 
     public virtual void DefendFinish(TrackEntry trackEntry = null) {
         if (defenseFinish != null) defenseFinish();
