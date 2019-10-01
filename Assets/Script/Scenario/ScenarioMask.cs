@@ -29,6 +29,7 @@ public class ScenarioMask : SerializedMonoBehaviour
     public Dictionary<string, GameObject> targetObject;
 
     public GameObject outText;
+    public GameObject talkingText;
 
     public GameObject textUP, textDown;
 

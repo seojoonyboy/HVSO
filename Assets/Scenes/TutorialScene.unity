@@ -9931,6 +9931,7 @@ MonoBehaviour:
     type: 3}
   blockTurnBtn: {fileID: 217671041}
   outText: {fileID: 1817419933}
+  talkingText: {fileID: 1147905565}
   textUP: {fileID: 1027285582}
   textDown: {fileID: 449188842}
   arrowSprite: {fileID: 21300000, guid: 56808d63e7c447d40a6aada6e9065176, type: 3}
