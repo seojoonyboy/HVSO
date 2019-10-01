@@ -499,7 +499,7 @@ public class PlaceMonster : MonoBehaviour {
                     actionCall -= actionCall;
                 }
                 else
-                    EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.EXPLOSION, transform.position);
+                    EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.DEBUFF, transform.position);
 
                 
             }

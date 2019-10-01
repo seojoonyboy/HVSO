@@ -294,9 +294,7 @@ public class EffectSystem : SerializedMonoBehaviour {
         POISON_GET,
         HERO_DEAD,
         HERO_SHIELD,
-        DARK_THORN,
-        DEBUFF,
-        CONTINUE_DEBUFF
+        DARK_THORN
     }
 
 }
