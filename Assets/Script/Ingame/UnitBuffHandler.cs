@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class UnitBuffHandler : MonoBehaviour {
-    GameObject buffContinue, debuffContinue;
+    [SerializeField] GameObject buffContinue, debuffContinue;
     public List<BuffStat> buffList;
     PlaceMonster placeMonster;
     int origin_atk, origin_hp;
@@ -39,7 +39,8 @@ public class UnitBuffHandler : MonoBehaviour {
                 buffContinue = EffectSystem.Instance.ContinueEffect(EffectSystem.EffectType.CONTINUE_BUFF, transform);
             }
         }
-        else if(total_buffed_hp < origin_hp) {
+
+        if(total_buffed_hp < origin_hp) {
             if(total_buffed_atk < origin_atk) {
                 if (buffContinue != null) {
                     Destroy(buffContinue);
@@ -51,7 +52,17 @@ public class UnitBuffHandler : MonoBehaviour {
         }
 
         if(total_buffed_hp == origin_hp) {
-            if(total_buffed_atk == origin_atk) {
+            if(total_buffed_atk < origin_atk) {
+                if (debuffContinue == null) {
+                    debuffContinue = EffectSystem.Instance.ContinueEffect(EffectSystem.EffectType.CONTINUE_DEBUFF, transform);
+                }
+            }
+            else if(total_buffed_atk > origin_atk) {
+                if (buffContinue == null) {
+                    buffContinue = EffectSystem.Instance.ContinueEffect(EffectSystem.EffectType.CONTINUE_BUFF, transform);
+                }
+            }
+            else {
                 if(debuffContinue != null) Destroy(debuffContinue);
                 if(buffContinue != null) Destroy(buffContinue);
             }
