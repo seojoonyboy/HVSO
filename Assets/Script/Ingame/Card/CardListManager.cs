@@ -188,7 +188,7 @@ public class CardListManager : MonoBehaviour
 
         info.Find("Class_1").GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[data.cardClasses[0]];
 
-        for(int i = 0; i < 5; i++) {
+        for(int i = 0; i < 3; i++) {
             info.Find("Skill&BuffRow1").GetChild(i).gameObject.SetActive(false);
             EventTrigger skill1 = info.Find("Skill&BuffRow1").GetChild(i).GetComponent<EventTrigger>();
             skill1.triggers.RemoveRange(0, skill1.triggers.Count);
@@ -213,7 +213,8 @@ public class CardListManager : MonoBehaviour
             if (data.attackTypes.Length != 0) {
                 info.Find("Skill&BuffRow1").GetChild(skillnum).gameObject.SetActive(true);
                 var image = AccountManager.Instance.resource.skillIcons[data.attackTypes[0]];
-                info.Find("Skill&BuffRow1").GetChild(skillnum).GetComponent<Image>().sprite = image;
+                info.Find("Skill&BuffRow1").GetChild(skillnum).Find("SkillIcon").GetComponent<Image>().sprite = image;
+                info.Find("Skill&BuffRow1").GetChild(skillnum).Find("Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.attackTypes[0];
                 //info.Find("Skill&BuffRow1").GetChild(skillnum).GetComponent<Button>().onClick.AddListener(() => {
                 //    OpenClassDescModal(data.attackTypes[0], image);
                 //});
@@ -230,7 +231,8 @@ public class CardListManager : MonoBehaviour
             if (data.attributes.Length != 0) {
                 info.Find("Skill&BuffRow1").GetChild(skillnum).gameObject.SetActive(true);
                 var image = AccountManager.Instance.resource.skillIcons[data.attributes[0]];
-                info.Find("Skill&BuffRow1").GetChild(skillnum).GetComponent<Image>().sprite = image;
+                info.Find("Skill&BuffRow1").GetChild(skillnum).Find("SkillIcon").GetComponent<Image>().sprite = image;
+                info.Find("Skill&BuffRow1").GetChild(skillnum).Find("Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.attributes[0];
                 //info.Find("Skill&BuffRow1").GetChild(skillnum).GetComponent<Button>().onClick.AddListener(() => {
                 //    OpenClassDescModal(data.attributes[0], image);
                 //});
@@ -260,12 +262,15 @@ public class CardListManager : MonoBehaviour
             info.Find("Categories/Text").GetComponent<TMPro.TextMeshProUGUI>().text = sb.ToString();
 
             info.Find("Flavor/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.flavorText;
-            info.Find("Flavor/Text").position = info.Find("Skill&BuffRow1").position;
-            if (info.Find("Skill&BuffRow1").GetChild(0).gameObject.activeSelf) {
-                info.Find("Flavor/Text").position = info.Find("Skill&BuffRow2").position;
-                if (info.Find("Skill&BuffRow2").GetChild(0).gameObject.activeSelf)
-                    info.Find("Flavor/Text").localPosition = Vector3.zero;
-            }
+            //info.Find("Flavor/Text").position = info.Find("Skill&BuffRow1").position;
+            //if (info.Find("Skill&BuffRow1").GetChild(0).gameObject.activeSelf) {
+            //    info.Find("Flavor/Text").position = info.Find("Skill&BuffRow2").position;
+            //    if (info.Find("Skill&BuffRow2").GetChild(0).gameObject.activeSelf)
+            //        info.Find("Flavor/Text").localPosition = Vector3.zero;
+            //}
+            info.Find("Flavor/Text").position = info.Find("Skill&BuffRow2").position;
+            if (info.Find("Skill&BuffRow2").GetChild(0).gameObject.activeSelf)
+                info.Find("Flavor/Text").localPosition = Vector3.zero;
         }
         //마법 카드
         else {
