@@ -17,6 +17,9 @@ public class UnitBuffHandler : MonoBehaviour {
         int total_buffed_atk = placeMonster.unit.originalAttack;
         int total_buffed_hp = placeMonster.unit.HP;
 
+        origin_atk = total_buffed_atk;
+        origin_hp = total_buffed_hp;
+
         Logger.Log(gameObject.name + "의 Buff 이력");
         foreach(BuffStat stat in buffList) {
             total_buffed_atk += stat.atk;
