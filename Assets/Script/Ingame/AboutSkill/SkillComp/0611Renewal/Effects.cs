@@ -93,15 +93,18 @@ namespace SkillModules {
             var keywords = ((string[])args).ToList();
 
             int result = 0;
+            int itemId = skillHandler.myObject.GetComponent<PlaceMonster>().itemId;
+
             foreach(SocketFormat.PlayHistory history in playHistory) {
                 var categories = history.cardItem.cardCategories.ToList();
                 foreach(string category in categories) {
-                    if (keywords.Contains(category)) {
+                    if (keywords.Contains(category) && history.cardItem.itemId != itemId) {
                         result++;
                         break;
                     }
                 }
             }
+
             skillHandler.AddAdditionalArgs(result);
             skillHandler.isDone = true;
         }
