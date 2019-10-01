@@ -6552,6 +6552,68 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: ScenarioUnitResurce
+      Entry: 7
+      Data: 30|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[ScenarioUnit,
+        Assembly-CSharp]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 31|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10005
+    - Name: $v
+      Entry: 7
+      Data: 32|ScenarioUnit, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: "\uC81C\uC2DD\uAD81\uC218"
+    - Name: sprite
+      Entry: 10
+      Data: 151
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: h10002
+    - Name: $v
+      Entry: 7
+      Data: 33|ScenarioUnit, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: "\uD06C\uB77C\uCFE0\uC2A4"
+    - Name: sprite
+      Entry: 10
+      Data: 175
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
   unitDeadObject: {fileID: 4985483695556585209, guid: c7f3c75ff72d1444a8ab0cfeef0207de,
     type: 3}
   previewUnit: {fileID: 855070147762477345, guid: b1eed5e36ae207c40be53cdb6c261354,

@@ -48,15 +48,32 @@ public class Hide_message : ScenarioExecute {
 
 //args[0] npc id 또는 이름
 //args[1] 텍스트 내용
+//args[2] isPlayer
 
 
 public class NPC_Print_message : ScenarioExecute {
     public NPC_Print_message() : base() { }
 
     public override void Execute() {
-        
+        scenarioMask.talkingText.SetActive(true);
+        bool isPlayer = false;
+        if (args[2] == "isPlayer")
+            isPlayer = true;
 
-
+        scenarioMask.talkingText.transform.Find("CharacterImage/Player").gameObject.SetActive(isPlayer);
+        scenarioMask.talkingText.transform.Find("CharacterImage/Enemy").gameObject.SetActive(!isPlayer);
+        scenarioMask.talkingText.transform.Find("NameObject/PlayerName").gameObject.SetActive(isPlayer);
+        scenarioMask.talkingText.transform.Find("NameObject/EnemyName").gameObject.SetActive(!isPlayer);
+        if (args[2] == "isPlayer") {
+            scenarioMask.talkingText.transform.Find("CharacterImage/Player").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoPortraite[args[0]];
+            scenarioMask.talkingText.transform.Find("NameObject/PlayerName").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.resource.ScenarioUnitResurce[args[0]].name;
+        }
+        else {
+            scenarioMask.talkingText.transform.Find("CharacterImage/Enemy").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoPortraite[args[0]];
+            scenarioMask.talkingText.transform.Find("NameObject/EnemyName").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.resource.ScenarioUnitResurce[args[0]].name;
+        }
+        scenarioMask.GetComponent<TextTyping>().StartTyping(args[1], handler);
+        scenarioMask.transform.Find("StopTypingTrigger").gameObject.SetActive(true);
     }
 }
 
@@ -73,8 +90,8 @@ public class Highlight : ScenarioExecute {
             target = scenarioMask.GetMaskingObject(args[0]);
 
 
-        ScenarioMask.Instance.SetHighlightImage(target);
-        ScenarioMask.Instance.GetMaskHighlight(target);
+        scenarioMask.SetHighlightImage(target);
+        scenarioMask.GetMaskHighlight(target);
         handler.isDone = true;
         Logger.Log("Highlight");
     }

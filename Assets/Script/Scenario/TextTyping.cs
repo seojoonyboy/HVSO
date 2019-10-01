@@ -5,15 +5,16 @@ using UnityEngine.UI;
 
 public class TextTyping : MonoBehaviour
 {
-    TMPro.TextMeshProUGUI textObj;
+    [SerializeField] TMPro.TextMeshProUGUI textObj;
     string typingText;
     private IEnumerator textmeshTyping;
+    ScenarioExecuteHandler scenarioHandler;
     bool isTyping;
 
-    public void StartTyping(GameObject obj, string text) {
+    public void StartTyping(string text, ScenarioExecuteHandler handler) {
         if (isTyping) return;
-        textObj = obj.GetComponent<TMPro.TextMeshProUGUI>();
         typingText = text;
+        scenarioHandler = handler;
         textmeshTyping = TypeTextMesh();
         StartCoroutine(textmeshTyping);
     }
@@ -32,6 +33,7 @@ public class TextTyping : MonoBehaviour
             yield return new WaitForSeconds(0.05f);
         }
         isTyping = false;
+        scenarioHandler.isDone = true;
     }
 
     public void StopTyping() {
@@ -39,5 +41,7 @@ public class TextTyping : MonoBehaviour
             StopCoroutine(textmeshTyping);
         textObj.text = typingText;
         isTyping = false;
+        scenarioHandler.isDone = true;
+        transform.Find("StopTypingTrigger").gameObject.SetActive(false);
     }
 }
