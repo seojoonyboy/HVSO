@@ -9,43 +9,54 @@ public class UnitBuffHandler : MonoBehaviour {
     int origin_atk, origin_hp;
 
     void Awake() {
-        placeMonster = GetComponent<PlaceMonster>();
-        origin_atk = placeMonster.unit.originalAttack;
-        origin_hp = placeMonster.unit.HP;
-
         buffList = new List<BuffStat>();
     }
 
     private void Refresh() {
-        int total_buffed_atk = origin_atk;
-        int total_buffed_hp = origin_hp;
+        placeMonster = GetComponent<PlaceMonster>();
+        int total_buffed_atk = placeMonster.unit.originalAttack;
+        int total_buffed_hp = placeMonster.unit.HP;
 
+        Logger.Log(gameObject.name + "의 Buff 이력");
         foreach(BuffStat stat in buffList) {
             total_buffed_atk += stat.atk;
             total_buffed_hp += stat.hp;
+
+            Logger.Log("공격력 : " + stat.atk + ", " + "체력 : " + stat.hp);
         }
 
         //버프 이펙트 보여주기
-        if(total_buffed_hp > origin_hp || total_buffed_atk > origin_atk) {
+        if(total_buffed_hp > origin_hp) {
+            if (total_buffed_atk > origin_atk) {
+                if (debuffContinue != null) {
+                    Destroy(debuffContinue);
+                }
+            }
             if(buffContinue == null) {
                 buffContinue = EffectSystem.Instance.ContinueEffect(EffectSystem.EffectType.CONTINUE_BUFF, transform);
             }
         }
-
-        //디버프 이펙트 보여주기
-        if(total_buffed_hp < origin_hp || total_buffed_atk < origin_atk) {
-            if(debuffContinue == null) {
+        else if(total_buffed_hp < origin_hp) {
+            if(total_buffed_atk < origin_atk) {
+                if (buffContinue != null) {
+                    Destroy(buffContinue);
+                }
+            }
+            if (debuffContinue == null) {
                 debuffContinue = EffectSystem.Instance.ContinueEffect(EffectSystem.EffectType.CONTINUE_DEBUFF, transform);
             }
         }
 
-        //버프 이펙트 보여주기 해제
-        if(total_buffed_atk == origin_atk && total_buffed_hp == origin_hp){
-            Destroy(buffContinue);
-            Destroy(debuffContinue);
+        if(total_buffed_hp == origin_hp) {
+            if(total_buffed_atk == origin_atk) {
+                if(debuffContinue != null) Destroy(debuffContinue);
+                if(buffContinue != null) Destroy(buffContinue);
+            }
         }
     }
 
+    //TODO : Assault인 경우 같은 라인에 적이 있는지 없는지에 따라 계속 호출되어 리스트에 쌓이는 문제가 있음.
+    //Assault처리 방법에 대해 고민
     public void AddBuff(BuffStat stat) {
         buffList.Add(stat);
         Refresh();
