@@ -85,22 +85,22 @@ public partial class PlayMangement : MonoBehaviour {
     }
 
 
-    public void SetGameData() {
-        InitGameData();
+    public void SetGameData(string match = null) {
+        InitGameData(match);
     }
 
     //최초에 데이터를 불러드릴 함수. missionData를 임시로 놓고, 그 후에 게임의 정보들 등록
     //승리목표 설정 -> 자원분배 -> 턴
-    protected void InitGameData() {
+    protected void InitGameData(string match = null) {
         ObservePlayerData();
-        SetVictoryCondition();
+        SetVictoryCondition(match);
         DistributeResource();
         InitTurnTable();
     }
 
     //승리 조건을 설정할 함수. victoryModule이라는 namespace로 전략패턴으로 구현 계획
-    private void SetVictoryCondition(object data = null) {
-        string condition = (string)data;
+    private void SetVictoryCondition(string data = null) {
+        string condition = data;
 
         switch (condition) {
             default:
@@ -790,7 +790,13 @@ public partial class PlayMangement : MonoBehaviour {
 /// </summary>
 public partial class PlayMangement {
     public GameObject SummonUnit(bool isPlayer, string unitID, int col, int row, int itemID = -1, int cardIndex = -1, Transform[][] args = null) {
+
+        
+
         PlayerController targetPlayer = (isPlayer == true) ? player : enemyPlayer;
+        if (unitsObserver.IsUnitExist(new FieldUnitsObserver.Pos(col, row), targetPlayer.isHuman) == true)
+            return null;
+
         CardDataPackage cardDataPackage = AccountManager.Instance.cardPackage;
 
         GameObject skeleton;

@@ -40,21 +40,33 @@ public partial class CardDropManager {
     /// 튜토리얼용 강제 소환위치 지정
     /// </summary>
     /// <param name="line">Args는 1부터 시작</param>
-    public void ForcedShowDropableSlot(int line) {
+    public void ForcedShowDropableSlot(string args, int line) {
         Logger.Log("ForcedShowDropableSlot");
         for(int i=0; i<5; i++) {
             if(i == line - 1) {
-                if (unitLine[i][0].childCount == 0) {
-                    slotLine[i].GetChild(0).gameObject.SetActive(true);
+                if (args == "slot") {
+                    if (unitLine[i][0].childCount == 0) {
+                        slotLine[i].GetChild(0).gameObject.SetActive(true);
+                    }
                 }
+                else if (args == "line") {
+                    slotLine[i].Find("BattleLineEffect").gameObject.SetActive(true);
+                }
+
             }
         }
     }
     public void ShowDropableSlot(dataModules.CollectionCard card) {
         if(ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.isTutorial) {
+
+
+            magicArgs = card.skills[0].target.args[0];
+            magicTarget = card.skills[0].target.args[1];
+
+            
             int line = ScenarioGameManagment.scenarioInstance.forcedSummonAt;
             if(line != -1) {
-                ForcedShowDropableSlot(line);
+                ForcedShowDropableSlot(magicTarget,line);
                 return;
             }
         }

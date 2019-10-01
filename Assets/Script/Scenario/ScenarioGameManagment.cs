@@ -21,6 +21,7 @@ public class ScenarioGameManagment : PlayMangement {
     public bool canHeroCardToHand = true;
     public bool stopEnemySummon = false;
     public bool stopEnemySpell = false;
+    public bool stopNextTurn = false;
 
     public int forcedSummonAt = -1;
 
@@ -167,12 +168,13 @@ public class ScenarioGameManagment : PlayMangement {
             yield return battleLine(line);
             if (isGame == false) yield break;
         }
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1f);        
         socketHandler.TurnOver();
         turn++;
-        yield return socketHandler.WaitGetCard();
+        yield return socketHandler.WaitGetCard();        
         DistributeResource();
         eventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_BATTLE_TURN, this, null);
+        yield return new WaitUntil(() => stopNextTurn == false);
         EndTurnDraw();
         yield return new WaitForSeconds(2.0f);
         yield return new WaitUntil(() => !SkillModules.SkillHandler.running);
