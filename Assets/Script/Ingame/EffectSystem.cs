@@ -39,6 +39,7 @@ public class EffectSystem : SerializedMonoBehaviour {
         effect.SetActive(true);
         SkeletonAnimation effectAnimation = effect.GetComponent<SkeletonAnimation>();
         effectAnimation.Initialize(true);
+
         effectAnimation.Update(0);
         effectAnimation.AnimationState.SetAnimation(0, "animation", false);
         effectAnimation.AnimationState.Complete += delegate (TrackEntry entry) { SetReadyObject(effect); };
@@ -86,8 +87,8 @@ public class EffectSystem : SerializedMonoBehaviour {
 
 
 
-    public void ContinueEffect(EffectType type, Transform pos) {
-        if (effectObject.ContainsKey(type) == false || effectObject[type] == null) return;
+    public GameObject ContinueEffect(EffectType type, Transform pos) {
+        if (effectObject.ContainsKey(type) == false || effectObject[type] == null) return null;
         GameObject effect = GetReadyObject(effectObject[type]);
         effect.transform.SetParent(pos);
         effect.name = effectObject[type].gameObject.name;
@@ -95,6 +96,7 @@ public class EffectSystem : SerializedMonoBehaviour {
         effect.SetActive(true);
         SkeletonAnimation effectAnimation = effect.GetComponent<SkeletonAnimation>();
         effectAnimation.AnimationState.SetAnimation(0, "animation", true);
+        return effect;
     }
 
     public bool CheckActiveEffect(EffectType type, Transform pos) {

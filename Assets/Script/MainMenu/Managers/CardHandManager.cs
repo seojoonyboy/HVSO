@@ -62,6 +62,7 @@ public class CardHandManager : MonoBehaviour {
     //멀리건 종료 버튼 클릭 함수
     public void FirstDrawCardChange() {
         socketDone = true;
+        clm.CloseMulliganCardList();
         foreach (GameObject cards in firstDrawList) {
             cards.transform.Find("ChangeButton").gameObject.SetActive(false);
         }

@@ -29,7 +29,6 @@ public class PlaceMonster : MonoBehaviour {
     
     protected bool instanceAttack = false;
     public EffectSystem.ActionDelegate actionCall;
-
     public float atkTime {
         get { return unitSpine.atkDuration; }
     }
@@ -138,7 +137,7 @@ public class PlaceMonster : MonoBehaviour {
         }
     }
 
-    public void HideUnit() {        
+    public void HideUnit() {
         transform.Find("HP").gameObject.SetActive(false);
         transform.Find("ATK").gameObject.SetActive(false);
         transform.Find("UnitAttackProperty").gameObject.SetActive(false);
@@ -464,7 +463,6 @@ public class PlaceMonster : MonoBehaviour {
         UpdateStat();
         SetState(UnitState.HIT);
     }
-    
 
     public void RequestChangeStat(int power = 0, int hp = 0, string magicId = null) {
         StartCoroutine(buffEffectCoroutine(power, hp, magicId));
@@ -487,34 +485,22 @@ public class PlaceMonster : MonoBehaviour {
             yield break;
         }
         else {
-            if (buff.hp < 0) {
-                if (magicId == "ac10021") {
-                    actionCall += Hit;
-                    EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.TREBUCHET, transform.position, actionCall);
-                    actionCall -= actionCall;
-                }
-                else if(magicId == "ac10074") {
-                    actionCall += Hit;
-                    EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.DARK_THORN, transform.position, actionCall);
-                    actionCall -= actionCall;
-                }
-                else
-                    EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.DEBUFF, transform.position);
-
-                
+            //투석공격
+            if (magicId == "ac10021") {
+                actionCall += Hit;
+                EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.TREBUCHET, transform.position, actionCall);
+                actionCall -= actionCall;
             }
+            //어둠의 가시
+            else if (magicId == "ac10074") {
+                actionCall += Hit;
+                EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.DARK_THORN, transform.position, actionCall);
+                actionCall -= actionCall;
+            }
+            //버프 혹은 디버프 효과 부여
             else {
-                EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.BUFF, transform.position);
-                if (buffEffect == false) {
-                    EffectSystem.Instance.ContinueEffect(EffectSystem.EffectType.CONTINUE_BUFF, transform);
-                    buffEffect = true;
-                }
-                else {
-                    if (unit.attack <= unit.originalAttack) {
-                        EffectSystem.Instance.DisableEffect(EffectSystem.EffectType.CONTINUE_BUFF, transform);
-                        buffEffect = false;
-                    }
-                }
+                GetComponent<UnitBuffHandler>()
+                    .AddBuff(new UnitBuffHandler.BuffStat(power, hp));
             }
         }
         buff.init();

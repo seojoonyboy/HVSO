@@ -153,6 +153,8 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
                     transform.Find("GlowEffect").gameObject.SetActive(false);
                     transform.Find("CardInfoWindow").gameObject.SetActive(false);
                     showCardsHandler.hideShowBtn.SetActive(false);
+                    skillHandler.highlight = highlightedSlot; 
+                    if(!skillHandler.TargetSelectExist()) skillHandler.SendSocket();
                     StartCoroutine(UseSkillCard(parms));
                     //if (GetComponents<Ability>() == null) UseCard();
                 }
@@ -199,6 +201,8 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
             transform.Find("GlowEffect").gameObject.SetActive(false);
             PlayMangement.instance.player.resource.Value -= cardData.cost;
             object[] parms = new object[] { true, gameObject };
+            skillHandler.highlight = highlightedSlot;
+            if(!skillHandler.TargetSelectExist()) skillHandler.SendSocket();
             StartCoroutine(UseSkillCard(parms));
             //if (GetComponents<Ability>() == null) UseCard();
         }

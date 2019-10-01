@@ -1004,6 +1004,7 @@ GameObject:
   - component: {fileID: 4549778766762803916}
   - component: {fileID: 4549778766762803914}
   - component: {fileID: 4549778766762803917}
+  - component: {fileID: 1734220965298164683}
   m_Layer: 13
   m_Name: BaseUnit
   m_TagString: Untagged
@@ -1122,6 +1123,20 @@ MonoBehaviour:
   buffEffect: 0
   unitSpine: {fileID: 0}
   hideSpine: {fileID: 0}
+--- !u!114 &1734220965298164683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4549778766762803919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a0aaa3cf6bae5746b62b99bcaedf263, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buffContinue: {fileID: 0}
+  debuffContinue: {fileID: 0}
 --- !u!1 &7633947265274660232
 GameObject:
   m_ObjectHideFlags: 0
@@ -1491,6 +1506,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4549778766762803916}
     m_Modifications:
+    - target: {fileID: 8544034429045599775, guid: 7331370235ab70642bdf53ca97543ba7,
+        type: 3}
+      propertyPath: m_Name
+      value: EffectObject
+      objectReference: {fileID: 0}
+    - target: {fileID: 8544034429045599775, guid: 7331370235ab70642bdf53ca97543ba7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6519469795811311031, guid: 7331370235ab70642bdf53ca97543ba7,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1544,16 +1569,6 @@ PrefabInstance:
     - target: {fileID: 6519469795811311031, guid: 7331370235ab70642bdf53ca97543ba7,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8544034429045599775, guid: 7331370235ab70642bdf53ca97543ba7,
-        type: 3}
-      propertyPath: m_Name
-      value: EffectObject
-      objectReference: {fileID: 0}
-    - target: {fileID: 8544034429045599775, guid: 7331370235ab70642bdf53ca97543ba7,
-        type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
