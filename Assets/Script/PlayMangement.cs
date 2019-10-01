@@ -389,11 +389,7 @@ public partial class PlayMangement : MonoBehaviour {
                 break;
             case "unit":
                 int itemId = int.Parse(target.args[0]);
-                List<GameObject> list;
-                if (args[0].CompareTo("my") == 0) //적 자신일 경우
-                    list = UnitsObserver.GetAllFieldUnits(enemyPlayer.isHuman);
-                else //적의 적 (나)일 경우
-                    list = UnitsObserver.GetAllFieldUnits(!enemyPlayer.isHuman);
+                List<GameObject> list = UnitsObserver.GetAllFieldUnits();
                 GameObject unit = list.Find(x => x.GetComponent<PlaceMonster>().itemId == itemId);
                 highlightUI = unit.transform.Find("ClickableUI").gameObject;
                 highlightUI.SetActive(true);
@@ -570,6 +566,11 @@ public partial class PlayMangement : MonoBehaviour {
         }
         yield return new WaitForSeconds(1f);
         socketHandler.TurnOver();
+        if(socketHandler.humanData.Count > 0 || socketHandler.orcData.Count > 0) {
+            Logger.LogWarning("전투 데이터가 아직 남았습니다. 이 메시지를 보시면 이종욱에게 알려주세요");
+            socketHandler.humanData.Clear();
+            socketHandler.orcData.Clear();
+        }
         turn++;
         yield return socketHandler.WaitGetCard();
         DistributeResource();
