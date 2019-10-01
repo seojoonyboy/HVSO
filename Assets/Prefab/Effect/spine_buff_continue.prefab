@@ -111,5 +111,5 @@ MonoBehaviour:
     materialsOutsideMask: []
   disableRenderingOnOverride: 1
   _animationName: animation
-  loop: 0
+  loop: 1
   timeScale: 1
