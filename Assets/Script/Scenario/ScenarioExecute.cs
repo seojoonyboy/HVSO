@@ -46,6 +46,21 @@ public class Hide_message : ScenarioExecute {
     }
 }
 
+//args[0] npc id 또는 이름
+//args[1] 텍스트 내용
+
+
+public class NPC_Print_message : ScenarioExecute {
+    public NPC_Print_message() : base() { }
+
+    public override void Execute() {
+        
+
+
+    }
+}
+
+
 
 public class Highlight : ScenarioExecute {
     public Highlight() :base() { }
