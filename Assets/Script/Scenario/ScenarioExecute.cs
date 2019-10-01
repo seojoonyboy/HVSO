@@ -192,6 +192,31 @@ public class Wait_summon : ScenarioExecute {
     }
 }
 
+
+public class Wait_Multiple_Summon : ScenarioExecute {
+    public Wait_Multiple_Summon() : base() { }
+
+    private int summonCount = 0;
+    private int clearCount = -1;
+
+    public override void Execute() {
+        int.TryParse(args[0], out clearCount);
+        PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.UNIT_SUMMONED, CheckSummon);
+    }
+
+    private void CheckSummon(Enum event_type, Component Sender, object Param) {
+        if(summonCount < clearCount) 
+            summonCount++;
+        else {
+            PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.UNIT_SUMMONED, CheckSummon);
+            handler.isDone = true;
+        }  
+    }
+}
+
+
+
+
 public class Wait_drop : ScenarioExecute {
     public Wait_drop() : base() { }
 
