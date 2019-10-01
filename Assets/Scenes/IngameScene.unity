@@ -5236,7 +5236,7 @@ PrefabInstance:
         type: 3}
       propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.data[2]
       value: 
-      objectReference: {fileID: 8747996444346256864, guid: a735d4f7ba402824eb8ca61ddded2da1,
+      objectReference: {fileID: 8068989366066805513, guid: 57656d73f4f6e4494a06f52a4e4850c8,
         type: 3}
     - target: {fileID: 8999688528475227032, guid: 089e07056aa4b4148b4eff310e0b9129,
         type: 3}
@@ -5284,7 +5284,7 @@ PrefabInstance:
         type: 3}
       propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.data[10]
       value: 
-      objectReference: {fileID: 3337307178450992341, guid: 1a1394a3a35c7de458579c78f530ddf6,
+      objectReference: {fileID: 2827747121096862383, guid: 29e602e199a7142158be014c71a237f9,
         type: 3}
     - target: {fileID: 8999688528475227032, guid: 089e07056aa4b4148b4eff310e0b9129,
         type: 3}

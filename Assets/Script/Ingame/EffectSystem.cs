@@ -267,6 +267,7 @@ public class EffectSystem : SerializedMonoBehaviour {
     public enum EffectType {
         APPEAR,
         BUFF,
+        DEBUFF,
         HIT_LOW,
         HIT_MIDDLE,
         HIT_HIGH,
@@ -276,6 +277,7 @@ public class EffectSystem : SerializedMonoBehaviour {
         TREBUCHET,
         PORTAL,
         CONTINUE_BUFF,
+        CONTINUE_DEBUFF,
         GETBACK,
         STUN,
         POISON_GET,
