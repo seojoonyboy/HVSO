@@ -225,8 +225,12 @@ public partial class PlayMangement : MonoBehaviour {
 
 
     public void DistributeResource() {
-        player.resource.Value = turn + 1;
-        enemyPlayer.resource.Value = turn + 1;
+
+        SocketFormat.Player socketPlayer = (player.isHuman) ? socketHandler.gameState.players.human : socketHandler.gameState.players.orc;
+        SocketFormat.Player socketEnemyPlayer = (enemyPlayer.isHuman) ? socketHandler.gameState.players.human : socketHandler.gameState.players.orc;
+                     
+        player.resource.Value = socketPlayer.resource;
+        enemyPlayer.resource.Value = socketEnemyPlayer.resource;
     }
 
     public void OnBlockPanel(string msg) {
