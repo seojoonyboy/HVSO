@@ -97,6 +97,17 @@ public class EffectSystem : SerializedMonoBehaviour {
         effectAnimation.AnimationState.SetAnimation(0, "animation", true);
     }
 
+    public bool CheckActiveEffect(EffectType type, Transform pos) {
+        foreach(Transform child in pos) {
+            if (pos.gameObject.name == effectObject[type].gameObject.name)
+                return true;
+        }
+        return false;
+    }
+
+
+
+
     public void DisableEffect(EffectType type, Transform pos) {
         if (pos.childCount <= 0) return;
         GameObject effect = pos.Find(effectObject[type].gameObject.name).gameObject;
@@ -281,7 +292,9 @@ public class EffectSystem : SerializedMonoBehaviour {
         POISON_GET,
         HERO_DEAD,
         HERO_SHIELD,
-        DARK_THORN
+        DARK_THORN,
+        DEBUFF,
+        CONTINUE_DEBUFF
     }
 
 }
