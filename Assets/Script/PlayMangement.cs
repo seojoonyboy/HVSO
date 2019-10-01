@@ -570,6 +570,11 @@ public partial class PlayMangement : MonoBehaviour {
         }
         yield return new WaitForSeconds(1f);
         socketHandler.TurnOver();
+        if(socketHandler.humanData.Count > 0 || socketHandler.orcData.Count > 0) {
+            Logger.LogWarning("전투 데이터가 아직 남았습니다. 이 메시지를 보시면 이종욱에게 알려주세요");
+            socketHandler.humanData.Clear();
+            socketHandler.orcData.Clear();
+        }
         turn++;
         yield return socketHandler.WaitGetCard();
         DistributeResource();
