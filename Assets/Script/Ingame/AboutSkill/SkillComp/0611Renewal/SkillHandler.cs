@@ -22,7 +22,7 @@ namespace SkillModules {
         public DragFilter dragFiltering;
         public bool socketDone = true;
         public bool finallyDone = true;
-        Transform highlight;
+        public Transform highlight;
         private int end_Card_Count = 0;
         private int coroutineCount = 0;
 
@@ -63,7 +63,7 @@ namespace SkillModules {
         //TODO : Trigger 관리
         private void Trigger (Enum Event_Type, Component Sender, object Param = null) {
             targetData = Param;
-            if(myObject.GetComponent<CardHandler>() != null) highlight = myObject.GetComponent<CardHandler>().highlightedSlot;
+            //if(myObject.GetComponent<CardHandler>() != null) highlight = myObject.GetComponent<CardHandler>().highlightedSlot;
 
             IngameEventHandler.EVENT_TYPE triggerType = (IngameEventHandler.EVENT_TYPE) Event_Type;
             if(triggerType == IngameEventHandler.EVENT_TYPE.BEGIN_ORC_POST_TURN || triggerType == IngameEventHandler.EVENT_TYPE.END_BATTLE_TURN) {
@@ -114,7 +114,7 @@ namespace SkillModules {
         }
 
         IEnumerator SkillTrigger (IngameEventHandler.EVENT_TYPE triggerType, object parms) {
-            SendingMessage(false);
+            if(myObject.GetComponent<PlaceMonster>() != null) SendingMessage(false);
             foreach (Skill skill in skills) {
                 isDone = false;                
                 bool active = skill.Trigger (triggerType, parms);
@@ -128,9 +128,7 @@ namespace SkillModules {
             if(!isPlayer) yield break;
             if(isPlayingCard()) {
                 PlayMangement.instance.UnlockTurnOver();
-                if(myObject.GetComponent<MagicDragHandler>()) {
-                    PlayMangement.instance.cardHandManager.DestroyCard(myObject);
-                }
+                DestroyMyCard();         
             }
         }
 
@@ -138,6 +136,25 @@ namespace SkillModules {
             if(TargetSelectExist() != after) return;
             if(isPlayingCard()) SendSocket();
             if(isFieldCard()) SkillActivate();
+        }
+
+        private void DestroyMyCard() {
+            MagicDragHandler magic = myObject.GetComponent<MagicDragHandler>();
+            if(magic != null) {
+                if(!magic.heroCardActivate) {
+                    int cardIndex = myObject.transform.parent.GetSiblingIndex();
+                    PlayMangement.instance.player.cdpm.DestroyCard(cardIndex);
+                    if(PlayMangement.instance.player.isHuman)
+                        PlayMangement.instance.player.ActivePlayer();
+                    else
+                        PlayMangement.instance.player.ActiveOrcTurn();
+                }
+                else {
+                    PlayMangement.instance.player.cdpm.DestroyUsedHeroCard(myObject.transform);
+                }
+                magic.CARDUSED = true;
+                magic.heroCardActivate = false;
+            }
         }
 
         private bool isPlayingCard() {
@@ -164,26 +181,10 @@ namespace SkillModules {
         }
 
 
-        private void SendSocket() {
+        public void SendSocket() {
             BattleConnector connector = PlayMangement.instance.socketHandler;
             MessageFormat format = MessageForm(true);
             connector.UseCard(format);
-            MagicDragHandler magic = myObject.GetComponent<MagicDragHandler>();
-            if(magic != null) {
-                if(!magic.heroCardActivate) {
-                    int cardIndex = myObject.transform.parent.GetSiblingIndex();
-                    PlayMangement.instance.player.cdpm.DestroyCard(cardIndex);
-                    if(PlayMangement.instance.player.isHuman)
-                        PlayMangement.instance.player.ActivePlayer();
-                    else
-                        PlayMangement.instance.player.ActiveOrcTurn();
-                }
-                else {
-                    PlayMangement.instance.player.cdpm.DestroyUsedHeroCard(myObject.transform);
-                }
-                magic.CARDUSED = true;
-                magic.heroCardActivate = false;
-            }
         }
 
         private MessageFormat MessageForm(bool isEndCardPlay) {
