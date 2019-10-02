@@ -237,7 +237,7 @@ public class Wait_Multiple_Summon : ScenarioExecute {
 
         summonCount++;
 
-        if(line.Length > 0 && summonCount < line.Length) {
+        if (line != null && line.Length > 0 && summonCount < line.Length) {
             scenarioGameManagment.forcedSummonAt = line[summonCount];
         }
         if (summonCount == clearCount) {
