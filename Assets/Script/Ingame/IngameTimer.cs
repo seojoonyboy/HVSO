@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.Events;
+using Spine.Unity;
 
 public class IngameTimer : MonoBehaviour {
     [SerializeField] GameObject timerUI;
-    [SerializeField] TextMeshProUGUI value;
+    [SerializeField] SkeletonGraphic skeletonGraphic;
+
+    //[SerializeField] TextMeshProUGUI value;
     public int uiStartSec = 10;
 
     int currentSec;
@@ -28,7 +31,7 @@ public class IngameTimer : MonoBehaviour {
     /// <returns></returns>
     IEnumerator TimerUIOn() {
         while (currentSec > 0) {
-            value.text = currentSec.ToString();
+            //value.text = currentSec.ToString();
             yield return new WaitForSeconds(1.0f);
             currentSec -= decreaseAmount;
         }
@@ -42,6 +45,8 @@ public class IngameTimer : MonoBehaviour {
     /// <returns></returns>
     IEnumerator TimerOn(int totalSec) {
         currentSec = totalSec;
+        skeletonGraphic.AnimationState.SetAnimation(0, "animation", false);
+
         while (currentSec > uiStartSec) {
             Logger.Log("Timer : " + currentSec);
             yield return new WaitForSeconds(1.0f);
