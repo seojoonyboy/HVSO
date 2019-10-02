@@ -180,7 +180,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
                 PlayMangement.instance.player.ConsumeShieldStack();
             showCardsHandler.ToggleAllCards();
 
-            if (ScenarioGameManagment.scenarioInstance == null) {
+            if (ScenarioGameManagment.scenarioInstance == null && cardUsed) {
                 IngameTimer timer = isPlayer ? PlayMangement.instance.player.GetComponent<IngameTimer>() : PlayMangement.instance.enemyPlayer.GetComponent<IngameTimer>();
                 timer.OnTimeout.RemoveListener(PlayMangement.instance.showCardsHandler.TimeoutShowCards);
                 timer.EndTimer();

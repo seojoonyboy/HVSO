@@ -348,7 +348,7 @@ public class PlayerController : MonoBehaviour
 
             if (ScenarioGameManagment.scenarioInstance == null) {
                 GetComponent<IngameTimer>().OnTimeout.AddListener(PlayMangement.instance.showCardsHandler.TimeoutShowCards);
-                GetComponent<IngameTimer>().BeginTimer(15);
+                GetComponent<IngameTimer>().BeginTimer(20);
             }
         }
         FullShieldStack(shieldStack.Value);
