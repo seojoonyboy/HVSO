@@ -10,6 +10,7 @@ public class CardHandManager : MonoBehaviour {
     [SerializeField] protected Transform showPos;
     [SerializeField] protected Transform firstDrawParent;
     [SerializeField] public Transform cardSpawnPos;
+    [SerializeField] TMPro.TextMeshProUGUI cardNumValue;
     public bool isMultiple = false;
     public bool firstDraw = true;
     public bool socketDone = false;
@@ -158,6 +159,7 @@ public class CardHandManager : MonoBehaviour {
         cardTransform.GetComponent<CardHandler>().CARDINDEX = cardNum;
         cardTransform.gameObject.SetActive(true);
         cardNum++;
+        cardNumValue.text = cardNum.ToString();
         cardList.Add(card);
         StartCoroutine(SendCardToHand(cardTransform.gameObject, cardPos));
     }
@@ -199,6 +201,7 @@ public class CardHandManager : MonoBehaviour {
             cardTransform.GetComponent<CardHandler>().CARDINDEX = cardNum;
             cardTransform.gameObject.SetActive(true);
             cardNum++;
+            cardNumValue.text = cardNum.ToString();
             cardList.Add(card);
             if (cardNum == cardData.Length)
                 StartCoroutine(SendMultipleCardToHand(cardTransform.gameObject, cardPos, true));
