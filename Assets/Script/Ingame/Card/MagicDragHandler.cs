@@ -172,13 +172,13 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
                     }
                     Invoke("SendEvent", 0.3f);
                     showCardsHandler.CancelSelecting();
+                    showCardsHandler.ToggleAllCards();
                 }
             }
             CardDropManager.Instance.HideMagicSlot();
             CardInfoOnDrag.instance.OffCardDragInfo();
             if (pass == false)
                 PlayMangement.instance.player.ConsumeShieldStack();
-            showCardsHandler.ToggleAllCards();
 
             if (ScenarioGameManagment.scenarioInstance == null && cardUsed) {
                 IngameTimer timer = isPlayer ? PlayMangement.instance.player.GetComponent<IngameTimer>() : PlayMangement.instance.enemyPlayer.GetComponent<IngameTimer>();
