@@ -393,6 +393,23 @@ public partial class BattleConnector : MonoBehaviour {
             }
         });
 
+        if(ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.isTutorial == false) {
+            string _result = result.result;
+
+            PlayMangement playMangement = PlayMangement.instance;
+            GameResultManager resultManager = playMangement.resultManager;
+            resultManager.gameObject.SetActive(true);
+
+            if (_result == "win") {
+                resultManager.SetResultWindow("win", playMangement.player.isHuman);
+            }
+            else {
+                resultManager.SetResultWindow("lose", playMangement.player.isHuman);
+            }
+        }
+
+
+
         //상대방이 재접속에 최종 실패하여 게임이 종료된 경우
         if (isOpponentPlayerDisconnected) {
             string _result = result.result;
