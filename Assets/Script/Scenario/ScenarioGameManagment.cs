@@ -40,7 +40,7 @@ public class ScenarioGameManagment : PlayMangement {
         SetWorldScale();
         SetPlayerCard();
         GetComponent<TurnMachine>().onTurnChanged.AddListener(ChangeTurn);
-        GetComponent<TurnMachine>().onPrepareTurn.AddListener(DistributeCard);
+        //GetComponent<TurnMachine>().onPrepareTurn.AddListener(DistributeCard);
         socketHandler.ClientReady();
         SetCamera();
 
