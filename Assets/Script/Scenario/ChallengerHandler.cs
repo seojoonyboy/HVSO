@@ -36,6 +36,9 @@ public class ChallengerHandler : SerializedMonoBehaviour {
             case "UNIT_SUMMONED":
                 type = IngameEventHandler.EVENT_TYPE.UNIT_SUMMONED;
                 break;
+            case "MAGIC_USED":
+                type = IngameEventHandler.EVENT_TYPE.MAGIC_USED;
+                break;
             default:
                 type = IngameEventHandler.EVENT_TYPE.DO_NOTHING;
                 break;
@@ -54,6 +57,9 @@ public class ChallengerHandler : SerializedMonoBehaviour {
         switch (eventName) {
             case "UNIT_SUMMONED":
                 type = IngameEventHandler.EVENT_TYPE.UNIT_SUMMONED;
+                break;
+            case "MAGIC_USED":
+                type = IngameEventHandler.EVENT_TYPE.MAGIC_USED;
                 break;
             default:
                 type = IngameEventHandler.EVENT_TYPE.DO_NOTHING;
