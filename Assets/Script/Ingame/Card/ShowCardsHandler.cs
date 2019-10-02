@@ -116,7 +116,8 @@ public class ShowCardsHandler : MonoBehaviour {
             if (card.activeSelf != isOn) {
                 card.SetActive(isOn);
             }
-            card.transform.localScale = new Vector3(1.5f, 1.5f, 1.0f);
+            card.transform.localScale = new Vector3(1.2f, 1.2f, 1.0f);
+            card.transform.localPosition = new Vector3(0.0f, -180f, 0.0f);
         }
     }
 
