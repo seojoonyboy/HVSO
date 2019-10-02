@@ -6787,7 +6787,7 @@ MonoBehaviour:
       Data: 44|ScenarioUnit, Assembly-CSharp
     - Name: name
       Entry: 1
-      Data: "\uC81C\uC2DD\uAD81\uC218"
+      Data: "\uC800\uACA9\uC0AC\uC218"
     - Name: sprite
       Entry: 10
       Data: 208
@@ -8168,17 +8168,6 @@ PrefabInstance:
       propertyPath: m_Text
       value: OS Login
       objectReference: {fileID: 0}
-    - target: {fileID: 6486996918943487192, guid: 17d05c4a2339f2d43949a0a942770cc7,
-        type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: d43a170deb028a94489d959e4210e208,
-        type: 3}
-    - target: {fileID: 6486996918943487192, guid: 17d05c4a2339f2d43949a0a942770cc7,
-        type: 3}
-      propertyPath: m_Type
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 221956876297840836, guid: 17d05c4a2339f2d43949a0a942770cc7,
         type: 3}
       propertyPath: m_SizeDelta.x
@@ -8228,6 +8217,17 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -600
+      objectReference: {fileID: 0}
+    - target: {fileID: 6486996918943487192, guid: 17d05c4a2339f2d43949a0a942770cc7,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: d43a170deb028a94489d959e4210e208,
+        type: 3}
+    - target: {fileID: 6486996918943487192, guid: 17d05c4a2339f2d43949a0a942770cc7,
+        type: 3}
+      propertyPath: m_Type
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4974090400243082660, guid: 17d05c4a2339f2d43949a0a942770cc7,
         type: 3}
