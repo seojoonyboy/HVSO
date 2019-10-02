@@ -36,7 +36,7 @@ public class CardDictionaryManager : MonoBehaviour {
         Transform classList = cardList.Find("CardsByCost");
         //for (int i = 0; i < classList.childCount; i++)
         //    classList.GetChild(i).Find("Header/Info/Image").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = i.ToString();
-        selectedSortOption = AccountManager.Instance.dicInfo.sortingState;
+        selectedSortOption = SortingOptions.CLASS;
         transform.Find("UIbar/Crystal/Value").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userResource.crystal.ToString();
         if (AccountManager.Instance.dicInfo.isHuman)
             SetToHumanCards();
