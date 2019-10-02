@@ -6,8 +6,9 @@ using UnityEngine.Events;
 using Spine.Unity;
 
 public class IngameTimer : MonoBehaviour {
-    [SerializeField] GameObject timerUI;
+    public GameObject timerUI;
     [SerializeField] SkeletonGraphic skeletonGraphic;
+    public Transform parent;
 
     //[SerializeField] TextMeshProUGUI value;
     public int uiStartSec = 10;

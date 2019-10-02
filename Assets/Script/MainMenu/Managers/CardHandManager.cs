@@ -256,18 +256,19 @@ public class CardHandManager : MonoBehaviour {
         var tmp = showPos.Find("Left").position;
         iTween.MoveTo(
             leftCard, 
-            new Vector3(tmp.x, tmp.y - 1.8f, 0),
+            new Vector3(tmp.x, tmp.y - 2.6f, 0),
             0.4f);
         iTween.RotateTo(leftCard, iTween.Hash("z", 0, "islocal", true, "time", 0.4f));
 
-        yield return new WaitForSeconds(0.5f);
+        iTween.RotateTo(rightCard, iTween.Hash("z", 0, "islocal", true, "time", 0.1f));
 
+        yield return new WaitForSeconds(0.5f);
         tmp = showPos.Find("Right").position;
         iTween.MoveTo(
             rightCard,
-            new Vector3(tmp.x, tmp.y - 1.8f, 0),
-            0.4f);
-        iTween.RotateTo(rightCard, iTween.Hash("z", 0, "islocal", true, "time", 0.4f));
+            new Vector3(tmp.x, tmp.y - 2.6f, 0),
+            0.6f);
+        
 
         yield return StartCoroutine(handler.ActiveHeroCard());
     }
