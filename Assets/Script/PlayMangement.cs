@@ -43,6 +43,8 @@ public partial class PlayMangement : MonoBehaviour {
     public victoryModule.VictoryCondition matchRule;
     public bool stopBattle = false;
     public bool stopTurn = false;
+    public bool beginStopTurn = false;
+    public bool afterStopTurn = false;
 
     public float cameraSize;
 
@@ -548,7 +550,7 @@ public partial class PlayMangement : MonoBehaviour {
         if (!socketHandler.cardPlayFinish())
             yield return EnemyUseCard(false);
         //서버에서 턴 넘김이 완료 될 때까지 대기
-        yield return socketHandler.WaitBattle();
+        yield return socketHandler.WaitBattle();        
         EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, TurnType.SECRET);
         //CustomEvent.Trigger(gameObject, "EndTurn");
     }
