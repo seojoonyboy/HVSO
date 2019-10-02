@@ -652,6 +652,12 @@ public class Force_drop_zone : ScenarioExecute {
                 try {
                     int.TryParse(args[1], out detail);
                     _type = Type.MAGIC;
+
+                    if (detail == 5) {
+                        if (scenarioGameManagment.UnitsObserver.IsUnitExist(new FieldUnitsObserver.Pos(4, 0), PlayMangement.instance.player.isHuman)) {
+                            detail = 4;
+                        }
+                    }
                 }
                 catch (ArgumentException) {
                     Logger.Log("Unit 소환에 대한 세부 정보 없음");
@@ -663,6 +669,8 @@ public class Force_drop_zone : ScenarioExecute {
             handler.isDone = true;
             return;
         }
+
+        
 
         scenarioGameManagment.forcedSummonAt = detail;
         handler.isDone = true;
