@@ -756,28 +756,6 @@ public class Enable_drag : ScenarioExecute {
     }
 }
 
-public class Stop_orc_turn : ScenarioExecute {
-    public Stop_orc_turn() : base() { }
-
-    public override void Execute() {
-
-        PlayMangement.instance.stopTurn = true;
-        handler.isDone = true;
-    }
-
-}
-
-public class Proceed_orc_turn : ScenarioExecute {
-    public Proceed_orc_turn() : base() { }
-
-    public override void Execute() {
-        PlayMangement.instance.stopTurn = false;
-        handler.isDone = true;
-    }
-
-
-}
-
 public class Wait_Battle_End : ScenarioExecute {
     public Wait_Battle_End() : base() { }
 
