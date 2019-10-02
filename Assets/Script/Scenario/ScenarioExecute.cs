@@ -240,16 +240,44 @@ public class Wait_Multiple_Summon : ScenarioExecute {
         if(line.Length > 0 && summonCount < line.Length) {
             scenarioGameManagment.forcedSummonAt = line[summonCount];
         }
-
-
         if (summonCount == clearCount) {
             PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.UNIT_SUMMONED, CheckSummon);
             scenarioGameManagment.forcedSummonAt = -1;
             handler.isDone = true;
         }
-
     }
 }
+
+
+public class Wait_Multiple_Summon_linelimit : ScenarioExecute {
+    public Wait_Multiple_Summon_linelimit() : base() { }
+
+    private int summonCount = 0;
+    private int clearCount = -1;
+    private int line;
+
+    public override void Execute() {
+        if (args.Count > 1) {
+            line = int.Parse(args[1]);            
+            scenarioGameManagment.forcedLine = line;
+        }
+
+        int.TryParse(args[0], out clearCount);
+        PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.UNIT_SUMMONED, CheckSummon);
+    }
+
+    private void CheckSummon(Enum event_type, Component Sender, object Param) {
+
+        summonCount++;
+        
+        if (summonCount == clearCount) {
+            PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.UNIT_SUMMONED, CheckSummon);
+            scenarioGameManagment.forcedLine = -1;
+            handler.isDone = true;
+        }
+    }
+}
+
 
 
 

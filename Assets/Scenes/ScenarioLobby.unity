@@ -48040,7 +48040,7 @@ MonoBehaviour:
       Data: 37|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
-      Data: Wait_Multiple_Summon
+      Data: Wait_Multiple_Summon_linelimit
     - Name: args
       Entry: 7
       Data: 38|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
@@ -48052,7 +48052,7 @@ MonoBehaviour:
       Data: 3
     - Name: 
       Entry: 1
-      Data: 1-2-3
+      Data: 3
     - Name: 
       Entry: 13
       Data: 
@@ -48233,8 +48233,9 @@ MonoBehaviour:
       Data: ac10005
     - Name: 
       Entry: 1
-      Data: "\uC798\uD588\uC5B4 \uC0AC\uB839\uAD00. \uC801\uC758 \uACF5\uACA9\uC744
-        \uB9C9\uC544\uB0BC \uC218 \uC788\uC744 \uAC83 \uAC19\uC544."
+      Data: "\uD558\uC9C0\uB9CC \uC801\uC758 \uACF5\uACA9\uB825\uC774 \uB108\uBB34
+        \uAC15\uD574\u2026 \uC6B0\uB9AC \uBCD1\uB825\uB3C4 \uBB34\uC0AC\uD558\uC9C4
+        \uC54A\uC744\uAC70\uC57C."
     - Name: 
       Entry: 1
       Data: true

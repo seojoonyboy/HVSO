@@ -56,6 +56,30 @@ public partial class CardDropManager {
             }
         }
     }
+    /// <summary>
+    /// ForcedShowDropableSlot과는 비슷한데, 이건 1~3번째 라인 형식으로 처리
+    /// </summary>
+    public void ForcedLimitLineSlot(int line, string args = null) {
+        for (int i = 0; i < 5; i++) {
+            if (args == null || args == "slot") {
+                if (unitLine[i][0].childCount == 0) {
+                    slotLine[i].GetChild(0).gameObject.SetActive(true);
+                }
+            }
+            else if (args == "line") {
+                slotLine[i].Find("BattleLineEffect").gameObject.SetActive(true);
+            }
+
+            if (i == line - 1)
+                break;
+        }
+
+
+    }
+
+
+
+
     public void ShowDropableSlot(dataModules.CollectionCard card) {
         if(ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.isTutorial) {
 
@@ -71,9 +95,14 @@ public partial class CardDropManager {
                 
             }
             
-            int line = ScenarioGameManagment.scenarioInstance.forcedSummonAt;
-            if(line != -1) {
-                ForcedShowDropableSlot(line, magicTarget);
+            int targetline = ScenarioGameManagment.scenarioInstance.forcedSummonAt;
+            int limitLine = ScenarioGameManagment.scenarioInstance.forcedLine;
+            if(targetline != -1) {
+                ForcedShowDropableSlot(targetline, magicTarget);
+                return;
+            }
+            if(limitLine != -1) {
+                ForcedLimitLineSlot(limitLine, magicTarget);
                 return;
             }
         }
