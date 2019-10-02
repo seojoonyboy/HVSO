@@ -950,3 +950,21 @@ public class ChallengeEnd : ScenarioExecute {
         handler.isDone = true;
     }
 }
+
+public class Stop_Invoke_NextTurn : ScenarioExecute {
+    public Stop_Invoke_NextTurn() : base() {  }
+
+    public override void Execute() {
+        PlayMangement.instance.gameObject.GetComponent<TurnMachine>().turnStop = true;
+        handler.isDone = true;
+    }
+}
+
+public class Proceed_Invoke_NextTurn : ScenarioExecute {
+    public Proceed_Invoke_NextTurn() : base() { }
+
+    public override void Execute() {
+        PlayMangement.instance.gameObject.GetComponent<TurnMachine>().turnStop = false;
+        handler.isDone = true;
+    }
+}

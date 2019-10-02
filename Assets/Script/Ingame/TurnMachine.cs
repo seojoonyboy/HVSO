@@ -11,6 +11,7 @@ public class TurnMachine : MonoBehaviour {
     private PlayerController player;
     private int index = -1;
     TurnType turn;
+    public bool turnStop = false;
     void Awake() {
     }
 
@@ -41,7 +42,12 @@ public class TurnMachine : MonoBehaviour {
 
     private IEnumerator InvokeTurnChanged() {
         yield return new WaitForSeconds(1.0f);
+        yield return StopInvokeTurn();
         onTurnChanged.Invoke();
+    }
+
+    private IEnumerator StopInvokeTurn() {
+        yield return new WaitUntil(() => turnStop == false);
     }
     
     public TurnType CurrentTurn() {
