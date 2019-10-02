@@ -243,10 +243,21 @@ public class CardHandManager : MonoBehaviour {
         handler = rightCard.GetComponent<CardHandler>();
         handler.DrawHeroCard(cards[1]);
 
-        iTween.MoveTo(leftCard, showPos.Find("Left").position, 0.4f);
+        //showPos.Find("Left").position
+        var tmp = showPos.Find("Left").position;
+        iTween.MoveTo(
+            leftCard, 
+            new Vector3(tmp.x, tmp.y - 1.8f, 0),
+            0.4f);
         iTween.RotateTo(leftCard, iTween.Hash("z", 0, "islocal", true, "time", 0.4f));
+
         yield return new WaitForSeconds(0.5f);
-        iTween.MoveTo(rightCard, showPos.Find("Right").position, 0.4f);
+
+        tmp = showPos.Find("Right").position;
+        iTween.MoveTo(
+            rightCard,
+            new Vector3(tmp.x, tmp.y - 1.8f, 0),
+            0.4f);
         iTween.RotateTo(rightCard, iTween.Hash("z", 0, "islocal", true, "time", 0.4f));
 
         yield return StartCoroutine(handler.ActiveHeroCard());
