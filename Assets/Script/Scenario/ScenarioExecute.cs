@@ -117,6 +117,34 @@ public class Wait_until : ScenarioExecute {
     }
 }
 
+public class Hero_Wait_Damage : ScenarioExecute {
+    public Hero_Wait_Damage() : base() { }
+
+    int waitCount = -1;
+    int count = 0;
+
+    public override void Execute() {
+        waitCount = int.Parse(args[0]);
+        PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.HERO_UNDER_ATTACK, CheckCount);
+    }
+
+    private void CheckCount(Enum event_type, Component Sender, object Param) {
+        bool isplayer = (bool)Param;
+
+        if (args[1] == "player" && isplayer == true)
+            count++;
+        else if (args[1] == "enemy" && isplayer == false)
+            count++;
+
+        if(count == waitCount) {
+            PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.HERO_UNDER_ATTACK, CheckCount);
+            handler.isDone = true;
+        }
+    }
+
+}
+
+
 public class Wait_click : ScenarioExecute {
     public Wait_click() : base() { }
 
@@ -428,11 +456,16 @@ public class Battle_turn : ScenarioExecute {
     public override void Execute() {
         switch (args[0]) {
             case "stop":
-                int.TryParse(args[1], out Line);
-                scenarioGameManagment.StopBattle(Line);
+                if (args.Count > 1) {
+                    int.TryParse(args[1], out Line);
+                    scenarioGameManagment.StopBattle(Line);
+                }
+                else
+                    scenarioGameManagment.stopBattle = true;
                 break;
             case "proceed":
                 scenarioGameManagment.BattleResume();
+                scenarioGameManagment.stopBattle = false;
                 break;
         }
 
