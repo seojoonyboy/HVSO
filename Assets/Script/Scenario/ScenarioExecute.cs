@@ -968,3 +968,21 @@ public class Proceed_Invoke_NextTurn : ScenarioExecute {
         handler.isDone = true;
     }
 }
+
+public class Wait_DrawHero : ScenarioExecute {
+    public Wait_DrawHero() : base() { }
+
+    public override void Execute() {
+        PlayMangement.instance.waitDraw = true;
+        handler.isDone = true;
+    }
+}
+
+public class Proceed_DrawHero : ScenarioExecute {
+    public Proceed_DrawHero() : base() { }
+
+    public override void Execute() {
+        PlayMangement.instance.waitDraw = false;
+        handler.isDone = true;
+    }
+}

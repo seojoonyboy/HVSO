@@ -45,6 +45,7 @@ public partial class PlayMangement : MonoBehaviour {
     public bool stopTurn = false;
     public bool beginStopTurn = false;
     public bool afterStopTurn = false;
+    public bool waitDraw = false;
 
     public float cameraSize;
 
@@ -717,7 +718,13 @@ public partial class PlayMangement : MonoBehaviour {
         }
     }
 
+    public IEnumerator WaitDrawHeroCard() {
+        yield return new WaitUntil(() => waitDraw == false);
+    }
+
+
     public IEnumerator DrawSpecialCard(bool isHuman) {
+        yield return WaitDrawHeroCard();
         Logger.Log("쉴드 발동!");
         bool isPlayer = (isHuman == player.isHuman);
         if (isPlayer) {
