@@ -549,6 +549,7 @@ public class ScenarioMask : SerializedMonoBehaviour
 
     public void HideText() {
         outText.SetActive(false);
+        talkingText.SetActive(false);
     }
 
 
