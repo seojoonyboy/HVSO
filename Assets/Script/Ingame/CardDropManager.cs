@@ -81,28 +81,15 @@ public partial class CardDropManager {
 
 
     public void ShowDropableSlot(dataModules.CollectionCard card) {
-        if(ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.isTutorial) {
-
-
-            if (card.skills.Length > 0) {
-                try {
-                    magicArgs = card.skills[0].target.args[0];
-                    magicTarget = card.skills[0].target.args[1];
-                }
-                catch(System.IndexOutOfRangeException ex) {
-
-                }
-                
-            }
-            
+        if(ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.isTutorial) {            
             int targetline = ScenarioGameManagment.scenarioInstance.forcedSummonAt;
             int limitLine = ScenarioGameManagment.scenarioInstance.forcedLine;
             if(targetline != -1) {
-                ForcedShowDropableSlot(targetline, magicTarget);
+                ForcedShowDropableSlot(targetline);
                 return;
             }
             if(limitLine != -1) {
-                ForcedLimitLineSlot(limitLine, magicTarget);
+                ForcedLimitLineSlot(limitLine);
                 return;
             }
         }
@@ -400,6 +387,20 @@ public partial class CardDropManager {
     protected string magicTarget;
     public void ShowMagicalSlot(string[] target, SkillModules.SkillHandler.DragFilter dragFiltering, SkillModules.ConditionChecker conditionChecker = null) {
         if (target == null) return;
+        if (ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.isTutorial) {
+            magicArgs = target[0];
+            magicTarget = target[1];
+
+            int targetline = ScenarioGameManagment.scenarioInstance.forcedSummonAt - 1;
+            for(int i = 0; i< 5; i++) {
+                if (i == targetline) {
+                    slotLine[i].Find("BattleLineEffect").gameObject.SetActive(true);
+                    return;
+                }
+            }
+        }
+
+
         magicArgs = target[0];
         magicTarget = target[1];
         if (magicArgs == "my")
