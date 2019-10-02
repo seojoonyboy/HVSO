@@ -40,11 +40,11 @@ public partial class CardDropManager {
     /// 튜토리얼용 강제 소환위치 지정
     /// </summary>
     /// <param name="line">Args는 1부터 시작</param>
-    public void ForcedShowDropableSlot(string args, int line) {
+    public void ForcedShowDropableSlot(int line, string args = null) {
         Logger.Log("ForcedShowDropableSlot");
         for(int i=0; i<5; i++) {
             if(i == line - 1) {
-                if (args == "slot") {
+                if (args == null || args == "slot") {
                     if (unitLine[i][0].childCount == 0) {
                         slotLine[i].GetChild(0).gameObject.SetActive(true);
                     }
@@ -60,13 +60,20 @@ public partial class CardDropManager {
         if(ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.isTutorial) {
 
 
-            magicArgs = card.skills[0].target.args[0];
-            magicTarget = card.skills[0].target.args[1];
+            if (card.skills.Length > 0) {
+                try {
+                    magicArgs = card.skills[0].target.args[0];
+                    magicTarget = card.skills[0].target.args[1];
+                }
+                catch(System.IndexOutOfRangeException ex) {
 
+                }
+                
+            }
             
             int line = ScenarioGameManagment.scenarioInstance.forcedSummonAt;
             if(line != -1) {
-                ForcedShowDropableSlot(magicTarget,line);
+                ForcedShowDropableSlot(line, magicTarget);
                 return;
             }
         }
