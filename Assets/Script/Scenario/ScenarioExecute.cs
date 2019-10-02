@@ -711,10 +711,26 @@ public class Orc_post_turn : ScenarioExecute {
 
         switch (args[0]) {
             case "stop":
-                PlayMangement.instance.stopTurn = true;
+                if (args.Count > 1) {
+                    switch (args[1]) {
+                        case "begin":
+                            PlayMangement.instance.beginStopTurn = true;
+                            break;
+                        case "after":
+                            PlayMangement.instance.afterStopTurn = true;
+                            break;
+                        default:
+                            PlayMangement.instance.beginStopTurn = true;
+                            break;
+                    }
+                }
+                else
+                    PlayMangement.instance.beginStopTurn = true;
                 break;
             case "proceed":
                 PlayMangement.instance.stopTurn = false;
+                PlayMangement.instance.beginStopTurn = false;
+                PlayMangement.instance.afterStopTurn = false;
                 break;
             default:
                 break;
@@ -738,28 +754,6 @@ public class Enable_drag : ScenarioExecute {
     public override void Execute() {
         handler.isDone = true;
     }
-}
-
-public class Stop_orc_turn : ScenarioExecute {
-    public Stop_orc_turn() : base() { }
-
-    public override void Execute() {
-
-        PlayMangement.instance.stopTurn = true;
-        handler.isDone = true;
-    }
-
-}
-
-public class Proceed_orc_turn : ScenarioExecute {
-    public Proceed_orc_turn() : base() { }
-
-    public override void Execute() {
-        PlayMangement.instance.stopTurn = false;
-        handler.isDone = true;
-    }
-
-
 }
 
 public class Wait_Battle_End : ScenarioExecute {
@@ -808,7 +802,7 @@ public class Wait_End_Line_Battle : ScenarioExecute {
     private void CheckEnd(Enum event_type, Component Sender, object Param) {
         //playerHit.Dispose();
         int line = (int)Param;
-        int targetLine = int.Parse(args[0]);
+        int targetLine = int.Parse(args[0]) - 1;
 
 
         if (line == targetLine)
@@ -868,3 +862,27 @@ public class Unblock_Screen : ScenarioExecute {
 
 }
 
+public class Wait_shield_active : ScenarioExecute {
+    public Wait_shield_active() : base() { }
+
+    bool isPlayer;
+
+    public override void Execute() {
+        PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.HERO_SHIELD_ACTIVE, CheckActive);
+    }
+
+    protected void CheckActive(Enum event_type, Component Sender, object Param) {        
+
+        if (args[0] == "player")
+            isPlayer = true;
+        else
+            isPlayer = false;
+
+        bool senderPlayer = (bool)Param;
+
+        if (senderPlayer == isPlayer) {
+            PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.HERO_SHIELD_ACTIVE, CheckActive);
+            handler.isDone = true;
+        }
+    }
+}

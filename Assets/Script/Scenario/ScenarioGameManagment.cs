@@ -104,7 +104,8 @@ public class ScenarioGameManagment : PlayMangement {
         canBattleProceed = true;
         stopEnemySummon = false;
         forcedSummonAt = -1;
-        stopTurn = false;
+        beginStopTurn = false;
+        afterStopTurn = false;
         ScenarioMask.Instance.DisableMask();
     }
 

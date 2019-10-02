@@ -89,6 +89,7 @@ public class IngameEventHandler : MonoBehaviour {
         PLAYER1_HIT,
         PLAYER2_HIT,
 
-        UNIT_DROP_FAIL
+        UNIT_DROP_FAIL,
+        HERO_SHIELD_ACTIVE
     }
 }

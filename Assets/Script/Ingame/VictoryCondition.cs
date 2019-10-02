@@ -44,6 +44,7 @@ namespace victoryModule {
             PlayMangement.instance.isGame = false;
             PlayMangement.instance.stopBattle = true;
             PlayMangement.instance.stopTurn = true;
+            PlayMangement.instance.beginStopTurn = true;
 
             SocketFormat.ResultFormat result = PlayMangement.instance.socketHandler.result;
             if(result != null) {

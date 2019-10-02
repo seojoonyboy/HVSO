@@ -13,7 +13,7 @@ public class TextTyping : MonoBehaviour
 
     public void StartTyping(string text, ScenarioExecuteHandler handler) {
         if (isTyping) return;
-        typingText = text;
+        typingText = text.Replace("<br> ", "|");
         scenarioHandler = handler;
         textmeshTyping = TypeTextMesh();
         StartCoroutine(textmeshTyping);
@@ -26,7 +26,10 @@ public class TextTyping : MonoBehaviour
         textObj.text = "";
         while(true) {
             if (count < num) {
-                textObj.text += typingText[count];
+                if (typingText[count].ToString() == "|") 
+                    textObj.text += "<br>";
+                else 
+                    textObj.text += typingText[count];
                 count++;
             }
             else break;
@@ -40,7 +43,7 @@ public class TextTyping : MonoBehaviour
     public void StopTyping() {
         if(textmeshTyping != null)
             StopCoroutine(textmeshTyping);
-        textObj.text = typingText;
+        textObj.text = typingText.Replace("|", "<br>");
         isTyping = false;
         scenarioHandler.isDone = true;
         transform.Find("StopTypingTrigger").gameObject.SetActive(false);
