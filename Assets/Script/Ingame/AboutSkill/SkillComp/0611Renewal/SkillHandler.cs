@@ -110,7 +110,7 @@ namespace SkillModules {
             BattleConnector connector = PlayMangement.instance.socketHandler;
             MessageFormat format = MessageForm(true);
             connector.UseCard(format);
-            PlayMangement.instance.UnlockTurnOver();
+            if(ScenarioGameManagment.scenarioInstance == null) PlayMangement.instance.UnlockTurnOver();
         }
 
         IEnumerator SkillTrigger (IngameEventHandler.EVENT_TYPE triggerType, object parms) {
@@ -127,7 +127,7 @@ namespace SkillModules {
             socketDone = true;
             if(!isPlayer) yield break;
             if(isPlayingCard()) {
-                PlayMangement.instance.UnlockTurnOver();
+                if(ScenarioGameManagment.scenarioInstance == null) PlayMangement.instance.UnlockTurnOver();
                 DestroyMyCard();         
             }
         }

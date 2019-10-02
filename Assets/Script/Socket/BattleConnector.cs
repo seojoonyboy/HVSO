@@ -185,6 +185,10 @@ public partial class BattleConnector : MonoBehaviour {
         SendMethod("client_ready");
     }
 
+    public void TutorialEnd() {
+        SendMethod("end_story_game");
+    }
+
     private class ItemIdClass {
         public ItemIdClass(int itemId) { this.itemId = itemId.ToString(); }
         public string itemId;
