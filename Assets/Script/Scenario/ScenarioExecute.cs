@@ -881,7 +881,7 @@ public class Wait_shield_active : ScenarioExecute {
         bool senderPlayer = (bool)Param;
 
         if (senderPlayer == isPlayer) {
-            PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.HERO_SHIELD_ACTIVE, CheckActive);
+            PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.HERO_SHIELD_ACTIVE, CheckActive);
             handler.isDone = true;
         }
     }
