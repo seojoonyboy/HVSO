@@ -1,14 +1,29 @@
 using System;
+using System.Collections;
 using BestHTTP;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class LoginController : MonoBehaviour {
     NetworkManager networkManager;
     GameObject loadingModal;
+    [SerializeField] GameObject logo, textImage;
+    [SerializeField] Button loginBtn;
     // Start is called before the first frame update
     void Start() {
         networkManager = NetworkManager.Instance;
+        StartCoroutine(LogoReveal());
+    }
+
+    IEnumerator LogoReveal() {
+        yield return new WaitForSeconds(4.0f);
+        logo.SetActive(true);
+        Logger.Log("logo");
+        yield return new WaitForSeconds(0.5f);
+        Logger.Log("textImage");
+        textImage.SetActive(true);
+        loginBtn.enabled = true;
     }
 
     public void OnStartButton() {
