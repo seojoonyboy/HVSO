@@ -179,7 +179,7 @@ public class MenuCardHandler : MonoBehaviour {
             menuCardInfo.SetCardInfo(cardData, isHuman);
             menuCardInfo.transform.Find("CreateCard").gameObject.SetActive(false);
         }
-        if (transform.parent.parent.parent.name == "HeroInfo")
+        if (transform.parent.parent.parent.name == "HeroInfo" && transform.parent.parent.name != "SkillWindow")
             exitTrigger2.SetActive(true);
     }
 }
