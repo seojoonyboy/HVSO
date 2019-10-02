@@ -215,19 +215,39 @@ public class Wait_Multiple_Summon : ScenarioExecute {
 
     private int summonCount = 0;
     private int clearCount = -1;
+    private string[] numParse;
+    private int[] line;
 
     public override void Execute() {
+        if (args.Count > 1) {
+            numParse = args[1].Split('-');
+            line = new int[numParse.Length];
+
+            for(int i =0; i<numParse.Length; i++) {
+                line[i] = int.Parse(numParse[i]);
+            }
+            scenarioGameManagment.forcedSummonAt = line[0];
+        }
+
         int.TryParse(args[0], out clearCount);
         PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.UNIT_SUMMONED, CheckSummon);
     }
 
     private void CheckSummon(Enum event_type, Component Sender, object Param) {
-        if(summonCount < clearCount) 
-            summonCount++;
-        else {
+
+        summonCount++;
+
+        if(line.Length > 0 && summonCount < line.Length) {
+            scenarioGameManagment.forcedSummonAt = line[summonCount];
+        }
+
+
+        if (summonCount == clearCount) {
             PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.UNIT_SUMMONED, CheckSummon);
+            scenarioGameManagment.forcedSummonAt = -1;
             handler.isDone = true;
-        }  
+        }
+
     }
 }
 
