@@ -501,6 +501,13 @@ public class PlaceMonster : MonoBehaviour {
             else {
                 GetComponent<UnitBuffHandler>()
                     .AddBuff(new UnitBuffHandler.BuffStat(power, hp));
+
+                if(buff.hp < 0) {
+                    EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.DEBUFF, transform.position);
+                }
+                else {
+                    EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.BUFF, transform.position);
+                }
             }
         }
         buff.init();
