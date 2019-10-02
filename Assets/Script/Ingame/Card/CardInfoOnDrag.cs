@@ -102,7 +102,7 @@ public class CardInfoOnDrag : MonoBehaviour
         crossHair.gameObject.SetActive(true);
         crossHair.position = Vector3.zero;
         iTween.MoveTo(crossHair.gameObject, targetPos.position, 0.5f);
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(1.0f);
         crossHair.gameObject.SetActive(false);
         crossHair.position = Vector3.zero;
     }

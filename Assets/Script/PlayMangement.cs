@@ -372,7 +372,7 @@ public partial class PlayMangement : MonoBehaviour {
             yield return EffectSystem.Instance.HeroCutScene(enemyPlayer.isHuman);
         }
         EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
         //카드 파괴
         card.transform.localScale = new Vector3(1, 1, 1);
         cardHandManager.DestroyCard(card);
@@ -914,6 +914,23 @@ public partial class PlayMangement {
             enemyCard.SetActive(false);
             enemyPlayer.playerUI.transform.Find("CardCount").GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = "X" + " " + (i + 1).ToString();
             i++;
+        }
+    }
+
+    public IEnumerator StoryDrawEnemyCard() {
+        int length = socketHandler.gameState.players.enemyPlayer(enemyPlayer.isHuman).deck.handCards.Length;
+        for(int i = 0; i < length; i++) {
+            GameObject enemyCard;
+            if (enemyPlayer.isHuman)
+                enemyCard = Instantiate(Resources.Load("Prefabs/HumanBackCard") as GameObject, enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(CountEnemyCard()));
+            else
+                enemyCard = Instantiate(Resources.Load("Prefabs/OrcBackCard") as GameObject, enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(CountEnemyCard()));
+            enemyCard.transform.position = player.cdpm.cardSpawnPos.position;
+            enemyCard.transform.localScale = new Vector3(1, 1, 1);
+            iTween.MoveTo(enemyCard, enemyCard.transform.parent.position, 0.15f);
+            yield return new WaitForSeconds(0.15f);
+            enemyCard.SetActive(false);
+            enemyPlayer.playerUI.transform.Find("CardCount").GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = "X" + " " + (i + 1).ToString();
         }
     }
 

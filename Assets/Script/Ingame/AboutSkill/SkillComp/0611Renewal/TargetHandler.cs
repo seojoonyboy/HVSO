@@ -475,8 +475,8 @@ namespace TargetModules {
                 terrainSlot.GetChild(0).gameObject.SetActive(true);
                 terrainSlot.GetComponent<SpriteRenderer>().color = new Color(1, 0, 0, 0.6f);
 
-                //4.  1.5초뒤에 끄기
-                yield return new WaitForSeconds(1.5f);
+                //4.  1초뒤에 끄기
+                yield return new WaitForSeconds(1f);
                 terrainSlot.gameObject.SetActive(false);
                 terrainSlot.GetChild(0).gameObject.SetActive(false);
                 terrainSlot.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.6f);
@@ -527,8 +527,8 @@ namespace TargetModules {
                     terrainSlot.GetChild(0).gameObject.SetActive(true);
                     terrainSlot.GetComponent<SpriteRenderer>().color = new Color(1, 0, 0, 0.6f);
 
-                    //4.  1.5초뒤에 끄기
-                    yield return new WaitForSeconds(1.5f);
+                    //4.  1초뒤에 끄기
+                    yield return new WaitForSeconds(1f);
                     terrainSlot.gameObject.SetActive(false);
                     terrainSlot.GetChild(0).gameObject.SetActive(false);
                     terrainSlot.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.6f);

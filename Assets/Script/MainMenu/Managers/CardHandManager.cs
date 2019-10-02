@@ -522,7 +522,7 @@ public class CardHandManager : MonoBehaviour {
         else
             CardInfoOnDrag.instance.SetCardDragInfo(null, new Vector3(0, 5, 0), handler.cardData.skills.Length != 0 ? handler.cardData.skills[0].desc : null);
         
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(1.0f);
         
         card.transform.SetParent(parent);
         CardInfoOnDrag.instance.OffCardDragInfo();
@@ -645,6 +645,7 @@ public class CardHandManager : MonoBehaviour {
         }
         else {
             bool isHuman = PlayMangement.instance.player.isHuman;
+            StartCoroutine(PlayMangement.instance.StoryDrawEnemyCard());
             yield return AddMultipleCard(PlayMangement.instance.socketHandler.gameState.players.myPlayer(isHuman).deck.handCards);
         }
         firstDraw = false;
