@@ -9,6 +9,7 @@ public class ShowCardsHandler : MonoBehaviour {
     [SerializeField] public GameObject hideShowBtn;
     [SerializeField] CardHandManager cardHandManager;
     [SerializeField] GameObject BgImg;
+    public Transform timerPos;
 
     // Start is called before the first frame update
     void Start() {
@@ -117,7 +118,7 @@ public class ShowCardsHandler : MonoBehaviour {
                 card.SetActive(isOn);
             }
             card.transform.localScale = new Vector3(1.2f, 1.2f, 1.0f);
-            card.transform.localPosition = new Vector3(0.0f, -180f, 0.0f);
+            card.transform.localPosition = new Vector3(0.0f, -260f, 0.0f);
         }
     }
 

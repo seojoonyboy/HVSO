@@ -347,8 +347,12 @@ public class PlayerController : MonoBehaviour
         if(isPlayer) {
 
             if (ScenarioGameManagment.scenarioInstance == null) {
-                GetComponent<IngameTimer>().OnTimeout.AddListener(PlayMangement.instance.showCardsHandler.TimeoutShowCards);
-                GetComponent<IngameTimer>().BeginTimer(20);
+                var ingameTimer = GetComponent<IngameTimer>();
+                ingameTimer.OnTimeout.AddListener(PlayMangement.instance.showCardsHandler.TimeoutShowCards);
+                ingameTimer.BeginTimer(20);
+                Invoke("OnTimeOut", 20);
+                ingameTimer.timerUI.transform.SetParent(PlayMangement.instance.showCardsHandler.timerPos);
+                ingameTimer.timerUI.transform.localPosition = Vector3.zero;
             }
         }
         FullShieldStack(shieldStack.Value);
@@ -356,6 +360,12 @@ public class PlayerController : MonoBehaviour
         shieldStack.Value = 0;
         shieldCount--;
         
+    }
+
+    public void OnTimeOut() {
+        var ingameTimer = GetComponent<IngameTimer>();
+        ingameTimer.timerUI.transform.SetParent(ingameTimer.parent);
+        ingameTimer.timerUI.transform.localPosition = new Vector3(0, -440f, 0);
     }
 
     public void DisableShield() {
