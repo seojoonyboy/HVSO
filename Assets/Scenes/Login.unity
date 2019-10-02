@@ -4796,13 +4796,260 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-    - Name: infoSprites
+    - Name: classInfo
       Entry: 7
-      Data: 20|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
-        UnityEngine.CoreModule]], mscorlib
+      Data: 20|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[ClassInfo,
+        Assembly-CSharp]], mscorlib
     - Name: comparer
       Entry: 7
       Data: 21|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 10
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: order
+    - Name: $v
+      Entry: 7
+      Data: 22|ClassInfo, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: "\uC9C8\uC11C"
+    - Name: info
+      Entry: 1
+      Data: "\uC815\uC815\uB2F9\uB2F9\uD558\uACE0 \uADDC\uCE59\uC744 \uC900\uC218\uD558\uB294
+        \uC9C8\uC11C\uB294 \uC815\uACF5\uBC95 \uC2A4\uD0C0\uC77C\uC758 \uD074\uB798\uC2A4\uC785\uB2C8\uB2E4."
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: knowledge
+    - Name: $v
+      Entry: 7
+      Data: 23|ClassInfo, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: "\uC9C0\uC2DD"
+    - Name: info
+      Entry: 1
+      Data: "\uB2E4\uC591\uD55C \uC9C0\uC2DD\uB4E4\uC744 \uD65C\uC6A9\uD558\uC5EC
+        \uCD5C\uB300\uD55C \uC720\uB9AC\uD55C \uC704\uCE58\uB97C \uD655\uBCF4\uD558\uB294
+        \uC2A4\uD0C0\uC77C\uC785\uB2C8\uB2E4."
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: sorcery
+    - Name: $v
+      Entry: 7
+      Data: 24|ClassInfo, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: "\uC8FC\uC220"
+    - Name: info
+      Entry: 1
+      Data: "\uC554\uD751 \uC8FC\uC220\uB4E4\uC744 \uD1B5\uD574 \uC0C1\uB300\uC5D0\uAC90
+        \uBD88\uB9AC\uD568\uC744, \uC544\uAD70\uC5D0\uAC90 \uC720\uB9AC\uD568\uC744
+        \uB3D9\uC2DC\uC5D0 \uC801\uC6A9\uC2DC\uD0A4\uB294 \uD074\uB798\uC2A4\uC785\uB2C8\uB2E4."
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: scheme
+    - Name: $v
+      Entry: 7
+      Data: 25|ClassInfo, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: "\uC74C\uBAA8"
+    - Name: info
+      Entry: 1
+      Data: "\uD2B9\uC815 \uC870\uAC74\uB9CC \uCDA9\uC871\uB41C\uB2E4\uBA74 \uB204\uAD6C\uBCF4\uB2E4
+        \uAC15\uB825\uD568\uC744 \uB4DC\uB7EC\uB0B4\uB294 \uD074\uB798\uC2A4\uC785\uB2C8\uB2E4."
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: mana
+    - Name: $v
+      Entry: 7
+      Data: 26|ClassInfo, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: "\uB9C8\uB825"
+    - Name: info
+      Entry: 1
+      Data: "\uD6C4\uBC18\uC744 \uB3C4\uBAA8\uD558\uBA70 \uAC15\uB825\uD55C \uC8FC\uBB38\uB4E4\uB85C
+        \uC0C1\uB300\uB97C \uC4F8\uC5B4\uBC84\uB9AC\uB294 \uD074\uB798\uC2A4\uC785\uB2C8\uB2E4."
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: pursuit
+    - Name: $v
+      Entry: 7
+      Data: 27|ClassInfo, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: "\uCD94\uC801"
+    - Name: info
+      Entry: 1
+      Data: "\uCC9C\uCC9C\uD788, \uADF8\uB9AC\uACE0 \uD655\uC2E4\uD558\uAC8C \uC0C1\uB300\uB97C
+        \uC870\uAE08\uC529 \uC555\uBC15\uD558\uC5EC \uCC98\uCE58\uD558\uB294 \uD074\uB798\uC2A4\uC785\uB2C8\uB2E4."
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: shadow
+    - Name: $v
+      Entry: 7
+      Data: 28|ClassInfo, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: "\uADF8\uB9BC\uC790"
+    - Name: info
+      Entry: 1
+      Data: "\uC5EC\uB7EC \uAC01\uB3C4\uC5D0\uC11C\uC758 \uACF5\uACA9\uACFC \uBC29\uD574\uB97C
+        \uD1B5\uD574 \uC0C1\uB300\uB97C \uAD50\uB780\uD558\uACE0 \uAD34\uB86D\uD788\uB294
+        \uD074\uB798\uC2A4\uC785\uB2C8\uB2E4."
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: destruction
+    - Name: $v
+      Entry: 7
+      Data: 29|ClassInfo, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: "\uD30C\uAD34"
+    - Name: info
+      Entry: 1
+      Data: "\uC870\uAE08\uC758 \uC190\uD574\uB294 \uC2E0\uACBD\uC4F0\uC9C0 \uC54A\uC73C\uBA70
+        \uB354 \uD070 \uD53C\uD574\uB97C \uC785\uD788\uB294 \uAC83\uC5D0 \uC9D1\uC911\uD558\uB294
+        \uACF5\uACA9\uC801 \uD074\uB798\uC2A4\uC785\uB2C8\uB2E4."
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: nature
+    - Name: $v
+      Entry: 7
+      Data: 30|ClassInfo, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: "\uC790\uC5F0"
+    - Name: info
+      Entry: 1
+      Data: "\uD6A8\uACFC\uC758 \uC591\uBA74\uC131\uC744 \uACE0\uB824\uD558\uC5EC
+        \uC801\uC7AC\uC801\uC18C\uC5D0 \uC54C\uB9DE\uC740 \uBC29\uBC95\uC73C\uB85C
+        \uC544\uAD70\uC744 \uCE58\uB8CC\uD558\uACE0 \uC0C1\uB300\uB97C \uACF5\uACA9\uD558\uB294
+        \uD074\uB798\uC2A4\uC785\uB2C8\uB2E4."
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: soul
+    - Name: $v
+      Entry: 7
+      Data: 31|ClassInfo, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: "\uC601\uD63C"
+    - Name: info
+      Entry: 1
+      Data: "\uAC1C\uBCC4\uB85C\uB294 \uC57D\uD558\uC9C0\uB9CC \uB04A\uC784\uC5C6\uC774
+        \uB418\uC0B4\uC544\uB098\uACE0 \uC7AC\uD65C\uC6A9\uB418\uC5B4 \uC0C1\uB300\uB97C
+        \uC4F0\uB7EC\uB728\uB9AC\uB294 \uD074\uB798\uC2A4\uC785\uB2C8\uB2E4."
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: infoSprites
+      Entry: 7
+      Data: 32|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
+        UnityEngine.CoreModule]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 33|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -5082,11 +5329,11 @@ MonoBehaviour:
       Data: 
     - Name: infoPortraite
       Entry: 7
-      Data: 22|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
+      Data: 34|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
         UnityEngine.CoreModule]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 23|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+      Data: 35|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -6110,11 +6357,11 @@ MonoBehaviour:
       Data: 
     - Name: skillIcons
       Entry: 7
-      Data: 24|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
+      Data: 36|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
         UnityEngine.CoreModule]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 25|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+      Data: 37|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -6358,11 +6605,11 @@ MonoBehaviour:
       Data: 
     - Name: heroPortraite
       Entry: 7
-      Data: 26|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
+      Data: 38|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
         UnityEngine.CoreModule]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 27|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+      Data: 39|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -6474,11 +6721,11 @@ MonoBehaviour:
       Data: 
     - Name: deckPortraite
       Entry: 7
-      Data: 28|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
+      Data: 40|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
         UnityEngine.CoreModule]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 29|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+      Data: 41|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -6554,11 +6801,11 @@ MonoBehaviour:
       Data: 
     - Name: ScenarioUnitResurce
       Entry: 7
-      Data: 30|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[ScenarioUnit,
+      Data: 42|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[ScenarioUnit,
         Assembly-CSharp]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 31|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+      Data: 43|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -6574,7 +6821,7 @@ MonoBehaviour:
       Data: ac10005
     - Name: $v
       Entry: 7
-      Data: 32|ScenarioUnit, Assembly-CSharp
+      Data: 44|ScenarioUnit, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: "\uC81C\uC2DD\uAD81\uC218"
@@ -6595,7 +6842,7 @@ MonoBehaviour:
       Data: h10002
     - Name: $v
       Entry: 7
-      Data: 33|ScenarioUnit, Assembly-CSharp
+      Data: 45|ScenarioUnit, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: "\uD06C\uB77C\uCFE0\uC2A4"
