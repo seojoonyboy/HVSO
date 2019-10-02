@@ -222,12 +222,15 @@ public class Wait_Multiple_Summon : ScenarioExecute {
     }
 
     private void CheckSummon(Enum event_type, Component Sender, object Param) {
-        if(summonCount < clearCount) 
-            summonCount++;
-        else {
+
+        summonCount++;
+
+
+        if (summonCount == clearCount) {
             PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.UNIT_SUMMONED, CheckSummon);
             handler.isDone = true;
-        }  
+        }
+
     }
 }
 
