@@ -711,10 +711,26 @@ public class Orc_post_turn : ScenarioExecute {
 
         switch (args[0]) {
             case "stop":
-                PlayMangement.instance.stopTurn = true;
+                if (args.Count > 1) {
+                    switch (args[1]) {
+                        case "begin":
+                            PlayMangement.instance.beginStopTurn = true;
+                            break;
+                        case "after":
+                            PlayMangement.instance.afterStopTurn = true;
+                            break;
+                        default:
+                            PlayMangement.instance.beginStopTurn = true;
+                            break;
+                    }
+                }
+                else
+                    PlayMangement.instance.beginStopTurn = true;
                 break;
             case "proceed":
                 PlayMangement.instance.stopTurn = false;
+                PlayMangement.instance.beginStopTurn = false;
+                PlayMangement.instance.afterStopTurn = false;
                 break;
             default:
                 break;
@@ -808,7 +824,7 @@ public class Wait_End_Line_Battle : ScenarioExecute {
     private void CheckEnd(Enum event_type, Component Sender, object Param) {
         //playerHit.Dispose();
         int line = (int)Param;
-        int targetLine = int.Parse(args[0]);
+        int targetLine = int.Parse(args[0]) - 1;
 
 
         if (line == targetLine)

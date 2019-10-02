@@ -252,7 +252,7 @@ public partial class PlayMangement : MonoBehaviour {
         if (isBefore)
             yield return new WaitForSeconds(1.0f);
 
-        yield return StopTurn();
+        yield return BeginStopTurn();
         #region socket use Card
         while (!socketHandler.cardPlayFinish()) {
             yield return socketHandler.useCardList.WaitNext();
@@ -284,6 +284,8 @@ public partial class PlayMangement : MonoBehaviour {
         }
         #endregion
         SocketFormat.DebugSocketData.ShowHandCard(socketHandler.gameState.players.enemyPlayer(enemyPlayer.isHuman).deck.handCards);
+
+        yield return AfterStopTurn();
         if (isBefore)
             EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, GetComponent<TurnMachine>().CurrentTurn());
     }
@@ -537,7 +539,7 @@ public partial class PlayMangement : MonoBehaviour {
     }
 
     public IEnumerator EnemeyOrcMagicSummon() {
-        yield return StopTurn();
+        yield return BeginStopTurn();
         yield return new WaitForSeconds(1f);
         //서버에서 오크 마법 턴 올 때까지 대기
         yield return new WaitUntil(passOrc);
@@ -550,7 +552,8 @@ public partial class PlayMangement : MonoBehaviour {
         if (!socketHandler.cardPlayFinish())
             yield return EnemyUseCard(false);
         //서버에서 턴 넘김이 완료 될 때까지 대기
-        yield return socketHandler.WaitBattle();        
+        yield return socketHandler.WaitBattle();
+        yield return AfterStopTurn();
         EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, TurnType.SECRET);
         //CustomEvent.Trigger(gameObject, "EndTurn");
     }
@@ -622,6 +625,16 @@ public partial class PlayMangement : MonoBehaviour {
     protected IEnumerator StopTurn() {
         yield return new WaitUntil(() => stopTurn == false);
     }
+
+    protected IEnumerator BeginStopTurn() {
+        yield return new WaitUntil(() => beginStopTurn == false);
+    }
+
+    protected IEnumerator AfterStopTurn() {
+        yield return new WaitUntil(() => afterStopTurn == false);
+    }
+
+
 
 
     IEnumerator whoFirstBattle(PlayerController first, PlayerController second, int line) {
