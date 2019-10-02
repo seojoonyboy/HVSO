@@ -1,0 +1,27 @@
+
+tutorial_handicon.png
+size: 256,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+hand
+  rotate: false
+  xy: 0, 37
+  size: 143, 178
+  orig: 143, 178
+  offset: 0, 0
+  index: -1
+ring_1
+  rotate: false
+  xy: 143, 107
+  size: 108, 108
+  orig: 108, 108
+  offset: 0, 0
+  index: -1
+ring_2
+  rotate: false
+  xy: 143, 0
+  size: 107, 107
+  orig: 107, 107
+  offset: 0, 0
+  index: -1
