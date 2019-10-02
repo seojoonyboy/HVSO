@@ -197,7 +197,7 @@ namespace SkillModules {
                 GameObject target = (GameObject)data;
                 if(target.GetComponent<stun>() == null) {
                     if (skillHandler.myObject != null) {
-                        string skillID = (skillHandler.myObject.GetComponent<MagicDragHandler>() != null) ? skillHandler.myObject.GetComponent<MagicDragHandler>().cardData.cardId : "";
+                        string skillID = (skillHandler.myObject.GetComponent<MagicDragHandler>() != null) ? skillHandler.myObject.GetComponent<MagicDragHandler>().cardID : "";
                         InvokeAttack(target, skillID);
                     }
                     else
