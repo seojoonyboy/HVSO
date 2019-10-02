@@ -149,7 +149,7 @@ public class DeckEditController : MonoBehaviour
             templateMenu = null;
         }
 
-        deckNamePanel.transform.Find("NameTemplate/TextArea/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "";
+        deckNamePanel.transform.Find("NameTemplate").GetComponent<TMPro.TMP_InputField>().text = "";
 
         if(isTemplate)
             FindObjectOfType<HUDController>().SetHeader(HUDController.Type.RESOURCE_ONLY_WITH_BACKBUTTON);
@@ -290,7 +290,9 @@ public class DeckEditController : MonoBehaviour
         heroID = heroId;
         this.isHuman = isHuman;
         isTemplate = true;
+
         deckNamePanel.transform.Find("NameTemplate").GetComponent<TMPro.TMP_InputField>().text = "";
+        transform.Find("InnerCanvas/DeckNamePanel/PlaceHolder").gameObject.SetActive(true);    
 
         heroData = AccountManager.Instance.myHeroInventories[heroId];
         Transform heroSpines = heroInfoWindow.Find("HeroSpines");
@@ -380,8 +382,10 @@ public class DeckEditController : MonoBehaviour
             isHuman = true;
         else
             isHuman = false;
-        deckNamePanel.transform.Find("NameTemplate").GetComponent<TMPro.TMP_InputField>().text = loadedDeck.name;
 
+        deckNamePanel.transform.Find("NameTemplate").GetComponent<TMPro.TMP_InputField>().text = loadedDeck.name;
+        transform.Find("InnerCanvas/DeckNamePanel/PlaceHolder").gameObject.SetActive(string.IsNullOrEmpty(deckNamePanel.transform.Find("NameTemplate").GetComponent<TMPro.TMP_InputField>().text));
+        
         Transform heroSpines = heroInfoWindow.Find("HeroSpines");
         for (int i = 0; i < heroSpines.childCount; i++)
             heroSpines.GetChild(i).gameObject.SetActive(false);
@@ -600,6 +604,15 @@ public class DeckEditController : MonoBehaviour
         }
     }
 
+    public void SelectInputName() {
+        transform.Find("InnerCanvas/DeckNamePanel/PlaceHolder").gameObject.SetActive(false);
+    }
+
+    public void EndInputName() {
+        if(string.IsNullOrEmpty(deckNamePanel.transform.Find("NameTemplate").GetComponent<TMPro.TMP_InputField>().text))
+            transform.Find("InnerCanvas/DeckNamePanel/PlaceHolder").gameObject.SetActive(true);
+    }
+
 
 
 
@@ -649,7 +662,7 @@ public class DeckEditController : MonoBehaviour
     /// Server에게 덱 새로 추가 요청(커스텀 덱)
     /// </summary>
     public void RequestNewDeck() {
-        if (string.IsNullOrEmpty(deckNamePanel.transform.Find("NameTemplate/TextArea/Text").GetComponent<TMPro.TextMeshProUGUI>().text) == true) {
+        if (string.IsNullOrEmpty(deckNamePanel.transform.Find("NameTemplate").GetComponent<TMPro.TMP_InputField>().text) == true) {
             Modal.instantiate("덱 이름을 입력해 주세요.", Modal.Type.CHECK);
             return;
         }
@@ -670,7 +683,7 @@ public class DeckEditController : MonoBehaviour
                 items.Add(data);
             }
         }
-        var nameVal = deckNamePanel.transform.Find("NameTemplate/TextArea/Text").GetComponent<TMPro.TextMeshProUGUI>().text;
+        var nameVal = deckNamePanel.transform.Find("NameTemplate").GetComponent<TMPro.TMP_InputField>().text;
 
         formatData.heroId = heroID; //영웅 id
         formatData.items = items.ToArray(); //추가한 카드 정보들
@@ -690,7 +703,7 @@ public class DeckEditController : MonoBehaviour
                 templateMenu.transform.gameObject.SetActive(false);
                 templateMenu = null;
             }
-            deckNamePanel.transform.Find("NameTemplate/TextArea/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "";
+            deckNamePanel.transform.Find("NameTemplate").GetComponent<TMPro.TMP_InputField>().text = "";
         }
 
     }

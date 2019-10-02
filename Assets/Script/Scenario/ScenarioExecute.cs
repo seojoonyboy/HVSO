@@ -209,6 +209,31 @@ public class Wait_summon : ScenarioExecute {
     }
 }
 
+
+public class Wait_Multiple_Summon : ScenarioExecute {
+    public Wait_Multiple_Summon() : base() { }
+
+    private int summonCount = 0;
+    private int clearCount = -1;
+
+    public override void Execute() {
+        int.TryParse(args[0], out clearCount);
+        PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.UNIT_SUMMONED, CheckSummon);
+    }
+
+    private void CheckSummon(Enum event_type, Component Sender, object Param) {
+        if(summonCount < clearCount) 
+            summonCount++;
+        else {
+            PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.UNIT_SUMMONED, CheckSummon);
+            handler.isDone = true;
+        }  
+    }
+}
+
+
+
+
 public class Wait_drop : ScenarioExecute {
     public Wait_drop() : base() { }
 
@@ -483,6 +508,25 @@ public class Disable_drag : ScenarioExecute {
     }
 }
 
+public class Stop_orc_magic : ScenarioExecute {
+    public Stop_orc_magic() : base() { }
+
+    public override void Execute() {
+        scenarioGameManagment.stopEnemySpell = true;
+        handler.isDone = true;
+    }
+
+}
+
+public class Proceed_orc_magic : ScenarioExecute {
+    public Proceed_orc_magic() : base() { }
+    public override void Execute() {
+        scenarioGameManagment.stopEnemySpell = false;
+        handler.isDone = true;
+    }
+}
+
+
 public class Stop_orc_summon : ScenarioExecute {
     public Stop_orc_summon() : base() { }
 
@@ -524,7 +568,13 @@ public class Force_drop_zone : ScenarioExecute {
                 }
                 break;
             case "magic":
-                _type = Type.MAGIC;
+                try {
+                    int.TryParse(args[1], out detail);
+                    _type = Type.MAGIC;
+                }
+                catch (ArgumentException) {
+                    Logger.Log("Unit 소환에 대한 세부 정보 없음");
+                }
                 break;
         }
 
@@ -533,9 +583,7 @@ public class Force_drop_zone : ScenarioExecute {
             return;
         }
 
-        if(_type == Type.UNIT) {
-            scenarioGameManagment.forcedSummonAt = detail;
-        }
+        scenarioGameManagment.forcedSummonAt = detail;
         handler.isDone = true;
     }
 
@@ -545,6 +593,57 @@ public class Force_drop_zone : ScenarioExecute {
         NONE
     }
 }
+
+public class Reinforement_Unit : ScenarioExecute {
+    public Reinforement_Unit() : base() { }
+
+    public override void Execute() {
+        string front = "ac10001";
+        string back = "ac10002";
+
+        for (int i = 0; i < 5; i++) {
+            
+            scenarioGameManagment.SummonUnit(scenarioGameManagment.player.isPlayer, back, 0, i);
+            scenarioGameManagment.SummonUnit(scenarioGameManagment.player.isPlayer, front, 1, i);
+        }
+    }
+
+
+}
+
+
+
+public class Stop_Next_Turn : ScenarioExecute {
+    public Stop_Next_Turn() : base() { }
+
+    public override void Execute() {
+        scenarioGameManagment.stopNextTurn = true;
+        handler.isDone = true;
+    }
+}
+
+public class Proceed_Next_Turn : ScenarioExecute {
+    public Proceed_Next_Turn() : base() { }
+
+    public override void Execute() {
+        scenarioGameManagment.stopNextTurn = false;
+        handler.isDone = true;
+    }
+
+}
+
+public class Set_Victory : ScenarioExecute {
+    public Set_Victory() : base() { }
+
+    public override void Execute() {
+
+        handler.isDone = true;
+    }
+
+}
+
+
+
 
 public class Remove_forced_drop_zone : ScenarioExecute {
     public Remove_forced_drop_zone() : base() { }
@@ -653,14 +752,19 @@ public class Wait_End_Line_Battle : ScenarioExecute {
     IDisposable playerHit;
 
     public override void Execute() {
-        //PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.LINE_BATTLE_FINISHED, CheckEnd);
-        int hp = PlayMangement.instance.player.HP.Value;
-        playerHit = PlayMangement.instance.player.HP.Where(x => x < hp).Subscribe(_ => CheckEnd());
+        PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.LINE_BATTLE_FINISHED, CheckEnd);
+        //int hp = PlayMangement.instance.player.HP.Value;
+        //playerHit = PlayMangement.instance.player.HP.Where(x => x < hp).Subscribe(_ => CheckEnd());
     }
 
-    private void CheckEnd() {
-        playerHit.Dispose();
-        handler.isDone = true;
+    private void CheckEnd(Enum event_type, Component Sender, object Param) {
+        //playerHit.Dispose();
+        int line = (int)Param;
+        int targetLine = int.Parse(args[0]);
+
+
+        if (line == targetLine)
+            handler.isDone = true;
     }
 }
 
