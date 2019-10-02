@@ -1985,6 +1985,8 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 6d90d0fd453f8244e8f144008aaa6e87, type: 3}
     - {fileID: 21300000, guid: 38f1fded280878a4d9dd66609ffc57be, type: 3}
     - {fileID: 21300000, guid: c5ebc4e4e95bdb5458ee5e4e89b1594c, type: 3}
+    - {fileID: 21300000, guid: 5acbfca1a283252419e9e57ff2bb81d6, type: 3}
+    - {fileID: 21300000, guid: e4b4578ba93307842b4c91778f62bab8, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -6827,7 +6829,7 @@ MonoBehaviour:
       Data: "\uC81C\uC2DD\uAD81\uC218"
     - Name: sprite
       Entry: 10
-      Data: 151
+      Data: 208
     - Name: 
       Entry: 8
       Data: 
@@ -6848,7 +6850,7 @@ MonoBehaviour:
       Data: "\uD06C\uB77C\uCFE0\uC2A4"
     - Name: sprite
       Entry: 10
-      Data: 175
+      Data: 209
     - Name: 
       Entry: 8
       Data: 

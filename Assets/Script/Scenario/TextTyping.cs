@@ -34,6 +34,7 @@ public class TextTyping : MonoBehaviour
         }
         isTyping = false;
         scenarioHandler.isDone = true;
+        transform.Find("StopTypingTrigger").gameObject.SetActive(false);
     }
 
     public void StopTyping() {
