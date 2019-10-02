@@ -9658,8 +9658,6 @@ MonoBehaviour:
     - {fileID: 1543052410}
     - {fileID: 1172094315}
     - {fileID: 1623881710}
-    - {fileID: 0}
-    - {fileID: 0}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -9806,8 +9804,8 @@ MonoBehaviour:
       Entry: 1
       Data: shieldArrows
     - Name: $v
-      Entry: 10
-      Data: 10
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -9818,8 +9816,8 @@ MonoBehaviour:
       Entry: 1
       Data: shieldArrow
     - Name: $v
-      Entry: 10
-      Data: 10
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -9830,8 +9828,8 @@ MonoBehaviour:
       Entry: 1
       Data: shieldCard
     - Name: $v
-      Entry: 10
-      Data: 11
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -48654,7 +48652,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardNum: 0
   cardStorage: {fileID: 1340215711007132827}
-  showPos: {fileID: 0}
+  showPos: {fileID: 4913263721670706141}
   firstDrawParent: {fileID: 1447204464}
   cardSpawnPos: {fileID: 295268607}
   cardNumValue: {fileID: 537156921}
