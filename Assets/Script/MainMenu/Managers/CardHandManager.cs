@@ -467,6 +467,7 @@ public class CardHandManager : MonoBehaviour {
         removeCard.localPosition = Vector3.zero;
         cardList.RemoveAt(index);
         cardNum--;
+        cardNumValue.text = cardNum.ToString();
         //handCardNum.text = cardNum.ToString();
         for (int i = index; i < cardNum; i++) {
             transform.GetChild(i).GetChild(0).GetComponent<CardHandler>().CARDINDEX = i;

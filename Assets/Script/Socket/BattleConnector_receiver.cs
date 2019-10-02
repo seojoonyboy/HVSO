@@ -252,6 +252,7 @@ public partial class BattleConnector : MonoBehaviour {
         lineBattleList.RemoveAllId();
         mapClearList.RemoveAllId();
         shieldChargeQueue.RemoveAllId();
+        shieldActivateQueue.Clear();
      }
 
     public void line_battle(object args, int? id) {
@@ -279,6 +280,7 @@ public partial class BattleConnector : MonoBehaviour {
         var json = (JObject)args;
         string camp = json["camp"].ToString();
         bool isHuman = PlayMangement.instance.player.isHuman;
+        shieldActivateQueue.Enqueue(camp.CompareTo("human") == 0 ? gameState.players.human : gameState.players.orc);
         //human 실드 발동
         if (camp == "human") {
             if (!isHuman) {
@@ -392,6 +394,23 @@ public partial class BattleConnector : MonoBehaviour {
                 }
             }
         });
+
+        if(ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.isTutorial == false) {
+            string _result = result.result;
+
+            PlayMangement playMangement = PlayMangement.instance;
+            GameResultManager resultManager = playMangement.resultManager;
+            resultManager.gameObject.SetActive(true);
+
+            if (_result == "win") {
+                resultManager.SetResultWindow("win", playMangement.player.isHuman);
+            }
+            else {
+                resultManager.SetResultWindow("lose", playMangement.player.isHuman);
+            }
+        }
+
+
 
         //상대방이 재접속에 최종 실패하여 게임이 종료된 경우
         if (isOpponentPlayerDisconnected) {

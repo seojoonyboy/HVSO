@@ -49293,7 +49293,7 @@ MonoBehaviour:
   stopNextTurn: 0
   forcedSummonAt: -1
   forcedLine: -1
-  showCardPos: {fileID: 0}
+  showCardPos: {fileID: 4913263721670706141}
   currentExecute: {fileID: 0}
   settingModal: {fileID: 2143105447}
 --- !u!114 &8279262150021554597

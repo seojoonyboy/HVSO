@@ -185,6 +185,10 @@ public partial class BattleConnector : MonoBehaviour {
         SendMethod("client_ready");
     }
 
+    public void TutorialEnd() {
+        SendMethod("end_story_game");
+    }
+
     private class ItemIdClass {
         public ItemIdClass(int itemId) { this.itemId = itemId.ToString(); }
         public string itemId;
@@ -275,6 +279,7 @@ public partial class BattleConnector : MonoBehaviour {
     public Queue<SocketFormat.Player> orcData = new Queue<SocketFormat.Player>();
     public QueueSocketList <ShieldCharge> shieldChargeQueue = new QueueSocketList<ShieldCharge>();
     public QueueSocketList<int> unitSkillList = new QueueSocketList<int>();
+    public Queue<SocketFormat.Player> shieldActivateQueue = new Queue<SocketFormat.Player>();
 
     public IEnumerator WaitGetCard() {
         if(!getNewCard) IngameNotice.instance.SetNotice("서버로부터 카드를 받고 있습니다");
