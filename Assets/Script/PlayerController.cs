@@ -332,6 +332,7 @@ public class PlayerController : MonoBehaviour
         GameObject shield = transform.Find("shield").gameObject;
         shield.SetActive(true);
 
+        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.HERO_SHIELD_ACTIVE, this, isPlayer);
 
         SkeletonAnimation skeletonAnimation = shield.GetComponent<SkeletonAnimation>();
         skeletonAnimation.Initialize(false);

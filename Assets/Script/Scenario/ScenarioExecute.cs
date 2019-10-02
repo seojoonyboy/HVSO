@@ -884,3 +884,27 @@ public class Unblock_Screen : ScenarioExecute {
 
 }
 
+public class Wait_shield_active : ScenarioExecute {
+    public Wait_shield_active() : base() { }
+
+    bool isPlayer;
+
+    public override void Execute() {
+        PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.HERO_SHIELD_ACTIVE, CheckActive);
+    }
+
+    protected void CheckActive(Enum event_type, Component Sender, object Param) {        
+
+        if (args[0] == "player")
+            isPlayer = true;
+        else
+            isPlayer = false;
+
+        bool senderPlayer = (bool)Param;
+
+        if (senderPlayer == isPlayer) {
+            PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.HERO_SHIELD_ACTIVE, CheckActive);
+            handler.isDone = true;
+        }
+    }
+}
