@@ -234,6 +234,7 @@ public class PlayerController : MonoBehaviour
         Queue<SocketFormat.Player> heroshieldData = isHuman ? socketHandler.humanData : socketHandler.orcData;
         SocketFormat.Player data;
         if(heroshieldData.Count != 0) data = heroshieldData.Peek();
+        else if(socketHandler.shieldActivateQueue.Count != 0) data = socketHandler.shieldActivateQueue.Dequeue();
         else data = socketHandler.gameState.players.myPlayer(isHuman);
         SocketFormat.ShieldCharge shieldData = GetShieldData();
 

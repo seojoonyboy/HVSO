@@ -252,6 +252,7 @@ public partial class BattleConnector : MonoBehaviour {
         lineBattleList.RemoveAllId();
         mapClearList.RemoveAllId();
         shieldChargeQueue.RemoveAllId();
+        shieldActivateQueue.Clear();
      }
 
     public void line_battle(object args, int? id) {
@@ -279,6 +280,7 @@ public partial class BattleConnector : MonoBehaviour {
         var json = (JObject)args;
         string camp = json["camp"].ToString();
         bool isHuman = PlayMangement.instance.player.isHuman;
+        shieldActivateQueue.Enqueue(camp.CompareTo("human") == 0 ? gameState.players.human : gameState.players.orc);
         //human 실드 발동
         if (camp == "human") {
             if (!isHuman) {
