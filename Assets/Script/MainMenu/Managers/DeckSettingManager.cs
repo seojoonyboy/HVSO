@@ -79,16 +79,15 @@ public class DeckSettingManager : MonoBehaviour
         CloseDeckButtonsFast();
         heroSelectController.gameObject.SetActive(true);
         heroSelectController.SetHumanHeroes();
-        hudController.SetHeader(HUDController.Type.RESOURCE_ONLY_WITH_BACKBUTTON);
+        hudController.SetHeader(HUDController.Type.HIDE);
         hudController.SetBackButton(() => ExitHeroSelect());
     }
 
     public void ExitHeroSelect() {
-        heroSelectController.transform.Find("HumanSelect").GetChild(0).gameObject.SetActive(false);
-        heroSelectController.transform.Find("OrcSelect").GetChild(0).gameObject.SetActive(false);
+        heroSelectController.transform.Find("RaceSelect/HumanSelect").GetChild(0).gameObject.SetActive(false);
+        heroSelectController.transform.Find("RaceSelect/OrcSelect").GetChild(0).gameObject.SetActive(false);
         heroSelectController.gameObject.SetActive(false);
         hudController.SetHeader(HUDController.Type.SHOW_USER_INFO);
-
     }
 
 

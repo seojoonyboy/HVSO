@@ -24,6 +24,7 @@ public class CardHandManager : MonoBehaviour {
         cardList = new List<GameObject>();
         firstDrawList = new List<GameObject>();
         clm = PlayMangement.instance.cardInfoCanvas.Find("CardInfoList").GetComponent<CardListManager>();
+        if(ScenarioGameManagment.instance != null) cardDestroyed = true;
         //handCardNum = transform.parent.Find("PlayerCardNum/Value").GetComponent<TMPro.TextMeshProUGUI>();
     }
 
@@ -62,18 +63,23 @@ public class CardHandManager : MonoBehaviour {
     //멀리건 종료 버튼 클릭 함수
     public void FirstDrawCardChange() {
         socketDone = true;
-        clm.CloseMulliganCardList();
-        foreach (GameObject cards in firstDrawList) {
-            cards.transform.Find("ChangeButton").gameObject.SetActive(false);
+        if(ScenarioGameManagment.scenarioInstance == null) {
+            clm.CloseMulliganCardList();
+            foreach (GameObject cards in firstDrawList) {
+                cards.transform.Find("ChangeButton").gameObject.SetActive(false);
+            }
+            AddInfoToList(null, true);
+            StartCoroutine(DrawChangedCards());
+            firstDrawParent.GetChild(4).gameObject.SetActive(false);
+            Transform finBtn = firstDrawParent.parent.Find("FinishButton");
+            finBtn.GetComponent<Button>().enabled = false;
+            finBtn.GetComponent<Image>().enabled = false;
+            finBtn.GetChild(0).gameObject.SetActive(false);
+            finBtn.gameObject.SetActive(false);
         }
-        AddInfoToList(null, true);
-        StartCoroutine(DrawChangedCards());
-        firstDrawParent.GetChild(4).gameObject.SetActive(false);
-        Transform finBtn = firstDrawParent.parent.Find("FinishButton");
-        finBtn.GetComponent<Button>().enabled = false;
-        finBtn.GetComponent<Image>().enabled = false;
-        finBtn.GetChild(0).gameObject.SetActive(false);
-        finBtn.gameObject.SetActive(false);
+        else {
+            StartCoroutine(DrawChangedCards());
+        }
         PlayMangement.instance.SetGameData();
         //PlayMangement.instance.resultManager.SetResultWindow("win", PlayMangement.instance.player.isHuman);
     }
@@ -624,14 +630,20 @@ public class CardHandManager : MonoBehaviour {
     IEnumerator DrawChangedCards() {
         firstDrawParent.parent.gameObject.GetComponent<Image>().enabled = false;
         PlayMangement.instance.socketHandler.MulliganEnd();
-        int index = 0;
-        PlayMangement.dragable = false;
-        while (index < 4) {
-            yield return new WaitForSeconds(0.2f);
-            AddCard(firstDrawList[index]);
-            index++;
+        if(ScenarioGameManagment.scenarioInstance == null) {
+            int index = 0;
+            PlayMangement.dragable = false;
+            while (index < 4) {
+                yield return new WaitForSeconds(0.2f);
+                AddCard(firstDrawList[index]);
+                index++;
+            }
+            yield return new WaitForSeconds(0.5f);
         }
-        yield return new WaitForSeconds(0.5f);
+        else {
+            bool isHuman = PlayMangement.instance.player.isHuman;
+            yield return AddMultipleCard(PlayMangement.instance.socketHandler.gameState.players.myPlayer(isHuman).deck.handCards);
+        }
         firstDraw = false;
         yield return PlayMangement.instance.socketHandler.WaitMulliganFinish();
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this);

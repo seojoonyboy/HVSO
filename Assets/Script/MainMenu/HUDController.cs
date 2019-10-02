@@ -67,6 +67,13 @@ public class HUDController : MonoBehaviour {
                 battleCoinUI.gameObject.SetActive(true);
                 dictionaryUI.gameObject.SetActive(false);
                 break;
+            case Type.ONLY_BAKCK_BUTTON:
+                backbuttonUI.gameObject.SetActive(true);
+                userInfoUI.gameObject.SetActive(false);
+                resourceUI.gameObject.SetActive(false);
+                battleCoinUI.gameObject.SetActive(false);
+                dictionaryUI.gameObject.SetActive(false);
+                break;
         }
     }
 
@@ -156,6 +163,7 @@ public class HUDController : MonoBehaviour {
         RESOURCE_ONLY_WITH_BACKBUTTON = 1,
         DICTIONARY_WINDOW = 2,
         BATTLE_READY_CANVAS = 3,
+        ONLY_BAKCK_BUTTON =4,
         HIDE = 10
     }
 }
