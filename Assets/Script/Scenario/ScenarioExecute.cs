@@ -651,9 +651,10 @@ public class Reinforement_Unit : ScenarioExecute {
 
         for (int i = 0; i < 5; i++) {
             
-            scenarioGameManagment.SummonUnit(scenarioGameManagment.player.isPlayer, back, 0, i);
-            scenarioGameManagment.SummonUnit(scenarioGameManagment.player.isPlayer, front, 1, i);
+            scenarioGameManagment.SummonUnit(scenarioGameManagment.player.isPlayer, back, i, 0);
+            scenarioGameManagment.SummonUnit(scenarioGameManagment.player.isPlayer, front, i, 1);
         }
+        handler.isDone = true;
     }
 
 

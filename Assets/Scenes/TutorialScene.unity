@@ -49124,6 +49124,8 @@ MonoBehaviour:
   matchRule: {fileID: 0}
   stopBattle: 0
   stopTurn: 0
+  beginStopTurn: 0
+  afterStopTurn: 0
   cameraSize: 0
   showCardsHandler: {fileID: 0}
   ingameCamera: {fileID: 1144235748}
@@ -49141,7 +49143,7 @@ MonoBehaviour:
   stopNextTurn: 0
   forcedSummonAt: -1
   forcedLine: -1
-  showCardPos: {fileID: 0}
+  showCardPos: {fileID: 4913263721670706141}
   currentExecute: {fileID: 0}
   settingModal: {fileID: 2143105447}
 --- !u!114 &8279262150021554597
