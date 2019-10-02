@@ -24,6 +24,7 @@ public class ScenarioGameManagment : PlayMangement {
     public bool stopNextTurn = false;
 
     public int forcedSummonAt = -1;
+    public int forcedLine = -1;
 
     bool canBattleProceed = true;
     int battleStopAt = 0;
