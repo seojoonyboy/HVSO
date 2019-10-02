@@ -886,3 +886,25 @@ public class Wait_shield_active : ScenarioExecute {
         }
     }
 }
+
+public class ChallengeStart : ScenarioExecute {
+    public ChallengeStart() : base() { }
+
+    public override void Execute() {
+        ChallengerHandler challengerHandler = PlayMangement.instance.GetComponent<ChallengerHandler>();
+
+        challengerHandler.AddListener(args[0]);
+        handler.isDone = true;
+    }
+}
+
+public class ChallengeEnd : ScenarioExecute {
+    public ChallengeEnd() : base() { }
+
+    public override void Execute() {
+        ChallengerHandler challengerHandler = PlayMangement.instance.GetComponent<ChallengerHandler>();
+
+        challengerHandler.RemoveListener(args[0]);
+        handler.isDone = true;
+    }
+}
