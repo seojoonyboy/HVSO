@@ -49707,3 +49707,5 @@ MonoBehaviour:
   cutSceneCanvas: {fileID: 248859740}
   fadeCanvas: {fileID: 232093067}
   worldFade: {fileID: 1958465303}
+  cardDragEffect: {fileID: 1469462950999664385, guid: 50385eb85abc5554dbd95126bf6db06c,
+    type: 3}

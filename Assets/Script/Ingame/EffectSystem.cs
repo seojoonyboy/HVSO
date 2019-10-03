@@ -21,6 +21,8 @@ public class EffectSystem : SerializedMonoBehaviour {
     public GameObject fadeCanvas;
     public SpriteRenderer worldFade;
 
+    public GameObject cardDragEffect;
+
     private void Awake() {
         Instance = this;
     }
@@ -296,7 +298,7 @@ public class EffectSystem : SerializedMonoBehaviour {
         POISON_GET,
         HERO_DEAD,
         HERO_SHIELD,
-        DARK_THORN
+        DARK_THORN,
     }
 
 }

@@ -5,6 +5,8 @@ using UnityEngine.UI;
 using Sirenix.OdinInspector;
 using UniRx;
 using TMPro;
+using Spine;
+using Spine.Unity;
 
 public class ScenarioMask : SerializedMonoBehaviour
 {
@@ -328,6 +330,17 @@ public class ScenarioMask : SerializedMonoBehaviour
             glowRect.GetChild(0).GetComponent<RectTransform>().sizeDelta = getObject.GetComponent<RectTransform>().sizeDelta;
             glowRect.GetChild(0).gameObject.GetComponent<Image>().sprite = getObject.transform.Find("BackGround").gameObject.GetComponent<Image>().sprite;
             glowRect.localScale = getObject.transform.localScale;
+
+
+            GameObject dragEffect = Instantiate(EffectSystem.Instance.cardDragEffect, getObject.transform);
+            dragEffect.transform.position = getObject.transform.position;
+            dragEffect.name = "drag";
+            dragEffect.transform.SetAsLastSibling();
+            SkeletonGraphic skeletonGraphic = dragEffect.GetComponent<SkeletonGraphic>();
+            skeletonGraphic.Initialize(true);
+            skeletonGraphic.Update(0);
+            skeletonGraphic.Skeleton.SetSlotsToSetupPose();
+            skeletonGraphic.AnimationState.SetAnimation(0, "DRAG", true);
         }
 
         else if (targetName.Contains("Line_")) {
@@ -358,7 +371,7 @@ public class ScenarioMask : SerializedMonoBehaviour
             glowRect.localScale = getObject.transform.localScale;
             glowRect.sizeDelta = getObject.GetComponent<RectTransform>().sizeDelta;
             glowImage.sprite = getObject.GetComponent<Image>().sprite;
-            glowObject.GetComponent<Animation>().clip = glowObject.GetComponent<Animation>().GetClip("WhiteGlowAnimation");
+            glowObject.GetComponent<UnityEngine.Animation>().clip = glowObject.GetComponent<UnityEngine.Animation>().GetClip("WhiteGlowAnimation");
             Observable.EveryUpdate().TakeWhile(_ => glowRect.gameObject.activeSelf == true).Subscribe(_ => glowRect.position = getObject.transform.position);
         }
         else if (targetName.Contains("Player1_Panel") || targetName.Contains("Player2_Panel") || targetName.Contains("FieldUI")) {
@@ -403,7 +416,7 @@ public class ScenarioMask : SerializedMonoBehaviour
             anotherRect.sizeDelta = getObject.GetComponent<RectTransform>().sizeDelta;
             Debug.Log(anotherRect.sizeDelta);
             anotherImage.sprite = (getObject.GetComponent<Image>() != null) ? getObject.GetComponent<Image>().sprite : defaultGlow.GetComponent<Image>().sprite;
-            Animation anothoerAnimation = anotherGlowObject.GetComponent<Animation>();
+            UnityEngine.Animation anothoerAnimation = anotherGlowObject.GetComponent<UnityEngine.Animation>();
             anothoerAnimation.Play();
 
         }
@@ -449,7 +462,7 @@ public class ScenarioMask : SerializedMonoBehaviour
             anotherRect.sizeDelta = getObject.GetComponent<RectTransform>().sizeDelta;
             Debug.Log(anotherRect.sizeDelta);
             anotherImage.sprite = (getObject.GetComponent<Image>() != null) ? getObject.GetComponent<Image>().sprite : defaultGlow.GetComponent<Image>().sprite;
-            Animation anothoerAnimation = anotherGlowObject.GetComponent<Animation>();
+            UnityEngine.Animation anothoerAnimation = anotherGlowObject.GetComponent<UnityEngine.Animation>();
             anothoerAnimation.Play();
 
         }
@@ -460,8 +473,8 @@ public class ScenarioMask : SerializedMonoBehaviour
             glowRect.sizeDelta = getObject.GetComponent<RectTransform>().sizeDelta;
             Debug.Log(glowRect.sizeDelta);
             glowImage.sprite = (getObject.GetComponent<Image>() != null) ? getObject.GetComponent<Image>().sprite : defaultGlow.GetComponent<Image>().sprite;
-        }      
-        Animation glowAnimation = glowObject.GetComponent<Animation>();
+        }
+        UnityEngine.Animation glowAnimation = glowObject.GetComponent<UnityEngine.Animation>();
         glowAnimation.Play();        
     }
     public void UnmaskHeroGuide() {
@@ -504,9 +517,22 @@ public class ScenarioMask : SerializedMonoBehaviour
                 glowRect.GetChild(0).gameObject.GetComponent<Image>().sprite = getObject.transform.Find("BackGround").gameObject.GetComponent<Image>().sprite;
 
                 glowRect.SetParent(cardSlot.GetChild(0));
-                Animation glowAnimation = glowObject.GetComponent<Animation>();
-                glowAnimation.Play();
+                UnityEngine.Animation glowAnimation = glowObject.GetComponent<UnityEngine.Animation>();
+                glowAnimation.Play();                
             }
+
+            if (getObject.transform.Find("drag") == null) {
+                GameObject dragEffect = Instantiate(EffectSystem.Instance.cardDragEffect, getObject.transform);
+                dragEffect.transform.position = getObject.transform.position;
+                dragEffect.name = "drag";
+                dragEffect.transform.SetAsLastSibling();
+                SkeletonGraphic skeletonGraphic = dragEffect.GetComponent<SkeletonGraphic>();
+                skeletonGraphic.Initialize(true);
+                skeletonGraphic.Update(0);
+                skeletonGraphic.Skeleton.SetSlotsToSetupPose();
+                skeletonGraphic.AnimationState.SetAnimation(0, "DRAG", true);
+            }
+
         }
     }
 
@@ -524,13 +550,18 @@ public class ScenarioMask : SerializedMonoBehaviour
             if (getObject.transform.Find("Glow") != null) {                
                 glowObject = getObject.transform.Find("Glow").gameObject;
                 glowRect = glowObject.GetComponent<RectTransform>();
-                Animation glowAnimation = glowObject.GetComponent<Animation>();
+                UnityEngine.Animation glowAnimation = glowObject.GetComponent<UnityEngine.Animation>();
                 glowAnimation.Stop();
                 glowRect.SetParent(highlightCanvas.transform);
                 glowRect.SetAsLastSibling();
                 glowRect.gameObject.SetActive(false);
                 glowRect.GetChild(0).gameObject.SetActive(false);
             }
+
+            if (getObject.transform.Find("drag") != null) {
+                Destroy(getObject.transform.Find("drag").gameObject);
+            }
+
         }
     }
 
@@ -544,7 +575,7 @@ public class ScenarioMask : SerializedMonoBehaviour
 
         glowObject = card.transform.Find("Glow").gameObject;
         glowRect = glowObject.GetComponent<RectTransform>();
-        Animation glowAnimation = glowObject.GetComponent<Animation>();
+        UnityEngine.Animation glowAnimation = glowObject.GetComponent<UnityEngine.Animation>();
         glowAnimation.Stop();
         glowRect.SetParent(highlightCanvas.transform);
         glowRect.SetAsLastSibling();
@@ -576,7 +607,7 @@ public class ScenarioMask : SerializedMonoBehaviour
             if (child.gameObject.activeSelf == false)
                 continue;
 
-            Animation glowAnimation = child.gameObject.GetComponent<Animation>();
+            UnityEngine.Animation glowAnimation = child.gameObject.GetComponent<UnityEngine.Animation>();
             glowAnimation.Stop();
             glowAnimation.clip = glowAnimation.GetClip("glowAnimation");
             child.gameObject.GetComponent<Image>().color = Color.white;
@@ -591,7 +622,7 @@ public class ScenarioMask : SerializedMonoBehaviour
         if(fieldGlow.transform.childCount > 0) {
 
             foreach(Transform child in fieldGlow.transform) {
-                Animation glowAnimation = child.gameObject.GetComponent<Animation>();
+                UnityEngine.Animation glowAnimation = child.gameObject.GetComponent<UnityEngine.Animation>();
                 glowAnimation.Stop();
                 child.SetParent(highlightCanvas.transform);
                 child.SetAsLastSibling();

@@ -16,6 +16,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
 
     public void OnBeginDrag(PointerEventData eventData) {
         if (heroCardActivate) {
+            if(ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.isTutorial == true) { if(gameObject.transform.Find("drag") != null) Destroy(gameObject.transform.Find("drag").gameObject); }
             ShowCardsHandler showCardsHandler = GetComponentInParent<ShowCardsHandler>();
             showCardsHandler.Selecting(gameObject);
 
