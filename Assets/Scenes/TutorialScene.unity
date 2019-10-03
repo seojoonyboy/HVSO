@@ -2996,7 +2996,7 @@ GameObject:
   - component: {fileID: 125596327}
   - component: {fileID: 125596326}
   m_Layer: 5
-  m_Name: Glow (1)
+  m_Name: Glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4562,6 +4562,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+  turnStop: 0
 --- !u!114 &208885978
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7893,7 +7894,7 @@ GameObject:
   - component: {fileID: 396941537}
   - component: {fileID: 396941536}
   m_Layer: 5
-  m_Name: Glow (9)
+  m_Name: Glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10081,6 +10082,7 @@ MonoBehaviour:
   talkingText: {fileID: 1147905565}
   textUP: {fileID: 1027285582}
   textDown: {fileID: 449188842}
+  glowObject: {fileID: 0}
   arrowSprite: {fileID: 21300000, guid: 56808d63e7c447d40a6aada6e9065176, type: 3}
 --- !u!114 &498848610
 MonoBehaviour:
@@ -12891,7 +12893,7 @@ GameObject:
   - component: {fileID: 626030326}
   - component: {fileID: 626030325}
   m_Layer: 5
-  m_Name: Glow (8)
+  m_Name: Glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13555,7 +13557,7 @@ GameObject:
   - component: {fileID: 680811230}
   - component: {fileID: 680811229}
   m_Layer: 5
-  m_Name: Glow (3)
+  m_Name: Glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17155,7 +17157,7 @@ GameObject:
   - component: {fileID: 852613477}
   - component: {fileID: 852613476}
   m_Layer: 5
-  m_Name: Glow (7)
+  m_Name: Glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -20734,7 +20736,7 @@ GameObject:
   - component: {fileID: 1055998751}
   - component: {fileID: 1055998750}
   m_Layer: 5
-  m_Name: Glow (6)
+  m_Name: Glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29255,7 +29257,7 @@ GameObject:
   - component: {fileID: 1450288120}
   - component: {fileID: 1450288119}
   m_Layer: 5
-  m_Name: Glow (4)
+  m_Name: Glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -37514,7 +37516,7 @@ GameObject:
   - component: {fileID: 1719233004}
   - component: {fileID: 1719233003}
   m_Layer: 5
-  m_Name: Glow (5)
+  m_Name: Glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -40964,7 +40966,7 @@ GameObject:
   - component: {fileID: 1914944825}
   - component: {fileID: 1914944824}
   m_Layer: 5
-  m_Name: Glow (2)
+  m_Name: Glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43616,7 +43618,7 @@ GameObject:
   - component: {fileID: 2090201675}
   - component: {fileID: 2090201674}
   m_Layer: 5
-  m_Name: Glow (10)
+  m_Name: Glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -49276,6 +49278,7 @@ MonoBehaviour:
   stopTurn: 0
   beginStopTurn: 0
   afterStopTurn: 0
+  waitDraw: 0
   cameraSize: 0
   showCardsHandler: {fileID: 0}
   ingameCamera: {fileID: 1144235748}

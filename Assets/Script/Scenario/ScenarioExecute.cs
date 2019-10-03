@@ -256,23 +256,36 @@ public class Wait_Multiple_Summon : ScenarioExecute {
             }
             scenarioGameManagment.forcedSummonAt = line[0];
         }
-
+        scenarioMask.CardDeckGlow();
         int.TryParse(args[0], out clearCount);
         PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.UNIT_SUMMONED, CheckSummon);
+        PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.UNIT_DROP_FAIL, HighLightOn);
     }
 
     private void CheckSummon(Enum event_type, Component Sender, object Param) {
 
-        summonCount++;
+        summonCount++;       
+        
 
         if (line != null && line.Length > 0 && summonCount < line.Length) {
             scenarioGameManagment.forcedSummonAt = line[summonCount];
+            Invoke("Glowing", 0.1f);
         }
         if (summonCount == clearCount) {
             PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.UNIT_SUMMONED, CheckSummon);
+            PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.UNIT_DROP_FAIL, HighLightOn);
             scenarioGameManagment.forcedSummonAt = -1;
+            scenarioMask.OffDeckCardGlow();
             handler.isDone = true;
         }
+    }
+
+    private void Glowing() {
+        scenarioMask.CardDeckGlow();
+    }
+
+    private void HighLightOn(Enum event_type, Component Sender, object Param) {
+        scenarioMask.CardDeckGlow();
     }
 }
 
@@ -290,19 +303,32 @@ public class Wait_Multiple_Summon_linelimit : ScenarioExecute {
             scenarioGameManagment.forcedLine = line;
         }
 
+        scenarioMask.CardDeckGlow();
         int.TryParse(args[0], out clearCount);
         PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.UNIT_SUMMONED, CheckSummon);
+        PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.UNIT_DROP_FAIL, HighLightOn);
     }
 
     private void CheckSummon(Enum event_type, Component Sender, object Param) {
 
         summonCount++;
-        
+
+        Invoke("Glowing", 0.1f);
         if (summonCount == clearCount) {
             PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.UNIT_SUMMONED, CheckSummon);
+            PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.UNIT_DROP_FAIL, HighLightOn);
             scenarioGameManagment.forcedLine = -1;
             handler.isDone = true;
         }
+    }
+    
+    private void Glowing() {
+        scenarioMask.CardDeckGlow();
+    }
+
+
+    private void HighLightOn(Enum event_type, Component Sender, object Param) {
+        scenarioMask.CardDeckGlow();
     }
 }
 

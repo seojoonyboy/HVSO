@@ -33,6 +33,7 @@ public class ScenarioMask : SerializedMonoBehaviour
 
     public GameObject textUP, textDown;
 
+    public GameObject glowObject;
     public Sprite arrowSprite;
 
     public void GetMaskHighlight(GameObject targetObject) {
@@ -126,7 +127,7 @@ public class ScenarioMask : SerializedMonoBehaviour
                     foreach (Transform cardSlot in maskObject.transform) {
 
                         if (cardSlot.childCount < 1)
-                            continue;
+                            continue;                        
 
                         if (cardSlot.GetChild(0).GetComponent<CardHandler>().cardID == sub) {
                             maskObject = cardSlot.gameObject;
@@ -469,6 +470,86 @@ public class ScenarioMask : SerializedMonoBehaviour
 
         GetMaskingObject("shieldArrow", "top").GetComponent<Image>().color = color;
         GetMaskingObject("shieldArrow", "bottom").GetComponent<Image>().color = color;
+    }
+
+    public void CardDeckGlow() {       
+        for(int i =0; i< targetObject["hand_card"].transform.childCount; i++) {
+
+            Transform cardSlot = targetObject["hand_card"].transform.GetChild(i);
+            if (cardSlot.childCount < 1)
+                continue;
+
+            if (PlayMangement.instance.player.resource.Value - cardSlot.GetChild(0).gameObject.GetComponent<CardHandler>().cardData.cost < 0)
+                continue;
+
+            GameObject glowObject = GetUnactiveGlow();
+            RectTransform glowRect = glowObject.GetComponent<RectTransform>();
+            GameObject getObject;
+            Image glowImage = glowObject.GetComponent<Image>();
+
+            
+
+            
+
+            getObject = cardSlot.GetChild(0).gameObject;
+            if (getObject.transform.Find("Glow") == null) {                
+                glowRect.gameObject.SetActive(true);
+                glowRect.position = getObject.transform.Find("Portrait").position;
+                glowRect.sizeDelta = getObject.transform.Find("Portrait").gameObject.GetComponent<RectTransform>().sizeDelta;
+                glowImage.sprite = getObject.transform.Find("Portrait").gameObject.GetComponent<Image>().sprite;
+
+                glowRect.GetChild(0).gameObject.SetActive(true);
+                glowRect.GetChild(0).position = getObject.transform.Find("BackGround").position;
+                glowRect.GetChild(0).GetComponent<RectTransform>().sizeDelta = getObject.GetComponent<RectTransform>().sizeDelta;
+                glowRect.GetChild(0).gameObject.GetComponent<Image>().sprite = getObject.transform.Find("BackGround").gameObject.GetComponent<Image>().sprite;
+
+                glowRect.SetParent(cardSlot.GetChild(0));
+                Animation glowAnimation = glowObject.GetComponent<Animation>();
+                glowAnimation.Play();
+            }
+        }
+    }
+
+    public void OffDeckCardGlow() {
+        RectTransform glowRect;
+        GameObject glowObject;
+        GameObject getObject;
+
+        foreach (Transform cardSlot in targetObject["hand_card"].transform) {
+            if (cardSlot.childCount < 1)
+                continue;
+
+            getObject = cardSlot.GetChild(0).gameObject;
+
+            if (getObject.transform.Find("Glow") != null) {                
+                glowObject = getObject.transform.Find("Glow").gameObject;
+                glowRect = glowObject.GetComponent<RectTransform>();
+                Animation glowAnimation = glowObject.GetComponent<Animation>();
+                glowAnimation.Stop();
+                glowRect.SetParent(highlightCanvas.transform);
+                glowRect.SetAsLastSibling();
+                glowRect.gameObject.SetActive(false);
+                glowRect.GetChild(0).gameObject.SetActive(false);
+            }
+        }
+    }
+
+    public void SelfOffCard(GameObject card) {
+        if (card == null)
+            return;
+        if (card.transform.Find("Glow") == null) return;
+
+        RectTransform glowRect;
+        GameObject glowObject;
+
+        glowObject = card.transform.Find("Glow").gameObject;
+        glowRect = glowObject.GetComponent<RectTransform>();
+        Animation glowAnimation = glowObject.GetComponent<Animation>();
+        glowAnimation.Stop();
+        glowRect.SetParent(highlightCanvas.transform);
+        glowRect.SetAsLastSibling();
+        glowRect.gameObject.SetActive(false);
+        glowRect.GetChild(0).gameObject.SetActive(false);
     }
 
 

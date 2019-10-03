@@ -16,6 +16,7 @@ public partial class UnitDragHandler : CardHandler, IBeginDragHandler, IDragHand
         if (firstDraw || PlayMangement.instance.isMulligan) return;
         if (Input.touchCount > 1) return;
         if (PlayMangement.instance.player.dragCard) return;
+        if (ScenarioGameManagment.scenarioInstance != null) ScenarioMask.Instance.OffDeckCardGlow();
         StartDragCard();
         CardInfoOnDrag.instance.SetPreviewUnit(cardData.id);
         if (cardData.skills.Length != 0)
@@ -60,6 +61,7 @@ public partial class UnitDragHandler : CardHandler, IBeginDragHandler, IDragHand
             highlightedSlot = null;
         }
         else if(turnMachine.isPlayerTurn()) {
+            if (ScenarioGameManagment.scenarioInstance != null) ScenarioMask.Instance.SelfOffCard(gameObject);
             Transform slot = CheckSlot();
             if (slot != null && slot.childCount <= 1)
                 StartCoroutine(SummonUnit(slot));
