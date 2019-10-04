@@ -12,22 +12,22 @@ public class HeroSelectController : MonoBehaviour
     public string selectedHeroId;
     bool isHuman;
     public void SetHumanHeroes() {
-        if (transform.Find("RaceSelect/HumanSelect").GetChild(0).gameObject.activeSelf) return;
-        transform.Find("RaceSelect/HumanSelect").GetChild(0).gameObject.SetActive(true);
-        transform.Find("RaceSelect/OrcSelect").GetChild(0).gameObject.SetActive(false);
-        transform.Find("HeroSpines/HumanSpines").gameObject.SetActive(true);
-        transform.Find("HeroSpines/OrcSpines").gameObject.SetActive(false);
+        if (transform.Find("InnerCanvas/RaceSelect/HumanSelect").GetChild(0).gameObject.activeSelf) return;
+        transform.Find("InnerCanvas/RaceSelect/HumanSelect").GetChild(0).gameObject.SetActive(true);
+        transform.Find("InnerCanvas/RaceSelect/OrcSelect").GetChild(0).gameObject.SetActive(false);
+        transform.Find("InnerCanvas/HeroSpines/HumanSpines").gameObject.SetActive(true);
+        transform.Find("InnerCanvas/HeroSpines/OrcSpines").gameObject.SetActive(false);
         isHuman = true;
         SetHeroInfo("h10001");
         OpenClassInfo();
     }
 
     public void SetOrcHeroes() {
-        if (transform.Find("RaceSelect/OrcSelect").GetChild(0).gameObject.activeSelf) return;
-        transform.Find("RaceSelect/HumanSelect").GetChild(0).gameObject.SetActive(false);
-        transform.Find("RaceSelect/OrcSelect").GetChild(0).gameObject.SetActive(true);
-        transform.Find("HeroSpines/HumanSpines").gameObject.SetActive(false);
-        transform.Find("HeroSpines/OrcSpines").gameObject.SetActive(true);
+        if (transform.Find("InnerCanvas/RaceSelect/OrcSelect").GetChild(0).gameObject.activeSelf) return;
+        transform.Find("InnerCanvas/RaceSelect/HumanSelect").GetChild(0).gameObject.SetActive(false);
+        transform.Find("InnerCanvas/RaceSelect/OrcSelect").GetChild(0).gameObject.SetActive(true);
+        transform.Find("InnerCanvas/HeroSpines/HumanSpines").gameObject.SetActive(false);
+        transform.Find("InnerCanvas/HeroSpines/OrcSpines").gameObject.SetActive(true);
         isHuman = false;
         SetHeroInfo("h10002");
         OpenClassInfo();
@@ -37,10 +37,10 @@ public class HeroSelectController : MonoBehaviour
         HeroInventory heroData = AccountManager.Instance.myHeroInventories[heroId];
         selectedHeroId = heroId;
 
-        Transform classWindow = transform.Find("HeroInfo/ClassWindow");
-        Transform skillWindow = transform.Find("HeroInfo/SkillWindow");
+        Transform classWindow = transform.Find("InnerCanvas/HeroInfo/ClassWindow");
+        Transform skillWindow = transform.Find("InnerCanvas/HeroInfo/SkillWindow");
 
-        transform.Find("HeroInfo/HeroName").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.name;
+        transform.Find("InnerCanvas/HeroInfo/HeroName").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.name;
 
         classWindow.Find("Class1/ClassImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[heroData.heroClasses[0]];
         classWindow.Find("Class1/ClassName").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.resource.classInfo[heroData.heroClasses[0]].name;
@@ -73,17 +73,17 @@ public class HeroSelectController : MonoBehaviour
     }
 
     public void OpenClassInfo() {
-        transform.Find("HeroInfo/ClassWindow").gameObject.SetActive(true);
-        transform.Find("HeroInfo/ClassBtn/UnSelected").gameObject.SetActive(false);
-        transform.Find("HeroInfo/SkillWindow").gameObject.SetActive(false);
-        transform.Find("HeroInfo/SkillBtn/UnSelected").gameObject.SetActive(true);
+        transform.Find("InnerCanvas/HeroInfo/ClassWindow").gameObject.SetActive(true);
+        transform.Find("InnerCanvas/HeroInfo/ClassBtn/UnSelected").gameObject.SetActive(false);
+        transform.Find("InnerCanvas/HeroInfo/SkillWindow").gameObject.SetActive(false);
+        transform.Find("InnerCanvas/HeroInfo/SkillBtn/UnSelected").gameObject.SetActive(true);
 
     }
 
     public void OpenSkillInfo() {
-        transform.Find("HeroInfo/ClassWindow").gameObject.SetActive(false);
-        transform.Find("HeroInfo/ClassBtn/UnSelected").gameObject.SetActive(true);
-        transform.Find("HeroInfo/SkillWindow").gameObject.SetActive(true);
-        transform.Find("HeroInfo/SkillBtn/UnSelected").gameObject.SetActive(false);
+        transform.Find("InnerCanvas/HeroInfo/ClassWindow").gameObject.SetActive(false);
+        transform.Find("InnerCanvas/HeroInfo/ClassBtn/UnSelected").gameObject.SetActive(true);
+        transform.Find("InnerCanvas/HeroInfo/SkillWindow").gameObject.SetActive(true);
+        transform.Find("InnerCanvas/HeroInfo/SkillBtn/UnSelected").gameObject.SetActive(false);
     }
 }

@@ -84,8 +84,8 @@ public class DeckSettingManager : MonoBehaviour
     }
 
     public void ExitHeroSelect() {
-        heroSelectController.transform.Find("RaceSelect/HumanSelect").GetChild(0).gameObject.SetActive(false);
-        heroSelectController.transform.Find("RaceSelect/OrcSelect").GetChild(0).gameObject.SetActive(false);
+        heroSelectController.transform.Find("InnerCanvas/RaceSelect/HumanSelect").GetChild(0).gameObject.SetActive(false);
+        heroSelectController.transform.Find("InnerCanvas/RaceSelect/OrcSelect").GetChild(0).gameObject.SetActive(false);
         heroSelectController.gameObject.SetActive(false);
         hudController.SetHeader(HUDController.Type.SHOW_USER_INFO);
     }
