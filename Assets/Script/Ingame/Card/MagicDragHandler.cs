@@ -16,7 +16,10 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
 
     public void OnBeginDrag(PointerEventData eventData) {
         if (heroCardActivate) {
-            if(ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.isTutorial == true) { if(gameObject.transform.Find("drag") != null) Destroy(gameObject.transform.Find("drag").gameObject); }
+            if(ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.isTutorial == true) { 
+                if(gameObject.transform.Find("drag") != null) 
+                    gameObject.transform.Find("drag").gameObject.SetActive(false);
+            }
             ShowCardsHandler showCardsHandler = GetComponentInParent<ShowCardsHandler>();
             showCardsHandler.Selecting(gameObject);
 
@@ -174,6 +177,10 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
                     Invoke("SendEvent", 0.3f);
                     showCardsHandler.CancelSelecting();
                     showCardsHandler.ToggleAllCards();
+                    if(ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.isTutorial == true) { 
+                        if(gameObject.transform.Find("drag") != null) 
+                            gameObject.transform.Find("drag").gameObject.SetActive(true);
+                    }
                 }
             }
             CardDropManager.Instance.HideMagicSlot();

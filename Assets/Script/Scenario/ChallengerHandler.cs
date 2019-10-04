@@ -16,6 +16,7 @@ public class ChallengerHandler : SerializedMonoBehaviour {
     Image textShadowGlow;
     Image textShadowGlowAdd;
     [SerializeField] Sprite[] textShadowImages;
+    [SerializeField] GameObject shieldTargetLine;
     IngameEventHandler eventHandler;
     void Start() {
         if(challengeUI == null) {
@@ -83,6 +84,7 @@ public class ChallengerHandler : SerializedMonoBehaviour {
         Challenge challenge = challenges[0];
         if (check.activeSelf) check.SetActive(false);
         textShadowGlowAdd.sprite = textShadowGlow.sprite = textShadow.sprite = textShadowImages[0];
+        if(challenges.Count == 1) shieldTargetLine.SetActive(true);
         Invoke("CloseGlowEffect", 1.5f);
         text.text = challenge.content + "(" + challenge.currentNum + "/" + challenge.targetNum + ")";
     }
@@ -118,6 +120,7 @@ public class ChallengerHandler : SerializedMonoBehaviour {
         check.SetActive(true);
         textShadowGlowAdd.sprite = textShadowGlow.sprite = textShadow.sprite = textShadowImages[1];
         textShadowGlow.gameObject.SetActive(true);
+        if(challenges.Count == 1) shieldTargetLine.SetActive(false);
         yield return new WaitForSeconds(2.0f);
         if (challenges.Count != 0) {
             challenges.Remove(challenges[0]);
