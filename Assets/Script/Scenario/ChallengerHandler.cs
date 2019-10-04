@@ -13,6 +13,8 @@ public class ChallengerHandler : SerializedMonoBehaviour {
     TextMeshProUGUI text;
     GameObject check;
     Image textShadow;
+    Image textShadowGlow;
+    Image textShadowGlowAdd;
     [SerializeField] Sprite[] textShadowImages;
     IngameEventHandler eventHandler;
     void Start() {
@@ -23,6 +25,8 @@ public class ChallengerHandler : SerializedMonoBehaviour {
         text = challengeUI.transform.Find("Text").GetComponent<TextMeshProUGUI>();
         check = challengeUI.transform.Find("Check/Image").gameObject;
         textShadow = challengeUI.transform.Find("Shadow").GetComponent<Image>();
+        textShadowGlow = challengeUI.transform.Find("ShadowGlow").GetComponent<Image>();
+        textShadowGlowAdd = challengeUI.transform.Find("ShadowGlow").GetComponentInChildren<Image>();
 
         eventHandler = PlayMangement.instance.EventHandler;
     }
@@ -46,6 +50,10 @@ public class ChallengerHandler : SerializedMonoBehaviour {
         eventHandler.AddListener(type, OnEventOccured);
 
         ShowChallenge();
+    }
+
+    private void CloseGlowEffect() {
+        textShadowGlow.gameObject.SetActive(false);
     }
 
     private void OnEventOccured(Enum Event_Type, Component Sender, object Param) {
@@ -74,6 +82,8 @@ public class ChallengerHandler : SerializedMonoBehaviour {
 
         Challenge challenge = challenges[0];
         if (check.activeSelf) check.SetActive(false);
+        textShadowGlowAdd.sprite = textShadowGlow.sprite = textShadow.sprite = textShadowImages[0];
+        Invoke("CloseGlowEffect", 1.5f);
         text.text = challenge.content + "(" + challenge.currentNum + "/" + challenge.targetNum + ")";
     }
 
@@ -106,8 +116,8 @@ public class ChallengerHandler : SerializedMonoBehaviour {
     /// </summary>
     IEnumerator CompleteChallenge() {
         check.SetActive(true);
-        textShadow.sprite = textShadowImages[1];
-
+        textShadowGlowAdd.sprite = textShadowGlow.sprite = textShadow.sprite = textShadowImages[1];
+        textShadowGlow.gameObject.SetActive(true);
         yield return new WaitForSeconds(2.0f);
         if (challenges.Count != 0) {
             challenges.Remove(challenges[0]);
