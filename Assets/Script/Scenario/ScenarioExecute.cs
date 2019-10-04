@@ -520,8 +520,10 @@ public class Enable_EndTurn : ScenarioExecute {
 
     public override void Execute() {
         GameObject endTurn = scenarioMask.GetMaskingObject("button", "endTurn");
+        GameObject handicon = scenarioMask.GetMaskingObject("turn_handicon");
         endTurn.GetComponent<Button>().enabled = true;
-
+        handicon.SetActive(true);
+        
         handler.isDone = true;
     }
 }
@@ -982,6 +984,7 @@ public class Stop_Invoke_NextTurn : ScenarioExecute {
 
     public override void Execute() {
         PlayMangement.instance.gameObject.GetComponent<TurnMachine>().turnStop = true;
+        
         handler.isDone = true;
     }
 }
@@ -991,6 +994,8 @@ public class Proceed_Invoke_NextTurn : ScenarioExecute {
 
     public override void Execute() {
         PlayMangement.instance.gameObject.GetComponent<TurnMachine>().turnStop = false;
+        GameObject handicon = scenarioMask.GetMaskingObject("turn_handicon");
+        handicon.SetActive(false);
         handler.isDone = true;
     }
 }
