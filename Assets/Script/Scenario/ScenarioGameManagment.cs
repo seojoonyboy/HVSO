@@ -6,6 +6,8 @@ using System.Reflection;
 using System;
 using TMPro;
 using UnityEngine.Events;
+using Spine;
+using Spine.Unity;
 
 public class ScenarioGameManagment : PlayMangement {
     public static ChapterData chapterData;
@@ -212,6 +214,19 @@ public class ScenarioGameManagment : PlayMangement {
     //    dataExecute.Execute();     
     //    yield return new WaitUntil(() => dataExecute.handler.isDone == true);
     //}
+
+    public IEnumerator OpponentRanAway() {
+        List<SkeletonAnimation> enemySpineList = new List<SkeletonAnimation>();
+        enemyPlayer.GetComponentsInChildren<SkeletonAnimation>(enemySpineList);
+        for(float alpha = 1f; alpha >= 0f; alpha -= 0.08f) {
+            Color color = new Color(1f,1f,1f, alpha);
+            for(int i = 0; i < enemySpineList.Count; i++) {
+                enemySpineList[i].skeleton.SetColor(color);
+            }
+            yield return new WaitForFixedUpdate();
+        }
+        enemyPlayer.gameObject.SetActive(false);
+    }
 
 
 }

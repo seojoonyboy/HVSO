@@ -1012,3 +1012,12 @@ public class Proceed_DrawHero : ScenarioExecute {
         handler.isDone = true;
     }
 }
+
+public class Fadeout_Enemy : ScenarioExecute {
+    public Fadeout_Enemy() : base() { }
+
+    public override void Execute() {
+        StartCoroutine(ScenarioGameManagment.scenarioInstance.OpponentRanAway());
+        handler.isDone = true;
+    }
+}
