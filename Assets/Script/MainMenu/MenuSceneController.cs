@@ -154,9 +154,35 @@ public class MenuSceneController : MonoBehaviour {
             }
         }
         dictionaryMenu.Find("HumanButton/CardNum").GetComponent<TMPro.TextMeshProUGUI>().text = myHumanCards.ToString() + "/" + humanTotalCards.ToString();
-        dictionaryMenu.Find("HumanButton/NewCard").gameObject.SetActive(AccountManager.Instance.cardPackage.checkHumanCard.Count > 0);
         dictionaryMenu.Find("OrcButton/CardNum").GetComponent<TMPro.TextMeshProUGUI>().text = myOrcCards.ToString() + "/" + orcTotalCards.ToString();
-        dictionaryMenu.Find("OrcButton/NewCard").gameObject.SetActive(AccountManager.Instance.cardPackage.checkOrcCard.Count > 0);
+        SetCardInfoByRarelity();
+    }
+
+    public void SetCardInfoByRarelity() {
+        Transform humanBtn = dictionaryMenu.Find("HumanButton/CardRarityInfo");
+        humanBtn.Find("common/CardNum").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.cardPackage.rarelityHumanCardNum["common"].Count.ToString();
+        humanBtn.Find("uncommon/CardNum").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.cardPackage.rarelityHumanCardNum["uncommon"].Count.ToString();
+        humanBtn.Find("rare/CardNum").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.cardPackage.rarelityHumanCardNum["rare"].Count.ToString();
+        humanBtn.Find("superrare/CardNum").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.cardPackage.rarelityHumanCardNum["superrare"].Count.ToString();
+        humanBtn.Find("legend/CardNum").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.cardPackage.rarelityHumanCardNum["legend"].Count.ToString();
+        humanBtn.Find("common/NewCard").gameObject.SetActive(AccountManager.Instance.cardPackage.rarelityHumanCardCheck["common"].Count > 0);
+        humanBtn.Find("uncommon/NewCard").gameObject.SetActive(AccountManager.Instance.cardPackage.rarelityHumanCardCheck["uncommon"].Count > 0);
+        humanBtn.Find("rare/NewCard").gameObject.SetActive(AccountManager.Instance.cardPackage.rarelityHumanCardCheck["rare"].Count > 0);
+        humanBtn.Find("superrare/NewCard").gameObject.SetActive(AccountManager.Instance.cardPackage.rarelityHumanCardCheck["superrare"].Count > 0);
+        humanBtn.Find("legend/NewCard").gameObject.SetActive(AccountManager.Instance.cardPackage.rarelityHumanCardCheck["legend"].Count > 0);
+        //dictionaryMenu.Find("HumanButton/NewCard").gameObject.SetActive(AccountManager.Instance.cardPackage.checkHumanCard.Count > 0);
+        Transform orcBtn = dictionaryMenu.Find("OrcButton/CardRarityInfo");
+        orcBtn.Find("common/CardNum").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.cardPackage.rarelityOrcCardNum["common"].Count.ToString();
+        orcBtn.Find("uncommon/CardNum").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.cardPackage.rarelityOrcCardNum["uncommon"].Count.ToString();
+        orcBtn.Find("rare/CardNum").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.cardPackage.rarelityOrcCardNum["rare"].Count.ToString();
+        orcBtn.Find("superrare/CardNum").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.cardPackage.rarelityOrcCardNum["superrare"].Count.ToString();
+        orcBtn.Find("legend/CardNum").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.cardPackage.rarelityOrcCardNum["legend"].Count.ToString();
+        orcBtn.Find("common/NewCard").gameObject.SetActive(AccountManager.Instance.cardPackage.rarelityOrcCardCheck["common"].Count > 0);
+        orcBtn.Find("uncommon/NewCard").gameObject.SetActive(AccountManager.Instance.cardPackage.rarelityOrcCardCheck["uncommon"].Count > 0);
+        orcBtn.Find("rare/NewCard").gameObject.SetActive(AccountManager.Instance.cardPackage.rarelityOrcCardCheck["rare"].Count > 0);
+        orcBtn.Find("superrare/NewCard").gameObject.SetActive(AccountManager.Instance.cardPackage.rarelityOrcCardCheck["superrare"].Count > 0);
+        orcBtn.Find("legend/NewCard").gameObject.SetActive(AccountManager.Instance.cardPackage.rarelityOrcCardCheck["legend"].Count > 0);
+        //dictionaryMenu.Find("OrcButton/NewCard").gameObject.SetActive(AccountManager.Instance.cardPackage.checkOrcCard.Count > 0);
     }
 
     IEnumerator UpdateWindow() {

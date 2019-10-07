@@ -63,7 +63,6 @@ public partial class AccountManager : Singleton<AccountManager> {
         cardPackage = Resources.Load("CardDatas/CardDataPackage_01") as CardDataPackage;
         resource = transform.GetComponent<ResourceManager>();
         gameObject.AddComponent<Timer.TimerManager>();
-
         PlayerPrefs.DeleteKey("ReconnectData");
     }
 
@@ -91,7 +90,53 @@ public partial class AccountManager : Singleton<AccountManager> {
         }
     }
 
-    public void SetCardData() {
+    public void SetCardPackage() {
+        if (cardPackage.rarelityHumanCardNum == null && cardPackage.rarelityOrcCardNum == null) {
+            cardPackage.rarelityHumanCardNum = new Dictionary<string, List<string>>();
+            cardPackage.rarelityOrcCardNum = new Dictionary<string, List<string>>();
+            cardPackage.rarelityHumanCardCheck = new Dictionary<string, List<string>>();
+            cardPackage.rarelityOrcCardCheck = new Dictionary<string, List<string>>();
+            cardPackage.rarelityHumanCardNum.Add("common", new List<string>());
+            cardPackage.rarelityHumanCardNum.Add("uncommon", new List<string>());
+            cardPackage.rarelityHumanCardNum.Add("rare", new List<string>());
+            cardPackage.rarelityHumanCardNum.Add("superrare", new List<string>());
+            cardPackage.rarelityHumanCardNum.Add("legend", new List<string>());
+            cardPackage.rarelityOrcCardNum.Add("common", new List<string>());
+            cardPackage.rarelityOrcCardNum.Add("uncommon", new List<string>());
+            cardPackage.rarelityOrcCardNum.Add("rare", new List<string>());
+            cardPackage.rarelityOrcCardNum.Add("superrare", new List<string>());
+            cardPackage.rarelityOrcCardNum.Add("legend", new List<string>());
+            cardPackage.rarelityHumanCardCheck.Add("common", new List<string>());
+            cardPackage.rarelityHumanCardCheck.Add("uncommon", new List<string>());
+            cardPackage.rarelityHumanCardCheck.Add("rare", new List<string>());
+            cardPackage.rarelityHumanCardCheck.Add("superrare", new List<string>());
+            cardPackage.rarelityHumanCardCheck.Add("legend", new List<string>());
+            cardPackage.rarelityOrcCardCheck.Add("common", new List<string>());
+            cardPackage.rarelityOrcCardCheck.Add("uncommon", new List<string>());
+            cardPackage.rarelityOrcCardCheck.Add("rare", new List<string>());
+            cardPackage.rarelityOrcCardCheck.Add("superrare", new List<string>());
+            cardPackage.rarelityOrcCardCheck.Add("legend", new List<string>());
+        }
+
+        foreach (CardInventory card in myCards) {
+            if (cardPackage.data.ContainsKey(card.cardId)) {
+                if (card.camp == "human") {
+                    if (!cardPackage.rarelityHumanCardNum[card.rarelity].Contains(card.cardId))
+                        cardPackage.rarelityHumanCardNum[card.rarelity].Add(card.cardId);
+                    if (cardPackage.checkHumanCard.Contains(card.cardId))
+                        cardPackage.rarelityHumanCardCheck[card.rarelity].Add(card.cardId);
+                }
+                else {
+                    if (!cardPackage.rarelityOrcCardNum[card.rarelity].Contains(card.cardId))
+                        cardPackage.rarelityOrcCardNum[card.rarelity].Add(card.cardId);
+                    if (cardPackage.checkOrcCard.Contains(card.cardId))
+                        cardPackage.rarelityOrcCardCheck[card.rarelity].Add(card.cardId);
+                }
+            }
+        }
+    }
+
+    public void SetCardData() {        
         foreach (CardInventory card in myCards) {
             if (!cardPackage.data.ContainsKey(card.cardId)) {
                 CardData data = new CardData();
@@ -153,6 +198,7 @@ public partial class AccountManager : Singleton<AccountManager> {
                 }
             }
         }
+        SetCardPackage();
         OnCardLoadFinished.Invoke();
     }
 

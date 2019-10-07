@@ -12,4 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 084b603658e201847903b0b83bec6460, type: 3}
   m_Name: CardDataPackage_01
   m_EditorClassIdentifier: 
-  ClientVersion: 
+  deviceId: 
+  checkHumanCard: []
+  checkOrcCard: []
