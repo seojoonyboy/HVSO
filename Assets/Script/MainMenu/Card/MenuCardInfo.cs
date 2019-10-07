@@ -255,6 +255,11 @@ public class MenuCardInfo : MonoBehaviour {
         if (cardCreate) return;
         cardCreate = true;
         accountManager.RequestCardBreak(cardId, WaitRequest);
+        string rarelity = accountManager.cardPackage.data[cardId].rarelity;
+        if (accountManager.cardPackage.data[cardId].camp == "human")
+            accountManager.cardPackage.rarelityHumanCardNum[rarelity].Remove(cardId);
+        else
+            accountManager.cardPackage.rarelityOrcCardNum[rarelity].Remove(cardId);
         accountManager.cardPackage.data.Remove(cardId);
     }
 

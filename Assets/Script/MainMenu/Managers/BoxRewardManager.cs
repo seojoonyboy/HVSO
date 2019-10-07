@@ -25,7 +25,7 @@ public class BoxRewardManager : MonoBehaviour
     NetworkManager networkManager;
 
     public UnityEvent OnBoxLoadFinished = new UnityEvent();
-
+    static bool openningBox;
     void Awake() {
         accountManager = AccountManager.Instance;
         hudCanvas = transform.parent;
@@ -50,7 +50,9 @@ public class BoxRewardManager : MonoBehaviour
     }
 
     public void OpenBox() {
+        if (openningBox) return;
         if (AccountManager.Instance.userResource.supplyBox <= 0) return;
+        openningBox = true;
         WaitReward();
     }
 
@@ -135,6 +137,7 @@ public class BoxRewardManager : MonoBehaviour
         for (int i = 0; i < 4; i++)
             effects.GetChild(i).gameObject.SetActive(false);
         SetBoxObj();
+        openningBox = false;
     }
 
     public void SetRewards(RewardClass[] rewardList) {
@@ -217,14 +220,17 @@ public class BoxRewardManager : MonoBehaviour
     }
 
     void CheckNewCardList(string cardId) {
-        if (accountManager.allCardsDic[cardId].camp == "human") {
+        CollectionCard cardData = accountManager.allCardsDic[cardId];
+        if (cardData.camp == "human") {
             if (!accountManager.cardPackage.checkHumanCard.Contains(cardId)) {
                 accountManager.cardPackage.checkHumanCard.Add(cardId);
+                accountManager.cardPackage.rarelityHumanCardCheck[cardData.rarelity].Add(cardId);
             }
         }
         else{
             if (!accountManager.cardPackage.checkOrcCard.Contains(cardId)) {
                 accountManager.cardPackage.checkOrcCard.Add(cardId);
+                accountManager.cardPackage.rarelityOrcCardCheck[cardData.rarelity].Add(cardId);
             }
         }
         menuSceneController.SetCardNumbersPerDic();

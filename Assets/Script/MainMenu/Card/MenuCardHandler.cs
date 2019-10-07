@@ -167,10 +167,14 @@ public class MenuCardHandler : MonoBehaviour {
         menuCardInfo.transform.parent.gameObject.SetActive(true);
         menuCardInfo.gameObject.SetActive(true);
         if(gameObject.name == "DictionaryCard" && transform.Find("NewCard").gameObject.activeSelf) {
-            if(isHuman)
+            if (isHuman) {
                 AccountManager.Instance.cardPackage.checkHumanCard.Remove(cardID);
-            else
+                AccountManager.Instance.cardPackage.rarelityHumanCardCheck[AccountManager.Instance.cardPackage.data[cardID].rarelity].Remove(cardID);
+            }
+            else {
                 AccountManager.Instance.cardPackage.checkOrcCard.Remove(cardID);
+                AccountManager.Instance.cardPackage.rarelityOrcCardCheck[AccountManager.Instance.cardPackage.data[cardID].rarelity].Remove(cardID);
+            }
             transform.Find("NewCard").gameObject.SetActive(false);
         }
         if (transform.parent.name == "Grid")
