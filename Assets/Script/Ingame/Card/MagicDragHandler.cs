@@ -136,10 +136,19 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
                         transform.parent.parent.Find("HeroCardGuide").gameObject.SetActive(true);
                     }
                     showCardsHandler.CancelSelecting();
+                    gameObject.transform.Find("drag").gameObject.SetActive(true);
                     SendEvent();
                 }
-                else
+                else {
+                    if (ScenarioGameManagment.scenarioInstance == null) {
+                        IngameTimer timer = isPlayer ? PlayMangement.instance.player.GetComponent<IngameTimer>() : PlayMangement.instance.enemyPlayer.GetComponent<IngameTimer>();
+                        timer.OnTimeout.RemoveListener(PlayMangement.instance.showCardsHandler.TimeoutShowCards);
+                        timer.EndTimer();
+                    }
+
                     ForceToHandHeroCards();
+                }
+                    
             }
             else {
                 CheckLocation(true);
@@ -160,7 +169,12 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
                     skillHandler.highlight = highlightedSlot; 
                     if(!skillHandler.TargetSelectExist()) skillHandler.SendSocket();
                     StartCoroutine(UseSkillCard(parms));
-                    //if (GetComponents<Ability>() == null) UseCard();
+
+                    if (ScenarioGameManagment.scenarioInstance == null) {
+                        IngameTimer timer = isPlayer ? PlayMangement.instance.player.GetComponent<IngameTimer>() : PlayMangement.instance.enemyPlayer.GetComponent<IngameTimer>();
+                        timer.OnTimeout.RemoveListener(PlayMangement.instance.showCardsHandler.TimeoutShowCards);
+                        timer.EndTimer();
+                    }
                 }
                 else {
                     highlighted = false;
@@ -187,12 +201,6 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
             CardInfoOnDrag.instance.OffCardDragInfo();
             if (pass == false)
                 PlayMangement.instance.player.ConsumeShieldStack();
-
-            if (ScenarioGameManagment.scenarioInstance == null && cardUsed) {
-                IngameTimer timer = isPlayer ? PlayMangement.instance.player.GetComponent<IngameTimer>() : PlayMangement.instance.enemyPlayer.GetComponent<IngameTimer>();
-                timer.OnTimeout.RemoveListener(PlayMangement.instance.showCardsHandler.TimeoutShowCards);
-                timer.EndTimer();
-            }
             return;
         }
         if (firstDraw) return;

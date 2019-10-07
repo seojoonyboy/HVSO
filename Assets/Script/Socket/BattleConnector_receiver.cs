@@ -285,14 +285,14 @@ public partial class BattleConnector : MonoBehaviour {
         if (camp == "human") {
             if (!isHuman) {
                 ingameTimer = PlayMangement.instance.enemyPlayer.GetComponent<IngameTimer>();
-                ingameTimer.PauseTimer(15);
+                ingameTimer.PauseTimer(20);
             }
         }
         //orc 실드 발동
         else {
             if (isHuman) {
                 ingameTimer = PlayMangement.instance.enemyPlayer.GetComponent<IngameTimer>();
-                ingameTimer.PauseTimer(15);
+                ingameTimer.PauseTimer(20);
             }
         }
     }
