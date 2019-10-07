@@ -50,6 +50,16 @@ namespace TargetModules {
                 .transform;
         }
 
+        protected Transform GetDropAreaCharacter() {
+            var highlightedSlot = GetComponent<CardHandler>().highlightedSlot;
+            if (highlightedSlot.GetComponentInParent<PlaceMonster>() != null) {
+                return GetDropAreaUnit();
+            }
+            else {
+                return highlightedSlot.GetComponentInParent<PlayerController>().transform;
+            }
+        }
+
         protected int GetDropLine() {
             Transform highlightedSlot = GetComponent<CardHandler>().highlightedSlot;
             int col = highlightedSlot.parent.GetSiblingIndex();
@@ -273,6 +283,9 @@ namespace TargetModules {
                             result.Add(target);
                         }
                     }
+                    else if(args[1] == "character") {
+                        result.Add(GetDropAreaCharacter().gameObject);
+                    }
                     else if(args[1] == "all") {
                         var targets = observer.GetAllFieldUnits(isHuman);
                         foreach (GameObject target in targets) {
@@ -290,6 +303,9 @@ namespace TargetModules {
                         foreach(GameObject target in targets) {
                             result.Add(target);
                         }
+                    }
+                    else if(args[1] == "character") {
+                        result.Add(GetDropAreaCharacter().gameObject);
                     }
                     else if (args[1] == "all") {
                         var targets = observer.GetAllFieldUnits(!isHuman);

@@ -127,15 +127,22 @@ public class PlayerController : MonoBehaviour
         hero.transform.SetAsLastSibling();
         heroSpine = hero.GetComponent<HeroSpine>();
 
-        if (isPlayer == true) {
+        if (isPlayer) {
             float reverse = hero.transform.localScale.x * -1f;
             hero.transform.localScale = new Vector3(reverse, hero.transform.localScale.y, hero.transform.localScale.z);
             heroSpine.GetComponent<MeshRenderer>().sortingOrder = 19;
             hero.transform.localPosition = new Vector3(0, 1, 0);
             hero.transform.localScale = new Vector3(-1, 1, 1);
+
+            transform.Find("MagicTargetTrigger").localPosition = new Vector3(0, 3.81f, 0);
+            transform.Find("ClickableUI").localPosition = new Vector3(0, 3.02f, 0);
         }
-        else
+        else {
+            transform.Find("MagicTargetTrigger").localPosition = new Vector3(0, 2.55f, 0);
+            transform.Find("ClickableUI").localPosition = new Vector3(0, 2.07f, 0);
+
             heroSpine.GetComponent<MeshRenderer>().sortingOrder = 7;
+        }
     }
     
     private void SetParticleSize(ParticleSystem particle) {

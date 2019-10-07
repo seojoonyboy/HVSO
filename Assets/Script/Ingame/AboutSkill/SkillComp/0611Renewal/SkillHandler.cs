@@ -276,6 +276,31 @@ namespace SkillModules {
                     isOrc = (skill.targetCamp().CompareTo("my") == 0) != isPlayerHuman;
                     args.Add(isOrc ? "orc" : "human");
                 break;
+                case "character":
+                    if(highlight != null) {
+                        var result = highlight.GetComponentInParent<PlaceMonster>();
+                        bool isUnit = true;
+                        if(result == null) {
+                            if(result.GetComponent<PlayerController>() != null) {
+                                isUnit = false;
+                            }
+                        }
+                        if (isUnit) {
+                            if (isSelect) monster = selectList[0].GetComponent<PlaceMonster>();
+                            else monster = GetDropAreaUnit();
+                            unitItemId = monster.itemId;
+                            args.Add(unitItemId.ToString());
+                            isOrc = monster.isPlayer != isPlayerHuman;
+                            args.Add(isOrc ? "orc" : "human");
+                        }
+                        else {
+                            args.Add("hero");
+
+                            isOrc = (skill.targetCamp().CompareTo("my") == 0) != isPlayerHuman;
+                            args.Add(isOrc ? "orc" : "human");
+                        }
+                    }
+                    break;
             }
             arguments.args = args.ToArray();
             return arguments;

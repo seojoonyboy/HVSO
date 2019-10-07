@@ -9,7 +9,7 @@ public partial class CardDropManager : Singleton<CardDropManager> {
     protected Transform[] slotLine;
     public Transform[][] unitLine;
     public Transform[][] enemyUnitLine;
-
+    public Transform playerHero, enemyHero;
     public void SetUnitDropPos() {
         slotLine = new Transform[5];
         Transform mapSlotLines = PlayMangement.instance.backGround.transform;
@@ -29,6 +29,8 @@ public partial class CardDropManager : Singleton<CardDropManager> {
                 enemyUnitLine[i][j] = unitSlotLines.parent.GetChild(1).GetChild(j).GetChild(i);
             }
         }
+        playerHero = PlayMangement.instance.player.transform;
+        enemyHero = PlayMangement.instance.enemyPlayer.transform;
     }
 }
 
@@ -448,6 +450,28 @@ public partial class CardDropManager {
                     }
                 }
                 break;
+            case "character":
+                for (int i = 0; i < 5; i++) {
+                    for (int j = 0; j < 2; j++) {
+                        if (dragFiltering != null) {
+                            if (units[i][j].childCount == 0) continue;
+                            if (!dragFiltering(units[i][j].GetChild(0).gameObject)) continue;
+                        }
+                        if (units[i][j].childCount > 0 && units[i][j].GetChild(0).GetComponent<ambush>() == null) {
+                            units[i][j].GetChild(0).Find("ClickableUI").gameObject.SetActive(true);
+                            units[i][j].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(true);
+                        }
+                    }
+                }
+                if(magicArgs == "enemy") {
+                    enemyHero.Find("MagicTargetTrigger").gameObject.SetActive(true);
+                    enemyHero.Find("ClickableUI").gameObject.SetActive(true);
+                }
+                else if(magicArgs == "my") {
+                    playerHero.Find("MagicTargetTrigger").gameObject.SetActive(true);
+                    playerHero.Find("ClickableUI").gameObject.SetActive(true);
+                }
+                break;
             default:
             case "all":
                 if (CheckConditionToUse(conditionChecker, group)) {
@@ -534,6 +558,24 @@ public partial class CardDropManager {
                     if(args != null)
                         slotLine[i].Find("BattleLineEffect").gameObject.SetActive(false);
 
+                }
+                break;
+            case "character":
+                for (int i = 0; i < 5; i++) {
+                    for (int j = 0; j < 2; j++) {
+                        if (units[i][j].childCount > 0) {
+                            units[i][j].GetChild(0).Find("ClickableUI").gameObject.SetActive(false);
+                            units[i][j].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(false);
+                        }
+                    }
+                }
+                if(magicArgs == "my") {
+                    playerHero.Find("MagicTargetTrigger").gameObject.SetActive(false);
+                    playerHero.Find("ClickableUI").gameObject.SetActive(false);
+                }
+                else if(magicArgs == "enemy") {
+                    enemyHero.Find("MagicTargetTrigger").gameObject.SetActive(false);
+                    enemyHero.Find("ClickableUI").gameObject.SetActive(false);
                 }
                 break;
             default:
