@@ -3,12 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UI.Extensions;
 
 public class HeroSelectController : MonoBehaviour
 {
     [SerializeField] TemplateMenu templateDeckCanvas;
     [SerializeField] HUDController hudController;
     [SerializeField] DeckSettingManager deckSettingManager;
+    [SerializeField] HorizontalScrollSnap humanHeroScroll;
+    [SerializeField] HorizontalScrollSnap orcHeroScroll;
+
     public string selectedHeroId;
     bool isHuman;
     public void SetHumanHeroes() {
@@ -18,7 +22,8 @@ public class HeroSelectController : MonoBehaviour
         transform.Find("InnerCanvas/HeroSpines/HumanSpines").gameObject.SetActive(true);
         transform.Find("InnerCanvas/HeroSpines/OrcSpines").gameObject.SetActive(false);
         isHuman = true;
-        SetHeroInfo("h10001");
+        humanHeroScroll.GoToScreen(0);
+        SetHeroInfo(0, true);
         OpenClassInfo();
     }
 
@@ -29,11 +34,17 @@ public class HeroSelectController : MonoBehaviour
         transform.Find("InnerCanvas/HeroSpines/HumanSpines").gameObject.SetActive(false);
         transform.Find("InnerCanvas/HeroSpines/OrcSpines").gameObject.SetActive(true);
         isHuman = false;
-        SetHeroInfo("h10002");
+        orcHeroScroll.GoToScreen(0);        
+        SetHeroInfo(0, false);
         OpenClassInfo();
     }
 
-    public void SetHeroInfo(string heroId) {
+    public void SetHeroInfo(int heroIndex, bool isHuman) {
+        string heroId;
+        if (isHuman)
+            heroId = humanHeroScroll.transform.GetChild(0).GetChild(heroIndex).name;
+        else
+            heroId = orcHeroScroll.transform.GetChild(0).GetChild(heroIndex).name;
         HeroInventory heroData = AccountManager.Instance.myHeroInventories[heroId];
         selectedHeroId = heroId;
 
@@ -85,5 +96,12 @@ public class HeroSelectController : MonoBehaviour
         transform.Find("InnerCanvas/HeroInfo/ClassBtn/UnSelected").gameObject.SetActive(true);
         transform.Find("InnerCanvas/HeroInfo/SkillWindow").gameObject.SetActive(true);
         transform.Find("InnerCanvas/HeroInfo/SkillBtn/UnSelected").gameObject.SetActive(false);
+    }
+
+    public void ScrollHeros(bool isHuman) {
+        if (isHuman)
+            SetHeroInfo(humanHeroScroll.CurrentPage, true);
+        else
+            SetHeroInfo(orcHeroScroll.CurrentPage, false);
     }
 }
