@@ -255,15 +255,15 @@ namespace SkillModules {
                         if(monster == null) {
                             if (selectList[0].GetComponentInParent<PlayerController>() != null) {
                                 isOrc = (skill.targetCamp().CompareTo("my") == 0) != isPlayerHuman;
+                                arguments.method = "hero";
                                 args.Add(isOrc ? "orc" : "human");
-
-                                args.Add("hero");
                             }
                         }
                         //타겟이 유닛
                         else {
                             monster = GetDropAreaUnit();
                             unitItemId = monster.itemId;
+                            arguments.method = "unit";
                             args.Add(unitItemId.ToString());
                             isOrc = monster.isPlayer != isPlayerHuman;
                             args.Add(isOrc ? "orc" : "human");
@@ -276,9 +276,8 @@ namespace SkillModules {
                         if (monster == null) {
                             if (highlight.GetComponentInParent<PlayerController>() != null) {
                                 isOrc = (skill.targetCamp().CompareTo("my") == 0) != isPlayerHuman;
+                                arguments.method = "hero";
                                 args.Add(isOrc ? "orc" : "human");
-
-                                args.Add("hero");
                             }
                         }
                         //타겟이 유닛
@@ -286,6 +285,7 @@ namespace SkillModules {
                             monster = GetDropAreaUnit();
                             unitItemId = monster.itemId;
                             args.Add(unitItemId.ToString());
+                            arguments.method = "unit";
                             isOrc = monster.isPlayer != isPlayerHuman;
                             args.Add(isOrc ? "orc" : "human");
                         }
