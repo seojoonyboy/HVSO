@@ -271,8 +271,8 @@ public class EditCardHandler : MonoBehaviour {
         else
             cardObject = transform;
         cardObject.gameObject.SetActive(true);
-        if (cardData.rarelity == "legend")
-            cardObject.SetAsFirstSibling();
+        //if (cardData.rarelity == "legend")
+        //    cardObject.SetAsFirstSibling();
         Sprite portraitImage = null;
         if (AccountManager.Instance.resource.cardPortraite.ContainsKey(cardID)) portraitImage = AccountManager.Instance.resource.cardPortraite[cardID];
         else portraitImage = AccountManager.Instance.resource.cardPortraite["default"];

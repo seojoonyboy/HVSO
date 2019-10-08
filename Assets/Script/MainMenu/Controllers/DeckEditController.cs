@@ -299,6 +299,7 @@ public class DeckEditController : MonoBehaviour
         for (int i = 0; i < heroSpines.childCount; i++) 
             heroSpines.GetChild(i).gameObject.SetActive(false);
         heroSpines.Find(heroId).gameObject.SetActive(true);
+        heroInfoWindow.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.name;
 
         if (isHuman) {
             heroInfoWindow.Find("BackGroundImage/Human").gameObject.SetActive(true);
@@ -390,6 +391,7 @@ public class DeckEditController : MonoBehaviour
         for (int i = 0; i < heroSpines.childCount; i++)
             heroSpines.GetChild(i).gameObject.SetActive(false);
         heroSpines.Find(loadedDeck.heroId).gameObject.SetActive(true);
+        heroInfoWindow.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.myHeroInventories[loadedDeck.heroId].name;
 
         if (isHuman) {
             heroInfoWindow.Find("BackGroundImage/Human").gameObject.SetActive(true);

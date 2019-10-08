@@ -99,16 +99,22 @@ public class ScenarioGameManagment : PlayMangement {
     }
 
     public void SkipTutorial() {
-        if (GetComponent<ScenarioExecuteHandler>().sets.Count > 0) {
-            foreach (var exec in GetComponent<ScenarioExecuteHandler>().sets) { Destroy(exec); }
-        }
-        chapterQueue.Clear();
-        canBattleProceed = true;
-        stopEnemySummon = false;
-        forcedSummonAt = -1;
-        beginStopTurn = false;
-        afterStopTurn = false;
-        ScenarioMask.Instance.DisableMask();
+        Modal.instantiate("정말 튜토리얼을 스킵하시겠습니까?", Modal.Type.YESNO, () => {
+            if (GetComponent<ScenarioExecuteHandler>().sets.Count > 0) {
+                foreach (var exec in GetComponent<ScenarioExecuteHandler>().sets) { Destroy(exec); }
+            }
+            chapterQueue.Clear();
+            canBattleProceed = true;
+            stopEnemySummon = false;
+            forcedSummonAt = -1;
+            beginStopTurn = false;
+            afterStopTurn = false;
+            ScenarioMask.Instance.DisableMask();
+
+            SocketHandler.TutorialEnd();
+
+            FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
+        });
     }
 
 

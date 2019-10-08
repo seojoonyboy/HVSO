@@ -332,25 +332,23 @@ public class CardDictionaryManager : MonoBehaviour {
         }
 
         int count = 0;
-
-        List<dataModules.Templates> selectedTemplates;
-        if (isHumanDictionary) 
-            selectedTemplates = AccountManager.Instance.humanTemplates;
-        else 
-            selectedTemplates = AccountManager.Instance.orcTemplates;
-
-        foreach (dataModules.Templates card in selectedTemplates) {
+        
+        foreach (dataModules.HeroInventory heroes in AccountManager.Instance.allHeroes) {
+            if (heroes.camp == "human" && !isHumanDictionary) continue;
+            if (heroes.camp == "orc" && isHumanDictionary) continue;
             Transform hero = heroCards.GetChild(count);
             hero.gameObject.SetActive(true);
-            hero.GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[card.id + "_button"];
-            bool haveHero = AccountManager.Instance.myHeroInventories.ContainsKey(card.id);
+            hero.GetComponent<Button>().onClick.AddListener(() => OpenHeroInfoWIndow(heroes.id));
+            hero.GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[heroes.id + "_button"];
+            bool haveHero = AccountManager.Instance.myHeroInventories.ContainsKey(heroes.id);
             hero.Find("HeroLevel").gameObject.SetActive(haveHero);
             hero.Find("Empty").gameObject.SetActive(!haveHero);
+            count++;
         }
     }
 
-    public void OpenHeroInfoWIndow(int index) {
-        SetHeroInfoWindow(index);
+    public void OpenHeroInfoWIndow(string heroId) {
+        SetHeroInfoWindow(heroId);
         heroInfoWindow.parent.gameObject.SetActive(true);
         heroInfoWindow.gameObject.SetActive(true);
     }
@@ -359,19 +357,29 @@ public class CardDictionaryManager : MonoBehaviour {
         heroInfoWindow.gameObject.SetActive(false);
     }
 
-    public void SetHeroInfoWindow(int index) {
-        dataModules.Templates hero;
+    public void SetHeroInfoWindow(string heroId) {
+        dataModules.Templates hero = new dataModules.Templates();
         Transform heroCards;
         if (isHumanDictionary) {
             heroInfoWindow.Find("HeroCards/Orc").gameObject.SetActive(false);
             heroCards = heroInfoWindow.Find("HeroCards/Human");
-            hero = AccountManager.Instance.humanTemplates[index];
+            foreach (dataModules.Templates heroes in AccountManager.Instance.humanTemplates) {
+                if (heroes.id == heroId) {
+                    hero = heroes;
+                    break;
+                }
+            }
             //heroInfoWindow.Find("Ribon").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["hero_name_human_superrare"];
         }
         else {
             heroInfoWindow.Find("HeroCards/Human").gameObject.SetActive(false);
             heroCards = heroInfoWindow.Find("HeroCards/Orc");
-            hero = AccountManager.Instance.orcTemplates[index];
+            foreach (dataModules.Templates heroes in AccountManager.Instance.orcTemplates) {
+                if (heroes.id == heroId) {
+                    hero = heroes;
+                    break;
+                }
+            }
             //heroInfoWindow.Find("Ribon").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["hero_name_orc_superrare"];
         }
         heroInfoWindow.Find("BackGroundImage/Human").gameObject.SetActive(isHumanDictionary);
