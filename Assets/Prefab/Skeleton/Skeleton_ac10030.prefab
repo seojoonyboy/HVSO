@@ -264,8 +264,8 @@ MonoBehaviour:
     materialsInsideMask: []
     materialsOutsideMask: []
   disableRenderingOnOverride: 1
-  _animationName: IDLE
-  loop: 1
+  _animationName: APPEAR
+  loop: 0
   timeScale: 1
 --- !u!114 &4157281011413468449
 MonoBehaviour:
@@ -288,8 +288,8 @@ MonoBehaviour:
   rangeDownAttackName: 
   generalAttackName: ATTACK
   deClockAnimationName: 
-  attackEventName: ATTACK
-  arrow: {fileID: 0}
+  attackEventName: SHOT
+  arrow: {fileID: 8366574016604891916, guid: 490182c9a4d608142b1dd4faf0a4b091, type: 3}
   hidingObject: {fileID: 0}
   teleportMove: 0
   headbone: {fileID: 0}
