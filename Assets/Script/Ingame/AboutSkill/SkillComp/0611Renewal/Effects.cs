@@ -423,8 +423,8 @@ namespace SkillModules {
             List<SocketFormat.Unit> socketList = state.map.allMonster;
             List<GameObject> enemyList = observer.GetAllFieldUnits(!playMangement.player.isHuman);
             List<GameObject> targets = new List<GameObject>();
-            string cardId = (string)args[0];
-            int amount = (int)args[1];
+            int amount = 0;
+            int.TryParse((string)args[0], out amount);
             
             foreach(GameObject enemy in enemyList) {
                 PlaceMonster monData = enemy.GetComponent<PlaceMonster>();
