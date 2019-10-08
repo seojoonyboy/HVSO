@@ -532,7 +532,7 @@ public partial class AccountManager {
         request.MethodType = HTTPMethods.Get;
         request.AddHeader("authorization", TokenFormat);
 
-        networkManager.Request(request, callback, "Human 템플릿을 불러오는중...");
+        networkManager.Request(request, callback, "orc 템플릿을 불러오는중...");
     }
 
     public void RequestInventories(OnRequestFinishedDelegate callback = null) {
