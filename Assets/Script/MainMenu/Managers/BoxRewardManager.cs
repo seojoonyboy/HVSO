@@ -61,8 +61,8 @@ public class BoxRewardManager : MonoBehaviour
         
         boxSpine.Initialize(true);
         boxSpine.Update(0);
-        boxSpine.AnimationState.SetAnimation(0, "01.start", false);
-        boxSpine.AnimationState.AddAnimation(1, "02.idle", true, 0.5f);
+        boxSpine.AnimationState.SetAnimation(0, "01.START", false);
+        boxSpine.AnimationState.AddAnimation(1, "02.IDLE", true, 0.5f);
     }
     
 
@@ -85,7 +85,7 @@ public class BoxRewardManager : MonoBehaviour
     public void GetResult() {
         transform.Find("OpenBox").gameObject.SetActive(true);
         transform.Find("ShowBox/Text").gameObject.SetActive(false);
-        boxSpine.AnimationState.SetAnimation(2, "03.open", false);
+        boxSpine.AnimationState.SetAnimation(2, "03.TOUCH", false);
         StartCoroutine(ShowRewards());
     }
 
