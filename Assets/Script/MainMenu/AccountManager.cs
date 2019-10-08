@@ -29,6 +29,8 @@ public partial class AccountManager : Singleton<AccountManager> {
     public List<Templates> orcTemplates;
 
     public List<CollectionCard> allCards { get; private set; }
+    public List<HeroInventory> allHeroes { get; private set; }
+
     public Dictionary<string, CollectionCard> allCardsDic { get; private set; }
 
     public Dictionary<string, HeroInventory> myHeroInventories;
@@ -612,11 +614,33 @@ public partial class AccountManager {
         networkManager.Request(request, OnReceivedLoadAllCards, "모든 카드 정보를 불러오는중...");
     }
 
+    public void LoadAllHeroes() {
+        StringBuilder sb = new StringBuilder();
+        sb
+            .Append(networkManager.baseUrl)
+            .Append("api/heroes");
+
+        HTTPRequest request = new HTTPRequest(
+            new Uri(sb.ToString())
+        );
+
+        request.MethodType = HTTPMethods.Get;
+        networkManager.Request(request, OnReceivedLoadAllHeroes, "모든 카드 정보를 불러오는중...");
+    }
+
     private void OnReceivedLoadAllCards(HTTPRequest originalRequest, HTTPResponse response) {
         if (response != null && response.IsSuccess) {
             var result = dataModules.JsonReader.Read<List<CollectionCard>>(response.DataAsText);
             allCards = result;
             allCardsDic = allCards.ToDictionary(x => x.id, x => x);
+            //OnCardLoadFinished.Invoke();
+        }
+    }
+
+    private void OnReceivedLoadAllHeroes(HTTPRequest originalRequest, HTTPResponse response) {
+        if (response != null && response.IsSuccess) {
+            var result = dataModules.JsonReader.Read<List<HeroInventory>>(response.DataAsText);
+            allHeroes = result;
             //OnCardLoadFinished.Invoke();
         }
     }
