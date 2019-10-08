@@ -5,106 +5,106 @@ format: RGBA8888
 filter: Linear,Linear
 repeat: none
 body_1
-  rotate: false
-  xy: 514, 147
+  rotate: true
+  xy: 119, 77
   size: 179, 109
   orig: 179, 109
   offset: 0, 0
   index: -1
 body_2
-  rotate: false
-  xy: 693, 154
+  rotate: true
+  xy: 228, 91
   size: 165, 102
   orig: 165, 102
   offset: 0, 0
   index: -1
 body_3
-  rotate: false
-  xy: 858, 159
+  rotate: true
+  xy: 330, 98
   size: 158, 97
   orig: 158, 97
   offset: 0, 0
   index: -1
 ground_1
   rotate: false
-  xy: 0, 175
+  xy: 228, 10
   size: 330, 81
   orig: 330, 81
   offset: 0, 0
   index: -1
 ground_2
   rotate: false
-  xy: 0, 101
+  xy: 581, 182
   size: 322, 74
   orig: 322, 74
   offset: 0, 0
   index: -1
 ground_3
   rotate: false
-  xy: 0, 0
+  xy: 558, 0
   size: 258, 101
   orig: 258, 101
   offset: 0, 0
   index: -1
 head
-  rotate: false
-  xy: 330, 137
+  rotate: true
+  xy: 0, 72
   size: 184, 119
   orig: 184, 119
   offset: 0, 0
   index: -1
 teeth_1
-  rotate: true
-  xy: 398, 103
+  rotate: false
+  xy: 0, 12
   size: 34, 60
   orig: 34, 60
   offset: 0, 0
   index: -1
 teeth_2
-  rotate: true
-  xy: 458, 103
+  rotate: false
+  xy: 34, 12
   size: 34, 60
   orig: 34, 60
   offset: 0, 0
   index: -1
 teeth_3
-  rotate: true
-  xy: 518, 114
+  rotate: false
+  xy: 68, 15
   size: 33, 57
   orig: 33, 57
   offset: 0, 0
   index: -1
 teeth_4
-  rotate: true
-  xy: 630, 116
+  rotate: false
+  xy: 581, 129
   size: 31, 53
   orig: 31, 53
   offset: 0, 0
   index: -1
 teeth_5
-  rotate: true
-  xy: 575, 114
+  rotate: false
+  xy: 101, 17
   size: 33, 55
   orig: 33, 55
   offset: 0, 0
   index: -1
 teeth_6
   rotate: false
-  xy: 258, 25
+  xy: 134, 1
   size: 47, 76
   orig: 47, 76
   offset: 0, 0
   index: -1
 teeth_7
-  rotate: true
-  xy: 322, 90
+  rotate: false
+  xy: 181, 1
   size: 47, 76
   orig: 47, 76
   offset: 0, 0
   index: -1
 weapon
-  rotate: false
-  xy: 693, 0
+  rotate: true
+  xy: 427, 101
   size: 155, 154
   orig: 155, 154
   offset: 0, 0
