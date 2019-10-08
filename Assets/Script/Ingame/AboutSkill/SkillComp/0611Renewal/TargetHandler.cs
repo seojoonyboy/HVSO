@@ -258,9 +258,6 @@ namespace TargetModules {
         }
 
         private List<GameObject> GetTarget(bool isPlayer, string[] args) {
-            FieldUnitsObserver playerObserver, enemyObserver;
-            var playManagement = PlayMangement.instance;
-
             var observer = PlayMangement.instance.UnitsObserver;
             bool isHuman = PlayMangement.instance.player.isHuman;
             isHuman = isPlayer ? isHuman : !isHuman;
@@ -273,20 +270,24 @@ namespace TargetModules {
 
             switch (args[0]) {
                 case "my":
-                    if (args[1] == "unit") {
-                        result.Add(GetDropAreaUnit().gameObject);
+                    if (args[1].Contains("unit")) {
+                        if (args[1].Contains("hero")) {
+                            result.Add(GetDropAreaCharacter().gameObject);
+                        }
+                        else {
+                            result.Add(GetDropAreaUnit().gameObject);
+                        }
                     }
-                    else if (args[1] == "line") {
+
+                    else if (args[1].Contains("line")) {
                         int col = GetDropLine();
                         var targets = observer.GetAllFieldUnits(col, isHuman);
                         foreach (GameObject target in targets) {
                             result.Add(target);
                         }
                     }
-                    else if(args[1] == "character") {
-                        result.Add(GetDropAreaCharacter().gameObject);
-                    }
-                    else if(args[1] == "all") {
+
+                    else if (args[1].Contains("all")) {
                         var targets = observer.GetAllFieldUnits(isHuman);
                         foreach (GameObject target in targets) {
                             result.Add(target);
@@ -294,20 +295,24 @@ namespace TargetModules {
                     }
                     break;
                 case "enemy":
-                    if (args[1] == "unit") {
-                        result.Add(GetDropAreaUnit().gameObject);
+                    if (args[1].Contains("unit")) {
+                        if (args[1].Contains("hero")) {
+                            result.Add(GetDropAreaCharacter().gameObject);
+                        }
+                        else {
+                            result.Add(GetDropAreaUnit().gameObject);
+                        }
                     }
-                    else if (args[1] == "line") {
+                    
+                    else if (args[1].Contains("line")) {
                         int col = GetDropLine();
                         var targets = observer.GetAllFieldUnits(col, !isHuman);
-                        foreach(GameObject target in targets) {
+                        foreach (GameObject target in targets) {
                             result.Add(target);
                         }
                     }
-                    else if(args[1] == "character") {
-                        result.Add(GetDropAreaCharacter().gameObject);
-                    }
-                    else if (args[1] == "all") {
+
+                    else if (args[1].Contains("all")) {
                         var targets = observer.GetAllFieldUnits(!isHuman);
                         foreach (GameObject target in targets) {
                             result.Add(target);
