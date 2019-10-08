@@ -332,19 +332,15 @@ public class CardDictionaryManager : MonoBehaviour {
         }
 
         int count = 0;
-
-        List<dataModules.Templates> selectedTemplates;
-        if (isHumanDictionary) 
-            selectedTemplates = AccountManager.Instance.humanTemplates;
-        else 
-            selectedTemplates = AccountManager.Instance.orcTemplates;
         
-        foreach (dataModules.Templates card in selectedTemplates) {
+        foreach (dataModules.HeroInventory heroes in AccountManager.Instance.allHeroes) {
+            if (heroes.camp == "human" && !isHumanDictionary) continue;
+            if (heroes.camp == "orc" && isHumanDictionary) continue;
             Transform hero = heroCards.GetChild(count);
             hero.gameObject.SetActive(true);
-            hero.GetComponent<Button>().onClick.AddListener(() => OpenHeroInfoWIndow(card.id));
-            hero.GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[card.id + "_button"];
-            bool haveHero = AccountManager.Instance.myHeroInventories[card.id].userHas;
+            hero.GetComponent<Button>().onClick.AddListener(() => OpenHeroInfoWIndow(heroes.id));
+            hero.GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[heroes.id + "_button"];
+            bool haveHero = AccountManager.Instance.myHeroInventories.ContainsKey(heroes.id);
             hero.Find("HeroLevel").gameObject.SetActive(haveHero);
             hero.Find("Empty").gameObject.SetActive(!haveHero);
             count++;
@@ -367,9 +363,9 @@ public class CardDictionaryManager : MonoBehaviour {
         if (isHumanDictionary) {
             heroInfoWindow.Find("HeroCards/Orc").gameObject.SetActive(false);
             heroCards = heroInfoWindow.Find("HeroCards/Human");
-            foreach (dataModules.Templates heros in AccountManager.Instance.humanTemplates) {
-                if (heros.id == heroId) {
-                    hero = heros;
+            foreach (dataModules.Templates heroes in AccountManager.Instance.humanTemplates) {
+                if (heroes.id == heroId) {
+                    hero = heroes;
                     break;
                 }
             }
@@ -378,9 +374,9 @@ public class CardDictionaryManager : MonoBehaviour {
         else {
             heroInfoWindow.Find("HeroCards/Human").gameObject.SetActive(false);
             heroCards = heroInfoWindow.Find("HeroCards/Orc");
-            foreach (dataModules.Templates heros in AccountManager.Instance.orcTemplates) {
-                if (heros.id == heroId) {
-                    hero = heros;
+            foreach (dataModules.Templates heroes in AccountManager.Instance.orcTemplates) {
+                if (heroes.id == heroId) {
+                    hero = heroes;
                     break;
                 }
             }

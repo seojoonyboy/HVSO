@@ -45,7 +45,13 @@ public class HeroSelectController : MonoBehaviour
             heroId = humanHeroScroll.transform.GetChild(0).GetChild(heroIndex).name;
         else
             heroId = orcHeroScroll.transform.GetChild(0).GetChild(heroIndex).name;
-        HeroInventory heroData = AccountManager.Instance.myHeroInventories[heroId];
+        HeroInventory heroData = new HeroInventory();
+        foreach (dataModules.HeroInventory hero in AccountManager.Instance.allHeroes) {
+            if (hero.id == heroId) {
+                heroData = hero;
+                break;
+            }
+        }
         selectedHeroId = heroId;
 
         Transform classWindow = transform.Find("InnerCanvas/HeroInfo/ClassWindow");
@@ -66,6 +72,7 @@ public class HeroSelectController : MonoBehaviour
         skillWindow.Find("Card2/Card").GetComponent<MenuCardHandler>().DrawCard(heroData.heroCards[1].cardId, isHuman);
         skillWindow.Find("Card2/CardName").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.heroCards[1].name;
         skillWindow.Find("Card2/CardInfo").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.heroCards[1].skills[0].desc;
+        transform.Find("InnerCanvas/OpenTemplateButton").gameObject.SetActive(AccountManager.Instance.myHeroInventories.ContainsKey(heroId));
     }
 
     public void OpenTemplateDeckCanvas() {
