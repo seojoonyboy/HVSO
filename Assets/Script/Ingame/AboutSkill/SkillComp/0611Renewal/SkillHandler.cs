@@ -241,66 +241,88 @@ namespace SkillModules {
             bool isOrc;
             List<GameObject> selectList = skill.GetTargetFromSelect();
             List<string> args = new List<string>();
-            switch(arguments.method) {
-                case "all":
-                    isOrc = (skill.targetCamp().CompareTo("my") == 0) != isPlayerHuman;
-                    args.Add(isOrc ? "orc" : "human");
-                break;
-                case "line":
-                    if(isSelect) args.Add(selectList[0].GetComponent<PlaceMonster>().x.ToString());
-                    else args.Add(GetDropAreaLine().ToString());
-                break;
-                case "unit":
+
+            //타겟이 unit, hero인 경우
+            if (arguments.method.Contains("unit")){
+                if (arguments.method.Contains("hero")) {
+                    //unit인지 hero인지 구분
                     int unitItemId;
                     PlaceMonster monster;
-                    if(isSelect) monster = selectList[0].GetComponent<PlaceMonster>();
-                    else monster = GetDropAreaUnit();
-                    unitItemId = monster.itemId;
-                    args.Add(unitItemId.ToString());
-                    isOrc = monster.isPlayer != isPlayerHuman;
-                    args.Add(isOrc ? "orc" : "human");
-                break;
-                case "place":
-                    int line = selectList[0].transform.GetSiblingIndex();
-                    args.Add(line.ToString());
-                    if (isEndCardPlay) {
-                        isOrc = (((List<GameObject>)skillTarget))[0].GetComponent<PlaceMonster>().isPlayer != isPlayerHuman;
-                    }   
-                    else
-                        isOrc = myObject.GetComponent<PlaceMonster>().isPlayer != isPlayerHuman;
-                    args.Add(isOrc ? "orc" : "human");
-                    //TODO : 협력 몬스터랑 같이 있을 시 앞 뒤 위치 제대로 파악해야함
-                    args.Add("front");
-                break;
-                case "camp":
-                    isOrc = (skill.targetCamp().CompareTo("my") == 0) != isPlayerHuman;
-                    args.Add(isOrc ? "orc" : "human");
-                break;
-                case "character":
-                    if(highlight != null) {
-                        var result = highlight.GetComponentInParent<PlaceMonster>();
-                        bool isUnit = true;
-                        if(result == null) {
-                            if(result.GetComponent<PlayerController>() != null) {
-                                isUnit = false;
+                    //select 스킬인 경우
+                    if (isSelect) {
+                        monster = selectList[0].GetComponent<PlaceMonster>();
+                        //타겟이 영웅?
+                        if(monster == null) {
+                            if (selectList[0].GetComponentInParent<PlayerController>() != null) {
+                                isOrc = (skill.targetCamp().CompareTo("my") == 0) != isPlayerHuman;
+                                args.Add(isOrc ? "orc" : "human");
+
+                                args.Add("hero");
                             }
                         }
-                        if (isUnit) {
-                            if (isSelect) monster = selectList[0].GetComponent<PlaceMonster>();
-                            else monster = GetDropAreaUnit();
+                        //타겟이 유닛
+                        else {
+                            monster = GetDropAreaUnit();
                             unitItemId = monster.itemId;
                             args.Add(unitItemId.ToString());
                             isOrc = monster.isPlayer != isPlayerHuman;
                             args.Add(isOrc ? "orc" : "human");
                         }
-                        else {
-                            args.Add("hero");
+                    }
+                    //select 스킬이 아닌경우
+                    else {
+                        monster = highlight.GetComponentInParent<PlaceMonster>();
+                        //타겟이 영웅?
+                        if (monster == null) {
+                            if (highlight.GetComponentInParent<PlayerController>() != null) {
+                                isOrc = (skill.targetCamp().CompareTo("my") == 0) != isPlayerHuman;
+                                args.Add(isOrc ? "orc" : "human");
 
-                            isOrc = (skill.targetCamp().CompareTo("my") == 0) != isPlayerHuman;
+                                args.Add("hero");
+                            }
+                        }
+                        //타겟이 유닛
+                        else {
+                            monster = GetDropAreaUnit();
+                            unitItemId = monster.itemId;
+                            args.Add(unitItemId.ToString());
+                            isOrc = monster.isPlayer != isPlayerHuman;
                             args.Add(isOrc ? "orc" : "human");
                         }
                     }
-                    break;
+                }
+                else {
+                    int unitItemId;
+                    PlaceMonster monster;
+                    if (isSelect) monster = selectList[0].GetComponent<PlaceMonster>();
+                    else monster = GetDropAreaUnit();
+                    unitItemId = monster.itemId;
+                    args.Add(unitItemId.ToString());
+                    isOrc = monster.isPlayer != isPlayerHuman;
+                    args.Add(isOrc ? "orc" : "human");
+                }
+            }
+            else {
+                if (arguments.method.Contains("all")) {
+                    isOrc = (skill.targetCamp().CompareTo("my") == 0) != isPlayerHuman;
+                    args.Add(isOrc ? "orc" : "human");
+                }
+
+                else if (arguments.method.Contains("line")) {
+                    if (isSelect) args.Add(selectList[0].GetComponent<PlaceMonster>().x.ToString());
+                    else args.Add(GetDropAreaLine().ToString());
+                }
+
+                else if (arguments.method.Contains("place")) {
+                    int line = selectList[0].transform.GetSiblingIndex();
+                    args.Add(line.ToString());
+                    if (isEndCardPlay) {
+                        isOrc = (((List<GameObject>)skillTarget))[0].GetComponent<PlaceMonster>().isPlayer != isPlayerHuman;
+                    }
+                    else
+                        isOrc = myObject.GetComponent<PlaceMonster>().isPlayer != isPlayerHuman;
+                    args.Add(isOrc ? "orc" : "human");
+                }
             }
             arguments.args = args.ToArray();
             return arguments;

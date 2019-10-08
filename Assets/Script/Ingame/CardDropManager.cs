@@ -419,69 +419,61 @@ public partial class CardDropManager {
     }
 
     private void ActivateTarget(Transform[][] units, string group, SkillModules.SkillHandler.DragFilter dragFiltering, SkillModules.ConditionChecker conditionChecker = null, string args = null) {
-        switch (group) {
-            case "unit":
-                for (int i = 0; i < 5; i++) {
-                    for (int j = 0; j < 2; j++) {
-                        if(dragFiltering != null) {
-                            if(units[i][j].childCount == 0) continue;
-                            if(!dragFiltering(units[i][j].GetChild(0).gameObject)) continue;
-                        }
-                        if (units[i][j].childCount > 0 && units[i][j].GetChild(0).GetComponent<ambush>() == null) {
-                            units[i][j].GetChild(0).Find("ClickableUI").gameObject.SetActive(true);
-                            units[i][j].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(true);
-                        }
-                    }
-                }
-                break;
-            case "line":
-                for (int i = 0; i < 5; i++) {
-                    if (args == null) {
-                        if (units[i][0].childCount > 0) {
-                            if (units[i][0].GetChild(0).GetComponent<ambush>() == null)
-                                slotLine[i].Find("BattleLineEffect").gameObject.SetActive(true);
-                        }
-                        if (units[i][1].childCount > 0) {
-                            slotLine[i].Find("BattleLineEffect").gameObject.SetActive(true);
-                        }
-                    }
-                    else {
-                        slotLine[i].Find("BattleLineEffect").gameObject.SetActive(true);
-                    }
-                }
-                break;
-            case "character":
-                for (int i = 0; i < 5; i++) {
-                    for (int j = 0; j < 2; j++) {
-                        if (dragFiltering != null) {
-                            if (units[i][j].childCount == 0) continue;
-                            if (!dragFiltering(units[i][j].GetChild(0).gameObject)) continue;
-                        }
-                        if (units[i][j].childCount > 0 && units[i][j].GetChild(0).GetComponent<ambush>() == null) {
-                            units[i][j].GetChild(0).Find("ClickableUI").gameObject.SetActive(true);
-                            units[i][j].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(true);
-                        }
-                    }
-                }
+        if (group.Contains("unit")) {
+            if (group.Contains("hero")) {
                 if(magicArgs == "enemy") {
                     enemyHero.Find("MagicTargetTrigger").gameObject.SetActive(true);
                     enemyHero.Find("ClickableUI").gameObject.SetActive(true);
                 }
-                else if(magicArgs == "my") {
+                else {
                     playerHero.Find("MagicTargetTrigger").gameObject.SetActive(true);
                     playerHero.Find("ClickableUI").gameObject.SetActive(true);
                 }
-                break;
-            default:
-            case "all":
-                if (CheckConditionToUse(conditionChecker, group)) {
-                    slotLine[2].Find("AllMagicTrigger").gameObject.SetActive(true);
-                    for (int i = 0; i < 5; i++) {
-                        slotLine[i].Find("BattleLineEffect").gameObject.SetActive(true);
-                        slotLine[i].Find("BattleLineEffect").GetComponent<BoxCollider2D>().enabled = false;
+            }
+
+            for (int i = 0; i < 5; i++) {
+                for (int j = 0; j < 2; j++) {
+                    if (dragFiltering != null) {
+                        if (units[i][j].childCount == 0) continue;
+                        if (!dragFiltering(units[i][j].GetChild(0).gameObject)) continue;
+                    }
+                    if (units[i][j].childCount > 0 && units[i][j].GetChild(0).GetComponent<ambush>() == null) {
+                        units[i][j].GetChild(0).Find("ClickableUI").gameObject.SetActive(true);
+                        units[i][j].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(true);
                     }
                 }
-                break;
+            }
+        }
+
+        else if (group.Contains("line")) {
+            for (int i = 0; i < 5; i++) {
+                if (args == null) {
+                    if (units[i][0].childCount > 0) {
+                        if (units[i][0].GetChild(0).GetComponent<ambush>() == null)
+                            slotLine[i].Find("BattleLineEffect").gameObject.SetActive(true);
+                    }
+                    if (units[i][1].childCount > 0) {
+                        slotLine[i].Find("BattleLineEffect").gameObject.SetActive(true);
+                    }
+                }
+                else {
+                    slotLine[i].Find("BattleLineEffect").gameObject.SetActive(true);
+                }
+            }
+        }
+
+        else if (group.Contains("all")) {
+            if (CheckConditionToUse(conditionChecker, group)) {
+                slotLine[2].Find("AllMagicTrigger").gameObject.SetActive(true);
+                for (int i = 0; i < 5; i++) {
+                    slotLine[i].Find("BattleLineEffect").gameObject.SetActive(true);
+                    slotLine[i].Find("BattleLineEffect").GetComponent<BoxCollider2D>().enabled = false;
+                }
+            }
+        }
+
+        else {
+            Logger.LogError("undefined target" + group);
         }
     }
 
@@ -539,53 +531,49 @@ public partial class CardDropManager {
     }
 
     private void DeactivateTarget(Transform[][] units, string group, string args = null) {
-        switch (group) {
-            case "unit":
-                for (int i = 0; i < 5; i++) {
-                    for (int j = 0; j < 2; j++) {
-                        if (units[i][j].childCount > 0) {
-                            units[i][j].GetChild(0).Find("ClickableUI").gameObject.SetActive(false);
-                            units[i][j].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(false);
-                        }
-                    }
-                }
-                break;
-            case "line":
-                for (int i = 0; i < 5; i++) {
-                    if ((units[i][0].childCount > 0 || units[i][1].childCount > 0) && args == null)
-                        slotLine[i].Find("BattleLineEffect").gameObject.SetActive(false);
-
-                    if(args != null)
-                        slotLine[i].Find("BattleLineEffect").gameObject.SetActive(false);
-
-                }
-                break;
-            case "character":
-                for (int i = 0; i < 5; i++) {
-                    for (int j = 0; j < 2; j++) {
-                        if (units[i][j].childCount > 0) {
-                            units[i][j].GetChild(0).Find("ClickableUI").gameObject.SetActive(false);
-                            units[i][j].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(false);
-                        }
-                    }
-                }
-                if(magicArgs == "my") {
-                    playerHero.Find("MagicTargetTrigger").gameObject.SetActive(false);
-                    playerHero.Find("ClickableUI").gameObject.SetActive(false);
-                }
-                else if(magicArgs == "enemy") {
+        if (group.Contains("unit")) {
+            if (group.Contains("hero")) {
+                if (magicArgs == "enemy") {
                     enemyHero.Find("MagicTargetTrigger").gameObject.SetActive(false);
                     enemyHero.Find("ClickableUI").gameObject.SetActive(false);
                 }
-                break;
-            default:
-            case "all":
-                slotLine[2].Find("AllMagicTrigger").gameObject.SetActive(false);
-                for (int i = 0; i < 5; i++) {
-                    slotLine[i].Find("BattleLineEffect").gameObject.SetActive(false);
-                    slotLine[i].Find("BattleLineEffect").GetComponent<BoxCollider2D>().enabled = true;
+                else {
+                    playerHero.Find("MagicTargetTrigger").gameObject.SetActive(false);
+                    playerHero.Find("ClickableUI").gameObject.SetActive(false);
                 }
-                break;
+            }
+
+            for (int i = 0; i < 5; i++) {
+                for (int j = 0; j < 2; j++) {
+                    if (units[i][j].childCount > 0) {
+                        units[i][j].GetChild(0).Find("ClickableUI").gameObject.SetActive(false);
+                        units[i][j].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(false);
+                    }
+                }
+            }
+        }
+
+        else if (group.Contains("line")) {
+            for (int i = 0; i < 5; i++) {
+                if ((units[i][0].childCount > 0 || units[i][1].childCount > 0) && args == null)
+                    slotLine[i].Find("BattleLineEffect").gameObject.SetActive(false);
+
+                if (args != null)
+                    slotLine[i].Find("BattleLineEffect").gameObject.SetActive(false);
+
+            }
+        }
+
+        else if (group.Contains("all")) {
+            slotLine[2].Find("AllMagicTrigger").gameObject.SetActive(false);
+            for (int i = 0; i < 5; i++) {
+                slotLine[i].Find("BattleLineEffect").gameObject.SetActive(false);
+                slotLine[i].Find("BattleLineEffect").GetComponent<BoxCollider2D>().enabled = true;
+            }
+        }
+
+        else {
+            Logger.LogError("undefined target" + group);
         }
     }
 }
