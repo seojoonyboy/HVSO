@@ -285,7 +285,7 @@ public class ScenarioManager : SerializedMonoBehaviour
                 .transform
                 .Find("HUD/StagePanel/TextGroup/StageScript")
                 .gameObject
-                .GetComponent<TextMeshProUGUI>().text = chapterData.description;
+                .GetComponent<Text>().text = chapterData.description;
 
         }
         else {
@@ -308,7 +308,7 @@ public class ScenarioManager : SerializedMonoBehaviour
                 .transform
                 .Find("HUD/StagePanel/TextGroup/StageScript")
                 .gameObject
-                .GetComponent<TextMeshProUGUI>().text = chapterData.description;
+                .GetComponent<Text>().text = chapterData.description;
         }
     }
 
