@@ -10,12 +10,14 @@ public class DeckSettingManager : MonoBehaviour
     [SerializeField] TMPro.TextMeshProUGUI deckNum;
     [SerializeField] HUDController hudController;
     [SerializeField] HeroSelectController heroSelectController;
+    [SerializeField] Transform anchorGuide1;
+    [SerializeField] Transform anchorGuide2;
 
     public MenuSceneController menuSceneController;
     public Transform selectedDeck;
 
     MyDecksLoader decksLoader;
-
+    bool initialized = false;
 
     public void AttachDecksLoader(ref MyDecksLoader decksLoader) {
         this.decksLoader = decksLoader;
@@ -28,16 +30,19 @@ public class DeckSettingManager : MonoBehaviour
         for (int i = 0; i < 3; i++) {
             LayoutRebuilder.ForceRebuildLayoutImmediate(deckList.GetComponent<RectTransform>());
         }
-
+        GetComponent<ScrollRect>().normalizedPosition = new Vector2(0, 1);
+        transform.GetComponent<ScrollRect>().enabled = deckList.GetChild(4).gameObject.activeSelf;
         Invoke("UpdateContentHeight", 0.25f);
     }
 
     private void UpdateContentHeight() {
-        float height = deckList.GetComponent<RectTransform>().rect.height;
-        transform.Find("DeckListParent").GetComponent<RectTransform>().sizeDelta = new Vector2(1080, height);
-        transform.Find("DeckListParent").GetComponent<RectTransform>().anchoredPosition = new Vector2(transform.Find("DeckListParent").GetComponent<RectTransform>().anchoredPosition.x, -height / 2);
-        GetComponent<ScrollRect>().normalizedPosition = new Vector2(0, 1);
-        transform.GetComponent<ScrollRect>().enabled = deckList.GetChild(4).gameObject.activeSelf;
+        if (initialized) return;
+        initialized = true;
+        float height = anchorGuide1.localPosition.y - anchorGuide2.localPosition.y;
+        //float height = deckList.GetComponent<RectTransform>().rect.height;
+        transform.Find("DeckListParent").GetComponent<RectTransform>().sizeDelta = new Vector2(1080, -height);
+        transform.Find("DeckListParent").GetComponent<RectTransform>().anchoredPosition = new Vector2(transform.Find("DeckListParent").GetComponent<RectTransform>().anchoredPosition.x, height / 2);
+        
     }
 
     public void SetPlayerNewDecks() {

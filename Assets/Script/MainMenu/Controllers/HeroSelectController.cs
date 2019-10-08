@@ -16,7 +16,6 @@ public class HeroSelectController : MonoBehaviour
     public string selectedHeroId;
     bool isHuman;
     public void SetHumanHeroes() {
-        if (transform.Find("InnerCanvas/RaceSelect/HumanSelect").GetChild(0).gameObject.activeSelf) return;
         transform.Find("InnerCanvas/RaceSelect/HumanSelect").GetChild(0).gameObject.SetActive(true);
         transform.Find("InnerCanvas/RaceSelect/OrcSelect").GetChild(0).gameObject.SetActive(false);
         transform.Find("InnerCanvas/HeroSpines/HumanSpines").gameObject.SetActive(true);
@@ -28,7 +27,6 @@ public class HeroSelectController : MonoBehaviour
     }
 
     public void SetOrcHeroes() {
-        if (transform.Find("InnerCanvas/RaceSelect/OrcSelect").GetChild(0).gameObject.activeSelf) return;
         transform.Find("InnerCanvas/RaceSelect/HumanSelect").GetChild(0).gameObject.SetActive(false);
         transform.Find("InnerCanvas/RaceSelect/OrcSelect").GetChild(0).gameObject.SetActive(true);
         transform.Find("InnerCanvas/HeroSpines/HumanSpines").gameObject.SetActive(false);
