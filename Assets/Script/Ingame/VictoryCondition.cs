@@ -51,6 +51,8 @@ namespace victoryModule {
                 PlayerController loserPlayer = (result.result == "win") ? enemyPlayer : player;
                 //loserPlayer.PlayerDead();
                 //EffectSystem.Instance.CameraZoomIn(loserPlayer.bodyTransform, 5.6f, 1.2f);
+                enemyWin.Dispose();
+                playerWin.Dispose();
                 Invoke("GetBattleResult", loserPlayer.DeadAnimationTime);
             }
             else {
@@ -80,6 +82,11 @@ namespace victoryModule {
         }
     }
 
+    public class TurnLimit_Match : VictoryCondition {
+        public TurnLimit_Match(PlayerController player_1, PlayerController player_2) : base(player_1, player_2) { }
+
+        
+    }
 }
 
 

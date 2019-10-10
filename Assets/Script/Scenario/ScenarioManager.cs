@@ -390,6 +390,7 @@ namespace Tutorial {
         public int chapter;
         public int stage_number;
         public string stage_Name;
+        public string match_type;
         [MultiLineProperty(10)] public string description;
         [MultiLineProperty(5)] public string specialRule;
         public List<ScriptData> scripts;
