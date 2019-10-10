@@ -714,5 +714,11 @@ public class DeckEditController : MonoBehaviour
     public class DeckItem {
         public string cardId;
         public int cardCount;
+        public DeckItem() { }
+
+        public DeckItem(string cardId, int cardCount) {
+            this.cardId = cardId;
+            this.cardCount = cardCount;
+        }
     }
 }

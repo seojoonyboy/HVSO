@@ -6,6 +6,8 @@ using Spine.Unity;
 using Spine;
 using dataModules;
 using TMPro;
+using BestHTTP;
+using System;
 
 public class TemplateMenu : MonoBehaviour {
     [SerializeField]
@@ -19,6 +21,8 @@ public class TemplateMenu : MonoBehaviour {
     private GameObject deckLayout;
 
     [SerializeField] Canvas deckSettingCanves;
+    [SerializeField] GameObject quickDeckMakeBtn;
+    [SerializeField] MenuSceneController menuSceneController;
 
     private string previewID;
     public bool isHuman;
@@ -51,6 +55,9 @@ public class TemplateMenu : MonoBehaviour {
         }
         transform.Find("DeckList").Find("NewDeck/Selected").gameObject.SetActive(false);
         transform.Find("DeckList").Find("NewDeck/SelectedBack").gameObject.SetActive(false);
+
+        //.decksLoader.Load();
+        quickDeckMakeBtn.SetActive(false);
     }
 
 
@@ -108,6 +115,8 @@ public class TemplateMenu : MonoBehaviour {
         }
         selectedDeck = deck;
         transform.Find("StartEditBtn").gameObject.SetActive(true);
+
+        quickDeckMakeBtn.SetActive(true);
     }
 
     public void SelectNewDeck() {
@@ -147,5 +156,32 @@ public class TemplateMenu : MonoBehaviour {
         gameObject.SetActive(false);
         transform.Find("StartEditBtn").gameObject.SetActive(false);
         FindObjectOfType<HUDController>().SetHeader(HUDController.Type.SHOW_USER_INFO);
+    }
+
+    /// <summary>
+    /// 바로 저장 버튼
+    /// </summary>
+    public void QuickDeckMake() {
+        if (selectedDeck == null) return;
+
+        Deck deck = selectedDeck.templateDeck;
+        NetworkManager.AddCustomDeckReqFormat format = new NetworkManager.AddCustomDeckReqFormat();
+        format.heroId = deck.heroId;
+        var items = new List<DeckEditController.DeckItem>();
+        foreach(Item item in deck.items) {
+            items.Add(new DeckEditController.DeckItem(item.cardId, item.cardCount));
+        }
+        format.items = items.ToArray();
+        format.name = deck.name;
+        format.camp = deck.camp;
+
+        AccountManager.Instance.RequestDeckMake(format, (HTTPRequest originalRequest, HTTPResponse response) => {
+            if(response.StatusCode == 200) {
+                Modal.instantiate("템플릿 덱을 생성하였습니다.", Modal.Type.CHECK, () => {
+                    menuSceneController.decksLoader.Load();
+                    ReturnToMenu();
+                });
+            }
+        });
     }
 }
