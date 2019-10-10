@@ -45,14 +45,15 @@ namespace victoryModule {
             PlayMangement.instance.stopBattle = true;
             PlayMangement.instance.stopTurn = true;
             PlayMangement.instance.beginStopTurn = true;
+            enemyWin.Dispose();
+            playerWin.Dispose();
 
             SocketFormat.ResultFormat result = PlayMangement.instance.socketHandler.result;
             if(result != null) {
                 PlayerController loserPlayer = (result.result == "win") ? enemyPlayer : player;
                 //loserPlayer.PlayerDead();
                 //EffectSystem.Instance.CameraZoomIn(loserPlayer.bodyTransform, 5.6f, 1.2f);
-                enemyWin.Dispose();
-                playerWin.Dispose();
+                
                 Invoke("GetBattleResult", loserPlayer.DeadAnimationTime);
             }
             else {
