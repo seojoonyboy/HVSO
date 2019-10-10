@@ -1,10 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using TMPro;
-
 namespace SkillModules {
-    public class poison : MonoBehaviour { 
+    public class poison : UnitAttribute { 
         private void Start() {
             gameObject.GetComponent<PlaceMonster>().AddAttackProperty("poison");
         }

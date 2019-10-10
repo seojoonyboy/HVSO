@@ -8,14 +8,24 @@ public class UnitBuffHandler : MonoBehaviour {
     PlaceMonster placeMonster;
     int origin_atk, origin_hp;
 
+    int total_buffed_atk, total_buffed_hp;
+
     void Awake() {
         buffList = new List<BuffStat>();
     }
 
+    public int GetBuffAtkAmount() {
+        return total_buffed_atk - origin_atk;
+    }
+
+    public int GetBuffHpAmount() {
+        return total_buffed_hp - origin_hp;
+    }
+
     private void Refresh() {
         placeMonster = GetComponent<PlaceMonster>();
-        int total_buffed_atk = placeMonster.unit.originalAttack;
-        int total_buffed_hp = placeMonster.unit.HP;
+        total_buffed_atk = placeMonster.unit.originalAttack;
+        total_buffed_hp = placeMonster.unit.HP;
 
         origin_atk = total_buffed_atk;
         origin_hp = total_buffed_hp;

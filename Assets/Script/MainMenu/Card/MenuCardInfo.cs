@@ -128,12 +128,6 @@ public class MenuCardInfo : MonoBehaviour {
             info.Find("Categories/Text").GetComponent<TMPro.TextMeshProUGUI>().text = sb.ToString();
             info.Find("Flavor/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.flavorText;
             info.Find("Flavor/Text").position = info.Find("Skill&BuffRow2").position;
-            //info.Find("Flavor/Text").position = info.Find("Skill&BuffRow1").position;
-            //if (info.Find("Skill&BuffRow1").GetChild(0).gameObject.activeSelf) {
-            //    
-            //    if (info.Find("Skill&BuffRow2").GetChild(0).gameObject.activeSelf)
-            //        info.Find("Flavor/Text").localPosition = Vector3.zero;
-            //}
         }
         //마법 카드
         else {

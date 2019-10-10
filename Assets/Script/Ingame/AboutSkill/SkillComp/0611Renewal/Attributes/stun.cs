@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
 namespace SkillModules {
-    public class stun : MonoBehaviour {
+    public class stun : UnitAttribute {
         private TextMeshPro textPro;
         private void Start() {
             EffectSystem.Instance.ContinueEffect(EffectSystem.EffectType.STUN, gameObject.GetComponent<PlaceMonster>().unitSpine.headbone);
