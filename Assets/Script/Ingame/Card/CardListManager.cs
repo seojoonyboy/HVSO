@@ -372,7 +372,7 @@ public class CardListManager : MonoBehaviour
                         for(int i=0; i<attributeNum; i++) {
                             Transform tf = buffSkills.transform.GetChild(i);
                             tf.gameObject.SetActive(true);
-                            tf.Find("Text").GetComponent<TMPro.TextMeshProUGUI>().text = attributeComps[i].ToString();
+                            tf.Find("Text").GetComponent<TMPro.TextMeshProUGUI>().text = GetSkillName(attributeComps[i].GetType());
                             AddBuffSkillIconImg(
                                 attributeComps[i].GetType(),
                                 tf.Find("Icon").GetComponent<Image>()
@@ -453,5 +453,32 @@ public class CardListManager : MonoBehaviour
         if (skillIcons.ContainsKey(str)) {
             targetImg.sprite = skillIcons[str];
         }
+    }
+
+    public string GetSkillName(System.Type type) {
+        string str = "";
+        if (type == typeof(ambush)) {
+            str = "ambush";
+        }
+        else if (type == typeof(chain)) {
+            str = "chain";
+        }
+        else if (type == typeof(guarded)) {
+            str = "protect";
+        }
+        else if (type == typeof(night_op)) {
+            str = "nightaction";
+        }
+        else if (type == typeof(pillage)) {
+            str = "pillage";
+        }
+        else if (type == typeof(poison)) {
+            str = "poison";
+        }
+        else if (type == typeof(stun)) {
+            str = "stun";
+        }
+
+        return AccountManager.Instance.GetComponent<Translator>().GetTranslatedSkillName(str);
     }
 }
