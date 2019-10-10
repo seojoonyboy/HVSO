@@ -114,7 +114,7 @@ public class TemplateMenu : MonoBehaviour {
             newDeck = false;
         }
         selectedDeck = deck;
-        transform.Find("StartEditBtn").gameObject.SetActive(true);
+        transform.Find("Buttons/StartEditBtn").gameObject.SetActive(true);
 
         quickDeckMakeBtn.SetActive(true);
     }
@@ -134,7 +134,7 @@ public class TemplateMenu : MonoBehaviour {
         newDeckSelectedBack.GetComponent<SkeletonGraphic>().Initialize(true);
         newDeckSelectedBack.GetComponent<SkeletonGraphic>().Update(0);
         newDeckSelectedBack.gameObject.SetActive(true);
-        transform.Find("StartEditBtn").gameObject.SetActive(true);
+        transform.Find("Buttons/StartEditBtn").gameObject.SetActive(true);
     }
 
     public void CancelSelectDeck() {
@@ -148,13 +148,13 @@ public class TemplateMenu : MonoBehaviour {
             transform.Find("DeckList/NewDeck/SelectedBack").gameObject.SetActive(false);
             newDeck = false;
         }
-        transform.Find("StartEditBtn").gameObject.SetActive(false);
+        transform.Find("Buttons/StartEditBtn").gameObject.SetActive(false);
     }
 
 
     public void ReturnToMenu() {
         gameObject.SetActive(false);
-        transform.Find("StartEditBtn").gameObject.SetActive(false);
+        transform.Find("Buttons/StartEditBtn").gameObject.SetActive(false);
         FindObjectOfType<HUDController>().SetHeader(HUDController.Type.SHOW_USER_INFO);
     }
 
