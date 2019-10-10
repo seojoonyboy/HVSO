@@ -45,12 +45,15 @@ namespace victoryModule {
             PlayMangement.instance.stopBattle = true;
             PlayMangement.instance.stopTurn = true;
             PlayMangement.instance.beginStopTurn = true;
+            enemyWin.Dispose();
+            playerWin.Dispose();
 
             SocketFormat.ResultFormat result = PlayMangement.instance.socketHandler.result;
             if(result != null) {
                 PlayerController loserPlayer = (result.result == "win") ? enemyPlayer : player;
                 //loserPlayer.PlayerDead();
                 //EffectSystem.Instance.CameraZoomIn(loserPlayer.bodyTransform, 5.6f, 1.2f);
+                
                 Invoke("GetBattleResult", loserPlayer.DeadAnimationTime);
             }
             else {
@@ -80,6 +83,11 @@ namespace victoryModule {
         }
     }
 
+    public class TurnLimit_Match : VictoryCondition {
+        public TurnLimit_Match(PlayerController player_1, PlayerController player_2) : base(player_1, player_2) { }
+
+        
+    }
 }
 
 

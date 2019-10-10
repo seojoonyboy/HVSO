@@ -349,29 +349,40 @@ public class PlayerController : MonoBehaviour
         skeletonAnimation.Update(0);
         skeletonAnimation.AnimationState.ClearTrack(0);
         TrackEntry entry;
-        entry = skeletonAnimation.AnimationState.SetAnimation(0, (isPlayer == true) ? "bottom" : "upside", false);
+        string side = (isPlayer == true) ? "bottom" : "upside";
+        entry = skeletonAnimation.AnimationState.SetAnimation(0, side, false);
         entry.Complete += delegate (TrackEntry temp) { shield.SetActive(false); };
 
         SetState(HeroState.SHIELD);
         if(PlayMangement.instance.heroShieldActive) return;
         PlayMangement.instance.heroShieldActive = true;
-        if(isPlayer) {
-
-            if (ScenarioGameManagment.scenarioInstance == null) {
-                var ingameTimer = GetComponent<IngameTimer>();
-                ingameTimer.OnTimeout.AddListener(PlayMangement.instance.showCardsHandler.TimeoutShowCards);
-                ingameTimer.BeginTimer(20);
-                Invoke("OnTimeOut", 20);
-                ingameTimer.timerUI.transform.SetParent(PlayMangement.instance.showCardsHandler.timerPos);
-                ingameTimer.timerUI.transform.localPosition = Vector3.zero;
-            }
-        }
         FullShieldStack(shieldStack.Value);
+        HeroCardTimer();
+
+        if (ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.isTutorial == true)
+            UseShieldCount();
+        else
+            Invoke("UseShieldCount", skeletonAnimation.skeleton.Data.FindAnimation(side).Duration);
+    }
+
+    public void UseShieldCount() {
         StartCoroutine(PlayMangement.instance.DrawSpecialCard(isHuman));
         shieldStack.Value = 0;
         shieldCount--;
-        
     }
+
+    public void HeroCardTimer() {
+        if (isPlayer == false) return;
+        if (ScenarioGameManagment.scenarioInstance != null) return;
+
+        var ingameTimer = GetComponent<IngameTimer>();
+        ingameTimer.OnTimeout.AddListener(PlayMangement.instance.showCardsHandler.TimeoutShowCards);
+        ingameTimer.BeginTimer(20);
+        Invoke("OnTimeOut", 20);
+        ingameTimer.timerUI.transform.SetParent(PlayMangement.instance.showCardsHandler.timerPos);
+        ingameTimer.timerUI.transform.localPosition = Vector3.zero;
+    }
+
 
     public void OnTimeOut() {
         var ingameTimer = GetComponent<IngameTimer>();
