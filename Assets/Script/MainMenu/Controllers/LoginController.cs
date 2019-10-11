@@ -10,10 +10,13 @@ public class LoginController : MonoBehaviour {
     GameObject loadingModal;
     [SerializeField] GameObject logo, textImage;
     [SerializeField] Button loginBtn;
+
+    bool isClicked = false;
     // Start is called before the first frame update
     void Start() {
         networkManager = NetworkManager.Instance;
         StartCoroutine(LogoReveal());
+        isClicked = false;
     }
 
     IEnumerator LogoReveal() {
@@ -27,8 +30,11 @@ public class LoginController : MonoBehaviour {
     }
 
     public void OnStartButton() {
-        AccountManager.Instance.RequestUserInfo(OnRequestUserInfoCallback);
-        SoundManager.Instance.PlaySound(SoundType.FIRST_TURN);
+        if (!isClicked) {
+            AccountManager.Instance.RequestUserInfo(OnRequestUserInfoCallback);
+            SoundManager.Instance.PlaySound(SoundType.FIRST_TURN);
+        }
+        isClicked = true;
     }
 
     public void OnGuestLoginButtonClick(string param) {
