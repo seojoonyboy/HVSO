@@ -449,7 +449,7 @@ public class CardListManager : MonoBehaviour
             str = "stun";
         }
 
-        var skillIcons = AccountManager.Instance.resource.skillIcons;
+        var skillIcons = AccountManager.Instance.resource.buffSkillIcons;
         if (skillIcons.ContainsKey(str)) {
             targetImg.sprite = skillIcons[str];
         }
