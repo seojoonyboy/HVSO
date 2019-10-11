@@ -347,11 +347,14 @@ namespace SkillModules {
         }
 
         public override bool IsConditionSatisfied() {
-            if (!ArgsExist()) return false;
             playedObject.IsValidateData(mySkillHandler.targetData);
 
             PlaceMonster playedMonster = playedObject.targetObject.GetComponent<PlaceMonster>();
             return playedMonster.GetComponent<ambush>() != null;
+        }
+
+        public override bool filtering(GameObject testObject) {
+            return testObject.GetComponent<PlaceMonster>().unit.attributes.ToList().Contains("ambush");
         }
     }
 
