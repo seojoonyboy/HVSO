@@ -334,8 +334,24 @@ namespace SkillModules {
 
         public override void filtering(ref List<GameObject> list) {
             string category = (string)args[0];
-            list.RemoveAll(x => (!x.GetComponent<PlaceMonster>().unit.cardCategories.ToList().Exists(y => y.CompareTo(category) == 0)));
+            list.RemoveAll(x => (!x.GetComponent<PlaceMonster>().unit.attributes.ToList().Exists(y => y.CompareTo(category) == 0)));
             return;
+        }
+    }
+
+    public class ambushing : ConditionChecker {
+        PlayedObject playedObject;
+
+        public ambushing(SkillHandler skillHandler, string[] args = null) : base(skillHandler) {
+            playedObject = new PlayedObject();
+        }
+
+        public override bool IsConditionSatisfied() {
+            if (!ArgsExist()) return false;
+            playedObject.IsValidateData(mySkillHandler.targetData);
+
+            PlaceMonster playedMonster = playedObject.targetObject.GetComponent<PlaceMonster>();
+            return playedMonster.GetComponent<ambush>() != null;
         }
     }
 
