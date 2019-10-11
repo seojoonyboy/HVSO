@@ -1,10 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
 
 namespace SkillModules {
-    public class night_op : MonoBehaviour {
+    public class night_op : UnitAttribute {
         // Start is called before the first frame update
         private TextMeshPro textPro;
         void Start() {

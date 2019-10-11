@@ -166,10 +166,38 @@ public class PlaceMonster : MonoBehaviour {
     public void AddAttackProperty(string status) {
         transform.Find("UnitAttackProperty").gameObject.SetActive(true);
         SpriteRenderer iconImage = transform.Find("UnitAttackProperty/StatIcon").GetComponent<SpriteRenderer>();
-        iconImage.sprite = (unit.attackType.Length <= 0) ? AccountManager.Instance.resource.skillIcons[status] : AccountManager.Instance.resource.skillIcons["fusion"];
         Debug.Log(iconImage.sprite.name);
+        var skillIcons = AccountManager.Instance.resource.skillIcons;
+
+        var attackList = unit.attackType.ToList();
+        if (attackList == null || attackList.Count == 0) {
+            attackList = new List<string>();
+            iconImage.sprite = skillIcons[status];
+        }
+        else {
+            iconImage.sprite = skillIcons["fusion"];
+        }
+        attackList.Add(status);
+        unit.attackType = attackList.ToArray();
     }
 
+    public void AddAttribute(string newAttrName) {
+        var attrList = unit.attributes.ToList();
+        if (attrList == null || attrList.Count == 0) {
+            attrList = new List<string>();
+        }
+        attrList.Add(newAttrName);
+        unit.attributes = attrList.ToArray();
+    }
+
+    public void RemoveAttribute(string attrName) {
+        var list = unit.attributes.ToList();
+        var isExist = list.Exists(x => x == attrName);
+        if (isExist) {
+            list.Remove(attrName);
+            unit.attributes = list.ToArray();
+        }
+    }
 
     public void SpawnUnit() {
         SetState(UnitState.APPEAR);
@@ -198,7 +226,7 @@ public class PlaceMonster : MonoBehaviour {
                 myTarget = targetPlayer.transform.gameObject;
         }
 
-        if ((GetComponent<SkillModules.poison>() != null) && (myTarget != null)) {
+        if (unit.attackType.ToList().Exists(x => x == "poison") && (myTarget != null)) {
             if(myTarget.GetComponent<PlaceMonster>() != null) {
                 myTarget.AddComponent<SkillModules.poisonned>();
             }

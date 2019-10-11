@@ -1,11 +1,9 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
 namespace SkillModules {
-    public class guarded : MonoBehaviour {
+    public class guarded : UnitAttribute {
         private TextMeshPro textPro;
         IngameEventHandler eventHandler;
 

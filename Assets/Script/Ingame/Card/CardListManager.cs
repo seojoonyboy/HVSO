@@ -6,7 +6,8 @@ using UnityEngine.UI.Extensions;
 using UnityEngine.EventSystems;
 using Spine;
 using Spine.Unity;
-
+using System.Text;
+using SkillModules;
 
 public class CardListManager : MonoBehaviour
 {
@@ -137,6 +138,16 @@ public class CardListManager : MonoBehaviour
         Transform remove = transform.Find("FieldUnitInfo").Find(objName);
         remove.SetParent(standbyInfo);
         remove.name = "CardInfoWindow";
+
+        Transform BuffSkills = remove.Find("BottomGroup/BuffSkills");
+        foreach(Transform tf in BuffSkills) {
+            tf.Find("Text").GetComponent<TMPro.TextMeshProUGUI>().text = string.Empty;
+            tf.gameObject.SetActive(false);
+        }
+        BuffSkills.gameObject.SetActive(false);
+        Transform BuffStats = remove.Find("BottomGroup/BuffStats");
+        BuffStats.gameObject.SetActive(false);
+
         remove.gameObject.SetActive(false);
     }
 
@@ -198,7 +209,7 @@ public class CardListManager : MonoBehaviour
             skill2.triggers.RemoveRange(0, skill2.triggers.Count);
         }
 
-        info.Find("Flavor/Text").GetComponent<TMPro.TextMeshProUGUI>().text = string.Empty;
+        info.Find("BottomGroup/Flavor/Text").GetComponent<TMPro.TextMeshProUGUI>().text = string.Empty;
 
         info.Find("UnitPortrait").gameObject.SetActive(false);
         info.Find("MagicPortrait").gameObject.SetActive(false);
@@ -260,17 +271,7 @@ public class CardListManager : MonoBehaviour
                 else sb.Append(ctg);
             }
             info.Find("Categories/Text").GetComponent<TMPro.TextMeshProUGUI>().text = sb.ToString();
-
-            info.Find("Flavor/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.flavorText;
-            //info.Find("Flavor/Text").position = info.Find("Skill&BuffRow1").position;
-            //if (info.Find("Skill&BuffRow1").GetChild(0).gameObject.activeSelf) {
-            //    info.Find("Flavor/Text").position = info.Find("Skill&BuffRow2").position;
-            //    if (info.Find("Skill&BuffRow2").GetChild(0).gameObject.activeSelf)
-            //        info.Find("Flavor/Text").localPosition = Vector3.zero;
-            //}
-            info.Find("Flavor/Text").position = info.Find("Skill&BuffRow2").position;
-            if (info.Find("Skill&BuffRow2").GetChild(0).gameObject.activeSelf)
-                info.Find("Flavor/Text").localPosition = Vector3.zero;
+            info.Find("BottomGroup/Flavor/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.flavorText;
         }
         //마법 카드
         else {
@@ -350,9 +351,65 @@ public class CardListManager : MonoBehaviour
 
                     if (selectedTarget.GetComponentInParent<ambush>() && !selectedTarget.GetComponentInParent<PlaceMonster>().isPlayer) return;
 
-                    string objName = selectedTarget.GetComponentInParent<PlaceMonster>().myUnitNum.ToString() + "unit";
+                    PlaceMonster placeMonster = selectedTarget.GetComponentInParent<PlaceMonster>();
+                    string objName = placeMonster.myUnitNum.ToString() + "unit";
                     transform.Find("FieldUnitInfo").gameObject.SetActive(true);
-                    transform.Find("FieldUnitInfo").Find(objName).gameObject.SetActive(true);
+                    GameObject infoWindow = transform.Find("FieldUnitInfo").Find(objName).gameObject;
+                    infoWindow.SetActive(true);
+
+                    UnitBuffHandler buffHandler = placeMonster.GetComponent<UnitBuffHandler>();
+                    int buff_hp = buffHandler.GetBuffHpAmount();
+                    int buff_atk = buffHandler.GetBuffAtkAmount();
+
+                    var attributeComps = placeMonster.GetComponents<UnitAttribute>();
+
+                    GameObject buffSkills = infoWindow.transform.Find("BottomGroup/BuffSkills").gameObject;
+                    
+                    int attributeNum = attributeComps.Length;
+                    var skillIcons = AccountManager.Instance.resource.skillIcons;
+                    if (attributeNum > 0) {
+                        buffSkills.SetActive(true);
+                        for(int i=0; i<attributeNum; i++) {
+                            Transform tf = buffSkills.transform.GetChild(i);
+                            tf.gameObject.SetActive(true);
+                            tf.Find("Text").GetComponent<TMPro.TextMeshProUGUI>().text = GetSkillName(attributeComps[i].GetType());
+                            AddBuffSkillIconImg(
+                                attributeComps[i].GetType(),
+                                tf.Find("Icon").GetComponent<Image>()
+                            );
+                        }
+                    }
+                    GameObject buffStats = infoWindow.transform.Find("BottomGroup/BuffStats").gameObject;
+                    buffStats.SetActive(true);
+                    TMPro.TextMeshProUGUI atkText = buffStats.transform.Find("ATK/Text").GetComponent<TMPro.TextMeshProUGUI>();
+                    StringBuilder sb = new StringBuilder();
+                    if (buff_atk > 0) {
+                        atkText.color = Color.green;
+                        sb.Append("+");
+                    }
+                    else if (buff_atk == 0) atkText.color = Color.white;
+                    else {
+                        atkText.color = Color.red;
+                        sb.Append("-");
+                    }
+                    sb.Append(buff_atk);
+                    atkText.text = sb.ToString();
+
+                    sb.Clear();
+
+                    TMPro.TextMeshProUGUI hpText = buffStats.transform.Find("HP/Text").GetComponent<TMPro.TextMeshProUGUI>();
+                    
+                    if (buff_hp > 0) {
+                        hpText.color = Color.green;
+                        sb.Append("+");
+                    }
+                    else if (buff_hp == 0) hpText.color = Color.white;
+                    else {
+                        hpText.color = Color.red;
+                        sb.Append("-");
+                    }
+                    sb.Append(buff_hp);
+                    hpText.text = sb.ToString();
                     //transform.Find("FieldUnitInfo").Find(objName).localScale = new Vector3(1.4f, 1.4f, 1);
                     PlayMangement.instance.infoOn = true;
                 }
@@ -368,4 +425,60 @@ public class CardListManager : MonoBehaviour
         PlayMangement.instance.infoOn = false;
     }
 
+    public void AddBuffSkillIconImg(System.Type type, Image targetImg) {
+        string str = "";
+        if (type == typeof(ambush)) {
+            str = "ambush";
+        }
+        else if (type == typeof(chain)) {
+            str = "chain";
+        }
+        else if (type == typeof(guarded)) {
+            str = "protect";
+        }
+        else if (type == typeof(night_op)) {
+            str = "nightaction";
+        }
+        else if (type == typeof(pillage)) {
+            str = "pillage";
+        }
+        else if (type == typeof(poison)) {
+            str = "poison";
+        }
+        else if (type == typeof(stun)) {
+            str = "stun";
+        }
+
+        var skillIcons = AccountManager.Instance.resource.skillIcons;
+        if (skillIcons.ContainsKey(str)) {
+            targetImg.sprite = skillIcons[str];
+        }
+    }
+
+    public string GetSkillName(System.Type type) {
+        string str = "";
+        if (type == typeof(ambush)) {
+            str = "ambush";
+        }
+        else if (type == typeof(chain)) {
+            str = "chain";
+        }
+        else if (type == typeof(guarded)) {
+            str = "protect";
+        }
+        else if (type == typeof(night_op)) {
+            str = "nightaction";
+        }
+        else if (type == typeof(pillage)) {
+            str = "pillage";
+        }
+        else if (type == typeof(poison)) {
+            str = "poison";
+        }
+        else if (type == typeof(stun)) {
+            str = "stun";
+        }
+
+        return AccountManager.Instance.GetComponent<Translator>().GetTranslatedSkillName(str);
+    }
 }

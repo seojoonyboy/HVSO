@@ -1,9 +1,7 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class ambush : MonoBehaviour {
+public class ambush : UnitAttribute {
     IngameEventHandler eventHandler;
     // Start is called before the first frame update
     void Start() {
