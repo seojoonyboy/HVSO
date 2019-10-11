@@ -268,7 +268,7 @@ namespace SkillModules {
     public class my_field_ctg_chk : ConditionChecker {
         PlayedObject playedObject;
 
-        public my_field_ctg_chk(SkillHandler skillHandler, string[] args = null) : base(skillHandler) {
+        public my_field_ctg_chk(SkillHandler skillHandler, string[] args = null) : base(skillHandler, args) {
             playedObject = new PlayedObject();
         }
 
