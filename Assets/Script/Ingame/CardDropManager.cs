@@ -437,9 +437,17 @@ public partial class CardDropManager {
                         if (units[i][j].childCount == 0) continue;
                         if (!dragFiltering(units[i][j].GetChild(0).gameObject)) continue;
                     }
-                    if (units[i][j].childCount > 0 && units[i][j].GetChild(0).GetComponent<ambush>() == null) {
-                        units[i][j].GetChild(0).Find("ClickableUI").gameObject.SetActive(true);
-                        units[i][j].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(true);
+                    if (units[i][j].childCount > 0) {
+                        if(units[i][j].GetChild(0).GetComponent<ambush>() == null) {
+                            units[i][j].GetChild(0).Find("ClickableUI").gameObject.SetActive(true);
+                            units[i][j].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(true);
+                        }
+                        else if(conditionChecker != null) {
+                            if( conditionChecker.GetType().Name.Contains("ambush")) {
+                                units[i][j].GetChild(0).Find("ClickableUI").gameObject.SetActive(true);
+                                units[i][j].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(true);
+                            }
+                        }
                     }
                 }
             }
