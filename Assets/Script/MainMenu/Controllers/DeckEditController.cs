@@ -449,12 +449,40 @@ public class DeckEditController : MonoBehaviour
                 }
             }
         }
-        heroInfoWindow.Find("Class/Class_1").GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[heroData.heroClasses[0]];
-        heroInfoWindow.Find("Class/Class_2").GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[heroData.heroClasses[1]];
+        Dictionary<string, Sprite> classSprite = AccountManager.Instance.resource.classImage;
+        transform.Find("InnerCanvas/SortToClass1").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[0] + "_sortbtnOff"];
+        transform.Find("InnerCanvas/SortToClass1/Selected").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[0] + "_sortbtnOn"];
+        transform.Find("InnerCanvas/SortToClass2").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[1] + "_sortbtnOff"];
+        transform.Find("InnerCanvas/SortToClass2/Selected").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[1] + "_sortbtnOn"];
+
+        if(heroData.heroClasses != null && heroData.heroClasses.Length >= 2) {
+            transform.Find("InnerCanvas/ShowAllClass").GetComponent<Image>().sprite = GetAllSortImage(heroData.heroClasses[0], heroData.heroClasses[1]);
+        }
+
+        heroInfoWindow.Find("Class/Class_1").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[0]];
+        heroInfoWindow.Find("Class/Class_2").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[1]];
+
         heroCards.gameObject.SetActive(true);
         for (int i = 0; i < heroData.heroCards.Length; i++)
             heroCards.GetChild(i).GetComponent<MenuCardHandler>().DrawCard(heroData.heroCards[i].cardId, isHuman);
         SetCustomDeckEditCards(loadedDeck, heroData);
+    }
+
+    public Sprite GetAllSortImage(string keyword1, string keyword2) {
+        Dictionary<string, Sprite> classSprite = AccountManager.Instance.resource.classImage;
+        var keys = classSprite.Keys;
+        string selectedKey = string.Empty;
+        foreach (string key in keys) {
+            if(key.Contains(keyword1) && key.Contains(keyword2)) {
+                selectedKey = key;
+            }
+        }
+        if (!string.IsNullOrEmpty(selectedKey)) {
+            return classSprite[selectedKey];
+        }
+        else {
+            return null;
+        }
     }
 
     private void SetCustomDeckEditCards(dataModules.Deck lodedDeck, HeroInventory heroData) {
