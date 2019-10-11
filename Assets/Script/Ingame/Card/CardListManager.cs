@@ -353,9 +353,11 @@ public class CardListManager : MonoBehaviour
 
                     PlaceMonster placeMonster = selectedTarget.GetComponentInParent<PlaceMonster>();
                     string objName = placeMonster.myUnitNum.ToString() + "unit";
-                    transform.Find("FieldUnitInfo").gameObject.SetActive(true);
-                    GameObject infoWindow = transform.Find("FieldUnitInfo").Find(objName).gameObject;
-                    infoWindow.SetActive(true);
+                    var fieldUnitInfo = transform.Find("FieldUnitInfo");
+                    fieldUnitInfo.gameObject.SetActive(true);
+                    Transform infoWindow = transform.Find("FieldUnitInfo").Find(objName);
+                    if (infoWindow == null) return;
+                    infoWindow.gameObject.SetActive(true);
 
                     UnitBuffHandler buffHandler = placeMonster.GetComponent<UnitBuffHandler>();
                     int buff_hp = buffHandler.GetBuffHpAmount();
