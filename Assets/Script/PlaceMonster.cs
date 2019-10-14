@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using System.Linq;
 using TMPro;
-
+using UnityEngine.UI;
 
 public class PlaceMonster : MonoBehaviour {
     public IngameClass.Unit unit;
@@ -546,8 +546,8 @@ public class PlaceMonster : MonoBehaviour {
     }
 
     public void UpdateStat() {
-        TextMeshPro hpText = transform.Find("HP").GetComponentInChildren<TextMeshPro>();
-        TextMeshPro atkText = transform.Find("ATK").GetComponentInChildren<TextMeshPro>();
+        Text hpText = transform.Find("Numbers/HP").GetComponentInChildren<Text>();
+        Text atkText = transform.Find("Numbers/ATK").GetComponentInChildren<Text>();
 
         if (unit.currentHP > 0)
             hpText.text = unit.currentHP.ToString();
