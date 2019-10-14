@@ -49,6 +49,7 @@ public partial class CardDropManager {
                 if (args == null || args == "slot") {
                     if (unitLine[i][0].childCount == 0) {
                         slotLine[i].GetChild(0).gameObject.SetActive(true);
+                        slotLine[i].GetChild(0).GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1f);
                     }
                 }
                 else if (args == "line") {
@@ -66,6 +67,7 @@ public partial class CardDropManager {
             if (args == null || args == "slot") {
                 if (unitLine[i][0].childCount == 0) {
                     slotLine[i].GetChild(0).gameObject.SetActive(true);
+                    slotLine[i].GetChild(0).GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1f);
                 }
             }
             else if (args == "line") {
