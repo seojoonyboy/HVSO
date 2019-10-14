@@ -135,6 +135,8 @@ public class TemplateMenu : MonoBehaviour {
         newDeckSelectedBack.GetComponent<SkeletonGraphic>().Update(0);
         newDeckSelectedBack.gameObject.SetActive(true);
         transform.Find("Buttons/StartEditBtn").gameObject.SetActive(true);
+
+        quickDeckMakeBtn.SetActive(false);
     }
 
     public void CancelSelectDeck() {
