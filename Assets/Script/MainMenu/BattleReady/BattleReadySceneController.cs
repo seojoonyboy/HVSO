@@ -24,7 +24,7 @@ public class BattleReadySceneController : MonoBehaviour {
     [SerializeField] HorizontalScrollSnap BattleTypeHorizontalScrollSnap;
     [SerializeField] public HUDController HudController;
     [SerializeField] HorizontalScrollSnap ScrollSnap;
-
+    [SerializeField] GameObject deckListPanel;
     public Deck selectedDeck;
 
     IEnumerator Start() {
@@ -43,11 +43,15 @@ public class BattleReadySceneController : MonoBehaviour {
         HudController.SetBackButton(() => {
             OnBackButton();
         });
+
+        deckListPanel.SetActive(true);
     }
 
     void OnDisable() {
         RectTransform rt = ScrollSnap.transform.Find("Content").GetComponent<RectTransform>();
         rt.offsetMin = new Vector2(0, rt.offsetMin.y);
+
+        deckListPanel.SetActive(false);
     }
 
     public void OnStartButton() {
