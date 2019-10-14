@@ -330,8 +330,15 @@ public class DeckEditController : MonoBehaviour
         transform.Find("InnerCanvas/SortToClass1/Selected").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[0] + "_sortbtnOn"];
         transform.Find("InnerCanvas/SortToClass2").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[1] + "_sortbtnOff"];
         transform.Find("InnerCanvas/SortToClass2/Selected").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[1] + "_sortbtnOn"];
+
+        if (heroData.heroClasses != null && heroData.heroClasses.Length >= 2) {
+            transform.Find("InnerCanvas/ShowAllClass").GetComponent<Image>().sprite = GetAllSortImage(heroData.heroClasses[0], heroData.heroClasses[1], false);
+            transform.Find("InnerCanvas/ShowAllClass/Selected").GetComponent<Image>().sprite = GetAllSortImage(heroData.heroClasses[0], heroData.heroClasses[1], true);
+        }
+
         heroInfoWindow.Find("Class/Class_1").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[0]];
         heroInfoWindow.Find("Class/Class_2").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[1]];
+
         heroCards.gameObject.SetActive(true);
         for(int i = 0; i < heroData.heroCards.Length; i++)
             heroCards.GetChild(i).GetComponent<MenuCardHandler>().DrawCard(heroData.heroCards[i].cardId, isHuman);
@@ -456,7 +463,8 @@ public class DeckEditController : MonoBehaviour
         transform.Find("InnerCanvas/SortToClass2/Selected").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[1] + "_sortbtnOn"];
 
         if(heroData.heroClasses != null && heroData.heroClasses.Length >= 2) {
-            transform.Find("InnerCanvas/ShowAllClass").GetComponent<Image>().sprite = GetAllSortImage(heroData.heroClasses[0], heroData.heroClasses[1]);
+            transform.Find("InnerCanvas/ShowAllClass").GetComponent<Image>().sprite = GetAllSortImage(heroData.heroClasses[0], heroData.heroClasses[1], false);
+            transform.Find("InnerCanvas/ShowAllClass/Selected").GetComponent<Image>().sprite = GetAllSortImage(heroData.heroClasses[0], heroData.heroClasses[1], true);
         }
 
         heroInfoWindow.Find("Class/Class_1").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[0]];
@@ -468,13 +476,16 @@ public class DeckEditController : MonoBehaviour
         SetCustomDeckEditCards(loadedDeck, heroData);
     }
 
-    public Sprite GetAllSortImage(string keyword1, string keyword2) {
+    public Sprite GetAllSortImage(string keyword1, string keyword2, bool isOn) {
         Dictionary<string, Sprite> classSprite = AccountManager.Instance.resource.classImage;
         var keys = classSprite.Keys;
         string selectedKey = string.Empty;
         foreach (string key in keys) {
             if(key.Contains(keyword1) && key.Contains(keyword2)) {
-                selectedKey = key;
+                if(isOn && key.Contains("sortbtnOn"))
+                    selectedKey = key;
+                if(!isOn && key.Contains("sortbtnOff"))
+                    selectedKey = key;
             }
         }
         if (!string.IsNullOrEmpty(selectedKey)) {
