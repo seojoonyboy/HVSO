@@ -212,6 +212,8 @@ public class StopHighlight : ScenarioExecute {
 
     public override void Execute() {
         scenarioMask.StopEveryHighlight();
+        GameObject handicon = scenarioMask.GetMaskingObject("turn_handicon");
+        handicon.SetActive(false);
         handler.isDone = true;
     }
 
