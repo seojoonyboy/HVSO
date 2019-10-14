@@ -7,7 +7,7 @@ using Spine;
 using Spine.Unity;
 
 public class MenuCardHandler : MonoBehaviour {
-    private string cardID;
+    public string cardID;
     [SerializeField] MenuCardInfo menuCardInfo;
     [SerializeField] GameObject exitTrigger2;
     dataModules.CollectionCard cardData;
