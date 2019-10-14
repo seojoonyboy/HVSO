@@ -6,6 +6,7 @@ using UnityEngine.UI.Extensions;
 using Spine;
 using Spine.Unity;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 
 public class CardDictionaryManager : MonoBehaviour {
     [SerializeField] Transform cardList;
@@ -20,10 +21,14 @@ public class CardDictionaryManager : MonoBehaviour {
     MyDecksLoader decksLoader;
 
     bool isHumanDictionary;
+    float clickTime;
+    bool standby;
     SortingOptions selectedSortOption;
     SortingOptions beforeSortOption;
 
     public UnityEvent SetCardsFinished = new UnityEvent();
+    GameObject selectedHero;
+    string selectedHeroId;
 
     public void AttachDecksLoader(ref MyDecksLoader decksLoader) {
         this.decksLoader = decksLoader;
@@ -49,19 +54,18 @@ public class CardDictionaryManager : MonoBehaviour {
         SetCardsByClass();
     }
 
-    public void RefreshToHumanCards() {
-        isHumanDictionary = true;
-        SetCardsByClass(true);
-    }
-
     public void SetToOrcCards() {
         isHumanDictionary = false;
         SetCardsByClass();
     }
 
-    public void RefreshToOrcCards() {
-        isHumanDictionary = false;
-        SetCardsByClass(true);
+    public void RefreshLine() {
+        Canvas.ForceUpdateCanvases();
+        for (int i = 0; i < 3; i++) {
+            LayoutRebuilder.ForceRebuildLayoutImmediate(cardList.GetChild(i).GetComponent<RectTransform>());
+        }
+
+        Invoke("UpdateContentHeight", 0.1f);
     }
 
     private void UpdateContentHeight() {
@@ -193,6 +197,8 @@ public class CardDictionaryManager : MonoBehaviour {
         }
         beforeSortOption = selectedSortOption;
         CloseSortModal();
+        if (selectedHero != null)
+            SortHeroCards();
     }
 
     void InitDictionary() {
@@ -212,7 +218,7 @@ public class CardDictionaryManager : MonoBehaviour {
         }
     }
 
-    public void SetCardsByClass(bool refresh = false) {
+    public void SetCardsByClass() {
         InitDictionary();
         int totalCount = 0;
         int haveCount = 0;
@@ -236,8 +242,7 @@ public class CardDictionaryManager : MonoBehaviour {
                 classList.GetChild(i).gameObject.SetActive(true);
         }
         cardNum.text = haveCount.ToString() + "/" + totalCount.ToString();
-        if(!refresh)
-            RefreshLine();
+        RefreshLine();
         SetHeroButtons();
     }
 
@@ -317,14 +322,7 @@ public class CardDictionaryManager : MonoBehaviour {
         RefreshLine();
     }
 
-    public void RefreshLine() {
-        Canvas.ForceUpdateCanvases();
-        for (int i = 0; i < 3; i++) {
-            LayoutRebuilder.ForceRebuildLayoutImmediate(cardList.GetChild(i).GetComponent<RectTransform>());
-        }
-
-        Invoke("UpdateContentHeight", 0.25f);
-    }
+   
 
     public void SetHeroButtons() {
         for (int i = 0; i < 8; i++) {
@@ -338,12 +336,145 @@ public class CardDictionaryManager : MonoBehaviour {
             if (heroes.camp == "orc" && isHumanDictionary) continue;
             Transform hero = heroCards.GetChild(count);
             hero.gameObject.SetActive(true);
-            hero.GetComponent<Button>().onClick.AddListener(() => OpenHeroInfoWIndow(heroes.id));
+            EventTrigger.Entry onBtn = new EventTrigger.Entry();
+            onBtn.eventID = EventTriggerType.PointerDown;
+            onBtn.callback.AddListener((EventData) => StartClick(heroes.id));
+            hero.GetComponent<EventTrigger>().triggers.Add(onBtn);
+            EventTrigger.Entry upBtn = new EventTrigger.Entry();
+            upBtn.eventID = EventTriggerType.PointerUp;
+            upBtn.callback.AddListener((EventData) => EndClick(hero.gameObject, heroes.id));
+            hero.GetComponent<EventTrigger>().triggers.Add(upBtn);
             hero.GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[heroes.id + "_button"];
             bool haveHero = AccountManager.Instance.myHeroInventories.ContainsKey(heroes.id);
             hero.Find("HeroLevel").gameObject.SetActive(haveHero);
             hero.Find("Empty").gameObject.SetActive(!haveHero);
             count++;
+        }
+    }
+
+    public void StartClick(string heroId) {
+        clickTime = Time.time;
+        StartCoroutine(WaitForOpenInfo(heroId));
+    }
+
+    IEnumerator WaitForOpenInfo(string heroId) {
+        standby = true;
+        while (standby) {
+            yield return new WaitForSeconds(0.1f);
+            if (Time.time - clickTime >= 0.5f) {
+                OpenHeroInfoWIndow(heroId);
+                standby = false;
+            }
+        }
+    }
+    public void EndClick(GameObject btn, string heroId) {
+        if (!standby) return;
+        if (selectedHero == null) {
+            selectedHero = btn;
+            selectedHeroId = heroId;
+            btn.transform.Find("Selected").gameObject.SetActive(true);
+            SortHeroCards();
+        }
+        else if (selectedHero == btn) {
+            selectedHero = null;
+            selectedHeroId = "";
+            btn.transform.Find("Selected").gameObject.SetActive(false);
+            ApplySortting();
+        }
+        else {
+            selectedHero.transform.Find("Selected").gameObject.SetActive(false);
+            selectedHero = btn;
+            selectedHeroId = heroId;
+            btn.transform.Find("Selected").gameObject.SetActive(true);
+            SortHeroCards();
+        }
+        standby = false;
+    }
+
+    public void SortHeroCards() {
+        switch (selectedSortOption) {
+            case SortingOptions.CLASS:
+                SetHeroesCardByClass();
+                break;
+            case SortingOptions.COST_ASCEND:
+            case SortingOptions.COST_DESCEND:
+                SetHeroesCardByCost();
+                break;
+            case SortingOptions.RARELITY_ASCEND:
+            case SortingOptions.RARELITY_DESCEND:
+                SetHeroesCardsByRarelity();
+                break;
+        }
+        RefreshLine();
+    }
+
+    public void SetHeroesCardByClass() {
+        Transform classList = cardList.Find("CardsByClass");
+        string heroClass1 = "";
+        string heroClass2 = "";
+        foreach (dataModules.HeroInventory hero in AccountManager.Instance.allHeroes) {
+            if(hero.id == selectedHeroId) {
+                heroClass1 = hero.heroClasses[0];
+                heroClass2 = hero.heroClasses[1];
+            }
+        }
+        for(int i = 0; i < classList.childCount; i++) {
+            if (classList.GetChild(i).name == heroClass1 || classList.GetChild(i).name == heroClass2)
+                classList.GetChild(i).gameObject.SetActive(true);
+            else
+                classList.GetChild(i).gameObject.SetActive(false);
+        }
+    }
+
+    public void SetHeroesCardByCost() {
+        Transform classList = cardList.Find("CardsByCost");
+        string heroClass1 = "";
+        string heroClass2 = "";
+        foreach (dataModules.HeroInventory hero in AccountManager.Instance.allHeroes) {
+            if (hero.id == selectedHeroId) {
+                heroClass1 = hero.heroClasses[0];
+                heroClass2 = hero.heroClasses[1];
+            }
+        }
+        for (int i = 0; i < classList.childCount; i++) {
+            Transform cardParent = classList.GetChild(i).Find("Grid");
+            int countActiveChild = 0;
+            for (int j = 0; j < cardParent.childCount; j++) {
+                string cardId = cardParent.GetChild(j).GetComponent<MenuCardHandler>().cardID;
+                if (AccountManager.Instance.allCardsDic[cardId].cardClasses[0] == heroClass1 || AccountManager.Instance.allCardsDic[cardId].cardClasses[0] == heroClass2) {
+                    cardParent.GetChild(j).gameObject.SetActive(true);
+                    countActiveChild++;
+                }
+                else
+                    cardParent.GetChild(j).gameObject.SetActive(false);
+            }
+            classList.GetChild(i).gameObject.SetActive(countActiveChild != 0);
+        }
+    }
+
+    public void SetHeroesCardsByRarelity() {
+        Transform classList = cardList.Find("CardsByRarelity");
+        string heroClass1 = "";
+        string heroClass2 = "";
+        foreach (dataModules.HeroInventory hero in AccountManager.Instance.allHeroes) {
+            if (hero.id == selectedHeroId) {
+                heroClass1 = hero.heroClasses[0];
+                heroClass2 = hero.heroClasses[1];
+            }
+        }
+        for (int i = 0; i < classList.childCount; i++) {
+            Transform cardParent = classList.GetChild(i).Find("Grid");
+            int countActiveChild = 0;
+            for (int j = 0; j < cardParent.childCount; j++) {
+                string cardId = cardParent.GetChild(j).GetComponent<MenuCardHandler>().cardID;
+                if (AccountManager.Instance.allCardsDic[cardId].cardClasses[0] == heroClass1 || AccountManager.Instance.allCardsDic[cardId].cardClasses[0] == heroClass2) {
+                    cardParent.GetChild(j).gameObject.SetActive(true);
+                    countActiveChild++;
+                }
+                else
+                    cardParent.GetChild(j).gameObject.SetActive(false);
+            }
+            classList.GetChild(i).gameObject.SetActive(countActiveChild != 0);
         }
     }
 
