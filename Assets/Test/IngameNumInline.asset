@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: IngameNumInline
   m_EditorClassIdentifier: 
   hashCode: -632680106
-  material: {fileID: 21005570129787084}
+  material: {fileID: 21092736873352026}
   materialHashCode: -14149603
   m_Version: 1.1.0
   m_SourceFontFileGUID: 55521f38fc3dd8945afe45303f32fc1b
@@ -241,94 +241,94 @@ MonoBehaviour:
     m_GlyphIndex: 13
     m_Scale: 1
   m_AtlasTextures:
-  - {fileID: 28875963584206710}
+  - {fileID: 28224814758706140}
   m_AtlasTextureIndex: 0
   m_UsedGlyphRects:
   - m_X: 0
     m_Y: 0
-    m_Width: 103
-    m_Height: 148
+    m_Width: 160
+    m_Height: 170
   - m_X: 0
-    m_Y: 148
-    m_Width: 109
-    m_Height: 147
-  - m_X: 103
-    m_Y: 0
-    m_Width: 100
-    m_Height: 147
+    m_Y: 170
+    m_Width: 135
+    m_Height: 170
   - m_X: 0
-    m_Y: 295
-    m_Width: 109
-    m_Height: 146
-  - m_X: 203
+    m_Y: 340
+    m_Width: 128
+    m_Height: 170
+  - m_X: 128
+    m_Y: 340
+    m_Width: 123
+    m_Height: 170
+  - m_X: 135
+    m_Y: 170
+    m_Width: 95
+    m_Height: 170
+  - m_X: 160
     m_Y: 0
-    m_Width: 137
-    m_Height: 145
-  - m_X: 340
+    m_Width: 132
+    m_Height: 169
+  - m_X: 230
+    m_Y: 169
+    m_Width: 123
+    m_Height: 169
+  - m_X: 292
     m_Y: 0
-    m_Width: 110
-    m_Height: 145
-  - m_X: 203
-    m_Y: 145
-    m_Width: 108
-    m_Height: 144
-  - m_X: 109
-    m_Y: 147
-    m_Width: 72
-    m_Height: 146
-  - m_X: 109
-    m_Y: 293
-    m_Width: 105
-    m_Height: 145
-  - m_X: 214
-    m_Y: 289
-    m_Width: 102
-    m_Height: 145
-  - m_X: 311
-    m_Y: 145
-    m_Width: 100
-    m_Height: 143
+    m_Width: 133
+    m_Height: 168
+  - m_X: 251
+    m_Y: 338
+    m_Width: 129
+    m_Height: 168
+  - m_X: 353
+    m_Y: 168
+    m_Width: 126
+    m_Height: 168
+  - m_X: 380
+    m_Y: 336
+    m_Width: 122
+    m_Height: 167
   m_FreeGlyphRects:
   - m_X: 0
-    m_Y: 441
+    m_Y: 510
     m_Width: 512
-    m_Height: 71
-  - m_X: 450
+    m_Height: 2
+  - m_X: 160
+    m_Y: 169
+    m_Width: 70
+    m_Height: 1
+  - m_X: 251
+    m_Y: 506
+    m_Width: 261
+    m_Height: 6
+  - m_X: 230
+    m_Y: 338
+    m_Width: 21
+    m_Height: 2
+  - m_X: 292
+    m_Y: 168
+    m_Width: 61
+    m_Height: 1
+  - m_X: 425
     m_Y: 0
-    m_Width: 62
-    m_Height: 512
-  - m_X: 103
-    m_Y: 147
-    m_Width: 6
-    m_Height: 1
-  - m_X: 109
-    m_Y: 438
-    m_Width: 403
-    m_Height: 74
-  - m_X: 181
-    m_Y: 147
-    m_Width: 22
-    m_Height: 146
-  - m_X: 181
-    m_Y: 289
+    m_Width: 87
+    m_Height: 168
+  - m_X: 479
+    m_Y: 0
     m_Width: 33
-    m_Height: 4
-  - m_X: 214
-    m_Y: 434
-    m_Width: 298
-    m_Height: 78
-  - m_X: 311
-    m_Y: 288
-    m_Width: 201
-    m_Height: 1
-  - m_X: 316
-    m_Y: 288
-    m_Width: 196
-    m_Height: 224
-  - m_X: 411
-    m_Y: 145
-    m_Width: 101
-    m_Height: 367
+    m_Height: 336
+  - m_X: 502
+    m_Y: 0
+    m_Width: 10
+    m_Height: 512
+  - m_X: 353
+    m_Y: 336
+    m_Width: 27
+    m_Height: 2
+  - m_X: 380
+    m_Y: 503
+    m_Width: 132
+    m_Height: 9
   m_fontInfo:
     Name: 
     PointSize: 0
@@ -374,7 +374,7 @@ MonoBehaviour:
     atlasHeight: 512
     characterSetSelectionMode: 6
     characterSequence: 30-39,78
-    referencedFontAssetGUID: dee11045814cab14897d00d0eb74fa8c
+    referencedFontAssetGUID: 
     referencedTextAssetGUID: 
     fontStyle: 0
     fontStyleModifier: 0
@@ -408,7 +408,7 @@ MonoBehaviour:
   boldSpacing: 7
   italicStyle: 35
   tabSize: 10
---- !u!21 &21005570129787084
+--- !u!21 &21092736873352026
 Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
@@ -416,7 +416,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: IngameNumInline Material
-  m_Shader: {fileID: 4800000, guid: 68e6db2ebdc24f95958faec2be5558d6, type: 3}
+  m_Shader: {fileID: 4800000, guid: 128e987d567d4e2c824d754223b3f3b0, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -440,11 +440,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 28875963584206710}
+        m_Texture: {fileID: 28224814758706140}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OutlineTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 28224814758706140}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
@@ -454,11 +454,12 @@ Material:
     - _BevelOffset: 0
     - _BevelRoundness: 0
     - _BevelWidth: 0
-    - _BumpFace: 0
-    - _BumpOutline: 0
+    - _BumpFace: 0.5
+    - _BumpOutline: 0.5
     - _ColorMask: 15
     - _Diffuse: 0.5
     - _FaceDilate: 0
+    - _FaceShininess: 0
     - _FaceUVSpeedX: 0
     - _FaceUVSpeedY: 0
     - _GlowInner: 0.05
@@ -469,15 +470,17 @@ Material:
     - _LightAngle: 3.1416
     - _MaskSoftnessX: 0
     - _MaskSoftnessY: 0
+    - _OutlineShininess: 0
     - _OutlineSoftness: 0
     - _OutlineUVSpeedX: 0
     - _OutlineUVSpeedY: 0
     - _OutlineWidth: 0
+    - _Padding: 0
     - _PerspectiveFilter: 0.875
     - _Reflectivity: 10
     - _ScaleRatioA: 0.8
-    - _ScaleRatioB: 0.65
-    - _ScaleRatioC: 0.65
+    - _ScaleRatioB: 0.7
+    - _ScaleRatioC: 0.7
     - _ScaleX: 1
     - _ScaleY: 1
     - _ShaderFlags: 0
@@ -495,7 +498,7 @@ Material:
     - _UnderlaySoftness: 0
     - _VertexOffsetX: 0
     - _VertexOffsetY: 0
-    - _WeightBold: 0.75
+    - _WeightBold: 0.5
     - _WeightNormal: 0
     m_Colors:
     - _ClipRect: {r: -32767, g: -32767, b: 32767, a: 32767}
@@ -503,12 +506,13 @@ Material:
     - _FaceColor: {r: 1, g: 1, b: 1, a: 1}
     - _GlowColor: {r: 0, g: 1, b: 0, a: 0.5}
     - _MaskCoord: {r: 0, g: 0, b: 32767, a: 32767}
-    - _OutlineColor: {r: 1, g: 1, b: 1, a: 1}
+    - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
     - _ReflectFaceColor: {r: 0, g: 0, b: 0, a: 1}
     - _ReflectOutlineColor: {r: 0, g: 0, b: 0, a: 1}
+    - _SpecColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _UnderlayColor: {r: 0, g: 0, b: 0, a: 0.5}
---- !u!28 &28875963584206710
+--- !u!28 &28224814758706140
 Texture2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
