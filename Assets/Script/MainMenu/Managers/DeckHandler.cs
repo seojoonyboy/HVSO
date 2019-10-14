@@ -111,12 +111,15 @@ public class DeckHandler : MonoBehaviour
 
     public void DeleteButton() {
         if (AccountManager.Instance == null) return;
-        DeckSettingManager deckManager = transform.parent.parent.parent.GetComponent<DeckSettingManager>();
-        StartCoroutine(deckManager.CloseDeckButtons());
-        //transform.GetChild(0).Find("Buttons").localPosition = new Vector3(-5, 0, 0);
-        AccountManager.Instance.RequestDeckRemove(DECKID, OnRemoved);
-        transform.SetAsLastSibling();
-        gameObject.SetActive(false);
+
+        Modal.instantiate("덱을 삭제하시겠습니까?", Modal.Type.CHECK, () => {
+            DeckSettingManager deckManager = transform.parent.parent.parent.GetComponent<DeckSettingManager>();
+            StartCoroutine(deckManager.CloseDeckButtons());
+            //transform.GetChild(0).Find("Buttons").localPosition = new Vector3(-5, 0, 0);
+            AccountManager.Instance.RequestDeckRemove(DECKID, OnRemoved);
+            transform.SetAsLastSibling();
+            gameObject.SetActive(false);
+        });
     }
 
     private void OnRemoved(HTTPRequest originalRequest, HTTPResponse response) {
