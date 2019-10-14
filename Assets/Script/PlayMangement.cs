@@ -279,7 +279,7 @@ public partial class PlayMangement : MonoBehaviour {
                 SocketFormat.DebugSocketData.SummonCardData(history);
             }
             int count = CountEnemyCard();
-            enemyPlayer.playerUI.transform.Find("CardCount").GetChild(0).gameObject.GetComponent<Text>().text = "x" + " " + (count).ToString();
+            enemyPlayer.playerUI.transform.Find("CardCount").GetChild(1).gameObject.GetComponent<Text>().text = (count).ToString();
             //SocketFormat.DebugSocketData.CheckMapPosition(state);
             yield return new WaitForSeconds(0.5f);
         }
@@ -371,7 +371,7 @@ public partial class PlayMangement : MonoBehaviour {
             card.transform.Find("BackGround").gameObject.SetActive(false);
             card.transform.Find("Cost").gameObject.SetActive(false);
             int count = CountEnemyCard();
-            enemyPlayer.playerUI.transform.Find("CardCount").GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = "X" + " " + (count).ToString();
+            enemyPlayer.playerUI.transform.Find("CardCount").GetChild(1).gameObject.GetComponent<Text>().text = (count).ToString();
 
 
             yield return EffectSystem.Instance.HeroCutScene(enemyPlayer.isHuman);
@@ -748,7 +748,7 @@ public partial class PlayMangement : MonoBehaviour {
             enemyCard.transform.localPosition = new Vector3(0, 0, 0);
             enemyCard.SetActive(true);
             int count = CountEnemyCard();
-            enemyPlayer.playerUI.transform.Find("CardCount").GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = "X" + " " + (count).ToString();
+            enemyPlayer.playerUI.transform.Find("CardCount").GetChild(1).gameObject.GetComponent<Text>().text = (count).ToString();
             IngameNotice.instance.SetNotice("상대방이 영웅카드 사용 여부를 결정 중입니다");
         }
         yield return new WaitForSeconds(1f);
@@ -776,7 +776,7 @@ public partial class PlayMangement : MonoBehaviour {
                     yield return MagicActivate(summonedMagic, history);
                     SocketFormat.DebugSocketData.SummonCardData(history);
                     int count = CountEnemyCard();
-                    enemyPlayer.playerUI.transform.Find("CardCount").GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = "X" + " " + (count).ToString();
+                    enemyPlayer.playerUI.transform.Find("CardCount").GetChild(1).gameObject.GetComponent<Text>().text = (count).ToString();
                     yield return new WaitForSeconds(1f);
                 }
             }
@@ -934,7 +934,7 @@ public partial class PlayMangement {
             iTween.MoveTo(enemyCard, enemyCard.transform.parent.position, 0.3f);
             yield return new WaitForSeconds(0.3f);
             enemyCard.SetActive(false);
-            enemyPlayer.playerUI.transform.Find("CardCount").GetChild(0).gameObject.GetComponent<Text>().text = "x" + " " + (i + 1).ToString();
+            enemyPlayer.playerUI.transform.Find("CardCount").GetChild(1).gameObject.GetComponent<Text>().text = (i + 1).ToString();
             i++;
         }
     }
@@ -952,7 +952,7 @@ public partial class PlayMangement {
             iTween.MoveTo(enemyCard, enemyCard.transform.parent.position, 0.15f);
             yield return new WaitForSeconds(0.15f);
             enemyCard.SetActive(false);
-            enemyPlayer.playerUI.transform.Find("CardCount").GetChild(0).gameObject.GetComponent<Text>().text = "x" + " " + (i + 1).ToString();
+            enemyPlayer.playerUI.transform.Find("CardCount").GetChild(1).gameObject.GetComponent<Text>().text = (i + 1).ToString();
         }
     }
 
@@ -972,7 +972,7 @@ public partial class PlayMangement {
         iTween.MoveTo(enemyCard, enemyCard.transform.parent.position, 0.3f);
         enemyCard.SetActive(true);
         int count = CountEnemyCard();
-        enemyPlayer.playerUI.transform.Find("CardCount").GetChild(0).gameObject.GetComponent<Text>().text = "x" + " " + (count).ToString();
+        enemyPlayer.playerUI.transform.Find("CardCount").GetChild(1).gameObject.GetComponent<Text>().text = (count).ToString();
     }
 
     public IEnumerator EnemyMagicCardDraw(int drawNum) {
@@ -989,7 +989,7 @@ public partial class PlayMangement {
             iTween.MoveTo(enemyCard, enemyCard.transform.parent.position, 0.3f);
             enemyCard.SetActive(true);
             int count = CountEnemyCard();
-            enemyPlayer.playerUI.transform.Find("CardCount").GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = "X" + " " + (count).ToString();
+            enemyPlayer.playerUI.transform.Find("CardCount").GetChild(1).gameObject.GetComponent<Text>().text = (count).ToString();
             yield return new WaitForSeconds(0.3f);
         }
     }

@@ -25,8 +25,8 @@ public class PlayerController : MonoBehaviour
 
     public GameObject backLine;
     public GameObject frontLine;
-    protected TextMeshProUGUI costText;
-    protected TextMeshProUGUI HPText;
+    protected Text costText;
+    protected Text HPText;
     protected Transform HPGauge;
     public GameObject buttonParticle;
     public bool dragCard = false;
@@ -75,8 +75,8 @@ public class PlayerController : MonoBehaviour
         string race = PlayerPrefs.GetString("SelectedRace");
         if (race == "HUMAN") isHuman = isPlayer;
         else isHuman = !isPlayer;
-        costText = playerUI.transform.Find("PlayerResource").GetChild(0).Find("Text").GetComponent<TextMeshProUGUI>();
-        HPText = playerUI.transform.Find("PlayerHealth/HealthText").GetComponent<TextMeshProUGUI>();
+        costText = playerUI.transform.Find("PlayerResource").GetChild(0).Find("Text").GetComponent<Text>();
+        HPText = playerUI.transform.Find("PlayerHealth/HealthText").GetComponent<Text>();
         HPGauge = playerUI.transform.Find("PlayerHealth/Helth&Shield/HpParent1/HpParent2/HpParent3/HpGage");
         //shieldGauge = playerUI.transform.Find("PlayerHealth/Helth&Shield/SheildGauge").GetComponent<Image>();
         if (isHuman) {
