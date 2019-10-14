@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
   m_Name: IngameNumOutline
   m_EditorClassIdentifier: 
-  hashCode: 0
+  hashCode: 1438972255
   material: {fileID: 21865898785027376}
-  materialHashCode: 0
+  materialHashCode: -1509477004
   m_Version: 1.1.0
-  m_SourceFontFileGUID: e916d7244943d584b9b788e8298a9572
-  m_SourceFontFile_EditorRef: {fileID: 0}
+  m_SourceFontFileGUID: 55521f38fc3dd8945afe45303f32fc1b
+  m_SourceFontFile_EditorRef: {fileID: 12800000, guid: 55521f38fc3dd8945afe45303f32fc1b,
+    type: 3}
   m_SourceFontFile: {fileID: 0}
   m_AtlasPopulationMode: 0
   m_FaceInfo:
@@ -241,7 +242,7 @@ MonoBehaviour:
     m_GlyphIndex: 13
     m_Scale: 1
   m_AtlasTextures:
-  - {fileID: 28506948549146722}
+  - {fileID: 28677071640330612}
   m_AtlasTextureIndex: 0
   m_UsedGlyphRects:
   - m_X: 0
@@ -366,15 +367,15 @@ MonoBehaviour:
   m_CreationSettings:
     sourceFontFileName: 
     sourceFontFileGUID: e916d7244943d584b9b788e8298a9572
-    pointSizeSamplingMode: 0
+    pointSizeSamplingMode: 1
     pointSize: 139
     padding: 15
     packingMode: 0
     atlasWidth: 512
     atlasHeight: 512
-    characterSetSelectionMode: 7
-    characterSequence: 1234567890x
-    referencedFontAssetGUID: 
+    characterSetSelectionMode: 6
+    characterSequence: 30-39,78
+    referencedFontAssetGUID: dee11045814cab14897d00d0eb74fa8c
     referencedTextAssetGUID: 
     fontStyle: 0
     fontStyleModifier: 0
@@ -432,7 +433,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 28506948549146722}
+        m_Texture: {fileID: 28677071640330612}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
@@ -449,7 +450,7 @@ Material:
     m_Colors:
     - _ClipRect: {r: -32767, g: -32767, b: 32767, a: 32767}
     - _FaceColor: {r: 1, g: 1, b: 1, a: 1}
---- !u!28 &28506948549146722
+--- !u!28 &28677071640330612
 Texture2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
