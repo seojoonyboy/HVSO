@@ -115,8 +115,8 @@ public partial class CardHandler : MonoBehaviour {
             Logger.Log("NoData");
         if (cardData.type == "unit") {
             Logger.Log(cardData.name);
-            transform.Find("Health/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.hp.ToString();
-            transform.Find("attack/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.attack.ToString();
+            transform.Find("Health/Text").GetComponent<Text>().text = cardData.hp.ToString();
+            transform.Find("attack/Text").GetComponent<Text>().text = cardData.attack.ToString();
             if (cardData.attributes.Length == 0 && cardData.attackTypes.Length == 0)
                 transform.Find("SkillIcon").gameObject.SetActive(false);
             else {
@@ -135,7 +135,7 @@ public partial class CardHandler : MonoBehaviour {
         }
         else
             transform.Find("GlowEffect").GetComponent<SkeletonGraphic>().color = new Color(1, 1, 1, 1);
-        transform.Find("Cost/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.cost.ToString();
+        transform.Find("Cost/Text").GetComponent<Text>().text = cardData.cost.ToString();
         transform.Find("Class").GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[cardData.cardClasses[0]];
         transform.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.name;
 

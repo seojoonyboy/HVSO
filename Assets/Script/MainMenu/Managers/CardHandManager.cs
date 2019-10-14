@@ -10,7 +10,7 @@ public class CardHandManager : MonoBehaviour {
     [SerializeField] protected Transform showPos;
     [SerializeField] protected Transform firstDrawParent;
     [SerializeField] public Transform cardSpawnPos;
-    [SerializeField] TMPro.TextMeshProUGUI cardNumValue;
+    [SerializeField] Text cardNumValue;
     public bool isMultiple = false;
     public bool firstDraw = true;
     public bool socketDone = false;
