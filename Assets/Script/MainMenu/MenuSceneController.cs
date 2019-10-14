@@ -21,6 +21,7 @@ public class MenuSceneController : MonoBehaviour {
     protected SkeletonGraphic selectedAnimation;
     private int currentPage;
     private bool buttonClicked;
+    static bool isLoaded = false;
     public MyDecksLoader decksLoader;
     [SerializeField] GameObject newbiLoadingModal;  //최초 접속시 튜토리얼 강제시 등장하는 로딩 화면
     [SerializeField] GameObject reconnectingModal;  //재접속 진행시 등장하는 로딩 화면
@@ -30,7 +31,10 @@ public class MenuSceneController : MonoBehaviour {
         //NetworkManager.ReconnectData dummyData = new NetworkManager.ReconnectData("11", "human");
         //PlayerPrefs.SetString("ReconnectData", JsonConvert.SerializeObject(dummyData));
         #endregion
-
+        if (!isLoaded)
+            isLoaded = true;
+        else
+            SetCardNumbersPerDic();
         if (PlayerPrefs.GetInt("isFirst") == 1) {
             var newbiComp = newbiLoadingModal.AddComponent<NewbiController>(); //첫 로그인 제어
             newbiComp.name = "NewbiController";
@@ -46,6 +50,7 @@ public class MenuSceneController : MonoBehaviour {
 
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.NICKNAME_CHANGED, OnNicknameChanged);
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.NICKNAME_CHANGED, OnNicknameChanged);
+        
     }
 
     private void OnNicknameChanged(Enum Event_Type, Component Sender, object Param) {
