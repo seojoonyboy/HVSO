@@ -33,11 +33,11 @@ public class TextTyping : MonoBehaviour
                 count++;
             }
             else break;
-            yield return new WaitForSeconds(0.05f);
+            yield return new WaitForSeconds(0.02f);
         }
         isTyping = false;
         scenarioHandler.isDone = true;
-        transform.Find("StopTypingTrigger").gameObject.SetActive(false);
+        //transform.Find("StopTypingTrigger").gameObject.SetActive(false);
     }
 
     public void StopTyping() {
@@ -46,6 +46,6 @@ public class TextTyping : MonoBehaviour
         textObj.text = typingText.Replace("|", "<br>");
         isTyping = false;
         scenarioHandler.isDone = true;
-        transform.Find("StopTypingTrigger").gameObject.SetActive(false);
+        //transform.Find("StopTypingTrigger").gameObject.SetActive(false);
     }
 }
