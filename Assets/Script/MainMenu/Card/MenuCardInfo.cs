@@ -44,20 +44,20 @@ public class MenuCardInfo : MonoBehaviour {
             info.Find("Dialog/Text").GetComponent<TMPro.TextMeshProUGUI>().text = null;
 
         if (data.hp != null) {
-            info.Find("Health/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.hp.ToString();
+            info.Find("Health/Text").GetComponent<Text>().text = data.hp.ToString();
             info.Find("Health").gameObject.SetActive(true);
         }
         else
             info.Find("Health").gameObject.SetActive(false);
 
         if (data.attack != null) {
-            info.Find("Attack/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.attack.ToString();
+            info.Find("Attack/Text").GetComponent<Text>().text = data.attack.ToString();
             info.Find("Attack").gameObject.SetActive(true);
         }
         else
             info.Find("Attack").gameObject.SetActive(false);
 
-        info.Find("Cost/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.cost.ToString();
+        info.Find("Cost/Text").GetComponent<Text>().text = data.cost.ToString();
 
         info.Find("Class_1").GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[data.cardClasses[0]];
 
@@ -85,7 +85,7 @@ public class MenuCardInfo : MonoBehaviour {
                 info.Find("Skill&BuffRow1").GetChild(skillnum).gameObject.SetActive(true);
                 var image = AccountManager.Instance.resource.skillIcons[data.attackTypes[0]];
                 info.Find("Skill&BuffRow1").GetChild(skillnum).Find("SkillIcon").GetComponent<Image>().sprite = image;
-                info.Find("Skill&BuffRow1").GetChild(skillnum).Find("Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.attackTypes[0];
+                info.Find("Skill&BuffRow1").GetChild(skillnum).Find("Text").GetComponent<TMPro.TextMeshProUGUI>().text =translator.GetTranslatedSkillName(data.attackTypes[0]);
                 EventTrigger.Entry onBtn = new EventTrigger.Entry();
                 onBtn.eventID = EventTriggerType.PointerDown;
                 onBtn.callback.AddListener((EventData) => OpenClassDescModal(data.attackTypes[0], image));
@@ -100,7 +100,7 @@ public class MenuCardInfo : MonoBehaviour {
                 info.Find("Skill&BuffRow1").GetChild(skillnum).gameObject.SetActive(true);
                 var image = AccountManager.Instance.resource.skillIcons[data.attributes[0]];
                 info.Find("Skill&BuffRow1").GetChild(skillnum).Find("SkillIcon").GetComponent<Image>().sprite = image;
-                info.Find("Skill&BuffRow1").GetChild(skillnum).Find("Text").GetComponent<TMPro.TextMeshProUGUI>().text= data.attributes[0];
+                info.Find("Skill&BuffRow1").GetChild(skillnum).Find("Text").GetComponent<TMPro.TextMeshProUGUI>().text= translator.GetTranslatedSkillName(data.attributes[0]);
                 EventTrigger.Entry onBtn = new EventTrigger.Entry();
                 onBtn.eventID = EventTriggerType.PointerDown;
                 onBtn.callback.AddListener((EventData) => OpenClassDescModal(data.attributes[0], image));
@@ -217,14 +217,8 @@ public class MenuCardInfo : MonoBehaviour {
     }
 
     private void SetClassDescModalData(string className = "", string desc = "", Sprite sprite = null) {
-        //Transform innerModal = classDescModal.Find("InnerModal");
-
-        TMPro.TextMeshProUGUI TMP_header = classDescModal.Find("Header").GetComponent<TMPro.TextMeshProUGUI>();
-        TMPro.TextMeshProUGUI TMP_desc = classDescModal.Find("Description").GetComponent<TMPro.TextMeshProUGUI>();
-
-        TMP_header.text = className + ": " + desc;
-        //TMP_desc.text = desc;
-        //innerModal.Find("Portrait/Image").GetComponent<Image>().sprite = sprite;
+        TMPro.TextMeshProUGUI TMP_header = classDescModal.Find("InnerModal/Header").GetComponent<TMPro.TextMeshProUGUI>();
+        TMP_header.text = "<color=blue>"+className+"</color>" + "\n" + desc;
     }
 
     public void CloseInfo() {
