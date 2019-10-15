@@ -183,6 +183,7 @@ public class ScenarioManager : SerializedMonoBehaviour
         }
         else {
             deckPrefab = orcDeckPrefab;
+            deckName = "튜토리얼 덱";
         }
         GameObject setDeck = Instantiate(deckPrefab, deckContent.transform);
         dataModules.Deck dummyDeck = new dataModules.Deck();

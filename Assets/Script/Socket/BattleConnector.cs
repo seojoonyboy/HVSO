@@ -171,7 +171,8 @@ public partial class BattleConnector : MonoBehaviour {
             //========================================================
             //deckId 및 race 관련 처리 수정 예정
             string stageNum = PlayerPrefs.GetString("StageNum");
-            race = "human";
+            //race = "human";
+            race = (race == "human") ? "human" : "orc";
             deckId = string.Empty;
             return new string[] { battleType, deckId, race, stageNum };
             //========================================================

@@ -171,6 +171,14 @@ namespace MenuTutorialModules {
             handler.isDone = true;
         }
     }
+    public class Menu_Hide_Message : MenuExecute {
+        public Menu_Hide_Message() : base() { }
+
+        public override void Execute() {
+            MenuMask.Instance.HideText();
+            handler.isDone = true;
+        }
+    }
 
     public class Highlight : MenuExecute {
         //버튼 하이라이트
