@@ -109,4 +109,13 @@ public class Menu_Block_Screen : MenuExecute {
     }
 }
 
+public class Menu_Hide_Message : MenuExecute {
+    public Menu_Hide_Message() : base() { }
+
+    public override void Execute() {
+        MenuMask.Instance.HideText();
+        handler.isDone = true;
+    }
+
+}
 

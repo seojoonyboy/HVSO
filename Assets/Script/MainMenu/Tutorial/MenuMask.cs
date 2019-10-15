@@ -94,6 +94,9 @@ public class MenuMask : SerializedMonoBehaviour
         DeactiveMask();
     }
 
+    public void HideText() {
+        menuTalkPanel.SetActive(false);
+    }
 
 
     private void ZeroMaskPos() {
