@@ -224,6 +224,21 @@ public partial class AccountManager : Singleton<AccountManager> {
         public string nickName;
         public string deviceId;
         public int pass;
+
+        public List<etcInfo> etcInfo;
+    }
+
+    public class etcInfo {
+        //public int id;
+        //public int userId;
+        public string key;
+        public string value;
+    }
+
+    public bool IsTutorialCleared() {
+        var data = userData.etcInfo.Find(x => x.key == "tutorialCleared");
+        if (data == null) return false;
+        return data.value == "true";
     }
 }
 
