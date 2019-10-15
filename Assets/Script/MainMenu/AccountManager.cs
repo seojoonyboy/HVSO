@@ -224,6 +224,21 @@ public partial class AccountManager : Singleton<AccountManager> {
         public string nickName;
         public string deviceId;
         public int pass;
+
+        public List<etcInfo> etcInfo;
+    }
+
+    public class etcInfo {
+        //public int id;
+        //public int userId;
+        public string key;
+        public string value;
+    }
+
+    public bool IsTutorialCleared() {
+        var data = userData.etcInfo.Find(x => x.key == "tutorialCleared");
+        if (data == null) return false;
+        return data.value == "true";
     }
 }
 
@@ -735,10 +750,22 @@ public partial class AccountManager {
             .Append("api/user");
 
         HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
-        //request.RawData = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(userInfo));
-        //request.MethodType = HTTPMethods.Post;
+    }
 
-        //networkManager.Request(request, callback, "");
+    /// <summary>
+    /// 튜토리얼 보상 요청
+    /// </summary>
+    /// <param name="callback"></param>
+    public void RequestReward(OnRequestFinishedDelegate callback) {
+        StringBuilder url = new StringBuilder();
+
+        url.Append(networkManager.baseUrl);
+        url.Append("/api/user/claim_reward?kind=tutorial");
+
+        HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
+        request.MethodType = HTTPMethods.Get;
+        request.AddHeader("authorization", TokenFormat);
+        networkManager.Request(request, callback, "보상 받기를 기다리는 중...");
     }
 
     private void OnExpChanged(HTTPRequest originalRequest, HTTPResponse response) {

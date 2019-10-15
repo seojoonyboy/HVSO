@@ -9,11 +9,18 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
     [HideInInspector] public TutorialSet selectedTutorialData;
     MenuExecuteHandler executeHandler;
 
+    void Start() {
+        //var IsTutorialCleared = AccountManager.Instance.IsTutorialCleared();
+        //if (!IsTutorialCleared) StartTutorial(TutorialType.TO_ORC_STORY);
+    }
+
     /// <summary>
     /// 튜토리얼 시작
     /// </summary>
     /// <param name="type">튜토리얼 종류</param>
     public void StartTutorial(TutorialType type) {
+        Logger.Log(type + " 튜토리얼 시작");
+
         selectedTutorialData = sets[(int)type];
         currentTutorial = type;
         switch (type) {

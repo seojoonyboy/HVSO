@@ -14,6 +14,7 @@ public class MenuExecuteHandler : MonoBehaviour {
     IEnumerator coroutine;
 
     void Start() {
+        executes = new List<MenuExecute>();
         tutorialManager = GetComponent<MenuTutorialManager>();
     }
 
