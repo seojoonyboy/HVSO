@@ -9,15 +9,27 @@ public class TextTyping : MonoBehaviour
     string typingText;
     private IEnumerator textmeshTyping;
     ScenarioExecuteHandler scenarioHandler;
+    MenuExecuteHandler menuExecuteHandler;
     bool isTyping;
 
     public void StartTyping(string text, ScenarioExecuteHandler handler) {
         if (isTyping) return;
         typingText = text.Replace("<br> ", "|");
         scenarioHandler = handler;
+        menuExecuteHandler = null;
         textmeshTyping = TypeTextMesh();
         StartCoroutine(textmeshTyping);
     }
+
+    public void StartTyping(string text, MenuExecuteHandler handler) {
+        if (isTyping) return;
+        typingText = text.Replace("<br> ", "|");
+        scenarioHandler = null;
+        menuExecuteHandler = handler;
+        textmeshTyping = TypeTextMesh();
+        StartCoroutine(textmeshTyping);
+    }
+
 
     public IEnumerator TypeTextMesh(){
         isTyping = true;
@@ -36,7 +48,12 @@ public class TextTyping : MonoBehaviour
             yield return new WaitForSeconds(0.02f);
         }
         isTyping = false;
-        scenarioHandler.isDone = true;
+
+        if (scenarioHandler != null)
+            scenarioHandler.isDone = true;
+        if (menuExecuteHandler != null)
+            menuExecuteHandler.isDone = true;
+
         //transform.Find("StopTypingTrigger").gameObject.SetActive(false);
     }
 
@@ -45,7 +62,10 @@ public class TextTyping : MonoBehaviour
             StopCoroutine(textmeshTyping);
         textObj.text = typingText.Replace("|", "<br>");
         isTyping = false;
-        scenarioHandler.isDone = true;
+        if (scenarioHandler != null)
+            scenarioHandler.isDone = true;
+        if (menuExecuteHandler != null)
+            menuExecuteHandler.isDone = true;
         //transform.Find("StopTypingTrigger").gameObject.SetActive(false);
     }
 }

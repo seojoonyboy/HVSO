@@ -20,6 +20,8 @@ public class MenuMask : SerializedMonoBehaviour
     public float rectWidthRadius = 0;
     public float rectHeightRadius = 0;
 
+    public GameObject menuTalkPanel;
+
 
     private void Awake() {
         Instance = this;
@@ -79,6 +81,11 @@ public class MenuMask : SerializedMonoBehaviour
         maskPanel.SetActive(true);
     }
 
+    public void BlockScreen() {
+        ActiveMask();
+        ZeroMaskPos();
+    }
+
 
 
     private void ZeroMaskPos() {
@@ -98,4 +105,23 @@ public class MenuMask : SerializedMonoBehaviour
         }
     }
 
+
+    public GameObject GetMenuObject(string main, string sub = null) {
+
+        GameObject maskObject = menuObject[main].gameObject;
+
+        if(maskObject != null) {
+
+            if(sub == null) {
+                return maskObject;
+            }
+            else {
+
+
+                return null;
+            }
+        }
+        return null;
+
+    }
 }
