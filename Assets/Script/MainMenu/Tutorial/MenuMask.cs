@@ -77,13 +77,21 @@ public class MenuMask : SerializedMonoBehaviour
         }      
     }
 
-    public void ActiveMask() {
+    private void ActiveMask() {
         maskPanel.SetActive(true);
+    }
+
+    private void DeactiveMask() {
+        maskPanel.SetActive(false);
     }
 
     public void BlockScreen() {
         ActiveMask();
         ZeroMaskPos();
+    }
+
+    public void UnBlockScreen() {
+        DeactiveMask();
     }
 
 
