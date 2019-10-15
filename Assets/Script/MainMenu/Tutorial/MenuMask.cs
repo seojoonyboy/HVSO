@@ -38,7 +38,7 @@ public class MenuMask : SerializedMonoBehaviour
         rectWidthRadius = topMask.transform.position.x - corner[0].x;
         rectHeightRadius = rectWidthRadius;
 
-        Invoke("test", 1.0f);
+        //Invoke("test", 1.0f);
     }
 
     void test() {
