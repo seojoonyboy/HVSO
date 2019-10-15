@@ -10,4 +10,6 @@ public class MenuExecute : MonoBehaviour {
         this.args = args;
         handler = GetComponent<MenuExecuteHandler>();
     }
+
+    public virtual void Execute() { }
 }
