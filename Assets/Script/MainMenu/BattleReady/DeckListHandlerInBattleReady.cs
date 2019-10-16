@@ -47,7 +47,16 @@ public class DeckListHandlerInBattleReady : MonoBehaviour {
 
         for(int i = 0; i < humanDecks.Count; i++) {
             content.GetChild(i).gameObject.SetActive(true);
-            content.GetChild(i).Find("HeroImg").GetComponent<Image>().sprite = campImages[0];
+
+            Image heroImg = content.GetChild(i).Find("HeroImg").GetComponent<Image>();
+            string banner = humanDecks[i].bannerImage;
+            if(banner == "custom") {
+                heroImg.sprite = accountManager.resource.deckPortraite["h10001"];
+            }
+            else {
+                heroImg.sprite = accountManager.resource.deckPortraite[banner];
+            }
+
             content.GetChild(i).Find("CardNum/Value").GetComponent<TextMeshProUGUI>().text = humanDecks[i].totalCardCount + "/";
             content.GetChild(i).Find("DeckName").GetComponent<TextMeshProUGUI>().text = humanDecks[i].name;
 
@@ -63,7 +72,16 @@ public class DeckListHandlerInBattleReady : MonoBehaviour {
         int index = 0;
         for(int i = humanDecks.Count; i < humanDecks.Count + orcDecks.Count; i++) {
             content.GetChild(i).gameObject.SetActive(true);
-            content.GetChild(i).Find("HeroImg").GetComponent<Image>().sprite = campImages[1];
+
+            Image heroImg = content.GetChild(i).Find("HeroImg").GetComponent<Image>();
+            string banner = orcDecks[index].bannerImage;
+            if (banner == "custom") {
+                heroImg.sprite = accountManager.resource.deckPortraite["h10002"];
+            }
+            else {
+                heroImg.sprite = accountManager.resource.deckPortraite[banner];
+            }
+
             content.GetChild(i).Find("CardNum/Value").GetComponent<TextMeshProUGUI>().text = orcDecks[index].totalCardCount + "/";
             content.GetChild(i).Find("DeckName").GetComponent<TextMeshProUGUI>().text = orcDecks[index].name;
 
