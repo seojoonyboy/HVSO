@@ -37,10 +37,7 @@ public class DeckHandler : MonoBehaviour
         if (deck.bannerImage == "custom")
             deckObj.Find("HeroImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.deckPortraite[deck.heroId];
         else {
-            if (isHuman) 
-                deckObj.Find("HeroImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.deckPortraite["human_template"];
-            else
-                deckObj.Find("HeroImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.deckPortraite["orc_template"];
+            deckObj.Find("HeroImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.deckPortraite[deck.bannerImage];
         }
         deckObj.Find("CardNum").gameObject.SetActive(true);
         deckObj.Find("CardNum/Value").GetComponent<TMPro.TextMeshProUGUI>().text = deck.totalCardCount.ToString() + "/";
@@ -53,10 +50,8 @@ public class DeckHandler : MonoBehaviour
     public void SetNewTemplateDeck(dataModules.Deck deck) {
         templateDeck = deck;
         deckID = deck.id;
-        if(deck.camp == "human")
-            transform.Find("HeroImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.deckPortraite["human_template"];
-        else
-            transform.Find("HeroImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.deckPortraite["orc_template"];
+        if(deck.bannerImage != null)
+            transform.Find("HeroImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.deckPortraite[deck.bannerImage];
         transform.Find("DeckName").GetComponent<TMPro.TextMeshProUGUI>().text = deck.name.ToString();
         transform.Find("CardNum/Value").GetComponent<TMPro.TextMeshProUGUI>().text = deck.totalCardCount.ToString() + "/";
         transform.Find("Selected").gameObject.SetActive(false);
