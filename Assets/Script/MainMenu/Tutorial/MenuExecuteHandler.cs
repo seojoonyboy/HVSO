@@ -1,3 +1,4 @@
+using MenuTutorialModules;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -49,11 +50,13 @@ public class MenuExecuteHandler : MonoBehaviour {
         executes = new List<MenuExecute>();
 
         foreach (MenuTutorialManager.Method method in currentSet.methods) {
-            MenuExecute exec = (MenuExecute)gameObject.AddComponent(Type.GetType(method.name));
+            string methodName = string.Format("MenuTutorialModules.{0}", method.name);
+            MenuExecute exec = (MenuExecute)gameObject.AddComponent(Type.GetType(methodName));
             if(exec == null) {
                 Logger.LogError(method.name + "에 대한 클래스를 찾을 수 없습니다.");
                 continue;
             }
+            executes.Add(exec);
             exec.Initialize(method.args);
         }
         coroutine = SkillTrigger();
@@ -70,7 +73,3 @@ public class MenuExecuteHandler : MonoBehaviour {
         canNextChapter = true;
     }
 }
-
-public class ToOrcStoryExecuteHandler : MenuExecuteHandler { }
-public class ToAIBattleExecuteHandler : MenuExecuteHandler { }
-public class ToBoxOpenExecuteHandler : MenuExecuteHandler { }

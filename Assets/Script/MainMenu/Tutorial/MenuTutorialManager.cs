@@ -7,7 +7,7 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
     public TutorialType currentTutorial;
     public List<TutorialSet> sets;
     [HideInInspector] public TutorialSet selectedTutorialData;
-    MenuExecuteHandler executeHandler;
+    [ShowInInspector] MenuExecuteHandler executeHandler;
 
     void Start() {
         //var IsTutorialCleared = AccountManager.Instance.IsTutorialCleared();
@@ -23,17 +23,7 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
 
         selectedTutorialData = sets[(int)type];
         currentTutorial = type;
-        switch (type) {
-            case TutorialType.TO_ORC_STORY:
-                executeHandler = gameObject.AddComponent<ToOrcStoryExecuteHandler>();
-                break;
-            case TutorialType.TO_AI_BATTLE:
-                executeHandler = gameObject.AddComponent<ToAIBattleExecuteHandler>();
-                break;
-            case TutorialType.TO_BOX_OPEN:
-                executeHandler = gameObject.AddComponent<ToBoxOpenExecuteHandler>();
-                break;
-        }
+        executeHandler = gameObject.AddComponent<MenuExecuteHandler>();
 
         if (executeHandler == null) return;
         executeHandler.Initialize(selectedTutorialData);

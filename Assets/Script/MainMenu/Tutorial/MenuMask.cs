@@ -2,13 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
+using UnityEngine.UI;
 
 public class MenuMask : SerializedMonoBehaviour
 {
     public static MenuMask Instance;
     public Dictionary<string, GameObject> menuObject;
     public GameObject maskPanel;
-
+    public GameObject dimmedPanel;
 
     public RectTransform topMask;
     public RectTransform leftMask;
@@ -21,7 +22,7 @@ public class MenuMask : SerializedMonoBehaviour
     public float rectHeightRadius = 0;
 
     public GameObject menuTalkPanel;
-
+    public Dictionary<GameObject, Transform> dimmedObjInfos;
 
     private void Awake() {
         Instance = this;
@@ -90,6 +91,23 @@ public class MenuMask : SerializedMonoBehaviour
         ZeroMaskPos();
     }
 
+    public void BlockWithTransparent() {
+        ActiveMask();
+        ZeroMaskPos();
+
+        topMask.GetComponent<Image>().color = new Color32(255, 255, 255, 0);
+        leftMask.GetComponent<Image>().color = new Color32(255, 255, 255, 0);
+        rightMask.GetComponent<Image>().color = new Color32(255, 255, 255, 0);
+        bottonMask.GetComponent<Image>().color = new Color32(255, 255, 255, 0);
+    }
+
+    public void ResetTransparentMask() {
+        topMask.GetComponent<Image>().color = new Color32(255, 255, 255, 100);
+        leftMask.GetComponent<Image>().color = new Color32(255, 255, 255, 100);
+        rightMask.GetComponent<Image>().color = new Color32(255, 255, 255, 100);
+        bottonMask.GetComponent<Image>().color = new Color32(255, 255, 255, 100);
+    }
+
     public void UnBlockScreen() {
         DeactiveMask();
     }
@@ -134,5 +152,24 @@ public class MenuMask : SerializedMonoBehaviour
         }
         return null;
 
+    }
+
+    public void OnDimmed(Transform origin, GameObject target) {
+        dimmedPanel.SetActive(true);
+
+        if (dimmedObjInfos == null) dimmedObjInfos = new Dictionary<GameObject, Transform>();
+        dimmedObjInfos[target] = origin;
+        target.transform.SetParent(dimmedPanel.transform);
+    }
+
+    public void OffDimmed(GameObject target) {
+        dimmedPanel.SetActive(false);
+
+        if (dimmedObjInfos.ContainsKey(target)) {
+            target.transform.SetParent(dimmedObjInfos[target]);
+        }
+        else {
+            Logger.LogError(target + "의 Origin 정보를 찾을 수 없습니다.");
+        }
     }
 }

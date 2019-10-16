@@ -46,7 +46,10 @@ public class DeckHandler : MonoBehaviour
     public void SetNewTemplateDeck(dataModules.Deck deck) {
         templateDeck = deck;
         deckID = deck.id;
-        transform.Find("HeroImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.deckPortraite[deck.heroId];
+        if(deck.camp == "human")
+            transform.Find("HeroImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.deckPortraite["human_template"];
+        else
+            transform.Find("HeroImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.deckPortraite["orc_template"];
         transform.Find("DeckName").GetComponent<TMPro.TextMeshProUGUI>().text = deck.name.ToString();
         transform.Find("CardNum/Value").GetComponent<TMPro.TextMeshProUGUI>().text = deck.totalCardCount.ToString() + "/";
         transform.Find("Selected").gameObject.SetActive(false);
