@@ -181,6 +181,7 @@ public class TemplateMenu : MonoBehaviour {
         format.items = items.ToArray();
         format.name = deck.name;
         format.camp = deck.camp;
+        format.bannerImage = deck.id;
 
         AccountManager.Instance.RequestDeckMake(format, (HTTPRequest originalRequest, HTTPResponse response) => {
             if(response.StatusCode == 200) {

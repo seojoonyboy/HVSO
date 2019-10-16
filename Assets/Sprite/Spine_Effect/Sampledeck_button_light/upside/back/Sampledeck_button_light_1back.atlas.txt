@@ -1,13 +1,13 @@
 
 Sampledeck_button_light_1back.png
-size: 1024,256
+size: 512,256
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 bacK2
   rotate: false
   xy: 0, 0
-  size: 520, 164
-  orig: 520, 164
+  size: 502, 156
+  orig: 502, 156
   offset: 0, 0
   index: -1

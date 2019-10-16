@@ -25,7 +25,7 @@ namespace MenuTutorialModules {
 
         //args[0] screen 또는 Dictionary 키값, args[1] 예비
         public override void Execute() {
-            GameObject target;
+            GameObject target = null;
 
             if (args[0] == "screen")
                 target = null;
@@ -43,7 +43,6 @@ namespace MenuTutorialModules {
                 clickStream.Dispose();
                 handler.isDone = true;
             }
-
         }
 
         private void CheckButton() {

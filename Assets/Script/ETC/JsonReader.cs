@@ -80,6 +80,7 @@ namespace dataModules {
         public string flavorText;
         public string camp;
         public string heroId;
+        public string bannerImage;
         public List<Item> items;
         public bool deckValidate;
     }
