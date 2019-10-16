@@ -18,8 +18,8 @@ namespace MenuTutorialModules {
         public virtual void Execute() { }
     }
 
-    public class Wait_MainMenu_Click : MenuExecute {
-        public Wait_MainMenu_Click() : base() { }
+    public class Wait_Click : MenuExecute {
+        public Wait_Click() : base() { }
 
         IDisposable clickStream;
 
@@ -153,12 +153,12 @@ namespace MenuTutorialModules {
         }
     }
 
-    public class Wait_until : MenuExecute {
-        public Wait_until() : base() { }
+    public class Wait_Until : MenuExecute {
+        public Wait_Until() : base() { }
 
         //몇초간 대기
         public override void Execute() {
-            MenuMask.Instance.BlockScreen();
+            MenuMask.Instance.BlockWithTransparent();
             var parms = args;
             float sec = 0;
             float.TryParse(parms[0], out sec);
@@ -167,10 +167,11 @@ namespace MenuTutorialModules {
 
         IEnumerator WaitSec(float sec = 0) {
             yield return new WaitForSeconds(sec);
-            //MenuMask.Instance.BlockScreen();
+            MenuMask.Instance.ResetTransparentMask();
             handler.isDone = true;
         }
     }
+
     public class Menu_Hide_Message : MenuExecute {
         public Menu_Hide_Message() : base() { }
 
@@ -183,6 +184,31 @@ namespace MenuTutorialModules {
     public class Highlight : MenuExecute {
         //버튼 하이라이트
         public override void Execute() {
+            handler.isDone = true;
+        }
+    }
+
+    public class OffHighlight : MenuExecute {
+        public override void Execute() {
+            MenuMask.Instance.UnBlockScreen();
+            handler.isDone = true;
+        }
+    }
+
+    public class Dimmed : MenuExecute {
+        public override void Execute() {
+            var menuMask = MenuMask.Instance;
+            
+            string objectName = args[0];
+            var targetObject = menuMask.GetMenuObject(objectName);
+
+            menuMask.UnBlockScreen();
+            if (args[1] == "on") {
+                menuMask.OnDimmed(targetObject.transform.parent, targetObject);
+            }
+            else if(args[1] == "off") {
+                menuMask.OffDimmed(targetObject);
+            }
             handler.isDone = true;
         }
     }
