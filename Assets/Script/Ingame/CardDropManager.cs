@@ -77,8 +77,24 @@ public partial class CardDropManager {
             if (i == line - 1)
                 break;
         }
-
-
+    }
+    public void ForcedShowDropableSlot(int[] line, string args = null) {
+        Logger.Log("ForcedShowDropableSlot");
+        int temp = 0;
+        for (int i = 0; i < 5; i++) {
+            if (i == line[temp] - 1) {
+                if (args == null || args == "slot") {
+                    if (unitLine[i][0].childCount == 0) {
+                        slotLine[i].GetChild(0).gameObject.SetActive(true);
+                        slotLine[i].GetChild(0).GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1f);
+                    }
+                }
+                else if (args == "line") {
+                    slotLine[i].Find("BattleLineEffect").gameObject.SetActive(true);
+                }
+                temp++;
+            }
+        }
     }
 
 
@@ -88,7 +104,13 @@ public partial class CardDropManager {
         if(ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.isTutorial) {            
             int targetline = ScenarioGameManagment.scenarioInstance.forcedSummonAt;
             int limitLine = ScenarioGameManagment.scenarioInstance.forcedLine;
-            if(targetline != -1) {
+            int multiLine = ScenarioGameManagment.scenarioInstance.multipleforceLine[0];
+
+            if(multiLine != -1) {
+                ForcedShowDropableSlot(ScenarioGameManagment.scenarioInstance.multipleforceLine);
+                return;
+            }
+            if (targetline != -1) {
                 ForcedShowDropableSlot(targetline);
                 return;
             }
