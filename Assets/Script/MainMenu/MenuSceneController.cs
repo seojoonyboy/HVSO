@@ -17,6 +17,7 @@ public class MenuSceneController : MonoBehaviour {
     [SerializeField] SkeletonGraphic battleSwordSkeleton;
     [SerializeField] TMPro.TextMeshProUGUI nicknameText;
     [SerializeField] GameObject battleReadyPanel;   //대전 준비 화면
+    [SerializeField] public GameObject storyLobbyPanel;    //스토리 메뉴 화면
     [SerializeField] SkeletonGraphic menuButton;
     protected SkeletonGraphic selectedAnimation;
     private int currentPage;
@@ -37,6 +38,7 @@ public class MenuSceneController : MonoBehaviour {
             SetCardNumbersPerDic();
         if (PlayerPrefs.GetInt("isFirst") == 1) {
             var newbiComp = newbiLoadingModal.AddComponent<NewbiController>(); //첫 로그인 제어
+            newbiComp.menuSceneController = this;
             newbiComp.name = "NewbiController";
             newbiComp.Init(decksLoader, newbiLoadingModal);
         }
@@ -112,7 +114,8 @@ public class MenuSceneController : MonoBehaviour {
     }
 
     public void OnStoryClicked() {
-        FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MISSION_SELECT_SCENE);
+        //FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MISSION_SELECT_SCENE);
+        storyLobbyPanel.SetActive(true);
         SoundManager.Instance.PlaySound(SoundType.FIRST_TURN);
     }
 

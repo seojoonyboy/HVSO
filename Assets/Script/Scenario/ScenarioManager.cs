@@ -34,7 +34,7 @@ public class ScenarioManager : SerializedMonoBehaviour
         Instance = this;
         OnHumanCategories();
         OnLobbySceneLoaded.Invoke();
-        UpdateUserResource();
+        isIngameButtonClicked = false;
         //PlayerPrefs.SetString("SelectedDeckId", "");
 #if !UNITY_EDITOR
         ScenarioMask.Instance.transform.parent.Find("DebugText").gameObject.SetActive(false);
@@ -47,8 +47,16 @@ public class ScenarioManager : SerializedMonoBehaviour
         //PlayerPrefs.SetString("SelectedDeckId", "");
         //PlayerPrefs.SetString("SelectedDeckType", "");
         //PlayerPrefs.SetString("SelectedBattleType", "");
-    }   
-    
+    }
+
+    [SerializeField] HUDController HUDController;
+    void OnEnable() {
+        HUDController.SetHeader(HUDController.Type.RESOURCE_ONLY_WITH_BACKBUTTON);
+        HUDController.SetBackButton(() => {
+            OnBackButton();
+        });
+    }
+
 
     public void OnBackButton() {
         SoundManager.Instance.PlaySound(SoundType.FIRST_TURN);
@@ -56,7 +64,10 @@ public class ScenarioManager : SerializedMonoBehaviour
         PlayerPrefs.SetString("SelectedDeckId", "");
         PlayerPrefs.SetString("SelectedDeckType", "");
         PlayerPrefs.SetString("SelectedBattleType", "");
-        FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);        
+        //FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);        
+        HUDController.SetHeader(HUDController.Type.SHOW_USER_INFO);
+
+        gameObject.SetActive(false);
     }
 
     public void OnHumanCategories() {
@@ -101,19 +112,6 @@ public class ScenarioManager : SerializedMonoBehaviour
             orc.StageCanvas.SetActive(true);
         }
     }
-
-    private void UpdateUserResource() {
-        TextMeshProUGUI crystalValue, goldValue;
-
-        Transform info = headerMenu.transform.Find("Right/Info");
-        crystalValue = info.Find("CrystalSlider/CrystalValue").gameObject.GetComponent<TextMeshProUGUI>();
-        goldValue = info.Find("GoldSlider/GoldValue").gameObject.GetComponent<TextMeshProUGUI>();
-
-        crystalValue.text = AccountManager.Instance.userData.manaCrystal.ToString();
-        goldValue.text = AccountManager.Instance.userData.gold.ToString();
-    }
-
-
 
     private void SetStoryListInfo() {
         Transform canvas;
@@ -190,7 +188,7 @@ public class ScenarioManager : SerializedMonoBehaviour
         dummyDeck.deckValidate = true;
         
         setDeck.transform.Find("Deck").GetComponent<Button>().onClick.AddListener(() => {
-            Instance.OnDeckSelected(setDeck, dummyDeck, true);
+            OnDeckSelected(setDeck, dummyDeck, true);
         });
         setDeck.transform.Find("Deck/Name").GetComponent<TextMeshProUGUI>().text = deckName;
     }
@@ -259,12 +257,15 @@ public class ScenarioManager : SerializedMonoBehaviour
 
     public void OnCloseBtn() {
         stageCanvas.SetActive(false);
+        HUDController.gameObject.SetActive(true);
     }
 
     public void OnClickStage(ChapterData chapterData, bool isTutorial) {
         stageCanvas.SetActive(true);
         ClearDeckList();
         isTutorialSelected = isTutorial;
+        HUDController.gameObject.SetActive(false);
+
         if (isTutorial) {
             CreateTutorialDeck(isHuman);
 

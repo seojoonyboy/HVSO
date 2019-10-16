@@ -11,6 +11,8 @@ public class NewbiController : MonoBehaviour {
     [SerializeField] Transform loadingPanel;
     List<string> preProcess;
     UnityEvent waitSecEvent = new UnityEvent();
+    public MenuSceneController menuSceneController;
+
 
     private void AddProcess(string eventName) {
         UnityEvent unityEvent;
@@ -56,7 +58,8 @@ public class NewbiController : MonoBehaviour {
             ProcessSocketConnect();
         }
         else if(eventName == "OnInvenLoadFinished") {
-            FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MISSION_SELECT_SCENE);
+            //FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MISSION_SELECT_SCENE);
+            menuSceneController.storyLobbyPanel.SetActive(true);
         }
 
         preProcess.Remove(eventName);
