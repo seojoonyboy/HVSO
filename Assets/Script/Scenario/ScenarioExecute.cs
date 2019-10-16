@@ -73,7 +73,7 @@ public class NPC_Print_message : ScenarioExecute {
             scenarioMask.talkingText.transform.Find("NameObject/EnemyName").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.resource.ScenarioUnitResurce[args[0]].name;
         }
         scenarioMask.talkingText.GetComponent<TextTyping>().StartTyping(args[1], handler);
-        //scenarioMask.talkingText.transform.Find("StopTypingTrigger").gameObject.SetActive(true);
+        scenarioMask.talkingText.transform.Find("StopTypingTrigger").gameObject.SetActive(true);
     }
 }
 
@@ -239,6 +239,45 @@ public class Wait_summon : ScenarioExecute {
     }
 }
 
+public class Disable_Deck_card : ScenarioExecute {
+    public Disable_Deck_card() : base() { }
+
+    //args[0] 카드 아이디
+    //특정 카드 이외의 드래그 제외
+    public override void Execute() {
+        GameObject cardHand = scenarioMask.targetObject["hand_card"];
+        
+        foreach(Transform slot in cardHand.transform) {
+            if (slot.childCount < 1)
+                continue;
+
+            CardHandler card = slot.GetChild(0).gameObject.GetComponent<CardHandler>();
+
+            if (card.cardID != args[0])
+                slot.GetChild(0).gameObject.GetComponent<CardHandler>().enabled = false;
+        }
+        handler.isDone = true;
+    }
+}
+
+public class Enable_Deck_card : ScenarioExecute {
+    public Enable_Deck_card() : base() { }
+
+    public override void Execute() {
+        GameObject cardHand = scenarioMask.targetObject["hand_card"];
+
+        foreach(Transform slot in cardHand.transform) {
+            if (slot.childCount < 1)
+                continue;
+            slot.GetChild(0).gameObject.GetComponent<CardHandler>().enabled = true;
+        }
+        handler.isDone = true;
+    }
+
+}
+
+
+
 
 public class Wait_Multiple_Summon : ScenarioExecute {
     public Wait_Multiple_Summon() : base() { }
@@ -290,6 +329,56 @@ public class Wait_Multiple_Summon : ScenarioExecute {
         scenarioMask.CardDeckGlow();
     }
 }
+
+public class Wait_Multiple_Summon_ScopeLine : ScenarioExecute {
+    public Wait_Multiple_Summon_ScopeLine() : base() { }
+
+    private int summonCount = 0;
+    private int clearCount = -1;
+    private string[] stringNum;
+    private int[] line;
+
+    // args[0] x,x
+    public override void Execute() {
+        stringNum = args[0].Split(',');
+        line = new int[stringNum.Length];
+
+        for(int i = 0; i< stringNum.Length; i++) {
+            line[i] = int.Parse(stringNum[i]);
+        }
+        scenarioMask.CardDeckGlow();
+        scenarioGameManagment.multipleforceLine = line;
+        clearCount = stringNum.Length;
+        PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.UNIT_SUMMONED, CheckSummon);
+        PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.UNIT_DROP_FAIL, HighLightOn);
+    }
+
+    private void CheckSummon(Enum event_type, Component Sender, object Param) {
+        summonCount++;
+        
+        if (summonCount == clearCount) {
+            PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.UNIT_SUMMONED, CheckSummon);
+            PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.UNIT_DROP_FAIL, HighLightOn);
+            scenarioGameManagment.multipleforceLine[0] = -1;
+            scenarioGameManagment.multipleforceLine[1] = -1;
+            handler.isDone = true;
+        }
+
+        if(summonCount < clearCount)
+            Invoke("Glowing", 0.1f);
+
+    }
+
+    private void Glowing() {
+        scenarioMask.CardDeckGlow();
+    }
+
+
+    private void HighLightOn(Enum event_type, Component Sender, object Param) {
+        scenarioMask.CardDeckGlow();
+    }
+}
+
 
 
 public class Wait_Multiple_Summon_linelimit : ScenarioExecute {
@@ -700,7 +789,9 @@ public class Force_drop_zone : ScenarioExecute {
             return;
         }
 
-        
+
+        if (args.Count > 2)
+            scenarioGameManagment.targetArgs = args[2];
 
         scenarioGameManagment.forcedSummonAt = detail;
         handler.isDone = true;

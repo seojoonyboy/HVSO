@@ -77,8 +77,29 @@ public partial class CardDropManager {
             if (i == line - 1)
                 break;
         }
+    }
+    public void ForcedShowDropableSlot(int[] line, string args = null) {
+        Logger.Log("ForcedShowDropableSlot");
+        int temp = 0;
+        for (int i = 0; i < 5; i++) {
+            if (temp >= line.Length)
+                break;
 
+            if (i == line[temp] - 1) {
+                if (args == null || args == "slot") {
+                    if (unitLine[i][0].childCount == 0) {
+                        slotLine[i].GetChild(0).gameObject.SetActive(true);
+                        slotLine[i].GetChild(0).GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1f);
+                    }
+                }
+                else if (args == "line") {
+                    slotLine[i].Find("BattleLineEffect").gameObject.SetActive(true);
+                }
 
+                if (temp < line.Length)
+                    temp++;
+            }
+        }
     }
 
 
@@ -88,7 +109,13 @@ public partial class CardDropManager {
         if(ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.isTutorial) {            
             int targetline = ScenarioGameManagment.scenarioInstance.forcedSummonAt;
             int limitLine = ScenarioGameManagment.scenarioInstance.forcedLine;
-            if(targetline != -1) {
+            int multiLine = ScenarioGameManagment.scenarioInstance.multipleforceLine[0];
+
+            if(multiLine != -1) {
+                ForcedShowDropableSlot(ScenarioGameManagment.scenarioInstance.multipleforceLine);
+                return;
+            }
+            if (targetline != -1) {
                 ForcedShowDropableSlot(targetline);
                 return;
             }
@@ -396,11 +423,30 @@ public partial class CardDropManager {
             magicTarget = target[1];
 
             int targetline = ScenarioGameManagment.scenarioInstance.forcedSummonAt - 1;
-            for(int i = 0; i< 5; i++) {
-                if (i == targetline) {
-                    slotLine[i].Find("BattleLineEffect").gameObject.SetActive(true);
-                    return;
+            if (magicTarget == "line") {
+                for (int i = 0; i < 5; i++) {
+                    if (i == targetline) {
+                        slotLine[i].Find("BattleLineEffect").gameObject.SetActive(true);
+                        return;
+                    }
                 }
+            }
+            if (magicTarget.Contains("unit")) {
+                for (int i = 0; i < 5; i++) {
+                    if (ScenarioGameManagment.scenarioInstance.targetArgs == "unit") {
+                        if (i == targetline) {
+                            enemyUnitLine[i][0].GetChild(0).Find("ClickableUI").gameObject.SetActive(true);
+                            enemyUnitLine[i][0].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(true);
+                        }
+                    }
+                    else {
+                        if (i == targetline) {
+                            enemyUnitLine[i][0].GetChild(0).Find("ClickableUI").gameObject.SetActive(true);
+                            enemyUnitLine[i][0].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(true);
+                        }
+                    }                    
+                }
+                return;
             }
         }
 
