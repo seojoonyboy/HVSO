@@ -33,7 +33,7 @@ public class TemplateMenu : MonoBehaviour {
     public void SetTemplateNewDecks(string heroId, bool isHuman) {
         heroID = heroId;
         this.isHuman = isHuman;
-        for (int i = 0; i < 3; i++) {
+        for (int i = 1; i < 4; i++) {
             transform.Find("DeckList").GetChild(i).gameObject.SetActive(false);
         }
         List<Templates> templates;
@@ -43,7 +43,7 @@ public class TemplateMenu : MonoBehaviour {
             templates = AccountManager.Instance.orcTemplates;
         foreach (Templates heros in templates) {
             if (heros.id == heroId) {
-                int count = 0;
+                int count = 1;
                 foreach (Deck deck in heros.templates) {
                     GameObject templateDeck = transform.Find("DeckList").GetChild(count).gameObject;
                     templateDeck.SetActive(true);
@@ -58,6 +58,7 @@ public class TemplateMenu : MonoBehaviour {
 
         //.decksLoader.Load();
         quickDeckMakeBtn.SetActive(false);
+        SelectNewDeck();
     }
 
 
