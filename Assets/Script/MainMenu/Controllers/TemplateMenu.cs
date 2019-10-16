@@ -30,6 +30,8 @@ public class TemplateMenu : MonoBehaviour {
     public DeckHandler selectedDeck;
     bool newDeck;
 
+    //static Deck selectedDeckBtn;
+
     public void SetTemplateNewDecks(string heroId, bool isHuman) {
         heroID = heroId;
         this.isHuman = isHuman;
@@ -100,7 +102,7 @@ public class TemplateMenu : MonoBehaviour {
         deckEditCtrl.gameObject.SetActive(true);
         deckEditCtrl.RefreshLine();
         deckEditCtrl.templateMenu = this;
-        CancelSelectDeck();
+        //CancelSelectDeck();
         FindObjectOfType<HUDController>().SetHeader(HUDController.Type.HIDE);
     }
 
