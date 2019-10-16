@@ -8,6 +8,7 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
     public List<TutorialSet> sets;
     [HideInInspector] public TutorialSet selectedTutorialData;
     [ShowInInspector] MenuExecuteHandler executeHandler;
+    public ScenarioManager scenarioManager;
 
     void Start() {
         //var IsTutorialCleared = AccountManager.Instance.IsTutorialCleared();
