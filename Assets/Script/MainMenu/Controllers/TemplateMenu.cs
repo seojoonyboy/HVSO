@@ -33,6 +33,8 @@ public class TemplateMenu : MonoBehaviour {
     public void SetTemplateNewDecks(string heroId, bool isHuman) {
         heroID = heroId;
         this.isHuman = isHuman;
+        transform.Find("BackgroundImage/human").gameObject.SetActive(isHuman);
+        transform.Find("BackgroundImage/orc").gameObject.SetActive(!isHuman);
         for (int i = 1; i < 4; i++) {
             transform.Find("DeckList").GetChild(i).gameObject.SetActive(false);
         }

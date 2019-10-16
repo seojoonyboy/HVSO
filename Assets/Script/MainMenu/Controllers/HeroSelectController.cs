@@ -20,6 +20,8 @@ public class HeroSelectController : MonoBehaviour
         transform.Find("InnerCanvas/RaceSelect/OrcSelect").GetChild(0).gameObject.SetActive(false);
         transform.Find("InnerCanvas/HeroSpines/HumanSpines").gameObject.SetActive(true);
         transform.Find("InnerCanvas/HeroSpines/OrcSpines").gameObject.SetActive(false);
+        transform.Find("InnerCanvas/BackgroundImage/human").gameObject.SetActive(true);
+        transform.Find("InnerCanvas/BackgroundImage/orc").gameObject.SetActive(false);
         isHuman = true;
         humanHeroScroll.GoToScreen(0);
         SetHeroInfo(0, true);
@@ -31,6 +33,8 @@ public class HeroSelectController : MonoBehaviour
         transform.Find("InnerCanvas/RaceSelect/OrcSelect").GetChild(0).gameObject.SetActive(true);
         transform.Find("InnerCanvas/HeroSpines/HumanSpines").gameObject.SetActive(false);
         transform.Find("InnerCanvas/HeroSpines/OrcSpines").gameObject.SetActive(true);
+        transform.Find("InnerCanvas/BackgroundImage/human").gameObject.SetActive(false);
+        transform.Find("InnerCanvas/BackgroundImage/orc").gameObject.SetActive(true);
         isHuman = false;
         orcHeroScroll.GoToScreen(0);        
         SetHeroInfo(0, false);
@@ -40,9 +44,9 @@ public class HeroSelectController : MonoBehaviour
     public void SetHeroInfo(int heroIndex, bool isHuman) {
         string heroId;
         if (isHuman)
-            heroId = humanHeroScroll.transform.GetChild(0).GetChild(heroIndex).name;
+            heroId = humanHeroScroll.transform.Find("Content").GetChild(heroIndex).name;
         else
-            heroId = orcHeroScroll.transform.GetChild(0).GetChild(heroIndex).name;
+            heroId = orcHeroScroll.transform.Find("Content").GetChild(heroIndex).name;
         HeroInventory heroData = new HeroInventory();
         foreach (dataModules.HeroInventory hero in AccountManager.Instance.allHeroes) {
             if (hero.id == heroId) {
