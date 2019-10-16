@@ -47,6 +47,7 @@ public class CardDictionaryManager : MonoBehaviour {
             SetToHumanCards();
         else
             SetToOrcCards();
+        RefreshLine();
     }
 
     public void SetToHumanCards() {
