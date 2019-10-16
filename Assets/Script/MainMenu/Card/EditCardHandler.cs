@@ -70,6 +70,10 @@ public class EditCardHandler : MonoBehaviour {
         standby = true;
         while (standby) {
             yield return new WaitForSeconds(0.1f);
+            if (!dragable) break;
+            if (dragging) break;
+            if (onAnimation) break;
+            if (!standby) break;
             if (Time.time - clickTime >= 0.2f) {
                 dragable = false;
             }
