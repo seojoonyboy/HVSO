@@ -730,6 +730,7 @@ public class DeckEditController : MonoBehaviour
         formatData.items = items.ToArray(); //추가한 카드 정보들
         formatData.name = nameVal.Replace(" ", string.Empty);
         formatData.camp = (isHuman == true) ? "human" : "orc";
+        formatData.bannerImage = "custom";
 
         AccountManager.Instance.RequestDeckMake(formatData, OnMakeNewDeckFinished);
     }
