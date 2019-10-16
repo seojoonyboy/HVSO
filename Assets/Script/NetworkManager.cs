@@ -175,6 +175,7 @@ public partial class NetworkManager {
         public string name;
         public string heroId;
         public string camp;
+        public string bannerImage;
         public DeckEditController.DeckItem[] items;
     }
 
