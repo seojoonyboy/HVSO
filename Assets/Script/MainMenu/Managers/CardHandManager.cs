@@ -657,11 +657,7 @@ public class CardHandManager : MonoBehaviour {
         PlayMangement.instance.isMulligan = false;
         firstDrawParent.gameObject.SetActive(false);
         GameObject firstOrcTurnObj = firstDrawParent.parent.Find("First_OrcPlay").gameObject;
-        firstOrcTurnObj.SetActive(true);
-        yield return new WaitForSeconds(1.0f);
-        firstOrcTurnObj.SetActive(false);
-
-        SoundManager.Instance.PlaySound(SoundType.FIRST_TURN);
+        PlayMangement.instance.gameObject.GetComponent<TurnMachine>().StartGame(firstOrcTurnObj);
     }
 
     public IEnumerator EditorSkipMulligan() {

@@ -49,6 +49,20 @@ public class TurnMachine : MonoBehaviour {
     private IEnumerator StopInvokeTurn() {
         yield return new WaitUntil(() => turnStop == false);
     }
+
+    public void StartGame(GameObject orcPanel) {
+        StartCoroutine(CheckStart(orcPanel));
+    }
+
+    private IEnumerator CheckStart(GameObject orcPanel) {
+        yield return StopInvokeTurn();
+        orcPanel.SetActive(true);
+        yield return new WaitForSeconds(1.0f);
+        orcPanel.SetActive(false);
+
+        SoundManager.Instance.PlaySound(SoundType.FIRST_TURN);
+    }
+
     
     public TurnType CurrentTurn() {
         return turn;
