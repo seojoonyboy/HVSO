@@ -73,7 +73,7 @@ public class NPC_Print_message : ScenarioExecute {
             scenarioMask.talkingText.transform.Find("NameObject/EnemyName").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.resource.ScenarioUnitResurce[args[0]].name;
         }
         scenarioMask.talkingText.GetComponent<TextTyping>().StartTyping(args[1], handler);
-        //scenarioMask.talkingText.transform.Find("StopTypingTrigger").gameObject.SetActive(true);
+        scenarioMask.talkingText.transform.Find("StopTypingTrigger").gameObject.SetActive(true);
     }
 }
 
@@ -341,10 +341,12 @@ public class Wait_Multiple_Summon_ScopeLine : ScenarioExecute {
     // args[0] x,x
     public override void Execute() {
         stringNum = args[0].Split(',');
+        line = new int[stringNum.Length];
 
         for(int i = 0; i< stringNum.Length; i++) {
             line[i] = int.Parse(stringNum[i]);
         }
+        scenarioMask.CardDeckGlow();
         scenarioGameManagment.multipleforceLine = line;
         clearCount = stringNum.Length;
         PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.UNIT_SUMMONED, CheckSummon);
@@ -353,7 +355,7 @@ public class Wait_Multiple_Summon_ScopeLine : ScenarioExecute {
 
     private void CheckSummon(Enum event_type, Component Sender, object Param) {
         summonCount++;
-        Invoke("Glowing", 0.1f);
+        
         if (summonCount == clearCount) {
             PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.UNIT_SUMMONED, CheckSummon);
             PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.UNIT_DROP_FAIL, HighLightOn);
@@ -361,6 +363,10 @@ public class Wait_Multiple_Summon_ScopeLine : ScenarioExecute {
             scenarioGameManagment.multipleforceLine[1] = -1;
             handler.isDone = true;
         }
+
+        if(summonCount < clearCount)
+            Invoke("Glowing", 0.1f);
+
     }
 
     private void Glowing() {
@@ -783,7 +789,9 @@ public class Force_drop_zone : ScenarioExecute {
             return;
         }
 
-        
+
+        if (args.Count > 2)
+            scenarioGameManagment.targetArgs = args[2];
 
         scenarioGameManagment.forcedSummonAt = detail;
         handler.isDone = true;

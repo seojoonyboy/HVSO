@@ -29,6 +29,7 @@ public class ScenarioGameManagment : PlayMangement {
     public int forcedSummonAt = -1;
     public int forcedLine = -1;
     public int[] multipleforceLine = { -1, -1 };
+    public string targetArgs = "";
 
     bool canBattleProceed = true;
     int battleStopAt = 0;

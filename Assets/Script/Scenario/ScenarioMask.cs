@@ -186,7 +186,7 @@ public class ScenarioMask : SerializedMonoBehaviour
                         maskObject = PlayMangement.instance.player.playerUI.transform.parent.Find("FirstDrawWindow").Find("FinishButton").gameObject;
                     }
                     if (sub == "endTurn") {
-                        maskObject = (PlayMangement.instance.player.isHuman) ? maskObject.transform.Find("HumanButton").gameObject : maskObject.transform.Find("Orc").gameObject;
+                        maskObject = (PlayMangement.instance.player.isHuman) ? maskObject.transform.Find("HumanButton").gameObject : maskObject.transform.Find("OrcButton").gameObject;
                     }
                 }
 
