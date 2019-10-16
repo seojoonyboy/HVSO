@@ -70,7 +70,6 @@ public class EditCardHandler : MonoBehaviour {
         standby = true;
         while (standby) {
             yield return new WaitForSeconds(0.1f);
-            if (!dragable) break;
             if (dragging) break;
             if (onAnimation) break;
             if (!standby) break;
