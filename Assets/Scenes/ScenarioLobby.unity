@@ -51364,7 +51364,109 @@ MonoBehaviour:
         mscorlib
     - Name: 
       Entry: 12
+      Data: 4
+    - Name: 
+      Entry: 7
+      Data: 306|Tutorial.Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Wait_until
+    - Name: args
+      Entry: 7
+      Data: 307|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: 2
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 308|Tutorial.Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: NPC_Print_message
+    - Name: args
+      Entry: 7
+      Data: 309|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 1
+      Data: ac10012
+    - Name: 
+      Entry: 1
+      Data: "\uC6B0\uB9AC \uC624\uD06C\uB4E4\uC740 \uC778\uAC04\uBCF4\uB2E4 \uBE60\uB974\uAC8C
+        \uBCD1\uB825\uC744 \uBC30\uCE58\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4. \uAC00\uC7A5
+        \uAE30\uBCF8\uC801\uC778 \uC624\uD06C \uBCD1\uC0AC\uB4E4\uC744 \uBC30\uCE58\uD574
+        \uC801\uC744 \uB300\uBE44\uD574\uC8FC\uC2ED\uC2DC\uC694."
+    - Name: 
+      Entry: 1
+      Data: true
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 310|Tutorial.Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Wait_click
+    - Name: args
+      Entry: 7
+      Data: 311|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: screen
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 312|Tutorial.Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Unblock_Screen
+    - Name: args
+      Entry: 7
+      Data: 313|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
       Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 13
       Data: 
