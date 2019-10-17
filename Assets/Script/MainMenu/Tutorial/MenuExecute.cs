@@ -255,17 +255,19 @@ namespace MenuTutorialModules {
         }
     }
 
-    /// <summary>
-    /// 스토리 메뉴에서 진영 선택 이후 덱 자동 선택 (스토리 상세 모달로 바로 이동)
-    /// </summary>
-    public class AutoDeckSelectInStory : MenuExecute {
+    public class AutoSelectStoryDeck : MenuExecute {
         public override void Execute() {
             ScenarioManager scenarioManager = GetComponent<MenuTutorialManager>().scenarioManager;
-            var content = scenarioManager.orc.stageContent;
-
-            Button deckButton = content.transform.GetChild(0).GetComponent<Button>();
-            deckButton.onClick.Invoke();
-            scenarioManager.selectedDeck = new object[] { true, AccountManager.Instance.orcDecks[0] };
+            string target = args[0];
+            switch (target) {
+                case "orc":
+                    var content = scenarioManager.orc.stageContent;
+                    Button deckButton = content.transform.GetChild(0).GetComponent<Button>();
+                    deckButton.onClick.Invoke();
+                    scenarioManager.selectedDeck = new object[] { true, AccountManager.Instance.orcDecks[0] };
+                    scenarioManager.deckContent.transform.GetChild(0).gameObject.SetActive(false);
+                    break;
+            }
 
             handler.isDone = true;
         }
