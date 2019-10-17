@@ -117,7 +117,7 @@ public class DeckHandler : MonoBehaviour
     public void DeleteButton() {
         if (AccountManager.Instance == null) return;
 
-        Modal.instantiate("덱을 삭제하시겠습니까?", Modal.Type.CHECK, () => {
+        Modal.instantiate("덱을 삭제하시겠습니까?", Modal.Type.YESNO, () => {
             DeckSettingManager deckManager = transform.parent.parent.parent.GetComponent<DeckSettingManager>();
             StartCoroutine(deckManager.CloseDeckButtons());
             //transform.GetChild(0).Find("Buttons").localPosition = new Vector3(-5, 0, 0);
