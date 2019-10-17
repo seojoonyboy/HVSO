@@ -437,25 +437,25 @@ public class SceneStartController : MonoBehaviour
                         {
                             Notification.RequestPermissions((bool result2) =>
                             {
-                                Notification.ScheduleUserNotification("1", "Haegin3", "Content 3", -1, 90, new Color32(0xff, 0x44, 0x44, 0xff), (bool r, string id) =>
-                                {
-#if MDEBUG
-                                    Debug.Log("Scheduled " + r + "  id " + id);
-#endif
-                                    Notification.CancelUserNotification("1");
-                                    Notification.ScheduleUserNotification("2", "Haegin1", "Content 1", -1, 30, new Color32(0xff, 0x44, 0x44, 0xff), (bool r2, string id2) =>
-                                    {
-#if MDEBUG
-                                        Debug.Log("Scheduled " + r2 + "  id " + id2);
-#endif
-                                        Notification.ScheduleUserNotification("3", "Haegin2", "Content 2", -1, 60, new Color32(0xff, 0x44, 0x44, 0xff), (bool r3, string id3) =>
-                                        {
-#if MDEBUG
-                                            Debug.Log("Scheduled " + r3 + "  id " + id3);
-#endif
-                                        });
-                                    });
-                                });
+//                                Notification.ScheduleUserNotification("1", "Haegin3", "Content 3", -1, 90, new Color32(0xff, 0x44, 0x44, 0xff), (bool r, string id) =>
+//                                {
+//#if MDEBUG
+//                                    Debug.Log("Scheduled " + r + "  id " + id);
+//#endif
+//                                    Notification.CancelUserNotification("1");
+//                                    Notification.ScheduleUserNotification("2", "Haegin1", "Content 1", -1, 30, new Color32(0xff, 0x44, 0x44, 0xff), (bool r2, string id2) =>
+//                                    {
+//#if MDEBUG
+//                                        Debug.Log("Scheduled " + r2 + "  id " + id2);
+//#endif
+//                                        Notification.ScheduleUserNotification("3", "Haegin2", "Content 2", -1, 60, new Color32(0xff, 0x44, 0x44, 0xff), (bool r3, string id3) =>
+//                                        {
+//#if MDEBUG
+//                                            Debug.Log("Scheduled " + r3 + "  id " + id3);
+//#endif
+//                                        });
+//                                    });
+//                                });
 
                                 // Push Notification 을 등록한다. 
                                 Notification.RegisterPushNotificationDevice();
