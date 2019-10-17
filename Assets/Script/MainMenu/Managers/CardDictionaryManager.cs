@@ -52,11 +52,13 @@ public class CardDictionaryManager : MonoBehaviour {
 
     public void SetToHumanCards() {
         isHumanDictionary = true;
+        transform.Find("Background/human").gameObject.SetActive(true);
         SetCardsByClass();
     }
 
     public void SetToOrcCards() {
         isHumanDictionary = false;
+        transform.Find("Background/orc").gameObject.SetActive(true);
         SetCardsByClass();
     }
 
@@ -370,23 +372,31 @@ public class CardDictionaryManager : MonoBehaviour {
     }
     public void EndClick(GameObject btn, string heroId) {
         if (!standby) return;
+        btn.transform.Find("SelectBack").GetComponent<SkeletonGraphic>().Initialize(true);
+        btn.transform.Find("SelectBack").GetComponent<SkeletonGraphic>().Update(0);
+        btn.transform.Find("SelectFront").GetComponent<SkeletonGraphic>().Initialize(true);
+        btn.transform.Find("SelectFront").GetComponent<SkeletonGraphic>().Update(0);
         if (selectedHero == null) {
             selectedHero = btn;
             selectedHeroId = heroId;
-            btn.transform.Find("Selected").gameObject.SetActive(true);
+            btn.transform.Find("SelectBack").gameObject.SetActive(true);
+            btn.transform.Find("SelectFront").gameObject.SetActive(true);
             SortHeroCards();
         }
         else if (selectedHero == btn) {
             selectedHero = null;
             selectedHeroId = "";
-            btn.transform.Find("Selected").gameObject.SetActive(false);
+            btn.transform.Find("SelectBack").gameObject.SetActive(false);
+            btn.transform.Find("SelectFront").gameObject.SetActive(false);
             ApplySortting();
         }
         else {
-            selectedHero.transform.Find("Selected").gameObject.SetActive(false);
+            selectedHero.transform.Find("SelectBack").gameObject.SetActive(false);
+            selectedHero.transform.Find("SelectFront").gameObject.SetActive(false);
             selectedHero = btn;
             selectedHeroId = heroId;
-            btn.transform.Find("Selected").gameObject.SetActive(true);
+            btn.transform.Find("SelectBack").gameObject.SetActive(true);
+            btn.transform.Find("SelectFront").gameObject.SetActive(true);
             SortHeroCards();
         }
         standby = false;
