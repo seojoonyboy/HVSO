@@ -51,6 +51,7 @@ public class TemplateMenu : MonoBehaviour {
                 foreach (Deck deck in heros.templates) {
                     GameObject templateDeck = transform.Find("DeckList").GetChild(count).gameObject;
                     templateDeck.SetActive(true);
+                    deck.bannerImage = deck.id;
                     templateDeck.GetComponent<DeckHandler>().SetNewTemplateDeck(deck);
                     count++;
                 }

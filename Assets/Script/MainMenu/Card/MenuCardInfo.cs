@@ -6,6 +6,8 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using BestHTTP;
 using dataModules;
+using Spine;
+using Spine.Unity;
 
 public class MenuCardInfo : MonoBehaviour {
     Translator translator;
@@ -24,6 +26,9 @@ public class MenuCardInfo : MonoBehaviour {
 
     private void Start() {
         accountManager = AccountManager.Instance;
+        transform.Find("CreateSpine").GetComponent<SkeletonGraphic>().Initialize(false);
+        transform.Find("CreateSpine").GetComponent<SkeletonGraphic>().Update(0);
+        transform.Find("CreateSpine").GetComponent<SkeletonGraphic>().AnimationState.Complete += delegate { EndCardMaking(); };
         OnMakeCardFinished.AddListener(() => AccountManager.Instance.RefreshInventories(OnInventoryRefreshFinished));
     }
     public virtual void SetCardInfo(CollectionCard data, bool isHuman, Transform dicCard = null) {
@@ -222,6 +227,7 @@ public class MenuCardInfo : MonoBehaviour {
     }
 
     public void CloseInfo() {
+        if (cardCreate) return;
         transform.parent.gameObject.SetActive(false);
         transform.gameObject.SetActive(false);
         transform.parent.Find("HeroInfo").gameObject.SetActive(false);
@@ -235,6 +241,8 @@ public class MenuCardInfo : MonoBehaviour {
 
     public void MakeCard() {
         if (cardCreate) return;
+        transform.Find("CreateSpine").gameObject.SetActive(true);
+        transform.Find("CreateSpine").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, "MAKING_" + cardData.rarelity, false);
         cardCreate = true;
         accountManager.RequestCardMake(cardId, WaitRequest);
     }
@@ -242,6 +250,9 @@ public class MenuCardInfo : MonoBehaviour {
     public void BreakCard() {
         if (cardCreate) return;
         cardCreate = true;
+        transform.Find("CreateSpine").gameObject.SetActive(true);
+        transform.Find("CreateSpine").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, "DECOMPOSITION_" + cardData.rarelity, false);
+        
         accountManager.RequestCardBreak(cardId, WaitRequest);
         string rarelity = accountManager.cardPackage.data[cardId].rarelity;
         if (accountManager.cardPackage.data[cardId].camp == "human")
@@ -268,11 +279,15 @@ public class MenuCardInfo : MonoBehaviour {
                 accountManager.SetCardData();
                 accountManager.SetHeroInventories(result.heroInventories);
                 //menuSceneController.decksLoader.LoadOnlyDecks();
-                dicCard.GetComponent<MenuCardHandler>().DrawCard(cardId, isHuman);
-                SetCardInfo(cardData, isHuman);
-                cardDic.transform.Find("UIbar/Crystal/Value").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userResource.crystal.ToString();
-                cardCreate = false;
+                
             }
         }
+    }
+
+    void EndCardMaking() {
+        dicCard.GetComponent<MenuCardHandler>().DrawCard(cardId, isHuman);
+        SetCardInfo(cardData, isHuman);
+        cardDic.transform.Find("UIbar/Crystal/Value").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userResource.crystal.ToString();
+        cardCreate = false;
     }
 }

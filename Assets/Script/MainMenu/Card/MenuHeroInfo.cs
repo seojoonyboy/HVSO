@@ -14,8 +14,6 @@ public class MenuHeroInfo : MonoBehaviour
                 break;
             }
         }
-
-        transform.gameObject.SetActive(true);
         transform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = hero.name;
         transform.Find("HeroDialog/Name").GetComponent<TMPro.TextMeshProUGUI>().text = hero.name;
         transform.Find("HeroSpines").GetChild(0).gameObject.SetActive(false);
