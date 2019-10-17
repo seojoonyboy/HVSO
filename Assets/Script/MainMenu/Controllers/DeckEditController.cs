@@ -11,7 +11,7 @@ public class DeckEditController : MonoBehaviour
 {
     [SerializeField] MenuCardInfo menuCardInfo;
     [SerializeField] Transform cardStorage;
-    [SerializeField] Transform heroInfoWindow;
+    [SerializeField] MenuHeroInfo heroInfoWindow;
     public string heroID;
     HeroInventory heroData;
 
@@ -188,7 +188,7 @@ public class DeckEditController : MonoBehaviour
     }
 
     public void OpenHeroInfo() {
-        heroInfoWindow.parent.gameObject.SetActive(true);
+        heroInfoWindow.transform.parent.gameObject.SetActive(true);
         heroInfoWindow.gameObject.SetActive(true);
     }
     public void CloseHeroInfo() {
@@ -285,7 +285,7 @@ public class DeckEditController : MonoBehaviour
     public void SetDeckEdit(string heroId, bool isHuman) {
         editing = false;
         InitCanvas();
-        Transform heroCards;
+        //Transform heroCards;
         heroData = null;
         heroID = heroId;
         this.isHuman = isHuman;
@@ -293,38 +293,15 @@ public class DeckEditController : MonoBehaviour
 
         deckNamePanel.transform.Find("NameTemplate").GetComponent<TMPro.TMP_InputField>().text = "";
         transform.Find("InnerCanvas/DeckNamePanel/PlaceHolder").gameObject.SetActive(true);    
-
-        heroData = AccountManager.Instance.myHeroInventories[heroId];
-        Transform heroSpines = heroInfoWindow.Find("HeroSpines");
-        for (int i = 0; i < heroSpines.childCount; i++) 
-            heroSpines.GetChild(i).gameObject.SetActive(false);
-        heroSpines.Find(heroId).gameObject.SetActive(true);
-        heroInfoWindow.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.name;
-
-        if (isHuman) {
-            heroInfoWindow.Find("BackGroundImage/Human").gameObject.SetActive(true);
-            heroInfoWindow.Find("BackGroundImage/Orc").gameObject.SetActive(false);
-            heroCards = heroInfoWindow.Find("HeroCards/Human");
-            heroInfoWindow.Find("HeroCards/Orc").gameObject.SetActive(false);
-            foreach(dataModules.Templates data in AccountManager.Instance.humanTemplates) {
-                if (data.id == heroId) {
-                    heroData = data;
-                    break;
-                }
+        heroInfoWindow.SetHeroInfoWindow(heroId);
+        
+        foreach (dataModules.HeroInventory heroes in AccountManager.Instance.allHeroes) {
+            if (heroes.id == heroId) {
+                heroData = heroes;
+                break;
             }
         }
-        else {
-            heroInfoWindow.Find("BackGroundImage/Human").gameObject.SetActive(false);
-            heroInfoWindow.Find("BackGroundImage/Orc").gameObject.SetActive(true);
-            heroCards = heroInfoWindow.Find("HeroCards/Orc");
-            heroInfoWindow.Find("HeroCards/Human").gameObject.SetActive(false);
-            foreach (dataModules.Templates data in AccountManager.Instance.orcTemplates) {
-                if (data.id == heroId) {
-                    heroData = data;
-                    break;
-                }
-            }
-        }
+
         Dictionary<string, Sprite> classSprite = AccountManager.Instance.resource.classImage;
         transform.Find("InnerCanvas/SortToClass1").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[0] + "_sortbtnOff"];
         transform.Find("InnerCanvas/SortToClass1/Selected").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[0] + "_sortbtnOn"];
@@ -336,12 +313,6 @@ public class DeckEditController : MonoBehaviour
             transform.Find("InnerCanvas/ShowAllClass/Selected").GetComponent<Image>().sprite = GetAllSortImage(heroData.heroClasses[0], heroData.heroClasses[1], true);
         }
 
-        heroInfoWindow.Find("Class/Class_1").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[0]];
-        heroInfoWindow.Find("Class/Class_2").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[1]];
-
-        heroCards.gameObject.SetActive(true);
-        for(int i = 0; i < heroData.heroCards.Length; i++)
-            heroCards.GetChild(i).GetComponent<MenuCardHandler>().DrawCard(heroData.heroCards[i].cardId, isHuman);
         SetDeckEditCards(isHuman, heroData);
     }
 
@@ -381,7 +352,6 @@ public class DeckEditController : MonoBehaviour
         this.isTemplate = isTemplate;
         editing = true;
         InitCanvas();
-        Transform heroCards;
         heroData = null;
         heroID = loadedDeck.heroId;
         if (!isTemplate) deckID = loadedDeck.id;
@@ -393,18 +363,9 @@ public class DeckEditController : MonoBehaviour
 
         deckNamePanel.transform.Find("NameTemplate").GetComponent<TMPro.TMP_InputField>().text = loadedDeck.name;
         transform.Find("InnerCanvas/DeckNamePanel/PlaceHolder").gameObject.SetActive(string.IsNullOrEmpty(deckNamePanel.transform.Find("NameTemplate").GetComponent<TMPro.TMP_InputField>().text));
-        
-        Transform heroSpines = heroInfoWindow.Find("HeroSpines");
-        for (int i = 0; i < heroSpines.childCount; i++)
-            heroSpines.GetChild(i).gameObject.SetActive(false);
-        heroSpines.Find(loadedDeck.heroId).gameObject.SetActive(true);
-        heroInfoWindow.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.myHeroInventories[loadedDeck.heroId].name;
+        heroInfoWindow.SetHeroInfoWindow(loadedDeck.heroId);
 
         if (isHuman) {
-            heroInfoWindow.Find("BackGroundImage/Human").gameObject.SetActive(true);
-            heroInfoWindow.Find("BackGroundImage/Orc").gameObject.SetActive(false);
-            heroCards = heroInfoWindow.Find("HeroCards/Human");
-            heroInfoWindow.Find("HeroCards/Orc").gameObject.SetActive(false);
             if (isTemplate) {
                 foreach (dataModules.Templates data in AccountManager.Instance.humanTemplates) {
                     foreach (dataModules.Deck template in data.templates) {
@@ -429,10 +390,6 @@ public class DeckEditController : MonoBehaviour
             }
         }
         else {
-            heroInfoWindow.Find("BackGroundImage/Human").gameObject.SetActive(false);
-            heroInfoWindow.Find("BackGroundImage/Orc").gameObject.SetActive(true);
-            heroCards = heroInfoWindow.Find("HeroCards/Orc");
-            heroInfoWindow.Find("HeroCards/Human").gameObject.SetActive(false);
             if (isTemplate) {
                 foreach (dataModules.Templates data in AccountManager.Instance.orcTemplates) {
                     foreach (dataModules.Deck template in data.templates) {
@@ -467,12 +424,6 @@ public class DeckEditController : MonoBehaviour
             transform.Find("InnerCanvas/ShowAllClass/Selected").GetComponent<Image>().sprite = GetAllSortImage(heroData.heroClasses[0], heroData.heroClasses[1], true);
         }
 
-        heroInfoWindow.Find("Class/Class_1").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[0]];
-        heroInfoWindow.Find("Class/Class_2").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[1]];
-
-        heroCards.gameObject.SetActive(true);
-        for (int i = 0; i < heroData.heroCards.Length; i++)
-            heroCards.GetChild(i).GetComponent<MenuCardHandler>().DrawCard(heroData.heroCards[i].cardId, isHuman);
         SetCustomDeckEditCards(loadedDeck, heroData);
     }
 

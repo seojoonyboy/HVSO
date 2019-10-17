@@ -158,8 +158,9 @@ public class MenuCardHandler : MonoBehaviour {
         }
         cardObject.Find("Cost/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.cost.ToString();
         //cardObject.Find("Class").GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[cardData.cardClasses[0]];
-        cardObject.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.name;      
-        transform.Find("HaveNum").gameObject.SetActive(false);
+        cardObject.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.name;
+        if (!cardData.isHeroCard)
+            transform.Find("HaveNum").gameObject.SetActive(false);
         cardObject.Find("Disabled").gameObject.SetActive(false);
     }
 
