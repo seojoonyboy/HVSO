@@ -168,10 +168,7 @@ public class MenuCardInfo : MonoBehaviour {
             int cardNum = 0;
             if (AccountManager.Instance.cardPackage.data.ContainsKey(data.id))
                 cardNum = AccountManager.Instance.cardPackage.data[data.id].cardCount;
-            if (cardNum <= 3)
-                info.Find("CreateCard/HaveNum").GetComponent<TMPro.TextMeshProUGUI>().text = cardNum.ToString();
-            else
-                info.Find("CreateCard/HaveNum").GetComponent<TMPro.TextMeshProUGUI>().text = "MAX";
+            info.Find("CreateCard/HaveNum").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, cardNum.ToString(), false);
             int makeCardcost = 0;
             switch (data.rarelity) {
                 case "common":

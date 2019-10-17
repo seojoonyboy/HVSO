@@ -345,7 +345,7 @@ public class CardDictionaryManager : MonoBehaviour {
             upBtn.eventID = EventTriggerType.PointerUp;
             upBtn.callback.AddListener((EventData) => EndClick(hero.gameObject, heroes.id));
             hero.GetComponent<EventTrigger>().triggers.Add(upBtn);
-            hero.GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[heroes.id + "_button"];
+            hero.Find("Portrait").GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[heroes.id + "_button"];
             bool haveHero = AccountManager.Instance.myHeroInventories.ContainsKey(heroes.id);
             hero.Find("HeroLevel").gameObject.SetActive(haveHero);
             hero.Find("Empty").gameObject.SetActive(!haveHero);
