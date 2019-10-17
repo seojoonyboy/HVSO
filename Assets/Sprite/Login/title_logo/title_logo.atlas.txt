@@ -13,24 +13,24 @@ back2
   index: -1
 logo
   rotate: true
-  xy: 985, 561
-  size: 721, 422
-  orig: 723, 424
-  offset: 1, 1
+  xy: 985, 499
+  size: 783, 450
+  orig: 783, 450
+  offset: 0, 0
   index: -1
 logo1
   rotate: false
-  xy: 985, 189
+  xy: 985, 127
   size: 724, 372
   orig: 726, 374
   offset: 1, 1
   index: -1
 sub_logo
   rotate: false
-  xy: 985, 106
-  size: 580, 83
-  orig: 582, 85
-  offset: 1, 1
+  xy: 985, 44
+  size: 643, 83
+  orig: 643, 83
+  offset: 0, 0
   index: -1
 sub_logo_shadow
   rotate: true
