@@ -36,10 +36,6 @@ namespace MenuTutorialModules {
 
             Button button = (target != null) ? target.GetComponent<Button>() : null;
             clickStream = (button != null) ? button.OnClickAsObservable().Subscribe(_ => CheckButton()) : Observable.EveryUpdate().Where(_ => Input.GetMouseButtonDown(0)).Subscribe(_ => CheckClick(target));
-
-            if(button != null) {
-                button.enabled = true;
-            }
         }
 
         private void CheckClick(GameObject target) {
@@ -92,6 +88,7 @@ namespace MenuTutorialModules {
         //args[0] dictionary 키값
         public override void Execute() {
             GameObject target;
+
             target = MenuMask.Instance.GetMenuObject(args[0]);
             if (target != null)
                 MenuMask.Instance.ScopeMenuObject(target);
@@ -208,16 +205,37 @@ namespace MenuTutorialModules {
             menuMask.UnBlockScreen();
             if (args[1] == "on") {
                 menuMask.OnDimmed(targetObject.transform.parent, targetObject);
-
-                Button button = targetObject.GetComponent<Button>();
-                if (button != null) button.enabled = false;
             }
             else if(args[1] == "off") {
                 menuMask.OffDimmed(targetObject);
-
-                Button button = targetObject.GetComponent<Button>();
-                if (button != null) button.enabled = true;
             }
+            handler.isDone = true;
+        }
+    }
+
+    public class Disable_Button : MenuExecute {
+        public override void Execute() {
+            var menuMask = MenuMask.Instance;
+
+            string objectName = args[0];
+            var targetObject = menuMask.GetMenuObject(objectName);
+
+            var button = targetObject.GetComponent<Button>();
+            if (button != null) button.enabled = false;
+
+            handler.isDone = true;
+        }
+    }
+
+    public class Enable_Button : MenuExecute {
+        public override void Execute() {
+            var menuMask = MenuMask.Instance;
+
+            string objectName = args[0];
+            var targetObject = menuMask.GetMenuObject(objectName);
+            var button = targetObject.GetComponent<Button>();
+            if (button != null) button.enabled = true;
+
             handler.isDone = true;
         }
     }
@@ -232,6 +250,24 @@ namespace MenuTutorialModules {
                     orcButton.GetComponent<Image>().sprite = GetComponent<MenuTutorialManager>().scenarioManager.orc.activeSprite;
                     break;
             }
+
+            handler.isDone = true;
+        }
+    }
+
+    /// <summary>
+    /// 스토리 메뉴에서 진영 선택 이후 덱 자동 선택 (스토리 상세 모달로 바로 이동)
+    /// </summary>
+    public class AutoDeckSelectInStory : MenuExecute {
+        public override void Execute() {
+            ScenarioManager scenarioManager = GetComponent<MenuTutorialManager>().scenarioManager;
+            var content = scenarioManager.orc.stageContent;
+
+            Button deckButton = content.transform.GetChild(0).GetComponent<Button>();
+            deckButton.onClick.Invoke();
+            scenarioManager.selectedDeck = new object[] { true, AccountManager.Instance.orcDecks[0] };
+
+            handler.isDone = true;
         }
     }
 
@@ -245,6 +281,8 @@ namespace MenuTutorialModules {
                     orcButton.GetComponent<Image>().sprite = GetComponent<MenuTutorialManager>().scenarioManager.orc.deactiveSprite;
                     break;
             }
+
+            handler.isDone = true;
         }
     }
 }
