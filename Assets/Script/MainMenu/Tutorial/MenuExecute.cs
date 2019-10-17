@@ -88,6 +88,7 @@ namespace MenuTutorialModules {
         //args[0] dictionary 키값
         public override void Execute() {
             GameObject target;
+
             target = MenuMask.Instance.GetMenuObject(args[0]);
             if (target != null)
                 MenuMask.Instance.ScopeMenuObject(target);
@@ -208,6 +209,81 @@ namespace MenuTutorialModules {
             else if(args[1] == "off") {
                 menuMask.OffDimmed(targetObject);
             }
+            handler.isDone = true;
+        }
+    }
+
+    public class Disable_Button : MenuExecute {
+        public override void Execute() {
+            var menuMask = MenuMask.Instance;
+
+            string objectName = args[0];
+            var targetObject = menuMask.GetMenuObject(objectName);
+
+            var button = targetObject.GetComponent<Button>();
+            if (button != null) button.enabled = false;
+
+            handler.isDone = true;
+        }
+    }
+
+    public class Enable_Button : MenuExecute {
+        public override void Execute() {
+            var menuMask = MenuMask.Instance;
+
+            string objectName = args[0];
+            var targetObject = menuMask.GetMenuObject(objectName);
+            var button = targetObject.GetComponent<Button>();
+            if (button != null) button.enabled = true;
+
+            handler.isDone = true;
+        }
+    }
+
+    public class ChangeSelectBtnImage : MenuExecute {
+        public override void Execute() {
+            string target = args[0];
+
+            switch (target) {
+                case "story_orc_btn":
+                    var orcButton = MenuMask.Instance.GetMenuObject("story_orc_button");
+                    orcButton.GetComponent<Image>().sprite = GetComponent<MenuTutorialManager>().scenarioManager.orc.activeSprite;
+                    break;
+            }
+
+            handler.isDone = true;
+        }
+    }
+
+    public class AutoSelectStoryDeck : MenuExecute {
+        public override void Execute() {
+            ScenarioManager scenarioManager = GetComponent<MenuTutorialManager>().scenarioManager;
+            string target = args[0];
+            switch (target) {
+                case "orc":
+                    var content = scenarioManager.orc.stageContent;
+                    Button deckButton = content.transform.GetChild(0).GetComponent<Button>();
+                    deckButton.onClick.Invoke();
+                    scenarioManager.selectedDeck = new object[] { true, AccountManager.Instance.orcDecks[0] };
+                    scenarioManager.deckContent.transform.GetChild(0).gameObject.SetActive(false);
+                    break;
+            }
+
+            handler.isDone = true;
+        }
+    }
+
+    public class ResetBtnImage : MenuExecute {
+        public override void Execute() {
+            string target = args[0];
+
+            switch (target) {
+                case "story_orc_btn":
+                    var orcButton = MenuMask.Instance.GetMenuObject("story_orc_button");
+                    orcButton.GetComponent<Image>().sprite = GetComponent<MenuTutorialManager>().scenarioManager.orc.deactiveSprite;
+                    break;
+            }
+
             handler.isDone = true;
         }
     }

@@ -51,6 +51,7 @@ namespace dataModules {
         public string camp;
         public string name;
         public string heroId;
+        public string flavorText;
         public bool userHas;
         public HeroCard[] heroCards;
     }

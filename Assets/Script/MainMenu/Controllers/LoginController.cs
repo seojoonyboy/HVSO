@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using BestHTTP;
+using Spine.Unity;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -27,6 +28,9 @@ public class LoginController : MonoBehaviour {
         Logger.Log("textImage");
         textImage.SetActive(true);
         loginBtn.enabled = true;
+        SkeletonGraphic skeletonGraphic = logo.GetComponent<SkeletonGraphic>();
+        Spine.AnimationState state = skeletonGraphic.AnimationState;
+        state.SetAnimation(0, "loop", true);
     }
 
     public void OnStartButton() {

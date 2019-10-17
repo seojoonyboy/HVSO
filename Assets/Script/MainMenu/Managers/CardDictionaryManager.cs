@@ -11,7 +11,7 @@ using UnityEngine.EventSystems;
 public class CardDictionaryManager : MonoBehaviour {
     [SerializeField] Transform cardList;
     [SerializeField] Transform heroCards;
-    [SerializeField] Transform heroInfoWindow;
+    [SerializeField] MenuHeroInfo heroInfoWindow;
     [SerializeField] Transform cardStorage;
     [SerializeField] Transform sortingModal;
     [SerializeField] TMPro.TextMeshProUGUI cardNum;
@@ -480,54 +480,13 @@ public class CardDictionaryManager : MonoBehaviour {
     }
 
     public void OpenHeroInfoWIndow(string heroId) {
-        SetHeroInfoWindow(heroId);
-        heroInfoWindow.parent.gameObject.SetActive(true);
+        heroInfoWindow.SetHeroInfoWindow(heroId);
+        heroInfoWindow.transform.parent.gameObject.SetActive(true);
         heroInfoWindow.gameObject.SetActive(true);
     }
 
     public void CloseHeroInfoWIndow() {
         heroInfoWindow.gameObject.SetActive(false);
-    }
-
-    public void SetHeroInfoWindow(string heroId) {
-        dataModules.Templates hero = new dataModules.Templates();
-        Transform heroCards;
-        if (isHumanDictionary) {
-            heroInfoWindow.Find("HeroCards/Orc").gameObject.SetActive(false);
-            heroCards = heroInfoWindow.Find("HeroCards/Human");
-            foreach (dataModules.Templates heroes in AccountManager.Instance.humanTemplates) {
-                if (heroes.id == heroId) {
-                    hero = heroes;
-                    break;
-                }
-            }
-            //heroInfoWindow.Find("Ribon").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["hero_name_human_superrare"];
-        }
-        else {
-            heroInfoWindow.Find("HeroCards/Human").gameObject.SetActive(false);
-            heroCards = heroInfoWindow.Find("HeroCards/Orc");
-            foreach (dataModules.Templates heroes in AccountManager.Instance.orcTemplates) {
-                if (heroes.id == heroId) {
-                    hero = heroes;
-                    break;
-                }
-            }
-            //heroInfoWindow.Find("Ribon").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["hero_name_orc_superrare"];
-        }
-        heroInfoWindow.Find("BackGroundImage/Human").gameObject.SetActive(isHumanDictionary);
-        heroInfoWindow.Find("BackGroundImage/Orc").gameObject.SetActive(!isHumanDictionary);
-        heroInfoWindow.gameObject.SetActive(true);
-        heroInfoWindow.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = hero.name;
-        heroInfoWindow.Find("HeroSpines").GetChild(0).gameObject.SetActive(false);
-        Transform heroSpine = heroInfoWindow.Find("HeroSpines/" + hero.id);
-        heroSpine.gameObject.SetActive(true);
-        heroSpine.SetAsFirstSibling();
-        heroInfoWindow.Find("Class").GetChild(0).GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[hero.heroClasses[0]];
-        heroInfoWindow.Find("Class").GetChild(1).GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[hero.heroClasses[1]];
-        for (int i = 0; i < hero.heroCards.Length; i++) {
-            heroCards.GetChild(i).GetComponent<MenuCardHandler>().DrawCard(hero.heroCards[i].cardId, isHumanDictionary);
-        }
-        heroCards.gameObject.SetActive(true);
     }
 
     public void ExitDictionaryScene() { 
