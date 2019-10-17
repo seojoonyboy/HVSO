@@ -442,14 +442,14 @@ public partial class CardDropManager {
                 for (int i = 0; i < 5; i++) {
                     if (ScenarioGameManagment.scenarioInstance.targetArgs == "unit") {
                         if (i == targetline) {
-                            enemyUnitLine[i][0].GetChild(0).Find("ClickableUI").gameObject.SetActive(true);
-                            enemyUnitLine[i][0].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(true);
+                            enemyUnitLine[0][i].GetChild(0).Find("ClickableUI").gameObject.SetActive(true);
+                            enemyUnitLine[0][i].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(true);
                         }
                     }
                     else {
                         if (i == targetline) {
-                            enemyUnitLine[i][0].GetChild(0).Find("ClickableUI").gameObject.SetActive(true);
-                            enemyUnitLine[i][0].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(true);
+                            enemyUnitLine[0][i].GetChild(0).Find("ClickableUI").gameObject.SetActive(true);
+                            enemyUnitLine[0][i].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(true);
                         }
                     }                    
                 }
