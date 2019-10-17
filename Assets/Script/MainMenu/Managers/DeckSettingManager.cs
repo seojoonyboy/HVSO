@@ -38,7 +38,7 @@ public class DeckSettingManager : MonoBehaviour
     private void UpdateContentHeight() {
         if (initialized) return;
         initialized = true;
-        float height = anchorGuide1.localPosition.y - anchorGuide2.localPosition.y;
+        float height = anchorGuide1.localPosition.y - anchorGuide2.localPosition.y + 200;
         //float height = deckList.GetComponent<RectTransform>().rect.height;
         transform.Find("DeckListParent").GetComponent<RectTransform>().sizeDelta = new Vector2(1080, -height);
         transform.Find("DeckListParent").GetComponent<RectTransform>().anchoredPosition = new Vector2(transform.Find("DeckListParent").GetComponent<RectTransform>().anchoredPosition.x, height / 2);
@@ -51,19 +51,17 @@ public class DeckSettingManager : MonoBehaviour
         int orcDecks = AccountManager.Instance.orcDecks.Count;
         int deckCount = humanDecks + orcDecks;
         transform.Find("Header/NumValue").GetComponent<TMPro.TextMeshProUGUI>().text = deckCount.ToString() + "/10";
-        if(deckCount > 0) {
+        deckList.GetChild(0).gameObject.SetActive(true);
+        deckList.GetChild(0).GetChild(0).Find("NewDeck").gameObject.SetActive(true);
+        if (deckCount > 0) {
             for(int i = 0; i < humanDecks; i++) {
-                deckList.GetChild(i).gameObject.SetActive(true);
-                deckList.GetChild(i).GetComponent<DeckHandler>().SetNewDeck(AccountManager.Instance.humanDecks[i]);
+                deckList.GetChild(i + 1).gameObject.SetActive(true);
+                deckList.GetChild(i + 1).GetComponent<DeckHandler>().SetNewDeck(AccountManager.Instance.humanDecks[i]);
             }
             for (int i = humanDecks; i < deckCount; i++) {
-                deckList.GetChild(i).gameObject.SetActive(true);
-                deckList.GetChild(i).GetComponent<DeckHandler>().SetNewDeck(AccountManager.Instance.orcDecks[i - humanDecks]);
+                deckList.GetChild(i + 1).gameObject.SetActive(true);
+                deckList.GetChild(i + 1).GetComponent<DeckHandler>().SetNewDeck(AccountManager.Instance.orcDecks[i - humanDecks]);
             }
-        }
-        if (deckCount != 10) {
-            deckList.GetChild(deckCount).gameObject.SetActive(true);
-            deckList.GetChild(deckCount).GetChild(0).Find("NewDeck").gameObject.SetActive(true);
         }
         RefreshLine();
     }
