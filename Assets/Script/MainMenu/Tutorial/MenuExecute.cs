@@ -25,7 +25,7 @@ namespace MenuTutorialModules {
 
         //args[0] screen 또는 Dictionary 키값, args[1] 예비
         public override void Execute() {
-            GameObject target;
+            GameObject target = null;
 
             if (args[0] == "screen")
                 target = null;
@@ -36,6 +36,10 @@ namespace MenuTutorialModules {
 
             Button button = (target != null) ? target.GetComponent<Button>() : null;
             clickStream = (button != null) ? button.OnClickAsObservable().Subscribe(_ => CheckButton()) : Observable.EveryUpdate().Where(_ => Input.GetMouseButtonDown(0)).Subscribe(_ => CheckClick(target));
+
+            if(button != null) {
+                button.enabled = true;
+            }
         }
 
         private void CheckClick(GameObject target) {
@@ -43,7 +47,6 @@ namespace MenuTutorialModules {
                 clickStream.Dispose();
                 handler.isDone = true;
             }
-
         }
 
         private void CheckButton() {
@@ -205,11 +208,43 @@ namespace MenuTutorialModules {
             menuMask.UnBlockScreen();
             if (args[1] == "on") {
                 menuMask.OnDimmed(targetObject.transform.parent, targetObject);
+
+                Button button = targetObject.GetComponent<Button>();
+                if (button != null) button.enabled = false;
             }
             else if(args[1] == "off") {
                 menuMask.OffDimmed(targetObject);
+
+                Button button = targetObject.GetComponent<Button>();
+                if (button != null) button.enabled = true;
             }
             handler.isDone = true;
+        }
+    }
+
+    public class ChangeSelectBtnImage : MenuExecute {
+        public override void Execute() {
+            string target = args[0];
+
+            switch (target) {
+                case "story_orc_btn":
+                    var orcButton = MenuMask.Instance.GetMenuObject("story_orc_button");
+                    orcButton.GetComponent<Image>().sprite = GetComponent<MenuTutorialManager>().scenarioManager.orc.activeSprite;
+                    break;
+            }
+        }
+    }
+
+    public class ResetBtnImage : MenuExecute {
+        public override void Execute() {
+            string target = args[0];
+
+            switch (target) {
+                case "story_orc_btn":
+                    var orcButton = MenuMask.Instance.GetMenuObject("story_orc_button");
+                    orcButton.GetComponent<Image>().sprite = GetComponent<MenuTutorialManager>().scenarioManager.orc.deactiveSprite;
+                    break;
+            }
         }
     }
 }
