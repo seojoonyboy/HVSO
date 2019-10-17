@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Spine;
+using Spine.Unity;
 
 public class MenuHeroInfo : MonoBehaviour
 {
@@ -18,6 +20,15 @@ public class MenuHeroInfo : MonoBehaviour
         transform.Find("HeroDialog/Name").GetComponent<TMPro.TextMeshProUGUI>().text = hero.name;
         transform.Find("HeroSpines").GetChild(0).gameObject.SetActive(false);
         Transform heroSpine = transform.Find("HeroSpines/" + hero.id);
+
+        if (!AccountManager.Instance.myHeroInventories.ContainsKey(heroId)) {
+            transform.Find("HeroSpines/lock").gameObject.SetActive(true);
+            heroSpine.GetComponent<SkeletonGraphic>().color = new Color(0.35f, 0.35f, 0.35f);
+        }
+        else {
+            transform.Find("HeroSpines/lock").gameObject.SetActive(false);
+            heroSpine.GetComponent<SkeletonGraphic>().color = new Color(1, 1, 1);
+        }
         heroSpine.gameObject.SetActive(true);
         heroSpine.SetAsFirstSibling();
 
@@ -37,6 +48,8 @@ public class MenuHeroInfo : MonoBehaviour
         skillWindow.Find("Card2/CardName").GetComponent<TMPro.TextMeshProUGUI>().text = hero.heroCards[1].name;
         skillWindow.Find("Card2/CardInfo").GetComponent<TMPro.TextMeshProUGUI>().text = hero.heroCards[1].skills[0].desc;
         SetHeroDialog(hero.flavorText, hero.camp == "human");
+        if(!AccountManager.Instance.myHeroInventories.ContainsKey(heroId))
+
         OpenClassWindow();
     }
 
