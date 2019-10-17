@@ -41,6 +41,7 @@ namespace SkillModules {
         public override bool IsConditionSatisfied() {
             List<GameObject> targets = (List<GameObject>)mySkillHandler.skillTarget;
             if(targets == null) return false;
+            if (targets[0] == null) return false;
             GameObject target = targets[0];
             IngameClass.Unit unit = target.GetComponent<PlaceMonster>().unit;
             bool exist = unit.cardCategories.ToList().Exists(x => !string.IsNullOrEmpty(x) && x.CompareTo(args[0]) == 0);

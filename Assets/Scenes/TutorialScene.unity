@@ -5432,7 +5432,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &222817023
 GameObject:
   m_ObjectHideFlags: 0
@@ -11343,7 +11342,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &517052093
 RectTransform:
   m_ObjectHideFlags: 0
@@ -54296,6 +54295,7 @@ MonoBehaviour:
   afterStopTurn: 0
   waitDraw: 0
   cameraSize: 0
+  waitShowResult: 0
   showCardsHandler: {fileID: 0}
   ingameCamera: {fileID: 1144235748}
   cameraPos: {x: 0, y: 0, z: 0}
@@ -54312,6 +54312,8 @@ MonoBehaviour:
   stopNextTurn: 0
   forcedSummonAt: -1
   forcedLine: -1
+  multipleforceLine: ffffffffffffffff
+  targetArgs: 
   showCardPos: {fileID: 4913263721670706141}
   currentExecute: {fileID: 0}
   settingModal: {fileID: 2143105447}
