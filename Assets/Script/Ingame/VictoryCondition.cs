@@ -35,6 +35,7 @@ namespace victoryModule {
 
     public class Annihilation_Match : VictoryCondition {
         public Annihilation_Match(PlayerController player_1, PlayerController player_2) : base(player_1, player_2) { }
+
         public override void SetCondition() {
             enemyWin = player.HP.Where(x => x <= 0).Subscribe(_ => CheckCondition()).AddTo(PlayMangement.instance.gameObject);
             playerWin = enemyPlayer.HP.Where(x => x <= 0).Subscribe(_ => CheckCondition()).AddTo(PlayMangement.instance.gameObject);
@@ -62,6 +63,7 @@ namespace victoryModule {
         }
 
         private IEnumerator WaitGetResult() {
+            yield return new WaitUntil(() => PlayMangement.instance.waitShowResult == false);
             yield return new WaitUntil(() =>  PlayMangement.instance.socketHandler.result != null );
             SocketFormat.ResultFormat result = PlayMangement.instance.socketHandler.result;
             GetBattleResult();

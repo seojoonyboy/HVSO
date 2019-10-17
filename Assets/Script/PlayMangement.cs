@@ -6,6 +6,7 @@ using Spine;
 using Spine.Unity;
 using TMPro;
 using Newtonsoft.Json;
+using UnityEngine.Events;
 
 public partial class PlayMangement : MonoBehaviour {
     public PlayerController player, enemyPlayer;
@@ -48,6 +49,8 @@ public partial class PlayMangement : MonoBehaviour {
     public bool waitDraw = false;
 
     public float cameraSize;
+
+    public bool waitShowResult = false;
 
     public ShowCardsHandler showCardsHandler;
     //public string magicHistroy;
@@ -111,7 +114,11 @@ public partial class PlayMangement : MonoBehaviour {
                 matchRule = gameObject.AddComponent<victoryModule.Annihilation_Match>();
                 matchRule.player = player;
                 matchRule.enemyPlayer = enemyPlayer;
-                matchRule.SetCondition();
+
+                if (ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.isTutorial)
+                    break;
+                else
+                    matchRule.SetCondition();
                 break;
         }
     }
