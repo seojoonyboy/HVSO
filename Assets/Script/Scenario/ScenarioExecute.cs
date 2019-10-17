@@ -255,6 +255,9 @@ public class Disable_Deck_card : ScenarioExecute {
 
             if (card.cardID != args[0])
                 slot.GetChild(0).gameObject.GetComponent<CardHandler>().enabled = false;
+            else
+                slot.GetChild(0).gameObject.GetComponent<CardHandler>().enabled = true;
+
         }
         handler.isDone = true;
     }
@@ -1119,3 +1122,51 @@ public class Fadeout_Enemy : ScenarioExecute {
         handler.isDone = true;
     }
 }
+
+public class Wait_UnitPos_Change : ScenarioExecute {
+    public Wait_UnitPos_Change() : base() { }
+
+    public override void Execute() {
+        PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.FIELD_CHANGED, CheckChange);        
+    }
+
+    private void CheckChange(Enum event_type, Component Sender, object Param) {
+        PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.FIELD_CHANGED, CheckChange);
+        handler.isDone = true;
+    }
+}
+
+public class Result_battle : ScenarioExecute {
+    public Result_battle() : base() { }
+
+    public override void Execute() {
+
+        if (args[0] == "stop")
+            PlayMangement.instance.waitShowResult = true;
+        else if (args[0] == "proceed")
+            PlayMangement.instance.waitShowResult = false;
+
+
+        handler.isDone = true;
+    }
+}
+
+public class Wait_Enemy_hero_Dead : ScenarioExecute {
+    public Wait_Enemy_hero_Dead() : base() { }
+
+    IDisposable enemyDead;
+
+    public override void Execute() {
+        enemyDead = scenarioGameManagment.enemyPlayer.HP.Where(x => x <= 0).Subscribe(_ => CheckExecute());
+    }
+
+    private void CheckExecute() {
+        enemyDead.Dispose();
+        handler.isDone = true;
+    }
+
+
+}
+
+
+

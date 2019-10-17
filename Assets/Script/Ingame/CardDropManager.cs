@@ -186,6 +186,13 @@ public partial class CardDropManager {
             }
         }
     }
+    public void ShowScopeSlot() {
+        for(int i= 0; i< 5; i++) {
+            if(ScenarioGameManagment.scenarioInstance.forcedSummonAt - 1 == i)
+                slotLine[i].GetChild(0).gameObject.SetActive(true);
+        }
+    }
+
 
     public void ShowDropableSlot(string[] attributes, bool isSkill = false) {
         for (int i = 0; i < 5; i++) {

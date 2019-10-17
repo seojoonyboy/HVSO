@@ -1,33 +1,40 @@
 
 title_logo.png
-size: 1024,1024
+size: 2048,2048
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
+back2
+  rotate: false
+  xy: 0, 0
+  size: 985, 1282
+  orig: 1080, 1920
+  offset: 41, 457
+  index: -1
 logo
   rotate: true
-  xy: 372, 3
-  size: 721, 422
-  orig: 723, 424
-  offset: 1, 1
+  xy: 985, 499
+  size: 783, 450
+  orig: 783, 450
+  offset: 0, 0
   index: -1
 logo1
-  rotate: true
-  xy: 0, 0
+  rotate: false
+  xy: 985, 127
   size: 724, 372
   orig: 726, 374
   offset: 1, 1
   index: -1
 sub_logo
-  rotate: true
-  xy: 866, 442
-  size: 580, 83
-  orig: 582, 85
-  offset: 1, 1
+  rotate: false
+  xy: 985, 44
+  size: 643, 83
+  orig: 643, 83
+  offset: 0, 0
   index: -1
 sub_logo_shadow
-  rotate: false
-  xy: 0, 724
+  rotate: true
+  xy: 1709, 416
   size: 866, 298
   orig: 868, 300
   offset: 1, 1

@@ -172,7 +172,7 @@ namespace TargetModules {
                     if(pos.row == 0) break;
                     var list = observer.GetAllFieldUnits(pos.col, isHuman);
                     list.Remove(gameObject);
-                    targets.AddRange(list);
+                    targets.AddRange(list);                    
                     break;
             }
         }
@@ -624,7 +624,11 @@ namespace TargetModules {
                                 attributes = myMonster.unit.attributes;
                             else
                                 attributes = GetDropAreaUnit().GetComponent<PlaceMonster>().unit.attributes;
-                            CardDropManager.Instance.ShowDropableSlot(attributes, true);
+
+                            if (ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.forcedSummonAt != -1)
+                                CardDropManager.Instance.ShowScopeSlot();
+                            else
+                                CardDropManager.Instance.ShowDropableSlot(attributes, true);
                         }
                         else {
                             failedCallback("자리가 없습니다.");
