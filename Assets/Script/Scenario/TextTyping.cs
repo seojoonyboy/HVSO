@@ -54,7 +54,7 @@ public class TextTyping : MonoBehaviour
         if (menuExecuteHandler != null)
             menuExecuteHandler.isDone = true;
 
-        transform.Find("StopTypingTrigger").gameObject.SetActive(false);
+        //transform.Find("StopTypingTrigger").gameObject.SetActive(false);
     }
 
     public void StopTyping() {
@@ -66,6 +66,6 @@ public class TextTyping : MonoBehaviour
             scenarioHandler.isDone = true;
         if (menuExecuteHandler != null)
             menuExecuteHandler.isDone = true;
-        transform.Find("StopTypingTrigger").gameObject.SetActive(false);
+        //transform.Find("StopTypingTrigger").gameObject.SetActive(false);
     }
 }
