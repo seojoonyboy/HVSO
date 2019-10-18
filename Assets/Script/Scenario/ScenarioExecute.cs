@@ -91,9 +91,19 @@ public class Highlight : ScenarioExecute {
 
 
         scenarioMask.SetHighlightImage(target);
-        scenarioMask.GetMaskHighlight(target);
+        
+
+        if (args[0] == "hand_card")
+            Glowing(args[1]);
+        else
+            scenarioMask.GetMaskHighlight(target);
+
         handler.isDone = true;
         Logger.Log("Highlight");
+    }
+
+    private void Glowing(string ID) {
+        scenarioMask.CardDeckGlow(ID);
     }
 
 }
@@ -224,7 +234,11 @@ public class Wait_summon : ScenarioExecute {
     public Wait_summon() : base() { }
 
     public override void Execute() {
+        PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.UNIT_SUMMONED, CheckSummon);
+        PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.UNIT_DROP_FAIL, Glowing);
+
         PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.UNIT_SUMMONED, CheckSummon);
+        PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.UNIT_DROP_FAIL, Glowing);
     }
     
 
@@ -234,9 +248,16 @@ public class Wait_summon : ScenarioExecute {
 
         if (unitID == args[1]) {
             PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.UNIT_SUMMONED, CheckSummon);
+            PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.UNIT_DROP_FAIL, Glowing);
             handler.isDone = true;
         }
     }
+
+
+    private void Glowing(Enum event_type, Component Sender, object Param) {
+        scenarioMask.CardDeckGlow(args[1]);
+    }
+
 }
 
 public class Disable_Deck_card : ScenarioExecute {
@@ -450,6 +471,7 @@ public class Wait_drop : ScenarioExecute {
     public override void Execute() {
         Glowing(args[1]);
         PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.MAGIC_USED, CheckMagicUse);
+        PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.UNIT_DROP_FAIL, GlowTrigger);
     }
 
     private void CheckMagicUse(Enum event_type, Component Sender, object Param) {
@@ -457,6 +479,7 @@ public class Wait_drop : ScenarioExecute {
 
         if(magicID == args[1]) {
             PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.MAGIC_USED, CheckMagicUse);
+            PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.UNIT_DROP_FAIL, GlowTrigger);
             handler.isDone = true;
         }      
     }
@@ -464,6 +487,11 @@ public class Wait_drop : ScenarioExecute {
     private void Glowing(string id) {
         scenarioMask.CardDeckGlow(id);
     }
+
+    private void GlowTrigger(Enum event_type, Component Sender, object Param) {
+        scenarioMask.CardDeckGlow(args[1]);
+    }
+
 
 }
 
@@ -796,7 +824,7 @@ public class Force_drop_zone : ScenarioExecute {
                     _type = Type.MAGIC;
 
                     if (detail == 5) {
-                        if (scenarioGameManagment.UnitsObserver.IsUnitExist(new FieldUnitsObserver.Pos(4, 0), PlayMangement.instance.player.isHuman)) {
+                        if (scenarioGameManagment.UnitsObserver.IsUnitExist(new FieldUnitsObserver.Pos(4, 0), PlayMangement.instance.player.isHuman) || scenarioGameManagment.UnitsObserver.IsUnitExist(new FieldUnitsObserver.Pos(4, 1), PlayMangement.instance.player.isHuman)) {
                             detail = 4;
                         }
                     }
