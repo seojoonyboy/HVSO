@@ -52,13 +52,13 @@ public class CardDictionaryManager : MonoBehaviour {
 
     public void SetToHumanCards() {
         isHumanDictionary = true;
-        transform.Find("Background/human").gameObject.SetActive(true);
+        transform.Find("BackgroundImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.campBackgrounds["human"];
         SetCardsByClass();
     }
 
     public void SetToOrcCards() {
         isHumanDictionary = false;
-        transform.Find("Background/orc").gameObject.SetActive(true);
+        transform.Find("BackgroundImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.campBackgrounds["orc"];
         SetCardsByClass();
     }
 

@@ -210,21 +210,27 @@ public partial class MenuCardInfo : MonoBehaviour {
                 cardNum = AccountManager.Instance.cardPackage.data[data.id].cardCount;
             info.Find("CreateCard/HaveNum").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, cardNum.ToString(), false);
             int makeCardcost = 0;
+            int breakCardcost = 0;
             switch (data.rarelity) {
                 case "common":
                     makeCardcost = 50;
+                    breakCardcost = 10;
                     break;
                 case "uncommon":
                     makeCardcost = 150;
+                    breakCardcost = 30;
                     break;
                 case "rare":
                     makeCardcost = 500;
+                    breakCardcost = 125;
                     break;
                 case "superrare":
                     makeCardcost = 1000;
+                    breakCardcost = 250;
                     break;
                 case "legend":
                     makeCardcost = 2000;
+                    breakCardcost = 600;
                     break;
             }
             if (cardNum == 4)
@@ -239,7 +245,7 @@ public partial class MenuCardInfo : MonoBehaviour {
             else
                 info.Find("CreateCard/BreakBtn/Disabled").gameObject.SetActive(false);
             info.Find("CreateCard/CrystalUseValue").GetComponent<TMPro.TextMeshProUGUI>().text = "-" + makeCardcost.ToString();
-            info.Find("CreateCard/CrystalGetValue").GetComponent<TMPro.TextMeshProUGUI>().text = "+" + (makeCardcost / 2).ToString();
+            info.Find("CreateCard/CrystalGetValue").GetComponent<TMPro.TextMeshProUGUI>().text = "+" + breakCardcost.ToString();
             info.Find("CreateCard/Crystal/Value").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userData.manaCrystal.ToString();
         }
     }

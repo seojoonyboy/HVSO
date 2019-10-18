@@ -93,7 +93,7 @@ public class ScenarioManager : SerializedMonoBehaviour
         OffPrevStoryList();
         SetStoryListInfo();
 
-        var backgroundImages = AccountManager.Instance.resource.campBacgrounds;
+        var backgroundImages = AccountManager.Instance.resource.campBackgrounds;
         if (isHuman) {
             orc.raceButton.GetComponent<Image>().sprite = orc.deactiveSprite;
             orc.heroSelect.SetActive(false);
