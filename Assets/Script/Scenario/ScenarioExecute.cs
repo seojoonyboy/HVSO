@@ -259,8 +259,7 @@ public class Disable_Deck_card : ScenarioExecute {
                 slot.GetChild(0).gameObject.GetComponent<CardHandler>().enabled = true;
             }
         }
-
-        Glowing(args[0]);
+        
         handler.isDone = true;
     }
 
