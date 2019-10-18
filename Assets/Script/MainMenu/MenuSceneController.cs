@@ -19,6 +19,7 @@ public class MenuSceneController : MonoBehaviour {
     [SerializeField] GameObject battleReadyPanel;   //대전 준비 화면
     [SerializeField] public GameObject storyLobbyPanel;    //스토리 메뉴 화면
     [SerializeField] SkeletonGraphic menuButton;
+    [SerializeField] GameObject[] offObjects;
     protected SkeletonGraphic selectedAnimation;
     private int currentPage;
     private bool buttonClicked;
@@ -27,7 +28,10 @@ public class MenuSceneController : MonoBehaviour {
     [SerializeField] GameObject newbiLoadingModal;  //최초 접속시 튜토리얼 강제시 등장하는 로딩 화면
     [SerializeField] GameObject reconnectingModal;  //재접속 진행시 등장하는 로딩 화면
 
+    public static MenuSceneController menuSceneController;
+
     private void Awake() {
+        menuSceneController = this;
         #region 테스트코드
         //NetworkManager.ReconnectData dummyData = new NetworkManager.ReconnectData("11", "human");
         //PlayerPrefs.SetString("ReconnectData", JsonConvert.SerializeObject(dummyData));
@@ -211,6 +215,15 @@ public class MenuSceneController : MonoBehaviour {
     public void OpenDictionary(bool isHuman) {
         AccountManager.Instance.dicInfo.isHuman = isHuman;
         AccountManager.Instance.dicInfo.inDic = true;
-        FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.DICTIONARY_SCENE);
+        for (int i = 0; i < offObjects.Length; i++)
+            offObjects[i].SetActive(false);
+        CardDictionaryManager.cardDictionaryManager.SetDictionaryScene();
+        //FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.DICTIONARY_SCENE);
+    }
+
+    public void CloseDictionary() {
+        SetCardNumbersPerDic();
+        for (int i = 0; i < offObjects.Length; i++)
+            offObjects[i].SetActive(true);
     }
 }

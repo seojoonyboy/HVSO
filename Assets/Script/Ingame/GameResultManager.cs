@@ -100,7 +100,8 @@ public class GameResultManager : MonoBehaviour {
     public void OpenSecondWindow() {
         transform.Find("FirstWindow").gameObject.SetActive(false);
         transform.Find("SecondWindow").gameObject.SetActive(true);
-
+        transform.Find("SecondWindow/Buttons/FindNewGame").GetComponent<Button>().interactable = false;
+        transform.Find("SecondWindow/Buttons/BattleReady").GetComponent<Button>().interactable = false;
         StartCoroutine(SetRewards());
     }
 
