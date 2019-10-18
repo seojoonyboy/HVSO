@@ -32,45 +32,6 @@ public partial class MenuCardInfo : MonoBehaviour {
         OnMakeCardFinished.AddListener(() => AccountManager.Instance.RefreshInventories(OnInventoryRefreshFinished));
     }
 
-     protected void DialogSetRichText(TMPro.TextMeshProUGUI uguiText, string desc) {
-        const string startCategory = "[";
-        const string endCategory = "]";
-        const string startType = "{";
-        const string endType = "}";
-        const string categoryColorStart = "<color=#ECC512>";
-        const string typeColorStart = "<color=#149AE9>";
-        const string colorEnd = "</color>";
-
-        List<string> categories = GetMiddleText(startCategory, endCategory, desc);
-        List<string> types = GetMiddleText(startType, endType, desc);
-
-        List<string> categories_translated = translator.GetTranslatedUnitCtg(categories);
-        
-        
-        for(int i = 0; i < categories.Count; i++) {
-            desc = desc.Replace(categories[i], categories_translated[i]);
-        }
-        desc = desc.Replace(startCategory, categoryColorStart);
-        desc = desc.Replace(endCategory, colorEnd);
-        for(int i = 0; i < types.Count; i++) {
-            string types_translated = translator.GetTranslatedSkillName(types[i]);
-            desc = desc.Replace(types[i], string.Format("<link={0}>{1}</link>", types[i], types_translated));
-        }
-        desc = desc.Replace(startType, typeColorStart);
-        desc = desc.Replace(endType, colorEnd);
-        
-        uguiText.text = desc;
-    }
-
-    private List<string> GetMiddleText(string start, string end, string value) {
-        List<string> middles = new List<string>();
-        List<int> startList = value.AllIndexesOf(start, System.StringComparison.OrdinalIgnoreCase);
-        List<int> endList = value.AllIndexesOf(end, System.StringComparison.OrdinalIgnoreCase);
-        for(int i = 0; i < startList.Count; i++)
-            middles.Add(value.Substring(startList[i] + 1, endList[i] - startList[i] - 1));
-        return middles;
-    }
-
     public virtual void SetCardInfo(CollectionCard data, bool isHuman, Transform dicCard = null) {
         if (dicCard != null)
             this.dicCard = dicCard;
@@ -83,7 +44,7 @@ public partial class MenuCardInfo : MonoBehaviour {
         info.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.name;
 
         if (data.skills.Length != 0) {
-            DialogSetRichText(info.Find("Dialog/Text").GetComponent<TMPro.TextMeshProUGUI>(),data.skills[0].desc);
+            info.Find("Dialog/Text").GetComponent<TMPro.TextMeshProUGUI>().text = translator.DialogSetRichText(data.skills[0].desc);
         }
         else
             info.Find("Dialog/Text").GetComponent<TMPro.TextMeshProUGUI>().text = null;

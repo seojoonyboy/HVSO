@@ -49,6 +49,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         if (firstDraw || PlayMangement.instance.isMulligan) return;
         if (Input.touchCount > 1) return;
         if (PlayMangement.instance.player.dragCard) return;
+        if (ScenarioGameManagment.scenarioInstance != null) ScenarioMask.Instance.OffDeckCardGlow();
         StartDragCard();
         if (cardData.skills.Length != 0)
             CardInfoOnDrag.instance.SetCardDragInfo(null, mouseLocalPos.localPosition, cardData.skills[0].desc);
@@ -232,6 +233,10 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
             transform.localScale = new Vector3(1, 1, 1);
             transform.localPosition = new Vector3(0, 0, 0);
             StartCoroutine(handManager.SortHandPosition());
+
+            if (ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.isTutorial == true)
+                SendEvent();
+
         }
         CardDropManager.Instance.HideMagicSlot();
         CardInfoOnDrag.instance.OffCardDragInfo();

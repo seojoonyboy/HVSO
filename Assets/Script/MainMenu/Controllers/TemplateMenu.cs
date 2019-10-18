@@ -126,6 +126,7 @@ public class TemplateMenu : MonoBehaviour {
         transform.Find("Buttons/StartEditBtn").gameObject.SetActive(true);
 
         quickDeckMakeBtn.SetActive(true);
+        quickDeckMakeBtn.GetComponent<Button>().interactable = deck.ableTemplate;
     }
 
     public void SelectNewDeck() {

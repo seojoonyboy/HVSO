@@ -138,8 +138,7 @@ public class PlaceMonster : MonoBehaviour {
     }
 
     public void HideUnit() {
-        transform.Find("HP").gameObject.SetActive(false);
-        transform.Find("ATK").gameObject.SetActive(false);
+        transform.Find("Numbers").gameObject.SetActive(false);
         transform.Find("UnitAttackProperty").gameObject.SetActive(false);
         unitSpine.gameObject.SetActive(false);
         hideSpine.gameObject.SetActive(true);
@@ -147,8 +146,7 @@ public class PlaceMonster : MonoBehaviour {
     }
 
     public void DetectUnit() {
-        transform.Find("HP").gameObject.SetActive(true);
-        transform.Find("ATK").gameObject.SetActive(true);
+        transform.Find("Numbers").gameObject.SetActive(true);
         transform.Find("UnitAttackProperty").gameObject.SetActive(true);
         //transform.Find("UnitTakeEffectIcon").gameObject.SetActive(true);
         SetState(UnitState.DETECT);
