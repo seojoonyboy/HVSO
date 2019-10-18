@@ -1162,6 +1162,9 @@ public class Wait_Enemy_hero_Dead : ScenarioExecute {
 
     private void CheckExecute() {
         enemyDead.Dispose();
+        PlayMangement.instance.stopBattle = true;
+        PlayMangement.instance.stopTurn = true;
+        PlayMangement.instance.beginStopTurn = true;
         handler.isDone = true;
     }
 
