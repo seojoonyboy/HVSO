@@ -27,7 +27,7 @@ public class ScenarioManager : SerializedMonoBehaviour
 
     [SerializeField] GameObject orcDeckPrefab;
     [SerializeField] GameObject humanDeckPrefab;
-
+    [SerializeField] Image backgroundImage;
 
     public static UnityEvent OnLobbySceneLoaded = new UnityEvent();
     private void Awake() {
@@ -93,6 +93,7 @@ public class ScenarioManager : SerializedMonoBehaviour
         OffPrevStoryList();
         SetStoryListInfo();
 
+        var backgroundImages = AccountManager.Instance.resource.campBacgrounds;
         if (isHuman) {
             orc.raceButton.GetComponent<Image>().sprite = orc.deactiveSprite;
             orc.heroSelect.SetActive(false);
@@ -101,6 +102,8 @@ public class ScenarioManager : SerializedMonoBehaviour
             human.raceButton.GetComponent<Image>().sprite = human.activeSprite;
             human.heroSelect.SetActive(true);
             human.StageCanvas.SetActive(true);
+
+            backgroundImage.sprite = backgroundImages["human"];
         }
         else {
             human.raceButton.GetComponent<Image>().sprite = human.deactiveSprite;
@@ -110,6 +113,8 @@ public class ScenarioManager : SerializedMonoBehaviour
             orc.raceButton.GetComponent<Image>().sprite = orc.activeSprite;
             orc.heroSelect.SetActive(true);
             orc.StageCanvas.SetActive(true);
+
+            backgroundImage.sprite = backgroundImages["orc"];
         }
     }
 

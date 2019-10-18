@@ -255,12 +255,18 @@ public class Disable_Deck_card : ScenarioExecute {
 
             if (card.cardID != args[0])
                 slot.GetChild(0).gameObject.GetComponent<CardHandler>().enabled = false;
-            else
+            else {
                 slot.GetChild(0).gameObject.GetComponent<CardHandler>().enabled = true;
-
+            }
         }
+        
         handler.isDone = true;
     }
+
+    private void Glowing(string ID) {
+        scenarioMask.CardDeckGlow(ID);
+    }
+
 }
 
 public class Enable_Deck_card : ScenarioExecute {
@@ -349,9 +355,10 @@ public class Wait_Multiple_Summon_ScopeLine : ScenarioExecute {
         for(int i = 0; i< stringNum.Length; i++) {
             line[i] = int.Parse(stringNum[i]);
         }
-        scenarioMask.CardDeckGlow();
         scenarioGameManagment.multipleforceLine = line;
         clearCount = stringNum.Length;
+
+        Glowing();
         PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.UNIT_SUMMONED, CheckSummon);
         PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.UNIT_DROP_FAIL, HighLightOn);
     }
@@ -367,18 +374,25 @@ public class Wait_Multiple_Summon_ScopeLine : ScenarioExecute {
             handler.isDone = true;
         }
 
-        if(summonCount < clearCount)
-            Invoke("Glowing", 0.1f);
+        if (summonCount < clearCount)
+            Invoke("Glowing", 0.3f);
+
 
     }
 
     private void Glowing() {
-        scenarioMask.CardDeckGlow();
+        if (args.Count > 1)
+            scenarioMask.CardDeckGlow(args[1]);
+        else
+            scenarioMask.CardDeckGlow();
     }
 
 
     private void HighLightOn(Enum event_type, Component Sender, object Param) {
-        scenarioMask.CardDeckGlow();
+        if (args.Count > 1)
+            scenarioMask.CardDeckGlow(args[1]);
+        else
+            scenarioMask.CardDeckGlow();
     }
 }
 
@@ -434,6 +448,7 @@ public class Wait_drop : ScenarioExecute {
     public Wait_drop() : base() { }
 
     public override void Execute() {
+        Glowing(args[1]);
         PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.MAGIC_USED, CheckMagicUse);
     }
 
@@ -445,6 +460,11 @@ public class Wait_drop : ScenarioExecute {
             handler.isDone = true;
         }      
     }
+
+    private void Glowing(string id) {
+        scenarioMask.CardDeckGlow(id);
+    }
+
 }
 
 
@@ -1162,6 +1182,9 @@ public class Wait_Enemy_hero_Dead : ScenarioExecute {
 
     private void CheckExecute() {
         enemyDead.Dispose();
+        PlayMangement.instance.stopBattle = true;
+        PlayMangement.instance.stopTurn = true;
+        PlayMangement.instance.beginStopTurn = true;
         handler.isDone = true;
     }
 
