@@ -485,7 +485,7 @@ public class ScenarioMask : SerializedMonoBehaviour
         GetMaskingObject("shieldArrow", "bottom").GetComponent<Image>().color = color;
     }
 
-    public void CardDeckGlow() {       
+    public void CardDeckGlow(string targetID = null) {       
         for(int i =0; i< targetObject["hand_card"].transform.childCount; i++) {
 
             Transform cardSlot = targetObject["hand_card"].transform.GetChild(i);
@@ -493,6 +493,9 @@ public class ScenarioMask : SerializedMonoBehaviour
                 continue;
 
             if (PlayMangement.instance.player.resource.Value - cardSlot.GetChild(0).gameObject.GetComponent<CardHandler>().cardData.cost < 0)
+                continue;
+
+            if (string.IsNullOrEmpty(targetID) == false && cardSlot.GetChild(0).gameObject.GetComponent<CardHandler>().cardID != targetID)
                 continue;
 
             GameObject glowObject = GetUnactiveGlow();
@@ -535,6 +538,7 @@ public class ScenarioMask : SerializedMonoBehaviour
 
         }
     }
+
 
     public void OffDeckCardGlow() {
         RectTransform glowRect;
