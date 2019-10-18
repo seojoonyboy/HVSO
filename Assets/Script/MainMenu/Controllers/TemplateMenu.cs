@@ -35,8 +35,11 @@ public class TemplateMenu : MonoBehaviour {
     public void SetTemplateNewDecks(string heroId, bool isHuman) {
         heroID = heroId;
         this.isHuman = isHuman;
-        transform.Find("BackgroundImage/human").gameObject.SetActive(isHuman);
-        transform.Find("BackgroundImage/orc").gameObject.SetActive(!isHuman);
+        if (isHuman)
+            transform.Find("BackgroundImage").GetComponent<Image>().sprite = AccountManager.Instance.resource.campBackgrounds["human"];
+        else
+            transform.Find("BackgroundImage").GetComponent<Image>().sprite = AccountManager.Instance.resource.campBackgrounds["orc"];
+
         for (int i = 1; i < 4; i++) {
             transform.Find("DeckList").GetChild(i).gameObject.SetActive(false);
         }
@@ -123,6 +126,7 @@ public class TemplateMenu : MonoBehaviour {
         transform.Find("Buttons/StartEditBtn").gameObject.SetActive(true);
 
         quickDeckMakeBtn.SetActive(true);
+        quickDeckMakeBtn.GetComponent<Button>().interactable = deck.ableTemplate;
     }
 
     public void SelectNewDeck() {
