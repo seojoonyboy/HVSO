@@ -85,10 +85,14 @@ public class GameResultManager : MonoBehaviour {
         frontSpine.gameObject.SetActive(true);
         backSpine.AnimationState.SetAnimation(0, "01.start", false);
         backSpine.AnimationState.AddAnimation(1, "02.play", true, 0.8f);
-        if (isHuman)
+        if (isHuman) {
             frontSpine.Skeleton.SetSkin("human");
-        else
+            transform.Find("SecondWindow/BackgroundImg/human").gameObject.SetActive(true);
+        }
+        else {
             frontSpine.Skeleton.SetSkin("orc");
+            transform.Find("SecondWindow/BackgroundImg/orc").gameObject.SetActive(true);
+        }
         frontSpine.AnimationState.SetAnimation(0, "01.start", false);
         frontSpine.AnimationState.AddAnimation(1, "02.play", true, 0.8f);
     }
@@ -96,7 +100,8 @@ public class GameResultManager : MonoBehaviour {
     public void OpenSecondWindow() {
         transform.Find("FirstWindow").gameObject.SetActive(false);
         transform.Find("SecondWindow").gameObject.SetActive(true);
-
+        transform.Find("SecondWindow/Buttons/FindNewGame").GetComponent<Button>().interactable = false;
+        transform.Find("SecondWindow/Buttons/BattleReady").GetComponent<Button>().interactable = false;
         StartCoroutine(SetRewards());
     }
 
@@ -106,6 +111,7 @@ public class GameResultManager : MonoBehaviour {
         Image slider = transform.Find("SecondWindow/PlayerExp/ExpSlider/SliderValue").GetComponent<Image>();
         slider.fillAmount = exp / lvExp;
         //transform.Find("RankGage/LevelImage/LevelText").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userResource.lv.ToString();
+        transform.Find("SecondWindow/PlayerExp/UserName").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userData.nickName;
         transform.Find("SecondWindow/PlayerExp/ExpSlider/ExpValue").GetComponent<TMPro.TextMeshProUGUI>().text = ((int)exp).ToString();
         transform.Find("SecondWindow/PlayerExp/ExpSlider/ExpMaxValue").GetComponent<TMPro.TextMeshProUGUI>().text = "/" + ((int)lvExp).ToString();
         iTween.ScaleTo(transform.Find("SecondWindow/PlayerExp").gameObject, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.5f));

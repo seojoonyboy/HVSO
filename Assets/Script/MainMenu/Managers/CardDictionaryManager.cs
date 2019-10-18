@@ -30,14 +30,33 @@ public class CardDictionaryManager : MonoBehaviour {
     GameObject selectedHero;
     string selectedHeroId;
 
+    public static CardDictionaryManager cardDictionaryManager;
+
     public void AttachDecksLoader(ref MyDecksLoader decksLoader) {
         this.decksLoader = decksLoader;
         this.decksLoader.OnInvenLoadFinished.AddListener(() => { SetToHumanCards(); });
     }
 
-
-
     private void Start() {
+        cardDictionaryManager = this;
+    }
+
+    //private void Start() {
+    //    Transform classList = cardList.Find("CardsByCost");
+    //    //for (int i = 0; i < classList.childCount; i++)
+    //    //    classList.GetChild(i).Find("Header/Info/Image").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = i.ToString();
+    //    selectedSortOption = SortingOptions.CLASS;
+    //    transform.Find("UIbar/Crystal/Value").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userResource.crystal.ToString();
+    //    if (AccountManager.Instance.dicInfo.isHuman)
+    //        SetToHumanCards();
+    //    else
+    //        SetToOrcCards();
+    //    RefreshLine();
+    //}
+
+    public void SetDictionaryScene() {
+        selectedHero = null;
+        selectedHeroId = null;
         Transform classList = cardList.Find("CardsByCost");
         //for (int i = 0; i < classList.childCount; i++)
         //    classList.GetChild(i).Find("Header/Info/Image").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = i.ToString();
@@ -325,7 +344,7 @@ public class CardDictionaryManager : MonoBehaviour {
         RefreshLine();
     }
 
-   
+
 
     public void SetHeroButtons() {
         for (int i = 0; i < 8; i++) {
@@ -333,12 +352,21 @@ public class CardDictionaryManager : MonoBehaviour {
         }
 
         int count = 0;
-        
+
         foreach (dataModules.HeroInventory heroes in AccountManager.Instance.allHeroes) {
             if (heroes.camp == "human" && !isHumanDictionary) continue;
             if (heroes.camp == "orc" && isHumanDictionary) continue;
             Transform hero = heroCards.GetChild(count);
             hero.gameObject.SetActive(true);
+            hero.transform.Find("SelectBack").gameObject.SetActive(false);
+            hero.transform.Find("SelectFront").gameObject.SetActive(false);
+            List<EventTrigger.Entry> entriesToRemove = new List<EventTrigger.Entry>();
+            foreach (var entry in hero.GetComponent<EventTrigger>().triggers) {
+                if (entry.eventID == EventTriggerType.PointerDown || entry.eventID == EventTriggerType.PointerUp)
+                    entriesToRemove.Add(entry);
+            }
+            foreach (var entry in entriesToRemove)
+                hero.GetComponent<EventTrigger>().triggers.Remove(entry);
             EventTrigger.Entry onBtn = new EventTrigger.Entry();
             onBtn.eventID = EventTriggerType.PointerDown;
             onBtn.callback.AddListener((EventData) => StartClick(heroes.id));
@@ -424,12 +452,12 @@ public class CardDictionaryManager : MonoBehaviour {
         string heroClass1 = "";
         string heroClass2 = "";
         foreach (dataModules.HeroInventory hero in AccountManager.Instance.allHeroes) {
-            if(hero.id == selectedHeroId) {
+            if (hero.id == selectedHeroId) {
                 heroClass1 = hero.heroClasses[0];
                 heroClass2 = hero.heroClasses[1];
             }
         }
-        for(int i = 0; i < classList.childCount; i++) {
+        for (int i = 0; i < classList.childCount; i++) {
             if (classList.GetChild(i).name == heroClass1 || classList.GetChild(i).name == heroClass2)
                 classList.GetChild(i).gameObject.SetActive(true);
             else
@@ -499,8 +527,8 @@ public class CardDictionaryManager : MonoBehaviour {
         heroInfoWindow.gameObject.SetActive(false);
     }
 
-    public void ExitDictionaryScene() { 
-        FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
+    public void ExitDictionaryScene() {
+        MenuSceneController.menuSceneController.CloseDictionary();
     }
 }
 
