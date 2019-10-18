@@ -34,7 +34,7 @@ public class ShowCardsHandler : MonoBehaviour {
                 transform
                     .Find("Left/Desc/Text")
                     .GetComponent<TextMeshProUGUI>()
-                    .text = desc[i];
+                    .text = AccountManager.Instance.GetComponent<Translator>().DialogSetRichText(desc[i]);
             }
             else if(i == 1) {
                 transform
@@ -43,7 +43,7 @@ public class ShowCardsHandler : MonoBehaviour {
                 transform
                     .Find("Right/Desc/Text")
                     .GetComponent<TextMeshProUGUI>()
-                    .text = desc[i];
+                    .text = AccountManager.Instance.GetComponent<Translator>().DialogSetRichText(desc[i]);
             }
             cards[i]
                 .transform
