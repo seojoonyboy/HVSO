@@ -200,6 +200,8 @@ namespace MenuTutorialModules {
             var menuMask = MenuMask.Instance;
             
             string objectName = args[0];
+            Logger.Log(objectName);
+
             var targetObject = menuMask.GetMenuObject(objectName);
 
             menuMask.UnBlockScreen();
@@ -268,6 +270,106 @@ namespace MenuTutorialModules {
                     scenarioManager.deckContent.transform.GetChild(0).gameObject.SetActive(false);
                     break;
             }
+
+            handler.isDone = true;
+        }
+    }
+
+    /// <summary>
+    /// 오크 튜토리얼 진행시 덱 리스트를 안보이게 해야함
+    /// </summary>
+    public class HideDeckList : MenuExecute {
+        public override void Execute() {
+            Transform deck =  handler
+                .GetComponent<MenuTutorialManager>()
+                .scenarioManager
+                .stageCanvas
+                .transform
+                .Find("HUD/StagePanel/Scroll View")
+                .GetChild(0);
+            var images = deck.GetComponentsInChildren<Image>();
+            var texts = deck.GetComponentsInChildren<Text>();
+            var textmeshes = deck.GetComponentsInChildren<TMPro.TextMeshProUGUI>();
+            foreach(Image image in images) {
+                image.enabled = false;
+            }
+            foreach(Text text in texts) {
+                text.enabled = false;
+            }
+            foreach(TMPro.TextMeshProUGUI text in textmeshes) {
+                text.enabled = false;
+            }
+
+            Transform stagePanel = handler
+                .GetComponent<MenuTutorialManager>()
+                .scenarioManager
+                .stageCanvas
+                .transform
+                .Find("HUD/StagePanel");
+
+            stagePanel
+                .Find("TextGroup/DeckScript")
+                .gameObject.SetActive(false);
+
+            stagePanel
+                .Find("TextGroup/DeckCount")
+                .gameObject.SetActive(false);
+
+            stagePanel
+                .Find("DeckBack")
+                .gameObject
+                .SetActive(false);
+
+            handler.isDone = true;
+        }
+    }
+
+    /// <summary>
+    /// 오크 튜토리얼 진행시 덱 리스트를 안보이게 한거 초기화
+    /// </summary>
+    public class ResetDeckList : MenuExecute {
+        public override void Execute() {
+            Transform deck = handler
+                .GetComponent<MenuTutorialManager>()
+                .scenarioManager
+                .stageCanvas
+                .transform
+                .Find("HUD/StagePanel/Scroll View")
+                .GetChild(0);
+            var images = deck.GetComponentsInChildren<Image>();
+            var texts = deck.GetComponentsInChildren<Text>();
+            var textmeshes = deck.GetComponentsInChildren<TMPro.TextMeshProUGUI>();
+            foreach (Image image in images) {
+                image.enabled = true;
+            }
+            foreach (Text text in texts) {
+                text.enabled = true;
+            }
+            foreach (TMPro.TextMeshProUGUI text in textmeshes) {
+                text.enabled = true;
+            }
+
+
+            //////////작업중
+            Transform stagePanel = handler
+                .GetComponent<MenuTutorialManager>()
+                .scenarioManager
+                .stageCanvas
+                .transform
+                .Find("HUD/StagePanel");
+
+            stagePanel
+                .Find("TextGroup/DeckScript")
+                .gameObject.SetActive(true);
+
+            stagePanel
+                .Find("TextGroup/DeckCount")
+                .gameObject.SetActive(true);
+
+            stagePanel
+                .Find("DeckBack")
+                .gameObject
+                .SetActive(true);
 
             handler.isDone = true;
         }
