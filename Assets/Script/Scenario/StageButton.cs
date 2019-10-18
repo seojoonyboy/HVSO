@@ -17,7 +17,9 @@ public class StageButton : ScenarioButton {
 
     public override void OnClicked() {
         List<ChapterData> list;
-        if(camp == "human") {
+        scenarioManager = ScenarioManager.Instance;
+
+        if (camp == "human") {
             list = scenarioManager.human_chapterDatas;
         }
         else {
