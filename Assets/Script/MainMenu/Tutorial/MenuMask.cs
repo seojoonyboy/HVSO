@@ -95,17 +95,17 @@ public class MenuMask : SerializedMonoBehaviour
         ActiveMask();
         ZeroMaskPos();
 
-        topMask.GetComponent<Image>().color = new Color32(255, 255, 255, 0);
-        leftMask.GetComponent<Image>().color = new Color32(255, 255, 255, 0);
-        rightMask.GetComponent<Image>().color = new Color32(255, 255, 255, 0);
-        bottonMask.GetComponent<Image>().color = new Color32(255, 255, 255, 0);
+        topMask.GetComponent<Image>().color = new Color(1, 1, 1, 0.004f);
+        leftMask.GetComponent<Image>().color = new Color(1, 1, 1, 0.004f);
+        rightMask.GetComponent<Image>().color = new Color(1, 1, 1, 0.004f);
+        bottonMask.GetComponent<Image>().color = new Color(1, 1, 1, 0.004f);
     }
 
     public void ResetTransparentMask() {
-        topMask.GetComponent<Image>().color = new Color32(255, 255, 255, 100);
-        leftMask.GetComponent<Image>().color = new Color32(255, 255, 255, 100);
-        rightMask.GetComponent<Image>().color = new Color32(255, 255, 255, 100);
-        bottonMask.GetComponent<Image>().color = new Color32(255, 255, 255, 100);
+        topMask.GetComponent<Image>().color = new Color(1, 1, 1, 0.004f);
+        leftMask.GetComponent<Image>().color = new Color(1, 1, 1, 0.004f);
+        rightMask.GetComponent<Image>().color = new Color(1, 1, 1, 0.004f);
+        bottonMask.GetComponent<Image>().color = new Color(1, 1, 1, 0.004f);
     }
 
     public void UnBlockScreen() {

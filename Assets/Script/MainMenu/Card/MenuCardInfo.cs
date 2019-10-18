@@ -175,23 +175,23 @@ public partial class MenuCardInfo : MonoBehaviour {
             switch (data.rarelity) {
                 case "common":
                     makeCardcost = 50;
-                    breakCardcost = 10;
+                    breakCardcost = 5;
                     break;
                 case "uncommon":
                     makeCardcost = 150;
-                    breakCardcost = 30;
+                    breakCardcost = 20;
                     break;
                 case "rare":
                     makeCardcost = 500;
-                    breakCardcost = 125;
+                    breakCardcost = 80;
                     break;
                 case "superrare":
                     makeCardcost = 1000;
-                    breakCardcost = 250;
+                    breakCardcost = 185;
                     break;
                 case "legend":
                     makeCardcost = 2000;
-                    breakCardcost = 600;
+                    breakCardcost = 400;
                     break;
             }
             if (cardNum == 4)
@@ -215,7 +215,7 @@ public partial class MenuCardInfo : MonoBehaviour {
         if (Input.touchCount > 1) return;
         Vector3 mousePos = Input.mousePosition;
         classDescModal.gameObject.SetActive(true);
-        classDescModal.position = new Vector3(mousePos.x + 20, mousePos.y + 200f, 0);
+        classDescModal.position = new Vector3(mousePos.x + 20, mousePos.y + 300f, 0);
         string[] set = translator.GetTranslatedSkillSet(className);
         SetClassDescModalData(set[0], set[1], image);
     }

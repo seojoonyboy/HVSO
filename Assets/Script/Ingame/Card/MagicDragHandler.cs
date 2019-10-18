@@ -49,7 +49,10 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         if (firstDraw || PlayMangement.instance.isMulligan) return;
         if (Input.touchCount > 1) return;
         if (PlayMangement.instance.player.dragCard) return;
-        if (ScenarioGameManagment.scenarioInstance != null) ScenarioMask.Instance.OffDeckCardGlow();
+        if (ScenarioGameManagment.scenarioInstance != null) {
+            ScenarioMask.Instance.OffDeckCardGlow();
+            ScenarioMask.Instance.StopEveryHighlight();
+        }
         StartDragCard();
         if (cardData.skills.Length != 0)
             CardInfoOnDrag.instance.SetCardDragInfo(null, mouseLocalPos.localPosition, cardData.skills[0].desc);
