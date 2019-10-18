@@ -43,29 +43,33 @@ public class GameResultManager : MonoBehaviour {
     public void SetResultWindow(string result, bool isHuman) {
         PlayerPrefs.DeleteKey("ReconnectData");
         gameObject.SetActive(true);
-        GameObject heroSpine = transform.Find("HeroSpine/" + PlayMangement.instance.player.heroID).gameObject;
+        transform.Find("FirstWindow").gameObject.SetActive(true);
+        GameObject heroSpine = transform.Find("FirstWindow/HeroSpine/" + PlayMangement.instance.player.heroID).gameObject;
         heroSpine.SetActive(true);
         iTween.ScaleTo(heroSpine, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.3f));
         getExp = PlayMangement.instance.socketHandler.result.reward.heroExp;
         supply = PlayMangement.instance.socketHandler.result.reward.supply;
         additionalSupply = PlayMangement.instance.socketHandler.result.reward.additionalSupply;
-        StartCoroutine(SetRewards());
+
         SkeletonGraphic backSpine;
         SkeletonGraphic frontSpine;
         switch (result) {
             case "win": {
                     heroSpine.GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, "IDLE", true);
-                    backSpine = transform.Find("BackSpine/WinningBack").GetComponent<SkeletonGraphic>();
-                    frontSpine = transform.Find("FrontSpine/WinningFront").GetComponent<SkeletonGraphic>();
-
+                    backSpine = transform.Find("FirstWindow/BackSpine/WinningBack").GetComponent<SkeletonGraphic>();
+                    frontSpine = transform.Find("FirstWindow/FrontSpine/WinningFront").GetComponent<SkeletonGraphic>();
+                    transform.Find("SecondWindow/BackSpine/WinningBack").gameObject.SetActive(true);
+                    transform.Find("SecondWindow/FrontSpine/WinningFront").gameObject.SetActive(true);
                 }
                 break;
             case "lose": {
                     heroSpine.GetComponent<SkeletonGraphic>().Initialize(true);
                     heroSpine.GetComponent<SkeletonGraphic>().Update(0);
                     heroSpine.GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, "DEAD", false);
-                    backSpine = transform.Find("BackSpine/LosingBack").GetComponent<SkeletonGraphic>();
-                    frontSpine = transform.Find("FrontSpine/LosingFront").GetComponent<SkeletonGraphic>();
+                    backSpine = transform.Find("FirstWindow/BackSpine/LosingBack").GetComponent<SkeletonGraphic>();
+                    frontSpine = transform.Find("FirstWindow/FrontSpine/LosingFront").GetComponent<SkeletonGraphic>();
+                    transform.Find("SecondWindow/BackSpine/LosingBack").gameObject.SetActive(true);
+                    transform.Find("SecondWindow/FrontSpine/LosingFront").gameObject.SetActive(true);
                 }
                 break;
             default:
@@ -89,35 +93,50 @@ public class GameResultManager : MonoBehaviour {
         frontSpine.AnimationState.AddAnimation(1, "02.play", true, 0.8f);
     }
 
+    public void OpenSecondWindow() {
+        transform.Find("FirstWindow").gameObject.SetActive(false);
+        transform.Find("SecondWindow").gameObject.SetActive(true);
+
+        StartCoroutine(SetRewards());
+    }
+
     IEnumerator SetRewards() {
-        Transform rewards = transform.Find("ResourceRewards");
+        Transform rewards = transform.Find("SecondWindow/ResourceRewards");
         yield return new WaitForSeconds(0.1f);
-        Image slider = transform.Find("RankGage/RankBar").GetComponent<Image>();
+        Image slider = transform.Find("SecondWindow/PlayerExp/ExpSlider/SliderValue").GetComponent<Image>();
         slider.fillAmount = exp / lvExp;
-        transform.Find("RankGage/LevelImage/LevelText").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userResource.lv.ToString();
-        transform.Find("RankGage/RankText/Value").GetComponent<TMPro.TextMeshProUGUI>().text = ((int)exp).ToString();
-        transform.Find("RankGage/RankText/MaxValue").GetComponent<TMPro.TextMeshProUGUI>().text = " / " + ((int)lvExp).ToString();
-        iTween.ScaleTo(transform.Find("RankGage").gameObject, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.5f));
+        //transform.Find("RankGage/LevelImage/LevelText").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userResource.lv.ToString();
+        transform.Find("SecondWindow/PlayerExp/ExpSlider/ExpValue").GetComponent<TMPro.TextMeshProUGUI>().text = ((int)exp).ToString();
+        transform.Find("SecondWindow/PlayerExp/ExpSlider/ExpMaxValue").GetComponent<TMPro.TextMeshProUGUI>().text = "/" + ((int)lvExp).ToString();
+        iTween.ScaleTo(transform.Find("SecondWindow/PlayerExp").gameObject, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.5f));
         if (getExp > 0) StartCoroutine(GetUserExp(slider));
-        if (supply > 0) {
-            rewards.GetChild(0).gameObject.SetActive(true);
-            rewards.GetChild(0).Find("Text/Value").GetComponent<TMPro.TextMeshProUGUI>().text = supply.ToString();
-            Transform additionalSupTxt = rewards.GetChild(0).Find("Text/Additional");
-            if (additionalSupply > 0) {
-                additionalSupTxt.gameObject.SetActive(true);
-                additionalSupTxt.GetComponent<TMPro.TextMeshProUGUI>().text = "+" + additionalSupply.ToString();
-            }
-            else
-                additionalSupTxt.gameObject.SetActive(false);
-            yield return new WaitForSeconds(0.1f);
-            iTween.ScaleTo(rewards.GetChild(0).gameObject, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.5f));
-        }
+        yield return new WaitForSeconds(0.1f);
+        iTween.ScaleTo(transform.Find("SecondWindow/PlayerMmr").gameObject, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.5f));
+        yield return new WaitForSeconds(0.1f);
+        iTween.ScaleTo(transform.Find("SecondWindow/PlayerSupply").gameObject, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.5f));
+        transform.Find("SecondWindow/PlayerSupply/SupplyText/Value").GetComponent<TMPro.TextMeshProUGUI>().text = (supply + additionalSupply).ToString();
+        transform.Find("SecondWindow/PlayerSupply/ExtraSupply/Value").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userResource.additionalPreSupply.ToString();
+        yield return new WaitForSeconds(0.1f);
+        iTween.ScaleTo(transform.Find("SecondWindow/Buttons").gameObject, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.5f));
+        //if (supply > 0) {
+        //    rewards.GetChild(0).gameObject.SetActive(true);
+        //    rewards.GetChild(0).Find("Text/Value").GetComponent<TMPro.TextMeshProUGUI>().text = supply.ToString();
+        //    Transform additionalSupTxt = rewards.GetChild(0).Find("Text/Additional");
+        //    if (additionalSupply > 0) {
+        //        additionalSupTxt.gameObject.SetActive(true);
+        //        additionalSupTxt.GetComponent<TMPro.TextMeshProUGUI>().text = "+" + additionalSupply.ToString();
+        //    }
+        //    else
+        //        additionalSupTxt.gameObject.SetActive(false);
+        //    yield return new WaitForSeconds(0.1f);
+        //    iTween.ScaleTo(rewards.GetChild(0).gameObject, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.5f));
+        //}
     }
 
     IEnumerator GetUserExp(Image slider) {
         float gain = getExp;
-        TMPro.TextMeshProUGUI expValueText = transform.Find("RankGage/RankText/Value").GetComponent<TMPro.TextMeshProUGUI>();
-        TMPro.TextMeshProUGUI lvUpValueText = transform.Find("RankGage/RankText/MaxValue").GetComponent<TMPro.TextMeshProUGUI>();
+        TMPro.TextMeshProUGUI expValueText = transform.Find("SecondWindow/PlayerExp/ExpSlider/ExpValue").GetComponent<TMPro.TextMeshProUGUI>();
+        TMPro.TextMeshProUGUI lvUpValueText = transform.Find("SecondWindow/PlayerExp/ExpSlider/ExpMaxValue").GetComponent<TMPro.TextMeshProUGUI>();
         while (gain > 0) {
             exp += 1;
             gain -= 1;
@@ -126,7 +145,7 @@ public class GameResultManager : MonoBehaviour {
             lvUpValueText.text = " / " + ((int)lvExp).ToString();
             if (exp == (int)lvExp) {
                 lv++;
-                transform.Find("RankGage/LevelImage/LevelText").GetComponent<TMPro.TextMeshProUGUI>().text = lv.ToString();
+                //transform.Find("RankGage/LevelImage/LevelText").GetComponent<TMPro.TextMeshProUGUI>().text = lv.ToString();
                 lvExp = nextLvExp;
                 slider.transform.localScale = new Vector3(1.1f, 1.1f, 1.1f);
                 yield return new WaitForSeconds(0.2f);
