@@ -303,13 +303,33 @@ public class CardListManager : MonoBehaviour
         //    obj.transform.GetChild(2).GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[data.class_2];
         //    obj.transform.GetChild(2).name = data.class_2;
         //}
+        #region 카드 상세보기 설명 글 클릭 이벤트 추가
+        TMPro.TextMeshProUGUI dialog = info.Find("Dialog/Text").GetComponent<TMPro.TextMeshProUGUI>();
+        EventTrigger dialogTrigger = dialog.GetComponent<EventTrigger>();
+        dialogTrigger.triggers.Clear();
+        EventTrigger.Entry ondialogBtn = new EventTrigger.Entry();
+        ondialogBtn.eventID = EventTriggerType.PointerDown;
+        ondialogBtn.callback.AddListener((EventData) => {
+            int linkIndex = TMPro.TMP_TextUtilities.FindIntersectingLink(dialog, Camera.main.ScreenToWorldPoint(Input.mousePosition), null);
+            if (linkIndex > -1) {
+                var linkInfo = dialog.textInfo.linkInfo[linkIndex];
+                var linkId = linkInfo.GetLinkID();
+                OpenClassDescModal(linkId, AccountManager.Instance.resource.skillIcons[linkId]);
+            }
+        });
+        dialogTrigger.triggers.Add(ondialogBtn);
+        EventTrigger.Entry offdialogBtn = new EventTrigger.Entry();
+        offdialogBtn.eventID = EventTriggerType.PointerUp;
+        offdialogBtn.callback.AddListener((EventData) => CloseClassDescModal());
+        dialogTrigger.triggers.Add(offdialogBtn);
+        #endregion
     }
 
     public void OpenClassDescModal(string className, Sprite image) {
         if (Input.touchCount > 1) return;
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         classDescModal.gameObject.SetActive(true);
-        classDescModal.position = new Vector3(mousePos.x, mousePos.y + 1.3f, 0);
+        classDescModal.position = new Vector3(mousePos.x, mousePos.y + 2.3f, 0);
         string[] set = translator.GetTranslatedSkillSet(className);
         SetClassDescModalData(set[0], set[1], image);
     }
