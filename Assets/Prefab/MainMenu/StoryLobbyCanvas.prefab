@@ -35523,6 +35523,7 @@ MonoBehaviour:
     type: 3}
   humanDeckPrefab: {fileID: 5113131716647166462, guid: c5e86cef69bd33c4b92877397cb502d1,
     type: 3}
+  backgroundImage: {fileID: 5110567678449028039}
   HUDController: {fileID: 0}
 --- !u!1 &5202287007326783207
 GameObject:
