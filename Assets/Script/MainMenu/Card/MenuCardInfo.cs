@@ -175,23 +175,23 @@ public partial class MenuCardInfo : MonoBehaviour {
             switch (data.rarelity) {
                 case "common":
                     makeCardcost = 50;
-                    breakCardcost = 10;
+                    breakCardcost = 5;
                     break;
                 case "uncommon":
                     makeCardcost = 150;
-                    breakCardcost = 30;
+                    breakCardcost = 20;
                     break;
                 case "rare":
                     makeCardcost = 500;
-                    breakCardcost = 125;
+                    breakCardcost = 80;
                     break;
                 case "superrare":
                     makeCardcost = 1000;
-                    breakCardcost = 250;
+                    breakCardcost = 185;
                     break;
                 case "legend":
                     makeCardcost = 2000;
-                    breakCardcost = 600;
+                    breakCardcost = 400;
                     break;
             }
             if (cardNum == 4)
