@@ -17,6 +17,8 @@ public class DeckHandler : MonoBehaviour
     public dataModules.Deck templateDeck;
 
     dataModules.Deck deck;
+    public bool ableTemplate = false;
+
     public string DECKID {
         get { return deckID; }
         set { deckID = value; }
@@ -52,10 +54,21 @@ public class DeckHandler : MonoBehaviour
         deckID = deck.id;
         if(deck.bannerImage != null)
             transform.Find("HeroImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.deckPortraite[deck.bannerImage];
-        transform.Find("DeckName").GetComponent<TMPro.TextMeshProUGUI>().text = deck.name.ToString();
-        transform.Find("CardNum/Value").GetComponent<TMPro.TextMeshProUGUI>().text = deck.totalCardCount.ToString() + "/";
+        transform.Find("DeckName").GetComponent<TMPro.TextMeshProUGUI>().text = deck.name;
+        int playerCardNum = CheckPlayerCards(deck);
+        transform.Find("CardNum/Value").GetComponent<TMPro.TextMeshProUGUI>().text = playerCardNum.ToString() + "/";
+        ableTemplate = (playerCardNum == 40);
         transform.Find("Selected").gameObject.SetActive(false);
         transform.Find("SelectedBack").gameObject.SetActive(false);
+    }
+
+    int CheckPlayerCards(dataModules.Deck deck) {
+        int cardCount = 0;
+        foreach(dataModules.Item card in deck.items) {
+            if (AccountManager.Instance.cardPackage.data.ContainsKey(card.id))
+                cardCount += AccountManager.Instance.cardPackage.data[card.id].cardCount;
+        }
+        return cardCount;
     }
 
     public void OpenDeckButton() {
