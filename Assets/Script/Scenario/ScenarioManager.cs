@@ -271,6 +271,14 @@ public class ScenarioManager : SerializedMonoBehaviour
         isTutorialSelected = isTutorial;
         HUDController.gameObject.SetActive(false);
 
+        Image background = stageCanvas.transform.Find("HUD/StagePanel/MainBack").GetComponent<Image>();
+        if (isHuman) {
+            background.sprite = human.readyCanvasBg;
+        }
+        else {
+            background.sprite = orc.readyCanvasBg;
+        }
+
         if (isTutorial) {
             CreateTutorialDeck(isHuman);
 
@@ -380,6 +388,7 @@ namespace Tutorial {
         public GameObject StageCanvas;
         public GameObject heroContent;
         public GameObject stageContent;
+        public Sprite readyCanvasBg;
     }
 
     public class ScenarioButton : MonoBehaviour {
