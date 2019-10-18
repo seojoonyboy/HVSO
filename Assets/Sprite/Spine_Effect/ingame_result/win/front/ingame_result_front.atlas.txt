@@ -6,70 +6,70 @@ filter: Linear,Linear
 repeat: none
 Victory
   rotate: false
-  xy: 1353, 359
+  xy: 866, 0
   size: 344, 122
   orig: 344, 123
   offset: 0, 1
   index: -1
 Victory_effect1
-  rotate: false
-  xy: 997, 347
+  rotate: true
+  xy: 410, 7
   size: 356, 134
   orig: 358, 136
   offset: 1, 1
   index: -1
 Victory_effect2
-  rotate: false
-  xy: 0, 72
+  rotate: true
+  xy: 271, 3
   size: 360, 139
   orig: 362, 141
   offset: 1, 1
   index: -1
 Victory_human
-  rotate: false
-  xy: 1697, 284
-  size: 233, 197
-  orig: 233, 197
+  rotate: true
+  xy: 866, 122
+  size: 246, 209
+  orig: 246, 209
   offset: 0, 0
   index: -1
 Victory_ob
   rotate: false
-  xy: 0, 345
-  size: 551, 136
-  orig: 551, 136
+  xy: 0, 363
+  size: 647, 142
+  orig: 647, 142
   offset: 0, 0
   index: -1
 Victory_ob_orc
   rotate: false
-  xy: 0, 211
-  size: 549, 134
-  orig: 549, 134
+  xy: 647, 368
+  size: 628, 137
+  orig: 628, 137
   offset: 0, 0
   index: -1
 Victory_ob_shadow
   rotate: false
-  xy: 0, 0
+  xy: 0, 40
   size: 271, 72
   orig: 273, 74
   offset: 1, 1
   index: -1
 Victory_orc
-  rotate: false
-  xy: 360, 16
-  size: 232, 195
-  orig: 232, 195
+  rotate: true
+  xy: 647, 112
+  size: 256, 219
+  orig: 256, 219
   offset: 0, 0
   index: -1
 Victory_shadow
-  rotate: false
-  xy: 551, 346
+  rotate: true
+  xy: 1275, 59
   size: 446, 135
   orig: 446, 137
   offset: 0, 1
   index: -1
 star
   rotate: false
-  xy: 592, 181
+  xy: 1075, 203
   size: 166, 165
   orig: 166, 165
   offset: 0, 0

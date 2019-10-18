@@ -5,57 +5,57 @@ format: RGBA8888
 filter: Linear,Linear
 repeat: none
 Victory
-  rotate: false
-  xy: 0, 0
+  rotate: true
+  xy: 603, 74
   size: 222, 133
   orig: 222, 133
   offset: 0, 0
   index: -1
 Victory_effect1
   rotate: false
-  xy: 222, 0
+  xy: 736, 163
   size: 222, 133
   orig: 222, 133
   offset: 0, 0
   index: -1
 Victory_human
-  rotate: false
-  xy: 552, 260
-  size: 236, 198
-  orig: 236, 198
+  rotate: true
+  xy: 394, 50
+  size: 246, 209
+  orig: 246, 209
   offset: 0, 0
   index: -1
 Victory_ob
   rotate: false
-  xy: 0, 271
-  size: 552, 187
-  orig: 552, 187
+  xy: 340, 296
+  size: 626, 170
+  orig: 626, 170
   offset: 0, 0
   index: -1
 Victory_ob_shadow
-  rotate: true
-  xy: 444, 0
+  rotate: false
+  xy: 69, 5
   size: 271, 72
   orig: 273, 74
   offset: 1, 1
   index: -1
 Victory_orc
   rotate: false
-  xy: 788, 263
-  size: 232, 195
-  orig: 232, 195
+  xy: 138, 77
+  size: 256, 219
+  orig: 256, 219
   offset: 0, 0
   index: -1
 Victory_shadow
-  rotate: false
-  xy: 0, 133
+  rotate: true
+  xy: 0, 77
   size: 389, 138
   orig: 389, 138
   offset: 0, 0
   index: -1
 star
-  rotate: false
-  xy: 516, 191
+  rotate: true
+  xy: 0, 0
   size: 77, 69
   orig: 77, 69
   offset: 0, 0

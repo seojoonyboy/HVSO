@@ -20,8 +20,7 @@ public class HeroSelectController : MonoBehaviour
         transform.Find("InnerCanvas/RaceSelect/OrcSelect").GetChild(0).gameObject.SetActive(false);
         transform.Find("InnerCanvas/HeroSpines/HumanSpines").gameObject.SetActive(true);
         transform.Find("InnerCanvas/HeroSpines/OrcSpines").gameObject.SetActive(false);
-        transform.Find("InnerCanvas/BackgroundImage/human").gameObject.SetActive(true);
-        transform.Find("InnerCanvas/BackgroundImage/orc").gameObject.SetActive(false);
+        transform.Find("InnerCanvas/BackgroundImage").GetComponent<Image>().sprite = AccountManager.Instance.resource.campBackgrounds["human"];
         isHuman = true;
         humanHeroScroll.GoToScreen(0);
         SetHeroInfo(0, true);
@@ -33,8 +32,7 @@ public class HeroSelectController : MonoBehaviour
         transform.Find("InnerCanvas/RaceSelect/OrcSelect").GetChild(0).gameObject.SetActive(true);
         transform.Find("InnerCanvas/HeroSpines/HumanSpines").gameObject.SetActive(false);
         transform.Find("InnerCanvas/HeroSpines/OrcSpines").gameObject.SetActive(true);
-        transform.Find("InnerCanvas/BackgroundImage/human").gameObject.SetActive(false);
-        transform.Find("InnerCanvas/BackgroundImage/orc").gameObject.SetActive(true);
+        transform.Find("InnerCanvas/BackgroundImage").GetComponent<Image>().sprite = AccountManager.Instance.resource.campBackgrounds["orc"];
         isHuman = false;
         orcHeroScroll.GoToScreen(0);        
         SetHeroInfo(0, false);
