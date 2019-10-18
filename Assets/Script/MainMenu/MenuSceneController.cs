@@ -70,6 +70,8 @@ public class MenuSceneController : MonoBehaviour {
             GameObject modal = Instantiate(reconnectingModal);
             modal.GetComponent<ReconnectController>().Init(decksLoader);
         }
+        //menuTutorialManager.StartTutorial(MenuTutorialManager.TutorialType.TO_ORC_STORY);
+
         menuButton.Initialize(true);
         menuButton.Update(0);
         ClickMenuButton(2);
