@@ -236,7 +236,7 @@ public class Wait_summon : ScenarioExecute {
     public override void Execute() {
         PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.UNIT_SUMMONED, CheckSummon);
         PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.UNIT_DROP_FAIL, Glowing);
-
+        Glow();
         PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.UNIT_SUMMONED, CheckSummon);
         PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.UNIT_DROP_FAIL, Glowing);
     }
@@ -251,6 +251,10 @@ public class Wait_summon : ScenarioExecute {
             PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.UNIT_DROP_FAIL, Glowing);
             handler.isDone = true;
         }
+    }
+
+    private void Glow() {
+        scenarioMask.CardDeckGlow(args[1]);
     }
 
 
