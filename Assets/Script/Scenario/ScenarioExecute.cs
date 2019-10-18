@@ -357,7 +357,8 @@ public class Wait_Multiple_Summon_ScopeLine : ScenarioExecute {
         }
         scenarioGameManagment.multipleforceLine = line;
         clearCount = stringNum.Length;
-        //Glowing();
+
+        Glowing();
         PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.UNIT_SUMMONED, CheckSummon);
         PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.UNIT_DROP_FAIL, HighLightOn);
     }
@@ -373,8 +374,8 @@ public class Wait_Multiple_Summon_ScopeLine : ScenarioExecute {
             handler.isDone = true;
         }
 
-        //if (summonCount < clearCount)
-            //Invoke("Glowing", 0.3f);
+        if (summonCount < clearCount)
+            Invoke("Glowing", 0.3f);
 
 
     }
@@ -447,6 +448,7 @@ public class Wait_drop : ScenarioExecute {
     public Wait_drop() : base() { }
 
     public override void Execute() {
+        Glowing(args[1]);
         PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.MAGIC_USED, CheckMagicUse);
     }
 
@@ -458,6 +460,11 @@ public class Wait_drop : ScenarioExecute {
             handler.isDone = true;
         }      
     }
+
+    private void Glowing(string id) {
+        scenarioMask.CardDeckGlow(id);
+    }
+
 }
 
 
