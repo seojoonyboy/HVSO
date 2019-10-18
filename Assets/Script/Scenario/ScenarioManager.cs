@@ -35,10 +35,6 @@ public class ScenarioManager : SerializedMonoBehaviour
         OnHumanCategories();
         OnLobbySceneLoaded.Invoke();
         isIngameButtonClicked = false;
-        //PlayerPrefs.SetString("SelectedDeckId", "");
-#if !UNITY_EDITOR
-        ScenarioMask.Instance.transform.parent.Find("DebugText").gameObject.SetActive(false);
-#endif
     }
 
     private void OnDestroy() {
