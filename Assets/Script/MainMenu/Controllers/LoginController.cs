@@ -67,6 +67,7 @@ public class LoginController : MonoBehaviour {
             else {
                 accountManager.OnSignInResultModal();
             }
+            PlayerPrefs.SetString("PrevTutorial", "");
         }
     }
 

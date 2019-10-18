@@ -27,6 +27,7 @@ public class MenuSceneController : MonoBehaviour {
     public MyDecksLoader decksLoader;
     [SerializeField] GameObject newbiLoadingModal;  //최초 접속시 튜토리얼 강제시 등장하는 로딩 화면
     [SerializeField] GameObject reconnectingModal;  //재접속 진행시 등장하는 로딩 화면
+    [SerializeField] MenuTutorialManager menuTutorialManager;
 
     public static MenuSceneController menuSceneController;
 
@@ -40,11 +41,30 @@ public class MenuSceneController : MonoBehaviour {
             isLoaded = true;
         else
             SetCardNumbersPerDic();
+
+        //TODO : api/user의 etcInfo에 tutorialCleared value를 이용하여 처리
         if (PlayerPrefs.GetInt("isFirst") == 1) {
-            var newbiComp = newbiLoadingModal.AddComponent<NewbiController>(); //첫 로그인 제어
-            newbiComp.menuSceneController = this;
-            newbiComp.name = "NewbiController";
-            newbiComp.Init(decksLoader, newbiLoadingModal);
+            string prevTutorial = PlayerPrefs.GetString("PrevTutorial");
+            if (string.IsNullOrEmpty(prevTutorial)) {
+                var newbiComp = newbiLoadingModal.AddComponent<NewbiController>(); //첫 로그인 제어
+                newbiComp.menuSceneController = this;
+                newbiComp.name = "NewbiController";
+                newbiComp.Init(decksLoader, newbiLoadingModal);
+            }
+            else {
+                switch (prevTutorial) {
+                    case "Human_Tutorial":
+                        //TODO : 보상 받기 처리
+                        //issue : 보상을 받고 진행을 중단한 경우, 
+                        //다음 튜토리얼에서는 처음부터 진행하다가 skip해야 하는지
+                        menuTutorialManager.StartTutorial(MenuTutorialManager.TutorialType.TO_ORC_STORY);
+                        break;
+                    case "Orc_Tutorial":
+                        //TODO : 보상 받기 처리
+
+                        break;
+                }
+            }
         }
         else if(PlayerPrefs.GetString("ReconnectData") != string.Empty) {
             GameObject modal = Instantiate(reconnectingModal);

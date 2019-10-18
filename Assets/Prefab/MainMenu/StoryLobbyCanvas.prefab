@@ -31418,7 +31418,7 @@ MonoBehaviour:
         mscorlib
     - Name: 
       Entry: 12
-      Data: 13
+      Data: 15
     - Name: 
       Entry: 7
       Data: 306|Tutorial.Method, Assembly-CSharp
@@ -31571,10 +31571,34 @@ MonoBehaviour:
       Data: 318|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
-      Data: Wait_Multiple_Summon_ScopeLine
+      Data: ChallengeStart
     - Name: args
       Entry: 7
       Data: 319|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: UNIT_SUMMONED
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 320|Tutorial.Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Wait_Multiple_Summon_ScopeLine
+    - Name: args
+      Entry: 7
+      Data: 321|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 2
@@ -31595,37 +31619,19 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 320|Tutorial.Method, Assembly-CSharp
-    - Name: name
-      Entry: 1
-      Data: StopHighlight
-    - Name: args
-      Entry: 7
-      Data: 321|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
       Data: 322|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
-      Data: Enable_EndTurn
+      Data: ChallengeEnd
     - Name: args
       Entry: 7
       Data: 323|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
-      Data: 0
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: UNIT_SUMMONED
     - Name: 
       Entry: 13
       Data: 
@@ -31640,7 +31646,7 @@ MonoBehaviour:
       Data: 324|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
-      Data: Enable_Deck_card
+      Data: StopHighlight
     - Name: args
       Entry: 7
       Data: 325|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
@@ -31661,19 +31667,13 @@ MonoBehaviour:
       Data: 326|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
-      Data: Highlight
+      Data: Enable_EndTurn
     - Name: args
       Entry: 7
       Data: 327|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
-      Data: 2
-    - Name: 
-      Entry: 1
-      Data: button
-    - Name: 
-      Entry: 1
-      Data: endTurn
+      Data: 0
     - Name: 
       Entry: 13
       Data: 
@@ -31688,7 +31688,7 @@ MonoBehaviour:
       Data: 328|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
-      Data: Stop_Invoke_NextTurn
+      Data: Enable_Deck_card
     - Name: args
       Entry: 7
       Data: 329|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
@@ -31709,10 +31709,58 @@ MonoBehaviour:
       Data: 330|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
-      Data: Wait_click
+      Data: Highlight
     - Name: args
       Entry: 7
       Data: 331|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 1
+      Data: button
+    - Name: 
+      Entry: 1
+      Data: endTurn
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 332|Tutorial.Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Stop_Invoke_NextTurn
+    - Name: args
+      Entry: 7
+      Data: 333|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 334|Tutorial.Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Wait_click
+    - Name: args
+      Entry: 7
+      Data: 335|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 2
@@ -31745,65 +31793,23 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 332|Tutorial.ScriptData, Assembly-CSharp
+      Data: 336|Tutorial.ScriptData, Assembly-CSharp
     - Name: Print_text
       Entry: 6
       Data: 
     - Name: methods
       Entry: 7
-      Data: 333|System.Collections.Generic.List`1[[Tutorial.Method, Assembly-CSharp]],
+      Data: 337|System.Collections.Generic.List`1[[Tutorial.Method, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
       Data: 17
     - Name: 
       Entry: 7
-      Data: 334|Tutorial.Method, Assembly-CSharp
-    - Name: name
-      Entry: 1
-      Data: Block_Screen
-    - Name: args
-      Entry: 7
-      Data: 335|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 336|Tutorial.Method, Assembly-CSharp
-    - Name: name
-      Entry: 1
-      Data: Stop_orc_summon
-    - Name: args
-      Entry: 7
-      Data: 337|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
       Data: 338|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
-      Data: Stop_orc_magic
+      Data: Block_Screen
     - Name: args
       Entry: 7
       Data: 339|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
@@ -31824,10 +31830,52 @@ MonoBehaviour:
       Data: 340|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
-      Data: NPC_Print_message
+      Data: Stop_orc_summon
     - Name: args
       Entry: 7
       Data: 341|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 342|Tutorial.Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Stop_orc_magic
+    - Name: args
+      Entry: 7
+      Data: 343|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 344|Tutorial.Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: NPC_Print_message
+    - Name: args
+      Entry: 7
+      Data: 345|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 3
@@ -31854,13 +31902,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 342|Tutorial.Method, Assembly-CSharp
+      Data: 346|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Wait_click
     - Name: args
       Entry: 7
-      Data: 343|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 347|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
@@ -31878,52 +31926,10 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 344|Tutorial.Method, Assembly-CSharp
-    - Name: name
-      Entry: 1
-      Data: Proceed_orc_magic
-    - Name: args
-      Entry: 7
-      Data: 345|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 346|Tutorial.Method, Assembly-CSharp
-    - Name: name
-      Entry: 1
-      Data: Proceed_orc_summon
-    - Name: args
-      Entry: 7
-      Data: 347|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
       Data: 348|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
-      Data: Proceed_Invoke_NextTurn
+      Data: Proceed_orc_magic
     - Name: args
       Entry: 7
       Data: 349|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
@@ -31944,16 +31950,13 @@ MonoBehaviour:
       Data: 350|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
-      Data: Wait_Turn
+      Data: Proceed_orc_summon
     - Name: args
       Entry: 7
       Data: 351|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
-      Data: 1
-    - Name: 
-      Entry: 1
-      Data: SECRET
+      Data: 0
     - Name: 
       Entry: 13
       Data: 
@@ -31968,7 +31971,7 @@ MonoBehaviour:
       Data: 352|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
-      Data: Disable_EndTurn
+      Data: Proceed_Invoke_NextTurn
     - Name: args
       Entry: 7
       Data: 353|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
@@ -31989,7 +31992,7 @@ MonoBehaviour:
       Data: 354|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
-      Data: Wait_until
+      Data: Wait_Turn
     - Name: args
       Entry: 7
       Data: 355|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
@@ -31998,7 +32001,7 @@ MonoBehaviour:
       Data: 1
     - Name: 
       Entry: 1
-      Data: 1
+      Data: SECRET
     - Name: 
       Entry: 13
       Data: 
@@ -32013,25 +32016,13 @@ MonoBehaviour:
       Data: 356|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
-      Data: NPC_Print_message
+      Data: Disable_EndTurn
     - Name: args
       Entry: 7
       Data: 357|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
-      Data: 3
-    - Name: 
-      Entry: 1
-      Data: ac10012
-    - Name: 
-      Entry: 1
-      Data: "\uC73C\u2026 \uC6B0\uB9AC \uC804\uC0AC\uB4E4\uBCF4\uB2E4 \uC801\uB4E4\uC758
-        \uAD70\uC0AC\uAC00 \uAC15\uD569\uB2C8\uB2E4. \uC5B4\uCA54\uC218 \uC5C6\uAD70\uC694.
-        \uC624\uD06C\uC758 \uC804\uD1B5 \uC8FC\uC220\uC744 \uC0AC\uC6A9\uD574\uC57C
-        \uD560 \uAC83 \uAC19\uC2B5\uB2C8\uB2E4."
-    - Name: 
-      Entry: 1
-      Data: true
+      Data: 0
     - Name: 
       Entry: 13
       Data: 
@@ -32046,7 +32037,7 @@ MonoBehaviour:
       Data: 358|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
-      Data: Wait_click
+      Data: Wait_until
     - Name: args
       Entry: 7
       Data: 359|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
@@ -32055,7 +32046,7 @@ MonoBehaviour:
       Data: 1
     - Name: 
       Entry: 1
-      Data: screen
+      Data: 1
     - Name: 
       Entry: 13
       Data: 
@@ -32082,8 +32073,10 @@ MonoBehaviour:
       Data: ac10012
     - Name: 
       Entry: 1
-      Data: "\uC5B4\uB460\uC758 \uAC00\uC2DC\uB85C \uAC15\uD55C \uC801\uC744 \uCC98\uCE58\uD558\uACE0
-        \uACF5\uACA9\uC744 \uBC29\uC9C0\uD558\uC138\uC694."
+      Data: "\uC73C\u2026 \uC6B0\uB9AC \uC804\uC0AC\uB4E4\uBCF4\uB2E4 \uC801\uB4E4\uC758
+        \uAD70\uC0AC\uAC00 \uAC15\uD569\uB2C8\uB2E4. \uC5B4\uCA54\uC218 \uC5C6\uAD70\uC694.
+        \uC624\uD06C\uC758 \uC804\uD1B5 \uC8FC\uC220\uC744 \uC0AC\uC6A9\uD574\uC57C
+        \uD560 \uAC83 \uAC19\uC2B5\uB2C8\uB2E4."
     - Name: 
       Entry: 1
       Data: true
@@ -32101,34 +32094,10 @@ MonoBehaviour:
       Data: 362|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
-      Data: Disable_Deck_card
-    - Name: args
-      Entry: 7
-      Data: 363|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 1
-    - Name: 
-      Entry: 1
-      Data: ac10074
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 364|Tutorial.Method, Assembly-CSharp
-    - Name: name
-      Entry: 1
       Data: Wait_click
     - Name: args
       Entry: 7
-      Data: 365|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 363|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
@@ -32146,13 +32115,92 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
+      Data: 364|Tutorial.Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: NPC_Print_message
+    - Name: args
+      Entry: 7
+      Data: 365|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 1
+      Data: ac10012
+    - Name: 
+      Entry: 1
+      Data: "\uC5B4\uB460\uC758 \uAC00\uC2DC\uB85C \uAC15\uD55C \uC801\uC744 \uCC98\uCE58\uD558\uACE0
+        \uACF5\uACA9\uC744 \uBC29\uC9C0\uD558\uC138\uC694."
+    - Name: 
+      Entry: 1
+      Data: true
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
       Data: 366|Tutorial.Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Disable_Deck_card
+    - Name: args
+      Entry: 7
+      Data: 367|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: ac10074
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 368|Tutorial.Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Wait_click
+    - Name: args
+      Entry: 7
+      Data: 369|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: screen
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 370|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Unblock_Screen
     - Name: args
       Entry: 7
-      Data: 367|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 371|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 0
@@ -32179,26 +32227,26 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 368|Tutorial.ScriptData, Assembly-CSharp
+      Data: 372|Tutorial.ScriptData, Assembly-CSharp
     - Name: Print_text
       Entry: 6
       Data: 
     - Name: methods
       Entry: 7
-      Data: 369|System.Collections.Generic.List`1[[Tutorial.Method, Assembly-CSharp]],
+      Data: 373|System.Collections.Generic.List`1[[Tutorial.Method, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
-      Data: 10
+      Data: 12
     - Name: 
       Entry: 7
-      Data: 370|Tutorial.Method, Assembly-CSharp
+      Data: 374|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Force_drop_zone
     - Name: args
       Entry: 7
-      Data: 371|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 375|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 3
@@ -32222,13 +32270,37 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 372|Tutorial.Method, Assembly-CSharp
+      Data: 376|Tutorial.Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: ChallengeStart
+    - Name: args
+      Entry: 7
+      Data: 377|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: MAGIC_USED
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 378|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Wait_drop
     - Name: args
       Entry: 7
-      Data: 373|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 379|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 2
@@ -32249,13 +32321,37 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 374|Tutorial.Method, Assembly-CSharp
+      Data: 380|Tutorial.Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: ChallengeEnd
+    - Name: args
+      Entry: 7
+      Data: 381|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: MAGIC_USED
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 382|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: NPC_Print_message
     - Name: args
       Entry: 7
-      Data: 375|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 383|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 3
@@ -32282,13 +32378,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 376|Tutorial.Method, Assembly-CSharp
+      Data: 384|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Wait_click
     - Name: args
       Entry: 7
-      Data: 377|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 385|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
@@ -32306,106 +32402,10 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 378|Tutorial.Method, Assembly-CSharp
-    - Name: name
-      Entry: 1
-      Data: Enable_EndTurn
-    - Name: args
-      Entry: 7
-      Data: 379|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 380|Tutorial.Method, Assembly-CSharp
-    - Name: name
-      Entry: 1
-      Data: Highlight
-    - Name: args
-      Entry: 7
-      Data: 381|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 2
-    - Name: 
-      Entry: 1
-      Data: button
-    - Name: 
-      Entry: 1
-      Data: endTurn
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 382|Tutorial.Method, Assembly-CSharp
-    - Name: name
-      Entry: 1
-      Data: Wait_click
-    - Name: args
-      Entry: 7
-      Data: 383|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 2
-    - Name: 
-      Entry: 1
-      Data: button
-    - Name: 
-      Entry: 1
-      Data: endTurn
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 384|Tutorial.Method, Assembly-CSharp
-    - Name: name
-      Entry: 1
-      Data: StopHighlight
-    - Name: args
-      Entry: 7
-      Data: 385|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
       Data: 386|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
-      Data: Stop_Next_Turn
+      Data: Enable_EndTurn
     - Name: args
       Entry: 7
       Data: 387|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
@@ -32426,10 +32426,106 @@ MonoBehaviour:
       Data: 388|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
-      Data: Wait_Battle_End
+      Data: Highlight
     - Name: args
       Entry: 7
       Data: 389|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 1
+      Data: button
+    - Name: 
+      Entry: 1
+      Data: endTurn
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 390|Tutorial.Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Wait_click
+    - Name: args
+      Entry: 7
+      Data: 391|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 1
+      Data: button
+    - Name: 
+      Entry: 1
+      Data: endTurn
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 392|Tutorial.Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: StopHighlight
+    - Name: args
+      Entry: 7
+      Data: 393|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 394|Tutorial.Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Stop_Next_Turn
+    - Name: args
+      Entry: 7
+      Data: 395|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 396|Tutorial.Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Wait_Battle_End
+    - Name: args
+      Entry: 7
+      Data: 397|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 0
@@ -32456,26 +32552,26 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 390|Tutorial.ScriptData, Assembly-CSharp
+      Data: 398|Tutorial.ScriptData, Assembly-CSharp
     - Name: Print_text
       Entry: 6
       Data: 
     - Name: methods
       Entry: 7
-      Data: 391|System.Collections.Generic.List`1[[Tutorial.Method, Assembly-CSharp]],
+      Data: 399|System.Collections.Generic.List`1[[Tutorial.Method, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
       Data: 8
     - Name: 
       Entry: 7
-      Data: 392|Tutorial.Method, Assembly-CSharp
+      Data: 400|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Block_Screen
     - Name: args
       Entry: 7
-      Data: 393|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 401|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 0
@@ -32490,13 +32586,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 394|Tutorial.Method, Assembly-CSharp
+      Data: 402|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: NPC_Print_message
     - Name: args
       Entry: 7
-      Data: 395|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 403|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 3
@@ -32522,13 +32618,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 396|Tutorial.Method, Assembly-CSharp
+      Data: 404|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Wait_click
     - Name: args
       Entry: 7
-      Data: 397|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 405|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
@@ -32546,13 +32642,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 398|Tutorial.Method, Assembly-CSharp
+      Data: 406|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: NPC_Print_message
     - Name: args
       Entry: 7
-      Data: 399|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 407|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 3
@@ -32578,13 +32674,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 400|Tutorial.Method, Assembly-CSharp
+      Data: 408|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Wait_click
     - Name: args
       Entry: 7
-      Data: 401|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 409|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
@@ -32602,13 +32698,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 402|Tutorial.Method, Assembly-CSharp
+      Data: 410|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Proceed_Next_Turn
     - Name: args
       Entry: 7
-      Data: 403|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 411|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 0
@@ -32623,13 +32719,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 404|Tutorial.Method, Assembly-CSharp
+      Data: 412|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Disable_EndTurn
     - Name: args
       Entry: 7
-      Data: 405|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 413|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 0
@@ -32644,13 +32740,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 406|Tutorial.Method, Assembly-CSharp
+      Data: 414|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Wait_until
     - Name: args
       Entry: 7
-      Data: 407|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 415|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
@@ -32680,26 +32776,26 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 408|Tutorial.ScriptData, Assembly-CSharp
+      Data: 416|Tutorial.ScriptData, Assembly-CSharp
     - Name: Print_text
       Entry: 6
       Data: 
     - Name: methods
       Entry: 7
-      Data: 409|System.Collections.Generic.List`1[[Tutorial.Method, Assembly-CSharp]],
+      Data: 417|System.Collections.Generic.List`1[[Tutorial.Method, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
-      Data: 17
+      Data: 18
     - Name: 
       Entry: 7
-      Data: 410|Tutorial.Method, Assembly-CSharp
+      Data: 418|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: NPC_Print_message
     - Name: args
       Entry: 7
-      Data: 411|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 419|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 3
@@ -32726,13 +32822,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 412|Tutorial.Method, Assembly-CSharp
+      Data: 420|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Disable_Deck_card
     - Name: args
       Entry: 7
-      Data: 413|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 421|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
@@ -32750,40 +32846,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 414|Tutorial.Method, Assembly-CSharp
-    - Name: name
-      Entry: 1
-      Data: Highlight
-    - Name: args
-      Entry: 7
-      Data: 415|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 2
-    - Name: 
-      Entry: 1
-      Data: hand_card
-    - Name: 
-      Entry: 1
-      Data: ac10011
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 416|Tutorial.Method, Assembly-CSharp
+      Data: 422|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Force_drop_zone
     - Name: args
       Entry: 7
-      Data: 417|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 423|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 2
@@ -32804,13 +32873,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 418|Tutorial.Method, Assembly-CSharp
+      Data: 424|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Wait_click
     - Name: args
       Entry: 7
-      Data: 419|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 425|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
@@ -32828,13 +32897,37 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 420|Tutorial.Method, Assembly-CSharp
+      Data: 426|Tutorial.Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: ChallengeStart
+    - Name: args
+      Entry: 7
+      Data: 427|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: UNIT_SUMMONED
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 428|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Unblock_Screen
     - Name: args
       Entry: 7
-      Data: 421|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 429|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 0
@@ -32849,13 +32942,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 422|Tutorial.Method, Assembly-CSharp
+      Data: 430|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Wait_summon
     - Name: args
       Entry: 7
-      Data: 423|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 431|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 2
@@ -32876,13 +32969,37 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 424|Tutorial.Method, Assembly-CSharp
+      Data: 432|Tutorial.Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: ChallengeEnd
+    - Name: args
+      Entry: 7
+      Data: 433|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: UNIT_SUMMONED
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 434|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: StopHighlight
     - Name: args
       Entry: 7
-      Data: 425|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 435|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 0
@@ -32897,13 +33014,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 426|Tutorial.Method, Assembly-CSharp
+      Data: 436|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: NPC_Print_message
     - Name: args
       Entry: 7
-      Data: 427|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 437|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 3
@@ -32929,13 +33046,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 428|Tutorial.Method, Assembly-CSharp
+      Data: 438|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Wait_click
     - Name: args
       Entry: 7
-      Data: 429|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 439|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
@@ -32953,130 +33070,10 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 430|Tutorial.Method, Assembly-CSharp
-    - Name: name
-      Entry: 1
-      Data: Enable_EndTurn
-    - Name: args
-      Entry: 7
-      Data: 431|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 432|Tutorial.Method, Assembly-CSharp
-    - Name: name
-      Entry: 1
-      Data: Highlight
-    - Name: args
-      Entry: 7
-      Data: 433|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 2
-    - Name: 
-      Entry: 1
-      Data: button
-    - Name: 
-      Entry: 1
-      Data: endTurn
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 434|Tutorial.Method, Assembly-CSharp
-    - Name: name
-      Entry: 1
-      Data: Wait_click
-    - Name: args
-      Entry: 7
-      Data: 435|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 2
-    - Name: 
-      Entry: 1
-      Data: button
-    - Name: 
-      Entry: 1
-      Data: endTurn
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 436|Tutorial.Method, Assembly-CSharp
-    - Name: name
-      Entry: 1
-      Data: StopHighlight
-    - Name: args
-      Entry: 7
-      Data: 437|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 438|Tutorial.Method, Assembly-CSharp
-    - Name: name
-      Entry: 1
-      Data: Wait_Turn
-    - Name: args
-      Entry: 7
-      Data: 439|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 1
-    - Name: 
-      Entry: 1
-      Data: HUMAN
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
       Data: 440|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
-      Data: Stop_orc_summon
+      Data: Enable_EndTurn
     - Name: args
       Entry: 7
       Data: 441|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
@@ -33097,10 +33094,130 @@ MonoBehaviour:
       Data: 442|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
-      Data: Wait_until
+      Data: Highlight
     - Name: args
       Entry: 7
       Data: 443|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 1
+      Data: button
+    - Name: 
+      Entry: 1
+      Data: endTurn
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 444|Tutorial.Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Wait_click
+    - Name: args
+      Entry: 7
+      Data: 445|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 1
+      Data: button
+    - Name: 
+      Entry: 1
+      Data: endTurn
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 446|Tutorial.Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: StopHighlight
+    - Name: args
+      Entry: 7
+      Data: 447|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 448|Tutorial.Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Wait_Turn
+    - Name: args
+      Entry: 7
+      Data: 449|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: HUMAN
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 450|Tutorial.Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Stop_orc_summon
+    - Name: args
+      Entry: 7
+      Data: 451|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 452|Tutorial.Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Wait_until
+    - Name: args
+      Entry: 7
+      Data: 453|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
@@ -33130,26 +33247,26 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 444|Tutorial.ScriptData, Assembly-CSharp
+      Data: 454|Tutorial.ScriptData, Assembly-CSharp
     - Name: Print_text
       Entry: 6
       Data: 
     - Name: methods
       Entry: 7
-      Data: 445|System.Collections.Generic.List`1[[Tutorial.Method, Assembly-CSharp]],
+      Data: 455|System.Collections.Generic.List`1[[Tutorial.Method, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
       Data: 6
     - Name: 
       Entry: 7
-      Data: 446|Tutorial.Method, Assembly-CSharp
+      Data: 456|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: NPC_Print_message
     - Name: args
       Entry: 7
-      Data: 447|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 457|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 3
@@ -33174,13 +33291,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 448|Tutorial.Method, Assembly-CSharp
+      Data: 458|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Wait_click
     - Name: args
       Entry: 7
-      Data: 449|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 459|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
@@ -33198,13 +33315,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 450|Tutorial.Method, Assembly-CSharp
+      Data: 460|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Proceed_orc_summon
     - Name: args
       Entry: 7
-      Data: 451|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 461|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 0
@@ -33219,13 +33336,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 452|Tutorial.Method, Assembly-CSharp
+      Data: 462|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Wait_Turn
     - Name: args
       Entry: 7
-      Data: 453|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 463|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
@@ -33243,13 +33360,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 454|Tutorial.Method, Assembly-CSharp
+      Data: 464|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Wait_until
     - Name: args
       Entry: 7
-      Data: 455|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 465|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
@@ -33267,13 +33384,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 456|Tutorial.Method, Assembly-CSharp
+      Data: 466|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Disable_EndTurn
     - Name: args
       Entry: 7
-      Data: 457|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 467|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 0
@@ -33300,26 +33417,26 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 458|Tutorial.ScriptData, Assembly-CSharp
+      Data: 468|Tutorial.ScriptData, Assembly-CSharp
     - Name: Print_text
       Entry: 6
       Data: 
     - Name: methods
       Entry: 7
-      Data: 459|System.Collections.Generic.List`1[[Tutorial.Method, Assembly-CSharp]],
+      Data: 469|System.Collections.Generic.List`1[[Tutorial.Method, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
-      Data: 11
+      Data: 13
     - Name: 
       Entry: 7
-      Data: 460|Tutorial.Method, Assembly-CSharp
+      Data: 470|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Block_Screen
     - Name: args
       Entry: 7
-      Data: 461|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 471|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 0
@@ -33334,13 +33451,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 462|Tutorial.Method, Assembly-CSharp
+      Data: 472|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: NPC_Print_message
     - Name: args
       Entry: 7
-      Data: 463|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 473|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 3
@@ -33366,13 +33483,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 464|Tutorial.Method, Assembly-CSharp
+      Data: 474|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Wait_click
     - Name: args
       Entry: 7
-      Data: 465|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 475|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
@@ -33390,13 +33507,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 466|Tutorial.Method, Assembly-CSharp
+      Data: 476|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: NPC_Print_message
     - Name: args
       Entry: 7
-      Data: 467|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 477|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 3
@@ -33422,148 +33539,19 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 468|Tutorial.Method, Assembly-CSharp
+      Data: 478|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Disable_Deck_card
     - Name: args
       Entry: 7
-      Data: 469|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 1
-    - Name: 
-      Entry: 1
-      Data: ac10017
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 470|Tutorial.Method, Assembly-CSharp
-    - Name: name
-      Entry: 1
-      Data: Wait_click
-    - Name: args
-      Entry: 7
-      Data: 471|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 1
-    - Name: 
-      Entry: 1
-      Data: screen
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 472|Tutorial.Method, Assembly-CSharp
-    - Name: name
-      Entry: 1
-      Data: Unblock_Screen
-    - Name: args
-      Entry: 7
-      Data: 473|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 474|Tutorial.Method, Assembly-CSharp
-    - Name: name
-      Entry: 1
-      Data: Wait_drop
-    - Name: args
-      Entry: 7
-      Data: 475|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 2
-    - Name: 
-      Entry: 1
-      Data: a
-    - Name: 
-      Entry: 1
-      Data: ac10017
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 476|Tutorial.Method, Assembly-CSharp
-    - Name: name
-      Entry: 1
-      Data: Wait_until
-    - Name: args
-      Entry: 7
-      Data: 477|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 1
-    - Name: 
-      Entry: 1
-      Data: 2
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 478|Tutorial.Method, Assembly-CSharp
-    - Name: name
-      Entry: 1
-      Data: NPC_Print_message
-    - Name: args
-      Entry: 7
       Data: 479|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
-      Data: 3
+      Data: 1
     - Name: 
       Entry: 1
-      Data: ac10012
-    - Name: 
-      Entry: 1
-      Data: "\uC9C0\uAE08 \uC0AC\uC6A9\uD560 \uC218 \uC788\uB294 \uB9C8\uBC95\uC744
-        \uD655\uBCF4\uD588\uC2B5\uB2C8\uB2E4! \uC9C0\uAE08 \uBC14\uB85C \uC0AC\uC6A9\uD574\uC11C
-        \uC554\uC0B4\uC790\uB97C \uBE48 \uB77C\uC778\uC73C\uB85C \uC774\uB3D9\uC2DC\uCF1C
-        \uBCF4\uACA0\uC2B5\uB2C8\uB2E4."
-    - Name: 
-      Entry: 1
-      Data: true
+      Data: ac10017
     - Name: 
       Entry: 13
       Data: 
@@ -33598,6 +33586,183 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: 
+      Entry: 7
+      Data: 482|Tutorial.Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Unblock_Screen
+    - Name: args
+      Entry: 7
+      Data: 483|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 484|Tutorial.Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: ChallengeStart
+    - Name: args
+      Entry: 7
+      Data: 485|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: MAGIC_USED
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 486|Tutorial.Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Wait_drop
+    - Name: args
+      Entry: 7
+      Data: 487|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 1
+      Data: a
+    - Name: 
+      Entry: 1
+      Data: ac10017
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 488|Tutorial.Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: ChallengeEnd
+    - Name: args
+      Entry: 7
+      Data: 489|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: MAGIC_USED
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 490|Tutorial.Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Wait_until
+    - Name: args
+      Entry: 7
+      Data: 491|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: 2
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 492|Tutorial.Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: NPC_Print_message
+    - Name: args
+      Entry: 7
+      Data: 493|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 1
+      Data: ac10012
+    - Name: 
+      Entry: 1
+      Data: "\uC9C0\uAE08 \uC0AC\uC6A9\uD560 \uC218 \uC788\uB294 \uB9C8\uBC95\uC744
+        \uD655\uBCF4\uD588\uC2B5\uB2C8\uB2E4! \uC9C0\uAE08 \uBC14\uB85C \uC0AC\uC6A9\uD574\uC11C
+        \uC554\uC0B4\uC790\uB97C \uBE48 \uB77C\uC778\uC73C\uB85C \uC774\uB3D9\uC2DC\uCF1C
+        \uBCF4\uACA0\uC2B5\uB2C8\uB2E4."
+    - Name: 
+      Entry: 1
+      Data: true
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 494|Tutorial.Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Wait_click
+    - Name: args
+      Entry: 7
+      Data: 495|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: screen
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
       Entry: 13
       Data: 
     - Name: 
@@ -33611,26 +33776,26 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 482|Tutorial.ScriptData, Assembly-CSharp
+      Data: 496|Tutorial.ScriptData, Assembly-CSharp
     - Name: Print_text
       Entry: 6
       Data: 
     - Name: methods
       Entry: 7
-      Data: 483|System.Collections.Generic.List`1[[Tutorial.Method, Assembly-CSharp]],
+      Data: 497|System.Collections.Generic.List`1[[Tutorial.Method, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
-      Data: 15
+      Data: 17
     - Name: 
       Entry: 7
-      Data: 484|Tutorial.Method, Assembly-CSharp
+      Data: 498|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Disable_Deck_card
     - Name: args
       Entry: 7
-      Data: 485|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 499|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
@@ -33648,13 +33813,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 486|Tutorial.Method, Assembly-CSharp
+      Data: 500|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Force_drop_zone
     - Name: args
       Entry: 7
-      Data: 487|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 501|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 2
@@ -33675,13 +33840,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 488|Tutorial.Method, Assembly-CSharp
+      Data: 502|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Unblock_Screen
     - Name: args
       Entry: 7
-      Data: 489|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 503|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 0
@@ -33696,13 +33861,37 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 490|Tutorial.Method, Assembly-CSharp
+      Data: 504|Tutorial.Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: ChallengeStart
+    - Name: args
+      Entry: 7
+      Data: 505|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: MAGIC_USED
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 506|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Wait_drop
     - Name: args
       Entry: 7
-      Data: 491|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 507|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 2
@@ -33723,13 +33912,37 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 492|Tutorial.Method, Assembly-CSharp
+      Data: 508|Tutorial.Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: ChallengeEnd
+    - Name: args
+      Entry: 7
+      Data: 509|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: MAGIC_USED
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 510|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Force_drop_zone
     - Name: args
       Entry: 7
-      Data: 493|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 511|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 2
@@ -33750,13 +33963,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 494|Tutorial.Method, Assembly-CSharp
+      Data: 512|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Wait_UnitPos_Change
     - Name: args
       Entry: 7
-      Data: 495|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 513|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 0
@@ -33771,13 +33984,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 496|Tutorial.Method, Assembly-CSharp
+      Data: 514|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Wait_until
     - Name: args
       Entry: 7
-      Data: 497|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 515|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
@@ -33795,13 +34008,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 498|Tutorial.Method, Assembly-CSharp
+      Data: 516|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: NPC_Print_message
     - Name: args
       Entry: 7
-      Data: 499|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 517|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 3
@@ -33827,13 +34040,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 500|Tutorial.Method, Assembly-CSharp
+      Data: 518|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Result_battle
     - Name: args
       Entry: 7
-      Data: 501|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 519|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
@@ -33851,13 +34064,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 502|Tutorial.Method, Assembly-CSharp
+      Data: 520|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Enable_EndTurn
     - Name: args
       Entry: 7
-      Data: 503|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 521|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 0
@@ -33872,13 +34085,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 504|Tutorial.Method, Assembly-CSharp
+      Data: 522|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Wait_click
     - Name: args
       Entry: 7
-      Data: 505|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 523|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
@@ -33896,13 +34109,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 506|Tutorial.Method, Assembly-CSharp
+      Data: 524|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Unblock_Screen
     - Name: args
       Entry: 7
-      Data: 507|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 525|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 0
@@ -33917,13 +34130,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 508|Tutorial.Method, Assembly-CSharp
+      Data: 526|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Highlight
     - Name: args
       Entry: 7
-      Data: 509|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 527|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 2
@@ -33944,13 +34157,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 510|Tutorial.Method, Assembly-CSharp
+      Data: 528|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Wait_click
     - Name: args
       Entry: 7
-      Data: 511|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 529|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 2
@@ -33971,13 +34184,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 512|Tutorial.Method, Assembly-CSharp
+      Data: 530|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: StopHighlight
     - Name: args
       Entry: 7
-      Data: 513|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 531|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 0
@@ -34004,26 +34217,26 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 514|Tutorial.ScriptData, Assembly-CSharp
+      Data: 532|Tutorial.ScriptData, Assembly-CSharp
     - Name: Print_text
       Entry: 6
       Data: 
     - Name: methods
       Entry: 7
-      Data: 515|System.Collections.Generic.List`1[[Tutorial.Method, Assembly-CSharp]],
+      Data: 533|System.Collections.Generic.List`1[[Tutorial.Method, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
       Data: 11
     - Name: 
       Entry: 7
-      Data: 516|Tutorial.Method, Assembly-CSharp
+      Data: 534|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Wait_Enemy_hero_Dead
     - Name: args
       Entry: 7
-      Data: 517|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 535|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 0
@@ -34038,13 +34251,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 518|Tutorial.Method, Assembly-CSharp
+      Data: 536|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: NPC_Print_message
     - Name: args
       Entry: 7
-      Data: 519|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 537|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 3
@@ -34068,13 +34281,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 520|Tutorial.Method, Assembly-CSharp
+      Data: 538|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Wait_click
     - Name: args
       Entry: 7
-      Data: 521|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 539|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
@@ -34092,13 +34305,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 522|Tutorial.Method, Assembly-CSharp
+      Data: 540|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: NPC_Print_message
     - Name: args
       Entry: 7
-      Data: 523|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 541|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 3
@@ -34126,13 +34339,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 524|Tutorial.Method, Assembly-CSharp
+      Data: 542|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Wait_click
     - Name: args
       Entry: 7
-      Data: 525|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 543|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
@@ -34150,13 +34363,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 526|Tutorial.Method, Assembly-CSharp
+      Data: 544|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: NPC_Print_message
     - Name: args
       Entry: 7
-      Data: 527|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 545|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 3
@@ -34183,13 +34396,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 528|Tutorial.Method, Assembly-CSharp
+      Data: 546|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Wait_click
     - Name: args
       Entry: 7
-      Data: 529|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 547|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
@@ -34207,13 +34420,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 530|Tutorial.Method, Assembly-CSharp
+      Data: 548|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: NPC_Print_message
     - Name: args
       Entry: 7
-      Data: 531|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 549|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 3
@@ -34239,13 +34452,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 532|Tutorial.Method, Assembly-CSharp
+      Data: 550|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Wait_click
     - Name: args
       Entry: 7
-      Data: 533|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 551|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
@@ -34263,13 +34476,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 534|Tutorial.Method, Assembly-CSharp
+      Data: 552|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Result_battle
     - Name: args
       Entry: 7
-      Data: 535|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 553|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
@@ -34287,13 +34500,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 536|Tutorial.Method, Assembly-CSharp
+      Data: 554|Tutorial.Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: End_tutorial
     - Name: args
       Entry: 7
-      Data: 537|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 555|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 0

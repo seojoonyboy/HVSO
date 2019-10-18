@@ -72,10 +72,13 @@ public class ScenarioGameManagment : PlayMangement {
         if (FindObjectOfType<NewbiController>() != null) {
             Destroy(FindObjectOfType<NewbiController>().gameObject);
         }
-        int isFirst = PlayerPrefs.GetInt("isFirst");
-        if(isFirst == 1) {
-            PlayerPrefs.SetInt("isFirst", 0);
-            AccountManager.Instance.needChangeNickName = true;
+
+        bool isHuman = PlayMangement.instance.player.isHuman;
+        if (isHuman) {
+            PlayerPrefs.SetString("PrevTutorial", "Human_Tutorial");
+        }
+        else {
+            PlayerPrefs.SetString("PrevTutorial", "Orc_Tutorial");
         }
     }
 
