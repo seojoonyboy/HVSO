@@ -10,8 +10,8 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
     public ScenarioManager scenarioManager;
 
     void Start() {
-        var IsTutorialCleared = AccountManager.Instance.IsTutorialCleared();
-        if (!IsTutorialCleared) StartTutorial(TutorialType.TO_ORC_STORY);
+        //var IsTutorialCleared = AccountManager.Instance.IsTutorialCleared();
+        //if (!IsTutorialCleared) StartTutorial(TutorialType.TO_ORC_STORY);
     }
 
     /// <summary>
