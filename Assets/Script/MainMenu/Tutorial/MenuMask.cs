@@ -53,23 +53,22 @@ public class MenuMask : SerializedMonoBehaviour
         ActiveMask();
 
         RectTransform menuTransform = menuObject.GetComponent<RectTransform>();
-        if(menuTransform != null) {
-            Vector3 menuObjectPos = menuTransform.position;
-            Vector3[] menuObjectCorner = new Vector3[4];
-            menuTransform.GetWorldCorners(menuObjectCorner);
+        if (menuTransform == null) return;
+        Vector3 menuObjectPos = menuTransform.position;
+        Vector3[] menuObjectCorner = new Vector3[4];
+        menuTransform.GetWorldCorners(menuObjectCorner);
 
-            float menuHalfHeight = menuObjectCorner[1].y - menuObjectPos.y;
-            float menuHalfWidth = menuObjectPos.x - menuObjectCorner[1].x;
+        float menuHalfHeight = menuObjectCorner[1].y - menuObjectPos.y;
+        float menuHalfWidth = menuObjectPos.x - menuObjectCorner[1].x;
 
-            Vector3 top = new Vector3(0, menuObjectPos.y + menuHalfHeight + rectHeightRadius, 0);
-            Vector3 left = new Vector3(menuObjectPos.x - menuHalfWidth - rectWidthRadius, 0, 0);
-            Vector3 right = new Vector3(menuObjectPos.x + menuHalfWidth + rectWidthRadius, 0, 0);
-            Vector3 bottom = new Vector3(0, menuObjectPos.y - menuHalfHeight - rectHeightRadius, 0);
-            topMask.position = top;
-            leftMask.position = left;
-            rightMask.position = right;
-            bottonMask.position = bottom;
-        }      
+        Vector3 top = new Vector3(0, menuObjectPos.y + menuHalfHeight + rectHeightRadius, 0);
+        Vector3 left = new Vector3(menuObjectPos.x - menuHalfWidth - rectWidthRadius, 0, 0);
+        Vector3 right = new Vector3(menuObjectPos.x + menuHalfWidth + rectWidthRadius, 0, 0);
+        Vector3 bottom = new Vector3(0, menuObjectPos.y - menuHalfHeight - rectHeightRadius, 0);
+        topMask.position = top;
+        leftMask.position = left;
+        rightMask.position = right;
+        bottonMask.position = bottom;
     }
 
     private void ActiveMask() {
@@ -133,19 +132,8 @@ public class MenuMask : SerializedMonoBehaviour
 
         GameObject maskObject = menuObject[main].gameObject;
 
-        if(maskObject != null) {
-
-            if(sub == null) {
-                return maskObject;
-            }
-            else {
-
-
-                return null;
-            }
-        }
-        return null;
-
+        if (maskObject == null) return null;
+        return sub == null ? maskObject : null;
     }
 
     public void OnDimmed(Transform origin, GameObject target) {

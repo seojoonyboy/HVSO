@@ -60,7 +60,7 @@ namespace MenuTutorialModules {
             MenuMask.Instance.gameObject.SetActive(true);
             menuMask.menuTalkPanel.SetActive(true);
 
-            bool isPlayer = !(args[2] == "enemy");
+            bool isPlayer = args[2] != "enemy";
 
             menuMask.menuTalkPanel.transform.Find("CharacterImage/Player").gameObject.SetActive(isPlayer);
             menuMask.menuTalkPanel.transform.Find("CharacterImage/Enemy").gameObject.SetActive(!isPlayer);
@@ -112,7 +112,7 @@ namespace MenuTutorialModules {
 
         //대화중 캐릭터 어둡게
         public override void Execute() {
-            bool isPlayer = !(args[0] == "enemy");
+            bool isPlayer = args[0] != "enemy";
 
             MenuMask menuMask = MenuMask.Instance;
             MenuMask.Instance.gameObject.SetActive(true);
@@ -132,7 +132,7 @@ namespace MenuTutorialModules {
 
         //대화중 캐릭터 밝게
         public override void Execute() {
-            bool isPlayer = !(args[0] == "enemy");
+            bool isPlayer = args[0] != "enemy";
 
             MenuMask menuMask = MenuMask.Instance;
             MenuMask.Instance.gameObject.SetActive(true);
