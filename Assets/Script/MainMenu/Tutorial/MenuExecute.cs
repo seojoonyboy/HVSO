@@ -385,4 +385,11 @@ namespace MenuTutorialModules {
             handler.isDone = true;
         }
     }
+
+    public class RequestReward : MenuExecute {
+        public override void Execute() {
+            //TODO : 보상 Request 및 Callback이 오면 isDone 변경
+            handler.isDone = true;
+        }
+    }  
 }
