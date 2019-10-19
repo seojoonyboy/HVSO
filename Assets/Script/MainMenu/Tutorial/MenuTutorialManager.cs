@@ -4,15 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MenuTutorialManager : SerializedMonoBehaviour {
-    public TutorialType currentTutorial;
     public List<TutorialSet> sets;
     [HideInInspector] public TutorialSet selectedTutorialData;
     [ShowInInspector] MenuExecuteHandler executeHandler;
     public ScenarioManager scenarioManager;
 
     void Start() {
-        //var IsTutorialCleared = AccountManager.Instance.IsTutorialCleared();
-        //if (!IsTutorialCleared) StartTutorial(TutorialType.TO_ORC_STORY);
+        var IsTutorialCleared = AccountManager.Instance.IsTutorialCleared();
+        if (!IsTutorialCleared) StartTutorial(TutorialType.TO_ORC_STORY);
     }
 
     /// <summary>
@@ -23,7 +22,6 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
         Logger.Log(type + " 튜토리얼 시작");
 
         selectedTutorialData = sets[(int)type];
-        currentTutorial = type;
         executeHandler = gameObject.AddComponent<MenuExecuteHandler>();
 
         if (executeHandler == null) return;

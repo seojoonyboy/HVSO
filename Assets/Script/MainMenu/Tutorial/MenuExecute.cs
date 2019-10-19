@@ -60,9 +60,7 @@ namespace MenuTutorialModules {
             MenuMask.Instance.gameObject.SetActive(true);
             menuMask.menuTalkPanel.SetActive(true);
 
-            bool isPlayer = true;
-            if (args[2] == "enemy")
-                isPlayer = false;
+            bool isPlayer = !(args[2] == "enemy");
 
             menuMask.menuTalkPanel.transform.Find("CharacterImage/Player").gameObject.SetActive(isPlayer);
             menuMask.menuTalkPanel.transform.Find("CharacterImage/Enemy").gameObject.SetActive(!isPlayer);
@@ -114,9 +112,7 @@ namespace MenuTutorialModules {
 
         //대화중 캐릭터 어둡게
         public override void Execute() {
-            bool isPlayer = true;
-            if (args[0] == "enemy")
-                isPlayer = false;
+            bool isPlayer = !(args[0] == "enemy");
 
             MenuMask menuMask = MenuMask.Instance;
             MenuMask.Instance.gameObject.SetActive(true);
@@ -136,9 +132,7 @@ namespace MenuTutorialModules {
 
         //대화중 캐릭터 밝게
         public override void Execute() {
-            bool isPlayer = true;
-            if (args[0] == "enemy")
-                isPlayer = false;
+            bool isPlayer = !(args[0] == "enemy");
 
             MenuMask menuMask = MenuMask.Instance;
             MenuMask.Instance.gameObject.SetActive(true);
@@ -205,11 +199,13 @@ namespace MenuTutorialModules {
             var targetObject = menuMask.GetMenuObject(objectName);
 
             menuMask.UnBlockScreen();
-            if (args[1] == "on") {
-                menuMask.OnDimmed(targetObject.transform.parent, targetObject);
-            }
-            else if(args[1] == "off") {
-                menuMask.OffDimmed(targetObject);
+            switch (args[1]) {
+                case "on":
+                    menuMask.OnDimmed(targetObject.transform.parent, targetObject);
+                    break;
+                case "off":
+                    menuMask.OffDimmed(targetObject);
+                    break;
             }
             handler.isDone = true;
         }

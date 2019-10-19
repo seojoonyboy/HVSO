@@ -48,12 +48,6 @@ public class MenuMask : SerializedMonoBehaviour
         ScopeMenuObject(menuObject["storyButton"]);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void ScopeMenuObject(GameObject menuObject) {
         if (menuObject == null) return;
         ActiveMask();
@@ -167,6 +161,7 @@ public class MenuMask : SerializedMonoBehaviour
 
         if (dimmedObjInfos.ContainsKey(target)) {
             target.transform.SetParent(dimmedObjInfos[target]);
+            dimmedObjInfos.Remove(target);
         }
         else {
             Logger.LogError(target + "의 Origin 정보를 찾을 수 없습니다.");
