@@ -394,33 +394,46 @@ namespace MenuTutorialModules {
     }
 
     public class Wait_DeckSelect : MenuExecute {
-        IDisposable clickStream;
-
-        //args[0] screen 또는 Dictionary 키값, args[1] 예비
         public override void Execute() {
-            //GameObject target = null;
-
-            //if (args[0] == "screen")
-            //    target = null;
-            //else if (args.Count > 1)
-            //    target = MenuMask.Instance.GetMenuObject(args[0], args[1]);
-            //else
-            //    target = MenuMask.Instance.GetMenuObject(args[0]);
-
-            //Button button = (target != null) ? target.GetComponent<Button>() : null;
-            //clickStream = (button != null) ? button.OnClickAsObservable().Subscribe(_ => CheckButton()) : Observable.EveryUpdate().Where(_ => Input.GetMouseButtonDown(0)).Subscribe(_ => CheckClick(target));
-            handler.isDone = true;
-        }
-
-        private void CheckClick(GameObject target) {
-            if (target == null) {
-                clickStream.Dispose();
-                handler.isDone = true;
+            var deckListPanel = GetComponent<MenuTutorialManager>().BattleReadydeckListPanel;
+            var content = deckListPanel.transform.Find("Viewport/Content");
+            foreach (Transform deckObject in content) {
+                Button btn = deckObject.GetComponent<Button>();
+                btn.onClick.AddListener(
+                    () => {
+                        Onclick();
+                        btn.onClick.RemoveListener(Onclick);
+                    });
             }
         }
 
-        private void CheckButton() {
-            clickStream.Dispose();
+        public void Onclick() {
+            handler.isDone = true;
+        }
+    }
+
+    public class Block_HUD : MenuExecute {
+        public override void Execute() {
+            var hud = GetComponent<MenuTutorialManager>().HUDCanvas;
+            var blockPanel = hud.transform.Find("MenuHUD/MenuHeader/BlockPanel");
+            blockPanel.gameObject.SetActive(true);
+            
+            handler.isDone = true;
+        }
+    }
+
+    public class Unblock_HUD : MenuExecute {
+        public override void Execute() {
+            var hud = GetComponent<MenuTutorialManager>().HUDCanvas;
+            var blockPanel = hud.transform.Find("MenuHUD/MenuHeader/BlockPanel");
+            blockPanel.gameObject.SetActive(false);
+            
+            handler.isDone = true;
+        }
+    }
+
+    public class ShowHandUI : MenuExecute {
+        public override void Execute() {
             handler.isDone = true;
         }
     }

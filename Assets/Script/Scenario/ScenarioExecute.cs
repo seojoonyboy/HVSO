@@ -1219,8 +1219,6 @@ public class Wait_Enemy_hero_Dead : ScenarioExecute {
         PlayMangement.instance.beginStopTurn = true;
         handler.isDone = true;
     }
-
-
 }
 
 
