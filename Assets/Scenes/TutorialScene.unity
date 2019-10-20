@@ -58729,7 +58729,6 @@ GameObject:
   - component: {fileID: 208885978}
   - component: {fileID: 208885980}
   - component: {fileID: 8279262150021554597}
-  - component: {fileID: 8279262150021554598}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -58806,6 +58805,7 @@ MonoBehaviour:
   showCardPos: {fileID: 4913263721670706141}
   currentExecute: {fileID: 0}
   settingModal: {fileID: 2143105447}
+  challengeUI: {fileID: 977624069}
 --- !u!114 &8279262150021554597
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58820,99 +58820,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sets: []
   isDone: 1
---- !u!114 &8279262150021554598
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8279262150021554595}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf0dc03db82b4cd4682151c4776e8e5a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects: []
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes:
-    - Name: challenges
-      Entry: 7
-      Data: 0|System.Collections.Generic.List`1[[ChallengerHandler+Challenge, Assembly-CSharp]],
-        mscorlib
-    - Name: 
-      Entry: 12
-      Data: 3
-    - Name: 
-      Entry: 7
-      Data: 1|ChallengerHandler+Challenge, Assembly-CSharp
-    - Name: id
-      Entry: 3
-      Data: 0
-    - Name: content
-      Entry: 1
-      Data: "\uC720\uB2DB\uC744 \uBC30\uCE58\uD574 \uC801\uC744 \uB9C9\uC544\uB77C"
-    - Name: targetNum
-      Entry: 3
-      Data: 3
-    - Name: currentNum
-      Entry: 3
-      Data: 0
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 2|ChallengerHandler+Challenge, Assembly-CSharp
-    - Name: id
-      Entry: 3
-      Data: 1
-    - Name: content
-      Entry: 1
-      Data: "\uC720\uB2DB\uC744 \uBC30\uCE58\uD574 \uC801\uC744 \uB9C9\uC544\uB77C"
-    - Name: targetNum
-      Entry: 3
-      Data: 2
-    - Name: currentNum
-      Entry: 3
-      Data: 0
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 3|ChallengerHandler+Challenge, Assembly-CSharp
-    - Name: id
-      Entry: 3
-      Data: 2
-    - Name: content
-      Entry: 1
-      Data: "\uC601\uC6C5 \uC2A4\uD0AC\uC744 \uC0AC\uC6A9\uD558\uB77C"
-    - Name: targetNum
-      Entry: 3
-      Data: 1
-    - Name: currentNum
-      Entry: 3
-      Data: 0
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-  challengeUI: {fileID: 977624069}
-  textShadowImages:
-  - {fileID: 21300000, guid: 42811a16cfc251c4c9f3f8f1601f0e71, type: 3}
-  - {fileID: 21300000, guid: b00966305fd3c284a863be8cbd185564, type: 3}
-  shieldTargetLine: {fileID: 1715020614}
 --- !u!114 &8999688528537312077
 MonoBehaviour:
   m_ObjectHideFlags: 0

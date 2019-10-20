@@ -1,6 +1,7 @@
 using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
+using MenuTutorialModules;
 using UnityEngine;
 
 public class MenuTutorialManager : SerializedMonoBehaviour {
@@ -11,7 +12,7 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
 
     void Start() {
         //var IsTutorialCleared = AccountManager.Instance.IsTutorialCleared();
-        //if (!IsTutorialCleared) StartTutorial(TutorialType.TO_ORC_STORY);
+        //if (!IsTutorialCleared) StartTutorial(TutorialType.TO_AI_BATTLE);
     }
 
     /// <summary>
@@ -20,7 +21,13 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
     /// <param name="type">튜토리얼 종류</param>
     public void StartTutorial(TutorialType type) {
         Logger.Log(type + " 튜토리얼 시작");
-
+        var execs = GetComponents<MenuExecute>();
+        if (execs != null) {
+            foreach (var exec in (execs)) {
+                Destroy(exec);
+            }
+        }
+        
         selectedTutorialData = sets[(int)type];
         executeHandler = gameObject.AddComponent<MenuExecuteHandler>();
 

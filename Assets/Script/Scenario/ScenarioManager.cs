@@ -23,8 +23,11 @@ public class ScenarioManager : SerializedMonoBehaviour
     public GameObject headerMenu;
     public bool isHuman;
     public List<ChapterData> human_chapterDatas, orc_chapterDatas;
+    public List<ChallengeData> human_challengeDatas, orc_challengeDatas;
+    
     public ChapterData selectedChapterData;
-
+    public ChallengeData selectedChallengeData;
+    
     [SerializeField] GameObject orcDeckPrefab;
     [SerializeField] GameObject humanDeckPrefab;
     [SerializeField] Image backgroundImage;
@@ -371,6 +374,13 @@ public class ScenarioManager : SerializedMonoBehaviour
             }
         }
         SoundManager.Instance.PlaySound(SoundType.FIRST_TURN);
+    }
+
+    public void SelectChallengeData(int chapterNum, int stageNum, string camp) {
+        List<ChallengeData> list;
+        list = camp == "human" ? human_challengeDatas : orc_challengeDatas;
+        selectedChallengeData = list.Find(x => x.chapterNum == chapterNum && x.stageNum == stageNum);
+        ScenarioGameManagment.challengeDatas = selectedChallengeData.challenges;
     }
 }
 

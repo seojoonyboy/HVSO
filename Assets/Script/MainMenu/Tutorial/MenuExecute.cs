@@ -391,5 +391,36 @@ namespace MenuTutorialModules {
             //TODO : 보상 Request 및 Callback이 오면 isDone 변경
             handler.isDone = true;
         }
-    }  
+    }
+
+    public class Wait_DeckSelect : MenuExecute {
+        IDisposable clickStream;
+
+        //args[0] screen 또는 Dictionary 키값, args[1] 예비
+        public override void Execute() {
+            GameObject target = null;
+
+            if (args[0] == "screen")
+                target = null;
+            else if (args.Count > 1)
+                target = MenuMask.Instance.GetMenuObject(args[0], args[1]);
+            else
+                target = MenuMask.Instance.GetMenuObject(args[0]);
+
+            Button button = (target != null) ? target.GetComponent<Button>() : null;
+            clickStream = (button != null) ? button.OnClickAsObservable().Subscribe(_ => CheckButton()) : Observable.EveryUpdate().Where(_ => Input.GetMouseButtonDown(0)).Subscribe(_ => CheckClick(target));
+        }
+
+        private void CheckClick(GameObject target) {
+            if (target == null) {
+                clickStream.Dispose();
+                handler.isDone = true;
+            }
+        }
+
+        private void CheckButton() {
+            clickStream.Dispose();
+            handler.isDone = true;
+        }
+    }
 }

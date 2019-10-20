@@ -12,7 +12,7 @@ using UnityEngine.UI;
 
 public class ScenarioGameManagment : PlayMangement {
     public static ChapterData chapterData;
-
+    public static List<ChallengerHandler.Challenge> challengeDatas;
     Queue<ScriptData> chapterQueue;
     ScriptData currentChapterData;
     Method currentMethod;
@@ -38,6 +38,8 @@ public class ScenarioGameManagment : PlayMangement {
     public ScenarioExecute currentExecute;
     public GameObject settingModal;
 
+    [SerializeField] private GameObject challengeUI;
+    
     private void Awake() {
         socketHandler = FindObjectOfType<BattleConnector>();
         instance = this;
@@ -80,6 +82,9 @@ public class ScenarioGameManagment : PlayMangement {
         else {
             PlayerPrefs.SetString("PrevTutorial", "Orc_Tutorial");
         }
+
+        ChallengerHandler challengerHandler = gameObject.AddComponent<ChallengerHandler>();
+        challengerHandler.Init(challengeDatas, challengeUI);
     }
 
     void OnDestroy() {
@@ -88,6 +93,9 @@ public class ScenarioGameManagment : PlayMangement {
 
         if (socketHandler != null)
             Destroy(socketHandler.gameObject);
+
+        ChallengerHandler handler = GetComponent<ChallengerHandler>();
+        if(handler != null) Destroy(handler);
     }
 
     void FixedUpdate() {

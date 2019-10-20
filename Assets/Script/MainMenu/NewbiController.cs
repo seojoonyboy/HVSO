@@ -54,7 +54,7 @@ public class NewbiController : MonoBehaviour {
         if(eventName == "OnScenarioSceneLoaded") {
             var chapterData = ScenarioManager.Instance.human_chapterDatas[0];
             ScenarioGameManagment.chapterData = chapterData;
-
+            ScenarioGameManagment.challengeDatas = ScenarioManager.Instance.human_challengeDatas[0].challenges;
             ProcessSocketConnect();
         }
         else if(eventName == "OnInvenLoadFinished") {

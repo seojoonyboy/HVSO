@@ -18,7 +18,11 @@ public class ChallengerHandler : SerializedMonoBehaviour {
     [SerializeField] Sprite[] textShadowImages;
     [SerializeField] GameObject shieldTargetLine;
     IngameEventHandler eventHandler;
-    void Start() {
+    
+    public void Init(List<Challenge> challenges, GameObject challengeUI) {
+        this.challenges = challenges;
+        this.challengeUI = challengeUI;
+        
         if(challengeUI == null) {
             PrintLogError("UI가 설정되어 있지 않습니다.");
             return;
@@ -83,9 +87,9 @@ public class ChallengerHandler : SerializedMonoBehaviour {
 
         Challenge challenge = challenges[0];
         if (check.activeSelf) check.SetActive(false);
-        textShadowGlowAdd.sprite = textShadowGlow.sprite = textShadow.sprite = textShadowImages[0];
-        if(challenges.Count == 1) shieldTargetLine.SetActive(true);
-        Invoke("CloseGlowEffect", 1.5f);
+        //textShadowGlowAdd.sprite = textShadowGlow.sprite = textShadow.sprite = textShadowImages[0];
+        //if(challenges.Count == 1) shieldTargetLine.SetActive(true);
+        //Invoke("CloseGlowEffect", 1.5f);
         text.text = challenge.content + "(" + challenge.currentNum + "/" + challenge.targetNum + ")";
     }
 
@@ -118,7 +122,7 @@ public class ChallengerHandler : SerializedMonoBehaviour {
     /// </summary>
     IEnumerator CompleteChallenge() {
         check.SetActive(true);
-        textShadowGlowAdd.sprite = textShadowGlow.sprite = textShadow.sprite = textShadowImages[1];
+        //textShadowGlowAdd.sprite = textShadowGlow.sprite = textShadow.sprite = textShadowImages[1];
         textShadowGlow.gameObject.SetActive(true);
         if(challenges.Count == 1) shieldTargetLine.SetActive(false);
         yield return new WaitForSeconds(2.0f);
@@ -143,4 +147,10 @@ public class ChallengerHandler : SerializedMonoBehaviour {
         public int targetNum;       //목표
         public int currentNum;      //현재 진척도
     }
+}
+
+public class ChallengeData {
+    public int chapterNum;
+    public int stageNum;
+    public List<ChallengerHandler.Challenge> challenges;
 }
