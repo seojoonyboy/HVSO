@@ -408,6 +408,7 @@ namespace MenuTutorialModules {
         }
 
         public void Onclick() {
+            PlayerPrefs.SetString("SelectedBattleType", "solo");
             handler.isDone = true;
         }
     }
