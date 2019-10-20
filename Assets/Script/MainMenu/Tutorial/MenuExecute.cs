@@ -398,17 +398,18 @@ namespace MenuTutorialModules {
 
         //args[0] screen 또는 Dictionary 키값, args[1] 예비
         public override void Execute() {
-            GameObject target = null;
+            //GameObject target = null;
 
-            if (args[0] == "screen")
-                target = null;
-            else if (args.Count > 1)
-                target = MenuMask.Instance.GetMenuObject(args[0], args[1]);
-            else
-                target = MenuMask.Instance.GetMenuObject(args[0]);
+            //if (args[0] == "screen")
+            //    target = null;
+            //else if (args.Count > 1)
+            //    target = MenuMask.Instance.GetMenuObject(args[0], args[1]);
+            //else
+            //    target = MenuMask.Instance.GetMenuObject(args[0]);
 
-            Button button = (target != null) ? target.GetComponent<Button>() : null;
-            clickStream = (button != null) ? button.OnClickAsObservable().Subscribe(_ => CheckButton()) : Observable.EveryUpdate().Where(_ => Input.GetMouseButtonDown(0)).Subscribe(_ => CheckClick(target));
+            //Button button = (target != null) ? target.GetComponent<Button>() : null;
+            //clickStream = (button != null) ? button.OnClickAsObservable().Subscribe(_ => CheckButton()) : Observable.EveryUpdate().Where(_ => Input.GetMouseButtonDown(0)).Subscribe(_ => CheckClick(target));
+            handler.isDone = true;
         }
 
         private void CheckClick(GameObject target) {
