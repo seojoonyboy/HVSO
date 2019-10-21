@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UniRx;
 using System;
 using Spine.Unity;
+using BestHTTP;
 
 namespace MenuTutorialModules {
     public class MenuExecute : MonoBehaviour {
@@ -391,9 +392,39 @@ namespace MenuTutorialModules {
     }
 
     public class RequestReward : MenuExecute {
+        IDisposable clickStream;
         public override void Execute() {
-            //TODO : 보상 Request 및 Callback이 오면 isDone 변경
-            handler.isDone = true;
+            string camp = args[0];
+            AccountManager.Instance.RequestIngameTutorialReward(ReqCallback, camp);
+        }
+        private void ReqCallback(HTTPRequest originalRequest, HTTPResponse response) {
+            var resText = response.DataAsText;
+            Response _res = dataModules.JsonReader.Read<Response>(resText);
+            if (!string.IsNullOrEmpty(_res.claimComplete)) {
+                //보상 이펙트 보여주기
+                GameObject target = null;
+                GetComponent<MenuTutorialManager>().ActiveRewardPanel(resText);
+
+                clickStream = Observable.EveryUpdate()
+                    .Where(_ => Input.GetMouseButtonDown(0))
+                    .Subscribe(_ => CheckClick(target));
+            }
+            else {
+                handler.isDone = true;
+            }
+        }
+
+        private void CheckClick(GameObject target) {
+            if (target == null) {
+                GetComponent<MenuTutorialManager>().DeactiveRewardPanel();
+                clickStream.Dispose();
+                handler.isDone = true;
+            }
+        }
+
+        public class Response {
+            public string claimComplete;
+            public string error;
         }
     }
 

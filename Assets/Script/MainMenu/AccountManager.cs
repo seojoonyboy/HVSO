@@ -756,12 +756,22 @@ public partial class AccountManager {
     /// 튜토리얼 보상 요청
     /// </summary>
     /// <param name="callback"></param>
-    public void RequestReward(OnRequestFinishedDelegate callback) {
+    public void RequestIngameTutorialReward(OnRequestFinishedDelegate callback, string camp) {
         StringBuilder url = new StringBuilder();
 
         url.Append(networkManager.baseUrl);
-        url.Append("/api/user/claim_reward?kind=tutorial");
+        url.Append("api/user/claim_reward?");
+        string parm = null;
+        if(camp == "orc") {
+            parm = "kind=orcDefaultDeck";
+        }
+        else if(camp == "human") {
+            parm = "kind=humanDefaultDeck";
+        }
 
+        if (string.IsNullOrEmpty(parm)) return;
+
+        url.Append(parm);
         HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
         request.MethodType = HTTPMethods.Get;
         request.AddHeader("authorization", TokenFormat);

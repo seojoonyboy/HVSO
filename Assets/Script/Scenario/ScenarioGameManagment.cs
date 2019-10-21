@@ -78,13 +78,6 @@ public class ScenarioGameManagment : PlayMangement {
         }
 
         bool isHuman = PlayMangement.instance.player.isHuman;
-        if (isHuman) {
-            PlayerPrefs.SetString("PrevTutorial", "Human_Tutorial");
-        }
-        else {
-            PlayerPrefs.SetString("PrevTutorial", "Orc_Tutorial");
-        }
-
         ChallengerHandler challengerHandler = gameObject.AddComponent<ChallengerHandler>();
         challengerHandler.Init(
             challengeDatas, 

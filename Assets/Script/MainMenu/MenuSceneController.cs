@@ -42,36 +42,13 @@ public class MenuSceneController : MonoBehaviour {
         else
             SetCardNumbersPerDic();
 
-        //TODO : api/user의 etcInfo에 tutorialCleared value를 이용하여 처리
-        if (PlayerPrefs.GetInt("isFirst") == 1) {
-            string prevTutorial = PlayerPrefs.GetString("PrevTutorial");
-            if (string.IsNullOrEmpty(prevTutorial)) {
-                var newbiComp = newbiLoadingModal.AddComponent<NewbiController>(); //첫 로그인 제어
-                newbiComp.menuSceneController = this;
-                newbiComp.name = "NewbiController";
-                newbiComp.Init(decksLoader, newbiLoadingModal);
-            }
-            else {
-                switch (prevTutorial) {
-                    case "Human_Tutorial":
-                        //TODO : 보상 받기 처리
-                        //issue : 보상을 받고 진행을 중단한 경우, 
-                        //다음 튜토리얼에서는 처음부터 진행하다가 skip해야 하는지
-                        menuTutorialManager.StartTutorial(MenuTutorialManager.TutorialType.TO_ORC_STORY);
-                        break;
-                    case "Orc_Tutorial":
-                        //TODO : 보상 받기 처리
+        CheckTutorial();    //튜토리얼을 어디서부터 진행해야 하는지 판단
 
-                        break;
-                }
-            }
-        }
-        else if(PlayerPrefs.GetString("ReconnectData") != string.Empty) {
-            GameObject modal = Instantiate(reconnectingModal);
-            modal.GetComponent<ReconnectController>().Init(decksLoader);
-        }
-        //menuTutorialManager.StartTutorial(MenuTutorialManager.TutorialType.TO_ORC_STORY);
-
+        //if(PlayerPrefs.GetString("ReconnectData") != string.Empty) {
+        //    GameObject modal = Instantiate(reconnectingModal);
+        //    modal.GetComponent<ReconnectController>().Init(decksLoader);
+        //}
+        
         menuButton.Initialize(true);
         menuButton.Update(0);
         ClickMenuButton(2);
@@ -86,6 +63,8 @@ public class MenuSceneController : MonoBehaviour {
     }
 
     private void Start() {
+        PlayerPrefs.SetInt("isFirst", 0);
+
         if (AccountManager.Instance.needChangeNickName) {
             Modal.instantiate("사용하실 닉네임을 입력해 주세요.", "새로운 닉네임", AccountManager.Instance.NickName, Modal.Type.INSERT, (str) => {
                 if (string.IsNullOrEmpty(str)) {
@@ -247,5 +226,71 @@ public class MenuSceneController : MonoBehaviour {
         SetCardNumbersPerDic();
         for (int i = 0; i < offObjects.Length; i++)
             offObjects[i].SetActive(true);
+    }
+
+    public void CheckTutorial() {
+        string prevTutorial = PlayerPrefs.GetString("PrevTutorial");
+
+        var etcInfos = AccountManager.Instance.userData.etcInfo;
+        bool needTutorial = true;
+
+        //첫 로그인
+        MenuTutorialManager.TutorialType tutorialType = MenuTutorialManager.TutorialType.TO_HUMAN_STORY;
+        if (PlayerPrefs.GetInt("isFirst") == 1) {
+            AddNewbiController();
+        }
+        else {
+            //튜토리얼 남았음
+            AccountManager.etcInfo tutorialCleared = etcInfos.Find(x => x.key == "tutorialCleared");
+            if (tutorialCleared == null) {
+                var humanDeckClaimed = etcInfos.Find(x => x.key == "humanDeckClaimed");
+                //휴먼 인게임 이후 메인화면에서 보상을 받지 않았음
+                if (humanDeckClaimed == null) {
+                    //휴먼 인게임 튜토리얼을 끝냈음
+                    if(prevTutorial == "Human_Tutorial") {
+                        tutorialType = MenuTutorialManager.TutorialType.TO_ORC_STORY;
+                    }
+                    //휴먼 인게임 튜토리얼을 끝내지 않았음
+                    else {
+                        AddNewbiController();
+                    }
+                }
+                //휴먼 인게임 이후 메인화면에서 보상을 받았음
+                else {
+                    var orcDeckClaimed = etcInfos.Find(x => x.key == "orcDeckClaimed");
+                    //오크 인게임 이후 메인화면에서 보상을 받지 않았음
+                    if(orcDeckClaimed == null) {
+                        //오크 인게임 튜토리얼을 끝냈음
+                        if (prevTutorial == "Orc_Tutorial") {
+                            tutorialType = MenuTutorialManager.TutorialType.TO_AI_BATTLE;
+                        }
+                        //오크 인게임 튜토리얼을 끝내지 않았음
+                        else {
+                            tutorialType = MenuTutorialManager.TutorialType.TO_ORC_STORY;
+                        }
+                    }
+                    else {
+                        //오크 인게임 이후 메인화면 보상을 받았음
+                        //박스 오픈 튜토리얼에서 보상을 받았는지?
+                        tutorialType = MenuTutorialManager.TutorialType.TO_BOX_OPEN;
+                    }
+                }
+            }
+            //튜토리얼 모두 진행하였음
+            else { needTutorial = false; }
+        }
+
+        if (needTutorial) {
+            if(tutorialType != MenuTutorialManager.TutorialType.TO_HUMAN_STORY) {
+                menuTutorialManager.StartTutorial(tutorialType);
+            }
+        }
+    }
+
+    public void AddNewbiController() {
+        var newbiComp = newbiLoadingModal.AddComponent<NewbiController>(); //첫 로그인 제어
+        newbiComp.menuSceneController = this;
+        newbiComp.name = "NewbiController";
+        newbiComp.Init(decksLoader, newbiLoadingModal);
     }
 }

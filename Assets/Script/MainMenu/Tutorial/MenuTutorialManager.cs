@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using MenuTutorialModules;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MenuTutorialManager : SerializedMonoBehaviour {
     public List<TutorialSet> sets;
@@ -12,6 +13,8 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
 
     public ScenarioManager scenarioManager;
     public GameObject handUIPools;
+    public GameObject rewardPanel;  //튜토리얼 중간에 보상받기 패널
+
     void Start() {
         //var IsTutorialCleared = AccountManager.Instance.IsTutorialCleared();
         //if (!IsTutorialCleared) StartTutorial(TutorialType.TO_ORC_STORY);
@@ -64,9 +67,26 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
         public List<string> args;
     }
 
+    /// <summary>
+    /// 보상받기 패널
+    /// </summary>
+    public void ActiveRewardPanel(string msg) {
+        rewardPanel.SetActive(true);
+        Text text = rewardPanel
+            .transform
+            .Find("Image/Text")
+            .GetComponent<Text>();
+        text.text = msg;
+    }
+
+    public void DeactiveRewardPanel() {
+        rewardPanel.SetActive(false);
+    }
+
     public enum TutorialType {
         TO_ORC_STORY = 0,
         TO_AI_BATTLE = 1,
-        TO_BOX_OPEN = 2
+        TO_BOX_OPEN = 2,
+        TO_HUMAN_STORY = 3
     }
 }

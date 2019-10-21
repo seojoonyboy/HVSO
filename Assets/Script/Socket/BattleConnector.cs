@@ -188,6 +188,14 @@ public partial class BattleConnector : MonoBehaviour {
 
     public void TutorialEnd() {
         SendMethod("end_story_game");
+
+        var isHuman = PlayMangement.instance.player.isHuman;
+        if (isHuman) {
+            PlayerPrefs.SetString("PrevTutorial", "Human_Tutorial");
+        }
+        else {
+            PlayerPrefs.SetString("PrevTutorial", "Orc_Tutorial");
+        }
     }
 
     private class ItemIdClass {
