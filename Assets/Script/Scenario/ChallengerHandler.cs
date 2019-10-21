@@ -33,6 +33,9 @@ public class ChallengerHandler : SerializedMonoBehaviour {
         textShadowGlow = challengeUI.transform.Find("ShadowGlow").GetComponent<Image>();
         textShadowGlowAdd = challengeUI.transform.Find("ShadowGlow").GetComponentInChildren<Image>();
 
+        this.textShadowImages = (Sprite[])textShadowImages.Clone();
+        this.shieldTargetLine = shieldTargetLine;
+
         eventHandler = PlayMangement.instance.EventHandler;
     }
 
