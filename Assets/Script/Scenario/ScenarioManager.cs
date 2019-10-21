@@ -18,6 +18,7 @@ public class ScenarioManager : SerializedMonoBehaviour
 
     private GameObject selectedDeckObject = null;
     public object selectedDeck;
+    public int selectChapter = 0;
 
 
     public GameObject headerMenu;
@@ -133,12 +134,15 @@ public class ScenarioManager : SerializedMonoBehaviour
             child.gameObject.SetActive(true);
         }
 
+        canvas.Find("HUD/ChapterSelect/BackGround/Text").gameObject.GetComponent<Text>().text = "CHAPTER " + selectChapter.ToString();
+
         Transform content = canvas.Find("HUD/StageSelect/Viewport/Content");
         for(int i=0; i < selectedList.Count; i++) {
             GameObject item = content.GetChild(i).gameObject;
             item.SetActive(true);
             string str = string.Format("{0}-{1} {2}", selectedList[i].chapter, selectedList[i].stage_number, selectedList[i].stage_Name);
             item.transform.Find("StageName").GetComponent<TextMeshProUGUI>().text = str;
+            ShowReward(item ,selectedList[i]);
 
             StageButton stageButtonComp = item.GetComponent<StageButton>();
             stageButtonComp.Init(selectedList[i].chapter, selectedList[i].stage_number, isHuman);
@@ -146,6 +150,28 @@ public class ScenarioManager : SerializedMonoBehaviour
             //item.transform.Find("StageScript").GetComponent<TextMeshProUGUI>().text = selectedList[i].description;
         }
     }
+    private void ShowReward(GameObject item ,ChapterData chapterData) {
+        if (chapterData.scenarioReward == null || chapterData.scenarioReward.Length <= 0) return;
+
+        Transform reward = item.transform.Find("Reward");
+        bool getReward = false;
+
+        for(int i = 0; i< chapterData.scenarioReward.Length; i++) {
+            reward.GetChild(i).gameObject.SetActive(true);
+            GameObject rewardImage = reward.GetChild(i).Find("RewardImage").gameObject;
+            GameObject rewardCount = reward.GetChild(i).Find("RewardCount").gameObject;
+
+            rewardImage.GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon[chapterData.scenarioReward[i].reward];
+            rewardCount.GetComponent<TextMeshProUGUI>().text = "x" + chapterData.scenarioReward[i].count;
+
+            rewardImage.SetActive(true);
+            rewardCount.SetActive(true);
+
+            if (getReward == true)
+                reward.GetChild(i).Find("Check").gameObject.SetActive(true);
+        }
+    }
+
 
     private void OffPrevStoryList() {
         if (isHuman) {
@@ -415,6 +441,7 @@ namespace Tutorial {
         [MultiLineProperty(10)] public string description;
         [MultiLineProperty(5)] public string specialRule;
         public List<ScriptData> scripts;
+        public ScenarioReward[] scenarioReward;
     }
 
     public class ScriptData {
@@ -428,4 +455,11 @@ namespace Tutorial {
         public string name;
         public List<string> args;
     }
+
+    public class ScenarioReward {
+        public string reward;
+        public int count;
+    }
+
+
 }
