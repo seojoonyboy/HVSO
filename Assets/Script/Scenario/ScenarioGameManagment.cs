@@ -38,8 +38,10 @@ public class ScenarioGameManagment : PlayMangement {
     public ScenarioExecute currentExecute;
     public GameObject settingModal;
 
-    [SerializeField] private GameObject challengeUI;
-    
+    public GameObject challengeUI;
+    public Sprite[] textShadowImages;
+    public GameObject shieldTargetLine;
+
     private void Awake() {
         socketHandler = FindObjectOfType<BattleConnector>();
         instance = this;
@@ -84,7 +86,12 @@ public class ScenarioGameManagment : PlayMangement {
         }
 
         ChallengerHandler challengerHandler = gameObject.AddComponent<ChallengerHandler>();
-        challengerHandler.Init(challengeDatas, challengeUI);
+        challengerHandler.Init(
+            challengeDatas, 
+            challengeUI, 
+            textShadowImages,
+            shieldTargetLine
+        );
     }
 
     void OnDestroy() {
