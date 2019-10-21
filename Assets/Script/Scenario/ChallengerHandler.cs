@@ -19,7 +19,7 @@ public class ChallengerHandler : SerializedMonoBehaviour {
     [SerializeField] GameObject shieldTargetLine;
     IngameEventHandler eventHandler;
     
-    public void Init(List<Challenge> challenges, GameObject challengeUI) {
+    public void Init(List<Challenge> challenges, GameObject challengeUI, Sprite[] textShadowImages, GameObject shieldTargetLine) {
         this.challenges = challenges;
         this.challengeUI = challengeUI;
         
@@ -87,9 +87,9 @@ public class ChallengerHandler : SerializedMonoBehaviour {
 
         Challenge challenge = challenges[0];
         if (check.activeSelf) check.SetActive(false);
-        //textShadowGlowAdd.sprite = textShadowGlow.sprite = textShadow.sprite = textShadowImages[0];
-        //if(challenges.Count == 1) shieldTargetLine.SetActive(true);
-        //Invoke("CloseGlowEffect", 1.5f);
+        textShadowGlowAdd.sprite = textShadowGlow.sprite = textShadow.sprite = textShadowImages[0];
+        if (challenges.Count == 1) shieldTargetLine.SetActive(true);
+        Invoke("CloseGlowEffect", 1.5f);
         text.text = challenge.content + "(" + challenge.currentNum + "/" + challenge.targetNum + ")";
     }
 
@@ -122,7 +122,7 @@ public class ChallengerHandler : SerializedMonoBehaviour {
     /// </summary>
     IEnumerator CompleteChallenge() {
         check.SetActive(true);
-        //textShadowGlowAdd.sprite = textShadowGlow.sprite = textShadow.sprite = textShadowImages[1];
+        textShadowGlowAdd.sprite = textShadowGlow.sprite = textShadow.sprite = textShadowImages[1];
         textShadowGlow.gameObject.SetActive(true);
         if(challenges.Count == 1) shieldTargetLine.SetActive(false);
         yield return new WaitForSeconds(2.0f);
