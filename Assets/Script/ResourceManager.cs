@@ -31,6 +31,7 @@ public class ResourceManager : SerializedMonoBehaviour
     public GameObject previewUnit;
     public GameObject baseSkillIcon;
     public GameObject hideObject;
+    public GameObject touchIcon;
 }
 
 public class ScenarioUnit {

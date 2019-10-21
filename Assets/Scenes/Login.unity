@@ -7511,6 +7511,8 @@ MonoBehaviour:
     type: 3}
   hideObject: {fileID: 8875640797152268877, guid: 2bc17b51b7bdecf4a8327178491451ee,
     type: 3}
+  touchIcon: {fileID: 1469462950999664385, guid: 50385eb85abc5554dbd95126bf6db06c,
+    type: 3}
 --- !u!114 &1870949077
 MonoBehaviour:
   m_ObjectHideFlags: 0
