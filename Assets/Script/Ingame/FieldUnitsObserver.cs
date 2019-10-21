@@ -88,8 +88,8 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
     /// <param name="col">새로운 위치 col</param>
     /// <returns></returns>
     IEnumerator UnitChangeCoroutine(GameObject target, Pos prevPos, Pos newPos, Transform parent, string useCardID = "") {
-        yield return new WaitForSeconds(1.0f);
-
+        //yield return new WaitForSeconds(1.0f);
+        yield return null;
         target.transform.SetParent(parent);
         //target.transform.localPosition = Vector3.zero;
 

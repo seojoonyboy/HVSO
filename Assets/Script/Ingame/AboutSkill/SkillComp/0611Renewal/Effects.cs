@@ -283,7 +283,7 @@ namespace SkillModules {
         }
 
         private async void WaitDone() {
-            await System.Threading.Tasks.Task.Delay(1600);
+            await System.Threading.Tasks.Task.Delay(600);
             skillHandler.isDone = true;
         }
     }
@@ -321,7 +321,7 @@ namespace SkillModules {
         }
 
         private async void WaitDone() {
-            await System.Threading.Tasks.Task.Delay(1500);
+            await System.Threading.Tasks.Task.Delay(500);
             skillHandler.isDone = true;
             await System.Threading.Tasks.Task.Delay(500);
             skillHandler.finallyDone = true;
