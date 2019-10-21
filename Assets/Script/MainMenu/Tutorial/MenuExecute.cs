@@ -40,7 +40,11 @@ namespace MenuTutorialModules {
                 target = MenuMask.Instance.GetMenuObject(args[0]);
 
             Button button = (target != null) ? target.GetComponent<Button>() : null;
-            clickStream = (button != null) ? button.OnClickAsObservable().Subscribe(_ => CheckButton()) : Observable.EveryUpdate().Where(_ => Input.GetMouseButtonDown(0)).Subscribe(_ => CheckClick(target));
+
+            if (button != null)
+                ShowTouchIcon(button.transform.gameObject);
+
+            clickStream = (button != null) ? button.OnClickAsObservable().Subscribe(_ => CheckButton(button)) : Observable.EveryUpdate().Where(_ => Input.GetMouseButtonDown(0)).Subscribe(_ => CheckClick(target));
         }
 
         private void CheckClick(GameObject target) {
@@ -50,10 +54,29 @@ namespace MenuTutorialModules {
             }
         }
 
-        private void CheckButton() {
+        private void CheckButton(Button button) {
+            HideTouchIcon(button);
             clickStream.Dispose();
             handler.isDone = true;
         }
+
+        private void ShowTouchIcon(GameObject targetButton) {
+            GameObject handIcon = Instantiate(AccountManager.Instance.resource.touchIcon, targetButton.transform);
+            handIcon.name = "handIcon";
+            handIcon.transform.position = targetButton.transform.position;
+            SkeletonGraphic touchIcon = handIcon.GetComponent<SkeletonGraphic>();
+            touchIcon.Skeleton.SetSlotsToSetupPose();
+            touchIcon.Initialize(true);
+            touchIcon.Update(0);
+            touchIcon.AnimationState.SetAnimation(0, "TOUCH", false);
+        }
+
+        private void HideTouchIcon(Button button) {
+            GameObject handIcon = button.gameObject.transform.Find("handIcon").gameObject;
+            Destroy(handIcon);
+        }
+
+
     }
 
     public class Menu_NPC_Talk : MenuExecute {

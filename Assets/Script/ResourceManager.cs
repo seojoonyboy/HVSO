@@ -25,11 +25,13 @@ public class ResourceManager : SerializedMonoBehaviour
     public Dictionary<string, Sprite> deckPortraite;
     public Dictionary<string, ScenarioUnit> ScenarioUnitResurce;
     public Dictionary<string, Sprite> campBackgrounds;   //진영별 뒷배경
+    public Dictionary<string, Sprite> rewardIcon;
 
     public GameObject unitDeadObject;
     public GameObject previewUnit;
     public GameObject baseSkillIcon;
     public GameObject hideObject;
+    public GameObject touchIcon;
 }
 
 public class ScenarioUnit {
