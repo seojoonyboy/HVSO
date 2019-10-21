@@ -4,15 +4,19 @@ using UnityEngine;
 using UnityEngine.UI;
 using UniRx;
 using System;
+using Spine.Unity;
 
 namespace MenuTutorialModules {
     public class MenuExecute : MonoBehaviour {
         public MenuExecuteHandler handler;
+        public HandUIController HandUIController;
+
         public List<string> args;
 
         public virtual void Initialize(List<string> args) {
             this.args = args;
             handler = GetComponent<MenuExecuteHandler>();
+            HandUIController = GetComponentInChildren<HandUIController>();
         }
 
         public virtual void Execute() { }
@@ -402,7 +406,6 @@ namespace MenuTutorialModules {
                 btn.onClick.AddListener(
                     () => {
                         Onclick();
-                        btn.onClick.RemoveListener(Onclick);
                     });
             }
         }
@@ -435,6 +438,31 @@ namespace MenuTutorialModules {
 
     public class ShowHandUI : MenuExecute {
         public override void Execute() {
+            GameObject target = MenuMask.Instance.GetMenuObject(args[0]);
+
+            string animType = args[1];
+            GameObject handUI = HandUIController.ActiveHand(target.GetComponent<RectTransform>(), args[0]);
+            SkeletonGraphic skeletonGraphic = handUI.GetComponent<SkeletonGraphic>();
+            skeletonGraphic.Initialize(true);
+            skeletonGraphic.Update(0);
+            skeletonGraphic.Skeleton.SetSlotsToSetupPose();
+
+            switch (animType) {
+                case "touch":
+                    skeletonGraphic.AnimationState.SetAnimation(0, "TOUCH", true);
+                    break;
+                case "drag":
+                    skeletonGraphic.AnimationState.SetAnimation(0, "DRAG", true);
+                    break;
+            }
+            handler.isDone = true;
+        }
+    }
+
+    public class HideHandUI : MenuExecute {
+        public override void Execute() {
+            HandUIController.DeactiveHand(args[0]);
+
             handler.isDone = true;
         }
     }
