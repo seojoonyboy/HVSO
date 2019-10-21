@@ -23,7 +23,7 @@ public class ReconnectTimerUI : MonoBehaviour {
                 time.Minutes,
                 time.Seconds);
 
-            text.text = "상대를 기다리는 중...\n대기시간 : " + resultText;
+            text.text = "상대를 기다리는 중...\n남은시간 : " + resultText;
         }
     }
 }
