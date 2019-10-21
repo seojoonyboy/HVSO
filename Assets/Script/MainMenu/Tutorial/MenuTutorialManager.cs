@@ -8,6 +8,8 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
     public List<TutorialSet> sets;
     [HideInInspector] public TutorialSet selectedTutorialData;
     [ShowInInspector] MenuExecuteHandler executeHandler;
+    public GameObject HUDCanvas, BattleReadydeckListPanel;
+
     public ScenarioManager scenarioManager;
 
     void Start() {
