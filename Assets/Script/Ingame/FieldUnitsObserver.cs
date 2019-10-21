@@ -2,6 +2,7 @@ using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Threading.Tasks;
 
 public class FieldUnitsObserver : SerializedMonoBehaviour {
     [TableMatrix(SquareCells = true)] public GameObject[,] orcUnits = new GameObject[5, 2];
@@ -21,6 +22,15 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
     public void UnitRemoved(Pos pos, bool isHuman) {
         if (isHuman) humanUnits[pos.col, pos.row] = null;
         else orcUnits[pos.col, pos.row] = null;
+        if(pos.row == 0) checkFrontUnit(pos, isHuman);
+    }
+
+    private async void checkFrontUnit(Pos pos, bool isHuman) {
+        GameObject[,] units = isHuman ? humanUnits : orcUnits;
+        GameObject frontUnit = units[pos.col, pos.row + 1];
+        if(frontUnit == null) return;
+        await Task.Delay(800);
+        UnitChangePosition(frontUnit, pos, frontUnit.GetComponent<PlaceMonster>().isPlayer);
     }
 
     //TODO : 적이 호출한지, 내가 호출한지 구분해야함

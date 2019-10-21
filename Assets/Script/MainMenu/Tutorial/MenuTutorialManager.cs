@@ -11,10 +11,10 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
     public GameObject HUDCanvas, BattleReadydeckListPanel;
 
     public ScenarioManager scenarioManager;
-
+    public GameObject handUIPools;
     void Start() {
         //var IsTutorialCleared = AccountManager.Instance.IsTutorialCleared();
-        //if (!IsTutorialCleared) StartTutorial(TutorialType.TO_AI_BATTLE);
+        //if (!IsTutorialCleared) StartTutorial(TutorialType.TO_ORC_STORY);
     }
 
     /// <summary>
