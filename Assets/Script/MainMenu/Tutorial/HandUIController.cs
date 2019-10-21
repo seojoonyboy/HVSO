@@ -24,7 +24,7 @@ public class HandUIController : MonoBehaviour {
         switch (key) {
             case "storyButton":
             case "orc_story_tutorial":
-                available_pools[0].GetComponent<RectTransform>().localPosition = new Vector3(rect.localPosition.x + 200, rect.localPosition.y, rect.localPosition.z);
+                available_pools[0].GetComponent<RectTransform>().localPosition = new Vector3(rect.localPosition.x + 400, rect.localPosition.y - 120, rect.localPosition.z);
                 break;
             case "story_orc_button":
             case "tutorial_play_button":
