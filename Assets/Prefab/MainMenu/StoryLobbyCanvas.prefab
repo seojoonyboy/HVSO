@@ -24102,7 +24102,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -0.0025634766, y: 0}
-  m_SizeDelta: {x: 0, y: 10}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &5110567678785666808
 CanvasRenderer:
@@ -27479,7 +27479,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -0.0025634766, y: 0}
-  m_SizeDelta: {x: 0, y: 20}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &5110567679792661536
 CanvasRenderer:
@@ -37109,10 +37109,224 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: human_challengeDatas
-      Entry: 6
+      Entry: 7
+      Data: 562|System.Collections.Generic.List`1[[ChallengeData, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 563|ChallengeData, Assembly-CSharp
+    - Name: chapterNum
+      Entry: 3
+      Data: 0
+    - Name: stageNum
+      Entry: 3
+      Data: 1
+    - Name: challenges
+      Entry: 7
+      Data: 564|System.Collections.Generic.List`1[[ChallengerHandler+Challenge, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 7
+      Data: 565|ChallengerHandler+Challenge, Assembly-CSharp
+    - Name: id
+      Entry: 3
+      Data: 0
+    - Name: content
+      Entry: 1
+      Data: "\uC720\uB2DB\uC744 \uBC30\uCE58\uD574 \uC801\uC744 \uB9C9\uC544\uB77C"
+    - Name: targetNum
+      Entry: 3
+      Data: 3
+    - Name: currentNum
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 566|ChallengerHandler+Challenge, Assembly-CSharp
+    - Name: id
+      Entry: 3
+      Data: 1
+    - Name: content
+      Entry: 1
+      Data: "\uC720\uB2DB\uC744 \uBC30\uCE58\uD574 \uC801\uC744 \uB9C9\uC544\uB77C\uB77C"
+    - Name: targetNum
+      Entry: 3
+      Data: 2
+    - Name: currentNum
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 567|ChallengerHandler+Challenge, Assembly-CSharp
+    - Name: id
+      Entry: 3
+      Data: 2
+    - Name: content
+      Entry: 1
+      Data: "\uC601\uC6C5 \uC2A4\uD0AC\uC744 \uC0AC\uC6A9\uD558\uB77C"
+    - Name: targetNum
+      Entry: 3
+      Data: 1
+    - Name: currentNum
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
       Data: 
     - Name: orc_challengeDatas
-      Entry: 6
+      Entry: 7
+      Data: 568|System.Collections.Generic.List`1[[ChallengeData, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 569|ChallengeData, Assembly-CSharp
+    - Name: chapterNum
+      Entry: 3
+      Data: 0
+    - Name: stageNum
+      Entry: 3
+      Data: 1
+    - Name: challenges
+      Entry: 7
+      Data: 570|System.Collections.Generic.List`1[[ChallengerHandler+Challenge, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 5
+    - Name: 
+      Entry: 7
+      Data: 571|ChallengerHandler+Challenge, Assembly-CSharp
+    - Name: id
+      Entry: 3
+      Data: 1
+    - Name: content
+      Entry: 1
+      Data: "\uC624\uD06C \uBCD1\uC0AC \uBC30\uCE58\uD558\uAE30"
+    - Name: targetNum
+      Entry: 3
+      Data: 2
+    - Name: currentNum
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 572|ChallengerHandler+Challenge, Assembly-CSharp
+    - Name: id
+      Entry: 3
+      Data: 2
+    - Name: content
+      Entry: 1
+      Data: "\uC5B4\uB460\uC758 \uAC00\uC2DC \uC0AC\uC6A9\uD558\uAE30"
+    - Name: targetNum
+      Entry: 3
+      Data: 1
+    - Name: currentNum
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 573|ChallengerHandler+Challenge, Assembly-CSharp
+    - Name: id
+      Entry: 3
+      Data: 3
+    - Name: content
+      Entry: 1
+      Data: "\uC624\uD06C \uC554\uC0B4\uC790 \uBC30\uCE58\uD558\uAE30"
+    - Name: targetNum
+      Entry: 3
+      Data: 1
+    - Name: currentNum
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 574|ChallengerHandler+Challenge, Assembly-CSharp
+    - Name: id
+      Entry: 3
+      Data: 4
+    - Name: content
+      Entry: 1
+      Data: "\uC804\uD22C\uC758 \uC678\uCE68 \uC0AC\uC6A9"
+    - Name: targetNum
+      Entry: 3
+      Data: 1
+    - Name: currentNum
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 575|ChallengerHandler+Challenge, Assembly-CSharp
+    - Name: id
+      Entry: 3
+      Data: 5
+    - Name: content
+      Entry: 1
+      Data: "\uC7AC\uBC30\uCE58 \uC0AC\uC6A9"
+    - Name: targetNum
+      Entry: 3
+      Data: 1
+    - Name: currentNum
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
       Data: 
     - Name: selectedChapterData
       Entry: 6
@@ -42115,6 +42329,7 @@ GameObject:
   - component: {fileID: 4452587164011267521}
   - component: {fileID: 8546880968302350818}
   - component: {fileID: 9094745220067123613}
+  - component: {fileID: 1613756976}
   m_Layer: 5
   m_Name: vsHumanSlot
   m_TagString: Untagged
@@ -42222,6 +42437,97 @@ MonoBehaviour:
   stage: 1
   camp: orc
   isTutorial: 1
+--- !u!114 &1613756976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6314430227648565439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf0dc03db82b4cd4682151c4776e8e5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: challenges
+      Entry: 7
+      Data: 0|System.Collections.Generic.List`1[[ChallengerHandler+Challenge, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 7
+      Data: 1|ChallengerHandler+Challenge, Assembly-CSharp
+    - Name: id
+      Entry: 3
+      Data: 0
+    - Name: content
+      Entry: 6
+      Data: 
+    - Name: targetNum
+      Entry: 3
+      Data: 0
+    - Name: currentNum
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 2|ChallengerHandler+Challenge, Assembly-CSharp
+    - Name: id
+      Entry: 3
+      Data: 0
+    - Name: content
+      Entry: 6
+      Data: 
+    - Name: targetNum
+      Entry: 3
+      Data: 0
+    - Name: currentNum
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 3|ChallengerHandler+Challenge, Assembly-CSharp
+    - Name: id
+      Entry: 3
+      Data: 0
+    - Name: content
+      Entry: 6
+      Data: 
+    - Name: targetNum
+      Entry: 3
+      Data: 0
+    - Name: currentNum
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+  challengeUI: {fileID: 0}
+  textShadowImages: []
+  shieldTargetLine: {fileID: 0}
 --- !u!1 &6316130234549592389
 GameObject:
   m_ObjectHideFlags: 0
