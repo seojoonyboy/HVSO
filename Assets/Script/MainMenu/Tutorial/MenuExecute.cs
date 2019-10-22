@@ -41,8 +41,8 @@ namespace MenuTutorialModules {
 
             Button button = (target != null) ? target.GetComponent<Button>() : null;
 
-            if (button != null)
-                ShowTouchIcon(button.transform.gameObject);
+            //if (button != null)
+            //    ShowTouchIcon(button.transform.gameObject);
 
             clickStream = (button != null) ? button.OnClickAsObservable().Subscribe(_ => CheckButton(button)) : Observable.EveryUpdate().Where(_ => Input.GetMouseButtonDown(0)).Subscribe(_ => CheckClick(target));
         }
