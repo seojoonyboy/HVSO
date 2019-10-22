@@ -46,6 +46,7 @@ namespace victoryModule {
             PlayMangement.instance.stopBattle = true;
             PlayMangement.instance.stopTurn = true;
             PlayMangement.instance.beginStopTurn = true;
+            SoundManager.Instance.bgmController.SoundDownAfterStop();
             enemyWin.Dispose();
             playerWin.Dispose();
 
@@ -77,12 +78,40 @@ namespace victoryModule {
             //EffectSystem.Instance.CameraZoomOut(1.2f);
 
 
-            if (player.HP.Value <= 0) 
+            if (player.HP.Value <= 0) {
                 resultManager.SetResultWindow("lose", player.isHuman);
-            else if (enemyPlayer.HP.Value <= 0) 
+                SetResultBgm("lose");
+            }
+            else if (enemyPlayer.HP.Value <= 0) {
                 resultManager.SetResultWindow("win", player.isHuman);
-                
+                SetResultBgm("win");
+            }
+
+            
         }
+
+        public void SetResultBgm(string result) {
+
+            switch (result) {
+                case "lose":
+                    SoundManager.Instance.bgmController.PlaySoundTrack(BgmController.BgmEnum.DEFEAT);
+                    break;
+                case "win":
+                    SoundManager.Instance.bgmController.PlaySoundTrack(BgmController.BgmEnum.VICTORY);
+                    break;
+                default:
+                    SoundManager.Instance.bgmController.PlaySoundTrack(BgmController.BgmEnum.DEFEAT);
+                    break;
+            }
+            
+
+        }
+
+        private void OnDestroy() {
+            //SoundManager.Instance.bgmController.StopSoundTrack();
+        }
+
+
     }
 
     public class TurnLimit_Match : VictoryCondition {

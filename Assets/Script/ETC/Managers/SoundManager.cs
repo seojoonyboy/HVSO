@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UniRx;
 using Sirenix.OdinInspector;
 
 [ShowOdinSerializedPropertiesInInspector]
 public class SoundManager : SerializedMonoBehaviour {
     public Dictionary<SoundType, AudioSource> sounds;
-
+    public Dictionary<string, AudioSource> unitSfx;
+    public Dictionary<string, AudioSource> magicSfx;
+    
     private static SoundManager _instance;
     public static SoundManager Instance {
         get {
@@ -19,6 +22,9 @@ public class SoundManager : SerializedMonoBehaviour {
             }
         }
     }
+    public GameObject emptySource;
+
+    public BgmController bgmController;
 
     void Awake() {
         _instance = GetComponent<SoundManager>();
@@ -30,9 +36,45 @@ public class SoundManager : SerializedMonoBehaviour {
             Logger.LogError(string.Format("{0}에 대한 음원을 찾을 수 없습니다.", type));
             return;
         }
-        sounds[type].Play();
+        PlaySfx(sounds[type]);
     }
+
+    private void PlaySfx(AudioSource sfxSource) {
+        GameObject soundObject = GetUnusedAudio();
+        soundObject.SetActive(true);
+        AudioSource sound = soundObject.GetComponent<AudioSource>();
+        sound.clip = sfxSource.clip;
+        sound.Play();
+        StartCoroutine(SoundAfterOff(sfxSource, soundObject));
+    }
+
+    //미사용 오브젝트 찾기
+    private GameObject GetUnusedAudio() {
+        foreach(Transform child in gameObject.transform) {
+            if (child.gameObject.activeSelf == false)
+                return child.gameObject;
+        }
+
+        GameObject empty = Instantiate(emptySource, gameObject.transform);
+        empty.transform.SetAsLastSibling();
+        return empty;
+    }
+
+    //임시로 이리 쓰는데, Unirx를 써서 처리 예정, 오디오 시간만큼 기달리고, 그 후에 턴 off
+    private IEnumerator SoundAfterOff(AudioSource audio, GameObject soundObject) {
+        yield return new WaitForSeconds(audio.clip.length);
+        soundObject.SetActive(false);
+    }
+
+
+
+
+
+
+
+
 }
+
 
 public enum SoundType {
     NEXT_TURN,
