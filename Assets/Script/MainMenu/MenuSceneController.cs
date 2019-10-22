@@ -42,13 +42,13 @@ public class MenuSceneController : MonoBehaviour {
         else
             SetCardNumbersPerDic();
 
-        //CheckTutorial();    //튜토리얼을 어디서부터 진행해야 하는지 판단
-
+        CheckTutorial();    //튜토리얼을 어디서부터 진행해야 하는지 판단
+        //menuTutorialManager.StartTutorial(MenuTutorialManager.TutorialType.TO_BOX_OPEN_HUMAN);
         //if(PlayerPrefs.GetString("ReconnectData") != string.Empty) {
         //    GameObject modal = Instantiate(reconnectingModal);
         //    modal.GetComponent<ReconnectController>().Init(decksLoader);
         //}
-        
+
         menuButton.Initialize(true);
         menuButton.Update(0);
         ClickMenuButton(2);
@@ -276,7 +276,13 @@ public class MenuSceneController : MonoBehaviour {
                     else {
                         //오크 인게임 이후 메인화면 보상을 받았음
                         //박스 오픈 튜토리얼에서 보상을 받았는지?
-                        tutorialType = MenuTutorialManager.TutorialType.TO_BOX_OPEN;
+                        string prevPlayedRace = PlayerPrefs.GetString("SelectedRace");
+                        if(prevPlayedRace == "human") {
+                            tutorialType = MenuTutorialManager.TutorialType.TO_BOX_OPEN_HUMAN;
+                        }
+                        else {
+                            tutorialType = MenuTutorialManager.TutorialType.TO_BOX_OPEN_ORC;
+                        }
                     }
                 }
             }

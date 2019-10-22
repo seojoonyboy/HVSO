@@ -15,6 +15,8 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
     public GameObject handUIPools;
     public GameObject rewardPanel;  //튜토리얼 중간에 보상받기 패널
     public GameObject TutorialStageReadyCanvas;
+    public GameObject BoxRewardPanel;
+
     void Start() {
         //var IsTutorialCleared = AccountManager.Instance.IsTutorialCleared();
         //if (!IsTutorialCleared) StartTutorial(TutorialType.TO_ORC_STORY);
@@ -101,10 +103,16 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
     public void DeactiveTutorialStoryReadyCanvas() {
         TutorialStageReadyCanvas.SetActive(false);
     }
+
+    public void ActiveRewardBoxCanvas() {
+        BoxRewardPanel.GetComponent<BoxRewardManager>().OpenBox();
+    }
+
     public enum TutorialType {
         TO_ORC_STORY = 0,
         TO_AI_BATTLE = 1,
-        TO_BOX_OPEN = 2,
-        TO_HUMAN_STORY = 3
+        TO_BOX_OPEN_HUMAN = 2,
+        TO_BOX_OPEN_ORC = 3,
+        TO_HUMAN_STORY = 4
     }
 }
