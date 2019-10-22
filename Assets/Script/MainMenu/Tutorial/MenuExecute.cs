@@ -57,6 +57,7 @@ namespace MenuTutorialModules {
 
         private void CheckButton() {
             clickStream.Dispose();
+            MenuGlow.Instance.StopEveryGlow();
             handler.isDone = true;
         }
 
@@ -75,9 +76,39 @@ namespace MenuTutorialModules {
             GameObject handIcon = button.gameObject.transform.Find("handIcon").gameObject;
             Destroy(handIcon);
         }
-
-
     }
+
+    //args[0] screen 또는 Dictionary 키값, args[1] 예비 wait_click이랑 똑같이.
+    public class Menu_Glowing : MenuExecute {
+        public Menu_Glowing() : base() { }
+
+        public override void Execute() {
+            GameObject target = null;
+
+            if (args[0] == "screen")
+                target = null;
+            else if (args.Count > 1)
+                target = MenuMask.Instance.GetMenuObject(args[0], args[1]);
+            else
+                target = MenuMask.Instance.GetMenuObject(args[0]);
+
+            if (target != null)
+                StartGlow(target);
+        }
+
+        public void StartGlow(GameObject target) {
+            MenuGlow.Instance.StartGlow(target);
+        }
+    } 
+
+    public class Stop_Menu_Glowing : MenuExecute {
+        public Stop_Menu_Glowing() : base() { }
+
+        public override void Execute() {
+            MenuGlow.Instance.StopEveryGlow();
+        }
+    }
+
 
     public class Menu_NPC_Talk : MenuExecute {
         public Menu_NPC_Talk() : base() { }
