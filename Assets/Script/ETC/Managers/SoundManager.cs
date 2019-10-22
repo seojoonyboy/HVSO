@@ -6,7 +6,7 @@ using Sirenix.OdinInspector;
 [ShowOdinSerializedPropertiesInInspector]
 public class SoundManager : SerializedMonoBehaviour {
     public Dictionary<SoundType, AudioSource> sounds;
-
+    
     private static SoundManager _instance;
     public static SoundManager Instance {
         get {
@@ -19,6 +19,7 @@ public class SoundManager : SerializedMonoBehaviour {
             }
         }
     }
+    public BgmController bgmController;
 
     void Awake() {
         _instance = GetComponent<SoundManager>();
@@ -33,6 +34,7 @@ public class SoundManager : SerializedMonoBehaviour {
         sounds[type].Play();
     }
 }
+
 
 public enum SoundType {
     NEXT_TURN,
