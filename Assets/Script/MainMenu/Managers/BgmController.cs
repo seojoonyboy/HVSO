@@ -27,6 +27,22 @@ public class BgmController : SerializedMonoBehaviour
         mainAudio.Play();
     }
 
+    private IEnumerator SoundVolumeDown() {
+        float soundVolumne = mainAudio.volume;
+        float speed = 0.1f;
+
+        while(soundVolumne <= 0) {
+            yield return new WaitForSeconds(0.05f);
+            soundVolumne -= speed;
+        }
+        mainAudio.Stop();
+    }
+
+    public void SoundDownAfterStop() {
+        StartCoroutine(SoundVolumeDown());
+    }
+
+
     public void StopSoundTrack() {
         mainAudio.Stop();
     }

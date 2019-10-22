@@ -46,7 +46,7 @@ namespace victoryModule {
             PlayMangement.instance.stopBattle = true;
             PlayMangement.instance.stopTurn = true;
             PlayMangement.instance.beginStopTurn = true;
-            SoundManager.Instance.bgmController.StopSoundTrack();
+            SoundManager.Instance.bgmController.SoundDownAfterStop();
             enemyWin.Dispose();
             playerWin.Dispose();
 

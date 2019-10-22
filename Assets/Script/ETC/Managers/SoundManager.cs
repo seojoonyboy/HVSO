@@ -33,6 +33,21 @@ public class SoundManager : SerializedMonoBehaviour {
         }
         sounds[type].Play();
     }
+
+    public GameObject GetUnusedAudio() {
+        foreach(Transform child in gameObject.transform) {
+
+        }
+        return null;
+    }
+
+
+
+
+
+
+
+
 }
 
 
