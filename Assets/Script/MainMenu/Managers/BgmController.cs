@@ -10,6 +10,7 @@ public class BgmController : SerializedMonoBehaviour
 
     private void Awake() {
         mainAudio = gameObject.GetComponent<AudioSource>();
+        DontDestroyOnLoad(gameObject);
     }
 
     private void Start() {
