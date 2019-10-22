@@ -12,6 +12,11 @@ public class BgmController : SerializedMonoBehaviour
         mainAudio = gameObject.GetComponent<AudioSource>();
     }
 
+    private void Start() {
+        //PlaySoundTrack(BgmEnum.MENU);
+    }
+
+
     public void PlaySoundTrack(BgmEnum type) {
         if (bgmDictionary.ContainsKey(type) == false || bgmDictionary[type] == null) {
             Logger.LogError("사운드가 없습니다.");
