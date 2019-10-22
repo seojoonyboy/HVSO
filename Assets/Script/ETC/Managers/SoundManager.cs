@@ -7,6 +7,8 @@ using Sirenix.OdinInspector;
 [ShowOdinSerializedPropertiesInInspector]
 public class SoundManager : SerializedMonoBehaviour {
     public Dictionary<SoundType, AudioSource> sounds;
+    public Dictionary<string, AudioSource> unitSfx;
+    public Dictionary<string, AudioSource> magicSfx;
     
     private static SoundManager _instance;
     public static SoundManager Instance {
@@ -20,6 +22,8 @@ public class SoundManager : SerializedMonoBehaviour {
             }
         }
     }
+    public GameObject emptySource;
+
     public BgmController bgmController;
 
     void Awake() {
@@ -50,7 +54,10 @@ public class SoundManager : SerializedMonoBehaviour {
             if (child.gameObject.activeSelf == false)
                 return child.gameObject;
         }
-        return null;
+
+        GameObject empty = Instantiate(emptySource, gameObject.transform);
+        empty.transform.SetAsLastSibling();
+        return empty;
     }
 
     //임시로 이리 쓰는데, Unirx를 써서 처리 예정, 오디오 시간만큼 기달리고, 그 후에 턴 off
