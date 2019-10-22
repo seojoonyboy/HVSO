@@ -42,7 +42,7 @@ public class MenuSceneController : MonoBehaviour {
         else
             SetCardNumbersPerDic();
 
-        CheckTutorial();    //튜토리얼을 어디서부터 진행해야 하는지 판단
+        //CheckTutorial();    //튜토리얼을 어디서부터 진행해야 하는지 판단
 
         //if(PlayerPrefs.GetString("ReconnectData") != string.Empty) {
         //    GameObject modal = Instantiate(reconnectingModal);
