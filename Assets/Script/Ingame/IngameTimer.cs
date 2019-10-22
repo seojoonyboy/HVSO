@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.Events;
 using Spine.Unity;
+using System.Threading.Tasks;
 
 public class IngameTimer : MonoBehaviour {
     public GameObject timerUI;
@@ -21,7 +22,7 @@ public class IngameTimer : MonoBehaviour {
     private void OnTimerUI() {
         Logger.Log("Timer UI 시작");
         timerUI.SetActive(true);
-
+        skeletonGraphic.AnimationState.SetAnimation(0, "animation", false);
         UICoroutine = TimerUIOn();
         StartCoroutine(UICoroutine);
     }
@@ -46,8 +47,6 @@ public class IngameTimer : MonoBehaviour {
     /// <returns></returns>
     IEnumerator TimerOn(int totalSec) {
         currentSec = totalSec;
-        skeletonGraphic.AnimationState.SetAnimation(0, "animation", false);
-
         while (currentSec > uiStartSec) {
             Logger.Log("Timer : " + currentSec);
             yield return new WaitForSeconds(1.0f);
@@ -69,10 +68,11 @@ public class IngameTimer : MonoBehaviour {
     /// <summary>
     /// 타이머 종료
     /// </summary>
-    public void EndTimer() {
+    public async void EndTimer() {
         OnTimeout.Invoke();
-        timerUI.SetActive(false);
         StopAllCoroutines();
+        await Task.Delay(2000);
+        timerUI.SetActive(false);
     }
 
     /// <summary>
