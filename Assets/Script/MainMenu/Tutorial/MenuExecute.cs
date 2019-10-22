@@ -431,4 +431,44 @@ namespace MenuTutorialModules {
             FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.CONNECT_MATCHING_SCENE);
         }
     }
+
+    public class BoxOpenProcess : MenuExecute {
+        public override void Execute() {
+            AccountManager.Instance.RequestTutorialBoxReward(callback);
+        }
+
+        private void callback(HTTPRequest originalRequest, HTTPResponse response) {
+            var resText = response.DataAsText;
+            Response _res = dataModules.JsonReader.Read<Response>(resText);
+            var menuTutorialManager = GetComponent<MenuTutorialManager>();
+            if (!string.IsNullOrEmpty(_res.claimComplete)) {
+                //보상 이펙트 보여주기
+                if(AccountManager.Instance.userData.supplyBox > 0) {
+                    menuTutorialManager.ActiveRewardBoxCanvas();
+                    menuTutorialManager.transform.Find("ExitButton").GetComponent<Button>().onClick.AddListener(onclick);
+                    
+                }
+                else {
+                    Logger.LogError("박스가 없습니다!");
+                    handler.isDone = true;
+                }
+            }
+            else {
+                menuTutorialManager.BoxRewardPanel.transform.Find("ExitButton")
+                    .GetComponent<Button>()
+                    .onClick
+                    .RemoveListener(onclick);
+                handler.isDone = true;
+            }
+        }
+
+        private void onclick() {
+            handler.isDone = true;
+        }
+
+        public class Response {
+            public string claimComplete;
+            public string error;
+        }
+    }
 }

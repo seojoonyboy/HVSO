@@ -805,5 +805,17 @@ public partial class AccountManager {
         }
     }
 
+    public void RequestTutorialBoxReward(OnRequestFinishedDelegate callback) {
+        StringBuilder url = new StringBuilder();
+
+        url.Append(networkManager.baseUrl);
+        url.Append("api/user/claim_reward?kind=tutorial");
+
+        HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
+        request.MethodType = HTTPMethods.Get;
+        request.AddHeader("authorization", TokenFormat);
+        networkManager.Request(request, callback, "보상 내역 확인중...");
+    }
+
     public bool needChangeNickName = false;
 }
