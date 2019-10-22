@@ -301,39 +301,54 @@ namespace MenuTutorialModules {
 
     public class RequestReward : MenuExecute {
         IDisposable clickStream;
+        IEnumerator coroutine;
         public override void Execute() {
             string camp = args[0];
             AccountManager.Instance.RequestIngameTutorialReward(ReqCallback, camp);
         }
+
         private void ReqCallback(HTTPRequest originalRequest, HTTPResponse response) {
             var resText = response.DataAsText;
             Response _res = dataModules.JsonReader.Read<Response>(resText);
             if (!string.IsNullOrEmpty(_res.claimComplete)) {
                 //보상 이펙트 보여주기
-                GameObject target = null;
-                GetComponent<MenuTutorialManager>().ActiveRewardPanel(resText);
-
-                clickStream = Observable.EveryUpdate()
-                    .Where(_ => Input.GetMouseButtonDown(0))
-                    .Subscribe(_ => CheckClick(target));
-
-                AccountManager.Instance.RequestUserInfo();
-                AccountManager.Instance.RequestMyDecks((req, res) => {
-                    if (res != null) {
-                        if (res.StatusCode == 200 || res.StatusCode == 304) {
-                            var result = JsonReader.Read<Decks>(res.DataAsText);
-                            AccountManager.Instance.orcDecks = result.orc;
-                            AccountManager.Instance.humanDecks = result.human;
-                        }
-                    }
-                    else {
-                        Logger.Log("Something is wrong");
-                    }
-                });
+                coroutine = Proceed();
+                StartCoroutine(coroutine);
             }
             else {
                 handler.isDone = true;
             }
+        }
+
+        IEnumerator Proceed() {
+            GameObject target = null;
+            GetComponent<MenuTutorialManager>().ActiveRewardPanel();
+
+            SkeletonGraphic skeletonGraphic = GetComponent<MenuTutorialManager>().rewardPanel.transform.Find("Anim").GetComponent<SkeletonGraphic>();
+
+            skeletonGraphic.Skeleton.SetSkin(args[0]);
+            skeletonGraphic.Skeleton.SetSlotsToSetupPose();
+            skeletonGraphic.AnimationState.Apply(skeletonGraphic.Skeleton);
+
+            yield return new WaitForSeconds(2.0f);
+
+            clickStream = Observable.EveryUpdate()
+                .Where(_ => Input.GetMouseButtonDown(0))
+                .Subscribe(_ => CheckClick(target));
+
+            AccountManager.Instance.RequestUserInfo();
+            AccountManager.Instance.RequestMyDecks((req, res) => {
+                if (res != null) {
+                    if (res.StatusCode == 200 || res.StatusCode == 304) {
+                        var result = JsonReader.Read<Decks>(res.DataAsText);
+                        AccountManager.Instance.orcDecks = result.orc;
+                        AccountManager.Instance.humanDecks = result.human;
+                    }
+                }
+                else {
+                    Logger.Log("Something is wrong");
+                }
+            });
         }
 
         private void CheckClick(GameObject target) {
