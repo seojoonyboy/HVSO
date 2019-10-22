@@ -31,6 +31,15 @@ public class SoundManager : SerializedMonoBehaviour {
         DontDestroyOnLoad(gameObject);    
     }
 
+    public void PlayAttackSound(string id) {
+        if (!unitSfx.ContainsKey(id) || unitSfx[id] == null) {
+            PlaySfx(unitSfx["ac10001"]);
+            return;
+        }
+        PlaySfx(unitSfx[id]);
+    }
+
+
     public void PlaySound(SoundType type) {
         if (!sounds.ContainsKey(type) || sounds[type] == null) {
             Logger.LogError(string.Format("{0}에 대한 음원을 찾을 수 없습니다.", type));
