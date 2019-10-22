@@ -63,6 +63,10 @@ public class MenuHeroInfo : MonoBehaviour
         OpenClassWindow();
     }
 
+    public void SetManaCurve() {
+
+    }
+
     public void OpenClassWindow() {
         transform.Find("Buttons/ClassBtn/UnSelected").gameObject.SetActive(false);
         transform.Find("Buttons/SkillBtn/UnSelected").gameObject.SetActive(true);
