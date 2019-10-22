@@ -410,7 +410,39 @@ namespace MenuTutorialModules {
         }
 
         public void Onclick() {
-            PlayerPrefs.SetString("SelectedBattleType", "solo");
+            handler.isDone = true;
+        }
+    }
+
+    public class ChangePVPBattleBtnFunction : MenuExecute {
+        public override void Execute() {
+            Button btn = MenuMask.Instance.menuObject["ai_battle_start_button"].GetComponent<Button>();
+            btn.onClick.RemoveAllListeners();
+            btn.onClick.AddListener(() => { StartCoroutine(Wait()); });
+            
+            handler.isDone = true;
+
+            IEnumerator Wait() {
+                PlayerPrefs.SetString("SelectedBattleType", "solo");
+                PlayerPrefs.SetString("PrevTutorial", "AI_Tutorial");
+                yield return new WaitForSeconds(1.0f);
+                FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.CONNECT_MATCHING_SCENE);
+            }
+        }
+    }
+
+    public class ResetPVPBattleBtnFunction : MenuExecute {
+        public override void Execute() {
+            Button btn = MenuMask.Instance.menuObject["ai_battle_start_button"].GetComponent<Button>();
+            btn.onClick.RemoveAllListeners();
+            btn.onClick.AddListener(() => {
+                GetComponent<MenuTutorialManager>()
+                    .BattleReadydeckListPanel
+                    .GetComponent<DeckListHandlerInBattleReady>()
+                    .parentController
+                    .OnStartButton();
+            });
+            
             handler.isDone = true;
         }
     }
@@ -490,14 +522,6 @@ namespace MenuTutorialModules {
 
             handler.isDone = true;
             FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.CONNECT_MATCHING_SCENE);
-        }
-    }
-
-    public class ForceAIBattleSocketConnect : MenuExecute {
-        public override void Execute() {
-            PlayerPrefs.SetString("SelectedBattleType", "solo");
-            PlayerPrefs.SetString("PrevTutorial", "AI_Tutorial");
-            handler.isDone = true;
         }
     }
 
