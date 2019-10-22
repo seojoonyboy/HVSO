@@ -276,12 +276,17 @@ public class MenuSceneController : MonoBehaviour {
                     else {
                         //오크 인게임 이후 메인화면 보상을 받았음
                         //박스 오픈 튜토리얼에서 보상을 받았는지?
-                        string prevPlayedRace = PlayerPrefs.GetString("SelectedRace");
-                        if(prevPlayedRace == "human") {
-                            tutorialType = MenuTutorialManager.TutorialType.TO_BOX_OPEN_HUMAN;
+                        if (prevTutorial == "AI_Tutorial") {
+                            string prevPlayedRace = PlayerPrefs.GetString("SelectedRace");
+                            if(prevPlayedRace == "human") {
+                                tutorialType = MenuTutorialManager.TutorialType.TO_BOX_OPEN_HUMAN;
+                            }
+                            else {
+                                tutorialType = MenuTutorialManager.TutorialType.TO_BOX_OPEN_ORC;
+                            }
                         }
                         else {
-                            tutorialType = MenuTutorialManager.TutorialType.TO_BOX_OPEN_ORC;
+                            tutorialType = MenuTutorialManager.TutorialType.TO_AI_BATTLE;
                         }
                     }
                 }

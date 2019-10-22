@@ -496,6 +496,7 @@ namespace MenuTutorialModules {
     public class ForceAIBattleSocketConnect : MenuExecute {
         public override void Execute() {
             PlayerPrefs.SetString("SelectedBattleType", "solo");
+            PlayerPrefs.SetString("PrevTutorial", "AI_Tutorial");
             handler.isDone = true;
         }
     }
