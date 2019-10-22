@@ -14,6 +14,7 @@ public class DeckEditController : MonoBehaviour
     [SerializeField] MenuHeroInfo heroInfoWindow;
     public string heroID;
     HeroInventory heroData;
+    private Translator translator;
 
     private Transform buttons;
     public Transform settingLayout;
@@ -43,8 +44,10 @@ public class DeckEditController : MonoBehaviour
     public MenuSceneController menuSceneController;
     bool isTemplate = false;
     int currentPage;
+    int[] cardMana;
 
     private void Start() {
+        translator = AccountManager.Instance.GetComponent<Translator>();
         SetObject();
     }
 
@@ -188,11 +191,33 @@ public class DeckEditController : MonoBehaviour
     }
 
     public void OpenHeroInfo() {
-        heroInfoWindow.transform.parent.gameObject.SetActive(true);
-        heroInfoWindow.gameObject.SetActive(true);
+        SetManaCurve();
+        transform.Find("InnerCanvas/HeroInfoWindow").gameObject.SetActive(true);
     }
+
     public void CloseHeroInfo() {
-        heroInfoWindow.gameObject.SetActive(false);
+        transform.Find("InnerCanvas/HeroInfoWindow").gameObject.SetActive(false);
+    }
+
+    public void SetManaCurve() {
+        Transform cardList = transform.Find("InnerCanvas/HandDeck/Mask/SettedDeck");
+        for (int i = 0; i < 8; i++)
+            cardMana[i] = 0;
+        for (int i = 0; i < cardList.childCount; i++) {
+            if (!cardList.GetChild(i).gameObject.activeSelf) continue;
+            int cost = cardList.GetChild(i).GetComponent<EditCardDragHandler>().cardData.cost;
+            int num = cardList.GetChild(i).GetComponent<EditCardDragHandler>().SETNUM;
+            if (cost >= 8)
+                cardMana[7] += num;
+            else
+                cardMana[cost] += num;
+        }
+        Transform manaCorveParent = transform.Find("InnerCanvas/HeroInfoWindow/ManaCurve/ManaSliderParent");
+        for(int i = 0; i < 8; i++) {
+            if (cardMana[i] > 30) cardMana[i] = 30;
+            manaCorveParent.GetChild(i).Find("SliderValue").GetComponent<Image>().fillAmount = (float)cardMana[i] / 30.0f;
+            manaCorveParent.GetChild(i).Find("CardNum").GetComponent<TMPro.TextMeshProUGUI>().text = cardMana[i].ToString();
+        }
     }
 
     public void NextPageButton() {
@@ -278,7 +303,33 @@ public class DeckEditController : MonoBehaviour
         LayoutRebuilder.ForceRebuildLayoutImmediate(settingLayout.GetComponent<RectTransform>());
     }
 
-
+    public void SetHeroInfo(string heroId) {
+        dataModules.HeroInventory hero = new dataModules.HeroInventory();
+        foreach (dataModules.HeroInventory heroes in AccountManager.Instance.allHeroes) {
+            if (heroes.id == heroId) {
+                hero = heroes;
+                break;
+            }
+        }
+        
+        Transform heroWindow = transform.Find("InnerCanvas/HeroInfoWindow");
+        heroWindow.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = hero.name;
+        Transform heroSpine = heroWindow.Find("HeroSpines");
+        heroSpine.GetChild(0).gameObject.SetActive(false);
+        heroSpine.Find(heroId).gameObject.SetActive(true);
+        heroSpine.Find(heroId).SetAsFirstSibling();
+        Transform skillWindow = heroWindow.Find("SkillInfo");
+        skillWindow.Find("Card1/Card").GetComponent<MenuCardHandler>().DrawCard(hero.heroCards[0].id);
+        skillWindow.Find("Card1/CardName").GetComponent<TMPro.TextMeshProUGUI>().text = hero.heroCards[0].name;
+        skillWindow.Find("Card1/CardInfo").GetComponent<TMPro.TextMeshProUGUI>().text = translator.DialogSetRichText(hero.heroCards[0].skills[0].desc);
+        skillWindow.Find("Card2/Card").GetComponent<MenuCardHandler>().DrawCard(hero.heroCards[1].id);
+        skillWindow.Find("Card2/CardName").GetComponent<TMPro.TextMeshProUGUI>().text = hero.heroCards[1].name;
+        skillWindow.Find("Card2/CardInfo").GetComponent<TMPro.TextMeshProUGUI>().text = translator.DialogSetRichText(hero.heroCards[1].skills[0].desc);
+        cardMana = new int[8];
+        for (int i = 0; i < 8; i++)
+            cardMana[i] = 0;
+        //heroWindow.gameObject.SetActive(false);
+    }
 
     
     
@@ -293,7 +344,7 @@ public class DeckEditController : MonoBehaviour
 
         deckNamePanel.transform.Find("NameTemplate").GetComponent<TMPro.TMP_InputField>().text = "";
         transform.Find("InnerCanvas/DeckNamePanel/PlaceHolder").gameObject.SetActive(true);    
-        heroInfoWindow.SetHeroInfoWindow(heroId);
+        SetHeroInfo(heroId);
         
         foreach (dataModules.HeroInventory heroes in AccountManager.Instance.allHeroes) {
             if (heroes.id == heroId) {
@@ -363,7 +414,7 @@ public class DeckEditController : MonoBehaviour
 
         deckNamePanel.transform.Find("NameTemplate").GetComponent<TMPro.TMP_InputField>().text = loadedDeck.name;
         transform.Find("InnerCanvas/DeckNamePanel/PlaceHolder").gameObject.SetActive(string.IsNullOrEmpty(deckNamePanel.transform.Find("NameTemplate").GetComponent<TMPro.TMP_InputField>().text));
-        heroInfoWindow.SetHeroInfoWindow(loadedDeck.heroId);
+        SetHeroInfo(loadedDeck.heroId);
 
         if (isHuman) {
             if (isTemplate) {
