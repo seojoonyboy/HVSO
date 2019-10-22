@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UI.Extensions;
+using Spine;
+using Spine.Unity;
 
 public class HeroSelectController : MonoBehaviour
 {
@@ -19,6 +21,7 @@ public class HeroSelectController : MonoBehaviour
         transform.Find("InnerCanvas/RaceSelect/HumanSelect").GetChild(0).gameObject.SetActive(true);
         transform.Find("InnerCanvas/RaceSelect/OrcSelect").GetChild(0).gameObject.SetActive(false);
         transform.Find("InnerCanvas/HeroSpines/HumanSpines").gameObject.SetActive(true);
+        SetHeroSpine(transform.Find("InnerCanvas/HeroSpines/HumanSpines/Content"));
         transform.Find("InnerCanvas/HeroSpines/OrcSpines").gameObject.SetActive(false);
         transform.Find("InnerCanvas/BackgroundImage").GetComponent<Image>().sprite = AccountManager.Instance.resource.campBackgrounds["human"];
         isHuman = true;
@@ -32,11 +35,26 @@ public class HeroSelectController : MonoBehaviour
         transform.Find("InnerCanvas/RaceSelect/OrcSelect").GetChild(0).gameObject.SetActive(true);
         transform.Find("InnerCanvas/HeroSpines/HumanSpines").gameObject.SetActive(false);
         transform.Find("InnerCanvas/HeroSpines/OrcSpines").gameObject.SetActive(true);
+        SetHeroSpine(transform.Find("InnerCanvas/HeroSpines/OrcSpines/Content"));
         transform.Find("InnerCanvas/BackgroundImage").GetComponent<Image>().sprite = AccountManager.Instance.resource.campBackgrounds["orc"];
         isHuman = false;
         orcHeroScroll.GoToScreen(0);        
         SetHeroInfo(0, false);
         OpenClassInfo();
+    }
+
+    void SetHeroSpine(Transform spineParent) {
+        for(int i = 0; i < spineParent.childCount; i++) {
+            if (!AccountManager.Instance.myHeroInventories.ContainsKey(spineParent.GetChild(i).name)) {
+                spineParent.GetChild(i).Find("Locked").gameObject.SetActive(true);
+                spineParent.GetChild(i).GetChild(0).GetComponent<SkeletonGraphic>().color = new Color(0.3f, 0.3f, 0.3f);
+            }
+            else {
+                spineParent.GetChild(i).Find("Locked").gameObject.SetActive(false);
+                spineParent.GetChild(i).GetChild(0).GetComponent<SkeletonGraphic>().color = new Color(1, 1, 1);
+            }
+
+        }
     }
 
     public void SetHeroInfo(int heroIndex, bool isHuman) {
