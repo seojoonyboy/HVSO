@@ -476,7 +476,7 @@ namespace MenuTutorialModules {
             var resText = response.DataAsText;
             Response _res = dataModules.JsonReader.Read<Response>(resText);
             var menuTutorialManager = GetComponent<MenuTutorialManager>();
-            if (!string.IsNullOrEmpty(_res.claimComplete)) {
+            if (!string.IsNullOrEmpty(_res.supplyBox)) {
                 //보상 이펙트 보여주기
                 if(AccountManager.Instance.userData.supplyBox > 0) {
                     menuTutorialManager.ActiveRewardBoxCanvas();
@@ -502,8 +502,7 @@ namespace MenuTutorialModules {
         }
 
         public class Response {
-            public string claimComplete;
-            public string error;
+            public string supplyBox;
         }
     }
 }
