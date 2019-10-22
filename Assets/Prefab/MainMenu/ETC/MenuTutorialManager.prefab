@@ -3152,7 +3152,7 @@ MonoBehaviour:
         Assembly-CSharp]], mscorlib
     - Name: 
       Entry: 12
-      Data: 3
+      Data: 4
     - Name: 
       Entry: 7
       Data: 1|MenuTutorialManager+TutorialSet, Assembly-CSharp
@@ -3267,7 +3267,7 @@ MonoBehaviour:
         mscorlib
     - Name: 
       Entry: 12
-      Data: 2
+      Data: 4
     - Name: 
       Entry: 7
       Data: 11|MenuTutorialManager+Method, Assembly-CSharp
@@ -3327,6 +3327,51 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: 
+      Entry: 7
+      Data: 15|MenuTutorialManager+Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: RequestReward
+    - Name: args
+      Entry: 7
+      Data: 16|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: human
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 17|MenuTutorialManager+Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Menu_Hide_Message
+    - Name: args
+      Entry: 7
+      Data: 18|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
       Entry: 13
       Data: 
     - Name: 
@@ -3340,7 +3385,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 15|MenuTutorialManager+InnerSet, Assembly-CSharp
+      Data: 19|MenuTutorialManager+InnerSet, Assembly-CSharp
     - Name: id
       Entry: 3
       Data: 3
@@ -3350,20 +3395,20 @@ MonoBehaviour:
         \uC5B4\uB461\uAC8C \uCC98\uB9AC"
     - Name: methods
       Entry: 7
-      Data: 16|System.Collections.Generic.List`1[[MenuTutorialManager+Method, Assembly-CSharp]],
+      Data: 20|System.Collections.Generic.List`1[[MenuTutorialManager+Method, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
       Data: 3
     - Name: 
       Entry: 7
-      Data: 17|MenuTutorialManager+Method, Assembly-CSharp
+      Data: 21|MenuTutorialManager+Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Darken_Menu_NPC_Talk
     - Name: args
       Entry: 7
-      Data: 18|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 22|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
@@ -3381,13 +3426,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 19|MenuTutorialManager+Method, Assembly-CSharp
+      Data: 23|MenuTutorialManager+Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Menu_NPC_Talk
     - Name: args
       Entry: 7
-      Data: 20|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 24|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 3
@@ -3411,13 +3456,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 21|MenuTutorialManager+Method, Assembly-CSharp
+      Data: 25|MenuTutorialManager+Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Wait_Click
     - Name: args
       Entry: 7
-      Data: 22|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 26|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
@@ -3447,7 +3492,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 23|MenuTutorialManager+InnerSet, Assembly-CSharp
+      Data: 27|MenuTutorialManager+InnerSet, Assembly-CSharp
     - Name: id
       Entry: 3
       Data: 4
@@ -3456,20 +3501,20 @@ MonoBehaviour:
       Data: 
     - Name: methods
       Entry: 7
-      Data: 24|System.Collections.Generic.List`1[[MenuTutorialManager+Method, Assembly-CSharp]],
+      Data: 28|System.Collections.Generic.List`1[[MenuTutorialManager+Method, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
       Data: 2
     - Name: 
       Entry: 7
-      Data: 25|MenuTutorialManager+Method, Assembly-CSharp
+      Data: 29|MenuTutorialManager+Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Menu_NPC_Talk
     - Name: args
       Entry: 7
-      Data: 26|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 30|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 3
@@ -3493,13 +3538,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 27|MenuTutorialManager+Method, Assembly-CSharp
+      Data: 31|MenuTutorialManager+Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Wait_Click
     - Name: args
       Entry: 7
-      Data: 28|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 32|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
@@ -3529,7 +3574,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 29|MenuTutorialManager+InnerSet, Assembly-CSharp
+      Data: 33|MenuTutorialManager+InnerSet, Assembly-CSharp
     - Name: id
       Entry: 3
       Data: 5
@@ -3539,20 +3584,20 @@ MonoBehaviour:
         \uBC1D\uAC8C \uCC98\uB9AC"
     - Name: methods
       Entry: 7
-      Data: 30|System.Collections.Generic.List`1[[MenuTutorialManager+Method, Assembly-CSharp]],
+      Data: 34|System.Collections.Generic.List`1[[MenuTutorialManager+Method, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
       Data: 3
     - Name: 
       Entry: 7
-      Data: 31|MenuTutorialManager+Method, Assembly-CSharp
+      Data: 35|MenuTutorialManager+Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Brighten_Menu_NPC_Talk
     - Name: args
       Entry: 7
-      Data: 32|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 36|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
@@ -3570,13 +3615,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 33|MenuTutorialManager+Method, Assembly-CSharp
+      Data: 37|MenuTutorialManager+Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Menu_NPC_Talk
     - Name: args
       Entry: 7
-      Data: 34|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 38|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 3
@@ -3602,13 +3647,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 35|MenuTutorialManager+Method, Assembly-CSharp
+      Data: 39|MenuTutorialManager+Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Wait_Click
     - Name: args
       Entry: 7
-      Data: 36|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 40|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
@@ -3638,7 +3683,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 37|MenuTutorialManager+InnerSet, Assembly-CSharp
+      Data: 41|MenuTutorialManager+InnerSet, Assembly-CSharp
     - Name: id
       Entry: 3
       Data: 6
@@ -3647,20 +3692,20 @@ MonoBehaviour:
       Data: 
     - Name: methods
       Entry: 7
-      Data: 38|System.Collections.Generic.List`1[[MenuTutorialManager+Method, Assembly-CSharp]],
+      Data: 42|System.Collections.Generic.List`1[[MenuTutorialManager+Method, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
       Data: 2
     - Name: 
       Entry: 7
-      Data: 39|MenuTutorialManager+Method, Assembly-CSharp
+      Data: 43|MenuTutorialManager+Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Menu_NPC_Talk
     - Name: args
       Entry: 7
-      Data: 40|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 44|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 3
@@ -3685,13 +3730,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 41|MenuTutorialManager+Method, Assembly-CSharp
+      Data: 45|MenuTutorialManager+Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Wait_Click
     - Name: args
       Entry: 7
-      Data: 42|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 46|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
@@ -3721,7 +3766,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 43|MenuTutorialManager+InnerSet, Assembly-CSharp
+      Data: 47|MenuTutorialManager+InnerSet, Assembly-CSharp
     - Name: id
       Entry: 3
       Data: 7
@@ -3730,20 +3775,20 @@ MonoBehaviour:
       Data: 
     - Name: methods
       Entry: 7
-      Data: 44|System.Collections.Generic.List`1[[MenuTutorialManager+Method, Assembly-CSharp]],
+      Data: 48|System.Collections.Generic.List`1[[MenuTutorialManager+Method, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
       Data: 2
     - Name: 
       Entry: 7
-      Data: 45|MenuTutorialManager+Method, Assembly-CSharp
+      Data: 49|MenuTutorialManager+Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Menu_NPC_Talk
     - Name: args
       Entry: 7
-      Data: 46|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 50|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 3
@@ -3768,13 +3813,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 47|MenuTutorialManager+Method, Assembly-CSharp
+      Data: 51|MenuTutorialManager+Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Wait_Click
     - Name: args
       Entry: 7
-      Data: 48|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 52|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
@@ -3804,7 +3849,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 49|MenuTutorialManager+InnerSet, Assembly-CSharp
+      Data: 53|MenuTutorialManager+InnerSet, Assembly-CSharp
     - Name: id
       Entry: 3
       Data: 8
@@ -3813,68 +3858,23 @@ MonoBehaviour:
       Data: "\uC2A4\uD1A0\uB9AC \uBC84\uD2BC \uD558\uC774\uB77C\uC774\uD2B8"
     - Name: methods
       Entry: 7
-      Data: 50|System.Collections.Generic.List`1[[MenuTutorialManager+Method, Assembly-CSharp]],
+      Data: 54|System.Collections.Generic.List`1[[MenuTutorialManager+Method, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
       Data: 6
     - Name: 
       Entry: 7
-      Data: 51|MenuTutorialManager+Method, Assembly-CSharp
+      Data: 55|MenuTutorialManager+Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Menu_Hide_Message
     - Name: args
       Entry: 7
-      Data: 52|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 53|MenuTutorialManager+Method, Assembly-CSharp
-    - Name: name
-      Entry: 1
-      Data: OffHighlight
-    - Name: args
-      Entry: 7
-      Data: 54|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 55|MenuTutorialManager+Method, Assembly-CSharp
-    - Name: name
-      Entry: 1
-      Data: Wait_Until
-    - Name: args
-      Entry: 7
       Data: 56|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
-      Data: 1
-    - Name: 
-      Entry: 1
-      Data: 1
+      Data: 0
     - Name: 
       Entry: 13
       Data: 
@@ -3889,10 +3889,55 @@ MonoBehaviour:
       Data: 57|MenuTutorialManager+Method, Assembly-CSharp
     - Name: name
       Entry: 1
-      Data: Dimmed
+      Data: OffHighlight
     - Name: args
       Entry: 7
       Data: 58|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 59|MenuTutorialManager+Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Wait_Until
+    - Name: args
+      Entry: 7
+      Data: 60|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: 1
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 61|MenuTutorialManager+Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Dimmed
+    - Name: args
+      Entry: 7
+      Data: 62|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 2
@@ -3913,13 +3958,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 59|MenuTutorialManager+Method, Assembly-CSharp
+      Data: 63|MenuTutorialManager+Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Disable_Button
     - Name: args
       Entry: 7
-      Data: 60|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 64|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
@@ -3937,13 +3982,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 61|MenuTutorialManager+Method, Assembly-CSharp
+      Data: 65|MenuTutorialManager+Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Wait_Until
     - Name: args
       Entry: 7
-      Data: 62|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 66|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
@@ -3973,7 +4018,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 63|MenuTutorialManager+InnerSet, Assembly-CSharp
+      Data: 67|MenuTutorialManager+InnerSet, Assembly-CSharp
     - Name: id
       Entry: 3
       Data: 9
@@ -3982,20 +4027,20 @@ MonoBehaviour:
       Data: "\uC2A4\uD1A0\uB9AC \uBC84\uD2BC \uD074\uB9AD \uB300\uAE30"
     - Name: methods
       Entry: 7
-      Data: 64|System.Collections.Generic.List`1[[MenuTutorialManager+Method, Assembly-CSharp]],
+      Data: 68|System.Collections.Generic.List`1[[MenuTutorialManager+Method, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
-      Data: 8
+      Data: 10
     - Name: 
       Entry: 7
-      Data: 65|MenuTutorialManager+Method, Assembly-CSharp
+      Data: 69|MenuTutorialManager+Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Menu_NPC_Talk
     - Name: args
       Entry: 7
-      Data: 66|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 70|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 3
@@ -4019,13 +4064,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 67|MenuTutorialManager+Method, Assembly-CSharp
+      Data: 71|MenuTutorialManager+Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Wait_Click
     - Name: args
       Entry: 7
-      Data: 68|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 72|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
@@ -4043,13 +4088,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 69|MenuTutorialManager+Method, Assembly-CSharp
+      Data: 73|MenuTutorialManager+Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Menu_Hide_Message
     - Name: args
       Entry: 7
-      Data: 70|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 74|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 0
@@ -4064,58 +4109,10 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 71|MenuTutorialManager+Method, Assembly-CSharp
-    - Name: name
-      Entry: 1
-      Data: Menu_Scope_Object
-    - Name: args
-      Entry: 7
-      Data: 72|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 1
-    - Name: 
-      Entry: 1
-      Data: storyButton
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 73|MenuTutorialManager+Method, Assembly-CSharp
-    - Name: name
-      Entry: 1
-      Data: Enable_Button
-    - Name: args
-      Entry: 7
-      Data: 74|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 1
-    - Name: 
-      Entry: 1
-      Data: storyButton
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
       Data: 75|MenuTutorialManager+Method, Assembly-CSharp
     - Name: name
       Entry: 1
-      Data: Wait_Click
+      Data: Menu_Scope_Object
     - Name: args
       Entry: 7
       Data: 76|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
@@ -4139,10 +4136,85 @@ MonoBehaviour:
       Data: 77|MenuTutorialManager+Method, Assembly-CSharp
     - Name: name
       Entry: 1
-      Data: Dimmed
+      Data: Enable_Button
     - Name: args
       Entry: 7
       Data: 78|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: storyButton
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 79|MenuTutorialManager+Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: ShowHandUI
+    - Name: args
+      Entry: 7
+      Data: 80|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 1
+      Data: storyButton
+    - Name: 
+      Entry: 1
+      Data: touch
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 81|MenuTutorialManager+Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Wait_Click
+    - Name: args
+      Entry: 7
+      Data: 82|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: storyButton
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 83|MenuTutorialManager+Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Dimmed
+    - Name: args
+      Entry: 7
+      Data: 84|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 2
@@ -4163,16 +4235,46 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 79|MenuTutorialManager+Method, Assembly-CSharp
+      Data: 85|MenuTutorialManager+Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: OffHighlight
     - Name: args
       Entry: 7
-      Data: 80|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 86|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
-      Data: 0
+      Data: 2
+    - Name: 
+      Entry: 1
+      Data: storyButton
+    - Name: 
+      Entry: 1
+      Data: touch
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 87|MenuTutorialManager+Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: HideHandUI
+    - Name: args
+      Entry: 7
+      Data: 88|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: storyButton
     - Name: 
       Entry: 13
       Data: 
@@ -4196,7 +4298,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 81|MenuTutorialManager+InnerSet, Assembly-CSharp
+      Data: 89|MenuTutorialManager+InnerSet, Assembly-CSharp
     - Name: id
       Entry: 3
       Data: 10
@@ -4205,20 +4307,20 @@ MonoBehaviour:
       Data: "\uC624\uD06C \uC9C4\uC601 \uBC84\uD2BC \uD558\uC774\uB77C\uC774\uD2B8"
     - Name: methods
       Entry: 7
-      Data: 82|System.Collections.Generic.List`1[[MenuTutorialManager+Method, Assembly-CSharp]],
+      Data: 90|System.Collections.Generic.List`1[[MenuTutorialManager+Method, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
       Data: 11
     - Name: 
       Entry: 7
-      Data: 83|MenuTutorialManager+Method, Assembly-CSharp
+      Data: 91|MenuTutorialManager+Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Menu_NPC_Talk
     - Name: args
       Entry: 7
-      Data: 84|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 92|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 3
@@ -4242,13 +4344,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 85|MenuTutorialManager+Method, Assembly-CSharp
+      Data: 93|MenuTutorialManager+Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Wait_Click
     - Name: args
       Entry: 7
-      Data: 86|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 94|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
@@ -4266,13 +4368,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 87|MenuTutorialManager+Method, Assembly-CSharp
+      Data: 95|MenuTutorialManager+Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Menu_Hide_Message
     - Name: args
       Entry: 7
-      Data: 88|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 96|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 0
@@ -4287,13 +4389,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 89|MenuTutorialManager+Method, Assembly-CSharp
+      Data: 97|MenuTutorialManager+Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Dimmed
     - Name: args
       Entry: 7
-      Data: 90|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 98|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 2
@@ -4314,13 +4416,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 91|MenuTutorialManager+Method, Assembly-CSharp
+      Data: 99|MenuTutorialManager+Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: ShowHandUI
     - Name: args
       Entry: 7
-      Data: 92|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 100|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 2
@@ -4341,109 +4443,10 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 93|MenuTutorialManager+Method, Assembly-CSharp
-    - Name: name
-      Entry: 1
-      Data: ChangeSelectBtnImage
-    - Name: args
-      Entry: 7
-      Data: 94|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 1
-    - Name: 
-      Entry: 1
-      Data: story_orc_btn
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 95|MenuTutorialManager+Method, Assembly-CSharp
-    - Name: name
-      Entry: 1
-      Data: Menu_Scope_Object
-    - Name: args
-      Entry: 7
-      Data: 96|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 1
-    - Name: 
-      Entry: 1
-      Data: story_orc_button
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 97|MenuTutorialManager+Method, Assembly-CSharp
-    - Name: name
-      Entry: 1
-      Data: Wait_Click
-    - Name: args
-      Entry: 7
-      Data: 98|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 1
-    - Name: 
-      Entry: 1
-      Data: story_orc_button
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 99|MenuTutorialManager+Method, Assembly-CSharp
-    - Name: name
-      Entry: 1
-      Data: Dimmed
-    - Name: args
-      Entry: 7
-      Data: 100|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 2
-    - Name: 
-      Entry: 1
-      Data: story_orc_button
-    - Name: 
-      Entry: 1
-      Data: off
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
       Data: 101|MenuTutorialManager+Method, Assembly-CSharp
     - Name: name
       Entry: 1
-      Data: ResetBtnImage
+      Data: ChangeSelectBtnImage
     - Name: args
       Entry: 7
       Data: 102|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
@@ -4467,10 +4470,109 @@ MonoBehaviour:
       Data: 103|MenuTutorialManager+Method, Assembly-CSharp
     - Name: name
       Entry: 1
-      Data: HideHandUI
+      Data: Menu_Scope_Object
     - Name: args
       Entry: 7
       Data: 104|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: story_orc_button
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 105|MenuTutorialManager+Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Wait_Click
+    - Name: args
+      Entry: 7
+      Data: 106|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: story_orc_button
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 107|MenuTutorialManager+Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Dimmed
+    - Name: args
+      Entry: 7
+      Data: 108|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 1
+      Data: story_orc_button
+    - Name: 
+      Entry: 1
+      Data: off
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 109|MenuTutorialManager+Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: ResetBtnImage
+    - Name: args
+      Entry: 7
+      Data: 110|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: story_orc_btn
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 111|MenuTutorialManager+Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: HideHandUI
+    - Name: args
+      Entry: 7
+      Data: 112|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
@@ -4500,7 +4602,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 105|MenuTutorialManager+InnerSet, Assembly-CSharp
+      Data: 113|MenuTutorialManager+InnerSet, Assembly-CSharp
     - Name: id
       Entry: 3
       Data: 12
@@ -4509,20 +4611,20 @@ MonoBehaviour:
       Data: 
     - Name: methods
       Entry: 7
-      Data: 106|System.Collections.Generic.List`1[[MenuTutorialManager+Method, Assembly-CSharp]],
+      Data: 114|System.Collections.Generic.List`1[[MenuTutorialManager+Method, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
       Data: 17
     - Name: 
       Entry: 7
-      Data: 107|MenuTutorialManager+Method, Assembly-CSharp
+      Data: 115|MenuTutorialManager+Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Wait_Until
     - Name: args
       Entry: 7
-      Data: 108|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 116|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
@@ -4540,13 +4642,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 109|MenuTutorialManager+Method, Assembly-CSharp
+      Data: 117|MenuTutorialManager+Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Dimmed
     - Name: args
       Entry: 7
-      Data: 110|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 118|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 2
@@ -4567,13 +4669,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 111|MenuTutorialManager+Method, Assembly-CSharp
+      Data: 119|MenuTutorialManager+Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: ShowHandUI
     - Name: args
       Entry: 7
-      Data: 112|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 120|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 2
@@ -4594,13 +4696,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 113|MenuTutorialManager+Method, Assembly-CSharp
+      Data: 121|MenuTutorialManager+Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Menu_Scope_Object
     - Name: args
       Entry: 7
-      Data: 114|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 122|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
@@ -4618,13 +4720,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 115|MenuTutorialManager+Method, Assembly-CSharp
+      Data: 123|MenuTutorialManager+Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Wait_Click
     - Name: args
       Entry: 7
-      Data: 116|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 124|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
@@ -4642,13 +4744,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 117|MenuTutorialManager+Method, Assembly-CSharp
+      Data: 125|MenuTutorialManager+Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: HideHandUI
     - Name: args
       Entry: 7
-      Data: 118|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 126|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
@@ -4666,13 +4768,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 119|MenuTutorialManager+Method, Assembly-CSharp
+      Data: 127|MenuTutorialManager+Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: AutoSelectStoryDeck
     - Name: args
       Entry: 7
-      Data: 120|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 128|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
@@ -4690,13 +4792,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 121|MenuTutorialManager+Method, Assembly-CSharp
+      Data: 129|MenuTutorialManager+Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Dimmed
     - Name: args
       Entry: 7
-      Data: 122|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 130|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 2
@@ -4717,13 +4819,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 123|MenuTutorialManager+Method, Assembly-CSharp
+      Data: 131|MenuTutorialManager+Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Menu_NPC_Talk
     - Name: args
       Entry: 7
-      Data: 124|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 132|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 3
@@ -4748,105 +4850,6 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 125|MenuTutorialManager+Method, Assembly-CSharp
-    - Name: name
-      Entry: 1
-      Data: Wait_Click
-    - Name: args
-      Entry: 7
-      Data: 126|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 1
-    - Name: 
-      Entry: 1
-      Data: screen
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 127|MenuTutorialManager+Method, Assembly-CSharp
-    - Name: name
-      Entry: 1
-      Data: Dimmed
-    - Name: args
-      Entry: 7
-      Data: 128|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 2
-    - Name: 
-      Entry: 1
-      Data: tutorial_play_button
-    - Name: 
-      Entry: 1
-      Data: on
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 129|MenuTutorialManager+Method, Assembly-CSharp
-    - Name: name
-      Entry: 1
-      Data: Menu_Hide_Message
-    - Name: args
-      Entry: 7
-      Data: 130|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 131|MenuTutorialManager+Method, Assembly-CSharp
-    - Name: name
-      Entry: 1
-      Data: ShowHandUI
-    - Name: args
-      Entry: 7
-      Data: 132|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 2
-    - Name: 
-      Entry: 1
-      Data: tutorial_play_button
-    - Name: 
-      Entry: 1
-      Data: touch
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
       Data: 133|MenuTutorialManager+Method, Assembly-CSharp
     - Name: name
       Entry: 1
@@ -4859,7 +4862,7 @@ MonoBehaviour:
       Data: 1
     - Name: 
       Entry: 1
-      Data: tutorial_play_button
+      Data: screen
     - Name: 
       Entry: 13
       Data: 
@@ -4886,7 +4889,7 @@ MonoBehaviour:
       Data: tutorial_play_button
     - Name: 
       Entry: 1
-      Data: off
+      Data: on
     - Name: 
       Entry: 13
       Data: 
@@ -4922,10 +4925,109 @@ MonoBehaviour:
       Data: 139|MenuTutorialManager+Method, Assembly-CSharp
     - Name: name
       Entry: 1
-      Data: ForceOrcStorySocketConnect
+      Data: ShowHandUI
     - Name: args
       Entry: 7
       Data: 140|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 1
+      Data: tutorial_play_button
+    - Name: 
+      Entry: 1
+      Data: touch
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 141|MenuTutorialManager+Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Wait_Click
+    - Name: args
+      Entry: 7
+      Data: 142|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: tutorial_play_button
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 143|MenuTutorialManager+Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Dimmed
+    - Name: args
+      Entry: 7
+      Data: 144|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 1
+      Data: tutorial_play_button
+    - Name: 
+      Entry: 1
+      Data: off
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 145|MenuTutorialManager+Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Menu_Hide_Message
+    - Name: args
+      Entry: 7
+      Data: 146|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 147|MenuTutorialManager+Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: ForceOrcStorySocketConnect
+    - Name: args
+      Entry: 7
+      Data: 148|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 2
@@ -4967,7 +5069,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 141|MenuTutorialManager+TutorialSet, Assembly-CSharp
+      Data: 149|MenuTutorialManager+TutorialSet, Assembly-CSharp
     - Name: id
       Entry: 3
       Data: 1
@@ -4976,14 +5078,14 @@ MonoBehaviour:
       Data: "AI \uB300\uC804 \uD50C\uB808\uC774\uB97C \uC720\uB3C4\uD558\uB294 \uD29C\uD1A0\uB9AC\uC5BC"
     - Name: innerDatas
       Entry: 7
-      Data: 142|System.Collections.Generic.List`1[[MenuTutorialManager+InnerSet, Assembly-CSharp]],
+      Data: 150|System.Collections.Generic.List`1[[MenuTutorialManager+InnerSet, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
       Data: 13
     - Name: 
       Entry: 7
-      Data: 143|MenuTutorialManager+InnerSet, Assembly-CSharp
+      Data: 151|MenuTutorialManager+InnerSet, Assembly-CSharp
     - Name: id
       Entry: 3
       Data: 1
@@ -4992,20 +5094,20 @@ MonoBehaviour:
       Data: 
     - Name: methods
       Entry: 7
-      Data: 144|System.Collections.Generic.List`1[[MenuTutorialManager+Method, Assembly-CSharp]],
+      Data: 152|System.Collections.Generic.List`1[[MenuTutorialManager+Method, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
       Data: 2
     - Name: 
       Entry: 7
-      Data: 145|MenuTutorialManager+Method, Assembly-CSharp
+      Data: 153|MenuTutorialManager+Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Menu_NPC_Talk
     - Name: args
       Entry: 7
-      Data: 146|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 154|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 3
@@ -5033,119 +5135,10 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 147|MenuTutorialManager+Method, Assembly-CSharp
-    - Name: name
-      Entry: 1
-      Data: Wait_Click
-    - Name: args
-      Entry: 7
-      Data: 148|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 1
-    - Name: 
-      Entry: 1
-      Data: screen
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: isExecute
-      Entry: 5
-      Data: false
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 149|MenuTutorialManager+InnerSet, Assembly-CSharp
-    - Name: id
-      Entry: 3
-      Data: 2
-    - Name: description
-      Entry: 1
-      Data: "\uBCF4\uC0C1 \uC694\uCCAD"
-    - Name: methods
-      Entry: 7
-      Data: 150|System.Collections.Generic.List`1[[MenuTutorialManager+Method, Assembly-CSharp]],
-        mscorlib
-    - Name: 
-      Entry: 12
-      Data: 3
-    - Name: 
-      Entry: 7
-      Data: 151|MenuTutorialManager+Method, Assembly-CSharp
-    - Name: name
-      Entry: 1
-      Data: Menu_NPC_Talk
-    - Name: args
-      Entry: 7
-      Data: 152|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 3
-    - Name: 
-      Entry: 1
-      Data: ac10012
-    - Name: 
-      Entry: 1
-      Data: "\uC0AC\uB839\uAD00\uC774\uB77C\uBA74 \uC6B0\uB9AC \uC624\uD06C\uB4E4\uC758
-        \uC790\uC720\uB97C \uC704\uD574 \uD798\uC368\uC904 \uAC83\uC774\uB77C\uACE0
-        \uBBFF\uB294\uB2E4. \uC0AC\uB839\uAD00\uC5D0\uAC8C \uBC29\uAE08 \uB3C4\uB9DD\uCE5C
-        \uC6B0\uB9AC \uBD80\uC871 \uC804\uBD80\uC758 \uC6B4\uBA85\uC744 \uB9E1\uAE30\uACA0\uB2E4."
-    - Name: 
-      Entry: 1
-      Data: enemy
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 153|MenuTutorialManager+Method, Assembly-CSharp
-    - Name: name
-      Entry: 1
-      Data: Wait_Click
-    - Name: args
-      Entry: 7
-      Data: 154|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 1
-    - Name: 
-      Entry: 1
-      Data: screen
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
       Data: 155|MenuTutorialManager+Method, Assembly-CSharp
     - Name: name
       Entry: 1
-      Data: RequestReward
+      Data: Wait_Click
     - Name: args
       Entry: 7
       Data: 156|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
@@ -5154,7 +5147,7 @@ MonoBehaviour:
       Data: 1
     - Name: 
       Entry: 1
-      Data: orc
+      Data: screen
     - Name: 
       Entry: 13
       Data: 
@@ -5181,17 +5174,17 @@ MonoBehaviour:
       Data: 157|MenuTutorialManager+InnerSet, Assembly-CSharp
     - Name: id
       Entry: 3
-      Data: 4
+      Data: 2
     - Name: description
-      Entry: 6
-      Data: 
+      Entry: 1
+      Data: "\uBCF4\uC0C1 \uC694\uCCAD"
     - Name: methods
       Entry: 7
       Data: 158|System.Collections.Generic.List`1[[MenuTutorialManager+Method, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
-      Data: 2
+      Data: 3
     - Name: 
       Entry: 7
       Data: 159|MenuTutorialManager+Method, Assembly-CSharp
@@ -5206,16 +5199,16 @@ MonoBehaviour:
       Data: 3
     - Name: 
       Entry: 1
-      Data: ac10005
+      Data: ac10012
     - Name: 
       Entry: 1
-      Data: "\uC7A0\uAE50\uB9CC! \uACB0\uAD6D \uC77C\uBD80 \uC778\uAC04\uB4E4\uC774
-        \uB108\uD76C\uB97C \uAD34\uB86D\uD788\uACE0 \uACF5\uACA9\uD588\uB2E4\uB294
-        \uAC83 \uB54C\uBB38\uC5D0 \uBAA8\uB4E0 \uC778\uAC04\uB4E4\uC744 \uACF5\uACA9\uD55C\uB2E4\uB294
-        \uAC70\uC57C?"
+      Data: "\uC0AC\uB839\uAD00\uC774\uB77C\uBA74 \uC6B0\uB9AC \uC624\uD06C\uB4E4\uC758
+        \uC790\uC720\uB97C \uC704\uD574 \uD798\uC368\uC904 \uAC83\uC774\uB77C\uACE0
+        \uBBFF\uB294\uB2E4. \uC0AC\uB839\uAD00\uC5D0\uAC8C \uBC29\uAE08 \uB3C4\uB9DD\uCE5C
+        \uC6B0\uB9AC \uBD80\uC871 \uC804\uBD80\uC758 \uC6B4\uBA85\uC744 \uB9E1\uAE30\uACA0\uB2E4."
     - Name: 
       Entry: 1
-      Data: my
+      Data: enemy
     - Name: 
       Entry: 13
       Data: 
@@ -5250,6 +5243,30 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: 
+      Entry: 7
+      Data: 163|MenuTutorialManager+Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: RequestReward
+    - Name: args
+      Entry: 7
+      Data: 164|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: orc
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
       Entry: 13
       Data: 
     - Name: 
@@ -5263,44 +5280,44 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 163|MenuTutorialManager+InnerSet, Assembly-CSharp
+      Data: 165|MenuTutorialManager+InnerSet, Assembly-CSharp
     - Name: id
       Entry: 3
-      Data: 5
+      Data: 4
     - Name: description
       Entry: 6
       Data: 
     - Name: methods
       Entry: 7
-      Data: 164|System.Collections.Generic.List`1[[MenuTutorialManager+Method, Assembly-CSharp]],
+      Data: 166|System.Collections.Generic.List`1[[MenuTutorialManager+Method, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
       Data: 2
     - Name: 
       Entry: 7
-      Data: 165|MenuTutorialManager+Method, Assembly-CSharp
+      Data: 167|MenuTutorialManager+Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Menu_NPC_Talk
     - Name: args
       Entry: 7
-      Data: 166|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 168|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 3
     - Name: 
       Entry: 1
-      Data: ac10012
+      Data: ac10005
     - Name: 
       Entry: 1
-      Data: "\uB108\uD76C\uB4E4\uC740 \uD56D\uC0C1 \uC77C\uBD80\uB77C\uACE0 \uB9D0\uD558\uC9C0.
-        \uD558\uC9C0\uB9CC \uC9C0\uB09C \uBA87\uBC31\uB144\uAC04 \uC778\uAC04\uC740
-        \uC138\uB97C \uBD88\uB9AC\uBA74\uC11C \uC624\uD06C\uB97C \uC810\uC810 \uC0B4
-        \uC218 \uC5C6\uB294 \uB545\uC73C\uB85C \uBAB0\uC544\uB0B4\uACE0 \uC788\uB2E4."
+      Data: "\uC7A0\uAE50\uB9CC! \uACB0\uAD6D \uC77C\uBD80 \uC778\uAC04\uB4E4\uC774
+        \uB108\uD76C\uB97C \uAD34\uB86D\uD788\uACE0 \uACF5\uACA9\uD588\uB2E4\uB294
+        \uAC83 \uB54C\uBB38\uC5D0 \uBAA8\uB4E0 \uC778\uAC04\uB4E4\uC744 \uACF5\uACA9\uD55C\uB2E4\uB294
+        \uAC70\uC57C?"
     - Name: 
       Entry: 1
-      Data: enemy
+      Data: my
     - Name: 
       Entry: 13
       Data: 
@@ -5312,13 +5329,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 167|MenuTutorialManager+Method, Assembly-CSharp
+      Data: 169|MenuTutorialManager+Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Wait_Click
     - Name: args
       Entry: 7
-      Data: 168|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 170|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
@@ -5348,7 +5365,92 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 169|MenuTutorialManager+InnerSet, Assembly-CSharp
+      Data: 171|MenuTutorialManager+InnerSet, Assembly-CSharp
+    - Name: id
+      Entry: 3
+      Data: 5
+    - Name: description
+      Entry: 6
+      Data: 
+    - Name: methods
+      Entry: 7
+      Data: 172|System.Collections.Generic.List`1[[MenuTutorialManager+Method, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 173|MenuTutorialManager+Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Menu_NPC_Talk
+    - Name: args
+      Entry: 7
+      Data: 174|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 1
+      Data: ac10012
+    - Name: 
+      Entry: 1
+      Data: "\uB108\uD76C\uB4E4\uC740 \uD56D\uC0C1 \uC77C\uBD80\uB77C\uACE0 \uB9D0\uD558\uC9C0.
+        \uD558\uC9C0\uB9CC \uC9C0\uB09C \uBA87\uBC31\uB144\uAC04 \uC778\uAC04\uC740
+        \uC138\uB97C \uBD88\uB9AC\uBA74\uC11C \uC624\uD06C\uB97C \uC810\uC810 \uC0B4
+        \uC218 \uC5C6\uB294 \uB545\uC73C\uB85C \uBAB0\uC544\uB0B4\uACE0 \uC788\uB2E4."
+    - Name: 
+      Entry: 1
+      Data: enemy
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 175|MenuTutorialManager+Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Wait_Click
+    - Name: args
+      Entry: 7
+      Data: 176|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: screen
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: isExecute
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 177|MenuTutorialManager+InnerSet, Assembly-CSharp
     - Name: id
       Entry: 3
       Data: 6
@@ -5357,20 +5459,20 @@ MonoBehaviour:
       Data: 
     - Name: methods
       Entry: 7
-      Data: 170|System.Collections.Generic.List`1[[MenuTutorialManager+Method, Assembly-CSharp]],
+      Data: 178|System.Collections.Generic.List`1[[MenuTutorialManager+Method, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
       Data: 2
     - Name: 
       Entry: 7
-      Data: 171|MenuTutorialManager+Method, Assembly-CSharp
+      Data: 179|MenuTutorialManager+Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Menu_NPC_Talk
     - Name: args
       Entry: 7
-      Data: 172|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 180|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 3
@@ -5398,13 +5500,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 173|MenuTutorialManager+Method, Assembly-CSharp
+      Data: 181|MenuTutorialManager+Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Wait_Click
     - Name: args
       Entry: 7
-      Data: 174|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 182|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
@@ -5434,7 +5536,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 175|MenuTutorialManager+InnerSet, Assembly-CSharp
+      Data: 183|MenuTutorialManager+InnerSet, Assembly-CSharp
     - Name: id
       Entry: 3
       Data: 7
@@ -5443,20 +5545,20 @@ MonoBehaviour:
       Data: 
     - Name: methods
       Entry: 7
-      Data: 176|System.Collections.Generic.List`1[[MenuTutorialManager+Method, Assembly-CSharp]],
+      Data: 184|System.Collections.Generic.List`1[[MenuTutorialManager+Method, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
       Data: 2
     - Name: 
       Entry: 7
-      Data: 177|MenuTutorialManager+Method, Assembly-CSharp
+      Data: 185|MenuTutorialManager+Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Menu_NPC_Talk
     - Name: args
       Entry: 7
-      Data: 178|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 186|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 3
@@ -5484,13 +5586,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 179|MenuTutorialManager+Method, Assembly-CSharp
+      Data: 187|MenuTutorialManager+Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Wait_Click
     - Name: args
       Entry: 7
-      Data: 180|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 188|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
@@ -5520,7 +5622,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 181|MenuTutorialManager+InnerSet, Assembly-CSharp
+      Data: 189|MenuTutorialManager+InnerSet, Assembly-CSharp
     - Name: id
       Entry: 3
       Data: 8
@@ -5529,20 +5631,20 @@ MonoBehaviour:
       Data: 
     - Name: methods
       Entry: 7
-      Data: 182|System.Collections.Generic.List`1[[MenuTutorialManager+Method, Assembly-CSharp]],
+      Data: 190|System.Collections.Generic.List`1[[MenuTutorialManager+Method, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
       Data: 2
     - Name: 
       Entry: 7
-      Data: 183|MenuTutorialManager+Method, Assembly-CSharp
+      Data: 191|MenuTutorialManager+Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Menu_NPC_Talk
     - Name: args
       Entry: 7
-      Data: 184|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 192|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 3
@@ -5567,123 +5669,19 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 185|MenuTutorialManager+Method, Assembly-CSharp
-    - Name: name
-      Entry: 1
-      Data: Wait_Click
-    - Name: args
-      Entry: 7
-      Data: 186|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 1
-    - Name: 
-      Entry: 1
-      Data: screen
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: isExecute
-      Entry: 5
-      Data: false
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 187|MenuTutorialManager+InnerSet, Assembly-CSharp
-    - Name: id
-      Entry: 3
-      Data: 9
-    - Name: description
-      Entry: 6
-      Data: 
-    - Name: methods
-      Entry: 7
-      Data: 188|System.Collections.Generic.List`1[[MenuTutorialManager+Method, Assembly-CSharp]],
-        mscorlib
-    - Name: 
-      Entry: 12
-      Data: 3
-    - Name: 
-      Entry: 7
-      Data: 189|MenuTutorialManager+Method, Assembly-CSharp
-    - Name: name
-      Entry: 1
-      Data: Menu_NPC_Talk
-    - Name: args
-      Entry: 7
-      Data: 190|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 3
-    - Name: 
-      Entry: 1
-      Data: ac10005
-    - Name: 
-      Entry: 1
-      Data: "\uC0AC\uB839\uAD00! \uBA54\uB274\uC5D0 \uC788\uB294 \uBC30\uD2C0 \uBC84\uD2BC\uC744
-        \uB20C\uB7EC\uC918."
-    - Name: 
-      Entry: 1
-      Data: my
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 191|MenuTutorialManager+Method, Assembly-CSharp
-    - Name: name
-      Entry: 1
-      Data: Wait_Click
-    - Name: args
-      Entry: 7
-      Data: 192|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 1
-    - Name: 
-      Entry: 1
-      Data: screen
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
       Data: 193|MenuTutorialManager+Method, Assembly-CSharp
     - Name: name
       Entry: 1
-      Data: Menu_Hide_Message
+      Data: Wait_Click
     - Name: args
       Entry: 7
       Data: 194|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
-      Data: 0
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: screen
     - Name: 
       Entry: 13
       Data: 
@@ -5710,35 +5708,39 @@ MonoBehaviour:
       Data: 195|MenuTutorialManager+InnerSet, Assembly-CSharp
     - Name: id
       Entry: 3
-      Data: 10
+      Data: 9
     - Name: description
-      Entry: 1
-      Data: "\uBC30\uD2C0 \uBC84\uD2BC \uD558\uC774\uB77C\uC774\uD2B8"
+      Entry: 6
+      Data: 
     - Name: methods
       Entry: 7
       Data: 196|System.Collections.Generic.List`1[[MenuTutorialManager+Method, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
-      Data: 4
+      Data: 3
     - Name: 
       Entry: 7
       Data: 197|MenuTutorialManager+Method, Assembly-CSharp
     - Name: name
       Entry: 1
-      Data: Dimmed
+      Data: Menu_NPC_Talk
     - Name: args
       Entry: 7
       Data: 198|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
-      Data: 2
+      Data: 3
     - Name: 
       Entry: 1
-      Data: battle_button
+      Data: ac10005
     - Name: 
       Entry: 1
-      Data: on
+      Data: "\uC0AC\uB839\uAD00! \uBA54\uB274\uC5D0 \uC788\uB294 \uBC30\uD2C0 \uBC84\uD2BC\uC744
+        \uB20C\uB7EC\uC918."
+    - Name: 
+      Entry: 1
+      Data: my
     - Name: 
       Entry: 13
       Data: 
@@ -5753,7 +5755,7 @@ MonoBehaviour:
       Data: 199|MenuTutorialManager+Method, Assembly-CSharp
     - Name: name
       Entry: 1
-      Data: Menu_Scope_Object
+      Data: Wait_Click
     - Name: args
       Entry: 7
       Data: 200|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
@@ -5762,7 +5764,7 @@ MonoBehaviour:
       Data: 1
     - Name: 
       Entry: 1
-      Data: battle_button
+      Data: screen
     - Name: 
       Entry: 13
       Data: 
@@ -5777,43 +5779,13 @@ MonoBehaviour:
       Data: 201|MenuTutorialManager+Method, Assembly-CSharp
     - Name: name
       Entry: 1
-      Data: Wait_Click
+      Data: Menu_Hide_Message
     - Name: args
       Entry: 7
       Data: 202|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
-      Data: 1
-    - Name: 
-      Entry: 1
-      Data: battle_button
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 203|MenuTutorialManager+Method, Assembly-CSharp
-    - Name: name
-      Entry: 1
-      Data: Dimmed
-    - Name: args
-      Entry: 7
-      Data: 204|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 2
-    - Name: 
-      Entry: 1
-      Data: battle_button
-    - Name: 
-      Entry: 1
-      Data: off
+      Data: 0
     - Name: 
       Entry: 13
       Data: 
@@ -5837,7 +5809,188 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 205|MenuTutorialManager+InnerSet, Assembly-CSharp
+      Data: 203|MenuTutorialManager+InnerSet, Assembly-CSharp
+    - Name: id
+      Entry: 3
+      Data: 10
+    - Name: description
+      Entry: 1
+      Data: "\uBC30\uD2C0 \uBC84\uD2BC \uD558\uC774\uB77C\uC774\uD2B8"
+    - Name: methods
+      Entry: 7
+      Data: 204|System.Collections.Generic.List`1[[MenuTutorialManager+Method, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 6
+    - Name: 
+      Entry: 7
+      Data: 205|MenuTutorialManager+Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Dimmed
+    - Name: args
+      Entry: 7
+      Data: 206|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 1
+      Data: battle_button
+    - Name: 
+      Entry: 1
+      Data: on
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 207|MenuTutorialManager+Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Menu_Scope_Object
+    - Name: args
+      Entry: 7
+      Data: 208|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: battle_button
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 209|MenuTutorialManager+Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: ShowHandUI
+    - Name: args
+      Entry: 7
+      Data: 210|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 1
+      Data: battle_button
+    - Name: 
+      Entry: 1
+      Data: touch
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 211|MenuTutorialManager+Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Wait_Click
+    - Name: args
+      Entry: 7
+      Data: 212|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: battle_button
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 213|MenuTutorialManager+Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Dimmed
+    - Name: args
+      Entry: 7
+      Data: 214|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 1
+      Data: battle_button
+    - Name: 
+      Entry: 1
+      Data: off
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 215|MenuTutorialManager+Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: HideHandUI
+    - Name: args
+      Entry: 7
+      Data: 216|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: battle_button
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: isExecute
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 217|MenuTutorialManager+InnerSet, Assembly-CSharp
     - Name: id
       Entry: 3
       Data: 11
@@ -5846,20 +5999,20 @@ MonoBehaviour:
       Data: "11 ~ 14\uAE4C\uC9C0"
     - Name: methods
       Entry: 7
-      Data: 206|System.Collections.Generic.List`1[[MenuTutorialManager+Method, Assembly-CSharp]],
+      Data: 218|System.Collections.Generic.List`1[[MenuTutorialManager+Method, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
       Data: 6
     - Name: 
       Entry: 7
-      Data: 207|MenuTutorialManager+Method, Assembly-CSharp
+      Data: 219|MenuTutorialManager+Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Menu_NPC_Talk
     - Name: args
       Entry: 7
-      Data: 208|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 220|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 3
@@ -5884,13 +6037,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 209|MenuTutorialManager+Method, Assembly-CSharp
+      Data: 221|MenuTutorialManager+Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Wait_Click
     - Name: args
       Entry: 7
-      Data: 210|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 222|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
@@ -5908,13 +6061,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 211|MenuTutorialManager+Method, Assembly-CSharp
+      Data: 223|MenuTutorialManager+Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Menu_NPC_Talk
     - Name: args
       Entry: 7
-      Data: 212|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 224|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 3
@@ -5939,13 +6092,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 213|MenuTutorialManager+Method, Assembly-CSharp
+      Data: 225|MenuTutorialManager+Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Wait_Click
     - Name: args
       Entry: 7
-      Data: 214|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 226|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
@@ -5963,13 +6116,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 215|MenuTutorialManager+Method, Assembly-CSharp
+      Data: 227|MenuTutorialManager+Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Menu_NPC_Talk
     - Name: args
       Entry: 7
-      Data: 216|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 228|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 3
@@ -5995,13 +6148,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 217|MenuTutorialManager+Method, Assembly-CSharp
+      Data: 229|MenuTutorialManager+Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Wait_Click
     - Name: args
       Entry: 7
-      Data: 218|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 230|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
@@ -6031,7 +6184,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 219|MenuTutorialManager+InnerSet, Assembly-CSharp
+      Data: 231|MenuTutorialManager+InnerSet, Assembly-CSharp
     - Name: id
       Entry: 3
       Data: 15
@@ -6040,20 +6193,20 @@ MonoBehaviour:
       Data: "\uC591\uCABD \uBAA8\uB450 \uC774\uBBF8\uC9C0 \uD65C\uC131\uD654 "
     - Name: methods
       Entry: 7
-      Data: 220|System.Collections.Generic.List`1[[MenuTutorialManager+Method, Assembly-CSharp]],
+      Data: 232|System.Collections.Generic.List`1[[MenuTutorialManager+Method, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
       Data: 1
     - Name: 
       Entry: 7
-      Data: 221|MenuTutorialManager+Method, Assembly-CSharp
+      Data: 233|MenuTutorialManager+Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Menu_NPC_Talk
     - Name: args
       Entry: 7
-      Data: 222|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 234|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 3
@@ -6089,7 +6242,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 223|MenuTutorialManager+InnerSet, Assembly-CSharp
+      Data: 235|MenuTutorialManager+InnerSet, Assembly-CSharp
     - Name: id
       Entry: 3
       Data: 16
@@ -6098,20 +6251,20 @@ MonoBehaviour:
       Data: 
     - Name: methods
       Entry: 7
-      Data: 224|System.Collections.Generic.List`1[[MenuTutorialManager+Method, Assembly-CSharp]],
+      Data: 236|System.Collections.Generic.List`1[[MenuTutorialManager+Method, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
       Data: 3
     - Name: 
       Entry: 7
-      Data: 225|MenuTutorialManager+Method, Assembly-CSharp
+      Data: 237|MenuTutorialManager+Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Menu_Hide_Message
     - Name: args
       Entry: 7
-      Data: 226|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 238|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 0
@@ -6126,13 +6279,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 227|MenuTutorialManager+Method, Assembly-CSharp
+      Data: 239|MenuTutorialManager+Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Block_HUD
     - Name: args
       Entry: 7
-      Data: 228|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 240|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 0
@@ -6147,13 +6300,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 229|MenuTutorialManager+Method, Assembly-CSharp
+      Data: 241|MenuTutorialManager+Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: Wait_DeckSelect
     - Name: args
       Entry: 7
-      Data: 230|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 242|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 0
@@ -6180,7 +6333,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 231|MenuTutorialManager+InnerSet, Assembly-CSharp
+      Data: 243|MenuTutorialManager+InnerSet, Assembly-CSharp
     - Name: id
       Entry: 3
       Data: 17
@@ -6189,20 +6342,95 @@ MonoBehaviour:
       Data: 
     - Name: methods
       Entry: 7
-      Data: 232|System.Collections.Generic.List`1[[MenuTutorialManager+Method, Assembly-CSharp]],
+      Data: 244|System.Collections.Generic.List`1[[MenuTutorialManager+Method, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
-      Data: 2
+      Data: 5
     - Name: 
       Entry: 7
-      Data: 233|MenuTutorialManager+Method, Assembly-CSharp
+      Data: 245|MenuTutorialManager+Method, Assembly-CSharp
     - Name: name
       Entry: 1
       Data: ShowHandUI
     - Name: args
       Entry: 7
-      Data: 234|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 246|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 1
+      Data: ai_battle_start_button
+    - Name: 
+      Entry: 1
+      Data: touch
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 247|MenuTutorialManager+Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Wait_Click
+    - Name: args
+      Entry: 7
+      Data: 248|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: ai_battle_start_button
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 249|MenuTutorialManager+Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: HideHandUI
+    - Name: args
+      Entry: 7
+      Data: 250|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: ai_battle_start_button
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 251|MenuTutorialManager+Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Unblock_HUD
+    - Name: args
+      Entry: 7
+      Data: 252|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 0
@@ -6217,13 +6445,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 235|MenuTutorialManager+Method, Assembly-CSharp
+      Data: 253|MenuTutorialManager+Method, Assembly-CSharp
     - Name: name
       Entry: 1
-      Data: Unblock_HUD
+      Data: ForceAIBattleSocketConnect
     - Name: args
       Entry: 7
-      Data: 236|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 254|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 0
@@ -6259,36 +6487,1110 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 237|MenuTutorialManager+TutorialSet, Assembly-CSharp
+      Data: 255|MenuTutorialManager+TutorialSet, Assembly-CSharp
     - Name: id
       Entry: 3
       Data: 2
     - Name: description
       Entry: 1
-      Data: "\uC0C1\uC790 \uC5F4\uAE30\uB97C \uC720\uB3C4\uD558\uB294 \uD29C\uD1A0\uB9AC\uC5BC"
+      Data: "\uC0C1\uC790 \uC5F4\uAE30\uB97C \uC720\uB3C4\uD558\uB294 \uD29C\uD1A0\uB9AC\uC5BC
+        (\uD734\uBA3C)"
     - Name: innerDatas
       Entry: 7
-      Data: 238|System.Collections.Generic.List`1[[MenuTutorialManager+InnerSet, Assembly-CSharp]],
+      Data: 256|System.Collections.Generic.List`1[[MenuTutorialManager+InnerSet, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 7
+    - Name: 
+      Entry: 7
+      Data: 257|MenuTutorialManager+InnerSet, Assembly-CSharp
+    - Name: id
+      Entry: 3
+      Data: 1
+    - Name: description
+      Entry: 6
+      Data: 
+    - Name: methods
+      Entry: 7
+      Data: 258|System.Collections.Generic.List`1[[MenuTutorialManager+Method, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 259|MenuTutorialManager+Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Menu_NPC_Talk
+    - Name: args
+      Entry: 7
+      Data: 260|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 1
+      Data: ac10005
+    - Name: 
+      Entry: 1
+      Data: "\uC0AC\uB839\uAD00\uC758 \uC9C0\uD718\uB294 \uC5ED\uC2DC \uBBFF\uC744\uB9CC\uD574"
+    - Name: 
+      Entry: 1
+      Data: my
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 261|MenuTutorialManager+Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Wait_Click
+    - Name: args
+      Entry: 7
+      Data: 262|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: screen
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: isExecute
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 263|MenuTutorialManager+InnerSet, Assembly-CSharp
+    - Name: id
+      Entry: 3
+      Data: 2
+    - Name: description
+      Entry: 6
+      Data: 
+    - Name: methods
+      Entry: 7
+      Data: 264|System.Collections.Generic.List`1[[MenuTutorialManager+Method, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 265|MenuTutorialManager+Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Menu_NPC_Talk
+    - Name: args
+      Entry: 7
+      Data: 266|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 1
+      Data: ac10012
+    - Name: 
+      Entry: 1
+      Data: "\uC774\uBC88\uC5D0\uB294 \uC778\uAC04\uC744 \uB3C4\uC654\uC9C0\uB9CC,
+        \uC5B8\uC81C\uB4E0 \uB2E4\uC2DC \uC6B0\uB9AC\uB97C \uC774\uB04C\uC5B4\uC8FC\uC154\uB3C4
+        \uC88B\uC2B5\uB2C8\uB2E4 \uC871\uC7A5\uB2D8. \uAE30\uB2E4\uB9AC\uACA0\uC2B5\uB2C8\uB2E4."
+    - Name: 
+      Entry: 1
+      Data: enemy
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 267|MenuTutorialManager+Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Wait_Click
+    - Name: args
+      Entry: 7
+      Data: 268|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: screen
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: isExecute
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 269|MenuTutorialManager+InnerSet, Assembly-CSharp
+    - Name: id
+      Entry: 3
+      Data: 3
+    - Name: description
+      Entry: 6
+      Data: 
+    - Name: methods
+      Entry: 7
+      Data: 270|System.Collections.Generic.List`1[[MenuTutorialManager+Method, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 271|MenuTutorialManager+Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Menu_NPC_Talk
+    - Name: args
+      Entry: 7
+      Data: 272|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 1
+      Data: ac10005
+    - Name: 
+      Entry: 1
+      Data: "\uC790, \uC800 \uC624\uD06C\uB294 \uBB34\uC2DC\uD558\uACE0 \uC774\uBC88
+        \uC804\uD22C\uB85C \uC5BB\uC740 \uC804\uB9AC\uD488\uC774 \uC788\uC5B4."
+    - Name: 
+      Entry: 1
+      Data: my
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 273|MenuTutorialManager+Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Wait_Click
+    - Name: args
+      Entry: 7
+      Data: 274|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: screen
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: isExecute
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 275|MenuTutorialManager+InnerSet, Assembly-CSharp
+    - Name: id
+      Entry: 3
+      Data: 4
+    - Name: description
+      Entry: 6
+      Data: 
+    - Name: methods
+      Entry: 7
+      Data: 276|System.Collections.Generic.List`1[[MenuTutorialManager+Method, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 277|MenuTutorialManager+Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Menu_NPC_Talk
+    - Name: args
+      Entry: 7
+      Data: 278|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 1
+      Data: ac10005
+    - Name: 
+      Entry: 1
+      Data: "\uC804\uD22C\uB97C \uC9C4\uD589\uD558\uBA74 \uBCF4\uAE09\uD488\uC744
+        \uC5BB\uC744 \uC218 \uC788\uACE0, \uBCF4\uAE09\uD488\uC774 100 \uC774\uC0C1
+        \uBAA8\uC774\uBA74 \uBCF4\uAE09\uC0C1\uC790\uB85C \uBC14\uAFD4 \uB2E4\uC591\uD55C
+        \uCE74\uB4DC\uB098 \uC7AC\uD654\uB97C \uC5BB\uC744 \uC218 \uC788\uC5B4."
+    - Name: 
+      Entry: 1
+      Data: my
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 279|MenuTutorialManager+Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Wait_Click
+    - Name: args
+      Entry: 7
+      Data: 280|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: screen
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: isExecute
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 281|MenuTutorialManager+InnerSet, Assembly-CSharp
+    - Name: id
+      Entry: 3
+      Data: 5
+    - Name: description
+      Entry: 6
+      Data: 
+    - Name: methods
+      Entry: 7
+      Data: 282|System.Collections.Generic.List`1[[MenuTutorialManager+Method, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 283|MenuTutorialManager+Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Menu_NPC_Talk
+    - Name: args
+      Entry: 7
+      Data: 284|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 1
+      Data: ac10005
+    - Name: 
+      Entry: 1
+      Data: "\uC774\uBC88 \uC804\uD22C\uB85C \uBCF4\uAE09\uC0C1\uC790\uB97C \uD558\uB098
+        \uC5BB\uC740\uAC83 \uAC19\uC740\uB370 \uD55C\uBC88 \uC5F4\uC5B4\uBCFC\uAE4C?"
+    - Name: 
+      Entry: 1
+      Data: my
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 285|MenuTutorialManager+Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Wait_Click
+    - Name: args
+      Entry: 7
+      Data: 286|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: screen
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: isExecute
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 287|MenuTutorialManager+InnerSet, Assembly-CSharp
+    - Name: id
+      Entry: 3
+      Data: 6
+    - Name: description
+      Entry: 1
+      Data: "\uC0C1\uC790\uC5F4\uAE30"
+    - Name: methods
+      Entry: 7
+      Data: 288|System.Collections.Generic.List`1[[MenuTutorialManager+Method, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
       Data: 1
     - Name: 
       Entry: 7
-      Data: 239|MenuTutorialManager+InnerSet, Assembly-CSharp
+      Data: 289|MenuTutorialManager+Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: BoxOpenProcess
+    - Name: args
+      Entry: 7
+      Data: 290|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: isExecute
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 291|MenuTutorialManager+InnerSet, Assembly-CSharp
     - Name: id
       Entry: 3
-      Data: 0
+      Data: 5
     - Name: description
       Entry: 6
       Data: 
     - Name: methods
       Entry: 7
-      Data: 240|System.Collections.Generic.List`1[[MenuTutorialManager+Method, Assembly-CSharp]],
+      Data: 292|System.Collections.Generic.List`1[[MenuTutorialManager+Method, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 293|MenuTutorialManager+Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Menu_NPC_Talk
+    - Name: args
+      Entry: 7
+      Data: 294|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 1
+      Data: ac10005
+    - Name: 
+      Entry: 1
+      Data: "\uC0C8\uB85C\uC6B4 \uCE74\uB4DC! \uADF8\uB9AC\uACE0 \uB9C8\uB825\uACB0\uC815\uACFC
+        \uCD94\uAC00\uBCF4\uAE09\uD488\uAE4C\uC9C0 \uC5BB\uC5C8\uB124!"
+    - Name: 
+      Entry: 1
+      Data: my
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: isExecute
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 295|MenuTutorialManager+TutorialSet, Assembly-CSharp
+    - Name: id
+      Entry: 3
+      Data: 3
+    - Name: description
+      Entry: 1
+      Data: "\uC0C1\uC790 \uC5F4\uAE30\uB97C \uC720\uB3C4\uD558\uB294 \uD29C\uD1A0\uB9AC\uC5BC
+        (\uC624\uD06C)"
+    - Name: innerDatas
+      Entry: 7
+      Data: 296|System.Collections.Generic.List`1[[MenuTutorialManager+InnerSet, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 7
+    - Name: 
+      Entry: 7
+      Data: 297|MenuTutorialManager+InnerSet, Assembly-CSharp
+    - Name: id
+      Entry: 3
+      Data: 1
+    - Name: description
+      Entry: 6
+      Data: 
+    - Name: methods
+      Entry: 7
+      Data: 298|System.Collections.Generic.List`1[[MenuTutorialManager+Method, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 299|MenuTutorialManager+Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Menu_NPC_Talk
+    - Name: args
+      Entry: 7
+      Data: 300|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 1
+      Data: ac10012
+    - Name: 
+      Entry: 1
+      Data: "\uC871\uC7A5\uB2D8\uC774 \uC6B0\uB9AC\uB97C \uC774\uB04C\uC5B4 \uC8FC\uC2E4
+        \uC904 \uC54C\uC558\uC2B5\uB2C8\uB2E4."
+    - Name: 
+      Entry: 1
+      Data: enemy
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 301|MenuTutorialManager+Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Wait_Click
+    - Name: args
+      Entry: 7
+      Data: 302|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: screen
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: isExecute
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 303|MenuTutorialManager+InnerSet, Assembly-CSharp
+    - Name: id
+      Entry: 3
+      Data: 2
+    - Name: description
+      Entry: 6
+      Data: 
+    - Name: methods
+      Entry: 7
+      Data: 304|System.Collections.Generic.List`1[[MenuTutorialManager+Method, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 305|MenuTutorialManager+Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Menu_NPC_Talk
+    - Name: args
+      Entry: 7
+      Data: 306|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 1
+      Data: ac10005
+    - Name: 
+      Entry: 1
+      Data: "\uD79D.. \uC5B4\uC9F8\uC11C \uC624\uD06C\uB97C \uC120\uD0DD\uD55C\uAC70\uC57C\u2026
+        \uD558\uC9C0\uB9CC \uB09C \uC0AC\uB839\uAD00\uC744 \uBBFF\uC73C\uB2C8\uAE4C
+        \uAE30\uB2E4\uB824 \uC904\uAC8C. \uC5B8\uC81C\uB4E0 \uC6B0\uB9AC\uB97C \uC9C0\uD718\uD574\uC918."
+    - Name: 
+      Entry: 1
+      Data: my
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 307|MenuTutorialManager+Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Wait_Click
+    - Name: args
+      Entry: 7
+      Data: 308|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: screen
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: isExecute
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 309|MenuTutorialManager+InnerSet, Assembly-CSharp
+    - Name: id
+      Entry: 3
+      Data: 3
+    - Name: description
+      Entry: 6
+      Data: 
+    - Name: methods
+      Entry: 7
+      Data: 310|System.Collections.Generic.List`1[[MenuTutorialManager+Method, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 311|MenuTutorialManager+Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Menu_NPC_Talk
+    - Name: args
+      Entry: 7
+      Data: 312|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 1
+      Data: ac10012
+    - Name: 
+      Entry: 1
+      Data: "\uD765. \uC871\uC7A5\uB2D8. \uC774\uBC88 \uC804\uD22C\uB85C \uC804\uB9AC\uD488\uC744
+        \uD68D\uB4DD\uD588\uC2B5\uB2C8\uB2E4."
+    - Name: 
+      Entry: 1
+      Data: enemy
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 313|MenuTutorialManager+Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Wait_Click
+    - Name: args
+      Entry: 7
+      Data: 314|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: screen
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: isExecute
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 315|MenuTutorialManager+InnerSet, Assembly-CSharp
+    - Name: id
+      Entry: 3
+      Data: 4
+    - Name: description
+      Entry: 6
+      Data: 
+    - Name: methods
+      Entry: 7
+      Data: 316|System.Collections.Generic.List`1[[MenuTutorialManager+Method, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 317|MenuTutorialManager+Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Menu_NPC_Talk
+    - Name: args
+      Entry: 7
+      Data: 318|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 1
+      Data: ac10012
+    - Name: 
+      Entry: 1
+      Data: "\uC804\uD22C\uB97C \uC9C4\uD589\uD558\uBA74 \uBCF4\uAE09\uD488\uC744
+        \uC5BB\uC744 \uC218 \uC788\uACE0, \uBCF4\uAE09\uD488 100\uAC1C\uB9C8\uB2E4
+        \uBCF4\uAE09\uC0C1\uC790 1\uAC1C\uB85C \uBC14\uAFC0 \uC218 \uC788\uC2B5\uB2C8\uB2E4. "
+    - Name: 
+      Entry: 1
+      Data: enemy
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 319|MenuTutorialManager+Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Wait_Click
+    - Name: args
+      Entry: 7
+      Data: 320|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: screen
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: isExecute
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 321|MenuTutorialManager+InnerSet, Assembly-CSharp
+    - Name: id
+      Entry: 3
+      Data: 5
+    - Name: description
+      Entry: 6
+      Data: 
+    - Name: methods
+      Entry: 7
+      Data: 322|System.Collections.Generic.List`1[[MenuTutorialManager+Method, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 323|MenuTutorialManager+Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Menu_NPC_Talk
+    - Name: args
+      Entry: 7
+      Data: 324|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 1
+      Data: ac10012
+    - Name: 
+      Entry: 1
+      Data: "\uBCF4\uAE09\uC0C1\uC790\uC5D0\uC11C\uB294 \uB2E4\uC591\uD55C \uCE74\uB4DC\uB098
+        \uC7AC\uD654\uB97C \uC5BB\uC744 \uC218 \uC788\uC2B5\uB2C8\uB2E4. \uD55C\uBC88
+        \uC5F4\uC5B4\uBCF4\uC2DC\uC8E0"
+    - Name: 
+      Entry: 1
+      Data: enemy
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 325|MenuTutorialManager+Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Wait_Click
+    - Name: args
+      Entry: 7
+      Data: 326|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: screen
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: isExecute
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 327|MenuTutorialManager+InnerSet, Assembly-CSharp
+    - Name: id
+      Entry: 3
+      Data: 6
+    - Name: description
+      Entry: 6
+      Data: 
+    - Name: methods
+      Entry: 7
+      Data: 328|System.Collections.Generic.List`1[[MenuTutorialManager+Method, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 329|MenuTutorialManager+Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: BoxOpenProcess
+    - Name: args
+      Entry: 7
+      Data: 330|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
       Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: isExecute
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 331|MenuTutorialManager+InnerSet, Assembly-CSharp
+    - Name: id
+      Entry: 3
+      Data: 7
+    - Name: description
+      Entry: 6
+      Data: 
+    - Name: methods
+      Entry: 7
+      Data: 332|System.Collections.Generic.List`1[[MenuTutorialManager+Method, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 333|MenuTutorialManager+Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Menu_NPC_Talk
+    - Name: args
+      Entry: 7
+      Data: 334|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 1
+      Data: ac10012
+    - Name: 
+      Entry: 1
+      Data: "\uC0C8\uB85C\uC6B4 \uCE74\uB4DC\uC640 \uD568\uAED8 \uB9C8\uB825\uACB0\uC815,
+        \uCD94\uAC00\uBCF4\uAE09\uD488\uC744 \uC5BB\uC73C\uC168\uAD70\uC694."
+    - Name: 
+      Entry: 1
+      Data: enemy
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 335|MenuTutorialManager+Method, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Wait_Click
+    - Name: args
+      Entry: 7
+      Data: 336|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: screen
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 13
       Data: 
@@ -6325,6 +7627,7 @@ MonoBehaviour:
   handUIPools: {fileID: 1924248823}
   rewardPanel: {fileID: 633433199}
   TutorialStageReadyCanvas: {fileID: 131491979}
+  BoxRewardPanel: {fileID: 0}
 --- !u!1001 &2898144949804769218
 PrefabInstance:
   m_ObjectHideFlags: 0

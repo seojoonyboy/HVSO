@@ -6,6 +6,7 @@ using UniRx;
 using System;
 using Spine.Unity;
 using BestHTTP;
+using dataModules;
 
 namespace MenuTutorialModules {
     public class MenuExecute : MonoBehaviour {
@@ -315,6 +316,20 @@ namespace MenuTutorialModules {
                 clickStream = Observable.EveryUpdate()
                     .Where(_ => Input.GetMouseButtonDown(0))
                     .Subscribe(_ => CheckClick(target));
+
+                AccountManager.Instance.RequestUserInfo();
+                AccountManager.Instance.RequestMyDecks((req, res) => {
+                    if (res != null) {
+                        if (res.StatusCode == 200 || res.StatusCode == 304) {
+                            var result = JsonReader.Read<Decks>(res.DataAsText);
+                            AccountManager.Instance.orcDecks = result.orc;
+                            AccountManager.Instance.humanDecks = result.human;
+                        }
+                    }
+                    else {
+                        Logger.Log("Something is wrong");
+                    }
+                });
             }
             else {
                 handler.isDone = true;
@@ -432,12 +447,32 @@ namespace MenuTutorialModules {
         }
     }
 
+    public class ForceAIBattleSocketConnect : MenuExecute {
+        public override void Execute() {
+            PlayerPrefs.SetString("SelectedBattleType", "solo");
+            handler.isDone = true;
+        }
+    }
+
     public class BoxOpenProcess : MenuExecute {
         public override void Execute() {
             AccountManager.Instance.RequestTutorialBoxReward(callback);
         }
 
         private void callback(HTTPRequest originalRequest, HTTPResponse response) {
+            AccountManager.Instance.RequestUserInfo();
+            AccountManager.Instance.RequestMyDecks((req, res) => {
+                if (res != null) {
+                    if (res.StatusCode == 200 || res.StatusCode == 304) {
+                        var result = JsonReader.Read<Decks>(res.DataAsText);
+                        AccountManager.Instance.orcDecks = result.orc;
+                        AccountManager.Instance.humanDecks = result.human;
+                    }
+                }
+                else {
+                    Logger.Log("Something is wrong");
+                }
+            });
             var resText = response.DataAsText;
             Response _res = dataModules.JsonReader.Read<Response>(resText);
             var menuTutorialManager = GetComponent<MenuTutorialManager>();

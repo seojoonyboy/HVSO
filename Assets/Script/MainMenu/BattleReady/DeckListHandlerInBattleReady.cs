@@ -16,7 +16,7 @@ public class DeckListHandlerInBattleReady : MonoBehaviour {
         accountManager = AccountManager.Instance;
     }
 
-    void OnEnable() {
+    private void Start() {
         parentController.HudController.SetBackButton(() => {
             gameObject.SetActive(false);
         });
