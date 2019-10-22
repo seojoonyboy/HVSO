@@ -44,7 +44,7 @@ namespace MenuTutorialModules {
             //if (button != null)
             //    ShowTouchIcon(button.transform.gameObject);
 
-            clickStream = (button != null) ? button.OnClickAsObservable().Subscribe(_ => CheckButton(button)) : Observable.EveryUpdate().Where(_ => Input.GetMouseButtonDown(0)).Subscribe(_ => CheckClick(target));
+            clickStream = (button != null) ? button.OnClickAsObservable().Subscribe(_ => CheckButton()) : Observable.EveryUpdate().Where(_ => Input.GetMouseButtonDown(0)).Subscribe(_ => CheckClick(target));
         }
 
         private void CheckClick(GameObject target) {
@@ -54,8 +54,7 @@ namespace MenuTutorialModules {
             }
         }
 
-        private void CheckButton(Button button) {
-            HideTouchIcon(button);
+        private void CheckButton() {
             clickStream.Dispose();
             handler.isDone = true;
         }
