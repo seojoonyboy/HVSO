@@ -480,7 +480,7 @@ namespace MenuTutorialModules {
                 //보상 이펙트 보여주기
                 if(AccountManager.Instance.userData.supplyBox > 0) {
                     menuTutorialManager.ActiveRewardBoxCanvas();
-                    menuTutorialManager.transform.Find("ExitButton").GetComponent<Button>().onClick.AddListener(onclick);
+                    menuTutorialManager.BoxRewardPanel.transform.Find("ExitButton").GetComponent<Button>().onClick.AddListener(onclick);
                     
                 }
                 else {
