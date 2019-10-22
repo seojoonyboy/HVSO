@@ -61,8 +61,12 @@ public class MenuSceneController : MonoBehaviour {
     private void OnNicknameChanged(Enum Event_Type, Component Sender, object Param) {
         nicknameText.text = (string)Param;
     }
+    private void OnDestroy() {
+        SoundManager.Instance.bgmController.StopSoundTrack();
+    }
 
     private void Start() {
+        SoundManager.Instance.bgmController.PlaySoundTrack(BgmController.BgmEnum.MENU);
         PlayerPrefs.SetInt("isFirst", 0);
 
         if (AccountManager.Instance.needChangeNickName) {
