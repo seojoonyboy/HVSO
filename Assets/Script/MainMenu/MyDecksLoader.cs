@@ -27,6 +27,7 @@ public class MyDecksLoader : MonoBehaviour {
         accountManager.RequestHumanTemplates(OnHumanTemplateLoadFinished);
         accountManager.RequestOrcTemplates(OnOrcTemplateLoadFinished);
         accountManager.RequestInventories(OnInventoryLoadFinished);
+        accountManager.RequestClearedStoryList();
     }
 
     public void LoadOnlyDecks() {
