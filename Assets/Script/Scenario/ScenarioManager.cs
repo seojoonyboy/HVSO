@@ -6,6 +6,7 @@ using TMPro;
 using Sirenix.OdinInspector;
 using Tutorial;
 using UnityEngine.Events;
+using System;
 
 public class ScenarioManager : SerializedMonoBehaviour
 {
@@ -154,7 +155,8 @@ public class ScenarioManager : SerializedMonoBehaviour
         if (chapterData.scenarioReward == null || chapterData.scenarioReward.Length <= 0) return;
 
         Transform reward = item.transform.Find("Reward");
-        bool getReward = false;
+        var stageButton = item.GetComponent<StageButton>();
+        var clearedStageList = AccountManager.Instance.clearedStages;
 
         for(int i = 0; i< chapterData.scenarioReward.Length; i++) {
             reward.GetChild(i).gameObject.SetActive(true);
@@ -167,12 +169,18 @@ public class ScenarioManager : SerializedMonoBehaviour
             rewardImage.SetActive(true);
             rewardCount.SetActive(true);
 
-            if (getReward == true)
-                reward.GetChild(i).Find("Check").gameObject.SetActive(true);
+            if(clearedStageList != null && chapterData.chapter == 0 && clearedStageList.Exists(
+                x => x.stageNumber == stageButton.stage && 
+                x.camp == stageButton.camp)) {
+
+                reward
+                    .GetChild(i)
+                    .Find("Check")
+                    .gameObject
+                    .SetActive(true);
+            } 
         }
     }
-
-
     private void OffPrevStoryList() {
         if (isHuman) {
             Transform stageSelectContent = orc.StageCanvas.transform.Find("HUD/StageSelect/Viewport/Content");
@@ -403,10 +411,13 @@ public class ScenarioManager : SerializedMonoBehaviour
     }
 
     public void SelectChallengeData(int chapterNum, int stageNum, string camp) {
-        List<ChallengeData> list;
-        list = camp == "human" ? human_challengeDatas : orc_challengeDatas;
-        selectedChallengeData = list.Find(x => x.chapterNum == chapterNum && x.stageNum == stageNum);
-        ScenarioGameManagment.challengeDatas = selectedChallengeData.challenges;
+        try {
+            List<ChallengeData> list;
+            list = camp == "human" ? human_challengeDatas : orc_challengeDatas;
+            selectedChallengeData = list.Find(x => x.chapterNum == chapterNum && x.stageNum == stageNum);
+            ScenarioGameManagment.challengeDatas = selectedChallengeData.challenges;
+        }
+        catch(NullReferenceException ex) { }
     }
 }
 

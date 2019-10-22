@@ -208,4 +208,11 @@ public partial class NetworkManager {
             this.battleType = battleType;
         }
     }
+
+    public class ClearedStageFormat {
+        public int id;
+        public int userId;
+        public string camp;
+        public int stageNumber;
+    }
 }

@@ -283,130 +283,15 @@ namespace MenuTutorialModules {
     public class AutoSelectStoryDeck : MenuExecute {
         public override void Execute() {
             ScenarioManager scenarioManager = GetComponent<MenuTutorialManager>().scenarioManager;
-            string target = args[0];
-            switch (target) {
-                case "orc":
-                    var content = scenarioManager.orc.stageContent;
-                    Button deckButton = content.transform.GetChild(0).GetComponent<Button>();
-                    deckButton.onClick.Invoke();
-                    scenarioManager.selectedDeck = new object[] { true, AccountManager.Instance.orcDecks[0] };
-                    scenarioManager.deckContent.transform.GetChild(0).gameObject.SetActive(false);
-                    break;
+            GetComponent<MenuTutorialManager>().ActiveTutorialStoryReadyCanvas(args[0]);
+
+            if (args[0] == "human") {
+                ScenarioGameManagment.chapterData = scenarioManager.human_chapterDatas[0];
+                ScenarioGameManagment.challengeDatas = scenarioManager.human_challengeDatas[0].challenges;
             }
-
-            handler.isDone = true;
-        }
-    }
-
-    /// <summary>
-    /// 오크 튜토리얼 진행시 덱 리스트를 안보이게 해야함
-    /// </summary>
-    public class HideDeckList : MenuExecute {
-        public override void Execute() {
-            Transform deck =  handler
-                .GetComponent<MenuTutorialManager>()
-                .scenarioManager
-                .stageCanvas
-                .transform
-                .Find("HUD/StagePanel/Scroll View")
-                .GetChild(0);
-            var images = deck.GetComponentsInChildren<Image>();
-            var texts = deck.GetComponentsInChildren<Text>();
-            var textmeshes = deck.GetComponentsInChildren<TMPro.TextMeshProUGUI>();
-            foreach(Image image in images) {
-                image.enabled = false;
-            }
-            foreach(Text text in texts) {
-                text.enabled = false;
-            }
-            foreach(TMPro.TextMeshProUGUI text in textmeshes) {
-                text.enabled = false;
-            }
-
-            Transform stagePanel = handler
-                .GetComponent<MenuTutorialManager>()
-                .scenarioManager
-                .stageCanvas
-                .transform
-                .Find("HUD/StagePanel");
-
-            stagePanel
-                .Find("TextGroup/DeckScript")
-                .gameObject.SetActive(false);
-
-            stagePanel
-                .Find("TextGroup/DeckCount")
-                .gameObject.SetActive(false);
-
-            stagePanel
-                .Find("DeckBack")
-                .gameObject
-                .SetActive(false);
-
-            handler.isDone = true;
-        }
-    }
-
-    /// <summary>
-    /// 오크 튜토리얼 진행시 덱 리스트를 안보이게 한거 초기화
-    /// </summary>
-    public class ResetDeckList : MenuExecute {
-        public override void Execute() {
-            Transform deck = handler
-                .GetComponent<MenuTutorialManager>()
-                .scenarioManager
-                .stageCanvas
-                .transform
-                .Find("HUD/StagePanel/Scroll View")
-                .GetChild(0);
-            var images = deck.GetComponentsInChildren<Image>();
-            var texts = deck.GetComponentsInChildren<Text>();
-            var textmeshes = deck.GetComponentsInChildren<TMPro.TextMeshProUGUI>();
-            foreach (Image image in images) {
-                image.enabled = true;
-            }
-            foreach (Text text in texts) {
-                text.enabled = true;
-            }
-            foreach (TMPro.TextMeshProUGUI text in textmeshes) {
-                text.enabled = true;
-            }
-
-
-            //////////작업중
-            Transform stagePanel = handler
-                .GetComponent<MenuTutorialManager>()
-                .scenarioManager
-                .stageCanvas
-                .transform
-                .Find("HUD/StagePanel");
-
-            stagePanel
-                .Find("TextGroup/DeckScript")
-                .gameObject.SetActive(true);
-
-            stagePanel
-                .Find("TextGroup/DeckCount")
-                .gameObject.SetActive(true);
-
-            stagePanel
-                .Find("DeckBack")
-                .gameObject
-                .SetActive(true);
-
-            handler.isDone = true;
-        }
-    }
-
-    public class ResetBtnImage : MenuExecute {
-        public override void Execute() {
-            string target = args[0];
-
-            switch (target) {
-                case "story_orc_btn":
-                    var orcButton = MenuMask.Instance.GetMenuObject("story_orc_button");
-                    orcButton.GetComponent<Image>().sprite = GetComponent<MenuTutorialManager>().scenarioManager.orc.deactiveSprite;
-                    break;
+            else if(args[0] == "orc") {
+                ScenarioGameManagment.chapterData = scenarioManager.orc_chapterDatas[0];
+                ScenarioGameManagment.challengeDatas = scenarioManager.orc_challengeDatas[0].challenges;
             }
 
             handler.isDone = true;
@@ -517,6 +402,33 @@ namespace MenuTutorialModules {
             HandUIController.DeactiveHand(args[0]);
 
             handler.isDone = true;
+        }
+    }
+
+    public class ResetBtnImage : MenuExecute {
+        public override void Execute() {
+            string target = args[0];
+
+            switch (target) {
+                case "story_orc_btn":
+                    var orcButton = MenuMask.Instance.GetMenuObject("story_orc_button");
+                    orcButton.GetComponent<Image>().sprite = GetComponent<MenuTutorialManager>().scenarioManager.orc.deactiveSprite;
+                    break;
+            }
+            handler.isDone = true;
+        }
+    }
+    public class ForceOrcStorySocketConnect : MenuExecute {
+        public override void Execute() {
+            string camp = args[0];
+            string stageNum = args[1];
+
+            PlayerPrefs.SetString("SelectedRace", camp);
+            PlayerPrefs.SetString("SelectedBattleType", "story");
+            PlayerPrefs.SetString("StageNum", stageNum);
+
+            handler.isDone = true;
+            FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.CONNECT_MATCHING_SCENE);
         }
     }
 }
