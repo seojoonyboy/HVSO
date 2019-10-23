@@ -43,6 +43,7 @@ namespace dataModules {
         public string cardId;
         public Skill[] skills;
         public string flavorText;
+        public bool indestructible;
     }
 
     public class HeroInventory {
@@ -110,6 +111,7 @@ namespace dataModules {
         public string attackRange;
         public bool isHeroCard;
         public string cardId;
+        public bool indestructible;
     }
 
     public class Skill {
