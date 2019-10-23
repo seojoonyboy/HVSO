@@ -167,6 +167,7 @@ public partial class AccountManager : Singleton<AccountManager> {
                 data.skills = card.skills;
                 data.flavorText = card.flavorText;
                 data.cardCount = card.cardCount;
+                data.indestructible = card.indestructible;
                 cardPackage.data.Add(card.cardId, data);
             }
             else {
@@ -198,6 +199,7 @@ public partial class AccountManager : Singleton<AccountManager> {
                     data.attackRange = card.attackRange;
                     data.hero_chk = card.isHeroCard;
                     data.skills = card.skills;
+                    data.indestructible = card.indestructible;
                     cardPackage.data.Add(card.cardId, data);
                 }
             }

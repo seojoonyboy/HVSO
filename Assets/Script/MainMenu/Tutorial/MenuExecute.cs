@@ -414,16 +414,33 @@ namespace MenuTutorialModules {
         public override void Execute() {
             var deckListPanel = GetComponent<MenuTutorialManager>().BattleReadydeckListPanel;
             var content = deckListPanel.transform.Find("Viewport/Content");
+
             foreach (Transform deckObject in content) {
-                Button btn = deckObject.GetComponent<Button>();
-                btn.onClick.AddListener(
-                    () => {
-                        Onclick();
-                    });
+                if (deckObject.gameObject.activeSelf) {
+                    Button btn = deckObject.GetComponent<Button>();
+                    btn.onClick.AddListener(
+                        () => {
+                            Onclick();
+                        });
+                    GameObject handUI = btn.transform.Find("HandUI").gameObject;
+                    handUI.SetActive(true);
+                    SkeletonGraphic skeletonGraphic = handUI.GetComponent<SkeletonGraphic>();
+                    skeletonGraphic.Initialize(true);
+                    skeletonGraphic.Update(0);
+                    skeletonGraphic.Skeleton.SetSlotsToSetupPose();
+                }
             }
         }
 
         public void Onclick() {
+            var deckListPanel = GetComponent<MenuTutorialManager>().BattleReadydeckListPanel;
+            var content = deckListPanel.transform.Find("Viewport/Content");
+            foreach (Transform deckObject in content) {
+                if (deckObject.gameObject.activeSelf) {
+                    GameObject handUI = deckObject.Find("HandUI").gameObject;
+                    handUI.SetActive(false);
+                }
+            }
             handler.isDone = true;
         }
     }
@@ -439,6 +456,7 @@ namespace MenuTutorialModules {
             IEnumerator Wait() {
                 PlayerPrefs.SetString("SelectedBattleType", "solo");
                 PlayerPrefs.SetString("PrevTutorial", "AI_Tutorial");
+
                 yield return new WaitForSeconds(1.0f);
                 FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.CONNECT_MATCHING_SCENE);
             }

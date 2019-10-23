@@ -260,6 +260,7 @@ public class EditCardHandler : MonoBehaviour {
         menuCardInfo.gameObject.SetActive(true);
         menuCardInfo.SetCardInfo(cardData, isHuman, null);
         menuCardInfo.transform.Find("CreateCard").gameObject.SetActive(false);
+        menuCardInfo.transform.Find("Indestructible").gameObject.SetActive(false);
     }
 
 

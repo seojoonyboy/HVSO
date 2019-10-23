@@ -18,6 +18,7 @@ public class CardData {
     public int cardCount;
     public string attackRange;
     public bool hero_chk;
+    public bool indestructible;
     public dataModules.Skill[] skills;
     public string flavorText;
 

@@ -4,6 +4,13 @@ size: 1024,1024
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
+Background
+  rotate: false
+  xy: 714, 56
+  size: 162, 288
+  orig: 162, 288
+  offset: 0, 0
+  index: -1
 Glow11
   rotate: true
   xy: 758, 696
@@ -23,13 +30,6 @@ Glow_1
   xy: 0, 342
   size: 586, 586
   orig: 586, 586
-  offset: 0, 0
-  index: -1
-Layer 2
-  rotate: false
-  xy: 714, 55
-  size: 163, 289
-  orig: 163, 289
   offset: 0, 0
   index: -1
 bax_nomal_bottom
