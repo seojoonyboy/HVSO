@@ -386,6 +386,24 @@ MonoBehaviour:
     - {fileID: 4549065912155317161, guid: 71cb651774c573a40920625b481e6486, type: 3}
     - {fileID: 4178236433806283601, guid: 3d3356d019826f94895294028b0d424a, type: 3}
     - {fileID: 4476280356095818534, guid: 0489b5facbffad143aaff88ba45fed05, type: 3}
+    - {fileID: 5686000927421064339, guid: 1a4f82ed71af35b4cb26c9d2eea1ad56, type: 3}
+    - {fileID: 7890899186903878622, guid: 8a7af8a60e940c9458db1ac38263f049, type: 3}
+    - {fileID: 5098918491462798241, guid: 38a4c7a52faacc442bd3d09997c48fab, type: 3}
+    - {fileID: 6758358007997137077, guid: 8d5ee91994392dd44a6e4fecca43f32b, type: 3}
+    - {fileID: 1224653816775569118, guid: 0da68698f51e8e741b8fe7fca446980e, type: 3}
+    - {fileID: 3204439524219417564, guid: 772ae70f4ffca6149b7095778f022f54, type: 3}
+    - {fileID: 6141606305777059281, guid: 26b12163a6426434ba011485e53871c3, type: 3}
+    - {fileID: 8951772827725384308, guid: a26b685a6a78e9b479d4c3fd2cb6ebee, type: 3}
+    - {fileID: 3362746477567764984, guid: 2b6749f5e7354dd47b106ab1f0a8a98f, type: 3}
+    - {fileID: 806087328012476952, guid: 471ef4f1b5e815942be5d392a35a7c7c, type: 3}
+    - {fileID: 4335143817685204421, guid: eeb8e0a0ec300294aa880cc1286edd38, type: 3}
+    - {fileID: 3506692097517451357, guid: 32661002310c09146ada2bc6749ff53f, type: 3}
+    - {fileID: 8512144222793733551, guid: 7950e871858f0fc40be795b9abdd2348, type: 3}
+    - {fileID: 1535636910475603919, guid: 607b9c21fdca2e24796904ad4cf70e79, type: 3}
+    - {fileID: 2082464673082781522, guid: 01a17f578b28feb438594cdaf7d58035, type: 3}
+    - {fileID: 4668546418215675758, guid: 75659f6535225a64bba723edccd05344, type: 3}
+    - {fileID: 8274908570737623852, guid: 7b4b68c3e65ed4a48be670f1aa4670e9, type: 3}
+    - {fileID: 3935619056792783273, guid: d7487db4d9d447e4b8faaeee8feaed72, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -960,6 +978,242 @@ MonoBehaviour:
     - Name: $v
       Entry: 10
       Data: 40
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: uiSfx
+      Entry: 7
+      Data: 5|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.AudioSource,
+        UnityEngine.AudioModule]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 6|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 18
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: boxopen_1
+    - Name: $v
+      Entry: 10
+      Data: 41
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: boxbutton_2
+    - Name: $v
+      Entry: 10
+      Data: 42
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: boxbutton_3
+    - Name: $v
+      Entry: 10
+      Data: 43
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: boxbutton_4
+    - Name: $v
+      Entry: 10
+      Data: 44
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: box_epic
+    - Name: $v
+      Entry: 10
+      Data: 45
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: box_normal
+    - Name: $v
+      Entry: 10
+      Data: 46
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: boxopen
+    - Name: $v
+      Entry: 10
+      Data: 47
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: boxopen_2
+    - Name: $v
+      Entry: 10
+      Data: 48
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: box_rare
+    - Name: $v
+      Entry: 10
+      Data: 49
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: box_superrare
+    - Name: $v
+      Entry: 10
+      Data: 50
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Cardchoice_1
+    - Name: $v
+      Entry: 10
+      Data: 51
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Cardchoice_2
+    - Name: $v
+      Entry: 10
+      Data: 52
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Cardchoice_3
+    - Name: $v
+      Entry: 10
+      Data: 53
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Cardchoice_hero
+    - Name: $v
+      Entry: 10
+      Data: 54
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Cardchoice_unit
+    - Name: $v
+      Entry: 10
+      Data: 55
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: menuSlide_1
+    - Name: $v
+      Entry: 10
+      Data: 56
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: menuSlide_2
+    - Name: $v
+      Entry: 10
+      Data: 57
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: menuSlide_3
+    - Name: $v
+      Entry: 10
+      Data: 58
     - Name: 
       Entry: 8
       Data: 
@@ -3628,10 +3882,6 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 4a42bf246fee0564e9a88f8695e100a6, type: 3}
     - {fileID: 21300000, guid: 767cf7bf6abc8724585b52943141f437, type: 3}
     - {fileID: 21300000, guid: 076d1a970a57a8141b40434005fd5212, type: 3}
-    - {fileID: 21300000, guid: 3f60b8911860b6442890f90107b22be3, type: 3}
-    - {fileID: 21300000, guid: bdcf319f46989c740ba28f50fa01a832, type: 3}
-    - {fileID: 21300000, guid: adf9ed4d1d2ca4946b49569711564228, type: 3}
-    - {fileID: 21300000, guid: e3cb359f1b774c949bffc2561b38d993, type: 3}
     - {fileID: 21300000, guid: 86d635818cf19624ea7cc54abc7ea5fd, type: 3}
     - {fileID: 21300000, guid: cc2245225b4632f469e9d8652b11c564, type: 3}
     - {fileID: 21300000, guid: bd71a3472e4dde740922027cdf157e68, type: 3}
@@ -8694,8 +8944,8 @@ MonoBehaviour:
       Entry: 1
       Data: h10001
     - Name: $v
-      Entry: 10
-      Data: 216
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -8706,8 +8956,8 @@ MonoBehaviour:
       Entry: 1
       Data: h10002
     - Name: $v
-      Entry: 10
-      Data: 217
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -8718,8 +8968,8 @@ MonoBehaviour:
       Entry: 1
       Data: h10003
     - Name: $v
-      Entry: 10
-      Data: 218
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -8730,8 +8980,8 @@ MonoBehaviour:
       Entry: 1
       Data: h10004
     - Name: $v
-      Entry: 10
-      Data: 219
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -8743,7 +8993,7 @@ MonoBehaviour:
       Data: h10001_button
     - Name: $v
       Entry: 10
-      Data: 220
+      Data: 216
     - Name: 
       Entry: 8
       Data: 
@@ -8755,7 +9005,7 @@ MonoBehaviour:
       Data: h10002_button
     - Name: $v
       Entry: 10
-      Data: 221
+      Data: 217
     - Name: 
       Entry: 8
       Data: 
@@ -8767,7 +9017,7 @@ MonoBehaviour:
       Data: h10003_button
     - Name: $v
       Entry: 10
-      Data: 222
+      Data: 218
     - Name: 
       Entry: 8
       Data: 
@@ -8779,7 +9029,7 @@ MonoBehaviour:
       Data: h10004_button
     - Name: $v
       Entry: 10
-      Data: 223
+      Data: 219
     - Name: 
       Entry: 8
       Data: 
@@ -8811,7 +9061,7 @@ MonoBehaviour:
       Data: h10001
     - Name: $v
       Entry: 10
-      Data: 224
+      Data: 220
     - Name: 
       Entry: 8
       Data: 
@@ -8823,7 +9073,7 @@ MonoBehaviour:
       Data: h10002
     - Name: $v
       Entry: 10
-      Data: 225
+      Data: 221
     - Name: 
       Entry: 8
       Data: 
@@ -8835,7 +9085,7 @@ MonoBehaviour:
       Data: h10003
     - Name: $v
       Entry: 10
-      Data: 226
+      Data: 222
     - Name: 
       Entry: 8
       Data: 
@@ -8847,7 +9097,7 @@ MonoBehaviour:
       Data: h10004
     - Name: $v
       Entry: 10
-      Data: 227
+      Data: 223
     - Name: 
       Entry: 8
       Data: 
@@ -8859,7 +9109,7 @@ MonoBehaviour:
       Data: empty
     - Name: $v
       Entry: 10
-      Data: 228
+      Data: 224
     - Name: 
       Entry: 8
       Data: 
@@ -8871,7 +9121,7 @@ MonoBehaviour:
       Data: deck1001
     - Name: $v
       Entry: 10
-      Data: 229
+      Data: 225
     - Name: 
       Entry: 8
       Data: 
@@ -8883,7 +9133,7 @@ MonoBehaviour:
       Data: deck1002
     - Name: $v
       Entry: 10
-      Data: 230
+      Data: 226
     - Name: 
       Entry: 8
       Data: 
@@ -8921,7 +9171,7 @@ MonoBehaviour:
       Data: "\uC800\uACA9\uC0AC\uC218"
     - Name: sprite
       Entry: 10
-      Data: 231
+      Data: 227
     - Name: 
       Entry: 8
       Data: 
@@ -8942,7 +9192,7 @@ MonoBehaviour:
       Data: "\uD06C\uB77C\uCFE0\uC2A4"
     - Name: sprite
       Entry: 10
-      Data: 232
+      Data: 228
     - Name: 
       Entry: 8
       Data: 
@@ -8963,7 +9213,7 @@ MonoBehaviour:
       Data: "\uC624\uD06C\uBCD1\uC0AC"
     - Name: sprite
       Entry: 10
-      Data: 233
+      Data: 229
     - Name: 
       Entry: 8
       Data: 
@@ -8984,7 +9234,7 @@ MonoBehaviour:
       Data: "\uC81C\uC2DD\uAD81\uC218"
     - Name: sprite
       Entry: 10
-      Data: 234
+      Data: 230
     - Name: 
       Entry: 8
       Data: 
@@ -9019,7 +9269,7 @@ MonoBehaviour:
       Data: human
     - Name: $v
       Entry: 10
-      Data: 235
+      Data: 231
     - Name: 
       Entry: 8
       Data: 
@@ -9031,7 +9281,7 @@ MonoBehaviour:
       Data: orc
     - Name: $v
       Entry: 10
-      Data: 236
+      Data: 232
     - Name: 
       Entry: 8
       Data: 
@@ -9063,7 +9313,7 @@ MonoBehaviour:
       Data: gold
     - Name: $v
       Entry: 10
-      Data: 237
+      Data: 233
     - Name: 
       Entry: 8
       Data: 
@@ -9075,7 +9325,7 @@ MonoBehaviour:
       Data: jewel
     - Name: $v
       Entry: 10
-      Data: 238
+      Data: 234
     - Name: 
       Entry: 8
       Data: 

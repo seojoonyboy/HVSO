@@ -10,6 +10,7 @@ public class SoundManager : SerializedMonoBehaviour {
     public Dictionary<SoundType, AudioSource> sounds;
     public Dictionary<string, AudioSource> unitSfx;
     public Dictionary<string, AudioSource> magicSfx;
+    public Dictionary<string, AudioSource> uiSfx;
     
     private static SoundManager _instance;
     public static SoundManager Instance {
