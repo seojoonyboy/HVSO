@@ -445,21 +445,21 @@ public class PlaceMonster : MonoBehaviour {
         if (unit.attack <= 3) {
             EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.HIT_LOW, targetPos);
             StartCoroutine(PlayMangement.instance.cameraShake(0.4f, 1));
-            //SoundManager.Instance.PlaySound(SoundType.NORMAL_ATTACK);
+            SoundManager.Instance.PlaySound(SoundType.NORMAL_ATTACK);
         }
         else if (unit.attack > 3) {        
             if (unit.attack > 3 && unit.attack <= 5) {
                 EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.HIT_MIDDLE, targetPos);
-                //SoundManager.Instance.PlaySound(SoundType.MIDDLE_ATTACK);
+                SoundManager.Instance.PlaySound(SoundType.MIDDLE_ATTACK);
                 StartCoroutine(PlayMangement.instance.cameraShake(0.4f, 2));
             }
             else if (unit.attack > 5) {
                 EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.HIT_HIGH, targetPos);
-                //SoundManager.Instance.PlaySound(SoundType.LARGE_ATTACK);
+                SoundManager.Instance.PlaySound(SoundType.LARGE_ATTACK);
                 StartCoroutine(PlayMangement.instance.cameraShake(0.4f, 3));
             }
         }
-        SoundManager.Instance.PlayAttackSound(unit.id);
+        //SoundManager.Instance.PlayAttackSound(unit.id);
     }
 
     public void InstanceKilled() {
