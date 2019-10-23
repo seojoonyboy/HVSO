@@ -258,7 +258,7 @@ public class EditCardHandler : MonoBehaviour {
         if (dragging) return;
         menuCardInfo.transform.parent.gameObject.SetActive(true);
         menuCardInfo.gameObject.SetActive(true);
-        menuCardInfo.SetCardInfo(cardData, isHuman);
+        menuCardInfo.SetCardInfo(cardData, isHuman, null);
         menuCardInfo.transform.Find("CreateCard").gameObject.SetActive(false);
     }
 

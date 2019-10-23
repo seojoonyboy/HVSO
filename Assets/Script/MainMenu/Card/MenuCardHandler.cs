@@ -181,7 +181,7 @@ public class MenuCardHandler : MonoBehaviour {
         if (transform.parent.name == "Grid")
             menuCardInfo.SetCardInfo(cardData, isHuman, transform);
         else {
-            menuCardInfo.SetCardInfo(cardData, isHuman);
+            menuCardInfo.SetCardInfo(cardData, isHuman, null);
             menuCardInfo.transform.Find("CreateCard").gameObject.SetActive(false);
         }
         if (transform.parent.parent.parent.name == "HeroInfo" && transform.parent.parent.name != "SkillWindow")
