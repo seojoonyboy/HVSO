@@ -16,17 +16,51 @@ MonoBehaviour:
   deleteDllAfterBuilds: 1
   AutomateForAllAOTPlatforms: 1
   automateForPlatforms: 0900000014000000
-  lastScan: 637024156295383688
+  lastScan: 637074356309790451
   supportSerializedTypes:
   - TypeName: UnityEngine.AudioSource, UnityEngine.AudioModule
+    IsCustom: 0
+    Emit: 1
+  - TypeName: BgmController+BgmEnum, Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Boolean, mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: ChallengeData, Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
+  - TypeName: ChallengerHandler+Challenge, Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
+  - TypeName: Tutorial.ChapterData, Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
+  - TypeName: ClassInfo, Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.Dictionary`2[[BgmController+BgmEnum, Assembly-CSharp],[UnityEngine.AudioSource,
+      UnityEngine.AudioModule]], mscorlib
     IsCustom: 0
     Emit: 1
   - TypeName: System.Collections.Generic.Dictionary`2[[EffectSystem+EffectType, Assembly-CSharp],[UnityEngine.GameObject,
       UnityEngine.CoreModule]], mscorlib
     IsCustom: 0
     Emit: 1
+  - TypeName: System.Collections.Generic.Dictionary`2[[UnityEngine.GameObject, UnityEngine.CoreModule],[UnityEngine.Transform,
+      UnityEngine.CoreModule]], mscorlib
+    IsCustom: 0
+    Emit: 1
   - TypeName: System.Collections.Generic.Dictionary`2[[SoundType, Assembly-CSharp],[UnityEngine.AudioSource,
       UnityEngine.AudioModule]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.AudioSource,
+      UnityEngine.AudioModule]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[ClassInfo,
+      Assembly-CSharp]], mscorlib
     IsCustom: 0
     Emit: 1
   - TypeName: System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.GameObject[],
@@ -35,6 +69,10 @@ MonoBehaviour:
     Emit: 1
   - TypeName: System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.GameObject,
       UnityEngine.CoreModule]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[ScenarioUnit,
+      Assembly-CSharp]], mscorlib
     IsCustom: 0
     Emit: 1
   - TypeName: System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
@@ -46,6 +84,10 @@ MonoBehaviour:
     IsCustom: 0
     Emit: 1
   - TypeName: EffectSystem+EffectType, Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.EnumEqualityComparer`1[[BgmController+BgmEnum,
+      Assembly-CSharp]], mscorlib
     IsCustom: 0
     Emit: 1
   - TypeName: System.Collections.Generic.EnumEqualityComparer`1[[EffectSystem+EffectType,
@@ -69,7 +111,69 @@ MonoBehaviour:
       mscorlib]], mscorlib
     IsCustom: 0
     Emit: 1
+  - TypeName: System.Int32, mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.List`1[[ChallengeData, Assembly-CSharp]],
+      mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.List`1[[ChallengerHandler+Challenge, Assembly-CSharp]],
+      mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.List`1[[Tutorial.ChapterData, Assembly-CSharp]],
+      mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.List`1[[MenuTutorialManager+InnerSet, Assembly-CSharp]],
+      mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.List`1[[MenuTutorialManager+Method, Assembly-CSharp]],
+      mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.List`1[[MenuTutorialManager+TutorialSet,
+      Assembly-CSharp]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.List`1[[Tutorial.Method, Assembly-CSharp]],
+      mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.List`1[[Tutorial.ScriptData, Assembly-CSharp]],
+      mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: MenuTutorialManager+InnerSet, Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
+  - TypeName: MenuTutorialManager+Method, Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
+  - TypeName: MenuTutorialManager+TutorialSet, Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
+  - TypeName: Tutorial.Method, Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
   - TypeName: System.Object, mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: Tutorial.ScenarioReward, Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
+  - TypeName: Tutorial.ScenarioReward[], Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
+  - TypeName: ScenarioUnit, Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
+  - TypeName: Tutorial.ScriptData, Assembly-CSharp
     IsCustom: 0
     Emit: 1
   - TypeName: SoundType, Assembly-CSharp
@@ -79,5 +183,8 @@ MonoBehaviour:
     IsCustom: 0
     Emit: 1
   - TypeName: System.String, mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: UnityEngine.Transform, UnityEngine.CoreModule
     IsCustom: 0
     Emit: 1
