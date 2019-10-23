@@ -26,15 +26,11 @@ public class BattleReadySceneController : MonoBehaviour {
     [SerializeField] HorizontalScrollSnap ScrollSnap;
     [SerializeField] GameObject deckListPanel;
     public Deck selectedDeck;
-
-    IEnumerator Start() {
-        yield return null;
-        isIngameButtonClicked = false;
-    }
-
     private void OnEnable() {
+        isIngameButtonClicked = false;
+
         ChangeBattleType(0);
-        
+
         //ScrollSnap.ChangePage(0);
         PlayerPrefs.SetString("SelectedDeckId", "");
         PlayerPrefs.SetString("SelectedRace", RaceType.NONE.ToString());
@@ -44,14 +40,13 @@ public class BattleReadySceneController : MonoBehaviour {
             OnBackButton();
         });
 
+        Logger.Log("deckListPanel.SetActive(true)");
         deckListPanel.SetActive(true);
     }
 
     void OnDisable() {
         RectTransform rt = ScrollSnap.transform.Find("Content").GetComponent<RectTransform>();
         rt.offsetMin = new Vector2(0, rt.offsetMin.y);
-
-        deckListPanel.SetActive(false);
     }
 
     public void OnStartButton() {
