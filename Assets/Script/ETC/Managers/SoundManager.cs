@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 using UniRx;
 using Sirenix.OdinInspector;
 
@@ -33,10 +34,21 @@ public class SoundManager : SerializedMonoBehaviour {
 
     public void PlayAttackSound(string id) {
         if (!unitSfx.ContainsKey(id) || unitSfx[id] == null) {
-            PlaySfx(unitSfx["ac10001"]);
+            AttackSound(unitSfx["ac10001"]);
             return;
         }
-        PlaySfx(unitSfx[id]);
+        if (id == "ac10005")
+            return;
+        AttackSound(unitSfx[id]);
+    }
+
+    private void AttackSound(AudioSource sfxSource) {
+        GameObject soundObject = GetUnusedAudio();
+        soundObject.SetActive(true);
+        AudioSource sound = soundObject.GetComponent<AudioSource>();
+        sound.clip = sfxSource.clip;
+        sound.Play();
+        StartCoroutine(SoundAfterOff(sfxSource, soundObject));
     }
 
 
@@ -53,6 +65,7 @@ public class SoundManager : SerializedMonoBehaviour {
         soundObject.SetActive(true);
         AudioSource sound = soundObject.GetComponent<AudioSource>();
         sound.clip = sfxSource.clip;
+        sound.time = 0;
         sound.Play();
         StartCoroutine(SoundAfterOff(sfxSource, soundObject));
     }
@@ -72,6 +85,7 @@ public class SoundManager : SerializedMonoBehaviour {
     //임시로 이리 쓰는데, Unirx를 써서 처리 예정, 오디오 시간만큼 기달리고, 그 후에 턴 off
     private IEnumerator SoundAfterOff(AudioSource audio, GameObject soundObject) {
         yield return new WaitForSeconds(audio.clip.length);
+        soundObject.GetComponent<AudioSource>().clip.UnloadAudioData();
         soundObject.SetActive(false);
     }
 

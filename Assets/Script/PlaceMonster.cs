@@ -287,6 +287,7 @@ public class PlaceMonster : MonoBehaviour {
     public void UnitTryAttack() {
         if (unit.attack <= 0) return;       
         SetState(UnitState.ATTACK);
+        SoundManager.Instance.PlayAttackSound(unit.id);
     }
 
     public void SuccessAttack() {
@@ -459,7 +460,7 @@ public class PlaceMonster : MonoBehaviour {
                 StartCoroutine(PlayMangement.instance.cameraShake(0.4f, 3));
             }
         }
-        SoundManager.Instance.PlayAttackSound(unit.id);
+        
     }
 
     public void InstanceKilled() {
