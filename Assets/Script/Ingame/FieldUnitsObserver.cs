@@ -30,6 +30,7 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
         GameObject frontUnit = units[pos.col, pos.row + 1];
         if(frontUnit == null) return;
         await Task.Delay(800);
+        if(frontUnit == null) return;
         UnitChangePosition(frontUnit, pos, frontUnit.GetComponent<PlaceMonster>().isPlayer);
     }
 
