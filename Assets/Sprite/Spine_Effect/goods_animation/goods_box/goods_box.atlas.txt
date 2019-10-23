@@ -1,0 +1,20 @@
+
+goods_box.png
+size: 512,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+box
+  rotate: false
+  xy: 0, 0
+  size: 271, 209
+  orig: 271, 209
+  offset: 0, 0
+  index: -1
+light
+  rotate: false
+  xy: 0, 209
+  size: 255, 255
+  orig: 255, 255
+  offset: 0, 0
+  index: -1
