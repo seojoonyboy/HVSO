@@ -239,8 +239,9 @@ MonoBehaviour:
   generalAttackName: 
   deClockAnimationName: 
   attackEventName: SHOT
-  arrow: {fileID: 144206, guid: eecfd95aa06159440b824635d22e0f24, type: 3}
+  arrow: {fileID: 496614619196890810, guid: 2a1b4a43d4d3fbf4486cefd5db78cd54, type: 3}
   hidingObject: {fileID: 0}
+  teleportMove: 0
   headbone: {fileID: 0}
   bodybone: {fileID: 0}
   rootbone: {fileID: 0}

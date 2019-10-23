@@ -23,18 +23,17 @@ public class BgmController : SerializedMonoBehaviour
             Logger.LogError("사운드가 없습니다.");
             return;
         }
-        mainAudio.volume = 1f;
+        mainAudio.volume = 0.6f;
         mainAudio.clip = bgmDictionary[type].clip;
         mainAudio.Play();
     }
 
     private IEnumerator SoundVolumeDown() {
-        float soundVolumne = mainAudio.volume;
         float speed = 0.1f;
 
-        while(soundVolumne <= 0) {
-            yield return new WaitForSeconds(0.05f);
-            soundVolumne -= speed;
+        while(mainAudio.volume > 0) {
+            yield return new WaitForSeconds(0.5f);
+            mainAudio.volume -= speed;
         }
         mainAudio.Stop();
     }
