@@ -3628,10 +3628,6 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 4a42bf246fee0564e9a88f8695e100a6, type: 3}
     - {fileID: 21300000, guid: 767cf7bf6abc8724585b52943141f437, type: 3}
     - {fileID: 21300000, guid: 076d1a970a57a8141b40434005fd5212, type: 3}
-    - {fileID: 21300000, guid: 3f60b8911860b6442890f90107b22be3, type: 3}
-    - {fileID: 21300000, guid: bdcf319f46989c740ba28f50fa01a832, type: 3}
-    - {fileID: 21300000, guid: adf9ed4d1d2ca4946b49569711564228, type: 3}
-    - {fileID: 21300000, guid: e3cb359f1b774c949bffc2561b38d993, type: 3}
     - {fileID: 21300000, guid: 86d635818cf19624ea7cc54abc7ea5fd, type: 3}
     - {fileID: 21300000, guid: cc2245225b4632f469e9d8652b11c564, type: 3}
     - {fileID: 21300000, guid: bd71a3472e4dde740922027cdf157e68, type: 3}
@@ -6622,8 +6618,8 @@ MonoBehaviour:
       Data: "\uC9C8\uC11C"
     - Name: info
       Entry: 1
-      Data: "\uC815\uC815\uB2F9\uB2F9\uD558\uACE0 \uADDC\uCE59\uC744 \uC900\uC218\uD558\uB294
-        \uC9C8\uC11C\uB294 \uC815\uACF5\uBC95 \uC2A4\uD0C0\uC77C\uC758 \uD074\uB798\uC2A4\uC785\uB2C8\uB2E4."
+      Data: "\uC815\uC815\uB2F9\uB2F9\uD558\uAC8C \uADDC\uCE59\uC744 \uC900\uC218\uD558\uB294
+        \uC815\uACF5\uBC95 \uC2A4\uD0C0\uC77C\uC758 \uD074\uB798\uC2A4\uC785\uB2C8\uB2E4."
     - Name: 
       Entry: 8
       Data: 
@@ -6646,7 +6642,7 @@ MonoBehaviour:
       Entry: 1
       Data: "\uB2E4\uC591\uD55C \uC9C0\uC2DD\uB4E4\uC744 \uD65C\uC6A9\uD558\uC5EC
         \uCD5C\uB300\uD55C \uC720\uB9AC\uD55C \uC704\uCE58\uB97C \uD655\uBCF4\uD558\uB294
-        \uC2A4\uD0C0\uC77C\uC785\uB2C8\uB2E4."
+        \uD074\uB798\uC2A4\uC785\uB2C8\uB2E4."
     - Name: 
       Entry: 8
       Data: 
@@ -6667,9 +6663,8 @@ MonoBehaviour:
       Data: "\uC8FC\uC220"
     - Name: info
       Entry: 1
-      Data: "\uC554\uD751 \uC8FC\uC220\uB4E4\uC744 \uD1B5\uD574 \uC0C1\uB300\uC5D0\uAC90
-        \uBD88\uB9AC\uD568\uC744, \uC544\uAD70\uC5D0\uAC90 \uC720\uB9AC\uD568\uC744
-        \uB3D9\uC2DC\uC5D0 \uC801\uC6A9\uC2DC\uD0A4\uB294 \uD074\uB798\uC2A4\uC785\uB2C8\uB2E4."
+      Data: "\uD751\uB9C8\uBC95\uC744 \uD1B5\uD574 \uC0C1\uB300\uC5D0\uAC90 \uBD88\uB9AC\uD568\uC744,
+        \uC544\uAD70\uC5D0\uAC90 \uC720\uB9AC\uD568\uC744 \uB3D9\uC2DC\uC5D0 \uC81C\uACF5\uD569\uB2C8\uB2E4."
     - Name: 
       Entry: 8
       Data: 
@@ -6690,8 +6685,8 @@ MonoBehaviour:
       Data: "\uC74C\uBAA8"
     - Name: info
       Entry: 1
-      Data: "\uD2B9\uC815 \uC870\uAC74\uB9CC \uCDA9\uC871\uB41C\uB2E4\uBA74 \uB204\uAD6C\uBCF4\uB2E4
-        \uAC15\uB825\uD568\uC744 \uB4DC\uB7EC\uB0B4\uB294 \uD074\uB798\uC2A4\uC785\uB2C8\uB2E4."
+      Data: "\uD2B9\uC815 \uC870\uAC74\uC744 \uCDA9\uC871\uD55C\uB2E4\uBA74 \uB204\uAD6C\uBCF4\uB2E4
+        \uAC15\uB825\uD574\uC9D1\uB2C8\uB2E4."
     - Name: 
       Entry: 8
       Data: 
@@ -6756,9 +6751,8 @@ MonoBehaviour:
       Data: "\uADF8\uB9BC\uC790"
     - Name: info
       Entry: 1
-      Data: "\uC5EC\uB7EC \uAC01\uB3C4\uC5D0\uC11C\uC758 \uACF5\uACA9\uACFC \uBC29\uD574\uB97C
-        \uD1B5\uD574 \uC0C1\uB300\uB97C \uAD50\uB780\uD558\uACE0 \uAD34\uB86D\uD788\uB294
-        \uD074\uB798\uC2A4\uC785\uB2C8\uB2E4."
+      Data: "\uC0C1\uB300\uB97C \uAD50\uB780\uD558\uACE0 \uAD34\uB86D\uD788\uB294
+        \uAE30\uAD50\uC801\uC778 \uD074\uB798\uC2A4\uC785\uB2C8\uB2E4."
     - Name: 
       Entry: 8
       Data: 
@@ -6779,9 +6773,8 @@ MonoBehaviour:
       Data: "\uD30C\uAD34"
     - Name: info
       Entry: 1
-      Data: "\uC870\uAE08\uC758 \uC190\uD574\uB294 \uC2E0\uACBD\uC4F0\uC9C0 \uC54A\uC73C\uBA70
-        \uB354 \uD070 \uD53C\uD574\uB97C \uC785\uD788\uB294 \uAC83\uC5D0 \uC9D1\uC911\uD558\uB294
-        \uACF5\uACA9\uC801 \uD074\uB798\uC2A4\uC785\uB2C8\uB2E4."
+      Data: "\uC791\uC740 \uD53C\uD574\uB294 \uC2E0\uACBD\uC4F0\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.
+        \uB354 \uD070 \uD53C\uD574\uB97C \uC785\uD788\uB294 \uAC83\uC774 \uC911\uC694\uD569\uB2C8\uB2E4."
     - Name: 
       Entry: 8
       Data: 
@@ -6802,8 +6795,7 @@ MonoBehaviour:
       Data: "\uC790\uC5F0"
     - Name: info
       Entry: 1
-      Data: "\uD6A8\uACFC\uC758 \uC591\uBA74\uC131\uC744 \uACE0\uB824\uD558\uC5EC
-        \uC801\uC7AC\uC801\uC18C\uC5D0 \uC54C\uB9DE\uC740 \uBC29\uBC95\uC73C\uB85C
+      Data: "\uC801\uC7AC\uC801\uC18C\uC5D0 \uC54C\uB9DE\uC740 \uBC29\uBC95\uC73C\uB85C
         \uC544\uAD70\uC744 \uCE58\uB8CC\uD558\uACE0 \uC0C1\uB300\uB97C \uACF5\uACA9\uD558\uB294
         \uD074\uB798\uC2A4\uC785\uB2C8\uB2E4."
     - Name: 
@@ -6826,9 +6818,8 @@ MonoBehaviour:
       Data: "\uC601\uD63C"
     - Name: info
       Entry: 1
-      Data: "\uAC1C\uBCC4\uB85C\uB294 \uC57D\uD558\uC9C0\uB9CC \uB04A\uC784\uC5C6\uC774
-        \uB418\uC0B4\uC544\uB098\uACE0 \uC7AC\uD65C\uC6A9\uB418\uC5B4 \uC0C1\uB300\uB97C
-        \uC4F0\uB7EC\uB728\uB9AC\uB294 \uD074\uB798\uC2A4\uC785\uB2C8\uB2E4."
+      Data: "\uD63C\uC790\uB294 \uC57D\uD569\uB2C8\uB2E4. \uBB49\uCE58\uBA74 \uB204\uAD6C\uBCF4\uB2E4
+        \uAC15\uB825\uD574\uC9C0\uB294 \uD074\uB798\uC2A4\uC785\uB2C8\uB2E4."
     - Name: 
       Entry: 8
       Data: 
@@ -8694,8 +8685,8 @@ MonoBehaviour:
       Entry: 1
       Data: h10001
     - Name: $v
-      Entry: 10
-      Data: 216
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -8706,8 +8697,8 @@ MonoBehaviour:
       Entry: 1
       Data: h10002
     - Name: $v
-      Entry: 10
-      Data: 217
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -8718,8 +8709,8 @@ MonoBehaviour:
       Entry: 1
       Data: h10003
     - Name: $v
-      Entry: 10
-      Data: 218
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -8730,8 +8721,8 @@ MonoBehaviour:
       Entry: 1
       Data: h10004
     - Name: $v
-      Entry: 10
-      Data: 219
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -8743,7 +8734,7 @@ MonoBehaviour:
       Data: h10001_button
     - Name: $v
       Entry: 10
-      Data: 220
+      Data: 216
     - Name: 
       Entry: 8
       Data: 
@@ -8755,7 +8746,7 @@ MonoBehaviour:
       Data: h10002_button
     - Name: $v
       Entry: 10
-      Data: 221
+      Data: 217
     - Name: 
       Entry: 8
       Data: 
@@ -8767,7 +8758,7 @@ MonoBehaviour:
       Data: h10003_button
     - Name: $v
       Entry: 10
-      Data: 222
+      Data: 218
     - Name: 
       Entry: 8
       Data: 
@@ -8779,7 +8770,7 @@ MonoBehaviour:
       Data: h10004_button
     - Name: $v
       Entry: 10
-      Data: 223
+      Data: 219
     - Name: 
       Entry: 8
       Data: 
@@ -8811,7 +8802,7 @@ MonoBehaviour:
       Data: h10001
     - Name: $v
       Entry: 10
-      Data: 224
+      Data: 220
     - Name: 
       Entry: 8
       Data: 
@@ -8823,7 +8814,7 @@ MonoBehaviour:
       Data: h10002
     - Name: $v
       Entry: 10
-      Data: 225
+      Data: 221
     - Name: 
       Entry: 8
       Data: 
@@ -8835,7 +8826,7 @@ MonoBehaviour:
       Data: h10003
     - Name: $v
       Entry: 10
-      Data: 226
+      Data: 222
     - Name: 
       Entry: 8
       Data: 
@@ -8847,7 +8838,7 @@ MonoBehaviour:
       Data: h10004
     - Name: $v
       Entry: 10
-      Data: 227
+      Data: 223
     - Name: 
       Entry: 8
       Data: 
@@ -8859,7 +8850,7 @@ MonoBehaviour:
       Data: empty
     - Name: $v
       Entry: 10
-      Data: 228
+      Data: 224
     - Name: 
       Entry: 8
       Data: 
@@ -8871,7 +8862,7 @@ MonoBehaviour:
       Data: deck1001
     - Name: $v
       Entry: 10
-      Data: 229
+      Data: 225
     - Name: 
       Entry: 8
       Data: 
@@ -8883,7 +8874,7 @@ MonoBehaviour:
       Data: deck1002
     - Name: $v
       Entry: 10
-      Data: 230
+      Data: 226
     - Name: 
       Entry: 8
       Data: 
@@ -8921,7 +8912,7 @@ MonoBehaviour:
       Data: "\uC800\uACA9\uC0AC\uC218"
     - Name: sprite
       Entry: 10
-      Data: 231
+      Data: 227
     - Name: 
       Entry: 8
       Data: 
@@ -8942,7 +8933,7 @@ MonoBehaviour:
       Data: "\uD06C\uB77C\uCFE0\uC2A4"
     - Name: sprite
       Entry: 10
-      Data: 232
+      Data: 228
     - Name: 
       Entry: 8
       Data: 
@@ -8963,7 +8954,7 @@ MonoBehaviour:
       Data: "\uC624\uD06C\uBCD1\uC0AC"
     - Name: sprite
       Entry: 10
-      Data: 233
+      Data: 229
     - Name: 
       Entry: 8
       Data: 
@@ -8984,7 +8975,7 @@ MonoBehaviour:
       Data: "\uC81C\uC2DD\uAD81\uC218"
     - Name: sprite
       Entry: 10
-      Data: 234
+      Data: 230
     - Name: 
       Entry: 8
       Data: 
@@ -9019,7 +9010,7 @@ MonoBehaviour:
       Data: human
     - Name: $v
       Entry: 10
-      Data: 235
+      Data: 231
     - Name: 
       Entry: 8
       Data: 
@@ -9031,7 +9022,7 @@ MonoBehaviour:
       Data: orc
     - Name: $v
       Entry: 10
-      Data: 236
+      Data: 232
     - Name: 
       Entry: 8
       Data: 
@@ -9063,7 +9054,7 @@ MonoBehaviour:
       Data: gold
     - Name: $v
       Entry: 10
-      Data: 237
+      Data: 233
     - Name: 
       Entry: 8
       Data: 
@@ -9075,7 +9066,7 @@ MonoBehaviour:
       Data: jewel
     - Name: $v
       Entry: 10
-      Data: 238
+      Data: 234
     - Name: 
       Entry: 8
       Data: 
