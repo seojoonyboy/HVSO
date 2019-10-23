@@ -36,6 +36,9 @@ public class HandUIController : MonoBehaviour {
                 available_pools[0].GetComponent<RectTransform>().localPosition = rect.localPosition;
                 break;
         }
+        if (key.Contains("deck_")) {
+            available_pools[0].GetComponent<RectTransform>().localPosition = new Vector3(rect.localPosition.x + 200, rect.localPosition.y - 120, rect.localPosition.z);
+        }
         return available_pools[0];
     }
 
