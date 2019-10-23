@@ -162,60 +162,69 @@ public partial class MenuCardInfo : MonoBehaviour {
             }
         }
 
-        if (data.isHeroCard)
+        if (data.isHeroCard) {
             info.Find("CreateCard").gameObject.SetActive(false);
-
+            transform.Find("Indestructible").gameObject.SetActive(false);
+        }
         else {
-            info.Find("CreateCard").gameObject.SetActive(true);
-            int cardNum = 0;
-            if (AccountManager.Instance.cardPackage.data.ContainsKey(data.id))
-                cardNum = AccountManager.Instance.cardPackage.data[data.id].cardCount;
-            info.Find("CreateCard/HaveNum").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, cardNum.ToString(), false);
-            int makeCardcost = 0;
-            int breakCardcost = 0;
-            switch (data.rarelity) {
-                case "common":
-                    makeCardcost = 50;
-                    breakCardcost = 5;
-                    break;
-                case "uncommon":
-                    makeCardcost = 150;
-                    breakCardcost = 20;
-                    break;
-                case "rare":
-                    makeCardcost = 500;
-                    breakCardcost = 80;
-                    break;
-                case "superrare":
-                    makeCardcost = 1000;
-                    breakCardcost = 185;
-                    break;
-                case "legend":
-                    makeCardcost = 2000;
-                    breakCardcost = 400;
-                    break;
+            if (data.indestructible) {
+                transform.Find("Indestructible").gameObject.SetActive(true);
+                transform.Find("Indestructible/HaveNum").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, "4", false);
+                info.Find("CreateCard").gameObject.SetActive(false);
             }
-            if (cardNum == 4)
-                info.Find("CreateCard/MakeBtn/Disabled").gameObject.SetActive(true);
             else {
-                info.Find("CreateCard/MakeBtn/Disabled").gameObject.SetActive(false);
-                if (makeCardcost >= AccountManager.Instance.userResource.crystal)
+                transform.Find("Indestructible").gameObject.SetActive(false);
+                info.Find("CreateCard").gameObject.SetActive(true);
+                int cardNum = 0;
+                if (AccountManager.Instance.cardPackage.data.ContainsKey(data.id))
+                    cardNum = AccountManager.Instance.cardPackage.data[data.id].cardCount;
+                info.Find("CreateCard/HaveNum").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, cardNum.ToString(), false);
+                int makeCardcost = 0;
+                int breakCardcost = 0;
+                switch (data.rarelity) {
+                    case "common":
+                        makeCardcost = 50;
+                        breakCardcost = 5;
+                        break;
+                    case "uncommon":
+                        makeCardcost = 150;
+                        breakCardcost = 20;
+                        break;
+                    case "rare":
+                        makeCardcost = 500;
+                        breakCardcost = 80;
+                        break;
+                    case "superrare":
+                        makeCardcost = 1000;
+                        breakCardcost = 185;
+                        break;
+                    case "legend":
+                        makeCardcost = 2000;
+                        breakCardcost = 400;
+                        break;
+                }
+                if (cardNum == 4)
                     info.Find("CreateCard/MakeBtn/Disabled").gameObject.SetActive(true);
-            }
-            if (cardNum == 0)
-                info.Find("CreateCard/BreakBtn/Disabled").gameObject.SetActive(true);
-            else
-                info.Find("CreateCard/BreakBtn/Disabled").gameObject.SetActive(false);
-            info.Find("CreateCard/CrystalUseValue").GetComponent<TMPro.TextMeshProUGUI>().text = "-" + makeCardcost.ToString();
-            info.Find("CreateCard/CrystalGetValue").GetComponent<TMPro.TextMeshProUGUI>().text = "+" + breakCardcost.ToString();
-            if (makeCard) {
-                if (data.rarelity == "common" && accountManager.userResource.crystal > beforeCrystal)
-                    info.Find("CreateCard/Crystal/Value").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userData.manaCrystal.ToString();
+                else {
+                    info.Find("CreateCard/MakeBtn/Disabled").gameObject.SetActive(false);
+                    if (makeCardcost >= AccountManager.Instance.userResource.crystal)
+                        info.Find("CreateCard/MakeBtn/Disabled").gameObject.SetActive(true);
+                }
+                if (cardNum == 0)
+                    info.Find("CreateCard/BreakBtn/Disabled").gameObject.SetActive(true);
                 else
-                    StartCoroutine(AddCrystalAnimation());
+                    info.Find("CreateCard/BreakBtn/Disabled").gameObject.SetActive(false);
+                info.Find("CreateCard/CrystalUseValue").GetComponent<TMPro.TextMeshProUGUI>().text = "-" + makeCardcost.ToString();
+                info.Find("CreateCard/CrystalGetValue").GetComponent<TMPro.TextMeshProUGUI>().text = "+" + breakCardcost.ToString();
+                if (makeCard) {
+                    if (data.rarelity == "common" && accountManager.userResource.crystal > beforeCrystal)
+                        info.Find("CreateCard/Crystal/Value").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userData.manaCrystal.ToString();
+                    else
+                        StartCoroutine(AddCrystalAnimation());
+                }
+                else
+                    info.Find("CreateCard/Crystal/Value").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userData.manaCrystal.ToString();
             }
-            else
-                info.Find("CreateCard/Crystal/Value").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userData.manaCrystal.ToString();
         }
     }
 

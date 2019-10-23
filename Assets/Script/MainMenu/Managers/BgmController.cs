@@ -23,6 +23,7 @@ public class BgmController : SerializedMonoBehaviour
             Logger.LogError("사운드가 없습니다.");
             return;
         }
+        mainAudio.volume = 1f;
         mainAudio.clip = bgmDictionary[type].clip;
         mainAudio.Play();
     }
