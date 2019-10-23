@@ -563,41 +563,44 @@ namespace MenuTutorialModules {
         }
 
         private void callback(HTTPRequest originalRequest, HTTPResponse response) {
-            AccountManager.Instance.RequestUserInfo();
-            AccountManager.Instance.RequestMyDecks((req, res) => {
-                if (res != null) {
-                    if (res.StatusCode == 200 || res.StatusCode == 304) {
-                        var result = JsonReader.Read<Decks>(res.DataAsText);
-                        AccountManager.Instance.orcDecks = result.orc;
-                        AccountManager.Instance.humanDecks = result.human;
+            AccountManager.Instance.RequestUserInfo((req, res) => {
+                AccountManager.Instance.SetSignInData(res);
+                AccountManager.Instance.RequestMyDecks((_req, _res) => {
+                    if (_res != null) {
+                        if (_res.StatusCode == 200 || _res.StatusCode == 304) {
+                            var result = JsonReader.Read<Decks>(res.DataAsText);
+                            AccountManager.Instance.orcDecks = result.orc;
+                            AccountManager.Instance.humanDecks = result.human;
+                        }
                     }
-                }
-                else {
-                    Logger.Log("Something is wrong");
-                }
+                    else {
+                        Logger.Log("Something is wrong");
+                    }
+
+                    var resText = response.DataAsText;
+                    Response __res = dataModules.JsonReader.Read<Response>(resText);
+                    var menuTutorialManager = GetComponent<MenuTutorialManager>();
+                    if (!string.IsNullOrEmpty(__res.supplyBox)) {
+                        //보상 이펙트 보여주기
+                        if (AccountManager.Instance.userData.supplyBox > 0) {
+                            menuTutorialManager.ActiveRewardBoxCanvas();
+                            menuTutorialManager.BoxRewardPanel.transform.Find("ExitButton").GetComponent<Button>().onClick.AddListener(onclick);
+
+                        }
+                        else {
+                            Logger.LogError("박스가 없습니다!");
+                            handler.isDone = true;
+                        }
+                    }
+                    else {
+                        menuTutorialManager.BoxRewardPanel.transform.Find("ExitButton")
+                            .GetComponent<Button>()
+                            .onClick
+                            .RemoveListener(onclick);
+                        handler.isDone = true;
+                    }
+                });
             });
-            var resText = response.DataAsText;
-            Response _res = dataModules.JsonReader.Read<Response>(resText);
-            var menuTutorialManager = GetComponent<MenuTutorialManager>();
-            if (!string.IsNullOrEmpty(_res.supplyBox)) {
-                //보상 이펙트 보여주기
-                if(AccountManager.Instance.userData.supplyBox > 0) {
-                    menuTutorialManager.ActiveRewardBoxCanvas();
-                    menuTutorialManager.BoxRewardPanel.transform.Find("ExitButton").GetComponent<Button>().onClick.AddListener(onclick);
-                    
-                }
-                else {
-                    Logger.LogError("박스가 없습니다!");
-                    handler.isDone = true;
-                }
-            }
-            else {
-                menuTutorialManager.BoxRewardPanel.transform.Find("ExitButton")
-                    .GetComponent<Button>()
-                    .onClick
-                    .RemoveListener(onclick);
-                handler.isDone = true;
-            }
         }
 
         private void onclick() {
