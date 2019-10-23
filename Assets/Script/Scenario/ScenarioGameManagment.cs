@@ -73,9 +73,6 @@ public class ScenarioGameManagment : PlayMangement {
         SetBackGround();
 
         settingModal.SetActive(true);
-        if (FindObjectOfType<NewbiController>() != null) {
-            Destroy(FindObjectOfType<NewbiController>().gameObject);
-        }
 
         bool isHuman = PlayMangement.instance.player.isHuman;
         ChallengerHandler challengerHandler = gameObject.AddComponent<ChallengerHandler>();
