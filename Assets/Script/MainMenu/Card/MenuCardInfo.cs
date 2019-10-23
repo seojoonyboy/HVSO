@@ -18,6 +18,7 @@ public partial class MenuCardInfo : MonoBehaviour {
     string cardId;
     bool isHuman;
     bool cardCreate = false;
+    float beforeCrystal;
     AccountManager accountManager;
     CollectionCard cardData;
     Transform dicCard;
@@ -32,7 +33,7 @@ public partial class MenuCardInfo : MonoBehaviour {
         OnMakeCardFinished.AddListener(() => AccountManager.Instance.RefreshInventories(OnInventoryRefreshFinished));
     }
 
-    public virtual void SetCardInfo(CollectionCard data, bool isHuman, Transform dicCard = null) {
+    public virtual void SetCardInfo(CollectionCard data, bool isHuman, Transform dicCard, bool makeCard = false) {
         if (dicCard != null)
             this.dicCard = dicCard;
         cardId = data.id;
@@ -207,8 +208,37 @@ public partial class MenuCardInfo : MonoBehaviour {
                 info.Find("CreateCard/BreakBtn/Disabled").gameObject.SetActive(false);
             info.Find("CreateCard/CrystalUseValue").GetComponent<TMPro.TextMeshProUGUI>().text = "-" + makeCardcost.ToString();
             info.Find("CreateCard/CrystalGetValue").GetComponent<TMPro.TextMeshProUGUI>().text = "+" + breakCardcost.ToString();
-            info.Find("CreateCard/Crystal/Value").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userData.manaCrystal.ToString();
+            if (makeCard) {
+                if (data.rarelity == "common" && accountManager.userResource.crystal > beforeCrystal)
+                    info.Find("CreateCard/Crystal/Value").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userData.manaCrystal.ToString();
+                else
+                    StartCoroutine(AddCrystalAnimation());
+            }
+            else
+                info.Find("CreateCard/Crystal/Value").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userData.manaCrystal.ToString();
         }
+    }
+
+    IEnumerator AddCrystalAnimation() {
+        float changed = (float)accountManager.userResource.crystal;
+        TMPro.TextMeshProUGUI crystalText = transform.Find("CreateCard/Crystal/Value").GetComponent<TMPro.TextMeshProUGUI>();
+        float duration = 0.3f;
+        float offset = (changed - beforeCrystal) / duration;
+        if (changed > beforeCrystal) {
+            while (beforeCrystal < changed) {
+                beforeCrystal += offset * Time.deltaTime;
+                crystalText.text = ((int)beforeCrystal).ToString();
+                yield return null;
+            }
+        }
+        else {
+            while (beforeCrystal > changed) {
+                beforeCrystal += offset * Time.deltaTime;
+                crystalText.text = ((int)beforeCrystal).ToString();
+                yield return null;
+            }
+        }
+        crystalText.text = ((int)changed).ToString();
     }
 
     public void OpenClassDescModal(string className, Sprite image) {
@@ -245,9 +275,10 @@ public partial class MenuCardInfo : MonoBehaviour {
 
     public void MakeCard() {
         if (cardCreate) return;
+        cardCreate = true;
         transform.Find("CreateSpine").gameObject.SetActive(true);
         transform.Find("CreateSpine").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, "MAKING_" + cardData.rarelity, false);
-        cardCreate = true;
+        beforeCrystal = accountManager.userResource.crystal;
         accountManager.RequestCardMake(cardId, WaitRequest);
     }
 
@@ -256,7 +287,7 @@ public partial class MenuCardInfo : MonoBehaviour {
         cardCreate = true;
         transform.Find("CreateSpine").gameObject.SetActive(true);
         transform.Find("CreateSpine").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, "DECOMPOSITION_" + cardData.rarelity, false);
-        
+        beforeCrystal = accountManager.userResource.crystal;
         accountManager.RequestCardBreak(cardId, WaitRequest);
         string rarelity = accountManager.cardPackage.data[cardId].rarelity;
         if (accountManager.cardPackage.data[cardId].camp == "human")
@@ -290,7 +321,7 @@ public partial class MenuCardInfo : MonoBehaviour {
 
     void EndCardMaking() {
         dicCard.GetComponent<MenuCardHandler>().DrawCard(cardId, isHuman);
-        SetCardInfo(cardData, isHuman);
+        SetCardInfo(cardData, isHuman, null, true);
         cardDic.transform.Find("UIbar/Crystal/Value").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userResource.crystal.ToString();
         cardCreate = false;
     }
