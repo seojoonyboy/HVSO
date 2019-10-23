@@ -294,7 +294,10 @@ public class MenuSceneController : MonoBehaviour {
                 }
             }
             //튜토리얼 모두 진행하였음
-            else { needTutorial = false; }
+            else {
+                menuTutorialManager.enabled = false;
+                needTutorial = false;
+            }
         }
 
         if (needTutorial) {

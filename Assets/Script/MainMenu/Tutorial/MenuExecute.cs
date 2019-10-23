@@ -590,4 +590,14 @@ namespace MenuTutorialModules {
             public string supplyBox;
         }
     }
+
+    public class EndTutorial : MenuExecute {
+        public override void Execute() {
+            Logger.Log("모든 튜토리얼 끝!");
+            GetComponent<MenuTutorialManager>().EndTutorial();
+            GetComponent<MenuTutorialManager>().enabled = false;
+            
+            handler.isDone = true;
+        }
+    }
 }
