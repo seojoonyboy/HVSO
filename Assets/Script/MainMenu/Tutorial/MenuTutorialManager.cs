@@ -72,13 +72,8 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
     /// <summary>
     /// 보상받기 패널
     /// </summary>
-    public void ActiveRewardPanel(string msg) {
+    public void ActiveRewardPanel() {
         rewardPanel.SetActive(true);
-        Text text = rewardPanel
-            .transform
-            .Find("Image/Text")
-            .GetComponent<Text>();
-        text.text = msg;
     }
 
     public void DeactiveRewardPanel() {

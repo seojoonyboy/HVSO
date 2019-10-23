@@ -68,6 +68,9 @@ public class LoginController : MonoBehaviour {
                 accountManager.OnSignInResultModal();
             }
         }
+        else {
+            isClicked = false;
+        }
     }
 
     private void ReqInTimer() {

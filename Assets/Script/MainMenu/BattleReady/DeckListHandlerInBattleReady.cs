@@ -7,7 +7,7 @@ using TMPro;
 public class DeckListHandlerInBattleReady : MonoBehaviour {
     AccountManager accountManager;
     [SerializeField] Transform content;
-    [SerializeField] BattleReadySceneController parentController;
+    public BattleReadySceneController parentController;
 
     public Sprite[] campImages;
     [SerializeField] GameObject battleStart;
