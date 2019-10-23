@@ -119,24 +119,38 @@ namespace MenuTutorialModules {
             MenuMask.Instance.gameObject.SetActive(true);
             menuMask.menuTalkPanel.SetActive(true);
 
-            bool isPlayer = args[2] != "enemy";
 
-            menuMask.menuTalkPanel.transform.Find("CharacterImage/Player").gameObject.SetActive(isPlayer);
-            menuMask.menuTalkPanel.transform.Find("CharacterImage/Enemy").gameObject.SetActive(!isPlayer);
-            menuMask.menuTalkPanel.transform.Find("NameObject/PlayerName").gameObject.SetActive(isPlayer);
-            menuMask.menuTalkPanel.transform.Find("NameObject/EnemyName").gameObject.SetActive(!isPlayer);
-            if (isPlayer) {
-                Logger.Log(args[0]);
-                menuMask.menuTalkPanel.transform.Find("CharacterImage/Player").GetComponent<Image>().sprite = AccountManager.Instance.resource.ScenarioUnitResurce[args[0]].sprite;
-                menuMask.menuTalkPanel.transform.Find("NameObject/PlayerName").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.resource.ScenarioUnitResurce[args[0]].name;
+            if (args[2] != "both") {
+                bool isPlayer = args[2] != "enemy";
+
+                menuMask.menuTalkPanel.transform.Find("CharacterImage/Player").gameObject.SetActive(isPlayer);
+                menuMask.menuTalkPanel.transform.Find("CharacterImage/Enemy").gameObject.SetActive(!isPlayer);
+                menuMask.menuTalkPanel.transform.Find("NameObject/PlayerName").gameObject.SetActive(isPlayer);
+                menuMask.menuTalkPanel.transform.Find("NameObject/EnemyName").gameObject.SetActive(!isPlayer);
+                if (isPlayer) {
+                    Logger.Log(args[0]);
+                    menuMask.menuTalkPanel.transform.Find("CharacterImage/Player").GetComponent<Image>().sprite = AccountManager.Instance.resource.ScenarioUnitResurce[args[0]].sprite;
+                    menuMask.menuTalkPanel.transform.Find("NameObject/PlayerName").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.resource.ScenarioUnitResurce[args[0]].name;
+                }
+                else {
+                    menuMask.menuTalkPanel.transform.Find("CharacterImage/Enemy").GetComponent<Image>().sprite = AccountManager.Instance.resource.ScenarioUnitResurce[args[0]].sprite;
+                    menuMask.menuTalkPanel.transform.Find("NameObject/EnemyName").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.resource.ScenarioUnitResurce[args[0]].name;
+                }
             }
             else {
-                menuMask.menuTalkPanel.transform.Find("CharacterImage/Enemy").GetComponent<Image>().sprite = AccountManager.Instance.resource.ScenarioUnitResurce[args[0]].sprite;
+                menuMask.menuTalkPanel.transform.Find("CharacterImage/Player").gameObject.SetActive(true);
+                menuMask.menuTalkPanel.transform.Find("CharacterImage/Enemy").gameObject.SetActive(true);
+                menuMask.menuTalkPanel.transform.Find("NameObject/PlayerName").gameObject.SetActive(true);
+                menuMask.menuTalkPanel.transform.Find("NameObject/EnemyName").gameObject.SetActive(true);
+
+                menuMask.menuTalkPanel.transform.Find("CharacterImage/Player").GetComponent<Image>().sprite = AccountManager.Instance.resource.ScenarioUnitResurce["ac10005"].sprite;
+                menuMask.menuTalkPanel.transform.Find("NameObject/PlayerName").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.resource.ScenarioUnitResurce[args[0]].name;
+                menuMask.menuTalkPanel.transform.Find("CharacterImage/Enemy").GetComponent<Image>().sprite = AccountManager.Instance.resource.ScenarioUnitResurce["ac10012"].sprite;
                 menuMask.menuTalkPanel.transform.Find("NameObject/EnemyName").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.resource.ScenarioUnitResurce[args[0]].name;
+                menuMask.menuTalkPanel.GetComponent<TextTyping>().StartTyping(args[1], handler);
             }
             menuMask.menuTalkPanel.GetComponent<TextTyping>().StartTyping(args[1], handler);
         }
-
     }
 
     public class Menu_Scope_Object : MenuExecute {
@@ -574,6 +588,16 @@ namespace MenuTutorialModules {
 
         public class Response {
             public string supplyBox;
+        }
+    }
+
+    public class EndTutorial : MenuExecute {
+        public override void Execute() {
+            Logger.Log("모든 튜토리얼 끝!");
+            GetComponent<MenuTutorialManager>().EndTutorial();
+            GetComponent<MenuTutorialManager>().enabled = false;
+            
+            handler.isDone = true;
         }
     }
 }

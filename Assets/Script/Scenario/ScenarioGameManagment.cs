@@ -85,6 +85,8 @@ public class ScenarioGameManagment : PlayMangement {
             textShadowImages,
             shieldTargetLine
         );
+        BgmController.BgmEnum soundTrack = (player.isHuman == true) ? BgmController.BgmEnum.FOREST : BgmController.BgmEnum.CITY;
+        SoundManager.Instance.bgmController.PlaySoundTrack(soundTrack);
     }
 
     void OnDestroy() {
