@@ -32,7 +32,7 @@ public class SoundManager : SerializedMonoBehaviour {
         DontDestroyOnLoad(gameObject);    
     }
     public void PlayMagicSound(string id) {
-        if (!unitSfx.ContainsKey(id) || unitSfx[id] == null) {
+        if (!magicSfx.ContainsKey(id) || magicSfx[id] == null) {
             AttackSound(magicSfx["ac10015"]);
             return;
         }
