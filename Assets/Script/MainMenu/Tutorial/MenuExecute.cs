@@ -144,9 +144,9 @@ namespace MenuTutorialModules {
                 menuMask.menuTalkPanel.transform.Find("NameObject/EnemyName").gameObject.SetActive(true);
 
                 menuMask.menuTalkPanel.transform.Find("CharacterImage/Player").GetComponent<Image>().sprite = AccountManager.Instance.resource.ScenarioUnitResurce["ac10005"].sprite;
-                menuMask.menuTalkPanel.transform.Find("NameObject/PlayerName").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.resource.ScenarioUnitResurce[args[0]].name;
+                menuMask.menuTalkPanel.transform.Find("NameObject/PlayerName").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.resource.ScenarioUnitResurce["ac10012"].name;
                 menuMask.menuTalkPanel.transform.Find("CharacterImage/Enemy").GetComponent<Image>().sprite = AccountManager.Instance.resource.ScenarioUnitResurce["ac10012"].sprite;
-                menuMask.menuTalkPanel.transform.Find("NameObject/EnemyName").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.resource.ScenarioUnitResurce[args[0]].name;
+                menuMask.menuTalkPanel.transform.Find("NameObject/EnemyName").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.resource.ScenarioUnitResurce["ac10005"].name;
                 menuMask.menuTalkPanel.GetComponent<TextTyping>().StartTyping(args[1], handler);
             }
             menuMask.menuTalkPanel.GetComponent<TextTyping>().StartTyping(args[1], handler);
@@ -415,6 +415,8 @@ namespace MenuTutorialModules {
             var deckListPanel = GetComponent<MenuTutorialManager>().BattleReadydeckListPanel;
             var content = deckListPanel.transform.Find("Viewport/Content");
 
+            deckListPanel.transform.Find("Description").gameObject.SetActive(true);
+
             foreach (Transform deckObject in content) {
                 if (deckObject.gameObject.activeSelf) {
                     Button btn = deckObject.GetComponent<Button>();
@@ -456,6 +458,13 @@ namespace MenuTutorialModules {
             IEnumerator Wait() {
                 PlayerPrefs.SetString("SelectedBattleType", "solo");
                 PlayerPrefs.SetString("PrevTutorial", "AI_Tutorial");
+
+                GetComponent<MenuTutorialManager>()
+                    .BattleReadydeckListPanel
+                    .transform
+                    .Find("Description")
+                    .gameObject
+                    .SetActive(false);
 
                 yield return new WaitForSeconds(1.0f);
                 FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.CONNECT_MATCHING_SCENE);
@@ -576,6 +585,8 @@ namespace MenuTutorialModules {
                     else {
                         Logger.Log("Something is wrong");
                     }
+
+                    MenuMask.Instance.UnBlockScreen();
 
                     var resText = response.DataAsText;
                     Response __res = dataModules.JsonReader.Read<Response>(resText);
