@@ -274,6 +274,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
             yield return EffectSystem.Instance.HeroCutScene(PlayMangement.instance.player.isHuman);            
         }
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
+        SoundManager.Instance.PlayMagicSound(cardData.id);
         highlighted = false;
         CardDropManager.Instance.HighLightMagicSlot(highlightedSlot, highlighted);
         highlightedSlot = null;        

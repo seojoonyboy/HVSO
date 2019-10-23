@@ -373,6 +373,7 @@ public partial class PlayMangement : MonoBehaviour {
         //타겟 지정 애니메이션
         yield return cardHandManager.ShowUsedCard(100, card);
         yield return EnemySettingTarget(history.targets[0], magicCard);
+        SoundManager.Instance.PlayMagicSound(magicCard.cardData.id);
         //실제 카드 사용
         object[] parms = new object[] { false, card };
         if (magicCard.cardData.isHeroCard == true) {
@@ -388,6 +389,7 @@ public partial class PlayMangement : MonoBehaviour {
         }
         EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
         yield return new WaitForSeconds(1f);
+        
         //카드 파괴
         card.transform.localScale = new Vector3(1, 1, 1);
         cardHandManager.DestroyCard(card);

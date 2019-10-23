@@ -31,6 +31,16 @@ public class SoundManager : SerializedMonoBehaviour {
         _instance = GetComponent<SoundManager>();
         DontDestroyOnLoad(gameObject);    
     }
+    public void PlayMagicSound(string id) {
+        if (!unitSfx.ContainsKey(id) || unitSfx[id] == null) {
+            AttackSound(magicSfx["ac10015"]);
+            return;
+        }
+        if (id == "ac10005")
+            return;
+        AttackSound(magicSfx[id]);
+    }
+
 
     public void PlayAttackSound(string id) {
         if (!unitSfx.ContainsKey(id) || unitSfx[id] == null) {
