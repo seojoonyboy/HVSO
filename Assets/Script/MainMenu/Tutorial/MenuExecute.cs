@@ -603,7 +603,29 @@ namespace MenuTutorialModules {
             MenuMask.Instance.UnBlockScreen();
             PlayerPrefs.SetInt("TutorialBoxRecieved", 1);
             PlayerPrefs.Save();
-            menuTutorialManager.BoxRewardPanel.transform.Find("ExitButton").GetComponent<Button>().onClick.AddListener(onclick);
+
+            AccountManager.Instance.RequestUserInfo((req, res) => {
+                var resText = res.DataAsText;
+                Response __res = dataModules.JsonReader.Read<Response>(resText);
+                if (!string.IsNullOrEmpty(__res.supplyBox)) {
+                    //보상 이펙트 보여주기
+                    if (AccountManager.Instance.userData.supplyBox > 0) {
+                        menuTutorialManager.ActiveRewardBoxCanvas();
+                        menuTutorialManager.BoxRewardPanel.transform.Find("ExitButton").GetComponent<Button>().onClick.AddListener(onclick);
+                    }
+                    else {
+                        Logger.LogError("박스가 없습니다!");
+                        handler.isDone = true;
+                    }
+                }
+                else {
+                    menuTutorialManager.BoxRewardPanel.transform.Find("ExitButton")
+                        .GetComponent<Button>()
+                        .onClick
+                        .RemoveListener(onclick);
+                    handler.isDone = true;
+                }
+            });
         }
 
         private void callback(HTTPRequest originalRequest, HTTPResponse response) {
