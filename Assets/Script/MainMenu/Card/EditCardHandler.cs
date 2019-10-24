@@ -94,6 +94,7 @@ public class EditCardHandler : MonoBehaviour {
         draggingObject = null;
         standby = false;
         if (Time.time - clickTime < 0.5f) {
+            SoundManager.Instance.PlaySound("button_3");
             if (isHandCard) {
                 deckEditController.ExpectFromDeck(cardData.id, gameObject);
                 if (SETNUM == 0) {
