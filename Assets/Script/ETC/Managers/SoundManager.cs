@@ -71,6 +71,14 @@ public class SoundManager : SerializedMonoBehaviour {
         PlaySfx(sounds[type]);
     }
 
+    public void PlaySound(string sound_name) {
+        if(!uiSfx.ContainsKey(sound_name) || uiSfx[sound_name] == null) {
+            Logger.LogError(string.Format("{0}에 대한 음원을 찾을 수 없습니다.", sound_name));
+            return;
+        }
+        PlaySfx(uiSfx[sound_name]);
+    }
+
     private void PlaySfx(AudioSource sfxSource) {
         GameObject soundObject = GetUnusedAudio();
         soundObject.SetActive(true);
