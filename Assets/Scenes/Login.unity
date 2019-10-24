@@ -386,6 +386,24 @@ MonoBehaviour:
     - {fileID: 4549065912155317161, guid: 71cb651774c573a40920625b481e6486, type: 3}
     - {fileID: 4178236433806283601, guid: 3d3356d019826f94895294028b0d424a, type: 3}
     - {fileID: 4476280356095818534, guid: 0489b5facbffad143aaff88ba45fed05, type: 3}
+    - {fileID: 5686000927421064339, guid: 1a4f82ed71af35b4cb26c9d2eea1ad56, type: 3}
+    - {fileID: 7890899186903878622, guid: 8a7af8a60e940c9458db1ac38263f049, type: 3}
+    - {fileID: 5098918491462798241, guid: 38a4c7a52faacc442bd3d09997c48fab, type: 3}
+    - {fileID: 6758358007997137077, guid: 8d5ee91994392dd44a6e4fecca43f32b, type: 3}
+    - {fileID: 1224653816775569118, guid: 0da68698f51e8e741b8fe7fca446980e, type: 3}
+    - {fileID: 3204439524219417564, guid: 772ae70f4ffca6149b7095778f022f54, type: 3}
+    - {fileID: 6141606305777059281, guid: 26b12163a6426434ba011485e53871c3, type: 3}
+    - {fileID: 8951772827725384308, guid: a26b685a6a78e9b479d4c3fd2cb6ebee, type: 3}
+    - {fileID: 3362746477567764984, guid: 2b6749f5e7354dd47b106ab1f0a8a98f, type: 3}
+    - {fileID: 806087328012476952, guid: 471ef4f1b5e815942be5d392a35a7c7c, type: 3}
+    - {fileID: 4335143817685204421, guid: eeb8e0a0ec300294aa880cc1286edd38, type: 3}
+    - {fileID: 3506692097517451357, guid: 32661002310c09146ada2bc6749ff53f, type: 3}
+    - {fileID: 8512144222793733551, guid: 7950e871858f0fc40be795b9abdd2348, type: 3}
+    - {fileID: 1535636910475603919, guid: 607b9c21fdca2e24796904ad4cf70e79, type: 3}
+    - {fileID: 2082464673082781522, guid: 01a17f578b28feb438594cdaf7d58035, type: 3}
+    - {fileID: 4668546418215675758, guid: 75659f6535225a64bba723edccd05344, type: 3}
+    - {fileID: 8274908570737623852, guid: 7b4b68c3e65ed4a48be670f1aa4670e9, type: 3}
+    - {fileID: 3935619056792783273, guid: d7487db4d9d447e4b8faaeee8feaed72, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -969,6 +987,242 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: uiSfx
+      Entry: 7
+      Data: 5|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.AudioSource,
+        UnityEngine.AudioModule]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 6|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 18
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: button_1
+    - Name: $v
+      Entry: 10
+      Data: 41
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: button_2
+    - Name: $v
+      Entry: 10
+      Data: 42
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: button_3
+    - Name: $v
+      Entry: 10
+      Data: 43
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: button_4
+    - Name: $v
+      Entry: 10
+      Data: 44
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: box_epic
+    - Name: $v
+      Entry: 10
+      Data: 45
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: box_normal
+    - Name: $v
+      Entry: 10
+      Data: 46
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: boxopen
+    - Name: $v
+      Entry: 10
+      Data: 47
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: boxopen_2
+    - Name: $v
+      Entry: 10
+      Data: 48
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: box_rare
+    - Name: $v
+      Entry: 10
+      Data: 49
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: box_superrare
+    - Name: $v
+      Entry: 10
+      Data: 50
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Cardchoice_1
+    - Name: $v
+      Entry: 10
+      Data: 51
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Cardchoice_2
+    - Name: $v
+      Entry: 10
+      Data: 52
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Cardchoice_3
+    - Name: $v
+      Entry: 10
+      Data: 53
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Cardchoice_hero
+    - Name: $v
+      Entry: 10
+      Data: 54
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Cardchoice_unit
+    - Name: $v
+      Entry: 10
+      Data: 55
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: menuSlide_1
+    - Name: $v
+      Entry: 10
+      Data: 56
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: menuSlide_2
+    - Name: $v
+      Entry: 10
+      Data: 57
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: menuSlide_3
+    - Name: $v
+      Entry: 10
+      Data: 58
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
   emptySource: {fileID: 393120952515187148, guid: ca2447c4184f12645aa4a5ce20e4dc8e,
     type: 3}
   bgmController: {fileID: 263622366}
@@ -980,7 +1234,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 134716699}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -36.081043, y: 729.76373, z: -1402.75}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 508275758}
