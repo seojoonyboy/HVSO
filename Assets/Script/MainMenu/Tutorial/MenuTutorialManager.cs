@@ -29,6 +29,18 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
     /// <param name="type">튜토리얼 종류</param>
     public void StartTutorial(TutorialType type) {
         Logger.Log(type + " 튜토리얼 시작");
+
+        if(type != TutorialType.TO_HUMAN_STORY) {
+            AccountManager.Instance.RequestUserInfo((req, res) => {
+                if (res.IsSuccess) {
+                    if (res.StatusCode == 200 || res.StatusCode == 304) {
+                        AccountManager.Instance.SetSignInData(res);
+                        Logger.Log(type + " 튜토리얼 시작에 따른 api/user 갱신");
+                    }
+                }
+            });
+        }
+
         var execs = GetComponents<MenuExecute>();
         if (execs != null) {
             foreach (var exec in (execs)) {
@@ -37,7 +49,7 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
         }
         
         selectedTutorialData = sets[(int)type];
-        executeHandler = gameObject.AddComponent<MenuExecuteHandler>();
+        if(executeHandler == null) executeHandler = gameObject.AddComponent<MenuExecuteHandler>();
 
         if (executeHandler == null) return;
         executeHandler.Initialize(selectedTutorialData);

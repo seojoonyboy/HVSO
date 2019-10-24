@@ -598,8 +598,9 @@ namespace MenuTutorialModules {
 
     public class BoxOpenProcess : MenuExecute {
         public override void Execute() {
-            //AccountManager.Instance.RequestTutorialBoxReward(callback);
-            handler.isDone = true;
+            var menuTutorialManager = GetComponent<MenuTutorialManager>();
+            menuTutorialManager.ActiveRewardBoxCanvas();
+            menuTutorialManager.BoxRewardPanel.transform.Find("ExitButton").GetComponent<Button>().onClick.AddListener(onclick);
         }
 
         private void callback(HTTPRequest originalRequest, HTTPResponse response) {
