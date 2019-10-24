@@ -117,8 +117,9 @@ public class SoundManager : SerializedMonoBehaviour {
 
     //임시로 이리 쓰는데, Unirx를 써서 처리 예정, 오디오 시간만큼 기달리고, 그 후에 턴 off
     private IEnumerator SoundAfterOff(AudioSource audio, GameObject soundObject) {
-        yield return new WaitForSeconds(audio.clip.length);
-        soundObject.GetComponent<AudioSource>().clip.UnloadAudioData();
+        yield return new WaitForSeconds(audio.clip.length + 0.1f);
+        soundObject.GetComponent<AudioSource>().clip = null;
+        yield return new WaitForSeconds(0.1f);
         soundObject.SetActive(false);
     }
 
