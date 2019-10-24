@@ -120,7 +120,6 @@ public class ScenarioManager : SerializedMonoBehaviour
     }
 
     private void SetStoryListInfo() {
-        Logger.Log("1");
         Transform canvas;
         List<ChapterData> selectedList;
         if (isHuman) {
@@ -131,32 +130,24 @@ public class ScenarioManager : SerializedMonoBehaviour
             canvas = orc.StageCanvas.transform;
             selectedList = orc_chapterDatas;
         }
-        Logger.Log("2");
         foreach (Transform child in canvas.transform) {
             child.gameObject.SetActive(true);
         }
-        Logger.Log("3");
         canvas.Find("HUD/ChapterSelect/BackGround/Text").gameObject.GetComponent<Text>().text = "CHAPTER " + selectChapter.ToString();
-        Logger.Log("4");
         Transform content = canvas.Find("HUD/StageSelect/Viewport/Content");
-        Logger.Log("5");
         for (int i=0; i < selectedList.Count; i++) {
             GameObject item = content.GetChild(i).gameObject;
             item.SetActive(true);
-            Logger.Log("6");
             string str = string.Format("{0}-{1} {2}", selectedList[i].chapter, selectedList[i].stage_number, selectedList[i].stage_Name);
             item.transform.Find("StageName").GetComponent<TextMeshProUGUI>().text = str;
-            Logger.Log("7");
             ShowReward(item ,selectedList[i]);
-            Logger.Log("8");
             StageButton stageButtonComp = item.GetComponent<StageButton>();
             stageButtonComp.Init(selectedList[i].chapter, selectedList[i].stage_number, isHuman);
-            Logger.Log("9");
             //item.transform.Find("StageScript").GetComponent<TextMeshProUGUI>().text = selectedList[i].description;
         }
     }
     private void ShowReward(GameObject item ,ChapterData chapterData) {
-        if (chapterData.scenarioReward == null || chapterData.scenarioReward.Length <= 0) return;
+        if (chapterData.scenarioReward == null) return;
 
         Transform reward = item.transform.Find("Reward");
         var stageButton = item.GetComponent<StageButton>();
@@ -173,18 +164,63 @@ public class ScenarioManager : SerializedMonoBehaviour
             rewardImage.SetActive(true);
             rewardCount.SetActive(true);
 
-            if(clearedStageList != null && chapterData.chapter == 0 && clearedStageList.Exists(
-                x => x.stageNumber == stageButton.stage && 
+            reward
+                    .GetChild(i)
+                    .Find("Check")
+                    .gameObject
+                    .SetActive(false);
+
+            item
+                .transform
+                .Find("ClearCheckMask")
+                .gameObject
+                .SetActive(false);
+
+            item
+                .transform
+                .Find("ClearTextImage")
+                .gameObject
+                .SetActive(false);
+
+            item
+                .transform
+                .Find("RewardTextImage")
+                .gameObject
+                .SetActive(true);
+        }
+
+        if (clearedStageList != null && chapterData.chapter == 0 && clearedStageList.Exists(
+                x => x.stageNumber == stageButton.stage &&
                 x.camp == stageButton.camp)) {
 
+            for(int i=0; i<chapterData.scenarioReward.Length; i++) {
                 reward
                     .GetChild(i)
                     .Find("Check")
                     .gameObject
                     .SetActive(true);
-            } 
+            }
+
+            item
+                .transform
+                .Find("ClearCheckMask")
+                .gameObject
+                .SetActive(true);
+
+            item
+                .transform
+                .Find("ClearTextImage")
+                .gameObject
+                .SetActive(true);
+
+            item
+                .transform
+                .Find("RewardTextImage")
+                .gameObject
+                .SetActive(false);
         }
     }
+
     private void OffPrevStoryList() {
         if (isHuman) {
             Transform stageSelectContent = orc.StageCanvas.transform.Find("HUD/StageSelect/Viewport/Content");
