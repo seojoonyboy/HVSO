@@ -601,6 +601,8 @@ namespace MenuTutorialModules {
             var menuTutorialManager = GetComponent<MenuTutorialManager>();
             menuTutorialManager.ActiveRewardBoxCanvas();
             MenuMask.Instance.UnBlockScreen();
+            PlayerPrefs.SetInt("TutorialBoxRecieved", 1);
+            PlayerPrefs.Save();
             menuTutorialManager.BoxRewardPanel.transform.Find("ExitButton").GetComponent<Button>().onClick.AddListener(onclick);
         }
 
@@ -627,7 +629,6 @@ namespace MenuTutorialModules {
                         if (AccountManager.Instance.userData.supplyBox > 0) {
                             menuTutorialManager.ActiveRewardBoxCanvas();
                             menuTutorialManager.BoxRewardPanel.transform.Find("ExitButton").GetComponent<Button>().onClick.AddListener(onclick);
-
                         }
                         else {
                             Logger.LogError("박스가 없습니다!");
