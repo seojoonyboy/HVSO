@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Spine;
 using Spine.Unity;
+using UnityEngine.Events;
 
 public class GameResultManager : MonoBehaviour {
     public GameObject SocketDisconnectedUI;
@@ -21,6 +22,8 @@ public class GameResultManager : MonoBehaviour {
     private int supplyBox = 0;
     private bool isHuman;
     private string result;
+
+    public UnityEvent EndRewardLoad = new UnityEvent();
 
     private void Awake() {
         lv = AccountManager.Instance.userResource.lv;
@@ -55,7 +58,7 @@ public class GameResultManager : MonoBehaviour {
         GameObject heroSpine = transform.Find("FirstWindow/HeroSpine/" + PlayMangement.instance.player.heroID).gameObject;
         heroSpine.SetActive(true);
         iTween.ScaleTo(heroSpine, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.3f));
-        getExp = PlayMangement.instance.socketHandler.result.reward.heroExp;
+        getExp = PlayMangement.instance.socketHandler.result.reward.userExp;
         getSupply = PlayMangement.instance.socketHandler.result.reward.supply;
         additionalSupply = PlayMangement.instance.socketHandler.result.reward.additionalSupply;
 
@@ -126,7 +129,7 @@ public class GameResultManager : MonoBehaviour {
         expSlider.fillAmount = exp / lvExp;
 
         Transform playerExp = transform.Find("SecondWindow/PlayerExp");
-        playerExp.Find("LevelIcon/Value").GetComponent<Text>().text = AccountManager.Instance.userResource.lv.ToString();
+        playerExp.Find("LevelIcon/Value").GetComponent<Text>().text = lv.ToString();
         playerExp.Find("UserName").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userData.nickName;
         playerExp.Find("ExpSlider/ExpValue").GetComponent<TMPro.TextMeshProUGUI>().text = ((int)exp).ToString();
         playerExp.Find("ExpSlider/ExpMaxValue").GetComponent<TMPro.TextMeshProUGUI>().text = "/" + ((int)lvExp).ToString();
@@ -136,17 +139,18 @@ public class GameResultManager : MonoBehaviour {
         yield return new WaitForSeconds(0.1f);
         Transform playerSup = transform.Find("SecondWindow/PlayerSupply");
         iTween.ScaleTo(playerSup.gameObject, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.5f));
-        playerSup.Find("SupplyText/Value").GetComponent<TMPro.TextMeshProUGUI>().text = (getSupply + additionalSupply).ToString();
-        playerSup.Find("ExtraSupply/Value").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userResource.additionalPreSupply.ToString();
         playerSup.Find("ExpSlider/SliderValue").GetComponent<Image>().fillAmount = supply / 100.0f;
         playerSup.Find("ExpSlider/SupValue").GetComponent<TMPro.TextMeshProUGUI>().text = supply.ToString();
         yield return new WaitForSeconds(0.1f);
         iTween.ScaleTo(transform.Find("SecondWindow/Buttons").gameObject, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.5f));
-        yield return new WaitForSeconds(0.3f);
-        if (getExp > 0) 
+        if (getExp > 0) {
+            yield return new WaitForSeconds(0.5f);
             yield return StartCoroutine(GetUserExp(expSlider));
-        if (getSupply + additionalSupply > 0)
+        }
+        if (getSupply + additionalSupply > 0) {
+            yield return new WaitForSeconds(0.5f);
             yield return StartCoroutine(GetUserSupply(playerSup.Find("ExpSlider/SliderValue").GetComponent<Image>(), getSupply, additionalSupply));
+        }
 
         //if (supply > 0) {
         //    rewards.GetChild(0).gameObject.SetActive(true);
@@ -175,16 +179,13 @@ public class GameResultManager : MonoBehaviour {
             lvUpValueText.text = " / " + ((int)lvExp).ToString();
             if (exp == (int)lvExp) {
                 lv++;
-                //transform.Find("RankGage/LevelImage/LevelText").GetComponent<TMPro.TextMeshProUGUI>().text = lv.ToString();
                 lvExp = nextLvExp;
-                slider.transform.localScale = new Vector3(1.1f, 1.1f, 1.1f);
-                yield return new WaitForSeconds(0.2f);
-                slider.transform.localScale = Vector3.one;
-                yield return new WaitForSeconds(0.2f);
-                slider.transform.localScale = new Vector3(1.1f, 1.1f, 1.1f);
-                yield return new WaitForSeconds(0.2f);
-                slider.transform.localScale = Vector3.one;
-                yield return new WaitForSeconds(0.3f);
+                SkeletonGraphic effect = transform.Find("SecondWindow/PlayerExp/LvUpEffect").GetComponent<SkeletonGraphic>();
+                transform.Find("SecondWindow/PlayerExp/LevelIcon/Value").GetComponent<Text>().text = lv.ToString();
+                effect.gameObject.SetActive(true);
+                effect.Initialize(true);
+                effect.Update(0);
+                effect.AnimationState.SetAnimation(0, "animation", false);
                 slider.fillAmount = 0;
                 exp = 0;
                 expValueText.text = ((int)exp).ToString();
@@ -197,12 +198,20 @@ public class GameResultManager : MonoBehaviour {
     IEnumerator GetUserSupply(Image slider, int getSup, int addSup, int winSup = 0) {
         TMPro.TextMeshProUGUI value = transform.Find("SecondWindow/PlayerSupply/ExpSlider/SupValue").GetComponent<TMPro.TextMeshProUGUI>();
         SkeletonGraphic boxSpine = transform.Find("SecondWindow/PlayerSupply/BoxSpine").GetComponent<SkeletonGraphic>();
+        TMPro.TextMeshProUGUI basicVal = transform.Find("SecondWindow/PlayerSupply/ExtraSupply/Basic/Value").GetComponent<TMPro.TextMeshProUGUI>();
+        TMPro.TextMeshProUGUI winVal = transform.Find("SecondWindow/PlayerSupply/ExtraSupply/Win/Value").GetComponent<TMPro.TextMeshProUGUI>();
+        TMPro.TextMeshProUGUI addVal = transform.Find("SecondWindow/PlayerSupply/ExtraSupply/Additional/Value").GetComponent<TMPro.TextMeshProUGUI>();
+        TMPro.TextMeshProUGUI totalVal = transform.Find("SecondWindow/PlayerSupply/SupplyText/Value").GetComponent<TMPro.TextMeshProUGUI>();
         boxSpine.Initialize(true);
         boxSpine.Update(0);
         boxSpine.AnimationState.SetAnimation(0, "02.vibration1", true);
+        int start = getSup;
+        int total = 0;
         while (getSup > 0) {
             supply++;
             getSup--;
+            basicVal.text = (start - getSup).ToString();
+            totalVal.text = (++total).ToString();
             slider.fillAmount = supply / 100.0f;
             value.text = supply.ToString();
             if(supply == 100) {
@@ -222,11 +231,14 @@ public class GameResultManager : MonoBehaviour {
             }
             yield return new WaitForSeconds(0.01f);
         }
+        start = addSup;
         if (addSup > 0) {
-            yield return new WaitForSeconds(1.0f);
+            yield return new WaitForSeconds(0.5f);
             while (addSup > 0) {
                 supply++;
                 addSup--;
+                addVal.text = (start - addSup).ToString();
+                totalVal.text = (++total).ToString();
                 slider.fillAmount = supply / 100.0f;
                 value.text = supply.ToString();
                 if (supply == 100) {
@@ -247,5 +259,7 @@ public class GameResultManager : MonoBehaviour {
                 yield return new WaitForSeconds(0.01f);
             }
         }
+        boxSpine.AnimationState.SetAnimation(0, "01.vibration0", true);
+        EndRewardLoad.Invoke();
     }
 }

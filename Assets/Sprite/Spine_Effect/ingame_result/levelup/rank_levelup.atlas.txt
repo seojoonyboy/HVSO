@@ -1,0 +1,132 @@
+
+rank_levelup.png
+size: 1024,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Comp000
+  rotate: true
+  xy: 0, 0
+  size: 180, 72
+  orig: 180, 72
+  offset: 0, 0
+  index: -1
+Comp001
+  rotate: true
+  xy: 72, 0
+  size: 180, 72
+  orig: 180, 72
+  offset: 0, 0
+  index: -1
+Comp002
+  rotate: true
+  xy: 100, 332
+  size: 180, 72
+  orig: 180, 72
+  offset: 0, 0
+  index: -1
+Comp003
+  rotate: true
+  xy: 172, 332
+  size: 180, 72
+  orig: 180, 72
+  offset: 0, 0
+  index: -1
+Comp004
+  rotate: true
+  xy: 144, 19
+  size: 180, 72
+  orig: 180, 72
+  offset: 0, 0
+  index: -1
+Comp005
+  rotate: true
+  xy: 216, 19
+  size: 180, 72
+  orig: 180, 72
+  offset: 0, 0
+  index: -1
+Comp006
+  rotate: false
+  xy: 232, 260
+  size: 180, 72
+  orig: 180, 72
+  offset: 0, 0
+  index: -1
+Comp007
+  rotate: true
+  xy: 244, 332
+  size: 180, 72
+  orig: 180, 72
+  offset: 0, 0
+  index: -1
+Comp008
+  rotate: true
+  xy: 316, 332
+  size: 180, 72
+  orig: 180, 72
+  offset: 0, 0
+  index: -1
+Comp009
+  rotate: true
+  xy: 388, 332
+  size: 180, 72
+  orig: 180, 72
+  offset: 0, 0
+  index: -1
+Comp010
+  rotate: true
+  xy: 288, 80
+  size: 180, 72
+  orig: 180, 72
+  offset: 0, 0
+  index: -1
+Comp011
+  rotate: false
+  xy: 288, 8
+  size: 180, 72
+  orig: 180, 72
+  offset: 0, 0
+  index: -1
+Comp012
+  rotate: true
+  xy: 360, 80
+  size: 180, 72
+  orig: 180, 72
+  offset: 0, 0
+  index: -1
+Comp013
+  rotate: false
+  xy: 412, 260
+  size: 180, 72
+  orig: 180, 72
+  offset: 0, 0
+  index: -1
+Comp014
+  rotate: true
+  xy: 460, 332
+  size: 180, 72
+  orig: 180, 72
+  offset: 0, 0
+  index: -1
+Comp015
+  rotate: true
+  xy: 532, 332
+  size: 180, 72
+  orig: 180, 72
+  offset: 0, 0
+  index: -1
+level up_
+  rotate: true
+  xy: 0, 180
+  size: 332, 100
+  orig: 332, 100
+  offset: 0, 0
+  index: -1
+star
+  rotate: true
+  xy: 100, 199
+  size: 133, 132
+  orig: 133, 132
+  offset: 0, 0
+  index: -1

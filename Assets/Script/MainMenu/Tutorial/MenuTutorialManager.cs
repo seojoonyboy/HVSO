@@ -108,6 +108,7 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
         TO_AI_BATTLE = 1,
         TO_BOX_OPEN_HUMAN = 2,
         TO_BOX_OPEN_ORC = 3,
-        TO_HUMAN_STORY = 4
+        MAIN_BUTTON_DESC = 4,
+        TO_HUMAN_STORY = 5
     }
 }

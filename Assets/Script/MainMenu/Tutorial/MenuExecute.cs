@@ -97,6 +97,7 @@ namespace MenuTutorialModules {
         }
 
         public void StartGlow(GameObject target) {
+            Logger.Log("Glow Target : " + target);
             MenuGlow.Instance.StartGlow(target);
         }
     } 
@@ -109,7 +110,6 @@ namespace MenuTutorialModules {
         }
     }
 
-
     public class Menu_NPC_Talk : MenuExecute {
         public Menu_NPC_Talk() : base() { }
 
@@ -119,6 +119,14 @@ namespace MenuTutorialModules {
             MenuMask.Instance.gameObject.SetActive(true);
             menuMask.menuTalkPanel.SetActive(true);
 
+            if(args.Count == 4) {
+                switch(args[3] == "top") {
+
+                }
+            }
+            else {
+
+            }
 
             if (args[2] != "both") {
                 bool isPlayer = args[2] != "enemy";
