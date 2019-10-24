@@ -42,7 +42,7 @@ public class MenuSceneController : MonoBehaviour {
         else
             SetCardNumbersPerDic();
 
-        //menuTutorialManager.StartTutorial(MenuTutorialManager.TutorialType.TO_AI_BATTLE);
+        //menuTutorialManager.StartTutorial(MenuTutorialManager.TutorialType.MAIN_BUTTON_DESC);
         CheckTutorial();    //튜토리얼을 어디서부터 진행해야 하는지 판단
         //menuTutorialManager.StartTutorial(MenuTutorialManager.TutorialType.TO_BOX_OPEN_HUMAN);
         //if(PlayerPrefs.GetString("ReconnectData") != string.Empty) {
