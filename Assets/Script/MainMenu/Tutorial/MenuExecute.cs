@@ -600,6 +600,7 @@ namespace MenuTutorialModules {
         public override void Execute() {
             var menuTutorialManager = GetComponent<MenuTutorialManager>();
             menuTutorialManager.ActiveRewardBoxCanvas();
+            MenuMask.Instance.UnBlockScreen();
             menuTutorialManager.BoxRewardPanel.transform.Find("ExitButton").GetComponent<Button>().onClick.AddListener(onclick);
         }
 
@@ -617,8 +618,6 @@ namespace MenuTutorialModules {
                     else {
                         Logger.Log("Something is wrong");
                     }
-
-                    MenuMask.Instance.UnBlockScreen();
 
                     var resText = response.DataAsText;
                     Response __res = dataModules.JsonReader.Read<Response>(resText);
