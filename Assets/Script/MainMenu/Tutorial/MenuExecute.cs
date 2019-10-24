@@ -119,13 +119,35 @@ namespace MenuTutorialModules {
             MenuMask.Instance.gameObject.SetActive(true);
             menuMask.menuTalkPanel.SetActive(true);
 
-            if(args.Count == 4) {
-                switch(args[3] == "top") {
+            Transform CharacterImage = menuMask.menuTalkPanel.transform.Find("CharacterImage");
+            Vector3 prevCharacterImagePos = CharacterImage.localPosition;
+            Transform MainText = menuMask.menuTalkPanel.transform.Find("MainText");
+            Vector3 prevMainTextPos = MainText.localPosition;
+            Transform NameObject = menuMask.menuTalkPanel.transform.Find("NameObject");
+            Vector3 prevNameObjectPos = NameObject.localPosition;
 
+            Vector3 originPos = menuMask.menuTalkPanel.transform.Find("OriginPos").localPosition;
+            Vector3 originNameObjectPos = menuMask.menuTalkPanel.transform.Find("OriginPosNameObject").localPosition;
+            menuMask.menuTalkPanel.transform.parent.GetComponent<Canvas>().sortingOrder = 83;
+
+            float offsetY = 400f;
+            if (args.Count == 4) {
+                switch (args[3]) {
+                    case "top":
+                        CharacterImage.localPosition = new Vector3(originPos.x, originPos.y + offsetY, prevCharacterImagePos.z);
+                        MainText.localPosition = new Vector3(originPos.x, originPos.y + offsetY, prevMainTextPos.z);
+                        NameObject.localPosition = new Vector3(originNameObjectPos.x, originNameObjectPos.y + offsetY, prevNameObjectPos.z);
+
+                        if (transform.Find("MainMenuGlowCanvas").gameObject.activeSelf) {
+                            menuMask.menuTalkPanel.transform.parent.GetComponent<Canvas>().sortingOrder = 86;
+                        }
+                        break;
                 }
             }
             else {
-
+                CharacterImage.localPosition = originPos;
+                MainText.localPosition = originPos;
+                NameObject.localPosition = originNameObjectPos;
             }
 
             if (args[2] != "both") {
@@ -464,7 +486,7 @@ namespace MenuTutorialModules {
             handler.isDone = true;
 
             IEnumerator Wait() {
-                PlayerPrefs.SetString("SelectedBattleType", "solo");
+                PlayerPrefs.SetString("SelectedBattleType", "tutorial");
                 PlayerPrefs.SetString("PrevTutorial", "AI_Tutorial");
 
                 GetComponent<MenuTutorialManager>()
@@ -628,6 +650,83 @@ namespace MenuTutorialModules {
 
         public class Response {
             public string supplyBox;
+        }
+    }
+
+    public class MainMenuButtonsGlow : MenuExecute {
+        public override void Execute() {
+            GetComponent<MenuTutorialManager>().FixedMenuCanvas.SetActive(false);
+
+            var glowCanvas = transform.Find("MainMenuGlowCanvas");
+            glowCanvas.gameObject.SetActive(true);
+            var bottomPanel = glowCanvas.Find("BottomPanel");
+
+            for(int i=0; i<5; i++) {
+                bottomPanel.GetChild(i).Find("Glow").gameObject.SetActive(true);
+            }
+            handler.isDone = true;
+        }
+    }
+
+    public class OffMainMenuButtonsGlow : MenuExecute {
+        public override void Execute() {
+            if (!GetComponent<MenuTutorialManager>().FixedMenuCanvas.activeSelf) {
+                GetComponent<MenuTutorialManager>().FixedMenuCanvas.SetActive(true);
+            }
+            var glowCanvas = transform.Find("MainMenuGlowCanvas");
+            var bottomPanel = glowCanvas.Find("BottomPanel");
+
+            for (int i = 0; i < 5; i++) {
+                bottomPanel.GetChild(i).Find("Glow").gameObject.SetActive(false);
+            }
+            glowCanvas.gameObject.SetActive(false);
+            handler.isDone = true;
+            glowCanvas.Find("Dimmed").gameObject.SetActive(false);
+        }
+    }
+
+    public class MainMenuButtonGlow : MenuExecute {
+        public override void Execute() {
+            GetComponent<MenuTutorialManager>().FixedMenuCanvas.SetActive(false);
+            Logger.Log("MainMenuButtonGlow : " + args[0]);
+            string buttonName = args[0];
+            int index = 0;
+            switch (buttonName) {
+                case "Card":
+                    index = 0;
+                    break;
+                case "DeckEdit":
+                    index = 1;
+                    break;
+                case "League":
+                    index = 2;
+                    break;
+                case "Store":
+                    index = 3;
+                    break;
+                case "Guild":
+                    index = 4;
+                    break;
+            }
+
+            var glowCanvas = transform.Find("MainMenuGlowCanvas");
+            glowCanvas.gameObject.SetActive(true);
+            var bottomPanel = glowCanvas.Find("BottomPanel");
+            for (int i = 0; i < 5; i++) {
+                if(index == i) {
+                    bottomPanel.GetChild(i).Find("Text").gameObject.SetActive(true);
+                    bottomPanel.GetChild(i).GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+                    bottomPanel.GetChild(i).Find("Image").GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+                    continue;
+                }
+                bottomPanel.GetChild(i).Find("Text").gameObject.SetActive(false);
+                bottomPanel.GetChild(i).Find("Glow").gameObject.SetActive(false);
+                bottomPanel.GetChild(i).GetComponent<Image>().color = new Color32(34, 34, 34, 255);
+                bottomPanel.GetChild(i).Find("Image").GetComponent<Image>().color = new Color32(34, 34, 34, 255);
+            }
+            glowCanvas.Find("Dimmed").gameObject.SetActive(true);
+            bottomPanel.GetChild(index).Find("Glow").gameObject.SetActive(true);
+            handler.isDone = true;
         }
     }
 
