@@ -37,7 +37,7 @@ public class TurnMachine : MonoBehaviour {
 
     private IEnumerator PlayNextTurnSound() {
         yield return new WaitForSeconds(1.0f);
-        SoundManager.Instance.PlaySound(SoundType.NEXT_TURN);
+        SoundManager.Instance.PlayIngameSfx("TurnButton");
     }
 
     private IEnumerator InvokeTurnChanged() {
@@ -60,7 +60,8 @@ public class TurnMachine : MonoBehaviour {
         yield return new WaitForSeconds(1.0f);
         orcPanel.SetActive(false);
 
-        SoundManager.Instance.PlaySound(SoundType.FIRST_TURN);
+        //SoundManager.Instance.PlaySound(SoundType.FIRST_TURN);
+        SoundManager.Instance.PlayIngameSfx("TurnStart");
     }
 
     

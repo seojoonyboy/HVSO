@@ -11,8 +11,9 @@ public class SoundManager : SerializedMonoBehaviour {
     public Dictionary<string, AudioSource> unitSfx;
     public Dictionary<string, AudioSource> magicSfx;
     public Dictionary<string, AudioSource> uiSfx;
+    public Dictionary<string, AudioSource> ingameSfx;
     
-    private static SoundManager _instance;
+    private static SoundManager _instance;  
     public static SoundManager Instance {
         get {
             if (_instance == null) {
@@ -32,6 +33,17 @@ public class SoundManager : SerializedMonoBehaviour {
         _instance = GetComponent<SoundManager>();
         DontDestroyOnLoad(gameObject);    
     }
+
+    public void PlayIngameSfx(string id) {
+        if (!ingameSfx.ContainsKey(id) || ingameSfx[id] == null) {
+            AttackSound(ingameSfx["ac10015"]);
+            return;
+        }
+        if (id == "ac10005")
+            return;
+        PlaySfx(ingameSfx[id]);
+    }
+
     public void PlayMagicSound(string id) {
         if (!magicSfx.ContainsKey(id) || magicSfx[id] == null) {
             AttackSound(magicSfx["ac10015"]);
