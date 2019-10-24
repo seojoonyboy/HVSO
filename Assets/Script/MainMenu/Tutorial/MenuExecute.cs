@@ -683,7 +683,7 @@ namespace MenuTutorialModules {
 
             var glowCanvas = transform.Find("MainMenuGlowCanvas");
             glowCanvas.gameObject.SetActive(true);
-            var bottomPanel = glowCanvas.Find("BottomPanel");
+            var bottomPanel = glowCanvas.Find("InnerCanvas/BottomPanel");
             MenuMask.Instance.transform.Find("Dimmed").gameObject.SetActive(true);
             for(int i=0; i<5; i++) {
                 bottomPanel.GetChild(i).Find("Glow").gameObject.SetActive(true);
@@ -698,7 +698,7 @@ namespace MenuTutorialModules {
                 GetComponent<MenuTutorialManager>().FixedMenuCanvas.SetActive(true);
             }
             var glowCanvas = transform.Find("MainMenuGlowCanvas");
-            var bottomPanel = glowCanvas.Find("BottomPanel");
+            var bottomPanel = glowCanvas.Find("InnerCanvas/BottomPanel");
             MenuMask.Instance.transform.Find("Dimmed").gameObject.SetActive(false);
 
             for (int i = 0; i < 5; i++) {
@@ -736,7 +736,7 @@ namespace MenuTutorialModules {
 
             var glowCanvas = transform.Find("MainMenuGlowCanvas");
             glowCanvas.gameObject.SetActive(true);
-            var bottomPanel = glowCanvas.Find("BottomPanel");
+            var bottomPanel = glowCanvas.Find("InnerCanvas/BottomPanel");
             for (int i = 0; i < 5; i++) {
                 if(index == i) {
                     bottomPanel.GetChild(i).Find("Text").gameObject.SetActive(true);
