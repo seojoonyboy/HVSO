@@ -601,9 +601,6 @@ namespace MenuTutorialModules {
             var menuTutorialManager = GetComponent<MenuTutorialManager>();
             menuTutorialManager.ActiveRewardBoxCanvas();
             menuTutorialManager.BoxRewardPanel.transform.Find("ExitButton").GetComponent<Button>().onClick.AddListener(onclick);
-            
-            //AccountManager.Instance.RequestTutorialBoxReward(callback);
-            handler.isDone = true;
         }
 
         private void callback(HTTPRequest originalRequest, HTTPResponse response) {
