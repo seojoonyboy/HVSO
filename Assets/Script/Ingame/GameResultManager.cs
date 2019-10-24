@@ -58,7 +58,7 @@ public class GameResultManager : MonoBehaviour {
         GameObject heroSpine = transform.Find("FirstWindow/HeroSpine/" + PlayMangement.instance.player.heroID).gameObject;
         heroSpine.SetActive(true);
         iTween.ScaleTo(heroSpine, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.3f));
-        getExp = PlayMangement.instance.socketHandler.result.reward.heroExp;
+        getExp = PlayMangement.instance.socketHandler.result.reward.userExp;
         getSupply = PlayMangement.instance.socketHandler.result.reward.supply;
         additionalSupply = PlayMangement.instance.socketHandler.result.reward.additionalSupply;
 
@@ -129,7 +129,7 @@ public class GameResultManager : MonoBehaviour {
         expSlider.fillAmount = exp / lvExp;
 
         Transform playerExp = transform.Find("SecondWindow/PlayerExp");
-        playerExp.Find("LevelIcon/Value").GetComponent<Text>().text = AccountManager.Instance.userResource.lv.ToString();
+        playerExp.Find("LevelIcon/Value").GetComponent<Text>().text = lv.ToString();
         playerExp.Find("UserName").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userData.nickName;
         playerExp.Find("ExpSlider/ExpValue").GetComponent<TMPro.TextMeshProUGUI>().text = ((int)exp).ToString();
         playerExp.Find("ExpSlider/ExpMaxValue").GetComponent<TMPro.TextMeshProUGUI>().text = "/" + ((int)lvExp).ToString();
@@ -181,6 +181,7 @@ public class GameResultManager : MonoBehaviour {
                 lv++;
                 lvExp = nextLvExp;
                 SkeletonGraphic effect = transform.Find("SecondWindow/PlayerExp/LvUpEffect").GetComponent<SkeletonGraphic>();
+                transform.Find("SecondWindow/PlayerExp/LevelIcon/Value").GetComponent<Text>().text = lv.ToString();
                 effect.gameObject.SetActive(true);
                 effect.Initialize(true);
                 effect.Update(0);
