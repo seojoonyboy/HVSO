@@ -17,6 +17,14 @@ public class BgmController : SerializedMonoBehaviour
         //PlaySoundTrack(BgmEnum.MENU);
     }
 
+    public void SoundTrackLoopOn() {
+        mainAudio.loop = true;
+    }
+
+    public void SoundTrackLoopOff() {
+        mainAudio.loop = false;
+    }
+
 
     public void PlaySoundTrack(BgmEnum type) {
         if (bgmDictionary.ContainsKey(type) == false || bgmDictionary[type] == null) {
