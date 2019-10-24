@@ -45,6 +45,8 @@ public class TextTyping : MonoBehaviour
                 count++;
             }
             else break;
+
+            SoundManager.Instance.PlayIngameSfx("TextTyping");
             yield return new WaitForSeconds(0.02f);
         }
         isTyping = false;

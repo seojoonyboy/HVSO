@@ -65,6 +65,7 @@ public partial class BattleConnector : MonoBehaviour {
         FindObjectOfType<BattleConnectSceneAnimController>().PlayStartBattleAnim();
 
         StopCoroutine(timeCheck);
+        SoundManager.Instance.PlayIngameSfx("GameMatch");
         SetUserInfoText();
         SetSaveGameId();
     }

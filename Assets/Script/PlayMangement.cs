@@ -245,7 +245,8 @@ public partial class PlayMangement : MonoBehaviour {
 
         SocketFormat.Player socketPlayer = (player.isHuman) ? socketHandler.gameState.players.human : socketHandler.gameState.players.orc;
         SocketFormat.Player socketEnemyPlayer = (enemyPlayer.isHuman) ? socketHandler.gameState.players.human : socketHandler.gameState.players.orc;
-                     
+
+        SoundManager.Instance.PlayIngameSfx("GetMana");
         player.resource.Value = socketPlayer.resource;
         enemyPlayer.resource.Value = socketEnemyPlayer.resource;
     }
@@ -949,6 +950,7 @@ public partial class PlayMangement {
             enemyCard.transform.localScale = new Vector3(1, 1, 1);
             iTween.MoveTo(enemyCard, enemyCard.transform.parent.position, 0.3f);
             yield return new WaitForSeconds(0.3f);
+            SoundManager.Instance.PlayIngameSfx("CardDraw");
             enemyCard.SetActive(false);
             enemyPlayer.playerUI.transform.Find("CardCount").GetChild(1).gameObject.GetComponent<Text>().text = (i + 1).ToString();
             i++;
@@ -968,6 +970,7 @@ public partial class PlayMangement {
             iTween.MoveTo(enemyCard, enemyCard.transform.parent.position, 0.15f);
             yield return new WaitForSeconds(0.15f);
             enemyCard.SetActive(false);
+            SoundManager.Instance.PlayIngameSfx("CardDraw");
             enemyPlayer.playerUI.transform.Find("CardCount").GetChild(1).gameObject.GetComponent<Text>().text = (i + 1).ToString();
         }
     }
@@ -986,6 +989,7 @@ public partial class PlayMangement {
         enemyCard.transform.position = player.cdpm.cardSpawnPos.position;
         enemyCard.transform.localScale = new Vector3(1, 1, 1);
         iTween.MoveTo(enemyCard, enemyCard.transform.parent.position, 0.3f);
+        SoundManager.Instance.PlayIngameSfx("CardDraw");
         enemyCard.SetActive(true);
         int count = CountEnemyCard();
         enemyPlayer.playerUI.transform.Find("CardCount").GetChild(1).gameObject.GetComponent<Text>().text = (count).ToString();
@@ -1002,6 +1006,7 @@ public partial class PlayMangement {
                 enemyCard = Instantiate(Resources.Load("Prefabs/OrcBackCard") as GameObject, enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(CountEnemyCard()));
             enemyCard.transform.position = player.cdpm.cardSpawnPos.position;
             enemyCard.transform.localScale = new Vector3(1, 1, 1);
+            SoundManager.Instance.PlayIngameSfx("CardDraw");
             iTween.MoveTo(enemyCard, enemyCard.transform.parent.position, 0.3f);
             enemyCard.SetActive(true);
             int count = CountEnemyCard();
