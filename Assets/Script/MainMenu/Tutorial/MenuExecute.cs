@@ -598,7 +598,8 @@ namespace MenuTutorialModules {
 
     public class BoxOpenProcess : MenuExecute {
         public override void Execute() {
-            AccountManager.Instance.RequestTutorialBoxReward(callback);
+            //AccountManager.Instance.RequestTutorialBoxReward(callback);
+            handler.isDone = true;
         }
 
         private void callback(HTTPRequest originalRequest, HTTPResponse response) {
