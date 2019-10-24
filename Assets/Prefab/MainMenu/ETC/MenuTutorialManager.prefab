@@ -7736,7 +7736,7 @@ MonoBehaviour:
       Data: 321|MenuTutorialManager+Method, Assembly-CSharp
     - Name: name
       Entry: 1
-      Data: EndTutorial
+      Data: StartMainMenuBtnTutorial
     - Name: args
       Entry: 7
       Data: 322|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
@@ -8566,7 +8566,7 @@ MonoBehaviour:
       Data: 383|MenuTutorialManager+Method, Assembly-CSharp
     - Name: name
       Entry: 1
-      Data: EndTutorial
+      Data: StartMainMenuBtnTutorial
     - Name: args
       Entry: 7
       Data: 384|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
