@@ -60,6 +60,10 @@ public class NPC_Print_message : ScenarioExecute {
         if (args[2] == "true")
             isPlayer = true;
 
+        if (args.Count > 3 && args[3] == "Top")
+            scenarioMask.talkingText.transform.position = scenarioMask.textUP.transform.position;
+
+        scenarioMask.talkingText.transform.position = scenarioMask.textDown.transform.position;
         scenarioMask.talkingText.transform.Find("CharacterImage/Player").gameObject.SetActive(isPlayer);
         scenarioMask.talkingText.transform.Find("CharacterImage/Enemy").gameObject.SetActive(!isPlayer);
         scenarioMask.talkingText.transform.Find("NameObject/PlayerName").gameObject.SetActive(isPlayer);
