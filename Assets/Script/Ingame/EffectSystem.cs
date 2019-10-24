@@ -274,7 +274,6 @@ public class EffectSystem : SerializedMonoBehaviour {
     }
 
 
-
     private void OnDestroy() {
         Instance = null;
     }

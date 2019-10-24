@@ -60,14 +60,21 @@ public class NPC_Print_message : ScenarioExecute {
         if (args[2] == "true")
             isPlayer = true;
 
+
+        scenarioMask.talkingText.transform.position = scenarioMask.textDown.transform.position;
         if (args.Count > 3 && args[3] == "Top")
             scenarioMask.talkingText.transform.position = scenarioMask.textUP.transform.position;
 
-        scenarioMask.talkingText.transform.position = scenarioMask.textDown.transform.position;
+        scenarioMask.talkingText.transform.Find("Panel").gameObject.SetActive(true);
+        if (args.Count > 3 && args[3] == "maskOff")
+            scenarioMask.talkingText.transform.Find("Panel").gameObject.SetActive(false);
+
+        
         scenarioMask.talkingText.transform.Find("CharacterImage/Player").gameObject.SetActive(isPlayer);
         scenarioMask.talkingText.transform.Find("CharacterImage/Enemy").gameObject.SetActive(!isPlayer);
         scenarioMask.talkingText.transform.Find("NameObject/PlayerName").gameObject.SetActive(isPlayer);
         scenarioMask.talkingText.transform.Find("NameObject/EnemyName").gameObject.SetActive(!isPlayer);
+        
         if (isPlayer) {
             scenarioMask.talkingText.transform.Find("CharacterImage/Player").GetComponent<Image>().sprite = AccountManager.Instance.resource.ScenarioUnitResurce[args[0]].sprite;
             scenarioMask.talkingText.transform.Find("NameObject/PlayerName").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.resource.ScenarioUnitResurce[args[0]].name;
@@ -112,7 +119,16 @@ public class Highlight : ScenarioExecute {
     private void Glowing(string ID) {
         scenarioMask.CardDeckGlow(ID);
     }
+}
 
+
+public class Till_On : ScenarioExecute {
+    public Till_On() : base() { }
+
+    public override void Execute() {
+        scenarioMask.TillOn();
+        handler.isDone = true;
+    }
 }
 
 public class Wait_until : ScenarioExecute {
@@ -201,8 +217,9 @@ public class Wait_click : ScenarioExecute {
             if (args.Count > 1 && args[1] == "off") {
                 scenarioMask.StopEveryHighlight();
                 scenarioMask.HideText();
+                
             }
-
+            scenarioMask.TillOff();
             handler.isDone = true;
         }
         else {

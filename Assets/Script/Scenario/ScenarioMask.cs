@@ -38,6 +38,8 @@ public class ScenarioMask : SerializedMonoBehaviour
     public GameObject glowObject;
     public Sprite arrowSprite;
 
+    public GameObject tilledObject;
+
     public void GetMaskHighlight(GameObject targetObject) {
         if (targetObject == null) return;
         ActiveMask();
@@ -86,7 +88,13 @@ public class ScenarioMask : SerializedMonoBehaviour
         blockTurnBtn.SetActive(false);
     }
 
+    public void TillOn() {
+        tilledObject.SetActive(true);
+    }
 
+    public void TillOff() {
+        tilledObject.SetActive(false);
+    }
 
 
     public GameObject GetMaskingObject(string main, string sub = null, string third = null) {
@@ -143,7 +151,7 @@ public class ScenarioMask : SerializedMonoBehaviour
                 }
                 if (main == "mana") {
                     if (sub == "my") {
-                        maskObject = PlayMangement.instance.player.playerUI.transform.Find("PlayerResource/Cost").gameObject;
+                        maskObject = PlayMangement.instance.player.playerUI.transform.Find("PlayerResource/Cost_dummy").gameObject;
                     }
                 }
                 if (main == "field") {
@@ -448,22 +456,21 @@ public class ScenarioMask : SerializedMonoBehaviour
                 glowRect.localScale = Vector3.one;
                 pos.y -= 1f;
             }
-            glowImage.sprite = arrowSprite;
+            glowImage.sprite = (getObject.GetComponent<Image>() != null) ? getObject.GetComponent<Image>().sprite : defaultGlow.GetComponent<Image>().sprite;
             glowRect.sizeDelta = getObject.GetComponent<RectTransform>().sizeDelta;
-            glowRect.position = pos;
+            glowRect.position = getObject.transform.position;
+            glowRect.localScale = getObject.transform.localScale;
             //glowObject.GetComponent<Animation>().clip = glowObject.GetComponent<Animation>().GetClip("RedGlow");
 
-            GameObject anotherGlowObject = GetUnactiveGlow();
-            RectTransform anotherRect = anotherGlowObject.GetComponent<RectTransform>();
-            Image anotherImage = anotherGlowObject.GetComponent<Image>();
-            anotherRect.gameObject.SetActive(true);
-            anotherRect.position = getObject.transform.position;
-            anotherRect.localScale = getObject.transform.localScale;
-            anotherRect.sizeDelta = getObject.GetComponent<RectTransform>().sizeDelta;
-            Debug.Log(anotherRect.sizeDelta);
-            anotherImage.sprite = (getObject.GetComponent<Image>() != null) ? getObject.GetComponent<Image>().sprite : defaultGlow.GetComponent<Image>().sprite;
-            UnityEngine.Animation anothoerAnimation = anotherGlowObject.GetComponent<UnityEngine.Animation>();
-            anothoerAnimation.Play();
+            //GameObject anotherGlowObject = GetUnactiveGlow();
+            //RectTransform anotherRect = anotherGlowObject.GetComponent<RectTransform>();
+            //Image anotherImage = anotherGlowObject.GetComponent<Image>();
+            //anotherRect.gameObject.SetActive(true);
+            //anotherRect.position = getObject.transform.position;
+            //anotherRect.localScale = getObject.transform.localScale;
+            //anotherRect.sizeDelta = getObject.GetComponent<RectTransform>().sizeDelta;
+            //UnityEngine.Animation anothoerAnimation = anotherGlowObject.GetComponent<UnityEngine.Animation>();
+            //anothoerAnimation.Play();
 
         }
         else {

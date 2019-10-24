@@ -1,0 +1,111 @@
+
+tutorial_ac10002.png
+size: 1024,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+L_leg
+  rotate: false
+  xy: 541, 1
+  size: 54, 78
+  orig: 54, 78
+  offset: 0, 0
+  index: -1
+L_low_arm
+  rotate: false
+  xy: 0, 12
+  size: 206, 67
+  orig: 206, 67
+  offset: 0, 0
+  index: -1
+L_upper_arm
+  rotate: false
+  xy: 773, 0
+  size: 89, 96
+  orig: 89, 96
+  offset: 0, 0
+  index: -1
+R_arm
+  rotate: true
+  xy: 649, 7
+  size: 89, 124
+  orig: 89, 124
+  offset: 0, 0
+  index: -1
+R_leg
+  rotate: false
+  xy: 595, 1
+  size: 54, 78
+  orig: 54, 78
+  offset: 0, 0
+  index: -1
+ac
+  rotate: false
+  xy: 852, 187
+  size: 45, 64
+  orig: 45, 64
+  offset: 0, 0
+  index: -1
+arrow_ac
+  rotate: true
+  xy: 609, 96
+  size: 155, 127
+  orig: 155, 127
+  offset: 0, 0
+  index: -1
+arrow_oj
+  rotate: true
+  xy: 381, 22
+  size: 57, 160
+  orig: 57, 160
+  offset: 0, 0
+  index: -1
+body
+  rotate: true
+  xy: 736, 132
+  size: 119, 116
+  orig: 119, 116
+  offset: 0, 0
+  index: -1
+dust
+  rotate: true
+  xy: 736, 96
+  size: 36, 38
+  orig: 36, 38
+  offset: 0, 0
+  index: -1
+helmet
+  rotate: false
+  xy: 0, 79
+  size: 153, 172
+  orig: 153, 172
+  offset: 0, 0
+  index: -1
+helmet_2
+  rotate: false
+  xy: 153, 79
+  size: 152, 172
+  orig: 152, 172
+  offset: 0, 0
+  index: -1
+helmet_3
+  rotate: false
+  xy: 305, 79
+  size: 152, 172
+  orig: 152, 172
+  offset: 0, 0
+  index: -1
+helmet_4
+  rotate: false
+  xy: 457, 79
+  size: 152, 172
+  orig: 152, 172
+  offset: 0, 0
+  index: -1
+shadow
+  rotate: false
+  xy: 206, 21
+  size: 175, 58
+  orig: 175, 58
+  offset: 0, 0
+  index: -1
