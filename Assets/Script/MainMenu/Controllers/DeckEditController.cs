@@ -510,6 +510,7 @@ public class DeckEditController : MonoBehaviour
                 else
                     settedCard.SETNUM = myCards.data[card.id].cardCount;
                 settedCard.DrawCard(card.cardId, isHuman);
+                settedCard.SetSetNum();
                 setCardNum += settedCard.SETNUM;
                 setCardList.Add(card.cardId, settedCard.gameObject);
                 settedCardNum++;
