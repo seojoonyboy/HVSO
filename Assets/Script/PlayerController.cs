@@ -101,6 +101,8 @@ public class PlayerController : MonoBehaviour
                 PlayMangement.instance.socketHandler.gameState.players.enemyPlayer(isHuman).user.nickName;
         }
 
+        
+
         SetPlayerHero(isHuman);
         if (!isPlayer)
             transform.Find("FightSpine").localPosition = new Vector3(0, 3, 0);
@@ -117,7 +119,10 @@ public class PlayerController : MonoBehaviour
     public void SetPlayerHero(bool isHuman, string heroID = "") {
         string id;
         GameObject hero;
-        if(isHuman == true) 
+        if (ScenarioGameManagment.scenarioInstance != null &&  isPlayer == false && isHuman == true)
+            heroID = "hac10002";
+
+        if (isHuman == true) 
             id = (string.IsNullOrEmpty(heroID)) ? "h10001" : heroID;        
         else 
             id = (string.IsNullOrEmpty(heroID)) ? "h10002" : heroID;

@@ -40,6 +40,8 @@ public partial class PlayMangement : MonoBehaviour {
     public static bool dragable = true;
     public string currentTurn;
 
+    
+
     public bool skillAction = false;
     public victoryModule.VictoryCondition matchRule;
     public bool stopBattle = false;
@@ -92,6 +94,8 @@ public partial class PlayMangement : MonoBehaviour {
         else
             PlayerSetHPData(20, 20);
     }
+
+    
 
 
     public void SetGameData(string match = null) {
