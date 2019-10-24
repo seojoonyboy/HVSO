@@ -71,6 +71,7 @@ public partial class PlayMangement : MonoBehaviour {
         SetCamera();
     }
     private void OnDestroy() {
+        SoundManager.Instance.bgmController.SoundTrackLoopOn();
         instance = null;
         if (socketHandler != null)
             Destroy(socketHandler.gameObject);

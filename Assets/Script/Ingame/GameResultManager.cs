@@ -61,6 +61,7 @@ public class GameResultManager : MonoBehaviour {
         getExp = PlayMangement.instance.socketHandler.result.reward.userExp;
         getSupply = PlayMangement.instance.socketHandler.result.reward.supply;
         additionalSupply = PlayMangement.instance.socketHandler.result.reward.additionalSupply;
+        SoundManager.Instance.bgmController.SoundTrackLoopOff();
 
         SkeletonGraphic backSpine;
         SkeletonGraphic frontSpine;

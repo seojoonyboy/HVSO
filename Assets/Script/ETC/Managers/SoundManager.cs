@@ -101,6 +101,8 @@ public class SoundManager : SerializedMonoBehaviour {
         StartCoroutine(SoundAfterOff(sfxSource, soundObject));
     }
 
+
+
     //미사용 오브젝트 찾기
     private GameObject GetUnusedAudio() {
         foreach(Transform child in gameObject.transform) {
