@@ -80,7 +80,7 @@ public partial class PlayMangement : MonoBehaviour {
         SetBackGround();
         SetPlayerCard();
 
-        BgmController.BgmEnum soundTrack = (player.isHuman == true) ? BgmController.BgmEnum.FOREST : BgmController.BgmEnum.CITY;
+        BgmController.BgmEnum soundTrack =  BgmController.BgmEnum.CITY;
         SoundManager.Instance.bgmController.PlaySoundTrack(soundTrack);
         //StartCoroutine(DisconnectTest());
     }

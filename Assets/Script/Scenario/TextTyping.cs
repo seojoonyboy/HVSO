@@ -37,6 +37,7 @@ public class TextTyping : MonoBehaviour
         int count = 0;
         textObj.text = "";
         while(true) {
+            SoundManager.Instance.PlayIngameSfx("TextTyping");
             if (count < num) {
                 if (typingText[count].ToString() == "|") 
                     textObj.text += "<br>";
@@ -44,9 +45,7 @@ public class TextTyping : MonoBehaviour
                     textObj.text += typingText[count];
                 count++;
             }
-            else break;
-
-            SoundManager.Instance.PlayIngameSfx("TextTyping");
+            else break;            
             yield return new WaitForSeconds(0.02f);
         }
         isTyping = false;
