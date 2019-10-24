@@ -376,6 +376,10 @@ public partial class BattleConnector : MonoBehaviour {
 
     public void begin_end_game(object args, int? id) {
         Time.timeScale = 1f;
+        if(ScenarioGameManagment.scenarioInstance == null) {
+            PlayMangement.instance.player.GetComponent<IngameTimer>().EndTimer();
+            PlayMangement.instance.enemyPlayer.GetComponent<IngameTimer>().EndTimer();
+        }
         JObject jobject = (JObject)args;
         result = JsonConvert.DeserializeObject<ResultFormat>(jobject.ToString());
 
