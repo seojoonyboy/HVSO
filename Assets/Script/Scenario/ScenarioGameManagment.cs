@@ -72,8 +72,6 @@ public class ScenarioGameManagment : PlayMangement {
     void Start() {
         SetBackGround();
 
-        settingModal.SetActive(true);
-
         bool isHuman = PlayMangement.instance.player.isHuman;
         ChallengerHandler challengerHandler = gameObject.AddComponent<ChallengerHandler>();
         challengerHandler.Init(

@@ -248,7 +248,6 @@ public class MenuSceneController : MonoBehaviour {
                     PlayerPrefs.SetInt("isFirst", 0);
                 }
                 else {
-                    if(newbiLoadingModal != null) Destroy(newbiLoadingModal);
                     //튜토리얼 남았음
                     AccountManager.etcInfo tutorialCleared = etcInfos.Find(x => x.key == "tutorialCleared");
                     if (tutorialCleared == null) {
