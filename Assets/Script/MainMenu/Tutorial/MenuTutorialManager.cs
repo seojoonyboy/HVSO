@@ -37,7 +37,7 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
         }
         
         selectedTutorialData = sets[(int)type];
-        executeHandler = gameObject.AddComponent<MenuExecuteHandler>();
+        if(executeHandler == null) executeHandler = gameObject.AddComponent<MenuExecuteHandler>();
 
         if (executeHandler == null) return;
         executeHandler.Initialize(selectedTutorialData);
