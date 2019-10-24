@@ -57,7 +57,7 @@ namespace MenuTutorialModules {
 
         private void CheckButton() {
             clickStream.Dispose();
-            MenuGlow.Instance.StopEveryGlow();
+            //MenuGlow.Instance.StopEveryGlow();
             handler.isDone = true;
         }
 
@@ -98,7 +98,7 @@ namespace MenuTutorialModules {
 
         public void StartGlow(GameObject target) {
             Logger.Log("Glow Target : " + target);
-            MenuGlow.Instance.StartGlow(target);
+            //MenuGlow.Instance.StartGlow(target);
         }
     } 
 
@@ -106,7 +106,7 @@ namespace MenuTutorialModules {
         public Stop_Menu_Glowing() : base() { }
 
         public override void Execute() {
-            MenuGlow.Instance.StopEveryGlow();
+            //MenuGlow.Instance.StopEveryGlow();
         }
     }
 
