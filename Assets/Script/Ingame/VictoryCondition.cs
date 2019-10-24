@@ -80,11 +80,11 @@ namespace victoryModule {
 
             if (player.HP.Value <= 0) {
                 resultManager.SetResultWindow("lose", player.isHuman);
-                SetResultBgm("lose");
+                //SetResultBgm("lose");
             }
             else if (enemyPlayer.HP.Value <= 0) {
                 resultManager.SetResultWindow("win", player.isHuman);
-                SetResultBgm("win");
+                //SetResultBgm("win");
             }
 
             
