@@ -118,6 +118,7 @@ public class Modal : MonoBehaviour {
 	}
 
 	private void CloseButton() {
+		SoundManager.Instance.PlaySound("button_1");
 		Destroy(gameObject);
 	}
 

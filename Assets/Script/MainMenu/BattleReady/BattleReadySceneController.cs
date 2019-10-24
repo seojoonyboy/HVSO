@@ -93,10 +93,11 @@ public class BattleReadySceneController : MonoBehaviour {
         HudController.SetHeader(HUDController.Type.SHOW_USER_INFO);
 
         gameObject.SetActive(false);
+        SoundManager.Instance.PlaySound("button_1");
     }
 
     public void ChangeBattleType(BattleType type) {
-        SoundManager.Instance.PlaySound(SoundType.FIRST_TURN);
+        SoundManager.Instance.PlaySound("button_1");
         selectedBattleType = type;
     }
 

@@ -68,6 +68,7 @@ public class MenuHeroInfo : MonoBehaviour
     }
 
     public void OpenClassWindow() {
+        SoundManager.Instance.PlaySound("button_1");
         transform.Find("Buttons/ClassBtn/UnSelected").gameObject.SetActive(false);
         transform.Find("Buttons/SkillBtn/UnSelected").gameObject.SetActive(true);
         transform.Find("Buttons/AbillityBtn/UnSelected").gameObject.SetActive(true);
@@ -76,6 +77,7 @@ public class MenuHeroInfo : MonoBehaviour
     }
 
     public void OpenSkillWindow() {
+        SoundManager.Instance.PlaySound("button_1");
         transform.Find("Buttons/ClassBtn/UnSelected").gameObject.SetActive(true);
         transform.Find("Buttons/SkillBtn/UnSelected").gameObject.SetActive(false);
         transform.Find("Buttons/AbillityBtn/UnSelected").gameObject.SetActive(true);
@@ -94,6 +96,7 @@ public class MenuHeroInfo : MonoBehaviour
     }
 
     public void OpenHeroDialog(bool open) {
+        SoundManager.Instance.PlaySound("button_1");
         transform.Find("HeroDialog").gameObject.SetActive(open);
     }   
 }

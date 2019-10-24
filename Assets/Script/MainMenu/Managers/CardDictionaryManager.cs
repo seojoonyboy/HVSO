@@ -70,12 +70,14 @@ public class CardDictionaryManager : MonoBehaviour {
     }
 
     public void SetToHumanCards() {
+        SoundManager.Instance.PlaySound("button_1");
         isHumanDictionary = true;
         transform.Find("BackgroundImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.campBackgrounds["human"];
         SetCardsByClass();
     }
 
     public void SetToOrcCards() {
+        SoundManager.Instance.PlaySound("button_1");
         isHumanDictionary = false;
         transform.Find("BackgroundImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.campBackgrounds["orc"];
         SetCardsByClass();
@@ -109,6 +111,7 @@ public class CardDictionaryManager : MonoBehaviour {
     }
 
     public void OpenSortModal() {
+        SoundManager.Instance.PlaySound("button_1");
         sortingModal.gameObject.SetActive(true);
         for (int i = 0; i < 5; i++)
             sortingModal.Find("Buttons").GetChild(i).GetChild(0).gameObject.SetActive(true);
@@ -199,6 +202,7 @@ public class CardDictionaryManager : MonoBehaviour {
     }
 
     public void ApplySortting() {
+        SoundManager.Instance.PlaySound("button_1");
         AccountManager.Instance.dicInfo.sortingState = selectedSortOption;
         switch (selectedSortOption) {
             case SortingOptions.CLASS:
@@ -384,6 +388,7 @@ public class CardDictionaryManager : MonoBehaviour {
     }
 
     public void StartClick(string heroId) {
+        SoundManager.Instance.PlaySound("button_1");
         clickTime = Time.time;
         StartCoroutine(WaitForOpenInfo(heroId));
     }
@@ -518,6 +523,7 @@ public class CardDictionaryManager : MonoBehaviour {
     }
 
     public void OpenHeroInfoWIndow(string heroId) {
+        SoundManager.Instance.PlaySound("button_1");
         heroInfoWindow.SetHeroInfoWindow(heroId);
         heroInfoWindow.transform.parent.gameObject.SetActive(true);
         heroInfoWindow.gameObject.SetActive(true);
@@ -528,6 +534,7 @@ public class CardDictionaryManager : MonoBehaviour {
     }
 
     public void ExitDictionaryScene() {
+        SoundManager.Instance.PlaySound("button_1");
         MenuSceneController.menuSceneController.CloseDictionary();
     }
 }
