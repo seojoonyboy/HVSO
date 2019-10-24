@@ -143,14 +143,13 @@ public class GameResultManager : MonoBehaviour {
         playerSup.Find("ExpSlider/SupValue").GetComponent<TMPro.TextMeshProUGUI>().text = supply.ToString();
         yield return new WaitForSeconds(0.1f);
         iTween.ScaleTo(transform.Find("SecondWindow/Buttons").gameObject, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.5f));
-        yield return new WaitForSeconds(0.3f);
         if (getExp > 0) {
+            yield return new WaitForSeconds(0.5f);
             yield return StartCoroutine(GetUserExp(expSlider));
-            yield return new WaitForSeconds(0.3f);
         }
         if (getSupply + additionalSupply > 0) {
+            yield return new WaitForSeconds(0.5f);
             yield return StartCoroutine(GetUserSupply(playerSup.Find("ExpSlider/SliderValue").GetComponent<Image>(), getSupply, additionalSupply));
-            yield return new WaitForSeconds(0.3f);
         }
 
         //if (supply > 0) {
@@ -180,16 +179,12 @@ public class GameResultManager : MonoBehaviour {
             lvUpValueText.text = " / " + ((int)lvExp).ToString();
             if (exp == (int)lvExp) {
                 lv++;
-                //transform.Find("RankGage/LevelImage/LevelText").GetComponent<TMPro.TextMeshProUGUI>().text = lv.ToString();
                 lvExp = nextLvExp;
-                slider.transform.localScale = new Vector3(1.1f, 1.1f, 1.1f);
-                yield return new WaitForSeconds(0.2f);
-                slider.transform.localScale = Vector3.one;
-                yield return new WaitForSeconds(0.2f);
-                slider.transform.localScale = new Vector3(1.1f, 1.1f, 1.1f);
-                yield return new WaitForSeconds(0.2f);
-                slider.transform.localScale = Vector3.one;
-                yield return new WaitForSeconds(0.3f);
+                SkeletonGraphic effect = transform.Find("SecondWindow/PlayerExp/LvUpEffect").GetComponent<SkeletonGraphic>();
+                effect.gameObject.SetActive(true);
+                effect.Initialize(true);
+                effect.Update(0);
+                effect.AnimationState.SetAnimation(0, "animation", false);
                 slider.fillAmount = 0;
                 exp = 0;
                 expValueText.text = ((int)exp).ToString();
@@ -263,6 +258,7 @@ public class GameResultManager : MonoBehaviour {
                 yield return new WaitForSeconds(0.01f);
             }
         }
+        boxSpine.AnimationState.SetAnimation(0, "01.vibration0", true);
         EndRewardLoad.Invoke();
     }
 }
