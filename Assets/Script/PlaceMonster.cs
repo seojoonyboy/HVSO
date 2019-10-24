@@ -158,7 +158,7 @@ public class PlaceMonster : MonoBehaviour {
             return;
         }
         SpriteRenderer iconImage = transform.Find("UnitAttackProperty/StatIcon").GetComponent<SpriteRenderer>();
-        iconImage.sprite = (unit.attackType.Length > 1) ? AccountManager.Instance.resource.skillIcons["fusion"] : AccountManager.Instance.resource.skillIcons[unit.attackType[0]];
+        iconImage.sprite = (unit.attackType.Length > 1) ? AccountManager.Instance.resource.skillIcons["complex"] : AccountManager.Instance.resource.skillIcons[unit.attackType[0]];
     }
 
     public void AddAttackProperty(string status) {
