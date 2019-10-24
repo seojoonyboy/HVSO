@@ -60,6 +60,7 @@ public class GameResultManager : MonoBehaviour {
                     frontSpine = transform.Find("FirstWindow/FrontSpine/WinningFront").GetComponent<SkeletonGraphic>();
                     transform.Find("SecondWindow/BackSpine/WinningBack").gameObject.SetActive(true);
                     transform.Find("SecondWindow/FrontSpine/WinningFront").gameObject.SetActive(true);
+                    SoundManager.Instance.bgmController.PlaySoundTrack(BgmController.BgmEnum.VICTORY);
                 }
                 break;
             case "lose": {
@@ -70,6 +71,7 @@ public class GameResultManager : MonoBehaviour {
                     frontSpine = transform.Find("FirstWindow/FrontSpine/LosingFront").GetComponent<SkeletonGraphic>();
                     transform.Find("SecondWindow/BackSpine/LosingBack").gameObject.SetActive(true);
                     transform.Find("SecondWindow/FrontSpine/LosingFront").gameObject.SetActive(true);
+                    SoundManager.Instance.bgmController.PlaySoundTrack(BgmController.BgmEnum.DEFEAT);
                 }
                 break;
             default:
