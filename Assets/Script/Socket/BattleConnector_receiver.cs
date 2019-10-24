@@ -82,6 +82,7 @@ public partial class BattleConnector : MonoBehaviour {
     /// </summary>
     private void SetUserInfoText() {
         string race = PlayerPrefs.GetString("SelectedRace").ToLower();
+        string mode = PlayerPrefs.GetString("SelectedBattleType");
 
         var orcPlayerData = gameState.players.orc;
         var orcUserData = orcPlayerData.user;
@@ -105,21 +106,29 @@ public partial class BattleConnector : MonoBehaviour {
         Text playerNickNameTxt = machine.transform.Find("PlayerName/NickName").GetComponent<Text>();
         Text playerHeroNameTxt = machine.transform.Find("PlayerName/HeroName").GetComponent<Text>();
 
+
+        
+
+
         Logger.Log(race);
 
         if (race == "human") {
             playerHeroNameTxt.text = humanHeroName;
             playerNickNameTxt.text = humanPlayerNickName;
 
-            enemyHeroNameTxt.text = orcHeroName;
-            enemyNickNameTxt.text = orcPlayerNickName;
+            enemyHeroNameTxt.text =  orcHeroName;
+            enemyNickNameTxt.text =  orcPlayerNickName;
         }
         else if (race == "orc") {
             playerHeroNameTxt.text = orcHeroName;
             playerNickNameTxt.text = orcPlayerNickName;
 
-            enemyHeroNameTxt.text = humanHeroName;
-            enemyNickNameTxt.text = humanPlayerNickName;
+            enemyHeroNameTxt.text = (mode == "story") ? "제식궁수" : humanHeroName;
+            enemyNickNameTxt.text = (mode == "story") ? "제식궁수" : humanPlayerNickName;
+
+            if (mode == "story")
+                machine.transform.Find("EnemyCharacter/EnemyZerod").gameObject.GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite["hac10002"];
+
         }
         timer.text = null;
         returnButton.onClick.RemoveListener(BattleCancel);
