@@ -119,13 +119,11 @@ public class MenuSceneController : MonoBehaviour {
             battleReadyPanel.SetActive(false);
             hudController.SetHeader(HUDController.Type.SHOW_USER_INFO);
         });
-        SoundManager.Instance.PlaySound(SoundType.FIRST_TURN);
     }
 
     public void OnStoryClicked() {
         //FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MISSION_SELECT_SCENE);
         storyLobbyPanel.SetActive(true);
-        SoundManager.Instance.PlaySound(SoundType.FIRST_TURN);
     }
 
     public void ClickMenuButton(int pageNum) {

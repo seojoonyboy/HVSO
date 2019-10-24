@@ -4,93 +4,86 @@ size: 1024,1024
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-Background
-  rotate: false
-  xy: 714, 56
-  size: 162, 288
-  orig: 162, 288
-  offset: 0, 0
-  index: -1
 Glow11
   rotate: true
-  xy: 758, 696
+  xy: 758, 560
   size: 78, 79
   orig: 78, 79
   offset: 0, 0
   index: -1
 Glow22
   rotate: false
-  xy: 912, 888
+  xy: 912, 752
   size: 40, 40
   orig: 40, 40
   offset: 0, 0
   index: -1
 Glow_1
   rotate: false
-  xy: 0, 342
+  xy: 0, 206
   size: 586, 586
   orig: 586, 586
   offset: 0, 0
   index: -1
 bax_nomal_bottom
   rotate: true
-  xy: 586, 648
+  xy: 586, 512
   size: 280, 172
   orig: 280, 172
   offset: 0, 0
   index: -1
 bax_nomal_bottom2
   rotate: false
-  xy: 586, 476
+  xy: 586, 340
   size: 280, 172
   orig: 280, 172
   offset: 0, 0
   index: -1
 box_light
   rotate: false
-  xy: 758, 774
+  xy: 758, 638
   size: 154, 154
   orig: 154, 154
   offset: 0, 0
   index: -1
 box_nomal_upside
   rotate: false
-  xy: 0, 136
+  xy: 0, 0
   size: 355, 206
   orig: 355, 206
   offset: 0, 0
   index: -1
 box_open_ac
   rotate: false
-  xy: 837, 746
+  xy: 837, 610
   size: 137, 28
   orig: 137, 28
   offset: 0, 0
   index: -1
 box_open_upside
   rotate: false
-  xy: 355, 154
+  xy: 355, 18
   size: 359, 188
   orig: 359, 188
   offset: 0, 0
   index: -1
 light
   rotate: false
-  xy: 355, 0
+  xy: 714, 54
   size: 154, 154
   orig: 154, 154
   offset: 0, 0
   index: -1
 ring_1
   rotate: false
-  xy: 586, 344
+  xy: 586, 208
   size: 132, 132
   orig: 132, 132
   offset: 0, 0
   index: -1
 ring_2
   rotate: false
-  xy: 718, 347
+  xy: 718, 211
   size: 129, 129
   orig: 129, 129
   offset: 0, 0

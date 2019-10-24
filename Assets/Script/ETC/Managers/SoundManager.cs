@@ -10,6 +10,7 @@ public class SoundManager : SerializedMonoBehaviour {
     public Dictionary<SoundType, AudioSource> sounds;
     public Dictionary<string, AudioSource> unitSfx;
     public Dictionary<string, AudioSource> magicSfx;
+    public Dictionary<string, AudioSource> uiSfx;
     
     private static SoundManager _instance;
     public static SoundManager Instance {
@@ -68,6 +69,14 @@ public class SoundManager : SerializedMonoBehaviour {
             return;
         }
         PlaySfx(sounds[type]);
+    }
+
+    public void PlaySound(string sound_name) {
+        if(!uiSfx.ContainsKey(sound_name) || uiSfx[sound_name] == null) {
+            Logger.LogError(string.Format("{0}에 대한 음원을 찾을 수 없습니다.", sound_name));
+            return;
+        }
+        PlaySfx(uiSfx[sound_name]);
     }
 
     private void PlaySfx(AudioSource sfxSource) {
