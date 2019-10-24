@@ -706,7 +706,7 @@ namespace MenuTutorialModules {
             }
             glowCanvas.gameObject.SetActive(false);
             handler.isDone = true;
-            glowCanvas.Find("Dimmed").gameObject.SetActive(false);
+            glowCanvas.Find("InnerCanvas/Dimmed").gameObject.SetActive(false);
         }
     }
 
@@ -749,7 +749,7 @@ namespace MenuTutorialModules {
                 bottomPanel.GetChild(i).GetComponent<Image>().color = new Color32(34, 34, 34, 255);
                 bottomPanel.GetChild(i).Find("Image").GetComponent<Image>().color = new Color32(34, 34, 34, 255);
             }
-            glowCanvas.Find("Dimmed").gameObject.SetActive(true);
+            glowCanvas.Find("InnerCanvas/Dimmed").gameObject.SetActive(true);
             bottomPanel.GetChild(index).Find("Glow").gameObject.SetActive(true);
             handler.isDone = true;
         }
