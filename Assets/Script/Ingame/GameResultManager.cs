@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Spine;
 using Spine.Unity;
+using UnityEngine.Events;
 
 public class GameResultManager : MonoBehaviour {
     public GameObject SocketDisconnectedUI;
@@ -21,6 +22,8 @@ public class GameResultManager : MonoBehaviour {
     private int supplyBox = 0;
     private bool isHuman;
     private string result;
+
+    public UnityEvent EndRewardLoad = new UnityEvent();
 
     private void Awake() {
         lv = AccountManager.Instance.userResource.lv;
@@ -260,5 +263,6 @@ public class GameResultManager : MonoBehaviour {
                 yield return new WaitForSeconds(0.01f);
             }
         }
+        EndRewardLoad.Invoke();
     }
 }
