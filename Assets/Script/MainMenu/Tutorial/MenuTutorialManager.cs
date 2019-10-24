@@ -16,6 +16,7 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
     public GameObject rewardPanel;  //튜토리얼 중간에 보상받기 패널
     public GameObject TutorialStageReadyCanvas;
     public GameObject BoxRewardPanel;
+    public GameObject FixedMenuCanvas;
 
     void Start() {
         //var IsTutorialCleared = AccountManager.Instance.IsTutorialCleared();
