@@ -660,7 +660,7 @@ namespace MenuTutorialModules {
             var glowCanvas = transform.Find("MainMenuGlowCanvas");
             glowCanvas.gameObject.SetActive(true);
             var bottomPanel = glowCanvas.Find("BottomPanel");
-
+            MenuMask.Instance.transform.Find("Dimmed").gameObject.SetActive(true);
             for(int i=0; i<5; i++) {
                 bottomPanel.GetChild(i).Find("Glow").gameObject.SetActive(true);
             }
@@ -675,6 +675,7 @@ namespace MenuTutorialModules {
             }
             var glowCanvas = transform.Find("MainMenuGlowCanvas");
             var bottomPanel = glowCanvas.Find("BottomPanel");
+            MenuMask.Instance.transform.Find("Dimmed").gameObject.SetActive(false);
 
             for (int i = 0; i < 5; i++) {
                 bottomPanel.GetChild(i).Find("Glow").gameObject.SetActive(false);
@@ -736,6 +737,13 @@ namespace MenuTutorialModules {
             GetComponent<MenuTutorialManager>().EndTutorial();
             GetComponent<MenuTutorialManager>().enabled = false;
             
+            handler.isDone = true;
+        }
+    }
+
+    public class StartMainMenuBtnTutorial : MenuExecute {
+        public override void Execute() {
+            GetComponent<MenuTutorialManager>().StartTutorial(MenuTutorialManager.TutorialType.MAIN_BUTTON_DESC);
             handler.isDone = true;
         }
     }
