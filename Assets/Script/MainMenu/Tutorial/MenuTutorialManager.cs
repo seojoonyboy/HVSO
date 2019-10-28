@@ -4,8 +4,12 @@ using System.Collections.Generic;
 using MenuTutorialModules;
 using UnityEngine;
 using UnityEngine.UI;
+using System.IO;
+using dataModules;
 
 public class MenuTutorialManager : SerializedMonoBehaviour {
+    [FilePath] public string tutorialSetsPath;
+
     public List<TutorialSet> sets;
     [HideInInspector] public TutorialSet selectedTutorialData;
     [ShowInInspector] MenuExecuteHandler executeHandler;
@@ -18,9 +22,13 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
     public GameObject BoxRewardPanel;
     public GameObject FixedMenuCanvas;
 
-    void Start() {
-        //var IsTutorialCleared = AccountManager.Instance.IsTutorialCleared();
-        //if (!IsTutorialCleared) StartTutorial(TutorialType.TO_ORC_STORY);
+    void Awake() {
+        ReadTutorialData();
+    }
+
+    private void ReadTutorialData() {
+        string dataAsJson = File.ReadAllText(tutorialSetsPath);
+        sets = JsonReader.Read<List<TutorialSet>>(dataAsJson);
     }
 
     /// <summary>
