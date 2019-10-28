@@ -9,18 +9,18 @@ using BestHTTP;
 
 public class DeckEditController : MonoBehaviour
 {
-    [SerializeField] MenuCardInfo menuCardInfo;
-    [SerializeField] Transform cardStorage;
-    [SerializeField] MenuHeroInfo heroInfoWindow;
+    [SerializeField] public MenuCardInfo menuCardInfo;
+    [SerializeField] public Transform cardStorage;
+    [SerializeField] public MenuHeroInfo heroInfoWindow;
+    [SerializeField] public GameObject deckNamePanel;
+    [SerializeField] public Transform settingLayout;
+    [SerializeField] public Transform ownCardLayout;
+    [SerializeField] public TMPro.TextMeshProUGUI pagenumText;
+    [SerializeField] public TMPro.TextMeshProUGUI setCardText;
+    [SerializeField] public Transform buttons;
+
     public string heroID;
-    HeroInventory heroData;
-    private Translator translator;
-
-    private Transform buttons;
-    public Transform settingLayout;
-    private Transform ownCardLayout;
-
-    private GameObject deckNamePanel;
+    HeroInventory heroData;    
 
     public GameObject selectCard;
     public bool editing = false;
@@ -34,8 +34,8 @@ public class DeckEditController : MonoBehaviour
     int haveCardNum = 0;
     int maxHaveCard = 0;
     int dontHaveCard = 0;
-    public TMPro.TextMeshProUGUI setCardText;
-    TMPro.TextMeshProUGUI pagenumText;
+    
+    
     string maxPage;
     int lastPage;
 
@@ -46,23 +46,6 @@ public class DeckEditController : MonoBehaviour
     int currentPage;
     int[] cardMana;
 
-    private void Start() {
-        translator = AccountManager.Instance.GetComponent<Translator>();
-        SetObject();
-    }
-
-    private void SetObject() {
-        deckNamePanel = transform.Find("InnerCanvas/DeckNamePanel").gameObject;        
-        settingLayout = transform.Find("InnerCanvas/HandDeck/Mask/SettedDeck");
-        ownCardLayout = transform.Find("InnerCanvas/CardBook");
-        pagenumText = transform.Find("InnerCanvas/PageNumber/Capacity").GetComponent<TMPro.TextMeshProUGUI>();
-        setCardText = transform.Find("InnerCanvas/HandDeck/Capacity").GetComponent<TMPro.TextMeshProUGUI>();
-        buttons = transform.Find("InnerCanvas/Buttons");
-
-        buttons.Find("SaveDeckButton").GetComponent<Button>().onClick.AddListener(delegate () { ConfirmButton(); });
-        buttons.Find("CancelButton").GetComponent<Button>().onClick.AddListener(delegate () { CancelButton(); });
-        gameObject.SetActive(false);
-    }
 
     private void InitCanvas() {
         setCardList = new Dictionary<string, GameObject>();
@@ -321,10 +304,10 @@ public class DeckEditController : MonoBehaviour
         Transform skillWindow = heroWindow.Find("SkillInfo");
         skillWindow.Find("Card1/Card").GetComponent<MenuCardHandler>().DrawCard(hero.heroCards[0].id);
         skillWindow.Find("Card1/CardName").GetComponent<TMPro.TextMeshProUGUI>().text = hero.heroCards[0].name;
-        skillWindow.Find("Card1/CardInfo").GetComponent<TMPro.TextMeshProUGUI>().text = translator.DialogSetRichText(hero.heroCards[0].skills[0].desc);
+        skillWindow.Find("Card1/CardInfo").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.GetComponent<Translator>().DialogSetRichText(hero.heroCards[0].skills[0].desc);
         skillWindow.Find("Card2/Card").GetComponent<MenuCardHandler>().DrawCard(hero.heroCards[1].id);
         skillWindow.Find("Card2/CardName").GetComponent<TMPro.TextMeshProUGUI>().text = hero.heroCards[1].name;
-        skillWindow.Find("Card2/CardInfo").GetComponent<TMPro.TextMeshProUGUI>().text = translator.DialogSetRichText(hero.heroCards[1].skills[0].desc);
+        skillWindow.Find("Card2/CardInfo").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.GetComponent<Translator>().DialogSetRichText(hero.heroCards[1].skills[0].desc);
         cardMana = new int[8];
         for (int i = 0; i < 8; i++)
             cardMana[i] = 0;
