@@ -7,6 +7,8 @@ using Sirenix.OdinInspector;
 using Tutorial;
 using UnityEngine.Events;
 using System;
+using System.IO;
+using dataModules;
 
 public class ScenarioManager : SerializedMonoBehaviour
 {
@@ -24,8 +26,6 @@ public class ScenarioManager : SerializedMonoBehaviour
 
     public GameObject headerMenu;
     public bool isHuman;
-    public List<ChapterData> human_chapterDatas, orc_chapterDatas;
-    public List<ChallengeData> human_challengeDatas, orc_challengeDatas;
     
     public ChapterData selectedChapterData;
     public ChallengeData selectedChallengeData;
@@ -33,6 +33,17 @@ public class ScenarioManager : SerializedMonoBehaviour
     [SerializeField] GameObject orcDeckPrefab;
     [SerializeField] GameObject humanDeckPrefab;
     [SerializeField] Image backgroundImage;
+
+    //파일 경로
+    [FilePath] public string 
+        human_scenarioDataPath, 
+        orc_scenarioDataPath,
+        human_challengeDataPath,
+        orc_challengeDataPath;
+
+    //파일 읽어 세팅함
+    public List<ChapterData> human_chapterDatas, orc_chapterDatas;
+    public List<ChallengeData> human_challengeDatas, orc_challengeDatas;
 
     public static UnityEvent OnLobbySceneLoaded = new UnityEvent();
     private void Awake() {
@@ -58,6 +69,22 @@ public class ScenarioManager : SerializedMonoBehaviour
         });
     }
 
+    /// <summary>
+    /// 휴먼튜토리얼 강제 호출시 Awake가 호출되지 않은 상태이기 때문에 MenuSceneController에서 호출함
+    /// </summary>
+    public void ReadScenarioData() {
+        string dataAsJson = File.ReadAllText(human_scenarioDataPath);
+        human_chapterDatas = JsonReader.Read<List<ChapterData>>(dataAsJson);
+
+        dataAsJson = File.ReadAllText(orc_scenarioDataPath);
+        orc_chapterDatas = JsonReader.Read<List<ChapterData>>(dataAsJson);
+
+        dataAsJson = File.ReadAllText(human_challengeDataPath);
+        human_challengeDatas = JsonReader.Read<List<ChallengeData>>(dataAsJson);
+
+        dataAsJson = File.ReadAllText(orc_challengeDataPath);
+        orc_challengeDatas = JsonReader.Read<List<ChallengeData>>(dataAsJson);
+    }
 
     public void OnBackButton() {
         SoundManager.Instance.PlaySound("button_1");

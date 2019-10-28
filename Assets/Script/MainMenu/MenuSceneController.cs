@@ -28,6 +28,7 @@ public class MenuSceneController : MonoBehaviour {
     [SerializeField] GameObject newbiLoadingModal;  //최초 접속시 튜토리얼 강제시 등장하는 로딩 화면
     [SerializeField] GameObject reconnectingModal;  //재접속 진행시 등장하는 로딩 화면
     [SerializeField] MenuTutorialManager menuTutorialManager;
+    [SerializeField] ScenarioManager scenarioManager;
 
     public static MenuSceneController menuSceneController;
 
@@ -56,7 +57,8 @@ public class MenuSceneController : MonoBehaviour {
 
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.NICKNAME_CHANGED, OnNicknameChanged);
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.NICKNAME_CHANGED, OnNicknameChanged);
-        
+
+        scenarioManager.ReadScenarioData();
     }
 
     private void OnNicknameChanged(Enum Event_Type, Component Sender, object Param) {
