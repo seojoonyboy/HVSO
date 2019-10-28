@@ -476,11 +476,9 @@ namespace TargetModules {
                     failedCallback("상대가 위치 지정에 실패했습니다.");
                     yield break;
                 }
-                int itemId = list.Dequeue();
-                var monList = server.gameState.map.allMonster;
-                SocketFormat.Unit unit = monList.Find(x => x.itemId == itemId);
+                int position = list.Dequeue();
                 //2. 밝혀줘야할 select 부분 찾기
-                FieldUnitsObserver.Pos movePos = unit.pos;
+                FieldUnitsObserver.Pos movePos = new FieldUnitsObserver.Pos(position, 0);
                 Terrain[] terrains = GameObject.Find("BackGround").GetComponentsInChildren<Terrain>();
                 Transform terrainSlot = null;
                 

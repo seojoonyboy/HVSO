@@ -598,8 +598,34 @@ namespace MenuTutorialModules {
 
     public class BoxOpenProcess : MenuExecute {
         public override void Execute() {
-            //AccountManager.Instance.RequestTutorialBoxReward(callback);
-            handler.isDone = true;
+            var menuTutorialManager = GetComponent<MenuTutorialManager>();
+            menuTutorialManager.ActiveRewardBoxCanvas();
+            MenuMask.Instance.UnBlockScreen();
+            PlayerPrefs.SetInt("TutorialBoxRecieved", 1);
+            PlayerPrefs.Save();
+
+            AccountManager.Instance.RequestUserInfo((req, res) => {
+                var resText = res.DataAsText;
+                Response __res = dataModules.JsonReader.Read<Response>(resText);
+                if (!string.IsNullOrEmpty(__res.supplyBox)) {
+                    //보상 이펙트 보여주기
+                    if (AccountManager.Instance.userData.supplyBox > 0) {
+                        menuTutorialManager.ActiveRewardBoxCanvas();
+                        menuTutorialManager.BoxRewardPanel.transform.Find("ExitButton").GetComponent<Button>().onClick.AddListener(onclick);
+                    }
+                    else {
+                        Logger.LogError("박스가 없습니다!");
+                        handler.isDone = true;
+                    }
+                }
+                else {
+                    menuTutorialManager.BoxRewardPanel.transform.Find("ExitButton")
+                        .GetComponent<Button>()
+                        .onClick
+                        .RemoveListener(onclick);
+                    handler.isDone = true;
+                }
+            });
         }
 
         private void callback(HTTPRequest originalRequest, HTTPResponse response) {
@@ -617,8 +643,6 @@ namespace MenuTutorialModules {
                         Logger.Log("Something is wrong");
                     }
 
-                    MenuMask.Instance.UnBlockScreen();
-
                     var resText = response.DataAsText;
                     Response __res = dataModules.JsonReader.Read<Response>(resText);
                     var menuTutorialManager = GetComponent<MenuTutorialManager>();
@@ -627,7 +651,6 @@ namespace MenuTutorialModules {
                         if (AccountManager.Instance.userData.supplyBox > 0) {
                             menuTutorialManager.ActiveRewardBoxCanvas();
                             menuTutorialManager.BoxRewardPanel.transform.Find("ExitButton").GetComponent<Button>().onClick.AddListener(onclick);
-
                         }
                         else {
                             Logger.LogError("박스가 없습니다!");
@@ -660,7 +683,7 @@ namespace MenuTutorialModules {
 
             var glowCanvas = transform.Find("MainMenuGlowCanvas");
             glowCanvas.gameObject.SetActive(true);
-            var bottomPanel = glowCanvas.Find("BottomPanel");
+            var bottomPanel = glowCanvas.Find("InnerCanvas/BottomPanel");
             MenuMask.Instance.transform.Find("Dimmed").gameObject.SetActive(true);
             for(int i=0; i<5; i++) {
                 bottomPanel.GetChild(i).Find("Glow").gameObject.SetActive(true);
@@ -675,7 +698,7 @@ namespace MenuTutorialModules {
                 GetComponent<MenuTutorialManager>().FixedMenuCanvas.SetActive(true);
             }
             var glowCanvas = transform.Find("MainMenuGlowCanvas");
-            var bottomPanel = glowCanvas.Find("BottomPanel");
+            var bottomPanel = glowCanvas.Find("InnerCanvas/BottomPanel");
             MenuMask.Instance.transform.Find("Dimmed").gameObject.SetActive(false);
 
             for (int i = 0; i < 5; i++) {
@@ -683,7 +706,7 @@ namespace MenuTutorialModules {
             }
             glowCanvas.gameObject.SetActive(false);
             handler.isDone = true;
-            glowCanvas.Find("Dimmed").gameObject.SetActive(false);
+            glowCanvas.Find("InnerCanvas/Dimmed").gameObject.SetActive(false);
         }
     }
 
@@ -713,7 +736,7 @@ namespace MenuTutorialModules {
 
             var glowCanvas = transform.Find("MainMenuGlowCanvas");
             glowCanvas.gameObject.SetActive(true);
-            var bottomPanel = glowCanvas.Find("BottomPanel");
+            var bottomPanel = glowCanvas.Find("InnerCanvas/BottomPanel");
             for (int i = 0; i < 5; i++) {
                 if(index == i) {
                     bottomPanel.GetChild(i).Find("Text").gameObject.SetActive(true);
@@ -726,7 +749,7 @@ namespace MenuTutorialModules {
                 bottomPanel.GetChild(i).GetComponent<Image>().color = new Color32(34, 34, 34, 255);
                 bottomPanel.GetChild(i).Find("Image").GetComponent<Image>().color = new Color32(34, 34, 34, 255);
             }
-            glowCanvas.Find("Dimmed").gameObject.SetActive(true);
+            glowCanvas.Find("InnerCanvas/Dimmed").gameObject.SetActive(true);
             bottomPanel.GetChild(index).Find("Glow").gameObject.SetActive(true);
             handler.isDone = true;
         }

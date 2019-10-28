@@ -30,6 +30,7 @@ public class HandUIController : MonoBehaviour {
             case "story_orc_button":
             case "tutorial_play_button":
             case "ai_battle_start_button":
+            case "reward_box":
                 available_pools[0].GetComponent<RectTransform>().localPosition = new Vector3(rect.localPosition.x + 100, rect.localPosition.y, rect.localPosition.z);
                 break;
             default:

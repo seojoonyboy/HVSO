@@ -258,6 +258,7 @@ public class MenuSceneController : MonoBehaviour {
                             }
                             //휴먼 인게임 튜토리얼을 끝내지 않았음
                             else {
+                                PlayerPrefs.SetInt("TutorialBoxRecieved", 0);
                                 AddNewbiController();
                             }
                         }
@@ -296,8 +297,20 @@ public class MenuSceneController : MonoBehaviour {
                     }
                     //튜토리얼 모두 진행하였음
                     else {
-                        menuTutorialManager.enabled = false;
-                        needTutorial = false;
+                        if (PlayerPrefs.GetInt("TutorialBoxRecieved") == 0) {
+                            string prevPlayedRace = PlayerPrefs.GetString("SelectedRace").ToLower();
+                            Logger.Log(prevPlayedRace);
+                            if (prevPlayedRace == "human") {
+                                tutorialType = MenuTutorialManager.TutorialType.TO_BOX_OPEN_HUMAN;
+                            }
+                            else {
+                                tutorialType = MenuTutorialManager.TutorialType.TO_BOX_OPEN_ORC;
+                            }
+                        }
+                        else {
+                            menuTutorialManager.enabled = false;
+                            needTutorial = false;
+                        }
                     }
                 }
 

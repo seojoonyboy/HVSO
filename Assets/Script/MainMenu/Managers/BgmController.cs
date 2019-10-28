@@ -18,11 +18,11 @@ public class BgmController : SerializedMonoBehaviour
     }
 
     public void SoundTrackLoopOn() {
-        mainAudio.loop = true;
+        //mainAudio.loop = true;
     }
 
     public void SoundTrackLoopOff() {
-        mainAudio.loop = false;
+        //mainAudio.loop = false;
     }
 
 
