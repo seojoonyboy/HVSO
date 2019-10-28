@@ -239,8 +239,10 @@ public class MenuSceneController : MonoBehaviour {
             if (res.IsSuccess) {
                 AccountManager.Instance.SetSignInData(res);
                 var etcInfos = AccountManager.Instance.userData.etcInfo;
-                bool needTutorial = true;
+                hudController.SetResourcesUI();
 
+                bool needTutorial = true;
+                
                 //첫 로그인
                 MenuTutorialManager.TutorialType tutorialType = MenuTutorialManager.TutorialType.TO_HUMAN_STORY;
                 if (PlayerPrefs.GetInt("isFirst") == 1) {
