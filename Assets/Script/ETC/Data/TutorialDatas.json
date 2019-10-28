@@ -757,14 +757,14 @@
       },
       {
         "id": 15,
-        "description": "양쪽 모두 이미지 활성화 ",
+        "description": "",
         "methods": [
           {
             "name": "Menu_NPC_Talk",
             "args": [
               "ac10012",
-              "사령관! 우리를 이끌어주시오!/지휘해줘!",
-              "both"
+              "사령관! 우리를 이끌어주시오!",
+              "enemy"
             ]
           },
           {
@@ -772,7 +772,21 @@
             "args": [
               "screen"
             ]
-          }
+          },
+          {
+            "name": "Menu_NPC_Talk",
+            "args": [
+              "ac10005",
+              "사령관! 우리를 지휘해줘!",
+              "my"
+            ]
+          },
+          {
+            "name": "Wait_Click",
+            "args": [
+              "screen"
+            ]
+          },
         ],
         "isExecute": false
       },
