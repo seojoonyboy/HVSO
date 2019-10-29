@@ -9,9 +9,7 @@ using BestHTTP;
 
 public class DeckEditController : MonoBehaviour
 {
-    [SerializeField] public MenuCardInfo menuCardInfo;
     [SerializeField] public Transform cardStorage;
-    [SerializeField] public MenuHeroInfo heroInfoWindow;
     [SerializeField] public GameObject deckNamePanel;
     [SerializeField] public Transform settingLayout;
     [SerializeField] public Transform ownCardLayout;
@@ -30,7 +28,7 @@ public class DeckEditController : MonoBehaviour
 
     public string deckID = null;
     bool isHuman;
-    int setCardNum = 0;
+    public int setCardNum = 0;
     int haveCardNum = 0;
     int maxHaveCard = 0;
     int dontHaveCard = 0;
@@ -63,7 +61,6 @@ public class DeckEditController : MonoBehaviour
             EditCardHandler cardHandler = settingLayout.GetChild(i).GetComponent<EditCardHandler>();
             cardHandler.InitEditCard();
             cardHandler.deckEditController = this;
-            cardHandler.menuCardInfo = this.menuCardInfo;
         }
         for(int i = 0; i < ownCardLayout.transform.childCount; i++) {
             for (int j = 0; j < 9; j++) {
@@ -72,7 +69,6 @@ public class DeckEditController : MonoBehaviour
                     cardHandler.transform.SetParent(ownCardLayout.Find(cardHandler.editBookRoot));
                 cardHandler.InitEditCard();
                 cardHandler.deckEditController = this;
-                cardHandler.menuCardInfo = this.menuCardInfo;
                 cardHandler.transform.localPosition = Vector3.zero;
             }
         }
@@ -226,6 +222,36 @@ public class DeckEditController : MonoBehaviour
         }
     }
 
+    public void ExpectFromDeck() {
+        if (EditCardHandler.onAnimation) return;
+        string cardId = MenuCardInfo.cardInfoWindow.editCard.GetComponent<EditCardHandler>().cardID;
+        if (!setCardList.ContainsKey(cardId)) return;
+        EditCardHandler handCardHandler = setCardList[cardId].GetComponent<EditCardHandler>();
+        handCardHandler.SETNUM--;
+        handCardHandler.SetSetNum();
+        EditCardHandler beforeCard = handCardHandler.beforeObject.GetComponent<EditCardHandler>();
+        beforeCard.HAVENUM++;
+        beforeCard.SetHaveNum(true);
+        if (handCardHandler.SETNUM == 0) {
+            handCardHandler.beforeObject = null;
+            handCardHandler.transform.SetAsLastSibling();
+            handCardHandler.transform.localScale = Vector3.zero;
+            StartCoroutine(handCardHandler.SortHandPos());
+            setCardList.Remove(cardId);
+        }
+        setCardNum--;
+        haveCardNum++;
+        ownCardLayout.GetChild(currentPage).gameObject.SetActive(false);
+        currentPage = beforeCard.transform.parent.parent.GetSiblingIndex();
+        ownCardLayout.GetChild(currentPage).gameObject.SetActive(true);
+        if (currentPage > 0) buttons.Find("PrevPageButton").gameObject.SetActive(true);
+        else buttons.Find("PrevPageButton").gameObject.SetActive(false);
+        if (currentPage + 1 == lastPage) buttons.Find("NextPageButton").gameObject.SetActive(false);
+        else buttons.Find("NextPageButton").gameObject.SetActive(true);
+        MenuCardInfo.cardInfoWindow.SetEditCardInfo(beforeCard.HAVENUM, setCardNum);
+        RefreshLine();
+    }
+
     public void ExpectFromDeck(string id, GameObject card) {
         EditCardHandler cardHandler = card.GetComponent<EditCardHandler>();
         cardHandler.SETNUM--;
@@ -246,6 +272,35 @@ public class DeckEditController : MonoBehaviour
         else buttons.Find("PrevPageButton").gameObject.SetActive(false);
         if (currentPage + 1 == lastPage) buttons.Find("NextPageButton").gameObject.SetActive(false);
         else buttons.Find("NextPageButton").gameObject.SetActive(true);
+        RefreshLine();
+    }
+
+    public void ConfirmSetDeck() {
+        if (setCardNum == 40) return;
+        if (EditCardHandler.onAnimation) return;
+        EditCardHandler cardHandler = MenuCardInfo.cardInfoWindow.editCard.GetComponent<EditCardHandler>();
+        string cardId = cardHandler.cardID;
+        StartCoroutine(cardHandler.ShowAddedCardPos());
+        if (!setCardList.ContainsKey(MenuCardInfo.cardInfoWindow.editCard.GetComponent<EditCardHandler>().cardID)) {
+            GameObject addedCard = settingLayout.transform.GetChild(setCardList.Count).gameObject;
+            setCardList.Add(cardId, addedCard);
+            EditCardHandler addCardHandler = addedCard.GetComponent<EditCardHandler>();
+            addCardHandler.SETNUM++;
+            addCardHandler.DrawCard(cardId, isHuman);
+            addCardHandler.SetSetNum(true);
+            addCardHandler.beforeObject = cardHandler.gameObject;
+            addedCard.SetActive(true);
+        }
+        else {
+            EditCardHandler addCardHandler = setCardList[cardId].GetComponent<EditCardHandler>();
+            addCardHandler.SETNUM++;
+            addCardHandler.SetSetNum(true);
+        }
+        cardHandler.HAVENUM--;
+        haveCardNum--;
+        cardHandler.SetHaveNum();
+        setCardNum++;
+        MenuCardInfo.cardInfoWindow.SetEditCardInfo(cardHandler.HAVENUM, setCardNum);
         RefreshLine();
     }
 

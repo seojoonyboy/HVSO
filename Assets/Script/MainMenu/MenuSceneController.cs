@@ -108,7 +108,7 @@ public class MenuSceneController : MonoBehaviour {
             AccountManager.Instance.dicInfo.inDic = false;
         }
 
-        menuTutorialManager.StartTutorial(MenuTutorialManager.TutorialType.TO_AI_BATTLE);
+        //menuTutorialManager.StartTutorial(MenuTutorialManager.TutorialType.TO_AI_BATTLE);
         //CheckTutorial();    //튜토리얼을 어디서부터 진행해야 하는지 판단
     }
 

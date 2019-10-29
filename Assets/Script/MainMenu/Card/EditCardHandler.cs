@@ -10,7 +10,7 @@ public class EditCardHandler : MonoBehaviour {
     public string cardID;
     public DeckEditController deckEditController;
 
-    public MenuCardInfo menuCardInfo;
+    //public MenuCardInfo menuCardInfo;
     public dataModules.CollectionCard cardData;
     public GameObject beforeObject;
     public Transform cardObject;
@@ -61,30 +61,30 @@ public class EditCardHandler : MonoBehaviour {
     }
 
 
-    public void StartClick() {
-        clickTime = Time.time;
-        StartCoroutine(WaitForOpenInfo());
-    }
+    //public void StartClick() {
+    //    clickTime = Time.time;
+    //    StartCoroutine(WaitForOpenInfo());
+    //}
 
-    IEnumerator WaitForOpenInfo() {
-        standby = true;
-        while (standby) {
-            yield return new WaitForSeconds(0.1f);
-            if (dragging) break;
-            if (onAnimation) break;
-            if (!standby) break;
-            if (Time.time - clickTime >= 0.2f) {
-                dragable = false;
-            }
-            if (Time.time - clickTime >= 0.5f) {
-                OpenCardInfo();
-                standby = false;
-                dragging = false;
-                draggingObject = null;
-            }
-        }
-        dragable = true;
-    }
+    //IEnumerator WaitForOpenInfo() {
+    //    standby = true;
+    //    while (standby) {
+    //        yield return new WaitForSeconds(0.1f);
+    //        if (dragging) break;
+    //        if (onAnimation) break;
+    //        if (!standby) break;
+    //        if (Time.time - clickTime >= 0.2f) {
+    //            dragable = false;
+    //        }
+    //        if (Time.time - clickTime >= 0.5f) {
+    //            OpenCardInfo();
+    //            standby = false;
+    //            dragging = false;
+    //            draggingObject = null;
+    //        }
+    //    }
+    //    dragable = true;
+    //}
 
     public void EndClick() {
         if (!dragable) return;
@@ -93,27 +93,28 @@ public class EditCardHandler : MonoBehaviour {
         dragging = false;
         draggingObject = null;
         standby = false;
-        if (Time.time - clickTime < 0.5f) {
-            SoundManager.Instance.PlaySound("button_3");
-            if (isHandCard) {
-                deckEditController.ExpectFromDeck(cardData.id, gameObject);
-                if (SETNUM == 0) {
-                    transform.SetAsLastSibling();
-                    transform.localScale = Vector3.zero;
-                    StartCoroutine(SortHandPos());
-                }
-            }
-            else {
-                if (HAVENUM == 0) return;
-                StartCoroutine(ShowAddedCardPos());
-                deckEditController.ConfirmSetDeck(cardData.id, gameObject);
-            }
-        }
+        OpenCardInfo();
+        //if (Time.time - clickTime < 0.5f) {
+        //    SoundManager.Instance.PlaySound("button_3");
+        //    if (isHandCard) {
+        //        deckEditController.ExpectFromDeck(cardData.id, gameObject);
+        //        if (SETNUM == 0) {
+        //            transform.SetAsLastSibling();
+        //            transform.localScale = Vector3.zero;
+        //            StartCoroutine(SortHandPos());
+        //        }
+        //    }
+        //    else {
+        //        if (HAVENUM == 0) return;
+        //        StartCoroutine(ShowAddedCardPos());
+        //        deckEditController.ConfirmSetDeck(cardData.id, gameObject);
+        //    }
+        //}
         //else
         //    OpenCardInfo();
     }
 
-    IEnumerator SortHandPos() {
+    public IEnumerator SortHandPos() {
         onAnimation = true;
         int handCardNum = deckEditController.setCardList.Count;
         if (handCardNum < 5)
@@ -131,7 +132,7 @@ public class EditCardHandler : MonoBehaviour {
         gameObject.SetActive(false);
     }
 
-    IEnumerator ShowAddedCardPos() {
+    public IEnumerator ShowAddedCardPos() {
         onAnimation = true;
         if (deckEditController.setCardList.ContainsKey(cardData.id)) {
             if (deckEditController.setCardList.Count > 4)
@@ -257,11 +258,21 @@ public class EditCardHandler : MonoBehaviour {
 
     public void OpenCardInfo() {
         if (dragging) return;
-        menuCardInfo.transform.parent.gameObject.SetActive(true);
-        menuCardInfo.gameObject.SetActive(true);
-        menuCardInfo.SetCardInfo(cardData, isHuman, null);
-        menuCardInfo.transform.Find("CreateCard").gameObject.SetActive(false);
-        menuCardInfo.transform.Find("Indestructible").gameObject.SetActive(false);
+        MenuCardInfo.cardInfoWindow.transform.parent.gameObject.SetActive(true);
+        MenuCardInfo.cardInfoWindow.gameObject.SetActive(true);
+        MenuCardInfo.cardInfoWindow.SetCardInfo(cardData, isHuman, null);
+        MenuCardInfo.cardInfoWindow.transform.Find("CreateCard").gameObject.SetActive(false);
+        MenuCardInfo.cardInfoWindow.transform.Find("EditCardUI").gameObject.SetActive(true);
+        if (isHandCard) {
+            MenuCardInfo.cardInfoWindow.SetEditCardInfo(beforeObject.GetComponent<EditCardHandler>().HAVENUM, deckEditController.setCardNum);
+            MenuCardInfo.cardInfoWindow.editCard = beforeObject;
+        }
+        else {
+            MenuCardInfo.cardInfoWindow.SetEditCardInfo(haveNum, deckEditController.setCardNum);
+            MenuCardInfo.cardInfoWindow.editCard = gameObject;
+        }
+        MenuCardInfo.cardInfoWindow.transform.Find("Flavor").gameObject.SetActive(false);
+        MenuCardInfo.cardInfoWindow.transform.Find("Indestructible").gameObject.SetActive(false);
     }
 
 

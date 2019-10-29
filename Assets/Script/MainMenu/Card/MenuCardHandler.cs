@@ -8,7 +8,7 @@ using Spine.Unity;
 
 public class MenuCardHandler : MonoBehaviour {
     public string cardID;
-    [SerializeField] MenuCardInfo menuCardInfo;
+    //[SerializeField] MenuCardInfo menuCardInfo;
     [SerializeField] GameObject exitTrigger2;
     dataModules.CollectionCard cardData;
     GameObject skeleton;
@@ -165,8 +165,8 @@ public class MenuCardHandler : MonoBehaviour {
     }
 
     public void OpenCardInfo() {
-        menuCardInfo.transform.parent.gameObject.SetActive(true);
-        menuCardInfo.gameObject.SetActive(true);
+        MenuCardInfo.cardInfoWindow.transform.parent.gameObject.SetActive(true);
+        MenuCardInfo.cardInfoWindow.gameObject.SetActive(true);
         if(gameObject.name == "DictionaryCard" && transform.Find("NewCard").gameObject.activeSelf) {
             if (isHuman) {
                 AccountManager.Instance.cardPackage.checkHumanCard.Remove(cardID);
@@ -178,11 +178,14 @@ public class MenuCardHandler : MonoBehaviour {
             }
             transform.Find("NewCard").gameObject.SetActive(false);
         }
-        if (transform.parent.name == "Grid")
-            menuCardInfo.SetCardInfo(cardData, isHuman, transform);
+        if (transform.parent.name == "Grid") {
+            MenuCardInfo.cardInfoWindow.SetCardInfo(cardData, isHuman, transform);
+            MenuCardInfo.cardInfoWindow.transform.Find("EditCardUI").gameObject.SetActive(false);
+        }
         else {
-            menuCardInfo.SetCardInfo(cardData, isHuman, null);
-            menuCardInfo.transform.Find("CreateCard").gameObject.SetActive(false);
+            MenuCardInfo.cardInfoWindow.SetCardInfo(cardData, isHuman, null);
+            MenuCardInfo.cardInfoWindow.transform.Find("CreateCard").gameObject.SetActive(false);
+            MenuCardInfo.cardInfoWindow.transform.Find("EditCardUI").gameObject.SetActive(false);
         }
         if (transform.parent.parent.parent.name == "HeroInfo" && transform.parent.parent.name != "SkillWindow")
             exitTrigger2.SetActive(true);

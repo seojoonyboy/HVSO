@@ -11,7 +11,6 @@ using UnityEngine.EventSystems;
 public class CardDictionaryManager : MonoBehaviour {
     [SerializeField] Transform cardList;
     [SerializeField] Transform heroCards;
-    [SerializeField] MenuHeroInfo heroInfoWindow;
     [SerializeField] Transform cardStorage;
     [SerializeField] Transform sortingModal;
     [SerializeField] TMPro.TextMeshProUGUI cardNum;
@@ -524,13 +523,13 @@ public class CardDictionaryManager : MonoBehaviour {
 
     public void OpenHeroInfoWIndow(string heroId) {
         SoundManager.Instance.PlaySound("button_1");
-        heroInfoWindow.SetHeroInfoWindow(heroId);
-        heroInfoWindow.transform.parent.gameObject.SetActive(true);
-        heroInfoWindow.gameObject.SetActive(true);
+        MenuHeroInfo.heroInfoWindow.SetHeroInfoWindow(heroId);
+        MenuHeroInfo.heroInfoWindow.transform.parent.gameObject.SetActive(true);
+        MenuHeroInfo.heroInfoWindow.gameObject.SetActive(true);
     }
 
     public void CloseHeroInfoWIndow() {
-        heroInfoWindow.gameObject.SetActive(false);
+        MenuHeroInfo.heroInfoWindow.gameObject.SetActive(false);
     }
 
     public void ExitDictionaryScene() {

@@ -11,6 +11,13 @@ public class MenuHeroInfo : MonoBehaviour
     private AccountManager accountManager;
     private Translator translator;
 
+    public static MenuHeroInfo heroInfoWindow;
+
+    private void Awake() {
+        heroInfoWindow = this;
+        gameObject.SetActive(false);
+    }
+    
     private void init() {
         accountManager = AccountManager.Instance;
         translator = accountManager.GetComponent<Translator>();

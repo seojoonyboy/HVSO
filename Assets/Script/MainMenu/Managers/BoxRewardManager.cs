@@ -12,7 +12,6 @@ using Spine.Unity;
 public class BoxRewardManager : MonoBehaviour
 {
     [SerializeField] Transform boxObject;
-    [SerializeField] CardDictionaryManager cardDic;
     [SerializeField] TMPro.TextMeshProUGUI supplyStore;
     [SerializeField] TMPro.TextMeshProUGUI storeTimer;
     [SerializeField] SkeletonGraphic boxSpine;
