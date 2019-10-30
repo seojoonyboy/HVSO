@@ -185,15 +185,7 @@ public class MenuSceneController : MonoBehaviour {
         AccountManager.Instance.OnCardLoadFinished.AddListener(() => SetCardNumbersPerDic());
         currentPage = 2;
         Transform buttonsParent = fixedCanvas.Find("Footer");
-        //for (int i = 0; i < fixedCanvas.Find("Footer").childCount; i++)
-        //    buttonSkeletons[i] = buttonsParent.GetChild(i).Find("ButtonImage").GetComponent<SkeletonGraphic>();
-        //StartCoroutine(UpdateWindow());
         TouchEffecter.Instance.SetScript();
-        if (AccountManager.Instance.dicInfo.inDic) {
-            windowScrollSnap.StartingScreen = 0;
-            ClickMenuButton(0);
-            AccountManager.Instance.dicInfo.inDic = false;
-        }
 
         Invoke("CheckTutorial", 1.0f);
         //menuTutorialManager.StartTutorial(MenuTutorialManager.TutorialType.TO_AI_BATTLE);
