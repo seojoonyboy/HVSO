@@ -17,7 +17,6 @@ public class CardDictionaryManager : MonoBehaviour {
     [SerializeField] MyDecksLoader myDecksLoader;
 
     [SerializeField] Sprite orcPanelBg, humanPanelBg;
-    MyDecksLoader decksLoader;
 
     bool isHumanDictionary;
     float clickTime;
