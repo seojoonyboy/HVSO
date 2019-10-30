@@ -26,6 +26,10 @@ public partial class MenuCardInfo : MonoBehaviour {
 
     public UnityEvent OnMakeCardFinished = new UnityEvent();
 
+    public static MenuCardInfo cardInfoWindow;
+    public GameObject editCard;
+
+
     private void Start() {
         accountManager = AccountManager.Instance;
         transform.Find("CreateSpine").GetComponent<SkeletonGraphic>().Initialize(false);
@@ -144,6 +148,7 @@ public partial class MenuCardInfo : MonoBehaviour {
             info.Find("Categories/Text").GetComponent<TMPro.TextMeshProUGUI>().text = sb.ToString();
             info.Find("Flavor/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.flavorText;
             info.Find("Flavor/Text").position = info.Find("Skill&BuffRow2").position;
+            info.Find("Flavor").gameObject.SetActive(true);
         }
         //마법 카드
         else {
@@ -237,6 +242,16 @@ public partial class MenuCardInfo : MonoBehaviour {
         }
     }
 
+    public void SetEditCardInfo(int haveNum, int handNum) {
+        SkeletonGraphic numSpine = transform.Find("EditCardUI/HaveNum/HaveNum").GetComponent<SkeletonGraphic>();
+        numSpine.Initialize(false);
+        numSpine.Update(0);
+        numSpine.AnimationState.SetAnimation(0, haveNum.ToString(), false);
+        transform.Find("EditCardUI/ConfirmCard").GetComponent<Button>().interactable = (haveNum != 0);
+        transform.Find("EditCardUI/ConfirmCard").GetComponent<Button>().interactable = (handNum != 40);
+        transform.Find("EditCardUI/ExpectCard").GetComponent<Button>().interactable = (haveNum != accountManager.cardPackage.data[cardId].cardCount);
+    }
+
     IEnumerator AddCrystalAnimation() {
         float changed = (float)accountManager.userResource.crystal;
         TMPro.TextMeshProUGUI crystalText = transform.Find("CreateCard/Crystal/Value").GetComponent<TMPro.TextMeshProUGUI>();
@@ -284,6 +299,7 @@ public partial class MenuCardInfo : MonoBehaviour {
         transform.parent.gameObject.SetActive(false);
         transform.gameObject.SetActive(false);
         transform.parent.Find("HeroInfo").gameObject.SetActive(false);
+        editCard = null;
     }
 
     public void CloseHeroesCardInfo() {
