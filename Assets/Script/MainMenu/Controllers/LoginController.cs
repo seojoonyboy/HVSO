@@ -18,6 +18,38 @@ public class LoginController : MonoBehaviour {
         networkManager = NetworkManager.Instance;
         StartCoroutine(LogoReveal());
         isClicked = false;
+
+        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, OnRequestUserInfoCallback);
+    }
+
+    private void OnRequestUserInfoCallback(Enum Event_Type, Component Sender, object Param) {
+        var sceneStartController = GetComponent<SceneStartController>();
+        AccountManager accountManager = AccountManager.Instance;
+
+        HTTPResponse res = (HTTPResponse)Param;
+
+        if (res.IsSuccess) {
+            if (accountManager.userData.preSupply < 200 && accountManager.userData.supplyTimeRemain > 0) {
+                Invoke("ReqInTimer", (float)accountManager.userData.supplyTimeRemain);
+            }
+            else {
+                Logger.Log("Pre Supply가 가득찼습니다. Timer를 호출하지 않습니다.");
+            }
+
+            if (PlayerPrefs.GetInt("isFirst") == 1) {
+                sceneStartController
+                    .LoginTypeCanvas
+                    .gameObject
+                    .SetActive(true);
+            }
+            else {
+                accountManager.OnSignInResultModal();
+            }
+        }
+        else {
+            isClicked = false;
+        }
+        
     }
 
     IEnumerator LogoReveal() {
@@ -35,7 +67,7 @@ public class LoginController : MonoBehaviour {
 
     public void OnStartButton() {
         if (!isClicked) {
-            AccountManager.Instance.RequestUserInfo(OnRequestUserInfoCallback);
+            AccountManager.Instance.RequestUserInfo();
             SoundManager.Instance.PlaySound(SoundType.FIRST_TURN);
         }
         isClicked = true;

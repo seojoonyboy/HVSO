@@ -14,6 +14,7 @@ public class NoneIngameSceneEventHandler : Singleton<NoneIngameSceneEventHandler
 
         //New item to be added. Check for existing event type key. If one exists, add to list
         if (Listeners.TryGetValue((EVENT_TYPE)Event_Type, out ListenList)) {
+            if (ListenList.Exists(x => x == Listener)) return;
             //List exists, so add new item
             ListenList.Add(Listener);
             return;
@@ -58,6 +59,20 @@ public class NoneIngameSceneEventHandler : Singleton<NoneIngameSceneEventHandler
 
     public enum EVENT_TYPE {
         NETWORK_EROR_OCCURED,
-        NICKNAME_CHANGED
+        API_USER_UPDATED,
+        API_DECKS_UPDATED,
+        API_DECK_CREATED,
+        API_DECK_REMOVED,
+        API_DECK_MODIFIED,
+        API_CARDS_UPDATED,
+        API_INVENTORIES_UPDATED,
+        API_OPENBOX,
+        API_CREATE_CARD,
+        API_REMOVE_CARD,
+        API_ORC_TEMPLATES_UPDATED,
+        API_HUMAN_TEMPLATES_UPDATED,
+        API_HEROES_UPDATED,
+        API_NICKNAME_UPDATED,
+        API_CLEARED_STAGE_UPDATED
     }
 }

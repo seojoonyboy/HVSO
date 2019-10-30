@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,9 +20,13 @@ public class DeckSettingManager : MonoBehaviour
     MyDecksLoader decksLoader;
     bool initialized = false;
 
-    public void AttachDecksLoader(ref MyDecksLoader decksLoader) {
-        this.decksLoader = decksLoader;
-        this.decksLoader.OnLoadFinished.AddListener(() => { OnDecksInfoLoaded(); });
+    public void Awake() {
+        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_DECKS_UPDATED, SetPlayerNewDecks);
+    }
+
+    private void SetPlayerNewDecks(Enum Event_Type, Component Sender, object Param) {
+        SetPlayerNewDecks();
+        Logger.Log("DeckSettingManager");
     }
 
     public void RefreshLine() {
@@ -134,9 +139,5 @@ public class DeckSettingManager : MonoBehaviour
                 deckList.GetChild(i).GetChild(0).localPosition = Vector3.zero;
             }
         }
-    }
-
-    void OnDecksInfoLoaded() {
-        SetPlayerNewDecks();
     }
 }

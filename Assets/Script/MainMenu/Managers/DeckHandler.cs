@@ -134,19 +134,8 @@ public class DeckHandler : MonoBehaviour
             DeckSettingManager deckManager = transform.parent.parent.parent.GetComponent<DeckSettingManager>();
             StartCoroutine(deckManager.CloseDeckButtons());
             //transform.GetChild(0).Find("Buttons").localPosition = new Vector3(-5, 0, 0);
-            AccountManager.Instance.RequestDeckRemove(DECKID, OnRemoved);
-            transform.SetAsLastSibling();
-            gameObject.SetActive(false);
+            AccountManager.Instance.RequestDeckRemove(DECKID);
         });
-    }
-
-    private void OnRemoved(HTTPRequest originalRequest, HTTPResponse response) {
-        if (response.StatusCode == 200) {
-            transform.GetComponentInParent<DeckSettingManager>()
-                .menuSceneController
-                .decksLoader
-                .Load();
-        }
     }
 
     public void StartAIBattle() {

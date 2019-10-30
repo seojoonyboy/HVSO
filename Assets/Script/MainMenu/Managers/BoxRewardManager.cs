@@ -31,9 +31,14 @@ public class BoxRewardManager : MonoBehaviour
         hudCanvas = transform.parent;
         accountManager.userResource.LinkTimer(storeTimer);
 
+        NoneIngameSceneEventHandler.Instance.AddListener(
+            NoneIngameSceneEventHandler.EVENT_TYPE.API_OPENBOX, 
+            (type, sender, parm) => {
+                SetBoxAnimation();
+                OnBoxLoadFinished.Invoke();
+            });
 
-        //cardDic.SetCardsFinished.AddListener(() => SetBoxAnimation());
-        OnBoxLoadFinished.AddListener(() => accountManager.RefreshInventories(OnInventoryRefreshFinished));
+        OnBoxLoadFinished.AddListener(() => accountManager.RequestInventories());
     }
 
     public void SetBoxObj() {
@@ -53,7 +58,7 @@ public class BoxRewardManager : MonoBehaviour
         if (openningBox) return;
         if (AccountManager.Instance.userResource.supplyBox <= 0) return;
         openningBox = true;
-        WaitReward();
+        accountManager.RequestRewardInfo();
     }
 
     public void SetBoxAnimation() {
@@ -64,23 +69,6 @@ public class BoxRewardManager : MonoBehaviour
         boxSpine.AnimationState.SetAnimation(0, "01.START", false);
         boxSpine.AnimationState.AddAnimation(1, "02.IDLE", true, 0.5f);
         SoundManager.Instance.PlaySound("boxopen");
-    }
-    
-
-    void WaitReward() {
-        accountManager.RequestRewardInfo((req, res) => {
-            if (res != null) {
-                if (res.StatusCode == 200 || res.StatusCode == 304) {
-                    var result = dataModules.JsonReader.Read<RewardClass[]>(res.DataAsText);
-
-                    accountManager.rewardList = result;
-                    accountManager.SetRewardInfo(result);
-                    SetBoxAnimation();
-                    OnBoxLoadFinished.Invoke();
-                    accountManager.RequestUserInfo(accountManager.SetSignInData);
-                }
-            }
-        });
     }
 
     public void GetResult() {
@@ -209,20 +197,6 @@ public class BoxRewardManager : MonoBehaviour
             effects.GetChild(3).GetComponent<SkeletonGraphic>().Skeleton.SetSkin("4.item");
         }
         effects.GetChild(3).GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, "animation", false);
-    }
-
-
-    public void OnInventoryRefreshFinished(HTTPRequest originalRequest, HTTPResponse response) {
-        if (response != null) {
-            if (response.StatusCode == 200 || response.StatusCode == 304) {
-                var result = JsonReader.Read<MyCardsInfo>(response.DataAsText);
-
-                accountManager.myCards = result.cardInventories;
-                accountManager.SetCardData();
-                accountManager.SetHeroInventories(result.heroInventories);
-                //cardDic.SetCardsFinished.Invoke();
-            }
-        }
     }
 
     void CheckNewCardList(string cardId) {

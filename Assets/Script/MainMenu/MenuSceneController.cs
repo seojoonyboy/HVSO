@@ -33,6 +33,9 @@ public class MenuSceneController : MonoBehaviour {
     public static MenuSceneController menuSceneController;
 
     private void Awake() {
+        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, CheckTutorial);
+        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_NICKNAME_UPDATED, NickNameChanged);
+
         menuSceneController = this;
         #region 테스트코드
         //NetworkManager.ReconnectData dummyData = new NetworkManager.ReconnectData("11", "human");
@@ -53,10 +56,109 @@ public class MenuSceneController : MonoBehaviour {
         menuButton.Update(0);
         ClickMenuButton(2);
 
-        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.NICKNAME_CHANGED, OnNicknameChanged);
-        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.NICKNAME_CHANGED, OnNicknameChanged);
-
         scenarioManager.ReadScenarioData();
+    }
+
+    private void NickNameChanged(Enum Event_Type, Component Sender, object Param) {
+        BestHTTP.HTTPResponse res = (BestHTTP.HTTPResponse)Param;
+
+        if (res.StatusCode == 200 || res.StatusCode == 304) {
+            Modal.instantiate("닉네임이 변경되었습니다.", Modal.Type.CHECK);
+        }
+        else {
+            Modal.instantiate("에러 발생 \n" + res.DataAsText, Modal.Type.CHECK);
+        }
+    }
+
+    private void CheckTutorial(Enum Event_Type, Component Sender, object Param) {
+        BestHTTP.HTTPResponse res = (BestHTTP.HTTPResponse)Param;
+
+        string prevTutorial = PlayerPrefs.GetString("PrevTutorial");
+        var etcInfos = AccountManager.Instance.userData.etcInfo;
+        hudController.SetResourcesUI();
+
+        bool needTutorial = true;
+
+        //첫 로그인
+        MenuTutorialManager.TutorialType tutorialType = MenuTutorialManager.TutorialType.TO_HUMAN_STORY;
+        if (PlayerPrefs.GetInt("isFirst") == 1) {
+            AddNewbiController();
+            PlayerPrefs.SetInt("isFirst", 0);
+        }
+        else {
+            //튜토리얼 남았음
+            AccountManager.etcInfo tutorialCleared = etcInfos.Find(x => x.key == "tutorialCleared");
+            if (tutorialCleared == null) {
+                var humanDeckClaimed = etcInfos.Find(x => x.key == "humanDeckClaimed");
+                //휴먼 인게임 이후 메인화면에서 보상을 받지 않았음
+                if (humanDeckClaimed == null) {
+                    //휴먼 인게임 튜토리얼을 끝냈음
+                    if (prevTutorial == "Human_Tutorial") {
+                        tutorialType = MenuTutorialManager.TutorialType.TO_ORC_STORY;
+                    }
+                    //휴먼 인게임 튜토리얼을 끝내지 않았음
+                    else {
+                        PlayerPrefs.SetInt("TutorialBoxRecieved", 0);
+                        AddNewbiController();
+                    }
+                }
+                //휴먼 인게임 이후 메인화면에서 보상을 받았음
+                else {
+                    var orcDeckClaimed = etcInfos.Find(x => x.key == "orcDeckClaimed");
+                    //오크 인게임 이후 메인화면에서 보상을 받지 않았음
+                    if (orcDeckClaimed == null) {
+                        //오크 인게임 튜토리얼을 끝냈음
+                        if (prevTutorial == "Orc_Tutorial") {
+                            tutorialType = MenuTutorialManager.TutorialType.TO_AI_BATTLE;
+                        }
+                        //오크 인게임 튜토리얼을 끝내지 않았음
+                        else {
+                            tutorialType = MenuTutorialManager.TutorialType.TO_ORC_STORY;
+                        }
+                    }
+                    else {
+                        //오크 인게임 이후 메인화면 보상을 받았음
+                        //박스 오픈 튜토리얼에서 보상을 받았는지?
+                        if (prevTutorial == "AI_Tutorial") {
+                            string prevPlayedRace = PlayerPrefs.GetString("SelectedRace").ToLower();
+                            Logger.Log(prevPlayedRace);
+                            if (prevPlayedRace == "human") {
+                                tutorialType = MenuTutorialManager.TutorialType.TO_BOX_OPEN_HUMAN;
+                            }
+                            else {
+                                tutorialType = MenuTutorialManager.TutorialType.TO_BOX_OPEN_ORC;
+                            }
+                        }
+                        else {
+                            tutorialType = MenuTutorialManager.TutorialType.TO_AI_BATTLE;
+                        }
+                    }
+                }
+            }
+            //튜토리얼 모두 진행하였음
+            else {
+                if (PlayerPrefs.GetInt("TutorialBoxRecieved") == 0) {
+                    string prevPlayedRace = PlayerPrefs.GetString("SelectedRace").ToLower();
+                    Logger.Log(prevPlayedRace);
+                    if (prevPlayedRace == "human") {
+                        tutorialType = MenuTutorialManager.TutorialType.TO_BOX_OPEN_HUMAN;
+                    }
+                    else {
+                        tutorialType = MenuTutorialManager.TutorialType.TO_BOX_OPEN_ORC;
+                    }
+                }
+                else {
+                    menuTutorialManager.enabled = false;
+                    needTutorial = false;
+                }
+            }
+        }
+
+        if (needTutorial) {
+            if (tutorialType != MenuTutorialManager.TutorialType.TO_HUMAN_STORY) {
+                menuTutorialManager.StartTutorial(tutorialType);
+            }
+        }
     }
 
     private void OnNicknameChanged(Enum Event_Type, Component Sender, object Param) {
@@ -75,25 +177,12 @@ public class MenuSceneController : MonoBehaviour {
                     Modal.instantiate("빈 닉네임은 허용되지 않습니다.", Modal.Type.CHECK);
                 }
                 else {
-                    AccountManager.Instance.ChangeNicknameReq(str, (req, res) => {
-                        if (res.StatusCode == 200 || res.StatusCode == 304) {
-                            Modal.instantiate("닉네임이 변경되었습니다.", Modal.Type.CHECK);
-                            AccountManager.Instance.needChangeNickName = false;
-                            AccountManager.Instance.NickName = str;
-                        }
-                        else {
-                            Modal.instantiate("에러 발생 \n" + res.DataAsText, Modal.Type.CHECK);
-                        }
-                    });
+                    AccountManager.Instance.ChangeNicknameReq(str);
                 }
             });
         }
 
-        deckSettingManager.AttachDecksLoader(ref decksLoader);
-        //cardDictionaryManager.AttachDecksLoader(ref decksLoader);
-        decksLoader.OnLoadFinished.AddListener(() => {
-            NoneIngameSceneEventHandler.Instance.PostNotification(NoneIngameSceneEventHandler.EVENT_TYPE.NICKNAME_CHANGED, this, AccountManager.Instance.NickName);
-        });
+        //deckSettingManager.AttachDecksLoader(ref decksLoader);
         decksLoader.Load();
         AccountManager.Instance.OnCardLoadFinished.AddListener(() => SetCardNumbersPerDic());
         currentPage = 2;
@@ -108,8 +197,8 @@ public class MenuSceneController : MonoBehaviour {
             AccountManager.Instance.dicInfo.inDic = false;
         }
 
-        menuTutorialManager.StartTutorial(MenuTutorialManager.TutorialType.TO_AI_BATTLE);
-        //CheckTutorial();    //튜토리얼을 어디서부터 진행해야 하는지 판단
+        //menuTutorialManager.StartTutorial(MenuTutorialManager.TutorialType.TO_AI_BATTLE);
+        AccountManager.Instance.RequestUserInfo();    //튜토리얼을 어디서부터 진행해야 하는지 판단
     }
 
     /// <summary>
@@ -231,101 +320,6 @@ public class MenuSceneController : MonoBehaviour {
         SetCardNumbersPerDic();
         for (int i = 0; i < offObjects.Length; i++)
             offObjects[i].SetActive(true);
-    }
-
-    public void CheckTutorial() {
-        string prevTutorial = PlayerPrefs.GetString("PrevTutorial");
-
-        AccountManager.Instance.RequestUserInfo((req, res) => {
-            if (res.IsSuccess) {
-                AccountManager.Instance.SetSignInData(res);
-                var etcInfos = AccountManager.Instance.userData.etcInfo;
-                hudController.SetResourcesUI();
-
-                bool needTutorial = true;
-                
-                //첫 로그인
-                MenuTutorialManager.TutorialType tutorialType = MenuTutorialManager.TutorialType.TO_HUMAN_STORY;
-                if (PlayerPrefs.GetInt("isFirst") == 1) {
-                    AddNewbiController();
-                    PlayerPrefs.SetInt("isFirst", 0);
-                }
-                else {
-                    //튜토리얼 남았음
-                    AccountManager.etcInfo tutorialCleared = etcInfos.Find(x => x.key == "tutorialCleared");
-                    if (tutorialCleared == null) {
-                        var humanDeckClaimed = etcInfos.Find(x => x.key == "humanDeckClaimed");
-                        //휴먼 인게임 이후 메인화면에서 보상을 받지 않았음
-                        if (humanDeckClaimed == null) {
-                            //휴먼 인게임 튜토리얼을 끝냈음
-                            if (prevTutorial == "Human_Tutorial") {
-                                tutorialType = MenuTutorialManager.TutorialType.TO_ORC_STORY;
-                            }
-                            //휴먼 인게임 튜토리얼을 끝내지 않았음
-                            else {
-                                PlayerPrefs.SetInt("TutorialBoxRecieved", 0);
-                                AddNewbiController();
-                            }
-                        }
-                        //휴먼 인게임 이후 메인화면에서 보상을 받았음
-                        else {
-                            var orcDeckClaimed = etcInfos.Find(x => x.key == "orcDeckClaimed");
-                            //오크 인게임 이후 메인화면에서 보상을 받지 않았음
-                            if (orcDeckClaimed == null) {
-                                //오크 인게임 튜토리얼을 끝냈음
-                                if (prevTutorial == "Orc_Tutorial") {
-                                    tutorialType = MenuTutorialManager.TutorialType.TO_AI_BATTLE;
-                                }
-                                //오크 인게임 튜토리얼을 끝내지 않았음
-                                else {
-                                    tutorialType = MenuTutorialManager.TutorialType.TO_ORC_STORY;
-                                }
-                            }
-                            else {
-                                //오크 인게임 이후 메인화면 보상을 받았음
-                                //박스 오픈 튜토리얼에서 보상을 받았는지?
-                                if (prevTutorial == "AI_Tutorial") {
-                                    string prevPlayedRace = PlayerPrefs.GetString("SelectedRace").ToLower();
-                                    Logger.Log(prevPlayedRace);
-                                    if (prevPlayedRace == "human") {
-                                        tutorialType = MenuTutorialManager.TutorialType.TO_BOX_OPEN_HUMAN;
-                                    }
-                                    else {
-                                        tutorialType = MenuTutorialManager.TutorialType.TO_BOX_OPEN_ORC;
-                                    }
-                                }
-                                else {
-                                    tutorialType = MenuTutorialManager.TutorialType.TO_AI_BATTLE;
-                                }
-                            }
-                        }
-                    }
-                    //튜토리얼 모두 진행하였음
-                    else {
-                        if (PlayerPrefs.GetInt("TutorialBoxRecieved") == 0) {
-                            string prevPlayedRace = PlayerPrefs.GetString("SelectedRace").ToLower();
-                            Logger.Log(prevPlayedRace);
-                            if (prevPlayedRace == "human") {
-                                tutorialType = MenuTutorialManager.TutorialType.TO_BOX_OPEN_HUMAN;
-                            }
-                            else {
-                                tutorialType = MenuTutorialManager.TutorialType.TO_BOX_OPEN_ORC;
-                            }
-                        }
-                        else {
-                            menuTutorialManager.enabled = false;
-                            needTutorial = false;
-                        }
-                    }
-                }
-
-                if (needTutorial) {
-                    if (tutorialType != MenuTutorialManager.TutorialType.TO_HUMAN_STORY) {
-                        menuTutorialManager.StartTutorial(tutorialType);
-                    }
-                }
-            }
-        });
     }
 
     public void AddNewbiController() {

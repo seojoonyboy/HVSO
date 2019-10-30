@@ -6,6 +6,7 @@ using dataModules;
 using TMPro;
 using UnityEngine.EventSystems;
 using BestHTTP;
+using System;
 
 public class DeckEditController : MonoBehaviour
 {
@@ -46,6 +47,24 @@ public class DeckEditController : MonoBehaviour
     int currentPage;
     int[] cardMana;
 
+    void Awake() {
+        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_DECK_MODIFIED, OnDeckModified);
+        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_DECK_CREATED, OnMakeNewDeckFinished);
+    }
+
+    private void OnMakeNewDeckFinished(Enum Event_Type, Component Sender, object Param) {
+        gameObject.SetActive(false);
+        if (templateMenu != null) {
+            templateMenu.transform.gameObject.SetActive(false);
+            templateMenu = null;
+        }
+        deckNamePanel.transform.Find("NameTemplate").GetComponent<TMPro.TMP_InputField>().text = "";
+    }
+
+    private void OnDeckModified(Enum Event_Type, Component Sender, object Param) {
+        menuSceneController.decksLoader.Load();
+        gameObject.SetActive(false);
+    }
 
     private void InitCanvas() {
         setCardList = new Dictionary<string, GameObject>();
@@ -673,16 +692,7 @@ public class DeckEditController : MonoBehaviour
         field.value = items.ToArray();
         formatData.parms.Add(field);
 
-        AccountManager.Instance.RequestDeckModify(formatData, deckId, OnDeckModifyFinished);
-    }
-
-    private void OnDeckModifyFinished(HTTPRequest originalRequest, HTTPResponse response) {
-        //덱 수정 요청 완료
-        if (response.StatusCode == 200) {
-            Logger.Log("덱 편집완료 완료");
-            menuSceneController.decksLoader.Load();
-            gameObject.SetActive(false);
-        }
+        AccountManager.Instance.RequestDeckModify(formatData, deckId);
     }
 
     /// <summary>
@@ -718,22 +728,7 @@ public class DeckEditController : MonoBehaviour
         formatData.camp = (isHuman == true) ? "human" : "orc";
         formatData.bannerImage = "custom";
 
-        AccountManager.Instance.RequestDeckMake(formatData, OnMakeNewDeckFinished);
-    }
-
-    private void OnMakeNewDeckFinished(HTTPRequest originalRequest, HTTPResponse response) {
-        //덱 새로 생성 완료
-        if (response.StatusCode == 200) {
-            Logger.Log("덱 생성 완료");
-            menuSceneController.decksLoader.Load();
-            gameObject.SetActive(false);
-            if (templateMenu != null) {
-                templateMenu.transform.gameObject.SetActive(false);
-                templateMenu = null;
-            }
-            deckNamePanel.transform.Find("NameTemplate").GetComponent<TMPro.TMP_InputField>().text = "";
-        }
-
+        AccountManager.Instance.RequestDeckMake(formatData);
     }
 
     [System.Serializable]

@@ -31,6 +31,15 @@ public class TemplateMenu : MonoBehaviour {
     bool newDeck;
 
     //static Deck selectedDeckBtn;
+    void Awake() {
+        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_DECK_CREATED, OnDeckAdded);
+    }
+
+    private void OnDeckAdded(Enum Event_Type, Component Sender, object Param) {
+        Modal.instantiate("템플릿 덱을 생성하였습니다.", Modal.Type.CHECK, () => {
+            ReturnToMenu();
+        });
+    }
 
     public void SetTemplateNewDecks(string heroId, bool isHuman) {
         heroID = heroId;
@@ -188,13 +197,6 @@ public class TemplateMenu : MonoBehaviour {
         format.camp = deck.camp;
         format.bannerImage = deck.id;
 
-        AccountManager.Instance.RequestDeckMake(format, (HTTPRequest originalRequest, HTTPResponse response) => {
-            if(response.StatusCode == 200) {
-                Modal.instantiate("템플릿 덱을 생성하였습니다.", Modal.Type.CHECK, () => {
-                    menuSceneController.decksLoader.Load();
-                    ReturnToMenu();
-                });
-            }
-        });
+        AccountManager.Instance.RequestDeckMake(format);
     }
 }

@@ -397,6 +397,20 @@ namespace MenuTutorialModules {
 
         IEnumerator Proceed() {
             GameObject target = null;
+
+            NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_DECKS_UPDATED, (type, sender, parm) => {
+                HTTPResponse res = (HTTPResponse)parm;
+                if (res != null) {
+                    if (res.StatusCode == 200 || res.StatusCode == 304) {
+                        var result = JsonReader.Read<Decks>(res.DataAsText);
+                        AccountManager.Instance.orcDecks = result.orc;
+                        AccountManager.Instance.humanDecks = result.human;
+                    }
+                }
+                else {
+                    Logger.Log("Something is wrong");
+                }
+            });
             GetComponent<MenuTutorialManager>().ActiveRewardPanel();
 
             SkeletonGraphic skeletonGraphic = GetComponent<MenuTutorialManager>().rewardPanel.transform.Find("Anim").GetComponent<SkeletonGraphic>();
@@ -412,18 +426,7 @@ namespace MenuTutorialModules {
                 .Subscribe(_ => CheckClick(target));
 
             AccountManager.Instance.RequestUserInfo();
-            AccountManager.Instance.RequestMyDecks((req, res) => {
-                if (res != null) {
-                    if (res.StatusCode == 200 || res.StatusCode == 304) {
-                        var result = JsonReader.Read<Decks>(res.DataAsText);
-                        AccountManager.Instance.orcDecks = result.orc;
-                        AccountManager.Instance.humanDecks = result.human;
-                    }
-                }
-                else {
-                    Logger.Log("Something is wrong");
-                }
-            });
+            AccountManager.Instance.RequestMyDecks();
         }
 
         private void CheckClick(GameObject target) {
@@ -598,13 +601,15 @@ namespace MenuTutorialModules {
 
     public class BoxOpenProcess : MenuExecute {
         public override void Execute() {
-            var menuTutorialManager = GetComponent<MenuTutorialManager>();
-            menuTutorialManager.ActiveRewardBoxCanvas();
-            MenuMask.Instance.UnBlockScreen();
-            PlayerPrefs.SetInt("TutorialBoxRecieved", 1);
-            PlayerPrefs.Save();
+            NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, (type, sender, parm) => {
+                HTTPResponse res = (HTTPResponse)parm;
 
-            AccountManager.Instance.RequestUserInfo((req, res) => {
+                var menuTutorialManager = GetComponent<MenuTutorialManager>();
+                menuTutorialManager.ActiveRewardBoxCanvas();
+                MenuMask.Instance.UnBlockScreen();
+                PlayerPrefs.SetInt("TutorialBoxRecieved", 1);
+                PlayerPrefs.Save();
+
                 var resText = res.DataAsText;
                 Response __res = dataModules.JsonReader.Read<Response>(resText);
                 if (!string.IsNullOrEmpty(__res.supplyBox)) {
@@ -626,46 +631,8 @@ namespace MenuTutorialModules {
                     handler.isDone = true;
                 }
             });
-        }
 
-        private void callback(HTTPRequest originalRequest, HTTPResponse response) {
-            AccountManager.Instance.RequestUserInfo((req, res) => {
-                AccountManager.Instance.SetSignInData(res);
-                AccountManager.Instance.RequestMyDecks((_req, _res) => {
-                    if (_res != null) {
-                        if (_res.StatusCode == 200 || _res.StatusCode == 304) {
-                            var result = JsonReader.Read<Decks>(res.DataAsText);
-                            AccountManager.Instance.orcDecks = result.orc;
-                            AccountManager.Instance.humanDecks = result.human;
-                        }
-                    }
-                    else {
-                        Logger.Log("Something is wrong");
-                    }
-
-                    var resText = response.DataAsText;
-                    Response __res = dataModules.JsonReader.Read<Response>(resText);
-                    var menuTutorialManager = GetComponent<MenuTutorialManager>();
-                    if (!string.IsNullOrEmpty(__res.supplyBox)) {
-                        //보상 이펙트 보여주기
-                        if (AccountManager.Instance.userData.supplyBox > 0) {
-                            menuTutorialManager.ActiveRewardBoxCanvas();
-                            menuTutorialManager.BoxRewardPanel.transform.Find("ExitButton").GetComponent<Button>().onClick.AddListener(onclick);
-                        }
-                        else {
-                            Logger.LogError("박스가 없습니다!");
-                            handler.isDone = true;
-                        }
-                    }
-                    else {
-                        menuTutorialManager.BoxRewardPanel.transform.Find("ExitButton")
-                            .GetComponent<Button>()
-                            .onClick
-                            .RemoveListener(onclick);
-                        handler.isDone = true;
-                    }
-                });
-            });
+            AccountManager.Instance.RequestUserInfo();
         }
 
         private void onclick() {

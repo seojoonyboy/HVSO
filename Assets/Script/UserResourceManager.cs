@@ -47,7 +47,7 @@ public class UserResourceManager : SerializedMonoBehaviour {
         if (timerText != null) {
             timerTime -= Time.deltaTime;
             if(timerTime <= 0) {
-                AccountManager.Instance.RequestUserInfo(AccountManager.Instance.SetSignInData);
+                AccountManager.Instance.RequestUserInfo();
                 timerOn = false;
                 return;
             }

@@ -39,14 +39,7 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
         Logger.Log(type + " 튜토리얼 시작");
 
         if(type != TutorialType.TO_HUMAN_STORY) {
-            AccountManager.Instance.RequestUserInfo((req, res) => {
-                if (res.IsSuccess) {
-                    if (res.StatusCode == 200 || res.StatusCode == 304) {
-                        AccountManager.Instance.SetSignInData(res);
-                        Logger.Log(type + " 튜토리얼 시작에 따른 api/user 갱신");
-                    }
-                }
-            });
+            AccountManager.Instance.RequestUserInfo();
         }
 
         var execs = GetComponents<MenuExecute>();

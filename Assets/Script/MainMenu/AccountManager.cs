@@ -55,7 +55,6 @@ public partial class AccountManager : Singleton<AccountManager> {
         }
         set {
             nickName = value;
-            NoneIngameSceneEventHandler.Instance.PostNotification(NoneIngameSceneEventHandler.EVENT_TYPE.NICKNAME_CHANGED, this, value);
         }
     }
 
@@ -257,7 +256,7 @@ public partial class AccountManager {
     /// </summary>
     /// <param name="callback"></param>
     /// <param name="retryOccured"></param>
-    public void RequestUserInfo(OnRequestFinishedDelegate callback = null) {
+    public void RequestUserInfo() {
         StringBuilder url = new StringBuilder();
         string base_url = networkManager.baseUrl;
 
@@ -272,12 +271,33 @@ public partial class AccountManager {
         //    .Append("?slow=30");
 
         Logger.Log("Request User Info");
-        HTTPRequest request = new HTTPRequest(
-            new Uri(url.ToString())
-        );
+        HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
         request.MethodType = HTTPMethods.Get;
         request.AddHeader("authorization", TokenFormat);
-        networkManager.Request(request, callback, "유저 정보를 불러오는중...");
+
+        networkManager.Request(
+            request, (req, res) => {
+                var sceneStartController = GetComponent<SceneStartController>();
+                if (res.StatusCode == 200 || res.StatusCode == 304) {
+                    SetSignInData(res);
+
+                    if (userData.preSupply >= MAX_PRE_SUPPLY) {
+                        Logger.Log("Pre Supply가 가득찼습니다.");
+                    }
+                    else {
+                        ReqInTimer(GetRemainSupplySec());
+                    }
+
+                    NoneIngameSceneEventHandler
+                        .Instance
+                        .PostNotification(
+                            NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED,
+                            null,
+                            res
+                        );
+                }
+            },
+            "유저 정보를 불러오는중...");
     }
 
     public void OnSignInResultModal() {
@@ -290,13 +310,8 @@ public partial class AccountManager {
     private void CallbackSignUp(HTTPRequest originalRequest, HTTPResponse response) {
         if (response != null && response.IsSuccess) {
             Logger.Log("회원가입 요청 완료");
-            RequestUserInfo((req, res) => {
-                if (response != null) {
-                    if (response.IsSuccess) {
-                        SetSignInData(res);
-                    }
-                }
-            });
+            RequestUserInfo();
+
             Modal.instantiate("회원가입이 완료되었습니다.", Modal.Type.CHECK, () => {
                 FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
             });
@@ -360,24 +375,14 @@ public partial class AccountManager {
         UserReqTimer = Timer.Register(
             interval,
             () => {
-                RequestUserInfo((req, res) => {
-                    var sceneStartController = GetComponent<SceneStartController>();
-                    if (res.StatusCode == 200 || res.StatusCode == 304) {
-                        SetSignInData(res);
-                        if (userData.preSupply >= MAX_PRE_SUPPLY) {
-                            Logger.Log("Pre Supply가 가득찼습니다.");
-                            return; //TODO : preSupply가 변동되면 다시 요청 필요 
-                        }
-                        ReqInTimer(GetRemainSupplySec());
-                    }
-                });
+                RequestUserInfo();
             });
     }
     #endregion
 }
 
 public partial class AccountManager {
-    public void RequestMyDecks(OnRequestFinishedDelegate callback = null) {
+    public void RequestMyDecks() {
         StringBuilder url = new StringBuilder();
         string base_url = networkManager.baseUrl;
 
@@ -390,12 +395,31 @@ public partial class AccountManager {
         );
         request.MethodType = HTTPMethods.Get;
         request.AddHeader("authorization", TokenFormat);
-        networkManager.Request(request, callback, "내 덱을 불러오는중...");
+        networkManager.Request(request, (req, res) => {
+            if (res.IsSuccess) {
+                if (res.StatusCode == 200 || res.StatusCode == 304) {
+                    var result = dataModules.JsonReader.Read<Decks>(res.DataAsText);
+                    orcDecks = result.orc;
+                    humanDecks = result.human;
+
+                    NoneIngameSceneEventHandler
+                        .Instance
+                        .PostNotification(
+                            NoneIngameSceneEventHandler.EVENT_TYPE.API_DECKS_UPDATED,
+                            null,
+                            res
+                        );
+                }
+            }
+            else {
+                Logger.LogWarning("내 덱 불러오기 실패");
+            }
+        }, "내 덱을 불러오는중...");
     }
     /// <summary>
     /// 덱 새로 생성 Server에 요청
     /// </summary>
-    public void RequestDeckMake(NetworkManager.AddCustomDeckReqFormat format, OnRequestFinishedDelegate callback = null) {
+    public void RequestDeckMake(NetworkManager.AddCustomDeckReqFormat format) {
         if (string.IsNullOrEmpty(format.heroId)) {
             Logger.Log("해당 커스텀 덱의 HeroId를 지정해 주세요");
             return;
@@ -420,22 +444,27 @@ public partial class AccountManager {
 
         //var tmp = JsonConvert.SerializeObject(format);
         request.RawData = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(format));
-        if (callback != null) request.Callback = callback;
-        networkManager.Request(request, OnReceived, "새로운 덱을 생성하는중...");
-    }
 
-    private void OnReceived(HTTPRequest originalRequest, HTTPResponse response) {
-        if (response.IsSuccess) {
-            if (response.StatusCode == 200 || response.StatusCode == 304) {
-                var result = response.DataAsText;
-            }
-        }
+        networkManager.Request(
+            request, 
+            (req, res) => {
+                if (res.IsSuccess) {
+                    if (res.StatusCode == 200 || res.StatusCode == 304) {
+                        NoneIngameSceneEventHandler.Instance.PostNotification(NoneIngameSceneEventHandler.EVENT_TYPE.API_DECK_CREATED, null, res);
+                        RequestMyDecks();
+                    }
+                }
+                else {
+                    Logger.LogWarning("덱 정보 갱신 실패");
+                }
+            },
+            "새로운 덱을 생성하는중...");
     }
 
     /// <summary>
     /// 카드 제작 요청
     /// </summary>
-    public void RequestCardMake(string cardId, OnRequestFinishedDelegate callback = null) {
+    public void RequestCardMake(string cardId) {
         StringBuilder sb = new StringBuilder();
         sb
             .Append(networkManager.baseUrl)
@@ -448,14 +477,29 @@ public partial class AccountManager {
         request.AddHeader("authorization", TokenFormat);
 
         request.RawData = Encoding.UTF8.GetBytes(string.Format("{{\"cardId\":\"{0}\"}}", cardId));
-        if (callback != null) request.Callback = callback;
-        networkManager.Request(request, OnReceived, "새로운 덱을 생성하는중...");
+        networkManager.Request(request, (req, res) => {
+            if (res.IsSuccess) {
+                if (res.StatusCode == 200 || res.StatusCode == 304) {
+
+                    NoneIngameSceneEventHandler
+                        .Instance
+                        .PostNotification(
+                            NoneIngameSceneEventHandler.EVENT_TYPE.API_CREATE_CARD,
+                            null,
+                            res
+                        );
+                }
+            }
+            else {
+                Logger.LogWarning("덱 생성 실패");
+            }
+        }, "새로운 덱을 생성하는중...");
     }
 
     /// <summary>
     /// 카드 해체 요청
     /// </summary>
-    public void RequestCardBreak(string cardId, OnRequestFinishedDelegate callback = null) {
+    public void RequestCardBreak(string cardId) {
         StringBuilder sb = new StringBuilder();
         sb
             .Append(networkManager.baseUrl)
@@ -468,8 +512,23 @@ public partial class AccountManager {
         request.AddHeader("authorization", TokenFormat);
 
         request.RawData = Encoding.UTF8.GetBytes(string.Format("{{\"cardId\":\"{0}\"}}", cardId));
-        if (callback != null) request.Callback = callback;
-        networkManager.Request(request, OnReceived, "새로운 덱을 생성하는중...");
+
+        networkManager.Request(request, (req, res) => {
+            if (res.IsSuccess) {
+                if (res.StatusCode == 200 || res.StatusCode == 304) {
+                    NoneIngameSceneEventHandler
+                        .Instance
+                        .PostNotification(
+                            NoneIngameSceneEventHandler.EVENT_TYPE.API_REMOVE_CARD,
+                            null,
+                            res
+                        );
+                }
+            }
+            else {
+                Logger.LogWarning("카드 제거 실패");
+            }
+        }, "카드를 제거하는 중...");
     }
 
 
@@ -477,7 +536,7 @@ public partial class AccountManager {
     /// 덱 제거 요청
     /// </summary>
     /// <param name="deckId">Deck Id</param>
-    public void RequestDeckRemove(string deckId, OnRequestFinishedDelegate callback = null) {
+    public void RequestDeckRemove(string deckId) {
         StringBuilder sb = new StringBuilder();
         sb
             .Append(networkManager.baseUrl)
@@ -490,15 +549,24 @@ public partial class AccountManager {
         request.MethodType = BestHTTP.HTTPMethods.Delete;
         request.AddHeader("authorization", TokenFormat);
 
-        if (callback != null) request.Callback = callback;
-        networkManager.Request(request, OnReceived, "덱 삭제를 요청하는 중...");
+        networkManager.Request(request, (req, res) => {
+            if (res.IsSuccess) {
+                if (res.StatusCode == 200 || res.StatusCode == 304) {
+                    NoneIngameSceneEventHandler.Instance.PostNotification(NoneIngameSceneEventHandler.EVENT_TYPE.API_DECK_REMOVED, null, res);
+                    RequestMyDecks();
+                }
+            }
+            else {
+                Logger.LogWarning("덱 삭제 실패");
+            }
+        }, "덱 삭제를 요청하는 중...");
     }
 
     /// <summary>
     /// 덱 수정 요청
     /// </summary>
     /// <param name="data">양식 작성</param>
-    public void RequestDeckModify(NetworkManager.ModifyDeckReqFormat data, string deckId, OnRequestFinishedDelegate callback = null) {
+    public void RequestDeckModify(NetworkManager.ModifyDeckReqFormat data, string deckId) {
         var pairs = data.parms;
 
         StringBuilder sb = new StringBuilder();
@@ -526,11 +594,21 @@ public partial class AccountManager {
         }
         request.RawData = Encoding.UTF8.GetBytes(json.ToString());
         request.AddHeader("authorization", TokenFormat);
-        if (callback != null) request.Callback = callback;
-        networkManager.Request(request, OnReceived, "덱 수정 요청을 전달하는중...");
+
+        networkManager.Request(request, (req, res) => {
+            if (res.IsSuccess) {
+                if (res.StatusCode == 200 || res.StatusCode == 304) {
+                    NoneIngameSceneEventHandler.Instance.PostNotification(NoneIngameSceneEventHandler.EVENT_TYPE.API_DECK_MODIFIED, null, res);
+                    RequestMyDecks();
+                }
+            }
+            else {
+                Logger.LogWarning("덱 수정 실패");
+            }
+        }, "덱 수정 요청을 전달하는중...");
     }
 
-    public void RequestHumanTemplates(OnRequestFinishedDelegate callback = null) {
+    public void RequestHumanTemplates() {
         StringBuilder sb = new StringBuilder();
         sb
             .Append(networkManager.baseUrl)
@@ -540,10 +618,25 @@ public partial class AccountManager {
         request.MethodType = HTTPMethods.Get;
         request.AddHeader("authorization", TokenFormat);
 
-        networkManager.Request(request, callback, "Human 템플릿을 불러오는중...");
+        networkManager.Request(request, (req, res) => {
+            if (res.IsSuccess) {
+                if (res.StatusCode == 200 || res.StatusCode == 304) {
+                    NoneIngameSceneEventHandler
+                        .Instance
+                        .PostNotification(
+                            NoneIngameSceneEventHandler.EVENT_TYPE.API_HUMAN_TEMPLATES_UPDATED,
+                            null,
+                            res
+                        );
+                }
+            }
+            else {
+                Logger.LogWarning("템플릿 정보 가져오기 실패");
+            }
+        }, "Human 템플릿을 불러오는중...");
     }
 
-    public void RequestOrcTemplates(OnRequestFinishedDelegate callback = null) {
+    public void RequestOrcTemplates() {
         StringBuilder sb = new StringBuilder();
         sb
             .Append(networkManager.baseUrl)
@@ -553,10 +646,25 @@ public partial class AccountManager {
         request.MethodType = HTTPMethods.Get;
         request.AddHeader("authorization", TokenFormat);
 
-        networkManager.Request(request, callback, "orc 템플릿을 불러오는중...");
+        networkManager.Request(request, (req, res) => {
+            if (res.IsSuccess) {
+                if (res.StatusCode == 200 || res.StatusCode == 304) {
+                    NoneIngameSceneEventHandler
+                        .Instance
+                        .PostNotification(
+                            NoneIngameSceneEventHandler.EVENT_TYPE.API_ORC_TEMPLATES_UPDATED,
+                            null,
+                            res
+                        );
+                }
+            }
+            else {
+                Logger.LogWarning("템플릿 정보 가져오기 실패");
+            }
+        }, "orc 템플릿을 불러오는중...");
     }
 
-    public void RequestInventories(OnRequestFinishedDelegate callback = null) {
+    public void RequestInventories() {
         StringBuilder sb = new StringBuilder();
         sb
             .Append(networkManager.baseUrl)
@@ -566,20 +674,28 @@ public partial class AccountManager {
         request.MethodType = HTTPMethods.Get;
         request.AddHeader("authorization", TokenFormat);
 
-        networkManager.Request(request, callback, "인벤토리 정보를 불러오는 중...");
-    }
+        networkManager.Request(request, (req, res) => {
+            if (res.IsSuccess) {
+                if (res.StatusCode == 200 || res.StatusCode == 304) {
+                    var result = dataModules.JsonReader.Read<MyCardsInfo>(res.DataAsText);
 
-    public void RefreshInventories(OnRequestFinishedDelegate callback = null) {
-        StringBuilder sb = new StringBuilder();
-        sb
-            .Append(networkManager.baseUrl)
-            .Append("api/user/inventories");
+                    myCards = result.cardInventories;
+                    SetHeroInventories(result.heroInventories);
 
-        HTTPRequest request = new HTTPRequest(new Uri(sb.ToString()));
-        request.MethodType = HTTPMethods.Get;
-        request.AddHeader("authorization", TokenFormat);
-
-        networkManager.Request(request, callback, "인벤토리 정보를 불러오는 중...");
+                    SetCardData();
+                    NoneIngameSceneEventHandler
+                        .Instance
+                        .PostNotification(
+                            NoneIngameSceneEventHandler.EVENT_TYPE.API_INVENTORIES_UPDATED,
+                            null,
+                            res
+                        );
+                }
+            }
+            else {
+                Logger.LogWarning("인벤토리 정보 가져오기 실패");
+            }
+        }, "인벤토리 정보를 불러오는 중...");
     }
 
     private void TestModifyDeck() {
@@ -630,7 +746,26 @@ public partial class AccountManager {
         );
 
         request.MethodType = HTTPMethods.Get;
-        networkManager.Request(request, OnReceivedLoadAllCards, "모든 카드 정보를 불러오는중...");
+        networkManager.Request(request, (req, res) => {
+            if (res.IsSuccess) {
+                if (res.StatusCode == 200 || res.StatusCode == 304) {
+                    var result = dataModules.JsonReader.Read<List<CollectionCard>>(res.DataAsText);
+                    allCards = result;
+                    allCardsDic = allCards.ToDictionary(x => x.id, x => x);
+
+                    NoneIngameSceneEventHandler
+                        .Instance
+                        .PostNotification(
+                            NoneIngameSceneEventHandler.EVENT_TYPE.API_CARDS_UPDATED,
+                            null,
+                            res
+                        );
+                }
+            }
+            else {
+                Logger.LogWarning("모든 카드 정보 가져오기 실패");
+            }
+        }, "모든 카드 정보를 불러오는중...");
     }
 
     public void LoadAllHeroes() {
@@ -647,15 +782,6 @@ public partial class AccountManager {
         networkManager.Request(request, OnReceivedLoadAllHeroes, "모든 카드 정보를 불러오는중...");
     }
 
-    private void OnReceivedLoadAllCards(HTTPRequest originalRequest, HTTPResponse response) {
-        if (response != null && response.IsSuccess) {
-            var result = dataModules.JsonReader.Read<List<CollectionCard>>(response.DataAsText);
-            allCards = result;
-            allCardsDic = allCards.ToDictionary(x => x.id, x => x);
-            //OnCardLoadFinished.Invoke();
-        }
-    }
-
     private void OnReceivedLoadAllHeroes(HTTPRequest originalRequest, HTTPResponse response) {
         if (response != null && response.IsSuccess) {
             var result = dataModules.JsonReader.Read<List<HeroInventory>>(response.DataAsText);
@@ -663,7 +789,7 @@ public partial class AccountManager {
             //OnCardLoadFinished.Invoke();
         }
     }
-    public void RequestRewardInfo(OnRequestFinishedDelegate callback = null) {
+    public void RequestRewardInfo() {
         StringBuilder url = new StringBuilder();
         string base_url = networkManager.baseUrl;
 
@@ -683,7 +809,28 @@ public partial class AccountManager {
         );
         request.MethodType = HTTPMethods.Get;
         request.AddHeader("authorization", TokenFormat);
-        networkManager.Request(request, callback, "박스 정보를 불러오는중...");
+        networkManager.Request(request, (req, res) => {
+            if (res.IsSuccess) {
+                if (res.StatusCode == 200 || res.StatusCode == 304) {
+                    var result = dataModules.JsonReader.Read<RewardClass[]>(res.DataAsText);
+
+                    rewardList = result;
+                    SetRewardInfo(result);
+                    RequestUserInfo();
+
+                    NoneIngameSceneEventHandler
+                        .Instance
+                        .PostNotification(
+                            NoneIngameSceneEventHandler.EVENT_TYPE.API_OPENBOX,
+                            null,
+                            res
+                        );
+                }
+            }
+            else {
+                Logger.LogWarning("박스 정보 가져오기 실패");
+            }
+        }, "박스 정보를 불러오는중...");
 
     }
 }
@@ -716,7 +863,7 @@ public partial class AccountManager {
         }
     }
 
-    public void ChangeNicknameReq(string val = "", OnRequestFinishedDelegate callback = null) {
+    public void ChangeNicknameReq(string val = "") {
         StringBuilder url = new StringBuilder();
         string base_url = networkManager.baseUrl;
 
@@ -732,7 +879,25 @@ public partial class AccountManager {
         NickNamechangeFormat format = new NickNamechangeFormat();
         format.nickName = val;
         request.RawData = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(format));
-        networkManager.Request(request, callback, "박스 정보를 불러오는중...");
+        networkManager.Request(request, (req, res) => {
+            if (res.IsSuccess) {
+                if (res.StatusCode == 200 || res.StatusCode == 304) {
+                    needChangeNickName = false;
+                    NickName = val;
+
+                    NoneIngameSceneEventHandler
+                        .Instance
+                        .PostNotification(
+                            NoneIngameSceneEventHandler.EVENT_TYPE.API_NICKNAME_UPDATED,
+                            null,
+                            res
+                        );
+                }
+            }
+            else {
+                Logger.LogWarning("닉네임 변경하기 실패");
+            }
+        }, "닉네임을 변경하는 중...");
     }
 
     public class NickNamechangeFormat {
@@ -791,7 +956,22 @@ public partial class AccountManager {
         HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
         request.MethodType = HTTPMethods.Get;
         request.AddHeader("authorization", TokenFormat);
-        networkManager.Request(request, ClearedStoryCallback, "보상 내역 확인중...");
+        networkManager.Request(request, (req, res) => {
+            if (res.IsSuccess) {
+                if (res.StatusCode == 200 || res.StatusCode == 304) {
+                    NoneIngameSceneEventHandler
+                        .Instance
+                        .PostNotification(
+                            NoneIngameSceneEventHandler.EVENT_TYPE.API_CLEARED_STAGE_UPDATED,
+                            null,
+                            res
+                        );
+                }
+            }
+            else {
+                Logger.LogWarning("클리어한 스테이지 정보 불러오기 실패");
+            }
+        }, "스테이지 진척도 불러오는 중...");
     }
 
     private void ClearedStoryCallback(HTTPRequest originalRequest, HTTPResponse response) {

@@ -8,6 +8,7 @@ using BestHTTP;
 using dataModules;
 using Spine;
 using Spine.Unity;
+using System;
 
 public partial class MenuCardInfo : MonoBehaviour {
     Translator translator;
@@ -30,7 +31,14 @@ public partial class MenuCardInfo : MonoBehaviour {
         transform.Find("CreateSpine").GetComponent<SkeletonGraphic>().Initialize(false);
         transform.Find("CreateSpine").GetComponent<SkeletonGraphic>().Update(0);
         transform.Find("CreateSpine").GetComponent<SkeletonGraphic>().AnimationState.Complete += delegate { EndCardMaking(); };
-        OnMakeCardFinished.AddListener(() => AccountManager.Instance.RefreshInventories(OnInventoryRefreshFinished));
+
+        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_CREATE_CARD, CardModified);
+        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_REMOVE_CARD, CardModified);
+        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, (type, sender, parm) => Logger.Log("!!"));
+    }
+
+    private void CardModified(Enum Event_Type, Component Sender, object Param) {
+        accountManager.RequestUserInfo();
     }
 
     public virtual void SetCardInfo(CollectionCard data, bool isHuman, Transform dicCard, bool makeCard = false) {
@@ -292,7 +300,7 @@ public partial class MenuCardInfo : MonoBehaviour {
         transform.Find("CreateSpine").gameObject.SetActive(true);
         transform.Find("CreateSpine").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, "MAKING_" + cardData.rarelity, false);
         beforeCrystal = accountManager.userResource.crystal;
-        accountManager.RequestCardMake(cardId, WaitRequest);
+        accountManager.RequestCardMake(cardId);
     }
 
     public void BreakCard() {
@@ -302,35 +310,15 @@ public partial class MenuCardInfo : MonoBehaviour {
         transform.Find("CreateSpine").gameObject.SetActive(true);
         transform.Find("CreateSpine").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, "DECOMPOSITION_" + cardData.rarelity, false);
         beforeCrystal = accountManager.userResource.crystal;
-        accountManager.RequestCardBreak(cardId, WaitRequest);
+
+        accountManager.RequestCardBreak(cardId);
+
         string rarelity = accountManager.cardPackage.data[cardId].rarelity;
         if (accountManager.cardPackage.data[cardId].camp == "human")
             accountManager.cardPackage.rarelityHumanCardNum[rarelity].Remove(cardId);
         else
             accountManager.cardPackage.rarelityOrcCardNum[rarelity].Remove(cardId);
         accountManager.cardPackage.data.Remove(cardId);
-    }
-
-    void WaitRequest(HTTPRequest originalRequest, HTTPResponse response) {
-        accountManager.RequestUserInfo((_req, _res) => {
-            accountManager.SetSignInData(_res);
-            //hudController.SetResourcesUI();
-            OnMakeCardFinished.Invoke();
-        });
-    }
-
-    public void OnInventoryRefreshFinished(HTTPRequest originalRequest, HTTPResponse response) {
-        if (response != null) {
-            if (response.StatusCode == 200 || response.StatusCode == 304) {
-                var result = JsonReader.Read<MyCardsInfo>(response.DataAsText);
-
-                accountManager.myCards = result.cardInventories;
-                accountManager.SetCardData();
-                accountManager.SetHeroInventories(result.heroInventories);
-                //menuSceneController.decksLoader.LoadOnlyDecks();
-                
-            }
-        }
     }
 
     void EndCardMaking() {

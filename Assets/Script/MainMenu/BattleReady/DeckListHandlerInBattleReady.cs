@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using dataModules;
+using System;
 
 public class DeckListHandlerInBattleReady : MonoBehaviour {
     AccountManager accountManager;
@@ -15,11 +16,74 @@ public class DeckListHandlerInBattleReady : MonoBehaviour {
 
     void Awake() {
         accountManager = AccountManager.Instance;
+
+        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_DECKS_UPDATED, LoadMyDecks);
+    }
+
+    private void LoadMyDecks(Enum Event_Type, Component Sender, object Param) {
+        BestHTTP.HTTPResponse res = (BestHTTP.HTTPResponse)Param;
+
+        var result = JsonReader.Read<Decks>(res.DataAsText);
+        accountManager.orcDecks = result.orc;
+        accountManager.humanDecks = result.human;
+
+        var humanDecks = accountManager.humanDecks;
+        var orcDecks = accountManager.orcDecks;
+
+        for (int i = 0; i < humanDecks.Count; i++) {
+            content.GetChild(i).gameObject.SetActive(true);
+
+            Image heroImg = content.GetChild(i).Find("HeroImg").GetComponent<Image>();
+            string banner = humanDecks[i].bannerImage;
+            if (banner == "custom") {
+                heroImg.sprite = accountManager.resource.deckPortraite["h10001"];
+            }
+            else {
+                heroImg.sprite = accountManager.resource.deckPortraite[banner];
+            }
+
+            content.GetChild(i).Find("CardNum/Value").GetComponent<TextMeshProUGUI>().text = humanDecks[i].totalCardCount + "/";
+            content.GetChild(i).Find("DeckName").GetComponent<TextMeshProUGUI>().text = humanDecks[i].name;
+
+            GameObject obj = content.GetChild(i).gameObject;
+            DeckHandler deckHandler = content.GetChild(i).gameObject.GetComponent<DeckHandler>();
+            deckHandler.DECKID = humanDecks[i].id;
+            var deck = humanDecks[i];
+
+            Button button = deckHandler.GetComponent<Button>();
+            button.onClick.AddListener(() => { OnDeckSelected(deckHandler.DECKID, "HUMAN", deck, obj); });
+        }
+
+        int index = 0;
+        for (int i = humanDecks.Count; i < humanDecks.Count + orcDecks.Count; i++) {
+            content.GetChild(i).gameObject.SetActive(true);
+
+            Image heroImg = content.GetChild(i).Find("HeroImg").GetComponent<Image>();
+            string banner = orcDecks[index].bannerImage;
+            if (banner == "custom") {
+                heroImg.sprite = accountManager.resource.deckPortraite["h10002"];
+            }
+            else {
+                heroImg.sprite = accountManager.resource.deckPortraite[banner];
+            }
+
+            content.GetChild(i).Find("CardNum/Value").GetComponent<TextMeshProUGUI>().text = orcDecks[index].totalCardCount + "/";
+            content.GetChild(i).Find("DeckName").GetComponent<TextMeshProUGUI>().text = orcDecks[index].name;
+
+            GameObject obj = content.GetChild(i).gameObject;
+            DeckHandler deckHandler = content.GetChild(i).gameObject.GetComponent<DeckHandler>();
+            deckHandler.DECKID = orcDecks[index].id;
+            var deck = orcDecks[index];
+
+            Button button = deckHandler.GetComponent<Button>();
+            button.onClick.AddListener(() => { OnDeckSelected(deckHandler.DECKID, "ORC", deck, obj); });
+            index++;
+        }
     }
 
     private void Start() {
         ResetMyDecks();
-        LoadMyDecks();
+        accountManager.RequestMyDecks();
 
         Canvas.ForceUpdateCanvases();
         LayoutRebuilder.ForceRebuildLayoutImmediate(content.GetComponent<RectTransform>());
@@ -34,71 +98,6 @@ public class DeckListHandlerInBattleReady : MonoBehaviour {
 
             selectedObj = null;
         }
-    }
-
-    public void LoadMyDecks() {
-        accountManager.RequestMyDecks((req, res) => {
-            var result = JsonReader.Read<Decks>(res.DataAsText);
-            accountManager.orcDecks = result.orc;
-            accountManager.humanDecks = result.human;
-
-            var humanDecks = accountManager.humanDecks;
-            var orcDecks = accountManager.orcDecks;
-
-            if (res != null) {
-                if(res.StatusCode == 200 || res.StatusCode == 304) {
-                    for (int i = 0; i < humanDecks.Count; i++) {
-                        content.GetChild(i).gameObject.SetActive(true);
-
-                        Image heroImg = content.GetChild(i).Find("HeroImg").GetComponent<Image>();
-                        string banner = humanDecks[i].bannerImage;
-                        if (banner == "custom") {
-                            heroImg.sprite = accountManager.resource.deckPortraite["h10001"];
-                        }
-                        else {
-                            heroImg.sprite = accountManager.resource.deckPortraite[banner];
-                        }
-
-                        content.GetChild(i).Find("CardNum/Value").GetComponent<TextMeshProUGUI>().text = humanDecks[i].totalCardCount + "/";
-                        content.GetChild(i).Find("DeckName").GetComponent<TextMeshProUGUI>().text = humanDecks[i].name;
-
-                        GameObject obj = content.GetChild(i).gameObject;
-                        DeckHandler deckHandler = content.GetChild(i).gameObject.GetComponent<DeckHandler>();
-                        deckHandler.DECKID = humanDecks[i].id;
-                        var deck = humanDecks[i];
-
-                        Button button = deckHandler.GetComponent<Button>();
-                        button.onClick.AddListener(() => { OnDeckSelected(deckHandler.DECKID, "HUMAN", deck, obj); });
-                    }
-
-                    int index = 0;
-                    for (int i = humanDecks.Count; i < humanDecks.Count + orcDecks.Count; i++) {
-                        content.GetChild(i).gameObject.SetActive(true);
-
-                        Image heroImg = content.GetChild(i).Find("HeroImg").GetComponent<Image>();
-                        string banner = orcDecks[index].bannerImage;
-                        if (banner == "custom") {
-                            heroImg.sprite = accountManager.resource.deckPortraite["h10002"];
-                        }
-                        else {
-                            heroImg.sprite = accountManager.resource.deckPortraite[banner];
-                        }
-
-                        content.GetChild(i).Find("CardNum/Value").GetComponent<TextMeshProUGUI>().text = orcDecks[index].totalCardCount + "/";
-                        content.GetChild(i).Find("DeckName").GetComponent<TextMeshProUGUI>().text = orcDecks[index].name;
-
-                        GameObject obj = content.GetChild(i).gameObject;
-                        DeckHandler deckHandler = content.GetChild(i).gameObject.GetComponent<DeckHandler>();
-                        deckHandler.DECKID = orcDecks[index].id;
-                        var deck = orcDecks[index];
-
-                        Button button = deckHandler.GetComponent<Button>();
-                        button.onClick.AddListener(() => { OnDeckSelected(deckHandler.DECKID, "ORC", deck, obj); });
-                        index++;
-                    }
-                }
-            }
-        });
     }
 
     public void ResetMyDecks() {

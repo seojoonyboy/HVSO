@@ -26,16 +26,11 @@ public class CardDictionaryManager : MonoBehaviour {
     SortingOptions selectedSortOption;
     SortingOptions beforeSortOption;
 
-    public UnityEvent SetCardsFinished = new UnityEvent();
+    //public UnityEvent SetCardsFinished = new UnityEvent();
     GameObject selectedHero;
     string selectedHeroId;
 
     public static CardDictionaryManager cardDictionaryManager;
-
-    public void AttachDecksLoader(ref MyDecksLoader decksLoader) {
-        this.decksLoader = decksLoader;
-        this.decksLoader.OnInvenLoadFinished.AddListener(() => { SetToHumanCards(); });
-    }
 
     private void Start() {
         cardDictionaryManager = this;
@@ -69,7 +64,7 @@ public class CardDictionaryManager : MonoBehaviour {
         RefreshLine();
     }
 
-    public void SetToHumanCards() {
+    public void SetToHumanCards() {        
         SoundManager.Instance.PlaySound("button_1");
         isHumanDictionary = true;
         transform.Find("BackgroundImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.campBackgrounds["human"];

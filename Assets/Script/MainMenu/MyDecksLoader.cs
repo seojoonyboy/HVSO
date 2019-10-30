@@ -13,8 +13,37 @@ public class MyDecksLoader : MonoBehaviour {
     public UnityEvent OnTemplateLoadFinished = new UnityEvent();
 
     void Awake() {
-        accountManager = AccountManager.Instance;    
+        accountManager = AccountManager.Instance;
+
+        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_HUMAN_TEMPLATES_UPDATED, OnHumanTemplateLoadFinished);
+        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_ORC_TEMPLATES_UPDATED, OnOrcTemplateLoadFinished);
+        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_INVENTORIES_UPDATED, OnInventoryLoadFinished);
+        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_DECKS_UPDATED, OnMyDecksLoadFinished);
     }
+
+    private void OnMyDecksLoadFinished(Enum Event_Type, Component Sender, object Param) {
+        OnLoadFinished.Invoke();
+    }
+
+    private void OnHumanTemplateLoadFinished(Enum Event_Type, Component Sender, object Param) {
+        HTTPResponse res = (HTTPResponse)Param;
+
+        var result = JsonReader.Read<List<Templates>>(res.DataAsText);
+        accountManager.humanTemplates = result;
+    }
+
+    private void OnInventoryLoadFinished(Enum Event_Type, Component Sender, object Param) {
+        //OnInvenLoadFinished.Invoke();
+    }
+
+    private void OnOrcTemplateLoadFinished(Enum Event_Type, Component Sender, object Param) {
+        HTTPResponse res = (HTTPResponse)Param;
+
+        var result = JsonReader.Read<List<Templates>>(res.DataAsText);
+        accountManager.orcTemplates = result;
+        OnTemplateLoadFinished.Invoke();
+    }
+
     /// <summary>
     /// 내 덱 정보 불러오기
     /// </summary>
@@ -23,61 +52,10 @@ public class MyDecksLoader : MonoBehaviour {
     public void Load() {
         accountManager.LoadAllCards();
         accountManager.LoadAllHeroes();
-        accountManager.RequestMyDecks(OnDeckLoadFinished);
-        accountManager.RequestHumanTemplates(OnHumanTemplateLoadFinished);
-        accountManager.RequestOrcTemplates(OnOrcTemplateLoadFinished);
-        accountManager.RequestInventories(OnInventoryLoadFinished);
+        accountManager.RequestMyDecks();
+        accountManager.RequestHumanTemplates();
+        accountManager.RequestOrcTemplates();
+        accountManager.RequestInventories();
         accountManager.RequestClearedStoryList();
-    }
-
-    public void LoadOnlyDecks() {
-        accountManager.RequestMyDecks(OnDeckLoadFinished); 
-    }
-
-    private void OnInventoryLoadFinished(HTTPRequest originalRequest, HTTPResponse response) {
-        if(response != null) {
-            if (response.StatusCode == 200 || response.StatusCode == 304) {
-                var result = JsonReader.Read<MyCardsInfo>(response.DataAsText);
-
-                accountManager.myCards = result.cardInventories;
-                accountManager.SetHeroInventories(result.heroInventories);
-                accountManager.SetCardData();
-                OnInvenLoadFinished.Invoke();
-            }
-        }
-    }
-
-
-    private void OnDeckLoadFinished(HTTPRequest originalRequest, HTTPResponse response) {
-        if(response != null) {
-            if(response.StatusCode == 200 || response.StatusCode == 304) {
-                var result = JsonReader.Read<Decks>(response.DataAsText);
-                accountManager.orcDecks = result.orc;
-                accountManager.humanDecks = result.human;
-                OnLoadFinished.Invoke();
-            }
-        }
-        else {
-            Logger.Log("Something is wrong");
-        }
-    }
-
-    private void OnOrcTemplateLoadFinished(HTTPRequest originalRequest, HTTPResponse response) {
-        if (response.IsSuccess) {
-            if(response.StatusCode == 200 || response.StatusCode == 304) {
-                var result = JsonReader.Read<List<Templates>>(response.DataAsText);
-                accountManager.orcTemplates = result;
-            }
-        }
-        OnTemplateLoadFinished.Invoke();
-    }
-
-    private void OnHumanTemplateLoadFinished(HTTPRequest originalRequest, HTTPResponse response) {
-        if (response.IsSuccess) {
-            if (response.StatusCode == 200 || response.StatusCode == 304) {
-                var result = JsonReader.Read<List<Templates>>(response.DataAsText);
-                accountManager.humanTemplates = result;
-            }
-        }
     }
 }

@@ -401,13 +401,7 @@ public partial class BattleConnector : MonoBehaviour {
 
     public void end_end_game(object args, int? id) {
         battleGameFinish = true;
-        AccountManager.Instance.RequestUserInfo((req, res) => {
-            if (res != null) {
-                if (res.IsSuccess) {
-                    AccountManager.Instance.SetSignInData(res);
-                }
-            }
-        });
+        AccountManager.Instance.RequestUserInfo();
 
         if (ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.isTutorial == false) {
             string _result = result.result;
