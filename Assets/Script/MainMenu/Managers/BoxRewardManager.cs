@@ -113,13 +113,19 @@ public class BoxRewardManager : MonoBehaviour
         Transform effects = transform.Find("EffectSpines");
         for (int i = 0; i < 4; i++) {
             boxParent.GetChild(i).localScale = Vector3.zero;
+            iTween.RotateTo(boxParent.GetChild(i).gameObject, iTween.Hash("y", 180, "islocal", true));
+            boxParent.GetChild(i).Find("BackImage").gameObject.SetActive(true);
+            if(i < 2)
+                boxParent.GetChild(i).transform.Find("back").gameObject.SetActive(false);
+            else if(i == 3)
+                boxParent.GetChild(i).Find("Card").transform.Find("back").gameObject.SetActive(false);
         }
         boxParent.gameObject.SetActive(false);
         transform.Find("ShowBox").gameObject.SetActive(false);
         transform.Find("ShowBox/Text").gameObject.SetActive(true);
         transform.Find("ExitButton").gameObject.SetActive(false);
-        boxParent.GetChild(0).GetChild(1).gameObject.SetActive(false);
-        boxParent.GetChild(1).GetChild(1).gameObject.SetActive(false);
+        boxParent.GetChild(0).Find("GetCrystal").gameObject.SetActive(false);
+        boxParent.GetChild(1).Find("GetCrystal").gameObject.SetActive(false);
         boxParent.GetChild(3).Find("Card").gameObject.SetActive(false);
         boxParent.GetChild(3).Find("Card/GetCrystal").gameObject.SetActive(false);
         boxParent.GetChild(3).Find("Resource").gameObject.SetActive(false);
@@ -127,8 +133,9 @@ public class BoxRewardManager : MonoBehaviour
             boxParent.GetChild(2).GetChild(i).gameObject.SetActive(false);
             boxParent.GetChild(3).Find("Resource").GetChild(i).gameObject.SetActive(false);
         }
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 4; i++)             
             effects.GetChild(i).gameObject.SetActive(false);
+
         SetBoxObj();
         openningBox = false;
     }
@@ -136,7 +143,7 @@ public class BoxRewardManager : MonoBehaviour
     public void SetRewards(RewardClass[] rewardList) {
         Transform boxParent = transform.Find("OpenBox");
         Transform effects = transform.Find("EffectSpines");
-        boxParent.GetChild(0).GetChild(0).GetComponent<MenuCardHandler>().DrawCard(rewardList[0].item);
+        boxParent.GetChild(0).Find("DictionaryCardVertical").GetComponent<MenuCardHandler>().DrawCard(rewardList[0].item);
 
         effects.GetChild(0).GetComponent<SkeletonGraphic>().Initialize(false);
         effects.GetChild(0).GetComponent<SkeletonGraphic>().Update(0);
@@ -146,13 +153,13 @@ public class BoxRewardManager : MonoBehaviour
             effects.GetChild(0).GetComponent<SkeletonGraphic>().Skeleton.SetSkin("3.magic");
         effects.GetChild(0).GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, "animation", false);
         if (rewardList[0].amount > 0) {
-            boxParent.GetChild(0).GetChild(1).gameObject.SetActive(true);
-            boxParent.GetChild(0).GetChild(1).Find("Value").GetComponent<TMPro.TextMeshProUGUI>().text = rewardList[0].amount.ToString();
+            boxParent.GetChild(0).GetChild(2).gameObject.SetActive(true);
+            boxParent.GetChild(0).GetChild(2).Find("Value").GetComponent<TMPro.TextMeshProUGUI>().text = rewardList[0].amount.ToString();
         }
         else
             CheckNewCardList(rewardList[0].item);
 
-        boxParent.GetChild(1).GetChild(0).GetComponent<MenuCardHandler>().DrawCard(rewardList[1].item);
+        boxParent.GetChild(1).Find("DictionaryCardVertical").GetComponent<MenuCardHandler>().DrawCard(rewardList[1].item);
         effects.GetChild(1).GetComponent<SkeletonGraphic>().Initialize(false);
         effects.GetChild(1).GetComponent<SkeletonGraphic>().Update(0);
         if (accountManager.allCardsDic[rewardList[1].item].type == "unit")
@@ -161,8 +168,8 @@ public class BoxRewardManager : MonoBehaviour
             effects.GetChild(1).GetComponent<SkeletonGraphic>().Skeleton.SetSkin("3.magic");
         effects.GetChild(1).GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, "animation", false);
         if (rewardList[1].amount > 0) {
-            boxParent.GetChild(1).GetChild(1).gameObject.SetActive(true);
-            boxParent.GetChild(1).GetChild(1).Find("Value").GetComponent<TMPro.TextMeshProUGUI>().text = rewardList[1].amount.ToString();
+            boxParent.GetChild(1).GetChild(2).gameObject.SetActive(true);
+            boxParent.GetChild(1).GetChild(2).Find("Value").GetComponent<TMPro.TextMeshProUGUI>().text = rewardList[1].amount.ToString();
         }
         else
             CheckNewCardList(rewardList[1].item);
@@ -177,7 +184,8 @@ public class BoxRewardManager : MonoBehaviour
         effects.GetChild(3).GetComponent<SkeletonGraphic>().Update(0);
         if (rewardList[3].type == "card"){
             boxParent.GetChild(3).Find("Card").gameObject.SetActive(true);
-            boxParent.GetChild(3).Find("Card").GetChild(0).GetComponent<MenuCardHandler>().DrawCard(rewardList[3].item);
+            boxParent.GetChild(3).Find("Resource").gameObject.SetActive(false);
+            boxParent.GetChild(3).Find("Card").Find("DictionaryCardVertical").GetComponent<MenuCardHandler>().DrawCard(rewardList[3].item);
             if (accountManager.allCardsDic[rewardList[3].item].type == "unit")
                 effects.GetChild(3).GetComponent<SkeletonGraphic>().Skeleton.SetSkin("1.unit");
             else
@@ -191,6 +199,7 @@ public class BoxRewardManager : MonoBehaviour
         }
         else {
             boxParent.GetChild(3).Find("Resource").gameObject.SetActive(true);
+            boxParent.GetChild(3).Find("Card").gameObject.SetActive(false);
             boxParent.GetChild(3).Find("Resource").Find(rewardList[3].item).gameObject.SetActive(true);
             boxParent.GetChild(3).Find("Resource").Find("Value").GetComponent<TMPro.TextMeshProUGUI>().text = rewardList[3].amount.ToString();
             effects.GetChild(3).GetComponent<SkeletonGraphic>().Skeleton.SetSkin("4.item");
@@ -213,6 +222,40 @@ public class BoxRewardManager : MonoBehaviour
             }
         }
         menuSceneController.SetCardNumbersPerDic();
+    }
+
+    public void FlipCard(GameObject target) {
+        StartCoroutine(FlipAni(target));
+    }
+
+    IEnumerator FlipAni(GameObject targetObj) {
+        GameObject target = targetObj;
+        iTween.RotateTo(target, iTween.Hash("y", 0, "islocal", true, "time", 0.8f));
+        yield return new WaitForSeconds(0.1f);
+        target.transform.Find("BackImage").gameObject.SetActive(false);
+        yield return new WaitForSeconds(0.05f);
+        if (target.name == "Random")
+            target = targetObj.transform.Find("Card").gameObject;
+        if (target.name != "Resource") {
+            if (!target.activeSelf) yield return null;
+            else {
+                string cardId = target.transform.Find("DictionaryCardVertical").GetComponent<MenuCardHandler>().cardID;
+                string aniName = "";
+                if (accountManager.allCardsDic[cardId].type == "unit")
+                    aniName += "u_";
+                else
+                    aniName += "m_";
+                if (accountManager.allCardsDic[cardId].rarelity != "common")
+                    aniName += accountManager.allCardsDic[cardId].rarelity;
+                else
+                    aniName = "NOANI";
+                SkeletonGraphic spine = target.transform.Find("back").GetComponent<SkeletonGraphic>();
+                spine.gameObject.SetActive(true);
+                spine.Initialize(true);
+                spine.Update(0);
+                spine.AnimationState.SetAnimation(0, aniName, true);
+            }
+        }
     }
 }
 

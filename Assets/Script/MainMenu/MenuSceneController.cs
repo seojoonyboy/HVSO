@@ -317,9 +317,9 @@ public class MenuSceneController : MonoBehaviour {
     }
 
     public void CloseDictionary() {
-        SetCardNumbersPerDic();
         for (int i = 0; i < offObjects.Length; i++)
             offObjects[i].SetActive(true);
+        SetCardNumbersPerDic();
     }
 
     public void AddNewbiController() {
