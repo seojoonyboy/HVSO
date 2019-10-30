@@ -51,17 +51,6 @@ public class NewbiController : MonoBehaviour {
     }
 
     private void OnEventOccured(string eventName) {
-        if(eventName == "OnScenarioSceneLoaded") {
-            var chapterData = ScenarioManager.Instance.human_chapterDatas[0];
-            ScenarioGameManagment.chapterData = chapterData;
-            ScenarioGameManagment.challengeDatas = ScenarioManager.Instance.human_challengeDatas[0].challenges;
-            ProcessSocketConnect();
-        }
-        else if(eventName == "OnInvenLoadFinished") {
-            //FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MISSION_SELECT_SCENE);
-            menuSceneController.storyLobbyPanel.SetActive(true);
-        }
-
         preProcess.Remove(eventName);
 
         if (preProcess.Count == 0) PreSettingFinished();
@@ -90,20 +79,18 @@ public class NewbiController : MonoBehaviour {
         waitSecEvent.Invoke();
     }
 
-    public void Init(MyDecksLoader decksLoader, GameObject loadingModal) {
+    public void Init(MyDecksLoader decksLoader, ScenarioManager scenarioManager, GameObject loadingModal) {
         this.decksLoader = decksLoader;
         loadingModal.SetActive(true);
         DontDestroyOnLoad(loadingModal.gameObject);
 
-        //loadingPanel.gameObject.SetActive(true);
-
         preProcess = new List<string>();
-        AddProcess("OnLoadFinished");
-        AddProcess("OnTemplateLoadFinished");
-        AddProcess("OnInvenLoadFinished");
 
-        //Scenario Data Setting
-        AddProcess("OnScenarioSceneLoaded");
+        var chapterData = scenarioManager.human_chapterDatas[0];
+        ScenarioGameManagment.chapterData = chapterData;
+        ScenarioGameManagment.challengeDatas = scenarioManager.human_challengeDatas[0].challenges;
+
+        ProcessSocketConnect();
 
         //BattleConnect
         AddProcess("OnOpenSocket");

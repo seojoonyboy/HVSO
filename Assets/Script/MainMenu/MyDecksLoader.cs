@@ -21,6 +21,13 @@ public class MyDecksLoader : MonoBehaviour {
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_DECKS_UPDATED, OnMyDecksLoadFinished);
     }
 
+    void OnDestroy() {
+        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_HUMAN_TEMPLATES_UPDATED, OnHumanTemplateLoadFinished);
+        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_ORC_TEMPLATES_UPDATED, OnOrcTemplateLoadFinished);
+        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_INVENTORIES_UPDATED, OnInventoryLoadFinished);
+        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_DECKS_UPDATED, OnMyDecksLoadFinished);
+    }
+
     private void OnMyDecksLoadFinished(Enum Event_Type, Component Sender, object Param) {
         OnLoadFinished.Invoke();
     }
@@ -33,7 +40,7 @@ public class MyDecksLoader : MonoBehaviour {
     }
 
     private void OnInventoryLoadFinished(Enum Event_Type, Component Sender, object Param) {
-        //OnInvenLoadFinished.Invoke();
+        OnInvenLoadFinished.Invoke();
     }
 
     private void OnOrcTemplateLoadFinished(Enum Event_Type, Component Sender, object Param) {

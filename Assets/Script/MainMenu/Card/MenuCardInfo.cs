@@ -45,6 +45,11 @@ public partial class MenuCardInfo : MonoBehaviour {
         transform.parent.gameObject.SetActive(false);
     }
 
+    void OnDestroy() {
+        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_CREATE_CARD, CardModified);
+        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_REMOVE_CARD, CardModified);
+    }
+
     private void CardModified(Enum Event_Type, Component Sender, object Param) {
         accountManager.RequestUserInfo();
         accountManager.RequestInventories();

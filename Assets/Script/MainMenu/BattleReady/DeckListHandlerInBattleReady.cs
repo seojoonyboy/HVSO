@@ -20,6 +20,10 @@ public class DeckListHandlerInBattleReady : MonoBehaviour {
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_DECKS_UPDATED, LoadMyDecks);
     }
 
+    void OnDestroy() {
+        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_DECKS_UPDATED, LoadMyDecks);
+    }
+
     private void LoadMyDecks(Enum Event_Type, Component Sender, object Param) {
         BestHTTP.HTTPResponse res = (BestHTTP.HTTPResponse)Param;
 
