@@ -47,6 +47,7 @@ public partial class MenuCardInfo : MonoBehaviour {
 
     private void CardModified(Enum Event_Type, Component Sender, object Param) {
         accountManager.RequestUserInfo();
+        accountManager.RequestInventories();
     }
 
     public virtual void SetCardInfo(CollectionCard data, bool isHuman, Transform dicCard, bool makeCard = false) {
@@ -251,8 +252,14 @@ public partial class MenuCardInfo : MonoBehaviour {
         numSpine.Initialize(false);
         numSpine.Update(0);
         numSpine.AnimationState.SetAnimation(0, haveNum.ToString(), false);
-        transform.Find("EditCardUI/ConfirmCard").GetComponent<Button>().interactable = (haveNum != 0 && handNum != 40);
-        transform.Find("EditCardUI/ExpectCard").GetComponent<Button>().interactable = (haveNum != accountManager.cardPackage.data[cardId].cardCount);
+        if (accountManager.cardPackage.data.ContainsKey(cardId)) {
+            transform.Find("EditCardUI/ConfirmCard").GetComponent<Button>().interactable = (haveNum != 0 && handNum != 40);
+            transform.Find("EditCardUI/ExpectCard").GetComponent<Button>().interactable = (haveNum != accountManager.cardPackage.data[cardId].cardCount);
+        }
+        else {
+            transform.Find("EditCardUI/ConfirmCard").GetComponent<Button>().interactable = false;
+            transform.Find("EditCardUI/ExpectCard").GetComponent<Button>().interactable = false;
+        }
     }
 
     IEnumerator AddCrystalAnimation() {
@@ -345,7 +352,8 @@ public partial class MenuCardInfo : MonoBehaviour {
     void EndCardMaking() {
         dicCard.GetComponent<MenuCardHandler>().DrawCard(cardId, isHuman);
         SetCardInfo(cardData, isHuman, null, true);
-        cardDic.transform.Find("UIbar/Crystal/Value").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userResource.crystal.ToString();
+        CardDictionaryManager.cardDictionaryManager.transform.Find("UIbar/Crystal/Value").GetComponent<TMPro.TextMeshProUGUI>().text 
+            = AccountManager.Instance.userResource.crystal.ToString();
         cardCreate = false;
     }
 }
