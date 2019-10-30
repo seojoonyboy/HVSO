@@ -33,7 +33,6 @@ public class MenuSceneController : MonoBehaviour {
     public static MenuSceneController menuSceneController;
 
     private void Awake() {
-        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, CheckTutorial);
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_NICKNAME_UPDATED, NickNameChanged);
 
         menuSceneController = this;
@@ -70,9 +69,7 @@ public class MenuSceneController : MonoBehaviour {
         }
     }
 
-    private void CheckTutorial(Enum Event_Type, Component Sender, object Param) {
-        BestHTTP.HTTPResponse res = (BestHTTP.HTTPResponse)Param;
-
+    private void CheckTutorial() {
         string prevTutorial = PlayerPrefs.GetString("PrevTutorial");
         var etcInfos = AccountManager.Instance.userData.etcInfo;
         hudController.SetResourcesUI();
@@ -166,6 +163,7 @@ public class MenuSceneController : MonoBehaviour {
     }
     private void OnDestroy() {
         SoundManager.Instance.bgmController.StopSoundTrack();
+        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_NICKNAME_UPDATED, NickNameChanged);
     }
 
     private void Start() {
@@ -187,16 +185,9 @@ public class MenuSceneController : MonoBehaviour {
         AccountManager.Instance.OnCardLoadFinished.AddListener(() => SetCardNumbersPerDic());
         currentPage = 2;
         Transform buttonsParent = fixedCanvas.Find("Footer");
-        //for (int i = 0; i < fixedCanvas.Find("Footer").childCount; i++)
-        //    buttonSkeletons[i] = buttonsParent.GetChild(i).Find("ButtonImage").GetComponent<SkeletonGraphic>();
-        //StartCoroutine(UpdateWindow());
         TouchEffecter.Instance.SetScript();
-        if (AccountManager.Instance.dicInfo.inDic) {
-            windowScrollSnap.StartingScreen = 0;
-            ClickMenuButton(0);
-            AccountManager.Instance.dicInfo.inDic = false;
-        }
 
+        Invoke("CheckTutorial", 1.0f);
         //menuTutorialManager.StartTutorial(MenuTutorialManager.TutorialType.TO_AI_BATTLE);
         AccountManager.Instance.RequestUserInfo();    //튜토리얼을 어디서부터 진행해야 하는지 판단
     }
@@ -326,6 +317,6 @@ public class MenuSceneController : MonoBehaviour {
         var newbiComp = newbiLoadingModal.AddComponent<NewbiController>(); //첫 로그인 제어
         newbiComp.menuSceneController = this;
         newbiComp.name = "NewbiController";
-        newbiComp.Init(decksLoader, newbiLoadingModal);
+        newbiComp.Init(decksLoader, scenarioManager, newbiLoadingModal);
     }
 }

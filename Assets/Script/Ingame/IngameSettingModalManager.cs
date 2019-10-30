@@ -30,6 +30,7 @@ public class IngameSettingModalManager : MonoBehaviour {
     }
 
     public void OnSurrendBtn() {
+        if (PlayMangement.instance.isGame == false) return;
         quitModal.SetActive(true);
     }
 
@@ -38,6 +39,7 @@ public class IngameSettingModalManager : MonoBehaviour {
     }
 
     public void Surrend() {
+        if (PlayMangement.instance.isGame == false) return;
         PlayMangement.instance.SocketHandler.Surrend(null);
         OffAllModals();
     }

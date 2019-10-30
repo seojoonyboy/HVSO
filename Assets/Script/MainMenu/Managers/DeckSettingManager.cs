@@ -24,6 +24,10 @@ public class DeckSettingManager : MonoBehaviour
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_DECKS_UPDATED, SetPlayerNewDecks);
     }
 
+    void OnDestroy() {
+        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_DECKS_UPDATED, SetPlayerNewDecks);
+    }
+
     private void SetPlayerNewDecks(Enum Event_Type, Component Sender, object Param) {
         SetPlayerNewDecks();
         Logger.Log("DeckSettingManager");
@@ -51,6 +55,7 @@ public class DeckSettingManager : MonoBehaviour
     }
 
     public void SetPlayerNewDecks() {
+        if (transform == null) return;
         InitNewDecks();
         int humanDecks = AccountManager.Instance.humanDecks.Count;
         int orcDecks = AccountManager.Instance.orcDecks.Count;

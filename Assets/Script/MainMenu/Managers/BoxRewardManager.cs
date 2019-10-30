@@ -7,7 +7,7 @@ using BestHTTP;
 using dataModules;
 using Spine;
 using Spine.Unity;
-
+using System;
 
 public class BoxRewardManager : MonoBehaviour
 {
@@ -30,14 +30,18 @@ public class BoxRewardManager : MonoBehaviour
         hudCanvas = transform.parent;
         accountManager.userResource.LinkTimer(storeTimer);
 
-        NoneIngameSceneEventHandler.Instance.AddListener(
-            NoneIngameSceneEventHandler.EVENT_TYPE.API_OPENBOX, 
-            (type, sender, parm) => {
-                SetBoxAnimation();
-                OnBoxLoadFinished.Invoke();
-            });
+        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_OPENBOX, OnBoxOpenRequest);
 
         OnBoxLoadFinished.AddListener(() => accountManager.RequestInventories());
+    }
+
+    void OnDestroy() {
+        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_OPENBOX, OnBoxOpenRequest);
+    }
+
+    private void OnBoxOpenRequest(Enum Event_Type, Component Sender, object Param) {
+        SetBoxAnimation();
+        OnBoxLoadFinished.Invoke();
     }
 
     public void SetBoxObj() {

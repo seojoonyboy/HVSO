@@ -50,6 +50,11 @@ public class DeckEditController : MonoBehaviour
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_DECK_CREATED, OnMakeNewDeckFinished);
     }
 
+    void OnDestroy() {
+        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_DECK_MODIFIED, OnDeckModified);
+        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_DECK_CREATED, OnMakeNewDeckFinished);
+    }
+
     private void OnMakeNewDeckFinished(Enum Event_Type, Component Sender, object Param) {
         gameObject.SetActive(false);
         if (templateMenu != null) {
