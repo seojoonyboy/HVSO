@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -92,8 +93,7 @@ public class HUDController : MonoBehaviour {
     }
 
     private void Awake() {
-        AccountManager.Instance.OnUserResourceRefresh.AddListener(() => SetResourcesUI());
-
+        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, OnUserDataUpdated);
         gradation = transform.GetChild(0).GetChild(0).Find("Gradation");
 
         userInfoUI = transform
@@ -123,6 +123,9 @@ public class HUDController : MonoBehaviour {
 
         backButton = backbuttonUI.Find("BackButton").GetComponent<Button>();
         box = transform.Find("GetReward").GetComponent<BoxRewardManager>();
+    }
+
+    private void OnUserDataUpdated(Enum Event_Type, Component Sender, object Param) {
         SetResourcesUI();
     }
 
@@ -130,6 +133,10 @@ public class HUDController : MonoBehaviour {
     void Start() {
         SetHeader(Type.SHOW_USER_INFO);
         //main_HorizontalScrollSnap.OnSelectionPageChangedEvent.AddListener(x => OnPageChanged(x));
+    }
+
+    void OnDestroy() {
+        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, OnUserDataUpdated);
     }
 
     public void OnPageChanged(int pageNum) {
@@ -141,11 +148,14 @@ public class HUDController : MonoBehaviour {
     }
     
     public void SetResourcesUI() {
-        lvValue.text = AccountManager.Instance.userResource.lv.ToString();
-        expSlider.fillAmount = (float)AccountManager.Instance.userResource.exp / (float)AccountManager.Instance.userResource.lvExp;
-        expValueText.text = AccountManager.Instance.userResource.exp.ToString() + "/" + AccountManager.Instance.userResource.lvExp;
-        crystalValue.text = AccountManager.Instance.userResource.crystal.ToString();
-        goldValue.text = AccountManager.Instance.userResource.gold.ToString();
+        var accountManager = AccountManager.Instance;
+        var userResource = accountManager.userResource;
+
+        lvValue.text = userResource.lv.ToString();
+        expSlider.fillAmount = (float)userResource.exp / (float)userResource.lvExp;
+        expValueText.text = userResource.exp.ToString() + "/" + userResource.lvExp;
+        crystalValue.text = userResource.crystal.ToString();
+        goldValue.text = userResource.gold.ToString();
         box.SetBoxObj();
     }
 
