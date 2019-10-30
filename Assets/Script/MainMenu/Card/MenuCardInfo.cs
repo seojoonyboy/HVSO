@@ -242,8 +242,7 @@ public partial class MenuCardInfo : MonoBehaviour {
         numSpine.Initialize(false);
         numSpine.Update(0);
         numSpine.AnimationState.SetAnimation(0, haveNum.ToString(), false);
-        transform.Find("EditCardUI/ConfirmCard").GetComponent<Button>().interactable = (haveNum != 0);
-        transform.Find("EditCardUI/ConfirmCard").GetComponent<Button>().interactable = (handNum != 40);
+        transform.Find("EditCardUI/ConfirmCard").GetComponent<Button>().interactable = (haveNum != 0 && handNum != 40);
         transform.Find("EditCardUI/ExpectCard").GetComponent<Button>().interactable = (haveNum != accountManager.cardPackage.data[cardId].cardCount);
     }
 
@@ -293,6 +292,8 @@ public partial class MenuCardInfo : MonoBehaviour {
         SoundManager.Instance.PlaySound("button_1");
         transform.parent.gameObject.SetActive(false);
         transform.gameObject.SetActive(false);
+        transform.parent.Find("DeckEditExitTrigger").gameObject.SetActive(false);
+        transform.parent.Find("ExitTrigger").gameObject.SetActive(true);
         transform.parent.Find("HeroInfo").gameObject.SetActive(false);
         editCard = null;
     }

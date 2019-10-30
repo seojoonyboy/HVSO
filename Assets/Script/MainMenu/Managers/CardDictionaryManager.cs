@@ -17,7 +17,7 @@ public class CardDictionaryManager : MonoBehaviour {
     [SerializeField] MyDecksLoader myDecksLoader;
 
     [SerializeField] Sprite orcPanelBg, humanPanelBg;
-    MyDecksLoader decksLoader;
+    //MyDecksLoader decksLoader;
 
     bool isHumanDictionary;
     float clickTime;
@@ -31,10 +31,10 @@ public class CardDictionaryManager : MonoBehaviour {
 
     public static CardDictionaryManager cardDictionaryManager;
 
-    public void AttachDecksLoader(ref MyDecksLoader decksLoader) {
-        this.decksLoader = decksLoader;
-        this.decksLoader.OnInvenLoadFinished.AddListener(() => { SetToHumanCards(); });
-    }
+    //public void AttachDecksLoader(ref MyDecksLoader decksLoader) {
+    //    this.decksLoader = decksLoader;
+    //    this.decksLoader.OnInvenLoadFinished.AddListener(() => { SetToHumanCards(); });
+    //}
 
     private void Start() {
         cardDictionaryManager = this;
