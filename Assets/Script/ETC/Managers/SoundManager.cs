@@ -7,11 +7,11 @@ using Sirenix.OdinInspector;
 
 [ShowOdinSerializedPropertiesInInspector]
 public class SoundManager : SerializedMonoBehaviour {
-    public Dictionary<SoundType, AudioSource> sounds;
-    public Dictionary<string, AudioSource> unitSfx;
-    public Dictionary<string, AudioSource> magicSfx;
-    public Dictionary<string, AudioSource> uiSfx;
-    public Dictionary<string, AudioSource> ingameSfx;
+    public Dictionary<SoundType, AudioClip> sounds;
+    public Dictionary<string, AudioClip> unitSfx;
+    public Dictionary<string, AudioClip> magicSfx;
+    public Dictionary<string, AudioClip> uiSfx;
+    public Dictionary<string, AudioClip> ingameSfx;
     
     private static SoundManager _instance;  
     public static SoundManager Instance {
@@ -65,11 +65,11 @@ public class SoundManager : SerializedMonoBehaviour {
         AttackSound(unitSfx[id]);
     }
 
-    private void AttackSound(AudioSource sfxSource) {
+    private void AttackSound(AudioClip sfxSource) {
         GameObject soundObject = GetUnusedAudio();
         soundObject.SetActive(true);
         AudioSource sound = soundObject.GetComponent<AudioSource>();
-        sound.clip = sfxSource.clip;
+        sound.clip = sfxSource;
         sound.Play();
         StartCoroutine(SoundAfterOff(sfxSource, soundObject));
     }
@@ -91,11 +91,11 @@ public class SoundManager : SerializedMonoBehaviour {
         PlaySfx(uiSfx[sound_name]);
     }
 
-    private void PlaySfx(AudioSource sfxSource) {
+    private void PlaySfx(AudioClip sfxSource) {
         GameObject soundObject = GetUnusedAudio();
         soundObject.SetActive(true);
         AudioSource sound = soundObject.GetComponent<AudioSource>();
-        sound.clip = sfxSource.clip;
+        sound.clip = sfxSource;
         sound.time = 0;
         sound.Play();
         StartCoroutine(SoundAfterOff(sfxSource, soundObject));
@@ -116,8 +116,8 @@ public class SoundManager : SerializedMonoBehaviour {
     }
 
     //임시로 이리 쓰는데, Unirx를 써서 처리 예정, 오디오 시간만큼 기달리고, 그 후에 턴 off
-    private IEnumerator SoundAfterOff(AudioSource audio, GameObject soundObject) {
-        yield return new WaitForSeconds(audio.clip.length + 0.1f);
+    private IEnumerator SoundAfterOff(AudioClip audio, GameObject soundObject) {
+        yield return new WaitForSeconds(audio.length + 0.1f);
         soundObject.GetComponent<AudioSource>().clip = null;
         yield return new WaitForSeconds(0.1f);
         soundObject.SetActive(false);
