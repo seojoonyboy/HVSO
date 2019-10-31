@@ -26,10 +26,6 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
     public GameObject BoxRewardPanel;
     public GameObject FixedMenuCanvas;
 
-    void Awake() {
-        ReadTutorialData();
-    }
-
     void Start() {
         PlayerPrefs.SetInt("IsFirstCardMenu", 1);
         PlayerPrefs.SetInt("IsFirstDeckListMenu", 1);
@@ -38,7 +34,7 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
         //OnMenuDescPanel(2);
     }
 
-    private void ReadTutorialData() {
+    public void ReadTutorialData() {
         string dataAsJson = ((TextAsset)Resources.Load("TutorialDatas/TutorialDatas")).text;
         sets = JsonReader.Read<List<TutorialSet>>(dataAsJson);
     }
