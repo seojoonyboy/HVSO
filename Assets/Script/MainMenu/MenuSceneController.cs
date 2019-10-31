@@ -81,6 +81,10 @@ public class MenuSceneController : MonoBehaviour {
         if (PlayerPrefs.GetInt("isFirst") == 1) {
             AddNewbiController();
             PlayerPrefs.SetInt("isFirst", 0);
+
+            PlayerPrefs.SetInt("IsFirstCardMenu", 1);
+            PlayerPrefs.SetInt("IsFirstDeckListMenu", 1);
+            PlayerPrefs.SetInt("IsFirstMainMenu", 1);
         }
         else {
             //튜토리얼 남았음
@@ -185,15 +189,7 @@ public class MenuSceneController : MonoBehaviour {
         AccountManager.Instance.OnCardLoadFinished.AddListener(() => SetCardNumbersPerDic());
         currentPage = 2;
         Transform buttonsParent = fixedCanvas.Find("Footer");
-        //for (int i = 0; i < fixedCanvas.Find("Footer").childCount; i++)
-        //    buttonSkeletons[i] = buttonsParent.GetChild(i).Find("ButtonImage").GetComponent<SkeletonGraphic>();
-        //StartCoroutine(UpdateWindow());
         TouchEffecter.Instance.SetScript();
-        if (AccountManager.Instance.dicInfo.inDic) {
-            windowScrollSnap.StartingScreen = 0;
-            ClickMenuButton(0);
-            AccountManager.Instance.dicInfo.inDic = false;
-        }
 
         Invoke("CheckTutorial", 1.0f);
         //menuTutorialManager.StartTutorial(MenuTutorialManager.TutorialType.TO_AI_BATTLE);
@@ -306,19 +302,27 @@ public class MenuSceneController : MonoBehaviour {
         }
     }
 
-    public void OpenDictionary(bool isHuman) {
+    public void OpenCardDictionary(bool isHuman) {
         AccountManager.Instance.dicInfo.isHuman = isHuman;
         AccountManager.Instance.dicInfo.inDic = true;
         for (int i = 0; i < offObjects.Length; i++)
             offObjects[i].SetActive(false);
-        CardDictionaryManager.cardDictionaryManager.SetDictionaryScene();
-        //FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.DICTIONARY_SCENE);
+        CardDictionaryManager.cardDictionaryManager.SetCardDictionary();
+    }
+
+    public void OpenHeroDictionary(bool isHuman) {
+        AccountManager.Instance.dicInfo.isHuman = isHuman;
+        AccountManager.Instance.dicInfo.inDic = true;
+        for (int i = 0; i < offObjects.Length; i++)
+            offObjects[i].SetActive(false);
+        CardDictionaryManager.cardDictionaryManager.SetHeroDictionary();
     }
 
     public void CloseDictionary() {
-        SetCardNumbersPerDic();
+        CardDictionaryManager.cardDictionaryManager.gameObject.SetActive(false);
         for (int i = 0; i < offObjects.Length; i++)
             offObjects[i].SetActive(true);
+        SetCardNumbersPerDic();
     }
 
     public void AddNewbiController() {

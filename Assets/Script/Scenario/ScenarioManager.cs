@@ -73,16 +73,16 @@ public class ScenarioManager : SerializedMonoBehaviour
     /// 휴먼튜토리얼 강제 호출시 Awake가 호출되지 않은 상태이기 때문에 MenuSceneController에서 호출함
     /// </summary>
     public void ReadScenarioData() {
-        string dataAsJson = File.ReadAllText(human_scenarioDataPath);
+        string dataAsJson = ((TextAsset)Resources.Load("TutorialDatas/HumanChapterDatas")).text;
         human_chapterDatas = JsonReader.Read<List<ChapterData>>(dataAsJson);
 
-        dataAsJson = File.ReadAllText(orc_scenarioDataPath);
+        dataAsJson = ((TextAsset)Resources.Load("TutorialDatas/OrcChapterDatas")).text;
         orc_chapterDatas = JsonReader.Read<List<ChapterData>>(dataAsJson);
 
-        dataAsJson = File.ReadAllText(human_challengeDataPath);
+        dataAsJson = ((TextAsset)Resources.Load("TutorialDatas/humanChallengeData")).text;
         human_challengeDatas = JsonReader.Read<List<ChallengeData>>(dataAsJson);
 
-        dataAsJson = File.ReadAllText(orc_challengeDataPath);
+        dataAsJson = ((TextAsset)Resources.Load("TutorialDatas/orcChallengeData")).text;
         orc_challengeDatas = JsonReader.Read<List<ChallengeData>>(dataAsJson);
     }
 

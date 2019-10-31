@@ -25,6 +25,8 @@ public class BattleReadySceneController : MonoBehaviour {
     [SerializeField] public HUDController HudController;
     [SerializeField] HorizontalScrollSnap ScrollSnap;
     [SerializeField] GameObject deckListPanel;
+    [SerializeField] MenuSceneController menuSceneController;
+
     public Deck selectedDeck;
     private void OnEnable() {
         isIngameButtonClicked = false;
@@ -47,6 +49,8 @@ public class BattleReadySceneController : MonoBehaviour {
     void OnDisable() {
         RectTransform rt = ScrollSnap.transform.Find("Content").GetComponent<RectTransform>();
         rt.offsetMin = new Vector2(0, rt.offsetMin.y);
+
+        menuSceneController.ClickMenuButton(2);
     }
 
     public void OnStartButton() {
@@ -80,16 +84,6 @@ public class BattleReadySceneController : MonoBehaviour {
     }
 
     public void OnBackButton() {
-        //SoundManager.Instance.PlaySound(SoundType.FIRST_TURN);
-
-        //foreach (Button btn in raceTypeButtons) {
-        //    GameObject obj = btn.gameObject;
-        //    obj.GetComponent<BooleanIndex>().isOn = false;
-        //    RaceTypeToggleHandler toggleHandler = obj.GetComponent<RaceTypeToggleHandler>();
-        //    toggleHandler.SwitchOff();
-        //    toggleHandler.ClearList();
-        //}
-        //EmptyMsgShowPanel.SetActive(true);
         HudController.SetHeader(HUDController.Type.SHOW_USER_INFO);
 
         gameObject.SetActive(false);
