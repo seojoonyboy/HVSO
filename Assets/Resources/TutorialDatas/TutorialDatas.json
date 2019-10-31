@@ -1078,6 +1078,31 @@
           }
         ],
         "isExecute": false
+      },
+      {
+        "id": 9,
+        "description": null,
+        "methods": [
+          {
+            "name": "OffHighlight",
+            "args": []
+          },
+          {
+            "name": "Wait_Until",
+            "args": [
+              "1"
+            ]
+          },
+          {
+            "name": "ActiveImageTutorial",
+            "args": []
+          },
+          {
+            "name": "EndTutorial",
+            "args": []
+          }
+        ],
+        "isExecute": false
       }
     ]
   },
@@ -1306,6 +1331,31 @@
           },
           {
             "name": "Menu_Hide_Message",
+            "args": []
+          }
+        ],
+        "isExecute": false
+      },
+      {
+        "id": 9,
+        "description": null,
+        "methods": [
+          {
+            "name": "OffHighlight",
+            "args": []
+          },
+          {
+            "name": "Wait_Until",
+            "args": [
+              "1"
+            ]
+          },
+          {
+            "name": "ActiveImageTutorial",
+            "args": []
+          },
+          {
+            "name": "EndTutorial",
             "args": []
           }
         ],
