@@ -13,6 +13,8 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
     public List<TutorialSet> sets;
     [HideInInspector] public TutorialSet selectedTutorialData;
     [ShowInInspector] MenuExecuteHandler executeHandler;
+    public GameObject mainDescCanvas;    //한 이미지로 표현하는 튜토리얼 parent 객체
+
     public GameObject HUDCanvas, BattleReadydeckListPanel;
 
     public ScenarioManager scenarioManager;
@@ -115,6 +117,43 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
 
     public void ActiveRewardBoxCanvas() {
         BoxRewardPanel.GetComponent<BoxRewardManager>().OpenBox();
+    }
+
+    public bool NeedPageDescription(int pageNum) {
+        var etcInfo = AccountManager.Instance.userData.etcInfo;
+        if (!etcInfo.Exists(x => x.key == "tutorialCleared")) return false;
+
+        switch (pageNum) {
+            case 0:
+                if(PlayerPrefs.GetInt("IsFirstCardMenu") == 1) {
+                    PlayerPrefs.SetInt("IsFirstCardMenu", 0);
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            case 1:
+                if (PlayerPrefs.GetInt("IsFirstDeckListMenu") == 1) {
+                    PlayerPrefs.SetInt("IsFirstDeckListMenu", 0);
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            case 2:
+                if (PlayerPrefs.GetInt("IsFirstMainMenu") == 1) {
+                    PlayerPrefs.SetInt("IsFirstMainMenu", 0);
+                    return true;
+                }
+                else {
+                    return false;
+                }
+        }
+        return false;
+    }
+
+    public void OnMenuDescPanel(int index) {
+        mainDescCanvas.transform.GetChild(index).gameObject.SetActive(true);
     }
 
     public enum TutorialType {
