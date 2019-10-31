@@ -730,6 +730,8 @@ namespace MenuTutorialModules {
     public class EndTutorial : MenuExecute {
         public override void Execute() {
             Logger.Log("모든 튜토리얼 끝!");
+            MenuMask.Instance.UnBlockScreen();
+
             GetComponent<MenuTutorialManager>().EndTutorial();
             GetComponent<MenuTutorialManager>().enabled = false;
             
@@ -740,6 +742,14 @@ namespace MenuTutorialModules {
     public class StartMainMenuBtnTutorial : MenuExecute {
         public override void Execute() {
             GetComponent<MenuTutorialManager>().StartTutorial(MenuTutorialManager.TutorialType.MAIN_BUTTON_DESC);
+            handler.isDone = true;
+        }
+    }
+
+    public class ActiveImageTutorial : MenuExecute {
+        public override void Execute() {
+            GetComponent<MenuTutorialManager>().OnMenuDescPanel(2);
+            PlayerPrefs.SetInt("IsFirstMainMenu", 0);
             handler.isDone = true;
         }
     }

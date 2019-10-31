@@ -13,6 +13,8 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
     public List<TutorialSet> sets;
     [HideInInspector] public TutorialSet selectedTutorialData;
     [ShowInInspector] MenuExecuteHandler executeHandler;
+    [SerializeField] UnityEngine.UI.Extensions.HorizontalScrollSnap scrollSnap;
+
     public GameObject mainDescCanvas;    //한 이미지로 표현하는 튜토리얼 parent 객체
 
     public GameObject HUDCanvas, BattleReadydeckListPanel;
@@ -24,11 +26,15 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
     public GameObject BoxRewardPanel;
     public GameObject FixedMenuCanvas;
 
-    void Awake() {
-        ReadTutorialData();
+    void Start() {
+        PlayerPrefs.SetInt("IsFirstCardMenu", 1);
+        PlayerPrefs.SetInt("IsFirstDeckListMenu", 1);
+        PlayerPrefs.SetInt("IsFirstMainMenu", 1);
+
+        //OnMenuDescPanel(2);
     }
 
-    private void ReadTutorialData() {
+    public void ReadTutorialData() {
         string dataAsJson = ((TextAsset)Resources.Load("TutorialDatas/TutorialDatas")).text;
         sets = JsonReader.Read<List<TutorialSet>>(dataAsJson);
     }
@@ -119,13 +125,21 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
         BoxRewardPanel.GetComponent<BoxRewardManager>().OpenBox();
     }
 
+    public void OnMainPageChanged() {
+        int pageNum = scrollSnap.CurrentPage;
+        if (NeedPageDescription(pageNum)) {
+            OnMenuDescPanel(pageNum);
+        }
+        //Logger.Log("Page : " + pageNum);
+    }
+
     public bool NeedPageDescription(int pageNum) {
         var etcInfo = AccountManager.Instance.userData.etcInfo;
-        if (!etcInfo.Exists(x => x.key == "tutorialCleared")) return false;
+        if (etcInfo.Exists(x => x.key == "tutorialCleared")) return false;
 
         switch (pageNum) {
             case 0:
-                if(PlayerPrefs.GetInt("IsFirstCardMenu") == 1) {
+                if (PlayerPrefs.GetInt("IsFirstCardMenu") == 1) {
                     PlayerPrefs.SetInt("IsFirstCardMenu", 0);
                     return true;
                 }
@@ -141,13 +155,14 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
                     return false;
                 }
             case 2:
-                if (PlayerPrefs.GetInt("IsFirstMainMenu") == 1) {
-                    PlayerPrefs.SetInt("IsFirstMainMenu", 0);
-                    return true;
-                }
-                else {
-                    return false;
-                }
+                //if (PlayerPrefs.GetInt("IsFirstMainMenu") == 1) {
+                //    PlayerPrefs.SetInt("IsFirstMainMenu", 0);
+                //    return true;
+                //}
+                //else {
+                //    return false;
+                //}
+                break;
         }
         return false;
     }
