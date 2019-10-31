@@ -28,7 +28,6 @@ public class ResourceManager : SerializedMonoBehaviour
     public Dictionary<string, Sprite> rewardIcon;
 
     public GameObject unitDeadObject;
-    public GameObject previewUnit;
     public GameObject baseSkillIcon;
     public GameObject hideObject;
     public GameObject touchIcon;
