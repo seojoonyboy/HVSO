@@ -302,16 +302,24 @@ public class MenuSceneController : MonoBehaviour {
         }
     }
 
-    public void OpenDictionary(bool isHuman) {
+    public void OpenCardDictionary(bool isHuman) {
         AccountManager.Instance.dicInfo.isHuman = isHuman;
         AccountManager.Instance.dicInfo.inDic = true;
         for (int i = 0; i < offObjects.Length; i++)
             offObjects[i].SetActive(false);
-        CardDictionaryManager.cardDictionaryManager.SetDictionaryScene();
-        //FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.DICTIONARY_SCENE);
+        CardDictionaryManager.cardDictionaryManager.SetCardDictionary();
+    }
+
+    public void OpenHeroDictionary(bool isHuman) {
+        AccountManager.Instance.dicInfo.isHuman = isHuman;
+        AccountManager.Instance.dicInfo.inDic = true;
+        for (int i = 0; i < offObjects.Length; i++)
+            offObjects[i].SetActive(false);
+        CardDictionaryManager.cardDictionaryManager.SetHeroDictionary();
     }
 
     public void CloseDictionary() {
+        CardDictionaryManager.cardDictionaryManager.gameObject.SetActive(false);
         for (int i = 0; i < offObjects.Length; i++)
             offObjects[i].SetActive(true);
         SetCardNumbersPerDic();

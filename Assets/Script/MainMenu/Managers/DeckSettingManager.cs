@@ -19,6 +19,7 @@ public class DeckSettingManager : MonoBehaviour
 
     MyDecksLoader decksLoader;
     bool initialized = false;
+    public bool isAni = false;
 
     public void Awake() {
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_DECKS_UPDATED, SetPlayerNewDecks);
@@ -115,7 +116,8 @@ public class DeckSettingManager : MonoBehaviour
                 iTween.MoveTo(deckList.GetChild(i).GetChild(0).gameObject, iTween.Hash("y", -175, "islocal", true, "time", 0.3f));
             }
         }
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(0.25f);
+        isAni = false;
     }
 
     public IEnumerator CloseDeckButtons() {

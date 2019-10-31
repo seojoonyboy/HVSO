@@ -14,9 +14,6 @@ public class CardDictionaryManager : MonoBehaviour {
     [SerializeField] Transform cardStorage;
     [SerializeField] Transform sortingModal;
     [SerializeField] TMPro.TextMeshProUGUI cardNum;
-    [SerializeField] MyDecksLoader myDecksLoader;
-
-    [SerializeField] Sprite orcPanelBg, humanPanelBg;
 
     bool isHumanDictionary;
     float clickTime;
@@ -24,9 +21,10 @@ public class CardDictionaryManager : MonoBehaviour {
     SortingOptions selectedSortOption;
     SortingOptions beforeSortOption;
 
-    //public UnityEvent SetCardsFinished = new UnityEvent();
-    GameObject selectedHero;
+    Transform selectedHero;
     string selectedHeroId;
+    bool isHeroDic;
+    bool isAni = false;
 
     public static CardDictionaryManager cardDictionaryManager;
 
@@ -34,74 +32,138 @@ public class CardDictionaryManager : MonoBehaviour {
         cardDictionaryManager = this;
     }
 
-    //private void Start() {
-    //    Transform classList = cardList.Find("CardsByCost");
-    //    //for (int i = 0; i < classList.childCount; i++)
-    //    //    classList.GetChild(i).Find("Header/Info/Image").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = i.ToString();
-    //    selectedSortOption = SortingOptions.CLASS;
-    //    transform.Find("UIbar/Crystal/Value").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userResource.crystal.ToString();
-    //    if (AccountManager.Instance.dicInfo.isHuman)
-    //        SetToHumanCards();
-    //    else
-    //        SetToOrcCards();
-    //    RefreshLine();
-    //}
-
-    public void SetDictionaryScene() {
+    public void SetCardDictionary() {
+        isHeroDic = false;
+        gameObject.SetActive(true);
+        transform.Find("HeroDictionary").gameObject.SetActive(false);
         selectedHero = null;
         selectedHeroId = null;
         Transform classList = cardList.Find("CardsByCost");
-        //for (int i = 0; i < classList.childCount; i++)
-        //    classList.GetChild(i).Find("Header/Info/Image").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = i.ToString();
         selectedSortOption = SortingOptions.CLASS;
         transform.Find("UIbar/Crystal/Value").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userResource.crystal.ToString();
-        if (AccountManager.Instance.dicInfo.isHuman)
+        if (AccountManager.Instance.dicInfo.isHuman) {
+            isHumanDictionary = true;
             SetToHumanCards();
-        else
+            transform.Find("BackgroundImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.campBackgrounds["human"];
+        }
+        else {
+            isHumanDictionary = false;
             SetToOrcCards();
+            transform.Find("BackgroundImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.campBackgrounds["orc"];
+        }
+        RefreshLine();
+    }
+
+    public void SetHeroDictionary() {
+        isHeroDic = true;
+        gameObject.SetActive(true);
+        transform.Find("HeroDictionary").gameObject.SetActive(true);
+        transform.Find("CardDictionary").gameObject.SetActive(false);
+        transform.Find("UIbar/SortBtn").gameObject.SetActive(false);
+        selectedHero = null;
+        selectedHeroId = null;
+        selectedSortOption = SortingOptions.CLASS;
+        transform.Find("UIbar/Crystal/Value").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userResource.crystal.ToString();
+        if (AccountManager.Instance.dicInfo.isHuman) {
+            isHumanDictionary = true;
+            SetToHumanHeroes();
+            transform.Find("BackgroundImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.campBackgrounds["human"];
+        }
+        else {
+            isHumanDictionary = false;
+            SetToOrcHeroes();
+            transform.Find("BackgroundImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.campBackgrounds["orc"];
+        }
         RefreshLine();
     }
 
     public void SetToHumanCards() {        
-        SoundManager.Instance.PlaySound("button_1");
-        isHumanDictionary = true;
-        transform.Find("BackgroundImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.campBackgrounds["human"];
+        transform.Find("CardDictionary").gameObject.SetActive(true);
+        transform.Find("UIbar/SortBtn").gameObject.SetActive(true);
         SetCardsByClass();
     }
 
     public void SetToOrcCards() {
-        SoundManager.Instance.PlaySound("button_1");
-        isHumanDictionary = false;
-        transform.Find("BackgroundImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.campBackgrounds["orc"];
+        transform.Find("CardDictionary").gameObject.SetActive(true);
+        transform.Find("UIbar/SortBtn").gameObject.SetActive(true);
         SetCardsByClass();
     }
 
-    public void RefreshLine() {
-        Canvas.ForceUpdateCanvases();
-        for (int i = 0; i < 3; i++) {
-            LayoutRebuilder.ForceRebuildLayoutImmediate(cardList.GetChild(i).GetComponent<RectTransform>());
-        }
-
-        Invoke("UpdateContentHeight", 0.1f);
-    }
-
-    private void UpdateContentHeight() {
-        float tmp = 1028f; //영웅 슬롯이 2줄이 될 시 300+ 해주면 됨
-        Transform activatedTf = null;
-        foreach (Transform tf in cardList) {
-            if (tf.gameObject.activeSelf) {
-                activatedTf = tf;
+    public void SetToHumanHeroes() {
+        Transform heroParent = transform.Find("HeroDictionary/HeroSelect");
+        heroParent.gameObject.SetActive(true);
+        int count = 0;
+        for(int i = 0; i < AccountManager.Instance.allHeroes.Count; i++) {
+            dataModules.HeroInventory heroData = AccountManager.Instance.allHeroes[i];
+            if (heroData.camp == "human") {
+                heroParent.GetChild(count).gameObject.SetActive(true);
+                heroParent.GetChild(count).gameObject.name = heroData.id;
+                heroParent.GetChild(count).Find("HeroObject/HeroImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.deckPortraite[heroData.id];
+                count++;
             }
         }
-
-        if (activatedTf == null) return;
-        float height = activatedTf.GetComponent<RectTransform>().rect.height;
-        float result = height + tmp;
-        //Debug.Log("result : " + (result).ToString());
-        transform.Find("Content").GetComponent<RectTransform>().sizeDelta = new Vector2(1080, result);
-        activatedTf.GetComponent<RectTransform>().anchoredPosition = new Vector2(activatedTf.GetComponent<RectTransform>().anchoredPosition.x, 0);
-        GetComponent<ScrollRect>().normalizedPosition = new Vector2(0, 1);
     }
+
+    public void SetToOrcHeroes() {
+        Transform heroParent = transform.Find("HeroDictionary/HeroSelect");
+        heroParent.gameObject.SetActive(true);
+        int count = 0;
+        for (int i = 0; i < AccountManager.Instance.allHeroes.Count; i++) {
+            dataModules.HeroInventory heroData = AccountManager.Instance.allHeroes[i];
+            if (heroData.camp == "orc") {
+                heroParent.GetChild(count).gameObject.SetActive(true);
+                heroParent.GetChild(count).gameObject.name = heroData.id;
+                heroParent.GetChild(count).Find("HeroObject/HeroImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.deckPortraite[heroData.id];
+                count++;
+            }
+        }
+    }
+
+    public void OpenHeroButton(Transform target) {
+        if (isAni) return;
+        if (target == selectedHero) {
+            StartCoroutine(CloseHeroButtons());
+            return;
+        }
+        isAni = true;
+        StartCoroutine(OpenHeroButtons(target));
+    }
+
+
+    public IEnumerator OpenHeroButtons(Transform hero) {
+        if (selectedHero != null)
+            yield return CloseHeroButtons();
+        selectedHero = hero;
+        int deckIndex = hero.GetSiblingIndex();
+        iTween.MoveTo(selectedHero.GetChild(0).Find("Buttons").gameObject, iTween.Hash("y", -175, "islocal", true, "time", 0.3f));
+        Transform heroParent = transform.Find("HeroDictionary/HeroSelect");
+        for (int i = deckIndex + 1; i < heroParent.childCount; i++) {
+            if (heroParent.GetChild(i).gameObject.activeSelf) {
+                iTween.MoveTo(heroParent.GetChild(i).GetChild(0).gameObject, iTween.Hash("y", -175, "islocal", true, "time", 0.3f));
+            }
+        }
+        selectedHeroId = hero.gameObject.name;
+        yield return new WaitForSeconds(0.25f);
+        isAni = false;
+    }
+
+    public IEnumerator CloseHeroButtons() {
+        int deckIndex = 0;
+        if (selectedHero != null) {
+            deckIndex = selectedHero.GetSiblingIndex();
+            iTween.MoveTo(selectedHero.GetChild(0).Find("Buttons").gameObject, iTween.Hash("y", 0, "islocal", true, "time", 0.1f));
+        }
+        Transform heroParent = transform.Find("HeroDictionary/HeroSelect");
+        for (int i = deckIndex + 1; i < heroParent.childCount; i++) {
+            if (heroParent.GetChild(i).gameObject.activeSelf) {
+                iTween.MoveTo(heroParent.GetChild(i).GetChild(0).gameObject, iTween.Hash("y", 0, "islocal", true, "time", 0.1f));
+            }
+        }
+        yield return new WaitForSeconds(0.2f);
+        selectedHero = null;
+    }
+
+    
 
     public void OpenSortModal() {
         SoundManager.Instance.PlaySound("button_1");
@@ -262,7 +324,7 @@ public class CardDictionaryManager : MonoBehaviour {
         }
         cardNum.text = haveCount.ToString() + "/" + totalCount.ToString();
         RefreshLine();
-        SetHeroButtons();
+        //SetHeroButtons();
     }
 
     public void SetCardsByRarelity(bool descending) {
@@ -341,92 +403,116 @@ public class CardDictionaryManager : MonoBehaviour {
         RefreshLine();
     }
 
-
-
-    public void SetHeroButtons() {
-        for (int i = 0; i < 8; i++) {
-            heroCards.GetChild(i).gameObject.SetActive(false);
-        }
-
-        int count = 0;
-
-        foreach (dataModules.HeroInventory heroes in AccountManager.Instance.allHeroes) {
-            if (heroes.camp == "human" && !isHumanDictionary) continue;
-            if (heroes.camp == "orc" && isHumanDictionary) continue;
-            Transform hero = heroCards.GetChild(count);
-            hero.gameObject.SetActive(true);
-            hero.transform.Find("SelectBack").gameObject.SetActive(false);
-            hero.transform.Find("SelectFront").gameObject.SetActive(false);
-            List<EventTrigger.Entry> entriesToRemove = new List<EventTrigger.Entry>();
-            foreach (var entry in hero.GetComponent<EventTrigger>().triggers) {
-                if (entry.eventID == EventTriggerType.PointerDown || entry.eventID == EventTriggerType.PointerUp)
-                    entriesToRemove.Add(entry);
-            }
-            foreach (var entry in entriesToRemove)
-                hero.GetComponent<EventTrigger>().triggers.Remove(entry);
-            EventTrigger.Entry onBtn = new EventTrigger.Entry();
-            onBtn.eventID = EventTriggerType.PointerDown;
-            onBtn.callback.AddListener((EventData) => StartClick(heroes.id));
-            hero.GetComponent<EventTrigger>().triggers.Add(onBtn);
-            EventTrigger.Entry upBtn = new EventTrigger.Entry();
-            upBtn.eventID = EventTriggerType.PointerUp;
-            upBtn.callback.AddListener((EventData) => EndClick(hero.gameObject, heroes.id));
-            hero.GetComponent<EventTrigger>().triggers.Add(upBtn);
-            hero.Find("Portrait").GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[heroes.id + "_button"];
-            bool haveHero = AccountManager.Instance.myHeroInventories.ContainsKey(heroes.id);
-            hero.Find("HeroLevel").gameObject.SetActive(haveHero);
-            hero.Find("Empty").gameObject.SetActive(!haveHero);
-            count++;
-        }
+    public void OpenHeroImage() {
+        if (selectedHero == null) return;
+        transform.Find("HeroDictionary/HeroSelect").gameObject.SetActive(false);
+        transform.Find("HeroDictionary/HeroImage").gameObject.SetActive(true);
+        transform.Find("HeroDictionary/HeroImage/HeroSpine").Find(selectedHeroId).gameObject.SetActive(true);
+        transform.Find("HeroDictionary/HeroImage/HeroSpine").Find(selectedHeroId).SetAsFirstSibling();
     }
 
-    public void StartClick(string heroId) {
-        SoundManager.Instance.PlaySound("button_1");
-        clickTime = Time.time;
-        StartCoroutine(WaitForOpenInfo(heroId));
+    public void OpenHeroInfo() {
+        OpenHeroInfoWIndow(selectedHeroId);
     }
 
-    IEnumerator WaitForOpenInfo(string heroId) {
-        standby = true;
-        while (standby) {
-            yield return new WaitForSeconds(0.1f);
-            if (Time.time - clickTime >= 0.5f) {
-                OpenHeroInfoWIndow(heroId);
-                standby = false;
-            }
-        }
+
+    public void OpenHeroCardDic() {
+        if (selectedHero == null) return;        
+        selectedSortOption = SortingOptions.CLASS;
+        transform.Find("HeroDictionary").gameObject.SetActive(false);
+        if (isHumanDictionary)
+            SetToHumanCards();
+        else
+            SetToOrcCards();
+        SortHeroCards();
     }
-    public void EndClick(GameObject btn, string heroId) {
-        if (!standby) return;
-        btn.transform.Find("SelectBack").GetComponent<SkeletonGraphic>().Initialize(true);
-        btn.transform.Find("SelectBack").GetComponent<SkeletonGraphic>().Update(0);
-        btn.transform.Find("SelectFront").GetComponent<SkeletonGraphic>().Initialize(true);
-        btn.transform.Find("SelectFront").GetComponent<SkeletonGraphic>().Update(0);
-        if (selectedHero == null) {
-            selectedHero = btn;
-            selectedHeroId = heroId;
-            btn.transform.Find("SelectBack").gameObject.SetActive(true);
-            btn.transform.Find("SelectFront").gameObject.SetActive(true);
-            SortHeroCards();
-        }
-        else if (selectedHero == btn) {
-            selectedHero = null;
-            selectedHeroId = "";
-            btn.transform.Find("SelectBack").gameObject.SetActive(false);
-            btn.transform.Find("SelectFront").gameObject.SetActive(false);
-            ApplySortting();
-        }
-        else {
-            selectedHero.transform.Find("SelectBack").gameObject.SetActive(false);
-            selectedHero.transform.Find("SelectFront").gameObject.SetActive(false);
-            selectedHero = btn;
-            selectedHeroId = heroId;
-            btn.transform.Find("SelectBack").gameObject.SetActive(true);
-            btn.transform.Find("SelectFront").gameObject.SetActive(true);
-            SortHeroCards();
-        }
-        standby = false;
-    }
+
+
+
+    //public void SetHeroButtons() {
+    //    for (int i = 0; i < 8; i++) {
+    //        heroCards.GetChild(i).gameObject.SetActive(false);
+    //    }
+
+    //    int count = 0;
+
+    //    foreach (dataModules.HeroInventory heroes in AccountManager.Instance.allHeroes) {
+    //        if (heroes.camp == "human" && !isHumanDictionary) continue;
+    //        if (heroes.camp == "orc" && isHumanDictionary) continue;
+    //        Transform hero = heroCards.GetChild(count);
+    //        hero.gameObject.SetActive(true);
+    //        hero.transform.Find("SelectBack").gameObject.SetActive(false);
+    //        hero.transform.Find("SelectFront").gameObject.SetActive(false);
+    //        List<EventTrigger.Entry> entriesToRemove = new List<EventTrigger.Entry>();
+    //        foreach (var entry in hero.GetComponent<EventTrigger>().triggers) {
+    //            if (entry.eventID == EventTriggerType.PointerDown || entry.eventID == EventTriggerType.PointerUp)
+    //                entriesToRemove.Add(entry);
+    //        }
+    //        foreach (var entry in entriesToRemove)
+    //            hero.GetComponent<EventTrigger>().triggers.Remove(entry);
+    //        EventTrigger.Entry onBtn = new EventTrigger.Entry();
+    //        onBtn.eventID = EventTriggerType.PointerDown;
+    //        onBtn.callback.AddListener((EventData) => StartClick(heroes.id));
+    //        hero.GetComponent<EventTrigger>().triggers.Add(onBtn);
+    //        EventTrigger.Entry upBtn = new EventTrigger.Entry();
+    //        upBtn.eventID = EventTriggerType.PointerUp;
+    //        upBtn.callback.AddListener((EventData) => EndClick(hero.gameObject, heroes.id));
+    //        hero.GetComponent<EventTrigger>().triggers.Add(upBtn);
+    //        hero.Find("Portrait").GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[heroes.id + "_button"];
+    //        bool haveHero = AccountManager.Instance.myHeroInventories.ContainsKey(heroes.id);
+    //        hero.Find("HeroLevel").gameObject.SetActive(haveHero);
+    //        hero.Find("Empty").gameObject.SetActive(!haveHero);
+    //        count++;
+    //    }
+    //}
+
+    //public void StartClick(string heroId) {
+    //    SoundManager.Instance.PlaySound("button_1");
+    //    clickTime = Time.time;
+    //    StartCoroutine(WaitForOpenInfo(heroId));
+    //}
+
+    //IEnumerator WaitForOpenInfo(string heroId) {
+    //    standby = true;
+    //    while (standby) {
+    //        yield return new WaitForSeconds(0.1f);
+    //        if (Time.time - clickTime >= 0.5f) {
+    //            OpenHeroInfoWIndow(heroId);
+    //            standby = false;
+    //        }
+    //    }
+    //}
+    //public void EndClick(GameObject btn, string heroId) {
+    //    if (!standby) return;
+    //    btn.transform.Find("SelectBack").GetComponent<SkeletonGraphic>().Initialize(true);
+    //    btn.transform.Find("SelectBack").GetComponent<SkeletonGraphic>().Update(0);
+    //    btn.transform.Find("SelectFront").GetComponent<SkeletonGraphic>().Initialize(true);
+    //    btn.transform.Find("SelectFront").GetComponent<SkeletonGraphic>().Update(0);
+    //    if (selectedHero == null) {
+    //        selectedHero = btn;
+    //        selectedHeroId = heroId;
+    //        btn.transform.Find("SelectBack").gameObject.SetActive(true);
+    //        btn.transform.Find("SelectFront").gameObject.SetActive(true);
+    //        SortHeroCards();
+    //    }
+    //    else if (selectedHero == btn) {
+    //        selectedHero = null;
+    //        selectedHeroId = "";
+    //        btn.transform.Find("SelectBack").gameObject.SetActive(false);
+    //        btn.transform.Find("SelectFront").gameObject.SetActive(false);
+    //        ApplySortting();
+    //    }
+    //    else {
+    //        selectedHero.transform.Find("SelectBack").gameObject.SetActive(false);
+    //        selectedHero.transform.Find("SelectFront").gameObject.SetActive(false);
+    //        selectedHero = btn;
+    //        selectedHeroId = heroId;
+    //        btn.transform.Find("SelectBack").gameObject.SetActive(true);
+    //        btn.transform.Find("SelectFront").gameObject.SetActive(true);
+    //        SortHeroCards();
+    //    }
+    //    standby = false;
+    //}
 
     public void SortHeroCards() {
         switch (selectedSortOption) {
@@ -528,7 +614,66 @@ public class CardDictionaryManager : MonoBehaviour {
 
     public void ExitDictionaryScene() {
         SoundManager.Instance.PlaySound("button_1");
+        if (!isHeroDic) {
+            ExitDictionaryCanvas();
+        }
+        else {
+            if (transform.Find("CardDictionary").gameObject.activeSelf) {
+                transform.Find("CardDictionary").gameObject.SetActive(false);
+                transform.Find("HeroDictionary").gameObject.SetActive(true);
+                transform.Find("UIbar/SortBtn").gameObject.SetActive(false);
+            }
+            else if (transform.Find("HeroDictionary/HeroImage").gameObject.activeSelf) {
+                transform.Find("HeroDictionary/HeroImage").gameObject.SetActive(false);
+                transform.Find("HeroDictionary/HeroImage/HeroSpine").GetChild(0).gameObject.SetActive(false);
+                transform.Find("HeroDictionary/HeroSelect").gameObject.SetActive(true);
+            }
+            else {
+                ExitDictionaryCanvas();
+            }
+        }
+    }
+
+    public void ExitDictionaryCanvas() {
+        Transform heroList = transform.Find("HeroDictionary/HeroSelect");
+        for (int i = 0; i < heroList.childCount; i++) {
+            heroList.GetChild(i).GetChild(0).localPosition = Vector3.zero;
+            heroList.GetChild(i).GetChild(0).Find("Buttons").localPosition = new Vector3(0, -10, 0);
+            heroList.GetChild(i).gameObject.SetActive(false);
+        }
+        selectedHero = null;
+        selectedHeroId = "";
+        transform.Find("CardDictionary").gameObject.SetActive(false);
+        transform.Find("HeroDictionary").gameObject.SetActive(false);
         MenuSceneController.menuSceneController.CloseDictionary();
+    }
+
+
+    public void RefreshLine() {
+        Canvas.ForceUpdateCanvases();
+        for (int i = 0; i < 3; i++) {
+            LayoutRebuilder.ForceRebuildLayoutImmediate(cardList.GetChild(i).GetComponent<RectTransform>());
+        }
+
+        Invoke("UpdateContentHeight", 0.1f);
+    }
+
+    private void UpdateContentHeight() {
+        float tmp = 1028f; //영웅 슬롯이 2줄이 될 시 300+ 해주면 됨
+        Transform activatedTf = null;
+        foreach (Transform tf in cardList) {
+            if (tf.gameObject.activeSelf) {
+                activatedTf = tf;
+            }
+        }
+
+        if (activatedTf == null) return;
+        float height = activatedTf.GetComponent<RectTransform>().rect.height;
+        float result = height + tmp;
+        //Debug.Log("result : " + (result).ToString());
+        transform.Find("CardDictionary").GetComponent<RectTransform>().sizeDelta = new Vector2(1080, result);
+        activatedTf.GetComponent<RectTransform>().anchoredPosition = new Vector2(activatedTf.GetComponent<RectTransform>().anchoredPosition.x, 0);
+        GetComponent<ScrollRect>().normalizedPosition = new Vector2(0, 1);
     }
 }
 

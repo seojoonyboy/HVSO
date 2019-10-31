@@ -73,10 +73,12 @@ public class DeckHandler : MonoBehaviour
 
     public void OpenDeckButton() {
         DeckSettingManager deckManager = transform.parent.parent.parent.GetComponent<DeckSettingManager>();
+        if (deckManager.isAni) return;
         if (deckManager.selectedDeck == transform) {
             StartCoroutine(deckManager.CloseDeckButtons());
             return;
         }
+        deckManager.isAni = true;
         StartCoroutine(deckManager.OpenDeckButtons(transform));
     }
 
