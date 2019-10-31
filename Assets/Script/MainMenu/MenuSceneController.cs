@@ -81,6 +81,10 @@ public class MenuSceneController : MonoBehaviour {
         if (PlayerPrefs.GetInt("isFirst") == 1) {
             AddNewbiController();
             PlayerPrefs.SetInt("isFirst", 0);
+
+            PlayerPrefs.SetInt("IsFirstCardMenu", 1);
+            PlayerPrefs.SetInt("IsFirstDeckListMenu", 1);
+            PlayerPrefs.SetInt("IsFirstMainMenu", 1);
         }
         else {
             //튜토리얼 남았음

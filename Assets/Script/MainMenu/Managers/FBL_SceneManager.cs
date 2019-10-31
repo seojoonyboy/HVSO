@@ -53,6 +53,7 @@ public class FBL_SceneManager : Singleton<FBL_SceneManager> {
                 numberOfScene = 8;
                 break;
         }
+
         var currentScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
         QualitySettings.asyncUploadTimeSlice = 4;
         StartCoroutine(LoadReadyScene(currentScene.buildIndex, numberOfScene));
