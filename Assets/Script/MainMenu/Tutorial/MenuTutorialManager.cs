@@ -27,7 +27,7 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
     }
 
     private void ReadTutorialData() {
-        string dataAsJson = File.ReadAllText(tutorialSetsPath);
+        string dataAsJson = ((TextAsset)Resources.Load("TutorialDatas/TutorialDatas")).text;
         sets = JsonReader.Read<List<TutorialSet>>(dataAsJson);
     }
 
