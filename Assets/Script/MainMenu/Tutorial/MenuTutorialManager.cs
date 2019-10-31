@@ -139,7 +139,7 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
 
     public bool NeedPageDescription(int pageNum) {
         var etcInfo = AccountManager.Instance.userData.etcInfo;
-        if (!etcInfo.Exists(x => x.key == "tutorialCleared")) return false;
+        if (etcInfo.Exists(x => x.key == "tutorialCleared")) return false;
 
         switch (pageNum) {
             case 0:
