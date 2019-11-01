@@ -390,12 +390,18 @@ namespace TargetModules {
 
     public class select : TargetHandler {
         protected SelectTargetFinished callback;
+        protected SelectTargetFailed failed;
+        protected string currentState;
 
         protected void Start() {
             if(!skillHandler.isPlayer) this.enabled = false;
         }
 
         protected void Update() {
+            if(failed != null && PlayMangement.instance.socketHandler.gameState.state.CompareTo(currentState) != 0) {
+                    failed("Time Over");
+                    removeSelectUI();
+            }
             if (callback != null && Input.GetMouseButtonDown(0)) {
                 Transform selectedTarget = null;
                 PlayMangement.dragable = false;
@@ -412,54 +418,56 @@ namespace TargetModules {
                 }
 
                 if (selectedTarget != null) {
-                    PlayMangement.instance.OffBlockPanel();
-
-                    CardDropManager.Instance.HideDropableSlot();
-                    bool isHuman = PlayMangement.instance.player.isHuman;
-
                     if (args[1] == "place") {
                         int col = selectedTarget.parent.GetSiblingIndex();
                         int row = 0;
 
                         var observer = PlayMangement.instance.UnitsObserver;
-
                         selectedTarget = observer.GetSlot(new FieldUnitsObserver.Pos(col, row), true);
                     }
 
                     if(args[1] == "unit") {
                         selectedTarget = selectedTarget.gameObject.GetComponentInParent<PlaceMonster>().transform;
-                        
                     }
 
                     SetTarget(selectedTarget.gameObject);
                     callback(selectedTarget);
                     skillHandler.SendingMessage(true);
-                    callback = null;
-                    PlayMangement.instance.infoOn = false;
-                    PlayMangement.dragable = true;
-                    PlayMangement.instance.UnlockTurnOver();
-                    
-                    var units = PlayMangement.instance.UnitsObserver.GetAllFieldUnits(!isHuman);
-                    foreach (GameObject unit in units) {
-                        unit
-                            .transform
-                            .Find("ClickableUI")
-                            .gameObject
-                            .SetActive(false);
-
-                        unit.transform.Find("MagicTargetTrigger").gameObject.SetActive(false);
-                    }
-                    units = PlayMangement.instance.UnitsObserver.GetAllFieldUnits(isHuman);
-                    foreach (GameObject unit in units) {
-                        unit
-                            .transform
-                            .Find("ClickableUI")
-                            .gameObject
-                            .SetActive(false);
-
-                        unit.transform.Find("MagicTargetTrigger").gameObject.SetActive(false);
-                    }
+                    removeSelectUI();
                 }
+            }
+        }
+
+        private void removeSelectUI() {
+            PlayMangement.instance.OffBlockPanel();
+            CardDropManager.Instance.HideDropableSlot();
+            callback = null;
+            failed = null;
+            PlayMangement.instance.infoOn = false;
+            PlayMangement.dragable = true;
+            PlayMangement.instance.UnlockTurnOver();
+
+            bool isHuman = PlayMangement.instance.player.isHuman;
+            
+            var units = PlayMangement.instance.UnitsObserver.GetAllFieldUnits(!isHuman);
+            foreach (GameObject unit in units) {
+                unit
+                    .transform
+                    .Find("ClickableUI")
+                    .gameObject
+                    .SetActive(false);
+
+                unit.transform.Find("MagicTargetTrigger").gameObject.SetActive(false);
+            }
+            units = PlayMangement.instance.UnitsObserver.GetAllFieldUnits(isHuman);
+            foreach (GameObject unit in units) {
+                unit
+                    .transform
+                    .Find("ClickableUI")
+                    .gameObject
+                    .SetActive(false);
+
+                unit.transform.Find("MagicTargetTrigger").gameObject.SetActive(false);
             }
         }
 
@@ -609,6 +617,9 @@ namespace TargetModules {
             foreach(string arg in args) {
                 Logger.Log(arg);
             }
+            
+            failed = failedCallback;
+            currentState = PlayMangement.instance.socketHandler.gameState.state;
 
             switch (args[0]) {
                 case "my":
