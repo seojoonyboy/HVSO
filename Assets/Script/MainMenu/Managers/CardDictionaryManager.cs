@@ -27,6 +27,8 @@ public class CardDictionaryManager : MonoBehaviour {
     bool isAni = false;
 
     public static CardDictionaryManager cardDictionaryManager;
+    Dictionary<string, int> classHumanCard;
+    Dictionary<string, int> classOrcCard;
 
     private void Start() {
         cardDictionaryManager = this;
@@ -90,30 +92,50 @@ public class CardDictionaryManager : MonoBehaviour {
     }
 
     public void SetToHumanHeroes() {
+        CountHumanCardClass();        
         Transform heroParent = transform.Find("HeroDictionary/HeroSelect");
         heroParent.gameObject.SetActive(true);
+        for (int i = 0; i < heroParent.childCount; i++) {
+            heroParent.GetChild(i).GetChild(0).localPosition = Vector3.zero;
+            heroParent.GetChild(i).GetChild(0).Find("Buttons").localPosition = new Vector3(0, -10, 0);
+            heroParent.GetChild(i).gameObject.SetActive(false);
+        }
         int count = 0;
         for(int i = 0; i < AccountManager.Instance.allHeroes.Count; i++) {
             dataModules.HeroInventory heroData = AccountManager.Instance.allHeroes[i];
             if (heroData.camp == "human") {
                 heroParent.GetChild(count).gameObject.SetActive(true);
                 heroParent.GetChild(count).gameObject.name = heroData.id;
-                heroParent.GetChild(count).Find("HeroObject/HeroImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.deckPortraite[heroData.id];
+                heroParent.GetChild(count).Find("HeroObject/HeroImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[heroData.id + "_dic"];
+                heroParent.GetChild(count).Find("HeroObject/CardNum/Value").GetComponent<TMPro.TextMeshProUGUI>().text =
+                    (classHumanCard[heroData.heroClasses[0]] + classHumanCard[heroData.heroClasses[1]]).ToString();
+                heroParent.GetChild(count).Find("HeroObject/CardNum/AllCardNum").GetComponent<TMPro.TextMeshProUGUI>().text = "/" +
+                    (classHumanCard["all_" + heroData.heroClasses[0]] + classHumanCard["all_" + heroData.heroClasses[1]]).ToString();
                 count++;
             }
         }
     }
 
     public void SetToOrcHeroes() {
+        CountOrcCardClass();
         Transform heroParent = transform.Find("HeroDictionary/HeroSelect");
         heroParent.gameObject.SetActive(true);
+        for (int i = 0; i < heroParent.childCount; i++) {
+            heroParent.GetChild(i).GetChild(0).localPosition = Vector3.zero;
+            heroParent.GetChild(i).GetChild(0).Find("Buttons").localPosition = new Vector3(0, -10, 0);
+            heroParent.GetChild(i).gameObject.SetActive(false);
+        }
         int count = 0;
         for (int i = 0; i < AccountManager.Instance.allHeroes.Count; i++) {
             dataModules.HeroInventory heroData = AccountManager.Instance.allHeroes[i];
             if (heroData.camp == "orc") {
                 heroParent.GetChild(count).gameObject.SetActive(true);
                 heroParent.GetChild(count).gameObject.name = heroData.id;
-                heroParent.GetChild(count).Find("HeroObject/HeroImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.deckPortraite[heroData.id];
+                heroParent.GetChild(count).Find("HeroObject/HeroImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[heroData.id + "_dic"];
+                heroParent.GetChild(count).Find("HeroObject/CardNum/Value").GetComponent<TMPro.TextMeshProUGUI>().text =
+                    (classOrcCard[heroData.heroClasses[0]] + classOrcCard[heroData.heroClasses[1]]).ToString();
+                heroParent.GetChild(count).Find("HeroObject/CardNum/AllCardNum").GetComponent<TMPro.TextMeshProUGUI>().text = "/" +
+                    (classOrcCard["all_" + heroData.heroClasses[0]] + classOrcCard["all_" + heroData.heroClasses[1]]).ToString();
                 count++;
             }
         }
@@ -151,7 +173,7 @@ public class CardDictionaryManager : MonoBehaviour {
         int deckIndex = 0;
         if (selectedHero != null) {
             deckIndex = selectedHero.GetSiblingIndex();
-            iTween.MoveTo(selectedHero.GetChild(0).Find("Buttons").gameObject, iTween.Hash("y", 0, "islocal", true, "time", 0.1f));
+            iTween.MoveTo(selectedHero.GetChild(0).Find("Buttons").gameObject, iTween.Hash("y", -10, "islocal", true, "time", 0.1f));
         }
         Transform heroParent = transform.Find("HeroDictionary/HeroSelect");
         for (int i = deckIndex + 1; i < heroParent.childCount; i++) {
@@ -163,7 +185,69 @@ public class CardDictionaryManager : MonoBehaviour {
         selectedHero = null;
     }
 
-    
+    public void CountHumanCardClass() {
+        if(classHumanCard != null) classHumanCard.Clear();
+        classHumanCard = new Dictionary<string, int>();
+        foreach (dataModules.CollectionCard card in AccountManager.Instance.allCards) {
+            if(card.camp == "human" && !card.isHeroCard) {
+                if (!classHumanCard.ContainsKey(card.cardClasses[0])) {
+                    classHumanCard.Add("all_" + card.cardClasses[0], 0);
+                    classHumanCard.Add(card.cardClasses[0], 0);
+                }
+                classHumanCard["all_" + card.cardClasses[0]]++;
+                if (AccountManager.Instance.cardPackage.data.ContainsKey(card.id)) {
+                    classHumanCard[card.cardClasses[0]]++;
+                }
+            }
+        }
+    }
+
+    public void CountOrcCardClass() {
+        if (classOrcCard != null) classOrcCard.Clear();
+        classOrcCard = new Dictionary<string, int>();
+        foreach (dataModules.CollectionCard card in AccountManager.Instance.allCards) {
+            if (card.camp == "orc" && !card.isHeroCard) {
+                if (!classOrcCard.ContainsKey(card.cardClasses[0])) {
+                    classOrcCard.Add("all_" + card.cardClasses[0], 0);
+                    classOrcCard.Add(card.cardClasses[0], 0);
+                }
+                classOrcCard["all_" + card.cardClasses[0]]++;
+                if (AccountManager.Instance.cardPackage.data.ContainsKey(card.id)) {
+                    classOrcCard[card.cardClasses[0]]++;
+                }
+            }
+        }
+    }
+
+    public void RefreshCardCount() {
+        if (isHumanDictionary) {
+            CountHumanCardClass();
+            Transform heroParent = transform.Find("HeroDictionary/HeroSelect");
+            int count = 0;
+            for (int i = 0; i < heroParent.childCount; i++) {
+                dataModules.HeroInventory heroData = AccountManager.Instance.allHeroes[i];
+                if (heroData.id == heroParent.GetChild(count).name) {
+                    heroParent.GetChild(count).Find("HeroObject/CardNum/Value").GetComponent<TMPro.TextMeshProUGUI>().text =
+                        (classHumanCard[heroData.heroClasses[0]] + classHumanCard[heroData.heroClasses[1]]).ToString();
+                    count++;
+                }
+            }
+        }
+        else {
+            CountOrcCardClass();
+            Transform heroParent = transform.Find("HeroDictionary/HeroSelect");
+            int count = 0;
+            for (int i = 0; i < heroParent.childCount; i++) {
+                dataModules.HeroInventory heroData = AccountManager.Instance.allHeroes[i];
+                if (heroData.id == heroParent.GetChild(count).name) {
+                    heroParent.GetChild(count).Find("HeroObject/CardNum/Value").GetComponent<TMPro.TextMeshProUGUI>().text =
+                        (classOrcCard[heroData.heroClasses[0]] + classOrcCard[heroData.heroClasses[1]]).ToString();
+                    count++;
+                }
+            }
+        }
+    }
+
 
     public void OpenSortModal() {
         SoundManager.Instance.PlaySound("button_1");
@@ -622,6 +706,7 @@ public class CardDictionaryManager : MonoBehaviour {
                 transform.Find("CardDictionary").gameObject.SetActive(false);
                 transform.Find("HeroDictionary").gameObject.SetActive(true);
                 transform.Find("UIbar/SortBtn").gameObject.SetActive(false);
+                RefreshCardCount();
             }
             else if (transform.Find("HeroDictionary/HeroImage").gameObject.activeSelf) {
                 transform.Find("HeroDictionary/HeroImage").gameObject.SetActive(false);
@@ -635,12 +720,6 @@ public class CardDictionaryManager : MonoBehaviour {
     }
 
     public void ExitDictionaryCanvas() {
-        Transform heroList = transform.Find("HeroDictionary/HeroSelect");
-        for (int i = 0; i < heroList.childCount; i++) {
-            heroList.GetChild(i).GetChild(0).localPosition = Vector3.zero;
-            heroList.GetChild(i).GetChild(0).Find("Buttons").localPosition = new Vector3(0, -10, 0);
-            heroList.GetChild(i).gameObject.SetActive(false);
-        }
         selectedHero = null;
         selectedHeroId = "";
         transform.Find("CardDictionary").gameObject.SetActive(false);
@@ -659,7 +738,7 @@ public class CardDictionaryManager : MonoBehaviour {
     }
 
     private void UpdateContentHeight() {
-        float tmp = 1028f; //영웅 슬롯이 2줄이 될 시 300+ 해주면 됨
+        float tmp = 512f; //영웅 슬롯이 2줄이 될 시 300+ 해주면 됨
         Transform activatedTf = null;
         foreach (Transform tf in cardList) {
             if (tf.gameObject.activeSelf) {
