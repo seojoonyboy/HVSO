@@ -613,6 +613,8 @@ namespace MenuTutorialModules {
             }
             else {
                 Logger.LogError("박스가 없습니다!");
+                PlayerPrefs.SetInt("TutorialBoxRecieved", 1);
+
                 handler.isDone = true;
             }
         }
@@ -625,6 +627,7 @@ namespace MenuTutorialModules {
                 .GetComponent<Button>()
                 .onClick
                 .RemoveListener(onclick);
+            PlayerPrefs.SetInt("TutorialBoxRecieved", 1);
             handler.isDone = true;
         }
 
