@@ -58,6 +58,7 @@ public class EditCardHandler : MonoBehaviour {
         transform.Find("MagicEditCard").gameObject.SetActive(false);
         editBookRoot = "";
         GetComponent<EditCardHandler>().SETNUM = 0;
+        GetComponent<EditCardHandler>().HAVENUM = 0;
     }
 
 

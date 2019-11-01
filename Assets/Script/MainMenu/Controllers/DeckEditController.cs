@@ -7,6 +7,7 @@ using TMPro;
 using UnityEngine.EventSystems;
 using BestHTTP;
 using System;
+using System.Linq;
 
 public class DeckEditController : MonoBehaviour
 {
@@ -26,6 +27,7 @@ public class DeckEditController : MonoBehaviour
 
     public Dictionary<string, GameObject> setCardList;
     List<DeckItem> items;
+    List<EditCard> editCards;
 
     public string deckID = null;
     bool isHuman;
@@ -71,6 +73,8 @@ public class DeckEditController : MonoBehaviour
 
     private void InitCanvas() {
         setCardList = new Dictionary<string, GameObject>();
+        if (editCards != null) editCards.Clear();
+        editCards = GetCards();
         setCardNum = 0;
         haveCardNum = 0;
         dontHaveCard = 0;
@@ -86,16 +90,23 @@ public class DeckEditController : MonoBehaviour
             cardHandler.InitEditCard();
             cardHandler.deckEditController = this;
         }
-        for(int i = 0; i < ownCardLayout.transform.childCount; i++) {
+
+        Transform cardStore = transform.Find("InnerCanvas/CardStore");
+        for(int i = 0; i < cardStore.childCount; i++) {
+            cardStore.GetChild(i).GetComponent<EditCardHandler>().deckEditController = this;
+        }
+        for (int i = 0; i < ownCardLayout.transform.childCount; i++) {
             for (int j = 0; j < 9; j++) {
-                EditCardHandler cardHandler = ownCardLayout.GetChild(i).GetChild(j).GetChild(0).GetComponent<EditCardHandler>();
-                if (cardHandler.editBookRoot != "")
-                    cardHandler.transform.SetParent(ownCardLayout.Find(cardHandler.editBookRoot));
-                cardHandler.InitEditCard();
-                cardHandler.deckEditController = this;
-                cardHandler.transform.localPosition = Vector3.zero;
+                if (ownCardLayout.GetChild(i).GetChild(j).childCount > 0) {
+                    EditCardHandler cardHandler = ownCardLayout.GetChild(i).GetChild(j).GetChild(0).GetComponent<EditCardHandler>();
+                    cardHandler.InitEditCard();
+                    cardHandler.deckEditController = this;
+                    cardHandler.transform.SetParent(cardStore);
+                    cardHandler.transform.localPosition = Vector3.zero;
+                }
             }
         }
+
         ownCardLayout.GetChild(currentPage).gameObject.SetActive(true);
         for (int i = 1; i < ownCardLayout.childCount; i++)
             ownCardLayout.GetChild(i).gameObject.SetActive(false);
@@ -106,10 +117,30 @@ public class DeckEditController : MonoBehaviour
         transform.Find("InnerCanvas/ShowAllClass/Selected").gameObject.SetActive(true);
         transform.Find("InnerCanvas/SortToClass1/Selected").gameObject.SetActive(false);
         transform.Find("InnerCanvas/SortToClass2/Selected").gameObject.SetActive(false);
+        transform.Find("InnerCanvas/ShowAllCards/Selected").gameObject.SetActive(false);
+    }
+
+    public List<EditCard> GetCards() {
+        List<EditCard> cards = new List<EditCard>();
+        Transform cardStore = transform.Find("InnerCanvas/CardStore");
+        int count = 0;
+
+        foreach (dataModules.CollectionCard card in AccountManager.Instance.allCards) {
+            if (isHuman == (card.camp == "human")) {
+                if (card.isHeroCard) continue;
+                cards.Add(new EditCard { cardObject = cardStore.GetChild(count).gameObject, cardId = card.id, cardClass = card.cardClasses[0], cardOrder = card.cost });
+                count++;
+            }
+        }  
+
+        return SortCardListByCost(cards).ToList();
+    }
+
+    IEnumerable<EditCard> SortCardListByCost(List<EditCard> cards) {
+        return cards.OrderBy(n => n.cardOrder);
     }
 
     public void ConfirmButton() {
-
         if(editing == true) {
             NetworkManager.ModifyDeckReqFormat form = new NetworkManager.ModifyDeckReqFormat();
             NetworkManager.ModifyDeckReqArgs field = new NetworkManager.ModifyDeckReqArgs();
@@ -390,19 +421,16 @@ public class DeckEditController : MonoBehaviour
         cardMana = new int[8];
         for (int i = 0; i < 8; i++)
             cardMana[i] = 0;
-        //heroWindow.gameObject.SetActive(false);
     }
 
     
-    
     public void SetDeckEdit(string heroId, bool isHuman) {
         editing = false;
-        InitCanvas();
-        //Transform heroCards;
-        heroData = null;
-        heroID = heroId;
         this.isHuman = isHuman;
         isTemplate = true;
+        InitCanvas();
+        heroData = null;
+        heroID = heroId;
 
         deckNamePanel.transform.Find("NameTemplate").GetComponent<TMPro.TMP_InputField>().text = "";
         transform.Find("InnerCanvas/DeckNamePanel/PlaceHolder").gameObject.SetActive(true);    
@@ -432,47 +460,44 @@ public class DeckEditController : MonoBehaviour
     private void SetDeckEditCards(bool isHuman, HeroInventory heroData) {
         int ownCount = -1;
         CardDataPackage myCards = AccountManager.Instance.cardPackage;
-        foreach(dataModules.CollectionCard card in AccountManager.Instance.allCards) {
-            if (card.isHeroCard) continue;
-            if (card.cardClasses[0] != heroData.heroClasses[0] && card.cardClasses[0] != heroData.heroClasses[1]) continue;
-            string race;
-            if (isHuman)
-                race = "human";
-            else
-                race = "orc";
-            if (card.camp != race) continue;
 
+        foreach (EditCard card in editCards) {
+            if (card.cardClass != heroData.heroClasses[0] && card.cardClass != heroData.heroClasses[1]) continue;
             ownCount++;
             int page = ownCount / 9;
-            EditCardHandler ownedCard = ownCardLayout.GetChild(page).GetChild(ownCount - (page * 9)).GetChild(0).GetComponent<EditCardHandler>();
-            ownedCard.editBookRoot = ownedCard.transform.parent.parent.name + "/" + ownedCard.transform.parent.name;
+            card.cardObject.transform.SetParent(ownCardLayout.GetChild(page).GetChild(ownCount - (page * 9)));
+            card.cardObject.transform.localScale = Vector3.one;
+            card.cardObject.transform.localPosition = Vector3.zero;
+            EditCardHandler ownedCard = card.cardObject.GetComponent<EditCardHandler>();
             ownedCard.gameObject.SetActive(true);
-            if (myCards.data.ContainsKey(card.id)) {
-                ownedCard.HAVENUM = myCards.data[card.id].cardCount;
-                haveCardNum += myCards.data[card.id].cardCount;
+            if (myCards.data.ContainsKey(card.cardId)) {
+                ownedCard.HAVENUM = myCards.data[card.cardId].cardCount;
+                haveCardNum += myCards.data[card.cardId].cardCount;
             }
-            ownedCard.DrawCard(card.id, isHuman);
+            ownedCard.DrawCard(card.cardId, isHuman);
             maxHaveCard = haveCardNum;
-            RefreshLine();
         }
+
         lastPage = (ownCount / 9) + 1;
         maxPage = "/" + lastPage.ToString();
         currentPage = 0;
         pagenumText.text = (currentPage + 1).ToString() + maxPage;
+        RefreshLine();
     }
 
     public void SetCustumDeckEdit(Deck loadedDeck, bool isTemplate = false) {
         this.isTemplate = isTemplate;
         editing = true;
-        InitCanvas();
         heroData = null;
         heroID = loadedDeck.heroId;
-        if (!isTemplate) deckID = loadedDeck.id;
-        deckID = loadedDeck.id;
         if (loadedDeck.camp == "human")
             isHuman = true;
         else
             isHuman = false;
+        InitCanvas();
+        if (!isTemplate) deckID = loadedDeck.id;
+        deckID = loadedDeck.id;
+        
 
         deckNamePanel.transform.Find("NameTemplate").GetComponent<TMPro.TMP_InputField>().text = loadedDeck.name;
         transform.Find("InnerCanvas/DeckNamePanel/PlaceHolder").gameObject.SetActive(string.IsNullOrEmpty(deckNamePanel.transform.Find("NameTemplate").GetComponent<TMPro.TMP_InputField>().text));
@@ -564,10 +589,11 @@ public class DeckEditController : MonoBehaviour
         int ownCount = -1;
         int settedCardNum = 0;
         CardDataPackage myCards = AccountManager.Instance.cardPackage;
-        foreach(dataModules.Item card in lodedDeck.items) {
+
+        foreach (dataModules.Item card in lodedDeck.items) {
             if (myCards.data.ContainsKey(card.id)) {
                 EditCardHandler settedCard = settingLayout.transform.GetChild(settedCardNum).GetComponent<EditCardHandler>();
-                if(myCards.data[card.id].cardCount >= card.cardCount)
+                if (myCards.data[card.id].cardCount >= card.cardCount)
                     settedCard.SETNUM = card.cardCount;
                 else
                     settedCard.SETNUM = myCards.data[card.id].cardCount;
@@ -580,32 +606,28 @@ public class DeckEditController : MonoBehaviour
             }
         }
 
-        foreach (dataModules.CollectionCard card in AccountManager.Instance.allCards) {
-            if (card.isHeroCard) continue;
-            if (card.cardClasses[0] != heroData.heroClasses[0] && card.cardClasses[0] != heroData.heroClasses[1]) continue;
-            string race;
-            if (isHuman)
-                race = "human";
-            else
-                race = "orc";
-            if (card.camp != race) continue;
+        foreach (EditCard card in editCards) {
+            if (card.cardClass != heroData.heroClasses[0] && card.cardClass != heroData.heroClasses[1]) continue;
             ownCount++;
             int page = ownCount / 9;
-            EditCardHandler ownedCard = ownCardLayout.GetChild(page).GetChild(ownCount - (page * 9)).GetChild(0).GetComponent<EditCardHandler>();
+            card.cardObject.transform.SetParent(ownCardLayout.GetChild(page).GetChild(ownCount - (page * 9)));
+            card.cardObject.transform.localScale = Vector3.one;
+            card.cardObject.transform.localPosition = Vector3.zero;
+            EditCardHandler ownedCard = card.cardObject.GetComponent<EditCardHandler>();
             ownedCard.gameObject.SetActive(true);
-            ownedCard.editBookRoot = ownedCard.transform.parent.parent.name + "/" + ownedCard.transform.parent.name;
-            if (myCards.data.ContainsKey(card.id)) {
-                if (!setCardList.ContainsKey(card.id)) {
-                    ownedCard.HAVENUM = myCards.data[card.id].cardCount;
-                    haveCardNum += myCards.data[card.id].cardCount;
-                    ownedCard.DrawCard(card.id, isHuman);
+
+            if (myCards.data.ContainsKey(card.cardId)) {
+                if (!setCardList.ContainsKey(card.cardId)) {
+                    ownedCard.HAVENUM = myCards.data[card.cardId].cardCount;
+                    haveCardNum += myCards.data[card.cardId].cardCount;
+                    ownedCard.DrawCard(card.cardId, isHuman);
                     maxHaveCard = haveCardNum;
                 }
                 else {
-                    EditCardHandler settedCard = setCardList[card.id].GetComponent<EditCardHandler>();
+                    EditCardHandler settedCard = setCardList[card.cardId].GetComponent<EditCardHandler>();
                     settedCard.beforeObject = ownedCard.gameObject;
-                    ownedCard.HAVENUM = myCards.data[card.id].cardCount - settedCard.SETNUM;
-                    ownedCard.DrawCard(card.id, isHuman);
+                    ownedCard.HAVENUM = myCards.data[card.cardId].cardCount - settedCard.SETNUM;
+                    ownedCard.DrawCard(card.cardId, isHuman);
                     if (ownedCard.HAVENUM == 0) {
                         ownedCard.DisableCard(true);
                     }
@@ -614,35 +636,37 @@ public class DeckEditController : MonoBehaviour
             }
             else {
                 ownedCard.HAVENUM = 0;
-                ownedCard.DrawCard(card.id, isHuman);
+                ownedCard.DrawCard(card.cardId, isHuman);
             }
             maxHaveCard = setCardNum + haveCardNum;
-            RefreshLine();
         }
+
         lastPage = (ownCount / 9) + 1;
         maxPage = "/" + lastPage.ToString();
         pagenumText.text = (currentPage + 1).ToString() + maxPage;
+        RefreshLine();
     }
 
     public void SortToAll() {
         int ownCount = -1;
-        List<GameObject> targetCards = new List<GameObject>();
         for (int i = 0; i < ownCardLayout.transform.childCount; i++) {
             for (int j = 0; j < 9; j++) {
                 if (ownCardLayout.GetChild(i).GetChild(j).childCount > 0) {
                     EditCardHandler cardHandler = ownCardLayout.GetChild(i).GetChild(j).GetChild(0).GetComponent<EditCardHandler>();
-                    if (cardHandler.editBookRoot != "") {
-                        cardHandler.transform.SetParent(cardStorage);
-                    }
+                    cardHandler.transform.SetParent(transform.Find("InnerCanvas/CardStore"));
                 }
             }
         }
-        while(cardStorage.childCount > 0) {
-            EditCardHandler cardHandler = cardStorage.GetChild(0).GetComponent<EditCardHandler>();
-            cardHandler.transform.SetParent(ownCardLayout.Find(cardHandler.editBookRoot));
-            cardHandler.transform.localPosition = Vector3.zero;
+        List<EditCard> cards = SortCardListByCost(editCards).ToList();
+        foreach (EditCard card in cards) {
+            if (card.cardClass != heroData.heroClasses[0] && card.cardClass != heroData.heroClasses[1]) continue;
             ownCount++;
+            int page = ownCount / 9;
+            card.cardObject.transform.SetParent(ownCardLayout.GetChild(page).GetChild(ownCount - (page * 9)));
+            card.cardObject.transform.localScale = Vector3.one;
+            card.cardObject.transform.localPosition = Vector3.zero;
         }
+
         ownCardLayout.GetChild(currentPage).gameObject.SetActive(false);
         currentPage = 0;
         ownCardLayout.GetChild(currentPage).gameObject.SetActive(true);
@@ -659,37 +683,57 @@ public class DeckEditController : MonoBehaviour
         transform.Find("InnerCanvas/ShowAllClass/Selected").gameObject.SetActive(true);
         transform.Find("InnerCanvas/SortToClass1/Selected").gameObject.SetActive(false);
         transform.Find("InnerCanvas/SortToClass2/Selected").gameObject.SetActive(false);
+        transform.Find("InnerCanvas/ShowAllCards/Selected").gameObject.SetActive(false);
     }
 
     public void SortToClass(int classNum) {
         int ownCount = -1;
         string className = heroData.heroClasses[classNum];
-        List<GameObject> targetCards = new List<GameObject>();
         for (int i = 0; i < ownCardLayout.transform.childCount; i++) {
             for (int j = 0; j < 9; j++) {
                 if (ownCardLayout.GetChild(i).GetChild(j).childCount > 0) {
                     EditCardHandler cardHandler = ownCardLayout.GetChild(i).GetChild(j).GetChild(0).GetComponent<EditCardHandler>();
-                    if (cardHandler.editBookRoot != "") {
-                        cardHandler.transform.SetParent(cardStorage);
-                    }
+                    cardHandler.transform.SetParent(transform.Find("InnerCanvas/CardStore"));
                 }
             }
         }
-        for (int i = 0; i < cardStorage.childCount; i++) {
-            EditCardHandler cardHandler = cardStorage.GetChild(i).GetComponent<EditCardHandler>();
-            if (cardHandler.cardData.cardClasses[0] == className)
-                targetCards.Add(cardHandler.gameObject);
+        List<EditCard> cards = SortCardListByCost(editCards).ToList();
+        foreach (EditCard card in cards) {
+            if (card.cardClass == className) {
+                ownCount++;
+                int page = ownCount / 9;
+                card.cardObject.transform.SetParent(ownCardLayout.GetChild(page).GetChild(ownCount - (page * 9)));
+                card.cardObject.transform.localScale = Vector3.one;
+                card.cardObject.transform.localPosition = Vector3.zero;
+            }
         }
-        foreach(GameObject cards in targetCards) {
-            ownCount++;
-            int page = ownCount / 9;
-            cards.transform.SetParent(ownCardLayout.GetChild(page).GetChild(ownCount - (page * 9)));
-            cards.transform.localPosition = Vector3.zero;
-        }
+
+        //List<GameObject> targetCards = new List<GameObject>();
+        //for (int i = 0; i < ownCardLayout.transform.childCount; i++) {
+        //    for (int j = 0; j < 9; j++) {
+        //        if (ownCardLayout.GetChild(i).GetChild(j).childCount > 0) {
+        //            EditCardHandler cardHandler = ownCardLayout.GetChild(i).GetChild(j).GetChild(0).GetComponent<EditCardHandler>();
+        //            if (cardHandler.editBookRoot != "") {
+        //                cardHandler.transform.SetParent(cardStorage);
+        //            }
+        //        }
+        //    }
+        //}
+        //for (int i = 0; i < cardStorage.childCount; i++) {
+        //    EditCardHandler cardHandler = cardStorage.GetChild(i).GetComponent<EditCardHandler>();
+        //    if (cardHandler.cardData.cardClasses[0] == className)
+        //        targetCards.Add(cardHandler.gameObject);
+        //}
+        //foreach(GameObject cards in targetCards) {
+        //    ownCount++;
+        //    int page = ownCount / 9;
+        //    cards.transform.SetParent(ownCardLayout.GetChild(page).GetChild(ownCount - (page * 9)));
+        //    cards.transform.localPosition = Vector3.zero;
+        //}
         ownCardLayout.GetChild(currentPage).gameObject.SetActive(false);
         currentPage = 0;
         ownCardLayout.GetChild(currentPage).gameObject.SetActive(true);
-        int lastPage = (ownCount / 9) + 1;
+        lastPage = (ownCount / 9) + 1;
         maxPage = "/" + lastPage.ToString();
         pagenumText.text = "1" + maxPage;
         if (lastPage == 1) {
@@ -708,6 +752,49 @@ public class DeckEditController : MonoBehaviour
             transform.Find("InnerCanvas/SortToClass1/Selected").gameObject.SetActive(false);
             transform.Find("InnerCanvas/SortToClass2/Selected").gameObject.SetActive(true);
         }
+        transform.Find("InnerCanvas/ShowAllCards/Selected").gameObject.SetActive(false);
+    }
+
+    public void ShowAllClassCards() {
+        int ownCount = -1;
+        for (int i = 0; i < ownCardLayout.transform.childCount; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (ownCardLayout.GetChild(i).GetChild(j).childCount > 0) {
+                    EditCardHandler cardHandler = ownCardLayout.GetChild(i).GetChild(j).GetChild(0).GetComponent<EditCardHandler>();
+                    cardHandler.transform.SetParent(transform.Find("InnerCanvas/CardStore"));
+                }
+            }
+        }
+        List<EditCard> cards = SortCardListByCost(editCards).ToList();
+        foreach (EditCard card in cards) {
+            ownCount++;
+            int page = ownCount / 9;
+            card.cardObject.transform.SetParent(ownCardLayout.GetChild(page).GetChild(ownCount - (page * 9)));
+            card.cardObject.transform.localScale = Vector3.one;
+            card.cardObject.transform.localPosition = Vector3.zero;
+            if(card.cardClass != heroData.heroClasses[0] && card.cardClass != heroData.heroClasses[1]) {
+                card.cardObject.SetActive(true);
+                card.cardObject.GetComponent<EditCardHandler>().HAVENUM = 0;
+                card.cardObject.GetComponent<EditCardHandler>().DrawCard(card.cardId, isHuman);
+            }
+        }
+        ownCardLayout.GetChild(currentPage).gameObject.SetActive(false);
+        currentPage = 0;
+        ownCardLayout.GetChild(currentPage).gameObject.SetActive(true);
+        lastPage = (ownCount / 9) + 1;
+        maxPage = "/" + lastPage.ToString();
+        pagenumText.text = "1" + maxPage;
+        if (lastPage == 1) {
+            buttons.Find("NextPageButton").gameObject.SetActive(false);
+        }
+        else
+            buttons.Find("NextPageButton").gameObject.SetActive(true);
+        buttons.Find("PrevPageButton").gameObject.SetActive(false);
+        RefreshLine();
+        transform.Find("InnerCanvas/ShowAllClass/Selected").gameObject.SetActive(false);
+        transform.Find("InnerCanvas/SortToClass1/Selected").gameObject.SetActive(false);
+        transform.Find("InnerCanvas/SortToClass2/Selected").gameObject.SetActive(false);
+        transform.Find("InnerCanvas/ShowAllCards/Selected").gameObject.SetActive(true);
     }
 
     public void SelectInputName() {
@@ -802,4 +889,11 @@ public class DeckEditController : MonoBehaviour
             this.cardCount = cardCount;
         }
     }
+}
+
+public class EditCard {
+    public GameObject cardObject;
+    public string cardId;
+    public string cardClass;
+    public int cardOrder;
 }
