@@ -60,7 +60,7 @@ public class IngameTimer : MonoBehaviour {
     /// 타이머 시작
     /// </summary>
     /// <param name="totalSec"></param>
-    public void BeginTimer(int totalSec = 40) {
+    public void BeginTimer(int totalSec = 20) {
         TimerCoroutine = TimerOn(totalSec);
         StartCoroutine(TimerCoroutine);
     }
