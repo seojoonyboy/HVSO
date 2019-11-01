@@ -55,10 +55,6 @@ public class ScenarioManager : SerializedMonoBehaviour
 
     private void OnDestroy() {
         Instance = null;
-        //PlayerPrefs.SetString("SelectedRace", "");
-        //PlayerPrefs.SetString("SelectedDeckId", "");
-        //PlayerPrefs.SetString("SelectedDeckType", "");
-        //PlayerPrefs.SetString("SelectedBattleType", "");
     }
 
     [SerializeField] HUDController HUDController;

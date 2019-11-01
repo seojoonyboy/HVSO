@@ -27,6 +27,8 @@ public class ResourceManager : SerializedMonoBehaviour
     public Dictionary<string, Sprite> campBackgrounds;   //진영별 뒷배경
     public Dictionary<string, Sprite> rewardIcon;
 
+    public Dictionary<string, UnitRace> unitRace;
+
     public GameObject unitDeadObject;
     public GameObject baseSkillIcon;
     public GameObject hideObject;
@@ -41,4 +43,24 @@ public class ScenarioUnit {
 public class ClassInfo {
     public string name;
     public string info;
+}
+
+public enum UnitRace {
+    HUMAN_ELDER_MAN = 500,
+    HUMAN_ELDER_WOMEN,
+    HUMAN_MAN,
+    HUMAN_WOMAN,
+    HUMAN_MIDDLE_MAN,
+    HUMAN_MIDDLE_WOMAN,
+    ORC_ELDER_MAN,
+    ORC_ELDER_WOMAN,
+    ORC_MAN,
+    ORC_WOMAN,
+    ORC_MIDDLE_MAN,
+    ORC_MIDDLE_WOMAN,
+    MACHINE,
+    MONSTER,
+    ANIMAL,
+    CRYSTAL,
+    BEAST
 }

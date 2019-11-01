@@ -32,6 +32,8 @@ public class MenuSceneController : MonoBehaviour {
 
     public static MenuSceneController menuSceneController;
 
+    bool isTutorialDataLoaded = false;
+
     private void Awake() {
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_NICKNAME_UPDATED, NickNameChanged);
 
@@ -54,8 +56,6 @@ public class MenuSceneController : MonoBehaviour {
         menuButton.Initialize(true);
         menuButton.Update(0);
         ClickMenuButton(2);
-
-        scenarioManager.ReadScenarioData();
     }
 
     private void NickNameChanged(Enum Event_Type, Component Sender, object Param) {
@@ -70,6 +70,11 @@ public class MenuSceneController : MonoBehaviour {
     }
 
     private void CheckTutorial() {
+        if (!isTutorialDataLoaded) {
+            menuTutorialManager.ReadTutorialData();
+            scenarioManager.ReadScenarioData();
+            isTutorialDataLoaded = true;
+        }
         string prevTutorial = PlayerPrefs.GetString("PrevTutorial");
         var etcInfos = AccountManager.Instance.userData.etcInfo;
         hudController.SetResourcesUI();
@@ -191,7 +196,7 @@ public class MenuSceneController : MonoBehaviour {
         Transform buttonsParent = fixedCanvas.Find("Footer");
         TouchEffecter.Instance.SetScript();
 
-        Invoke("CheckTutorial", 1.0f);
+        CheckTutorial();
         //menuTutorialManager.StartTutorial(MenuTutorialManager.TutorialType.TO_AI_BATTLE);
         AccountManager.Instance.RequestUserInfo();    //튜토리얼을 어디서부터 진행해야 하는지 판단
     }

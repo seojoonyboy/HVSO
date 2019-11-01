@@ -12,7 +12,9 @@ public class SoundManager : SerializedMonoBehaviour {
     public Dictionary<string, AudioClip> magicSfx;
     public Dictionary<string, AudioClip> uiSfx;
     public Dictionary<string, AudioClip> ingameSfx;
+    public Dictionary<UnitRace, Dictionary<VoiceType, AudioClip>> unitSound;
     
+
     private static SoundManager _instance;  
     public static SoundManager Instance {
         get {
@@ -131,6 +133,14 @@ public class SoundManager : SerializedMonoBehaviour {
 
 
 }
+public enum VoiceType {
+    ATTACK = 1500,
+    CHARGE,
+    DAMAGE,
+    DIE
+}
+
+
 
 
 public enum SoundType {
