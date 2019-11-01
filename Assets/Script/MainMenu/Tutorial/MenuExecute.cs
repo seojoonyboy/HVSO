@@ -604,47 +604,31 @@ namespace MenuTutorialModules {
 
     public class BoxOpenProcess : MenuExecute {
         public override void Execute() {
-            NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, OnUserDataUpdated);
-            AccountManager.Instance.RequestUserInfo();
-        }
+            var userData = AccountManager.Instance.userData;
+            var menuTutorialManager = GetComponent<MenuTutorialManager>();
 
-        void OnDestroy() {
-            NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, OnUserDataUpdated);
+            if (userData.supplyBox > 0) {
+                menuTutorialManager.BoxRewardPanel.transform.Find("ExitButton").GetComponent<Button>().onClick.AddListener(onclick);
+                menuTutorialManager.ActiveRewardBoxCanvas();
+            }
+            else {
+                Logger.LogError("박스가 없습니다!");
+                PlayerPrefs.SetInt("TutorialBoxRecieved", 1);
+
+                handler.isDone = true;
+            }
         }
 
         private void onclick() {
-            handler.isDone = true;
-        }
-
-        private void OnUserDataUpdated(Enum Event_Type, Component Sender, object Param) {
-            HTTPResponse res = (HTTPResponse)Param;
-
-            var menuTutorialManager = GetComponent<MenuTutorialManager>();
-            menuTutorialManager.ActiveRewardBoxCanvas();
-            MenuMask.Instance.UnBlockScreen();
+            GetComponent<MenuTutorialManager>()
+                .BoxRewardPanel
+                .transform
+                .Find("ExitButton")
+                .GetComponent<Button>()
+                .onClick
+                .RemoveListener(onclick);
             PlayerPrefs.SetInt("TutorialBoxRecieved", 1);
-            PlayerPrefs.Save();
-
-            var resText = res.DataAsText;
-            Response __res = dataModules.JsonReader.Read<Response>(resText);
-            if (!string.IsNullOrEmpty(__res.supplyBox)) {
-                //보상 이펙트 보여주기
-                if (AccountManager.Instance.userData.supplyBox > 0) {
-                    menuTutorialManager.ActiveRewardBoxCanvas();
-                    menuTutorialManager.BoxRewardPanel.transform.Find("ExitButton").GetComponent<Button>().onClick.AddListener(onclick);
-                }
-                else {
-                    Logger.LogError("박스가 없습니다!");
-                    handler.isDone = true;
-                }
-            }
-            else {
-                menuTutorialManager.BoxRewardPanel.transform.Find("ExitButton")
-                    .GetComponent<Button>()
-                    .onClick
-                    .RemoveListener(onclick);
-                handler.isDone = true;
-            }
+            handler.isDone = true;
         }
 
         public class Response {
