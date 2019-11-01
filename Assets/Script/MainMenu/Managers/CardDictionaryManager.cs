@@ -250,7 +250,7 @@ public class CardDictionaryManager : MonoBehaviour {
 
 
     public void OpenSortModal() {
-        SoundManager.Instance.PlaySound("button_1");
+        SoundManager.Instance.PlaySound(UISfxSound.BUTTON1);
         sortingModal.gameObject.SetActive(true);
         for (int i = 0; i < 5; i++)
             sortingModal.Find("Buttons").GetChild(i).GetChild(0).gameObject.SetActive(true);
@@ -341,7 +341,7 @@ public class CardDictionaryManager : MonoBehaviour {
     }
 
     public void ApplySortting() {
-        SoundManager.Instance.PlaySound("button_1");
+        SoundManager.Instance.PlaySound(UISfxSound.BUTTON1);
         AccountManager.Instance.dicInfo.sortingState = selectedSortOption;
         switch (selectedSortOption) {
             case SortingOptions.CLASS:
@@ -686,7 +686,7 @@ public class CardDictionaryManager : MonoBehaviour {
     }
 
     public void OpenHeroInfoWIndow(string heroId) {
-        SoundManager.Instance.PlaySound("button_1");
+        SoundManager.Instance.PlaySound(UISfxSound.BUTTON1);
         MenuHeroInfo.heroInfoWindow.SetHeroInfoWindow(heroId);
         MenuHeroInfo.heroInfoWindow.transform.parent.gameObject.SetActive(true);
         MenuHeroInfo.heroInfoWindow.gameObject.SetActive(true);
@@ -697,7 +697,7 @@ public class CardDictionaryManager : MonoBehaviour {
     }
 
     public void ExitDictionaryScene() {
-        SoundManager.Instance.PlaySound("button_1");
+        SoundManager.Instance.PlaySound(UISfxSound.BUTTON1);
         if (!isHeroDic) {
             ExitDictionaryCanvas();
         }

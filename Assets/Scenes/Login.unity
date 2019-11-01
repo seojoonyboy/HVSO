@@ -533,8 +533,8 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 7e9b134d6e27c44f3887d364cebf2fa2, type: 3}
     - {fileID: 8300000, guid: 611ac5289e5bd554d92c055d1fe86c03, type: 3}
     - {fileID: 8300000, guid: 8fc662d5a9adcbb428019f191ca4e5e2, type: 3}
-    - {fileID: 8300000, guid: b23bb9e282332bd48959e8d537fbedd2, type: 3}
     - {fileID: 8300000, guid: 58d1d4be3fa2ff641a2ba4b406fdc157, type: 3}
+    - {fileID: 8300000, guid: b23bb9e282332bd48959e8d537fbedd2, type: 3}
     - {fileID: 8300000, guid: c3c589ddef1251444b47ae6fbdd8d55d, type: 3}
     - {fileID: 8300000, guid: 73e60876cf76b4b48a19fa154731d48a, type: 3}
     - {fileID: 8300000, guid: 67cd145d28849984db89d042c0938225, type: 3}
@@ -1146,11 +1146,21 @@ MonoBehaviour:
       Data: 
     - Name: uiSfx
       Entry: 7
-      Data: 5|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.AudioClip,
+      Data: 5|System.Collections.Generic.Dictionary`2[[UISfxSound, Assembly-CSharp],[UnityEngine.AudioClip,
         UnityEngine.AudioModule]], mscorlib
     - Name: comparer
-      Entry: 9
-      Data: 3
+      Entry: 7
+      Data: 6|System.Collections.Generic.EnumEqualityComparer`1[[UISfxSound, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 12
       Data: 18
@@ -1158,8 +1168,8 @@ MonoBehaviour:
       Entry: 7
       Data: 
     - Name: $k
-      Entry: 1
-      Data: box_epic
+      Entry: 3
+      Data: 3500
     - Name: $v
       Entry: 10
       Data: 41
@@ -1170,8 +1180,8 @@ MonoBehaviour:
       Entry: 7
       Data: 
     - Name: $k
-      Entry: 1
-      Data: box_normal
+      Entry: 3
+      Data: 3501
     - Name: $v
       Entry: 10
       Data: 42
@@ -1182,8 +1192,8 @@ MonoBehaviour:
       Entry: 7
       Data: 
     - Name: $k
-      Entry: 1
-      Data: boxopen
+      Entry: 3
+      Data: 3504
     - Name: $v
       Entry: 10
       Data: 43
@@ -1194,8 +1204,8 @@ MonoBehaviour:
       Entry: 7
       Data: 
     - Name: $k
-      Entry: 1
-      Data: boxopen_2
+      Entry: 3
+      Data: 3505
     - Name: $v
       Entry: 10
       Data: 44
@@ -1206,8 +1216,8 @@ MonoBehaviour:
       Entry: 7
       Data: 
     - Name: $k
-      Entry: 1
-      Data: box_rare
+      Entry: 3
+      Data: 3502
     - Name: $v
       Entry: 10
       Data: 45
@@ -1218,8 +1228,8 @@ MonoBehaviour:
       Entry: 7
       Data: 
     - Name: $k
-      Entry: 1
-      Data: box_superrare
+      Entry: 3
+      Data: 3503
     - Name: $v
       Entry: 10
       Data: 46
@@ -1230,8 +1240,8 @@ MonoBehaviour:
       Entry: 7
       Data: 
     - Name: $k
-      Entry: 1
-      Data: button_1
+      Entry: 3
+      Data: 3506
     - Name: $v
       Entry: 10
       Data: 47
@@ -1242,8 +1252,8 @@ MonoBehaviour:
       Entry: 7
       Data: 
     - Name: $k
-      Entry: 1
-      Data: button_2
+      Entry: 3
+      Data: 3507
     - Name: $v
       Entry: 10
       Data: 48
@@ -1254,8 +1264,8 @@ MonoBehaviour:
       Entry: 7
       Data: 
     - Name: $k
-      Entry: 1
-      Data: button_3
+      Entry: 3
+      Data: 3508
     - Name: $v
       Entry: 10
       Data: 49
@@ -1266,8 +1276,8 @@ MonoBehaviour:
       Entry: 7
       Data: 
     - Name: $k
-      Entry: 1
-      Data: button_4
+      Entry: 3
+      Data: 3509
     - Name: $v
       Entry: 10
       Data: 50
@@ -1278,8 +1288,8 @@ MonoBehaviour:
       Entry: 7
       Data: 
     - Name: $k
-      Entry: 1
-      Data: Cardchoice_1
+      Entry: 3
+      Data: 3510
     - Name: $v
       Entry: 10
       Data: 51
@@ -1290,8 +1300,8 @@ MonoBehaviour:
       Entry: 7
       Data: 
     - Name: $k
-      Entry: 1
-      Data: Cardchoice_2
+      Entry: 3
+      Data: 3511
     - Name: $v
       Entry: 10
       Data: 52
@@ -1302,8 +1312,8 @@ MonoBehaviour:
       Entry: 7
       Data: 
     - Name: $k
-      Entry: 1
-      Data: Cardchoice_3
+      Entry: 3
+      Data: 3512
     - Name: $v
       Entry: 10
       Data: 53
@@ -1314,8 +1324,8 @@ MonoBehaviour:
       Entry: 7
       Data: 
     - Name: $k
-      Entry: 1
-      Data: Cardchoice_hero
+      Entry: 3
+      Data: 3513
     - Name: $v
       Entry: 10
       Data: 54
@@ -1326,8 +1336,8 @@ MonoBehaviour:
       Entry: 7
       Data: 
     - Name: $k
-      Entry: 1
-      Data: Cardchoice_unit
+      Entry: 3
+      Data: 3514
     - Name: $v
       Entry: 10
       Data: 55
@@ -1338,8 +1348,8 @@ MonoBehaviour:
       Entry: 7
       Data: 
     - Name: $k
-      Entry: 1
-      Data: menuSlide_1
+      Entry: 3
+      Data: 3515
     - Name: $v
       Entry: 10
       Data: 56
@@ -1350,8 +1360,8 @@ MonoBehaviour:
       Entry: 7
       Data: 
     - Name: $k
-      Entry: 1
-      Data: menuSlide_2
+      Entry: 3
+      Data: 3516
     - Name: $v
       Entry: 10
       Data: 57
@@ -1362,8 +1372,8 @@ MonoBehaviour:
       Entry: 7
       Data: 
     - Name: $k
-      Entry: 1
-      Data: menuSlide_3
+      Entry: 3
+      Data: 3517
     - Name: $v
       Entry: 10
       Data: 58
@@ -1378,11 +1388,21 @@ MonoBehaviour:
       Data: 
     - Name: ingameSfx
       Entry: 7
-      Data: 6|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.AudioClip,
+      Data: 7|System.Collections.Generic.Dictionary`2[[IngameSfxSound, Assembly-CSharp],[UnityEngine.AudioClip,
         UnityEngine.AudioModule]], mscorlib
     - Name: comparer
-      Entry: 9
-      Data: 3
+      Entry: 7
+      Data: 8|System.Collections.Generic.EnumEqualityComparer`1[[IngameSfxSound, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 12
       Data: 10
@@ -1390,8 +1410,8 @@ MonoBehaviour:
       Entry: 7
       Data: 
     - Name: $k
-      Entry: 1
-      Data: CardDraw
+      Entry: 3
+      Data: 4500
     - Name: $v
       Entry: 10
       Data: 59
@@ -1402,8 +1422,8 @@ MonoBehaviour:
       Entry: 7
       Data: 
     - Name: $k
-      Entry: 1
-      Data: CardError
+      Entry: 3
+      Data: 4501
     - Name: $v
       Entry: 10
       Data: 60
@@ -1414,8 +1434,8 @@ MonoBehaviour:
       Entry: 7
       Data: 
     - Name: $k
-      Entry: 1
-      Data: GameMatch
+      Entry: 3
+      Data: 4503
     - Name: $v
       Entry: 10
       Data: 61
@@ -1426,8 +1446,8 @@ MonoBehaviour:
       Entry: 7
       Data: 
     - Name: $k
-      Entry: 1
-      Data: GetMana
+      Entry: 3
+      Data: 4502
     - Name: $v
       Entry: 10
       Data: 62
@@ -1438,8 +1458,8 @@ MonoBehaviour:
       Entry: 7
       Data: 
     - Name: $k
-      Entry: 1
-      Data: MulliganButton
+      Entry: 3
+      Data: 4504
     - Name: $v
       Entry: 10
       Data: 63
@@ -1450,8 +1470,8 @@ MonoBehaviour:
       Entry: 7
       Data: 
     - Name: $k
-      Entry: 1
-      Data: ShieldAction
+      Entry: 3
+      Data: 4505
     - Name: $v
       Entry: 10
       Data: 64
@@ -1462,8 +1482,8 @@ MonoBehaviour:
       Entry: 7
       Data: 
     - Name: $k
-      Entry: 1
-      Data: ShieldCharge
+      Entry: 3
+      Data: 4506
     - Name: $v
       Entry: 10
       Data: 65
@@ -1474,8 +1494,8 @@ MonoBehaviour:
       Entry: 7
       Data: 
     - Name: $k
-      Entry: 1
-      Data: TextTyping
+      Entry: 3
+      Data: 4507
     - Name: $v
       Entry: 10
       Data: 66
@@ -1486,8 +1506,8 @@ MonoBehaviour:
       Entry: 7
       Data: 
     - Name: $k
-      Entry: 1
-      Data: TurnButton
+      Entry: 3
+      Data: 4508
     - Name: $v
       Entry: 10
       Data: 67
@@ -1498,8 +1518,8 @@ MonoBehaviour:
       Entry: 7
       Data: 
     - Name: $k
-      Entry: 1
-      Data: TurnStart
+      Entry: 3
+      Data: 4509
     - Name: $v
       Entry: 10
       Data: 68
@@ -1514,12 +1534,12 @@ MonoBehaviour:
       Data: 
     - Name: unitSound
       Entry: 7
-      Data: 7|System.Collections.Generic.Dictionary`2[[UnitRace, Assembly-CSharp],[System.Collections.Generic.Dictionary`2[[VoiceType,
+      Data: 9|System.Collections.Generic.Dictionary`2[[UnitRace, Assembly-CSharp],[System.Collections.Generic.Dictionary`2[[VoiceType,
         Assembly-CSharp],[UnityEngine.AudioClip, UnityEngine.AudioModule]], mscorlib]],
         mscorlib
     - Name: comparer
       Entry: 7
-      Data: 8|System.Collections.Generic.EnumEqualityComparer`1[[UnitRace, Assembly-CSharp]],
+      Data: 10|System.Collections.Generic.EnumEqualityComparer`1[[UnitRace, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
@@ -1541,11 +1561,11 @@ MonoBehaviour:
       Data: 502
     - Name: $v
       Entry: 7
-      Data: 9|System.Collections.Generic.Dictionary`2[[VoiceType, Assembly-CSharp],[UnityEngine.AudioClip,
+      Data: 11|System.Collections.Generic.Dictionary`2[[VoiceType, Assembly-CSharp],[UnityEngine.AudioClip,
         UnityEngine.AudioModule]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 10|System.Collections.Generic.EnumEqualityComparer`1[[VoiceType, Assembly-CSharp]],
+      Data: 12|System.Collections.Generic.EnumEqualityComparer`1[[VoiceType, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
@@ -1624,11 +1644,11 @@ MonoBehaviour:
       Data: 500
     - Name: $v
       Entry: 7
-      Data: 11|System.Collections.Generic.Dictionary`2[[VoiceType, Assembly-CSharp],[UnityEngine.AudioClip,
+      Data: 13|System.Collections.Generic.Dictionary`2[[VoiceType, Assembly-CSharp],[UnityEngine.AudioClip,
         UnityEngine.AudioModule]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 12|System.Collections.Generic.EnumEqualityComparer`1[[VoiceType, Assembly-CSharp]],
+      Data: 14|System.Collections.Generic.EnumEqualityComparer`1[[VoiceType, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
@@ -1707,11 +1727,11 @@ MonoBehaviour:
       Data: 504
     - Name: $v
       Entry: 7
-      Data: 13|System.Collections.Generic.Dictionary`2[[VoiceType, Assembly-CSharp],[UnityEngine.AudioClip,
+      Data: 15|System.Collections.Generic.Dictionary`2[[VoiceType, Assembly-CSharp],[UnityEngine.AudioClip,
         UnityEngine.AudioModule]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 14|System.Collections.Generic.EnumEqualityComparer`1[[VoiceType, Assembly-CSharp]],
+      Data: 16|System.Collections.Generic.EnumEqualityComparer`1[[VoiceType, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
@@ -1790,11 +1810,11 @@ MonoBehaviour:
       Data: 503
     - Name: $v
       Entry: 7
-      Data: 15|System.Collections.Generic.Dictionary`2[[VoiceType, Assembly-CSharp],[UnityEngine.AudioClip,
+      Data: 17|System.Collections.Generic.Dictionary`2[[VoiceType, Assembly-CSharp],[UnityEngine.AudioClip,
         UnityEngine.AudioModule]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 16|System.Collections.Generic.EnumEqualityComparer`1[[VoiceType, Assembly-CSharp]],
+      Data: 18|System.Collections.Generic.EnumEqualityComparer`1[[VoiceType, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
@@ -1873,11 +1893,11 @@ MonoBehaviour:
       Data: 508
     - Name: $v
       Entry: 7
-      Data: 17|System.Collections.Generic.Dictionary`2[[VoiceType, Assembly-CSharp],[UnityEngine.AudioClip,
+      Data: 19|System.Collections.Generic.Dictionary`2[[VoiceType, Assembly-CSharp],[UnityEngine.AudioClip,
         UnityEngine.AudioModule]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 18|System.Collections.Generic.EnumEqualityComparer`1[[VoiceType, Assembly-CSharp]],
+      Data: 20|System.Collections.Generic.EnumEqualityComparer`1[[VoiceType, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12

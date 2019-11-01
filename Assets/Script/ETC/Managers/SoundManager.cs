@@ -10,8 +10,8 @@ public class SoundManager : SerializedMonoBehaviour {
     public Dictionary<SoundType, AudioClip> sounds;
     public Dictionary<string, AudioClip> unitSfx;
     public Dictionary<string, AudioClip> magicSfx;
-    public Dictionary<string, AudioClip> uiSfx;
-    public Dictionary<string, AudioClip> ingameSfx;
+    public Dictionary<UISfxSound, AudioClip> uiSfx;
+    public Dictionary<IngameSfxSound, AudioClip> ingameSfx;
     public Dictionary<UnitRace, Dictionary<VoiceType, AudioClip>> unitSound;
     
 
@@ -36,13 +36,11 @@ public class SoundManager : SerializedMonoBehaviour {
         DontDestroyOnLoad(gameObject);    
     }
 
-    public void PlayIngameSfx(string id) {
+    public void PlayIngameSfx(IngameSfxSound id) {
         if (!ingameSfx.ContainsKey(id) || ingameSfx[id] == null) {
-            AttackSound(ingameSfx["ac10015"]);
+            AttackSound(ingameSfx[IngameSfxSound.CARDDRAW]);
             return;
         }
-        if (id == "ac10005")
-            return;
         PlaySfx(ingameSfx[id]);
     }
 
@@ -85,12 +83,12 @@ public class SoundManager : SerializedMonoBehaviour {
         PlaySfx(sounds[type]);
     }
 
-    public void PlaySound(string sound_name) {
-        if(!uiSfx.ContainsKey(sound_name) || uiSfx[sound_name] == null) {
-            Logger.LogError(string.Format("{0}에 대한 음원을 찾을 수 없습니다.", sound_name));
+    public void PlaySound(UISfxSound sfxSound) {
+        if(!uiSfx.ContainsKey(sfxSound) || uiSfx[sfxSound] == null) {
+            Logger.LogError(string.Format("{0}에 대한 음원을 찾을 수 없습니다."));
             return;
         }
-        PlaySfx(uiSfx[sound_name]);
+        PlaySfx(uiSfx[sfxSound]);
     }
 
     private void PlaySfx(AudioClip sfxSource) {
@@ -138,6 +136,40 @@ public enum VoiceType {
     CHARGE,
     DAMAGE,
     DIE
+}
+
+public enum UISfxSound {
+    BOX_EPIC = 3500,
+    BOX_NORMAL,
+    BOX_RARE,
+    BOX_SUPERRARE,
+    BOXOPEN,
+    BOXOPEN_2,
+    BUTTON1,
+    BUTTON2,
+    BUTTON3,
+    BUTTON4,
+    CARDCHOICE1,
+    CARDCHOICE2,
+    CARDCHOICE3,
+    CARDCHOICE_HERO,
+    CARDCHOICE_UNIT,
+    MENUSLIDE1,
+    MENUSLIDE2,
+    MENUSLIDE3
+}
+
+public enum IngameSfxSound {
+    CARDDRAW = 4500,
+    CARDERROR,
+    GAMEMATCH,
+    GETMANA,
+    MULLIGANBUTTON,
+    SHIELDACTION,
+    SHIELDCHARGE,
+    TEXTTYPING,
+    TURNBUTTON,
+    TURNSTART
 }
 
 

@@ -372,7 +372,7 @@ public class PlayerController : MonoBehaviour
 
     public void UseShieldCount() {
         StartCoroutine(PlayMangement.instance.DrawSpecialCard(isHuman));
-        SoundManager.Instance.PlayIngameSfx("ShieldAction");
+        SoundManager.Instance.PlayIngameSfx(IngameSfxSound.SHIELDACTION);
         shieldStack.Value = 0;
         shieldCount--;
     }
@@ -455,7 +455,7 @@ public class PlayerController : MonoBehaviour
                 playManagement.releaseTurnBtn.gameObject.SetActive(false);
                 buttonParticle.SetActive(false);
             }
-            SoundManager.Instance.PlayIngameSfx("TurnButton");
+            SoundManager.Instance.PlayIngameSfx(IngameSfxSound.TURNBUTTON);
             myTurn = false;
             playManagement.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, playManagement.GetComponent<TurnMachine>().CurrentTurn());
             if(isHuman == playManagement.player.isHuman)
@@ -577,7 +577,7 @@ public class PlayerController : MonoBehaviour
             entry = shieldGauge.AnimationState.AddAnimation(0, (start + i).ToString(), false, 0);
 
         }
-        SoundManager.Instance.PlayIngameSfx("ShieldCharge");
+        SoundManager.Instance.PlayIngameSfx(IngameSfxSound.SHIELDCHARGE);
         // entry.Complete += delegate (TrackEntry trackEntry) {  };       
     }
 

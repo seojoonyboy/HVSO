@@ -671,7 +671,7 @@ public class CardHandManager : MonoBehaviour {
         yield return new WaitForSeconds(1.0f);
         firstOrcTurnObj.SetActive(false);
 
-        SoundManager.Instance.PlayIngameSfx("TurnButton");
+        SoundManager.Instance.PlayIngameSfx(IngameSfxSound.TURNBUTTON);
     }
 
     /// <summary>
