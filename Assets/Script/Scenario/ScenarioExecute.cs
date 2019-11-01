@@ -1246,4 +1246,19 @@ public class Wait_Enemy_hero_Dead : ScenarioExecute {
 }
 
 
+//첫 카드배분 스탑 or 배분
+public class First_Card : ScenarioExecute {
+    public First_Card() : base() { }
+
+    public override void Execute() {
+        if (args[0] == "stop")
+            PlayMangement.instance.stopFirstCard = true;
+        else
+            PlayMangement.instance.stopFirstCard = false;
+        handler.isDone = true;
+    }
+
+}
+
+
 

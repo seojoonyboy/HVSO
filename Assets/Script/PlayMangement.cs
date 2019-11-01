@@ -49,6 +49,7 @@ public partial class PlayMangement : MonoBehaviour {
     public bool beginStopTurn = false;
     public bool afterStopTurn = false;
     public bool waitDraw = false;
+    public bool stopFirstCard = false;
 
     public float cameraSize;
 
