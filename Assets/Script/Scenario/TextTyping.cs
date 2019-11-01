@@ -37,7 +37,7 @@ public class TextTyping : MonoBehaviour
         int count = 0;
         textObj.text = "";
         while(true) {
-            SoundManager.Instance.PlayIngameSfx("TextTyping");
+            SoundManager.Instance.PlayIngameSfx(IngameSfxSound.TEXTTYPING);
             if (count < num) {
                 if (typingText[count].ToString() == "|") 
                     textObj.text += "<br>";

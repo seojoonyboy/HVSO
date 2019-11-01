@@ -83,7 +83,7 @@ public class ScenarioManager : SerializedMonoBehaviour
     }
 
     public void OnBackButton() {
-        SoundManager.Instance.PlaySound("button_1");
+        SoundManager.Instance.PlaySound(UISfxSound.BUTTON1);
         PlayerPrefs.SetString("SelectedRace", "");
         PlayerPrefs.SetString("SelectedDeckId", "");
         PlayerPrefs.SetString("SelectedDeckType", "");
@@ -95,7 +95,7 @@ public class ScenarioManager : SerializedMonoBehaviour
     }
 
     public void OnHumanCategories() {
-        SoundManager.Instance.PlaySound("button_1");
+        SoundManager.Instance.PlaySound(UISfxSound.BUTTON1);
         //heroID = "";
         isHuman = true;
         PlayerPrefs.SetString("SelectedRace", "HUMAN");
@@ -104,7 +104,7 @@ public class ScenarioManager : SerializedMonoBehaviour
     }
     
     public void OnOrcCategories() {
-        SoundManager.Instance.PlaySound("button_1");
+        SoundManager.Instance.PlaySound(UISfxSound.BUTTON1);
         //heroID = "";
         isHuman = false;
         PlayerPrefs.SetString("SelectedRace", "ORC");
@@ -270,7 +270,7 @@ public class ScenarioManager : SerializedMonoBehaviour
     }
 
     public void OnStageCloseBtn() {
-        SoundManager.Instance.PlaySound("button_1");
+        SoundManager.Instance.PlaySound(UISfxSound.BUTTON1);
         stageCanvas.SetActive(false);
     }
 
@@ -337,7 +337,7 @@ public class ScenarioManager : SerializedMonoBehaviour
     }
 
     public void OnDeckSelected(GameObject selectedDeckObject, dataModules.Deck data, bool isTutorial) {
-        SoundManager.Instance.PlaySound("button_1");
+        SoundManager.Instance.PlaySound(UISfxSound.BUTTON1);
         if (this.selectedDeckObject != null) {
             this.selectedDeckObject.transform.Find("SelectedBack").gameObject.SetActive(false);
             this.selectedDeckObject.transform.Find("Selected").gameObject.SetActive(false);
@@ -361,13 +361,13 @@ public class ScenarioManager : SerializedMonoBehaviour
     }
 
     public void OnCloseBtn() {
-        SoundManager.Instance.PlaySound("button_1");
+        SoundManager.Instance.PlaySound(UISfxSound.BUTTON1);
         stageCanvas.SetActive(false);
         HUDController.gameObject.SetActive(true);
     }
 
     public void OnClickStage(ChapterData chapterData, bool isTutorial) {
-        SoundManager.Instance.PlaySound("button_1");
+        SoundManager.Instance.PlaySound(UISfxSound.BUTTON1);
         stageCanvas.SetActive(true);
         ClearDeckList();
         isTutorialSelected = isTutorial;

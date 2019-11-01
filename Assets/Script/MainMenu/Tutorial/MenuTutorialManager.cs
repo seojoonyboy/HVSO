@@ -135,34 +135,34 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
 
     public bool NeedPageDescription(int pageNum) {
         var etcInfo = AccountManager.Instance.userData.etcInfo;
-        if (etcInfo.Exists(x => x.key == "tutorialCleared")) return false;
-
-        switch (pageNum) {
-            case 0:
-                if (PlayerPrefs.GetInt("IsFirstCardMenu") == 1) {
-                    PlayerPrefs.SetInt("IsFirstCardMenu", 0);
-                    return true;
-                }
-                else {
-                    return false;
-                }
-            case 1:
-                if (PlayerPrefs.GetInt("IsFirstDeckListMenu") == 1) {
-                    PlayerPrefs.SetInt("IsFirstDeckListMenu", 0);
-                    return true;
-                }
-                else {
-                    return false;
-                }
-            case 2:
-                //if (PlayerPrefs.GetInt("IsFirstMainMenu") == 1) {
-                //    PlayerPrefs.SetInt("IsFirstMainMenu", 0);
-                //    return true;
-                //}
-                //else {
-                //    return false;
-                //}
-                break;
+        if (etcInfo.Exists(x => x.key == "tutorialCleared")) {
+            switch (pageNum) {
+                case 0:
+                    if (PlayerPrefs.GetInt("IsFirstCardMenu") == 1) {
+                        PlayerPrefs.SetInt("IsFirstCardMenu", 0);
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
+                case 1:
+                    if (PlayerPrefs.GetInt("IsFirstDeckListMenu") == 1) {
+                        PlayerPrefs.SetInt("IsFirstDeckListMenu", 0);
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
+                case 2:
+                    //if (PlayerPrefs.GetInt("IsFirstMainMenu") == 1) {
+                    //    PlayerPrefs.SetInt("IsFirstMainMenu", 0);
+                    //    return true;
+                    //}
+                    //else {
+                    //    return false;
+                    //}
+                    break;
+            }
         }
         return false;
     }

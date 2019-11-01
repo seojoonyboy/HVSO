@@ -1,0 +1,847 @@
+[
+    {
+        "chapter": 0,
+        "stage_number": 1,
+        "stage_Name": "토벌",
+        "match_type": "tutorial",
+        "description": "새로 만들어진 마을. 오크들이 경작지를 침입, 농작물과 가축을 약탈함. 오크들을 막아내고 적을 물리치기",
+        "specialRule": "- 적 영웅 체력 10\n- 튜토리얼",
+        "scripts": [
+            {
+                "Print_text": "data_stage_1001_3",
+                "methods": [
+                    {
+                        "name": "Stop_orc_summon",
+                        "args": [
+                            "units",
+                            "all"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Turn",
+                        "args": [
+                            "ORC"
+                        ]
+                    },
+                    {
+                        "name": "Wait_until",
+                        "args": [
+                            "1"
+                        ]
+                    }
+                ],
+                "isExecute": false
+            },
+            {
+                "Print_text": "data_stage_1001_4",
+                "methods": [
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "ac10005",
+                            "사령관! 오크가 공격해오고 있어!!",
+                            "true"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    }
+                ],
+                "isExecute": false
+            },
+            {
+                "Print_text": "data_stage_1001_5",
+                "methods": [
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "ac10005",
+                            "우리 병사들은 아직 준비가 안됐어… <br> 너무 위험한 상황인걸?",
+                            "true"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen",
+                            "off"
+                        ]
+                    },
+                    {
+                        "name": "Proceed_orc_summon",
+                        "args": []
+                    },
+                    {
+                        "name": "Disable_EndTurn",
+                        "args": []
+                    },
+                    {
+                        "name": "Wait_Turn",
+                        "args": [
+                            "HUMAN"
+                        ]
+                    }
+                ],
+                "isExecute": false
+            },
+            {
+                "Print_text": "data_stage_1001_8",
+                "methods": [
+                    {
+                        "name": "Wait_until",
+                        "args": [
+                            "1"
+                        ]
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "ac10005",
+                            "시작부터 강력한 적들이야! <br> 우리 병사들로 대응하지 않으면 위험할거야!",
+                            "true"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "Unblock_Screen",
+                        "args": []
+                    }
+                ],
+                "isExecute": false
+            },
+            {
+                "Print_text": "data_stage_1001_9",
+                "methods": [
+                    {
+                        "name": "ChallengeStart",
+                        "args": [
+                            "UNIT_SUMMONED"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Multiple_Summon_linelimit",
+                        "args": [
+                            "3",
+                            "3"
+                        ]
+                    },
+                    {
+                        "name": "ChallengeEnd",
+                        "args": [
+                            "UNIT_SUMMONED"
+                        ]
+                    },
+                    {
+                        "name": "Enable_EndTurn",
+                        "args": []
+                    },
+                    {
+                        "name": "Highlight",
+                        "args": [
+                            "button",
+                            "endTurn"
+                        ]
+                    },
+                    {
+                        "name": "Orc_post_turn",
+                        "args": [
+                            "stop"
+                        ]
+                    },
+                    {
+                        "name": "Stop_Invoke_NextTurn",
+                        "args": []
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "button",
+                            "endTurn"
+                        ]
+                    },
+                    {
+                        "name": "StopHighlight",
+                        "args": []
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "ac10005",
+                            "잘했어 사령관. 적의 공격을 막아낼 수 있을 것 같아.",
+                            "true"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "ac10005",
+                            "하지만 적의 공격력이 너무 강해… 우리 병력도 무사하진 않을거야.",
+                            "true"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "Proceed_Invoke_NextTurn",
+                        "args": []
+                    },
+                    {
+                        "name": "Wait_until",
+                        "args": [
+                            "2"
+                        ]
+                    }
+                ],
+                "isExecute": false
+            },
+            {
+                "Print_text": "data_stage_1001_14",
+                "methods": [
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "ac10005",
+                            "오크가 마법을 쓰려고 하는지 잘 지켜봐 사령관!",
+                            "true"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "ac10005",
+                            "오크는 우리보다 병사들은 먼저 배치하는 대신 마법을 뒤늦게 쓸 수 있어.",
+                            "true"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "Till_On",
+                        "args": []
+                    },
+                    {
+                        "name": "Highlight",
+                        "args": [
+                            "mana"
+                        ]
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "ac10005",
+                            "대신 마나를 비축해 둬야 하는데 지금은 적의 마나가 없는걸 보니 마법을 쓰진 못할 것 같아.",
+                            "true",
+                            "maskOff"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen",
+                            "off"
+                        ]
+                    },
+                    {
+                        "name": "Orc_post_turn",
+                        "args": [
+                            "proceed"
+                        ]
+                    },
+                    {
+                        "name": "Stop_Next_Turn",
+                        "args": []
+                    }
+                ],
+                "isExecute": false
+            },
+            {
+                "Print_text": "data_stage_1001_20",
+                "methods": [
+                    {
+                        "name": "Wait_Battle_End",
+                        "args": []
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "ac10005",
+                            "소진된 병력이 있지만 어떻게든 막아낸 것 같아. <br> 본대에서 지원이 올 때까지 막아낼 수 있을까?",
+                            "true"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen",
+                            "off"
+                        ]
+                    },
+                    {
+                        "name": "Disable_EndTurn",
+                        "args": []
+                    },
+                    {
+                        "name": "Proceed_Next_Turn",
+                        "args": []
+                    },
+                    {
+                        "name": "Wait_Turn",
+                        "args": [
+                            "HUMAN"
+                        ]
+                    }
+                ],
+                "isExecute": false
+            },
+            {
+                "Print_text": "data_stage_1001_24",
+                "methods": [
+                    {
+                        "name": "Wait_until",
+                        "args": [
+                            "1"
+                        ]
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "ac10005",
+                            "큰일이야! 적의 병력이 엄청나게 몰려오고 있어! 어떻게 하지??",
+                            "true"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "ac10005",
+                            "아! 지금 본대에서 전령이 왔어! 1라운드만 더 버텨줘!! 아군이 도와주러 오고있어!",
+                            "true"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "Unblock_Screen",
+                        "args": []
+                    }
+                ],
+                "isExecute": false
+            },
+            {
+                "Print_text": "data_stage_1001_26",
+                "methods": [
+                    {
+                        "name": "ChallengeStart",
+                        "args": [
+                            "UNIT_SUMMONED"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Multiple_Summon",
+                        "args": [
+                            "2"
+                        ]
+                    },
+                    {
+                        "name": "ChallengeEnd",
+                        "args": [
+                            "UNIT_SUMMONED"
+                        ]
+                    },
+                    {
+                        "name": "Enable_EndTurn",
+                        "args": []
+                    },
+                    {
+                        "name": "Stop_Invoke_NextTurn",
+                        "args": []
+                    },
+                    {
+                        "name": "Highlight",
+                        "args": [
+                            "button",
+                            "endTurn"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "button",
+                            "endTurn"
+                        ]
+                    },
+                    {
+                        "name": "StopHighlight",
+                        "args": []
+                    },
+                    {
+                        "name": "Stop_orc_magic",
+                        "args": []
+                    },
+                    {
+                        "name": "Orc_post_turn",
+                        "args": [
+                            "stop",
+                            "after"
+                        ]
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "ac10005",
+                            "좋아, 이정도면 버틸 수 있을 것 같아.",
+                            "true"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "Proceed_Invoke_NextTurn",
+                        "args": []
+                    },
+                    {
+                        "name": "Wait_until",
+                        "args": [
+                            "2"
+                        ]
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "h10002",
+                            "흐흐흐 그정도로 충분하다 생각하나",
+                            "false"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "Proceed_orc_magic",
+                        "args": []
+                    },
+                    {
+                        "name": "Wait_until",
+                        "args": [
+                            "6"
+                        ]
+                    }
+                ],
+                "isExecute": false
+            },
+            {
+                "Print_text": "data_stage_1001_27",
+                "methods": [
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "ac10005",
+                            "오크의 마법이야! 이건 예상하지 못했는데…",
+                            "true"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "Orc_post_turn",
+                        "args": [
+                            "proceed"
+                        ]
+                    }
+                ],
+                "isExecute": false
+            },
+            {
+                "Print_text": "data_stage_1001_30",
+                "methods": [
+                    {
+                        "name": "Hero_Wait_Damage",
+                        "args": [
+                            "2",
+                            "player"
+                        ]
+                    },
+                    {
+                        "name": "Battle_turn",
+                        "args": [
+                            "stop"
+                        ]
+                    },
+                    {
+                        "name": "Wait_DrawHero",
+                        "args": []
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "ac10005",
+                            "체력이 얼마 남지 않았어… 여기까지인 걸까?",
+                            "true"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "Battle_turn",
+                        "args": [
+                            "proceed"
+                        ]
+                    },
+                    {
+                        "name": "Wait_shield_active",
+                        "args": [
+                            "player"
+                        ]
+                    },
+                    {
+                        "name": "Till_On",
+                        "args": []
+                    },
+                    {
+                        "name": "Highlight",
+                        "args": [
+                            "shield-gage",
+                            "my"
+                        ]
+                    },
+                    {
+                        "name": "Stop_Next_Turn",
+                        "args": []
+                    }
+                ],
+                "isExecute": false
+            },
+            {
+                "Print_text": "실드가 발동될 때 제공되는 영웅스킬은 두개 중 하나를 선택해서 사용할 수 있습니다. ",
+                "methods": [
+                    {
+                        "name": "Block_Screen",
+                        "args": []
+                    },
+                    {
+                        "name": "Wait_until",
+                        "args": [
+                            "1.1"
+                        ]
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "ac10005",
+                            "이건… 진정한 영웅들만 발동시킬 수 있다는 실드…?  사령관 대단해!!",
+                            "true",
+                            "Top"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "StopHighlight",
+                        "args": []
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "ac10005",
+                            "적에게 공격을 당하면 실드 게이지가 충전되고 8칸이 모두 충전되면 강력한 능력을 사용할 수 있다고 들었어!",
+                            "true"
+                        ]
+                    },
+                    {
+                        "name": "Disable_to_hand_herocard",
+                        "args": []
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "Proceed_DrawHero",
+                        "args": []
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "ac10005",
+                            "적의 병사들 중에서 아직 공격을 하지 않은 적이 남아있어.",
+                            "true"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "ac10005",
+                            "한번 더 공격받으면 위험하니 아직 공격하지 않은 적에게 투석공격을 사용해서 처치해줘!",
+                            "true"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    }
+                ],
+                "isExecute": false
+            },
+            {
+                "Print_text": "전장으로 드래그 해서 즉시 사용할 수도 있고 핸드로 드래그해서 나중을 위해 아낄 수도 있습니다.",
+                "methods": [
+                    {
+                        "name": "Multiple_Highlight",
+                        "args": [
+                            "shieldArrow-top",
+                            "shieldCard-ac10021"
+                        ]
+                    },
+                    {
+                        "name": "Disable_drag",
+                        "args": [
+                            "shieldCard",
+                            "exclusive",
+                            "ac10021"
+                        ]
+                    },
+                    {
+                        "name": "OffHighlight",
+                        "args": []
+                    },
+                    {
+                        "name": "Force_drop_zone",
+                        "args": [
+                            "magic",
+                            "5"
+                        ]
+                    },
+                    {
+                        "name": "ChallengeStart",
+                        "args": [
+                            "MAGIC_USED"
+                        ]
+                    },
+                    {
+                        "name": "Wait_drop",
+                        "args": [
+                            "shieldCard",
+                            "ac10021"
+                        ]
+                    },
+                    {
+                        "name": "ChallengeEnd",
+                        "args": [
+                            "MAGIC_USED"
+                        ]
+                    },
+                    {
+                        "name": "Wait_until",
+                        "args": [
+                            "6"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Battle_End",
+                        "args": []
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "ac10005",
+                            "해냈어 사령관! 우리가 버텨냈다구!",
+                            "true"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "ac10005",
+                            "그리고 드디어 본대의 지원이 도착했어! 우린살았어~",
+                            "true"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "Reinforement_Unit",
+                        "args": []
+                    },
+                    {
+                        "name": "Wait_until",
+                        "args": [
+                            "1.5"
+                        ]
+                    }
+                ],
+                "isExecute": false
+            },
+            {
+                "Print_text": null,
+                "methods": [
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "h10002",
+                            "앞으로 한걸음 남았는데 방해꾼이 많군.",
+                            "false"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "h10002",
+                            "일단 오늘은 물러나지만 죽을뻔한 오늘을 기억해라. 다음에 또 만나지.",
+                            "false"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "Fadeout_Enemy",
+                        "args": []
+                    },
+                    {
+                        "name": "Wait_until",
+                        "args": [
+                            "3"
+                        ]
+                    }
+                ],
+                "isExecute": false
+            },
+            {
+                "Print_text": null,
+                "methods": [
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "ac10005",
+                            "정말… 적들이 도망친거야?",
+                            "true"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "ac10005",
+                            "우리가 이겼어!! 엄청난 승리야!!",
+                            "true"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "End_tutorial",
+                        "args": []
+                    }
+                ],
+                "isExecute": false
+            }
+        ],
+        "scenarioReward": []
+    },
+
+    {
+        "chapter": 0,
+        "stage_number": 2,
+        "stage_Name": "토벌",
+        "match_type": "tutorial",
+        "description": "오크의 습격에서 새로 만들어진 마을로 이동중인 상단 지키기",
+        "specialRule": "- 적 영웅 체력 10\n- 튜토리얼",
+        "scripts": []
+
+    }
+]

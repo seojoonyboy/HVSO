@@ -311,7 +311,7 @@ public partial class CardHandler : MonoBehaviour {
         CardHandManager handManager = FindObjectOfType<CardHandManager>();
         PlayMangement.instance.socketHandler.HandchangeCallback = handManager.RedrawCallback;
         PlayMangement.instance.socketHandler.ChangeCard(itemID);
-        SoundManager.Instance.PlayIngameSfx("MulliganButton");
+        SoundManager.Instance.PlayIngameSfx(IngameSfxSound.MULLIGANBUTTON);
     }
 
     public void DisableCard() {

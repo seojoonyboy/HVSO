@@ -35,7 +35,7 @@ public class MenuSceneController : MonoBehaviour {
     bool isTutorialDataLoaded = false;
 
     private void Awake() {
-        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_NICKNAME_UPDATED, NickNameChanged);
+        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, OnUserDataUpdate);
 
         menuSceneController = this;
         #region 테스트코드
@@ -58,15 +58,8 @@ public class MenuSceneController : MonoBehaviour {
         ClickMenuButton(2);
     }
 
-    private void NickNameChanged(Enum Event_Type, Component Sender, object Param) {
-        BestHTTP.HTTPResponse res = (BestHTTP.HTTPResponse)Param;
-
-        if (res.StatusCode == 200 || res.StatusCode == 304) {
-            Modal.instantiate("닉네임이 변경되었습니다.", Modal.Type.CHECK);
-        }
-        else {
-            Modal.instantiate("에러 발생 \n" + res.DataAsText, Modal.Type.CHECK);
-        }
+    private void OnUserDataUpdate(Enum Event_Type, Component Sender, object Param) {
+        nicknameText.text = AccountManager.Instance.userData.nickName;
     }
 
     private void CheckTutorial() {
@@ -167,12 +160,9 @@ public class MenuSceneController : MonoBehaviour {
         }
     }
 
-    private void OnNicknameChanged(Enum Event_Type, Component Sender, object Param) {
-        nicknameText.text = (string)Param;
-    }
     private void OnDestroy() {
         SoundManager.Instance.bgmController.StopSoundTrack();
-        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_NICKNAME_UPDATED, NickNameChanged);
+        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, OnUserDataUpdate);
     }
 
     private void Start() {

@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,6 +11,6 @@ public class SoundController : MonoBehaviour {
 
     public void PlaySound(string name) {
         if(soundManager == null) return;
-        soundManager.PlaySound(name);
+        //soundManager.PlaySound(name);
     }
 }

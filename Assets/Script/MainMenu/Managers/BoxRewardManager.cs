@@ -71,14 +71,14 @@ public class BoxRewardManager : MonoBehaviour
         boxSpine.Update(0);
         boxSpine.AnimationState.SetAnimation(0, "01.START", false);
         boxSpine.AnimationState.AddAnimation(1, "02.IDLE", true, 0.5f);
-        SoundManager.Instance.PlaySound("boxopen");
+        SoundManager.Instance.PlaySound(UISfxSound.BOXOPEN);
     }
 
     public void GetResult() {
         transform.Find("OpenBox").gameObject.SetActive(true);
         transform.Find("ShowBox/Text").gameObject.SetActive(false);
         boxSpine.AnimationState.SetAnimation(2, "03.TOUCH", false);
-        SoundManager.Instance.PlaySound("boxopen_2");
+        SoundManager.Instance.PlaySound(UISfxSound.BOXOPEN_2);
         StartCoroutine(ShowRewards());
     }
 
@@ -88,18 +88,18 @@ public class BoxRewardManager : MonoBehaviour
         Transform effects = transform.Find("EffectSpines");
         yield return new WaitForSeconds(1.2f);
         effects.GetChild(0).gameObject.SetActive(true);
-        SoundManager.Instance.PlaySound("box_normal");
+        SoundManager.Instance.PlaySound(UISfxSound.BOX_NORMAL);
         yield return new WaitForSeconds(0.05f);
         effects.GetChild(1).gameObject.SetActive(true);
-        SoundManager.Instance.PlaySound("box_rare");
+        SoundManager.Instance.PlaySound(UISfxSound.BOX_RARE);
         yield return new WaitForSeconds(0.05f);
         iTween.ScaleTo(boxParent.GetChild(0).gameObject, iTween.Hash("x", 1.4, "y", 1.4, "islocal", true, "time", 0.2f));
         effects.GetChild(2).gameObject.SetActive(true);
-        SoundManager.Instance.PlaySound("box_superrare");
+        SoundManager.Instance.PlaySound(UISfxSound.BOX_SUPERRARE);
         yield return new WaitForSeconds(0.05f);
         iTween.ScaleTo(boxParent.GetChild(1).gameObject, iTween.Hash("x", 1.4, "y", 1.4, "islocal", true, "time", 0.2f));
         effects.GetChild(3).gameObject.SetActive(true);
-        SoundManager.Instance.PlaySound("box_epic");
+        SoundManager.Instance.PlaySound(UISfxSound.BOX_EPIC);
         yield return new WaitForSeconds(0.05f);
         iTween.ScaleTo(boxParent.GetChild(2).gameObject, iTween.Hash("x", 1, "y", 1, "islocal", true, "time", 0.2f));
         yield return new WaitForSeconds(0.05f);
