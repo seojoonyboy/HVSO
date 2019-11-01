@@ -56,7 +56,7 @@ public partial class MenuCardInfo : MonoBehaviour {
     }
 
     public virtual void SetCardInfo(CollectionCard data, bool isHuman, Transform dicCard, bool makeCard = false) {
-        SoundManager.Instance.PlaySound("button_4");
+        SoundManager.Instance.PlaySound(UISfxSound.BUTTON4);
         if (dicCard != null)
             this.dicCard = dicCard;
         cardId = data.id;
@@ -310,7 +310,7 @@ public partial class MenuCardInfo : MonoBehaviour {
 
     public void CloseInfo() {
         if (cardCreate) return;
-        SoundManager.Instance.PlaySound("button_1");
+        SoundManager.Instance.PlaySound(UISfxSound.BUTTON1);
         transform.parent.gameObject.SetActive(false);
         transform.gameObject.SetActive(false);
         transform.parent.Find("DeckEditExitTrigger").gameObject.SetActive(false);
@@ -320,7 +320,7 @@ public partial class MenuCardInfo : MonoBehaviour {
     }
 
     public void CloseHeroesCardInfo() {
-        SoundManager.Instance.PlaySound("button_1");
+        SoundManager.Instance.PlaySound(UISfxSound.BUTTON1);
         transform.gameObject.SetActive(false);
         transform.parent.Find("ExitTrigger2").gameObject.SetActive(false);
     }
@@ -328,7 +328,7 @@ public partial class MenuCardInfo : MonoBehaviour {
 
     public void MakeCard() {
         if (cardCreate) return;
-        SoundManager.Instance.PlaySound("button_1");
+        SoundManager.Instance.PlaySound(UISfxSound.BUTTON1);
         cardCreate = true;
         transform.Find("CreateSpine").gameObject.SetActive(true);
         transform.Find("CreateSpine").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, "MAKING_" + cardData.rarelity, false);
@@ -338,7 +338,7 @@ public partial class MenuCardInfo : MonoBehaviour {
 
     public void BreakCard() {
         if (cardCreate) return;
-        SoundManager.Instance.PlaySound("button_1");
+        SoundManager.Instance.PlaySound(UISfxSound.BUTTON1);
         cardCreate = true;
         transform.Find("CreateSpine").gameObject.SetActive(true);
         transform.Find("CreateSpine").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, "DECOMPOSITION_" + cardData.rarelity, false);
