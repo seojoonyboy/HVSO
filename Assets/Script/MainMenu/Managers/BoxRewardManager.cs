@@ -238,18 +238,25 @@ public class BoxRewardManager : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         target.transform.Find("BackImage").gameObject.SetActive(false);
         yield return new WaitForSeconds(0.05f);
-        if (target.name == "Random")
-            target = targetObj.transform.Find("Card").gameObject;
-        if (target.name != "Resource") {
+        if (target.name == "Random") {
+            if(targetObj.transform.Find("Card").gameObject.activeSelf)
+                target = targetObj.transform.Find("Card").gameObject;
+            else 
+                target = targetObj.transform.Find("Resource").gameObject;
+        }   
+        if (target.name.Contains("Card")) {
             if (!target.activeSelf) yield return null;
             else {
                 string cardId = target.transform.Find("DictionaryCardVertical").GetComponent<MenuCardHandler>().cardID;
                 string aniName = "";
+
+                var rarelity = accountManager.allCardsDic[cardId].rarelity;
+
                 if (accountManager.allCardsDic[cardId].type == "unit")
                     aniName += "u_";
                 else
                     aniName += "m_";
-                if (accountManager.allCardsDic[cardId].rarelity != "common")
+                if (rarelity != "common")
                     aniName += accountManager.allCardsDic[cardId].rarelity;
                 else
                     aniName = "NOANI";
@@ -258,6 +265,43 @@ public class BoxRewardManager : MonoBehaviour
                 spine.Initialize(true);
                 spine.Update(0);
                 spine.AnimationState.SetAnimation(0, aniName, true);
+
+                SoundManager soundManager = SoundManager.Instance;
+                switch (rarelity) {
+                    case "common":
+                    case "uncommon":
+                        soundManager.PlaySound(UISfxSound.BOX_NORMAL);
+                        break;
+                    case "rare":
+                        soundManager.PlaySound(UISfxSound.BOX_RARE);
+                        break;
+                    case "superrare":
+                        soundManager.PlaySound(UISfxSound.BOX_SUPERRARE);
+                        break;
+                    case "legend":
+                        soundManager.PlaySound(UISfxSound.BOX_EPIC);
+                        break;
+                }
+            }
+        }
+        //재화 획득인 경우
+        else {
+            string type = string.Empty;
+            for(int i=0; i<3; i++) {
+                if (target.transform.GetChild(i).gameObject.activeSelf) {
+                    type = target.transform.GetChild(i).gameObject.name;
+                }
+            }
+
+            SoundManager soundManager = SoundManager.Instance;
+            switch (type) {
+                case "gold":
+                case "supplyStore":
+                    soundManager.PlaySound(UISfxSound.BOX_SUPERRARE);
+                    break;
+                case "crystal":
+                    soundManager.PlaySound(UISfxSound.BOX_NORMAL);
+                    break;
             }
         }
     }

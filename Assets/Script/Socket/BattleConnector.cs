@@ -291,7 +291,7 @@ public partial class BattleConnector : MonoBehaviour {
     public Queue<SocketFormat.Player> shieldActivateQueue = new Queue<SocketFormat.Player>();
 
     public IEnumerator WaitGetCard() {
-        if(!getNewCard) IngameNotice.instance.SetNotice("서버로부터 카드를 받고 있습니다");
+        if(!getNewCard) IngameNotice.instance.SetNotice("Loading...");
         while(!getNewCard) {
             yield return new WaitForFixedUpdate();
         }
@@ -301,7 +301,7 @@ public partial class BattleConnector : MonoBehaviour {
 
     public IEnumerator WaitMulliganFinish() {
         WaitForFixedUpdate fixedUpdate = new WaitForFixedUpdate();
-        if(gameState.state.CompareTo("mulligan") == 0) IngameNotice.instance.SetNotice("상대방이 카드 교체중입니다.");
+        if(gameState.state.CompareTo("mulligan") == 0) IngameNotice.instance.SetNotice("Waiting...");
         while(gameState.state.CompareTo("mulligan") == 0)
             yield return fixedUpdate;
         IngameNotice.instance.CloseNotice();

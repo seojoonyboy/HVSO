@@ -73,15 +73,20 @@ public class GameResultManager : MonoBehaviour {
                     frontSpine = transform.Find("FirstWindow/FrontSpine/WinningFront").GetComponent<SkeletonGraphic>();
                     transform.Find("SecondWindow/BackSpine/WinningBack").gameObject.SetActive(true);
                     transform.Find("SecondWindow/FrontSpine/WinningFront").gameObject.SetActive(true);
+                    transform.Find("SecondWindow/BackSpine/LosingBack").gameObject.SetActive(false);
+                    transform.Find("SecondWindow/FrontSpine/LosingFront").gameObject.SetActive(false);
                     SoundManager.Instance.bgmController.PlaySoundTrack(BgmController.BgmEnum.VICTORY);
                 }
                 break;
             case "lose": {
+                    BgCanvas.Find("Particle/First").gameObject.SetActive(false);
                     heroSpine.GetComponent<SkeletonGraphic>().Initialize(true);
                     heroSpine.GetComponent<SkeletonGraphic>().Update(0);
                     heroSpine.GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, "DEAD", false);
                     backSpine = transform.Find("FirstWindow/BackSpine/LosingBack").GetComponent<SkeletonGraphic>();
                     frontSpine = transform.Find("FirstWindow/FrontSpine/LosingFront").GetComponent<SkeletonGraphic>();
+                    transform.Find("SecondWindow/BackSpine/WinningBack").gameObject.SetActive(false);
+                    transform.Find("SecondWindow/FrontSpine/WinningFront").gameObject.SetActive(false);
                     transform.Find("SecondWindow/BackSpine/LosingBack").gameObject.SetActive(true);
                     transform.Find("SecondWindow/FrontSpine/LosingFront").gameObject.SetActive(true);
                     SoundManager.Instance.bgmController.PlaySoundTrack(BgmController.BgmEnum.DEFEAT);
