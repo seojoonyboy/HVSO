@@ -253,7 +253,7 @@ public class StopHighlight : ScenarioExecute {
 
 }
 
-
+//단순히 유닛 소환 기달림 args[0] 무시가능,  args[1] unitID
 public class Wait_summon : ScenarioExecute {
     public Wait_summon() : base() { }
 
@@ -336,7 +336,7 @@ public class Enable_Deck_card : ScenarioExecute {
 
 
 
-
+//args[0] 얼마나? 
 public class Wait_Multiple_Summon : ScenarioExecute {
     public Wait_Multiple_Summon() : base() { }
 
@@ -388,6 +388,7 @@ public class Wait_Multiple_Summon : ScenarioExecute {
     }
 }
 
+// args[0] x,y x는 어디 어디 배치할껀가?
 public class Wait_Multiple_Summon_ScopeLine : ScenarioExecute {
     public Wait_Multiple_Summon_ScopeLine() : base() { }
 
@@ -396,7 +397,7 @@ public class Wait_Multiple_Summon_ScopeLine : ScenarioExecute {
     private string[] stringNum;
     private int[] line;
 
-    // args[0] x,x
+    
     public override void Execute() {
         stringNum = args[0].Split(',');
         line = new int[stringNum.Length];
@@ -446,7 +447,7 @@ public class Wait_Multiple_Summon_ScopeLine : ScenarioExecute {
 }
 
 
-
+//args[0] 얼마나 소환할지? args[1] 1~x 라인중 x까지 라인 활성화
 public class Wait_Multiple_Summon_linelimit : ScenarioExecute {
     public Wait_Multiple_Summon_linelimit() : base() { }
 
@@ -492,7 +493,7 @@ public class Wait_Multiple_Summon_linelimit : ScenarioExecute {
 
 
 
-
+// 마법사용 대기
 public class Wait_drop : ScenarioExecute {
     public Wait_drop() : base() { }
 
@@ -644,6 +645,7 @@ public class End_tutorial : ScenarioExecute {
     }
 }
 
+//배틀턴 args[0] stop or proceed, args[1] 몇라인?
 public class Battle_turn : ScenarioExecute {
     public Battle_turn() : base() { }
 
@@ -685,6 +687,7 @@ public class Select_Skill_Force : ScenarioExecute {
     }
 }
 
+//턴버튼 무력화
 public class Enable_EndTurn : ScenarioExecute {
     public Enable_EndTurn() : base() { }
 
@@ -902,7 +905,7 @@ public class Reinforement_Unit : ScenarioExecute {
 }
 
 
-
+//배틀 끝나고 다음턴
 public class Stop_Next_Turn : ScenarioExecute {
     public Stop_Next_Turn() : base() { }
 
@@ -980,7 +983,7 @@ public class Orc_post_turn : ScenarioExecute {
         handler.isDone = true;
     }
 }
-
+//사각형으로 된 오브젝트들 setactive = false
 public class OffHighlight : ScenarioExecute {
     public OffHighlight() : base() { }
 
@@ -997,7 +1000,7 @@ public class Enable_drag : ScenarioExecute {
         handler.isDone = true;
     }
 }
-
+//전투 종료를 기달림
 public class Wait_Battle_End : ScenarioExecute {
     public Wait_Battle_End() : base() { }
 
@@ -1010,7 +1013,7 @@ public class Wait_Battle_End : ScenarioExecute {
         handler.isDone = true;
     }
 }
-
+//미사용 함수 폐기예정
 public class Block_Turn_Btn : ScenarioExecute {
     public Block_Turn_Btn() : base() { }
 
@@ -1020,7 +1023,7 @@ public class Block_Turn_Btn : ScenarioExecute {
     }
 
 }
-
+//미사용 함수 폐기예정
 public class Unblock_Turn_Btn : ScenarioExecute {
     public Unblock_Turn_Btn() : base() { }
 
@@ -1029,7 +1032,7 @@ public class Unblock_Turn_Btn : ScenarioExecute {
         handler.isDone = true;
     }
 }
-
+//몇번째 라인 전투 종료?
 public class Wait_End_Line_Battle : ScenarioExecute {
     public Wait_End_Line_Battle() : base() { }
 
@@ -1150,7 +1153,7 @@ public class ChallengeEnd : ScenarioExecute {
         handler.isDone = true;
     }
 }
-
+// 턴과 턴사이, 배틀 종료 아님!
 public class Stop_Invoke_NextTurn : ScenarioExecute {
     public Stop_Invoke_NextTurn() : base() {  }
 
@@ -1171,7 +1174,7 @@ public class Proceed_Invoke_NextTurn : ScenarioExecute {
         handler.isDone = true;
     }
 }
-
+//영웅카드 뽑을상황에 잠시 뽑지말도록 스탑
 public class Wait_DrawHero : ScenarioExecute {
     public Wait_DrawHero() : base() { }
 
@@ -1357,4 +1360,8 @@ public class Wait_Field_Change : ScenarioExecute {
     }
 }
 
+//Proceed_Invoke_NextTurn, Stop_Invoke_NextTurn (오크->휴먼->마법->배틀 턴중에 '버튼'을 눌렀을 경우)
+//Stop_Next_Turn, Proceed_Next_Turn (전투 종료후, 다음턴)
+//Wait_Turn 턴을 중단 시키는게 아니라, 어떤 턴이 올때까지 대기
+//
 
