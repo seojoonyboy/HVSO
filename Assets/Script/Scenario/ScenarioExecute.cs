@@ -1260,5 +1260,101 @@ public class First_Card : ScenarioExecute {
 
 }
 
+/// <summary>
+/// 적 유닛이 소환해야할 경우의 class
+/// </summary>
+public class Wait_Enemy_Summon : ScenarioExecute {
+    public Wait_Enemy_Summon() : base() { }
+    
+    private int count = 0;
+    private int goalCount = -1;
+
+    public override void Execute() {
+        goalCount = int.Parse(args[0]);
+        PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.ENEMY_SUMMON_UNIT, CheckSummon);
+    }
+
+    private void CheckSummon(Enum event_type, Component Sender, object Param) {
+        count++;
+
+        if(count >= goalCount) {
+            PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.ENEMY_SUMMON_UNIT, CheckSummon);
+            handler.isDone = true;
+        }
+
+    }
+}
+
+
+/// <summary>
+/// 특정 유닛의 정보창을 띄워야 할 스크립트 args[0] 유닛 아이디
+/// </summary>
+public class Wait_Info_Window : ScenarioExecute {
+    public Wait_Info_Window() : base() { }
+
+    public override void Execute() {
+        PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.OPEN_INFO_WINDOW, CheckOpen);
+    }
+
+    private void CheckOpen(Enum event_type, Component Sender, object Param) {
+        PlaceMonster placeMonster = (PlaceMonster)Param;
+        string unitID = placeMonster.unit.id;
+
+        if(unitID == args[0]) {
+            PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.OPEN_INFO_WINDOW, CheckOpen);
+            handler.isDone = true;
+        }
+    }
+}
+
+public class Wait_Close_Info : ScenarioExecute {
+    public Wait_Close_Info() : base() { }
+
+    public override void Execute() {
+        PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.CLOSE_INFO_WINDOW, CheckClose);
+    }
+    private void CheckClose(Enum event_type, Component Sender, object Param) {
+        PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.CLOSE_INFO_WINDOW, CheckClose);
+        handler.isDone = true;
+    }
+
+}
+
+
+public class Focus_Skill_Icon : ScenarioExecute {
+    public Focus_Skill_Icon() : base() { }
+
+    public override void Execute() {
+        scenarioMask.FocusSkillIcon();
+        PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.CLICK_SKILL_ICON, CheckClick);
+    }
+
+    private void CheckClick(Enum event_type, Component Sender, object Param) {
+        PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.CLICK_SKILL_ICON, CheckClick);
+        handler.isDone = true;
+    }
+
+}
+
+public class Blur_Skill_Icon : ScenarioExecute {
+    public Blur_Skill_Icon() : base() { }
+
+    public override void Execute() {
+        scenarioMask.BlurSkillIcon();
+        handler.isDone = true;
+    }
+}
+
+public class Wait_Field_Change : ScenarioExecute {
+    public Wait_Field_Change() : base() { }
+
+    public override void Execute() {
+        PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.FIELD_CHANGED, CheckClose);
+
+    }
+    private void CheckClose(Enum event_type, Component Sender, object Param) {
+        handler.isDone = true;
+    }
+}
 
 

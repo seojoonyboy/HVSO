@@ -469,6 +469,7 @@ public partial class PlayMangement : MonoBehaviour {
             UnitsObserver.UnitChangePosition(existUnit.gameObject, new FieldUnitsObserver.Pos(i, 1), player.isHuman);
         }
         GameObject monster = SummonUnit(false, id, i, j, history.cardItem.itemId);
+        eventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.ENEMY_SUMMON_UNIT, this, id);
         return monster;
     }
 

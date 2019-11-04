@@ -675,5 +675,40 @@ public class ScenarioMask : SerializedMonoBehaviour
         talkingText.SetActive(false);
     }
 
+    private GameObject GetInfoWindow() {
+        Transform openWindow = targetObject["unitInfo"].gameObject.transform;
+        foreach(Transform child in openWindow) {
+            if (child.gameObject.activeSelf == true)
+                return child.gameObject;
+        }
+        return null;       
+    }
+
+    public void FocusSkillIcon() {
+        GameObject openWindow = GetInfoWindow();
+        Transform skillIcon = openWindow.transform.Find("Skill&BuffRow1/Skill");
+        GetMaskHighlight(skillIcon.gameObject);
+        ActiveMask();
+
+        GameObject dragEffect = Instantiate(EffectSystem.Instance.cardDragEffect, skillIcon);
+        dragEffect.transform.position = skillIcon.position;
+        dragEffect.name = "touch";
+        dragEffect.transform.SetAsLastSibling();
+        SkeletonGraphic skeletonGraphic = dragEffect.GetComponent<SkeletonGraphic>();
+        skeletonGraphic.Initialize(true);
+        skeletonGraphic.Update(0);
+        skeletonGraphic.Skeleton.SetSlotsToSetupPose();
+        skeletonGraphic.AnimationState.SetAnimation(0, "TOUCH", true);
+    }
+
+    public void BlurSkillIcon() {
+        GameObject openWindow = GetInfoWindow();
+        Transform skillIcon = openWindow.transform.Find("Skill&BuffRow1/Skill");
+
+        GameObject dragEffect = skillIcon.Find("touch").gameObject;
+        Destroy(dragEffect);
+    }
+
+
 
 }

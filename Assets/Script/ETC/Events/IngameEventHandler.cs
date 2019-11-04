@@ -92,6 +92,11 @@ public class IngameEventHandler : MonoBehaviour {
         UNIT_DROP_FAIL,
         HERO_SHIELD_ACTIVE,
 
-        HERO_UNDER_ATTACK
+        HERO_UNDER_ATTACK,
+        ENEMY_SUMMON_UNIT,
+
+        OPEN_INFO_WINDOW,
+        CLICK_SKILL_ICON,
+        CLOSE_INFO_WINDOW
     }
 }

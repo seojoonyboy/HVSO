@@ -25,7 +25,7 @@ public class ScenarioGameManagment : PlayMangement {
     public bool stopEnemySummon = false;
     public bool stopEnemySpell = false;
     public bool stopNextTurn = false;
-    
+    public bool infoWindow = true;
 
     public int forcedSummonAt = -1;
     public int forcedLine = -1;

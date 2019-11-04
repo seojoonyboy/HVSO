@@ -411,7 +411,6 @@
         ],
         "scenarioReward": []
     },
-
     {
         "chapter": 0,
         "stage_number": 2,
@@ -419,7 +418,432 @@
         "match_type": "tutorial",
         "description": "오크의 습격에서 새로 만들어진 마을로 이동중인 상단 지키기",
         "specialRule": "- 적 영웅 체력 10\n- 튜토리얼",
-        "scripts": [],
+        "scripts": [
+            {
+                "Print_text": "",
+                "methods": [
+                    {
+                        "name": "First_Card",
+                        "args": [
+                            "stop"
+                        ]
+                    },
+                    {
+                        "name": "Stop_orc_summon",
+                        "args": [
+                            "units",
+                            "all"
+                        ]
+                    },
+                    {
+                        "name": "Wait_until",
+                        "args": [
+                            "1"
+                        ]
+                    }
+                ],
+                "isExecute": false
+            },
+            {
+                "Print_text": "data_stage_1031_2_1-7",
+                "methods": [
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "ac10048",
+                            "덕분에 살았습니다. 혹시 성으로 돌아가신다면 저희 상단도 함께 이동해도 될까요?",
+                            "true"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "h10001",
+                            "그렇게 하시죠. 조심하며 이동합시다.",
+                            "true"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "ac10002",
+                            "습격이다! 오크가 마차를 노린다!!",
+                            "true"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "h10001",
+                            "저말 하자마자 나타나다니… 이건 너무 전형적인데.",
+                            "true"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "Proceed_orc_summon",
+                        "args": []
+                    },
+                    {
+                        "name": "First_Card",
+                        "args": [
+                            "proceed"
+                        ]
+                    }
+                ],
+                "isExecute": false
+            },
+            {
+                "Print_text": "data_stage_1031_2_8",
+                "methods": [
+                    {
+                        "name": "Wait_Turn",
+                        "args": [
+                            "HUMAN"
+                        ]
+                    },
+                    {
+                        "name": "Disable_EndTurn",
+                        "args": []
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "h10001",
+                            "저녀석은…? 왜 공격력이 높아진건지 확인해봐야 하겠군",
+                            "true"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Info_Window",
+                        "args": [
+                            "ac10011"
+                        ]
+                    },
+                    {
+                        "name": "Focus_Skill_Icon",
+                        "args": []
+                    },
+                    {
+                        "name": "Blur_Skill_Icon",
+                        "args": []
+                    },
+                    {
+                        "name": "Unblock_Screen",
+                        "args": []
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "h10001",
+                            "이런… 병력으로 막아야 하는데 마나가 부족해서 배치할 수가 없군. 피해를 입게 되겠어.",
+                            "true"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Close_Info",
+                        "args": []
+                    },
+                    {
+                        "name": "Highlight",
+                        "args": [
+                            "button",
+                            "endTurn"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "button",
+                            "endTurn"
+                        ]
+                    },
+                    {
+                        "name": "Wait_DrawHero",
+                        "args": []
+                    },
+                    {
+                        "name": "Disable_to_hand_herocard",
+                        "args": []
+                    },
+                    {
+                        "name": "Wait_Turn",
+                        "args": [
+                            "BATTLE"
+                        ]
+                    }
+                ],
+                "isExecute": false
+            },
+            {
+                "Print_text": "data_stage_1031_2_9-11",
+                "methods": [
+                    {
+                        "name": "Wait_shield_active",
+                        "args": [
+                            "player"
+                        ]
+                    },
+                    {
+                        "name": "Wait_until",
+                        "args": [
+                            "1.1"
+                        ]
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "h10001",
+                            "실드가 발동되어 영웅 스킬을 사용할 수 있게 되었군.",
+                            "true"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "Proceed_DrawHero",
+                        "args": []
+                    },
+                    {
+                        "name": "Disable_drag",
+                        "args": [
+                            "shieldCard",
+                            "exclusive",
+                            "ac10021"
+                        ]
+                    },
+                    {
+                        "name": "Force_drop_zone",
+                        "args": [
+                            "magic",
+                            "1"
+                        ]
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "h10001",
+                            "투석기로 저 암살자 녀석을 처치해야겠어.",
+                            "true"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    }
+                ],
+                "isExecute": false
+            },
+            {
+                "Print_text": "data_stage_1031_2_12-22",
+                "methods": [
+                    {
+                        "name": "Wait_drop",
+                        "args": [
+                            "shieldCard",
+                            "ac10021"
+                        ]
+                    },
+                    {
+                        "name": "Wait_until",
+                        "args": [
+                            "6"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Turn",
+                        "args": [
+                            "ORC"
+                        ]
+                    },
+                    {
+                        "name": "Stop_Invoke_NextTurn",
+                        "args": []
+                    },
+                    {
+                        "name": "Wait_Enemy_Summon",
+                        "args": [
+                            "2"
+                        ]
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "h10001",
+                            "저 암살자는 막아서는 적이 없을 때 강해지는군. 가만히 두면 안되겠다.",
+                            "true"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "Proceed_Invoke_NextTurn",
+                        "args": []
+                    },
+                    {
+                        "name": "Wait_Turn",
+                        "args": [
+                            "HUMAN"
+                        ]
+                    },
+                    {
+                        "name": "Disable_EndTurn",
+                        "args": []
+                    },
+                    {
+                        "name": "Disable_Deck_card",
+                        "args": [
+                            "ac10008"
+                        ]
+                    },
+                    {
+                        "name": "Force_drop_zone",
+                        "args": [
+                            "magic",
+                            "4"
+                        ]
+                    },
+                    {
+                        "name": "Wait_summon",
+                        "args": [
+                            "ac10008"
+                        ]
+                    },
+                    {
+                        "name": "StopHighlight",
+                        "args": []
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "h10001",
+                            "도전자는 맞은편에 적이 없을 때, 다른 적을 자신의 앞으로 끌고올 수 있다. 귀찮은 암살자 녀석을 처리하자.",
+                            "true"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Field_Change",
+                        "args": []
+                    }
+                ],
+                "isExecute": false
+            },
+            {
+                "name": "data_stage_1031_2_23",
+                "args": [
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "h10001",
+                            "이제 암살자는 힘을 쓰지 못할 것이다. 상단의 짐마차를 지키는 데 신경써야겠군.",
+                            "true"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "Force_drop_zone",
+                        "args": [
+                            "3"
+                        ]
+                    },
+                    {
+                        "name": "Wait_summon",
+                        "args": [
+                            "ac10001"
+                        ]
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "h10001",
+                            "연계 능력을 지닌 유닛들은 다른 유닛 앞 혹은 뒤에 배치가 가능하니 마차를 지키기에 유리하다. ",
+                            "true"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "h10001",
+                            "자 이제 짐마차가 파괴되지 않도록 주의하면서 적들을 물리치고 성으로 돌아가자!",
+                            "true"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "End_tutorial",
+                        "args": []
+                    }
+                ],
+                "isExecute": false
+            }
+        ],
         "scenarioReward": []
     }
 ]

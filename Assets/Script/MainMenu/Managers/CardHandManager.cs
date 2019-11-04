@@ -638,7 +638,8 @@ public class CardHandManager : MonoBehaviour {
         if(ScenarioGameManagment.scenarioInstance == null) {
             int index = 0;
             PlayMangement.dragable = false;
-            yield return new WaitUntil(() => ScenarioGameManagment.scenarioInstance.stopFirstCard == false);
+            if (ScenarioGameManagment.scenarioInstance != null)
+                yield return new WaitUntil(() => ScenarioGameManagment.scenarioInstance.stopFirstCard == false);
             while (index < 4) {
                 yield return new WaitForSeconds(0.2f);
                 AddCard(firstDrawList[index]);
