@@ -128,7 +128,25 @@ public class DeckEditController : MonoBehaviour
         foreach (dataModules.CollectionCard card in AccountManager.Instance.allCards) {
             if (isHuman == (card.camp == "human")) {
                 if (card.isHeroCard) continue;
-                cards.Add(new EditCard { cardObject = cardStore.GetChild(count).gameObject, cardId = card.id, cardClass = card.cardClasses[0], cardOrder = card.cost });
+                int rarelityValue = 0;
+                switch (card.rarelity) {
+                    case "common":
+                        rarelityValue = 0;
+                        break;
+                    case "uncommon":
+                        rarelityValue = 1;
+                        break;
+                    case "rare":
+                        rarelityValue = 2;
+                        break;
+                    case "superrare":
+                        rarelityValue = 3;
+                        break;
+                    case "legend":
+                        rarelityValue = 4;
+                        break;
+                }
+                cards.Add(new EditCard { cardObject = cardStore.GetChild(count).gameObject, cardId = card.id, cardClass = card.cardClasses[0], costOrder = card.cost, rareOrder = rarelityValue });
                 count++;
             }
         }  
@@ -137,7 +155,7 @@ public class DeckEditController : MonoBehaviour
     }
 
     IEnumerable<EditCard> SortCardListByCost(List<EditCard> cards) {
-        return cards.OrderBy(n => n.cardOrder);
+        return cards.OrderBy(n => n.costOrder).ThenBy(m => m.rareOrder);
     }
 
     public void ConfirmButton() {
@@ -895,5 +913,6 @@ public class EditCard {
     public GameObject cardObject;
     public string cardId;
     public string cardClass;
-    public int cardOrder;
+    public int costOrder;
+    public int rareOrder;
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UI.Extensions;
@@ -29,6 +30,7 @@ public class CardDictionaryManager : MonoBehaviour {
     public static CardDictionaryManager cardDictionaryManager;
     Dictionary<string, int> classHumanCard;
     Dictionary<string, int> classOrcCard;
+    List<DictionaryCard> dicCards;
 
     private void Start() {
         cardDictionaryManager = this;
@@ -82,13 +84,51 @@ public class CardDictionaryManager : MonoBehaviour {
     public void SetToHumanCards() {        
         transform.Find("CardDictionary").gameObject.SetActive(true);
         transform.Find("UIbar/SortBtn").gameObject.SetActive(true);
+        GetCard();
         SetCardsByClass();
     }
 
     public void SetToOrcCards() {
         transform.Find("CardDictionary").gameObject.SetActive(true);
         transform.Find("UIbar/SortBtn").gameObject.SetActive(true);
+        GetCard();
         SetCardsByClass();
+    }
+
+    public void GetCard() {
+        if (dicCards != null) dicCards.Clear();
+        dicCards = new List<DictionaryCard>();
+        int count = 0;
+        foreach (dataModules.CollectionCard card in AccountManager.Instance.allCards) {
+            if (card.isHeroCard) continue;
+            if ((card.camp == "human") == isHumanDictionary) {
+                int rarelityValue = 0;
+                switch (card.rarelity) {
+                    case "common":
+                        rarelityValue = 0;
+                        break;
+                    case "uncommon":
+                        rarelityValue = 1;
+                        break;
+                    case "rare":
+                        rarelityValue = 2;
+                        break;
+                    case "superrare":
+                        rarelityValue = 3;
+                        break;
+                    case "legend":
+                        rarelityValue = 4;
+                        break;
+                }
+                dicCards.Add(new DictionaryCard { cardObject = cardStorage.GetChild(count).gameObject, cardId = card.id, cardClass = card.cardClasses[0], rareOrder = rarelityValue, costOrder = card.cost });
+                count++;
+            }
+        }
+        dicCards = SortDicCard(dicCards).ToList();
+    }
+
+    IEnumerable<DictionaryCard> SortDicCard(List<DictionaryCard> cards) {
+        return cards.OrderBy(n => n.rareOrder).ThenBy(m => m.costOrder).ThenBy(o => o.cardId);
     }
 
     public void SetToHumanHeroes() {
@@ -389,18 +429,30 @@ public class CardDictionaryManager : MonoBehaviour {
         int haveCount = 0;
         Transform classList = cardList.Find("CardsByClass");
         classList.gameObject.SetActive(true);
-        foreach (dataModules.CollectionCard card in AccountManager.Instance.allCards) {
-            if (card.isHeroCard) continue;
-            if (isHumanDictionary && card.camp != "human") continue;
-            if (!isHumanDictionary && card.camp != "orc") continue;
+
+        foreach(DictionaryCard card in dicCards) {
             Transform cardObj = cardStorage.GetChild(0);
-            Transform classSet = classList.Find(card.cardClasses[0]).Find("Grid");
-            cardObj.SetParent(classSet);
-            cardObj.GetComponent<MenuCardHandler>().DrawCard(card.id, isHumanDictionary);
-            if (AccountManager.Instance.cardPackage.data.ContainsKey(card.id)) haveCount++;
-            cardObj.gameObject.SetActive(true);
+            Transform classSet = classList.Find(card.cardClass).Find("Grid");
+            card.cardObject.transform.SetParent(classSet);
+            card.cardObject.GetComponent<MenuCardHandler>().DrawCard(card.cardId, isHumanDictionary);
+            if (AccountManager.Instance.cardPackage.data.ContainsKey(card.cardId)) haveCount++;
+            card.cardObject.SetActive(true);
             totalCount++;
         }
+
+        //foreach (dataModules.CollectionCard card in AccountManager.Instance.allCards) {
+        //    if (card.isHeroCard) continue;
+        //    if (isHumanDictionary && card.camp != "human") continue;
+        //    if (!isHumanDictionary && card.camp != "orc") continue;
+        //    Transform cardObj = cardStorage.GetChild(0);
+        //    Transform classSet = classList.Find(card.cardClasses[0]).Find("Grid");
+        //    cardObj.SetParent(classSet);
+        //    cardObj.GetComponent<MenuCardHandler>().DrawCard(card.id, isHumanDictionary);
+        //    if (AccountManager.Instance.cardPackage.data.ContainsKey(card.id)) haveCount++;
+        //    cardObj.gameObject.SetActive(true);
+        //    totalCount++;
+        //}
+
         for (int i = 0; i < classList.childCount; i++) {
             Transform cardSet = classList.GetChild(i).Find("Grid");
             if (cardSet.childCount > 0)
@@ -431,18 +483,49 @@ public class CardDictionaryManager : MonoBehaviour {
             rarelityList.Find("superrare").SetSiblingIndex(3);
             rarelityList.Find("legend").SetSiblingIndex(4);
         }
-        foreach (dataModules.CollectionCard card in AccountManager.Instance.allCards) {
-            if (card.isHeroCard) continue;
-            if (isHumanDictionary && card.camp != "human") continue;
-            if (!isHumanDictionary && card.camp != "orc") continue;
+
+        string rarelity = string.Empty;
+        foreach (DictionaryCard card in dicCards) {
             Transform cardObj = cardStorage.GetChild(0);
-            Transform classSet = rarelityList.Find(card.rarelity).Find("Grid");
-            cardObj.SetParent(classSet);
-            cardObj.GetComponent<MenuCardHandler>().DrawCard(card.id, isHumanDictionary);
-            if (AccountManager.Instance.cardPackage.data.ContainsKey(card.id)) haveCount++;
-            cardObj.gameObject.SetActive(true);
+            switch (card.rareOrder) {
+                case 0:
+                    rarelity = "common";
+                    break;
+                case 1:
+                    rarelity = "uncommon";
+                    break;
+                case 2:
+                    rarelity = "rare";
+                    break;
+                case 3:
+                    rarelity = "superrare";
+                    break;
+                case 4:
+                    rarelity = "legend";
+                    break;
+            }
+            Transform classSet = rarelityList.Find(rarelity).Find("Grid");
+            card.cardObject.transform.SetParent(classSet);
+            card.cardObject.GetComponent<MenuCardHandler>().DrawCard(card.cardId, isHumanDictionary);
+            if (AccountManager.Instance.cardPackage.data.ContainsKey(card.cardId)) haveCount++;
+            card.cardObject.SetActive(true);
             totalCount++;
         }
+
+        //foreach (dataModules.CollectionCard card in AccountManager.Instance.allCards) {
+        //    if (card.isHeroCard) continue;
+        //    if (isHumanDictionary && card.camp != "human") continue;
+        //    if (!isHumanDictionary && card.camp != "orc") continue;
+        //    Transform cardObj = cardStorage.GetChild(0);
+        //    Transform classSet = rarelityList.Find(card.rarelity).Find("Grid");
+        //    cardObj.SetParent(classSet);
+        //    cardObj.GetComponent<MenuCardHandler>().DrawCard(card.id, isHumanDictionary);
+        //    if (AccountManager.Instance.cardPackage.data.ContainsKey(card.id)) haveCount++;
+        //    cardObj.gameObject.SetActive(true);
+        //    totalCount++;
+        //}
+
+
         for (int i = 0; i < rarelityList.childCount; i++) {
             Transform cardSet = rarelityList.GetChild(i).Find("Grid");
             if (cardSet.childCount > 0)
@@ -466,18 +549,30 @@ public class CardDictionaryManager : MonoBehaviour {
             for (int i = 0; i < costList.childCount; i++)
                 costList.Find(i.ToString()).SetSiblingIndex(i);
         }
-        foreach (dataModules.CollectionCard card in AccountManager.Instance.allCards) {
-            if (card.isHeroCard) continue;
-            if (isHumanDictionary && card.camp != "human") continue;
-            if (!isHumanDictionary && card.camp != "orc") continue;
+
+        foreach (DictionaryCard card in dicCards) {
             Transform cardObj = cardStorage.GetChild(0);
-            Transform classSet = costList.Find(card.cost.ToString()).Find("Grid");
-            cardObj.SetParent(classSet);
-            cardObj.GetComponent<MenuCardHandler>().DrawCard(card.id, isHumanDictionary);
-            if (AccountManager.Instance.cardPackage.data.ContainsKey(card.id)) haveCount++;
-            cardObj.gameObject.SetActive(true);
+            Transform classSet = costList.Find(card.costOrder.ToString()).Find("Grid");
+            card.cardObject.transform.SetParent(classSet);
+            card.cardObject.GetComponent<MenuCardHandler>().DrawCard(card.cardId, isHumanDictionary);
+            if (AccountManager.Instance.cardPackage.data.ContainsKey(card.cardId)) haveCount++;
+            card.cardObject.SetActive(true);
             totalCount++;
         }
+
+        //foreach (dataModules.CollectionCard card in AccountManager.Instance.allCards) {
+        //    if (card.isHeroCard) continue;
+        //    if (isHumanDictionary && card.camp != "human") continue;
+        //    if (!isHumanDictionary && card.camp != "orc") continue;
+        //    Transform cardObj = cardStorage.GetChild(0);
+        //    Transform classSet = costList.Find(card.cost.ToString()).Find("Grid");
+        //    cardObj.SetParent(classSet);
+        //    cardObj.GetComponent<MenuCardHandler>().DrawCard(card.id, isHumanDictionary);
+        //    if (AccountManager.Instance.cardPackage.data.ContainsKey(card.id)) haveCount++;
+        //    cardObj.gameObject.SetActive(true);
+        //    totalCount++;
+        //}
+
         for (int i = 0; i < costList.childCount; i++) {
             Transform cardSet = costList.GetChild(i).Find("Grid");
             if (cardSet.childCount > 0)
@@ -768,4 +863,12 @@ public class DictionaryInfo {
     public bool isHuman;
     public SortingOptions sortingState;
     public bool inDic;
+}
+
+public class DictionaryCard {
+    public GameObject cardObject;
+    public string cardId;
+    public string cardClass;
+    public int rareOrder;
+    public int costOrder;
 }
