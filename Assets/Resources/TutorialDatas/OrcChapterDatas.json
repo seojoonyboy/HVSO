@@ -543,5 +543,401 @@
 
         ],
         "scenarioReward": []
+    },
+    {
+        "chapter": 0,
+        "stage_number": 2,
+        "stage_Name": "복수",
+        "match_type": "tutorial",
+        "description": null,
+        "specialRule": "- 적 영웅 체력 5\n- 튜토리얼",
+        "scripts": [
+            {
+                "Print_text": "data_stage_1031_2",
+                "methods": [
+                    {
+                        "name": "First_Card",
+                        "args": [
+                            "stop"
+                        ]
+                    },
+                    {
+                        "name": "Stop_orc_summon",
+                        "args": [
+                            "units",
+                            "all"
+                        ]
+                    },
+                    {
+                        "name": "Wait_until",
+                        "args": [
+                            "1"
+                        ]
+                    }
+                ],
+                "isExecute": false
+            },
+            {
+                "Print_text": "data_stage_1031_2_1-2",
+                "methods": [
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "ac10012",
+                            "족장님. 정찰에 성공했습니다. 적의 부대는 현재 야영하며 휴식중입니다.",
+                            "true"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "h10002",
+                            "그냥 살려 보내줄수야 없지. 지금 즉시 기습한다!! 공격해라!",
+                            "true"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "Proceed_orc_summon",
+                        "args": []
+                    },
+                    {
+                        "name": "First_Card",
+                        "args": [
+                            "proceed"
+                        ]
+                    }
+                ],
+                "isExecute": false
+            },
+            {
+                "Print_text": "data_stage_1031_2_3-6",
+                "methods": [
+                    {
+                        "name": "Wait_Turn",
+                        "args": [
+                            "ORC"
+                        ]
+                    },
+                    {
+                        "name": "Disable_EndTurn",
+                        "args": []
+                    },
+                    {
+                        "name": "Wait_until",
+                        "args": [
+                            "1"
+                        ]
+                    },
+                    {
+                        "name": "Force_drop_zone",
+                        "args": [
+                            "unit",
+                            "1"
+                        ]
+                    },
+                    {
+                        "name": "Disable_Deck_card",
+                        "args": [
+                            "ac10020"
+                        ]
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "h10002",
+                            "적이 우리를 제대로 포착하지 못하도록 모두 매복하여 적을 공격하라!! ",
+                            "true"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "Wait_summon",
+                        "args": [
+                            "ac10020"
+                        ]
+                    },
+                    {
+                        "name": "Stop_Invoke_NextTurn",
+                        "args": []
+                    },
+                    {
+                        "name": "StopHighlight",
+                        "args": []
+                    },
+                    {
+                        "name": "Enable_EndTurn",
+                        "args": []
+                    },
+                    {
+                        "name": "Highlight",
+                        "args": [
+                            "button",
+                            "endTurn"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "button",
+                            "endTurn"
+                        ]
+                    }
+                ],
+                "isExecute": false
+            },
+            {
+                "Print_text": "data_stage_1031_2_7-8",
+                "methods": [
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "ac10002",
+                            "적습이다!! 모두 방어하라!! 1번 라인에 적이 있는것 같으니 2번라인을 치고 나가자! ",
+                            "false"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "Proceed_Invoke_NextTurn",
+                        "args": []
+                    },
+                    {
+                        "name": "Wait_Turn",
+                        "args": [
+                            "HUMAN"
+                        ]
+                    },
+                    {
+                        "name": "Stop_Invoke_NextTurn",
+                        "args": []
+                    },
+                    {
+                        "name": "Wait_Enemy_Summon",
+                        "args": [
+                            "2"
+                        ]
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "h10002",
+                            "지금이다! 매복을 풀고 공격해라!  ",
+                            "true"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "Proceed_Invoke_NextTurn",
+                        "args": []
+                    },
+                    {
+                        "name": "Wait_Turn",
+                        "args": [
+                            "SECRET"
+                        ]
+                    },
+                    {
+                        "name": "Disable_EndTurn",
+                        "args": []
+                    },
+                    {
+                        "name": "Wait_until",
+                        "args": [
+                            "1"
+                        ]
+                    }
+                ],
+                "isExecute": false
+            },
+            {
+                "Print_text": "data_stage_1031_2_9-12",
+                "methods": [
+                    {
+                        "name": "Force_drop_zone",
+                        "args": [
+                            "magic",
+                            "2"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Field_Change",
+                        "args": []
+                    },
+                    {
+                        "name": "Wait_until",
+                        "args": [
+                            "1"
+                        ]
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "h10002",
+                            "후후후 잠복꾼의 매복효과로 위치를 이동할 줄은 몰랐겠지.  ",
+                            "true"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "h10002",
+                            "이젠 잠복꾼의 관통 능력으로 한번에 해치워주마!  ",
+                            "true"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "Enable_EndTurn",
+                        "args": []
+                    },
+                    {
+                        "name": "Highlight",
+                        "args": [
+                            "button",
+                            "endTurn"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "button",
+                            "endTurn"
+                        ]
+                    }
+                ],
+                "isExecute": false
+            },
+            {
+                "Print_text": "",
+                "methods": [
+                    {
+                        "name": "Wait_Turn",
+                        "args": [
+                            "BATTLE"
+                        ]
+                    },
+                    {
+                        "name": "Stop_Next_Turn",
+                        "args": []
+                    },
+                    {
+                        "name": "Wait_Battle_End",
+                        "args": []
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "ac10002",
+                            "큭… 날 지키란 말이다!! 쓸모없는 병사놈들 같으니!  ",
+                            "false"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "h10002",
+                            "역시 높으신 인간놈들이란… 너희들은 이 대륙에 없어지는게 더 낫다!!  ",
+                            "true"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "Proceed_Next_Turn",
+                        "args": []
+                    },
+                    {
+                        "name": "End_tutorial",
+                        "args": []
+                    }
+                ],
+                "isExecute": false
+            },
+            {
+                "Print_text": "",
+                "methods": [
+                    {
+                        "name": "Wait_Enemy_hero_Dead",
+                        "args": []
+                    },
+                    {
+                        "name": "Result_battle",
+                        "args": [
+                            "stop"
+                        ]
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "h10002",
+                            "쥐새끼 같은놈… 결국은 도망쳤구나. 내 나중에 꼭 너를 잡아 죽여주마.  ",
+                            "true"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "Result_battle",
+                        "args": [
+                            "proceed"
+                        ]
+                    }
+                ],
+                "isExecute": false
+            }
+        ],
+        "scenarioReward": []
     }
 ]

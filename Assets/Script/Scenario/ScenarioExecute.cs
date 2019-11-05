@@ -253,7 +253,7 @@ public class StopHighlight : ScenarioExecute {
 
 }
 
-//단순히 유닛 소환 기달림 args[0] 무시가능,  args[1] unitID
+//단순히 유닛 소환 기달림 args[0] unitID
 public class Wait_summon : ScenarioExecute {
     public Wait_summon() : base() { }
 
@@ -270,7 +270,7 @@ public class Wait_summon : ScenarioExecute {
         string unitID = (string)Param;
 
 
-        if (unitID == args[1]) {
+        if (unitID == args[0]) {
             PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.UNIT_SUMMONED, CheckSummon);
             PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.UNIT_DROP_FAIL, Glowing);
             handler.isDone = true;
@@ -278,12 +278,12 @@ public class Wait_summon : ScenarioExecute {
     }
 
     private void Glow() {
-        scenarioMask.CardDeckGlow(args[1]);
+        scenarioMask.CardDeckGlow(args[0]);
     }
 
 
     private void Glowing(Enum event_type, Component Sender, object Param) {
-        scenarioMask.CardDeckGlow(args[1]);
+        scenarioMask.CardDeckGlow(args[0]);
     }
 
 }

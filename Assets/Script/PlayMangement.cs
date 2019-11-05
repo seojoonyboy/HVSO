@@ -118,8 +118,16 @@ public partial class PlayMangement : MonoBehaviour {
         string condition = data;
 
         switch (condition) {
+            case "Protect":
+                matchRule = gameObject.AddComponent<victoryModule.ProtectObject>();
+                matchRule.player = player;
+                matchRule.enemyPlayer = enemyPlayer;
+                if (ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.isTutorial)
+                    break;
+                else
+                    matchRule.SetCondition();
+                break;
             default:
-                //matchRule = new victoryModule.Annihilation_Match(player, enemyPlayer);
                 matchRule = gameObject.AddComponent<victoryModule.Annihilation_Match>();
                 matchRule.player = player;
                 matchRule.enemyPlayer = enemyPlayer;
