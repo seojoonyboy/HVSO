@@ -406,10 +406,19 @@
                         "args": []
                     }
                 ],
-                "isExecute":  false
+                "isExecute": false
             }
         ],
-        "scenarioReward": []
+        "scenarioReward": [
+            {
+                "reward": "exp",
+                "count": 20
+            },
+            {
+                "reward": "supply",
+                "count": 50
+            }
+        ]
     },
     {
         "chapter": 0,
@@ -519,8 +528,7 @@
                             "0,2",
                             "qc10001"
                         ]
-                    }
-                    ,
+                    },
                     {
                         "name": "SetUp_Protect_Unit",
                         "args": [
@@ -859,6 +867,15 @@
                 "isExecute": false
             }
         ],
-        "scenarioReward": []
+        "scenarioReward": [
+            {
+                "reward": "exp",
+                "count": 20
+            },
+            {
+                "reward": "supply",
+                "count": 50
+            }
+        ]
     }
 ]
