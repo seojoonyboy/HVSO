@@ -1360,6 +1360,24 @@ public class Wait_Field_Change : ScenarioExecute {
     }
 }
 
+public class Set_Unit : ScenarioExecute {
+    public Set_Unit() : base() { }
+
+    public override void Execute() {
+        string[] parse = args[0].Split(',');
+        int col = int.Parse(parse[0]);
+        int row = int.Parse(parse[1]);
+
+        if (AccountManager.Instance.allCardsDic[args[1]] != null)
+            PlayMangement.instance.SummonUnit(true, args[1], col, row);
+        handler.isDone = true;
+
+    }
+
+}
+
+
+
 //제로베이스
 public class SetUp_Protect_Unit : ScenarioExecute {
     public SetUp_Protect_Unit() : base() { }
@@ -1383,7 +1401,6 @@ public class SetUp_Protect_Unit : ScenarioExecute {
 
         handler.isDone = true;
     }
-
 }
 
 
