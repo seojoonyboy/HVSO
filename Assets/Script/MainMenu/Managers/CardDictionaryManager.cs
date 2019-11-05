@@ -588,6 +588,12 @@ public class CardDictionaryManager : MonoBehaviour {
         transform.Find("HeroDictionary/HeroImage").gameObject.SetActive(true);
         transform.Find("HeroDictionary/HeroImage/HeroSpine").Find(selectedHeroId).gameObject.SetActive(true);
         transform.Find("HeroDictionary/HeroImage/HeroSpine").Find(selectedHeroId).SetAsFirstSibling();
+        foreach(dataModules.HeroInventory hero in AccountManager.Instance.allHeroes) {
+            if (hero.id == selectedHeroId) {
+                transform.Find("HeroDictionary/HeroImage/HeroStory/HeroName").GetComponent<TMPro.TextMeshProUGUI>().text = hero.name;
+                break;
+            }
+        }
     }
 
     public void OpenHeroInfo() {
