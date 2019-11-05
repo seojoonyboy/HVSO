@@ -1314,10 +1314,13 @@ public class Wait_Close_Info : ScenarioExecute {
     public Wait_Close_Info() : base() { }
 
     public override void Execute() {
+        scenarioMask.DisableMask();
+        scenarioMask.InfoTouchON();
         PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.CLOSE_INFO_WINDOW, CheckClose);
     }
     private void CheckClose(Enum event_type, Component Sender, object Param) {
         PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.CLOSE_INFO_WINDOW, CheckClose);
+        scenarioMask.InfoTouchOFF();
         handler.isDone = true;
     }
 

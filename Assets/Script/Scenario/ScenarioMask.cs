@@ -39,6 +39,7 @@ public class ScenarioMask : SerializedMonoBehaviour
     public Sprite arrowSprite;
 
     public GameObject tilledObject;
+    public GameObject infoTouch;
 
     public void GetMaskHighlight(GameObject targetObject) {
         if (targetObject == null) return;
@@ -707,6 +708,14 @@ public class ScenarioMask : SerializedMonoBehaviour
 
         GameObject dragEffect = skillIcon.Find("touch").gameObject;
         Destroy(dragEffect);
+    }
+
+    public void InfoTouchON() {
+        infoTouch.SetActive(true);
+    }
+
+    public void InfoTouchOFF() {
+        infoTouch.SetActive(false);
     }
 
 
