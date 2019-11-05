@@ -415,7 +415,7 @@
         "chapter": 0,
         "stage_number": 2,
         "stage_Name": "토벌",
-        "match_type": "tutorial",
+        "match_type": "Protect",
         "description": "오크의 습격에서 새로 만들어진 마을로 이동중인 상단 지키기",
         "specialRule": "- 적 영웅 체력 10\n- 튜토리얼",
         "scripts": [
@@ -512,6 +512,13 @@
                         "args": [
                             "proceed"
                         ]
+                    },
+                    {
+                        "name": "SetUp_Protect_Unit",
+                        "args": [
+                            "0,2"
+                        ]
+
                     }
                 ],
                 "isExecute": false

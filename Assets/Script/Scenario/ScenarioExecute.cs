@@ -1360,6 +1360,33 @@ public class Wait_Field_Change : ScenarioExecute {
     }
 }
 
+//제로베이스
+public class SetUp_Protect_Unit : ScenarioExecute {
+    public SetUp_Protect_Unit() : base() { }
+
+    public override void Execute() {
+        victoryModule.ProtectObject protectObject = PlayMangement.instance.gameObject.GetComponent<victoryModule.ProtectObject>();
+
+        string[] parse = args[0].Split(',');
+        int col = int.Parse(parse[0]);
+        int row = int.Parse(parse[1]);
+        
+
+        FieldUnitsObserver.Pos pos = new FieldUnitsObserver.Pos(col, row);
+
+        PlaceMonster targetUnit = PlayMangement.instance.UnitsObserver.GetUnit(pos, true).gameObject.GetComponent<PlaceMonster>();
+
+
+        if (protectObject != null && targetUnit != null)
+            protectObject.SetTargetUnit(targetUnit);
+
+
+        handler.isDone = true;
+    }
+
+}
+
+
 //Proceed_Invoke_NextTurn, Stop_Invoke_NextTurn (오크->휴먼->마법->배틀 턴중에 '버튼'을 눌렀을 경우)
 //Stop_Next_Turn, Proceed_Next_Turn (전투 종료후, 다음턴)
 //Wait_Turn 턴을 중단 시키는게 아니라, 어떤 턴이 올때까지 대기
