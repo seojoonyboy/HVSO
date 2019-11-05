@@ -31,6 +31,10 @@ namespace victoryModule {
             return;
         }
 
+        public virtual void GetReward() {
+            return;
+        }
+
     }
 
     public class Annihilation_Match : VictoryCondition {
@@ -109,6 +113,12 @@ namespace victoryModule {
 
         private void OnDestroy() {
             //SoundManager.Instance.bgmController.StopSoundTrack();
+        }
+
+        //보상 분배
+        public override void GetReward() {
+            if (ScenarioGameManagment.scenarioInstance == null) return;
+
         }
 
 
@@ -206,7 +216,9 @@ namespace victoryModule {
         private void OnDestroy() {
             //SoundManager.Instance.bgmController.StopSoundTrack();
         }
-
+        public override void GetReward() {
+            if (ScenarioGameManagment.scenarioInstance == null) return;
+        }
 
     }
 
