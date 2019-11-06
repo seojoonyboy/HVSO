@@ -5,7 +5,6 @@ using System;
 using UniRx;
 using Sirenix.OdinInspector;
 
-[ShowOdinSerializedPropertiesInInspector]
 public class SoundManager : SerializedMonoBehaviour {
     public Dictionary<SoundType, AudioClip> sounds;
     public Dictionary<string, AudioClip> unitSfx;

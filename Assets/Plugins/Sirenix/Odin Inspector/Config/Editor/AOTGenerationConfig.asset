@@ -12,25 +12,66 @@ MonoBehaviour:
   m_Script: {fileID: 1726182683, guid: a4865f1ab4504ed8a368670db22f409c, type: 3}
   m_Name: AOTGenerationConfig
   m_EditorClassIdentifier: 
-  automateBeforeBuilds: 1
+  automateBeforeBuilds: 0
   deleteDllAfterBuilds: 1
   AutomateForAllAOTPlatforms: 1
   automateForPlatforms: 0900000014000000
-  lastScan: 637075669222141698
+  lastScan: 637086455327590635
   supportSerializedTypes:
+  - TypeName: System.Boolean, mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.Dictionary`2[[UnityEngine.GameObject, UnityEngine.CoreModule],[UnityEngine.Transform,
+      UnityEngine.CoreModule]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.EnumEqualityComparer`1[[EffectSystem+EffectType,
+      Assembly-CSharp]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: UnityEngine.GameObject[,], UnityEngine.CoreModule
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.IEqualityComparer`1[[EffectSystem+EffectType,
+      Assembly-CSharp]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Int32, mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.List`1[[Tutorial.Method, Assembly-CSharp]],
+      mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.List`1[[Tutorial.ScriptData, Assembly-CSharp]],
+      mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: Tutorial.Method, Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
+  - TypeName: Tutorial.ScenarioReward[], Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
+  - TypeName: Tutorial.ScriptData, Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
+  - TypeName: UnityEngine.Transform, UnityEngine.CoreModule
+    IsCustom: 0
+    Emit: 1
+  - TypeName: UnityEngine.AudioClip, UnityEngine.AudioModule
+    IsCustom: 0
+    Emit: 1
   - TypeName: UnityEngine.AudioSource, UnityEngine.AudioModule
     IsCustom: 0
     Emit: 1
   - TypeName: BgmController+BgmEnum, Assembly-CSharp
     IsCustom: 0
     Emit: 1
-  - TypeName: System.Boolean, mscorlib
-    IsCustom: 0
-    Emit: 1
   - TypeName: ChallengeData, Assembly-CSharp
-    IsCustom: 0
-    Emit: 1
-  - TypeName: ChallengerHandler+Challenge, Assembly-CSharp
     IsCustom: 0
     Emit: 1
   - TypeName: Tutorial.ChapterData, Assembly-CSharp
@@ -47,15 +88,15 @@ MonoBehaviour:
       UnityEngine.CoreModule]], mscorlib
     IsCustom: 0
     Emit: 1
-  - TypeName: System.Collections.Generic.Dictionary`2[[UnityEngine.GameObject, UnityEngine.CoreModule],[UnityEngine.Transform,
-      UnityEngine.CoreModule]], mscorlib
-    IsCustom: 0
-    Emit: 1
-  - TypeName: System.Collections.Generic.Dictionary`2[[SoundType, Assembly-CSharp],[UnityEngine.AudioSource,
+  - TypeName: System.Collections.Generic.Dictionary`2[[IngameSfxSound, Assembly-CSharp],[UnityEngine.AudioClip,
       UnityEngine.AudioModule]], mscorlib
     IsCustom: 0
     Emit: 1
-  - TypeName: System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.AudioSource,
+  - TypeName: System.Collections.Generic.Dictionary`2[[SoundType, Assembly-CSharp],[UnityEngine.AudioClip,
+      UnityEngine.AudioModule]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.AudioClip,
       UnityEngine.AudioModule]], mscorlib
     IsCustom: 0
     Emit: 1
@@ -83,6 +124,23 @@ MonoBehaviour:
       mscorlib]], mscorlib
     IsCustom: 0
     Emit: 1
+  - TypeName: System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnitRace,
+      Assembly-CSharp]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.Dictionary`2[[UISfxSound, Assembly-CSharp],[UnityEngine.AudioClip,
+      UnityEngine.AudioModule]], mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.Dictionary`2[[UnitRace, Assembly-CSharp],[System.Collections.Generic.Dictionary`2[[VoiceType,
+      Assembly-CSharp],[UnityEngine.AudioClip, UnityEngine.AudioModule]], mscorlib]],
+      mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.Dictionary`2[[VoiceType, Assembly-CSharp],[UnityEngine.AudioClip,
+      UnityEngine.AudioModule]], mscorlib
+    IsCustom: 0
+    Emit: 1
   - TypeName: EffectSystem+EffectType, Assembly-CSharp
     IsCustom: 0
     Emit: 1
@@ -90,18 +148,27 @@ MonoBehaviour:
       Assembly-CSharp]], mscorlib
     IsCustom: 0
     Emit: 1
-  - TypeName: System.Collections.Generic.EnumEqualityComparer`1[[EffectSystem+EffectType,
-      Assembly-CSharp]], mscorlib
+  - TypeName: System.Collections.Generic.EnumEqualityComparer`1[[IngameSfxSound, Assembly-CSharp]],
+      mscorlib
     IsCustom: 0
     Emit: 1
   - TypeName: System.Collections.Generic.EnumEqualityComparer`1[[SoundType, Assembly-CSharp]],
       mscorlib
     IsCustom: 0
     Emit: 1
-  - TypeName: UnityEngine.GameObject, UnityEngine.CoreModule
+  - TypeName: System.Collections.Generic.EnumEqualityComparer`1[[UISfxSound, Assembly-CSharp]],
+      mscorlib
     IsCustom: 0
     Emit: 1
-  - TypeName: UnityEngine.GameObject[,], UnityEngine.CoreModule
+  - TypeName: System.Collections.Generic.EnumEqualityComparer`1[[UnitRace, Assembly-CSharp]],
+      mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.EnumEqualityComparer`1[[VoiceType, Assembly-CSharp]],
+      mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: UnityEngine.GameObject, UnityEngine.CoreModule
     IsCustom: 0
     Emit: 1
   - TypeName: UnityEngine.GameObject[], UnityEngine.CoreModule
@@ -111,14 +178,38 @@ MonoBehaviour:
       mscorlib]], mscorlib
     IsCustom: 0
     Emit: 1
-  - TypeName: System.Int32, mscorlib
+  - TypeName: System.Collections.Generic.IEqualityComparer`1[[BgmController+BgmEnum,
+      Assembly-CSharp]], mscorlib
     IsCustom: 0
     Emit: 1
-  - TypeName: System.Collections.Generic.List`1[[ChallengeData, Assembly-CSharp]],
+  - TypeName: System.Collections.Generic.IEqualityComparer`1[[IngameSfxSound, Assembly-CSharp]],
       mscorlib
     IsCustom: 0
     Emit: 1
-  - TypeName: System.Collections.Generic.List`1[[ChallengerHandler+Challenge, Assembly-CSharp]],
+  - TypeName: System.Collections.Generic.IEqualityComparer`1[[SoundType, Assembly-CSharp]],
+      mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.IEqualityComparer`1[[System.String, mscorlib]],
+      mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.IEqualityComparer`1[[UISfxSound, Assembly-CSharp]],
+      mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.IEqualityComparer`1[[UnitRace, Assembly-CSharp]],
+      mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.IEqualityComparer`1[[VoiceType, Assembly-CSharp]],
+      mscorlib
+    IsCustom: 0
+    Emit: 1
+  - TypeName: IngameSfxSound, Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
+  - TypeName: System.Collections.Generic.List`1[[ChallengeData, Assembly-CSharp]],
       mscorlib
     IsCustom: 0
     Emit: 1
@@ -126,51 +217,17 @@ MonoBehaviour:
       mscorlib
     IsCustom: 0
     Emit: 1
-  - TypeName: System.Collections.Generic.List`1[[MenuTutorialManager+InnerSet, Assembly-CSharp]],
-      mscorlib
-    IsCustom: 0
-    Emit: 1
-  - TypeName: System.Collections.Generic.List`1[[MenuTutorialManager+Method, Assembly-CSharp]],
-      mscorlib
-    IsCustom: 0
-    Emit: 1
   - TypeName: System.Collections.Generic.List`1[[MenuTutorialManager+TutorialSet,
       Assembly-CSharp]], mscorlib
-    IsCustom: 0
-    Emit: 1
-  - TypeName: System.Collections.Generic.List`1[[Tutorial.Method, Assembly-CSharp]],
-      mscorlib
-    IsCustom: 0
-    Emit: 1
-  - TypeName: System.Collections.Generic.List`1[[Tutorial.ScriptData, Assembly-CSharp]],
-      mscorlib
-    IsCustom: 0
-    Emit: 1
-  - TypeName: System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
-    IsCustom: 0
-    Emit: 1
-  - TypeName: MenuTutorialManager+InnerSet, Assembly-CSharp
-    IsCustom: 0
-    Emit: 1
-  - TypeName: MenuTutorialManager+Method, Assembly-CSharp
     IsCustom: 0
     Emit: 1
   - TypeName: MenuTutorialManager+TutorialSet, Assembly-CSharp
     IsCustom: 0
     Emit: 1
-  - TypeName: Tutorial.Method, Assembly-CSharp
-    IsCustom: 0
-    Emit: 1
   - TypeName: System.Object, mscorlib
     IsCustom: 0
     Emit: 1
-  - TypeName: Tutorial.ScenarioReward[], Assembly-CSharp
-    IsCustom: 0
-    Emit: 1
   - TypeName: ScenarioUnit, Assembly-CSharp
-    IsCustom: 0
-    Emit: 1
-  - TypeName: Tutorial.ScriptData, Assembly-CSharp
     IsCustom: 0
     Emit: 1
   - TypeName: SoundType, Assembly-CSharp
@@ -182,6 +239,12 @@ MonoBehaviour:
   - TypeName: System.String, mscorlib
     IsCustom: 0
     Emit: 1
-  - TypeName: UnityEngine.Transform, UnityEngine.CoreModule
+  - TypeName: UISfxSound, Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
+  - TypeName: UnitRace, Assembly-CSharp
+    IsCustom: 0
+    Emit: 1
+  - TypeName: VoiceType, Assembly-CSharp
     IsCustom: 0
     Emit: 1
