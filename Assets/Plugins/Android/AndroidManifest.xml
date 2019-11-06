@@ -45,5 +45,6 @@
     <meta-data android:name="com.google.android.gms.ads.APPLICATION_ID" android:value="ca-app-pub-8910195275590924~5903100277" />
     <meta-data android:name="haeginsplitappbinsize" android:value="HAEGIN_UNITY_SPLIT_APP_BIN_SIZE" />
     <meta-data android:name="android.max_aspect" android:value="3.0" />
+    <meta-data android:name="unityplayer.SkipPermissionsDialog" android:value="true" />
   </application>
 </manifest>

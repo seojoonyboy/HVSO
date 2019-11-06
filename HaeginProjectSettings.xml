@@ -25,7 +25,7 @@
 	<FirebaseDynamicLink>hgmodsample.page.link</FirebaseDynamicLink>
 	<AdMobAppId>ca-app-pub-8910195275590924~5903100277</AdMobAppId>
 	<UseAppsFlyer>False</UseAppsFlyer>
-	<SkipPermissionsDialog>False</SkipPermissionsDialog>
+	<SkipPermissionsDialog>True</SkipPermissionsDialog>
 	<UseIOSGoogleMobileAds7_24_0_OR_HIGHER>True</UseIOSGoogleMobileAds7_24_0_OR_HIGHER>
 	<UseOneStoreIAP>False</UseOneStoreIAP>
 	<OneStoreBase64EncodedPublicKey></OneStoreBase64EncodedPublicKey>
