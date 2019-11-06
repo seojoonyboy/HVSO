@@ -11,7 +11,7 @@ using UnityEngine.AssetGraph;
 class ModuleBuildScript
 {
     private static EditorBuildSettingsScene[] SCENES = null;
-    private static string TARGET_DIR = "Build";
+    private static string TARGET_DIR = "~/Work/";
 
     private static string GetArg(string name)
     {
@@ -62,7 +62,7 @@ class ModuleBuildScript
         PlayerSettings.iOS.hideHomeButton = false;
         PlayerSettings.bundleVersion = "1.0";
 
-        GenericBuild(SCENES, TARGET_DIR + "/XCode", BuildTarget.iOS, BuildOptions.None);
+        GenericBuild(SCENES, TARGET_DIR + "/prjcc_xcode", BuildTarget.iOS, BuildOptions.None);
     }
 
     static void PerformOneStoreAndroidBuild()
