@@ -17,6 +17,7 @@ public class BoxRewardManager : MonoBehaviour
     [SerializeField] SkeletonGraphic boxSpine;
     [SerializeField] Transform additionalSupply;
     [SerializeField] MenuSceneController menuSceneController;
+    [SerializeField] Transform targetSpine;
     // Start is called before the first frame update
     Transform hudCanvas;
 
@@ -24,7 +25,10 @@ public class BoxRewardManager : MonoBehaviour
     NetworkManager networkManager;
 
     public UnityEvent OnBoxLoadFinished = new UnityEvent();
-    static bool openningBox;
+    static bool openningBox = false;
+    bool openAni = false;
+    int openCount;
+
     void Awake() {
         accountManager = AccountManager.Instance;
         hudCanvas = transform.parent;
@@ -59,6 +63,7 @@ public class BoxRewardManager : MonoBehaviour
 
     public void OpenBox() {
         if (openningBox) return;
+        if (openAni) return;
         if (AccountManager.Instance.userResource.supplyBox <= 0) return;
         openningBox = true;
         accountManager.RequestRewardInfo();
@@ -66,7 +71,7 @@ public class BoxRewardManager : MonoBehaviour
 
     public void SetBoxAnimation() {
         transform.Find("ShowBox").gameObject.SetActive(true);
-        
+        openCount = 0;
         boxSpine.Initialize(true);
         boxSpine.Update(0);
         boxSpine.AnimationState.SetAnimation(0, "01.START", false);
@@ -82,23 +87,160 @@ public class BoxRewardManager : MonoBehaviour
         StartCoroutine(ShowRewards());
     }
 
-    IEnumerator ShowRewards() {
-        SetRewards(accountManager.rewardList);
+    public void GetBoxResult() {
+        if (openAni) return;
+        transform.Find("OpenBox").gameObject.SetActive(true);
+        transform.Find("ShowBox/Text").gameObject.SetActive(false);
+        transform.Find("OpenBox/TargetSpine").gameObject.SetActive(false);
+        if (openCount == 0) {
+            SetRewards(accountManager.rewardList);
+            boxSpine.AnimationState.SetAnimation(2, "03.TOUCH1", false);
+        }
+        else if (openCount == 4) {
+            CloseBoxOpen();
+            return;
+        }
+        else {
+            transform.Find("OpenBox").GetChild(openCount - 1).gameObject.SetActive(false);
+            boxSpine.AnimationState.SetAnimation(2, "04.TOUCH2", false);
+        }
+        SoundManager.Instance.PlaySound(UISfxSound.BOXOPEN_2);
+        int count = openCount;
+        openCount++;
+        StartCoroutine(ShowEachReward(count));
+
+    }
+
+    public void CloseBoxOpen() {
         Transform boxParent = transform.Find("OpenBox");
-        Transform effects = transform.Find("EffectSpines");
+        for (int i = 0; i < 4; i++) {
+            boxParent.GetChild(i).gameObject.SetActive(true);
+            boxParent.GetChild(i).localScale = Vector3.zero;
+            boxParent.GetChild(i).localPosition = new Vector3(0, -480, 0);
+            if (i < 2)
+                boxParent.GetChild(i).transform.Find("back").gameObject.SetActive(false);
+            else if (i == 3)
+                boxParent.GetChild(i).Find("Card").transform.Find("back").gameObject.SetActive(false);
+        }
+        boxParent.gameObject.SetActive(false);
+        transform.Find("ShowBox").gameObject.SetActive(false);
+        transform.Find("ShowBox/Text").gameObject.SetActive(true);
+        transform.Find("ExitButton").gameObject.SetActive(false);
+        boxParent.GetChild(0).Find("GetCrystal").gameObject.SetActive(false);
+        boxParent.GetChild(1).Find("GetCrystal").gameObject.SetActive(false);
+        boxParent.GetChild(3).Find("Card").gameObject.SetActive(false);
+        boxParent.GetChild(3).Find("Card/GetCrystal").gameObject.SetActive(false);
+        boxParent.GetChild(3).Find("Resource").gameObject.SetActive(false);
+        for (int i = 0; i < 3; i++) {
+            boxParent.GetChild(2).GetChild(i).gameObject.SetActive(false);
+            boxParent.GetChild(3).Find("Resource").GetChild(i).gameObject.SetActive(false);
+        }
+        SetBoxObj();
+        openningBox = false;
+    }
+
+    IEnumerator ShowEachReward(int count) {
+        openAni = true;
+        if (count == 0)
+            yield return new WaitForSeconds(0.95f);
+        else
+            yield return new WaitForSeconds(0.5f);
+        Transform target = transform.Find("OpenBox").GetChild(count);
+        iTween.ScaleTo(target.gameObject, iTween.Hash("x", 1.4, "y", 1.4, "islocal", true, "time", 0.4f));
+        iTween.MoveTo(target.gameObject, iTween.Hash(/*"easetype", "easeOutElastic",*/ "y", targetSpine.localPosition.y, "islocal", true, "time", 0.4f));
+        SkeletonGraphic targetEffect = transform.Find("OpenBox/TargetSpine").GetComponent<SkeletonGraphic>();
+        yield return new WaitForSeconds(0.1f);
+        targetEffect.gameObject.SetActive(true);
+        targetEffect.Initialize(true);
+        targetEffect.Update(0);
+        targetEffect.AnimationState.SetAnimation(0, "animation", false);
+        yield return new WaitForSeconds(0.1f);
+        GameObject targetObj = target.gameObject;
+        if (target.name == "Random") {
+            if (target.transform.Find("Card").gameObject.activeSelf)
+                target = targetObj.transform.Find("Card");
+            else
+                target = targetObj.transform.Find("Resource");
+        }
+
+        if (target.name.Contains("Card")) {
+            if (!target.gameObject.activeSelf) yield return null;
+            else {
+                string cardId = target.Find("DictionaryCardVertical").GetComponent<MenuCardHandler>().cardID;
+                string aniName = "";
+                var rarelity = accountManager.allCardsDic[cardId].rarelity;
+                if (accountManager.allCardsDic[cardId].type == "unit")
+                    aniName += "u_";
+                else
+                    aniName += "m_";
+                if (rarelity != "common")
+                    aniName += accountManager.allCardsDic[cardId].rarelity;
+                else
+                    aniName = "NOANI";
+                SkeletonGraphic spine = target.Find("back").GetComponent<SkeletonGraphic>();
+                spine.gameObject.SetActive(true);
+                spine.Initialize(true);
+                spine.Update(0);
+                spine.AnimationState.SetAnimation(0, aniName, true);
+
+                SoundManager soundManager = SoundManager.Instance;
+                switch (rarelity) {
+                    case "common":
+                    case "uncommon":
+                        soundManager.PlaySound(UISfxSound.BOX_NORMAL);
+                        break;
+                    case "rare":
+                        soundManager.PlaySound(UISfxSound.BOX_RARE);
+                        break;
+                    case "superrare":
+                        soundManager.PlaySound(UISfxSound.BOX_SUPERRARE);
+                        break;
+                    case "legend":
+                        soundManager.PlaySound(UISfxSound.BOX_EPIC);
+                        break;
+                }
+            }
+        }
+        else {
+            string type = string.Empty;
+            for (int i = 0; i < 3; i++) {
+                if (target.GetChild(i).gameObject.activeSelf) {
+                    type = target.GetChild(i).gameObject.name;
+                }
+            }
+
+            SoundManager soundManager = SoundManager.Instance;
+            switch (type) {
+                case "gold":
+                case "supplyStore":
+                    soundManager.PlaySound(UISfxSound.BOX_SUPERRARE);
+                    break;
+                case "crystal":
+                    soundManager.PlaySound(UISfxSound.BOX_NORMAL);
+                    break;
+            }
+        }
+        yield return new WaitForSeconds(0.3f);
+        openAni = false;
+    }
+
+
+    IEnumerator ShowRewards() {
+        Transform boxParent = transform.Find("OpenBox");
+        //Transform effects = transform.Find("EffectSpines");
         yield return new WaitForSeconds(1.2f);
-        effects.GetChild(0).gameObject.SetActive(true);
+        //effects.GetChild(0).gameObject.SetActive(true);
         SoundManager.Instance.PlaySound(UISfxSound.BOX_NORMAL);
         yield return new WaitForSeconds(0.05f);
-        effects.GetChild(1).gameObject.SetActive(true);
+        //effects.GetChild(1).gameObject.SetActive(true);
         SoundManager.Instance.PlaySound(UISfxSound.BOX_RARE);
         yield return new WaitForSeconds(0.05f);
         iTween.ScaleTo(boxParent.GetChild(0).gameObject, iTween.Hash("x", 1.4, "y", 1.4, "islocal", true, "time", 0.2f));
-        effects.GetChild(2).gameObject.SetActive(true);
+        //effects.GetChild(2).gameObject.SetActive(true);
         SoundManager.Instance.PlaySound(UISfxSound.BOX_SUPERRARE);
         yield return new WaitForSeconds(0.05f);
         iTween.ScaleTo(boxParent.GetChild(1).gameObject, iTween.Hash("x", 1.4, "y", 1.4, "islocal", true, "time", 0.2f));
-        effects.GetChild(3).gameObject.SetActive(true);
+        //effects.GetChild(3).gameObject.SetActive(true);
         SoundManager.Instance.PlaySound(UISfxSound.BOX_EPIC);
         yield return new WaitForSeconds(0.05f);
         iTween.ScaleTo(boxParent.GetChild(2).gameObject, iTween.Hash("x", 1, "y", 1, "islocal", true, "time", 0.2f));
