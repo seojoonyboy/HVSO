@@ -11,7 +11,7 @@ using UnityEngine.AssetGraph;
 class ModuleBuildScript
 {
     private static EditorBuildSettingsScene[] SCENES = null;
-    private static string TARGET_DIR = "~/Work/";
+    private static string TARGET_DIR = "Build";
 
     private static string GetArg(string name)
     {
@@ -62,7 +62,7 @@ class ModuleBuildScript
         PlayerSettings.iOS.hideHomeButton = false;
         PlayerSettings.bundleVersion = "1.0";
 
-        GenericBuild(SCENES, TARGET_DIR + "/prjcc_xcode", BuildTarget.iOS, BuildOptions.None);
+        GenericBuild(SCENES, TARGET_DIR + "/XCode", BuildTarget.iOS, BuildOptions.None);
     }
 
     static void PerformOneStoreAndroidBuild()
@@ -86,6 +86,7 @@ class ModuleBuildScript
         PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.iOS, "ODIN_INSPECTOR;ENABLE_LOG;DO_NOT_USE_GPRESTO;MDEBUG;STORE_KIT_API_ENABLED;APP_DELEGATE_ENABLED;GAME_KIT_API_ENABLED;USER_NOTIFICATIONS_API_ENABLED;USE_MAINTENANCESERVER_V2;AN_FIREBASE_ANALYTICS;AN_FIREBASE_MESSAGING");
         PlayerSettings.applicationIdentifier = "com.haegin.hvso";
         PlayerSettings.iOS.sdkVersion = iOSSdkVersion.DeviceSDK;
+        ProjectSettingsWindow.SetOneStoreSettings(false);
         BuildiOS(1);
     }
 
@@ -94,6 +95,7 @@ class ModuleBuildScript
         PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.iOS, "ODIN_INSPECTOR;ENABLE_LOG;DO_NOT_USE_GPRESTO;MDEBUG;STORE_KIT_API_ENABLED;APP_DELEGATE_ENABLED;GAME_KIT_API_ENABLED;USER_NOTIFICATIONS_API_ENABLED;USE_MAINTENANCESERVER_V2;AN_FIREBASE_ANALYTICS;AN_FIREBASE_MESSAGING");
         PlayerSettings.applicationIdentifier = "com.haegin.hvso";
         PlayerSettings.iOS.sdkVersion = iOSSdkVersion.SimulatorSDK;
+        ProjectSettingsWindow.SetOneStoreSettings(false);
         BuildiOS(1);
     }
 
