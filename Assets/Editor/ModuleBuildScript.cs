@@ -106,7 +106,7 @@ class ModuleBuildScript
 
     private static EditorBuildSettingsScene[] FindBuildScenes()
     {
-        EditorBuildSettingsScene[] sceneList = new EditorBuildSettingsScene[8];
+        EditorBuildSettingsScene[] sceneList = new EditorBuildSettingsScene[9];
         sceneList[0] = new EditorBuildSettingsScene("Assets/Haegin/Sample/Scenes/SceneOBBCheck.unity", true);
         sceneList[1] = new EditorBuildSettingsScene("Assets/Scenes/Login.unity", true);
         sceneList[2] = new EditorBuildSettingsScene("Assets/Scenes/MenuScene.unity", true);
