@@ -111,10 +111,11 @@ class ModuleBuildScript
         sceneList[1] = new EditorBuildSettingsScene("Assets/Scenes/Login.unity", true);
         sceneList[2] = new EditorBuildSettingsScene("Assets/Scenes/MenuScene.unity", true);
         sceneList[3] = new EditorBuildSettingsScene("Assets/Scenes/LoadingScene.unity", true);
-        sceneList[4] = new EditorBuildSettingsScene("Assets/Scenes/BattleConnectScene.unity", true);
+        sceneList[4] = new EditorBuildSettingsScene("Assets/Scenes/BatttleConnectScene.unity", true);
         sceneList[5] = new EditorBuildSettingsScene("Assets/Scenes/IngameScene.unity", true);
         sceneList[6] = new EditorBuildSettingsScene("Assets/Scenes/ScenarioLobby.unity", true);
-        sceneList[7] = new EditorBuildSettingsScene("Assets/Scenes/DictionaryScene.unity", true);
+        sceneList[7] = new EditorBuildSettingsScene("Assets/Scenes/TutorialScene.unity", true);
+        sceneList[8] = new EditorBuildSettingsScene("Assets/Scenes/DictionaryScene.unity", true);
         return sceneList;
     }
 
