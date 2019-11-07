@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Haegin;
@@ -126,7 +126,7 @@ public class SceneLoginController : MonoBehaviour
     public void OnGuestLoginButtonClick(string param)
     {
         Firebase.Analytics.FirebaseAnalytics.LogEvent("Guest_Login");
-        SceneManager.LoadScene("SceneGameService", LoadSceneMode.Single);
+        SceneManager.LoadScene("Login", LoadSceneMode.Single);
     }
 
 
@@ -139,7 +139,7 @@ public class SceneLoginController : MonoBehaviour
             Debug.Log("LogintAccount  result=" + result + "    code=" + code + " blockSuid=" + blockSuid);
 #endif
             if (result && code == WebClient.AuthCode.SUCCESS)
-                SceneManager.LoadScene("SceneGameService", LoadSceneMode.Single);
+                SceneManager.LoadScene("Login", LoadSceneMode.Single);
         });
 #elif UNITY_ANDROID
         Account.LoginAccount(Account.HaeginAccountType.GooglePlayGameService, accountDialog.OpenSelectDialog, (bool result, WebClient.AuthCode code, TimeSpan blockRemainTime, long blockSuid) =>
@@ -148,7 +148,7 @@ public class SceneLoginController : MonoBehaviour
             Debug.Log("LogintAccount  result=" + result + "    code=" + code + " blockSuid=" + blockSuid);
 #endif
             if (result && code == WebClient.AuthCode.SUCCESS)
-                SceneManager.LoadScene("SceneGameService", LoadSceneMode.Single);
+                SceneManager.LoadScene("Login", LoadSceneMode.Single);
         });
 #elif UNITY_STANDALONE && USE_STEAM
         Account.LoginAccount(Account.HaeginAccountType.Steam, accountDialog.OpenSelectDialog, (bool result, WebClient.AuthCode code, TimeSpan blockRemainTime, long blockSuid) =>
@@ -157,7 +157,7 @@ public class SceneLoginController : MonoBehaviour
             Debug.Log("LogintAccount  result=" + result + "    code=" + code + " blockSuid=" + blockSuid);
 #endif
             if (result && code == WebClient.AuthCode.SUCCESS)
-                SceneManager.LoadScene("SceneGameService", LoadSceneMode.Single);
+                SceneManager.LoadScene("Login", LoadSceneMode.Single);
         });
 #endif
     }
@@ -176,7 +176,7 @@ public class SceneLoginController : MonoBehaviour
                 Debug.Log("LogintAccount  result=" + result + "    code=" + code + "  blockSuid=" + blockSuid);
 #endif
                 if (result && code == WebClient.AuthCode.SUCCESS)
-                    SceneManager.LoadScene("SceneGameService", LoadSceneMode.Single);
+                    SceneManager.LoadScene("Login", LoadSceneMode.Single);
             });
         }
     }

@@ -444,14 +444,22 @@ public class SceneStartController : MonoBehaviour
                                             Debug.Log("Scheduled " + r3 + "  id " + id3);
 #endif
                                         });
+
                                     });
                                 });
 
                                 // Push Notification 을 등록한다. 
                                 Notification.RegisterPushNotificationDevice();
                             });
-
-                            Patch();
+                            PromoEvents.CheckPromoEvents(OpenPromoEventWindow, () => {
+#if MDEBUG
+                                Debug.Log("LoadScene SceneLogin");
+#endif
+                                //SceneManager.LoadScene("SceneLogin", LoadSceneMode.Single);
+                                EULACanvas.gameObject.SetActive(false);
+                                NetworkManager.Instance.Auth();
+                            });
+                            //Patch();
                         }
                         else
                         {
