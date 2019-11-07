@@ -611,94 +611,6 @@ public class CardDictionaryManager : MonoBehaviour {
             SetToOrcCards();
         SortHeroCards();
     }
-
-
-
-    //public void SetHeroButtons() {
-    //    for (int i = 0; i < 8; i++) {
-    //        heroCards.GetChild(i).gameObject.SetActive(false);
-    //    }
-
-    //    int count = 0;
-
-    //    foreach (dataModules.HeroInventory heroes in AccountManager.Instance.allHeroes) {
-    //        if (heroes.camp == "human" && !isHumanDictionary) continue;
-    //        if (heroes.camp == "orc" && isHumanDictionary) continue;
-    //        Transform hero = heroCards.GetChild(count);
-    //        hero.gameObject.SetActive(true);
-    //        hero.transform.Find("SelectBack").gameObject.SetActive(false);
-    //        hero.transform.Find("SelectFront").gameObject.SetActive(false);
-    //        List<EventTrigger.Entry> entriesToRemove = new List<EventTrigger.Entry>();
-    //        foreach (var entry in hero.GetComponent<EventTrigger>().triggers) {
-    //            if (entry.eventID == EventTriggerType.PointerDown || entry.eventID == EventTriggerType.PointerUp)
-    //                entriesToRemove.Add(entry);
-    //        }
-    //        foreach (var entry in entriesToRemove)
-    //            hero.GetComponent<EventTrigger>().triggers.Remove(entry);
-    //        EventTrigger.Entry onBtn = new EventTrigger.Entry();
-    //        onBtn.eventID = EventTriggerType.PointerDown;
-    //        onBtn.callback.AddListener((EventData) => StartClick(heroes.id));
-    //        hero.GetComponent<EventTrigger>().triggers.Add(onBtn);
-    //        EventTrigger.Entry upBtn = new EventTrigger.Entry();
-    //        upBtn.eventID = EventTriggerType.PointerUp;
-    //        upBtn.callback.AddListener((EventData) => EndClick(hero.gameObject, heroes.id));
-    //        hero.GetComponent<EventTrigger>().triggers.Add(upBtn);
-    //        hero.Find("Portrait").GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[heroes.id + "_button"];
-    //        bool haveHero = AccountManager.Instance.myHeroInventories.ContainsKey(heroes.id);
-    //        hero.Find("HeroLevel").gameObject.SetActive(haveHero);
-    //        hero.Find("Empty").gameObject.SetActive(!haveHero);
-    //        count++;
-    //    }
-    //}
-
-    //public void StartClick(string heroId) {
-    //    SoundManager.Instance.PlaySound("button_1");
-    //    clickTime = Time.time;
-    //    StartCoroutine(WaitForOpenInfo(heroId));
-    //}
-
-    //IEnumerator WaitForOpenInfo(string heroId) {
-    //    standby = true;
-    //    while (standby) {
-    //        yield return new WaitForSeconds(0.1f);
-    //        if (Time.time - clickTime >= 0.5f) {
-    //            OpenHeroInfoWIndow(heroId);
-    //            standby = false;
-    //        }
-    //    }
-    //}
-    //public void EndClick(GameObject btn, string heroId) {
-    //    if (!standby) return;
-    //    btn.transform.Find("SelectBack").GetComponent<SkeletonGraphic>().Initialize(true);
-    //    btn.transform.Find("SelectBack").GetComponent<SkeletonGraphic>().Update(0);
-    //    btn.transform.Find("SelectFront").GetComponent<SkeletonGraphic>().Initialize(true);
-    //    btn.transform.Find("SelectFront").GetComponent<SkeletonGraphic>().Update(0);
-    //    if (selectedHero == null) {
-    //        selectedHero = btn;
-    //        selectedHeroId = heroId;
-    //        btn.transform.Find("SelectBack").gameObject.SetActive(true);
-    //        btn.transform.Find("SelectFront").gameObject.SetActive(true);
-    //        SortHeroCards();
-    //    }
-    //    else if (selectedHero == btn) {
-    //        selectedHero = null;
-    //        selectedHeroId = "";
-    //        btn.transform.Find("SelectBack").gameObject.SetActive(false);
-    //        btn.transform.Find("SelectFront").gameObject.SetActive(false);
-    //        ApplySortting();
-    //    }
-    //    else {
-    //        selectedHero.transform.Find("SelectBack").gameObject.SetActive(false);
-    //        selectedHero.transform.Find("SelectFront").gameObject.SetActive(false);
-    //        selectedHero = btn;
-    //        selectedHeroId = heroId;
-    //        btn.transform.Find("SelectBack").gameObject.SetActive(true);
-    //        btn.transform.Find("SelectFront").gameObject.SetActive(true);
-    //        SortHeroCards();
-    //    }
-    //    standby = false;
-    //}
-
     public void SortHeroCards() {
         switch (selectedSortOption) {
             case SortingOptions.CLASS:
@@ -839,7 +751,7 @@ public class CardDictionaryManager : MonoBehaviour {
     }
 
     private void UpdateContentHeight() {
-        float tmp = 512f; //영웅 슬롯이 2줄이 될 시 300+ 해주면 됨
+        float tmp = 512f;
         Transform activatedTf = null;
         foreach (Transform tf in cardList) {
             if (tf.gameObject.activeSelf) {
