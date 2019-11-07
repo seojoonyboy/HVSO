@@ -586,6 +586,8 @@ public class CardDictionaryManager : MonoBehaviour {
         if (selectedHero == null) return;
         transform.Find("HeroDictionary/HeroSelect").gameObject.SetActive(false);
         transform.Find("HeroDictionary/HeroImage").gameObject.SetActive(true);
+        transform.Find("HeroDictionary/HeroImage/HeroStory/HumanBG").gameObject.SetActive(isHumanDictionary);
+        transform.Find("HeroDictionary/HeroImage/HeroStory/OrcBG").gameObject.SetActive(!isHumanDictionary);
         transform.Find("HeroDictionary/HeroImage/HeroSpine").Find(selectedHeroId).gameObject.SetActive(true);
         transform.Find("HeroDictionary/HeroImage/HeroSpine").Find(selectedHeroId).SetAsFirstSibling();
         foreach(dataModules.HeroInventory hero in AccountManager.Instance.allHeroes) {

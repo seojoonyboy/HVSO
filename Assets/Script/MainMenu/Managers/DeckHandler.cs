@@ -54,7 +54,7 @@ public class DeckHandler : MonoBehaviour
         deckID = deck.id;
         if(deck.bannerImage != null)
             transform.Find("HeroImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.deckPortraite[deck.bannerImage];
-        transform.Find("DeckName").GetComponent<TMPro.TextMeshProUGUI>().text = "견본덱";
+        transform.Find("DeckName").GetComponent<TMPro.TextMeshProUGUI>().text = "견본 부대";
         int playerCardNum = CheckPlayerCards(deck);
         transform.Find("CardNum/Value").GetComponent<TMPro.TextMeshProUGUI>().text = playerCardNum.ToString() + "/";
         ableTemplate = (playerCardNum == 40);
