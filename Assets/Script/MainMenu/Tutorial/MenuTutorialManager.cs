@@ -13,7 +13,7 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
     public List<TutorialSet> sets;
     [HideInInspector] public TutorialSet selectedTutorialData;
     [ShowInInspector] MenuExecuteHandler executeHandler;
-    [SerializeField] UnityEngine.UI.Extensions.HorizontalScrollSnap scrollSnap;
+    public UnityEngine.UI.Extensions.HorizontalScrollSnap scrollSnap;
 
     public GameObject mainDescCanvas;    //한 이미지로 표현하는 튜토리얼 parent 객체
 

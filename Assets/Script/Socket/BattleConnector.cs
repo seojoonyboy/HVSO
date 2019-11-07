@@ -161,12 +161,7 @@ public partial class BattleConnector : MonoBehaviour {
 
         if(battleType.CompareTo("test") == 0)
             return new string[] { battleType, race };
-        
-        //Logger.Log("stageNum : " + PlayerPrefs.GetString("StageNum"));
-        if (battleType == "story" && PlayerPrefs.GetString("StageNum") != "1") {
-            PlayerPrefs.SetString("SelectedBattleType", "solo");
-            battleType = "solo";
-        }  //TODO : 튜토리얼 이외의 스토리 세팅이 되면 변경할 필요가 있음
+
         if (battleType == "story") {
             //========================================================
             //deckId 및 race 관련 처리 수정 예정

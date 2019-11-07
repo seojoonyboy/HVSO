@@ -1,26 +1,56 @@
 [
-  {
-    "chapterNum": 0,
-    "stageNum": 1,
-    "challenges": [
-      {
-        "id": 0,
-        "content": "유닛을 배치해 적을 막아라",
-        "targetNum": 3,
-        "currentNum": 0
-      },
-      {
-        "id": 1,
-        "content": "유닛을 배치해 적을 막아라라",
-        "targetNum": 2,
-        "currentNum": 0
-      },
-      {
-        "id": 2,
-        "content": "영웅 스킬을 사용하라",
-        "targetNum": 1,
-        "currentNum": 0
-      }
-    ]
-  }
+    {
+        "chapterNum": 0,
+        "stageNum": 1,
+        "challenges": [
+            {
+                "id": 0,
+                "content": "유닛을 배치해 적을 막아라",
+                "targetNum": 3,
+                "currentNum": 0
+            },
+            {
+                "id": 1,
+                "content": "유닛을 배치해 적을 막아라라",
+                "targetNum": 2,
+                "currentNum": 0
+            },
+            {
+                "id": 2,
+                "content": "영웅 스킬을 사용하라",
+                "targetNum": 1,
+                "currentNum": 0
+            }
+        ]
+    },
+    {
+        "chapterNum": 0,
+        "stageNum": 2,
+        "challenges": [
+		    {
+			    "id": 0,
+			    "content": "영웅 스킬 사용하기",
+			    "targetNum": 1,
+			    "currentNum": 0
+		    },
+		    {
+			    "id": 1,
+			    "content": "도전자를 배치해서 암살자를 끌어오기",
+			    "targetNum": 1,
+			    "currentNum": 0
+		    },
+		    {
+			    "id": 2,
+			    "content": "방패병 배치",
+			    "targetNum": 1,
+			    "currentNum": 0
+		    },
+		    {
+			    "id": 2,
+			    "content": "짐마차를 지키면서 전투 승리",
+			    "targetNum": 1,
+			    "currentNum": 0
+		    }
+        ]
+    }
 ]

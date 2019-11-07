@@ -364,13 +364,15 @@ namespace MenuTutorialModules {
             ScenarioManager scenarioManager = GetComponent<MenuTutorialManager>().scenarioManager;
             GetComponent<MenuTutorialManager>().ActiveTutorialStoryReadyCanvas(args[0]);
 
+            int chapterNum = 0;
+            int.TryParse(args[1], out chapterNum);
             if (args[0] == "human") {
-                ScenarioGameManagment.chapterData = scenarioManager.human_chapterDatas[0];
-                ScenarioGameManagment.challengeDatas = scenarioManager.human_challengeDatas[0].challenges;
+                ScenarioGameManagment.chapterData = scenarioManager.human_chapterDatas[chapterNum];
+                ScenarioGameManagment.challengeDatas = scenarioManager.human_challengeDatas[chapterNum].challenges;
             }
             else if(args[0] == "orc") {
-                ScenarioGameManagment.chapterData = scenarioManager.orc_chapterDatas[0];
-                ScenarioGameManagment.challengeDatas = scenarioManager.orc_challengeDatas[0].challenges;
+                ScenarioGameManagment.chapterData = scenarioManager.orc_chapterDatas[chapterNum];
+                ScenarioGameManagment.challengeDatas = scenarioManager.orc_challengeDatas[chapterNum].challenges;
             }
 
             handler.isDone = true;
@@ -737,6 +739,20 @@ namespace MenuTutorialModules {
         public override void Execute() {
             GetComponent<MenuTutorialManager>().OnMenuDescPanel(2);
             PlayerPrefs.SetInt("IsFirstMainMenu", 0);
+            handler.isDone = true;
+        }
+    }
+
+    public class ForceToPage : MenuExecute {
+        public override void Execute() {
+            string pageName = args[0];
+
+            switch (pageName) {
+                case "StoryLobby":
+                    GetComponent<MenuTutorialManager>().scenarioManager.gameObject.SetActive(true);
+                    break;
+            }
+
             handler.isDone = true;
         }
     }
