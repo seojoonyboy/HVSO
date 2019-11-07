@@ -1,0 +1,859 @@
+[
+  {
+    "chapter": 0,
+    "stage_number": 1,
+    "stage_Name": "복수",
+    "match_type": "tutorial",
+    "description": null,
+    "specialRule": "- 적 영웅 체력 5\n- 튜토리얼",
+    "scripts": [
+      {
+        "Print_text": null,
+        "methods": [
+          {
+            "name": "Stop_Invoke_NextTurn",
+            "args": []
+          },
+          {
+            "name": "NPC_Print_message",
+            "args": [
+              "ac10012",
+              "족장님, 인간들의 순찰대가 나타났습니다.",
+              "true"
+            ]
+          },
+          {
+            "name": "Wait_click",
+            "args": [
+              "screen"
+            ]
+          },
+          {
+            "name": "NPC_Print_message",
+            "args": [
+              "ac10002",
+              "어이 오크들. 이 근처에는 인간의 마을이 있다. 오크주제에 어딜 어슬렁거리는거냐.",
+              "false"
+            ]
+          },
+          {
+            "name": "Wait_click",
+            "args": [
+              "screen"
+            ]
+          },
+          {
+            "name": "NPC_Print_message",
+            "args": [
+              "ac10012",
+              "우리는 그저 지나가는 길입니다. 아무 짓도 하지 않았습니다.",
+              "true"
+            ]
+          },
+          {
+            "name": "Wait_click",
+            "args": [
+              "screen"
+            ]
+          },
+          {
+            "name": "NPC_Print_message",
+            "args": [
+              "ac10002",
+              "오크가 지나가기만 해도 주변엔 악취가 난단말이다. 그냥 산 구석에 쳐박혀서 나오지 말았어야지.",
+              "false"
+            ]
+          },
+          {
+            "name": "Wait_click",
+            "args": [
+              "screen"
+            ]
+          },
+          {
+            "name": "NPC_Print_message",
+            "args": [
+              "ac10002",
+              "너희같은 해충들이 왜 살아있는지 모르겠단 말이야. 이참에 싹 정리해주도록 하지. 전투준비!",
+              "false"
+            ]
+          },
+          {
+            "name": "Wait_click",
+            "args": [
+              "screen"
+            ]
+          },
+          {
+            "name": "NPC_Print_message",
+            "args": [
+              "ac10012",
+              "족장님! 인간들이 저희를 공격하려 합니다!! 저희를 지켜주세요!",
+              "true"
+            ]
+          },
+          {
+            "name": "Wait_click",
+            "args": [
+              "screen"
+            ]
+          },
+          {
+            "name": "Proceed_Invoke_NextTurn",
+            "args": []
+          }
+        ],
+        "isExecute": false
+      },
+      {
+        "Print_text": null,
+        "methods": [
+          {
+            "name": "Disable_EndTurn",
+            "args": []
+          },
+          {
+            "name": "Wait_until",
+            "args": [
+              "2"
+            ]
+          },
+          {
+            "name": "NPC_Print_message",
+            "args": [
+              "ac10012",
+              "우리 오크들은 인간보다 빠르게 병력을 배치할 수 있습니다. 오크 병사를 배치해주세요!",
+              "true"
+            ]
+          },
+          {
+            "name": "Wait_click",
+            "args": [
+              "screen"
+            ]
+          },
+          {
+            "name": "Unblock_Screen",
+            "args": []
+          },
+          {
+            "name": "Disable_Deck_card",
+            "args": [
+              "ac10012"
+            ]
+          },
+          {
+            "name": "ChallengeStart",
+            "args": [
+              "UNIT_SUMMONED"
+            ]
+          },
+          {
+            "name": "Wait_Multiple_Summon_ScopeLine",
+            "args": [
+              "2,4",
+              "ac10012"
+            ]
+          },
+          {
+            "name": "ChallengeEnd",
+            "args": [
+              "UNIT_SUMMONED"
+            ]
+          },
+          {
+            "name": "StopHighlight",
+            "args": []
+          },
+          {
+            "name": "Enable_EndTurn",
+            "args": []
+          },
+          {
+            "name": "Enable_Deck_card",
+            "args": []
+          },
+          {
+            "name": "Highlight",
+            "args": [
+              "button",
+              "endTurn"
+            ]
+          },
+          {
+            "name": "Stop_Invoke_NextTurn",
+            "args": []
+          },
+          {
+            "name": "Wait_click",
+            "args": [
+              "button",
+              "endTurn"
+            ]
+          }
+        ],
+        "isExecute": false
+      },
+      {
+        "Print_text": null,
+        "methods": [
+          {
+            "name": "Block_Screen",
+            "args": []
+          },
+          {
+            "name": "Stop_orc_summon",
+            "args": []
+          },
+          {
+            "name": "Stop_orc_magic",
+            "args": []
+          },
+          {
+            "name": "NPC_Print_message",
+            "args": [
+              "ac10002",
+              "미개한 오크 주제에 겁도 없구나. 제대로 즐기다 해치워주마.",
+              "false"
+            ]
+          },
+          {
+            "name": "Wait_click",
+            "args": [
+              "screen"
+            ]
+          },
+          {
+            "name": "Proceed_orc_magic",
+            "args": []
+          },
+          {
+            "name": "Proceed_orc_summon",
+            "args": []
+          },
+          {
+            "name": "Proceed_Invoke_NextTurn",
+            "args": []
+          },
+          {
+            "name": "Wait_Turn",
+            "args": [
+              "SECRET"
+            ]
+          },
+          {
+            "name": "Disable_EndTurn",
+            "args": []
+          },
+          {
+            "name": "Wait_until",
+            "args": [
+              "1"
+            ]
+          },
+          {
+            "name": "NPC_Print_message",
+            "args": [
+              "ac10012",
+              "적들의 군대가 너무 강합니다. 어쩔수 없이 오크족 마법을 사용해야 할 것 같습니다.",
+              "true"
+            ]
+          },
+          {
+            "name": "Wait_click",
+            "args": [
+              "screen"
+            ]
+          },
+          {
+            "name": "NPC_Print_message",
+            "args": [
+              "ac10012",
+              "어둠의 가시로 강한 적을 처치하고 공격을 방지하세요.",
+              "true"
+            ]
+          },
+          {
+            "name": "Disable_Deck_card",
+            "args": [
+              "ac10074"
+            ]
+          },
+          {
+            "name": "Wait_click",
+            "args": [
+              "screen"
+            ]
+          },
+          {
+            "name": "Unblock_Screen",
+            "args": []
+          }
+        ],
+        "isExecute": false
+      },
+      {
+        "Print_text": null,
+        "methods": [
+          {
+            "name": "Force_drop_zone",
+            "args": [
+              "magic",
+              "2",
+              "unit"
+            ]
+          },
+          {
+            "name": "ChallengeStart",
+            "args": [
+              "MAGIC_USED"
+            ]
+          },
+          {
+            "name": "Wait_drop",
+            "args": [
+              "magiceCard",
+              "ac10074"
+            ]
+          },
+          {
+            "name": "ChallengeEnd",
+            "args": [
+              "MAGIC_USED"
+            ]
+          },
+          {
+            "name": "Wait_until",
+            "args": [
+              "3.6"
+            ]
+          },
+          {
+            "name": "NPC_Print_message",
+            "args": [
+              "ac10012",
+              "오크의 마법은 인간의 병력 배치와 마법 사용을 모두 보고, 나중에 사용할 수 있다는 장점이 있습니다.",
+              "true"
+            ]
+          },
+          {
+            "name": "Wait_click",
+            "args": [
+              "screen"
+            ]
+          },
+          {
+            "name": "Enable_EndTurn",
+            "args": []
+          },
+          {
+            "name": "Highlight",
+            "args": [
+              "button",
+              "endTurn"
+            ]
+          },
+          {
+            "name": "Wait_click",
+            "args": [
+              "button",
+              "endTurn"
+            ]
+          },
+          {
+            "name": "StopHighlight",
+            "args": []
+          },
+          {
+            "name": "Stop_Next_Turn",
+            "args": []
+          },
+          {
+            "name": "Wait_Battle_End",
+            "args": []
+          }
+        ],
+        "isExecute": false
+      },
+      {
+        "Print_text": null,
+        "methods": [
+          {
+            "name": "Block_Screen",
+            "args": []
+          },
+          {
+            "name": "NPC_Print_message",
+            "args": [
+              "ac10002",
+              "뭐..뭐야 방금 그건? 오크주제에 마법같은걸 쓰다니, 악마같은 놈들이 틀림없다. 더 많은 병력을 불러와야해!!",
+              "false"
+            ]
+          },
+          {
+            "name": "Wait_click",
+            "args": [
+              "screen"
+            ]
+          },
+          {
+            "name": "NPC_Print_message",
+            "args": [
+              "ac10012",
+              "저놈이 도망칩니다! 더 많은 인간을 불러올테니, 도망치기 전에 잡아야 합니다.",
+              "true"
+            ]
+          },
+          {
+            "name": "Wait_click",
+            "args": [
+              "screen"
+            ]
+          },
+          {
+            "name": "Proceed_Next_Turn",
+            "args": []
+          },
+          {
+            "name": "Disable_EndTurn",
+            "args": []
+          },
+          {
+            "name": "Wait_until",
+            "args": [
+              "5"
+            ]
+          }
+        ],
+        "isExecute": false
+      },
+      {
+        "Print_text": null,
+        "methods": [
+          {
+            "name": "NPC_Print_message",
+            "args": [
+              "ac10012",
+              "병력 싸움으로는 불리하니, 지휘관을 노려야 합니다. 지휘관을 공격할 때 강한 암살자를 배치하세요.",
+              "true"
+            ]
+          },
+          {
+            "name": "Disable_Deck_card",
+            "args": [
+              "ac10011"
+            ]
+          },
+          {
+            "name": "Force_drop_zone",
+            "args": [
+              "unit",
+              "1"
+            ]
+          },
+          {
+            "name": "Wait_click",
+            "args": [
+              "screen"
+            ]
+          },
+          {
+            "name": "ChallengeStart",
+            "args": [
+              "UNIT_SUMMONED"
+            ]
+          },
+          {
+            "name": "Unblock_Screen",
+            "args": []
+          },
+          {
+            "name": "Wait_summon",
+            "args": [
+              "a",
+              "ac10011"
+            ]
+          },
+          {
+            "name": "ChallengeEnd",
+            "args": [
+              "UNIT_SUMMONED"
+            ]
+          },
+          {
+            "name": "StopHighlight",
+            "args": []
+          },
+          {
+            "name": "NPC_Print_message",
+            "args": [
+              "ac10012",
+              "더 이상 배치할 수 있는 병력이 없습니다. 일단 유닛 턴은 넘어가야 하겠네요.",
+              "true"
+            ]
+          },
+          {
+            "name": "Wait_click",
+            "args": [
+              "screen"
+            ]
+          },
+          {
+            "name": "Enable_EndTurn",
+            "args": []
+          },
+          {
+            "name": "Highlight",
+            "args": [
+              "button",
+              "endTurn"
+            ]
+          },
+          {
+            "name": "Wait_click",
+            "args": [
+              "button",
+              "endTurn"
+            ]
+          },
+          {
+            "name": "StopHighlight",
+            "args": []
+          },
+          {
+            "name": "Wait_Turn",
+            "args": [
+              "HUMAN"
+            ]
+          },
+          {
+            "name": "Stop_orc_summon",
+            "args": []
+          },
+          {
+            "name": "Wait_until",
+            "args": [
+              "1"
+            ]
+          }
+        ],
+        "isExecute": false
+      },
+      {
+        "Print_text": null,
+        "methods": [
+          {
+            "name": "NPC_Print_message",
+            "args": [
+              "ac10002",
+              "이런 건방진… 뭣들하나!! 오크 암살자가 날 노리잖나!! 날 지켜라!",
+              "false"
+            ]
+          },
+          {
+            "name": "Wait_click",
+            "args": [
+              "screen"
+            ]
+          },
+          {
+            "name": "Proceed_orc_summon",
+            "args": []
+          },
+          {
+            "name": "Wait_Turn",
+            "args": [
+              "SECRET"
+            ]
+          },
+          {
+            "name": "Wait_until",
+            "args": [
+              "1"
+            ]
+          },
+          {
+            "name": "Disable_EndTurn",
+            "args": []
+          }
+        ],
+        "isExecute": false
+      },
+      {
+        "Print_text": null,
+        "methods": [
+          {
+            "name": "Block_Screen",
+            "args": []
+          },
+          {
+            "name": "NPC_Print_message",
+            "args": [
+              "ac10012",
+              "이런!! 교활한 녀석입니다. 우리 암살자 앞에 방패병을 배치해 암살자의 힘이 빠졌습니다.",
+              "true"
+            ]
+          },
+          {
+            "name": "Wait_click",
+            "args": [
+              "screen"
+            ]
+          },
+          {
+            "name": "NPC_Print_message",
+            "args": [
+              "ac10012",
+              "일단 저희의 카드를 보충할 필요가 있습니다. 전투의 외침 카드를 사용해 카드를 확보합시다.",
+              "true"
+            ]
+          },
+          {
+            "name": "Disable_Deck_card",
+            "args": [
+              "ac10017"
+            ]
+          },
+          {
+            "name": "Wait_click",
+            "args": [
+              "screen"
+            ]
+          },
+          {
+            "name": "Unblock_Screen",
+            "args": []
+          },
+          {
+            "name": "ChallengeStart",
+            "args": [
+              "MAGIC_USED"
+            ]
+          },
+          {
+            "name": "Wait_drop",
+            "args": [
+              "a",
+              "ac10017"
+            ]
+          },
+          {
+            "name": "ChallengeEnd",
+            "args": [
+              "MAGIC_USED"
+            ]
+          },
+          {
+            "name": "Wait_until",
+            "args": [
+              "2"
+            ]
+          },
+          {
+            "name": "NPC_Print_message",
+            "args": [
+              "ac10012",
+              "즉시 사용할 수 있는 마법을 확보했습니다! 마법을 사용해 암살자의 위치를 옮겨봅시다!",
+              "true"
+            ]
+          },
+          {
+            "name": "Wait_click",
+            "args": [
+              "screen"
+            ]
+          }
+        ],
+        "isExecute": false
+      },
+      {
+        "Print_text": null,
+        "methods": [
+          {
+            "name": "Disable_Deck_card",
+            "args": [
+              "ac10015"
+            ]
+          },
+          {
+            "name": "Force_drop_zone",
+            "args": [
+              "unit",
+              "1"
+            ]
+          },
+          {
+            "name": "Unblock_Screen",
+            "args": []
+          },
+          {
+            "name": "ChallengeStart",
+            "args": [
+              "MAGIC_USED"
+            ]
+          },
+          {
+            "name": "Wait_drop",
+            "args": [
+              "ac10015",
+              "ac10015"
+            ]
+          },
+          {
+            "name": "ChallengeEnd",
+            "args": [
+              "MAGIC_USED"
+            ]
+          },
+          {
+            "name": "Force_drop_zone",
+            "args": [
+              "magic",
+              "3"
+            ]
+          },
+          {
+            "name": "Wait_UnitPos_Change",
+            "args": []
+          },
+          {
+            "name": "Wait_until",
+            "args": [
+              "1"
+            ]
+          },
+          {
+            "name": "NPC_Print_message",
+            "args": [
+              "ac10012",
+              "이제 암살자가 적 지휘관을 노릴 수 있습니다! 전투를 진행하십시오 족장님!",
+              "true"
+            ]
+          },
+          {
+            "name": "Result_battle",
+            "args": [
+              "stop"
+            ]
+          },
+          {
+            "name": "Enable_EndTurn",
+            "args": []
+          },
+          {
+            "name": "Wait_click",
+            "args": [
+              "screen"
+            ]
+          },
+          {
+            "name": "Unblock_Screen",
+            "args": []
+          },
+          {
+            "name": "Highlight",
+            "args": [
+              "button",
+              "endTurn"
+            ]
+          },
+          {
+            "name": "Wait_click",
+            "args": [
+              "button",
+              "endTurn"
+            ]
+          },
+          {
+            "name": "StopHighlight",
+            "args": []
+          }
+        ],
+        "isExecute": false
+      },
+      {
+        "Print_text": null,
+        "methods": [
+          {
+            "name": "Wait_Enemy_hero_Dead",
+            "args": []
+          },
+          {
+            "name": "Wait_until",
+            "args": [
+              "2"
+            ]
+          },
+          {
+            "name": "NPC_Print_message",
+            "args": [
+              "ac10002",
+              "크악 젠장… 오크놈..들… 주제에…",
+              "false"
+            ]
+          },
+          {
+            "name": "Wait_click",
+            "args": [
+              "screen"
+            ]
+          },
+          {
+            "name": "NPC_Print_message",
+            "args": [
+              "ac10012",
+              "적 지휘관을 처치했습니다! 하지만 결국 적의 군사들은 도망쳤습니다.",
+              "true"
+            ]
+          },
+          {
+            "name": "Wait_click",
+            "args": [
+              "screen"
+            ]
+          },
+          {
+            "name": "NPC_Print_message",
+            "args": [
+              "ac10012",
+              "전투에서는 이겼지만 우리 부족은 인간에게 추적당하게 되겠군요…",
+              "true"
+            ]
+          },
+          {
+            "name": "Wait_click",
+            "args": [
+              "screen"
+            ]
+          },
+          {
+            "name": "NPC_Print_message",
+            "args": [
+              "ac10012",
+              "인간들이 언제 돌아올지 모르니 일단은 여기서 도망쳐서 부족을 수습하시죠.",
+              "true"
+            ]
+          },
+          {
+            "name": "Wait_click",
+            "args": [
+              "screen"
+            ]
+          },
+          {
+            "name": "Result_battle",
+            "args": [
+              "proceed"
+            ]
+          },
+          {
+            "name": "End_tutorial",
+            "args": []
+          }
+        ],
+        "isExecute": false
+      }
+    ],
+    "scenarioReward": []
+  }
+]

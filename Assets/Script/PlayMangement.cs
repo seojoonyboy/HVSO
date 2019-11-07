@@ -49,6 +49,7 @@ public partial class PlayMangement : MonoBehaviour {
     public bool beginStopTurn = false;
     public bool afterStopTurn = false;
     public bool waitDraw = false;
+    public bool stopFirstCard = false;
 
     public float cameraSize;
 
@@ -117,8 +118,16 @@ public partial class PlayMangement : MonoBehaviour {
         string condition = data;
 
         switch (condition) {
+            case "Protect":
+                matchRule = gameObject.AddComponent<victoryModule.ProtectObject>();
+                matchRule.player = player;
+                matchRule.enemyPlayer = enemyPlayer;
+                if (ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.isTutorial)
+                    break;
+                else
+                    matchRule.SetCondition();
+                break;
             default:
-                //matchRule = new victoryModule.Annihilation_Match(player, enemyPlayer);
                 matchRule = gameObject.AddComponent<victoryModule.Annihilation_Match>();
                 matchRule.player = player;
                 matchRule.enemyPlayer = enemyPlayer;
@@ -468,6 +477,7 @@ public partial class PlayMangement : MonoBehaviour {
             UnitsObserver.UnitChangePosition(existUnit.gameObject, new FieldUnitsObserver.Pos(i, 1), player.isHuman);
         }
         GameObject monster = SummonUnit(false, id, i, j, history.cardItem.itemId);
+        eventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.ENEMY_SUMMON_UNIT, this, id);
         return monster;
     }
 

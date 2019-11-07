@@ -232,10 +232,12 @@ public class CardListManager : MonoBehaviour
                 EventTrigger.Entry onBtn = new EventTrigger.Entry();
                 onBtn.eventID = EventTriggerType.PointerDown;
                 onBtn.callback.AddListener((EventData) => OpenClassDescModal(data.attackTypes[0], image));
+                onBtn.callback.AddListener((EventPost) => PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.CLICK_SKILL_ICON,this));
                 info.Find("Skill&BuffRow1").GetChild(skillnum).GetComponent<EventTrigger>().triggers.Add(onBtn);
                 EventTrigger.Entry offBtn = new EventTrigger.Entry();
                 offBtn.eventID = EventTriggerType.PointerUp;
                 offBtn.callback.AddListener((EventData) => CloseClassDescModal());
+                offBtn.callback.AddListener((EventPost) => PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.CLOSE_INFO_WINDOW, this));
                 info.Find("Skill&BuffRow1").GetChild(skillnum).GetComponent<EventTrigger>().triggers.Add(offBtn);
                 skillnum++;
             }
@@ -346,7 +348,7 @@ public class CardListManager : MonoBehaviour
     
 
     public virtual void OpenUnitInfoWindow(Vector3 inputPos) {
-        if (ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.isTutorial == true) return;
+        if (ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.infoWindow == false) return;
 
         if (!PlayMangement.instance.infoOn && Input.GetMouseButtonDown(0)) {
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(inputPos);
@@ -428,6 +430,7 @@ public class CardListManager : MonoBehaviour
                     hpText.text = sb.ToString();
                     //transform.Find("FieldUnitInfo").Find(objName).localScale = new Vector3(1.4f, 1.4f, 1);
                     PlayMangement.instance.infoOn = true;
+                    PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.OPEN_INFO_WINDOW, this, placeMonster);
                 }
             }
         }
