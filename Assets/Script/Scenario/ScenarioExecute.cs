@@ -253,7 +253,7 @@ public class StopHighlight : ScenarioExecute {
 
 }
 
-
+//단순히 유닛 소환 기달림 args[0] unitID
 public class Wait_summon : ScenarioExecute {
     public Wait_summon() : base() { }
 
@@ -270,7 +270,7 @@ public class Wait_summon : ScenarioExecute {
         string unitID = (string)Param;
 
 
-        if (unitID == args[1]) {
+        if (unitID == args[0]) {
             PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.UNIT_SUMMONED, CheckSummon);
             PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.UNIT_DROP_FAIL, Glowing);
             handler.isDone = true;
@@ -278,12 +278,12 @@ public class Wait_summon : ScenarioExecute {
     }
 
     private void Glow() {
-        scenarioMask.CardDeckGlow(args[1]);
+        scenarioMask.CardDeckGlow(args[0]);
     }
 
 
     private void Glowing(Enum event_type, Component Sender, object Param) {
-        scenarioMask.CardDeckGlow(args[1]);
+        scenarioMask.CardDeckGlow(args[0]);
     }
 
 }
@@ -336,7 +336,7 @@ public class Enable_Deck_card : ScenarioExecute {
 
 
 
-
+//args[0] 얼마나? 
 public class Wait_Multiple_Summon : ScenarioExecute {
     public Wait_Multiple_Summon() : base() { }
 
@@ -388,6 +388,7 @@ public class Wait_Multiple_Summon : ScenarioExecute {
     }
 }
 
+// args[0] x,y x는 어디 어디 배치할껀가?
 public class Wait_Multiple_Summon_ScopeLine : ScenarioExecute {
     public Wait_Multiple_Summon_ScopeLine() : base() { }
 
@@ -396,7 +397,7 @@ public class Wait_Multiple_Summon_ScopeLine : ScenarioExecute {
     private string[] stringNum;
     private int[] line;
 
-    // args[0] x,x
+    
     public override void Execute() {
         stringNum = args[0].Split(',');
         line = new int[stringNum.Length];
@@ -446,7 +447,7 @@ public class Wait_Multiple_Summon_ScopeLine : ScenarioExecute {
 }
 
 
-
+//args[0] 얼마나 소환할지? args[1] 1~x 라인중 x까지 라인 활성화
 public class Wait_Multiple_Summon_linelimit : ScenarioExecute {
     public Wait_Multiple_Summon_linelimit() : base() { }
 
@@ -492,7 +493,7 @@ public class Wait_Multiple_Summon_linelimit : ScenarioExecute {
 
 
 
-
+// 마법사용 대기
 public class Wait_drop : ScenarioExecute {
     public Wait_drop() : base() { }
 
@@ -644,6 +645,7 @@ public class End_tutorial : ScenarioExecute {
     }
 }
 
+//배틀턴 args[0] stop or proceed, args[1] 몇라인?
 public class Battle_turn : ScenarioExecute {
     public Battle_turn() : base() { }
 
@@ -685,6 +687,7 @@ public class Select_Skill_Force : ScenarioExecute {
     }
 }
 
+//턴버튼 무력화
 public class Enable_EndTurn : ScenarioExecute {
     public Enable_EndTurn() : base() { }
 
@@ -902,7 +905,7 @@ public class Reinforement_Unit : ScenarioExecute {
 }
 
 
-
+//배틀 끝나고 다음턴
 public class Stop_Next_Turn : ScenarioExecute {
     public Stop_Next_Turn() : base() { }
 
@@ -980,7 +983,7 @@ public class Orc_post_turn : ScenarioExecute {
         handler.isDone = true;
     }
 }
-
+//사각형으로 된 오브젝트들 setactive = false
 public class OffHighlight : ScenarioExecute {
     public OffHighlight() : base() { }
 
@@ -997,7 +1000,7 @@ public class Enable_drag : ScenarioExecute {
         handler.isDone = true;
     }
 }
-
+//전투 종료를 기달림
 public class Wait_Battle_End : ScenarioExecute {
     public Wait_Battle_End() : base() { }
 
@@ -1010,7 +1013,7 @@ public class Wait_Battle_End : ScenarioExecute {
         handler.isDone = true;
     }
 }
-
+//미사용 함수 폐기예정
 public class Block_Turn_Btn : ScenarioExecute {
     public Block_Turn_Btn() : base() { }
 
@@ -1020,7 +1023,7 @@ public class Block_Turn_Btn : ScenarioExecute {
     }
 
 }
-
+//미사용 함수 폐기예정
 public class Unblock_Turn_Btn : ScenarioExecute {
     public Unblock_Turn_Btn() : base() { }
 
@@ -1029,7 +1032,7 @@ public class Unblock_Turn_Btn : ScenarioExecute {
         handler.isDone = true;
     }
 }
-
+//몇번째 라인 전투 종료?
 public class Wait_End_Line_Battle : ScenarioExecute {
     public Wait_End_Line_Battle() : base() { }
 
@@ -1150,7 +1153,7 @@ public class ChallengeEnd : ScenarioExecute {
         handler.isDone = true;
     }
 }
-
+// 턴과 턴사이, 배틀 종료 아님!
 public class Stop_Invoke_NextTurn : ScenarioExecute {
     public Stop_Invoke_NextTurn() : base() {  }
 
@@ -1171,7 +1174,7 @@ public class Proceed_Invoke_NextTurn : ScenarioExecute {
         handler.isDone = true;
     }
 }
-
+//영웅카드 뽑을상황에 잠시 뽑지말도록 스탑
 public class Wait_DrawHero : ScenarioExecute {
     public Wait_DrawHero() : base() { }
 
@@ -1246,4 +1249,166 @@ public class Wait_Enemy_hero_Dead : ScenarioExecute {
 }
 
 
+//첫 카드배분 스탑 or 배분
+public class First_Card : ScenarioExecute {
+    public First_Card() : base() { }
+
+    public override void Execute() {
+        if (args[0] == "stop")
+            PlayMangement.instance.stopFirstCard = true;
+        else
+            PlayMangement.instance.stopFirstCard = false;
+        handler.isDone = true;
+    }
+
+}
+
+/// <summary>
+/// 적 유닛이 소환해야할 경우의 class
+/// </summary>
+public class Wait_Enemy_Summon : ScenarioExecute {
+    public Wait_Enemy_Summon() : base() { }
+    
+    private int count = 0;
+    private int goalCount = -1;
+
+    public override void Execute() {
+        goalCount = int.Parse(args[0]);
+        PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.ENEMY_SUMMON_UNIT, CheckSummon);
+    }
+
+    private void CheckSummon(Enum event_type, Component Sender, object Param) {
+        count++;
+
+        if(count >= goalCount) {
+            PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.ENEMY_SUMMON_UNIT, CheckSummon);
+            handler.isDone = true;
+        }
+
+    }
+}
+
+
+/// <summary>
+/// 특정 유닛의 정보창을 띄워야 할 스크립트 args[0] 유닛 아이디
+/// </summary>
+public class Wait_Info_Window : ScenarioExecute {
+    public Wait_Info_Window() : base() { }
+
+    public override void Execute() {
+        PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.OPEN_INFO_WINDOW, CheckOpen);
+    }
+
+    private void CheckOpen(Enum event_type, Component Sender, object Param) {
+        PlaceMonster placeMonster = (PlaceMonster)Param;
+        string unitID = placeMonster.unit.id;
+
+        if(unitID == args[0]) {
+            PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.OPEN_INFO_WINDOW, CheckOpen);
+            handler.isDone = true;
+        }
+    }
+}
+
+public class Wait_Close_Info : ScenarioExecute {
+    public Wait_Close_Info() : base() { }
+
+    public override void Execute() {
+        scenarioMask.DisableMask();
+        scenarioMask.InfoTouchON();
+        PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.CLOSE_INFO_WINDOW, CheckClose);
+    }
+    private void CheckClose(Enum event_type, Component Sender, object Param) {
+        PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.CLOSE_INFO_WINDOW, CheckClose);
+        scenarioMask.InfoTouchOFF();
+        handler.isDone = true;
+    }
+
+}
+
+
+public class Focus_Skill_Icon : ScenarioExecute {
+    public Focus_Skill_Icon() : base() { }
+
+    public override void Execute() {
+        scenarioMask.FocusSkillIcon();
+        PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.CLICK_SKILL_ICON, CheckClick);
+    }
+
+    private void CheckClick(Enum event_type, Component Sender, object Param) {
+        PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.CLICK_SKILL_ICON, CheckClick);
+        handler.isDone = true;
+    }
+
+}
+
+public class Blur_Skill_Icon : ScenarioExecute {
+    public Blur_Skill_Icon() : base() { }
+
+    public override void Execute() {
+        scenarioMask.BlurSkillIcon();
+        handler.isDone = true;
+    }
+}
+
+public class Wait_Field_Change : ScenarioExecute {
+    public Wait_Field_Change() : base() { }
+
+    public override void Execute() {
+        PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.FIELD_CHANGED, CheckClose);
+
+    }
+    private void CheckClose(Enum event_type, Component Sender, object Param) {
+        handler.isDone = true;
+    }
+}
+
+public class Set_Unit : ScenarioExecute {
+    public Set_Unit() : base() { }
+
+    public override void Execute() {
+        string[] parse = args[0].Split(',');
+        int col = int.Parse(parse[0]);
+        int row = int.Parse(parse[1]);
+
+        if (AccountManager.Instance.allCardsDic[args[1]] != null)
+            PlayMangement.instance.SummonUnit(true, args[1], col, row);
+        handler.isDone = true;
+
+    }
+
+}
+
+
+
+//제로베이스
+public class SetUp_Protect_Unit : ScenarioExecute {
+    public SetUp_Protect_Unit() : base() { }
+
+    public override void Execute() {
+        victoryModule.ProtectObject protectObject = PlayMangement.instance.gameObject.GetComponent<victoryModule.ProtectObject>();
+
+        string[] parse = args[0].Split(',');
+        int col = int.Parse(parse[0]);
+        int row = int.Parse(parse[1]);
+        
+
+        FieldUnitsObserver.Pos pos = new FieldUnitsObserver.Pos(col, row);
+
+        PlaceMonster targetUnit = PlayMangement.instance.UnitsObserver.GetUnit(pos, true).gameObject.GetComponent<PlaceMonster>();
+
+
+        if (protectObject != null && targetUnit != null)
+            protectObject.SetTargetUnit(targetUnit);
+
+
+        handler.isDone = true;
+    }
+}
+
+
+//Proceed_Invoke_NextTurn, Stop_Invoke_NextTurn (오크->휴먼->마법->배틀 턴중에 '버튼'을 눌렀을 경우)
+//Stop_Next_Turn, Proceed_Next_Turn (전투 종료후, 다음턴)
+//Wait_Turn 턴을 중단 시키는게 아니라, 어떤 턴이 올때까지 대기
+//
 

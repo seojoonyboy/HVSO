@@ -634,10 +634,12 @@ public class CardHandManager : MonoBehaviour {
     /// <returns></returns>
     IEnumerator DrawChangedCards() {
         firstDrawParent.parent.gameObject.GetComponent<Image>().enabled = false;
-        PlayMangement.instance.socketHandler.MulliganEnd();
+        PlayMangement.instance.socketHandler.MulliganEnd();        
         if(ScenarioGameManagment.scenarioInstance == null) {
             int index = 0;
             PlayMangement.dragable = false;
+            if (ScenarioGameManagment.scenarioInstance != null)
+                yield return new WaitUntil(() => ScenarioGameManagment.scenarioInstance.stopFirstCard == false);
             while (index < 4) {
                 yield return new WaitForSeconds(0.2f);
                 AddCard(firstDrawList[index]);
