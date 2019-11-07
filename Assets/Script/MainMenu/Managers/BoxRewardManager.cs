@@ -18,6 +18,7 @@ public class BoxRewardManager : MonoBehaviour
     [SerializeField] Transform additionalSupply;
     [SerializeField] MenuSceneController menuSceneController;
     [SerializeField] Transform targetSpine;
+    [SerializeField] Transform lastPos;
     // Start is called before the first frame update
     Transform hudCanvas;
 
@@ -28,6 +29,7 @@ public class BoxRewardManager : MonoBehaviour
     static bool openningBox = false;
     bool openAni = false;
     int openCount;
+    IEnumerator nowAni;
 
     void Awake() {
         accountManager = AccountManager.Instance;
@@ -71,11 +73,14 @@ public class BoxRewardManager : MonoBehaviour
 
     public void SetBoxAnimation() {
         transform.Find("ShowBox").gameObject.SetActive(true);
+        transform.Find("ShowBox/BoxSpine/Image/Num").GetComponent<Text>().text = "4";
         openCount = 0;
         boxSpine.Initialize(true);
         boxSpine.Update(0);
         boxSpine.AnimationState.SetAnimation(0, "01.START", false);
         boxSpine.AnimationState.AddAnimation(1, "02.IDLE", true, 0.5f);
+        transform.Find("ShowBox/BoxSpine/Image").GetComponent<BoneFollowerGraphic>().Initialize();
+        transform.Find("ShowBox/BoxSpine/Image").GetComponent<BoneFollowerGraphic>().boneName = "card";
         SoundManager.Instance.PlaySound(UISfxSound.BOXOPEN);
     }
 
@@ -88,7 +93,11 @@ public class BoxRewardManager : MonoBehaviour
     }
 
     public void GetBoxResult() {
-        if (openAni) return;
+        if (openAni) {
+            //StopCoroutine(nowAni);
+            //StopAni(openCount - 1);
+            return;
+        }
         transform.Find("OpenBox").gameObject.SetActive(true);
         transform.Find("ShowBox/Text").gameObject.SetActive(false);
         transform.Find("OpenBox/TargetSpine").gameObject.SetActive(false);
@@ -96,19 +105,76 @@ public class BoxRewardManager : MonoBehaviour
             SetRewards(accountManager.rewardList);
             boxSpine.AnimationState.SetAnimation(2, "03.TOUCH1", false);
         }
-        else if (openCount == 4) {
+        else if (openCount == 5) {
             CloseBoxOpen();
+            return;
+        }
+        else if (openCount == 4) {
+            StartCoroutine(BoxTotalResult());
+            openCount++;
             return;
         }
         else {
             transform.Find("OpenBox").GetChild(openCount - 1).gameObject.SetActive(false);
+            transform.Find("OpenBox").GetChild(openCount - 1).localScale = Vector3.zero;
             boxSpine.AnimationState.SetAnimation(2, "04.TOUCH2", false);
         }
         SoundManager.Instance.PlaySound(UISfxSound.BOXOPEN_2);
         int count = openCount;
         openCount++;
-        StartCoroutine(ShowEachReward(count));
+        nowAni = ShowEachReward(count);
+        StartCoroutine(nowAni);
+    }
 
+    void StopAni(int count) {
+        transform.Find("ShowBox/BoxSpine/Image/Num").GetComponent<Text>().text = (4 - openCount).ToString();
+        Transform target = transform.Find("OpenBox").GetChild(count);
+        Destroy(target.GetComponent<iTween>());
+        target.localScale = new Vector3(1.4f, 1.4f, 1);
+        target.localPosition = targetSpine.localPosition;
+        transform.Find("OpenBox/TargetSpine").gameObject.SetActive(false);
+        GameObject targetObj = target.gameObject;
+        if (target.name == "Random") {
+            if (target.transform.Find("Card").gameObject.activeSelf)
+                target = targetObj.transform.Find("Card");
+            else
+                target = targetObj.transform.Find("Resource");
+        }
+        if (target.name.Contains("Card")) {
+            if (target.gameObject.activeSelf) { 
+                string cardId = target.Find("DictionaryCardVertical").GetComponent<MenuCardHandler>().cardID;
+                string aniName = "";
+                var rarelity = accountManager.allCardsDic[cardId].rarelity;
+                if (accountManager.allCardsDic[cardId].type == "unit")
+                    aniName += "u_";
+                else
+                    aniName += "m_";
+                if (rarelity != "common")
+                    aniName += accountManager.allCardsDic[cardId].rarelity;
+                else
+                    aniName = "NOANI";
+                SkeletonGraphic spine = target.Find("back").GetComponent<SkeletonGraphic>();
+                spine.gameObject.SetActive(true);
+                spine.Initialize(true);
+                spine.Update(0);
+                spine.AnimationState.SetAnimation(0, aniName, true);
+            }
+        }
+        openAni = false;
+    }
+
+    IEnumerator BoxTotalResult() {
+        openAni = true;
+        Transform boxParent = transform.Find("OpenBox");
+        boxParent.GetChild(3).localScale = Vector3.zero;
+        boxParent.GetChild(3).gameObject.SetActive(false);
+        for (int i = 0; i < 4; i++) {
+            boxParent.GetChild(i).gameObject.SetActive(true);
+            boxParent.GetChild(i).position = lastPos.GetChild(i).position;
+            yield return new WaitForSeconds(0.1f);
+            iTween.ScaleTo(boxParent.GetChild(i).gameObject, iTween.Hash("x", 0.9f, "y", 0.9f, "islocal", true, "time", 0.4f));
+        }
+        openAni = false;
     }
 
     public void CloseBoxOpen() {
@@ -145,9 +211,10 @@ public class BoxRewardManager : MonoBehaviour
             yield return new WaitForSeconds(0.95f);
         else
             yield return new WaitForSeconds(0.5f);
+        transform.Find("ShowBox/BoxSpine/Image/Num").GetComponent<Text>().text = (4 - openCount).ToString();
         Transform target = transform.Find("OpenBox").GetChild(count);
         iTween.ScaleTo(target.gameObject, iTween.Hash("x", 1.4, "y", 1.4, "islocal", true, "time", 0.4f));
-        iTween.MoveTo(target.gameObject, iTween.Hash(/*"easetype", "easeOutElastic",*/ "y", targetSpine.localPosition.y, "islocal", true, "time", 0.4f));
+        iTween.MoveTo(target.gameObject, iTween.Hash("y", targetSpine.localPosition.y, "islocal", true, "time", 0.4f));
         SkeletonGraphic targetEffect = transform.Find("OpenBox/TargetSpine").GetComponent<SkeletonGraphic>();
         yield return new WaitForSeconds(0.1f);
         targetEffect.gameObject.SetActive(true);
