@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.Networking;
 
 namespace Haegin
 {
@@ -105,6 +106,72 @@ namespace Haegin
             JavaSystemClass.CallStatic("exit", 0);
 #else
             Application.Quit();
+#endif
+        }
+
+
+        public static void CheckHaeginCertificate()
+        {
+#if !UNITY_EDITOR
+            instance.StartCoroutine(instance.CheckHaeginCertificateSub());
+#endif
+        }
+
+        IEnumerator CheckHaeginCertificateSub()
+        {
+#if MDEBUG
+            Debug.Log("-CheckCertificate--------------------------------------begin");
+#endif
+            UnityWebRequest req = UnityWebRequest.Get("https://office.haegin.kr:50443");
+            yield return req.SendWebRequest();
+            if (req != null)
+            {
+#if MDEBUG
+                Debug.Log("-CheckCertificate--    isNetworkError [" + req.isNetworkError + "]");
+                Debug.Log("-CheckCertificate--    isDone [" + req.isDone + "]");
+                Debug.Log("-CheckCertificate--    isHttpError [" + req.isHttpError + "]");
+                Debug.Log("-CheckCertificate--    error [" + req.error + "]");
+                Debug.Log("-CheckCertificate--    responseCode [" + req.responseCode + "]");
+#endif
+                if(req.isNetworkError)
+                {
+#if UNITY_ANDROID
+                    var message = new SA.Android.App.AN_AlertDialog(SA.Android.App.AN_DialogTheme.Material);
+                    message.Title = "인증 실패";
+                    message.Message = "해긴 인증에 실패했습니다. 게임을 종료합니다.";
+                    message.SetPositiveButton("확인", () => {
+                        ApplicationQuit();
+                    });
+                    message.Show();
+#elif UNITY_IOS
+                    SA.iOS.UIKit.ISN_UIAlertController alert = new SA.iOS.UIKit.ISN_UIAlertController("인증 실패", "해긴 인증에 실패했습니다. 게임을 종료합니다.", SA.iOS.UIKit.ISN_UIAlertControllerStyle.Alert);
+                    SA.iOS.UIKit.ISN_UIAlertAction defaultAction = new SA.iOS.UIKit.ISN_UIAlertAction("확인", SA.iOS.UIKit.ISN_UIAlertActionStyle.Default, () => {
+                        ApplicationQuit();
+                    });
+                    alert.AddAction(defaultAction);
+                    alert.Present();
+#endif
+                }
+                else
+                {
+#if UNITY_ANDROID
+                    var message = new SA.Android.App.AN_AlertDialog(SA.Android.App.AN_DialogTheme.Material);
+                    message.Title = "인증 성공";
+                    message.Message = "해긴 인증에 성공했습니다. 릴리즈용 버전에서는 이 창이 뜨면 안됩니다.";
+                    message.SetPositiveButton("확인", () => {
+                    });
+                    message.Show();
+#elif UNITY_IOS
+                    SA.iOS.UIKit.ISN_UIAlertController alert = new SA.iOS.UIKit.ISN_UIAlertController("인증 성공", "해긴 인증에 성공했습니다. 릴리즈용 버전에서는 이 창이 뜨면 안됩니다.", SA.iOS.UIKit.ISN_UIAlertControllerStyle.Alert);
+                    SA.iOS.UIKit.ISN_UIAlertAction defaultAction = new SA.iOS.UIKit.ISN_UIAlertAction("확인", SA.iOS.UIKit.ISN_UIAlertActionStyle.Default, () => {
+                    });
+                    alert.AddAction(defaultAction);
+                    alert.Present();
+#endif
+                }
+            }
+#if MDEBUG
+            Debug.Log("-CheckCertificate--------------------------------------end");
 #endif
         }
     }

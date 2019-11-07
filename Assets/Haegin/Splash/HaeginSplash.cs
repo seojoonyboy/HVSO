@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -43,9 +43,6 @@ namespace Haegin
         {
             GameObject splash = Instantiate(Resources.Load<GameObject>("Splash/HaeginSplash"));
             splash.GetComponent<HaeginSplash>().Setting(ori, callback);
-
-            splash.GetComponent<Canvas>().sortingOrder = 30;
-            splash.GetComponent<CanvasScaler>().referenceResolution = new Vector2(1080, 1920);
         }
     }
 }

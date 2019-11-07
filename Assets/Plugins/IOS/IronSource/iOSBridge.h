@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <IronSource/IronSource.h>
 
+
 @interface iOSBridge : NSObject<ISRewardedVideoDelegate,ISDemandOnlyRewardedVideoDelegate, ISInterstitialDelegate,ISDemandOnlyInterstitialDelegate, ISOfferwallDelegate, ISRewardedInterstitialDelegate, ISBannerDelegate, ISSegmentDelegate>
 
 @end

@@ -1,6 +1,6 @@
 ﻿using UnityEditor;
 using UnityEngine;
-#if UNITY_IOS
+#if UNITY_IOS || UNITY_2018_3_OR_NEWER
 using UnityEditor.iOS.Xcode;
 using UnityEditor.iOS.Xcode.Extensions;
 #endif
@@ -9,7 +9,7 @@ using UnityEditor.Callbacks;
 
 public class AddExtension : MonoBehaviour
 {
-#if UNITY_IOS
+#if UNITY_IOS || UNITY_2018_3_OR_NEWER
     [PostProcessBuild(101)]
     public static void OnPostProcessBuild(BuildTarget target, string pathToBuiltProject)
     {

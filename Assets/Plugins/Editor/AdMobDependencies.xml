@@ -1,9 +1,17 @@
 <dependencies>
   <androidPackages>
-    <androidPackage spec="com.google.android.gms:play-services-ads:17.2.0">
+    <androidPackage spec="com.google.android.gms:play-services-ads:18.2.0">
       <!--androidSdkPackageIds>
         <androidSdkPackageId>extra-google-m2repository</androidSdkPackageId>
       </androidSdkPackageIds-->
     </androidPackage>
+    <androidPackage spec="com.google.android.gms:play-services-ads-identifier:16.0.0">
+    </androidPackage>
+    <androidPackage spec="com.facebook.android:audience-network-sdk:5.6.0">
+    </androidPackage>
   </androidPackages>
+  <iosPods>
+      <iosPod name="Google-Mobile-Ads-SDK" />
+      <iosPod name="FBAudienceNetwork" version="5.6.0" />
+  </iosPods>
 </dependencies>

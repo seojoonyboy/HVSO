@@ -27,10 +27,6 @@ public class SceneStartController : MonoBehaviour
 
     private WebClient webClient;
 
-    public GameObject preloadSplash;
-    public TextAsset preloadKorean;
-    public TextAsset preloadEnglish;
-
     string urlscheme = null;
 
     void OnOpenURL(string url, Dictionary<string, string> parameters)
@@ -74,16 +70,14 @@ public class SceneStartController : MonoBehaviour
         Account.Initialize(ProjectSettings.webClientOAuth2ClientId);
 
         // 최초 씬에서 webClient를 생성
+#if USE_SAMPLE_SCENE
         MessagePack.Resolvers.CompositeResolver.RegisterAndSetAsDefault(Haegin.Resolvers.HaeginResolver.Instance, MessagePack.Unity.UnityResolver.Instance, MessagePack.Resolvers.BuiltinResolver.Instance, MessagePack.Resolvers.AttributeFormatterResolver.Instance, MessagePack.Resolvers.PrimitiveObjectResolver.Instance);
 
+#endif
         ThreadSafeDispatcher.Instance.PushSystemBackKeyListener(OnSystemBackKey);
 
-#if UNITY_ANDROID
-        // AppID, Secret, Auth 할 것인지 여부 (서비스 빌드는 false로 반드시...)
-        HockeyApp.Initialize("36b15dd0c5a240d4a98b086133f2ecf3", "9078c8bd7ca9af4866f38649ec520764", true);
-#elif UNITY_IOS
-        // AppID, Secret, Auth 할 것인지 여부 (서비스 빌드는 false로 반드시...)
-        HockeyApp.Initialize("a340f4f488254145b766caec4bfdd037", "7e382ac0f1f816411393e13514c7939a", true);
+#if HAEGIN_CERTIFICATE
+        ThreadSafeDispatcher.CheckHaeginCertificate();
 #endif
     }
 
@@ -156,17 +150,9 @@ public class SceneStartController : MonoBehaviour
 
     void Start()
     {
-#if MDEBUG
-        Debug.Log("SceneStartController Start1");
-#endif
         URLScheme.Instance().CheckUrlScheme();
-#if MDEBUG
-        Debug.Log("SceneStartController Start2");
-#endif
-        HaeginSplash.ShowHaeginSplash(HaeginSplash.Orientations.Landscape, CheckServiceStatus);
-#if MDEBUG
-        Debug.Log("SceneStartController Start3");
-#endif
+//        HaeginSplash.ShowHaeginSplash(HaeginSplash.Orientations.Landscape, CheckServiceStatus);
+        CheckServiceStatus();
     }
 
     // 
@@ -353,7 +339,7 @@ public class SceneStartController : MonoBehaviour
 #endif
 
 
-        void StartGame()
+    void StartGame()
     {
 #if MDEBUG
         Debug.Log("ScencStartController StartGame");
@@ -372,7 +358,11 @@ public class SceneStartController : MonoBehaviour
         // Handshake  &  Protocol Version Check
         ushort[] clientVersion = new ushort[] { 1, 0, 0, 1 };
 #if UNITY_ANDROID
+#if UES_ONESTORE_IAP
+        string updateDownloadUrl = "onestore://common/product/bg_update/0000742060";
+#else
         string updateDownloadUrl = "https://play.google.com/store/apps/details?id=com.haegin.homerunclash";
+#endif
 #elif UNITY_IOS
         string updateDownloadUrl = "https://itunes.apple.com/app/id1345750763";
 #else
@@ -437,40 +427,31 @@ public class SceneStartController : MonoBehaviour
                         {
                             Notification.RequestPermissions((bool result2) =>
                             {
-//                                Notification.ScheduleUserNotification("1", "Haegin3", "Content 3", -1, 90, new Color32(0xff, 0x44, 0x44, 0xff), (bool r, string id) =>
-//                                {
-//#if MDEBUG
-//                                    Debug.Log("Scheduled " + r + "  id " + id);
-//#endif
-//                                    Notification.CancelUserNotification("1");
-//                                    Notification.ScheduleUserNotification("2", "Haegin1", "Content 1", -1, 30, new Color32(0xff, 0x44, 0x44, 0xff), (bool r2, string id2) =>
-//                                    {
-//#if MDEBUG
-//                                        Debug.Log("Scheduled " + r2 + "  id " + id2);
-//#endif
-//                                        Notification.ScheduleUserNotification("3", "Haegin2", "Content 2", -1, 60, new Color32(0xff, 0x44, 0x44, 0xff), (bool r3, string id3) =>
-//                                        {
-//#if MDEBUG
-//                                            Debug.Log("Scheduled " + r3 + "  id " + id3);
-//#endif
-//                                        });
-//                                    });
-//                                });
+                                Notification.ScheduleUserNotification("1", "Haegin3", "Content 3", -1, 90, new Color32(0xff, 0x44, 0x44, 0xff), (bool r, string id) =>
+                                {
+#if MDEBUG
+                                    Debug.Log("Scheduled " + r + "  id " + id);
+#endif
+                                    Notification.CancelUserNotification("1");
+                                    Notification.ScheduleUserNotification("2", "Haegin1", "Content 1", -1, 30, new Color32(0xff, 0x44, 0x44, 0xff), (bool r2, string id2) =>
+                                    {
+#if MDEBUG
+                                        Debug.Log("Scheduled " + r2 + "  id " + id2);
+#endif
+                                        Notification.ScheduleUserNotification("3", "Haegin2", "Content 2", -1, 60, new Color32(0xff, 0x44, 0x44, 0xff), (bool r3, string id3) =>
+                                        {
+#if MDEBUG
+                                            Debug.Log("Scheduled " + r3 + "  id " + id3);
+#endif
+                                        });
+                                    });
+                                });
 
                                 // Push Notification 을 등록한다. 
                                 Notification.RegisterPushNotificationDevice();
                             });
 
-                            //Patch();
-                            PromoEvents.CheckPromoEvents(OpenPromoEventWindow, () =>
-                            {
-                            #if MDEBUG
-                                Debug.Log("LoadScene SceneLogin");
-#endif
-                                //SceneManager.LoadScene("SceneLogin", LoadSceneMode.Single);
-                                EULACanvas.gameObject.SetActive(false);
-                                NetworkManager.Instance.Auth();
-                            });
+                            Patch();
                         }
                         else
                         {
@@ -572,7 +553,9 @@ public class SceneStartController : MonoBehaviour
         patcher = new PatcherAsyncBG(url);
         patcher.Progressed += OnProgressed;
         patcher.FileCompleted += OnFileCompleted;
+#if USE_SAMPLE_SCENE
         patcher.AllCompleted += OnAllCompleted;
+#endif
         patcher.ErrorOccurred += OnErrorOccurred;
         patcher.TotalProgressed += OnTotalProgressed;
         patcher.ReachabilityChanged += OnReachabilityChanged;

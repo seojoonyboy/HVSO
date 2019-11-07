@@ -1340,7 +1340,7 @@ namespace G.Network
                 int[] filesize = null;
                 string[] url = null;
 #else
-                client.GetOBBDownloadInfo(ProjectSettings.base64EncodedPublicKey, (int count, string[] filename, int[] filesize, string[] url) => {
+                client.GetOBBDownloadInfo(ProjectSettings.base64EncodedPublicKey, obburl, (int count, string[] filename, int[] filesize, string[] url) => {
 #endif
 #if MDEBUG
                     Debug.Log("OBB Count = " + count);

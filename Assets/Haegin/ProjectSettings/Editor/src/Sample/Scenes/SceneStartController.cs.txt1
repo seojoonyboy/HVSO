@@ -26,10 +26,6 @@ public class SceneStartController : MonoBehaviour
 
     private WebClient webClient;
 
-    public GameObject preloadSplash;
-    public TextAsset preloadKorean;
-    public TextAsset preloadEnglish;
-
     string urlscheme = null;
 
     void OnOpenURL(string url, Dictionary<string, string> parameters)

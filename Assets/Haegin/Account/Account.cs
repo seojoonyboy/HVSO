@@ -242,11 +242,7 @@ namespace Haegin
                 }
             }
 #endif
-            if (accountId.CompareTo(ProjectSettings.accountIdToCreate) == 0) {
-                Debug.Log("신규 게스트 생성");
-                PlayerPrefs.SetInt("isFirst", 1);
-            }
-            else PlayerPrefs.SetInt("isFirst", 0);
+
 #if MDEBUG
             Debug.Log("Load AccountId [" + accountId + "]");
 #endif
@@ -353,14 +349,14 @@ namespace Haegin
             return accountId;
         }
 
-        public static void LoginAccount(HaeginAccountType accountType, OpenSelectDialog openSelectDialog, OnLoggedIn onLoggedIn)
+        public static void LoginAccount(HaeginAccountType accountType, OpenSelectDialog openSelectDialog, OnLoggedIn onLoggedIn, List<string> perms = null)
         {
             switch (accountType)
             {
                 case HaeginAccountType.Guest:
                     if (CheckIfFBLogoutNeeded() && FB.IsLoggedIn)
                     {
-                        LoginAccountFacebook(openSelectDialog, onLoggedIn);
+                        LoginAccountFacebook(openSelectDialog, onLoggedIn, perms);
                     }
                     else
                     {
@@ -378,7 +374,7 @@ namespace Haegin
                     break;
 #endif
                 case HaeginAccountType.Facebook:
-                    LoginAccountFacebook(openSelectDialog, onLoggedIn);
+                    LoginAccountFacebook(openSelectDialog, onLoggedIn, perms);
                     break;
 #if UNITY_STANDALONE && USE_STEAM
                 case HaeginAccountType.Steam:
@@ -929,9 +925,12 @@ namespace Haegin
         }
 
 
-        public static void LoginAccountFacebook(OpenSelectDialog openSelectDialog, OnLoggedIn onLoggedIn)
+        public static void LoginAccountFacebook(OpenSelectDialog openSelectDialog, OnLoggedIn onLoggedIn, List<string> perms = null)
         {
-            var perms = new List<string> { "public_profile", "user_friends" };
+            if(perms == null)
+            {
+                perms = new List<string> { "public_profile", "user_friends" };
+            }
 
             if(FB.IsLoggedIn)
             {

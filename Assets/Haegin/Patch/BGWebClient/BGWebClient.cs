@@ -120,9 +120,16 @@ namespace Haegin
             return _nativeBGDownload.Call<string>("getWritableObbDir");
         }
 
-        public void GetOBBDownloadInfo(string publicKey, OnOBBInfo callback) {
-            OBBInfoCallback = callback;
-            _nativeBGDownload.Call("getOBBDownloadInfo", publicKey);
+        public void GetOBBDownloadInfo(string publicKey, string obburl, OnOBBInfo callback) {
+            if(obburl == null)
+            {            
+                OBBInfoCallback = callback;
+                _nativeBGDownload.Call("getOBBDownloadInfo", publicKey);
+            }
+            else
+            {
+                callback(0, null, null, null);
+            }
         }
 
         public string GetUnityBuildId() {
