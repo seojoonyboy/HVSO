@@ -1,4 +1,4 @@
-//#define QA
+﻿//#define QA
 #define DONT_UNLOAD_BGWEBCLIENT
 using UnityEngine;
 using Haegin;
@@ -17,6 +17,8 @@ public class SceneOBBCheckController : MonoBehaviour {
     public GameObject requestPermissionDialog;
 
     public TextAsset[] preloadTextAssets;
+
+    public GameObject preloadSplash;
 
     private void Awake()
     {
@@ -84,6 +86,11 @@ public class SceneOBBCheckController : MonoBehaviour {
 
     void Start()
     {
+        HaeginSplash.ShowHaeginSplash(HaeginSplash.Orientations.Landscape, StartAfterSplash);
+    }
+
+    void StartAfterSplash()
+    { 
 #if MDEBUG
         Debug.Log("---------------------------------------------------\nNetwork Operator Name : " + NetworkInfo.GetNetworkOperatorName() + "\n---------------------------------------------------");
 #endif

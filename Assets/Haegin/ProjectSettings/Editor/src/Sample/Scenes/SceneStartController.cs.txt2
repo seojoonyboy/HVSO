@@ -2,13 +2,9 @@
 #endif
         ThreadSafeDispatcher.Instance.PushSystemBackKeyListener(OnSystemBackKey);
 
-#if UNITY_ANDROID
-        // AppID, Secret, Auth 할 것인지 여부 (서비스 빌드는 false로 반드시...)
-        HockeyApp.Initialize("36b15dd0c5a240d4a98b086133f2ecf3", "9078c8bd7ca9af4866f38649ec520764", true);
-#elif UNITY_IOS
-        // AppID, Secret, Auth 할 것인지 여부 (서비스 빌드는 false로 반드시...)
-        HockeyApp.Initialize("a340f4f488254145b766caec4bfdd037", "7e382ac0f1f816411393e13514c7939a", true);
-#endif
+#if HAEGIN_CERTIFICATE
+        ThreadSafeDispatcher.CheckHaeginCertificate();
+#endif        
     }
 
     void RetryOccurred(Protocol protocol, int retryCount)
@@ -80,17 +76,9 @@
 
     void Start()
     {
-#if MDEBUG
-        Debug.Log("SceneStartController Start1");
-#endif
         URLScheme.Instance().CheckUrlScheme();
-#if MDEBUG
-        Debug.Log("SceneStartController Start2");
-#endif
-        HaeginSplash.ShowHaeginSplash(HaeginSplash.Orientations.Landscape, CheckServiceStatus);
-#if MDEBUG
-        Debug.Log("SceneStartController Start3");
-#endif
+//        HaeginSplash.ShowHaeginSplash(HaeginSplash.Orientations.Landscape, CheckServiceStatus);
+        CheckServiceStatus();
     }
 
     // 

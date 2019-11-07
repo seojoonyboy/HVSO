@@ -146,10 +146,26 @@ static NSString* appOpenshortcutItem  = @"";
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     ISN_UIRegisterRemoteNotificationsResult *result = [[ISN_UIRegisterRemoteNotificationsResult alloc] init];
+    /*
     result.m_deviceTokenUTF8 = [[[[deviceToken description]
                                   stringByReplacingOccurrencesOfString: @"<" withString: @""]
                                  stringByReplacingOccurrencesOfString: @">" withString: @""]
                                 stringByReplacingOccurrencesOfString: @" " withString: @""];
+     */
+    NSUInteger length = deviceToken.length;
+    if (length == 0)
+    {
+        result.m_deviceTokenUTF8 = @"";
+    }
+    else
+    {
+        const unsigned char *buffer = (const unsigned char*)deviceToken.bytes;
+        NSMutableString *hexString  = [NSMutableString stringWithCapacity:(length * 2)];
+        for (int i = 0; i < length; ++i) {
+            [hexString appendFormat:@"%02x", buffer[i]];
+        }
+        result.m_deviceTokenUTF8 = [hexString copy];
+    }
     ISN_SendMessage(UNITY_APP_DELEGATE, "RemoteNotificationsRegisterationResult", [result toJSONString]);
     
     try {

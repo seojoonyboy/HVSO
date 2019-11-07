@@ -47,9 +47,14 @@ public class WebViewObject : MonoBehaviour
 {
     Callback onJS;
     Callback onError;
+    Callback onHttpError;
     Callback onStarted;
     Callback onLoaded;
     bool visibility;
+    int mMarginLeft;
+    int mMarginTop;
+    int mMarginRight;
+    int mMarginBottom;
 #if UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX
     IntPtr webView;
     Rect rect;
@@ -59,10 +64,6 @@ public class WebViewObject : MonoBehaviour
 #elif UNITY_IPHONE
     IntPtr webView;
 #elif UNITY_ANDROID
-    int mMarginLeft;
-    int mMarginTop;
-    int mMarginRight;
-    int mMarginBottom;
     AndroidJavaObject webView;
     
     bool mVisibility;
@@ -74,14 +75,12 @@ public class WebViewObject : MonoBehaviour
     {
         if (webView == null)
             return;
-        if (paused)
+        if (!paused)
         {
             webView.Call("SetVisibility", false);
-        }
-        else
-        {
             mResumedTimestamp = Time.realtimeSinceStartup;
         }
+        webView.Call("OnApplicationPause", paused);
     }
 
     void Update()
@@ -280,7 +279,7 @@ public class WebViewObject : MonoBehaviour
     private static extern int _CWebViewPlugin_Destroy(IntPtr instance);
     [DllImport("__Internal")]
     private static extern void _CWebViewPlugin_SetMargins(
-        IntPtr instance, int left, int top, int right, int bottom);
+        IntPtr instance, float left, float top, float right, float bottom, bool relative);
     [DllImport("__Internal")]
     private static extern void _CWebViewPlugin_SetVisibility(
         IntPtr instance, bool visibility);
@@ -321,19 +320,32 @@ public class WebViewObject : MonoBehaviour
     private static extern void   _CWebViewPlugin_ClearCustomHeader(IntPtr instance);
     [DllImport("__Internal")]
     private static extern void   _CWebViewPlugin_ClearCookies();
+    [DllImport("__Internal")]
+    private static extern string _CWebViewPlugin_GetCookies(string url);
 #endif
+
+    public static bool IsWebViewAvailable()
+    {
+#if !UNITY_EDITOR && UNITY_ANDROID
+        return (new AndroidJavaObject("net.gree.unitywebview.CWebViewPlugin")).CallStatic<bool>("IsWebViewAvailable");
+#else
+        return true;
+#endif
+    }
 
     public void Init(
         Callback cb = null,
         bool transparent = false,
         string ua = "",
         Callback err = null,
+        Callback httpErr = null,
         Callback ld = null,
         bool enableWKWebView = false,
         Callback started = null)
     {
         onJS = cb;
         onError = err;
+        onHttpError = httpErr;
         onStarted = started;
         onLoaded = ld;
 #if UNITY_WEBPLAYER
@@ -397,6 +409,7 @@ public class WebViewObject : MonoBehaviour
             return;
         _CWebViewPlugin_Destroy(webView);
         webView = IntPtr.Zero;
+        Destroy(texture);
 #elif UNITY_IPHONE
         if (webView == IntPtr.Zero)
             return;
@@ -428,7 +441,7 @@ public class WebViewObject : MonoBehaviour
 #endif
     }
 
-    public void SetMargins(int left, int top, int right, int bottom)
+    public void SetMargins(int left, int top, int right, int bottom, bool relative = false)
     {
 #if UNITY_WEBPLAYER
 #elif UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
@@ -442,11 +455,11 @@ public class WebViewObject : MonoBehaviour
 #elif UNITY_ANDROID
         if (webView == null)
             return;
+#endif
         mMarginLeft = left;
         mMarginTop = top;
         mMarginRight = right;
         mMarginBottom = bottom;
-#endif
 #if UNITY_WEBPLAYER
         Application.ExternalCall("unityWebView.setMargins", name, left, top, right, bottom);
 #elif UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
@@ -457,9 +470,23 @@ public class WebViewObject : MonoBehaviour
         _CWebViewPlugin_SetRect(webView, width, height);
         rect = new Rect(left, bottom, width, height);
 #elif UNITY_IPHONE
-        _CWebViewPlugin_SetMargins(webView, left, top, right, bottom);
+        if (relative) {
+            float w = (float)Screen.width;
+            float h = (float)Screen.height;
+            _CWebViewPlugin_SetMargins(webView, left / w, top / h, right / w, bottom / h, true);
+        } else {
+            _CWebViewPlugin_SetMargins(webView, (float)left, (float)top, (float)right, (float)bottom, false);
+        }
 #elif UNITY_ANDROID
-        webView.Call("SetMargins", left, top, right, AdjustBottomMargin(bottom));
+        if (relative) {
+            float w = (float)Screen.width;
+            float h = (float)Screen.height;
+            int iw = Screen.currentResolution.width;
+            int ih = Screen.currentResolution.height;
+            webView.Call("SetMargins", (int)(left / w * iw), (int)(top / h * ih), (int)(right / w * iw), AdjustBottomMargin((int)(bottom / h * ih)));
+        } else {
+            webView.Call("SetMargins", left, top, right, AdjustBottomMargin(bottom));
+        }
 #endif
     }
 
@@ -647,6 +674,14 @@ public class WebViewObject : MonoBehaviour
         }
     }
 
+    public void CallOnHttpError(string error)
+    {
+        if (onHttpError != null)
+        {
+            onHttpError(error);
+        }
+    }
+
     public void CallOnStarted(string url)
     {
         if (onStarted != null)
@@ -684,7 +719,6 @@ public class WebViewObject : MonoBehaviour
 #elif UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX || UNITY_IPHONE
         if (webView == IntPtr.Zero)
             return;
-
         _CWebViewPlugin_AddCustomHeader(webView, headerKey, headerValue);
 #elif UNITY_ANDROID
         if (webView == null)
@@ -704,7 +738,6 @@ public class WebViewObject : MonoBehaviour
 #elif UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX || UNITY_IPHONE
         if (webView == IntPtr.Zero)
             return null;
-        
         return _CWebViewPlugin_GetCustomHeaderValue(webView, headerKey);  
 #elif UNITY_ANDROID
         if (webView == null)
@@ -720,7 +753,6 @@ public class WebViewObject : MonoBehaviour
 #elif UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX || UNITY_IPHONE
         if (webView == IntPtr.Zero)
             return;
-
         _CWebViewPlugin_RemoveCustomHeader(webView, headerKey);
 #elif UNITY_ANDROID
         if (webView == null)
@@ -738,7 +770,6 @@ public class WebViewObject : MonoBehaviour
 #elif UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX || UNITY_IPHONE
         if (webView == IntPtr.Zero)
             return;
-
         _CWebViewPlugin_ClearCustomHeader(webView);
 #elif UNITY_ANDROID
         if (webView == null)
@@ -756,12 +787,34 @@ public class WebViewObject : MonoBehaviour
 #elif UNITY_IPHONE && !UNITY_EDITOR
         if (webView == IntPtr.Zero)
             return;
-
         _CWebViewPlugin_ClearCookies();
 #elif UNITY_ANDROID && !UNITY_EDITOR
         if (webView == null)
             return;
         webView.Call("ClearCookies");
+#endif
+    }
+
+
+    public string GetCookies(string url)
+    {
+#if UNITY_WEBPLAYER
+        //TODO: UNSUPPORTED
+        return "";
+#elif UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
+        //TODO: UNSUPPORTED
+        return "";
+#elif UNITY_IPHONE && !UNITY_EDITOR
+        if (webView == IntPtr.Zero)
+            return "";
+        return _CWebViewPlugin_GetCookies(url);
+#elif UNITY_ANDROID && !UNITY_EDITOR
+        if (webView == null)
+            return "";
+        return webView.Call<string>("GetCookies", url);
+#else
+        //TODO: UNSUPPORTED
+        return "";
 #endif
     }
 

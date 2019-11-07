@@ -169,7 +169,11 @@ namespace Haegin
 #if UNITY_IOS
             return MarketType.AppleStore;
 #elif UNITY_ANDROID
+#if USE_ONESTORE_IAP
+            return MarketType.OneStore;
+#else
             return MarketType.GooglePlay;
+#endif
 #elif UNITY_STANDALONE && USE_STEAM
             return MarketType.Steam;
 #else

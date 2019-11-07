@@ -1,6 +1,6 @@
 ﻿using UnityEditor;
 using UnityEngine;
-#if UNITY_IOS
+#if UNITY_IOS || UNITY_2018_3_OR_NEWER
 using UnityEditor.iOS.Xcode;
 using UnityEditor.iOS.Xcode.Extensions;
 #endif
@@ -52,7 +52,7 @@ public class CreateIOSLocalizeStrings : MonoBehaviour
     {
         if (target == BuildTarget.iOS)
         {
-#if UNITY_IOS
+#if UNITY_IOS || UNITY_2018_3_OR_NEWER
             var localizePath = pathToBuiltProject;
 
             var projPath = PBXProject.GetPBXProjectPath(pathToBuiltProject);

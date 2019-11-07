@@ -1,6 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" package="com.haegin.hvso" android:versionCode="1" android:versionName="1.0">
-  <application tools:replace="android:label, android:icon" android:label="@string/app_name" android:icon="@drawable/app_icon" android:roundIcon="@drawable/app_icon" android:usesCleartextTraffic="true">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" package="com.haegin.hvso.onestore" android:versionCode="1" android:versionName="1.0">
+  <application tools:replace="android:label, android:icon, android:roundIcon" android:label="@string/app_name" android:icon="@drawable/app_icon" android:roundIcon="@drawable/app_icon" android:networkSecurityConfig="@xml/network_security_config">
+    <!--" android:label="@string/app_name" android:icon="@drawable/app_icon" android:roundIcon="@drawable/app_icon" android:usesCleartextTraffic="true">-->
     <activity android:name="com.google.firebase.URLSchemeMessagingUnityPlayerActivity" android:configChanges="fontScale|keyboard|keyboardHidden|locale|mnc|mcc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|uiMode|touchscreen" android:hardwareAccelerated="true" android:theme="@style/UnityThemeSelector">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
@@ -11,7 +12,7 @@
         <category android:name="android.intent.category.DEFAULT" />
         <category android:name="android.intent.category.BROWSABLE" />
         <data android:host="view" android:scheme="hgmodsample" />
-      </intent-filter>   
+      </intent-filter>
       <meta-data android:name="unityplayer.UnityActivity" android:value="true" />
     </activity>
     <service android:name="com.google.firebase.messaging.MessageForwardingService" android:exported="false" />
@@ -35,11 +36,17 @@
     <activity android:name="com.facebook.unity.FBUnityCreateGameGroupActivity" />
     <activity android:name="com.facebook.unity.FBUnityJoinGameGroupActivity" />
     <activity android:name="com.facebook.unity.AppInviteDialogActivity" />
-    <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="fb2008915349208918" />
-    <provider android:name="com.facebook.FacebookContentProvider" android:authorities="com.facebook.app.FacebookContentProvider2008915349208918" android:exported="true" />
+    <activity android:name="com.haegin.haeginmodule.onestore.IapUnityPluginActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+    <meta-data android:name="iap:api_version" android:value="5" />
+    <activity android:name="com.facebook.ads.AudienceNetworkActivity" android:hardwareAccelerated="true" android:configChanges="keyboardHidden|orientation|screenSize" />
+    <activity android:name="com.facebook.ads.internal.ipc.RemoteANActivity" android:configChanges="keyboardHidden|orientation|screenSize" android:exported="false" android:process=":adnw" />
+    <service android:name="com.facebook.ads.internal.ipc.AdsProcessPriorityService" android:exported="false" />
+    <service android:name="com.facebook.ads.internal.ipc.AdsMessengerService" android:exported="false" android:process=":adnw" />
+    <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="fb166749030757238" />
+    <provider android:name="com.facebook.FacebookContentProvider" android:authorities="com.facebook.app.FacebookContentProvider166749030757238" android:exported="true" />
     <receiver android:name="com.haegin.haeginmodule.notification.UnityNotificationManager" />
     <receiver android:name="com.haegin.haeginmodule.notification.UnityNotificationActionHandler" />
-    <provider android:name="com.yasirkula.unity.UnitySSContentProvider" android:authorities="com.haegin.hvso.fileprovider" android:exported="false" android:grantUriPermissions="true">
+    <provider android:name="com.yasirkula.unity.UnitySSContentProvider" android:authorities="com.haegin.hvso.onestore.fileprovider" android:exported="false" android:grantUriPermissions="true">
       <!--meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/file_paths" /-->
     </provider>
     <meta-data android:name="com.google.android.gms.ads.APPLICATION_ID" android:value="ca-app-pub-8910195275590924~5903100277" />

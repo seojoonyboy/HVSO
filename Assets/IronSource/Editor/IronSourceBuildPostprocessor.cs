@@ -61,7 +61,6 @@ namespace IronSource.Editor
 			project.AddFrameworkToProject (targetId, "AdSupport.framework", false);
 			project.AddFrameworkToProject (targetId, "CoreMedia.framework", false);
 			project.AddFrameworkToProject (targetId, "CoreVideo.framework", false);
-			project.AddFrameworkToProject (targetId, "CoreLocation.framework", false);
 			project.AddFrameworkToProject (targetId, "CoreTelephony.framework", false);
 			project.AddFrameworkToProject (targetId, "CoreGraphics.framework", false);
 			project.AddFrameworkToProject (targetId, "QuartzCore.framework", false);

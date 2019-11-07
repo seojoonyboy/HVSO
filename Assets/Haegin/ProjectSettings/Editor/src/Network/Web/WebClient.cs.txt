@@ -173,7 +173,7 @@ namespace Haegin
 
         private static string prevUrl = null;
 
-        private ProtoWebClient client = null;
+        public ProtoWebClient client = null;
 
         public event Logged Logged
         {
@@ -357,6 +357,28 @@ namespace Haegin
             }
         }
 
+
+        //
+        //   더 이상 이 함수는 사용하지 마세요. protocolVersion는 내부적으로 protocol dll 안에서 서버로 보내게 됩니다.
+        // 
+        public void RequestHandshake(ushort[] protocolVersion, ushort[] clientVersion, string language, HandshakedResult callback)
+        {
+            handshakedResult = callback;
+            HandshakeReq req = new HandshakeReq { ProtocolVersion = protocolVersion, ClientVersion = clientVersion, Language = language };
+#if UNITY_IOS
+            req.MarketType = MarketType.AppleStore;
+#elif UNITY_ANDROID
+#if USE_ONESTORE_IAP
+            req.MarketType = MarketType.OneStore;
+#else
+            req.MarketType = MarketType.GooglePlay;
+#endif
+#else
+            req.MarketType = MarketType.GooglePlay;
+#endif
+            Request(req);
+        }
+
         public void RequestHandshake(ushort[] clientVersion, string language, HandshakedResult callback)
         {
             handshakedResult = callback;
@@ -364,12 +386,17 @@ namespace Haegin
 #if UNITY_IOS
             req.MarketType = MarketType.AppleStore;
 #elif UNITY_ANDROID
+#if USE_ONESTORE_IAP
+            req.MarketType = MarketType.OneStore;
+#else
             req.MarketType = MarketType.GooglePlay;
+#endif
 #else
             req.MarketType = MarketType.GooglePlay;
 #endif
             Request(req);
         }
+
 
         public void Process(HandshakeReq req, HandshakeRes res)
         {

@@ -113,6 +113,13 @@ public class ProjectSettingsWindow : EditorWindow
     static string ZendeskHelpUrl = "https://help-homerunclash.haegin.kr/hc";
     static string ZendeskHelpAPPageID = "360033798014";
     static string ZendeskHelpSupportMail = "support@homerunclash.zendesk.com";
+    static bool UseContactsAPI = false;
+
+    static string NotifyIconHDPIPath = "Assets/Haegin/ProjectSettings/Editor/NotifyIcon/drawable-hdpi_notify_icon_small.png";
+    static string NotifyIconMDPIPath = "Assets/Haegin/ProjectSettings/Editor/NotifyIcon/drawable-mdpi_notify_icon_small.png";
+    static string NotifyIconXHDPIPath = "Assets/Haegin/ProjectSettings/Editor/NotifyIcon/drawable-xhdpi_notify_icon_small.png";
+    static string NotifyIconXXHDPIPath = "Assets/Haegin/ProjectSettings/Editor/NotifyIcon/drawable-xxhdpi_notify_icon_small.png";
+    static string NotifyIconXXXHDPIPath = "Assets/Haegin/ProjectSettings/Editor/NotifyIcon/drawable-xxxhdpi_notify_icon_small.png";
 
     Rect notifyIcon1;
 
@@ -303,6 +310,49 @@ public class ProjectSettingsWindow : EditorWindow
                     ZendeskHelpSupportMail = text;
             }
             catch { }
+            try
+            {
+                text = node["UseContactsAPI"].InnerText;
+                if (!string.IsNullOrEmpty(text))
+                    UseContactsAPI = text.Equals("true", System.StringComparison.OrdinalIgnoreCase);
+            }
+            catch { }
+            try
+            {
+                text = node["NotifyIconHDPIPath"].InnerText;
+                if (!string.IsNullOrEmpty(text))
+                    NotifyIconHDPIPath = text;
+            }
+            catch { }
+            try
+            {
+                text = node["NotifyIconMDPIPath"].InnerText;
+                if (!string.IsNullOrEmpty(text))
+                    NotifyIconMDPIPath = text;
+            }
+            catch { }
+            try
+            {
+                text = node["NotifyIconXHDPIPath"].InnerText;
+                if (!string.IsNullOrEmpty(text))
+                    NotifyIconXHDPIPath = text;
+            }
+            catch { }
+            try
+            {
+                text = node["NotifyIconXXHDPIPath"].InnerText;
+                if (!string.IsNullOrEmpty(text))
+                    NotifyIconXXHDPIPath = text;
+            }
+            catch { }
+            try
+            {
+                text = node["NotifyIconXXXHDPIPath"].InnerText;
+                if (!string.IsNullOrEmpty(text))
+                    NotifyIconXXXHDPIPath = text;
+            }
+            catch { }
+
         }
         else
         {
@@ -316,7 +366,7 @@ public class ProjectSettingsWindow : EditorWindow
         {
             File.Delete(xmlpath);
         }
-        string[] contents = new string[24 + (int)LocalizedName.Max];
+        string[] contents = new string[30 + (int)LocalizedName.Max];
 
         contents[0] = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
         contents[1] = "<HaeginSettings>";
@@ -345,12 +395,22 @@ public class ProjectSettingsWindow : EditorWindow
         contents[20 + (int)LocalizedName.Max] = "\t<ZendeskHelpUrl>" + ZendeskHelpUrl + "</ZendeskHelpUrl>";
         contents[21 + (int)LocalizedName.Max] = "\t<ZendeskHelpAPPageID>" + ZendeskHelpAPPageID + "</ZendeskHelpAPPageID>";
         contents[22 + (int)LocalizedName.Max] = "\t<ZendeskHelpSupportMail>" + ZendeskHelpSupportMail + "</ZendeskHelpSupportMail>";
-        contents[23 + (int)LocalizedName.Max] = "</HaeginSettings>";
+        contents[23 + (int)LocalizedName.Max] = "\t<UseContactsAPI>" + UseContactsAPI + "</UseContactsAPI>";
+        contents[24 + (int)LocalizedName.Max] = "\t<NotifyIconHDPIPath>" + NotifyIconXXXHDPIPath + "</NotifyIconHDPIPath>";
+        contents[25 + (int)LocalizedName.Max] = "\t<NotifyIconMDPIPath>" + NotifyIconMDPIPath + "</NotifyIconMDPIPath>";
+        contents[26 + (int)LocalizedName.Max] = "\t<NotifyIconXHDPIPath>" + NotifyIconXHDPIPath + "</NotifyIconXHDPIPath>";
+        contents[27 + (int)LocalizedName.Max] = "\t<NotifyIconXXHDPIPath>" + NotifyIconXXHDPIPath + "</NotifyIconXXHDPIPath>";
+        contents[28 + (int)LocalizedName.Max] = "\t<NotifyIconXXXHDPIPath>" + NotifyIconXXXHDPIPath + "</NotifyIconXXXHDPIPath>";
+        contents[29 + (int)LocalizedName.Max] = "</HaeginSettings>";
         File.WriteAllLines(xmlpath, contents);
     }
 
+
+    public Vector2 scrollPosition = Vector2.zero;
     void OnGUI()
     {
+        scrollPosition = GUILayout.BeginScrollView(scrollPosition, GUIStyle.none);
+
         GUILayout.BeginVertical("box");
         GUILayout.Label("Basic Settings");
         GUILayout.BeginVertical("box");
@@ -383,7 +443,15 @@ public class ProjectSettingsWindow : EditorWindow
         base64EncodedPublicKey = EditorGUILayout.TextField("Google Base64 Encoded Public Key", base64EncodedPublicKey);
         toolsReplaceAdd = EditorGUILayout.TextField("Additional tools:replace item", toolsReplaceAdd);
         SkipPermissionsDialog = EditorGUILayout.Toggle("SkipPermissionsDialog", SkipPermissionsDialog);
+        GUILayout.EndVertical();
 
+        GUILayout.BeginVertical("box");
+        GUILayout.Label("Android Notify Icon Settings (PNG)");
+        NotifyIconHDPIPath = EditorGUILayout.TextField("36*36 File", NotifyIconHDPIPath);
+        NotifyIconMDPIPath = EditorGUILayout.TextField("24*24 File", NotifyIconMDPIPath);
+        NotifyIconXHDPIPath = EditorGUILayout.TextField("48*48 File", NotifyIconXHDPIPath);
+        NotifyIconXXHDPIPath = EditorGUILayout.TextField("72*72 File", NotifyIconXXHDPIPath);
+        NotifyIconXXXHDPIPath = EditorGUILayout.TextField("96*96 File", NotifyIconXXXHDPIPath);
         GUILayout.EndVertical();
 
         GUILayout.BeginVertical("box");
@@ -416,16 +484,24 @@ public class ProjectSettingsWindow : EditorWindow
         ZendeskHelpSupportMail = EditorGUILayout.TextField("Support Mail", ZendeskHelpSupportMail);
         GUILayout.EndVertical();
 
+        GUILayout.BeginVertical("box");
+        GUILayout.Label("Contacts API Settings");
+        UseContactsAPI = EditorGUILayout.Toggle("Use Contacts API", UseContactsAPI);
+        GUILayout.EndVertical();
+
         if (GUILayout.Button("Apply"))
         {
             ApplyProjectSettings();
         }
         GUILayout.EndVertical();
+
+        GUILayout.EndScrollView();
     }
 
     void ApplyProjectSettings()
     {
         SaveSettings();
+        CopyAndroidNotifyIconFiles();
         CreateStringsXML();
         CreateIOSLocalizedName();
         CreateProjectSettingsCS();
@@ -438,6 +514,40 @@ public class ProjectSettingsWindow : EditorWindow
     void CreateBaseManifest()
     {
         CreateBaseManifestSub(UseOneStoreIAP, BundleID);
+    }
+
+    void CopyAndroidNotifyIconFiles()
+    {
+        try
+        {
+            File.Copy(NotifyIconXXXHDPIPath, "Assets/Plugins/Android/AN_Res/res/drawable/notify_icon_small.png", true);
+        }
+        catch { }
+        try
+        {
+            File.Copy(NotifyIconHDPIPath, "Assets/Plugins/Android/AN_Res/res/drawable-hdpi/notify_icon_small.png", true);
+        }
+        catch { }
+        try
+        {
+            File.Copy(NotifyIconMDPIPath, "Assets/Plugins/Android/AN_Res/res/drawable-mdpi/notify_icon_small.png", true);
+        }
+        catch { }
+        try
+        {
+            File.Copy(NotifyIconXHDPIPath, "Assets/Plugins/Android/AN_Res/res/drawable-xhdpi/notify_icon_small.png", true);
+        }
+        catch { }
+        try
+        {
+            File.Copy(NotifyIconXXHDPIPath, "Assets/Plugins/Android/AN_Res/res/drawable-xxhdpi/notify_icon_small.png", true);
+        }
+        catch { }
+        try
+        {
+            File.Copy(NotifyIconXXXHDPIPath, "Assets/Plugins/Android/AN_Res/res/drawable-xxxhdpi/notify_icon_small.png", true);
+        }
+        catch { }
     }
 
     static void CreateBaseManifestFromBuildScript(bool overrideUseOneStoreIAP, string overrideBundleID)
@@ -621,6 +731,7 @@ public class ProjectSettingsWindow : EditorWindow
             "\t\tpublic static bool UseIOSGoogleMobileAds7_24_0_OR_HIGHER = " + UseIOSGoogleMobileAds7_24_0_OR_HIGHER.ToString().ToLower() + ";",
             "\t\tpublic static string oneStoreBase64EncodedPublicKey = \"" + oneStoreBase64EncodedPublicKey + "\";",
             "\t\tpublic static string ZendeskHelpAPPageID = \"" + ZendeskHelpAPPageID + "\";",
+            "\t\tpublic static string AdMobAppId = \"" + AdMobAppId + "\";",
             "\t}",
             "}"
         };
@@ -676,6 +787,34 @@ public class ProjectSettingsWindow : EditorWindow
             }
             srcstr = srcstr.Replace("https://help-homerunclash.haegin.kr/hc", ZendeskHelpUrl);
             srcstr = srcstr.Replace("support@haegin.kr", ZendeskHelpSupportMail);
+            File.AppendAllText(dstpath, srcstr);
+        }
+
+        {
+            string srcpath = srcDir + "AN_Res/AndroidManifest.xml.txt";
+            string dstpath = "Assets/Plugins/Android/AN_Res/AndroidManifest.xml";
+
+            string srcstr = File.ReadAllText(srcpath);
+
+            if (File.Exists(dstpath))
+            {
+                File.Delete(dstpath);
+            }
+            if(!UseContactsAPI)
+            {
+                srcstr = srcstr.Replace("<uses-permission android:name=\"android.permission.READ_CONTACTS\" />", "<!--uses-permission android:name=\"android.permission.READ_CONTACTS\" /-->");
+                srcstr = srcstr.Replace("<uses-permission android:name=\"android.permission.READ_PHONE_STATE\" />", "<!--uses-permission android:name=\"android.permission.READ_PHONE_STATE\" /-->");
+                
+                File.Copy(srcDir + "StansAssets/off/AN_Settings.asset.txt", "Assets/Plugins/StansAssets/Settings/Resources/AN_Settings.asset", true);
+                File.Copy(srcDir + "StansAssets/off/ISD_Settings.asset.txt", "Assets/Plugins/StansAssets/Settings/Resources/ISD_Settings.asset", true);
+                File.Copy(srcDir + "StansAssets/off/ISN_Settings.asset.txt", "Assets/Plugins/StansAssets/Settings/Resources/ISN_Settings.asset", true);
+            }
+            else
+            {
+                File.Copy(srcDir + "StansAssets/on/AN_Settings.asset.txt", "Assets/Plugins/StansAssets/Settings/Resources/AN_Settings.asset", true);
+                File.Copy(srcDir + "StansAssets/on/ISD_Settings.asset.txt", "Assets/Plugins/StansAssets/Settings/Resources/ISD_Settings.asset", true);
+                File.Copy(srcDir + "StansAssets/on/ISN_Settings.asset.txt", "Assets/Plugins/StansAssets/Settings/Resources/ISN_Settings.asset", true);
+            }
             File.AppendAllText(dstpath, srcstr);
         }
 

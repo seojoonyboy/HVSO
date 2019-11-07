@@ -86,6 +86,7 @@ class ModuleSampleBuildScript
         PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.iOS, "CUSTOM_NGUI;CROSS_PLATFORM_INPUT;MOBILE_INPUT;MDEBUG;USE_SAMPLE_SCENE");
         PlayerSettings.applicationIdentifier = "com.haegin.modulesample";
         PlayerSettings.iOS.sdkVersion = iOSSdkVersion.DeviceSDK;
+        ProjectSettingsWindow.SetOneStoreSettings(false);
         BuildiOS(1);
     }
 
@@ -94,6 +95,7 @@ class ModuleSampleBuildScript
         PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.iOS, "CUSTOM_NGUI;CROSS_PLATFORM_INPUT;MOBILE_INPUT;MDEBUG;DO_NOT_USE_GPRESTO;USE_SAMPLE_SCENE");
         PlayerSettings.applicationIdentifier = "com.haegin.modulesample";
         PlayerSettings.iOS.sdkVersion = iOSSdkVersion.SimulatorSDK;
+        ProjectSettingsWindow.SetOneStoreSettings(false);
         BuildiOS(1);
     }
 

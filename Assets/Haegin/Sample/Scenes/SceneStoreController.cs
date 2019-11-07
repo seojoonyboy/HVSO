@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using Haegin;
 using HaeginGame;
+using System.Collections.Generic;
 
 public class SceneStoreController : MonoBehaviour
 {
@@ -145,15 +146,19 @@ public class SceneStoreController : MonoBehaviour
         IronSourceEvents.onRewardedVideoAdRewardedEvent += RewardedVideoAdRewardedEvent;
         IronSourceEvents.onRewardedVideoAdShowFailedEvent += RewardedVideoAdShowFailedEvent;
 
+#if MDEBUG
+        IronSource.Agent.setAdaptersDebug(true);
+#endif
         IronSource.Agent.setUserId(Account.GetAccountId());
 #if UNITY_ANDROID
-        IronSource.Agent.init("7592f4ed");
+//        IronSource.Agent.init("7592f4ed"); // HomerunClash
+        IronSource.Agent.init("8f3317a5"); // OVERDOX
 #elif UNITY_IOS
-        IronSource.Agent.init("7592bb65");
+//        IronSource.Agent.init("7592bb65"); // HomerunClash
+        IronSource.Agent.init("8f32de1d"); // OVERDOX
 #endif
         IronSource.Agent.validateIntegration();
         IronSource.Agent.shouldTrackNetworkState(true);
-
         var products = new string[] { "com_haegin_test1" };
         IAP.init(products, (bool result, bool bProcessIAP, byte[] purchasedData) =>
         {
@@ -303,6 +308,23 @@ public class SceneStoreController : MonoBehaviour
         {
             IronSource.Agent.showRewardedVideo("YOUR_PLACEMENT_NAME");
         }
+    }
+
+    public void OnButtonReadContacts(string param)
+    {
+        Contacts.GetContactsInfo((Contacts.ContactsResult result, List<ContactsRecord> records) => {
+            switch(result)
+            {
+                case Contacts.ContactsResult.Success:
+                    Debug.Log("---------------------------------------------------------");
+                    for (int i = 0; i < records.Count; i++)
+                    {
+                        Debug.Log(records[i].Name + " : " + records[i].Phone);
+                    }
+                    Debug.Log("---------------------------------------------------------");
+                    break;
+            }
+        });
     }
 
     public void OnButtonBuyClick(string param)

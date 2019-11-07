@@ -15,4 +15,13 @@ extern "C"
         else
             return MakeStringCopy([[myCarrier carrierName] UTF8String]);
     }
+
+    const char* getCarrierCountryCode() {
+        CTTelephonyNetworkInfo *myNetworkInfo = [[CTTelephonyNetworkInfo alloc] init];
+        CTCarrier *myCarrier = [myNetworkInfo subscriberCellularProvider];
+        if(myCarrier == nil)
+            return MakeStringCopy("");
+        else
+            return MakeStringCopy([[myCarrier isoCountryCode] UTF8String]);
+    }
 }
