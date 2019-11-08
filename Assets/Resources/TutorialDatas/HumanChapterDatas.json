@@ -587,10 +587,20 @@
                         ]
                     },
                     {
+                        "name": "Highlight_Unit",
+                        "args": [
+                            "ac10011"
+                        ]
+                    },
+                    {
                         "name": "Wait_Info_Window",
                         "args": [
                             "ac10011"
                         ]
+                    },
+                    {
+                        "name": "StopHighlight",
+                        "args": []
                     },
                     {
                         "name": "Focus_Skill_Icon",
@@ -637,7 +647,7 @@
                         ]
                     },
                     {
-                        "name": "Disable_EndTurn",
+                        "name": "StopHighlight",
                         "args": []
                     },
                     {
@@ -685,6 +695,10 @@
                         "args": [
                             "screen"
                         ]
+                    },
+                    {
+                        "name": "Unblock_Screen",
+                        "args": []
                     },
                     {
                         "name": "Proceed_DrawHero",
@@ -783,6 +797,10 @@
                         "args": []
                     },
                     {
+                        "name": "Unblock_Screen",
+                        "args": []
+                    },
+                    {
                         "name": "Disable_Deck_card",
                         "args": [
                             "ac10008"
@@ -828,7 +846,7 @@
             },
             {
                 "name": "data_stage_1031_2_23",
-                "args": [
+                "methods": [
                     {
                         "name": "NPC_Print_message",
                         "args": [
@@ -844,9 +862,18 @@
                         ]
                     },
                     {
+                        "name": "Enable_Deck_card",
+                        "args": []  
+                    },
+                    {
+                        "name": "Disable_Deck_card",
+                        "args": ["ac10001"]
+                    },
+                    {
                         "name": "Force_drop_zone",
                         "args": [
-                            "3"
+                            "unit",
+                            "2"
                         ]
                     },
                     {
@@ -884,7 +911,11 @@
                         ]
                     },
                     {
-                        "name": "End_tutorial",
+                        "name": "Enable_Deck_card",
+                        "args": []  
+                    },
+                    {
+                        "name": "Remove_forced_drop_zone",
                         "args": []
                     }
                 ],

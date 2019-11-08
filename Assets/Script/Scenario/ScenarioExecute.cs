@@ -1307,6 +1307,18 @@ public class Wait_Enemy_Summon : ScenarioExecute {
     }
 }
 
+public class Highlight_Unit : ScenarioExecute {
+    public Highlight_Unit() : base() { }
+
+    public override void Execute() {
+        string cardId = args[0];
+        List<GameObject> list = PlayMangement.instance.UnitsObserver.GetAllFieldUnits(false);
+        GameObject target = list.Find((unit) => unit.GetComponent<PlaceMonster>().unit.id.CompareTo(cardId)== 0);
+        scenarioMask.InfoTouchON(target.transform.position);
+        handler.isDone = true;
+    }
+}
+
 
 /// <summary>
 /// 특정 유닛의 정보창을 띄워야 할 스크립트 args[0] 유닛 아이디

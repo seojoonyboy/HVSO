@@ -643,6 +643,8 @@ public class ScenarioMask : SerializedMonoBehaviour
 
         }
 
+        InfoTouchOFF();
+
     }    
 
     public void ShowText(string word = "") {
@@ -710,7 +712,8 @@ public class ScenarioMask : SerializedMonoBehaviour
         Destroy(dragEffect);
     }
 
-    public void InfoTouchON() {
+    public void InfoTouchON(Vector3 pos = default(Vector3)) {
+        infoTouch.transform.position = pos;
         infoTouch.SetActive(true);
     }
 
