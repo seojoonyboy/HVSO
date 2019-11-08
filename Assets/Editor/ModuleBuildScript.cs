@@ -39,7 +39,7 @@ class ModuleBuildScript
 
     static void BuildAndroid(int versionCode)
     {
-        PlayerSettings.Android.useAPKExpansionFiles = true;
+        PlayerSettings.Android.useAPKExpansionFiles = false;
         SCENES = FindBuildScenes();
 
         PlayerSettings.bundleVersion = "1.0";//string.Format("{0}.{1}.{2}.{3}", GameConfig.clientVersion[0], GameConfig.clientVersion[1], GameConfig.clientVersion[2], GameConfig.clientVersion[3]);
