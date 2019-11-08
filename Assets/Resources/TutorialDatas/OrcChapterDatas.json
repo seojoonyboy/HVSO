@@ -80,20 +80,6 @@
                     {
                         "name": "NPC_Print_message",
                         "args": [
-                            "ac10012",
-                            "근처 부족이 유목생활을 하다가 돌아왔을 때, 목축지에 인간 마을이 들어서 있어서 몰살당했다고 합니다.",
-                            "true"
-                        ]
-                    },
-                    {
-                        "name": "Wait_click",
-                        "args": [
-                            "screen"
-                        ]
-                    },
-                    {
-                        "name": "NPC_Print_message",
-                        "args": [
                             "h10002",
                             "저놈 짓일지도 모르겠군. 내가 복수해 주겠다!!",
                             "true"
@@ -110,6 +96,10 @@
                         "args": []
                     },
                     {
+                        "name": "Unblock_Screen",
+                        "args": []
+                    },
+                    {
                         "name": "First_Card",
                         "args": [
                             "proceed"
@@ -122,12 +112,6 @@
                 "Print_text": "data_stage_1031_1_5_9",
                 "methods": [
                     {
-                        "name": "Wait_Turn",
-                        "args": [
-                            "ORC"
-                        ]
-                    },
-                    {
                         "name": "Disable_EndTurn",
                         "args": []
                     },
@@ -138,10 +122,22 @@
                         ]
                     },
                     {
+                        "name": "ChallengeStart",
+                        "args": [
+                            "UNIT_SUMMONED"
+                        ]
+                    },
+                    {
                         "name": "Wait_Multiple_Summon_linelimit",
                         "args": [
                             "2",
                             "2"
+                        ]
+                    },
+                    {
+                        "name": "ChallengeEnd",
+                        "args": [
+                            "UNIT_SUMMONED"
                         ]
                     },
                     {
