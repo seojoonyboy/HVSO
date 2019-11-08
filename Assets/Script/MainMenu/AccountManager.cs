@@ -299,7 +299,20 @@ public partial class AccountManager {
             },
             "유저 정보를 불러오는중...");
     }
+    public void RequestUserInfo(OnRequestFinishedDelegate callback) {
+        StringBuilder url = new StringBuilder();
+        string base_url = networkManager.baseUrl;
 
+        url
+            .Append(base_url)
+            .Append("api/user/");
+
+        HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
+        request.MethodType = HTTPMethods.Get;
+        request.AddHeader("authorization", TokenFormat);
+
+        networkManager.Request(request, callback, "유저 정보를 불러오는중...");
+    }
     public void OnSignInResultModal() {
         Destroy(loadingModal);
         Modal.instantiate("로그인이 되었습니다.", Modal.Type.CHECK, () => {

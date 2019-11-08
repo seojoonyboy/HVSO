@@ -307,10 +307,24 @@ namespace MenuTutorialModules {
             menuMask.UnBlockScreen();
             switch (args[1]) {
                 case "on":
+                    if(args.Count > 2) {
+                        if(objectName == "orc_story_tutorial" && args[2] == "scrollArea") {
+                            GameObject clone = Instantiate(targetObject);
+                            clone.name = objectName;
+                            clone.transform.SetParent(targetObject.transform.parent, true);
+                            clone.transform.localScale = Vector3.one;
+                            clone.transform.SetAsFirstSibling();
+                        }
+                    }
                     menuMask.OnDimmed(targetObject.transform.parent, targetObject);
                     break;
                 case "off":
-                    menuMask.OffDimmed(targetObject);
+                    if (args.Count > 2) {
+                        menuMask.OffDimmed(targetObject, objectName);
+                    }
+                    else {
+                        menuMask.OffDimmed(targetObject);
+                    }
                     break;
             }
             handler.isDone = true;
@@ -548,7 +562,17 @@ namespace MenuTutorialModules {
 
     public class ShowHandUI : MenuExecute {
         public override void Execute() {
-            GameObject target = MenuMask.Instance.GetMenuObject(args[0]);
+            GameObject target = null;
+            if(args.Count > 2) {
+                foreach(Transform child in MenuMask.Instance.transform.Find("Dimmed")) {
+                    if(child.name == args[0]) {
+                        target = child.gameObject;
+                    }
+                }
+            }
+            else {
+                target = MenuMask.Instance.GetMenuObject(args[0]);
+            }
 
             string animType = args[1];
             GameObject handUI = HandUIController.ActiveHand(target.GetComponent<RectTransform>(), args[0]);

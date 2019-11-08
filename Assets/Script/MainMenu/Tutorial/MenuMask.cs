@@ -10,6 +10,7 @@ public class MenuMask : SerializedMonoBehaviour
     public Dictionary<string, GameObject> menuObject;
     public GameObject maskPanel;
     public GameObject dimmedPanel;
+    public MenuTutorialManager menuTutorialManager;
 
     public RectTransform topMask;
     public RectTransform leftMask;
@@ -153,6 +154,39 @@ public class MenuMask : SerializedMonoBehaviour
         }
         else {
             Logger.LogError(target + "의 Origin 정보를 찾을 수 없습니다.");
+        }
+    }
+
+    public void OffDimmed(GameObject target, int sibilingIndex) {
+        dimmedPanel.SetActive(false);
+
+        if (dimmedObjInfos.ContainsKey(target)) {
+            target.transform.SetParent(dimmedObjInfos[target]);
+            target.transform.SetSiblingIndex(sibilingIndex);
+            dimmedObjInfos.Remove(target);
+        }
+        else {
+            Logger.LogError(target + "의 Origin 정보를 찾을 수 없습니다.");
+        }
+    }
+
+    public void OffDimmed(GameObject targetObject, string name) {
+        int index = -1;
+        switch (name) {
+            case "orc_story_tutorial":
+                index = 0;
+                Transform tf = menuTutorialManager.scenarioManager.orc.stageContent.transform;
+                foreach(Transform child in tf) {
+                    if (child.name == name) Destroy(child.gameObject);
+                }
+                break;
+        }
+
+        if(index == -1) {
+            OffDimmed(targetObject);
+        }
+        else {
+            OffDimmed(targetObject, index);
         }
     }
 }
