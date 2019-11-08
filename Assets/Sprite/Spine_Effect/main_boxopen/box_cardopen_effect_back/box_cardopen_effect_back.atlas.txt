@@ -1,790 +1,1014 @@
 
 box_cardopen_effect_back.png
-size: 2048,1024
+size: 2048,2048
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 Comp10000
   rotate: false
-  xy: 0, 768
-  size: 128, 128
-  orig: 128, 128
+  xy: 0, 1540
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp10001
   rotate: false
-  xy: 128, 768
-  size: 128, 128
-  orig: 128, 128
+  xy: 154, 1540
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp10002
   rotate: false
-  xy: 256, 768
-  size: 128, 128
-  orig: 128, 128
+  xy: 308, 1540
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp10003
   rotate: false
-  xy: 384, 768
-  size: 128, 128
-  orig: 128, 128
+  xy: 462, 1540
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp10004
   rotate: false
-  xy: 512, 768
-  size: 128, 128
-  orig: 128, 128
+  xy: 616, 1540
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp10005
   rotate: false
-  xy: 640, 768
-  size: 128, 128
-  orig: 128, 128
+  xy: 770, 1540
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp10006
   rotate: false
-  xy: 768, 768
-  size: 128, 128
-  orig: 128, 128
+  xy: 924, 1540
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp10007
   rotate: false
-  xy: 896, 768
-  size: 128, 128
-  orig: 128, 128
+  xy: 1078, 1540
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp10008
   rotate: false
-  xy: 1024, 768
-  size: 128, 128
-  orig: 128, 128
+  xy: 1232, 1540
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp10009
   rotate: false
-  xy: 1152, 768
-  size: 128, 128
-  orig: 128, 128
+  xy: 1386, 1540
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp10010
   rotate: false
-  xy: 1280, 768
-  size: 128, 128
-  orig: 128, 128
+  xy: 1540, 1540
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp10011
   rotate: false
-  xy: 1408, 768
-  size: 128, 128
-  orig: 128, 128
+  xy: 1694, 1540
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp10012
   rotate: false
-  xy: 1536, 768
-  size: 128, 128
-  orig: 128, 128
+  xy: 1848, 1540
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp10013
   rotate: false
-  xy: 1664, 768
-  size: 128, 128
-  orig: 128, 128
+  xy: 0, 1386
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp10014
   rotate: false
-  xy: 1792, 768
-  size: 128, 128
-  orig: 128, 128
+  xy: 154, 1386
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp10015
   rotate: false
-  xy: 1920, 768
-  size: 128, 128
-  orig: 128, 128
+  xy: 308, 1386
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp110000
   rotate: false
-  xy: 640, 256
-  size: 128, 128
-  orig: 128, 128
+  xy: 1540, 924
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp110001
   rotate: false
-  xy: 768, 256
-  size: 128, 128
-  orig: 128, 128
+  xy: 1694, 924
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp110002
   rotate: false
-  xy: 896, 256
-  size: 128, 128
-  orig: 128, 128
+  xy: 1848, 924
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp110003
   rotate: false
-  xy: 1024, 256
-  size: 128, 128
-  orig: 128, 128
+  xy: 0, 770
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp110004
   rotate: false
-  xy: 1152, 256
-  size: 128, 128
-  orig: 128, 128
+  xy: 154, 770
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp110005
   rotate: false
-  xy: 1280, 256
-  size: 128, 128
-  orig: 128, 128
+  xy: 308, 770
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp110006
   rotate: false
-  xy: 1408, 256
-  size: 128, 128
-  orig: 128, 128
+  xy: 462, 770
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp110007
   rotate: false
-  xy: 1536, 256
-  size: 128, 128
-  orig: 128, 128
+  xy: 616, 770
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp110008
   rotate: false
-  xy: 1664, 256
-  size: 128, 128
-  orig: 128, 128
+  xy: 770, 770
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp110009
   rotate: false
-  xy: 1792, 256
-  size: 128, 128
-  orig: 128, 128
+  xy: 924, 770
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp110010
   rotate: false
-  xy: 1920, 256
-  size: 128, 128
-  orig: 128, 128
+  xy: 1078, 770
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp110011
   rotate: false
-  xy: 0, 128
-  size: 128, 128
-  orig: 128, 128
+  xy: 1232, 770
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp110012
   rotate: false
-  xy: 128, 128
-  size: 128, 128
-  orig: 128, 128
+  xy: 1386, 770
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp110013
   rotate: false
-  xy: 256, 128
-  size: 128, 128
-  orig: 128, 128
+  xy: 1540, 770
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp110014
   rotate: false
-  xy: 384, 128
-  size: 128, 128
-  orig: 128, 128
+  xy: 1694, 770
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp110015
   rotate: false
-  xy: 512, 128
-  size: 128, 128
-  orig: 128, 128
+  xy: 1848, 770
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp20000
   rotate: false
-  xy: 0, 640
-  size: 128, 128
-  orig: 128, 128
+  xy: 462, 1386
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp20001
   rotate: false
-  xy: 128, 640
-  size: 128, 128
-  orig: 128, 128
+  xy: 616, 1386
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp20002
   rotate: false
-  xy: 256, 640
-  size: 128, 128
-  orig: 128, 128
+  xy: 770, 1386
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp20003
   rotate: false
-  xy: 384, 640
-  size: 128, 128
-  orig: 128, 128
+  xy: 924, 1386
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp20004
   rotate: false
-  xy: 512, 640
-  size: 128, 128
-  orig: 128, 128
+  xy: 1078, 1386
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp20005
   rotate: false
-  xy: 640, 640
-  size: 128, 128
-  orig: 128, 128
+  xy: 1232, 1386
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp20006
   rotate: false
-  xy: 768, 640
-  size: 128, 128
-  orig: 128, 128
+  xy: 1386, 1386
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp20007
   rotate: false
-  xy: 896, 640
-  size: 128, 128
-  orig: 128, 128
+  xy: 1540, 1386
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp20008
   rotate: false
-  xy: 1024, 640
-  size: 128, 128
-  orig: 128, 128
+  xy: 1694, 1386
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp20009
   rotate: false
-  xy: 1152, 640
-  size: 128, 128
-  orig: 128, 128
+  xy: 1848, 1386
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp20010
   rotate: false
-  xy: 1280, 640
-  size: 128, 128
-  orig: 128, 128
+  xy: 0, 1232
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp20011
   rotate: false
-  xy: 1408, 640
-  size: 128, 128
-  orig: 128, 128
+  xy: 154, 1232
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp20012
   rotate: false
-  xy: 1536, 640
-  size: 128, 128
-  orig: 128, 128
+  xy: 308, 1232
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp20013
   rotate: false
-  xy: 1664, 640
-  size: 128, 128
-  orig: 128, 128
+  xy: 462, 1232
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp20014
   rotate: false
-  xy: 1792, 640
-  size: 128, 128
-  orig: 128, 128
+  xy: 616, 1232
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp20015
   rotate: false
-  xy: 1920, 640
-  size: 128, 128
-  orig: 128, 128
+  xy: 770, 1232
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp220000
   rotate: false
-  xy: 640, 128
-  size: 128, 128
-  orig: 128, 128
+  xy: 0, 616
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp220001
   rotate: false
-  xy: 768, 128
-  size: 128, 128
-  orig: 128, 128
+  xy: 154, 616
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp220002
   rotate: false
-  xy: 896, 128
-  size: 128, 128
-  orig: 128, 128
+  xy: 308, 616
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp220003
   rotate: false
-  xy: 1024, 128
-  size: 128, 128
-  orig: 128, 128
+  xy: 462, 616
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp220004
   rotate: false
-  xy: 1152, 128
-  size: 128, 128
-  orig: 128, 128
+  xy: 616, 616
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp220005
   rotate: false
-  xy: 1280, 128
-  size: 128, 128
-  orig: 128, 128
+  xy: 770, 616
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp220006
   rotate: false
-  xy: 1408, 128
-  size: 128, 128
-  orig: 128, 128
+  xy: 924, 616
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp220007
   rotate: false
-  xy: 1536, 128
-  size: 128, 128
-  orig: 128, 128
+  xy: 1078, 616
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp220008
   rotate: false
-  xy: 1664, 128
-  size: 128, 128
-  orig: 128, 128
+  xy: 1232, 616
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp220009
   rotate: false
-  xy: 1792, 128
-  size: 128, 128
-  orig: 128, 128
+  xy: 1386, 616
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp220010
   rotate: false
-  xy: 1920, 128
-  size: 128, 128
-  orig: 128, 128
+  xy: 1540, 616
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp220011
   rotate: false
-  xy: 0, 0
-  size: 128, 128
-  orig: 128, 128
+  xy: 1694, 616
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp220012
   rotate: false
-  xy: 128, 0
-  size: 128, 128
-  orig: 128, 128
+  xy: 1848, 616
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp220013
   rotate: false
-  xy: 256, 0
-  size: 128, 128
-  orig: 128, 128
+  xy: 0, 462
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp220014
   rotate: false
-  xy: 384, 0
-  size: 128, 128
-  orig: 128, 128
+  xy: 154, 462
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp220015
   rotate: false
-  xy: 512, 0
-  size: 128, 128
-  orig: 128, 128
+  xy: 308, 462
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp30000
   rotate: false
-  xy: 0, 512
-  size: 128, 128
-  orig: 128, 128
+  xy: 924, 1232
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp30015
   rotate: false
-  xy: 0, 512
-  size: 128, 128
-  orig: 128, 128
+  xy: 924, 1232
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp30001
   rotate: false
-  xy: 256, 512
-  size: 128, 128
-  orig: 128, 128
+  xy: 1078, 1232
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp30002
   rotate: false
-  xy: 384, 512
-  size: 128, 128
-  orig: 128, 128
+  xy: 1232, 1232
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp30003
   rotate: false
-  xy: 640, 512
-  size: 128, 128
-  orig: 128, 128
+  xy: 1386, 1232
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp30004
   rotate: false
-  xy: 768, 512
-  size: 128, 128
-  orig: 128, 128
+  xy: 1540, 1232
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp30005
   rotate: false
-  xy: 1024, 512
-  size: 128, 128
-  orig: 128, 128
+  xy: 1694, 1232
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp30006
   rotate: false
-  xy: 1152, 512
-  size: 128, 128
-  orig: 128, 128
+  xy: 1848, 1232
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp30007
   rotate: false
-  xy: 1408, 512
-  size: 128, 128
-  orig: 128, 128
+  xy: 0, 1078
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp30008
   rotate: false
-  xy: 1536, 512
-  size: 128, 128
-  orig: 128, 128
+  xy: 154, 1078
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp30009
   rotate: false
-  xy: 1792, 512
-  size: 128, 128
-  orig: 128, 128
+  xy: 308, 1078
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp30010
   rotate: false
-  xy: 1920, 512
-  size: 128, 128
-  orig: 128, 128
+  xy: 462, 1078
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp30011
   rotate: false
-  xy: 128, 384
-  size: 128, 128
-  orig: 128, 128
+  xy: 616, 1078
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp30012
   rotate: false
-  xy: 256, 384
-  size: 128, 128
-  orig: 128, 128
+  xy: 770, 1078
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp30013
   rotate: false
-  xy: 512, 384
-  size: 128, 128
-  orig: 128, 128
+  xy: 924, 1078
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp30014
   rotate: false
-  xy: 640, 384
-  size: 128, 128
-  orig: 128, 128
+  xy: 1078, 1078
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp330000
   rotate: false
-  xy: 128, 512
-  size: 128, 128
-  orig: 128, 128
+  xy: 462, 462
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp330002
   rotate: false
-  xy: 512, 512
-  size: 128, 128
-  orig: 128, 128
+  xy: 616, 462
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp330004
   rotate: false
-  xy: 896, 512
-  size: 128, 128
-  orig: 128, 128
+  xy: 770, 462
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp330006
   rotate: false
-  xy: 1280, 512
-  size: 128, 128
-  orig: 128, 128
+  xy: 924, 462
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp330008
   rotate: false
-  xy: 1664, 512
-  size: 128, 128
-  orig: 128, 128
+  xy: 1078, 462
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp330010
   rotate: false
-  xy: 0, 384
-  size: 128, 128
-  orig: 128, 128
+  xy: 1232, 462
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp330012
   rotate: false
-  xy: 384, 384
-  size: 128, 128
-  orig: 128, 128
+  xy: 1386, 462
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp40000
   rotate: false
-  xy: 768, 384
-  size: 128, 128
-  orig: 128, 128
+  xy: 1232, 1078
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp40015
   rotate: false
-  xy: 768, 384
-  size: 128, 128
-  orig: 128, 128
+  xy: 1232, 1078
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp40001
   rotate: false
-  xy: 896, 384
-  size: 128, 128
-  orig: 128, 128
+  xy: 1386, 1078
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp40002
   rotate: false
-  xy: 1024, 384
-  size: 128, 128
-  orig: 128, 128
+  xy: 1540, 1078
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp40003
   rotate: false
-  xy: 1152, 384
-  size: 128, 128
-  orig: 128, 128
+  xy: 1694, 1078
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp40004
   rotate: false
-  xy: 1280, 384
-  size: 128, 128
-  orig: 128, 128
+  xy: 1848, 1078
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp40005
   rotate: false
-  xy: 1408, 384
-  size: 128, 128
-  orig: 128, 128
+  xy: 0, 924
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp40006
   rotate: false
-  xy: 1536, 384
-  size: 128, 128
-  orig: 128, 128
+  xy: 154, 924
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp40007
   rotate: false
-  xy: 1664, 384
-  size: 128, 128
-  orig: 128, 128
+  xy: 308, 924
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp40008
   rotate: false
-  xy: 1792, 384
-  size: 128, 128
-  orig: 128, 128
+  xy: 462, 924
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp40009
   rotate: false
-  xy: 1920, 384
-  size: 128, 128
-  orig: 128, 128
+  xy: 616, 924
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp40010
   rotate: false
-  xy: 0, 256
-  size: 128, 128
-  orig: 128, 128
+  xy: 770, 924
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp40011
   rotate: false
-  xy: 128, 256
-  size: 128, 128
-  orig: 128, 128
+  xy: 924, 924
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp40012
   rotate: false
-  xy: 256, 256
-  size: 128, 128
-  orig: 128, 128
+  xy: 1078, 924
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp40013
   rotate: false
-  xy: 384, 256
-  size: 128, 128
-  orig: 128, 128
+  xy: 1232, 924
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp40014
   rotate: false
-  xy: 512, 256
-  size: 128, 128
-  orig: 128, 128
+  xy: 1386, 924
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp440000
   rotate: false
-  xy: 640, 0
-  size: 128, 128
-  orig: 128, 128
+  xy: 1540, 462
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp440015
   rotate: false
-  xy: 640, 0
-  size: 128, 128
-  orig: 128, 128
+  xy: 1540, 462
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp440002
   rotate: false
-  xy: 768, 0
-  size: 128, 128
-  orig: 128, 128
+  xy: 1694, 462
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp440004
   rotate: false
-  xy: 896, 0
-  size: 128, 128
-  orig: 128, 128
+  xy: 1848, 462
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp440006
   rotate: false
-  xy: 1024, 0
-  size: 128, 128
-  orig: 128, 128
+  xy: 0, 308
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp440008
   rotate: false
-  xy: 1152, 0
-  size: 128, 128
-  orig: 128, 128
+  xy: 154, 308
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp440010
   rotate: false
-  xy: 1280, 0
-  size: 128, 128
-  orig: 128, 128
+  xy: 308, 308
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp440012
   rotate: false
-  xy: 1408, 0
-  size: 128, 128
-  orig: 128, 128
+  xy: 462, 308
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
 Comp440014
   rotate: false
-  xy: 1536, 0
-  size: 128, 128
-  orig: 128, 128
+  xy: 616, 308
+  size: 154, 154
+  orig: 154, 154
+  offset: 0, 0
+  index: -1
+g_superrare00
+  rotate: false
+  xy: 924, 308
+  size: 154, 154
+  orig: 154, 154
+  offset: 0, 0
+  index: -1
+g_superrare01
+  rotate: false
+  xy: 1078, 308
+  size: 154, 154
+  orig: 154, 154
+  offset: 0, 0
+  index: -1
+g_superrare02
+  rotate: false
+  xy: 1232, 308
+  size: 154, 154
+  orig: 154, 154
+  offset: 0, 0
+  index: -1
+g_superrare03
+  rotate: false
+  xy: 1386, 308
+  size: 154, 154
+  orig: 154, 154
+  offset: 0, 0
+  index: -1
+g_superrare04
+  rotate: false
+  xy: 1540, 308
+  size: 154, 154
+  orig: 154, 154
+  offset: 0, 0
+  index: -1
+g_superrare05
+  rotate: false
+  xy: 1694, 308
+  size: 154, 154
+  orig: 154, 154
+  offset: 0, 0
+  index: -1
+g_superrare06
+  rotate: false
+  xy: 1848, 308
+  size: 154, 154
+  orig: 154, 154
+  offset: 0, 0
+  index: -1
+g_superrare07
+  rotate: false
+  xy: 0, 154
+  size: 154, 154
+  orig: 154, 154
+  offset: 0, 0
+  index: -1
+g_superrare08
+  rotate: false
+  xy: 154, 154
+  size: 154, 154
+  orig: 154, 154
+  offset: 0, 0
+  index: -1
+g_superrare09
+  rotate: false
+  xy: 308, 154
+  size: 154, 154
+  orig: 154, 154
+  offset: 0, 0
+  index: -1
+g_superrare10
+  rotate: false
+  xy: 462, 154
+  size: 154, 154
+  orig: 154, 154
+  offset: 0, 0
+  index: -1
+g_superrare11
+  rotate: false
+  xy: 616, 154
+  size: 154, 154
+  orig: 154, 154
+  offset: 0, 0
+  index: -1
+g_superrare12
+  rotate: false
+  xy: 770, 154
+  size: 154, 154
+  orig: 154, 154
+  offset: 0, 0
+  index: -1
+g_superrare13
+  rotate: false
+  xy: 924, 154
+  size: 154, 154
+  orig: 154, 154
+  offset: 0, 0
+  index: -1
+g_superrare14
+  rotate: false
+  xy: 1078, 154
+  size: 154, 154
+  orig: 154, 154
+  offset: 0, 0
+  index: -1
+g_superrare15
+  rotate: false
+  xy: 770, 308
+  size: 154, 154
+  orig: 154, 154
+  offset: 0, 0
+  index: -1
+h_legend00
+  rotate: false
+  xy: 1232, 154
+  size: 154, 154
+  orig: 154, 154
+  offset: 0, 0
+  index: -1
+h_legend01
+  rotate: false
+  xy: 1386, 154
+  size: 154, 154
+  orig: 154, 154
+  offset: 0, 0
+  index: -1
+h_legend02
+  rotate: false
+  xy: 1540, 154
+  size: 154, 154
+  orig: 154, 154
+  offset: 0, 0
+  index: -1
+h_legend03
+  rotate: false
+  xy: 1694, 154
+  size: 154, 154
+  orig: 154, 154
+  offset: 0, 0
+  index: -1
+h_legend04
+  rotate: false
+  xy: 1848, 154
+  size: 154, 154
+  orig: 154, 154
+  offset: 0, 0
+  index: -1
+h_legend05
+  rotate: false
+  xy: 0, 0
+  size: 154, 154
+  orig: 154, 154
+  offset: 0, 0
+  index: -1
+h_legend06
+  rotate: false
+  xy: 154, 0
+  size: 154, 154
+  orig: 154, 154
+  offset: 0, 0
+  index: -1
+h_legend07
+  rotate: false
+  xy: 308, 0
+  size: 154, 154
+  orig: 154, 154
+  offset: 0, 0
+  index: -1
+h_legend08
+  rotate: false
+  xy: 462, 0
+  size: 154, 154
+  orig: 154, 154
+  offset: 0, 0
+  index: -1
+h_legend09
+  rotate: false
+  xy: 616, 0
+  size: 154, 154
+  orig: 154, 154
+  offset: 0, 0
+  index: -1
+h_legend10
+  rotate: false
+  xy: 770, 0
+  size: 154, 154
+  orig: 154, 154
+  offset: 0, 0
+  index: -1
+h_legend11
+  rotate: false
+  xy: 924, 0
+  size: 154, 154
+  orig: 154, 154
+  offset: 0, 0
+  index: -1
+h_legend12
+  rotate: false
+  xy: 1078, 0
+  size: 154, 154
+  orig: 154, 154
+  offset: 0, 0
+  index: -1
+h_legend13
+  rotate: false
+  xy: 1232, 0
+  size: 154, 154
+  orig: 154, 154
+  offset: 0, 0
+  index: -1
+h_legend14
+  rotate: false
+  xy: 1386, 0
+  size: 154, 154
+  orig: 154, 154
+  offset: 0, 0
+  index: -1
+h_legend15
+  rotate: false
+  xy: 1540, 0
+  size: 154, 154
+  orig: 154, 154
   offset: 0, 0
   index: -1
