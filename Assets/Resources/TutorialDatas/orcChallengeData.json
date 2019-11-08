@@ -1,38 +1,32 @@
 [
-  {
-    "chapterNum": 0,
-    "stageNum": 1,
-    "challenges": [
-      {
-        "id": 1,
-        "content": "오크 병사 배치하기",
-        "targetNum": 2,
-        "currentNum": 0
-      },
-      {
-        "id": 2,
-        "content": "어둠의 가시 사용하기",
-        "targetNum": 1,
-        "currentNum": 0
-      },
-      {
-        "id": 3,
-        "content": "오크 암살자 배치하기",
-        "targetNum": 1,
-        "currentNum": 0
-      },
-      {
-        "id": 4,
-        "content": "전투의 외침 사용",
-        "targetNum": 1,
-        "currentNum": 0
-      },
-      {
-        "id": 5,
-        "content": "재배치 사용",
-        "targetNum": 1,
-        "currentNum": 0
-      }
-    ]
-  }
+    {
+        "chapterNum": 0,
+        "stageNum": 1,
+        "challenges": [
+            {
+                "id": 1,
+                "content": "오크 파수꾼 배치",
+                "targetNum": 2,
+                "currentNum": 0
+            },
+            {
+                "id": 2,
+                "content": "마법 사용하기",
+                "targetNum": 1,
+                "currentNum": 0
+            }
+        ]
+    },
+    {
+        "chapterNum": 0,
+        "stageNum": 2,
+        "challenges": [
+            {
+                "id": 1,
+                "content": "오크 잠복꾼 배치",
+                "targetNum": 1,
+                "currentNum": 0
+            },
+        ]
+    }
 ]
