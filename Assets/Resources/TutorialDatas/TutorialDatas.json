@@ -1,12 +1,24 @@
 [
     {
         "id": 0,
-        "description": "human 튜토리얼 2번째 유도",
+        "description": "human 튜토리얼 0-2 유도",
         "innerDatas": [
             {
                 "id": 1,
                 "description": null,
                 "methods": [
+                    {
+                        "name": "RequestReward",
+                        "args": [
+                            "human"
+                        ]
+                    },
+                    {
+                        "name": "ForceToPage",
+                        "args": [
+                            "StoryLobby"
+                        ]
+                    },
                     {
                         "name": "Menu_Block_Screen",
                         "args": []
@@ -122,615 +134,14 @@
     },
     {
         "id": 1,
-        "description": "AI 대전 플레이를 유도하는 튜토리얼",
+        "description": "orc 튜토리얼 0-1 유도",
         "innerDatas": [
             {
                 "id": 1,
-                "description": null,
+                "description": "휴먼 0-1 튜토리얼 유도",
                 "methods": [
                     {
-                        "name": "Menu_NPC_Talk",
-                        "args": [
-                            "ac10012",
-                            "벌써 수십년째 우리 오크종족은 인간들 때문에 점점 삶의 터전 밖으로 밀려나 죽어가고 있다.",
-                            "enemy"
-                        ]
-                    },
-                    {
-                        "name": "Wait_Click",
-                        "args": [
-                            "screen"
-                        ]
-                    }
-                ],
-                "isExecute": false
-            },
-            {
-                "id": 2,
-                "description": "보상 요청",
-                "methods": [
-                    {
-                        "name": "Menu_NPC_Talk",
-                        "args": [
-                            "ac10012",
-                            "사령관에게 방금 도망친 우리 부족 전부의 운명을 맡기겠다. 부디 우리에게 자유를…",
-                            "enemy"
-                        ]
-                    },
-                    {
-                        "name": "Wait_Click",
-                        "args": [
-                            "screen"
-                        ]
-                    },
-                    {
-                        "name": "Menu_Hide_Message",
-                        "args": []
-                    },
-                    {
-                        "name": "RequestReward",
-                        "args": [
-                            "orc"
-                        ]
-                    }
-                ],
-                "isExecute": false
-            },
-            {
-                "id": 4,
-                "description": null,
-                "methods": [
-                    {
-                        "name": "Menu_NPC_Talk",
-                        "args": [
-                            "ac10005",
-                            "잠깐만! 결국 일부 인간들이 너희를 괴롭히고 공격했다는 것 때문에 모든 인간들을 공격한다는 거야?",
-                            "my"
-                        ]
-                    },
-                    {
-                        "name": "Wait_Click",
-                        "args": [
-                            "screen"
-                        ]
-                    }
-                ],
-                "isExecute": false
-            },
-            {
-                "id": 5,
-                "description": null,
-                "methods": [
-                    {
-                        "name": "Menu_NPC_Talk",
-                        "args": [
-                            "ac10012",
-                            "너희들은 항상 일부라고 말하지. 하지만 우린 벌써 지난 몇백년간 같은일을 겪고있다.",
-                            "enemy"
-                        ]
-                    },
-                    {
-                        "name": "Wait_Click",
-                        "args": [
-                            "screen"
-                        ]
-                    }
-                ],
-                "isExecute": false
-            },
-            {
-                "id": 6,
-                "description": null,
-                "methods": [
-                    {
-                        "name": "Menu_NPC_Talk",
-                        "args": [
-                            "ac10005",
-                            "우리들이야 말로 살아남기 위해서 노력하는 것 뿐이야. 너희는 유목민족이니 이동하며 살 수 있잖아!",
-                            "my"
-                        ]
-                    },
-                    {
-                        "name": "Wait_Click",
-                        "args": [
-                            "screen"
-                        ]
-                    }
-                ],
-                "isExecute": false
-            },
-            {
-                "id": 7,
-                "description": null,
-                "methods": [
-                    {
-                        "name": "Menu_NPC_Talk",
-                        "args": [
-                            "ac10012",
-                            "흥. 우리 부족 중에서도 정착하는 경우가 있다. 너희야말로 오크의 일부와 전체를 혼동하는군.",
-                            "enemy"
-                        ]
-                    },
-                    {
-                        "name": "Wait_Click",
-                        "args": [
-                            "screen"
-                        ]
-                    }
-                ],
-                "isExecute": false
-            },
-            {
-                "id": 8,
-                "description": null,
-                "methods": [
-                    {
-                        "name": "Menu_NPC_Talk",
-                        "args": [
-                            "ac10005",
-                            "좋아! 그럼 누구의 말이 더 타당한지 사령관에게 의견을 묻자.",
-                            "my"
-                        ]
-                    },
-                    {
-                        "name": "Wait_Click",
-                        "args": [
-                            "screen"
-                        ]
-                    }
-                ],
-                "isExecute": false
-            },
-            {
-                "id": 9,
-                "description": null,
-                "methods": [
-                    {
-                        "name": "Menu_NPC_Talk",
-                        "args": [
-                            "ac10005",
-                            "사령관! 메뉴에 있는 배틀 버튼을 눌러줘.",
-                            "my"
-                        ]
-                    },
-                    {
-                        "name": "Wait_Click",
-                        "args": [
-                            "screen"
-                        ]
-                    },
-                    {
-                        "name": "Menu_Hide_Message",
-                        "args": []
-                    }
-                ],
-                "isExecute": false
-            },
-            {
-                "id": 10,
-                "description": "배틀 버튼 하이라이트",
-                "methods": [
-                    {
-                        "name": "Dimmed",
-                        "args": [
-                            "battle_button",
-                            "on"
-                        ]
-                    },
-                    {
-                        "name": "Menu_Scope_Object",
-                        "args": [
-                            "battle_button"
-                        ]
-                    },
-                    {
-                        "name": "ShowHandUI",
-                        "args": [
-                            "battle_button",
-                            "touch"
-                        ]
-                    },
-                    {
-                        "name": "Wait_Click",
-                        "args": [
-                            "battle_button"
-                        ]
-                    },
-                    {
-                        "name": "Dimmed",
-                        "args": [
-                            "battle_button",
-                            "off"
-                        ]
-                    },
-                    {
-                        "name": "HideHandUI",
-                        "args": [
-                            "battle_button"
-                        ]
-                    }
-                ],
-                "isExecute": false
-            },
-            {
-                "id": 11,
-                "description": "11 ~ 14까지",
-                "methods": [
-                    {
-                        "name": "Menu_NPC_Talk",
-                        "args": [
-                            "ac10005",
-                            "이제 사령관이 지휘하길 원하는 덱을 선택해줘",
-                            "my"
-                        ]
-                    },
-                    {
-                        "name": "Wait_Click",
-                        "args": [
-                            "screen"
-                        ]
-                    },
-                    {
-                        "name": "Menu_NPC_Talk",
-                        "args": [
-                            "ac10005",
-                            "사령관은 우리 군대를 지휘하실거야. 안전을 위협받는 인간들을 지켜주실거라구.",
-                            "my"
-                        ]
-                    },
-                    {
-                        "name": "Wait_Click",
-                        "args": [
-                            "screen"
-                        ]
-                    },
-                    {
-                        "name": "Menu_NPC_Talk",
-                        "args": [
-                            "ac10012",
-                            "사령관은 우리 오크를 이끌어주실 것이다. 우리의 투쟁이야 말로 자유를 위한 것이다.",
-                            "enemy"
-                        ]
-                    },
-                    {
-                        "name": "Wait_Click",
-                        "args": [
-                            "screen"
-                        ]
-                    }
-                ],
-                "isExecute": false
-            },
-            {
-                "id": 15,
-                "description": "",
-                "methods": [
-                    {
-                        "name": "Menu_NPC_Talk",
-                        "args": [
-                            "ac10012",
-                            "사령관! 우리를 이끌어주시오!",
-                            "enemy"
-                        ]
-                    },
-                    {
-                        "name": "Wait_Click",
-                        "args": [
-                            "screen"
-                        ]
-                    },
-                    {
-                        "name": "Menu_NPC_Talk",
-                        "args": [
-                            "ac10005",
-                            "사령관! 우리를 지휘해줘!",
-                            "my"
-                        ]
-                    },
-                    {
-                        "name": "Wait_Click",
-                        "args": [
-                            "screen"
-                        ]
-                    }
-                ],
-                "isExecute": false
-            },
-            {
-                "id": 16,
-                "description": null,
-                "methods": [
-                    {
-                        "name": "Menu_Hide_Message",
-                        "args": []
-                    },
-                    {
-                        "name": "Block_HUD",
-                        "args": []
-                    },
-                    {
-                        "name": "Wait_DeckSelect",
-                        "args": []
-                    }
-                ],
-                "isExecute": false
-            },
-            {
-                "id": 17,
-                "description": null,
-                "methods": [
-                    {
-                        "name": "ChangePVPBattleBtnFunction",
-                        "args": []
-                    },
-                    {
-                        "name": "ShowHandUI",
-                        "args": [
-                            "ai_battle_start_button",
-                            "touch"
-                        ]
-                    },
-                    {
-                        "name": "Wait_Click",
-                        "args": [
-                            "ai_battle_start_button"
-                        ]
-                    },
-                    {
-                        "name": "HideHandUI",
-                        "args": [
-                            "ai_battle_start_button"
-                        ]
-                    },
-                    {
-                        "name": "Unblock_HUD",
-                        "args": []
-                    },
-                    {
-                        "name": "ResetPVPBattleBtnFunction",
-                        "args": []
-                    }
-                ],
-                "isExecute": false
-            }
-        ]
-    },
-    {
-        "id": 2,
-        "description": "상자 열기를 유도하는 튜토리얼 (휴먼)",
-        "innerDatas": [
-            {
-                "id": 1,
-                "description": null,
-                "methods": [
-                    {
-                        "name": "Menu_NPC_Talk",
-                        "args": [
-                            "ac10005",
-                            "사령관의 지휘는 역시 믿을만해",
-                            "my"
-                        ]
-                    },
-                    {
-                        "name": "Wait_Click",
-                        "args": [
-                            "screen"
-                        ]
-                    }
-                ],
-                "isExecute": false
-            },
-            {
-                "id": 2,
-                "description": null,
-                "methods": [
-                    {
-                        "name": "Menu_NPC_Talk",
-                        "args": [
-                            "ac10012",
-                            "이번에는 인간을 도왔지만, 언제든 다시 우리를 이끌어주셔도 좋습니다 족장님. 기다리겠습니다.",
-                            "enemy"
-                        ]
-                    },
-                    {
-                        "name": "Wait_Click",
-                        "args": [
-                            "screen"
-                        ]
-                    }
-                ],
-                "isExecute": false
-            },
-            {
-                "id": 3,
-                "description": null,
-                "methods": [
-                    {
-                        "name": "Menu_NPC_Talk",
-                        "args": [
-                            "ac10005",
-                            "자, 저 오크는 무시하고 이번 전투로 얻은 전리품이 있어.",
-                            "my"
-                        ]
-                    },
-                    {
-                        "name": "Wait_Click",
-                        "args": [
-                            "screen"
-                        ]
-                    }
-                ],
-                "isExecute": false
-            },
-            {
-                "id": 4,
-                "description": null,
-                "methods": [
-                    {
-                        "name": "Menu_NPC_Talk",
-                        "args": [
-                            "ac10005",
-                            "전투를 진행하면 보급품을 얻을 수 있고, 보급품이 100 이상 모이면 보급상자로 바꿔 다양한 카드나 재화를 얻을 수 있어.",
-                            "my"
-                        ]
-                    },
-                    {
-                        "name": "Wait_Click",
-                        "args": [
-                            "screen"
-                        ]
-                    }
-                ],
-                "isExecute": false
-            },
-            {
-                "id": 5,
-                "description": null,
-                "methods": [
-                    {
-                        "name": "Menu_NPC_Talk",
-                        "args": [
-                            "ac10005",
-                            "이번 전투로 보급상자를 하나 얻은것 같은데 한번 열어볼까?",
-                            "my"
-                        ]
-                    },
-                    {
-                        "name": "Wait_Click",
-                        "args": [
-                            "screen"
-                        ]
-                    },
-                    {
-                        "name": "Menu_Hide_Message",
-                        "args": []
-                    },
-                    {
-                        "name": "Menu_Scope_Object",
-                        "args": [
-                            "reward_box"
-                        ]
-                    },
-                    {
-                        "name": "Dimmed",
-                        "args": [
-                            "reward_box",
-                            "on"
-                        ]
-                    },
-                    {
-                        "name": "ShowHandUI",
-                        "args": [
-                            "reward_box",
-                            "touch"
-                        ]
-                    },
-                    {
-                        "name": "Wait_Click",
-                        "args": [
-                            "reward_box"
-                        ]
-                    },
-                    {
-                        "name": "HideHandUI",
-                        "args": [
-                            "reward_box"
-                        ]
-                    },
-                    {
-                        "name": "Dimmed",
-                        "args": [
-                            "reward_box",
-                            "off"
-                        ]
-                    }
-                ],
-                "isExecute": false
-            },
-            {
-                "id": 6,
-                "description": "상자열기",
-                "methods": [
-                    {
-                        "name": "BoxOpenProcess",
-                        "args": []
-                    }
-                ],
-                "isExecute": false
-            },
-            {
-                "id": 5,
-                "description": null,
-                "methods": [
-                    {
-                        "name": "Menu_NPC_Talk",
-                        "args": [
-                            "ac10005",
-                            "새로운 카드! 그리고 재화까지 얻었네!",
-                            "my"
-                        ]
-                    },
-                    {
-                        "name": "Wait_Click",
-                        "args": [
-                            "screen"
-                        ]
-                    }
-                ],
-                "isExecute": false
-            },
-            {
-                "id": 6,
-                "description": null,
-                "methods": [
-                    {
-                        "name": "Menu_NPC_Talk",
-                        "args": [
-                            "ac10005",
-                            "보급상자를 개봉하면 새로운 카드를 무조건 2장 얻을 수 있어.",
-                            "my"
-                        ]
-                    },
-                    {
-                        "name": "Wait_Click",
-                        "args": [
-                            "screen"
-                        ]
-                    }
-                ],
-                "isExecute": false
-            },
-            {
-                "id": 7,
-                "description": null,
-                "methods": [
-                    {
-                        "name": "Menu_NPC_Talk",
-                        "args": [
-                            "ac10005",
-                            "나머지 2개의 보상에서는 추가 카드나 재화를 얻을 수 있어. 그러니 보급상자를 많이 얻어봐~",
-                            "my"
-                        ]
-                    },
-                    {
-                        "name": "Wait_Click",
-                        "args": [
-                            "screen"
-                        ]
-                    },
-                    {
-                        "name": "Menu_Hide_Message",
-                        "args": []
-                    }
-                ],
-                "isExecute": false
-            },
-            {
-                "id": 9,
-                "description": null,
-                "methods": [
-                    {
-                        "name": "OffHighlight",
+                        "name": "Menu_Block_Screen",
                         "args": []
                     },
                     {
@@ -740,12 +151,333 @@
                         ]
                     },
                     {
-                        "name": "ActiveImageTutorial",
+                        "name": "ForceToPage",
+                        "args": [
+                            "StoryLobby"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Until",
+                        "args": [
+                            "1"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "story_orc_button",
+                            "on"
+                        ]
+                    },
+                    {
+                        "name": "ShowHandUI",
+                        "args": [
+                            "story_orc_button",
+                            "touch"
+                        ]
+                    },
+                    {
+                        "name": "ChangeSelectBtnImage",
+                        "args": [
+                            "story_orc_btn"
+                        ]
+                    },
+                    {
+                        "name": "Menu_Scope_Object",
+                        "args": [
+                            "story_orc_button"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                            "story_orc_button"
+                        ]
+                    },
+                    {
+                        "name": "HideHandUI",
+                        "args": [
+                            "story_orc_button"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "story_orc_button",
+                            "off"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "orc_story_tutorial",
+                            "on",
+                            "scrollArea"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Until",
+                        "args": [
+                            "1"
+                        ]
+                    },
+                    {
+                        "name": "ShowHandUI",
+                        "args": [
+                            "orc_story_tutorial",
+                            "touch"
+                        ]
+                    },
+                    {
+                        "name": "Menu_Scope_Object",
+                        "args": [
+                            "orc_story_tutorial"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                            "orc_story_tutorial"
+                        ]
+                    },
+                    {
+                        "name": "HideHandUI",
+                        "args": [
+                            "orc_story_tutorial"
+                        ]
+                    },
+                    {
+                        "name": "AutoSelectStoryDeck",
+                        "args": [
+                            "orc",
+                            "1"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "orc_story_tutorial",
+                            "off",
+                            "scrollArea"
+                        ]
+                    },
+                    {
+                        "name": "ShowHandUI",
+                        "args": [
+                          "tutorial_play_button",
+                          "touch"
+                        ]
+                    },
+                    {
+                        "name": "Menu_Scope_Object",
+                        "args": [
+                            "tutorial_play_button"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "tutorial_play_button",
+                            "on"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                            "tutorial_play_button"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "tutorial_play_button",
+                            "off"
+                        ]
+                    },
+                    {
+                        "name": "ForceOrcStorySocketConnect",
+                        "args": [
+                            "orc",
+                            "1"
+                        ]
+                    }
+                ],
+                "isExecute": false
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "description": "orc 튜토리얼 0-2 유도",
+            "innerDatas": [
+            {
+                "id": 1,
+                "description": null,
+                "methods": [
+                    {
+                        "name": "RequestReward",
+                        "args": [
+                            "orc"
+                        ]
+                    },
+                    {
+                        "name": "ForceToPage",
+                        "args": [
+                            "StoryLobby"
+                        ]
+                    },
+                    {
+                        "name": "Menu_Block_Screen",
                         "args": []
                     },
                     {
-                        "name": "EndTutorial",
-                        "args": []
+                        "name": "Wait_Until",
+                        "args": [
+                            "1"
+                        ]
+                    },
+                    {
+                        "name": "ForceToPage",
+                        "args": [
+                            "StoryLobby"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Until",
+                        "args": [
+                            "1"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "story_orc_button",
+                            "on"
+                        ]
+                    },
+                    {
+                        "name": "ShowHandUI",
+                        "args": [
+                            "story_orc_button",
+                            "touch"
+                        ]
+                    },
+                    {
+                        "name": "ChangeSelectBtnImage",
+                        "args": [
+                            "story_orc_btn"
+                        ]
+                    },
+                    {
+                        "name": "Menu_Scope_Object",
+                        "args": [
+                            "story_orc_button"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                            "story_orc_button"
+                        ]
+                    },
+                    {
+                        "name": "HideHandUI",
+                        "args": [
+                            "story_orc_button"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "story_orc_button",
+                            "off"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "orc_story_tutorial_2",
+                            "on"
+                        ]
+                    },
+                    {
+                        "name": "ShowHandUI",
+                        "args": [
+                            "orc_story_tutorial_2",
+                            "touch"
+                        ]
+                    },
+                    {
+                        "name": "Menu_Scope_Object",
+                        "args": [
+                            "orc_story_tutorial_2"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                            "orc_story_tutorial_2"
+                        ]
+                    },
+                    {
+                        "name": "HideHandUI",
+                        "args": [
+                            "orc_story_tutorial_2"
+                        ]
+                    },
+                    {
+                        "name": "AutoSelectStoryDeck",
+                        "args": [
+                            "orc",
+                            "1"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "orc_story_tutorial_2",
+                            "off"
+                        ]
+                    },
+                    {
+                        "name": "ShowHandUI",
+                        "args": [
+                          "tutorial_play_button",
+                          "touch"
+                        ]
+                    },
+                    {
+                        "name": "Menu_Scope_Object",
+                        "args": [
+                            "tutorial_play_button"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "tutorial_play_button",
+                            "on"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                            "tutorial_play_button"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "tutorial_play_button",
+                            "off"
+                        ]
+                    },
+                    {
+                        "name": "ForceOrcStorySocketConnect",
+                        "args": [
+                            "orc",
+                            "2"
+                        ]
                     }
                 ],
                 "isExecute": false

@@ -38,7 +38,7 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
     public void StartTutorial(TutorialType type) {
         Logger.Log(type + " 튜토리얼 시작");
 
-        if(type != TutorialType.TO_HUMAN_STORY) {
+        if(type != TutorialType.NONE) {
             AccountManager.Instance.RequestUserInfo();
         }
 
@@ -164,11 +164,10 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
     }
 
     public enum TutorialType {
-        TO_ORC_STORY = 0,
-        TO_AI_BATTLE = 1,
-        TO_BOX_OPEN_HUMAN = 2,
-        TO_BOX_OPEN_ORC = 3,
-        MAIN_BUTTON_DESC = 4,
-        TO_HUMAN_STORY = 5
+        TO_HUMAN_STORY_2 = 0,
+        TO_ORC_STORY = 1,
+        TO_ORC_STORY_2 = 2,
+        MAIN_BUTTON_DESC = 3,
+        NONE = 4
     }
 }
