@@ -44,6 +44,7 @@ namespace dataModules {
         public Skill[] skills;
         public string flavorText;
         public bool indestructible;
+        public bool unownable;
     }
 
     public class HeroInventory {

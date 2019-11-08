@@ -128,6 +128,7 @@ public class DeckEditController : MonoBehaviour
         foreach (dataModules.CollectionCard card in AccountManager.Instance.allCards) {
             if (isHuman == (card.camp == "human")) {
                 if (card.isHeroCard) continue;
+                if (card.unownable) continue;
                 int rarelityValue = 0;
                 switch (card.rarelity) {
                     case "common":

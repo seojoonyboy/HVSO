@@ -101,6 +101,7 @@ public class CardDictionaryManager : MonoBehaviour {
         int count = 0;
         foreach (dataModules.CollectionCard card in AccountManager.Instance.allCards) {
             if (card.isHeroCard) continue;
+            if (card.unownable) continue;
             if ((card.camp == "human") == isHumanDictionary) {
                 int rarelityValue = 0;
                 switch (card.rarelity) {
