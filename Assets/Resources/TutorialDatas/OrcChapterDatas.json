@@ -557,14 +557,16 @@
                         ]
                     },
                     {
+                        "name" : "End_tutorial",
+                        "args" : [
+                            "proceed_game"
+                        ]
+                    },
+                    {
                         "name": "Result_battle",
                         "args": [
                             "proceed"
                         ]
-                    },
-                    {
-                        "name": "End_tutorial",
-                        "args": []
                     }
                 ],
                 "isExecute": false
@@ -945,6 +947,16 @@
                     {
                         "name" : "Enable_Deck_card",
                         "args" : []
+                    },
+                    {
+                        "name" : "Remove_forced_drop_zone",
+                        "args" : []
+                    },
+                    {
+                        "name" : "End_tutorial",
+                        "args" : [
+                            "proceed_game"
+                        ]
                     }
                 ],
                 "isExecute": false
@@ -981,6 +993,10 @@
                         "args": [
                             "proceed"
                         ]
+                    },
+                    {
+                        "name" : "End_tutorial",
+                        "args" : []
                     }
                 ],
                 "isExecute": false

@@ -652,8 +652,15 @@ public class End_tutorial : ScenarioExecute {
         scenarioMask.UnmaskHeroGuide();
         scenarioMask.HideText();
         ScenarioGameManagment.scenarioInstance.isTutorial = false;
-        ScenarioGameManagment.scenarioInstance.socketHandler.TutorialEnd();
-        //AccountManager.Instance.needChangeNickName = true;
+
+        if (args.Count != 0) {
+            if (args[0] == "proceed_game") {
+
+            }
+        }
+        else {
+            ScenarioGameManagment.scenarioInstance.socketHandler.TutorialEnd();
+        }
     }
 }
 
