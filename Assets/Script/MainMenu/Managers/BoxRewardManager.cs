@@ -59,7 +59,7 @@ public class BoxRewardManager : MonoBehaviour
         }
         else
             boxObject.Find("BoxImage/BoxValue").gameObject.SetActive(false);
-        additionalSupply.Find("Value").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userResource.additionalPreSupply.ToString();
+        additionalSupply.Find("Value").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userResource.supplyX2Coupon.ToString();
     }
 
     public void OpenBox() {
