@@ -164,6 +164,10 @@
                         ]
                     },
                     {
+                        "name": "Unblock_Screen",
+                        "args": []
+                    },
+                    {
                         "name": "ChallengeEnd",
                         "args": [
                             "UNIT_SUMMONED"
