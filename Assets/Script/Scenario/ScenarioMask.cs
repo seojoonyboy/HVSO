@@ -687,7 +687,7 @@ public class ScenarioMask : SerializedMonoBehaviour
 
     public void FocusSkillIcon() {
         GameObject openWindow = GetInfoWindow();
-        Transform skillIcon = openWindow.transform.Find("Skill&BuffRow1/Skill");
+        Transform skillIcon = openWindow.transform.Find("Skill&BuffRow1/Skill1");
         GetMaskHighlight(skillIcon.gameObject);
         ActiveMask();
 
@@ -704,7 +704,7 @@ public class ScenarioMask : SerializedMonoBehaviour
 
     public void BlurSkillIcon() {
         GameObject openWindow = GetInfoWindow();
-        Transform skillIcon = openWindow.transform.Find("Skill&BuffRow1/Skill");
+        Transform skillIcon = openWindow.transform.Find("Skill&BuffRow1/Skill1");
 
         GameObject dragEffect = skillIcon.Find("touch").gameObject;
         Destroy(dragEffect);

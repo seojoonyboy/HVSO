@@ -342,7 +342,7 @@ public class CardListManager : MonoBehaviour
     }
 
     private void SetClassDescModalData(string className = "", string desc = "", Sprite sprite = null) {
-        TMPro.TextMeshProUGUI TMP_header = classDescModal.Find("InnerModal/Header").GetComponent<TMPro.TextMeshProUGUI>();
+        TMPro.TextMeshProUGUI TMP_header = classDescModal.Find("Header").GetComponent<TMPro.TextMeshProUGUI>();
         TMP_header.text = "<color=blue>"+className+"</color>" + "\n" + desc;
     }
     

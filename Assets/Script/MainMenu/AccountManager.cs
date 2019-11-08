@@ -222,7 +222,7 @@ public partial class AccountManager : Singleton<AccountManager> {
         public int supplyBox;
         public int manaCrystal;
         public int preSupply;
-        public int additionalPreSupply;
+        public int supplyX2Coupon;
 
         public string nickName;
         public string deviceId;
@@ -351,7 +351,7 @@ public partial class AccountManager {
             supplyStore: userData.preSupply,
             supply: userData.supply,
             supplyBox: userData.supplyBox,
-            additionalPreSupply : userData.additionalPreSupply
+            supplyX2Coupon: userData.supplyX2Coupon
         );
     }
 
@@ -370,7 +370,7 @@ public partial class AccountManager {
             supplyStore: userData.preSupply,
             supply: userData.supply,
             supplyBox: userData.supplyBox,
-            additionalPreSupply: userData.additionalPreSupply
+            supplyX2Coupon: userData.supplyX2Coupon
         );
         OnUserResourceRefresh.Invoke();
     }

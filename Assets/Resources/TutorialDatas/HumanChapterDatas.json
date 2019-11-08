@@ -157,15 +157,15 @@
                         ]
                     },
                     {
+                        "name": "Unblock_Screen",
+                        "args": []
+                    },
+                    {
                         "name": "Wait_Multiple_Summon_ScopeLine",
                         "args": [
                             "1,3",
                             "ac10005"
                         ]
-                    },
-                    {
-                        "name": "Unblock_Screen",
-                        "args": []
                     },
                     {
                         "name": "ChallengeEnd",
@@ -194,6 +194,10 @@
                             "button",
                             "endTurn"
                         ]
+                    },
+                    {
+                        "name": "StopHighlight",
+                        "args": []
                     },
                     {
                         "name": "Wait_Turn",
@@ -263,9 +267,13 @@
                         ]
                     },
                     {
+                        "name": "Unblock_Screen",
+                        "args": []
+                    },
+                    {
                         "name": "Wait_Multiple_Summon_linelimit",
                         "args": [
-                            "3",
+                            "2",
                             "3"
                         ]
                     },
@@ -286,6 +294,10 @@
                             "button",
                             "endTurn"
                         ]
+                    },
+                    {
+                        "name": "StopHighlight",
+                        "args": []
                     },
                     {
                         "name": "Wait_Turn",
@@ -463,7 +475,7 @@
                     {
                         "name": "NPC_Print_message",
                         "args": [
-                            "ac10048",
+                            "ac10005",
                             "덕분에 살았습니다. 혹시 성으로 돌아가신다면 저희 상단도 함께 이동해도 될까요?",
                             "true"
                         ]
@@ -527,16 +539,20 @@
                         ]
                     },
                     {
+                        "name": "Set_Hero_Shield",
+                        "args": []
+                    },
+                    {
                         "name": "Set_Unit",
                         "args": [
-                            "0,2",
+                            "2,0",
                             "qc10001"
                         ]
                     },
                     {
                         "name": "SetUp_Protect_Unit",
                         "args": [
-                            "0,2"
+                            "2,0"
                         ]
 
                     }
@@ -603,7 +619,7 @@
                         ]
                     },
                     {
-                        "name": "Wait_Close_Info",
+                        "name": "Enable_EndTurn",
                         "args": []
                     },
                     {
@@ -619,6 +635,10 @@
                             "button",
                             "endTurn"
                         ]
+                    },
+                    {
+                        "name": "Disable_EndTurn",
+                        "args": []
                     },
                     {
                         "name": "Wait_DrawHero",

@@ -1383,12 +1383,35 @@ public class Set_Unit : ScenarioExecute {
         int col = int.Parse(parse[0]);
         int row = int.Parse(parse[1]);
 
-        if (AccountManager.Instance.allCardsDic[args[1]] != null)
-            PlayMangement.instance.SummonUnit(true, args[1], col, row);
+        if (AccountManager.Instance.allCardsDic[args[1]] != null) {
+            GameObject unit = PlayMangement.instance.SummonUnit(true, args[1], col, row);
+            unit.GetComponent<PlaceMonster>().itemId = PlayMangement.instance.socketHandler.gameState.map.lines[col].human[row].itemId;
+        }
         handler.isDone = true;
 
     }
 
+}
+
+public class Set_Hero_Shield : ScenarioExecute {
+    public Set_Hero_Shield() : base() { }
+
+    public override void Execute() {
+        PlayMangement playMangement = PlayMangement.instance;
+        bool isHuman = playMangement.player.isHuman;
+        int socketMyShield = playMangement.socketHandler.gameState.players.myPlayer(isHuman).hero.shieldGauge;
+        int socketEnemyShield = playMangement.socketHandler.gameState.players.myPlayer(!isHuman).hero.shieldGauge;
+        if(socketMyShield > 0) {
+            playMangement.player.shieldStack.Value = socketMyShield;
+            PlayMangement.instance.player.FullShieldStack(socketMyShield);
+        }
+        if(socketEnemyShield > 0) {
+            playMangement.enemyPlayer.shieldStack.Value = socketEnemyShield;
+            PlayMangement.instance.enemyPlayer.FullShieldStack(socketEnemyShield);
+        }
+
+        handler.isDone = true;
+    }
 }
 
 
