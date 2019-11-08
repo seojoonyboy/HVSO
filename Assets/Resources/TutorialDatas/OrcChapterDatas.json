@@ -145,6 +145,10 @@
                         "args": []
                     },
                     {
+                        "name" : "StopHighlight",
+                        "args" : []
+                    },
+                    {
                         "name": "Highlight",
                         "args": [
                             "button",
@@ -157,7 +161,11 @@
                             "button",
                             "endTurn"
                         ]
-                    }
+                    },
+                    {
+                        "name" : "StopHighlight",
+                        "args" : []
+                    },
                 ],
                 "isExecute": false
             },
@@ -230,10 +238,31 @@
                         ]
                     },
                     {
-                        "name": "Wait_drop",
+                        "name": "Unblock_Screen",
+                        "args": []
+                    },
+                    {
+                        "name": "ChallengeStart",
                         "args": [
-                            "magiceCard",
-                            "ac10074"
+                            "MAGIC_USED"
+                        ]
+                    },
+                    {
+                        "name" : "Enable_Deck_card",
+                        "args" : [
+                            
+                        ]
+                    },
+                    {
+                        "name": "Wait_AnyMagic_Use",
+                        "args": [
+                            "magiceCard"
+                        ]
+                    },
+                    {
+                        "name" : "ChallengeEnd",
+                        "args" : [
+                            "MAGIC_USED"
                         ]
                     },
                     {
@@ -327,6 +356,10 @@
                             "멍청한 녀석. 이성을 잃었군.",
                             "true"
                         ]
+                    },
+                    {
+                        "name" : "Unblock_Screen",
+                        "args" : []
                     },
                     {
                         "name": "Wait_click",

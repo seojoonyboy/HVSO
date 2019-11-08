@@ -461,7 +461,7 @@ public class Wait_Multiple_Summon_linelimit : ScenarioExecute {
             scenarioGameManagment.forcedLine = line;
         }
 
-        scenarioMask.CardDeckGlow();
+        scenarioMask.CardDeckGlow("ac10018");
         int.TryParse(args[0], out clearCount);
         PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.UNIT_SUMMONED, CheckSummon);
         PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.UNIT_DROP_FAIL, HighLightOn);
@@ -477,16 +477,18 @@ public class Wait_Multiple_Summon_linelimit : ScenarioExecute {
             PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.UNIT_DROP_FAIL, HighLightOn);
             scenarioGameManagment.forcedLine = -1;
             handler.isDone = true;
+
+            scenarioMask.OffDeckCardGlow();
         }
     }
     
     private void Glowing() {
-        scenarioMask.CardDeckGlow();
+        scenarioMask.CardDeckGlow("ac10018");
     }
 
 
     private void HighLightOn(Enum event_type, Component Sender, object Param) {
-        scenarioMask.CardDeckGlow();
+        scenarioMask.CardDeckGlow("ac10018");
     }
 }
 
@@ -520,11 +522,21 @@ public class Wait_drop : ScenarioExecute {
     private void GlowTrigger(Enum event_type, Component Sender, object Param) {
         scenarioMask.CardDeckGlow(args[1]);
     }
-
-
 }
 
+public class Wait_AnyMagic_Use : ScenarioExecute {
+    public override void Execute() {
+        //Glowing(args[1]);
+        PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.MAGIC_USED, CheckMagicUse);
+    }
 
+    private void CheckMagicUse(Enum event_type, Component Sender, object Param) {
+        string magicID = (string)Param;
+
+        PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.MAGIC_USED, CheckMagicUse);
+        handler.isDone = true;
+    }
+}
 
 public class Multiple_Highlight : ScenarioExecute {
     public Multiple_Highlight() : base() { }
