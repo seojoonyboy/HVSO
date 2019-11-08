@@ -114,6 +114,9 @@ public class MenuSceneController : MonoBehaviour {
                 menuTutorialManager.StartTutorial(tutorialType);
             }
         }
+        else {
+            menuTutorialManager.enabled = false;
+        }
     }
 
     private void OnUserDataUpdate(Enum Event_Type, Component Sender, object Param) {
