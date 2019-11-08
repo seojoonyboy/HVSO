@@ -663,10 +663,8 @@
                 "Print_text": "data_stage_1031_2_3-6",
                 "methods": [
                     {
-                        "name": "Wait_Turn",
-                        "args": [
-                            "ORC"
-                        ]
+                        "name" : "Unblock_Screen",
+                        "args" : []
                     },
                     {
                         "name": "Disable_EndTurn",
@@ -766,20 +764,25 @@
                         "args": []
                     },
                     {
+                        "name" : "Remove_forced_drop_zone",
+                        "args" : []
+                    },
+                    {
+                        "name" : "Force_drop_zone",
+                        "args" : [
+                            "unit",
+                            "2"
+                        ]
+                    },
+                    {
                         "name": "Wait_Turn",
                         "args": [
-                            "HUMAN"
+                            "SECRET"
                         ]
                     },
                     {
                         "name": "Stop_Invoke_NextTurn",
                         "args": []
-                    },
-                    {
-                        "name": "Wait_Enemy_Summon",
-                        "args": [
-                            "2"
-                        ]
                     },
                     {
                         "name": "NPC_Print_message",
@@ -796,14 +799,16 @@
                         ]
                     },
                     {
+                        "name": "Wait_Field_Change",
+                        "args": []
+                    },
+                    {
                         "name": "Proceed_Invoke_NextTurn",
                         "args": []
                     },
                     {
-                        "name": "Wait_Turn",
-                        "args": [
-                            "SECRET"
-                        ]
+                        "name" : "Remove_forced_drop_zone",
+                        "args" : []
                     },
                     {
                         "name": "Disable_EndTurn",
@@ -821,17 +826,6 @@
             {
                 "Print_text": "data_stage_1031_2_9-12",
                 "methods": [
-                    {
-                        "name": "Force_drop_zone",
-                        "args": [
-                            "magic",
-                            "2"
-                        ]
-                    },
-                    {
-                        "name": "Wait_Field_Change",
-                        "args": []
-                    },
                     {
                         "name": "Wait_until",
                         "args": [
@@ -937,8 +931,20 @@
                         "args": []
                     },
                     {
-                        "name": "End_tutorial",
+                        "name" : "Unblock_Screen",
+                        "args" : []
+                    },
+                    {
+                        "name": "Enable_EndTurn",
                         "args": []
+                    },
+                    {
+                        "name" : "StopHighlight",
+                        "args" : []
+                    },
+                    {
+                        "name" : "Enable_Deck_card",
+                        "args" : []
                     }
                 ],
                 "isExecute": false
