@@ -167,8 +167,15 @@ public class MenuSceneController : MonoBehaviour {
         Transform buttonsParent = fixedCanvas.Find("Footer");
         TouchEffecter.Instance.SetScript();
 
-        //CheckTutorial();
-        //menuTutorialManager.StartTutorial(MenuTutorialManager.TutorialType.TO_AI_BATTLE);
+        CheckTutorial();
+
+        #region 테스트 코드
+        //menuTutorialManager.ReadTutorialData();
+        //scenarioManager.ReadScenarioData();
+        //isTutorialDataLoaded = true;
+        //menuTutorialManager.StartTutorial(MenuTutorialManager.TutorialType.TO_ORC_STORY);
+        #endregion
+
         AccountManager.Instance.RequestUserInfo();    //튜토리얼을 어디서부터 진행해야 하는지 판단
     }
 
