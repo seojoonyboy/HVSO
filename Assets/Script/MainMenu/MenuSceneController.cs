@@ -43,6 +43,7 @@ public class MenuSceneController : MonoBehaviour {
         menuTutorialManager.ReadTutorialData();
         scenarioManager.ReadScenarioData();
         isTutorialDataLoaded = true;
+        //menuTutorialManager.StartTutorial(MenuTutorialManager.TutorialType.TO_ORC_STORY_2);
         #endregion
 
         if (!isLoaded)
