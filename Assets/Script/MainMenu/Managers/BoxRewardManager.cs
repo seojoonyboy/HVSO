@@ -215,7 +215,7 @@ public class BoxRewardManager : MonoBehaviour
         boxParent.GetChild(3).Find("Card").gameObject.SetActive(false);
         boxParent.GetChild(3).Find("Card/GetCrystal").gameObject.SetActive(false);
         boxParent.GetChild(3).Find("Resource").gameObject.SetActive(false);
-        for (int i = 0; i < 3; i++) {
+        for (int i = 1; i < 4; i++) {
             boxParent.GetChild(2).GetChild(i).gameObject.SetActive(false);
             boxParent.GetChild(3).Find("Resource").GetChild(i).gameObject.SetActive(false);
         }
@@ -298,6 +298,11 @@ public class BoxRewardManager : MonoBehaviour
                     type = target.GetChild(i).gameObject.name;
                 }
             }
+            SkeletonGraphic spine = target.Find("back").GetComponent<SkeletonGraphic>();
+            spine.gameObject.SetActive(true);
+            spine.Initialize(true);
+            spine.Update(0);
+            spine.AnimationState.SetAnimation(0, "g_superrare", true);
 
             SoundManager soundManager = SoundManager.Instance;
             switch (type) {
@@ -411,7 +416,7 @@ public class BoxRewardManager : MonoBehaviour
             CheckNewCardList(rewardList[1].item);
 
         boxParent.GetChild(2).Find(rewardList[2].item).gameObject.SetActive(true);
-        boxParent.GetChild(2).Find("Value").GetComponent<TMPro.TextMeshProUGUI>().text = rewardList[2].amount.ToString();
+        boxParent.GetChild(2).Find("Value").GetComponent<TMPro.TextMeshProUGUI>().text = "+" + rewardList[2].amount.ToString();
         effects.GetChild(2).GetComponent<SkeletonGraphic>().Initialize(false);
         effects.GetChild(2).GetComponent<SkeletonGraphic>().Update(0);
         effects.GetChild(2).GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, "animation", false);
@@ -437,7 +442,7 @@ public class BoxRewardManager : MonoBehaviour
             boxParent.GetChild(3).Find("Resource").gameObject.SetActive(true);
             boxParent.GetChild(3).Find("Card").gameObject.SetActive(false);
             boxParent.GetChild(3).Find("Resource").Find(rewardList[3].item).gameObject.SetActive(true);
-            boxParent.GetChild(3).Find("Resource").Find("Value").GetComponent<TMPro.TextMeshProUGUI>().text = rewardList[3].amount.ToString();
+            boxParent.GetChild(3).Find("Resource").Find("Value").GetComponent<TMPro.TextMeshProUGUI>().text = "+" + rewardList[3].amount.ToString();
             effects.GetChild(3).GetComponent<SkeletonGraphic>().Skeleton.SetSkin("4.item");
         }
         effects.GetChild(3).GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, "animation", false);
