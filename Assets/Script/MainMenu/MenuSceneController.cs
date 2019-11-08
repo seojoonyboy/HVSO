@@ -100,7 +100,12 @@ public class MenuSceneController : MonoBehaviour {
                         }
                         else {
                             //오크 튜토리얼 0-2을 진행하지 않았음
-                            tutorialType = MenuTutorialManager.TutorialType.TO_ORC_STORY_2;
+                            if (!clearedStages.Exists(x => x.camp == "orc" && x.stageNumber == 2)) {
+                                tutorialType = MenuTutorialManager.TutorialType.TO_ORC_STORY_2;
+                            }
+                            else {
+                                needTutorial = false;
+                            }
                         }
                     }
                 }
