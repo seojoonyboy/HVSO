@@ -35,23 +35,20 @@ public class MenuSceneController : MonoBehaviour {
     bool isTutorialDataLoaded = false;
 
     private void Awake() {
-        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_TUTORIAL_PRESETTING_COMPLETE, CheckTutorial);
+        //NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_TUTORIAL_PRESETTING_COMPLETE, CheckTutorial);
 
         menuSceneController = this;
+
         #region 테스트코드
-        //NetworkManager.ReconnectData dummyData = new NetworkManager.ReconnectData("11", "human");
-        //PlayerPrefs.SetString("ReconnectData", JsonConvert.SerializeObject(dummyData));
+        menuTutorialManager.ReadTutorialData();
+        scenarioManager.ReadScenarioData();
+        isTutorialDataLoaded = true;
         #endregion
+
         if (!isLoaded)
             isLoaded = true;
         else
             SetCardNumbersPerDic();
-
-        //menuTutorialManager.StartTutorial(MenuTutorialManager.TutorialType.TO_BOX_OPEN_HUMAN);
-        //if(PlayerPrefs.GetString("ReconnectData") != string.Empty) {
-        //    GameObject modal = Instantiate(reconnectingModal);
-        //    modal.GetComponent<ReconnectController>().Init(decksLoader);
-        //}
 
         menuButton.Initialize(true);
         menuButton.Update(0);

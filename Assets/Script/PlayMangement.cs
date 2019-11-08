@@ -246,7 +246,7 @@ public partial class PlayMangement : MonoBehaviour {
             player.back = cardDB.transform.Find("OrcBackCard").gameObject;
             enemyPlayer.back = cardDB.transform.Find("HumanBackCard").gameObject;
         }
-        enemyPlayer.playerUI.transform.Find("CardCount").gameObject.GetComponent<Image>().sprite = enemyCard.GetComponent<Image>().sprite;
+        //enemyPlayer.playerUI.transform.Find("CardCount").gameObject.GetComponent<Image>().sprite = enemyCard.GetComponent<Image>().sprite;
     }
 
 
@@ -304,7 +304,7 @@ public partial class PlayMangement : MonoBehaviour {
                 SocketFormat.DebugSocketData.SummonCardData(history);
             }
             int count = CountEnemyCard();
-            enemyPlayer.playerUI.transform.Find("CardCount").GetChild(1).gameObject.GetComponent<Text>().text = (count).ToString();
+            enemyPlayer.playerUI.transform.Find("CardCount").GetChild(0).gameObject.GetComponent<Text>().text = (count).ToString();
             //SocketFormat.DebugSocketData.CheckMapPosition(state);
             yield return new WaitForSeconds(0.5f);
         }
@@ -963,7 +963,7 @@ public partial class PlayMangement {
             yield return new WaitForSeconds(0.3f);
             SoundManager.Instance.PlayIngameSfx(IngameSfxSound.CARDDRAW);
             enemyCard.SetActive(false);
-            enemyPlayer.playerUI.transform.Find("CardCount").GetChild(1).gameObject.GetComponent<Text>().text = (i + 1).ToString();
+            enemyPlayer.playerUI.transform.Find("CardCount").GetChild(0).gameObject.GetComponent<Text>().text = (i + 1).ToString();
             i++;
         }
     }
@@ -982,7 +982,7 @@ public partial class PlayMangement {
             yield return new WaitForSeconds(0.15f);
             enemyCard.SetActive(false);
             SoundManager.Instance.PlayIngameSfx(IngameSfxSound.CARDDRAW);
-            enemyPlayer.playerUI.transform.Find("CardCount").GetChild(1).gameObject.GetComponent<Text>().text = (i + 1).ToString();
+            enemyPlayer.playerUI.transform.Find("CardCount").GetChild(0).gameObject.GetComponent<Text>().text = (i + 1).ToString();
         }
     }
 
@@ -1003,7 +1003,7 @@ public partial class PlayMangement {
         SoundManager.Instance.PlayIngameSfx(IngameSfxSound.CARDDRAW);
         enemyCard.SetActive(true);
         int count = CountEnemyCard();
-        enemyPlayer.playerUI.transform.Find("CardCount").GetChild(1).gameObject.GetComponent<Text>().text = (count).ToString();
+        enemyPlayer.playerUI.transform.Find("CardCount").GetChild(0).gameObject.GetComponent<Text>().text = (count).ToString();
     }
 
     public IEnumerator EnemyMagicCardDraw(int drawNum) {
@@ -1021,7 +1021,7 @@ public partial class PlayMangement {
             iTween.MoveTo(enemyCard, enemyCard.transform.parent.position, 0.3f);
             enemyCard.SetActive(true);
             int count = CountEnemyCard();
-            enemyPlayer.playerUI.transform.Find("CardCount").GetChild(1).gameObject.GetComponent<Text>().text = (count).ToString();
+            enemyPlayer.playerUI.transform.Find("CardCount").GetChild(0).gameObject.GetComponent<Text>().text = (count).ToString();
             yield return new WaitForSeconds(0.3f);
         }
     }
