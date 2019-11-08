@@ -72,6 +72,7 @@ public class NoneIngameSceneEventHandler : Singleton<NoneIngameSceneEventHandler
         API_ORC_TEMPLATES_UPDATED,
         API_HUMAN_TEMPLATES_UPDATED,
         API_NICKNAME_UPDATED,
-        API_CLEARED_STAGE_UPDATED
+        API_CLEARED_STAGE_UPDATED,
+        API_TUTORIAL_PRESETTING_COMPLETE
     }
 }

@@ -919,21 +919,6 @@ public partial class AccountManager {
 }
 
 public partial class AccountManager {
-    public int Exp { get; private set; }
-
-    public void ExpInc(int amount) {
-        ExpReq(amount, OnExpChanged);
-    }
-
-    private void ExpReq(int amount, OnRequestFinishedDelegate callback) {
-        StringBuilder url = new StringBuilder();
-
-        url.Append(networkManager.baseUrl)
-            .Append("api/user");
-
-        HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
-    }
-
     /// <summary>
     /// 튜토리얼 보상 요청
     /// </summary>
@@ -960,6 +945,18 @@ public partial class AccountManager {
         networkManager.Request(request, callback, "보상 받기를 기다리는 중...");
     }
 
+    public void RequestClearedStoryList(OnRequestFinishedDelegate callback) {
+        StringBuilder url = new StringBuilder();
+
+        url.Append(networkManager.baseUrl);
+        url.Append("api/user/stage_cleared");
+
+        HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
+        request.MethodType = HTTPMethods.Get;
+        request.AddHeader("authorization", TokenFormat);
+        networkManager.Request(request, callback, "");
+    }
+
     public void RequestClearedStoryList() {
         StringBuilder url = new StringBuilder();
 
@@ -972,6 +969,9 @@ public partial class AccountManager {
         networkManager.Request(request, (req, res) => {
             if (res.IsSuccess) {
                 if (res.StatusCode == 200 || res.StatusCode == 304) {
+                    clearedStages = dataModules.JsonReader
+                        .Read<List<NetworkManager.ClearedStageFormat>>(res.DataAsText);
+
                     NoneIngameSceneEventHandler
                         .Instance
                         .PostNotification(
@@ -986,20 +986,6 @@ public partial class AccountManager {
             }
         }, "스테이지 진척도 불러오는 중...");
     }
-
-    private void ClearedStoryCallback(HTTPRequest originalRequest, HTTPResponse response) {
-        if(response != null && response.IsSuccess) {
-            clearedStages = dataModules.JsonReader
-                .Read<List<NetworkManager.ClearedStageFormat>>(response.DataAsText);
-        }
-    }
-
-    private void OnExpChanged(HTTPRequest originalRequest, HTTPResponse response) {
-        if (response != null && response.IsSuccess) {
-
-        }
-    }
-
     public void RequestTutorialBoxReward(OnRequestFinishedDelegate callback) {
         StringBuilder url = new StringBuilder();
 
@@ -1010,6 +996,40 @@ public partial class AccountManager {
         request.MethodType = HTTPMethods.Get;
         request.AddHeader("authorization", TokenFormat);
         networkManager.Request(request, callback, "보상 내역 확인중...");
+    }
+
+    public void RequestTutorialPreSettings() {
+        RequestUserInfo((req, res) => {
+            if (res.IsSuccess) {
+                RequestClearedStoryList((_req, _res) => {
+                    if (_res.IsSuccess) {
+                        clearedStages = dataModules.JsonReader
+                        .Read<List<NetworkManager.ClearedStageFormat>>(_res.DataAsText);
+
+                        NoneIngameSceneEventHandler
+                            .Instance
+                            .PostNotification(
+                                NoneIngameSceneEventHandler.EVENT_TYPE.API_CLEARED_STAGE_UPDATED,
+                                null,
+                                _res
+                            );
+
+                        NoneIngameSceneEventHandler
+                            .Instance
+                            .PostNotification(
+                                NoneIngameSceneEventHandler.EVENT_TYPE.API_TUTORIAL_PRESETTING_COMPLETE,
+                                null
+                            );
+                    }
+                    else {
+                        Logger.LogWarning("요청 실패로 튜토리얼 진행 문제 발생");
+                    }
+                });
+            }
+            else {
+                Logger.LogWarning("요청 실패로 튜토리얼 진행 문제 발생");
+            }
+        });
     }
 
     public bool needChangeNickName = false;

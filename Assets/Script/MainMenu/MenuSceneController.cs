@@ -35,7 +35,7 @@ public class MenuSceneController : MonoBehaviour {
     bool isTutorialDataLoaded = false;
 
     private void Awake() {
-        //NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, OnUserDataUpdate);
+        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_TUTORIAL_PRESETTING_COMPLETE, CheckTutorial);
 
         menuSceneController = this;
         #region 테스트코드
@@ -58,11 +58,7 @@ public class MenuSceneController : MonoBehaviour {
         ClickMenuButton(2);
     }
 
-    private void OnUserDataUpdate(Enum Event_Type, Component Sender, object Param) {
-        nicknameText.text = AccountManager.Instance.userData.nickName;
-    }
-
-    private void CheckTutorial() {
+    private void CheckTutorial(Enum Event_Type, Component Sender, object Param) {
         if (!isTutorialDataLoaded) {
             menuTutorialManager.ReadTutorialData();
             scenarioManager.ReadScenarioData();
@@ -85,53 +81,32 @@ public class MenuSceneController : MonoBehaviour {
             PlayerPrefs.SetInt("IsFirstMainMenu", 1);
         }
         else {
-            AccountManager accountManager = AccountManager.Instance;
+            //튜토리얼 남았음
+            AccountManager.etcInfo tutorialCleared = etcInfos.Find(x => x.key == "tutorialCleared");
+            var clearedStages = AccountManager.Instance.clearedStages;
 
-            accountManager.RequestUserInfo((req, res) => {
-                if (res.IsSuccess) {
-                    accountManager.SetSignInData(res);
-
-                    //튜토리얼 남았음
-                    AccountManager.etcInfo tutorialCleared = etcInfos.Find(x => x.key == "tutorialCleared");
-                    var clearedStages = AccountManager.Instance.clearedStages;
-
-                    if (tutorialCleared == null) {
-                        var humanDeckClaimed = etcInfos.Find(x => x.key == "humanDeckClaimed");
-                        //휴먼 튜토리얼 0-1 이후 메인화면에서 보상을 받지 않았음 (다시 휴먼 0-1 인게임으로)
-                        if (humanDeckClaimed == null) {
-                            PlayerPrefs.SetInt("TutorialBoxRecieved", 0);
-                            AddNewbiController();
+            if (tutorialCleared == null) {
+                //휴먼 튜토리얼 0-1을 진행하지 않았음
+                if (!clearedStages.Exists(x => x.camp == "human" && x.stageNumber == 1)) {
+                    AddNewbiController();
+                }
+                else {
+                    //휴먼 튜토리얼 0-2을 진행하지 않았음
+                    if (!clearedStages.Exists(x => x.camp == "human" && x.stageNumber == 2)) {
+                        tutorialType = MenuTutorialManager.TutorialType.TO_HUMAN_STORY_2;
+                    }
+                    else {
+                        //오크 튜토리얼 0-1을 진행하지 않았음
+                        if (!clearedStages.Exists(x => x.camp == "orc" && x.stageNumber == 1)) {
+                            tutorialType = MenuTutorialManager.TutorialType.TO_ORC_STORY;
                         }
-                        //휴먼 튜토리얼 0-1 이후 메인화면에서 보상을 받았음
                         else {
-                            //휴먼 튜토리얼 0-2를 진행하지 않았음
-                            if(!clearedStages.Exists(x => x.camp == "human" && x.stageNumber == 2)) {
-                                tutorialType = MenuTutorialManager.TutorialType.TO_HUMAN_STORY_2;
-                            }
-                            //휴먼 튜토리얼 0-2를 진행함
-                            else {
-                                var orcDeckClaimed = etcInfos.Find(x => x.key == "orcDeckClaimed");
-                                //오크 튜토리얼 0-1을 진행하지 않았음
-                                if (orcDeckClaimed == null) {
-                                    tutorialType = MenuTutorialManager.TutorialType.TO_ORC_STORY;
-                                }
-                                //오크 튜토리얼 0-1을 진행함 
-                                else {
-                                    //오크 튜토리얼 0-2를 진행하지 않았음
-                                    if(!clearedStages.Exists(x => x.camp == "orc" && x.stageNumber == 2)) {
-                                        tutorialType = MenuTutorialManager.TutorialType.TO_ORC_STORY_2;
-                                    }
-                                    //오크 튜토리얼 0-2를 진행함
-                                    else {
-                                        menuTutorialManager.enabled = false;
-                                        needTutorial = false;
-                                    }
-                                }
-                            }
+                            //오크 튜토리얼 0-2을 진행하지 않았음
+                            tutorialType = MenuTutorialManager.TutorialType.TO_ORC_STORY_2;
                         }
                     }
                 }
-            });
+            }
         }
 
         if (needTutorial) {
@@ -141,9 +116,13 @@ public class MenuSceneController : MonoBehaviour {
         }
     }
 
+    private void OnUserDataUpdate(Enum Event_Type, Component Sender, object Param) {
+        nicknameText.text = AccountManager.Instance.userData.nickName;
+    }
+
     private void OnDestroy() {
         SoundManager.Instance.bgmController.StopSoundTrack();
-        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, OnUserDataUpdate);
+        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_TUTORIAL_PRESETTING_COMPLETE, CheckTutorial);
     }
 
     private void Start() {
@@ -167,16 +146,14 @@ public class MenuSceneController : MonoBehaviour {
         Transform buttonsParent = fixedCanvas.Find("Footer");
         TouchEffecter.Instance.SetScript();
 
-        CheckTutorial();
-
         #region 테스트 코드
         //menuTutorialManager.ReadTutorialData();
         //scenarioManager.ReadScenarioData();
         //isTutorialDataLoaded = true;
-        //menuTutorialManager.StartTutorial(MenuTutorialManager.TutorialType.TO_ORC_STORY);
+        //menuTutorialManager.StartTutorial(MenuTutorialManager.TutorialType.TO_ORC_STORY_2);
         #endregion
 
-        AccountManager.Instance.RequestUserInfo();    //튜토리얼을 어디서부터 진행해야 하는지 판단
+        AccountManager.Instance.RequestTutorialPreSettings();
     }
 
     /// <summary>
