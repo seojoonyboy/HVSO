@@ -30,7 +30,7 @@ public class StageButton : ScenarioButton {
             .Find(x => x.chapter == chapter && x.stage_number == stage);
         scenarioManager.SelectChallengeData(chapter, stage, camp);
         
-        PlayerPrefs.SetString("StageNum", (chapter + 1).ToString());
+        PlayerPrefs.SetString("StageNum", (stage).ToString());
         scenarioManager.OnClickStage(scenarioManager.selectedChapterData, isTutorial);
     }
 }
