@@ -44,7 +44,7 @@ class ModuleBuildScript
 
         PlayerSettings.bundleVersion = "1.0";//string.Format("{0}.{1}.{2}.{3}", GameConfig.clientVersion[0], GameConfig.clientVersion[1], GameConfig.clientVersion[2], GameConfig.clientVersion[3]);
         PlayerSettings.Android.bundleVersionCode = versionCode;
-        PlayerSettings.Android.keystoreName = "hvso.keystore";
+        PlayerSettings.Android.keystoreName = "/Volumes/Data/fbl_haegin/hvso.keystore";
         PlayerSettings.Android.keystorePass = "Fbl1324$";
         PlayerSettings.Android.keyaliasName = "hvso";
         PlayerSettings.Android.keyaliasPass = "Fbl1324$";
