@@ -308,58 +308,179 @@
     },
     {
         "id": 2,
-        "description": "상자 열기를 유도하는 튜토리얼 (휴먼)",
+        "description": "orc 튜토리얼 0-2 유도",
             "innerDatas": [
             {
-                "name": "Dimmed",
-                "args": [
-                    "story_orc_button",
-                    "on"
-                ]
-            },
-            {
-                "name": "ShowHandUI",
-                "args": [
-                    "story_orc_button",
-                    "touch"
-                ]
-            },
-            {
-                "name": "ChangeSelectBtnImage",
-                "args": [
-                    "story_orc_btn"
-                ]
-            },
-            {
-                "name": "Menu_Scope_Object",
-                "args": [
-                    "story_orc_button"
-                ]
-            },
-            {
-                "name": "Wait_Click",
-                "args": [
-                    "story_orc_button"
-                ]
-            },
-            {
-                "name": "Dimmed",
-                "args": [
-                    "story_orc_button",
-                    "off"
-                ]
-            },
-                {
-                "name": "ResetBtnImage",
-                "args": [
-                    "story_orc_btn"
-                ]
-            },
-                {
-                "name": "HideHandUI",
-                "args": [
-                    "story_orc_button"
-                ]
+                "id": 1,
+                "description": null,
+                "methods": [
+                    {
+                        "name": "RequestReward",
+                        "args": [
+                            "orc"
+                        ]
+                    },
+                    {
+                        "name": "ForceToPage",
+                        "args": [
+                            "StoryLobby"
+                        ]
+                    },
+                    {
+                        "name": "Menu_Block_Screen",
+                        "args": []
+                    },
+                    {
+                        "name": "Wait_Until",
+                        "args": [
+                            "1"
+                        ]
+                    },
+                    {
+                        "name": "ForceToPage",
+                        "args": [
+                            "StoryLobby"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Until",
+                        "args": [
+                            "1"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "story_orc_button",
+                            "on"
+                        ]
+                    },
+                    {
+                        "name": "ShowHandUI",
+                        "args": [
+                            "story_orc_button",
+                            "touch"
+                        ]
+                    },
+                    {
+                        "name": "ChangeSelectBtnImage",
+                        "args": [
+                            "story_orc_btn"
+                        ]
+                    },
+                    {
+                        "name": "Menu_Scope_Object",
+                        "args": [
+                            "story_orc_button"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                            "story_orc_button"
+                        ]
+                    },
+                    {
+                        "name": "HideHandUI",
+                        "args": [
+                            "story_orc_button"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "story_orc_button",
+                            "off"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "orc_story_tutorial_2",
+                            "on"
+                        ]
+                    },
+                    {
+                        "name": "ShowHandUI",
+                        "args": [
+                            "orc_story_tutorial_2",
+                            "touch"
+                        ]
+                    },
+                    {
+                        "name": "Menu_Scope_Object",
+                        "args": [
+                            "orc_story_tutorial_2"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                            "orc_story_tutorial_2"
+                        ]
+                    },
+                    {
+                        "name": "HideHandUI",
+                        "args": [
+                            "orc_story_tutorial_2"
+                        ]
+                    },
+                    {
+                        "name": "AutoSelectStoryDeck",
+                        "args": [
+                            "orc",
+                            "1"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "orc_story_tutorial_2",
+                            "off"
+                        ]
+                    },
+                    {
+                        "name": "ShowHandUI",
+                        "args": [
+                          "tutorial_play_button",
+                          "touch"
+                        ]
+                    },
+                    {
+                        "name": "Menu_Scope_Object",
+                        "args": [
+                            "tutorial_play_button"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "tutorial_play_button",
+                            "on"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                            "tutorial_play_button"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "tutorial_play_button",
+                            "off"
+                        ]
+                    },
+                    {
+                        "name": "ForceOrcStorySocketConnect",
+                        "args": [
+                            "orc",
+                            "2"
+                        ]
+                    }
+                ],
+                "isExecute": false
             }
         ]
     },
