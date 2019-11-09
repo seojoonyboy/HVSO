@@ -72,7 +72,7 @@ public class PlayerController : MonoBehaviour
     }
 
     public virtual void Init() {
-        string race = PlayerPrefs.GetString("SelectedRace");
+        string race = PlayerPrefs.GetString("SelectedRace").ToUpper();
         if (race == "HUMAN") isHuman = isPlayer;
         else isHuman = !isPlayer;
         costText = playerUI.transform.Find("PlayerResource").GetChild(0).Find("Text").GetComponent<Text>();

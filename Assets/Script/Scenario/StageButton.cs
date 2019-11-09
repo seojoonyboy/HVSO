@@ -31,6 +31,7 @@ public class StageButton : ScenarioButton {
         scenarioManager.SelectChallengeData(chapter, stage, camp);
         
         PlayerPrefs.SetString("StageNum", (stage).ToString());
+        PlayerPrefs.SetString("SelectedRace", camp);
         scenarioManager.OnClickStage(scenarioManager.selectedChapterData, isTutorial);
     }
 }
