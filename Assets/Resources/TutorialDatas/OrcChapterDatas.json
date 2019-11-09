@@ -234,7 +234,7 @@
                         "name": "Force_drop_zone",
                         "args": [
                             "magic",
-                            "2"
+                            "1"
                         ]
                     },
                     {
@@ -254,9 +254,10 @@
                         ]
                     },
                     {
-                        "name": "Wait_AnyMagic_Use",
+                        "name": "Wait_drop",
                         "args": [
-                            "magiceCard"
+                            "magic",
+                            "ac10016"
                         ]
                     },
                     {
@@ -376,7 +377,7 @@
                     {
                         "name": "Wait_Multiple_Summon_ScopeLine",
                         "args": [
-                            "1,2",
+                            "2,3",
                             "ac10011"
                         ]
                     },

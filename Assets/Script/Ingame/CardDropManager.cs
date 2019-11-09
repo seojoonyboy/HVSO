@@ -449,27 +449,22 @@ public partial class CardDropManager {
             }
             if (magicTarget.Contains("unit")) {
                 for (int i = 0; i < 5; i++) {
-                    if (ScenarioGameManagment.scenarioInstance.targetArgs == "unit") {
-                        if (magicArgs == "enemy") {
-                            if (i == targetline) {
-                                enemyUnitLine[i][0].GetChild(0).Find("ClickableUI").gameObject.SetActive(true);
-                                enemyUnitLine[i][0].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(true);
-                                return;
-                            }
+                    if (magicArgs == "enemy") {
+                        if (i == targetline) {
+                            enemyUnitLine[0][i].GetChild(0).Find("ClickableUI").gameObject.SetActive(true);
+                            enemyUnitLine[0][i].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(true);
+                            return;
                         }
-                        else {
-                            if (i == targetline) {
-                                Debug.Log(unitLine[i][0].GetChild(0).gameObject);
-
-                                unitLine[i][0].GetChild(0).Find("ClickableUI").gameObject.SetActive(true);
-                                unitLine[i][0].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(true);
-                                return;
-                            }
-                        }
-
                     }
+                    else {
+                        if (i == targetline) {
+                            Debug.Log(unitLine[i][0].GetChild(0).gameObject);
 
-
+                            unitLine[0][i].GetChild(0).Find("ClickableUI").gameObject.SetActive(true);
+                            unitLine[0][i].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(true);
+                            return;
+                        }
+                    }
                 }
                 return;
             }

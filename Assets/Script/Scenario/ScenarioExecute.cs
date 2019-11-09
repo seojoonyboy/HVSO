@@ -881,11 +881,8 @@ public class Force_drop_zone : ScenarioExecute {
             handler.isDone = true;
             return;
         }
-
-
-        if (args.Count > 2)
-            scenarioGameManagment.targetArgs = args[2];
-
+        
+        scenarioGameManagment.forcedLine = detail;
         scenarioGameManagment.forcedSummonAt = detail;
         handler.isDone = true;
     }
