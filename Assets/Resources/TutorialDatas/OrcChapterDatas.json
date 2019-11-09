@@ -526,6 +526,18 @@
                             "button",
                             "endTurn"
                         ]
+                    },
+                    {
+                        "name": "StopHighlight",
+                        "args": []
+                    },
+                    {
+                        "name": "Enable_Deck_card",
+                        "args": []
+                    },
+                    {
+                        "name": "Remove_forced_drop_zone",
+                        "args": []
                     }
                 ],
                 "isExecute": false
