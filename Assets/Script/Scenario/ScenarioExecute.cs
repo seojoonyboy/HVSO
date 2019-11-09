@@ -652,15 +652,7 @@ public class End_tutorial : ScenarioExecute {
         scenarioMask.UnmaskHeroGuide();
         scenarioMask.HideText();
         ScenarioGameManagment.scenarioInstance.isTutorial = false;
-
-        if (args.Count != 0) {
-            if (args[0] == "proceed_game") {
-
-            }
-        }
-        else {
-            ScenarioGameManagment.scenarioInstance.socketHandler.TutorialEnd();
-        }
+        ScenarioGameManagment.scenarioInstance.socketHandler.TutorialEnd();
     }
 }
 
@@ -1390,6 +1382,7 @@ public class Wait_Field_Change : ScenarioExecute {
 
     }
     private void CheckClose(Enum event_type, Component Sender, object Param) {
+        PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.FIELD_CHANGED, CheckClose);
         handler.isDone = true;
     }
 }
@@ -1516,7 +1509,19 @@ public class Wait_Match_End : ScenarioExecute {
 
     private void ResetGameDisease() {
         scenarioGameManagment.stopNextTurn = false;
+        PlayMangement.instance.gameObject.GetComponent<TurnMachine>().turnStop = false;
+        scenarioGameManagment.stopEnemySummon = false;
     }
+}
+
+public class Set_Tutorial_After_Battle : ScenarioExecute {
+    public Set_Tutorial_After_Battle() : base() { }
+
+    public override void Execute() {
+        scenarioGameManagment.matchRule.SetCondition();
+        handler.isDone = true;
+    }
+
 }
 
 

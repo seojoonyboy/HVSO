@@ -51,6 +51,11 @@ public partial class CardDropManager {
                         slotLine[i].GetChild(0).gameObject.SetActive(true);
                         slotLine[i].GetChild(0).GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1f);
                     }
+                    else {
+                        slotLine[i].GetChild(1).gameObject.SetActive(true);
+                        slotLine[i].GetChild(0).GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1f);
+                    }
+
                 }
                 else if (args == "line") {
                     slotLine[i].Find("BattleLineEffect").gameObject.SetActive(true);

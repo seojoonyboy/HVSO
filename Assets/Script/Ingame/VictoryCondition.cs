@@ -54,6 +54,8 @@ namespace victoryModule {
             enemyWin.Dispose();
             playerWin.Dispose();
 
+
+
             SocketFormat.ResultFormat result = PlayMangement.instance.socketHandler.result;
             if(result != null) {
                 PlayerController loserPlayer = (result.result == "win") ? enemyPlayer : player;

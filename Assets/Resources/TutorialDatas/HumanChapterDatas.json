@@ -465,6 +465,10 @@
                         "args": [
                             "1"
                         ]
+                    },
+                    {
+                        "name": "Set_Tutorial_After_Battle",
+                        "args": []
                     }
                 ],
                 "isExecute": false
@@ -783,14 +787,12 @@
                         ]
                     },
                     {
-                        "name": "Proceed_Invoke_NextTurn",
-                        "args": []
+                        "name": "Wait_until",
+                        "args": ["1"]
                     },
                     {
-                        "name": "Wait_Turn",
-                        "args": [
-                            "HUMAN"
-                        ]
+                        "name": "Proceed_Invoke_NextTurn",
+                        "args": []
                     },
                     {
                         "name": "Disable_EndTurn",
@@ -845,7 +847,7 @@
                 "isExecute": false
             },
             {
-                "name": "data_stage_1031_2_23",
+                "Print_text": "data_stage_1031_2_23",
                 "methods": [
                     {
                         "name": "NPC_Print_message",
@@ -863,17 +865,17 @@
                     },
                     {
                         "name": "Enable_Deck_card",
-                        "args": []  
+                        "args": []
                     },
                     {
                         "name": "Disable_Deck_card",
-                        "args": ["ac10001"]
+                        "args": [ "ac10001" ]
                     },
                     {
                         "name": "Force_drop_zone",
                         "args": [
                             "unit",
-                            "2"
+                            "3"
                         ]
                     },
                     {
@@ -912,7 +914,7 @@
                     },
                     {
                         "name": "Enable_Deck_card",
-                        "args": []  
+                        "args": []
                     },
                     {
                         "name": "Remove_forced_drop_zone",
@@ -922,8 +924,16 @@
                         "name": "Wait_Match_End",
                         "args": []
                     },
-                    {
 
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "End_tutorial",
+                        "args": []
                     }
                 ],
                 "isExecute": false

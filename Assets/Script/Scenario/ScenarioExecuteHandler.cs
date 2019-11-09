@@ -29,7 +29,7 @@ public class ScenarioExecuteHandler : MonoBehaviour {
 
         foreach (Method method in data.methods) {
             ScenarioExecute exec = (ScenarioExecute)gameObject.AddComponent(Type.GetType(method.name));
-            if(exec == null) { Logger.LogError(method.name + "에 대한 클래스를 찾을 수 없습니다!"); }
+            if(exec == null) { Logger.LogError(method.name + "에 대한 클래스를 찾을 수 없습니다!"); break; }
             sets.Add(exec);
             exec.Initialize(method.args);
         }

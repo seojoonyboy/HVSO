@@ -613,6 +613,10 @@
                         "args": [
                             "1"
                         ]
+                    },
+                    {
+                        "name": "Set_Tutorial_After_Battle",
+                        "args": []
                     }
                 ],
                 "isExecute": false
@@ -933,30 +937,28 @@
                         "args": []
                     },
                     {
-                        "name" : "Unblock_Screen",
-                        "args" : []
+                        "name": "Unblock_Screen",
+                        "args": []
                     },
                     {
                         "name": "Enable_EndTurn",
                         "args": []
                     },
                     {
-                        "name" : "StopHighlight",
-                        "args" : []
+                        "name": "StopHighlight",
+                        "args": []
                     },
                     {
-                        "name" : "Enable_Deck_card",
-                        "args" : []
+                        "name": "Enable_Deck_card",
+                        "args": []
                     },
                     {
-                        "name" : "Remove_forced_drop_zone",
-                        "args" : []
+                        "name": "Remove_forced_drop_zone",
+                        "args": []
                     },
                     {
-                        "name" : "End_tutorial",
-                        "args" : [
-                            "proceed_game"
-                        ]
+                        "name": "Wait_Match_End",
+                        "args": []
                     }
                 ],
                 "isExecute": false
@@ -964,10 +966,6 @@
             {
                 "Print_text": "",
                 "methods": [
-                    {
-                        "name": "Wait_Enemy_hero_Dead",
-                        "args": []
-                    },
                     {
                         "name": "Result_battle",
                         "args": [
