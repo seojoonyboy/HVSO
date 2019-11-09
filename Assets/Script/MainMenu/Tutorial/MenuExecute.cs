@@ -380,6 +380,7 @@ namespace MenuTutorialModules {
 
             int chapterNum = 0;
             int.TryParse(args[1], out chapterNum);
+            chapterNum -= 1;
             if (args[0] == "human") {
                 ScenarioGameManagment.chapterData = scenarioManager.human_chapterDatas[chapterNum];
                 ScenarioGameManagment.challengeDatas = scenarioManager.human_challengeDatas[chapterNum].challenges;

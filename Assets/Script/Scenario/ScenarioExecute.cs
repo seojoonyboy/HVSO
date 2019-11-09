@@ -1433,22 +1433,24 @@ public class SetUp_Protect_Unit : ScenarioExecute {
     public SetUp_Protect_Unit() : base() { }
 
     public override void Execute() {
-        victoryModule.ProtectObject protectObject = PlayMangement.instance.gameObject.GetComponent<victoryModule.ProtectObject>();
 
-        string[] parse = args[0].Split(',');
-        int col = int.Parse(parse[0]);
-        int row = int.Parse(parse[1]);
-        
+        if (PlayMangement.instance.gameObject.GetComponent<victoryModule.ProtectObject>() != null) {
+            victoryModule.ProtectObject protectObject = PlayMangement.instance.gameObject.GetComponent<victoryModule.ProtectObject>();
 
-        FieldUnitsObserver.Pos pos = new FieldUnitsObserver.Pos(col, row);
-
-        PlaceMonster targetUnit = PlayMangement.instance.UnitsObserver.GetUnit(pos, true).gameObject.GetComponent<PlaceMonster>();
+            string[] parse = args[0].Split(',');
+            int col = int.Parse(parse[0]);
+            int row = int.Parse(parse[1]);
 
 
-        if (protectObject != null && targetUnit != null)
-            protectObject.SetTargetUnit(targetUnit);
+            FieldUnitsObserver.Pos pos = new FieldUnitsObserver.Pos(col, row);
+
+            PlaceMonster targetUnit = PlayMangement.instance.UnitsObserver.GetUnit(pos, true).gameObject.GetComponent<PlaceMonster>();
 
 
+            if (protectObject != null && targetUnit != null)
+                protectObject.SetTargetUnit(targetUnit);
+
+        }
         handler.isDone = true;
     }
 }
