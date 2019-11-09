@@ -35,14 +35,14 @@ public class MenuSceneController : MonoBehaviour {
     bool isTutorialDataLoaded = false;
 
     private void Awake() {
-        //NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_TUTORIAL_PRESETTING_COMPLETE, CheckTutorial);
+        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_TUTORIAL_PRESETTING_COMPLETE, CheckTutorial);
 
         menuSceneController = this;
 
         #region 테스트코드
-        menuTutorialManager.ReadTutorialData();
-        scenarioManager.ReadScenarioData();
-        isTutorialDataLoaded = true;
+        //menuTutorialManager.ReadTutorialData();
+        //scenarioManager.ReadScenarioData();
+        //isTutorialDataLoaded = true;
         //menuTutorialManager.StartTutorial(MenuTutorialManager.TutorialType.TO_ORC_STORY_2);
         #endregion
 
