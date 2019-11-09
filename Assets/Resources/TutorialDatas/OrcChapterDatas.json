@@ -408,6 +408,10 @@
                             "button",
                             "endTurn"
                         ]
+                    },
+                    {
+                        "name": "StopHighlight",
+                        "args": []
                     }
                 ],
                 "isExecute": false
@@ -462,12 +466,6 @@
                         ]
                     },
                     {
-                        "name": "Wait_click",
-                        "args": [
-                            "screen"
-                        ]
-                    },
-                    {
                         "name": "NPC_Print_message",
                         "args": [
                             "ac10012",
@@ -498,7 +496,7 @@
                     {
                         "name": "NPC_Print_message",
                         "args": [
-                            "ac10002",
+                            "ac10012",
                             "지금으로써는 카드를 더 뽑을 필요도 없겠군요. '턴 종료' 버튼을 터치해서 전투를 시작하세요!",
                             "true"
                         ]
@@ -526,6 +524,10 @@
                             "button",
                             "endTurn"
                         ]
+                    },
+                    {
+                        "name": "StopHighlight",
+                        "args": []
                     }
                 ],
                 "isExecute": false
