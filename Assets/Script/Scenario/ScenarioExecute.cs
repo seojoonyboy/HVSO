@@ -1468,6 +1468,7 @@ public class Wait_Match_End : ScenarioExecute {
     public override void Execute() {
         ResetForceDropzone();
         ResetDisableCard();
+        ResetGameDisease();
         scenarioGameManagment.isTutorial = false;
 
         playerStatus = PlayMangement.instance.player.HP.Where(x => x <= 0).Subscribe(_ => GameEnd()).AddTo(PlayMangement.instance.gameObject);
@@ -1489,20 +1490,33 @@ public class Wait_Match_End : ScenarioExecute {
 
         }
         else if(PlayMangement.instance.enemyPlayer.HP.Value <= 0) {
-
             handler.isDone = true;
         }
     }
 
 
     private void ResetForceDropzone() {
+        scenarioGameManagment.forcedSummonAt = -1;
+        scenarioGameManagment.forcedLine = -1;
+        scenarioGameManagment.multipleforceLine = new int[]{ -1,-1};
 
     }
 
     private void ResetDisableCard() {
+        scenarioGameManagment.canHeroCardToHand = true;
+        scenarioMask.DisableMask();
+        GameObject cardHand = scenarioMask.targetObject["hand_card"];
 
+        foreach (Transform slot in cardHand.transform) {
+            if (slot.childCount < 1)
+                continue;
+            slot.GetChild(0).gameObject.GetComponent<CardHandler>().enabled = true;
+        }
     }
 
+    private void ResetGameDisease() {
+        scenarioGameManagment.stopNextTurn = false;
+    }
 }
 
 
