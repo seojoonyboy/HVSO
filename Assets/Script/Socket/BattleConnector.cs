@@ -157,6 +157,8 @@ public partial class BattleConnector : MonoBehaviour {
     private string[] SetJoinGameData() {
         string deckId = PlayerPrefs.GetString("SelectedDeckId");
         string battleType = PlayerPrefs.GetString("SelectedBattleType");
+
+        Debug.Assert(!PlayerPrefs.GetString("SelectedRace").Any(char.IsUpper), "Race 정보는 소문자로 입력해야 합니다!");
         string race = PlayerPrefs.GetString("SelectedRace").ToLower();
 
         if(battleType.CompareTo("test") == 0)
