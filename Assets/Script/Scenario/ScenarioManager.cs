@@ -98,7 +98,7 @@ public class ScenarioManager : SerializedMonoBehaviour
         SoundManager.Instance.PlaySound(UISfxSound.BUTTON1);
         //heroID = "";
         isHuman = true;
-        PlayerPrefs.SetString("SelectedRace", "HUMAN");
+        PlayerPrefs.SetString("SelectedRace", "human");
         ToggleUI();
         SetStoryListInfo();
     }
@@ -107,7 +107,7 @@ public class ScenarioManager : SerializedMonoBehaviour
         SoundManager.Instance.PlaySound(UISfxSound.BUTTON1);
         //heroID = "";
         isHuman = false;
-        PlayerPrefs.SetString("SelectedRace", "ORC");
+        PlayerPrefs.SetString("SelectedRace", "orc");
         ToggleUI();
         SetStoryListInfo();
     }

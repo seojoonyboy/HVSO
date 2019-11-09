@@ -1110,11 +1110,11 @@ public partial class PlayMangement {
     private Transform turnIcon;
 
     public void InitTurnTable() {
-        string race = PlayerPrefs.GetString("SelectedRace").ToUpper();
+        string race = PlayerPrefs.GetString("SelectedRace").ToLower();
         bool isHuman;
 
         turnSpine = turnTable.Find("TurnSpine").GetComponent<SkeletonGraphic>();
-        if (race == "HUMAN") isHuman = true;
+        if (race == "human") isHuman = true;
         else isHuman = false;
         if (isHuman) {
             releaseTurnBtn = turnTable.Find("HumanButton").gameObject;
