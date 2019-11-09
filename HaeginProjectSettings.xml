@@ -32,4 +32,10 @@
 	<ZendeskHelpUrl>https://help-homerunclash.haegin.kr/hc</ZendeskHelpUrl>
 	<ZendeskHelpAPPageID>360033798014</ZendeskHelpAPPageID>
 	<ZendeskHelpSupportMail>support@homerunclash.zendesk.com</ZendeskHelpSupportMail>
+	<UseContactsAPI>False</UseContactsAPI>
+	<NotifyIconHDPIPath>Assets/Haegin/ProjectSettings/Editor/NotifyIcon/drawable-xxxhdpi_notify_icon_small.png</NotifyIconHDPIPath>
+	<NotifyIconMDPIPath>Assets/Haegin/ProjectSettings/Editor/NotifyIcon/drawable-mdpi_notify_icon_small.png</NotifyIconMDPIPath>
+	<NotifyIconXHDPIPath>Assets/Haegin/ProjectSettings/Editor/NotifyIcon/drawable-xhdpi_notify_icon_small.png</NotifyIconXHDPIPath>
+	<NotifyIconXXHDPIPath>Assets/Haegin/ProjectSettings/Editor/NotifyIcon/drawable-xxhdpi_notify_icon_small.png</NotifyIconXXHDPIPath>
+	<NotifyIconXXXHDPIPath>Assets/Haegin/ProjectSettings/Editor/NotifyIcon/drawable-xxxhdpi_notify_icon_small.png</NotifyIconXXXHDPIPath>
 </HaeginSettings>
