@@ -7,6 +7,7 @@ using TMPro;
 using System;
 using Spine;
 using Spine.Unity;
+using System.Linq;
 
 public class PlayerController : MonoBehaviour
 {
@@ -72,8 +73,10 @@ public class PlayerController : MonoBehaviour
     }
 
     public virtual void Init() {
-        string race = PlayerPrefs.GetString("SelectedRace");
-        if (race == "HUMAN") isHuman = isPlayer;
+        Debug.Assert(!PlayerPrefs.GetString("SelectedRace").Any(char.IsUpper), "Race 정보는 소문자로 입력해야 합니다!");
+
+        string race = PlayerPrefs.GetString("SelectedRace").ToLower();
+        if (race == "human") isHuman = isPlayer;
         else isHuman = !isPlayer;
         costText = playerUI.transform.Find("PlayerResource").GetChild(0).Find("Text").GetComponent<Text>();
         HPText = playerUI.transform.Find("PlayerHealth/HealthText").GetComponent<Text>();

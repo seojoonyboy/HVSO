@@ -1110,7 +1110,7 @@ public partial class PlayMangement {
     private Transform turnIcon;
 
     public void InitTurnTable() {
-        string race = PlayerPrefs.GetString("SelectedRace");
+        string race = PlayerPrefs.GetString("SelectedRace").ToUpper();
         bool isHuman;
 
         turnSpine = turnTable.Find("TurnSpine").GetComponent<SkeletonGraphic>();
@@ -1125,6 +1125,8 @@ public partial class PlayMangement {
         for (int i = 0; i < 4; i++) {
             turnTable.Find("TurnBoard").position = canvas.transform.GetChild(2).GetChild(2).position;
         }
+
+        Debug.Log("isHuman" + isHuman);
     }
 
     public void SetTurnButton() {
