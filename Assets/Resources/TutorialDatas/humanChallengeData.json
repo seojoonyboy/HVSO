@@ -11,14 +11,8 @@
             },
             {
                 "id": 1,
-                "content": "유닛을 배치해 적을 막아라라",
+                "content": "적 유닛이 없는 라인에 유닛을 배치",
                 "targetNum": 2,
-                "currentNum": 0
-            },
-            {
-                "id": 2,
-                "content": "영웅 스킬을 사용하라",
-                "targetNum": 1,
                 "currentNum": 0
             }
         ]

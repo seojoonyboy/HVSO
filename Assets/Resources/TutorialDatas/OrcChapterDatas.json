@@ -711,6 +711,12 @@
                         ]
                     },
                     {
+                        "name" : "ChallengeStart",
+                        "args" : [
+                            "UNIT_SUMMONED"
+                        ]
+                    },
+                    {
                         "name"  : "Unblock_Screen",
                         "args" : []
                     },
@@ -718,6 +724,12 @@
                         "name": "Wait_summon",
                         "args": [
                             "ac10020"
+                        ]
+                    },
+                    {
+                        "name" : "ChallengeEnd",
+                        "args" : [
+                            "UNIT_SUMMONED"
                         ]
                     },
                     {

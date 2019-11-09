@@ -261,6 +261,12 @@
                 "Print_text": "data_stage_1031_17-19",
                 "methods": [
                     {
+                        "name" : "ChallengeStart",
+                        "args" : [
+                            "UNIT_SUMMONED"
+                        ]
+                    },
+                    {
                         "name": "Disable_Deck_card",
                         "args": [
                             "ac10002"
@@ -275,6 +281,12 @@
                         "args": [
                             "2",
                             "3"
+                        ]
+                    },
+                    {
+                        "name" : "ChallengeEnd",
+                        "args" : [
+                            "UNIT_SUMMONED"
                         ]
                     },
                     {
@@ -655,6 +667,12 @@
                         "args": []
                     },
                     {
+                        "name" : "ChallengeStart",
+                        "args" : [
+                            "MAGIC_USED"
+                        ]
+                    },
+                    {
                         "name": "Wait_DrawHero",
                         "args": []
                     },
@@ -751,6 +769,12 @@
                         ]
                     },
                     {
+                        "name" : "ChallengeEnd",
+                        "args" : [
+                            "MAGIC_USED"
+                        ]
+                    },
+                    {
                         "name": "Wait_until",
                         "args": [
                             "6"
@@ -787,6 +811,12 @@
                         ]
                     },
                     {
+                        "name" : "ChallengeStart",
+                        "args" : [
+                            "UNIT_SUMMONED"
+                        ]
+                    },
+                    {
                         "name": "Wait_until",
                         "args": [ "1" ]
                     },
@@ -819,6 +849,12 @@
                         "name": "Wait_summon",
                         "args": [
                             "ac10008"
+                        ]
+                    },
+                    {
+                        "name" : "ChallengeEnd",
+                        "args" : [
+                            "UNIT_SUMMONED"
                         ]
                     },
                     {
