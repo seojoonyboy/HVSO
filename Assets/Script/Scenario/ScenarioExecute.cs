@@ -1460,6 +1460,52 @@ public class SetUp_Protect_Unit : ScenarioExecute {
     }
 }
 
+public class Wait_Match_End : ScenarioExecute {
+    public Wait_Match_End() : base() { }
+
+    IDisposable playerStatus, enemyStatus, objectStatus;
+
+    public override void Execute() {
+        ResetForceDropzone();
+        ResetDisableCard();
+        scenarioGameManagment.isTutorial = false;
+
+        playerStatus = PlayMangement.instance.player.HP.Where(x => x <= 0).Subscribe(_ => GameEnd()).AddTo(PlayMangement.instance.gameObject);
+        enemyStatus = PlayMangement.instance.enemyPlayer.HP.Where(x => x <= 0).Subscribe(_ => GameEnd()).AddTo(PlayMangement.instance.gameObject); ;
+
+        if(PlayMangement.instance.gameObject.GetComponent<victoryModule.ProtectObject>() != null) {
+            PlaceMonster targetUnit = PlayMangement.instance.gameObject.GetComponent<victoryModule.ProtectObject>().targetUnit;
+            objectStatus = Observable.EveryUpdate().Where(_ => targetUnit.unit.currentHP <= 0).Subscribe(_ => GameEnd()).AddTo(PlayMangement.instance.gameObject); ;
+        }
+    }
+
+    private void GameEnd() {
+        playerStatus.Dispose();
+        enemyStatus.Dispose();
+        if (objectStatus != null)
+            objectStatus.Dispose();
+
+        if(PlayMangement.instance.player.HP.Value <= 0) {
+
+        }
+        else if(PlayMangement.instance.enemyPlayer.HP.Value <= 0) {
+
+            handler.isDone = true;
+        }
+    }
+
+
+    private void ResetForceDropzone() {
+
+    }
+
+    private void ResetDisableCard() {
+
+    }
+
+}
+
+
 
 //Proceed_Invoke_NextTurn, Stop_Invoke_NextTurn (오크->휴먼->마법->배틀 턴중에 '버튼'을 눌렀을 경우)
 //Stop_Next_Turn, Proceed_Next_Turn (전투 종료후, 다음턴)
