@@ -1001,6 +1001,15 @@ public partial class AccountManager {
     public void RequestTutorialPreSettings() {
         RequestUserInfo((req, res) => {
             if (res.IsSuccess) {
+                SetSignInData(res);
+                NoneIngameSceneEventHandler
+                    .Instance
+                    .PostNotification(
+                        NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED,
+                        null,
+                        res
+                    );
+                
                 RequestClearedStoryList((_req, _res) => {
                     if (_res.IsSuccess) {
                         clearedStages = dataModules.JsonReader

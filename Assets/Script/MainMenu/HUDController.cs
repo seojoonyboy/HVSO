@@ -14,7 +14,8 @@ public class HUDController : MonoBehaviour {
     [SerializeField] TMPro.TextMeshProUGUI expValueText;
     [SerializeField] Transform userInfoCanvas;
     [SerializeField] Image expSlider;
-
+    [SerializeField] private TMPro.TextMeshProUGUI nickName;
+    
     Transform
         gradation,
         userInfoUI,
@@ -127,6 +128,7 @@ public class HUDController : MonoBehaviour {
 
     private void OnUserDataUpdated(Enum Event_Type, Component Sender, object Param) {
         SetResourcesUI();
+        SetUserNickName();
     }
 
     // Start is called before the first frame update
@@ -157,6 +159,10 @@ public class HUDController : MonoBehaviour {
         crystalValue.text = userResource.crystal.ToString();
         goldValue.text = userResource.gold.ToString();
         box.SetBoxObj();
+    }
+
+    public void SetUserNickName() {
+        nickName.text = AccountManager.Instance.NickName;
     }
 
     public void HideDictionaryUI() {
