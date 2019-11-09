@@ -216,12 +216,6 @@
                         ]
                     },
                     {
-                        "name": "Wait_Until",
-                        "args": [
-                            "1"
-                        ]
-                    },
-                    {
                         "name": "ShowHandUI",
                         "args": [
                             "orc_story_tutorial",
