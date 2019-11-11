@@ -15,6 +15,7 @@ public class BoxRewardManager : MonoBehaviour
     [SerializeField] TMPro.TextMeshProUGUI supplyStore;
     [SerializeField] TMPro.TextMeshProUGUI storeTimer;
     [SerializeField] SkeletonGraphic boxSpine;
+    [SerializeField] SkeletonGraphic boxEffect;
     [SerializeField] Transform additionalSupply;
     [SerializeField] MenuSceneController menuSceneController;
     [SerializeField] Transform targetSpine;
@@ -76,8 +77,13 @@ public class BoxRewardManager : MonoBehaviour
         openCount = 0;
         boxSpine.Initialize(true);
         boxSpine.Update(0);
+        //boxSpine.AnimationState.SetAnimation(0, "00.NOANI", false);
         boxSpine.AnimationState.SetAnimation(0, "01.START", false);
         boxSpine.AnimationState.AddAnimation(1, "02.IDLE", true, 0.5f);
+        boxEffect.Initialize(true);
+        boxEffect.Update(0);
+        boxEffect.gameObject.SetActive(true);
+        boxEffect.AnimationState.SetAnimation(0, "00.NOANI", false);
         transform.Find("ShowBox/BoxSpine/Image").GetComponent<BoneFollowerGraphic>().Initialize();
         transform.Find("ShowBox/BoxSpine/Image").GetComponent<BoneFollowerGraphic>().boneName = "card";
         SoundManager.Instance.PlaySound(UISfxSound.BOXOPEN);
@@ -100,24 +106,69 @@ public class BoxRewardManager : MonoBehaviour
         transform.Find("OpenBox").gameObject.SetActive(true);
         transform.Find("ShowBox/Text").gameObject.SetActive(false);
         transform.Find("OpenBox/TargetSpine").gameObject.SetActive(false);
-        if (openCount == 0) {
-            SetRewards(accountManager.rewardList);
-            boxSpine.AnimationState.SetAnimation(2, "03.TOUCH1", false);
+        //if (openCount == 0) {
+        //    SetRewards(accountManager.rewardList);
+        //    boxSpine.AnimationState.SetAnimation(2, "03.TOUCH1", false);
+        //    boxEffect.AnimationState.SetAnimation(0, "01.open", false);
+        //    boxEffect.AnimationState.AddAnimation(1, "roop", true, 2.0f);
+        //}
+        //else if (openCount == 5) {
+        //    CloseBoxOpen();
+        //    return;
+        //}
+        //else if (openCount == 4) {
+        //    StartCoroutine(BoxTotalResult());
+        //    openCount++;
+        //    return;
+        //}
+        //else {
+        //    transform.Find("OpenBox").GetChild(openCount - 1).gameObject.SetActive(false);
+        //    transform.Find("OpenBox").GetChild(openCount - 1).localScale = Vector3.zero;
+        //    boxSpine.AnimationState.SetAnimation(2, "04.TOUCH2", false);
+        //    if (openCount != 3) {
+        //        boxEffect.AnimationState.SetAnimation(2, "02.open", false);
+        //        boxEffect.AnimationState.AddAnimation(3, "roop", true, 1.0f);
+        //    }
+        //    else
+        //        boxEffect.AnimationState.SetAnimation(4, "03.open", false);
+        //}
+        
+        switch (openCount) {
+            case 0:
+                SetRewards(accountManager.rewardList);
+                boxSpine.AnimationState.SetAnimation(2, "03.TOUCH1", false);
+                boxEffect.AnimationState.SetAnimation(1, "01.open", false);
+                boxEffect.AnimationState.AddAnimation(2, "loop", true, 2.0f);
+                break;
+            case 1:
+                transform.Find("OpenBox").GetChild(openCount - 1).gameObject.SetActive(false);
+                transform.Find("OpenBox").GetChild(openCount - 1).localScale = Vector3.zero;
+                boxSpine.AnimationState.SetAnimation(2, "04.TOUCH2", false);
+                boxEffect.AnimationState.SetAnimation(3, "02.open", false);
+                boxEffect.AnimationState.AddAnimation(4, "loop", true, 1.0f);
+                break;
+            case 2:
+                transform.Find("OpenBox").GetChild(openCount - 1).gameObject.SetActive(false);
+                transform.Find("OpenBox").GetChild(openCount - 1).localScale = Vector3.zero;
+                boxSpine.AnimationState.SetAnimation(2, "04.TOUCH2", false);
+                boxEffect.AnimationState.SetAnimation(5, "02.open", false);
+                boxEffect.AnimationState.AddAnimation(6, "loop", true, 1.0f);
+                break;
+            case 3:
+                transform.Find("OpenBox").GetChild(openCount - 1).gameObject.SetActive(false);
+                transform.Find("OpenBox").GetChild(openCount - 1).localScale = Vector3.zero;
+                boxSpine.AnimationState.SetAnimation(2, "04.TOUCH2", false);
+                boxEffect.AnimationState.SetAnimation(7, "03.open", false);
+                break;
+            case 4:
+                StartCoroutine(BoxTotalResult());
+                openCount++;
+                return;
+            case 5:
+                CloseBoxOpen();
+                return;
         }
-        else if (openCount == 5) {
-            CloseBoxOpen();
-            return;
-        }
-        else if (openCount == 4) {
-            StartCoroutine(BoxTotalResult());
-            openCount++;
-            return;
-        }
-        else {
-            transform.Find("OpenBox").GetChild(openCount - 1).gameObject.SetActive(false);
-            transform.Find("OpenBox").GetChild(openCount - 1).localScale = Vector3.zero;
-            boxSpine.AnimationState.SetAnimation(2, "04.TOUCH2", false);
-        }
+
         SoundManager.Instance.PlaySound(UISfxSound.BOXOPEN_2);
         int count = openCount;
         openCount++;
@@ -163,11 +214,12 @@ public class BoxRewardManager : MonoBehaviour
 
     IEnumerator BoxTotalResult() {
         openAni = true;
+        boxEffect.gameObject.SetActive(false);
         Transform boxParent = transform.Find("OpenBox");
         boxParent.GetChild(3).localScale = Vector3.zero;
         boxParent.GetChild(3).gameObject.SetActive(false);
         for (int i = 0; i < 4; i++) {
-            boxParent.GetChild(i).gameObject.SetActive(true);
+            boxParent.GetChild(i).gameObject.SetActive(true); 
             boxParent.GetChild(i).position = lastPos.GetChild(i).position;
             if (i < 2) {                
                 boxParent.GetChild(i).Find("Name").localScale = Vector3.zero;

@@ -654,11 +654,22 @@ namespace TargetModules {
                             filter(ref units);
                             foreach (GameObject unit in units) {
                                 var ui = unit.transform.Find("ClickableUI").gameObject;
+
+                                //if (ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.forcedSummonAt != -1 && unit.GetComponent<PlaceMonster>().x == ScenarioGameManagment.scenarioInstance.forcedSummonAt) {
+                                //    if (ui != null) {
+                                //        ui.SetActive(true);
+                                //        PlayMangement.instance.infoOn = true;
+                                //    }
+                                //    unit.transform.Find("MagicTargetTrigger").gameObject.SetActive(true);
+                                //    break;
+                                //}
+
                                 if (ui != null) {
                                     ui.SetActive(true);
                                     PlayMangement.instance.infoOn = true;
                                 }
                                 unit.transform.Find("MagicTargetTrigger").gameObject.SetActive(true);
+                                
                             }
                         }
                         else {

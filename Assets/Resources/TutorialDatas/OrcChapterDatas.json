@@ -610,10 +610,6 @@
                         "args": [
                             "1"
                         ]
-                    },
-                    {
-                        "name": "Set_Tutorial_After_Battle",
-                        "args": []
                     }
                 ],
                 "isExecute": false
