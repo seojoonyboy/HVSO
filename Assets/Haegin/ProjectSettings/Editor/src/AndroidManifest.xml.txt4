@@ -1,4 +1,0 @@
-﻿" android:exported="true" />
-    <receiver android:name="com.haegin.haeginmodule.notification.UnityNotificationManager" />
-    <receiver android:name="com.haegin.haeginmodule.notification.UnityNotificationActionHandler" />
-    <provider android:name="com.yasirkula.unity.UnitySSContentProvider" android:authorities="

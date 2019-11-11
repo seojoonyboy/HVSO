@@ -164,10 +164,8 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
     }
 
     public enum TutorialType {
-        TO_HUMAN_STORY_2 = 0,
-        TO_ORC_STORY = 1,
-        TO_ORC_STORY_2 = 2,
-        MAIN_BUTTON_DESC = 3,
-        NONE = 4
+        TO_ORC_STORY = 0,
+        MAIN_BUTTON_DESC = 1,
+        NONE = 2
     }
 }

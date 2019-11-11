@@ -6,39 +6,35 @@ using UnityEngine.Events;
 
 public class Modal : MonoBehaviour {
     [SerializeField] private GameObject InnerModal;
-	[SerializeField] private Button yesButton;
-	[SerializeField] private Button noButton;
-	[SerializeField] private Button closeBtn;
-	[SerializeField] private Text describe;
-	[SerializeField] private GameObject inputGameObject;
-	[SerializeField] private Text insertTitle;
-	[SerializeField] private InputField inputField;
-    const float DefaultHeight = 455f;
-    const float DefaultWidth = 745f;
-    const float InputHeight = 550f;
+    [SerializeField] GameObject checkModal, YesNoModal, InsertModal;
+    System.Action action;
 
 	public enum Type {
 		YESNO,
 		CHECK,
 		INSERT
 	}
-	/// <summary>
-	/// Modal 창 생성기 (YESNO와 CHECK 편)
-	/// </summary>
-	/// <param name="text">설명에 들어갈 내용</param>
-	/// <param name="type">Modal.Type.종류</param>
-	/// <param name="function">yes 버튼 누를 경우 실행 함수(필요하면)</param>
-	/// <param name="title">제목에 들어갈 내용(필요하면)(급하게 넣은 매개변수)</param>
-	public static void instantiate(string text, Type type, UnityAction function = null, string title = null) {
+
+    private void OnDestroy() {
+        EscapeKeyController.escapeKeyCtrl.RemoveEscape(action);
+    }
+    /// <summary>
+    /// Modal 창 생성기 (YESNO와 CHECK 편)
+    /// </summary>
+    /// <param name="text">설명에 들어갈 내용</param>
+    /// <param name="type">Modal.Type.종류</param>
+    /// <param name="function">yes 버튼 누를 경우 실행 함수(필요하면)</param>
+    /// <param name="title">제목에 들어갈 내용(필요하면)(급하게 넣은 매개변수)</param>
+    public static GameObject instantiate(string text, Type type, UnityAction function = null, System.Action function2 = null, string title = null) {
         if (type == Type.INSERT) {
 			Logger.LogWarning("enum INSERT는 매개변수 하나 더 있습니다!");
-			return;
+            return null;
 		}
-		GameObject modal = Resources.Load("Prefabs/ModalCanvas", typeof(GameObject)) as GameObject;
+        
+        GameObject modal = Resources.Load("Prefabs/ModalCanvas", typeof(GameObject)) as GameObject;
         GameObject tmp = Instantiate(modal);
-        tmp.GetComponent<Modal>().InnerModal.GetComponent<RectTransform>().sizeDelta = new Vector2(DefaultWidth, DefaultHeight);
-        tmp.GetComponent<Modal>().SetData(text, function, type, title);
-        //Instantiate(modal, canvas.transform, false).GetComponent<Modal>().setData(text, function, type);
+        tmp.GetComponent<Modal>().SetData(text, function, type, function2, title);
+        return modal;
 	}
     /// <summary>
     /// Modal 창 생성기 (Insert 편) 
@@ -48,17 +44,15 @@ public class Modal : MonoBehaviour {
     /// <param name="inputText">inputField value</param>
     /// <param name="type">Modal.Type.종류</param>
     /// <param name="function">yes 버튼 누를 경우 실행 함수</param>
-    public static GameObject instantiate(string text, string descText, string inputText, Type type, UnityAction<string> function) {
+    public static GameObject instantiate(string text, string placeHolderText, string value, Type type, UnityAction<string> function) {
 		if(type != Type.INSERT) {
 			Logger.LogWarning("enum YESNO 또는 CHECK는 매개변수를 줄여주십시오!");
 			return null;
 		}
 		GameObject modal = Resources.Load("Prefabs/ModalCanvas", typeof(GameObject)) as GameObject;
         GameObject tmp = Instantiate(modal);
-        tmp.GetComponent<Modal>().SetData(text, descText, inputText, function);
-        tmp.GetComponent<Modal>().InnerModal.GetComponent<RectTransform>().sizeDelta = new Vector2(DefaultWidth, InputHeight);
+        tmp.GetComponent<Modal>().SetData(text, placeHolderText, value, function);
         return tmp;
-        //Instantiate(modal, canvas.transform, false).GetComponent<Modal>().setData(text, inputText, function);
 	}
 
     public static GameObject instantiateReconnectModal() {
@@ -73,51 +67,71 @@ public class Modal : MonoBehaviour {
 	/// <param name="type">Modal.Type.종류</param>
 	/// <param name="function">yes 버튼 누를 경우 실행 함수(필요하면)</param>
 	/// <param name="title">제목에 들어갈 내용(필요하면)(급하게 넣은 매개변수)</param>
-	public void SetData(string text, UnityAction function, Type type, string title = null) {
-		if(type == Type.CHECK) {
-			noButton.gameObject.SetActive(false);
-			yesButton.GetComponentInChildren<Text>().text = "확인";
+	public void SetData(string text, UnityAction function, Type type, System.Action function2 = null, string title = null) {
+        Text describe = null;
+        Button yesButton = null;
+        if (type == Type.CHECK) {
+            checkModal.SetActive(true);
+            describe = checkModal.transform.Find("Describe").GetComponent<Text>();
+            yesButton = checkModal.transform.Find("Buttons/YesButton").GetComponent<Button>();
 		}
-		insertTitle.text = title;
-		describe.text = text;
-		yesButton.onClick.AddListener(CloseButton);
-		closeBtn.gameObject.SetActive(false);
-		if(function == null) return;
-		yesButton.onClick.AddListener(function);
+        else if(type == Type.YESNO) {
+            YesNoModal.SetActive(true);
+            describe = YesNoModal.transform.Find("Describe").GetComponent<Text>();
+            yesButton = YesNoModal.transform.Find("Buttons/YesButton").GetComponent<Button>();
+            if (function2 != null) {
+                action = function2;
+                EscapeKeyController.escapeKeyCtrl.AddEscape(function2);
+            }
+        }
+        else { Logger.LogError("Modal 타입이 올바르지 않습니다!"); }
+
+        if(describe != null) {
+            describe.text = text;
+        }
+
+        if(yesButton != null) {
+            yesButton.onClick.AddListener(CloseButton);
+            if(function != null) yesButton.onClick.AddListener(function);
+        }
 	}
 
-	public void SetData(string text, string descText, string inputText, UnityAction<string> function, bool closeExist = false) {
-		describe.gameObject.SetActive(false);
-		inputGameObject.SetActive(true);
-		noButton.gameObject.SetActive(false);
-		yesButton.GetComponentInChildren<Text>().text = "저장";
-		insertTitle.text = text;
-		inputField.GetComponentInChildren<Text>().text = descText;
-        inputField.text = inputText;
-		inputField.onValidateInput += delegate(string input, int charIndex, char addedChar) { return MyValidate(addedChar);};
-		closeBtn.gameObject.SetActive(closeExist);
-        yesButton.onClick.AddListener(() => {CheckInputText(inputField.text, function);});
+    /// <summary>
+    /// Modal 창 생성기 (Insert 편)에 대한 데이터 세팅
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="descText"></param>
+    /// <param name="inputText"></param>
+    /// <param name="function"></param>
+    /// <param name="closeExist"></param>
+	public void SetData(string text, string placeHolderText, string value, UnityAction<string> function, bool closeExist = false) {
+        InsertModal.SetActive(true);
+        Text describe = InsertModal.transform.Find("Describe").GetComponent<Text>();
+        Text placeHolder = InsertModal.transform.Find("InputField").GetComponent<InputField>().placeholder.GetComponent<Text>();
+        InputField inputValue = InsertModal.transform.Find("InputField").GetComponent<InputField>();
+
+        describe.text = text;
+        placeHolder.text = placeHolderText;
+        inputValue.text = value;
+
+        Button yesButton = InsertModal.transform.Find("Buttons/YesButton").GetComponent<Button>();
+        yesButton.onClick.AddListener(() => { CheckInputText(inputValue.text, function); });
 	}
 
 	private void CheckInputText(string text, UnityAction<string> function) {
-		if(string.IsNullOrEmpty(text)) {
-			//instantiate("내용이 비어있습니다\n내용을 채워주세요", Type.CHECK);
-			Text warning = inputGameObject.transform.GetChild(1).GetComponent<Text>();
-			warning.color = Color.red;
-			warning.fontSize = 40;
-			Handheld.Vibrate();
-			return;
-		}
-		function(text);
-		CloseButton();
-	}
+        if (string.IsNullOrEmpty(text)) {
+            //instantiate("내용이 비어있습니다\n내용을 채워주세요", Type.CHECK);
+            Text warning = InsertModal.transform.Find("Describe").GetComponent<Text>();
+            warning.color = Color.red;
+            warning.fontSize = 40;
+            Handheld.Vibrate();
+            return;
+        }
+        function(text);
+        CloseButton();
+    }
 
-	private void Start() {
-		noButton.onClick.AddListener(CloseButton);
-		closeBtn.onClick.AddListener(CloseButton);
-	}
-
-	private void CloseButton() {
+	public void CloseButton() {
 		SoundManager.Instance.PlaySound(UISfxSound.BUTTON1);
 		Destroy(gameObject);
 	}

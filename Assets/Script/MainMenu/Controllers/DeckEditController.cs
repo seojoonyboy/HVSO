@@ -47,6 +47,8 @@ public class DeckEditController : MonoBehaviour
     int currentPage;
     int[] cardMana;
 
+    GameObject cancelModal;
+
     void Awake() {
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_DECK_MODIFIED, OnDeckModified);
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_DECK_CREATED, OnMakeNewDeckFinished);
@@ -194,16 +196,15 @@ public class DeckEditController : MonoBehaviour
     }
 
     public void CancelButton() {
-        transform.Find("InnerCanvas/CancelWindow").gameObject.SetActive(true);
+        cancelModal = Modal.instantiate("편집을 취소 하시겠습니까?", Modal.Type.YESNO, () => {
+            CancelEdit();
+        }, ResumeEdit);
         EscapeKeyController.escapeKeyCtrl.RemoveEscape(CancelButton);
-        EscapeKeyController.escapeKeyCtrl.AddEscape(ResumeEdit);
-        //if(isTemplate)
+        //EscapeKeyController.escapeKeyCtrl.AddEscape(ResumeEdit);
     }
 
     public void CancelEdit() {
         EscapeKeyController.escapeKeyCtrl.RemoveEscape(CancelButton);
-        EscapeKeyController.escapeKeyCtrl.RemoveEscape(ResumeEdit);
-        transform.Find("InnerCanvas/CancelWindow").gameObject.SetActive(false);
         setCardList = null;
         if (templateMenu != null) {
             templateMenu.transform.gameObject.SetActive(true);
@@ -222,12 +223,11 @@ public class DeckEditController : MonoBehaviour
     }
 
     public void ResumeEdit() {
-        transform.Find("InnerCanvas/CancelWindow").gameObject.SetActive(false);
-        EscapeKeyController.escapeKeyCtrl.RemoveEscape(ResumeEdit);
+        Destroy(cancelModal);
         EscapeKeyController.escapeKeyCtrl.AddEscape(CancelButton);
+        //EscapeKeyController.escapeKeyCtrl.RemoveEscape(ResumeEdit);
     }
-    
-
+   
     public void OnTouchCard(GameObject card) {
         if (card.GetComponent<EditCardHandler>().cardObject.Find("Disabled").gameObject.activeSelf) return;
         if (selectCard == null)
