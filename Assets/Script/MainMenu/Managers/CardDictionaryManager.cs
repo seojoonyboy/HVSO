@@ -230,6 +230,7 @@ public class CardDictionaryManager : MonoBehaviour {
         if(classHumanCard != null) classHumanCard.Clear();
         classHumanCard = new Dictionary<string, int>();
         foreach (dataModules.CollectionCard card in AccountManager.Instance.allCards) {
+            if (card.unownable) continue;
             if(card.camp == "human" && !card.isHeroCard) {
                 if (!classHumanCard.ContainsKey(card.cardClasses[0])) {
                     classHumanCard.Add("all_" + card.cardClasses[0], 0);
@@ -247,6 +248,7 @@ public class CardDictionaryManager : MonoBehaviour {
         if (classOrcCard != null) classOrcCard.Clear();
         classOrcCard = new Dictionary<string, int>();
         foreach (dataModules.CollectionCard card in AccountManager.Instance.allCards) {
+            if (card.unownable) continue;
             if (card.camp == "orc" && !card.isHeroCard) {
                 if (!classOrcCard.ContainsKey(card.cardClasses[0])) {
                     classOrcCard.Add("all_" + card.cardClasses[0], 0);
