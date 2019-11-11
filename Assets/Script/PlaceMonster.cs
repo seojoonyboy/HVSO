@@ -59,7 +59,7 @@ public class PlaceMonster : MonoBehaviour {
     };
 
     void OnDestroy() {
-        
+        if(PlayMangement.instance == null) return;
         if (isPlayer) {
             PlayMangement.instance.UnitsObserver
                 .RefreshFields(
