@@ -980,7 +980,7 @@ public partial class PlayMangement {
                 enemyCard = Instantiate(Resources.Load("Prefabs/OrcBackCard") as GameObject, enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(CountEnemyCard()));
             enemyCard.transform.position = player.cdpm.cardSpawnPos.position;
             enemyCard.transform.localScale = new Vector3(1, 1, 1);
-            iTween.MoveTo(enemyCard, enemyCard.transform.parent.position, 0.15f);
+            iTween.MoveTo(enemyCard, enemyCard.transform.parent.position, 0.3f);
             yield return new WaitForSeconds(0.15f);
             enemyCard.SetActive(false);
             SoundManager.Instance.PlayIngameSfx(IngameSfxSound.CARDDRAW);
@@ -1003,7 +1003,7 @@ public partial class PlayMangement {
         enemyCard.transform.localScale = new Vector3(1, 1, 1);
         iTween.MoveTo(enemyCard, enemyCard.transform.parent.position, 0.3f);
         SoundManager.Instance.PlayIngameSfx(IngameSfxSound.CARDDRAW);
-        enemyCard.SetActive(true);
+        enemyCard.SetActive(false);
         int count = CountEnemyCard();
         enemyPlayer.playerUI.transform.Find("CardCount").GetChild(0).gameObject.GetComponent<Text>().text = (count).ToString();
     }
