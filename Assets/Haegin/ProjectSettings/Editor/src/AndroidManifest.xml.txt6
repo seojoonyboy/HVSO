@@ -1,0 +1,3 @@
+﻿" />
+    <meta-data android:name="haeginsplitappbinsize" android:value="HAEGIN_UNITY_SPLIT_APP_BIN_SIZE" />
+    <meta-data android:name="android.max_aspect" android:value="3.0" />
