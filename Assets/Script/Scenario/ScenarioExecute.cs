@@ -1574,6 +1574,8 @@ public class Wait_Match_End : ScenarioExecute {
             yield return new WaitForSeconds(1.0f);
         else
             yield return new WaitForSeconds(PlayMangement.instance.player.DeadAnimationTime);
+
+        yield return new WaitUntil(() => PlayMangement.instance.waitShowResult == false);
         PlayMangement.instance.SocketHandler.Surrend(null);
     }
 
