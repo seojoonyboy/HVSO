@@ -751,8 +751,8 @@
                         ]
                     },
                     {
-                        "name" : "ChallengeEnd",
-                        "args" : [
+                        "name": "ChallengeEnd",
+                        "args": [
                             "MAGIC_USED"
                         ]
                     },
@@ -793,8 +793,8 @@
                         ]
                     },
                     {
-                        "name" : "ChallengeStart",
-                        "args" : [
+                        "name": "ChallengeStart",
+                        "args": [
                             "UNIT_SUMMONED"
                         ]
                     },
@@ -834,9 +834,15 @@
                         ]
                     },
                     {
-                        "name" : "ChallengeEnd",
-                        "args" : [
+                        "name": "ChallengeEnd",
+                        "args": [
                             "UNIT_SUMMONED"
+                        ]
+                    },
+                    {
+                        "name": "Deactive_TargetHandler",
+                        "args": [
+                            "3,0"
                         ]
                     },
                     {
@@ -862,6 +868,12 @@
                         "name": "Wait_click",
                         "args": [
                             "screen"
+                        ]
+                    },
+                    {
+                        "name": "Active_TargetHandler",
+                        "args": [
+                            "3,0"
                         ]
                     },
 

@@ -1628,6 +1628,50 @@ public class Set_Tutorial_After_Battle : ScenarioExecute {
 }
 
 
+public class Deactive_TargetHandler : ScenarioExecute {
+    public Deactive_TargetHandler() : base() { }
+
+    public override void Execute() {
+        string[] parse = args[0].Split(',');
+        int col = int.Parse(parse[0]);
+        int row = int.Parse(parse[1]);
+
+
+        FieldUnitsObserver.Pos pos = new FieldUnitsObserver.Pos(col, row);
+
+        PlaceMonster targetUnit = PlayMangement.instance.UnitsObserver.GetUnit(pos, true).gameObject.GetComponent<PlaceMonster>();
+
+        if (targetUnit.gameObject.GetComponent<TargetModules.TargetHandler>() != null)
+            targetUnit.gameObject.GetComponent<TargetModules.TargetHandler>().enabled = false;
+
+        handler.isDone = true;
+    }
+}
+
+public class Active_TargetHandler : ScenarioExecute {
+    public Active_TargetHandler() : base() { }
+
+    public override void Execute() {
+        string[] parse = args[0].Split(',');
+        int col = int.Parse(parse[0]);
+        int row = int.Parse(parse[1]);
+
+
+        FieldUnitsObserver.Pos pos = new FieldUnitsObserver.Pos(col, row);
+
+        PlaceMonster targetUnit = PlayMangement.instance.UnitsObserver.GetUnit(pos, true).gameObject.GetComponent<PlaceMonster>();
+
+        if (targetUnit.gameObject.GetComponent<TargetModules.TargetHandler>() != null)
+            targetUnit.gameObject.GetComponent<TargetModules.TargetHandler>().enabled = true;
+
+        handler.isDone = true;
+    }
+}
+
+
+
+
+
 
 //Proceed_Invoke_NextTurn, Stop_Invoke_NextTurn (오크->휴먼->마법->배틀 턴중에 '버튼'을 눌렀을 경우)
 //Stop_Next_Turn, Proceed_Next_Turn (전투 종료후, 다음턴)
