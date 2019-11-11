@@ -67,7 +67,7 @@
                         "name": "NPC_Print_message",
                         "args": [
                             "ac10012",
-                            "근처 부족이 유목생활을 하다가 돌아왔을 때, 목축지에 인간 마을이 들어서 있어서 몰살당했다고 합니다.",
+                            "최근 유목생활 중이던 작은 규모의 오크 부족이 인간 무리에게 몰살을 당했다고 합니다.",
                             "true"
                         ]
                     },
@@ -81,7 +81,7 @@
                         "name": "NPC_Print_message",
                         "args": [
                             "h10002",
-                            "저놈 짓일지도 모르겠군. 내가 복수해 주겠다!!",
+                            "인간들이란 뻔하다. 내가 복수해 주겠다!!",
                             "true"
                         ]
                     },
@@ -469,7 +469,7 @@
                         "name": "NPC_Print_message",
                         "args": [
                             "ac10012",
-                            "사용할 수 있는 마법이 드로우 마법이군요. 주의할 점은 핸드에는 카드를 10장만 가질 수 있습니다.",
+                            "드로우 마법을 사용할 수 있군요. 핸드에 카드는 10장만 가질 수 있습니다. 주의하세요",
                             "true"
                         ]
                     },
@@ -483,21 +483,7 @@
                         "name": "NPC_Print_message",
                         "args": [
                             "ac10012",
-                            "10장 이상으로는 카드를 뽑을 수 없으니 주의하세요.",
-                            "true"
-                        ]
-                    },
-                    {
-                        "name": "Wait_click",
-                        "args": [
-                            "screen"
-                        ]
-                    },
-                    {
-                        "name": "NPC_Print_message",
-                        "args": [
-                            "ac10012",
-                            "지금으로써는 카드를 더 뽑을 필요도 없겠군요. '턴 종료' 버튼을 터치해서 전투를 시작하세요!",
+                            "사용할 수 있는 카드는 없군요. 그럼, '턴 종료' 버튼을 터치해서 전투를 시작하세요! ",
                             "true"
                         ]
                     },
@@ -680,8 +666,8 @@
                 "Print_text": "data_stage_1031_2_3-6",
                 "methods": [
                     {
-                        "name" : "Unblock_Screen",
-                        "args" : []
+                        "name": "Unblock_Screen",
+                        "args": []
                     },
                     {
                         "name": "Disable_EndTurn",
@@ -721,14 +707,14 @@
                         ]
                     },
                     {
-                        "name" : "ChallengeStart",
-                        "args" : [
+                        "name": "ChallengeStart",
+                        "args": [
                             "UNIT_SUMMONED"
                         ]
                     },
                     {
-                        "name"  : "Unblock_Screen",
-                        "args" : []
+                        "name": "Unblock_Screen",
+                        "args": []
                     },
                     {
                         "name": "Wait_summon",
@@ -737,8 +723,8 @@
                         ]
                     },
                     {
-                        "name" : "ChallengeEnd",
-                        "args" : [
+                        "name": "ChallengeEnd",
+                        "args": [
                             "UNIT_SUMMONED"
                         ]
                     },
@@ -767,6 +753,10 @@
                             "button",
                             "endTurn"
                         ]
+                    },
+                    {
+                        "name": "StopHighlight",
+                        "args": []
                     }
                 ],
                 "isExecute": false
@@ -906,6 +896,10 @@
                             "button",
                             "endTurn"
                         ]
+                    },
+                    {
+                        "name": "StopHighlight",
+                        "args": []
                     }
                 ],
                 "isExecute": false

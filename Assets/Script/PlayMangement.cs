@@ -73,6 +73,7 @@ public partial class PlayMangement : MonoBehaviour {
     }
     private void OnDestroy() {
         SoundManager.Instance.bgmController.SoundTrackLoopOn();
+        PlayerPrefs.SetString("BattleMode", "");
         instance = null;
         if (socketHandler != null)
             Destroy(socketHandler.gameObject);
@@ -100,7 +101,8 @@ public partial class PlayMangement : MonoBehaviour {
     
 
 
-    public void SetGameData(string match = null) {
+    public void SetGameData() {
+        string match = PlayerPrefs.GetString("BattleMode");
         InitGameData(match);
     }
 
@@ -776,7 +778,7 @@ public partial class PlayMangement : MonoBehaviour {
             enemyCard.transform.localPosition = new Vector3(0, 0, 0);
             enemyCard.SetActive(true);
             int count = CountEnemyCard();
-            enemyPlayer.playerUI.transform.Find("CardCount").GetChild(1).gameObject.GetComponent<Text>().text = (count).ToString();
+            enemyPlayer.playerUI.transform.Find("CardCount").GetChild(0).gameObject.GetComponent<Text>().text = (count).ToString();
             IngameNotice.instance.SetNotice("상대방이 영웅카드 사용 여부를 결정 중입니다");
         }
         yield return new WaitForSeconds(1f);
@@ -804,7 +806,7 @@ public partial class PlayMangement : MonoBehaviour {
                     yield return MagicActivate(summonedMagic, history);
                     SocketFormat.DebugSocketData.SummonCardData(history);
                     int count = CountEnemyCard();
-                    enemyPlayer.playerUI.transform.Find("CardCount").GetChild(1).gameObject.GetComponent<Text>().text = (count).ToString();
+                    enemyPlayer.playerUI.transform.Find("CardCount").GetChild(0).gameObject.GetComponent<Text>().text = (count).ToString();
                     yield return new WaitForSeconds(1f);
                 }
             }
