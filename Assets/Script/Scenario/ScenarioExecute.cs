@@ -130,7 +130,9 @@ public class Till_On : ScenarioExecute {
         handler.isDone = true;
     }
 }
-
+/// <summary>
+/// x초를 기달릴지 결정 args[0] int x
+/// </summary>
 public class Wait_until : ScenarioExecute {
     public Wait_until() : base() { }
 
@@ -149,7 +151,9 @@ public class Wait_until : ScenarioExecute {
         handler.isDone = true;
     }
 }
-
+/// <summary>
+/// 히어로가 데미지 입기를 기달림. args[0] 몇번 데미지 입을 건지, args[1] player, enemy
+/// </summary>
 public class Hero_Wait_Damage : ScenarioExecute {
     public Hero_Wait_Damage() : base() { }
 
@@ -177,7 +181,9 @@ public class Hero_Wait_Damage : ScenarioExecute {
 
 }
 
-
+/// <summary>
+/// 클릭의 대기 args[0] screen, button or scenarioMask의 id값, args[1] screen일 경우 off, button은 endTurn, 그 외의 경우 scenarioMask 참조
+/// </summary>
 public class Wait_click : ScenarioExecute {
     public Wait_click() : base() { }
 
@@ -253,7 +259,9 @@ public class StopHighlight : ScenarioExecute {
 
 }
 
-//단순히 유닛 소환 기달림 args[0] unitID
+/// <summary>
+/// 단순히 유닛 소환 기달림 args[0] unitID
+/// </summary>
 public class Wait_summon : ScenarioExecute {
     public Wait_summon() : base() { }
 
@@ -288,11 +296,12 @@ public class Wait_summon : ScenarioExecute {
 
 }
 
+/// <summary>
+/// cardID 이외의 카드 드래그 억제 args[0] cardID
+/// </summary>
 public class Disable_Deck_card : ScenarioExecute {
     public Disable_Deck_card() : base() { }
 
-    //args[0] 카드 아이디
-    //특정 카드 이외의 드래그 제외
     public override void Execute() {
         GameObject cardHand = scenarioMask.targetObject["hand_card"];
         
@@ -317,7 +326,9 @@ public class Disable_Deck_card : ScenarioExecute {
     }
 
 }
-
+/// <summary>
+/// 카드 드래그 억제 해체
+/// </summary>
 public class Enable_Deck_card : ScenarioExecute {
     public Enable_Deck_card() : base() { }
 
@@ -336,7 +347,9 @@ public class Enable_Deck_card : ScenarioExecute {
 
 
 
-//args[0] 얼마나? 
+/// <summary>
+/// 플레이어의 소환 대기 x만큼 args[0] int x
+/// </summary>
 public class Wait_Multiple_Summon : ScenarioExecute {
     public Wait_Multiple_Summon() : base() { }
 
@@ -388,7 +401,9 @@ public class Wait_Multiple_Summon : ScenarioExecute {
     }
 }
 
-// args[0] x,y x는 어디 어디 배치할껀가?
+/// <summary>
+/// 플레이어의 특정 위치 소환대기 args[0] int x,x
+/// </summary>
 public class Wait_Multiple_Summon_ScopeLine : ScenarioExecute {
     public Wait_Multiple_Summon_ScopeLine() : base() { }
 
@@ -447,7 +462,9 @@ public class Wait_Multiple_Summon_ScopeLine : ScenarioExecute {
 }
 
 
-//args[0] 얼마나 소환할지? args[1] 1~x 라인중 x까지 라인 활성화
+/// <summary>
+/// 플레이어의 소환 대기 1~x 라인중 x까지 라인 활성화 args[0] int count, args[1]  int x
+/// </summary>
 public class Wait_Multiple_Summon_linelimit : ScenarioExecute {
     public Wait_Multiple_Summon_linelimit() : base() { }
 
@@ -495,7 +512,9 @@ public class Wait_Multiple_Summon_linelimit : ScenarioExecute {
 
 
 
-// 마법사용 대기
+/// <summary>
+/// 마법 사용을 기달림 args[0] "", args[1] cardID
+/// </summary>
 public class Wait_drop : ScenarioExecute {
     public Wait_drop() : base() { }
 
@@ -537,7 +556,7 @@ public class Wait_AnyMagic_Use : ScenarioExecute {
         handler.isDone = true;
     }
 }
-
+// 다중 하이라이트 args[0] string,string args[1] string,string
 public class Multiple_Highlight : ScenarioExecute {
     public Multiple_Highlight() : base() { }
 
@@ -567,7 +586,9 @@ public class Multiple_Highlight : ScenarioExecute {
     }
 
 }
-
+/// <summary>
+/// 카드의 드래그를 대기 args[0] "" args[1] cardID
+/// </summary>
 public class Wait_Drag : ScenarioExecute {
     public Wait_Drag() : base() { }
 
@@ -618,7 +639,9 @@ public class Wait_Drag : ScenarioExecute {
         }
     }
 }
-
+/// <summary>
+/// 실드 강제 발동 args 없음.
+/// </summary>
 public class Activate_shield : ScenarioExecute {
     public Activate_shield() : base() { }
 
@@ -629,7 +652,9 @@ public class Activate_shield : ScenarioExecute {
 }
 
 
-
+/// <summary>
+/// 실드 게이지 채워줌. args 없음.
+/// </summary>
 public class Fill_shield_gage : ScenarioExecute {
     public Fill_shield_gage() : base() { }
 
@@ -644,7 +669,9 @@ public class Fill_shield_gage : ScenarioExecute {
         handler.isDone = true;
     }
 }
-
+/// <summary>
+/// 튜토리얼 종료 선언 args 없음.
+/// </summary>
 public class End_tutorial : ScenarioExecute {
     public End_tutorial() : base() { }
 
@@ -656,7 +683,9 @@ public class End_tutorial : ScenarioExecute {
     }
 }
 
-//배틀턴 args[0] stop or proceed, args[1] 몇라인?
+/// <summary>
+/// 배틀턴중 몇번째 라인에서 멈추는지. args[0] stop or proceed, args[1] int x
+/// </summary>
 public class Battle_turn : ScenarioExecute {
     public Battle_turn() : base() { }
 
@@ -683,22 +712,10 @@ public class Battle_turn : ScenarioExecute {
 }
 
 
-public class Select_Skill_Force : ScenarioExecute {
-    public Select_Skill_Force() : base() { }
 
-    public override void Execute() {
-
-        
-    }
-
-    public void HighlightLine() {
-        GameObject targetLine;
-        targetLine = scenarioMask.GetMaskingObject(args[0], args[1]);
-        scenarioMask.GetMaskHighlight(targetLine);
-    }
-}
-
-//턴버튼 무력화
+/// <summary>
+/// 턴버튼 재활성화
+/// </summary>
 public class Enable_EndTurn : ScenarioExecute {
     public Enable_EndTurn() : base() { }
 
@@ -711,7 +728,9 @@ public class Enable_EndTurn : ScenarioExecute {
         handler.isDone = true;
     }
 }
-
+/// <summary>
+/// 턴버튼 억제
+/// </summary>
 public class Disable_EndTurn : ScenarioExecute {
     public Disable_EndTurn() : base() { }
 
@@ -722,7 +741,9 @@ public class Disable_EndTurn : ScenarioExecute {
         handler.isDone = true;
     }
 }
-
+/// <summary>
+/// 영웅카드 덱으로 오는것을 억제
+/// </summary>
 public class Disable_to_hand_herocard : ScenarioExecute {
     public Disable_to_hand_herocard() : base() { }
 
@@ -732,7 +753,9 @@ public class Disable_to_hand_herocard : ScenarioExecute {
         handler.isDone = true;
     }
 }
-
+/// <summary>
+/// 영웅카드 덱으로 오는거 활성화
+/// </summary>
 public class Enable_to_hand_herocard : ScenarioExecute {
     public Enable_to_hand_herocard() : base() { }
 
@@ -742,7 +765,9 @@ public class Enable_to_hand_herocard : ScenarioExecute {
         handler.isDone = true;
     }
 }
-
+/// <summary>
+/// 영웅카드의 드래그를 억제 args[0] "shieldCard", args[1] "exclusive", args[2] 카드 아이디
+/// </summary>
 public class Disable_drag : ScenarioExecute {
     public Disable_drag() : base() { }
 
@@ -774,33 +799,39 @@ public class Disable_drag : ScenarioExecute {
                 break;
         }
         handler.isDone = true;
-    }
+    }    
+}
 
-    public class Enable_drag : ScenarioExecute {
-        public Enable_drag() : base() { }
+/// <summary>
+/// 드래그 활성화 args[0] shieldCards
+/// </summary>
+public class Enable_drag : ScenarioExecute {
+    public Enable_drag() : base() { }
 
-        public override void Execute() {
-            string _target = args[0];
-            switch (_target) {
-                case "shieldCards":
-                    Transform showCardPos = scenarioGameManagment.showCardPos;
+    public override void Execute() {
+        string _target = args[0];
+        switch (_target) {
+            case "shieldCards":
+                Transform showCardPos = scenarioGameManagment.showCardPos;
 
-                    foreach (Transform child in showCardPos.Find("Left").transform) {
-                        if (child.GetComponent<MagicDragHandler>()) {
-                            child.GetComponent<MagicDragHandler>().enabled = true;
-                        }
+                foreach (Transform child in showCardPos.Find("Left").transform) {
+                    if (child.GetComponent<MagicDragHandler>()) {
+                        child.GetComponent<MagicDragHandler>().enabled = true;
                     }
-                    foreach (Transform child in showCardPos.Find("Right").transform) {
-                        if (child.GetComponent<MagicDragHandler>()) {
-                            child.GetComponent<MagicDragHandler>().enabled = true;
-                        }
+                }
+                foreach (Transform child in showCardPos.Find("Right").transform) {
+                    if (child.GetComponent<MagicDragHandler>()) {
+                        child.GetComponent<MagicDragHandler>().enabled = true;
                     }
-                    break;
-            }
+                }
+                break;
         }
     }
 }
 
+/// <summary>
+/// 적의 마법 사용을 억제 args 없음.
+/// </summary>
 public class Stop_orc_magic : ScenarioExecute {
     public Stop_orc_magic() : base() { }
 
@@ -810,7 +841,9 @@ public class Stop_orc_magic : ScenarioExecute {
     }
 
 }
-
+/// <summary>
+/// 마법 사용 억제 해체 args 없음.
+/// </summary>
 public class Proceed_orc_magic : ScenarioExecute {
     public Proceed_orc_magic() : base() { }
     public override void Execute() {
@@ -819,7 +852,9 @@ public class Proceed_orc_magic : ScenarioExecute {
     }
 }
 
-
+/// <summary>
+/// 적이 유닛 소환하는 것을 억제 args 없음.
+/// </summary> 
 public class Stop_orc_summon : ScenarioExecute {
     public Stop_orc_summon() : base() { }
 
@@ -828,7 +863,9 @@ public class Stop_orc_summon : ScenarioExecute {
         handler.isDone = true;
     }
 }
-
+/// <summary>
+/// 억제된 적 소환 재개 args 없음.
+/// </summary>
 public class Proceed_orc_summon : ScenarioExecute {
     public Proceed_orc_summon() : base() { }
 
@@ -838,6 +875,10 @@ public class Proceed_orc_summon : ScenarioExecute {
     }
 }
 
+
+/// <summary>
+/// 특정 배치를 강제화 args[0] unit or magic, args[1] int x
+/// </summary>
 public class Force_drop_zone : ScenarioExecute {
     public Force_drop_zone() : base() { }
 
@@ -894,26 +935,10 @@ public class Force_drop_zone : ScenarioExecute {
     }
 }
 
-public class Reinforement_Unit : ScenarioExecute {
-    public Reinforement_Unit() : base() { }
 
-    public override void Execute() {
-        string front = "ac10001";
-        string back = "ac10002";
-
-        for (int i = 0; i < 5; i++) {
-            
-            scenarioGameManagment.SummonUnit(scenarioGameManagment.player.isPlayer, back, i, 0);
-            scenarioGameManagment.SummonUnit(scenarioGameManagment.player.isPlayer, front, i, 1);
-        }
-        handler.isDone = true;
-    }
-
-
-}
-
-
-//배틀 끝나고 다음턴
+/// <summary>
+/// 배틀이 종료되고 다음턴으로 넘어갈려는것을 억제 args 없음.
+/// </summary>
 public class Stop_Next_Turn : ScenarioExecute {
     public Stop_Next_Turn() : base() { }
 
@@ -922,7 +947,9 @@ public class Stop_Next_Turn : ScenarioExecute {
         handler.isDone = true;
     }
 }
-
+/// <summary>
+/// 배틀이 종료되고 다음턴 억제 된 것을 재개 args 없음.
+/// </summary>
 public class Proceed_Next_Turn : ScenarioExecute {
     public Proceed_Next_Turn() : base() { }
 
@@ -933,29 +960,22 @@ public class Proceed_Next_Turn : ScenarioExecute {
 
 }
 
-public class Set_Victory : ScenarioExecute {
-    public Set_Victory() : base() { }
 
-    public override void Execute() {
-
-        handler.isDone = true;
-    }
-
-}
-
-
-
-
+/// <summary>
+/// 유닛의 소환 슬롯을 강제하던 부분 제거 args 없음.
+/// </summary>
 public class Remove_forced_drop_zone : ScenarioExecute {
     public Remove_forced_drop_zone() : base() { }
 
     public override void Execute() {
         scenarioGameManagment.forcedSummonAt = -1;
-
         handler.isDone = true;
     }
 }
 
+/// <summary>
+/// 오크가 아니라, 적 플레이어의 턴넘김을 억제, args[0] stop or proceed
+/// </summary>
 public class Orc_post_turn : ScenarioExecute {
     public Orc_post_turn() : base() { }
 
@@ -991,24 +1011,10 @@ public class Orc_post_turn : ScenarioExecute {
         handler.isDone = true;
     }
 }
-//사각형으로 된 오브젝트들 setactive = false
-public class OffHighlight : ScenarioExecute {
-    public OffHighlight() : base() { }
 
-    public override void Execute() {
-        scenarioMask.DisableMask();
-        handler.isDone = true;
-    }
-}
-
-public class Enable_drag : ScenarioExecute {
-    public Enable_drag() : base() { }
-
-    public override void Execute() {
-        handler.isDone = true;
-    }
-}
-//전투 종료를 기달림
+/// <summary>
+/// 배틀 턴에서 5번째 배틀까지 전부 끝나는것을 기달림. args 없음.
+/// </summary>
 public class Wait_Battle_End : ScenarioExecute {
     public Wait_Battle_End() : base() { }
 
@@ -1021,26 +1027,10 @@ public class Wait_Battle_End : ScenarioExecute {
         handler.isDone = true;
     }
 }
-//미사용 함수 폐기예정
-public class Block_Turn_Btn : ScenarioExecute {
-    public Block_Turn_Btn() : base() { }
 
-    public override void Execute() {
-        scenarioMask.BlockButton();
-        handler.isDone = true;
-    }
-
-}
-//미사용 함수 폐기예정
-public class Unblock_Turn_Btn : ScenarioExecute {
-    public Unblock_Turn_Btn() : base() { }
-
-    public override void Execute() {
-        scenarioMask.UnblockButton();
-        handler.isDone = true;
-    }
-}
-//몇번째 라인 전투 종료?
+/// <summary>
+/// 배틀 턴중에 x번째의 전투가 기다리기를 끝나는 함수 args[0] int x
+/// </summary>
 public class Wait_End_Line_Battle : ScenarioExecute {
     public Wait_End_Line_Battle() : base() { }
 
@@ -1063,7 +1053,9 @@ public class Wait_End_Line_Battle : ScenarioExecute {
     }
 }
 
-
+/// <summary>
+/// 해당 턴이 돌아올때까지를 기달림. args[0] "ORC","HUMAN","SECRET","BATTLE"
+/// </summary>
 public class Wait_Turn : ScenarioExecute {
     public Wait_Turn() : base() { }
 
@@ -1096,6 +1088,10 @@ public class Wait_Turn : ScenarioExecute {
     }
 }
 
+
+/// <summary>
+/// 화면 전체를 막도록 투명 스크린 활성화 args 없음.
+/// </summary>
 public class Block_Screen : ScenarioExecute {
     public Block_Screen() : base() { }
 
@@ -1105,6 +1101,9 @@ public class Block_Screen : ScenarioExecute {
     }
 }
 
+/// <summary>
+/// 화면 전체를 막고있던 투명 스크린의 해채 args 없음.
+/// </summary>
 public class Unblock_Screen : ScenarioExecute {
     public Unblock_Screen() : base() { }
 
@@ -1114,7 +1113,9 @@ public class Unblock_Screen : ScenarioExecute {
     }
 
 }
-
+/// <summary>
+/// 실드가 터지기를 기달리는 함수 args[0] player or enemy
+/// </summary>
 public class Wait_shield_active : ScenarioExecute {
     public Wait_shield_active() : base() { }
 
@@ -1139,7 +1140,9 @@ public class Wait_shield_active : ScenarioExecute {
         }
     }
 }
-
+/// <summary>
+/// 미션 시작 타이밍 선언 args 없음.
+/// </summary>
 public class ChallengeStart : ScenarioExecute {
     public ChallengeStart() : base() { }
 
@@ -1151,6 +1154,9 @@ public class ChallengeStart : ScenarioExecute {
     }
 }
 
+/// <summary>
+/// 미션 종료타이밍 선언 args 없음.
+/// </summary>
 public class ChallengeEnd : ScenarioExecute {
     public ChallengeEnd() : base() { }
 
@@ -1161,7 +1167,9 @@ public class ChallengeEnd : ScenarioExecute {
         handler.isDone = true;
     }
 }
-// 턴과 턴사이, 배틀 종료 아님!
+/// <summary>
+/// 한턴 내에서 오크 -> 휴먼 -> 마법 -> 배틀 사이사이의 턴을 재개시킴 args 없음.
+/// </summary>
 public class Stop_Invoke_NextTurn : ScenarioExecute {
     public Stop_Invoke_NextTurn() : base() {  }
 
@@ -1172,6 +1180,10 @@ public class Stop_Invoke_NextTurn : ScenarioExecute {
     }
 }
 
+
+/// <summary>
+/// 한턴 내에서 오크 -> 휴먼 -> 마법 -> 배틀 사이사이의 턴을 재개시킴 args 없음.
+/// </summary>
 public class Proceed_Invoke_NextTurn : ScenarioExecute {
     public Proceed_Invoke_NextTurn() : base() { }
 
@@ -1182,7 +1194,10 @@ public class Proceed_Invoke_NextTurn : ScenarioExecute {
         handler.isDone = true;
     }
 }
-//영웅카드 뽑을상황에 잠시 뽑지말도록 스탑
+
+/// <summary>
+/// 영웅카드 드로우 억제 args 없음.
+/// </summary>
 public class Wait_DrawHero : ScenarioExecute {
     public Wait_DrawHero() : base() { }
 
@@ -1192,6 +1207,9 @@ public class Wait_DrawHero : ScenarioExecute {
     }
 }
 
+/// <summary>
+/// 영웅카드 드로우 재개 args 없음.
+/// </summary>
 public class Proceed_DrawHero : ScenarioExecute {
     public Proceed_DrawHero() : base() { }
 
@@ -1200,7 +1218,9 @@ public class Proceed_DrawHero : ScenarioExecute {
         handler.isDone = true;
     }
 }
-
+/// <summary>
+/// 적이 도망침 args 없음.
+/// </summary>
 public class Fadeout_Enemy : ScenarioExecute {
     public Fadeout_Enemy() : base() { }
 
@@ -1210,6 +1230,9 @@ public class Fadeout_Enemy : ScenarioExecute {
     }
 }
 
+/// <summary>
+/// 유닛의 위치가 바뀔때를 기달림. args 없음.
+/// </summary>
 public class Wait_UnitPos_Change : ScenarioExecute {
     public Wait_UnitPos_Change() : base() { }
 
@@ -1223,6 +1246,10 @@ public class Wait_UnitPos_Change : ScenarioExecute {
     }
 }
 
+
+/// <summary>
+/// 전투후, 결과 화면을 억제하거나 보여줌. args[0] stop or proceed
+/// </summary>
 public class Result_battle : ScenarioExecute {
     public Result_battle() : base() { }
 
@@ -1238,6 +1265,9 @@ public class Result_battle : ScenarioExecute {
     }
 }
 
+/// <summary>
+/// 매치는 아니지만, 적 영웅이 죽을 때 까지 기달림. args 없음
+/// </summary>
 public class Wait_Enemy_hero_Dead : ScenarioExecute {
     public Wait_Enemy_hero_Dead() : base() { }
 
@@ -1257,7 +1287,9 @@ public class Wait_Enemy_hero_Dead : ScenarioExecute {
 }
 
 
-//첫 카드배분 스탑 or 배분
+/// <summary>
+/// 첫 카드배분 스탑 or 배분, 현재 버그로 미작동
+/// </summary>
 public class First_Card : ScenarioExecute {
     public First_Card() : base() { }
 
@@ -1272,7 +1304,7 @@ public class First_Card : ScenarioExecute {
 }
 
 /// <summary>
-/// 적 유닛이 소환해야할 경우의 class
+/// 적 유닛이 소환해야할 경우의 class args[0] int x;
 /// </summary>
 public class Wait_Enemy_Summon : ScenarioExecute {
     public Wait_Enemy_Summon() : base() { }
@@ -1295,7 +1327,9 @@ public class Wait_Enemy_Summon : ScenarioExecute {
 
     }
 }
-
+/// <summary>
+/// 특정 유닛을 터치해야할 경우 사용 args[0] 유닛 아이디
+/// </summary>
 public class Highlight_Unit : ScenarioExecute {
     public Highlight_Unit() : base() { }
 
@@ -1329,7 +1363,9 @@ public class Wait_Info_Window : ScenarioExecute {
         }
     }
 }
-
+/// <summary>
+/// 정보창을 닫게하는것을 기달림 args 없음.
+/// </summary>
 public class Wait_Close_Info : ScenarioExecute {
     public Wait_Close_Info() : base() { }
 
@@ -1346,7 +1382,9 @@ public class Wait_Close_Info : ScenarioExecute {
 
 }
 
-
+/// <summary>
+/// 유닛정보창의 스킬 아이콘 강조
+/// </summary>
 public class Focus_Skill_Icon : ScenarioExecute {
     public Focus_Skill_Icon() : base() { }
 
@@ -1361,7 +1399,9 @@ public class Focus_Skill_Icon : ScenarioExecute {
     }
 
 }
-
+/// <summary>
+/// 유닛 정보창에서, 스킬 아이콘 터치후 터치 이펙트의 제거
+/// </summary>
 public class Blur_Skill_Icon : ScenarioExecute {
     public Blur_Skill_Icon() : base() { }
 
@@ -1371,6 +1411,11 @@ public class Blur_Skill_Icon : ScenarioExecute {
     }
 }
 
+
+
+///<summary>
+///어떤 유닛이던간에 필드가 바뀌는것을 기달림. args 없음
+///</summary> 
 public class Wait_Field_Change : ScenarioExecute {
     public Wait_Field_Change() : base() { }
 
@@ -1384,6 +1429,9 @@ public class Wait_Field_Change : ScenarioExecute {
     }
 }
 
+/// <summary>
+/// 특정 유닛의 소환 args[0] (col,row) args[1] 유닛 아이디
+/// </summary>
 public class Set_Unit : ScenarioExecute {
     public Set_Unit() : base() { }
 
@@ -1402,6 +1450,9 @@ public class Set_Unit : ScenarioExecute {
 
 }
 
+/// <summary>
+/// 히어로 실드를 강제적으로 체워줌. args 없음.
+/// </summary>
 public class Set_Hero_Shield : ScenarioExecute {
     public Set_Hero_Shield() : base() { }
 
@@ -1425,7 +1476,9 @@ public class Set_Hero_Shield : ScenarioExecute {
 
 
 
-//제로베이스
+/// <summary>
+/// 특정 유닛을 지켜야 할 경우, 사용 args[0] 위치값 (col,row), victoryCondition이 ProtectObject일때만 사용!
+/// </summary>
 public class SetUp_Protect_Unit : ScenarioExecute {
     public SetUp_Protect_Unit() : base() { }
 
@@ -1452,6 +1505,9 @@ public class SetUp_Protect_Unit : ScenarioExecute {
     }
 }
 
+/// <summary>
+/// 게임이 진행되야하는 상황이면 사용, args 없음, player hp가 0이거나 object의 hp가 0일경우, handler가 넘어가지 않아서 endTutorial를 발생시키지 못함.
+/// </summary>
 public class Wait_Match_End : ScenarioExecute {
     public Wait_Match_End() : base() { }
 
@@ -1513,6 +1569,10 @@ public class Wait_Match_End : ScenarioExecute {
     }
 }
 
+
+/// <summary>
+/// 시나리오의 경우에 처음에 InitGameData가 사용되지 않아서, 튜토리얼 종료후에 게임이 진행된다는 정보를 등록. args 없음.
+/// </summary>
 public class Set_Tutorial_After_Battle : ScenarioExecute {
     public Set_Tutorial_After_Battle() : base() { }
 
