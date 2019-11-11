@@ -1547,13 +1547,14 @@ public class Wait_Match_End : ScenarioExecute {
     }
 
     private void GameEnd() {
+        StopGame();
         playerStatus.Dispose();
         enemyStatus.Dispose();
         if (objectStatus != null)
             objectStatus.Dispose();
 
         if(PlayMangement.instance.player.HP.Value <= 0) {
-            PlayMangement.instance.SocketHandler.Surrend(null);
+            StartCoroutine(WaitObjectDead(false));
         }
         else if(PlayMangement.instance.enemyPlayer.HP.Value <= 0) {
             handler.isDone = true;
@@ -1561,10 +1562,27 @@ public class Wait_Match_End : ScenarioExecute {
     }
 
     private void ProtectObjectDead() {
+        StartCoroutine(WaitObjectDead(true));
         playerStatus.Dispose();
         enemyStatus.Dispose();
         objectStatus.Dispose();
+        StopGame();
+        
+    }
+    private IEnumerator WaitObjectDead(bool objectDead) {
+        if (objectDead == true)
+            yield return new WaitForSeconds(1.0f);
+        else
+            yield return new WaitForSeconds(PlayMangement.instance.player.DeadAnimationTime);
         PlayMangement.instance.SocketHandler.Surrend(null);
+    }
+
+    private void StopGame() {
+        PlayMangement.instance.isGame = false;
+        PlayMangement.instance.stopBattle = true;
+        PlayMangement.instance.stopTurn = true;
+        PlayMangement.instance.beginStopTurn = true;
+        SoundManager.Instance.bgmController.SoundDownAfterStop();
     }
 
     private void ResetForceDropzone() {
