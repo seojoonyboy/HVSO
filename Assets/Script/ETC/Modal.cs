@@ -34,7 +34,7 @@ public class Modal : MonoBehaviour {
         GameObject modal = Resources.Load("Prefabs/ModalCanvas", typeof(GameObject)) as GameObject;
         GameObject tmp = Instantiate(modal);
         tmp.GetComponent<Modal>().SetData(text, function, type, function2, title);
-        return modal;
+        return tmp;
 	}
     /// <summary>
     /// Modal 창 생성기 (Insert 편) 

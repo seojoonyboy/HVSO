@@ -223,7 +223,7 @@ public class DeckEditController : MonoBehaviour
     }
 
     public void ResumeEdit() {
-        Destroy(cancelModal);
+        DestroyImmediate(cancelModal, true);
         EscapeKeyController.escapeKeyCtrl.AddEscape(CancelButton);
         //EscapeKeyController.escapeKeyCtrl.RemoveEscape(ResumeEdit);
     }
