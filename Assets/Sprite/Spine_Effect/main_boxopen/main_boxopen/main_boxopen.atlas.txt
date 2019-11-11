@@ -4,44 +4,58 @@ size: 1024,256
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
+Glow11
+  rotate: false
+  xy: 714, 13
+  size: 78, 79
+  orig: 78, 79
+  offset: 0, 0
+  index: -1
+Rectangle
+  rotate: true
+  xy: 0, 0
+  size: 43, 92
+  orig: 43, 92
+  offset: 0, 0
+  index: -1
 bax_nomal_bottom3
   rotate: true
-  xy: 868, 49
+  xy: 714, 92
   size: 157, 78
   orig: 157, 78
   offset: 0, 0
   index: -1
 bax_nomal_bottom4
-  rotate: true
-  xy: 946, 49
+  rotate: false
+  xy: 792, 171
   size: 157, 78
   orig: 157, 78
   offset: 0, 0
   index: -1
 box_nomal_upside
   rotate: false
-  xy: 0, 0
+  xy: 0, 43
   size: 355, 206
   orig: 355, 206
   offset: 0, 0
   index: -1
 box_open_ac
   rotate: false
-  xy: 714, 24
+  xy: 92, 15
   size: 137, 28
   orig: 137, 28
   offset: 0, 0
   index: -1
 box_open_upside
   rotate: false
-  xy: 355, 18
+  xy: 355, 61
   size: 359, 188
   orig: 359, 188
   offset: 0, 0
   index: -1
 light
   rotate: false
-  xy: 714, 52
+  xy: 792, 17
   size: 154, 154
   orig: 154, 154
   offset: 0, 0
