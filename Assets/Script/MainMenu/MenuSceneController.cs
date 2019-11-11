@@ -274,6 +274,7 @@ public class MenuSceneController : MonoBehaviour {
         for (int i = 0; i < offObjects.Length; i++)
             offObjects[i].SetActive(false);
         CardDictionaryManager.cardDictionaryManager.SetCardDictionary();
+        EscapeKeyController.escapeKeyCtrl.AddEscape(CloseDictionary);
     }
 
     public void OpenHeroDictionary(bool isHuman) {
@@ -282,6 +283,7 @@ public class MenuSceneController : MonoBehaviour {
         for (int i = 0; i < offObjects.Length; i++)
             offObjects[i].SetActive(false);
         CardDictionaryManager.cardDictionaryManager.SetHeroDictionary();
+        EscapeKeyController.escapeKeyCtrl.AddEscape(CloseDictionary);
     }
 
     public void CloseDictionary() {
@@ -289,6 +291,7 @@ public class MenuSceneController : MonoBehaviour {
         for (int i = 0; i < offObjects.Length; i++)
             offObjects[i].SetActive(true);
         SetCardNumbersPerDic();
+        EscapeKeyController.escapeKeyCtrl.RemoveEscape(CloseDictionary);
     }
 
     public void AddNewbiController() {

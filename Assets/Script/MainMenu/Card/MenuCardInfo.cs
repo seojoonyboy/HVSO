@@ -250,6 +250,7 @@ public partial class MenuCardInfo : MonoBehaviour {
                     info.Find("CreateCard/Crystal/Value").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userData.manaCrystal.ToString();
             }
         }
+        EscapeKeyController.escapeKeyCtrl.AddEscape(CloseInfo);
     }
 
     public void SetEditCardInfo(int haveNum, int handNum) {
@@ -317,12 +318,14 @@ public partial class MenuCardInfo : MonoBehaviour {
         transform.parent.Find("ExitTrigger").gameObject.SetActive(true);
         transform.parent.Find("HeroInfo").gameObject.SetActive(false);
         editCard = null;
+        EscapeKeyController.escapeKeyCtrl.RemoveEscape(CloseInfo);
     }
 
     public void CloseHeroesCardInfo() {
         SoundManager.Instance.PlaySound(UISfxSound.BUTTON1);
         transform.gameObject.SetActive(false);
         transform.parent.Find("ExitTrigger2").gameObject.SetActive(false);
+        EscapeKeyController.escapeKeyCtrl.RemoveEscape(CloseHeroesCardInfo);
     }
 
 

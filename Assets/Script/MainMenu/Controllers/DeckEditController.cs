@@ -72,6 +72,7 @@ public class DeckEditController : MonoBehaviour
     }
 
     private void InitCanvas() {
+        EscapeKeyController.escapeKeyCtrl.AddEscape(CancelButton);
         setCardList = new Dictionary<string, GameObject>();
         if (editCards != null) editCards.Clear();
         editCards = GetCards();
@@ -194,10 +195,14 @@ public class DeckEditController : MonoBehaviour
 
     public void CancelButton() {
         transform.Find("InnerCanvas/CancelWindow").gameObject.SetActive(true);
+        EscapeKeyController.escapeKeyCtrl.RemoveEscape(CancelButton);
+        EscapeKeyController.escapeKeyCtrl.AddEscape(ResumeEdit);
         //if(isTemplate)
     }
 
     public void CancelEdit() {
+        EscapeKeyController.escapeKeyCtrl.RemoveEscape(CancelButton);
+        EscapeKeyController.escapeKeyCtrl.RemoveEscape(ResumeEdit);
         transform.Find("InnerCanvas/CancelWindow").gameObject.SetActive(false);
         setCardList = null;
         if (templateMenu != null) {
@@ -218,6 +223,8 @@ public class DeckEditController : MonoBehaviour
 
     public void ResumeEdit() {
         transform.Find("InnerCanvas/CancelWindow").gameObject.SetActive(false);
+        EscapeKeyController.escapeKeyCtrl.RemoveEscape(ResumeEdit);
+        EscapeKeyController.escapeKeyCtrl.AddEscape(CancelButton);
     }
     
 
@@ -246,10 +253,12 @@ public class DeckEditController : MonoBehaviour
     public void OpenHeroInfo() {
         SetManaCurve();
         transform.Find("InnerCanvas/HeroInfoWindow").gameObject.SetActive(true);
+        EscapeKeyController.escapeKeyCtrl.AddEscape(CloseHeroInfo);
     }
 
     public void CloseHeroInfo() {
         transform.Find("InnerCanvas/HeroInfoWindow").gameObject.SetActive(false);
+        EscapeKeyController.escapeKeyCtrl.RemoveEscape(CloseHeroInfo);
     }
 
     public void SetManaCurve() {

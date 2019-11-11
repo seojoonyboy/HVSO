@@ -99,6 +99,7 @@ public class HeroSelectController : MonoBehaviour
         gameObject.SetActive(false);
         hudController.SetHeader(HUDController.Type.ONLY_BAKCK_BUTTON);
         hudController.SetBackButton(() => ExitTemplateCanvas());
+        EscapeKeyController.escapeKeyCtrl.AddEscape(ExitTemplateCanvas);
     }
 
     public void ExitTemplateCanvas() {
@@ -106,6 +107,7 @@ public class HeroSelectController : MonoBehaviour
         templateDeckCanvas.gameObject.SetActive(false);
         templateDeckCanvas.CancelSelectDeck();
         hudController.SetHeader(HUDController.Type.HIDE);
+        EscapeKeyController.escapeKeyCtrl.RemoveEscape(ExitTemplateCanvas);
     }
 
     public void OpenClassInfo() {

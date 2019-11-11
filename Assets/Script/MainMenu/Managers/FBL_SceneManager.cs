@@ -58,6 +58,7 @@ public class FBL_SceneManager : Singleton<FBL_SceneManager> {
         QualitySettings.asyncUploadTimeSlice = 4;
         StartCoroutine(LoadReadyScene(currentScene.buildIndex, numberOfScene));
         QualitySettings.asyncUploadTimeSlice = 2;
+        EscapeKeyController.escapeKeyCtrl.ResetEscapeList();
     }
 
     AsyncOperation[] asyncOps = new AsyncOperation[7];

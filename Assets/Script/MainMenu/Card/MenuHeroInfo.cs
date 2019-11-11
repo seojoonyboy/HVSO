@@ -65,7 +65,7 @@ public class MenuHeroInfo : MonoBehaviour
         skillWindow.Find("Card2/CardName").GetComponent<TMPro.TextMeshProUGUI>().text = hero.heroCards[1].name;
         skillWindow.Find("Card2/CardInfo").GetComponent<TMPro.TextMeshProUGUI>().text = translator.DialogSetRichText(hero.heroCards[1].skills[0].desc);
         SetHeroDialog(hero.flavorText, hero.camp == "human");
-        if(!accountManager.myHeroInventories.ContainsKey(heroId))
+        EscapeKeyController.escapeKeyCtrl.AddEscape(MenuCardInfo.cardInfoWindow.CloseInfo);
 
         OpenClassWindow();
     }
