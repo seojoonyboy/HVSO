@@ -77,6 +77,7 @@ public class MenuSceneController : MonoBehaviour {
             PlayerPrefs.SetInt("IsFirstCardMenu", 1);
             PlayerPrefs.SetInt("IsFirstDeckListMenu", 1);
             PlayerPrefs.SetInt("IsFirstMainMenu", 1);
+            PlayerPrefs.SetString("NeedMenuTutorial", "false"); //메인화면 이미지 튜토리얼 필요 여부
         }
         else {
             //튜토리얼 남았음
@@ -106,6 +107,8 @@ public class MenuSceneController : MonoBehaviour {
         }
         else {
             menuTutorialManager.enabled = false;
+            PlayerPrefs.SetString("NeedMenuTutorial", "true");
+            menuTutorialManager.OnMenuDescPanel(2);
         }
     }
 
