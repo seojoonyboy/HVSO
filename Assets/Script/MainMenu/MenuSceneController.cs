@@ -89,24 +89,11 @@ public class MenuSceneController : MonoBehaviour {
                     AddNewbiController();
                 }
                 else {
-                    //휴먼 튜토리얼 0-2을 진행하지 않았음
-                    if (!clearedStages.Exists(x => x.camp == "human" && x.stageNumber == 2)) {
-                        tutorialType = MenuTutorialManager.TutorialType.TO_HUMAN_STORY_2;
+                    if(!clearedStages.Exists(x => x.camp == "orc" && x.stageNumber == 1)) {
+                        tutorialType = MenuTutorialManager.TutorialType.TO_ORC_STORY;
                     }
                     else {
-                        //오크 튜토리얼 0-1을 진행하지 않았음
-                        if (!clearedStages.Exists(x => x.camp == "orc" && x.stageNumber == 1)) {
-                            tutorialType = MenuTutorialManager.TutorialType.TO_ORC_STORY;
-                        }
-                        else {
-                            //오크 튜토리얼 0-2을 진행하지 않았음
-                            if (!clearedStages.Exists(x => x.camp == "orc" && x.stageNumber == 2)) {
-                                tutorialType = MenuTutorialManager.TutorialType.TO_ORC_STORY_2;
-                            }
-                            else {
-                                needTutorial = false;
-                            }
-                        }
+                        needTutorial = false;
                     }
                 }
             }
