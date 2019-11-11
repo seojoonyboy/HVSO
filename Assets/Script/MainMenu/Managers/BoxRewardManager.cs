@@ -307,8 +307,9 @@ public class BoxRewardManager : MonoBehaviour
             SoundManager soundManager = SoundManager.Instance;
             switch (type) {
                 case "gold":
-                case "supplyStore":
-                    soundManager.PlaySound(UISfxSound.BOX_SUPERRARE);
+                case "supplyX2Coupon":
+                    spine.gameObject.SetActive(false);
+                    soundManager.PlaySound(UISfxSound.BOX_NORMAL);
                     break;
                 case "crystal":
                     soundManager.PlaySound(UISfxSound.BOX_NORMAL);
