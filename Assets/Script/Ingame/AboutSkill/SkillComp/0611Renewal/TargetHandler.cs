@@ -655,21 +655,12 @@ namespace TargetModules {
                             foreach (GameObject unit in units) {
                                 var ui = unit.transform.Find("ClickableUI").gameObject;
 
-                                //if (ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.forcedSummonAt != -1 && unit.GetComponent<PlaceMonster>().x == ScenarioGameManagment.scenarioInstance.forcedSummonAt) {
-                                //    if (ui != null) {
-                                //        ui.SetActive(true);
-                                //        PlayMangement.instance.infoOn = true;
-                                //    }
-                                //    unit.transform.Find("MagicTargetTrigger").gameObject.SetActive(true);
-                                //    break;
-                                //}
-
                                 if (ui != null) {
                                     ui.SetActive(true);
                                     PlayMangement.instance.infoOn = true;
                                 }
                                 unit.transform.Find("MagicTargetTrigger").gameObject.SetActive(true);
-                                
+
                             }
                         }
                         else {
@@ -699,11 +690,22 @@ namespace TargetModules {
 
                             foreach (GameObject unit in units) {
                                 var ui = unit.transform.Find("ClickableUI").gameObject;
-                                if (ui != null) {
-                                    ui.SetActive(true);
-                                    PlayMangement.instance.infoOn = true;
+                                if (ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.forcedTargetAt != -1) {
+                                    if (unit.GetComponent<PlaceMonster>().x == ScenarioGameManagment.scenarioInstance.forcedSummonAt) {
+                                        if (ui != null) {
+                                            ui.SetActive(true);
+                                            PlayMangement.instance.infoOn = true;
+                                        }
+                                        unit.transform.Find("MagicTargetTrigger").gameObject.SetActive(true);
+                                    }
                                 }
-                                unit.transform.Find("MagicTargetTrigger").gameObject.SetActive(true);
+                                else {
+                                    if (ui != null) {
+                                        ui.SetActive(true);
+                                        PlayMangement.instance.infoOn = true;
+                                    }
+                                    unit.transform.Find("MagicTargetTrigger").gameObject.SetActive(true);
+                                }
                             }
 
                             callback = successCallback;

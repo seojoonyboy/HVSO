@@ -828,6 +828,10 @@
                         ]
                     },
                     {
+                        "name": "Force_UnitSkill_Target",
+                        "args": ["1"]
+                    },
+                    {
                         "name": "Wait_summon",
                         "args": [
                             "ac10008"
@@ -843,13 +847,6 @@
                         "name": "Deactive_TargetHandler",
                         "args": [
                             "3,0"
-                        ]
-                    },
-                    {
-                        "name": "Force_drop_zone",
-                        "args": [
-                            "unit",
-                            "2"
                         ]
                     },
                     {
