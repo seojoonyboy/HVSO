@@ -151,6 +151,24 @@ public class Wait_until : ScenarioExecute {
         handler.isDone = true;
     }
 }
+
+public class Wait_EnemyDead_Animation : ScenarioExecute {
+    public Wait_EnemyDead_Animation() : base() { }
+
+    public override void Execute() {
+        scenarioMask.MaskScreen();
+        StartCoroutine(WaitSec(PlayMangement.instance.enemyPlayer.DeadAnimationTime));
+    }
+    IEnumerator WaitSec(float sec = 0) {
+        Logger.Log("WaitSec");
+        yield return new WaitForSeconds(sec);
+        scenarioMask.OffMaskScreen();
+        handler.isDone = true;
+    }
+
+}
+
+
 /// <summary>
 /// 히어로가 데미지 입기를 기달림. args[0] 몇번 데미지 입을 건지, args[1] player, enemy
 /// </summary>
@@ -1524,24 +1542,50 @@ public class Wait_Match_End : ScenarioExecute {
 
         if(PlayMangement.instance.gameObject.GetComponent<victoryModule.ProtectObject>() != null) {
             PlaceMonster targetUnit = PlayMangement.instance.gameObject.GetComponent<victoryModule.ProtectObject>().targetUnit;
-            objectStatus = Observable.EveryUpdate().Where(_ => targetUnit.unit.currentHP <= 0).Subscribe(_ => GameEnd()).AddTo(PlayMangement.instance.gameObject); ;
+            objectStatus = Observable.EveryUpdate().Where(_ => targetUnit.unit.currentHP <= 0).Subscribe(_ => ProtectObjectDead()).AddTo(PlayMangement.instance.gameObject); ;
         }
     }
 
     private void GameEnd() {
+        StopGame();
         playerStatus.Dispose();
         enemyStatus.Dispose();
         if (objectStatus != null)
             objectStatus.Dispose();
 
         if(PlayMangement.instance.player.HP.Value <= 0) {
-
+            StartCoroutine(WaitObjectDead(false));
         }
         else if(PlayMangement.instance.enemyPlayer.HP.Value <= 0) {
             handler.isDone = true;
         }
     }
 
+    private void ProtectObjectDead() {
+        StartCoroutine(WaitObjectDead(true));
+        playerStatus.Dispose();
+        enemyStatus.Dispose();
+        objectStatus.Dispose();
+        StopGame();
+        
+    }
+    private IEnumerator WaitObjectDead(bool objectDead) {
+        if (objectDead == true)
+            yield return new WaitForSeconds(1.0f);
+        else
+            yield return new WaitForSeconds(PlayMangement.instance.player.DeadAnimationTime);
+
+        yield return new WaitUntil(() => PlayMangement.instance.waitShowResult == false);
+        PlayMangement.instance.SocketHandler.Surrend(null);
+    }
+
+    private void StopGame() {
+        PlayMangement.instance.isGame = false;
+        PlayMangement.instance.stopBattle = true;
+        PlayMangement.instance.stopTurn = true;
+        PlayMangement.instance.beginStopTurn = true;
+        SoundManager.Instance.bgmController.SoundDownAfterStop();
+    }
 
     private void ResetForceDropzone() {
         scenarioGameManagment.forcedSummonAt = -1;
@@ -1582,6 +1626,50 @@ public class Set_Tutorial_After_Battle : ScenarioExecute {
     }
 
 }
+
+
+public class Deactive_TargetHandler : ScenarioExecute {
+    public Deactive_TargetHandler() : base() { }
+
+    public override void Execute() {
+        string[] parse = args[0].Split(',');
+        int col = int.Parse(parse[0]);
+        int row = int.Parse(parse[1]);
+
+
+        FieldUnitsObserver.Pos pos = new FieldUnitsObserver.Pos(col, row);
+
+        PlaceMonster targetUnit = PlayMangement.instance.UnitsObserver.GetUnit(pos, true).gameObject.GetComponent<PlaceMonster>();
+
+        if (targetUnit.gameObject.GetComponent<TargetModules.TargetHandler>() != null)
+            targetUnit.gameObject.GetComponent<TargetModules.TargetHandler>().enabled = false;
+
+        handler.isDone = true;
+    }
+}
+
+public class Active_TargetHandler : ScenarioExecute {
+    public Active_TargetHandler() : base() { }
+
+    public override void Execute() {
+        string[] parse = args[0].Split(',');
+        int col = int.Parse(parse[0]);
+        int row = int.Parse(parse[1]);
+
+
+        FieldUnitsObserver.Pos pos = new FieldUnitsObserver.Pos(col, row);
+
+        PlaceMonster targetUnit = PlayMangement.instance.UnitsObserver.GetUnit(pos, true).gameObject.GetComponent<PlaceMonster>();
+
+        if (targetUnit.gameObject.GetComponent<TargetModules.TargetHandler>() != null)
+            targetUnit.gameObject.GetComponent<TargetModules.TargetHandler>().enabled = true;
+
+        handler.isDone = true;
+    }
+}
+
+
+
 
 
 
