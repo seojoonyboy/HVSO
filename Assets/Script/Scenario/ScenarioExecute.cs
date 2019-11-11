@@ -1542,7 +1542,7 @@ public class Wait_Match_End : ScenarioExecute {
 
         if(PlayMangement.instance.gameObject.GetComponent<victoryModule.ProtectObject>() != null) {
             PlaceMonster targetUnit = PlayMangement.instance.gameObject.GetComponent<victoryModule.ProtectObject>().targetUnit;
-            objectStatus = Observable.EveryUpdate().Where(_ => targetUnit.unit.currentHP <= 0).Subscribe(_ => GameEnd()).AddTo(PlayMangement.instance.gameObject); ;
+            objectStatus = Observable.EveryUpdate().Where(_ => targetUnit.unit.currentHP <= 0).Subscribe(_ => ProtectObjectDead()).AddTo(PlayMangement.instance.gameObject); ;
         }
     }
 
@@ -1553,13 +1553,19 @@ public class Wait_Match_End : ScenarioExecute {
             objectStatus.Dispose();
 
         if(PlayMangement.instance.player.HP.Value <= 0) {
-
+            PlayMangement.instance.SocketHandler.Surrend(null);
         }
         else if(PlayMangement.instance.enemyPlayer.HP.Value <= 0) {
             handler.isDone = true;
         }
     }
 
+    private void ProtectObjectDead() {
+        playerStatus.Dispose();
+        enemyStatus.Dispose();
+        objectStatus.Dispose();
+        PlayMangement.instance.SocketHandler.Surrend(null);
+    }
 
     private void ResetForceDropzone() {
         scenarioGameManagment.forcedSummonAt = -1;
