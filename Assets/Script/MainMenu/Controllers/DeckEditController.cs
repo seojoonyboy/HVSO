@@ -193,12 +193,12 @@ public class DeckEditController : MonoBehaviour
     }
 
     public void CancelButton() {
-        transform.Find("InnerCanvas/CancelWindow").gameObject.SetActive(true);
-        //if(isTemplate)
+        Modal.instantiate("편집을 취소 하시겠습니까?", Modal.Type.YESNO, () => {
+            CancelEdit();
+        });
     }
 
     public void CancelEdit() {
-        transform.Find("InnerCanvas/CancelWindow").gameObject.SetActive(false);
         setCardList = null;
         if (templateMenu != null) {
             templateMenu.transform.gameObject.SetActive(true);
@@ -215,11 +215,6 @@ public class DeckEditController : MonoBehaviour
         isTemplate = false;
         gameObject.SetActive(false);
     }
-
-    public void ResumeEdit() {
-        transform.Find("InnerCanvas/CancelWindow").gameObject.SetActive(false);
-    }
-    
 
     public void OnTouchCard(GameObject card) {
         if (card.GetComponent<EditCardHandler>().cardObject.Find("Disabled").gameObject.activeSelf) return;
