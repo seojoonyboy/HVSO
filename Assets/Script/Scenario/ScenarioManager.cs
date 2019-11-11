@@ -53,6 +53,17 @@ public class ScenarioManager : SerializedMonoBehaviour
         isIngameButtonClicked = false;
     }
 
+    private void Update() {
+        if(Application.platform == RuntimePlatform.Android) {
+            if(gameObject.activeSelf == true) {
+                if (Input.GetKeyDown(KeyCode.Escape)) {
+                    OnBackButton();
+                }
+            }
+        }
+    }
+
+
     private void OnDestroy() {
         Instance = null;
     }
