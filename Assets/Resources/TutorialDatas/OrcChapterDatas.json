@@ -666,8 +666,8 @@
                 "Print_text": "data_stage_1031_2_3-6",
                 "methods": [
                     {
-                        "name" : "Unblock_Screen",
-                        "args" : []
+                        "name": "Unblock_Screen",
+                        "args": []
                     },
                     {
                         "name": "Disable_EndTurn",
@@ -707,14 +707,14 @@
                         ]
                     },
                     {
-                        "name" : "ChallengeStart",
-                        "args" : [
+                        "name": "ChallengeStart",
+                        "args": [
                             "UNIT_SUMMONED"
                         ]
                     },
                     {
-                        "name"  : "Unblock_Screen",
-                        "args" : []
+                        "name": "Unblock_Screen",
+                        "args": []
                     },
                     {
                         "name": "Wait_summon",
@@ -723,8 +723,8 @@
                         ]
                     },
                     {
-                        "name" : "ChallengeEnd",
-                        "args" : [
+                        "name": "ChallengeEnd",
+                        "args": [
                             "UNIT_SUMMONED"
                         ]
                     },
@@ -753,6 +753,10 @@
                             "button",
                             "endTurn"
                         ]
+                    },
+                    {
+                        "name": "StopHighlight",
+                        "args": []
                     }
                 ],
                 "isExecute": false
@@ -892,6 +896,10 @@
                             "button",
                             "endTurn"
                         ]
+                    },
+                    {
+                        "name": "StopHighlight",
+                        "args": []
                     }
                 ],
                 "isExecute": false
