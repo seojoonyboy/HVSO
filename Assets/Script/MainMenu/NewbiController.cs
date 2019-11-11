@@ -62,7 +62,7 @@ public class NewbiController : MonoBehaviour {
     }
 
     private void ProcessSocketConnect() {
-        PlayerPrefs.SetString("SelectedRace", "HUMAN");
+        PlayerPrefs.SetString("SelectedRace", "human");
         PlayerPrefs.SetString("SelectedBattleType", "story");
         PlayerPrefs.SetString("StageNum", "1");
         PlayerPrefs.SetString("SelectedDeckId", string.Empty);

@@ -95,6 +95,7 @@ public class DeckSettingManager : MonoBehaviour
         heroSelectController.SetHumanHeroes();
         hudController.SetHeader(HUDController.Type.HIDE);
         hudController.SetBackButton(() => ExitHeroSelect());
+        EscapeKeyController.escapeKeyCtrl.AddEscape(ExitHeroSelect);
     }
 
     public void ExitHeroSelect() {
@@ -102,6 +103,7 @@ public class DeckSettingManager : MonoBehaviour
         heroSelectController.transform.Find("InnerCanvas/RaceSelect/OrcSelect").GetChild(0).gameObject.SetActive(false);
         heroSelectController.gameObject.SetActive(false);
         hudController.SetHeader(HUDController.Type.SHOW_USER_INFO);
+        EscapeKeyController.escapeKeyCtrl.RemoveEscape(ExitHeroSelect);
     }
 
 

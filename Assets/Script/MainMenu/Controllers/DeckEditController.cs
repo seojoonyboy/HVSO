@@ -47,6 +47,8 @@ public class DeckEditController : MonoBehaviour
     int currentPage;
     int[] cardMana;
 
+    GameObject cancelModal;
+
     void Awake() {
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_DECK_MODIFIED, OnDeckModified);
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_DECK_CREATED, OnMakeNewDeckFinished);
@@ -72,6 +74,7 @@ public class DeckEditController : MonoBehaviour
     }
 
     private void InitCanvas() {
+        EscapeKeyController.escapeKeyCtrl.AddEscape(CancelButton);
         setCardList = new Dictionary<string, GameObject>();
         if (editCards != null) editCards.Clear();
         editCards = GetCards();
@@ -193,12 +196,15 @@ public class DeckEditController : MonoBehaviour
     }
 
     public void CancelButton() {
-        transform.Find("InnerCanvas/CancelWindow").gameObject.SetActive(true);
-        //if(isTemplate)
+        cancelModal = Modal.instantiate("편집을 취소 하시겠습니까?", Modal.Type.YESNO, () => {
+            CancelEdit();
+        }, ResumeEdit);
+        EscapeKeyController.escapeKeyCtrl.RemoveEscape(CancelButton);
+        //EscapeKeyController.escapeKeyCtrl.AddEscape(ResumeEdit);
     }
 
     public void CancelEdit() {
-        transform.Find("InnerCanvas/CancelWindow").gameObject.SetActive(false);
+        EscapeKeyController.escapeKeyCtrl.RemoveEscape(CancelButton);
         setCardList = null;
         if (templateMenu != null) {
             templateMenu.transform.gameObject.SetActive(true);
@@ -217,10 +223,11 @@ public class DeckEditController : MonoBehaviour
     }
 
     public void ResumeEdit() {
-        transform.Find("InnerCanvas/CancelWindow").gameObject.SetActive(false);
+        DestroyImmediate(cancelModal, true);
+        EscapeKeyController.escapeKeyCtrl.AddEscape(CancelButton);
+        //EscapeKeyController.escapeKeyCtrl.RemoveEscape(ResumeEdit);
     }
-    
-
+   
     public void OnTouchCard(GameObject card) {
         if (card.GetComponent<EditCardHandler>().cardObject.Find("Disabled").gameObject.activeSelf) return;
         if (selectCard == null)
@@ -246,10 +253,12 @@ public class DeckEditController : MonoBehaviour
     public void OpenHeroInfo() {
         SetManaCurve();
         transform.Find("InnerCanvas/HeroInfoWindow").gameObject.SetActive(true);
+        EscapeKeyController.escapeKeyCtrl.AddEscape(CloseHeroInfo);
     }
 
     public void CloseHeroInfo() {
         transform.Find("InnerCanvas/HeroInfoWindow").gameObject.SetActive(false);
+        EscapeKeyController.escapeKeyCtrl.RemoveEscape(CloseHeroInfo);
     }
 
     public void SetManaCurve() {

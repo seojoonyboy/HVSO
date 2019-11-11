@@ -318,11 +318,13 @@ public class CardDictionaryManager : MonoBehaviour {
                 sortingModal.Find("Buttons/Descending").GetChild(0).gameObject.SetActive(false);
                 break;
         }
+        EscapeKeyController.escapeKeyCtrl.AddEscape(CloseSortModal);
     }
 
     public void CloseSortModal() {
         selectedSortOption = beforeSortOption;
         sortingModal.gameObject.SetActive(false);
+        EscapeKeyController.escapeKeyCtrl.RemoveEscape(CloseSortModal);
     }
 
     public void ClickClassButton() {
@@ -599,6 +601,7 @@ public class CardDictionaryManager : MonoBehaviour {
                 break;
             }
         }
+        EscapeKeyController.escapeKeyCtrl.AddEscape(ExitDictionaryScene);
     }
 
     public void OpenHeroInfo() {
@@ -615,7 +618,9 @@ public class CardDictionaryManager : MonoBehaviour {
         else
             SetToOrcCards();
         SortHeroCards();
+        EscapeKeyController.escapeKeyCtrl.AddEscape(ExitDictionaryScene);
     }
+
     public void SortHeroCards() {
         switch (selectedSortOption) {
             case SortingOptions.CLASS:
@@ -712,6 +717,7 @@ public class CardDictionaryManager : MonoBehaviour {
 
     public void CloseHeroInfoWIndow() {
         MenuHeroInfo.heroInfoWindow.gameObject.SetActive(false);
+        EscapeKeyController.escapeKeyCtrl.RemoveEscape(CloseHeroInfoWIndow);
     }
 
     public void ExitDictionaryScene() {
@@ -721,12 +727,14 @@ public class CardDictionaryManager : MonoBehaviour {
         }
         else {
             if (transform.Find("CardDictionary").gameObject.activeSelf) {
+                EscapeKeyController.escapeKeyCtrl.RemoveEscape(ExitDictionaryScene);
                 transform.Find("CardDictionary").gameObject.SetActive(false);
                 transform.Find("HeroDictionary").gameObject.SetActive(true);
                 transform.Find("UIbar/SortBtn").gameObject.SetActive(false);
                 RefreshCardCount();
             }
             else if (transform.Find("HeroDictionary/HeroImage").gameObject.activeSelf) {
+                EscapeKeyController.escapeKeyCtrl.RemoveEscape(ExitDictionaryScene);
                 transform.Find("HeroDictionary/HeroImage").gameObject.SetActive(false);
                 transform.Find("HeroDictionary/HeroImage/HeroSpine").GetChild(0).gameObject.SetActive(false);
                 transform.Find("HeroDictionary/HeroSelect").gameObject.SetActive(true);

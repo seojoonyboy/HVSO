@@ -89,24 +89,11 @@ public class MenuSceneController : MonoBehaviour {
                     AddNewbiController();
                 }
                 else {
-                    //휴먼 튜토리얼 0-2을 진행하지 않았음
-                    if (!clearedStages.Exists(x => x.camp == "human" && x.stageNumber == 2)) {
-                        tutorialType = MenuTutorialManager.TutorialType.TO_HUMAN_STORY_2;
+                    if(!clearedStages.Exists(x => x.camp == "orc" && x.stageNumber == 1)) {
+                        tutorialType = MenuTutorialManager.TutorialType.TO_ORC_STORY;
                     }
                     else {
-                        //오크 튜토리얼 0-1을 진행하지 않았음
-                        if (!clearedStages.Exists(x => x.camp == "orc" && x.stageNumber == 1)) {
-                            tutorialType = MenuTutorialManager.TutorialType.TO_ORC_STORY;
-                        }
-                        else {
-                            //오크 튜토리얼 0-2을 진행하지 않았음
-                            if (!clearedStages.Exists(x => x.camp == "orc" && x.stageNumber == 2)) {
-                                tutorialType = MenuTutorialManager.TutorialType.TO_ORC_STORY_2;
-                            }
-                            else {
-                                needTutorial = false;
-                            }
-                        }
+                        needTutorial = false;
                     }
                 }
             }
@@ -135,7 +122,7 @@ public class MenuSceneController : MonoBehaviour {
         SoundManager.Instance.bgmController.PlaySoundTrack(BgmController.BgmEnum.MENU);
 
         if (AccountManager.Instance.needChangeNickName) {
-            Modal.instantiate("사용하실 닉네임을 입력해 주세요.", "새로운 닉네임", AccountManager.Instance.NickName, Modal.Type.INSERT, (str) => {
+            Modal.instantiate("변경하실 닉네임을 입력해 주세요.", "새로운 닉네임", AccountManager.Instance.NickName, Modal.Type.INSERT, (str) => {
                 if (string.IsNullOrEmpty(str)) {
                     Modal.instantiate("빈 닉네임은 허용되지 않습니다.", Modal.Type.CHECK);
                 }
@@ -274,6 +261,7 @@ public class MenuSceneController : MonoBehaviour {
         for (int i = 0; i < offObjects.Length; i++)
             offObjects[i].SetActive(false);
         CardDictionaryManager.cardDictionaryManager.SetCardDictionary();
+        EscapeKeyController.escapeKeyCtrl.AddEscape(CloseDictionary);
     }
 
     public void OpenHeroDictionary(bool isHuman) {
@@ -282,6 +270,7 @@ public class MenuSceneController : MonoBehaviour {
         for (int i = 0; i < offObjects.Length; i++)
             offObjects[i].SetActive(false);
         CardDictionaryManager.cardDictionaryManager.SetHeroDictionary();
+        EscapeKeyController.escapeKeyCtrl.AddEscape(CloseDictionary);
     }
 
     public void CloseDictionary() {
@@ -289,6 +278,7 @@ public class MenuSceneController : MonoBehaviour {
         for (int i = 0; i < offObjects.Length; i++)
             offObjects[i].SetActive(true);
         SetCardNumbersPerDic();
+        EscapeKeyController.escapeKeyCtrl.RemoveEscape(CloseDictionary);
     }
 
     public void AddNewbiController() {

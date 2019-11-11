@@ -187,7 +187,11 @@ public class MenuCardHandler : MonoBehaviour {
             MenuCardInfo.cardInfoWindow.transform.Find("CreateCard").gameObject.SetActive(false);
             MenuCardInfo.cardInfoWindow.transform.Find("EditCardUI").gameObject.SetActive(false);
         }
-        if (transform.parent.parent.parent.name == "HeroInfo" && transform.parent.parent.name != "SkillWindow")
+        if (transform.parent.parent.parent.name == "HeroInfo" && transform.parent.parent.name != "SkillWindow") {
             exitTrigger2.SetActive(true);
+            EscapeKeyController.escapeKeyCtrl.AddEscape(MenuCardInfo.cardInfoWindow.CloseHeroesCardInfo);
+        }
+        else
+            EscapeKeyController.escapeKeyCtrl.AddEscape(MenuCardInfo.cardInfoWindow.CloseInfo);
     }
 }
