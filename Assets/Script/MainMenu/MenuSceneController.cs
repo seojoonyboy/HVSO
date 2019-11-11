@@ -71,13 +71,8 @@ public class MenuSceneController : MonoBehaviour {
         //첫 로그인
         MenuTutorialManager.TutorialType tutorialType = MenuTutorialManager.TutorialType.NONE;
         if (PlayerPrefs.GetInt("isFirst") == 1) {
-            AddNewbiController();
             PlayerPrefs.SetInt("isFirst", 0);
-
-            PlayerPrefs.SetInt("IsFirstCardMenu", 1);
-            PlayerPrefs.SetInt("IsFirstDeckListMenu", 1);
-            PlayerPrefs.SetInt("IsFirstMainMenu", 1);
-            PlayerPrefs.SetString("NeedMenuTutorial", "false"); //메인화면 이미지 튜토리얼 필요 여부
+            AddNewbiController();
         }
         else {
             //튜토리얼 남았음
@@ -88,13 +83,22 @@ public class MenuSceneController : MonoBehaviour {
                 //휴먼 튜토리얼 0-1을 진행하지 않았음
                 if (!clearedStages.Exists(x => x.camp == "human" && x.stageNumber == 1)) {
                     AddNewbiController();
+
+                    PlayerPrefs.SetString("NeedMenuTutorial", "false"); //메인화면 이미지 튜토리얼 필요 여부
+                    PlayerPrefs.SetString("NeedUnlockMenu", "true");
                 }
                 else {
                     if(!clearedStages.Exists(x => x.camp == "orc" && x.stageNumber == 1)) {
                         tutorialType = MenuTutorialManager.TutorialType.TO_ORC_STORY;
                     }
                     else {
-                        needTutorial = false;
+                        string NeedUnlockMenu = PlayerPrefs.GetString("NeedUnlockMenu");
+                        if (NeedUnlockMenu == "true") {
+                            tutorialType = MenuTutorialManager.TutorialType.UNLOCK_STORY_AND_BATTLE_MENU;
+                        }
+                        else {
+                            needTutorial = false;
+                        }
                     }
                 }
             }
@@ -108,7 +112,10 @@ public class MenuSceneController : MonoBehaviour {
         else {
             menuTutorialManager.enabled = false;
             PlayerPrefs.SetString("NeedMenuTutorial", "true");
-            menuTutorialManager.OnMenuDescPanel(2);
+
+            foreach(Transform child in menuTutorialManager.mainDescCanvas.transform) {
+                child.GetComponent<dataModules.BooleanIndex>().isOn = false;
+            }
         }
     }
 

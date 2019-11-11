@@ -438,8 +438,19 @@ namespace MenuTutorialModules {
             skeletonGraphic.Skeleton.SetSkin(args[0]);
             skeletonGraphic.Skeleton.SetSlotsToSetupPose();
             skeletonGraphic.AnimationState.Apply(skeletonGraphic.Skeleton);
+            skeletonGraphic.AnimationState.SetAnimation(0, "sampledeck", false);
 
-            yield return new WaitForSeconds(2.0f);
+            yield return new WaitForSeconds(0.8f);
+
+            skeletonGraphic.transform.Find("Header").GetComponent<TMPro.TextMeshProUGUI>().text = "덱 획득";
+            if(args[0] == "human") {
+                skeletonGraphic.transform.Find("Description").GetComponent<TMPro.TextMeshProUGUI>().text = "휴먼 기본덱 획득";
+            }
+            else {
+                skeletonGraphic.transform.Find("Description").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 기본덱 획득";
+            }
+
+            yield return new WaitForSeconds(1.0f);
 
             clickStream = Observable.EveryUpdate()
                 .Where(_ => Input.GetMouseButtonDown(0))
@@ -497,6 +508,125 @@ namespace MenuTutorialModules {
                 }
             }
             handler.isDone = true;
+        }
+    }
+
+    /// <summary>
+    /// 오크 스토리 해금
+    /// </summary>
+    public class UnlockOrcAnim : MenuExecute {
+        IDisposable clickStream;
+        IEnumerator coroutine;
+
+        public override void Execute() {
+            coroutine = Proceed();
+            StartCoroutine(coroutine);
+        }
+
+        IEnumerator Proceed() {
+            GameObject target = null;
+
+            GetComponent<MenuTutorialManager>().ActiveRewardPanel();
+            SkeletonGraphic skeletonGraphic = GetComponent<MenuTutorialManager>().rewardPanel.transform.Find("Anim").GetComponent<SkeletonGraphic>();
+
+            skeletonGraphic.AnimationState.Update(0);
+            skeletonGraphic.AnimationState.SetAnimation(0, "story", false);
+            
+            skeletonGraphic.transform.Find("Header").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 스토리 해금";
+            skeletonGraphic.transform.Find("Description").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 진영 튜토리얼이 개방 되었습니다!";
+
+            yield return new WaitForSeconds(1.0f);
+
+            clickStream = Observable.EveryUpdate()
+                .Where(_ => Input.GetMouseButtonDown(0))
+                .Subscribe(_ => CheckClick(target));
+        }
+
+        private void CheckClick(GameObject target) {
+            if (target == null) {
+                GetComponent<MenuTutorialManager>().DeactiveRewardPanel();
+                clickStream.Dispose();
+                handler.isDone = true;
+            }
+        }
+    }
+
+    /// <summary>
+    /// 스토리 메뉴 해금
+    /// </summary>
+    public class UnlockStroyAnim : MenuExecute {
+        IDisposable clickStream;
+        IEnumerator coroutine;
+
+        public override void Execute() {
+            coroutine = Proceed();
+            StartCoroutine(coroutine);
+        }
+
+        IEnumerator Proceed() {
+            GameObject target = null;
+
+            GetComponent<MenuTutorialManager>().ActiveRewardPanel();
+            SkeletonGraphic skeletonGraphic = GetComponent<MenuTutorialManager>().rewardPanel.transform.Find("Anim").GetComponent<SkeletonGraphic>();
+
+            skeletonGraphic.AnimationState.Update(0);
+            skeletonGraphic.AnimationState.SetAnimation(0, "story", false);
+
+            skeletonGraphic.transform.Find("Header").GetComponent<TMPro.TextMeshProUGUI>().text = "스토리 메뉴 해금";
+            skeletonGraphic.transform.Find("Description").GetComponent<TMPro.TextMeshProUGUI>().text = "스토리 메뉴가 오픈되었습니다!";
+
+            yield return new WaitForSeconds(1.0f);
+
+            clickStream = Observable.EveryUpdate()
+                .Where(_ => Input.GetMouseButtonDown(0))
+                .Subscribe(_ => CheckClick(target));
+        }
+
+        private void CheckClick(GameObject target) {
+            if (target == null) {
+                GetComponent<MenuTutorialManager>().DeactiveRewardPanel();
+                clickStream.Dispose();
+                handler.isDone = true;
+            }
+        }
+    }
+
+    public class UnlockBattleAnim : MenuExecute {
+        IDisposable clickStream;
+        IEnumerator coroutine;
+
+        public override void Execute() {
+            coroutine = Proceed();
+            StartCoroutine(coroutine);
+        }
+
+        IEnumerator Proceed() {
+            GameObject target = null;
+
+            GetComponent<MenuTutorialManager>().ActiveRewardPanel();
+            SkeletonGraphic skeletonGraphic = GetComponent<MenuTutorialManager>().rewardPanel.transform.Find("Anim").GetComponent<SkeletonGraphic>();
+
+            skeletonGraphic.AnimationState.Update(0);
+            skeletonGraphic.AnimationState.SetAnimation(0, "story", false);
+
+            skeletonGraphic.transform.Find("Header").GetComponent<TMPro.TextMeshProUGUI>().text = "배틀 메뉴 해금";
+            skeletonGraphic.transform.Find("Description").GetComponent<TMPro.TextMeshProUGUI>().text = "배틀 메뉴가 오픈되었습니다!";
+
+            yield return new WaitForSeconds(1.0f);
+
+            clickStream = Observable.EveryUpdate()
+                .Where(_ => Input.GetMouseButtonDown(0))
+                .Subscribe(_ => CheckClick(target));
+        }
+
+        private void CheckClick(GameObject target) {
+            if (target == null) {
+                GetComponent<MenuTutorialManager>().DeactiveRewardPanel();
+                clickStream.Dispose();
+                handler.isDone = true;
+
+                PlayerPrefs.SetString("NeedUnlockMenu", "false");
+            }
         }
     }
 
