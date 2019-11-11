@@ -57,7 +57,11 @@ public class ScenarioManager : SerializedMonoBehaviour
         if(Application.platform == RuntimePlatform.Android) {
             if(gameObject.activeSelf == true) {
                 if (Input.GetKeyDown(KeyCode.Escape)) {
-                    OnBackButton();
+                    if (stageCanvas.activeSelf == true) {
+                        OnStageCloseBtn();
+                    }
+                    else
+                        OnBackButton();
                 }
             }
         }
