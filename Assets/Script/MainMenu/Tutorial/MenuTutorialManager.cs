@@ -118,16 +118,18 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
     }
 
     public void OnMainPageChanged() {
+
+        if (PlayerPrefs.GetInt("IsFirstCardMenu") == 0 && PlayerPrefs.GetInt("IsFirstDeckListMenu") == 0) {
+            PlayerPrefs.SetString("NeedMenuTutorial", "false");
+        }
         int pageNum = scrollSnap.CurrentPage;
         if (NeedPageDescription(pageNum)) {
             OnMenuDescPanel(pageNum);
         }
-        //Logger.Log("Page : " + pageNum);
     }
 
     public bool NeedPageDescription(int pageNum) {
-        var etcInfo = AccountManager.Instance.userData.etcInfo;
-        if (etcInfo.Exists(x => x.key == "tutorialCleared")) {
+        if (PlayerPrefs.GetString("NeedMenuTutorial") == "true") {
             switch (pageNum) {
                 case 0:
                     if (PlayerPrefs.GetInt("IsFirstCardMenu") == 1) {
@@ -146,13 +148,6 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
                         return false;
                     }
                 case 2:
-                    //if (PlayerPrefs.GetInt("IsFirstMainMenu") == 1) {
-                    //    PlayerPrefs.SetInt("IsFirstMainMenu", 0);
-                    //    return true;
-                    //}
-                    //else {
-                    //    return false;
-                    //}
                     break;
             }
         }
