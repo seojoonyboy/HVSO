@@ -12,6 +12,7 @@ class ModuleBuildScript
 {
     private static EditorBuildSettingsScene[] SCENES = null;
     private static string TARGET_DIR = "Build";
+    private static DateTime time = DateTime.Now;
 
     private static string GetArg(string name)
     {
@@ -42,7 +43,7 @@ class ModuleBuildScript
         PlayerSettings.Android.useAPKExpansionFiles = false;
         SCENES = FindBuildScenes();
 
-        PlayerSettings.bundleVersion = "1.0";//string.Format("{0}.{1}.{2}.{3}", GameConfig.clientVersion[0], GameConfig.clientVersion[1], GameConfig.clientVersion[2], GameConfig.clientVersion[3]);
+        PlayerSettings.bundleVersion = string.Format("0.2.{0}", time.ToString("MMdd"));//string.Format("{0}.{1}.{2}.{3}", GameConfig.clientVersion[0], GameConfig.clientVersion[1], GameConfig.clientVersion[2], GameConfig.clientVersion[3]);
         PlayerSettings.Android.bundleVersionCode = versionCode;
         PlayerSettings.Android.keystoreName = "/Volumes/Data/fbl_haegin/hvso.keystore";
         PlayerSettings.Android.keystorePass = "Fbl1324$";
@@ -60,7 +61,7 @@ class ModuleBuildScript
 
         PlayerSettings.iOS.buildNumber = versionCode.ToString();
         PlayerSettings.iOS.hideHomeButton = false;
-        PlayerSettings.bundleVersion = "1.0";
+        PlayerSettings.bundleVersion = string.Format("0.2.{0}", time.ToString("MMdd"));
 
         GenericBuild(SCENES, TARGET_DIR + "/XCode", BuildTarget.iOS, BuildOptions.None);
     }
