@@ -103,6 +103,7 @@ public class ScenarioManager : SerializedMonoBehaviour
         PlayerPrefs.SetString("SelectedDeckId", "");
         PlayerPrefs.SetString("SelectedDeckType", "");
         PlayerPrefs.SetString("SelectedBattleType", "");
+        PlayerPrefs.SetString("BattleMode", "");
         //FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);        
         HUDController.SetHeader(HUDController.Type.SHOW_USER_INFO);
 
@@ -463,6 +464,7 @@ public class ScenarioManager : SerializedMonoBehaviour
         if (isTutorial) {
             FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.CONNECT_MATCHING_SCENE);
             ScenarioGameManagment.chapterData = selectedChapterData;
+            PlayerPrefs.SetString("BattleMode", selectedChapterData.match_type);
         }
         else {
             string selectedDeckId = PlayerPrefs.GetString("SelectedDeckId").ToLower();

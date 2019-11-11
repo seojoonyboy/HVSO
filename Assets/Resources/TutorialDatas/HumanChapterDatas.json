@@ -954,11 +954,9 @@
                         "name": "Wait_Match_End",
                         "args": []
                     },
-
                     {
-                        "name": "Wait_click",
+                        "name": "Wait_EnemyDead_Animation",
                         "args": [
-                            "screen"
                         ]
                     },
                     {

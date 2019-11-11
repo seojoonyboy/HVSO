@@ -73,6 +73,7 @@ public partial class PlayMangement : MonoBehaviour {
     }
     private void OnDestroy() {
         SoundManager.Instance.bgmController.SoundTrackLoopOn();
+        PlayerPrefs.SetString("BattleMode", "");
         instance = null;
         if (socketHandler != null)
             Destroy(socketHandler.gameObject);
@@ -100,7 +101,8 @@ public partial class PlayMangement : MonoBehaviour {
     
 
 
-    public void SetGameData(string match = null) {
+    public void SetGameData() {
+        string match = PlayerPrefs.GetString("BattleMode");
         InitGameData(match);
     }
 

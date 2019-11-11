@@ -151,6 +151,24 @@ public class Wait_until : ScenarioExecute {
         handler.isDone = true;
     }
 }
+
+public class Wait_EnemyDead_Animation : ScenarioExecute {
+    public Wait_EnemyDead_Animation() : base() { }
+
+    public override void Execute() {
+        scenarioMask.MaskScreen();
+        StartCoroutine(WaitSec(PlayMangement.instance.enemyPlayer.DeadAnimationTime));
+    }
+    IEnumerator WaitSec(float sec = 0) {
+        Logger.Log("WaitSec");
+        yield return new WaitForSeconds(sec);
+        scenarioMask.OffMaskScreen();
+        handler.isDone = true;
+    }
+
+}
+
+
 /// <summary>
 /// 히어로가 데미지 입기를 기달림. args[0] 몇번 데미지 입을 건지, args[1] player, enemy
 /// </summary>
