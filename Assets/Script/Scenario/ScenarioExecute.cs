@@ -1425,16 +1425,38 @@ public class Wait_Close_Info : ScenarioExecute {
 public class Focus_Skill_Icon : ScenarioExecute {
     public Focus_Skill_Icon() : base() { }
 
+    public int time;
+    public float currentTime = 0;
+    public bool clickIcon = false;
+
+    IDisposable click, unclick;
+
     public override void Execute() {
         scenarioMask.FocusSkillIcon();
+        time = int.Parse(args[0]);
         PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.CLICK_SKILL_ICON, CheckClick);
+
+        click = Observable.EveryUpdate().Where(_ => clickIcon == true).Select(_ => currentTime += Time.deltaTime).SkipWhile(x => x < time).First().Subscribe(_ => ClickFinish());
+        unclick = Observable.EveryUpdate().Where(_ => clickIcon == true).Where(_ => Input.GetMouseButton(0) == false).Subscribe(_ => { currentTime = 0; clickIcon = false; });
     }
 
     private void CheckClick(Enum event_type, Component Sender, object Param) {
-        PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.CLICK_SKILL_ICON, CheckClick);
+        clickIcon = true;
+    }
+
+    private void ClickFinish() {
+        click.Dispose();
+        unclick.Dispose();
+        PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.CLICK_SKILL_ICON, CheckClick);
         handler.isDone = true;
     }
 
+    private void OnDestroy() {
+        if (click != null || unclick != null) {
+            click.Dispose();
+            unclick.Dispose();
+        }
+    }
 }
 /// <summary>
 /// 유닛 정보창에서, 스킬 아이콘 터치후 터치 이펙트의 제거

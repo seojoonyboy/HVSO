@@ -602,7 +602,9 @@
                     },
                     {
                         "name": "Focus_Skill_Icon",
-                        "args": []
+                        "args": [
+                            "1"
+                        ]
                     },
                     {
                         "name": "Blur_Skill_Icon",
