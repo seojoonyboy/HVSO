@@ -72,6 +72,7 @@ public class BoxRewardManager : MonoBehaviour
     }
 
     public void SetBoxAnimation() {
+        InitBoxObjects();
         transform.Find("ShowBox").gameObject.SetActive(true);
         transform.Find("ShowBox/BoxSpine/Image/Num").GetComponent<Text>().text = "4";
         openCount = 0;
@@ -106,39 +107,12 @@ public class BoxRewardManager : MonoBehaviour
         transform.Find("OpenBox").gameObject.SetActive(true);
         transform.Find("ShowBox/Text").gameObject.SetActive(false);
         transform.Find("OpenBox/TargetSpine").gameObject.SetActive(false);
-        //if (openCount == 0) {
-        //    SetRewards(accountManager.rewardList);
-        //    boxSpine.AnimationState.SetAnimation(2, "03.TOUCH1", false);
-        //    boxEffect.AnimationState.SetAnimation(0, "01.open", false);
-        //    boxEffect.AnimationState.AddAnimation(1, "roop", true, 2.0f);
-        //}
-        //else if (openCount == 5) {
-        //    CloseBoxOpen();
-        //    return;
-        //}
-        //else if (openCount == 4) {
-        //    StartCoroutine(BoxTotalResult());
-        //    openCount++;
-        //    return;
-        //}
-        //else {
-        //    transform.Find("OpenBox").GetChild(openCount - 1).gameObject.SetActive(false);
-        //    transform.Find("OpenBox").GetChild(openCount - 1).localScale = Vector3.zero;
-        //    boxSpine.AnimationState.SetAnimation(2, "04.TOUCH2", false);
-        //    if (openCount != 3) {
-        //        boxEffect.AnimationState.SetAnimation(2, "02.open", false);
-        //        boxEffect.AnimationState.AddAnimation(3, "roop", true, 1.0f);
-        //    }
-        //    else
-        //        boxEffect.AnimationState.SetAnimation(4, "03.open", false);
-        //}
-        
         switch (openCount) {
             case 0:
                 SetRewards(accountManager.rewardList);
                 boxSpine.AnimationState.SetAnimation(2, "03.TOUCH1", false);
                 boxEffect.AnimationState.SetAnimation(1, "01.open", false);
-                boxEffect.AnimationState.AddAnimation(2, "loop", true, 2.0f);
+                boxEffect.AnimationState.AddAnimation(2, "loop", true, 1.2f);
                 break;
             case 1:
                 transform.Find("OpenBox").GetChild(openCount - 1).gameObject.SetActive(false);
@@ -175,73 +149,46 @@ public class BoxRewardManager : MonoBehaviour
         StartCoroutine(ShowEachReward(count));
     }
 
-    void StopAni(int count) {
-        transform.Find("ShowBox/BoxSpine/Image/Num").GetComponent<Text>().text = (4 - openCount).ToString();
-        Transform target = transform.Find("OpenBox").GetChild(count);
-        Destroy(target.GetComponent<iTween>());
-        target.localScale = new Vector3(1.4f, 1.4f, 1);
-        target.localPosition = targetSpine.localPosition;
-        transform.Find("OpenBox/TargetSpine").gameObject.SetActive(false);
-        Transform targetObj = target;
-        if (target.name == "Random") {
-            if (target.transform.Find("Card").gameObject.activeSelf)
-                target = targetObj.Find("Card");
-            else
-                target = targetObj.Find("Resource");
-        }
-        if (target.name.Contains("Card")) {
-            if (target.gameObject.activeSelf) { 
-                string cardId = target.Find("DictionaryCardVertical").GetComponent<MenuCardHandler>().cardID;
-                string aniName = "";
-                var rarelity = accountManager.allCardsDic[cardId].rarelity;
-                if (accountManager.allCardsDic[cardId].type == "unit")
-                    aniName += "u_";
-                else
-                    aniName += "m_";
-                if (rarelity != "common")
-                    aniName += accountManager.allCardsDic[cardId].rarelity;
-                else
-                    aniName = "NOANI";
-                SkeletonGraphic spine = target.Find("back").GetComponent<SkeletonGraphic>();
-                spine.gameObject.SetActive(true);
-                spine.Initialize(true);
-                spine.Update(0);
-                spine.AnimationState.SetAnimation(0, aniName, true);
-            }
-        }
-        openAni = false;
-    }
+    //void StopAni(int count) {
+    //    transform.Find("ShowBox/BoxSpine/Image/Num").GetComponent<Text>().text = (4 - openCount).ToString();
+    //    Transform target = transform.Find("OpenBox").GetChild(count);
+    //    Destroy(target.GetComponent<iTween>());
+    //    target.localScale = new Vector3(1.4f, 1.4f, 1);
+    //    target.localPosition = targetSpine.localPosition;
+    //    transform.Find("OpenBox/TargetSpine").gameObject.SetActive(false);
+    //    Transform targetObj = target;
+    //    if (target.name == "Random") {
+    //        if (target.transform.Find("Card").gameObject.activeSelf)
+    //            target = targetObj.Find("Card");
+    //        else
+    //            target = targetObj.Find("Resource");
+    //    }
+    //    if (target.name.Contains("Card")) {
+    //        if (target.gameObject.activeSelf) { 
+    //            string cardId = target.Find("DictionaryCardVertical").GetComponent<MenuCardHandler>().cardID;
+    //            string aniName = "";
+    //            var rarelity = accountManager.allCardsDic[cardId].rarelity;
+    //            if (accountManager.allCardsDic[cardId].type == "unit")
+    //                aniName += "u_";
+    //            else
+    //                aniName += "m_";
+    //            if (rarelity != "common")
+    //                aniName += accountManager.allCardsDic[cardId].rarelity;
+    //            else
+    //                aniName = "NOANI";
+    //            SkeletonGraphic spine = target.Find("back").GetComponent<SkeletonGraphic>();
+    //            spine.gameObject.SetActive(true);
+    //            spine.Initialize(true);
+    //            spine.Update(0);
+    //            spine.AnimationState.SetAnimation(0, aniName, true);
+    //        }
+    //    }
+    //    openAni = false;
+    //}
 
-    IEnumerator BoxTotalResult() {
-        openAni = true;
-        boxEffect.gameObject.SetActive(false);
-        Transform boxParent = transform.Find("OpenBox");
-        boxParent.GetChild(3).localScale = Vector3.zero;
-        boxParent.GetChild(3).gameObject.SetActive(false);
-        for (int i = 0; i < 4; i++) {
-            boxParent.GetChild(i).gameObject.SetActive(true); 
-            boxParent.GetChild(i).position = lastPos.GetChild(i).position;
-            if (i < 2) {                
-                boxParent.GetChild(i).Find("Name").localScale = Vector3.zero;
-                boxParent.GetChild(i).Find("Rarelity").localScale = Vector3.zero;
-                for(int j = 0; j < 5; j++) {
-                    boxParent.GetChild(i).Find("Rarelity").GetChild(j).gameObject.SetActive(false);
-                }
-            }
-            else if (i == 3) {
-                boxParent.GetChild(i).Find("Card").Find("Name").localScale = Vector3.zero;
-                boxParent.GetChild(i).Find("Card").Find("Rarelity").localScale = Vector3.zero;
-                for (int j = 0; j < 5; j++) {
-                    boxParent.GetChild(i).Find("Card").Find("Rarelity").GetChild(j).gameObject.SetActive(false);
-                }
-            }
-            yield return new WaitForSeconds(0.1f);
-            iTween.ScaleTo(boxParent.GetChild(i).gameObject, iTween.Hash("x", 0.9f, "y", 0.9f, "islocal", true, "time", 0.4f));
-        }
-        openAni = false;
-    }
+    
 
-    public void CloseBoxOpen() {
+    public void InitBoxObjects() {
         Transform boxParent = transform.Find("OpenBox");
         for (int i = 0; i < 4; i++) {
             boxParent.GetChild(i).gameObject.SetActive(true);
@@ -258,15 +205,22 @@ public class BoxRewardManager : MonoBehaviour
                 boxParent.GetChild(i).Find("Card").Find("Rarelity").localScale = Vector3.zero;
             }
         }
+    }
+
+    public void CloseBoxOpen() {
+        InitBoxObjects();
+        Transform boxParent = transform.Find("OpenBox");
         boxParent.gameObject.SetActive(false);
         transform.Find("ShowBox").gameObject.SetActive(false);
         transform.Find("ShowBox/Text").gameObject.SetActive(true);
         transform.Find("ExitButton").gameObject.SetActive(false);
         boxParent.GetChild(0).Find("GetCrystal").gameObject.SetActive(false);
         boxParent.GetChild(1).Find("GetCrystal").gameObject.SetActive(false);
+        boxParent.GetChild(2).Find("back").gameObject.SetActive(false);
         boxParent.GetChild(3).Find("Card").gameObject.SetActive(false);
         boxParent.GetChild(3).Find("Card/GetCrystal").gameObject.SetActive(false);
         boxParent.GetChild(3).Find("Resource").gameObject.SetActive(false);
+        boxParent.GetChild(3).Find("Resource/back").gameObject.SetActive(false);
         for (int i = 1; i < 4; i++) {
             boxParent.GetChild(2).GetChild(i).gameObject.SetActive(false);
             boxParent.GetChild(3).Find("Resource").GetChild(i).gameObject.SetActive(false);
@@ -345,30 +299,62 @@ public class BoxRewardManager : MonoBehaviour
         }
         else {
             string type = string.Empty;
-            for (int i = 0; i < 3; i++) {
+            for (int i = 1; i < 4; i++) {
                 if (target.GetChild(i).gameObject.activeSelf) {
                     type = target.GetChild(i).gameObject.name;
                 }
             }
-            SkeletonGraphic spine = target.Find("back").GetComponent<SkeletonGraphic>();
-            spine.gameObject.SetActive(true);
-            spine.Initialize(true);
-            spine.Update(0);
-            spine.AnimationState.SetAnimation(0, "g_superrare", true);
+            if (type != "supplyX2Coupon") { 
+                SkeletonGraphic spine = target.Find("back").GetComponent<SkeletonGraphic>();
+                spine.gameObject.SetActive(true);
+                spine.Initialize(true);
+                spine.Update(0);
+                spine.AnimationState.SetAnimation(0, "g_superrare", true);
+            }
 
             SoundManager soundManager = SoundManager.Instance;
             switch (type) {
                 case "gold":
                 case "supplyX2Coupon":
-                    spine.gameObject.SetActive(false);
                     soundManager.PlaySound(UISfxSound.BOX_NORMAL);
                     break;
                 case "crystal":
                     soundManager.PlaySound(UISfxSound.BOX_NORMAL);
                     break;
             }
+            yield return new WaitForSeconds(0.2f);
         }
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.2f);
+        openAni = false;
+    }
+
+    IEnumerator BoxTotalResult() {
+        openAni = true;
+        boxEffect.gameObject.SetActive(false);
+        Transform boxParent = transform.Find("OpenBox");
+        boxParent.GetChild(3).localScale = Vector3.zero;
+        boxParent.GetChild(3).gameObject.SetActive(false);
+        for (int i = 0; i < 4; i++) {
+            boxParent.GetChild(i).gameObject.SetActive(true);
+            boxParent.GetChild(i).position = lastPos.GetChild(i).position;
+            if (i < 2) {
+                boxParent.GetChild(i).Find("Name").localScale = Vector3.zero;
+                boxParent.GetChild(i).Find("Rarelity").localScale = Vector3.zero;
+                for (int j = 0; j < 5; j++) {
+                    boxParent.GetChild(i).Find("Rarelity").GetChild(j).gameObject.SetActive(false);
+                }
+            }
+            else if (i == 3) {
+                boxParent.GetChild(i).Find("Card").Find("Name").localScale = Vector3.zero;
+                boxParent.GetChild(i).Find("Card").Find("Rarelity").localScale = Vector3.zero;
+                for (int j = 0; j < 5; j++) {
+                    boxParent.GetChild(i).Find("Card").Find("Rarelity").GetChild(j).gameObject.SetActive(false);
+                }
+            }
+            yield return new WaitForSeconds(0.1f);
+            iTween.ScaleTo(boxParent.GetChild(i).gameObject, iTween.Hash("x", 0.9f, "y", 0.9f, "islocal", true, "time", 0.4f));
+        }
+        yield return new WaitForSeconds(0.5f);
         openAni = false;
     }
 
