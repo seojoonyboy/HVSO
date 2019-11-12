@@ -133,7 +133,8 @@ public class Modal : MonoBehaviour {
 
 	public void CloseButton() {
 		SoundManager.Instance.PlaySound(UISfxSound.BUTTON1);
-		Destroy(gameObject);
+        if (action != null) action();
+        else Destroy(gameObject);        
 	}
 
 	private char MyValidate(char charToValidate) {

@@ -10,9 +10,11 @@ public class UserInfoManager : MonoBehaviour
         transform.Find("InnerCanvas/Content/BaseInfo/UserId").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.NickName;
         transform.Find("InnerCanvas/Content/BaseInfo/Exp/Slider/SliderValue").GetComponent<Image>().fillAmount = (float)AccountManager.Instance.userData.exp / (float)AccountManager.Instance.userData.lvExp;
         transform.Find("InnerCanvas/Content/BaseInfo/Exp/ExpValue").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userData.exp.ToString() + "/" + AccountManager.Instance.userData.lvExp.ToString();
+        EscapeKeyController.escapeKeyCtrl.AddEscape(ExitUserInfo);
     }
 
     public void ExitUserInfo() {
         gameObject.SetActive(false);
+        EscapeKeyController.escapeKeyCtrl.RemoveEscape(ExitUserInfo);
     }
 }

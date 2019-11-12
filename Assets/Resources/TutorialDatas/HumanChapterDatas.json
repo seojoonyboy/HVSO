@@ -828,6 +828,10 @@
                         ]
                     },
                     {
+                        "name": "Force_UnitSkill_Target",
+                        "args": [ "1" ]
+                    },
+                    {
                         "name": "Wait_summon",
                         "args": [
                             "ac10008"
@@ -838,18 +842,11 @@
                         "args": [
                             "UNIT_SUMMONED"
                         ]
-                    },
+                    },                    
                     {
                         "name": "Deactive_TargetHandler",
                         "args": [
                             "3,0"
-                        ]
-                    },
-                    {
-                        "name": "Force_drop_zone",
-                        "args": [
-                            "unit",
-                            "2"
                         ]
                     },
                     {
@@ -894,6 +891,10 @@
                             "이제 암살자는 힘을 쓰지 못할 것이다. 상단의 짐마차를 지키는 데 신경써야겠군.",
                             "true"
                         ]
+                    },
+                    {
+                        "name": "Disable_EndTurn",
+                        "args": []
                     },
                     {
                         "name": "Wait_click",
@@ -950,6 +951,28 @@
                             "screen"
                         ]
                     },
+                    {
+                        "name": "Enable_EndTurn",
+                        "args": []
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "button",
+                            "endTurn"
+                        ]
+                    },
+                    {
+                        "name": "StopHighlight",
+                        "args": []
+                    }
+                    
+                ],
+                "isExecute": false
+            },
+            {
+                "Print_text": "data_stage_1031_2_WaitBattle",
+                "methods": [
                     {
                         "name": "Enable_Deck_card",
                         "args": []
