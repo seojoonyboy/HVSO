@@ -1,0 +1,27 @@
+
+box_open_insidelight.png
+size: 512,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Glow11
+  rotate: false
+  xy: 71, 22
+  size: 130, 131
+  orig: 130, 131
+  offset: 0, 0
+  index: -1
+Rectangle
+  rotate: false
+  xy: 0, 0
+  size: 71, 153
+  orig: 71, 153
+  offset: 0, 0
+  index: -1
+light2
+  rotate: false
+  xy: 201, 25
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1

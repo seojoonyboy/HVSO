@@ -118,49 +118,22 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
     }
 
     public void OnMainPageChanged() {
-
-        if (PlayerPrefs.GetInt("IsFirstCardMenu") == 0 && PlayerPrefs.GetInt("IsFirstDeckListMenu") == 0) {
-            PlayerPrefs.SetString("NeedMenuTutorial", "false");
-        }
         int pageNum = scrollSnap.CurrentPage;
-        if (NeedPageDescription(pageNum)) {
-            OnMenuDescPanel(pageNum);
-        }
-    }
-
-    public bool NeedPageDescription(int pageNum) {
-        if (PlayerPrefs.GetString("NeedMenuTutorial") == "true") {
-            switch (pageNum) {
-                case 0:
-                    if (PlayerPrefs.GetInt("IsFirstCardMenu") == 1) {
-                        PlayerPrefs.SetInt("IsFirstCardMenu", 0);
-                        return true;
-                    }
-                    else {
-                        return false;
-                    }
-                case 1:
-                    if (PlayerPrefs.GetInt("IsFirstDeckListMenu") == 1) {
-                        PlayerPrefs.SetInt("IsFirstDeckListMenu", 0);
-                        return true;
-                    }
-                    else {
-                        return false;
-                    }
-                case 2:
-                    break;
-            }
-        }
-        return false;
+        OnMenuDescPanel(pageNum);
     }
 
     public void OnMenuDescPanel(int index) {
-        mainDescCanvas.transform.GetChild(index).gameObject.SetActive(true);
+        BooleanIndex comp = mainDescCanvas.transform.GetChild(index).GetComponent<BooleanIndex>();
+        if(comp.isOn == true) {
+            mainDescCanvas.transform.GetChild(index).gameObject.SetActive(true);
+            comp.isOn = false;
+        }
     }
 
     public enum TutorialType {
         TO_ORC_STORY = 0,
-        MAIN_BUTTON_DESC = 1,
-        NONE = 2
+        UNLOCK_STORY_AND_BATTLE_MENU = 1,
+        MAIN_BUTTON_DESC = 2,
+        NONE = 3
     }
 }
