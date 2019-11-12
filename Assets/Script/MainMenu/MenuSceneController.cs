@@ -33,6 +33,7 @@ public class MenuSceneController : MonoBehaviour {
     public static MenuSceneController menuSceneController;
 
     bool isTutorialDataLoaded = false;
+    GameObject quitModal;
 
     private void Awake() {
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_TUTORIAL_PRESETTING_COMPLETE, CheckTutorial);
@@ -54,6 +55,26 @@ public class MenuSceneController : MonoBehaviour {
         menuButton.Initialize(true);
         menuButton.Update(0);
         ClickMenuButton(2);
+        EscapeKeyController.escapeKeyCtrl.AddEscape(OpenQuitModal);
+    }
+
+    private void QuitApp() {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
+    }
+
+    public void OpenQuitModal() {
+        quitModal = Modal.instantiate("게임을 종료 하시겠습니까?", Modal.Type.YESNO, QuitApp, CloseQuitModal);
+        EscapeKeyController.escapeKeyCtrl.RemoveEscape(OpenQuitModal);
+    }
+
+    public void CloseQuitModal() {
+        DestroyImmediate(quitModal, true);
+        EscapeKeyController.escapeKeyCtrl.RemoveEscape(CloseQuitModal);
+        EscapeKeyController.escapeKeyCtrl.AddEscape(OpenQuitModal);
     }
 
     private void CheckTutorial(Enum Event_Type, Component Sender, object Param) {
@@ -124,7 +145,8 @@ public class MenuSceneController : MonoBehaviour {
     }
 
     private void OnDestroy() {
-        SoundManager.Instance.bgmController.StopSoundTrack();
+        if(SoundManager.Instance != null)
+            SoundManager.Instance.bgmController.StopSoundTrack();
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_TUTORIAL_PRESETTING_COMPLETE, CheckTutorial);
     }
 
@@ -149,12 +171,12 @@ public class MenuSceneController : MonoBehaviour {
         Transform buttonsParent = fixedCanvas.Find("Footer");
         TouchEffecter.Instance.SetScript();
 
-        #region 테스트 코드
+#region 테스트 코드
         //menuTutorialManager.ReadTutorialData();
         //scenarioManager.ReadScenarioData();
         //isTutorialDataLoaded = true;
         //menuTutorialManager.StartTutorial(MenuTutorialManager.TutorialType.TO_ORC_STORY_2);
-        #endregion
+#endregion
 
         AccountManager.Instance.RequestTutorialPreSettings();
     }

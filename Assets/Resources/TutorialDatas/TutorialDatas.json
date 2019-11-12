@@ -8,6 +8,10 @@
                 "description": null,
                 "methods": [
                     {
+                        "name": "DeactiveImageTutorial",
+                        "args": []
+                    },
+                    {
                         "name": "ForceToPage",
                         "args": [
                             "StoryLobby"
@@ -214,6 +218,49 @@
                         ]
                     },
                     {
+                        "name": "Menu_Scope_Object",
+                        "args": [
+                            "hud_back_button"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "hud_back_button",
+                            "on"
+                        ]
+                    },
+                    {
+                        "name": "ShowHandUI",
+                        "args": [
+                          "hud_back_button",
+                          "touch"
+                        ]
+                    },
+                    {
+                        "name" : "DeactiveImageTutorial",
+                        "args" : []
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                            "hud_back_button"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "hud_back_button",
+                            "off"
+                        ]
+                    },
+                    {
+                        "name": "HideHandUI",
+                        "args": [
+                            "hud_back_button"
+                        ]
+                    },
+                    {
                         "name": "UnlockStroyAnim",
                         "args": []
                     },
@@ -223,6 +270,10 @@
                     },
                     {
                         "name" : "OffHighlight",
+                        "args" : []
+                    },
+                    {
+                        "name" : "ActiveImageTutorial",
                         "args" : []
                     }
                 ],

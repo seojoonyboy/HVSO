@@ -630,67 +630,6 @@ namespace MenuTutorialModules {
         }
     }
 
-    public class ChangePVPBattleBtnFunction : MenuExecute {
-        public override void Execute() {
-            Button btn = MenuMask.Instance.menuObject["ai_battle_start_button"].GetComponent<Button>();
-            btn.onClick.RemoveAllListeners();
-            btn.onClick.AddListener(() => { StartCoroutine(Wait()); });
-            
-            handler.isDone = true;
-
-            IEnumerator Wait() {
-                PlayerPrefs.SetString("SelectedBattleType", "tutorial");
-                PlayerPrefs.SetString("PrevTutorial", "AI_Tutorial");
-
-                GetComponent<MenuTutorialManager>()
-                    .BattleReadydeckListPanel
-                    .transform
-                    .Find("Description")
-                    .gameObject
-                    .SetActive(false);
-
-                yield return new WaitForSeconds(1.0f);
-                FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.CONNECT_MATCHING_SCENE);
-            }
-        }
-    }
-
-    public class ResetPVPBattleBtnFunction : MenuExecute {
-        public override void Execute() {
-            Button btn = MenuMask.Instance.menuObject["ai_battle_start_button"].GetComponent<Button>();
-            btn.onClick.RemoveAllListeners();
-            btn.onClick.AddListener(() => {
-                GetComponent<MenuTutorialManager>()
-                    .BattleReadydeckListPanel
-                    .GetComponent<DeckListHandlerInBattleReady>()
-                    .parentController
-                    .OnStartButton();
-            });
-            
-            handler.isDone = true;
-        }
-    }
-
-    public class Block_HUD : MenuExecute {
-        public override void Execute() {
-            var hud = GetComponent<MenuTutorialManager>().HUDCanvas;
-            var blockPanel = hud.transform.Find("MenuHUD/MenuHeader/BlockPanel");
-            blockPanel.gameObject.SetActive(true);
-            
-            handler.isDone = true;
-        }
-    }
-
-    public class Unblock_HUD : MenuExecute {
-        public override void Execute() {
-            var hud = GetComponent<MenuTutorialManager>().HUDCanvas;
-            var blockPanel = hud.transform.Find("MenuHUD/MenuHeader/BlockPanel");
-            blockPanel.gameObject.SetActive(false);
-            
-            handler.isDone = true;
-        }
-    }
-
     public class ShowHandUI : MenuExecute {
         public override void Execute() {
             GameObject target = null;
@@ -883,17 +822,23 @@ namespace MenuTutorialModules {
         }
     }
 
-    public class StartMainMenuBtnTutorial : MenuExecute {
+    public class ActiveImageTutorial : MenuExecute {
         public override void Execute() {
-            GetComponent<MenuTutorialManager>().StartTutorial(MenuTutorialManager.TutorialType.MAIN_BUTTON_DESC);
+            GameObject mainDescCanvas = GetComponent<MenuTutorialManager>().mainDescCanvas;
+            foreach (Transform child in mainDescCanvas.transform) {
+                child.GetComponent<BooleanIndex>().isOn = true;
+            }
+            GetComponent<MenuTutorialManager>().OnMainPageChanged();
             handler.isDone = true;
         }
     }
 
-    public class ActiveImageTutorial : MenuExecute {
+    public class DeactiveImageTutorial : MenuExecute {
         public override void Execute() {
-            GetComponent<MenuTutorialManager>().OnMenuDescPanel(2);
-            PlayerPrefs.SetInt("IsFirstMainMenu", 0);
+            GameObject mainDescCanvas = GetComponent<MenuTutorialManager>().mainDescCanvas;
+            foreach(Transform child in mainDescCanvas.transform) {
+                child.GetComponent<BooleanIndex>().isOn = false;
+            }
             handler.isDone = true;
         }
     }
