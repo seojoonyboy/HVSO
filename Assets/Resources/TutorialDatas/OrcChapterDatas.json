@@ -4,7 +4,7 @@
         "stage_number": 1,
         "stage_Name": "복수",
         "match_type": "tutorial",
-        "description": null,
+        "description": "오크 부족을 토벌하러온 인간 기사와의 전투에서 살아남고 상대를 물리쳐라.",
         "specialRule": "- 적 영웅 체력 5\n- 튜토리얼",
         "scripts": [
             {
@@ -586,7 +586,7 @@
         "stage_number": 2,
         "stage_Name": "복수",
         "match_type": "tutorial",
-        "description": null,
+        "description": "적을 추격해온 오크부족은 야영하며 쉬고있던 토벌대를 습격하고자 한다.",
         "specialRule": "- 적 영웅 체력 5\n- 튜토리얼",
         "scripts": [
             {

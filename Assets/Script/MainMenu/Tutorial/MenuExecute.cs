@@ -374,7 +374,6 @@ namespace MenuTutorialModules {
     public class AutoSelectStoryDeck : MenuExecute {
         public override void Execute() {
             ScenarioManager scenarioManager = GetComponent<MenuTutorialManager>().scenarioManager;
-            GetComponent<MenuTutorialManager>().ActiveTutorialStoryReadyCanvas(args[0]);
 
             int chapterNum = 0;
             int.TryParse(args[1], out chapterNum);
@@ -388,6 +387,7 @@ namespace MenuTutorialModules {
                 ScenarioGameManagment.challengeDatas = scenarioManager.orc_challengeDatas[chapterNum].challenges;
             }
 
+            GetComponent<MenuTutorialManager>().ActiveTutorialStoryReadyCanvas(args[0]);
             handler.isDone = true;
         }
     }

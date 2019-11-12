@@ -107,6 +107,12 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
                 stagePanel.Find("OrcBack").gameObject.SetActive(true);
                 break;
         }
+
+        stagePanel
+            .transform
+            .Find("TextGroup/StageScript")
+            .gameObject
+            .GetComponent<Text>().text = ScenarioGameManagment.chapterData.description;
     }
 
     public void DeactiveTutorialStoryReadyCanvas() {

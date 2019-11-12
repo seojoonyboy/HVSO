@@ -406,14 +406,6 @@ public class ScenarioManager : SerializedMonoBehaviour
                 .gameObject
                 .GetComponent<TextMeshProUGUI>().text = chapterData.chapter.ToString() + "-" + chapterData.stage_number.ToString();
 
-
-            stageCanvas
-                .transform
-                .Find("HUD/StagePanel/TextGroup/StageName")
-                .gameObject
-                .GetComponent<TextMeshProUGUI>().text = chapterData.stage_Name;
-
-
             stageCanvas
                 .transform
                 .Find("HUD/StagePanel/TextGroup/StageScript")
@@ -428,14 +420,6 @@ public class ScenarioManager : SerializedMonoBehaviour
                 .Find("HUD/StagePanel/TextGroup/StageName")
                 .gameObject
                 .GetComponent<TextMeshProUGUI>().text = chapterData.chapter.ToString() + "-" + chapterData.stage_number.ToString();
-
-
-            stageCanvas
-                .transform
-                .Find("HUD/StagePanel/TextGroup/StageName")
-                .gameObject
-                .GetComponent<TextMeshProUGUI>().text = chapterData.stage_Name;
-
 
             stageCanvas
                 .transform
