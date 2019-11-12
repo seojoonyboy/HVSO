@@ -36,6 +36,10 @@
                         ]
                     },
                     {
+                        "name": "UnlockOrcAnim",
+                        "args": []
+                    },
+                    {
                         "name": "Dimmed",
                         "args": [
                             "story_orc_button",
@@ -167,6 +171,59 @@
                             "orc",
                             "1"
                         ]
+                    }
+                ],
+                "isExecute": false
+            }
+        ]
+    },
+    {
+        "id": 0,
+        "description": "human 덱 보상, 스토리, 배틀 메뉴 오픈",
+        "innerDatas": [
+            {
+                "id": 1,
+                "description": null,
+                "methods": [
+                    {
+                        "name": "ForceToPage",
+                        "args": [
+                            "StoryLobby"
+                        ]
+                    },
+                    {
+                        "name": "Menu_Block_Screen",
+                        "args": []
+                    },
+                    {
+                        "name": "ForceToPage",
+                        "args": [
+                            "StoryLobby"
+                        ]
+                    },
+                    {
+                        "name" : "Wait_Until",
+                        "args" : [
+                            "0.8"
+                         ]
+                    },
+                    {
+                        "name": "RequestReward",
+                        "args": [
+                            "orc"
+                        ]
+                    },
+                    {
+                        "name": "UnlockStroyAnim",
+                        "args": []
+                    },
+                    {
+                        "name": "UnlockBattleAnim",
+                        "args": []
+                    },
+                    {
+                        "name" : "OffHighlight",
+                        "args" : []
                     }
                 ],
                 "isExecute": false

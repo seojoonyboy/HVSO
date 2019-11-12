@@ -893,6 +893,25 @@ public class Proceed_orc_summon : ScenarioExecute {
     }
 }
 
+public class Force_UnitSkill_Target : ScenarioExecute {
+    public Force_UnitSkill_Target() : base() { }
+
+    public override void Execute() {
+        //string[] parse = args[0].Split(',');
+        //int col = int.Parse(parse[0]);
+        //int row = int.Parse(parse[1]);
+
+
+        //FieldUnitsObserver.Pos pos = new FieldUnitsObserver.Pos(col, row);
+
+        //PlaceMonster targetUnit = PlayMangement.instance.UnitsObserver.GetUnit(pos, true).gameObject.GetComponent<PlaceMonster>();
+        int targetLine = int.Parse(args[0]);
+        scenarioGameManagment.forcedTargetAt = targetLine;
+        handler.isDone = true;
+    }
+
+}
+
 
 /// <summary>
 /// 특정 배치를 강제화 args[0] unit or magic, args[1] int x
@@ -1590,6 +1609,7 @@ public class Wait_Match_End : ScenarioExecute {
     private void ResetForceDropzone() {
         scenarioGameManagment.forcedSummonAt = -1;
         scenarioGameManagment.forcedLine = -1;
+        scenarioGameManagment.forcedTargetAt = -1;
         scenarioGameManagment.multipleforceLine = new int[]{ -1,-1};
 
     }
