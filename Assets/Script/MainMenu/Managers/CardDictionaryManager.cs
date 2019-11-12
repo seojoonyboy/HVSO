@@ -750,6 +750,7 @@ public class CardDictionaryManager : MonoBehaviour {
         selectedHeroId = "";
         transform.Find("CardDictionary").gameObject.SetActive(false);
         transform.Find("HeroDictionary").gameObject.SetActive(false);
+        selectedSortOption = SortingOptions.CLASS;
         MenuSceneController.menuSceneController.CloseDictionary();
     }
 

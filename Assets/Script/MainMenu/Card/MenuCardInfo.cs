@@ -250,7 +250,6 @@ public partial class MenuCardInfo : MonoBehaviour {
                     info.Find("CreateCard/Crystal/Value").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userData.manaCrystal.ToString();
             }
         }
-        EscapeKeyController.escapeKeyCtrl.AddEscape(CloseInfo);
     }
 
     public void SetEditCardInfo(int haveNum, int handNum) {
