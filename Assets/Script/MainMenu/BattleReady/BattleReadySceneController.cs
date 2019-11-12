@@ -49,8 +49,6 @@ public class BattleReadySceneController : MonoBehaviour {
     void OnDisable() {
         RectTransform rt = ScrollSnap.transform.Find("Content").GetComponent<RectTransform>();
         rt.offsetMin = new Vector2(0, rt.offsetMin.y);
-
-        menuSceneController.ClickMenuButton(2);
     }
 
     public void OnStartButton() {
