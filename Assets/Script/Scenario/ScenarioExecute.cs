@@ -1711,6 +1711,48 @@ public class Active_TargetHandler : ScenarioExecute {
     }
 }
 
+public class Disable_UnitInfo_Window : ScenarioExecute {
+    public Disable_UnitInfo_Window() : base() { }
+
+    public override void Execute() {
+        string[] parse = args[0].Split(',');
+        int col = int.Parse(parse[0]);
+        int row = int.Parse(parse[1]);
+        string enemyParse = args[1];
+        bool isPlayer = (enemyParse == "player") ? true : false;
+
+
+        FieldUnitsObserver.Pos pos = new FieldUnitsObserver.Pos(col, row);
+
+        PlaceMonster targetUnit = PlayMangement.instance.UnitsObserver.GetUnit(pos, isPlayer).gameObject.GetComponent<PlaceMonster>();
+
+        targetUnit.gameObject.transform.Find("InfoWindowTrigger").gameObject.SetActive(false);
+        handler.isDone = true;
+    }
+}
+
+public class Enable_UnitInfo_Window : ScenarioExecute {
+    public Enable_UnitInfo_Window() : base() { }
+
+    public override void Execute() {
+        string[] parse = args[0].Split(',');
+        int col = int.Parse(parse[0]);
+        int row = int.Parse(parse[1]);
+        string enemyParse = args[1];
+        bool isPlayer = (enemyParse == "player") ? true : false;
+
+        FieldUnitsObserver.Pos pos = new FieldUnitsObserver.Pos(col, row);
+
+        PlaceMonster targetUnit = PlayMangement.instance.UnitsObserver.GetUnit(pos, isPlayer).gameObject.GetComponent<PlaceMonster>();
+
+        targetUnit.gameObject.transform.Find("InfoWindowTrigger").gameObject.SetActive(true);
+        handler.isDone = true;
+    }
+
+}
+
+
+
 
 
 
