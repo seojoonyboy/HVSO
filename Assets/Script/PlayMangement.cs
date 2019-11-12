@@ -85,6 +85,8 @@ public partial class PlayMangement : MonoBehaviour {
 
         BgmController.BgmEnum soundTrack =  BgmController.BgmEnum.CITY;
         SoundManager.Instance.bgmController.PlaySoundTrack(soundTrack);
+
+        StartCoroutine(cameraShake(0.4f, 10));
         //StartCoroutine(DisconnectTest());
     }
 
@@ -1053,7 +1055,7 @@ public partial class PlayMangement {
         cameraSize = Camera.main.orthographicSize;
     }
 
-    public IEnumerator cameraShake(float time, int power) {
+    public IEnumerator cameraShake(float time, float power) {
         float timer = 0;
         float cameraSize = ingameCamera.orthographicSize;
         while (timer <= time) {
