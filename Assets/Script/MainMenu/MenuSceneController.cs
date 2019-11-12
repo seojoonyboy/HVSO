@@ -26,6 +26,8 @@ public class MenuSceneController : MonoBehaviour {
     static bool isLoaded = false;
     public MyDecksLoader decksLoader;
     [SerializeField] GameObject newbiLoadingModal;  //최초 접속시 튜토리얼 강제시 등장하는 로딩 화면
+    GameObject loadingModal;
+
     [SerializeField] GameObject reconnectingModal;  //재접속 진행시 등장하는 로딩 화면
     [SerializeField] MenuTutorialManager menuTutorialManager;
     [SerializeField] ScenarioManager scenarioManager;
@@ -56,6 +58,11 @@ public class MenuSceneController : MonoBehaviour {
         menuButton.Update(0);
         ClickMenuButton(2);
         EscapeKeyController.escapeKeyCtrl.AddEscape(OpenQuitModal);
+
+        loadingModal = LoadingModal.instantiate();
+        loadingModal.transform.GetChild(0).Find("Text").GetComponent<Text>().text = "";
+        loadingModal.transform.GetChild(0).Find("Time").GetComponent<Text>().enabled = false;
+        loadingModal.transform.GetChild(0).GetComponent<Image>().color = new Color(0, 0, 0, 255f);
     }
 
     private void QuitApp() {
@@ -138,6 +145,8 @@ public class MenuSceneController : MonoBehaviour {
                 child.GetComponent<dataModules.BooleanIndex>().isOn = false;
             }
         }
+
+        if (loadingModal != null) Destroy(loadingModal);
     }
 
     private void OnUserDataUpdate(Enum Event_Type, Component Sender, object Param) {
