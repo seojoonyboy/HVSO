@@ -548,6 +548,13 @@
                         ]
                     },
                     {
+                        "name": "Disable_UnitInfo_Window",
+                        "args": [
+                            "2,0",
+                            "player"
+                        ]
+                    },
+                    {
                         "name": "SetUp_Protect_Unit",
                         "args": [
                             "2,0"
@@ -567,6 +574,13 @@
                         ]
                     },
                     {
+                        "name": "Disable_UnitInfo_Window",
+                        "args": [
+                            "0,0",
+                            "enemy"
+                        ]
+                    },
+                    {
                         "name": "Disable_EndTurn",
                         "args": []
                     },
@@ -582,6 +596,13 @@
                         "name": "Wait_click",
                         "args": [
                             "screen"
+                        ]
+                    },
+                    {
+                        "name": "Enable_UnitInfo_Window",
+                        "args": [
+                            "0,0",
+                            "enemy"
                         ]
                     },
                     {
@@ -609,6 +630,13 @@
                     {
                         "name": "Blur_Skill_Icon",
                         "args": []
+                    },
+                    {
+                        "name": "Enable_UnitInfo_Window",
+                        "args": [
+                            "2,0",
+                            "player"
+                        ]
                     },
                     {
                         "name": "Unblock_Screen",
@@ -651,8 +679,8 @@
                         "args": []
                     },
                     {
-                        "name" : "ChallengeStart",
-                        "args" : [
+                        "name": "ChallengeStart",
+                        "args": [
                             "MAGIC_USED"
                         ]
                     },
