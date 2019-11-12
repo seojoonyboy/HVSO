@@ -527,9 +527,12 @@ namespace MenuTutorialModules {
             GetComponent<MenuTutorialManager>().ActiveRewardPanel();
             SkeletonGraphic skeletonGraphic = GetComponent<MenuTutorialManager>().rewardPanel.transform.Find("Anim").GetComponent<SkeletonGraphic>();
 
-            skeletonGraphic.AnimationState.Update(0);
+            skeletonGraphic.Skeleton.SetSkin("orc");
+            skeletonGraphic.Skeleton.SetSlotsToSetupPose();
+            skeletonGraphic.AnimationState.Apply(skeletonGraphic.Skeleton);
+
             skeletonGraphic.AnimationState.SetAnimation(0, "story", false);
-            
+
             skeletonGraphic.transform.Find("Header").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 스토리 해금";
             skeletonGraphic.transform.Find("Description").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 진영 튜토리얼이 개방 되었습니다!";
 
