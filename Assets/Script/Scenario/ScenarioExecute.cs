@@ -1422,7 +1422,8 @@ public class Wait_Close_Info : ScenarioExecute {
 public class Focus_Skill_Icon : ScenarioExecute {
     public Focus_Skill_Icon() : base() { }
 
-    public int time;
+    public int parseTime;
+    public float time;
     public float currentTime = 0;
     public bool clickIcon = false;
 
@@ -1430,7 +1431,8 @@ public class Focus_Skill_Icon : ScenarioExecute {
 
     public override void Execute() {
         scenarioMask.FocusSkillIcon();
-        time = int.Parse(args[0]);
+        parseTime = int.Parse(args[0]);
+        time = parseTime - 0.3f;
         PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.CLICK_SKILL_ICON, CheckClick);
 
         click = Observable.EveryUpdate().Where(_ => clickIcon == true).Select(_ => currentTime += Time.deltaTime).SkipWhile(x => x < time).First().Subscribe(_ => ClickFinish());
