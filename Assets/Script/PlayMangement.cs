@@ -401,7 +401,7 @@ public partial class PlayMangement : MonoBehaviour {
             card.transform.Find("BackGround").gameObject.SetActive(false);
             card.transform.Find("Cost").gameObject.SetActive(false);
             int count = CountEnemyCard();
-            enemyPlayer.playerUI.transform.Find("CardCount").GetChild(1).gameObject.GetComponent<Text>().text = (count).ToString();
+            enemyPlayer.playerUI.transform.Find("CardCount").GetChild(0).gameObject.GetComponent<Text>().text = (count).ToString();
 
 
             yield return EffectSystem.Instance.HeroCutScene(enemyPlayer.isHuman);
@@ -1023,7 +1023,7 @@ public partial class PlayMangement {
             enemyCard.transform.localScale = new Vector3(1, 1, 1);
             SoundManager.Instance.PlayIngameSfx(IngameSfxSound.CARDDRAW);
             iTween.MoveTo(enemyCard, enemyCard.transform.parent.position, 0.3f);
-            enemyCard.SetActive(true);
+            enemyCard.SetActive(false);
             int count = CountEnemyCard();
             enemyPlayer.playerUI.transform.Find("CardCount").GetChild(0).gameObject.GetComponent<Text>().text = (count).ToString();
             yield return new WaitForSeconds(0.3f);
