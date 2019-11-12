@@ -123,6 +123,7 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
     }
 
     public void OnMenuDescPanel(int index) {
+        if (index > 2) return;
         BooleanIndex comp = mainDescCanvas.transform.GetChild(index).GetComponent<BooleanIndex>();
         if(comp.isOn == true) {
             mainDescCanvas.transform.GetChild(index).gameObject.SetActive(true);
