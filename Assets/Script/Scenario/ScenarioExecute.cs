@@ -83,11 +83,8 @@ public class NPC_Print_message : ScenarioExecute {
             scenarioMask.talkingText.transform.Find("CharacterImage/Enemy").GetComponent<Image>().sprite = AccountManager.Instance.resource.ScenarioUnitResurce[args[0]].sprite;
             scenarioMask.talkingText.transform.Find("NameObject/EnemyName").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.resource.ScenarioUnitResurce[args[0]].name;
         }
-        scenarioMask.talkingText.GetComponent<TextTyping>().StartTyping(args[1], handler);
-
-#if UNITY_EDITOR
+        scenarioMask.talkingText.GetComponent<TextTyping>().StartTyping(args[1], handler);        
         scenarioMask.talkingText.transform.Find("StopTypingTrigger").gameObject.SetActive(true);
-#endif
     }
 }
 

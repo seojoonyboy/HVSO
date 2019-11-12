@@ -180,9 +180,7 @@ namespace MenuTutorialModules {
                 menuMask.menuTalkPanel.GetComponent<TextTyping>().StartTyping(args[1], handler);
             }
             menuMask.menuTalkPanel.GetComponent<TextTyping>().StartTyping(args[1], handler);
-#if UNITY_EDITOR
             menuMask.menuTalkPanel.transform.Find("StopTypingTrigger").gameObject.SetActive(true);
-#endif
         }
     }
 
