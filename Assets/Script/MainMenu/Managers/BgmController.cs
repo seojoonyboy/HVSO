@@ -32,8 +32,10 @@ public class BgmController : SerializedMonoBehaviour
             return;
         }
 
-        if (type == BgmEnum.VICTORY || type == BgmEnum.DEFEAT)
+        if (type == BgmEnum.VICTORY || type == BgmEnum.DEFEAT) {
             mainAudio.loop = false;
+            StopCoroutine(SoundVolumeDown());
+        }
         else
             mainAudio.loop = true;
 
