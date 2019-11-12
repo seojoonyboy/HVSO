@@ -1055,7 +1055,7 @@ public partial class PlayMangement {
         cameraSize = Camera.main.orthographicSize;
     }
 
-    public IEnumerator cameraShake(float time, float power) {
+    public IEnumerator cameraShake(float time, int power) {
         float timer = 0;
         float cameraSize = ingameCamera.orthographicSize;
         while (timer <= time) {
