@@ -480,6 +480,29 @@
                         ]
                     },
                     {
+                        "name": "Unblock_Screen",
+                        "args": []
+                    },
+                    {
+                        "name": "Disable_Deck_card",
+                        "args": [
+                            "ac10017"
+                        ]
+                    },
+                    {
+                        "name": "Wait_drop",
+                        "args": [
+                            "magic",
+                            "ac10017"
+                        ]
+                    },
+                    {
+                        "name": "Wait_until",
+                        "args": [
+                            "3"
+                        ]
+                    },
+                    {
                         "name": "NPC_Print_message",
                         "args": [
                             "ac10012",
@@ -654,6 +677,14 @@
                         "args": [
                             "proceed"
                         ]
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "h10002",
+                            "적이 우리를 제대로 포착하지 못하도록 모두 매복하여 적을 공격하라!! ",
+                            "true"
+                        ]
                     }
                 ],
                 "isExecute": false
@@ -670,12 +701,6 @@
                         "args": []
                     },
                     {
-                        "name": "Wait_until",
-                        "args": [
-                            "1"
-                        ]
-                    },
-                    {
                         "name": "Force_drop_zone",
                         "args": [
                             "unit",
@@ -687,15 +712,7 @@
                         "args": [
                             "ac10020"
                         ]
-                    },
-                    {
-                        "name": "NPC_Print_message",
-                        "args": [
-                            "h10002",
-                            "적이 우리를 제대로 포착하지 못하도록 모두 매복하여 적을 공격하라!! ",
-                            "true"
-                        ]
-                    },
+                    },                    
                     {
                         "name": "Wait_click",
                         "args": [
