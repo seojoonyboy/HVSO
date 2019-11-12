@@ -20,6 +20,7 @@ public class BoxRewardManager : MonoBehaviour
     [SerializeField] MenuSceneController menuSceneController;
     [SerializeField] Transform targetSpine;
     [SerializeField] Transform lastPos;
+    [SerializeField] GameObject skipBtn;
     // Start is called before the first frame update
     Transform hudCanvas;
 
@@ -109,6 +110,7 @@ public class BoxRewardManager : MonoBehaviour
         transform.Find("OpenBox/TargetSpine").gameObject.SetActive(false);
         switch (openCount) {
             case 0:
+                skipBtn.SetActive(true);
                 SetRewards(accountManager.rewardList);
                 boxSpine.AnimationState.SetAnimation(2, "03.TOUCH1", false);
                 boxEffect.AnimationState.SetAnimation(1, "01.open", false);
@@ -137,6 +139,7 @@ public class BoxRewardManager : MonoBehaviour
             case 4:
                 StartCoroutine(BoxTotalResult());
                 openCount++;
+                skipBtn.SetActive(false);
                 return;
             case 5:
                 CloseBoxOpen();
@@ -147,6 +150,17 @@ public class BoxRewardManager : MonoBehaviour
         int count = openCount;
         openCount++;
         StartCoroutine(ShowEachReward(count));
+    }
+
+    public void SkipBoxOpen() {
+        if (openAni) return;
+        if(openCount > 0) {
+            transform.Find("OpenBox").GetChild(openCount - 1).gameObject.SetActive(false);
+            transform.Find("OpenBox").GetChild(openCount - 1).localScale = Vector3.zero;
+        }
+        StartCoroutine(BoxTotalResult());
+        openCount = 5;
+        skipBtn.SetActive(false);
     }
 
     //void StopAni(int count) {
@@ -186,7 +200,7 @@ public class BoxRewardManager : MonoBehaviour
     //    openAni = false;
     //}
 
-    
+
 
     public void InitBoxObjects() {
         Transform boxParent = transform.Find("OpenBox");
