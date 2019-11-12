@@ -845,9 +845,6 @@ public partial class PlayMangement : MonoBehaviour {
 /// </summary>
 public partial class PlayMangement {
     public GameObject SummonUnit(bool isPlayer, string unitID, int col, int row, int itemID = -1, int cardIndex = -1, Transform[][] args = null) {
-
-        
-
         PlayerController targetPlayer = (isPlayer == true) ? player : enemyPlayer;
         if (unitsObserver.IsUnitExist(new FieldUnitsObserver.Pos(col, row), targetPlayer.isHuman) == true)
             return null;
@@ -920,6 +917,7 @@ public partial class PlayMangement {
 
             if(cardIndex != -1)
                 player.cdpm.DestroyCard(cardIndex);
+            if(placeMonster.unit.id.Contains("qc")) cardInfoCanvas.GetChild(0).GetComponent<CardListManager>().AddFeildUnitInfo(0, placeMonster.myUnitNum, cardData);
         }
         else {
             int enemyCardCount = CountEnemyCard();

@@ -196,8 +196,8 @@ public class CardListManager : MonoBehaviour
             info.Find("Attack").gameObject.SetActive(false);
 
         info.Find("Cost/Text").GetComponent<Text>().text = data.cost.ToString();
-
-        info.Find("Class_1").GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[data.cardClasses[0]];
+        if(data.cardClasses.Length > 0)
+            info.Find("Class_1").GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[data.cardClasses[0]];
 
         for(int i = 0; i < 3; i++) {
             info.Find("Skill&BuffRow1").GetChild(i).gameObject.SetActive(false);
@@ -261,7 +261,7 @@ public class CardListManager : MonoBehaviour
             }
 
             List<string> categories = new List<string>();
-            if(data.cardCategories[0] != null) categories.Add(data.cardCategories[0]);
+            if(data.cardCategories.Length > 0 && data.cardCategories[0] != null) categories.Add(data.cardCategories[0]);
             if(data.cardCategories.Length > 1) categories.Add(data.cardCategories[1]);
             var translatedCategories = translator.GetTranslatedUnitCtg(categories);
             System.Text.StringBuilder sb = new System.Text.StringBuilder();
