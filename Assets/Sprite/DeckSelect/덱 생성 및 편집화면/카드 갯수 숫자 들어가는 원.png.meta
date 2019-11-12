@@ -1,9 +1,9 @@
 fileFormatVersion: 2
 guid: 26d0ff826f7d2f54caecd92c775bb712
 TextureImporter:
-  internalIDToNameTable: []
+  fileIDToRecycleName: {}
   externalObjects: {}
-  serializedVersion: 10
+  serializedVersion: 9
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -91,6 +91,17 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
   spriteSheet:
     serializedVersion: 2
     sprites: []
@@ -98,13 +109,11 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: b09e7748dc5321d428374bf82ef9d307
-    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
-    secondaryTextures: []
-  spritePackingTag: EditDeckUI
+  spritePackingTag: MainMenuScene
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
   userData: 
