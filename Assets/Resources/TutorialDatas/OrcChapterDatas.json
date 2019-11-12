@@ -480,6 +480,29 @@
                         ]
                     },
                     {
+                        "name": "Unblock_Screen",
+                        "args": []
+                    },
+                    {
+                        "name": "Disable_Deck_card",
+                        "args": [
+                            "ac10017"
+                        ]
+                    },
+                    {
+                        "name": "Wait_drop",
+                        "args": [
+                            "magic",
+                            "ac10017"
+                        ]
+                    },
+                    {
+                        "name": "Wait_until",
+                        "args": [
+                            "3"
+                        ]
+                    },
+                    {
                         "name": "NPC_Print_message",
                         "args": [
                             "ac10012",
