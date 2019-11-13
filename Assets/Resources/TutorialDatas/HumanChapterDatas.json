@@ -776,8 +776,8 @@
                     {
                         "name": "Wait_drop",
                         "args": [
-                            "shieldCard",
-                            "ac10021"
+                            "ac10021",
+                            "0"
                         ]
                     },
                     {

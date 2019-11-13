@@ -528,33 +528,49 @@ public class Wait_Multiple_Summon_linelimit : ScenarioExecute {
 
 
 /// <summary>
-/// 마법 사용을 기달림 args[0] "", args[1] cardID
+/// 마법 사용을 기달림 args[0] cardID
 /// </summary>
 public class Wait_drop : ScenarioExecute {
     public Wait_drop() : base() { }
 
+    private int dropZone = -1;
+
     public override void Execute() {
-        Glowing(args[1]);
+        Glowing(args[0]);
+
+        if (args.Count > 1) 
+            dropZone = int.Parse(args[1]);
+        
         PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.MAGIC_USED, CheckMagicUse);
         PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.UNIT_DROP_FAIL, GlowTrigger);
+        PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.BEGIN_CARD_PLAY, CheckDrag);
     }
 
     private void CheckMagicUse(Enum event_type, Component Sender, object Param) {
         string magicID = (string)Param;
 
-        if(magicID == args[1]) {
+        if(magicID == args[0]) {
             PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.MAGIC_USED, CheckMagicUse);
             PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.UNIT_DROP_FAIL, GlowTrigger);
+            PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.BEGIN_CARD_PLAY, CheckDrag);
+            scenarioMask.InfoTouchOFF();
             handler.isDone = true;
         }      
     }
+
+    private void CheckDrag(Enum event_type, Component Sender, object Param) {
+        if (args.Count > 1)
+            scenarioMask.InfoTouchON(PlayMangement.instance.backGround.transform.GetChild(dropZone).position);
+    }
+
 
     private void Glowing(string id) {
         scenarioMask.CardDeckGlow(id);
     }
 
     private void GlowTrigger(Enum event_type, Component Sender, object Param) {
-        scenarioMask.CardDeckGlow(args[1]);
+        scenarioMask.CardDeckGlow(args[0]);
+        scenarioMask.InfoTouchOFF();
     }
 }
 

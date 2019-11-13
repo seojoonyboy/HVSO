@@ -252,7 +252,6 @@
                     {
                         "name": "Wait_drop",
                         "args": [
-                            "magic",
                             "ac10016"
                         ]
                     },
@@ -261,6 +260,10 @@
                         "args": [
                             "MAGIC_USED"
                         ]
+                    },
+                    {
+                        "name": "Wait_until",
+                        "args": [ "3" ]
                     },
                     {
                         "name": "Enable_EndTurn",
@@ -492,7 +495,6 @@
                     {
                         "name": "Wait_drop",
                         "args": [
-                            "magic",
                             "ac10017"
                         ]
                     },
