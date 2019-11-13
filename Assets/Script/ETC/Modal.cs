@@ -25,7 +25,7 @@ public class Modal : MonoBehaviour {
     /// <param name="type">Modal.Type.종류</param>
     /// <param name="function">yes 버튼 누를 경우 실행 함수(필요하면)</param>
     /// <param name="title">제목에 들어갈 내용(필요하면)(급하게 넣은 매개변수)</param>
-    public static GameObject instantiate(string text, Type type, UnityAction function = null, System.Action function2 = null, string title = null) {
+    public static GameObject instantiate(string text, Type type, UnityAction function = null, System.Action function2 = null, string title = null, string[] btnTexts = null) {
         if (type == Type.INSERT) {
 			Logger.LogWarning("enum INSERT는 매개변수 하나 더 있습니다!");
             return null;
@@ -33,7 +33,7 @@ public class Modal : MonoBehaviour {
         
         GameObject modal = Resources.Load("Prefabs/ModalCanvas", typeof(GameObject)) as GameObject;
         GameObject tmp = Instantiate(modal);
-        tmp.GetComponent<Modal>().SetData(text, function, type, function2, title);
+        tmp.GetComponent<Modal>().SetData(text, function, type, function2, title, btnTexts);
         return tmp;
 	}
     /// <summary>
@@ -67,13 +67,17 @@ public class Modal : MonoBehaviour {
 	/// <param name="type">Modal.Type.종류</param>
 	/// <param name="function">yes 버튼 누를 경우 실행 함수(필요하면)</param>
 	/// <param name="title">제목에 들어갈 내용(필요하면)(급하게 넣은 매개변수)</param>
-	public void SetData(string text, UnityAction function, Type type, System.Action function2 = null, string title = null) {
+	public void SetData(string text, UnityAction function, Type type, System.Action function2 = null, string title = null, string[] btnTexts = null) {
         Text describe = null;
         Button yesButton = null;
         if (type == Type.CHECK) {
             checkModal.SetActive(true);
             describe = checkModal.transform.Find("Describe").GetComponent<Text>();
             yesButton = checkModal.transform.Find("Buttons/YesButton").GetComponent<Button>();
+
+            if(btnTexts != null && btnTexts.Length >= 1) {
+                yesButton.transform.Find("Text").GetComponent<Text>().text = btnTexts[0];
+            }
 		}
         else if(type == Type.YESNO) {
             YesNoModal.SetActive(true);
@@ -82,6 +86,11 @@ public class Modal : MonoBehaviour {
             if (function2 != null) {
                 action = function2;
                 EscapeKeyController.escapeKeyCtrl.AddEscape(function2);
+            }
+
+            if (btnTexts != null && btnTexts.Length >= 2) {
+                yesButton.transform.Find("Text").GetComponent<Text>().text = btnTexts[0];
+                YesNoModal.transform.Find("Buttons/NoButton/Text").GetComponent<Text>().text = btnTexts[1];
             }
         }
         else { Logger.LogError("Modal 타입이 올바르지 않습니다!"); }

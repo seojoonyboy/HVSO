@@ -70,7 +70,9 @@ public class BattleReadySceneController : MonoBehaviour {
                 FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.CONNECT_MATCHING_SCENE);
             }
             else {
-                Modal.instantiate("유효하지 않은 덱입니다.", Modal.Type.CHECK);
+                if(selectedDeck.totalCardCount < 40) {
+                    Modal.instantiate("부대에 포함된 카드의 수가 부족합니다.", Modal.Type.CHECK);
+                }
             }
         }
         else {

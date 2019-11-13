@@ -173,7 +173,7 @@ public class DeckEditController : MonoBehaviour
             
             
             if (string.IsNullOrEmpty(inputNameVal)) {
-                Modal.instantiate("원하는 이름을 적어주세요", Modal.Type.CHECK);
+                Modal.instantiate("변경하실 닉네임을 입력해주세요.", Modal.Type.CHECK);
                 return;
             }
             field.value = inputNameVal;

@@ -438,7 +438,7 @@ public class ScenarioManager : SerializedMonoBehaviour
         string race = PlayerPrefs.GetString("SelectedRace").ToLower();
 
         if(selectedDeck == null) {
-            Modal.instantiate("유효하지 않은 덱입니다.", Modal.Type.CHECK);
+            Modal.instantiate("덱을 선택해 주세요", Modal.Type.CHECK);
             SoundManager.Instance.PlaySound(SoundType.FIRST_TURN);
             return;
         }
@@ -462,7 +462,9 @@ public class ScenarioManager : SerializedMonoBehaviour
                     ScenarioGameManagment.chapterData = selectedChapterData;
                 }
                 else {
-                    Modal.instantiate("유효하지 않은 덱입니다.", Modal.Type.CHECK);
+                    if(selectedDeck.totalCardCount < 40) {
+                        Modal.instantiate("부대에 포함된 카드의 수가 부족합니다.", Modal.Type.CHECK);
+                    }
                 }
             }
             else {
