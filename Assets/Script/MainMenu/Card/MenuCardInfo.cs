@@ -38,7 +38,6 @@ public partial class MenuCardInfo : MonoBehaviour {
 
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_CREATE_CARD, CardModified);
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_REMOVE_CARD, CardModified);
-        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, (type, sender, parm) => Logger.Log("!!"));
 
         cardInfoWindow = this;
         gameObject.SetActive(false);

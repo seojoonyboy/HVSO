@@ -31,7 +31,7 @@ public class DeckSettingManager : MonoBehaviour
 
     private void SetPlayerNewDecks(Enum Event_Type, Component Sender, object Param) {
         SetPlayerNewDecks();
-        Logger.Log("DeckSettingManager");
+        //Logger.Log("DeckSettingManager");
     }
 
     public void RefreshLine() {

@@ -55,9 +55,9 @@ public class LoginController : MonoBehaviour {
     IEnumerator LogoReveal() {
         yield return new WaitForSeconds(0.8f);
         logo.SetActive(true);
-        Logger.Log("logo");
+        //Logger.Log("logo");
         yield return new WaitForSeconds(0.5f);
-        Logger.Log("textImage");
+        //Logger.Log("textImage");
         textImage.SetActive(true);
         loginBtn.enabled = true;
         SkeletonGraphic skeletonGraphic = logo.GetComponent<SkeletonGraphic>();
