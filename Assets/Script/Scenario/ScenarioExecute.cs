@@ -493,7 +493,7 @@ public class Wait_Multiple_Summon_linelimit : ScenarioExecute {
             scenarioGameManagment.forcedLine = line;
         }
 
-        scenarioMask.CardDeckGlow("ac10018");
+        scenarioMask.CardDeckGlow(args[2]);
         int.TryParse(args[0], out clearCount);
         PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.UNIT_SUMMONED, CheckSummon);
         PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.UNIT_DROP_FAIL, HighLightOn);
@@ -515,12 +515,12 @@ public class Wait_Multiple_Summon_linelimit : ScenarioExecute {
     }
     
     private void Glowing() {
-        scenarioMask.CardDeckGlow("ac10018");
+        scenarioMask.CardDeckGlow(args[2]);
     }
 
 
     private void HighLightOn(Enum event_type, Component Sender, object Param) {
-        scenarioMask.CardDeckGlow("ac10018");
+        scenarioMask.CardDeckGlow(args[2]);
     }
 }
 
