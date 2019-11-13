@@ -227,6 +227,10 @@
                         ]
                     },
                     {
+                        "name": "Disable_Deck_card",
+                        "args": [ "ac10016" ]
+                    },
+                    {
                         "name": "Force_drop_zone",
                         "args": [
                             "magic",
