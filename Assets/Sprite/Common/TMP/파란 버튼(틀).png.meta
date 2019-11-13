@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 1f139e839d9981543b628adeb27732f9
+guid: c1d5002bc50634840a83449bcbc3b059
 TextureImporter:
   fileIDToRecycleName: {}
   externalObjects: {}
@@ -46,7 +46,7 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
-  spriteBorder: {x: 81, y: 47, z: 113, w: 68}
+  spriteBorder: {x: 64, y: 57, z: 74, w: 46}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
@@ -91,18 +91,29 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
   spriteSheet:
     serializedVersion: 2
     sprites: []
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 5a8873c16bd364c4395c0c1ddc35d04a
+    spriteID: 3d8c321b29dd8634694b9861acb3437f
     vertices: []
     indices: 
     edges: []
     weights: []
-  spritePackingTag: MenuUI
+  spritePackingTag: MainMenuScene
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
   userData: 
