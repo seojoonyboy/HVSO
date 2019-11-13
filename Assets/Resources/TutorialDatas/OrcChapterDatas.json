@@ -248,12 +248,6 @@
                         ]
                     },
                     {
-                        "name": "Enable_Deck_card",
-                        "args": [
-
-                        ]
-                    },
-                    {
                         "name": "Wait_drop",
                         "args": [
                             "ac10016"
@@ -267,7 +261,7 @@
                     },
                     {
                         "name": "Wait_until",
-                        "args": [ "3" ]
+                        "args": [ "4" ]
                     },
                     {
                         "name": "Enable_EndTurn",
