@@ -24,6 +24,7 @@ public partial class PlayMangement : MonoBehaviour {
     public static PlayMangement instance { get; protected set; }
     public GameObject backGround;
     public GameObject onCanvasPosGroup;
+    public GameObject lineMaskObject;
     //public CardCircleManager cardCircleManager;
     public CardHandManager cardHandManager;
     public GameResultManager resultManager;
@@ -226,14 +227,16 @@ public partial class PlayMangement : MonoBehaviour {
 
 
     protected virtual void SetBackGround() {
+        GameObject raceSprite;
         if (player.isHuman == true) {
-            GameObject raceSprite = Instantiate(AccountManager.Instance.resource.raceUiPrefabs["HUMAN_BACKGROUND"][0], backGround.transform);
+            raceSprite = Instantiate(AccountManager.Instance.resource.raceUiPrefabs["HUMAN_BACKGROUND"][0], backGround.transform);
             raceSprite.transform.SetAsLastSibling();
         }
         else {
-            GameObject raceSprite = Instantiate(AccountManager.Instance.resource.raceUiPrefabs["ORC_BACKGROUND"][0], backGround.transform);
+            raceSprite = Instantiate(AccountManager.Instance.resource.raceUiPrefabs["ORC_BACKGROUND"][0], backGround.transform);
             raceSprite.transform.SetAsLastSibling();
         }
+        lineMaskObject = backGround.transform.Find("field_mask").gameObject;
     }
 
 

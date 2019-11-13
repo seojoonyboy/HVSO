@@ -440,11 +440,21 @@ public partial class CardDropManager {
 
             int targetline = ScenarioGameManagment.scenarioInstance.forcedSummonAt - 1;
             if (magicTarget == "line") {
+                GameObject lineMask = PlayMangement.instance.lineMaskObject;
+                lineMask.SetActive(true);
                 for (int i = 0; i < 5; i++) {
                     if (i == targetline) {
+                        GameObject line = lineMask.transform.GetChild(i).gameObject;
+                        line.SetActive(false);
                         slotLine[i].Find("BattleLineEffect").gameObject.SetActive(true);
-                        return;
+                        slotLine[i].Find("BattleLineEffect").gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
                     }
+                    else {
+                        GameObject line = lineMask.transform.GetChild(i).gameObject;
+                        line.SetActive(true);
+                        line.GetComponent<SpriteRenderer>().color = new Color(0.48f, 0.48f, 0.48f, 1f);                        
+                    }
+                        
                 }
             }
             if (magicTarget.Contains("unit")) {
@@ -525,14 +535,18 @@ public partial class CardDropManager {
             for (int i = 0; i < 5; i++) {
                 if (args == null) {
                     if (units[i][0].childCount > 0) {
-                        if (units[i][0].GetChild(0).GetComponent<ambush>() == null)
+                        if (units[i][0].GetChild(0).GetComponent<ambush>() == null) {
+                            slotLine[i].Find("BattleLineEffect").gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
                             slotLine[i].Find("BattleLineEffect").gameObject.SetActive(true);
+                        }
                     }
                     if (units[i][1].childCount > 0) {
+                        slotLine[i].Find("BattleLineEffect").gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
                         slotLine[i].Find("BattleLineEffect").gameObject.SetActive(true);
                     }
                 }
                 else {
+                    slotLine[i].Find("BattleLineEffect").gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
                     slotLine[i].Find("BattleLineEffect").gameObject.SetActive(true);
                 }
             }
@@ -602,6 +616,9 @@ public partial class CardDropManager {
 
         if (magicArgs == "tool")
             DeactivateTarget(unitLine, magicTarget, magicArgs);
+
+        GameObject lineMask = PlayMangement.instance.lineMaskObject;
+        lineMask.SetActive(false);
 
         magicArgs = magicTarget = null;
     }
