@@ -440,12 +440,12 @@ namespace MenuTutorialModules {
 
             yield return new WaitForSeconds(0.8f);
 
-            skeletonGraphic.transform.Find("Header").GetComponent<TMPro.TextMeshProUGUI>().text = "덱 획득";
+            skeletonGraphic.transform.Find("Header/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "덱 획득";
             if(args[0] == "human") {
-                skeletonGraphic.transform.Find("Description").GetComponent<TMPro.TextMeshProUGUI>().text = "휴먼 기본덱 획득";
+                skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "휴먼 기본덱 획득";
             }
             else {
-                skeletonGraphic.transform.Find("Description").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 기본덱 획득";
+                skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 기본덱 획득";
             }
 
             yield return new WaitForSeconds(1.0f);
@@ -527,14 +527,16 @@ namespace MenuTutorialModules {
             GetComponent<MenuTutorialManager>().ActiveRewardPanel();
             SkeletonGraphic skeletonGraphic = GetComponent<MenuTutorialManager>().rewardPanel.transform.Find("Anim").GetComponent<SkeletonGraphic>();
 
+            skeletonGraphic.Initialize(true);
+            skeletonGraphic.Update(0);
+
             skeletonGraphic.Skeleton.SetSkin("orc");
             skeletonGraphic.Skeleton.SetSlotsToSetupPose();
+            skeletonGraphic.AnimationState.SetAnimation(0, "story_details", false);
             skeletonGraphic.AnimationState.Apply(skeletonGraphic.Skeleton);
 
-            skeletonGraphic.AnimationState.SetAnimation(0, "story", false);
-
-            skeletonGraphic.transform.Find("Header").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 스토리 해금";
-            skeletonGraphic.transform.Find("Description").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 진영 튜토리얼이 개방 되었습니다!";
+            skeletonGraphic.transform.Find("Header/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 스토리 해금";
+            skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 진영 튜토리얼이 개방 되었습니다!";
 
             yield return new WaitForSeconds(1.0f);
 
@@ -570,11 +572,16 @@ namespace MenuTutorialModules {
             GetComponent<MenuTutorialManager>().ActiveRewardPanel();
             SkeletonGraphic skeletonGraphic = GetComponent<MenuTutorialManager>().rewardPanel.transform.Find("Anim").GetComponent<SkeletonGraphic>();
 
-            skeletonGraphic.AnimationState.Update(0);
-            skeletonGraphic.AnimationState.SetAnimation(0, "story", false);
+            skeletonGraphic.Initialize(true);
+            skeletonGraphic.Update(0);
 
-            skeletonGraphic.transform.Find("Header").GetComponent<TMPro.TextMeshProUGUI>().text = "스토리 메뉴 해금";
-            skeletonGraphic.transform.Find("Description").GetComponent<TMPro.TextMeshProUGUI>().text = "스토리 메뉴가 오픈되었습니다!";
+            skeletonGraphic.Skeleton.SetSkin("human");
+            skeletonGraphic.Skeleton.SetSlotsToSetupPose();
+            skeletonGraphic.AnimationState.SetAnimation(0, "story", false);
+            skeletonGraphic.AnimationState.Apply(skeletonGraphic.Skeleton);
+
+            skeletonGraphic.transform.Find("Header/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "스토리 메뉴 해금";
+            skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "스토리 메뉴가 오픈되었습니다!";
 
             yield return new WaitForSeconds(1.0f);
 
@@ -607,11 +614,16 @@ namespace MenuTutorialModules {
             GetComponent<MenuTutorialManager>().ActiveRewardPanel();
             SkeletonGraphic skeletonGraphic = GetComponent<MenuTutorialManager>().rewardPanel.transform.Find("Anim").GetComponent<SkeletonGraphic>();
 
-            skeletonGraphic.AnimationState.Update(0);
-            skeletonGraphic.AnimationState.SetAnimation(0, "story", false);
+            skeletonGraphic.Initialize(true);
+            skeletonGraphic.Update(0);
 
-            skeletonGraphic.transform.Find("Header").GetComponent<TMPro.TextMeshProUGUI>().text = "배틀 메뉴 해금";
-            skeletonGraphic.transform.Find("Description").GetComponent<TMPro.TextMeshProUGUI>().text = "배틀 메뉴가 오픈되었습니다!";
+            skeletonGraphic.Skeleton.SetSkin("human");
+            skeletonGraphic.Skeleton.SetSlotsToSetupPose();
+            skeletonGraphic.AnimationState.Apply(skeletonGraphic.Skeleton);
+            skeletonGraphic.AnimationState.SetAnimation(0, "battle", false);
+
+            skeletonGraphic.transform.Find("Header/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "배틀 메뉴 해금";
+            skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "배틀 메뉴가 오픈되었습니다!";
 
             yield return new WaitForSeconds(1.0f);
 
