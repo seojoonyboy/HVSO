@@ -181,8 +181,7 @@ public class BoxRewardManager : MonoBehaviour
             }
 
             if (target.name.Contains("Card")) {
-                if (!target.gameObject.activeSelf) break;
-                else {
+                if (target.gameObject.activeSelf) { 
                     string cardId = target.Find("DictionaryCardVertical").GetComponent<MenuCardHandler>().cardID;
                     string aniName = "";
                     var rarelity = accountManager.allCardsDic[cardId].rarelity;
@@ -326,8 +325,7 @@ public class BoxRewardManager : MonoBehaviour
         }
 
         if (target.name.Contains("Card")) {
-            if (!target.gameObject.activeSelf) yield return null;
-            else {
+            if (target.gameObject.activeSelf) { 
                 string cardId = target.Find("DictionaryCardVertical").GetComponent<MenuCardHandler>().cardID;
                 string aniName = "";
                 var rarelity = accountManager.allCardsDic[cardId].rarelity;
