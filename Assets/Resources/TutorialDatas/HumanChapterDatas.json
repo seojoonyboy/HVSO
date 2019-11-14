@@ -1060,26 +1060,6 @@
                     {
                         "name": "Fill_shield_gage",
                         "args": []
-                    },
-                    {
-                        "name": "Wait_Turn",
-                        "args": [
-                            "HUMAN"
-                        ]
-                    },
-                    {
-                        "name": "Fill_shield_gage",
-                        "args": []
-                    },
-                    {
-                        "name": "Wait_Turn",
-                        "args": [
-                            "HUMAN"
-                        ]
-                    },
-                    {
-                        "name": "Fill_shield_gage",
-                        "args": []
                     }
                 ],
                 "isExecute": false
