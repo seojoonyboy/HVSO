@@ -146,8 +146,8 @@ public class DeckHandler : MonoBehaviour
             PlayerPrefs.SetString("SelectedDeckId", deckID);
             PlayerPrefs.SetString("SelectedBattleType", "solo");
             string camp;
-            if (isHuman) { camp = "HUMAN"; }
-            else { camp = "ORC"; }
+            if (isHuman) { camp = "human"; }
+            else { camp = "orc"; }
             PlayerPrefs.SetString("SelectedRace", camp);
 
             FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.CONNECT_MATCHING_SCENE);
