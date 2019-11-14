@@ -13,6 +13,15 @@ public class LoginController : MonoBehaviour {
     [SerializeField] Button loginBtn;
 
     bool isClicked = false;
+
+    private void Awake() {
+        AccountManager.Instance.tokenSetFinished += OnTokenSetFinished;
+    }
+
+    private void OnTokenSetFinished() {
+        loginBtn.enabled = true;
+    }
+
     // Start is called before the first frame update
     void Start() {
         networkManager = NetworkManager.Instance;
@@ -59,7 +68,7 @@ public class LoginController : MonoBehaviour {
         yield return new WaitForSeconds(0.5f);
         //Logger.Log("textImage");
         textImage.SetActive(true);
-        loginBtn.enabled = true;
+        //loginBtn.enabled = true;
         SkeletonGraphic skeletonGraphic = logo.GetComponent<SkeletonGraphic>();
         Spine.AnimationState state = skeletonGraphic.AnimationState;
         state.SetAnimation(0, "loop", true);

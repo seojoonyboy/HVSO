@@ -849,6 +849,7 @@ public partial class AccountManager {
 }
 
 public partial class AccountManager {
+    public UnityAction tokenSetFinished;
     string tokenId;
     public string TokenId {
         get => tokenId;
@@ -856,15 +857,10 @@ public partial class AccountManager {
             tokenId = value;
             TokenFormat = string.Format("Bearer {0}", TokenId);
             //Logger.Log(TokenId);
+            tokenSetFinished.Invoke();
         }
     }
     public string TokenFormat { get; private set; }
-
-    public void SetUserToken(HTTPResponse response) {
-        var result = dataModules.JsonReader.Read<Token>(response.DataAsText);
-        TokenId = result.token;
-        //Logger.Log("Token 재발행");
-    }
 
     public class TokenForm {
         public string deviceId;
