@@ -694,7 +694,6 @@ public class Fill_shield_gage : ScenarioExecute {
     }
 
     IEnumerator Fill_gage() {
-        yield return new WaitUntil(() => PlayMangement.instance.player.shieldStack.Value >= 1);
         PlayMangement.instance.player.FullShieldStack(PlayMangement.instance.player.shieldStack.Value);
         PlayMangement.instance.player.shieldStack.Value = 8;
         handler.isDone = true;
