@@ -397,13 +397,11 @@ public partial class BattleConnector : MonoBehaviour {
             Destroy(GetComponent<ReconnectController>());
             Destroy(reconnectModal);
         }
-     }
 
-    public void end_end_game(object args, int? id) {
         battleGameFinish = true;
         AccountManager.Instance.RequestUserInfo();
 
-        if (ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.isTutorial == false) {
+        if (ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.isTutorial) {
             string _result = result.result;
 
             PlayMangement playMangement = PlayMangement.instance;
@@ -426,14 +424,20 @@ public partial class BattleConnector : MonoBehaviour {
             GameResultManager resultManager = playMangement.resultManager;
             resultManager.gameObject.SetActive(true);
 
-            if(_result == "win") {
+            if (_result == "win") {
                 resultManager.SetResultWindow("win", playMangement.player.isHuman);
             }
             else {
                 resultManager.SetResultWindow("lose", playMangement.player.isHuman);
             }
         }
+    }
 
+    public void end_end_game(object args, int? id) {
+        PlayMangement playMangement = PlayMangement.instance;
+        GameResultManager resultManager = playMangement.resultManager;
+
+        StartCoroutine(resultManager.SetRewards());
     }
 
     public void ping(object args, int? id) {
