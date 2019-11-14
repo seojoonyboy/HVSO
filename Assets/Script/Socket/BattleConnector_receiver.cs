@@ -124,11 +124,11 @@ public partial class BattleConnector : MonoBehaviour {
             playerHeroNameTxt.text = orcHeroName;
             playerNickNameTxt.text = orcPlayerNickName;
 
-            enemyHeroNameTxt.text = (mode == "story") ? "제식궁수" : humanHeroName;
-            enemyNickNameTxt.text = (mode == "story") ? "제식궁수" : humanPlayerNickName;
+            enemyHeroNameTxt.text = (mode == "story") ? "레이 첸 민" : humanHeroName;
+            enemyNickNameTxt.text = (mode == "story") ? "레이 첸 민" : humanPlayerNickName;
 
             if (mode == "story")
-                machine.transform.Find("EnemyCharacter/EnemyZerod").gameObject.GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite["hac10002"];
+                machine.transform.Find("EnemyCharacter/EnemyZerod").gameObject.GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite["hac10001"];
 
         }
         timer.text = null;

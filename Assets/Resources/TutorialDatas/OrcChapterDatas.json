@@ -52,7 +52,7 @@
                     {
                         "name": "NPC_Print_message",
                         "args": [
-                            "ac10002",
+                            "hac10001",
                             "감히 인간의 마을을 공격해? 미개한 오크주제에, 이런짓을 벌이고 무사할 줄 알았느냐!!",
                             "false"
                         ]
@@ -315,7 +315,7 @@
                     {
                         "name": "NPC_Print_message",
                         "args": [
-                            "ac10002",
+                            "hac10001",
                             "이…이런 건방진 것들이!! 나를 공격해? 해치워주마!!",
                             "false"
                         ]
@@ -424,7 +424,7 @@
                     {
                         "name": "NPC_Print_message",
                         "args": [
-                            "ac10002",
+                            "hac10001",
                             "내 모든걸 걸고 너희를 죽여주마!",
                             "false"
                         ]
@@ -566,7 +566,7 @@
                     {
                         "name": "NPC_Print_message",
                         "args": [
-                            "ac10002",
+                            "hac10001",
                             "으아악! 두고보자 오크놈들!",
                             "false"
                         ]
@@ -938,7 +938,7 @@
                     {
                         "name": "NPC_Print_message",
                         "args": [
-                            "ac10002",
+                            "hac10001",
                             "큭… 날 지키란 말이다!! 쓸모없는 병사놈들 같으니!  ",
                             "false"
                         ]
