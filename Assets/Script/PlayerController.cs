@@ -127,7 +127,7 @@ public class PlayerController : MonoBehaviour
         string id;
         GameObject hero;
         if (ScenarioGameManagment.scenarioInstance != null &&  isPlayer == false && isHuman == true)
-            heroID = "hac10002";
+            heroID = "hac10001";
 
         if (isHuman == true) 
             id = (string.IsNullOrEmpty(heroID)) ? "h10001" : heroID;        
