@@ -41,6 +41,10 @@ public class PlayerController : MonoBehaviour
     public ReactiveProperty<int> shieldStack = new ReactiveProperty<int>(0);
     protected int shieldCount = 0;
 
+    public int remainShieldCount {
+        get { return shieldCount; }
+    }
+
     protected HeroSpine heroSpine;
     public static int activeCardMinCost;
     public string heroID;
