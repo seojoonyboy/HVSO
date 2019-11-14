@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 public class IngameTimer : MonoBehaviour {
     public GameObject timerUI;
     [SerializeField] SkeletonGraphic skeletonGraphic;
+    [SerializeField] Transform rope;
     public Transform parent;
 
     //[SerializeField] TextMeshProUGUI value;
@@ -111,4 +112,14 @@ public class IngameTimer : MonoBehaviour {
         }
     }
 #endif
+
+    public void RopeTimerOn(int second = 20) {
+        rope.gameObject.SetActive(true);
+        rope.GetComponent<Animator>().speed = 1f / ((float)second * 0.1f);
+        Debug.Log(rope.GetComponent<Animator>().speed);
+    }
+
+    public void RopeTimerOff() {
+        rope.gameObject.SetActive(false);
+    }
 }
