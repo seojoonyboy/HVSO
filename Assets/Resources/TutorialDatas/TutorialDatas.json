@@ -44,6 +44,10 @@
                         "args": []
                     },
                     {
+                        "name": "DestroyLoadingModal",
+                        "args": []
+                    },
+                    {
                         "name": "Dimmed",
                         "args": [
                             "story_orc_button",
@@ -216,6 +220,10 @@
                         "args": [
                             "orc"
                         ]
+                    },
+                    {
+                        "name": "DestroyLoadingModal",
+                        "args": []
                     },
                     {
                         "name": "Menu_Scope_Object",

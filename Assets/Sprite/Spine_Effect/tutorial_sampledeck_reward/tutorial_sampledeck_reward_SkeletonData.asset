@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: tutorial_sampledeck_reward_SkeletonData
   m_EditorClassIdentifier: 
   atlasAssets:
-  - {fileID: 11400000, guid: 4e09b1ebbce0e1d49b15f9578b372e66, type: 2}
+  - {fileID: 11400000, guid: 4c3eddd01f645834aac5496f10a28bf6, type: 2}
   scale: 0.01
-  skeletonJSON: {fileID: 4900000, guid: ec5a912f0264aab42823e467d0489402, type: 3}
+  skeletonJSON: {fileID: 4900000, guid: 46cf43df827a0a641a901a1126e78da3, type: 3}
   skeletonDataModifiers: []
   fromAnimation: []
   toAnimation: []

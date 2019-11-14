@@ -25,6 +25,7 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
     public GameObject TutorialStageReadyCanvas;
     public GameObject BoxRewardPanel;
     public GameObject FixedMenuCanvas;
+    public MenuSceneController menuSceneController;
 
     public void ReadTutorialData() {
         string dataAsJson = ((TextAsset)Resources.Load("TutorialDatas/TutorialDatas")).text;
