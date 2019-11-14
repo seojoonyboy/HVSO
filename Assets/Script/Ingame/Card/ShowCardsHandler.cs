@@ -109,6 +109,10 @@ public class ShowCardsHandler : MonoBehaviour {
         //핸드로 가져온 경우
         else {
             activatedCard.SetActive(true);
+
+            activatedCard.GetComponent<Button>().enabled = true;
+            activatedCard.GetComponent<Button>().onClick.RemoveAllListeners();
+            activatedCard.GetComponent<Button>().onClick.AddListener(() => { GetComponent<CardHandler>().OpenCardInfoList(); });
         }
 
         ToggleDragGuideUI(false);
