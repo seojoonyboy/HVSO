@@ -433,9 +433,11 @@ namespace MenuTutorialModules {
 
             SkeletonGraphic skeletonGraphic = GetComponent<MenuTutorialManager>().rewardPanel.transform.Find("Anim").GetComponent<SkeletonGraphic>();
 
+            skeletonGraphic.Initialize(true);
+
             skeletonGraphic.Skeleton.SetSkin(args[0]);
             skeletonGraphic.Skeleton.SetSlotsToSetupPose();
-            skeletonGraphic.AnimationState.Apply(skeletonGraphic.Skeleton);
+
             skeletonGraphic.AnimationState.SetAnimation(0, "sampledeck", false);
 
             yield return new WaitForSeconds(0.8f);
@@ -469,6 +471,14 @@ namespace MenuTutorialModules {
         public class Response {
             public string claimComplete;
             public string error;
+        }
+    }
+
+    public class DestroyLoadingModal : MenuExecute {
+        public override void Execute() {
+            var loadingModal = GetComponent<MenuTutorialManager>().menuSceneController.loadingModal;
+            if (loadingModal != null) Destroy(loadingModal);
+            handler.isDone = true;
         }
     }
 
@@ -528,12 +538,10 @@ namespace MenuTutorialModules {
             SkeletonGraphic skeletonGraphic = GetComponent<MenuTutorialManager>().rewardPanel.transform.Find("Anim").GetComponent<SkeletonGraphic>();
 
             skeletonGraphic.Initialize(true);
-            skeletonGraphic.Update(0);
 
             skeletonGraphic.Skeleton.SetSkin("orc");
             skeletonGraphic.Skeleton.SetSlotsToSetupPose();
             skeletonGraphic.AnimationState.SetAnimation(0, "story_details", false);
-            skeletonGraphic.AnimationState.Apply(skeletonGraphic.Skeleton);
 
             skeletonGraphic.transform.Find("Header/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 스토리 해금";
             skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 진영 튜토리얼이 개방 되었습니다!";
@@ -573,12 +581,10 @@ namespace MenuTutorialModules {
             SkeletonGraphic skeletonGraphic = GetComponent<MenuTutorialManager>().rewardPanel.transform.Find("Anim").GetComponent<SkeletonGraphic>();
 
             skeletonGraphic.Initialize(true);
-            skeletonGraphic.Update(0);
 
             skeletonGraphic.Skeleton.SetSkin("human");
             skeletonGraphic.Skeleton.SetSlotsToSetupPose();
             skeletonGraphic.AnimationState.SetAnimation(0, "story", false);
-            skeletonGraphic.AnimationState.Apply(skeletonGraphic.Skeleton);
 
             skeletonGraphic.transform.Find("Header/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "스토리 메뉴 해금";
             skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "스토리 메뉴가 오픈되었습니다!";
@@ -615,11 +621,9 @@ namespace MenuTutorialModules {
             SkeletonGraphic skeletonGraphic = GetComponent<MenuTutorialManager>().rewardPanel.transform.Find("Anim").GetComponent<SkeletonGraphic>();
 
             skeletonGraphic.Initialize(true);
-            skeletonGraphic.Update(0);
 
             skeletonGraphic.Skeleton.SetSkin("human");
             skeletonGraphic.Skeleton.SetSlotsToSetupPose();
-            skeletonGraphic.AnimationState.Apply(skeletonGraphic.Skeleton);
             skeletonGraphic.AnimationState.SetAnimation(0, "battle", false);
 
             skeletonGraphic.transform.Find("Header/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "배틀 메뉴 해금";
