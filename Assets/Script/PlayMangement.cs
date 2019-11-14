@@ -161,6 +161,7 @@ public partial class PlayMangement : MonoBehaviour {
         //if (Input.GetKeyDown(KeyCode.Escape)) {
         //    FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
         //}
+        if(heroShieldActive) return;
         if (!infoOn && Input.GetMouseButtonDown(0)) {
             cardInfoCanvas.GetChild(0).GetComponent<CardListManager>().OpenUnitInfoWindow(Input.mousePosition);
         }
