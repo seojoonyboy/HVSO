@@ -439,7 +439,13 @@ public partial class BattleConnector : MonoBehaviour {
         PlayMangement playMangement = PlayMangement.instance;
         GameResultManager resultManager = playMangement.resultManager;
 
-        StartCoroutine(resultManager.SetRewards());
+        string battleType = PlayerPrefs.GetString("SelectedBattleType");
+        if (battleType == "solo") {
+            FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
+        }
+        else {
+            StartCoroutine(resultManager.SetRewards());
+        }
     }
 
     public void ping(object args, int? id) {
