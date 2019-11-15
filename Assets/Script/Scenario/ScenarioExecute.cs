@@ -711,6 +711,7 @@ public class End_tutorial : ScenarioExecute {
         scenarioMask.HideText();
         ScenarioGameManagment.scenarioInstance.isTutorial = false;
         ScenarioGameManagment.scenarioInstance.socketHandler.TutorialEnd();
+        StartCoroutine(PlayMangement.instance.matchRule.WaitGetResult());
     }
 }
 

@@ -22,6 +22,11 @@ namespace victoryModule {
             return;
         }
 
+        public virtual IEnumerator WaitGetResult() {
+            yield return null;
+        }
+
+
         public virtual void CheckCondition() {
             return;
         }
@@ -69,7 +74,7 @@ namespace victoryModule {
             }
         }
 
-        private IEnumerator WaitGetResult() {
+        public override IEnumerator WaitGetResult() {
             yield return new WaitUntil(() => PlayMangement.instance.waitShowResult == false);
             yield return new WaitUntil(() =>  PlayMangement.instance.socketHandler.result != null );
             SocketFormat.ResultFormat result = PlayMangement.instance.socketHandler.result;
@@ -172,7 +177,7 @@ namespace victoryModule {
             }
         }
 
-        private IEnumerator WaitGetResult() {
+        public override IEnumerator WaitGetResult() {
             yield return new WaitUntil(() => PlayMangement.instance.waitShowResult == false);
             yield return new WaitUntil(() => PlayMangement.instance.socketHandler.result != null);
             SocketFormat.ResultFormat result = PlayMangement.instance.socketHandler.result;
