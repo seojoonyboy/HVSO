@@ -4304,6 +4304,11 @@ PrefabInstance:
       propertyPath: showCardsHandler
       value: 
       objectReference: {fileID: 3938507735432067610}
+    - target: {fileID: 8279262149816908149, guid: 089e07056aa4b4148b4eff310e0b9129,
+        type: 3}
+      propertyPath: surrendButton
+      value: 
+      objectReference: {fileID: 5632087516802273974}
     - target: {fileID: 8999688528475227032, guid: 089e07056aa4b4148b4eff310e0b9129,
         type: 3}
       propertyPath: serializationData.PrefabModifications.Array.size
@@ -12261,7 +12266,7 @@ MonoBehaviour:
   m_material: {fileID: 0}
   m_sharedMaterial: {fileID: 0}
   m_isDefaultMaterial: 0
-  m_padding: 8.840815
+  m_padding: 0
   m_canvasRenderer: {fileID: 663125629}
   m_TextComponent: {fileID: 1268611193}
   m_materialReferenceIndex: 1
@@ -43602,6 +43607,16 @@ PrefabInstance:
       propertyPath: BgCanvas
       value: 
       objectReference: {fileID: 1514690666}
+    - target: {fileID: 4760111524600265045, guid: 87e8dc35205d26d40a05abfa3d7a942e,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4760111524600265045, guid: 87e8dc35205d26d40a05abfa3d7a942e,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 87e8dc35205d26d40a05abfa3d7a942e, type: 3}
 --- !u!1 &5128621024474210361
@@ -44336,6 +44351,11 @@ PrefabInstance:
       propertyPath: m_hasFontAssetChanged
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5632087517586477960, guid: 13f48f22344c53a409c35ab7ec1a2f66,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5632087517564572381, guid: 13f48f22344c53a409c35ab7ec1a2f66,
         type: 3}
       propertyPath: m_Enabled
@@ -44363,6 +44383,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 13f48f22344c53a409c35ab7ec1a2f66, type: 3}
+--- !u!114 &5632087516802273974 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5632087517586477960, guid: 13f48f22344c53a409c35ab7ec1a2f66,
+    type: 3}
+  m_PrefabInstance: {fileID: 5632087516802273973}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &5741449010072405592 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2897516525071283717, guid: c28b9fdd64f96ef44b4886edd2fe0d37,

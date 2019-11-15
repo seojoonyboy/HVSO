@@ -14,6 +14,7 @@ public class IngameTimer : MonoBehaviour {
 
     //[SerializeField] TextMeshProUGUI value;
     public int uiStartSec = 10;
+    private float ropeSpeed;
 
     int currentSec;
     int decreaseAmount = 1; //pause 처리를 위함
@@ -84,8 +85,12 @@ public class IngameTimer : MonoBehaviour {
     }
 
     public void PauseTimer(int amount) {
-        tmpCoroutine = tmpTimer(amount);
-        StartCoroutine(tmpCoroutine);
+        //tmpCoroutine = tmpTimer(amount);
+        //StartCoroutine(tmpCoroutine);
+        if(rope.gameObject.activeSelf) return;
+        Animator ani = rope.GetComponent<Animator>();
+        ropeSpeed = ani.speed;
+        ani.speed = 0f;
     }
 
     IEnumerator tmpTimer(int amount) {
@@ -101,8 +106,10 @@ public class IngameTimer : MonoBehaviour {
     /// 타이머 재개
     /// </summary>
     public void ResumeTimer() {
-        decreaseAmount = 1;
-        if (tmpCoroutine != null) StopCoroutine(tmpCoroutine);
+        //decreaseAmount = 1;
+        //if (tmpCoroutine != null) StopCoroutine(tmpCoroutine);
+        if(rope.gameObject.activeSelf) return;
+        rope.GetComponent<Animator>().speed = ropeSpeed;
     }
 
 #if UNITY_EDITOR
@@ -116,7 +123,6 @@ public class IngameTimer : MonoBehaviour {
     public void RopeTimerOn(int second = 20) {
         rope.gameObject.SetActive(true);
         rope.GetComponent<Animator>().speed = 1f / ((float)second * 0.1f);
-        Debug.Log(rope.GetComponent<Animator>().speed);
     }
 
     public void RopeTimerOff() {

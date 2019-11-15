@@ -176,6 +176,8 @@ public partial class BattleConnector : MonoBehaviour {
         CardHandManager cardHandManager = PlayMangement.instance.cardHandManager;
         if(!cardHandManager.socketDone)
             cardHandManager.FirstDrawCardChange();
+
+        PlayMangement.instance.surrendButton.enabled = true;
     }
 
     public void begin_turn_start(object args, int? id) {
@@ -495,6 +497,13 @@ public partial class BattleConnector : MonoBehaviour {
     public void begin_resend_battle_message(object args, int? id) { }
 
     public void end_resend_battle_message(object args, int? id) { }
+
+    public void x2_reward(object args, int? id) {
+        var json = (JObject)args;
+        PlayMangement playMangement = PlayMangement.instance;
+        GameResultManager resultManager = playMangement.resultManager;
+        resultManager.ExtraRewardReceived(json);
+    }
 }
 
 public partial class BattleConnector : MonoBehaviour {
