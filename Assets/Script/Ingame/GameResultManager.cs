@@ -35,6 +35,11 @@ public class GameResultManager : MonoBehaviour {
     }
 
     public void OnReturnBtn() {
+        PlayMangement.instance.SocketHandler.SendMethod("end_game");
+        Invoke("ToMainScene", 1.0f);
+    }
+
+    public void ToMainScene() {
         FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
     }
 
@@ -128,7 +133,7 @@ public class GameResultManager : MonoBehaviour {
         StartCoroutine(SetRewards());
     }
 
-    IEnumerator SetRewards() {
+    public IEnumerator SetRewards() {
         Transform rewards = transform.Find("SecondWindow/ResourceRewards");
         yield return new WaitForSeconds(0.1f);
         Image expSlider = transform.Find("SecondWindow/PlayerExp/ExpSlider/SliderValue").GetComponent<Image>();

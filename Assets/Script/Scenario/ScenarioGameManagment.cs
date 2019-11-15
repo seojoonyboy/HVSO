@@ -131,7 +131,7 @@ public class ScenarioGameManagment : PlayMangement {
 
             SocketHandler.TutorialEnd();
 
-            FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
+            //FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
         });
     }
 

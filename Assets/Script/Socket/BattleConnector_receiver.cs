@@ -188,7 +188,7 @@ public partial class BattleConnector : MonoBehaviour {
         PlayerController player;
         player = PlayMangement.instance.player.isHuman ? PlayMangement.instance.enemyPlayer : PlayMangement.instance.player;
         if (ScenarioGameManagment.scenarioInstance == null) {
-            player.GetComponent<IngameTimer>().BeginTimer();
+            player.GetComponent<IngameTimer>().RopeTimerOn();
         }
         checkMyTurn(false);
     }
@@ -197,7 +197,7 @@ public partial class BattleConnector : MonoBehaviour {
         PlayerController player;
         player = PlayMangement.instance.player.isHuman ? PlayMangement.instance.enemyPlayer : PlayMangement.instance.player;
         if(ScenarioGameManagment.scenarioInstance == null) {
-            player.GetComponent<IngameTimer>().EndTimer();
+            player.GetComponent<IngameTimer>().RopeTimerOff();
         }
         if(!PlayMangement.instance.player.isHuman)
             PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, TurnType.ORC);
@@ -208,7 +208,7 @@ public partial class BattleConnector : MonoBehaviour {
         PlayerController player;
         player = PlayMangement.instance.player.isHuman ? PlayMangement.instance.player : PlayMangement.instance.enemyPlayer;
         if(ScenarioGameManagment.scenarioInstance == null) {
-            player.GetComponent<IngameTimer>().BeginTimer(30);
+            player.GetComponent<IngameTimer>().RopeTimerOn(30);
         }
         checkMyTurn(true);
     }
@@ -217,7 +217,7 @@ public partial class BattleConnector : MonoBehaviour {
         PlayerController player;
         player = PlayMangement.instance.player.isHuman ? PlayMangement.instance.player : PlayMangement.instance.enemyPlayer;
         if(ScenarioGameManagment.scenarioInstance == null) {
-            player.GetComponent<IngameTimer>().EndTimer();
+            player.GetComponent<IngameTimer>().RopeTimerOff();
         }
         if(PlayMangement.instance.player.isHuman)
             PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, TurnType.HUMAN);
@@ -228,7 +228,7 @@ public partial class BattleConnector : MonoBehaviour {
         PlayerController player;
         player = PlayMangement.instance.player.isHuman ? PlayMangement.instance.enemyPlayer : PlayMangement.instance.player;
         if(ScenarioGameManagment.scenarioInstance == null) {
-            player.GetComponent<IngameTimer>().BeginTimer();
+            player.GetComponent<IngameTimer>().RopeTimerOn();
         }
         checkMyTurn(false);
         unitSkillList.isDone = false;
@@ -238,7 +238,7 @@ public partial class BattleConnector : MonoBehaviour {
         PlayerController player;
         player = PlayMangement.instance.player.isHuman ? PlayMangement.instance.enemyPlayer : PlayMangement.instance.player;
         if(ScenarioGameManagment.scenarioInstance == null) {
-            player.GetComponent<IngameTimer>().EndTimer();
+            player.GetComponent<IngameTimer>().RopeTimerOff();
         }
         if(!PlayMangement.instance.player.isHuman)
             PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, TurnType.SECRET);
@@ -397,13 +397,11 @@ public partial class BattleConnector : MonoBehaviour {
             Destroy(GetComponent<ReconnectController>());
             Destroy(reconnectModal);
         }
-     }
 
-    public void end_end_game(object args, int? id) {
         battleGameFinish = true;
         AccountManager.Instance.RequestUserInfo();
 
-        if (ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.isTutorial == false) {
+        if (ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.isTutorial) {
             string _result = result.result;
 
             PlayMangement playMangement = PlayMangement.instance;
@@ -426,14 +424,20 @@ public partial class BattleConnector : MonoBehaviour {
             GameResultManager resultManager = playMangement.resultManager;
             resultManager.gameObject.SetActive(true);
 
-            if(_result == "win") {
+            if (_result == "win") {
                 resultManager.SetResultWindow("win", playMangement.player.isHuman);
             }
             else {
                 resultManager.SetResultWindow("lose", playMangement.player.isHuman);
             }
         }
+    }
 
+    public void end_end_game(object args, int? id) {
+        PlayMangement playMangement = PlayMangement.instance;
+        GameResultManager resultManager = playMangement.resultManager;
+
+        StartCoroutine(resultManager.SetRewards());
     }
 
     public void ping(object args, int? id) {
