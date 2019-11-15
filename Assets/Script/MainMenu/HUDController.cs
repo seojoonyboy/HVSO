@@ -141,6 +141,7 @@ public class HUDController : MonoBehaviour {
 
     void OnDestroy() {
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, OnUserDataUpdated);
+        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_NICKNAME_UPDATED, OnUserDataUpdated);
     }
 
     public void OnPageChanged(int pageNum) {
