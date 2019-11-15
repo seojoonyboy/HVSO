@@ -872,7 +872,7 @@ public partial class AccountManager {
         }
     }
 
-    public void ChangeNicknameReq(string val = "") {
+    public void ChangeNicknameReq(string val = "", UnityAction callback = null) {
         StringBuilder url = new StringBuilder();
         string base_url = networkManager.baseUrl;
 
@@ -901,6 +901,7 @@ public partial class AccountManager {
                             null,
                             res
                         );
+                    if(callback != null) callback();
                 }
             }
             else {
