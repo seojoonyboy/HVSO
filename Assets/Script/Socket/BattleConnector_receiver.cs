@@ -176,6 +176,8 @@ public partial class BattleConnector : MonoBehaviour {
         CardHandManager cardHandManager = PlayMangement.instance.cardHandManager;
         if(!cardHandManager.socketDone)
             cardHandManager.FirstDrawCardChange();
+
+        PlayMangement.instance.surrendButton.enabled = true;
     }
 
     public void begin_turn_start(object args, int? id) {

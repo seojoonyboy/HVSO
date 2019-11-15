@@ -57,6 +57,7 @@ public partial class PlayMangement : MonoBehaviour {
     public bool waitShowResult = false;
 
     public ShowCardsHandler showCardsHandler;
+    public Button surrendButton;
     //public string magicHistroy;
 
     private void Awake() {
