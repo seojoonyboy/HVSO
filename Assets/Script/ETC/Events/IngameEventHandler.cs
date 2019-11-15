@@ -40,6 +40,10 @@ public class IngameEventHandler : MonoBehaviour {
         }
     }
 
+    internal void AddListener(object extraRewardReceived) {
+        throw new NotImplementedException();
+    }
+
     public void RemoveEvent(Enum Event_Type) {
         //Remove entry from dictionary
         Listeners.Remove((EVENT_TYPE)Event_Type);
@@ -97,6 +101,8 @@ public class IngameEventHandler : MonoBehaviour {
 
         OPEN_INFO_WINDOW,
         CLICK_SKILL_ICON,
-        CLOSE_INFO_WINDOW
+        CLOSE_INFO_WINDOW,
+
+        EXTRA_REWARD_RECEIVED
     }
 }

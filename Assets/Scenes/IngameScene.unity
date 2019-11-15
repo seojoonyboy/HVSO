@@ -12261,7 +12261,7 @@ MonoBehaviour:
   m_material: {fileID: 0}
   m_sharedMaterial: {fileID: 0}
   m_isDefaultMaterial: 0
-  m_padding: 8.840815
+  m_padding: 0
   m_canvasRenderer: {fileID: 663125629}
   m_TextComponent: {fileID: 1268611193}
   m_materialReferenceIndex: 1
@@ -43602,6 +43602,16 @@ PrefabInstance:
       propertyPath: BgCanvas
       value: 
       objectReference: {fileID: 1514690666}
+    - target: {fileID: 4760111524600265045, guid: 87e8dc35205d26d40a05abfa3d7a942e,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4760111524600265045, guid: 87e8dc35205d26d40a05abfa3d7a942e,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 87e8dc35205d26d40a05abfa3d7a942e, type: 3}
 --- !u!1 &5128621024474210361

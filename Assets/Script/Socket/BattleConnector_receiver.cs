@@ -495,6 +495,13 @@ public partial class BattleConnector : MonoBehaviour {
     public void begin_resend_battle_message(object args, int? id) { }
 
     public void end_resend_battle_message(object args, int? id) { }
+
+    public void x2_reward(object args, int? id) {
+        var json = (JObject)args;
+        PlayMangement playMangement = PlayMangement.instance;
+        GameResultManager resultManager = playMangement.resultManager;
+        resultManager.ExtraRewardReceived(json);
+    }
 }
 
 public partial class BattleConnector : MonoBehaviour {
