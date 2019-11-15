@@ -578,16 +578,14 @@
                         ]
                     },
                     {
-                        "name" : "End_tutorial",
-                        "args" : [
-                            "proceed_game"
-                        ]
-                    },
-                    {
                         "name": "Result_battle",
                         "args": [
                             "proceed"
                         ]
+                    },
+                    {
+                        "name": "End_tutorial",
+                        "args": []
                     }
                 ],
                 "isExecute": false
