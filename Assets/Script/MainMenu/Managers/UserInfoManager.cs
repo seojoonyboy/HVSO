@@ -17,4 +17,27 @@ public class UserInfoManager : MonoBehaviour
         gameObject.SetActive(false);
         EscapeKeyController.escapeKeyCtrl.RemoveEscape(ExitUserInfo);
     }
+
+    public void ChangeId() {
+        Modal.instantiate("변경하실 닉네임을 입력해 주세요.", "새로운 닉네임", AccountManager.Instance.NickName, Modal.Type.INSERT, (str) => {
+            if (string.IsNullOrEmpty(str)) {
+                Modal.instantiate("빈 닉네임은 허용되지 않습니다.", Modal.Type.CHECK);
+            }
+            else {
+                AccountManager.Instance.ChangeNicknameReq(str, ChangeCallback);
+            }
+        });
+    }
+
+    private void ChangeCallback() {
+        AccountManager.Instance.RequestUserInfo((req, res) => {
+            if(res.IsSuccess) {
+                Modal.instantiate("닉네임 변경이 적용 됐습니다.", Modal.Type.CHECK);
+                SetUserInfo();
+            }
+            else {
+                Modal.instantiate("닉네임 변경이 실패했습니다.\n다시 한번 시도바랍니다.", Modal.Type.CHECK);
+            }
+        });
+    }
 }
