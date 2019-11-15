@@ -34,6 +34,20 @@ public class GameResultManager : MonoBehaviour {
         supply = AccountManager.Instance.userResource.supply;
         nextLvExp = AccountManager.Instance.userResource.nextLvExp;
         gameObject.SetActive(false);
+
+        string battleType = PlayerPrefs.GetString("SelectedBattleType");
+        if(battleType == "solo") {
+            ChangeResultButtonFunction();
+        }
+        else {
+            Button btn = transform.Find("FirstWindow/GotoRewardButton").GetComponent<Button>();
+            btn.onClick.RemoveAllListeners();
+            btn.onClick.AddListener(() => {
+                OpenSecondWindow();
+            });
+            btn.transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = "보상으로";
+
+        }
     }
 
     public void ExtraRewardReceived(JObject data) {
@@ -305,5 +319,18 @@ public class GameResultManager : MonoBehaviour {
     private void ClaimDoubleReq() {
         Logger.Log("ClaimDoubleReq");
         PlayMangement.instance.SocketHandler.SendMethod("claim_2x_reward");
+    }
+
+    /// <summary>
+    /// AI 대전에서는 결과화면에서 보상화면이 나오지 않게 바꿔야함
+    /// </summary>
+    public void ChangeResultButtonFunction() {
+        Logger.Log("AI 대전의 결과창 화면 세팅 변경");
+        Button btn = transform.Find("FirstWindow/GotoRewardButton").GetComponent<Button>();
+        btn.onClick.RemoveAllListeners();
+        btn.onClick.AddListener(() => {
+            PlayMangement.instance.SocketHandler.SendMethod("end_game");
+        });
+        btn.transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = "메인으로";
     }
 }
