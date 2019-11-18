@@ -42,6 +42,18 @@ public class EditCardButtonHandler : MonoBehaviour {
         }
     }
 
+    public void CheckHandMoving() {
+        if (!gameObject.activeSelf) return;
+        if (transform.parent.name == "HandDeckArea")
+            CloseCardButtons();
+    }
+
+    public void CheckBookMoving() {
+        if (!gameObject.activeSelf) return;
+        if (transform.parent.name == "CardBookArea")
+            CloseCardButtons();
+    }
+
     public void SetCardButtons(Transform card, bool isHandCard, int cardNum) {
         this.card = card;
         cardData = card.GetComponent<EditCardHandler>().cardData;
