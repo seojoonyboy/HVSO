@@ -258,11 +258,11 @@ public partial class MenuCardInfo : MonoBehaviour {
         numSpine.AnimationState.SetAnimation(0, haveNum.ToString(), false);
         if (accountManager.cardPackage.data.ContainsKey(cardId)) {
             transform.Find("EditCardUI/ConfirmCard").GetComponent<Button>().interactable = (haveNum != 0 && handNum != 40);
-            transform.Find("EditCardUI/ExpectCard").GetComponent<Button>().interactable = (haveNum != accountManager.cardPackage.data[cardId].cardCount);
+            transform.Find("EditCardUI/ExceptCard").GetComponent<Button>().interactable = (haveNum != accountManager.cardPackage.data[cardId].cardCount);
         }
         else {
             transform.Find("EditCardUI/ConfirmCard").GetComponent<Button>().interactable = false;
-            transform.Find("EditCardUI/ExpectCard").GetComponent<Button>().interactable = false;
+            transform.Find("EditCardUI/ExceptCard").GetComponent<Button>().interactable = false;
         }
     }
 
@@ -312,8 +312,8 @@ public partial class MenuCardInfo : MonoBehaviour {
         SoundManager.Instance.PlaySound(UISfxSound.BUTTON1);
         transform.parent.gameObject.SetActive(false);
         transform.gameObject.SetActive(false);
-        transform.parent.Find("DeckEditExitTrigger").gameObject.SetActive(false);
-        transform.parent.Find("ExitTrigger").gameObject.SetActive(true);
+        //transform.parent.Find("DeckEditExitTrigger").gameObject.SetActive(false);
+        //transform.parent.Find("ExitTrigger").gameObject.SetActive(true);
         transform.parent.Find("HeroInfo").gameObject.SetActive(false);
         editCard = null;
         EscapeKeyController.escapeKeyCtrl.RemoveEscape(CloseInfo);

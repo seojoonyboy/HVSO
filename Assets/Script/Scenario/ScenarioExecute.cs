@@ -1127,10 +1127,12 @@ public class Wait_Turn : ScenarioExecute {
             case "BATTLE":
                 eventType = IngameEventHandler.EVENT_TYPE.BEGIN_BATTLE_TURN;
                 break;
+            case "MULIGAN":
+                eventType = IngameEventHandler.EVENT_TYPE.END_MULIGUN_CARD;
+                break;
 
         }
         PlayMangement.instance.EventHandler.AddListener(eventType, CheckTurn);
-
     }
 
     protected void CheckTurn(Enum event_type, Component Sender, object Param) {
@@ -1444,7 +1446,7 @@ public class Focus_Skill_Icon : ScenarioExecute {
     public float currentTime = 0;
     public bool clickIcon = false;
 
-    IDisposable click, unclick;
+    IDisposable click, unclick, temp;
 
     public override void Execute() {
         scenarioMask.FocusSkillIcon();
@@ -1453,6 +1455,9 @@ public class Focus_Skill_Icon : ScenarioExecute {
         PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.CLICK_SKILL_ICON, CheckClick);
         scenarioMask.outText.gameObject.SetActive(true);
 
+        
+        //click = Observable.Timer(TimeSpan.FromSeconds(currentTime), TimeSpan.FromSeconds(time)).Where(_ => clickIcon == true).First().Subscribe(_ => ClickFinish());
+        //click = Observable.Interval(TimeSpan.FromSeconds(time)).Where(_=>clickIcon == true).Select(x=> currentTime += time).First(x=>x>=time).Subscribe(_ => ClickFinish());
         click = Observable.EveryUpdate().Where(_ => clickIcon == true).Select(_ => currentTime += Time.deltaTime).SkipWhile(x => x < time).First().Subscribe(_ => ClickFinish());
         unclick = Observable.EveryUpdate().Where(_ => clickIcon == true).Where(_ => Input.GetMouseButton(0) == false).Subscribe(_ => { currentTime = 0; clickIcon = false; });
     }
@@ -1765,8 +1770,8 @@ public class Enable_UnitInfo_Window : ScenarioExecute {
         targetUnit.gameObject.transform.Find("InfoWindowTrigger").gameObject.SetActive(true);
         handler.isDone = true;
     }
-
 }
+
 
 
 

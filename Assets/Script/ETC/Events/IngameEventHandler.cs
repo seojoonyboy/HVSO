@@ -103,6 +103,7 @@ public class IngameEventHandler : MonoBehaviour {
         CLICK_SKILL_ICON,
         CLOSE_INFO_WINDOW,
 
-        EXTRA_REWARD_RECEIVED
+        EXTRA_REWARD_RECEIVED,
+        END_MULIGUN_CARD
     }
 }
