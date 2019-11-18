@@ -198,6 +198,9 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     private void JoinGame() {
+        webSocket.Close();
+        OpenSocket();
+
         string[] args;
         PlayerPrefs.SetString("SelectedBattleType", "league");
 
