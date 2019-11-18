@@ -118,7 +118,7 @@ public class MenuSceneController : MonoBehaviour {
                     if (loadingModal != null) Destroy(loadingModal);
                 }
                 else {
-                    loadingModal.GetComponent<Canvas>().sortingOrder = 81;
+                    if(loadingModal != null) loadingModal.GetComponent<Canvas>().sortingOrder = 81;
 
                     if(!clearedStages.Exists(x => x.camp == "orc" && x.stageNumber == 1)) {
                         tutorialType = MenuTutorialManager.TutorialType.TO_ORC_STORY;

@@ -7,6 +7,7 @@ using Spine.Unity;
 using UnityEngine.Events;
 using System;
 using Newtonsoft.Json.Linq;
+using UniRx;
 
 public class GameResultManager : MonoBehaviour {
     public GameObject SocketDisconnectedUI;
@@ -49,6 +50,11 @@ public class GameResultManager : MonoBehaviour {
         }
     }
 
+    void OnDestroy() {
+        if (observer_1 != null) observer_1.Dispose();
+        if (observer_2 != null) observer_2.Dispose();
+    }
+
     public void ExtraRewardReceived(JObject data) {
         TMPro.TextMeshProUGUI doubleCoupons = transform.Find("SecondWindow/PlayerSupply/ExtraSupply/DoubleButton/Value").GetComponent<TMPro.TextMeshProUGUI>();
         doubleCoupons.text = data["couponLeft"].ToString();
@@ -68,11 +74,6 @@ public class GameResultManager : MonoBehaviour {
 
     public void OnReturnBtn() {
         PlayMangement.instance.SocketHandler.SendMethod("end_game");
-        Invoke("ToMainScene", 1.0f);
-    }
-
-    public void ToMainScene() {
-        StopCoroutine(OnTimerToExit());
         FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
     }
 
@@ -150,10 +151,7 @@ public class GameResultManager : MonoBehaviour {
         frontSpine.AnimationState.SetAnimation(0, "01.start", false);
         frontSpine.AnimationState.AddAnimation(1, "02.play", true, 0.8f);
 
-
-        if (PlayerPrefs.GetString("SelectedBattleType") == "solo") {
-            StartCoroutine(OnTimerToExit());
-        }
+        OnTimerToExit();
     }
 
     public void OpenSecondWindow() {
@@ -170,7 +168,6 @@ public class GameResultManager : MonoBehaviour {
         transform.Find("SecondWindow/Buttons/BattleReady").GetComponent<Button>().interactable = false;
 
         StartCoroutine(SetRewards());
-        StartCoroutine(OnTimerToExit());
     }
 
     public IEnumerator SetRewards() {
@@ -220,9 +217,20 @@ public class GameResultManager : MonoBehaviour {
         //}
     }
 
-    IEnumerator OnTimerToExit() {
-        yield return new WaitForSeconds(5.0f);
-        OnReturnBtn();
+    public float currentTime = 0;
+    private const float WAIT_TIME = 5.0f;
+    IDisposable observer_1, observer_2;
+
+    void OnTimerToExit() {
+        observer_1 = Observable
+            .EveryUpdate()
+            .Select(_ => currentTime += Time.deltaTime)
+            .SkipWhile(x => x < WAIT_TIME)
+            .Subscribe(_ => OnReturnBtn());
+        observer_2 = Observable
+            .EveryUpdate()
+            .Where(_ => Input.GetMouseButton(0) == true)
+            .Subscribe(_ => { currentTime = 0; });
     }
 
     IEnumerator GetUserExp(Image slider) {
