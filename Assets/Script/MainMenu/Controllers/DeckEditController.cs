@@ -327,6 +327,16 @@ public class DeckEditController : MonoBehaviour
         handCardHandler.SETNUM--;
         handCardHandler.SetSetNum();
         if (!handCardHandler.beforeObject.activeSelf) handCardHandler.beforeObject.gameObject.SetActive(true);
+
+        float ditance1 = handCardHandler.beforeObject.transform.position.y + (142 * transform.localScale.x) - editBar.transform.Find("CardBookBottom").position.y;
+        float ditance2 = handCardHandler.beforeObject.transform.position.y - (142 * transform.localScale.x) - editBar.bookBottomLimit.position.y;
+        if (ditance1 > 0) {
+            editBar.cardBookArea.GetChild(0).position = new Vector3(editBar.cardBookArea.GetChild(0).position.x, editBar.cardBookArea.GetChild(0).position.y - ditance1);
+        }
+        else if (ditance2 < 0) {
+            editBar.cardBookArea.GetChild(0).position = new Vector3(editBar.cardBookArea.GetChild(0).position.x, editBar.cardBookArea.GetChild(0).position.y - ditance2);
+        }
+
         EditCardHandler beforeCard = handCardHandler.beforeObject.GetComponent<EditCardHandler>();
         beforeCard.HAVENUM++;
         beforeCard.SetHaveNum(true);
@@ -352,28 +362,76 @@ public class DeckEditController : MonoBehaviour
         if (setCardNum == 40) return;
         if (EditCardHandler.onAnimation) return;
         EditCardHandler cardHandler = cardObj.GetComponent<EditCardHandler>();
+        EditCardHandler addCardHandler;
         if (!setCardList.ContainsKey(cardId)) {
             GameObject addedCard = settingLayout.GetChild(0).GetChild(setCardList.Count).gameObject;
+            addedCard.SetActive(true);
             setCardList.Add(cardId, addedCard);
-            EditCardHandler addCardHandler = addedCard.GetComponent<EditCardHandler>();
+            addCardHandler = addedCard.GetComponent<EditCardHandler>();
             addCardHandler.SETNUM++;
             addCardHandler.DrawCard(cardId, isHuman);
             addCardHandler.SetSetNum(true);
             addCardHandler.beforeObject = cardObj;
-            addedCard.SetActive(true);
+            SortHandCards();
             RefreshLine2();
         }
         else {
-            EditCardHandler addCardHandler = setCardList[cardId].GetComponent<EditCardHandler>();
+            addCardHandler = setCardList[cardId].GetComponent<EditCardHandler>();
             addCardHandler.SETNUM++;
             addCardHandler.SetSetNum(true);
+        }
+        float ditance1 = addCardHandler.transform.position.y + (142 * transform.localScale.x) - editBar.handTopPos.position.y;
+        float ditance2 = addCardHandler.transform.position.y - (142 * transform.localScale.x) - editBar.transform.Find("CardBookTop").position.y;
+        if (ditance1 > 0) {
+            editBar.handDeckArea.GetChild(0).position = new Vector3(editBar.handDeckArea.GetChild(0).position.x, editBar.handDeckArea.GetChild(0).position.y - ditance1);
+        }
+        else if (ditance2 < 0) {
+            editBar.handDeckArea.GetChild(0).position = new Vector3(editBar.handDeckArea.GetChild(0).position.x, editBar.handDeckArea.GetChild(0).position.y - ditance2);
         }
         cardHandler.HAVENUM--;
         haveCardNum--;
         cardHandler.SetHaveNum();
         if (cardHandler.HAVENUM == 0) cardObj.SetActive(false);
         setCardNum++;
-        RefreshLine2();
+    }
+
+    public void SortHandCards() {
+        List<EditCard> cards = new List<EditCard>();
+        int count = 0;
+        for (int i = 0; i < settingLayout.GetChild(0).childCount; i++) {
+            if (!settingLayout.GetChild(0).GetChild(i).gameObject.activeSelf) break;
+            dataModules.CollectionCard cardData = settingLayout.GetChild(0).GetChild(i).GetComponent<EditCardHandler>().cardData;
+            int rarelityValue = 0;
+            switch (cardData.rarelity) {
+                case "common":
+                    rarelityValue = 0;
+                    break;
+                case "uncommon":
+                    rarelityValue = 1;
+                    break;
+                case "rare":
+                    rarelityValue = 2;
+                    break;
+                case "superrare":
+                    rarelityValue = 3;
+                    break;
+                case "legend":
+                    rarelityValue = 4;
+                    break;
+            }
+            cards.Add(new EditCard {
+                cardObject = settingLayout.GetChild(0).GetChild(i).gameObject,
+                cardId = cardData.id,
+                cardClass = cardData.cardClasses[0],
+                costOrder = cardData.cost,
+                rareOrder = rarelityValue
+            });
+            count++;
+        }
+        List<EditCard> sortedCards = SortCardListByCost(cards).ToList();
+        for(int i = 0; i < sortedCards.Count; i++) {
+            sortedCards[i].cardObject.transform.SetSiblingIndex(i);
+        }
     }
 
     public void RefreshLine() {
@@ -647,6 +705,7 @@ public class DeckEditController : MonoBehaviour
             }
             maxHaveCard = setCardNum + haveCardNum;
         }
+        SortHandCards();
         RefreshLine2();
         editBar.InitCanvas();
         RefreshLine();

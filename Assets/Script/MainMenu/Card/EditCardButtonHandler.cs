@@ -18,28 +18,40 @@ public class EditCardButtonHandler : MonoBehaviour {
             if (isHandCard) {
                 RectTransform handRect = handDeckArea.GetChild(0).GetComponent<RectTransform>();
                 if (transform.position.y < card.position.y) {
-                    if (handRect.anchoredPosition.y > 0 || handRect.anchoredPosition.y < -10) {
+                    if (handRect.anchoredPosition.y > 0 || handRect.anchoredPosition.y < (-10 * deckEditCanvas.localScale.x)) {
                         CloseCardButtons();
                     }
                 }
                 else if (handRect.anchoredPosition.y < handRect.sizeDelta.y - handDeckArea.GetComponent<RectTransform>().sizeDelta.y
-                    || handRect.anchoredPosition.y > handRect.sizeDelta.y - handDeckArea.GetComponent<RectTransform>().sizeDelta.y + 10) {
+                    || handRect.anchoredPosition.y > handRect.sizeDelta.y - handDeckArea.GetComponent<RectTransform>().sizeDelta.y + (10 * deckEditCanvas.localScale.x)) {
                     CloseCardButtons();
                 }
             }
             if (!isHandCard) {
                 RectTransform bookRect = cardBookArea.GetChild(0).GetComponent<RectTransform>();
                 if (transform.position.y < card.position.y) {
-                    if (bookRect.anchoredPosition.y > 0 || bookRect.anchoredPosition.y < -10) {
+                    if (bookRect.anchoredPosition.y > 0 || bookRect.anchoredPosition.y < (-10 * deckEditCanvas.localScale.x)) {
                         CloseCardButtons();
                     }
                 }
-                else if (bookRect.anchoredPosition.y + 100 < (bookRect.sizeDelta.y - cardBookArea.GetComponent<RectTransform>().sizeDelta.y) * deckEditCanvas.localScale.x
-                    || bookRect.anchoredPosition.y > bookRect.sizeDelta.y - cardBookArea.GetComponent<RectTransform>().sizeDelta.y + 10) {
+                else if (bookRect.anchoredPosition.y + (100 * deckEditCanvas.localScale.x) < (bookRect.sizeDelta.y - cardBookArea.GetComponent<RectTransform>().sizeDelta.y) * deckEditCanvas.localScale.x
+                    || bookRect.anchoredPosition.y > bookRect.sizeDelta.y - cardBookArea.GetComponent<RectTransform>().sizeDelta.y + (10 * deckEditCanvas.localScale.x)) {
                     CloseCardButtons();
                 }
             }
         }
+    }
+
+    public void CheckHandMoving() {
+        if (!gameObject.activeSelf) return;
+        if (transform.parent.name == "HandDeckArea")
+            CloseCardButtons();
+    }
+
+    public void CheckBookMoving() {
+        if (!gameObject.activeSelf) return;
+        if (transform.parent.name == "CardBookArea")
+            CloseCardButtons();
     }
 
     public void SetCardButtons(Transform card, bool isHandCard, int cardNum) {
@@ -52,8 +64,11 @@ public class EditCardButtonHandler : MonoBehaviour {
             transform.SetParent(handDeckArea);
         else
             transform.SetParent(cardBookArea);
+
         transform.GetChild(0).Find("AddCard").gameObject.SetActive(!isHandCard);
         transform.GetChild(0).Find("ExceptCard").gameObject.SetActive(isHandCard);
+        if(!isHandCard)
+            transform.GetChild(0).Find("AddCard").GetComponent<Button>().interactable = (cardNum == 0) ? false : true;
         EditCardHandler cardHandler = transform.GetChild(0).Find("CardImage").GetComponent<EditCardHandler>();
         cardHandler.InitEditCard();
         cardHandler.HAVENUM = cardNum;
