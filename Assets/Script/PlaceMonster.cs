@@ -454,7 +454,7 @@ public class PlaceMonster : MonoBehaviour {
                 //SoundManager.Instance.PlaySound(SoundType.MIDDLE_ATTACK);
                 StartCoroutine(PlayMangement.instance.cameraShake(0.4f, 4));
             }
-            else if (unit.attack > 7) {
+            else if (unit.attack >= 7) {
                 EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.HIT_HIGH, targetPos);
                 //SoundManager.Instance.PlaySound(SoundType.LARGE_ATTACK);
                 StartCoroutine(PlayMangement.instance.cameraShake(0.4f, 10));
