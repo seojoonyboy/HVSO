@@ -1,0 +1,104 @@
+
+tutorial__h10001.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+L_arm
+  rotate: false
+  xy: 522, 307
+  size: 238, 253
+  orig: 238, 253
+  offset: 0, 0
+  index: -1
+L_lapel
+  rotate: true
+  xy: 727, 136
+  size: 169, 133
+  orig: 169, 133
+  offset: 0, 0
+  index: -1
+L_leg
+  rotate: false
+  xy: 317, 136
+  size: 199, 255
+  orig: 199, 255
+  offset: 0, 0
+  index: -1
+R_lapel
+  rotate: false
+  xy: 762, 429
+  size: 155, 131
+  orig: 155, 131
+  offset: 0, 0
+  index: -1
+R_leg
+  rotate: true
+  xy: 2, 9
+  size: 197, 236
+  orig: 197, 236
+  offset: 0, 0
+  index: -1
+R_low_arm
+  rotate: false
+  xy: 2, 208
+  size: 313, 183
+  orig: 313, 183
+  offset: 0, 0
+  index: -1
+R_upper_arm
+  rotate: true
+  xy: 240, 2
+  size: 132, 218
+  orig: 132, 218
+  offset: 0, 0
+  index: -1
+body
+  rotate: true
+  xy: 682, 562
+  size: 368, 328
+  orig: 368, 328
+  offset: 0, 0
+  index: -1
+eye
+  rotate: true
+  xy: 522, 624
+  size: 38, 43
+  orig: 38, 43
+  offset: 0, 0
+  index: -1
+eye2
+  rotate: true
+  xy: 567, 631
+  size: 31, 40
+  orig: 31, 40
+  offset: 0, 0
+  index: -1
+head
+  rotate: true
+  xy: 2, 393
+  size: 269, 258
+  orig: 269, 258
+  offset: 0, 0
+  index: -1
+head_2
+  rotate: true
+  xy: 262, 393
+  size: 269, 258
+  orig: 269, 258
+  offset: 0, 0
+  index: -1
+purse
+  rotate: true
+  xy: 518, 127
+  size: 178, 207
+  orig: 178, 207
+  offset: 0, 0
+  index: -1
+shadow
+  rotate: false
+  xy: 2, 664
+  size: 678, 266
+  orig: 678, 266
+  offset: 0, 0
+  index: -1

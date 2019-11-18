@@ -7,6 +7,7 @@ using Spine;
 using Spine.Unity;
 using System;
 using Newtonsoft.Json;
+using UIModule;
 
 public class MenuSceneController : MonoBehaviour {
     [SerializeField] Transform fixedCanvas;
@@ -26,7 +27,7 @@ public class MenuSceneController : MonoBehaviour {
     static bool isLoaded = false;
     public MyDecksLoader decksLoader;
     [SerializeField] GameObject newbiLoadingModal;  //최초 접속시 튜토리얼 강제시 등장하는 로딩 화면
-    GameObject loadingModal;
+    public GameObject loadingModal;
 
     [SerializeField] GameObject reconnectingModal;  //재접속 진행시 등장하는 로딩 화면
     [SerializeField] MenuTutorialManager menuTutorialManager;
@@ -60,6 +61,7 @@ public class MenuSceneController : MonoBehaviour {
         EscapeKeyController.escapeKeyCtrl.AddEscape(OpenQuitModal);
 
         loadingModal = LoadingModal.instantiate();
+        Destroy(loadingModal.transform.GetChild(0).gameObject.GetComponent<LoadingTextEffect>());
         loadingModal.transform.GetChild(0).Find("Text").GetComponent<Text>().text = "";
         loadingModal.transform.GetChild(0).Find("Time").GetComponent<Text>().enabled = false;
         loadingModal.transform.GetChild(0).GetComponent<Image>().color = new Color(0, 0, 0, 255f);
@@ -111,11 +113,13 @@ public class MenuSceneController : MonoBehaviour {
                 //휴먼 튜토리얼 0-1을 진행하지 않았음
                 if (!clearedStages.Exists(x => x.camp == "human" && x.stageNumber == 1)) {
                     AddNewbiController();
-
-                    PlayerPrefs.SetString("NeedMenuTutorial", "false"); //메인화면 이미지 튜토리얼 필요 여부
                     PlayerPrefs.SetString("NeedUnlockMenu", "true");
+
+                    if (loadingModal != null) Destroy(loadingModal);
                 }
                 else {
+                    if(loadingModal != null) loadingModal.GetComponent<Canvas>().sortingOrder = 81;
+
                     if(!clearedStages.Exists(x => x.camp == "orc" && x.stageNumber == 1)) {
                         tutorialType = MenuTutorialManager.TutorialType.TO_ORC_STORY;
                     }
@@ -139,14 +143,8 @@ public class MenuSceneController : MonoBehaviour {
         }
         else {
             menuTutorialManager.enabled = false;
-            PlayerPrefs.SetString("NeedMenuTutorial", "true");
-
-            foreach(Transform child in menuTutorialManager.mainDescCanvas.transform) {
-                child.GetComponent<dataModules.BooleanIndex>().isOn = false;
-            }
+            if (loadingModal != null) Destroy(loadingModal);
         }
-
-        if (loadingModal != null) Destroy(loadingModal);
     }
 
     private void OnUserDataUpdate(Enum Event_Type, Component Sender, object Param) {

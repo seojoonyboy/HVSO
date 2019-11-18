@@ -255,7 +255,7 @@ public partial class BattleConnector : MonoBehaviour {
             UnityEngine.SceneManagement.SceneManager.LoadScene("TutorialScene", UnityEngine.SceneManagement.LoadSceneMode.Single);
     }
 
-    private void SendMethod(string method, object args = null) {
+    public void SendMethod(string method, object args = null) {
         if(args == null) args = new string[]{};
         SendFormat format = new SendFormat(method, args);
         string json = JsonConvert.SerializeObject(format);

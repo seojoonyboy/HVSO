@@ -96,6 +96,7 @@ public class HUDController : MonoBehaviour {
 
     private void Awake() {
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, OnUserDataUpdated);
+        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_NICKNAME_UPDATED, OnUserDataUpdated);
         gradation = transform.GetChild(0).GetChild(0).Find("Gradation");
 
         userInfoUI = transform
@@ -140,6 +141,7 @@ public class HUDController : MonoBehaviour {
 
     void OnDestroy() {
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, OnUserDataUpdated);
+        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_NICKNAME_UPDATED, OnUserDataUpdated);
     }
 
     public void OnPageChanged(int pageNum) {

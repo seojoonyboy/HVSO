@@ -5,6 +5,9 @@ using UnityEngine.UI;
 using Spine;
 using Spine.Unity;
 using UnityEngine.Events;
+using System;
+using Newtonsoft.Json.Linq;
+using UniRx;
 
 public class GameResultManager : MonoBehaviour {
     public GameObject SocketDisconnectedUI;
@@ -32,9 +35,45 @@ public class GameResultManager : MonoBehaviour {
         supply = AccountManager.Instance.userResource.supply;
         nextLvExp = AccountManager.Instance.userResource.nextLvExp;
         gameObject.SetActive(false);
+
+        string battleType = PlayerPrefs.GetString("SelectedBattleType");
+        if(battleType == "solo") {
+            ChangeResultButtonFunction();
+        }
+        else {
+            Button btn = transform.Find("FirstWindow/GotoRewardButton").GetComponent<Button>();
+            btn.onClick.RemoveAllListeners();
+            btn.onClick.AddListener(() => {
+                OpenSecondWindow();
+            });
+            btn.transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = "보상으로";
+        }
+    }
+
+    void OnDestroy() {
+        if (observer_1 != null) observer_1.Dispose();
+        if (observer_2 != null) observer_2.Dispose();
+    }
+
+    public void ExtraRewardReceived(JObject data) {
+        TMPro.TextMeshProUGUI doubleCoupons = transform.Find("SecondWindow/PlayerSupply/ExtraSupply/DoubleButton/Value").GetComponent<TMPro.TextMeshProUGUI>();
+        doubleCoupons.text = data["couponLeft"].ToString();
+
+        int supply = 0;
+        int.TryParse(data["supply"].ToString(), out supply);
+
+        Transform playerSup = transform.Find("SecondWindow/PlayerSupply");
+        StartCoroutine(GetUserSupply(playerSup.Find("ExpSlider/SliderValue").GetComponent<Image>(), supply, 0, 0, true));
+
+        var button = transform.Find("SecondWindow/PlayerSupply/ExtraSupply/DoubleButton/Button").GetComponent<Button>();
+        button.enabled = false;
+        button.GetComponent<Image>().color = new Color32(106, 106, 106, 255);
+        button.transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().color = new Color32(106, 106, 106, 255);
+        button.transform.GetChild(1).GetComponent<Text>().color = new Color32(106, 106, 106, 255);
     }
 
     public void OnReturnBtn() {
+        PlayMangement.instance.SocketHandler.SendMethod("end_game");
         FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
     }
 
@@ -60,7 +99,7 @@ public class GameResultManager : MonoBehaviour {
         iTween.ScaleTo(heroSpine, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.3f));
         getExp = PlayMangement.instance.socketHandler.result.reward.userExp;
         getSupply = PlayMangement.instance.socketHandler.result.reward.supply;
-        additionalSupply = PlayMangement.instance.socketHandler.result.reward.additionalSupply;
+        //additionalSupply = PlayMangement.instance.socketHandler.result.reward.additionalSupply;
         SoundManager.Instance.bgmController.SoundTrackLoopOff();
 
         SkeletonGraphic backSpine;
@@ -111,6 +150,8 @@ public class GameResultManager : MonoBehaviour {
             frontSpine.Skeleton.SetSkin("orc");
         frontSpine.AnimationState.SetAnimation(0, "01.start", false);
         frontSpine.AnimationState.AddAnimation(1, "02.play", true, 0.8f);
+
+        OnTimerToExit();
     }
 
     public void OpenSecondWindow() {
@@ -125,10 +166,11 @@ public class GameResultManager : MonoBehaviour {
             BgCanvas.Find("Particle/Second").gameObject.SetActive(true);
         transform.Find("SecondWindow/Buttons/FindNewGame").GetComponent<Button>().interactable = false;
         transform.Find("SecondWindow/Buttons/BattleReady").GetComponent<Button>().interactable = false;
+
         StartCoroutine(SetRewards());
     }
 
-    IEnumerator SetRewards() {
+    public IEnumerator SetRewards() {
         Transform rewards = transform.Find("SecondWindow/ResourceRewards");
         yield return new WaitForSeconds(0.1f);
         Image expSlider = transform.Find("SecondWindow/PlayerExp/ExpSlider/SliderValue").GetComponent<Image>();
@@ -153,11 +195,13 @@ public class GameResultManager : MonoBehaviour {
             yield return new WaitForSeconds(0.5f);
             yield return StartCoroutine(GetUserExp(expSlider));
         }
-        if (getSupply + additionalSupply > 0) {
+        if (getSupply > 0) {
             yield return new WaitForSeconds(0.5f);
             yield return StartCoroutine(GetUserSupply(playerSup.Find("ExpSlider/SliderValue").GetComponent<Image>(), getSupply, additionalSupply));
         }
 
+        TMPro.TextMeshProUGUI doubleCoupons = transform.Find("SecondWindow/PlayerSupply/ExtraSupply/DoubleButton/Value").GetComponent<TMPro.TextMeshProUGUI>();
+        doubleCoupons.text = AccountManager.Instance.userData.supplyX2Coupon.ToString();
         //if (supply > 0) {
         //    rewards.GetChild(0).gameObject.SetActive(true);
         //    rewards.GetChild(0).Find("Text/Value").GetComponent<TMPro.TextMeshProUGUI>().text = supply.ToString();
@@ -171,6 +215,22 @@ public class GameResultManager : MonoBehaviour {
         //    yield return new WaitForSeconds(0.1f);
         //    iTween.ScaleTo(rewards.GetChild(0).gameObject, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.5f));
         //}
+    }
+
+    public float currentTime = 0;
+    private const float WAIT_TIME = 5.0f;
+    IDisposable observer_1, observer_2;
+
+    void OnTimerToExit() {
+        observer_1 = Observable
+            .EveryUpdate()
+            .Select(_ => currentTime += Time.deltaTime)
+            .SkipWhile(x => x < WAIT_TIME)
+            .Subscribe(_ => OnReturnBtn());
+        observer_2 = Observable
+            .EveryUpdate()
+            .Where(_ => Input.GetMouseButton(0) == true)
+            .Subscribe(_ => { currentTime = 0; });
     }
 
     IEnumerator GetUserExp(Image slider) {
@@ -201,18 +261,21 @@ public class GameResultManager : MonoBehaviour {
         }
     }
 
-    IEnumerator GetUserSupply(Image slider, int getSup, int addSup, int winSup = 0) {
+    IEnumerator GetUserSupply(Image slider, int getSup, int addSup, int winSup = 0, bool isAdditional = false) {
         TMPro.TextMeshProUGUI value = transform.Find("SecondWindow/PlayerSupply/ExpSlider/SupValue").GetComponent<TMPro.TextMeshProUGUI>();
         SkeletonGraphic boxSpine = transform.Find("SecondWindow/PlayerSupply/BoxSpine").GetComponent<SkeletonGraphic>();
         TMPro.TextMeshProUGUI basicVal = transform.Find("SecondWindow/PlayerSupply/ExtraSupply/Basic/Value").GetComponent<TMPro.TextMeshProUGUI>();
         TMPro.TextMeshProUGUI winVal = transform.Find("SecondWindow/PlayerSupply/ExtraSupply/Win/Value").GetComponent<TMPro.TextMeshProUGUI>();
-        TMPro.TextMeshProUGUI addVal = transform.Find("SecondWindow/PlayerSupply/ExtraSupply/Additional/Value").GetComponent<TMPro.TextMeshProUGUI>();
         TMPro.TextMeshProUGUI totalVal = transform.Find("SecondWindow/PlayerSupply/SupplyText/Value").GetComponent<TMPro.TextMeshProUGUI>();
         boxSpine.Initialize(true);
         boxSpine.Update(0);
         boxSpine.AnimationState.SetAnimation(0, "02.vibration1", true);
         int start = getSup;
         int total = 0;
+        if (isAdditional) {
+            int.TryParse(totalVal.text, out total);
+        }
+        
         while (getSup > 0) {
             supply++;
             getSup--;
@@ -243,7 +306,6 @@ public class GameResultManager : MonoBehaviour {
             while (addSup > 0) {
                 supply++;
                 addSup--;
-                addVal.text = (start - addSup).ToString();
                 totalVal.text = (++total).ToString();
                 slider.fillAmount = supply / 100.0f;
                 value.text = supply.ToString();
@@ -267,5 +329,28 @@ public class GameResultManager : MonoBehaviour {
         }
         boxSpine.AnimationState.SetAnimation(0, "01.vibration0", true);
         EndRewardLoad.Invoke();
+    }
+
+    //쿠폰 사용 버튼 클릭
+    public void OnDoubleCouponButton() {
+        Modal.instantiate("보상을 추가로 획득 가능합니다.\n보급품 2배 획득 쿠폰을 사용하시겠습니까?", Modal.Type.YESNO, () => { ClaimDoubleReq(); });
+    }
+
+    private void ClaimDoubleReq() {
+        Logger.Log("ClaimDoubleReq");
+        PlayMangement.instance.SocketHandler.SendMethod("claim_2x_reward");
+    }
+
+    /// <summary>
+    /// AI 대전에서는 결과화면에서 보상화면이 나오지 않게 바꿔야함
+    /// </summary>
+    public void ChangeResultButtonFunction() {
+        Logger.Log("AI 대전의 결과창 화면 세팅 변경");
+        Button btn = transform.Find("FirstWindow/GotoRewardButton").GetComponent<Button>();
+        btn.onClick.RemoveAllListeners();
+        btn.onClick.AddListener(() => {
+            PlayMangement.instance.SocketHandler.SendMethod("end_game");
+        });
+        btn.transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = "메인으로";
     }
 }

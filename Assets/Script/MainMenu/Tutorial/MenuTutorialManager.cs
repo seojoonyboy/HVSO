@@ -25,6 +25,7 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
     public GameObject TutorialStageReadyCanvas;
     public GameObject BoxRewardPanel;
     public GameObject FixedMenuCanvas;
+    public MenuSceneController menuSceneController;
 
     public void ReadTutorialData() {
         string dataAsJson = ((TextAsset)Resources.Load("TutorialDatas/TutorialDatas")).text;
@@ -129,12 +130,7 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
     }
 
     public void OnMenuDescPanel(int index) {
-        if (index > 2) return;
-        BooleanIndex comp = mainDescCanvas.transform.GetChild(index).GetComponent<BooleanIndex>();
-        if(comp.isOn == true) {
-            mainDescCanvas.transform.GetChild(index).gameObject.SetActive(true);
-            comp.isOn = false;
-        }
+
     }
 
     public enum TutorialType {

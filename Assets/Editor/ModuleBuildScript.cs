@@ -43,15 +43,16 @@ class ModuleBuildScript
         PlayerSettings.Android.useAPKExpansionFiles = false;
         SCENES = FindBuildScenes();
 
-        PlayerSettings.bundleVersion = string.Format("0.2.{0}", time.ToString("MMdd"));//string.Format("{0}.{1}.{2}.{3}", GameConfig.clientVersion[0], GameConfig.clientVersion[1], GameConfig.clientVersion[2], GameConfig.clientVersion[3]);
+        PlayerSettings.bundleVersion = string.Format("0.2.{0}", time.ToString("MMddHHmm"));//string.Format("{0}.{1}.{2}.{3}", GameConfig.clientVersion[0], GameConfig.clientVersion[1], GameConfig.clientVersion[2], GameConfig.clientVersion[3]);
         PlayerSettings.Android.bundleVersionCode = versionCode;
+        EditorUserBuildSettings.androidBuildSubtarget = MobileTextureSubtarget.ETC2;
         PlayerSettings.Android.keystoreName = "/Volumes/Data/fbl_haegin/hvso.keystore";
         PlayerSettings.Android.keystorePass = "Fbl1324$";
         PlayerSettings.Android.keyaliasName = "hvso";
         PlayerSettings.Android.keyaliasPass = "Fbl1324$";
         Debug.Log(GetArg("-exportPath"));
 
-        GenericBuild(SCENES, GetArg("-exportPath"), BuildTarget.Android, BuildOptions.None);
+        GenericBuild(SCENES, GetArg("-exportPath"), BuildTarget.Android, BuildOptions.CompressWithLz4HC);
     }
 
     static void BuildiOS(int versionCode)
@@ -61,9 +62,9 @@ class ModuleBuildScript
 
         PlayerSettings.iOS.buildNumber = versionCode.ToString();
         PlayerSettings.iOS.hideHomeButton = false;
-        PlayerSettings.bundleVersion = string.Format("0.2.{0}", time.ToString("MMdd"));
+        PlayerSettings.bundleVersion = string.Format("0.2.{0}", time.ToString("MMddHHmm"));
 
-        GenericBuild(SCENES, TARGET_DIR + "/XCode", BuildTarget.iOS, BuildOptions.None);
+        GenericBuild(SCENES, TARGET_DIR + "/XCode", BuildTarget.iOS, BuildOptions.CompressWithLz4HC);
     }
 
     static void PerformOneStoreAndroidBuild()

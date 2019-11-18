@@ -35,9 +35,9 @@ public class EditBarDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler
     public void OnDrag(PointerEventData eventData) {
         float mousePosY = Input.mousePosition.y;
         transform.position = new Vector3(transform.position.x, mousePosY);
-        if (transform.GetChild(1).position.y < bottomDragLimit.position.y)
+        if (transform.Find("CardBookBottom").position.y < bottomDragLimit.position.y)
             transform.position = new Vector3(transform.position.x, bottomDragLimit.position.y + (55 * canvasScale), 0);
-        if (transform.GetChild(0).position.y > topDragLimit.position.y)
+        if (transform.Find("CardBookTop").position.y > topDragLimit.position.y)
             transform.position = new Vector3(transform.position.x, topDragLimit.position.y - (55 * canvasScale), 0);
 
         SetAreas();
@@ -45,9 +45,9 @@ public class EditBarDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler
 
 
     public void OnEndDrag(PointerEventData eventData) {
-        if (transform.GetChild(1).position.y < bottomDragLimit.position.y)
+        if (transform.Find("CardBookBottom").position.y < bottomDragLimit.position.y)
             transform.position = new Vector3(transform.position.x, bottomDragLimit.position.y + (55 * canvasScale), 0);
-        if (transform.GetChild(0).position.y > topDragLimit.position.y)
+        if (transform.Find("CardBookTop").position.y > topDragLimit.position.y)
             transform.position = new Vector3(transform.position.x, topDragLimit.position.y - (55 * canvasScale), 0);
 
         SetAreas();

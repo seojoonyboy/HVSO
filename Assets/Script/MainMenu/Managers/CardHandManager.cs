@@ -236,10 +236,13 @@ public class CardHandManager : MonoBehaviour {
         leftCard.transform.SetParent(showPos.Find("Left"));
         rightCard.transform.SetParent(showPos.Find("Right"));
 
-        showPos.Find("HeroCardGuide").gameObject.SetActive(true);
-
         leftCard.SetActive(true);
         rightCard.SetActive(true);
+
+        CardHandler handler = leftCard.GetComponent<CardHandler>();
+        handler.DrawHeroCard(cards[0]);
+        handler = rightCard.GetComponent<CardHandler>();
+        handler.DrawHeroCard(cards[1]);
 
         ShowCardsHandler showCardsHandler = showPos.GetComponent<ShowCardsHandler>();
         showCardsHandler.AddCards(
@@ -247,16 +250,10 @@ public class CardHandManager : MonoBehaviour {
             new string[] { cards[0].skills[0].desc, cards[1].skills[0].desc }
         );
 
-        CardHandler handler = leftCard.GetComponent<CardHandler>();
-        handler.DrawHeroCard(cards[0]);
-        handler = rightCard.GetComponent<CardHandler>();
-        handler.DrawHeroCard(cards[1]);
-
-        //showPos.Find("Left").position
         var tmp = showPos.Find("Left").position;
         iTween.MoveTo(
             leftCard, 
-            new Vector3(tmp.x, tmp.y - 2.6f, 0),
+            new Vector3(tmp.x, tmp.y, 0),
             0.4f);
         iTween.RotateTo(leftCard, iTween.Hash("z", 0, "islocal", true, "time", 0.4f));
 
@@ -266,9 +263,14 @@ public class CardHandManager : MonoBehaviour {
         tmp = showPos.Find("Right").position;
         iTween.MoveTo(
             rightCard,
-            new Vector3(tmp.x, tmp.y - 2.6f, 0),
+            new Vector3(tmp.x, tmp.y, 0),
             0.6f);
-        
+
+        leftCard.transform.localScale = new Vector3(1.2f, 1.2f, 1.0f);
+        rightCard.transform.localScale = new Vector3(1.2f, 1.2f, 1.0f);
+
+        yield return new WaitForSeconds(0.6f);
+        showCardsHandler.ToggleAllCards();
 
         yield return StartCoroutine(handler.ActiveHeroCard());
     }

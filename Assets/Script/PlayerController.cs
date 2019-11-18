@@ -41,6 +41,10 @@ public class PlayerController : MonoBehaviour
     public ReactiveProperty<int> shieldStack = new ReactiveProperty<int>(0);
     protected int shieldCount = 0;
 
+    public int remainShieldCount {
+        get { return shieldCount; }
+    }
+
     protected HeroSpine heroSpine;
     public static int activeCardMinCost;
     public string heroID;
@@ -123,7 +127,7 @@ public class PlayerController : MonoBehaviour
         string id;
         GameObject hero;
         if (ScenarioGameManagment.scenarioInstance != null &&  isPlayer == false && isHuman == true)
-            heroID = "hac10002";
+            heroID = "hac10001";
 
         if (isHuman == true) 
             id = (string.IsNullOrEmpty(heroID)) ? "h10001" : heroID;        

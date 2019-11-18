@@ -463,7 +463,7 @@ public partial class AccountManager {
             (req, res) => {
                 if (res.IsSuccess) {
                     if (res.StatusCode == 200 || res.StatusCode == 304) {
-                        NoneIngameSceneEventHandler.Instance.PostNotification(NoneIngameSceneEventHandler.EVENT_TYPE.API_DECK_CREATED, null, res);
+                        NoneIngameSceneEventHandler.Instance.PostNotification(NoneIngameSceneEventHandler.EVENT_TYPE.API_DECK_CREATED, null, format.bannerImage);
                         RequestMyDecks();
                     }
                 }
@@ -849,6 +849,7 @@ public partial class AccountManager {
 }
 
 public partial class AccountManager {
+    public UnityAction tokenSetFinished;
     string tokenId;
     public string TokenId {
         get => tokenId;
@@ -856,15 +857,10 @@ public partial class AccountManager {
             tokenId = value;
             TokenFormat = string.Format("Bearer {0}", TokenId);
             //Logger.Log(TokenId);
+            tokenSetFinished.Invoke();
         }
     }
     public string TokenFormat { get; private set; }
-
-    public void SetUserToken(HTTPResponse response) {
-        var result = dataModules.JsonReader.Read<Token>(response.DataAsText);
-        TokenId = result.token;
-        //Logger.Log("Token 재발행");
-    }
 
     public class TokenForm {
         public string deviceId;
@@ -876,7 +872,7 @@ public partial class AccountManager {
         }
     }
 
-    public void ChangeNicknameReq(string val = "") {
+    public void ChangeNicknameReq(string val = "", UnityAction callback = null) {
         StringBuilder url = new StringBuilder();
         string base_url = networkManager.baseUrl;
 
@@ -905,6 +901,7 @@ public partial class AccountManager {
                             null,
                             res
                         );
+                    if(callback != null) callback();
                 }
             }
             else {

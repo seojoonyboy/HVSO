@@ -873,7 +873,7 @@
                         "args": [
                             "UNIT_SUMMONED"
                         ]
-                    },                    
+                    },
                     {
                         "name": "Deactive_TargetHandler",
                         "args": [
@@ -997,7 +997,7 @@
                         "name": "StopHighlight",
                         "args": []
                     }
-                    
+
                 ],
                 "isExecute": false
             },
@@ -1039,5 +1039,36 @@
                 "count": 50
             }
         ]
+    },
+    {
+        "chapter": 0,
+        "stage_number": 3,
+        "stage_Name": "쉴드시스템 테스트",
+        "match_type": "testing",
+        "description": "nothing",
+        "specialRule": "쉴드!",
+        "scripts": [
+            {
+                "Print_text": "",
+                "methods": [
+                    {
+                        "name": "Wait_Turn",
+                        "args": [
+                            "HUMAN"
+                        ]
+                    },
+                    {
+                        "name": "Unblock_Screen",
+                        "args": []
+                    },
+                    {
+                        "name": "Fill_shield_gage",
+                        "args": []
+                    }
+                ],
+                "isExecute": false
+            }
+        ],
+        "scenarioReward": []
     }
 ]

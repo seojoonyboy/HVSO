@@ -132,7 +132,7 @@ public class DeckHandler : MonoBehaviour
     public void DeleteButton() {
         if (AccountManager.Instance == null) return;
 
-        Modal.instantiate("덱을 삭제하시겠습니까?", Modal.Type.YESNO, () => {
+        Modal.instantiate("부대를 삭제하시겠습니까?", Modal.Type.YESNO, () => {
             DeckSettingManager deckManager = transform.parent.parent.parent.GetComponent<DeckSettingManager>();
             StartCoroutine(deckManager.CloseDeckButtons());
             //transform.GetChild(0).Find("Buttons").localPosition = new Vector3(-5, 0, 0);
@@ -146,8 +146,8 @@ public class DeckHandler : MonoBehaviour
             PlayerPrefs.SetString("SelectedDeckId", deckID);
             PlayerPrefs.SetString("SelectedBattleType", "solo");
             string camp;
-            if (isHuman) { camp = "HUMAN"; }
-            else { camp = "ORC"; }
+            if (isHuman) { camp = "human"; }
+            else { camp = "orc"; }
             PlayerPrefs.SetString("SelectedRace", camp);
 
             FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.CONNECT_MATCHING_SCENE);

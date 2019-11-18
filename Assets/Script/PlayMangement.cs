@@ -57,6 +57,7 @@ public partial class PlayMangement : MonoBehaviour {
     public bool waitShowResult = false;
 
     public ShowCardsHandler showCardsHandler;
+    public Button surrendButton;
     //public string magicHistroy;
 
     private void Awake() {
@@ -161,6 +162,7 @@ public partial class PlayMangement : MonoBehaviour {
         //if (Input.GetKeyDown(KeyCode.Escape)) {
         //    FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
         //}
+        if(heroShieldActive) return;
         if (!infoOn && Input.GetMouseButtonDown(0)) {
             cardInfoCanvas.GetChild(0).GetComponent<CardListManager>().OpenUnitInfoWindow(Input.mousePosition);
         }
