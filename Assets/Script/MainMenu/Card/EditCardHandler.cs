@@ -72,6 +72,7 @@ public class EditCardHandler : MonoBehaviour {
     }
 
     public void OpenCardButtons() {
+        StopScorllArea();
         if (isHandCard) {
             float areaSize = (deckEditController.editBar.handDeckArea.GetComponent<RectTransform>().sizeDelta.y - 475);
             if (areaSize < 0) {
@@ -89,7 +90,6 @@ public class EditCardHandler : MonoBehaviour {
             float limit = ((fromTop == true) ? 142.0f : -343.0f) * MenuSceneController.menuSceneController.transform.localScale.x;
             if (Mathf.Abs(distanc) < Mathf.Abs(limit)) 
                 deckEditController.editBar.handDeckArea.GetChild(0).position = new Vector3(deckPos.x, deckPos.y - distanc - (limit * deckEditController.transform.localScale.x), 0);
-            StopScorllArea();
             deckEditController.cardButtons.SetCardButtons(transform, isHandCard, setNum);
         }
         else {
@@ -109,7 +109,6 @@ public class EditCardHandler : MonoBehaviour {
             float limit = ((fromTop == true) ? 142.0f : -343.0f) * MenuSceneController.menuSceneController.transform.localScale.x;
             if (Mathf.Abs(distanc) < Mathf.Abs(limit)) 
                 deckEditController.editBar.cardBookArea.GetChild(0).position = new Vector3(deckPos.x, deckPos.y - distanc - (limit * deckEditController.transform.localScale.x), 0);
-            StopScorllArea();
             deckEditController.cardButtons.SetCardButtons(transform, isHandCard, haveNum);
         }
     }

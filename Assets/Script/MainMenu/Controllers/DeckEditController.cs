@@ -365,13 +365,15 @@ public class DeckEditController : MonoBehaviour
         EditCardHandler addCardHandler;
         if (!setCardList.ContainsKey(cardId)) {
             GameObject addedCard = settingLayout.GetChild(0).GetChild(setCardList.Count).gameObject;
+            addedCard.SetActive(true);
             setCardList.Add(cardId, addedCard);
             addCardHandler = addedCard.GetComponent<EditCardHandler>();
             addCardHandler.SETNUM++;
             addCardHandler.DrawCard(cardId, isHuman);
             addCardHandler.SetSetNum(true);
             addCardHandler.beforeObject = cardObj;
-            addedCard.SetActive(true);
+            SortHandCards();
+            RefreshLine2();
         }
         else {
             addCardHandler = setCardList[cardId].GetComponent<EditCardHandler>();
@@ -391,7 +393,45 @@ public class DeckEditController : MonoBehaviour
         cardHandler.SetHaveNum();
         if (cardHandler.HAVENUM == 0) cardObj.SetActive(false);
         setCardNum++;
-        RefreshLine2();
+    }
+
+    public void SortHandCards() {
+        List<EditCard> cards = new List<EditCard>();
+        int count = 0;
+        for (int i = 0; i < settingLayout.GetChild(0).childCount; i++) {
+            if (!settingLayout.GetChild(0).GetChild(i).gameObject.activeSelf) break;
+            dataModules.CollectionCard cardData = settingLayout.GetChild(0).GetChild(i).GetComponent<EditCardHandler>().cardData;
+            int rarelityValue = 0;
+            switch (cardData.rarelity) {
+                case "common":
+                    rarelityValue = 0;
+                    break;
+                case "uncommon":
+                    rarelityValue = 1;
+                    break;
+                case "rare":
+                    rarelityValue = 2;
+                    break;
+                case "superrare":
+                    rarelityValue = 3;
+                    break;
+                case "legend":
+                    rarelityValue = 4;
+                    break;
+            }
+            cards.Add(new EditCard {
+                cardObject = settingLayout.GetChild(0).GetChild(i).gameObject,
+                cardId = cardData.id,
+                cardClass = cardData.cardClasses[0],
+                costOrder = cardData.cost,
+                rareOrder = rarelityValue
+            });
+            count++;
+        }
+        List<EditCard> sortedCards = SortCardListByCost(cards).ToList();
+        for(int i = 0; i < sortedCards.Count; i++) {
+            sortedCards[i].cardObject.transform.SetSiblingIndex(i);
+        }
     }
 
     public void RefreshLine() {
@@ -665,6 +705,7 @@ public class DeckEditController : MonoBehaviour
             }
             maxHaveCard = setCardNum + haveCardNum;
         }
+        SortHandCards();
         RefreshLine2();
         editBar.InitCanvas();
         RefreshLine();
