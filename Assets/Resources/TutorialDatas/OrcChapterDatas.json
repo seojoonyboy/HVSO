@@ -24,9 +24,9 @@
                         ]
                     },
                     {
-                        "name": "Wait_until",
+                        "name": "Wait_Turn",
                         "args": [
-                            "1"
+                            "MULIGAN"
                         ]
                     }
                 ],
@@ -628,9 +628,9 @@
                         ]
                     },
                     {
-                        "name": "Wait_until",
+                        "name": "Wait_Turn",
                         "args": [
-                            "1"
+                            "MULIGAN"
                         ]
                     }
                 ],

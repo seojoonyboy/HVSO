@@ -1823,8 +1823,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 1007250cd93b8b74ab9ee61b927edb77, type: 3}
-  m_Type: 0
+  m_Sprite: {fileID: 21300000, guid: f524767b6506c2e488150bdac3f51a87, type: 3}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -24203,7 +24203,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: e4b1120f56d62364288d3e1d77c9ee62, type: 3}
+  m_Sprite: {fileID: 21300000, guid: bf6aea8079976504faffb36b12c5fdc0, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -52204,8 +52204,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 87db8f9255fea3d44bb58608798dcd35, type: 3}
-  m_Type: 0
+  m_Sprite: {fileID: 21300000, guid: bf6aea8079976504faffb36b12c5fdc0, type: 3}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -52578,8 +52578,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 87db8f9255fea3d44bb58608798dcd35, type: 3}
-  m_Type: 0
+  m_Sprite: {fileID: 21300000, guid: bf6aea8079976504faffb36b12c5fdc0, type: 3}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -53150,8 +53150,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 87db8f9255fea3d44bb58608798dcd35, type: 3}
-  m_Type: 0
+  m_Sprite: {fileID: 21300000, guid: bf6aea8079976504faffb36b12c5fdc0, type: 3}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -55049,6 +55049,7 @@ MonoBehaviour:
   EndRewardLoad:
     m_PersistentCalls:
       m_Calls: []
+  currentTime: 0
 --- !u!114 &4760111525719009902
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -56753,8 +56754,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 87db8f9255fea3d44bb58608798dcd35, type: 3}
-  m_Type: 0
+  m_Sprite: {fileID: 21300000, guid: bf6aea8079976504faffb36b12c5fdc0, type: 3}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -60273,6 +60274,7 @@ MonoBehaviour:
   cameraSize: 0
   waitShowResult: 0
   showCardsHandler: {fileID: 0}
+  surrendButton: {fileID: 0}
   ingameCamera: {fileID: 1144235748}
   cameraPos: {x: 0, y: 0, z: 0}
   eventHandler: {fileID: 208885978}
