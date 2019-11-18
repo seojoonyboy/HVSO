@@ -32,6 +32,8 @@ public partial class BattleConnector : MonoBehaviour {
         else if (message.Contains("matched")) {
             matchKey = message.Split(':')[1];
             Logger.Log("matchKey : " + matchKey);
+            JoinGame();
+            return;
         }
         ReceiveFormat result = dataModules.JsonReader.Read<ReceiveFormat>(message);
         queue.Enqueue(result);
@@ -155,7 +157,7 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void entrance_complete(object args, int? id) {
-        JoinGame();
+        //JoinGame();
     }
 
     public void matched(object args, int? id) {
