@@ -24,6 +24,10 @@ public partial class BattleConnector : MonoBehaviour {
     public bool isOpponentPlayerDisconnected = false;
 
     private void ReceiveMessage(WebSocket webSocket, string message) {
+        if(message.CompareTo("entrance_complete")==0||message.Contains("matched")) {
+            Debug.Log(message);
+            return;
+        }
         ReceiveFormat result = dataModules.JsonReader.Read<ReceiveFormat>(message);
         queue.Enqueue(result);
         DequeueSocket();
