@@ -463,7 +463,7 @@ public partial class AccountManager {
             (req, res) => {
                 if (res.IsSuccess) {
                     if (res.StatusCode == 200 || res.StatusCode == 304) {
-                        NoneIngameSceneEventHandler.Instance.PostNotification(NoneIngameSceneEventHandler.EVENT_TYPE.API_DECK_CREATED, null, res);
+                        NoneIngameSceneEventHandler.Instance.PostNotification(NoneIngameSceneEventHandler.EVENT_TYPE.API_DECK_CREATED, null, format.bannerImage);
                         RequestMyDecks();
                     }
                 }

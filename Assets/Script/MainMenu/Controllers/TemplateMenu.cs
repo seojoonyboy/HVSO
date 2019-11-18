@@ -36,7 +36,16 @@ public class TemplateMenu : MonoBehaviour {
     }
 
     private void OnDeckAdded(Enum Event_Type, Component Sender, object Param) {
-        Modal.instantiate("템플릿 덱을 생성하였습니다.", Modal.Type.CHECK, () => {
+        string parm = (string)Param;
+
+        string msg = null;
+        if(parm == "custom") {
+            msg = "나만의 부대를 생성하였습니다.";
+        }
+        else {
+            msg = "템플릿 부대를 생성하였습니다.";
+        }
+        Modal.instantiate(msg, Modal.Type.CHECK, () => {
             ReturnToMenu();
         });
     }
