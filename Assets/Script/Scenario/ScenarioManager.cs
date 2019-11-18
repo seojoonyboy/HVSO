@@ -177,7 +177,7 @@ public class ScenarioManager : SerializedMonoBehaviour
         canvas.Find("HUD/ChapterSelect/BackGround/Text").gameObject.GetComponent<Text>().text = "CHAPTER " + selectChapter.ToString();
         Transform content = canvas.Find("HUD/StageSelect/Viewport/Content");
         for (int i=0; i < selectedList.Count; i++) {
-            //if (selectedList[i].match_type == "testing") continue;
+            if (selectedList[i].match_type == "testing") continue;
             GameObject item = content.GetChild(i).gameObject;
             item.SetActive(true);
             string str = string.Format("{0}-{1} {2}", selectedList[i].chapter, selectedList[i].stage_number, selectedList[i].stage_Name);
