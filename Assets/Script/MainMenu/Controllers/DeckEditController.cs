@@ -327,6 +327,16 @@ public class DeckEditController : MonoBehaviour
         handCardHandler.SETNUM--;
         handCardHandler.SetSetNum();
         if (!handCardHandler.beforeObject.activeSelf) handCardHandler.beforeObject.gameObject.SetActive(true);
+
+        float ditance1 = handCardHandler.beforeObject.transform.position.y + (142 * transform.localScale.x) - editBar.transform.Find("CardBookBottom").position.y;
+        float ditance2 = handCardHandler.beforeObject.transform.position.y - (142 * transform.localScale.x) - editBar.bookBottomLimit.position.y;
+        if (ditance1 > 0) {
+            editBar.cardBookArea.GetChild(0).position = new Vector3(editBar.cardBookArea.GetChild(0).position.x, editBar.cardBookArea.GetChild(0).position.y - ditance1);
+        }
+        else if (ditance2 < 0) {
+            editBar.cardBookArea.GetChild(0).position = new Vector3(editBar.cardBookArea.GetChild(0).position.x, editBar.cardBookArea.GetChild(0).position.y - ditance2);
+        }
+
         EditCardHandler beforeCard = handCardHandler.beforeObject.GetComponent<EditCardHandler>();
         beforeCard.HAVENUM++;
         beforeCard.SetHaveNum(true);
@@ -352,21 +362,29 @@ public class DeckEditController : MonoBehaviour
         if (setCardNum == 40) return;
         if (EditCardHandler.onAnimation) return;
         EditCardHandler cardHandler = cardObj.GetComponent<EditCardHandler>();
+        EditCardHandler addCardHandler;
         if (!setCardList.ContainsKey(cardId)) {
             GameObject addedCard = settingLayout.GetChild(0).GetChild(setCardList.Count).gameObject;
             setCardList.Add(cardId, addedCard);
-            EditCardHandler addCardHandler = addedCard.GetComponent<EditCardHandler>();
+            addCardHandler = addedCard.GetComponent<EditCardHandler>();
             addCardHandler.SETNUM++;
             addCardHandler.DrawCard(cardId, isHuman);
             addCardHandler.SetSetNum(true);
             addCardHandler.beforeObject = cardObj;
             addedCard.SetActive(true);
-            RefreshLine2();
         }
         else {
-            EditCardHandler addCardHandler = setCardList[cardId].GetComponent<EditCardHandler>();
+            addCardHandler = setCardList[cardId].GetComponent<EditCardHandler>();
             addCardHandler.SETNUM++;
             addCardHandler.SetSetNum(true);
+        }
+        float ditance1 = addCardHandler.transform.position.y + (142 * transform.localScale.x) - editBar.handTopPos.position.y;
+        float ditance2 = addCardHandler.transform.position.y - (142 * transform.localScale.x) - editBar.transform.Find("CardBookTop").position.y;
+        if (ditance1 > 0) {
+            editBar.handDeckArea.GetChild(0).position = new Vector3(editBar.handDeckArea.GetChild(0).position.x, editBar.handDeckArea.GetChild(0).position.y - ditance1);
+        }
+        else if (ditance2 < 0) {
+            editBar.handDeckArea.GetChild(0).position = new Vector3(editBar.handDeckArea.GetChild(0).position.x, editBar.handDeckArea.GetChild(0).position.y - ditance2);
         }
         cardHandler.HAVENUM--;
         haveCardNum--;
