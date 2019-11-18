@@ -121,7 +121,12 @@ public class CardDictionaryManager : MonoBehaviour {
                         rarelityValue = 4;
                         break;
                 }
-                dicCards.Add(new DictionaryCard { cardObject = cardStorage.GetChild(count).gameObject, cardId = card.id, cardClass = card.cardClasses[0], rareOrder = rarelityValue, costOrder = card.cost });
+                dicCards.Add(new DictionaryCard { 
+                    cardObject = cardStorage.GetChild(count).gameObject, 
+                    cardId = card.id, 
+                    cardClass = card.cardClasses[0], 
+                    rareOrder = rarelityValue, 
+                    costOrder = card.cost });
                 count++;
             }
         }

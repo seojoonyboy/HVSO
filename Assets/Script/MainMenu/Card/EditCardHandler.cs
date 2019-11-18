@@ -61,32 +61,6 @@ public class EditCardHandler : MonoBehaviour {
         GetComponent<EditCardHandler>().HAVENUM = 0;
     }
 
-
-    //public void StartClick() {
-    //    clickTime = Time.time;
-    //    StartCoroutine(WaitForOpenInfo());
-    //}
-
-    //IEnumerator WaitForOpenInfo() {
-    //    standby = true;
-    //    while (standby) {
-    //        yield return new WaitForSeconds(0.1f);
-    //        if (dragging) break;
-    //        if (onAnimation) break;
-    //        if (!standby) break;
-    //        if (Time.time - clickTime >= 0.2f) {
-    //            dragable = false;
-    //        }
-    //        if (Time.time - clickTime >= 0.5f) {
-    //            OpenCardInfo();
-    //            standby = false;
-    //            dragging = false;
-    //            draggingObject = null;
-    //        }
-    //    }
-    //    dragable = true;
-    //}
-
     public void EndClick() {
         if (!dragable) return;
         if (dragging) return;
@@ -94,25 +68,57 @@ public class EditCardHandler : MonoBehaviour {
         dragging = false;
         draggingObject = null;
         standby = false;
-        OpenCardInfo();
-        //if (Time.time - clickTime < 0.5f) {
-        //    SoundManager.Instance.PlaySound("button_3");
-        //    if (isHandCard) {
-        //        deckEditController.ExpectFromDeck(cardData.id, gameObject);
-        //        if (SETNUM == 0) {
-        //            transform.SetAsLastSibling();
-        //            transform.localScale = Vector3.zero;
-        //            StartCoroutine(SortHandPos());
-        //        }
-        //    }
-        //    else {
-        //        if (HAVENUM == 0) return;
-        //        StartCoroutine(ShowAddedCardPos());
-        //        deckEditController.ConfirmSetDeck(cardData.id, gameObject);
-        //    }
-        //}
-        //else
-        //    OpenCardInfo();
+        OpenCardButtons();
+    }
+
+    public void OpenCardButtons() {
+        if (isHandCard) {
+            float areaSize = (deckEditController.editBar.handDeckArea.GetComponent<RectTransform>().sizeDelta.y - 475);
+            if (areaSize < 0) {
+                deckEditController.editBar.transform.position 
+                    = new Vector3(deckEditController.editBar.transform.position.x, deckEditController.editBar.transform.position.y + (areaSize * deckEditController.transform.localScale.x), 0);
+                deckEditController.editBar.SetAreas();
+            }
+            else
+                areaSize = 0;
+            float distanceFromTop = transform.position.y - deckEditController.editBar.handTopPos.position.y;
+            float distanceFromBottom = transform.position.y - deckEditController.editBar.transform.Find("CardBookTop").position.y;
+            float distanc = (Mathf.Abs(distanceFromTop) > Mathf.Abs(distanceFromBottom + areaSize)) ? distanceFromBottom : distanceFromTop;
+            bool fromTop = (Mathf.Abs(distanceFromTop) > Mathf.Abs(distanceFromBottom + areaSize)) ? false : true;
+            Vector3 deckPos = deckEditController.editBar.handDeckArea.GetChild(0).position;
+            float limit = ((fromTop == true) ? 142.0f : -343.0f) * MenuSceneController.menuSceneController.transform.localScale.x;
+            if (Mathf.Abs(distanc) < Mathf.Abs(limit)) 
+                deckEditController.editBar.handDeckArea.GetChild(0).position = new Vector3(deckPos.x, deckPos.y - distanc - (limit * deckEditController.transform.localScale.x), 0);
+            StopScorllArea();
+            deckEditController.cardButtons.SetCardButtons(transform, isHandCard, setNum);
+        }
+        else {
+            float areaSize = deckEditController.editBar.cardBookArea.GetComponent<RectTransform>().sizeDelta.y - 475;
+            if (areaSize < 0) {
+                deckEditController.editBar.transform.position 
+                    = new Vector3(deckEditController.editBar.transform.position.x, deckEditController.editBar.transform.position.y - (areaSize * deckEditController.transform.localScale.x), 0);
+                deckEditController.editBar.SetAreas();
+            }
+            else
+                areaSize = 0;
+            float distanceFromTop = transform.position.y - deckEditController.editBar.transform.Find("CardBookBottom").position.y;
+            float distanceFromBottom = transform.position.y - deckEditController.editBar.bookBottomLimit.position.y;
+            float distanc = (Mathf.Abs(distanceFromTop) > Mathf.Abs(distanceFromBottom + areaSize)) ? distanceFromBottom : distanceFromTop;
+            bool fromTop = (Mathf.Abs(distanceFromTop) > Mathf.Abs(distanceFromBottom + areaSize)) ? false : true;
+            Vector3 deckPos = deckEditController.editBar.cardBookArea.GetChild(0).position;
+            float limit = ((fromTop == true) ? 142.0f : -343.0f) * MenuSceneController.menuSceneController.transform.localScale.x;
+            if (Mathf.Abs(distanc) < Mathf.Abs(limit)) 
+                deckEditController.editBar.cardBookArea.GetChild(0).position = new Vector3(deckPos.x, deckPos.y - distanc - (limit * deckEditController.transform.localScale.x), 0);
+            StopScorllArea();
+            deckEditController.cardButtons.SetCardButtons(transform, isHandCard, haveNum);
+        }
+    }
+
+    public void StopScorllArea() {
+        deckEditController.editBar.handDeckArea.GetComponent<ScrollRect>().StopMovement();
+        deckEditController.editBar.handDeckArea.GetComponent<ScrollRect>().enabled = false;
+        deckEditController.editBar.cardBookArea.GetComponent<ScrollRect>().StopMovement();
+        deckEditController.editBar.cardBookArea.GetComponent<ScrollRect>().enabled = false;
     }
 
     public IEnumerator SortHandPos() {
@@ -252,9 +258,9 @@ public class EditCardHandler : MonoBehaviour {
             transform.Find("HaveNum/Graphic").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, "NOANI", false);
     }
 
-    public void CardSet() {
-        deckEditController.OnTouchCard(gameObject);
-    }
+    //public void CardSet() {
+    //    deckEditController.OnTouchCard(gameObject);
+    //}
 
 
     public void OpenCardInfo() {
@@ -264,8 +270,8 @@ public class EditCardHandler : MonoBehaviour {
         MenuCardInfo.cardInfoWindow.transform.parent.Find("DeckEditExitTrigger").gameObject.SetActive(true);
         MenuCardInfo.cardInfoWindow.transform.parent.Find("ExitTrigger").gameObject.SetActive(false);
         MenuCardInfo.cardInfoWindow.SetCardInfo(cardData, isHuman, null);
-        MenuCardInfo.cardInfoWindow.transform.Find("CreateCard").gameObject.SetActive(false);
-        MenuCardInfo.cardInfoWindow.transform.Find("EditCardUI").gameObject.SetActive(true);
+        MenuCardInfo.cardInfoWindow.transform.Find("CreateCard").gameObject.SetActive(true);
+        MenuCardInfo.cardInfoWindow.transform.Find("EditCardUI").gameObject.SetActive(false);
         if (isHandCard) {
             MenuCardInfo.cardInfoWindow.SetEditCardInfo(beforeObject.GetComponent<EditCardHandler>().HAVENUM, deckEditController.setCardNum);
             MenuCardInfo.cardInfoWindow.editCard = beforeObject;
@@ -276,6 +282,7 @@ public class EditCardHandler : MonoBehaviour {
         }
         MenuCardInfo.cardInfoWindow.transform.Find("Flavor").gameObject.SetActive(false);
         MenuCardInfo.cardInfoWindow.transform.Find("Indestructible").gameObject.SetActive(false);
+        EscapeKeyController.escapeKeyCtrl.AddEscape(MenuCardInfo.cardInfoWindow.CloseInfo);
     }
 
 
