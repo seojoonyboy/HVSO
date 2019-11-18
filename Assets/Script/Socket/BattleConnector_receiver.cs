@@ -23,10 +23,15 @@ public partial class BattleConnector : MonoBehaviour {
     public ResultFormat result = null;
     public bool isOpponentPlayerDisconnected = false;
 
+    string matchKey = string.Empty;
     private void ReceiveMessage(WebSocket webSocket, string message) {
-        if(message.CompareTo("entrance_complete")==0||message.Contains("matched")) {
+        if(message.Contains("entrance_complete")) {
             Debug.Log(message);
             return;
+        }
+        else if (message.Contains("matched")) {
+            matchKey = message.Split(':')[1];
+            Logger.Log("matchKey : " + matchKey);
         }
         ReceiveFormat result = dataModules.JsonReader.Read<ReceiveFormat>(message);
         queue.Enqueue(result);
@@ -150,7 +155,7 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void entrance_complete(object args, int? id) {
-        Logger.Log("로비 접속 성공");
+        JoinGame();
     }
 
     public void matched(object args, int? id) {

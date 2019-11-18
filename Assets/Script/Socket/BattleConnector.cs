@@ -21,7 +21,7 @@ public partial class BattleConnector : MonoBehaviour {
 
     private string lobbyUrl {
         get {
-            return NetworkManager.Instance.baseUrl + "lobby";
+            return NetworkManager.Instance.baseUrl + "lobby/socket";
         }
     }
     
@@ -58,11 +58,11 @@ public partial class BattleConnector : MonoBehaviour {
         Debug.Assert(!PlayerPrefs.GetString("SelectedRace").Any(char.IsUpper), "Race 정보는 소문자로 입력해야 합니다!");
         string race = PlayerPrefs.GetString("SelectedRace").ToLower();
 
-        string url = string.Format("{0}", this.url);
+        string url = string.Format("{0}", this.lobbyUrl);
         webSocket = new WebSocket(new Uri(string.Format("{0}?token={1}&camp={2}", url, AccountManager.Instance.TokenId, race)));
         webSocket.OnOpen += OnLobbyOpen;
         webSocket.OnMessage += ReceiveMessage;
-        webSocket.OnClosed += OnLobbyClosed;
+        //webSocket.OnClosed += OnLobbyClosed;
         webSocket.OnError += OnError;
         webSocket.Open();
     }
@@ -87,7 +87,7 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     private void OnLobbyOpen(WebSocket webSocket) {
-
+        Logger.Log("OnLobbyOpen");
     }
 
     private void OnLobbyClosed(WebSocket webSocket, ushort code, string message) {
@@ -197,6 +197,14 @@ public partial class BattleConnector : MonoBehaviour {
         OnOpenSocket.Invoke();
     }
 
+    private void JoinGame() {
+        string[] args;
+        PlayerPrefs.SetString("SelectedBattleType", "league");
+
+        args = SetJoinGameData();
+        SendMethod("join_game", args);
+    }
+
     private string[] SetJoinGameData() {
         string deckId = PlayerPrefs.GetString("SelectedDeckId");
         string battleType = PlayerPrefs.GetString("SelectedBattleType");
@@ -215,6 +223,12 @@ public partial class BattleConnector : MonoBehaviour {
             race = (race == "human") ? "human" : "orc";
             deckId = string.Empty;
             return new string[] { battleType, deckId, race, stageNum };
+            //========================================================
+        }
+        else if(battleType == "league") {
+            //========================================================
+            //matchkey 필요
+            return new string[] { battleType, deckId, race, matchKey };
             //========================================================
         }
         //return new string[] { "story", "", "orc", "10"};
