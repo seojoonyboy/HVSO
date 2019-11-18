@@ -444,10 +444,10 @@ namespace MenuTutorialModules {
 
             skeletonGraphic.transform.Find("Header/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "덱 획득";
             if(args[0] == "human") {
-                skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "휴먼 기본덱 획득";
+                skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "휴먼 기본부대 획득";
             }
             else {
-                skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 기본덱 획득";
+                skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 기본부대 획득";
             }
 
             yield return new WaitForSeconds(1.0f);

@@ -187,85 +187,20 @@
     },
     {
         "id": 0,
-        "description": "human 덱 보상, 스토리, 배틀 메뉴 오픈",
+        "description": "orc 덱 보상, 스토리, 배틀 메뉴 오픈",
         "innerDatas": [
             {
                 "id": 1,
                 "description": null,
                 "methods": [
                     {
-                        "name": "ForceToPage",
-                        "args": [
-                            "StoryLobby"
-                        ]
-                    },
-                    {
                         "name": "Menu_Block_Screen",
                         "args": []
-                    },
-                    {
-                        "name": "ForceToPage",
-                        "args": [
-                            "StoryLobby"
-                        ]
-                    },
-                    {
-                        "name" : "Wait_Until",
-                        "args" : [
-                            "0.8"
-                         ]
                     },
                     {
                         "name": "RequestReward",
                         "args": [
                             "orc"
-                        ]
-                    },
-                    {
-                        "name": "DestroyLoadingModal",
-                        "args": []
-                    },
-                    {
-                        "name": "Menu_Scope_Object",
-                        "args": [
-                            "hud_back_button"
-                        ]
-                    },
-                    {
-                        "name": "Dimmed",
-                        "args": [
-                            "hud_back_button",
-                            "on"
-                        ]
-                    },
-                    {
-                        "name": "ShowHandUI",
-                        "args": [
-                          "hud_back_button",
-                          "touch"
-                        ]
-                    },
-                    {
-                        "name" : "DeactiveImageTutorial",
-                        "args" : []
-                    },
-                    {
-                        "name": "Wait_Click",
-                        "args": [
-                            "hud_back_button"
-                        ]
-                    },
-                    {
-                        "name": "Dimmed",
-                        "args": [
-                            "hud_back_button",
-                            "off"
-                        ]
-                    },
-                    {
-                        "name": "HideHandUI",
-                        "args": [
-                            "hud_back_button"
                         ]
                     },
                     {
@@ -277,11 +212,11 @@
                         "args": []
                     },
                     {
-                        "name" : "OffHighlight",
-                        "args" : []
+                        "name": "DestroyLoadingModal",
+                        "args": []
                     },
                     {
-                        "name" : "ActiveImageTutorial",
+                        "name" : "OffHighlight",
                         "args" : []
                     }
                 ],

@@ -113,14 +113,12 @@ public class MenuSceneController : MonoBehaviour {
                 //휴먼 튜토리얼 0-1을 진행하지 않았음
                 if (!clearedStages.Exists(x => x.camp == "human" && x.stageNumber == 1)) {
                     AddNewbiController();
-
-                    PlayerPrefs.SetString("NeedMenuTutorial", "false"); //메인화면 이미지 튜토리얼 필요 여부
                     PlayerPrefs.SetString("NeedUnlockMenu", "true");
 
                     if (loadingModal != null) Destroy(loadingModal);
                 }
                 else {
-                    loadingModal.GetComponent<Canvas>().sortingOrder = 81;
+                    if(loadingModal != null) loadingModal.GetComponent<Canvas>().sortingOrder = 81;
 
                     if(!clearedStages.Exists(x => x.camp == "orc" && x.stageNumber == 1)) {
                         tutorialType = MenuTutorialManager.TutorialType.TO_ORC_STORY;
@@ -145,12 +143,6 @@ public class MenuSceneController : MonoBehaviour {
         }
         else {
             menuTutorialManager.enabled = false;
-            PlayerPrefs.SetString("NeedMenuTutorial", "true");
-
-            foreach(Transform child in menuTutorialManager.mainDescCanvas.transform) {
-                child.GetComponent<dataModules.BooleanIndex>().isOn = false;
-            }
-
             if (loadingModal != null) Destroy(loadingModal);
         }
     }
