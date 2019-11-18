@@ -136,6 +136,24 @@ public partial class BattleConnector : MonoBehaviour {
         returnButton.gameObject.SetActive(false);
     }
 
+    /// <summary>
+    /// 로비 연결 끊어짐 (연결 성공 혹은 유저가 로비를 나갔을 때
+    /// </summary>
+    /// <param name="args"></param>
+    /// <param name="id"></param>
+    public void disconnected(object args, int? id) {
+        Logger.Log("disconnected");
+    }
+
+    public void entrance_complete(object args, int? id) {
+        Logger.Log("로비 접속 성공");
+    }
+
+    public void matched(object args, int? id) {
+        Logger.Log("매칭 성공");
+        Logger.Log(args);
+    }
+
     public void end_ready(object args, int? id) { 
         bool isTest = PlayerPrefs.GetString("SelectedBattleType").CompareTo("test") == 0;
         if(isTest) {
