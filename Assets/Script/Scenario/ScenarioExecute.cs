@@ -1448,6 +1448,8 @@ public class Focus_Skill_Icon : ScenarioExecute {
 
     IDisposable click, unclick, temp;
 
+    //private IObservable<float> countObserver() => Observable.Timer(TimeSpan.FromSeconds(0), TimeSpan.FromSeconds(1)).Where(_ => clickIcon == true).Select(x => currentTime + x).TakeWhile(x => x < time);
+
     public override void Execute() {
         scenarioMask.FocusSkillIcon();
         parseTime = int.Parse(args[0]);
@@ -1455,8 +1457,9 @@ public class Focus_Skill_Icon : ScenarioExecute {
         PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.CLICK_SKILL_ICON, CheckClick);
         scenarioMask.outText.gameObject.SetActive(true);
 
-        
-        //click = Observable.Timer(TimeSpan.FromSeconds(currentTime), TimeSpan.FromSeconds(time)).Where(_ => clickIcon == true).First().Subscribe(_ => ClickFinish());
+        //countObserver().Subscribe(_ => ClickFinish());
+        //countObserver().Concat(countObserver()).Subscribe(_ => { },()=> { });
+        //click = Observable.Timer(TimeSpan.FromSeconds(0), TimeSpan.FromSeconds(1)).Where(_ => clickIcon == true).Select(x => currentTime + x).First(x => x >= time).Subscribe(_ => ClickFinish());
         //click = Observable.Interval(TimeSpan.FromSeconds(time)).Where(_=>clickIcon == true).Select(x=> currentTime += time).First(x=>x>=time).Subscribe(_ => ClickFinish());
         click = Observable.EveryUpdate().Where(_ => clickIcon == true).Select(_ => currentTime += Time.deltaTime).SkipWhile(x => x < time).First().Subscribe(_ => ClickFinish());
         unclick = Observable.EveryUpdate().Where(_ => clickIcon == true).Where(_ => Input.GetMouseButton(0) == false).Subscribe(_ => { currentTime = 0; clickIcon = false; });

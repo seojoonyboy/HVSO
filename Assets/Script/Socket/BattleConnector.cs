@@ -288,7 +288,7 @@ public partial class BattleConnector : MonoBehaviour {
     public Queue<SocketFormat.Player> shieldActivateQueue = new Queue<SocketFormat.Player>();
 
     public IEnumerator WaitGetCard() {
-        if(!getNewCard) IngameNotice.instance.SetNotice("Loading...");
+        if(!getNewCard) IngameNotice.instance.SetNotice();
         while(!getNewCard) {
             yield return new WaitForFixedUpdate();
         }

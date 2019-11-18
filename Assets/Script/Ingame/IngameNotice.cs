@@ -32,6 +32,7 @@ public class IngameNotice : MonoBehaviour {
 
     private List<string> noticeList = new List<string>();
     [SerializeField] private TextMeshProUGUI noticeText;
+    [SerializeField] private Image noticeImage;
     private float colorAlpha;
 
     private void Update() {
@@ -51,9 +52,16 @@ public class IngameNotice : MonoBehaviour {
     }
 
     public void SetNotice(string text) {
+        noticeImage.gameObject.SetActive(false);
+        noticeText.gameObject.SetActive(true);
         colorAlpha = 1f;
         noticeText.text = text;
         gameObject.SetActive(true);
+    }
+
+    public void SetNotice() {
+        noticeText.gameObject.SetActive(false);
+        noticeImage.gameObject.SetActive(true);
     }
 
     public void CloseNotice() {
