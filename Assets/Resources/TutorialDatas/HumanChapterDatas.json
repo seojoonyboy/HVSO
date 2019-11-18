@@ -1060,10 +1060,6 @@
                     {
                         "name": "Unblock_Screen",
                         "args": []
-                    },
-                    {
-                        "name": "Fill_shield_gage",
-                        "args": []
                     }
                 ],
                 "isExecute": false
