@@ -46,7 +46,6 @@ public class GameResultManager : MonoBehaviour {
                 OpenSecondWindow();
             });
             btn.transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = "보상으로";
-
         }
     }
 
@@ -73,6 +72,7 @@ public class GameResultManager : MonoBehaviour {
     }
 
     public void ToMainScene() {
+        StopCoroutine(OnTimerToExit());
         FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
     }
 
@@ -149,6 +149,11 @@ public class GameResultManager : MonoBehaviour {
             frontSpine.Skeleton.SetSkin("orc");
         frontSpine.AnimationState.SetAnimation(0, "01.start", false);
         frontSpine.AnimationState.AddAnimation(1, "02.play", true, 0.8f);
+
+
+        if (PlayerPrefs.GetString("SelectedBattleType") == "solo") {
+            StartCoroutine(OnTimerToExit());
+        }
     }
 
     public void OpenSecondWindow() {
@@ -163,7 +168,9 @@ public class GameResultManager : MonoBehaviour {
             BgCanvas.Find("Particle/Second").gameObject.SetActive(true);
         transform.Find("SecondWindow/Buttons/FindNewGame").GetComponent<Button>().interactable = false;
         transform.Find("SecondWindow/Buttons/BattleReady").GetComponent<Button>().interactable = false;
+
         StartCoroutine(SetRewards());
+        StartCoroutine(OnTimerToExit());
     }
 
     public IEnumerator SetRewards() {
@@ -211,6 +218,11 @@ public class GameResultManager : MonoBehaviour {
         //    yield return new WaitForSeconds(0.1f);
         //    iTween.ScaleTo(rewards.GetChild(0).gameObject, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.5f));
         //}
+    }
+
+    IEnumerator OnTimerToExit() {
+        yield return new WaitForSeconds(5.0f);
+        OnReturnBtn();
     }
 
     IEnumerator GetUserExp(Image slider) {
