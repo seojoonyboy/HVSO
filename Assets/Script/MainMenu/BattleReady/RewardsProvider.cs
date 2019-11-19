@@ -33,7 +33,7 @@ public class RewardsProvider : SerializedMonoBehaviour {
 
     Rewards Read() {
         string dataAsJson = ((TextAsset)Resources.Load(path)).text;
-        Logger.Log(dataAsJson);
+        //Logger.Log(dataAsJson);
         var rewards = JsonReader.Read<Rewards>(dataAsJson);
         return rewards;
     }
@@ -45,7 +45,7 @@ public class RewardsProvider : SerializedMonoBehaviour {
 
             TextMeshProUGUI amountTxt = btn.transform.Find("Amount").GetComponent<TextMeshProUGUI>();
             amountTxt.text = reward.amount.ToString();
-            Image rewardIcon = btn.transform.Find("Image").GetComponent<Image>();
+            Image rewardIcon = btn.transform.Find("Image/RewardIcon").GetComponent<Image>();
             rewardIcon.sprite = GetRewardIcon(reward.type, reward.args);
             Image checkMark = btn.transform.Find("CheckMark").GetComponent<Image>();
 

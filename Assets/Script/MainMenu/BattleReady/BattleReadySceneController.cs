@@ -46,12 +46,12 @@ public class BattleReadySceneController : MonoBehaviour {
 
         //Logger.Log("deckListPanel.SetActive(true)");
         //deckListPanel.SetActive(true);
-        //EscapeKeyController.escapeKeyCtrl.AddEscape(OnBackButton) ;
+        EscapeKeyController.escapeKeyCtrl.AddEscape(OnBackButton) ;
     }
 
     void OnDisable() {
-        RectTransform rt = ScrollSnap.transform.Find("Content").GetComponent<RectTransform>();
-        rt.offsetMin = new Vector2(0, rt.offsetMin.y);
+        //RectTransform rt = ScrollSnap.transform.Find("Content").GetComponent<RectTransform>();
+        //rt.offsetMin = new Vector2(0, rt.offsetMin.y);
 
         EscapeKeyController.escapeKeyCtrl.RemoveEscape(OnBackButton);
     }
