@@ -4,7 +4,14 @@ using UnityEngine;
 
 public class BattleConnectSceneAnimController : MonoBehaviour {
     public void EntryAnimFinished() {
-        FindObjectOfType<BattleConnector>().OpenLobby();
+        string battleType = PlayerPrefs.GetString("SelectedBattleType");
+
+        if(battleType == "league") {
+            FindObjectOfType<BattleConnector>().OpenLobby();
+        }
+        else {
+            FindObjectOfType<BattleConnector>().OpenSocket();
+        }
 
         string race = PlayerPrefs.GetString("SelectedRace").ToLower();
         Animator animator = GetComponent<Animator>();
