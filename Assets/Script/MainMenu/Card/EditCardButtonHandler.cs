@@ -56,10 +56,13 @@ public class EditCardButtonHandler : MonoBehaviour {
     public void OpenCardInfo() {
         MenuCardInfo.cardInfoWindow.transform.parent.gameObject.SetActive(true);
         MenuCardInfo.cardInfoWindow.gameObject.SetActive(true);
-        MenuCardInfo.cardInfoWindow.SetCardInfo(cardData, cardData.camp == "human", null);
-        MenuCardInfo.cardInfoWindow.transform.Find("CreateCard").gameObject.SetActive(true);
+        MenuCardInfo.cardInfoWindow.SetCardInfo(cardData, cardData.camp == "human", card);
+        //MenuCardInfo.cardInfoWindow.transform.Find("CreateCard").gameObject.SetActive(true);
         MenuCardInfo.cardInfoWindow.transform.Find("EditCardUI").gameObject.SetActive(false);
         MenuCardInfo.cardInfoWindow.transform.Find("Flavor").gameObject.SetActive(false);
+        if (transform.parent.name == "HandDeckArea") {
+            MenuCardInfo.cardInfoWindow.transform.Find("CreateCard/BreakBtn/DisableInHand").gameObject.SetActive(true);
+        }
         EscapeKeyController.escapeKeyCtrl.AddEscape(MenuCardInfo.cardInfoWindow.CloseInfo);
     }
 
@@ -79,5 +82,9 @@ public class EditCardButtonHandler : MonoBehaviour {
         cardHandler.HAVENUM--;
         cardHandler.SetHaveNum();
         if (cardHandler.HAVENUM == 0) CloseCardButtons();
+    }
+
+    public void MakeCard(Transform cardObj, bool makeCard) {
+        deckEditCanvas.GetComponent<DeckEditController>().AddMadeCard(cardObj, makeCard);
     }
 }
