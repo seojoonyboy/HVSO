@@ -115,6 +115,7 @@ public class DeckEditController : MonoBehaviour {
         transform.Find("InnerCanvas/BackGroundPatern/Orc").gameObject.SetActive(!isHuman);
         if (editCards != null) editCards.Clear();
         editCards = GetCards();
+        
         setCardNum = 0;
         haveCardNum = 0;
         dontHaveCard = 0;
@@ -154,7 +155,11 @@ public class DeckEditController : MonoBehaviour {
         string heroClass1 = heroData.heroClasses[0];
         string heroClass2 = heroData.heroClasses[1];
         ownCardLayout.GetChild(0).name = heroClass1;
+        ownCardLayout.GetChild(0).Find("Header/Info/Image").GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[heroClass1];
+        ownCardLayout.GetChild(0).Find("Header/Info/Name").GetComponent<TMPro.TextMeshProUGUI>().text = heroClass1;
         ownCardLayout.GetChild(1).name = heroClass2;
+        ownCardLayout.GetChild(1).Find("Header/Info/Image").GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[heroClass2];
+        ownCardLayout.GetChild(1).Find("Header/Info/Name").GetComponent<TMPro.TextMeshProUGUI>().text = heroClass2;
 
 
         foreach (dataModules.CollectionCard card in AccountManager.Instance.allCards) {
@@ -276,7 +281,7 @@ public class DeckEditController : MonoBehaviour {
     }
 
     public void SetManaCurve() {
-        Transform cardList = transform.Find("InnerCanvas/HandDeck/SettedDeck");
+        Transform cardList = transform.Find("InnerCanvas/HandDeckArea/SettedDeck");
         for (int i = 0; i < 8; i++)
             cardMana[i] = 0;
         for (int i = 0; i < cardList.childCount; i++) {
@@ -351,11 +356,153 @@ public class DeckEditController : MonoBehaviour {
         RefreshLine2();
     }
 
-    public void AutoSetDeck() {
-        for (int i = 0; i < 8; i++) {
 
+
+
+
+
+
+
+
+    public void AutoSetDeck() {
+        List<GameObject>[,] bookCards = new List<GameObject>[8, 5];
+        int[] setNumsByCost = new int[8];
+        foreach (KeyValuePair<string, GameObject> obj in setCardList) {
+            int cost = obj.Value.GetComponent<EditCardHandler>().cardData.cost;
+            if (cost > 6) cost = 7;
+            setNumsByCost[cost] += obj.Value.GetComponent<EditCardHandler>().SETNUM;
+        }
+        for(int i = 0; i < 8; i++) {
+            for(int j = 0; j < 5; j++) {
+                bookCards[i,j] = new List<GameObject>();
+            }
+        }
+        for(int i = 0; i < 2; i++) {
+            for (int j = 0; j < ownCardLayout.GetChild(i).GetChild(1).childCount; j++) {
+                GameObject cardObj = ownCardLayout.GetChild(i).GetChild(1).GetChild(j).gameObject;
+                if (cardObj.activeSelf) {
+                    dataModules.CollectionCard cardDate = cardObj.GetComponent<EditCardHandler>().cardData;
+                    int cost = cardDate.cost;
+                    if (cost > 6) cost = 7;
+                    switch (cardDate.rarelity) {
+                        case "common":
+                            bookCards[cost, 4].Add(cardObj);
+                            break;
+                        case "uncommon":
+                            bookCards[cost, 3].Add(cardObj);
+                            break;
+                        case "rare":
+                            bookCards[cost, 2].Add(cardObj);
+                            break;
+                        case "superrare":
+                            bookCards[cost, 1].Add(cardObj);
+                            break;
+                        case "legend":
+                            bookCards[cost, 0].Add(cardObj);
+                            break;
+                    }
+                }
+            }
+        }
+        System.Random rand = new System.Random();
+        int costNum = 0;
+        while (costNum < 8) {
+            int maxNumber = 0;
+            switch (costNum) {
+                case 0:
+                    maxNumber = 4;
+                    break;
+                case 1:
+                    maxNumber = 8;
+                    break;
+                case 2:
+                    maxNumber = 9;
+                    break;
+                case 3:
+                    maxNumber = 7;
+                    break;
+                case 4:
+                    maxNumber = 5;
+                    break;
+                case 5:
+                    maxNumber = 3;
+                    break;
+                case 6:
+                case 7:
+                    maxNumber = 2;
+                    break;
+            }
+
+            while (setNumsByCost[costNum] < maxNumber) {
+                for (int i = 0; i < 5; i++) {
+                    while (bookCards[costNum, i].Count > 0) {
+                        int num = rand.Next(0, bookCards[costNum, i].Count);
+                        string cardId = bookCards[costNum, i][num].GetComponent<EditCardHandler>().cardID;
+                        EditCardHandler addCardHandler;
+                        if (!setCardList.ContainsKey(cardId)) {
+                            GameObject addedCard = settingLayout.GetChild(0).GetChild(setCardList.Count).gameObject;
+                            addedCard.SetActive(true);
+                            setCardList.Add(cardId, addedCard);
+                            addCardHandler = addedCard.GetComponent<EditCardHandler>();
+                            addCardHandler.SETNUM++;
+                            addCardHandler.DrawCard(cardId, isHuman);
+                            //addCardHandler.SetSetNum(true);
+                            addCardHandler.beforeObject = bookCards[costNum, i][num];
+                        }
+                        else {
+                            addCardHandler = setCardList[cardId].GetComponent<EditCardHandler>();
+                            addCardHandler.SETNUM++;
+                            //addCardHandler.SetSetNum(true);
+                        }
+                        setNumsByCost[costNum]++;
+                        bookCards[costNum, i][num].GetComponent<EditCardHandler>().HAVENUM--;
+                        if (bookCards[costNum, i][num].GetComponent<EditCardHandler>().HAVENUM == 0)
+                            bookCards[costNum, i].Remove(bookCards[costNum, i][num]);
+                        haveCardNum--;
+                        setCardNum++;
+                        if (setNumsByCost[costNum] == maxNumber || setCardNum == 40) break;
+                    }
+                    if (setNumsByCost[costNum] == maxNumber || setCardNum == 40) break;
+                }
+                break;
+            }
+            costNum++;
+            if (setCardNum == 40) break;
+            if (costNum == 8 && setCardNum != 40) {
+                costNum = 0;
+                setNumsByCost = new int[8];
+            }
+        }
+        SetCardNums();
+        SortHandCards();
+        RefreshLine2();
+    }
+
+    public void SetCardNums() {
+        for (int i = 0; i < 40; i++) {
+            EditCardHandler cardHandler = settingLayout.GetChild(0).GetChild(i).GetComponent<EditCardHandler>();
+            cardHandler.SetSetNum();
+        }
+
+        Transform cardStore = transform.Find("InnerCanvas/CardStore");
+        for (int i = 0; i < cardStore.childCount; i++) {
+            cardStore.GetChild(i).GetComponent<EditCardHandler>().deckEditController = this;
+        }
+        for (int i = 0; i < 2; i++) {
+            for(int j = 0; j < ownCardLayout.GetChild(i).Find("Grid").childCount; j++) { 
+                EditCardHandler cardHandler = ownCardLayout.GetChild(i).Find("Grid").GetChild(j).GetComponent<EditCardHandler>();
+                cardHandler.SetHaveNum();
+                if (cardHandler.HAVENUM == 0) cardHandler.gameObject.SetActive(false);
+            }
         }
     }
+
+
+
+
+
+
+
 
     public void ConfirmSetDeck(GameObject cardObj, string cardId) {
         if (setCardNum == 40) return;
@@ -564,10 +711,10 @@ public class DeckEditController : MonoBehaviour {
 
 
         Dictionary<string, Sprite> classSprite = AccountManager.Instance.resource.classImage;
-        transform.Find("InnerCanvas/Buttons/SortToClass1").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[0] + "_sortbtnOff"];
-        transform.Find("InnerCanvas/Buttons/SortToClass1/Selected").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[0] + "_sortbtnOn"];
-        transform.Find("InnerCanvas/Buttons/SortToClass2").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[1] + "_sortbtnOff"];
-        transform.Find("InnerCanvas/Buttons/SortToClass2/Selected").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[1] + "_sortbtnOn"];
+        transform.Find("InnerCanvas/Buttons/SortToClass1").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[0]];
+        transform.Find("InnerCanvas/Buttons/SortToClass1/Selected").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[0]];
+        transform.Find("InnerCanvas/Buttons/SortToClass2").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[1]];
+        transform.Find("InnerCanvas/Buttons/SortToClass2/Selected").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[1]];
 
         SetDeckEditCards(isHuman, heroData);
     }
@@ -661,10 +808,10 @@ public class DeckEditController : MonoBehaviour {
         SetHeroInfo(loadedDeck.heroId);
 
         Dictionary<string, Sprite> classSprite = AccountManager.Instance.resource.classImage;
-        transform.Find("InnerCanvas/Buttons/SortToClass1").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[0] + "_sortbtnOff"];
-        transform.Find("InnerCanvas/Buttons/SortToClass1/Selected").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[0] + "_sortbtnOn"];
-        transform.Find("InnerCanvas/Buttons/SortToClass2").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[1] + "_sortbtnOff"];
-        transform.Find("InnerCanvas/Buttons/SortToClass2/Selected").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[1] + "_sortbtnOn"];
+        transform.Find("InnerCanvas/Buttons/SortToClass1").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[0]];
+        transform.Find("InnerCanvas/Buttons/SortToClass1/Selected").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[0]];
+        transform.Find("InnerCanvas/Buttons/SortToClass2").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[1]];
+        transform.Find("InnerCanvas/Buttons/SortToClass2/Selected").GetComponent<Image>().sprite = classSprite[heroData.heroClasses[1]];
 
         SetCustomDeckEditCards(loadedDeck, heroData);
     }
@@ -870,12 +1017,12 @@ public class DeckEditController : MonoBehaviour {
     }
 
     public void SelectInputName() {
-        handDeckHeader.Find("DeckNamePanel").gameObject.SetActive(false);
+        handDeckHeader.Find("DeckNamePanel/PlaceHolder").gameObject.SetActive(false);
     }
 
     public void EndInputName() {
         if (string.IsNullOrEmpty(deckNamePanel.transform.Find("NameTemplate").GetComponent<TMPro.TMP_InputField>().text))
-            handDeckHeader.Find("DeckNamePanel").gameObject.SetActive(true);
+            handDeckHeader.Find("DeckNamePanel/PlaceHolder").gameObject.SetActive(true);
     }
 
 
