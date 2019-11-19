@@ -5,6 +5,7 @@ using dataModules;
 using TMPro;
 using UnityEngine.UI;
 using Sirenix.OdinInspector;
+using UnityEngine.Events;
 
 [ShowOdinSerializedPropertiesInInspector]
 public class RewardsProvider : SerializedMonoBehaviour {
@@ -12,6 +13,8 @@ public class RewardsProvider : SerializedMonoBehaviour {
     [SerializeField] GameObject RewardButtonPool;
     [SerializeField] Transform content;
     public Dictionary<string, Sprite> rewardIcons;
+    public List<GameObject> buttons;
+    public List<int> standards;
 
     void Start() {
 
@@ -26,7 +29,7 @@ public class RewardsProvider : SerializedMonoBehaviour {
 
     void Clear() {
         foreach(Transform tf in content) {
-            if (tf.name.Contains("Slider")) continue;
+            if (tf.name.Contains("Bar")) continue;
             Destroy(tf.gameObject);
         }
     }
@@ -40,18 +43,27 @@ public class RewardsProvider : SerializedMonoBehaviour {
 
     void Separate(ref Rewards data) {
         List<Reward> rewards = data.rewards;
-        foreach(Reward reward in rewards) {
+        buttons = new List<GameObject>();
+        standards = new List<int>();
+
+        foreach (Reward reward in rewards) {
             GameObject btn = Instantiate(RewardButtonPool);
 
             TextMeshProUGUI amountTxt = btn.transform.Find("Amount").GetComponent<TextMeshProUGUI>();
-            amountTxt.text = reward.amount.ToString();
+            amountTxt.text = reward.standard.ToString();
             Image rewardIcon = btn.transform.Find("Image/RewardIcon").GetComponent<Image>();
             rewardIcon.sprite = GetRewardIcon(reward.type, reward.args);
             Image checkMark = btn.transform.Find("CheckMark").GetComponent<Image>();
 
             btn.gameObject.SetActive(true);
             btn.transform.SetParent(content);
+            btn.transform.Find("MMR").GetComponent<IntergerIndex>().Id = reward.standard;
+            standards.Add(reward.standard);
+
+            buttons.Add(btn);
         }
+
+        GetComponent<RewardProgressController>().OnRewardObjectSettingFinished();
     }
 
     Sprite GetRewardIcon(string keyword, string[] args = null) {
