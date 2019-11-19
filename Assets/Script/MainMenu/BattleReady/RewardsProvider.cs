@@ -26,12 +26,14 @@ public class RewardsProvider : SerializedMonoBehaviour {
 
     void Clear() {
         foreach(Transform tf in content) {
+            if (tf.name.Contains("Slider")) continue;
             Destroy(tf.gameObject);
         }
     }
 
     Rewards Read() {
         string dataAsJson = ((TextAsset)Resources.Load(path)).text;
+        Logger.Log(dataAsJson);
         var rewards = JsonReader.Read<Rewards>(dataAsJson);
         return rewards;
     }
@@ -43,10 +45,11 @@ public class RewardsProvider : SerializedMonoBehaviour {
 
             TextMeshProUGUI amountTxt = btn.transform.Find("Amount").GetComponent<TextMeshProUGUI>();
             amountTxt.text = reward.amount.ToString();
-            Image rewardIcon = btn.transform.Find("Button/Image").GetComponent<Image>();
+            Image rewardIcon = btn.transform.Find("Image").GetComponent<Image>();
             rewardIcon.sprite = GetRewardIcon(reward.type, reward.args);
             Image checkMark = btn.transform.Find("CheckMark").GetComponent<Image>();
 
+            btn.gameObject.SetActive(true);
             btn.transform.SetParent(content);
         }
     }
