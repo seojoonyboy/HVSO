@@ -232,7 +232,7 @@ public class CardListManager : MonoBehaviour
                 EventTrigger.Entry onBtn = new EventTrigger.Entry();
                 onBtn.eventID = EventTriggerType.PointerDown;
                 onBtn.callback.AddListener((EventData) => OpenClassDescModal(data.attackTypes[0], image));
-                onBtn.callback.AddListener((EventPost) => PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.CLICK_SKILL_ICON,this));
+                //onBtn.callback.AddListener((EventPost) => PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.CLICK_SKILL_ICON,this));
                 info.Find("Skill&BuffRow1").GetChild(skillnum).GetComponent<EventTrigger>().triggers.Add(onBtn);
                 EventTrigger.Entry offBtn = new EventTrigger.Entry();
                 offBtn.eventID = EventTriggerType.PointerUp;
@@ -327,11 +327,11 @@ public class CardListManager : MonoBehaviour
         #endregion
     }
 
-    public void OpenClassDescModal(string className, Sprite image) {
+    public void OpenClassDescModal(string className, Sprite image, Transform modalTransform = null) {
         if (Input.touchCount > 1) return;
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         classDescModal.gameObject.SetActive(true);
-        classDescModal.position = new Vector3(mousePos.x, mousePos.y + 2.3f, 0);
+        classDescModal.position = (modalTransform != null) ? new Vector3(modalTransform.position.x, modalTransform.position.y + 2f, 0f) : new Vector3(mousePos.x, mousePos.y + 2.3f, 0);
         string[] set = translator.GetTranslatedSkillSet(className);
         SetClassDescModalData(set[0], set[1], image);
     }
