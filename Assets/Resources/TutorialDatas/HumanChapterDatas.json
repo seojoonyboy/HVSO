@@ -625,7 +625,36 @@
                     {
                         "name": "Focus_Skill_Icon",
                         "args": [
-                            "1"
+                            "ac10011"
+                        ]
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "h10001",
+                            "유닛을 터치해서 스킬 텍스트를 꾹 누르면 설명이 떠서 알 수 있지.",
+                            "true",
+                            "maskOff"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
+                            "h10001",
+                            "이런… 병력으로 막아야 하는데 마나가 부족해서 배치할 수가 없군. 피해를 입게 되겠어.",
+                            "true"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
                         ]
                     },
                     {
@@ -642,20 +671,6 @@
                     {
                         "name": "Unblock_Screen",
                         "args": []
-                    },
-                    {
-                        "name": "NPC_Print_message",
-                        "args": [
-                            "h10001",
-                            "이런… 병력으로 막아야 하는데 마나가 부족해서 배치할 수가 없군. 피해를 입게 되겠어.",
-                            "true"
-                        ]
-                    },
-                    {
-                        "name": "Wait_click",
-                        "args": [
-                            "screen"
-                        ]
                     },
                     {
                         "name": "Enable_EndTurn",

@@ -1004,6 +1004,20 @@
                     {
                         "name": "NPC_Print_message",
                         "args": [
+                            "hac10001",
+                            "안되겠다, 모두 도망쳐라!!  ",
+                            "false"
+                        ]
+                    },
+                    {
+                        "name": "Wait_click",
+                        "args": [
+                            "screen"
+                        ]
+                    },
+                    {
+                        "name": "NPC_Print_message",
+                        "args": [
                             "h10002",
                             "쥐새끼 같은놈… 결국은 도망쳤구나. 내 나중에 꼭 너를 잡아 죽여주마.  ",
                             "true"
@@ -1022,8 +1036,8 @@
                         ]
                     },
                     {
-                        "name" : "End_tutorial",
-                        "args" : []
+                        "name": "End_tutorial",
+                        "args": []
                     }
                 ],
                 "isExecute": false

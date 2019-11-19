@@ -135,9 +135,9 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
                     transform.localScale = new Vector3(1, 1, 1);
                     transform.localPosition = new Vector3(0, 0, 0);
                     transform.Find("CardInfoWindow").gameObject.SetActive(false);
-                    if (heroCardActivate) {
-                        transform.parent.parent.Find("HeroCardGuide").gameObject.SetActive(true);
-                    }
+                    //if (heroCardActivate) {
+                    //    transform.parent.parent.Find("HeroCardGuide").gameObject.SetActive(true);
+                    //}
                     showCardsHandler.CancelSelecting();
                     //gameObject.transform.Find("drag").gameObject.SetActive(true);
                     SendEvent();
