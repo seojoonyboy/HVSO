@@ -13,8 +13,17 @@ using System.Linq;
 
 public partial class BattleConnector : MonoBehaviour {
 
-    private string url { get { 
-        return NetworkManager.Instance.baseUrl + "game"; } }
+    private string url {
+        get {
+            return NetworkManager.Instance.baseUrl + "game";
+        }
+    }
+
+    private string lobbyUrl {
+        get {
+            return NetworkManager.Instance.baseUrl + "lobby/socket";
+        }
+    }
     
     WebSocket webSocket;
     [SerializeField] Text message;
@@ -40,6 +49,27 @@ public partial class BattleConnector : MonoBehaviour {
         Application.wantsToQuit -= Quitting;
     }
 
+    /// <summary>
+    /// open lobby socket
+    /// </summary>
+    public void OpenLobby() {
+        reconnectCount = 0;
+
+        Debug.Assert(!PlayerPrefs.GetString("SelectedRace").Any(char.IsUpper), "Race 정보는 소문자로 입력해야 합니다!");
+        string race = PlayerPrefs.GetString("SelectedRace").ToLower();
+
+        string url = string.Format("{0}", this.lobbyUrl);
+        webSocket = new WebSocket(new Uri(string.Format("{0}?token={1}&camp={2}", url, AccountManager.Instance.TokenId, race)));
+        webSocket.OnOpen += OnLobbyOpen;
+        webSocket.OnMessage += ReceiveMessage;
+        //webSocket.OnClosed += OnLobbyClosed;
+        webSocket.OnError += OnError;
+        webSocket.Open();
+    }
+
+    /// <summary>
+    /// open game socket (after lobby socket connected)
+    /// </summary>
     public void OpenSocket() {
         reconnectCount = 0;
         string url = string.Format("{0}", this.url);
@@ -54,6 +84,14 @@ public partial class BattleConnector : MonoBehaviour {
         timeCheck = StartCoroutine(TimerOn());
         returnButton.onClick.AddListener(BattleCancel);
         returnButton.gameObject.SetActive(true);
+    }
+
+    private void OnLobbyOpen(WebSocket webSocket) {
+        Logger.Log("OnLobbyOpen");
+    }
+
+    private void OnLobbyClosed(WebSocket webSocket, ushort code, string message) {
+        OpenSocket();
     }
 
     private IEnumerator TimerOn() {
@@ -108,6 +146,11 @@ public partial class BattleConnector : MonoBehaviour {
         return true;
     }
 
+    public void DisconnectLobby() {
+        SendMethod("disconnect");
+        FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
+    }
+
     public async void TryReconnect() {
         await Task.Delay(2000);
         if(isQuit) return;
@@ -154,6 +197,17 @@ public partial class BattleConnector : MonoBehaviour {
         OnOpenSocket.Invoke();
     }
 
+    private void JoinGame() {
+        webSocket.Close();
+        OpenSocket();
+
+        string[] args;
+        PlayerPrefs.SetString("SelectedBattleType", "league");
+
+        args = SetJoinGameData();
+        SendMethod("join_game", args);
+    }
+
     private string[] SetJoinGameData() {
         string deckId = PlayerPrefs.GetString("SelectedDeckId");
         string battleType = PlayerPrefs.GetString("SelectedBattleType");
@@ -172,6 +226,12 @@ public partial class BattleConnector : MonoBehaviour {
             race = (race == "human") ? "human" : "orc";
             deckId = string.Empty;
             return new string[] { battleType, deckId, race, stageNum };
+            //========================================================
+        }
+        else if(battleType == "league") {
+            //========================================================
+            //matchkey 필요
+            return new string[] { battleType, deckId, race, matchKey };
             //========================================================
         }
         //return new string[] { "story", "", "orc", "10"};

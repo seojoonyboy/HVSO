@@ -23,6 +23,7 @@ public partial class BattleConnector : MonoBehaviour {
     public ResultFormat result = null;
     public bool isOpponentPlayerDisconnected = false;
 
+    string matchKey = string.Empty;
     private void ReceiveMessage(WebSocket webSocket, string message) {
         ReceiveFormat result = dataModules.JsonReader.Read<ReceiveFormat>(message);
         queue.Enqueue(result);
@@ -134,6 +135,25 @@ public partial class BattleConnector : MonoBehaviour {
         timer.text = null;
         returnButton.onClick.RemoveListener(BattleCancel);
         returnButton.gameObject.SetActive(false);
+    }
+
+    /// <summary>
+    /// 로비 연결 끊어짐 (연결 성공 혹은 유저가 로비를 나갔을 때
+    /// </summary>
+    /// <param name="args"></param>
+    /// <param name="id"></param>
+    public void disconnected(object args, int? id) {
+
+    }
+
+    public void entrance_complete(object args, int? id) {
+        
+    }
+
+    public void matched(object args, int? id) {
+        matchKey = ((string)args).Split(':')[1];
+        Logger.Log("matchKey : " + matchKey);
+        JoinGame();
     }
 
     public void end_ready(object args, int? id) { 
