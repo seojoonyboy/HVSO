@@ -25,16 +25,6 @@ public partial class BattleConnector : MonoBehaviour {
 
     string matchKey = string.Empty;
     private void ReceiveMessage(WebSocket webSocket, string message) {
-        if(message.Contains("entrance_complete")) {
-            Debug.Log(message);
-            return;
-        }
-        else if (message.Contains("matched")) {
-            matchKey = message.Split(':')[1];
-            Logger.Log("matchKey : " + matchKey);
-            JoinGame();
-            return;
-        }
         ReceiveFormat result = dataModules.JsonReader.Read<ReceiveFormat>(message);
         queue.Enqueue(result);
         DequeueSocket();
@@ -153,16 +143,17 @@ public partial class BattleConnector : MonoBehaviour {
     /// <param name="args"></param>
     /// <param name="id"></param>
     public void disconnected(object args, int? id) {
-        Logger.Log("disconnected");
+
     }
 
     public void entrance_complete(object args, int? id) {
-        //JoinGame();
+        
     }
 
     public void matched(object args, int? id) {
-        Logger.Log("매칭 성공");
-        Logger.Log(args);
+        matchKey = ((string)args).Split(':')[1];
+        Logger.Log("matchKey : " + matchKey);
+        JoinGame();
     }
 
     public void end_ready(object args, int? id) { 
