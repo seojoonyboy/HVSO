@@ -58,6 +58,7 @@ public partial class BattleConnector : MonoBehaviour {
         if(theMethod == null) return;
         
         object[] args = new object[]{result.args, result.id};
+        Logger.Log(result.method);
         theMethod.Invoke(this, args);
     }
 
@@ -151,8 +152,8 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void matched(object args, int? id) {
-        matchKey = ((string)args).Split(':')[1];
-        Logger.Log("matchKey : " + matchKey);
+        var json = (JObject)args;
+        matchKey = json["matchKey"].ToString();
         JoinGame();
     }
 
