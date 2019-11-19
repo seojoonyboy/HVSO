@@ -55,7 +55,7 @@ public class DeckListHandlerInBattleReady : MonoBehaviour {
             var deck = humanDecks[i];
 
             Button button = deckHandler.GetComponent<Button>();
-            button.onClick.AddListener(() => { OnDeckSelected(deckHandler.DECKID, "HUMAN", deck, obj); });
+            button.onClick.AddListener(() => { OnDeckSelected(deckHandler.DECKID, "human", deck, obj); });
         }
 
         int index = 0;
@@ -80,7 +80,7 @@ public class DeckListHandlerInBattleReady : MonoBehaviour {
             var deck = orcDecks[index];
 
             Button button = deckHandler.GetComponent<Button>();
-            button.onClick.AddListener(() => { OnDeckSelected(deckHandler.DECKID, "ORC", deck, obj); });
+            button.onClick.AddListener(() => { OnDeckSelected(deckHandler.DECKID, "orc", deck, obj); });
             index++;
         }
     }

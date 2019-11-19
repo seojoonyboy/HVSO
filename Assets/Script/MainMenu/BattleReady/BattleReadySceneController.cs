@@ -51,7 +51,6 @@ public class BattleReadySceneController : MonoBehaviour {
         RectTransform rt = ScrollSnap.transform.Find("Content").GetComponent<RectTransform>();
         rt.offsetMin = new Vector2(0, rt.offsetMin.y);
 
-        menuSceneController.ClickMenuButton(2);
         EscapeKeyController.escapeKeyCtrl.RemoveEscape(OnBackButton);
     }
 
