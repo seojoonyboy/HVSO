@@ -1451,18 +1451,25 @@ public class Focus_Skill_Icon : ScenarioExecute {
     //private IObservable<float> countObserver() => Observable.Timer(TimeSpan.FromSeconds(0), TimeSpan.FromSeconds(1)).Where(_ => clickIcon == true).Select(x => currentTime + x).TakeWhile(x => x < time);
 
     public override void Execute() {
-        scenarioMask.FocusSkillIcon();
-        parseTime = int.Parse(args[0]);
-        time = parseTime - 0.3f;
-        PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.CLICK_SKILL_ICON, CheckClick);
-        scenarioMask.outText.gameObject.SetActive(true);
+        //scenarioMask.FocusSkillIcon();
+        //parseTime = int.Parse(args[0]);
+        //time = parseTime - 0.3f;
+        //PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.CLICK_SKILL_ICON, CheckClick);
+        //scenarioMask.outText.gameObject.SetActive(true);
 
-        //countObserver().Subscribe(_ => ClickFinish());
-        //countObserver().Concat(countObserver()).Subscribe(_ => { },()=> { });
-        //click = Observable.Timer(TimeSpan.FromSeconds(0), TimeSpan.FromSeconds(1)).Where(_ => clickIcon == true).Select(x => currentTime + x).First(x => x >= time).Subscribe(_ => ClickFinish());
-        //click = Observable.Interval(TimeSpan.FromSeconds(time)).Where(_=>clickIcon == true).Select(x=> currentTime += time).First(x=>x>=time).Subscribe(_ => ClickFinish());
-        click = Observable.EveryUpdate().Where(_ => clickIcon == true).Select(_ => currentTime += Time.deltaTime).SkipWhile(x => x < time).First().Subscribe(_ => ClickFinish());
-        unclick = Observable.EveryUpdate().Where(_ => clickIcon == true).Where(_ => Input.GetMouseButton(0) == false).Subscribe(_ => { currentTime = 0; clickIcon = false; });
+        ////countObserver().Subscribe(_ => ClickFinish());
+        ////countObserver().Concat(countObserver()).Subscribe(_ => { },()=> { });
+        ////click = Observable.Timer(TimeSpan.FromSeconds(0), TimeSpan.FromSeconds(1)).Where(_ => clickIcon == true).Select(x => currentTime + x).First(x => x >= time).Subscribe(_ => ClickFinish());
+        ////click = Observable.Interval(TimeSpan.FromSeconds(time)).Where(_=>clickIcon == true).Select(x=> currentTime += time).First(x=>x>=time).Subscribe(_ => ClickFinish());
+        //click = Observable.EveryUpdate().Where(_ => clickIcon == true).Select(_ => currentTime += Time.deltaTime).SkipWhile(x => x < time).First().Subscribe(_ => ClickFinish());
+        //unclick = Observable.EveryUpdate().Where(_ => clickIcon == true).Where(_ => Input.GetMouseButton(0) == false).Subscribe(_ => { currentTime = 0; clickIcon = false; });
+
+
+        CardListManager clm = PlayMangement.instance.cardInfoCanvas.Find("CardInfoList").GetComponent<CardListManager>();
+        dataModules.CollectionCard cardData = AccountManager.Instance.allCardsDic[args[0]];
+        Sprite image = AccountManager.Instance.resource.skillIcons[cardData.attackTypes[0]];
+        clm.OpenClassDescModal(cardData.attackTypes[0], image, scenarioMask.GetInfoWindow().transform.Find("Skill&BuffRow1/Skill1"));
+        handler.isDone = true;
     }
 
     private void CheckClick(Enum event_type, Component Sender, object Param) {
@@ -1478,10 +1485,6 @@ public class Focus_Skill_Icon : ScenarioExecute {
     }
 
     private void OnDestroy() {
-        if (click != null || unclick != null) {
-            click.Dispose();
-            unclick.Dispose();
-        }
     }
 }
 /// <summary>
@@ -1491,7 +1494,9 @@ public class Blur_Skill_Icon : ScenarioExecute {
     public Blur_Skill_Icon() : base() { }
 
     public override void Execute() {
-        scenarioMask.BlurSkillIcon();
+        CardListManager clm = PlayMangement.instance.cardInfoCanvas.Find("CardInfoList").GetComponent<CardListManager>();
+        clm.CloseClassDescModal();
+        //scenarioMask.BlurSkillIcon();
         handler.isDone = true;
     }
 }

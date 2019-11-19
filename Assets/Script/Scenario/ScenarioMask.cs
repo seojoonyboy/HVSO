@@ -678,7 +678,7 @@ public class ScenarioMask : SerializedMonoBehaviour
         talkingText.SetActive(false);
     }
 
-    private GameObject GetInfoWindow() {
+    public GameObject GetInfoWindow() {
         Transform openWindow = targetObject["unitInfo"].gameObject.transform;
         foreach(Transform child in openWindow) {
             if (child.gameObject.activeSelf == true)
