@@ -1,0 +1,131 @@
+{
+    "maxSliderNum" : 3600,
+    "rewards" : [
+        {
+            "standard" : 100,
+            "type" : "manaCrystal",
+            "amount" : 150,
+            "args" : []
+        },
+        {
+            "standard" : 180,
+            "type" : "randomCard",
+            "amount" : 150,
+            "args" : ["common"]
+        },
+        {
+            "standard" : 260,
+            "type" : "gold",
+            "amount" : 80,
+            "args" : []
+        },
+        {
+            "standard" : 380,
+            "type" : "supplyBox",
+            "amount" : 2,
+            "args" : []
+        },
+        {
+            "standard" : 460,
+            "type" : "gold",
+            "amount" : 80,
+            "args" : []
+        },
+        {
+            "standard" : 550,
+            "type" : "randomCard",
+            "amount" : 4,
+            "args" : ["common"]
+        },
+        {
+            "standard" : 700,
+            "type" : "doubleCoupon",
+            "amount" : 7,
+            "args" : []
+        },
+        {
+            "standard" : 800,
+            "type" : "supplyBox",
+            "amount" : 1,
+            "args" : []
+        },
+        {
+            "standard" : 900,
+            "type" : "randomCard",
+            "amount" : 2,
+            "args" : ["uncommon"]
+        },
+        {
+            "standard" : 1100,
+            "type" : "gold",
+            "amount" : 80,
+            "args" : []
+        },
+        {
+            "standard" : 1200,
+            "type" : "randomCard",
+            "amount" : 2,
+            "args" : ["uncommon"]
+        },
+        {
+            "standard" : 1300,
+            "type" : "doubleCoupon",
+            "amount" : 12,
+            "args" : []
+        },
+        {
+            "standard" : 1500,
+            "type" : "supplyBox",
+            "amount" : 2,
+            "args" : []
+        },
+        {
+            "standard" : 1650,
+            "type" : "manaCrystal",
+            "amount" : 250,
+            "args" : []
+        },
+        {
+            "standard" : 1800,
+            "type" : "randomCard",
+            "amount" : 2,
+            "args" : ["rare"]
+        },
+        {
+            "standard" : 2100,
+            "type" : "supplyBox",
+            "amount" : 2,
+            "args" : []
+        },
+        {
+            "standard" : 2250,
+            "type" : "gold",
+            "amount" : 150,
+            "args" : []
+        },
+        {
+            "standard" : 2400,
+            "type" : "randomCard",
+            "amount" : 2,
+            "args" : ["superrare"]
+        },
+        {
+            "standard" : 2700,
+            "type" : "randomCard",
+            "amount" : 1,
+            "args" : ["superrare"]
+        },
+        {
+            "standard" : 2900,
+            "type" : "gold",
+            "amount" : 200,
+            "args" : []
+        },
+        {
+            "standard" : 3100,
+            "type" : "randomCard",
+            "amount" : 1,
+            "args" : ["legend"]
+        }
+    ]
+}

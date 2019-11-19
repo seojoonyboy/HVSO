@@ -146,11 +146,6 @@ public partial class BattleConnector : MonoBehaviour {
         return true;
     }
 
-    public void DisconnectLobby() {
-        SendMethod("disconnect");
-        FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
-    }
-
     public async void TryReconnect() {
         await Task.Delay(2000);
         if(isQuit) return;

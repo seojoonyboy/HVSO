@@ -26,25 +26,27 @@ public class BattleReadySceneController : MonoBehaviour {
     [SerializeField] HorizontalScrollSnap ScrollSnap;
     [SerializeField] GameObject deckListPanel;
     [SerializeField] MenuSceneController menuSceneController;
+    [SerializeField] RewardsProvider rewardsProvider;
 
     public Deck selectedDeck;
     private void OnEnable() {
-        isIngameButtonClicked = false;
+        rewardsProvider.Provide();
+        //isIngameButtonClicked = false;
 
-        ChangeBattleType(0);
+        //ChangeBattleType(0);
 
-        //ScrollSnap.ChangePage(0);
-        PlayerPrefs.SetString("SelectedDeckId", "");
-        PlayerPrefs.SetString("SelectedRace", RaceType.NONE.ToString());
+        ////ScrollSnap.ChangePage(0);
+        //PlayerPrefs.SetString("SelectedDeckId", "");
+        //PlayerPrefs.SetString("SelectedRace", RaceType.NONE.ToString());
 
-        HudController.SetHeader(HUDController.Type.RESOURCE_ONLY_WITH_BACKBUTTON);
-        HudController.SetBackButton(() => {
-            OnBackButton();
-        });
+        //HudController.SetHeader(HUDController.Type.RESOURCE_ONLY_WITH_BACKBUTTON);
+        //HudController.SetBackButton(() => {
+        //    OnBackButton();
+        //});
 
-        Logger.Log("deckListPanel.SetActive(true)");
-        deckListPanel.SetActive(true);
-        EscapeKeyController.escapeKeyCtrl.AddEscape(OnBackButton) ;
+        //Logger.Log("deckListPanel.SetActive(true)");
+        //deckListPanel.SetActive(true);
+        //EscapeKeyController.escapeKeyCtrl.AddEscape(OnBackButton) ;
     }
 
     void OnDisable() {
