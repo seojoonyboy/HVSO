@@ -13,21 +13,20 @@ using System;
 public partial class MenuCardInfo : MonoBehaviour {
     Translator translator;
     [SerializeField] Transform classDescModal;
-    [SerializeField] CardDictionaryManager cardDic;
-    [SerializeField] HUDController hudController;
-    [SerializeField] MenuSceneController menuSceneController;
+
     string cardId;
     bool isHuman;
     bool cardCreate = false;
     float beforeCrystal;
     AccountManager accountManager;
     CollectionCard cardData;
-    Transform dicCard;
+    Transform cardObject;
 
     public UnityEvent OnMakeCardFinished = new UnityEvent();
 
     public static MenuCardInfo cardInfoWindow;
     public GameObject editCard;
+    bool makeCard;
 
 
     private void Start() {
@@ -54,10 +53,9 @@ public partial class MenuCardInfo : MonoBehaviour {
         accountManager.RequestInventories();
     }
 
-    public virtual void SetCardInfo(CollectionCard data, bool isHuman, Transform dicCard, bool makeCard = false) {
+    public virtual void SetCardInfo(CollectionCard data, bool isHuman, Transform cardObj, bool makeCard = false) {
         SoundManager.Instance.PlaySound(UISfxSound.BUTTON4);
-        if (dicCard != null)
-            this.dicCard = dicCard;
+        cardObject = cardObj;
         cardId = data.id;
         this.isHuman = isHuman;
         Transform info = transform;
@@ -315,6 +313,7 @@ public partial class MenuCardInfo : MonoBehaviour {
         //transform.parent.Find("DeckEditExitTrigger").gameObject.SetActive(false);
         //transform.parent.Find("ExitTrigger").gameObject.SetActive(true);
         transform.parent.Find("HeroInfo").gameObject.SetActive(false);
+        transform.Find("CreateCard/BreakBtn/DisableInHand").gameObject.SetActive(false);
         editCard = null;
         EscapeKeyController.escapeKeyCtrl.RemoveEscape(CloseInfo);
     }
@@ -331,6 +330,7 @@ public partial class MenuCardInfo : MonoBehaviour {
         if (cardCreate) return;
         SoundManager.Instance.PlaySound(UISfxSound.BUTTON1);
         cardCreate = true;
+        makeCard = true;
         transform.Find("CreateSpine").gameObject.SetActive(true);
         transform.Find("CreateSpine").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, "MAKING_" + cardData.rarelity, false);
         beforeCrystal = accountManager.userResource.crystal;
@@ -341,6 +341,7 @@ public partial class MenuCardInfo : MonoBehaviour {
         if (cardCreate) return;
         SoundManager.Instance.PlaySound(UISfxSound.BUTTON1);
         cardCreate = true;
+        makeCard = false;
         transform.Find("CreateSpine").gameObject.SetActive(true);
         transform.Find("CreateSpine").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, "DECOMPOSITION_" + cardData.rarelity, false);
         beforeCrystal = accountManager.userResource.crystal;
@@ -356,10 +357,17 @@ public partial class MenuCardInfo : MonoBehaviour {
     }
 
     void EndCardMaking() {
-        dicCard.GetComponent<MenuCardHandler>().DrawCard(cardId, isHuman);
-        SetCardInfo(cardData, isHuman, null, true);
-        CardDictionaryManager.cardDictionaryManager.transform.Find("UIbar/Crystal/Value").GetComponent<TMPro.TextMeshProUGUI>().text 
+        if (cardObject.name == "DictionaryCard") {
+            cardObject.GetComponent<MenuCardHandler>().DrawCard(cardId, isHuman);
+            CardDictionaryManager.cardDictionaryManager.transform.Find("UIbar/Crystal/Value").GetComponent<TMPro.TextMeshProUGUI>().text
             = AccountManager.Instance.userResource.crystal.ToString();
+            SetCardInfo(cardData, isHuman, cardObject, true);
+        }
+        else {
+            cardObject.GetComponent<EditCardHandler>().deckEditController.cardButtons.MakeCard(cardObject, makeCard);
+            SetCardInfo(cardData, isHuman, cardObject, true);
+            transform.Find("Flavor").gameObject.SetActive(false);
+        }
         cardCreate = false;
     }
 }

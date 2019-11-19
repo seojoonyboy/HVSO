@@ -268,7 +268,7 @@ public class EditCardHandler : MonoBehaviour {
         MenuCardInfo.cardInfoWindow.gameObject.SetActive(true);
         MenuCardInfo.cardInfoWindow.transform.parent.Find("DeckEditExitTrigger").gameObject.SetActive(true);
         MenuCardInfo.cardInfoWindow.transform.parent.Find("ExitTrigger").gameObject.SetActive(false);
-        MenuCardInfo.cardInfoWindow.SetCardInfo(cardData, isHuman, null);
+        MenuCardInfo.cardInfoWindow.SetCardInfo(cardData, isHuman, transform);
         MenuCardInfo.cardInfoWindow.transform.Find("CreateCard").gameObject.SetActive(true);
         MenuCardInfo.cardInfoWindow.transform.Find("EditCardUI").gameObject.SetActive(false);
         if (isHandCard) {
