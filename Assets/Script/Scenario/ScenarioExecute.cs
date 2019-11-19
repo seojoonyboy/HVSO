@@ -1468,6 +1468,8 @@ public class Focus_Skill_Icon : ScenarioExecute {
         CardListManager clm = PlayMangement.instance.cardInfoCanvas.Find("CardInfoList").GetComponent<CardListManager>();
         dataModules.CollectionCard cardData = AccountManager.Instance.allCardsDic[args[0]];
         Sprite image = AccountManager.Instance.resource.skillIcons[cardData.attackTypes[0]];
+        scenarioMask.GetMaskHighlight(scenarioMask.targetObject["attributeIcon"]);
+        scenarioMask.MaskTillON();
         clm.OpenClassDescModal(cardData.attackTypes[0], image, scenarioMask.GetInfoWindow().transform.Find("Skill&BuffRow1/Skill1"));
         handler.isDone = true;
     }
@@ -1496,6 +1498,7 @@ public class Blur_Skill_Icon : ScenarioExecute {
     public override void Execute() {
         CardListManager clm = PlayMangement.instance.cardInfoCanvas.Find("CardInfoList").GetComponent<CardListManager>();
         clm.CloseClassDescModal();
+        scenarioMask.OffMaskScreen();
         //scenarioMask.BlurSkillIcon();
         handler.isDone = true;
     }

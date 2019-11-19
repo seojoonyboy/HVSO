@@ -81,6 +81,16 @@ public class ScenarioMask : SerializedMonoBehaviour
         bottonMask.transform.gameObject.SetActive(true);
     }
 
+    public void MaskTillON() {
+        Color maskColor = Color.black;
+        maskColor.a = 0.3f;
+
+        topMask.transform.GetComponent<Image>().color = maskColor;
+        leftMask.transform.GetComponent<Image>().color = maskColor;
+        rightMask.transform.GetComponent<Image>().color = maskColor;
+        bottonMask.transform.GetComponent<Image>().color = maskColor;
+    }
+
     public void BlockButton() {
         blockTurnBtn.SetActive(true);
     }
@@ -244,11 +254,12 @@ public class ScenarioMask : SerializedMonoBehaviour
 
 
     public void OffMaskScreen() {
-        Color prevColor = topMask.transform.GetComponent<Image>().color;
-        topMask.transform.GetComponent<Image>().color = new Color(prevColor.r, prevColor.g, prevColor.b, defaultAlpha);
-        leftMask.transform.GetComponent<Image>().color = new Color(prevColor.r, prevColor.g, prevColor.b, defaultAlpha);
-        rightMask.transform.GetComponent<Image>().color = new Color(prevColor.r, prevColor.g, prevColor.b, defaultAlpha);
-        bottonMask.transform.GetComponent<Image>().color = new Color(prevColor.r, prevColor.g, prevColor.b, defaultAlpha);
+        Color maskColor = Color.white;
+        maskColor.a = defaultAlpha;
+        topMask.transform.GetComponent<Image>().color = maskColor;
+        leftMask.transform.GetComponent<Image>().color = maskColor;
+        rightMask.transform.GetComponent<Image>().color = maskColor;
+        bottonMask.transform.GetComponent<Image>().color = maskColor;
     }
 
     private void Awake() {
