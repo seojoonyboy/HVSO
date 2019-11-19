@@ -6,6 +6,7 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 public class EditBarDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
+    [SerializeField] public Transform mainCanvas;
     [SerializeField] public Transform topDragLimit;
     [SerializeField] public Transform bottomDragLimit;
     [SerializeField] public Transform bookBottomLimit;
@@ -18,7 +19,7 @@ public class EditBarDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler
     float canvasScale;
 
     public void InitCanvas() {
-        canvasScale = deckEditCanvas.localScale.x;
+        canvasScale = mainCanvas.localScale.x;
         transform.position = new Vector3(transform.position.x, defaultDragLimit.position.y - (55 * canvasScale), 0);
         handDeckArea.GetChild(0).localPosition = Vector3.zero;
         cardBookArea.GetChild(0).localPosition = Vector3.zero;
@@ -29,6 +30,7 @@ public class EditBarDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler
     }
 
     public void OnBeginDrag(PointerEventData eventData) {
+        deckEditCanvas.GetComponent<DeckEditController>().cardButtons.CloseCardButtons();
         SetAreas();
     }
 
