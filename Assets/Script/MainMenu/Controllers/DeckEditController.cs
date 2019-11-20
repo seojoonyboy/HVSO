@@ -446,18 +446,18 @@ public class DeckEditController : MonoBehaviour {
                             addCardHandler = addedCard.GetComponent<EditCardHandler>();
                             addCardHandler.SETNUM++;
                             addCardHandler.DrawCard(cardId, isHuman);
-                            //addCardHandler.SetSetNum(true);
                             addCardHandler.beforeObject = bookCards[costNum, i][num];
                         }
                         else {
                             addCardHandler = setCardList[cardId].GetComponent<EditCardHandler>();
                             addCardHandler.SETNUM++;
-                            //addCardHandler.SetSetNum(true);
                         }
                         setNumsByCost[costNum]++;
                         bookCards[costNum, i][num].GetComponent<EditCardHandler>().HAVENUM--;
-                        if (bookCards[costNum, i][num].GetComponent<EditCardHandler>().HAVENUM == 0)
+                        if (bookCards[costNum, i][num].GetComponent<EditCardHandler>().HAVENUM == 0) {
+                            bookCards[costNum, i][num].SetActive(false);
                             bookCards[costNum, i].Remove(bookCards[costNum, i][num]);
+                        }
                         haveCardNum--;
                         setCardNum++;
                         if (setNumsByCost[costNum] == maxNumber || setCardNum == 40) break;
@@ -491,18 +491,12 @@ public class DeckEditController : MonoBehaviour {
         for (int i = 0; i < 2; i++) {
             for(int j = 0; j < ownCardLayout.GetChild(i).Find("Grid").childCount; j++) { 
                 EditCardHandler cardHandler = ownCardLayout.GetChild(i).Find("Grid").GetChild(j).GetComponent<EditCardHandler>();
+                if (!cardHandler.gameObject.activeSelf) continue;
                 cardHandler.SetHaveNum();
                 if (cardHandler.HAVENUM == 0) cardHandler.gameObject.SetActive(false);
             }
         }
     }
-
-
-
-
-
-
-
 
     public void ConfirmSetDeck(GameObject cardObj, string cardId) {
         if (setCardNum == 40) return;
