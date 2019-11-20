@@ -22,6 +22,10 @@ namespace MenuTutorialModules {
         }
 
         public virtual void Execute() { }
+
+        void OnDestroy() {
+            StopAllCoroutines();
+        }
     }
 
     public class Wait_Click : MenuExecute {
@@ -476,8 +480,8 @@ namespace MenuTutorialModules {
 
     public class DestroyLoadingModal : MenuExecute {
         public override void Execute() {
-            var loadingModal = GetComponent<MenuTutorialManager>().menuSceneController.loadingModal;
-            if (loadingModal != null) Destroy(loadingModal);
+            var loadingModal = GetComponent<MenuTutorialManager>().menuSceneController.hideModal;
+            loadingModal.SetActive(false);
             handler.isDone = true;
         }
     }

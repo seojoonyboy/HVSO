@@ -24,24 +24,37 @@ public class EditCardButtonHandler : MonoBehaviour {
         this.isHandCard = isHandCard;
         gameObject.SetActive(true);
         transform.position = card.position;
-        if (isHandCard)
+        if (isHandCard) 
             transform.SetParent(handDeckArea);
-        else
+        else 
             transform.SetParent(cardBookArea);
 
         transform.GetChild(0).Find("AddCard").gameObject.SetActive(!isHandCard);
         transform.GetChild(0).Find("ExceptCard").gameObject.SetActive(isHandCard);
         if(!isHandCard)
             transform.GetChild(0).Find("AddCard").GetComponent<Button>().interactable = (cardNum == 0) ? false : true;
-        EditCardHandler cardHandler = transform.GetChild(0).Find("CardImage").GetComponent<EditCardHandler>();
-        cardHandler.InitEditCard();
-        cardHandler.HAVENUM = cardNum;
-        cardHandler.DrawCard(cardData.id, cardData.camp == "human");
-        cardHandler.gameObject.SetActive(true);
+        SetCardImage(card.GetComponent<EditCardHandler>());
         if (gameObject.activeSelf) {
             handDeckArea.GetComponent<ScrollRect>().enabled = true;
             cardBookArea.GetComponent<ScrollRect>().enabled = true;
         }
+        if (deckEditCanvas.GetComponent<DeckEditController>().setCardNum == 40) {
+            transform.GetChild(0).Find("AddCard").GetComponent<Button>().interactable = false;
+            transform.GetChild(0).Find("AddCard/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "FULL";
+        }
+        else
+            transform.GetChild(0).Find("AddCard/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "추가";
+    }
+
+    public void SetCardImage(EditCardHandler card) {
+        EditCardHandler cardHandler = transform.GetChild(0).Find("CardImage").GetComponent<EditCardHandler>();
+        cardHandler.InitEditCard();
+        if (isHandCard)
+            cardHandler.HAVENUM = card.SETNUM;
+        else
+            cardHandler.HAVENUM = card.HAVENUM;
+        cardHandler.DrawCard(cardData.id, cardData.camp == "human");
+        cardHandler.gameObject.SetActive(true);
     }
 
     public void CloseCardButtons() {
@@ -57,8 +70,6 @@ public class EditCardButtonHandler : MonoBehaviour {
         MenuCardInfo.cardInfoWindow.transform.parent.gameObject.SetActive(true);
         MenuCardInfo.cardInfoWindow.gameObject.SetActive(true);
         MenuCardInfo.cardInfoWindow.SetCardInfo(cardData, cardData.camp == "human", card);
-        //MenuCardInfo.cardInfoWindow.transform.Find("CreateCard").gameObject.SetActive(true);
-        MenuCardInfo.cardInfoWindow.transform.Find("EditCardUI").gameObject.SetActive(false);
         MenuCardInfo.cardInfoWindow.transform.Find("Flavor").gameObject.SetActive(false);
         if (transform.parent.name == "HandDeckArea") {
             MenuCardInfo.cardInfoWindow.transform.Find("CreateCard/BreakBtn/DisableInHand").gameObject.SetActive(true);
@@ -67,12 +78,20 @@ public class EditCardButtonHandler : MonoBehaviour {
     }
 
     public void AddCardInDeck() {
+        DeckEditController deckEdit = deckEditCanvas.GetComponent<DeckEditController>();
+        if (deckEdit.setCardNum == 40) return;
         EditCardHandler cardHandler = transform.GetChild(0).Find("CardImage").GetComponent<EditCardHandler>();
-        deckEditCanvas.GetComponent<DeckEditController>().ConfirmSetDeck(card.gameObject, cardData.id);
+        deckEdit.ConfirmSetDeck(card.gameObject, cardData.id);
         cardHandler.DrawCard(cardData.id, cardData.camp == "human");
         cardHandler.HAVENUM--;
         cardHandler.SetHaveNum();
         if (cardHandler.HAVENUM == 0) CloseCardButtons();
+        if (deckEdit.setCardNum == 40) {
+            transform.GetChild(0).Find("AddCard").GetComponent<Button>().interactable = false;
+            transform.GetChild(0).Find("AddCard/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "FULL";
+        }
+        else
+            transform.GetChild(0).Find("AddCard/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "추가";
     }
 
     public void ExceptCardFromDeck() {

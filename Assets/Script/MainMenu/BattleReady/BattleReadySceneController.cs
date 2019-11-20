@@ -25,9 +25,11 @@ public class BattleReadySceneController : MonoBehaviour {
     [SerializeField] GameObject deckListPanel;
     [SerializeField] MenuSceneController menuSceneController;
     [SerializeField] RewardsProvider rewardsProvider;
-
+    
     public Deck selectedDeck;
-    private void OnEnable() {
+    public LeagueData userLeagueData;
+
+    void OnEnable() {
         rewardsProvider.Provide();
         isIngameButtonClicked = false;
 
@@ -46,7 +48,17 @@ public class BattleReadySceneController : MonoBehaviour {
         EscapeKeyController.escapeKeyCtrl.RemoveEscape(OnBackButton);
     }
 
+    private void OnRankUp() {
 
+    }
+
+    /// <summary>
+    /// 랭크 변화가 있었는지 확인
+    /// </summary>
+    /// <returns></returns>
+    private bool isRankChanged() {
+        return true;
+    }
 
     public void OnStartButton() {
         if (isIngameButtonClicked) {
