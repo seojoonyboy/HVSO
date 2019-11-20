@@ -1468,7 +1468,7 @@ public class Focus_Skill_Icon : ScenarioExecute {
         CardListManager clm = PlayMangement.instance.cardInfoCanvas.Find("CardInfoList").GetComponent<CardListManager>();
         dataModules.CollectionCard cardData = AccountManager.Instance.allCardsDic[args[0]];
         Sprite image = AccountManager.Instance.resource.skillIcons[cardData.attackTypes[0]];
-        scenarioMask.GetMaskHighlight(scenarioMask.targetObject["attributeIcon"]);
+        scenarioMask.GetMaskHighlight(scenarioMask.targetObject["attributeIcon"], true);
         scenarioMask.MaskTillON();
         clm.OpenClassDescModal(cardData.attackTypes[0], image, scenarioMask.GetInfoWindow().transform.Find("Skill&BuffRow1/Skill1"));
         handler.isDone = true;

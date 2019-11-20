@@ -40,8 +40,9 @@ public class ScenarioMask : SerializedMonoBehaviour
 
     public GameObject tilledObject;
     public GameObject infoTouch;
+    public GameObject solidLine;
 
-    public void GetMaskHighlight(GameObject targetObject) {
+    public void GetMaskHighlight(GameObject targetObject, bool activeSolidLine = false) {
         if (targetObject == null) return;
         ActiveMask();
         RectTransform targetTransform = targetObject.GetComponent<RectTransform>();
@@ -56,14 +57,28 @@ public class ScenarioMask : SerializedMonoBehaviour
             float halfHeight = targetRectPos[1].y - targetPos.y;
             float halfWidth = targetPos.x - targetRectPos[1].x;
 
-            Vector3 top = new Vector3(0, targetPos.y + halfHeight + rectHeightRadius, 0);
+            Vector3 top = new Vector3(targetTransform.position.x, targetPos.y + halfHeight + rectHeightRadius, 0);
             Vector3 left = new Vector3(targetPos.x - halfWidth - rectWidthRadius, 0, 0);
             Vector3 right = new Vector3(targetPos.x + halfWidth + rectWidthRadius, 0, 0);
-            Vector3 bottom = new Vector3(0, targetPos.y - halfHeight - rectHeightRadius, 0);
+            Vector3 bottom = new Vector3(targetTransform.position.x, targetPos.y - halfHeight - rectHeightRadius, 0);
             topMask.position = top;
             leftMask.position = left;
             rightMask.position = right;
-            bottonMask.position = bottom;
+            bottonMask.position = bottom;            
+
+            topMask.sizeDelta = new Vector2(targetTransform.sizeDelta.x, topMask.sizeDelta.y);
+            bottonMask.sizeDelta = new Vector2(targetTransform.sizeDelta.x, bottonMask.sizeDelta.y);
+
+            if(activeSolidLine == true) {
+                solidLine.SetActive(true);
+                RectTransform solidRect = solidLine.GetComponent<RectTransform>();
+                solidRect.sizeDelta = targetTransform.sizeDelta;
+                solidRect.position = targetTransform.position;
+                UnityEngine.Animation solidAnimation = solidLine.GetComponent<UnityEngine.Animation>();
+                solidAnimation.Play();
+            }
+            else
+                solidLine.SetActive(false);
         }        
     }
 
@@ -72,6 +87,7 @@ public class ScenarioMask : SerializedMonoBehaviour
         leftMask.transform.gameObject.SetActive(false);
         rightMask.transform.gameObject.SetActive(false);
         bottonMask.transform.gameObject.SetActive(false);
+        solidLine.SetActive(false);
     }
 
     public void ActiveMask() {
@@ -84,6 +100,8 @@ public class ScenarioMask : SerializedMonoBehaviour
     public void MaskTillON() {
         Color maskColor = Color.black;
         maskColor.a = 0.3f;
+
+        
 
         topMask.transform.GetComponent<Image>().color = maskColor;
         leftMask.transform.GetComponent<Image>().color = maskColor;
@@ -653,6 +671,8 @@ public class ScenarioMask : SerializedMonoBehaviour
             }
 
         }
+        solidLine.SetActive(false);
+        
 
         InfoTouchOFF();
 
