@@ -226,6 +226,7 @@ public class GameResultManager : MonoBehaviour {
             .EveryUpdate()
             .Select(_ => currentTime += Time.deltaTime)
             .SkipWhile(x => x < WAIT_TIME)
+            .First()
             .Subscribe(_ => OnReturnBtn());
         observer_2 = Observable
             .EveryUpdate()

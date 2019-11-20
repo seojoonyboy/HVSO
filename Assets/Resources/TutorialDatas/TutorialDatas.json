@@ -22,12 +22,6 @@
                         "args": []
                     },
                     {
-                        "name": "ForceToPage",
-                        "args": [
-                            "StoryLobby"
-                        ]
-                    },
-                    {
                         "name" : "Wait_Until",
                         "args" : [
                             "0.8"
