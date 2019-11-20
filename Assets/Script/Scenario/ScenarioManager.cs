@@ -298,11 +298,11 @@ public class ScenarioManager : SerializedMonoBehaviour
         string deckName = "";
         if (isHuman) {
             deckPrefab = humanDeckPrefab;
-            deckName = "튜토리얼 덱";
+            deckName = "휴먼 기본부대";
         }
         else {
             deckPrefab = orcDeckPrefab;
-            deckName = "튜토리얼 덱";
+            deckName = "오크 기본부대";
         }
         GameObject setDeck = Instantiate(deckPrefab, deckContent.transform);
         dataModules.Deck dummyDeck = new dataModules.Deck();
@@ -312,6 +312,9 @@ public class ScenarioManager : SerializedMonoBehaviour
             OnDeckSelected(setDeck, dummyDeck, true);
         });
         setDeck.transform.Find("Deck/Name").GetComponent<TextMeshProUGUI>().text = deckName;
+
+        var deckCountText = stageCanvas.transform.Find("HUD/StagePanel/TextGroup/DeckCount").GetComponent<TextMeshProUGUI>();
+        deckCountText.text = "1/1";
     }
 
     private void LoadMyDecks(bool isHuman) {
@@ -351,6 +354,9 @@ public class ScenarioManager : SerializedMonoBehaviour
             });
             deckIndex++;
         }
+
+        var deckCountText = stageCanvas.transform.Find("HUD/StagePanel/TextGroup/DeckCount").GetComponent<TextMeshProUGUI>();
+        deckCountText.text = totalDecks.Count + "/8";
     }
 
     public void OnDeckSelected(GameObject selectedDeckObject, dataModules.Deck data, bool isTutorial) {
@@ -391,11 +397,15 @@ public class ScenarioManager : SerializedMonoBehaviour
         HUDController.gameObject.SetActive(false);
 
         Image background = stageCanvas.transform.Find("HUD/StagePanel/MainBack").GetComponent<Image>();
+        Image header = stageCanvas.transform.Find("HUD/StagePanel/DeckBack").GetComponent<Image>();
+        
         if (isHuman) {
             background.sprite = human.readyCanvasBg;
+            header.sprite = human.headerBg;
         }
         else {
             background.sprite = orc.readyCanvasBg;
+            header.sprite = orc.headerBg;
         }
 
         if (isTutorial) {
@@ -505,6 +515,7 @@ namespace Tutorial {
         public GameObject heroContent;
         public GameObject stageContent;
         public Sprite readyCanvasBg;
+        public Sprite headerBg;
     }
 
     public class ScenarioButton : MonoBehaviour {
