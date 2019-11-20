@@ -180,12 +180,10 @@ public class MenuCardHandler : MonoBehaviour {
         }
         if (transform.parent.name == "Grid") {
             MenuCardInfo.cardInfoWindow.SetCardInfo(cardData, isHuman, transform);
-            MenuCardInfo.cardInfoWindow.transform.Find("EditCardUI").gameObject.SetActive(false);
         }
         else {
             MenuCardInfo.cardInfoWindow.SetCardInfo(cardData, isHuman, null);
             MenuCardInfo.cardInfoWindow.transform.Find("CreateCard").gameObject.SetActive(false);
-            MenuCardInfo.cardInfoWindow.transform.Find("EditCardUI").gameObject.SetActive(false);
         }
         if (transform.parent.parent.parent.name == "HeroInfo" && transform.parent.parent.name != "SkillWindow") {
             exitTrigger2.SetActive(true);

@@ -262,28 +262,6 @@ public class EditCardHandler : MonoBehaviour {
     //}
 
 
-    public void OpenCardInfo() {
-        if (dragging) return;
-        MenuCardInfo.cardInfoWindow.transform.parent.gameObject.SetActive(true);
-        MenuCardInfo.cardInfoWindow.gameObject.SetActive(true);
-        MenuCardInfo.cardInfoWindow.transform.parent.Find("DeckEditExitTrigger").gameObject.SetActive(true);
-        MenuCardInfo.cardInfoWindow.transform.parent.Find("ExitTrigger").gameObject.SetActive(false);
-        MenuCardInfo.cardInfoWindow.SetCardInfo(cardData, isHuman, transform);
-        MenuCardInfo.cardInfoWindow.transform.Find("CreateCard").gameObject.SetActive(true);
-        MenuCardInfo.cardInfoWindow.transform.Find("EditCardUI").gameObject.SetActive(false);
-        if (isHandCard) {
-            MenuCardInfo.cardInfoWindow.SetEditCardInfo(beforeObject.GetComponent<EditCardHandler>().HAVENUM, deckEditController.setCardNum);
-            MenuCardInfo.cardInfoWindow.editCard = beforeObject;
-        }
-        else {
-            MenuCardInfo.cardInfoWindow.SetEditCardInfo(haveNum, deckEditController.setCardNum);
-            MenuCardInfo.cardInfoWindow.editCard = gameObject;
-        }
-        MenuCardInfo.cardInfoWindow.transform.Find("Flavor").gameObject.SetActive(false);
-        MenuCardInfo.cardInfoWindow.transform.Find("Indestructible").gameObject.SetActive(false);
-        EscapeKeyController.escapeKeyCtrl.AddEscape(MenuCardInfo.cardInfoWindow.CloseInfo);
-    }
-
 
     public void DrawCard(string id, bool isHuman) {
         this.isHuman = isHuman;
