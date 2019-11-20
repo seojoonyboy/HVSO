@@ -440,19 +440,14 @@ public partial class CardDropManager {
 
             int targetline = ScenarioGameManagment.scenarioInstance.forcedSummonAt - 1;
             if (magicTarget == "line") {
-                GameObject lineMask = PlayMangement.instance.lineMaskObject;
-                lineMask.SetActive(true);
                 for (int i = 0; i < 5; i++) {
                     if (i == targetline) {
-                        GameObject line = lineMask.transform.GetChild(i).gameObject;
-                        line.SetActive(false);
+                        MaskingLine(i, false);
                         slotLine[i].Find("BattleLineEffect").gameObject.SetActive(true);
                         slotLine[i].Find("BattleLineEffect").gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
                     }
                     else {
-                        GameObject line = lineMask.transform.GetChild(i).gameObject;
-                        line.SetActive(true);
-                        line.GetComponent<SpriteRenderer>().color = new Color(0.48f, 0.48f, 0.48f, 1f);                        
+                        MaskingLine(i, true);
                     }                        
                 }
                 return;
@@ -496,6 +491,14 @@ public partial class CardDropManager {
             ActivateTarget(unitLine, magicTarget, dragFiltering, conditionChecker, magicArgs);
     }
 
+    private void MaskingLine(int lineNum, bool active) {
+        GameObject lineMask = PlayMangement.instance.lineMaskObject;
+        lineMask.SetActive(true);
+        GameObject line = lineMask.transform.GetChild(lineNum).gameObject;
+        line.SetActive(active);
+        line.GetComponent<SpriteRenderer>().color = new Color(0.48f, 0.48f, 0.48f, 1f);
+    }
+
     private void ActivateTarget(Transform[][] units, string group, SkillModules.SkillHandler.DragFilter dragFiltering, SkillModules.ConditionChecker conditionChecker = null, string args = null) {
         if (group.Contains("unit")) {
             if (group.Contains("hero")) {
@@ -531,34 +534,30 @@ public partial class CardDropManager {
             }
         }
 
-        else if (group.Contains("line")) {
-            GameObject lineMask = PlayMangement.instance.lineMaskObject;
-            lineMask.SetActive(true);
+        else if (group.Contains("line")) {            
             for (int i = 0; i < 5; i++) {
                 if (args == null) {
                     if (units[i][0].childCount > 0) {
                         if (units[i][0].GetChild(0).GetComponent<ambush>() == null) {
                             slotLine[i].Find("BattleLineEffect").gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
                             slotLine[i].Find("BattleLineEffect").gameObject.SetActive(true);
-                            lineMask.transform.GetChild(i).gameObject.SetActive(false);
+                            MaskingLine(i, false);
                         }
                     }
                     if (units[i][1].childCount > 0) {
                         slotLine[i].Find("BattleLineEffect").gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
                         slotLine[i].Find("BattleLineEffect").gameObject.SetActive(true);
-                        lineMask.transform.GetChild(i).gameObject.SetActive(false);
+                        MaskingLine(i, false);
                     }
                     if(units[i][0].childCount <= 0 && units[i][0].childCount <= 0) {
-                        GameObject line = lineMask.transform.GetChild(i).gameObject;
-                        line.SetActive(true);
-                        line.GetComponent<SpriteRenderer>().color = new Color(0.48f, 0.48f, 0.48f, 1f);
+                        MaskingLine(i, true);
                     }
 
                 }
                 else {
                     slotLine[i].Find("BattleLineEffect").gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
                     slotLine[i].Find("BattleLineEffect").gameObject.SetActive(true);
-                    lineMask.transform.GetChild(i).gameObject.SetActive(false);
+                    MaskingLine(i, false);
                 }
             }
         }
