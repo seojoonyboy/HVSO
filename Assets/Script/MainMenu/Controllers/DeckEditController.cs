@@ -357,6 +357,7 @@ public class DeckEditController : MonoBehaviour {
     }
 
     public void AutoSetDeck() {
+        cardButtons.CloseCardButtons();
         List<GameObject>[,] bookCards = new List<GameObject>[8, 5];
         int[] setNumsByCost = new int[8];
         foreach (KeyValuePair<string, GameObject> obj in setCardList) {

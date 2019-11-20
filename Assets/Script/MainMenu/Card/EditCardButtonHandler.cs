@@ -42,6 +42,9 @@ public class EditCardButtonHandler : MonoBehaviour {
             handDeckArea.GetComponent<ScrollRect>().enabled = true;
             cardBookArea.GetComponent<ScrollRect>().enabled = true;
         }
+        if (deckEditCanvas.GetComponent<DeckEditController>().setCardNum == 40)
+            transform.GetChild(0).Find("AddCard").GetComponent<Button>().interactable = false;
+
     }
 
     public void CloseCardButtons() {
