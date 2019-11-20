@@ -356,14 +356,6 @@ public class DeckEditController : MonoBehaviour {
         RefreshLine2();
     }
 
-
-
-
-
-
-
-
-
     public void AutoSetDeck() {
         List<GameObject>[,] bookCards = new List<GameObject>[8, 5];
         int[] setNumsByCost = new int[8];
@@ -480,14 +472,11 @@ public class DeckEditController : MonoBehaviour {
         SortHandCards();
         RefreshLine2();
         for (int i = 0; i < 40; i++) {
+            if (!settingLayout.GetChild(0).GetChild(i).gameObject.activeSelf) continue;
             EditCardHandler cardHandler = settingLayout.GetChild(0).GetChild(i).GetComponent<EditCardHandler>();
             cardHandler.SetSetNum();
         }
 
-        Transform cardStore = transform.Find("InnerCanvas/CardStore");
-        for (int i = 0; i < cardStore.childCount; i++) {
-            cardStore.GetChild(i).GetComponent<EditCardHandler>().deckEditController = this;
-        }
         for (int i = 0; i < 2; i++) {
             for(int j = 0; j < ownCardLayout.GetChild(i).Find("Grid").childCount; j++) { 
                 EditCardHandler cardHandler = ownCardLayout.GetChild(i).Find("Grid").GetChild(j).GetComponent<EditCardHandler>();
@@ -513,7 +502,6 @@ public class DeckEditController : MonoBehaviour {
             addCardHandler.SetSetNum(true);
             addCardHandler.beforeObject = cardObj;
             SortHandCards();
-            RefreshLine2();
         }
         else {
             addCardHandler = setCardList[cardId].GetComponent<EditCardHandler>();
@@ -533,6 +521,7 @@ public class DeckEditController : MonoBehaviour {
         cardHandler.SetHaveNum();
         if (cardHandler.HAVENUM == 0) cardObj.SetActive(false);
         setCardNum++;
+        RefreshLine2();
     }
 
     public void SortHandCards() {
