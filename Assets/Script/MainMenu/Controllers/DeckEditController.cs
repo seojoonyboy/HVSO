@@ -356,15 +356,8 @@ public class DeckEditController : MonoBehaviour {
         RefreshLine2();
     }
 
-
-
-
-
-
-
-
-
     public void AutoSetDeck() {
+        cardButtons.CloseCardButtons();
         List<GameObject>[,] bookCards = new List<GameObject>[8, 5];
         int[] setNumsByCost = new int[8];
         foreach (KeyValuePair<string, GameObject> obj in setCardList) {
@@ -446,18 +439,18 @@ public class DeckEditController : MonoBehaviour {
                             addCardHandler = addedCard.GetComponent<EditCardHandler>();
                             addCardHandler.SETNUM++;
                             addCardHandler.DrawCard(cardId, isHuman);
-                            //addCardHandler.SetSetNum(true);
                             addCardHandler.beforeObject = bookCards[costNum, i][num];
                         }
                         else {
                             addCardHandler = setCardList[cardId].GetComponent<EditCardHandler>();
                             addCardHandler.SETNUM++;
-                            //addCardHandler.SetSetNum(true);
                         }
                         setNumsByCost[costNum]++;
                         bookCards[costNum, i][num].GetComponent<EditCardHandler>().HAVENUM--;
-                        if (bookCards[costNum, i][num].GetComponent<EditCardHandler>().HAVENUM == 0)
+                        if (bookCards[costNum, i][num].GetComponent<EditCardHandler>().HAVENUM == 0) {
+                            bookCards[costNum, i][num].SetActive(false);
                             bookCards[costNum, i].Remove(bookCards[costNum, i][num]);
+                        }
                         haveCardNum--;
                         setCardNum++;
                         if (setNumsByCost[costNum] == maxNumber || setCardNum == 40) break;
@@ -474,35 +467,26 @@ public class DeckEditController : MonoBehaviour {
             }
         }
         SetCardNums();
-        SortHandCards();
-        RefreshLine2();
     }
 
     public void SetCardNums() {
+        SortHandCards();
+        RefreshLine2();
         for (int i = 0; i < 40; i++) {
+            if (!settingLayout.GetChild(0).GetChild(i).gameObject.activeSelf) continue;
             EditCardHandler cardHandler = settingLayout.GetChild(0).GetChild(i).GetComponent<EditCardHandler>();
             cardHandler.SetSetNum();
         }
 
-        Transform cardStore = transform.Find("InnerCanvas/CardStore");
-        for (int i = 0; i < cardStore.childCount; i++) {
-            cardStore.GetChild(i).GetComponent<EditCardHandler>().deckEditController = this;
-        }
         for (int i = 0; i < 2; i++) {
             for(int j = 0; j < ownCardLayout.GetChild(i).Find("Grid").childCount; j++) { 
                 EditCardHandler cardHandler = ownCardLayout.GetChild(i).Find("Grid").GetChild(j).GetComponent<EditCardHandler>();
+                if (!cardHandler.gameObject.activeSelf) continue;
                 cardHandler.SetHaveNum();
                 if (cardHandler.HAVENUM == 0) cardHandler.gameObject.SetActive(false);
             }
         }
     }
-
-
-
-
-
-
-
 
     public void ConfirmSetDeck(GameObject cardObj, string cardId) {
         if (setCardNum == 40) return;
@@ -519,7 +503,6 @@ public class DeckEditController : MonoBehaviour {
             addCardHandler.SetSetNum(true);
             addCardHandler.beforeObject = cardObj;
             SortHandCards();
-            RefreshLine2();
         }
         else {
             addCardHandler = setCardList[cardId].GetComponent<EditCardHandler>();
@@ -539,6 +522,7 @@ public class DeckEditController : MonoBehaviour {
         cardHandler.SetHaveNum();
         if (cardHandler.HAVENUM == 0) cardObj.SetActive(false);
         setCardNum++;
+        RefreshLine2();
     }
 
     public void SortHandCards() {
@@ -634,8 +618,8 @@ public class DeckEditController : MonoBehaviour {
                 RefreshLine2();
                 float ditance1 = cardObj.position.y + (142 * transform.localScale.x) - editBar.transform.Find("CardBookBottom").position.y;
                 if (Mathf.Abs(ditance1) < editBar.cardBookArea.GetComponent<RectTransform>().sizeDelta.y && ditance1 < 0)
-                    editBar.cardBookArea.GetChild(0).localPosition = new Vector3(editBar.cardBookArea.GetChild(0).localPosition.x, editBar.cardBookArea.GetChild(0).localPosition.y - (ditance1 / transform.localScale.x));
-                cardObj.GetComponent<EditCardHandler>().OpenCardButtons();
+                    editBar.cardBookArea.GetChild(0).position = new Vector3(editBar.cardBookArea.GetChild(0).position.x, editBar.cardBookArea.GetChild(0).position.y - ditance1);
+                StartCoroutine(OpenCardButtonLate(cardObj));
 
             }
         }
@@ -645,12 +629,24 @@ public class DeckEditController : MonoBehaviour {
                 if (!setCardList.ContainsKey(cardObj.GetComponent<EditCardHandler>().cardID)) {
                     editBar.InitCanvas();
                     RefreshLine2();
-                    float ditance2 = cardObj.position.y - (142 * transform.localScale.x) - editBar.bookBottomLimit.position.y;
+                    float ditance2 = cardObj.position.y - (343 * transform.localScale.x) - editBar.bookBottomLimit.position.y;
                     if (ditance2 < 0)
                         editBar.cardBookArea.GetChild(0).position = new Vector3(editBar.cardBookArea.GetChild(0).position.x, editBar.cardBookArea.GetChild(0).position.y - ditance2);
-                    cardObj.GetComponent<EditCardHandler>().OpenCardButtons();
+                    StartCoroutine(OpenCardButtonLate(cardObj));
                 }
             }
+        }
+    }
+
+    IEnumerator OpenCardButtonLate(Transform cardObj) {
+        yield return new WaitForSeconds(0.1f);
+        EditCardHandler baseCardHandler = cardObj.GetComponent<EditCardHandler>();
+        cardButtons.SetCardButtons(cardObj, false, baseCardHandler.HAVENUM);
+        if (baseCardHandler.HAVENUM > 0) {
+            EditCardHandler cardHandler = cardButtons.transform.GetChild(0).Find("CardImage").GetComponent<EditCardHandler>();
+            cardHandler.DrawCard(baseCardHandler.cardID, baseCardHandler.cardData.camp == "human");
+            cardHandler.HAVENUM = baseCardHandler.HAVENUM;
+            cardHandler.SetHaveNum();
         }
     }
 

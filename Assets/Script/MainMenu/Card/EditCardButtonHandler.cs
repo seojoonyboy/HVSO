@@ -42,6 +42,9 @@ public class EditCardButtonHandler : MonoBehaviour {
             handDeckArea.GetComponent<ScrollRect>().enabled = true;
             cardBookArea.GetComponent<ScrollRect>().enabled = true;
         }
+        if (deckEditCanvas.GetComponent<DeckEditController>().setCardNum == 40)
+            transform.GetChild(0).Find("AddCard").GetComponent<Button>().interactable = false;
+
     }
 
     public void CloseCardButtons() {
@@ -86,13 +89,5 @@ public class EditCardButtonHandler : MonoBehaviour {
 
     public void MakeCard(Transform cardObj, bool makeCard) {
         deckEditCanvas.GetComponent<DeckEditController>().AddMadeCard(cardObj, makeCard);
-        int haveNum = cardObj.GetComponent<EditCardHandler>().HAVENUM;
-        if (haveNum > 0) {
-            EditCardHandler cardHandler = transform.GetChild(0).Find("CardImage").GetComponent<EditCardHandler>();
-            cardHandler.DrawCard(cardData.id, cardData.camp == "human");
-            cardHandler.HAVENUM = haveNum;
-            cardHandler.SetHaveNum();
-        }
-
     }
 }
