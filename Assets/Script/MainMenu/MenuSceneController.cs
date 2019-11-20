@@ -27,7 +27,7 @@ public class MenuSceneController : MonoBehaviour {
     static bool isLoaded = false;
     public MyDecksLoader decksLoader;
     [SerializeField] GameObject newbiLoadingModal;  //최초 접속시 튜토리얼 강제시 등장하는 로딩 화면
-    public GameObject loadingModal;
+    public GameObject hideModal;
 
     [SerializeField] GameObject reconnectingModal;  //재접속 진행시 등장하는 로딩 화면
     [SerializeField] MenuTutorialManager menuTutorialManager;
@@ -60,11 +60,7 @@ public class MenuSceneController : MonoBehaviour {
         ClickMenuButton(2);
         EscapeKeyController.escapeKeyCtrl.AddEscape(OpenQuitModal);
 
-        loadingModal = LoadingModal.instantiate();
-        Destroy(loadingModal.transform.GetChild(0).gameObject.GetComponent<LoadingTextEffect>());
-        loadingModal.transform.GetChild(0).Find("Text").GetComponent<Text>().text = "";
-        loadingModal.transform.GetChild(0).Find("Time").GetComponent<Text>().enabled = false;
-        loadingModal.transform.GetChild(0).GetComponent<Image>().color = new Color(0, 0, 0, 255f);
+        hideModal.SetActive(true);
     }
 
     private void QuitApp() {
@@ -103,6 +99,8 @@ public class MenuSceneController : MonoBehaviour {
         if (PlayerPrefs.GetInt("isFirst") == 1) {
             PlayerPrefs.SetInt("isFirst", 0);
             AddNewbiController();
+
+            hideModal.SetActive(false);
         }
         else {
             //튜토리얼 남았음
@@ -114,12 +112,8 @@ public class MenuSceneController : MonoBehaviour {
                 if (!clearedStages.Exists(x => x.camp == "human" && x.stageNumber == 1)) {
                     AddNewbiController();
                     PlayerPrefs.SetString("NeedUnlockMenu", "true");
-
-                    if (loadingModal != null) Destroy(loadingModal);
                 }
                 else {
-                    if(loadingModal != null) loadingModal.GetComponent<Canvas>().sortingOrder = 81;
-
                     if(!clearedStages.Exists(x => x.camp == "orc" && x.stageNumber == 1)) {
                         tutorialType = MenuTutorialManager.TutorialType.TO_ORC_STORY;
                     }
@@ -131,6 +125,8 @@ public class MenuSceneController : MonoBehaviour {
                         else {
                             needTutorial = false;
                         }
+
+                        hideModal.SetActive(false);
                     }
                 }
             }
@@ -143,7 +139,6 @@ public class MenuSceneController : MonoBehaviour {
         }
         else {
             menuTutorialManager.enabled = false;
-            if (loadingModal != null) Destroy(loadingModal);
         }
     }
 
