@@ -474,8 +474,6 @@ public class DeckEditController : MonoBehaviour {
             }
         }
         SetCardNums();
-        SortHandCards();
-        RefreshLine2();
     }
 
     public void SetCardNums() {
@@ -496,6 +494,8 @@ public class DeckEditController : MonoBehaviour {
                 if (cardHandler.HAVENUM == 0) cardHandler.gameObject.SetActive(false);
             }
         }
+        SortHandCards();
+        RefreshLine2();
     }
 
     public void ConfirmSetDeck(GameObject cardObj, string cardId) {
