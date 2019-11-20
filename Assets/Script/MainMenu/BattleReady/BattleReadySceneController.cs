@@ -12,8 +12,6 @@ using UnityEngine.Events;
 public class BattleReadySceneController : MonoBehaviour {
     public Toggle[] battleTypeToggles;
     public Button[] raceTypeButtons;
-
-    BattleType selectedBattleType;
     RaceType raceType;
 
     List<GameObject> allDeckObjects = new List<GameObject>();
@@ -31,28 +29,20 @@ public class BattleReadySceneController : MonoBehaviour {
     public Deck selectedDeck;
     private void OnEnable() {
         rewardsProvider.Provide();
-        //isIngameButtonClicked = false;
+        isIngameButtonClicked = false;
 
-        //ChangeBattleType(0);
+        //ScrollSnap.ChangePage(0);
+        PlayerPrefs.SetString("SelectedDeckId", "");
+        PlayerPrefs.SetString("SelectedRace", RaceType.NONE.ToString());
 
-        ////ScrollSnap.ChangePage(0);
-        //PlayerPrefs.SetString("SelectedDeckId", "");
-        //PlayerPrefs.SetString("SelectedRace", RaceType.NONE.ToString());
-
-        //HudController.SetHeader(HUDController.Type.RESOURCE_ONLY_WITH_BACKBUTTON);
-        //HudController.SetBackButton(() => {
-        //    OnBackButton();
-        //});
-
-        //Logger.Log("deckListPanel.SetActive(true)");
-        //deckListPanel.SetActive(true);
+        HudController.SetHeader(HUDController.Type.RESOURCE_ONLY_WITH_BACKBUTTON);
+        HudController.SetBackButton(() => {
+            OnBackButton();
+        });
         EscapeKeyController.escapeKeyCtrl.AddEscape(OnBackButton) ;
     }
 
     void OnDisable() {
-        //RectTransform rt = ScrollSnap.transform.Find("Content").GetComponent<RectTransform>();
-        //rt.offsetMin = new Vector2(0, rt.offsetMin.y);
-
         EscapeKeyController.escapeKeyCtrl.RemoveEscape(OnBackButton);
     }
 
@@ -97,59 +87,9 @@ public class BattleReadySceneController : MonoBehaviour {
         SoundManager.Instance.PlaySound(UISfxSound.BUTTON1);
     }
 
-    public void ChangeBattleType(BattleType type) {
-        SoundManager.Instance.PlaySound(UISfxSound.BUTTON1);
-        selectedBattleType = type;
-    }
-
-    /// <summary>
-    /// 지금은 사용하지 않음
-    /// </summary>
-    /// <param name="deckId"></param>
-    public void ChangeDeck(string deckId) {
-        var msg = string.Format("{0} 선택됨", deckId);
-        PlayerPrefs.SetString("SelectedDeckId", deckId);
-        int isNum = 0;
-        if(int.TryParse(deckId, out isNum)) {
-            PlayerPrefs.SetString("SelectedDeckType", "custom");
-        }
-        else {
-            PlayerPrefs.SetString("SelectedDeckType", "basic");
-        }
-    }
-
-    public void ChangeBattleType(int pageIndex) {
-        //string type = "multi";
-        //switch (pageIndex) {
-        //    case 0:
-        //    default:
-        //        type = "multi";
-        //        break;
-        //    case 1:
-        //        type = "solo";
-        //        break;
-        //}
-        //PlayerPrefs.SetString("SelectedBattleType", type);
-    }
-
-    public enum BattleType {
-        AI = 0,
-        CASUAL = 1,
-        RANK = 2
-    }
-
     public enum RaceType {
         HUMAN = 0,
         ORC = 1,
         NONE = 2
-    }
-
-    public void NextBattleType() {
-        Logger.Log("Next Battle Type");
-        BattleTypeHorizontalScrollSnap.NextScreen();
-    }
-
-    public void PrevBattleType() {
-        BattleTypeHorizontalScrollSnap.PreviousScreen();
     }
 }
