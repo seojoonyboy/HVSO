@@ -86,13 +86,5 @@ public class EditCardButtonHandler : MonoBehaviour {
 
     public void MakeCard(Transform cardObj, bool makeCard) {
         deckEditCanvas.GetComponent<DeckEditController>().AddMadeCard(cardObj, makeCard);
-        int haveNum = cardObj.GetComponent<EditCardHandler>().HAVENUM;
-        if (haveNum > 0) {
-            EditCardHandler cardHandler = transform.GetChild(0).Find("CardImage").GetComponent<EditCardHandler>();
-            cardHandler.DrawCard(cardData.id, cardData.camp == "human");
-            cardHandler.HAVENUM = haveNum;
-            cardHandler.SetHaveNum();
-        }
-
     }
 }
