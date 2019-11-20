@@ -453,9 +453,9 @@ public partial class CardDropManager {
                         GameObject line = lineMask.transform.GetChild(i).gameObject;
                         line.SetActive(true);
                         line.GetComponent<SpriteRenderer>().color = new Color(0.48f, 0.48f, 0.48f, 1f);                        
-                    }
-                        
+                    }                        
                 }
+                return;
             }
             if (magicTarget.Contains("unit")) {
                 for (int i = 0; i < 5; i++) {
@@ -532,22 +532,33 @@ public partial class CardDropManager {
         }
 
         else if (group.Contains("line")) {
+            GameObject lineMask = PlayMangement.instance.lineMaskObject;
+            lineMask.SetActive(true);
             for (int i = 0; i < 5; i++) {
                 if (args == null) {
                     if (units[i][0].childCount > 0) {
                         if (units[i][0].GetChild(0).GetComponent<ambush>() == null) {
                             slotLine[i].Find("BattleLineEffect").gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
                             slotLine[i].Find("BattleLineEffect").gameObject.SetActive(true);
+                            lineMask.transform.GetChild(i).gameObject.SetActive(false);
                         }
                     }
                     if (units[i][1].childCount > 0) {
                         slotLine[i].Find("BattleLineEffect").gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
                         slotLine[i].Find("BattleLineEffect").gameObject.SetActive(true);
+                        lineMask.transform.GetChild(i).gameObject.SetActive(false);
                     }
+                    if(units[i][0].childCount <= 0 && units[i][0].childCount <= 0) {
+                        GameObject line = lineMask.transform.GetChild(i).gameObject;
+                        line.SetActive(true);
+                        line.GetComponent<SpriteRenderer>().color = new Color(0.48f, 0.48f, 0.48f, 1f);
+                    }
+
                 }
                 else {
                     slotLine[i].Find("BattleLineEffect").gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
                     slotLine[i].Find("BattleLineEffect").gameObject.SetActive(true);
+                    lineMask.transform.GetChild(i).gameObject.SetActive(false);
                 }
             }
         }
