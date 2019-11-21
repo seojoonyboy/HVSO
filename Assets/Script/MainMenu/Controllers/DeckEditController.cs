@@ -449,6 +449,7 @@ public class DeckEditController : MonoBehaviour {
             }
             costNum++;
             if (setCardNum == 40) break;
+            if (haveCardNum == 0) break;
             if (costNum == 8 && setCardNum != 40) {
                 costNum = 0;
                 setNumsByCost = new int[8];

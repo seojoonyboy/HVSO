@@ -45,6 +45,10 @@ public class MenuHeroInfo : MonoBehaviour
         else {
             transform.Find("HeroSpines/lock").gameObject.SetActive(false);
             heroSpine.GetComponent<SkeletonGraphic>().color = new Color(1, 1, 1);
+            if(accountManager.myHeroInventories[heroId].tier == 0) {
+                transform.Find("HeroSpines/lock").gameObject.SetActive(true);
+                heroSpine.GetComponent<SkeletonGraphic>().color = new Color(0.35f, 0.35f, 0.35f);
+            }
         }
         heroSpine.gameObject.SetActive(true);
         heroSpine.SetAsFirstSibling();
