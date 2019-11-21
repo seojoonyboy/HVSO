@@ -248,29 +248,30 @@ public class MenuSceneController : MonoBehaviour {
     }
 
     public void SetCardInfoByRarelity() {
+        CardDataPackage cdp = AccountManager.Instance.cardPackage;
         Transform humanBtn = dictionaryMenu.Find("HumanButton/CardRarityInfo");
-        humanBtn.Find("common/CardNum").GetComponent<Text>().text = AccountManager.Instance.cardPackage.rarelityHumanCardNum["common"].Count.ToString();
-        humanBtn.Find("uncommon/CardNum").GetComponent<Text>().text = AccountManager.Instance.cardPackage.rarelityHumanCardNum["uncommon"].Count.ToString();
-        humanBtn.Find("rare/CardNum").GetComponent<Text>().text = AccountManager.Instance.cardPackage.rarelityHumanCardNum["rare"].Count.ToString();
-        humanBtn.Find("superrare/CardNum").GetComponent<Text>().text = AccountManager.Instance.cardPackage.rarelityHumanCardNum["superrare"].Count.ToString();
-        humanBtn.Find("legend/CardNum").GetComponent<Text>().text = AccountManager.Instance.cardPackage.rarelityHumanCardNum["legend"].Count.ToString();
-        humanBtn.Find("common/NewCard").gameObject.SetActive(AccountManager.Instance.cardPackage.rarelityHumanCardCheck["common"].Count > 0);
-        humanBtn.Find("uncommon/NewCard").gameObject.SetActive(AccountManager.Instance.cardPackage.rarelityHumanCardCheck["uncommon"].Count > 0);
-        humanBtn.Find("rare/NewCard").gameObject.SetActive(AccountManager.Instance.cardPackage.rarelityHumanCardCheck["rare"].Count > 0);
-        humanBtn.Find("superrare/NewCard").gameObject.SetActive(AccountManager.Instance.cardPackage.rarelityHumanCardCheck["superrare"].Count > 0);
-        humanBtn.Find("legend/NewCard").gameObject.SetActive(AccountManager.Instance.cardPackage.rarelityHumanCardCheck["legend"].Count > 0);
+        humanBtn.Find("common/CardNum").GetComponent<Text>().text = cdp.rarelityHumanCardNum["common"].Count.ToString();
+        humanBtn.Find("uncommon/CardNum").GetComponent<Text>().text = cdp.rarelityHumanCardNum["uncommon"].Count.ToString();
+        humanBtn.Find("rare/CardNum").GetComponent<Text>().text = cdp.rarelityHumanCardNum["rare"].Count.ToString();
+        humanBtn.Find("superrare/CardNum").GetComponent<Text>().text = cdp.rarelityHumanCardNum["superrare"].Count.ToString();
+        humanBtn.Find("legend/CardNum").GetComponent<Text>().text = cdp.rarelityHumanCardNum["legend"].Count.ToString();
+        humanBtn.Find("common/NewCard").gameObject.SetActive(cdp.rarelityHumanCardCheck["common"].Count > 0);
+        humanBtn.Find("uncommon/NewCard").gameObject.SetActive(cdp.rarelityHumanCardCheck["uncommon"].Count > 0);
+        humanBtn.Find("rare/NewCard").gameObject.SetActive(cdp.rarelityHumanCardCheck["rare"].Count > 0);
+        humanBtn.Find("superrare/NewCard").gameObject.SetActive(cdp.rarelityHumanCardCheck["superrare"].Count > 0);
+        humanBtn.Find("legend/NewCard").gameObject.SetActive(cdp.rarelityHumanCardCheck["legend"].Count > 0);
         //dictionaryMenu.Find("HumanButton/NewCard").gameObject.SetActive(AccountManager.Instance.cardPackage.checkHumanCard.Count > 0);
         Transform orcBtn = dictionaryMenu.Find("OrcButton/CardRarityInfo");
-        orcBtn.Find("common/CardNum").GetComponent<Text>().text = AccountManager.Instance.cardPackage.rarelityOrcCardNum["common"].Count.ToString();
-        orcBtn.Find("uncommon/CardNum").GetComponent<Text>().text = AccountManager.Instance.cardPackage.rarelityOrcCardNum["uncommon"].Count.ToString();
-        orcBtn.Find("rare/CardNum").GetComponent<Text>().text = AccountManager.Instance.cardPackage.rarelityOrcCardNum["rare"].Count.ToString();
-        orcBtn.Find("superrare/CardNum").GetComponent<Text>().text = AccountManager.Instance.cardPackage.rarelityOrcCardNum["superrare"].Count.ToString();
-        orcBtn.Find("legend/CardNum").GetComponent<Text>().text = AccountManager.Instance.cardPackage.rarelityOrcCardNum["legend"].Count.ToString();
-        orcBtn.Find("common/NewCard").gameObject.SetActive(AccountManager.Instance.cardPackage.rarelityOrcCardCheck["common"].Count > 0);
-        orcBtn.Find("uncommon/NewCard").gameObject.SetActive(AccountManager.Instance.cardPackage.rarelityOrcCardCheck["uncommon"].Count > 0);
-        orcBtn.Find("rare/NewCard").gameObject.SetActive(AccountManager.Instance.cardPackage.rarelityOrcCardCheck["rare"].Count > 0);
-        orcBtn.Find("superrare/NewCard").gameObject.SetActive(AccountManager.Instance.cardPackage.rarelityOrcCardCheck["superrare"].Count > 0);
-        orcBtn.Find("legend/NewCard").gameObject.SetActive(AccountManager.Instance.cardPackage.rarelityOrcCardCheck["legend"].Count > 0);
+        orcBtn.Find("common/CardNum").GetComponent<Text>().text = cdp.rarelityOrcCardNum["common"].Count.ToString();
+        orcBtn.Find("uncommon/CardNum").GetComponent<Text>().text = cdp.rarelityOrcCardNum["uncommon"].Count.ToString();
+        orcBtn.Find("rare/CardNum").GetComponent<Text>().text = cdp.rarelityOrcCardNum["rare"].Count.ToString();
+        orcBtn.Find("superrare/CardNum").GetComponent<Text>().text = cdp.rarelityOrcCardNum["superrare"].Count.ToString();
+        orcBtn.Find("legend/CardNum").GetComponent<Text>().text = cdp.rarelityOrcCardNum["legend"].Count.ToString();
+        orcBtn.Find("common/NewCard").gameObject.SetActive(cdp.rarelityOrcCardCheck["common"].Count > 0);
+        orcBtn.Find("uncommon/NewCard").gameObject.SetActive(cdp.rarelityOrcCardCheck["uncommon"].Count > 0);
+        orcBtn.Find("rare/NewCard").gameObject.SetActive(cdp.rarelityOrcCardCheck["rare"].Count > 0);
+        orcBtn.Find("superrare/NewCard").gameObject.SetActive(cdp.rarelityOrcCardCheck["superrare"].Count > 0);
+        orcBtn.Find("legend/NewCard").gameObject.SetActive(cdp.rarelityOrcCardCheck["legend"].Count > 0);
         //dictionaryMenu.Find("OrcButton/NewCard").gameObject.SetActive(AccountManager.Instance.cardPackage.checkOrcCard.Count > 0);
     }
 

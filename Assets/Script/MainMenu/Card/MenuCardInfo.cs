@@ -249,21 +249,6 @@ public partial class MenuCardInfo : MonoBehaviour {
         }
     }
 
-    public void SetEditCardInfo(int haveNum, int handNum) {
-        SkeletonGraphic numSpine = transform.Find("EditCardUI/HaveNum/HaveNum").GetComponent<SkeletonGraphic>();
-        numSpine.Initialize(false);
-        numSpine.Update(0);
-        numSpine.AnimationState.SetAnimation(0, haveNum.ToString(), false);
-        if (accountManager.cardPackage.data.ContainsKey(cardId)) {
-            transform.Find("EditCardUI/ConfirmCard").GetComponent<Button>().interactable = (haveNum != 0 && handNum != 40);
-            transform.Find("EditCardUI/ExceptCard").GetComponent<Button>().interactable = (haveNum != accountManager.cardPackage.data[cardId].cardCount);
-        }
-        else {
-            transform.Find("EditCardUI/ConfirmCard").GetComponent<Button>().interactable = false;
-            transform.Find("EditCardUI/ExceptCard").GetComponent<Button>().interactable = false;
-        }
-    }
-
     IEnumerator AddCrystalAnimation() {
         float changed = (float)accountManager.userResource.crystal;
         TMPro.TextMeshProUGUI crystalText = transform.Find("CreateCard/Crystal/Value").GetComponent<TMPro.TextMeshProUGUI>();

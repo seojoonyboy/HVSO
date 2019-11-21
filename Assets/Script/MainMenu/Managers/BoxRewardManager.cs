@@ -9,8 +9,7 @@ using Spine;
 using Spine.Unity;
 using System;
 
-public class BoxRewardManager : MonoBehaviour
-{
+public class BoxRewardManager : MonoBehaviour {
     [SerializeField] Transform boxObject;
     [SerializeField] TMPro.TextMeshProUGUI supplyStore;
     [SerializeField] TMPro.TextMeshProUGUI storeTimer;
@@ -181,7 +180,7 @@ public class BoxRewardManager : MonoBehaviour
             }
 
             if (target.name.Contains("Card")) {
-                if (target.gameObject.activeSelf) { 
+                if (target.gameObject.activeSelf) {
                     string cardId = target.Find("DictionaryCardVertical").GetComponent<MenuCardHandler>().cardID;
                     string aniName = "";
                     var rarelity = accountManager.allCardsDic[cardId].rarelity;
@@ -325,7 +324,7 @@ public class BoxRewardManager : MonoBehaviour
         }
 
         if (target.name.Contains("Card")) {
-            if (target.gameObject.activeSelf) { 
+            if (target.gameObject.activeSelf) {
                 string cardId = target.Find("DictionaryCardVertical").GetComponent<MenuCardHandler>().cardID;
                 string aniName = "";
                 var rarelity = accountManager.allCardsDic[cardId].rarelity;
@@ -373,7 +372,7 @@ public class BoxRewardManager : MonoBehaviour
                     type = target.GetChild(i).gameObject.name;
                 }
             }
-            if (type != "supplyX2Coupon") { 
+            if (type != "supplyX2Coupon") {
                 SkeletonGraphic spine = target.Find("back").GetComponent<SkeletonGraphic>();
                 spine.gameObject.SetActive(true);
                 spine.Initialize(true);
@@ -399,7 +398,7 @@ public class BoxRewardManager : MonoBehaviour
 
     IEnumerator BoxTotalResult() {
         openAni = true;
-        if(openCount == 0)
+        if (openCount == 0)
             yield return new WaitForSeconds(0.9f);
         boxEffect.gameObject.SetActive(false);
         Transform boxParent = transform.Find("OpenBox");
@@ -428,68 +427,6 @@ public class BoxRewardManager : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         openAni = false;
     }
-
-
-    //IEnumerator ShowRewards() {
-    //    Transform boxParent = transform.Find("OpenBox");
-    //    //Transform effects = transform.Find("EffectSpines");
-    //    yield return new WaitForSeconds(1.2f);
-    //    //effects.GetChild(0).gameObject.SetActive(true);
-    //    SoundManager.Instance.PlaySound(UISfxSound.BOX_NORMAL);
-    //    yield return new WaitForSeconds(0.05f);
-    //    //effects.GetChild(1).gameObject.SetActive(true);
-    //    SoundManager.Instance.PlaySound(UISfxSound.BOX_RARE);
-    //    yield return new WaitForSeconds(0.05f);
-    //    iTween.ScaleTo(boxParent.GetChild(0).gameObject, iTween.Hash("x", 1.4, "y", 1.4, "islocal", true, "time", 0.2f));
-    //    //effects.GetChild(2).gameObject.SetActive(true);
-    //    SoundManager.Instance.PlaySound(UISfxSound.BOX_SUPERRARE);
-    //    yield return new WaitForSeconds(0.05f);
-    //    iTween.ScaleTo(boxParent.GetChild(1).gameObject, iTween.Hash("x", 1.4, "y", 1.4, "islocal", true, "time", 0.2f));
-    //    //effects.GetChild(3).gameObject.SetActive(true);
-    //    SoundManager.Instance.PlaySound(UISfxSound.BOX_EPIC);
-    //    yield return new WaitForSeconds(0.05f);
-    //    iTween.ScaleTo(boxParent.GetChild(2).gameObject, iTween.Hash("x", 1, "y", 1, "islocal", true, "time", 0.2f));
-    //    yield return new WaitForSeconds(0.05f);
-    //    if(boxParent.GetChild(3).Find("Card").gameObject.activeSelf)
-    //        iTween.ScaleTo(boxParent.GetChild(3).gameObject, iTween.Hash("x", 1.4, "y", 1.4, "islocal", true, "time", 0.2f));
-    //    else
-    //        iTween.ScaleTo(boxParent.GetChild(3).gameObject, iTween.Hash("x", 1, "y", 1, "islocal", true, "time", 0.2f));
-    //    yield return new WaitForSeconds(0.4f);
-    //    //cardDic.SetToHumanCards();
-    //    transform.Find("ExitButton").gameObject.SetActive(true);
-    //}
-
-    //public void ExitBoxOpen() {
-    //    Transform boxParent = transform.Find("OpenBox");
-    //    Transform effects = transform.Find("EffectSpines");
-    //    for (int i = 0; i < 4; i++) {
-    //        boxParent.GetChild(i).localScale = Vector3.zero;
-    //        iTween.RotateTo(boxParent.GetChild(i).gameObject, iTween.Hash("y", 180, "islocal", true));
-    //        boxParent.GetChild(i).Find("BackImage").gameObject.SetActive(true);
-    //        if(i < 2)
-    //            boxParent.GetChild(i).transform.Find("back").gameObject.SetActive(false);
-    //        else if(i == 3)
-    //            boxParent.GetChild(i).Find("Card").transform.Find("back").gameObject.SetActive(false);
-    //    }
-    //    boxParent.gameObject.SetActive(false);
-    //    transform.Find("ShowBox").gameObject.SetActive(false);
-    //    transform.Find("ShowBox/Text").gameObject.SetActive(true);
-    //    transform.Find("ExitButton").gameObject.SetActive(false);
-    //    boxParent.GetChild(0).Find("GetCrystal").gameObject.SetActive(false);
-    //    boxParent.GetChild(1).Find("GetCrystal").gameObject.SetActive(false);
-    //    boxParent.GetChild(3).Find("Card").gameObject.SetActive(false);
-    //    boxParent.GetChild(3).Find("Card/GetCrystal").gameObject.SetActive(false);
-    //    boxParent.GetChild(3).Find("Resource").gameObject.SetActive(false);
-    //    for (int i = 0; i < 3; i++) {
-    //        boxParent.GetChild(2).GetChild(i).gameObject.SetActive(false);
-    //        boxParent.GetChild(3).Find("Resource").GetChild(i).gameObject.SetActive(false);
-    //    }
-    //    for (int i = 0; i < 4; i++)             
-    //        effects.GetChild(i).gameObject.SetActive(false);
-
-    //    SetBoxObj();
-    //    openningBox = false;
-    //}
 
     public void SetRewards(RewardClass[] rewardList) {
         Transform boxParent = transform.Find("OpenBox");
@@ -533,7 +470,7 @@ public class BoxRewardManager : MonoBehaviour
 
         effects.GetChild(3).GetComponent<SkeletonGraphic>().Initialize(false);
         effects.GetChild(3).GetComponent<SkeletonGraphic>().Update(0);
-        if (rewardList[3].type == "card"){
+        if (rewardList[3].type == "card") {
             boxParent.GetChild(3).Find("Card").gameObject.SetActive(true);
             boxParent.GetChild(3).Find("Resource").gameObject.SetActive(false);
             boxParent.GetChild(3).Find("Card").Find("DictionaryCardVertical").GetComponent<MenuCardHandler>().DrawCard(rewardList[3].item);
@@ -566,7 +503,7 @@ public class BoxRewardManager : MonoBehaviour
                 accountManager.cardPackage.rarelityHumanCardCheck[cardData.rarelity].Add(cardId);
             }
         }
-        else{
+        else {
             if (!accountManager.cardPackage.checkOrcCard.Contains(cardId)) {
                 accountManager.cardPackage.checkOrcCard.Add(cardId);
                 accountManager.cardPackage.rarelityOrcCardCheck[cardData.rarelity].Add(cardId);
@@ -574,84 +511,6 @@ public class BoxRewardManager : MonoBehaviour
         }
         menuSceneController.SetCardNumbersPerDic();
     }
-
-    //public void FlipCard(GameObject target) {
-    //    StartCoroutine(FlipAni(target));
-    //}
-
-    //IEnumerator FlipAni(GameObject targetObj) {
-    //    GameObject target = targetObj;
-    //    iTween.RotateTo(target, iTween.Hash("y", 0, "islocal", true, "time", 0.8f));
-    //    yield return new WaitForSeconds(0.1f);
-    //    target.transform.Find("BackImage").gameObject.SetActive(false);
-    //    yield return new WaitForSeconds(0.05f);
-    //    if (target.name == "Random") {
-    //        if(targetObj.transform.Find("Card").gameObject.activeSelf)
-    //            target = targetObj.transform.Find("Card").gameObject;
-    //        else 
-    //            target = targetObj.transform.Find("Resource").gameObject;
-    //    }   
-    //    if (target.name.Contains("Card")) {
-    //        if (!target.activeSelf) yield return null;
-    //        else {
-    //            string cardId = target.transform.Find("DictionaryCardVertical").GetComponent<MenuCardHandler>().cardID;
-    //            string aniName = "";
-
-    //            var rarelity = accountManager.allCardsDic[cardId].rarelity;
-
-    //            if (accountManager.allCardsDic[cardId].type == "unit")
-    //                aniName += "u_";
-    //            else
-    //                aniName += "m_";
-    //            if (rarelity != "common")
-    //                aniName += accountManager.allCardsDic[cardId].rarelity;
-    //            else
-    //                aniName = "NOANI";
-    //            SkeletonGraphic spine = target.transform.Find("back").GetComponent<SkeletonGraphic>();
-    //            spine.gameObject.SetActive(true);
-    //            spine.Initialize(true);
-    //            spine.Update(0);
-    //            spine.AnimationState.SetAnimation(0, aniName, true);
-
-    //            SoundManager soundManager = SoundManager.Instance;
-    //            switch (rarelity) {
-    //                case "common":
-    //                case "uncommon":
-    //                    soundManager.PlaySound(UISfxSound.BOX_NORMAL);
-    //                    break;
-    //                case "rare":
-    //                    soundManager.PlaySound(UISfxSound.BOX_RARE);
-    //                    break;
-    //                case "superrare":
-    //                    soundManager.PlaySound(UISfxSound.BOX_SUPERRARE);
-    //                    break;
-    //                case "legend":
-    //                    soundManager.PlaySound(UISfxSound.BOX_EPIC);
-    //                    break;
-    //            }
-    //        }
-    //    }
-    //    //재화 획득인 경우
-    //    else {
-    //        string type = string.Empty;
-    //        for(int i=0; i<3; i++) {
-    //            if (target.transform.GetChild(i).gameObject.activeSelf) {
-    //                type = target.transform.GetChild(i).gameObject.name;
-    //            }
-    //        }
-
-    //        SoundManager soundManager = SoundManager.Instance;
-    //        switch (type) {
-    //            case "gold":
-    //            case "supplyStore":
-    //                soundManager.PlaySound(UISfxSound.BOX_SUPERRARE);
-    //                break;
-    //            case "crystal":
-    //                soundManager.PlaySound(UISfxSound.BOX_NORMAL);
-    //                break;
-    //        }
-    //    }
-    //}
 }
 
 public class RewardClass {
