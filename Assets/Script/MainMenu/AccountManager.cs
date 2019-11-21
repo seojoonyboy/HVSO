@@ -299,6 +299,7 @@ public partial class AccountManager {
             },
             "유저 정보를 불러오는중...");
     }
+
     public void RequestUserInfo(OnRequestFinishedDelegate callback) {
         StringBuilder url = new StringBuilder();
         string base_url = networkManager.baseUrl;
@@ -1039,4 +1040,60 @@ public partial class AccountManager {
     }
 
     public bool needChangeNickName = false;
+}
+
+public partial class AccountManager {
+    public LeagueInfo leagueInfo;
+
+    public class LeagueInfo {
+        public int modifiedRatingPoint;
+        public RankDetail rankDetail;
+
+        public int id;
+        public int userId;
+        //public int leagueId;
+        public int ratingPoint;
+        public int winningStreak;
+        public int losingStreak;
+    }
+    
+    public class RankDetail {
+        public string major;
+        public string minor;
+        public int next;
+    }
+
+    /// <summary>
+    /// 플레이어 리그 정보 요청
+    /// </summary>
+    public void RequestLeagueInfo() {
+        StringBuilder url = new StringBuilder();
+        string base_url = networkManager.baseUrl;
+
+        url
+            .Append(base_url)
+            .Append("api/user/league_info");
+
+        Logger.Log("Request league_info");
+        HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
+        request.MethodType = HTTPMethods.Get;
+        request.AddHeader("authorization", TokenFormat);
+
+        networkManager.Request(
+            request, (req, res) => {
+                var sceneStartController = GetComponent<SceneStartController>();
+                if (res.StatusCode == 200 || res.StatusCode == 304) {
+                    leagueInfo = dataModules.JsonReader.Read<LeagueInfo>(res.DataAsText);
+
+                    NoneIngameSceneEventHandler
+                        .Instance
+                        .PostNotification(
+                            NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_INFO_UPDATED,
+                            null,
+                            leagueInfo
+                        );
+                }
+            },
+            "리그 정보를 불러오는중...");
+    }
 }
