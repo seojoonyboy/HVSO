@@ -93,8 +93,8 @@ public class RewardProgressController : MonoBehaviour {
         var startRect = rect.rect;
 
         float interval = 0;
-        while (startRect.width + val < offset) {
-            rect.sizeDelta = new Vector2(startRect.width + val, rect.rect.height);
+        while (progressPosX + val < offset) {
+            rect.sizeDelta = new Vector2(progressPosX + val, rect.rect.height);
             if(interval > 0 && interval % 40 == 0) {
                 var totalWidth = scrollRect.content.sizeDelta.x;
                 var tmp = rect.sizeDelta / totalWidth;
