@@ -1,0 +1,90 @@
+
+ac10090.png
+size: 1024,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+L_leg
+  rotate: false
+  xy: 604, 4
+  size: 76, 93
+  orig: 76, 93
+  offset: 0, 0
+  index: -1
+L_low_arm
+  rotate: false
+  xy: 744, 123
+  size: 83, 130
+  orig: 83, 130
+  offset: 0, 0
+  index: -1
+L_upper_arm
+  rotate: true
+  xy: 755, 36
+  size: 87, 81
+  orig: 87, 81
+  offset: 0, 0
+  index: -1
+R_arm1
+  rotate: false
+  xy: 448, 0
+  size: 156, 89
+  orig: 156, 89
+  offset: 0, 0
+  index: -1
+R_arm2
+  rotate: false
+  xy: 448, 89
+  size: 155, 164
+  orig: 155, 164
+  offset: 0, 0
+  index: -1
+R_leg
+  rotate: false
+  xy: 680, 4
+  size: 75, 93
+  orig: 75, 93
+  offset: 0, 0
+  index: -1
+ac1
+  rotate: false
+  xy: 105, 29
+  size: 28, 33
+  orig: 28, 33
+  offset: 0, 0
+  index: -1
+ac2
+  rotate: false
+  xy: 76, 2
+  size: 29, 60
+  orig: 29, 60
+  offset: 0, 0
+  index: -1
+body
+  rotate: true
+  xy: 603, 97
+  size: 156, 141
+  orig: 156, 141
+  offset: 0, 0
+  index: -1
+head
+  rotate: true
+  xy: 76, 62
+  size: 191, 186
+  orig: 191, 186
+  offset: 0, 0
+  index: -1
+head2
+  rotate: true
+  xy: 262, 62
+  size: 191, 186
+  orig: 191, 186
+  offset: 0, 0
+  index: -1
+shadow
+  rotate: true
+  xy: 0, 23
+  size: 230, 76
+  orig: 230, 76
+  offset: 0, 0
+  index: -1
