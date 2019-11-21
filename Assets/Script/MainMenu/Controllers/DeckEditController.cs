@@ -748,7 +748,7 @@ public class DeckEditController : MonoBehaviour {
         deckID = loadedDeck.id;
 
         deckNamePanel.transform.Find("NameTemplate").GetComponent<TMPro.TMP_InputField>().text = loadedDeck.name;
-        handDeckHeader.Find("DeckNamePanel").gameObject.SetActive(string.IsNullOrEmpty(deckNamePanel.transform.Find("NameTemplate").GetComponent<TMPro.TMP_InputField>().text));
+        handDeckHeader.Find("DeckNamePanel/PlaceHolder").gameObject.SetActive(string.IsNullOrEmpty(deckNamePanel.transform.Find("NameTemplate").GetComponent<TMPro.TMP_InputField>().text));
         SetHeroInfo(loadedDeck.heroId);
 
         Dictionary<string, Sprite> classSprite = AccountManager.Instance.resource.classImage;
