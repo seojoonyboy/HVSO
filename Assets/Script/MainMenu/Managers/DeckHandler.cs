@@ -43,6 +43,10 @@ public class DeckHandler : MonoBehaviour
         }
         deckObj.Find("CardNum").gameObject.SetActive(true);
         deckObj.Find("CardNum/Value").GetComponent<TMPro.TextMeshProUGUI>().text = deck.totalCardCount.ToString() + "/";
+        if (deck.totalCardCount < 40)
+            deckObj.Find("CardNum/Value").GetComponent<TMPro.TextMeshProUGUI>().color = Color.red;
+        else
+            deckObj.Find("CardNum/Value").GetComponent<TMPro.TextMeshProUGUI>().color = Color.white;
         deckObj.Find("DeckName").gameObject.SetActive(true);
         deckObj.Find("DeckName").GetComponent<TMPro.TextMeshProUGUI>().text = deck.name.ToString();
 
@@ -58,6 +62,10 @@ public class DeckHandler : MonoBehaviour
         int playerCardNum = CheckPlayerCards(deck);
         transform.Find("CardNum/Value").GetComponent<TMPro.TextMeshProUGUI>().text = playerCardNum.ToString() + "/";
         ableTemplate = (playerCardNum == 40);
+        //if (deck.totalCardCount < 40)
+        //    transform.Find("CardNum/Value").GetComponent<TMPro.TextMeshProUGUI>().color = Color.red;
+        //else
+        //    transform.Find("CardNum/Value").GetComponent<TMPro.TextMeshProUGUI>().color = Color.white;
         transform.Find("Selected").gameObject.SetActive(false);
         transform.Find("SelectedBack").gameObject.SetActive(false);
     }
