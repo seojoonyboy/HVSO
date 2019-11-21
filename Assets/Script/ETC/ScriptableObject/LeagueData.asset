@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prevRank: 
   newRank: 
-  prevMMR: 100
-  newMMR: 400
+  prevMMR: 0
+  newMMR: 0
