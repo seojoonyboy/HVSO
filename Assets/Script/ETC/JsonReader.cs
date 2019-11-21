@@ -55,6 +55,8 @@ namespace dataModules {
         public string heroId;
         public string flavorText;
         public bool userHas;
+        public int piece;
+        public int tier;
         public HeroCard[] heroCards;
     }
 

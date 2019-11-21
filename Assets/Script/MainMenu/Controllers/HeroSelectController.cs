@@ -52,8 +52,11 @@ public class HeroSelectController : MonoBehaviour
             else {
                 spineParent.GetChild(i).Find("Locked").gameObject.SetActive(false);
                 spineParent.GetChild(i).GetChild(0).GetComponent<SkeletonGraphic>().color = new Color(1, 1, 1);
+                if(AccountManager.Instance.myHeroInventories[spineParent.GetChild(i).name].tier == 0) {
+                    spineParent.GetChild(i).Find("Locked").gameObject.SetActive(true);
+                    spineParent.GetChild(i).GetChild(0).GetComponent<SkeletonGraphic>().color = new Color(0.3f, 0.3f, 0.3f);
+                }
             }
-
         }
     }
 
@@ -90,7 +93,8 @@ public class HeroSelectController : MonoBehaviour
         skillWindow.Find("Card2/Card").GetComponent<MenuCardHandler>().DrawCard(heroData.heroCards[1].cardId, isHuman);
         skillWindow.Find("Card2/CardName").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.heroCards[1].name;
         skillWindow.Find("Card2/CardInfo").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.GetComponent<Translator>().DialogSetRichText(heroData.heroCards[1].skills[0].desc);
-        transform.Find("InnerCanvas/OpenTemplateButton").gameObject.SetActive(AccountManager.Instance.myHeroInventories.ContainsKey(heroId));
+        transform.Find("InnerCanvas/OpenTemplateButton").gameObject.SetActive(AccountManager.Instance.myHeroInventories.ContainsKey(heroId) 
+            && AccountManager.Instance.myHeroInventories[heroId].tier > 0);
     }
 
     public void OpenTemplateDeckCanvas() {

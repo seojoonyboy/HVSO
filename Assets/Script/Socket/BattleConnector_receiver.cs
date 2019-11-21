@@ -416,6 +416,7 @@ public partial class BattleConnector : MonoBehaviour {
         JObject jobject = (JObject)args;
         result = JsonConvert.DeserializeObject<ResultFormat>(jobject.ToString());
 
+
         if (reconnectModal != null) {
             Destroy(GetComponent<ReconnectController>());
             Destroy(reconnectModal);
@@ -463,9 +464,6 @@ public partial class BattleConnector : MonoBehaviour {
         string battleType = PlayerPrefs.GetString("SelectedBattleType");
         if (battleType == "solo") {
             FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
-        }
-        else {
-            StartCoroutine(resultManager.SetRewards());
         }
     }
 

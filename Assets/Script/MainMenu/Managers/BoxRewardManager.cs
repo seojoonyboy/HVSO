@@ -78,7 +78,6 @@ public class BoxRewardManager : MonoBehaviour {
         openCount = 0;
         boxSpine.Initialize(true);
         boxSpine.Update(0);
-        //boxSpine.AnimationState.SetAnimation(0, "00.NOANI", false);
         boxSpine.AnimationState.SetAnimation(0, "01.START", false);
         boxSpine.AnimationState.AddAnimation(1, "02.IDLE", true, 0.5f);
         boxEffect.Initialize(true);
@@ -92,20 +91,9 @@ public class BoxRewardManager : MonoBehaviour {
         transform.Find("OpenBox").gameObject.SetActive(true);
     }
 
-    //public void GetResult() {
-    //    transform.Find("OpenBox").gameObject.SetActive(true);
-    //    transform.Find("ShowBox/Text").gameObject.SetActive(false);
-    //    boxSpine.AnimationState.SetAnimation(2, "03.TOUCH", false);
-    //    SoundManager.Instance.PlaySound(UISfxSound.BOXOPEN_2);
-    //    StartCoroutine(ShowRewards());
-    //}
 
     public void GetBoxResult() {
-        if (openAni) {
-            //StopCoroutine(nowAni);
-            //StopAni(openCount - 1);
-            return;
-        }
+        if (openAni) return;
         transform.Find("ShowBox/Text").gameObject.SetActive(false);
         transform.Find("OpenBox/TargetSpine").gameObject.SetActive(false);
         switch (openCount) {
@@ -170,14 +158,7 @@ public class BoxRewardManager : MonoBehaviour {
 
     public void SetSkipBackSpine() {
         for (int i = 0; i < 4; i++) {
-            Transform target = transform.Find("OpenBox").GetChild(i);
-            GameObject targetObj = target.gameObject;
-            if (target.name == "Random") {
-                if (target.transform.Find("Card").gameObject.activeSelf)
-                    target = targetObj.transform.Find("Card");
-                else
-                    target = targetObj.transform.Find("Resource");
-            }
+            Transform target = transform.Find("OpenBox").GetChild(i).GetChild(0);
 
             if (target.name.Contains("Card")) {
                 if (target.gameObject.activeSelf) {
@@ -199,13 +180,11 @@ public class BoxRewardManager : MonoBehaviour {
                     spine.AnimationState.SetAnimation(0, aniName, true);
                 }
             }
+            else if (target.name.Contains("Hero")) {
+
+            }
             else {
-                string type = string.Empty;
-                for (int j = 1; j < 4; j++) {
-                    if (target.GetChild(j).gameObject.activeSelf) {
-                        type = target.GetChild(j).gameObject.name;
-                    }
-                }
+                string type = target.GetChild(0).name;
                 if (type != "supplyX2Coupon") {
                     SkeletonGraphic spine = target.Find("back").GetComponent<SkeletonGraphic>();
                     spine.gameObject.SetActive(true);
@@ -217,62 +196,24 @@ public class BoxRewardManager : MonoBehaviour {
         }
     }
 
-    //void StopAni(int count) {
-    //    transform.Find("ShowBox/BoxSpine/Image/Num").GetComponent<Text>().text = (4 - openCount).ToString();
-    //    Transform target = transform.Find("OpenBox").GetChild(count);
-    //    Destroy(target.GetComponent<iTween>());
-    //    target.localScale = new Vector3(1.4f, 1.4f, 1);
-    //    target.localPosition = targetSpine.localPosition;
-    //    transform.Find("OpenBox/TargetSpine").gameObject.SetActive(false);
-    //    Transform targetObj = target;
-    //    if (target.name == "Random") {
-    //        if (target.transform.Find("Card").gameObject.activeSelf)
-    //            target = targetObj.Find("Card");
-    //        else
-    //            target = targetObj.Find("Resource");
-    //    }
-    //    if (target.name.Contains("Card")) {
-    //        if (target.gameObject.activeSelf) { 
-    //            string cardId = target.Find("DictionaryCardVertical").GetComponent<MenuCardHandler>().cardID;
-    //            string aniName = "";
-    //            var rarelity = accountManager.allCardsDic[cardId].rarelity;
-    //            if (accountManager.allCardsDic[cardId].type == "unit")
-    //                aniName += "u_";
-    //            else
-    //                aniName += "m_";
-    //            if (rarelity != "common")
-    //                aniName += accountManager.allCardsDic[cardId].rarelity;
-    //            else
-    //                aniName = "NOANI";
-    //            SkeletonGraphic spine = target.Find("back").GetComponent<SkeletonGraphic>();
-    //            spine.gameObject.SetActive(true);
-    //            spine.Initialize(true);
-    //            spine.Update(0);
-    //            spine.AnimationState.SetAnimation(0, aniName, true);
-    //        }
-    //    }
-    //    openAni = false;
-    //}
-
 
 
     public void InitBoxObjects() {
         skipBtn.SetActive(true);
         Transform boxParent = transform.Find("OpenBox");
         for (int i = 0; i < 4; i++) {
-            boxParent.GetChild(i).gameObject.SetActive(true);
-            boxParent.GetChild(i).localScale = Vector3.zero;
-            boxParent.GetChild(i).localPosition = new Vector3(0, -480, 0);
-            if (i < 2) {
-                boxParent.GetChild(i).Find("back").gameObject.SetActive(false);
-                boxParent.GetChild(i).Find("Name").localScale = Vector3.zero;
-                boxParent.GetChild(i).Find("Rarelity").localScale = Vector3.zero;
-            }
-            else if (i == 3) {
-                boxParent.GetChild(i).Find("Card").Find("back").gameObject.SetActive(false);
-                boxParent.GetChild(i).Find("Card").Find("Name").localScale = Vector3.zero;
-                boxParent.GetChild(i).Find("Card").Find("Rarelity").localScale = Vector3.zero;
-            }
+            Transform reward = boxParent.GetChild(i);
+            reward.gameObject.SetActive(true);
+            reward.localScale = Vector3.zero;
+            reward.localPosition = new Vector3(0, -480, 0);
+            reward.Find("Card/GetCrystal").gameObject.SetActive(false);
+            reward.Find("Card/back").gameObject.SetActive(false);
+            reward.Find("Card/Name").gameObject.SetActive(true);
+            reward.Find("Card/Name").localScale = Vector3.zero;
+            reward.Find("Card/Rarelity").localScale = Vector3.zero;
+            reward.Find("Resource").GetChild(1).gameObject.SetActive(false);
+            reward.Find("Resource/back").gameObject.SetActive(false);
+            reward.GetChild(0).gameObject.SetActive(false);
         }
     }
 
@@ -283,31 +224,21 @@ public class BoxRewardManager : MonoBehaviour {
         transform.Find("ShowBox").gameObject.SetActive(false);
         transform.Find("ShowBox/Text").gameObject.SetActive(true);
         transform.Find("ExitButton").gameObject.SetActive(false);
-        boxParent.GetChild(0).Find("GetCrystal").gameObject.SetActive(false);
-        boxParent.GetChild(1).Find("GetCrystal").gameObject.SetActive(false);
-        boxParent.GetChild(2).Find("back").gameObject.SetActive(false);
-        boxParent.GetChild(3).Find("Card").gameObject.SetActive(false);
-        boxParent.GetChild(3).Find("Card/GetCrystal").gameObject.SetActive(false);
-        boxParent.GetChild(3).Find("Resource").gameObject.SetActive(false);
-        boxParent.GetChild(3).Find("Resource/back").gameObject.SetActive(false);
-        for (int i = 1; i < 4; i++) {
-            boxParent.GetChild(2).GetChild(i).gameObject.SetActive(false);
-            boxParent.GetChild(3).Find("Resource").GetChild(i).gameObject.SetActive(false);
-        }
         SetBoxObj();
         openningBox = false;
     }
 
     IEnumerator ShowEachReward(int count) {
         openAni = true;
+        transform.Find("OpenBox").GetChild(count).Find("Card/Name").localScale = Vector3.zero;
         if (count == 0)
             yield return new WaitForSeconds(0.95f);
         else
             yield return new WaitForSeconds(0.5f);
         transform.Find("ShowBox/BoxSpine/Image/Num").GetComponent<Text>().text = (4 - openCount).ToString();
-        Transform target = transform.Find("OpenBox").GetChild(count);
-        iTween.ScaleTo(target.gameObject, iTween.Hash("x", 1.4, "y", 1.4, "islocal", true, "time", 0.4f));
-        iTween.MoveTo(target.gameObject, iTween.Hash("y", targetSpine.localPosition.y, "islocal", true, "time", 0.4f));
+        Transform target = transform.Find("OpenBox").GetChild(count).GetChild(0);
+        iTween.ScaleTo(target.parent.gameObject, iTween.Hash("x", 1.4, "y", 1.4, "islocal", true, "time", 0.4f));
+        iTween.MoveTo(target.parent.gameObject, iTween.Hash("y", targetSpine.localPosition.y, "islocal", true, "time", 0.4f));
         SkeletonGraphic targetEffect = transform.Find("OpenBox/TargetSpine").GetComponent<SkeletonGraphic>();
         yield return new WaitForSeconds(0.1f);
         targetEffect.gameObject.SetActive(true);
@@ -315,15 +246,8 @@ public class BoxRewardManager : MonoBehaviour {
         targetEffect.Update(0);
         targetEffect.AnimationState.SetAnimation(0, "animation", false);
         yield return new WaitForSeconds(0.1f);
-        GameObject targetObj = target.gameObject;
-        if (target.name == "Random") {
-            if (target.transform.Find("Card").gameObject.activeSelf)
-                target = targetObj.transform.Find("Card");
-            else
-                target = targetObj.transform.Find("Resource");
-        }
 
-        if (target.name.Contains("Card")) {
+        if (target.name == "Card") {
             if (target.gameObject.activeSelf) {
                 string cardId = target.Find("DictionaryCardVertical").GetComponent<MenuCardHandler>().cardID;
                 string aniName = "";
@@ -359,19 +283,19 @@ public class BoxRewardManager : MonoBehaviour {
                         break;
                 }
                 target.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = accountManager.allCardsDic[cardId].name;
-                target.Find("Rarelity").Find(accountManager.allCardsDic[cardId].rarelity).gameObject.SetActive(true);
+                target.Find("Rarelity").Find(accountManager.allCardsDic[cardId].rarelity).SetAsFirstSibling();
+                target.Find("Rarelity").GetChild(0).gameObject.SetActive(true);
                 iTween.ScaleTo(target.Find("Rarelity").gameObject, iTween.Hash("x", 0.7f, "y", 0.7f, "islocal", true, "time", 0.3f));
                 yield return new WaitForSeconds(0.2f);
                 iTween.ScaleTo(target.Find("Name").gameObject, iTween.Hash("x", 1.0f, "y", 1.0f, "islocal", true, "time", 0.3f));
             }
         }
+        else if(target.name == "Hero") {
+
+        }
         else {
             string type = string.Empty;
-            for (int i = 1; i < 4; i++) {
-                if (target.GetChild(i).gameObject.activeSelf) {
-                    type = target.GetChild(i).gameObject.name;
-                }
-            }
+            type = target.gameObject.name;
             if (type != "supplyX2Coupon") {
                 SkeletonGraphic spine = target.Find("back").GetComponent<SkeletonGraphic>();
                 spine.gameObject.SetActive(true);
@@ -405,95 +329,68 @@ public class BoxRewardManager : MonoBehaviour {
         boxParent.GetChild(3).localScale = Vector3.zero;
         boxParent.GetChild(3).gameObject.SetActive(false);
         for (int i = 0; i < 4; i++) {
-            boxParent.GetChild(i).gameObject.SetActive(true);
-            boxParent.GetChild(i).position = lastPos.GetChild(i).position;
-            if (i < 2) {
-                boxParent.GetChild(i).Find("Name").localScale = Vector3.zero;
-                boxParent.GetChild(i).Find("Rarelity").localScale = Vector3.zero;
-                for (int j = 0; j < 5; j++) {
-                    boxParent.GetChild(i).Find("Rarelity").GetChild(j).gameObject.SetActive(false);
-                }
-            }
-            else if (i == 3) {
-                boxParent.GetChild(i).Find("Card").Find("Name").localScale = Vector3.zero;
-                boxParent.GetChild(i).Find("Card").Find("Rarelity").localScale = Vector3.zero;
-                for (int j = 0; j < 5; j++) {
-                    boxParent.GetChild(i).Find("Card").Find("Rarelity").GetChild(j).gameObject.SetActive(false);
-                }
+            Transform reward = boxParent.GetChild(i);
+            Transform rewardTarget = reward.GetChild(0);
+            reward.gameObject.SetActive(true);
+            reward.position = lastPos.GetChild(i).position;
+            if (rewardTarget.name == "Card") {
+                rewardTarget.Find("Name").gameObject.SetActive(false);
+                rewardTarget.Find("Rarelity").localScale = Vector3.zero;
+                rewardTarget.Find("Rarelity").GetChild(0).gameObject.SetActive(false);
             }
             yield return new WaitForSeconds(0.1f);
-            iTween.ScaleTo(boxParent.GetChild(i).gameObject, iTween.Hash("x", 0.9f, "y", 0.9f, "islocal", true, "time", 0.4f));
+            iTween.ScaleTo(reward.gameObject, iTween.Hash("x", 0.9f, "y", 0.9f, "islocal", true, "time", 0.4f));
         }
         yield return new WaitForSeconds(0.5f);
         openAni = false;
     }
 
     public void SetRewards(RewardClass[] rewardList) {
+        for(int i = 0; i < rewardList.Length; i++) 
+            SetEachReward(rewardList[i], i);
+    }
+
+    public void SetEachReward(RewardClass reward, int index) {
         Transform boxParent = transform.Find("OpenBox");
         Transform effects = transform.Find("EffectSpines");
-        boxParent.GetChild(0).Find("DictionaryCardVertical").GetComponent<MenuCardHandler>().DrawCard(rewardList[0].item);
-
-        effects.GetChild(0).GetComponent<SkeletonGraphic>().Initialize(false);
-        effects.GetChild(0).GetComponent<SkeletonGraphic>().Update(0);
-        if (accountManager.allCardsDic[rewardList[0].item].type == "unit")
-            effects.GetChild(0).GetComponent<SkeletonGraphic>().Skeleton.SetSkin("1.unit");
-        else
-            effects.GetChild(0).GetComponent<SkeletonGraphic>().Skeleton.SetSkin("3.magic");
-        effects.GetChild(0).GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, "animation", false);
-        if (rewardList[0].amount > 0) {
-            boxParent.GetChild(0).GetChild(2).gameObject.SetActive(true);
-            boxParent.GetChild(0).GetChild(2).Find("Value").GetComponent<TMPro.TextMeshProUGUI>().text = rewardList[0].amount.ToString();
-        }
-        else
-            CheckNewCardList(rewardList[0].item);
-
-        boxParent.GetChild(1).Find("DictionaryCardVertical").GetComponent<MenuCardHandler>().DrawCard(rewardList[1].item);
-        effects.GetChild(1).GetComponent<SkeletonGraphic>().Initialize(false);
-        effects.GetChild(1).GetComponent<SkeletonGraphic>().Update(0);
-        if (accountManager.allCardsDic[rewardList[1].item].type == "unit")
-            effects.GetChild(1).GetComponent<SkeletonGraphic>().Skeleton.SetSkin("1.unit");
-        else
-            effects.GetChild(1).GetComponent<SkeletonGraphic>().Skeleton.SetSkin("3.magic");
-        effects.GetChild(1).GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, "animation", false);
-        if (rewardList[1].amount > 0) {
-            boxParent.GetChild(1).GetChild(2).gameObject.SetActive(true);
-            boxParent.GetChild(1).GetChild(2).Find("Value").GetComponent<TMPro.TextMeshProUGUI>().text = rewardList[1].amount.ToString();
-        }
-        else
-            CheckNewCardList(rewardList[1].item);
-
-        boxParent.GetChild(2).Find(rewardList[2].item).gameObject.SetActive(true);
-        boxParent.GetChild(2).Find("Value").GetComponent<TMPro.TextMeshProUGUI>().text = "+" + rewardList[2].amount.ToString();
-        effects.GetChild(2).GetComponent<SkeletonGraphic>().Initialize(false);
-        effects.GetChild(2).GetComponent<SkeletonGraphic>().Update(0);
-        effects.GetChild(2).GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, "animation", false);
-
-        effects.GetChild(3).GetComponent<SkeletonGraphic>().Initialize(false);
-        effects.GetChild(3).GetComponent<SkeletonGraphic>().Update(0);
-        if (rewardList[3].type == "card") {
-            boxParent.GetChild(3).Find("Card").gameObject.SetActive(true);
-            boxParent.GetChild(3).Find("Resource").gameObject.SetActive(false);
-            boxParent.GetChild(3).Find("Card").Find("DictionaryCardVertical").GetComponent<MenuCardHandler>().DrawCard(rewardList[3].item);
-            if (accountManager.allCardsDic[rewardList[3].item].type == "unit")
-                effects.GetChild(3).GetComponent<SkeletonGraphic>().Skeleton.SetSkin("1.unit");
+        effects.GetChild(index).GetComponent<SkeletonGraphic>().Initialize(false);
+        effects.GetChild(index).GetComponent<SkeletonGraphic>().Update(0);
+        if (reward.type == "card") {
+            boxParent.GetChild(index).Find("Card").SetAsFirstSibling();
+            boxParent.GetChild(index).Find("Card").gameObject.SetActive(true);
+            boxParent.GetChild(index).Find("Card/DictionaryCardVertical").GetComponent<MenuCardHandler>().DrawCard(reward.item);
+            boxParent.GetChild(index).Find("Card/Name").localScale = Vector3.zero;
+            if (accountManager.allCardsDic[reward.item].type == "unit")
+                effects.GetChild(index).GetComponent<SkeletonGraphic>().Skeleton.SetSkin("1.unit");
             else
-                effects.GetChild(3).GetComponent<SkeletonGraphic>().Skeleton.SetSkin("3.magic");
-            if (rewardList[3].amount > 0) {
-                boxParent.GetChild(3).Find("Card/GetCrystal").gameObject.SetActive(true);
-                boxParent.GetChild(3).Find("Card/GetCrystal").Find("Value").GetComponent<TMPro.TextMeshProUGUI>().text = rewardList[3].amount.ToString();
+                effects.GetChild(index).GetComponent<SkeletonGraphic>().Skeleton.SetSkin("3.magic");
+            if (reward.amount > 0) {
+                boxParent.GetChild(index).Find("Card/GetCrystal").gameObject.SetActive(true);
+                boxParent.GetChild(index).Find("Card/GetCrystal").Find("Value").GetComponent<TMPro.TextMeshProUGUI>().text = reward.amount.ToString();
             }
             else
-                CheckNewCardList(rewardList[3].item);
+                CheckNewCardList(reward.item);
+        }
+        else if(reward.type == "hero") {
+            boxParent.GetChild(index).Find("Hero").SetAsFirstSibling();
+            boxParent.GetChild(index).Find("Hero").gameObject.SetActive(true);
+            boxParent.GetChild(index).Find("Hero/Image").GetComponent<Image>().sprite = accountManager.resource.heroPortraite[reward.item + "_button"];
+            boxParent.GetChild(index).Find("Hero/Value").GetComponent<TMPro.TextMeshProUGUI>().text = "+" + reward.amount.ToString();
+
         }
         else {
-            boxParent.GetChild(3).Find("Resource").gameObject.SetActive(true);
-            boxParent.GetChild(3).Find("Card").gameObject.SetActive(false);
-            boxParent.GetChild(3).Find("Resource").Find(rewardList[3].item).gameObject.SetActive(true);
-            boxParent.GetChild(3).Find("Resource").Find("Value").GetComponent<TMPro.TextMeshProUGUI>().text = "+" + rewardList[3].amount.ToString();
-            effects.GetChild(3).GetComponent<SkeletonGraphic>().Skeleton.SetSkin("4.item");
+            boxParent.GetChild(index).Find("Resource").SetAsFirstSibling();
+            boxParent.GetChild(index).Find("Resource").gameObject.SetActive(true);
+            boxParent.GetChild(index).Find("Resource/" + reward.item).gameObject.SetActive(true);
+            boxParent.GetChild(index).Find("Resource/" + reward.item).SetSiblingIndex(1);
+            boxParent.GetChild(index).Find("Resource/Value").GetComponent<TMPro.TextMeshProUGUI>().text = "+" + reward.amount.ToString();
+            effects.GetChild(index).GetComponent<SkeletonGraphic>().Skeleton.SetSkin("4.item");
         }
-        effects.GetChild(3).GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, "animation", false);
+        effects.GetChild(index).GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, "animation", false);
     }
+
+
+
 
     void CheckNewCardList(string cardId) {
         CollectionCard cardData = accountManager.allCardsDic[cardId];
