@@ -144,12 +144,18 @@ public class RewardProgressController : MonoBehaviour {
         float targetPosX = closestBtnPosX * leagueData.newMMR / btnMMR;
         float interval = 0;
 
-        int val = 0;
+        float val = 0;
         while (progressPosX - 50 >= targetPosX) {
             rect.sizeDelta = new Vector2(progressPosX + val, rect.rect.height);
+            if (interval > 0 && interval % 40 == 0) {
+                var totalWidth = scrollRect.content.sizeDelta.x;
+                var tmp = rect.sizeDelta / totalWidth;
+                //Logger.Log("rect.sizeDelta + val / totalWidth : " + tmp);
+                scrollRect.horizontalNormalizedPosition = tmp.x;
+            }
             progressPosX = rect.rect.width;
-            yield return new WaitForEndOfFrame();
-            val -= 10;
+            yield return new WaitForSeconds(0.01f);
+            val -= 0.1f;
             interval++;
         }
     }
