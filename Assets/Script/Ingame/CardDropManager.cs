@@ -439,6 +439,7 @@ public partial class CardDropManager {
             magicTarget = target[1];
 
             int targetline = ScenarioGameManagment.scenarioInstance.forcedSummonAt - 1;
+            //PlayMangement.instance.backGroundTillObject.SetActive(true);
             if (magicTarget == "line") {
                 for (int i = 0; i < 5; i++) {
                     if (i == targetline) {
@@ -453,6 +454,7 @@ public partial class CardDropManager {
                 return;
             }
             if (magicTarget.Contains("unit")) {
+                //PlayMangement.instance.backGroundTillObject.SetActive(true);
                 for (int i = 0; i < 5; i++) {
                     if (magicArgs == "enemy") {
                         if (i == targetline) {
@@ -534,7 +536,8 @@ public partial class CardDropManager {
             }
         }
 
-        else if (group.Contains("line")) {            
+        else if (group.Contains("line")) {
+            //PlayMangement.instance.backGroundTillObject.SetActive(true);
             for (int i = 0; i < 5; i++) {
                 if (args == null) {
                     if (units[i][0].childCount > 0) {
@@ -563,6 +566,7 @@ public partial class CardDropManager {
         }
 
         else if (group.Contains("all")) {
+            //PlayMangement.instance.backGroundTillObject.SetActive(true);
             if (CheckConditionToUse(conditionChecker, group)) {
                 slotLine[2].Find("AllMagicTrigger").gameObject.SetActive(true);
                 for (int i = 0; i < 5; i++) {
@@ -629,7 +633,7 @@ public partial class CardDropManager {
 
         GameObject lineMask = PlayMangement.instance.lineMaskObject;
         lineMask.SetActive(false);
-
+        PlayMangement.instance.backGroundTillObject.SetActive(false);
         magicArgs = magicTarget = null;
     }
 
