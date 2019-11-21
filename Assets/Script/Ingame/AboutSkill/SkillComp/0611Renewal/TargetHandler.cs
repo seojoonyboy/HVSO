@@ -18,6 +18,15 @@ namespace TargetModules {
         public bool isDone = false;
 
         public SkillHandler skillHandler;
+
+        public enum TargetEnum {
+            NONE,
+            UNIT,
+            FIELD,
+            ALL
+        }
+
+
         /// <summary>
         /// 타겟을 지정하는 단계를 시작
         /// </summary>
