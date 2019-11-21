@@ -13,9 +13,7 @@ public class MenuSceneController : MonoBehaviour {
     [SerializeField] Transform fixedCanvas;
     [SerializeField] HUDController hudController;
     [SerializeField] HorizontalScrollSnap windowScrollSnap;
-    [SerializeField] DeckSettingManager deckSettingManager;
     [SerializeField] Transform dictionaryMenu;
-    [SerializeField] SkeletonGraphic battleSwordSkeleton;
     [SerializeField] TMPro.TextMeshProUGUI nicknameText;
     [SerializeField] GameObject battleReadyPanel;   //대전 준비 화면
     [SerializeField] public GameObject storyLobbyPanel;    //스토리 메뉴 화면

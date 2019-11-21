@@ -13,6 +13,7 @@ using System;
 public partial class MenuCardInfo : MonoBehaviour {
     Translator translator;
     [SerializeField] Transform classDescModal;
+    [SerializeField] DeckSettingManager deckSettingManager;
 
     string cardId;
     bool isHuman;
@@ -51,6 +52,7 @@ public partial class MenuCardInfo : MonoBehaviour {
     private void CardModified(Enum Event_Type, Component Sender, object Param) {
         accountManager.RequestUserInfo();
         accountManager.RequestInventories();
+        accountManager.RequestMyDecks();
     }
 
     public virtual void SetCardInfo(CollectionCard data, bool isHuman, Transform cardObj, bool makeCard = false) {
@@ -354,5 +356,6 @@ public partial class MenuCardInfo : MonoBehaviour {
             transform.Find("Flavor").gameObject.SetActive(false);
         }
         cardCreate = false;
+        deckSettingManager.SetPlayerNewDecks();
     }
 }
