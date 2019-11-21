@@ -65,6 +65,11 @@ public partial class BattleConnector : MonoBehaviour {
         //webSocket.OnClosed += OnLobbyClosed;
         webSocket.OnError += OnError;
         webSocket.Open();
+
+        message.text = "대전상대를 찾는중...";
+        timeCheck = StartCoroutine(TimerOn());
+        returnButton.onClick.AddListener(BattleCancel);
+        returnButton.gameObject.SetActive(true);
     }
 
     /// <summary>

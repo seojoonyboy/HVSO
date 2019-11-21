@@ -133,9 +133,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
             if (transform.position.y < -3.5f) {
                 if(ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.canHeroCardToHand == false) {
                     pass = true;
-                    transform.localScale = new Vector3(1, 1, 1);
-                    transform.localPosition = new Vector3(0, 0, 0);
-                    transform.Find("CardInfoWindow").gameObject.SetActive(false);
+                    BackToDeckCard();
                     //if (heroCardActivate) {
                     //    transform.parent.parent.Find("HeroCardGuide").gameObject.SetActive(true);
                     //}
@@ -186,10 +184,9 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
                     highlightedSlot = null;
                 }
                 if (!cardUsed) {
-                    transform.localScale = new Vector3(1, 1, 1);
-                    transform.localPosition = new Vector3(0, 0, 0);
-                    transform.Find("CardInfoWindow").gameObject.SetActive(false);
-                    
+                    BackToDeckCard();
+
+
                     Invoke("SendEvent", 0.3f);
                     showCardsHandler.CancelSelecting();
                     if(ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.isTutorial == true) { 
@@ -230,9 +227,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         }
         handManager.transform.SetParent(mouseXPos.parent);
         if (!cardUsed) {
-            transform.localScale = new Vector3(1, 1, 1);
-            transform.localPosition = new Vector3(0, 0, 0);
-            StartCoroutine(handManager.SortHandPosition());
+            BackToDeckCard();
 
             if (ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.isTutorial == true)
                 SendEvent();

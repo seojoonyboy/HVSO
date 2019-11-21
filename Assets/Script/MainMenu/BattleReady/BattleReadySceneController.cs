@@ -25,12 +25,16 @@ public class BattleReadySceneController : MonoBehaviour {
     [SerializeField] GameObject deckListPanel;
     [SerializeField] MenuSceneController menuSceneController;
     [SerializeField] RewardsProvider rewardsProvider;
-    
+    [SerializeField] BattleReadyHeaderController battleReadyHeaderController;
+
     public Deck selectedDeck;
     public LeagueData userLeagueData;
 
+    void Awake() {
+        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_INFO_UPDATED, OnLeagueInfoUpdated);
+    }
+
     void OnEnable() {
-        rewardsProvider.Provide();
         isIngameButtonClicked = false;
 
         //ScrollSnap.ChangePage(0);
@@ -41,15 +45,29 @@ public class BattleReadySceneController : MonoBehaviour {
         HudController.SetBackButton(() => {
             OnBackButton();
         });
-        EscapeKeyController.escapeKeyCtrl.AddEscape(OnBackButton) ;
+        EscapeKeyController.escapeKeyCtrl.AddEscape(OnBackButton);
+
+        AccountManager.Instance.RequestLeagueInfo();
     }
 
     void OnDisable() {
         EscapeKeyController.escapeKeyCtrl.RemoveEscape(OnBackButton);
     }
 
+    void OnDestroy() {
+        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_INFO_UPDATED, OnLeagueInfoUpdated);
+    }
+
     private void OnRankUp() {
 
+    }
+
+    private void OnLeagueInfoUpdated(Enum Event_Type, Component Sender, object Param) {
+        AccountManager.LeagueInfo info = (AccountManager.LeagueInfo)Param;
+
+        userLeagueData.newMMR = info.ratingPoint;
+        rewardsProvider.Provide();
+        battleReadyHeaderController.SetUI(info);
     }
 
     /// <summary>

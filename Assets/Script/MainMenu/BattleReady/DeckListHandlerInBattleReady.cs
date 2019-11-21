@@ -120,7 +120,7 @@ public class DeckListHandlerInBattleReady : MonoBehaviour {
 
         PlayerPrefs.SetString("SelectedRace", camp);
         PlayerPrefs.SetString("SelectedDeckId", deckId);
-        PlayerPrefs.SetString("SelectedBattleType", "multi");
+        PlayerPrefs.SetString("SelectedBattleType", "league");
 
         parentController.selectedDeck = deck;
 

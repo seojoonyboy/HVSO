@@ -81,6 +81,7 @@ public partial class CardHandler : MonoBehaviour {
 
     public virtual void OnTurnChanged(Enum Event_Type, Component Sender, object Param) {
         isMyTurn = turnMachine.isPlayerTurn();
+        EffectSystem.Instance.UnTillField();
     }
 
     public virtual void DrawCard(string ID, int itemID = -1, bool first = false) {
@@ -393,6 +394,13 @@ public partial class CardHandler : MonoBehaviour {
             transform.localPosition = new Vector3(0, 0, 0);
         mouseLocalPos.position = transform.position;
     }
+
+    protected void BackToDeckCard() {
+        transform.localScale = new Vector3(1, 1, 1);
+        transform.localPosition = new Vector3(0, 0, 0);
+        StartCoroutine(handManager.SortHandPosition());
+    }
+
 }
 
 //영웅 카드
