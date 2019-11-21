@@ -439,7 +439,7 @@ public partial class CardDropManager {
             magicTarget = target[1];
 
             int targetline = ScenarioGameManagment.scenarioInstance.forcedSummonAt - 1;
-            //PlayMangement.instance.backGroundTillObject.SetActive(true);
+            PlayMangement.instance.backGroundTillObject.SetActive(true);
             if (magicTarget == "line") {
                 for (int i = 0; i < 5; i++) {
                     if (i == targetline) {
@@ -454,7 +454,7 @@ public partial class CardDropManager {
                 return;
             }
             if (magicTarget.Contains("unit")) {
-                //PlayMangement.instance.backGroundTillObject.SetActive(true);
+                PlayMangement.instance.backGroundTillObject.SetActive(true);
                 for (int i = 0; i < 5; i++) {
                     if (magicArgs == "enemy") {
                         if (i == targetline) {
@@ -537,7 +537,7 @@ public partial class CardDropManager {
         }
 
         else if (group.Contains("line")) {
-            //PlayMangement.instance.backGroundTillObject.SetActive(true);
+            PlayMangement.instance.backGroundTillObject.SetActive(true);
             for (int i = 0; i < 5; i++) {
                 if (args == null) {
                     if (units[i][0].childCount > 0) {
