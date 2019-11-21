@@ -142,7 +142,7 @@ public class PlayerController : MonoBehaviour
         if (isPlayer) {
             float reverse = hero.transform.localScale.x * -1f;
             hero.transform.localScale = new Vector3(reverse, hero.transform.localScale.y, hero.transform.localScale.z);
-            heroSpine.GetComponent<MeshRenderer>().sortingOrder = 19;
+            heroSpine.GetComponent<MeshRenderer>().sortingOrder = 55;
             hero.transform.localPosition = new Vector3(0, 1, 0);
             hero.transform.localScale = new Vector3(-1, 1, 1);
 

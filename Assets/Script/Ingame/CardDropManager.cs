@@ -443,12 +443,12 @@ public partial class CardDropManager {
             if (magicTarget == "line") {
                 for (int i = 0; i < 5; i++) {
                     if (i == targetline) {
-                        MaskingLine(i, false);
+                        EffectSystem.Instance.MaskingLine(i, false);
                         slotLine[i].Find("BattleLineEffect").gameObject.SetActive(true);
                         slotLine[i].Find("BattleLineEffect").gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
                     }
                     else {
-                        MaskingLine(i, true);
+                        EffectSystem.Instance.MaskingLine(i, true);
                     }                        
                 }
                 return;
@@ -493,13 +493,13 @@ public partial class CardDropManager {
             ActivateTarget(unitLine, magicTarget, dragFiltering, conditionChecker, magicArgs);
     }
 
-    private void MaskingLine(int lineNum, bool active) {
-        GameObject lineMask = PlayMangement.instance.lineMaskObject;
-        lineMask.SetActive(true);
-        GameObject line = lineMask.transform.GetChild(lineNum).gameObject;
-        line.SetActive(active);
-        line.GetComponent<SpriteRenderer>().color = new Color(0.48f, 0.48f, 0.48f, 1f);
-    }
+    //private void MaskingLine(int lineNum, bool active) {
+    //    GameObject lineMask = PlayMangement.instance.lineMaskObject;
+    //    lineMask.SetActive(true);
+    //    GameObject line = lineMask.transform.GetChild(lineNum).gameObject;
+    //    line.SetActive(active);
+    //    line.GetComponent<SpriteRenderer>().color = new Color(0.48f, 0.48f, 0.48f, 1f);
+    //}
 
     private void ActivateTarget(Transform[][] units, string group, SkillModules.SkillHandler.DragFilter dragFiltering, SkillModules.ConditionChecker conditionChecker = null, string args = null) {
         if (group.Contains("unit")) {
@@ -544,23 +544,23 @@ public partial class CardDropManager {
                         if (units[i][0].GetChild(0).GetComponent<ambush>() == null) {
                             slotLine[i].Find("BattleLineEffect").gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
                             slotLine[i].Find("BattleLineEffect").gameObject.SetActive(true);
-                            MaskingLine(i, false);
+                            EffectSystem.Instance.MaskingLine(i, false);
                         }
                     }
                     if (units[i][1].childCount > 0) {
                         slotLine[i].Find("BattleLineEffect").gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
                         slotLine[i].Find("BattleLineEffect").gameObject.SetActive(true);
-                        MaskingLine(i, false);
+                        EffectSystem.Instance.MaskingLine(i, false);
                     }
                     if(units[i][0].childCount <= 0 && units[i][0].childCount <= 0) {
-                        MaskingLine(i, true);
+                        EffectSystem.Instance.MaskingLine(i, true);
                     }
 
                 }
                 else {
                     slotLine[i].Find("BattleLineEffect").gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
                     slotLine[i].Find("BattleLineEffect").gameObject.SetActive(true);
-                    MaskingLine(i, false);
+                    EffectSystem.Instance.MaskingLine(i, false);
                 }
             }
         }
@@ -631,9 +631,7 @@ public partial class CardDropManager {
         if (magicArgs == "tool")
             DeactivateTarget(unitLine, magicTarget, magicArgs);
 
-        GameObject lineMask = PlayMangement.instance.lineMaskObject;
-        lineMask.SetActive(false);
-        PlayMangement.instance.backGroundTillObject.SetActive(false);
+        EffectSystem.Instance.HideMaskingLine();
         magicArgs = magicTarget = null;
     }
 
