@@ -8,6 +8,7 @@ using UnityEngine.Events;
 using System;
 using Newtonsoft.Json.Linq;
 using UniRx;
+using System.Text;
 
 public class GameResultManager : MonoBehaviour {
     public GameObject SocketDisconnectedUI;
@@ -168,6 +169,9 @@ public class GameResultManager : MonoBehaviour {
         transform.Find("SecondWindow/Buttons/BattleReady").GetComponent<Button>().interactable = false;
 
         StartCoroutine(SetRewards());
+        if(PlayerPrefs.GetString("SelectedBattleType") == "league") {
+            StartCoroutine(SetLeagueData());
+        }
     }
 
     public IEnumerator SetRewards() {
@@ -215,6 +219,52 @@ public class GameResultManager : MonoBehaviour {
         //    yield return new WaitForSeconds(0.1f);
         //    iTween.ScaleTo(rewards.GetChild(0).gameObject, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.5f));
         //}
+    }
+
+    public IEnumerator SetLeagueData() {
+        var battleConnector = PlayMangement.instance.SocketHandler;
+        var leagueInfo = battleConnector.leagueInfo;
+        if (leagueInfo == null) {
+            Transform secondWindow = transform.Find("SecondWindow");
+            Transform playerMMR = secondWindow.Find("PlayerMmr");
+            Image rankIcon = playerMMR.Find("RankIcon").GetComponent<Image>();
+
+            var icons = AccountManager.Instance.resource.rankIcons;
+            if (icons.ContainsKey(leagueInfo.rankDetail.minor)) {
+                rankIcon.sprite = icons[leagueInfo.rankDetail.minor];
+            }
+            else {
+                rankIcon.sprite = icons["default"];
+            }
+
+            var description = playerMMR.Find("VictoryInfo").GetComponent<TMPro.TextMeshProUGUI>();
+            StringBuilder sb = new StringBuilder();
+            if(leagueInfo.winningStreak > 0) {
+                sb
+                    .Append("<color=yellow>")
+                    .Append(leagueInfo.winningStreak)
+                    .Append("</color> 연승중");
+            }
+            else if(leagueInfo.losingStreak > 0) {
+                sb
+                    .Append("<color=red>")
+                    .Append(leagueInfo.losingStreak)
+                    .Append("</color> 연패중");
+            }
+            int pointUp = PlayMangement.instance.SocketHandler.result.pointUp;
+
+            Slider slider = playerMMR.Find("ExpSlider/SliderValue").GetComponent<Slider>();
+            int sliderMaxVal = leagueInfo.ratingPoint + pointUp;
+            slider.maxValue = sliderMaxVal;
+            slider.value = leagueInfo.ratingPoint - pointUp;
+            //while (slider.value < sliderMaxVal) {
+            //    //slider.value += 
+            //    yield return new WaitForSeconds(0.01f);
+            //}
+            description.text = sb.ToString();
+        }
+        yield return 0;
+
     }
 
     public float currentTime = 0;

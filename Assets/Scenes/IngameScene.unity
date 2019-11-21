@@ -43756,6 +43756,16 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4760111524608807199, guid: 87e8dc35205d26d40a05abfa3d7a942e,
+        type: 3}
+      propertyPath: m_Name
+      value: RankIcon
+      objectReference: {fileID: 0}
+    - target: {fileID: 4760111524608807201, guid: 87e8dc35205d26d40a05abfa3d7a942e,
+        type: 3}
+      propertyPath: m_PreserveAspect
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 87e8dc35205d26d40a05abfa3d7a942e, type: 3}
 --- !u!1 &5128621024474210361
