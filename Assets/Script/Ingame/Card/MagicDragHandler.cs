@@ -41,6 +41,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
             }
 
             object[] parms1 = new object[] { true, gameObject };
+            EffectSystem.Instance.TilledField();
             PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_CARD_PLAY, this, parms1);
             return;
         }
@@ -123,7 +124,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
 
 
     public void OnEndDrag(PointerEventData eventData) {
-        EffectSystem.Instance.IncreaseFadeAlpha();
+        EffectSystem.Instance.UnTillField();
         if (heroCardActivate) {
             ShowCardsHandler showCardsHandler = GetComponentInParent<ShowCardsHandler>();
             bool pass = false;

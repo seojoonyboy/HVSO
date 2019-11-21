@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class DeckSettingManager : MonoBehaviour
 {
-    [SerializeField] public GameObject cardDictionaryCanvas;
     [SerializeField] Transform deckList;
     [SerializeField] TMPro.TextMeshProUGUI deckNum;
     [SerializeField] HUDController hudController;
@@ -15,9 +14,7 @@ public class DeckSettingManager : MonoBehaviour
     [SerializeField] Transform anchorGuide2;
 
     public MenuSceneController menuSceneController;
-    public Transform selectedDeck;
-
-    MyDecksLoader decksLoader;
+    public Transform selectedDeck;    
     bool initialized = false;
     public bool isAni = false;
 
@@ -31,7 +28,6 @@ public class DeckSettingManager : MonoBehaviour
 
     private void SetPlayerNewDecks(Enum Event_Type, Component Sender, object Param) {
         SetPlayerNewDecks();
-        //Logger.Log("DeckSettingManager");
     }
 
     public void RefreshLine() {
@@ -52,7 +48,6 @@ public class DeckSettingManager : MonoBehaviour
         //float height = deckList.GetComponent<RectTransform>().rect.height;
         transform.Find("DeckListParent").GetComponent<RectTransform>().sizeDelta = new Vector2(1080, -height);
         transform.Find("DeckListParent").GetComponent<RectTransform>().anchoredPosition = new Vector2(transform.Find("DeckListParent").GetComponent<RectTransform>().anchoredPosition.x, height / 2);
-        
     }
 
     public void SetPlayerNewDecks() {

@@ -19,6 +19,8 @@ public class EffectSystem : SerializedMonoBehaviour {
     public GameObject spareObject;
     public GameObject cutSceneCanvas;
     public GameObject fadeCanvas;
+
+
     public SpriteRenderer worldFade;
 
     public GameObject cardDragEffect;
@@ -167,13 +169,17 @@ public class EffectSystem : SerializedMonoBehaviour {
         cutsceneObject.SetActive(false);
     }
 
-    public void DecreaseFadeAlpha() {
+    public void TilledField() {
+        GameObject backGroundTill = PlayMangement.instance.backGroundTillObject;
+        backGroundTill.SetActive(true);
         worldFade.transform.gameObject.SetActive(true);
         worldFade.sortingOrder = 16;
         worldFade.color = new Color(0, 0, 0, 0.6f);
     }
 
-    public void IncreaseFadeAlpha() {
+    public void UnTillField() {
+        GameObject backGroundTill = PlayMangement.instance.backGroundTillObject;
+        backGroundTill.SetActive(true);
         worldFade.sortingOrder = 16;
         worldFade.color = new Color(0, 0, 0, 0.6f);
         worldFade.transform.gameObject.SetActive(false);

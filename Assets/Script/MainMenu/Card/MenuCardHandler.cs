@@ -168,13 +168,16 @@ public class MenuCardHandler : MonoBehaviour {
         MenuCardInfo.cardInfoWindow.transform.parent.gameObject.SetActive(true);
         MenuCardInfo.cardInfoWindow.gameObject.SetActive(true);
         if(gameObject.name == "DictionaryCard" && transform.Find("NewCard").gameObject.activeSelf) {
+            CardDataPackage cdp = AccountManager.Instance.cardPackage;
             if (isHuman) {
-                AccountManager.Instance.cardPackage.checkHumanCard.Remove(cardID);
-                AccountManager.Instance.cardPackage.rarelityHumanCardCheck[AccountManager.Instance.cardPackage.data[cardID].rarelity].Remove(cardID);
+                cdp.checkHumanCard.Remove(cardID);
+                while(cdp.rarelityHumanCardCheck[cdp.data[cardID].rarelity].Contains(cardID))
+                    cdp.rarelityHumanCardCheck[cdp.data[cardID].rarelity].Remove(cardID);
             }
             else {
-                AccountManager.Instance.cardPackage.checkOrcCard.Remove(cardID);
-                AccountManager.Instance.cardPackage.rarelityOrcCardCheck[AccountManager.Instance.cardPackage.data[cardID].rarelity].Remove(cardID);
+                cdp.checkOrcCard.Remove(cardID);
+                while (cdp.rarelityOrcCardCheck[cdp.data[cardID].rarelity].Contains(cardID))
+                    cdp.rarelityOrcCardCheck[cdp.data[cardID].rarelity].Remove(cardID);
             }
             transform.Find("NewCard").gameObject.SetActive(false);
         }
