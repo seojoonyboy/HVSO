@@ -25,6 +25,7 @@ public partial class PlayMangement : MonoBehaviour {
     public GameObject backGround;
     public GameObject onCanvasPosGroup;
     public GameObject lineMaskObject;
+    public GameObject backGroundTillObject;
     //public CardCircleManager cardCircleManager;
     public CardHandManager cardHandManager;
     public GameResultManager resultManager;
@@ -58,6 +59,7 @@ public partial class PlayMangement : MonoBehaviour {
 
     public ShowCardsHandler showCardsHandler;
     public Button surrendButton;
+    
     //public string magicHistroy;
 
     private void Awake() {
@@ -239,6 +241,12 @@ public partial class PlayMangement : MonoBehaviour {
             raceSprite.transform.SetAsLastSibling();
         }
         lineMaskObject = backGround.transform.Find("field_mask").gameObject;
+        backGroundTillObject = backGround.transform.Find("till").gameObject;
+
+        backGroundTillObject.transform.Find("upkeep").gameObject.GetComponent<SpriteRenderer>().sprite
+            = raceSprite.transform.Find("upkeep").gameObject.GetComponent<SpriteRenderer>().sprite;
+        backGroundTillObject.transform.Find("upBackGround").gameObject.GetComponent<SpriteRenderer>().sprite
+            = raceSprite.transform.Find("upBackGround").gameObject.GetComponent<SpriteRenderer>().sprite;
     }
 
 

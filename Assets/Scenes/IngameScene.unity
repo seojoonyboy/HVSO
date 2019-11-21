@@ -34796,6 +34796,31 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 7732885739660803045, guid: 17309e135219a4448bd6fd4cbbcd1e04,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 8969361807245191731, guid: 17309e135219a4448bd6fd4cbbcd1e04,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8728146482434901842, guid: 17309e135219a4448bd6fd4cbbcd1e04,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1456843981247189222, guid: 17309e135219a4448bd6fd4cbbcd1e04,
+        type: 3}
+      propertyPath: m_Name
+      value: upBackGround_mask
+      objectReference: {fileID: 0}
+    - target: {fileID: 8070349733963714446, guid: 17309e135219a4448bd6fd4cbbcd1e04,
+        type: 3}
+      propertyPath: m_Name
+      value: upkeep_mask
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 17309e135219a4448bd6fd4cbbcd1e04, type: 3}
 --- !u!4 &1685675060 stripped
