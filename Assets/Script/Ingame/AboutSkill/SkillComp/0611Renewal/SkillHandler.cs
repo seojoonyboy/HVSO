@@ -24,7 +24,6 @@ namespace SkillModules {
         public bool finallyDone = true;
         public Transform highlight;
         private int end_Card_Count = 0;
-        private int coroutineCount = 0;
 
         string targetType;
 
@@ -122,8 +121,9 @@ namespace SkillModules {
                 if(!active && skill.TargetSelectExist()) SendingMessage(true);
                 if (active && !isDone) yield return new WaitUntil (() => isDone);
                 PlayMangement.instance.OffBlockPanel();                
-            }            
+            }
             //유닛 소환이나 마법 카드 사용 했을 때
+            EffectSystem.Instance.HideMaskingLine();
             isDone = true;
             socketDone = true;
             if(!isPlayer) yield break;
