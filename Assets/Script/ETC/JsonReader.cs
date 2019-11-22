@@ -57,7 +57,13 @@ namespace dataModules {
         public bool userHas;
         public int piece;
         public int tier;
+        public HeroLevel next_level;
         public HeroCard[] heroCards;
+    }
+
+    public class HeroLevel {
+        public int piece;
+        public int manaCrystal;
     }
 
     public class Decks {
