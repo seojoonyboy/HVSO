@@ -46,7 +46,8 @@ public class MenuHeroInfo : MonoBehaviour
         transform.Find("HeroDialog/Name").GetComponent<TMPro.TextMeshProUGUI>().text = hero.name;
         transform.Find("HeroSpines").GetChild(0).gameObject.SetActive(false);
         Transform heroSpine = transform.Find("HeroSpines/" + hero.id);
-
+        for (int i = 0; i < 3; i++)
+            transform.Find("HeroLevel/Stars").GetChild(i).GetChild(0).gameObject.SetActive(false);
         if (!accountManager.myHeroInventories.ContainsKey(heroId)) {
             transform.Find("HeroSpines/lock").gameObject.SetActive(true);
             heroSpine.GetComponent<SkeletonGraphic>().color = new Color(0.35f, 0.35f, 0.35f);
@@ -58,8 +59,7 @@ public class MenuHeroInfo : MonoBehaviour
             if(heroData.tier == 0) {
                 transform.Find("HeroSpines/lock").gameObject.SetActive(true);
                 heroSpine.GetComponent<SkeletonGraphic>().color = new Color(0.35f, 0.35f, 0.35f);
-                for (int i = 0; i < 3; i++)
-                    transform.Find("HeroLevel/Stars").GetChild(i).GetChild(0).gameObject.SetActive(false);
+                
                 transform.Find("HeroLevel/Exp/Value").GetComponent<Image>().fillAmount = 0;
                 transform.Find("HeroLevel/Exp/ValueText").GetComponent<TMPro.TextMeshProUGUI>().text = "0/30";
             }
