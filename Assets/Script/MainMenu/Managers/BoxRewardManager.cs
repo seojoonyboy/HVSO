@@ -185,13 +185,15 @@ public class BoxRewardManager : MonoBehaviour {
             }
             else {
                 string type = target.GetChild(0).name;
+                SkeletonGraphic spine = target.Find("back").GetComponent<SkeletonGraphic>();
                 if (type != "supplyX2Coupon") {
-                    SkeletonGraphic spine = target.Find("back").GetComponent<SkeletonGraphic>();
                     spine.gameObject.SetActive(true);
                     spine.Initialize(true);
                     spine.Update(0);
                     spine.AnimationState.SetAnimation(0, "g_superrare", true);
                 }
+                else 
+                    spine.gameObject.SetActive(false);
             }
         }
     }
@@ -294,15 +296,16 @@ public class BoxRewardManager : MonoBehaviour {
 
         }
         else {
-            string type = string.Empty;
-            type = target.gameObject.name;
+            string type = target.gameObject.name;
+            SkeletonGraphic spine = target.Find("back").GetComponent<SkeletonGraphic>();
             if (type != "supplyX2Coupon") {
-                SkeletonGraphic spine = target.Find("back").GetComponent<SkeletonGraphic>();
                 spine.gameObject.SetActive(true);
                 spine.Initialize(true);
                 spine.Update(0);
                 spine.AnimationState.SetAnimation(0, "g_superrare", true);
             }
+            else 
+                spine.gameObject.SetActive(false);
 
             SoundManager soundManager = SoundManager.Instance;
             switch (type) {

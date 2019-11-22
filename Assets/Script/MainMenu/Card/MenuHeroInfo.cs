@@ -68,16 +68,24 @@ public class MenuHeroInfo : MonoBehaviour
                 for (int i = 0; i < heroData.tier; i++)
                     transform.Find("HeroLevel/Stars").GetChild(i).GetChild(0).gameObject.SetActive(true);
             }
-            float fillExp = (float)heroData.piece / heroData.next_level.piece;
-            if (fillExp >= 1) {
-                transform.Find("HeroLevel/Exp").gameObject.SetActive(false);
-                transform.Find("HeroLevel/TierUpBtn").gameObject.SetActive(true);
+            if (heroData.next_level != null) {
+                float fillExp = (float)heroData.piece / heroData.next_level.piece;
+                if (fillExp >= 1) {
+                    transform.Find("HeroLevel/Exp").gameObject.SetActive(false);
+                    transform.Find("HeroLevel/TierUpBtn").gameObject.SetActive(true);
+                }
+                else {
+                    transform.Find("HeroLevel/Exp").gameObject.SetActive(true);
+                    transform.Find("HeroLevel/TierUpBtn").gameObject.SetActive(false);
+                    transform.Find("HeroLevel/Exp/Value").GetComponent<Image>().fillAmount = (float)heroData.piece / heroData.next_level.piece;
+                    transform.Find("HeroLevel/Exp/ValueText").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.piece + "/" + heroData.next_level.piece;
+                }
             }
             else {
                 transform.Find("HeroLevel/Exp").gameObject.SetActive(true);
                 transform.Find("HeroLevel/TierUpBtn").gameObject.SetActive(false);
-                transform.Find("HeroLevel/Exp/Value").GetComponent<Image>().fillAmount = (float)heroData.piece / heroData.next_level.piece;
-                transform.Find("HeroLevel/Exp/ValueText").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.piece + "/" + heroData.next_level.piece;
+                transform.Find("HeroLevel/Exp/Value").GetComponent<Image>().fillAmount = 1;
+                transform.Find("HeroLevel/Exp/ValueText").GetComponent<TMPro.TextMeshProUGUI>().text = "MAX";
             }
         }
         heroSpine.gameObject.SetActive(true);

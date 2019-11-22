@@ -169,17 +169,21 @@ public class CardDictionaryManager : MonoBehaviour {
                 if (AccountManager.Instance.myHeroInventories.ContainsKey(heroData.id)) {
                     dataModules.HeroInventory myHeroData = AccountManager.Instance.myHeroInventories[heroData.id];
                     heroSlot.Find("HeroObject/HeroExp/HumanGauge").gameObject.SetActive(true);
-                    heroSlot.Find("HeroObject/HeroExp/HumanGauge").GetComponent<Image>().fillAmount = (float)myHeroData.piece / myHeroData.next_level.piece;
-                    heroSlot.Find("HeroObject/HeroExp/Value").GetComponent<TMPro.TextMeshProUGUI>().text = myHeroData.piece.ToString();
-                    heroSlot.Find("HeroObject/HeroExp/MaxValue").GetComponent<TMPro.TextMeshProUGUI>().text = "/" + myHeroData.next_level.piece;
+                    if (myHeroData.next_level != null) {
+                        heroSlot.Find("HeroObject/HeroExp/HumanGauge").GetComponent<Image>().fillAmount = (float)myHeroData.piece / myHeroData.next_level.piece;
+                        heroSlot.Find("HeroObject/HeroExp/Value").GetComponent<TMPro.TextMeshProUGUI>().text = myHeroData.piece + "/" + myHeroData.next_level.piece;
+                    }
+                    else {
+                        heroSlot.Find("HeroObject/HeroExp/HumanGauge").GetComponent<Image>().fillAmount = 1;
+                        heroSlot.Find("HeroObject/HeroExp/Value").GetComponent<TMPro.TextMeshProUGUI>().text = "MAX";
+                    }
                     for (int j = 0; j < myHeroData.tier; j++)
                         heroSlot.Find("HeroObject/HeroLevel").GetChild(j).gameObject.SetActive(true);
                 }
                 else {
                     heroSlot.Find("HeroObject/HeroExp/HumanGauge").gameObject.SetActive(true);
                     heroSlot.Find("HeroObject/HeroExp/HumanGauge").GetComponent<Image>().fillAmount = 0;
-                    heroSlot.Find("HeroObject/HeroExp/Value").GetComponent<TMPro.TextMeshProUGUI>().text = 0.ToString();
-                    heroSlot.Find("HeroObject/HeroExp/MaxValue").GetComponent<TMPro.TextMeshProUGUI>().text = "/" + 30;
+                    heroSlot.Find("HeroObject/HeroExp/Value").GetComponent<TMPro.TextMeshProUGUI>().text = "0/30";
                 }
                 count++;
             }
@@ -219,17 +223,21 @@ public class CardDictionaryManager : MonoBehaviour {
                 if (AccountManager.Instance.myHeroInventories.ContainsKey(heroData.id)) {
                     dataModules.HeroInventory myHeroData = AccountManager.Instance.myHeroInventories[heroData.id];
                     heroSlot.Find("HeroObject/HeroExp/OrcGauge").gameObject.SetActive(true);
-                    heroSlot.Find("HeroObject/HeroExp/OrcGauge").GetComponent<Image>().fillAmount = (float)myHeroData.piece / myHeroData.next_level.piece;
-                    heroSlot.Find("HeroObject/HeroExp/Value").GetComponent<TMPro.TextMeshProUGUI>().text = myHeroData.piece.ToString();
-                    heroSlot.Find("HeroObject/HeroExp/MaxValue").GetComponent<TMPro.TextMeshProUGUI>().text = "/" + myHeroData.next_level.piece;
+                    if (myHeroData.next_level != null) {
+                        heroSlot.Find("HeroObject/HeroExp/OrcGauge").GetComponent<Image>().fillAmount = (float)myHeroData.piece / myHeroData.next_level.piece;
+                        heroSlot.Find("HeroObject/HeroExp/Value").GetComponent<TMPro.TextMeshProUGUI>().text = myHeroData.piece + "/" + myHeroData.next_level.piece;
+                    }
+                    else {
+                        heroSlot.Find("HeroObject/HeroExp/OrcGauge").GetComponent<Image>().fillAmount = 1;
+                        heroSlot.Find("HeroObject/HeroExp/Value").GetComponent<TMPro.TextMeshProUGUI>().text = "MAX";
+                    }
                     for (int j = 0; j < myHeroData.tier; j++)
                         heroSlot.Find("HeroObject/HeroLevel").GetChild(j).gameObject.SetActive(true);
                 }
                 else {
                     heroSlot.Find("HeroObject/HeroExp/OrcGauge").gameObject.SetActive(true);
                     heroSlot.Find("HeroObject/HeroExp/OrcGauge").GetComponent<Image>().fillAmount = 0;
-                    heroSlot.Find("HeroObject/HeroExp/Value").GetComponent<TMPro.TextMeshProUGUI>().text = 0.ToString();
-                    heroSlot.Find("HeroObject/HeroExp/MaxValue").GetComponent<TMPro.TextMeshProUGUI>().text = "/" + 30;
+                    heroSlot.Find("HeroObject/HeroExp/Value").GetComponent<TMPro.TextMeshProUGUI>().text = "0/30";
                 }
                 count++;
             }
