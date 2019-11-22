@@ -219,7 +219,7 @@ namespace SkillModules {
         public async void InvokeAttack(GameObject target, string cardID = "") {
             await Task.Delay(800);
             target.GetComponent<PlaceMonster>().InstanceAttack(cardID);
-            EffectSystem.Instance.HighlightLine(target.GetComponent<PlaceMonster>().x, true);
+            EffectSystem.Instance.HighlightLine(target.GetComponent<PlaceMonster>().x);
         }
         
 
@@ -279,8 +279,7 @@ namespace SkillModules {
                 new FieldUnitsObserver.Pos(args.col, args.row),
                 isPlayer,
                 cardID
-            );
-
+            );            
             WaitDone();
         }
 
@@ -312,11 +311,13 @@ namespace SkillModules {
         private void MoveUnit(ref SelfMoveArgs args, bool isPlayer) {
             PlayMangement playMangement = PlayMangement.instance;
             FieldUnitsObserver observer = playMangement.UnitsObserver;
+            
+
             observer.UnitChangePosition(
                 skillHandler.myObject, 
                 new FieldUnitsObserver.Pos(args.col, args.row),
                 isPlayer
-            );
+            );            
 
             skillHandler.finallyDone = false;
             WaitDone();
@@ -325,7 +326,7 @@ namespace SkillModules {
         private async void WaitDone() {
             await System.Threading.Tasks.Task.Delay(500);
             skillHandler.isDone = true;
-            await System.Threading.Tasks.Task.Delay(500);
+            await System.Threading.Tasks.Task.Delay(500);        
             skillHandler.finallyDone = true;
         }
     }
@@ -363,7 +364,7 @@ namespace SkillModules {
                 string skillId = skillHandler.myObject.GetComponent<MagicDragHandler>().cardData.id;                
                 if (unit != null) {
                     unit.RequestChangeStat(0, -amount, skillId);
-                    EffectSystem.Instance.HighlightLine(unit.x, true);
+                    EffectSystem.Instance.HighlightLine(unit.x);
                     WaitEffect(target, amount);
                 } else {
                     target.GetComponent<PlayerController>().TakeIgnoreShieldDamage(amount, true, skillId);

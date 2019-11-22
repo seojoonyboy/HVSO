@@ -63,6 +63,9 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
         //    );
         //}
 
+        EffectSystem.Instance.TilledFieldOverUnit();
+        target.GetComponent<PlaceMonster>().unitSoringOrder = 58;
+
         if (isHuman) humanUnits[prevPos.col, prevPos.row] = null;
         else orcUnits[prevPos.col, prevPos.row] = null;
 
@@ -115,6 +118,10 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
         Logger.Log(string.Format("prev Pos Row : {0}", prevPos.row));
 
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.FIELD_CHANGED, null, null);
+
+        yield return new WaitForSeconds(1.5f);
+        target.GetComponent<PlaceMonster>().unitSoringOrder = 50;
+        EffectSystem.Instance.HideMaskingLine();
     }
 
     /// <summary>

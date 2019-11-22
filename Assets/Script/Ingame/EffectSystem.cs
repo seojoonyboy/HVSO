@@ -171,9 +171,15 @@ public class EffectSystem : SerializedMonoBehaviour {
         cutsceneObject.SetActive(false);
     }
 
+    public void TilledFieldOverUnit() {
+        for (int i = 0; i < 5; i++)
+            MaskingLine(i, true);
+    }
+
+
     public void TilledField() {
         GameObject backGroundTill = PlayMangement.instance.backGroundTillObject;
-        backGroundTill.SetActive(true);
+        backGroundTill.SetActive(true);        
         worldFade.transform.gameObject.SetActive(true);
         worldFade.sortingOrder = 47;
         worldFade.color = new Color(0, 0, 0, 0.6f);
@@ -188,6 +194,7 @@ public class EffectSystem : SerializedMonoBehaviour {
 
     public void UnTillField() {
         GameObject backGroundTill = PlayMangement.instance.backGroundTillObject;
+        backGroundTill.transform.Find("upkeep_mask").gameObject.SetActive(false);
         backGroundTill.SetActive(false);
         worldFade.sortingOrder = 47;
         worldFade.color = new Color(0, 0, 0, 0.6f);
@@ -203,7 +210,7 @@ public class EffectSystem : SerializedMonoBehaviour {
         line.GetComponent<SpriteRenderer>().sortingOrder = (active == true) ? 53 : 11;
     }
 
-    public void HighlightLine(int lineNum, bool skillActive = false) {
+    public void HighlightLine(int lineNum) {
         TilledField();        
         for (int i = 0; i< 5; i++) 
             MaskingLine(i, (i != lineNum) ? true : false);
