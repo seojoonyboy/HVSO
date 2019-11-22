@@ -1085,8 +1085,8 @@ public partial class AccountManager {
                 var sceneStartController = GetComponent<SceneStartController>();
                 if (res.StatusCode == 200 || res.StatusCode == 304) {
                     leagueInfo = dataModules.JsonReader.Read<LeagueInfo>(res.DataAsText);
-                    scriptable_leagueData.prevRank = leagueInfo.rankDetail.minor;
-                    scriptable_leagueData.prevMMR = leagueInfo.ratingPoint;
+                    scriptable_leagueData.newMMR = leagueInfo.ratingPoint;
+                    scriptable_leagueData.newRank = leagueInfo.rankDetail.minor;
 
                     NoneIngameSceneEventHandler
                         .Instance

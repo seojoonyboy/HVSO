@@ -58,6 +58,7 @@ public class RewardsProvider : SerializedMonoBehaviour {
             btn.gameObject.SetActive(true);
             btn.transform.SetParent(content);
             btn.transform.Find("MMR").GetComponent<IntergerIndex>().Id = reward.standard;
+
             standards.Add(reward.standard);
 
             buttons.Add(btn);
