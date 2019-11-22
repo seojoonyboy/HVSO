@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Spine;
 using Spine.Unity;
+using System;
 using System.Linq;
 
 public class MenuHeroInfo : MonoBehaviour
@@ -12,12 +13,19 @@ public class MenuHeroInfo : MonoBehaviour
     private Translator translator;
 
     public static MenuHeroInfo heroInfoWindow;
+    bool tierUpHero = false;
+    string heroId;
 
     private void Awake() {
         heroInfoWindow = this;
+        init();
         gameObject.SetActive(false);
     }
-    
+
+    private void Start() {
+        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_TIERUP_HERO, HeroModified);
+    }
+
     private void init() {
         accountManager = AccountManager.Instance;
         translator = accountManager.GetComponent<Translator>();
@@ -25,7 +33,8 @@ public class MenuHeroInfo : MonoBehaviour
 
     // Start is called before the first frame update
     public void SetHeroInfoWindow(string heroId) {
-        if(accountManager == null) init();
+        this.heroId = heroId;
+        if (accountManager == null) init();
         dataModules.HeroInventory hero = new dataModules.HeroInventory();
         foreach (dataModules.HeroInventory heroes in accountManager.allHeroes) {
             if (heroes.id == heroId) {
@@ -43,11 +52,31 @@ public class MenuHeroInfo : MonoBehaviour
             heroSpine.GetComponent<SkeletonGraphic>().color = new Color(0.35f, 0.35f, 0.35f);
         }
         else {
+            dataModules.HeroInventory heroData = accountManager.myHeroInventories[heroId];
             transform.Find("HeroSpines/lock").gameObject.SetActive(false);
             heroSpine.GetComponent<SkeletonGraphic>().color = new Color(1, 1, 1);
-            if(accountManager.myHeroInventories[heroId].tier == 0) {
+            if(heroData.tier == 0) {
                 transform.Find("HeroSpines/lock").gameObject.SetActive(true);
                 heroSpine.GetComponent<SkeletonGraphic>().color = new Color(0.35f, 0.35f, 0.35f);
+                for (int i = 0; i < 3; i++)
+                    transform.Find("HeroLevel/Stars").GetChild(i).GetChild(0).gameObject.SetActive(false);
+                transform.Find("HeroLevel/Exp/Value").GetComponent<Image>().fillAmount = 0;
+                transform.Find("HeroLevel/Exp/ValueText").GetComponent<TMPro.TextMeshProUGUI>().text = "0/30";
+            }
+            else {
+                for (int i = 0; i < heroData.tier; i++)
+                    transform.Find("HeroLevel/Stars").GetChild(i).GetChild(0).gameObject.SetActive(true);
+            }
+            float fillExp = (float)heroData.piece / heroData.next_level.piece;
+            if (fillExp >= 1) {
+                transform.Find("HeroLevel/Exp").gameObject.SetActive(false);
+                transform.Find("HeroLevel/TierUpBtn").gameObject.SetActive(true);
+            }
+            else {
+                transform.Find("HeroLevel/Exp").gameObject.SetActive(true);
+                transform.Find("HeroLevel/TierUpBtn").gameObject.SetActive(false);
+                transform.Find("HeroLevel/Exp/Value").GetComponent<Image>().fillAmount = (float)heroData.piece / heroData.next_level.piece;
+                transform.Find("HeroLevel/Exp/ValueText").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.piece + "/" + heroData.next_level.piece;
             }
         }
         heroSpine.gameObject.SetActive(true);
@@ -72,6 +101,30 @@ public class MenuHeroInfo : MonoBehaviour
         EscapeKeyController.escapeKeyCtrl.AddEscape(MenuCardInfo.cardInfoWindow.CloseInfo);
 
         OpenClassWindow();
+    }
+
+    public void TierUpHero() {
+        if (tierUpHero) return;
+        transform.Find("block").gameObject.SetActive(true);
+        SoundManager.Instance.PlaySound(UISfxSound.BUTTON1);
+        tierUpHero = true;
+        accountManager.RequestHeroTierUp(heroId);
+    }
+
+    private void HeroModified(Enum Event_Type, Component Sender, object Param) {
+        accountManager.RequestInventories();
+        StartCoroutine(HeroMakingAni());
+    }
+
+    IEnumerator HeroMakingAni() {
+        yield return new WaitForSeconds(0.5f);
+        if(accountManager.myHeroInventories[heroId].camp == "human")
+            CardDictionaryManager.cardDictionaryManager.RefreshHumanHero();
+        else
+            CardDictionaryManager.cardDictionaryManager.RefreshOrcHero();
+        SetHeroInfoWindow(heroId);
+        transform.Find("block").gameObject.SetActive(false);
+        tierUpHero = false;
     }
 
     public void OpenClassWindow() {

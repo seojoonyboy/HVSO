@@ -43,6 +43,7 @@ public partial class AccountManager : Singleton<AccountManager> {
     public RewardClass[] rewardList;
     public DictionaryInfo dicInfo;
 
+
     NetworkManager networkManager;
     GameObject loadingModal;
     public UnityEvent OnUserResourceRefresh = new UnityEvent();
@@ -315,6 +316,7 @@ public partial class AccountManager {
 
         networkManager.Request(request, callback, "유저 정보를 불러오는중...");
     }
+
     public void OnSignInResultModal() {
         Destroy(loadingModal);
         Modal.instantiate("로그인이 되었습니다.", Modal.Type.CHECK, () => {
@@ -477,6 +479,41 @@ public partial class AccountManager {
     }
 
     /// <summary>
+    /// 영웅 티어업 요청
+    /// </summary>
+    public void RequestHeroTierUp(string heroId) {
+        StringBuilder sb = new StringBuilder();
+        sb
+            .Append(networkManager.baseUrl)
+            .Append("api/user/herotier_up");
+
+        HTTPRequest request = new HTTPRequest(
+            new Uri(sb.ToString())
+        );
+        request.MethodType = BestHTTP.HTTPMethods.Post;
+        request.AddHeader("authorization", TokenFormat);
+        Debug.Log(string.Format("{{\"heroId\":\"{0}\"}}", heroId));
+        request.RawData = Encoding.UTF8.GetBytes(string.Format("{{\"heroId\":\"{0}\"}}", heroId));
+        networkManager.Request(request, (req, res) => {
+            if (res.IsSuccess) {
+                if (res.StatusCode == 200 || res.StatusCode == 304) {
+
+                    NoneIngameSceneEventHandler
+                        .Instance
+                        .PostNotification(
+                            NoneIngameSceneEventHandler.EVENT_TYPE.API_TIERUP_HERO,
+                            null,
+                            res
+                        );
+                }
+            }
+            else {
+                Logger.LogWarning("영웅 티어업 실패");
+            }
+        }, "영웅 티어업 하는중...");
+    }
+
+    /// <summary>
     /// 카드 제작 요청
     /// </summary>
     public void RequestCardMake(string cardId) {
@@ -506,9 +543,9 @@ public partial class AccountManager {
                 }
             }
             else {
-                Logger.LogWarning("덱 생성 실패");
+                Logger.LogWarning("카드 제작 실패");
             }
-        }, "새로운 덱을 생성하는중...");
+        }, "새로운 카드 제작하는중...");
     }
 
     /// <summary>
