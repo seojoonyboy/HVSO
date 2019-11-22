@@ -55,21 +55,6 @@ public class GameResultManager : MonoBehaviour {
     void OnDestroy() {
         if (observer_1 != null) observer_1.Dispose();
         if (observer_2 != null) observer_2.Dispose();
-
-        scriptable_leagueData.prevRank = PlayMangement
-            .instance
-            .SocketHandler
-            .result
-            .leagueInfo
-            .rankDetail
-            .minor;
-
-        scriptable_leagueData.prevMMR = PlayMangement
-            .instance
-            .SocketHandler
-            .result
-            .leagueInfo
-            .ratingPoint;
     }
 
     public void ExtraRewardReceived(JObject data) {

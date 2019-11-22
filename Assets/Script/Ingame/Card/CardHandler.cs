@@ -381,7 +381,6 @@ public partial class CardHandler : MonoBehaviour {
         mouseXPos.position = new Vector3(mousePos.x, 0, 0);
         cardHand.transform.SetParent(mouseXPos);
         mouseLocalPos.position = transform.position;
-        EffectSystem.Instance.TilledField();
     }
 
     protected void OnDragCard() {

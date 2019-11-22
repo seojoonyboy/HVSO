@@ -33,6 +33,12 @@ public class PlaceMonster : MonoBehaviour {
         get { return unitSpine.atkDuration; }
     }
 
+    public int unitSoringOrder {
+        set { unitSpine.transform.GetComponent<MeshRenderer>().sortingOrder = value; }
+        get { return unitSpine.transform.GetComponent<MeshRenderer>().sortingOrder; }
+    }
+
+
     struct buffStat {
         public bool running;
         public int atk;
@@ -272,7 +278,7 @@ public class PlaceMonster : MonoBehaviour {
                 }
                 else {
                     iTween.MoveTo(gameObject, iTween.Hash("x", gameObject.transform.position.x - 0.75f, "y", myTarget.transform.position.y, "z", gameObject.transform.position.z, "time", 0.3f, "easetype", iTween.EaseType.easeInOutExpo, "oncomplete", "UnitTryAttack", "oncompletetarget", gameObject));
-                    unitSpine.transform.GetComponent<MeshRenderer>().sortingOrder = 51;
+                    unitSoringOrder = 51;
                     iTween.MoveTo(myTarget, iTween.Hash("x", myTarget.transform.position.x + 0.75f, "y", myTarget.transform.position.y, "z", myTarget.transform.position.z, "time", 0.2f, "easetype", iTween.EaseType.easeInOutExpo));
                 }
             }
@@ -572,7 +578,7 @@ public class PlaceMonster : MonoBehaviour {
     }
 
     private void ReturnPosition() {
-        unitSpine.transform.GetComponent<MeshRenderer>().sortingOrder = 50;
+        unitSoringOrder = 50;
         iTween.MoveTo(gameObject, iTween.Hash("x", unitLocation.x, "y", unitLocation.y, "z", unitLocation.z, "time", 0.3f, "delay", 0.5f, "easetype", iTween.EaseType.easeInOutExpo));
     }
 

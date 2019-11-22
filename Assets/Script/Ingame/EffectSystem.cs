@@ -170,24 +170,18 @@ public class EffectSystem : SerializedMonoBehaviour {
         //yield return FadeIn(0.6f, 0, cutsceneAnimation.Skeleton.Data.FindAnimation("animation").Duration / 2);
         cutsceneObject.SetActive(false);
     }
-
+    
     public void TilledField() {
         GameObject backGroundTill = PlayMangement.instance.backGroundTillObject;
-        backGroundTill.SetActive(true);
+        backGroundTill.SetActive(true);        
         worldFade.transform.gameObject.SetActive(true);
         worldFade.sortingOrder = 47;
         worldFade.color = new Color(0, 0, 0, 0.6f);
     }
 
-    public void TilledFieldWithOutHero() {
-        worldFade.transform.gameObject.SetActive(true);
-        worldFade.sortingOrder = 16;
-        worldFade.color = new Color(0, 0, 0, 0.6f);
-    }
-
-
     public void UnTillField() {
         GameObject backGroundTill = PlayMangement.instance.backGroundTillObject;
+        backGroundTill.transform.Find("upkeep_mask").gameObject.SetActive(false);
         backGroundTill.SetActive(false);
         worldFade.sortingOrder = 47;
         worldFade.color = new Color(0, 0, 0, 0.6f);
@@ -203,11 +197,10 @@ public class EffectSystem : SerializedMonoBehaviour {
         line.GetComponent<SpriteRenderer>().sortingOrder = (active == true) ? 53 : 11;
     }
 
-    public void HighlightLine(int lineNum, bool skillActive = false) {
+    public void ShowLineMask(int lineNum = -1) {
         TilledField();        
         for (int i = 0; i< 5; i++) 
-            MaskingLine(i, (i != lineNum) ? true : false);
-        
+            MaskingLine(i, (i != lineNum) ? true : false);        
     }
 
 
@@ -216,11 +209,6 @@ public class EffectSystem : SerializedMonoBehaviour {
         lineMask.SetActive(false);
         UnTillField();
     }
-
-    public void ResetSortingLayer() {
-        GameObject lineMask = PlayMangement.instance.lineMaskObject;
-    }
-
 
 
     private void EndTurnDisableTill(Enum event_type, Component Sender, object Param) {
