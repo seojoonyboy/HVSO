@@ -175,7 +175,7 @@ public class EffectSystem : SerializedMonoBehaviour {
         GameObject backGroundTill = PlayMangement.instance.backGroundTillObject;
         backGroundTill.SetActive(true);
         worldFade.transform.gameObject.SetActive(true);
-        worldFade.sortingOrder = 48;
+        worldFade.sortingOrder = 47;
         worldFade.color = new Color(0, 0, 0, 0.6f);
     }
 
@@ -188,9 +188,8 @@ public class EffectSystem : SerializedMonoBehaviour {
 
     public void UnTillField() {
         GameObject backGroundTill = PlayMangement.instance.backGroundTillObject;
-        backGroundTill.transform.Find("upkeep_mask").gameObject.SetActive(false);
         backGroundTill.SetActive(false);
-        worldFade.sortingOrder = 48;
+        worldFade.sortingOrder = 47;
         worldFade.color = new Color(0, 0, 0, 0.6f);
         worldFade.transform.gameObject.SetActive(false);
     }
@@ -205,11 +204,10 @@ public class EffectSystem : SerializedMonoBehaviour {
     }
 
     public void HighlightLine(int lineNum, bool skillActive = false) {
-        TilledField();
+        TilledField();        
         for (int i = 0; i< 5; i++) 
-            MaskingLine(i, (i == lineNum) ? true : false);
+            MaskingLine(i, (i != lineNum) ? true : false);
         
-        PlayMangement.instance.backGroundTillObject.transform.Find("upkeep_mask").gameObject.SetActive(skillActive);
     }
 
 

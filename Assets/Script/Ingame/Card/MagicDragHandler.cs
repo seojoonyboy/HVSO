@@ -268,11 +268,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
         SoundManager.Instance.PlayMagicSound(cardData.id);
         highlighted = false;
-        CardDropManager.Instance.HighLightMagicSlot(highlightedSlot, highlighted);
-
-        EffectSystem.Instance.HighlightLine(highlightedSlot.parent.GetSiblingIndex(),true);
-        
-
+        CardDropManager.Instance.HighLightMagicSlot(highlightedSlot, highlighted);       
         highlightedSlot = null;        
         skillHandler.RemoveTriggerEvent();
         ShowCardsHandler showCardsHandler = transform.root.GetComponentInChildren<ShowCardsHandler>();

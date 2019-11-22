@@ -123,7 +123,6 @@ namespace SkillModules {
                 PlayMangement.instance.OffBlockPanel();                
             }
             //유닛 소환이나 마법 카드 사용 했을 때
-            EffectSystem.Instance.HideMaskingLine();
             isDone = true;
             socketDone = true;
             if(!isPlayer) yield break;
