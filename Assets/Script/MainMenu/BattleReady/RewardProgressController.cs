@@ -8,9 +8,11 @@ using dataModules;
 using System.Linq;
 
 public class RewardProgressController : MonoBehaviour {
-    [SerializeField] GameObject 
-        prevProgressBar, //이전 진척도
-        currentProgressBar; //현재 진척도
+    [SerializeField]
+    GameObject
+        prevProgressBar,        //이전 진척도
+        currentProgressBar,     //현재 진척도
+        backgroundProgressBar;
     [SerializeField] HorizontalLayoutGroup layoutGroup;
     [SerializeField] LeagueData leagueData;
     ScrollRect scrollRect;
@@ -77,6 +79,9 @@ public class RewardProgressController : MonoBehaviour {
 
         RectTransform rect = progressBar.GetComponent<RectTransform>();
         rect.sizeDelta = new Vector2(startPosX + progressBarOffsetLeft, rect.rect.height);
+
+        RectTransform bgRect = backgroundProgressBar.GetComponent<RectTransform>();
+        bgRect.sizeDelta = new Vector2(scrollRect.content.sizeDelta.x - 130, bgRect.sizeDelta.y);
     }
 
     bool isProgressAscending = true;

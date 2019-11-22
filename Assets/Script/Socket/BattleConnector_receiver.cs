@@ -407,6 +407,8 @@ public partial class BattleConnector : MonoBehaviour {
         PlayMangement.instance.resultManager.SocketErrorUIOpen(true);
     }
 
+    public AccountManager.LeagueInfo leagueInfo;
+
     public void begin_end_game(object args, int? id) {
         Time.timeScale = 1f;
         if(ScenarioGameManagment.scenarioInstance == null) {
@@ -415,7 +417,7 @@ public partial class BattleConnector : MonoBehaviour {
         }
         JObject jobject = (JObject)args;
         result = JsonConvert.DeserializeObject<ResultFormat>(jobject.ToString());
-
+        leagueInfo = result.leagueInfo;
 
         if (reconnectModal != null) {
             Destroy(GetComponent<ReconnectController>());

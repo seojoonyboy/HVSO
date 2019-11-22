@@ -29,6 +29,8 @@ namespace SocketFormat {
     public class ResultFormat {
         public string result;
         public Reward reward;
+        public AccountManager.LeagueInfo leagueInfo;
+        public int pointUp;
     }
 
     public class Reward {
