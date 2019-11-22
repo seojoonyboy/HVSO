@@ -185,7 +185,8 @@ public class GameResultManager : MonoBehaviour {
         transform.Find("SecondWindow/Buttons/BattleReady").GetComponent<Button>().interactable = false;
 
         StartCoroutine(SetRewards());
-        if(PlayerPrefs.GetString("SelectedBattleType") == "league") {
+        var battleType = PlayerPrefs.GetString("SelectedBattleType");
+        if (battleType == "league" || battleType == "leagueTest") {
             StartCoroutine(SetLeagueData());
         }
         else {

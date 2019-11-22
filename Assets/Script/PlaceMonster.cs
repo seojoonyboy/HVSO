@@ -516,7 +516,7 @@ public class PlaceMonster : MonoBehaviour {
             //투석공격
             if (magicId == "ac10021") {
                 actionCall += Hit;
-                EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.TREBUCHET, transform.position, actionCall);
+                EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.TREBUCHET, transform.position, actionCall);                
                 actionCall -= actionCall;
             }
             //어둠의 가시
