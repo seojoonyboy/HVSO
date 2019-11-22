@@ -267,12 +267,17 @@ public class GameResultManager : MonoBehaviour {
 
             var expValue = playerMMR.Find("ExpSlider/ExpValue").GetComponent<TMPro.TextMeshProUGUI>();
 
-            float offset = 1f;
-            while (currentVal < leagueInfo.ratingPoint) {
-                currentVal += offset;
-                slider.fillAmount = currentVal / (float)sliderMaxVal;
-                expValue.text = currentVal + "/" + sliderMaxVal;
-                yield return new WaitForSeconds(0.01f);
+            if(scriptable_leagueData.prevMMR < leagueInfo.ratingPoint) {
+                float offset = 1f;
+                while (currentVal < leagueInfo.ratingPoint) {
+                    currentVal += offset;
+                    slider.fillAmount = currentVal / (float)sliderMaxVal;
+                    expValue.text = currentVal + "/" + sliderMaxVal;
+                    yield return new WaitForSeconds(0.01f);
+                }
+            }
+            else {
+                expValue.text = leagueInfo.ratingPoint + "/" + sliderMaxVal;
             }
 
             if (icons.ContainsKey(leagueInfo.rankDetail.minor)) {
