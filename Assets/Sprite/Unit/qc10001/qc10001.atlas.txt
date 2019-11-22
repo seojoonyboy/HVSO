@@ -1,0 +1,34 @@
+
+qc10001.png
+size: 512,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+body
+  rotate: false
+  xy: 2, 366
+  size: 271, 137
+  orig: 271, 137
+  offset: 0, 0
+  index: -1
+body1
+  rotate: false
+  xy: 2, 160
+  size: 185, 204
+  orig: 185, 204
+  offset: 0, 0
+  index: -1
+leg
+  rotate: false
+  xy: 2, 2
+  size: 159, 156
+  orig: 159, 156
+  offset: 0, 0
+  index: -1
+shadow
+  rotate: true
+  xy: 189, 97
+  size: 267, 82
+  orig: 267, 82
+  offset: 0, 0
+  index: -1
