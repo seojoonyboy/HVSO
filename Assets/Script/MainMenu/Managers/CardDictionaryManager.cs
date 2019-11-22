@@ -157,22 +157,31 @@ public class CardDictionaryManager : MonoBehaviour {
         int count = 0;
         for (int i = 0; i < AccountManager.Instance.allHeroes.Count; i++) {
             dataModules.HeroInventory heroData = AccountManager.Instance.allHeroes[i];
-            if (heroData.camp == "human") {
-                dataModules.HeroInventory myHeroData = AccountManager.Instance.myHeroInventories[heroData.id];
+            if (heroData.camp == "orc") {
                 Transform heroSlot = heroParent.GetChild(count);
-                heroSlot.gameObject.SetActive(true);
-                heroSlot.gameObject.name = heroData.id;
-                heroSlot.Find("HeroObject/HeroExp/HumanGauge").gameObject.SetActive(true);
-                heroSlot.Find("HeroObject/HeroExp/HumanGauge").GetComponent<Image>().fillAmount = (float)myHeroData.piece / myHeroData.next_level.piece;
-                heroSlot.Find("HeroObject/HeroExp/Value").GetComponent<TMPro.TextMeshProUGUI>().text = myHeroData.piece.ToString();
-                heroSlot.Find("HeroObject/HeroExp/MaxValue").GetComponent<TMPro.TextMeshProUGUI>().text = "/" + myHeroData.next_level.piece;
-                for (int j = 0; j < myHeroData.tier; j++)
-                    heroSlot.Find("HeroObject/HeroLevel").GetChild(j).gameObject.SetActive(true);
                 heroSlot.Find("HeroObject/HeroImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[heroData.id + "_dic"];
                 heroSlot.Find("HeroObject/CardNum/Value").GetComponent<TMPro.TextMeshProUGUI>().text =
-                    (classHumanCard[heroData.heroClasses[0]] + classHumanCard[heroData.heroClasses[1]]).ToString();
+                    (classOrcCard[heroData.heroClasses[0]] + classOrcCard[heroData.heroClasses[1]]).ToString();
                 heroSlot.Find("HeroObject/CardNum/AllCardNum").GetComponent<TMPro.TextMeshProUGUI>().text = "/" +
-                    (classHumanCard["all_" + heroData.heroClasses[0]] + classHumanCard["all_" + heroData.heroClasses[1]]).ToString();
+                    (classOrcCard["all_" + heroData.heroClasses[0]] + classOrcCard["all_" + heroData.heroClasses[1]]).ToString();
+
+                if (AccountManager.Instance.myHeroInventories.ContainsKey(heroData.id)) {
+                    dataModules.HeroInventory myHeroData = AccountManager.Instance.myHeroInventories[heroData.id];
+                    heroSlot.gameObject.SetActive(true);
+                    heroSlot.gameObject.name = heroData.id;
+                    heroSlot.Find("HeroObject/HeroExp/HumanGauge").gameObject.SetActive(true);
+                    heroSlot.Find("HeroObject/HeroExp/HumanGauge").GetComponent<Image>().fillAmount = (float)myHeroData.piece / myHeroData.next_level.piece;
+                    heroSlot.Find("HeroObject/HeroExp/Value").GetComponent<TMPro.TextMeshProUGUI>().text = myHeroData.piece.ToString();
+                    heroSlot.Find("HeroObject/HeroExp/MaxValue").GetComponent<TMPro.TextMeshProUGUI>().text = "/" + myHeroData.next_level.piece;
+                    for (int j = 0; j < myHeroData.tier; j++)
+                        heroSlot.Find("HeroObject/HeroLevel").GetChild(j).gameObject.SetActive(true);
+                }
+                else {
+                    heroSlot.Find("HeroObject/HeroExp/HumanGauge").gameObject.SetActive(true);
+                    heroSlot.Find("HeroObject/HeroExp/HumanGauge").GetComponent<Image>().fillAmount = 0;
+                    heroSlot.Find("HeroObject/HeroExp/Value").GetComponent<TMPro.TextMeshProUGUI>().text = 0.ToString();
+                    heroSlot.Find("HeroObject/HeroExp/MaxValue").GetComponent<TMPro.TextMeshProUGUI>().text = "/" + 30;
+                }
                 count++;
             }
         }
@@ -199,21 +208,31 @@ public class CardDictionaryManager : MonoBehaviour {
         for (int i = 0; i < AccountManager.Instance.allHeroes.Count; i++) {
             dataModules.HeroInventory heroData = AccountManager.Instance.allHeroes[i];
             if (heroData.camp == "orc") {
-                dataModules.HeroInventory myHeroData = AccountManager.Instance.myHeroInventories[heroData.id];
                 Transform heroSlot = heroParent.GetChild(count);
-                heroSlot.gameObject.SetActive(true);
-                heroSlot.gameObject.name = heroData.id;
-                heroSlot.Find("HeroObject/HeroExp/OrcGauge").gameObject.SetActive(true);
-                heroSlot.Find("HeroObject/HeroExp/OrcGauge").GetComponent<Image>().fillAmount = (float)myHeroData.piece / myHeroData.next_level.piece;
-                heroSlot.Find("HeroObject/HeroExp/Value").GetComponent<TMPro.TextMeshProUGUI>().text = myHeroData.piece.ToString();
-                heroSlot.Find("HeroObject/HeroExp/MaxValue").GetComponent<TMPro.TextMeshProUGUI>().text = "/" + myHeroData.next_level.piece;
-                for (int j = 0; j < myHeroData.tier; j++)
-                    heroSlot.Find("HeroObject/HeroLevel").GetChild(j).gameObject.SetActive(true);
+                
                 heroSlot.Find("HeroObject/HeroImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[heroData.id + "_dic"];
                 heroSlot.Find("HeroObject/CardNum/Value").GetComponent<TMPro.TextMeshProUGUI>().text =
                     (classOrcCard[heroData.heroClasses[0]] + classOrcCard[heroData.heroClasses[1]]).ToString();
                 heroSlot.Find("HeroObject/CardNum/AllCardNum").GetComponent<TMPro.TextMeshProUGUI>().text = "/" +
                     (classOrcCard["all_" + heroData.heroClasses[0]] + classOrcCard["all_" + heroData.heroClasses[1]]).ToString();
+
+                if (AccountManager.Instance.myHeroInventories.ContainsKey(heroData.id)) {
+                    dataModules.HeroInventory myHeroData = AccountManager.Instance.myHeroInventories[heroData.id];
+                    heroSlot.gameObject.SetActive(true);
+                    heroSlot.gameObject.name = heroData.id;
+                    heroSlot.Find("HeroObject/HeroExp/OrcGauge").gameObject.SetActive(true);
+                    heroSlot.Find("HeroObject/HeroExp/OrcGauge").GetComponent<Image>().fillAmount = (float)myHeroData.piece / myHeroData.next_level.piece;
+                    heroSlot.Find("HeroObject/HeroExp/Value").GetComponent<TMPro.TextMeshProUGUI>().text = myHeroData.piece.ToString();
+                    heroSlot.Find("HeroObject/HeroExp/MaxValue").GetComponent<TMPro.TextMeshProUGUI>().text = "/" + myHeroData.next_level.piece;
+                    for (int j = 0; j < myHeroData.tier; j++)
+                        heroSlot.Find("HeroObject/HeroLevel").GetChild(j).gameObject.SetActive(true);
+                }
+                else {
+                    heroSlot.Find("HeroObject/HeroExp/OrcGauge").gameObject.SetActive(true);
+                    heroSlot.Find("HeroObject/HeroExp/OrcGauge").GetComponent<Image>().fillAmount = 0;
+                    heroSlot.Find("HeroObject/HeroExp/Value").GetComponent<TMPro.TextMeshProUGUI>().text = 0.ToString();
+                    heroSlot.Find("HeroObject/HeroExp/MaxValue").GetComponent<TMPro.TextMeshProUGUI>().text = "/" + 30;
+                }
                 count++;
             }
         }
