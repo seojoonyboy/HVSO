@@ -38191,6 +38191,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1731395429}
   m_PrefabAsset: {fileID: 0}
+--- !u!212 &1731395432 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 1958465303, guid: 17309e135219a4448bd6fd4cbbcd1e04,
+    type: 3}
+  m_PrefabInstance: {fileID: 1731395429}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1732473287
 GameObject:
   m_ObjectHideFlags: 0
@@ -58329,7 +58335,7 @@ MonoBehaviour:
     type: 3}
   cutSceneCanvas: {fileID: 248859740}
   fadeCanvas: {fileID: 232093067}
-  worldFade: {fileID: 0}
+  worldFade: {fileID: 1731395432}
   cardDragEffect: {fileID: 1469462950999664385, guid: 50385eb85abc5554dbd95126bf6db06c,
     type: 3}
 --- !u!224 &9042207024972009527

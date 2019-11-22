@@ -34,7 +34,7 @@ public class ChallengerHandler : SerializedMonoBehaviour {
         textShadowGlowAdd = challengeUI.transform.Find("ShadowGlow").GetComponentInChildren<Image>();
 
         this.textShadowImages = (Sprite[])textShadowImages.Clone();
-        this.shieldTargetLine = shieldTargetLine;
+        //this.shieldTargetLine = shieldTargetLine;
 
         eventHandler = PlayMangement.instance.EventHandler;
     }
@@ -91,7 +91,7 @@ public class ChallengerHandler : SerializedMonoBehaviour {
         Challenge challenge = challenges[0];
         if (check.activeSelf) check.SetActive(false);
         textShadowGlowAdd.sprite = textShadowGlow.sprite = textShadow.sprite = textShadowImages[0];
-        if (challenges.Count == 1) shieldTargetLine.SetActive(true);
+        //if (challenges.Count == 1) shieldTargetLine.SetActive(true);
         Invoke("CloseGlowEffect", 1.5f);
         text.text = challenge.content + "(" + challenge.currentNum + "/" + challenge.targetNum + ")";
     }
@@ -127,7 +127,7 @@ public class ChallengerHandler : SerializedMonoBehaviour {
         check.SetActive(true);
         textShadowGlowAdd.sprite = textShadowGlow.sprite = textShadow.sprite = textShadowImages[1];
         textShadowGlow.gameObject.SetActive(true);
-        if(challenges.Count == 1) shieldTargetLine.SetActive(false);
+        //if(challenges.Count == 1) shieldTargetLine.SetActive(false);
         yield return new WaitForSeconds(2.0f);
         if (challenges.Count != 0) {
             challenges.Remove(challenges[0]);
