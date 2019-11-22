@@ -41,7 +41,6 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
             }
 
             object[] parms1 = new object[] { true, gameObject };
-            EffectSystem.Instance.TilledField();
             PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.BEGIN_CARD_PLAY, this, parms1);
             return;
         }

@@ -219,7 +219,7 @@ namespace SkillModules {
         public async void InvokeAttack(GameObject target, string cardID = "") {
             await Task.Delay(800);
             target.GetComponent<PlaceMonster>().InstanceAttack(cardID);
-            EffectSystem.Instance.HighlightLine(target.GetComponent<PlaceMonster>().x);
+            EffectSystem.Instance.ShowLineMask(target.GetComponent<PlaceMonster>().x);
         }
         
 
@@ -364,7 +364,7 @@ namespace SkillModules {
                 string skillId = skillHandler.myObject.GetComponent<MagicDragHandler>().cardData.id;                
                 if (unit != null) {
                     unit.RequestChangeStat(0, -amount, skillId);
-                    EffectSystem.Instance.HighlightLine(unit.x);
+                    EffectSystem.Instance.ShowLineMask(unit.x);
                     WaitEffect(target, amount);
                 } else {
                     target.GetComponent<PlayerController>().TakeIgnoreShieldDamage(amount, true, skillId);
