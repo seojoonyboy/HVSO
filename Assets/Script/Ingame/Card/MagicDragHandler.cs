@@ -110,8 +110,9 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
             cardUsed = false;
             transform.localScale = new Vector3(1, 1, 1);
             transform.localPosition = new Vector3(0, 0, 0);
-            transform.Find("CardInfoWindow").gameObject.SetActive(false);
             transform.parent.parent.Find("HeroCardGuide").gameObject.SetActive(true);
+
+            transform.Find("CardInfoWindow").gameObject.SetActive(false);
             showCardsHandler.CancelSelecting();
         }
         else {
@@ -136,6 +137,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
                     //if (heroCardActivate) {
                     //    transform.parent.parent.Find("HeroCardGuide").gameObject.SetActive(true);
                     //}
+                    transform.Find("CardInfoWindow").gameObject.SetActive(false);
                     showCardsHandler.CancelSelecting();
                     //gameObject.transform.Find("drag").gameObject.SetActive(true);
                     SendEvent();
@@ -187,6 +189,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
 
 
                     Invoke("SendEvent", 0.3f);
+                    transform.Find("CardInfoWindow").gameObject.SetActive(false);
                     showCardsHandler.CancelSelecting();
                     if(ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.isTutorial == true) { 
                         if(gameObject.transform.Find("drag") != null) 
