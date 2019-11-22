@@ -563,7 +563,8 @@ public class Wait_drop : ScenarioExecute {
         if (args.Count > 1) {
             Vector3 pos = PlayMangement.instance.backGround.transform.GetChild(dropZone).position;
             scenarioMask.InfoTouchON(pos);
-            pos.x += 5f;
+            pos.x += 4f;
+            pos.y -= 1f;
             scenarioMask.SetPosText(pos);
             scenarioMask.ShowText("이곳으로 드레그 하세요.");
         }
