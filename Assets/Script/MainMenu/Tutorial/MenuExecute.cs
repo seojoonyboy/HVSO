@@ -462,6 +462,7 @@ namespace MenuTutorialModules {
 
             AccountManager.Instance.RequestUserInfo();
             AccountManager.Instance.RequestMyDecks();
+            AccountManager.Instance.RequestInventories();
         }
 
         private void CheckClick(GameObject target) {
