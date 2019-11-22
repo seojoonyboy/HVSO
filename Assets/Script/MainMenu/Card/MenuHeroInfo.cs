@@ -74,10 +74,6 @@ public class MenuHeroInfo : MonoBehaviour
         OpenClassWindow();
     }
 
-    public void SetManaCurve() {
-
-    }
-
     public void OpenClassWindow() {
         SoundManager.Instance.PlaySound(UISfxSound.BUTTON1);
         transform.Find("Buttons/ClassBtn/UnSelected").gameObject.SetActive(false);
