@@ -171,11 +171,11 @@ public class EffectSystem : SerializedMonoBehaviour {
         cutsceneObject.SetActive(false);
     }
     
-    public void TilledField() {
+    public void TilledField(bool maskField = false) {
         GameObject backGroundTill = PlayMangement.instance.backGroundTillObject;
         backGroundTill.SetActive(true);        
         worldFade.transform.gameObject.SetActive(true);
-        worldFade.sortingOrder = 47;
+        worldFade.sortingOrder = (maskField == true) ? 48 : 46;
         worldFade.color = new Color(0, 0, 0, 0.6f);
     }
 
@@ -183,7 +183,7 @@ public class EffectSystem : SerializedMonoBehaviour {
         GameObject backGroundTill = PlayMangement.instance.backGroundTillObject;
         backGroundTill.transform.Find("upkeep_mask").gameObject.SetActive(false);
         backGroundTill.SetActive(false);
-        worldFade.sortingOrder = 47;
+        worldFade.sortingOrder = 46;
         worldFade.color = new Color(0, 0, 0, 0.6f);
         worldFade.transform.gameObject.SetActive(false);
     }

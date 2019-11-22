@@ -693,13 +693,14 @@ public class ScenarioMask : SerializedMonoBehaviour
     }
 
 
-    public void SetPosText(string args = "") {
-        if(args == "bottom") {
-            outText.transform.position = textDown.transform.position;          
-        }
-        else {
-            outText.transform.position = textUP.transform.position;
-        }
+    public void SetPosText(Vector3 pos) {
+        //if(args == "bottom") {
+        //    outText.transform.position = textDown.transform.position;          
+        //}
+        //else {
+        //    outText.transform.position = textUP.transform.position;
+        //}
+        outText.transform.position = pos;
     }
 
 
