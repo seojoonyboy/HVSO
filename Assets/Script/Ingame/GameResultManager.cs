@@ -28,6 +28,7 @@ public class GameResultManager : MonoBehaviour {
     private string result;
 
     public UnityEvent EndRewardLoad = new UnityEvent();
+    public LeagueData scriptable_leagueData;
 
     private void Awake() {
         lv = AccountManager.Instance.userResource.lv;
@@ -54,6 +55,21 @@ public class GameResultManager : MonoBehaviour {
     void OnDestroy() {
         if (observer_1 != null) observer_1.Dispose();
         if (observer_2 != null) observer_2.Dispose();
+
+        scriptable_leagueData.prevRank = PlayMangement
+            .instance
+            .SocketHandler
+            .result
+            .leagueInfo
+            .rankDetail
+            .minor;
+
+        scriptable_leagueData.prevMMR = PlayMangement
+            .instance
+            .SocketHandler
+            .result
+            .leagueInfo
+            .ratingPoint;
     }
 
     public void ExtraRewardReceived(JObject data) {
@@ -232,10 +248,9 @@ public class GameResultManager : MonoBehaviour {
             Transform secondWindow = transform.Find("SecondWindow");
             Transform playerMMR = secondWindow.Find("PlayerMmr");
             Image rankIcon = playerMMR.Find("RankIcon").GetComponent<Image>();
-
             var icons = AccountManager.Instance.resource.rankIcons;
-            if (icons.ContainsKey(leagueInfo.rankDetail.minor)) {
-                rankIcon.sprite = icons[leagueInfo.rankDetail.minor];
+            if (icons.ContainsKey(scriptable_leagueData.prevRank)) {
+                rankIcon.sprite = icons[scriptable_leagueData.prevRank];
             }
             else {
                 rankIcon.sprite = icons["default"];
@@ -272,6 +287,23 @@ public class GameResultManager : MonoBehaviour {
                 expValue.text = currentVal + "/" + sliderMaxVal;
                 yield return new WaitForSeconds(0.01f);
             }
+
+            if (icons.ContainsKey(leagueInfo.rankDetail.minor)) {
+                if(scriptable_leagueData.prevRank != null && scriptable_leagueData.prevRank != leagueInfo.rankDetail.minor) {
+                    //TODO : 승급인지 강등인지 구분 필요
+                    if(pointUp > 0) {
+                        Logger.Log("승급!");
+                    }
+                    else {
+                        Logger.Log("강등!");
+                    }
+                }
+
+                rankIcon.sprite = icons[leagueInfo.rankDetail.minor];
+            }
+            else {
+                rankIcon.sprite = icons["default"];
+            }
         }
         yield return 0;
 
@@ -295,8 +327,8 @@ public class GameResultManager : MonoBehaviour {
             Image rankIcon = playerMMR.Find("RankIcon").GetComponent<Image>();
 
             var icons = AccountManager.Instance.resource.rankIcons;
-            if (icons.ContainsKey(leagueInfo.rankDetail.minor)) {
-                rankIcon.sprite = icons[leagueInfo.rankDetail.minor];
+            if (icons.ContainsKey(scriptable_leagueData.prevRank)) {
+                rankIcon.sprite = icons[scriptable_leagueData.prevRank];
             }
             else {
                 rankIcon.sprite = icons["default"];
@@ -330,6 +362,23 @@ public class GameResultManager : MonoBehaviour {
                 slider.fillAmount = currentVal / (float)sliderMaxVal;
                 expValue.text = currentVal + "/" + sliderMaxVal;
                 yield return new WaitForSeconds(0.01f);
+            }
+
+            if (icons.ContainsKey(leagueInfo.rankDetail.minor)) {
+                if (scriptable_leagueData.prevRank != null && scriptable_leagueData.prevRank != leagueInfo.rankDetail.minor) {
+                    //TODO : 승급인지 강등인지 구분 필요
+                    if (pointUp > 0) {
+                        Logger.Log("승급!");
+                    }
+                    else {
+                        Logger.Log("강등!");
+                    }
+                }
+
+                rankIcon.sprite = icons[leagueInfo.rankDetail.minor];
+            }
+            else {
+                rankIcon.sprite = icons["default"];
             }
         }
         yield return 0;
