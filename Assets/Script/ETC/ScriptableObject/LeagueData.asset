@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b39d56393fc81a746a31e9ef0e7c0dc8, type: 3}
   m_Name: LeagueData
   m_EditorClassIdentifier: 
-  prevRank: 
+  prevRank: "\uBB34\uBA85 \uBCD1\uC0AC"
   newRank: 
-  prevMMR: 0
-  newMMR: 0
+  prevMMR: 280
+  newMMR: 310

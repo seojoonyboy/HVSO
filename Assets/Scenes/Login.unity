@@ -2831,6 +2831,8 @@ MonoBehaviour:
   OnCardLoadFinished:
     m_PersistentCalls:
       m_Calls: []
+  scriptable_leagueData: {fileID: 11400000, guid: 376e6853eb3fc2246b5da4276f95bef7,
+    type: 2}
   needChangeNickName: 0
 --- !u!4 &1870949075
 Transform:

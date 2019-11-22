@@ -249,12 +249,13 @@ public class GameResultManager : MonoBehaviour {
             Transform playerMMR = secondWindow.Find("PlayerMmr");
             Image rankIcon = playerMMR.Find("RankIcon").GetComponent<Image>();
             var icons = AccountManager.Instance.resource.rankIcons;
-            if (icons.ContainsKey(scriptable_leagueData.prevRank)) {
+            if (!string.IsNullOrEmpty(scriptable_leagueData.prevRank) && icons.ContainsKey(scriptable_leagueData.prevRank)) {
                 rankIcon.sprite = icons[scriptable_leagueData.prevRank];
             }
             else {
                 rankIcon.sprite = icons["default"];
             }
+            rankIcon.transform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = scriptable_leagueData.prevRank;
 
             var description = playerMMR.Find("VictoryInfo").GetComponent<TMPro.TextMeshProUGUI>();
             StringBuilder sb = new StringBuilder();
@@ -281,7 +282,7 @@ public class GameResultManager : MonoBehaviour {
             var expValue = playerMMR.Find("ExpSlider/ExpValue").GetComponent<TMPro.TextMeshProUGUI>();
 
             float offset = 1f;
-            while (currentVal <= leagueInfo.ratingPoint) {
+            while (currentVal < leagueInfo.ratingPoint) {
                 currentVal += offset;
                 slider.fillAmount = currentVal / (float)sliderMaxVal;
                 expValue.text = currentVal + "/" + sliderMaxVal;
@@ -300,6 +301,7 @@ public class GameResultManager : MonoBehaviour {
                 }
 
                 rankIcon.sprite = icons[leagueInfo.rankDetail.minor];
+                rankIcon.transform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = leagueInfo.rankDetail.minor;
             }
             else {
                 rankIcon.sprite = icons["default"];
@@ -315,10 +317,15 @@ public class GameResultManager : MonoBehaviour {
         leagueInfo.winningStreak = 1;
         leagueInfo.losingStreak = 0;
         leagueInfo.rankDetail = new AccountManager.RankDetail();
-        leagueInfo.rankDetail.minor = "무명 병사";
-        leagueInfo.rankDetail.major = "무명 병사";
-        leagueInfo.ratingPoint = 80;
-        leagueInfo.rankDetail.next = 150;
+        leagueInfo.rankDetail.minor = "오합지졸 우두머리";
+        leagueInfo.rankDetail.major = "지도자";
+        leagueInfo.ratingPoint = 40;
+        leagueInfo.rankDetail.next = 300;
+
+        scriptable_leagueData.prevMMR = 280;
+        scriptable_leagueData.newMMR = 320;
+        scriptable_leagueData.prevRank = "무명 병사";
+
         int pointUp = 70;
 
         if (leagueInfo != null) {
@@ -333,6 +340,7 @@ public class GameResultManager : MonoBehaviour {
             else {
                 rankIcon.sprite = icons["default"];
             }
+            rankIcon.transform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = scriptable_leagueData.prevRank;
 
             var description = playerMMR.Find("VictoryInfo").GetComponent<TMPro.TextMeshProUGUI>();
             StringBuilder sb = new StringBuilder();
@@ -357,7 +365,7 @@ public class GameResultManager : MonoBehaviour {
             var expValue = playerMMR.Find("ExpSlider/ExpValue").GetComponent<TMPro.TextMeshProUGUI>();
 
             float offset = 1f;
-            while (currentVal <= leagueInfo.ratingPoint) {
+            while (currentVal < leagueInfo.ratingPoint) {
                 currentVal += offset;
                 slider.fillAmount = currentVal / (float)sliderMaxVal;
                 expValue.text = currentVal + "/" + sliderMaxVal;
@@ -376,6 +384,7 @@ public class GameResultManager : MonoBehaviour {
                 }
 
                 rankIcon.sprite = icons[leagueInfo.rankDetail.minor];
+                rankIcon.transform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = leagueInfo.rankDetail.minor;
             }
             else {
                 rankIcon.sprite = icons["default"];
