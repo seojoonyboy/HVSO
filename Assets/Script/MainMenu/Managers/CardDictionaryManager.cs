@@ -168,7 +168,6 @@ public class CardDictionaryManager : MonoBehaviour {
                 heroSlot.gameObject.name = heroData.id;
                 if (AccountManager.Instance.myHeroInventories.ContainsKey(heroData.id)) {
                     dataModules.HeroInventory myHeroData = AccountManager.Instance.myHeroInventories[heroData.id];
-                    
                     heroSlot.Find("HeroObject/HeroExp/HumanGauge").gameObject.SetActive(true);
                     heroSlot.Find("HeroObject/HeroExp/HumanGauge").GetComponent<Image>().fillAmount = (float)myHeroData.piece / myHeroData.next_level.piece;
                     heroSlot.Find("HeroObject/HeroExp/Value").GetComponent<TMPro.TextMeshProUGUI>().text = myHeroData.piece.ToString();

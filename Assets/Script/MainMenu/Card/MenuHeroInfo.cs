@@ -51,6 +51,10 @@ public class MenuHeroInfo : MonoBehaviour
         if (!accountManager.myHeroInventories.ContainsKey(heroId)) {
             transform.Find("HeroSpines/lock").gameObject.SetActive(true);
             heroSpine.GetComponent<SkeletonGraphic>().color = new Color(0.35f, 0.35f, 0.35f);
+            transform.Find("HeroLevel/Exp").gameObject.SetActive(true);
+            transform.Find("HeroLevel/TierUpBtn").gameObject.SetActive(false);
+            transform.Find("HeroLevel/Exp/Value").GetComponent<Image>().fillAmount = 0;
+            transform.Find("HeroLevel/Exp/ValueText").GetComponent<TMPro.TextMeshProUGUI>().text ="0/30";
         }
         else {
             dataModules.HeroInventory heroData = accountManager.myHeroInventories[heroId];
@@ -59,9 +63,6 @@ public class MenuHeroInfo : MonoBehaviour
             if(heroData.tier == 0) {
                 transform.Find("HeroSpines/lock").gameObject.SetActive(true);
                 heroSpine.GetComponent<SkeletonGraphic>().color = new Color(0.35f, 0.35f, 0.35f);
-                
-                transform.Find("HeroLevel/Exp/Value").GetComponent<Image>().fillAmount = 0;
-                transform.Find("HeroLevel/Exp/ValueText").GetComponent<TMPro.TextMeshProUGUI>().text = "0/30";
             }
             else {
                 for (int i = 0; i < heroData.tier; i++)
