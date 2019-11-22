@@ -21,6 +21,8 @@ public class RewardProgressController : MonoBehaviour {
     int maxMMR = 0;
     RewardsProvider rewardsProvider;
 
+    public bool isMoving = false;
+
     void Awake() {
         scrollRect = GetComponent<ScrollRect>();
     }
@@ -81,7 +83,7 @@ public class RewardProgressController : MonoBehaviour {
         rect.sizeDelta = new Vector2(startPosX + progressBarOffsetLeft, rect.rect.height);
 
         RectTransform bgRect = backgroundProgressBar.GetComponent<RectTransform>();
-        bgRect.sizeDelta = new Vector2(scrollRect.content.sizeDelta.x - 130, bgRect.sizeDelta.y);
+        bgRect.sizeDelta = new Vector2(scrollRect.content.sizeDelta.x - 10, bgRect.sizeDelta.y);
     }
 
     bool isProgressAscending = true;
@@ -95,16 +97,18 @@ public class RewardProgressController : MonoBehaviour {
         if (leagueData.newMMR > leagueData.prevMMR) isProgressAscending = true;
         else isProgressAscending = false;
 
+        isMoving = true;
+
         if (isProgressAscending) {
-            StartCoroutine(
-                ProgressAscending()
-            );
+            yield return StartCoroutine(ProgressAscending());
         }
         else {
-            StartCoroutine(
-                ProgressDescending()
-            );
+            yield return StartCoroutine(ProgressDescending());
         }
+
+        isMoving = false;
+        leagueData.prevMMR = AccountManager.Instance.leagueInfo.ratingPoint;
+        leagueData.prevRank = AccountManager.Instance.leagueInfo.rankDetail.minor;
     }
 
     IEnumerator ProgressAscending() {
@@ -113,25 +117,27 @@ public class RewardProgressController : MonoBehaviour {
         var closestBtnPosX = closestBtnRect.localPosition.x;
         int btnMMR = GetButtonStandard(closestBtnIndex);
 
-        RectTransform rect = currentProgressBar.GetComponent<RectTransform>();
-        var progressPosX = currentProgressBar.GetComponent<RectTransform>().localPosition.x;
+        if(btnMMR != 0) {
+            RectTransform rect = currentProgressBar.GetComponent<RectTransform>();
+            var progressPosX = currentProgressBar.GetComponent<RectTransform>().localPosition.x;
 
-        float targetPosX = closestBtnPosX * leagueData.newMMR / btnMMR;
-        float offset = targetPosX - progressPosX;
-        float interval = 0;
+            float targetPosX = closestBtnPosX * leagueData.newMMR / btnMMR;
+            float offset = targetPosX - progressPosX;
+            float interval = 0;
 
-        int val = 0;
-        while (progressPosX + val < offset) {
-            rect.sizeDelta = new Vector2(progressPosX + val, rect.rect.height);
-            if (interval > 0 && interval % 40 == 0) {
-                var totalWidth = scrollRect.content.sizeDelta.x;
-                var tmp = rect.sizeDelta / totalWidth;
-                //Logger.Log("rect.sizeDelta + val / totalWidth : " + tmp);
-                scrollRect.horizontalNormalizedPosition = tmp.x;
+            int val = 0;
+            while (progressPosX + val < offset) {
+                rect.sizeDelta = new Vector2(progressPosX + val - 50, rect.rect.height);
+                if (interval > 0 && interval % 40 == 0) {
+                    var totalWidth = scrollRect.content.sizeDelta.x;
+                    var tmp = rect.sizeDelta / totalWidth;
+                    //Logger.Log("rect.sizeDelta + val / totalWidth : " + tmp);
+                    scrollRect.horizontalNormalizedPosition = tmp.x;
+                }
+                yield return new WaitForEndOfFrame();
+                val += 10;
+                interval++;
             }
-            yield return new WaitForEndOfFrame();
-            val += 10;
-            interval++;
         }
 
         SnapTo(closestBtnIndex);
@@ -143,26 +149,30 @@ public class RewardProgressController : MonoBehaviour {
         var closestBtnPosX = closestBtnRect.localPosition.x;
         int btnMMR = GetButtonStandard(closestBtnIndex);
 
-        RectTransform rect = currentProgressBar.GetComponent<RectTransform>();
-        var progressPosX = currentProgressBar.GetComponent<RectTransform>().rect.width;
+        if(btnMMR != 0) {
+            RectTransform rect = currentProgressBar.GetComponent<RectTransform>();
+            var progressPosX = currentProgressBar.GetComponent<RectTransform>().rect.width;
 
-        float targetPosX = closestBtnPosX * leagueData.newMMR / btnMMR;
-        float interval = 0;
+            float targetPosX = closestBtnPosX * leagueData.newMMR / btnMMR;
+            float interval = 0;
 
-        float val = 0;
-        while (progressPosX - 50 >= targetPosX) {
-            rect.sizeDelta = new Vector2(progressPosX + val, rect.rect.height);
-            if (interval > 0 && interval % 40 == 0) {
-                var totalWidth = scrollRect.content.sizeDelta.x;
-                var tmp = rect.sizeDelta / totalWidth;
-                //Logger.Log("rect.sizeDelta + val / totalWidth : " + tmp);
-                scrollRect.horizontalNormalizedPosition = tmp.x;
+            float val = 0;
+            while (progressPosX - 50 >= targetPosX) {
+                rect.sizeDelta = new Vector2(progressPosX + val - 50, rect.rect.height);
+                if (interval > 0 && interval % 40 == 0) {
+                    var totalWidth = scrollRect.content.sizeDelta.x;
+                    var tmp = rect.sizeDelta / totalWidth;
+                    //Logger.Log("rect.sizeDelta + val / totalWidth : " + tmp);
+                    scrollRect.horizontalNormalizedPosition = tmp.x;
+                }
+                progressPosX = rect.rect.width;
+                yield return new WaitForSeconds(0.01f);
+                val -= 0.1f;
+                interval++;
             }
-            progressPosX = rect.rect.width;
-            yield return new WaitForSeconds(0.01f);
-            val -= 0.1f;
-            interval++;
         }
+
+        SnapTo(closestBtnIndex);
     }
 
     /// <summary>

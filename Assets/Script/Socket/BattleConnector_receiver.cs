@@ -109,10 +109,6 @@ public partial class BattleConnector : MonoBehaviour {
         Text playerNickNameTxt = machine.transform.Find("PlayerName/NickName").GetComponent<Text>();
         Text playerHeroNameTxt = machine.transform.Find("PlayerName/HeroName").GetComponent<Text>();
 
-
-        
-
-
         Logger.Log(race);
 
         if (race == "human") {
