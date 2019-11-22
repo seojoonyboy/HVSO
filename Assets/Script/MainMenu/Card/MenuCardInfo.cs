@@ -187,6 +187,7 @@ public partial class MenuCardInfo : MonoBehaviour {
 
         if (data.isHeroCard) {
             info.Find("CreateCard").gameObject.SetActive(false);
+            info.Find("CreateSpine").gameObject.SetActive(false);
             transform.Find("Indestructible").gameObject.SetActive(false);
         }
         else {
