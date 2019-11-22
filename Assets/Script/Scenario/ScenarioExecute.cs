@@ -28,11 +28,11 @@ public class Print_message : ScenarioExecute {
 
     public override void Execute() {
         scenarioMask.ShowText(args[0]);
-        if (args.Count > 1) {
-            scenarioMask.SetPosText(args[1]);
-        }
-        else
-            scenarioMask.SetPosText();
+        //if (args.Count > 1) {
+        //    scenarioMask.SetPosText(args[1]);
+        //}
+        //else
+        //    scenarioMask.SetPosText();
         handler.isDone = true;
     }
 }
@@ -554,13 +554,20 @@ public class Wait_drop : ScenarioExecute {
             PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.UNIT_DROP_FAIL, GlowTrigger);
             PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.BEGIN_CARD_PLAY, CheckDrag);
             scenarioMask.InfoTouchOFF();
+            scenarioMask.HideText();
             handler.isDone = true;
         }      
     }
 
     private void CheckDrag(Enum event_type, Component Sender, object Param) {
-        if (args.Count > 1)
-            scenarioMask.InfoTouchON(PlayMangement.instance.backGround.transform.GetChild(dropZone).position);
+        if (args.Count > 1) {
+            Vector3 pos = PlayMangement.instance.backGround.transform.GetChild(dropZone).position;
+            scenarioMask.InfoTouchON(pos);
+            pos.x += 4f;
+            pos.y -= 1f;
+            scenarioMask.SetPosText(pos);
+            scenarioMask.ShowText("이곳으로 드레그 하세요.");
+        }
     }
 
 
@@ -570,7 +577,11 @@ public class Wait_drop : ScenarioExecute {
 
     private void GlowTrigger(Enum event_type, Component Sender, object Param) {
         scenarioMask.CardDeckGlow(args[0]);
-        scenarioMask.InfoTouchOFF();
+
+        if (args.Count > 1) {
+            scenarioMask.HideText();
+            scenarioMask.InfoTouchOFF();
+        }
     }
 }
 
