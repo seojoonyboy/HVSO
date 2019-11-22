@@ -29,7 +29,7 @@ public partial class BattleConnector : MonoBehaviour {
     [SerializeField] Text message;
     [SerializeField] Text timer;
     [SerializeField] GameObject machine;
-    [SerializeField] Button returnButton;
+    [SerializeField] Button returnButton, aiBattleButton;
 
     public UnityAction<string, int, bool> HandchangeCallback;
     private Coroutine timeCheck;
@@ -70,6 +70,16 @@ public partial class BattleConnector : MonoBehaviour {
         timeCheck = StartCoroutine(TimerOn());
         returnButton.onClick.AddListener(BattleCancel);
         returnButton.gameObject.SetActive(true);
+
+        aiBattleButton.gameObject.SetActive(true);
+    }
+
+    public void OnAiBattleButtonClicked() {
+        if(webSocket != null) webSocket.Close();
+        PlayerPrefs.SetString("SelectedBattleType", "leagueTest");
+        aiBattleButton.gameObject.SetActive(false);
+
+        OpenSocket();
     }
 
     /// <summary>
