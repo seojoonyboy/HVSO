@@ -175,7 +175,7 @@ public class EffectSystem : SerializedMonoBehaviour {
         GameObject backGroundTill = PlayMangement.instance.backGroundTillObject;
         backGroundTill.SetActive(true);
         worldFade.transform.gameObject.SetActive(true);
-        worldFade.sortingOrder = 48;
+        worldFade.sortingOrder = 47;
         worldFade.color = new Color(0, 0, 0, 0.6f);
     }
 
@@ -189,7 +189,7 @@ public class EffectSystem : SerializedMonoBehaviour {
     public void UnTillField() {
         GameObject backGroundTill = PlayMangement.instance.backGroundTillObject;
         backGroundTill.SetActive(false);
-        worldFade.sortingOrder = 48;
+        worldFade.sortingOrder = 47;
         worldFade.color = new Color(0, 0, 0, 0.6f);
         worldFade.transform.gameObject.SetActive(false);
     }
@@ -199,9 +199,17 @@ public class EffectSystem : SerializedMonoBehaviour {
         lineMask.SetActive(true);
         GameObject line = lineMask.transform.GetChild(lineNum).gameObject;
         line.SetActive(active);
-        line.GetComponent<SpriteRenderer>().color = new Color(0.48f, 0.48f, 0.48f, 0.6f);
+        line.GetComponent<SpriteRenderer>().color = new Color(0.28f, 0.28f, 0.28f, 0.6f);
         line.GetComponent<SpriteRenderer>().sortingOrder = (active == true) ? 53 : 11;
     }
+
+    public void HighlightLine(int lineNum, bool skillActive = false) {
+        TilledField();        
+        for (int i = 0; i< 5; i++) 
+            MaskingLine(i, (i != lineNum) ? true : false);
+        
+    }
+
 
     public void HideMaskingLine() {
         GameObject lineMask = PlayMangement.instance.lineMaskObject;

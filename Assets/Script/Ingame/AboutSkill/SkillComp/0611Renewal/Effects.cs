@@ -219,11 +219,13 @@ namespace SkillModules {
         public async void InvokeAttack(GameObject target, string cardID = "") {
             await Task.Delay(800);
             target.GetComponent<PlaceMonster>().InstanceAttack(cardID);
+            EffectSystem.Instance.HighlightLine(target.GetComponent<PlaceMonster>().x, true);
         }
         
 
         private async void waitDone() {
             await Task.Delay(2500);
+            EffectSystem.Instance.HideMaskingLine();
             skillHandler.finallyDone = true;
         }
     }
@@ -358,9 +360,10 @@ namespace SkillModules {
         private void BlastEnemy(bool isPlayer, List<GameObject> targets, int amount) {
             foreach(GameObject target in targets) {
                 PlaceMonster unit = target.GetComponent<PlaceMonster>();
-                string skillId = skillHandler.myObject.GetComponent<MagicDragHandler>().cardData.id;
-                if(unit != null) {
+                string skillId = skillHandler.myObject.GetComponent<MagicDragHandler>().cardData.id;                
+                if (unit != null) {
                     unit.RequestChangeStat(0, -amount, skillId);
+                    EffectSystem.Instance.HighlightLine(unit.x, true);
                     WaitEffect(target, amount);
                 } else {
                     target.GetComponent<PlayerController>().TakeIgnoreShieldDamage(amount, true, skillId);
@@ -373,6 +376,8 @@ namespace SkillModules {
             await System.Threading.Tasks.Task.Delay(1500);
             if (target != null)
                 target.GetComponent<PlaceMonster>().CheckHP();
+
+            EffectSystem.Instance.HideMaskingLine();
             skillHandler.finallyDone = true;
         }
     }
