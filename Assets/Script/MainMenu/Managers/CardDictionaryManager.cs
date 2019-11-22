@@ -183,7 +183,7 @@ public class CardDictionaryManager : MonoBehaviour {
                 else {
                     heroSlot.Find("HeroObject/HeroExp/HumanGauge").gameObject.SetActive(true);
                     heroSlot.Find("HeroObject/HeroExp/HumanGauge").GetComponent<Image>().fillAmount = 0;
-                    heroSlot.Find("HeroObject/HeroExp/Value").GetComponent<TMPro.TextMeshProUGUI>().text = "0/30";
+                    heroSlot.Find("HeroObject/HeroExp/Value").GetComponent<TMPro.TextMeshProUGUI>().text = "0/10";
                 }
                 count++;
             }
@@ -237,7 +237,7 @@ public class CardDictionaryManager : MonoBehaviour {
                 else {
                     heroSlot.Find("HeroObject/HeroExp/OrcGauge").gameObject.SetActive(true);
                     heroSlot.Find("HeroObject/HeroExp/OrcGauge").GetComponent<Image>().fillAmount = 0;
-                    heroSlot.Find("HeroObject/HeroExp/Value").GetComponent<TMPro.TextMeshProUGUI>().text = "0/30";
+                    heroSlot.Find("HeroObject/HeroExp/Value").GetComponent<TMPro.TextMeshProUGUI>().text = "0/10";
                 }
                 count++;
             }
