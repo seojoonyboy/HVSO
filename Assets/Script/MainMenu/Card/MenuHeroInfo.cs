@@ -54,7 +54,7 @@ public class MenuHeroInfo : MonoBehaviour
             transform.Find("HeroLevel/Exp").gameObject.SetActive(true);
             transform.Find("HeroLevel/TierUpBtn").gameObject.SetActive(false);
             transform.Find("HeroLevel/Exp/Value").GetComponent<Image>().fillAmount = 0;
-            transform.Find("HeroLevel/Exp/ValueText").GetComponent<TMPro.TextMeshProUGUI>().text ="0/30";
+            transform.Find("HeroLevel/Exp/ValueText").GetComponent<TMPro.TextMeshProUGUI>().text ="0/10";
         }
         else {
             dataModules.HeroInventory heroData = accountManager.myHeroInventories[heroId];
