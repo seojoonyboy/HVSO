@@ -128,7 +128,7 @@ public class BoxRewardManager : MonoBehaviour {
                 skipBtn.SetActive(false);
                 return;
             case 5:
-                CloseBoxOpen();
+                //CloseBoxOpen();
                 return;
         }
 
@@ -345,6 +345,7 @@ public class BoxRewardManager : MonoBehaviour {
             iTween.ScaleTo(reward.gameObject, iTween.Hash("x", 0.9f, "y", 0.9f, "islocal", true, "time", 0.4f));
         }
         yield return new WaitForSeconds(0.5f);
+        transform.Find("ExitButton").gameObject.SetActive(true);
         openAni = false;
     }
 

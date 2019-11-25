@@ -30,6 +30,8 @@ public partial class PlayMangement : MonoBehaviour {
     public CardHandManager cardHandManager;
     public GameResultManager resultManager;
     public SkeletonGraphic playerMana, enemyMana;
+    public GameObject optionIcon;
+
 
     public GameObject baseUnit;
     protected int turn = 0;
@@ -71,8 +73,6 @@ public partial class PlayMangement : MonoBehaviour {
         GetComponent<TurnMachine>().onTurnChanged.AddListener(ChangeTurn);
         if (!isTest) GetComponent<TurnMachine>().onPrepareTurn.AddListener(DistributeCard);
         socketHandler.ClientReady();
-        //GameObject backGroundEffect = Instantiate(EffectSystem.Instance.backgroundEffect);
-        //backGroundEffect.transform.position = backGround.transform.Find("ParticlePosition").position;
         SetCamera();
     }
     private void OnDestroy() {

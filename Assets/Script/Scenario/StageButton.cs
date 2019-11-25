@@ -33,5 +33,6 @@ public class StageButton : ScenarioButton {
         PlayerPrefs.SetString("StageNum", (stage).ToString());
         PlayerPrefs.SetString("SelectedRace", camp);
         scenarioManager.OnClickStage(scenarioManager.selectedChapterData, isTutorial);
+        EscapeKeyController.escapeKeyCtrl.AddEscape(scenarioManager.OnCloseBtn);
     }
 }

@@ -4960,6 +4960,11 @@ PrefabInstance:
       propertyPath: surrendButton
       value: 
       objectReference: {fileID: 5632087516802273974}
+    - target: {fileID: 8279262149816908149, guid: 089e07056aa4b4148b4eff310e0b9129,
+        type: 3}
+      propertyPath: optionIcon
+      value: 
+      objectReference: {fileID: 5632087516802273975}
     - target: {fileID: 8999688528475227032, guid: 089e07056aa4b4148b4eff310e0b9129,
         type: 3}
       propertyPath: serializationData.PrefabModifications.Array.size
@@ -50335,6 +50340,12 @@ MonoBehaviour:
   m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &5632087516802273975 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5632087518207193170, guid: 13f48f22344c53a409c35ab7ec1a2f66,
+    type: 3}
+  m_PrefabInstance: {fileID: 5632087516802273973}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &5741449010072405592 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2897516525071283717, guid: c28b9fdd64f96ef44b4886edd2fe0d37,
