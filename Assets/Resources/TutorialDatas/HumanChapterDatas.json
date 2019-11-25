@@ -679,6 +679,10 @@
                         "args": []
                     },
                     {
+                        "name": "Wait_Close_Info",
+                        "args": []
+                    },
+                    {
                         "name": "Highlight",
                         "args": [
                             "button",
