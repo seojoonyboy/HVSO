@@ -544,6 +544,7 @@
                     {
                         "name": "Set_Unit",
                         "args": [
+                            "player",
                             "2,0",
                             "qc10001"
                         ]

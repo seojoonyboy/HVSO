@@ -1540,12 +1540,13 @@ public class Set_Unit : ScenarioExecute {
     public Set_Unit() : base() { }
 
     public override void Execute() {
-        string[] parse = args[0].Split(',');
+        bool isHuman = (args[0] == "player") ? true : false;
+        string[] parse = args[1].Split(',');
         int col = int.Parse(parse[0]);
         int row = int.Parse(parse[1]);
 
-        if (AccountManager.Instance.allCardsDic[args[1]] != null) {
-            GameObject unit = PlayMangement.instance.SummonUnit(true, args[1], col, row);
+        if (AccountManager.Instance.allCardsDic[args[2]] != null) {
+            GameObject unit = PlayMangement.instance.SummonUnit(true, args[2], col, row);
             unit.GetComponent<PlaceMonster>().itemId = PlayMangement.instance.socketHandler.gameState.map.lines[col].human[row].itemId;
         }
         handler.isDone = true;
