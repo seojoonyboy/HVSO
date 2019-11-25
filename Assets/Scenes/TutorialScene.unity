@@ -44756,7 +44756,7 @@ PrefabInstance:
     - target: {fileID: 5632087518207193170, guid: 13f48f22344c53a409c35ab7ec1a2f66,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5632087518207193177, guid: 13f48f22344c53a409c35ab7ec1a2f66,
         type: 3}
@@ -57906,6 +57906,7 @@ MonoBehaviour:
   resultManager: {fileID: 4760111525719009901}
   playerMana: {fileID: 604619667}
   enemyMana: {fileID: 1292529334}
+  optionIcon: {fileID: 2143105447}
   baseUnit: {fileID: 4549778766762803919, guid: e809507ac2ad94f4ea3612c5aa4ea070,
     type: 3}
   blockPanel: {fileID: 237659611}
