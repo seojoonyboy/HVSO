@@ -3119,6 +3119,7 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 7b8f3c6b6a950854b9b4eed42a872ec8, type: 3}
     - {fileID: 21300000, guid: 4aa1258e718e96f4fb2ba6e69bb57257, type: 3}
     - {fileID: 21300000, guid: 0705556a9c0e352408ea950cb650dbc5, type: 3}
+    - {fileID: 21300000, guid: d32e7cda06a1cb942ac8b9c93cf73ba9, type: 3}
     - {fileID: 21300000, guid: a5d8bff885c9f714bad4ff079d1a7a7d, type: 3}
     - {fileID: 21300000, guid: 1a96835c309b75f44aaea776ac1b7aaf, type: 3}
     - {fileID: 21300000, guid: fb03cb93b55568c40b5022e6974942d2, type: 3}
@@ -8631,7 +8632,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 6
+      Data: 7
     - Name: 
       Entry: 7
       Data: 
@@ -8759,6 +8760,27 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10048
+    - Name: $v
+      Entry: 7
+      Data: 52|ScenarioUnit, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: "\uADDC\uBC94\uAD00\uB9AC\uC778"
+    - Name: sprite
+      Entry: 10
+      Data: 255
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
       Entry: 13
       Data: 
     - Name: 
@@ -8766,11 +8788,11 @@ MonoBehaviour:
       Data: 
     - Name: campBackgrounds
       Entry: 7
-      Data: 52|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
+      Data: 53|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
         UnityEngine.CoreModule]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 53|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+      Data: 54|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -8786,7 +8808,7 @@ MonoBehaviour:
       Data: human
     - Name: $v
       Entry: 10
-      Data: 255
+      Data: 256
     - Name: 
       Entry: 8
       Data: 
@@ -8798,7 +8820,7 @@ MonoBehaviour:
       Data: orc
     - Name: $v
       Entry: 10
-      Data: 256
+      Data: 257
     - Name: 
       Entry: 8
       Data: 
@@ -8810,11 +8832,11 @@ MonoBehaviour:
       Data: 
     - Name: rewardIcon
       Entry: 7
-      Data: 54|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
+      Data: 55|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
         UnityEngine.CoreModule]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 55|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+      Data: 56|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -8866,7 +8888,7 @@ MonoBehaviour:
       Data: supply
     - Name: $v
       Entry: 10
-      Data: 257
+      Data: 258
     - Name: 
       Entry: 8
       Data: 
@@ -8878,7 +8900,7 @@ MonoBehaviour:
       Data: doubleCoupon
     - Name: $v
       Entry: 10
-      Data: 258
+      Data: 259
     - Name: 
       Entry: 8
       Data: 
@@ -8890,11 +8912,11 @@ MonoBehaviour:
       Data: 
     - Name: rankIcons
       Entry: 7
-      Data: 56|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
+      Data: 57|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
         UnityEngine.CoreModule]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 57|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+      Data: 58|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -8910,7 +8932,7 @@ MonoBehaviour:
       Data: "\uBB34\uBA85 \uBCD1\uC0AC"
     - Name: $v
       Entry: 10
-      Data: 259
+      Data: 260
     - Name: 
       Entry: 8
       Data: 
@@ -8922,7 +8944,7 @@ MonoBehaviour:
       Data: "\uC18C\uADDC\uBAA8 \uBB34\uB825\uC9D1\uB2E8"
     - Name: $v
       Entry: 10
-      Data: 260
+      Data: 261
     - Name: 
       Entry: 8
       Data: 
@@ -8934,7 +8956,7 @@ MonoBehaviour:
       Data: "\uC624\uD569\uC9C0\uC878 \uC6B0\uB450\uBA38\uB9AC"
     - Name: $v
       Entry: 10
-      Data: 261
+      Data: 262
     - Name: 
       Entry: 8
       Data: 
@@ -8946,7 +8968,7 @@ MonoBehaviour:
       Data: "\uC790\uACBD\uB2E8 \uB300\uC7A5"
     - Name: $v
       Entry: 10
-      Data: 262
+      Data: 263
     - Name: 
       Entry: 8
       Data: 
@@ -8958,7 +8980,7 @@ MonoBehaviour:
       Data: "\uC9C0\uC5ED\uC9C0\uB3C4\uC790"
     - Name: $v
       Entry: 10
-      Data: 263
+      Data: 264
     - Name: 
       Entry: 8
       Data: 
@@ -8970,7 +8992,7 @@ MonoBehaviour:
       Data: "\uCD08\uAE09 \uC6A9\uBCD1\uB2E8\uC7A5"
     - Name: $v
       Entry: 10
-      Data: 264
+      Data: 265
     - Name: 
       Entry: 8
       Data: 
@@ -8982,7 +9004,7 @@ MonoBehaviour:
       Data: default
     - Name: $v
       Entry: 10
-      Data: 264
+      Data: 265
     - Name: 
       Entry: 8
       Data: 
@@ -8994,11 +9016,11 @@ MonoBehaviour:
       Data: 
     - Name: unitRace
       Entry: 7
-      Data: 58|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnitRace,
+      Data: 59|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnitRace,
         Assembly-CSharp]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 59|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+      Data: 60|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
