@@ -2833,6 +2833,7 @@ MonoBehaviour:
       m_Calls: []
   scriptable_leagueData: {fileID: 11400000, guid: 376e6853eb3fc2246b5da4276f95bef7,
     type: 2}
+  prevSceneName: 
   needChangeNickName: 0
 --- !u!4 &1870949075
 Transform:
@@ -3106,7 +3107,7 @@ MonoBehaviour:
     - {fileID: 21300000, guid: b424e3bb79ee7cb40a5df280d46f1d76, type: 3}
     - {fileID: 21300000, guid: 47a2f1670ba90be4d9d2635c949b1f37, type: 3}
     - {fileID: 21300000, guid: 2e64acdef1ef5e141af41d1354dc023d, type: 3}
-    - {fileID: 21300000, guid: 160fca4784c1b7a4396a00e3a61943cd, type: 3}
+    - {fileID: 21300000, guid: 0705556a9c0e352408ea950cb650dbc5, type: 3}
     - {fileID: 21300000, guid: 45e31c947d163db48b1c669c99394a8c, type: 3}
     - {fileID: 21300000, guid: eb90fae6a820e0645b4225b29f559aad, type: 3}
     - {fileID: 21300000, guid: 5ef11e7f281eb26458a2f7a2611cdcc5, type: 3}
@@ -3118,7 +3119,6 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 5e6be8d738286ec4fbd8e5462cadcbec, type: 3}
     - {fileID: 21300000, guid: 7b8f3c6b6a950854b9b4eed42a872ec8, type: 3}
     - {fileID: 21300000, guid: 4aa1258e718e96f4fb2ba6e69bb57257, type: 3}
-    - {fileID: 21300000, guid: 0705556a9c0e352408ea950cb650dbc5, type: 3}
     - {fileID: 21300000, guid: d32e7cda06a1cb942ac8b9c93cf73ba9, type: 3}
     - {fileID: 21300000, guid: a5d8bff885c9f714bad4ff079d1a7a7d, type: 3}
     - {fileID: 21300000, guid: 1a96835c309b75f44aaea776ac1b7aaf, type: 3}
@@ -8752,7 +8752,7 @@ MonoBehaviour:
       Data: "\uB808\uC774 \uCCB8 \uBBFC"
     - Name: sprite
       Entry: 10
-      Data: 254
+      Data: 242
     - Name: 
       Entry: 8
       Data: 
@@ -8773,7 +8773,7 @@ MonoBehaviour:
       Data: "\uADDC\uBC94\uAD00\uB9AC\uC778"
     - Name: sprite
       Entry: 10
-      Data: 255
+      Data: 254
     - Name: 
       Entry: 8
       Data: 
@@ -8808,7 +8808,7 @@ MonoBehaviour:
       Data: human
     - Name: $v
       Entry: 10
-      Data: 256
+      Data: 255
     - Name: 
       Entry: 8
       Data: 
@@ -8820,7 +8820,7 @@ MonoBehaviour:
       Data: orc
     - Name: $v
       Entry: 10
-      Data: 257
+      Data: 256
     - Name: 
       Entry: 8
       Data: 
@@ -8888,7 +8888,7 @@ MonoBehaviour:
       Data: supply
     - Name: $v
       Entry: 10
-      Data: 258
+      Data: 257
     - Name: 
       Entry: 8
       Data: 
@@ -8900,7 +8900,7 @@ MonoBehaviour:
       Data: doubleCoupon
     - Name: $v
       Entry: 10
-      Data: 259
+      Data: 258
     - Name: 
       Entry: 8
       Data: 
@@ -8932,7 +8932,7 @@ MonoBehaviour:
       Data: "\uBB34\uBA85 \uBCD1\uC0AC"
     - Name: $v
       Entry: 10
-      Data: 260
+      Data: 259
     - Name: 
       Entry: 8
       Data: 
@@ -8944,7 +8944,7 @@ MonoBehaviour:
       Data: "\uC18C\uADDC\uBAA8 \uBB34\uB825\uC9D1\uB2E8"
     - Name: $v
       Entry: 10
-      Data: 261
+      Data: 260
     - Name: 
       Entry: 8
       Data: 
@@ -8956,7 +8956,7 @@ MonoBehaviour:
       Data: "\uC624\uD569\uC9C0\uC878 \uC6B0\uB450\uBA38\uB9AC"
     - Name: $v
       Entry: 10
-      Data: 262
+      Data: 261
     - Name: 
       Entry: 8
       Data: 
@@ -8968,7 +8968,7 @@ MonoBehaviour:
       Data: "\uC790\uACBD\uB2E8 \uB300\uC7A5"
     - Name: $v
       Entry: 10
-      Data: 263
+      Data: 262
     - Name: 
       Entry: 8
       Data: 
@@ -8980,7 +8980,7 @@ MonoBehaviour:
       Data: "\uC9C0\uC5ED\uC9C0\uB3C4\uC790"
     - Name: $v
       Entry: 10
-      Data: 264
+      Data: 263
     - Name: 
       Entry: 8
       Data: 
@@ -8992,7 +8992,7 @@ MonoBehaviour:
       Data: "\uCD08\uAE09 \uC6A9\uBCD1\uB2E8\uC7A5"
     - Name: $v
       Entry: 10
-      Data: 265
+      Data: 264
     - Name: 
       Entry: 8
       Data: 
@@ -9004,7 +9004,7 @@ MonoBehaviour:
       Data: default
     - Name: $v
       Entry: 10
-      Data: 265
+      Data: 264
     - Name: 
       Entry: 8
       Data: 
