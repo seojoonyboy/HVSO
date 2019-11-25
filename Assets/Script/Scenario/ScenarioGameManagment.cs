@@ -61,7 +61,7 @@ public class ScenarioGameManagment : PlayMangement {
             skipButton.SetActive(false);
         
 
-        if (chapterData.chapter == 0 & chapterData.stage_number == 1)
+        if (chapterData.chapter == 0 && chapterData.stage_number == 1)
             optionIcon.SetActive(false);
 
 
