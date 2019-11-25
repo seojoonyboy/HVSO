@@ -13,7 +13,7 @@ public class IngameSettingModalManager : MonoBehaviour {
         settingBtn.onClick.AddListener(() => {
             basePanel.SetActive(true);
             settingModal.SetActive(true);
-        });    
+        });
     }
 
     void Update() {
