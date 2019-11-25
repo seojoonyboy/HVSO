@@ -55,9 +55,10 @@ public class TurnMachine : MonoBehaviour {
     }
 
     private IEnumerator CheckStart(GameObject orcPanel) {
-        yield return StopInvokeTurn();
+        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_MULIGUN_CARD, this);
+        yield return StopInvokeTurn();        
         orcPanel.SetActive(true);
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(1.0f);        
         orcPanel.SetActive(false);
 
         //SoundManager.Instance.PlaySound(SoundType.FIRST_TURN);

@@ -656,7 +656,7 @@ public class CardHandManager : MonoBehaviour {
         }
         firstDraw = false;
         yield return PlayMangement.instance.socketHandler.WaitMulliganFinish();
-        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_MULIGUN_CARD, this);
+        
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this);
         //CustomEvent.Trigger(GameObject.Find("GameManager"), "EndTurn");
         PlayMangement.instance.isMulligan = false;
