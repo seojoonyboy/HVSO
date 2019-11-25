@@ -65,7 +65,7 @@ public class GameResultManager : MonoBehaviour {
         int.TryParse(data["supply"].ToString(), out supply);
 
         Transform playerSup = transform.Find("SecondWindow/PlayerSupply");
-        StartCoroutine(GetUserSupply(playerSup.Find("ExpSlider/SliderValue").GetComponent<Image>(), supply, 0, 0, true));
+        StartCoroutine(GetUserSupply(playerSup.Find("ExpSlider/Slider").GetComponent<Slider>(), supply, 0, 0, true));
 
         var button = transform.Find("SecondWindow/PlayerSupply/ExtraSupply/DoubleButton/Button").GetComponent<Button>();
         button.enabled = false;
@@ -183,8 +183,8 @@ public class GameResultManager : MonoBehaviour {
     public IEnumerator SetRewards() {
         Transform rewards = transform.Find("SecondWindow/ResourceRewards");
         yield return new WaitForSeconds(0.1f);
-        Image expSlider = transform.Find("SecondWindow/PlayerExp/ExpSlider/SliderValue").GetComponent<Image>();
-        expSlider.fillAmount = exp / lvExp;
+        Slider expSlider = transform.Find("SecondWindow/PlayerExp/ExpSlider/Slider").GetComponent<Slider>();
+        expSlider.value = exp / lvExp;
 
         Transform playerExp = transform.Find("SecondWindow/PlayerExp");
         playerExp.Find("LevelIcon/Value").GetComponent<Text>().text = lv.ToString();
@@ -197,7 +197,7 @@ public class GameResultManager : MonoBehaviour {
         yield return new WaitForSeconds(0.1f);
         Transform playerSup = transform.Find("SecondWindow/PlayerSupply");
         iTween.ScaleTo(playerSup.gameObject, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.5f));
-        playerSup.Find("ExpSlider/SliderValue").GetComponent<Image>().fillAmount = supply / 100.0f;
+        playerSup.Find("ExpSlider/Slider").GetComponent<Slider>().value = supply / 100.0f;
         playerSup.Find("ExpSlider/SupValue").GetComponent<TMPro.TextMeshProUGUI>().text = supply.ToString();
         yield return new WaitForSeconds(0.1f);
         iTween.ScaleTo(transform.Find("SecondWindow/Buttons").gameObject, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.5f));
@@ -207,7 +207,7 @@ public class GameResultManager : MonoBehaviour {
         }
         if (getSupply > 0) {
             yield return new WaitForSeconds(0.5f);
-            yield return StartCoroutine(GetUserSupply(playerSup.Find("ExpSlider/SliderValue").GetComponent<Image>(), getSupply, additionalSupply));
+            yield return StartCoroutine(GetUserSupply(playerSup.Find("ExpSlider/Slider").GetComponent<Slider>(), getSupply, additionalSupply));
         }
 
         TMPro.TextMeshProUGUI doubleCoupons = transform.Find("SecondWindow/PlayerSupply/ExtraSupply/DoubleButton/Value").GetComponent<TMPro.TextMeshProUGUI>();
@@ -266,12 +266,17 @@ public class GameResultManager : MonoBehaviour {
             slider.fillAmount = currentVal / sliderMaxVal;
 
             var expValue = playerMMR.Find("ExpSlider/ExpValue").GetComponent<TMPro.TextMeshProUGUI>();
+            Transform sliderEffect = slider.transform.Find("Effect");
+            RectTransform sliderEffectRect = sliderEffect.GetComponent<RectTransform>();
+            float sliderWidth = slider.GetComponent<RectTransform>().rect.width;
 
-            if(scriptable_leagueData.prevMMR < leagueInfo.ratingPoint) {
+            if (scriptable_leagueData.prevMMR < leagueInfo.ratingPoint) {
                 float offset = 1f;
                 while (currentVal < leagueInfo.ratingPoint) {
                     currentVal += offset;
                     slider.fillAmount = currentVal / (float)sliderMaxVal;
+                    sliderEffectRect.localPosition = new Vector2(sliderWidth * slider.fillAmount, 0);
+
                     expValue.text = currentVal + "/" + sliderMaxVal;
                     yield return new WaitForSeconds(0.01f);
                 }
@@ -390,26 +395,28 @@ public class GameResultManager : MonoBehaviour {
     IDisposable observer_1, observer_2;
 
     void OnTimerToExit() {
-        observer_1 = Observable
-            .EveryUpdate()
-            .Select(_ => currentTime += Time.deltaTime)
-            .SkipWhile(x => x < WAIT_TIME)
-            .First()
-            .Subscribe(_ => OnReturnBtn());
-        observer_2 = Observable
-            .EveryUpdate()
-            .Where(_ => Input.GetMouseButton(0) == true)
-            .Subscribe(_ => { currentTime = 0; });
+        //observer_1 = Observable
+        //    .EveryUpdate()
+        //    .Select(_ => currentTime += Time.deltaTime)
+        //    .SkipWhile(x => x < WAIT_TIME)
+        //    .First()
+        //    .Subscribe(_ => OnReturnBtn());
+        //observer_2 = Observable
+        //    .EveryUpdate()
+        //    .Where(_ => Input.GetMouseButton(0) == true)
+        //    .Subscribe(_ => { currentTime = 0; });
     }
 
-    IEnumerator GetUserExp(Image slider) {
+    IEnumerator GetUserExp(Slider slider) {
         float gain = getExp;
         TMPro.TextMeshProUGUI expValueText = transform.Find("SecondWindow/PlayerExp/ExpSlider/ExpValue").GetComponent<TMPro.TextMeshProUGUI>();
         TMPro.TextMeshProUGUI lvUpValueText = transform.Find("SecondWindow/PlayerExp/ExpSlider/ExpMaxValue").GetComponent<TMPro.TextMeshProUGUI>();
+
         while (gain > 0) {
             exp += 1;
             gain -= 1;
-            slider.fillAmount = exp / lvExp;
+            slider.value = exp / lvExp;
+
             expValueText.text = ((int)exp).ToString();
             lvUpValueText.text = " / " + ((int)lvExp).ToString();
             if (exp == (int)lvExp) {
@@ -421,7 +428,8 @@ public class GameResultManager : MonoBehaviour {
                 effect.Initialize(true);
                 effect.Update(0);
                 effect.AnimationState.SetAnimation(0, "animation", false);
-                slider.fillAmount = 0;
+                slider.value = 0;
+
                 exp = 0;
                 expValueText.text = ((int)exp).ToString();
                 lvUpValueText.text = " / " + ((int)lvExp).ToString();
@@ -430,7 +438,7 @@ public class GameResultManager : MonoBehaviour {
         }
     }
 
-    IEnumerator GetUserSupply(Image slider, int getSup, int addSup, int winSup = 0, bool isAdditional = false) {
+    IEnumerator GetUserSupply(Slider slider, int getSup, int addSup, int winSup = 0, bool isAdditional = false) {
         TMPro.TextMeshProUGUI value = transform.Find("SecondWindow/PlayerSupply/ExpSlider/SupValue").GetComponent<TMPro.TextMeshProUGUI>();
         SkeletonGraphic boxSpine = transform.Find("SecondWindow/PlayerSupply/BoxSpine").GetComponent<SkeletonGraphic>();
         TMPro.TextMeshProUGUI basicVal = transform.Find("SecondWindow/PlayerSupply/ExtraSupply/Basic/Value").GetComponent<TMPro.TextMeshProUGUI>();
@@ -444,13 +452,15 @@ public class GameResultManager : MonoBehaviour {
         if (isAdditional) {
             int.TryParse(totalVal.text, out total);
         }
-        
+
         while (getSup > 0) {
             supply++;
             getSup--;
             basicVal.text = (start - getSup).ToString();
             totalVal.text = (++total).ToString();
-            slider.fillAmount = supply / 100.0f;
+
+            slider.value = supply / 100.0f;
+
             value.text = supply.ToString();
             if(supply == 100) {
                 boxSpine.AnimationState.SetAnimation(0, "03.vibration2", false);
@@ -462,7 +472,9 @@ public class GameResultManager : MonoBehaviour {
                 yield return new WaitForSeconds(0.2f);
                 slider.transform.localScale = Vector3.one;
                 yield return new WaitForSeconds(0.3f);
-                slider.fillAmount = 0;
+
+                slider.value = 0;
+
                 supply = 0;
                 value.text = supply.ToString();
                 boxSpine.AnimationState.SetAnimation(0, "02.vibration1", true);
@@ -476,7 +488,8 @@ public class GameResultManager : MonoBehaviour {
                 supply++;
                 addSup--;
                 totalVal.text = (++total).ToString();
-                slider.fillAmount = supply / 100.0f;
+                slider.value = supply / 100.0f;
+
                 value.text = supply.ToString();
                 if (supply == 100) {
                     boxSpine.AnimationState.SetAnimation(0, "03.vibration2", false);
@@ -488,7 +501,8 @@ public class GameResultManager : MonoBehaviour {
                     yield return new WaitForSeconds(0.2f);
                     slider.transform.localScale = Vector3.one;
                     yield return new WaitForSeconds(0.3f);
-                    slider.fillAmount = 0;
+                    slider.value = 0;
+
                     supply = 0;
                     value.text = supply.ToString();
                     boxSpine.AnimationState.SetAnimation(0, "02.vibration1", true);
