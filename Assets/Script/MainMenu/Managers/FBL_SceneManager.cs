@@ -43,14 +43,11 @@ public class FBL_SceneManager : Singleton<FBL_SceneManager> {
             case Scene.MISSION_INGAME:
                 numberOfScene = 5;
                 break;
-            case Scene.MISSION_SELECT_SCENE:
+            case Scene.TUTORIAL:
                 numberOfScene = 6;
                 break;
-            case Scene.TUTORIAL:
-                numberOfScene = 7;
-                break;
             case Scene.DICTIONARY_SCENE:
-                numberOfScene = 8;
+                numberOfScene = 7;
                 break;
         }
 
@@ -78,7 +75,7 @@ public class FBL_SceneManager : Singleton<FBL_SceneManager> {
         if (asyncOps[load - 2] == null) {
             UnityEngine.SceneManagement.SceneManager.LoadScene(load, UnityEngine.SceneManagement.LoadSceneMode.Single);
             if(load == 2)
-                UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(8, UnityEngine.SceneManagement.LoadSceneMode.Additive);
+                UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(7, UnityEngine.SceneManagement.LoadSceneMode.Additive);
             for (int i = 0; i < 7; i++) {
                 asyncOps[i] = null;
             }
@@ -98,7 +95,6 @@ public class FBL_SceneManager : Singleton<FBL_SceneManager> {
 
     public enum Scene {
         MAIN_SCENE,
-        MISSION_SELECT_SCENE,
         MISSION_INGAME,
         DECK_LIST_SCNE,
         DECK_SETTING_SCENE,
