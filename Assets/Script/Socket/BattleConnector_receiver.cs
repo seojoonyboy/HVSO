@@ -13,6 +13,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SocketFormat;
 using IngameEditor;
+using TMPro;
 
 /// 서버로부터 데이터를 받아올 때 reflection으로 string을 함수로 바로 발동하게 하는 부분
 public partial class BattleConnector : MonoBehaviour {
@@ -103,11 +104,11 @@ public partial class BattleConnector : MonoBehaviour {
         Logger.Log(orcPlayerNickName);
         Logger.Log(humanPlayerNickName);
 
-        Text enemyNickNameTxt = machine.transform.Find("EnemyName/NickName").GetComponent<Text>();
-        Text enemyHeroNameTxt = machine.transform.Find("EnemyName/HeroName").GetComponent<Text>();
+        TextMeshProUGUI enemyNickNameTxt = machine.transform.Find("EnemyName/Level/PlayerName").GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI enemyHeroNameTxt = machine.transform.Find("EnemyName/HeroName").GetComponent<TextMeshProUGUI>();
 
-        Text playerNickNameTxt = machine.transform.Find("PlayerName/NickName").GetComponent<Text>();
-        Text playerHeroNameTxt = machine.transform.Find("PlayerName/HeroName").GetComponent<Text>();
+        TextMeshProUGUI playerNickNameTxt = machine.transform.Find("PlayerName/PlayerName").GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI playerHeroNameTxt = machine.transform.Find("PlayerName/Tier/HeroName").GetComponent<TextMeshProUGUI>();
 
         Logger.Log(race);
 
