@@ -78,7 +78,14 @@ public class ScenarioManager : SerializedMonoBehaviour
         HUDController.SetBackButton(() => {
             OnBackButton();
         });
+
+        EscapeKeyController.escapeKeyCtrl.AddEscape(OnBackButton);
     }
+
+    void OnDisable() {
+        EscapeKeyController.escapeKeyCtrl.RemoveEscape(OnBackButton);
+    }
+
 
     /// <summary>
     /// 휴먼튜토리얼 강제 호출시 Awake가 호출되지 않은 상태이기 때문에 MenuSceneController에서 호출함
@@ -106,7 +113,6 @@ public class ScenarioManager : SerializedMonoBehaviour
         PlayerPrefs.SetString("BattleMode", "");
         //FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);        
         HUDController.SetHeader(HUDController.Type.SHOW_USER_INFO);
-
         gameObject.SetActive(false);
     }
 
@@ -387,6 +393,7 @@ public class ScenarioManager : SerializedMonoBehaviour
         SoundManager.Instance.PlaySound(UISfxSound.BUTTON1);
         stageCanvas.SetActive(false);
         HUDController.gameObject.SetActive(true);
+        EscapeKeyController.escapeKeyCtrl.RemoveEscape(OnCloseBtn);
     }
 
     public void OnClickStage(ChapterData chapterData, bool isTutorial) {
