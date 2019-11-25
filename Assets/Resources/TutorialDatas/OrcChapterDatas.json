@@ -11,10 +11,8 @@
                 "Print_text": "data_stage_1031_1_",
                 "methods": [
                     {
-                        "name": "First_Card",
-                        "args": [
-                            "stop"
-                        ]
+                        "name": "Stop_Invoke_NextTurn",
+                        "args": []
                     },
                     {
                         "name": "Stop_orc_summon",
@@ -100,10 +98,8 @@
                         "args": []
                     },
                     {
-                        "name": "First_Card",
-                        "args": [
-                            "proceed"
-                        ]
+                        "name": "Proceed_Invoke_NextTurn",
+                        "args": []
                     }
                 ],
                 "isExecute": false
@@ -615,10 +611,8 @@
                 "Print_text": "data_stage_1031_2",
                 "methods": [
                     {
-                        "name": "First_Card",
-                        "args": [
-                            "stop"
-                        ]
+                        "name": "Stop_Invoke_NextTurn",
+                        "args": []
                     },
                     {
                         "name": "Stop_orc_summon",
@@ -672,10 +666,8 @@
                         "args": []
                     },
                     {
-                        "name": "First_Card",
-                        "args": [
-                            "proceed"
-                        ]
+                        "name": "Proceed_Invoke_NextTurn",
+                        "args": []
                     },
                     {
                         "name": "NPC_Print_message",
