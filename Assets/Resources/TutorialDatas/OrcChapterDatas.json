@@ -26,6 +26,10 @@
                         "args": [
                             "MULIGAN"
                         ]
+                    },
+                    {
+                        "name": "Wait_until",
+                        "args": [ "1" ]
                     }
                 ],
                 "isExecute": false
@@ -626,6 +630,10 @@
                         "args": [
                             "MULIGAN"
                         ]
+                    },
+                    {
+                        "name": "Wait_until",
+                        "args": [ "1" ]
                     }
                 ],
                 "isExecute": false
