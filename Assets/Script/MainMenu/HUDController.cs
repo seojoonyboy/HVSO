@@ -86,7 +86,7 @@ public class HUDController : MonoBehaviour {
     public void SetBackButton(UnityAction action) {
         backButton.onClick.RemoveAllListeners();
         backButton.onClick.AddListener(action);
-        backButton.onClick.AddListener(() => main_HorizontalScrollSnap.GoToScreen(2));
+        //backButton.onClick.AddListener(() => main_HorizontalScrollSnap.GoToScreen(2));
     }
 
     public void SetBackButtonMsg(string msg) {
