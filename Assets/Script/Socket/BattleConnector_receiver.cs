@@ -335,11 +335,13 @@ public partial class BattleConnector : MonoBehaviour {
         }
     }
 
+    bool isSurrender = false;
+
     public void surrender(object args, int? id) {
         var json = (JObject)args;
         string camp = json["camp"].ToString();
         Logger.Log(camp + "측 항복");
-
+        isSurrender = true;
         string result = "";
         bool isHuman = PlayMangement.instance.player.isHuman;
 
@@ -430,7 +432,7 @@ public partial class BattleConnector : MonoBehaviour {
             PlayMangement playMangement = PlayMangement.instance;
             GameResultManager resultManager = playMangement.resultManager;
             resultManager.gameObject.SetActive(true);
-
+            if(isSurrender) return;
             if (_result == "win") {
                 resultManager.SetResultWindow("win", playMangement.player.isHuman);
             }
