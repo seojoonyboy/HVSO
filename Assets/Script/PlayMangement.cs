@@ -92,6 +92,8 @@ public partial class PlayMangement : MonoBehaviour {
 
         //StartCoroutine(cameraShake(0.4f, 10));
         //StartCoroutine(DisconnectTest());
+
+        AccountManager.Instance.prevSceneName = "Ingame";
     }
 
     public void SyncPlayerHp() {
@@ -103,9 +105,6 @@ public partial class PlayMangement : MonoBehaviour {
         else
             PlayerSetHPData(20, 20);
     }
-
-    
-
 
     public void SetGameData() {
         string match = PlayerPrefs.GetString("BattleMode");
