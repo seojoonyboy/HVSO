@@ -202,7 +202,9 @@ public partial class BattleConnector : MonoBehaviour {
         PlayMangement.instance.SyncPlayerHp();
     }
     
-    public void end_turn_start(object args, int? id) { }
+    public void end_turn_start(object args, int? id) {
+            DebugSocketData.StartCheckMonster(gameState);
+    }
 
     public void begin_orc_pre_turn(object args, int? id) {
         PlayerController player;
