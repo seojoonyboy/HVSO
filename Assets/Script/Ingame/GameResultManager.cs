@@ -30,6 +30,7 @@ public class GameResultManager : MonoBehaviour {
     public UnityEvent EndRewardLoad = new UnityEvent();
     public LeagueData scriptable_leagueData;
 
+    string battleType;
     private void Awake() {
         lv = AccountManager.Instance.userResource.lv;
         exp = AccountManager.Instance.userResource.exp;
@@ -38,7 +39,7 @@ public class GameResultManager : MonoBehaviour {
         nextLvExp = AccountManager.Instance.userResource.nextLvExp;
         gameObject.SetActive(false);
 
-        string battleType = PlayerPrefs.GetString("SelectedBattleType");
+        battleType = PlayerPrefs.GetString("SelectedBattleType");
         if(battleType == "solo") {
             ChangeResultButtonFunction();
         }
@@ -260,22 +261,18 @@ public class GameResultManager : MonoBehaviour {
             description.text = sb.ToString();
 
             int pointUp = PlayMangement.instance.SocketHandler.result.pointUp;
-            Image slider = playerMMR.Find("ExpSlider/SliderValue").GetComponent<Image>();
+            Slider slider = playerMMR.Find("ExpSlider/Slider").GetComponent<Slider>();
             int sliderMaxVal = leagueInfo.ratingPoint + leagueInfo.rankDetail.next;
             float currentVal = leagueInfo.ratingPoint - pointUp;
-            slider.fillAmount = currentVal / sliderMaxVal;
+            slider.value = currentVal / sliderMaxVal;
 
             var expValue = playerMMR.Find("ExpSlider/ExpValue").GetComponent<TMPro.TextMeshProUGUI>();
-            Transform sliderEffect = slider.transform.Find("Effect");
-            RectTransform sliderEffectRect = sliderEffect.GetComponent<RectTransform>();
-            float sliderWidth = slider.GetComponent<RectTransform>().rect.width;
 
             if (scriptable_leagueData.prevMMR < leagueInfo.ratingPoint) {
                 float offset = 1f;
                 while (currentVal < leagueInfo.ratingPoint) {
                     currentVal += offset;
-                    slider.fillAmount = currentVal / (float)sliderMaxVal;
-                    sliderEffectRect.localPosition = new Vector2(sliderWidth * slider.fillAmount, 0);
+                    slider.value = currentVal / (float)sliderMaxVal;
 
                     expValue.text = currentVal + "/" + sliderMaxVal;
                     yield return new WaitForSeconds(0.01f);
@@ -395,16 +392,34 @@ public class GameResultManager : MonoBehaviour {
     IDisposable observer_1, observer_2;
 
     void OnTimerToExit() {
-        //observer_1 = Observable
-        //    .EveryUpdate()
-        //    .Select(_ => currentTime += Time.deltaTime)
-        //    .SkipWhile(x => x < WAIT_TIME)
-        //    .First()
-        //    .Subscribe(_ => OnReturnBtn());
-        //observer_2 = Observable
-        //    .EveryUpdate()
-        //    .Where(_ => Input.GetMouseButton(0) == true)
-        //    .Subscribe(_ => { currentTime = 0; });
+        observer_1 = Observable
+            .EveryUpdate()
+            .Select(_ => currentTime += Time.deltaTime)
+            .SkipWhile(x => x < WAIT_TIME)
+            .First()
+            .Subscribe(_ => OnTimeOut());
+        observer_2 = Observable
+            .EveryUpdate()
+            .Where(_ => Input.GetMouseButton(0) == true)
+            .Subscribe(_ => { currentTime = 0; });
+    }
+
+    void OnTimeOut() {
+        if(battleType == "solo") {
+            OnReturnBtn();
+        }
+        else {
+            GameObject secondWindow = transform.Find("SecondWindow").gameObject;
+            if (!secondWindow.activeSelf) {
+                OpenSecondWindow();
+
+                currentTime = 0;
+                OnTimerToExit();
+            }
+            else {
+                OnReturnBtn();
+            }
+        }
     }
 
     IEnumerator GetUserExp(Slider slider) {
