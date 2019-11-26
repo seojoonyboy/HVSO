@@ -1,0 +1,27 @@
+
+ac10092_attackob.png
+size: 256,128
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+ac1
+  rotate: false
+  xy: 158, 45
+  size: 97, 77
+  orig: 97, 77
+  offset: 0, 0
+  index: -1
+ac2
+  rotate: false
+  xy: 158, 9
+  size: 78, 36
+  orig: 78, 36
+  offset: 0, 0
+  index: -1
+ac_effect
+  rotate: true
+  xy: 0, 0
+  size: 122, 158
+  orig: 122, 158
+  offset: 0, 0
+  index: -1

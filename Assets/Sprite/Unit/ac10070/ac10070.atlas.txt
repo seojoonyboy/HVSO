@@ -1,0 +1,132 @@
+
+ac10070.png
+size: 1024,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Group 1
+  rotate: true
+  xy: 606, 71
+  size: 30, 29
+  orig: 30, 29
+  offset: 0, 0
+  index: -1
+L_leg
+  rotate: true
+  xy: 541, 152
+  size: 104, 101
+  orig: 104, 101
+  offset: 0, 0
+  index: -1
+R_leg
+  rotate: true
+  xy: 541, 152
+  size: 104, 101
+  orig: 104, 101
+  offset: 0, 0
+  index: -1
+body1
+  rotate: false
+  xy: 316, 6
+  size: 115, 116
+  orig: 115, 116
+  offset: 0, 0
+  index: -1
+body2
+  rotate: false
+  xy: 431, 11
+  size: 115, 116
+  orig: 115, 116
+  offset: 0, 0
+  index: -1
+effect1
+  rotate: true
+  xy: 606, 101
+  size: 51, 48
+  orig: 51, 48
+  offset: 0, 0
+  index: -1
+effect2
+  rotate: true
+  xy: 546, 8
+  size: 60, 74
+  orig: 60, 74
+  offset: 0, 0
+  index: -1
+eye1
+  rotate: true
+  xy: 229, 112
+  size: 144, 43
+  orig: 144, 43
+  offset: 0, 0
+  index: -1
+eye2
+  rotate: true
+  xy: 272, 115
+  size: 141, 43
+  orig: 141, 43
+  offset: 0, 0
+  index: -1
+eye_back
+  rotate: true
+  xy: 315, 122
+  size: 134, 43
+  orig: 134, 43
+  offset: 0, 0
+  index: -1
+head
+  rotate: true
+  xy: 485, 148
+  size: 108, 56
+  orig: 108, 56
+  offset: 0, 0
+  index: -1
+head1
+  rotate: true
+  xy: 59, 102
+  size: 154, 68
+  orig: 154, 68
+  offset: 0, 0
+  index: -1
+head2
+  rotate: true
+  xy: 0, 96
+  size: 160, 59
+  orig: 160, 59
+  offset: 0, 0
+  index: -1
+head3
+  rotate: true
+  xy: 261, 0
+  size: 112, 55
+  orig: 112, 55
+  offset: 0, 0
+  index: -1
+head_attack
+  rotate: false
+  xy: 127, 108
+  size: 102, 148
+  orig: 102, 148
+  offset: 0, 0
+  index: -1
+leg
+  rotate: true
+  xy: 546, 68
+  size: 84, 60
+  orig: 84, 60
+  offset: 0, 0
+  index: -1
+rd
+  rotate: true
+  xy: 358, 127
+  size: 129, 127
+  orig: 129, 127
+  offset: 0, 0
+  index: -1
+shadow
+  rotate: false
+  xy: 0, 9
+  size: 261, 87
+  orig: 261, 87
+  offset: 0, 0
+  index: -1
