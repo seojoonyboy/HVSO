@@ -81,7 +81,7 @@ public partial class CardHandler : MonoBehaviour {
 
     public virtual void OnTurnChanged(Enum Event_Type, Component Sender, object Param) {
         isMyTurn = turnMachine.isPlayerTurn();
-        EffectSystem.Instance.UnTillField();
+        EffectSystem.Instance.HideEveryDim();
     }
 
     public virtual void DrawCard(string ID, int itemID = -1, bool first = false) {

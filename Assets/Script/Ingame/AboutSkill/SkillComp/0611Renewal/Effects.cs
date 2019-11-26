@@ -219,13 +219,13 @@ namespace SkillModules {
         public async void InvokeAttack(GameObject target, string cardID = "") {
             await Task.Delay(800);
             target.GetComponent<PlaceMonster>().InstanceAttack(cardID);
-            EffectSystem.Instance.ShowLineMask(target.GetComponent<PlaceMonster>().x);
+            EffectSystem.Instance.CheckEveryLineMask(target.GetComponent<PlaceMonster>().x);
         }
         
 
         private async void waitDone() {
             await Task.Delay(2500);
-            EffectSystem.Instance.HideMaskingLine();
+            EffectSystem.Instance.HideMaskLine();
             skillHandler.finallyDone = true;
         }
     }
@@ -364,7 +364,7 @@ namespace SkillModules {
                 string skillId = skillHandler.myObject.GetComponent<MagicDragHandler>().cardData.id;                
                 if (unit != null) {
                     unit.RequestChangeStat(0, -amount, skillId);
-                    EffectSystem.Instance.ShowLineMask(unit.x);
+                    EffectSystem.Instance.CheckEveryLineMask(unit.x);
                     WaitEffect(target, amount);
                 } else {
                     target.GetComponent<PlayerController>().TakeIgnoreShieldDamage(amount, true, skillId);
@@ -378,7 +378,7 @@ namespace SkillModules {
             if (target != null)
                 target.GetComponent<PlaceMonster>().CheckHP();
 
-            EffectSystem.Instance.HideMaskingLine();
+            EffectSystem.Instance.HideMaskLine();
             skillHandler.finallyDone = true;
         }
     }
