@@ -542,14 +542,6 @@
                         "args": []
                     },
                     {
-                        "name": "Set_Unit",
-                        "args": [
-                            "player",
-                            "2,0",
-                            "qc10001"
-                        ]
-                    },
-                    {
                         "name": "Disable_UnitInfo_Window",
                         "args": [
                             "2,0",
