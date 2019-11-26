@@ -11,10 +11,8 @@
                 "Print_text": "data_stage_1031_1",
                 "methods": [
                     {
-                        "name": "First_Card",
-                        "args": [
-                            "stop"
-                        ]
+                        "name": "Stop_Invoke_NextTurn",
+                        "args": []
                     },
                     {
                         "name": "Stop_orc_summon",
@@ -28,6 +26,10 @@
                         "args": [
                             "MULIGAN"
                         ]
+                    },
+                    {
+                        "name": "Wait_until",
+                        "args": [ "1" ]
                     }
                 ],
                 "isExecute": false
@@ -96,10 +98,8 @@
                         "args": []
                     },
                     {
-                        "name": "First_Card",
-                        "args": [
-                            "proceed"
-                        ]
+                        "name": "Proceed_Invoke_NextTurn",
+                        "args": []
                     }
                 ],
                 "isExecute": false
@@ -447,10 +447,8 @@
                 "Print_text": "",
                 "methods": [
                     {
-                        "name": "First_Card",
-                        "args": [
-                            "stop"
-                        ]
+                        "name": "Stop_Invoke_NextTurn",
+                        "args": []
                     },
                     {
                         "name": "Stop_orc_summon",
@@ -464,6 +462,10 @@
                         "args": [
                             "MULIGAN"
                         ]
+                    },
+                    {
+                        "name": "Wait_until",
+                        "args": [ "1" ]
                     }
                 ],
                 "isExecute": false
@@ -474,7 +476,7 @@
                     {
                         "name": "NPC_Print_message",
                         "args": [
-                            "ac10005",
+                            "ac10048",
                             "덕분에 살았습니다. 혹시 성으로 돌아가신다면 저희 상단도 함께 이동해도 될까요?",
                             "true"
                         ]
@@ -517,7 +519,7 @@
                         "name": "NPC_Print_message",
                         "args": [
                             "h10001",
-                            "저말 하자마자 나타나다니… 이건 너무 전형적인데.",
+                            "말 하자마자 나타나다니… 이건 너무 전형적인데.",
                             "true"
                         ]
                     },
@@ -532,21 +534,12 @@
                         "args": []
                     },
                     {
-                        "name": "First_Card",
-                        "args": [
-                            "proceed"
-                        ]
+                        "name": "Proceed_Invoke_NextTurn",
+                        "args": []
                     },
                     {
                         "name": "Set_Hero_Shield",
                         "args": []
-                    },
-                    {
-                        "name": "Set_Unit",
-                        "args": [
-                            "2,0",
-                            "qc10001"
-                        ]
                     },
                     {
                         "name": "Disable_UnitInfo_Window",
@@ -589,7 +582,7 @@
                         "name": "NPC_Print_message",
                         "args": [
                             "h10001",
-                            "저녀석은…? 왜 공격력이 높아진건지 확인해봐야 하겠군",
+                            "저 녀석은…? 왜 공격력이 높아진건지 확인해봐야 하겠군",
                             "true"
                         ]
                     },
@@ -675,6 +668,10 @@
                     },
                     {
                         "name": "Enable_EndTurn",
+                        "args": []
+                    },
+                    {
+                        "name": "Wait_Close_Info",
                         "args": []
                     },
                     {

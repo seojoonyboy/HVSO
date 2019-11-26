@@ -29,6 +29,7 @@ public class LoginController : MonoBehaviour {
         isClicked = false;
 
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, OnRequestUserInfoCallback);
+        AccountManager.Instance.prevSceneName = "OBB";
     }
 
     private void OnRequestUserInfoCallback(Enum Event_Type, Component Sender, object Param) {

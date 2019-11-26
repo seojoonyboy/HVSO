@@ -11,10 +11,8 @@
                 "Print_text": "data_stage_1031_1_",
                 "methods": [
                     {
-                        "name": "First_Card",
-                        "args": [
-                            "stop"
-                        ]
+                        "name": "Stop_Invoke_NextTurn",
+                        "args": []
                     },
                     {
                         "name": "Stop_orc_summon",
@@ -28,6 +26,10 @@
                         "args": [
                             "MULIGAN"
                         ]
+                    },
+                    {
+                        "name": "Wait_until",
+                        "args": [ "1" ]
                     }
                 ],
                 "isExecute": false
@@ -100,10 +102,8 @@
                         "args": []
                     },
                     {
-                        "name": "First_Card",
-                        "args": [
-                            "proceed"
-                        ]
+                        "name": "Proceed_Invoke_NextTurn",
+                        "args": []
                     }
                 ],
                 "isExecute": false
@@ -615,10 +615,8 @@
                 "Print_text": "data_stage_1031_2",
                 "methods": [
                     {
-                        "name": "First_Card",
-                        "args": [
-                            "stop"
-                        ]
+                        "name": "Stop_Invoke_NextTurn",
+                        "args": []
                     },
                     {
                         "name": "Stop_orc_summon",
@@ -632,6 +630,10 @@
                         "args": [
                             "MULIGAN"
                         ]
+                    },
+                    {
+                        "name": "Wait_until",
+                        "args": [ "1" ]
                     }
                 ],
                 "isExecute": false
@@ -643,7 +645,7 @@
                         "name": "NPC_Print_message",
                         "args": [
                             "ac10012",
-                            "족장님. 정찰에 성공했습니다. 적의 부대는 현재 야영하며 휴식중입니다.",
+                            "족장님. 정찰에 성공했습니다. 적의 부대는 현재 부상당한 방패병들이 지키고 있습니다.",
                             "true"
                         ]
                     },
@@ -672,10 +674,8 @@
                         "args": []
                     },
                     {
-                        "name": "First_Card",
-                        "args": [
-                            "proceed"
-                        ]
+                        "name": "Proceed_Invoke_NextTurn",
+                        "args": []
                     },
                     {
                         "name": "NPC_Print_message",
@@ -780,7 +780,7 @@
                         "name": "NPC_Print_message",
                         "args": [
                             "ac10002",
-                            "적습이다!! 모두 방어하라!! 1번 라인에 적이 있는것 같으니 2번라인을 치고 나가자! ",
+                            "적습이다!! 모두 방어하라!! 1번 라인에 적이 있는것 같으니 그곳을 방어한다! ",
                             "false"
                         ]
                     },
@@ -881,7 +881,7 @@
                         "name": "NPC_Print_message",
                         "args": [
                             "h10002",
-                            "이젠 잠복꾼의 관통 능력으로 한번에 해치워주마!  ",
+                            "이젠 잠복꾼의 관통 능력으로 너희 영웅까지 공격해주마!  ",
                             "true"
                         ]
                     },

@@ -1,0 +1,34 @@
+
+ac10068.png
+size: 1024,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+chr
+  rotate: false
+  xy: 2, 2
+  size: 409, 409
+  orig: 409, 409
+  offset: 0, 0
+  index: -1
+cr
+  rotate: false
+  xy: 721, 206
+  size: 205, 205
+  orig: 205, 205
+  offset: 0, 0
+  index: -1
+rd
+  rotate: false
+  xy: 413, 108
+  size: 306, 303
+  orig: 306, 303
+  offset: 0, 0
+  index: -1
+sha
+  rotate: false
+  xy: 721, 144
+  size: 197, 60
+  orig: 197, 60
+  offset: 0, 0
+  index: -1

@@ -24,9 +24,6 @@ EditorBuildSettings:
     path: Assets/Scenes/IngameScene.unity
     guid: c779ba3ba45fa784db6cf4f02fed5d79
   - enabled: 1
-    path: Assets/Scenes/ScenarioLobby.unity
-    guid: 5b678e23e10195f4ca00e5484943c6fd
-  - enabled: 1
     path: Assets/Scenes/TutorialScene.unity
     guid: ffe6674bdef25f24597cb70d9019b89f
   - enabled: 1

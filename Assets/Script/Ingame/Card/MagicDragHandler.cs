@@ -124,7 +124,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
 
 
     public void OnEndDrag(PointerEventData eventData) {
-        EffectSystem.Instance.UnTillField();
+        EffectSystem.Instance.HideEveryDim();
         if (heroCardActivate) {
             ShowCardsHandler showCardsHandler = GetComponentInParent<ShowCardsHandler>();
             bool pass = false;

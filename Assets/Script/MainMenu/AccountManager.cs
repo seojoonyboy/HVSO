@@ -49,6 +49,7 @@ public partial class AccountManager : Singleton<AccountManager> {
     public UnityEvent OnUserResourceRefresh = new UnityEvent();
     public UnityEvent OnCardLoadFinished = new UnityEvent();
     public LeagueData scriptable_leagueData;
+    public string prevSceneName;
 
     private string nickName;
     public string NickName {
@@ -1122,8 +1123,12 @@ public partial class AccountManager {
                 var sceneStartController = GetComponent<SceneStartController>();
                 if (res.StatusCode == 200 || res.StatusCode == 304) {
                     leagueInfo = dataModules.JsonReader.Read<LeagueInfo>(res.DataAsText);
-                    scriptable_leagueData.newMMR = leagueInfo.ratingPoint;
-                    scriptable_leagueData.newRank = leagueInfo.rankDetail.minor;
+
+                    if(prevSceneName != "Ingame") {
+                        Logger.Log("이전 씬이 Ingame이 아닌 경우");
+                        scriptable_leagueData.prevMMR = leagueInfo.ratingPoint;
+                        scriptable_leagueData.prevRank = leagueInfo.rankDetail.minor;
+                    }
 
                     NoneIngameSceneEventHandler
                         .Instance

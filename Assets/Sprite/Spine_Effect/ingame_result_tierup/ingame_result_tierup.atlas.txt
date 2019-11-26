@@ -1,0 +1,62 @@
+
+ingame_result_tierup.png
+size: 1024,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Glow11
+  rotate: false
+  xy: 451, 114
+  size: 130, 131
+  orig: 130, 131
+  offset: 0, 0
+  index: -1
+Glow111
+  rotate: false
+  xy: 451, 2
+  size: 110, 110
+  orig: 110, 110
+  offset: 0, 0
+  index: -1
+Glow22
+  rotate: false
+  xy: 563, 46
+  size: 66, 66
+  orig: 66, 66
+  offset: 0, 0
+  index: -1
+box_light
+  rotate: false
+  xy: 446, 247
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+tier1
+  rotate: true
+  xy: 2, 7
+  size: 186, 227
+  orig: 186, 227
+  offset: 0, 0
+  index: -1
+tier2
+  rotate: true
+  xy: 2, 195
+  size: 308, 220
+  orig: 308, 220
+  offset: 0, 0
+  index: -1
+tier3
+  rotate: true
+  xy: 224, 195
+  size: 308, 220
+  orig: 308, 220
+  offset: 0, 0
+  index: -1
+tier4
+  rotate: true
+  xy: 231, 4
+  size: 189, 218
+  orig: 189, 218
+  offset: 0, 0
+  index: -1
