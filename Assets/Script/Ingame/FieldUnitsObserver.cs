@@ -120,8 +120,7 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.FIELD_CHANGED, null, null);
 
         yield return new WaitForSeconds(1.5f);
-        //target.GetComponent<PlaceMonster>().unitSoringOrder = 50;
-        //EffectSystem.Instance.HideMaskingLine();
+        target.GetComponent<PlaceMonster>().ResetSorting();
     }
 
     /// <summary>

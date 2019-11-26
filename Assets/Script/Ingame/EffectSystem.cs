@@ -33,7 +33,7 @@ public class EffectSystem : SerializedMonoBehaviour {
     private void Start() {
         GameObject backEffect = Instantiate(backgroundEffect);
         backEffect.transform.position = PlayMangement.instance.backGround.transform.Find("ParticlePosition").position;
-        PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, EndTurnDisableTill);
+        PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, EndTurnDisableMask);
     }
 
 
@@ -171,48 +171,78 @@ public class EffectSystem : SerializedMonoBehaviour {
         cutsceneObject.SetActive(false);
     }
     
-    public void TilledField(bool maskField = false) {
+    public void EnemyHeroDim(bool maskingHero = false) {
+        //GameObject backGroundTill = PlayMangement.instance.backGroundTillObject;
+        //backGroundTill.SetActive(true);        
+        //worldFade.transform.gameObject.SetActive(true);
+        //worldFade.sortingOrder = (maskField == true) ? 48 : 46;
+        //worldFade.color = new Color(0, 0, 0, 0.6f);
+
         GameObject backGroundTill = PlayMangement.instance.backGroundTillObject;
-        backGroundTill.SetActive(true);        
-        worldFade.transform.gameObject.SetActive(true);
-        worldFade.sortingOrder = (maskField == true) ? 48 : 46;
-        worldFade.color = new Color(0, 0, 0, 0.6f);
+        GameObject enemyBackground = backGroundTill.transform.Find("upBackGround").gameObject;
+
+        backGroundTill.SetActive(true);
+        enemyBackground.GetComponent<SpriteRenderer>().sortingOrder = (maskingHero == true) ? 7 : 5;
+
+        Color backGroundColor = new Color(0.5f, 0.5f, 0.5f, 1f);
+        backGroundColor.a = (maskingHero == true) ? 0.7f : 1f;
+        enemyBackground.GetComponent<SpriteRenderer>().color = backGroundColor;
     }
 
-    public void UnTillField() {
+    public void EnemyHeroHideDim() {
         GameObject backGroundTill = PlayMangement.instance.backGroundTillObject;
-        backGroundTill.transform.Find("upkeep_mask").gameObject.SetActive(false);
         backGroundTill.SetActive(false);
-        worldFade.sortingOrder = 46;
-        worldFade.color = new Color(0, 0, 0, 0.6f);
-        worldFade.transform.gameObject.SetActive(false);
-    }
+    }    
 
-    public void MaskingLine(int lineNum, bool active) {
+    public void MaskLine(int lineNum, bool active) {
         GameObject lineMask = PlayMangement.instance.lineMaskObject;
         lineMask.SetActive(true);
         GameObject line = lineMask.transform.GetChild(lineNum).gameObject;
         line.SetActive(active);
         line.GetComponent<SpriteRenderer>().color = new Color(0.28f, 0.28f, 0.28f, 0.6f);
-        line.GetComponent<SpriteRenderer>().sortingOrder = (active == true) ? 53 : 11;
+
+        int sorting = 53;
+        line.GetComponent<SpriteRenderer>().sortingOrder = (active == true) ? sorting : 11;
     }
 
-    public void ShowLineMask(int lineNum = -1) {
-        TilledField();        
-        for (int i = 0; i< 5; i++) 
-            MaskingLine(i, (i != lineNum) ? true : false);        
-    }
-
-
-    public void HideMaskingLine() {
+    public void HideMaskLine() {
         GameObject lineMask = PlayMangement.instance.lineMaskObject;
         lineMask.SetActive(false);
-        UnTillField();
     }
 
 
-    private void EndTurnDisableTill(Enum event_type, Component Sender, object Param) {
-        HideMaskingLine();
+    public void CheckEveryLineMask(int lineNum = -1) {
+        for (int i = 0; i < 5; i++)
+            MaskLine(i, (i != lineNum) ? true : false);       
+        
+    }
+
+    public void CheckEveryLineMask(PlaceMonster unit) {
+        for (int i = 0; i < 5; i++)
+            MaskLine(i, true);
+
+        EnemyHeroDim(true);
+        unit.OverMask();
+    }
+
+    public void ShowSlotWithDim() {
+        for (int i = 0; i < 5; i++)
+            MaskLine(i, true);
+
+        EnemyHeroDim(true);
+    }
+
+
+
+
+    public void HideEveryDim() {
+        HideMaskLine();
+        EnemyHeroHideDim();
+    }
+
+
+    private void EndTurnDisableMask(Enum event_type, Component Sender, object Param) {
+        HideEveryDim();
     }
 
 
@@ -312,7 +342,7 @@ public class EffectSystem : SerializedMonoBehaviour {
 
     private void OnDestroy() {
         Instance = null;
-        PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, EndTurnDisableTill);
+        PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, EndTurnDisableMask);
     }
 
     public enum EffectType {

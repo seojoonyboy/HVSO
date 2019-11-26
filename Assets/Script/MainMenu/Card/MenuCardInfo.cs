@@ -296,13 +296,13 @@ public partial class MenuCardInfo : MonoBehaviour {
     public void CloseInfo() {
         if (cardCreate) return;
         SoundManager.Instance.PlaySound(UISfxSound.BUTTON1);
-        transform.parent.gameObject.SetActive(false);
-        transform.gameObject.SetActive(false);
-        //transform.parent.Find("DeckEditExitTrigger").gameObject.SetActive(false);
-        //transform.parent.Find("ExitTrigger").gameObject.SetActive(true);
         transform.parent.Find("HeroInfo").gameObject.SetActive(false);
         transform.Find("CreateCard/BreakBtn/DisableInHand").gameObject.SetActive(false);
+        if (transform.localPosition.y != 0)
+            transform.localPosition = Vector3.zero;
         editCard = null;
+        transform.parent.gameObject.SetActive(false);
+        transform.gameObject.SetActive(false);
         EscapeKeyController.escapeKeyCtrl.RemoveEscape(CloseInfo);
     }
 
@@ -349,6 +349,10 @@ public partial class MenuCardInfo : MonoBehaviour {
             cardObject.GetComponent<MenuCardHandler>().DrawCard(cardId, isHuman);
             CardDictionaryManager.cardDictionaryManager.transform.Find("UIbar/Crystal/Value").GetComponent<TMPro.TextMeshProUGUI>().text
             = AccountManager.Instance.userResource.crystal.ToString();
+            SetCardInfo(cardData, isHuman, cardObject, true);
+        }
+        else if(cardObject.name == "DictionaryCardVertical") {
+            cardObject.GetComponent<MenuCardHandler>().DrawCard(cardId);
             SetCardInfo(cardData, isHuman, cardObject, true);
         }
         else {

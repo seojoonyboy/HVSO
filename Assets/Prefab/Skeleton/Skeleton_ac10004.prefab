@@ -141,6 +141,7 @@ MonoBehaviour:
   attackEventName: SHOT
   arrow: {fileID: 2753944476047113115, guid: 403f8fe5c9b6d6c4d8c6044a8d3700ab, type: 3}
   hidingObject: {fileID: 0}
+  teleportMove: 0
   headbone: {fileID: 0}
   bodybone: {fileID: 0}
   rootbone: {fileID: 0}

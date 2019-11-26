@@ -107,7 +107,7 @@ public class PlayerController : MonoBehaviour
             playerUI.transform.Find("EnemyNickname").GetComponent<Text>().text = 
                 PlayMangement.instance.socketHandler.gameState.players.enemyPlayer(isHuman).user.nickName;
         }
-
+        
         
 
         SetPlayerHero(isHuman);
@@ -123,18 +123,18 @@ public class PlayerController : MonoBehaviour
         Debug.Log(heroSpine);
     }
 
-    public void SetPlayerHero(bool isHuman, string heroID = "") {
+    public void SetPlayerHero(bool isHuman) {
         string id;
         GameObject hero;
-        if (ScenarioGameManagment.scenarioInstance != null &&  isPlayer == false && isHuman == true)
-            heroID = "hac10001";
-
-        if (isHuman == true) 
-            id = (string.IsNullOrEmpty(heroID)) ? "h10001" : heroID;        
-        else 
-            id = (string.IsNullOrEmpty(heroID)) ? "h10002" : heroID;
-        this.heroID = id;
-
+        if (ScenarioGameManagment.scenarioInstance != null && isPlayer == false && isHuman == true)
+            id = "hac10001";
+        else {
+            if (isHuman == true)
+                id = PlayMangement.instance.socketHandler.gameState.players.human.hero.id;
+            else
+                id = PlayMangement.instance.socketHandler.gameState.players.orc.hero.id;
+            this.heroID = id;
+        }
         hero = Instantiate(AccountManager.Instance.resource.heroSkeleton[id], transform);
         hero.transform.SetAsLastSibling();
         heroSpine = hero.GetComponent<HeroSpine>();
@@ -153,7 +153,7 @@ public class PlayerController : MonoBehaviour
             transform.Find("MagicTargetTrigger").localPosition = new Vector3(0, 2.55f, 0);
             transform.Find("ClickableUI").localPosition = new Vector3(0, 2.07f, 0);
 
-            heroSpine.GetComponent<MeshRenderer>().sortingOrder = 7;
+            heroSpine.GetComponent<MeshRenderer>().sortingOrder = 6;
         }
     }
     

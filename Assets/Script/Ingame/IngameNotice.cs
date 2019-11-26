@@ -62,6 +62,7 @@ public class IngameNotice : MonoBehaviour {
     public void SetNotice() {
         noticeText.gameObject.SetActive(false);
         noticeImage.gameObject.SetActive(true);
+        gameObject.SetActive(true);
     }
 
     public void CloseNotice() {

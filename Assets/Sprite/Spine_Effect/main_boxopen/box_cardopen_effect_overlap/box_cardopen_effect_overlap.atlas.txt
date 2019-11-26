@@ -1,0 +1,27 @@
+
+box_cardopen_effect_overlap.png
+size: 1024,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+e1
+  rotate: false
+  xy: 2, 2
+  size: 384, 384
+  orig: 384, 384
+  offset: 0, 0
+  index: -1
+e2
+  rotate: false
+  xy: 388, 132
+  size: 254, 254
+  orig: 254, 254
+  offset: 0, 0
+  index: -1
+mana
+  rotate: false
+  xy: 644, 267
+  size: 88, 119
+  orig: 88, 119
+  offset: 0, 0
+  index: -1

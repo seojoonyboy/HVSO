@@ -1,0 +1,132 @@
+
+ac10089.png
+size: 1024,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+L_arm
+  rotate: false
+  xy: 443, 253
+  size: 82, 122
+  orig: 82, 122
+  offset: 0, 0
+  index: -1
+R_arm
+  rotate: false
+  xy: 444, 377
+  size: 84, 120
+  orig: 84, 120
+  offset: 0, 0
+  index: -1
+R_leg
+  rotate: true
+  xy: 525, 282
+  size: 95, 93
+  orig: 95, 93
+  offset: 0, 0
+  index: -1
+attack_effect
+  rotate: false
+  xy: 80, 313
+  size: 126, 184
+  orig: 126, 184
+  offset: 0, 0
+  index: -1
+body
+  rotate: true
+  xy: 261, 8
+  size: 138, 108
+  orig: 138, 108
+  offset: 0, 0
+  index: -1
+effect1
+  rotate: false
+  xy: 443, 181
+  size: 70, 72
+  orig: 70, 72
+  offset: 0, 0
+  index: -1
+head
+  rotate: true
+  xy: 206, 330
+  size: 167, 135
+  orig: 167, 135
+  offset: 0, 0
+  index: -1
+head2
+  rotate: true
+  xy: 308, 163
+  size: 167, 135
+  orig: 167, 135
+  offset: 0, 0
+  index: -1
+head3
+  rotate: true
+  xy: 154, 146
+  size: 167, 154
+  orig: 167, 154
+  offset: 0, 0
+  index: -1
+head_a
+  rotate: true
+  xy: 25, 2
+  size: 46, 24
+  orig: 46, 24
+  offset: 0, 0
+  index: -1
+pet_body
+  rotate: true
+  xy: 0, 48
+  size: 196, 154
+  orig: 196, 154
+  offset: 0, 0
+  index: -1
+pet_body2
+  rotate: true
+  xy: 472, 62
+  size: 119, 105
+  orig: 119, 105
+  offset: 0, 0
+  index: -1
+pet_head
+  rotate: true
+  xy: 341, 375
+  size: 122, 103
+  orig: 122, 103
+  offset: 0, 0
+  index: -1
+pet_head2
+  rotate: true
+  xy: 369, 41
+  size: 122, 103
+  orig: 122, 103
+  offset: 0, 0
+  index: -1
+pet_head3
+  rotate: true
+  xy: 154, 5
+  size: 141, 107
+  orig: 141, 107
+  offset: 0, 0
+  index: -1
+pet_head_a
+  rotate: false
+  xy: 0, 0
+  size: 25, 48
+  orig: 25, 48
+  offset: 0, 0
+  index: -1
+pet_head_b
+  rotate: true
+  xy: 49, 10
+  size: 38, 19
+  orig: 38, 19
+  offset: 0, 0
+  index: -1
+shadow
+  rotate: true
+  xy: 0, 244
+  size: 253, 80
+  orig: 253, 80
+  offset: 0, 0
+  index: -1
