@@ -771,6 +771,10 @@ namespace SkillModules {
             PlayerController player = (isPlayer == true) ? PlayMangement.instance.player : PlayMangement.instance.enemyPlayer;
             player.resource.Value += amount;
             Logger.Log("추가 자원 얻음");
+            if(isPlayer) {
+                if(player.isHuman) player.ActivePlayer();
+                else player.ActiveOrcTurn();
+            }
         }
 
     }
