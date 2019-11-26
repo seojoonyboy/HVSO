@@ -351,6 +351,10 @@ public partial class MenuCardInfo : MonoBehaviour {
             = AccountManager.Instance.userResource.crystal.ToString();
             SetCardInfo(cardData, isHuman, cardObject, true);
         }
+        else if(cardObject.name == "DictionaryCardVertical") {
+            cardObject.GetComponent<MenuCardHandler>().DrawCard(cardId);
+            SetCardInfo(cardData, isHuman, cardObject, true);
+        }
         else {
             cardObject.GetComponent<EditCardHandler>().deckEditController.cardButtons.MakeCard(cardObject, makeCard);
             SetCardInfo(cardData, isHuman, cardObject, true);
