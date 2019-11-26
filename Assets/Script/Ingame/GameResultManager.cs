@@ -13,6 +13,7 @@ using System.Text;
 public class GameResultManager : MonoBehaviour {
     public GameObject SocketDisconnectedUI;
     [SerializeField] Transform BgCanvas;
+    [SerializeField] GameObject tierChangeEffectModal;
 
     private float lv;
     private float exp;

@@ -92,6 +92,8 @@ public partial class PlayMangement : MonoBehaviour {
 
         //StartCoroutine(cameraShake(0.4f, 10));
         //StartCoroutine(DisconnectTest());
+
+        AccountManager.Instance.prevSceneName = "Ingame";
     }
 
     public void SyncPlayerHp() {
@@ -103,9 +105,6 @@ public partial class PlayMangement : MonoBehaviour {
         else
             PlayerSetHPData(20, 20);
     }
-
-    
-
 
     public void SetGameData() {
         string match = PlayerPrefs.GetString("BattleMode");
@@ -857,7 +856,7 @@ public partial class PlayMangement : MonoBehaviour {
 /// 유닛 소환관련 처리
 /// </summary>
 public partial class PlayMangement {
-    public GameObject SummonUnit(bool isPlayer, string unitID, int col, int row, int itemID = -1, int cardIndex = -1, Transform[][] args = null) {
+    public GameObject SummonUnit(bool isPlayer, string unitID, int col, int row, int itemID = -1, int cardIndex = -1, Transform[][] args = null, bool isFree = false) {
         PlayerController targetPlayer = (isPlayer == true) ? player : enemyPlayer;
         if (unitsObserver.IsUnitExist(new FieldUnitsObserver.Pos(col, row), targetPlayer.isHuman) == true)
             return null;
@@ -914,7 +913,7 @@ public partial class PlayMangement {
 
         placeMonster.Init(cardData);
         placeMonster.SpawnUnit();
-        targetPlayer.resource.Value -= cardData.cost;
+        if(!isFree) targetPlayer.resource.Value -= cardData.cost;
         var observer = UnitsObserver;
 
         if (isPlayer) {

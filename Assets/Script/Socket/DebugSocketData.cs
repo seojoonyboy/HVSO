@@ -182,5 +182,19 @@ namespace SocketFormat {
                 observer.UnitChangePosition(mon, new FieldUnitsObserver.Pos(line, 0), isHuman);
             }
         }
+
+        public static void StartCheckMonster(SocketFormat.GameState state) {
+            for(int i = 0; i < state.map.lines.Length; i++) {
+                if(state.map.lines[i].human.Length > 0) summonMonster(i, state.map.lines[i].human, true);
+                if(state.map.lines[i].orc.Length > 0) summonMonster(i, state.map.lines[i].orc, false);
+            }
+        }
+
+        private static void summonMonster(int line, SocketFormat.Unit[] units, bool isHuman) {
+            PlayMangement playMangement = PlayMangement.instance;
+            bool isPlayer = playMangement.player.isHuman == isHuman;
+            for(int i = 0; i < units.Length; i++)
+                playMangement.SummonUnit(isPlayer, units[i].cardId, line, i, units[i].itemId, -1, null, true);
+        }
     }  
 }
