@@ -158,8 +158,10 @@ public class BoxRewardManager : MonoBehaviour {
 
     public void SetSkipBackSpine() {
         for (int i = 0; i < 4; i++) {
-            Transform target = transform.Find("OpenBox").GetChild(i).GetChild(0);
-
+            Transform target = transform.Find("OpenBox").GetChild(i).GetChild(1);
+            SkeletonGraphic backSpine = target.parent.Find("back").GetComponent<SkeletonGraphic>();
+            backSpine.Initialize(true);
+            backSpine.Update(0);
             if (target.name.Contains("Card")) {
                 if (target.gameObject.activeSelf) {
                     string cardId = target.Find("DictionaryCardVertical").GetComponent<MenuCardHandler>().cardID;
@@ -173,27 +175,23 @@ public class BoxRewardManager : MonoBehaviour {
                         aniName += accountManager.allCardsDic[cardId].rarelity;
                     else
                         aniName = "NOANI";
-                    SkeletonGraphic spine = target.Find("back").GetComponent<SkeletonGraphic>();
-                    spine.gameObject.SetActive(true);
-                    spine.Initialize(true);
-                    spine.Update(0);
-                    spine.AnimationState.SetAnimation(0, aniName, true);
+                    
+                    backSpine.gameObject.SetActive(true);
+                    backSpine.AnimationState.SetAnimation(0, aniName, true);
                 }
             }
             else if (target.name.Contains("Hero")) {
-
+                backSpine.gameObject.SetActive(true);
+                backSpine.AnimationState.SetAnimation(0, "h_legend", true);
             }
             else {
-                string type = target.GetChild(0).name;
-                SkeletonGraphic spine = target.Find("back").GetComponent<SkeletonGraphic>();
-                if (type != "supplyX2Coupon") {
-                    spine.gameObject.SetActive(true);
-                    spine.Initialize(true);
-                    spine.Update(0);
-                    spine.AnimationState.SetAnimation(0, "g_superrare", true);
+                string type = target.GetChild(0).name;                
+                if (type == "gold") {
+                    backSpine.gameObject.SetActive(true);
+                    backSpine.AnimationState.SetAnimation(0, "g_legend", true);
                 }
-                else 
-                    spine.gameObject.SetActive(false);
+                else
+                    backSpine.gameObject.SetActive(false);
             }
         }
     }
@@ -208,14 +206,13 @@ public class BoxRewardManager : MonoBehaviour {
             reward.gameObject.SetActive(true);
             reward.localScale = Vector3.zero;
             reward.localPosition = new Vector3(0, -480, 0);
+            reward.Find("back").gameObject.SetActive(false);
             reward.Find("Card/GetCrystal").gameObject.SetActive(false);
-            reward.Find("Card/back").gameObject.SetActive(false);
             reward.Find("Card/Name").gameObject.SetActive(true);
             reward.Find("Card/Name").localScale = Vector3.zero;
             reward.Find("Card/Rarelity").localScale = Vector3.zero;
-            reward.Find("Resource").GetChild(1).gameObject.SetActive(false);
-            reward.Find("Resource/back").gameObject.SetActive(false);
-            reward.GetChild(0).gameObject.SetActive(false);
+            reward.Find("Resource").GetChild(0).gameObject.SetActive(false);
+            reward.GetChild(1).gameObject.SetActive(false);
             SkeletonGraphic crystalSpine = reward.Find("Card/GetCrystalEffect").GetComponent<SkeletonGraphic>();
             crystalSpine.gameObject.SetActive(true);
             crystalSpine.Initialize(true);
@@ -242,10 +239,13 @@ public class BoxRewardManager : MonoBehaviour {
         else
             yield return new WaitForSeconds(0.5f);
         transform.Find("ShowBox/BoxSpine/Image/Num").GetComponent<Text>().text = (4 - openCount).ToString();
-        Transform target = transform.Find("OpenBox").GetChild(count).GetChild(0);
+        Transform target = transform.Find("OpenBox").GetChild(count).GetChild(1);
         iTween.ScaleTo(target.parent.gameObject, iTween.Hash("x", 1.4, "y", 1.4, "islocal", true, "time", 0.4f));
         iTween.MoveTo(target.parent.gameObject, iTween.Hash("y", targetSpine.localPosition.y, "islocal", true, "time", 0.4f));
         SkeletonGraphic targetEffect = transform.Find("OpenBox/TargetSpine").GetComponent<SkeletonGraphic>();
+        SkeletonGraphic backSpine = target.parent.Find("back").GetComponent<SkeletonGraphic>();
+        backSpine.Initialize(true);
+        backSpine.Update(0);
         yield return new WaitForSeconds(0.1f);
         targetEffect.gameObject.SetActive(true);
         targetEffect.Initialize(true);
@@ -266,11 +266,8 @@ public class BoxRewardManager : MonoBehaviour {
                     aniName += accountManager.allCardsDic[cardId].rarelity;
                 else
                     aniName = "NOANI";
-                SkeletonGraphic spine = target.Find("back").GetComponent<SkeletonGraphic>();
-                spine.gameObject.SetActive(true);
-                spine.Initialize(true);
-                spine.Update(0);
-                spine.AnimationState.SetAnimation(0, aniName, true);
+                backSpine.gameObject.SetActive(true);
+                backSpine.AnimationState.SetAnimation(0, aniName, true);
 
                 SoundManager soundManager = SoundManager.Instance;
                 switch (rarelity) {
@@ -304,19 +301,17 @@ public class BoxRewardManager : MonoBehaviour {
             }
         }
         else if(target.name == "Hero") {
-
+            backSpine.gameObject.SetActive(true);
+            backSpine.AnimationState.SetAnimation(0, "h_legend", true);
         }
         else {
             string type = target.gameObject.name;
-            SkeletonGraphic spine = target.Find("back").GetComponent<SkeletonGraphic>();
-            if (type != "supplyX2Coupon") {
-                spine.gameObject.SetActive(true);
-                spine.Initialize(true);
-                spine.Update(0);
-                spine.AnimationState.SetAnimation(0, "g_superrare", true);
+            if (type == "gold") {
+                backSpine.gameObject.SetActive(true);
+                backSpine.AnimationState.SetAnimation(0, "g_legend", true);
             }
-            else 
-                spine.gameObject.SetActive(false);
+            else
+                backSpine.gameObject.SetActive(false);
 
             SoundManager soundManager = SoundManager.Instance;
             switch (type) {
@@ -344,7 +339,7 @@ public class BoxRewardManager : MonoBehaviour {
         boxParent.GetChild(3).gameObject.SetActive(false);
         for (int i = 0; i < 4; i++) {
             Transform reward = boxParent.GetChild(i);
-            Transform rewardTarget = reward.GetChild(0);
+            Transform rewardTarget = reward.GetChild(1);
             reward.gameObject.SetActive(true);
             reward.position = lastPos.GetChild(i).position;
             if (rewardTarget.name == "Card") {
@@ -375,7 +370,7 @@ public class BoxRewardManager : MonoBehaviour {
         effects.GetChild(index).GetComponent<SkeletonGraphic>().Update(0);
         if (reward.type == "card") {
             Transform target = boxTarget.Find("Card");
-            target.SetAsFirstSibling();
+            target.SetSiblingIndex(1);
             target.gameObject.SetActive(true);
             target.Find("DictionaryCardVertical").GetComponent<MenuCardHandler>().DrawCard(reward.item);
             target.Find("Name").localScale = Vector3.zero;
@@ -400,25 +395,31 @@ public class BoxRewardManager : MonoBehaviour {
         }
         else if(reward.type == "hero") {
             Transform target = boxTarget.Find("Hero");
-            target.SetAsFirstSibling();
+            target.SetSiblingIndex(1);
             target.gameObject.SetActive(true);
             target.Find("Image").GetComponent<Image>().sprite = accountManager.resource.heroPortraite[reward.item + "_button"];
+            target.Find("Image").GetComponent<Button>().onClick.RemoveAllListeners();
+            target.Find("Image").GetComponent<Button>().onClick.AddListener(() => OpenHeroInfoBtn(reward.item));
             target.Find("Value").GetComponent<TMPro.TextMeshProUGUI>().text = "+" + reward.amount.ToString();
 
         }
         else {
             Transform target = boxTarget.Find("Resource");
-            target.SetAsFirstSibling();
+            target.SetSiblingIndex(1);
             target.gameObject.SetActive(true);
             target.Find(reward.item).gameObject.SetActive(true);
-            target.Find(reward.item).SetSiblingIndex(1);
+            target.Find(reward.item).SetSiblingIndex(0);
             target.Find("Value").GetComponent<TMPro.TextMeshProUGUI>().text = "+" + reward.amount.ToString();
             effects.GetChild(index).GetComponent<SkeletonGraphic>().Skeleton.SetSkin("4.item");
         }
         effects.GetChild(index).GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, "animation", false);
     }
 
-
+    public void OpenHeroInfoBtn(string heroId) {
+        MenuHeroInfo.heroInfoWindow.SetHeroInfoWindow(heroId);
+        MenuHeroInfo.heroInfoWindow.transform.parent.gameObject.SetActive(true);
+        MenuHeroInfo.heroInfoWindow.gameObject.SetActive(true);
+    }
 
 
     void CheckNewCardList(string cardId) {

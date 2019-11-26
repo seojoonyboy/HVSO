@@ -196,7 +196,7 @@ public partial class BattleConnector : MonoBehaviour {
             bool isSameType = data.battleType.CompareTo(PlayerPrefs.GetString("SelectedBattleType")) == 0;
             //bool isMulti = data.battleType.CompareTo("multi") == 0;
             if(isSameType) {
-                args = new string[]{data.gameId, data.camp};
+                args = new string[]{data.gameId, data.camp, data.battleType.CompareTo("leagueTest") == 0 ? "league" : data.battleType};
                 SendMethod("reconnect_game", args);
                 return;
             }

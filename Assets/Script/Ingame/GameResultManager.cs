@@ -389,7 +389,7 @@ public class GameResultManager : MonoBehaviour {
     }
 
     public float currentTime = 0;
-    private const float WAIT_TIME = 5.0f;
+    private const float WAIT_TIME = 10.0f;
     IDisposable observer_1, observer_2;
 
     void OnTimerToExit() {
