@@ -298,8 +298,8 @@ public partial class MenuCardInfo : MonoBehaviour {
         SoundManager.Instance.PlaySound(UISfxSound.BUTTON1);
         transform.parent.Find("HeroInfo").gameObject.SetActive(false);
         transform.Find("CreateCard/BreakBtn/DisableInHand").gameObject.SetActive(false);
-        if (!transform.Find("CreateCard").gameObject.activeSelf)
-            transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y + (200 * transform.parent.localScale.y));
+        if (transform.localPosition.y != 0)
+            transform.localPosition = Vector3.zero;
         editCard = null;
         transform.parent.gameObject.SetActive(false);
         transform.gameObject.SetActive(false);

@@ -403,6 +403,8 @@ public class BoxRewardManager : MonoBehaviour {
             target.SetAsFirstSibling();
             target.gameObject.SetActive(true);
             target.Find("Image").GetComponent<Image>().sprite = accountManager.resource.heroPortraite[reward.item + "_button"];
+            target.Find("Image").GetComponent<Button>().onClick.RemoveAllListeners();
+            target.Find("Image").GetComponent<Button>().onClick.AddListener(() => OpenHeroInfoBtn(reward.item));
             target.Find("Value").GetComponent<TMPro.TextMeshProUGUI>().text = "+" + reward.amount.ToString();
 
         }
@@ -418,7 +420,11 @@ public class BoxRewardManager : MonoBehaviour {
         effects.GetChild(index).GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, "animation", false);
     }
 
-
+    public void OpenHeroInfoBtn(string heroId) {
+        MenuHeroInfo.heroInfoWindow.SetHeroInfoWindow(heroId);
+        MenuHeroInfo.heroInfoWindow.transform.parent.gameObject.SetActive(true);
+        MenuHeroInfo.heroInfoWindow.gameObject.SetActive(true);
+    }
 
 
     void CheckNewCardList(string cardId) {
