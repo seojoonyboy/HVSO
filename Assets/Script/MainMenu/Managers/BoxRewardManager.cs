@@ -390,7 +390,7 @@ public class BoxRewardManager : MonoBehaviour {
                 getCrystal.Find("ObjectsParent").gameObject.SetActive(false);
                 getCrystal.Find("ObjectsParent/UnitBlock").gameObject.SetActive(isUnit);
                 getCrystal.Find("ObjectsParent/MagicBlock").gameObject.SetActive(!isUnit);
-                getCrystal.Find("ObjectsParent / Value").GetComponent<TMPro.TextMeshProUGUI>().text = reward.amount.ToString();
+                getCrystal.Find("ObjectsParent/Value").GetComponent<TMPro.TextMeshProUGUI>().text = reward.amount.ToString();
             }
             else {
                 CheckNewCardList(reward.item);

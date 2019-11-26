@@ -181,7 +181,7 @@ public class MenuCardHandler : MonoBehaviour {
             }
             transform.Find("NewCard").gameObject.SetActive(false);
         }
-        if (transform.parent.name == "Grid") {
+        if (transform.parent.name == "Grid" || transform.parent.name == "Card") {
             MenuCardInfo.cardInfoWindow.SetCardInfo(cardData, isHuman, transform);
         }
         else {
