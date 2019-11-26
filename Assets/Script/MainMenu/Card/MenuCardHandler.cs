@@ -181,12 +181,14 @@ public class MenuCardHandler : MonoBehaviour {
             }
             transform.Find("NewCard").gameObject.SetActive(false);
         }
-        if (transform.parent.name == "Grid" || transform.parent.name == "Card") {
+        if (transform.parent.name == "Grid") {
             MenuCardInfo.cardInfoWindow.SetCardInfo(cardData, isHuman, transform);
         }
         else {
             MenuCardInfo.cardInfoWindow.SetCardInfo(cardData, isHuman, null);
             MenuCardInfo.cardInfoWindow.transform.Find("CreateCard").gameObject.SetActive(false);
+            MenuCardInfo.cardInfoWindow.transform.localPosition =
+                new Vector3(MenuCardInfo.cardInfoWindow.transform.localPosition.x, MenuCardInfo.cardInfoWindow.transform.localPosition.y - (200 * MenuCardInfo.cardInfoWindow.transform.parent.localScale.y));
         }
         if (transform.parent.parent.parent.name == "HeroInfo" && transform.parent.parent.name != "SkillWindow") {
             exitTrigger2.SetActive(true);

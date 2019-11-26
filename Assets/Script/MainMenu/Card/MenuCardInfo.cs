@@ -296,13 +296,13 @@ public partial class MenuCardInfo : MonoBehaviour {
     public void CloseInfo() {
         if (cardCreate) return;
         SoundManager.Instance.PlaySound(UISfxSound.BUTTON1);
-        transform.parent.gameObject.SetActive(false);
-        transform.gameObject.SetActive(false);
-        //transform.parent.Find("DeckEditExitTrigger").gameObject.SetActive(false);
-        //transform.parent.Find("ExitTrigger").gameObject.SetActive(true);
         transform.parent.Find("HeroInfo").gameObject.SetActive(false);
         transform.Find("CreateCard/BreakBtn/DisableInHand").gameObject.SetActive(false);
+        if (!transform.Find("CreateCard").gameObject.activeSelf)
+            transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y + (200 * transform.parent.localScale.y));
         editCard = null;
+        transform.parent.gameObject.SetActive(false);
+        transform.gameObject.SetActive(false);
         EscapeKeyController.escapeKeyCtrl.RemoveEscape(CloseInfo);
     }
 
