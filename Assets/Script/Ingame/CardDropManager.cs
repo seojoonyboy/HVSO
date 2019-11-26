@@ -449,6 +449,7 @@ public partial class CardDropManager {
                     }
                     else {
                         EffectSystem.Instance.MaskLine(i, true);
+
                     }                        
                 }
                 return;
@@ -512,11 +513,13 @@ public partial class CardDropManager {
                     playerHero.Find("MagicTargetTrigger").gameObject.SetActive(true);
                     playerHero.Find("ClickableUI").gameObject.SetActive(true);
                 }
+                EffectSystem.Instance.EnemyHeroDim();
             }
             else {
-
+                EffectSystem.Instance.EnemyHeroDim(true);
             }
 
+            EffectSystem.Instance.ShowSlotWithDim();
             for (int i = 0; i < 5; i++) {
                 for (int j = 0; j < 2; j++) {
                     if (dragFiltering != null) {
@@ -541,6 +544,7 @@ public partial class CardDropManager {
 
         else if (group.Contains("line")) {
             PlayMangement.instance.backGroundTillObject.SetActive(true);
+            EffectSystem.Instance.EnemyHeroDim(true);
             for (int i = 0; i < 5; i++) {
                 if (args == null) {
                     if (units[i][0].childCount > 0) {
@@ -570,6 +574,7 @@ public partial class CardDropManager {
 
         else if (group.Contains("all")) {
             //PlayMangement.instance.backGroundTillObject.SetActive(true);
+            EffectSystem.Instance.EnemyHeroDim(true);
             if (CheckConditionToUse(conditionChecker, group)) {
                 slotLine[2].Find("AllMagicTrigger").gameObject.SetActive(true);
                 for (int i = 0; i < 5; i++) {
@@ -634,7 +639,6 @@ public partial class CardDropManager {
         if (magicArgs == "tool")
             DeactivateTarget(unitLine, magicTarget, magicArgs);
 
-        EffectSystem.Instance.HideMaskLine();
         magicArgs = magicTarget = null;
     }
 

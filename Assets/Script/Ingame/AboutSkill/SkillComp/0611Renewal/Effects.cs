@@ -225,7 +225,7 @@ namespace SkillModules {
 
         private async void waitDone() {
             await Task.Delay(2500);
-            EffectSystem.Instance.HideMaskLine();
+            EffectSystem.Instance.HideEveryDim();
             skillHandler.finallyDone = true;
         }
     }
@@ -274,6 +274,7 @@ namespace SkillModules {
         private void MoveUnit(ref GameObject target, ref SkillTargetArgs args, bool isPlayer, string cardID = "") {
             PlayMangement playMangement = PlayMangement.instance;
             FieldUnitsObserver observer = playMangement.UnitsObserver;
+            EffectSystem.Instance.CheckEveryLineMask(target.GetComponent<PlaceMonster>());
             observer.UnitChangePosition(
                 target, 
                 new FieldUnitsObserver.Pos(args.col, args.row),
@@ -283,8 +284,9 @@ namespace SkillModules {
             WaitDone();
         }
 
-        private async void WaitDone() {
+        private async void WaitDone(GameObject target = null) {
             await System.Threading.Tasks.Task.Delay(600);
+            EffectSystem.Instance.HideEveryDim();
             skillHandler.isDone = true;
         }
     }
@@ -311,7 +313,7 @@ namespace SkillModules {
         private void MoveUnit(ref SelfMoveArgs args, bool isPlayer) {
             PlayMangement playMangement = PlayMangement.instance;
             FieldUnitsObserver observer = playMangement.UnitsObserver;
-            
+            EffectSystem.Instance.CheckEveryLineMask(skillHandler.myObject.GetComponent<PlaceMonster>());
 
             observer.UnitChangePosition(
                 skillHandler.myObject, 
@@ -323,10 +325,11 @@ namespace SkillModules {
             WaitDone();
         }
 
-        private async void WaitDone() {
+        private async void WaitDone(GameObject target = null) {
             await System.Threading.Tasks.Task.Delay(500);
             skillHandler.isDone = true;
-            await System.Threading.Tasks.Task.Delay(500);        
+            await System.Threading.Tasks.Task.Delay(500);
+            EffectSystem.Instance.HideEveryDim();
             skillHandler.finallyDone = true;
         }
     }

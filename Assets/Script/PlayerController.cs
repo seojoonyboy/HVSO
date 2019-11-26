@@ -153,7 +153,7 @@ public class PlayerController : MonoBehaviour
             transform.Find("MagicTargetTrigger").localPosition = new Vector3(0, 2.55f, 0);
             transform.Find("ClickableUI").localPosition = new Vector3(0, 2.07f, 0);
 
-            heroSpine.GetComponent<MeshRenderer>().sortingOrder = 7;
+            heroSpine.GetComponent<MeshRenderer>().sortingOrder = 6;
         }
     }
     

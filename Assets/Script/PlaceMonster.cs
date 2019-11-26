@@ -158,6 +158,15 @@ public class PlaceMonster : MonoBehaviour {
         SetState(UnitState.DETECT);
     }
 
+    public void OverMask() {
+        unitSoringOrder = 55;
+    }
+    
+    public void ResetSorting() {
+        unitSoringOrder = 50;
+    }
+
+
     public void ChangeAttackProperty() {
         if (unit.attackType.Length <= 0) {
             transform.Find("UnitAttackProperty").gameObject.SetActive(false);

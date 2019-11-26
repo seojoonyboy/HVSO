@@ -182,7 +182,11 @@ public class EffectSystem : SerializedMonoBehaviour {
         GameObject enemyBackground = backGroundTill.transform.Find("upBackGround").gameObject;
 
         backGroundTill.SetActive(true);
-        enemyBackground.GetComponent<SpriteRenderer>().sortingOrder = (maskingHero == true) ? 8 : 6;
+        enemyBackground.GetComponent<SpriteRenderer>().sortingOrder = (maskingHero == true) ? 7 : 5;
+
+        Color backGroundColor = new Color(0.5f, 0.5f, 0.5f, 1f);
+        backGroundColor.a = (maskingHero == true) ? 0.7f : 1f;
+        enemyBackground.GetComponent<SpriteRenderer>().color = backGroundColor;
     }
 
     public void EnemyHeroHideDim() {
@@ -196,7 +200,9 @@ public class EffectSystem : SerializedMonoBehaviour {
         GameObject line = lineMask.transform.GetChild(lineNum).gameObject;
         line.SetActive(active);
         line.GetComponent<SpriteRenderer>().color = new Color(0.28f, 0.28f, 0.28f, 0.6f);
-        line.GetComponent<SpriteRenderer>().sortingOrder = (active == true) ? 53 : 11;
+
+        int sorting = 53;
+        line.GetComponent<SpriteRenderer>().sortingOrder = (active == true) ? sorting : 11;
     }
 
     public void HideMaskLine() {
@@ -207,8 +213,27 @@ public class EffectSystem : SerializedMonoBehaviour {
 
     public void CheckEveryLineMask(int lineNum = -1) {
         for (int i = 0; i < 5; i++)
-            MaskLine(i, (i != lineNum) ? true : false);
+            MaskLine(i, (i != lineNum) ? true : false);       
+        
     }
+
+    public void CheckEveryLineMask(PlaceMonster unit) {
+        for (int i = 0; i < 5; i++)
+            MaskLine(i, true);
+
+        EnemyHeroDim(true);
+        unit.OverMask();
+    }
+
+    public void ShowSlotWithDim() {
+        for (int i = 0; i < 5; i++)
+            MaskLine(i, true);
+
+        EnemyHeroDim(true);
+    }
+
+
+
 
     public void HideEveryDim() {
         HideMaskLine();
