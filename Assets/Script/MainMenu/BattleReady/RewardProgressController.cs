@@ -107,8 +107,6 @@ public class RewardProgressController : MonoBehaviour {
         }
 
         isMoving = false;
-        leagueData.prevMMR = AccountManager.Instance.leagueInfo.ratingPoint;
-        leagueData.prevRank = AccountManager.Instance.leagueInfo.rankDetail.minor;
     }
 
     IEnumerator ProgressAscending() {
