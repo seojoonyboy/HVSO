@@ -20,6 +20,7 @@ public class BoxRewardManager : MonoBehaviour {
     [SerializeField] Transform targetSpine;
     [SerializeField] Transform lastPos;
     [SerializeField] GameObject skipBtn;
+    [SerializeField] Transform resourceInfo;
     // Start is called before the first frame update
     Transform hudCanvas;
 
@@ -434,6 +435,33 @@ public class BoxRewardManager : MonoBehaviour {
         MenuHeroInfo.heroInfoWindow.SetHeroInfoWindow(heroId);
         MenuHeroInfo.heroInfoWindow.transform.parent.gameObject.SetActive(true);
         MenuHeroInfo.heroInfoWindow.gameObject.SetActive(true);
+    }
+
+    public void OpenResourceInfo(string resource) {
+        resourceInfo.gameObject.SetActive(true);
+        resourceInfo.Find(resource).gameObject.SetActive(true);
+        resourceInfo.Find(resource).SetSiblingIndex(1);
+        switch (resource) {
+            case "gold":
+                resourceInfo.Find("Header/Name").GetComponent<TMPro.TextMeshProUGUI>().text = "금화";
+                resourceInfo.Find("Body/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "금화 설명";
+                break;
+            case "crystal":
+                resourceInfo.Find("Header/Name").GetComponent<TMPro.TextMeshProUGUI>().text = "마나 크리스탈";
+                resourceInfo.Find("Body/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "마나 크리스탈 설명";
+                break;
+            case "supplyX2Coupon":
+                resourceInfo.Find("Header/Name").GetComponent<TMPro.TextMeshProUGUI>().text = "보상 2배 쿠폰";
+                resourceInfo.Find("Body/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "보상 2배 쿠폰";
+                break;
+        }
+        EscapeKeyController.escapeKeyCtrl.AddEscape(CloseResourceInfo);
+    }
+
+    public void CloseResourceInfo() {
+        EscapeKeyController.escapeKeyCtrl.RemoveEscape(CloseResourceInfo);
+        resourceInfo.GetChild(1).gameObject.SetActive(false);
+        resourceInfo.gameObject.SetActive(false);
     }
 
 
