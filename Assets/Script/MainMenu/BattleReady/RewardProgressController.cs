@@ -45,11 +45,11 @@ public class RewardProgressController : MonoBehaviour {
 
     public void Init() {
         //테스트 코드
-        SetProgress(progressType.CURR_PROGRESS_BAR, leagueData.prevMMR);
+        SetProgress(progressType.CURR_PROGRESS_BAR);
     }
 
     //진척도 초기 세팅
-    private void SetProgress(progressType type, int mmr) {
+    private void SetProgress(progressType type) {
         GameObject progressBar = null;
 
         if(type == progressType.CURR_PROGRESS_BAR) {
@@ -69,7 +69,7 @@ public class RewardProgressController : MonoBehaviour {
     IEnumerator SetProgress(GameObject progressBar) {
         yield return new WaitForEndOfFrame();
         float progressBarOffsetLeft = 50;
-        int prevMMR = leagueData.prevMMR;
+        int prevMMR = leagueData.prevLeagueInfo.ratingPoint;
 
         float firstBtnPosX = rewardsProvider
             .buttons[0]
@@ -94,8 +94,7 @@ public class RewardProgressController : MonoBehaviour {
     IEnumerator Progress(GameObject progressBar) {
         yield return new WaitForEndOfFrame();
 
-        if (leagueData.newMMR > leagueData.prevMMR) isProgressAscending = true;
-        else isProgressAscending = false;
+        isProgressAscending = (leagueData.leagueInfo.ratingPoint > leagueData.prevLeagueInfo.ratingPoint);
 
         isMoving = true;
 
@@ -110,7 +109,7 @@ public class RewardProgressController : MonoBehaviour {
     }
 
     IEnumerator ProgressAscending() {
-        int closestBtnIndex = GetIndex(leagueData.newMMR);
+        int closestBtnIndex = GetIndex(leagueData.leagueInfo.ratingPoint);
         RectTransform closestBtnRect = rewardsProvider.buttons[closestBtnIndex].GetComponent<RectTransform>();
         var closestBtnPosX = closestBtnRect.localPosition.x;
         int btnMMR = GetButtonStandard(closestBtnIndex);
@@ -119,7 +118,7 @@ public class RewardProgressController : MonoBehaviour {
             RectTransform rect = currentProgressBar.GetComponent<RectTransform>();
             var progressPosX = currentProgressBar.GetComponent<RectTransform>().localPosition.x;
 
-            float targetPosX = closestBtnPosX * leagueData.newMMR / btnMMR;
+            float targetPosX = closestBtnPosX * leagueData.leagueInfo.ratingPoint / btnMMR;
             float offset = targetPosX - progressPosX;
             float interval = 0;
 
@@ -142,7 +141,7 @@ public class RewardProgressController : MonoBehaviour {
     }
 
     IEnumerator ProgressDescending() {
-        int closestBtnIndex = GetIndex(leagueData.newMMR);
+        int closestBtnIndex = GetIndex(leagueData.leagueInfo.ratingPoint);
         RectTransform closestBtnRect = rewardsProvider.buttons[closestBtnIndex].GetComponent<RectTransform>();
         var closestBtnPosX = closestBtnRect.localPosition.x;
         int btnMMR = GetButtonStandard(closestBtnIndex);
@@ -151,7 +150,7 @@ public class RewardProgressController : MonoBehaviour {
             RectTransform rect = currentProgressBar.GetComponent<RectTransform>();
             var progressPosX = currentProgressBar.GetComponent<RectTransform>().rect.width;
 
-            float targetPosX = closestBtnPosX * leagueData.newMMR / btnMMR;
+            float targetPosX = closestBtnPosX * leagueData.leagueInfo.ratingPoint / btnMMR;
             float interval = 0;
 
             float val = 0;

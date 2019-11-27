@@ -60,6 +60,7 @@ public partial class AccountManager : Singleton<AccountManager> {
             nickName = value;
         }
     }
+    public Dictionary<string, Area> rankAreas;  //랭크 구간
 
     private void Awake() {
         Application.targetFrameRate = 60;
@@ -75,7 +76,7 @@ public partial class AccountManager : Singleton<AccountManager> {
     // Start is called before the first frame update
     void Start() {
         networkManager = NetworkManager.Instance;
-        dicInfo = new DictionaryInfo();
+        MakeAreaDict(); //랭크 구간 생성
     }
 
     #if UNITY_EDITOR
@@ -1082,24 +1083,29 @@ public partial class AccountManager {
 }
 
 public partial class AccountManager {
-    public LeagueInfo leagueInfo;
-
+    [Serializable]
     public class LeagueInfo {
         public int modifiedRatingPoint;
         public RankDetail rankDetail;
 
-        public int id;
+        public int? id;
         public int userId;
         //public int leagueId;
         public int ratingPoint;
         public int winningStreak;
         public int losingStreak;
+        public string rankingBattleState;
     }
-    
+
+    [Serializable]
     public class RankDetail {
-        public string major;
-        public string minor;
-        public int next;
+        public int? rankUpBattleCount;
+        public int? rankDownBattleCount;
+
+        public string majorRankName;
+        public string minorRankName;
+        public int pointOverThen;
+        public int pointLessThen;
     }
 
     /// <summary>
@@ -1122,12 +1128,12 @@ public partial class AccountManager {
             request, (req, res) => {
                 var sceneStartController = GetComponent<SceneStartController>();
                 if (res.StatusCode == 200 || res.StatusCode == 304) {
-                    leagueInfo = dataModules.JsonReader.Read<LeagueInfo>(res.DataAsText);
+                    var leagueInfo = dataModules.JsonReader.Read<LeagueInfo>(res.DataAsText);
 
                     if(prevSceneName != "Ingame") {
                         Logger.Log("이전 씬이 Ingame이 아닌 경우");
-                        scriptable_leagueData.prevMMR = leagueInfo.ratingPoint;
-                        scriptable_leagueData.prevRank = leagueInfo.rankDetail.minor;
+                        scriptable_leagueData.leagueInfo = leagueInfo;
+                        scriptable_leagueData.prevLeagueInfo = leagueInfo;
                     }
 
                     NoneIngameSceneEventHandler
@@ -1140,5 +1146,38 @@ public partial class AccountManager {
                 }
             },
             "리그 정보를 불러오는중...");
+    }
+
+    private void MakeAreaDict() {
+        dicInfo = new DictionaryInfo();
+        rankAreas = new Dictionary<string, Area>();
+        rankAreas.Add("무명 병사", new Area(0, 149));
+        rankAreas.Add("오합지졸 우두머리", new Area(150, 299));
+        rankAreas.Add("소규모 무력집단", new Area(300, 449));
+        rankAreas.Add("자경대 대장", new Area(600, 799));
+        rankAreas.Add("초급 용병단장", new Area(800, 999));
+        rankAreas.Add("베테랑 용병단장", new Area(1000, 1199));
+        rankAreas.Add("최정예 용병단장", new Area(1200, 1399));
+        rankAreas.Add("정규군 지휘관", new Area(1400, 1699));
+        rankAreas.Add("군단장", new Area(1700, 1999));
+        rankAreas.Add("대장군", new Area(2000, 2299));
+        rankAreas.Add("총사령관", new Area(2300, 2599));
+    }
+
+    public Area GetTargetRankArea(string keyword) {
+        if (rankAreas.ContainsKey(keyword)) {
+            return rankAreas[keyword];
+        }
+        return null;
+    }
+
+    public class Area {
+        public int Min;
+        public int Max;
+
+        public Area(int Min, int Max) {
+            this.Max = Max;
+            this.Min = Min;
+        }
     }
 }
