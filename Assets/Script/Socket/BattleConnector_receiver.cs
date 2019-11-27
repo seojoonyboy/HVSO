@@ -153,8 +153,14 @@ public partial class BattleConnector : MonoBehaviour {
                 if (icons.ContainsKey(humanLeagueInfo.rankDetail.minorRankName)) {
                     playerName.Find("MMR/Value/Image").GetComponent<Image>().sprite = icons[humanLeagueInfo.rankDetail.minorRankName];
                 }
+                else {
+                    playerName.Find("MMR/Value/Image").GetComponent<Image>().sprite = icons["default"];
+                }
                 if (icons.ContainsKey(orcLeagueInfo.rankDetail.minorRankName)) {
                     enemyName.Find("MMR/Image").GetComponent<Image>().sprite = icons[orcLeagueInfo.rankDetail.minorRankName];
+                }
+                else {
+                    enemyName.Find("MMR/Image").GetComponent<Image>().sprite = icons["default"];
                 }
             }
             else {
@@ -165,8 +171,14 @@ public partial class BattleConnector : MonoBehaviour {
                 if (icons.ContainsKey(orcLeagueInfo.rankDetail.minorRankName)) {
                     playerName.Find("MMR/Value/Image").GetComponent<Image>().sprite = icons[orcLeagueInfo.rankDetail.minorRankName];
                 }
+                else {
+                    playerName.Find("MMR/Value/Image").GetComponent<Image>().sprite = icons["default"];
+                }
                 if (icons.ContainsKey(humanLeagueInfo.rankDetail.minorRankName)) {
                     enemyName.Find("MMR/Image").GetComponent<Image>().sprite = icons[humanLeagueInfo.rankDetail.minorRankName];
+                }
+                else {
+                    enemyName.Find("MMR/Image").GetComponent<Image>().sprite = icons["default"];
                 }
             }
         }
