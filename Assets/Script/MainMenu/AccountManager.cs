@@ -1095,17 +1095,23 @@ public partial class AccountManager {
         public int winningStreak;
         public int losingStreak;
         public string rankingBattleState;
+        public bool[] rankingBattleCount;
     }
 
     [Serializable]
     public class RankDetail {
-        public int? rankUpBattleCount;
-        public int? rankDownBattleCount;
+        public RankUpCondition rankUpBattleCount;
+        public RankUpCondition rankDownBattleCount;
 
         public string majorRankName;
         public string minorRankName;
         public int pointOverThen;
         public int pointLessThen;
+    }
+
+    public class RankUpCondition {
+        public int needTo;
+        public int battles;
     }
 
     /// <summary>
