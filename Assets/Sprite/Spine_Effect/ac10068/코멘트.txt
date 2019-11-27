@@ -1,0 +1,3 @@
+이펙트위치: effect_body
+
+시전유닛에게 animation_main 실행 좌우 유닛에겐sub애니 실행
