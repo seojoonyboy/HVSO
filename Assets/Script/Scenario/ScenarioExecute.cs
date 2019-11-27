@@ -1469,7 +1469,7 @@ public class Wait_Close_Info : ScenarioExecute {
 
     public override void Execute() {
         scenarioMask.DisableMask();
-        scenarioMask.InfoTouchON(scenarioMask.infoTouch.transform.position);
+        scenarioMask.InfoTouchON(scenarioMask.targetObject["unitInfoOutPos"].transform.position);
         PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.CLOSE_INFO_WINDOW, CheckClose);
     }
     private void CheckClose(Enum event_type, Component Sender, object Param) {
