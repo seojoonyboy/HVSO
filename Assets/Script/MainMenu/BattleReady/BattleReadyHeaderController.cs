@@ -58,9 +58,9 @@ public class BattleReadyHeaderController : SerializedMonoBehaviour {
 
     public void SetUI(AccountManager.LeagueInfo data) {
         TextMeshProUGUI nameTxt = rankObj.transform.Find("NameBg/Name").GetComponent<TextMeshProUGUI>();
-        nameTxt.text = data.rankDetail.minor;
+        nameTxt.text = data.rankDetail.minorRankName;
         Image rankImg = rankObj.transform.Find("Image").GetComponent<Image>();
-        rankImg.sprite = GetRankImage(data.rankDetail.minor);
+        rankImg.sprite = GetRankImage(data.rankDetail.minorRankName);
 
         SetRank(data.ratingPoint);
         SetDescription(data);

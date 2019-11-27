@@ -4346,6 +4346,7 @@ MonoBehaviour:
   returnButton: {fileID: 1379328143}
   aiBattleButton: {fileID: 1379530143}
   isOpponentPlayerDisconnected: 0
+  leagueData: {fileID: 11400000, guid: 376e6853eb3fc2246b5da4276f95bef7, type: 2}
 --- !u!4 &1448482647
 Transform:
   m_ObjectHideFlags: 0

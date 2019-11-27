@@ -64,8 +64,6 @@ public class BattleReadySceneController : MonoBehaviour {
 
     private void OnLeagueInfoUpdated(Enum Event_Type, Component Sender, object Param) {
         AccountManager.LeagueInfo info = (AccountManager.LeagueInfo)Param;
-
-        userLeagueData.newMMR = info.ratingPoint;
         rewardsProvider.Provide();
         battleReadyHeaderController.SetUI(info);
     }
