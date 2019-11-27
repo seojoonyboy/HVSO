@@ -441,7 +441,7 @@
                     {
                         "name": "NPC_Print_message",
                         "args": [
-                            "h10001",
+                            "hac10001",
                             "에잇! 우리 부대만이라도 적을 추격한다!! ",
                             "true"
                         ]
@@ -723,11 +723,11 @@
                         "args": []
                     },
                     {
-                        "name": "Enable_EndTurn",
+                        "name": "Wait_Close_Info",
                         "args": []
                     },
                     {
-                        "name": "Wait_Close_Info",
+                        "name": "Enable_EndTurn",
                         "args": []
                     },
                     {

@@ -104,6 +104,10 @@ public class IngameEventHandler : MonoBehaviour {
         CLOSE_INFO_WINDOW,
 
         EXTRA_REWARD_RECEIVED,
-        END_MULIGUN_CARD
+        END_MULIGUN_CARD,
+
+        SELECT_HERO_CARD,
+        READY_HERO_CARD,
+        CANCEL_HERO_CARD
     }
 }
