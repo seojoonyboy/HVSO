@@ -32,9 +32,10 @@ public class DeckHandler : MonoBehaviour
 
     public void SetNewDeck(dataModules.Deck deck) {
         deckID = deck.id;
-        if (deck.camp == "human") isHuman = true;
-        else isHuman = false;
+        isHuman = (deck.camp == "human") ? true : false;
         Transform deckObj = transform.GetChild(0);
+        deckObj.Find("RaceFlag/Human").gameObject.SetActive(isHuman);
+        deckObj.Find("RaceFlag/Orc").gameObject.SetActive(!isHuman);
         deckObj.Find("HeroImg").gameObject.SetActive(true);
         if (deck.bannerImage == "custom")
             deckObj.Find("HeroImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.deckPortraite[deck.heroId];
@@ -42,11 +43,17 @@ public class DeckHandler : MonoBehaviour
             deckObj.Find("HeroImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.deckPortraite[deck.bannerImage];
         }
         deckObj.Find("CardNum").gameObject.SetActive(true);
-        deckObj.Find("CardNum/Value").GetComponent<TMPro.TextMeshProUGUI>().text = deck.totalCardCount.ToString() + "/";
-        if (deck.totalCardCount < 40)
+        deckObj.Find("CardNum/Value").GetComponent<TMPro.TextMeshProUGUI>().text = deck.totalCardCount.ToString();
+        if (deck.totalCardCount < 40) {
             deckObj.Find("CardNum/Value").GetComponent<TMPro.TextMeshProUGUI>().color = Color.red;
-        else
+            deckObj.Find("HeroImg").GetComponent<Image>().color = new Color(0.235f, 0.235f, 0.235f);
+            deckObj.Find("HeroImg").GetChild(0).gameObject.SetActive(true);
+        }
+        else {
             deckObj.Find("CardNum/Value").GetComponent<TMPro.TextMeshProUGUI>().color = Color.white;
+            deckObj.Find("HeroImg").GetComponent<Image>().color = Color.white;
+            deckObj.Find("HeroImg").GetChild(0).gameObject.SetActive(false);
+        }
         deckObj.Find("DeckName").gameObject.SetActive(true);
         deckObj.Find("DeckName").GetComponent<TMPro.TextMeshProUGUI>().text = deck.name.ToString();
 

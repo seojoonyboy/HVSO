@@ -196,8 +196,6 @@ public class BoxRewardManager : MonoBehaviour {
         }
     }
 
-
-
     public void InitBoxObjects() {
         skipBtn.SetActive(true);
         Transform boxParent = transform.Find("OpenBox");
@@ -212,6 +210,7 @@ public class BoxRewardManager : MonoBehaviour {
             reward.Find("Card/Name").localScale = Vector3.zero;
             reward.Find("Card/Rarelity").localScale = Vector3.zero;
             reward.Find("Resource").GetChild(0).gameObject.SetActive(false);
+            reward.Find("Hero/GetCrystal").gameObject.SetActive(false);
             reward.GetChild(1).gameObject.SetActive(false);
             SkeletonGraphic crystalSpine = reward.Find("Card/GetCrystalEffect").GetComponent<SkeletonGraphic>();
             crystalSpine.gameObject.SetActive(true);
@@ -303,6 +302,13 @@ public class BoxRewardManager : MonoBehaviour {
         else if(target.name == "Hero") {
             backSpine.gameObject.SetActive(true);
             backSpine.AnimationState.SetAnimation(0, "h_legend", true);
+            if (target.Find("GetCrystal").gameObject.activeSelf) {
+                yield return new WaitForSeconds(0.4f);
+                SkeletonGraphic crystalSpine = target.Find("GetCrystalEffect").GetComponent<SkeletonGraphic>();
+                crystalSpine.AnimationState.SetAnimation(0, "animation", false);
+                yield return new WaitForSeconds(0.2f);
+                target.Find("GetCrystal").GetChild(0).gameObject.SetActive(true);
+            }
         }
         else {
             string type = target.gameObject.name;
@@ -348,7 +354,10 @@ public class BoxRewardManager : MonoBehaviour {
                 rewardTarget.Find("Rarelity").GetChild(0).gameObject.SetActive(false);
                 if(rewardTarget.Find("GetCrystal").gameObject.activeSelf)
                     rewardTarget.Find("GetCrystal").GetChild(0).gameObject.SetActive(true);
-
+            }
+            else if(rewardTarget.name == "Hero") {
+                if (rewardTarget.Find("GetCrystal").gameObject.activeSelf)
+                    rewardTarget.Find("GetCrystal").GetChild(0).gameObject.SetActive(true);
             }
             yield return new WaitForSeconds(0.1f);
             iTween.ScaleTo(reward.gameObject, iTween.Hash("x", 0.9f, "y", 0.9f, "islocal", true, "time", 0.4f));
@@ -400,8 +409,14 @@ public class BoxRewardManager : MonoBehaviour {
             target.Find("Image").GetComponent<Image>().sprite = accountManager.resource.heroPortraite[reward.item + "_button"];
             target.Find("Image").GetComponent<Button>().onClick.RemoveAllListeners();
             target.Find("Image").GetComponent<Button>().onClick.AddListener(() => OpenHeroInfoBtn(reward.item));
+            target.Find("Value").gameObject.SetActive(reward.amount < 100);
             target.Find("Value").GetComponent<TMPro.TextMeshProUGUI>().text = "+" + reward.amount.ToString();
-
+            if (!target.Find("Value").gameObject.activeSelf) {
+                Transform getCrystal = target.Find("GetCrystal");
+                getCrystal.gameObject.SetActive(true);
+                getCrystal.Find("ObjectsParent").gameObject.SetActive(false);
+                getCrystal.Find("ObjectsParent/Value").GetComponent<TMPro.TextMeshProUGUI>().text = "+" + reward.amount.ToString();
+            }
         }
         else {
             Transform target = boxTarget.Find("Resource");
