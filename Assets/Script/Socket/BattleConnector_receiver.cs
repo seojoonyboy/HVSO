@@ -63,7 +63,15 @@ public partial class BattleConnector : MonoBehaviour {
         theMethod.Invoke(this, args);
     }
 
+    AccountManager.LeagueInfo orcLeagueInfo, humanLeagueInfo;
     public void begin_ready(object args, int? id) {
+        string battleType = PlayerPrefs.GetString("SelectedBattleType");
+        if (battleType == "league" || battleType == "leagueTest") {
+            JObject json = (JObject)args;
+            orcLeagueInfo = dataModules.JsonReader.Read<AccountManager.LeagueInfo>(json["orc"].ToString());
+            humanLeagueInfo = dataModules.JsonReader.Read<AccountManager.LeagueInfo>(json["human"].ToString());
+        }
+
         this.message.text = "대전 상대를 찾았습니다.";
         FindObjectOfType<BattleConnectSceneAnimController>().PlayStartBattleAnim();
 
@@ -101,8 +109,8 @@ public partial class BattleConnector : MonoBehaviour {
         if (string.IsNullOrEmpty(humanPlayerNickName)) humanPlayerNickName = "Bot";
         string humanHeroName = humanPlayerData.hero.name;
 
-        Logger.Log(orcPlayerNickName);
-        Logger.Log(humanPlayerNickName);
+        //Logger.Log(orcPlayerNickName);
+        //Logger.Log(humanPlayerNickName);
 
         TextMeshProUGUI enemyNickNameTxt = machine.transform.Find("EnemyName/Level/PlayerName").GetComponent<TextMeshProUGUI>();
         TextMeshProUGUI enemyHeroNameTxt = machine.transform.Find("EnemyName/HeroName").GetComponent<TextMeshProUGUI>();
@@ -110,7 +118,7 @@ public partial class BattleConnector : MonoBehaviour {
         TextMeshProUGUI playerNickNameTxt = machine.transform.Find("PlayerName/PlayerName").GetComponent<TextMeshProUGUI>();
         TextMeshProUGUI playerHeroNameTxt = machine.transform.Find("PlayerName/Tier/HeroName").GetComponent<TextMeshProUGUI>();
 
-        Logger.Log(race);
+        //Logger.Log(race);
 
         if (race == "human") {
             playerHeroNameTxt.text = humanHeroName;
@@ -133,6 +141,39 @@ public partial class BattleConnector : MonoBehaviour {
         timer.text = null;
         returnButton.onClick.RemoveListener(BattleCancel);
         returnButton.gameObject.SetActive(false);
+
+        Transform enemyName = machine.transform.Find("EnemyName");
+        Transform playerName = machine.transform.Find("PlayerName");
+        if (mode == "league" || mode == "leagueTest") {
+            if(race == "human") {
+                playerName.Find("MMR/Value").GetComponent<TextMeshProUGUI>().text = humanLeagueInfo.ratingPoint.ToString();
+                enemyName.Find("MMR/Value").GetComponent<TextMeshProUGUI>().text = orcLeagueInfo.ratingPoint.ToString();
+
+                var icons = AccountManager.Instance.resource.rankIcons;
+                if (icons.ContainsKey(humanLeagueInfo.rankDetail.minorRankName)) {
+                    playerName.Find("MMR/Value/Image").GetComponent<Image>().sprite = icons[humanLeagueInfo.rankDetail.minorRankName];
+                }
+                if (icons.ContainsKey(orcLeagueInfo.rankDetail.minorRankName)) {
+                    enemyName.Find("MMR/Image").GetComponent<Image>().sprite = icons[orcLeagueInfo.rankDetail.minorRankName];
+                }
+            }
+            else {
+                playerName.Find("MMR/Value").GetComponent<TextMeshProUGUI>().text = orcLeagueInfo.ratingPoint.ToString();
+                enemyName.Find("MMR/Value").GetComponent<TextMeshProUGUI>().text = humanLeagueInfo.ratingPoint.ToString();
+
+                var icons = AccountManager.Instance.resource.rankIcons;
+                if (icons.ContainsKey(orcLeagueInfo.rankDetail.minorRankName)) {
+                    playerName.Find("MMR/Value/Image").GetComponent<Image>().sprite = icons[orcLeagueInfo.rankDetail.minorRankName];
+                }
+                if (icons.ContainsKey(humanLeagueInfo.rankDetail.minorRankName)) {
+                    enemyName.Find("MMR/Image").GetComponent<Image>().sprite = icons[humanLeagueInfo.rankDetail.minorRankName];
+                }
+            }
+        }
+        else {
+            playerName.Find("MMR").gameObject.SetActive(false);
+            enemyName.Find("MMR").gameObject.SetActive(false);
+        }
     }
 
     /// <summary>
@@ -408,8 +449,7 @@ public partial class BattleConnector : MonoBehaviour {
         PlayMangement.instance.resultManager.SocketErrorUIOpen(true);
     }
 
-    public AccountManager.LeagueInfo leagueInfo;
-
+    public LeagueData leagueData;
     public void begin_end_game(object args, int? id) {
         Time.timeScale = 1f;
         if(ScenarioGameManagment.scenarioInstance == null) {
@@ -418,7 +458,7 @@ public partial class BattleConnector : MonoBehaviour {
         }
         JObject jobject = (JObject)args;
         result = JsonConvert.DeserializeObject<ResultFormat>(jobject.ToString());
-        leagueInfo = result.leagueInfo;
+        leagueData.leagueInfo = result.leagueInfo;
 
         if (reconnectModal != null) {
             Destroy(GetComponent<ReconnectController>());
