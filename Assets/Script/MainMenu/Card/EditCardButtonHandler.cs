@@ -74,6 +74,8 @@ public class EditCardButtonHandler : MonoBehaviour {
         if (transform.parent.name == "HandDeckArea") {
             MenuCardInfo.cardInfoWindow.transform.Find("CreateCard/BreakBtn/DisableInHand").gameObject.SetActive(true);
         }
+        else
+            MenuCardInfo.cardInfoWindow.bookHaveNum = card.GetComponent<EditCardHandler>().HAVENUM;
         EscapeKeyController.escapeKeyCtrl.AddEscape(MenuCardInfo.cardInfoWindow.CloseInfo);
     }
 
