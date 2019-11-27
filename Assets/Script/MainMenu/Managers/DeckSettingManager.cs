@@ -59,6 +59,7 @@ public class DeckSettingManager : MonoBehaviour
         transform.Find("Header/NumValue").GetComponent<TMPro.TextMeshProUGUI>().text = deckCount.ToString() + "/10";
         deckList.GetChild(0).gameObject.SetActive(true);
         deckList.GetChild(0).GetChild(0).Find("NewDeck").gameObject.SetActive(true);
+        deckList.GetChild(0).GetChild(0).Find("RaceFlag").gameObject.SetActive(false);
         if (deckCount > 0) {
             for(int i = 0; i < humanDecks; i++) {
                 deckList.GetChild(i + 1).gameObject.SetActive(true);
