@@ -519,7 +519,7 @@
                         "name": "NPC_Print_message",
                         "args": [
                             "h10001",
-                            "적을 쫒아간 병력이 돌아오지 않는군. 하지만 무한정 기다릴 수도 없으니 우리는 성으로 돌아간다.",
+                            "적을 쫓아간 병력이 돌아오지 않는군. 하지만 무한정 기다릴 수도 없으니 우리는 성으로 돌아간다.",
                             "true"
                         ]
                     },
@@ -1018,9 +1018,21 @@
                         ]
                     },
                     {
+                        "name": "ChallengeStart",
+                        "args": [
+                            "UNIT_SUMMONED"
+                        ]
+                    },
+                    {
                         "name": "Wait_summon",
                         "args": [
                             "ac10001"
+                        ]
+                    },
+                    {
+                        "name": "ChallengeEnd",
+                        "args": [
+                            "UNIT_SUMMONED"
                         ]
                     },
                     {
@@ -1049,6 +1061,12 @@
                         "name": "Wait_click",
                         "args": [
                             "screen"
+                        ]
+                    },
+                    {
+                        "name": "ChallengeStart",
+                        "args": [
+                            "ENEMY_DEFEAT"
                         ]
                     },
                     {
@@ -1084,6 +1102,12 @@
                     {
                         "name": "Wait_Match_End",
                         "args": []
+                    },
+                    {
+                        "name": "ChallengeEnd",
+                        "args": [
+                            "ENEMY_DEFEAT"
+                        ]
                     },
                     {
                         "name": "Wait_EnemyDead_Animation",

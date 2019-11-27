@@ -990,6 +990,12 @@
                         ]
                     },
                     {
+                        "name": "ChallengeStart",
+                        "args": [
+                            "ENEMY_DEFEAT"
+                        ]
+                    },
+                    {
                         "name": "Proceed_Next_Turn",
                         "args": []
                     },
@@ -1055,6 +1061,12 @@
                         "name": "Wait_click",
                         "args": [
                             "screen"
+                        ]
+                    },
+                    {
+                        "name": "ChallengeEnd",
+                        "args": [
+                            "ENEMY_DEFEAT"
                         ]
                     },
                     {

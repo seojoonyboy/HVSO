@@ -51,6 +51,9 @@ public class ChallengerHandler : SerializedMonoBehaviour {
             case "MAGIC_USED":
                 type = IngameEventHandler.EVENT_TYPE.MAGIC_USED;
                 break;
+            case "ENEMY_DEFEAT":
+                type = IngameEventHandler.EVENT_TYPE.ENEMY_HERO_DEAD;
+                break;
             default:
                 type = IngameEventHandler.EVENT_TYPE.DO_NOTHING;
                 break;
@@ -76,6 +79,9 @@ public class ChallengerHandler : SerializedMonoBehaviour {
                 break;
             case "MAGIC_USED":
                 type = IngameEventHandler.EVENT_TYPE.MAGIC_USED;
+                break;
+            case "ENEMY_DEFEAT":
+                type = IngameEventHandler.EVENT_TYPE.ENEMY_HERO_DEAD;
                 break;
             default:
                 type = IngameEventHandler.EVENT_TYPE.DO_NOTHING;

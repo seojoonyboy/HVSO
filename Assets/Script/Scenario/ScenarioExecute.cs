@@ -1678,6 +1678,7 @@ public class Wait_Match_End : ScenarioExecute {
             StartCoroutine(WaitObjectDead(false));
         }
         else if(PlayMangement.instance.enemyPlayer.HP.Value <= 0) {
+            PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.ENEMY_HERO_DEAD, this);
             handler.isDone = true;
         }
     }
