@@ -8062,7 +8062,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: night_op
+      Data: nightaction
     - Name: $v
       Entry: 10
       Data: 210
@@ -8098,7 +8098,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: prestrike
+      Data: snipe
     - Name: $v
       Entry: 10
       Data: 213
@@ -8310,7 +8310,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: night_op
+      Data: nightaction
     - Name: $v
       Entry: 10
       Data: 229
@@ -8346,7 +8346,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: prestrike
+      Data: snipe
     - Name: $v
       Entry: 10
       Data: 232
@@ -9704,7 +9704,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 17
+      Data: 18
     - Name: 
       Entry: 7
       Data: 
@@ -9806,7 +9806,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: night_op
+      Data: nightaction
     - Name: $v
       Entry: 1
       Data: "\uC57C\uAC04\uC791\uC804"
@@ -9910,6 +9910,18 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: snipe
+    - Name: $v
+      Entry: 1
+      Data: "\uC800\uACA9"
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
       Entry: 13
       Data: 
     - Name: 
@@ -9924,7 +9936,7 @@ MonoBehaviour:
       Data: 1
     - Name: 
       Entry: 12
-      Data: 17
+      Data: 18
     - Name: 
       Entry: 7
       Data: 
@@ -10125,7 +10137,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: night_op
+      Data: nightaction
     - Name: $v
       Entry: 1
       Data: "\uC0C1\uB300 \uC601\uC6C5 \uACF5\uACA9\uC2DC \uC2E4\uB4DC\uAC8C\uC774\uC9C0\uB97C
@@ -10144,6 +10156,18 @@ MonoBehaviour:
       Data: "\uC0C1\uB300 \uC601\uC6C5 \uACF5\uACA9\uC2DC \uC2E4\uB4DC\uAC8C\uC774\uC9C0\uB97C
         \uCDA9\uC804\uC2DC\uD0A4\uC9C0 \uC54A\uACE0 \uC2E4\uB4DC\uAC8C\uC774\uC9C0\uB97C
         \uD6D4\uCCD0\uC634"
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: snipe
+    - Name: $v
+      Entry: 1
+      Data: "\uC801 \uCC98\uCE58\uC2DC 1\uD68C \uCD94\uAC00 \uACF5\uACA9"
     - Name: 
       Entry: 8
       Data: 
