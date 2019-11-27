@@ -179,7 +179,7 @@ public class GameResultManager : MonoBehaviour {
         }
         else {
             //테스트 코드
-            StartCoroutine(SetTestLeagueData());
+            //StartCoroutine(SetTestLeagueData());
         }
     }
 
