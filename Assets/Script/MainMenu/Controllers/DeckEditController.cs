@@ -766,12 +766,12 @@ public class DeckEditController : MonoBehaviour {
         CardDataPackage myCards = AccountManager.Instance.cardPackage;
 
         foreach (dataModules.Item card in lodedDeck.items) {
-            if (myCards.data.ContainsKey(card.id)) {
+            if (myCards.data.ContainsKey(card.cardId)) {
                 EditCardHandler settedCard = settingLayout.GetChild(0).GetChild(settedCardNum).GetComponent<EditCardHandler>();
-                if (myCards.data[card.id].cardCount >= card.cardCount)
+                if (myCards.data[card.cardId].cardCount >= card.cardCount)
                     settedCard.SETNUM = card.cardCount;
                 else
-                    settedCard.SETNUM = myCards.data[card.id].cardCount;
+                    settedCard.SETNUM = myCards.data[card.cardId].cardCount;
                 settedCard.DrawCard(card.cardId, isHuman);
                 settedCard.SetSetNum();
                 setCardNum += settedCard.SETNUM;

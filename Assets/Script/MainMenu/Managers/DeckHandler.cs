@@ -73,8 +73,8 @@ public class DeckHandler : MonoBehaviour
     int CheckPlayerCards(dataModules.Deck deck) {
         int cardCount = 0;
         foreach(dataModules.Item card in deck.items) {
-            if (AccountManager.Instance.cardPackage.data.ContainsKey(card.id))
-                cardCount += AccountManager.Instance.cardPackage.data[card.id].cardCount;
+            if (AccountManager.Instance.cardPackage.data.ContainsKey(card.cardId))
+                cardCount += AccountManager.Instance.cardPackage.data[card.cardId].cardCount;
         }
         return cardCount;
     }
