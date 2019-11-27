@@ -264,11 +264,11 @@ public class GameResultManager : MonoBehaviour {
             int pointUp = PlayMangement.instance.SocketHandler.result.pointUp;
             //MMR 증가
             if (pointUp > 0) {
-                coroutine = ProgressLeagueBar(scriptable_leagueData.prevLeagueInfo.ratingPoint, scriptable_leagueData.leagueInfo.ratingPoint, true);
+                coroutine = ProgressLeagueBar(scriptable_leagueData.prevLeagueInfo.ratingPoint, scriptable_leagueData.leagueInfo.ratingPoint, true, leagueInfo);
             }
             //MMR 감소
             else {
-                coroutine = ProgressLeagueBar(scriptable_leagueData.prevLeagueInfo.ratingPoint, scriptable_leagueData.leagueInfo.ratingPoint, false);
+                coroutine = ProgressLeagueBar(scriptable_leagueData.prevLeagueInfo.ratingPoint, scriptable_leagueData.leagueInfo.ratingPoint, false, leagueInfo);
             }
 
             yield return StartCoroutine(coroutine);
@@ -374,11 +374,11 @@ public class GameResultManager : MonoBehaviour {
 
             //MMR 증가
             if (pointUp > 0) {
-                coroutine = ProgressLeagueBar(scriptable_leagueData.prevLeagueInfo.ratingPoint, scriptable_leagueData.leagueInfo.ratingPoint, true);
+                coroutine = ProgressLeagueBar(scriptable_leagueData.prevLeagueInfo.ratingPoint, scriptable_leagueData.leagueInfo.ratingPoint, true, leagueInfo);
             }
             //MMR 감소
             else {
-                coroutine = ProgressLeagueBar(scriptable_leagueData.prevLeagueInfo.ratingPoint, scriptable_leagueData.leagueInfo.ratingPoint, false);
+                coroutine = ProgressLeagueBar(scriptable_leagueData.prevLeagueInfo.ratingPoint, scriptable_leagueData.leagueInfo.ratingPoint, false, leagueInfo);
             }
             yield return StartCoroutine(coroutine);
 
@@ -415,7 +415,7 @@ public class GameResultManager : MonoBehaviour {
             .Subscribe(_ => { currentTime = 0; });
     }
 
-    IEnumerator ProgressLeagueBar(int from, int to, bool isAscend) {
+    IEnumerator ProgressLeagueBar(int from, int to, bool isAscend, AccountManager.LeagueInfo leagueInfo) {
         Transform secondWindow = transform.Find("SecondWindow");
         Transform playerMMR = secondWindow.Find("PlayerMmr");
 
@@ -433,7 +433,7 @@ public class GameResultManager : MonoBehaviour {
         //isAscend = false;
 
         float val = 0;
-        var result = SliceSliderData(from, to, isAscend);
+        var result = SliceSliderData(from, to, isAscend, leagueInfo);
         foreach(SliderData data in result) {
             float offset = 1.0f;
 
@@ -626,7 +626,7 @@ public class GameResultManager : MonoBehaviour {
 
     public List<int> standards = new List<int>() { 0, 150, 300, 450, 600, 800, 1000, 1200, 1400, 1700, 2000, 2300, 2600 };
     
-    public List<SliderData> SliceSliderData(int from, int to, bool isAscend) {
+    public List<SliderData> SliceSliderData(int from, int to, bool isAscend, AccountManager.LeagueInfo leagueInfo) {
         List<SliderData> datas = new List<SliderData>();
 
         if (isAscend) {
@@ -664,12 +664,8 @@ public class GameResultManager : MonoBehaviour {
                 }
                 datas.Add(new SliderData(_from, 0, _from));
             }
-            if(query1.Count > 0) {
-                datas.Add(new SliderData(from, to, standards[query1.Count - 1]));
-            }
-            else {
-                datas.Add(new SliderData(from, to, standards[1]));
-            }
+            var rankArea = AccountManager.Instance.GetTargetRankArea(leagueInfo.rankDetail.minorRankName);
+            datas.Add(new SliderData(from, to, rankArea.Max));
         }
         return datas;
     }

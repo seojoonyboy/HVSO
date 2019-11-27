@@ -1160,6 +1160,7 @@ public partial class AccountManager {
         rankAreas.Add("무명 병사", new Area(0, 149));
         rankAreas.Add("오합지졸 우두머리", new Area(150, 299));
         rankAreas.Add("소규모 무력집단", new Area(300, 449));
+        rankAreas.Add("지역 지도자", new Area(450, 599));
         rankAreas.Add("자경대 대장", new Area(600, 799));
         rankAreas.Add("초급 용병단장", new Area(800, 999));
         rankAreas.Add("베테랑 용병단장", new Area(1000, 1199));
