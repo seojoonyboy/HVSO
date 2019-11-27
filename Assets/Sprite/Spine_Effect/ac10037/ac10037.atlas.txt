@@ -1,0 +1,62 @@
+
+ac10037.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+cr
+  rotate: false
+  xy: 280, 41
+  size: 223, 223
+  orig: 223, 223
+  offset: 0, 0
+  index: -1
+eff_brea
+  rotate: false
+  xy: 505, 2
+  size: 250, 250
+  orig: 250, 250
+  offset: 0, 0
+  index: -1
+th1_1
+  rotate: false
+  xy: 828, 100
+  size: 194, 546
+  orig: 194, 546
+  offset: 0, 0
+  index: -1
+th1_2
+  rotate: true
+  xy: 2, 266
+  size: 190, 546
+  orig: 190, 546
+  offset: 0, 0
+  index: -1
+th1_3
+  rotate: true
+  xy: 2, 458
+  size: 188, 546
+  orig: 188, 546
+  offset: 0, 0
+  index: -1
+th2_1
+  rotate: true
+  xy: 550, 451
+  size: 195, 276
+  orig: 195, 276
+  offset: 0, 0
+  index: -1
+th2_2
+  rotate: true
+  xy: 550, 254
+  size: 195, 276
+  orig: 195, 276
+  offset: 0, 0
+  index: -1
+th2_3
+  rotate: true
+  xy: 2, 69
+  size: 195, 276
+  orig: 195, 276
+  offset: 0, 0
+  index: -1
