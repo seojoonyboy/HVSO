@@ -203,6 +203,8 @@ public class MenuSceneController : MonoBehaviour {
         fixedCanvas.Find("InnerCanvas/Footer").GetChild(currentPage).GetChild(0).gameObject.SetActive(false);
         currentPage = pageNum;
         windowScrollSnap.GoToScreen(currentPage);
+        if (currentPage + 1 == 4)
+            currentPage = 4;
         menuButton.AnimationState.SetAnimation(0, "IDLE_" + (currentPage + 1).ToString(), true);
         fixedCanvas.Find("InnerCanvas/Footer").GetChild(currentPage).GetChild(0).gameObject.SetActive(true);
     }
@@ -210,6 +212,8 @@ public class MenuSceneController : MonoBehaviour {
     public void ScrollSnapButtonChange() {
         fixedCanvas.Find("InnerCanvas/Footer").GetChild(currentPage).GetChild(0).gameObject.SetActive(false);
         currentPage = windowScrollSnap.CurrentPage;
+        if (currentPage + 1 == 4)
+            currentPage = 4;
         menuButton.AnimationState.SetAnimation(0, "IDLE_" + (currentPage + 1).ToString(), true);
         fixedCanvas.Find("InnerCanvas/Footer").GetChild(currentPage).GetChild(0).gameObject.SetActive(true);
     }
@@ -248,29 +252,22 @@ public class MenuSceneController : MonoBehaviour {
     public void SetCardInfoByRarelity() {
         CardDataPackage cdp = AccountManager.Instance.cardPackage;
         Transform humanBtn = dictionaryMenu.Find("HumanButton/CardRarityInfo");
-        humanBtn.Find("common/CardNum").GetComponent<Text>().text = cdp.rarelityHumanCardNum["common"].Count.ToString();
-        humanBtn.Find("uncommon/CardNum").GetComponent<Text>().text = cdp.rarelityHumanCardNum["uncommon"].Count.ToString();
-        humanBtn.Find("rare/CardNum").GetComponent<Text>().text = cdp.rarelityHumanCardNum["rare"].Count.ToString();
-        humanBtn.Find("superrare/CardNum").GetComponent<Text>().text = cdp.rarelityHumanCardNum["superrare"].Count.ToString();
-        humanBtn.Find("legend/CardNum").GetComponent<Text>().text = cdp.rarelityHumanCardNum["legend"].Count.ToString();
-        humanBtn.Find("common/NewCard").gameObject.SetActive(cdp.rarelityHumanCardCheck["common"].Count > 0);
-        humanBtn.Find("uncommon/NewCard").gameObject.SetActive(cdp.rarelityHumanCardCheck["uncommon"].Count > 0);
-        humanBtn.Find("rare/NewCard").gameObject.SetActive(cdp.rarelityHumanCardCheck["rare"].Count > 0);
-        humanBtn.Find("superrare/NewCard").gameObject.SetActive(cdp.rarelityHumanCardCheck["superrare"].Count > 0);
-        humanBtn.Find("legend/NewCard").gameObject.SetActive(cdp.rarelityHumanCardCheck["legend"].Count > 0);
-        //dictionaryMenu.Find("HumanButton/NewCard").gameObject.SetActive(AccountManager.Instance.cardPackage.checkHumanCard.Count > 0);
         Transform orcBtn = dictionaryMenu.Find("OrcButton/CardRarityInfo");
-        orcBtn.Find("common/CardNum").GetComponent<Text>().text = cdp.rarelityOrcCardNum["common"].Count.ToString();
-        orcBtn.Find("uncommon/CardNum").GetComponent<Text>().text = cdp.rarelityOrcCardNum["uncommon"].Count.ToString();
-        orcBtn.Find("rare/CardNum").GetComponent<Text>().text = cdp.rarelityOrcCardNum["rare"].Count.ToString();
-        orcBtn.Find("superrare/CardNum").GetComponent<Text>().text = cdp.rarelityOrcCardNum["superrare"].Count.ToString();
-        orcBtn.Find("legend/CardNum").GetComponent<Text>().text = cdp.rarelityOrcCardNum["legend"].Count.ToString();
-        orcBtn.Find("common/NewCard").gameObject.SetActive(cdp.rarelityOrcCardCheck["common"].Count > 0);
-        orcBtn.Find("uncommon/NewCard").gameObject.SetActive(cdp.rarelityOrcCardCheck["uncommon"].Count > 0);
-        orcBtn.Find("rare/NewCard").gameObject.SetActive(cdp.rarelityOrcCardCheck["rare"].Count > 0);
-        orcBtn.Find("superrare/NewCard").gameObject.SetActive(cdp.rarelityOrcCardCheck["superrare"].Count > 0);
-        orcBtn.Find("legend/NewCard").gameObject.SetActive(cdp.rarelityOrcCardCheck["legend"].Count > 0);
-        //dictionaryMenu.Find("OrcButton/NewCard").gameObject.SetActive(AccountManager.Instance.cardPackage.checkOrcCard.Count > 0);
+        for (int i = 0; i < 5; i++) {
+            string rarelity = humanBtn.GetChild(i).name;
+            humanBtn.GetChild(i).Find("CardNum").GetComponent<Text>().text = cdp.rarelityHumanCardNum[rarelity].Count.ToString();
+            humanBtn.GetChild(i).Find("NewCard").gameObject.SetActive(cdp.rarelityHumanCardCheck[rarelity].Count > 0);
+            orcBtn.GetChild(i).Find("CardNum").GetComponent<Text>().text = cdp.rarelityOrcCardNum[rarelity].Count.ToString();
+            orcBtn.GetChild(i).Find("NewCard").gameObject.SetActive(cdp.rarelityOrcCardCheck[rarelity].Count > 0);
+        }
+        for(int i = 0; i < 5; i++) {
+            if(humanBtn.GetChild(i).Find("NewCard").gameObject.activeSelf || orcBtn.GetChild(i).Find("NewCard").gameObject.activeSelf) {
+                menuButton.transform.Find("Dictionary").gameObject.SetActive(true);
+                break;
+            }
+            if(i == 4)
+                menuButton.transform.Find("Dictionary").gameObject.SetActive(false);
+        }
     }
 
     IEnumerator UpdateWindow() {

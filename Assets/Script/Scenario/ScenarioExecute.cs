@@ -544,6 +544,12 @@ public class Wait_drop : ScenarioExecute {
         PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.MAGIC_USED, CheckMagicUse);
         PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.UNIT_DROP_FAIL, GlowTrigger);
         PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.BEGIN_CARD_PLAY, CheckDrag);
+
+        if (AccountManager.Instance.allCardsDic[args[0]].isHeroCard == true) {
+            PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.SELECT_HERO_CARD, CheckHeroCardTouch);
+            PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.READY_HERO_CARD, ReadyUseHeroCard);
+            PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.CANCEL_HERO_CARD, CancelHeroCard);
+        }
     }
 
     private void CheckMagicUse(Enum event_type, Component Sender, object Param) {
@@ -553,6 +559,14 @@ public class Wait_drop : ScenarioExecute {
             PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.MAGIC_USED, CheckMagicUse);
             PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.UNIT_DROP_FAIL, GlowTrigger);
             PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.BEGIN_CARD_PLAY, CheckDrag);
+
+            if (AccountManager.Instance.allCardsDic[args[0]].isHeroCard == true) {
+                PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.SELECT_HERO_CARD, CheckHeroCardTouch);
+                PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.READY_HERO_CARD, ReadyUseHeroCard);
+                PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.CANCEL_HERO_CARD, CancelHeroCard);
+            }
+
+
             scenarioMask.InfoTouchOFF();
             scenarioMask.HideText();
             handler.isDone = true;
@@ -570,13 +584,32 @@ public class Wait_drop : ScenarioExecute {
         }
     }
 
-
-    private void Glowing(string id) {
-        scenarioMask.CardDeckGlow(id);
+    private void CheckHeroCardTouch(Enum event_type, Component Sender, object Param) {
+        scenarioMask.HideHeroCardGlow();
     }
 
-    private void GlowTrigger(Enum event_type, Component Sender, object Param) {
-        scenarioMask.CardDeckGlow(args[0]);
+    private void ReadyUseHeroCard(Enum event_type, Component Sender, object Param) {
+        GameObject card = (GameObject)Param;
+
+        scenarioMask.HeroCardDrag(card);
+    }
+
+    private void CancelHeroCard(Enum event_type, Component Sender, object Param) {
+        scenarioMask.HideHeroCardGlow();
+    }
+
+
+
+    private void Glowing(string id) {
+        if (AccountManager.Instance.allCardsDic[args[0]].isHeroCard == true) {
+            scenarioMask.HeroCardGlow(true);
+        }
+        else
+            scenarioMask.CardDeckGlow(id);
+    }
+
+    private void GlowTrigger(Enum event_type, Component Sender, object Param) {        
+        Glowing(args[0]);
 
         if (args.Count > 1) {
             scenarioMask.HideText();
@@ -837,6 +870,7 @@ public class Disable_drag : ScenarioExecute {
                     targets.RemoveAll(x => x.GetComponent<MagicDragHandler>().cardData.id == args[2]);
                     foreach(var card in targets) {
                         card.GetComponent<MagicDragHandler>().enabled = false;
+                        card.GetComponent<Button>().enabled = false;
                     }
                 }
                 break;
@@ -1435,7 +1469,7 @@ public class Wait_Close_Info : ScenarioExecute {
 
     public override void Execute() {
         scenarioMask.DisableMask();
-        scenarioMask.InfoTouchON(scenarioMask.infoTouch.transform.position);
+        scenarioMask.InfoTouchON(scenarioMask.targetObject["unitInfoOutPos"].transform.position);
         PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.CLOSE_INFO_WINDOW, CheckClose);
     }
     private void CheckClose(Enum event_type, Component Sender, object Param) {
@@ -1644,6 +1678,7 @@ public class Wait_Match_End : ScenarioExecute {
             StartCoroutine(WaitObjectDead(false));
         }
         else if(PlayMangement.instance.enemyPlayer.HP.Value <= 0) {
+            PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.ENEMY_HERO_DEAD, this);
             handler.isDone = true;
         }
     }

@@ -28,7 +28,7 @@ public partial class MenuCardInfo : MonoBehaviour {
     public static MenuCardInfo cardInfoWindow;
     public GameObject editCard;
     bool makeCard;
-
+    public int bookHaveNum;
 
     private void Start() {
         accountManager = AccountManager.Instance;
@@ -301,6 +301,7 @@ public partial class MenuCardInfo : MonoBehaviour {
         if (transform.localPosition.y != 0)
             transform.localPosition = Vector3.zero;
         editCard = null;
+        bookHaveNum = 0;
         transform.parent.gameObject.SetActive(false);
         transform.gameObject.SetActive(false);
         EscapeKeyController.escapeKeyCtrl.RemoveEscape(CloseInfo);
@@ -330,6 +331,8 @@ public partial class MenuCardInfo : MonoBehaviour {
         SoundManager.Instance.PlaySound(UISfxSound.BUTTON1);
         cardCreate = true;
         makeCard = false;
+        if (bookHaveNum > 0)
+            bookHaveNum--;
         transform.Find("CreateSpine").gameObject.SetActive(true);
         transform.Find("CreateSpine").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, "DECOMPOSITION_" + cardData.rarelity, false);
         beforeCrystal = accountManager.userResource.crystal;
@@ -351,13 +354,11 @@ public partial class MenuCardInfo : MonoBehaviour {
             = AccountManager.Instance.userResource.crystal.ToString();
             SetCardInfo(cardData, isHuman, cardObject, true);
         }
-        else if(cardObject.name == "DictionaryCardVertical") {
-            cardObject.GetComponent<MenuCardHandler>().DrawCard(cardId);
-            SetCardInfo(cardData, isHuman, cardObject, true);
-        }
         else {
             cardObject.GetComponent<EditCardHandler>().deckEditController.cardButtons.MakeCard(cardObject, makeCard);
             SetCardInfo(cardData, isHuman, cardObject, true);
+            if (cardObject.parent.name != "HandDeckArea" && bookHaveNum == 0)
+                transform.Find("CreateCard/BreakBtn/DisableInHand").gameObject.SetActive(true);
             transform.Find("Flavor").gameObject.SetActive(false);
         }
         cardCreate = false;

@@ -69,6 +69,7 @@ public class ShowCardsHandler : MonoBehaviour {
     /// </summary>
     /// <param name="selectedObject">선택된 카드 gameobject</param>
     public void OnClick(GameObject selectedObject) {
+        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.SELECT_HERO_CARD, this);
         StartCoroutine(ProceedSelect(selectedObject));
     }
 
@@ -80,13 +81,16 @@ public class ShowCardsHandler : MonoBehaviour {
         ToggleCancelBtn(true);
         ToggleClickGuideUI(false);
 
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(0.4f);        
+
 
         ToggleDragGuideUI(true);
         
 
         ToggleBg(false);
-        
+
+        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.READY_HERO_CARD, this, selectedObject);
+
         selectedObject.GetComponent<MagicDragHandler>().enabled = true;
         selectedObject.GetComponent<Button>().enabled = false;
     }
@@ -134,6 +138,7 @@ public class ShowCardsHandler : MonoBehaviour {
     }
 
     public void CancelSelecting() {
+        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.CANCEL_HERO_CARD, this);
         StartCoroutine(ProceedCancel());
     }
 
@@ -153,7 +158,7 @@ public class ShowCardsHandler : MonoBehaviour {
         ToggleCancelBtn(false);
 
         yield return new WaitForSeconds(0.4f);
-        
+        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.UNIT_DROP_FAIL, this);
         ToggleAllCards(true);
 
         selectedCard.GetComponent<MagicDragHandler>().enabled = false;

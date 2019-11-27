@@ -365,7 +365,8 @@ public class EffectSystem : SerializedMonoBehaviour {
         HERO_DEAD,
         HERO_SHIELD,
         DARK_THORN,
-        OVERHIT
+        OVERHIT,
+        CHAIN_LIGHTNING
     }
 
 }
