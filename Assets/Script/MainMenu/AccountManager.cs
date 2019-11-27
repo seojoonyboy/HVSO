@@ -1088,7 +1088,7 @@ public partial class AccountManager {
         public int modifiedRatingPoint;
         public RankDetail rankDetail;
 
-        public int id;
+        public int? id;
         public int userId;
         //public int leagueId;
         public int ratingPoint;
