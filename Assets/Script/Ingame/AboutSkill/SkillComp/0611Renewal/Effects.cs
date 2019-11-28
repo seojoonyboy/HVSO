@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UniRx;
 using System.Threading.Tasks;
 
 namespace SkillModules {
@@ -352,7 +353,7 @@ namespace SkillModules {
                 bool isPlayer = (bool)tmp[0];
                 List<GameObject> targets = (List<GameObject>)tmp[1];
                 int amount = (int)tmp[2];
-                skillHandler.finallyDone = false;
+                skillHandler.finallyDone = false;                
                 BlastEnemy(isPlayer, targets, amount);
             }
             else {
@@ -361,27 +362,40 @@ namespace SkillModules {
             skillHandler.isDone = true;
         }
 
-        private void BlastEnemy(bool isPlayer, List<GameObject> targets, int amount) {
-            foreach(GameObject target in targets) {
+        private void BlastEnemy(bool isPlayer, List<GameObject> targets, int amount) {           
+            foreach (GameObject target in targets) {
                 PlaceMonster unit = target.GetComponent<PlaceMonster>();
                 string skillId = skillHandler.myObject.GetComponent<MagicDragHandler>().cardData.id;                
                 if (unit != null) {
                     unit.RequestChangeStat(0, -amount, skillId);
-                    EffectSystem.Instance.CheckEveryLineMask(unit.x);
+                    EffectSystem.Instance.CheckEveryLineMask(unit);
+                    EffectSystem.Instance.MaskLine(unit.x, false);
                     WaitEffect(target, amount);
                 } else {
                     target.GetComponent<PlayerController>().TakeIgnoreShieldDamage(amount, true, skillId);
                     skillHandler.finallyDone = true;
                 }
             }
+
+            //if (targets.Count == 1)
+            //    EffectSystem.Instance.CheckEveryLineMask(targets[0].GetComponent<PlaceMonster>().x);
+            //else if (targets.Count > 1)
+            //    EffectSystem.Instance.CheckEveryLineMask(targets);
+            //else
+            //    return;
         }
+        
+
 
         private async void WaitEffect(GameObject target, int amount) {
             await System.Threading.Tasks.Task.Delay(1500);
-            if (target != null)
+            if (target != null) {
                 target.GetComponent<PlaceMonster>().CheckHP();
+                target.GetComponent<PlaceMonster>().ResetSorting();
 
+            }
             EffectSystem.Instance.HideMaskLine();
+            EffectSystem.Instance.EnemyHeroHideDim();
             skillHandler.finallyDone = true;
         }
     }
@@ -410,6 +424,7 @@ namespace SkillModules {
             // }
             skillHandler.finallyDone = false;
             WaitDone();
+            EffectSystem.Instance.CheckEveryLineMask();
             skillHandler.isDone = true;
         }
 
@@ -460,8 +475,11 @@ namespace SkillModules {
         private void BlastEnemy(bool isPlayer, List<GameObject> targets, int amount) {
             foreach (GameObject target in targets) {
                 target.GetComponent<PlaceMonster>().RequestChangeStat(0, -amount);
+                EffectSystem.Instance.MaskLine(target.GetComponent<PlaceMonster>().x, false);
                 WaitEffect(target, amount);
             }
+
+
         }
 
         private async void WaitEffect(GameObject target, int amount) {
