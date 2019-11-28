@@ -75,6 +75,8 @@ public class NoneIngameSceneEventHandler : Singleton<NoneIngameSceneEventHandler
         API_NICKNAME_UPDATED,
         API_CLEARED_STAGE_UPDATED,
         API_TUTORIAL_PRESETTING_COMPLETE,
-        API_LEAGUE_INFO_UPDATED
+        API_LEAGUE_INFO_UPDATED,
+        API_SHOP_ITEM_UPDATED,
+        API_SHOP_ITEM_BUY
     }
 }
