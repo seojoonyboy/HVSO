@@ -179,7 +179,7 @@ public class GameResultManager : MonoBehaviour {
         }
         else {
             //테스트 코드
-            StartCoroutine(SetTestLeagueData());
+            //StartCoroutine(SetTestLeagueData());
         }
     }
 
@@ -263,12 +263,12 @@ public class GameResultManager : MonoBehaviour {
 
             int pointUp = PlayMangement.instance.SocketHandler.result.pointUp;
             //MMR 증가
-            if (pointUp > 0) {
-                coroutine = ProgressLeagueBar(scriptable_leagueData.prevLeagueInfo.ratingPoint, scriptable_leagueData.leagueInfo.ratingPoint, true);
+            if (scriptable_leagueData.leagueInfo.ratingPoint > scriptable_leagueData.prevLeagueInfo.ratingPoint) {
+                coroutine = ProgressLeagueBar(scriptable_leagueData.prevLeagueInfo.ratingPoint, scriptable_leagueData.leagueInfo.ratingPoint, true, leagueInfo);
             }
             //MMR 감소
             else {
-                coroutine = ProgressLeagueBar(scriptable_leagueData.prevLeagueInfo.ratingPoint, scriptable_leagueData.leagueInfo.ratingPoint, false);
+                coroutine = ProgressLeagueBar(scriptable_leagueData.prevLeagueInfo.ratingPoint, scriptable_leagueData.leagueInfo.ratingPoint, false, leagueInfo);
             }
 
             yield return StartCoroutine(coroutine);
@@ -325,79 +325,6 @@ public class GameResultManager : MonoBehaviour {
 
     IEnumerator coroutine;
 
-    public IEnumerator SetTestLeagueData() {
-        var battleConnector = PlayMangement.instance.SocketHandler;
-        AccountManager.LeagueInfo leagueInfo = new AccountManager.LeagueInfo();
-        leagueInfo.winningStreak = 1;
-        leagueInfo.losingStreak = 0;
-        leagueInfo.rankDetail = new AccountManager.RankDetail();
-        leagueInfo.rankDetail.minorRankName = "오합지졸 우두머리";
-        leagueInfo.rankDetail.majorRankName = "지도자";
-        leagueInfo.ratingPoint = 170;
-        leagueInfo.rankDetail.pointOverThen = 300;
-
-        scriptable_leagueData.prevLeagueInfo.ratingPoint = 140;
-        scriptable_leagueData.prevLeagueInfo.rankDetail.minorRankName = "무명 병사";
-        scriptable_leagueData.leagueInfo.ratingPoint = 170;
-
-        int pointUp = 30;
-
-        if (leagueInfo != null) {
-            Transform secondWindow = transform.Find("SecondWindow");
-            Transform playerMMR = secondWindow.Find("PlayerMmr");
-            Image rankIcon = playerMMR.Find("RankIcon").GetComponent<Image>();
-
-            var icons = AccountManager.Instance.resource.rankIcons;
-            if (icons.ContainsKey(scriptable_leagueData.prevLeagueInfo.rankDetail.minorRankName)) {
-                rankIcon.sprite = icons[scriptable_leagueData.prevLeagueInfo.rankDetail.minorRankName];
-            }
-            else {
-                rankIcon.sprite = icons["default"];
-            }
-            rankIcon.transform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = scriptable_leagueData.prevLeagueInfo.rankDetail.minorRankName;
-
-            var description = playerMMR.Find("VictoryInfo").GetComponent<TMPro.TextMeshProUGUI>();
-            StringBuilder sb = new StringBuilder();
-            if (leagueInfo.winningStreak > 0) {
-                sb
-                    .Append("<color=yellow>")
-                    .Append(leagueInfo.winningStreak)
-                    .Append("</color> 연승중");
-            }
-            else if (leagueInfo.losingStreak > 0) {
-                sb
-                    .Append("<color=red>")
-                    .Append(leagueInfo.losingStreak)
-                    .Append("</color> 연패중");
-            }
-            description.text = sb.ToString();
-
-            //MMR 증가
-            if (pointUp > 0) {
-                coroutine = ProgressLeagueBar(scriptable_leagueData.prevLeagueInfo.ratingPoint, scriptable_leagueData.leagueInfo.ratingPoint, true);
-            }
-            //MMR 감소
-            else {
-                coroutine = ProgressLeagueBar(scriptable_leagueData.prevLeagueInfo.ratingPoint, scriptable_leagueData.leagueInfo.ratingPoint, false);
-            }
-            yield return StartCoroutine(coroutine);
-
-            //yield return new WaitForSeconds(3.0f);
-            //yield return ShowLeagueEffect();
-            //yield return ShowTierChangeEffect(leagueInfo, pointUp);
-
-            if (icons.ContainsKey(leagueInfo.rankDetail.minorRankName)) {
-                rankIcon.sprite = icons[leagueInfo.rankDetail.minorRankName];
-                rankIcon.transform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = leagueInfo.rankDetail.minorRankName;
-            }
-            else {
-                rankIcon.sprite = icons["default"];
-            }
-        }
-        yield return 0;
-
-    }
-
     public float currentTime = 0;
     private const float WAIT_TIME = 10.0f;
     IDisposable observer_1, observer_2;
@@ -415,7 +342,7 @@ public class GameResultManager : MonoBehaviour {
             .Subscribe(_ => { currentTime = 0; });
     }
 
-    IEnumerator ProgressLeagueBar(int from, int to, bool isAscend) {
+    IEnumerator ProgressLeagueBar(int from, int to, bool isAscend, AccountManager.LeagueInfo leagueInfo) {
         Transform secondWindow = transform.Find("SecondWindow");
         Transform playerMMR = secondWindow.Find("PlayerMmr");
 
@@ -433,7 +360,7 @@ public class GameResultManager : MonoBehaviour {
         //isAscend = false;
 
         float val = 0;
-        var result = SliceSliderData(from, to, isAscend);
+        var result = SliceSliderData(from, to, isAscend, leagueInfo);
         foreach(SliderData data in result) {
             float offset = 1.0f;
 
@@ -450,12 +377,33 @@ public class GameResultManager : MonoBehaviour {
                 }
             }
             else {
-                val = data.maxVal;
-                while (val > data.to) {
-                    val -= offset;
-                    slider.value = val / data.maxVal;
-                    expValue.text = val + "/" + data.maxVal;
-                    yield return new WaitForSeconds(0.01f);
+                yield return new WaitForSeconds(1.0f);
+                //마이너스 이동
+                if (data.from == 0 && data.to < 0) {
+                    slider.value = 0;
+                    int _to = -1 * data.to;
+                    float _val = data.minVal;
+
+                    Logger.Log("마이너스 이동");
+                    Logger.Log("_to : " + _to);
+                    Logger.Log("_val : " + _val);
+
+                    while (_val > _to) {
+                        _val -= offset;
+                        Logger.Log("_val : " + _val);
+                        expValue.text = _val + "/" + data.maxVal;
+                        yield return new WaitForSeconds(0.01f);
+                    }
+                }
+                //일반적인 감소
+                else {
+                    val = data.maxVal;
+                    while (val > data.to) {
+                        val -= offset;
+                        slider.value = val / data.maxVal;
+                        expValue.text = val + "/" + data.maxVal;
+                        yield return new WaitForSeconds(0.01f);
+                    }
                 }
             }
         }
@@ -626,8 +574,15 @@ public class GameResultManager : MonoBehaviour {
 
     public List<int> standards = new List<int>() { 0, 150, 300, 450, 600, 800, 1000, 1200, 1400, 1700, 2000, 2300, 2600 };
     
-    public List<SliderData> SliceSliderData(int from, int to, bool isAscend) {
+    public List<SliderData> SliceSliderData(int from, int to, bool isAscend, AccountManager.LeagueInfo leagueInfo) {
         List<SliderData> datas = new List<SliderData>();
+
+        //테스트 코드
+        //isAscend = false;
+        //from = 570;
+        //to = 550;
+        //leagueInfo.ratingPoint = 550;
+        //leagueInfo.rankDetail.minorRankName = "자경대 대장";
 
         if (isAscend) {
             List<int> query1 = standards.FindAll(x => x > from && x < to);      //from과 to 사이에 존재하는 기준값
@@ -643,10 +598,10 @@ public class GameResultManager : MonoBehaviour {
                     _from = query1[i - 1];
                     _to = query1[i];
                 }
-                datas.Add(new SliderData(_from, _to, query1[i + 1]));
+                datas.Add(new SliderData(_from, _to, query1[i + 1], 0));
             }
             int index = standards.IndexOf(query1[query1.Count - 1]);
-            datas.Add(new SliderData(query1[query1.Count - 1], to, standards[index + 1]));
+            datas.Add(new SliderData(query1[query1.Count - 1], to, standards[index + 1], 0));
         }
         else {
             List<int> query1 = standards.FindAll(x => x > to && x < from);      //from과 to 사이에 존재하는 기준값
@@ -662,13 +617,15 @@ public class GameResultManager : MonoBehaviour {
                     _from = query1[i - 1] - 1;
                     _to = query1[i];
                 }
-                datas.Add(new SliderData(_from, 0, _from));
+                datas.Add(new SliderData(_from, 0, _from, 0));
             }
-            if(query1.Count > 0) {
-                datas.Add(new SliderData(from, to, standards[query1.Count - 1]));
+            var rankArea = AccountManager.Instance.GetTargetRankArea(leagueInfo.rankDetail.minorRankName);
+            //최솟값보다 떨어지는 경우
+            if(from < rankArea.Min) {
+                datas.Add(new SliderData(0, -from, rankArea.Max, rankArea.Min));
             }
             else {
-                datas.Add(new SliderData(from, to, standards[1]));
+                datas.Add(new SliderData(from, to, rankArea.Max, rankArea.Min));
             }
         }
         return datas;
@@ -678,11 +635,12 @@ public class GameResultManager : MonoBehaviour {
         public int from;
         public int to;
         public int maxVal;
-
-        public SliderData(int from, int to, int maxVal) {
+        public int minVal;
+        public SliderData(int from, int to, int maxVal, int minVal) {
             this.from = from;
             this.to = to;
             this.maxVal = maxVal;
+            this.minVal = minVal;   //Minus 이동에서만 사용함
         }
     }
 }

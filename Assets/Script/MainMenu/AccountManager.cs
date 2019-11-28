@@ -28,6 +28,8 @@ public partial class AccountManager : Singleton<AccountManager> {
     public List<Templates> humanTemplates;
     public List<Templates> orcTemplates;
 
+    public List<Shop> shopItems;
+
     public List<CollectionCard> allCards { get; private set; }
     public List<HeroInventory> allHeroes { get; private set; }
 
@@ -494,7 +496,6 @@ public partial class AccountManager {
         );
         request.MethodType = BestHTTP.HTTPMethods.Post;
         request.AddHeader("authorization", TokenFormat);
-        Debug.Log(string.Format("{{\"heroId\":\"{0}\"}}", heroId));
         request.RawData = Encoding.UTF8.GetBytes(string.Format("{{\"heroId\":\"{0}\"}}", heroId));
         networkManager.Request(request, (req, res) => {
             if (res.IsSuccess) {
@@ -750,6 +751,74 @@ public partial class AccountManager {
                 Logger.LogWarning("인벤토리 정보 가져오기 실패");
             }
         }, "인벤토리 정보를 불러오는 중...");
+    }
+
+
+
+    public void RequestShopItems() {
+        StringBuilder url = new StringBuilder();
+        string base_url = networkManager.baseUrl;
+
+        url
+            .Append(base_url)
+            .Append("api/shop");
+
+        HTTPRequest request = new HTTPRequest(
+            new Uri(url.ToString())
+        );
+        request.MethodType = HTTPMethods.Get;
+        request.AddHeader("authorization", TokenFormat);
+        networkManager.Request(request, (req, res) => {
+            if (res.IsSuccess) {
+                if (res.StatusCode == 200 || res.StatusCode == 304) {
+                    var result = dataModules.JsonReader.Read<List<Shop>>(res.DataAsText);
+                    shopItems = result;
+
+                    NoneIngameSceneEventHandler
+                        .Instance
+                        .PostNotification(
+                            NoneIngameSceneEventHandler.EVENT_TYPE.API_SHOP_ITEM_UPDATED,
+                            null,
+                            res
+                        );
+                }
+            }
+            else {
+                Logger.LogWarning("상점 불러오기 실패");
+            }
+        }, "상점을 불러오는중...");
+    }
+
+    public void RequestBuyItem(string itemId) {
+        StringBuilder sb = new StringBuilder();
+        sb
+            .Append(networkManager.baseUrl)
+            .Append("api/shop/buy");
+
+        HTTPRequest request = new HTTPRequest(
+            new Uri(sb.ToString())
+        );
+        request.MethodType = BestHTTP.HTTPMethods.Post;
+        request.AddHeader("authorization", TokenFormat);
+
+        request.RawData = Encoding.UTF8.GetBytes(string.Format("{{\"id\":\"{0}\"}}", itemId));
+
+        networkManager.Request(request, (req, res) => {
+            if (res.IsSuccess) {
+                if (res.StatusCode == 200 || res.StatusCode == 304) {
+                    NoneIngameSceneEventHandler
+                        .Instance
+                        .PostNotification(
+                            NoneIngameSceneEventHandler.EVENT_TYPE.API_SHOP_ITEM_BUY,
+                            null,
+                            res
+                        );
+                }
+            }
+            else {
+                Logger.LogWarning("상품 구매 실패");
+            }
+        }, "상품 구매 중...");
     }
 
     private void TestModifyDeck() {
@@ -1160,6 +1229,7 @@ public partial class AccountManager {
         rankAreas.Add("무명 병사", new Area(0, 149));
         rankAreas.Add("오합지졸 우두머리", new Area(150, 299));
         rankAreas.Add("소규모 무력집단", new Area(300, 449));
+        rankAreas.Add("지역 지도자", new Area(450, 599));
         rankAreas.Add("자경대 대장", new Area(600, 799));
         rankAreas.Add("초급 용병단장", new Area(800, 999));
         rankAreas.Add("베테랑 용병단장", new Area(1000, 1199));

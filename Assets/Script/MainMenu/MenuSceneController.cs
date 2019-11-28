@@ -19,6 +19,7 @@ public class MenuSceneController : MonoBehaviour {
     [SerializeField] public GameObject storyLobbyPanel;    //스토리 메뉴 화면
     [SerializeField] SkeletonGraphic menuButton;
     [SerializeField] GameObject[] offObjects;
+    [SerializeField] ShopManager shopManager;
     protected SkeletonGraphic selectedAnimation;
     private int currentPage;
     private bool buttonClicked;
@@ -38,7 +39,7 @@ public class MenuSceneController : MonoBehaviour {
 
     private void Awake() {
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_TUTORIAL_PRESETTING_COMPLETE, CheckTutorial);
-
+        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_SHOP_ITEM_UPDATED, UpdateShop);
         menuSceneController = this;
 
         #region 테스트코드
@@ -148,6 +149,7 @@ public class MenuSceneController : MonoBehaviour {
         if(SoundManager.Instance != null)
             SoundManager.Instance.bgmController.StopSoundTrack();
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_TUTORIAL_PRESETTING_COMPLETE, CheckTutorial);
+        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_SHOP_ITEM_UPDATED, UpdateShop);
     }
 
     private void Start() {
@@ -316,5 +318,9 @@ public class MenuSceneController : MonoBehaviour {
         newbiComp.menuSceneController = this;
         newbiComp.name = "NewbiController";
         newbiComp.Init(decksLoader, scenarioManager, newbiLoadingModal);
+    }
+
+    private void UpdateShop(Enum Event_Type, Component Sender, object Param) {
+        shopManager.SetShop();
     }
 }

@@ -68,14 +68,6 @@ public class BattleReadySceneController : MonoBehaviour {
         battleReadyHeaderController.SetUI(info);
     }
 
-    /// <summary>
-    /// 랭크 변화가 있었는지 확인
-    /// </summary>
-    /// <returns></returns>
-    private bool isRankChanged() {
-        return true;
-    }
-
     public void OnStartButton() {
         if (isIngameButtonClicked) {
             Logger.Log("이미 대전 시작 버튼이 눌려진 상태");

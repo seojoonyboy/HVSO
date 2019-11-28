@@ -9081,7 +9081,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: "\uC9C0\uC5ED\uC9C0\uB3C4\uC790"
+      Data: "\uC9C0\uC5ED \uC9C0\uB3C4\uC790"
     - Name: $v
       Entry: 10
       Data: 271
@@ -10394,6 +10394,7 @@ MonoBehaviour:
   logo: {fileID: 571196812}
   textImage: {fileID: 1363517176}
   loginBtn: {fileID: 1949013726}
+  currentTime: 0
 --- !u!1 &1949013722
 GameObject:
   m_ObjectHideFlags: 0
