@@ -27,6 +27,12 @@
                 "targetNum": 1,
                 "currentNum": 0
             },
+            {
+                "id": 2,
+                "content": "전투에서 승리",
+                "targetNum": 1,
+                "currentNum": 0
+            }
         ]
     }
 ]

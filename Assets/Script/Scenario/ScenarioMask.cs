@@ -522,6 +522,65 @@ public class ScenarioMask : SerializedMonoBehaviour
         GetMaskingObject("shieldArrow", "bottom").GetComponent<Image>().color = color;
     }
 
+    public void HeroCardGlow(bool isLeft) {
+        GameObject temp = targetObject["shieldCard"];
+        ShowCardsHandler showCardsHandler = temp.GetComponent<ShowCardsHandler>();
+        GameObject card;
+
+        if (isLeft == true)
+            card = temp.transform.Find("Left").GetChild(1).gameObject;
+        else
+            card = temp.transform.Find("Right").GetChild(1).gameObject;
+
+
+        if (card.transform.Find("drag") == null) {
+            GameObject dragEffect = Instantiate(EffectSystem.Instance.cardDragEffect, card.transform);
+            dragEffect.transform.position = card.transform.position;
+            dragEffect.name = "drag";
+            dragEffect.transform.SetAsLastSibling();
+            SetTouchAnimation(dragEffect, "TOUCH");
+        }
+        else {
+            GameObject dragEffect = card.transform.Find("drag").gameObject;
+            SetTouchAnimation(dragEffect, "TOUCH");
+        }
+
+        card.transform.Find("drag").gameObject.SetActive(true);
+    }
+
+    public void HeroCardDrag(GameObject card) {
+        GameObject dragEffect = card.transform.Find("drag").gameObject;
+        SetTouchAnimation(dragEffect, "DRAG");
+        dragEffect.SetActive(true);
+    }
+
+    private void SetTouchAnimation(GameObject dragEffect, string anime) {        
+        SkeletonGraphic skeletonGraphic = dragEffect.GetComponent<SkeletonGraphic>();
+        skeletonGraphic.Initialize(true);
+        skeletonGraphic.Update(0);
+        skeletonGraphic.Skeleton.SetSlotsToSetupPose();
+        skeletonGraphic.AnimationState.SetAnimation(0, anime, true);
+    }
+
+    public void HideHeroCardGlow() {
+        GameObject temp = targetObject["shieldCard"];
+        ShowCardsHandler showCardsHandler = temp.GetComponent<ShowCardsHandler>();
+        GameObject card;
+
+        card = temp.transform.Find("Left").GetChild(1).gameObject;
+        if (card.transform.Find("drag") != null) {
+            SetTouchAnimation(card.transform.Find("drag").gameObject, "TOUCH");
+            card.transform.Find("drag").gameObject.SetActive(false);
+        }
+        card = temp.transform.Find("Right").GetChild(1).gameObject;
+        if (card.transform.Find("drag") != null) {
+            SetTouchAnimation(card.transform.Find("drag").gameObject, "TOUCH");
+            card.transform.Find("drag").gameObject.SetActive(false);
+        }
+    }
+
+
+
     public void CardDeckGlow(string targetID = null) {       
         for(int i =0; i< targetObject["hand_card"].transform.childCount; i++) {
 
@@ -538,11 +597,7 @@ public class ScenarioMask : SerializedMonoBehaviour
             GameObject glowObject = GetUnactiveGlow();
             RectTransform glowRect = glowObject.GetComponent<RectTransform>();
             GameObject getObject;
-            Image glowImage = glowObject.GetComponent<Image>();
-
-            
-
-            
+            Image glowImage = glowObject.GetComponent<Image>();         
 
             getObject = cardSlot.GetChild(0).gameObject;
             if (getObject.transform.Find("Glow") == null) {                

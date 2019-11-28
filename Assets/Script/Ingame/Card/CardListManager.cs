@@ -236,8 +236,7 @@ public class CardListManager : MonoBehaviour
                 info.Find("Skill&BuffRow1").GetChild(skillnum).GetComponent<EventTrigger>().triggers.Add(onBtn);
                 EventTrigger.Entry offBtn = new EventTrigger.Entry();
                 offBtn.eventID = EventTriggerType.PointerUp;
-                offBtn.callback.AddListener((EventData) => CloseClassDescModal());
-                offBtn.callback.AddListener((EventPost) => PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.CLOSE_INFO_WINDOW, this));
+                offBtn.callback.AddListener((EventData) => CloseClassDescModal());                
                 info.Find("Skill&BuffRow1").GetChild(skillnum).GetComponent<EventTrigger>().triggers.Add(offBtn);
                 skillnum++;
             }
@@ -441,6 +440,7 @@ public class CardListManager : MonoBehaviour
         for (int i = 0; i < transform.Find("FieldUnitInfo").childCount; i++) {
             transform.Find("FieldUnitInfo").GetChild(i).gameObject.SetActive(false);
         }
+        PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.CLOSE_INFO_WINDOW, this);
         PlayMangement.instance.infoOn = false;
     }
 
