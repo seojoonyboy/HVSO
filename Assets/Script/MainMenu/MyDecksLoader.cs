@@ -65,5 +65,6 @@ public class MyDecksLoader : MonoBehaviour {
         accountManager.RequestInventories();
         accountManager.RequestClearedStoryList();
         accountManager.RequestShopItems();
+        accountManager.RequestLeagueInfo();
     }
 }
