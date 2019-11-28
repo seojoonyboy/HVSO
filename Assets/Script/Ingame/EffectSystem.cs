@@ -192,14 +192,18 @@ public class EffectSystem : SerializedMonoBehaviour {
     public void EnemyHeroHideDim() {
         GameObject backGroundTill = PlayMangement.instance.backGroundTillObject;
         backGroundTill.SetActive(false);
-    }    
+    }
+
+
+    
+
 
     public void MaskLine(int lineNum, bool active) {
         GameObject lineMask = PlayMangement.instance.lineMaskObject;
         lineMask.SetActive(true);
         GameObject line = lineMask.transform.GetChild(lineNum).gameObject;
         line.SetActive(active);
-        line.GetComponent<SpriteRenderer>().color = new Color(0.28f, 0.28f, 0.28f, 0.6f);
+        line.GetComponent<SpriteRenderer>().color = new Color(0.28f, 0.28f, 0.28f, 0.6f);        
 
         int sorting = 53;
         line.GetComponent<SpriteRenderer>().sortingOrder = (active == true) ? sorting : 11;
@@ -207,15 +211,24 @@ public class EffectSystem : SerializedMonoBehaviour {
 
     public void HideMaskLine() {
         GameObject lineMask = PlayMangement.instance.lineMaskObject;
+        foreach (Transform child in lineMask.transform)
+            MaskLine(child.GetSiblingIndex(), false);
         lineMask.SetActive(false);
+
     }
+
+    public bool GetLineMaskEnable(int lineNum) {
+        return PlayMangement.instance.lineMaskObject.transform.GetChild(lineNum).gameObject.activeSelf;
+}
+
 
 
     public void CheckEveryLineMask(int lineNum = -1) {
         for (int i = 0; i < 5; i++)
-            MaskLine(i, (i != lineNum) ? true : false);       
-        
+            MaskLine(i, (i != lineNum) ? true : false);      
     }
+
+    
 
     public void CheckEveryLineMask(PlaceMonster unit) {
         for (int i = 0; i < 5; i++)

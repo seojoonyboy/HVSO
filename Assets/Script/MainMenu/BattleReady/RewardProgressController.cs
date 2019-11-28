@@ -44,7 +44,6 @@ public class RewardProgressController : MonoBehaviour {
     }
 
     public void Init() {
-        //테스트 코드
         SetProgress(progressType.CURR_PROGRESS_BAR);
     }
 
@@ -66,21 +65,45 @@ public class RewardProgressController : MonoBehaviour {
         StartCoroutine(SetProgress(progressBar));
     }
 
+    const float progressBarOffsetLeft = 50;
+
     IEnumerator SetProgress(GameObject progressBar) {
         yield return new WaitForEndOfFrame();
-        float progressBarOffsetLeft = 50;
+        
         int prevMMR = leagueData.prevLeagueInfo.ratingPoint;
 
-        float firstBtnPosX = rewardsProvider
-            .buttons[0]
+        int closestRightTargetIndex = 0;
+        int closestLeftTargetIndex = GetIndex(prevMMR);
+        if (closestLeftTargetIndex == rewardsProvider.buttons.Count - 1) closestRightTargetIndex = rewardsProvider.buttons.Count - 1;
+        else closestRightTargetIndex = GetIndex(prevMMR) + 1;
+
+        float closestLeftTargetMMR = rewardsProvider
+            .standards[closestLeftTargetIndex];
+        float closestLeftTargetX = rewardsProvider
+            .buttons[closestLeftTargetIndex]
             .GetComponent<RectTransform>()
             .localPosition.x;
-        int firstBtnMMR = rewardsProvider.standards[0];
+        float closestRightTargetMMR = rewardsProvider
+            .standards[closestRightTargetIndex];
+        float closestRightTargetX = rewardsProvider
+            .buttons[closestRightTargetIndex]
+            .GetComponent<RectTransform>()
+            .localPosition.x;
 
-        float startPosX = prevMMR * firstBtnPosX / firstBtnMMR;
+        if (closestLeftTargetIndex < closestRightTargetIndex) {
+            float mmrWidth = closestRightTargetMMR - closestLeftTargetMMR;
+            float localPosWidth = closestRightTargetX - closestLeftTargetX;
 
-        RectTransform rect = progressBar.GetComponent<RectTransform>();
-        rect.sizeDelta = new Vector2(startPosX + progressBarOffsetLeft, rect.rect.height);
+            var val = localPosWidth * (prevMMR - closestLeftTargetMMR) / mmrWidth;
+
+            RectTransform rect = progressBar.GetComponent<RectTransform>();
+            rect.sizeDelta = new Vector2(closestLeftTargetX + val - progressBarOffsetLeft, rect.rect.height);
+        }
+        else {
+            int tmpVal = 60;
+            RectTransform rect = progressBar.GetComponent<RectTransform>();
+            rect.sizeDelta = new Vector2(closestLeftTargetX + tmpVal - progressBarOffsetLeft, rect.rect.height);
+        }
 
         RectTransform bgRect = backgroundProgressBar.GetComponent<RectTransform>();
         bgRect.sizeDelta = new Vector2(scrollRect.content.sizeDelta.x - 10, bgRect.sizeDelta.y);
@@ -95,7 +118,9 @@ public class RewardProgressController : MonoBehaviour {
         yield return new WaitForEndOfFrame();
 
         isProgressAscending = (leagueData.leagueInfo.ratingPoint > leagueData.prevLeagueInfo.ratingPoint);
-
+        //테스트 코드
+        //isProgressAscending = false;
+        
         isMoving = true;
 
         if (isProgressAscending) {
@@ -109,71 +134,117 @@ public class RewardProgressController : MonoBehaviour {
     }
 
     IEnumerator ProgressAscending() {
-        int closestBtnIndex = GetIndex(leagueData.leagueInfo.ratingPoint);
-        RectTransform closestBtnRect = rewardsProvider.buttons[closestBtnIndex].GetComponent<RectTransform>();
-        var closestBtnPosX = closestBtnRect.localPosition.x;
-        int btnMMR = GetButtonStandard(closestBtnIndex);
+        int newMMR = leagueData.prevLeagueInfo.ratingPoint;
+        //테스트 코드
+        //newMMR = 3000;
 
-        if(btnMMR != 0) {
+        int closestRightTargetIndex = 0;
+        int closestLeftTargetIndex = GetIndex(newMMR);
+        if (closestLeftTargetIndex == rewardsProvider.buttons.Count - 1) closestRightTargetIndex = rewardsProvider.buttons.Count - 1;
+        else closestRightTargetIndex = GetIndex(newMMR) + 1;
+
+        float closestLeftTargetMMR = rewardsProvider
+            .standards[closestLeftTargetIndex];
+        float closestLeftTargetX = rewardsProvider
+            .buttons[closestLeftTargetIndex]
+            .GetComponent<RectTransform>()
+            .localPosition.x;
+        float closestRightTargetMMR = rewardsProvider
+            .standards[closestRightTargetIndex];
+        float closestRightTargetX = rewardsProvider
+            .buttons[closestRightTargetIndex]
+            .GetComponent<RectTransform>()
+            .localPosition.x;
+
+        if (closestLeftTargetIndex < closestRightTargetIndex) {
+            float mmrWidth = closestRightTargetMMR - closestLeftTargetMMR;
+            float localPosWidth = closestRightTargetX - closestLeftTargetX;
+
+            float val = 0;
+            if (newMMR != closestLeftTargetMMR) {
+                val = closestLeftTargetX + (localPosWidth * (newMMR - closestLeftTargetMMR) / mmrWidth) - progressBarOffsetLeft;
+            }
+            else {
+                val = closestLeftTargetX - progressBarOffsetLeft;
+            }
+            
+            float targetPosX = val;
             RectTransform rect = currentProgressBar.GetComponent<RectTransform>();
-            var progressPosX = currentProgressBar.GetComponent<RectTransform>().localPosition.x;
+            float progressValue = rect.sizeDelta.x;
 
-            float targetPosX = closestBtnPosX * leagueData.leagueInfo.ratingPoint / btnMMR;
-            float offset = targetPosX - progressPosX;
-            float interval = 0;
-
-            int val = 0;
-            while (progressPosX + val < offset) {
-                rect.sizeDelta = new Vector2(progressPosX + val - 50, rect.rect.height);
+            int interval = 0;
+            while (progressValue < targetPosX) {
+                progressValue += 10;
+                rect.sizeDelta = new Vector2(progressValue, rect.rect.height);
                 if (interval > 0 && interval % 40 == 0) {
                     var totalWidth = scrollRect.content.sizeDelta.x;
                     var tmp = rect.sizeDelta / totalWidth;
-                    //Logger.Log("rect.sizeDelta + val / totalWidth : " + tmp);
                     scrollRect.horizontalNormalizedPosition = tmp.x;
                 }
                 yield return new WaitForEndOfFrame();
-                val += 10;
                 interval++;
             }
         }
-
-        SnapTo(closestBtnIndex);
+        SnapTo(closestRightTargetIndex);
     }
 
     IEnumerator ProgressDescending() {
-        int closestBtnIndex = GetIndex(leagueData.leagueInfo.ratingPoint);
-        RectTransform closestBtnRect = rewardsProvider.buttons[closestBtnIndex].GetComponent<RectTransform>();
-        var closestBtnPosX = closestBtnRect.localPosition.x;
-        int btnMMR = GetButtonStandard(closestBtnIndex);
+        int newMMR = leagueData.prevLeagueInfo.ratingPoint;
+        //테스트 코드
+        //newMMR = 2000;
 
-        if(btnMMR != 0) {
-            RectTransform rect = currentProgressBar.GetComponent<RectTransform>();
-            var progressPosX = currentProgressBar.GetComponent<RectTransform>().rect.width;
+        int closestRightTargetIndex = 0;
+        int closestLeftTargetIndex = GetIndex(newMMR);
+        if (closestLeftTargetIndex == rewardsProvider.buttons.Count - 1) closestRightTargetIndex = rewardsProvider.buttons.Count - 1;
+        else closestRightTargetIndex = GetIndex(newMMR) + 1;
 
-            float targetPosX = closestBtnPosX * leagueData.leagueInfo.ratingPoint / btnMMR;
-            float interval = 0;
+        float closestLeftTargetMMR = rewardsProvider
+            .standards[closestLeftTargetIndex];
+        float closestLeftTargetX = rewardsProvider
+            .buttons[closestLeftTargetIndex]
+            .GetComponent<RectTransform>()
+            .localPosition.x;
+        float closestRightTargetMMR = rewardsProvider
+            .standards[closestRightTargetIndex];
+        float closestRightTargetX = rewardsProvider
+            .buttons[closestRightTargetIndex]
+            .GetComponent<RectTransform>()
+            .localPosition.x;
+
+        if (closestLeftTargetIndex < closestRightTargetIndex) {
+            float mmrWidth = closestRightTargetMMR - closestLeftTargetMMR;
+            float localPosWidth = closestRightTargetX - closestLeftTargetX;
 
             float val = 0;
-            while (progressPosX - 50 >= targetPosX) {
-                rect.sizeDelta = new Vector2(progressPosX + val - 50, rect.rect.height);
+            if (newMMR != closestLeftTargetMMR) {
+                val = closestLeftTargetX + (localPosWidth * (newMMR - closestLeftTargetMMR) / mmrWidth) - progressBarOffsetLeft;
+            }
+            else {
+                val = closestLeftTargetX - progressBarOffsetLeft;
+            }
+
+            float targetPosX = val;
+            RectTransform rect = currentProgressBar.GetComponent<RectTransform>();
+            float progressValue = rect.sizeDelta.x;
+
+            int interval = 0;
+            while (progressValue > targetPosX) {
+                progressValue -= 10;
+                rect.sizeDelta = new Vector2(progressValue, rect.rect.height);
                 if (interval > 0 && interval % 40 == 0) {
                     var totalWidth = scrollRect.content.sizeDelta.x;
                     var tmp = rect.sizeDelta / totalWidth;
-                    //Logger.Log("rect.sizeDelta + val / totalWidth : " + tmp);
                     scrollRect.horizontalNormalizedPosition = tmp.x;
                 }
-                progressPosX = rect.rect.width;
-                yield return new WaitForSeconds(0.01f);
-                val -= 0.1f;
+                yield return new WaitForEndOfFrame();
                 interval++;
             }
         }
-
-        SnapTo(closestBtnIndex);
+        SnapTo(closestRightTargetIndex);
     }
 
     /// <summary>
-    /// mmr에서 가장 가까운 버튼의 index를 구함
+    /// mmr에서 가장 가까운 버튼(자신보다 작은)의 index를 구함
     /// </summary>
     /// <param name="mmr">내 현재 mmr</param>
     /// <returns></returns>
