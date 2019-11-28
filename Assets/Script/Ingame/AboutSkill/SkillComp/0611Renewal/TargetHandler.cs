@@ -436,7 +436,9 @@ namespace TargetModules {
                     }
 
                     if(args[1] == "unit") {
-                        selectedTarget = selectedTarget.gameObject.GetComponentInParent<PlaceMonster>().transform;
+                        PlaceMonster targetMonster = selectedTarget.gameObject.GetComponentInParent<PlaceMonster>();
+                        if(!targetMonster.transform.Find("ClickableUI").gameObject.activeSelf) return;
+                        selectedTarget = targetMonster.transform;
                     }
 
                     SetTarget(selectedTarget.gameObject);
