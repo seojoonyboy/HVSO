@@ -160,4 +160,21 @@ namespace dataModules {
     public class BoxInfo {
         public List<RewardClass> rewardList;
     }
+
+    public class Shop {
+        public ShopItem[] items;
+        public string id;
+        public string name;
+        public string desc;
+        public string category;
+        public string price;
+        public bool isRealMoney;
+        public string createdAt;
+        public string updatedAt;
+    }
+
+    public class ShopItem {
+        public string name;
+        public string amount;
+    }
 }

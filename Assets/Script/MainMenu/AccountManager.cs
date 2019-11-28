@@ -28,6 +28,8 @@ public partial class AccountManager : Singleton<AccountManager> {
     public List<Templates> humanTemplates;
     public List<Templates> orcTemplates;
 
+    public List<Shop> shopItems;
+
     public List<CollectionCard> allCards { get; private set; }
     public List<HeroInventory> allHeroes { get; private set; }
 
@@ -750,6 +752,42 @@ public partial class AccountManager {
                 Logger.LogWarning("인벤토리 정보 가져오기 실패");
             }
         }, "인벤토리 정보를 불러오는 중...");
+    }
+
+
+
+    public void RequestShopItems() {
+        StringBuilder url = new StringBuilder();
+        string base_url = networkManager.baseUrl;
+
+        url
+            .Append(base_url)
+            .Append("api/shop");
+
+        HTTPRequest request = new HTTPRequest(
+            new Uri(url.ToString())
+        );
+        request.MethodType = HTTPMethods.Get;
+        request.AddHeader("authorization", TokenFormat);
+        networkManager.Request(request, (req, res) => {
+            if (res.IsSuccess) {
+                if (res.StatusCode == 200 || res.StatusCode == 304) {
+                    var result = dataModules.JsonReader.Read<List<Shop>>(res.DataAsText);
+                    shopItems = result;
+
+                    NoneIngameSceneEventHandler
+                        .Instance
+                        .PostNotification(
+                            NoneIngameSceneEventHandler.EVENT_TYPE.API_SHOP_ITEM_UPDATED,
+                            null,
+                            res
+                        );
+                }
+            }
+            else {
+                Logger.LogWarning("상점 불러오기 실패");
+            }
+        }, "상점을 불러오는중...");
     }
 
     private void TestModifyDeck() {

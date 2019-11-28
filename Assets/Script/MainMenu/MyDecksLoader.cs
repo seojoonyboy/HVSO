@@ -64,5 +64,6 @@ public class MyDecksLoader : MonoBehaviour {
         accountManager.RequestOrcTemplates();
         accountManager.RequestInventories();
         accountManager.RequestClearedStoryList();
+        accountManager.RequestShopItems();
     }
 }
