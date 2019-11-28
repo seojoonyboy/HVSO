@@ -167,7 +167,7 @@ namespace dataModules {
         public string name;
         public string desc;
         public string category;
-        public string price;
+        public int price;
         public bool isRealMoney;
         public string createdAt;
         public string updatedAt;
