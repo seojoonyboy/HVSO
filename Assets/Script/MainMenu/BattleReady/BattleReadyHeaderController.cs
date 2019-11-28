@@ -112,6 +112,8 @@ public class BattleReadyHeaderController : SerializedMonoBehaviour {
     }
 
     IEnumerator SetNormalUI(AccountManager.LeagueInfo data) {
+        SetDescription(data);
+        StartCoroutine(_SetRank(data.ratingPoint));
         yield return 0;
     }
 

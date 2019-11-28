@@ -79,7 +79,7 @@ public class ShopManager : MonoBehaviour
 
     public void PopBuyModal(dataModules.Shop item, bool isBox = false) {
         if (buying) return;
-        if (item.category == "supplyBox") {
+        if (item.category == "supplyBox" || item.category == "x2coupon") {
             if (item.price <= AccountManager.Instance.userResource.gold) {
                 checkModal = Modal.instantiate("상품을 구매 하시겠습니까?", Modal.Type.YESNO, () => {
                     BuyItem(item.id, isBox);
