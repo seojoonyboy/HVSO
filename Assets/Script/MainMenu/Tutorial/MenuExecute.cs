@@ -655,7 +655,50 @@ namespace MenuTutorialModules {
     }
 
     /// <summary>
-    /// 스토리 메뉴 해금
+    /// 오크 진영 튜토리얼이 개방 되었습니다!
+    /// </summary>
+    public class UnlockOrcStoryAnim : MenuExecute {
+        IDisposable clickStream;
+        IEnumerator coroutine;
+
+        public override void Execute() {
+            coroutine = Proceed();
+            StartCoroutine(coroutine);
+        }
+
+        IEnumerator Proceed() {
+            GameObject target = null;
+
+            GetComponent<MenuTutorialManager>().ActiveRewardPanel();
+            SkeletonGraphic skeletonGraphic = GetComponent<MenuTutorialManager>().rewardPanel.transform.Find("Anim").GetComponent<SkeletonGraphic>();
+
+            skeletonGraphic.Initialize(true);
+
+            skeletonGraphic.Skeleton.SetSkin("orc");
+            skeletonGraphic.Skeleton.SetSlotsToSetupPose();
+            skeletonGraphic.AnimationState.SetAnimation(0, "story", false);
+
+            skeletonGraphic.transform.Find("Header/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 튜토리얼 개방";
+            skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 진영 튜토리얼이 개방 되었습니다!";
+
+            yield return new WaitForSeconds(1.0f);
+
+            clickStream = Observable.EveryUpdate()
+                .Where(_ => Input.GetMouseButtonDown(0))
+                .Subscribe(_ => CheckClick(target));
+        }
+
+        private void CheckClick(GameObject target) {
+            if (target == null) {
+                GetComponent<MenuTutorialManager>().DeactiveRewardPanel();
+                clickStream.Dispose();
+                handler.isDone = true;
+            }
+        }
+    }
+
+    /// <summary>
+    /// 메인화면에서 스토리 메뉴 전체 해금 표시
     /// </summary>
     public class UnlockStroyAnim : MenuExecute {
         IDisposable clickStream;

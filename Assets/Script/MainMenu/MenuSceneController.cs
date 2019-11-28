@@ -148,12 +148,12 @@ public class MenuSceneController : MonoBehaviour {
                             }
                             else {
                                 var isPvpOpened = PlayerPrefs.GetString("isPvpOpened");
-                                if (isPvpOpened == "false") {
-                                    tutorialType = MenuTutorialManager.TutorialType.UNLOCK_STORY_AND_BATTLE_MENU;
-                                    menuTutorialManager.StartTutorial(tutorialType);
+                                if (isPvpOpened == "true") {
+                                    needTutorial = false;
                                 }
                                 else {
-                                    needTutorial = false;
+                                    tutorialType = MenuTutorialManager.TutorialType.UNLOCK_STORY_AND_BATTLE_MENU;
+                                    menuTutorialManager.StartTutorial(tutorialType);
                                 }
                             }
                         }
