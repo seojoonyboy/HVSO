@@ -37,9 +37,27 @@ public class MenuSceneController : MonoBehaviour {
     bool isTutorialDataLoaded = false;
     GameObject quitModal;
 
+    [SerializeField] MedalUIFormat medalUI;
+
+    [Serializable] public class MedalUIFormat {
+        public Image tierImage;
+        public TMPro.TextMeshProUGUI tierName;
+        public Text tierValue;
+        public BattleReadyHeaderController readyHeader;
+
+        public void OnLeagueInfoUpdated(Enum Event_Type, Component Sender, object Param) {
+            AccountManager.LeagueInfo info = (AccountManager.LeagueInfo)Param;
+            tierImage.sprite = readyHeader.GetRankImage(info.rankDetail.minorRankName);
+            tierImage.SetNativeSize();
+            tierName.text = info.rankDetail.minorRankName;
+            tierValue.text = info.ratingPoint.ToString();
+        }
+    }
+
     private void Awake() {
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_TUTORIAL_PRESETTING_COMPLETE, CheckTutorial);
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_SHOP_ITEM_UPDATED, UpdateShop);
+        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_INFO_UPDATED, medalUI.OnLeagueInfoUpdated);
         menuSceneController = this;
 
         #region 테스트코드
@@ -150,6 +168,7 @@ public class MenuSceneController : MonoBehaviour {
             SoundManager.Instance.bgmController.StopSoundTrack();
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_TUTORIAL_PRESETTING_COMPLETE, CheckTutorial);
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_SHOP_ITEM_UPDATED, UpdateShop);
+        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_INFO_UPDATED, medalUI.OnLeagueInfoUpdated);
     }
 
     private void Start() {
