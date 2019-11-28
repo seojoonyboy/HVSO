@@ -496,7 +496,6 @@ public partial class AccountManager {
         );
         request.MethodType = BestHTTP.HTTPMethods.Post;
         request.AddHeader("authorization", TokenFormat);
-        Debug.Log(string.Format("{{\"heroId\":\"{0}\"}}", heroId));
         request.RawData = Encoding.UTF8.GetBytes(string.Format("{{\"heroId\":\"{0}\"}}", heroId));
         networkManager.Request(request, (req, res) => {
             if (res.IsSuccess) {
@@ -788,6 +787,38 @@ public partial class AccountManager {
                 Logger.LogWarning("상점 불러오기 실패");
             }
         }, "상점을 불러오는중...");
+    }
+
+    public void RequestBuyItem(string itemId) {
+        StringBuilder sb = new StringBuilder();
+        sb
+            .Append(networkManager.baseUrl)
+            .Append("api/shop/buy");
+
+        HTTPRequest request = new HTTPRequest(
+            new Uri(sb.ToString())
+        );
+        request.MethodType = BestHTTP.HTTPMethods.Post;
+        request.AddHeader("authorization", TokenFormat);
+
+        request.RawData = Encoding.UTF8.GetBytes(string.Format("{{\"id\":\"{0}\"}}", itemId));
+
+        networkManager.Request(request, (req, res) => {
+            if (res.IsSuccess) {
+                if (res.StatusCode == 200 || res.StatusCode == 304) {
+                    NoneIngameSceneEventHandler
+                        .Instance
+                        .PostNotification(
+                            NoneIngameSceneEventHandler.EVENT_TYPE.API_SHOP_ITEM_BUY,
+                            null,
+                            res
+                        );
+                }
+            }
+            else {
+                Logger.LogWarning("상품 구매 실패");
+            }
+        }, "상품 구매 중...");
     }
 
     private void TestModifyDeck() {

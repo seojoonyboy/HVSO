@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ShopManager : MonoBehaviour
 {
@@ -9,6 +11,10 @@ public class ShopManager : MonoBehaviour
     int goldItemCount;
     int x2couponCount;
     int supplyBoxCount;
+    bool buyBox = false;
+    private void Start() {
+        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_SHOP_ITEM_BUY, OpenBoxByBuying);
+    }
     public void SetShop() { 
         goldItemCount = 0;
         x2couponCount = 0;
@@ -19,8 +25,10 @@ public class ShopManager : MonoBehaviour
                     SetGoldItem(item);
                     break;
                 case "supplyBox":
+                    SetSupplyBoxItem(item);
                     break;
                 case "x2coupon":
+                    SetCouponItem(item);
                     break;
             }
         }
@@ -36,6 +44,8 @@ public class ShopManager : MonoBehaviour
         }
         else
             target.Find("FreeGold").gameObject.SetActive(false);
+        target.GetComponent<Button>().onClick.RemoveAllListeners();
+        target.GetComponent<Button>().onClick.AddListener(() => BuyItem(item.id));
         goldItemCount++;
     }
 
@@ -43,16 +53,27 @@ public class ShopManager : MonoBehaviour
         Transform target = transform.Find("ShopWindowParent/ShopWindow/Supply2XCouponShop").GetChild(x2couponCount);
         target.Find("Price").GetComponent<TMPro.TextMeshProUGUI>().text = item.price.ToString();
         target.Find("Value").GetComponent<TMPro.TextMeshProUGUI>().text = item.items[0].amount;
+        target.GetComponent<Button>().onClick.RemoveAllListeners();
+        target.GetComponent<Button>().onClick.AddListener(() => BuyItem(item.id));
         x2couponCount++;
     }
 
     public void SetSupplyBoxItem(dataModules.Shop item) {
         Transform target = transform.Find("ShopWindowParent/ShopWindow/SuppluBoxShop").GetChild(supplyBoxCount);
-        target.Find("Price").GetComponent<TMPro.TextMeshProUGUI>().text = item.price.ToString();
+        target.Find("Button/Price").GetComponent<TMPro.TextMeshProUGUI>().text = item.price.ToString();
+        target.Find("Button").GetComponent<Button>().onClick.RemoveAllListeners();
+        target.Find("Button").GetComponent<Button>().onClick.AddListener(() => BuyItem(item.id, true));
         supplyBoxCount++;
     }
 
-    public void BuySmallBox() {
-        boxRewardManager.OpenBox();
+    public void BuyItem(string itemId, bool isBox = false) {
+        AccountManager.Instance.RequestBuyItem(itemId);
+        buyBox = isBox;
+    }
+
+    public void OpenBoxByBuying(Enum Event_Type, Component Sender, object Param) {
+        if(buyBox)
+            boxRewardManager.OpenBox();
+        AccountManager.Instance.RequestUserInfo();
     }
 }
