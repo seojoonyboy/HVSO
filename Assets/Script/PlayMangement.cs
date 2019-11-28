@@ -416,7 +416,7 @@ public partial class PlayMangement : MonoBehaviour {
             enemyPlayer.playerUI.transform.Find("CardCount").GetChild(0).gameObject.GetComponent<Text>().text = (count).ToString();
 
 
-            yield return EffectSystem.Instance.HeroCutScene(enemyPlayer.isHuman);
+            yield return EffectSystem.Instance.HeroCutScene(enemyPlayer.heroID);
         }
         EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
         yield return new WaitForSeconds(1f);

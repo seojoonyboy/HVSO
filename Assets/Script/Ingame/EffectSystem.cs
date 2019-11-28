@@ -36,6 +36,34 @@ public class EffectSystem : SerializedMonoBehaviour {
         PlayMangement.instance.EventHandler.AddListener(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, EndTurnDisableMask);
     }
 
+    public void SetCutsceneSkin() {
+        SkeletonGraphic humanAnime, orcAnime;
+        GameObject humanCut, orcCut;
+
+        string humanID = PlayMangement.instance.socketHandler.gameState.players.human.hero.id;
+        string orcID = PlayMangement.instance.socketHandler.gameState.players.orc.hero.id;
+
+        humanAnime = cutSceneCanvas.transform.Find("Human").gameObject.GetComponent<SkeletonGraphic>();
+        orcAnime = cutSceneCanvas.transform.Find("Orc").gameObject.GetComponent<SkeletonGraphic>();
+
+        Skin humanSkin = humanAnime.SkeletonData.FindSkin(humanID);
+        Skin orcSkin = orcAnime.SkeletonData.FindSkin(orcID);
+
+
+        humanCut = cutSceneCanvas.transform.Find("Human").gameObject;
+        humanAnime.Skeleton.Skin = humanSkin;
+        humanAnime.Skeleton.SetSlotsToSetupPose();
+        humanAnime.AnimationState.Apply(humanAnime.Skeleton);
+        humanAnime.LateUpdate();
+
+        
+        orcCut = cutSceneCanvas.transform.Find("Orc").gameObject;
+        orcAnime.Skeleton.Skin = orcSkin;
+        orcAnime.Skeleton.SetSlotsToSetupPose();
+        orcAnime.AnimationState.Apply(humanAnime.Skeleton);
+        orcAnime.LateUpdate();
+    }
+
 
     public void ShowEffect(EffectType type, Vector3 pos) {
         if (effectObject.ContainsKey(type) == false || effectObject[type] == null) return;
@@ -146,29 +174,45 @@ public class EffectSystem : SerializedMonoBehaviour {
         effectObject.SetActive(false);
     }
 
-    public IEnumerator HeroCutScene(bool isHuman) {
+    public IEnumerator HeroCutScene(string heroID) {
         SkeletonGraphic cutsceneAnimation;
         GameObject cutsceneObject;
-        //StartCoroutine(FadeOut(0f, 0.6f, 0.8f));
-        if (isHuman == true) {
-            cutsceneObject = cutSceneCanvas.transform.Find("Human").gameObject;
-            cutsceneObject.SetActive(true);
-            cutsceneAnimation = cutSceneCanvas.transform.Find("Human").gameObject.GetComponent<SkeletonGraphic>();
-        }
-        else {
-            cutsceneObject = cutSceneCanvas.transform.Find("Orc").gameObject;
-            cutsceneObject.SetActive(true);
-            cutsceneAnimation = cutSceneCanvas.transform.Find("Orc").gameObject.GetComponent<SkeletonGraphic>();
-        }
+
+        //if (isHuman == true) {
+        //    cutsceneObject = cutSceneCanvas.transform.Find("Human").gameObject;
+        //    cutsceneObject.SetActive(true);
+        //    cutsceneAnimation = cutSceneCanvas.transform.Find("Human").gameObject.GetComponent<SkeletonGraphic>();
+        //}
+        //else {
+        //    cutsceneObject = cutSceneCanvas.transform.Find("Orc").gameObject;
+        //    cutsceneObject.SetActive(true);
+        //    cutsceneAnimation = cutSceneCanvas.transform.Find("Orc").gameObject.GetComponent<SkeletonGraphic>();
+        //}
         //cutsceneAnimation.AnimationState.ClearTrack(0);
         //cutsceneAnimation.AnimationState.Data.DefaultMix = 1;
+
+
+        cutsceneObject = GetCutsceneObject(heroID);
+        cutsceneAnimation = cutsceneObject.GetComponent<SkeletonGraphic>();
         cutsceneAnimation.Skeleton.SetSlotsToSetupPose();
         cutsceneAnimation.Initialize(true);
         cutsceneAnimation.Update(0);
         cutsceneAnimation.AnimationState.SetAnimation(0, "animation", false);
         yield return new WaitForSeconds(cutsceneAnimation.Skeleton.Data.FindAnimation("animation").Duration);
-        //yield return FadeIn(0.6f, 0, cutsceneAnimation.Skeleton.Data.FindAnimation("animation").Duration / 2);
         cutsceneObject.SetActive(false);
+    }
+
+    private GameObject GetCutsceneObject(string heroID) {
+        GameObject cutsceneObject;
+
+        foreach (Transform child in cutSceneCanvas.transform) {
+            if (child.name == heroID) {
+                cutsceneObject = child.gameObject;
+                cutsceneObject.SetActive(true);
+                return cutsceneObject;
+            }
+        }
+        return null;
     }
     
     public void EnemyHeroDim(bool maskingHero = false) {
