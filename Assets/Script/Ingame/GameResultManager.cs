@@ -260,8 +260,6 @@ public class GameResultManager : MonoBehaviour {
                     .Append("</color> 연패중");
             }
             description.text = sb.ToString();
-
-            int pointUp = PlayMangement.instance.SocketHandler.result.pointUp;
             //MMR 증가
             if (scriptable_leagueData.leagueInfo.ratingPoint > scriptable_leagueData.prevLeagueInfo.ratingPoint) {
                 coroutine = ProgressLeagueBar(scriptable_leagueData.prevLeagueInfo.ratingPoint, scriptable_leagueData.leagueInfo.ratingPoint, true, leagueInfo);
@@ -273,7 +271,7 @@ public class GameResultManager : MonoBehaviour {
 
             yield return StartCoroutine(coroutine);
             //yield return ShowLeagueEffect();
-            //yield return ShowTierChangeEffect(leagueInfo, pointUp);
+            yield return ShowTierChangeEffect();
 
             if (icons.ContainsKey(leagueInfo.rankDetail.minorRankName)) {
                 rankIcon.sprite = icons[leagueInfo.rankDetail.minorRankName];
@@ -297,8 +295,11 @@ public class GameResultManager : MonoBehaviour {
     /// <summary>
     /// 승급/강등 이펙트 보여주기
     /// </summary>
-    IEnumerator ShowTierChangeEffect(AccountManager.LeagueInfo leagueInfo, int pointUp) {
-        yield return 0;
+    IEnumerator ShowTierChangeEffect() {
+        var leagueInfo = scriptable_leagueData.leagueInfo;
+        var prevLeagueInfo = scriptable_leagueData.prevLeagueInfo;
+
+        yield return new WaitForSeconds(1.0f);
         if (scriptable_leagueData.prevLeagueInfo.rankDetail.minorRankName != scriptable_leagueData.leagueInfo.rankDetail.minorRankName) {
             tierChangeEffectModal.SetActive(true);
             string animName = GetTierAnimName(leagueInfo.rankDetail.minorRankName);
@@ -312,13 +313,16 @@ public class GameResultManager : MonoBehaviour {
             var message = tierChangeEffectModal.transform.Find("Message").GetComponent<TMPro.TextMeshProUGUI>();
 
             //TODO : 승급인지 강등인지 구분 필요
-            if (pointUp > 0) {
+            if (leagueInfo.ratingPoint - prevLeagueInfo.ratingPoint > 0) {
                 message.text = leagueInfo.rankDetail.minorRankName + "으로 승급하셨습니다.";
                 Logger.Log("승급!");
             }
-            else {
+            else if(leagueInfo.ratingPoint - prevLeagueInfo.ratingPoint < 0) {
                 message.text = leagueInfo.rankDetail.minorRankName + "으로 강등되었습니다.";
                 Logger.Log("강등!");
+            }
+            else {
+                Logger.Log("??");
             }
         }
     }
@@ -377,7 +381,6 @@ public class GameResultManager : MonoBehaviour {
                 }
             }
             else {
-                yield return new WaitForSeconds(1.0f);
                 //마이너스 이동
                 if (data.from == 0 && data.to < 0) {
                     slider.value = 0;
@@ -568,8 +571,9 @@ public class GameResultManager : MonoBehaviour {
                 return "t4-2";
             case "지역 지도자":
                 return "t4-1";
+            default:
+                return "무명 병사";
         }
-        return null;
     }
 
     public List<int> standards = new List<int>() { 0, 150, 300, 450, 600, 800, 1000, 1200, 1400, 1700, 2000, 2300, 2600 };
