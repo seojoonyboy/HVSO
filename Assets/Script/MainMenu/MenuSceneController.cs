@@ -314,14 +314,10 @@ public class MenuSceneController : MonoBehaviour {
     }
 
     public void AddNewbiController() {
-        Logger.Log("AddNewbiController");
-
-        PlayerPrefs.SetString("SelectedRace", "human");
-        PlayerPrefs.SetString("SelectedBattleType", "story");
-        PlayerPrefs.SetString("StageNum", "1");
-        PlayerPrefs.SetString("SelectedDeckId", string.Empty);
-
-        FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.CONNECT_MATCHING_SCENE);
+        var newbiComp = newbiLoadingModal.AddComponent<NewbiController>(); //첫 로그인 제어
+        newbiComp.menuSceneController = this;
+        newbiComp.name = "NewbiController";
+        newbiComp.Init(decksLoader, scenarioManager, newbiLoadingModal);
     }
 
     private void UpdateShop(Enum Event_Type, Component Sender, object Param) {
