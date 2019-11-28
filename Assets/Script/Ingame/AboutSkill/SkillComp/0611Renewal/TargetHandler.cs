@@ -664,6 +664,16 @@ namespace TargetModules {
                             foreach (GameObject unit in units) {
                                 var ui = unit.transform.Find("ClickableUI").gameObject;
 
+                                if (skillHandler.myObject.gameObject == unit) {
+                                    if (skillHandler.myObject.gameObject.GetComponent<PlaceMonster>().unit.id == "ac10032") {
+                                        ui.SetActive(false);
+                                        unit.transform.Find("MagicTargetTrigger").gameObject.SetActive(false);
+                                        continue;
+                                    }
+                                }
+
+
+
                                 if (ui != null) {
                                     ui.SetActive(true);
                                     PlayMangement.instance.infoOn = true;
