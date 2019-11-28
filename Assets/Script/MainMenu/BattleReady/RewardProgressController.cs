@@ -44,7 +44,6 @@ public class RewardProgressController : MonoBehaviour {
     }
 
     public void Init() {
-        //테스트 코드
         SetProgress(progressType.CURR_PROGRESS_BAR);
     }
 
