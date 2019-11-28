@@ -120,7 +120,7 @@ public class RewardProgressController : MonoBehaviour {
 
         isProgressAscending = (leagueData.leagueInfo.ratingPoint > leagueData.prevLeagueInfo.ratingPoint);
         //테스트 코드
-        isProgressAscending = false;
+        //isProgressAscending = false;
         
         isMoving = true;
 
@@ -192,7 +192,7 @@ public class RewardProgressController : MonoBehaviour {
     IEnumerator ProgressDescending() {
         int newMMR = leagueData.prevLeagueInfo.ratingPoint;
         //테스트 코드
-        newMMR = 2000;
+        //newMMR = 2000;
 
         int closestRightTargetIndex = 0;
         int closestLeftTargetIndex = GetIndex(newMMR);
