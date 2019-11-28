@@ -350,8 +350,8 @@ namespace SkillModules {
         public override bool IsConditionSatisfied() {
             playedObject.IsValidateData(mySkillHandler.targetData);
 
-            PlaceMonster playedMonster = playedObject.targetObject.GetComponent<PlaceMonster>();
-            return playedMonster.GetComponent<ambush>() != null;
+            PlaceMonster playedMonster = mySkillHandler.highlight.gameObject.GetComponentInParent<PlaceMonster>();
+            return playedMonster.gameObject.GetComponent<ambush>() != null;
         }
 
         public override bool filtering(GameObject testObject) {
