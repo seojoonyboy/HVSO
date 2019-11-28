@@ -441,6 +441,8 @@ public partial class CardDropManager {
             int targetline = ScenarioGameManagment.scenarioInstance.forcedSummonAt - 1;
             PlayMangement.instance.backGroundTillObject.SetActive(true);
             if (magicTarget == "line") {
+                DeactivateTarget(unitLine, "unit");
+                DeactivateTarget(enemyUnitLine, "unit");
                 for (int i = 0; i < 5; i++) {
                     if (i == targetline) {
                         EffectSystem.Instance.MaskLine(i, false);
@@ -544,6 +546,8 @@ public partial class CardDropManager {
 
         else if (group.Contains("line")) {
             PlayMangement.instance.backGroundTillObject.SetActive(true);
+            DeactivateTarget(unitLine, "unit");
+            DeactivateTarget(enemyUnitLine, "unit");
             EffectSystem.Instance.EnemyHeroDim(true);
             for (int i = 0; i < 5; i++) {
                 if (args == null) {
