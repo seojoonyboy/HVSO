@@ -354,7 +354,10 @@ public class GameResultManager : MonoBehaviour {
         float currentVal = scriptable_leagueData.prevLeagueInfo.ratingPoint;
         var expValue = playerMMR.Find("ExpSlider/ExpValue").GetComponent<TMPro.TextMeshProUGUI>();
 
-        int prevMaxMMR = AccountManager.Instance.GetTargetRankArea(scriptable_leagueData.prevLeagueInfo.rankDetail.minorRankName).Max;
+        int prevMaxMMR = 3000;
+        if(AccountManager.Instance.GetTargetRankArea(scriptable_leagueData.prevLeagueInfo.rankDetail.minorRankName) != null) {
+            prevMaxMMR = AccountManager.Instance.GetTargetRankArea(scriptable_leagueData.prevLeagueInfo.rankDetail.minorRankName).Max;
+        }
         int sliderMaxVal = prevMaxMMR;
         slider.value = currentVal / sliderMaxVal;
 
@@ -394,6 +397,7 @@ public class GameResultManager : MonoBehaviour {
                     while (_val > _to) {
                         _val -= offset;
                         Logger.Log("_val : " + _val);
+                        slider.value = _val / data.maxVal;
                         expValue.text = _val + "/" + data.maxVal;
                         yield return new WaitForSeconds(0.01f);
                     }
@@ -624,6 +628,8 @@ public class GameResultManager : MonoBehaviour {
                 datas.Add(new SliderData(_from, 0, _from, 0));
             }
             var rankArea = AccountManager.Instance.GetTargetRankArea(leagueInfo.rankDetail.minorRankName);
+            if (rankArea != null) rankArea = new AccountManager.Area(3000, 3000);
+
             //최솟값보다 떨어지는 경우
             if(from < rankArea.Min) {
                 datas.Add(new SliderData(0, -from, rankArea.Max, rankArea.Min));
