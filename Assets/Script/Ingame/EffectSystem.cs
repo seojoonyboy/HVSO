@@ -193,6 +193,7 @@ public class EffectSystem : SerializedMonoBehaviour {
 
 
         cutsceneObject = GetCutsceneObject(heroID);
+        if (cutsceneObject == null) yield break;
         cutsceneAnimation = cutsceneObject.GetComponent<SkeletonGraphic>();
         cutsceneAnimation.Skeleton.SetSlotsToSetupPose();
         cutsceneAnimation.Initialize(true);
@@ -423,7 +424,8 @@ public class EffectSystem : SerializedMonoBehaviour {
         HERO_SHIELD,
         DARK_THORN,
         OVERHIT,
-        CHAIN_LIGHTNING
+        CHAIN_LIGHTNING,
+        NO_DAMAGE
     }
 
 }

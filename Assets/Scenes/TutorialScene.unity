@@ -29834,8 +29834,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000030517578, y: -53.205006}
-  m_SizeDelta: {x: 0, y: 103.39}
+  m_AnchoredPosition: {x: 0.5, y: -52.7}
+  m_SizeDelta: {x: -52.9, y: 56.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1348084183
 MonoBehaviour:
@@ -29884,12 +29884,12 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 42
+  m_fontSize: 40
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 42
+  m_fontSizeMax: 40
   m_fontStyle: 1
   m_textAlignment: 514
   m_characterSpacing: 0
@@ -59599,6 +59599,7 @@ MonoBehaviour:
     - {fileID: 8275074938614007895, guid: 50ab61c8db1fd45d48f8c0d9d3ebe579, type: 3}
     - {fileID: 6419550157007258136, guid: 74637aec61bd80247880f3bff2e3aee7, type: 3}
     - {fileID: 1557774813051648500, guid: 0c00cb0578e1f52408de3644832d12f9, type: 3}
+    - {fileID: 3074569864476349517, guid: d19709084cd20494e9e6e50d6e4d5c52, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -59623,7 +59624,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 21
+      Data: 22
     - Name: 
       Entry: 7
       Data: 
@@ -59873,6 +59874,18 @@ MonoBehaviour:
     - Name: $v
       Entry: 10
       Data: 19
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 21
+    - Name: $v
+      Entry: 10
+      Data: 20
     - Name: 
       Entry: 8
       Data: 
