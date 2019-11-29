@@ -249,6 +249,7 @@ public class PlayerController : MonoBehaviour
     }
 
     public virtual void PlayerTakeDamage(int amount) {
+        if (GetComponent<SkillModules.guarded>() != null) return;
         BattleConnector socketHandler = PlayMangement.instance.socketHandler;
         Queue<SocketFormat.Player> heroshieldData = isHuman ? socketHandler.humanData : socketHandler.orcData;
         SocketFormat.Player data;
@@ -266,10 +267,6 @@ public class PlayerController : MonoBehaviour
             ActiveShield();
         }
         else {
-            if (GetComponent<SkillModules.guarded>() != null) {
-                amount = 0;
-            }
-
             if (HP.Value >= amount)
                 HP.Value -= amount;
             else
