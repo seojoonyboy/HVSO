@@ -663,19 +663,12 @@ namespace TargetModules {
                             var units = PlayMangement.instance.UnitsObserver
                                 .GetAllFieldUnits(PlayMangement.instance.player.isHuman);
                             filter(ref units);
+                            
+                            PlaceMonster myUnit = skillHandler.myObject.GetComponent<PlaceMonster>(); //현재 사용한 스킬이 유닛인 경우
+                            if(myUnit) units.RemoveAll(unit => unit.GetComponent<PlaceMonster>().itemId == myUnit.itemId); //자기 자신이 포함되어있다면 제외
+
                             foreach (GameObject unit in units) {
                                 var ui = unit.transform.Find("ClickableUI").gameObject;
-
-                                if (skillHandler.myObject.gameObject == unit) {
-                                    if (skillHandler.myObject.gameObject.GetComponent<PlaceMonster>().unit.id == "ac10032") {
-                                        ui.SetActive(false);
-                                        unit.transform.Find("MagicTargetTrigger").gameObject.SetActive(false);
-                                        continue;
-                                    }
-                                }
-
-
-
                                 if (ui != null) {
                                     ui.SetActive(true);
                                     PlayMangement.instance.infoOn = true;

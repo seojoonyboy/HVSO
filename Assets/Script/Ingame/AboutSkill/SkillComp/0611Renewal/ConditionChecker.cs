@@ -294,6 +294,12 @@ namespace SkillModules {
             }
             return false;
         }
+
+        public override void filtering(ref List<GameObject> list) {
+            string category = args[0];
+            list.RemoveAll(x => x.GetComponent<PlaceMonster>().unit.cardCategories.ToList().Exists(ctg => ctg.CompareTo(category)!=0));
+            return;
+        }
     }
 
     public class select_ctg_chk : ConditionChecker {
