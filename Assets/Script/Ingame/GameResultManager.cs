@@ -405,11 +405,16 @@ public class GameResultManager : MonoBehaviour {
                 }
                 //일반적인 감소
                 else {
-                    val = data.maxVal;
+                    val = data.from;
+
+                    Logger.Log("마이너스 이동");
+                    Logger.Log("to : " + to);
+                    Logger.Log("val : " + val);
+
                     while (val > data.to) {
                         val -= offset;
                         slider.value = val / data.maxVal;
-                        expValue.text = val + "/" + data.maxVal;
+                        expValue.text = val + "/" + data.from;
                         yield return new WaitForSeconds(0.01f);
                     }
                 }
@@ -629,7 +634,7 @@ public class GameResultManager : MonoBehaviour {
                 datas.Add(new SliderData(_from, 0, _from, 0));
             }
             var rankArea = AccountManager.Instance.GetTargetRankArea(leagueInfo.rankDetail.minorRankName);
-            if (rankArea != null) rankArea = new AccountManager.Area(3000, 3000);
+            if (rankArea == null) rankArea = new AccountManager.Area(3000, 3000);
 
             //최솟값보다 떨어지는 경우
             if(from < rankArea.Min) {
