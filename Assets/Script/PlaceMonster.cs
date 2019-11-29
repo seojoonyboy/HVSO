@@ -540,6 +540,11 @@ public class PlaceMonster : MonoBehaviour {
                 EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.DARK_THORN, transform.position, actionCall);
                 actionCall -= actionCall;
             }
+            else if (magicId == "ac10037") {
+                actionCall += Hit;
+                EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.OVERHIT, unitSpine.rootbone.position, actionCall);
+                actionCall -= actionCall;
+            }
             //버프 혹은 디버프 효과 부여
             else {
                 GetComponent<UnitBuffHandler>()
