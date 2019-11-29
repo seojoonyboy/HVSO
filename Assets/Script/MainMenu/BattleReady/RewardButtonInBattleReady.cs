@@ -29,8 +29,7 @@ public class RewardButtonInBattleReady : MonoBehaviour {
     }
 
     private void MMRChanged() {
-        var barX = progressBar.GetComponent<RectTransform>().rect.width;
-        Logger.Log("barX : " + barX);
+        var barX = progressBar.GetComponent<RectTransform>().rect.width + 50;
 
         if(rect.localPosition.x >= barX) {
             image.sprite = toggleImages[0];
