@@ -66,6 +66,7 @@ public class NewbiController : MonoBehaviour {
         PlayerPrefs.SetString("SelectedBattleType", "story");
         PlayerPrefs.SetString("StageNum", "1");
         PlayerPrefs.SetString("SelectedDeckId", string.Empty);
+        PlayerPrefs.SetString("selectedHeroId", "h10001");
 
         //ScenarioGameManagment.chapterData = 
 

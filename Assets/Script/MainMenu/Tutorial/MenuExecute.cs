@@ -394,10 +394,30 @@ namespace MenuTutorialModules {
             if (args[0] == "human") {
                 ScenarioGameManagment.chapterData = scenarioManager.human_chapterDatas[chapterNum];
                 ScenarioGameManagment.challengeDatas = scenarioManager.human_challengeDatas[chapterNum].challenges;
+
+                string heroId = "h10001";
+                switch (chapterNum) {
+                    default:
+                    case 1:
+                    case 2:
+                        heroId = "h10001";
+                        break;
+                }
+                PlayerPrefs.SetString("selectedHeroId", heroId);
             }
             else if(args[0] == "orc") {
                 ScenarioGameManagment.chapterData = scenarioManager.orc_chapterDatas[chapterNum];
                 ScenarioGameManagment.challengeDatas = scenarioManager.orc_challengeDatas[chapterNum].challenges;
+
+                string heroId = "h10002";
+                switch (chapterNum) {
+                    default:
+                    case 1:
+                    case 2:
+                        heroId = "h10002";
+                        break;
+                }
+                PlayerPrefs.SetString("selectedHeroId", heroId);
             }
 
             GetComponent<MenuTutorialManager>().ActiveTutorialStoryReadyCanvas(args[0]);
