@@ -119,7 +119,7 @@ public class MenuHeroInfo : MonoBehaviour
     public void ClickHeroTierUp() {
         int cost = accountManager.myHeroInventories[heroId].next_level.manaCrystal;
         if (accountManager.userResource.crystal >= cost) {
-            teirUpModal = Modal.instantiate("마나 수정이 " + accountManager.userResource.crystal.ToString() + "개 소모됩니다. 진행 하시겠습니까?", Modal.Type.YESNO, TierUpHero, CancelTierUp);
+            teirUpModal = Modal.instantiate("마나 수정이 " + cost.ToString() + "개 소모됩니다. 진행 하시겠습니까?", Modal.Type.YESNO, TierUpHero, CancelTierUp);
             EscapeKeyController.escapeKeyCtrl.AddEscape(CancelTierUp);
         }
         else {
