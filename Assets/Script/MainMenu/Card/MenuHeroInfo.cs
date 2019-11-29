@@ -16,6 +16,7 @@ public class MenuHeroInfo : MonoBehaviour
     bool tierUpHero = false;
     string heroId;
 
+    GameObject teirUpModal;
     private void Awake() {
         heroInfoWindow = this;
         init();
@@ -113,6 +114,24 @@ public class MenuHeroInfo : MonoBehaviour
         EscapeKeyController.escapeKeyCtrl.AddEscape(MenuCardInfo.cardInfoWindow.CloseInfo);
 
         OpenClassWindow();
+    }
+
+    public void ClickHeroTierUp() {
+        int cost = accountManager.myHeroInventories[heroId].next_level.manaCrystal;
+        if (accountManager.userResource.crystal >= cost) {
+            teirUpModal = Modal.instantiate("마나 수정이 " + accountManager.userResource.crystal.ToString() + "개 소모됩니다. 진행 하시겠습니까?", Modal.Type.YESNO, TierUpHero, CancelTierUp);
+            EscapeKeyController.escapeKeyCtrl.AddEscape(CancelTierUp);
+        }
+        else {
+            int lack = cost - accountManager.userResource.crystal;
+            teirUpModal = Modal.instantiate("마나 수정이 " + lack.ToString() + "개 부족합니다.", Modal.Type.CHECK);
+            EscapeKeyController.escapeKeyCtrl.AddEscape(CancelTierUp);
+        }
+    }
+
+    public void CancelTierUp() {
+        DestroyImmediate(teirUpModal, true);
+        EscapeKeyController.escapeKeyCtrl.RemoveEscape(CancelTierUp);
     }
 
     public void TierUpHero() {
