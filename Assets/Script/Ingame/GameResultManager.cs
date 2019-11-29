@@ -82,6 +82,15 @@ public class GameResultManager : MonoBehaviour {
         FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
     }
 
+    public void OnBattleReadyBtn() {
+        AccountManager.Instance.visitDeckNow = 1;
+        OnReturnBtn();
+    }
+
+    public void OnNewGameBtn() {
+        //FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.CONNECT_MATCHING_SCENE);
+    }
+
     public void SocketErrorUIOpen(bool friendOut) {
         SocketDisconnectedUI.SetActive(true);
         if (friendOut)
@@ -170,7 +179,7 @@ public class GameResultManager : MonoBehaviour {
         if (result == "win")
             BgCanvas.Find("Particle/Second").gameObject.SetActive(true);
         transform.Find("SecondWindow/Buttons/FindNewGame").GetComponent<Button>().interactable = false;
-        transform.Find("SecondWindow/Buttons/BattleReady").GetComponent<Button>().interactable = false;
+        transform.Find("SecondWindow/Buttons/BattleReady").GetComponent<Button>().interactable = true;
 
         StartCoroutine(SetRewards());
         var battleType = PlayerPrefs.GetString("SelectedBattleType");
@@ -270,7 +279,14 @@ public class GameResultManager : MonoBehaviour {
             }
 
             yield return StartCoroutine(coroutine);
-            //yield return ShowLeagueEffect();
+            if(scriptable_leagueData.prevLeagueInfo.rankingBattleState != "normal") {
+                Logger.Log("승급전 혹은 강등전 진행중!");
+                yield return ShowLeagueEffect();
+            }
+            if(scriptable_leagueData.prevLeagueInfo.rankingBattleState == "normal" && scriptable_leagueData.leagueInfo.rankingBattleState != "normal") {
+                Logger.Log("승급전 혹은 강등전 발생!");
+                yield return ShowRankChangeChanceUI();
+            }
             yield return ShowTierChangeEffect();
 
             if (icons.ContainsKey(leagueInfo.rankDetail.minorRankName)) {
@@ -286,9 +302,84 @@ public class GameResultManager : MonoBehaviour {
     }
 
     /// <summary>
+    /// 승급전 혹은 강등전 발생했다는거 보여주기
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator ShowRankChangeChanceUI() {
+        Logger.Log("승급전/강등전 발생 이벤트 UI 처리");
+
+        Transform secondWindow = transform.Find("SecondWindow");
+        Transform playerMmr = secondWindow.Find("PlayerMmr");
+        Transform expSlider = playerMmr.Find("ExpSlider");
+        expSlider.Find("RankChangeEffect").gameObject.SetActive(true);
+
+        var leagueInfo = scriptable_leagueData.leagueInfo;
+        if(leagueInfo.rankingBattleState == "rank_up") {
+            Logger.Log("Case 1");
+            expSlider.Find("RankChangeEffect/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "승급전 발생";
+        }
+        else if(leagueInfo.rankingBattleState == "rank_down") {
+            Logger.Log("Case 2");
+            expSlider.Find("RankChangeEffect/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "강등전 발생";
+        }
+        else {
+            Logger.Log("Unknown Case");
+            expSlider.Find("RankChangeEffect").gameObject.SetActive(false);
+        }
+        yield return 0;
+    }
+
+    /// <summary>
     /// 승급전 결과 보여주기 (예 : 3판2선승제 => 하나씩 결과 보여주기)
     /// </summary>
     IEnumerator ShowLeagueEffect() {
+        Logger.Log("승급전 진행중 관련 UI 처리");
+
+        Transform secondWindow = transform.Find("SecondWindow");
+        Transform playerMmr = secondWindow.Find("PlayerMmr");
+        Transform expSlider = playerMmr.Find("ExpSlider");
+        Transform rankBoard = playerMmr.Find("RankBoard");
+
+        expSlider.gameObject.SetActive(false);
+        rankBoard.gameObject.SetActive(true);
+        Transform slotParent = rankBoard.Find("Bottom");
+
+        var leagueInfo = scriptable_leagueData.leagueInfo;
+        int slotCnt = 0;
+        if(leagueInfo.rankingBattleState == "rank_up") {
+            Logger.Log("Case 1");
+            slotCnt = leagueInfo.rankDetail.rankUpBattleCount.battles;
+            rankBoard.Find("Top/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "승급전 진행중";
+        }
+        else if(leagueInfo.rankingBattleState == "rank_down") {
+            Logger.Log("Case 2");
+            slotCnt = leagueInfo.rankDetail.rankDownBattleCount.battles;
+            rankBoard.Find("Top/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "강등전 진행중";
+        }
+        else {
+            Logger.Log("Unknown Case");
+            expSlider.gameObject.SetActive(true);
+            rankBoard.gameObject.SetActive(false);
+        }
+
+        for (int i = 0; i < slotCnt; i++) {
+            slotParent.GetChild(i).gameObject.SetActive(true);
+        }
+
+        bool[] battleResults = leagueInfo.rankingBattleCount;
+        if(battleResults != null) {
+            for (int i = 0; i < battleResults.Length; i++) {
+                if (battleResults[i]) {
+                    slotParent.GetChild(i).Find("Win").gameObject.SetActive(true);
+                    slotParent.GetChild(i).Find("Lose").gameObject.SetActive(false);
+                }
+                else {
+                    slotParent.GetChild(i).Find("Win").gameObject.SetActive(false);
+                    slotParent.GetChild(i).Find("Lose").gameObject.SetActive(true);
+                }
+                yield return new WaitForSeconds(0.2f);
+            }
+        }
         yield return 0;
     }
 
