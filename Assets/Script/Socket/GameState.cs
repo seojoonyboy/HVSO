@@ -133,6 +133,7 @@ namespace SocketFormat {
     }
 
     public class Hero {
+        public int tier;
         public string[] heroClasses;
         public string id;
         public string camp;
