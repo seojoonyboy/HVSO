@@ -159,6 +159,8 @@ public class DeckHandler : MonoBehaviour
         const int MaxCardNum = 40;
         if (deck.deckValidate) {
             PlayerPrefs.SetString("SelectedDeckId", deckID);
+            PlayerPrefs.SetString("selectedHeroId", deck.heroId);
+
             PlayerPrefs.SetString("SelectedBattleType", "solo");
             string camp;
             if (isHuman) { camp = "human"; }
