@@ -436,7 +436,9 @@ namespace TargetModules {
                     }
 
                     if(args[1] == "unit") {
-                        selectedTarget = selectedTarget.gameObject.GetComponentInParent<PlaceMonster>().transform;
+                        PlaceMonster targetMonster = selectedTarget.gameObject.GetComponentInParent<PlaceMonster>();
+                        if(!targetMonster.transform.Find("ClickableUI").gameObject.activeSelf) return;
+                        selectedTarget = targetMonster.transform;
                     }
 
                     SetTarget(selectedTarget.gameObject);
@@ -663,6 +665,16 @@ namespace TargetModules {
                             filter(ref units);
                             foreach (GameObject unit in units) {
                                 var ui = unit.transform.Find("ClickableUI").gameObject;
+
+                                if (skillHandler.myObject.gameObject == unit) {
+                                    if (skillHandler.myObject.gameObject.GetComponent<PlaceMonster>().unit.id == "ac10032") {
+                                        ui.SetActive(false);
+                                        unit.transform.Find("MagicTargetTrigger").gameObject.SetActive(false);
+                                        continue;
+                                    }
+                                }
+
+
 
                                 if (ui != null) {
                                     ui.SetActive(true);

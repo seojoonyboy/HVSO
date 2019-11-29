@@ -248,7 +248,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
     IEnumerator UseSkillCardExceptInfo(object[] parms) {
         skillHandler.socketDone = false;
         PlayMangement.instance.LockTurnOver();
-        yield return EffectSystem.Instance.HeroCutScene(PlayMangement.instance.player.isHuman);
+        yield return EffectSystem.Instance.HeroCutScene(PlayMangement.instance.player.heroID);
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
         highlighted = false;
         CardDropManager.Instance.HighLightMagicSlot(highlightedSlot, highlighted);
@@ -265,7 +265,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         yield return PlayMangement.instance.cardHandManager.ShowUsedCard(transform.parent.GetSiblingIndex(), gameObject);
         if (cardData.isHeroCard == true) {
             HideCardImage();
-            yield return EffectSystem.Instance.HeroCutScene(PlayMangement.instance.player.isHuman);            
+            yield return EffectSystem.Instance.HeroCutScene(PlayMangement.instance.player.heroID);            
         }
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_CARD_PLAY, this, parms);
         SoundManager.Instance.PlayMagicSound(cardData.id);
