@@ -2834,6 +2834,7 @@ MonoBehaviour:
   scriptable_leagueData: {fileID: 11400000, guid: 376e6853eb3fc2246b5da4276f95bef7,
     type: 2}
   prevSceneName: 
+  visitDeckNow: 0
   needChangeNickName: 0
 --- !u!4 &1870949075
 Transform:
@@ -8280,7 +8281,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: night_op
+      Data: nightaction
     - Name: $v
       Entry: 10
       Data: 233
