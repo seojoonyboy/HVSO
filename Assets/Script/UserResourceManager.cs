@@ -24,6 +24,7 @@ public class UserResourceManager : SerializedMonoBehaviour {
     public int supplyX2Coupon;
 
     public TMPro.TextMeshProUGUI timerText;
+    public Image storeGauge;
     public bool timerOn;
 
     public void SetResource(uint lv, uint exp, uint lvExp, uint nextLvExp, int gold, int crystal, int supplyStore, int supplyStoreTime, int supply, int supplyBox, int supplyX2Coupon) {
@@ -39,6 +40,8 @@ public class UserResourceManager : SerializedMonoBehaviour {
         this.supplyBox = supplyBox;
         this.supplyX2Coupon = supplyX2Coupon;
         timerOn = true;
+        if(storeGauge != null)
+            storeGauge.fillAmount = supplyStore / 200.0f;
     }
 
     void Update() {
@@ -57,8 +60,9 @@ public class UserResourceManager : SerializedMonoBehaviour {
         }
     }
 
-    public void LinkTimer(TMPro.TextMeshProUGUI timerText) {
+    public void LinkTimer(TMPro.TextMeshProUGUI timerText, Image gauge) {
         this.timerText = timerText;
+        storeGauge = gauge;
     }
 
     public void SetTimer(int supplyStoreTime) {
@@ -71,7 +75,7 @@ public class UserResourceManager : SerializedMonoBehaviour {
         }
         else
             supplyStoreTimer = "창고 가득참";
-        if (timerText != null)
+        if (timerText != null) 
             timerText.text = supplyStoreTimer;
     }
 }
