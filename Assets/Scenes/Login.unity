@@ -3136,8 +3136,11 @@ MonoBehaviour:
     - {fileID: 21300000, guid: d32e7cda06a1cb942ac8b9c93cf73ba9, type: 3}
     - {fileID: 21300000, guid: a5d8bff885c9f714bad4ff079d1a7a7d, type: 3}
     - {fileID: 21300000, guid: 1a96835c309b75f44aaea776ac1b7aaf, type: 3}
+    - {fileID: 21300000, guid: 0ce28c66301fb61409d5a4b052a328a6, type: 3}
+    - {fileID: 21300000, guid: 95bbbede74ef2a340b619c0f488535d0, type: 3}
     - {fileID: 21300000, guid: fb03cb93b55568c40b5022e6974942d2, type: 3}
     - {fileID: 21300000, guid: 3755116f979270449ae9d2e4ce6a4173, type: 3}
+    - {fileID: 21300000, guid: 26812ea8dedd1f044917220ce7cadc71, type: 3}
     - {fileID: 21300000, guid: e3bc5d027da036242a481b2cbabdbb92, type: 3}
     - {fileID: 21300000, guid: b165af79aec57754e976a8447d9d0843, type: 3}
     - {fileID: 21300000, guid: 05774e2810abc914ebbf897848a33423, type: 3}
@@ -9073,7 +9076,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 5
+      Data: 6
     - Name: 
       Entry: 7
       Data: 
@@ -9081,8 +9084,8 @@ MonoBehaviour:
       Entry: 1
       Data: gold
     - Name: $v
-      Entry: 6
-      Data: 
+      Entry: 10
+      Data: 271
     - Name: 
       Entry: 8
       Data: 
@@ -9093,8 +9096,8 @@ MonoBehaviour:
       Entry: 1
       Data: jewel
     - Name: $v
-      Entry: 6
-      Data: 
+      Entry: 10
+      Data: 272
     - Name: 
       Entry: 8
       Data: 
@@ -9118,7 +9121,7 @@ MonoBehaviour:
       Data: supply
     - Name: $v
       Entry: 10
-      Data: 271
+      Data: 273
     - Name: 
       Entry: 8
       Data: 
@@ -9130,7 +9133,19 @@ MonoBehaviour:
       Data: doubleCoupon
     - Name: $v
       Entry: 10
-      Data: 272
+      Data: 274
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: supplyBox
+    - Name: $v
+      Entry: 10
+      Data: 275
     - Name: 
       Entry: 8
       Data: 
@@ -9162,7 +9177,7 @@ MonoBehaviour:
       Data: "\uBB34\uBA85 \uBCD1\uC0AC"
     - Name: $v
       Entry: 10
-      Data: 273
+      Data: 276
     - Name: 
       Entry: 8
       Data: 
@@ -9174,7 +9189,7 @@ MonoBehaviour:
       Data: "\uC18C\uADDC\uBAA8 \uBB34\uB825\uC9D1\uB2E8"
     - Name: $v
       Entry: 10
-      Data: 274
+      Data: 277
     - Name: 
       Entry: 8
       Data: 
@@ -9186,7 +9201,7 @@ MonoBehaviour:
       Data: "\uC624\uD569\uC9C0\uC878 \uC6B0\uB450\uBA38\uB9AC"
     - Name: $v
       Entry: 10
-      Data: 275
+      Data: 278
     - Name: 
       Entry: 8
       Data: 
@@ -9198,7 +9213,7 @@ MonoBehaviour:
       Data: "\uC790\uACBD\uB2E8 \uB300\uC7A5"
     - Name: $v
       Entry: 10
-      Data: 276
+      Data: 279
     - Name: 
       Entry: 8
       Data: 
@@ -9210,7 +9225,7 @@ MonoBehaviour:
       Data: "\uC9C0\uC5ED \uC9C0\uB3C4\uC790"
     - Name: $v
       Entry: 10
-      Data: 277
+      Data: 280
     - Name: 
       Entry: 8
       Data: 
@@ -9222,7 +9237,7 @@ MonoBehaviour:
       Data: "\uCD08\uAE09 \uC6A9\uBCD1\uB2E8\uC7A5"
     - Name: $v
       Entry: 10
-      Data: 278
+      Data: 281
     - Name: 
       Entry: 8
       Data: 
@@ -9234,7 +9249,7 @@ MonoBehaviour:
       Data: default
     - Name: $v
       Entry: 10
-      Data: 278
+      Data: 281
     - Name: 
       Entry: 8
       Data: 
