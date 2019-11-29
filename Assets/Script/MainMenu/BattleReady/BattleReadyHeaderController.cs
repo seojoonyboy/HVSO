@@ -12,8 +12,6 @@ public class BattleReadyHeaderController : SerializedMonoBehaviour {
     [SerializeField] Image headerImg;
     [SerializeField] Sprite[] headerImages;
 
-    public Dictionary<string, Sprite> rankSprites;
-
     void OnDisable() {
         normalUI.SetActive(true);
         foreach(Transform child in rankingBattleUI.transform.Find("RankingTable")) {
@@ -37,9 +35,10 @@ public class BattleReadyHeaderController : SerializedMonoBehaviour {
     }
 
     public Sprite GetRankImage(string keyword) {
-        Sprite sprite = rankSprites["default"];
-        if (!string.IsNullOrEmpty(keyword) && rankSprites.ContainsKey(keyword)) {
-            sprite = rankSprites[keyword];
+        var rankIcons = AccountManager.Instance.resource.rankIcons;
+        Sprite sprite = rankIcons["default"];
+        if (!string.IsNullOrEmpty(keyword) && rankIcons.ContainsKey(keyword)) {
+            sprite = rankIcons[keyword];
         }
         return sprite;
     }
