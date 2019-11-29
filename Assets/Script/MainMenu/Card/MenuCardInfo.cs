@@ -318,6 +318,8 @@ public partial class MenuCardInfo : MonoBehaviour {
     public void MakeCard() {
         if (cardCreate) return;
         SoundManager.Instance.PlaySound(UISfxSound.BUTTON1);
+        if (bookHaveNum == 0)
+            bookHaveNum++;
         cardCreate = true;
         makeCard = true;
         transform.Find("CreateSpine").gameObject.SetActive(true);
