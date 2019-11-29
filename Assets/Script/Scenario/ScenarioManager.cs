@@ -380,6 +380,8 @@ public class ScenarioManager : SerializedMonoBehaviour
         //twinkle.GetComponent<DeckClickSpine>().Click();
         object[] selectedInfo = new object[] { isTutorial, data };
         PlayerPrefs.SetString("SelectedDeckId", data.id);
+        PlayerPrefs.SetString("selectedHeroId", data.heroId);
+
         selectedDeck = selectedInfo;
     }
 
