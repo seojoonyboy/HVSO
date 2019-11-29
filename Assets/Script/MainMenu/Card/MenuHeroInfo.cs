@@ -42,6 +42,8 @@ public class MenuHeroInfo : MonoBehaviour
                 break;
             }
         }
+        transform.Find("Image/Human").gameObject.SetActive(hero.camp == "human");
+        transform.Find("Image/Orc").gameObject.SetActive(!(hero.camp == "human"));
         transform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = hero.name;
         transform.Find("HeroDialog/Name").GetComponent<TMPro.TextMeshProUGUI>().text = hero.name;
         transform.Find("HeroSpines").GetChild(0).gameObject.SetActive(false);
@@ -53,7 +55,7 @@ public class MenuHeroInfo : MonoBehaviour
             heroSpine.GetComponent<SkeletonGraphic>().color = new Color(0.35f, 0.35f, 0.35f);
             transform.Find("HeroLevel/Exp").gameObject.SetActive(true);
             transform.Find("HeroLevel/TierUpBtn").gameObject.SetActive(false);
-            transform.Find("HeroLevel/Exp/Value").GetComponent<Image>().fillAmount = 0;
+            transform.Find("HeroLevel/Exp/Slider/Value").GetComponent<Image>().fillAmount = 0;
             transform.Find("HeroLevel/Exp/ValueText").GetComponent<TMPro.TextMeshProUGUI>().text ="0/10";
         }
         else {
@@ -71,20 +73,21 @@ public class MenuHeroInfo : MonoBehaviour
             if (heroData.next_level != null) {
                 float fillExp = (float)heroData.piece / heroData.next_level.piece;
                 if (fillExp >= 1) {
-                    transform.Find("HeroLevel/Exp").gameObject.SetActive(false);
+                    transform.Find("HeroLevel/Exp/ValueText").gameObject.SetActive(false);
                     transform.Find("HeroLevel/TierUpBtn").gameObject.SetActive(true);
+                    transform.Find("HeroLevel/Exp/Slider/Value").localPosition = new Vector3(-490, 0, 0);
                 }
                 else {
-                    transform.Find("HeroLevel/Exp").gameObject.SetActive(true);
+                    transform.Find("HeroLevel/Exp/ValueText").gameObject.SetActive(true);
                     transform.Find("HeroLevel/TierUpBtn").gameObject.SetActive(false);
-                    transform.Find("HeroLevel/Exp/Slider/Value").localPosition = new Vector3(-(980 * (1 - (heroData.piece / heroData.next_level.piece))), 0, 0);
+                    transform.Find("HeroLevel/Exp/Slider/Value").localPosition = new Vector3(-1470 + (980 * fillExp), 0, 0);
                     transform.Find("HeroLevel/Exp/ValueText").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.piece + "/" + heroData.next_level.piece;
                 }
             }
             else {
-                transform.Find("HeroLevel/Exp").gameObject.SetActive(true);
+                transform.Find("HeroLevel/Exp/ValueText").gameObject.SetActive(true);
                 transform.Find("HeroLevel/TierUpBtn").gameObject.SetActive(false);
-                transform.Find("HeroLevel/Exp/Slider/Value").localPosition = Vector3.zero;
+                transform.Find("HeroLevel/Exp/Slider/Value").localPosition = new Vector3(-1470, 0, 0);
                 transform.Find("HeroLevel/Exp/ValueText").GetComponent<TMPro.TextMeshProUGUI>().text = "MAX";
             }
         }
