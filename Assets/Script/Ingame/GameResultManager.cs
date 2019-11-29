@@ -82,6 +82,15 @@ public class GameResultManager : MonoBehaviour {
         FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
     }
 
+    public void OnBattleReadyBtn() {
+        AccountManager.Instance.visitDeckNow = 1;
+        OnReturnBtn();
+    }
+
+    public void OnNewGameBtn() {
+        //FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.CONNECT_MATCHING_SCENE);
+    }
+
     public void SocketErrorUIOpen(bool friendOut) {
         SocketDisconnectedUI.SetActive(true);
         if (friendOut)
@@ -170,7 +179,7 @@ public class GameResultManager : MonoBehaviour {
         if (result == "win")
             BgCanvas.Find("Particle/Second").gameObject.SetActive(true);
         transform.Find("SecondWindow/Buttons/FindNewGame").GetComponent<Button>().interactable = false;
-        transform.Find("SecondWindow/Buttons/BattleReady").GetComponent<Button>().interactable = false;
+        transform.Find("SecondWindow/Buttons/BattleReady").GetComponent<Button>().interactable = true;
 
         StartCoroutine(SetRewards());
         var battleType = PlayerPrefs.GetString("SelectedBattleType");
