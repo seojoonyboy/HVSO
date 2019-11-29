@@ -708,10 +708,10 @@ namespace SkillModules {
                     List<GameObject> list = observer.GetAllFieldUnits(pos.col, isHuman);
                     //유닛이 존재하지 않으면 그곳에 생성
                     if(list.Count == 0) {
-                        var summonedUnit = playMangement.SummonUnit(isPlayer, cardId, pos.col, pos.row, serverUnit.itemId);
+                        var summonedUnit = playMangement.SummonUnit(isPlayer, cardId, pos.col, pos.row, serverUnit.itemId, -1, null, true);
 
-                        if (isPlayer) observer.RefreshFields(CardDropManager.Instance.unitLine, isHuman);
-                        else observer.RefreshFields(CardDropManager.Instance.enemyUnitLine, isHuman);
+                        //if (isPlayer) observer.RefreshFields(CardDropManager.Instance.unitLine, isHuman);
+                        //else observer.RefreshFields(CardDropManager.Instance.enemyUnitLine, isHuman);
                     }
                 }
             }

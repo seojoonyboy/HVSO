@@ -929,7 +929,8 @@ public partial class PlayMangement {
 
             if(cardIndex != -1)
                 player.cdpm.DestroyCard(cardIndex);
-            if(placeMonster.unit.id.Contains("qc")) cardInfoCanvas.GetChild(0).GetComponent<CardListManager>().AddFeildUnitInfo(0, placeMonster.myUnitNum, cardData);
+            if(isFree) cardInfoCanvas.GetChild(0).GetComponent<CardListManager>().AddFeildUnitInfo(0, placeMonster.myUnitNum, cardData);
+            //if(placeMonster.unit.id.Contains("qc")) cardInfoCanvas.GetChild(0).GetComponent<CardListManager>().AddFeildUnitInfo(0, placeMonster.myUnitNum, cardData);
         }
         else {
             int enemyCardCount = CountEnemyCard();
