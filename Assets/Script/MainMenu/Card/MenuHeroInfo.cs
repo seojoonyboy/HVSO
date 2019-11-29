@@ -77,14 +77,14 @@ public class MenuHeroInfo : MonoBehaviour
                 else {
                     transform.Find("HeroLevel/Exp").gameObject.SetActive(true);
                     transform.Find("HeroLevel/TierUpBtn").gameObject.SetActive(false);
-                    transform.Find("HeroLevel/Exp/Value").GetComponent<Image>().fillAmount = (float)heroData.piece / heroData.next_level.piece;
+                    transform.Find("HeroLevel/Exp/Slider/Value").localPosition = new Vector3(-(980 * (1 - (heroData.piece / heroData.next_level.piece))), 0, 0);
                     transform.Find("HeroLevel/Exp/ValueText").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.piece + "/" + heroData.next_level.piece;
                 }
             }
             else {
                 transform.Find("HeroLevel/Exp").gameObject.SetActive(true);
                 transform.Find("HeroLevel/TierUpBtn").gameObject.SetActive(false);
-                transform.Find("HeroLevel/Exp/Value").GetComponent<Image>().fillAmount = 1;
+                transform.Find("HeroLevel/Exp/Slider/Value").localPosition = Vector3.zero;
                 transform.Find("HeroLevel/Exp/ValueText").GetComponent<TMPro.TextMeshProUGUI>().text = "MAX";
             }
         }
