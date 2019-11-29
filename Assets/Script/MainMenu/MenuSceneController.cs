@@ -218,6 +218,10 @@ public class MenuSceneController : MonoBehaviour {
 #endregion
 
         AccountManager.Instance.RequestTutorialPreSettings();
+        if(AccountManager.Instance.visitDeckNow == 1) {
+            Invoke("OnPVPClicked", 0.1f);
+            AccountManager.Instance.visitDeckNow = 0;
+        }
     }
 
     /// <summary>

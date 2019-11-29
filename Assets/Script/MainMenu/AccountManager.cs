@@ -64,6 +64,8 @@ public partial class AccountManager : Singleton<AccountManager> {
     }
     public Dictionary<string, Area> rankAreas;  //랭크 구간
 
+    public int visitDeckNow = 0;
+
     private void Awake() {
         Application.targetFrameRate = 60;
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
