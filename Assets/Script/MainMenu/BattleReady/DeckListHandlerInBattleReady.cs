@@ -123,6 +123,7 @@ public class DeckListHandlerInBattleReady : MonoBehaviour {
         PlayerPrefs.SetString("SelectedBattleType", "league");
 
         parentController.selectedDeck = deck;
+        PlayerPrefs.SetString("selectedHeroId", deck.heroId);
 
         Logger.Log(camp + "의" + deckId + "덱이 선택됨");
 
