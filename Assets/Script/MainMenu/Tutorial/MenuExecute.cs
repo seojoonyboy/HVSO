@@ -310,12 +310,21 @@ namespace MenuTutorialModules {
             switch (args[1]) {
                 case "on":
                     if(args.Count > 2) {
-                        if(objectName == "orc_story_tutorial" && args[2] == "scrollArea") {
+                        if(objectName == "orc_story_tutorial_1" && args[2] == "scrollArea") {
                             GameObject clone = Instantiate(targetObject);
                             clone.name = objectName;
                             clone.transform.SetParent(targetObject.transform.parent, true);
                             clone.transform.localScale = Vector3.one;
                             clone.transform.SetAsFirstSibling();
+                            clone.transform.Find("New_Image").gameObject.SetActive(true);
+                        }
+                        else if(objectName == "human_story_tutorial_1" && args[2] == "scrollArea") {
+                            GameObject clone = Instantiate(targetObject);
+                            clone.name = objectName;
+                            clone.transform.SetParent(targetObject.transform.parent, true);
+                            clone.transform.localScale = Vector3.one;
+                            clone.transform.SetSiblingIndex(1);
+                            clone.transform.Find("New_Image").gameObject.SetActive(true);
                         }
                     }
                     menuMask.OnDimmed(targetObject.transform.parent, targetObject);
@@ -567,8 +576,131 @@ namespace MenuTutorialModules {
         }
     }
 
+    public class UnlockOrcStory_2_Anim : MenuExecute {
+        IDisposable clickStream;
+        IEnumerator coroutine;
+
+        public override void Execute() {
+            coroutine = Proceed();
+            StartCoroutine(coroutine);
+        }
+
+        IEnumerator Proceed() {
+            GameObject target = null;
+
+            GetComponent<MenuTutorialManager>().ActiveRewardPanel();
+            SkeletonGraphic skeletonGraphic = GetComponent<MenuTutorialManager>().rewardPanel.transform.Find("Anim").GetComponent<SkeletonGraphic>();
+
+            skeletonGraphic.Initialize(true);
+
+            skeletonGraphic.Skeleton.SetSkin("orc");
+            skeletonGraphic.Skeleton.SetSlotsToSetupPose();
+            skeletonGraphic.AnimationState.SetAnimation(0, "story_details", false);
+
+            skeletonGraphic.transform.Find("Header/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 스토리 해금";
+            skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 진영 튜토리얼이 개방 되었습니다!";
+
+            yield return new WaitForSeconds(1.0f);
+
+            clickStream = Observable.EveryUpdate()
+                .Where(_ => Input.GetMouseButtonDown(0))
+                .Subscribe(_ => CheckClick(target));
+        }
+
+        private void CheckClick(GameObject target) {
+            if (target == null) {
+                GetComponent<MenuTutorialManager>().DeactiveRewardPanel();
+                clickStream.Dispose();
+                handler.isDone = true;
+            }
+        }
+    }
+
+    public class UnlockHumanStory_2_Anim : MenuExecute {
+        IDisposable clickStream;
+        IEnumerator coroutine;
+
+        public override void Execute() {
+            coroutine = Proceed();
+            StartCoroutine(coroutine);
+        }
+
+        IEnumerator Proceed() {
+            GameObject target = null;
+
+            GetComponent<MenuTutorialManager>().ActiveRewardPanel();
+            SkeletonGraphic skeletonGraphic = GetComponent<MenuTutorialManager>().rewardPanel.transform.Find("Anim").GetComponent<SkeletonGraphic>();
+
+            skeletonGraphic.Initialize(true);
+
+            skeletonGraphic.Skeleton.SetSkin("human");
+            skeletonGraphic.Skeleton.SetSlotsToSetupPose();
+            skeletonGraphic.AnimationState.SetAnimation(0, "story_details", false);
+
+            skeletonGraphic.transform.Find("Header/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "휴먼 스토리 해금";
+            skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "휴먼 진영 튜토리얼이 개방 되었습니다!";
+
+            yield return new WaitForSeconds(1.0f);
+
+            clickStream = Observable.EveryUpdate()
+                .Where(_ => Input.GetMouseButtonDown(0))
+                .Subscribe(_ => CheckClick(target));
+        }
+
+        private void CheckClick(GameObject target) {
+            if (target == null) {
+                GetComponent<MenuTutorialManager>().DeactiveRewardPanel();
+                clickStream.Dispose();
+                handler.isDone = true;
+            }
+        }
+    }
+
     /// <summary>
-    /// 스토리 메뉴 해금
+    /// 오크 진영 튜토리얼이 개방 되었습니다!
+    /// </summary>
+    public class UnlockOrcStoryAnim : MenuExecute {
+        IDisposable clickStream;
+        IEnumerator coroutine;
+
+        public override void Execute() {
+            coroutine = Proceed();
+            StartCoroutine(coroutine);
+        }
+
+        IEnumerator Proceed() {
+            GameObject target = null;
+
+            GetComponent<MenuTutorialManager>().ActiveRewardPanel();
+            SkeletonGraphic skeletonGraphic = GetComponent<MenuTutorialManager>().rewardPanel.transform.Find("Anim").GetComponent<SkeletonGraphic>();
+
+            skeletonGraphic.Initialize(true);
+
+            skeletonGraphic.Skeleton.SetSkin("orc");
+            skeletonGraphic.Skeleton.SetSlotsToSetupPose();
+            skeletonGraphic.AnimationState.SetAnimation(0, "story", false);
+
+            skeletonGraphic.transform.Find("Header/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 튜토리얼 개방";
+            skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 진영 튜토리얼이 개방 되었습니다!";
+
+            yield return new WaitForSeconds(1.0f);
+
+            clickStream = Observable.EveryUpdate()
+                .Where(_ => Input.GetMouseButtonDown(0))
+                .Subscribe(_ => CheckClick(target));
+        }
+
+        private void CheckClick(GameObject target) {
+            if (target == null) {
+                GetComponent<MenuTutorialManager>().DeactiveRewardPanel();
+                clickStream.Dispose();
+                handler.isDone = true;
+            }
+        }
+    }
+
+    /// <summary>
+    /// 메인화면에서 스토리 메뉴 전체 해금 표시
     /// </summary>
     public class UnlockStroyAnim : MenuExecute {
         IDisposable clickStream;
@@ -647,8 +779,27 @@ namespace MenuTutorialModules {
                 clickStream.Dispose();
                 handler.isDone = true;
 
+                PlayerPrefs.SetString("isPvpOpened", "true");
                 PlayerPrefs.SetString("NeedUnlockMenu", "false");
             }
+        }
+    }
+
+    public class ShowNewImage : MenuExecute {
+        public override void Execute() {
+            GameObject target = MenuMask.Instance.GetMenuObject(args[0]);
+            target.SetActive(true);
+
+            handler.isDone = true;
+        }
+    }
+
+    public class HideNewImage : MenuExecute {
+        public override void Execute() {
+            GameObject target = MenuMask.Instance.GetMenuObject(args[0]);
+            target.SetActive(false);
+
+            handler.isDone = true;
         }
     }
 
@@ -708,10 +859,22 @@ namespace MenuTutorialModules {
     }
     public class ForceOrcStorySocketConnect : MenuExecute {
         public override void Execute() {
-            string camp = args[0];
             string stageNum = args[1];
 
-            PlayerPrefs.SetString("SelectedRace", camp);
+            PlayerPrefs.SetString("SelectedRace", "orc");
+            PlayerPrefs.SetString("SelectedBattleType", "story");
+            PlayerPrefs.SetString("StageNum", stageNum);
+
+            handler.isDone = true;
+            FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.CONNECT_MATCHING_SCENE);
+        }
+    }
+
+    public class ForceHumanStorySocketConnect : MenuExecute {
+        public override void Execute() {
+            string stageNum = args[1];
+
+            PlayerPrefs.SetString("SelectedRace", "human");
             PlayerPrefs.SetString("SelectedBattleType", "story");
             PlayerPrefs.SetString("StageNum", stageNum);
 

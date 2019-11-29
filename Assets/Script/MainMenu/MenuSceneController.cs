@@ -115,6 +115,7 @@ public class MenuSceneController : MonoBehaviour {
         MenuTutorialManager.TutorialType tutorialType = MenuTutorialManager.TutorialType.NONE;
         if (PlayerPrefs.GetInt("isFirst") == 1) {
             PlayerPrefs.SetInt("isFirst", 0);
+            PlayerPrefs.SetString("isPvpOpened", "false");
             AddNewbiController();
 
             hideModal.SetActive(false);
@@ -131,30 +132,47 @@ public class MenuSceneController : MonoBehaviour {
                     PlayerPrefs.SetString("NeedUnlockMenu", "true");
                 }
                 else {
-                    if(!clearedStages.Exists(x => x.camp == "orc" && x.stageNumber == 1)) {
+                    //오크 튜토리얼 0-1을 진행하지 않았음
+                    if (!clearedStages.Exists(x => x.camp == "orc" && x.stageNumber == 1)) {
                         tutorialType = MenuTutorialManager.TutorialType.TO_ORC_STORY;
                     }
                     else {
-                        string NeedUnlockMenu = PlayerPrefs.GetString("NeedUnlockMenu");
-                        if (NeedUnlockMenu == "true") {
-                            tutorialType = MenuTutorialManager.TutorialType.UNLOCK_STORY_AND_BATTLE_MENU;
+                        //휴먼 튜토리얼 0-2을 진행하지 않았음
+                        if (!clearedStages.Exists(x => x.camp == "human" && x.stageNumber == 2)) {
+                            tutorialType = MenuTutorialManager.TutorialType.TO_HUMAN_STORY_2;
                         }
                         else {
-                            needTutorial = false;
+                            //오크 튜토리얼 0-2을 진행하지 않았음
+                            if (!clearedStages.Exists(x => x.camp == "orc" && x.stageNumber == 2)) {
+                                tutorialType = MenuTutorialManager.TutorialType.TO_ORC_STORY_2;
+                            }
+                            else {
+                                var isPvpOpened = PlayerPrefs.GetString("isPvpOpened");
+                                if (isPvpOpened == "true") {
+                                    needTutorial = false;
+                                }
+                                else {
+                                    tutorialType = MenuTutorialManager.TutorialType.UNLOCK_STORY_AND_BATTLE_MENU;
+                                    menuTutorialManager.StartTutorial(tutorialType);
+                                }
+                            }
                         }
-
-                        hideModal.SetActive(false);
                     }
                 }
             }
+            else needTutorial = false;
         }
 
         if (needTutorial) {
             if (tutorialType != MenuTutorialManager.TutorialType.NONE) {
+                //테스트 코드
+                //tutorialType = MenuTutorialManager.TutorialType.TO_ORC_STORY_2;
                 menuTutorialManager.StartTutorial(tutorialType);
             }
         }
         else {
+            needTutorial = false;
+            hideModal.SetActive(false);
             menuTutorialManager.enabled = false;
         }
     }
