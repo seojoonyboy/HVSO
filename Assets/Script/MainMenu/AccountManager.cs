@@ -1238,6 +1238,7 @@ public partial class AccountManager {
         rankAreas.Add("군단장", new Area(1700, 1999));
         rankAreas.Add("대장군", new Area(2000, 2299));
         rankAreas.Add("총사령관", new Area(2300, 2599));
+        rankAreas.Add("찬란한 영웅", new Area(2600, 2999));
     }
 
     public Area GetTargetRankArea(string keyword) {

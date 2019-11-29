@@ -723,7 +723,17 @@
                         "args": []
                     },
                     {
+                        "name": "Print_message",
+                        "args": [
+                            "정보창 바깥을 터치하면 정보창을 닫습니다."
+                        ]
+                    },
+                    {
                         "name": "Wait_Close_Info",
+                        "args": []
+                    },
+                    {
+                        "name": "Hide_message",
                         "args": []
                     },
                     {

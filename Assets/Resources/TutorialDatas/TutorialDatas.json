@@ -42,6 +42,12 @@
                         "args": []
                     },
                     {
+                        "name" : "ShowNewImage",
+                        "args" : [
+                            "story_orc_button_newImage"
+                        ]
+                    },
+                    {
                         "name": "Dimmed",
                         "args": [
                             "story_orc_button",
@@ -74,6 +80,12 @@
                         ]
                     },
                     {
+                        "name" : "HideNewImage",
+                        "args" : [
+                            "story_orc_button_newImage"
+                        ]
+                    },
+                    {
                         "name": "HideHandUI",
                         "args": [
                             "story_orc_button"
@@ -84,6 +96,12 @@
                         "args": [
                             "story_orc_button",
                             "off"
+                        ]
+                    },
+                    {
+                        "name" : "ShowNewImage",
+                        "args" : [
+                            "orc_story_tutorial_1_newImage"
                         ]
                     },
                     {
@@ -111,6 +129,12 @@
                         "name": "Wait_Click",
                         "args": [
                             "orc_story_tutorial_1"
+                        ]
+                    },
+                    {
+                        "name" : "HideNewImage",
+                        "args" : [
+                            "orc_story_tutorial_1_newImage"
                         ]
                     },
                     {
@@ -294,6 +318,12 @@
                         ]
                     },
                     {
+                        "name" : "ShowNewImage",
+                        "args" : [
+                            "human_story_tutorial_2_newImage"
+                        ]
+                    },
+                    {
                         "name": "Dimmed",
                         "args": [
                             "human_story_tutorial_2",
@@ -318,6 +348,12 @@
                         "name": "Wait_Click",
                         "args": [
                             "human_story_tutorial_2"
+                        ]
+                    },
+                    {
+                        "name" : "HideNewImage",
+                        "args" : [
+                            "human_story_tutorial_2_newImage"
                         ]
                     },
                     {
@@ -410,6 +446,12 @@
                         ]
                     },
                     {
+                        "name" : "ShowNewImage",
+                        "args" : [
+                            "story_orc_button_newImage"
+                        ]
+                    },
+                    {
                         "name": "ShowHandUI",
                         "args": [
                             "story_orc_button",
@@ -435,6 +477,12 @@
                         ]
                     },
                     {
+                        "name" : "HideNewImage",
+                        "args" : [
+                            "story_orc_button_newImage"
+                        ]
+                    },
+                    {
                         "name": "HideHandUI",
                         "args": [
                             "story_orc_button"
@@ -445,6 +493,12 @@
                         "args": [
                             "story_orc_button",
                             "off"
+                        ]
+                    },
+                    {
+                        "name" : "ShowNewImage",
+                        "args" : [
+                            "orc_story_tutorial_2_newImage"
                         ]
                     },
                     {
@@ -472,6 +526,12 @@
                         "name": "Wait_Click",
                         "args": [
                             "orc_story_tutorial_2"
+                        ]
+                    },
+                    {
+                        "name" : "HideNewImage",
+                        "args" : [
+                            "orc_story_tutorial_2_newImage"
                         ]
                     },
                     {
