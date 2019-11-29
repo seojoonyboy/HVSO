@@ -347,6 +347,8 @@ namespace SkillModules {
     public class blast_enemy : Ability {
         public blast_enemy() : base() { }
 
+        bool isMain = false;
+
         public override void Execute(object data) {
             if (data.GetType().IsArray) {
                 object[] tmp = (object[])data;
@@ -356,9 +358,14 @@ namespace SkillModules {
                 skillHandler.finallyDone = false;
 
                 Skill skill = skillHandler.skills.ToList().Find(x => x.abilityData == this);
-                int num = Array.BinarySearch(skillHandler.skills, skill);
+                if(skillHandler.skills[0].TargetArgs() == skill.TargetArgs()) {
+                    EffectSystem.Instance.CheckEveryLineMask();
+                    EffectSystem.Instance.EnemyHeroDim((skillHandler.myObject.GetComponent<MagicDragHandler>().cardData.id == "ac10021") ? false : true);
+                    isMain = true;
+                }
 
-                BlastEnemy(isPlayer, targets, amount);
+
+                BlastEnemy(isPlayer, targets, amount, isMain);
             }
             else {
                 ShowFormatErrorLog("blast_enemy");
@@ -366,13 +373,12 @@ namespace SkillModules {
             skillHandler.isDone = true;
         }
 
-        private void BlastEnemy(bool isPlayer, List<GameObject> targets, int amount) {           
+        private void BlastEnemy(bool isPlayer, List<GameObject> targets, int amount, bool mainImpact = false) {           
             foreach (GameObject target in targets) {
                 PlaceMonster unit = target.GetComponent<PlaceMonster>();
                 string skillId = skillHandler.myObject.GetComponent<MagicDragHandler>().cardData.id;                
                 if (unit != null) {
-                    unit.RequestChangeStat(0, -amount, skillId);
-                    EffectSystem.Instance.CheckEveryLineMask(unit, (skillId == "ac10021") ? false : true);
+                    unit.RequestChangeStat(0, -amount, skillId, mainImpact);                    
                     EffectSystem.Instance.MaskLine(unit.x, false);
                     WaitEffect(target, amount);
                 } else {
@@ -478,7 +484,8 @@ namespace SkillModules {
 
         private void BlastEnemy(bool isPlayer, List<GameObject> targets, int amount) {
             foreach (GameObject target in targets) {
-                target.GetComponent<PlaceMonster>().RequestChangeStat(0, -amount);
+                string skillId = skillHandler.myObject.GetComponent<MagicDragHandler>().cardData.id;
+                target.GetComponent<PlaceMonster>().RequestChangeStat(0, -amount, skillId);
                 EffectSystem.Instance.MaskLine(target.GetComponent<PlaceMonster>().x, false);
                 WaitEffect(target, amount);
             }
@@ -489,6 +496,8 @@ namespace SkillModules {
         private async void WaitEffect(GameObject target, int amount) {
             await System.Threading.Tasks.Task.Delay(1500);
             target.GetComponent<PlaceMonster>().CheckHP();
+            EffectSystem.Instance.HideMaskLine();
+            EffectSystem.Instance.EnemyHeroHideDim();
             skillHandler.finallyDone = true;
         }
     }

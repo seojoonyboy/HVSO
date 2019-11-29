@@ -507,8 +507,8 @@ public class PlaceMonster : MonoBehaviour {
         SetState(UnitState.HIT);
     }
 
-    public void RequestChangeStat(int power = 0, int hp = 0, string magicId = null) {
-        StartCoroutine(buffEffectCoroutine(power, hp, magicId));
+    public void RequestChangeStat(int power = 0, int hp = 0, string magicId = null, bool isMain = false) {
+        StartCoroutine(buffEffectCoroutine(power, hp, magicId, isMain));
         unit.attack += power;
         if (unit.attack < 0) unit.attack = 0;
         unit.currentHP += hp;
@@ -516,7 +516,7 @@ public class PlaceMonster : MonoBehaviour {
         UpdateStat();
     }
 
-    private IEnumerator buffEffectCoroutine(int power, int hp, string magicId = null){
+    private IEnumerator buffEffectCoroutine(int power, int hp, string magicId = null, bool isMain = false){
         buff.atk += power;
         buff.hp += hp;
         if(buff.running) yield break;
@@ -547,10 +547,9 @@ public class PlaceMonster : MonoBehaviour {
             }
             else if (magicId == "ac10034") {
                 actionCall += Hit;
-                EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.FIRE_WAVE, unitSpine.rootbone.position, actionCall, true);
+                EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.FIRE_WAVE, unitSpine.rootbone.position, actionCall, isMain);
                 actionCall -= actionCall;
             }
-
             //버프 혹은 디버프 효과 부여
             else {
                 GetComponent<UnitBuffHandler>()
