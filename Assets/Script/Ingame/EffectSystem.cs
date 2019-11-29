@@ -133,6 +133,7 @@ public class EffectSystem : SerializedMonoBehaviour {
 
     public GameObject ContinueEffect(EffectType type, Transform pos) {
         if (effectObject.ContainsKey(type) == false || effectObject[type] == null) return null;
+        if (pos.Find(effectObject[type].gameObject.name) != null) return null;
         GameObject effect = GetReadyObject(effectObject[type]);
         effect.transform.SetParent(pos);
         effect.name = effectObject[type].gameObject.name;

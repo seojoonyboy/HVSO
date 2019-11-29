@@ -427,6 +427,10 @@ public class PlayerController : MonoBehaviour
     
 
     public void TakeIgnoreShieldDamage(int amount, bool isMagic = false, string skillId= null) {
+        if (GetComponent<SkillModules.guarded>() != null) {
+            amount = 0;
+        }
+
 
         if (HP.Value >= amount)
             HP.Value -= amount;
