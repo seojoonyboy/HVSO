@@ -74,8 +74,13 @@ public class HeroSelectController : MonoBehaviour
             }
         }
         selectedHeroId = heroId;
-        for (int i = 0; i < 3; i++) 
-            transform.Find("InnerCanvas/HeroLevel").GetChild(i).GetChild(0).gameObject.SetActive(i < AccountManager.Instance.myHeroInventories[heroId].tier);
+        if (AccountManager.Instance.myHeroInventories.ContainsKey(heroId)) {
+            for (int i = 0; i < 3; i++)
+                transform.Find("InnerCanvas/HeroLevel").GetChild(i).GetChild(0).gameObject.SetActive(i < AccountManager.Instance.myHeroInventories[heroId].tier);
+        }
+        else
+            for (int i = 0; i < 3; i++)
+                transform.Find("InnerCanvas/HeroLevel").GetChild(i).GetChild(0).gameObject.SetActive(false);
 
         Transform classWindow = transform.Find("InnerCanvas/HeroInfo/ClassWindow");
         Transform skillWindow = transform.Find("InnerCanvas/HeroInfo/SkillWindow");

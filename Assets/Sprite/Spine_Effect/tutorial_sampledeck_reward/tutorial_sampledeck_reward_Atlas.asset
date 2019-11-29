@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6b194f808b1af6499c93410e504af42, type: 3}
   m_Name: tutorial_sampledeck_reward_Atlas
   m_EditorClassIdentifier: 
-  atlasFile: {fileID: 4900000, guid: bae8f64bb09c7ff44b296dacfd2530db, type: 3}
+  atlasFile: {fileID: 4900000, guid: ba9e33aa7cb7ff94bac1c668001b4856, type: 3}
   materials:
-  - {fileID: 2100000, guid: ea116c44336d2c249b393553bf185e32, type: 2}
+  - {fileID: 2100000, guid: 5e302183942ae434d90f9bb62519e880, type: 2}

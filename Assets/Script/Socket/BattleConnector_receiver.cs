@@ -119,6 +119,13 @@ public partial class BattleConnector : MonoBehaviour {
         TextMeshProUGUI playerHeroNameTxt = machine.transform.Find("PlayerName/Tier/HeroName").GetComponent<TextMeshProUGUI>();
 
         //Logger.Log(race);
+        Transform enemyName = machine.transform.Find("EnemyName");
+        Transform playerName = machine.transform.Find("PlayerName");
+        var PlayerTierParent = playerName.Find("Tier");
+        var EnemyTierParent = enemyName.Find("HeroName/Tier");
+        int humanTier = gameState.players.human.hero.tier;
+        int orcTier = gameState.players.orc.hero.tier;
+        
 
         if (race == "human") {
             playerHeroNameTxt.text = humanHeroName;
@@ -126,6 +133,15 @@ public partial class BattleConnector : MonoBehaviour {
 
             enemyHeroNameTxt.text =  orcHeroName;
             enemyNickNameTxt.text =  orcPlayerNickName;
+
+            for (int i = 0; i < humanTier; i++) {
+                PlayerTierParent.GetChild(i).Find("Active").gameObject.SetActive(true);
+                PlayerTierParent.GetChild(i).Find("Deactive").gameObject.SetActive(false);
+            }
+            for (int i = 0; i < orcTier; i++) {
+                EnemyTierParent.GetChild(i).Find("Active").gameObject.SetActive(true);
+                EnemyTierParent.GetChild(i).Find("Deactive").gameObject.SetActive(false);
+            }
         }
         else if (race == "orc") {
             playerHeroNameTxt.text = orcHeroName;
@@ -133,6 +149,15 @@ public partial class BattleConnector : MonoBehaviour {
 
             enemyHeroNameTxt.text = (mode == "story") ? "레이 첸 민" : humanHeroName;
             enemyNickNameTxt.text = (mode == "story") ? "레이 첸 민" : humanPlayerNickName;
+
+            for (int i = 0; i < orcTier; i++) {
+                PlayerTierParent.GetChild(i).Find("Active").gameObject.SetActive(true);
+                PlayerTierParent.GetChild(i).Find("Deactive").gameObject.SetActive(false);
+            }
+            for (int i = 0; i < humanTier; i++) {
+                EnemyTierParent.GetChild(i).Find("Active").gameObject.SetActive(true);
+                EnemyTierParent.GetChild(i).Find("Deactive").gameObject.SetActive(false);
+            }
 
             if (mode == "story")
                 machine.transform.Find("EnemyCharacter/EnemyZerod").gameObject.GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite["hac10001"];
@@ -142,8 +167,6 @@ public partial class BattleConnector : MonoBehaviour {
         returnButton.onClick.RemoveListener(BattleCancel);
         returnButton.gameObject.SetActive(false);
 
-        Transform enemyName = machine.transform.Find("EnemyName");
-        Transform playerName = machine.transform.Find("PlayerName");
         if (mode == "league" || mode == "leagueTest") {
             if(race == "human") {
                 playerName.Find("MMR/Value").GetComponent<TextMeshProUGUI>().text = humanLeagueInfo.ratingPoint.ToString();
