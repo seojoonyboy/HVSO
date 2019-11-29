@@ -12,9 +12,13 @@ namespace SkillModules {
         public ConditionChecker[] conditionCheckers;
         private ScopeChecker scopeChecker;
         private TargetHandler targetHandler;
-        private Ability ability;
+        private Ability ability;        
         private SkillHandler mySkillHandler;
-        
+
+        public Ability abilityData {
+            get { return ability; }
+        }
+
 
         //TODO : 한줄마다의 스킬들을 초기화
         public void Initialize(dataModules.Skill dataSkill, SkillHandler mySkillHandler) {

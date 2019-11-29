@@ -16,7 +16,6 @@ namespace SkillModules {
         public bool isPlayer;
         public object targetData;
         private List<IngameEventHandler.EVENT_TYPE> triggerList;
-        public GameObject finalTarget;
         public bool isDone = true;
         public delegate bool DragFilter(GameObject TestObject);
         public DragFilter dragFiltering;
