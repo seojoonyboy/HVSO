@@ -316,6 +316,7 @@ namespace MenuTutorialModules {
                             clone.transform.SetParent(targetObject.transform.parent, true);
                             clone.transform.localScale = Vector3.one;
                             clone.transform.SetAsFirstSibling();
+                            clone.transform.Find("New_Image").gameObject.SetActive(true);
                         }
                         else if(objectName == "human_story_tutorial_1" && args[2] == "scrollArea") {
                             GameObject clone = Instantiate(targetObject);
@@ -323,6 +324,7 @@ namespace MenuTutorialModules {
                             clone.transform.SetParent(targetObject.transform.parent, true);
                             clone.transform.localScale = Vector3.one;
                             clone.transform.SetSiblingIndex(1);
+                            clone.transform.Find("New_Image").gameObject.SetActive(true);
                         }
                     }
                     menuMask.OnDimmed(targetObject.transform.parent, targetObject);
@@ -780,6 +782,24 @@ namespace MenuTutorialModules {
                 PlayerPrefs.SetString("isPvpOpened", "true");
                 PlayerPrefs.SetString("NeedUnlockMenu", "false");
             }
+        }
+    }
+
+    public class ShowNewImage : MenuExecute {
+        public override void Execute() {
+            GameObject target = MenuMask.Instance.GetMenuObject(args[0]);
+            target.SetActive(true);
+
+            handler.isDone = true;
+        }
+    }
+
+    public class HideNewImage : MenuExecute {
+        public override void Execute() {
+            GameObject target = MenuMask.Instance.GetMenuObject(args[0]);
+            target.SetActive(false);
+
+            handler.isDone = true;
         }
     }
 
