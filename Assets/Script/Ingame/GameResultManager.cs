@@ -82,13 +82,20 @@ public class GameResultManager : MonoBehaviour {
         FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
     }
 
+    /// <summary>
+    /// 대전 준비화면으로 바로 이동 버튼
+    /// </summary>
     public void OnBattleReadyBtn() {
         AccountManager.Instance.visitDeckNow = 1;
         OnReturnBtn();
     }
 
+    /// <summary>
+    /// 매칭 화면으로 바로 이동 버튼
+    /// </summary>
     public void OnNewGameBtn() {
-        //FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.CONNECT_MATCHING_SCENE);
+        PlayerPrefs.SetString("SelectedBattleType", "league");
+        FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.CONNECT_MATCHING_SCENE);
     }
 
     public void SocketErrorUIOpen(bool friendOut) {
@@ -178,7 +185,7 @@ public class GameResultManager : MonoBehaviour {
             BgCanvas.Find("BackgroundImg/orc").gameObject.SetActive(true);
         if (result == "win")
             BgCanvas.Find("Particle/Second").gameObject.SetActive(true);
-        transform.Find("SecondWindow/Buttons/FindNewGame").GetComponent<Button>().interactable = false;
+        //transform.Find("SecondWindow/Buttons/FindNewGame").GetComponent<Button>().interactable = false;
         transform.Find("SecondWindow/Buttons/BattleReady").GetComponent<Button>().interactable = true;
 
         StartCoroutine(SetRewards());
