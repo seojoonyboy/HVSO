@@ -155,6 +155,7 @@ public partial class AccountManager : Singleton<AccountManager> {
                 data.rarelity = card.rarelity;
                 data.type = card.type;
                 data.camp = card.camp;
+                if (card.cardClasses == null) Debug.Log(card.cardId);
                 data.class_1 = card.cardClasses[0];
                 if (card.cardClasses.Length == 2)
                     data.class_2 = card.cardClasses[1];
