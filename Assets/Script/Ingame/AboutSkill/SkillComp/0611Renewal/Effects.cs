@@ -353,7 +353,11 @@ namespace SkillModules {
                 bool isPlayer = (bool)tmp[0];
                 List<GameObject> targets = (List<GameObject>)tmp[1];
                 int amount = (int)tmp[2];
-                skillHandler.finallyDone = false;                
+                skillHandler.finallyDone = false;
+
+                Skill skill = skillHandler.skills.ToList().Find(x => x.abilityData == this);
+                int num = Array.BinarySearch(skillHandler.skills, skill);
+
                 BlastEnemy(isPlayer, targets, amount);
             }
             else {
@@ -368,7 +372,7 @@ namespace SkillModules {
                 string skillId = skillHandler.myObject.GetComponent<MagicDragHandler>().cardData.id;                
                 if (unit != null) {
                     unit.RequestChangeStat(0, -amount, skillId);
-                    EffectSystem.Instance.CheckEveryLineMask(unit);
+                    EffectSystem.Instance.CheckEveryLineMask(unit, (skillId == "ac10021") ? false : true);
                     EffectSystem.Instance.MaskLine(unit.x, false);
                     WaitEffect(target, amount);
                 } else {

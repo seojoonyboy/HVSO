@@ -542,9 +542,15 @@ public class PlaceMonster : MonoBehaviour {
             }
             else if (magicId == "ac10037") {
                 actionCall += Hit;
-                EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.OVERHIT, unitSpine.rootbone.position, actionCall);
+                EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.CHAIN_LIGHTNING, unitSpine.rootbone.position, actionCall);
                 actionCall -= actionCall;
             }
+            else if (magicId == "ac10034") {
+                actionCall += Hit;
+                EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.FIRE_WAVE, unitSpine.rootbone.position, actionCall, true);
+                actionCall -= actionCall;
+            }
+
             //버프 혹은 디버프 효과 부여
             else {
                 GetComponent<UnitBuffHandler>()

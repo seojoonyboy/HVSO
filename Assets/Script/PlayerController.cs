@@ -413,7 +413,7 @@ public class PlayerController : MonoBehaviour
         if (amount < 0) {
             if (skillId == "ac10021") {
                 actionCall += MagicHit;
-                EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.TREBUCHET, position, actionCall, transform);
+                EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.TREBUCHET, position, actionCall, false, transform);
                 actionCall -= actionCall;
             }
             else

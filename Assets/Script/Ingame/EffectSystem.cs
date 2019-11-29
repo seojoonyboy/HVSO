@@ -81,7 +81,7 @@ public class EffectSystem : SerializedMonoBehaviour {
         //return effectAnimation.skeleton.Data.FindAnimation("animation").Duration - 0.1f;
     }
 
-    public void ShowEffectOnEvent(EffectType type, Vector3 pos, ActionDelegate callback, Transform playerTransform = null) {
+    public void ShowEffectOnEvent(EffectType type, Vector3 pos, ActionDelegate callback, bool main = false , Transform playerTransform = null) {
         if (effectObject.ContainsKey(type) == false || effectObject[type] == null) return;
         GameObject effect = GetReadyObject(effectObject[type]);
         effect.transform.position = pos;
@@ -92,7 +92,17 @@ public class EffectSystem : SerializedMonoBehaviour {
         effectAnimation.Update(0);
         if (playerTransform != null && playerTransform.gameObject.GetComponent<PlayerController>().isPlayer == false)
             effect.GetComponent<MeshRenderer>().sortingOrder = 8;
-        effectAnimation.AnimationState.SetAnimation(0, "animation", false);
+
+        if (effectAnimation.skeleton.Data.FindAnimation("animation") != null)
+            effectAnimation.AnimationState.SetAnimation(0, "animation", false);
+        else {
+
+            if (main == true)
+                effectAnimation.AnimationState.SetAnimation(0, "animation" + "_main", false);
+            else
+                effectAnimation.AnimationState.SetAnimation(0, "animation" + "_sub", false);
+
+        }
         effectAnimation.AnimationState.Event += delegate (TrackEntry entry, Spine.Event e) {
             if (e.Data.Name == "ATTACK") {
                 callback();
@@ -275,11 +285,11 @@ public class EffectSystem : SerializedMonoBehaviour {
 
     
 
-    public void CheckEveryLineMask(PlaceMonster unit) {
+    public void CheckEveryLineMask(PlaceMonster unit, bool heroDim = true) {
         for (int i = 0; i < 5; i++)
             MaskLine(i, true);
 
-        EnemyHeroDim(true);
+        EnemyHeroDim(heroDim);
         unit.OverMask();
     }
 
@@ -425,7 +435,8 @@ public class EffectSystem : SerializedMonoBehaviour {
         DARK_THORN,
         OVERHIT,
         CHAIN_LIGHTNING,
-        NO_DAMAGE
+        NO_DAMAGE,
+        FIRE_WAVE
     }
 
 }
