@@ -15,10 +15,11 @@ public class BattleConnectSceneAnimController : MonoBehaviour {
         }
 
         string race = PlayerPrefs.GetString("SelectedRace").ToLower();
+        string heroid = PlayerPrefs.GetString("selectedHeroId");
         
         Animator animator = GetComponent<Animator>();
         GameObject portraitObject;
-        Sprite portrait = AccountManager.Instance.resource.heroPortraite[PlayMangement.instance.socketHandler.gameState.players.human.hero.id];
+        Sprite portrait = AccountManager.Instance.resource.heroPortraite[heroid];
 
         switch (race) {
             case "human":
