@@ -57,12 +57,12 @@ public class ScenarioGameManagment : PlayMangement {
         socketHandler.ClientReady();
         SetCamera();
 
-        if (chapterData.stage_number > 1) 
-            skipButton.SetActive(false);
+        //if (chapterData.stage_number > 1) 
+        //    skipButton.SetActive(false);
         
 
-        if (chapterData.chapter == 0 && chapterData.stage_number == 1)
-            optionIcon.SetActive(false);
+        //if (chapterData.chapter == 0 && chapterData.stage_number == 1)
+        //    optionIcon.SetActive(false);
 
 
         thisType = GetType();
