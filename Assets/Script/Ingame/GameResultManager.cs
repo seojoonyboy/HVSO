@@ -308,17 +308,18 @@ public class GameResultManager : MonoBehaviour {
 
             if (animName != null) skeletonGraphic.Skeleton.SetSkin(animName);
             skeletonGraphic.Skeleton.SetSlotsToSetupPose();
-            skeletonGraphic.AnimationState.SetAnimation(0, "animation", false);
 
             var message = tierChangeEffectModal.transform.Find("Message").GetComponent<TMPro.TextMeshProUGUI>();
 
             //TODO : 승급인지 강등인지 구분 필요
             if (leagueInfo.ratingPoint - prevLeagueInfo.ratingPoint > 0) {
                 message.text = leagueInfo.rankDetail.minorRankName + "으로 승급하셨습니다.";
+                skeletonGraphic.AnimationState.SetAnimation(0, "UP", false);
                 Logger.Log("승급!");
             }
             else if(leagueInfo.ratingPoint - prevLeagueInfo.ratingPoint < 0) {
                 message.text = leagueInfo.rankDetail.minorRankName + "으로 강등되었습니다.";
+                skeletonGraphic.AnimationState.SetAnimation(0, "DOWN", false);
                 Logger.Log("강등!");
             }
             else {
@@ -576,7 +577,7 @@ public class GameResultManager : MonoBehaviour {
             case "지역 지도자":
                 return "t4-1";
             default:
-                return "무명 병사";
+                return "t5";
         }
     }
 

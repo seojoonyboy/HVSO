@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6b194f808b1af6499c93410e504af42, type: 3}
   m_Name: ingame_result_tierup_Atlas
   m_EditorClassIdentifier: 
-  atlasFile: {fileID: 4900000, guid: 93b6d5085ab89694fab3f9906eb05129, type: 3}
+  atlasFile: {fileID: 4900000, guid: 6506b1ef2c520c64095f17876be9b695, type: 3}
   materials:
-  - {fileID: 2100000, guid: d7e68d560e85b2949bfe11b0e96bea8e, type: 2}
+  - {fileID: 2100000, guid: 2c08554e22b89b44ca466fbd7938f2b8, type: 2}

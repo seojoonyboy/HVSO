@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: ingame_result_tierup_SkeletonData
   m_EditorClassIdentifier: 
   atlasAssets:
-  - {fileID: 11400000, guid: 1a010c6ea70cd614899f5f30b06f8aa2, type: 2}
+  - {fileID: 11400000, guid: 8e27d7a89e2314a4291185a649f4e55c, type: 2}
   scale: 0.01
-  skeletonJSON: {fileID: 4900000, guid: efe296473b56c3349bee0502793441cd, type: 3}
+  skeletonJSON: {fileID: 4900000, guid: 8cf345181cb0af245a14f5cdb2e69859, type: 3}
   skeletonDataModifiers: []
   fromAnimation: []
   toAnimation: []
