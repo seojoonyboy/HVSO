@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BattleConnectSceneAnimController : MonoBehaviour {
     public void EntryAnimFinished() {
@@ -14,13 +15,21 @@ public class BattleConnectSceneAnimController : MonoBehaviour {
         }
 
         string race = PlayerPrefs.GetString("SelectedRace").ToLower();
+        
         Animator animator = GetComponent<Animator>();
+        GameObject portraitObject;
+        Sprite portrait = AccountManager.Instance.resource.heroPortraite[PlayMangement.instance.socketHandler.gameState.players.human.hero.id];
+
         switch (race) {
             case "human":
-                animator.Play("HumanWait");
+                portraitObject = gameObject.transform.Find("PlayerCharacter/Zerod").gameObject;
+                portraitObject.GetComponent<Image>().sprite = portrait;
+                animator.Play("HumanWait");              
                 break;
             case "orc":
-                animator.Play("OrcWait");
+                portraitObject = gameObject.transform.Find("PlayerCharacter/Kracus").gameObject;
+                portraitObject.GetComponent<Image>().sprite = portrait;
+                animator.Play("OrcWait");                
                 break;
         }
     }

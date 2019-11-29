@@ -142,6 +142,8 @@ public partial class BattleConnector : MonoBehaviour {
                 EnemyTierParent.GetChild(i).Find("Active").gameObject.SetActive(true);
                 EnemyTierParent.GetChild(i).Find("Deactive").gameObject.SetActive(false);
             }
+            machine.transform.Find("EnemyCharacter/EnemyKarcus").gameObject.GetComponent<Image>().sprite
+                = AccountManager.Instance.resource.heroPortraite[PlayMangement.instance.socketHandler.gameState.players.orc.hero.id];
         }
         else if (race == "orc") {
             playerHeroNameTxt.text = orcHeroName;
@@ -158,9 +160,11 @@ public partial class BattleConnector : MonoBehaviour {
                 EnemyTierParent.GetChild(i).Find("Active").gameObject.SetActive(true);
                 EnemyTierParent.GetChild(i).Find("Deactive").gameObject.SetActive(false);
             }
-
+            
             if (mode == "story")
                 machine.transform.Find("EnemyCharacter/EnemyZerod").gameObject.GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite["hac10001"];
+            else
+                machine.transform.Find("EnemyCharacter/EnemyZerod").gameObject.GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[PlayMangement.instance.socketHandler.gameState.players.human.hero.id];
 
         }
         timer.text = null;
