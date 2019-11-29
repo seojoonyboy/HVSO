@@ -330,12 +330,14 @@ public class PlaceMonster : MonoBehaviour {
 
     public void SingleAttack() {
         PlaceMonster targetMonster = myTarget.GetComponent<PlaceMonster>();
+        BattleConnector battleConnector = PlayMangement.instance.socketHandler;
+
         if (unit.attack > 0) {
             if (targetMonster != null) {
                 RequestAttackUnit(myTarget, unit.attack);
             }
             else {
-                if (unit.attackType.Contains("night_op") || unit.attackType.Contains("pillage"))
+                if (unit.attackType.Contains("nightaction") || unit.attackType.Contains("pillage"))
                     myTarget.GetComponent<PlayerController>().TakeIgnoreShieldDamage(unit.attack);
                 else
                     myTarget.GetComponent<PlayerController>().PlayerTakeDamage(unit.attack);

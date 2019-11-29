@@ -24,8 +24,8 @@ namespace SkillModules {
         }
 
         void OnDestroy() {
-            TextMeshPro textPro = transform.Find("Status").GetComponent<TextMeshPro>();
-            textPro.gameObject.SetActive(false);
+            //TextMeshPro textPro = transform.Find("Status").GetComponent<TextMeshPro>();
+            //textPro.gameObject.SetActive(false);
             EffectSystem.Instance.DisableEffect(EffectSystem.EffectType.NO_DAMAGE, transform);
             //PlayMangement.instance.DisabelSkillIcon("protect", transform);
             eventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.BEGIN_ORC_PRE_TURN, OnBattleEndTurn);
