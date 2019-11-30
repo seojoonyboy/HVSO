@@ -74,7 +74,7 @@ public class UserResourceManager : SerializedMonoBehaviour {
             supplyStoreTimer = time.Hours.ToString() + ":" + time.Minutes.ToString() + ":" + time.Seconds.ToString();
         }
         else
-            supplyStoreTimer = "창고 가득참";
+            supplyStoreTimer = "";
         if (timerText != null) 
             timerText.text = supplyStoreTimer;
     }
