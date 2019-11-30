@@ -428,6 +428,7 @@ namespace MenuTutorialModules {
     public class RequestReward : MenuExecute {
         IDisposable clickStream;
         IEnumerator coroutine;
+        int index = 0;
         public override void Execute() {
             string camp = args[0];
             AccountManager.Instance.RequestIngameTutorialReward(ReqCallback, camp);
@@ -462,24 +463,30 @@ namespace MenuTutorialModules {
                     Logger.Log("Something is wrong");
                 }
             });
-            GetComponent<MenuTutorialManager>().ActiveRewardPanel();
-
-            SkeletonGraphic skeletonGraphic = GetComponent<MenuTutorialManager>().rewardPanel.transform.Find("Anim").GetComponent<SkeletonGraphic>();
-
-            skeletonGraphic.Initialize(true);
-
-            skeletonGraphic.Skeleton.SetSkin(args[0]);
-            skeletonGraphic.Skeleton.SetSlotsToSetupPose();
-
-            skeletonGraphic.AnimationState.SetAnimation(0, "sampledeck", false);
+            
 
             yield return new WaitForSeconds(0.8f);
-
-            skeletonGraphic.transform.Find("Header/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "덱 획득";
+            
             if(args[0] == "human") {
+                SkeletonGraphic skeletonGraphic = GetComponent<MenuTutorialManager>().rewardPanel.transform.GetChild(0).GetChild(5).GetComponent<SkeletonGraphic>();
+                skeletonGraphic.Skeleton.SetSlotsToSetupPose();
+                skeletonGraphic.Skeleton.SetSkin("human");
+                index = 5;
+
+                yield return new WaitForEndOfFrame();
+                GetComponent<MenuTutorialManager>().ActiveRewardPanel(5);
+                skeletonGraphic.transform.Find("Header/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "덱 획득";
                 skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "휴먼 기본 부대, '왕국 수비대' 획득!";
             }
             else {
+                SkeletonGraphic skeletonGraphic = GetComponent<MenuTutorialManager>().rewardPanel.transform.GetChild(0).GetChild(6).GetComponent<SkeletonGraphic>();
+                skeletonGraphic.Skeleton.SetSlotsToSetupPose();
+                skeletonGraphic.Skeleton.SetSkin("orc");
+                index = 6;
+
+                yield return new WaitForEndOfFrame();
+                GetComponent<MenuTutorialManager>().ActiveRewardPanel(6);
+                skeletonGraphic.transform.Find("Header/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "덱 획득";
                 skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 기본 부대, '주술사 부족' 획득!";
             }
 
@@ -496,7 +503,7 @@ namespace MenuTutorialModules {
 
         private void CheckClick(GameObject target) {
             if (target == null) {
-                GetComponent<MenuTutorialManager>().DeactiveRewardPanel();
+                GetComponent<MenuTutorialManager>().DeactiveRewardPanel(index);
                 clickStream.Dispose();
                 handler.isDone = true;
             }
@@ -553,49 +560,6 @@ namespace MenuTutorialModules {
         }
     }
 
-    /// <summary>
-    /// 오크 스토리 해금
-    /// </summary>
-    public class UnlockOrcAnim : MenuExecute {
-        IDisposable clickStream;
-        IEnumerator coroutine;
-
-        public override void Execute() {
-            coroutine = Proceed();
-            StartCoroutine(coroutine);
-        }
-
-        IEnumerator Proceed() {
-            GameObject target = null;
-
-            GetComponent<MenuTutorialManager>().ActiveRewardPanel();
-            SkeletonGraphic skeletonGraphic = GetComponent<MenuTutorialManager>().rewardPanel.transform.Find("Anim").GetComponent<SkeletonGraphic>();
-
-            skeletonGraphic.Initialize(true);
-
-            skeletonGraphic.Skeleton.SetSkin("orc");
-            skeletonGraphic.Skeleton.SetSlotsToSetupPose();
-            skeletonGraphic.AnimationState.SetAnimation(0, "story_details", false);
-
-            skeletonGraphic.transform.Find("Header/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 스토리 해금";
-            skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 진영 튜토리얼이 개방 되었습니다!";
-
-            yield return new WaitForSeconds(1.0f);
-
-            clickStream = Observable.EveryUpdate()
-                .Where(_ => Input.GetMouseButtonDown(0))
-                .Subscribe(_ => CheckClick(target));
-        }
-
-        private void CheckClick(GameObject target) {
-            if (target == null) {
-                GetComponent<MenuTutorialManager>().DeactiveRewardPanel();
-                clickStream.Dispose();
-                handler.isDone = true;
-            }
-        }
-    }
-
     public class UnlockOrcStory_2_Anim : MenuExecute {
         IDisposable clickStream;
         IEnumerator coroutine;
@@ -607,15 +571,13 @@ namespace MenuTutorialModules {
 
         IEnumerator Proceed() {
             GameObject target = null;
-
-            GetComponent<MenuTutorialManager>().ActiveRewardPanel();
-            SkeletonGraphic skeletonGraphic = GetComponent<MenuTutorialManager>().rewardPanel.transform.Find("Anim").GetComponent<SkeletonGraphic>();
-
-            skeletonGraphic.Initialize(true);
-
-            skeletonGraphic.Skeleton.SetSkin("orc");
+            
+            SkeletonGraphic skeletonGraphic = GetComponent<MenuTutorialManager>().rewardPanel.transform.GetChild(0).GetChild(1).GetComponent<SkeletonGraphic>();
             skeletonGraphic.Skeleton.SetSlotsToSetupPose();
-            skeletonGraphic.AnimationState.SetAnimation(0, "story_reward2", false);
+            skeletonGraphic.Skeleton.SetSkin("orc");
+
+            yield return new WaitForEndOfFrame();
+            GetComponent<MenuTutorialManager>().ActiveRewardPanel(1);
 
             skeletonGraphic.transform.Find("Header/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 스토리 해금";
             skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 진영 튜토리얼이 개방 되었습니다!";
@@ -629,7 +591,7 @@ namespace MenuTutorialModules {
 
         private void CheckClick(GameObject target) {
             if (target == null) {
-                GetComponent<MenuTutorialManager>().DeactiveRewardPanel();
+                GetComponent<MenuTutorialManager>().DeactiveRewardPanel(1);
                 clickStream.Dispose();
                 handler.isDone = true;
             }
@@ -647,16 +609,14 @@ namespace MenuTutorialModules {
 
         IEnumerator Proceed() {
             GameObject target = null;
-
-            GetComponent<MenuTutorialManager>().ActiveRewardPanel();
-            SkeletonGraphic skeletonGraphic = GetComponent<MenuTutorialManager>().rewardPanel.transform.Find("Anim").GetComponent<SkeletonGraphic>();
-
-            skeletonGraphic.Initialize(true);
-
-            skeletonGraphic.Skeleton.SetSkin("human");
+            
+            SkeletonGraphic skeletonGraphic = GetComponent<MenuTutorialManager>().rewardPanel.transform.GetChild(0).GetChild(2).GetComponent<SkeletonGraphic>();
             skeletonGraphic.Skeleton.SetSlotsToSetupPose();
-            skeletonGraphic.AnimationState.SetAnimation(0, "story_reward2", false);
+            skeletonGraphic.Skeleton.SetSkin("human");
 
+            yield return new WaitForEndOfFrame();
+
+            GetComponent<MenuTutorialManager>().ActiveRewardPanel(2);
             skeletonGraphic.transform.Find("Header/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "휴먼 스토리 해금";
             skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "휴먼 진영 튜토리얼이 개방 되었습니다!";
 
@@ -669,7 +629,7 @@ namespace MenuTutorialModules {
 
         private void CheckClick(GameObject target) {
             if (target == null) {
-                GetComponent<MenuTutorialManager>().DeactiveRewardPanel();
+                GetComponent<MenuTutorialManager>().DeactiveRewardPanel(2);
                 clickStream.Dispose();
                 handler.isDone = true;
             }
@@ -677,7 +637,7 @@ namespace MenuTutorialModules {
     }
 
     /// <summary>
-    /// 오크 진영 튜토리얼이 개방 되었습니다!
+    /// 오크 진영 튜토리얼이 개방 되었습니다! (오크 0-1 오픈)
     /// </summary>
     public class UnlockOrcStoryAnim : MenuExecute {
         IDisposable clickStream;
@@ -690,16 +650,13 @@ namespace MenuTutorialModules {
 
         IEnumerator Proceed() {
             GameObject target = null;
-
-            GetComponent<MenuTutorialManager>().ActiveRewardPanel();
-            SkeletonGraphic skeletonGraphic = GetComponent<MenuTutorialManager>().rewardPanel.transform.Find("Anim").GetComponent<SkeletonGraphic>();
-
-            skeletonGraphic.Initialize(true);
-
-            skeletonGraphic.Skeleton.SetSkin("orc");
+            SkeletonGraphic skeletonGraphic = GetComponent<MenuTutorialManager>().rewardPanel.transform.GetChild(0).GetChild(0).GetComponent<SkeletonGraphic>();
             skeletonGraphic.Skeleton.SetSlotsToSetupPose();
-            skeletonGraphic.AnimationState.SetAnimation(0, "story_reward1", false);
+            skeletonGraphic.Skeleton.SetSkin("orc");
 
+            yield return new WaitForEndOfFrame();
+            GetComponent<MenuTutorialManager>().ActiveRewardPanel(0);
+            
             skeletonGraphic.transform.Find("Header/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 튜토리얼 개방";
             skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 진영 튜토리얼이 개방 되었습니다!";
 
@@ -712,7 +669,7 @@ namespace MenuTutorialModules {
 
         private void CheckClick(GameObject target) {
             if (target == null) {
-                GetComponent<MenuTutorialManager>().DeactiveRewardPanel();
+                GetComponent<MenuTutorialManager>().DeactiveRewardPanel(0);
                 clickStream.Dispose();
                 handler.isDone = true;
             }
@@ -734,14 +691,13 @@ namespace MenuTutorialModules {
         IEnumerator Proceed() {
             GameObject target = null;
 
-            GetComponent<MenuTutorialManager>().ActiveRewardPanel();
-            SkeletonGraphic skeletonGraphic = GetComponent<MenuTutorialManager>().rewardPanel.transform.Find("Anim").GetComponent<SkeletonGraphic>();
-
-            skeletonGraphic.Initialize(true);
-
-            skeletonGraphic.Skeleton.SetSkin("human");
+            SkeletonGraphic skeletonGraphic = GetComponent<MenuTutorialManager>().rewardPanel.transform.GetChild(0).GetChild(4).GetComponent<SkeletonGraphic>();
             skeletonGraphic.Skeleton.SetSlotsToSetupPose();
-            skeletonGraphic.AnimationState.SetAnimation(0, "story", false);
+            skeletonGraphic.Skeleton.SetSkin("human");
+
+            yield return new WaitForEndOfFrame();
+
+            GetComponent<MenuTutorialManager>().ActiveRewardPanel(4);
 
             skeletonGraphic.transform.Find("Header/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "스토리 메뉴 해금";
             skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "스토리 메뉴가 오픈되었습니다!";
@@ -755,7 +711,7 @@ namespace MenuTutorialModules {
 
         private void CheckClick(GameObject target) {
             if (target == null) {
-                GetComponent<MenuTutorialManager>().DeactiveRewardPanel();
+                GetComponent<MenuTutorialManager>().DeactiveRewardPanel(4);
                 clickStream.Dispose();
                 handler.isDone = true;
             }
@@ -773,15 +729,14 @@ namespace MenuTutorialModules {
 
         IEnumerator Proceed() {
             GameObject target = null;
-
-            GetComponent<MenuTutorialManager>().ActiveRewardPanel();
-            SkeletonGraphic skeletonGraphic = GetComponent<MenuTutorialManager>().rewardPanel.transform.Find("Anim").GetComponent<SkeletonGraphic>();
-
-            skeletonGraphic.Initialize(true);
-
-            skeletonGraphic.Skeleton.SetSkin("human");
+            
+            SkeletonGraphic skeletonGraphic = GetComponent<MenuTutorialManager>().rewardPanel.transform.GetChild(0).GetChild(3).GetComponent<SkeletonGraphic>();
             skeletonGraphic.Skeleton.SetSlotsToSetupPose();
-            skeletonGraphic.AnimationState.SetAnimation(0, "battle", false);
+            skeletonGraphic.Skeleton.SetSkin("human");
+
+            yield return new WaitForEndOfFrame();
+
+            GetComponent<MenuTutorialManager>().ActiveRewardPanel(3);
 
             skeletonGraphic.transform.Find("Header/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "배틀 메뉴 해금";
             skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "배틀 메뉴가 오픈되었습니다!";
@@ -795,7 +750,7 @@ namespace MenuTutorialModules {
 
         private void CheckClick(GameObject target) {
             if (target == null) {
-                GetComponent<MenuTutorialManager>().DeactiveRewardPanel();
+                GetComponent<MenuTutorialManager>().DeactiveRewardPanel(3);
                 clickStream.Dispose();
                 handler.isDone = true;
 

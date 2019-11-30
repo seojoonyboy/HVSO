@@ -27,6 +27,8 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
     public GameObject FixedMenuCanvas;
     public MenuSceneController menuSceneController;
 
+    public GameObject[] UnlockSpineObjects;
+
     public void ReadTutorialData() {
         string dataAsJson = ((TextAsset)Resources.Load("TutorialDatas/TutorialDatas")).text;
         sets = JsonReader.Read<List<TutorialSet>>(dataAsJson);
@@ -87,11 +89,23 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
     /// <summary>
     /// 보상받기 패널
     /// </summary>
-    public void ActiveRewardPanel() {
+    public void ActiveRewardPanel(int index) {
         rewardPanel.SetActive(true);
+        rewardPanel
+            .transform
+            .GetChild(0)
+            .GetChild(index)
+            .gameObject
+            .SetActive(true);
     }
 
-    public void DeactiveRewardPanel() {
+    public void DeactiveRewardPanel(int index) {
+        rewardPanel
+            .transform
+            .GetChild(0)
+            .GetChild(index)
+            .gameObject
+            .SetActive(false);
         rewardPanel.SetActive(false);
     }
 
