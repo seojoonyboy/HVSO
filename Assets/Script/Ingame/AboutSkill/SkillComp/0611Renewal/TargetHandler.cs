@@ -445,6 +445,7 @@ namespace TargetModules {
                     callback(selectedTarget);
                     skillHandler.SendingMessage(true);
                     removeSelectUI();
+                    TintUnit(false);
                 }
             }
         }
@@ -484,6 +485,7 @@ namespace TargetModules {
 
         protected IEnumerator enemyTurnSelect(SelectTargetFinished successCallback, SelectTargetFailed failedCallback) {
             BattleConnector server = PlayMangement.instance.socketHandler;
+            TintUnit(true);
             //턴 넘김으로 인한 경우 (현재 오크 잠복꾼) 위치 이동만 존재합니다.
             if(skillHandler.targetData == null) {
                 //1. 메시지 올 때까지 기다리기
@@ -610,6 +612,7 @@ namespace TargetModules {
             
             PlayMangement.instance.OffBlockPanel();
             PlayMangement.instance.UnlockTurnOver();
+            TintUnit(false);
         }
 
         public override void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback, Filtering filter) {
@@ -618,6 +621,8 @@ namespace TargetModules {
                 transform.localScale = Vector3.zero;
             }
             PlayMangement.instance.LockTurnOver();
+
+
 
             //TODO : 적일 경우 해당 소켓이 도달 할 때까지 기다리기 card_played, skill_activated
             if(!skillHandler.isPlayer) { 
@@ -649,6 +654,7 @@ namespace TargetModules {
                                 CardDropManager.Instance.ShowScopeSlot();
                             else
                                 CardDropManager.Instance.ShowDropableSlot(attributes, true);
+                            TintUnit(true);
                         }
                         else {
                             failedCallback("자리가 없습니다.");
@@ -674,8 +680,8 @@ namespace TargetModules {
                                     PlayMangement.instance.infoOn = true;
                                 }
                                 unit.transform.Find("MagicTargetTrigger").gameObject.SetActive(true);
-
                             }
+                            TintUnit(true);
                         }
                         else {
                             failedCallback("타겟이 없습니다.");
@@ -723,6 +729,7 @@ namespace TargetModules {
                             }
 
                             callback = successCallback;
+                            TintUnit(true);
                         }
                         else {
                             failedCallback("타겟이 없습니다.");
@@ -817,6 +824,19 @@ namespace TargetModules {
                     break;
             }
             return result;
+        }
+
+        private void TintUnit(bool onOff) {
+            PlaceMonster caster;
+            caster = skillHandler.myObject.GetComponent<PlaceMonster>();
+            if(caster == null) {
+                object skillTarget = skillHandler.skillTarget;
+                if(skillTarget.GetType() ==  typeof(GameObject))
+                    caster = ((GameObject)skillTarget).GetComponent<PlaceMonster>();
+                else if(skillTarget.GetType() == typeof(List<GameObject>))
+                    caster = ((List<GameObject>)skillTarget)[0].GetComponent<PlaceMonster>();
+            }
+            caster.TintAnimation(onOff);
         }
     }
 

@@ -698,4 +698,20 @@ public class PlaceMonster : MonoBehaviour {
                 break;
         }
     }
+
+    public void TintAnimation(bool onOff) {
+        MaterialPropertyBlock block = new MaterialPropertyBlock();
+        MeshRenderer render = unitSpine.GetComponent<MeshRenderer>();
+        string colorProperty = "_Color";
+		string blackTintProperty = "_Black";
+        if(onOff) {
+            block.SetColor(colorProperty, Color.white);
+            block.SetColor(blackTintProperty, Color.grey);
+        }
+        else {
+            block.SetColor(colorProperty, Color.white);
+            block.SetColor(blackTintProperty, Color.black);
+        }
+        render.SetPropertyBlock(block);
+    }
 }
