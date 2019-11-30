@@ -92,6 +92,7 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
     }
 
     public void DeactiveRewardPanel() {
+        rewardPanel.transform.Find("SubBackground").gameObject.SetActive(true);
         rewardPanel.SetActive(false);
     }
 

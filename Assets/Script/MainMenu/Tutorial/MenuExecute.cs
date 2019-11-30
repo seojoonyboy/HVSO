@@ -471,6 +471,8 @@ namespace MenuTutorialModules {
             skeletonGraphic.Skeleton.SetSkin(args[0]);
             skeletonGraphic.Skeleton.SetSlotsToSetupPose();
 
+            yield return new WaitForEndOfFrame();
+            skeletonGraphic.transform.parent.Find("SubBackground").gameObject.SetActive(false);
             skeletonGraphic.AnimationState.SetAnimation(0, "sampledeck", false);
 
             yield return new WaitForSeconds(0.8f);
@@ -575,6 +577,9 @@ namespace MenuTutorialModules {
 
             skeletonGraphic.Skeleton.SetSkin("orc");
             skeletonGraphic.Skeleton.SetSlotsToSetupPose();
+
+            yield return new WaitForEndOfFrame();
+            skeletonGraphic.transform.parent.Find("SubBackground").gameObject.SetActive(false);
             skeletonGraphic.AnimationState.SetAnimation(0, "story_details", false);
 
             skeletonGraphic.transform.Find("Header/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 스토리 해금";
@@ -615,6 +620,9 @@ namespace MenuTutorialModules {
 
             skeletonGraphic.Skeleton.SetSkin("orc");
             skeletonGraphic.Skeleton.SetSlotsToSetupPose();
+
+            yield return new WaitForEndOfFrame();
+            skeletonGraphic.transform.parent.Find("SubBackground").gameObject.SetActive(false);
             skeletonGraphic.AnimationState.SetAnimation(0, "story_reward2", false);
 
             skeletonGraphic.transform.Find("Header/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 스토리 해금";
@@ -655,6 +663,9 @@ namespace MenuTutorialModules {
 
             skeletonGraphic.Skeleton.SetSkin("human");
             skeletonGraphic.Skeleton.SetSlotsToSetupPose();
+
+            yield return new WaitForEndOfFrame();
+            skeletonGraphic.transform.parent.Find("SubBackground").gameObject.SetActive(false);
             skeletonGraphic.AnimationState.SetAnimation(0, "story_reward2", false);
 
             skeletonGraphic.transform.Find("Header/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "휴먼 스토리 해금";
@@ -698,6 +709,9 @@ namespace MenuTutorialModules {
 
             skeletonGraphic.Skeleton.SetSkin("orc");
             skeletonGraphic.Skeleton.SetSlotsToSetupPose();
+
+            yield return new WaitForEndOfFrame();
+            skeletonGraphic.transform.parent.Find("SubBackground").gameObject.SetActive(false);
             skeletonGraphic.AnimationState.SetAnimation(0, "story_reward1", false);
 
             skeletonGraphic.transform.Find("Header/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 튜토리얼 개방";
@@ -741,6 +755,8 @@ namespace MenuTutorialModules {
 
             skeletonGraphic.Skeleton.SetSkin("human");
             skeletonGraphic.Skeleton.SetSlotsToSetupPose();
+            yield return new WaitForEndOfFrame();
+            skeletonGraphic.transform.parent.Find("SubBackground").gameObject.SetActive(false);
             skeletonGraphic.AnimationState.SetAnimation(0, "story", false);
 
             skeletonGraphic.transform.Find("Header/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "스토리 메뉴 해금";
@@ -781,6 +797,9 @@ namespace MenuTutorialModules {
 
             skeletonGraphic.Skeleton.SetSkin("human");
             skeletonGraphic.Skeleton.SetSlotsToSetupPose();
+
+            yield return new WaitForEndOfFrame();
+            skeletonGraphic.transform.parent.Find("SubBackground").gameObject.SetActive(false);
             skeletonGraphic.AnimationState.SetAnimation(0, "battle", false);
 
             skeletonGraphic.transform.Find("Header/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "배틀 메뉴 해금";
