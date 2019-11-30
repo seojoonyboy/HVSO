@@ -123,14 +123,14 @@ public class BattleReadyHeaderController : SerializedMonoBehaviour {
         StringBuilder sb = new StringBuilder();
         TextMeshProUGUI descTxt = normalUI.transform.Find("Text").GetComponent<TextMeshProUGUI>();
         //연승중
-        if(info.winningStreak > 0) {
+        if(info.winningStreak > 1) {
             sb
                 .Append("<color=yellow>")
                 .Append(info.winningStreak)
                 .Append("연승! </color>");
         }
         //연패중
-        else if(info.losingStreak > 0) {
+        else if(info.losingStreak > 1) {
             sb
                 .Append("<color=red>")
                 .Append(info.losingStreak)

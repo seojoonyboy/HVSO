@@ -263,13 +263,13 @@ public class GameResultManager : MonoBehaviour {
 
             var description = playerMMR.Find("VictoryInfo").GetComponent<TMPro.TextMeshProUGUI>();
             StringBuilder sb = new StringBuilder();
-            if(leagueInfo.winningStreak > 0) {
+            if(leagueInfo.winningStreak > 1) {
                 sb
                     .Append("<color=yellow>")
                     .Append(leagueInfo.winningStreak)
                     .Append("</color> 연승중");
             }
-            else if(leagueInfo.losingStreak > 0) {
+            else if(leagueInfo.losingStreak > 1) {
                 sb
                     .Append("<color=red>")
                     .Append(leagueInfo.losingStreak)
