@@ -62,7 +62,7 @@ public class ScenarioGameManagment : PlayMangement {
         
 
         //if (chapterData.chapter == 0 && chapterData.stage_number == 1)
-        //    optionIcon.SetActive(false);
+        optionIcon.SetActive(false);
 
 
         thisType = GetType();
