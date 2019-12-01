@@ -65,6 +65,7 @@ public class PlaceMonster : MonoBehaviour {
     };
 
     void OnDestroy() {
+        tintOnOff = false;
         if(PlayMangement.instance == null) return;
         if (isPlayer) {
             PlayMangement.instance.UnitsObserver
@@ -700,18 +701,27 @@ public class PlaceMonster : MonoBehaviour {
     }
 
     public void TintAnimation(bool onOff) {
+        tintOnOff = onOff;
+        if(tintOnOff) StartCoroutine(PingPongTween());
+    }
+
+    bool tintOnOff = false;
+
+    private IEnumerator PingPongTween() {
         MaterialPropertyBlock block = new MaterialPropertyBlock();
-        MeshRenderer render = unitSpine.GetComponent<MeshRenderer>();
+        MeshRenderer meshRenderer = unitSpine.GetComponent<MeshRenderer>();
         string colorProperty = "_Color";
 		string blackTintProperty = "_Black";
-        if(onOff) {
+        while(tintOnOff) {
+            float random = Mathf.PingPong(Time.time, 0.8f);
+            Color showColor = new Vector4(random, random, random, 1f);
             block.SetColor(colorProperty, Color.white);
-            block.SetColor(blackTintProperty, Color.grey);
+            block.SetColor(blackTintProperty, showColor);
+            meshRenderer.SetPropertyBlock(block);
+            yield return null;
         }
-        else {
-            block.SetColor(colorProperty, Color.white);
-            block.SetColor(blackTintProperty, Color.black);
-        }
-        render.SetPropertyBlock(block);
+        block.SetColor(colorProperty, Color.white);
+        block.SetColor(blackTintProperty, Color.black);
+        meshRenderer.SetPropertyBlock(block);
     }
 }
