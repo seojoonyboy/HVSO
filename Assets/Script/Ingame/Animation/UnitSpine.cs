@@ -79,8 +79,8 @@ public class UnitSpine : MonoBehaviour
     }
 
     private void Start() {
-        SetUpGlow();
-        ActiveGlow();
+        //SetUpGlow();
+        //ActiveGlow();
     }
 
 
@@ -88,7 +88,6 @@ public class UnitSpine : MonoBehaviour
         skeletonAnimation = GetComponent<SkeletonAnimation>();
         spineAnimationState = skeletonAnimation.AnimationState;
         skeleton = skeletonAnimation.Skeleton;
-        return;
         spineAnimationState.Event += AnimationEvent;
         
         headbone = transform.Find("effect_head");
