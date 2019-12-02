@@ -6,6 +6,7 @@ Shader "Custom/Spine_Skeleton_Glow"
         [NoScaleOffset] _MainTex("MainTex", 2D) = "black" {}
         [Toggle(_STRAIGHT_ALPHA_INPUT)] _StraightAlphaInput("Straight Alpha Texture", Int) = 0
         _Cutoff("Shadow alpha cutoff", Range(0,1)) = 0.1
+        _GlowPower("Glow Power", Range(1,3)) = 1
         [HideInInspector] _StencilRef("Stencil Reference", Float) = 1.0
         [Enum(UnityEngine.Rendering.CompareFunction)] _StencilComp("Stencil Comparison", Float) = 8 // Set to Always as default
     }
@@ -34,6 +35,7 @@ Shader "Custom/Spine_Skeleton_Glow"
                 sampler2D _MainTex;
                 float4 _Color;
                 float4 _Black;
+                float _GlowPower;
 
                 struct VertexInput {
                     float4 vertex : POSITION;
@@ -51,7 +53,7 @@ Shader "Custom/Spine_Skeleton_Glow"
                     VertexOutput o;
                     o.pos = UnityObjectToClipPos(v.vertex);
                     o.uv = v.uv;
-                    o.vertexColor = v.vertexColor * float4(_Color.rgb + _Color.a, _Color.a); // Combine a PMA version of _Color with vertexColor.
+                    o.vertexColor = v.vertexColor * float4(_Color.rgb + (_Color.a * _GlowPower), _Color.a); // Combine a PMA version of _Color with vertexColor.
                     
                     // shader 출력 부분. 빛이 비추는 방향에서 보는 방향으로 shader 출력
                     // _Color.rgb부분이 보여주는 부분에 보일 컬러, 이 셰이더는 color.black으로 설정!
