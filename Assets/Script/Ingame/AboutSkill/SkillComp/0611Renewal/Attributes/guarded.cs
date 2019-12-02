@@ -11,9 +11,11 @@ namespace SkillModules {
             //TextMeshPro textPro = transform.Find("Status").GetComponent<TextMeshPro>();
             //textPro.gameObject.SetActive(true);
             //textPro.text = "보호 받음";
-            //PlayMangement.instance.AddSkillIcon("protect", transform);
+            //PlayMangement.instance.AddSkillIcon("protect", transform);           
 
-            EffectSystem.Instance.ContinueEffect(EffectSystem.EffectType.NO_DAMAGE, transform);
+
+            Transform bodyBone = (gameObject.GetComponent<PlaceMonster>() != null) ? gameObject.GetComponent<PlaceMonster>().unitSpine.bodybone : null;
+            EffectSystem.Instance.ContinueEffect(EffectSystem.EffectType.NO_DAMAGE, transform, bodyBone);
 
             eventHandler = PlayMangement.instance.EventHandler;
             eventHandler.AddListener(IngameEventHandler.EVENT_TYPE.END_BATTLE_TURN, OnBattleEndTurn);
