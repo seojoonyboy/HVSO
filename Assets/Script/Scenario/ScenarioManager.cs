@@ -9,6 +9,7 @@ using UnityEngine.Events;
 using System;
 using System.IO;
 using dataModules;
+using System.Text;
 
 public class ScenarioManager : SerializedMonoBehaviour
 {
@@ -188,12 +189,31 @@ public class ScenarioManager : SerializedMonoBehaviour
             item.SetActive(true);
             string str = string.Format("{0}-{1} {2}", selectedList[i].chapter, selectedList[i].stage_number, selectedList[i].stage_Name);
             item.transform.Find("StageName").GetComponent<TextMeshProUGUI>().text = str;
-            ShowReward(item ,selectedList[i]);
+            //ShowReward(item ,selectedList[i]);
             StageButton stageButtonComp = item.GetComponent<StageButton>();
             stageButtonComp.Init(selectedList[i].chapter, selectedList[i].stage_number, isHuman);
+            
+            SetStorySummaryText(
+                selectedList[i].description, 
+                item.transform.Find("StageScript").GetComponent<TextMeshProUGUI>()
+            );
             //item.transform.Find("StageScript").GetComponent<TextMeshProUGUI>().text = selectedList[i].description;
         }
     }
+
+    private void SetStorySummaryText(string data, TextMeshProUGUI targetTextComp) {
+        int cutStandard = 45;
+        StringBuilder cutStr = new StringBuilder();
+        if(data.Length > cutStandard) {
+            cutStr.Append(data.Substring(cutStandard));
+            cutStr.Append("...");
+        }
+        else {
+            cutStr.Append(data);
+        }
+        targetTextComp.text = cutStr.ToString();
+    }
+
     private void ShowReward(GameObject item ,ChapterData chapterData) {
         if (chapterData.scenarioReward == null) return;
 
