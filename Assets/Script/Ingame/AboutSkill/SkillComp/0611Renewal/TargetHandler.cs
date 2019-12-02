@@ -637,6 +637,11 @@ namespace TargetModules {
             failed = failedCallback;
             currentState = PlayMangement.instance.socketHandler.gameState.state;
 
+            GameObject targetObject = skillHandler.myObject;
+            if (targetObject != null && targetObject.GetComponent<PlaceMonster>() != null)
+                EffectSystem.Instance.CheckEveryLineMask(targetObject.GetComponent<PlaceMonster>());
+
+
             switch (args[0]) {
                 case "my":
                     if(args.Length == 2 && args[1] == "place") {

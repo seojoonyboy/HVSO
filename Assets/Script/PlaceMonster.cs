@@ -723,5 +723,6 @@ public class PlaceMonster : MonoBehaviour {
         block.SetColor(colorProperty, Color.black);
         //block.SetColor(blackTintProperty, Color.black);
         meshRenderer.SetPropertyBlock(block);
+        EffectSystem.Instance.HideEveryDim();
     }
 }
