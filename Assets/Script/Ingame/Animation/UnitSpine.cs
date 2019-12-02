@@ -186,7 +186,11 @@ public class UnitSpine : MonoBehaviour
 
     public void SetUpGlow() {
         bool increase = false;
-        float speed = 0.005f;
+        float speed = 0.01f;
+        
+        Observable.EveryUpdate().Where(_ => spineColor.r >= 1f).Subscribe(_ => increase = false).AddTo(this);
+        Observable.EveryUpdate().Where(_ => spineColor.r <= 0.5f).Subscribe(_ => increase = true).AddTo(this);
+        
 
         DecreaseGlowRX = Observable.EveryUpdate().Where(_ => isGlow == true).Where(_=> increase == false)
             .Select(_ => spineColor.r -= speed).Select(_ => spineColor.g -= speed).Select(_ => spineColor.b -= speed)
@@ -196,8 +200,7 @@ public class UnitSpine : MonoBehaviour
             .Select(_ => spineColor.r += speed).Select(_ => spineColor.g += speed).Select(_ => spineColor.b += speed)
             .Subscribe(_ => skeleton.SetColor(spineColor)).AddTo(this);
 
-        Observable.EveryUpdate().Where(_ => spineColor.r >= 1f).Subscribe(_ => increase = false).AddTo(this);
-        Observable.EveryUpdate().Where(_ => spineColor.r <= 0.5f).Subscribe(_ => increase = true).AddTo(this);
+        
     }
 
     public void ActiveGlow() {
