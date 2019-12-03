@@ -51,7 +51,7 @@ public class GameResultManager : MonoBehaviour {
             btn.onClick.AddListener(() => {
                 OpenSecondWindow();
             });
-            btn.transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = "보상으로";
+            //btn.transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = "보상으로";
         }
     }
 
@@ -666,7 +666,7 @@ public class GameResultManager : MonoBehaviour {
         btn.onClick.AddListener(() => {
             PlayMangement.instance.SocketHandler.SendMethod("end_game");
         });
-        btn.transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = "메인으로";
+        //btn.transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = "메인으로";
     }
 
     private string GetTierAnimName(string keyword) {
