@@ -96,8 +96,8 @@ namespace SkillModules {
         }
 
         private int compare(SkillHandler x, SkillHandler y) {
-            int X = x.myObject.GetComponent<PlaceMonster>().x;
-            int Y = y.myObject.GetComponent<PlaceMonster>().x;
+            int X = x.myObject.GetComponent<PlaceMonster>().row;
+            int Y = y.myObject.GetComponent<PlaceMonster>().row;
             return X.CompareTo(Y);
         }
 
@@ -309,7 +309,7 @@ namespace SkillModules {
                 }
 
                 else if (arguments.method.Contains("line")) {
-                    if (isSelect) args.Add(selectList[0].GetComponent<PlaceMonster>().x.ToString());
+                    if (isSelect) args.Add(selectList[0].GetComponent<PlaceMonster>().row.ToString());
                     else args.Add(GetDropAreaLine().ToString());
                 }
 

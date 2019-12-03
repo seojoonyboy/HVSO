@@ -637,6 +637,11 @@ namespace TargetModules {
             failed = failedCallback;
             currentState = PlayMangement.instance.socketHandler.gameState.state;
 
+            GameObject targetObject = skillHandler.myObject;
+            if (targetObject != null && targetObject.GetComponent<PlaceMonster>() != null)
+                EffectSystem.Instance.CheckEveryLineMask(targetObject.GetComponent<PlaceMonster>());
+
+
             switch (args[0]) {
                 case "my":
                     if(args.Length == 2 && args[1] == "place") {
@@ -644,6 +649,7 @@ namespace TargetModules {
                             PlayMangement.instance.OnBlockPanel("대상을 지정해 주세요.");
                             callback = successCallback;
                             PlaceMonster myMonster = skillHandler.myObject.GetComponent<PlaceMonster>();
+                            EffectSystem.Instance.CheckEveryLineMask(myMonster);
                             string[] attributes; 
                             if(myMonster != null)
                                 attributes = myMonster.unit.attributes;
@@ -711,7 +717,7 @@ namespace TargetModules {
                             foreach (GameObject unit in units) {
                                 var ui = unit.transform.Find("ClickableUI").gameObject;
                                 if (ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.forcedTargetAt != -1) {
-                                    if (unit.GetComponent<PlaceMonster>().x == ScenarioGameManagment.scenarioInstance.forcedTargetAt) {
+                                    if (unit.GetComponent<PlaceMonster>().row == ScenarioGameManagment.scenarioInstance.forcedTargetAt) {
                                         if (ui != null) {
                                             ui.SetActive(true);
                                             PlayMangement.instance.infoOn = true;
@@ -845,7 +851,7 @@ namespace TargetModules {
             base.SelectTarget(successCallback, failedCallback, filter);
 
             var targets = new List<GameObject>();
-            int col = skillHandler.myObject.GetComponent<PlaceMonster>().x;
+            int col = skillHandler.myObject.GetComponent<PlaceMonster>().row;
 
             if (args[0] == "enemy") {
                 if (args[1] == "unit") {

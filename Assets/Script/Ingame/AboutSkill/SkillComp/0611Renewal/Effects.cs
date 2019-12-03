@@ -220,7 +220,7 @@ namespace SkillModules {
         public async void InvokeAttack(GameObject target, string cardID = "") {
             await Task.Delay(800);
             target.GetComponent<PlaceMonster>().InstanceAttack(cardID);
-            EffectSystem.Instance.CheckEveryLineMask(target.GetComponent<PlaceMonster>().x);
+            EffectSystem.Instance.CheckEveryLineMask(target.GetComponent<PlaceMonster>().row);
         }
         
 
@@ -379,7 +379,7 @@ namespace SkillModules {
                 string skillId = skillHandler.myObject.GetComponent<MagicDragHandler>().cardData.id;                
                 if (unit != null) {
                     unit.RequestChangeStat(0, -amount, skillId, mainImpact);                    
-                    EffectSystem.Instance.MaskLine(unit.x, false);
+                    EffectSystem.Instance.MaskLine(unit.row, false);
                     WaitEffect(target, amount);
                 } else {
                     target.GetComponent<PlayerController>().TakeIgnoreShieldDamage(amount, true, skillId);
@@ -486,7 +486,7 @@ namespace SkillModules {
             foreach (GameObject target in targets) {
                 string skillId = skillHandler.myObject.GetComponent<MagicDragHandler>().cardData.id;
                 target.GetComponent<PlaceMonster>().RequestChangeStat(0, -amount, skillId);
-                EffectSystem.Instance.MaskLine(target.GetComponent<PlaceMonster>().x, false);
+                EffectSystem.Instance.MaskLine(target.GetComponent<PlaceMonster>().row, false);
                 WaitEffect(target, amount);
             }
 

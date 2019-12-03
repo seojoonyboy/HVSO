@@ -210,22 +210,22 @@ public partial class PlayMangement : MonoBehaviour {
         enemyPlayer.wallPosition = backGround.transform.Find("PlayerPosition").Find("Player_2Wall").position;
         enemyPlayer.unitClosePosition = backGround.transform.Find("PlayerPosition").Find("Player_2Close").position;
 
-        for (int i = 0; i < player.frontLine.transform.childCount; i++) {
-            player.backLine.transform.GetChild(i).position = new Vector3(backGround.transform.GetChild(i).position.x, player.backLine.transform.position.y, 0);
-            player.frontLine.transform.GetChild(i).position = new Vector3(backGround.transform.GetChild(i).position.x, player.frontLine.transform.position.y, 0);
-            enemyPlayer.backLine.transform.GetChild(i).position = new Vector3(backGround.transform.GetChild(i).position.x, enemyPlayer.backLine.transform.position.y, 0);
-            enemyPlayer.frontLine.transform.GetChild(i).position = new Vector3(backGround.transform.GetChild(i).position.x, enemyPlayer.frontLine.transform.position.y, 0);
-        }
+        //for (int i = 0; i < player.frontLine.transform.childCount; i++) {
+        //    player.backLine.transform.GetChild(i).position = new Vector3(backGround.transform.GetChild(i).position.x, player.backLine.transform.position.y, 0);
+        //    player.frontLine.transform.GetChild(i).position = new Vector3(backGround.transform.GetChild(i).position.x, player.frontLine.transform.position.y, 0);
+        //    enemyPlayer.backLine.transform.GetChild(i).position = new Vector3(backGround.transform.GetChild(i).position.x, enemyPlayer.backLine.transform.position.y, 0);
+        //    enemyPlayer.frontLine.transform.GetChild(i).position = new Vector3(backGround.transform.GetChild(i).position.x, enemyPlayer.frontLine.transform.position.y, 0);
+        //}
 
-        player.backLine.transform.position = backGround.transform.Find("Line_Y_Position").Find("Player1_BackLine").position;
-        player.frontLine.transform.position = backGround.transform.Find("Line_Y_Position").Find("Player1_FrontLine").position;
-        enemyPlayer.backLine.transform.position = backGround.transform.Find("Line_Y_Position").Find("Player2_BackLine").position;
-        enemyPlayer.frontLine.transform.position = backGround.transform.Find("Line_Y_Position").Find("Player2_FrontLine").position;
+        player.backLine.transform.position = backGround.transform.Find("Line_3").Find("BackSlot").position;
+        player.frontLine.transform.position = backGround.transform.Find("Line_3").Find("FrontSlot").position;
+        enemyPlayer.backLine.transform.position = backGround.transform.Find("Line_3").Find("EnemyBackSlot").position;
+        enemyPlayer.frontLine.transform.position = backGround.transform.Find("Line_3").Find("EnemyFrontSlot").position;
 
-        for (int i = 0; i < player.frontLine.transform.childCount; i++) {
-            Vector3 pos = backGround.transform.GetChild(i).position;
-            backGround.transform.GetChild(i).position = new Vector3(pos.x, player.backLine.transform.position.y, 0);
-        }
+        //for (int i = 0; i < player.frontLine.transform.childCount; i++) {
+        //    Vector3 pos = backGround.transform.GetChild(i).position;
+        //    backGround.transform.GetChild(i).position = new Vector3(pos.x, player.backLine.transform.position.y, 0);
+        //}
     }
 
 
@@ -729,7 +729,6 @@ public partial class PlayMangement : MonoBehaviour {
         if (!isGame) yield break;
         if (lineObject.transform.GetChild(line).childCount == 0) yield break;
         PlaceMonster placeMonster = lineObject.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>();
-        if (placeMonster.maxAtkCount == 1 && secondAttack) yield break;
         if (placeMonster.unit.attack <= 0) yield break;
         placeMonster.GetTarget();
         yield return new WaitForSeconds(1.1f + placeMonster.atkTime);

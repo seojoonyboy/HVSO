@@ -12,13 +12,11 @@ public class PlaceMonster : MonoBehaviour {
 
     public bool isPlayer;
 
-    public int x { get; private set; }
-    public int y { get; private set; }
+    public int row { get; private set; }
+    public int col { get; private set; }
     public GameObject myTarget;
 
     public Vector3 unitLocation;
-    public int atkCount = 0;
-    public int maxAtkCount = 0;
     public int myUnitNum = 0;
     public int itemId = -1;
 
@@ -26,9 +24,14 @@ public class PlaceMonster : MonoBehaviour {
     
     public UnitSpine unitSpine;
     public HideUnit hideSpine;
+
+    public UnityAction attackCall;
+    public UnityAction takeMagicCall;
+
     
     protected bool instanceAttack = false;
     public EffectSystem.ActionDelegate actionCall;
+
     public float atkTime {
         get { return unitSpine.atkDuration; }
     }
@@ -85,23 +88,16 @@ public class PlaceMonster : MonoBehaviour {
     }
 
     public void Init(dataModules.CollectionCard data) {
-        x = transform.parent.GetSiblingIndex();
-        y = transform.parent.parent.GetSiblingIndex();
+        row = transform.parent.GetSiblingIndex();
+        col = transform.parent.parent.GetSiblingIndex();
 
         unitLocation = gameObject.transform.position;       
         
         unitSpine = transform.Find("skeleton").GetComponent<UnitSpine>();
-        unitSpine.attackCallback += SuccessAttack;
-        unitSpine.takeMagicCallback += CheckHP;
+        attackCall += AttackTiming;
+        takeMagicCall += CheckHP;
 
-        
-        if (unit.attackType.Length > 0 && unit.attackType[0] == "double")
-            maxAtkCount = 2;
-        else
-            maxAtkCount = 1;
-
-        if (unit.attributes.Length > 0 && unit.attributes[0] == "ambush")
-            gameObject.AddComponent<ambush>();
+        CheckAttribute();
 
 
         if (unit.attackRange == "distance") {
@@ -130,6 +126,25 @@ public class PlaceMonster : MonoBehaviour {
         UpdateStat();
         ChangeAttackProperty();
     }
+
+    public void CheckAttribute() {
+        if (unit.attributes.Length < 1) return;
+
+        string[] checkAttribute = unit.attributes;
+
+        if (checkAttribute.Contains("ambush"))
+            gameObject.AddComponent<ambush>();       
+    }
+
+    public void ChangeAttackProperty() {
+        if (unit.attackType.Length <= 0) {
+            transform.Find("UnitAttackProperty").gameObject.SetActive(false);
+            return;
+        }
+        SpriteRenderer iconImage = transform.Find("UnitAttackProperty/StatIcon").GetComponent<SpriteRenderer>();
+        iconImage.sprite = (unit.attackType.Length > 1) ? AccountManager.Instance.resource.skillIcons["complex"] : AccountManager.Instance.resource.skillIcons[unit.attackType[0]];
+    }
+
 
     public void SetHiding() {
         if (unit.attributes.Length > 0) {
@@ -168,14 +183,7 @@ public class PlaceMonster : MonoBehaviour {
     }
 
 
-    public void ChangeAttackProperty() {
-        if (unit.attackType.Length <= 0) {
-            transform.Find("UnitAttackProperty").gameObject.SetActive(false);
-            return;
-        }
-        SpriteRenderer iconImage = transform.Find("UnitAttackProperty/StatIcon").GetComponent<SpriteRenderer>();
-        iconImage.sprite = (unit.attackType.Length > 1) ? AccountManager.Instance.resource.skillIcons["complex"] : AccountManager.Instance.resource.skillIcons[unit.attackType[0]];
-    }
+    
 
     public void AddAttackProperty(string status) {
         transform.Find("UnitAttackProperty").gameObject.SetActive(true);
@@ -232,10 +240,10 @@ public class PlaceMonster : MonoBehaviour {
             myTarget = targetPlayer.transform.gameObject;
         }
         else {
-            if (targetPlayer.frontLine.transform.GetChild(x).childCount != 0)
-                myTarget = targetPlayer.frontLine.transform.GetChild(x).GetChild(0).gameObject;
-            else if (targetPlayer.backLine.transform.GetChild(x).childCount != 0)
-                myTarget = targetPlayer.backLine.transform.GetChild(x).GetChild(0).gameObject;
+            if (targetPlayer.frontLine.transform.GetChild(row).childCount != 0)
+                myTarget = targetPlayer.frontLine.transform.GetChild(row).GetChild(0).gameObject;
+            else if (targetPlayer.backLine.transform.GetChild(row).childCount != 0)
+                myTarget = targetPlayer.backLine.transform.GetChild(row).GetChild(0).gameObject;
             else
                 myTarget = targetPlayer.transform.gameObject;
         }
@@ -245,10 +253,10 @@ public class PlaceMonster : MonoBehaviour {
                 myTarget.AddComponent<SkillModules.poisonned>();
             }
             if(unit.attackType.Contains("through")) {
-                if (targetPlayer.frontLine.transform.GetChild(x).childCount != 0)
-                    targetPlayer.frontLine.transform.GetChild(x).GetChild(0).gameObject.AddComponent<SkillModules.poisonned>();
-                if (targetPlayer.backLine.transform.GetChild(x).childCount != 0)
-                    targetPlayer.backLine.transform.GetChild(x).GetChild(0).gameObject.AddComponent<SkillModules.poisonned>();
+                if (targetPlayer.frontLine.transform.GetChild(row).childCount != 0)
+                    targetPlayer.frontLine.transform.GetChild(row).GetChild(0).gameObject.AddComponent<SkillModules.poisonned>();
+                if (targetPlayer.backLine.transform.GetChild(row).childCount != 0)
+                    targetPlayer.backLine.transform.GetChild(row).GetChild(0).gameObject.AddComponent<SkillModules.poisonned>();
             }
         }
 
@@ -306,6 +314,12 @@ public class PlaceMonster : MonoBehaviour {
         SoundManager.Instance.PlayAttackSound(unit.id);
     }
 
+    public void AttackTiming() {
+
+        SuccessAttack();
+    }
+
+
     public void SuccessAttack() {
 
         if (unit.attackRange == "distance") {
@@ -351,8 +365,8 @@ public class PlaceMonster : MonoBehaviour {
 
     public void PiercingAttack() {
         PlayerController targetPlayer = myTarget.GetComponent<PlayerController>();
-        PlaceMonster frontMonster = (targetPlayer.frontLine.transform.GetChild(x).childCount > 0) ? targetPlayer.frontLine.transform.GetChild(x).GetChild(0).GetComponent<PlaceMonster>() : null;
-        PlaceMonster backMonster = (targetPlayer.backLine.transform.GetChild(x).childCount > 0) ? targetPlayer.backLine.transform.GetChild(x).GetChild(0).GetComponent<PlaceMonster>() : null;
+        PlaceMonster frontMonster = (targetPlayer.frontLine.transform.GetChild(row).childCount > 0) ? targetPlayer.frontLine.transform.GetChild(row).GetChild(0).GetComponent<PlaceMonster>() : null;
+        PlaceMonster backMonster = (targetPlayer.backLine.transform.GetChild(row).childCount > 0) ? targetPlayer.backLine.transform.GetChild(row).GetChild(0).GetComponent<PlaceMonster>() : null;
         GameObject arrow = transform.Find("arrow").gameObject;
         arrow.SetActive(true);
 
@@ -399,8 +413,8 @@ public class PlaceMonster : MonoBehaviour {
 
 
     public void ChangePosition(int x, int y, Vector3 unitLocation, string cardID) {
-        this.x = x;
-        this.y = y;
+        row = x;
+        col = y;
 
         Vector3 portalPosition = new Vector3(unitLocation.x, unitSpine.headbone.transform.position.y, unitLocation.z);
         this.unitLocation = unitLocation;
@@ -434,8 +448,8 @@ public class PlaceMonster : MonoBehaviour {
                 myTarget.GetComponent<PlaceMonster>().CheckHP();
             else {
                 PlayerController targetPlayer = myTarget.GetComponent<PlayerController>();
-                PlaceMonster frontMonster = (targetPlayer.frontLine.transform.GetChild(x).childCount > 0) ? targetPlayer.frontLine.transform.GetChild(x).GetChild(0).GetComponent<PlaceMonster>() : null;
-                PlaceMonster backMonster = (targetPlayer.backLine.transform.GetChild(x).childCount > 0) ? targetPlayer.backLine.transform.GetChild(x).GetChild(0).GetComponent<PlaceMonster>() : null;
+                PlaceMonster frontMonster = (targetPlayer.frontLine.transform.GetChild(row).childCount > 0) ? targetPlayer.frontLine.transform.GetChild(row).GetChild(0).GetComponent<PlaceMonster>() : null;
+                PlaceMonster backMonster = (targetPlayer.backLine.transform.GetChild(row).childCount > 0) ? targetPlayer.backLine.transform.GetChild(row).GetChild(0).GetComponent<PlaceMonster>() : null;
                 if(frontMonster != null) frontMonster.CheckHP();
                 if(backMonster != null) backMonster.CheckHP();
             }
@@ -624,14 +638,14 @@ public class PlaceMonster : MonoBehaviour {
             if (isHuman) slots = playMangement.UnitsObserver.humanUnits;
             else slots = playMangement.UnitsObserver.orcUnits;
 
-            if(slots[x, y] == null)
+            if(slots[row, col] == null)
                 return;
         }
         else {
             if (isHuman) slots = playMangement.UnitsObserver.orcUnits;
             else slots = playMangement.UnitsObserver.humanUnits;
 
-            if (slots[x, y] == null)
+            if (slots[row, col] == null)
                 return;
         }
         unit.currentHP = 0;
@@ -645,14 +659,14 @@ public class PlaceMonster : MonoBehaviour {
         GameObject dropTomb = Instantiate(tomb);
         dropTomb.transform.position = transform.position;
 
-        Logger.Log("X : " + x);
-        Logger.Log("Y : " + y);
+        Logger.Log("X : " + row);
+        Logger.Log("Y : " + col);
 
         if (isPlayer) {
-            PlayMangement.instance.UnitsObserver.UnitRemoved(new FieldUnitsObserver.Pos(x, y), isHuman);
+            PlayMangement.instance.UnitsObserver.UnitRemoved(new FieldUnitsObserver.Pos(row, col), isHuman);
         }
         else {
-            PlayMangement.instance.UnitsObserver.UnitRemoved(new FieldUnitsObserver.Pos(x, y), !isHuman);
+            PlayMangement.instance.UnitsObserver.UnitRemoved(new FieldUnitsObserver.Pos(row, col), !isHuman);
         }
 
         dropTomb.GetComponent<DeadSpine>().target = gameObject;
@@ -711,17 +725,18 @@ public class PlaceMonster : MonoBehaviour {
         MaterialPropertyBlock block = new MaterialPropertyBlock();
         MeshRenderer meshRenderer = unitSpine.GetComponent<MeshRenderer>();
         string colorProperty = "_Color";
-		string blackTintProperty = "_Black";
+		//string blackTintProperty = "_Black";
         while(tintOnOff) {
-            float random = Mathf.PingPong(Time.time, 0.8f);
+            float random = Mathf.PingPong(Time.time * 2f, 1f);
             Color showColor = new Vector4(random, random, random, 1f);
-            block.SetColor(colorProperty, Color.white);
-            block.SetColor(blackTintProperty, showColor);
+            block.SetColor(colorProperty, showColor);
+            //block.SetColor(blackTintProperty, showColor);
             meshRenderer.SetPropertyBlock(block);
             yield return null;
         }
-        block.SetColor(colorProperty, Color.white);
-        block.SetColor(blackTintProperty, Color.black);
+        block.SetColor(colorProperty, Color.black);
+        //block.SetColor(blackTintProperty, Color.black);
         meshRenderer.SetPropertyBlock(block);
+        EffectSystem.Instance.HideEveryDim();
     }
 }
