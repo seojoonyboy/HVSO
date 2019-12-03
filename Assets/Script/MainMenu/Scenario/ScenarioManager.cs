@@ -406,7 +406,8 @@ public class ScenarioManager : SerializedMonoBehaviour
         bool isTutorial = stageButton.isTutorial;
 
         Image background = stageCanvas.transform.Find("HUD/BackGround").GetComponent<Image>();
-        Image descBackground = stageCanvas.transform.Find("HUD/Image").GetComponent<Image>();
+        Image descBackground = stageCanvas.transform.Find("HUD/StagePanel/Body").GetComponent<Image>();
+        Image victoryBackground = stageCanvas.transform.Find("HUD/StagePanel/VictoryConditions").GetComponent<Image>();
 
         if (isHuman) {
             background.sprite = human.background;
@@ -417,6 +418,8 @@ public class ScenarioManager : SerializedMonoBehaviour
             .Find("HUD/StagePanel/VictoryConditions/HeroName")
             .gameObject
             .GetComponent<TextMeshProUGUI>().text = "제로드";
+
+            victoryBackground.sprite = human.victoryConditionBg;
         }
         else {
             background.sprite = orc.background;
@@ -427,6 +430,8 @@ public class ScenarioManager : SerializedMonoBehaviour
             .Find("HUD/StagePanel/VictoryConditions/HeroName")
             .gameObject
             .GetComponent<TextMeshProUGUI>().text = "크라수스";
+
+            victoryBackground.sprite = orc.victoryConditionBg;
         }
 
         stageCanvas
@@ -550,6 +555,7 @@ namespace Tutorial {
         public GameObject raceButton;
         public Sprite activeSprite;
         public Sprite deactiveSprite;
+        public Sprite victoryConditionBg;
         public GameObject heroSelect;
         public GameObject StageCanvas;
         public GameObject heroContent;
