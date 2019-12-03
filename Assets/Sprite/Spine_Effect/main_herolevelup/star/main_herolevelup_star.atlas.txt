@@ -1,0 +1,27 @@
+
+main_herolevelup_star.png
+size: 256,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+star1
+  rotate: true
+  xy: 97, 20
+  size: 79, 77
+  orig: 79, 77
+  offset: 0, 0
+  index: -1
+star11
+  rotate: true
+  xy: 2, 2
+  size: 97, 93
+  orig: 97, 93
+  offset: 0, 0
+  index: -1
+star_e
+  rotate: false
+  xy: 2, 101
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1

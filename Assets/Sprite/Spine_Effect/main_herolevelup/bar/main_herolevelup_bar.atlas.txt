@@ -1,0 +1,237 @@
+
+main_herolevelup_bar.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Group 1
+  rotate: false
+  xy: 786, 90
+  size: 102, 132
+  orig: 105, 135
+  offset: 2, 2
+  index: -1
+bar00
+  rotate: false
+  xy: 0, 936
+  size: 393, 72
+  orig: 399, 100
+  offset: 3, 14
+  index: -1
+bar01
+  rotate: false
+  xy: 0, 864
+  size: 393, 72
+  orig: 399, 100
+  offset: 3, 14
+  index: -1
+bar02
+  rotate: false
+  xy: 393, 936
+  size: 393, 72
+  orig: 399, 100
+  offset: 3, 14
+  index: -1
+bar03
+  rotate: false
+  xy: 0, 792
+  size: 393, 72
+  orig: 399, 100
+  offset: 3, 14
+  index: -1
+bar04
+  rotate: false
+  xy: 393, 864
+  size: 393, 72
+  orig: 399, 100
+  offset: 3, 14
+  index: -1
+bar05
+  rotate: false
+  xy: 0, 720
+  size: 393, 72
+  orig: 399, 100
+  offset: 3, 14
+  index: -1
+bar06
+  rotate: false
+  xy: 393, 792
+  size: 393, 72
+  orig: 399, 100
+  offset: 3, 14
+  index: -1
+bar07
+  rotate: false
+  xy: 0, 648
+  size: 393, 72
+  orig: 399, 100
+  offset: 3, 14
+  index: -1
+bar08
+  rotate: false
+  xy: 393, 720
+  size: 393, 72
+  orig: 399, 100
+  offset: 3, 14
+  index: -1
+bar09
+  rotate: false
+  xy: 0, 576
+  size: 393, 72
+  orig: 399, 100
+  offset: 3, 14
+  index: -1
+bar10
+  rotate: false
+  xy: 393, 648
+  size: 393, 72
+  orig: 399, 100
+  offset: 3, 14
+  index: -1
+bar11
+  rotate: false
+  xy: 0, 504
+  size: 393, 72
+  orig: 399, 100
+  offset: 3, 14
+  index: -1
+bar12
+  rotate: false
+  xy: 393, 576
+  size: 393, 72
+  orig: 399, 100
+  offset: 3, 14
+  index: -1
+bar13
+  rotate: true
+  xy: 786, 615
+  size: 393, 72
+  orig: 399, 100
+  offset: 3, 14
+  index: -1
+bar14
+  rotate: false
+  xy: 0, 432
+  size: 393, 72
+  orig: 399, 100
+  offset: 3, 14
+  index: -1
+bar15
+  rotate: false
+  xy: 393, 504
+  size: 393, 72
+  orig: 399, 100
+  offset: 3, 14
+  index: -1
+bar16
+  rotate: true
+  xy: 858, 615
+  size: 393, 72
+  orig: 399, 100
+  offset: 3, 14
+  index: -1
+bar17
+  rotate: false
+  xy: 0, 360
+  size: 393, 72
+  orig: 399, 100
+  offset: 3, 14
+  index: -1
+bar18
+  rotate: false
+  xy: 393, 432
+  size: 393, 72
+  orig: 399, 100
+  offset: 3, 14
+  index: -1
+bar19
+  rotate: true
+  xy: 930, 615
+  size: 393, 72
+  orig: 399, 100
+  offset: 3, 14
+  index: -1
+bar20
+  rotate: false
+  xy: 0, 288
+  size: 393, 72
+  orig: 399, 100
+  offset: 3, 14
+  index: -1
+bar200
+  rotate: false
+  xy: 393, 72
+  size: 393, 72
+  orig: 399, 100
+  offset: 3, 14
+  index: -1
+bar21
+  rotate: false
+  xy: 393, 360
+  size: 393, 72
+  orig: 399, 100
+  offset: 3, 14
+  index: -1
+bar22
+  rotate: false
+  xy: 0, 216
+  size: 393, 72
+  orig: 399, 100
+  offset: 3, 14
+  index: -1
+bar23
+  rotate: false
+  xy: 393, 288
+  size: 393, 72
+  orig: 399, 100
+  offset: 3, 14
+  index: -1
+bar24
+  rotate: false
+  xy: 0, 144
+  size: 393, 72
+  orig: 399, 100
+  offset: 3, 14
+  index: -1
+bar25
+  rotate: false
+  xy: 393, 216
+  size: 393, 72
+  orig: 399, 100
+  offset: 3, 14
+  index: -1
+bar26
+  rotate: true
+  xy: 786, 222
+  size: 393, 72
+  orig: 399, 100
+  offset: 3, 14
+  index: -1
+bar27
+  rotate: false
+  xy: 0, 72
+  size: 393, 72
+  orig: 399, 100
+  offset: 3, 14
+  index: -1
+bar28
+  rotate: false
+  xy: 393, 144
+  size: 393, 72
+  orig: 399, 100
+  offset: 3, 14
+  index: -1
+bar29
+  rotate: true
+  xy: 858, 222
+  size: 393, 72
+  orig: 399, 100
+  offset: 3, 14
+  index: -1
+bar30
+  rotate: false
+  xy: 0, 0
+  size: 393, 72
+  orig: 399, 100
+  offset: 3, 14
+  index: -1
