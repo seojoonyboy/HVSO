@@ -507,7 +507,7 @@ public partial class BattleConnector : MonoBehaviour {
         battleGameFinish = true;
         AccountManager.Instance.RequestUserInfo();
 
-        if (ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.isTutorial) {
+        if (ScenarioGameManagment.scenarioInstance != null) {
             string _result = result.result;
 
             PlayMangement playMangement = PlayMangement.instance;
