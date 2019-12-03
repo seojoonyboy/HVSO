@@ -13,7 +13,7 @@ public partial class PlayMangement : MonoBehaviour {
 
     public GameObject cardDB;
     public GameObject uiSlot;
-    public GameObject canvas;
+    public GameObject playerCanvas, enemyPlayerCanvas;
 
     public Transform cardInfoCanvas;
     public Transform battleLineEffect;
@@ -1138,7 +1138,7 @@ public partial class PlayMangement {
             releaseTurnBtn = turnTable.Find("OrcButton").gameObject;
         }
         for (int i = 0; i < 4; i++) {
-            turnTable.Find("TurnBoard").position = canvas.transform.GetChild(2).GetChild(2).position;
+            turnTable.Find("TurnBoard").position = playerCanvas.transform.GetChild(1).GetChild(2).position;
         }
 
         Debug.Log("isHuman" + isHuman);
