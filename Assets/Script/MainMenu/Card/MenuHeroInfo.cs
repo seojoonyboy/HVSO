@@ -76,6 +76,7 @@ public class MenuHeroInfo : MonoBehaviour
                 if (fillExp >= 1) {
                     transform.Find("HeroLevel/Exp/ValueText").gameObject.SetActive(false);
                     transform.Find("HeroLevel/TierUpBtn").gameObject.SetActive(true);
+                    transform.Find("HeroLevel/TierUpBtn/UpgradeSpine").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, "animation", true);
                     transform.Find("HeroLevel/Exp/Slider/Value").localPosition = new Vector3(-490, 0, 0);
                 }
                 else {
@@ -119,6 +120,7 @@ public class MenuHeroInfo : MonoBehaviour
     public void ClickHeroTierUp() {
         int cost = accountManager.myHeroInventories[heroId].next_level.manaCrystal;
         if (accountManager.userResource.crystal >= cost) {
+            transform.Find("HeroLevel/TierUpBtn/UpgradeSpine").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, "animation2", false);
             teirUpModal = Modal.instantiate("마나 수정이 " + cost.ToString() + "개 소모됩니다. 진행 하시겠습니까?", Modal.Type.YESNO, TierUpHero, CancelTierUp);
             EscapeKeyController.escapeKeyCtrl.AddEscape(CancelTierUp);
         }
@@ -132,6 +134,7 @@ public class MenuHeroInfo : MonoBehaviour
     public void CancelTierUp() {
         DestroyImmediate(teirUpModal, true);
         EscapeKeyController.escapeKeyCtrl.RemoveEscape(CancelTierUp);
+        transform.Find("HeroLevel/TierUpBtn/UpgradeSpine").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, "animation", true);
     }
 
     public void TierUpHero() {
