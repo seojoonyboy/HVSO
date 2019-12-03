@@ -211,8 +211,8 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
 
     public virtual Pos GetMyPos(GameObject gameObject) {
         Pos pos = new Pos();
-        pos.col = gameObject.GetComponent<PlaceMonster>().x;
-        pos.row = gameObject.GetComponent<PlaceMonster>().y;
+        pos.col = gameObject.GetComponent<PlaceMonster>().row;
+        pos.row = gameObject.GetComponent<PlaceMonster>().col;
 
         return pos;
     }
