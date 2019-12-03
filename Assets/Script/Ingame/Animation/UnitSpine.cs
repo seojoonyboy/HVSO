@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Spine.Unity;
 using Spine;
+using UniRx;
 using UnityEngine.Events;
 
 public class UnitSpine : MonoBehaviour
@@ -50,6 +51,10 @@ public class UnitSpine : MonoBehaviour
     protected HideUnit hideUnit;
 
     public bool teleportMove;
+    public bool isGlow = false;
+
+    public Color spineColor = new Color(1f, 1f, 1f);
+    System.IDisposable DecreaseGlowRX, IncreaseGlowRX;
 
     [HideInInspector]
     public Transform headbone;
@@ -69,20 +74,27 @@ public class UnitSpine : MonoBehaviour
 
 
     private void Awake() {
+        
         Init();
+    }
+
+    private void Start() {
+        //SetUpGlow();
+        //ActiveGlow();
     }
 
 
     public virtual void Init() {
         skeletonAnimation = GetComponent<SkeletonAnimation>();
         spineAnimationState = skeletonAnimation.AnimationState;
-        spineAnimationState.Event += AnimationEvent;
         skeleton = skeletonAnimation.Skeleton;
+        spineAnimationState.Event += AnimationEvent;
+        
         headbone = transform.Find("effect_head");
         bodybone = transform.Find("effect_body");
         rootbone = transform.Find("effect_root");
         //skeleton.SetToSetupPose();
-
+        
         if (arrow != null && transform.parent.GetComponent<PlaceMonster>().isPlayer == true) {
             if (rangeUpAttackName != "")
                 attackAnimationName = rangeUpAttackName;
@@ -170,4 +182,37 @@ public class UnitSpine : MonoBehaviour
     public virtual void TakeMagicEvent(TrackEntry entry) {
         if (takeMagicCallback != null) takeMagicCallback();
     }
+
+
+    public void SetUpGlow() {
+        bool increase = false;
+        float speed = 0.01f;
+        
+        Observable.EveryUpdate().Where(_ => spineColor.r >= 1f).Subscribe(_ => increase = false).AddTo(this);
+        Observable.EveryUpdate().Where(_ => spineColor.r <= 0.5f).Subscribe(_ => increase = true).AddTo(this);
+        
+
+        DecreaseGlowRX = Observable.EveryUpdate().Where(_ => isGlow == true).Where(_=> increase == false)
+            .Select(_ => spineColor.r -= speed).Select(_ => spineColor.g -= speed).Select(_ => spineColor.b -= speed)
+            .Subscribe(_ => skeleton.SetColor(spineColor)).AddTo(this);
+
+        IncreaseGlowRX = Observable.EveryUpdate().Where(_ => isGlow == true).Where(_=> increase == true)
+            .Select(_ => spineColor.r += speed).Select(_ => spineColor.g += speed).Select(_ => spineColor.b += speed)
+            .Subscribe(_ => skeleton.SetColor(spineColor)).AddTo(this);
+
+        
+    }
+
+    public void ActiveGlow() {
+        isGlow = true;
+    }
+
+    public void DeactiveGlow() {
+        isGlow = false;
+        spineColor = Color.white;
+        skeleton.SetColor(spineColor);
+    }
+    
+
+
 }

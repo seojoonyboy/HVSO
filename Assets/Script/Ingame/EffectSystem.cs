@@ -131,13 +131,16 @@ public class EffectSystem : SerializedMonoBehaviour {
 
 
 
-    public GameObject ContinueEffect(EffectType type, Transform pos) {
+    public GameObject ContinueEffect(EffectType type, Transform pos, Transform bonePos = null) {
         if (effectObject.ContainsKey(type) == false || effectObject[type] == null) return null;
         if (pos.Find(effectObject[type].gameObject.name) != null) return null;
         GameObject effect = GetReadyObject(effectObject[type]);
         effect.transform.SetParent(pos);
         effect.name = effectObject[type].gameObject.name;
-        effect.transform.position = pos.position;
+
+        effect.transform.position = (bonePos == null) ? pos.position : bonePos.position;
+
+
         effect.SetActive(true);
         SkeletonAnimation effectAnimation = effect.GetComponent<SkeletonAnimation>();
         effectAnimation.AnimationState.SetAnimation(0, "animation", true);
