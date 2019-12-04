@@ -305,26 +305,37 @@ public class ScenarioManager : SerializedMonoBehaviour
     private void ShowReward(GameObject item) {
         var stageButton = item.GetComponent<StageButton>();
         var rewards = stageButton.chapterData.scenarioReward;
+        Color32 ReceivedBgColor = new Color32(140, 140, 140, 255);
+
         if (rewards == null) return;
 
         Transform rewardParent = stageCanvas.transform.Find("HUD/StagePanel/Rewards/HorizontalGroup");
         var clearedStageList = AccountManager.Instance.clearedStages;
         foreach(Transform tf in rewardParent) {
-            tf.GetComponent<Image>().enabled = false;
-            tf.Find("ClearedMark").gameObject.SetActive(false);
+            tf.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+            tf.Find("Image").GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+
+            tf.Find("Image").gameObject.SetActive(false);
+            tf.Find("Image/ClearedMark").gameObject.SetActive(false);
         }
 
         for(int i=0; i<rewards.Length; i++) {
             string rewardType = rewards[i].reward;
-            Sprite rewardImage = AccountManager.Instance.resource.rewardIcon[rewardType];
-            rewardParent.GetChild(i).GetComponent<Image>().enabled = true;
-            rewardParent.GetChild(i).GetComponent<Image>().sprite = rewardImage;
-            rewardParent.GetChild(i).Find("Amount").GetComponent<TextMeshProUGUI>().text = "x" + rewards[i].count;
+            Sprite rewardImage = null;
+            if (AccountManager.Instance.resource.rewardIcon.ContainsKey(rewardType)) {
+                rewardImage = AccountManager.Instance.resource.rewardIcon[rewardType];
+            }
+
+            rewardParent.GetChild(i).Find("Image").gameObject.SetActive(true);
+            rewardParent.GetChild(i).Find("Image").GetComponent<Image>().sprite = rewardImage;
+            rewardParent.GetChild(i).Find("Image/Amount").GetComponent<TextMeshProUGUI>().text = "x" + rewards[i].count;
         }
 
         if(clearedStageList.Exists(x => stageButton.chapter == 0 && x.camp == stageButton.camp && x.stageNumber == stageButton.stage)) {
             for (int i = 0; i < rewards.Length; i++) {
-                rewardParent.GetChild(i).Find("ClearedMark").gameObject.SetActive(true);
+                rewardParent.GetChild(i).Find("Image/ClearedMark").gameObject.SetActive(true);
+                rewardParent.GetChild(i).GetComponent<Image>().color = ReceivedBgColor;
+                rewardParent.GetChild(i).Find("Image").GetComponent<Image>().color = ReceivedBgColor;
             }
         }
     }
