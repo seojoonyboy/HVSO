@@ -346,19 +346,23 @@ public class ScenarioManager : SerializedMonoBehaviour
     }
 
     private void CreateTutorialDeck(bool isHuman) {
+        Deck dummyDeck = new Deck();
+        dummyDeck.deckValidate = true;
+
         GameObject deckPrefab;
         string deckName = "";
         if (isHuman) {
             deckPrefab = humanDeckPrefab;
             deckName = "휴먼 기본부대";
+            dummyDeck.heroId = "h10001";
         }
         else {
             deckPrefab = orcDeckPrefab;
             deckName = "오크 기본부대";
+            dummyDeck.heroId = "h10002";
         }
+
         GameObject setDeck = Instantiate(deckPrefab, deckContent.transform);
-        Deck dummyDeck = new Deck();
-        dummyDeck.deckValidate = true;
         
         setDeck.transform.Find("Deck").GetComponent<Button>().onClick.AddListener(() => {
             OnDeckSelected(setDeck, dummyDeck, true);
@@ -650,6 +654,9 @@ namespace Tutorial {
         public int stage_number;
         public string stage_Name;
         public string match_type;
+        public string myHeroId;
+        public string enemyHeroId;
+
         [MultiLineProperty(10)] public string description;
         [MultiLineProperty(5)] public string specialRule;
         public List<ScriptData> scripts;
