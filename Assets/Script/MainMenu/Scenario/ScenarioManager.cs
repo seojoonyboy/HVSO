@@ -23,7 +23,6 @@ public class ScenarioManager : SerializedMonoBehaviour
 
     public GameObject selectedDeckObject = null;
     public object selectedDeck;
-    public int selectChapter = 0;
     private int currentPageIndex = 0;   //현재 페이지
     private int maxPageIndex = 0;       //최대 페이지
 
@@ -264,7 +263,6 @@ public class ScenarioManager : SerializedMonoBehaviour
         foreach (Transform child in canvas.transform) {
             child.gameObject.SetActive(true);
         }
-        canvas.Find("HUD/ChapterSelect/BackGround/Text").gameObject.GetComponent<Text>().text = "CHAPTER " + selectChapter.ToString();
         Transform content = canvas.Find("HUD/StageSelect/Viewport/Content");
         canvas.Find("HUD/ChapterSelect/BackGround/Text").GetComponent<Text>().text = "CHAPTER" + page;
         
@@ -522,8 +520,15 @@ public class ScenarioManager : SerializedMonoBehaviour
     }
 
     public void OpenDeckListWindow() {
+        ClearDeckList();
+
         SetBackButton(3);
         EscapeKeyController.escapeKeyCtrl.AddEscape(CloseDeckList);
+
+        if (selectedChapterData.chapter > 0) {
+            Modal.instantiate("준비중입니다!", Modal.Type.CHECK);
+            return;
+        }
 
         stageCanvas.gameObject.SetActive(true);
         stageCanvas.transform.Find("DeckSelectPanel").gameObject.SetActive(true);
