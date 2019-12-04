@@ -64,36 +64,6 @@ public class EffectSystem : SerializedMonoBehaviour {
         orcAnime.LateUpdate();
     }
 
-    public void ShowAttackEffect(int power, Vector3 pos) {
-        EffectType hitType;
-        int cameraPower;
-
-        if(power > 6) {
-            hitType = EffectType.HIT_HIGH;
-            cameraPower = 10;
-        }
-        else if (power > 3 && power <= 6) {
-            hitType = EffectType.HIT_MIDDLE;
-            cameraPower = 4;
-        }
-        else {
-            hitType = EffectType.HIT_LOW;
-            cameraPower = 1;
-        }     
-
-        GameObject effect = GetReadyObject(effectObject[hitType]);
-        effect.transform.position = pos;
-        effect.name = effectObject[hitType].gameObject.name;
-        effect.SetActive(true);
-        SkeletonAnimation effectAnimation = effect.GetComponent<SkeletonAnimation>();
-        effectAnimation.Initialize(true);
-        effectAnimation.Update(0);
-        effectAnimation.AnimationState.SetAnimation(0, "animation", false);
-        effectAnimation.AnimationState.Complete += delegate (TrackEntry entry) { SetReadyObject(effect); };
-        PlayMangement.instance.cameraShake(0.4f, cameraPower);
-    }
-
-
 
     public void ShowEffect(EffectType type, Vector3 pos) {
         if (effectObject.ContainsKey(type) == false || effectObject[type] == null) return;
