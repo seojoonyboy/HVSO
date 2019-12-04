@@ -163,7 +163,6 @@ public class ScenarioManager : SerializedMonoBehaviour
     /// 종족 선택시 UI 세팅
     /// </summary>
     private void ToggleUI() {
-        OffPrevStoryList();
         SetSubStoryListInfo();
 
         var backgroundImages = AccountManager.Instance.resource.campBackgrounds;
@@ -242,28 +241,29 @@ public class ScenarioManager : SerializedMonoBehaviour
     }
 
     private void SetSubStoryListInfo(int page = 0) {
-        ClearDeckList();
         currentPageIndex = page;
         
-        Transform canvas;
+        Transform canvas, content;
         List<ChapterData> selectedList;
         if (isHuman) {
             canvas = human.StageCanvas.transform;
             selectedList = pageHumanStoryList[page];
+            content = human.stageContent.transform;
 
             maxPageIndex = pageHumanStoryList.Count - 1;
         }
         else {
             canvas = orc.StageCanvas.transform;
             selectedList = pageOrcStoryList[page];
+            content = orc.stageContent.transform;
 
             maxPageIndex = pageOrcStoryList.Count - 1;
         }
 
-        foreach (Transform child in canvas.transform) {
-            child.gameObject.SetActive(true);
+        foreach (Transform child in content) {
+            child.gameObject.SetActive(false);
+            child.transform.Find("ClearCheckMask").gameObject.SetActive(false);
         }
-        Transform content = canvas.Find("HUD/StageSelect/Viewport/Content");
         canvas.Find("HUD/ChapterSelect/BackGround/Text").GetComponent<Text>().text = "CHAPTER" + page;
         
         for (int i=0; i < selectedList.Count; i++) {
@@ -275,7 +275,12 @@ public class ScenarioManager : SerializedMonoBehaviour
             //ShowReward(item ,selectedList[i]);
             StageButton stageButtonComp = item.GetComponent<StageButton>();
             stageButtonComp.Init(selectedList[i], isHuman);
-            
+
+            var clearedStageList = AccountManager.Instance.clearedStages;
+            if(clearedStageList.Exists(x => stageButtonComp.chapter == 0 && x.camp == stageButtonComp.camp && x.stageNumber == stageButtonComp.stage)) {
+                item.transform.Find("ClearCheckMask").gameObject.SetActive(true);
+            }
+
             SetStorySummaryText(
                 selectedList[i].description, 
                 item.transform.Find("StageScript").GetComponent<TextMeshProUGUI>()
@@ -306,6 +311,7 @@ public class ScenarioManager : SerializedMonoBehaviour
         var clearedStageList = AccountManager.Instance.clearedStages;
         foreach(Transform tf in rewardParent) {
             tf.GetComponent<Image>().enabled = false;
+            tf.Find("ClearedMark").gameObject.SetActive(false);
         }
 
         for(int i=0; i<rewards.Length; i++) {
@@ -313,29 +319,12 @@ public class ScenarioManager : SerializedMonoBehaviour
             Sprite rewardImage = AccountManager.Instance.resource.rewardIcon[rewardType];
             rewardParent.GetChild(i).GetComponent<Image>().enabled = true;
             rewardParent.GetChild(i).GetComponent<Image>().sprite = rewardImage;
-            rewardParent.GetChild(i).GetChild(0).GetComponent<TextMeshProUGUI>().text = "x" + rewards[i].count;
+            rewardParent.GetChild(i).Find("Amount").GetComponent<TextMeshProUGUI>().text = "x" + rewards[i].count;
         }
-    }
 
-    private void OffPrevStoryList() {
-        if (isHuman) {
-            Transform stageSelectContent = orc.StageCanvas.transform.Find("HUD/StageSelect/Viewport/Content");
-            foreach(Transform child in stageSelectContent) {
-                child.gameObject.SetActive(false);
-            }
-
-            foreach (Transform child in orc.StageCanvas.transform) {
-                child.gameObject.SetActive(false);
-            }
-        }
-        else {
-            Transform stageSelectContent = orc.StageCanvas.transform.Find("HUD/StageSelect/Viewport/Content");
-            foreach (Transform child in stageSelectContent) {
-                child.gameObject.SetActive(false);
-            }
-
-            foreach (Transform child in human.StageCanvas.transform) {
-                child.gameObject.SetActive(false);
+        if(clearedStageList.Exists(x => stageButton.chapter == 0 && x.camp == stageButton.camp && x.stageNumber == stageButton.stage)) {
+            for (int i = 0; i < rewards.Length; i++) {
+                rewardParent.GetChild(i).Find("ClearedMark").gameObject.SetActive(true);
             }
         }
     }
