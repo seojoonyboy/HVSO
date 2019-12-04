@@ -413,8 +413,9 @@ public class EffectSystem : SerializedMonoBehaviour {
 
 
     private void OnDestroy() {
+        if (PlayMangement.instance != null)
+            PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, EndTurnDisableMask);
         Instance = null;
-        PlayMangement.instance.EventHandler.RemoveListener(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, EndTurnDisableMask);
     }
 
     public enum EffectType {
