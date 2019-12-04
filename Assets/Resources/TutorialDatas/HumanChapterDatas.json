@@ -3,9 +3,11 @@
         "chapter": 0,
         "stage_number": 1,
         "stage_Name": "토벌",
+        "stage_type" : "normal",
         "match_type": "tutorial",
+        "map" : "forest",
         "description": "슈로덴 성 근처의 새로 만들어진 작은 마을. 갑작스럽게 침입한 오크들이 농작물과 가축을 약탈하고 있다. 적을 막아내고 물리쳐라.",
-        "specialRule": "- 적 영웅 체력 10\n- 튜토리얼",
+        "specialRule": "적 영웅 체력 10 \n 튜토리얼",
         "scripts": [
             {
                 "Print_text": "data_stage_1031_1",
@@ -482,8 +484,10 @@
         "stage_number": 2,
         "stage_Name": "토벌",
         "match_type": "Protect",
+        "stage_type" : "normal",
+        "map" : "forest",
         "description": "성으로 돌아가려는 상단을 오크가 습격한다. 상단의 짐마차를 지키며 적을 물리쳐라.",
-        "specialRule": "- 적 영웅 체력 10\n- 튜토리얼",
+        "specialRule": "적 영웅 체력 10 \n 튜토리얼",
         "scripts": [
             {
                 "Print_text": "",
@@ -1144,30 +1148,87 @@
         ]
     },
     {
-        "chapter": 0,
-        "stage_number": 3,
-        "stage_Name": "쉴드시스템 테스트",
-        "match_type": "testing",
-        "description": "nothing",
-        "specialRule": "쉴드!",
-        "scripts": [
+        "chapter": 1,
+        "stage_number": 1,
+        "stage_Name": "토벌",
+        "match_type": "story",
+        "stage_type" : "normal",
+        "map" : "forest",
+        "description": "매년 반복되는 우기로 인한 피해로 골치를 썩고 있는 대륙 남부에 위치한 슈로덴 성. 그곳의 수비대장인 제로드는 댐 건설 예정지 근처의 오크 부족을 이동시키려 군대를 출진하게 된다.",
+        "specialRule": "적 영웅의 체력 최대치 20",
+        "scripts": [],
+        "scenarioReward": [
             {
-                "Print_text": "",
-                "methods": [
-                    {
-                        "name": "Wait_Turn",
-                        "args": [
-                            "HUMAN"
-                        ]
-                    },
-                    {
-                        "name": "Unblock_Screen",
-                        "args": []
-                    }
-                ],
-                "isExecute": false
+                "reward": "exp",
+                "count": 10
+            },
+            {
+                "reward": "supply",
+                "count": 25
             }
-        ],
-        "scenarioReward": []
+        ]
+    },
+    {
+        "chapter": 1,
+        "stage_number": 2,
+        "stage_Name": "흑마법",
+        "match_type": "story",
+        "stage_type" : "normal",
+        "map" : "forest",
+        "description": "오크 부족민들은 전문적으로 군사 훈련을 받은 군대를 이길 수 없었고, 그로인해 오크 주술사들은 금기를 깨고 흑마법을 사용해서라도 부족민들이 도망칠 시간을 얻고자 한다.",
+        "specialRule": "적 영웅의 체력 최대치 20",
+        "scripts": [],
+        "scenarioReward": [
+            {
+                "reward": "exp",
+                "count": 10
+            },
+            {
+                "reward": "supplyBox",
+                "count": 1
+            }
+        ]
+    },
+    {
+        "chapter": 1,
+        "stage_number": 3,
+        "stage_Name": "무너진 슈로덴",
+        "match_type": "story",
+        "stage_type" : "normal",
+        "map" : "castle",
+        "description": "흑마법의 위력을 본 제로드는 실바미트라 강 상류까지 오크들을 추적한 후 성으로 복귀했지만, 도착한 성은 오크들에게 공격당해 외성벽이 무너진 상태였다.",
+        "specialRule": "적 영웅의 체력 최대치 20",
+        "scripts": [],
+        "scenarioReward": [
+            {
+                "reward": "exp",
+                "count": 10
+            },
+            {
+                "reward": "jewel",
+                "count": 150
+            }
+        ]
+    },
+    {
+        "chapter": 1,
+        "stage_number": 4,
+        "stage_Name": "대마법사 노드렉",
+        "match_type": "story",
+        "stage_type" : "boss",
+        "map" : "forest",
+        "description": "성에서 주민들을 데리고 탈출한 제로드는 급한대로 시길버트 숲에 숨어있다가 가까운 항구 도시 트리톤으로 몰래 이동하려 하지만, 베테랑 사냥꾼들로 구성된 추격대와 그들의 리더인 푸른 해골에게 포위되고 말았다.",
+        "specialRule": "적 영웅의 체력 최대치 30 \n 적 오크 파수꾼 유닛 2개 1/2번 라인에 배치된 상태로 시작 \n 적 자원 2로 시작 \n 10턴동안 생존 목표 \n 10턴 이후 폭발 연출이 일어나며 적군 라인 모든 유닛 제거, 유저 승리",
+        "scripts": [],
+        "scenarioReward": [
+            {
+                "reward": "exp",
+                "count": 20
+            },
+            {
+                "reward": "h10003",
+                "count": 10
+            }
+        ]
     }
 ]
