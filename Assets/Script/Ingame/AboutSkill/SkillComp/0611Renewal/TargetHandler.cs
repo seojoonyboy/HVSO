@@ -717,7 +717,7 @@ namespace TargetModules {
                             foreach (GameObject unit in units) {
                                 var ui = unit.transform.Find("ClickableUI").gameObject;
                                 if (ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.forcedTargetAt != -1) {
-                                    if (unit.GetComponent<PlaceMonster>().row == ScenarioGameManagment.scenarioInstance.forcedTargetAt) {
+                                    if (unit.GetComponent<PlaceMonster>().x == ScenarioGameManagment.scenarioInstance.forcedTargetAt) {
                                         if (ui != null) {
                                             ui.SetActive(true);
                                             PlayMangement.instance.infoOn = true;
@@ -851,7 +851,7 @@ namespace TargetModules {
             base.SelectTarget(successCallback, failedCallback, filter);
 
             var targets = new List<GameObject>();
-            int col = skillHandler.myObject.GetComponent<PlaceMonster>().row;
+            int col = skillHandler.myObject.GetComponent<PlaceMonster>().x;
 
             if (args[0] == "enemy") {
                 if (args[1] == "unit") {
