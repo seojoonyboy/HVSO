@@ -22,7 +22,6 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
     public ScenarioManager scenarioManager;
     public GameObject handUIPools;
     public GameObject rewardPanel;  //튜토리얼 중간에 보상받기 패널
-    public GameObject TutorialStageReadyCanvas;
     public GameObject BoxRewardPanel;
     public GameObject FixedMenuCanvas;
     public MenuSceneController menuSceneController;
@@ -94,31 +93,6 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
     public void DeactiveRewardPanel() {
         rewardPanel.transform.Find("SubBackground").gameObject.SetActive(true);
         rewardPanel.SetActive(false);
-    }
-
-    public void ActiveTutorialStoryReadyCanvas(string camp) {
-        TutorialStageReadyCanvas.SetActive(true);
-        Transform stagePanel = TutorialStageReadyCanvas.transform.Find("HUD/StagePanel");
-        switch (camp) {
-            case "human":
-                stagePanel.Find("HumanBack").gameObject.SetActive(true);
-                stagePanel.Find("OrcBack").gameObject.SetActive(false);
-                break;
-            case "orc":
-                stagePanel.Find("HumanBack").gameObject.SetActive(false);
-                stagePanel.Find("OrcBack").gameObject.SetActive(true);
-                break;
-        }
-
-        stagePanel
-            .transform
-            .Find("TextGroup/StageScript")
-            .gameObject
-            .GetComponent<Text>().text = ScenarioGameManagment.chapterData.description;
-    }
-
-    public void DeactiveTutorialStoryReadyCanvas() {
-        TutorialStageReadyCanvas.SetActive(false);
     }
 
     public void ActiveRewardBoxCanvas() {

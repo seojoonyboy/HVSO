@@ -394,7 +394,6 @@ namespace MenuTutorialModules {
             if (args[0] == "human") {
                 ScenarioGameManagment.chapterData = scenarioManager.human_chapterDatas[chapterNum];
                 ScenarioGameManagment.challengeDatas = scenarioManager.human_challengeDatas[chapterNum].challenges;
-
                 string heroId = "h10001";
                 switch (chapterNum) {
                     default:
@@ -420,7 +419,12 @@ namespace MenuTutorialModules {
                 PlayerPrefs.SetString("selectedHeroId", heroId);
             }
 
-            GetComponent<MenuTutorialManager>().ActiveTutorialStoryReadyCanvas(args[0]);
+            scenarioManager.stageCanvas
+                    .transform
+                    .Find("DeckSelectPanel/StagePanel/Scroll View/Viewport/Content")
+                    .GetChild(0)
+                    .Find("Deck")
+                    .GetComponent<Button>().onClick.Invoke();
             handler.isDone = true;
         }
     }

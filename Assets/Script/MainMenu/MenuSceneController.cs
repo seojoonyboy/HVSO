@@ -162,10 +162,12 @@ public class MenuSceneController : MonoBehaviour {
             else needTutorial = false;
         }
 
+        //테스트 코드
+        //needTutorial = true;
+        //tutorialType = MenuTutorialManager.TutorialType.TO_HUMAN_STORY_2;
+        /////////////////////////////////////////////////////////////////
         if (needTutorial) {
             if (tutorialType != MenuTutorialManager.TutorialType.NONE) {
-                //테스트 코드
-                //tutorialType = MenuTutorialManager.TutorialType.TO_ORC_STORY_2;
                 menuTutorialManager.StartTutorial(tutorialType);
             }
         }
