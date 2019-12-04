@@ -30,6 +30,7 @@ public class PlaceMonster : MonoBehaviour {
 
     
     protected bool instanceAttack = false;
+    public EffectSystem.ActionDelegate actionCall;
 
     public float atkTime {
         get { return unitSpine.atkDuration; }
@@ -314,41 +315,31 @@ public class PlaceMonster : MonoBehaviour {
     }
 
     public void AttackTiming() {
-        AttackToUnit();
+
+        SuccessAttack();
     }
 
 
-    public void AttackToUnit() {
-        if (unit.attackRange == "distance") 
-            UnitShotToTarget();        
-        else
-            SingleAttack();
-    }
+    public void SuccessAttack() {
 
-    public void UnitShotToTarget() {
-        GameObject arrow = transform.Find("arrow").gameObject;
-        arrow.transform.position = transform.position;
-        arrow.SetActive(true);
-        PlaceMonster targetMonster = myTarget.GetComponent<PlaceMonster>();
-        if (unit.attackType.Length > 0 && unit.attackType[0] == "through") {
-            Hashtable piercing = iTween.Hash("x", gameObject.transform.position.x, "y", myTarget.GetComponent<PlayerController>().wallPosition.y, "z", gameObject.transform.position.z, "time", 0.2f, "easetype", iTween.EaseType.easeOutExpo, "oncomplete", "PiercingAttack", "oncompletetarget", gameObject);
-            iTween.MoveTo(arrow, piercing);
-        }
-        else {
-            Hashtable shot;
+        if (unit.attackRange == "distance") {
+            GameObject arrow = transform.Find("arrow").gameObject;
+            arrow.transform.position = transform.position;
+            arrow.SetActive(true);
+            PlaceMonster targetMonster = myTarget.GetComponent<PlaceMonster>();
 
-            if (targetMonster != null) {
-                shot = iTween.Hash("x", gameObject.transform.position.x, "y", myTarget.transform.position.y, "z", gameObject.transform.position.z, "time", 0.2f, "easetype", iTween.EaseType.easeOutExpo, "oncomplete", "SingleAttack", "oncompletetarget", gameObject);
-                iTween.MoveTo(arrow, shot);
-
+            if (unit.attackType.Length > 0 && unit.attackType[0] == "through") {
+                iTween.MoveTo(arrow, iTween.Hash("x", gameObject.transform.position.x, "y", myTarget.GetComponent<PlayerController>().wallPosition.y, "z", gameObject.transform.position.z, "time", 0.2f, "easetype", iTween.EaseType.easeOutExpo, "oncomplete", "PiercingAttack", "oncompletetarget", gameObject));
             }
             else {
-                shot = iTween.Hash("x", gameObject.transform.position.x, "y", myTarget.GetComponent<PlayerController>().wallPosition.y, "z", gameObject.transform.position.z, "time", 0.2f, "easetype", iTween.EaseType.easeOutExpo, "oncomplete", "SingleAttack", "oncompletetarget", gameObject);
-                iTween.MoveTo(arrow, shot);
-
+                if (targetMonster != null)
+                    iTween.MoveTo(arrow, iTween.Hash("x", gameObject.transform.position.x, "y", myTarget.transform.position.y, "z", gameObject.transform.position.z, "time", 0.2f, "easetype", iTween.EaseType.easeOutExpo, "oncomplete", "SingleAttack", "oncompletetarget", gameObject));
+                else
+                    iTween.MoveTo(arrow, iTween.Hash("x", gameObject.transform.position.x, "y", myTarget.GetComponent<PlayerController>().wallPosition.y, "z", gameObject.transform.position.z, "time", 0.2f, "easetype", iTween.EaseType.easeOutExpo, "oncomplete", "SingleAttack", "oncompletetarget", gameObject));
             }
         }
-
+        else
+            SingleAttack();
     }
 
 
@@ -381,14 +372,17 @@ public class PlaceMonster : MonoBehaviour {
 
 
         if (frontMonster != null) {
-            RequestAttackUnit(frontMonster.transform.gameObject, unit.attack);            
+            RequestAttackUnit(frontMonster.transform.gameObject, unit.attack);
+            //iTween.MoveTo(arrow, iTween.Hash("x", gameObject.transform.position.x, "y", myTarget.transform.position.y, "z", gameObject.transform.position.z, "time", 0.1f, "easetype", iTween.EaseType.easeOutExpo));
             AttackEffect(frontMonster.transform.gameObject);
         }
         if (backMonster != null) {
-            RequestAttackUnit(backMonster.transform.gameObject, unit.attack);           
+            RequestAttackUnit(backMonster.transform.gameObject, unit.attack);
+            //iTween.MoveTo(arrow, iTween.Hash("x", gameObject.transform.position.x, "y", myTarget.transform.position.y, "z", gameObject.transform.position.z, "time", 0.05f, "easetype", iTween.EaseType.easeOutExpo));
             AttackEffect(backMonster.transform.gameObject);
         }
-        targetPlayer.PlayerTakeDamage(unit.attack);        
+        targetPlayer.PlayerTakeDamage(unit.attack);
+        
         AttackEffect(myTarget);
 
         EndAttack();
@@ -397,8 +391,11 @@ public class PlaceMonster : MonoBehaviour {
     public void InstanceAttack(string cardID = "") {
         instanceAttack = true;        
 
-        if (cardID == "ac10016") 
-            EffectSystem.Instance.ShowEffectAfterCall(EffectSystem.EffectType.ANGRY, unitSpine.headbone, delegate () { GetTarget(); });        
+        if (cardID == "ac10016") {
+            actionCall += GetTarget;
+            EffectSystem.Instance.ShowEffectAfterCall(EffectSystem.EffectType.ANGRY, unitSpine.headbone, actionCall);
+            actionCall -= actionCall;
+        }
         else
             GetTarget();
     }
@@ -427,7 +424,9 @@ public class PlaceMonster : MonoBehaviour {
 
         switch (cardID) {
             case "ac10028":
-                EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.PORTAL, portalPosition, delegate() { ChangePositionMagicEffect(); });
+                actionCall += ChangePositionMagicEffect;
+                EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.PORTAL, portalPosition, actionCall);
+                actionCall = null;
                 break;
             case "ac10015":
                 ChangePositionMagicEffect();
@@ -475,7 +474,25 @@ public class PlaceMonster : MonoBehaviour {
     public void AttackEffect(GameObject target = null) {
         PlaceMonster targetMonster = target.GetComponent<PlaceMonster>();
         Vector3 targetPos = (targetMonster != null) ? targetMonster.unitSpine.bodybone.position : new Vector3(gameObject.transform.position.x, myTarget.GetComponent<PlayerController>().wallPosition.y, 0);
-        EffectSystem.Instance.ShowAttackEffect(unit.attack, targetPos);        
+
+        if (unit.attack <= 3) {
+            EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.HIT_LOW, targetPos);
+            StartCoroutine(PlayMangement.instance.cameraShake(0.4f, 1));
+            //SoundManager.Instance.PlaySound(SoundType.NORMAL_ATTACK);
+        }
+        else if (unit.attack > 3) {        
+            if (unit.attack > 3 && unit.attack <= 6) {
+                EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.HIT_MIDDLE, targetPos);
+                //SoundManager.Instance.PlaySound(SoundType.MIDDLE_ATTACK);
+                StartCoroutine(PlayMangement.instance.cameraShake(0.4f, 4));
+            }
+            else if (unit.attack >= 7) {
+                EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.HIT_HIGH, targetPos);
+                //SoundManager.Instance.PlaySound(SoundType.LARGE_ATTACK);
+                StartCoroutine(PlayMangement.instance.cameraShake(0.4f, 10));
+            }
+        }
+        
     }
 
     public void InstanceKilled() {
@@ -530,17 +547,25 @@ public class PlaceMonster : MonoBehaviour {
         else {
             //투석공격
             if (magicId == "ac10021") {
-                EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.TREBUCHET, transform.position, delegate () { Hit(); });    
+                actionCall += Hit;
+                EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.TREBUCHET, transform.position, actionCall);                
+                actionCall -= actionCall;
             }
             //어둠의 가시
             else if (magicId == "ac10074") {
-                EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.DARK_THORN, transform.position, delegate () { Hit(); });
+                actionCall += Hit;
+                EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.DARK_THORN, transform.position, actionCall);
+                actionCall -= actionCall;
             }
             else if (magicId == "ac10037") {
-                EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.CHAIN_LIGHTNING, unitSpine.rootbone.position, delegate () { Hit(); });
+                actionCall += Hit;
+                EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.CHAIN_LIGHTNING, unitSpine.rootbone.position, actionCall);
+                actionCall -= actionCall;
             }
             else if (magicId == "ac10034") {
-                EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.FIRE_WAVE, unitSpine.rootbone.position, delegate() { Hit(); }, isMain);
+                actionCall += Hit;
+                EffectSystem.Instance.ShowEffectOnEvent(EffectSystem.EffectType.FIRE_WAVE, unitSpine.rootbone.position, actionCall, isMain);
+                actionCall -= actionCall;
             }
             //버프 혹은 디버프 효과 부여
             else {
