@@ -13,10 +13,10 @@ public class MailBoxManager : MonoBehaviour
     }
 
     public void OpenMail() {
-        transform.Find("OpenedMail").gameObject.SetActive(true);
+        transform.GetChild(0).Find("OpenedMail").gameObject.SetActive(true);
     }
 
     public void CloseMail() {
-        transform.Find("OpenedMail").gameObject.SetActive(false);
+        transform.GetChild(0).Find("OpenedMail").gameObject.SetActive(false);
     }
 }
