@@ -103,6 +103,7 @@ public class ScenarioManager : SerializedMonoBehaviour
         PlayerPrefs.SetString("BattleMode", "");
         //FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);        
         HUDController.SetHeader(HUDController.Type.SHOW_USER_INFO);
+        offAllGlowEffect();
         gameObject.SetActive(false);
     }
 
@@ -460,6 +461,19 @@ public class ScenarioManager : SerializedMonoBehaviour
         else {
             human.StageCanvas.transform.Find("HUD/StageSelect/Buttons").gameObject.SetActive(false);
             orc.StageCanvas.transform.Find("HUD/StageSelect/Buttons").gameObject.SetActive(true);
+        }
+
+        offAllGlowEffect();
+        selectedChapterObject.transform.Find("Effect").gameObject.SetActive(true);
+    }
+
+    private void offAllGlowEffect() {
+        foreach(Transform item in human.stageContent.transform) {
+            item.Find("Effect").gameObject.SetActive(false);
+        }
+
+        foreach(Transform item in orc.stageContent.transform) {
+            item.Find("Effect").gameObject.SetActive(false);
         }
     }
 

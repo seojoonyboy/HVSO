@@ -456,6 +456,7 @@ public class SceneStartController : MonoBehaviour
                                 Debug.Log("LoadScene SceneLogin");
 #endif
                                 NetworkManager.Instance.Auth();
+                                FindObjectOfType<LoginController>().Login();
                             });
                             //Patch();
                         }
