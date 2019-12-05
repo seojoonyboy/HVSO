@@ -1,4 +1,4 @@
-﻿//#define QA
+//#define QA
 #define DONT_UNLOAD_BGWEBCLIENT
 using UnityEngine;
 using Haegin;
@@ -144,8 +144,7 @@ public class SceneOBBCheckController : MonoBehaviour {
 
         UGUICommon.ShowRequestPermission(requestPermissionDialog, canvas, TextManager.GetString(TextManager.StringTag.AppPermissionsTitle1), TextManager.GetString(TextManager.StringTag.AppPermissionsInfo1), (UGUICommon.ButtonType buttonType) =>
         {
-            //RequestAndroidPermission(0);
-            SceneManager.LoadScene("Login", LoadSceneMode.Single);
+            RequestAndroidPermission(0);
         });
     }
 
@@ -353,8 +352,9 @@ public class SceneOBBCheckController : MonoBehaviour {
             progresstext.text = TextManager.GetString(TextManager.StringTag.CompleteDownloadFiles);
             patcher.ClearEvent();
             patcher = null;
-            //SceneManager.LoadScene(1, LoadSceneMode.Single);
-            SceneManager.LoadScene("Login", LoadSceneMode.Single);
+
+            gameObject.SetActive(false);
+            FindObjectOfType<LoginController>().sceneLoginCanvas.gameObject.SetActive(true);
         }
         else
         {

@@ -12,6 +12,8 @@ public class LoginController : MonoBehaviour {
     [SerializeField] GameObject logo, textImage;
     [SerializeField] Button loginBtn;
 
+    public GameObject obbCanvas, sceneStartCanvas, sceneLoginCanvas, LoginTypeSelCanvas, EULACanvas, fbl_loginCanvas;
+
     bool isClicked = false;
 
     private void Awake() {
@@ -22,8 +24,7 @@ public class LoginController : MonoBehaviour {
         loginBtn.enabled = true;
     }
 
-    // Start is called before the first frame update
-    void Start() {
+    public void Login() {
         networkManager = NetworkManager.Instance;
         StartCoroutine(LogoReveal());
         isClicked = false;
