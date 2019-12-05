@@ -729,6 +729,7 @@ public partial class PlayMangement : MonoBehaviour {
         if (!isGame) yield break;
         if (lineObject.transform.GetChild(line).childCount == 0) yield break;
         PlaceMonster placeMonster = lineObject.transform.GetChild(line).GetChild(0).GetComponent<PlaceMonster>();
+        if (placeMonster.maxAtkCount == 1 && secondAttack) yield break;
         if (placeMonster.unit.attack <= 0) yield break;
         placeMonster.GetTarget();
         yield return new WaitForSeconds(1.1f + placeMonster.atkTime);

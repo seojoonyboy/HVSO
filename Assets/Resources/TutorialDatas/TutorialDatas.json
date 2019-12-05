@@ -154,39 +154,78 @@
                     {
                         "name": "Dimmed",
                         "args": [
-                            "orc_story_enter_button",
+                            "orc_story_detail_button",
                             "on"
                         ]
                     },
                     {
                         "name": "ShowHandUI",
                         "args": [
-                            "orc_story_enter_button",
+                            "orc_story_detail_button",
                             "touch"
                         ]
                     },
                     {
                         "name": "Menu_Scope_Object",
                         "args": [
-                            "orc_story_enter_button"
+                            "orc_story_detail_button"
                         ]
                     },
                     {
                         "name": "Wait_Click",
                         "args": [
-                            "orc_story_enter_button"
+                            "orc_story_detail_button"
                         ]
                     },
                     {
                         "name": "HideHandUI",
                         "args": [
-                            "orc_story_enter_button"
+                            "orc_story_detail_button"
                         ]
                     },
                     {
                         "name": "Dimmed",
                         "args": [
-                            "orc_story_enter_button",
+                            "orc_story_detail_button",
+                            "off"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "story_deckList_enter_button",
+                            "on"
+                        ]
+                    },
+                    {
+                        "name": "ShowHandUI",
+                        "args": [
+                            "story_deckList_enter_button",
+                            "touch"
+                        ]
+                    },
+                    {
+                        "name": "Menu_Scope_Object",
+                        "args": [
+                            "story_deckList_enter_button"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                            "story_deckList_enter_button"
+                        ]
+                    },
+                    {
+                        "name": "HideHandUI",
+                        "args": [
+                            "story_deckList_enter_button"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "story_deckList_enter_button",
                             "off"
                         ]
                     },
@@ -424,39 +463,78 @@
                     {
                         "name": "Dimmed",
                         "args": [
-                            "human_story_enter_button",
+                            "human_story_detail_button",
                             "on"
                         ]
                     },
                     {
                         "name": "ShowHandUI",
                         "args": [
-                            "human_story_enter_button",
+                            "human_story_detail_button",
                             "touch"
                         ]
                     },
                     {
                         "name": "Menu_Scope_Object",
                         "args": [
-                            "human_story_enter_button"
+                            "human_story_detail_button"
                         ]
                     },
                     {
                         "name": "Wait_Click",
                         "args": [
-                            "human_story_enter_button"
+                            "human_story_detail_button"
                         ]
                     },
                     {
                         "name": "HideHandUI",
                         "args": [
-                            "human_story_enter_button"
+                            "human_story_detail_button"
                         ]
                     },
                     {
                         "name": "Dimmed",
                         "args": [
-                            "human_story_enter_button",
+                            "human_story_detail_button",
+                            "off"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "story_deckList_enter_button",
+                            "on"
+                        ]
+                    },
+                    {
+                        "name": "ShowHandUI",
+                        "args": [
+                            "story_deckList_enter_button",
+                            "touch"
+                        ]
+                    },
+                    {
+                        "name": "Menu_Scope_Object",
+                        "args": [
+                            "story_deckList_enter_button"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                            "story_deckList_enter_button"
+                        ]
+                    },
+                    {
+                        "name": "HideHandUI",
+                        "args": [
+                            "story_deckList_enter_button"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "story_deckList_enter_button",
                             "off"
                         ]
                     },
@@ -666,39 +744,78 @@
                     {
                         "name": "Dimmed",
                         "args": [
-                            "orc_story_enter_button",
+                            "orc_story_detail_button",
                             "on"
                         ]
                     },
                     {
                         "name": "ShowHandUI",
                         "args": [
-                            "orc_story_enter_button",
+                            "orc_story_detail_button",
                             "touch"
                         ]
                     },
                     {
                         "name": "Menu_Scope_Object",
                         "args": [
-                            "orc_story_enter_button"
+                            "orc_story_detail_button"
                         ]
                     },
                     {
                         "name": "Wait_Click",
                         "args": [
-                            "orc_story_enter_button"
+                            "orc_story_detail_button"
                         ]
                     },
                     {
                         "name": "HideHandUI",
                         "args": [
-                            "orc_story_enter_button"
+                            "orc_story_detail_button"
                         ]
                     },
                     {
                         "name": "Dimmed",
                         "args": [
-                            "orc_story_enter_button",
+                            "orc_story_detail_button",
+                            "off"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "story_deckList_enter_button",
+                            "on"
+                        ]
+                    },
+                    {
+                        "name": "ShowHandUI",
+                        "args": [
+                            "story_deckList_enter_button",
+                            "touch"
+                        ]
+                    },
+                    {
+                        "name": "Menu_Scope_Object",
+                        "args": [
+                            "story_deckList_enter_button"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                            "story_deckList_enter_button"
+                        ]
+                    },
+                    {
+                        "name": "HideHandUI",
+                        "args": [
+                            "story_deckList_enter_button"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "story_deckList_enter_button",
                             "off"
                         ]
                     },
