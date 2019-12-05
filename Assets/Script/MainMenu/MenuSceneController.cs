@@ -246,18 +246,14 @@ public class MenuSceneController : MonoBehaviour {
         buttonClicked = true;
         fixedCanvas.Find("InnerCanvas/Footer").GetChild(currentPage).GetChild(0).gameObject.SetActive(false);
         currentPage = pageNum;
-        windowScrollSnap.GoToScreen(currentPage);
-        if (currentPage + 1 == 4)
-            currentPage = 4;
+        windowScrollSnap.GoToScreen(currentPage - 1);
         menuButton.AnimationState.SetAnimation(0, "IDLE_" + (currentPage + 1).ToString(), true);
         fixedCanvas.Find("InnerCanvas/Footer").GetChild(currentPage).GetChild(0).gameObject.SetActive(true);
     }
 
     public void ScrollSnapButtonChange() {
         fixedCanvas.Find("InnerCanvas/Footer").GetChild(currentPage).GetChild(0).gameObject.SetActive(false);
-        currentPage = windowScrollSnap.CurrentPage;
-        if (currentPage + 1 == 4)
-            currentPage = 4;
+        currentPage = windowScrollSnap.CurrentPage + 1;
         menuButton.AnimationState.SetAnimation(0, "IDLE_" + (currentPage + 1).ToString(), true);
         fixedCanvas.Find("InnerCanvas/Footer").GetChild(currentPage).GetChild(0).gameObject.SetActive(true);
     }

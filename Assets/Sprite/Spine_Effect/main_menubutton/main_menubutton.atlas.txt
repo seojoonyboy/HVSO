@@ -6,50 +6,50 @@ filter: Linear,Linear
 repeat: none
 1
   rotate: false
-  xy: 638, 6
-  size: 130, 139
-  orig: 130, 139
+  xy: 680, 7
+  size: 138, 148
+  orig: 138, 148
   offset: 0, 0
   index: -1
 2
   rotate: true
-  xy: 481, 22
-  size: 123, 155
-  orig: 123, 155
+  xy: 512, 24
+  size: 131, 166
+  orig: 131, 166
   offset: 0, 0
   index: -1
 3
   rotate: true
-  xy: 770, 17
-  size: 118, 149
-  orig: 118, 149
+  xy: 820, 18
+  size: 126, 159
+  orig: 126, 159
   offset: 0, 0
   index: -1
 4
   rotate: false
-  xy: 319, 2
-  size: 160, 143
-  orig: 160, 143
+  xy: 340, 2
+  size: 170, 153
+  orig: 170, 153
   offset: 0, 0
   index: -1
 5
   rotate: false
-  xy: 788, 137
-  size: 159, 159
-  orig: 159, 159
+  xy: 840, 146
+  size: 170, 170
+  orig: 170, 170
   offset: 0, 0
   index: -1
 bar
   rotate: false
-  xy: 2, 14
-  size: 315, 131
-  orig: 315, 131
+  xy: 2, 15
+  size: 336, 140
+  orig: 336, 140
   offset: 0, 0
   index: -1
 ex
   rotate: false
-  xy: 2, 147
-  size: 784, 149
-  orig: 784, 149
+  xy: 2, 157
+  size: 836, 159
+  orig: 836, 159
   offset: 0, 0
   index: -1

@@ -17,6 +17,7 @@ public class MenuHeroInfo : MonoBehaviour
     string heroId;
 
     GameObject teirUpModal;
+    int nowTier;
     private void Awake() {
         heroInfoWindow = this;
         init();
@@ -25,6 +26,7 @@ public class MenuHeroInfo : MonoBehaviour
 
     private void Start() {
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_TIERUP_HERO, HeroModified);
+        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_INVENTORIES_UPDATED, StartAni);
     }
 
     private void init() {
@@ -63,12 +65,13 @@ public class MenuHeroInfo : MonoBehaviour
             dataModules.HeroInventory heroData = accountManager.myHeroInventories[heroId];
             transform.Find("HeroSpines/lock").gameObject.SetActive(false);
             heroSpine.GetComponent<SkeletonGraphic>().color = new Color(1, 1, 1);
-            if(heroData.tier == 0) {
+            nowTier = heroData.tier;
+            if (nowTier == 0) {
                 transform.Find("HeroSpines/lock").gameObject.SetActive(true);
                 heroSpine.GetComponent<SkeletonGraphic>().color = new Color(0.35f, 0.35f, 0.35f);
             }
             else {
-                for (int i = 0; i < heroData.tier; i++)
+                for (int i = 0; i < nowTier; i++)
                     transform.Find("HeroLevel/Stars").GetChild(i).GetChild(0).gameObject.SetActive(true);
             }
             if (heroData.next_level != null) {
@@ -139,26 +142,66 @@ public class MenuHeroInfo : MonoBehaviour
 
     public void TierUpHero() {
         if (tierUpHero) return;
-        transform.Find("block").gameObject.SetActive(true);
         SoundManager.Instance.PlaySound(UISfxSound.BUTTON1);
         tierUpHero = true;
+        StartCoroutine(SetUpTeirUp());
         accountManager.RequestHeroTierUp(heroId);
+    }
+
+    IEnumerator SetUpTeirUp() {
+        transform.Find("TierUpField").gameObject.SetActive(true);
+        for (int i = 0; i < nowTier; i++)
+            transform.Find("TierUpField/Stars").GetChild(i).Find("Star").gameObject.SetActive(true);
+        GameObject heroSpines = transform.Find("HeroSpines").gameObject;
+        heroSpines.transform.SetAsLastSibling();
+        iTween.MoveTo(heroSpines, iTween.Hash("y", 0, "islocal", true, "time", 0.8f));
+        iTween.ScaleTo(heroSpines, iTween.Hash("x", 1.2f, "y", 1.2f, "islocal", true, "time", 0.8f));
+        Image[] colors = transform.Find("TierUpField").GetComponentsInChildren<Image>();
+        float colorA = 0;
+        while (colorA < 1.0f) {
+            colorA += 4.0f * Time.deltaTime;
+            for(int i = 0; i < colors.Length; i++) 
+                colors[i].color = new Color(1, 1, 1, colorA);
+            yield return null;
+        }
     }
 
     private void HeroModified(Enum Event_Type, Component Sender, object Param) {
         accountManager.RequestInventories();
+        
+    }
+
+    public void StartAni(Enum Event_Type, Component Sender, object Param) {
         StartCoroutine(HeroMakingAni());
     }
 
     IEnumerator HeroMakingAni() {
         yield return new WaitForSeconds(0.5f);
-        if(accountManager.myHeroInventories[heroId].camp == "human")
+        dataModules.HeroInventory heroData = accountManager.myHeroInventories[heroId];
+        if (heroData.camp == "human")
             CardDictionaryManager.cardDictionaryManager.RefreshHumanHero();
         else
             CardDictionaryManager.cardDictionaryManager.RefreshOrcHero();
+        SkeletonGraphic spine = transform.Find("TierUpField/Stars").GetChild(nowTier).Find("StartSpine").GetComponent<SkeletonGraphic>();
+        spine.Initialize(true);
+        spine.Update(0);
+        spine.AnimationState.SetAnimation(0, "animation", false);
         SetHeroInfoWindow(heroId);
-        transform.Find("block").gameObject.SetActive(false);
+        yield return new WaitForSeconds(0.3f);
+        transform.Find("TierUpField/Stars").GetChild(nowTier - 1).Find("Star").gameObject.SetActive(true);
         tierUpHero = false;
+    }
+
+    public void CloseHeroTierUp() {
+        if (tierUpHero) return;
+        Transform heroSpines = transform.Find("HeroSpines");
+        heroSpines.SetSiblingIndex(2);
+        heroSpines.localScale = Vector3.one;
+        heroSpines.localPosition = new Vector3(0, 193, 0);
+        transform.Find("TierUpField").GetComponentInChildren<Image>().color = new Color(1, 1, 1, 0);
+        for (int i = 0; i < 3; i++)
+            transform.Find("TierUpField/Stars").GetChild(i).Find("Star").gameObject.SetActive(false);
+        transform.Find("TierUpField").gameObject.SetActive(false);
     }
 
     public void OpenClassWindow() {
