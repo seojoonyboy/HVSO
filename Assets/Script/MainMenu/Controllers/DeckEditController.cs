@@ -70,6 +70,10 @@ public class DeckEditController : MonoBehaviour {
     }
 
     private void OnMakeNewDeckFinished(Enum Event_Type, Component Sender, object Param) {
+        if (EscapeKeyController.escapeKeyCtrl.escapeFunc.Count > 2)
+            EscapeKeyController.escapeKeyCtrl.escapeFunc.RemoveRange(1, 3);
+        else
+            EscapeKeyController.escapeKeyCtrl.RemoveEscape(CancelButton);
         gameObject.SetActive(false);
         if (templateMenu != null) {
             templateMenu.transform.gameObject.SetActive(false);
@@ -79,6 +83,10 @@ public class DeckEditController : MonoBehaviour {
     }
 
     private void OnDeckModified(Enum Event_Type, Component Sender, object Param) {
+        if (EscapeKeyController.escapeKeyCtrl.escapeFunc.Count > 2)
+            EscapeKeyController.escapeKeyCtrl.escapeFunc.RemoveRange(1, 3);
+        else
+            EscapeKeyController.escapeKeyCtrl.RemoveEscape(CancelButton);
         menuSceneController.decksLoader.Load();
         gameObject.SetActive(false);
     }

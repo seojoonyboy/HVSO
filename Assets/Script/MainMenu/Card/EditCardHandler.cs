@@ -293,8 +293,8 @@ public class EditCardHandler : MonoBehaviour {
         }
 
         if (cardData.type == "unit") {
-            cardObject.Find("Health/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.hp.ToString();
-            cardObject.Find("attack/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.attack.ToString();
+            cardObject.Find("Health/Text").GetComponent<Text>().text = cardData.hp.ToString();
+            cardObject.Find("attack/Text").GetComponent<Text>().text = cardData.attack.ToString();
             if (cardData.attributes.Length == 0 && cardData.attackTypes.Length == 0)
                 cardObject.Find("SkillIcon").gameObject.SetActive(false);
             else {
@@ -307,7 +307,7 @@ public class EditCardHandler : MonoBehaviour {
                     cardObject.Find("SkillIcon").GetComponent<Image>().sprite = AccountManager.Instance.resource.skillIcons["complex"];
             }
         }
-        cardObject.Find("Cost/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.cost.ToString();
+        cardObject.Find("Cost/Text").GetComponent<Text>().text = cardData.cost.ToString();
         if (!cardData.isHeroCard) {
             transform.Find("HaveNum/Graphic").GetComponent<SkeletonGraphic>().Initialize(false);
             Spine.AnimationState aniState = transform.Find("HaveNum/Graphic").GetComponent<SkeletonGraphic>().AnimationState;

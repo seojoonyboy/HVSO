@@ -109,16 +109,16 @@ public class HeroSelectController : MonoBehaviour
         templateDeckCanvas.SetTemplateNewDecks(selectedHeroId, isHuman);
         gameObject.SetActive(false);
         hudController.SetHeader(HUDController.Type.ONLY_BAKCK_BUTTON);
-        hudController.SetBackButton(() => ExitTemplateCanvas());
-        EscapeKeyController.escapeKeyCtrl.AddEscape(ExitTemplateCanvas);
+        hudController.SetBackButton(() => ExitTemplateCanvas_Edit());
+        EscapeKeyController.escapeKeyCtrl.AddEscape(ExitTemplateCanvas_Edit);
     }
 
-    public void ExitTemplateCanvas() {
+    public void ExitTemplateCanvas_Edit() {
         gameObject.SetActive(true);
         templateDeckCanvas.gameObject.SetActive(false);
         templateDeckCanvas.CancelSelectDeck();
         hudController.SetHeader(HUDController.Type.HIDE);
-        EscapeKeyController.escapeKeyCtrl.RemoveEscape(ExitTemplateCanvas);
+        EscapeKeyController.escapeKeyCtrl.RemoveEscape(ExitTemplateCanvas_Edit);
     }
 
     public void OpenClassInfo() {
