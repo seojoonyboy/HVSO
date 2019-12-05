@@ -120,6 +120,7 @@ public class GameResultManager : MonoBehaviour {
         iTween.ScaleTo(heroSpine, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.3f));
         getExp = PlayMangement.instance.socketHandler.result.reward.userExp;
         getSupply = PlayMangement.instance.socketHandler.result.reward.supply;
+        additionalSupply = PlayMangement.instance.socketHandler.result.reward.x2supply;
         //additionalSupply = PlayMangement.instance.socketHandler.result.reward.additionalSupply;
         SoundManager.Instance.bgmController.SoundTrackLoopOff();
 
