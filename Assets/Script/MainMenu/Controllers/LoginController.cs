@@ -18,6 +18,7 @@ public class LoginController : MonoBehaviour {
 
     private void Awake() {
         AccountManager.Instance.tokenSetFinished += OnTokenSetFinished;
+        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, OnRequestUserInfoCallback);
     }
 
     private void OnTokenSetFinished() {
@@ -27,9 +28,7 @@ public class LoginController : MonoBehaviour {
     public void Login() {
         networkManager = NetworkManager.Instance;
         StartCoroutine(LogoReveal());
-        isClicked = false;
-
-        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, OnRequestUserInfoCallback);
+        
         AccountManager.Instance.prevSceneName = "OBB";
     }
 
@@ -74,6 +73,7 @@ public class LoginController : MonoBehaviour {
         SkeletonGraphic skeletonGraphic = logo.GetComponent<SkeletonGraphic>();
         Spine.AnimationState state = skeletonGraphic.AnimationState;
         state.SetAnimation(0, "loop", true);
+        isClicked = false;
     }
 
     public void OnStartButton() {

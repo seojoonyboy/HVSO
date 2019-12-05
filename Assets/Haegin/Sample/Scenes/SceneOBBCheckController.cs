@@ -353,7 +353,7 @@ public class SceneOBBCheckController : MonoBehaviour {
             patcher.ClearEvent();
             patcher = null;
 
-            gameObject.SetActive(false);
+            //gameObject.SetActive(false);
             FindObjectOfType<LoginController>().sceneLoginCanvas.gameObject.SetActive(true);
         }
         else
