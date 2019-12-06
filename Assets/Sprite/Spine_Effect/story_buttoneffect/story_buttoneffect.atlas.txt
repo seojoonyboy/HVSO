@@ -1,0 +1,13 @@
+
+story_buttoneffect.png
+size: 1024,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+bacK1
+  rotate: false
+  xy: 0, 0
+  size: 862, 370
+  orig: 862, 370
+  offset: 0, 0
+  index: -1
