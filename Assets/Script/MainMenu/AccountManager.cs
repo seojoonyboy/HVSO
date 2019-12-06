@@ -29,6 +29,8 @@ public partial class AccountManager : Singleton<AccountManager> {
     public List<Templates> orcTemplates;
 
     public List<Shop> shopItems;
+    public List<Mail> mailList;
+    public List<MailReward> mailRewardList; 
 
     public List<CollectionCard> allCards { get; private set; }
     public List<HeroInventory> allHeroes { get; private set; }
@@ -813,6 +815,103 @@ public partial class AccountManager {
                         .Instance
                         .PostNotification(
                             NoneIngameSceneEventHandler.EVENT_TYPE.API_SHOP_ITEM_BUY,
+                            null,
+                            res
+                        );
+                }
+            }
+            else {
+                Logger.LogWarning("상품 구매 실패");
+            }
+        }, "상품 구매 중...");
+    }
+
+    public void RequestMailBox() {
+        StringBuilder url = new StringBuilder();
+        string base_url = networkManager.baseUrl;
+
+        url
+            .Append(base_url)
+            .Append("api/posts");
+
+        HTTPRequest request = new HTTPRequest(
+            new Uri(url.ToString())
+        );
+        request.MethodType = HTTPMethods.Get;
+        request.AddHeader("authorization", TokenFormat);
+        networkManager.Request(request, (req, res) => {
+            if (res.IsSuccess) {
+                if (res.StatusCode == 200 || res.StatusCode == 304) {
+                    var result = dataModules.JsonReader.Read<List<Mail>>(res.DataAsText);
+                    mailList = result;
+
+                    NoneIngameSceneEventHandler
+                        .Instance
+                        .PostNotification(
+                            NoneIngameSceneEventHandler.EVENT_TYPE.API_MAIL_UPDATE,
+                            null,
+                            res
+                        );
+                }
+            }
+            else {
+                Logger.LogWarning("우편함 불러오기 실패");
+            }
+        }, "우편함 불러오는중...");
+    }
+
+    public void RequestReadMail(string mailId) {
+        StringBuilder url = new StringBuilder();
+        string base_url = networkManager.baseUrl;
+
+        url
+            .Append(base_url)
+            .Append("api/posts/" + mailId);
+
+        HTTPRequest request = new HTTPRequest(
+            new Uri(url.ToString())
+        );
+        request.MethodType = HTTPMethods.Get;
+        request.AddHeader("authorization", TokenFormat);
+        networkManager.Request(request, (req, res) => {
+            if (res.IsSuccess) {
+                if (res.StatusCode == 200 || res.StatusCode == 304) {
+                    NoneIngameSceneEventHandler
+                        .Instance
+                        .PostNotification(
+                            NoneIngameSceneEventHandler.EVENT_TYPE.API_MAIL_READ,
+                            null,
+                            res
+                        );
+                }
+            }
+            else {
+                Logger.LogWarning("우편 읽기 실패");
+            }
+        }, "우편 불러오는중...");
+    }
+
+    public void RequestReceiveMail(string mailId) {
+        StringBuilder sb = new StringBuilder();
+        sb
+            .Append(networkManager.baseUrl)
+            .Append("api/posts/receive/" + mailId);
+
+        HTTPRequest request = new HTTPRequest(
+            new Uri(sb.ToString())
+        );
+        request.MethodType = BestHTTP.HTTPMethods.Post;
+        request.AddHeader("authorization", TokenFormat);
+
+        networkManager.Request(request, (req, res) => {
+            if (res.IsSuccess) {
+                if (res.StatusCode == 200 || res.StatusCode == 304) {
+                    var result = dataModules.JsonReader.Read<List<MailReward>>(res.DataAsText);
+                    mailRewardList = result;
+                    NoneIngameSceneEventHandler
+                        .Instance
+                        .PostNotification(
+                            NoneIngameSceneEventHandler.EVENT_TYPE.API_MAIL_RECEIVE,
                             null,
                             res
                         );
