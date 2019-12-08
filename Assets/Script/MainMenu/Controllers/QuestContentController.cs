@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -49,6 +49,21 @@ namespace Quest {
                 if (icons.ContainsKey(data.rewards[i].kind)) {
                     rewardImg.sprite = icons[data.rewards[i].kind];
                 }
+            }
+
+            NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_QUEST_REWARD_RECEIVED, OnRewardReceived);
+        }
+
+        private void OnDisable() {
+            NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_QUEST_REWARD_RECEIVED, OnRewardReceived);
+        }
+
+        private void OnRewardReceived(Enum Event_Type, Component Sender, object Param) {
+            var receiveCompletedId = (int)Param;
+
+            if(receiveCompletedId == data.id) {
+                getBtn.GetComponentInChildren<TextMeshProUGUI>().text = "획득완료";
+                getBtn.enabled = false;
             }
         }
 
@@ -146,6 +161,13 @@ namespace Quest {
             manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_4);
             AccountManager.Instance.RequestUnlockInTutorial(3);
             AccountManager.Instance.RequestQuestInfo();
+        }
+
+        /// <summary>
+        /// 받기 버튼 클릭
+        /// </summary>
+        public void RequestRewardButtonClicked() {
+            AccountManager.Instance.RequestQuestClearReward(data.id);
         }
     }
 }

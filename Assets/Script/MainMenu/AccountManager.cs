@@ -1468,6 +1468,44 @@ public partial class AccountManager {
             "튜토리얼 완료 처리중..."
             );
     }
+
+    public void RequestQuestClearReward(int id) {
+        StringBuilder url = new StringBuilder();
+        string base_url = networkManager.baseUrl;
+
+        url
+            .Append(base_url)
+            .Append("api/quest/get_reward");
+
+        url.Append("/" + id);
+        Logger.Log("RequestQuestClearReward");
+
+        HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
+
+        request.MethodType = HTTPMethods.Post;
+        request.AddHeader("authorization", TokenFormat);
+
+        networkManager.Request(
+            request,
+            (req, res) => {
+                Logger.Log(res.DataAsText);
+                if (res.IsSuccess) {
+                    if (res.StatusCode == 200 || res.StatusCode == 304) {
+                        RequestMailBox();
+
+                        NoneIngameSceneEventHandler
+                        .Instance
+                        .PostNotification(
+                            NoneIngameSceneEventHandler.EVENT_TYPE.API_QUEST_REWARD_RECEIVED,
+                            null,
+                            id
+                        );
+                    }
+                }
+            },
+            "튜토리얼 보상 요청중..."
+            );
+    }
 }
 
 public partial class AccountManager {
