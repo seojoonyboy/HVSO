@@ -1082,9 +1082,11 @@ namespace MenuTutorialModules {
         public override void Execute() {
             MenuMask.Instance.UnBlockScreen();
 
-            GetComponent<MenuTutorialManager>().EndTutorial();
-            GetComponent<MenuTutorialManager>().enabled = false;
-            
+            try {
+                GetComponent<MenuTutorialManager>().EndTutorial();
+                GetComponent<MenuTutorialManager>().enabled = false;
+            }
+            catch(Exception ex) { }
             handler.isDone = true;
         }
     }
