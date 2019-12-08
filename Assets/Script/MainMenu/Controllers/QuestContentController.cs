@@ -177,8 +177,9 @@ namespace Quest {
         /// 받기 버튼 클릭
         /// </summary>
         public void RequestRewardButtonClicked() {
-            if(data.cleared) return;
-            AccountManager.Instance.RequestQuestClearReward(data.id);
+            if (data.cleared && !data.rewardGet) {
+                AccountManager.Instance.RequestQuestClearReward(data.id);
+            }
         }
 
         public void MenuDeckSettingShowHand(string[] args) {
