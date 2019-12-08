@@ -6,6 +6,7 @@ using System;
 
 public class QuestManager : MonoBehaviour
 {
+    [SerializeField] GameObject QuestCanvas;
     [SerializeField] Transform content;
     [SerializeField] HUDController HUDController;
 
@@ -13,22 +14,19 @@ public class QuestManager : MonoBehaviour
     private List<QuestContentController> quests;
     private QuestData[] dataSamples;
 
-    void OnEnable() {
+    public void OpenQuestCanvas() {
         HUDController.SetHeader(HUDController.Type.RESOURCE_ONLY_WITH_BACKBUTTON);
         HUDController.SetBackButton(OnBackBtnClicked);
 
         EscapeKeyController.escapeKeyCtrl.AddEscape(OnBackBtnClicked);
-    }
-
-    private void OnDisable() {
-        EscapeKeyController.escapeKeyCtrl.RemoveEscape(OnBackBtnClicked);
+        QuestCanvas.SetActive(true);
     }
 
     void OnBackBtnClicked() {
         SoundManager.Instance.PlaySound(UISfxSound.BUTTON1);
-
+        EscapeKeyController.escapeKeyCtrl.RemoveEscape(OnBackBtnClicked);
         HUDController.SetHeader(HUDController.Type.SHOW_USER_INFO);
-        gameObject.SetActive(false);
+        QuestCanvas.SetActive(false);
     }
 
     private void Awake() {
@@ -57,7 +55,6 @@ public class QuestManager : MonoBehaviour
         string data = ((TextAsset)Resources.Load("TutorialDatas/questData")).text;
         dataSamples = JsonReader.Read<QuestData[]>(data);
         AddQuest(dataSamples[0]);
-        gameObject.SetActive(false);
     }
 
     public void AddSecondQuest() {

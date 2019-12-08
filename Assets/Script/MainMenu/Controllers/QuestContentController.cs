@@ -75,6 +75,7 @@ public class QuestContentController : MonoBehaviour {
         OnEvent theEvent = null;
         theEvent = (type, Sender, Param) => {
             var card = Array.Find(AccountManager.Instance.myCards, x=>x.cardId.CompareTo(args[0])==0);
+            if(card == null) return;
             if(card.cardCount != 4) return;
             createCardDone();
             NoneIngameSceneEventHandler.Instance.RemoveListener(
