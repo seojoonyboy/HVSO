@@ -36,6 +36,7 @@ public class ScenarioManager : SerializedMonoBehaviour
     [SerializeField] GameObject orcDeckPrefab;
     [SerializeField] GameObject humanDeckPrefab;
     [SerializeField] Image backgroundImage;
+    [SerializeField] BattleMenuController BattleMenuController;
 
     //파일 경로
     [FilePath] public string 
@@ -101,9 +102,9 @@ public class ScenarioManager : SerializedMonoBehaviour
         PlayerPrefs.SetString("SelectedDeckType", "");
         PlayerPrefs.SetString("SelectedBattleType", "");
         PlayerPrefs.SetString("BattleMode", "");
-        //FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);        
-        HUDController.SetHeader(HUDController.Type.SHOW_USER_INFO);
+
         gameObject.SetActive(false);
+        HUDController.SetBackButton(BattleMenuController.OnBackButton);
     }
 
     public void SetBackButton(int depth) {

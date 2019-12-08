@@ -26,6 +26,7 @@ public class BattleReadySceneController : MonoBehaviour {
     [SerializeField] MenuSceneController menuSceneController;
     [SerializeField] RewardsProvider rewardsProvider;
     [SerializeField] BattleReadyHeaderController battleReadyHeaderController;
+    [SerializeField] BattleMenuController BattleMenuController;
 
     public Deck selectedDeck;
     public LeagueData userLeagueData;
@@ -101,10 +102,10 @@ public class BattleReadySceneController : MonoBehaviour {
     }
 
     public void OnBackButton() {
-        HudController.SetHeader(HUDController.Type.SHOW_USER_INFO);
-
         gameObject.SetActive(false);
         SoundManager.Instance.PlaySound(UISfxSound.BUTTON1);
+
+        HudController.SetBackButton(BattleMenuController.OnBackButton);
     }
 
     public enum RaceType {
