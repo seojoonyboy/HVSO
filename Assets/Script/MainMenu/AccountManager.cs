@@ -1548,7 +1548,7 @@ public partial class AccountManager {
 
         url
             .Append(base_url)
-            .Append("api/quest/progress")
+            .Append("api/quest/progress/")
             .Append(questId);
 
         Logger.Log("Request Quest Info");

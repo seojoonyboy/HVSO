@@ -205,5 +205,18 @@ namespace Quest {
             questInfo.quest = this;
             questInfo.addId = args[0];
         }
+
+        public void BattleShow(string[] args) {
+            GameObject battle = manager.tutorialSerializeList.BattleObject;
+            Instantiate(manager.handSpinePrefab, battle.transform, false);
+
+            battle.GetComponent<Button>().onClick.AddListener(BattleClicked);
+        }
+
+        private void BattleClicked() {
+            GameObject battle = manager.tutorialSerializeList.BattleObject;
+            battle.GetComponent<Button>().onClick.RemoveListener(BattleClicked);
+            AccountManager.Instance.RequestQuestProgress(data.id);
+        }
     }
 }
