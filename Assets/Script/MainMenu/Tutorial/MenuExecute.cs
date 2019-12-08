@@ -818,6 +818,8 @@ namespace MenuTutorialModules {
 
             var loadingModal = GetComponent<MenuTutorialManager>().menuSceneController.hideModal;
             loadingModal.SetActive(true);
+
+            GetComponent<MenuTutorialManager>().menuTextCanvas.SetActive(false);
         }
 
         IEnumerator Proceed() {
@@ -864,6 +866,8 @@ namespace MenuTutorialModules {
                     .GetChild(0)
                     .gameObject
                     .SetActive(false);
+
+                GetComponent<MenuTutorialManager>().menuTextCanvas.SetActive(true);
             }
         }
     }
