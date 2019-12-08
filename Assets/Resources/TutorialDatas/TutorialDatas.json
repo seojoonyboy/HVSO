@@ -777,10 +777,6 @@
                         "args" : []
                     },
                     {
-                        "name" : "UnlockCardMenu",
-                        "args" : []
-                    },
-                    {
                         "name" : "EndTutorial",
                         "args" : []
                     }
