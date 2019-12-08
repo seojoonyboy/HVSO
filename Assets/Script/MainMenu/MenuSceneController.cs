@@ -114,7 +114,6 @@ public class MenuSceneController : MonoBehaviour {
         MenuTutorialManager.TutorialType tutorialType = MenuTutorialManager.TutorialType.NONE;
         if (PlayerPrefs.GetInt("isFirst") == 1) {
             PlayerPrefs.SetInt("isFirst", 0);
-            PlayerPrefs.SetString("isPvpOpened", "false");
             AddNewbiController();
 
             hideModal.SetActive(false);
@@ -128,7 +127,6 @@ public class MenuSceneController : MonoBehaviour {
                 //휴먼 튜토리얼 0-1을 진행하지 않았음
                 if (!clearedStages.Exists(x => x.camp == "human" && x.stageNumber == 1)) {
                     AddNewbiController();
-                    PlayerPrefs.SetString("NeedUnlockMenu", "true");
                 }
                 else {
                     //오크 튜토리얼 0-1을 진행하지 않았음
@@ -136,25 +134,13 @@ public class MenuSceneController : MonoBehaviour {
                         tutorialType = MenuTutorialManager.TutorialType.TO_ORC_STORY;
                     }
                     else {
-                        //휴먼 튜토리얼 0-2을 진행하지 않았음
-                        if (!clearedStages.Exists(x => x.camp == "human" && x.stageNumber == 2)) {
-                            tutorialType = MenuTutorialManager.TutorialType.TO_HUMAN_STORY_2;
+                        string storyUnlocked = PlayerPrefs.GetString("StoryUnlocked", "false");
+                        if(storyUnlocked == "false") {
+                            tutorialType = MenuTutorialManager.TutorialType.UNLOCK_TOTAL_STORY;
                         }
                         else {
-                            //오크 튜토리얼 0-2을 진행하지 않았음
-                            if (!clearedStages.Exists(x => x.camp == "orc" && x.stageNumber == 2)) {
-                                tutorialType = MenuTutorialManager.TutorialType.TO_ORC_STORY_2;
-                            }
-                            else {
-                                var isPvpOpened = PlayerPrefs.GetString("isPvpOpened");
-                                if (isPvpOpened == "true") {
-                                    needTutorial = false;
-                                }
-                                else {
-                                    tutorialType = MenuTutorialManager.TutorialType.UNLOCK_STORY_AND_BATTLE_MENU;
-                                    menuTutorialManager.StartTutorial(tutorialType);
-                                }
-                            }
+                            needTutorial = false;
+                            //퀘스트 제어
                         }
                     }
                 }
@@ -352,6 +338,8 @@ public class MenuSceneController : MonoBehaviour {
     }
 
     public void AddNewbiController() {
+        PlayerPrefs.SetString("StoryUnlocked", "false");
+
         var newbiComp = newbiLoadingModal.AddComponent<NewbiController>(); //첫 로그인 제어
         newbiComp.menuSceneController = this;
         newbiComp.name = "NewbiController";

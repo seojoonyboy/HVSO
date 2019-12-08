@@ -778,6 +778,8 @@ namespace MenuTutorialModules {
                 GetComponent<MenuTutorialManager>().DeactiveRewardPanel();
                 clickStream.Dispose();
                 handler.isDone = true;
+
+                PlayerPrefs.SetString("StoryUnlocked", "true");
             }
         }
     }
@@ -821,9 +823,6 @@ namespace MenuTutorialModules {
                 GetComponent<MenuTutorialManager>().DeactiveRewardPanel();
                 clickStream.Dispose();
                 handler.isDone = true;
-
-                PlayerPrefs.SetString("isPvpOpened", "true");
-                PlayerPrefs.SetString("NeedUnlockMenu", "false");
             }
         }
     }
