@@ -31,6 +31,7 @@ public class MenuSceneController : MonoBehaviour {
     [SerializeField] GameObject reconnectingModal;  //재접속 진행시 등장하는 로딩 화면
     [SerializeField] MenuTutorialManager menuTutorialManager;
     [SerializeField] ScenarioManager scenarioManager;
+    [SerializeField] BattleMenuController battleMenuController;
 
     public static MenuSceneController menuSceneController;
 
@@ -209,6 +210,18 @@ public class MenuSceneController : MonoBehaviour {
             Invoke("OnPVPClicked", 0.1f);
             AccountManager.Instance.visitDeckNow = 0;
         }
+
+        var SelectedBattleButton = PlayerPrefs.GetString("SelectedBattleButton");
+        if(SelectedBattleButton == "STORY") {
+            battleMenuController.SetMainMenuDirectPlayButton(1);
+        }
+        else if(SelectedBattleButton == "LEAGUE") {
+            battleMenuController.SetMainMenuDirectPlayButton(0);
+        }
+        else {
+            battleMenuController.ClearDirectPlayButton();
+            Modal.instantiate("선택된 모드 정보가 없습니다. 모드를 직접 선택해주세요!", Modal.Type.CHECK);
+        }
     }
 
     /// <summary>
@@ -339,6 +352,7 @@ public class MenuSceneController : MonoBehaviour {
 
     public void AddNewbiController() {
         PlayerPrefs.SetString("StoryUnlocked", "false");
+        PlayerPrefs.SetString("SelectedBattleButton", BattleMenuController.BattleType.STORY.ToString());
 
         var newbiComp = newbiLoadingModal.AddComponent<NewbiController>(); //첫 로그인 제어
         newbiComp.menuSceneController = this;
