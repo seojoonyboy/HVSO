@@ -1360,3 +1360,86 @@ public partial class AccountManager {
         }
     }
 }
+
+public partial class AccountManager {
+    public List<QuestInfo> questInfos;
+
+    public class QuestInfo {
+        public int id;
+        public string name;
+        public bool cleared;
+        public List<QuestUnlockInfo> after;
+    }
+
+    public class QuestUnlockInfo {
+        public string method;
+        public string[] args;
+    }
+
+    /// <summary>
+    /// 메뉴 해금/잠금 여부 목록
+    /// </summary>
+    public void RequestTutorialInfos() {
+        StringBuilder url = new StringBuilder();
+        string base_url = networkManager.baseUrl;
+
+        url
+            .Append(base_url)
+            .Append("api/user/tutorial_info");
+
+        Logger.Log("Request tutorial_info");
+        HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
+        request.MethodType = HTTPMethods.Get;
+        request.AddHeader("authorization", TokenFormat);
+
+        networkManager.Request(
+            request, (req, res) => {
+                if (res.StatusCode == 200 || res.StatusCode == 304) {
+                    questInfos = dataModules.JsonReader.Read<List<QuestInfo>>(res.DataAsText);
+                    
+                    NoneIngameSceneEventHandler
+                        .Instance
+                        .PostNotification(
+                            NoneIngameSceneEventHandler.EVENT_TYPE.API_TUTORIAL_INFOS_UPDATED,
+                            null,
+                            questInfos
+                        );
+                }
+            },
+            "튜토리얼 정보를 불러오는중...");
+    }
+
+    /// <summary>
+    /// 튜토리얼 완료 처리 요청
+    /// </summary>
+    /// <param name="id"></param>
+    public void TutorialFinished(int id) {
+        StringBuilder url = new StringBuilder();
+        string base_url = networkManager.baseUrl;
+
+        url
+            .Append(base_url)
+            .Append("api/user/tutorial_info");
+
+        Logger.Log("Request POST tutorial_info");
+
+        HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
+
+        request.MethodType = HTTPMethods.Post;
+        request.AddHeader("authorization", TokenFormat);
+
+        url.Append("/" + id);
+
+        networkManager.Request(
+            request,
+            (req, res) => {
+                if (res.IsSuccess) {
+                    if(res.StatusCode == 200 || res.StatusCode == 304) {
+                        RequestTutorialInfos();
+                    }
+                }
+            }, 
+            "튜토리얼 완료 처리중..."
+            );
+    }
+}
