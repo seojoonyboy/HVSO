@@ -220,7 +220,7 @@ public class MenuSceneController : MonoBehaviour {
         }
         else {
             battleMenuController.ClearDirectPlayButton();
-            Modal.instantiate("선택된 모드 정보가 없습니다. 모드를 직접 선택해주세요!", Modal.Type.CHECK);
+            //Modal.instantiate("선택된 모드 정보가 없습니다. 모드를 직접 선택해주세요!", Modal.Type.CHECK);
         }
     }
 
