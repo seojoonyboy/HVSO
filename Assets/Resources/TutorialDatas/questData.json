@@ -15,10 +15,6 @@
                 "args" : ["human", "2"]
             },
             {
-                "method" : "ShowStoryHand",
-                "args" : ["orc", "2"]
-            },
-            {
                 "method" : "StoryCleared",
                 "args" : ["quest_sub_set_3"]
             }

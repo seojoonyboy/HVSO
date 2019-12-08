@@ -661,7 +661,7 @@ public class ScenarioManager : SerializedMonoBehaviour
     public void ShowTutoHand(string camp) {
         if(questTutorial == null) return;
         if(questTutorial.handUI != null) {
-            Destroy(questTutorial.handUI);
+            DestroyImmediate(questTutorial.handUI);
             questTutorial.handUI = null;
         }
         bool isClear = AccountManager.Instance.clearedStages.Exists(x=>(x.stageNumber == questTutorial.stage && x.camp.CompareTo(camp) == 0));
