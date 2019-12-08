@@ -54,6 +54,7 @@ public class BattleMenuController : MonoBehaviour {
             mainSceneImage.sprite = modeImages[type];
 
             directModePlayButton.onClick.AddListener(() => {
+                gameObject.SetActive(true);
                 modeButtons[type].onClick.Invoke();
             });
         }
