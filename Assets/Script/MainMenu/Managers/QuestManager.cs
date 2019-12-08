@@ -83,6 +83,7 @@ namespace Quest {
         public Reward[] rewards;
     }
 
+    [Serializable]
     public class Reward {
         public string kind;
         public int amount;

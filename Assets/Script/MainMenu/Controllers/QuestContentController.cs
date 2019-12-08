@@ -16,6 +16,7 @@ namespace Quest {
         [SerializeField] private TextMeshProUGUI sliderInfo;
         [SerializeField] private Button getBtn;
         [SerializeField] private Button rerollBtn;
+        [SerializeField] private Transform rewardUIParent;
 
         public QuestData data;
         public QuestManager manager;
@@ -34,6 +35,20 @@ namespace Quest {
             else {
                 getBtn.enabled = false;
                 getBtn.GetComponentInChildren<TextMeshProUGUI>().text = "진행중";
+            }
+
+            foreach(Transform slot in rewardUIParent) {
+                slot.gameObject.SetActive(false);
+            }
+
+            var icons = AccountManager.Instance.resource.rewardIcon;
+
+            for(int i=0; i<data.rewards.Length; i++) {
+                rewardUIParent.GetChild(i).gameObject.SetActive(true);
+                Image rewardImg = rewardUIParent.GetChild(i).GetChild(0).GetComponent<Image>();
+                if (icons.ContainsKey(data.rewards[i].kind)) {
+                    rewardImg.sprite = icons[data.rewards[i].kind];
+                }
             }
         }
 
