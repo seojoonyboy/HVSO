@@ -176,7 +176,7 @@ public class DeckHandler : MonoBehaviour
         }
     }
 
-    public void TutorialHandShow(QuestContentController quest) {
+    public void TutorialHandShow(Quest.QuestContentController quest) {
         if(!isHuman) return;
         Instantiate(quest.manager.handSpinePrefab, transform.Find("DeckObject"), false);
         Instantiate(quest.manager.handSpinePrefab, transform.Find("DeckObject/Buttons/EditBtn"), false);

@@ -851,7 +851,7 @@ public class CardDictionaryManager : MonoBehaviour {
     GameObject tutorialHand;
     UnityAction tutoAction;
 
-    public void cardShowHand(QuestContentController quest, string[] args) {
+    public void cardShowHand(Quest.QuestContentController quest, string[] args) {
         Transform beforeHand = transform.Find("tutorialHand");
         if(beforeHand != null) Destroy(beforeHand.gameObject);
         DictionaryCard card = dicCards.Find(x=>x.cardId == args[0]);
