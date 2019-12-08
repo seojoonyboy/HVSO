@@ -1171,7 +1171,8 @@ namespace MenuTutorialModules {
                 clickStream.Dispose();
                 handler.isDone = true;
 
-                AccountManager.Instance.RequestUnlockInTutorial(3);
+                AccountManager.Instance.RequestUnlockInTutorial(2);
+                AccountManager.Instance.RequestQuestInfo();
             }
         }
     }

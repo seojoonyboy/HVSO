@@ -646,6 +646,8 @@ public class ScenarioManager : SerializedMonoBehaviour
         questTutorial = new QuestTutorial();
         questTutorial.quest = quest;
         questTutorial.stage = stage;
+        if(Instance == null) return;
+        ShowTutoHand("human");
     }
 
     
