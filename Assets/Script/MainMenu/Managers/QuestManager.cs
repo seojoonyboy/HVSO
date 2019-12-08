@@ -56,7 +56,7 @@ namespace Quest {
             quest.data = data;
             quest.manager = this;
             quest.gameObject.SetActive(true);
-            if(data.cleared == false && data.tutorials == null) return;
+            if(data.cleared == true || data.tutorials == null) return;
             quest.ActiveTutorial();
             showNewIcon(true);
         }

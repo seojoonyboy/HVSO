@@ -90,7 +90,6 @@ namespace Quest {
             Type enumType = typeof(MenuTutorialManager.TutorialType);
             MenuTutorialManager.TutorialType questEnum = (MenuTutorialManager.TutorialType)Enum.Parse(enumType, args[0].ToUpper());
             manager.tutoDialog.StartQuestSubSet(questEnum);
-            AccountManager.Instance.RequestUnlockInTutorial(2);
         }
 
         /// <summary>
@@ -121,6 +120,7 @@ namespace Quest {
             theEvent = (type, Sender, Param) => {
                 var card = Array.Find(AccountManager.Instance.myCards, x=>x.cardId.CompareTo(args[0])==0);
                 if(card == null) return;
+                Start();
                 if(card.cardCount != 4) return;
                 createCardDone();
                 NoneIngameSceneEventHandler.Instance.RemoveListener(
@@ -141,12 +141,10 @@ namespace Quest {
                 DestroyImmediate(hand);
             }
             //튜토리얼 완료
-            data.cleared = true;
-            data.prog = 1;
-            slider.value = slider.maxValue;
-            sliderInfo.text = "1/1";
             MenuSceneController menu = MenuSceneController.menuSceneController;
             menu.DictionaryRemoveHand();
+            manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_4);
+            AccountManager.Instance.RequestUnlockInTutorial(3);
             AccountManager.Instance.RequestQuestInfo();
         }
     }
