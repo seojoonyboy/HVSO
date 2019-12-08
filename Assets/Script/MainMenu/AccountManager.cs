@@ -1404,6 +1404,8 @@ public partial class AccountManager {
                             null,
                             questInfos
                         );
+
+                    RequestUserInfo();
                 }
             },
             "튜토리얼 정보를 불러오는중...");
