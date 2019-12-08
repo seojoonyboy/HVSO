@@ -103,6 +103,8 @@ public class ScenarioManager : SerializedMonoBehaviour
         PlayerPrefs.SetString("SelectedBattleType", "");
         PlayerPrefs.SetString("BattleMode", "");
 
+        offAllGlowEffect();
+
         gameObject.SetActive(false);
         HUDController.SetBackButton(BattleMenuController.OnBackButton);
     }
@@ -292,6 +294,16 @@ public class ScenarioManager : SerializedMonoBehaviour
         ShowTutoHand(isHuman ? "human" : "orc");
     }
 
+    private void offAllGlowEffect() {
+        foreach (Transform item in human.stageContent.transform) {
+            item.Find("Glow").gameObject.SetActive(false);
+        }
+
+        foreach (Transform item in orc.stageContent.transform) {
+            item.Find("Glow").gameObject.SetActive(false);
+        }
+    }
+
     private void SetStorySummaryText(string data, TextMeshProUGUI targetTextComp) {
         int cutStandard = 45;
         StringBuilder cutStr = new StringBuilder();
@@ -464,6 +476,9 @@ public class ScenarioManager : SerializedMonoBehaviour
             human.StageCanvas.transform.Find("HUD/StageSelect/Buttons").gameObject.SetActive(false);
             orc.StageCanvas.transform.Find("HUD/StageSelect/Buttons").gameObject.SetActive(true);
         }
+
+        offAllGlowEffect();
+        selectedChapterObject.transform.Find("Glow").gameObject.SetActive(true);
     }
 
     public void OpenStoryDetailWindow() {
