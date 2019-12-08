@@ -438,6 +438,18 @@
                         ]
                     },
                     {
+                        "name" : "Menu_Hide_Message",
+                        "args" : []
+                    },
+                    {
+                        "name" : "OffHighlight",
+                        "args" : []
+                    },
+                    {
+                        "name" : "UnlockCardMenu",
+                        "args" : []
+                    },
+                    {
                         "name" : "EndTutorial",
                         "args" : []
                     }
@@ -653,6 +665,22 @@
                         "args": [
                           "screen"
                         ]
+                    },
+                    {
+                        "name" : "Menu_Hide_Message",
+                        "args" : []
+                    },
+                    {
+                        "name" : "OffHighlight",
+                        "args" : []
+                    },
+                    {
+                        "name" : "UnlockCardMenu",
+                        "args" : []
+                    },
+                    {
+                        "name" : "EndTutorial",
+                        "args" : []
                     }
                 ]
             }
@@ -679,6 +707,18 @@
                         "args": [
                           "screen"
                         ]
+                    },
+                    {
+                        "name" : "Menu_Hide_Message",
+                        "args" : []
+                    },
+                    {
+                        "name" : "OffHighlight",
+                        "args" : []
+                    },
+                    {
+                        "name" : "UnlockCardMenu",
+                        "args" : []
                     },
                     {
                         "name" : "EndTutorial",
@@ -727,6 +767,18 @@
                         "args": [
                           "screen"
                         ]
+                    },
+                    {
+                        "name" : "Menu_Hide_Message",
+                        "args" : []
+                    },
+                    {
+                        "name" : "OffHighlight",
+                        "args" : []
+                    },
+                    {
+                        "name" : "UnlockCardMenu",
+                        "args" : []
                     },
                     {
                         "name" : "EndTutorial",
