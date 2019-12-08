@@ -85,6 +85,9 @@ public class MenuLockController : SerializedMonoBehaviour {
             return;
         }
         else {
+            if(translatedKeyword == "league") {
+                menues[translatedKeyword].transform.GetChild(0).gameObject.SetActive(false);
+            }
             menu = menues[translatedKeyword];
         }
         if (menu == null) return;
