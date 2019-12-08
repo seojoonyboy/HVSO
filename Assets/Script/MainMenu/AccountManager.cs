@@ -1379,7 +1379,7 @@ public partial class AccountManager {
     /// <summary>
     /// 메뉴 해금/잠금 여부 목록
     /// </summary>
-    public void RequestTutorialInfos() {
+    public void RequestTutorialUnlockInfos() {
         StringBuilder url = new StringBuilder();
         string base_url = networkManager.baseUrl;
 
@@ -1413,7 +1413,7 @@ public partial class AccountManager {
     /// 튜토리얼 완료 처리 요청
     /// </summary>
     /// <param name="id"></param>
-    public void TutorialFinished(int id) {
+    public void RequestUnlockInTutorial(int id) {
         StringBuilder url = new StringBuilder();
         string base_url = networkManager.baseUrl;
 
