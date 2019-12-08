@@ -398,10 +398,8 @@
                         "args" : []
                     },
                     {
-                        "name": "Menu_Scope_Object",
-                        "args": [
-                            "storyButton"
-                        ]
+                        "name" : "RequestQuestInfo",
+                        "args" : []
                     },
                     {
                         "name" : "OffHighlight",

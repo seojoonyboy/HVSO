@@ -1175,4 +1175,11 @@ namespace MenuTutorialModules {
             }
         }
     }
+
+    public class RequestQuestInfo : MenuExecute {
+        public override void Execute() {
+            AccountManager.Instance.RequestQuestInfo();
+            handler.isDone = true;
+        }
+    }
 }
