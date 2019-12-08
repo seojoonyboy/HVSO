@@ -27,6 +27,7 @@ public class MenuLockController : SerializedMonoBehaviour {
         var unlockInfo = etcInfo.Find(x => x.key == "unlockInfo");
         if (unlockInfo == null) return;
 
+        Lock(); //일단 다 잠금
         string data = unlockInfo.value;
         string[] menuNames = data.Split(',');
         foreach(string name in menuNames) {
