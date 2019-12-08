@@ -97,7 +97,7 @@ namespace Quest {
         [Serializable] public class TutorialSerializeList {
             public ScenarioManager scenarioManager;
             public DeckSettingManager deckSettingManager;
-            
+            public GameObject BattleObject;
         }
 
     }
