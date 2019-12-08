@@ -160,7 +160,7 @@ namespace Quest {
         }
 
         private async void createCardDone() {
-            await Task.Delay(1000);
+            await Task.Delay(2000);
             GameObject hand;
             while(true) {
                 hand = GameObject.Find("tutorialHand");
