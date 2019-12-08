@@ -1470,7 +1470,7 @@ public partial class AccountManager {
             );
     }
 
-    public void RequestQuestClearReward(int id) {
+    public void RequestQuestClearReward(int id, GameObject obj) {
         StringBuilder url = new StringBuilder();
         string base_url = networkManager.baseUrl;
 
@@ -1499,7 +1499,7 @@ public partial class AccountManager {
                         .PostNotification(
                             NoneIngameSceneEventHandler.EVENT_TYPE.API_QUEST_REWARD_RECEIVED,
                             null,
-                            id
+                            obj
                         );
                     }
                 }

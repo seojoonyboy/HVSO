@@ -66,12 +66,10 @@ namespace Quest {
         }
 
         private void OnRewardReceived(Enum Event_Type, Component Sender, object Param) {
-            var receiveCompletedId = (int)Param;
+            var targetObj = (GameObject)Param;
 
-            if(receiveCompletedId == data.id) {
-                getBtn.GetComponentInChildren<TextMeshProUGUI>().text = "획득완료";
-                getBtn.enabled = false;
-            }
+            targetObj.GetComponent<QuestContentController>().getBtn.GetComponentInChildren<TextMeshProUGUI>().text = "획득완료";
+            targetObj.GetComponent<QuestContentController>().getBtn.enabled = false;
         }
 
         private void GetReward() {
@@ -180,7 +178,7 @@ namespace Quest {
         /// </summary>
         public void RequestRewardButtonClicked() {
             if (data.cleared && !data.rewardGet) {
-                AccountManager.Instance.RequestQuestClearReward(data.id);
+                AccountManager.Instance.RequestQuestClearReward(data.id, gameObject);
             }
         }
 
