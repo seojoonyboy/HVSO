@@ -815,6 +815,9 @@ namespace MenuTutorialModules {
         public override void Execute() {
             coroutine = Proceed();
             StartCoroutine(coroutine);
+
+            var loadingModal = GetComponent<MenuTutorialManager>().menuSceneController.hideModal;
+            loadingModal.SetActive(true);
         }
 
         IEnumerator Proceed() {
@@ -829,6 +832,9 @@ namespace MenuTutorialModules {
             skeletonGraphic.Skeleton.SetSlotsToSetupPose();
 
             yield return new WaitForEndOfFrame();
+            var loadingModal = GetComponent<MenuTutorialManager>().menuSceneController.hideModal;
+            loadingModal.SetActive(false);
+
             skeletonGraphic.transform.parent.Find("SubBackground").gameObject.SetActive(false);
             skeletonGraphic.AnimationState.SetAnimation(0, "battle", false);
 
@@ -849,6 +855,15 @@ namespace MenuTutorialModules {
                 handler.isDone = true;
 
                 AccountManager.Instance.RequestUnlockInTutorial(4);
+
+                GetComponent<MenuTutorialManager>()
+                    .battleMenuCanvas
+                    .transform
+                    .Find("InnerCanvas/MainPanel/LeagueButton")
+                    .GetChild(0)
+                    .GetChild(0)
+                    .gameObject
+                    .SetActive(false);
             }
         }
     }
@@ -1065,7 +1080,6 @@ namespace MenuTutorialModules {
 
     public class EndTutorial : MenuExecute {
         public override void Execute() {
-            Logger.Log("모든 튜토리얼 끝!");
             MenuMask.Instance.UnBlockScreen();
 
             GetComponent<MenuTutorialManager>().EndTutorial();
@@ -1118,6 +1132,9 @@ namespace MenuTutorialModules {
         public override void Execute() {
             coroutine = Proceed();
             StartCoroutine(coroutine);
+
+            var loadingModal = GetComponent<MenuTutorialManager>().menuSceneController.hideModal;
+            loadingModal.SetActive(true);
         }
 
         IEnumerator Proceed() {
@@ -1132,6 +1149,9 @@ namespace MenuTutorialModules {
             skeletonGraphic.Skeleton.SetSlotsToSetupPose();
 
             yield return new WaitForEndOfFrame();
+            var loadingModal = GetComponent<MenuTutorialManager>().menuSceneController.hideModal;
+            loadingModal.SetActive(false);
+
             skeletonGraphic.transform.parent.Find("SubBackground").gameObject.SetActive(false);
             skeletonGraphic.AnimationState.SetAnimation(0, "NOANI", false);
 
