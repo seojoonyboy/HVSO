@@ -29,8 +29,14 @@ namespace Quest {
             slider.value = (float)data.prog;
             sliderInfo.text = data.prog.ToString() + "/" + data.progMax.ToString();
             if(data.cleared) {
-                getBtn.enabled = true;
-                getBtn.GetComponentInChildren<TextMeshProUGUI>().text = "획득하기";
+                if (!data.rewardGet) {
+                    getBtn.enabled = true;
+                    getBtn.GetComponentInChildren<TextMeshProUGUI>().text = "획득하기";
+                }
+                else {
+                    getBtn.enabled = false;
+                    getBtn.GetComponentInChildren<TextMeshProUGUI>().text = "획득완료";
+                }
             }
             else {
                 getBtn.enabled = false;
