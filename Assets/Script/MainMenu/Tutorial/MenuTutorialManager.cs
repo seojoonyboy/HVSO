@@ -128,10 +128,8 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
             case TutorialType.QUEST_SUB_SET_5:
                 arr_index = 6;
                 break;
-            case TutorialType.QUEST_SUB_SET_6:
-                arr_index = 7;
-                break;
         }
+        if (arr_index == -1) return;
 
         var selectedSets = sets[arr_index];
 

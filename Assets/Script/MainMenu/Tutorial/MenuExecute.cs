@@ -1153,7 +1153,7 @@ namespace MenuTutorialModules {
             loadingModal.SetActive(false);
 
             skeletonGraphic.transform.parent.Find("SubBackground").gameObject.SetActive(false);
-            skeletonGraphic.AnimationState.SetAnimation(0, "NOANI", false);
+            skeletonGraphic.AnimationState.SetAnimation(0, "sampledeck", false);
 
             skeletonGraphic.transform.Find("Header/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "카드 메뉴 해금";
             skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "카드 메뉴가 해금되었습니다!";

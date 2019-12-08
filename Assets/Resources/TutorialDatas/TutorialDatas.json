@@ -699,30 +699,6 @@
                         ]
                     },
                     {
-                        "name" : "Menu_Hide_Message",
-                        "args" : []
-                    },
-                    {
-                        "name" : "OffHighlight",
-                        "args" : []
-                    },
-                    {
-                        "name" : "EndTutorial",
-                        "args" : []
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "id": 7,
-        "description" : "QUEST_SUB_SET_6",
-        "innerDatas": [
-            {
-                "id" : 1,
-                "description" : null,
-                "methods" : [
-                    {
                         "name" : "UnlockBattleAnim",
                         "args" : []
                     },
@@ -769,5 +745,5 @@
                 ]
             }
         ]
-    },
+    }
 ]

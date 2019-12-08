@@ -1462,6 +1462,7 @@ public partial class AccountManager {
                 if (res.IsSuccess) {
                     if(res.StatusCode == 200 || res.StatusCode == 304) {
                         RequestTutorialUnlockInfos();
+                        RequestQuestInfo();
                     }
                 }
             }, 
