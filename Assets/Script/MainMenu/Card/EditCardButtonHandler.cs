@@ -44,6 +44,20 @@ public class EditCardButtonHandler : MonoBehaviour {
         }
         else
             transform.GetChild(0).Find("AddCard/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "추가";
+        SetTutoHand(cardData);
+    }
+
+    private void SetTutoHand(dataModules.CollectionCard cardData) {
+        if(EditCardHandler.questInfo == null) return;
+        if(EditCardHandler.questInfo.handUIcreateOrRemove != null)
+            Destroy(EditCardHandler.questInfo.handUIcreateOrRemove);
+        if(cardData.id.CompareTo(!isHandCard ? EditCardHandler.questInfo.addId : EditCardHandler.questInfo.removeId) != 0) return;
+        Transform parent;
+        if(isHandCard) parent = transform.GetChild(0).Find("ExceptCard");
+        else parent = transform.GetChild(0).Find("AddCard");
+        
+        EditCardHandler.questInfo.handUIcreateOrRemove = Instantiate(EditCardHandler.questInfo.quest.manager.handSpinePrefab, parent, false);
+        EditCardHandler.questInfo.handUIcreateOrRemove.name = "tutorialHand";
     }
 
     public void SetCardImage(EditCardHandler card) {
@@ -86,6 +100,7 @@ public class EditCardButtonHandler : MonoBehaviour {
         deckEdit.ConfirmSetDeck(card.gameObject, cardData.id);
         cardHandler.DrawCard(cardData.id, cardData.camp == "human");
         cardHandler.HAVENUM--;
+        TutoCheckCardAdd(cardHandler);
         cardHandler.SetHaveNum();
         if (cardHandler.HAVENUM == 0) CloseCardButtons();
         if (deckEdit.setCardNum == 40) {
@@ -94,6 +109,17 @@ public class EditCardButtonHandler : MonoBehaviour {
         }
         else
             transform.GetChild(0).Find("AddCard/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "추가";
+    }
+
+    private void TutoCheckCardAdd(EditCardHandler cardHandler) {
+        if(EditCardHandler.questInfo == null) return;
+        
+        bool isAddCard = cardHandler.cardData.id.CompareTo(EditCardHandler.questInfo.addId) == 0;
+        if(!isAddCard) return;
+        if(cardHandler.HAVENUM != 0) return;
+        EditCardHandler.questInfo.isDoneAddCard = true;
+
+        Instantiate(EditCardHandler.questInfo.quest.manager.handSpinePrefab, deckEditCanvas.Find("InnerCanvas/Buttons/SaveDeckButton"), false).name = "tutorialHand";
     }
 
     public void ExceptCardFromDeck() {

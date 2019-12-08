@@ -211,11 +211,29 @@ public class DeckEditController : MonoBehaviour {
                     inputNameVal = inputNameVal.Replace(" ", string.Empty);
                 }
             };
+            TutoFinish();
         }
         else {
             RequestNewDeck();
         }
         FindObjectOfType<HUDController>().SetHeader(HUDController.Type.SHOW_USER_INFO);
+    }
+
+    private void TutoFinish() {
+        if(EditCardHandler.questInfo == null) return;
+        EditCardHandler.QuestInfo questInfo = EditCardHandler.questInfo;
+        if(!questInfo.isDoneAddCard) return;
+        while(true) {
+            GameObject hand = GameObject.Find("tutorialHand");
+            if(hand == null) break;
+            DestroyImmediate(hand);
+        }
+        
+        AccountManager.Instance.RequestQuestProgress(questInfo.quest.data.id);
+        AccountManager.Instance.RequestUnlockInTutorial(4);
+        AccountManager.Instance.RequestQuestInfo();
+        questInfo.quest.manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_5);
+        EditCardHandler.questInfo = null;
     }
 
     public void CancelButton() {
@@ -244,6 +262,14 @@ public class DeckEditController : MonoBehaviour {
         isTemplate = false;
         gameObject.SetActive(false);
         cardButtons.gameObject.SetActive(false);
+        RemoveTutoHand();
+    }
+
+    private void RemoveTutoHand() {
+        if(EditCardHandler.questInfo == null) return;
+        EditCardHandler.QuestInfo questInfo = EditCardHandler.questInfo;
+        Destroy(questInfo.handUIaddCard);
+        Destroy(questInfo.handUIremoveCard);
     }
 
     public void ResumeEdit() {

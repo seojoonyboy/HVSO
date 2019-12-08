@@ -1541,4 +1541,37 @@ public partial class AccountManager {
             },
             "튜토리얼 정보를 불러오는중...");
     }
+
+    public void RequestQuestProgress(int questId) {
+        StringBuilder url = new StringBuilder();
+        string base_url = networkManager.baseUrl;
+
+        url
+            .Append(base_url)
+            .Append("api/quest/progress")
+            .Append(questId);
+
+        Logger.Log("Request Quest Info");
+        HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
+        request.MethodType = HTTPMethods.Post;
+        request.AddHeader("authorization", TokenFormat);
+
+        networkManager.Request(
+            request, (req, res) => {
+                if (res.StatusCode == 200 || res.StatusCode == 304) {
+                    // var QuestData = dataModules.JsonReader.Read<Quest.QuestData[]>(res.DataAsText);
+                    
+                    // NoneIngameSceneEventHandler
+                    //     .Instance
+                    //     .PostNotification(
+                    //         NoneIngameSceneEventHandler.EVENT_TYPE.API_QUEST_UPDATED,
+                    //         null,
+                    //         QuestData
+                    //     );
+
+                    // RequestUserInfo();
+                }
+            },
+            "튜토리얼 정보를 불러오는중...");
+    }
 }

@@ -47,6 +47,8 @@ public class EditCardHandler : MonoBehaviour {
         public string addId;
         public GameObject handUIaddCard;
         public GameObject handUIremoveCard;
+        public GameObject handUIcreateOrRemove;
+        public bool isDoneAddCard;
     }
 
 
