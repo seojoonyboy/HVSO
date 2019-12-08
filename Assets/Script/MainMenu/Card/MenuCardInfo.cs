@@ -305,6 +305,7 @@ public partial class MenuCardInfo : MonoBehaviour {
         transform.parent.gameObject.SetActive(false);
         transform.gameObject.SetActive(false);
         EscapeKeyController.escapeKeyCtrl.RemoveEscape(CloseInfo);
+        if(tutoHand != null) Destroy(tutoHand);
     }
 
     public void CloseHeroesCardInfo() {
@@ -365,5 +366,14 @@ public partial class MenuCardInfo : MonoBehaviour {
         }
         cardCreate = false;
         deckSettingManager.SetPlayerNewDecks();
+    }
+    
+    GameObject tutoHand;
+
+    public void makeShowHand(QuestContentController quest) {
+        Transform creating = transform.Find("CreateCard/MakeBtn");
+        tutoHand = Instantiate(quest.manager.handSpinePrefab, creating, false);
+        tutoHand.transform.SetParent(creating.parent);
+        tutoHand.name = "tutorialHand";
     }
 }
