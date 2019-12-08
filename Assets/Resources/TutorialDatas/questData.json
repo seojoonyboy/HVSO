@@ -3,12 +3,16 @@
         "id" : 1,
         "tutorials" : [
             {
-                "method" : "ShowStoryHand",
-                "args" : ["human", 2]
+                "method" : "QuestSubSetShow",
+                "args" : ["quest_sub_set_1"]
             },
             {
                 "method" : "ShowStoryHand",
-                "args" : ["orc", 2]
+                "args" : ["human", "2"]
+            },
+            {
+                "method" : "ShowStoryHand",
+                "args" : ["orc", "2"]
             }
         ]
     },
