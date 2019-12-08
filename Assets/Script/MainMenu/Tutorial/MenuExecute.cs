@@ -429,6 +429,28 @@ namespace MenuTutorialModules {
         }
     }
 
+    public class RequestQuestBoxReward : MenuExecute {
+        public override void Execute() {
+            AccountManager.Instance.RequestTutorialBox(callback);
+        }
+
+        private void callback(HTTPRequest originalRequest, HTTPResponse response) {
+            if (response.DataAsText.Contains("already")) {
+                handler.isDone = true;
+            }
+            else {
+                GetComponent<MenuTutorialManager>().BoxRewardPanel.transform.Find("ExitButton").GetComponent<Button>().onClick.AddListener(OnClick);
+                GetComponent<MenuTutorialManager>().menuTextCanvas.SetActive(false);
+            }
+        }
+
+        private void OnClick() {
+            GetComponent<MenuTutorialManager>().BoxRewardPanel.transform.Find("ExitButton").GetComponent<Button>().onClick.RemoveListener(OnClick);
+            GetComponent<MenuTutorialManager>().menuTextCanvas.SetActive(true);
+            handler.isDone = true;
+        }
+    }
+
     public class RequestReward : MenuExecute {
         IDisposable clickStream;
         IEnumerator coroutine;

@@ -25,6 +25,7 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
     public GameObject BoxRewardPanel;
     public GameObject FixedMenuCanvas;
     public GameObject battleMenuCanvas;
+    public GameObject menuTextCanvas;
 
     public MenuSceneController menuSceneController;
 

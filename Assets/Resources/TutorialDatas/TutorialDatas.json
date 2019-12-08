@@ -577,6 +577,14 @@
                         ]
                     },
                     {
+                        "name" : "Menu_Hide_Message",
+                        "args" : []
+                    },
+                    {
+                        "name" : "RequestQuestBoxReward",
+                        "args" : []
+                    },
+                    {
                         "name" : "Menu_NPC_Talk",
                         "args" : [
                             "h10001",
@@ -603,6 +611,14 @@
                         "args": [
                           "screen"
                         ]
+                    },
+                    {
+                        "name" : "Menu_Hide_Message",
+                        "args" : []
+                    },
+                    {
+                        "name" : "OffHighlight",
+                        "args" : []
                     },
                     {
                         "name" : "UnlockCardMenu",

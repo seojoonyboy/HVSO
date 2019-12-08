@@ -1195,16 +1195,41 @@ public partial class AccountManager {
             }
         }, "스테이지 진척도 불러오는 중...");
     }
-    public void RequestTutorialBoxReward(OnRequestFinishedDelegate callback) {
+
+    public void RequestTutorialBox(OnRequestFinishedDelegate callback) {
         StringBuilder url = new StringBuilder();
 
         url.Append(networkManager.baseUrl);
-        url.Append("api/user/claim_reward?kind=tutorial");
+        url.Append("api/user/claim_reward?kind=tutorialBox");
 
         HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
         request.MethodType = HTTPMethods.Get;
         request.AddHeader("authorization", TokenFormat);
-        networkManager.Request(request, callback, "보상 내역 확인중...");
+        networkManager.Request(
+            request, 
+            (req, res) => {
+                if (res.StatusCode == 200 || res.StatusCode == 304) {
+                    Logger.Log(res.DataAsText);
+                    if (res.DataAsText.Contains("already")) {
+                        Logger.Log("이미 보상 받았음");
+                    }
+                    else {
+                        var result = dataModules.JsonReader.Read<RewardClass[]>(res.DataAsText);
+
+                        rewardList = result;
+                        SetRewardInfo(result);
+
+                        NoneIngameSceneEventHandler.Instance.PostNotification(
+                            NoneIngameSceneEventHandler.EVENT_TYPE.API_OPENBOX,
+                            null,
+                            res
+                        );
+                    }
+                }
+                callback(req, res);
+            },
+            "보상 내역 확인중..."
+            );
     }
 
     public void RequestTutorialPreSettings() {
