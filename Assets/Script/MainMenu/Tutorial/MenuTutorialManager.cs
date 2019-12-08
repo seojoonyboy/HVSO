@@ -154,7 +154,6 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
         QUEST_SUB_SET_3 = 15,
         QUEST_SUB_SET_4 = 16,
         QUEST_SUB_SET_5 = 17,
-        QUEST_SUB_SET_6 = 18,
         NONE = 99
     }
 }
