@@ -175,4 +175,10 @@ public class DeckHandler : MonoBehaviour
             }
         }
     }
+
+    public void TutorialHandShow(QuestContentController quest) {
+        if(!isHuman) return;
+        Instantiate(quest.manager.handSpinePrefab, transform.Find("DeckObject"), false);
+        Instantiate(quest.manager.handSpinePrefab, transform.Find("DeckObject/Buttons/EditBtn"), false);
+    }
 }
