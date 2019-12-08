@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using Spine;
 using Spine.Unity;
+using System;
 
 public class EditCardHandler : MonoBehaviour {
     public string cardID;
@@ -38,6 +39,17 @@ public class EditCardHandler : MonoBehaviour {
     protected float handFirstXPos;
     protected float clickTime;
     protected bool standby;
+    public static QuestInfo questInfo;
+
+    [Serializable] public class QuestInfo {
+        public Quest.QuestContentController quest;
+        public string removeId;
+        public string addId;
+        public GameObject handUIaddCard;
+        public GameObject handUIremoveCard;
+    }
+
+
 
     public int SETNUM {
         get { return setNum; }
@@ -59,6 +71,30 @@ public class EditCardHandler : MonoBehaviour {
         editBookRoot = "";
         GetComponent<EditCardHandler>().SETNUM = 0;
         GetComponent<EditCardHandler>().HAVENUM = 0;
+    }
+
+    public void SetTutoHand() {
+        if(questInfo == null) return;
+        if(cardData == null) return;
+        if(cardData.id.CompareTo(questInfo.addId) == 0) {
+            questInfo.handUIaddCard = Instantiate(questInfo.quest.manager.handSpinePrefab, transform, false);
+            questInfo.handUIaddCard.name = "tutorialHand";
+        }
+        if(cardData.id.CompareTo(questInfo.removeId) == 0) {
+            questInfo.handUIremoveCard = Instantiate(questInfo.quest.manager.handSpinePrefab, transform, false);
+            questInfo.handUIremoveCard.name = "tutorialHand";
+        }
+    }
+
+    private void RemoveTutoHand() {
+        if(questInfo == null) return;
+        if(cardData == null) return;
+        if(questInfo.handUIaddCard == null && questInfo.handUIremoveCard == null) return;
+        
+        if(cardData.id.CompareTo(questInfo.addId) == 0)
+            Destroy(questInfo.handUIaddCard);
+        if(cardData.id.CompareTo(questInfo.removeId) == 0)
+            Destroy(questInfo.handUIremoveCard);
     }
 
     public void EndClick() {
@@ -342,5 +378,6 @@ public class EditCardHandler : MonoBehaviour {
                 cardObject.Find("Disabled/NonAbility").gameObject.SetActive(true);
             }
         }
+        RemoveTutoHand();
     }
 }

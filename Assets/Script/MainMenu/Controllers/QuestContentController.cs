@@ -93,6 +93,7 @@ namespace Quest {
         }
 
         public void ShowStoryHand(string[] args) {
+            if(data.cleared) return;
             string camp = args[0];
             int stage = int.Parse(args[1]);
             manager.tutorialSerializeList.scenarioManager.SetTutoQuest(this, stage);
@@ -112,6 +113,7 @@ namespace Quest {
         /// </summary>
         /// <param name="args"></param>
         public void MenuDictionaryShowHand(string[] args) {
+            if(data.cleared) return;
             MenuSceneController menu = MenuSceneController.menuSceneController;
             menu.DictionaryShowHand(this, args);
         }
@@ -122,6 +124,7 @@ namespace Quest {
         /// </summary>
         /// <param name="args">해당 카드 id</param>
         public void DictionaryCardHand(string[] args) {
+            if(data.cleared) return;
             CardDictionaryManager cardManager = CardDictionaryManager.cardDictionaryManager;
             cardManager.cardShowHand(this, args);
         }
@@ -131,6 +134,7 @@ namespace Quest {
         /// </summary>
         /// <param name="args">해당 카드 id</param>
         public void CreateCardCheck(string[] args) {
+            if(data.cleared) return;
             OnEvent theEvent = null;
             theEvent = (type, Sender, Param) => {
                 var card = Array.Find(AccountManager.Instance.myCards, x=>x.cardId.CompareTo(args[0])==0);
@@ -167,7 +171,32 @@ namespace Quest {
         /// 받기 버튼 클릭
         /// </summary>
         public void RequestRewardButtonClicked() {
+            if(data.cleared) return;
             AccountManager.Instance.RequestQuestClearReward(data.id);
+        }
+
+        public void MenuDeckSettingShowHand(string[] args) {
+            if(data.cleared) return;
+            DeckHandler[] decks = manager.tutorialSerializeList.deckSettingManager.transform.GetComponentsInChildren<DeckHandler>();
+            Array.ForEach(decks, x=> x.TutorialHandShow(this));
+        }
+
+        public void DeckSettingRemoveCard(string[] args) {
+            if(data.cleared) return;
+            if(EditCardHandler.questInfo == null)
+                EditCardHandler.questInfo = new EditCardHandler.QuestInfo();
+            EditCardHandler.QuestInfo questInfo = EditCardHandler.questInfo;
+            questInfo.quest = this;
+            questInfo.removeId = args[0];
+        }
+
+        public void DeckSettingAddCard(string[] args) {
+            if(data.cleared) return;
+            if(EditCardHandler.questInfo == null)
+                EditCardHandler.questInfo = new EditCardHandler.QuestInfo();
+            EditCardHandler.QuestInfo questInfo = EditCardHandler.questInfo;
+            questInfo.quest = this;
+            questInfo.addId = args[0];
         }
     }
 }

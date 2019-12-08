@@ -40,7 +40,18 @@
     {
         "id" : 3,
         "tutorials" : [
-            
+            {
+                "method" : "MenuDeckSettingShowHand",
+                "args" : []
+            },
+            {
+                "method" : "DeckSettingRemoveCard",
+                "args" : ["ac10005"]
+            },
+            {
+                "method" : "DeckSettingAddCard",
+                "args" : ["ac10055"]
+            }
         ]
     },
     {

@@ -178,7 +178,13 @@ public class DeckHandler : MonoBehaviour
 
     public void TutorialHandShow(Quest.QuestContentController quest) {
         if(!isHuman) return;
-        Instantiate(quest.manager.handSpinePrefab, transform.Find("DeckObject"), false);
-        Instantiate(quest.manager.handSpinePrefab, transform.Find("DeckObject/Buttons/EditBtn"), false);
+        Instantiate(quest.manager.handSpinePrefab, transform.Find("DeckObject"), false).name = "tutorialHand";
+        Instantiate(quest.manager.handSpinePrefab, transform.Find("DeckObject/Buttons/EditBtn"), false).name = "tutorialHand";
+        transform.Find("DeckObject/Buttons/EditBtn").GetComponent<Button>().onClick.AddListener(FindAllCards);
+    }
+
+    private void FindAllCards() {
+        EditCardHandler[] editCards = FindObjectsOfType<EditCardHandler>();
+        Array.ForEach(editCards, x=>x.SetTutoHand());
     }
 }

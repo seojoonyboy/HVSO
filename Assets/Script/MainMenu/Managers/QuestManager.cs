@@ -56,8 +56,9 @@ namespace Quest {
             quest.data = data;
             quest.manager = this;
             quest.gameObject.SetActive(true);
-            if(data.cleared == true || data.tutorials == null) return;
+            if(data.tutorials == null) return;
             quest.ActiveTutorial();
+            if(data.cleared) return;
             showNewIcon(true);
         }
 
@@ -95,6 +96,8 @@ namespace Quest {
 
         [Serializable] public class TutorialSerializeList {
             public ScenarioManager scenarioManager;
+            public DeckSettingManager deckSettingManager;
+            
         }
 
     }
