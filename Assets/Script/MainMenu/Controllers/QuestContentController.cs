@@ -49,6 +49,10 @@ namespace Quest {
             }
         }
 
+        public void ShowStoryHand(string[] args) {
+            
+        }
+
         /// <summary>
         /// 메뉴 화면 카드 도감 휴먼 영웅에 손가락 표시
         /// </summary>
@@ -103,7 +107,7 @@ namespace Quest {
             sliderInfo.text = "1/1";
             MenuSceneController menu = MenuSceneController.menuSceneController;
             menu.DictionaryRemoveHand();
-            manager.AddSecondQuest();
+            AccountManager.Instance.RequestQuestInfo();
         }
     }
 }

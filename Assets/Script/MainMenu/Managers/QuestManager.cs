@@ -13,7 +13,7 @@ namespace Quest {
 
         public GameObject handSpinePrefab;
         private List<QuestContentController> quests;
-        private QuestData[] dataSamples;
+        private Tutorials[] tutorialJson;
 
         public void OpenQuestCanvas() {
             HUDController.SetHeader(HUDController.Type.RESOURCE_ONLY_WITH_BACKBUTTON);
@@ -33,8 +33,17 @@ namespace Quest {
         private void Awake() {
             quests = new List<QuestContentController>();
             content.GetComponentsInChildren<QuestContentController>(true, quests);
-            Debug.Log(quests.Count);
-            NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_DECKS_UPDATED, ShowQuestSample);
+            ReadFile();
+            NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_QUEST_UPDATED, ShowQuest);
+        }
+
+        private void ReadFile() {
+            string data = ((TextAsset)Resources.Load("TutorialDatas/questData")).text;
+            tutorialJson = JsonReader.Read<Tutorials[]>(data);
+        }
+
+        private void OnDestroy() {
+            NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_QUEST_UPDATED, ShowQuest);
         }
 
         public void AddQuest(QuestData data) {
@@ -42,24 +51,23 @@ namespace Quest {
             quest.data = data;
             quest.manager = this;
             quest.gameObject.SetActive(true);
-            if(quest.data.tutorials == null) return;
+            if(data.cleared == false && data.tutorials == null) return;
             quest.ActiveTutorial();
         }
 
-        private void ShowQuestSample(Enum type, Component Sender, object Param) {
-            NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_DECKS_UPDATED, ShowQuestSample);
-            StartCoroutine(Adding());
+        public void ResetQuest() {
+            quests.ForEach(x=>x.gameObject.SetActive(false));
         }
 
-        private IEnumerator Adding() {
-            yield return null;
-            string data = ((TextAsset)Resources.Load("TutorialDatas/questData")).text;
-            dataSamples = JsonReader.Read<QuestData[]>(data);
-            AddQuest(dataSamples[0]);
-        }
-
-        public void AddSecondQuest() {
-            AddQuest(dataSamples[1]);
+        private void ShowQuest(Enum type, Component Sender, object Param) {
+            QuestData[] datas = (QuestData[])Param;
+            ResetQuest();
+            Array.ForEach(datas, x=>{
+                Array.ForEach(tutorialJson, y=> {
+                    if(x.id == y.id) x.tutorials = y.tutorials;
+                });
+            });
+            Array.ForEach(datas, x=>AddQuest(x));
         }
     }
 
@@ -78,6 +86,11 @@ namespace Quest {
     public class Reward {
         public string kind;
         public int amount;
+    }
+
+    public class Tutorials {
+        public int id;
+        public TutorialShowList[] tutorials;
     }
 
     public class TutorialShowList {
