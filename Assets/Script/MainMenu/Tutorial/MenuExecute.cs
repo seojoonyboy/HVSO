@@ -1076,6 +1076,7 @@ namespace MenuTutorialModules {
 
             switch (pageName) {
                 case "StoryLobby":
+                    GetComponent<MenuTutorialManager>().battleMenuCanvas.gameObject.SetActive(true);
                     GetComponent<MenuTutorialManager>().scenarioManager.gameObject.SetActive(true);
                     break;
             }

@@ -150,7 +150,7 @@ public class MenuSceneController : MonoBehaviour {
 
         //테스트 코드
         //needTutorial = true;
-        //tutorialType = MenuTutorialManager.TutorialType.TO_HUMAN_STORY_2;
+        //tutorialType = MenuTutorialManager.TutorialType.UNLOCK_TOTAL_STORY;
         /////////////////////////////////////////////////////////////////
         if (needTutorial) {
             if (tutorialType != MenuTutorialManager.TutorialType.NONE) {
@@ -348,5 +348,14 @@ public class MenuSceneController : MonoBehaviour {
 
     private void UpdateShop(Enum Event_Type, Component Sender, object Param) {
         shopManager.SetShop();
+    }
+
+    /// <summary>
+    /// 퀘스트 중간에 등장하는 강제 부분 처리
+    /// </summary>
+    /// <param name="type">Type</param>
+    public void StartQuestSubSet(MenuTutorialManager.TutorialType type) {
+        menuTutorialManager.enabled = true;
+        menuTutorialManager.StartQuestSubSet(type);
     }
 }
