@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using dataModules;
@@ -7,8 +7,27 @@ using System;
 public class QuestManager : MonoBehaviour
 {
     [SerializeField] Transform content;
+    [SerializeField] HUDController HUDController;
+
     private List<QuestContentController> quests;
 
+    void OnEnable() {
+        HUDController.SetHeader(HUDController.Type.RESOURCE_ONLY_WITH_BACKBUTTON);
+        HUDController.SetBackButton(OnBackBtnClicked);
+
+        EscapeKeyController.escapeKeyCtrl.AddEscape(OnBackBtnClicked);
+    }
+
+    private void OnDisable() {
+        EscapeKeyController.escapeKeyCtrl.RemoveEscape(OnBackBtnClicked);
+    }
+
+    void OnBackBtnClicked() {
+        SoundManager.Instance.PlaySound(UISfxSound.BUTTON1);
+
+        HUDController.SetHeader(HUDController.Type.SHOW_USER_INFO);
+        gameObject.SetActive(false);
+    }
 
     private void Awake() {
         quests = new List<QuestContentController>();
