@@ -1435,7 +1435,7 @@ public partial class AccountManager {
             (req, res) => {
                 if (res.IsSuccess) {
                     if(res.StatusCode == 200 || res.StatusCode == 304) {
-                        RequestTutorialInfos();
+                        RequestTutorialUnlockInfos();
                     }
                 }
             }, 

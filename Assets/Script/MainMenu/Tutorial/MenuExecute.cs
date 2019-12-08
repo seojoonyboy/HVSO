@@ -780,6 +780,8 @@ namespace MenuTutorialModules {
                 handler.isDone = true;
 
                 PlayerPrefs.SetString("StoryUnlocked", "true");
+
+                AccountManager.Instance.RequestUnlockInTutorial(1);
             }
         }
     }
@@ -823,6 +825,8 @@ namespace MenuTutorialModules {
                 GetComponent<MenuTutorialManager>().DeactiveRewardPanel();
                 clickStream.Dispose();
                 handler.isDone = true;
+
+                AccountManager.Instance.RequestUnlockInTutorial(4);
             }
         }
     }
@@ -1082,6 +1086,51 @@ namespace MenuTutorialModules {
             }
 
             handler.isDone = true;
+        }
+    }
+
+    public class UnlockCardMenu : MenuExecute {
+        IDisposable clickStream;
+        IEnumerator coroutine;
+
+        public override void Execute() {
+            coroutine = Proceed();
+            StartCoroutine(coroutine);
+        }
+
+        IEnumerator Proceed() {
+            GameObject target = null;
+
+            GetComponent<MenuTutorialManager>().ActiveRewardPanel();
+            SkeletonGraphic skeletonGraphic = GetComponent<MenuTutorialManager>().rewardPanel.transform.Find("Anim").GetComponent<SkeletonGraphic>();
+
+            skeletonGraphic.Initialize(true);
+
+            skeletonGraphic.Skeleton.SetSkin("human");
+            skeletonGraphic.Skeleton.SetSlotsToSetupPose();
+
+            yield return new WaitForEndOfFrame();
+            skeletonGraphic.transform.parent.Find("SubBackground").gameObject.SetActive(false);
+            skeletonGraphic.AnimationState.SetAnimation(0, "NOANI", false);
+
+            skeletonGraphic.transform.Find("Header/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "카드 메뉴 해금";
+            skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "카드 메뉴가 해금되었습니다!";
+
+            yield return new WaitForSeconds(1.0f);
+
+            clickStream = Observable.EveryUpdate()
+                .Where(_ => Input.GetMouseButtonDown(0))
+                .Subscribe(_ => CheckClick(target));
+        }
+
+        private void CheckClick(GameObject target) {
+            if (target == null) {
+                GetComponent<MenuTutorialManager>().DeactiveRewardPanel();
+                clickStream.Dispose();
+                handler.isDone = true;
+
+                AccountManager.Instance.RequestUnlockInTutorial(3);
+            }
         }
     }
 }
