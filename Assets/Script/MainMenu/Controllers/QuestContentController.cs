@@ -60,12 +60,26 @@ namespace Quest {
             for(int i = 0; i < data.tutorials.Length; i++) {
                 MethodInfo theMethod = this.GetType().GetMethod(data.tutorials[i].method);
                 object[] args = new object[]{data.tutorials[i].args};
+                Debug.Log(data.tutorials[i].method);
                 theMethod.Invoke(this, args);
             }
         }
 
+        public void QuestSubSetShow(string[] args) {
+            if(data.prog > 0) return;
+            Type enumType = typeof(MenuTutorialManager.TutorialType);
+            MenuTutorialManager.TutorialType questEnum = (MenuTutorialManager.TutorialType)Enum.Parse(enumType, args[0].ToUpper());
+            manager.tutoDialog.StartQuestSubSet(questEnum);
+        }
+
+        public void QuestIconShow(string[] args) {
+            manager.ShowHandIcon();
+        }
+
         public void ShowStoryHand(string[] args) {
-            
+            string camp = args[0];
+            int stage = int.Parse(args[1]);
+            manager.tutorialSerializeList.scenarioManager.SetTutoQuest(this, stage);
         }
 
         /// <summary>

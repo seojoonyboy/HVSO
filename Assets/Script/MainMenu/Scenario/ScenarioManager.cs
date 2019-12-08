@@ -288,6 +288,8 @@ public class ScenarioManager : SerializedMonoBehaviour
             );
             //item.transform.Find("StageScript").GetComponent<TextMeshProUGUI>().text = selectedList[i].description;
         }
+
+        ShowTutoHand(isHuman ? "human" : "orc");
     }
 
     private void SetStorySummaryText(string data, TextMeshProUGUI targetTextComp) {
@@ -621,6 +623,42 @@ public class ScenarioManager : SerializedMonoBehaviour
             ScenarioGameManagment.challengeDatas = selectedChallengeData.challenges;
         }
         catch(NullReferenceException ex) { }
+    }
+
+    private QuestTutorial questTutorial;
+
+    public void SetTutoQuest(Quest.QuestContentController quest, int stage) {
+        questTutorial = new QuestTutorial();
+        questTutorial.quest = quest;
+        questTutorial.stage = stage;
+    }
+
+    
+
+    public class QuestTutorial {
+        public Quest.QuestContentController quest;
+        public int stage;
+        [HideInInspector] public GameObject handUI;
+    }
+
+    public void ShowTutoHand(string camp) {
+        if(questTutorial == null) return;
+        if(questTutorial.handUI != null) {
+            Destroy(questTutorial.handUI);
+            questTutorial.handUI = null;
+        }
+        bool isClear = AccountManager.Instance.clearedStages.Exists(x=>(x.stageNumber == questTutorial.stage && x.camp.CompareTo(camp) == 0));
+        if(isClear) return;
+        StageButton[] stages = transform.GetComponentsInChildren<StageButton>();
+        StageButton stage = Array.Find(stages, x => (x.chapter == 0 && x.stage == questTutorial.stage && x.camp.CompareTo(camp) == 0));
+        if(stage == null) return;
+        questTutorial.handUI = Instantiate(questTutorial.quest.manager.handSpinePrefab, stage.transform, false);
+    }
+
+    public TutorialSerializedList tutorialSerializedList;
+
+    [Serializable] public class TutorialSerializedList {
+        public ScenarioManager scenarioManager;
     }
 }
 

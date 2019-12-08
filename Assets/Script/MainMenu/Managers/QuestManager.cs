@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using dataModules;
 using System;
+using System.Threading.Tasks;
 
 namespace Quest {
     public class QuestManager : MonoBehaviour
@@ -10,6 +11,8 @@ namespace Quest {
         [SerializeField] GameObject QuestCanvas;
         [SerializeField] Transform content;
         [SerializeField] HUDController HUDController;
+        [SerializeField] GameObject newIcon;
+        public MenuTutorialManager tutoDialog;
 
         public GameObject handSpinePrefab;
         private List<QuestContentController> quests;
@@ -21,6 +24,8 @@ namespace Quest {
 
             EscapeKeyController.escapeKeyCtrl.AddEscape(OnBackBtnClicked);
             QuestCanvas.SetActive(true);
+            RemoveHandIcon();
+            showNewIcon(false);
         }
 
         void OnBackBtnClicked() {
@@ -53,13 +58,19 @@ namespace Quest {
             quest.gameObject.SetActive(true);
             if(data.cleared == false && data.tutorials == null) return;
             quest.ActiveTutorial();
+            showNewIcon(true);
+        }
+
+        public void showNewIcon(bool yesno) {
+            newIcon.SetActive(yesno);
         }
 
         public void ResetQuest() {
             quests.ForEach(x=>x.gameObject.SetActive(false));
         }
 
-        private void ShowQuest(Enum type, Component Sender, object Param) {
+        private async void ShowQuest(Enum type, Component Sender, object Param) {
+            await Task.Delay(1000);
             QuestData[] datas = (QuestData[])Param;
             ResetQuest();
             Array.ForEach(datas, x=>{
@@ -69,6 +80,23 @@ namespace Quest {
             });
             Array.ForEach(datas, x=>AddQuest(x));
         }
+
+        public void ShowHandIcon() {
+            Instantiate(handSpinePrefab, transform, false).name = "tutorialHand";
+        }
+
+        private void RemoveHandIcon() {
+            Transform hand = transform.Find("tutorialHand");
+            if(hand == null) return;
+            Destroy(hand.gameObject);
+        }
+
+        public TutorialSerializeList tutorialSerializeList;
+
+        [Serializable] public class TutorialSerializeList {
+            public ScenarioManager scenarioManager;
+        }
+
     }
 
     [Serializable] public class QuestData {
