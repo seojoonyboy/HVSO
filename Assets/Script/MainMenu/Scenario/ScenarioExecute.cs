@@ -151,6 +151,10 @@ public class Wait_until : ScenarioExecute {
         scenarioMask.OffMaskScreen();
         handler.isDone = true;
     }
+
+    private void OnDestroy() {
+        StopAllCoroutines();
+    }
 }
 
 public class Wait_EnemyDead_Animation : ScenarioExecute {
