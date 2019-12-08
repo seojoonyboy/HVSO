@@ -370,7 +370,7 @@ public partial class MenuCardInfo : MonoBehaviour {
     
     GameObject tutoHand;
 
-    public void makeShowHand(QuestContentController quest) {
+    public void makeShowHand(Quest.QuestContentController quest) {
         Transform creating = transform.Find("CreateCard/MakeBtn");
         tutoHand = Instantiate(quest.manager.handSpinePrefab, creating, false);
         tutoHand.transform.SetParent(creating.parent);

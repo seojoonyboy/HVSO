@@ -1,10 +1,19 @@
 [
     {
-        "title" : "카드 제작하기",
-        "info" : "사기 저하 카드를 제작하자",
-        "reachNum" : 1,
-        "currentNum" : 0,
-        "isClear" : false,
+        "id" : 1,
+        "tutorials" : [
+            {
+                "method" : "ShowStoryHand",
+                "args" : ["human", 2]
+            },
+            {
+                "method" : "ShowStoryHand",
+                "args" : ["orc", 2]
+            }
+        ]
+    },
+    {
+        "id" : 2,
         "tutorials" : [
             {
                 "method" : "MenuDictionaryShowHand",
@@ -17,11 +26,13 @@
         ]
     },
     {
-        "title" : "덱 편집하기",
-        "info" : "사기 저하 카드를 덱에 넣자",
-        "reachNum" : 1,
-        "currentNum" : 0,
-        "isClear" : false,
+        "id" : 3,
+        "tutorials" : [
+            
+        ]
+    },
+    {
+        "id" : 4,
         "tutorials" : [
             
         ]
