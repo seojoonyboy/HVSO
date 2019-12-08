@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using System;
 using TMPro;
 using System.Reflection;
+using System.Threading.Tasks;
 using UnityEngine.Events;
 
 namespace Quest {
@@ -158,7 +159,8 @@ namespace Quest {
                 theEvent);
         }
 
-        private void createCardDone() {
+        private async void createCardDone() {
+            await Task.Delay(1000);
             GameObject hand;
             while(true) {
                 hand = GameObject.Find("tutorialHand");

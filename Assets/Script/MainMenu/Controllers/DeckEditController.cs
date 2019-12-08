@@ -207,7 +207,7 @@ public class DeckEditController : MonoBehaviour {
             else {
                 RequestModifyDeck(form, deckID);
                 if (inputNameVal.Contains(" ")) {
-                    Modal.instantiate("덱 이름의 빈 칸은 제거됩니다.", Modal.Type.CHECK);
+                    //Modal.instantiate("덱 이름의 빈 칸은 제거됩니다.", Modal.Type.CHECK);
                     inputNameVal = inputNameVal.Replace(" ", string.Empty);
                 }
             };

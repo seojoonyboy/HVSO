@@ -72,6 +72,7 @@ namespace Quest {
 
         private async void ShowQuest(Enum type, Component Sender, object Param) {
             await Task.Delay(1000);
+            if(quests[0] == null) return;
             QuestData[] datas = (QuestData[])Param;
             ResetQuest();
             Array.ForEach(datas, x=>{
