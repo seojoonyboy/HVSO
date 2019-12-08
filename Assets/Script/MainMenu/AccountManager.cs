@@ -1419,16 +1419,15 @@ public partial class AccountManager {
 
         url
             .Append(base_url)
-            .Append("api/user/tutorial_info");
+            .Append("api/user/tutorial_cleared");
 
+        url.Append("/" + id);
         Logger.Log("Request POST tutorial_info");
 
         HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
 
         request.MethodType = HTTPMethods.Post;
         request.AddHeader("authorization", TokenFormat);
-
-        url.Append("/" + id);
 
         networkManager.Request(
             request,
