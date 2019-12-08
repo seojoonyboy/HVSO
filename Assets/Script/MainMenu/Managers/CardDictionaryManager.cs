@@ -805,6 +805,10 @@ public class CardDictionaryManager : MonoBehaviour {
                 ExitDictionaryCanvas();
             }
         }
+        if(tutorialHand != null) {
+            tutorialHand.transform.parent.transform.GetComponent<Button>().onClick.RemoveListener(tutoAction);
+            Destroy(tutorialHand);
+        }
     }
 
     public void ExitDictionaryCanvas() {
@@ -842,6 +846,19 @@ public class CardDictionaryManager : MonoBehaviour {
         transform.Find("CardDictionary").GetComponent<RectTransform>().sizeDelta = new Vector2(1080, result);
         activatedTf.GetComponent<RectTransform>().anchoredPosition = new Vector2(activatedTf.GetComponent<RectTransform>().anchoredPosition.x, 0);
         GetComponent<ScrollRect>().normalizedPosition = new Vector2(0, 1);
+    }
+
+    GameObject tutorialHand;
+    UnityAction tutoAction;
+
+    public void cardShowHand(QuestContentController quest, string[] args) {
+        Transform beforeHand = transform.Find("tutorialHand");
+        if(beforeHand != null) Destroy(beforeHand.gameObject);
+        DictionaryCard card = dicCards.Find(x=>x.cardId == args[0]);
+        tutorialHand = Instantiate(quest.manager.handSpinePrefab, card.cardObject.transform, false);
+        tutorialHand.name = "tutorialHand";
+        tutoAction = () => MenuCardInfo.cardInfoWindow.makeShowHand(quest);
+        card.cardObject.GetComponent<Button>().onClick.AddListener(tutoAction);
     }
 }
 

@@ -9,7 +9,9 @@ public class QuestManager : MonoBehaviour
     [SerializeField] Transform content;
     [SerializeField] HUDController HUDController;
 
+    public GameObject handSpinePrefab;
     private List<QuestContentController> quests;
+    private QuestData[] dataSamples;
 
     void OnEnable() {
         HUDController.SetHeader(HUDController.Type.RESOURCE_ONLY_WITH_BACKBUTTON);
@@ -33,14 +35,33 @@ public class QuestManager : MonoBehaviour
         quests = new List<QuestContentController>();
         content.GetComponentsInChildren<QuestContentController>(true, quests);
         Debug.Log(quests.Count);
+        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_DECKS_UPDATED, ShowQuestSample);
     }
 
-    public void AddQuest(string data) {
+    public void AddQuest(QuestData data) {
         QuestContentController quest = quests.Find(x=>!x.gameObject.activeSelf);
-        quest.data = JsonReader.Read<QuestData>(data);
+        quest.data = data;
+        quest.manager = this;
         quest.gameObject.SetActive(true);
         if(quest.data.tutorials == null) return;
         quest.ActiveTutorial();
+    }
+
+    private void ShowQuestSample(Enum type, Component Sender, object Param) {
+        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_DECKS_UPDATED, ShowQuestSample);
+        StartCoroutine(Adding());
+    }
+
+    private IEnumerator Adding() {
+        yield return null;
+        string data = ((TextAsset)Resources.Load("TutorialDatas/questData")).text;
+        dataSamples = JsonReader.Read<QuestData[]>(data);
+        AddQuest(dataSamples[0]);
+        gameObject.SetActive(false);
+    }
+
+    public void AddSecondQuest() {
+        AddQuest(dataSamples[1]);
     }
 }
 

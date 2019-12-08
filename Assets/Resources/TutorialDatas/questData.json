@@ -1,0 +1,29 @@
+[
+    {
+        "title" : "카드 제작하기",
+        "info" : "사기 저하 카드를 제작하자",
+        "reachNum" : 1,
+        "currentNum" : 0,
+        "isClear" : false,
+        "tutorials" : [
+            {
+                "method" : "MenuDictionaryShowHand",
+                "args" : ["ac10055"]
+            },
+            {
+                "method" : "CreateCardCheck",
+                "args" : ["ac10055"]
+            },
+        ]
+    },
+    {
+        "title" : "덱 편집하기",
+        "info" : "사기 저하 카드를 덱에 넣자",
+        "reachNum" : 1,
+        "currentNum" : 0,
+        "isClear" : false,
+        "tutorials" : [
+            
+        ]
+    },
+]
