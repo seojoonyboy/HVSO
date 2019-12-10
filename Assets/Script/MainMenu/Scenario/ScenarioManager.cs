@@ -37,6 +37,7 @@ public class ScenarioManager : SerializedMonoBehaviour
     [SerializeField] GameObject humanDeckPrefab;
     [SerializeField] Image backgroundImage;
     [SerializeField] BattleMenuController BattleMenuController;
+    [SerializeField] Dictionary<string, Sprite> stroyBackgroundImages; 
 
     //파일 경로
     [FilePath] public string 
@@ -278,6 +279,9 @@ public class ScenarioManager : SerializedMonoBehaviour
             //ShowReward(item ,selectedList[i]);
             StageButton stageButtonComp = item.GetComponent<StageButton>();
             stageButtonComp.Init(selectedList[i], isHuman);
+
+            var backgroundImage = GetStoryBackgroundImage(stageButtonComp.camp, stageButtonComp.chapter, stageButtonComp.stage);
+            item.transform.Find("BackGround").GetComponent<Image>().sprite = backgroundImage;
 
             var clearedStageList = AccountManager.Instance.clearedStages;
             if(clearedStageList.Exists(x => stageButtonComp.chapter == 0 && x.camp == stageButtonComp.camp && x.stageNumber == stageButtonComp.stage)) {
@@ -676,6 +680,17 @@ public class ScenarioManager : SerializedMonoBehaviour
 
     [Serializable] public class TutorialSerializedList {
         public ScenarioManager scenarioManager;
+    }
+
+    public Sprite GetStoryBackgroundImage(string camp, int chapterNumber, int stageNumber) {
+        
+        string defaultKey = camp + "_default";
+        //Logger.Log("defaultKey : " + defaultKey);
+        Sprite selectedImage = null;
+        stroyBackgroundImages
+            .TryGetValue(camp + "_" + chapterNumber + "-" + stageNumber, out selectedImage);
+        if(selectedImage == null) selectedImage = stroyBackgroundImages[defaultKey];
+        return selectedImage;
     }
 }
 
