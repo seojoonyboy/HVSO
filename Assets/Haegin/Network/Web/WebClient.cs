@@ -156,8 +156,8 @@ namespace Haegin
             if (gameObject == null)
             {
                 gameObject = new GameObject("HaeginWebClient" + System.Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(urlString)));
-                if (DontDestroy)
-                    DontDestroyOnLoad(gameObject);
+                //if (DontDestroy)
+                //    DontDestroyOnLoad(gameObject);
                 gameObject.AddComponent<WebClient>();
 
                 WebClient web = gameObject.GetComponent<WebClient>();
