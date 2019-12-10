@@ -63,5 +63,6 @@ public enum UnitRace {
     MONSTER,
     ANIMAL,
     CRYSTAL,
-    BEAST
+    BEAST,
+    HUMAN_BOY
 }

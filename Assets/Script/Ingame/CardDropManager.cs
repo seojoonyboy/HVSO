@@ -582,6 +582,7 @@ public partial class CardDropManager {
                 slotLine[2].Find("AllMagicTrigger").gameObject.SetActive(true);
                 for (int i = 0; i < 5; i++) {
                     slotLine[i].Find("BattleLineEffect").gameObject.SetActive(true);
+                    slotLine[i].Find("BattleLineEffect").gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
                     slotLine[i].Find("BattleLineEffect").GetComponent<BoxCollider2D>().enabled = false;
                 }
             }
