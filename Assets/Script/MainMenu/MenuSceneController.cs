@@ -302,6 +302,7 @@ public class MenuSceneController : MonoBehaviour {
         for(int i = 0; i < 5; i++) {
             if(humanBtn.GetChild(i).Find("NewCard").gameObject.activeSelf || orcBtn.GetChild(i).Find("NewCard").gameObject.activeSelf) {
                 menuButton.transform.Find("Dictionary").gameObject.SetActive(true);
+                menuButton.transform.Find("Dictionary").GetComponent<BoneFollowerGraphic>().SetBone("ex3");
                 break;
             }
             if(i == 4)
