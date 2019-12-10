@@ -31,7 +31,13 @@ public class MenuLocker : MonoBehaviour {
     }
 
     public void Lock() {
-        StartCoroutine(_Lock());
+        if (!gameObject.activeInHierarchy) {
+            button = transform.parent.GetComponent<Button>();
+            button.enabled = false;
+        }
+        else {
+            StartCoroutine(_Lock());
+        }
     }
 
     IEnumerator _Lock() {
@@ -47,8 +53,14 @@ public class MenuLocker : MonoBehaviour {
     }
 
     public void Unlock() {
-        skeletonGraphic.enabled = true;
-        StartCoroutine(_Unlock());
+        if (!gameObject.activeInHierarchy) {
+            button = transform.parent.GetComponent<Button>();
+            button.enabled = true;
+        }
+        else {
+            skeletonGraphic.enabled = true;
+            StartCoroutine(_Unlock());
+        }
     }
 
     IEnumerator _Unlock() {
