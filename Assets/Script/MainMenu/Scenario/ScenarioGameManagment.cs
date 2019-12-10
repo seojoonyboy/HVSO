@@ -133,7 +133,7 @@ public class ScenarioGameManagment : PlayMangement {
             beginStopTurn = false;
             afterStopTurn = false;
             ScenarioMask.Instance.DisableMask();
-
+            challengeUI.SetActive(false);
             SocketHandler.TutorialEnd();
 
             //FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
