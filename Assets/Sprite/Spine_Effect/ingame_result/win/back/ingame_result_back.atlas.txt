@@ -1,41 +1,41 @@
 
 ingame_result_back.png
-size: 2048,1024
+size: 1024,1024
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 branches_L
-  rotate: true
-  xy: 0, 0
-  size: 340, 477
-  orig: 340, 477
+  rotate: false
+  xy: 0, 338
+  size: 453, 636
+  orig: 453, 636
   offset: 0, 0
   index: -1
 branches_R
-  rotate: true
-  xy: 477, 0
-  size: 340, 477
-  orig: 340, 477
+  rotate: false
+  xy: 453, 338
+  size: 453, 636
+  orig: 453, 636
   offset: 0, 0
   index: -1
 light
-  rotate: false
-  xy: 0, 340
-  size: 607, 607
-  orig: 607, 607
+  rotate: true
+  xy: 0, 0
+  size: 338, 339
+  orig: 338, 339
   offset: 0, 0
   index: -1
 light_ellipse
   rotate: false
-  xy: 607, 494
-  size: 447, 453
-  orig: 449, 455
-  offset: 1, 1
+  xy: 637, 146
+  size: 192, 192
+  orig: 192, 192
+  offset: 0, 0
   index: -1
 trumpet
-  rotate: true
-  xy: 954, 271
-  size: 223, 187
-  orig: 225, 188
-  offset: 1, 0
+  rotate: false
+  xy: 339, 89
+  size: 298, 249
+  orig: 300, 251
+  offset: 1, 1
   index: -1
