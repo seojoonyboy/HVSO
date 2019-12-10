@@ -31,7 +31,8 @@ namespace Haegin
             GooglePlayGameService,
             AppleGameCenter,
             Facebook,
-            Steam
+            Steam,
+            AppleId
         }
 
         public enum DialogType
@@ -117,6 +118,8 @@ namespace Haegin
                     return "Steam " + name;
                 case AccountType.Facebook:
                     return "Facebook " + name;
+                case AccountType.AppleId:
+                    return "AppleID " + name;
             }
             return name;
         }
@@ -132,8 +135,8 @@ namespace Haegin
             SA.Android.AN_Settings.Instance.GooglePlay = true;
             SA.Android.AN_Settings.Instance.Vending = true;
             SA.Android.AN_Settings.Instance.Licensing = false;
-#elif UNITY_IOS
-
+#elif UNITY_IOS && !UNITY_EDITOR
+            SignInWithAppleManager.GetInstance();
 #endif
             if (!Application.RequestAdvertisingIdentifierAsync((string adId, bool trackingEnabled, string error) =>
                 {
@@ -288,6 +291,21 @@ namespace Haegin
                 FB.LogOut();
         }
 
+        public static bool IsLoggedInAppleId()
+        {
+            return SignInWithAppleManager.GetInstance().IsLoggedIn();
+        }
+
+        public static bool IsSupportedAppleId()
+        {
+            return SignInWithAppleManager.GetInstance().IsSupported();
+        }
+
+        public static void LogoutAppleId()
+        {
+            SignInWithAppleManager.GetInstance().Logout();
+        }
+
         public static void SaveAccountInfo()
         {
             PlayerPrefs.SetString("GameServiceAccountType", GameServiceAccountType.ToString());
@@ -343,6 +361,30 @@ namespace Haegin
         }
 //#endif
 
+        public static void SetAppleIdLoginSelect()
+        {
+            PlayerPrefs.SetInt("SIWALSF", 1);
+            PlayerPrefs.Save();
+        }
+
+        public static void ResetAppleIdLoginSelect()
+        {
+            PlayerPrefs.SetInt("SIWALSF", 0);
+            PlayerPrefs.Save();
+        }
+
+        public static bool CheckIfAppleIdLogoutNeeded()
+        {
+            if (IsLoggedInAppleId() && PlayerPrefs.GetInt("SIWALSF", 0) == 1)
+            {
+                LogoutAppleId();
+                ResetAppleIdLoginSelect();
+                return false;
+            }
+            return true;
+        }
+
+
         public static string GetAccountId()
         {
             LoadAccountInfo();
@@ -357,6 +399,10 @@ namespace Haegin
                     if (CheckIfFBLogoutNeeded() && FB.IsLoggedIn)
                     {
                         LoginAccountFacebook(openSelectDialog, onLoggedIn, perms);
+                    }
+                    else if(CheckIfAppleIdLogoutNeeded() && IsLoggedInAppleId())
+                    {
+                        LoginAccountAppleId(openSelectDialog, onLoggedIn);
                     }
                     else
                     {
@@ -384,6 +430,9 @@ namespace Haegin
                     LoginAccountSteam(openSelectDialog, onLoggedIn);
                     break;
 #endif
+                case HaeginAccountType.AppleId:
+                    LoginAccountAppleId(openSelectDialog, onLoggedIn);
+                    break;
             }
         }
 
@@ -411,6 +460,359 @@ namespace Haegin
                     onLoggedIn(false, WebClient.AuthCode.FAILED, blockRemainTime, blockSuid);
                 }
             });
+        }
+
+        public static void LoginAccountAppleId(OpenSelectDialog openSelectDialog, OnLoggedIn onLoggedIn)
+        {
+            if(SignInWithAppleManager.GetInstance().IsSupported())
+            {
+                SignInWithAppleManager.GetInstance().Login((bool result, string identityToken, string authCode, string appleId, string name, string email) =>
+                {
+                    if (result)
+                    {
+#if MDEBUG
+                        Debug.Log("-------------------------------------------------------------------");
+                        Debug.Log("Unity AppleId : [" + appleId + "]");
+                        Debug.Log("Unity Email : [" + email + "]");
+                        Debug.Log("Unity IdentityToken : [" + identityToken + "]");
+                        Debug.Log("Unity AuthCode : [" + authCode + "]");
+                        Debug.Log("-------------------------------------------------------------------");
+#endif
+                        if(identityToken == null || authCode == null)
+                        {
+                            // 이 경우는 재로그인인 경우로 그냥 Guest 로그인 한다.
+                            LoginAccountGuest(onLoggedIn);
+                            return;
+                        }
+
+                        WebClient.GetInstance().RequestAppleIdAuth(appleId, email, identityToken, authCode, Account.GetAccountId(), name, LinkOption.None, (WebClient.ErrorCode error, WebClient.AuthCode code, string accountId1, AccountType localAccountType, string localAccountName, byte[] accountInfo, TimeSpan blockRemainTime, long blockSuid) =>
+                        {
+                            // 다시 쓰면 안되니까, 리셋한다.
+                            // identityToken = null;
+                            // authCode = null;
+
+                            if (error == WebClient.ErrorCode.SUCCESS)
+                            {
+                                if (code == WebClient.AuthCode.SUCCESS)
+                                {
+                                    isGuestAccount = false;
+                                    // AppleId에 연동된 계정으로 로그인 성공
+                                    Account.SetAccountId(accountId1, Account.GameServiceAccountType);
+                                    onLoggedIn(true, code, blockRemainTime, blockSuid);
+                                }
+                                else if (code == WebClient.AuthCode.NEED_TO_LINK)
+                                {
+                                    // 기존 소셜 계정과 새로운 소셜 계정에 연결이 필요한 경우
+                                    // 구글에 연동된 예전 게임 데이타가 없음.
+                                    openSelectDialog(DialogType.Link, localAccountType, TypedName(localAccountType, localAccountName), TypedName(AccountType.AppleId, name), accountInfo, selectButton =>
+                                    {
+                                        if (selectButton == SelectButton.YES)
+                                        {
+                                            WebClient.GetInstance().RequestAppleIdAuth(appleId, email, identityToken, authCode, Account.GetAccountId(), name, LinkOption.Link, (WebClient.ErrorCode error2, WebClient.AuthCode code2, string accountId2, AccountType localAccountType2, string localAccountName2, byte[] accountInfo2, TimeSpan blockRemainTime2, long blockSuid2) =>
+                                            {
+                                                if (error2 == WebClient.ErrorCode.SUCCESS && code2 == WebClient.AuthCode.SUCCESS)
+                                                {
+                                                    isGuestAccount = false;
+                                                    Account.SetAccountId(accountId2, Account.GameServiceAccountType);
+                                                    onLoggedIn(true, code2, blockRemainTime2, blockSuid2);
+                                                }
+                                                else
+                                                {
+                                                    onLoggedIn(error2 == WebClient.ErrorCode.SUCCESS, WebClient.AuthCode.FAILED, TimeSpan.Zero, 0);
+                                                }
+                                            });
+                                        }
+                                        else
+                                        {
+                                            // 로그인을 취소함.
+                                            LogoutAppleId();
+                                            onLoggedIn(false, WebClient.AuthCode.Cancel, TimeSpan.Zero, 0);
+                                        }
+                                    });
+                                }
+                                else if (code == WebClient.AuthCode.NEED_TO_SELECT)
+                                {
+                                    // Facebook에 연동된 예전 게임 데이타가 있음
+                                    // 이 경우에는 사용자에게 어느 계정을 사용할 것인지 물어봐야함
+                                    SetAppleIdLoginSelect();
+                                    openSelectDialog(DialogType.Select, localAccountType, TypedName(localAccountType, localAccountName), TypedName(AccountType.Facebook, name), accountInfo, selectButton =>
+                                    {
+                                        ResetAppleIdLoginSelect();
+                                        if (selectButton == SelectButton.YES)
+                                        {
+                                            WebClient.GetInstance().RequestAppleIdAuth(appleId, email, identityToken, authCode, Account.GetAccountId(), name, LinkOption.Auth, (WebClient.ErrorCode error2, WebClient.AuthCode code2, string accountId2, AccountType localAccountType2, string localAccountName2, byte[] accountInfo2, TimeSpan blockRemainTime2, long blockSuid2) =>
+                                            {
+                                                if (error2 == WebClient.ErrorCode.SUCCESS && code2 == WebClient.AuthCode.SUCCESS)
+                                                {
+                                                    isGuestAccount = false;
+                                                    Account.SetAccountId(accountId2, Account.GameServiceAccountType);
+                                                    onLoggedIn(true, code2, blockRemainTime2, blockSuid2);
+                                                }
+                                                else
+                                                {
+                                                    onLoggedIn(error2 == WebClient.ErrorCode.SUCCESS, WebClient.AuthCode.FAILED, TimeSpan.Zero, 0);
+                                                }
+                                            });
+                                        }
+                                        else
+                                        {
+                                            WebClient.GetInstance().RequestAppleIdAuth(appleId, email, identityToken, authCode, Account.GetAccountId(), name, LinkOption.Local, (WebClient.ErrorCode error2, WebClient.AuthCode code2, string accountId2, AccountType localAccountType2, string localAccountName2, byte[] accountInfo2, TimeSpan blockRemainTime2, long blockSuid2) =>
+                                            {
+                                                if (error2 == WebClient.ErrorCode.SUCCESS && code2 == WebClient.AuthCode.SUCCESS)
+                                                {
+                                                    isGuestAccount = false;
+                                                    Account.SetAccountId(accountId2, Account.GameServiceAccountType);
+                                                    onLoggedIn(true, code2, blockRemainTime2, blockSuid2);
+                                                }
+                                                else
+                                                {
+                                                    onLoggedIn(error2 == WebClient.ErrorCode.SUCCESS, WebClient.AuthCode.FAILED, TimeSpan.Zero, 0);
+                                                }
+                                            });
+                                        }
+                                    });
+                                }
+                                else if (code == WebClient.AuthCode.NEED_TO_LOGOUT)
+                                {
+#if UNITY_ANDROID
+                            // Android의 경우 
+                            openSelectDialog(DialogType.Logout, localAccountType, TypedName(localAccountType, localAccountName), TypedName(AccountType.AppleId, name), accountInfo, selectButton =>
+                            {
+                                if (selectButton == SelectButton.YES)
+                                {
+                                    // Google Play 계정 로그아웃 
+                                    if (IsLoggedInGameService())
+                                    {
+                                        LogoutGameService();
+                                    }
+                                    // Facebook 계정 로그아웃
+                                    if(IsLoggedInFacebook())
+                                    {
+                                        LogoutFacebook();
+                                    }
+                                    WebClient.GetInstance().RequestAppleIdAuth(appleId, email, identityToken, authCode, Account.GetAccountId(), name, LinkOption.Auth, (WebClient.ErrorCode error2, WebClient.AuthCode code2, string accountId2, AccountType localAccountType2, string localAccountName2, byte[] accountInfo2, TimeSpan blockRemainTime2, long blockSuid2) =>
+                                    {
+                                        if (error2 == WebClient.ErrorCode.SUCCESS && code2 == WebClient.AuthCode.SUCCESS)
+                                        {
+                                            isGuestAccount = false;
+                                            Account.SetAccountId(accountId2, Account.HaeginAccountType.Guest);
+                                            onLoggedIn(true, code2, blockRemainTime2, blockSuid2);
+                                        }
+                                        else
+                                        {
+                                            onLoggedIn(error2 == WebClient.ErrorCode.SUCCESS, WebClient.AuthCode.FAILED, TimeSpan.Zero, 0);
+                                        }
+                                    });
+                                }
+                                else
+                                {
+                                    // AppleId 계정 로그아웃
+                                    if (IsLoggedInAppleId())
+                                    {
+                                        LogoutAppleId();
+                                    }
+                                    onLoggedIn(false, code, blockRemainTime, blockSuid);
+                                }
+                            });
+#elif UNITY_IOS
+                                    if (IsLoggedInGameService())
+                                    {
+                                        // iOS의 경우 GameCenter 계정은 로그아웃 할 수 없으므로, 
+                                        // AppleId 로그아웃하고, facebook 로그인 불가능하다고 알려줌 
+                                        LogoutAppleId();
+                                        openSelectDialog(DialogType.CannotLogin, localAccountType, TypedName(localAccountType, localAccountName), TypedName(AccountType.AppleId, name), accountInfo, selectButton =>
+                                        {
+                                            onLoggedIn(false, code, blockRemainTime, blockSuid);
+                                        });
+                                    }
+                                    else
+                                    {
+                                        openSelectDialog(DialogType.Logout, localAccountType, TypedName(localAccountType, localAccountName), TypedName(AccountType.AppleId, name), accountInfo, selectButton =>
+                                        {
+                                            if (selectButton == SelectButton.YES)
+                                            {
+                                                // Facebook 계정 로그아웃
+                                                if (IsLoggedInFacebook())
+                                                {
+                                                    LogoutFacebook();
+                                                }
+                                                WebClient.GetInstance().RequestAppleIdAuth(appleId, email, identityToken, authCode, Account.GetAccountId(), name, LinkOption.Auth, (WebClient.ErrorCode error2, WebClient.AuthCode code2, string accountId2, AccountType localAccountType2, string localAccountName2, byte[] accountInfo2, TimeSpan blockRemainTime2, long blockSuid2) =>
+                                                {
+                                                    isGuestAccount = false;
+                                                    Account.SetAccountId(accountId2, Account.HaeginAccountType.Guest);
+                                                    onLoggedIn(true, code2, blockRemainTime2, blockSuid2);
+                                                });
+                                            }
+                                            else
+                                            {
+                                                // AppleId 계정 로그아웃
+                                                if (IsLoggedInAppleId())
+                                                {
+                                                    LogoutAppleId();
+                                                }
+                                                onLoggedIn(false, code, blockRemainTime, blockSuid);
+                                            }
+                                        });
+                                    }
+#endif
+                                }
+                                else if (code == WebClient.AuthCode.NEED_TO_LOGOUT_CLEAR)
+                                {
+#if UNITY_ANDROID
+                            // Android의 경우 
+                            openSelectDialog(DialogType.Logout, localAccountType, TypedName(localAccountType, localAccountName), TypedName(AccountType.AppleId, name), accountInfo, selectButton =>
+                            {
+                                if (selectButton == SelectButton.YES)
+                                {
+                                    // Google Play 계정 로그아웃 
+                                    if (IsLoggedInGameService())
+                                    {
+                                        LogoutGameService();
+                                    }
+                                    // Facebook 계정 로그아웃
+                                    if (IsLoggedInFacebook())
+                                    {
+                                        LogoutFacebook();
+                                    }
+                                    SetAccountId(ProjectSettings.accountIdToCreate, Account.HaeginAccountType.Guest);
+                                    WebClient.GetInstance().RequestAuth((WebClient.ErrorCode error3, WebClient.AuthCode code3, AccountType accountType3, TimeSpan blockRemainTime3, long blockSuid3) =>
+                                    {
+                                        if (error3 == WebClient.ErrorCode.SUCCESS)
+                                        {
+                                            isGuestAccount = (accountType3 == AccountType.None);
+
+                                            switch (code3)
+                                            {
+                                                case WebClient.AuthCode.SUCCESS:
+                                                    WebClient.GetInstance().RequestAppleIdAuth(appleId, email, identityToken, authCode, Account.GetAccountId(), name, LinkOption.Auth, (WebClient.ErrorCode error2, WebClient.AuthCode code2, string accountId2, AccountType localAccountType2, string localAccountName2, byte[] accountInfo2, TimeSpan blockRemainTime2, long blockSuid2) =>
+                                                    {
+                                                        if (error2 == WebClient.ErrorCode.SUCCESS && code2 == WebClient.AuthCode.SUCCESS)
+                                                        {
+                                                            isGuestAccount = false;
+                                                            Account.SetAccountId(accountId2, Account.HaeginAccountType.Guest);
+                                                            onLoggedIn(true, code2, blockRemainTime2, blockSuid2);
+                                                        }
+                                                        else
+                                                        {
+                                                            onLoggedIn(error2 == WebClient.ErrorCode.SUCCESS, WebClient.AuthCode.FAILED, TimeSpan.Zero, 0);
+                                                        }
+                                                    });
+                                                    break;
+                                                default://case WebClient.AuthCode.FAILED:
+                                                    // 로그인 실패 처리
+                                                    LogoutAppleId();
+                                                    onLoggedIn(false, code3, blockRemainTime3, blockSuid3);
+                                                    break;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            // 네트워크 에러 처리
+                                            onLoggedIn(false, WebClient.AuthCode.FAILED, blockRemainTime3, blockSuid3);
+                                        }
+                                    });
+                                }
+                                else
+                                {
+                                    // AppleId 계정 로그아웃
+                                    if (IsLoggedInAppleId())
+                                    {
+                                        LogoutAppleId();
+                                    }
+                                    onLoggedIn(false, code, blockRemainTime, blockSuid);
+                                }
+                            });
+#elif UNITY_IOS
+                                    if (IsLoggedInGameService())
+                                    {
+                                        // iOS의 경우 GameCenter 계정은 로그아웃 할 수 없으므로, 
+                                        // AppleId 로그아웃하고, AppleId 로그인 불가능하다고 알려줌 
+                                        LogoutAppleId();
+                                        openSelectDialog(DialogType.CannotLogin, localAccountType, TypedName(localAccountType, localAccountName), TypedName(AccountType.AppleId, name), accountInfo, selectButton =>
+                                        {
+                                            onLoggedIn(false, code, blockRemainTime, blockSuid);
+                                        });
+                                    }
+                                    else
+                                    {
+                                        openSelectDialog(DialogType.Logout, localAccountType, TypedName(localAccountType, localAccountName), TypedName(AccountType.AppleId, name), accountInfo, selectButton =>
+                                        {
+                                            if (selectButton == SelectButton.YES)
+                                            {
+                                                // Facebook 계정 로그아웃
+                                                if (IsLoggedInFacebook())
+                                                {
+                                                    LogoutFacebook();
+                                                }
+                                                SetAccountId(ProjectSettings.accountIdToCreate, Account.HaeginAccountType.Guest);
+                                                WebClient.GetInstance().RequestAuth((WebClient.ErrorCode error3, WebClient.AuthCode code3, AccountType accountType3, TimeSpan blockRemainTime3, long blockSuid3) =>
+                                                {
+                                                    if (error3 == WebClient.ErrorCode.SUCCESS)
+                                                    {
+                                                        isGuestAccount = (accountType3 == AccountType.None);
+                                                        switch (code3)
+                                                        {
+                                                            case WebClient.AuthCode.SUCCESS:
+                                                                WebClient.GetInstance().RequestAppleIdAuth(appleId, email, identityToken, authCode, Account.GetAccountId(), name, LinkOption.Auth, (WebClient.ErrorCode error2, WebClient.AuthCode code2, string accountId2, AccountType localAccountType2, string localAccountName2, byte[] accountInfo2, TimeSpan blockRemainTime2, long blockSuid2) =>
+                                                                {
+                                                                    isGuestAccount = false;
+                                                                    Account.SetAccountId(accountId2, Account.HaeginAccountType.Guest);
+                                                                    onLoggedIn(true, code2, blockRemainTime2, blockSuid2);
+                                                                });
+                                                                break;
+                                                            default://case WebClient.AuthCode.FAILED:
+                                                                // 로그인 실패 처리
+                                                                // AppleId 계정 로그아웃
+                                                                LogoutAppleId();
+                                                                onLoggedIn(false, code3, blockRemainTime3, blockSuid3);
+                                                                break;
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        LogoutAppleId();
+                                                        // 네트워크 에러 처리
+                                                        onLoggedIn(false, WebClient.AuthCode.FAILED, blockRemainTime3, blockSuid3);
+                                                    }
+                                                });
+                                            }
+                                            else
+                                            {
+                                                // AppleId 계정 로그아웃
+                                                LogoutAppleId();
+                                                onLoggedIn(false, code, blockRemainTime, blockSuid);
+                                            }
+                                        });
+                                    }
+#endif
+                                }
+                                else
+                                {
+                                    LogoutAppleId();
+                                    onLoggedIn(false, code, blockRemainTime, blockSuid);
+                                }
+                            }
+                            else
+                            {
+                                LogoutAppleId();
+                                onLoggedIn(false, code, blockRemainTime, blockSuid);
+                            }
+                        });
+                    }
+                    else
+                    {
+                        // AppleId 계정 로그아웃
+                        LogoutAppleId();
+                        onLoggedIn(false, WebClient.AuthCode.FAILED, TimeSpan.Zero, 0);
+                    }
+                });
+            }
+            else
+            {
+                // AppleId 계정 로그아웃
+                LogoutAppleId();
+                onLoggedIn(false, WebClient.AuthCode.FAILED, TimeSpan.Zero, 0);
+            }
         }
 
 #if UNITY_STANDALONE && USE_STEAM
@@ -462,7 +864,7 @@ namespace Haegin
                                     }
                                     else
                                     {
-                                        _onLoggedIn(error2 == WebClient.ErrorCode.SUCCESS, WebClient.AuthCode.FAILED, TimeSpan.Zero, 0);
+                                        onLoggedIn(error2 == WebClient.ErrorCode.SUCCESS, WebClient.AuthCode.FAILED, TimeSpan.Zero, 0);
                                     }
                                 });
                             }
@@ -483,7 +885,7 @@ namespace Haegin
                                     }
                                     else
                                     {
-                                        _onLoggedIn(error2 == WebClient.ErrorCode.SUCCESS, WebClient.AuthCode.FAILED, TimeSpan.Zero, 0);
+                                        onLoggedIn(error2 == WebClient.ErrorCode.SUCCESS, WebClient.AuthCode.FAILED, TimeSpan.Zero, 0);
                                     }
                                 });
                             }
@@ -507,7 +909,7 @@ namespace Haegin
                                     }
                                     else
                                     {
-                                        _onLoggedIn(error2 == WebClient.ErrorCode.SUCCESS, WebClient.AuthCode.FAILED, TimeSpan.Zero, 0);
+                                        onLoggedIn(error2 == WebClient.ErrorCode.SUCCESS, WebClient.AuthCode.FAILED, TimeSpan.Zero, 0);
                                     }
                                 });
                             }
@@ -523,7 +925,7 @@ namespace Haegin
                                     }
                                     else
                                     {
-                                        _onLoggedIn(error2 == WebClient.ErrorCode.SUCCESS, WebClient.AuthCode.FAILED, TimeSpan.Zero, 0);
+                                        onLoggedIn(error2 == WebClient.ErrorCode.SUCCESS, WebClient.AuthCode.FAILED, TimeSpan.Zero, 0);
                                     }
                                 });
                             }
@@ -539,6 +941,10 @@ namespace Haegin
                             {
                                 FB.LogOut();
                             }
+                            if (IsLoggedInAppleId())
+                            {
+                                LogoutAppleId();
+                            }
                             WebClient.GetInstance().RequestSteamAuth(SteamUser.GetSteamID().m_SteamID, GetSteamAuthSessionTicket(), Account.GetAccountId(), SteamFriends.GetPersonaName(), LinkOption.Auth, (WebClient.ErrorCode error2, WebClient.AuthCode code2, string accountId2, AccountType localAccountType2, string localAccountName2, byte[] accountInfo2, TimeSpan blockRemainTime2, long blockSuid2) =>
                             {
                                 if (error2 == WebClient.ErrorCode.SUCCESS && code2 == WebClient.AuthCode.SUCCESS)
@@ -549,7 +955,7 @@ namespace Haegin
                                 }
                                 else
                                 {
-                                    _onLoggedIn(error2 == WebClient.ErrorCode.SUCCESS, WebClient.AuthCode.FAILED, TimeSpan.Zero, 0);
+                                    onLoggedIn(error2 == WebClient.ErrorCode.SUCCESS, WebClient.AuthCode.FAILED, TimeSpan.Zero, 0);
                                 }
                             });
                         });
@@ -563,6 +969,10 @@ namespace Haegin
                             if (FB.IsLoggedIn)
                             {
                                 FB.LogOut();
+                            }
+                            if (IsLoggedInAppleId())
+                            {
+                                LogoutAppleId();
                             }
                             SetAccountId(ProjectSettings.accountIdToCreate, Account.HaeginAccountType.Guest);
                             WebClient.GetInstance().RequestAuth((WebClient.ErrorCode error3, WebClient.AuthCode code3, AccountType accountType3, TimeSpan blockRemainTime3, long blockSuid3) => {
@@ -662,7 +1072,7 @@ namespace Haegin
                                         }
                                         else
                                         {
-                                            _onLoggedIn(error2 == WebClient.ErrorCode.SUCCESS, WebClient.AuthCode.FAILED, TimeSpan.Zero, 0);
+                                            onLoggedIn(error2 == WebClient.ErrorCode.SUCCESS, WebClient.AuthCode.FAILED, TimeSpan.Zero, 0);
                                         }
                                     });
                                 }
@@ -670,6 +1080,7 @@ namespace Haegin
                                 {
                                     // 로그인을 취소한. 
                                     FB.LogOut();
+                                    onLoggedIn(false, WebClient.AuthCode.Cancel, TimeSpan.Zero, 0);
                                 }
                             });
                         }
@@ -697,7 +1108,7 @@ namespace Haegin
                                         }
                                         else
                                         {
-                                            _onLoggedIn(error2 == WebClient.ErrorCode.SUCCESS, WebClient.AuthCode.FAILED, TimeSpan.Zero, 0);
+                                            onLoggedIn(error2 == WebClient.ErrorCode.SUCCESS, WebClient.AuthCode.FAILED, TimeSpan.Zero, 0);
                                         }
                                     });
                                 }
@@ -713,7 +1124,7 @@ namespace Haegin
                                         }
                                         else
                                         {
-                                            _onLoggedIn(error2 == WebClient.ErrorCode.SUCCESS, WebClient.AuthCode.FAILED, TimeSpan.Zero, 0);
+                                            onLoggedIn(error2 == WebClient.ErrorCode.SUCCESS, WebClient.AuthCode.FAILED, TimeSpan.Zero, 0);
                                         }
                                     });
                                 }
@@ -732,6 +1143,10 @@ namespace Haegin
                                     {
                                         LogoutGameService();
                                     }
+                                    if (IsLoggedInAppleId())
+                                    {
+                                        LogoutAppleId();
+                                    }
                                     WebClient.GetInstance().RequestFacebookAuth(long.Parse(AccessToken.CurrentAccessToken.UserId), AccessToken.CurrentAccessToken.TokenString, Account.GetAccountId(), name, LinkOption.Auth, (WebClient.ErrorCode error2, WebClient.AuthCode code2, string accountId2, AccountType localAccountType2, string localAccountName2, byte[] accountInfo2, TimeSpan blockRemainTime2, long blockSuid2) =>
                                     {
                                         if (error2 == WebClient.ErrorCode.SUCCESS && code2 == WebClient.AuthCode.SUCCESS)
@@ -742,7 +1157,7 @@ namespace Haegin
                                         }
                                         else
                                         {
-                                            _onLoggedIn(error2 == WebClient.ErrorCode.SUCCESS, WebClient.AuthCode.FAILED, TimeSpan.Zero, 0);
+                                            onLoggedIn(error2 == WebClient.ErrorCode.SUCCESS, WebClient.AuthCode.FAILED, TimeSpan.Zero, 0);
                                         }
                                     });
                                 }
@@ -772,6 +1187,10 @@ namespace Haegin
                                 {
                                     if (selectButton == SelectButton.YES)
                                     {
+                                        if (IsLoggedInAppleId())
+                                        {
+                                            LogoutAppleId();
+                                        }
                                         WebClient.GetInstance().RequestFacebookAuth(long.Parse(AccessToken.CurrentAccessToken.UserId), AccessToken.CurrentAccessToken.TokenString, Account.GetAccountId(), name, LinkOption.Auth, (WebClient.ErrorCode error2, WebClient.AuthCode code2, string accountId2, AccountType localAccountType2, string localAccountName2, byte[] accountInfo2, TimeSpan blockRemainTime2, long blockSuid2) =>
                                         {
                                             isGuestAccount = false;
@@ -805,6 +1224,10 @@ namespace Haegin
                                     {
                                         LogoutGameService();
                                     }
+                                    if (IsLoggedInAppleId())
+                                    {
+                                        LogoutAppleId();
+                                    }
                                     SetAccountId(ProjectSettings.accountIdToCreate, Account.HaeginAccountType.Guest);
                                     WebClient.GetInstance().RequestAuth((WebClient.ErrorCode error3, WebClient.AuthCode code3, AccountType accountType3, TimeSpan blockRemainTime3, long blockSuid3) =>
                                     {
@@ -825,7 +1248,7 @@ namespace Haegin
                                                         }
                                                         else
                                                         {
-                                                            _onLoggedIn(error2 == WebClient.ErrorCode.SUCCESS, WebClient.AuthCode.FAILED, TimeSpan.Zero, 0);
+                                                            onLoggedIn(error2 == WebClient.ErrorCode.SUCCESS, WebClient.AuthCode.FAILED, TimeSpan.Zero, 0);
                                                         }
                                                     });
                                                     break;
@@ -869,6 +1292,10 @@ namespace Haegin
                                 {
                                     if (selectButton == SelectButton.YES)
                                     {
+                                        if (IsLoggedInAppleId())
+                                        {
+                                            LogoutAppleId();
+                                        }
                                         SetAccountId(ProjectSettings.accountIdToCreate, Account.HaeginAccountType.Guest);
                                         WebClient.GetInstance().RequestAuth((WebClient.ErrorCode error3, WebClient.AuthCode code3, AccountType accountType3, TimeSpan blockRemainTime3, long blockSuid3) =>
                                         {
@@ -1032,7 +1459,7 @@ namespace Haegin
                 Debug.Log(res.Error.Message);
                 Debug.Log("OnAuthFinished   failed");
 #endif
-                if(res.Error.Code == 2)
+                if(res.Error.Code == 2 || res.Error.Code == 6)
                 {
                     // 아이폰 세팅에서 GameCenter 로그인을 해야하는 상황.
                     IsGameCenterLoginCancelled = true;
@@ -1168,6 +1595,10 @@ namespace Haegin
                                 {
                                     FB.LogOut();
                                 }
+                                if (IsLoggedInAppleId())
+                                {
+                                    LogoutAppleId();
+                                }
                                 WebClient.GetInstance().RequestAuthApple(playerId, playerAlias, publicKeyUrl, signature, timestamp, salt, Account.GetAccountId(), LinkOption.Auth, (WebClient.ErrorCode error2, WebClient.AuthCode code2, string accountId2, AccountType localAccountType2, string localAccountName2, byte[] accountInfo2, TimeSpan blockRemainTime2, long blockSuid2) =>
                                 {
                                     if (error2 == WebClient.ErrorCode.SUCCESS && code2 == WebClient.AuthCode.SUCCESS)
@@ -1192,6 +1623,10 @@ namespace Haegin
                                 if (FB.IsLoggedIn)
                                 {
                                     FB.LogOut();
+                                }
+                                if (IsLoggedInAppleId())
+                                {
+                                    LogoutAppleId();
                                 }
                                 SetAccountId(ProjectSettings.accountIdToCreate, Account.HaeginAccountType.Guest);
                                 WebClient.GetInstance().RequestAuth((WebClient.ErrorCode error3, WebClient.AuthCode code3, AccountType accountType3, TimeSpan blockRemainTime3, long blockSuid3) => {
@@ -1438,6 +1873,7 @@ namespace Haegin
                                     {
                                         // 구글 로그인을 취소한다. 로그아웃
                                         LogoutGameService();
+                                        _onLoggedIn(false, WebClient.AuthCode.Cancel, TimeSpan.Zero, 0);
                                     }
                                 });
                             }
@@ -1495,6 +1931,10 @@ namespace Haegin
                                         {
                                             FB.LogOut();
                                         }
+                                        if (IsLoggedInAppleId())
+                                        {
+                                            LogoutAppleId();
+                                        }
                                         GetRefreshedServerAuthCode((string serverAuthCode) => {
                                             WebClient.GetInstance().RequestAuthGoogle(serverAuthCode, Account.GetAccountId(), LinkOption.Auth, (WebClient.ErrorCode error2, WebClient.AuthCode code2, string accountId2, AccountType localAccountType2, string localAccountName2, byte[] accountInfo2, TimeSpan blockRemainTime2, long blockSuid2) =>
                                             {
@@ -1531,6 +1971,10 @@ namespace Haegin
                                         if (FB.IsLoggedIn)
                                         {
                                             FB.LogOut();
+                                        }
+                                        if (IsLoggedInAppleId())
+                                        {
+                                            LogoutAppleId();
                                         }
 
                                         SetAccountId(ProjectSettings.accountIdToCreate, Account.HaeginAccountType.Guest);

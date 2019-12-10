@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,12 +19,12 @@ namespace Haegin
         {
             if (ori == Orientations.Portrait)
             {
-                gameObject.GetComponent<CanvasScaler>().referenceResolution = new Vector2(1080, 1920);
+                gameObject.GetComponent<CanvasScaler>().referenceResolution = new Vector2(1064, 1900);
                 gameObject.GetComponent<CanvasScaler>().matchWidthOrHeight = 0.0f;
             }
             else
             {
-                gameObject.GetComponent<CanvasScaler>().referenceResolution = new Vector2(1080, 1920);
+                gameObject.GetComponent<CanvasScaler>().referenceResolution = new Vector2(1776, 1000);
                 gameObject.GetComponent<CanvasScaler>().matchWidthOrHeight = 1.0f;
             }
 
@@ -43,7 +43,6 @@ namespace Haegin
         {
             GameObject splash = Instantiate(Resources.Load<GameObject>("Splash/HaeginSplash"));
             splash.GetComponent<HaeginSplash>().Setting(ori, callback);
-            splash.GetComponent<Canvas>().sortingOrder = 50;
         }
     }
 }

@@ -17,5 +17,6 @@ namespace Haegin
 		public static string oneStoreBase64EncodedPublicKey = "";
 		public static string ZendeskHelpAPPageID = "360033798014";
 		public static string AdMobAppId = "ca-app-pub-8910195275590924~5903100277";
+		public static string iOSAdMobAppId = "ca-app-pub-8910195275590924~5903100277";
 	}
 }

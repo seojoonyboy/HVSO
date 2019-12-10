@@ -1,6 +1,6 @@
 ﻿using UnityEditor;
 using UnityEngine;
-#if UNITY_IOS || UNITY_2018_3_OR_NEWER
+#if UNITY_IOS
 using UnityEditor.iOS.Xcode;
 using UnityEditor.iOS.Xcode.Extensions;
 #endif
@@ -10,7 +10,7 @@ using Haegin;
 
 public class AddAppsFlyerSettings : MonoBehaviour 
 {
-#if UNITY_IOS || UNITY_2018_3_OR_NEWER
+#if UNITY_IOS
     [PostProcessBuild(103)]
     public static void OnPostProcessBuild(BuildTarget target, string pathToBuiltProject)
     {
