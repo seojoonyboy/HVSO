@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Haegin;
@@ -17,6 +17,8 @@ public class SceneLoginController : MonoBehaviour
 
     void Awake()
     {
+        UGUICommon.ResetCanvasReferenceSize(canvas);
+
         webClient = WebClient.GetInstance();
 
         webClient.ErrorOccurred += OnErrorOccurred;
@@ -51,6 +53,16 @@ public class SceneLoginController : MonoBehaviour
             //GameObject.Find("FacebookLogin").GetComponent<Image>().color = Color.grey;
             GameObject.Find("FacebookLogin").GetComponent<Text>().text = "Facebook Logout";
         }
+
+        if(!Account.IsSupportedAppleId())
+        {
+#if MDEBUG
+            Debug.Log("Sign in with Apple is not supported.....");
+#endif
+            GameObject.Find("SignInWithApple").GetComponent<Button>().interactable = false;
+        }
+
+
         ThreadSafeDispatcher.Instance.PushSystemBackKeyListener(OnSystemBackKey);
     }
 
@@ -126,9 +138,7 @@ public class SceneLoginController : MonoBehaviour
     public void OnGuestLoginButtonClick(string param)
     {
         Firebase.Analytics.FirebaseAnalytics.LogEvent("Guest_Login");
-
-        gameObject.SetActive(false);
-        FindObjectOfType<LoginController>().fbl_loginCanvas.gameObject.SetActive(true);
+        SceneManager.LoadScene("SceneGameService", LoadSceneMode.Single);
     }
 
 
@@ -140,10 +150,8 @@ public class SceneLoginController : MonoBehaviour
 #if MDEBUG
             Debug.Log("LogintAccount  result=" + result + "    code=" + code + " blockSuid=" + blockSuid);
 #endif
-            if (result && code == WebClient.AuthCode.SUCCESS) {
-                gameObject.SetActive(false);
-                FindObjectOfType<LoginController>().fbl_loginCanvas.gameObject.SetActive(true);
-            }
+            if (result && code == WebClient.AuthCode.SUCCESS)
+                SceneManager.LoadScene("SceneGameService", LoadSceneMode.Single);
         });
 #elif UNITY_ANDROID
         Account.LoginAccount(Account.HaeginAccountType.GooglePlayGameService, accountDialog.OpenSelectDialog, (bool result, WebClient.AuthCode code, TimeSpan blockRemainTime, long blockSuid) =>
@@ -151,10 +159,8 @@ public class SceneLoginController : MonoBehaviour
 #if MDEBUG
             Debug.Log("LogintAccount  result=" + result + "    code=" + code + " blockSuid=" + blockSuid);
 #endif
-            if (result && code == WebClient.AuthCode.SUCCESS) {
-                gameObject.SetActive(false);
-                FindObjectOfType<LoginController>().fbl_loginCanvas.gameObject.SetActive(true);
-            }
+            if (result && code == WebClient.AuthCode.SUCCESS)
+                SceneManager.LoadScene("SceneGameService", LoadSceneMode.Single);
         });
 #elif UNITY_STANDALONE && USE_STEAM
         Account.LoginAccount(Account.HaeginAccountType.Steam, accountDialog.OpenSelectDialog, (bool result, WebClient.AuthCode code, TimeSpan blockRemainTime, long blockSuid) =>
@@ -162,17 +168,27 @@ public class SceneLoginController : MonoBehaviour
 #if MDEBUG
             Debug.Log("LogintAccount  result=" + result + "    code=" + code + " blockSuid=" + blockSuid);
 #endif
-            if (result && code == WebClient.AuthCode.SUCCESS){
-                gameObject.SetActive(false);
-                FindObjectOfType<LoginController>().fbl_loginCanvas.gameObject.SetActive(true);
-            }    
+            if (result && code == WebClient.AuthCode.SUCCESS)
+                SceneManager.LoadScene("SceneGameService", LoadSceneMode.Single);
         });
 #endif
     }
 
+    public void OnSignInWithAppleButtonClick(string param)
+    {
+        Account.LoginAccount(Account.HaeginAccountType.AppleId, accountDialog.OpenSelectDialog, (bool result, WebClient.AuthCode code, TimeSpan blockRemainTime, long blockSuid) =>
+        {
+#if MDEBUG
+            Debug.Log("LogintAccount  result=" + result + "    code=" + code + "  blockSuid=" + blockSuid);
+#endif
+            if (result && code == WebClient.AuthCode.SUCCESS)
+                SceneManager.LoadScene("SceneGameService", LoadSceneMode.Single);
+        });
+    }
+
     public void OnFacebookLoginButtonClick(string param)
     {
-        if(FB.IsLoggedIn)
+        if (FB.IsLoggedIn)
         {
             FB.LogOut();
         }
@@ -183,11 +199,11 @@ public class SceneLoginController : MonoBehaviour
 #if MDEBUG
                 Debug.Log("LogintAccount  result=" + result + "    code=" + code + "  blockSuid=" + blockSuid);
 #endif
-                if (result && code == WebClient.AuthCode.SUCCESS) {
-                    gameObject.SetActive(false);
-                    FindObjectOfType<LoginController>().fbl_loginCanvas.gameObject.SetActive(true);
-                }
+                if (result && code == WebClient.AuthCode.SUCCESS)
+                    SceneManager.LoadScene("SceneGameService", LoadSceneMode.Single);
             });
         }
     }
+
 }
+
