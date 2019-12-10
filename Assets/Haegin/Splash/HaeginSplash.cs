@@ -43,6 +43,7 @@ namespace Haegin
         {
             GameObject splash = Instantiate(Resources.Load<GameObject>("Splash/HaeginSplash"));
             splash.GetComponent<HaeginSplash>().Setting(ori, callback);
+            splash.GetComponent<Canvas>().sortingOrder = 50;
         }
     }
 }

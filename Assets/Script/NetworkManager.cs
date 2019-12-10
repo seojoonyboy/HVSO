@@ -65,7 +65,10 @@ public partial class NetworkManager : Singleton<NetworkManager> {
             IssueJWTRes result = (IssueJWTRes)rar.Res;
             Logger.Log("Token : " + result.Token);
             AccountManager.Instance.TokenId = result.Token;
-            GameObject.Find("Canvas").transform.Find("Panel").GetComponent<Button>().enabled = true;
+            GameObject.Find("FBL_Login_Canvas").transform.Find("Panel").GetComponent<Button>().enabled = true;
+            FindObjectOfType<SceneOBBCheckController>().gameObject.SetActive(false);
+            //FindObjectOfType<LoginController>().Login();
+            FindObjectOfType<LoginController>().sceneStartCanvas.gameObject.SetActive(true);
         }
     }
 
