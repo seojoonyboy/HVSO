@@ -140,7 +140,7 @@ public partial class CardDropManager {
                     for (int j = 0; j < attribute.Length; j++) {
                         if (attribute[j] == "chain") {
                             if(unitLine[i][1].childCount != 0) continue;
-                            unitLine[i][0].GetChild(0).position = new Vector3(unitLine[i][0].position.x, unitLine[i][0].GetChild(0).position.y + 1.5f, 0);
+                            unitLine[i][0].GetChild(0).position = new Vector3(unitLine[i][0].position.x, unitLine[i][0].GetChild(0).position.y + 0.5f, 0);
                             unitLine[i][0].GetChild(0).Find("InfoWindowTrigger").gameObject.SetActive(false);
                             slotLine[i].GetChild(1).gameObject.SetActive(true);
                             slotLine[i].GetChild(2).gameObject.SetActive(true);
@@ -346,7 +346,7 @@ public partial class CardDropManager {
         else {
             target.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1f);
             if(index > 0)
-                unitLine[lineNum][0].GetChild(0).position = new Vector3(unitLine[lineNum][0].position.x, unitLine[lineNum][0].position.y + 1.5f, 0);
+                unitLine[lineNum][0].GetChild(0).position = new Vector3(unitLine[lineNum][0].position.x, unitLine[lineNum][0].position.y, 0);
             if (enemyUnitLine[lineNum][0].childCount == 0 && enemyUnitLine[lineNum][1].childCount == 0)
                 PlayMangement.instance.enemyPlayer.transform.Find("FightSpine").gameObject.SetActive(false);
             else {
@@ -469,7 +469,6 @@ public partial class CardDropManager {
                     else {
                         if (i == targetline) {
                             Debug.Log(unitLine[i][0].GetChild(0).gameObject);
-
                             unitLine[0][i].GetChild(0).Find("ClickableUI").gameObject.SetActive(true);
                             unitLine[0][i].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(true);
                             return;

@@ -14,8 +14,6 @@ public class PlayerController : MonoBehaviour
     public bool isHuman;
     public bool isPlayer;
     private bool myTurn = false;
-    public int[,] placement = new int[2,5] { {0,0,0,0,0 },
-                                              {0,0,0,0,0 }};
     public GameObject card;
     public GameObject back;
     public GameObject playerUI;
