@@ -42,7 +42,7 @@ public class BattleMenuController : MonoBehaviour {
         PlayerPrefs.SetString("SelectedBattleButton", type.ToString());
 
         SetMainMenuDirectPlayButton(index);
-        subPanels[index].SetActive(true);
+        OnBackButton();
 
         Logger.Log("OnSelectBattleType");
     }
@@ -54,8 +54,7 @@ public class BattleMenuController : MonoBehaviour {
             mainSceneImage.sprite = modeImages[type];
 
             directModePlayButton.onClick.AddListener(() => {
-                gameObject.SetActive(true);
-                modeButtons[type].onClick.Invoke();
+                subPanels[type].SetActive(true);
             });
         }
     }
