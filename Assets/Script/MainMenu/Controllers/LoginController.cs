@@ -12,23 +12,23 @@ public class LoginController : MonoBehaviour {
     [SerializeField] GameObject logo, textImage;
     [SerializeField] Button loginBtn;
 
+    public GameObject obbCanvas, sceneStartCanvas, sceneLoginCanvas, LoginTypeSelCanvas, EULACanvas, fbl_loginCanvas;
+
     bool isClicked = false;
 
     private void Awake() {
         AccountManager.Instance.tokenSetFinished += OnTokenSetFinished;
+        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, OnRequestUserInfoCallback);
     }
 
     private void OnTokenSetFinished() {
         loginBtn.enabled = true;
     }
 
-    // Start is called before the first frame update
-    void Start() {
+    public void Login() {
         networkManager = NetworkManager.Instance;
         StartCoroutine(LogoReveal());
-        isClicked = false;
-
-        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, OnRequestUserInfoCallback);
+        
         AccountManager.Instance.prevSceneName = "OBB";
     }
 
@@ -73,6 +73,7 @@ public class LoginController : MonoBehaviour {
         SkeletonGraphic skeletonGraphic = logo.GetComponent<SkeletonGraphic>();
         Spine.AnimationState state = skeletonGraphic.AnimationState;
         state.SetAnimation(0, "loop", true);
+        isClicked = false;
     }
 
     public void OnStartButton() {

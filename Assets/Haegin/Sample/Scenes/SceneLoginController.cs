@@ -126,7 +126,9 @@ public class SceneLoginController : MonoBehaviour
     public void OnGuestLoginButtonClick(string param)
     {
         Firebase.Analytics.FirebaseAnalytics.LogEvent("Guest_Login");
-        SceneManager.LoadScene("Login", LoadSceneMode.Single);
+
+        gameObject.SetActive(false);
+        FindObjectOfType<LoginController>().fbl_loginCanvas.gameObject.SetActive(true);
     }
 
 
@@ -138,8 +140,10 @@ public class SceneLoginController : MonoBehaviour
 #if MDEBUG
             Debug.Log("LogintAccount  result=" + result + "    code=" + code + " blockSuid=" + blockSuid);
 #endif
-            if (result && code == WebClient.AuthCode.SUCCESS)
-                SceneManager.LoadScene("Login", LoadSceneMode.Single);
+            if (result && code == WebClient.AuthCode.SUCCESS) {
+                gameObject.SetActive(false);
+                FindObjectOfType<LoginController>().fbl_loginCanvas.gameObject.SetActive(true);
+            }
         });
 #elif UNITY_ANDROID
         Account.LoginAccount(Account.HaeginAccountType.GooglePlayGameService, accountDialog.OpenSelectDialog, (bool result, WebClient.AuthCode code, TimeSpan blockRemainTime, long blockSuid) =>
@@ -147,8 +151,10 @@ public class SceneLoginController : MonoBehaviour
 #if MDEBUG
             Debug.Log("LogintAccount  result=" + result + "    code=" + code + " blockSuid=" + blockSuid);
 #endif
-            if (result && code == WebClient.AuthCode.SUCCESS)
-                SceneManager.LoadScene("Login", LoadSceneMode.Single);
+            if (result && code == WebClient.AuthCode.SUCCESS) {
+                gameObject.SetActive(false);
+                FindObjectOfType<LoginController>().fbl_loginCanvas.gameObject.SetActive(true);
+            }
         });
 #elif UNITY_STANDALONE && USE_STEAM
         Account.LoginAccount(Account.HaeginAccountType.Steam, accountDialog.OpenSelectDialog, (bool result, WebClient.AuthCode code, TimeSpan blockRemainTime, long blockSuid) =>
@@ -156,8 +162,10 @@ public class SceneLoginController : MonoBehaviour
 #if MDEBUG
             Debug.Log("LogintAccount  result=" + result + "    code=" + code + " blockSuid=" + blockSuid);
 #endif
-            if (result && code == WebClient.AuthCode.SUCCESS)
-                SceneManager.LoadScene("Login", LoadSceneMode.Single);
+            if (result && code == WebClient.AuthCode.SUCCESS){
+                gameObject.SetActive(false);
+                FindObjectOfType<LoginController>().fbl_loginCanvas.gameObject.SetActive(true);
+            }    
         });
 #endif
     }
@@ -175,8 +183,10 @@ public class SceneLoginController : MonoBehaviour
 #if MDEBUG
                 Debug.Log("LogintAccount  result=" + result + "    code=" + code + "  blockSuid=" + blockSuid);
 #endif
-                if (result && code == WebClient.AuthCode.SUCCESS)
-                    SceneManager.LoadScene("Login", LoadSceneMode.Single);
+                if (result && code == WebClient.AuthCode.SUCCESS) {
+                    gameObject.SetActive(false);
+                    FindObjectOfType<LoginController>().fbl_loginCanvas.gameObject.SetActive(true);
+                }
             });
         }
     }

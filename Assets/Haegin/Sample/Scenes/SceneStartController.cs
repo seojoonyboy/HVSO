@@ -398,6 +398,7 @@ public class SceneStartController : MonoBehaviour
 
     public void OnErrorOccurred(int error)
     {
+        Logger.Log("Error Code : " + error);
         OnNetworkError();
     }
 
@@ -454,9 +455,8 @@ public class SceneStartController : MonoBehaviour
 #if MDEBUG
                                 Debug.Log("LoadScene SceneLogin");
 #endif
-                                //SceneManager.LoadScene("SceneLogin", LoadSceneMode.Single);
-                                EULACanvas.gameObject.SetActive(false);
                                 NetworkManager.Instance.Auth();
+                                FindObjectOfType<LoginController>().Login();
                             });
                             //Patch();
                         }
