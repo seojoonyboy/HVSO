@@ -7,6 +7,8 @@ using UnityEngine.UI;
 
 public class MenuLockController : SerializedMonoBehaviour {
     [SerializeField] Dictionary<string, GameObject> menues;
+    [SerializeField] Dictionary<string, GameObject> mainMenues;
+
     NoneIngameSceneEventHandler eventHandler;
 
     void Awake() {
@@ -69,6 +71,38 @@ public class MenuLockController : SerializedMonoBehaviour {
         if (menu == null) return;
 
         menu.GetComponent<Button>().enabled = false;
+    }
+
+    /// <summary>
+    /// 특정 메인 메뉴 잠금
+    /// </summary>
+    /// <param name="page"></param>
+    public void LockMainMenu(string name) {
+        if (mainMenues.ContainsKey(name)) {
+            mainMenues[name].SetActive(false);
+        }
+    }
+
+    public void LockAllMainMenues() {
+        foreach(KeyValuePair<string, GameObject> pair in mainMenues) {
+            mainMenues[pair.Key].SetActive(false);
+        }
+    }
+
+    /// <summary>
+    /// 특정 메인 메뉴 해금
+    /// </summary>
+    /// <param name="name"></param>
+    public void UnlockMainMenu(string name) {
+        if (mainMenues.ContainsKey(name)) {
+            mainMenues[name].SetActive(true);
+        }
+    }
+
+    public void UnlockAllMainMenues() {
+        foreach (KeyValuePair<string, GameObject> pair in mainMenues) {
+            mainMenues[pair.Key].SetActive(true);
+        }
     }
 
     /// <summary>
