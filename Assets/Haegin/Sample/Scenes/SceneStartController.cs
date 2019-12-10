@@ -455,8 +455,6 @@ public class SceneStartController : MonoBehaviour
 #if MDEBUG
                                 Debug.Log("LoadScene SceneLogin");
 #endif
-                                NetworkManager.Instance.Auth();
-                                FindObjectOfType<LoginController>().Login();
                             });
                             //Patch();
                         }
@@ -467,6 +465,9 @@ public class SceneStartController : MonoBehaviour
 #endif
                         }
                     });
+                    NetworkManager.Instance.Auth();
+                    FindObjectOfType<LoginController>().gameObject.SetActive(true);
+                    FindObjectOfType<LoginController>().Login();
                     break;
                 case WebClient.AuthCode.FAILED_CrossCheckRetry:
 #if MDEBUG
