@@ -120,6 +120,7 @@ public class MenuSceneController : MonoBehaviour {
             hideModal.SetActive(false);
         }
         else {
+            hideModal.SetActive(true);
             //튜토리얼 남았음
             AccountManager.etcInfo tutorialCleared = etcInfos.Find(x => x.key == "tutorialCleared");
             var clearedStages = AccountManager.Instance.clearedStages;

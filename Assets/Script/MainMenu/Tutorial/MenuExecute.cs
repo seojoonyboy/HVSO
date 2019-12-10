@@ -203,54 +203,12 @@ namespace MenuTutorialModules {
         }
     }
 
-
-
     public class Menu_Block_Screen : MenuExecute {
         public Menu_Block_Screen() : base() { }
 
         // 단순한 화면 막기
         public override void Execute() {
             MenuMask.Instance.BlockScreen();
-            handler.isDone = true;
-        }
-    }
-
-    public class Darken_Menu_NPC_Talk : MenuExecute {
-        public Darken_Menu_NPC_Talk() : base() { }
-
-        //대화중 캐릭터 어둡게
-        public override void Execute() {
-            bool isPlayer = args[0] != "enemy";
-
-            MenuMask menuMask = MenuMask.Instance;
-            MenuMask.Instance.gameObject.SetActive(true);
-
-            if (isPlayer) {
-                menuMask.menuTalkPanel.transform.Find("CharacterImage/Player").GetComponent<Image>().color = new Color32(0, 0, 0, 255);
-            }
-            else {
-                menuMask.menuTalkPanel.transform.Find("CharacterImage/Enemy").GetComponent<Image>().color = new Color32(0, 0, 0, 255);
-            }
-            handler.isDone = true;
-        }
-    }
-
-    public class Brighten_Menu_NPC_Talk : MenuExecute {
-        public Brighten_Menu_NPC_Talk() : base() { }
-
-        //대화중 캐릭터 밝게
-        public override void Execute() {
-            bool isPlayer = args[0] != "enemy";
-
-            MenuMask menuMask = MenuMask.Instance;
-            MenuMask.Instance.gameObject.SetActive(true);
-
-            if (isPlayer) {
-                menuMask.menuTalkPanel.transform.Find("CharacterImage/Player").GetComponent<Image>().color = new Color32(255, 255, 255, 255);
-            }
-            else {
-                menuMask.menuTalkPanel.transform.Find("CharacterImage/Enemy").GetComponent<Image>().color = new Color32(255, 255, 255, 255);
-            }
             handler.isDone = true;
         }
     }
@@ -338,33 +296,6 @@ namespace MenuTutorialModules {
                     }
                     break;
             }
-            handler.isDone = true;
-        }
-    }
-
-    public class Disable_Button : MenuExecute {
-        public override void Execute() {
-            var menuMask = MenuMask.Instance;
-
-            string objectName = args[0];
-            var targetObject = menuMask.GetMenuObject(objectName);
-
-            var button = targetObject.GetComponent<Button>();
-            if (button != null) button.enabled = false;
-
-            handler.isDone = true;
-        }
-    }
-
-    public class Enable_Button : MenuExecute {
-        public override void Execute() {
-            var menuMask = MenuMask.Instance;
-
-            string objectName = args[0];
-            var targetObject = menuMask.GetMenuObject(objectName);
-            var button = targetObject.GetComponent<Button>();
-            if (button != null) button.enabled = true;
-
             handler.isDone = true;
         }
     }
@@ -540,43 +471,6 @@ namespace MenuTutorialModules {
         public override void Execute() {
             var loadingModal = GetComponent<MenuTutorialManager>().menuSceneController.hideModal;
             loadingModal.SetActive(false);
-            handler.isDone = true;
-        }
-    }
-
-    public class Wait_DeckSelect : MenuExecute {
-        public override void Execute() {
-            var deckListPanel = GetComponent<MenuTutorialManager>().BattleReadydeckListPanel;
-            var content = deckListPanel.transform.Find("Viewport/Content");
-
-            deckListPanel.transform.Find("Description").gameObject.SetActive(true);
-
-            foreach (Transform deckObject in content) {
-                if (deckObject.gameObject.activeSelf) {
-                    Button btn = deckObject.GetComponent<Button>();
-                    btn.onClick.AddListener(
-                        () => {
-                            Onclick();
-                        });
-                    GameObject handUI = btn.transform.Find("HandUI").gameObject;
-                    handUI.SetActive(true);
-                    SkeletonGraphic skeletonGraphic = handUI.GetComponent<SkeletonGraphic>();
-                    skeletonGraphic.Initialize(true);
-                    skeletonGraphic.Update(0);
-                    skeletonGraphic.Skeleton.SetSlotsToSetupPose();
-                }
-            }
-        }
-
-        public void Onclick() {
-            var deckListPanel = GetComponent<MenuTutorialManager>().BattleReadydeckListPanel;
-            var content = deckListPanel.transform.Find("Viewport/Content");
-            foreach (Transform deckObject in content) {
-                if (deckObject.gameObject.activeSelf) {
-                    GameObject handUI = deckObject.Find("HandUI").gameObject;
-                    handUI.SetActive(false);
-                }
-            }
             handler.isDone = true;
         }
     }
@@ -1091,27 +985,6 @@ namespace MenuTutorialModules {
                 GetComponent<MenuTutorialManager>().enabled = false;
             }
             catch(Exception ex) { }
-            handler.isDone = true;
-        }
-    }
-
-    public class ActiveImageTutorial : MenuExecute {
-        public override void Execute() {
-            GameObject mainDescCanvas = GetComponent<MenuTutorialManager>().mainDescCanvas;
-            foreach (Transform child in mainDescCanvas.transform) {
-                child.GetComponent<BooleanIndex>().isOn = true;
-            }
-            GetComponent<MenuTutorialManager>().OnMainPageChanged();
-            handler.isDone = true;
-        }
-    }
-
-    public class DeactiveImageTutorial : MenuExecute {
-        public override void Execute() {
-            GameObject mainDescCanvas = GetComponent<MenuTutorialManager>().mainDescCanvas;
-            foreach(Transform child in mainDescCanvas.transform) {
-                child.GetComponent<BooleanIndex>().isOn = false;
-            }
             handler.isDone = true;
         }
     }

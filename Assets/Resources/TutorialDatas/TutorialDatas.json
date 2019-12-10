@@ -8,10 +8,6 @@
                 "description": null,
                 "methods": [
                     {
-                        "name": "DeactiveImageTutorial",
-                        "args": []
-                    },
-                    {
                         "name": "ForceToPage",
                         "args": [
                             "StoryLobby"
@@ -34,11 +30,11 @@
                         ]
                     },
                     {
-                        "name": "UnlockOrcStoryAnim",
+                        "name": "DestroyLoadingModal",
                         "args": []
                     },
                     {
-                        "name": "DestroyLoadingModal",
+                        "name": "UnlockOrcStoryAnim",
                         "args": []
                     },
                     {
@@ -306,12 +302,6 @@
                         "args": []
                     },
                     {
-                        "name": "ForceToPage",
-                        "args": [
-                            "StoryLobby"
-                        ]
-                    },
-                    {
                         "name": "RequestReward",
                         "args": [
                             "orc"
@@ -320,78 +310,6 @@
                     {
                         "name": "DestroyLoadingModal",
                         "args": []
-                    },
-                    {
-                        "name": "Menu_Scope_Object",
-                        "args": [
-                            "hud_back_button"
-                        ]
-                    },
-                    {
-                        "name": "Dimmed",
-                        "args": [
-                            "hud_back_button",
-                            "on"
-                        ]
-                    },
-                    {
-                        "name": "ShowHandUI",
-                        "args": [
-                          "hud_back_button",
-                          "touch"
-                        ]
-                    },
-                    {
-                        "name": "Wait_Click",
-                        "args": [
-                            "hud_back_button"
-                        ]
-                    },
-                    {
-                        "name": "Dimmed",
-                        "args": [
-                            "hud_back_button",
-                            "off"
-                        ]
-                    },
-                    {
-                        "name": "HideHandUI",
-                        "args": [
-                            "hud_back_button"
-                        ]
-                    },
-                    {
-                        "name": "Dimmed",
-                        "args": [
-                            "hud_back_button",
-                            "on"
-                        ]
-                    },
-                    {
-                        "name": "ShowHandUI",
-                        "args": [
-                          "hud_back_button",
-                          "touch"
-                        ]
-                    },
-                    {
-                        "name": "Wait_Click",
-                        "args": [
-                            "hud_back_button"
-                        ]
-                    },
-                    {
-                        "name": "Dimmed",
-                        "args": [
-                            "hud_back_button",
-                            "off"
-                        ]
-                    },
-                    {
-                        "name": "HideHandUI",
-                        "args": [
-                            "hud_back_button"
-                        ]
                     },
                     {
                         "name" : "UnlockStroyAnim",
@@ -425,7 +343,21 @@
                         "name" : "Menu_NPC_Talk",
                         "args" : [
                             "h10001",
-                            "이제 퀘스트를 받을 수 있다. 다양한 임무들을 수행하고 보상을 얻을 수 있지.",
+                            "스토리 메뉴에서 앞으로 진행된 이야기들을 확인해 볼 수 있다. 클리어 보상도 확인해 보도록.",
+                            "my"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                          "screen"
+                        ]
+                    },
+                    {
+                        "name" : "Menu_NPC_Talk",
+                        "args" : [
+                            "h10001",
+                            "그리고 이제 퀘스트를 받을 수 있다. 다양한 임무들을 수행하고 보상을 얻을 수 있지. 확인해 보는게 좋을거다.",
                             "my"
                         ]
                     },
