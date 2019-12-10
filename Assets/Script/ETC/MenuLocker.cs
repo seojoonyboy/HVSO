@@ -7,6 +7,7 @@ using Spine.Unity;
 using UnityEditor;
 #endif
 
+[RequireComponent(typeof(Button))]
 [ExecuteInEditMode()]
 public class MenuLocker : MonoBehaviour {
 #if UNITY_EDITOR
@@ -19,8 +20,10 @@ public class MenuLocker : MonoBehaviour {
     }
 #endif
     SkeletonGraphic skeletonGraphic;
+    Button button;
     void Start() {
         skeletonGraphic = GetComponent<SkeletonGraphic>();
+        button = GetComponentInParent<Button>();
     }
 
     void OnDestroy() {
@@ -38,10 +41,13 @@ public class MenuLocker : MonoBehaviour {
 
         skeletonGraphic.AnimationState.SetAnimation(0, "animation", false);
         yield return new WaitForSeconds(1.0f);
-        gameObject.SetActive(false);
+        skeletonGraphic.enabled = false;
+
+        button.enabled = false;
     }
 
     public void Unlock() {
+        skeletonGraphic.enabled = true;
         StartCoroutine(_Unlock());
     }
 
@@ -49,5 +55,7 @@ public class MenuLocker : MonoBehaviour {
         yield return new WaitForEndOfFrame();
         gameObject.SetActive(true);
         skeletonGraphic.AnimationState.SetAnimation(0, "NOANI", false);
+
+        button.enabled = true;
     }
 }
