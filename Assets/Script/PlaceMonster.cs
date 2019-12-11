@@ -27,7 +27,7 @@ public class PlaceMonster : MonoBehaviour {
     public UnitSpine unitSpine;
     public HideUnit hideSpine;
 
-    private UnitRace unitRace;
+    
     protected bool instanceAttack = false;
     public EffectSystem.ActionDelegate actionCall;
     public float atkTime {
@@ -90,7 +90,6 @@ public class PlaceMonster : MonoBehaviour {
         y = transform.parent.parent.GetSiblingIndex();
 
         unitLocation = gameObject.transform.position;
-        unitRace = AccountManager.Instance.resource.unitRace[unit.id];
 
         unitSpine = transform.Find("skeleton").GetComponent<UnitSpine>();
         unitSpine.attackCallback += SuccessAttack;
@@ -314,7 +313,7 @@ public class PlaceMonster : MonoBehaviour {
             attackVoice = VoiceType.CHARGE;
         else
             attackVoice = VoiceType.ATTACK;
-        SoundManager.Instance.PlayUnitVoice(unitRace, attackVoice);
+        SoundManager.Instance.PlayUnitVoice(unit.id, attackVoice);
     } 
 
     public void SuccessAttack() {
@@ -669,7 +668,7 @@ public class PlaceMonster : MonoBehaviour {
 
         dropTomb.GetComponent<DeadSpine>().target = gameObject;
         dropTomb.GetComponent<DeadSpine>().StartAnimation(unit.ishuman);
-        SoundManager.Instance.PlayUnitVoice(unitRace, VoiceType.DIE);
+        SoundManager.Instance.PlayUnitVoice(unit.id, VoiceType.DIE);
         object[] parms = new object[]{isPlayer, gameObject};
 
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.FIELD_CHANGED, null, null);
@@ -695,7 +694,7 @@ public class PlaceMonster : MonoBehaviour {
                 unitSpine.Attack();
                 break;
             case UnitState.HIT:
-                SoundManager.Instance.PlayUnitVoice(unitRace, VoiceType.DAMAGE);
+                SoundManager.Instance.PlayUnitVoice(unit.id, VoiceType.DAMAGE);
                 unitSpine.Hit();
                 break;
             case UnitState.MAGICHIT:
