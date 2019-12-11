@@ -28,7 +28,7 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
     public GameObject menuTextCanvas;
 
     public MenuSceneController menuSceneController;
-    [SerializeField] MenuLockController lockController;
+    public MenuLockController lockController;
 
     public void ReadTutorialData() {
         string dataAsJson = ((TextAsset)Resources.Load("TutorialDatas/TutorialDatas")).text;
@@ -129,6 +129,21 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
             case TutorialType.QUEST_SUB_SET_5:
                 arr_index = 6;
                 break;
+            case TutorialType.QUEST_SUB_SET_6:
+                arr_index = 7;
+                break;
+            case TutorialType.QUEST_SUB_SET_7:
+                arr_index = 8;
+                break;
+            case TutorialType.QUEST_SUB_SET_8:
+                arr_index = 9;
+                break;
+            case TutorialType.QUEST_SUB_SET_9:
+                arr_index = 10;
+                break;
+            case TutorialType.QUEST_SUB_SET_100:
+                arr_index = 10;
+                break;
         }
         if (arr_index == -1) return;
 
@@ -155,6 +170,11 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
         QUEST_SUB_SET_3 = 15,
         QUEST_SUB_SET_4 = 16,
         QUEST_SUB_SET_5 = 17,
+        QUEST_SUB_SET_6 = 18,
+        QUEST_SUB_SET_7 = 19,
+        QUEST_SUB_SET_8 = 20,
+        QUEST_SUB_SET_9 = 21,
+        QUEST_SUB_SET_100 = 100,
         NONE = 99
     }
 }

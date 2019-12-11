@@ -161,9 +161,15 @@ public class MenuSceneController : MonoBehaviour {
             }
         }
         else {
-            needTutorial = false;
-            hideModal.SetActive(false);
-            menuTutorialManager.enabled = false;
+            var prevScene = AccountManager.Instance.prevSceneName;
+            if (prevScene == "Story") {
+                StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_100);
+            }
+            else {
+                needTutorial = false;
+                hideModal.SetActive(false);
+                menuTutorialManager.enabled = false;
+            }
         }
     }
 

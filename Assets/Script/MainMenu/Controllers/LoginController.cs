@@ -26,10 +26,10 @@ public class LoginController : MonoBehaviour {
     }
 
     public void Login() {
+        AccountManager.Instance.prevSceneName = "Login";
+
         networkManager = NetworkManager.Instance;
         StartCoroutine(LogoReveal());
-        
-        AccountManager.Instance.prevSceneName = "OBB";
     }
 
     private void OnRequestUserInfoCallback(Enum Event_Type, Component Sender, object Param) {

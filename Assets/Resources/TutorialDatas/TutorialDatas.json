@@ -298,6 +298,16 @@
                 "description" : null,
                 "methods" : [
                     {
+                        "name" : "SetPlayerPrefabStoryUnlocked",
+                        "args" : []
+                    },
+                    {
+                        "name": "ForceToPage",
+                        "args": [
+                            "StoryLobby"
+                        ]
+                    },
+                    {
                         "name": "Menu_Block_Screen",
                         "args": []
                     },
@@ -312,14 +322,47 @@
                         "args": []
                     },
                     {
-                        "name" : "OffHighlight",
-                        "args" : []
+                        "name": "Dimmed",
+                        "args": [
+                            "hud_back_button",
+                            "on"
+                        ]
+                    },
+                    {
+                        "name": "ShowHandUI",
+                        "args": [
+                          "hud_back_button",
+                          "touch"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                            "hud_back_button"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "hud_back_button",
+                            "off"
+                        ]
+                    },
+                    {
+                        "name": "HideHandUI",
+                        "args": [
+                            "hud_back_button"
+                        ]
                     },
                     {
                         "name" : "RequestUnlockQuest",
                         "args" : [
                             "1"
                         ]
+                    },
+                    {
+                        "name" : "OffHighlight",
+                        "args" : []
                     },
                     {
                         "name" : "EndTutorial",
@@ -352,14 +395,6 @@
                         ]
                     },
                     {
-                        "name" : "Menu_Hide_Message",
-                        "args" : []
-                    },
-                    {
-                        "name" : "UnlockStroyAnim",
-                        "args" : []
-                    },
-                    {
                         "name" : "Menu_NPC_Talk",
                         "args" : [
                             "h10001",
@@ -390,21 +425,8 @@
         ]
     },
     {
-        "id": 3,
-        "description" : "QUEST_SUB_SET_2 (튜토리얼 상세보기 화면으로 강제 이동)",
-        "innerDatas": [
-            {
-                "id" : 1,
-                "description" : null,
-                "methods" : [
-
-                ]
-            }
-        ]
-    },
-    {
         "id": 4,
-        "description" : "QUEST_SUB_SET_3",
+        "description" : "QUEST_SUB_SET_2",
         "innerDatas": [
             {
                 "id" : 1,
@@ -415,48 +437,9 @@
                         "args": []
                     },
                     {
-                        "name": "ForceToPage",
-                        "args": [
-                            "StoryLobby"
-                        ]
-                    },
-                    {
-                        "name": "Menu_Scope_Object",
-                        "args": [
-                            "hud_back_button"
-                        ]
-                    },
-                    {
-                        "name": "Dimmed",
-                        "args": [
-                            "hud_back_button",
-                            "on"
-                        ]
-                    },
-                    {
-                        "name": "ShowHandUI",
-                        "args": [
-                          "hud_back_button",
-                          "touch"
-                        ]
-                    },
-                    {
-                        "name": "Wait_Click",
-                        "args": [
-                            "hud_back_button"
-                        ]
-                    },
-                    {
-                        "name": "Dimmed",
-                        "args": [
-                            "hud_back_button",
-                            "off"
-                        ]
-                    },
-                    {
-                        "name": "HideHandUI",
-                        "args": [
-                            "hud_back_button"
+                        "name" : "Wait_Until",
+                        "args" : [
+                            "1"
                         ]
                     },
                     {
@@ -496,57 +479,7 @@
                         "name" : "Menu_NPC_Talk",
                         "args" : [
                             "h10001",
-                            "완료한 퀘스트들은 퀘스트 메뉴에서 완료하고 우편으로 보상을 받을 수 있으니 참고하도록.",
-                            "my"
-                        ]
-                    },
-                    {
-                        "name": "Wait_Click",
-                        "args": [
-                          "screen"
-                        ]
-                    },
-                    {
-                        "name" : "Menu_NPC_Talk",
-                        "args" : [
-                            "h10001",
-                            "일단 보다 새로운 전략과 강한 부대를 위해 보급상자를 확인하세.",
-                            "my"
-                        ]
-                    },
-                    {
-                        "name": "Wait_Click",
-                        "args": [
-                          "screen"
-                        ]
-                    },
-                    {
-                        "name" : "Menu_Hide_Message",
-                        "args" : []
-                    },
-                    {
-                        "name" : "RequestQuestBoxReward",
-                        "args" : []
-                    },
-                    {
-                        "name" : "Menu_NPC_Talk",
-                        "args" : [
-                            "h10001",
-                            "{사기저하}라… 쓸만하겠어.",
-                            "my"
-                        ]
-                    },
-                    {
-                        "name": "Wait_Click",
-                        "args": [
-                          "screen"
-                        ]
-                    },
-                    {
-                        "name" : "Menu_NPC_Talk",
-                        "args" : [
-                            "h10001",
-                            "혹시 모르니 마력결정으로 {사기저하}를 더 제작하도록 하지.",
+                            "완료된 퀘스트가 있는 것 같군. 확인해 보도록 하지.",
                             "my"
                         ]
                     },
@@ -565,7 +498,41 @@
                         "args" : []
                     },
                     {
-                        "name" : "UnlockCardMenu",
+                        "name" : "EndTutorial",
+                        "args" : []
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id" : 5,
+        "description" : "QUEST_SUB_SET_3",
+        "innerDatas" : [
+            {
+                "id" : 1,
+                "description" : null,
+                "methods" : [
+                    {
+                        "name" : "Menu_NPC_Talk",
+                        "args" : [
+                            "h10001",
+                            "퀘스트 보상은 우편으로 발송된다네. 메인화면에서 우편함을 확인해 보게나.",
+                            "my"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                          "screen"
+                        ]
+                    },
+                    {
+                        "name" : "Menu_Hide_Message",
+                        "args" : []
+                    },
+                    {
+                        "name" : "OffHighlight",
                         "args" : []
                     },
                     {
@@ -577,8 +544,112 @@
         ]
     },
     {
-        "id": 5,
+        "id" : 6,
         "description" : "QUEST_SUB_SET_4",
+        "innerDatas" : [
+            {
+                "id" : 1,
+                "description" : null,
+                "methods" : [
+                    {
+                        "name" : "Menu_NPC_Talk",
+                        "args" : [
+                            "h10001",
+                            "이것은 마력결정이로군.",
+                            "my"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                          "screen"
+                        ]
+                    },
+                    {
+                        "name" : "Menu_NPC_Talk",
+                        "args" : [
+                            "h10001",
+                            "마력결정은 카드를 제작하거나 영웅의 레벨을 올리는 등 다양한 곳에서 쓰이지.",
+                            "my"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                          "screen"
+                        ]
+                    },
+                    {
+                        "name" : "Menu_NPC_Talk",
+                        "args" : [
+                            "h10001",
+                            "이번 기회에 부대를 보강해보도록 할까? 일단 카드를 제작하러 가보세.",
+                            "my"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                          "screen"
+                        ]
+                    },
+                    {
+                        "name" : "Menu_Hide_Message",
+                        "args" : []
+                    },
+                    {
+                        "name" : "OffHighlight",
+                        "args" : []
+                    },
+                    {
+                        "name" : "EndTutorial",
+                        "args" : []
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id" : 7,
+        "description" : "QUEST_SUB_SET_5",
+        "innerDatas" : [
+            {
+                "id" : 1,
+                "description" : null,
+                "methods" : [
+                    {
+                        "name" : "Menu_NPC_Talk",
+                        "args" : [
+                            "h10001",
+                            "상대 유닛을 견제할 수 있는 {사기저하}을 4장 제작하도록 하지.",
+                            "my"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                          "screen"
+                        ]
+                    },
+                    {
+                        "name" : "Menu_Hide_Message",
+                        "args" : []
+                    },
+                    {
+                        "name" : "OffHighlight",
+                        "args" : []
+                    },
+                    {
+                        "name" : "EndTutorial",
+                        "args" : []
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 8,
+        "description" : "QUEST_SUB_SET_6",
         "innerDatas": [
             {
                 "id" : 1,
@@ -615,8 +686,8 @@
         ]
     },
     {
-        "id": 6,
-        "description" : "QUEST_SUB_SET_5",
+        "id": 9,
+        "description" : "QUEST_SUB_SET_7",
         "innerDatas": [
             {
                 "id" : 1,
@@ -626,7 +697,7 @@
                         "name" : "Menu_NPC_Talk",
                         "args" : [
                             "h10001",
-                            "아참, 완료한 퀘스트들은 퀘스트 메뉴에서 완료하고 우편으로 보상을 받을 수 있으니 참고하도록.",
+                            "좋아 이제 새로운 부대로 새로운 전략을 사용해 볼 수 있겠군. 어서 시험해 보고 싶어졌어.",
                             "my"
                         ]
                     },
@@ -641,10 +712,34 @@
                         "args" : []
                     },
                     {
+                        "name" : "Menu_Hide_Message",
+                        "args" : []
+                    },
+                    {
+                        "name" : "OffHighlight",
+                        "args" : []
+                    },
+                    {
+                        "name" : "EndTutorial",
+                        "args" : []
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 10,
+        "description" : "QUEST_SUB_SET_8",
+        "innerDatas": [
+            {
+                "id" : 1,
+                "description" : null,
+                "methods" : [
+                    {
                         "name" : "Menu_NPC_Talk",
                         "args" : [
                             "h10001",
-                            "전투를 통해 보급품을 획득하고, 보급상자에서 카드를 획득한다. 심플하군.",
+                            "전투를 통해 보급품을 획득할 수 있고, 보급품으로 보급상자를 만들어서 카드를 획득한다.",
                             "my"
                         ]
                     },
@@ -679,6 +774,53 @@
                     {
                         "name" : "EndTutorial",
                         "args" : []
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id" : 11,
+        "description" : "카드 메뉴 잠금 해제",
+        "innerDatas" : [
+            {
+                "id" : 1,
+                "description" : null,
+                "methods" : [
+                    {
+                        "name" : "UnlockCardMenu",
+                        "args" : []
+                    },
+                    {
+                        "name" : "OffHighlight",
+                        "args" : []
+                    },
+                    {
+                        "name" : "EndTutorial",
+                        "args" : []
+                    }
+                ]
+            }
+        ]
+        
+    },
+    {
+        "id": 100,
+        "description" : "QUEST_SUB_SET_100 (스토리 인게임 플레이 이후 로비 강제 이동시키기)",
+        "innerDatas": [
+            {
+                "id" : 1,
+                "description" : null,
+                "methods" : [
+                    {
+                        "name": "ForceToPage",
+                        "args": [
+                            "StoryLobby"
+                        ]
+                    },
+                    {
+                        "name": "DestroyLoadingModal",
+                        "args": []
                     }
                 ]
             }
