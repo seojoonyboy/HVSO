@@ -904,6 +904,8 @@ namespace MenuTutorialModules {
         public override void Execute() {
             AccountManager.Instance.RequestUnlockInTutorial(2);
             AccountManager.Instance.RequestQuestInfo();
+
+            handler.isDone = true;
         }
     }
 
