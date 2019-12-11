@@ -11,6 +11,7 @@ using UIModule;
 
 public class MenuSceneController : MonoBehaviour {
     [SerializeField] Transform fixedCanvas;
+    [SerializeField] GameObject OptionCanvas;
     [SerializeField] HUDController hudController;
     [SerializeField] HorizontalScrollSnap windowScrollSnap;
     [SerializeField] Transform dictionaryMenu;
@@ -235,6 +236,19 @@ public class MenuSceneController : MonoBehaviour {
             battleReadyPanel.SetActive(false);
             hudController.SetHeader(HUDController.Type.SHOW_USER_INFO);
         });
+    }
+
+    public void OpenOption() {
+        OptionCanvas.SetActive(true);
+        EscapeKeyController.escapeKeyCtrl.AddEscape(CloseOption);
+        hudController.SetHeader(HUDController.Type.RESOURCE_ONLY_WITH_BACKBUTTON);
+        hudController.SetBackButton(CloseOption);
+    }
+
+    void CloseOption() {
+        EscapeKeyController.escapeKeyCtrl.RemoveEscape(CloseOption);
+        OptionCanvas.SetActive(false);
+        hudController.SetHeader(HUDController.Type.SHOW_USER_INFO);
     }
 
     public void OnStoryClicked() {
