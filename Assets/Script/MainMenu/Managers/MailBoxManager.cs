@@ -150,5 +150,8 @@ public class MailBoxManager : MonoBehaviour
             transform.Find("Content/OpenedMail/Rewards").GetChild(i).gameObject.SetActive(false);
         if(EscapeKeyController.escapeKeyCtrl.escapeFunc.Contains(CloseMail))
             EscapeKeyController.escapeKeyCtrl.RemoveEscape(CloseMail);
+
+        Handheld.Vibrate();
+        
     }
 }

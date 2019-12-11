@@ -12,7 +12,15 @@ public class SoundManager : SerializedMonoBehaviour {
     public Dictionary<UISfxSound, AudioClip> uiSfx;
     public Dictionary<IngameSfxSound, AudioClip> ingameSfx;
     public Dictionary<UnitRace, Dictionary<VoiceType, AudioClip>> unitSound;
-    
+    float soundVolume;
+
+    public float SOUNDVOLUME {
+        get { return soundVolume; }
+        set {
+            soundVolume = value;
+            PlayerPrefs.SetFloat("SoundVolume", soundVolume);
+        }
+    }
 
     private static SoundManager _instance;  
     public static SoundManager Instance {
@@ -32,6 +40,10 @@ public class SoundManager : SerializedMonoBehaviour {
 
     void Awake() {
         _instance = GetComponent<SoundManager>();
+        if (!PlayerPrefs.HasKey("SoundVolume")) 
+            PlayerPrefs.SetFloat("SoundVolume", 0.5f);
+        soundVolume = PlayerPrefs.GetFloat("SoundVolume");
+            
         DontDestroyOnLoad(gameObject);    
     }
 
@@ -77,6 +89,7 @@ public class SoundManager : SerializedMonoBehaviour {
         soundObject.SetActive(true);
         AudioSource sound = soundObject.GetComponent<AudioSource>();
         sound.clip = sfxSource;
+        sound.volume = soundVolume;
         sound.Play();
         StartCoroutine(SoundAfterOff(sfxSource, soundObject));
     }
@@ -104,6 +117,7 @@ public class SoundManager : SerializedMonoBehaviour {
         AudioSource sound = soundObject.GetComponent<AudioSource>();
         sound.clip = sfxSource;
         sound.time = 0;
+        sound.volume = soundVolume;
         sound.Play();
         StartCoroutine(SoundAfterOff(sfxSource, soundObject));
     }
@@ -129,15 +143,8 @@ public class SoundManager : SerializedMonoBehaviour {
         yield return new WaitForSeconds(0.1f);
         soundObject.SetActive(false);
     }
-
-
-
-
-
-
-
-
 }
+
 public enum VoiceType {
     ATTACK = 1500,
     CHARGE,
