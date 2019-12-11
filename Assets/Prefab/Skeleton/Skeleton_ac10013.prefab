@@ -142,6 +142,8 @@ MonoBehaviour:
   arrow: {fileID: 8366574016604891916, guid: 490182c9a4d608142b1dd4faf0a4b091, type: 3}
   hidingObject: {fileID: 0}
   teleportMove: 0
+  isGlow: 0
+  spineColor: {r: 1, g: 1, b: 1, a: 1}
   headbone: {fileID: 0}
   bodybone: {fileID: 0}
   rootbone: {fileID: 0}

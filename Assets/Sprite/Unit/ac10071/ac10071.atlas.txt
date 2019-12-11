@@ -1,0 +1,83 @@
+
+ac10071.png
+size: 1024,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+L_leg
+  rotate: true
+  xy: 305, 194
+  size: 67, 91
+  orig: 67, 91
+  offset: 0, 0
+  index: -1
+L_low_arm
+  rotate: false
+  xy: 396, 198
+  size: 82, 124
+  orig: 82, 124
+  offset: 0, 0
+  index: -1
+L_low_arm2
+  rotate: true
+  xy: 0, 0
+  size: 181, 207
+  orig: 181, 207
+  offset: 0, 0
+  index: -1
+R_arm1
+  rotate: false
+  xy: 478, 201
+  size: 89, 121
+  orig: 89, 121
+  offset: 0, 0
+  index: -1
+R_leg
+  rotate: false
+  xy: 484, 110
+  size: 66, 91
+  orig: 66, 91
+  offset: 0, 0
+  index: -1
+body
+  rotate: true
+  xy: 207, 14
+  size: 167, 140
+  orig: 167, 140
+  offset: 0, 0
+  index: -1
+ex
+  rotate: false
+  xy: 0, 181
+  size: 305, 308
+  orig: 305, 308
+  offset: 0, 0
+  index: -1
+head
+  rotate: true
+  xy: 347, 27
+  size: 167, 137
+  orig: 167, 137
+  offset: 0, 0
+  index: -1
+head2
+  rotate: true
+  xy: 379, 322
+  size: 167, 137
+  orig: 167, 137
+  offset: 0, 0
+  index: -1
+head3
+  rotate: true
+  xy: 516, 322
+  size: 167, 137
+  orig: 167, 137
+  offset: 0, 0
+  index: -1
+shadow
+  rotate: true
+  xy: 305, 261
+  size: 228, 74
+  orig: 228, 74
+  offset: 0, 0
+  index: -1
