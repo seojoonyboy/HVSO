@@ -76,6 +76,7 @@ public partial class AccountManager : Singleton<AccountManager> {
         cardPackage = Resources.Load("CardDatas/CardDataPackage_01") as CardDataPackage;
         resource = transform.GetComponent<ResourceManager>();
         gameObject.AddComponent<Timer.TimerManager>();
+        
         PlayerPrefs.DeleteKey("ReconnectData");
     }
 

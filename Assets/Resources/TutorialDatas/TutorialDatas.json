@@ -298,6 +298,10 @@
                 "description" : null,
                 "methods" : [
                     {
+                        "name" : "SetPlayerPrefabStoryUnlocked",
+                        "args" : []
+                    },
+                    {
                         "name": "ForceToPage",
                         "args": [
                             "StoryLobby"
@@ -532,10 +536,6 @@
                         "args" : []
                     },
                     {
-                        "name" : "UnlockCardMenu",
-                        "args" : []
-                    },
-                    {
                         "name" : "EndTutorial",
                         "args" : []
                     }
@@ -632,19 +632,11 @@
                         ]
                     },
                     {
-                        "name" : "UnlockCardMenu",
-                        "args" : []
-                    },
-                    {
                         "name" : "Menu_Hide_Message",
                         "args" : []
                     },
                     {
                         "name" : "OffHighlight",
-                        "args" : []
-                    },
-                    {
-                        "name" : "UnlockCardMenu",
                         "args" : []
                     },
                     {
@@ -786,6 +778,31 @@
                 ]
             }
         ]
+    },
+    {
+        "id" : 11,
+        "description" : "카드 메뉴 잠금 해제",
+        "innerDatas" : [
+            {
+                "id" : 1,
+                "description" : null,
+                "methods" : [
+                    {
+                        "name" : "UnlockCardMenu",
+                        "args" : []
+                    },
+                    {
+                        "name" : "OffHighlight",
+                        "args" : []
+                    },
+                    {
+                        "name" : "EndTutorial",
+                        "args" : []
+                    }
+                ]
+            }
+        ]
+        
     },
     {
         "id": 100,

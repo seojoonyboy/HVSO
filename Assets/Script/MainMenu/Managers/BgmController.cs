@@ -7,9 +7,22 @@ public class BgmController : SerializedMonoBehaviour
 {
     public Dictionary<BgmEnum, AudioSource> bgmDictionary;
     public AudioSource mainAudio;
+    float bgmVolume;
+
+    public float BGMVOLUME {
+        get { return bgmVolume; }
+        set { 
+            bgmVolume = value;
+            PlayerPrefs.SetFloat("BgmVolume", value);
+            mainAudio.volume = bgmVolume;
+        }
+    }
 
     private void Awake() {
         mainAudio = gameObject.GetComponent<AudioSource>();
+        if (!PlayerPrefs.HasKey("BgmVolume"))
+            PlayerPrefs.SetFloat("BgmVolume", 0.5f);
+        mainAudio.volume = PlayerPrefs.GetFloat("BgmVolume");
         DontDestroyOnLoad(gameObject);
     }
 
@@ -25,7 +38,6 @@ public class BgmController : SerializedMonoBehaviour
         //mainAudio.loop = false;
     }
 
-
     public void PlaySoundTrack(BgmEnum type) {
         if (bgmDictionary.ContainsKey(type) == false || bgmDictionary[type] == null) {
             Logger.LogError("사운드가 없습니다.");
@@ -39,7 +51,6 @@ public class BgmController : SerializedMonoBehaviour
         else
             mainAudio.loop = true;
 
-        mainAudio.volume = 0.6f;
         mainAudio.clip = bgmDictionary[type].clip;
         mainAudio.Play();
     }
