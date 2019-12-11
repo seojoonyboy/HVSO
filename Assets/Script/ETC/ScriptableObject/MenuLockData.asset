@@ -13,8 +13,6 @@ MonoBehaviour:
   m_Name: MenuLockData
   m_EditorClassIdentifier: 
   lockMenuList:
-  - CardMenu_human
-  - CardMenu_orc
   - League
   - Story
   - DeckEdit
