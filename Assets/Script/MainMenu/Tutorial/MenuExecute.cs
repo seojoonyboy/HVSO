@@ -653,74 +653,6 @@ namespace MenuTutorialModules {
         }
     }
 
-    public class UnlockBattleAnim : MenuExecute {
-        IDisposable clickStream;
-        IEnumerator coroutine;
-
-        public override void Execute() {
-            coroutine = Proceed();
-            StartCoroutine(coroutine);
-
-            var loadingModal = GetComponent<MenuTutorialManager>().menuSceneController.hideModal;
-            loadingModal.SetActive(true);
-
-            GetComponent<MenuTutorialManager>().menuTextCanvas.SetActive(false);
-        }
-
-        IEnumerator Proceed() {
-            GameObject target = null;
-
-            GetComponent<MenuTutorialManager>().ActiveRewardPanel();
-            SkeletonGraphic skeletonGraphic = GetComponent<MenuTutorialManager>().rewardPanel.transform.Find("Anim").GetComponent<SkeletonGraphic>();
-
-            skeletonGraphic.Initialize(true);
-
-            skeletonGraphic.Skeleton.SetSkin("human");
-            skeletonGraphic.Skeleton.SetSlotsToSetupPose();
-
-            yield return new WaitForEndOfFrame();
-            var loadingModal = GetComponent<MenuTutorialManager>().menuSceneController.hideModal;
-            loadingModal.SetActive(false);
-
-            skeletonGraphic.transform.parent.Find("SubBackground").gameObject.SetActive(false);
-            skeletonGraphic.AnimationState.SetAnimation(0, "battle", false);
-
-            skeletonGraphic.transform.Find("Header/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "배틀 메뉴 해금";
-            skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "배틀 메뉴가 오픈되었습니다!";
-
-            yield return new WaitForSeconds(1.0f);
-
-            clickStream = Observable.EveryUpdate()
-                .Where(_ => Input.GetMouseButtonDown(0))
-                .Subscribe(_ => CheckClick(target));
-        }
-
-        private void CheckClick(GameObject target) {
-            if (target == null) {
-                GetComponent<MenuTutorialManager>().DeactiveRewardPanel();
-                clickStream.Dispose();
-                handler.isDone = true;
-
-                AccountManager.Instance.RequestUnlockInTutorial(4);
-
-                GetComponent<MenuTutorialManager>()
-                    .battleMenuCanvas
-                    .transform
-                    .Find("InnerCanvas/MainPanel/LeagueButton")
-                    .GetChild(0)
-                    .GetChild(0)
-                    .gameObject
-                    .SetActive(false);
-
-                GetComponent<MenuTutorialManager>().menuTextCanvas.SetActive(true);
-            }
-        }
-
-        void OnDestroy() {
-            StopAllCoroutines();
-        }
-    }
-
     public class ShowNewImage : MenuExecute {
         public override void Execute() {
             GameObject target = MenuMask.Instance.GetMenuObject(args[0]);
@@ -993,6 +925,11 @@ namespace MenuTutorialModules {
 
             AccountManager.Instance.RequestUnlockInTutorial(id);
             AccountManager.Instance.RequestQuestInfo();
+
+            //리그 Unlock시 Mode 버튼 Unlock
+            if(id == 4) {
+                GetComponent<MenuTutorialManager>().lockController.Unlock("Mode", false);
+            }
 
             handler.isDone = true;
         }

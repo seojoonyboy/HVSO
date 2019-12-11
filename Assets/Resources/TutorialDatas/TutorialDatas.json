@@ -710,8 +710,10 @@
                         ]
                     },
                     {
-                        "name" : "UnlockBattleAnim",
-                        "args" : []
+                        "name" : "RequestUnlockQuest",
+                        "args" : [
+                            "4"
+                        ]
                     },
                     {
                         "name" : "Menu_Hide_Message",
