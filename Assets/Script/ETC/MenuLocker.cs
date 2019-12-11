@@ -77,6 +77,13 @@ public class MenuLocker : MonoBehaviour {
         button.enabled = true;
     }
 
+    public void OnlyUnlockEffect() {
+        if (gameObject.activeInHierarchy) {
+            skeletonGraphic.enabled = true;
+            skeletonGraphic.AnimationState.SetAnimation(0, "animation", false);
+        }
+    }
+
     public enum State {
         LOCKED,
         UNLOCKED,

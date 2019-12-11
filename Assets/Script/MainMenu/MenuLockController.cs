@@ -55,15 +55,15 @@ public class MenuLockController : SerializedMonoBehaviour {
     /// <param name="keyword"></param>
     /// <param name="needTranslate"></param>
     public void Lock(string keyword) {
-        Logger.Log("Lock : " + keyword);
+        //Logger.Log("Lock : " + keyword);
         if (!menues.ContainsKey(keyword)) {
-            Logger.Log("keyword no exist : " + keyword);
+            Logger.LogError("keyword no exist : " + keyword);
             return;
         }
         GameObject menu = menues[keyword];
 
         if (IsMainMenu(keyword)) {
-            Logger.Log("Lock : " + keyword);
+            //Logger.Log("Lock : " + keyword);
             try {
                 switch (keyword) {
                     case "DeckEdit":
@@ -89,7 +89,7 @@ public class MenuLockController : SerializedMonoBehaviour {
                 menu.transform.Find("Lock").GetComponent<MenuLocker>().Lock();
             }
             catch(Exception ex) {
-                Logger.Log(ex);
+                Logger.LogError(ex);
             }
         }
         else {
@@ -108,15 +108,15 @@ public class MenuLockController : SerializedMonoBehaviour {
         if (fromServer) {
             translatedKeyword = FindMenuObject(keyword);
         }
-        Logger.Log("Unlock : " + translatedKeyword);
+        //Logger.Log("Unlock : " + translatedKeyword);
         if (translatedKeyword == "CardMenu") {
             menues["CardMenu_orc"].transform.Find("Lock").GetComponent<MenuLocker>().Unlock();
             menues["CardMenu_human"].transform.Find("Lock").GetComponent<MenuLocker>().Unlock();
             return;
         }
         else {
-            if(translatedKeyword == "League") {
-                menues[translatedKeyword].transform.Find("Lock").GetComponent<MenuLocker>().Unlock();
+            if(translatedKeyword == "Story") {
+                menues["Mode"].transform.parent.parent.Find("SelectedModeImage/Lock").GetComponent<MenuLocker>().OnlyUnlockEffect();
             }
             menu = menues[translatedKeyword];
             menu.transform.Find("Lock").GetComponent<MenuLocker>().Unlock();
