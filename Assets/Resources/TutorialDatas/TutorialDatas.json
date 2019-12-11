@@ -391,14 +391,6 @@
                         ]
                     },
                     {
-                        "name" : "Menu_Hide_Message",
-                        "args" : []
-                    },
-                    {
-                        "name" : "UnlockStroyAnim",
-                        "args" : []
-                    },
-                    {
                         "name" : "Menu_NPC_Talk",
                         "args" : [
                             "h10001",
@@ -499,10 +491,6 @@
                     },
                     {
                         "name" : "OffHighlight",
-                        "args" : []
-                    },
-                    {
-                        "name" : "UnlockCardMenu",
                         "args" : []
                     },
                     {
@@ -618,6 +606,10 @@
                         "args": [
                           "screen"
                         ]
+                    },
+                    {
+                        "name" : "UnlockCardMenu",
+                        "args" : []
                     },
                     {
                         "name" : "Menu_Hide_Message",
