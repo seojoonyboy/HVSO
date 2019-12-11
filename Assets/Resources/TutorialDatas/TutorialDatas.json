@@ -298,6 +298,10 @@
                 "description" : null,
                 "methods" : [
                     {
+                        "name" : "SetPlayerPrefabStoryUnlocked",
+                        "args" : []
+                    },
+                    {
                         "name": "ForceToPage",
                         "args": [
                             "StoryLobby"
