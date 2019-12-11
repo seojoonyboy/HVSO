@@ -107,7 +107,7 @@ public class ScenarioManager : SerializedMonoBehaviour
         offAllGlowEffect();
 
         gameObject.SetActive(false);
-        HUDController.SetBackButton(BattleMenuController.OnBackButton);
+        HUDController.SetHeader(HUDController.Type.SHOW_USER_INFO);
     }
 
     public void SetBackButton(int depth) {
