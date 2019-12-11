@@ -94,7 +94,7 @@ public class MenuLockController : SerializedMonoBehaviour {
         }
 
         if (!scriptable_menuLockData.lockMenuList.Exists(x => x == translatedKeyword)) scriptable_menuLockData.lockMenuList.Add(translatedKeyword);
-        if (scriptable_menuLockData.unlockMenuList.Exists(x => x == translatedKeyword)) scriptable_menuLockData.lockMenuList.Remove(translatedKeyword);
+        if (scriptable_menuLockData.unlockMenuList.Exists(x => x == translatedKeyword)) scriptable_menuLockData.unlockMenuList.Remove(translatedKeyword);
     }
 
     /// <summary>
@@ -150,7 +150,7 @@ public class MenuLockController : SerializedMonoBehaviour {
         }
 
         if (scriptable_menuLockData.lockMenuList.Exists(x => x == translatedKeyword)) scriptable_menuLockData.lockMenuList.Remove(translatedKeyword);
-        if (!scriptable_menuLockData.unlockMenuList.Exists(x => x == translatedKeyword)) scriptable_menuLockData.lockMenuList.Add(translatedKeyword);
+        if (!scriptable_menuLockData.unlockMenuList.Exists(x => x == translatedKeyword)) scriptable_menuLockData.unlockMenuList.Add(translatedKeyword);
     }
 
     public string FindMenuObject(string keyword) {
