@@ -26,6 +26,8 @@ public class LoginController : MonoBehaviour {
     }
 
     public void Login() {
+        AccountManager.Instance.prevSceneName = "Login";
+
         networkManager = NetworkManager.Instance;
         StartCoroutine(LogoReveal());
     }
