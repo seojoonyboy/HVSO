@@ -89,7 +89,7 @@ public class MenuLockController : SerializedMonoBehaviour {
                 menu.transform.Find("Lock").GetComponent<MenuLocker>().Lock();
             }
             catch(Exception ex) {
-                Logger.LogError(ex);
+                //Logger.LogError(ex);
             }
         }
         else {
@@ -159,7 +159,7 @@ public class MenuLockController : SerializedMonoBehaviour {
         scriptable_menuLockData.lockMenuList.Add("CardMenu_orc");
         scriptable_menuLockData.lockMenuList.Add("League");
         scriptable_menuLockData.lockMenuList.Add("Story");
-        scriptable_menuLockData.lockMenuList.Add("DectEdit");
+        scriptable_menuLockData.lockMenuList.Add("DeckEdit");
         scriptable_menuLockData.lockMenuList.Add("Dictionary");
         scriptable_menuLockData.lockMenuList.Add("Shop");
         scriptable_menuLockData.lockMenuList.Add("RewardBox");
