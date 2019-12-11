@@ -197,6 +197,8 @@ namespace Haegin
 #endif
         public static void init(string[] skus, OnInitialized completeHandler)
         {
+            _purchaseCompletionAction = null;
+            _purchaseRestorationAction = null;
             _initializedAction = completeHandler;
 #if UNITY_IOS || UNITY_TVOS
             if(ISN_SKPaymentQueue.IsReady)
@@ -222,16 +224,15 @@ namespace Haegin
             });
 #elif UNITY_ANDROID
 
-            if (_isInitialized)
-            {
-                completeHandler(true, false, null);
-                _initializedAction = null;
-                return;
-            }
 #if USE_ONESTORE_IAP
             OneStore.IAPManager.GetInstance().ConnectService(OnBillingSetupFinished);
-
 #else
+            if (_isInitialized)
+            {
+                OnBillingSetupFinishedProcess();
+                return;
+            }
+
             // In-App Product Info
             var settings = AN_Settings.Instance;
             settings.Vending = true;
@@ -648,6 +649,10 @@ namespace Haegin
                                     bProcessIAP = true;
                                     if (_purchaseCompletionAction != null)
                                         _purchaseCompletionAction(PurchaseResultCode.PURCHASE_INVALID_RECEIPT, null, "verification failed");
+                                    else
+                                    {
+                                        OneStore.IAPManager.GetInstance().Consume(purchase, OnConsume);
+                                    }
                                     break;
                                 case ConsumptionState.Unauthorized:  // unauthorized : 서버 문제니까 그냥 두고 다음에 다시 확인 
                                     if (_purchaseCompletionAction != null)
@@ -700,6 +705,34 @@ namespace Haegin
 
         }
 #else
+        private static void OnBillingSetupFinishedProcess()
+        {
+            // 구매완료 후 소비되지 않은 컨텐츠 소비 
+            List<AN_Purchase> list = new List<AN_Purchase>();
+            foreach (AN_Purchase tpl in AN_Billing.Inventory.Purchases)
+            {
+#if MDEBUG
+                Debug.Log("----------------------------------------------\n Not Yet Processed Product : " + tpl.ProductId + "\n--------------------------------------------------");
+#endif
+                AN_Product p = AN_Billing.Inventory.GetProductById(tpl.ProductId);
+                if (p != null && p.IsConsumable && tpl.PurchaseState == 0)
+                {
+                    list.Add(tpl);
+                }
+            }
+            if (list.Count > 0)
+            {
+                WebClient webClient = WebClient.GetInstance();
+                webClient.RequestConsumeGoogleReceipt(list, OnConsumeGoogleReceiptResult);
+                // OnConsumeGoogleReceiptResult 에서 _initializedAction을 호출한다. 미지급 상품 지급후에...
+            }
+            else
+            {
+                _initializedAction(true, false, null);
+                _initializedAction = null;
+            }
+        }
+
         private static void OnBillingSetupFinished(SA.Android.Vending.Billing.AN_BillingConnectionResult result)
         {
 #if MDEBUG
@@ -708,30 +741,7 @@ namespace Haegin
             if (result.IsSucceeded)
             {
                 _isInitialized = true;
-                // 구매완료 후 소비되지 않은 컨텐츠 소비 
-                List<AN_Purchase> list = new List<AN_Purchase>();
-                foreach (AN_Purchase tpl in AN_Billing.Inventory.Purchases)
-                {
-#if MDEBUG
-                    Debug.Log("----------------------------------------------\n Not Yet Processed Product : " + tpl.ProductId + "\n--------------------------------------------------");
-#endif
-                    AN_Product p = AN_Billing.Inventory.GetProductById(tpl.ProductId);
-                    if (p != null && p.IsConsumable && tpl.PurchaseState == 0)
-                    {
-                        list.Add(tpl);
-                    }
-                }
-                if (list.Count > 0)
-                {
-                    WebClient webClient = WebClient.GetInstance();
-                    webClient.RequestConsumeGoogleReceipt(list, OnConsumeGoogleReceiptResult);
-                    // OnConsumeGoogleReceiptResult 에서 _initializedAction을 호출한다. 미지급 상품 지급후에...
-                }
-                else
-                {
-                    _initializedAction(true, false, null);
-                    _initializedAction = null;
-                }
+                OnBillingSetupFinishedProcess();
             }
             else
             {
@@ -742,7 +752,15 @@ namespace Haegin
 
         private static void OnProductPurchased(AN_BillingPurchaseResult result)
         {
-            if(result.Error.Code == -1005)
+#if MDEBUG
+            Debug.Log("OnProductPurchased(AN_BillingPurchaseResult result) ");
+            if(result == null) Debug.Log("result = null");
+            if(result.Error == null) Debug.Log("result.Error = null");
+            Debug.Log("result.Error.Code = " + result.Error.Code);
+            Debug.Log("result.IsSucceeded = " + result.IsSucceeded);
+            if(result.Purchase == null) Debug.Log("result.Purchase = null");
+#endif
+            if(result.Error != null && result.Error.Code == -1005)
             {
                 if (_purchaseCompletionAction != null)
                     _purchaseCompletionAction(PurchaseResultCode.PURCHASE_USER_CANCEL, null, result.Error.Message);
@@ -758,17 +776,17 @@ namespace Haegin
                 }
                 else
                 {
-                    switch (result.Purchase.PurchaseState)
-                    {   /*
-                        case GooglePurchaseState.CANCELED:
-                            if (_purchaseCompletionAction != null)
-                                _purchaseCompletionAction(PurchaseResultCode.PURCHASE_USER_CANCEL, null, result.Error.Message);
-                            break;*/
-                        default:
+                    //switch (result.Purchase.PurchaseState)
+                    //{   
+                        //case GooglePurchaseState.CANCELED:
+                        //    if (_purchaseCompletionAction != null)
+                        //        _purchaseCompletionAction(PurchaseResultCode.PURCHASE_USER_CANCEL, null, result.Error.Message);
+                        //    break;
+                        //default:
                             if (_purchaseCompletionAction != null)
                                 _purchaseCompletionAction(PurchaseResultCode.PURCHASE_FAIL, null, result.Error.Message);
-                            break;
-                    }
+                        //    break;
+                    //}
                 }
             }
         }
@@ -789,7 +807,7 @@ namespace Haegin
 
         public static void OnConsumeGoogleReceiptResult(WebClient.ErrorCode error, List<GoogleConsumedProduct> consumedList, byte[] purchasedData)
         {
-            bool bProcessIAP = false;;
+            bool bProcessIAP = false;
             switch (error)
             {
                 case WebClient.ErrorCode.SUCCESS:
@@ -815,6 +833,15 @@ namespace Haegin
                                     bProcessIAP = true;
                                     if (_purchaseCompletionAction != null)
                                         _purchaseCompletionAction(PurchaseResultCode.PURCHASE_INVALID_RECEIPT, null, "verification failed");
+                                    else
+                                    {
+                                        AN_Billing.Consume(AN_Billing.Inventory.GetPurchaseByProductId(p.ProductId), (SA_Result result) => {
+                                            ThreadSafeDispatcher.Instance.Invoke(() =>
+                                            {
+                                                OnProductConsumed(result);
+                                            });
+                                        });
+                                    }
                                     break;
                                 case ConsumptionState.Unauthorized:  // unauthorized : 서버 문제니까 그냥 두고 다음에 다시 확인 
                                     if (_purchaseCompletionAction != null)

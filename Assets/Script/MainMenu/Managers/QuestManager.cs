@@ -75,6 +75,7 @@ namespace Quest {
             if(quests[0] == null) return;
             QuestData[] datas = (QuestData[])Param;
             ResetQuest();
+            datas = Array.FindAll(datas, x=> !(x.cleared && x.rewardGet));
             Array.ForEach(datas, x=>{
                 Array.ForEach(tutorialJson, y=> {
                     if(x.id == y.id) x.tutorials = y.tutorials;

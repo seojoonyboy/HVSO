@@ -17,6 +17,8 @@ public class SceneGameServiceController : MonoBehaviour
 
     private void Awake()
     {
+        UGUICommon.ResetCanvasReferenceSize(canvas);
+
         webClient = WebClient.GetInstance();
 
         webClient.ErrorOccurred += OnErrorOccurred;

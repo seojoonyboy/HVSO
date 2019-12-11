@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using UnityEngine.Events;
 
 namespace Quest {
-    public class QuestContentController : MonoBehaviour {
+    public partial class QuestContentController : MonoBehaviour {
         
         [SerializeField] private TextMeshProUGUI title;
         [SerializeField] private TextMeshProUGUI info;
@@ -68,14 +68,23 @@ namespace Quest {
         private void OnRewardReceived(Enum Event_Type, Component Sender, object Param) {
             var targetObj = (GameObject)Param;
 
-            targetObj.GetComponent<QuestContentController>().getBtn.GetComponentInChildren<TextMeshProUGUI>().text = "획득완료";
-            targetObj.GetComponent<QuestContentController>().getBtn.enabled = false;
+            //targetObj.GetComponent<QuestContentController>().getBtn.GetComponentInChildren<TextMeshProUGUI>().text = "획득완료";
+            //targetObj.GetComponent<QuestContentController>().getBtn.enabled = false;
         }
 
         private void GetReward() {
             gameObject.SetActive(false);
         }
 
+        public void RequestRewardButtonClicked() {
+            if (data.cleared && !data.rewardGet) {
+                AccountManager.Instance.RequestQuestClearReward(data.id, gameObject);
+                AccountManager.Instance.RequestQuestInfo();
+            }
+        }
+    }
+
+    public partial class QuestContentController : MonoBehaviour {
         public void ActiveTutorial() {
             for(int i = 0; i < data.tutorials.Length; i++) {
                 MethodInfo theMethod = this.GetType().GetMethod(data.tutorials[i].method);
@@ -104,6 +113,31 @@ namespace Quest {
             manager.tutorialSerializeList.scenarioManager.SetTutoQuest(this, stage);
         }
 
+        public void QuestClearShow(string[] args) {
+            // if(!data.cleared) return;
+            // manager.ShowHandIcon();
+            // ShowHandIcon();
+        }
+
+        private void ShowHandIcon() {
+            Instantiate(manager.handSpinePrefab, getBtn.transform, false).name = "tutorialHand";
+            UnityAction deleteHand = null;
+            deleteHand = () => {
+                deleteHand -= deleteHand;
+                Transform hand = getBtn.transform.Find("tutorialHand");
+                if(hand == null) return;
+                Destroy(hand.gameObject);
+            };
+            getBtn.onClick.AddListener(deleteHand);
+            getBtn.onClick.AddListener(GetPostOffice);
+        }
+
+        private async void GetPostOffice() {
+            await Task.Delay(1000);
+            getBtn.onClick.RemoveListener(GetPostOffice);
+            manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_3);
+        }
+
         public void StoryCleared(string[] args) {
             if(!data.cleared) return;
             bool isBoxGet = AccountManager.Instance.userData.etcInfo.Exists(x=>x.key.CompareTo("tutorialBox")==0);
@@ -113,31 +147,18 @@ namespace Quest {
             manager.tutoDialog.StartQuestSubSet(questEnum);
         }
 
-        /// <summary>
-        /// 메뉴 화면 카드 도감 휴먼 영웅에 손가락 표시
-        /// </summary>
-        /// <param name="args"></param>
         public void MenuDictionaryShowHand(string[] args) {
             if(data.cleared) return;
             MenuSceneController menu = MenuSceneController.menuSceneController;
             menu.DictionaryShowHand(this, args);
         }
 
-        /// <summary>
-        /// 도감 메뉴 해당 카드에 손가락 표시
-        /// cardManager.cardShowHand 함수 별개로 만들어서 거기 안에 손가락 생성 별도로 만들게 하기
-        /// </summary>
-        /// <param name="args">해당 카드 id</param>
         public void DictionaryCardHand(string[] args) {
             if(data.cleared) return;
             CardDictionaryManager cardManager = CardDictionaryManager.cardDictionaryManager;
             cardManager.cardShowHand(this, args);
         }
 
-        /// <summary>
-        /// 카드 생성 됐을 때 확인 하는 용도
-        /// </summary>
-        /// <param name="args">해당 카드 id</param>
         public void CreateCardCheck(string[] args) {
             if(data.cleared) return;
             OnEvent theEvent = null;
@@ -171,15 +192,6 @@ namespace Quest {
             manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_4);
             AccountManager.Instance.RequestUnlockInTutorial(3);
             AccountManager.Instance.RequestQuestInfo();
-        }
-
-        /// <summary>
-        /// 받기 버튼 클릭
-        /// </summary>
-        public void RequestRewardButtonClicked() {
-            if (data.cleared && !data.rewardGet) {
-                AccountManager.Instance.RequestQuestClearReward(data.id, gameObject);
-            }
         }
 
         public void MenuDeckSettingShowHand(string[] args) {

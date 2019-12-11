@@ -24,6 +24,7 @@
 	<URLScheme>hgmodsample</URLScheme>
 	<FirebaseDynamicLink>hgmodsample.page.link</FirebaseDynamicLink>
 	<AdMobAppId>ca-app-pub-8910195275590924~5903100277</AdMobAppId>
+	<iOSAdMobAppId>ca-app-pub-8910195275590924~5903100277</iOSAdMobAppId>
 	<UseAppsFlyer>False</UseAppsFlyer>
 	<SkipPermissionsDialog>True</SkipPermissionsDialog>
 	<UseIOSGoogleMobileAds7_24_0_OR_HIGHER>True</UseIOSGoogleMobileAds7_24_0_OR_HIGHER>

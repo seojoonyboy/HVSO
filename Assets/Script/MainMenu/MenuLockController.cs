@@ -6,7 +6,10 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class MenuLockController : SerializedMonoBehaviour {
+    [SerializeField] Transform MainScrollSnapContent;
     [SerializeField] Dictionary<string, GameObject> menues;
+    [SerializeField] Dictionary<string, GameObject> mainMenues;
+
     NoneIngameSceneEventHandler eventHandler;
 
     void Awake() {
@@ -40,7 +43,6 @@ public class MenuLockController : SerializedMonoBehaviour {
     /// </summary>
     public void Lock() {
         foreach(KeyValuePair<string, GameObject> pair in menues) {
-            //pair.Value.GetComponent<Button>().enabled = false;
             Lock(pair.Key, false);
         }
     }
@@ -55,8 +57,12 @@ public class MenuLockController : SerializedMonoBehaviour {
         if (needTranslate) {
             var translatedKeyword = FindMenuObject(keyword);
             if (translatedKeyword == "cardMenu") {
-                menues["cardMenu_orc"].GetComponent<Button>().enabled = false;
-                menues["cardMenu_human"].GetComponent<Button>().enabled = false;
+                menues["cardMenu_orc"]
+                    .transform.Find("Lock")
+                    .GetComponent<MenuLocker>().Lock();
+                menues["cardMenu_human"]
+                    .transform.Find("Lock")
+                    .GetComponent<MenuLocker>().Lock();
                 return;
             }
             else {
@@ -68,7 +74,40 @@ public class MenuLockController : SerializedMonoBehaviour {
         }
         if (menu == null) return;
 
-        menu.GetComponent<Button>().enabled = false;
+        Logger.Log(menu.name);
+        menu.transform.Find("Lock").GetComponent<MenuLocker>().Lock();
+    }
+
+    /// <summary>
+    /// 특정 메인 메뉴 잠금
+    /// </summary>
+    /// <param name="page"></param>
+    public void LockMainMenu(string name) {
+        if (mainMenues.ContainsKey(name)) {
+            mainMenues[name].GetComponentInChildren<MenuLocker>().Lock();
+        }
+    }
+
+    public void LockAllMainMenues() {
+        foreach(KeyValuePair<string, GameObject> pair in mainMenues) {
+            mainMenues[pair.Key].GetComponentInChildren<MenuLocker>().Lock();
+        }
+    }
+
+    /// <summary>
+    /// 특정 메인 메뉴 해금
+    /// </summary>
+    /// <param name="name"></param>
+    public void UnlockMainMenu(string name) {
+        if (mainMenues.ContainsKey(name)) {
+            mainMenues[name].GetComponentInChildren<MenuLocker>().Unlock();
+        }
+    }
+
+    public void UnlockAllMainMenues() {
+        foreach (KeyValuePair<string, GameObject> pair in mainMenues) {
+            mainMenues[pair.Key].GetComponentInChildren<MenuLocker>().Unlock();
+        }
     }
 
     /// <summary>
