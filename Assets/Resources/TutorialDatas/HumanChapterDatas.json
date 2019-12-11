@@ -6,7 +6,7 @@
         "stage_type" : "normal",
         "match_type": "tutorial",
         "myHeroId" : "h10001",
-        "enemyHeroId" : "h10002",
+        "enemyHeroId" : "qh10002",
         "map" : "forest",
         "description": "슈로덴 성 근처의 새로 만들어진 작은 마을. 갑작스럽게 침입한 오크들이 농작물과 가축을 약탈하고 있다. 적을 막아내고 물리쳐라.",
         "specialRule": "적 영웅 체력 10 \n 튜토리얼",
@@ -86,7 +86,7 @@
                     {
                         "name": "NPC_Print_message",
                         "args": [
-                            "hac10001",
+                            "qh10001",
                             "이자식들!! 멈추지 못해!!",
                             "true"
                         ]
@@ -431,7 +431,7 @@
                     {
                         "name": "NPC_Print_message",
                         "args": [
-                            "hac10001",
+                            "qh10001",
                             "뭐라고? 적을 추격해서 몰살시켜야지 왜 멈추는거야! ",
                             "true"
                         ]
@@ -445,7 +445,7 @@
                     {
                         "name": "NPC_Print_message",
                         "args": [
-                            "hac10001",
+                            "qh10001",
                             "에잇! 우리 부대만이라도 적을 추격한다!! ",
                             "true"
                         ]
@@ -488,7 +488,7 @@
         "match_type": "Protect",
         "stage_type" : "normal",
         "myHeroId" : "h10001",
-        "enemyHeroId" : "h10002",
+        "enemyHeroId" : "qh10002",
         "map" : "forest",
         "description": "성으로 돌아가려는 상단을 오크가 습격한다. 상단의 짐마차를 지키며 적을 물리쳐라.",
         "specialRule": "적 영웅 체력 10 \n 튜토리얼",
@@ -1122,6 +1122,10 @@
                         "args": []
                     },
                     {
+                        "name": "Result_battle",
+                        "args": [ "stop" ]
+                    },
+                    {
                         "name": "ChallengeEnd",
                         "args": [
                             "ENEMY_DEFEAT"
@@ -1131,6 +1135,10 @@
                         "name": "Wait_EnemyDead_Animation",
                         "args": [
                         ]
+                    },
+                    {
+                        "name": "Result_battle",
+                        "args": [ "proceed" ]
                     },
                     {
                         "name": "End_tutorial",
