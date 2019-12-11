@@ -111,12 +111,25 @@ namespace Quest {
             string camp = args[0];
             int stage = int.Parse(args[1]);
             manager.tutorialSerializeList.scenarioManager.SetTutoQuest(this, stage);
+            StoryHandInstance(manager.tutorialSerializeList.PlayButton);
+            CheckTutorialPlayed(int.Parse(args[1]));
+        }
+
+        private void CheckTutorialPlayed(int stage) {
+            bool isHumanClear = AccountManager.Instance.clearedStages.Exists(x=>(x.stageNumber == stage && x.camp.CompareTo("human") == 0));
+            if(!isHumanClear) StoryHandInstance(manager.tutorialSerializeList.HumanFlag);
+            bool isOrcClear = AccountManager.Instance.clearedStages.Exists(x=>(x.stageNumber == stage && x.camp.CompareTo("orc") == 0));
+            if(!isOrcClear) StoryHandInstance(manager.tutorialSerializeList.OrcFlag);
+        }
+
+        private void StoryHandInstance(Transform parent) {
+            Instantiate(manager.handSpinePrefab, parent, false).name = "tutorialHand";
         }
 
         public void QuestClearShow(string[] args) {
-            // if(!data.cleared) return;
-            // manager.ShowHandIcon();
-            // ShowHandIcon();
+            if(!data.cleared) return;
+            manager.ShowHandIcon();
+            ShowHandIcon();
         }
 
         private void ShowHandIcon() {
@@ -139,12 +152,12 @@ namespace Quest {
         }
 
         public void StoryCleared(string[] args) {
-            if(!data.cleared) return;
-            bool isBoxGet = AccountManager.Instance.userData.etcInfo.Exists(x=>x.key.CompareTo("tutorialBox")==0);
-            if(isBoxGet) return;
-            Type enumType = typeof(MenuTutorialManager.TutorialType);
-            MenuTutorialManager.TutorialType questEnum = (MenuTutorialManager.TutorialType)Enum.Parse(enumType, args[0].ToUpper());
-            manager.tutoDialog.StartQuestSubSet(questEnum);
+            // if(!data.cleared) return;
+            // bool isBoxGet = AccountManager.Instance.userData.etcInfo.Exists(x=>x.key.CompareTo("tutorialBox")==0);
+            // if(isBoxGet) return;
+            // Type enumType = typeof(MenuTutorialManager.TutorialType);
+            // MenuTutorialManager.TutorialType questEnum = (MenuTutorialManager.TutorialType)Enum.Parse(enumType, args[0].ToUpper());
+            // manager.tutoDialog.StartQuestSubSet(questEnum);
         }
 
         public void MenuDictionaryShowHand(string[] args) {
