@@ -19950,11 +19950,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 2365456590538964527, guid: 69efe2d34efe54f4e82b895e13f01f96,
-        type: 3}
-      propertyPath: m_SortingOrder
-      value: 749
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 69efe2d34efe54f4e82b895e13f01f96, type: 3}
 --- !u!224 &907461067 stripped
@@ -46611,7 +46606,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 130, y: 285}
+  m_AnchoredPosition: {x: 220, y: 285}
   m_SizeDelta: {x: 867, y: 881}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2143433575

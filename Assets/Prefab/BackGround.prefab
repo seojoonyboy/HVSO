@@ -1627,7 +1627,7 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 50
+  m_SortingOrder: 58
 --- !u!114 &7821517856183327682
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3778,7 +3778,7 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 50
+  m_SortingOrder: 58
 --- !u!114 &7635460094437943838
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4187,7 +4187,7 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 50
+  m_SortingOrder: 58
 --- !u!114 &2364628793624005458
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5455,7 +5455,7 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 50
+  m_SortingOrder: 58
 --- !u!114 &9019412444463035288
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5922,7 +5922,7 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 51
+  m_SortingOrder: 58
 --- !u!114 &7883230381236524699
 MonoBehaviour:
   m_ObjectHideFlags: 0
