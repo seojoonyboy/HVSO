@@ -118,7 +118,7 @@ namespace Quest {
             public GameObject newMail;
             public ScenarioManager scenarioManager;
             public DeckSettingManager deckSettingManager;
-            public GameObject BattleObject;
+            public Button BattleButton;
             public Button backButton;
             public Button mailReceiveButton;
             public Button openMailButton;
@@ -128,6 +128,8 @@ namespace Quest {
             public HorizontalScrollSnap horizontalScrollSnap;
             public GameObject newCardMenu;
             public GameObject newDeckMenu;
+            public GameObject newBattleMenu;
+            public Button modeSelect;
         }
 
     }

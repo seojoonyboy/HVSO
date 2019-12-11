@@ -273,15 +273,24 @@ namespace Quest {
         }
 
         public void BattleShow(string[] args) {
-            GameObject battle = manager.tutorialSerializeList.BattleObject;
+            if(data.cleared) return;
+            manager.tutorialSerializeList.modeSelect.onClick.AddListener(ModeClicked);
+            manager.tutorialSerializeList.newBattleMenu.SetActive(true);
+            GameObject battle = manager.tutorialSerializeList.BattleButton.gameObject;
             Instantiate(manager.handSpinePrefab, battle.transform, false);
 
-            battle.GetComponent<Button>().onClick.AddListener(BattleClicked);
+            manager.tutorialSerializeList.BattleButton.onClick.AddListener(BattleClicked);
+        }
+
+        public void ModeClicked() {
+            manager.tutorialSerializeList.modeSelect.GetComponent<Button>().onClick.RemoveListener(ModeClicked);
+            manager.tutorialSerializeList.menuLockController.Unlock("League", false);
         }
 
         private void BattleClicked() {
-            GameObject battle = manager.tutorialSerializeList.BattleObject;
-            battle.GetComponent<Button>().onClick.RemoveListener(BattleClicked);
+            manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_8);
+            manager.tutorialSerializeList.newBattleMenu.SetActive(false);
+            manager.tutorialSerializeList.BattleButton.GetComponent<Button>().onClick.RemoveListener(BattleClicked);
             AccountManager.Instance.RequestQuestProgress(data.id);
         }
     }
