@@ -160,6 +160,7 @@ namespace Quest {
         }
 
         private void BreakCardDictionaryTab() {
+            manager.tutorialSerializeList.menuLockController.Unlock("Dictionary", false);
             Debug.Log("부셔야한다.....");
         }
 
