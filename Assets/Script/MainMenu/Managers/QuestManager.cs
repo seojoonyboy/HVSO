@@ -14,7 +14,7 @@ namespace Quest {
         [SerializeField] Transform content;
         [SerializeField] HUDController HUDController;
         [SerializeField] GameObject newIcon;
-        public MenuTutorialManager tutoDialog;
+        public MenuSceneController tutoDialog;
 
         public GameObject handSpinePrefab;
         private List<QuestContentController> quests;

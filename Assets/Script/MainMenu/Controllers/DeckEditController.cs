@@ -83,10 +83,16 @@ public class DeckEditController : MonoBehaviour {
     }
 
     private void OnDeckModified(Enum Event_Type, Component Sender, object Param) {
+        try{
         if (EscapeKeyController.escapeKeyCtrl.escapeFunc.Count > 2)
             EscapeKeyController.escapeKeyCtrl.escapeFunc.RemoveRange(1, 3);
         else
             EscapeKeyController.escapeKeyCtrl.RemoveEscape(CancelButton);
+        }
+        catch (Exception e) {
+            Debug.Log("Escape Error JustSkipping");
+            Debug.LogWarning(e);
+        }
         menuSceneController.decksLoader.Load();
         gameObject.SetActive(false);
     }
