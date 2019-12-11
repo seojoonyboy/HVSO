@@ -653,35 +653,6 @@ namespace MenuTutorialModules {
         }
     }
 
-    /// <summary>
-    /// 메인화면에서 스토리 메뉴 전체 해금 표시
-    /// </summary>
-    public class UnlockStroyAnim : MenuExecute {
-        IEnumerator coroutine;
-        NoneIngameSceneEventHandler eventHandler;
-        public override void Execute() {
-            eventHandler = NoneIngameSceneEventHandler.Instance;
-            eventHandler.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, OnUserDataUpdated);
-        }
-
-        private void OnUserDataUpdated(Enum Event_Type, Component Sender, object Param) {
-            coroutine = Proceed();
-            StartCoroutine(coroutine);
-            eventHandler.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, OnUserDataUpdated);
-        }
-
-        IEnumerator Proceed() {
-            yield return new WaitForSeconds(1.0f);
-            PlayerPrefs.SetString("StoryUnlocked", "true");
-            handler.isDone = true;
-        }
-
-        void OnDestroy() {
-            eventHandler.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, OnUserDataUpdated);
-            StopAllCoroutines();
-        }
-    }
-
     public class UnlockBattleAnim : MenuExecute {
         IDisposable clickStream;
         IEnumerator coroutine;
@@ -1058,6 +1029,13 @@ namespace MenuTutorialModules {
             AccountManager.Instance.RequestUnlockInTutorial(id);
             AccountManager.Instance.RequestQuestInfo();
 
+            handler.isDone = true;
+        }
+    }
+
+    public class SetPlayerPrefabStoryUnlocked : MenuExecute {
+        public override void Execute() {
+            PlayerPrefs.SetString("StoryUnlocked", "true");
             handler.isDone = true;
         }
     }
