@@ -53,8 +53,9 @@ public class SoundManager : SerializedMonoBehaviour {
         AttackSound(magicSfx[id]);
     }
 
-    public void PlayUnitVoice(UnitRace race, VoiceType voice) {
-        if (unitSound[race] == null) return;
+    public void PlayUnitVoice(string id, VoiceType voice) {
+        if (AccountManager.Instance.resource.unitRace.ContainsKey(id) == false) return;
+        UnitRace race = AccountManager.Instance.resource.unitRace[id];
         AudioClip unitAudio = unitSound[race][voice];
         PlaySfx(unitAudio);
     }
