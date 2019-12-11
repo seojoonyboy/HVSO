@@ -312,14 +312,47 @@
                         "args": []
                     },
                     {
-                        "name" : "OffHighlight",
-                        "args" : []
+                        "name": "Dimmed",
+                        "args": [
+                            "hud_back_button",
+                            "on"
+                        ]
+                    },
+                    {
+                        "name": "ShowHandUI",
+                        "args": [
+                          "hud_back_button",
+                          "touch"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                            "hud_back_button"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "hud_back_button",
+                            "off"
+                        ]
+                    },
+                    {
+                        "name": "HideHandUI",
+                        "args": [
+                            "hud_back_button"
+                        ]
                     },
                     {
                         "name" : "RequestUnlockQuest",
                         "args" : [
                             "1"
                         ]
+                    },
+                    {
+                        "name" : "OffHighlight",
+                        "args" : []
                     },
                     {
                         "name" : "EndTutorial",
@@ -338,8 +371,43 @@
                 "description" : null,
                 "methods" : [
                     {
-                        "name": "DestroyLoadingModal",
-                        "args": []
+                        "name" : "Wait_Until",
+                        "args" : [
+                            "1"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "hud_back_button",
+                            "on"
+                        ]
+                    },
+                    {
+                        "name": "ShowHandUI",
+                        "args": [
+                          "hud_back_button",
+                          "touch"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                            "hud_back_button"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "hud_back_button",
+                            "off"
+                        ]
+                    },
+                    {
+                        "name": "HideHandUI",
+                        "args": [
+                            "hud_back_button"
+                        ]
                     },
                     {
                         "name" : "Menu_NPC_Talk",
@@ -406,48 +474,9 @@
                         "args": []
                     },
                     {
-                        "name": "ForceToPage",
-                        "args": [
-                            "StoryLobby"
-                        ]
-                    },
-                    {
-                        "name": "Menu_Scope_Object",
-                        "args": [
-                            "hud_back_button"
-                        ]
-                    },
-                    {
-                        "name": "Dimmed",
-                        "args": [
-                            "hud_back_button",
-                            "on"
-                        ]
-                    },
-                    {
-                        "name": "ShowHandUI",
-                        "args": [
-                          "hud_back_button",
-                          "touch"
-                        ]
-                    },
-                    {
-                        "name": "Wait_Click",
-                        "args": [
-                            "hud_back_button"
-                        ]
-                    },
-                    {
-                        "name": "Dimmed",
-                        "args": [
-                            "hud_back_button",
-                            "off"
-                        ]
-                    },
-                    {
-                        "name": "HideHandUI",
-                        "args": [
-                            "hud_back_button"
+                        "name" : "Wait_Until",
+                        "args" : [
+                            "1"
                         ]
                     },
                     {
