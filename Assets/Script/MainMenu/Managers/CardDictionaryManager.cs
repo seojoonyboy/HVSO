@@ -806,12 +806,12 @@ public class CardDictionaryManager : MonoBehaviour {
             }
         }
         if(tutorialHand != null) {
-            if(closingToShowEditDeckLock) {
-                quest.CloseDictionary();
-                closingToShowEditDeckLock = false;
-            }
             tutorialHand.transform.parent.transform.GetComponent<Button>().onClick.RemoveListener(tutoAction);
             Destroy(tutorialHand);
+        }
+        if(closingToShowEditDeckLock) {
+                quest.CloseDictionary();
+                closingToShowEditDeckLock = false;
         }
     }
 

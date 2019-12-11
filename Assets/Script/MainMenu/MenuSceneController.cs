@@ -405,7 +405,13 @@ public class MenuSceneController : MonoBehaviour {
         Transform cardMenu = dictionaryMenu.Find("HumanButton/CardDic");
         Instantiate(quest.manager.handSpinePrefab, cardMenu.transform, false).name = "tutorialHand";
         tutoAction = () => quest.DictionaryCardHand(args);
+        UnityEngine.Events.UnityAction firstShow = null;
+        firstShow = () => {
+            quest.ReadyEnterCardMenu();
+            cardMenu.GetComponent<Button>().onClick.RemoveListener(firstShow);
+        };
         cardMenu.GetComponent<Button>().onClick.AddListener(tutoAction);
+        cardMenu.GetComponent<Button>().onClick.AddListener(firstShow);
     }
 
     public void DictionaryRemoveHand() {

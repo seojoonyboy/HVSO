@@ -22,7 +22,7 @@ namespace Quest {
         public QuestData data;
         public QuestManager manager;
         
-        private void Start() {
+        private void OnEnable() {
             if(data == null) return;
             title.text = data.name;
             info.text = data.desc;
@@ -194,14 +194,11 @@ namespace Quest {
             MenuSceneController menu = MenuSceneController.menuSceneController;
             menu.DictionaryShowHand(this, args);
             manager.tutorialSerializeList.newCardMenu.SetActive(true);
-            manager.tutorialSerializeList.horizontalScrollSnap.OnSelectionChangeEndEvent.AddListener(ReadyEnterCardMenu);
         }
 
-        private void ReadyEnterCardMenu(int screen) {
-            if(screen != 1) return;
+        public void ReadyEnterCardMenu() {
             manager.tutorialSerializeList.newCardMenu.SetActive(false);
             manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_5);
-            manager.tutorialSerializeList.horizontalScrollSnap.OnSelectionChangeEndEvent.RemoveListener(ReadyEnterCardMenu);
         }
 
         public void DictionaryCardHand(string[] args) {
@@ -216,7 +213,6 @@ namespace Quest {
             theEvent = (type, Sender, Param) => {
                 var card = Array.Find(AccountManager.Instance.myCards, x=>x.cardId.CompareTo(args[0])==0);
                 if(card == null) return;
-                Start();
                 if(card.cardCount != 4) return;
                 createCardDone();
                 NoneIngameSceneEventHandler.Instance.RemoveListener(
