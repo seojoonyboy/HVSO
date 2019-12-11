@@ -273,7 +273,8 @@ public class MenuSceneController : MonoBehaviour {
 
     public void ScrollSnapButtonChange() {
         fixedCanvas.Find("InnerCanvas/Footer").GetChild(currentPage).GetChild(0).gameObject.SetActive(false);
-        currentPage = windowScrollSnap.CurrentPage + 1;
+        currentPage = windowScrollSnap.CurrentPageObject().GetComponent<dataModules.IntergerIndex>().Id + 1;
+        Logger.Log("currentPage :" + currentPage);
         menuButton.AnimationState.SetAnimation(0, "IDLE_" + (currentPage + 1).ToString(), true);
         fixedCanvas.Find("InnerCanvas/Footer").GetChild(currentPage).GetChild(0).gameObject.SetActive(true);
     }

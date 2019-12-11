@@ -82,7 +82,11 @@ public class MenuLockController : SerializedMonoBehaviour {
 
                 MainScrollSnapContent.parent.GetComponent<HorizontalScrollSnap>().enabled = false;
                 MainScrollSnapContent.parent.GetComponent<HorizontalScrollSnap>().enabled = true;
-                
+
+                MainScrollSnapContent.parent.GetComponent<HorizontalScrollSnap>().CurrentPage = 2;
+                int mainSibilingIndex = MainScrollSnapContent.Find("MainWindow").GetSiblingIndex();
+                MainScrollSnapContent.parent.GetComponent<HorizontalScrollSnap>().GoToScreen(mainSibilingIndex);
+
                 menu.transform.Find("Lock").GetComponent<MenuLocker>().Lock();
             }
             catch(Exception ex) {
@@ -138,6 +142,10 @@ public class MenuLockController : SerializedMonoBehaviour {
 
                 MainScrollSnapContent.parent.GetComponent<HorizontalScrollSnap>().enabled = false;
                 MainScrollSnapContent.parent.GetComponent<HorizontalScrollSnap>().enabled = true;
+
+                MainScrollSnapContent.parent.GetComponent<HorizontalScrollSnap>().CurrentPage = 2;
+                int mainSibilingIndex = MainScrollSnapContent.Find("MainWindow").GetSiblingIndex();
+                MainScrollSnapContent.parent.GetComponent<HorizontalScrollSnap>().GoToScreen(mainSibilingIndex);
 
                 menu.transform.Find("Lock").GetComponent<MenuLocker>().Unlock();
             }
