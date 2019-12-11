@@ -140,8 +140,9 @@ public partial class CardDropManager {
                     for (int j = 0; j < attribute.Length; j++) {
                         if (attribute[j] == "chain") {
                             if(unitLine[i][1].childCount != 0) continue;
-                            unitLine[i][0].GetChild(0).position = new Vector3(unitLine[i][0].position.x, unitLine[i][0].GetChild(0).position.y + 0.5f, 0);
+                            unitLine[i][0].GetChild(0).position = new Vector3(unitLine[i][0].position.x, unitLine[i][0].GetChild(0).position.y + 1.5f, 0);
                             unitLine[i][0].GetChild(0).Find("InfoWindowTrigger").gameObject.SetActive(false);
+                            unitLine[i][0].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(false);
                             slotLine[i].GetChild(1).gameObject.SetActive(true);
                             slotLine[i].GetChild(2).gameObject.SetActive(true);
                         }
@@ -169,6 +170,7 @@ public partial class CardDropManager {
                             if (attribute[j] == "chain") {
                                 unitLine[i][0].GetChild(0).position = new Vector3(unitLine[i][0].position.x, unitLine[i][0].GetChild(0).position.y + 1.5f, 0);
                                 unitLine[i][0].GetChild(0).Find("InfoWindowTrigger").gameObject.SetActive(false);
+                                unitLine[i][0].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(false);
                                 slotLine[i].GetChild(1).gameObject.SetActive(true);
                                 slotLine[i].GetChild(2).gameObject.SetActive(true);
                             }
@@ -183,6 +185,7 @@ public partial class CardDropManager {
                         if (unitLine[i][1].childCount == 0) {
                             unitLine[i][0].GetChild(0).position = new Vector3(unitLine[i][0].position.x, unitLine[i][0].GetChild(0).position.y + 1.5f, 0);
                             unitLine[i][0].GetChild(0).Find("InfoWindowTrigger").gameObject.SetActive(false);
+                            unitLine[i][0].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(false);
                             slotLine[i].GetChild(1).gameObject.SetActive(true);
                             slotLine[i].GetChild(2).gameObject.SetActive(true);
                         }
@@ -218,6 +221,7 @@ public partial class CardDropManager {
                         if (attribute[j] == "chain") {
                             unitLine[i][0].GetChild(0).position = new Vector3(unitLine[i][0].position.x, unitLine[i][0].GetChild(0).position.y + 1.5f, 0);
                             unitLine[i][0].GetChild(0).Find("InfoWindowTrigger").gameObject.SetActive(false);
+                            unitLine[i][0].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(false);
                             slotLine[i].GetChild(1).gameObject.SetActive(true);
                             slotLine[i].GetChild(2).gameObject.SetActive(true);
                             if (isSkill) {
@@ -251,6 +255,7 @@ public partial class CardDropManager {
                             if (attribute[j] == "chain") {
                                 unitLine[i][0].GetChild(0).position = new Vector3(unitLine[i][0].position.x, unitLine[i][0].GetChild(0).position.y + 1.5f, 0);
                                 unitLine[i][0].GetChild(0).Find("InfoWindowTrigger").gameObject.SetActive(false);
+                                unitLine[i][0].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(false);
                                 slotLine[i].GetChild(1).gameObject.SetActive(true);
                                 slotLine[i].GetChild(2).gameObject.SetActive(true);
                                 if (isSkill) {
@@ -271,6 +276,7 @@ public partial class CardDropManager {
                         if (unitLine[i][1].childCount == 0) {
                             unitLine[i][0].GetChild(0).position = new Vector3(unitLine[i][0].position.x, unitLine[i][0].GetChild(0).position.y + 1.5f, 0);
                             unitLine[i][0].GetChild(0).Find("InfoWindowTrigger").gameObject.SetActive(false);
+                            unitLine[i][0].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(false);
                             slotLine[i].GetChild(1).gameObject.SetActive(true);
                             slotLine[i].GetChild(2).gameObject.SetActive(true);
                             if (isSkill) {
