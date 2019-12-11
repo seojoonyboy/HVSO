@@ -672,6 +672,7 @@ namespace MenuTutorialModules {
 
         IEnumerator Proceed() {
             yield return new WaitForSeconds(1.0f);
+            PlayerPrefs.SetString("StoryUnlocked", "true");
             handler.isDone = true;
         }
     }
@@ -737,6 +738,10 @@ namespace MenuTutorialModules {
 
                 GetComponent<MenuTutorialManager>().menuTextCanvas.SetActive(true);
             }
+        }
+
+        void OnDestroy() {
+            StopAllCoroutines();
         }
     }
 
@@ -969,7 +974,6 @@ namespace MenuTutorialModules {
 
             switch (pageName) {
                 case "StoryLobby":
-                    GetComponent<MenuTutorialManager>().battleMenuCanvas.gameObject.SetActive(true);
                     GetComponent<MenuTutorialManager>().scenarioManager.gameObject.SetActive(true);
                     break;
             }

@@ -312,14 +312,47 @@
                         "args": []
                     },
                     {
-                        "name" : "OffHighlight",
-                        "args" : []
+                        "name": "Dimmed",
+                        "args": [
+                            "hud_back_button",
+                            "on"
+                        ]
+                    },
+                    {
+                        "name": "ShowHandUI",
+                        "args": [
+                          "hud_back_button",
+                          "touch"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                            "hud_back_button"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "hud_back_button",
+                            "off"
+                        ]
+                    },
+                    {
+                        "name": "HideHandUI",
+                        "args": [
+                            "hud_back_button"
+                        ]
                     },
                     {
                         "name" : "RequestUnlockQuest",
                         "args" : [
                             "1"
                         ]
+                    },
+                    {
+                        "name" : "OffHighlight",
+                        "args" : []
                     },
                     {
                         "name" : "EndTutorial",
@@ -337,6 +370,45 @@
                 "id" : 1,
                 "description" : null,
                 "methods" : [
+                    {
+                        "name" : "Wait_Until",
+                        "args" : [
+                            "1"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "hud_back_button",
+                            "on"
+                        ]
+                    },
+                    {
+                        "name": "ShowHandUI",
+                        "args": [
+                          "hud_back_button",
+                          "touch"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                            "hud_back_button"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "hud_back_button",
+                            "off"
+                        ]
+                    },
+                    {
+                        "name": "HideHandUI",
+                        "args": [
+                            "hud_back_button"
+                        ]
+                    },
                     {
                         "name" : "Menu_NPC_Talk",
                         "args" : [
@@ -402,48 +474,9 @@
                         "args": []
                     },
                     {
-                        "name": "ForceToPage",
-                        "args": [
-                            "StoryLobby"
-                        ]
-                    },
-                    {
-                        "name": "Menu_Scope_Object",
-                        "args": [
-                            "hud_back_button"
-                        ]
-                    },
-                    {
-                        "name": "Dimmed",
-                        "args": [
-                            "hud_back_button",
-                            "on"
-                        ]
-                    },
-                    {
-                        "name": "ShowHandUI",
-                        "args": [
-                          "hud_back_button",
-                          "touch"
-                        ]
-                    },
-                    {
-                        "name": "Wait_Click",
-                        "args": [
-                            "hud_back_button"
-                        ]
-                    },
-                    {
-                        "name": "Dimmed",
-                        "args": [
-                            "hud_back_button",
-                            "off"
-                        ]
-                    },
-                    {
-                        "name": "HideHandUI",
-                        "args": [
-                            "hud_back_button"
+                        "name" : "Wait_Until",
+                        "args" : [
+                            "1"
                         ]
                     },
                     {
@@ -766,6 +799,28 @@
                     {
                         "name" : "EndTutorial",
                         "args" : []
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 100,
+        "description" : "QUEST_SUB_SET_100 (스토리 인게임 플레이 이후 로비 강제 이동시키기)",
+        "innerDatas": [
+            {
+                "id" : 1,
+                "description" : null,
+                "methods" : [
+                    {
+                        "name": "ForceToPage",
+                        "args": [
+                            "StoryLobby"
+                        ]
+                    },
+                    {
+                        "name": "DestroyLoadingModal",
+                        "args": []
                     }
                 ]
             }
