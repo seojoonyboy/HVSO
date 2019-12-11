@@ -131,8 +131,9 @@ public partial class BattleConnector : MonoBehaviour {
             playerHeroNameTxt.text = humanHeroName;
             playerNickNameTxt.text = humanPlayerNickName;
 
-            enemyHeroNameTxt.text =  orcHeroName;
-            enemyNickNameTxt.text =  orcPlayerNickName;
+            enemyHeroNameTxt.text = (mode == "story") ? "오크병사" : orcHeroName;
+            enemyNickNameTxt.text = (mode == "story") ? "오크병사" : orcPlayerNickName;
+
 
             for (int i = 0; i < humanTier; i++) {
                 PlayerTierParent.GetChild(i).Find("Active").gameObject.SetActive(true);
@@ -142,8 +143,10 @@ public partial class BattleConnector : MonoBehaviour {
                 EnemyTierParent.GetChild(i).Find("Active").gameObject.SetActive(true);
                 EnemyTierParent.GetChild(i).Find("Deactive").gameObject.SetActive(false);
             }
-            machine.transform.Find("EnemyCharacter/EnemyKracus").gameObject.GetComponent<Image>().sprite
-                = AccountManager.Instance.resource.heroPortraite[gameState.players.orc.hero.id];
+            if (mode == "story")
+                machine.transform.Find("EnemyCharacter/EnemyKracus").gameObject.GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite["qh10002"];
+            else
+                machine.transform.Find("EnemyCharacter/EnemyKracus").gameObject.GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[gameState.players.human.hero.id];
         }
         else if (race == "orc") {
             playerHeroNameTxt.text = orcHeroName;

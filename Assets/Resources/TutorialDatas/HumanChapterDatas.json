@@ -1122,6 +1122,10 @@
                         "args": []
                     },
                     {
+                        "name": "Result_battle",
+                        "args": [ "stop" ]
+                    },
+                    {
                         "name": "ChallengeEnd",
                         "args": [
                             "ENEMY_DEFEAT"
@@ -1131,6 +1135,10 @@
                         "name": "Wait_EnemyDead_Animation",
                         "args": [
                         ]
+                    },
+                    {
+                        "name": "Result_battle",
+                        "args": [ "proceed" ]
                     },
                     {
                         "name": "End_tutorial",
