@@ -1,5 +1,14 @@
 [
     {
+        "id" : 0,
+        "tutorials" : [
+            {
+                "method" : "StartMailTutorial",
+                "args" : []
+            }
+        ]
+    },
+    {
         "id" : 1,
         "tutorials" : [
             {
