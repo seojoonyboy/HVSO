@@ -1056,6 +1056,8 @@ namespace MenuTutorialModules {
             }
 
             AccountManager.Instance.RequestUnlockInTutorial(id);
+            AccountManager.Instance.RequestQuestInfo();
+
             handler.isDone = true;
         }
     }
