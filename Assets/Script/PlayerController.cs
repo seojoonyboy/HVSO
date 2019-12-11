@@ -125,7 +125,7 @@ public class PlayerController : MonoBehaviour
         string id;
         GameObject hero;
         if (ScenarioGameManagment.scenarioInstance != null && isPlayer == false && isHuman == true)
-            id = "hac10001";
+            id = "qh10001";
         else {
             if (isHuman == true)
                 id = PlayMangement.instance.socketHandler.gameState.players.human.hero.id;

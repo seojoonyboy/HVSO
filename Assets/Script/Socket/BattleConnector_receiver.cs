@@ -162,7 +162,7 @@ public partial class BattleConnector : MonoBehaviour {
             }
             
             if (mode == "story")
-                machine.transform.Find("EnemyCharacter/EnemyZerod").gameObject.GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite["hac10001"];
+                machine.transform.Find("EnemyCharacter/EnemyZerod").gameObject.GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite["qh10001"];
             else
                 machine.transform.Find("EnemyCharacter/EnemyZerod").gameObject.GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[gameState.players.human.hero.id];
 
