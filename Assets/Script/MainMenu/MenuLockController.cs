@@ -4,13 +4,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UI.Extensions;
 
 public class MenuLockController : SerializedMonoBehaviour {
     [SerializeField] Transform MainScrollSnapContent;
     [SerializeField] Dictionary<string, GameObject> menues;
-    [SerializeField] Dictionary<string, GameObject> mainMenues;
 
     NoneIngameSceneEventHandler eventHandler;
+    [SerializeField] MenuLockData scriptable_menuLockData;
 
     void Awake() {
         eventHandler = NoneIngameSceneEventHandler.Instance;
@@ -22,19 +23,20 @@ public class MenuLockController : SerializedMonoBehaviour {
     }
 
     private void OnUserDataUpdated(Enum Event_Type, Component Sender, object Param) {
-        var etcInfo = AccountManager.Instance.userData.etcInfo;
-        if (etcInfo == null) {
-            Lock();
-            return;
+        foreach(string menuName in scriptable_menuLockData.lockMenuList) {
+            Lock(menuName);
         }
-        var unlockInfo = etcInfo.Find(x => x.key == "unlockInfo");
-        if (unlockInfo == null) return;
 
-        Lock(); //일단 다 잠금
-        string data = unlockInfo.value;
-        string[] menuNames = data.Split(',');
-        foreach(string name in menuNames) {
-            Unlock(name);
+        var etcInfo = AccountManager.Instance.userData.etcInfo;
+        if (etcInfo != null) {
+            var unlockInfo = etcInfo.Find(x => x.key == "unlockInfo");
+            if (unlockInfo == null) return;
+
+            string data = unlockInfo.value;
+            string[] menuNames = data.Split(',');
+            foreach (string name in menuNames) {
+                Unlock(name, true);
+            }
         }
     }
 
@@ -43,7 +45,7 @@ public class MenuLockController : SerializedMonoBehaviour {
     /// </summary>
     public void Lock() {
         foreach(KeyValuePair<string, GameObject> pair in menues) {
-            Lock(pair.Key, false);
+            Lock(pair.Key);
         }
     }
 
@@ -52,61 +54,46 @@ public class MenuLockController : SerializedMonoBehaviour {
     /// </summary>
     /// <param name="keyword"></param>
     /// <param name="needTranslate"></param>
-    public void Lock(string keyword, bool needTranslate) {
-        GameObject menu = null;
-        if (needTranslate) {
-            var translatedKeyword = FindMenuObject(keyword);
-            if (translatedKeyword == "cardMenu") {
-                menues["cardMenu_orc"]
-                    .transform.Find("Lock")
-                    .GetComponent<MenuLocker>().Lock();
-                menues["cardMenu_human"]
-                    .transform.Find("Lock")
-                    .GetComponent<MenuLocker>().Lock();
-                return;
+    public void Lock(string keyword) {
+        Logger.Log("Lock : " + keyword);
+        if (!menues.ContainsKey(keyword)) {
+            Logger.Log("keyword no exist : " + keyword);
+            return;
+        }
+        GameObject menu = menues[keyword];
+
+        if (IsMainMenu(keyword)) {
+            Logger.Log("Lock : " + keyword);
+            try {
+                switch (keyword) {
+                    case "DeckEdit":
+                        Transform DeckSettingWindow = MainScrollSnapContent.Find("DeckSettingWindow");
+                        DeckSettingWindow.SetParent(MainScrollSnapContent.parent);
+                        DeckSettingWindow.gameObject.SetActive(false);
+                        break;
+                    case "Dictionary":
+                        Transform DictionarySelect = MainScrollSnapContent.Find("DictionarySelect");
+                        DictionarySelect.SetParent(MainScrollSnapContent.parent);
+                        DictionarySelect.gameObject.SetActive(false);
+                        break;
+                    case "Shop":
+                        Transform ShopWindow = MainScrollSnapContent.Find("ShopWindow");
+                        ShopWindow.SetParent(MainScrollSnapContent.parent);
+                        ShopWindow.gameObject.SetActive(false);
+                        break;
+                }
+
+                MainScrollSnapContent.parent.GetComponent<HorizontalScrollSnap>().enabled = false;
+                MainScrollSnapContent.parent.GetComponent<HorizontalScrollSnap>().enabled = true;
+                
+                menu.transform.Find("Lock").GetComponent<MenuLocker>().Lock();
             }
-            else {
-                menu = menues[translatedKeyword];
+            catch(Exception ex) {
+                Logger.Log(ex);
             }
         }
         else {
-            menu = menues[keyword];
-        }
-        if (menu == null) return;
-
-        Logger.Log(menu.name);
-        menu.transform.Find("Lock").GetComponent<MenuLocker>().Lock();
-    }
-
-    /// <summary>
-    /// 특정 메인 메뉴 잠금
-    /// </summary>
-    /// <param name="page"></param>
-    public void LockMainMenu(string name) {
-        if (mainMenues.ContainsKey(name)) {
-            mainMenues[name].GetComponentInChildren<MenuLocker>().Lock();
-        }
-    }
-
-    public void LockAllMainMenues() {
-        foreach(KeyValuePair<string, GameObject> pair in mainMenues) {
-            mainMenues[pair.Key].GetComponentInChildren<MenuLocker>().Lock();
-        }
-    }
-
-    /// <summary>
-    /// 특정 메인 메뉴 해금
-    /// </summary>
-    /// <param name="name"></param>
-    public void UnlockMainMenu(string name) {
-        if (mainMenues.ContainsKey(name)) {
-            mainMenues[name].GetComponentInChildren<MenuLocker>().Unlock();
-        }
-    }
-
-    public void UnlockAllMainMenues() {
-        foreach (KeyValuePair<string, GameObject> pair in mainMenues) {
-            mainMenues[pair.Key].GetComponentInChildren<MenuLocker>().Unlock();
+            menu.transform.Find("Lock").GetComponent<MenuLocker>().Lock();
         }
     }
 
@@ -114,38 +101,70 @@ public class MenuLockController : SerializedMonoBehaviour {
     /// 특정 메뉴 해금
     /// </summary>
     /// <param name="keyword"></param>
-    public void Unlock(string keyword) {
+    public void Unlock(string keyword, bool fromServer) {
         GameObject menu = null;
 
-        var translatedKeyword = FindMenuObject(keyword);
-        if (translatedKeyword == "cardMenu") {
-            menues["cardMenu_orc"].GetComponent<Button>().enabled = true;
-            menues["cardMenu_human"].GetComponent<Button>().enabled = true;
+        var translatedKeyword = keyword;
+        if (fromServer) {
+            translatedKeyword = FindMenuObject(keyword);
+        }
+        Logger.Log("Unlock : " + translatedKeyword);
+        if (translatedKeyword == "CardMenu") {
+            menues["CardMenu_orc"].transform.Find("Lock").GetComponent<MenuLocker>().Unlock();
+            menues["CardMenu_human"].transform.Find("Lock").GetComponent<MenuLocker>().Unlock();
             return;
         }
         else {
-            if(translatedKeyword == "league") {
-                menues[translatedKeyword].transform.GetChild(0).gameObject.SetActive(false);
+            if(translatedKeyword == "League") {
+                menues[translatedKeyword].transform.Find("Lock").GetComponent<MenuLocker>().Unlock();
             }
             menu = menues[translatedKeyword];
+            menu.transform.Find("Lock").GetComponent<MenuLocker>().Unlock();
         }
-        if (menu == null) return;
-        menu.GetComponent<Button>().enabled = true;
+
+        if (!scriptable_menuLockData.unlockMenuList.Exists(x => x == translatedKeyword)) scriptable_menuLockData.unlockMenuList.Add(translatedKeyword);
+        if (scriptable_menuLockData.lockMenuList.Exists(x => x == translatedKeyword)) scriptable_menuLockData.lockMenuList.Remove(translatedKeyword);
     }
 
     public string FindMenuObject(string keyword) {
         string translatedKeyword = string.Empty;
         switch (keyword) {
             case "스토리":
-                translatedKeyword = "story";
+                translatedKeyword = "Story";
                 break;
             case "카드":
-                translatedKeyword = "cardMenu";
+                translatedKeyword = "CardMenu";
                 break;
             case "배틀":
-                translatedKeyword = "league";
+                translatedKeyword = "League";
                 break;
         }
         return translatedKeyword;
+    }
+
+    private bool IsMainMenu(string keyword) {
+        if (keyword == "DeckEdit") return true;
+        if (keyword == "DeckSetting") return true;
+        if (keyword == "Dictionary") return true;
+        if (keyword == "Shop") return true;
+        return false;
+    }
+
+    /// <summary>
+    /// scriptableObject 데이터 초기화
+    /// </summary>
+    public void ResetMenuLockData() {
+        scriptable_menuLockData.lockMenuList.Clear();
+        scriptable_menuLockData.lockMenuList.Add("CardMenu_human");
+        scriptable_menuLockData.lockMenuList.Add("CardMenu_orc");
+        scriptable_menuLockData.lockMenuList.Add("League");
+        scriptable_menuLockData.lockMenuList.Add("Story");
+        scriptable_menuLockData.lockMenuList.Add("DectEdit");
+        scriptable_menuLockData.lockMenuList.Add("Dictionary");
+        scriptable_menuLockData.lockMenuList.Add("Shop");
+        scriptable_menuLockData.lockMenuList.Add("RewardBox");
+        scriptable_menuLockData.lockMenuList.Add("Mode");
+
+        scriptable_menuLockData.unlockMenuList.Clear();
     }
 }

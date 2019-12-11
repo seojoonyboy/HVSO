@@ -21,6 +21,7 @@ public class MenuLocker : MonoBehaviour {
 #endif
     SkeletonGraphic skeletonGraphic;
     Button button;
+    State state = State.DEFAULT;
     void Start() {
         skeletonGraphic = GetComponent<SkeletonGraphic>();
         button = GetComponentInParent<Button>();
@@ -31,6 +32,9 @@ public class MenuLocker : MonoBehaviour {
     }
 
     public void Lock() {
+        if (state == State.LOCKED) return;
+
+        gameObject.SetActive(true);
         if (!gameObject.activeInHierarchy) {
             button = transform.parent.GetComponent<Button>();
             button.enabled = false;
@@ -38,21 +42,20 @@ public class MenuLocker : MonoBehaviour {
         else {
             StartCoroutine(_Lock());
         }
+
+        state = State.LOCKED;
     }
 
     IEnumerator _Lock() {
-        skeletonGraphic.Initialize(true);
-        skeletonGraphic.Skeleton.SetSlotsToSetupPose();
         yield return new WaitForEndOfFrame();
 
-        skeletonGraphic.AnimationState.SetAnimation(0, "animation", false);
-        yield return new WaitForSeconds(1.0f);
-        skeletonGraphic.enabled = false;
-
+        skeletonGraphic.AnimationState.SetAnimation(0, "NOANI", false);
         button.enabled = false;
     }
 
     public void Unlock() {
+        if (state == State.UNLOCKED) return;
+
         if (!gameObject.activeInHierarchy) {
             button = transform.parent.GetComponent<Button>();
             button.enabled = true;
@@ -61,13 +64,22 @@ public class MenuLocker : MonoBehaviour {
             skeletonGraphic.enabled = true;
             StartCoroutine(_Unlock());
         }
+
+        state = State.UNLOCKED;
     }
 
     IEnumerator _Unlock() {
+        skeletonGraphic.Initialize(true);
+        skeletonGraphic.Skeleton.SetSlotsToSetupPose();
         yield return new WaitForEndOfFrame();
-        gameObject.SetActive(true);
-        skeletonGraphic.AnimationState.SetAnimation(0, "NOANI", false);
+        skeletonGraphic.AnimationState.SetAnimation(0, "animation", false);
 
         button.enabled = true;
+    }
+
+    public enum State {
+        LOCKED,
+        UNLOCKED,
+        DEFAULT
     }
 }

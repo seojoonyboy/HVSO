@@ -657,48 +657,22 @@ namespace MenuTutorialModules {
     /// 메인화면에서 스토리 메뉴 전체 해금 표시
     /// </summary>
     public class UnlockStroyAnim : MenuExecute {
-        IDisposable clickStream;
         IEnumerator coroutine;
-
+        NoneIngameSceneEventHandler eventHandler;
         public override void Execute() {
+            eventHandler = NoneIngameSceneEventHandler.Instance;
+            eventHandler.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, OnUserDataUpdated);
+        }
+
+        private void OnUserDataUpdated(Enum Event_Type, Component Sender, object Param) {
             coroutine = Proceed();
             StartCoroutine(coroutine);
+            eventHandler.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, OnUserDataUpdated);
         }
 
         IEnumerator Proceed() {
-            GameObject target = null;
-
-            GetComponent<MenuTutorialManager>().ActiveRewardPanel();
-            SkeletonGraphic skeletonGraphic = GetComponent<MenuTutorialManager>().rewardPanel.transform.Find("Anim").GetComponent<SkeletonGraphic>();
-
-            skeletonGraphic.Initialize(true);
-
-            skeletonGraphic.Skeleton.SetSkin("human");
-            skeletonGraphic.Skeleton.SetSlotsToSetupPose();
-            yield return new WaitForEndOfFrame();
-            skeletonGraphic.transform.parent.Find("SubBackground").gameObject.SetActive(false);
-            skeletonGraphic.AnimationState.SetAnimation(0, "story", false);
-
-            skeletonGraphic.transform.Find("Header/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "스토리 메뉴 해금";
-            skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "스토리 메뉴가 오픈되었습니다!";
-
-            yield return new WaitForSeconds(1.0f);
-
-            clickStream = Observable.EveryUpdate()
-                .Where(_ => Input.GetMouseButtonDown(0))
-                .Subscribe(_ => CheckClick(target));
-        }
-
-        private void CheckClick(GameObject target) {
-            if (target == null) {
-                GetComponent<MenuTutorialManager>().DeactiveRewardPanel();
-                clickStream.Dispose();
-                handler.isDone = true;
-
-                PlayerPrefs.SetString("StoryUnlocked", "true");
-
-                AccountManager.Instance.RequestUnlockInTutorial(1);
-            }
+            yield return new WaitForSeconds(2.0f);
+            handler.isDone = true;
         }
     }
 
@@ -1059,6 +1033,20 @@ namespace MenuTutorialModules {
     public class RequestQuestInfo : MenuExecute {
         public override void Execute() {
             AccountManager.Instance.RequestQuestInfo();
+            handler.isDone = true;
+        }
+    }
+
+    public class RequestUnlockQuest : MenuExecute {
+        public override void Execute() {
+            int id = -1;
+            int.TryParse(args[0], out id);
+            if(id == -1) {
+                handler.isDone = true;
+                return;
+            }
+
+            AccountManager.Instance.RequestUnlockInTutorial(id);
             handler.isDone = true;
         }
     }

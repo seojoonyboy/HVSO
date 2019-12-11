@@ -71,6 +71,7 @@ namespace Quest {
         }
 
         private async void ShowQuest(Enum type, Component Sender, object Param) {
+            Logger.Log("ShowRequest");
             await Task.Delay(1000);
             if(quests[0] == null) return;
             QuestData[] datas = (QuestData[])Param;

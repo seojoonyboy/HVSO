@@ -312,16 +312,14 @@
                         "args": []
                     },
                     {
-                        "name" : "UnlockStroyAnim",
-                        "args" : []
-                    },
-                    {
-                        "name" : "RequestQuestInfo",
-                        "args" : []
-                    },
-                    {
                         "name" : "OffHighlight",
                         "args" : []
+                    },
+                    {
+                        "name" : "RequestUnlockQuest",
+                        "args" : [
+                            "1"
+                        ]
                     },
                     {
                         "name" : "EndTutorial",
@@ -352,6 +350,14 @@
                         "args": [
                           "screen"
                         ]
+                    },
+                    {
+                        "name" : "Menu_Hide_Message",
+                        "args" : []
+                    },
+                    {
+                        "name" : "UnlockStroyAnim",
+                        "args" : []
                     },
                     {
                         "name" : "Menu_NPC_Talk",
