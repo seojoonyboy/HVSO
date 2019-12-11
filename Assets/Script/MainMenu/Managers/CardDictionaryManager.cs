@@ -806,8 +806,10 @@ public class CardDictionaryManager : MonoBehaviour {
             }
         }
         if(tutorialHand != null) {
-            quest.CloseDictionary();
-            quest = null;
+            if(closingToShowEditDeckLock) {
+                quest.CloseDictionary();
+                closingToShowEditDeckLock = false;
+            }
             tutorialHand.transform.parent.transform.GetComponent<Button>().onClick.RemoveListener(tutoAction);
             Destroy(tutorialHand);
         }
@@ -849,6 +851,7 @@ public class CardDictionaryManager : MonoBehaviour {
         activatedTf.GetComponent<RectTransform>().anchoredPosition = new Vector2(activatedTf.GetComponent<RectTransform>().anchoredPosition.x, 0);
         GetComponent<ScrollRect>().normalizedPosition = new Vector2(0, 1);
     }
+    public bool closingToShowEditDeckLock;
     Quest.QuestContentController quest;
     GameObject tutorialHand;
     UnityAction tutoAction;

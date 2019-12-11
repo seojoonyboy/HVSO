@@ -244,6 +244,7 @@ namespace Quest {
             //튜토리얼 완료
             MenuSceneController menu = MenuSceneController.menuSceneController;
             menu.DictionaryRemoveHand();
+            CardDictionaryManager.cardDictionaryManager.closingToShowEditDeckLock = true;
             manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_6);
             AccountManager.Instance.RequestUnlockInTutorial(3);
             AccountManager.Instance.RequestQuestInfo();

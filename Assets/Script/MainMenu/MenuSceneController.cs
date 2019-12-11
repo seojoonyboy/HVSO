@@ -410,6 +410,7 @@ public class MenuSceneController : MonoBehaviour {
 
     public void DictionaryRemoveHand() {
         dictionaryMenu.Find("HumanButton/CardDic").GetComponent<Button>().onClick.RemoveListener(tutoAction);
+        tutoAction = null;
         Transform hand = dictionaryMenu.Find("HumanButton/CardDic").Find("tutorialHand");
         if(hand == null) return;
         Destroy(hand.gameObject);
