@@ -338,6 +338,10 @@
                 "description" : null,
                 "methods" : [
                     {
+                        "name": "DestroyLoadingModal",
+                        "args": []
+                    },
+                    {
                         "name" : "Menu_NPC_Talk",
                         "args" : [
                             "h10001",
@@ -766,6 +770,28 @@
                     {
                         "name" : "EndTutorial",
                         "args" : []
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 100,
+        "description" : "QUEST_SUB_SET_100 (스토리 인게임 플레이 이후 로비 강제 이동시키기)",
+        "innerDatas": [
+            {
+                "id" : 1,
+                "description" : null,
+                "methods" : [
+                    {
+                        "name": "ForceToPage",
+                        "args": [
+                            "StoryLobby"
+                        ]
+                    },
+                    {
+                        "name": "DestroyLoadingModal",
+                        "args": []
                     }
                 ]
             }
