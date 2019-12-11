@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using dataModules;
 using System;
 using System.Threading.Tasks;
@@ -105,6 +106,11 @@ namespace Quest {
             public ScenarioManager scenarioManager;
             public DeckSettingManager deckSettingManager;
             public GameObject BattleObject;
+            public Button backButton;
+            public Button mailReceiveButton;
+            public Button openMailButton;
+            public MailBoxManager mailBoxManager;
+            public Button mailBackButton;
         }
 
     }
