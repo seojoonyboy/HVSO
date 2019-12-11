@@ -37,8 +37,20 @@ public class MailBoxManager : MonoBehaviour
         EscapeKeyController.escapeKeyCtrl.AddEscape(CloseMailBox);
     }
 
+    public Quest.QuestContentController quest;
+
+    public void QuestSet(Quest.QuestContentController quest) {
+        this.quest = quest;
+    }
+
+    private void TutoQuest() {
+        if(quest == null) return;
+        quest.MailOpen();
+    }
+
     public void SetMailBox() {
         InitMailBox();
+        TutoQuest();
         int count = 0;
         foreach(dataModules.Mail mail in AccountManager.Instance.mailList) {
             Transform slot = mailListParent.GetChild(count);

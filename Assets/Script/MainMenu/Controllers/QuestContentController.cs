@@ -134,22 +134,46 @@ namespace Quest {
         }
 
         private void ShowHandIcon() {
-            Instantiate(manager.handSpinePrefab, getBtn.transform, false).name = "tutorialHand";
-            UnityAction deleteHand = null;
-            deleteHand = () => {
-                deleteHand -= deleteHand;
-                Transform hand = getBtn.transform.Find("tutorialHand");
-                if(hand == null) return;
-                Destroy(hand.gameObject);
-            };
-            getBtn.onClick.AddListener(deleteHand);
-            getBtn.onClick.AddListener(GetPostOffice);
+            AddSpinetoButtonAndRemoveClick(getBtn, GetPostOffice);
         }
 
         private async void GetPostOffice() {
-            await Task.Delay(1000);
-            getBtn.onClick.RemoveListener(GetPostOffice);
+            await Task.Delay(500);
             manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_3);
+            manager.tutorialSerializeList.newMail.SetActive(true);
+            AddSpinetoButtonAndRemoveClick(manager.tutorialSerializeList.backButton);
+            
+            manager.tutorialSerializeList.mailBoxManager.quest = this;
+        }
+
+        public void MailOpen() {
+            AddSpinetoButtonAndRemoveClick(manager.tutorialSerializeList.mailReceiveButton, SubSet4);
+            manager.tutorialSerializeList.openMailButton.enabled = false;
+        }
+
+        private void SubSet4() {
+            manager.tutorialSerializeList.mailBoxManager.quest = null;
+            manager.tutorialSerializeList.newMail.SetActive(false);
+            manager.tutorialSerializeList.openMailButton.enabled = true;
+            manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_4);
+            AddSpinetoButtonAndRemoveClick(manager.tutorialSerializeList.mailBackButton, BreakCardDictionaryTab);
+        }
+
+        private void BreakCardDictionaryTab() {
+            Debug.Log("부셔야한다.....");
+        }
+
+        private void AddSpinetoButtonAndRemoveClick(Button button, UnityAction moreAction = null) {
+            Instantiate(manager.handSpinePrefab, button.transform, false).name = "tutorialHand";
+            UnityAction deleteHand = null;
+            if(moreAction != null) deleteHand += moreAction;
+            deleteHand += () => {
+                deleteHand -= deleteHand;
+                Transform hand = button.transform.Find("tutorialHand");
+                if(hand == null) return;
+                Destroy(hand.gameObject);
+            };
+            button.onClick.AddListener(deleteHand);
         }
 
         public void MenuDictionaryShowHand(string[] args) {
