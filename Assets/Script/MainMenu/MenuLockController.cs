@@ -139,16 +139,19 @@ public class MenuLockController : SerializedMonoBehaviour {
                     case "DeckEdit":
                         Transform DeckSettingWindow = MainScrollSnapContent.parent.Find("DeckSettingWindow");
                         DeckSettingWindow.SetParent(MainScrollSnapContent);
+                        DeckSettingWindow.transform.SetAsFirstSibling();    //메인화면보다 왼쪽
                         DeckSettingWindow.gameObject.SetActive(true);
                         break;
                     case "Dictionary":
                         Transform DictionarySelect = MainScrollSnapContent.parent.Find("DictionarySelect");
                         DictionarySelect.SetParent(MainScrollSnapContent);
+                        DictionarySelect.transform.SetAsLastSibling();      //메인화면보다 오른쪽
                         DictionarySelect.gameObject.SetActive(true);
                         break;
                     case "Shop":
                         Transform ShopWindow = MainScrollSnapContent.parent.Find("ShopWindow");
                         ShopWindow.SetParent(MainScrollSnapContent);
+                        ShopWindow.transform.SetAsLastSibling();            //메인화면보다 오른쪽
                         ShopWindow.gameObject.SetActive(true);
                         break;
                 }
