@@ -142,7 +142,7 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
                 arr_index = 10;
                 break;
             case TutorialType.QUEST_SUB_SET_100:
-                arr_index = 10;
+                arr_index = 11;
                 break;
         }
         if (arr_index == -1) return;

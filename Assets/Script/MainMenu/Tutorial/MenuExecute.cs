@@ -958,6 +958,16 @@ namespace MenuTutorialModules {
         }
     }
 
+    public class ForceToStory : MenuExecute {
+        public override void Execute() {
+            string prevName = AccountManager.Instance.prevSceneName;
+            if(prevName == "Story") {
+                GetComponent<MenuTutorialManager>().scenarioManager.gameObject.SetActive(true);
+            }
+            handler.isDone = true;
+        }
+    }
+
     public class UnlockCardMenu : MenuExecute {
         public override void Execute() {
             AccountManager.Instance.RequestUnlockInTutorial(2);
