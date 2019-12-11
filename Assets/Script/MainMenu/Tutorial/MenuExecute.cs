@@ -675,6 +675,11 @@ namespace MenuTutorialModules {
             PlayerPrefs.SetString("StoryUnlocked", "true");
             handler.isDone = true;
         }
+
+        void OnDestroy() {
+            eventHandler.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, OnUserDataUpdated);
+            StopAllCoroutines();
+        }
     }
 
     public class UnlockBattleAnim : MenuExecute {
