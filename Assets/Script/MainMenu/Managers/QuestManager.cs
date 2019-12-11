@@ -111,6 +111,7 @@ namespace Quest {
             public Button openMailButton;
             public MailBoxManager mailBoxManager;
             public Button mailBackButton;
+            public MenuLockController menuLockController;
         }
 
     }
