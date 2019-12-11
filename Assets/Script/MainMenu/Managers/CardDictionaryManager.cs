@@ -806,6 +806,8 @@ public class CardDictionaryManager : MonoBehaviour {
             }
         }
         if(tutorialHand != null) {
+            quest.CloseDictionary();
+            quest = null;
             tutorialHand.transform.parent.transform.GetComponent<Button>().onClick.RemoveListener(tutoAction);
             Destroy(tutorialHand);
         }
@@ -847,11 +849,12 @@ public class CardDictionaryManager : MonoBehaviour {
         activatedTf.GetComponent<RectTransform>().anchoredPosition = new Vector2(activatedTf.GetComponent<RectTransform>().anchoredPosition.x, 0);
         GetComponent<ScrollRect>().normalizedPosition = new Vector2(0, 1);
     }
-
+    Quest.QuestContentController quest;
     GameObject tutorialHand;
     UnityAction tutoAction;
 
     public void cardShowHand(Quest.QuestContentController quest, string[] args) {
+        this.quest = quest;
         Transform beforeHand = transform.Find("tutorialHand");
         if(beforeHand != null) Destroy(beforeHand.gameObject);
         DictionaryCard card = dicCards.Find(x=>x.cardId == args[0]);

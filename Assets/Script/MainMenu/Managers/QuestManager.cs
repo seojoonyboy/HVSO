@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UI.Extensions;
 using dataModules;
 using System;
 using System.Threading.Tasks;
@@ -74,6 +75,7 @@ namespace Quest {
         private async void ShowQuest(Enum type, Component Sender, object Param) {
             Logger.Log("ShowRequest");
             await Task.Delay(1000);
+            TutorialNoQuestShow();
             if(quests[0] == null) return;
             QuestData[] datas = (QuestData[])Param;
             ResetQuest();
@@ -84,6 +86,17 @@ namespace Quest {
                 });
             });
             Array.ForEach(datas, x=>AddQuest(x));
+        }
+
+        private void TutorialNoQuestShow() {
+            bool needStart = PlayerPrefs.GetInt("FirstTutorialClear", 0) == 1 ? true : false;
+            if(!needStart) return;
+            QuestContentController noQuest = gameObject.AddComponent<QuestContentController>();
+            noQuest.enabled = false;
+            noQuest.data = new QuestData();
+            noQuest.data.tutorials = tutorialJson[0].tutorials;
+            noQuest.manager = this;
+            noQuest.ActiveTutorial();
         }
 
         public void ShowHandIcon() {
@@ -112,6 +125,9 @@ namespace Quest {
             public MailBoxManager mailBoxManager;
             public Button mailBackButton;
             public MenuLockController menuLockController;
+            public HorizontalScrollSnap horizontalScrollSnap;
+            public GameObject newCardMenu;
+            public GameObject newDeckMenu;
         }
 
     }

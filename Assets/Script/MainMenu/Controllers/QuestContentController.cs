@@ -131,17 +131,28 @@ namespace Quest {
             manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_2);
             manager.ShowHandIcon();
             ShowHandIcon();
+           
         }
 
         private void ShowHandIcon() {
-            AddSpinetoButtonAndRemoveClick(getBtn, GetPostOffice);
+            AddSpinetoButtonAndRemoveClick(getBtn, GetQuestItem);
+        }
+
+        private void GetQuestItem() {
+            manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_3);
+            PlayerPrefs.SetInt("FirstTutorialClear", 1);
+            PlayerPrefs.Save();
+        }
+
+        public void StartMailTutorial(string[] args) {
+            GetPostOffice();
+            if(!manager.tutorialSerializeList.backButton.gameObject.activeInHierarchy) return;
+            AddSpinetoButtonAndRemoveClick(manager.tutorialSerializeList.backButton);
         }
 
         private async void GetPostOffice() {
             await Task.Delay(500);
-            manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_3);
             manager.tutorialSerializeList.newMail.SetActive(true);
-            AddSpinetoButtonAndRemoveClick(manager.tutorialSerializeList.backButton);
             
             manager.tutorialSerializeList.mailBoxManager.quest = this;
         }
@@ -160,8 +171,9 @@ namespace Quest {
         }
 
         private void BreakCardDictionaryTab() {
-            manager.tutorialSerializeList.menuLockController.Unlock("Dictionary", false);
-            Debug.Log("부셔야한다.....");
+            manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_9);
+            PlayerPrefs.DeleteKey("FirstTutorialClear");
+            PlayerPrefs.Save();
         }
 
         private void AddSpinetoButtonAndRemoveClick(Button button, UnityAction moreAction = null) {
@@ -181,6 +193,15 @@ namespace Quest {
             if(data.cleared) return;
             MenuSceneController menu = MenuSceneController.menuSceneController;
             menu.DictionaryShowHand(this, args);
+            manager.tutorialSerializeList.newCardMenu.SetActive(true);
+            manager.tutorialSerializeList.horizontalScrollSnap.OnSelectionChangeEndEvent.AddListener(ReadyEnterCardMenu);
+        }
+
+        private void ReadyEnterCardMenu(int screen) {
+            if(screen != 1) return;
+            manager.tutorialSerializeList.newCardMenu.SetActive(false);
+            manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_5);
+            manager.tutorialSerializeList.horizontalScrollSnap.OnSelectionChangeEndEvent.RemoveListener(ReadyEnterCardMenu);
         }
 
         public void DictionaryCardHand(string[] args) {
@@ -208,6 +229,10 @@ namespace Quest {
                 theEvent);
         }
 
+        public void CloseDictionary() {
+            manager.tutorialSerializeList.menuLockController.Unlock("DeckEdit", false);
+        }
+
         private async void createCardDone() {
             await Task.Delay(2000);
             GameObject hand;
@@ -219,13 +244,15 @@ namespace Quest {
             //튜토리얼 완료
             MenuSceneController menu = MenuSceneController.menuSceneController;
             menu.DictionaryRemoveHand();
-            manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_4);
+            manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_6);
             AccountManager.Instance.RequestUnlockInTutorial(3);
             AccountManager.Instance.RequestQuestInfo();
         }
 
         public void MenuDeckSettingShowHand(string[] args) {
             if(data.cleared) return;
+            manager.tutorialSerializeList.newDeckMenu.SetActive(true);
+            manager.tutorialSerializeList.horizontalScrollSnap.OnSelectionChangeEndEvent.AddListener(x=>{if(x==0) manager.tutorialSerializeList.newDeckMenu.SetActive(false);});
             DeckHandler[] decks = manager.tutorialSerializeList.deckSettingManager.transform.GetComponentsInChildren<DeckHandler>();
             Array.ForEach(decks, x=> x.TutorialHandShow(this));
         }
