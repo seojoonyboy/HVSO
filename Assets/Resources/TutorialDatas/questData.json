@@ -17,10 +17,6 @@
             {
                 "method" : "QuestClearShow",
                 "args" : []
-            },
-            {
-                "method" : "StoryCleared",
-                "args" : ["quest_sub_set_3"]
             }
         ]
     },
