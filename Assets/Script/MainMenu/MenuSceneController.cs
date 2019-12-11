@@ -393,6 +393,7 @@ public class MenuSceneController : MonoBehaviour {
     /// </summary>
     /// <param name="type">Type</param>
     public void StartQuestSubSet(MenuTutorialManager.TutorialType type) {
+        Logger.Log("SubSet 시작 : " + type.ToString());
         menuTutorialManager.enabled = true;
         menuTutorialManager.StartQuestSubSet(type);
     }

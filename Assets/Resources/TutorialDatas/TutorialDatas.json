@@ -433,13 +433,15 @@
                 "description" : null,
                 "methods" : [
                     {
-                        "name": "Menu_Block_Screen",
-                        "args": []
-                    },
-                    {
                         "name" : "Wait_Until",
                         "args" : [
                             "1"
+                        ]
+                    },
+                    {
+                        "name" : "ForceToPage",
+                        "args" : [
+                            "StoryLobby"
                         ]
                     },
                     {
@@ -813,10 +815,8 @@
                 "description" : null,
                 "methods" : [
                     {
-                        "name": "ForceToPage",
-                        "args": [
-                            "StoryLobby"
-                        ]
+                        "name": "ForceToStory",
+                        "args": [ ]
                     },
                     {
                         "name": "DestroyLoadingModal",
