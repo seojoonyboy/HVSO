@@ -9373,7 +9373,7 @@ MonoBehaviour:
       Data: 53|ScenarioUnit, Assembly-CSharp
     - Name: name
       Entry: 1
-      Data: "\uC624\uD06C\uBCD1\uC0AC"
+      Data: "\uC624\uD06C \uBD80\uC871\uC7A5"
     - Name: sprite
       Entry: 10
       Data: 278
