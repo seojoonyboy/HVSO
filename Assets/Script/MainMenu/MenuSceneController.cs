@@ -75,7 +75,7 @@ public class MenuSceneController : MonoBehaviour {
 
         menuButton.Initialize(true);
         menuButton.Update(0);
-        ClickMenuButton(2);
+        ClickMenuButton("Main");
         EscapeKeyController.escapeKeyCtrl.AddEscape(OpenQuitModal);
 
         hideModal.SetActive(true);
@@ -262,21 +262,51 @@ public class MenuSceneController : MonoBehaviour {
         storyLobbyPanel.SetActive(true);
     }
 
-    public void ClickMenuButton(int pageNum) {
+    public void ClickMenuButton(string btnName) {
         buttonClicked = true;
-        fixedCanvas.Find("InnerCanvas/Footer").GetChild(currentPage).GetChild(0).gameObject.SetActive(false);
-        currentPage = pageNum;
-        windowScrollSnap.GoToScreen(currentPage - 1);
-        menuButton.AnimationState.SetAnimation(0, "IDLE_" + (currentPage + 1).ToString(), true);
-        fixedCanvas.Find("InnerCanvas/Footer").GetChild(currentPage).GetChild(0).gameObject.SetActive(true);
+        foreach(GameObject window in windowScrollSnap.ChildObjects) {
+            if(window.name.Contains(btnName)) {
+                windowScrollSnap.GoToScreen(window.transform.GetSiblingIndex());
+            }
+        }
+
+        Transform footer = fixedCanvas.Find("InnerCanvas/Footer");
+        foreach(Transform btn in footer) {
+            if(btn.name == btnName) {
+                int animIndex = btn.GetSiblingIndex() + 1;
+                menuButton.AnimationState.SetAnimation(0, "IDLE_" + (animIndex).ToString(), true);
+                btn.Find("Text").gameObject.SetActive(true);
+            }
+            else {
+                btn.Find("Text").gameObject.SetActive(false);
+            }
+        }
+        //fixedCanvas.Find("InnerCanvas/Footer").GetChild(currentPage).GetChild(0).gameObject.SetActive(false);
+        //currentPage = pageNum;
+        //windowScrollSnap.GoToScreen(currentPage - 1);
+        //menuButton.AnimationState.SetAnimation(0, "IDLE_" + (currentPage + 1).ToString(), true);
+        //fixedCanvas.Find("InnerCanvas/Footer").GetChild(currentPage).GetChild(0).gameObject.SetActive(true);
     }
 
     public void ScrollSnapButtonChange() {
-        fixedCanvas.Find("InnerCanvas/Footer").GetChild(currentPage).GetChild(0).gameObject.SetActive(false);
-        currentPage = windowScrollSnap.CurrentPageObject().GetComponent<dataModules.IntergerIndex>().Id + 1;
-        Logger.Log("currentPage :" + currentPage);
-        menuButton.AnimationState.SetAnimation(0, "IDLE_" + (currentPage + 1).ToString(), true);
-        fixedCanvas.Find("InnerCanvas/Footer").GetChild(currentPage).GetChild(0).gameObject.SetActive(true);
+        Logger.Log("ScrollSnapButtonChange current page : " + windowScrollSnap.CurrentPage);
+
+        Transform footer = fixedCanvas.Find("InnerCanvas/Footer");
+        int pageIndex = windowScrollSnap.CurrentPageObject().GetComponent<dataModules.IntergerIndex>().Id + 1;
+        menuButton.AnimationState.SetAnimation(0, "IDLE_" + (pageIndex).ToString(), true);
+        //fixedCanvas.Find("InnerCanvas/Footer").GetChild(currentPage).GetChild(0).gameObject.SetActive(false);
+        fixedCanvas.Find("InnerCanvas/Footer").GetChild(pageIndex).GetChild(0).gameObject.SetActive(true);
+
+        foreach (Transform btn in footer) {
+            if (windowScrollSnap.CurrentPageObject().name.Contains(btn.name)) {
+                int animIndex = btn.GetSiblingIndex() + 1;
+                menuButton.AnimationState.SetAnimation(0, "IDLE_" + (animIndex).ToString(), true);
+                btn.Find("Text").gameObject.SetActive(true);
+            }
+            else {
+                btn.Find("Text").gameObject.SetActive(false);
+            }
+        }
     }
 
 

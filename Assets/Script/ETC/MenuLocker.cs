@@ -59,6 +59,8 @@ public class MenuLocker : MonoBehaviour {
         if (!gameObject.activeInHierarchy) {
             button = transform.parent.GetComponent<Button>();
             button.enabled = true;
+
+            gameObject.SetActive(false);
         }
         else {
             skeletonGraphic.enabled = true;

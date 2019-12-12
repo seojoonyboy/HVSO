@@ -10,6 +10,7 @@ using UnityEngine.UI.Extensions;
 
 public class MenuLockController : SerializedMonoBehaviour {
     [SerializeField] Transform MainScrollSnapContent;
+    [SerializeField] GameObject mainButtonsParent;
     [SerializeField] Dictionary<string, GameObject> menues;
 
     NoneIngameSceneEventHandler eventHandler;
@@ -131,23 +132,24 @@ public class MenuLockController : SerializedMonoBehaviour {
         GameObject menu = menues[translatedKeyword];
         if(translatedKeyword == "Story") {
             menues["Mode"].transform.parent.parent.Find("SelectedModeImage/Lock").GetComponent<MenuLocker>().OnlyUnlockEffect();
+            mainButtonsParent.transform.GetChild(4).Find("Lock").GetComponent<MenuLocker>().Unlock();
         }
 
         if (IsMainMenu(translatedKeyword)) {
             switch (translatedKeyword) {
                 case "DeckEdit":
-                    Transform DeckSettingWindow = MainScrollSnapContent.parent.Find("DeckSettingWindow");
-                    if (DeckSettingWindow == null) break;
-                    DeckSettingWindow.SetParent(MainScrollSnapContent);
-                    DeckSettingWindow.transform.SetAsFirstSibling();    //메인화면보다 왼쪽
-                    DeckSettingWindow.gameObject.SetActive(true);
+                    Transform DeckEditWindow = MainScrollSnapContent.parent.Find("DeckEditWindow");
+                    if (DeckEditWindow == null) break;
+                    DeckEditWindow.SetParent(MainScrollSnapContent);
+                    DeckEditWindow.transform.SetAsFirstSibling();    //메인화면보다 왼쪽
+                    DeckEditWindow.gameObject.SetActive(true);
                     break;
                 case "Dictionary":
-                    Transform DictionarySelect = MainScrollSnapContent.parent.Find("DictionarySelect");
-                    if (DictionarySelect == null) break;
-                    DictionarySelect.SetParent(MainScrollSnapContent);
-                    DictionarySelect.transform.SetAsLastSibling();      //메인화면보다 오른쪽
-                    DictionarySelect.gameObject.SetActive(true);
+                    Transform DictionaryWindow = MainScrollSnapContent.parent.Find("DictionaryWindow");
+                    if (DictionaryWindow == null) break;
+                    DictionaryWindow.SetParent(MainScrollSnapContent);
+                    DictionaryWindow.transform.SetAsLastSibling();      //메인화면보다 오른쪽
+                    DictionaryWindow.gameObject.SetActive(true);
                     break;
                 case "Shop":
                     Transform ShopWindow = MainScrollSnapContent.parent.Find("ShopWindow");
