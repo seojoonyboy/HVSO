@@ -169,8 +169,9 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
                     transform.Find("GlowEffect").gameObject.SetActive(false);
                     transform.Find("CardInfoWindow").gameObject.SetActive(false);
                     showCardsHandler.hideShowBtn.SetActive(false);
-                    skillHandler.highlight = highlightedSlot; 
-                    if(!skillHandler.TargetSelectExist()) skillHandler.SendSocket();
+                    skillHandler.highlight = highlightedSlot;
+                    SoundManager.Instance.PlaySound(UISfxSound.CARDCHOICE_HERO);
+                    if (!skillHandler.TargetSelectExist()) skillHandler.SendSocket();
                     StartCoroutine(UseSkillCard(parms));
 
                     if (ScenarioGameManagment.scenarioInstance == null) {
@@ -218,29 +219,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
             PlayMangement.instance.player.resource.Value -= cardData.cost;
             object[] parms = new object[] { true, gameObject };
             skillHandler.highlight = highlightedSlot;
-            UISfxSound sound;
-            switch (cardData.rarelity) {
-                case "common":
-                    sound = UISfxSound.CARD_USE_NORMAL;
-                    break;
-                case "uncommon":
-                    sound = UISfxSound.CARD_USE_NORMAL;
-                    break;
-                case "rare":
-                    sound = UISfxSound.CARD_USE_RARE;
-                    break;
-                case "superrare":
-                    sound = UISfxSound.CARD_USE_SUPERRARE;
-                    break;
-                case "legend":
-                    sound = UISfxSound.CARD_USE_LEGEND;
-                    break;
-                default:
-                    sound = UISfxSound.CARD_USE_NORMAL;
-                    break;
-            }
-
-            SoundManager.Instance.PlaySound(sound);
+            SoundManager.Instance.PlaySound(UISfxSound.CARDCHOICE_UNIT);
             if (!skillHandler.TargetSelectExist()) skillHandler.SendSocket();
             StartCoroutine(UseSkillCard(parms));
             //if (GetComponents<Ability>() == null) UseCard();
