@@ -113,8 +113,8 @@ namespace Quest {
 
         [Serializable] public class TutorialSerializeList {
             public GameObject playButton;
-            public Transform HumanFlag;
-            public Transform OrcFlag;
+            public GameObject HumanFlagIcon;
+            public GameObject OrcFlagIcon;
             public GameObject newMail;
             public ScenarioManager scenarioManager;
             public DeckSettingManager deckSettingManager;

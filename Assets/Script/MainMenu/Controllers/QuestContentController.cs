@@ -117,13 +117,9 @@ namespace Quest {
 
         private void CheckTutorialPlayed(int stage) {
             bool isHumanClear = AccountManager.Instance.clearedStages.Exists(x=>(x.stageNumber == stage && x.camp.CompareTo("human") == 0));
-            if(!isHumanClear) StoryHandInstance(manager.tutorialSerializeList.HumanFlag);
+            if(!isHumanClear) manager.tutorialSerializeList.HumanFlagIcon.SetActive(true);
             bool isOrcClear = AccountManager.Instance.clearedStages.Exists(x=>(x.stageNumber == stage && x.camp.CompareTo("orc") == 0));
-            if(!isOrcClear) StoryHandInstance(manager.tutorialSerializeList.OrcFlag);
-        }
-
-        private void StoryHandInstance(Transform parent) {
-            Instantiate(manager.handSpinePrefab, parent, false).name = "tutorialHand";
+            if(!isOrcClear) manager.tutorialSerializeList.OrcFlagIcon.SetActive(true);
         }
 
         public void QuestClearShow(string[] args) {
@@ -181,7 +177,7 @@ namespace Quest {
             UnityAction deleteHand = null;
             if(moreAction != null) deleteHand += moreAction;
             deleteHand += () => {
-                deleteHand -= deleteHand;
+                button.onClick.RemoveListener(deleteHand);
                 Transform hand = button.transform.Find("tutorialHand");
                 if(hand == null) return;
                 Destroy(hand.gameObject);
