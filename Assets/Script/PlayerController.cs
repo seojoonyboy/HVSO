@@ -576,16 +576,15 @@ public class PlayerController : MonoBehaviour
         shieldGauge.AnimationState.ClearTrack(0);
         TrackEntry entry = new TrackEntry();
 
-
+        
+        SoundManager.Instance.PlayShieldChargeCount(amount);
         for (int i = 1; i <= amount; i++) {
 
             if (start + i > 8)
                 break;
 
             entry = shieldGauge.AnimationState.AddAnimation(0, (start + i).ToString(), false, 0);
-
-        }
-        SoundManager.Instance.PlayIngameSfx(IngameSfxSound.SHIELDCHARGE);
+        }       
         // entry.Complete += delegate (TrackEntry trackEntry) {  };       
     }
 

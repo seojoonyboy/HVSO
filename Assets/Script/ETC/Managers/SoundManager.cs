@@ -72,7 +72,13 @@ public class SoundManager : SerializedMonoBehaviour {
         PlaySfx(unitAudio);
     }
 
-
+    public async void PlayShieldChargeCount(int num) {
+        for (int i = 0; i < num; i++) {
+            await System.Threading.Tasks.Task.Delay(100);
+            PlaySfx(ingameSfx[IngameSfxSound.SHIELDCHARGECOUNT]);            
+        }
+        SoundManager.Instance.PlayIngameSfx(IngameSfxSound.SHIELDCHARGE);
+    }
 
     public void PlayAttackSound(string id) {
         if (!unitSfx.ContainsKey(id) || unitSfx[id] == null) {
@@ -186,7 +192,8 @@ public enum IngameSfxSound {
     TURNSTART,
     HUMANTURN,
     ORCTURN,
-    ORCMAGICTURN
+    ORCMAGICTURN,
+    SHIELDCHARGECOUNT
 }
 
 
