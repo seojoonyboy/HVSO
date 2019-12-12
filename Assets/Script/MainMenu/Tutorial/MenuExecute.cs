@@ -7,6 +7,8 @@ using System;
 using Spine.Unity;
 using BestHTTP;
 using dataModules;
+using Spine;
+using UnityEngine.UI.Extensions;
 
 namespace MenuTutorialModules {
     public class MenuExecute : MonoBehaviour {
@@ -941,6 +943,68 @@ namespace MenuTutorialModules {
         public override void Execute() {
             PlayerPrefs.SetString("StoryUnlocked", "true");
             handler.isDone = true;
+        }
+    }
+
+    public class UnlockRewardBoxMenu : MenuExecute {
+        public override void Execute() {
+            StartCoroutine(Proceed());
+        }
+
+        IEnumerator Proceed() {
+            yield return new WaitForSeconds(0.2f);
+            MenuMask.Instance.HideText();
+
+            MenuLockController menuLockController = GetComponent<MenuTutorialManager>().lockController;
+            HorizontalScrollSnap horizontalScrollSnap = GetComponent<MenuTutorialManager>().scrollSnap;
+            //horizontalScrollSnap.GoToScreen()
+
+            var lockObj = menuLockController.FindButtonLockObject("RewardBox");
+            if (lockObj.activeInHierarchy) {
+                SkeletonGraphic skeletonGraphic = lockObj.GetComponent<SkeletonGraphic>();
+                menuLockController.Unlock("RewardBox", false);
+                yield return new WaitForSeconds(1.5f);
+                handler.isDone = true;
+                //skeletonGraphic.AnimationState.End += delegate (TrackEntry trackEntry) {
+                //    handler.isDone = true;
+                //};
+            }
+            else {
+                handler.isDone = true;
+            }
+        }
+
+        void OnDestroy() {
+            StopAllCoroutines();
+        }
+    }
+
+    public class UnlockShopMenu : MenuExecute {
+        public override void Execute() {
+            StartCoroutine(Proceed());
+        }
+
+        IEnumerator Proceed() {
+            yield return new WaitForSeconds(0.2f);
+            MenuMask.Instance.HideText();
+
+            MenuLockController menuLockController = GetComponent<MenuTutorialManager>().lockController;
+            HorizontalScrollSnap horizontalScrollSnap = GetComponent<MenuTutorialManager>().scrollSnap;
+
+            var lockObj = menuLockController.FindButtonLockObject("Shop");
+            if (lockObj.activeInHierarchy) {
+                SkeletonGraphic skeletonGraphic = lockObj.GetComponent<SkeletonGraphic>();
+                menuLockController.Unlock("Shop", false);
+                yield return new WaitForSeconds(1.5f);
+                handler.isDone = true;
+            }
+            else {
+                handler.isDone = true;
+            }
+        }
+
+        void OnDestroy() {
+            StopAllCoroutines();
         }
     }
 }
