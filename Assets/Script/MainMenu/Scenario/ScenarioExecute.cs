@@ -162,7 +162,14 @@ public class Wait_EnemyDead_Animation : ScenarioExecute {
 
     public override void Execute() {
         scenarioMask.MaskScreen();
-        StartCoroutine(WaitSec(PlayMangement.instance.enemyPlayer.DeadAnimationTime));
+
+        float sec = 0f;
+        if (PlayMangement.instance.enemyPlayer.DeadAnimationTime < 2f)
+            sec = 2f;
+        else
+            sec = PlayMangement.instance.enemyPlayer.DeadAnimationTime;
+
+        StartCoroutine(WaitSec(sec));
     }
     IEnumerator WaitSec(float sec = 0) {
         Logger.Log("WaitSec");
@@ -1714,7 +1721,7 @@ public class Wait_Match_End : ScenarioExecute {
         PlayMangement.instance.stopBattle = true;
         PlayMangement.instance.stopTurn = true;
         PlayMangement.instance.beginStopTurn = true;
-        SoundManager.Instance.bgmController.SoundDownAfterStop();
+        //SoundManager.Instance.bgmController.SoundDownAfterStop();
     }
 
     private void ResetForceDropzone() {
