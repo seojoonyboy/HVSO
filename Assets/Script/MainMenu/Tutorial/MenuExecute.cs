@@ -927,9 +927,10 @@ namespace MenuTutorialModules {
                 return;
             }
 
-            AccountManager.Instance.RequestUnlockInTutorial(id);
-            AccountManager.Instance.RequestQuestInfo();
-
+            if(id != 4) {
+                AccountManager.Instance.RequestUnlockInTutorial(id);
+                AccountManager.Instance.RequestQuestInfo();
+            }
             //리그 Unlock시 Mode 버튼 Unlock
             if(id == 4) {
                 GetComponent<MenuTutorialManager>().lockController.Unlock("Mode", false);
