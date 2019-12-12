@@ -88,6 +88,10 @@ public class MenuLocker : MonoBehaviour {
         state = State.UNLOCKED;
     }
 
+    public State GetState() {
+        return state;
+    }
+
     public enum State {
         LOCKED,
         UNLOCKED,
