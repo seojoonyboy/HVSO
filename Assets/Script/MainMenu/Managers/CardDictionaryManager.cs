@@ -812,6 +812,7 @@ public class CardDictionaryManager : MonoBehaviour {
         if(closingToShowEditDeckLock) {
                 quest.CloseDictionary();
                 closingToShowEditDeckLock = false;
+                dicCards.ForEach(x=>x.cardObject.GetComponent<Button>().enabled = true);
         }
     }
 
@@ -861,6 +862,8 @@ public class CardDictionaryManager : MonoBehaviour {
         Transform beforeHand = transform.Find("tutorialHand");
         if(beforeHand != null) Destroy(beforeHand.gameObject);
         DictionaryCard card = dicCards.Find(x=>x.cardId == args[0]);
+        dicCards.ForEach(x=>x.cardObject.GetComponent<Button>().enabled = false);
+        card.cardObject.GetComponent<Button>().enabled = true;
         tutorialHand = Instantiate(quest.manager.handSpinePrefab, card.cardObject.transform, false);
         tutorialHand.name = "tutorialHand";
         tutoAction = () => MenuCardInfo.cardInfoWindow.makeShowHand(quest);
