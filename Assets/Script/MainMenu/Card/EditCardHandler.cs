@@ -81,6 +81,7 @@ public class EditCardHandler : MonoBehaviour {
         if(cardData.id.CompareTo(questInfo.addId) == 0) {
             questInfo.handUIaddCard = Instantiate(questInfo.quest.manager.handSpinePrefab, transform, false);
             questInfo.handUIaddCard.name = "tutorialHand";
+            questInfo.handUIaddCard.SetActive(false);
         }
         if(cardData.id.CompareTo(questInfo.removeId) == 0) {
             questInfo.handUIremoveCard = Instantiate(questInfo.quest.manager.handSpinePrefab, transform, false);
