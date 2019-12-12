@@ -64,6 +64,7 @@ public partial class MenuCardInfo : MonoBehaviour {
         cardData = data;
         translator = AccountManager.Instance.GetComponent<Translator>();
         info.Find("FrameImage/TierBack").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["name_" + data.rarelity];
+        info.Find("FrameImage/TierRibbon").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["ribbon_" + data.rarelity];
         info.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.name;
 
         if (data.skills.Length != 0) {
@@ -92,7 +93,7 @@ public partial class MenuCardInfo : MonoBehaviour {
 
         info.Find("FrameImage/Human").gameObject.SetActive(data.camp == "human");
         info.Find("FrameImage/Orc").gameObject.SetActive(data.camp == "orc");
-
+        info.Find("HaveNum").gameObject.SetActive(true);
         int cardNum = 0;
         if (AccountManager.Instance.cardPackage.data.ContainsKey(data.id))
             cardNum = AccountManager.Instance.cardPackage.data[data.id].cardCount;
@@ -110,14 +111,12 @@ public partial class MenuCardInfo : MonoBehaviour {
         //}
 
         info.Find("Flavor/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "";
-        info.Find("UnitPortrait").gameObject.SetActive(false);
-        info.Find("MagicPortrait").gameObject.SetActive(false);
         int skillnum = 0;
+        if (AccountManager.Instance.resource.infoPortraite.ContainsKey(data.id)) {
+            info.Find("FrameImage/UnitPortrait").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoPortraite[data.id];
+        }
         if (data.type == "unit") {
-            info.Find("UnitPortrait").gameObject.SetActive(true);
-            if (AccountManager.Instance.resource.infoPortraite.ContainsKey(data.id)) {
-                info.Find("UnitPortrait").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoPortraite[data.id];
-            }
+            
             if (data.attackTypes.Length != 0) {
                 info.Find("Skill&BuffRow1").GetChild(skillnum).gameObject.SetActive(true);
                 var image = AccountManager.Instance.resource.skillIcons[data.attackTypes[0]];
@@ -180,21 +179,12 @@ public partial class MenuCardInfo : MonoBehaviour {
                 else sb.Append(ctg);
             }
             info.Find("SkillInfo/Categories/Text").GetComponent<TMPro.TextMeshProUGUI>().text = sb.ToString();
-
-            info.Find("MagicPortrait").gameObject.SetActive(true);
-            //info.Find("Categories").gameObject.SetActive(false);
-            if (AccountManager.Instance.resource.cardPortraite.ContainsKey(data.id)) {
-                info.Find("MagicPortrait").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardPortraite[data.id];
-                if (data.isHeroCard)
-                    info.Find("MagicPortrait/Frame").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground["hero_legend_human"];
-                else
-                    info.Find("MagicPortrait/Frame").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground["magic_" + data.rarelity];
-            }
         }
 
         if (data.isHeroCard) {
             info.Find("CreateCard").gameObject.SetActive(false);
             info.Find("CreateSpine").gameObject.SetActive(false);
+            info.Find("HaveNum").gameObject.SetActive(false);
         }
         else {
             if (data.indestructible) {
@@ -319,8 +309,6 @@ public partial class MenuCardInfo : MonoBehaviour {
         SoundManager.Instance.PlaySound(UISfxSound.BUTTON1);
         transform.parent.Find("HeroInfo").gameObject.SetActive(false);
         transform.Find("CreateCard/BreakBtn/DisableInHand").gameObject.SetActive(false);
-        if (transform.localPosition.y != 0)
-            transform.localPosition = Vector3.zero;
         editCard = null;
         bookHaveNum = 0;
         transform.parent.gameObject.SetActive(false);
