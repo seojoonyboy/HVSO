@@ -114,6 +114,10 @@ public class DeckSettingManager : MonoBehaviour
                 iTween.MoveTo(deckList.GetChild(i).GetChild(0).gameObject, iTween.Hash("y", -175, "islocal", true, "time", 0.3f));
             }
         }
+        if(EditCardHandler.questInfo != null) {
+            Transform hand = deck.Find("DeckObject/tutorialHand");
+            if(hand != null) hand.gameObject.SetActive(false);
+        }
         yield return new WaitForSeconds(0.25f);
         isAni = false;
     }
@@ -130,6 +134,10 @@ public class DeckSettingManager : MonoBehaviour
             }
         }
         yield return new WaitForSeconds(0.2f);
+        if(EditCardHandler.questInfo != null) {
+            Transform hand = selectedDeck.Find("DeckObject/tutorialHand");
+            if(hand != null) hand.gameObject.SetActive(true);
+        }
         selectedDeck = null;
     }
 
@@ -143,6 +151,10 @@ public class DeckSettingManager : MonoBehaviour
             if (deckList.GetChild(i).gameObject.activeSelf) {
                 deckList.GetChild(i).GetChild(0).localPosition = Vector3.zero;
             }
+        }
+        if(EditCardHandler.questInfo != null && selectedDeck != null) {
+            Transform hand = selectedDeck.Find("DeckObject/tutorialHand");
+            if(hand != null) hand.gameObject.SetActive(true);
         }
     }
 }
