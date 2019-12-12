@@ -63,14 +63,14 @@ public partial class MenuCardInfo : MonoBehaviour {
         Transform info = transform;
         cardData = data;
         translator = AccountManager.Instance.GetComponent<Translator>();
-        info.Find("Name").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["name_" + data.rarelity];
+        info.Find("FrameImage/TierBack").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["name_" + data.rarelity];
         info.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.name;
 
         if (data.skills.Length != 0) {
-            info.Find("Dialog/Text").GetComponent<TMPro.TextMeshProUGUI>().text = translator.DialogSetRichText(data.skills[0].desc);
+            info.Find("SkillInfo/Dialog/Text").GetComponent<TMPro.TextMeshProUGUI>().text = translator.DialogSetRichText(data.skills[0].desc);
         }
         else
-            info.Find("Dialog/Text").GetComponent<TMPro.TextMeshProUGUI>().text = null;
+            info.Find("SkillInfo/Dialog/Text").GetComponent<TMPro.TextMeshProUGUI>().text = null;
 
         if (data.hp != null) {
             info.Find("Health/Text").GetComponent<Text>().text = data.hp.ToString();
@@ -90,16 +90,24 @@ public partial class MenuCardInfo : MonoBehaviour {
 
         info.Find("Class_1").GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[data.cardClasses[0]];
 
+        info.Find("FrameImage/Human").gameObject.SetActive(data.camp == "human");
+        info.Find("FrameImage/Orc").gameObject.SetActive(data.camp == "orc");
 
-        for (int i = 0; i < 3; i++) {
-            info.Find("Skill&BuffRow1").GetChild(i).gameObject.SetActive(false);
-            EventTrigger skill1 = info.Find("Skill&BuffRow1").GetChild(i).GetComponent<EventTrigger>();
-            skill1.triggers.RemoveRange(0, skill1.triggers.Count);
+        int cardNum = 0;
+        if (AccountManager.Instance.cardPackage.data.ContainsKey(data.id))
+            cardNum = AccountManager.Instance.cardPackage.data[data.id].cardCount;
+        info.Find("HaveNum").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, cardNum.ToString(), false);
 
-            info.Find("Skill&BuffRow2").GetChild(i).gameObject.SetActive(false);
-            EventTrigger skill2 = info.Find("Skill&BuffRow2").GetChild(i).GetComponent<EventTrigger>();
-            skill2.triggers.RemoveRange(0, skill2.triggers.Count);
-        }
+
+        //for (int i = 0; i < 3; i++) {
+        //    info.Find("Skill&BuffRow1").GetChild(i).gameObject.SetActive(false);
+        //    EventTrigger skill1 = info.Find("Skill&BuffRow1").GetChild(i).GetComponent<EventTrigger>();
+        //    skill1.triggers.RemoveRange(0, skill1.triggers.Count);
+
+        //    info.Find("Skill&BuffRow2").GetChild(i).gameObject.SetActive(false);
+        //    EventTrigger skill2 = info.Find("Skill&BuffRow2").GetChild(i).GetComponent<EventTrigger>();
+        //    skill2.triggers.RemoveRange(0, skill2.triggers.Count);
+        //}
 
         info.Find("Flavor/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "";
         info.Find("UnitPortrait").gameObject.SetActive(false);
@@ -153,10 +161,9 @@ public partial class MenuCardInfo : MonoBehaviour {
                 if (translatedCategories.Count != cnt) sb.Append(ctg + ", ");
                 else sb.Append(ctg);
             }
-            info.Find("Categories").gameObject.SetActive(true);
-            info.Find("Categories/Text").GetComponent<TMPro.TextMeshProUGUI>().text = sb.ToString();
+            info.Find("SkillInfo/Categories").gameObject.SetActive(true);
+            info.Find("SkillInfo/Categories/Text").GetComponent<TMPro.TextMeshProUGUI>().text = sb.ToString();
             info.Find("Flavor/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.flavorText;
-            info.Find("Flavor/Text").position = info.Find("Skill&BuffRow2").position;
             info.Find("Flavor").gameObject.SetActive(true);
         }
         //마법 카드
@@ -172,7 +179,7 @@ public partial class MenuCardInfo : MonoBehaviour {
                 if (translatedCategories.Count != cnt) sb.Append(ctg + ", ");
                 else sb.Append(ctg);
             }
-            info.Find("Categories/Text").GetComponent<TMPro.TextMeshProUGUI>().text = sb.ToString();
+            info.Find("SkillInfo/Categories/Text").GetComponent<TMPro.TextMeshProUGUI>().text = sb.ToString();
 
             info.Find("MagicPortrait").gameObject.SetActive(true);
             //info.Find("Categories").gameObject.SetActive(false);
@@ -188,21 +195,13 @@ public partial class MenuCardInfo : MonoBehaviour {
         if (data.isHeroCard) {
             info.Find("CreateCard").gameObject.SetActive(false);
             info.Find("CreateSpine").gameObject.SetActive(false);
-            transform.Find("Indestructible").gameObject.SetActive(false);
         }
         else {
             if (data.indestructible) {
-                transform.Find("Indestructible").gameObject.SetActive(true);
-                transform.Find("Indestructible/HaveNum").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, "4", false);
-                info.Find("CreateCard").gameObject.SetActive(false);
+                transform.Find("CreateBtn").GetComponent<Button>().interactable = false;
             }
             else {
-                transform.Find("Indestructible").gameObject.SetActive(false);
-                info.Find("CreateCard").gameObject.SetActive(true);
-                int cardNum = 0;
-                if (AccountManager.Instance.cardPackage.data.ContainsKey(data.id))
-                    cardNum = AccountManager.Instance.cardPackage.data[data.id].cardCount;
-                info.Find("CreateCard/HaveNum").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, cardNum.ToString(), false);
+                transform.Find("CreateBtn").GetComponent<Button>().interactable = true;
                 int makeCardcost = 0;
                 int breakCardcost = 0;
                 switch (data.rarelity) {
@@ -238,8 +237,8 @@ public partial class MenuCardInfo : MonoBehaviour {
                     info.Find("CreateCard/BreakBtn/Disabled").gameObject.SetActive(true);
                 else
                     info.Find("CreateCard/BreakBtn/Disabled").gameObject.SetActive(false);
-                info.Find("CreateCard/CrystalUseValue").GetComponent<TMPro.TextMeshProUGUI>().text = "-" + makeCardcost.ToString();
-                info.Find("CreateCard/CrystalGetValue").GetComponent<TMPro.TextMeshProUGUI>().text = "+" + breakCardcost.ToString();
+                info.Find("CreateCard/MakeBtn/CrystalUseValue").GetComponent<TMPro.TextMeshProUGUI>().text = "-" + makeCardcost.ToString();
+                info.Find("CreateCard/BreakBtn/CrystalGetValue").GetComponent<TMPro.TextMeshProUGUI>().text = "+" + breakCardcost.ToString();
                 if (makeCard) {
                     if (data.rarelity == "common" && accountManager.userResource.crystal > beforeCrystal)
                         info.Find("CreateCard/Crystal/Value").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userData.manaCrystal.ToString();
@@ -250,6 +249,28 @@ public partial class MenuCardInfo : MonoBehaviour {
                     info.Find("CreateCard/Crystal/Value").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userData.manaCrystal.ToString();
             }
         }
+        if (cardCreate)
+            OpenCreateCard();
+        else
+            OpenSkillWindow();
+    }
+
+    public void OpenSkillWindow() {
+        transform.Find("SkillInfo").gameObject.SetActive(true);
+        transform.Find("Flavor").gameObject.SetActive(false);
+        transform.Find("CreateCard").gameObject.SetActive(false);
+    }
+
+    public void OpenFlavor() {
+        transform.Find("SkillInfo").gameObject.SetActive(false);
+        transform.Find("Flavor").gameObject.SetActive(true);
+        transform.Find("CreateCard").gameObject.SetActive(false);
+    }
+
+    public void OpenCreateCard() {
+        transform.Find("SkillInfo").gameObject.SetActive(false);
+        transform.Find("Flavor").gameObject.SetActive(false);
+        transform.Find("CreateCard").gameObject.SetActive(true);
     }
 
     IEnumerator AddCrystalAnimation() {
@@ -318,6 +339,7 @@ public partial class MenuCardInfo : MonoBehaviour {
 
     public void MakeCard() {
         if (cardCreate) return;
+        transform.Find("CreateBlock").gameObject.SetActive(true);
         SoundManager.Instance.PlaySound(UISfxSound.BUTTON1);
         if (bookHaveNum == 0)
             bookHaveNum++;
@@ -331,6 +353,7 @@ public partial class MenuCardInfo : MonoBehaviour {
 
     public void BreakCard() {
         if (cardCreate) return;
+        transform.Find("CreateBlock").gameObject.SetActive(true);
         SoundManager.Instance.PlaySound(UISfxSound.BUTTON1);
         cardCreate = true;
         makeCard = false;
@@ -364,6 +387,7 @@ public partial class MenuCardInfo : MonoBehaviour {
                 transform.Find("CreateCard/BreakBtn/DisableInHand").gameObject.SetActive(true);
             transform.Find("Flavor").gameObject.SetActive(false);
         }
+        transform.Find("CreateBlock").gameObject.SetActive(false);
         cardCreate = false;
         deckSettingManager.SetPlayerNewDecks();
     }
