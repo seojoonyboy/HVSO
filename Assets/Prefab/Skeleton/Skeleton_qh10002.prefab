@@ -296,5 +296,5 @@ MonoBehaviour:
   hitAnimationName: HIT
   deadAnimationName: DEAD
   shieldAnimationName: SHIELD
-  lastHitAnimationName: LASTHIT
+  lastHitAnimationName: DEAD
   dummyAnimation: 

@@ -757,6 +757,28 @@
                         "name" : "Menu_NPC_Talk",
                         "args" : [
                             "h10001",
+                            "보급상자를 많이 얻을수록 부대가 강해질 수 있다는 이야기로군. 꼭 기억하도록.",
+                            "my"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                          "screen"
+                        ]
+                    },
+                    {
+                        "name" : "UnlockRewardBoxMenu",
+                        "args" : []
+                    },
+                    {
+                        "name" : "UnlockShopMenu",
+                        "args" : []
+                    },
+                    {
+                        "name" : "Menu_NPC_Talk",
+                        "args" : [
+                            "h10001",
                             "다른 장군들과의 전투 경험도 무시할 순 없겠어. 틈틈히 진행해보도록 하지.",
                             "my"
                         ]

@@ -131,8 +131,8 @@ public partial class BattleConnector : MonoBehaviour {
             playerHeroNameTxt.text = humanHeroName;
             playerNickNameTxt.text = humanPlayerNickName;
 
-            enemyHeroNameTxt.text = (mode == "story") ? "오크병사" : orcHeroName;
-            enemyNickNameTxt.text = (mode == "story") ? "오크병사" : orcPlayerNickName;
+            enemyHeroNameTxt.text = (mode == "story") ? "오크 부족장" : orcHeroName;
+            enemyNickNameTxt.text = (mode == "story") ? "오크 부족장" : orcPlayerNickName;
 
 
             for (int i = 0; i < humanTier; i++) {

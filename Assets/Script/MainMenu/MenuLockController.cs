@@ -134,40 +134,38 @@ public class MenuLockController : SerializedMonoBehaviour {
         }
 
         if (IsMainMenu(translatedKeyword)) {
-            try {
-                switch (translatedKeyword) {
-                    case "DeckEdit":
-                        Transform DeckSettingWindow = MainScrollSnapContent.parent.Find("DeckSettingWindow");
-                        DeckSettingWindow.SetParent(MainScrollSnapContent);
-                        DeckSettingWindow.transform.SetAsFirstSibling();    //메인화면보다 왼쪽
-                        DeckSettingWindow.gameObject.SetActive(true);
-                        break;
-                    case "Dictionary":
-                        Transform DictionarySelect = MainScrollSnapContent.parent.Find("DictionarySelect");
-                        DictionarySelect.SetParent(MainScrollSnapContent);
-                        DictionarySelect.transform.SetAsLastSibling();      //메인화면보다 오른쪽
-                        DictionarySelect.gameObject.SetActive(true);
-                        break;
-                    case "Shop":
-                        Transform ShopWindow = MainScrollSnapContent.parent.Find("ShopWindow");
-                        ShopWindow.SetParent(MainScrollSnapContent);
-                        ShopWindow.transform.SetAsLastSibling();            //메인화면보다 오른쪽
-                        ShopWindow.gameObject.SetActive(true);
-                        break;
-                }
-
-                MainScrollSnapContent.parent.GetComponent<HorizontalScrollSnap>().enabled = false;
-                MainScrollSnapContent.parent.GetComponent<HorizontalScrollSnap>().enabled = true;
-
-                MainScrollSnapContent.parent.GetComponent<HorizontalScrollSnap>().CurrentPage = 2;
-                int mainSibilingIndex = MainScrollSnapContent.Find("MainWindow").GetSiblingIndex();
-                MainScrollSnapContent.parent.GetComponent<HorizontalScrollSnap>().GoToScreen(mainSibilingIndex);
-
-                menu.transform.Find("Lock").GetComponent<MenuLocker>().Unlock();
+            switch (translatedKeyword) {
+                case "DeckEdit":
+                    Transform DeckSettingWindow = MainScrollSnapContent.parent.Find("DeckSettingWindow");
+                    if (DeckSettingWindow == null) break;
+                    DeckSettingWindow.SetParent(MainScrollSnapContent);
+                    DeckSettingWindow.transform.SetAsFirstSibling();    //메인화면보다 왼쪽
+                    DeckSettingWindow.gameObject.SetActive(true);
+                    break;
+                case "Dictionary":
+                    Transform DictionarySelect = MainScrollSnapContent.parent.Find("DictionarySelect");
+                    if (DictionarySelect == null) break;
+                    DictionarySelect.SetParent(MainScrollSnapContent);
+                    DictionarySelect.transform.SetAsLastSibling();      //메인화면보다 오른쪽
+                    DictionarySelect.gameObject.SetActive(true);
+                    break;
+                case "Shop":
+                    Transform ShopWindow = MainScrollSnapContent.parent.Find("ShopWindow");
+                    if (ShopWindow == null) break;
+                    ShopWindow.SetParent(MainScrollSnapContent);
+                    ShopWindow.transform.SetAsLastSibling();            //메인화면보다 오른쪽
+                    ShopWindow.gameObject.SetActive(true);
+                    break;
             }
-            catch (Exception ex) {
-                //Logger.LogError(ex);
-            }
+
+            MainScrollSnapContent.parent.GetComponent<HorizontalScrollSnap>().enabled = false;
+            MainScrollSnapContent.parent.GetComponent<HorizontalScrollSnap>().enabled = true;
+
+            MainScrollSnapContent.parent.GetComponent<HorizontalScrollSnap>().CurrentPage = 2;
+            int mainSibilingIndex = MainScrollSnapContent.Find("MainWindow").GetSiblingIndex();
+            MainScrollSnapContent.parent.GetComponent<HorizontalScrollSnap>().GoToScreen(mainSibilingIndex);
+
+            menu.transform.Find("Lock").GetComponent<MenuLocker>().Unlock();
         }
         else {
             menu.transform.Find("Lock").GetComponent<MenuLocker>().Unlock();
@@ -200,6 +198,16 @@ public class MenuLockController : SerializedMonoBehaviour {
                 break;
         }
         return translatedKeyword;
+    }
+
+    public GameObject FindButtonObject(string name) {
+        if (!menues.ContainsKey(name)) return null;
+        else return menues[name];
+    }
+
+    public GameObject FindButtonLockObject(string name) {
+        if (!menues.ContainsKey(name)) return null;
+        else return menues[name].transform.Find("Lock").gameObject;
     }
 
     private bool IsMainMenu(string keyword) {
