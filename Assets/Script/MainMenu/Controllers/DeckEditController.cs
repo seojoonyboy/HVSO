@@ -689,7 +689,7 @@ public class DeckEditController : MonoBehaviour {
         }
         InitCanvas();
 
-        deckNamePanel.transform.Find("NameTemplate").GetComponent<TMPro.TMP_InputField>().text = "";
+        deckNamePanel.transform.Find("NameTemplate").GetComponent<TMPro.TMP_InputField>().text = "내 부대";
         handDeckHeader.Find("DeckNamePanel").gameObject.SetActive(true);
         SetHeroInfo(heroId);
 
