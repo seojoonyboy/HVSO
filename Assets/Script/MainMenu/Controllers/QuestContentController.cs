@@ -272,15 +272,15 @@ namespace Quest {
             if(data.cleared) return;
             manager.tutorialSerializeList.modeSelect.onClick.AddListener(ModeClicked);
             manager.tutorialSerializeList.newBattleMenu.SetActive(true);
-            GameObject battle = manager.tutorialSerializeList.BattleButton.gameObject;
-            Instantiate(manager.handSpinePrefab, battle.transform, false);
-
             manager.tutorialSerializeList.BattleButton.onClick.AddListener(BattleClicked);
         }
 
-        public void ModeClicked() {
+        public async void ModeClicked() {
             manager.tutorialSerializeList.modeSelect.GetComponent<Button>().onClick.RemoveListener(ModeClicked);
+            await Task.Delay(400);
             manager.tutorialSerializeList.menuLockController.Unlock("League", false);
+            GameObject battle = manager.tutorialSerializeList.BattleButton.gameObject;
+            Instantiate(manager.handSpinePrefab, battle.transform, false);
         }
 
         private void BattleClicked() {
