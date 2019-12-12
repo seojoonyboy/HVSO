@@ -58,6 +58,7 @@ public class EditCardButtonHandler : MonoBehaviour {
         
         EditCardHandler.questInfo.handUIcreateOrRemove = Instantiate(EditCardHandler.questInfo.quest.manager.handSpinePrefab, parent, false);
         EditCardHandler.questInfo.handUIcreateOrRemove.name = "tutorialHand";
+        EditCardHandler.questInfo.handUIcreateOrRemove.transform.SetParent(EditCardHandler.questInfo.handUIcreateOrRemove.transform.parent.parent);
     }
 
     public void SetCardImage(EditCardHandler card) {
@@ -111,6 +112,7 @@ public class EditCardButtonHandler : MonoBehaviour {
             transform.GetChild(0).Find("AddCard/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "추가";
     }
 
+
     private void TutoCheckCardAdd(EditCardHandler cardHandler) {
         if(EditCardHandler.questInfo == null) return;
         
@@ -128,7 +130,17 @@ public class EditCardButtonHandler : MonoBehaviour {
         cardHandler.DrawCard(cardData.id, cardData.camp == "human");
         cardHandler.HAVENUM--;
         cardHandler.SetHaveNum();
+        TutoCheckCardRemove(cardHandler);
         if (cardHandler.HAVENUM == 0) CloseCardButtons();
+    }
+
+    private void TutoCheckCardRemove(EditCardHandler cardHandler) {
+        if(EditCardHandler.questInfo == null) return;
+
+        bool isRemoveCard = cardHandler.cardData.id.CompareTo(EditCardHandler.questInfo.removeId) == 0;
+        if(!isRemoveCard) return;
+        if(cardHandler.HAVENUM != 0) return;
+        EditCardHandler.questInfo.handUIaddCard.SetActive(true);
     }
 
     public void MakeCard(Transform cardObj, bool makeCard) {
