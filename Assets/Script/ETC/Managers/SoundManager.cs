@@ -176,7 +176,11 @@ public enum UISfxSound {
     CARDCHOICE_UNIT,
     MENUSLIDE1,
     MENUSLIDE2,
-    MENUSLIDE3
+    MENUSLIDE3,
+    CARD_USE_NORMAL,
+    CARD_USE_RARE,
+    CARD_USE_SUPERRARE,
+    CARD_USE_LEGEND
 }
 
 public enum IngameSfxSound {

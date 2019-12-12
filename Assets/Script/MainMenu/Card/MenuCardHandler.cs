@@ -181,8 +181,6 @@ public class MenuCardHandler : MonoBehaviour {
         else {
             MenuCardInfo.cardInfoWindow.SetCardInfo(cardData, isHuman, null);
             MenuCardInfo.cardInfoWindow.transform.Find("CreateCard").gameObject.SetActive(false);
-            MenuCardInfo.cardInfoWindow.transform.localPosition =
-                new Vector3(0, -(200 * MenuCardInfo.cardInfoWindow.transform.parent.localScale.y));
         }
         if (transform.parent.parent.parent.name == "HeroInfo" && transform.parent.parent.name != "SkillWindow") {
             exitTrigger2.SetActive(true);
