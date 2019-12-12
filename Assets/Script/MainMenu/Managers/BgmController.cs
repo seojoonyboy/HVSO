@@ -43,10 +43,12 @@ public class BgmController : SerializedMonoBehaviour
             Logger.LogError("사운드가 없습니다.");
             return;
         }
+        StopAllCoroutines();
+        mainAudio.volume = PlayerPrefs.GetFloat("BgmVolume");
+
 
         if (type == BgmEnum.VICTORY || type == BgmEnum.DEFEAT) {
-            mainAudio.loop = false;
-            StopCoroutine(SoundVolumeDown());
+            mainAudio.loop = false;            
         }
         else
             mainAudio.loop = true;

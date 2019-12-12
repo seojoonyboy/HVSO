@@ -77,7 +77,7 @@ public class SoundManager : SerializedMonoBehaviour {
             await System.Threading.Tasks.Task.Delay(100);
             PlaySfx(ingameSfx[IngameSfxSound.SHIELDCHARGECOUNT]);            
         }
-        SoundManager.Instance.PlayIngameSfx(IngameSfxSound.SHIELDCHARGE);
+        PlayIngameSfx(IngameSfxSound.SHIELDCHARGE);
     }
 
     public void PlayAttackSound(string id) {
