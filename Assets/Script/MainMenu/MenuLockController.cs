@@ -130,8 +130,11 @@ public class MenuLockController : SerializedMonoBehaviour {
             return;
         }
         GameObject menu = menues[translatedKeyword];
+        Logger.Log(translatedKeyword + " 해금됨");
         if(translatedKeyword == "Story") {
             menues["Mode"].transform.parent.parent.Find("SelectedModeImage/Lock").GetComponent<MenuLocker>().OnlyUnlockEffect();
+        }
+        if(translatedKeyword == "Shop") {
             mainButtonsParent.transform.GetChild(4).Find("Lock").GetComponent<MenuLocker>().Unlock();
         }
 
