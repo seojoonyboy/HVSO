@@ -183,7 +183,10 @@ public enum IngameSfxSound {
     SHIELDCHARGE,
     TEXTTYPING,
     TURNBUTTON,
-    TURNSTART
+    TURNSTART,
+    HUMANTURN,
+    ORCTURN,
+    ORCMAGICTURN
 }
 
 
