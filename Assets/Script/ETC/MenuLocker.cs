@@ -63,6 +63,7 @@ public class MenuLocker : MonoBehaviour {
             gameObject.SetActive(false);
         }
         else {
+            if (skeletonGraphic == null) Start();
             skeletonGraphic.enabled = true;
             StartCoroutine(_Unlock());
         }

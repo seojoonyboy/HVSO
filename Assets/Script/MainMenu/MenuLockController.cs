@@ -51,15 +51,22 @@ public class MenuLockController : SerializedMonoBehaviour {
 
         var unlockMenuList = dataModules.JsonReader.Read<MenuNameData>(PlayerPrefs.GetString("unlockMenuList"));
         if (unlockMenuList.menuNameList == null) unlockMenuList.menuNameList = new List<string>();
-
+        
+        StringBuilder sb = new StringBuilder();
+        StringBuilder sb2 = new StringBuilder();
         foreach (string name in unlockMenuList.menuNameList) {
-            Logger.Log("unlockMenuList : " + name);
+            sb.Append(name + ", ");
+
             Unlock(name, false);
+            if (lockMenuList.menuNameList.Exists(x => x == name)) lockMenuList.menuNameList.Remove(name);
         }
         foreach (string name in lockMenuList.menuNameList) {
-            Logger.Log("LockMenuList : " + name);
+            sb2.Append(name + ", ");
             Lock(name, false);
         }
+
+        Logger.Log("unlockMenuList : " + sb.ToString());
+        Logger.Log("lockMenuList : " + sb2.ToString());
     }
 
     /// <summary>
