@@ -11,6 +11,8 @@ using UnityEngine.UI.Extensions;
 public class MenuLockController : SerializedMonoBehaviour {
     [SerializeField] Transform MainScrollSnapContent;
     [SerializeField] GameObject mainButtonsParent;
+    [SerializeField] Transform deckEditListParent;
+
     [SerializeField] Dictionary<string, GameObject> menues;
 
     NoneIngameSceneEventHandler eventHandler;
@@ -45,6 +47,18 @@ public class MenuLockController : SerializedMonoBehaviour {
             foreach (string name in menuNames) {
                 Unlock(name, true);
             }
+        }
+
+        var unlockMenuList = dataModules.JsonReader.Read<MenuNameData>(PlayerPrefs.GetString("unlockMenuList"));
+        if (unlockMenuList.menuNameList == null) unlockMenuList.menuNameList = new List<string>();
+
+        foreach (string name in unlockMenuList.menuNameList) {
+            Logger.Log("unlockMenuList : " + name);
+            Unlock(name, false);
+        }
+        foreach (string name in lockMenuList.menuNameList) {
+            Logger.Log("LockMenuList : " + name);
+            Lock(name, false);
         }
     }
 
@@ -100,7 +114,17 @@ public class MenuLockController : SerializedMonoBehaviour {
             menu.transform.Find("Lock").GetComponent<MenuLocker>().Lock();
         }
         else {
-            menu.transform.Find("Lock").GetComponent<MenuLocker>().Lock();
+            if (translatedKeyword.Contains("HumanBaseDeck") || translatedKeyword.Contains("OrcBaseDeck")) {
+                foreach (Transform deckObject in deckEditListParent) {
+                    if (deckObject.GetSiblingIndex() == 0) continue;
+                    var buttons = deckObject.Find("DeckObject/Buttons");
+                    buttons.Find("DeleteBtn/Lock").GetComponent<MenuLocker>().Lock();
+                    buttons.Find("AiBattleBtn/Lock").GetComponent<MenuLocker>().Lock();
+                }
+            }
+            else {
+                menu.transform.Find("Lock").GetComponent<MenuLocker>().Lock();
+            }
         }
 
         var unlockMenuList = dataModules.JsonReader.Read<MenuNameData>(PlayerPrefs.GetString("unlockMenuList"));
@@ -174,17 +198,24 @@ public class MenuLockController : SerializedMonoBehaviour {
             menu.transform.Find("Lock").GetComponent<MenuLocker>().Unlock();
         }
         else {
-            menu.transform.Find("Lock").GetComponent<MenuLocker>().Unlock();
+            if(translatedKeyword.Contains("HumanBaseDeck") || translatedKeyword.Contains("OrcBaseDeck")) {
+                foreach (Transform deckObject in deckEditListParent) {
+                    if (deckObject.GetSiblingIndex() == 0) continue;
+                    var buttons = deckObject.Find("DeckObject/Buttons");
+                    buttons.Find("DeleteBtn/Lock").GetComponent<MenuLocker>().Unlock();
+                    buttons.Find("AiBattleBtn/Lock").GetComponent<MenuLocker>().Unlock();
+                }
+            }
+            else {
+                menu.transform.Find("Lock").GetComponent<MenuLocker>().Unlock();
+            }
         }
 
         var unlockMenuList = dataModules.JsonReader.Read<MenuNameData>(PlayerPrefs.GetString("unlockMenuList"));
         var lockMenuList = dataModules.JsonReader.Read<MenuNameData>(PlayerPrefs.GetString("lockMenuList"));
 
-        if (unlockMenuList.menuNameList == null) unlockMenuList.menuNameList = new List<string>();
-        if (lockMenuList.menuNameList == null) lockMenuList.menuNameList = new List<string>();
-
         if (lockMenuList.menuNameList.Exists(x => x == translatedKeyword)) lockMenuList.menuNameList.Remove(translatedKeyword);
-        if (unlockMenuList.menuNameList.Exists(x => x == translatedKeyword)) unlockMenuList.menuNameList.Add(translatedKeyword);
+        if (!unlockMenuList.menuNameList.Exists(x => x == translatedKeyword)) unlockMenuList.menuNameList.Add(translatedKeyword);
 
         PlayerPrefs.SetString("lockMenuList", JsonConvert.SerializeObject(lockMenuList));
         PlayerPrefs.SetString("unlockMenuList", JsonConvert.SerializeObject(unlockMenuList));
@@ -240,6 +271,10 @@ public class MenuLockController : SerializedMonoBehaviour {
         lockMenuList.menuNameList.Add("Shop");
         lockMenuList.menuNameList.Add("RewardBox");
         lockMenuList.menuNameList.Add("Mode");
+        lockMenuList.menuNameList.Add("HumanBaseDeckAiBattleBtn");
+        lockMenuList.menuNameList.Add("HumanBaseDeckDeleteBtn");
+        lockMenuList.menuNameList.Add("OrcBaseDeckAiBattleBtn");
+        lockMenuList.menuNameList.Add("OrcBaseDeckDeleteBtn");
 
         PlayerPrefs.SetString("lockMenuList", JsonConvert.SerializeObject(lockMenuList));
         PlayerPrefs.SetString("unlockMenuList", JsonConvert.SerializeObject(unlockMenuList));
