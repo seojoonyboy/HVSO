@@ -649,7 +649,7 @@ namespace TargetModules {
                             PlayMangement.instance.OnBlockPanel("대상을 지정해 주세요.");
                             callback = successCallback;
                             PlaceMonster myMonster = skillHandler.myObject.GetComponent<PlaceMonster>();
-                            EffectSystem.Instance.CheckEveryLineMask(myMonster);
+                            EffectSystem.Instance.ShowSlotWithDim();
                             string[] attributes; 
                             if(myMonster != null)
                                 attributes = myMonster.unit.attributes;
