@@ -146,7 +146,7 @@ public partial class BattleConnector : MonoBehaviour {
             if (mode == "story")
                 machine.transform.Find("EnemyCharacter/EnemyKracus").gameObject.GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite["qh10002"];
             else
-                machine.transform.Find("EnemyCharacter/EnemyKracus").gameObject.GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[gameState.players.human.hero.id];
+                machine.transform.Find("EnemyCharacter/EnemyKracus").gameObject.GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[gameState.players.orc.hero.id];
         }
         else if (race == "orc") {
             playerHeroNameTxt.text = orcHeroName;
