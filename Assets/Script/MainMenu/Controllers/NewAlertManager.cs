@@ -8,9 +8,12 @@ public class NewAlertManager : MonoBehaviour
 {
     public static NewAlertManager Instance;
     public GameObject alertPref;
-    public static List<string> buttonName;
+    public List<string> buttonName;
+    public Dictionary<string, GameObject> buttonDic;
+
     public string iconName = "NewAlertIcon";
-    
+    public string playerPrefKey = "AlertIcon";
+
     private void Awake() {
         Instance = this;
     }
@@ -18,7 +21,28 @@ public class NewAlertManager : MonoBehaviour
     private void OnDestroy() {
         if (Instance != null)
             Instance = null;
+        if (buttonName.Count > 0) {
+            SaveButtonName();
+            buttonName.Clear();
+        }       
     }
+
+    private void SaveButtonName() {
+        string nameData = "";
+        for(int i = 0; i < buttonName.Count; i++) {
+            nameData += buttonName[i];
+            nameData += '/';
+        }
+        PlayerPrefs.SetString(playerPrefKey, nameData);
+    }
+
+    private void LoadButtonName() {
+        string nameData = PlayerPrefs.GetString(playerPrefKey);
+        string[] data = nameData.Split('/');
+        buttonName.AddRange(data);
+    }
+
+
 
     public void SetUpButtonToAlert(GameObject button) {
         Button targetButton = button.GetComponent<Button>();
@@ -34,21 +58,17 @@ public class NewAlertManager : MonoBehaviour
         GameObject Icon = Instantiate(alertPref, rect);
         Icon.transform.position = iconPos;
         Icon.name = iconName;
-
-        buttonName.Add(button.name);
-        targetButton.OnClickAsObservable().Subscribe(_ => DisableButtonToAlert(button)).AddTo(Icon);
+        
+        buttonDic.Add(button.name, button);
+        targetButton.OnClickAsObservable().First().Subscribe(_ => DisableButtonToAlert(button)).AddTo(Icon);
         Icon.SetActive(true);
     }
 
-    public void DisableButtonToAlert(GameObject button) {
+    private void DisableButtonToAlert(GameObject button) {
         if (button.GetComponent<Button>() == null) return;
         Transform icon = button.transform.Find(iconName);
         if (icon == null) return;
-        buttonName.Remove(button.name);
+        buttonDic.Remove(button.name);
         Destroy(icon.gameObject);
     }
-}
-
-public class AlartNameData {
-    public List<string> menuNameList;
 }
