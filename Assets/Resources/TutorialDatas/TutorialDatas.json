@@ -187,13 +187,6 @@
                         ]
                     },
                     {
-                        "name": "Dimmed",
-                        "args": [
-                            "story_deckList_enter_button",
-                            "on"
-                        ]
-                    },
-                    {
                         "name": "ShowHandUI",
                         "args": [
                             "story_deckList_enter_button",
@@ -216,13 +209,6 @@
                         "name": "HideHandUI",
                         "args": [
                             "story_deckList_enter_button"
-                        ]
-                    },
-                    {
-                        "name": "Dimmed",
-                        "args": [
-                            "story_deckList_enter_button",
-                            "off"
                         ]
                     },
                     {
