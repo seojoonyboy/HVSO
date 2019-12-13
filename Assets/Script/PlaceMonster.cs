@@ -722,6 +722,7 @@ public class PlaceMonster : MonoBehaviour {
     private IEnumerator PingPongTween() {
         MaterialPropertyBlock block = new MaterialPropertyBlock();
         MeshRenderer meshRenderer = unitSpine.GetComponent<MeshRenderer>();
+        unitSoringOrder = 55;
         string colorProperty = "_Color";
 		//string blackTintProperty = "_Black";
         while(tintOnOff) {
@@ -735,6 +736,7 @@ public class PlaceMonster : MonoBehaviour {
         block.SetColor(colorProperty, Color.black);
         //block.SetColor(blackTintProperty, Color.black);
         meshRenderer.SetPropertyBlock(block);
+        unitSoringOrder = 50;
         EffectSystem.Instance.HideEveryDim();
     }
 }
