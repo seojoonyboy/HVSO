@@ -37,7 +37,7 @@ public class HandUIController : MonoBehaviour {
                 available_pools[0].GetComponent<RectTransform>().localPosition = new Vector3(rect.localPosition.x + 100, rect.localPosition.y, rect.localPosition.z);
                 break;
             case "hud_back_button":
-                available_pools[0].GetComponent<RectTransform>().localPosition = new Vector3(rect.localPosition.x + 100, rect.localPosition.y - 50, rect.localPosition.z);
+                available_pools[0].GetComponent<RectTransform>().localPosition = new Vector3(rect.localPosition.x + 60, rect.localPosition.y, rect.localPosition.z);
                 break;
             default:
                 available_pools[0].GetComponent<RectTransform>().localPosition = rect.localPosition;

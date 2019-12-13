@@ -37,7 +37,8 @@ public class ScenarioManager : SerializedMonoBehaviour
     [SerializeField] GameObject humanDeckPrefab;
     [SerializeField] Image backgroundImage;
     [SerializeField] BattleMenuController BattleMenuController;
-    [SerializeField] Dictionary<string, Sprite> stroyBackgroundImages; 
+    [SerializeField] Dictionary<string, Sprite> stroyBackgroundImages;
+    [SerializeField] Dictionary<string, Sprite> storyHeroPortraits;
 
     //파일 경로
     [FilePath] public string 
@@ -497,31 +498,39 @@ public class ScenarioManager : SerializedMonoBehaviour
 
         Image background = stageCanvas.transform.Find("HUD/BackGround").GetComponent<Image>();
         Image descBackground = stageCanvas.transform.Find("HUD/StagePanel/Body").GetComponent<Image>();
-        Image victoryBackground = stageCanvas.transform.Find("HUD/StagePanel/VictoryConditions").GetComponent<Image>();
+        Image victoryBackground = stageCanvas.transform.Find("HUD/StagePanel/VictoryConditions/Portrait").GetComponent<Image>();
 
+        
         if (isHuman) {
             background.sprite = human.background;
             descBackground.sprite = human.readyCanvasBg;
 
+            var translatedResult = GetTranslatedHeroName(stageButton.chapterData.enemyHeroId);
             stageCanvas
             .transform
-            .Find("HUD/StagePanel/VictoryConditions/HeroName")
+            .Find("HUD/StagePanel/VictoryConditions/Portrait/HeroName")
             .gameObject
-            .GetComponent<TextMeshProUGUI>().text = "제로드";
+            .GetComponent<TextMeshProUGUI>().text = translatedResult;
 
-            victoryBackground.sprite = human.victoryConditionBg;
+            if (storyHeroPortraits.ContainsKey(stageButton.chapterData.enemyHeroId)) {
+                victoryBackground.sprite = storyHeroPortraits[stageButton.chapterData.enemyHeroId];
+            }
+            
         }
         else {
             background.sprite = orc.background;
             descBackground.sprite = orc.readyCanvasBg;
 
+            var translatedResult = GetTranslatedHeroName(stageButton.chapterData.enemyHeroId);
             stageCanvas
             .transform
-            .Find("HUD/StagePanel/VictoryConditions/HeroName")
+            .Find("HUD/StagePanel/VictoryConditions/Portrait/HeroName")
             .gameObject
-            .GetComponent<TextMeshProUGUI>().text = "크라수스";
+            .GetComponent<TextMeshProUGUI>().text = translatedResult;
 
-            victoryBackground.sprite = orc.victoryConditionBg;
+            if (storyHeroPortraits.ContainsKey(stageButton.chapterData.enemyHeroId)) {
+                victoryBackground.sprite = storyHeroPortraits[stageButton.chapterData.enemyHeroId];
+            }
         }
 
         stageCanvas
@@ -534,7 +543,7 @@ public class ScenarioManager : SerializedMonoBehaviour
             .transform
             .Find("HUD/StagePanel/Body/Description")
             .gameObject
-            .GetComponent<TextMeshProUGUI>().text = stageButton.description;
+            .GetComponent<Text>().text = stageButton.description;
 
         ShowReward(selectedChapterObject);
 
@@ -691,6 +700,20 @@ public class ScenarioManager : SerializedMonoBehaviour
             .TryGetValue(camp + "_" + chapterNumber + "-" + stageNumber, out selectedImage);
         if(selectedImage == null) selectedImage = stroyBackgroundImages[defaultKey];
         return selectedImage;
+    }
+
+    public string GetTranslatedHeroName(string heroId) {
+        switch (heroId) {
+            case "h10001":
+                return "제로드";
+            case "h10002":
+                return "크라쿠스";
+            case "qh10001":
+                return "레이첸민";
+            case "qh10002":
+                return "오크 부족장";
+        }
+        return "default";
     }
 }
 
