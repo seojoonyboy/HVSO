@@ -48,6 +48,18 @@ public class MenuLockController : SerializedMonoBehaviour {
                 Unlock(name, true);
             }
         }
+
+        var unlockMenuList = dataModules.JsonReader.Read<MenuNameData>(PlayerPrefs.GetString("unlockMenuList"));
+        if (unlockMenuList.menuNameList == null) unlockMenuList.menuNameList = new List<string>();
+
+        foreach (string name in unlockMenuList.menuNameList) {
+            Logger.Log("unlockMenuList : " + name);
+            Unlock(name, false);
+        }
+        foreach (string name in lockMenuList.menuNameList) {
+            Logger.Log("LockMenuList : " + name);
+            Lock(name, false);
+        }
     }
 
     /// <summary>
@@ -201,9 +213,6 @@ public class MenuLockController : SerializedMonoBehaviour {
 
         var unlockMenuList = dataModules.JsonReader.Read<MenuNameData>(PlayerPrefs.GetString("unlockMenuList"));
         var lockMenuList = dataModules.JsonReader.Read<MenuNameData>(PlayerPrefs.GetString("lockMenuList"));
-
-        if (unlockMenuList.menuNameList == null) unlockMenuList.menuNameList = new List<string>();
-        if (lockMenuList.menuNameList == null) lockMenuList.menuNameList = new List<string>();
 
         if (lockMenuList.menuNameList.Exists(x => x == translatedKeyword)) lockMenuList.menuNameList.Remove(translatedKeyword);
         if (!unlockMenuList.menuNameList.Exists(x => x == translatedKeyword)) unlockMenuList.menuNameList.Add(translatedKeyword);
