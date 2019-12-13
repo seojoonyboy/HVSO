@@ -114,6 +114,10 @@ public partial class MenuCardInfo : MonoBehaviour {
         int skillnum = 0;
         if (AccountManager.Instance.resource.infoPortraite.ContainsKey(data.id)) {
             info.Find("FrameImage/UnitPortrait").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoPortraite[data.id];
+            if (!accountManager.cardPackage.data.ContainsKey(data.id))
+                info.Find("FrameImage/UnitPortrait").GetComponent<Image>().color = Color.gray;
+            else
+                info.Find("FrameImage/UnitPortrait").GetComponent<Image>().color = Color.white;
         }
         if (data.type == "unit") {
             

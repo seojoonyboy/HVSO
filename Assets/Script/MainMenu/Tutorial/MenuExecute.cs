@@ -631,6 +631,7 @@ namespace MenuTutorialModules {
 
             skeletonGraphic.Skeleton.SetSkin("orc");
             skeletonGraphic.Skeleton.SetSlotsToSetupPose();
+            skeletonGraphic.transform.Find("Header").GetComponent<BoneFollowerGraphic>().SetBone("text1");
 
             yield return new WaitForEndOfFrame();
             skeletonGraphic.transform.parent.Find("SubBackground").gameObject.SetActive(false);
@@ -1006,6 +1007,18 @@ namespace MenuTutorialModules {
 
         void OnDestroy() {
             StopAllCoroutines();
+        }
+    }
+
+    public class UnlockDeckEditButtons : MenuExecute {
+        public override void Execute() {
+            MenuLockController menuLockController = GetComponent<MenuTutorialManager>().lockController;
+            menuLockController.Unlock("HumanBaseDeckAiBattleBtn", false);
+            menuLockController.Unlock("HumanBaseDeckDeleteBtn", false);
+            menuLockController.Unlock("OrcBaseDeckAiBattleBtn", false);
+            menuLockController.Unlock("OrcBaseDeckDeleteBtn", false);
+
+            handler.isDone = true;
         }
     }
 }

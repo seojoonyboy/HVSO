@@ -76,7 +76,9 @@ public class MenuLocker : MonoBehaviour {
         yield return new WaitForEndOfFrame();
         skeletonGraphic.AnimationState.SetAnimation(0, "animation", false);
 
+        yield return new WaitForSeconds(1.0f);
         button.enabled = true;
+        gameObject.SetActive(false);
     }
 
     public void OnlyUnlockEffect() {

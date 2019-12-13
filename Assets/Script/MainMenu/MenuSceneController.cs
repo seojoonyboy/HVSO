@@ -171,6 +171,8 @@ public class MenuSceneController : MonoBehaviour {
                 menuTutorialManager.enabled = false;
             }
         }
+
+        //StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_7);
     }
 
     private void OnUserDataUpdate(Enum Event_Type, Component Sender, object Param) {

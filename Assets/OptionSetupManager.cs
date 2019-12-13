@@ -10,8 +10,16 @@ public class OptionSetupManager : MonoBehaviour
     [SerializeField] Slider soundSlider;
     [SerializeField] TMPro.TextMeshProUGUI soundValue;
     // Start is called before the first frame update
+    public static bool vibrateOn;
     void Start()
     {
+        if (PlayerPrefs.HasKey("Vibrate")) {
+            vibrateOn = (PlayerPrefs.GetString("Vibrate") == "On");
+        }
+        else
+            PlayerPrefs.SetString("Vibrate", "On");
+        transform.GetChild(0).Find("Vibration").Find("Off").GetComponent<Button>().interactable = PlayerPrefs.GetString("Vibrate") == "On";
+        transform.GetChild(0).Find("Vibration").Find("On").GetComponent<Button>().interactable = PlayerPrefs.GetString("Vibrate") == "Off";
         bgmSlider.value = PlayerPrefs.GetFloat("BgmVolume");
         bgmValue.text = ((int)(bgmSlider.value * 100)).ToString();
         soundSlider.value = PlayerPrefs.GetFloat("SoundVolume");
@@ -37,5 +45,17 @@ public class OptionSetupManager : MonoBehaviour
 
     public void VolumeDownBtn(Slider slider) {
         bgmSlider.value -= 0.01f;
+    }
+
+    public void VibrateOn(bool on) {
+        if (on)
+            PlayerPrefs.SetString("Vibrate", "On");
+        else 
+            PlayerPrefs.SetString("Vibrate", "Off");
+        transform.GetChild(0).Find("Vibration").Find("Off").GetComponent<Button>().interactable = on;
+        transform.GetChild(0).Find("Vibration").Find("On").GetComponent<Button>().interactable = !on;
+        vibrateOn = on;
+        if (vibrateOn)
+            Handheld.Vibrate();
     }
 }
