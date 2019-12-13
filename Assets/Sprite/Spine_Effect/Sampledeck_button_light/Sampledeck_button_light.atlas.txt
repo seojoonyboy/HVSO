@@ -1,0 +1,20 @@
+
+Sampledeck_button_light.png
+size: 1024,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+bacK1
+  rotate: false
+  xy: 0, 0
+  size: 707, 230
+  orig: 707, 230
+  offset: 0, 0
+  index: -1
+bacK2
+  rotate: false
+  xy: 0, 230
+  size: 726, 242
+  orig: 726, 242
+  offset: 0, 0
+  index: -1
