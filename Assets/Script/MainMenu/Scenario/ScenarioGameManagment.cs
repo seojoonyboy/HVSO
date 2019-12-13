@@ -44,6 +44,7 @@ public class ScenarioGameManagment : PlayMangement {
     public Sprite[] textShadowImages;
     public GameObject shieldTargetLine;
     public GameObject skipButton;
+    public GameObject textCanvas;
 
     private void Awake() {
         socketHandler = FindObjectOfType<BattleConnector>();
@@ -133,6 +134,7 @@ public class ScenarioGameManagment : PlayMangement {
             beginStopTurn = false;
             afterStopTurn = false;
             ScenarioMask.Instance.DisableMask();
+            textCanvas.SetActive(false);
             challengeUI.SetActive(false);
             SocketHandler.TutorialEnd();
 

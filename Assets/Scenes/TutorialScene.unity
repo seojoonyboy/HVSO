@@ -59487,6 +59487,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: b00966305fd3c284a863be8cbd185564, type: 3}
   shieldTargetLine: {fileID: 0}
   skipButton: {fileID: 316986704}
+  textCanvas: {fileID: 826299585}
 --- !u!114 &8279262150021554597
 MonoBehaviour:
   m_ObjectHideFlags: 0
