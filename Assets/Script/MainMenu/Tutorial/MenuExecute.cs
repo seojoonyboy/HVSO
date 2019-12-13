@@ -631,6 +631,7 @@ namespace MenuTutorialModules {
 
             skeletonGraphic.Skeleton.SetSkin("orc");
             skeletonGraphic.Skeleton.SetSlotsToSetupPose();
+            skeletonGraphic.transform.Find("Header").GetComponent<BoneFollowerGraphic>().SetBone("text1");
 
             yield return new WaitForEndOfFrame();
             skeletonGraphic.transform.parent.Find("SubBackground").gameObject.SetActive(false);
