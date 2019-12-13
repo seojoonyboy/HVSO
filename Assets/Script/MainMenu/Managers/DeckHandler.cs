@@ -74,7 +74,6 @@ public class DeckHandler : MonoBehaviour
         //else
         //    transform.Find("CardNum/Value").GetComponent<TMPro.TextMeshProUGUI>().color = Color.white;
         transform.Find("Selected").gameObject.SetActive(false);
-        transform.Find("SelectedBack").gameObject.SetActive(false);
     }
 
     int CheckPlayerCards(dataModules.Deck deck) {
@@ -106,8 +105,6 @@ public class DeckHandler : MonoBehaviour
     public void SelectTemplateDeck() {
         transform.Find("Selected").GetComponent<SkeletonGraphic>().Initialize(true);
         transform.Find("Selected").gameObject.SetActive(true);
-        transform.Find("SelectedBack").GetComponent<SkeletonGraphic>().Initialize(true);
-        transform.Find("SelectedBack").gameObject.SetActive(true);
         templateCanvas.SelectDeck(this);
     }
 
