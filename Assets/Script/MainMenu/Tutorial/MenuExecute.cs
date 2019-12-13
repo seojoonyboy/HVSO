@@ -1009,4 +1009,16 @@ namespace MenuTutorialModules {
             StopAllCoroutines();
         }
     }
+
+    public class UnlockDeckEditButtons : MenuExecute {
+        public override void Execute() {
+            MenuLockController menuLockController = GetComponent<MenuTutorialManager>().lockController;
+            menuLockController.Unlock("HumanBaseDeckAiBattleBtn", false);
+            menuLockController.Unlock("HumanBaseDeckDeleteBtn", false);
+            menuLockController.Unlock("OrcBaseDeckAiBattleBtn", false);
+            menuLockController.Unlock("OrcBaseDeckDeleteBtn", false);
+
+            handler.isDone = true;
+        }
+    }
 }
