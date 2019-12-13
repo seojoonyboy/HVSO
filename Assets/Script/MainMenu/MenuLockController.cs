@@ -69,37 +69,35 @@ public class MenuLockController : SerializedMonoBehaviour {
 
         if (IsMainMenu(translatedKeyword)) {
             //Logger.Log("Lock : " + keyword);
-            try {
-                switch (translatedKeyword) {
-                    case "DeckEdit":
-                        Transform DeckSettingWindow = MainScrollSnapContent.Find("DeckSettingWindow");
-                        DeckSettingWindow.SetParent(MainScrollSnapContent.parent);
-                        DeckSettingWindow.gameObject.SetActive(false);
-                        break;
-                    case "Dictionary":
-                        Transform DictionarySelect = MainScrollSnapContent.Find("DictionarySelect");
-                        DictionarySelect.SetParent(MainScrollSnapContent.parent);
-                        DictionarySelect.gameObject.SetActive(false);
-                        break;
-                    case "Shop":
-                        Transform ShopWindow = MainScrollSnapContent.Find("ShopWindow");
-                        ShopWindow.SetParent(MainScrollSnapContent.parent);
-                        ShopWindow.gameObject.SetActive(false);
-                        break;
-                }
-
-                MainScrollSnapContent.parent.GetComponent<HorizontalScrollSnap>().enabled = false;
-                MainScrollSnapContent.parent.GetComponent<HorizontalScrollSnap>().enabled = true;
-
-                MainScrollSnapContent.parent.GetComponent<HorizontalScrollSnap>().CurrentPage = 2;
-                int mainSibilingIndex = MainScrollSnapContent.Find("MainWindow").GetSiblingIndex();
-                MainScrollSnapContent.parent.GetComponent<HorizontalScrollSnap>().GoToScreen(mainSibilingIndex);
-
-                menu.transform.Find("Lock").GetComponent<MenuLocker>().Lock();
+            switch (translatedKeyword) {
+                case "DeckEdit":
+                    Transform DeckEditWindow = MainScrollSnapContent.Find("DeckEditWindow");
+                    if (DeckEditWindow == null) break;
+                    DeckEditWindow.SetParent(MainScrollSnapContent.parent);
+                    DeckEditWindow.gameObject.SetActive(false);
+                    break;
+                case "Dictionary":
+                    Transform DictionarySelect = MainScrollSnapContent.Find("DictionaryWindow");
+                    if (DictionarySelect == null) break;
+                    DictionarySelect.SetParent(MainScrollSnapContent.parent);
+                    DictionarySelect.gameObject.SetActive(false);
+                    break;
+                case "Shop":
+                    Transform ShopWindow = MainScrollSnapContent.Find("ShopWindow");
+                    if (ShopWindow == null) break;
+                    ShopWindow.SetParent(MainScrollSnapContent.parent);
+                    ShopWindow.gameObject.SetActive(false);
+                    break;
             }
-            catch(Exception ex) {
-                //Logger.LogError(ex);
-            }
+
+            MainScrollSnapContent.parent.GetComponent<HorizontalScrollSnap>().enabled = false;
+            MainScrollSnapContent.parent.GetComponent<HorizontalScrollSnap>().enabled = true;
+
+            MainScrollSnapContent.parent.GetComponent<HorizontalScrollSnap>().CurrentPage = 2;
+            int mainSibilingIndex = MainScrollSnapContent.Find("MainWindow").GetSiblingIndex();
+            MainScrollSnapContent.parent.GetComponent<HorizontalScrollSnap>().GoToScreen(mainSibilingIndex);
+
+            menu.transform.Find("Lock").GetComponent<MenuLocker>().Lock();
         }
         else {
             menu.transform.Find("Lock").GetComponent<MenuLocker>().Lock();
@@ -136,6 +134,9 @@ public class MenuLockController : SerializedMonoBehaviour {
         }
         if(translatedKeyword == "Shop") {
             mainButtonsParent.transform.GetChild(4).Find("Lock").GetComponent<MenuLocker>().Unlock();
+        }
+        if(translatedKeyword == "DeckEdit") {
+            mainButtonsParent.transform.GetChild(1).Find("Lock").GetComponent<MenuLocker>().Unlock();
         }
 
         if (IsMainMenu(translatedKeyword)) {
