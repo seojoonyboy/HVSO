@@ -32,6 +32,7 @@ public class BoxRewardManager : MonoBehaviour {
     static bool openningBox = false;
     bool openAni = false;
     int openCount;
+    float beforeBgmVolume;
 
     void Awake() {
         accountManager = AccountManager.Instance;
@@ -70,6 +71,8 @@ public class BoxRewardManager : MonoBehaviour {
         if (openAni) return;
         if (AccountManager.Instance.userResource.supplyBox <= 0) return;
         openningBox = true;
+        beforeBgmVolume = SoundManager.Instance.bgmController.BGMVOLUME;
+        //SoundManager.Instance.bgmController.BGMVOLUME = 0;
         accountManager.RequestRewardInfo();
     }
 
@@ -88,7 +91,7 @@ public class BoxRewardManager : MonoBehaviour {
         boxEffect.AnimationState.SetAnimation(0, "00.NOANI", false);
         transform.Find("ShowBox/BoxSpine/Image").GetComponent<BoneFollowerGraphic>().Initialize();
         transform.Find("ShowBox/BoxSpine/Image").GetComponent<BoneFollowerGraphic>().boneName = "card";
-        SoundManager.Instance.PlaySound(UISfxSound.BOXOPEN);
+        //SoundManager.Instance.PlaySound(UISfxSound.BOXOPEN);
         SetRewards(accountManager.rewardList);
         transform.Find("OpenBox").gameObject.SetActive(true);
     }
@@ -133,8 +136,10 @@ public class BoxRewardManager : MonoBehaviour {
                 //CloseBoxOpen();
                 return;
         }
-
-        SoundManager.Instance.PlaySound(UISfxSound.BOXOPEN_2);
+        if(openCount == 0)
+            SoundManager.Instance.PlaySound(UISfxSound.BOXOPEN);
+        else
+            SoundManager.Instance.PlaySound(UISfxSound.BOXOPEN_2);
         int count = openCount;
         openCount++;
         StartCoroutine(ShowEachReward(count));
@@ -224,16 +229,18 @@ public class BoxRewardManager : MonoBehaviour {
     public void CloseBoxOpen() {
         InitBoxObjects();
         Transform boxParent = transform.Find("OpenBox");
+        //SoundManager.Instance.bgmController.BGMVOLUME = beforeBgmVolume;
         boxParent.gameObject.SetActive(false);
         transform.Find("ShowBox").gameObject.SetActive(false);
         transform.Find("ShowBox/Text").gameObject.SetActive(true);
         transform.Find("ExitButton").gameObject.SetActive(false);
         SetBoxObj();
-        openningBox = false;
+        openningBox = false;        
     }
 
     IEnumerator ShowEachReward(int count) {
         openAni = true;
+        SoundManager soundManager = SoundManager.Instance;
         transform.Find("OpenBox").GetChild(count).Find("Name").localScale = Vector3.zero;
         if (count == 0)
             yield return new WaitForSeconds(0.95f);
@@ -269,7 +276,14 @@ public class BoxRewardManager : MonoBehaviour {
                 backSpine.gameObject.SetActive(true);
                 backSpine.AnimationState.SetAnimation(0, aniName, true);
 
-                SoundManager soundManager = SoundManager.Instance;
+                
+                targetBox.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = accountManager.allCardsDic[cardId].name;
+                targetBox.Find("Rarelity").Find(accountManager.allCardsDic[cardId].rarelity).SetAsFirstSibling();
+                targetBox.Find("Rarelity").GetChild(0).gameObject.SetActive(true);
+                yield return new WaitForSeconds(0.2f);
+                iTween.ScaleTo(targetBox.Find("Name").gameObject, iTween.Hash("x", 1.0f, "y", 1.0f, "islocal", true, "time", 0.3f));
+                yield return new WaitForSeconds(0.2f);
+                iTween.ScaleTo(targetBox.Find("Rarelity").gameObject, iTween.Hash("x", 1.0f, "y", 1.0f, "islocal", true, "time", 0.3f));
                 switch (rarelity) {
                     case "common":
                     case "uncommon":
@@ -285,13 +299,6 @@ public class BoxRewardManager : MonoBehaviour {
                         soundManager.PlaySound(UISfxSound.BOX_EPIC);
                         break;
                 }
-                targetBox.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = accountManager.allCardsDic[cardId].name;
-                targetBox.Find("Rarelity").Find(accountManager.allCardsDic[cardId].rarelity).SetAsFirstSibling();
-                targetBox.Find("Rarelity").GetChild(0).gameObject.SetActive(true);
-                yield return new WaitForSeconds(0.2f);
-                iTween.ScaleTo(targetBox.Find("Name").gameObject, iTween.Hash("x", 1.0f, "y", 1.0f, "islocal", true, "time", 0.3f));
-                yield return new WaitForSeconds(0.2f);
-                iTween.ScaleTo(targetBox.Find("Rarelity").gameObject, iTween.Hash("x", 1.0f, "y", 1.0f, "islocal", true, "time", 0.3f));
                 if (target.Find("GetCrystal").gameObject.activeSelf) {
                     yield return new WaitForSeconds(0.2f);
                     SkeletonGraphic crystalSpine = target.Find("GetCrystalEffect").GetComponent<SkeletonGraphic>();
@@ -311,6 +318,7 @@ public class BoxRewardManager : MonoBehaviour {
             iTween.ScaleTo(targetBox.Find("Name").gameObject, iTween.Hash("x", 1.0f, "y", 1.0f, "islocal", true, "time", 0.3f));
             yield return new WaitForSeconds(0.2f);
             iTween.ScaleTo(targetBox.Find("Rarelity").gameObject, iTween.Hash("x", 1.0f, "y", 1.0f, "islocal", true, "time", 0.3f));
+            soundManager.PlaySound(UISfxSound.BOX_EPIC);
             if (target.Find("GetCrystal").gameObject.activeSelf) {
                 yield return new WaitForSeconds(0.4f);
                 SkeletonGraphic crystalSpine = target.Find("GetCrystalEffect").GetComponent<SkeletonGraphic>();
@@ -325,22 +333,24 @@ public class BoxRewardManager : MonoBehaviour {
                 backSpine.gameObject.SetActive(true);
                 backSpine.AnimationState.SetAnimation(0, "g_legend", true);
             }
-            else
+            else {
                 backSpine.gameObject.SetActive(false);
+            }
             yield return new WaitForSeconds(0.2f);
-            SoundManager soundManager = SoundManager.Instance;
             switch (type) {
                 case "gold":
                     targetBox.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = "골드 뭉치";
+                    soundManager.PlaySound(UISfxSound.BOX_EPIC);
                     break;
                 case "supplyX2Coupon":
                     targetBox.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = "2배 쿠폰";
+                    soundManager.PlaySound(UISfxSound.BOX_NORMAL);
                     break;
                 case "crystal":
                     targetBox.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = "마나석 뭉치";
+                    soundManager.PlaySound(UISfxSound.BOX_NORMAL);
                     break;
             }
-            soundManager.PlaySound(UISfxSound.BOX_NORMAL);
             yield return new WaitForSeconds(0.2f);
             targetBox.Find("Rarelity").Find("resource").SetAsFirstSibling();
             targetBox.Find("Rarelity").GetChild(0).gameObject.SetActive(true);
