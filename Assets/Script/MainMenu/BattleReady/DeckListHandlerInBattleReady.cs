@@ -97,7 +97,6 @@ public class DeckListHandlerInBattleReady : MonoBehaviour {
         battleStart.SetActive(false);
 
         if(selectedObj != null) {
-            selectedObj.transform.Find("BackEffect").gameObject.SetActive(false);
             selectedObj.transform.Find("FrontEffect").gameObject.SetActive(false);
 
             selectedObj = null;
@@ -114,7 +113,6 @@ public class DeckListHandlerInBattleReady : MonoBehaviour {
 
     public void OnDeckSelected(string deckId, string camp, dataModules.Deck deck, GameObject obj) {
         if(selectedObj != null) {
-            selectedObj.transform.Find("BackEffect").gameObject.SetActive(false);
             selectedObj.transform.Find("FrontEffect").gameObject.SetActive(false);
         }
 
@@ -129,7 +127,6 @@ public class DeckListHandlerInBattleReady : MonoBehaviour {
 
         selectedObj = obj;
 
-        selectedObj.transform.Find("BackEffect").gameObject.SetActive(true);
         selectedObj.transform.Find("FrontEffect").gameObject.SetActive(true);
 
         battleStart.SetActive(true);
