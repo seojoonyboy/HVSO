@@ -102,6 +102,14 @@ public class MenuLocker : MonoBehaviour {
         state = State.UNLOCKED;
     }
 
+    public void UnlockWithNoEffect() {
+        if (button == null) button = transform.parent.GetComponent<Button>();
+        button.enabled = true;
+        gameObject.SetActive(false);
+
+        state = State.UNLOCKED;
+    }
+
     public State GetState() {
         return state;
     }
