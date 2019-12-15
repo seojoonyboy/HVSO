@@ -291,7 +291,7 @@ public class MenuSceneController : MonoBehaviour {
     }
 
     public void ScrollSnapButtonChange() {
-        Logger.Log("ScrollSnapButtonChange current page : " + windowScrollSnap.CurrentPage);
+        //Logger.Log("ScrollSnapButtonChange current page : " + windowScrollSnap.CurrentPage);
 
         Transform footer = fixedCanvas.Find("InnerCanvas/Footer");
         int pageIndex = windowScrollSnap.CurrentPageObject().GetComponent<dataModules.IntergerIndex>().Id + 1;
