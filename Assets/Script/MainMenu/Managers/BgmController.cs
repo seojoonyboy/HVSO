@@ -40,7 +40,7 @@ public class BgmController : SerializedMonoBehaviour
 
     public void PlaySoundTrack(BgmEnum type) {
         if (bgmDictionary.ContainsKey(type) == false || bgmDictionary[type] == null) {
-            Logger.LogError("사운드가 없습니다.");
+            //Logger.LogError("사운드가 없습니다.");
             return;
         }
         StopAllCoroutines();

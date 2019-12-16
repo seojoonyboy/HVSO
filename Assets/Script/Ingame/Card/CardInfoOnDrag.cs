@@ -13,7 +13,7 @@ public class CardInfoOnDrag : MonoBehaviour
             if (_instance == null) {
                 _instance = (CardInfoOnDrag)FindObjectOfType(typeof(CardInfoOnDrag));
                 if (_instance == null) {
-                    Logger.LogWarning("아직 준비가 안됐습니다. 양해바랍니다.");
+                    //Logger.LogWarning("아직 준비가 안됐습니다. 양해바랍니다.");
                 }
             }
             return _instance;

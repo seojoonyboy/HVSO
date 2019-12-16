@@ -18,11 +18,11 @@ public class ScenarioExporter : MonoBehaviour {
         string dataAsJson = JsonConvert.SerializeObject(scenarioManager.human_chapterDatas);
         string filePath = Application.dataPath + humanChapterDataPath;
         File.WriteAllText(filePath, dataAsJson);
-        Logger.Log("Human Chapter Data Exported");
+        //Logger.Log("Human Chapter Data Exported");
 
         dataAsJson = JsonConvert.SerializeObject(scenarioManager.orc_chapterDatas);
         filePath = Application.dataPath + orcChapterDataPath;
         File.WriteAllText(filePath, dataAsJson);
-        Logger.Log("Orc Chapter Data Exported");
+        //Logger.Log("Orc Chapter Data Exported");
     }
 }

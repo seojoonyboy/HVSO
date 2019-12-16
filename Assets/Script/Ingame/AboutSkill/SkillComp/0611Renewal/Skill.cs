@@ -76,7 +76,7 @@ namespace SkillModules {
             else {
                 System.Type type = System.Type.GetType(methodAdd);
                 if(type == null) {
-                    Logger.LogError(string.Format("{0} 클래스가 존재하지 않습니다. 기존 베이스 클래스로 대처 합니다.", methodAdd));
+                    //Logger.LogError(string.Format("{0} 클래스가 존재하지 않습니다. 기존 베이스 클래스로 대처 합니다.", methodAdd));
                     return t;
                 }
                 if(handler == null) {
@@ -92,7 +92,7 @@ namespace SkillModules {
         }
 
         public bool Trigger(IngameEventHandler.EVENT_TYPE triggerType, object parms) {
-            Logger.Log(mySkillHandler.myObject);
+            //Logger.Log(mySkillHandler.myObject);
             GameObject obj = null;
             PlayedObject parmsObject = new PlayedObject();
             if(parmsObject.IsValidateData(parms)) 
@@ -117,11 +117,11 @@ namespace SkillModules {
                 targetHandler.SelectTarget(
                     delegate {
                         var targets = targetHandler.GetTarget();
-                        Logger.Log(targets.Count + "개의 Target");
+                        //Logger.Log(targets.Count + "개의 Target");
                         ability.Execute(SetExecuteData(targetHandler.GetTarget(), ability.args));
                     },
                     delegate {
-                        Logger.Log("타겟이 없습니다.");
+                        //Logger.Log("타겟이 없습니다.");
                         if(TargetSelectExist()) mySkillHandler.SendingMessage(true);
                         mySkillHandler.isDone = true;
                     },
@@ -163,8 +163,8 @@ namespace SkillModules {
 
                 var pos = observer.GetMyPos(mySkillHandler.myObject);
 
-                Logger.Log(pos.col);
-                Logger.Log(pos.row);
+                //Logger.Log(pos.col);
+                //Logger.Log(pos.row);
 
                 args.col = pos.col;
                 args.row = 0;

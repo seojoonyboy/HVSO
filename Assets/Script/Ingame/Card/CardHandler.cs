@@ -289,7 +289,7 @@ public partial class CardHandler : MonoBehaviour {
         RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, Mathf.Infinity, layerMask);
 
         if (hit.collider != null && hit.transform.gameObject.layer == 15) {
-            Logger.Log(hit.collider.transform.parent.name);
+            //Logger.Log(hit.collider.transform.parent.name);
             return hit.transform;
         }
         return null;

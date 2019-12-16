@@ -30,12 +30,12 @@ public class UnitBuffHandler : MonoBehaviour {
         origin_atk = total_buffed_atk;
         origin_hp = total_buffed_hp;
 
-        Logger.Log(gameObject.name + "의 Buff 이력");
+        //Logger.Log(gameObject.name + "의 Buff 이력");
         foreach(BuffStat stat in buffList) {
             total_buffed_atk += stat.atk;
             total_buffed_hp += stat.hp;
 
-            Logger.Log("공격력 : " + stat.atk + ", " + "체력 : " + stat.hp);
+            //Logger.Log("공격력 : " + stat.atk + ", " + "체력 : " + stat.hp);
         }
 
         //버프 이펙트 보여주기

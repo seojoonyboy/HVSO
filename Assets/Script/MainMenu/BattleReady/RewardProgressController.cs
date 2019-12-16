@@ -59,7 +59,7 @@ public class RewardProgressController : MonoBehaviour {
         }
         else {
             progressBar = currentProgressBar;
-            Logger.Log("argument is wrong");
+            //Logger.Log("argument is wrong");
         }
 
         StartCoroutine(SetProgress(progressBar));

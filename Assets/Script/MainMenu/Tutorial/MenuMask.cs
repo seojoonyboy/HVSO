@@ -153,7 +153,7 @@ public class MenuMask : SerializedMonoBehaviour
             dimmedObjInfos.Remove(target);
         }
         else {
-            Logger.LogError(target + "의 Origin 정보를 찾을 수 없습니다.");
+            //Logger.LogError(target + "의 Origin 정보를 찾을 수 없습니다.");
         }
     }
 
@@ -166,7 +166,7 @@ public class MenuMask : SerializedMonoBehaviour
             dimmedObjInfos.Remove(target);
         }
         else {
-            Logger.LogError(target + "의 Origin 정보를 찾을 수 없습니다.");
+            //Logger.LogError(target + "의 Origin 정보를 찾을 수 없습니다.");
         }
     }
 

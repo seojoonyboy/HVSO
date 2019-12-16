@@ -134,7 +134,7 @@ public class MenuCardHandler : MonoBehaviour {
         }
 
         if (cardData.type == "unit") {
-            Logger.Log(cardData.name);
+            //Logger.Log(cardData.name);
             cardObject.Find("Health/Text").GetComponent<Text>().text = cardData.hp.ToString();
             cardObject.Find("attack/Text").GetComponent<Text>().text = cardData.attack.ToString();
             if (cardData.attributes.Length == 0 && cardData.attackTypes.Length == 0)
