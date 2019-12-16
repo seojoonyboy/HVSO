@@ -59,7 +59,9 @@ public class SceneLoginController : MonoBehaviour
 #if MDEBUG
             Debug.Log("Sign in with Apple is not supported.....");
 #endif
-            GameObject.Find("SignInWithApple").GetComponent<Button>().interactable = false;
+            //GameObject.Find("SignInWithApple").GetComponent<Button>().interactable = false;
+            GameObject appleSign = GameObject.Find("SignInWithApple");
+            if(appleSign != null) Destroy(appleSign);
         }
 
 
@@ -138,7 +140,7 @@ public class SceneLoginController : MonoBehaviour
     public void OnGuestLoginButtonClick(string param)
     {
         Firebase.Analytics.FirebaseAnalytics.LogEvent("Guest_Login");
-        SceneManager.LoadScene("SceneGameService", LoadSceneMode.Single);
+        LoginComplete();
     }
 
 
@@ -151,7 +153,7 @@ public class SceneLoginController : MonoBehaviour
             Debug.Log("LogintAccount  result=" + result + "    code=" + code + " blockSuid=" + blockSuid);
 #endif
             if (result && code == WebClient.AuthCode.SUCCESS)
-                SceneManager.LoadScene("SceneGameService", LoadSceneMode.Single);
+                LoginComplete();
         });
 #elif UNITY_ANDROID
         Account.LoginAccount(Account.HaeginAccountType.GooglePlayGameService, accountDialog.OpenSelectDialog, (bool result, WebClient.AuthCode code, TimeSpan blockRemainTime, long blockSuid) =>
@@ -160,7 +162,7 @@ public class SceneLoginController : MonoBehaviour
             Debug.Log("LogintAccount  result=" + result + "    code=" + code + " blockSuid=" + blockSuid);
 #endif
             if (result && code == WebClient.AuthCode.SUCCESS)
-                SceneManager.LoadScene("SceneGameService", LoadSceneMode.Single);
+                ActivateIssueJWT();
         });
 #elif UNITY_STANDALONE && USE_STEAM
         Account.LoginAccount(Account.HaeginAccountType.Steam, accountDialog.OpenSelectDialog, (bool result, WebClient.AuthCode code, TimeSpan blockRemainTime, long blockSuid) =>
@@ -169,7 +171,7 @@ public class SceneLoginController : MonoBehaviour
             Debug.Log("LogintAccount  result=" + result + "    code=" + code + " blockSuid=" + blockSuid);
 #endif
             if (result && code == WebClient.AuthCode.SUCCESS)
-                SceneManager.LoadScene("SceneGameService", LoadSceneMode.Single);
+                ActivateIssueJWT();
         });
 #endif
     }
@@ -182,7 +184,7 @@ public class SceneLoginController : MonoBehaviour
             Debug.Log("LogintAccount  result=" + result + "    code=" + code + "  blockSuid=" + blockSuid);
 #endif
             if (result && code == WebClient.AuthCode.SUCCESS)
-                SceneManager.LoadScene("SceneGameService", LoadSceneMode.Single);
+                LoginComplete();
         });
     }
 
@@ -200,10 +202,18 @@ public class SceneLoginController : MonoBehaviour
                 Debug.Log("LogintAccount  result=" + result + "    code=" + code + "  blockSuid=" + blockSuid);
 #endif
                 if (result && code == WebClient.AuthCode.SUCCESS)
-                    SceneManager.LoadScene("SceneGameService", LoadSceneMode.Single);
+                    LoginComplete();
             });
         }
     }
 
+    public void LoginComplete() {
+        if(PlayerPrefs.GetInt("isFirst", 2) == 2) {
+            PlayerPrefs.SetInt("isFirst", 1);
+            PlayerPrefs.Save();
+        }
+        gameObject.SetActive(false);
+        AccountManager.Instance.OnSignInResultModal();
+    }
 }
 

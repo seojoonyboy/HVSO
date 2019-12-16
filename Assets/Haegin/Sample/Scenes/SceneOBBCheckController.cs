@@ -86,7 +86,7 @@ public class SceneOBBCheckController : MonoBehaviour {
 
     void Start()
     {
-        HaeginSplash.ShowHaeginSplash(HaeginSplash.Orientations.Landscape, StartAfterSplash);
+        HaeginSplash.ShowHaeginSplash(HaeginSplash.Orientations.Portrait, StartAfterSplash);
     }
 
     void StartAfterSplash()
