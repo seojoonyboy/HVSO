@@ -612,18 +612,22 @@ public class GameResultManager : MonoBehaviour {
                 supply = 0;
                 value.text = supply.ToString();
                 Transform alertIcon = boxSpine.gameObject.transform.Find("AlertIcon");
+
                 alertIcon.gameObject.SetActive(true);
                 alertIcon.Find("SupplyText").gameObject.SetActive(true);
                 alertIcon.Find("SupplyText").gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = (++newSupply).ToString();
-                boxSpine.gameObject.GetComponent<Button>().enabled = true;
-                boxSpine.gameObject.GetComponent<Button>().onClick.AddListener(delegate () {
-                    newSupply--;
-                    alertIcon.Find("SupplyText").gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = newSupply.ToString();
-                    if (supply <= 0) {
-                        boxSpine.gameObject.GetComponent<Button>().enabled = false;
-                        alertIcon.gameObject.SetActive(false);
-                    }
-                });
+                if (ScenarioGameManagment.scenarioInstance == null) {
+                    boxSpine.gameObject.GetComponent<Button>().enabled = true;
+                    boxSpine.gameObject.GetComponent<Button>().onClick.AddListener(delegate () {
+                        newSupply--;
+                        alertIcon.Find("SupplyText").gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = newSupply.ToString();
+                        if (supply <= 0) {
+                            boxSpine.gameObject.GetComponent<Button>().enabled = false;
+                            alertIcon.gameObject.SetActive(false);
+                        }
+                    });
+                }
+
                 boxSpine.AnimationState.SetAnimation(0, "02.vibration1", true);
             }
             yield return new WaitForSeconds(0.01f);
@@ -659,16 +663,17 @@ public class GameResultManager : MonoBehaviour {
                     alertIcon.gameObject.SetActive(true);
                     alertIcon.Find("SupplyText").gameObject.SetActive(true);
                     alertIcon.Find("SupplyText").gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = (++newSupply).ToString();
-                    boxSpine.gameObject.GetComponent<Button>().enabled = true;
-                    boxSpine.gameObject.GetComponent<Button>().onClick.AddListener(delegate () {
-                        newSupply--;
-                        alertIcon.Find("SupplyText").gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = newSupply.ToString();
-                        if (supply <= 0) {
-                            boxSpine.gameObject.GetComponent<Button>().enabled = false;
-                            alertIcon.gameObject.SetActive(false);
-                        }
-                    });
-
+                    if (ScenarioGameManagment.scenarioInstance == null) {
+                        boxSpine.gameObject.GetComponent<Button>().enabled = true;
+                        boxSpine.gameObject.GetComponent<Button>().onClick.AddListener(delegate () {
+                            newSupply--;
+                            alertIcon.Find("SupplyText").gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = newSupply.ToString();
+                            if (supply <= 0) {
+                                boxSpine.gameObject.GetComponent<Button>().enabled = false;
+                                alertIcon.gameObject.SetActive(false);
+                            }
+                        });
+                    }
 
                     boxSpine.AnimationState.SetAnimation(0, "02.vibration1", true);
                 }
