@@ -166,7 +166,7 @@ public class MenuLocker : MonoBehaviour {
                 transform.parent.Find("SupplyGauge").GetComponent<Image>().color = deactiveColor;
                 transform.parent.Find("SupplyGauge/Image").GetComponent<Image>().color = deactiveColor;
                 //transform.parent.Find("BoxImage").GetChild(0).GetComponent<SkeletonGraphic>().Initialize(true);
-                transform.parent.Find("BoxImage").GetChild(0).GetComponent<SkeletonGraphic>().Skeleton.SetColor(deactiveColor);
+                transform.parent.Find("BoxImage").GetChild(0).GetComponent<SkeletonGraphic>().Skeleton.FindSlot("box").SetColor(deactiveColor);
                 break;
         }
     }
@@ -200,7 +200,7 @@ public class MenuLocker : MonoBehaviour {
                 transform.parent.Find("SupplyGauge").GetComponent<Image>().color = activeColor;
                 transform.parent.Find("SupplyGauge/Image").GetComponent<Image>().color = activeColor;
                 //transform.parent.Find("BoxImage").GetChild(0).GetComponent<SkeletonGraphic>().Initialize(true);
-                transform.parent.Find("BoxImage").GetChild(0).GetComponent<SkeletonGraphic>().Skeleton.SetColor(activeColor);
+                transform.parent.Find("BoxImage").GetChild(0).GetComponent<SkeletonGraphic>().Skeleton.FindSlot("box").SetColor(activeColor);
                 break;
         }
     }
