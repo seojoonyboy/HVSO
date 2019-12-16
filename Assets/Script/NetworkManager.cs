@@ -66,7 +66,7 @@ public partial class NetworkManager : Singleton<NetworkManager> {
             Logger.Log("Token : " + result.Token);
             AccountManager.Instance.TokenId = result.Token;
             GameObject.Find("FBL_Login_Canvas").transform.Find("Panel").GetComponent<Button>().enabled = true;
-            FindObjectOfType<SceneOBBCheckController>().gameObject.SetActive(false);
+            //FindObjectOfType<SceneOBBCheckController>().gameObject.SetActive(false);
             //FindObjectOfType<LoginController>().Login();
             FindObjectOfType<LoginController>().sceneStartCanvas.gameObject.SetActive(true);
         }
