@@ -126,6 +126,9 @@ public class HeroSelectController : MonoBehaviour
         transform.Find("InnerCanvas/HeroInfo/ClassBtn/UnSelected").gameObject.SetActive(false);
         transform.Find("InnerCanvas/HeroInfo/SkillWindow").gameObject.SetActive(false);
         transform.Find("InnerCanvas/HeroInfo/SkillBtn/UnSelected").gameObject.SetActive(true);
+        transform.Find("InnerCanvas/HeroInfo/AbililityWindow").gameObject.SetActive(false);
+        transform.Find("InnerCanvas/HeroInfo/AbillityBtn/UnSelected").gameObject.SetActive(true);
+        
 
     }
 
@@ -134,7 +137,20 @@ public class HeroSelectController : MonoBehaviour
         transform.Find("InnerCanvas/HeroInfo/ClassBtn/UnSelected").gameObject.SetActive(true);
         transform.Find("InnerCanvas/HeroInfo/SkillWindow").gameObject.SetActive(true);
         transform.Find("InnerCanvas/HeroInfo/SkillBtn/UnSelected").gameObject.SetActive(false);
+        transform.Find("InnerCanvas/HeroInfo/AbililityWindow").gameObject.SetActive(false);
+        transform.Find("InnerCanvas/HeroInfo/AbillityBtn/UnSelected").gameObject.SetActive(true);
     }
+
+    public void OpenAbillityInfo() {
+        transform.Find("InnerCanvas/HeroInfo/ClassWindow").gameObject.SetActive(false);
+        transform.Find("InnerCanvas/HeroInfo/ClassBtn/UnSelected").gameObject.SetActive(true);
+        transform.Find("InnerCanvas/HeroInfo/SkillWindow").gameObject.SetActive(false);
+        transform.Find("InnerCanvas/HeroInfo/SkillBtn/UnSelected").gameObject.SetActive(true);
+        transform.Find("InnerCanvas/HeroInfo/AbililityWindow").gameObject.SetActive(true);
+        transform.Find("InnerCanvas/HeroInfo/AbillityBtn/UnSelected").gameObject.SetActive(false);
+    }
+
+
 
     public void ScrollHeros(bool isHuman) {
         if (isHuman)

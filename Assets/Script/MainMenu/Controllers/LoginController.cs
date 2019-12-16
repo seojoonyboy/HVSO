@@ -33,7 +33,6 @@ public class LoginController : MonoBehaviour {
     }
 
     private void OnRequestUserInfoCallback(Enum Event_Type, Component Sender, object Param) {
-        var sceneStartController = GetComponent<SceneStartController>();
         AccountManager accountManager = AccountManager.Instance;
 
         HTTPResponse res = (HTTPResponse)Param;
@@ -46,11 +45,8 @@ public class LoginController : MonoBehaviour {
                 Logger.Log("Pre Supply가 가득찼습니다. Timer를 호출하지 않습니다.");
             }
 
-            if (PlayerPrefs.GetInt("isFirst") == 1) {
-                sceneStartController
-                    .LoginTypeCanvas
-                    .gameObject
-                    .SetActive(true);
+            if (PlayerPrefs.GetInt("isFirst", 2) == 2) {
+                LoginTypeSelCanvas.SetActive(true);
             }
             else {
                 accountManager.OnSignInResultModal();

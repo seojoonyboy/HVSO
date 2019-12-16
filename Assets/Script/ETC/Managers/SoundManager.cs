@@ -68,6 +68,7 @@ public class SoundManager : SerializedMonoBehaviour {
     public void PlayUnitVoice(string id, VoiceType voice) {
         if (AccountManager.Instance.resource.unitRace.ContainsKey(id) == false) return;
         UnitRace race = AccountManager.Instance.resource.unitRace[id];
+        if (race == UnitRace.HUMAN_MAN || race == UnitRace.HUMAN_ELDER_MAN || race == UnitRace.HUMAN_WOMAN || race == UnitRace.HUMAN_MIDDLE_MAN) return;
         AudioClip unitAudio = unitSound[race][voice];
         PlaySfx(unitAudio);
     }
