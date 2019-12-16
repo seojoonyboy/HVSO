@@ -104,8 +104,7 @@ public class BattleReadySceneController : MonoBehaviour {
     public void OnBackButton() {
         gameObject.SetActive(false);
         SoundManager.Instance.PlaySound(UISfxSound.BUTTON1);
-
-        HudController.SetBackButton(BattleMenuController.OnBackButton);
+        HudController.SetHeader(HUDController.Type.SHOW_USER_INFO);
     }
 
     public enum RaceType {
