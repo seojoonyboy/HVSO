@@ -16,6 +16,7 @@ public class MenuLockController : SerializedMonoBehaviour {
     [SerializeField] Dictionary<string, GameObject> menues;
 
     NoneIngameSceneEventHandler eventHandler;
+    bool isAllUnlocked = false;
 
     void Awake() {
         eventHandler = NoneIngameSceneEventHandler.Instance;
@@ -27,6 +28,13 @@ public class MenuLockController : SerializedMonoBehaviour {
     }
 
     private void OnUserDataUpdated(Enum Event_Type, Component Sender, object Param) {
+        if (isAllUnlocked) {
+            foreach(KeyValuePair<string, GameObject> keyValuePair in menues) {
+                keyValuePair.Value.transform.Find("Lock").GetComponent<MenuLocker>().UnlockWithNoEffect();
+            }
+            return;
+        }
+
         string _lockMenuList = PlayerPrefs.GetString("lockMenuList");
         if (string.IsNullOrEmpty(_lockMenuList)) return;
 
@@ -67,6 +75,12 @@ public class MenuLockController : SerializedMonoBehaviour {
 
         Logger.Log("unlockMenuList : " + sb.ToString());
         Logger.Log("lockMenuList : " + sb2.ToString());
+
+        if (lockMenuList.menuNameList.Count == 0) {
+            Logger.Log("///////////////////////");
+            Logger.Log("모두 해금됨");
+            isAllUnlocked = true;
+        }
     }
 
     /// <summary>

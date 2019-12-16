@@ -607,7 +607,7 @@ public class PlayerController : MonoBehaviour
         shieldGauge.Update(0);
         shieldGauge.AnimationState.ClearTrack(0);
         TrackEntry entry = new TrackEntry();
-
+        SoundManager.Instance.PlayShieldChargeCount(amount);
         for (int i = 1; i < amount; i++)
             entry = shieldGauge.AnimationState.AddAnimation(0, (start + i).ToString(), false, 0);
 
