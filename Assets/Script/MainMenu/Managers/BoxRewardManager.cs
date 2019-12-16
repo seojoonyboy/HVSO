@@ -14,8 +14,8 @@ public class BoxRewardManager : MonoBehaviour {
     [SerializeField] TMPro.TextMeshProUGUI supplyStore;
     [SerializeField] TMPro.TextMeshProUGUI storeTimer;
     [SerializeField] Image storeGauge;
-    [SerializeField] SkeletonGraphic boxSpine;
-    [SerializeField] SkeletonGraphic boxEffect;
+    [SerializeField] protected SkeletonGraphic boxSpine;
+    [SerializeField] protected SkeletonGraphic boxEffect;
     [SerializeField] Transform additionalSupply;
     [SerializeField] MenuSceneController menuSceneController;
     [SerializeField] Transform targetSpine;
@@ -25,14 +25,14 @@ public class BoxRewardManager : MonoBehaviour {
     // Start is called before the first frame update
     Transform hudCanvas;
 
-    AccountManager accountManager;
-    NetworkManager networkManager;
+    protected AccountManager accountManager;
+    protected NetworkManager networkManager;
 
     public UnityEvent OnBoxLoadFinished = new UnityEvent();
-    static bool openningBox = false;
-    bool openAni = false;
-    int openCount;
-    float beforeBgmVolume;
+    protected static bool openningBox = false;
+    protected bool openAni = false;
+    protected int openCount;
+    protected float beforeBgmVolume;
 
     void Awake() {
         accountManager = AccountManager.Instance;
@@ -48,7 +48,7 @@ public class BoxRewardManager : MonoBehaviour {
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_OPENBOX, OnBoxOpenRequest);
     }
 
-    private void OnBoxOpenRequest(Enum Event_Type, Component Sender, object Param) {
+    protected void OnBoxOpenRequest(Enum Event_Type, Component Sender, object Param) {
         SetBoxAnimation();
         OnBoxLoadFinished.Invoke();
     }
@@ -66,7 +66,7 @@ public class BoxRewardManager : MonoBehaviour {
         additionalSupply.Find("Value").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userResource.supplyX2Coupon.ToString();
     }
 
-    public void OpenBox() {
+    public virtual void OpenBox() {
         if (openningBox) return;
         if (openAni) return;
         if (AccountManager.Instance.userResource.supplyBox <= 0) return;
@@ -76,7 +76,7 @@ public class BoxRewardManager : MonoBehaviour {
         accountManager.RequestRewardInfo();
     }
 
-    public void SetBoxAnimation() {
+    public virtual void SetBoxAnimation() {
         InitBoxObjects();
         transform.Find("ShowBox").gameObject.SetActive(true);
         transform.Find("ShowBox/BoxSpine/Image/Num").GetComponent<Text>().text = "4";
@@ -226,7 +226,7 @@ public class BoxRewardManager : MonoBehaviour {
         }
     }
 
-    public void CloseBoxOpen() {
+    public virtual void CloseBoxOpen() {
         InitBoxObjects();
         Transform boxParent = transform.Find("OpenBox");
         //SoundManager.Instance.bgmController.BGMVOLUME = beforeBgmVolume;
@@ -390,12 +390,12 @@ public class BoxRewardManager : MonoBehaviour {
         openAni = false;
     }
 
-    public void SetRewards(RewardClass[] rewardList) {
+    public virtual void SetRewards(RewardClass[] rewardList) {
         for(int i = 0; i < rewardList.Length; i++) 
             SetEachReward(rewardList[i], i);
     }
 
-    public void SetEachReward(RewardClass reward, int index) {
+    public virtual void SetEachReward(RewardClass reward, int index) {
         Transform boxTarget = transform.Find("OpenBox").GetChild(index);
         Transform effects = transform.Find("EffectSpines");
         effects.GetChild(index).GetComponent<SkeletonGraphic>().Initialize(false);
@@ -488,7 +488,7 @@ public class BoxRewardManager : MonoBehaviour {
     }
 
 
-    void CheckNewCardList(string cardId) {
+    protected virtual void CheckNewCardList(string cardId) {
         CollectionCard cardData = accountManager.allCardsDic[cardId];
         if (cardData.camp == "human") {
             if (!accountManager.cardPackage.checkHumanCard.Contains(cardId)) {
