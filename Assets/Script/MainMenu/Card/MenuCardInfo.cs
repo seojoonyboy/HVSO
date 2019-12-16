@@ -187,10 +187,14 @@ public partial class MenuCardInfo : MonoBehaviour {
 
         if (data.isHeroCard) {
             info.Find("CreateCard").gameObject.SetActive(false);
+            info.Find("CreateBtn").GetComponent<Button>().interactable = false;
             info.Find("CreateSpine").gameObject.SetActive(false);
             info.Find("HaveNum").gameObject.SetActive(false);
+            info.Find("Name/HeroName").gameObject.SetActive(true);
+            info.Find("FrameImage/TierRibbon").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["ribbon_hero"];
         }
         else {
+            info.Find("Name/HeroName").gameObject.SetActive(false);
             if (data.indestructible) {
                 transform.Find("CreateBtn").GetComponent<Button>().interactable = false;
             }

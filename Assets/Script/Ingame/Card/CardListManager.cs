@@ -217,7 +217,7 @@ public class CardListManager : MonoBehaviour
         //info.Find("BottomGroup/Flavor/Text").GetComponent<TMPro.TextMeshProUGUI>().text = string.Empty;
 
         info.Find("FrameImage/UnitPortrait").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoPortraite[data.id];
-
+        info.Find("Flavor/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "";
         int skillnum = 0;
         if (data.type == "unit") {
 
@@ -274,7 +274,6 @@ public class CardListManager : MonoBehaviour
             info.Find("SkillInfo/Categories").gameObject.SetActive(true);
             info.Find("SkillInfo/Categories/Text").GetComponent<TMPro.TextMeshProUGUI>().text = sb.ToString();
             info.Find("Flavor/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.flavorText;
-            info.Find("Flavor").gameObject.SetActive(false);
         }
         //마법 카드
         else {
@@ -291,6 +290,7 @@ public class CardListManager : MonoBehaviour
             }
             info.Find("SkillInfo/Categories/Text").GetComponent<TMPro.TextMeshProUGUI>().text = sb.ToString();
         }
+        info.Find("Flavor").gameObject.SetActive(false);
         //if (data.class_2 == null)
         //    obj.transform.GetChild(2).gameObject.SetActive(false);
         //else {
