@@ -141,6 +141,7 @@ public class MenuLocker : MonoBehaviour {
         switch (transform.parent.name) {
             case "LeagueButton":
             case "StoryButton":
+                transform.parent.parent.GetComponent<SkeletonGraphic>().Initialize(false);
                 transform.parent.parent.GetComponent<SkeletonGraphic>().Skeleton.SetColor(deactiveColor);
                 break;
             case "DeckEdit":
@@ -148,6 +149,8 @@ public class MenuLocker : MonoBehaviour {
             case "Shop":
             case "Story":
                 var parentSibilingIndex = transform.parent.GetSiblingIndex();
+
+                transform.root.Find("InnerCanvas/ButtonAnimation").GetComponent<SkeletonGraphic>().Initialize(false);
                 SkeletonGraphic skeletonGraphic = transform.root.Find("InnerCanvas/ButtonAnimation").GetComponent<SkeletonGraphic>();
                 var slot = skeletonGraphic.Skeleton.FindSlot(GetSlotName(parentSibilingIndex));
                 slot.SetColor(deactiveColor);
@@ -166,6 +169,7 @@ public class MenuLocker : MonoBehaviour {
                 transform.parent.Find("SupplyGauge").GetComponent<Image>().color = deactiveColor;
                 transform.parent.Find("SupplyGauge/Image").GetComponent<Image>().color = deactiveColor;
                 //transform.parent.Find("BoxImage").GetChild(0).GetComponent<SkeletonGraphic>().Initialize(true);
+                transform.parent.Find("BoxImage").GetChild(0).GetComponent<SkeletonGraphic>().Initialize(false);
                 transform.parent.Find("BoxImage").GetChild(0).GetComponent<SkeletonGraphic>().Skeleton.FindSlot("box").SetColor(deactiveColor);
                 break;
         }
@@ -175,6 +179,7 @@ public class MenuLocker : MonoBehaviour {
         switch (transform.parent.name) {
             case "LeagueButton":
             case "StoryButton":
+                transform.parent.parent.GetComponent<SkeletonGraphic>().Initialize(false);
                 transform.parent.parent.GetComponent<SkeletonGraphic>().Skeleton.SetColor(activeColor);
                 break;
             case "DeckEdit":
@@ -182,12 +187,12 @@ public class MenuLocker : MonoBehaviour {
             case "Shop":
             case "Story":
                 var parentSibilingIndex = transform.parent.GetSiblingIndex();
+
+                transform.root.Find("InnerCanvas/ButtonAnimation").GetComponent<SkeletonGraphic>().Initialize(false);
                 SkeletonGraphic skeletonGraphic = transform.root.Find("InnerCanvas/ButtonAnimation").GetComponent<SkeletonGraphic>();
                 var slot = skeletonGraphic.Skeleton.FindSlot(GetSlotName(parentSibilingIndex));
                 slot.SetColor(activeColor);
 
-                //slot = skeletonGraphic.Skeleton.FindSlot("1");
-                //slot.SetColor(activeColor);
                 break;
             case "ModeButton":
             case "DeckObject":
@@ -200,6 +205,7 @@ public class MenuLocker : MonoBehaviour {
                 transform.parent.Find("SupplyGauge").GetComponent<Image>().color = activeColor;
                 transform.parent.Find("SupplyGauge/Image").GetComponent<Image>().color = activeColor;
                 //transform.parent.Find("BoxImage").GetChild(0).GetComponent<SkeletonGraphic>().Initialize(true);
+                transform.parent.Find("BoxImage").GetChild(0).GetComponent<SkeletonGraphic>().Initialize(false);
                 transform.parent.Find("BoxImage").GetChild(0).GetComponent<SkeletonGraphic>().Skeleton.FindSlot("box").SetColor(activeColor);
                 break;
         }
