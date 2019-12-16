@@ -139,8 +139,4 @@ public class IngameBoxRewarder : BoxRewardManager
         transform.Find("ExitButton").gameObject.SetActive(false);
         openningBox = false;
     }
-
-
-
-
 }
