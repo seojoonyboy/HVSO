@@ -208,18 +208,30 @@ public class MenuHeroInfo : MonoBehaviour
         SoundManager.Instance.PlaySound(UISfxSound.BUTTON1);
         transform.Find("Buttons/ClassBtn/UnSelected").gameObject.SetActive(false);
         transform.Find("Buttons/SkillBtn/UnSelected").gameObject.SetActive(true);
-        transform.Find("Buttons/AbillityBtn/UnSelected").gameObject.SetActive(true);
+        transform.Find("Buttons/AbilityBtn/UnSelected").gameObject.SetActive(true);
         transform.Find("ClassInfo").gameObject.SetActive(true);
         transform.Find("SkillInfo").gameObject.SetActive(false);
+        transform.Find("AbilityInfo").gameObject.SetActive(false);
     }
 
     public void OpenSkillWindow() {
         SoundManager.Instance.PlaySound(UISfxSound.BUTTON1);
         transform.Find("Buttons/ClassBtn/UnSelected").gameObject.SetActive(true);
         transform.Find("Buttons/SkillBtn/UnSelected").gameObject.SetActive(false);
-        transform.Find("Buttons/AbillityBtn/UnSelected").gameObject.SetActive(true);
+        transform.Find("Buttons/AbilityBtn/UnSelected").gameObject.SetActive(true);
         transform.Find("ClassInfo").gameObject.SetActive(false);
         transform.Find("SkillInfo").gameObject.SetActive(true);
+        transform.Find("AbilityInfo").gameObject.SetActive(false);
+    }
+
+    public void OpenAbilityWindow() {
+        SoundManager.Instance.PlaySound(UISfxSound.BUTTON1);
+        transform.Find("Buttons/ClassBtn/UnSelected").gameObject.SetActive(true);
+        transform.Find("Buttons/SkillBtn/UnSelected").gameObject.SetActive(true);
+        transform.Find("Buttons/AbilityBtn/UnSelected").gameObject.SetActive(false);
+        transform.Find("ClassInfo").gameObject.SetActive(false);
+        transform.Find("SkillInfo").gameObject.SetActive(false);
+        transform.Find("AbilityInfo").gameObject.SetActive(true);
     }
 
     public void SetHeroDialog(string dialog, bool isHuman) {
