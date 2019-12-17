@@ -398,7 +398,7 @@ public class SceneStartController : MonoBehaviour
 
     public void OnErrorOccurred(int error)
     {
-        Logger.Log("Error Code : " + error);
+        //Logger.Log("Error Code : " + error);
         OnNetworkError();
     }
 

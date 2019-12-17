@@ -36,8 +36,8 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
 
     //TODO : 적이 호출한지, 내가 호출한지 구분해야함
     public virtual void UnitChangePosition(GameObject target, Pos pos, bool isPlayer, string cardID = "") {
-        Logger.Log("Col : " + pos.col);
-        Logger.Log("Row : " + pos.row);
+        //Logger.Log("Col : " + pos.col);
+        //Logger.Log("Row : " + pos.row);
 
         Pos prevPos = GetMyPos(target);
         bool isHuman = target.GetComponent<PlaceMonster>().unit.ishuman;
@@ -114,8 +114,8 @@ public class FieldUnitsObserver : SerializedMonoBehaviour {
             useCardID
         );
 
-        Logger.Log(string.Format("prev Pos Col : {0}",prevPos.col));
-        Logger.Log(string.Format("prev Pos Row : {0}", prevPos.row));
+        //Logger.Log(string.Format("prev Pos Col : {0}",prevPos.col));
+        //Logger.Log(string.Format("prev Pos Row : {0}", prevPos.row));
 
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.FIELD_CHANGED, null, null);
 

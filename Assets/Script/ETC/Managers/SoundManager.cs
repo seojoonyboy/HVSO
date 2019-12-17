@@ -26,7 +26,7 @@ public class SoundManager : SerializedMonoBehaviour {
     public static SoundManager Instance {
         get {
             if (_instance == null) {
-                Logger.LogError("SoundManager를 찾을 수 없습니다.");
+                //Logger.LogError("SoundManager를 찾을 수 없습니다.");
                 return null;
             }
             else {
@@ -104,7 +104,7 @@ public class SoundManager : SerializedMonoBehaviour {
 
     public void PlaySound(SoundType type) {
         if (!sounds.ContainsKey(type) || sounds[type] == null) {
-            Logger.LogError(string.Format("{0}에 대한 음원을 찾을 수 없습니다.", type));
+            //Logger.LogError(string.Format("{0}에 대한 음원을 찾을 수 없습니다.", type));
             return;
         }
         PlaySfx(sounds[type]);
@@ -112,7 +112,7 @@ public class SoundManager : SerializedMonoBehaviour {
 
     public void PlaySound(UISfxSound sfxSound) {
         if(!uiSfx.ContainsKey(sfxSound) || uiSfx[sfxSound] == null) {
-            Logger.LogError(string.Format("{0}에 대한 음원을 찾을 수 없습니다."));
+            //Logger.LogError(string.Format("{0}에 대한 음원을 찾을 수 없습니다."));
             return;
         }
         PlaySfx(uiSfx[sfxSound]);

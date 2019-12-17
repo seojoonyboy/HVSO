@@ -1069,7 +1069,7 @@ public partial class AccountManager {
         set {
             tokenId = value;
             TokenFormat = string.Format("Bearer {0}", TokenId);
-            //Logger.Log(TokenId);
+            Logger.Log(TokenFormat);
             tokenSetFinished.Invoke();
         }
     }
@@ -1293,6 +1293,8 @@ public partial class AccountManager {
         public int losingStreak;
         public string rankingBattleState;
         public bool[] rankingBattleCount;
+        public int? ratingPointTop;
+        public List<Reward> rewards;
     }
 
     [Serializable]
@@ -1309,6 +1311,19 @@ public partial class AccountManager {
     public class RankUpCondition {
         public int needTo;
         public int battles;
+    }
+
+    public class Reward {
+        public bool claimed;
+        public bool canClaim;
+        public RewardInfo reward;
+        public int id;
+        public int point;
+    }
+
+    public class RewardInfo {
+        public string kind;
+        public string amount;
     }
 
     /// <summary>
@@ -1349,6 +1364,30 @@ public partial class AccountManager {
                 }
             },
             "리그 정보를 불러오는중...");
+    }
+
+    public void RequestLeagueReward(OnRequestFinishedDelegate callback, int rewardId) {
+        StringBuilder url = new StringBuilder();
+        string base_url = networkManager.baseUrl;
+
+        url
+            .Append(base_url)
+            .Append("api/user/claim_reward")
+            .Append("?kind=rating&rewardId=")
+            .Append(rewardId.ToString());
+
+        Logger.Log("RequestLeagueReward");
+        HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
+        request.MethodType = HTTPMethods.Get;
+        request.AddHeader("authorization", TokenFormat);
+
+        networkManager.Request(
+            request, (req, res) => {
+                callback(req, res);
+
+                RequestLeagueInfo();
+            },
+            "리그 보상 요청...");
     }
 
     private void MakeAreaDict() {

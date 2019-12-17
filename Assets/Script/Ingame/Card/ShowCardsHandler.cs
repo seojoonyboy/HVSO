@@ -238,7 +238,7 @@ public class ShowCardsHandler : MonoBehaviour {
             selectedCard.GetComponent<MagicDragHandler>().OnEndDrag(null);
         }
         catch(System.Exception ex) {
-            Logger.LogError(ex.ToString());
+            //Logger.LogError(ex.ToString());
         }
 
         CardInfoOnDrag.instance.OffCardDragInfo();

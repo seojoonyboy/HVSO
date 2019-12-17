@@ -305,7 +305,7 @@ public class PlayerController : MonoBehaviour
         availableAmountToGet = (enemyShieldStack < amount) ? enemyShieldStack : amount;
         targetPlayer.DiscountShieldStack(targetPlayer.shieldStack.Value, availableAmountToGet);
 
-        Logger.Log("적 실드 " + targetPlayer.shieldStack.Value + "로 바뀜(약탈)");
+        //Logger.Log("적 실드 " + targetPlayer.shieldStack.Value + "로 바뀜(약탈)");
 
         ////내가 채울 수 있는 양 계산
         ChangeShieldStack(shieldStack.Value, availableAmountToGet);

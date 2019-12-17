@@ -244,7 +244,7 @@ public partial class BattleConnector : MonoBehaviour {
             SendStartState(value);
         }
         PlayMangement.instance.GetComponent<TurnMachine>().onPrepareTurn.Invoke();
-        Logger.Log("준비 턴");
+        //Logger.Log("준비 턴");
     }
 
     public void start_state(object args, int? id) {
@@ -425,7 +425,7 @@ public partial class BattleConnector : MonoBehaviour {
     public void surrender(object args, int? id) {
         var json = (JObject)args;
         string camp = json["camp"].ToString();
-        Logger.Log(camp + "측 항복");
+        //Logger.Log(camp + "측 항복");
         isSurrender = true;
         string result = "";
         bool isHuman = PlayMangement.instance.player.isHuman;

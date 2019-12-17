@@ -139,7 +139,7 @@ public class ChallengerHandler : SerializedMonoBehaviour {
             challenges.Remove(challenges[0]);
         }
         else {
-            Logger.Log("챌린지 모두 완료");
+            //Logger.Log("챌린지 모두 완료");
         }
         yield return new WaitForSeconds(1.5f);
         check.SetActive(false);
@@ -147,7 +147,7 @@ public class ChallengerHandler : SerializedMonoBehaviour {
     }
 
     private void PrintLogError(string msg) {
-        Logger.LogError(msg);
+        //Logger.LogError(msg);
     }
 
     public class Challenge {

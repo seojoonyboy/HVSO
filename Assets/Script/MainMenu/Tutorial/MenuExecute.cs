@@ -103,7 +103,7 @@ namespace MenuTutorialModules {
         }
 
         public void StartGlow(GameObject target) {
-            Logger.Log("Glow Target : " + target);
+            //Logger.Log("Glow Target : " + target);
             //MenuGlow.Instance.StartGlow(target);
         }
     } 
@@ -164,7 +164,7 @@ namespace MenuTutorialModules {
                 menuMask.menuTalkPanel.transform.Find("NameObject/PlayerName").gameObject.SetActive(isPlayer);
                 menuMask.menuTalkPanel.transform.Find("NameObject/EnemyName").gameObject.SetActive(!isPlayer);
                 if (isPlayer) {
-                    Logger.Log(args[0]);
+                    //Logger.Log(args[0]);
                     menuMask.menuTalkPanel.transform.Find("CharacterImage/Player").GetComponent<Image>().sprite = AccountManager.Instance.resource.ScenarioUnitResurce[args[0]].sprite;
                     menuMask.menuTalkPanel.transform.Find("NameObject/PlayerName").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.resource.ScenarioUnitResurce[args[0]].name;
                 }
@@ -262,7 +262,7 @@ namespace MenuTutorialModules {
             var menuMask = MenuMask.Instance;
             
             string objectName = args[0];
-            Logger.Log(objectName);
+            //Logger.Log(objectName);
 
             var targetObject = menuMask.GetMenuObject(objectName);
 
@@ -418,7 +418,7 @@ namespace MenuTutorialModules {
                     }
                 }
                 else {
-                    Logger.Log("Something is wrong");
+                    //Logger.Log("Something is wrong");
                 }
             });
             GetComponent<MenuTutorialManager>().ActiveRewardPanel();
@@ -764,7 +764,7 @@ namespace MenuTutorialModules {
                 menuTutorialManager.ActiveRewardBoxCanvas();
             }
             else {
-                Logger.LogError("박스가 없습니다!");
+                //Logger.LogError("박스가 없습니다!");
                 PlayerPrefs.SetInt("TutorialBoxRecieved", 1);
 
                 handler.isDone = true;
@@ -824,7 +824,7 @@ namespace MenuTutorialModules {
     public class MainMenuButtonGlow : MenuExecute {
         public override void Execute() {
             GetComponent<MenuTutorialManager>().FixedMenuCanvas.SetActive(false);
-            Logger.Log("MainMenuButtonGlow : " + args[0]);
+            //Logger.Log("MainMenuButtonGlow : " + args[0]);
             string buttonName = args[0];
             int index = 0;
             switch (buttonName) {

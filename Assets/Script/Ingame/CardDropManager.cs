@@ -43,7 +43,7 @@ public partial class CardDropManager {
     /// </summary>
     /// <param name="line">Args는 1부터 시작</param>
     public void ForcedShowDropableSlot(int line, string args = null) {
-        Logger.Log("ForcedShowDropableSlot");
+        //Logger.Log("ForcedShowDropableSlot");
         for(int i=0; i<5; i++) {
             if(i == line - 1) {
                 if (args == null || args == "slot") {
@@ -84,7 +84,7 @@ public partial class CardDropManager {
         }
     }
     public void ForcedShowDropableSlot(int[] line, string args = null) {
-        Logger.Log("ForcedShowDropableSlot");
+        //Logger.Log("ForcedShowDropableSlot");
         int temp = 0;
         for (int i = 0; i < 5; i++) {
             if (temp >= line.Length)
@@ -595,7 +595,7 @@ public partial class CardDropManager {
         }
 
         else {
-            Logger.LogError("undefined target" + group);
+            //Logger.LogError("undefined target" + group);
         }
     }
 
@@ -695,7 +695,7 @@ public partial class CardDropManager {
         }
 
         else {
-            Logger.LogError("undefined target" + group);
+            //Logger.LogError("undefined target" + group);
         }
     }
 }

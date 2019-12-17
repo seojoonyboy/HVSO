@@ -262,7 +262,7 @@ public class PlaceMonster : MonoBehaviour {
             bool isHuman = isPlayer ? playMangement.player.isHuman : playMangement.enemyPlayer.isHuman;
             var result = PlayMangement.instance.UnitsObserver.GetAllFieldUnits(myPos.col, !isHuman);
             if(result.Count == 0) {
-                Logger.Log("적이 없음. pillage 발동");
+                //Logger.Log("적이 없음. pillage 발동");
                 if(isPlayer) playMangement.player.PillageEnemyShield(2);
                 else playMangement.enemyPlayer.PillageEnemyShield(2);
             }
@@ -656,8 +656,8 @@ public class PlaceMonster : MonoBehaviour {
         GameObject dropTomb = Instantiate(tomb);
         dropTomb.transform.position = transform.position;
 
-        Logger.Log("X : " + x);
-        Logger.Log("Y : " + y);
+        //Logger.Log("X : " + x);
+        //Logger.Log("Y : " + y);
 
         if (isPlayer) {
             PlayMangement.instance.UnitsObserver.UnitRemoved(new FieldUnitsObserver.Pos(x, y), isHuman);

@@ -71,7 +71,7 @@ public class BattleReadySceneController : MonoBehaviour {
 
     public void OnStartButton() {
         if (isIngameButtonClicked) {
-            Logger.Log("이미 대전 시작 버튼이 눌려진 상태");
+            //Logger.Log("이미 대전 시작 버튼이 눌려진 상태");
             return;
         }
         string race = PlayerPrefs.GetString("SelectedRace").ToLower();
@@ -104,8 +104,7 @@ public class BattleReadySceneController : MonoBehaviour {
     public void OnBackButton() {
         gameObject.SetActive(false);
         SoundManager.Instance.PlaySound(UISfxSound.BUTTON1);
-
-        HudController.SetBackButton(BattleMenuController.OnBackButton);
+        HudController.SetHeader(HUDController.Type.SHOW_USER_INFO);
     }
 
     public enum RaceType {

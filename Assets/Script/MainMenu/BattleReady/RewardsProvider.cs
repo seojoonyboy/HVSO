@@ -12,18 +12,17 @@ public class RewardsProvider : SerializedMonoBehaviour {
     const string path = "BattleReady/MMR_rewards_table";
     [SerializeField] GameObject RewardButtonPool;
     [SerializeField] Transform content;
-    public Dictionary<string, Sprite> rewardIcons;
     public List<GameObject> buttons;
     public List<int> standards;
-
-    void Start() {
-
+    Dictionary<string, Sprite> rewardIcons;
+    private void Awake() {
+        rewardIcons = AccountManager.Instance.resource.rewardIcon;
     }
 
     public void Provide() {
         Clear();
 
-        var rewards = Read();
+        var rewards = AccountManager.Instance.scriptable_leagueData.leagueInfo.rewards;
         Separate(ref rewards);
     }
 
@@ -34,32 +33,25 @@ public class RewardsProvider : SerializedMonoBehaviour {
         }
     }
 
-    Rewards Read() {
-        string dataAsJson = ((TextAsset)Resources.Load(path)).text;
-        //Logger.Log(dataAsJson);
-        var rewards = JsonReader.Read<Rewards>(dataAsJson);
-        return rewards;
-    }
-
-    void Separate(ref Rewards data) {
-        List<Reward> rewards = data.rewards;
+    void Separate(ref List<AccountManager.Reward> rewards) {
         buttons = new List<GameObject>();
         standards = new List<int>();
 
-        foreach (Reward reward in rewards) {
+        foreach (AccountManager.Reward reward in rewards) {
             GameObject btn = Instantiate(RewardButtonPool);
 
             TextMeshProUGUI amountTxt = btn.transform.Find("Amount").GetComponent<TextMeshProUGUI>();
-            amountTxt.text = reward.standard.ToString();
+            amountTxt.text = reward.point.ToString();
             Image rewardIcon = btn.transform.Find("Image/RewardIcon").GetComponent<Image>();
-            rewardIcon.sprite = GetRewardIcon(reward.type, reward.args);
+            rewardIcon.sprite = GetRewardIcon(reward.reward.kind);
             Image checkMark = btn.transform.Find("CheckMark").GetComponent<Image>();
 
             btn.gameObject.SetActive(true);
             btn.transform.SetParent(content);
-            btn.transform.Find("MMR").GetComponent<IntergerIndex>().Id = reward.standard;
+            btn.transform.Find("MMR").GetComponent<IntergerIndex>().Id = reward.id;
+            btn.GetComponent<RewardButtonInBattleReady>().SetRewardData(reward);
 
-            standards.Add(reward.standard);
+            standards.Add(reward.point);
 
             buttons.Add(btn);
         }
@@ -67,31 +59,12 @@ public class RewardsProvider : SerializedMonoBehaviour {
         GetComponent<RewardProgressController>().OnRewardObjectSettingFinished();
     }
 
-    Sprite GetRewardIcon(string keyword, string[] args = null) {
-        if (keyword.Contains("Card")) {
-            if (args == null) return null;
-
-            return rewardIcons[args[0]];
+    Sprite GetRewardIcon(string keyword) {
+        if (rewardIcons.ContainsKey(keyword)) {
+            return rewardIcons[keyword];
         }
         else {
-            if (rewardIcons.ContainsKey(keyword)) {
-                return rewardIcons[keyword];
-            }
-            else {
-                return null;
-            }
+            return null;
         }
-    }
-
-    public class Rewards {
-        public int maxSliderNum;
-        public List<Reward> rewards;
-    }
-
-    public class Reward {
-        public int standard;
-        public string type;
-        public int amount;
-        public string[] args;
     }
 }

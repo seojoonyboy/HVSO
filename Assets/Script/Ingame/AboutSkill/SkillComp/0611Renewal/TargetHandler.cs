@@ -32,7 +32,7 @@ namespace TargetModules {
         /// </summary>
         public virtual void SelectTarget(SelectTargetFinished successCallback, SelectTargetFailed failedCallback, Filtering filter) {
             targets = new List<GameObject>();
-            Logger.Log("타겟을 지정합니다.");
+            //Logger.Log("타겟을 지정합니다.");
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace TargetModules {
 
         public List<GameObject> GetTarget() {
             if(targets == null || targets.Count == 0) {
-                Logger.Log("타겟이 없습니다.");
+                //Logger.Log("타겟이 없습니다.");
             }
             return targets;
         }
@@ -73,7 +73,7 @@ namespace TargetModules {
             Transform highlightedSlot = GetComponent<CardHandler>().highlightedSlot;
             int col = highlightedSlot.parent.GetSiblingIndex();
 
-            Logger.Log(col);
+            //Logger.Log(col);
 
             return col;
         }
@@ -273,7 +273,7 @@ namespace TargetModules {
 
             List<GameObject> result = new List<GameObject>();
             if (args.Length != 2) {
-                Logger.LogError("Args가 잘못 전달되었습니다.");
+                //Logger.LogError("Args가 잘못 전달되었습니다.");
                 return result;
             }
 
@@ -365,7 +365,7 @@ namespace TargetModules {
 
             List<GameObject> result = new List<GameObject>();
             if (args.Length != 2) {
-                Logger.LogError("Args가 잘못 전달되었습니다.");
+                //Logger.LogError("Args가 잘못 전달되었습니다.");
                 return result;
             }
 
@@ -631,7 +631,7 @@ namespace TargetModules {
             }
             
             foreach(string arg in args) {
-                Logger.Log(arg);
+                //Logger.Log(arg);
             }
             
             failed = failedCallback;
@@ -705,7 +705,7 @@ namespace TargetModules {
                                 var placeMonster = units[i].GetComponent<PlaceMonster>();
                                 if (placeMonster.GetComponent<ambush>() != null) {
                                     units.Remove(units[i]);
-                                    Logger.Log("잠복 유닛 감지됨");
+                                    //Logger.Log("잠복 유닛 감지됨");
                                 }
                             }
 
@@ -824,7 +824,7 @@ namespace TargetModules {
                     }
 
                     if (units.Count != 0) {
-                        Logger.Log(observer.GetAllFieldUnits(isHuman).Count + "개의 적이 감지됨");
+                        //Logger.Log(observer.GetAllFieldUnits(isHuman).Count + "개의 적이 감지됨");
                         result = true;
                     }
                     break;
@@ -902,7 +902,7 @@ namespace TargetModules {
                 }
             }
             failedCallback("타겟을 찾을 수 없습니다");
-            Logger.Log("타겟을 찾을 수 없습니다.");
+            //Logger.Log("타겟을 찾을 수 없습니다.");
         }
 
         /// <summary></summary>
@@ -933,7 +933,7 @@ namespace TargetModules {
                 }
             }
             else {
-                Logger.LogError("only made all, " + args[1] + "need to be code");
+                //Logger.LogError("only made all, " + args[1] + "need to be code");
             }
             successCallback(GetTarget());
         }

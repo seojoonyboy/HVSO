@@ -23,8 +23,8 @@ public class ClickableText : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             var linkInfo = text.textInfo.linkInfo[linkIndex];
             var linkId = linkInfo.GetLinkID();
 
-            Logger.Log("linkInfo : " + linkInfo);
-            Logger.Log("linkId : " + linkId);
+            //Logger.Log("linkInfo : " + linkInfo);
+            //Logger.Log("linkId : " + linkId);
 
             modalText.text = linkId + "에 대한 설명입니다.";
         }

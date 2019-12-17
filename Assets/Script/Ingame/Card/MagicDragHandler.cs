@@ -32,7 +32,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
             //TODO : Filter를 통해(Use Condition) 타겟 표시 추가 제어
             try {
                 if (skillHandler.skills[0].conditionCheckers[0] != null) {
-                    Logger.Log("ConditionChecker [0] 존재 : " + skillHandler.skills[0].conditionCheckers[0]);
+                    //Logger.Log("ConditionChecker [0] 존재 : " + skillHandler.skills[0].conditionCheckers[0]);
                     CardDropManager.Instance.ShowMagicalSlot(cardData.skills[0].target.args, skillHandler.dragFiltering, skillHandler.skills[0].conditionCheckers[0]);
                 }
             }
@@ -63,7 +63,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         //TODO : Filter를 통해(Use Condition) 타겟 표시 추가 제어
         try {
             if(skillHandler.skills[0].conditionCheckers[0] != null) {
-                Logger.Log("ConditionChecker [0] 존재 : " + skillHandler.skills[0].conditionCheckers[0]);
+                //Logger.Log("ConditionChecker [0] 존재 : " + skillHandler.skills[0].conditionCheckers[0]);
                 CardDropManager.Instance.ShowMagicalSlot(cardData.skills[0].target.args, skillHandler.dragFiltering, skillHandler.skills[0].conditionCheckers[0]);
             }
         }

@@ -102,7 +102,7 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     private void OnLobbyOpen(WebSocket webSocket) {
-        Logger.Log("OnLobbyOpen");
+        //Logger.Log("OnLobbyOpen");
     }
 
     private void OnLobbyClosed(WebSocket webSocket, ushort code, string message) {
@@ -134,7 +134,7 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     public void OnClosed(WebSocket webSocket, ushort code, string msg) {
-        Logger.LogWarning("Socket has been closed : " + code + "  message : " + msg);
+        //Logger.LogWarning("Socket has been closed : " + code + "  message : " + msg);
         if(battleGameFinish) return;
         reconnectModal = Instantiate(Modal.instantiateReconnectModal());
         TryReconnect();
@@ -143,12 +143,12 @@ public partial class BattleConnector : MonoBehaviour {
     public void OnError(WebSocket webSocket, Exception ex) {
         Time.timeScale = 0;
         reconnectModal = Instantiate(Modal.instantiateReconnectModal());
-        Logger.LogError("Socket Error message : " + ex);
+        //Logger.LogError("Socket Error message : " + ex);
         TryReconnect();
     }
 
     private bool Quitting() {
-        Logger.Log("quitting");
+        //Logger.Log("quitting");
         isQuit = true;
         if(webSocket != null) {
             webSocket.OnOpen -= OnOpen;
@@ -311,7 +311,7 @@ public partial class BattleConnector : MonoBehaviour {
     }
 
     void Error(WebSocket webSocket, Exception ex) {
-        Logger.LogWarning(ex);
+        //Logger.LogWarning(ex);
     }
 
     void OnDisable() {
@@ -330,7 +330,7 @@ public partial class BattleConnector : MonoBehaviour {
         SendFormat format = new SendFormat(method, args);
         string json = JsonConvert.SerializeObject(format);
         webSocket.Send(json);
-        Logger.Log(string.Format("보내는 메시지 : {0}", json));
+        //Logger.Log(string.Format("보내는 메시지 : {0}", json));
     }
 
     private string[] ConvertObjectArrayToStringArray(object[] objs) {
