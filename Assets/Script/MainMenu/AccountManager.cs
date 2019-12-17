@@ -1681,4 +1681,34 @@ public partial class AccountManager {
             },
             "튜토리얼 스킵 요청중...");
     }
+
+    public void RequestChangeMMRForTest(int mmr) {
+        StringBuilder url = new StringBuilder();
+        string base_url = networkManager.baseUrl;
+
+        if (mmr < 0) mmr = 0;
+        else if (mmr > 3000) mmr = 3000;
+
+        url
+            .Append(base_url)
+            .Append("api/test_helper/league_info/")
+            .Append(mmr);
+
+        HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
+        request.MethodType = HTTPMethods.Get;
+        request.AddHeader("authorization", TokenFormat);
+
+        networkManager.Request(
+            request, (req, res) => {
+                if (res.StatusCode == 200 || res.StatusCode == 304) {
+                    Modal.instantiate("MMR 변경 완료", Modal.Type.CHECK);
+                }
+                else {
+                    Modal.instantiate("MMR 변경 요청 오류", Modal.Type.CHECK);
+                    Logger.LogError(res.DataAsText);
+                }
+                
+            },
+            "MMR 변경 요청중...");
+    }
 }
