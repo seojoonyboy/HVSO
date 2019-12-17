@@ -582,7 +582,7 @@ public class GameResultManager : MonoBehaviour {
         boxSpine.AnimationState.SetAnimation(0, "02.vibration1", true);
         int start = getSup;
         int total = 0;
-        int newSupply = 0;
+        int box = 0;
         if (isAdditional) {
             int.TryParse(totalVal.text, out total);
         }
@@ -615,13 +615,13 @@ public class GameResultManager : MonoBehaviour {
 
                 alertIcon.gameObject.SetActive(true);
                 alertIcon.Find("SupplyText").gameObject.SetActive(true);
-                alertIcon.Find("SupplyText").gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = (++newSupply).ToString();
+                alertIcon.Find("SupplyText").gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = (++box).ToString();
                 if (ScenarioGameManagment.scenarioInstance == null) {
                     boxSpine.gameObject.GetComponent<Button>().enabled = true;
                     boxSpine.gameObject.GetComponent<Button>().onClick.AddListener(delegate () {
-                        newSupply--;
-                        alertIcon.Find("SupplyText").gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = newSupply.ToString();
-                        if (supply <= 0) {
+                        box--;
+                        alertIcon.Find("SupplyText").gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = box.ToString();
+                        if (box < 1) {
                             boxSpine.gameObject.GetComponent<Button>().enabled = false;
                             alertIcon.gameObject.SetActive(false);
                         }
@@ -662,13 +662,13 @@ public class GameResultManager : MonoBehaviour {
                     Transform alertIcon = boxSpine.gameObject.transform.Find("AlertIcon");
                     alertIcon.gameObject.SetActive(true);
                     alertIcon.Find("SupplyText").gameObject.SetActive(true);
-                    alertIcon.Find("SupplyText").gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = (++newSupply).ToString();
+                    alertIcon.Find("SupplyText").gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = (++box).ToString();
                     if (ScenarioGameManagment.scenarioInstance == null) {
                         boxSpine.gameObject.GetComponent<Button>().enabled = true;
                         boxSpine.gameObject.GetComponent<Button>().onClick.AddListener(delegate () {
-                            newSupply--;
-                            alertIcon.Find("SupplyText").gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = newSupply.ToString();
-                            if (supply <= 0) {
+                            box--;
+                            alertIcon.Find("SupplyText").gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = box.ToString();
+                            if (box < 1) {
                                 boxSpine.gameObject.GetComponent<Button>().enabled = false;
                                 alertIcon.gameObject.SetActive(false);
                             }
