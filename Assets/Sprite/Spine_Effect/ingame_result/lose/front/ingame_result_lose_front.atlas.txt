@@ -1,62 +1,62 @@
 
 ingame_result_lose_front.png
-size: 1024,512
+size: 1024,1024
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 Victory
-  rotate: true
-  xy: 603, 74
-  size: 222, 133
-  orig: 222, 133
+  rotate: false
+  xy: 464, 703
+  size: 354, 172
+  orig: 354, 172
   offset: 0, 0
   index: -1
 Victory_effect1
   rotate: false
-  xy: 736, 163
-  size: 222, 133
-  orig: 222, 133
+  xy: 0, 602
+  size: 296, 177
+  orig: 296, 177
   offset: 0, 0
   index: -1
 Victory_human
-  rotate: true
-  xy: 394, 50
-  size: 246, 209
-  orig: 246, 209
+  rotate: false
+  xy: 0, 13
+  size: 328, 279
+  orig: 328, 279
   offset: 0, 0
   index: -1
 Victory_ob
   rotate: false
-  xy: 340, 296
-  size: 626, 170
-  orig: 626, 170
+  xy: 0, 292
+  size: 834, 227
+  orig: 834, 227
   offset: 0, 0
   index: -1
 Victory_ob_shadow
   rotate: false
-  xy: 69, 5
-  size: 271, 72
-  orig: 273, 74
+  xy: 102, 779
+  size: 362, 96
+  orig: 364, 98
   offset: 1, 1
   index: -1
 Victory_orc
   rotate: false
-  xy: 138, 77
-  size: 256, 219
-  orig: 256, 219
+  xy: 328, 0
+  size: 341, 292
+  orig: 341, 292
   offset: 0, 0
   index: -1
 Victory_shadow
-  rotate: true
-  xy: 0, 77
-  size: 389, 138
-  orig: 389, 138
+  rotate: false
+  xy: 296, 519
+  size: 518, 184
+  orig: 518, 184
   offset: 0, 0
   index: -1
 star
-  rotate: true
-  xy: 0, 0
-  size: 77, 69
-  orig: 77, 69
+  rotate: false
+  xy: 0, 783
+  size: 102, 92
+  orig: 102, 92
   offset: 0, 0
   index: -1
