@@ -1614,4 +1614,71 @@ public partial class AccountManager {
             },
             "튜토리얼 정보를 불러오는중...");
     }
+
+    public void SkipStoryRequest(string camp, int stageNumber) {
+        StringBuilder url = new StringBuilder();
+        string base_url = networkManager.baseUrl;
+
+        url
+            .Append(base_url)
+            .Append("api/test_helper/tutorial/")
+            .Append(camp)
+            .Append("/")
+            .Append(stageNumber);
+
+        HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
+        request.MethodType = HTTPMethods.Get;
+        request.AddHeader("authorization", TokenFormat);
+
+        PlayerPrefs.SetString("SelectedBattleButton", "STORY");
+        PlayerPrefs.SetInt("isFirst", 0);
+
+        MenuLockController.MenuNameData lockMenuList = new MenuLockController.MenuNameData();
+        MenuLockController.MenuNameData unlockMenuList = new MenuLockController.MenuNameData();
+
+        lockMenuList.menuNameList = new List<string>();
+        unlockMenuList.menuNameList = new List<string>();
+
+        lockMenuList.menuNameList.Add("League");
+        //lockMenuList.menuNameList.Add("Story");
+        lockMenuList.menuNameList.Add("DeckEdit");
+        lockMenuList.menuNameList.Add("Dictionary");
+        lockMenuList.menuNameList.Add("Shop");
+        lockMenuList.menuNameList.Add("RewardBox");
+        lockMenuList.menuNameList.Add("Mode");
+        lockMenuList.menuNameList.Add("HumanBaseDeckAiBattleBtn");
+        lockMenuList.menuNameList.Add("HumanBaseDeckDeleteBtn");
+        lockMenuList.menuNameList.Add("OrcBaseDeckAiBattleBtn");
+        lockMenuList.menuNameList.Add("OrcBaseDeckDeleteBtn");
+
+        unlockMenuList.menuNameList.Add("Story");
+
+        PlayerPrefs.SetString("lockMenuList", JsonConvert.SerializeObject(lockMenuList));
+        PlayerPrefs.SetString("unlockMenuList", JsonConvert.SerializeObject(unlockMenuList));
+
+        if (stageNumber == 1) {
+            if(camp == "human") {
+                RequestIngameTutorialReward((req, res) => {
+                    Modal.instantiate("휴먼 기본부대 획득", Modal.Type.CHECK);
+                }, camp);
+            }
+            else {
+                RequestIngameTutorialReward((req, res) => {
+                    Modal.instantiate("오크 기본부대 획득", Modal.Type.CHECK);
+                }, camp);
+            }
+        }
+
+        networkManager.Request(
+            request, (req, res) => {
+                if (res.StatusCode == 200 || res.StatusCode == 304) {
+                    Modal.instantiate("튜토리얼 " + camp + ", " + stageNumber + " 스킵 완료", Modal.Type.CHECK);
+                }
+                else {
+                    Modal.instantiate("튜토리얼 skip 요청 오류", Modal.Type.CHECK);
+                    Logger.LogError(res.DataAsText);
+                }
+            },
+            "튜토리얼 스킵 요청중...");
+    }
 }

@@ -1,76 +1,69 @@
 
 ingame_result_front.png
-size: 2048,512
+size: 1024,1024
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 Victory
-  rotate: false
-  xy: 866, 0
-  size: 344, 122
-  orig: 344, 123
-  offset: 0, 1
+  rotate: true
+  xy: 862, 504
+  size: 491, 132
+  orig: 491, 132
+  offset: 0, 0
   index: -1
 Victory_effect1
-  rotate: true
-  xy: 410, 7
-  size: 356, 134
-  orig: 358, 136
-  offset: 1, 1
-  index: -1
-Victory_effect2
-  rotate: true
-  xy: 271, 3
-  size: 360, 139
-  orig: 362, 141
-  offset: 1, 1
+  rotate: false
+  xy: 0, 292
+  size: 508, 151
+  orig: 508, 151
+  offset: 0, 0
   index: -1
 Victory_human
-  rotate: true
-  xy: 866, 122
-  size: 246, 209
-  orig: 246, 209
+  rotate: false
+  xy: 341, 13
+  size: 328, 279
+  orig: 328, 279
   offset: 0, 0
   index: -1
 Victory_ob
   rotate: false
-  xy: 0, 363
-  size: 647, 142
-  orig: 647, 142
+  xy: 0, 806
+  size: 862, 189
+  orig: 862, 189
   offset: 0, 0
   index: -1
 Victory_ob_orc
   rotate: false
-  xy: 647, 368
-  size: 628, 137
-  orig: 628, 137
+  xy: 0, 623
+  size: 837, 183
+  orig: 837, 183
   offset: 0, 0
   index: -1
 Victory_ob_shadow
-  rotate: false
-  xy: 0, 40
-  size: 271, 72
-  orig: 273, 74
+  rotate: true
+  xy: 669, 41
+  size: 362, 96
+  orig: 364, 98
   offset: 1, 1
   index: -1
 Victory_orc
-  rotate: true
-  xy: 647, 112
-  size: 256, 219
-  orig: 256, 219
+  rotate: false
+  xy: 0, 0
+  size: 341, 292
+  orig: 341, 292
   offset: 0, 0
   index: -1
 Victory_shadow
-  rotate: true
-  xy: 1275, 59
-  size: 446, 135
-  orig: 446, 137
-  offset: 0, 1
+  rotate: false
+  xy: 0, 443
+  size: 593, 180
+  orig: 595, 182
+  offset: 1, 1
   index: -1
 star
   rotate: false
-  xy: 1075, 203
-  size: 166, 165
-  orig: 166, 165
+  xy: 593, 403
+  size: 221, 220
+  orig: 221, 220
   offset: 0, 0
   index: -1
