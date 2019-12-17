@@ -153,8 +153,8 @@ public class MenuCardHandler : MonoBehaviour {
         }
         cardObject.Find("Cost/Text").GetComponent<Text>().text = cardData.cost.ToString();
         //cardObject.Find("Class").GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[cardData.cardClasses[0]];
-        if (!cardData.isHeroCard)
-            transform.Find("HaveNum").gameObject.SetActive(false);
+        //if (!cardData.isHeroCard)
+        //    transform.Find("HaveNum").gameObject.SetActive(false);
         cardObject.Find("Disabled").gameObject.SetActive(false);
     }
 

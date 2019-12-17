@@ -150,19 +150,78 @@ public class MailBoxManager : MonoBehaviour
     }
 
     public void CloseReceiveResult() {
+        InitRewardList();
         transform.GetChild(0).Find("ReceivedReward").gameObject.SetActive(false);
-        for (int i = 0; i < transform.GetChild(0).Find("ReceivedReward").GetChild(0).childCount; i++)
-            transform.GetChild(0).Find("ReceivedReward").GetChild(0).GetChild(i).gameObject.SetActive(false);
         EscapeKeyController.escapeKeyCtrl.RemoveEscape(CloseReceiveResult);
     }
 
-    public void SetReceiveResult() {
-        Transform slotList = transform.GetChild(0).Find("ReceivedReward").GetChild(0);
-        List<dataModules.MailReward> itemList = AccountManager.Instance.mailRewardList;
+    public void SetReceiveResult(List<dataModules.MailReward> rewardList = null ) {
+        Transform slotList = transform.GetChild(0).Find("ReceivedReward/RowSlot");
+        List<dataModules.MailReward> itemList = new List<dataModules.MailReward>();
+        if (rewardList != null)
+            itemList = rewardList;
+        else
+            itemList = AccountManager.Instance.mailRewardList;
         for (int i = 0; i < AccountManager.Instance.mailRewardList.Count; i++) {
-            slotList.GetChild(i).GetChild(0).GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon[itemList[i].kind];
-            slotList.GetChild(i).GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = itemList[i].amount.ToString();
-            slotList.GetChild(i).gameObject.SetActive(true);
+            Transform target;
+            slotList.GetChild(i / 3).gameObject.SetActive(true);
+            slotList.GetChild(i / 3).GetChild(i % 3).gameObject.SetActive(true);
+            if (itemList[i].kind.Contains("card")) {
+                target = slotList.GetChild(i / 3).GetChild(i % 3).Find("Reward/RewardCard");
+                
+                string cardId = itemList[i].cards[0].cardId;
+                slotList.GetChild(i / 3).GetChild(i % 3).Find("NameOrNum").GetComponent<TMPro.TextMeshProUGUI>().text
+                    = AccountManager.Instance.allCardsDic[cardId].name;
+                target.GetComponent<MenuCardHandler>().DrawCard(cardId);
+                if(itemList[i].cards[0].crystal != 0) {
+                    target.Find("GetCrystal").gameObject.SetActive(true);
+                    target.Find("GetCrystal").GetChild(0).Find("MagicBlock").gameObject.SetActive(AccountManager.Instance.allCardsDic[cardId].type == "magic");
+                    target.Find("GetCrystal").GetChild(0).Find("UnitBlock").gameObject.SetActive(AccountManager.Instance.allCardsDic[cardId].type == "unit");
+                    target.Find("GetCrystal").GetChild(0).Find("Value").GetComponent<TMPro.TextMeshProUGUI>().text = itemList[i].cards[0].crystal.ToString();
+                }
+                else
+                    target.Find("GetCrystal").gameObject.SetActive(false);
+            }
+            else {
+                target = slotList.GetChild(i / 3).GetChild(i % 3).Find("Reward/Resource");
+                string item = itemList[i].kind;
+                if (itemList[i].kind.Contains("gold"))
+                    item = "gold";
+                target.GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon["result_" + item];
+                slotList.GetChild(i / 3).GetChild(i % 3).Find("NameOrNum").GetComponent<TMPro.TextMeshProUGUI>().text = itemList[i].amount;
+            }
+            target.SetAsFirstSibling();
+            target.gameObject.SetActive(true);
+            if (i == 8 && AccountManager.Instance.mailRewardList.Count > 9) {
+                int count = 9;
+                while(count > 0) {
+                    itemList.RemoveAt(0);
+                    count--;
+                }
+                Button nextBtn = transform.Find("Content/ReceivedReward/Buttons/Next").GetComponent<Button>();
+                nextBtn.gameObject.SetActive(true);
+                nextBtn.onClick.RemoveAllListeners();
+                nextBtn.onClick.AddListener(() => SetNextRewardPage(itemList));
+                break;
+            }
+            else
+                transform.Find("Content/ReceivedReward/Buttons/Next").gameObject.SetActive(false);
+        }
+    }
+
+    void SetNextRewardPage(List<dataModules.MailReward> itemList) {
+        InitRewardList();
+        SetReceiveResult(itemList);
+    }
+
+    void InitRewardList() {
+        Transform slotList = transform.GetChild(0).Find("ReceivedReward/RowSlot");
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                slotList.GetChild(i).GetChild(j).gameObject.SetActive(false);
+                slotList.GetChild(i).GetChild(j).GetChild(0).GetChild(0).gameObject.SetActive(false);
+            }
+            slotList.GetChild(i).gameObject.SetActive(false);
         }
     }
 

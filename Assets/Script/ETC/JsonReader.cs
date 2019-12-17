@@ -63,7 +63,7 @@ namespace dataModules {
 
     public class HeroLevel {
         public int piece;
-        public int manaCrystal;
+        public int crystal;
     }
 
     public class Decks {
