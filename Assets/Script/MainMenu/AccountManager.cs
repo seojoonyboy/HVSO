@@ -232,7 +232,7 @@ public partial class AccountManager : Singleton<AccountManager> {
         public double supplyTimeRemain;
         public int supply;
         public int supplyBox;
-        public int manaCrystal;
+        public int crystal;
         public int preSupply;
         public int supplyX2Coupon;
 
@@ -360,7 +360,7 @@ public partial class AccountManager {
             lvExp: userData.lvExp,
             nextLvExp: userData.nextLvExp,
             gold: userData.gold,
-            crystal: userData.manaCrystal,
+            crystal: userData.crystal,
             supplyStoreTime: (int)userData.supplyTimeRemain,
             supplyStore: userData.preSupply,
             supply: userData.supply,
@@ -379,7 +379,7 @@ public partial class AccountManager {
             lvExp: userData.lvExp,
             nextLvExp: userData.nextLvExp,
             gold: userData.gold,
-            crystal: userData.manaCrystal,
+            crystal: userData.crystal,
             supplyStoreTime: (int)userData.supplyTimeRemain,
             supplyStore: userData.preSupply,
             supply: userData.supply,
@@ -919,6 +919,7 @@ public partial class AccountManager {
                 }
             }
             else {
+                Debug.Log(res.DataAsText);
                 Logger.LogWarning("상품 구매 실패");
             }
         }, "상품 구매 중...");
