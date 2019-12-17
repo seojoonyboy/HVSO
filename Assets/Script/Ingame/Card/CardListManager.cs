@@ -294,7 +294,6 @@ public class CardListManager : MonoBehaviour
         info.Find("FrameImage/ClassFrame").gameObject.SetActive(!data.isHeroCard);
         info.Find("Class_1").gameObject.SetActive(!data.isHeroCard);
         info.Find("HeroClass").gameObject.SetActive(data.isHeroCard);
-        info.Find("HaveNum").gameObject.SetActive(!data.isHeroCard);
         info.Find("Name/HeroName").gameObject.SetActive(data.isHeroCard);
         info.Find("FrameImage/ClassFrame").gameObject.SetActive(!data.isHeroCard);
         if (data.isHeroCard) {
