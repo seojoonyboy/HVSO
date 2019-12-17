@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class MailBoxManager : MonoBehaviour
 {
     [SerializeField] Transform mailListParent;
-
+    [SerializeField] HUDController HUDController;
 
     private void OnEnable() {
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_MAIL_UPDATE, RequestMailOver);
@@ -25,6 +25,19 @@ public class MailBoxManager : MonoBehaviour
         gameObject.SetActive(true);
         transform.Find("Block").gameObject.SetActive(true);
         AccountManager.Instance.RequestMailBox();
+
+        HUDController.SetHeader(HUDController.Type.ONLY_BAKCK_BUTTON);
+        HUDController.SetBackButton(() => { 
+            CloseMailBox();
+            HUDController.SetHeader(HUDController.Type.SHOW_USER_INFO);
+            if(quest != null) {
+                quest
+                    .AddSpinetoButtonAndRemoveClick(
+                        quest.manager.tutorialSerializeList.backButton, 
+                        quest.BreakCardDictionaryTab
+                    );
+            }
+        });
     }
 
     public void CloseMailBox() {

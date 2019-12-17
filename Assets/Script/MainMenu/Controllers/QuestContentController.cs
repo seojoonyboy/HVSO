@@ -163,16 +163,16 @@ namespace Quest {
             manager.tutorialSerializeList.newMail.SetActive(false);
             manager.tutorialSerializeList.openMailButton.enabled = true;
             manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_4);
-            AddSpinetoButtonAndRemoveClick(manager.tutorialSerializeList.mailBackButton, BreakCardDictionaryTab);
+            AddSpinetoButtonAndRemoveClick(manager.tutorialSerializeList.backButton, BreakCardDictionaryTab);
         }
 
-        private void BreakCardDictionaryTab() {
+        public void BreakCardDictionaryTab() {
             manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_9);
             PlayerPrefs.DeleteKey("FirstTutorialClear");
             PlayerPrefs.Save();
         }
 
-        private void AddSpinetoButtonAndRemoveClick(Button button, UnityAction moreAction = null) {
+        public void AddSpinetoButtonAndRemoveClick(Button button, UnityAction moreAction = null) {
             Instantiate(manager.handSpinePrefab, button.transform, false).name = "tutorialHand";
             UnityAction deleteHand = null;
             if(moreAction != null) deleteHand += moreAction;
