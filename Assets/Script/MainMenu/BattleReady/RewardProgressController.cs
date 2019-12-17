@@ -57,7 +57,7 @@ public class RewardProgressController : MonoBehaviour {
 
     IEnumerator SetPrevProgressBar() {
         yield return new WaitForEndOfFrame();
-        int ratingTop = leagueData.prevLeagueInfo.ratingPointTop;
+        int ratingTop = leagueData.prevLeagueInfo.ratingPointTop ?? default(int);
 
         int closestRightTargetIndex = 0;
         int closestLeftTargetIndex = GetIndex(ratingTop);

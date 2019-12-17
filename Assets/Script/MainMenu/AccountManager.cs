@@ -1293,7 +1293,7 @@ public partial class AccountManager {
         public int losingStreak;
         public string rankingBattleState;
         public bool[] rankingBattleCount;
-        public int ratingPointTop;
+        public int? ratingPointTop;
         public List<Reward> rewards;
     }
 
