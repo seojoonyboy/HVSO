@@ -185,13 +185,17 @@ public partial class MenuCardInfo : MonoBehaviour {
             info.Find("SkillInfo/Categories/Text").GetComponent<TMPro.TextMeshProUGUI>().text = sb.ToString();
         }
 
+        info.Find("FrameImage/ClassFrame").gameObject.SetActive(!data.isHeroCard);
+        info.Find("Class_1").gameObject.SetActive(!data.isHeroCard);
+        info.Find("HeroClass").gameObject.SetActive(data.isHeroCard);
+        info.Find("HaveNum").gameObject.SetActive(!data.isHeroCard);
+        info.Find("Name/HeroName").gameObject.SetActive(data.isHeroCard);
+        info.Find("FrameImage/ClassFrame").gameObject.SetActive(!data.isHeroCard);
         if (data.isHeroCard) {
             info.Find("CreateCard").gameObject.SetActive(false);
             info.Find("CreateBtn").GetComponent<Button>().interactable = false;
             info.Find("CreateSpine").gameObject.SetActive(false);
-            info.Find("HaveNum").gameObject.SetActive(false);
-            info.Find("Name/HeroName").gameObject.SetActive(true);
-            info.Find("FrameImage/TierRibbon").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["ribbon_hero"];
+            info.Find("FrameImage/TierRibbon").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["ribbon_hero"];   
         }
         else {
             info.Find("Name/HeroName").gameObject.SetActive(false);
