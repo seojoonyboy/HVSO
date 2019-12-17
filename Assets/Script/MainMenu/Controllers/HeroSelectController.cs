@@ -126,8 +126,8 @@ public class HeroSelectController : MonoBehaviour
         transform.Find("InnerCanvas/HeroInfo/ClassBtn/UnSelected").gameObject.SetActive(false);
         transform.Find("InnerCanvas/HeroInfo/SkillWindow").gameObject.SetActive(false);
         transform.Find("InnerCanvas/HeroInfo/SkillBtn/UnSelected").gameObject.SetActive(true);
-        transform.Find("InnerCanvas/HeroInfo/AbililityWindow").gameObject.SetActive(false);
-        transform.Find("InnerCanvas/HeroInfo/AbillityBtn/UnSelected").gameObject.SetActive(true);
+        transform.Find("InnerCanvas/HeroInfo/AbilityWindow").gameObject.SetActive(false);
+        transform.Find("InnerCanvas/HeroInfo/AbilityBtn/UnSelected").gameObject.SetActive(true);
         
 
     }
@@ -137,8 +137,8 @@ public class HeroSelectController : MonoBehaviour
         transform.Find("InnerCanvas/HeroInfo/ClassBtn/UnSelected").gameObject.SetActive(true);
         transform.Find("InnerCanvas/HeroInfo/SkillWindow").gameObject.SetActive(true);
         transform.Find("InnerCanvas/HeroInfo/SkillBtn/UnSelected").gameObject.SetActive(false);
-        transform.Find("InnerCanvas/HeroInfo/AbililityWindow").gameObject.SetActive(false);
-        transform.Find("InnerCanvas/HeroInfo/AbillityBtn/UnSelected").gameObject.SetActive(true);
+        transform.Find("InnerCanvas/HeroInfo/AbilityWindow").gameObject.SetActive(false);
+        transform.Find("InnerCanvas/HeroInfo/AbilityBtn/UnSelected").gameObject.SetActive(true);
     }
 
     public void OpenAbillityInfo() {
@@ -146,8 +146,8 @@ public class HeroSelectController : MonoBehaviour
         transform.Find("InnerCanvas/HeroInfo/ClassBtn/UnSelected").gameObject.SetActive(true);
         transform.Find("InnerCanvas/HeroInfo/SkillWindow").gameObject.SetActive(false);
         transform.Find("InnerCanvas/HeroInfo/SkillBtn/UnSelected").gameObject.SetActive(true);
-        transform.Find("InnerCanvas/HeroInfo/AbililityWindow").gameObject.SetActive(true);
-        transform.Find("InnerCanvas/HeroInfo/AbillityBtn/UnSelected").gameObject.SetActive(false);
+        transform.Find("InnerCanvas/HeroInfo/AbilityWindow").gameObject.SetActive(true);
+        transform.Find("InnerCanvas/HeroInfo/AbilityBtn/UnSelected").gameObject.SetActive(false);
     }
 
 
