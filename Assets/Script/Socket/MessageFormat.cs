@@ -31,7 +31,18 @@ namespace SocketFormat {
         public Reward reward;
         public AccountManager.LeagueInfo leagueInfo;
         public int pointUp;
+        public LevelUp lvUp;
     }
+    public class LevelUp {
+        public int lv;
+        public Dictionary<int, LevelReward> rewards;
+    }
+
+    public class LevelReward {
+        public string kind;
+        public int amount;
+    }
+
 
     public class Reward {
         public int supply;

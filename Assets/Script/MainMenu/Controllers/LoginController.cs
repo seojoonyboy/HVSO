@@ -11,7 +11,8 @@ public class LoginController : MonoBehaviour {
     GameObject loadingModal;
     [SerializeField] GameObject logo, textImage;
     [SerializeField] Button loginBtn;
-    [SerializeField] GameObject skipbuttons;
+    [SerializeField] GameObject skipbuttons, mmrchange;
+    [SerializeField] TMPro.TMP_InputField mmrInputField;
 
     public GameObject obbCanvas, sceneStartCanvas, sceneLoginCanvas, LoginTypeSelCanvas, EULACanvas, fbl_loginCanvas;
 
@@ -22,6 +23,7 @@ public class LoginController : MonoBehaviour {
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, OnRequestUserInfoCallback);
 #if UNITY_EDITOR
         skipbuttons.SetActive(true);
+        mmrchange.SetActive(true);
 #endif
     }
 
@@ -135,5 +137,17 @@ public class LoginController : MonoBehaviour {
             accountManager.SkipStoryRequest("human", 2);
             accountManager.SkipStoryRequest("orc", 2);
         }
+    }
+
+    public void ChangeMMR() {
+        //Modal.instantiate(mmrInputField.text, Modal.Type.CHECK);
+        int value = 0;
+        int.TryParse(mmrInputField.text, out value);
+
+        if(value == 0) {
+            Modal.instantiate("숫자만 입력 가능합니다.", Modal.Type.CHECK);
+            return;
+        }
+        AccountManager.Instance.RequestChangeMMRForTest(value);
     }
 }
