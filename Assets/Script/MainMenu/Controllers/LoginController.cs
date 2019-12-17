@@ -11,6 +11,7 @@ public class LoginController : MonoBehaviour {
     GameObject loadingModal;
     [SerializeField] GameObject logo, textImage;
     [SerializeField] Button loginBtn;
+    [SerializeField] GameObject skipbuttons;
 
     public GameObject obbCanvas, sceneStartCanvas, sceneLoginCanvas, LoginTypeSelCanvas, EULACanvas, fbl_loginCanvas;
 
@@ -19,6 +20,9 @@ public class LoginController : MonoBehaviour {
     private void Awake() {
         AccountManager.Instance.tokenSetFinished += OnTokenSetFinished;
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, OnRequestUserInfoCallback);
+#if UNITY_EDITOR
+        skipbuttons.SetActive(true);
+#endif
     }
 
     private void OnTokenSetFinished() {
@@ -114,5 +118,22 @@ public class LoginController : MonoBehaviour {
 
     private void ReqInTimer() {
         AccountManager.Instance.ReqInTimer(AccountManager.Instance.GetRemainSupplySec());
+    }
+
+    public void SkipStory(int type) {
+        AccountManager accountManager = AccountManager.Instance;
+        if(type == 0) {
+            accountManager.SkipStoryRequest("human", 1);
+        }
+        else if(type == 1) {
+            accountManager.SkipStoryRequest("human", 1);
+            accountManager.SkipStoryRequest("orc", 1);
+        }
+        else if(type == 2) {
+            accountManager.SkipStoryRequest("human", 1);
+            accountManager.SkipStoryRequest("orc", 1);
+            accountManager.SkipStoryRequest("human", 2);
+            accountManager.SkipStoryRequest("orc", 2);
+        }
     }
 }
