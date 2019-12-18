@@ -143,11 +143,6 @@ public class LoginController : MonoBehaviour {
         //Modal.instantiate(mmrInputField.text, Modal.Type.CHECK);
         int value = 0;
         int.TryParse(mmrInputField.text, out value);
-
-        if(value == 0) {
-            Modal.instantiate("숫자만 입력 가능합니다.", Modal.Type.CHECK);
-            return;
-        }
         AccountManager.Instance.RequestChangeMMRForTest(value);
     }
 }

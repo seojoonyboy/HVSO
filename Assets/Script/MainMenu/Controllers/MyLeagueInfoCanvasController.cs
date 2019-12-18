@@ -72,6 +72,8 @@ public class MyLeagueInfoCanvasController : MonoBehaviour {
 
     private void LeagueInfoLoaded(Enum Event_Type, Component Sender, object Param) {
         newLeagueInfo = accountManager.scriptable_leagueData.leagueInfo;
+        prevLeagueInfo = accountManager.scriptable_leagueData.prevLeagueInfo;
+
         StartCoroutine(ShowLeagueInfoChange());
     }
 
@@ -87,26 +89,131 @@ public class MyLeagueInfoCanvasController : MonoBehaviour {
     }
 
     IEnumerator MMRChangeProceed() {
-        yield return 0;
-        currentMMRValue.text = newLeagueInfo.ratingPoint.ToString();
-        currentMMRIndicator.text = newLeagueInfo.ratingPoint.ToString();
-        mmrName.text = newLeagueInfo.rankDetail.minorRankName;
-        MMRDownStandardValue.text = newLeagueInfo.rankDetail.pointOverThen.ToString();
-        MMRUpStandardValue.text = newLeagueInfo.rankDetail.pointLessThen.ToString();
+        currentMMRValue.text = prevLeagueInfo.ratingPoint.ToString();
+        currentMMRIndicator.text = prevLeagueInfo.ratingPoint.ToString();
+        mmrName.text = prevLeagueInfo.rankDetail.minorRankName;
+        MMRDownStandardValue.text = prevLeagueInfo.rankDetail.pointOverThen.ToString();
+        MMRUpStandardValue.text = prevLeagueInfo.rankDetail.pointLessThen.ToString();
 
-        int pointOverThen = newLeagueInfo.rankDetail.pointOverThen;
-        int pointLessThen = newLeagueInfo.rankDetail.pointLessThen;
+        int pointOverThen = prevLeagueInfo.rankDetail.pointOverThen; //등급 범위 최솟값
+        int pointLessThen = prevLeagueInfo.rankDetail.pointLessThen; //등급 범위 최댓값
         prevMaxMMRSlider.maxValue = pointLessThen - pointOverThen;
         currentMMRSlider.maxValue = pointLessThen - pointOverThen;
 
-        int ratingPointTop = newLeagueInfo.ratingPointTop ?? default(int);
+        int ratingPointTop = prevLeagueInfo.ratingPointTop ?? default(int);
         prevMaxMMRSlider.value = ratingPointTop;
-        currentMMRSlider.value = newLeagueInfo.ratingPoint - pointOverThen;
+        currentMMRSlider.value = prevLeagueInfo.ratingPoint - pointOverThen;
 
-        rankIcon.sprite = accountManager.resource.rankIcons[newLeagueInfo.rankDetail.minorRankName];
+        rankIcon.sprite = accountManager.resource.rankIcons[prevLeagueInfo.rankDetail.minorRankName];
+        currentMMRIndicator.text = prevLeagueInfo.ratingPoint.ToString();
+
+        //start testcode
+        //int prevRatingPoint = prevLeagueInfo.ratingPoint + 170;
+        //newLeagueInfo.rankDetail.minorRankName = "오합지졸 우두머리";
+        //newLeagueInfo.ratingPoint = prevRatingPoint;
+        //end testcode
+
+        Logger.Log("ratingPoint : " + newLeagueInfo.ratingPoint);
+        Logger.Log("prevRatingPoint : " + prevLeagueInfo.ratingPoint);
+
+        //mmr 변화가 있는지 check
+        bool isMMRChanged = false;
+        isMMRChanged = prevLeagueInfo.ratingPoint != newLeagueInfo.ratingPoint;
+        if (isMMRChanged) {
+            int changeAmount = newLeagueInfo.ratingPoint - prevLeagueInfo.ratingPoint;
+            int prevMMR = prevLeagueInfo.ratingPoint;
+
+            //랭크 변화가 있는지 check
+            bool isTierChanged = false;
+            isTierChanged = prevLeagueInfo.rankDetail.minorRankName != newLeagueInfo.rankDetail.minorRankName;
+
+            //mmr 증가
+            if (changeAmount > 0) {
+                //승급
+                if (isTierChanged) {
+                    Logger.Log("승급 발생");
+                    currentMMRSlider.maxValue = prevLeagueInfo.rankDetail.pointLessThen - prevLeagueInfo.rankDetail.pointOverThen;
+                    yield return ProceedNewMMRSlider(
+                        prevMMR - prevLeagueInfo.rankDetail.pointOverThen,
+                        (int)currentMMRSlider.maxValue,
+                        prevLeagueInfo.rankDetail.pointOverThen);
+
+                    MMRDownStandardValue.text = newLeagueInfo.rankDetail.pointOverThen.ToString();
+                    MMRUpStandardValue.text = newLeagueInfo.rankDetail.pointLessThen.ToString();
+                    mmrName.text = newLeagueInfo.rankDetail.minorRankName;
+                    rankIcon.sprite = accountManager.resource.rankIcons[newLeagueInfo.rankDetail.minorRankName];
+
+                    currentMMRSlider.maxValue = newLeagueInfo.rankDetail.pointLessThen - newLeagueInfo.rankDetail.pointOverThen;
+                    yield return ProceedNewMMRSlider(
+                        newLeagueInfo.rankDetail.pointOverThen, 
+                        newLeagueInfo.ratingPoint - newLeagueInfo.rankDetail.pointOverThen,
+                        newLeagueInfo.rankDetail.pointOverThen);
+                }
+                else {
+                    Logger.Log("MMR 증가");
+                    currentMMRSlider.maxValue = newLeagueInfo.rankDetail.pointLessThen - newLeagueInfo.rankDetail.pointOverThen;
+                    yield return ProceedNewMMRSlider(
+                        prevLeagueInfo.ratingPoint - prevLeagueInfo.rankDetail.pointOverThen,
+                        newLeagueInfo.ratingPoint - newLeagueInfo.rankDetail.pointOverThen,
+                        newLeagueInfo.rankDetail.pointOverThen);
+                }
+            }
+            //mmr 감소
+            else if(changeAmount < 0) {
+                //강등
+                if (isTierChanged) {
+                    Logger.Log("강등 발생");
+                    currentMMRSlider.maxValue = prevLeagueInfo.rankDetail.pointLessThen - prevLeagueInfo.rankDetail.pointOverThen;
+                    yield return ProceedNewMMRSlider(
+                        prevLeagueInfo.ratingPoint - prevLeagueInfo.rankDetail.pointOverThen,
+                        prevLeagueInfo.rankDetail.pointOverThen - prevLeagueInfo.rankDetail.pointOverThen,
+                        prevLeagueInfo.rankDetail.pointOverThen);
+
+                    MMRDownStandardValue.text = newLeagueInfo.rankDetail.pointOverThen.ToString();
+                    MMRUpStandardValue.text = newLeagueInfo.rankDetail.pointLessThen.ToString();
+                    mmrName.text = newLeagueInfo.rankDetail.minorRankName;
+                    rankIcon.sprite = accountManager.resource.rankIcons[newLeagueInfo.rankDetail.minorRankName];
+
+                    currentMMRSlider.maxValue = newLeagueInfo.rankDetail.pointLessThen - newLeagueInfo.rankDetail.pointOverThen;
+                    yield return ProceedNewMMRSlider(
+                        newLeagueInfo.rankDetail.pointLessThen,
+                        newLeagueInfo.ratingPoint - newLeagueInfo.rankDetail.pointOverThen,
+                        newLeagueInfo.rankDetail.pointOverThen);
+                }
+                else {
+                    Logger.Log("MMR 감소");
+                    currentMMRSlider.maxValue = newLeagueInfo.rankDetail.pointLessThen - newLeagueInfo.rankDetail.pointOverThen;
+                    yield return ProceedNewMMRSlider(
+                        newLeagueInfo.rankDetail.pointLessThen,
+                        newLeagueInfo.ratingPoint - newLeagueInfo.rankDetail.pointOverThen,
+                        newLeagueInfo.rankDetail.pointOverThen);
+                }
+            }
+        }
     }
 
     IEnumerator MakeLeaderBoardList() {
+        yield return 0;
+    }
+
+    IEnumerator ProceedNewMMRSlider(int from, int to, int offset) {
+        currentMMRSlider.value = from;
+        if (from < to) {
+            while(from <= to) {
+                yield return new WaitForSeconds(0.01f);
+                currentMMRIndicator.text = (currentMMRSlider.value + offset).ToString();
+                currentMMRSlider.value += 1;
+                from += 1;
+            }
+        }
+        else {
+            while (from >= to) {
+                yield return new WaitForSeconds(0.01f);
+                currentMMRIndicator.text = (currentMMRSlider.value + offset).ToString();
+                currentMMRSlider.value -= 1;
+                from-= 1;
+            }
+        }
         yield return 0;
     }
 
