@@ -30,11 +30,11 @@ public class MailBoxManager : MonoBehaviour
         HUDController.SetBackButton(() => { 
             CloseMailBox();
             HUDController.SetHeader(HUDController.Type.SHOW_USER_INFO);
-            if(quest != null) {
-                quest
+            if(tutoQuest != null) {
+                tutoQuest.quest
                     .AddSpinetoButtonAndRemoveClick(
-                        quest.manager.tutorialSerializeList.backButton, 
-                        quest.BreakCardDictionaryTab
+                        tutoQuest.quest.manager.tutorialSerializeList.backButton, 
+                        tutoQuest.quest.BreakCardDictionaryTab
                     );
             }
         });
@@ -50,20 +50,28 @@ public class MailBoxManager : MonoBehaviour
         EscapeKeyController.escapeKeyCtrl.AddEscape(CloseMailBox);
     }
 
-    public Quest.QuestContentController quest;
-
-    public void QuestSet(Quest.QuestContentController quest) {
-        this.quest = quest;
+    public TutorialQuest tutoQuest;
+    public class TutorialQuest {
+        public Quest.QuestContentController quest;
+        public Button openBtn;
+        public Button receiveBtn;
     }
 
-    private void TutoQuest() {
-        if(quest == null) return;
-        quest.MailOpen();
+    private void TutoQuest(Button openBtn, Button receiveBtn) {
+        if(tutoQuest.quest == null) return;
+        if(tutoQuest.openBtn != null) {
+            tutoQuest.quest.ResetMailOpen(tutoQuest.openBtn);
+        }
+        if(tutoQuest.receiveBtn != null) {
+            tutoQuest.receiveBtn.enabled = true;
+        }
+        tutoQuest.openBtn = openBtn;
+        tutoQuest.receiveBtn = receiveBtn;
+        tutoQuest.quest.MailOpen();
     }
 
     public void SetMailBox() {
         InitMailBox();
-        TutoQuest();
         int count = 0;
         foreach(dataModules.Mail mail in AccountManager.Instance.mailList) {
             Transform slot = mailListParent.GetChild(count);
@@ -89,6 +97,7 @@ public class MailBoxManager : MonoBehaviour
                 if(AccountManager.Instance.resource.rewardIcon.ContainsKey(item.kind))
                     slot.Find("RewardList").GetChild(itemCount).GetChild(0).GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon[item.kind];
                 slot.Find("RewardList").GetChild(itemCount).GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = item.amount.ToString();
+                if(tutoQuest != null && item.amount >= 200) TutoQuest(slot.Find("OpenMailBtn").GetComponent<Button>(), slot.Find("RecieveBtn").GetComponent<Button>());
                 slot.Find("RewardList").GetChild(itemCount).gameObject.SetActive(true);
                 itemCount++;
             }

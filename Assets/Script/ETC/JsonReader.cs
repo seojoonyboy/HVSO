@@ -49,6 +49,7 @@ namespace dataModules {
 
     public class HeroInventory {
         public string[] heroClasses;
+        public string[] traitText;
         public string id;
         public string camp;
         public string name;
