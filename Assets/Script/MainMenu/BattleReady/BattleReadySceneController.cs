@@ -53,6 +53,7 @@ public class BattleReadySceneController : MonoBehaviour {
 
     void OnDisable() {
         EscapeKeyController.escapeKeyCtrl.RemoveEscape(OnBackButton);
+        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_INFO_UPDATED, OnLeagueInfoUpdated);
     }
 
     void OnDestroy() {
