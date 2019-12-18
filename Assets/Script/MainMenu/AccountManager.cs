@@ -1431,6 +1431,38 @@ public partial class AccountManager {
             "리그 보상 요청...");
     }
 
+    public List<RankTableRow> rankTable = new List<RankTableRow>();
+
+    public void RequestRankTable() {
+        StringBuilder url = new StringBuilder();
+        string base_url = networkManager.baseUrl;
+
+        url
+            .Append(base_url)
+            .Append("api/info/rank_table");
+
+        HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
+        request.MethodType = HTTPMethods.Get;
+        request.AddHeader("authorization", TokenFormat);
+
+        networkManager.Request(
+            request, (req, res) => {
+                var sceneStartController = GetComponent<SceneStartController>();
+                if (res.StatusCode == 200 || res.StatusCode == 304) {
+                    rankTable = dataModules.JsonReader.Read<List<RankTableRow>>(res.DataAsText);
+
+                    NoneIngameSceneEventHandler
+                        .Instance
+                        .PostNotification(
+                            NoneIngameSceneEventHandler.EVENT_TYPE.API_RANK_TABLE_RECEIVED,
+                            null,
+                            rankTable
+                        );
+                }
+            },
+            "등급 테이블을 불러오는중...");
+    }
+
     private void MakeAreaDict() {
         dicInfo = new DictionaryInfo();
         rankAreas = new Dictionary<string, Area>();
@@ -1464,6 +1496,17 @@ public partial class AccountManager {
             this.Max = Max;
             this.Min = Min;
         }
+    }
+
+    public class RankTableRow {
+        //public RankUpCondition rankUpBattleCount;
+        //public RankUpCondition rankDownBattleCount;
+        public string majorRankName;
+        public string minorRankName;
+        public int? pointOverThen;
+        public int? pointLessThen;
+
+        public int id;
     }
 }
 
