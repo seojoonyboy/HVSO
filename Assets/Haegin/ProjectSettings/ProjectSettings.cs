@@ -16,7 +16,7 @@ namespace Haegin
 		public static bool UseIOSGoogleMobileAds7_24_0_OR_HIGHER = true;
 		public static string oneStoreBase64EncodedPublicKey = "";
 		public static string ZendeskHelpAPPageID = "360033798014";
-		public static string AdMobAppId = "ca-app-pub-8910195275590924~5903100277";
-		public static string iOSAdMobAppId = "ca-app-pub-8910195275590924~5903100277";
+		public static string AdMobAppId = "ca-app-pub-3940256099942544/5224354917";
+		public static string iOSAdMobAppId = "ca-app-pub-3940256099942544/1712485313";
 	}
 }

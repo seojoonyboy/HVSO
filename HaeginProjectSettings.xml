@@ -23,8 +23,8 @@
 	<GoogleBase64EncodedPublicKey>MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAhyY/WIjzgbHjmJpKtvc/0G/9bm8GS6/+Xpg78KHaY43jobSfzktzvI8wgQntmpVyDS79/1EPuBjciySmvlaFuDUii4LQeb6ohOwesf3wcwhX5OjYiS+PJCher4wxXwF/1LWOg+bR+g8x+5OSREvjT0GCsDt+oEFmAUdFSC23tcqvqF2J+1HeMKDPONmElSQymiTbg+f3rBJ5d9/lpWGtZMIvZB3HlHNsaxTPQmFoT1sBQ8vmEKBS4prx4vN2uf4T/WRl4S9JQD0No0n+7AgS5nRkjfFXMjbeU/bTioWc3C52SaZeld8meTza0TQ0fCekVZSgKnU3q7hUxUV9dhRgzwIDAQAB</GoogleBase64EncodedPublicKey>
 	<URLScheme>hgmodsample</URLScheme>
 	<FirebaseDynamicLink>hgmodsample.page.link</FirebaseDynamicLink>
-	<AdMobAppId>ca-app-pub-8910195275590924~5903100277</AdMobAppId>
-	<iOSAdMobAppId>ca-app-pub-8910195275590924~5903100277</iOSAdMobAppId>
+	<AdMobAppId>ca-app-pub-3940256099942544/5224354917</AdMobAppId>
+	<iOSAdMobAppId>ca-app-pub-3940256099942544/1712485313</iOSAdMobAppId>
 	<UseAppsFlyer>False</UseAppsFlyer>
 	<SkipPermissionsDialog>True</SkipPermissionsDialog>
 	<UseIOSGoogleMobileAds7_24_0_OR_HIGHER>True</UseIOSGoogleMobileAds7_24_0_OR_HIGHER>
