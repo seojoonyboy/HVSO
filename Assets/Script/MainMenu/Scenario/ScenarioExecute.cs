@@ -66,12 +66,17 @@ public class NPC_Print_message : ScenarioExecute {
             scenarioMask.talkingText.transform.position = scenarioMask.textUP.transform.position;
 
         scenarioMask.talkingText.transform.Find("Panel").gameObject.SetActive(true);
-        if (args.Count > 3 && args[3] == "maskOff")
+        if (args.Count > 3 && args[3].Contains("maskOff"))
             scenarioMask.talkingText.transform.Find("Panel").gameObject.SetActive(false);
 
-        
-        scenarioMask.talkingText.transform.Find("CharacterImage/Player").gameObject.SetActive(isPlayer);
-        scenarioMask.talkingText.transform.Find("CharacterImage/Enemy").gameObject.SetActive(!isPlayer);
+        if (args.Count > 3 && args[3].Contains("characterOFF")) {
+            scenarioMask.talkingText.transform.Find("CharacterImage/Player").gameObject.SetActive(false);
+            scenarioMask.talkingText.transform.Find("CharacterImage/Enemy").gameObject.SetActive(false);
+        }
+        else {
+            scenarioMask.talkingText.transform.Find("CharacterImage/Player").gameObject.SetActive(isPlayer);
+            scenarioMask.talkingText.transform.Find("CharacterImage/Enemy").gameObject.SetActive(!isPlayer);
+        }            
         scenarioMask.talkingText.transform.Find("NameObject/PlayerName").gameObject.SetActive(isPlayer);
         scenarioMask.talkingText.transform.Find("NameObject/EnemyName").gameObject.SetActive(!isPlayer);
         
@@ -87,6 +92,10 @@ public class NPC_Print_message : ScenarioExecute {
 
             scenarioMask.talkingText.transform.Find("NameObject/EnemyName").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.resource.ScenarioUnitResurce[args[0]].name;
         }
+
+        
+
+
         scenarioMask.talkingText.GetComponent<TextTyping>().StartTyping(args[1], handler);        
         scenarioMask.talkingText.transform.Find("StopTypingTrigger").gameObject.SetActive(true);
     }
@@ -1530,7 +1539,7 @@ public class Focus_Skill_Icon : ScenarioExecute {
         Sprite image = AccountManager.Instance.resource.skillIcons[cardData.attackTypes[0]];
         scenarioMask.GetMaskHighlight(scenarioMask.targetObject["attributeIcon"], true);
         scenarioMask.MaskTillON();
-        clm.OpenClassDescModal(cardData.attackTypes[0], image, scenarioMask.GetInfoWindow().transform.Find("Skill&BuffRow1/Skill1"));
+        clm.OpenClassDescModal(cardData.attackTypes[0], image, scenarioMask.targetObject["skillHyper"].transform);
         handler.isDone = true;
     }
 
@@ -1845,6 +1854,19 @@ public class Enable_UnitInfo_Window : ScenarioExecute {
     }
 }
 
+public class Show_Info_Modal : ScenarioExecute {
+    public Show_Info_Modal() : base() { }
+
+    public override void Execute() {
+        if (args[0] == "block")
+            scenarioGameManagment.blockInfoModal = true;
+        else
+            scenarioGameManagment.blockInfoModal = false;
+        handler.isDone = true;
+    }
+
+
+}
 
 
 

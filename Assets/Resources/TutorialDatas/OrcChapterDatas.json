@@ -26,6 +26,12 @@
                         ]
                     },
                     {
+                        "name": "Show_Info_Modal",
+                        "args": [
+                            "block"
+                        ]
+                    },
+                    {
                         "name": "Wait_Turn",
                         "args": [
                             "MULIGAN"
@@ -662,6 +668,12 @@
                         ]
                     },
                     {
+                        "name": "Show_Info_Modal",
+                        "args": [
+                            "block"
+                        ]
+                    },
+                    {
                         "name": "Wait_Turn",
                         "args": [
                             "MULIGAN"
@@ -995,6 +1007,12 @@
                         "name": "Wait_click",
                         "args": [
                             "screen"
+                        ]
+                    },
+                    {
+                        "name": "Show_Info_Modal",
+                        "args": [
+                            "open"
                         ]
                     },
                     {

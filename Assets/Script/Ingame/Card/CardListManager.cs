@@ -339,6 +339,7 @@ public class CardListManager : MonoBehaviour
 
     public void OpenClassDescModal(string className, Sprite image, Transform modalTransform = null) {
         if (Input.touchCount > 1) return;
+        if (ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.blockInfoModal == true) return;
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         classDescModal.gameObject.SetActive(true);
         classDescModal.position = (modalTransform != null) ? new Vector3(modalTransform.position.x, modalTransform.position.y + 2f, 0f) : new Vector3(mousePos.x, mousePos.y + 2.3f, 0);
@@ -358,7 +359,7 @@ public class CardListManager : MonoBehaviour
     
 
     public virtual void OpenUnitInfoWindow(Vector3 inputPos) {
-        if (ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.infoWindow == false) return;
+        if (ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.blockInfoModal == true) return;
 
         if (!PlayMangement.instance.infoOn && Input.GetMouseButtonDown(0)) {
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(inputPos);

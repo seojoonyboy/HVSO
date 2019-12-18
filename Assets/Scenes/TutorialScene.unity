@@ -9922,6 +9922,7 @@ RectTransform:
   - {fileID: 1415798619}
   - {fileID: 493798791}
   - {fileID: 736269464}
+  - {fileID: 1082437922}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -11846,8 +11847,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -16, y: 390}
-  m_SizeDelta: {x: 400, y: 400}
+  m_AnchoredPosition: {x: -51.68, y: -96.1}
+  m_SizeDelta: {x: 80.55, y: 66.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &493798792
 MonoBehaviour:
@@ -12094,6 +12095,7 @@ MonoBehaviour:
     - {fileID: 1458766942}
     - {fileID: 493798790}
     - {fileID: 736269463}
+    - {fileID: 1082437921}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -12112,7 +12114,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 17
+      Data: 18
     - Name: 
       Entry: 7
       Data: 
@@ -12314,6 +12316,18 @@ MonoBehaviour:
     - Name: $v
       Entry: 10
       Data: 15
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: skillHyper
+    - Name: $v
+      Entry: 10
+      Data: 16
     - Name: 
       Entry: 8
       Data: 
@@ -17660,7 +17674,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -131, y: -324}
+  m_AnchoredPosition: {x: -410, y: -17}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &736269465
@@ -25035,6 +25049,50 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1081540045}
+  m_CullTransparentMesh: 0
+--- !u!1 &1082437921
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1082437922}
+  - component: {fileID: 1082437923}
+  m_Layer: 5
+  m_Name: hyperLinkPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &1082437922
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1082437921}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 406770081}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -36.000008, y: -98.099976}
+  m_SizeDelta: {x: 111.9, y: 62.2}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &1082437923
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1082437921}
   m_CullTransparentMesh: 0
 --- !u!1 &1083531453
 GameObject:
@@ -62479,6 +62537,7 @@ MonoBehaviour:
   shieldTargetLine: {fileID: 0}
   skipButton: {fileID: 316986704}
   textCanvas: {fileID: 826299585}
+  blockInfoModal: 0
 --- !u!114 &8279262150021554597
 MonoBehaviour:
   m_ObjectHideFlags: 0
