@@ -276,7 +276,7 @@ public class GameResultManager : MonoBehaviour {
                             slotSprite.sprite = AccountManager.Instance.resource.rewardIcon["supplyBox"];
                             break;
                     }
-                    amoutObject.text = "x" + " " + levelData.rewards[i].amount.ToString();
+                    amoutObject.text = "x" + levelData.rewards[i].amount.ToString();
                 }
             }
 
