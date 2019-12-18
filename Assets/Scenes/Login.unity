@@ -5070,34 +5070,34 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 94ecd76784844eb4cb419d995eb5bbe4, type: 3}
     - {fileID: 21300000, guid: a7668c2868ba5f94fb2b10f0da6950c9, type: 3}
     - {fileID: 21300000, guid: 4674ea9187b6eb4478e1860a637ca175, type: 3}
-    - {fileID: 21300000, guid: 6f99a725de684824084dca6f8f61b39c, type: 3}
+    - {fileID: 21300000, guid: 126135a1a7fe0d148805c5f55248f15a, type: 3}
     - {fileID: 21300000, guid: 88fe1ebed96260b449b6327e6716d8dd, type: 3}
     - {fileID: 21300000, guid: 572928332adba9e4189687b68c16769e, type: 3}
     - {fileID: 21300000, guid: dba8ee2b3a9a98b4b80862ec1884fd83, type: 3}
     - {fileID: 21300000, guid: 9555c56d43f503445a48193d01a28202, type: 3}
     - {fileID: 21300000, guid: b8ffdef7c477e504c95e673361f1ebb3, type: 3}
-    - {fileID: 21300000, guid: d3647aba5789e5a4abfa109893a2a1d9, type: 3}
-    - {fileID: 21300000, guid: 91d48ec25e3c08749bf29c8da0b8d6ca, type: 3}
-    - {fileID: 21300000, guid: 534051e75a3feaf45a0523fcfa96e602, type: 3}
-    - {fileID: 21300000, guid: 202c1a617f916cb41a5315b736999fda, type: 3}
-    - {fileID: 21300000, guid: 6998e3ccff3cd594d9124b940addb774, type: 3}
-    - {fileID: 21300000, guid: 2db0f04b2d63fcd45bfd64ddb2227250, type: 3}
-    - {fileID: 21300000, guid: b63fb70ab658d9e4d850a95071d03753, type: 3}
-    - {fileID: 21300000, guid: 462d7b56abf93c64c87bab2aae571961, type: 3}
-    - {fileID: 21300000, guid: a961032ef380cf6488e41682d6913cfd, type: 3}
+    - {fileID: 21300000, guid: e73a6253b57e3b045986a4a20409d39d, type: 3}
+    - {fileID: 21300000, guid: 338986b0930c04c46b7a27bb2e4835d6, type: 3}
+    - {fileID: 21300000, guid: e312c19364d5b6340b0e6fff6c3fc081, type: 3}
+    - {fileID: 21300000, guid: 9ab7b4919a99ead4d85bbca65b469cf6, type: 3}
+    - {fileID: 21300000, guid: 60eff88541510be4aa5ac32594a236d5, type: 3}
+    - {fileID: 21300000, guid: 04a53553cfe2c934a8813da9947ab0fe, type: 3}
+    - {fileID: 21300000, guid: 7205c24e5b5e4884597373e3cefe7e27, type: 3}
+    - {fileID: 21300000, guid: 123723dbf34591842bc4ff9b1579eba3, type: 3}
+    - {fileID: 21300000, guid: b3fd1518797df6f46a0ce9d263eae2b2, type: 3}
     - {fileID: 21300000, guid: 61a1e9b28cf590d46b946115d139f7f8, type: 3}
     - {fileID: 21300000, guid: c92f80405be5c82498cfd966aadf81e2, type: 3}
     - {fileID: 21300000, guid: dc3e634e94ef86246aafaaf88994c209, type: 3}
     - {fileID: 21300000, guid: c3604d789f8f4c54ea1c6395a4a52ca6, type: 3}
     - {fileID: 21300000, guid: b9972fbb9bc4bab40b6798bac3cf810a, type: 3}
-    - {fileID: 21300000, guid: 9640a508147030940905d0db05930602, type: 3}
-    - {fileID: 21300000, guid: 0de4e3eac4cdf8145be3c90b612c3854, type: 3}
+    - {fileID: 21300000, guid: e53ee8e8aeb24174fbd659b6a8c78935, type: 3}
+    - {fileID: 21300000, guid: 298ebebe84dff774485cc76a6da0b8d4, type: 3}
     - {fileID: 21300000, guid: 410905fc29a627d4a9ed21e827b1d80f, type: 3}
     - {fileID: 21300000, guid: 18d4eb33eb64b2c498fb39f7b37e00c3, type: 3}
     - {fileID: 21300000, guid: 114b0c61ba9f47a40a65cf2499a548c6, type: 3}
     - {fileID: 21300000, guid: 08ab548964785dd48a2928f3912f416d, type: 3}
-    - {fileID: 21300000, guid: 035f667f47f5bda42bb4b1667dffb6ec, type: 3}
-    - {fileID: 21300000, guid: e84056b5f40d83546bb04eeefb5aa61e, type: 3}
+    - {fileID: 21300000, guid: d5fa495ae037f8e4387dc14c6b99410e, type: 3}
+    - {fileID: 21300000, guid: 4455f73ecf9489b47a5c248b949c4e5d, type: 3}
     - {fileID: 21300000, guid: 681b550c62148e04f825fc3622591fb7, type: 3}
     - {fileID: 21300000, guid: 254b178c06e3b6141a7736edc0a27d01, type: 3}
     - {fileID: 21300000, guid: 2116fe7c5c9d7eb4c8ca58d085a5f087, type: 3}
@@ -5107,15 +5107,15 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 10062c9c7c631dc49a993c7070c2aa5f, type: 3}
     - {fileID: 21300000, guid: 11fadf527a7987d40918c6bfc31922bf, type: 3}
     - {fileID: 21300000, guid: 664f428be9e06d74bbe1f1fe52fe39e4, type: 3}
-    - {fileID: 21300000, guid: 15801389fc689444e98c9d923030a45c, type: 3}
+    - {fileID: 21300000, guid: 7cbcd842458f3054bb913f24694f981a, type: 3}
     - {fileID: 21300000, guid: 11a5e8fe499796749b1b93b8316ebd7e, type: 3}
     - {fileID: 21300000, guid: 95dac85f80a18b54db165cdbe6cf3c3b, type: 3}
     - {fileID: 21300000, guid: 2041670ebc86f224f9a792121aa1ba58, type: 3}
-    - {fileID: 21300000, guid: 4c121a98b99c14e4894eb7c85c7829e0, type: 3}
-    - {fileID: 21300000, guid: be4a06762d233f147ac2bc7045b22908, type: 3}
+    - {fileID: 21300000, guid: a803dd3c5c96a92458640cce6a1dbeef, type: 3}
+    - {fileID: 21300000, guid: 72178c1fc3d8189409db6d971d012249, type: 3}
     - {fileID: 21300000, guid: 4f86acda91d4a1e47b6b964dafe349c0, type: 3}
     - {fileID: 21300000, guid: b7c82e9d62dace94088f7a2a1b84819c, type: 3}
-    - {fileID: 21300000, guid: 41ff7bd06b0db6444be382a8257f9de0, type: 3}
+    - {fileID: 21300000, guid: 1c78a32e3d0e9dc4b9a93a481cce4b75, type: 3}
     - {fileID: 21300000, guid: 0f90818a698f5fd4995e00a7675242c6, type: 3}
     - {fileID: 21300000, guid: d00bb220292134c4bacd5b0063c2b425, type: 3}
     - {fileID: 21300000, guid: 6401cb24ca9a3084dad04a512c49c7e9, type: 3}
@@ -5194,17 +5194,17 @@ MonoBehaviour:
     - {fileID: 4982694264928277531, guid: 6b05c8e40d4d49941a11a7ae173fbe28, type: 3}
     - {fileID: 2617440342755643518, guid: 70c2aa1bda4726f47b2753f744123570, type: 3}
     - {fileID: 7557904670309727613, guid: 2692001007029e44a926152e81131f87, type: 3}
-    - {fileID: 21300000, guid: a2c8d290ac98aed4f9f97ca1d809d1ba, type: 3}
-    - {fileID: 21300000, guid: 01237c9dc9c54994e95c78c475b57742, type: 3}
-    - {fileID: 21300000, guid: 808e2e5133abdcd48bf610d4f18b0922, type: 3}
-    - {fileID: 21300000, guid: 48116390a3e7cfc44a1e4110f67c78a9, type: 3}
-    - {fileID: 21300000, guid: 9fee1a3a0f0327e47baffc55727ac45b, type: 3}
-    - {fileID: 21300000, guid: d565a15a02feeaf4db0673ef5eff0f32, type: 3}
-    - {fileID: 21300000, guid: 9c1dfa177b179bf47a423c0c255f3a64, type: 3}
-    - {fileID: 21300000, guid: 5d25502f32e25a846bb42902b64c229c, type: 3}
-    - {fileID: 21300000, guid: 8cd97768e7da7f843abc8eb1834031d9, type: 3}
-    - {fileID: 21300000, guid: fe9ff34cd10d81d4ea2c96b13aea3a5c, type: 3}
-    - {fileID: 21300000, guid: 0f555026d861fd44ca875451e2a86519, type: 3}
+    - {fileID: 21300000, guid: e5b7d6d129776ee459ebb3761de36acd, type: 3}
+    - {fileID: 21300000, guid: 6132ceb7464b76349a668a66a20d36d9, type: 3}
+    - {fileID: 21300000, guid: 30a490fb3934351469a7eeb0a66c7f4c, type: 3}
+    - {fileID: 21300000, guid: 1cfe9bad31cf55444b17457eba4c63b3, type: 3}
+    - {fileID: 21300000, guid: 32c486a1562470a43844dd13e0b3e342, type: 3}
+    - {fileID: 21300000, guid: a53df609addb7fb46a318933865ded40, type: 3}
+    - {fileID: 21300000, guid: b2603fda77c4816429fcf7284bf73505, type: 3}
+    - {fileID: 21300000, guid: 21adb1d58a82a9b4c9a5d9718d84c11c, type: 3}
+    - {fileID: 21300000, guid: 0c682f78b90b0df4ca916c234e382cc5, type: 3}
+    - {fileID: 21300000, guid: cac7764df89225e4e94cfc1962af8e93, type: 3}
+    - {fileID: 21300000, guid: aa406a717b3b0934d803001efc316c5e, type: 3}
     - {fileID: 3856163850324625839, guid: 9385d2fe74077bc47850c371850b9947, type: 3}
     - {fileID: 5295120286612665779, guid: a8fff3bb27589304c982f7f7909b3ece, type: 3}
     - {fileID: 5155577732532556144, guid: 9ef289f95be76604d99c978f161fa917, type: 3}
@@ -5377,6 +5377,9 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 43eefd8d53336c74d97785a7f8dc9312, type: 3}
     - {fileID: 21300000, guid: 8d611e6e79611214d9e2f436fd190ea3, type: 3}
     - {fileID: 21300000, guid: 78817aece1ebac94092912bd8170c7fa, type: 3}
+    - {fileID: 21300000, guid: 5ea355a3640129e42bbf89d989e027e2, type: 3}
+    - {fileID: 21300000, guid: da74e348c5c5dcd46ac1fbbc960a0cc5, type: 3}
+    - {fileID: 21300000, guid: 7adc67005b6e0dc4594a3a04d1a44742, type: 3}
     - {fileID: 21300000, guid: e3bc5d027da036242a481b2cbabdbb92, type: 3}
     - {fileID: 21300000, guid: b165af79aec57754e976a8447d9d0843, type: 3}
     - {fileID: 21300000, guid: 05774e2810abc914ebbf897848a33423, type: 3}
@@ -7827,7 +7830,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 23
+      Data: 14
     - Name: 
       Entry: 7
       Data: 
@@ -7953,66 +7956,6 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: name_common
-    - Name: $v
-      Entry: 6
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: name_uncommon
-    - Name: $v
-      Entry: 6
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: name_rare
-    - Name: $v
-      Entry: 6
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: name_superrare
-    - Name: $v
-      Entry: 6
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: name_legend
-    - Name: $v
-      Entry: 6
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
       Data: hero_superrare_orc
     - Name: $v
       Entry: 10
@@ -8037,54 +7980,6 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: hero_superrare_human_name
-    - Name: $v
-      Entry: 6
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: hero_superrare_orc_name
-    - Name: $v
-      Entry: 6
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: hero_legend_orc_name
-    - Name: $v
-      Entry: 6
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: hero_legend_orc
-    - Name: $v
-      Entry: 10
-      Data: 147
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
       Data: hero_legend_human
     - Name: $v
       Entry: 10
@@ -8097,10 +7992,10 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: hero_legend_human_name
+      Data: hero_legend_orc
     - Name: $v
-      Entry: 6
-      Data: 
+      Entry: 10
+      Data: 147
     - Name: 
       Entry: 8
       Data: 
@@ -11539,7 +11434,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 15
+      Data: 19
     - Name: 
       Entry: 7
       Data: 
@@ -11715,8 +11610,56 @@ MonoBehaviour:
       Entry: 1
       Data: gold
     - Name: $v
+      Entry: 10
+      Data: 320
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: result_gold
+    - Name: $v
+      Entry: 10
+      Data: 320
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: result_crystal
+    - Name: $v
+      Entry: 10
+      Data: 321
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: result_supplyBox
+    - Name: $v
       Entry: 6
       Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: result_x2Coupon
+    - Name: $v
+      Entry: 10
+      Data: 322
     - Name: 
       Entry: 8
       Data: 
@@ -11748,7 +11691,7 @@ MonoBehaviour:
       Data: "\uBB34\uBA85 \uBCD1\uC0AC"
     - Name: $v
       Entry: 10
-      Data: 320
+      Data: 323
     - Name: 
       Entry: 8
       Data: 
@@ -11760,7 +11703,7 @@ MonoBehaviour:
       Data: "\uC18C\uADDC\uBAA8 \uBB34\uB825\uC9D1\uB2E8"
     - Name: $v
       Entry: 10
-      Data: 321
+      Data: 324
     - Name: 
       Entry: 8
       Data: 
@@ -11772,7 +11715,7 @@ MonoBehaviour:
       Data: "\uC624\uD569\uC9C0\uC878 \uC6B0\uB450\uBA38\uB9AC"
     - Name: $v
       Entry: 10
-      Data: 322
+      Data: 325
     - Name: 
       Entry: 8
       Data: 
@@ -11784,7 +11727,7 @@ MonoBehaviour:
       Data: "\uC790\uACBD\uB2E8 \uB300\uC7A5"
     - Name: $v
       Entry: 10
-      Data: 323
+      Data: 326
     - Name: 
       Entry: 8
       Data: 
@@ -11796,7 +11739,7 @@ MonoBehaviour:
       Data: "\uC9C0\uC5ED \uC9C0\uB3C4\uC790"
     - Name: $v
       Entry: 10
-      Data: 324
+      Data: 327
     - Name: 
       Entry: 8
       Data: 
@@ -11808,7 +11751,7 @@ MonoBehaviour:
       Data: "\uCD08\uAE09 \uC6A9\uBCD1\uB2E8\uC7A5"
     - Name: $v
       Entry: 10
-      Data: 325
+      Data: 328
     - Name: 
       Entry: 8
       Data: 
@@ -11820,7 +11763,7 @@ MonoBehaviour:
       Data: default
     - Name: $v
       Entry: 10
-      Data: 325
+      Data: 328
     - Name: 
       Entry: 8
       Data: 
@@ -11832,7 +11775,7 @@ MonoBehaviour:
       Data: "\uBCA0\uD14C\uB791 \uC6A9\uBCD1\uB2E8\uC7A5"
     - Name: $v
       Entry: 10
-      Data: 326
+      Data: 329
     - Name: 
       Entry: 8
       Data: 
@@ -11844,7 +11787,7 @@ MonoBehaviour:
       Data: "\uCD5C\uC815\uC608 \uC6A9\uBCD1\uB2E8\uC7A5"
     - Name: $v
       Entry: 10
-      Data: 327
+      Data: 330
     - Name: 
       Entry: 8
       Data: 

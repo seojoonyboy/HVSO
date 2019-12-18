@@ -123,7 +123,7 @@ namespace Quest {
             public Button mailReceiveButton;
             public Button openMailButton;
             public MailBoxManager mailBoxManager;
-            public Button mailBackButton;
+            //public Button mailBackButton;
             public MenuLockController menuLockController;
             public HorizontalScrollSnap horizontalScrollSnap;
             public GameObject newCardMenu;

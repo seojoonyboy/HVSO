@@ -121,7 +121,7 @@ public class MenuHeroInfo : MonoBehaviour
     }
 
     public void ClickHeroTierUp() {
-        int cost = accountManager.myHeroInventories[heroId].next_level.manaCrystal;
+        int cost = accountManager.myHeroInventories[heroId].next_level.crystal;
         if (accountManager.userResource.crystal >= cost) {
             transform.Find("HeroLevel/TierUpBtn/UpgradeSpine").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, "animation2", false);
             teirUpModal = Modal.instantiate("마나 수정이 " + cost.ToString() + "개 소모됩니다. 진행 하시겠습니까?", Modal.Type.YESNO, TierUpHero, CancelTierUp);

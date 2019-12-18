@@ -114,10 +114,14 @@ public partial class MenuCardInfo : MonoBehaviour {
         int skillnum = 0;
         if (AccountManager.Instance.resource.infoPortraite.ContainsKey(data.id)) {
             info.Find("FrameImage/UnitPortrait").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoPortraite[data.id];
-            if (!accountManager.cardPackage.data.ContainsKey(data.id))
-                info.Find("FrameImage/UnitPortrait").GetComponent<Image>().color = Color.gray;
-            else
+            if (!accountManager.cardPackage.data.ContainsKey(data.id)) {
+                info.Find("FrameImage/UnitPortrait").GetComponent<Image>().color = new Color(0.3f, 0.3f, 0.3f);
+                info.Find("FrameImage/UnitPortrait/Lock").gameObject.SetActive(true);
+            }
+            else {
                 info.Find("FrameImage/UnitPortrait").GetComponent<Image>().color = Color.white;
+                info.Find("FrameImage/UnitPortrait/Lock").gameObject.SetActive(false);
+            }
         }
         if (data.type == "unit") {
             
@@ -243,12 +247,12 @@ public partial class MenuCardInfo : MonoBehaviour {
                 info.Find("CreateCard/BreakBtn/CrystalGetValue").GetComponent<TMPro.TextMeshProUGUI>().text = "+" + breakCardcost.ToString();
                 if (makeCard) {
                     if (data.rarelity == "common" && accountManager.userResource.crystal > beforeCrystal)
-                        info.Find("CreateCard/Crystal/Value").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userData.manaCrystal.ToString();
+                        info.Find("CreateCard/Crystal/Value").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userData.crystal.ToString();
                     else
                         StartCoroutine(AddCrystalAnimation());
                 }
                 else
-                    info.Find("CreateCard/Crystal/Value").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userData.manaCrystal.ToString();
+                    info.Find("CreateCard/Crystal/Value").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userData.crystal.ToString();
             }
         }
         if (cardCreate)
