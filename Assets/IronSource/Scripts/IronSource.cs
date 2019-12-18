@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System;
@@ -7,7 +7,7 @@ public class IronSource : IronSourceIAgent
 {
 	private IronSourceIAgent _platformAgent ;
 	private static IronSource _instance;
-	private const string UNITY_PLUGIN_VERSION = "6.11.1";
+	private const string UNITY_PLUGIN_VERSION = "6.9.1.1";
 	public const string GENDER_MALE = "male";
 	public const string GENDER_FEMALE = "female";
 	public const string GENDER_UNKNOWN = "unknown";
