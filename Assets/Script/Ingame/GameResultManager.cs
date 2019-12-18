@@ -29,8 +29,12 @@ public class GameResultManager : MonoBehaviour {
     private bool isHuman;
     private string result;
 
+
+    public bool stopNextReward = false;
+
     public UnityEvent EndRewardLoad = new UnityEvent();
     public LeagueData scriptable_leagueData;
+    public 
 
     string battleType;
     private void Awake() {
@@ -225,6 +229,64 @@ public class GameResultManager : MonoBehaviour {
             yield return new WaitForSeconds(0.5f);
             yield return StartCoroutine(GetUserExp(expSlider));
         }
+
+        if (PlayMangement.instance.socketHandler.result.lvUp != null) {
+            stopNextReward = true;
+            PlayMangement.instance.levelCanvas.SetActive(true);
+
+            SocketFormat.LevelUp levelData = PlayMangement.instance.socketHandler.result.lvUp;
+
+            Transform levelCanvas = PlayMangement.instance.levelCanvas.transform;
+
+            Transform levelup = levelCanvas.Find("LevelUP");
+            Transform reward = levelCanvas.Find("Reward");
+            Button confirmBtn = levelCanvas.Find("ConfirmBtn").gameObject.GetComponent<Button>();
+            SkeletonGraphic levelUPEffect = levelup.gameObject.GetComponent<SkeletonGraphic>();
+            UnityEngine.Animation rewardAnimation = reward.gameObject.GetComponent<UnityEngine.Animation>();
+
+            confirmBtn.onClick.AddListener(delegate () { levelCanvas.gameObject.SetActive(false); stopNextReward = false; rewardAnimation.Stop(); });
+
+            if (levelData.rewards.Count == 0)
+                reward.Find("RewardLayout").gameObject.SetActive(false);
+            else {
+                Transform layout = reward.Find("RewardLayout");
+                for (int i = 0; i < levelData.rewards.Count; i++) {
+                    Transform slot = layout.GetChild(i);
+                    Image slotSprite = slot.Find("rewardSprite").gameObject.GetComponent<Image>();
+                    TMPro.TextMeshProUGUI amoutObject = slot.Find("rewardAmount").gameObject.GetComponent<TMPro.TextMeshProUGUI>();
+                    slot.gameObject.SetActive(true);
+                    switch (levelData.rewards[i].kind) {
+                        case "goldFree":
+                            slotSprite.sprite = AccountManager.Instance.resource.rewardIcon["goldFree"];                            
+                            break;
+                        case "manaCrystal":
+                            slotSprite.sprite = AccountManager.Instance.resource.rewardIcon["crystal"];
+                            break;
+                        case "supplyBox":
+                            slotSprite.sprite = AccountManager.Instance.resource.rewardIcon["supplyBox"];
+                            break;
+                        //case "add_deck":
+                        //    break;
+                        default:
+                            slotSprite.sprite = AccountManager.Instance.resource.rewardIcon["supplyBox"];
+                            break;
+                    }
+                    amoutObject.text = "x" + " " + levelData.rewards[i].amount.ToString();
+                }
+            }
+
+
+
+            TrackEntry entry;
+            entry = levelUPEffect.AnimationState.AddAnimation(0, "01.start", false, 0);
+            entry = levelUPEffect.AnimationState.AddAnimation(0, "02.play", true, 0);
+            yield return new WaitForSeconds(levelUPEffect.AnimationState.Data.SkeletonData.FindAnimation("01.start").Duration);
+            if(reward.gameObject.activeSelf == true) {
+                rewardAnimation.Play();
+            }            
+        }
+
+        yield return new WaitUntil(() => stopNextReward == false);
         if (getSupply > 0) {
             yield return new WaitForSeconds(0.5f);
             yield return StartCoroutine(GetUserSupply(playerSup.Find("ExpSlider/Slider").GetComponent<Slider>(), getSupply, additionalSupply));
