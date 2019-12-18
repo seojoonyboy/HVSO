@@ -84,6 +84,8 @@ public class HeroSelectController : MonoBehaviour
 
         Transform classWindow = transform.Find("InnerCanvas/HeroInfo/ClassWindow");
         Transform skillWindow = transform.Find("InnerCanvas/HeroInfo/SkillWindow");
+        Transform abilityWindow = transform.Find("InnerCanvas/HeroInfo/AbilityWindow");
+        
 
         transform.Find("InnerCanvas/HeroInfo/HeroName").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.name;
 
@@ -100,6 +102,10 @@ public class HeroSelectController : MonoBehaviour
         skillWindow.Find("Card2/Card").GetComponent<MenuCardHandler>().DrawCard(heroData.heroCards[1].cardId, isHuman);
         skillWindow.Find("Card2/CardName").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.heroCards[1].name;
         skillWindow.Find("Card2/CardInfo").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.GetComponent<Translator>().DialogSetRichText(heroData.heroCards[1].skills[0].desc);
+
+        abilityWindow.Find("Ability1/AbilityInfo").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.traitText[0];
+        abilityWindow.Find("Ability2/AbilityInfo").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.traitText[1];
+
         transform.Find("InnerCanvas/OpenTemplateButton").gameObject.SetActive(AccountManager.Instance.myHeroInventories.ContainsKey(heroId) 
             && AccountManager.Instance.myHeroInventories[heroId].tier > 0);
     }
