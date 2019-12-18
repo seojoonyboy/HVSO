@@ -149,20 +149,29 @@ namespace Quest {
         private async void GetPostOffice() {
             await Task.Delay(500);
             manager.tutorialSerializeList.newMail.SetActive(true);
-            
-            manager.tutorialSerializeList.mailBoxManager.quest = this;
+            manager.tutorialSerializeList.mailAllGetButton.interactable = false;
+            manager.tutorialSerializeList.mailBoxManager.tutoQuest = new MailBoxManager.TutorialQuest();
+            manager.tutorialSerializeList.mailBoxManager.tutoQuest.quest = this;
         }
 
         public void MailOpen() {
-            AddSpinetoButtonAndRemoveClick(manager.tutorialSerializeList.mailReceiveButton, SubSet4);
-            manager.tutorialSerializeList.openMailButton.enabled = false;
+            AddSpinetoButtonAndRemoveClick(manager.tutorialSerializeList.mailBoxManager.tutoQuest.receiveBtn, SubSet4);
+            manager.tutorialSerializeList.mailBoxManager.tutoQuest.openBtn.enabled = false;
+        }
+
+        public void ResetMailOpen(Button btn) {
+            btn.onClick.RemoveListener(SubSet4);
+            Transform hand = btn.transform.Find("tutorialHand");
+            if(hand == null) return;
+            Destroy(hand.gameObject);
         }
 
         private void SubSet4() {
-            manager.tutorialSerializeList.mailBoxManager.quest = null;
             manager.tutorialSerializeList.newMail.SetActive(false);
-            manager.tutorialSerializeList.openMailButton.enabled = true;
+            manager.tutorialSerializeList.mailBoxManager.tutoQuest.openBtn.enabled = true;
+            manager.tutorialSerializeList.mailAllGetButton.interactable = true;
             manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_4);
+            manager.tutorialSerializeList.mailBoxManager.tutoQuest = null;
             AddSpinetoButtonAndRemoveClick(manager.tutorialSerializeList.backButton, BreakCardDictionaryTab);
         }
 
@@ -244,6 +253,7 @@ namespace Quest {
 
         public void MenuDeckSettingShowHand(string[] args) {
             if(data.cleared) return;
+            AddSpinetoButtonAndRemoveClick(manager.tutorialSerializeList.ScrollDeckButton);
             manager.tutorialSerializeList.newDeckMenu.SetActive(true);
             manager.tutorialSerializeList.horizontalScrollSnap.OnSelectionChangeEndEvent.AddListener(x=>{if(x==0) manager.tutorialSerializeList.newDeckMenu.SetActive(false);});
             DeckHandler[] decks = manager.tutorialSerializeList.deckSettingManager.transform.GetComponentsInChildren<DeckHandler>();
