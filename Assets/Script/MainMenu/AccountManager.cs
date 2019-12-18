@@ -329,6 +329,7 @@ public partial class AccountManager {
 
     public void OnSignInResultModal() {
         Destroy(loadingModal);
+        AdsManager.Instance.Init();
         Modal.instantiate("로그인이 되었습니다.", Modal.Type.CHECK, () => {
             FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
         });
@@ -1267,6 +1268,8 @@ public partial class AccountManager {
                             );
                     }
                     else {
+                        Debug.LogError(_res.IsSuccess);
+                        Debug.LogError(_res.DataAsText);
                         Logger.LogWarning("요청 실패로 튜토리얼 진행 문제 발생");
                     }
                 });
