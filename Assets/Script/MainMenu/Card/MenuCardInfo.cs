@@ -236,7 +236,7 @@ public partial class MenuCardInfo : MonoBehaviour {
                     info.Find("CreateCard/MakeBtn/Disabled").gameObject.SetActive(true);
                 else {
                     info.Find("CreateCard/MakeBtn/Disabled").gameObject.SetActive(false);
-                    if (makeCardcost >= AccountManager.Instance.userResource.crystal)
+                    if (makeCardcost > AccountManager.Instance.userResource.crystal)
                         info.Find("CreateCard/MakeBtn/Disabled").gameObject.SetActive(true);
                 }
                 if (cardNum == 0)
