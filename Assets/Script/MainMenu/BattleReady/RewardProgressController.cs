@@ -43,6 +43,10 @@ public class RewardProgressController : MonoBehaviour {
         StartCoroutine(Progress(currentProgressBar));
     }
 
+    void OnDisable() {
+        StopAllCoroutines();
+    }
+
     public void Init() {
         SetProgress();
     }
