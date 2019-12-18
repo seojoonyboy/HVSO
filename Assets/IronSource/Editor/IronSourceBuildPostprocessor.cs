@@ -26,7 +26,7 @@ namespace IronSource.Editor
 
 				if (Directory.Exists (dirpath)) {
 					//Match the classes that has "Settings" in their name, and don't start with "I"
-					var files = Directory.GetFiles (dirpath, "*.cs", SearchOption.TopDirectoryOnly).Where (file => Regex.IsMatch (Path.GetFileName (file), "^(?!I).+Settings.*$"));
+					var files = Directory.GetFiles (dirpath, "*.cs", SearchOption.TopDirectoryOnly).Where (file => Regex.IsMatch (Path.GetFileName (file), "^(?!IAdapter).+Settings.*$"));
 
 					//Go over all the adapter settings classes, and call their updateProject method
 					foreach (string file in files) {
@@ -53,21 +53,22 @@ namespace IronSource.Editor
 			string targetId = project.TargetGuidByName (PBXProject.GetUnityTargetName ());
 
 			// Required System Frameworks
-			project.AddFrameworkToProject (targetId, "Foundation.framework", false);
-			project.AddFrameworkToProject (targetId, "AVFoundation.framework", false);
-			project.AddFrameworkToProject (targetId, "Security.framework", false);
-			project.AddFrameworkToProject (targetId, "WebKit.framework", false);
-			project.AddFrameworkToProject (targetId, "StoreKit.framework", false);
 			project.AddFrameworkToProject (targetId, "AdSupport.framework", false);
-			project.AddFrameworkToProject (targetId, "CoreMedia.framework", false);
-			project.AddFrameworkToProject (targetId, "CoreVideo.framework", false);
-			project.AddFrameworkToProject (targetId, "CoreTelephony.framework", false);
-			project.AddFrameworkToProject (targetId, "CoreGraphics.framework", false);
-			project.AddFrameworkToProject (targetId, "QuartzCore.framework", false);
-			project.AddFrameworkToProject (targetId, "SystemConfiguration.framework", false);
-			project.AddFrameworkToProject (targetId, "CFNetwork.framework", false);
-			project.AddFrameworkToProject (targetId, "MobileCoreServices.framework", false);
 			project.AddFrameworkToProject (targetId, "AudioToolbox.framework", false);
+			project.AddFrameworkToProject (targetId, "AVFoundation.framework", false);
+			project.AddFrameworkToProject (targetId, "CoreGraphics.framework", false);
+			project.AddFrameworkToProject (targetId, "CoreMedia.framework", false);
+			project.AddFrameworkToProject (targetId, "CoreTelephony.framework", false);
+			project.AddFrameworkToProject (targetId, "CoreVideo.framework", false);
+			project.AddFrameworkToProject (targetId, "CFNetwork.framework", false);		
+			project.AddFrameworkToProject (targetId, "Foundation.framework", false);
+			project.AddFrameworkToProject (targetId, "MobileCoreServices.framework", false);
+			project.AddFrameworkToProject (targetId, "QuartzCore.framework", false);
+			project.AddFrameworkToProject (targetId, "Security.framework", false);
+			project.AddFrameworkToProject (targetId, "StoreKit.framework", false);
+			project.AddFrameworkToProject (targetId, "SystemConfiguration.framework", false);
+			project.AddFrameworkToProject (targetId, "WebKit.framework", false);
+		
 			
 			project.AddFileToBuild (targetId, project.AddFile ("usr/lib/libz.tbd", "Frameworks/libz.tbd", PBXSourceTree.Sdk));
 
