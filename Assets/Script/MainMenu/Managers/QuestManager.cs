@@ -120,13 +120,12 @@ namespace Quest {
             public DeckSettingManager deckSettingManager;
             public Button BattleButton;
             public Button backButton;
-            public Button mailReceiveButton;
-            public Button openMailButton;
+            public Button mailAllGetButton;
             public MailBoxManager mailBoxManager;
-            //public Button mailBackButton;
             public MenuLockController menuLockController;
             public HorizontalScrollSnap horizontalScrollSnap;
             public GameObject newCardMenu;
+            public Button ScrollDeckButton;
             public GameObject newDeckMenu;
             public GameObject newBattleMenu;
             public Button modeSelect;
