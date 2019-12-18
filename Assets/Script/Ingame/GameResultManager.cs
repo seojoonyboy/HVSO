@@ -251,11 +251,11 @@ public class GameResultManager : MonoBehaviour {
             leveltext.text = levelData.lv.ToString();
             confirmBtn.onClick.AddListener(delegate () { levelCanvas.gameObject.SetActive(false); stopNextReward = false; rewardAnimation.Stop(); });
 
-            if (levelData.rewards.Count == 0)
+            if (levelData.rewards.Length == 0)
                 reward.Find("RewardLayout").gameObject.SetActive(false);
             else {
-                Transform layout = reward.Find("RewardLayout");
-                for (int i = 0; i < levelData.rewards.Count; i++) {
+                Transform layout = reward.Find("RewardLayout");                
+                for (int i = 0; i < levelData.rewards.Length; i++) {
                     Transform slot = layout.GetChild(i);
                     Image slotSprite = slot.Find("rewardSprite").gameObject.GetComponent<Image>();
                     TMPro.TextMeshProUGUI amoutObject = slot.Find("rewardAmount").gameObject.GetComponent<TMPro.TextMeshProUGUI>();
@@ -288,7 +288,7 @@ public class GameResultManager : MonoBehaviour {
             entry = levelUPEffect.AnimationState.AddAnimation(0, "01.start", false, 0);
             entry = levelUPEffect.AnimationState.AddAnimation(0, "02.play", true, 0);
             yield return new WaitForSeconds(levelUPEffect.AnimationState.Data.SkeletonData.FindAnimation("01.start").Duration);
-            if(reward.gameObject.activeSelf == true) {
+            if(levelData.rewards.Length > 0) {
                 rewardAnimation.Play();
             }            
         }

@@ -35,7 +35,7 @@ namespace SocketFormat {
     }
     public class LevelUp {
         public int lv;
-        public Dictionary<int, LevelReward> rewards;
+        public LevelReward[] rewards;
     }
 
     public class LevelReward {
