@@ -1299,6 +1299,37 @@ public partial class AccountManager {
         public bool[] rankingBattleCount;
         public int? ratingPointTop;
         public List<Reward> rewards;
+
+        public LeagueInfo DeepCopy(LeagueInfo originData) {
+            LeagueInfo leagueInfo = new LeagueInfo();
+            leagueInfo.modifiedRatingPoint = originData.modifiedRatingPoint;
+            leagueInfo.ratingPoint = originData.ratingPoint;
+            leagueInfo.ratingPointTop = originData.ratingPointTop;
+            //leagueInfo.rankingBattleCount = originData.rankingBattleCount;
+            leagueInfo.rankingBattleCount = new bool[originData.rankingBattleCount.Length];
+            for(int i=0; i<originData.rankingBattleCount.Length; i++) {
+                rankingBattleCount[i] = originData.rankingBattleCount[i];
+            }
+            leagueInfo.rankingBattleState = originData.rankingBattleState;
+            leagueInfo.rewards = originData.rewards;
+
+            leagueInfo.rankDetail = new RankDetail();
+            leagueInfo.rankDetail.majorRankName = originData.rankDetail.majorRankName;
+            leagueInfo.rankDetail.minorRankName = originData.rankDetail.minorRankName;
+            leagueInfo.rankDetail.pointLessThen = originData.rankDetail.pointLessThen;
+            leagueInfo.rankDetail.pointOverThen = originData.rankDetail.pointOverThen;
+            
+
+            if(originData.rankDetail.rankDownBattleCount != null) {
+                leagueInfo.rankDetail.rankDownBattleCount = new RankUpCondition(originData.rankDetail.rankDownBattleCount.needTo, originData.rankDetail.rankDownBattleCount.battles);
+            }
+
+            if(originData.rankDetail.rankUpBattleCount != null) {
+                leagueInfo.rankDetail.rankUpBattleCount = new RankUpCondition(originData.rankDetail.rankUpBattleCount.needTo, originData.rankDetail.rankUpBattleCount.battles);
+            }
+
+            return leagueInfo;
+        }
     }
 
     [Serializable]
@@ -1312,9 +1343,15 @@ public partial class AccountManager {
         public int pointLessThen;
     }
 
+    [Serializable]
     public class RankUpCondition {
         public int needTo;
         public int battles;
+
+        public RankUpCondition(int needTo, int battles) {
+            this.needTo = needTo;
+            this.battles = battles;
+        }
     }
 
     public class Reward {
@@ -1355,7 +1392,7 @@ public partial class AccountManager {
                     if(prevSceneName != "Ingame") {
                         Logger.Log("이전 씬이 Ingame이 아닌 경우");
                         scriptable_leagueData.leagueInfo = leagueInfo;
-                        scriptable_leagueData.prevLeagueInfo = leagueInfo;
+                        scriptable_leagueData.prevLeagueInfo = leagueInfo.DeepCopy(leagueInfo);
                     }
 
                     NoneIngameSceneEventHandler
