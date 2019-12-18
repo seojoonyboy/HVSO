@@ -283,12 +283,13 @@ public class GameResultManager : MonoBehaviour {
 
 
             levelup.gameObject.SetActive(true);
-            TrackEntry entry;
-            levelUPEffect.AnimationState.Event += delegate (TrackEntry ent, Spine.Event e) { if (e.Data.Name == "TEXT") leveltext.gameObject.SetActive(true); };
+            TrackEntry entry;            
             entry = levelUPEffect.AnimationState.AddAnimation(0, "01.start", false, 0);
             entry = levelUPEffect.AnimationState.AddAnimation(0, "02.play", true, 0);
-            yield return new WaitForSeconds(levelUPEffect.AnimationState.Data.SkeletonData.FindAnimation("01.start").Duration);
-            if(levelData.rewards.Length > 0) {
+            yield return new WaitForSeconds(levelUPEffect.AnimationState.Data.SkeletonData.FindAnimation("01.start").Duration - 0.2f);
+            leveltext.gameObject.SetActive(true);
+            yield return new WaitForSeconds(0.2f);
+            if (levelData.rewards.Length > 0) {
                 rewardAnimation.Play();
             }            
         }
@@ -315,6 +316,7 @@ public class GameResultManager : MonoBehaviour {
         //    iTween.ScaleTo(rewards.GetChild(0).gameObject, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.5f));
         //}
     }
+    
 
     public IEnumerator SetLeagueData() {
         var leagueInfo = scriptable_leagueData.leagueInfo;
