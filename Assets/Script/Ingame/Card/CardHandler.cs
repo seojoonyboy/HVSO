@@ -98,7 +98,7 @@ public partial class CardHandler : MonoBehaviour {
             transform.Find("Portrait").GetComponent<Image>().sprite = portraitImage;
             if (!cardData.isHeroCard) {
                 transform.Find("BackGround").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground[cardData.type + "_" + cardData.rarelity];
-                transform.Find("Name").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground["name_" + cardData.rarelity];
+                //transform.Find("Name").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground["name_" + cardData.rarelity];
             }
             else {
                 string race;

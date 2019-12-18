@@ -61,7 +61,8 @@ public partial class PlayMangement : MonoBehaviour {
 
     public ShowCardsHandler showCardsHandler;
     public Button surrendButton;
-    
+
+    public GameObject levelCanvas;
     //public string magicHistroy;
 
     private void Awake() {

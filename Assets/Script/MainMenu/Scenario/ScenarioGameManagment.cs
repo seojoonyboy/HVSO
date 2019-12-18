@@ -46,6 +46,8 @@ public class ScenarioGameManagment : PlayMangement {
     public GameObject skipButton;
     public GameObject textCanvas;
 
+    public bool blockInfoModal = false;
+
     private void Awake() {
         socketHandler = FindObjectOfType<BattleConnector>();
         instance = this;

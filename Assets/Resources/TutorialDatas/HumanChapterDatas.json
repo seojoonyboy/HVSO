@@ -26,6 +26,12 @@
                         ]
                     },
                     {
+                        "name": "Show_Info_Modal",
+                        "args": [
+                            "block"
+                        ]
+                    },
+                    {
                         "name": "Wait_Turn",
                         "args": [
                             "MULIGAN"
@@ -508,6 +514,12 @@
                         ]
                     },
                     {
+                        "name": "Show_Info_Modal",
+                        "args": [
+                            "block"
+                        ]
+                    },
+                    {
                         "name": "Wait_Turn",
                         "args": [
                             "MULIGAN"
@@ -657,6 +669,12 @@
                         ]
                     },
                     {
+                        "name": "Show_Info_Modal",
+                        "args": [
+                            "open"
+                        ]
+                    },
+                    {
                         "name": "Enable_UnitInfo_Window",
                         "args": [
                             "0,0",
@@ -691,7 +709,7 @@
                             "h10001",
                             "유닛을 터치해서 스킬 텍스트를 꾹 누르면 설명이 떠서 알 수 있지.",
                             "true",
-                            "maskOff"
+                            "maskOff, characterOFF"
                         ]
                     },
                     {
@@ -706,7 +724,7 @@
                             "h10001",
                             "저 유닛과 같은 라인에 병력을 배치하면 공격력을 줄일 수 있겠지만… 지금은 어렵겠군.",
                             "true",
-                            "maskOff"
+                            "maskOff, characterOFF"
                         ]
                     },
                     {
@@ -739,6 +757,12 @@
                     {
                         "name": "Wait_Close_Info",
                         "args": []
+                    },
+                    {
+                        "name": "Show_Info_Modal",
+                        "args": [
+                            "block"
+                        ]
                     },
                     {
                         "name": "Hide_message",
@@ -1079,6 +1103,12 @@
                         "name": "Wait_click",
                         "args": [
                             "screen"
+                        ]
+                    },
+                    {
+                        "name": "Show_Info_Modal",
+                        "args": [
+                            "open"
                         ]
                     },
                     {
