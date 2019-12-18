@@ -240,10 +240,15 @@ public class GameResultManager : MonoBehaviour {
 
             Transform levelup = levelCanvas.Find("LevelUP");
             Transform reward = levelCanvas.Find("Reward");
+            Text leveltext = levelCanvas.Find("Level").gameObject.GetComponent<Text>();
             Button confirmBtn = levelCanvas.Find("ConfirmBtn").gameObject.GetComponent<Button>();
             SkeletonGraphic levelUPEffect = levelup.gameObject.GetComponent<SkeletonGraphic>();
             UnityEngine.Animation rewardAnimation = reward.gameObject.GetComponent<UnityEngine.Animation>();
 
+            levelUPEffect.Initialize(true);
+            levelUPEffect.Update(0);
+
+            leveltext.text = levelData.lv.ToString();
             confirmBtn.onClick.AddListener(delegate () { levelCanvas.gameObject.SetActive(false); stopNextReward = false; rewardAnimation.Stop(); });
 
             if (levelData.rewards.Count == 0)
@@ -277,7 +282,9 @@ public class GameResultManager : MonoBehaviour {
 
 
 
+            levelup.gameObject.SetActive(true);
             TrackEntry entry;
+            levelUPEffect.AnimationState.Event += delegate (TrackEntry ent, Spine.Event e) { if (e.Data.Name == "TEXT") leveltext.gameObject.SetActive(true); };
             entry = levelUPEffect.AnimationState.AddAnimation(0, "01.start", false, 0);
             entry = levelUPEffect.AnimationState.AddAnimation(0, "02.play", true, 0);
             yield return new WaitForSeconds(levelUPEffect.AnimationState.Data.SkeletonData.FindAnimation("01.start").Duration);
