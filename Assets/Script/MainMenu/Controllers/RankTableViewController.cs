@@ -90,7 +90,7 @@ public class RankTableViewController : MonoBehaviour {
                 myObject = rankObj;
             }
             else {
-                if (rankTableRow.data.pointOverThen != null && rankTableRow.data.pointOverThen < 2600) {
+                if (rankTableRow.data.pointOverThen != null && rankTableRow.data.pointOverThen < 2300) {
                     rankTableRow.background.sprite = GetBackgroundImage(Category.NORMAL);
                     rankTableRow.upperLine.sprite = rankTableRow.middleLine.sprite = GetLineImage(Category.NORMAL);
                 }
@@ -102,13 +102,15 @@ public class RankTableViewController : MonoBehaviour {
             index++;
         }
 
-        MoveScrollToMyRank();
+        StartCoroutine(MoveScrollToMyRank());
     }
 
-    public void MoveScrollToMyRank() {
-        if (myObject == null) return;
-        float normalizedPosition = (float)myObject.transform.GetSiblingIndex() / (float)content.childCount;
-        scrollRect.normalizedPosition = new Vector2(0, normalizedPosition);
+    IEnumerator MoveScrollToMyRank() {
+        if (myObject != null) {
+            yield return new WaitForEndOfFrame();
+            float normalizedPosition = (float)myObject.transform.GetSiblingIndex() / (float)content.childCount;
+            scrollRect.verticalNormalizedPosition = 1 - normalizedPosition;
+        }
     }
 
     public Sprite GetBackgroundImage(Category category) {
