@@ -9,7 +9,7 @@ public class UserInfoManager : MonoBehaviour
         AccountManager.Instance.RequestLeagueInfo();
 
         Transform contents = transform.Find("InnerCanvas/Content");
-        contents.Find("BaseInfo/LevelFrame/LevelValue").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userData.lv.ToString();
+        contents.Find("BaseInfo/LevelFrame/LevelValue").GetComponent<Text>().text = AccountManager.Instance.userData.lv.ToString();
         contents.Find("BaseInfo/UserId").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.NickName;
         contents.Find("BaseInfo/Exp/Slider/SliderValue").GetComponent<Image>().fillAmount = (float)AccountManager.Instance.userData.exp / (float)AccountManager.Instance.userData.lvExp;
         contents.Find("BaseInfo/Exp/ExpValue").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userData.exp.ToString() + "/" + AccountManager.Instance.userData.lvExp.ToString();

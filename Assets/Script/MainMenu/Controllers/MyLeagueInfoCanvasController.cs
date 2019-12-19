@@ -30,6 +30,8 @@ public class MyLeagueInfoCanvasController : MonoBehaviour {
     Text currentMMRValue;
     Slider prevMaxMMRSlider, currentMMRSlider;
 
+    bool rankTableLoaded = false;
+
     // Start is called before the first frame update
     void Awake() {
         accountManager = AccountManager.Instance;
@@ -58,11 +60,20 @@ public class MyLeagueInfoCanvasController : MonoBehaviour {
         EscapeKeyController.escapeKeyCtrl.AddEscape(OffPanel);
         
         eventHandler.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_INFO_UPDATED, LeagueInfoLoaded);
+        eventHandler.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_RANK_TABLE_RECEIVED, RankTableLoaded);
+
         accountManager.RequestLeagueInfo();
+        accountManager.RequestRankTable();
+    }
+
+    private void RankTableLoaded(Enum Event_Type, Component Sender, object Param) {
+        rankTableLoaded = true;
     }
 
     void OnDisable() {
         eventHandler.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_INFO_UPDATED, LeagueInfoLoaded);
+        eventHandler.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_RANK_TABLE_RECEIVED, RankTableLoaded);
+        
         StopAllCoroutines();
     }
 
@@ -78,14 +89,9 @@ public class MyLeagueInfoCanvasController : MonoBehaviour {
     }
 
     IEnumerator ShowLeagueInfoChange() {
-        yield return SliderProceed();
+        yield return new WaitUntil(() => rankTableLoaded);
         yield return MMRChangeProceed();
-
         yield return MakeLeaderBoardList();
-    }
-
-    IEnumerator SliderProceed() {
-        yield return 0;
     }
 
     IEnumerator MMRChangeProceed() {
@@ -95,8 +101,8 @@ public class MyLeagueInfoCanvasController : MonoBehaviour {
         MMRDownStandardValue.text = prevLeagueInfo.rankDetail.pointOverThen.ToString();
         MMRUpStandardValue.text = prevLeagueInfo.rankDetail.pointLessThen.ToString();
 
-        int pointOverThen = prevLeagueInfo.rankDetail.pointOverThen; //µÓ±ﬁ π¸¿ß √÷º⁄∞™
-        int pointLessThen = prevLeagueInfo.rankDetail.pointLessThen; //µÓ±ﬁ π¸¿ß √÷¥Ò∞™
+        int pointOverThen = prevLeagueInfo.rankDetail.pointOverThen; //Îì±Í∏â Î≤îÏúÑ ÏµúÏÜüÍ∞í
+        int pointLessThen = prevLeagueInfo.rankDetail.pointLessThen; //Îì±Í∏â Î≤îÏúÑ ÏµúÎåìÍ∞í
         prevMaxMMRSlider.maxValue = pointLessThen - pointOverThen;
         currentMMRSlider.maxValue = pointLessThen - pointOverThen;
 
@@ -107,31 +113,49 @@ public class MyLeagueInfoCanvasController : MonoBehaviour {
         rankIcon.sprite = accountManager.resource.rankIcons[prevLeagueInfo.rankDetail.minorRankName];
         currentMMRIndicator.text = prevLeagueInfo.ratingPoint.ToString();
 
+        var item = accountManager.rankTable.Find(x => x.minorRankName == prevLeagueInfo.rankDetail.minorRankName);
+        int prevRankIndex = -1;
+        string prevRankName = prevLeagueInfo.rankDetail.minorRankName;
+        if (item != null) {
+            if(item.minorRankName == "Î¨¥Î™Ö Î≥ëÏÇ¨") {
+                prevRankIndex = 1;
+            }
+            else if(item.minorRankName == "Ï†ÑÎûµÏùò Ï†úÏôï") {
+                prevRankIndex = accountManager.rankTable.Count - 1;
+            }
+            else {
+                prevRankIndex = accountManager.rankTable.IndexOf(item);
+            }
+
+            MMRDownStandardIcon.sprite = accountManager.resource.rankIcons[accountManager.rankTable[prevRankIndex - 1].minorRankName];
+            MMRUpStandardIcon.sprite = accountManager.resource.rankIcons[accountManager.rankTable[prevRankIndex + 1].minorRankName];
+        }
+
         //start testcode
         //int prevRatingPoint = prevLeagueInfo.ratingPoint + 170;
-        //newLeagueInfo.rankDetail.minorRankName = "ø¿«’¡ˆ¡π øÏµŒ∏”∏Æ";
+        //newLeagueInfo.rankDetail.minorRankName = "Ïò§Ìï©ÏßÄÏ°∏ Ïö∞ÎëêÎ®∏Î¶¨";
         //newLeagueInfo.ratingPoint = prevRatingPoint;
         //end testcode
 
         Logger.Log("ratingPoint : " + newLeagueInfo.ratingPoint);
         Logger.Log("prevRatingPoint : " + prevLeagueInfo.ratingPoint);
 
-        //mmr ∫Ø»≠∞° ¿÷¥¬¡ˆ check
+        //mmr Î≥ÄÌôîÍ∞Ä ÏûàÎäîÏßÄ check
         bool isMMRChanged = false;
         isMMRChanged = prevLeagueInfo.ratingPoint != newLeagueInfo.ratingPoint;
         if (isMMRChanged) {
             int changeAmount = newLeagueInfo.ratingPoint - prevLeagueInfo.ratingPoint;
             int prevMMR = prevLeagueInfo.ratingPoint;
 
-            //∑©≈© ∫Ø»≠∞° ¿÷¥¬¡ˆ check
+            //Îû≠ÌÅ¨ Î≥ÄÌôîÍ∞Ä ÏûàÎäîÏßÄ check
             bool isTierChanged = false;
             isTierChanged = prevLeagueInfo.rankDetail.minorRankName != newLeagueInfo.rankDetail.minorRankName;
 
-            //mmr ¡ı∞°
+            //mmr Ï¶ùÍ∞Ä
             if (changeAmount > 0) {
-                //Ω¬±ﬁ
+                //ÏäπÍ∏â
                 if (isTierChanged) {
-                    Logger.Log("Ω¬±ﬁ πﬂª˝");
+                    Logger.Log("ÏäπÍ∏â Î∞úÏÉù");
                     currentMMRSlider.maxValue = prevLeagueInfo.rankDetail.pointLessThen - prevLeagueInfo.rankDetail.pointOverThen;
                     yield return ProceedNewMMRSlider(
                         prevMMR - prevLeagueInfo.rankDetail.pointOverThen,
@@ -150,7 +174,7 @@ public class MyLeagueInfoCanvasController : MonoBehaviour {
                         newLeagueInfo.rankDetail.pointOverThen);
                 }
                 else {
-                    Logger.Log("MMR ¡ı∞°");
+                    Logger.Log("MMR Ï¶ùÍ∞Ä");
                     currentMMRSlider.maxValue = newLeagueInfo.rankDetail.pointLessThen - newLeagueInfo.rankDetail.pointOverThen;
                     yield return ProceedNewMMRSlider(
                         prevLeagueInfo.ratingPoint - prevLeagueInfo.rankDetail.pointOverThen,
@@ -158,11 +182,11 @@ public class MyLeagueInfoCanvasController : MonoBehaviour {
                         newLeagueInfo.rankDetail.pointOverThen);
                 }
             }
-            //mmr ∞®º“
+            //mmr Í∞êÏÜå
             else if(changeAmount < 0) {
-                //∞≠µÓ
+                //Í∞ïÎì±
                 if (isTierChanged) {
-                    Logger.Log("∞≠µÓ πﬂª˝");
+                    Logger.Log("Í∞ïÎì± Î∞úÏÉù");
                     currentMMRSlider.maxValue = prevLeagueInfo.rankDetail.pointLessThen - prevLeagueInfo.rankDetail.pointOverThen;
                     yield return ProceedNewMMRSlider(
                         prevLeagueInfo.ratingPoint - prevLeagueInfo.rankDetail.pointOverThen,
@@ -181,7 +205,7 @@ public class MyLeagueInfoCanvasController : MonoBehaviour {
                         newLeagueInfo.rankDetail.pointOverThen);
                 }
                 else {
-                    Logger.Log("MMR ∞®º“");
+                    Logger.Log("MMR Í∞êÏÜå");
                     currentMMRSlider.maxValue = newLeagueInfo.rankDetail.pointLessThen - newLeagueInfo.rankDetail.pointOverThen;
                     yield return ProceedNewMMRSlider(
                         newLeagueInfo.rankDetail.pointLessThen,
@@ -249,5 +273,25 @@ public class MyLeagueInfoCanvasController : MonoBehaviour {
     public void OffPanelByMain() {
         hudController.SetHeader(HUDController.Type.SHOW_USER_INFO);
         OffPanel();
+    }
+
+    //public Sprite GetNextRankImage(string keyword) {
+    //    List<Sprites> sprites = new List<Sprites>();
+    //    foreach(KeyValuePair<string, Sprite> keyValuePairs in accountManager.resource.rankIcons) {
+    //        sprites.Add(new Sprites(keyValuePairs.Key, keyValuePairs.Value));
+    //    }
+
+    //    var image = sprites.Find(x => x.name == keyword);
+    //    if(image == null) return 
+    //}
+
+    public class Sprites {
+        public string name;
+        public Sprite image;
+
+        public Sprites(string name, Sprite image) {
+            this.name = name;
+            this.image = image;
+        }
     }
 }
