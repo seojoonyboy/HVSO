@@ -61,6 +61,7 @@ public class RankTableViewController : MonoBehaviour {
         }
     }
 
+    GameObject myObject;
     void MakeList() {
         string myRankName = accountManager.scriptable_leagueData.leagueInfo.rankDetail.minorRankName;
         var tableData = accountManager.rankTable;
@@ -77,12 +78,16 @@ public class RankTableViewController : MonoBehaviour {
             rankTableRow.mmr.text = row.pointOverThen.ToString();
             rankTableRow.minorRankName.text = row.minorRankName;
             rankTableRow.data = row;
+            if (accountManager.resource.rankIcons.ContainsKey(row.minorRankName)) {
+                rankTableRow.rankIcon.sprite = accountManager.resource.rankIcons[row.minorRankName];
+            }
 
             if (row.minorRankName == myRankName) {
                 rankTableRow.background.sprite = GetBackgroundImage(Category.ME);
                 rankTableRow.upperLine.sprite = rankTableRow.middleLine.sprite = GetLineImage(Category.ME);
 
                 rankTableRow.myLeagueMark.SetActive(true);
+                myObject = rankObj;
             }
             else {
                 if (rankTableRow.data.pointOverThen != null && rankTableRow.data.pointOverThen < 2600) {
@@ -96,6 +101,14 @@ public class RankTableViewController : MonoBehaviour {
             }
             index++;
         }
+
+        MoveScrollToMyRank();
+    }
+
+    public void MoveScrollToMyRank() {
+        if (myObject == null) return;
+        float normalizedPosition = (float)myObject.transform.GetSiblingIndex() / (float)content.childCount;
+        scrollRect.normalizedPosition = new Vector2(0, normalizedPosition);
     }
 
     public Sprite GetBackgroundImage(Category category) {

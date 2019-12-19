@@ -11,7 +11,7 @@ namespace dataModules {
         public Text mmr;
         public TextMeshProUGUI minorRankName;
         public Image upperLine, middleLine;
-        public Image background;
+        public Image background, rankIcon;
         public GameObject myLeagueMark;
     }
 }
