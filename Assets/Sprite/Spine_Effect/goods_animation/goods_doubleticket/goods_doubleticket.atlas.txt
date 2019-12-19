@@ -1,0 +1,48 @@
+
+goods_doubleticket.png
+size: 256,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+doubleticket
+  rotate: true
+  xy: 105, 4
+  size: 44, 38
+  orig: 44, 38
+  offset: 0, 0
+  index: -1
+doubleticket2
+  rotate: true
+  xy: 122, 50
+  size: 44, 38
+  orig: 44, 38
+  offset: 0, 0
+  index: -1
+effect1
+  rotate: false
+  xy: 2, 2
+  size: 54, 46
+  orig: 54, 46
+  offset: 0, 0
+  index: -1
+effect2
+  rotate: false
+  xy: 2, 50
+  size: 118, 119
+  orig: 118, 119
+  offset: 0, 0
+  index: -1
+star_e
+  rotate: false
+  xy: 58, 3
+  size: 45, 45
+  orig: 45, 45
+  offset: 0, 0
+  index: -1
+text1
+  rotate: false
+  xy: 122, 96
+  size: 20, 19
+  orig: 20, 19
+  offset: 0, 0
+  index: -1
