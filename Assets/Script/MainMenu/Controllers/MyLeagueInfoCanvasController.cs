@@ -57,7 +57,12 @@ public class MyLeagueInfoCanvasController : MonoBehaviour {
 
     void OnPanel() {
         gameObject.SetActive(true);
-        EscapeKeyController.escapeKeyCtrl.AddEscape(OffPanel);
+        if (BattleReadySceneController.instance != null && BattleReadySceneController.instance.gameObject.activeSelf) {
+            EscapeKeyController.escapeKeyCtrl.AddEscape(OffPanelByBattleReady);
+        }
+        else {
+            EscapeKeyController.escapeKeyCtrl.AddEscape(OffPanelByMain);
+        }
         
         eventHandler.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_INFO_UPDATED, LeagueInfoLoaded);
         eventHandler.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_RANK_TABLE_RECEIVED, RankTableLoaded);
@@ -262,7 +267,12 @@ public class MyLeagueInfoCanvasController : MonoBehaviour {
     void OffPanel() {
         gameObject.SetActive(false);
 
-        EscapeKeyController.escapeKeyCtrl.RemoveEscape(OffPanel);
+        if (BattleReadySceneController.instance != null && BattleReadySceneController.instance.gameObject.activeSelf) {
+            EscapeKeyController.escapeKeyCtrl.RemoveEscape(OffPanelByBattleReady);
+        }
+        else {
+            EscapeKeyController.escapeKeyCtrl.RemoveEscape(OffPanelByMain);
+        }
     }
 
     public void OffPanelByBattleReady() {
@@ -273,25 +283,5 @@ public class MyLeagueInfoCanvasController : MonoBehaviour {
     public void OffPanelByMain() {
         hudController.SetHeader(HUDController.Type.SHOW_USER_INFO);
         OffPanel();
-    }
-
-    //public Sprite GetNextRankImage(string keyword) {
-    //    List<Sprites> sprites = new List<Sprites>();
-    //    foreach(KeyValuePair<string, Sprite> keyValuePairs in accountManager.resource.rankIcons) {
-    //        sprites.Add(new Sprites(keyValuePairs.Key, keyValuePairs.Value));
-    //    }
-
-    //    var image = sprites.Find(x => x.name == keyword);
-    //    if(image == null) return 
-    //}
-
-    public class Sprites {
-        public string name;
-        public Sprite image;
-
-        public Sprites(string name, Sprite image) {
-            this.name = name;
-            this.image = image;
-        }
     }
 }
