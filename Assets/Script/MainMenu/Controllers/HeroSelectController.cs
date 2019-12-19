@@ -105,6 +105,36 @@ public class HeroSelectController : MonoBehaviour
 
         abilityWindow.Find("Ability1/AbilityInfo").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.traitText[0];
         abilityWindow.Find("Ability2/AbilityInfo").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.traitText[1];
+        for (int i = 0; i < 2; i++) {
+            string traitKey = "";
+            switch (heroData.traitText[i]) {
+                case "최대체력 +2":
+                    traitKey = "health_max_2";
+                    break;
+                case "최대 실드 개수 +1":
+                    traitKey = "shield_max_1";
+                    break;
+                case "실드게이지 충전량 최소치 +1":
+                    traitKey = "shield_min_charge_1";
+                    break;
+                case "마법 페이즈에 자원 1 획득":
+                    traitKey = "magic_phase_1";
+                    break;
+                case "마법의 주문 공격력 +1":
+                    traitKey = "magic_power_1";
+                    break;
+                case "실드게이지 충전량 최대치 +1":
+                    traitKey = "shield_max_charge_1";
+                    break;
+                case "tool 카드 사용 비용 -1":
+                    traitKey = "toolcard_use_1";
+                    break;
+            }
+            if (i == 0)
+                abilityWindow.Find("Ability1/AbilityImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.traitIcons[traitKey];
+            else
+                abilityWindow.Find("Ability2/AbilityImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.traitIcons[traitKey];
+        }
 
         transform.Find("InnerCanvas/OpenTemplateButton").gameObject.SetActive(AccountManager.Instance.myHeroInventories.ContainsKey(heroId) 
             && AccountManager.Instance.myHeroInventories[heroId].tier > 0);
