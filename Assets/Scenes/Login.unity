@@ -5435,6 +5435,13 @@ MonoBehaviour:
     - {fileID: 21300000, guid: c122b1cdcc679234da5cb818e411a8bf, type: 3}
     - {fileID: 21300000, guid: 7db10bc4b62751e4796aaf51b4e6ccf6, type: 3}
     - {fileID: 21300000, guid: 705da75b51ceb2c468944c5b3ac2d00e, type: 3}
+    - {fileID: 21300000, guid: 71ae9517de0f32d4ea3ba8f1cb63612d, type: 3}
+    - {fileID: 21300000, guid: 0219215898853ea4697c4016b9922b5e, type: 3}
+    - {fileID: 21300000, guid: decb82731192a76459ab0303ca4764f7, type: 3}
+    - {fileID: 21300000, guid: 25e8845ddb225724eb65e48d87849ef5, type: 3}
+    - {fileID: 21300000, guid: 1295e43b6212e1245aa75deb77968ac5, type: 3}
+    - {fileID: 21300000, guid: 9627e7e6007fb7649a6ca71bb540b8fb, type: 3}
+    - {fileID: 21300000, guid: 9784b1aa3d1e2a440af5707fd211e428, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -11868,13 +11875,117 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-    - Name: unitRace
+    - Name: traitIcons
       Entry: 7
-      Data: 60|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnitRace,
-        Assembly-CSharp]], mscorlib
+      Data: 60|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Sprite,
+        UnityEngine.CoreModule]], mscorlib
     - Name: comparer
       Entry: 7
       Data: 61|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 7
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: shield_max_charge_1
+    - Name: $v
+      Entry: 10
+      Data: 335
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: health_max_2
+    - Name: $v
+      Entry: 10
+      Data: 336
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: shield_min_charge_1
+    - Name: $v
+      Entry: 10
+      Data: 337
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: magic_phase_1
+    - Name: $v
+      Entry: 10
+      Data: 338
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: magic_power_1
+    - Name: $v
+      Entry: 10
+      Data: 339
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: toolcard_use_1
+    - Name: $v
+      Entry: 10
+      Data: 340
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: shield_max_1
+    - Name: $v
+      Entry: 10
+      Data: 341
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: unitRace
+      Entry: 7
+      Data: 62|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnitRace,
+        Assembly-CSharp]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 63|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
