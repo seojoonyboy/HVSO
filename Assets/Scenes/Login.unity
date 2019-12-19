@@ -5442,6 +5442,13 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 1043f739fa8ca7d40808271cf881c906, type: 3}
     - {fileID: 21300000, guid: 20d6e18dc2b829f4086fbb8ea59d35b9, type: 3}
     - {fileID: 21300000, guid: 80d78832ea0931848b5889bb82867483, type: 3}
+    - {fileID: 21300000, guid: 71ae9517de0f32d4ea3ba8f1cb63612d, type: 3}
+    - {fileID: 21300000, guid: 0219215898853ea4697c4016b9922b5e, type: 3}
+    - {fileID: 21300000, guid: decb82731192a76459ab0303ca4764f7, type: 3}
+    - {fileID: 21300000, guid: 25e8845ddb225724eb65e48d87849ef5, type: 3}
+    - {fileID: 21300000, guid: 1295e43b6212e1245aa75deb77968ac5, type: 3}
+    - {fileID: 21300000, guid: 9627e7e6007fb7649a6ca71bb540b8fb, type: 3}
+    - {fileID: 21300000, guid: 9784b1aa3d1e2a440af5707fd211e428, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -11981,7 +11988,7 @@ MonoBehaviour:
       Data: shield_max_charge_1
     - Name: $v
       Entry: 10
-      Data: 336
+      Data: 342
     - Name: 
       Entry: 8
       Data: 
@@ -11993,7 +12000,7 @@ MonoBehaviour:
       Data: health_max_2
     - Name: $v
       Entry: 10
-      Data: 341
+      Data: 343
     - Name: 
       Entry: 8
       Data: 
@@ -12005,7 +12012,7 @@ MonoBehaviour:
       Data: shield_min_charge_1
     - Name: $v
       Entry: 10
-      Data: 331
+      Data: 344
     - Name: 
       Entry: 8
       Data: 
@@ -12017,7 +12024,7 @@ MonoBehaviour:
       Data: magic_phase_1
     - Name: $v
       Entry: 10
-      Data: 332
+      Data: 345
     - Name: 
       Entry: 8
       Data: 
@@ -12029,7 +12036,7 @@ MonoBehaviour:
       Data: magic_power_1
     - Name: $v
       Entry: 10
-      Data: 333
+      Data: 346
     - Name: 
       Entry: 8
       Data: 
@@ -12041,7 +12048,7 @@ MonoBehaviour:
       Data: toolcard_use_1
     - Name: $v
       Entry: 10
-      Data: 334
+      Data: 347
     - Name: 
       Entry: 8
       Data: 
@@ -12053,7 +12060,7 @@ MonoBehaviour:
       Data: shield_max_1
     - Name: $v
       Entry: 10
-      Data: 335
+      Data: 348
     - Name: 
       Entry: 8
       Data: 
