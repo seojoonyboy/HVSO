@@ -31,6 +31,15 @@ public class BattleReadySceneController : MonoBehaviour {
     public Deck selectedDeck;
     public LeagueData userLeagueData;
 
+    private static BattleReadySceneController m_instance;
+    public static BattleReadySceneController instance {
+        get {
+            if (m_instance == null) m_instance = FindObjectOfType<BattleReadySceneController>();
+
+            return m_instance;
+        }
+    }
+
     void Awake() {
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_INFO_UPDATED, OnLeagueInfoUpdated);
     }
