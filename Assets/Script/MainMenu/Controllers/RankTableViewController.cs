@@ -7,9 +7,10 @@ using UnityEngine.UI;
 public class RankTableViewController : MonoBehaviour {
     [SerializeField] ScrollRect scrollRect;
     [SerializeField] Transform content;
-    [SerializeField] GameObject rankObject, myRankObject;
+    [SerializeField] GameObject rankObject;
     [SerializeField] HUDController hudController;
     [SerializeField] MyLeagueInfoCanvasController myLeagueInfoCanvasController;
+    [SerializeField] Sprite[] rankObjectBackgrounds, rankObjectLines;
 
     AccountManager accountManager;
     NoneIngameSceneEventHandler eventHandler;
@@ -61,19 +62,66 @@ public class RankTableViewController : MonoBehaviour {
 
         int index = 0;
         foreach(AccountManager.RankTableRow row in tableData) {
-            if(row.minorRankName == myRankName) {
-                GameObject rankObj = Instantiate(rankObject);
-                rankObj.AddComponent<dataModules.RankTableRow>();
-                rankObj.transform.SetParent(content, true);
-                rankObj.name = "item_" + index;
+            GameObject rankObj = Instantiate(rankObject);
+            rankObj.SetActive(true);
+            rankObj.transform.SetParent(content, true);
+            rankObj.transform.SetAsFirstSibling();
+            rankObj.name = "item_" + index;
+
+            var rankTableRow = rankObj.GetComponent<dataModules.RankTableRow>();
+            rankTableRow.mmr.text = row.pointOverThen.ToString();
+            rankTableRow.minorRankName.text = row.minorRankName;
+            rankTableRow.data = row;
+
+            if (row.minorRankName == myRankName) {
+                rankTableRow.background.sprite = GetBackgroundImage(Category.ME);
+                rankTableRow.upperLine.sprite = rankTableRow.middleLine.sprite = GetLineImage(Category.ME);
+
+                rankTableRow.myLeagueMark.SetActive(true);
             }
             else {
-                GameObject myRankObj = Instantiate(myRankObject);
-                myRankObj.AddComponent<dataModules.RankTableRow>();
-                myRankObj.transform.SetParent(content, true);
-                myRankObj.name = "item_" + index;
+                if (rankTableRow.data.pointOverThen != null && rankTableRow.data.pointOverThen < 2600) {
+                    rankTableRow.background.sprite = GetBackgroundImage(Category.NORMAL);
+                    rankTableRow.upperLine.sprite = rankTableRow.middleLine.sprite = GetLineImage(Category.NORMAL);
+                }
+                else {
+                    rankTableRow.background.sprite = GetBackgroundImage(Category.HIGH);
+                    rankTableRow.upperLine.sprite = rankTableRow.middleLine.sprite = GetLineImage(Category.HIGH);
+                }
             }
             index++;
         }
+    }
+
+    public Sprite GetBackgroundImage(Category category) {
+        switch (category) {
+            case Category.HIGH:
+                return rankObjectBackgrounds[2];
+            case Category.NORMAL:
+                return rankObjectBackgrounds[0];
+            case Category.ME:
+                return rankObjectBackgrounds[1];
+            default:
+                return rankObjectBackgrounds[0];
+        }
+    }
+
+    public Sprite GetLineImage(Category category) {
+        switch (category) {
+            case Category.HIGH:
+                return rankObjectLines[2];
+            case Category.NORMAL:
+                return rankObjectLines[0];
+            case Category.ME:
+                return rankObjectLines[1];
+            default:
+                return rankObjectLines[0];
+        }
+    }
+
+    public enum Category {
+        HIGH,
+        NORMAL,
+        ME
     }
 }
