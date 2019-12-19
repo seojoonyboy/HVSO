@@ -7,814 +7,1050 @@ using System.Globalization;
 
 public class IronSourceEvents : MonoBehaviour
 {
-    public static event Action<IronSourceError> onRewardedVideoAdShowFailedEvent;
-    public static event Action onRewardedVideoAdOpenedEvent;
-    public static event Action onRewardedVideoAdClosedEvent;
-    public static event Action onRewardedVideoAdStartedEvent;
-    public static event Action onRewardedVideoAdEndedEvent;
-    public static event Action<IronSourcePlacement> onRewardedVideoAdRewardedEvent;
-    public static event Action<IronSourcePlacement> onRewardedVideoAdClickedEvent;
-    public static event Action<bool> onRewardedVideoAvailabilityChangedEvent;
-
-    public static event Action<String> onRewardedVideoAdOpenedDemandOnlyEvent;
-    public static event Action<String> onRewardedVideoAdClosedDemandOnlyEvent;
-    public static event Action<String> onRewardedVideoAdLoadedDemandOnlyEvent;
-    public static event Action<String> onRewardedVideoAdRewardedDemandOnlyEvent;
-    public static event Action<String, IronSourceError> onRewardedVideoAdShowFailedDemandOnlyEvent;
-    public static event Action<String> onRewardedVideoAdClickedDemandOnlyEvent;
-    public static event Action<String, IronSourceError> onRewardedVideoAdLoadFailedDemandOnlyEvent;
-
-    public static event Action onInterstitialAdReadyEvent;
-    public static event Action<IronSourceError> onInterstitialAdLoadFailedEvent;
-    public static event Action onInterstitialAdOpenedEvent;
-    public static event Action onInterstitialAdClosedEvent;
-    public static event Action onInterstitialAdShowSucceededEvent;
-    public static event Action<IronSourceError> onInterstitialAdShowFailedEvent;
-    public static event Action onInterstitialAdClickedEvent;
-
-    public static event Action onInterstitialAdRewardedEvent;
-
-    public static event Action<string> onInterstitialAdReadyDemandOnlyEvent;
-    public static event Action<string> onInterstitialAdOpenedDemandOnlyEvent;
-    public static event Action<string> onInterstitialAdClosedDemandOnlyEvent;
-    public static event Action<string, IronSourceError> onInterstitialAdLoadFailedDemandOnlyEvent;
-    public static event Action<string> onInterstitialAdClickedDemandOnlyEvent;
-    public static event Action<string, IronSourceError> onInterstitialAdShowFailedDemandOnlyEvent;
-
-    public static event Action<bool> onOfferwallAvailableEvent;
-    public static event Action onOfferwallOpenedEvent;
-    public static event Action<Dictionary<string, object>> onOfferwallAdCreditedEvent;
-    public static event Action<IronSourceError> onGetOfferwallCreditsFailedEvent;
-    public static event Action onOfferwallClosedEvent;
-    public static event Action<IronSourceError> onOfferwallShowFailedEvent;
-
-    public static event Action onBannerAdLoadedEvent;
-    public static event Action onBannerAdLeftApplicationEvent;
-    public static event Action onBannerAdScreenDismissedEvent;
-    public static event Action onBannerAdScreenPresentedEvent;
-    public static event Action onBannerAdClickedEvent;
-    public static event Action<IronSourceError> onBannerAdLoadFailedEvent;
-
-    public static event Action<string> onSegmentReceivedEvent;
-
-    #if UNITY_ANDROID
-        private IUnityRewardedVideo rewardedVideoAndroid;
-        private IUnityInterstitial interstitialAndroid;
-        private IUnityOfferwall offerwallAndroid;
-        private IUnityBanner bannerAndroid;
-        private IUnitySegment segmentAndroid;
-
-    #endif
-
-
-    void Awake()
+    private const string ERROR_CODE = "error_code";
+    private const string ERROR_DESCRIPTION = "error_description";
+    private const string INSTANCE_ID_KEY = "instanceId";
+    private const string PLACEMENT_KEY = "placement";   
+        
+    void Awake ()
     {
-    #if UNITY_ANDROID
-        this.rewardedVideoAndroid = (IUnityRewardedVideo)new IronSourceRewardedVideoAndroid();//sets this.rewardedVideoAndroid as listener for RV(Mediation& Demand Only) events in the bridge
-        this.rewardedVideoAndroid.CreateRewardedVideo();//implement RV(Mediation & Demand Only) callbacks in the bridge
-        registerRewardedVideoEvents();//subscribe to RV events from this.rewardedVideoAndroid
-        registerRewardedVideoDemandOnlyEvents();//subscribe to RV Demand Only events from this.rewardedVideoAndroid
-        this.interstitialAndroid = (IUnityInterstitial)new IronSourceInterstitialAndroid();//sets this.interstitialAndroid as listener for IS(Mediation& Demand Only& rewarded interstitial)  events in the bridge
-        this.interstitialAndroid.CreateInterstitial();//implement IS(Mediation & Demand Only& rewarded Interstitial) callbacks in the bridge
-        registerInterstitialEvents();//subscribe to interstitial events from this.interstitialAndroid
-        registerInterstitialDemandOnlyEvents();//subscribe to interstitial Demand Only events from this.interstitialAndroid
-        this.offerwallAndroid = (IUnityOfferwall)new IronSourceOfferwallAndroid();//sets this.offerwallAndroid as listener for Offerwall events in the bridge
-        this.offerwallAndroid.CreateOfferwall();//implement OW callbacks in the bridge
-        registerOfferwallEvents();//subscribe to OW events from this.offerwallAndroid
-        this.bannerAndroid = (IUnityBanner)new IronSourceBannerAndroid();//sets banners  this.rewardedVideoAndroid as listener for RV(Mediation& Demand Only) in the bridge and implement Banner callbacks
-        registerBannerEvents();//subscribe to banners events from this.bannerAndroid
-        this.segmentAndroid = (IUnitySegment)new IronSourceSegmentAndroid();//sets this.segmentAndroid as listener for Segment events in the bridge
-        this.segmentAndroid.CreateSegment();//implement onSegmentReceived callback in the bridge
-        registerSegmentEvents();//subscribe to onSegmentRecieved event from this.bannerAndroid
-#endif
-        Debug.Log("IronSourceEvents Awake called");
-        DontDestroyOnLoad(gameObject);                  //Makes the object not be destroyed automatically when loading a new scene.
+        gameObject.name = "IronSourceEvents";           //Change the GameObject name to IronSourceEvents.
+        DontDestroyOnLoad (gameObject);                 //Makes the object not be destroyed automatically when loading a new scene.
     }
+    
+    // ******************************* Rewarded Video Events *******************************
+    private static event Action<IronSourceError> _onRewardedVideoAdShowFailedEvent;
 
-
-#if UNITY_IOS
-    // *******************************iOS Rewarded Video Events *******************************
-
-    public void onRewardedVideoAdShowFailed(string error)
+    public static event Action<IronSourceError> onRewardedVideoAdShowFailedEvent {
+        add {
+            if (_onRewardedVideoAdShowFailedEvent == null || !_onRewardedVideoAdShowFailedEvent.GetInvocationList ().Contains (value)) {
+                _onRewardedVideoAdShowFailedEvent += value;
+            }
+        }
+        
+        remove {
+            if (_onRewardedVideoAdShowFailedEvent.GetInvocationList ().Contains (value)) {
+                _onRewardedVideoAdShowFailedEvent -= value;
+            }
+        }
+    }
+    
+    public void onRewardedVideoAdShowFailed (string description)
     {
-        if (onRewardedVideoAdShowFailedEvent != null)
-        {
-            IronSourceError ironSourceError = IronSourceUtils.getErrorFromErrorObject(error);
-            onRewardedVideoAdShowFailedEvent(ironSourceError);
+        if (_onRewardedVideoAdShowFailedEvent != null) {
+            IronSourceError sse = getErrorFromErrorObject (description);
+            _onRewardedVideoAdShowFailedEvent (sse);
         }
     }
 
-    public void onRewardedVideoAdClosed(string empty)
-    {
-        if (onRewardedVideoAdClosedEvent != null)
-        {
-            onRewardedVideoAdClosedEvent();
+    private static event Action _onRewardedVideoAdOpenedEvent;
+
+    public static event Action onRewardedVideoAdOpenedEvent {
+        add {
+            if (_onRewardedVideoAdOpenedEvent == null || !_onRewardedVideoAdOpenedEvent.GetInvocationList ().Contains (value)) {
+                _onRewardedVideoAdOpenedEvent += value;
+            }
         }
-
-    }
-
-    public void onRewardedVideoAdOpened(string empty)
-    {
-        if (onRewardedVideoAdOpenedEvent != null)
-        {
-            onRewardedVideoAdOpenedEvent();
+        
+        remove {
+            if (_onRewardedVideoAdOpenedEvent.GetInvocationList ().Contains (value)) {
+                _onRewardedVideoAdOpenedEvent -= value;
+            }
         }
-
     }
-
-    public void onRewardedVideoAdStarted(string empty)
+    
+    public void onRewardedVideoAdOpened (string empty)
     {
-        if (onRewardedVideoAdStartedEvent != null)
-        {
-            onRewardedVideoAdStartedEvent();
-        }
-
-    }
-
-    public void onRewardedVideoAdEnded(string empty)
-    {
-        if (onRewardedVideoAdEndedEvent != null)
-        {
-            onRewardedVideoAdEndedEvent();
-        }
-
-    }
-
-    public void onRewardedVideoAdRewarded(string description)
-    {
-        if (onRewardedVideoAdRewardedEvent != null)
-        {
-            IronSourcePlacement ssp = IronSourceUtils.getPlacementFromObject(description);
-            onRewardedVideoAdRewardedEvent(ssp);
+        if (_onRewardedVideoAdOpenedEvent != null) {
+            _onRewardedVideoAdOpenedEvent ();
         }
     }
 
-    public void onRewardedVideoAdClicked(string description)
-    {
-        if (onRewardedVideoAdClickedEvent != null)
-        {
-            IronSourcePlacement ssp = IronSourceUtils.getPlacementFromObject(description);
-            onRewardedVideoAdClickedEvent(ssp);
-        }
+    private static event Action _onRewardedVideoAdClosedEvent;
 
+    public static event Action onRewardedVideoAdClosedEvent {
+        add {
+            if (_onRewardedVideoAdClosedEvent == null || !_onRewardedVideoAdClosedEvent.GetInvocationList ().Contains (value)) {
+                _onRewardedVideoAdClosedEvent += value;
+            }
+        }
+        
+        remove {
+            if (_onRewardedVideoAdClosedEvent.GetInvocationList ().Contains (value)) {
+                _onRewardedVideoAdClosedEvent -= value;
+            }
+        }
+    }
+    
+    public void onRewardedVideoAdClosed (string empty)
+    {
+        if (_onRewardedVideoAdClosedEvent != null) {
+            _onRewardedVideoAdClosedEvent ();
+        }
     }
 
-    public void onRewardedVideoAvailabilityChanged(string stringAvailable)
+    private static event Action _onRewardedVideoAdStartedEvent;
+
+    public static event Action onRewardedVideoAdStartedEvent {
+        add {
+            if (_onRewardedVideoAdStartedEvent == null || !_onRewardedVideoAdStartedEvent.GetInvocationList ().Contains (value)) {
+                _onRewardedVideoAdStartedEvent += value;
+            }
+        }
+        
+        remove {
+            if (_onRewardedVideoAdStartedEvent.GetInvocationList ().Contains (value)) {
+                _onRewardedVideoAdStartedEvent -= value;
+            }
+        }
+    }
+    
+    public void onRewardedVideoAdStarted (string empty)
+    {
+        if (_onRewardedVideoAdStartedEvent != null) {
+            _onRewardedVideoAdStartedEvent ();
+        }
+    }
+
+    private static event Action _onRewardedVideoAdEndedEvent;
+
+    public static event Action onRewardedVideoAdEndedEvent {
+        add {
+            if (_onRewardedVideoAdEndedEvent == null || !_onRewardedVideoAdEndedEvent.GetInvocationList ().Contains (value)) {
+                _onRewardedVideoAdEndedEvent += value;
+            }
+        }
+        
+        remove {
+            if (_onRewardedVideoAdEndedEvent.GetInvocationList ().Contains (value)) {
+                _onRewardedVideoAdEndedEvent -= value;
+            }
+        }
+    }
+    
+    public void onRewardedVideoAdEnded (string empty)
+    {
+        if (_onRewardedVideoAdEndedEvent != null) {
+            _onRewardedVideoAdEndedEvent ();
+        }
+    }
+
+    private static event Action<IronSourcePlacement> _onRewardedVideoAdRewardedEvent;
+
+    public static event Action<IronSourcePlacement> onRewardedVideoAdRewardedEvent {
+        add {
+            if (_onRewardedVideoAdRewardedEvent == null || !_onRewardedVideoAdRewardedEvent.GetInvocationList ().Contains (value)) {
+                _onRewardedVideoAdRewardedEvent += value;
+            }
+        }
+        
+        remove {
+            if (_onRewardedVideoAdRewardedEvent.GetInvocationList ().Contains (value)) {
+                _onRewardedVideoAdRewardedEvent -= value;
+            }
+        }
+    }
+    
+    public void onRewardedVideoAdRewarded (string description)
+    {
+        if (_onRewardedVideoAdRewardedEvent != null) {
+            IronSourcePlacement ssp = getPlacementFromObject (description);
+            _onRewardedVideoAdRewardedEvent (ssp);
+        }   
+    }
+
+    private static event Action<IronSourcePlacement> _onRewardedVideoAdClickedEvent;
+
+    public static event Action<IronSourcePlacement> onRewardedVideoAdClickedEvent {
+        add {
+            if (_onRewardedVideoAdClickedEvent == null || !_onRewardedVideoAdClickedEvent.GetInvocationList ().Contains (value)) {
+                _onRewardedVideoAdClickedEvent += value;
+            }
+        }
+        
+        remove {
+            if (_onRewardedVideoAdClickedEvent.GetInvocationList ().Contains (value)) {
+                _onRewardedVideoAdClickedEvent -= value;
+            }
+        }
+    }
+    
+    public void onRewardedVideoAdClicked (string description)
+    {
+        if (_onRewardedVideoAdClickedEvent != null) {
+            IronSourcePlacement ssp = getPlacementFromObject (description);
+            _onRewardedVideoAdClickedEvent (ssp);
+        }   
+    }
+
+    private static event Action<bool> _onRewardedVideoAvailabilityChangedEvent;
+
+    public static event Action<bool> onRewardedVideoAvailabilityChangedEvent {
+        add {
+            if (_onRewardedVideoAvailabilityChangedEvent == null || !_onRewardedVideoAvailabilityChangedEvent.GetInvocationList ().Contains (value)) {
+                _onRewardedVideoAvailabilityChangedEvent += value;
+            }
+        }
+
+        remove {
+            if (_onRewardedVideoAvailabilityChangedEvent.GetInvocationList ().Contains (value)) {
+                _onRewardedVideoAvailabilityChangedEvent -= value;
+            }
+        }
+    }
+
+    public void onRewardedVideoAvailabilityChanged (string stringAvailable)
     {
         bool isAvailable = (stringAvailable == "true") ? true : false;
-
-        if (onRewardedVideoAvailabilityChangedEvent != null)
-        {
-            onRewardedVideoAvailabilityChangedEvent(isAvailable);
-        }
-
+        if (_onRewardedVideoAvailabilityChangedEvent != null)
+            _onRewardedVideoAvailabilityChangedEvent (isAvailable);
     }
 
-    // *******************************iOS RewardedVideo DemandOnly Events *******************************
-    public void onRewardedVideoAdLoadedDemandOnly(string instanceId)
-    {
-        if (onRewardedVideoAdLoadedDemandOnlyEvent != null)
-        {
-            onRewardedVideoAdLoadedDemandOnlyEvent(instanceId);
+    // ******************************* RewardedVideo DemandOnly Events *******************************
+
+    private static event Action<string> _onRewardedVideoAdLoadedDemandOnlyEvent;
+
+    public static event Action<string> onRewardedVideoAdLoadedDemandOnlyEvent {
+        add {
+            if (_onRewardedVideoAdLoadedDemandOnlyEvent == null || !_onRewardedVideoAdLoadedDemandOnlyEvent.GetInvocationList ().Contains (value)) {
+                _onRewardedVideoAdLoadedDemandOnlyEvent += value;
+            }
+        }
+
+        remove {
+            if (_onRewardedVideoAdLoadedDemandOnlyEvent.GetInvocationList ().Contains (value)) {
+                _onRewardedVideoAdLoadedDemandOnlyEvent -= value;
+            }
         }
     }
 
-    public void onRewardedVideoAdLoadFailedDemandOnly(string args)
+    public void onRewardedVideoAdLoadedDemandOnly (string instanceId)
     {
-        if (onRewardedVideoAdLoadFailedDemandOnlyEvent != null && !String.IsNullOrEmpty(args))
-        {
-            List<object> argList = IronSourceJSON.Json.Deserialize(args) as List<object>;
-            IronSourceError err = IronSourceUtils.getErrorFromErrorObject(argList[1]);
+        if (_onRewardedVideoAdLoadedDemandOnlyEvent != null ) {
+            _onRewardedVideoAdLoadedDemandOnlyEvent (instanceId);
+        }
+    }
+
+    private static event Action<string,IronSourceError> _onRewardedVideoAdLoadFailedDemandOnlyEvent;
+
+    public static event Action<string,IronSourceError> onRewardedVideoAdLoadFailedDemandOnlyEvent {
+        add {
+            if (_onRewardedVideoAdLoadFailedDemandOnlyEvent == null || !_onRewardedVideoAdLoadFailedDemandOnlyEvent.GetInvocationList ().Contains (value)) {
+                _onRewardedVideoAdLoadFailedDemandOnlyEvent += value;
+            }
+        }
+
+        remove {
+            if (_onRewardedVideoAdLoadFailedDemandOnlyEvent.GetInvocationList ().Contains (value)) {
+                _onRewardedVideoAdLoadFailedDemandOnlyEvent -= value;
+            }
+        }
+    }
+
+    public void onRewardedVideoAdLoadFailedDemandOnly (string args)
+    {
+        if (_onRewardedVideoAdLoadFailedDemandOnlyEvent != null && !String.IsNullOrEmpty(args)) {
+            List<object> argList = IronSourceJSON.Json.Deserialize (args) as List<object>;  
+            IronSourceError err = getErrorFromErrorObject(argList[1]);
             string instanceId = argList[0].ToString();
-            onRewardedVideoAdLoadFailedDemandOnlyEvent(instanceId, err);
+            _onRewardedVideoAdLoadFailedDemandOnlyEvent (instanceId, err);
         }
     }
 
-    public void onRewardedVideoAdOpenedDemandOnly(string instanceId)
+    private static event Action<string> _onRewardedVideoAdOpenedDemandOnlyEvent;
+
+    public static event Action<string> onRewardedVideoAdOpenedDemandOnlyEvent {
+        add {
+            if (_onRewardedVideoAdOpenedDemandOnlyEvent == null || !_onRewardedVideoAdOpenedDemandOnlyEvent.GetInvocationList ().Contains (value)) {
+                _onRewardedVideoAdOpenedDemandOnlyEvent += value;
+            }
+        }
+        
+        remove {
+            if (_onRewardedVideoAdOpenedDemandOnlyEvent.GetInvocationList ().Contains (value)) {
+                _onRewardedVideoAdOpenedDemandOnlyEvent -= value;
+            }
+        }
+    }
+    
+    public void onRewardedVideoAdOpenedDemandOnly (string instanceId)
     {
-        if (onRewardedVideoAdOpenedDemandOnlyEvent != null)
-        {
-            onRewardedVideoAdOpenedDemandOnlyEvent(instanceId);
+        if (_onRewardedVideoAdOpenedDemandOnlyEvent != null) {
+            _onRewardedVideoAdOpenedDemandOnlyEvent (instanceId);
         }
     }
 
-    public void onRewardedVideoAdClosedDemandOnly(string instanceId)
+    private static event Action<string> _onRewardedVideoAdClosedDemandOnlyEvent;
+
+    public static event Action<string> onRewardedVideoAdClosedDemandOnlyEvent {
+        add {
+            if (_onRewardedVideoAdClosedDemandOnlyEvent == null || !_onRewardedVideoAdClosedDemandOnlyEvent.GetInvocationList ().Contains (value)) {
+                _onRewardedVideoAdClosedDemandOnlyEvent += value;
+            }
+        }
+        
+        remove {
+            if (_onRewardedVideoAdClosedDemandOnlyEvent.GetInvocationList ().Contains (value)) {
+                _onRewardedVideoAdClosedDemandOnlyEvent -= value;
+            }
+        }
+    }
+    
+    public void onRewardedVideoAdClosedDemandOnly (string instanceId)
     {
-        if (onRewardedVideoAdClosedDemandOnlyEvent != null)
-        {
-            onRewardedVideoAdClosedDemandOnlyEvent(instanceId);
+        if (_onRewardedVideoAdClosedDemandOnlyEvent != null) {
+            _onRewardedVideoAdClosedDemandOnlyEvent (instanceId);
         }
     }
 
-    public void onRewardedVideoAdRewardedDemandOnly(string instanceId)
-    {
-        if (onRewardedVideoAdRewardedDemandOnlyEvent != null)
-        {
-            onRewardedVideoAdRewardedDemandOnlyEvent(instanceId);
+    private static event Action<string> _onRewardedVideoAdRewardedDemandOnlyEvent;
+
+    public static event Action<string> onRewardedVideoAdRewardedDemandOnlyEvent {
+        add {
+            if (_onRewardedVideoAdRewardedDemandOnlyEvent == null || !_onRewardedVideoAdRewardedDemandOnlyEvent.GetInvocationList ().Contains (value)) {
+                _onRewardedVideoAdRewardedDemandOnlyEvent += value;
+            }
+        }
+        
+        remove {
+            if (_onRewardedVideoAdRewardedDemandOnlyEvent.GetInvocationList ().Contains (value)) {
+                _onRewardedVideoAdRewardedDemandOnlyEvent -= value;
+            }
         }
     }
-
-    public void onRewardedVideoAdShowFailedDemandOnly(string args)
+    
+    public void onRewardedVideoAdRewardedDemandOnly (string instanceId)
     {
-        if (onRewardedVideoAdShowFailedDemandOnlyEvent != null && !String.IsNullOrEmpty(args))
-        {
-            List<object> argList = IronSourceJSON.Json.Deserialize(args) as List<object>;
-            IronSourceError err = IronSourceUtils.getErrorFromErrorObject(argList[1]);
+        if (_onRewardedVideoAdRewardedDemandOnlyEvent != null) {
+            _onRewardedVideoAdRewardedDemandOnlyEvent (instanceId);
+        }   
+    }
+
+    private static event Action<string,IronSourceError> _onRewardedVideoAdShowFailedDemandOnlyEvent;
+
+    public static event Action<string,IronSourceError> onRewardedVideoAdShowFailedDemandOnlyEvent {
+        add {
+            if (_onRewardedVideoAdShowFailedDemandOnlyEvent == null || !_onRewardedVideoAdShowFailedDemandOnlyEvent.GetInvocationList ().Contains (value)) {
+                _onRewardedVideoAdShowFailedDemandOnlyEvent += value;
+            }
+        }
+        
+        remove {
+            if (_onRewardedVideoAdShowFailedDemandOnlyEvent.GetInvocationList ().Contains (value)) {
+                _onRewardedVideoAdShowFailedDemandOnlyEvent -= value;
+            }
+        }
+    }
+    
+    public void onRewardedVideoAdShowFailedDemandOnly (string args)
+    {  
+        if (_onRewardedVideoAdShowFailedDemandOnlyEvent != null && !String.IsNullOrEmpty(args)) {
+            List<object> argList = IronSourceJSON.Json.Deserialize (args) as List<object>;  
+            IronSourceError err = getErrorFromErrorObject(argList[1]);
             string instanceId = argList[0].ToString();
-            onRewardedVideoAdShowFailedDemandOnlyEvent(instanceId, err);
+            _onRewardedVideoAdShowFailedDemandOnlyEvent (instanceId, err);
         }
     }
 
-    public void onRewardedVideoAdClickedDemandOnly(string instanceId)
-    {
-        if (onRewardedVideoAdClickedDemandOnlyEvent != null)
-        {
-            onRewardedVideoAdClickedDemandOnlyEvent(instanceId);
+    private static event Action<string> _onRewardedVideoAdClickedDemandOnlyEvent;
+
+    public static event Action<string> onRewardedVideoAdClickedDemandOnlyEvent {
+        add {
+            if (_onRewardedVideoAdClickedDemandOnlyEvent == null || !_onRewardedVideoAdClickedDemandOnlyEvent.GetInvocationList ().Contains (value)) {
+                _onRewardedVideoAdClickedDemandOnlyEvent += value;
+            }
+        }
+        
+        remove {
+            if (_onRewardedVideoAdClickedDemandOnlyEvent.GetInvocationList ().Contains (value)) {
+                _onRewardedVideoAdClickedDemandOnlyEvent -= value;
+            }
         }
     }
+    
+    public void onRewardedVideoAdClickedDemandOnly (string instanceId)
+    { 
+        if (_onRewardedVideoAdClickedDemandOnlyEvent != null) {
+            _onRewardedVideoAdClickedDemandOnlyEvent (instanceId);
+        }   
+    }
 
-    // *******************************iOS Interstitial Events *******************************
+    // ******************************* Interstitial Events *******************************
 
+    private static event Action _onInterstitialAdReadyEvent;
+
+    public static event Action onInterstitialAdReadyEvent {
+        add {
+            if (_onInterstitialAdReadyEvent == null || !_onInterstitialAdReadyEvent.GetInvocationList ().Contains (value)) {
+                _onInterstitialAdReadyEvent += value;
+            }
+        }
+        
+        remove {
+            if (_onInterstitialAdReadyEvent.GetInvocationList ().Contains (value)) {
+                _onInterstitialAdReadyEvent -= value;
+            }
+        }
+    }
+    
     public void onInterstitialAdReady ()
     {
-        if (onInterstitialAdReadyEvent != null)
-            onInterstitialAdReadyEvent ();
+        if (_onInterstitialAdReadyEvent != null)
+            _onInterstitialAdReadyEvent ();
     }
 
+    private static event Action<IronSourceError> _onInterstitialAdLoadFailedEvent;
+
+    public static event Action<IronSourceError> onInterstitialAdLoadFailedEvent {
+        add {
+            if (_onInterstitialAdLoadFailedEvent == null || !_onInterstitialAdLoadFailedEvent.GetInvocationList ().Contains (value)) {
+                _onInterstitialAdLoadFailedEvent += value;
+            }
+        }
+        
+        remove {
+            if (_onInterstitialAdLoadFailedEvent.GetInvocationList ().Contains (value)) {
+                _onInterstitialAdLoadFailedEvent -= value;
+            }
+        }
+    }
     
     public void onInterstitialAdLoadFailed (string description)
     {
-        if (onInterstitialAdLoadFailedEvent != null) {
-            IronSourceError sse = IronSourceUtils.getErrorFromErrorObject(description);
-            onInterstitialAdLoadFailedEvent (sse);
+        if (_onInterstitialAdLoadFailedEvent != null) {
+            IronSourceError sse = getErrorFromErrorObject (description);
+            _onInterstitialAdLoadFailedEvent (sse);
         }
     }
 
+    private static event Action _onInterstitialAdOpenedEvent;
+
+    public static event Action onInterstitialAdOpenedEvent {
+        add {
+            if (_onInterstitialAdOpenedEvent == null || !_onInterstitialAdOpenedEvent.GetInvocationList ().Contains (value)) {
+                _onInterstitialAdOpenedEvent += value;
+            }
+        }
+        
+        remove {
+            if (_onInterstitialAdOpenedEvent.GetInvocationList ().Contains (value)) {
+                _onInterstitialAdOpenedEvent -= value;
+            }
+        }
+    }
+    
     public void onInterstitialAdOpened (string empty)
     {
-        if (onInterstitialAdOpenedEvent != null) {
-            onInterstitialAdOpenedEvent ();
-        }
-    }
-        
-    public void onInterstitialAdClosed (string empty)
-    {
-        if (onInterstitialAdClosedEvent != null) {
-            onInterstitialAdClosedEvent ();
+        if (_onInterstitialAdOpenedEvent != null) {
+            _onInterstitialAdOpenedEvent ();
         }
     }
 
+    private static event Action _onInterstitialAdClosedEvent;
+
+    public static event Action onInterstitialAdClosedEvent {
+        add {
+            if (_onInterstitialAdClosedEvent == null || !_onInterstitialAdClosedEvent.GetInvocationList ().Contains (value)) {
+                _onInterstitialAdClosedEvent += value;
+            }
+        }
+        
+        remove {
+            if (_onInterstitialAdClosedEvent.GetInvocationList ().Contains (value)) {
+                _onInterstitialAdClosedEvent -= value;
+            }
+        }
+    }
+    
+    public void onInterstitialAdClosed (string empty)
+    {
+        if (_onInterstitialAdClosedEvent != null) {
+            _onInterstitialAdClosedEvent ();
+        }
+    }
+
+    private static event Action _onInterstitialAdShowSucceededEvent;
+
+    public static event Action onInterstitialAdShowSucceededEvent {
+        add {
+            if (_onInterstitialAdShowSucceededEvent == null || !_onInterstitialAdShowSucceededEvent.GetInvocationList ().Contains (value)) {
+                _onInterstitialAdShowSucceededEvent += value;
+            }
+        }
+        
+        remove {
+            if (_onInterstitialAdShowSucceededEvent.GetInvocationList ().Contains (value)) {
+                _onInterstitialAdShowSucceededEvent -= value;
+            }
+        }
+    }
+    
     public void onInterstitialAdShowSucceeded (string empty)
     {
-        if (onInterstitialAdShowSucceededEvent != null) {
-            onInterstitialAdShowSucceededEvent ();
+        if (_onInterstitialAdShowSucceededEvent != null) {
+            _onInterstitialAdShowSucceededEvent ();
+        }
+    }
+
+    private static event Action<IronSourceError> _onInterstitialAdShowFailedEvent;
+
+    public static event Action<IronSourceError> onInterstitialAdShowFailedEvent {
+        add {
+            if (_onInterstitialAdShowFailedEvent == null || !_onInterstitialAdShowFailedEvent.GetInvocationList ().Contains (value)) {
+                _onInterstitialAdShowFailedEvent += value;
+            }
+        }
+        
+        remove {
+            if (_onInterstitialAdShowFailedEvent.GetInvocationList ().Contains (value)) {
+                _onInterstitialAdShowFailedEvent -= value;
+            }
         }
     }
     
     public void onInterstitialAdShowFailed (string description)
     {
-        if (onInterstitialAdShowFailedEvent != null) {
-            IronSourceError sse = IronSourceUtils.getErrorFromErrorObject(description);
-            onInterstitialAdShowFailedEvent (sse);
+        if (_onInterstitialAdShowFailedEvent != null) {
+            IronSourceError sse = getErrorFromErrorObject (description);
+            _onInterstitialAdShowFailedEvent (sse);
         }   
     }
 
+    private static event Action _onInterstitialAdClickedEvent;
+
+    public static event Action onInterstitialAdClickedEvent {
+        add {
+            if (_onInterstitialAdClickedEvent == null || !_onInterstitialAdClickedEvent.GetInvocationList ().Contains (value)) {
+                _onInterstitialAdClickedEvent += value;
+            }
+        }
+        
+        remove {
+            if (_onInterstitialAdClickedEvent.GetInvocationList ().Contains (value)) {
+                _onInterstitialAdClickedEvent -= value;
+            }
+        }
+    }
+    
     public void onInterstitialAdClicked (string empty)
     {
-        if (onInterstitialAdClickedEvent != null) {
-            onInterstitialAdClickedEvent ();
+        if (_onInterstitialAdClickedEvent != null) {
+            _onInterstitialAdClickedEvent ();
         }
     }
 
-    // *******************************iOS Interstitial DemanOnly Events *******************************
+    // ******************************* Interstitial DemanOnly Events *******************************
 
-        public void onInterstitialAdReadyDemandOnly (string instanceId)
+    private static event Action<string> _onInterstitialAdReadyDemandOnlyEvent;
+
+    public static event Action<string> onInterstitialAdReadyDemandOnlyEvent {
+        add {
+            if (_onInterstitialAdReadyDemandOnlyEvent == null || !_onInterstitialAdReadyDemandOnlyEvent.GetInvocationList ().Contains (value)) {
+                _onInterstitialAdReadyDemandOnlyEvent += value;
+            }
+        }
+        
+        remove {
+            if (_onInterstitialAdReadyDemandOnlyEvent.GetInvocationList ().Contains (value)) {
+                _onInterstitialAdReadyDemandOnlyEvent -= value;
+            }
+        }
+    }
+    
+    public void onInterstitialAdReadyDemandOnly (string instanceId)
     {
-        if (onInterstitialAdReadyDemandOnlyEvent != null)
-            onInterstitialAdReadyDemandOnlyEvent (instanceId);
+        if (_onInterstitialAdReadyDemandOnlyEvent != null)
+            _onInterstitialAdReadyDemandOnlyEvent (instanceId);
     }
 
+
+    private static event Action<string,IronSourceError> _onInterstitialAdLoadFailedDemandOnlyEvent;
+
+    public static event Action<string,IronSourceError> onInterstitialAdLoadFailedDemandOnlyEvent {
+        add {
+            if (_onInterstitialAdLoadFailedDemandOnlyEvent == null || !_onInterstitialAdLoadFailedDemandOnlyEvent.GetInvocationList ().Contains (value)) {
+                _onInterstitialAdLoadFailedDemandOnlyEvent += value;
+            }
+        }
+        
+        remove {
+            if (_onInterstitialAdLoadFailedDemandOnlyEvent.GetInvocationList ().Contains (value)) {
+                _onInterstitialAdLoadFailedDemandOnlyEvent -= value;
+            }
+        }
+    }
     
     public void onInterstitialAdLoadFailedDemandOnly (string args)
     {
-        if (onInterstitialAdLoadFailedDemandOnlyEvent  != null && !String.IsNullOrEmpty(args)) {
-            List<object> argList = IronSourceJSON.Json.Deserialize(args) as List<object>;
-            IronSourceError err = IronSourceUtils.getErrorFromErrorObject(argList[1]);
-            string instanceId = argList[0].ToString(); 
-            onInterstitialAdLoadFailedDemandOnlyEvent  (instanceId, err);
+        if (_onInterstitialAdLoadFailedDemandOnlyEvent != null && !String.IsNullOrEmpty(args)) {
+            List<object> argList = IronSourceJSON.Json.Deserialize (args) as List<object>;  
+            IronSourceError err = getErrorFromErrorObject(argList[1]);
+            string instanceId = argList[0].ToString();
+            _onInterstitialAdLoadFailedDemandOnlyEvent (instanceId, err);
         }
     }
 
+    private static event Action<string> _onInterstitialAdOpenedDemandOnlyEvent;
+
+    public static event Action<string> onInterstitialAdOpenedDemandOnlyEvent {
+        add {
+            if (_onInterstitialAdOpenedDemandOnlyEvent == null || !_onInterstitialAdOpenedDemandOnlyEvent.GetInvocationList ().Contains (value)) {
+                _onInterstitialAdOpenedDemandOnlyEvent += value;
+            }
+        }
+        
+        remove {
+            if (_onInterstitialAdOpenedDemandOnlyEvent.GetInvocationList ().Contains (value)) {
+                _onInterstitialAdOpenedDemandOnlyEvent -= value;
+            }
+        }
+    }
+    
     public void onInterstitialAdOpenedDemandOnly (string instanceId)
     {
-        if (onInterstitialAdOpenedDemandOnlyEvent != null) {
-            onInterstitialAdOpenedDemandOnlyEvent (instanceId);
+        if (_onInterstitialAdOpenedDemandOnlyEvent != null) {
+            _onInterstitialAdOpenedDemandOnlyEvent (instanceId);
         }
     }
+
+    private static event Action<string> _onInterstitialAdClosedDemandOnlyEvent;
+
+    public static event Action<string> onInterstitialAdClosedDemandOnlyEvent {
+        add {
+            if (_onInterstitialAdClosedDemandOnlyEvent == null || !_onInterstitialAdClosedDemandOnlyEvent.GetInvocationList ().Contains (value)) {
+                _onInterstitialAdClosedDemandOnlyEvent += value;
+            }
+        }
         
+        remove {
+            if (_onInterstitialAdClosedDemandOnlyEvent.GetInvocationList ().Contains (value)) {
+                _onInterstitialAdClosedDemandOnlyEvent -= value;
+            }
+        }
+    }
+    
     public void onInterstitialAdClosedDemandOnly (string instanceId)
     {
-        if (onInterstitialAdClosedDemandOnlyEvent != null) {
-            onInterstitialAdClosedDemandOnlyEvent(instanceId);
+        if (_onInterstitialAdClosedDemandOnlyEvent != null) {
+            _onInterstitialAdClosedDemandOnlyEvent (instanceId);
         }
     }
 
-    
-    public void onInterstitialAdShowFailedDemandOnly (string args)
-    {
-        if (onInterstitialAdShowFailedDemandOnlyEvent != null && !String.IsNullOrEmpty(args))
-        {
-            List<object> argList = IronSourceJSON.Json.Deserialize(args) as List<object>;
-            IronSourceError err = IronSourceUtils.getErrorFromErrorObject(argList[1]);
-            string instanceId = argList[0].ToString();
-            onInterstitialAdShowFailedDemandOnlyEvent (instanceId, err);
-        }   
-    }
+    private static event Action<string, IronSourceError> _onInterstitialAdShowFailedDemandOnlyEvent;
 
-    public void onInterstitialAdClickedDemandOnly (string instanceId)
-    {
-        if (onInterstitialAdClickedDemandOnlyEvent != null) {
-            onInterstitialAdClickedDemandOnlyEvent (instanceId);
-        }
-    }
-
-    // *******************************iOS Rewarded Interstitial Events *******************************
-
-    public void onInterstitialAdRewarded(string empty)
-    {
-        if (onInterstitialAdRewardedEvent != null)
-        {
-            onInterstitialAdRewardedEvent();
-        }
-    }
-
-    // *******************************iOS Offerwall Events ******************************* 
-
-    public void onOfferwallOpened(string empty)
-    {
-        if (onOfferwallOpenedEvent != null)
-        {
-            onOfferwallOpenedEvent();
-        }
-    }
-
-
-    public void onOfferwallShowFailed(string description)
-    {
-        if (onOfferwallShowFailedEvent != null)
-        {
-            IronSourceError sse = IronSourceUtils.getErrorFromErrorObject(description);
-            onOfferwallShowFailedEvent(sse);
-        }
-    }
-
-
-    public void onOfferwallClosed(string empty)
-    {
-        if (onOfferwallClosedEvent != null)
-        {
-            onOfferwallClosedEvent();
-        }
-    }
-
-
-    public void onGetOfferwallCreditsFailed(string description)
-    {
-        if (onGetOfferwallCreditsFailedEvent != null)
-        {
-            IronSourceError sse = IronSourceUtils.getErrorFromErrorObject(description);
-            onGetOfferwallCreditsFailedEvent(sse);
-
-        }
-    }
-
-
-    public void onOfferwallAdCredited(string json)
-    {
-        if (onOfferwallAdCreditedEvent != null)
-            onOfferwallAdCreditedEvent(IronSourceJSON.Json.Deserialize(json) as Dictionary<string, object>);
-    }
-
-
-    public void onOfferwallAvailable(string stringAvailable)
-    {
-        bool isAvailable = (stringAvailable == "true") ? true : false;
-        if (onOfferwallAvailableEvent != null)
-            onOfferwallAvailableEvent(isAvailable);
-    }
-
-    // ******************************* iOS Banner Events *******************************    
-
-    public void onBannerAdLoaded ()
-    {
-        if (onBannerAdLoadedEvent != null)
-            onBannerAdLoadedEvent ();
-    }
-
-    public void onBannerAdLoadFailed (string description)
-    {
-        if (onBannerAdLoadFailedEvent != null) {
-            IronSourceError sse = IronSourceUtils.getErrorFromErrorObject (description);
-            onBannerAdLoadFailedEvent (sse);
+    public static event Action<string, IronSourceError> onInterstitialAdShowFailedDemandOnlyEvent {
+        add {
+            if (_onInterstitialAdShowFailedDemandOnlyEvent == null || !_onInterstitialAdShowFailedDemandOnlyEvent.GetInvocationList ().Contains (value)) {
+                _onInterstitialAdShowFailedDemandOnlyEvent += value;
+            }
         }
         
+        remove {
+            if (_onInterstitialAdShowFailedDemandOnlyEvent.GetInvocationList ().Contains (value)) {
+                _onInterstitialAdShowFailedDemandOnlyEvent -= value;
+            }
+        }
+    }
+    
+    public void onInterstitialAdShowFailedDemandOnly (string args)
+    { 
+        if (_onInterstitialAdLoadFailedDemandOnlyEvent != null && !String.IsNullOrEmpty (args)) {
+            List<object> argList = IronSourceJSON.Json.Deserialize (args) as List<object>; 
+            IronSourceError sse = getErrorFromErrorObject(argList[1]);
+            string instanceId = argList[0].ToString();
+            _onInterstitialAdShowFailedDemandOnlyEvent (instanceId, sse);
+        }
+    }
+
+    private static event Action<string> _onInterstitialAdClickedDemandOnlyEvent;
+
+    public static event Action<string> onInterstitialAdClickedDemandOnlyEvent {
+        add {
+            if (_onInterstitialAdClickedDemandOnlyEvent == null || !_onInterstitialAdClickedDemandOnlyEvent.GetInvocationList ().Contains (value)) {
+                _onInterstitialAdClickedDemandOnlyEvent += value;
+            }
+        }
+        
+        remove {
+            if (_onInterstitialAdClickedDemandOnlyEvent.GetInvocationList ().Contains (value)) {
+                _onInterstitialAdClickedDemandOnlyEvent -= value;
+            }
+        }
+    }
+    
+    public void onInterstitialAdClickedDemandOnly (string instanceId)
+    {
+        if (_onInterstitialAdClickedDemandOnlyEvent != null) {
+            _onInterstitialAdClickedDemandOnlyEvent (instanceId);
+        }
+    }
+
+
+    // ******************************* Rewarded Interstitial Events *******************************
+
+    private static event Action _onInterstitialAdRewardedEvent;
+    
+    public static event Action onInterstitialAdRewardedEvent {
+        add {
+            if (_onInterstitialAdRewardedEvent == null || !_onInterstitialAdRewardedEvent.GetInvocationList ().Contains (value)) {
+                _onInterstitialAdRewardedEvent += value;
+            }
+        }
+        
+        remove {
+            if (_onInterstitialAdRewardedEvent.GetInvocationList ().Contains (value)) {
+                _onInterstitialAdRewardedEvent -= value;
+            }
+        }
+    }
+    
+    public void onInterstitialAdRewarded (string empty)
+    {
+        if (_onInterstitialAdRewardedEvent != null) {
+            _onInterstitialAdRewardedEvent ();
+        }
+    }
+
+    // ******************************* Offerwall Events ******************************* 
+
+    private static event Action _onOfferwallOpenedEvent;
+
+    public static event Action onOfferwallOpenedEvent {
+        add {
+            if (_onOfferwallOpenedEvent == null || !_onOfferwallOpenedEvent.GetInvocationList ().Contains (value)) {
+                _onOfferwallOpenedEvent += value;
+            }
+        }
+        
+        remove {
+            if (_onOfferwallOpenedEvent.GetInvocationList ().Contains (value)) {
+                _onOfferwallOpenedEvent -= value;
+            }           
+        }
+    }
+    
+    public void onOfferwallOpened (string empty)
+    {
+        if (_onOfferwallOpenedEvent != null) {
+            _onOfferwallOpenedEvent ();
+        }
+    }
+
+    private static event Action<IronSourceError> _onOfferwallShowFailedEvent;
+
+    public static event Action<IronSourceError> onOfferwallShowFailedEvent {
+        add {
+            if (_onOfferwallShowFailedEvent == null || !_onOfferwallShowFailedEvent.GetInvocationList ().Contains (value)) {
+                _onOfferwallShowFailedEvent += value;
+            }
+        }
+        
+        remove {
+            if (_onOfferwallShowFailedEvent.GetInvocationList ().Contains (value)) {
+                _onOfferwallShowFailedEvent -= value;
+            }
+        }
+    }
+    
+    public void onOfferwallShowFailed (string description)
+    {
+        if (_onOfferwallShowFailedEvent != null) {
+            IronSourceError sse = getErrorFromErrorObject (description);
+            _onOfferwallShowFailedEvent (sse);
+        }
+    }
+
+    private static event Action _onOfferwallClosedEvent;
+
+    public static event Action onOfferwallClosedEvent {
+        add {
+            if (_onOfferwallClosedEvent == null || !_onOfferwallClosedEvent.GetInvocationList ().Contains (value)) {
+                _onOfferwallClosedEvent += value;
+            }
+        }
+        
+        remove {
+            if (_onOfferwallClosedEvent.GetInvocationList ().Contains (value)) {
+                _onOfferwallClosedEvent -= value;
+            }       
+        }
+    }
+    
+    public void onOfferwallClosed (string empty)
+    {
+        if (_onOfferwallClosedEvent != null) {
+            _onOfferwallClosedEvent ();
+        }
+    }
+
+    private static event Action<IronSourceError> _onGetOfferwallCreditsFailedEvent;
+
+    public static event Action<IronSourceError> onGetOfferwallCreditsFailedEvent {
+        add {
+            if (_onGetOfferwallCreditsFailedEvent == null || !_onGetOfferwallCreditsFailedEvent.GetInvocationList ().Contains (value)) {
+                _onGetOfferwallCreditsFailedEvent += value;
+            }
+        }
+        
+        remove {
+            if (_onGetOfferwallCreditsFailedEvent.GetInvocationList ().Contains (value)) {
+                _onGetOfferwallCreditsFailedEvent -= value;
+            }
+        }
+    }
+    
+    public void onGetOfferwallCreditsFailed (string description)
+    {
+        if (_onGetOfferwallCreditsFailedEvent != null) {
+            IronSourceError sse = getErrorFromErrorObject (description);
+            _onGetOfferwallCreditsFailedEvent (sse);
+
+        }
+    }
+
+    private static event Action<Dictionary<string,object>> _onOfferwallAdCreditedEvent;
+
+    public static event Action<Dictionary<string,object>> onOfferwallAdCreditedEvent {
+        add {
+            if (_onOfferwallAdCreditedEvent == null || !_onOfferwallAdCreditedEvent.GetInvocationList ().Contains (value)) {
+                _onOfferwallAdCreditedEvent += value;
+            }
+        }
+
+        remove {
+            if (_onOfferwallAdCreditedEvent.GetInvocationList ().Contains (value)) {
+                _onOfferwallAdCreditedEvent -= value;
+            }
+        }
+    }
+
+    public void onOfferwallAdCredited (string json)
+    {
+        if (_onOfferwallAdCreditedEvent != null)
+            _onOfferwallAdCreditedEvent (IronSourceJSON.Json.Deserialize (json) as Dictionary<string,object>);
+    }
+
+    private static event Action<bool> _onOfferwallAvailableEvent;
+    
+    public static event Action<bool> onOfferwallAvailableEvent {
+        add {
+            if (_onOfferwallAvailableEvent == null || !_onOfferwallAvailableEvent.GetInvocationList ().Contains (value)) {
+                _onOfferwallAvailableEvent += value;
+            }
+        }
+        
+        remove {
+            if (_onOfferwallAvailableEvent.GetInvocationList ().Contains (value)) {
+                _onOfferwallAvailableEvent -= value;
+            }
+        }
+    }
+    
+    public void onOfferwallAvailable (string stringAvailable)
+    {
+        bool isAvailable = (stringAvailable == "true") ? true : false;
+        if (_onOfferwallAvailableEvent != null)
+            _onOfferwallAvailableEvent (isAvailable);
+    }
+
+    // ******************************* Banner Events *******************************    
+    private static event Action _onBannerAdLoadedEvent;
+    
+    public static event Action onBannerAdLoadedEvent {
+        add {
+            if (_onBannerAdLoadedEvent == null || !_onBannerAdLoadedEvent.GetInvocationList ().Contains (value)) {
+                _onBannerAdLoadedEvent += value;
+            }
+        }
+        
+        remove {
+            if (_onBannerAdLoadedEvent.GetInvocationList ().Contains (value)) {
+                _onBannerAdLoadedEvent -= value;
+            }
+        }
+    }
+    
+    public void onBannerAdLoaded ()
+    {
+        if (_onBannerAdLoadedEvent != null)
+            _onBannerAdLoadedEvent ();
+    }
+    
+    private static event Action<IronSourceError> _onBannerAdLoadFailedEvent;
+    
+    public static event Action<IronSourceError> onBannerAdLoadFailedEvent {
+        add {
+            if (_onBannerAdLoadFailedEvent == null || !_onBannerAdLoadFailedEvent.GetInvocationList ().Contains (value)) {
+                _onBannerAdLoadFailedEvent += value;
+            }
+        }
+        
+        remove {
+            if (_onBannerAdLoadFailedEvent.GetInvocationList ().Contains (value)) {
+                _onBannerAdLoadFailedEvent -= value;
+            }
+        }
+    }
+    
+    public void onBannerAdLoadFailed (string description)
+    {
+        if (_onBannerAdLoadFailedEvent != null) {
+            IronSourceError sse = getErrorFromErrorObject (description);
+            _onBannerAdLoadFailedEvent (sse);
+        }
+        
+    }
+
+    private static event Action _onBannerAdClickedEvent;
+    
+    public static event Action onBannerAdClickedEvent {
+        add {
+            if (_onBannerAdClickedEvent == null || !_onBannerAdClickedEvent.GetInvocationList ().Contains (value)) {
+                _onBannerAdClickedEvent += value;
+            }
+        }
+        
+        remove {
+            if (_onBannerAdClickedEvent.GetInvocationList ().Contains (value)) {
+                _onBannerAdClickedEvent -= value;
+            }
+        }
     }
     
     public void onBannerAdClicked ()
     {
-        if (onBannerAdClickedEvent != null)
-            onBannerAdClickedEvent ();
+        if (_onBannerAdClickedEvent != null)
+            _onBannerAdClickedEvent ();
     }
 
+    private static event Action _onBannerAdScreenPresentedEvent;
+    
+    public static event Action onBannerAdScreenPresentedEvent {
+        add {
+            if (_onBannerAdScreenPresentedEvent == null || !_onBannerAdScreenPresentedEvent.GetInvocationList ().Contains (value)) {
+                _onBannerAdScreenPresentedEvent += value;
+            }
+        }
+        
+        remove {
+            if (_onBannerAdScreenPresentedEvent.GetInvocationList ().Contains (value)) {
+                _onBannerAdScreenPresentedEvent -= value;
+            }
+        }
+    }
+    
     public void onBannerAdScreenPresented ()
     {
-        if (onBannerAdScreenPresentedEvent != null)
-            onBannerAdScreenPresentedEvent ();
+        if (_onBannerAdScreenPresentedEvent != null)
+            _onBannerAdScreenPresentedEvent ();
     }
 
+    private static event Action _onBannerAdScreenDismissedEvent;
+    
+    public static event Action onBannerAdScreenDismissedEvent {
+        add {
+            if (_onBannerAdScreenDismissedEvent == null || !_onBannerAdScreenDismissedEvent.GetInvocationList ().Contains (value)) {
+                _onBannerAdScreenDismissedEvent += value;
+            }
+        }
+        
+        remove {
+            if (_onBannerAdScreenDismissedEvent.GetInvocationList ().Contains (value)) {
+                _onBannerAdScreenDismissedEvent -= value;
+            }
+        }
+    }
+    
     public void onBannerAdScreenDismissed ()
     {
-        if (onBannerAdScreenDismissedEvent != null)
-            onBannerAdScreenDismissedEvent ();
+        if (_onBannerAdScreenDismissedEvent != null)
+            _onBannerAdScreenDismissedEvent ();
     }
 
+    private static event Action _onBannerAdLeftApplicationEvent;
+
+    public static event Action onBannerAdLeftApplicationEvent {
+        add {
+            if (_onBannerAdLeftApplicationEvent == null || !_onBannerAdLeftApplicationEvent.GetInvocationList ().Contains (value)) {
+                _onBannerAdLeftApplicationEvent += value;
+            }
+        }
+        
+        remove {
+            if (_onBannerAdLeftApplicationEvent.GetInvocationList ().Contains (value)) {
+                _onBannerAdLeftApplicationEvent -= value;
+            }
+        }
+    }
+    
     public void onBannerAdLeftApplication ()
     {
-        if (onBannerAdLeftApplicationEvent != null)
-            onBannerAdLeftApplicationEvent ();
+        if (_onBannerAdLeftApplicationEvent != null)
+            _onBannerAdLeftApplicationEvent ();
     }
 
-    // ******************************* iOS Segment Events *******************************    
-
+    private static event Action<string> _onSegmentReceivedEvent;
+    public static event Action<string> onSegmentReceivedEvent {
+        add {
+            if (_onSegmentReceivedEvent == null || !_onSegmentReceivedEvent.GetInvocationList ().Contains (value)) {
+                _onSegmentReceivedEvent += value;
+            }
+        }
+        
+        remove {
+            if (_onSegmentReceivedEvent.GetInvocationList ().Contains (value)) {
+                _onSegmentReceivedEvent -= value;
+            }
+        }
+    }
+    
     public void onSegmentReceived (string segmentName)
     {
-        if (onSegmentReceivedEvent != null)
-            onSegmentReceivedEvent (segmentName);
+        if (_onSegmentReceivedEvent != null)
+            _onSegmentReceivedEvent (segmentName);
     }
+    
+    // ******************************* Helper methods *******************************   
 
-#endif
-#if UNITY_ANDROID
-
-    //subscribe to IronSourceInterstitialAndroid IS Mediation & rewarded Interstitial events and notify to subscribed events inside the app
-    private void registerInterstitialEvents()
+        private IronSourceError getErrorFromErrorObject (object descriptionObject)
     {
-        this.interstitialAndroid.OnInterstitialAdClicked += () =>
-        {
-            if (onInterstitialAdClickedEvent != null)
-            {
-                onInterstitialAdClickedEvent();
-            }
-        };
+        Dictionary<string,object> error = null;
+        if (descriptionObject is IDictionary) {
+            error = descriptionObject as Dictionary<string,object>;
+        }
+        else if (descriptionObject is String && !String.IsNullOrEmpty (descriptionObject.ToString())) {
+            error = IronSourceJSON.Json.Deserialize (descriptionObject.ToString()) as Dictionary<string,object>;
+        }
 
-        this.interstitialAndroid.OnInterstitialAdReady += () =>
-        {
-            if (onInterstitialAdReadyEvent != null)
-            {
-                onInterstitialAdReadyEvent();
-            }
-        };
-
-        this.interstitialAndroid.OnInterstitialAdClosed += () =>
-        {
-            if (onInterstitialAdClosedEvent != null)
-            {
-                onInterstitialAdClosedEvent();
-            }
-        };
-
-        this.interstitialAndroid.OnInterstitialAdOpened += () =>
-        {
-            if (onInterstitialAdOpenedEvent != null)
-            {
-                onInterstitialAdOpenedEvent();
-            }
-        };
-
-        this.interstitialAndroid.OnInterstitialAdLoadFailed += (ironsourceError) =>
-        {
-            if (onInterstitialAdLoadFailedEvent != null)
-            {
-                onInterstitialAdLoadFailedEvent(ironsourceError);
-            }
-        };
-
-        this.interstitialAndroid.OnInterstitialAdShowFailed += (ironSourceError) =>
-        {
-            if (onInterstitialAdShowFailedEvent != null)
-            {
-                onInterstitialAdShowFailedEvent(ironSourceError);
-            }
-        };
-
-        this.interstitialAndroid.OnInterstitialAdShowSucceeded += () =>
-        {
-            if (onInterstitialAdShowSucceededEvent != null)
-            {
-                onInterstitialAdShowSucceededEvent();
-            }
-        };
-        this.interstitialAndroid.OnInterstitialAdRewarded += () =>
-        {
-            if (onInterstitialAdRewardedEvent != null)
-            {
-                onInterstitialAdRewardedEvent();
-            }
-        };
-
+        IronSourceError sse = new IronSourceError (-1, "");
+        if (error != null && error.Count > 0) {
+            int eCode = Convert.ToInt32 (error [ERROR_CODE].ToString ());
+            string eDescription = error [ERROR_DESCRIPTION].ToString ();
+            sse = new IronSourceError (eCode, eDescription);
+        } 
+    
+        return sse;
     }
 
-    //subscribe to IronSourceInterstitialAndroid IS Demand Only events and notify to subscribed events inside the app
-    private void registerInterstitialDemandOnlyEvents()
-    {
-        this.interstitialAndroid.OnInterstitialAdReadyDemandOnly += (instanceId) =>
-        {
-            if (onInterstitialAdReadyDemandOnlyEvent != null)
-            {
-                onInterstitialAdReadyDemandOnlyEvent(instanceId);
-            }
-        };
+    private IronSourcePlacement getPlacementFromObject (object placementObject)
+    {       
+        Dictionary<string,object> placementJSON = null;
+        if (placementObject is IDictionary) {
+            placementJSON = placementObject as Dictionary<string,object>;
+        }
+        else if (placementObject is String) {
+            placementJSON = IronSourceJSON.Json.Deserialize (placementObject.ToString()) as Dictionary<string,object>;
+        }
 
-        this.interstitialAndroid.OnInterstitialAdClosedDemandOnly += (instanceId) =>
-        {
-            if (onInterstitialAdClosedDemandOnlyEvent != null)
-            {
-                onInterstitialAdClosedDemandOnlyEvent(instanceId);
-            }
-        };
+        IronSourcePlacement ssp = null;
+        if (placementJSON != null && placementJSON.Count > 0) {
+            int rewardAmount = Convert.ToInt32 (placementJSON ["placement_reward_amount"].ToString ());
+            string rewardName = placementJSON ["placement_reward_name"].ToString ();
+            string placementName = placementJSON ["placement_name"].ToString ();
+        
+            ssp = new IronSourcePlacement (placementName, rewardName, rewardAmount);
+        }
 
-        this.interstitialAndroid.OnInterstitialAdOpenedDemandOnly += (instanceId) =>
-        {
-            if (onInterstitialAdOpenedDemandOnlyEvent != null)
-            {
-                onInterstitialAdOpenedDemandOnlyEvent(instanceId);
-            }
-        };
-
-        this.interstitialAndroid.OnInterstitialAdClickedDemandOnly += (instanceId) =>
-        {
-            if (onInterstitialAdClickedDemandOnlyEvent != null)
-            {
-                onInterstitialAdClickedDemandOnlyEvent(instanceId);
-            }
-        };
-
-        this.interstitialAndroid.OnInterstitialAdLoadFailedDemandOnly += (instanceId, ironSourceError) =>
-        {
-            if (onInterstitialAdLoadFailedDemandOnlyEvent != null)
-            {
-                onInterstitialAdLoadFailedDemandOnlyEvent(instanceId, ironSourceError);
-            }
-        };
-
-        this.interstitialAndroid.OnInterstitialAdShowFailedDemandOnly += (instanceId, ironSourceError) =>
-        {
-            if (onInterstitialAdShowFailedDemandOnlyEvent != null)
-            {
-                onInterstitialAdShowFailedDemandOnlyEvent(instanceId, ironSourceError);
-            }
-        };
-
+        return ssp;
     }
-    //subscribe to IronSourceRewardedVideoAndroid RV Mediation events and notify to subscribed events inside the app
-    private void registerRewardedVideoEvents()
-    {
-        this.rewardedVideoAndroid.OnRewardedVideoAdClicked += (IronSourcePlacement) =>
-        {
-            if (onRewardedVideoAdClickedEvent != null)
-            {
-                onRewardedVideoAdClickedEvent(IronSourcePlacement);
-            }
-        };
-        this.rewardedVideoAndroid.OnRewardedVideoAdShowFailed += (IronSourceError) =>
-        {
-            if (onRewardedVideoAdShowFailedEvent != null)
-            {
-                onRewardedVideoAdShowFailedEvent(IronSourceError);
-            }
-        };
-        this.rewardedVideoAndroid.OnRewardedVideoAdOpened += () =>
-        {
-            if (onRewardedVideoAdOpenedEvent != null)
-            {
-                onRewardedVideoAdOpenedEvent();
-            }
-        };
-        this.rewardedVideoAndroid.OnRewardedVideoAdClosed += () =>
-        {
-            if (onRewardedVideoAdClosedEvent != null)
-            {
-                onRewardedVideoAdClosedEvent();
-            }
-        };
-        this.rewardedVideoAndroid.OnRewardedVideoAdStarted += () =>
-        {
-            if (onRewardedVideoAdStartedEvent != null)
-            {
-                onRewardedVideoAdStartedEvent();
-            }
-        };
-        this.rewardedVideoAndroid.OnRewardedVideoAdEnded += () =>
-        {
-            if (onRewardedVideoAdEndedEvent != null)
-            {
-                onRewardedVideoAdEndedEvent();
-            }
-        };
-        this.rewardedVideoAndroid.OnRewardedVideoAdRewarded += (IronSourcePlacement) =>
-        {
-            if (onRewardedVideoAdRewardedEvent != null)
-            {
-                onRewardedVideoAdRewardedEvent(IronSourcePlacement);
-            }
-        };
-
-        this.rewardedVideoAndroid.OnRewardedVideoAvailabilityChanged += (isAvailable) =>
-        {
-            if (onRewardedVideoAvailabilityChangedEvent != null)
-            {
-                onRewardedVideoAvailabilityChangedEvent(isAvailable);
-            }
-        };
-    }
-
-    //subscribe to IronSourceRewardedVideoAndroid RV Demand Only events and notify to subscribed events inside the app
-    public void registerRewardedVideoDemandOnlyEvents()
-    {
-
-        this.rewardedVideoAndroid.OnRewardedVideoAdClosedDemandOnlyEvent += (instanceId) =>
-        {
-            if (onRewardedVideoAdClosedDemandOnlyEvent != null)
-            {
-                onRewardedVideoAdClosedDemandOnlyEvent(instanceId);
-            }
-        };
-
-        this.rewardedVideoAndroid.OnRewardedVideoAdLoadedDemandOnlyEvent += (instanceId) =>
-        {
-            if (onRewardedVideoAdLoadedDemandOnlyEvent != null)
-            {
-                onRewardedVideoAdLoadedDemandOnlyEvent(instanceId);
-            }
-        };
-
-        this.rewardedVideoAndroid.OnRewardedVideoAdOpenedDemandOnlyEvent += (instanceId) =>
-        {
-            if (onRewardedVideoAdOpenedDemandOnlyEvent != null)
-            {
-                onRewardedVideoAdOpenedDemandOnlyEvent(instanceId);
-            }
-        };
-
-        this.rewardedVideoAndroid.OnRewardedVideoAdClickedDemandOnlyEvent += (instanceId) =>
-        {
-            if (onRewardedVideoAdClickedDemandOnlyEvent != null)
-            {
-                onRewardedVideoAdClickedDemandOnlyEvent(instanceId);
-            }
-        };
-
-        this.rewardedVideoAndroid.OnRewardedVideoAdRewardedDemandOnlyEvent += (instanceId) =>
-        {
-            if (onRewardedVideoAdRewardedDemandOnlyEvent != null)
-            {
-                onRewardedVideoAdRewardedDemandOnlyEvent(instanceId);
-            }
-        };
-
-        this.rewardedVideoAndroid.OnRewardedVideoAdLoadFailedDemandOnlyEvent += (instanceId, error) =>
-        {
-            if (onRewardedVideoAdLoadFailedDemandOnlyEvent != null)
-            {
-                onRewardedVideoAdLoadFailedDemandOnlyEvent(instanceId, error);
-            }
-        };
-
-        this.rewardedVideoAndroid.OnRewardedVideoAdShowFailedDemandOnlyEvent += (instanceId, error) =>
-        {
-            if (onRewardedVideoAdShowFailedDemandOnlyEvent != null)
-            {
-                onRewardedVideoAdShowFailedDemandOnlyEvent(instanceId, error);
-            }
-        };
-    }
-    //subscribe to IronSourceOfferwallAndroid OW events and notify to subscribed events inside the app
-
-    void registerOfferwallEvents()
-    {
-
-        this.offerwallAndroid.OnOfferwallOpened += () =>
-        {
-            if (onOfferwallOpenedEvent != null)
-            {
-                onOfferwallOpenedEvent();
-            }
-        };
-
-        this.offerwallAndroid.OnOfferwallShowFailed += (error) =>
-        {
-            if(onOfferwallShowFailedEvent != null)
-            {
-                onOfferwallShowFailedEvent(error);
-            }
-
-        };
-
-        this.offerwallAndroid.OnOfferwallClosed += () =>
-        {
-            if (onOfferwallClosedEvent != null)
-            {
-                onOfferwallClosedEvent();
-            }
-        };
-
-        this.offerwallAndroid.OnOfferwallAvailable += (isAvailable) =>
-        {
-            if(onOfferwallAvailableEvent != null)
-            {
-                onOfferwallAvailableEvent(isAvailable);
-            }
-        };
-
-        this.offerwallAndroid.OnOfferwallAdCredited += (dic) =>
-        {
-            if(onOfferwallAdCreditedEvent != null)
-            {
-                onOfferwallAdCreditedEvent(dic);
-            }
-        };
-
-        this.offerwallAndroid.OnGetOfferwallCreditsFailed += (error) =>
-        {
-            if(onGetOfferwallCreditsFailedEvent != null)
-            {
-                onGetOfferwallCreditsFailedEvent(error);
-            }
-        };
-
-    }
-    //subscribe to IronSourceBannerAndroid banner events and notify to subscribed events inside the app
-
-    private void registerBannerEvents()
-    {
-        this.bannerAndroid.OnBannerAdLoaded += () =>
-        {
-            if(onBannerAdLoadedEvent != null){
-                onBannerAdLoadedEvent();
-            }
-
-        };
-
-        this.bannerAndroid.OnBannerAdClicked += () =>
-        {
-            if(onBannerAdClickedEvent != null){
-                onBannerAdClickedEvent();
-            }
-        };
-
-        this.bannerAndroid.OnBannerAdLoadFailed += (ironSourceError) =>
-        {
-            if(onBannerAdLoadFailedEvent != null){
-
-                onBannerAdLoadFailedEvent(ironSourceError);
-            }
-        };
-
-        this.bannerAndroid.OnBannerAdLeftApplication += () =>
-        {
-            if (onBannerAdLeftApplicationEvent != null)
-            {
-                onBannerAdLeftApplicationEvent();
-            }
-        };
-
-        this.bannerAndroid.OnBannerAdScreenDismissed += () =>
-        {
-            if (onBannerAdScreenDismissedEvent != null)
-            {
-                onBannerAdScreenDismissedEvent();
-            }
-        };
-
-        this.bannerAndroid.OnBannerAdScreenPresented += () =>
-        {
-            if (onBannerAdScreenPresentedEvent != null)
-            {
-                onBannerAdScreenPresentedEvent();
-            }
-        };
-    }
-    //subscribe to IronSourceSegmentAndroid onSegmentRecieved event and notify to subscribed event inside the app
-
-    private void registerSegmentEvents()
-    {
-        this.segmentAndroid.OnSegmentRecieved += (segmentName) =>
-        {
-            if (onSegmentReceivedEvent != null)
-            {
-                onSegmentReceivedEvent(segmentName);
-            }
-        };
-    }
-#endif
-
 }
