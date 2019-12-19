@@ -45,7 +45,12 @@ public class RankTableViewController : MonoBehaviour {
     void OnBackButton() {
         EscapeKeyController.escapeKeyCtrl.RemoveEscape(OnBackButton);
         hudController.SetBackButton(() => {
-            myLeagueInfoCanvasController.OffPanelByMain();
+            if (BattleReadySceneController.instance.gameObject.activeSelf) {
+                myLeagueInfoCanvasController.OffPanelByBattleReady();
+            }
+            else {
+                myLeagueInfoCanvasController.OffPanelByMain();
+            }
         });
         gameObject.SetActive(false);
     }
