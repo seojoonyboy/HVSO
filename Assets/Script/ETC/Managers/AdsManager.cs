@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Haegin;
@@ -88,7 +88,8 @@ public class AdsManager : Singleton<AdsManager>
             int rewardAmount = placement.getRewardAmount();
             Debug.Log("보상 이름 : " + rewardName + "\n보상 규모 : " + rewardAmount);
         }
-        #endif
+        AccountManager.Instance.RequestMainAdReward();
+#endif
     }
 
     void RewardedVideoAdShowFailedEvent(IronSourceError error) {
@@ -98,7 +99,10 @@ public class AdsManager : Singleton<AdsManager>
     }
 
     public void ShowRewardedBtn(string placementName) {
-        if(IronSource.Agent.isRewardedVideoAvailable()) IronSource.Agent.showRewardedVideo(placementName);
+#if UNITY_EDITOR
+        AccountManager.Instance.RequestMainAdReward();
+#endif
+        if (IronSource.Agent.isRewardedVideoAvailable()) IronSource.Agent.showRewardedVideo(placementName);
         else Modal.instantiate("광고를 가져오지 못했습니다.", Modal.Type.CHECK);
     }
 }
