@@ -12,6 +12,7 @@ public class BattleMenuController : MonoBehaviour {
     [SerializeField] Button[] modeButtons;
 
     public Sprite[] modeImages;
+    int battleTypeIndex = 0;
 
     BattleType battleType;
     private void OnEnable() {
@@ -34,6 +35,8 @@ public class BattleMenuController : MonoBehaviour {
     }
 
     public void OnSelectBattleType(int index) {
+        battleTypeIndex = index;
+
         if (!modeButtons[index].enabled) return;
 
         BattleType type = (BattleType)index;
@@ -48,6 +51,8 @@ public class BattleMenuController : MonoBehaviour {
     }
 
     public void SetMainMenuDirectPlayButton(int type) {
+        battleTypeIndex = type;
+
         directModePlayButton.onClick.RemoveAllListeners();
         if (modeButtons[type].enabled) {
             mainSceneImage.enabled = true;
@@ -62,6 +67,20 @@ public class BattleMenuController : MonoBehaviour {
     public void ClearDirectPlayButton() {
         mainSceneImage.enabled = false;
         directModePlayButton.onClick.RemoveAllListeners();
+    }
+    
+    public void NextModeButton() {
+        battleTypeIndex++;
+        if (battleTypeIndex > modeButtons.Length - 1) battleTypeIndex = 0;
+
+        SetMainMenuDirectPlayButton(battleTypeIndex);
+    }
+
+    public void PrevModeButton() {
+        battleTypeIndex--;
+        if (battleTypeIndex < 0) battleTypeIndex = modeButtons.Length - 1;
+
+        SetMainMenuDirectPlayButton(battleTypeIndex);
     }
 
     public enum BattleType {
