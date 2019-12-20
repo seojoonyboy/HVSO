@@ -657,7 +657,7 @@ namespace TargetModules {
                                 attributes = GetDropAreaUnit().GetComponent<PlaceMonster>().unit.attributes;
 
                             if (ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.forcedSummonAt != -1)
-                                CardDropManager.Instance.ShowScopeSlot();
+                                CardDropManager.Instance.ShowScopeSlot(PlayMangement.instance.player.isHuman);
                             else
                                 CardDropManager.Instance.ShowDropableSlot(attributes, true);
                             TintUnit(true);
