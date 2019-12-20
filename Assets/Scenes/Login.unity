@@ -2748,6 +2748,17 @@ PrefabInstance:
       propertyPath: accountDialog
       value: 
       objectReference: {fileID: 1667585024}
+    - target: {fileID: 1451046152327900218, guid: a4ea8363f031e564e9d9454ce81d63cd,
+        type: 3}
+      propertyPath: eulaBg
+      value: 
+      objectReference: {fileID: 1545929496113026, guid: aa01c554245ea43a5a7f728f8d30e979,
+        type: 3}
+    - target: {fileID: 1451046152327900218, guid: a4ea8363f031e564e9d9454ce81d63cd,
+        type: 3}
+      propertyPath: EULACanvas
+      value: 
+      objectReference: {fileID: 285700652668246597}
     - target: {fileID: 6466955425460581115, guid: a4ea8363f031e564e9d9454ce81d63cd,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2860,22 +2871,22 @@ PrefabInstance:
     - target: {fileID: 7167178456944391580, guid: a4ea8363f031e564e9d9454ce81d63cd,
         type: 3}
       propertyPath: m_ReferenceResolution.x
-      value: 1920
+      value: 2160
       objectReference: {fileID: 0}
     - target: {fileID: 7167178456944391580, guid: a4ea8363f031e564e9d9454ce81d63cd,
         type: 3}
       propertyPath: m_ReferenceResolution.y
-      value: 1080
+      value: 3840
       objectReference: {fileID: 0}
     - target: {fileID: 8997218566416232017, guid: a4ea8363f031e564e9d9454ce81d63cd,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.8
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8997218566416232017, guid: a4ea8363f031e564e9d9454ce81d63cd,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.8
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8997218566416232017, guid: a4ea8363f031e564e9d9454ce81d63cd,
         type: 3}
@@ -2896,6 +2907,41 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7874505504891461461, guid: a4ea8363f031e564e9d9454ce81d63cd,
+        type: 3}
+      propertyPath: m_RenderMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7874505504891461461, guid: a4ea8363f031e564e9d9454ce81d63cd,
+        type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 1379516316}
+    - target: {fileID: 285700652668246596, guid: a4ea8363f031e564e9d9454ce81d63cd,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 285700652668246597, guid: a4ea8363f031e564e9d9454ce81d63cd,
+        type: 3}
+      propertyPath: m_RenderMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 285700652668246597, guid: a4ea8363f031e564e9d9454ce81d63cd,
+        type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 1379516316}
+    - target: {fileID: 2098837717412290336, guid: a4ea8363f031e564e9d9454ce81d63cd,
+        type: 3}
+      propertyPath: m_ReferenceResolution.x
+      value: 2160
+      objectReference: {fileID: 0}
+    - target: {fileID: 2098837717412290336, guid: a4ea8363f031e564e9d9454ce81d63cd,
+        type: 3}
+      propertyPath: m_ReferenceResolution.y
+      value: 3840
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a4ea8363f031e564e9d9454ce81d63cd, type: 3}
