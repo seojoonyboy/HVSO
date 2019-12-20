@@ -99,6 +99,18 @@ public class MailBoxManager : MonoBehaviour
                 slot.Find("RewardList").GetChild(itemCount).GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = item.amount.ToString();
                 if(tutoQuest != null && item.amount >= 200) TutoQuest(slot.Find("OpenMailBtn").GetComponent<Button>(), slot.Find("RecieveBtn").GetComponent<Button>());
                 slot.Find("RewardList").GetChild(itemCount).gameObject.SetActive(true);
+                
+                if (slot.Find("RewardList").GetChild(itemCount).GetComponent<Button>() == null) slot.Find("RewardList").GetChild(itemCount).gameObject.AddComponent<Button>();
+
+                string item_kind = item.kind;
+                Button rewardIconBtn = slot.Find("RewardList").GetChild(itemCount).GetComponent<Button>();
+                rewardIconBtn.onClick.RemoveAllListeners();
+                RewardDescriptionHandler rewardDescriptionHandler = RewardDescriptionHandler.instance;
+                rewardIconBtn.onClick.AddListener(() => { 
+                    rewardDescriptionHandler.RequestDescriptionModal(item_kind);
+                    //Logger.Log("item_kind : " + item_kind);
+                });
+
                 itemCount++;
             }
             count++;
