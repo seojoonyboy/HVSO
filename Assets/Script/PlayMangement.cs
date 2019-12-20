@@ -445,12 +445,9 @@ public partial class PlayMangement : MonoBehaviour {
                 break;
             case "line":
                 int line = int.Parse(target.args[0]);
-                Terrain[] lineList = FindObjectsOfType<Terrain>();
-                int terrainLine;
-                for (int i = 0; i < lineList.Length; i++) {
-                    terrainLine = lineList[i].transform.GetSiblingIndex();
-                    if (terrainLine != line) continue;
-                    highlightUI = lineList[i].transform.Find("BattleLineEffect").gameObject;
+                for (int i = 0; i < 5; i++) {
+                    if (i != line) continue;
+                    highlightUI = PlayMangement.instance.backGround.transform.GetChild(i).Find("BattleLineEffect").gameObject;
                     break;
                 }
                 break;
