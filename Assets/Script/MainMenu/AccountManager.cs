@@ -1152,7 +1152,7 @@ public partial class AccountManager {
 
         url.Append(parm);
         HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
-        request.MethodType = HTTPMethods.Get;
+        request.MethodType = HTTPMethods.Post;
         request.AddHeader("authorization", TokenFormat);
         networkManager.Request(request, callback, "보상 받기를 기다리는 중...");
     }
@@ -1206,7 +1206,7 @@ public partial class AccountManager {
         url.Append("api/user/claim_reward?kind=tutorialBox");
 
         HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
-        request.MethodType = HTTPMethods.Get;
+        request.MethodType = HTTPMethods.Post;
         request.AddHeader("authorization", TokenFormat);
         networkManager.Request(
             request, 
@@ -1419,7 +1419,7 @@ public partial class AccountManager {
 
         Logger.Log("RequestLeagueReward");
         HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
-        request.MethodType = HTTPMethods.Get;
+        request.MethodType = HTTPMethods.Post;
         request.AddHeader("authorization", TokenFormat);
 
         networkManager.Request(
