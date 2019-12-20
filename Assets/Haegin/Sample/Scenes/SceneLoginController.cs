@@ -171,7 +171,7 @@ public class SceneLoginController : MonoBehaviour
             Debug.Log("LogintAccount  result=" + result + "    code=" + code + " blockSuid=" + blockSuid);
 #endif
             if (result && code == WebClient.AuthCode.SUCCESS)
-                ActivateIssueJWT();
+                LoginComplete();
         });
 #endif
     }
