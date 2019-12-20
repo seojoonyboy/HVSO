@@ -8345,7 +8345,7 @@ MonoBehaviour:
   boxObject: {fileID: 0}
   supplyStore: {fileID: 0}
   storeTimer: {fileID: 0}
-  storeGauge: {fileID: 0}
+  AdsButton: {fileID: 0}
   boxSpine: {fileID: 591528207}
   boxEffect: {fileID: 1348591092}
   additionalSupply: {fileID: 0}
@@ -70169,7 +70169,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1001 &4241801604021860582
 PrefabInstance:
   m_ObjectHideFlags: 0
