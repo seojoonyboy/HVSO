@@ -776,7 +776,7 @@ public partial class AccountManager {
         HTTPRequest request = new HTTPRequest(
             new Uri(url.ToString())
         );
-        request.MethodType = HTTPMethods.Get;
+        request.MethodType = HTTPMethods.Post;
         request.AddHeader("authorization", TokenFormat);
         networkManager.Request(request, (req, res) => {
             if (res.IsSuccess) {

@@ -33,11 +33,10 @@ public class UserResourceManager : SerializedMonoBehaviour {
     public bool timerOn;
 
     private void Awake() {
-        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_ADREWARD_MAIN, OnMainAdRequest);
+        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_ADREWARD_MAIN, OnMainAdOver);
     }
-
     private void OnDestroy() {
-        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_ADREWARD_MAIN, OnMainAdRequest);
+        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_ADREWARD_MAIN, OnMainAdOver);
     }
 
     public void SetResource(uint lv,
@@ -53,6 +52,7 @@ public class UserResourceManager : SerializedMonoBehaviour {
                             int supply, 
                             int supplyBox, 
                             int supplyX2Coupon) {
+        //timerOn = false;
         this.lv = lv;
         this.exp = exp;
         this.lvExp = lvExp;
@@ -62,8 +62,9 @@ public class UserResourceManager : SerializedMonoBehaviour {
         this.supplyStore = supplyStore;
         SetSupplyTimer(supplyStoreTime);
         SetMainAdsTimer(mainAdTimeRemain);
-        if(adsLeftNum != null)
-            adsLeftNum.text = mainAdCount.ToString();
+        this.mainAdCount = mainAdCount;
+        if (adsLeftNum != null)
+            adsLeftNum.text = this.mainAdCount.ToString();
         this.supply = supply;
         this.supplyBox = supplyBox;
         this.supplyX2Coupon = supplyX2Coupon;
@@ -87,14 +88,16 @@ public class UserResourceManager : SerializedMonoBehaviour {
             }
         }
         if (adsTimerText != null) {
-            adsTimerTime -= Time.deltaTime;
-            if (adsTimerTime <= 0) {
-                AccountManager.Instance.RequestUserInfo();
-                timerOn = false;
-                return;
-            }
-            if ((mainAdTimeRemain * 0.001f) - mainAdTimeRemain >= 1) {
-                SetSupplyTimer(mainAdTimeRemain - 1000);
+            if (mainAdCount != 3) {
+                adsTimerTime -= Time.deltaTime;
+                if (adsTimerTime <= 0) {
+                    AccountManager.Instance.RequestUserInfo();
+                    timerOn = false;
+                    return;
+                }
+                if ((mainAdTimeRemain * 0.001f) - mainAdTimeRemain >= 1) {
+                    SetMainAdsTimer(mainAdTimeRemain - 1000);
+                }
             }
         }
     }
@@ -132,8 +135,8 @@ public class UserResourceManager : SerializedMonoBehaviour {
         if (adsTimerText != null)
             adsTimerText.text = mainAdTimer;
     }
-
-    protected void OnMainAdRequest(Enum Event_Type, Component Sender, object Param) {
+    public void OnMainAdOver(Enum Event_Type, Component Sender, object Param) {
         AccountManager.Instance.RequestUserInfo();
     }
+
 }
