@@ -160,7 +160,10 @@ public class MenuLocker : MonoBehaviour {
                 break;
             case "ModeButton":
             case "DeckObject":
-                transform.parent.GetComponent<Image>().color = deactiveColor;
+                var images = transform.parent.GetComponentsInChildren<Image>();
+                foreach(Image img in images) {
+                    img.color = deactiveColor;
+                }
                 break;
             case "RewardBox":
                 transform.parent.Find("WoodenImage").GetComponent<Image>().color = deactiveColor;
@@ -196,7 +199,10 @@ public class MenuLocker : MonoBehaviour {
                 break;
             case "ModeButton":
             case "DeckObject":
-                transform.parent.GetComponent<Image>().color = activeColor;
+                var images = transform.parent.GetComponentsInChildren<Image>();
+                foreach (Image img in images) {
+                    img.color = activeColor;
+                }
                 break;
             case "RewardBox":
                 transform.parent.Find("WoodenImage").GetComponent<Image>().color = activeColor;
