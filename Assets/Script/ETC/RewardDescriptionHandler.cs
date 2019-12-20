@@ -50,7 +50,7 @@ public class RewardDescriptionHandler : MonoBehaviour {
         //Logger.Log(description.name);
         Transform content = modal.transform.Find("InnerModal/Content");
         content.Find("Header").GetComponent<TextMeshProUGUI>().text = description.name;
-        content.Find("Description").GetComponent<TextMeshProUGUI>().text = description.description;
+        content.Find("Description").GetComponent<TextMeshProUGUI>().text = description.description.Replace('|', '\n');
         modal.transform.Find("InnerModal/Slot/Icon").GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon[description.key];
     }
 
