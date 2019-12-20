@@ -16,18 +16,43 @@ public class UserResourceManager : SerializedMonoBehaviour {
     public int gold;
     public int crystal;
     public int supplyStore;
-    public float timerTime;
+    public float suppllyTimerTime;
+    public float adsTimerTime;
     public int supplyStoreTime;
+    public int mainAdTimeRemain;
+    public int mainAdCount;
     public string supplyStoreTimer;
+    public string mainAdTimer;
     public int supply;
     public int supplyBox;
     public int supplyX2Coupon;
 
     public TMPro.TextMeshProUGUI timerText;
-    public Image storeGauge;
+    public TMPro.TextMeshProUGUI adsTimerText;
+    public TMPro.TextMeshProUGUI adsLeftNum;
     public bool timerOn;
 
-    public void SetResource(uint lv, uint exp, uint lvExp, uint nextLvExp, int gold, int crystal, int supplyStore, int supplyStoreTime, int supply, int supplyBox, int supplyX2Coupon) {
+    private void Awake() {
+        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_ADREWARD_MAIN, OnMainAdRequest);
+    }
+
+    private void OnDestroy() {
+        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_ADREWARD_MAIN, OnMainAdRequest);
+    }
+
+    public void SetResource(uint lv,
+                            uint exp,
+                            uint lvExp,
+                            uint nextLvExp, 
+                            int gold, 
+                            int crystal, 
+                            int supplyStore, 
+                            int supplyStoreTime, 
+                            int mainAdTimeRemain, 
+                            int mainAdCount, 
+                            int supply, 
+                            int supplyBox, 
+                            int supplyX2Coupon) {
         this.lv = lv;
         this.exp = exp;
         this.lvExp = lvExp;
@@ -35,47 +60,80 @@ public class UserResourceManager : SerializedMonoBehaviour {
         this.gold = gold;
         this.crystal = crystal;
         this.supplyStore = supplyStore;
-        SetTimer(supplyStoreTime);
+        SetSupplyTimer(supplyStoreTime);
+        SetMainAdsTimer(mainAdTimeRemain);
+        if(adsLeftNum != null)
+            adsLeftNum.text = mainAdCount.ToString();
         this.supply = supply;
         this.supplyBox = supplyBox;
         this.supplyX2Coupon = supplyX2Coupon;
         timerOn = true;
-        if(storeGauge != null)
-            storeGauge.fillAmount = supplyStore / 200.0f;
     }
 
     void Update() {
-        if (supplyStore == 200) return;
+        //if (supplyStore == 200) return;
         if (!timerOn) return;
         if (timerText != null) {
-            timerTime -= Time.deltaTime;
-            if(timerTime <= 0) {
+            if (supplyStore < 200) {
+                suppllyTimerTime -= Time.deltaTime;
+                if (suppllyTimerTime <= 0) {
+                    AccountManager.Instance.RequestUserInfo();
+                    timerOn = false;
+                    return;
+                }
+                if ((supplyStoreTime * 0.001f) - suppllyTimerTime >= 1) {
+                    SetSupplyTimer(supplyStoreTime - 1000);
+                }
+            }
+        }
+        if (adsTimerText != null) {
+            adsTimerTime -= Time.deltaTime;
+            if (adsTimerTime <= 0) {
                 AccountManager.Instance.RequestUserInfo();
                 timerOn = false;
                 return;
             }
-            if ((supplyStoreTime * 0.001f) - timerTime >= 1) {
-                SetTimer(supplyStoreTime - 1000);
+            if ((mainAdTimeRemain * 0.001f) - mainAdTimeRemain >= 1) {
+                SetSupplyTimer(mainAdTimeRemain - 1000);
             }
         }
     }
 
-    public void LinkTimer(TMPro.TextMeshProUGUI timerText, Image gauge) {
+    public void LinkTimer(TMPro.TextMeshProUGUI timerText, Transform adsBtn) {
         this.timerText = timerText;
-        storeGauge = gauge;
+        adsTimerText = adsBtn.Find("Timer").GetComponent<TMPro.TextMeshProUGUI>();
+        adsLeftNum = adsBtn.Find("LeftValue").GetComponent<TMPro.TextMeshProUGUI>();
     }
 
-    public void SetTimer(int supplyStoreTime) {
+    public void SetSupplyTimer(int supplyStoreTime) {
         TimeSpan time = TimeSpan.FromMilliseconds(supplyStoreTime);
         
         this.supplyStoreTime = supplyStoreTime;
-        timerTime = supplyStoreTime * 0.001f;
-        if (timerTime > 0) {
+        suppllyTimerTime = supplyStoreTime * 0.001f;
+        if (suppllyTimerTime > 0) {
             supplyStoreTimer = time.Hours.ToString() + ":" + time.Minutes.ToString() + ":" + time.Seconds.ToString();
         }
         else
             supplyStoreTimer = "";
         if (timerText != null) 
             timerText.text = supplyStoreTimer;
+    }
+
+    public void SetMainAdsTimer(int mainAdTimeRemain) {
+        TimeSpan time = TimeSpan.FromMilliseconds(mainAdTimeRemain);
+
+        this.mainAdTimeRemain = supplyStoreTime;
+        adsTimerTime = mainAdTimeRemain * 0.001f;
+        if (adsTimerTime > 0) {
+            mainAdTimer = time.Hours.ToString() + ":" + time.Minutes.ToString() + ":" + time.Seconds.ToString();
+        }
+        else
+            mainAdTimer = "00:00:00";
+        if (adsTimerText != null)
+            adsTimerText.text = mainAdTimer;
+    }
+
+    protected void OnMainAdRequest(Enum Event_Type, Component Sender, object Param) {
+        AccountManager.Instance.RequestUserInfo();
     }
 }

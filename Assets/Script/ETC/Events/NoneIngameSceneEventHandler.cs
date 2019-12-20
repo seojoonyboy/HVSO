@@ -84,6 +84,7 @@ public class NoneIngameSceneEventHandler : Singleton<NoneIngameSceneEventHandler
         API_TUTORIAL_INFOS_UPDATED,
         API_QUEST_UPDATED,
         API_QUEST_REWARD_RECEIVED,
-        API_RANK_TABLE_RECEIVED
+        API_RANK_TABLE_RECEIVED,
+        API_ADREWARD_MAIN,
     }
 }

@@ -13,7 +13,7 @@ public class BoxRewardManager : MonoBehaviour {
     [SerializeField] Transform boxObject;
     [SerializeField] TMPro.TextMeshProUGUI supplyStore;
     [SerializeField] TMPro.TextMeshProUGUI storeTimer;
-    [SerializeField] Image storeGauge;
+    [SerializeField] Transform AdsButton;
     [SerializeField] protected SkeletonGraphic boxSpine;
     [SerializeField] protected SkeletonGraphic boxEffect;
     [SerializeField] Transform additionalSupply;
@@ -37,7 +37,7 @@ public class BoxRewardManager : MonoBehaviour {
     void Awake() {
         accountManager = AccountManager.Instance;
         hudCanvas = transform.parent;
-        accountManager.userResource.LinkTimer(storeTimer, storeGauge);
+        accountManager.userResource.LinkTimer(storeTimer, AdsButton);
 
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_OPENBOX, OnBoxOpenRequest);
 
