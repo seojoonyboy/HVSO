@@ -230,12 +230,13 @@ public partial class AccountManager : Singleton<AccountManager> {
 
         public int gold;
         public double supplyTimeRemain;
+        public double mainAdTimeRemain;
         public int supply;
         public int supplyBox;
         public int crystal;
         public int preSupply;
         public int supplyX2Coupon;
-
+        public int mainAdCount;
         public string nickName;
         public string deviceId;
         public int pass;
@@ -363,6 +364,8 @@ public partial class AccountManager {
             gold: userData.gold,
             crystal: userData.crystal,
             supplyStoreTime: (int)userData.supplyTimeRemain,
+            mainAdTimeRemain: (int)userData.mainAdTimeRemain,
+            mainAdCount: userData.mainAdCount,
             supplyStore: userData.preSupply,
             supply: userData.supply,
             supplyBox: userData.supplyBox,
@@ -382,6 +385,8 @@ public partial class AccountManager {
             gold: userData.gold,
             crystal: userData.crystal,
             supplyStoreTime: (int)userData.supplyTimeRemain,
+            mainAdTimeRemain: (int)userData.mainAdTimeRemain,
+            mainAdCount: userData.mainAdCount,
             supplyStore: userData.preSupply,
             supply: userData.supply,
             supplyBox: userData.supplyBox,
@@ -760,6 +765,36 @@ public partial class AccountManager {
         }, "인벤토리 정보를 불러오는 중...");
     }
 
+    public void RequestMainAdReward() {
+        StringBuilder url = new StringBuilder();
+        string base_url = networkManager.baseUrl;
+
+        url
+            .Append(base_url)
+            .Append("api/user/claim_reward?kind=ad&placementName=main&rewardName=presupply&rewardAmount=40");
+
+        HTTPRequest request = new HTTPRequest(
+            new Uri(url.ToString())
+        );
+        request.MethodType = HTTPMethods.Post;
+        request.AddHeader("authorization", TokenFormat);
+        networkManager.Request(request, (req, res) => {
+            if (res.IsSuccess) {
+                if (res.StatusCode == 200 || res.StatusCode == 304) {
+                    NoneIngameSceneEventHandler
+                        .Instance
+                        .PostNotification(
+                            NoneIngameSceneEventHandler.EVENT_TYPE.API_ADREWARD_MAIN,
+                            null,
+                            res
+                        );
+                }
+            }
+            else {
+                Logger.LogWarning("광고 보상 받기 실패");
+            }
+        }, "광고 보상 불러오는 중...");
+    }
 
 
     public void RequestShopItems() {
