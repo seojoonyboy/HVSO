@@ -24,8 +24,8 @@ public class BattleReadyHeaderController : SerializedMonoBehaviour {
     }
 
     public void SetUI(AccountManager.LeagueInfo data) {
-        TextMeshProUGUI nameTxt = rankObj.transform.Find("NameBg/Name").GetComponent<TextMeshProUGUI>();
-        nameTxt.text = data.rankDetail.minorRankName;
+        TextMeshProUGUI mmrName = transform.Find("Desc/MMR/MinorName").GetComponent<TextMeshProUGUI>();
+        mmrName.text = data.rankDetail.minorRankName;
         Image rankImg = rankObj.transform.Find("Image").GetComponent<Image>();
         rankImg.sprite = GetRankImage(data.rankDetail.minorRankName);
 
@@ -146,7 +146,7 @@ public class BattleReadyHeaderController : SerializedMonoBehaviour {
 
     IEnumerator _SetRank(int mmr) {
         yield return 0;
-        var medalValue = normalUI.transform.Find("Medal/Value").GetComponent<TextMeshProUGUI>();
-        medalValue.text = mmr.ToString();
+        var mmrValue = normalUI.transform.Find("MMR/Value").GetComponent<Text>();
+        mmrValue.text = mmr.ToString();
     }
 }
