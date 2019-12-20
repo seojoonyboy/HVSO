@@ -70,6 +70,10 @@ public class DeckEditController : MonoBehaviour {
     }
 
     private void OnMakeNewDeckFinished(Enum Event_Type, Component Sender, object Param) {
+        if (EscapeKeyController.escapeKeyCtrl.escapeFunc.Count > 2)
+            EscapeKeyController.escapeKeyCtrl.escapeFunc.RemoveRange(1, 3);
+        else
+            EscapeKeyController.escapeKeyCtrl.RemoveEscape(CancelButton);
         gameObject.SetActive(false);
         if (templateMenu != null) {
             templateMenu.transform.gameObject.SetActive(false);
@@ -79,6 +83,16 @@ public class DeckEditController : MonoBehaviour {
     }
 
     private void OnDeckModified(Enum Event_Type, Component Sender, object Param) {
+        try{
+        if (EscapeKeyController.escapeKeyCtrl.escapeFunc.Count > 2)
+            EscapeKeyController.escapeKeyCtrl.escapeFunc.RemoveRange(1, 3);
+        else
+            EscapeKeyController.escapeKeyCtrl.RemoveEscape(CancelButton);
+        }
+        catch (Exception e) {
+            Debug.Log("Escape Error JustSkipping");
+            Debug.LogWarning(e);
+        }
         menuSceneController.decksLoader.Load();
         gameObject.SetActive(false);
     }
@@ -199,15 +213,32 @@ public class DeckEditController : MonoBehaviour {
             else {
                 RequestModifyDeck(form, deckID);
                 if (inputNameVal.Contains(" ")) {
-                    Modal.instantiate("덱 이름의 빈 칸은 제거됩니다.", Modal.Type.CHECK);
+                    //Modal.instantiate("덱 이름의 빈 칸은 제거됩니다.", Modal.Type.CHECK);
                     inputNameVal = inputNameVal.Replace(" ", string.Empty);
                 }
             };
+            TutoFinish();
         }
         else {
             RequestNewDeck();
         }
         FindObjectOfType<HUDController>().SetHeader(HUDController.Type.SHOW_USER_INFO);
+    }
+
+    private void TutoFinish() {
+        if(EditCardHandler.questInfo == null) return;
+        EditCardHandler.QuestInfo questInfo = EditCardHandler.questInfo;
+        if(!questInfo.isDoneAddCard) return;
+        while(true) {
+            GameObject hand = GameObject.Find("tutorialHand");
+            if(hand == null) break;
+            DestroyImmediate(hand);
+        }
+        
+        AccountManager.Instance.RequestQuestProgress(questInfo.quest.data.id);
+        AccountManager.Instance.RequestUnlockInTutorial(4);
+        questInfo.quest.manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_7);
+        EditCardHandler.questInfo = null;
     }
 
     public void CancelButton() {
@@ -236,6 +267,14 @@ public class DeckEditController : MonoBehaviour {
         isTemplate = false;
         gameObject.SetActive(false);
         cardButtons.gameObject.SetActive(false);
+        RemoveTutoHand();
+    }
+
+    private void RemoveTutoHand() {
+        if(EditCardHandler.questInfo == null) return;
+        EditCardHandler.QuestInfo questInfo = EditCardHandler.questInfo;
+        Destroy(questInfo.handUIaddCard);
+        Destroy(questInfo.handUIremoveCard);
     }
 
     public void ResumeEdit() {
@@ -649,7 +688,7 @@ public class DeckEditController : MonoBehaviour {
         }
         InitCanvas();
 
-        deckNamePanel.transform.Find("NameTemplate").GetComponent<TMPro.TMP_InputField>().text = "";
+        deckNamePanel.transform.Find("NameTemplate").GetComponent<TMPro.TMP_InputField>().text = "내 부대";
         handDeckHeader.Find("DeckNamePanel").gameObject.SetActive(true);
         SetHeroInfo(heroId);
 

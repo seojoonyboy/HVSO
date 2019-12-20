@@ -11,29 +11,34 @@ public class LoginController : MonoBehaviour {
     GameObject loadingModal;
     [SerializeField] GameObject logo, textImage;
     [SerializeField] Button loginBtn;
+    [SerializeField] GameObject skipbuttons, mmrchange;
+    [SerializeField] TMPro.TMP_InputField mmrInputField;
+
+    public GameObject obbCanvas, sceneStartCanvas, sceneLoginCanvas, LoginTypeSelCanvas, EULACanvas, fbl_loginCanvas;
 
     bool isClicked = false;
 
     private void Awake() {
         AccountManager.Instance.tokenSetFinished += OnTokenSetFinished;
+        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, OnRequestUserInfoCallback);
+#if UNITY_EDITOR
+        skipbuttons.SetActive(true);
+        mmrchange.SetActive(true);
+#endif
     }
 
     private void OnTokenSetFinished() {
         loginBtn.enabled = true;
     }
 
-    // Start is called before the first frame update
-    void Start() {
+    public void Login() {
+        AccountManager.Instance.prevSceneName = "Login";
+
         networkManager = NetworkManager.Instance;
         StartCoroutine(LogoReveal());
-        isClicked = false;
-
-        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, OnRequestUserInfoCallback);
-        AccountManager.Instance.prevSceneName = "OBB";
     }
 
     private void OnRequestUserInfoCallback(Enum Event_Type, Component Sender, object Param) {
-        var sceneStartController = GetComponent<SceneStartController>();
         AccountManager accountManager = AccountManager.Instance;
 
         HTTPResponse res = (HTTPResponse)Param;
@@ -46,11 +51,8 @@ public class LoginController : MonoBehaviour {
                 Logger.Log("Pre Supply가 가득찼습니다. Timer를 호출하지 않습니다.");
             }
 
-            if (PlayerPrefs.GetInt("isFirst") == 1) {
-                sceneStartController
-                    .LoginTypeCanvas
-                    .gameObject
-                    .SetActive(true);
+            if (PlayerPrefs.GetInt("isFirst", 2) == 2) {
+                LoginTypeSelCanvas.SetActive(true);
             }
             else {
                 accountManager.OnSignInResultModal();
@@ -73,6 +75,7 @@ public class LoginController : MonoBehaviour {
         SkeletonGraphic skeletonGraphic = logo.GetComponent<SkeletonGraphic>();
         Spine.AnimationState state = skeletonGraphic.AnimationState;
         state.SetAnimation(0, "loop", true);
+        isClicked = false;
     }
 
     public void OnStartButton() {
@@ -117,5 +120,29 @@ public class LoginController : MonoBehaviour {
 
     private void ReqInTimer() {
         AccountManager.Instance.ReqInTimer(AccountManager.Instance.GetRemainSupplySec());
+    }
+
+    public void SkipStory(int type) {
+        AccountManager accountManager = AccountManager.Instance;
+        if(type == 0) {
+            accountManager.SkipStoryRequest("human", 1);
+        }
+        else if(type == 1) {
+            accountManager.SkipStoryRequest("human", 1);
+            accountManager.SkipStoryRequest("orc", 1);
+        }
+        else if(type == 2) {
+            accountManager.SkipStoryRequest("human", 1);
+            accountManager.SkipStoryRequest("orc", 1);
+            accountManager.SkipStoryRequest("human", 2);
+            accountManager.SkipStoryRequest("orc", 2);
+        }
+    }
+
+    public void ChangeMMR() {
+        //Modal.instantiate(mmrInputField.text, Modal.Type.CHECK);
+        int value = 0;
+        int.TryParse(mmrInputField.text, out value);
+        AccountManager.Instance.RequestChangeMMRForTest(value);
     }
 }

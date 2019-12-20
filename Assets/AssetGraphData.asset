@@ -386,7 +386,7 @@ MonoBehaviour:
   - m_name: Export To Directory for Patcher
     m_id: cb486e12-7266-4bda-ad3d-8f533f0f2f9c
     m_x: 1152
-    m_y: 252
+    m_y: 216
     m_nodeInstance:
       m_className: UnityEngine.AssetGraph.PatcherExporter, Assembly-CSharp-Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null

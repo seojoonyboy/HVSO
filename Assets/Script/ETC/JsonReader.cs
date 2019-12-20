@@ -49,6 +49,7 @@ namespace dataModules {
 
     public class HeroInventory {
         public string[] heroClasses;
+        public string[] traitText;
         public string id;
         public string camp;
         public string name;
@@ -63,7 +64,7 @@ namespace dataModules {
 
     public class HeroLevel {
         public int piece;
-        public int manaCrystal;
+        public int crystal;
     }
 
     public class Decks {
@@ -176,5 +177,36 @@ namespace dataModules {
     public class ShopItem {
         public string name;
         public string amount;
+    }
+
+    public class Mail {
+        public int id;
+        public int userId;
+        public string sender;
+        public string context;
+        public string expiredAt;
+        public bool isRead;
+        public bool itemReceived;
+        public string createdAt;
+        public string updatedAt;
+        public MailItem[] items;
+    }
+    
+    public class MailItem {
+        public int id;
+        public int postId;
+        public string kind;
+        public int? amount;
+    }
+
+    public class MailReward {
+        public string kind;
+        public string amount;
+        public MailCard[] cards;
+    }
+
+    public class MailCard {
+        public string cardId;
+        public int crystal;
     }
 }

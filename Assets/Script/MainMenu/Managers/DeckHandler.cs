@@ -74,7 +74,6 @@ public class DeckHandler : MonoBehaviour
         //else
         //    transform.Find("CardNum/Value").GetComponent<TMPro.TextMeshProUGUI>().color = Color.white;
         transform.Find("Selected").gameObject.SetActive(false);
-        transform.Find("SelectedBack").gameObject.SetActive(false);
     }
 
     int CheckPlayerCards(dataModules.Deck deck) {
@@ -106,8 +105,6 @@ public class DeckHandler : MonoBehaviour
     public void SelectTemplateDeck() {
         transform.Find("Selected").GetComponent<SkeletonGraphic>().Initialize(true);
         transform.Find("Selected").gameObject.SetActive(true);
-        transform.Find("SelectedBack").GetComponent<SkeletonGraphic>().Initialize(true);
-        transform.Find("SelectedBack").gameObject.SetActive(true);
         templateCanvas.SelectDeck(this);
     }
 
@@ -174,5 +171,17 @@ public class DeckHandler : MonoBehaviour
                 Modal.instantiate("부대에 포함된 카드의 수가 부족합니다.", Modal.Type.CHECK);
             }
         }
+    }
+
+    public void TutorialHandShow(Quest.QuestContentController quest) {
+        if(!isHuman) return;
+        Instantiate(quest.manager.handSpinePrefab, transform.Find("DeckObject"), false).name = "tutorialHand";
+        Instantiate(quest.manager.handSpinePrefab, transform.Find("DeckObject/Buttons/EditBtn"), false).name = "tutorialHand";
+        transform.Find("DeckObject/Buttons/EditBtn").GetComponent<Button>().onClick.AddListener(FindAllCards);
+    }
+
+    private void FindAllCards() {
+        EditCardHandler[] editCards = FindObjectsOfType<EditCardHandler>();
+        Array.ForEach(editCards, x=>x.SetTutoHand());
     }
 }

@@ -98,7 +98,7 @@ public partial class CardHandler : MonoBehaviour {
             transform.Find("Portrait").GetComponent<Image>().sprite = portraitImage;
             if (!cardData.isHeroCard) {
                 transform.Find("BackGround").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground[cardData.type + "_" + cardData.rarelity];
-                transform.Find("Name").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground["name_" + cardData.rarelity];
+                //transform.Find("Name").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground["name_" + cardData.rarelity];
             }
             else {
                 string race;
@@ -107,7 +107,7 @@ public partial class CardHandler : MonoBehaviour {
                 else
                     race = "_orc";
                 transform.Find("BackGround").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground["hero_" + cardData.rarelity + race];
-                transform.Find("Name").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground["hero_" + cardData.rarelity + race + "_name"];
+                //transform.Find("Name").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground["hero_" + cardData.rarelity + race + "_name"];
             }
 
             if (AccountManager.Instance.resource.cardSkeleton.ContainsKey("cardID")) skeleton = AccountManager.Instance.resource.cardSkeleton[cardID];
@@ -289,7 +289,7 @@ public partial class CardHandler : MonoBehaviour {
         RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, Mathf.Infinity, layerMask);
 
         if (hit.collider != null && hit.transform.gameObject.layer == 15) {
-            Logger.Log(hit.collider.transform.parent.name);
+            //Logger.Log(hit.collider.transform.parent.name);
             return hit.transform;
         }
         return null;

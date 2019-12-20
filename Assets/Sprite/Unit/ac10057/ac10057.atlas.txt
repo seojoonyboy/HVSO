@@ -1,0 +1,83 @@
+
+ac10057.png
+size: 1024,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+L_arm
+  rotate: true
+  xy: 187, 7
+  size: 64, 98
+  orig: 64, 98
+  offset: 0, 0
+  index: -1
+L_arm2
+  rotate: false
+  xy: 550, 37
+  size: 158, 86
+  orig: 158, 86
+  offset: 0, 0
+  index: -1
+L_leg
+  rotate: false
+  xy: 285, 1
+  size: 63, 70
+  orig: 63, 70
+  offset: 0, 0
+  index: -1
+R_arm
+  rotate: true
+  xy: 708, 36
+  size: 96, 94
+  orig: 96, 94
+  offset: 0, 0
+  index: -1
+R_leg
+  rotate: false
+  xy: 348, 1
+  size: 63, 70
+  orig: 63, 70
+  offset: 0, 0
+  index: -1
+body
+  rotate: true
+  xy: 550, 123
+  size: 123, 113
+  orig: 123, 113
+  offset: 0, 0
+  index: -1
+effect1
+  rotate: false
+  xy: 663, 132
+  size: 96, 114
+  orig: 96, 114
+  offset: 0, 0
+  index: -1
+head
+  rotate: false
+  xy: 178, 71
+  size: 187, 175
+  orig: 187, 175
+  offset: 0, 0
+  index: -1
+head2
+  rotate: false
+  xy: 365, 71
+  size: 185, 175
+  orig: 185, 175
+  offset: 0, 0
+  index: -1
+head3
+  rotate: true
+  xy: 0, 62
+  size: 184, 178
+  orig: 184, 178
+  offset: 0, 0
+  index: -1
+shadow
+  rotate: false
+  xy: 0, 0
+  size: 187, 62
+  orig: 187, 62
+  offset: 0, 0
+  index: -1

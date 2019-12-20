@@ -9,12 +9,18 @@ public class SceneStoreController : MonoBehaviour
     public Canvas canvas;
     public GameObject systemDialog;
     public GameObject eulaText;
-    public GameObject helpDialog;
+    private GameObject helpDialog;
+    public GameObject helpDialogPortrait;
+    public GameObject helpDialogLandscape;
 
     private WebClient webClient;
 
     void Awake()
     {
+        UGUICommon.ResetCanvasReferenceSize(canvas);
+        if (Screen.height > Screen.width) helpDialog = helpDialogPortrait;
+        else helpDialog = helpDialogLandscape;
+
         webClient = WebClient.GetInstance();
 
         webClient.ErrorOccurred += OnErrorOccurred;

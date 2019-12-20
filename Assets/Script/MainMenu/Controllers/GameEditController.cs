@@ -357,7 +357,7 @@ namespace IngameEditor {
                 startState.players.human.hero.shieldGuage = (int)enemyHeroShieldSlider.value;
             }
             else {
-                Logger.Log("Something is wrong");
+                //Logger.Log("Something is wrong");
             }
 
             PlayerPrefs.SetString("SelectedRace", selectedRace);

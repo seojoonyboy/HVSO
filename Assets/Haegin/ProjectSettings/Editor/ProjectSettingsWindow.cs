@@ -105,10 +105,11 @@ public class ProjectSettingsWindow : EditorWindow
     static string URLScheme = "hgmodsample";
     static string firebaseDynamicLink = "hgmodsample.page.link";
     static string AdMobAppId = "ca-app-pub-8910195275590924~5903100277";
+    static string iOSAdMobAppId = "ca-app-pub-8910195275590924~5903100277";
     static string oneStoreBase64EncodedPublicKey = "";
-    static bool UseAppsFlyer = false;
-    static bool SkipPermissionsDialog = false;
-    static bool UseIOSGoogleMobileAds7_24_0_OR_HIGHER = false;
+    static bool UseAppsFlyer = true;
+    static bool SkipPermissionsDialog = true;
+    static bool UseIOSGoogleMobileAds7_24_0_OR_HIGHER = true;
     static bool UseOneStoreIAP = false;
     static string ZendeskHelpUrl = "https://help-homerunclash.haegin.kr/hc";
     static string ZendeskHelpAPPageID = "360033798014";
@@ -254,6 +255,13 @@ public class ProjectSettingsWindow : EditorWindow
             catch { }
             try
             {
+                text = node["iOSAdMobAppId"].InnerText;
+                if (!string.IsNullOrEmpty(text))
+                    iOSAdMobAppId = text;
+            }
+            catch { }
+            try
+            {
                 text = node["UseAppsFlyer"].InnerText;
                 if (!string.IsNullOrEmpty(text))
                 {
@@ -366,7 +374,7 @@ public class ProjectSettingsWindow : EditorWindow
         {
             File.Delete(xmlpath);
         }
-        string[] contents = new string[30 + (int)LocalizedName.Max];
+        string[] contents = new string[31 + (int)LocalizedName.Max];
 
         contents[0] = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
         contents[1] = "<HaeginSettings>";
@@ -387,21 +395,22 @@ public class ProjectSettingsWindow : EditorWindow
         contents[12 + (int)LocalizedName.Max] = "\t<URLScheme>" + URLScheme + "</URLScheme>";
         contents[13 + (int)LocalizedName.Max] = "\t<FirebaseDynamicLink>" + firebaseDynamicLink + "</FirebaseDynamicLink>";
         contents[14 + (int)LocalizedName.Max] = "\t<AdMobAppId>" + AdMobAppId + "</AdMobAppId>";
-        contents[15 + (int)LocalizedName.Max] = "\t<UseAppsFlyer>" + UseAppsFlyer + "</UseAppsFlyer>";
-        contents[16 + (int)LocalizedName.Max] = "\t<SkipPermissionsDialog>" + SkipPermissionsDialog + "</SkipPermissionsDialog>";
-        contents[17 + (int)LocalizedName.Max] = "\t<UseIOSGoogleMobileAds7_24_0_OR_HIGHER>" + UseIOSGoogleMobileAds7_24_0_OR_HIGHER + "</UseIOSGoogleMobileAds7_24_0_OR_HIGHER>";
-        contents[18 + (int)LocalizedName.Max] = "\t<UseOneStoreIAP>" + UseOneStoreIAP + "</UseOneStoreIAP>";
-        contents[19 + (int)LocalizedName.Max] = "\t<OneStoreBase64EncodedPublicKey>" + oneStoreBase64EncodedPublicKey + "</OneStoreBase64EncodedPublicKey>";
-        contents[20 + (int)LocalizedName.Max] = "\t<ZendeskHelpUrl>" + ZendeskHelpUrl + "</ZendeskHelpUrl>";
-        contents[21 + (int)LocalizedName.Max] = "\t<ZendeskHelpAPPageID>" + ZendeskHelpAPPageID + "</ZendeskHelpAPPageID>";
-        contents[22 + (int)LocalizedName.Max] = "\t<ZendeskHelpSupportMail>" + ZendeskHelpSupportMail + "</ZendeskHelpSupportMail>";
-        contents[23 + (int)LocalizedName.Max] = "\t<UseContactsAPI>" + UseContactsAPI + "</UseContactsAPI>";
-        contents[24 + (int)LocalizedName.Max] = "\t<NotifyIconHDPIPath>" + NotifyIconXXXHDPIPath + "</NotifyIconHDPIPath>";
-        contents[25 + (int)LocalizedName.Max] = "\t<NotifyIconMDPIPath>" + NotifyIconMDPIPath + "</NotifyIconMDPIPath>";
-        contents[26 + (int)LocalizedName.Max] = "\t<NotifyIconXHDPIPath>" + NotifyIconXHDPIPath + "</NotifyIconXHDPIPath>";
-        contents[27 + (int)LocalizedName.Max] = "\t<NotifyIconXXHDPIPath>" + NotifyIconXXHDPIPath + "</NotifyIconXXHDPIPath>";
-        contents[28 + (int)LocalizedName.Max] = "\t<NotifyIconXXXHDPIPath>" + NotifyIconXXXHDPIPath + "</NotifyIconXXXHDPIPath>";
-        contents[29 + (int)LocalizedName.Max] = "</HaeginSettings>";
+        contents[15 + (int)LocalizedName.Max] = "\t<iOSAdMobAppId>" + iOSAdMobAppId + "</iOSAdMobAppId>";
+        contents[16 + (int)LocalizedName.Max] = "\t<UseAppsFlyer>" + UseAppsFlyer + "</UseAppsFlyer>";
+        contents[17 + (int)LocalizedName.Max] = "\t<SkipPermissionsDialog>" + SkipPermissionsDialog + "</SkipPermissionsDialog>";
+        contents[18 + (int)LocalizedName.Max] = "\t<UseIOSGoogleMobileAds7_24_0_OR_HIGHER>" + UseIOSGoogleMobileAds7_24_0_OR_HIGHER + "</UseIOSGoogleMobileAds7_24_0_OR_HIGHER>";
+        contents[19 + (int)LocalizedName.Max] = "\t<UseOneStoreIAP>" + UseOneStoreIAP + "</UseOneStoreIAP>";
+        contents[20 + (int)LocalizedName.Max] = "\t<OneStoreBase64EncodedPublicKey>" + oneStoreBase64EncodedPublicKey + "</OneStoreBase64EncodedPublicKey>";
+        contents[21 + (int)LocalizedName.Max] = "\t<ZendeskHelpUrl>" + ZendeskHelpUrl + "</ZendeskHelpUrl>";
+        contents[22 + (int)LocalizedName.Max] = "\t<ZendeskHelpAPPageID>" + ZendeskHelpAPPageID + "</ZendeskHelpAPPageID>";
+        contents[23 + (int)LocalizedName.Max] = "\t<ZendeskHelpSupportMail>" + ZendeskHelpSupportMail + "</ZendeskHelpSupportMail>";
+        contents[24 + (int)LocalizedName.Max] = "\t<UseContactsAPI>" + UseContactsAPI + "</UseContactsAPI>";
+        contents[25 + (int)LocalizedName.Max] = "\t<NotifyIconHDPIPath>" + NotifyIconXXXHDPIPath + "</NotifyIconHDPIPath>";
+        contents[26 + (int)LocalizedName.Max] = "\t<NotifyIconMDPIPath>" + NotifyIconMDPIPath + "</NotifyIconMDPIPath>";
+        contents[27 + (int)LocalizedName.Max] = "\t<NotifyIconXHDPIPath>" + NotifyIconXHDPIPath + "</NotifyIconXHDPIPath>";
+        contents[28 + (int)LocalizedName.Max] = "\t<NotifyIconXXHDPIPath>" + NotifyIconXXHDPIPath + "</NotifyIconXXHDPIPath>";
+        contents[29 + (int)LocalizedName.Max] = "\t<NotifyIconXXXHDPIPath>" + NotifyIconXXXHDPIPath + "</NotifyIconXXXHDPIPath>";
+        contents[30 + (int)LocalizedName.Max] = "</HaeginSettings>";
         File.WriteAllLines(xmlpath, contents);
     }
 
@@ -439,7 +448,7 @@ public class ProjectSettingsWindow : EditorWindow
         webClientOAuth2ClientId = EditorGUILayout.TextField("OAuth2 Client ID", webClientOAuth2ClientId);
         BundleID = EditorGUILayout.TextField("Package Name", BundleID);
         URLScheme = EditorGUILayout.TextField("URL Scheme", URLScheme);
-        AdMobAppId = EditorGUILayout.TextField("AdMob App Id", AdMobAppId);
+        AdMobAppId = EditorGUILayout.TextField("AdMob App Id(Android)", AdMobAppId);
         base64EncodedPublicKey = EditorGUILayout.TextField("Google Base64 Encoded Public Key", base64EncodedPublicKey);
         toolsReplaceAdd = EditorGUILayout.TextField("Additional tools:replace item", toolsReplaceAdd);
         SkipPermissionsDialog = EditorGUILayout.Toggle("SkipPermissionsDialog", SkipPermissionsDialog);
@@ -458,7 +467,7 @@ public class ProjectSettingsWindow : EditorWindow
         GUILayout.Label("iOS Settings");
         UseIOSGoogleMobileAds7_24_0_OR_HIGHER = EditorGUILayout.Toggle("Use GoogleAds7.24.0 or higher", UseIOSGoogleMobileAds7_24_0_OR_HIGHER);
         firebaseDynamicLink = EditorGUILayout.TextField("Firebase Dynamic Link", firebaseDynamicLink);
-
+        iOSAdMobAppId = EditorGUILayout.TextField("AdMob App Id(iOS)", iOSAdMobAppId);
         GUILayout.EndVertical();
 
         GUILayout.BeginVertical("box");
@@ -732,6 +741,7 @@ public class ProjectSettingsWindow : EditorWindow
             "\t\tpublic static string oneStoreBase64EncodedPublicKey = \"" + oneStoreBase64EncodedPublicKey + "\";",
             "\t\tpublic static string ZendeskHelpAPPageID = \"" + ZendeskHelpAPPageID + "\";",
             "\t\tpublic static string AdMobAppId = \"" + AdMobAppId + "\";",
+            "\t\tpublic static string iOSAdMobAppId = \"" + iOSAdMobAppId + "\";",
             "\t}",
             "}"
         };

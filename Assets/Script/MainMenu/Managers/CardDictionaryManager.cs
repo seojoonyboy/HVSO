@@ -805,6 +805,15 @@ public class CardDictionaryManager : MonoBehaviour {
                 ExitDictionaryCanvas();
             }
         }
+        if(tutorialHand != null) {
+            tutorialHand.transform.parent.transform.GetComponent<Button>().onClick.RemoveListener(tutoAction);
+            Destroy(tutorialHand);
+        }
+        if(closingToShowEditDeckLock) {
+                quest.CloseDictionary();
+                closingToShowEditDeckLock = false;
+                dicCards.ForEach(x=>x.cardObject.GetComponent<Button>().enabled = true);
+        }
     }
 
     public void ExitDictionaryCanvas() {
@@ -842,6 +851,23 @@ public class CardDictionaryManager : MonoBehaviour {
         transform.Find("CardDictionary").GetComponent<RectTransform>().sizeDelta = new Vector2(1080, result);
         activatedTf.GetComponent<RectTransform>().anchoredPosition = new Vector2(activatedTf.GetComponent<RectTransform>().anchoredPosition.x, 0);
         GetComponent<ScrollRect>().normalizedPosition = new Vector2(0, 1);
+    }
+    public bool closingToShowEditDeckLock;
+    Quest.QuestContentController quest;
+    GameObject tutorialHand;
+    UnityAction tutoAction;
+
+    public void cardShowHand(Quest.QuestContentController quest, string[] args) {
+        this.quest = quest;
+        Transform beforeHand = transform.Find("tutorialHand");
+        if(beforeHand != null) Destroy(beforeHand.gameObject);
+        DictionaryCard card = dicCards.Find(x=>x.cardId == args[0]);
+        dicCards.ForEach(x=>x.cardObject.GetComponent<Button>().enabled = false);
+        card.cardObject.GetComponent<Button>().enabled = true;
+        tutorialHand = Instantiate(quest.manager.handSpinePrefab, card.cardObject.transform, false);
+        tutorialHand.name = "tutorialHand";
+        tutoAction = () => MenuCardInfo.cardInfoWindow.makeShowHand(quest);
+        card.cardObject.GetComponent<Button>().onClick.AddListener(tutoAction);
     }
 }
 

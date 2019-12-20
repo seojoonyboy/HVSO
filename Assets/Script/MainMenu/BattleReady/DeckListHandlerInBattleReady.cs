@@ -83,6 +83,9 @@ public class DeckListHandlerInBattleReady : MonoBehaviour {
             button.onClick.AddListener(() => { OnDeckSelected(deckHandler.DECKID, "orc", deck, obj); });
             index++;
         }
+
+        int totalDeckCount = humanDecks.Count + orcDecks.Count;
+        transform.Find("Header/NumValue").GetComponent<TextMeshProUGUI>().text = totalDeckCount + "/10";
     }
 
     private void Start() {
@@ -97,7 +100,6 @@ public class DeckListHandlerInBattleReady : MonoBehaviour {
         battleStart.SetActive(false);
 
         if(selectedObj != null) {
-            selectedObj.transform.Find("BackEffect").gameObject.SetActive(false);
             selectedObj.transform.Find("FrontEffect").gameObject.SetActive(false);
 
             selectedObj = null;
@@ -114,7 +116,6 @@ public class DeckListHandlerInBattleReady : MonoBehaviour {
 
     public void OnDeckSelected(string deckId, string camp, dataModules.Deck deck, GameObject obj) {
         if(selectedObj != null) {
-            selectedObj.transform.Find("BackEffect").gameObject.SetActive(false);
             selectedObj.transform.Find("FrontEffect").gameObject.SetActive(false);
         }
 
@@ -125,11 +126,10 @@ public class DeckListHandlerInBattleReady : MonoBehaviour {
         parentController.selectedDeck = deck;
         PlayerPrefs.SetString("selectedHeroId", deck.heroId);
 
-        Logger.Log(camp + "의" + deckId + "덱이 선택됨");
+        //Logger.Log(camp + "의" + deckId + "덱이 선택됨");
 
         selectedObj = obj;
 
-        selectedObj.transform.Find("BackEffect").gameObject.SetActive(true);
         selectedObj.transform.Find("FrontEffect").gameObject.SetActive(true);
 
         battleStart.SetActive(true);

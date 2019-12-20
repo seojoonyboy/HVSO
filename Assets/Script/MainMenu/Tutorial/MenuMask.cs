@@ -153,7 +153,7 @@ public class MenuMask : SerializedMonoBehaviour
             dimmedObjInfos.Remove(target);
         }
         else {
-            Logger.LogError(target + "의 Origin 정보를 찾을 수 없습니다.");
+            //Logger.LogError(target + "의 Origin 정보를 찾을 수 없습니다.");
         }
     }
 
@@ -166,14 +166,14 @@ public class MenuMask : SerializedMonoBehaviour
             dimmedObjInfos.Remove(target);
         }
         else {
-            Logger.LogError(target + "의 Origin 정보를 찾을 수 없습니다.");
+            //Logger.LogError(target + "의 Origin 정보를 찾을 수 없습니다.");
         }
     }
 
     public void OffDimmed(GameObject targetObject, string name) {
         int index = -1;
         switch (name) {
-            case "orc_story_tutorial":
+            case "orc_story_tutorial_1":
                 index = 0;
                 Transform tf = menuTutorialManager.scenarioManager.orc.stageContent.transform;
                 foreach(Transform child in tf) {

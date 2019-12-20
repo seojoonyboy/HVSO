@@ -29,25 +29,25 @@ public class FBL_SceneManager : Singleton<FBL_SceneManager> {
         int numberOfScene = -1;
         switch (scene) {
             case Scene.LOGIN:
-                numberOfScene = 1;
+                numberOfScene = 0;
                 break;
             case Scene.MAIN_SCENE:
-                numberOfScene = 2;
+                numberOfScene = 1;
                 break;
             case Scene.LOADING_SCENE:
-                numberOfScene = 3;
+                numberOfScene = 2;
                 break;
             case Scene.CONNECT_MATCHING_SCENE:
-                numberOfScene = 4;
+                numberOfScene = 3;
                 break;
             case Scene.MISSION_INGAME:
-                numberOfScene = 5;
+                numberOfScene = 4;
                 break;
             case Scene.TUTORIAL:
-                numberOfScene = 6;
+                numberOfScene = 5;
                 break;
             case Scene.DICTIONARY_SCENE:
-                numberOfScene = 7;
+                numberOfScene = 6;
                 break;
         }
 
@@ -70,19 +70,19 @@ public class FBL_SceneManager : Singleton<FBL_SceneManager> {
 
     IEnumerator LoadReadyScene(int unload, int load) {
         yield return null;
-        if (unload - 2 >= 0)
-            asyncOps[unload - 2] = null;
-        if (asyncOps[load - 2] == null) {
+        if (unload - 1 >= 0)
+            asyncOps[unload - 1] = null;
+        if (asyncOps[load - 1] == null) {
             UnityEngine.SceneManagement.SceneManager.LoadScene(load, UnityEngine.SceneManagement.LoadSceneMode.Single);
-            if(load == 2)
-                UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(7, UnityEngine.SceneManagement.LoadSceneMode.Additive);
+            if(load == 1)
+                UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(6, UnityEngine.SceneManagement.LoadSceneMode.Additive);
             for (int i = 0; i < 7; i++) {
                 asyncOps[i] = null;
             }
             yield break;
         }
-        while (!asyncOps[load - 2].isDone) {
-            asyncOps[load - 2].allowSceneActivation = true;
+        while (!asyncOps[load - 1].isDone) {
+            asyncOps[load - 1].allowSceneActivation = true;
             yield return null;
         }
     }

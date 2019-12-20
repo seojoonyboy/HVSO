@@ -27,7 +27,7 @@ public class Modal : MonoBehaviour {
     /// <param name="title">제목에 들어갈 내용(필요하면)(급하게 넣은 매개변수)</param>
     public static GameObject instantiate(string text, Type type, UnityAction function = null, System.Action function2 = null, string title = null, string[] btnTexts = null) {
         if (type == Type.INSERT) {
-			Logger.LogWarning("enum INSERT는 매개변수 하나 더 있습니다!");
+			//Logger.LogWarning("enum INSERT는 매개변수 하나 더 있습니다!");
             return null;
 		}
         
@@ -46,7 +46,7 @@ public class Modal : MonoBehaviour {
     /// <param name="function">yes 버튼 누를 경우 실행 함수</param>
     public static GameObject instantiate(string text, string placeHolderText, string value, Type type, UnityAction<string> function) {
 		if(type != Type.INSERT) {
-			Logger.LogWarning("enum YESNO 또는 CHECK는 매개변수를 줄여주십시오!");
+			//Logger.LogWarning("enum YESNO 또는 CHECK는 매개변수를 줄여주십시오!");
 			return null;
 		}
 		GameObject modal = Resources.Load("Prefabs/ModalCanvas", typeof(GameObject)) as GameObject;

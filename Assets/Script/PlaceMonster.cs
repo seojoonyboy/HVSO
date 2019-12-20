@@ -26,6 +26,7 @@ public class PlaceMonster : MonoBehaviour {
     
     public UnitSpine unitSpine;
     public HideUnit hideSpine;
+
     
     protected bool instanceAttack = false;
     public EffectSystem.ActionDelegate actionCall;
@@ -88,8 +89,8 @@ public class PlaceMonster : MonoBehaviour {
         x = transform.parent.GetSiblingIndex();
         y = transform.parent.parent.GetSiblingIndex();
 
-        unitLocation = gameObject.transform.position;       
-        
+        unitLocation = gameObject.transform.position;
+
         unitSpine = transform.Find("skeleton").GetComponent<UnitSpine>();
         unitSpine.attackCallback += SuccessAttack;
         unitSpine.takeMagicCallback += CheckHP;
@@ -261,7 +262,7 @@ public class PlaceMonster : MonoBehaviour {
             bool isHuman = isPlayer ? playMangement.player.isHuman : playMangement.enemyPlayer.isHuman;
             var result = PlayMangement.instance.UnitsObserver.GetAllFieldUnits(myPos.col, !isHuman);
             if(result.Count == 0) {
-                Logger.Log("적이 없음. pillage 발동");
+                //Logger.Log("적이 없음. pillage 발동");
                 if(isPlayer) playMangement.player.PillageEnemyShield(2);
                 else playMangement.enemyPlayer.PillageEnemyShield(2);
             }
@@ -304,7 +305,16 @@ public class PlaceMonster : MonoBehaviour {
         if (unit.attack <= 0) return;       
         SetState(UnitState.ATTACK);
         SoundManager.Instance.PlayAttackSound(unit.id);
-    }
+        VoiceType attackVoice;
+
+        if (unitSpine.arrow == null)
+            attackVoice = VoiceType.ATTACK;
+        else if (unitSpine.arrow != null && unitSpine.arrow.name.Contains("magic"))
+            attackVoice = VoiceType.CHARGE;
+        else
+            attackVoice = VoiceType.ATTACK;
+        SoundManager.Instance.PlayUnitVoice(unit.id, attackVoice);
+    } 
 
     public void SuccessAttack() {
 
@@ -508,6 +518,7 @@ public class PlaceMonster : MonoBehaviour {
 
         UpdateStat();
         SetState(UnitState.HIT);
+        
     }
 
     public void RequestChangeStat(int power = 0, int hp = 0, string magicId = null, bool isMain = false) {
@@ -645,8 +656,8 @@ public class PlaceMonster : MonoBehaviour {
         GameObject dropTomb = Instantiate(tomb);
         dropTomb.transform.position = transform.position;
 
-        Logger.Log("X : " + x);
-        Logger.Log("Y : " + y);
+        //Logger.Log("X : " + x);
+        //Logger.Log("Y : " + y);
 
         if (isPlayer) {
             PlayMangement.instance.UnitsObserver.UnitRemoved(new FieldUnitsObserver.Pos(x, y), isHuman);
@@ -657,7 +668,7 @@ public class PlaceMonster : MonoBehaviour {
 
         dropTomb.GetComponent<DeadSpine>().target = gameObject;
         dropTomb.GetComponent<DeadSpine>().StartAnimation(unit.ishuman);
-
+        SoundManager.Instance.PlayUnitVoice(unit.id, VoiceType.DIE);
         object[] parms = new object[]{isPlayer, gameObject};
 
         PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.FIELD_CHANGED, null, null);
@@ -679,10 +690,11 @@ public class PlaceMonster : MonoBehaviour {
                         hideSpine.Idle();
                 }
                 break;
-            case UnitState.ATTACK:
+            case UnitState.ATTACK:                
                 unitSpine.Attack();
                 break;
             case UnitState.HIT:
+                SoundManager.Instance.PlayUnitVoice(unit.id, VoiceType.DAMAGE);
                 unitSpine.Hit();
                 break;
             case UnitState.MAGICHIT:
@@ -710,6 +722,7 @@ public class PlaceMonster : MonoBehaviour {
     private IEnumerator PingPongTween() {
         MaterialPropertyBlock block = new MaterialPropertyBlock();
         MeshRenderer meshRenderer = unitSpine.GetComponent<MeshRenderer>();
+        unitSoringOrder = 55;
         string colorProperty = "_Color";
 		//string blackTintProperty = "_Black";
         while(tintOnOff) {
@@ -723,6 +736,7 @@ public class PlaceMonster : MonoBehaviour {
         block.SetColor(colorProperty, Color.black);
         //block.SetColor(blackTintProperty, Color.black);
         meshRenderer.SetPropertyBlock(block);
+        unitSoringOrder = 50;
         EffectSystem.Instance.HideEveryDim();
     }
 }

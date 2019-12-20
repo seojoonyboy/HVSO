@@ -1,202 +1,202 @@
 
 tutorial_sampledeck_reward.png
-size: 1024,1024
+size: 2048,1024
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 Comp00000
-  rotate: false
-  xy: 931, 330
-  size: 30, 42
-  orig: 179, 179
-  offset: 6, 70
+  rotate: true
+  xy: 997, 508
+  size: 43, 60
+  orig: 256, 256
+  offset: 9, 100
   index: -1
 Comp00001
-  rotate: false
-  xy: 964, 625
-  size: 51, 45
-  orig: 179, 179
-  offset: 6, 67
+  rotate: true
+  xy: 1030, 176
+  size: 72, 64
+  orig: 256, 256
+  offset: 9, 96
   index: -1
 Comp00002
   rotate: true
-  xy: 963, 350
-  size: 92, 45
-  orig: 179, 179
-  offset: 11, 67
+  xy: 64, 30
+  size: 131, 64
+  orig: 256, 256
+  offset: 16, 96
   index: -1
 Comp00003
   rotate: true
-  xy: 964, 487
-  size: 93, 45
-  orig: 179, 179
-  offset: 61, 67
+  xy: 0, 28
+  size: 133, 64
+  orig: 256, 256
+  offset: 87, 96
   index: -1
 Comp00004
-  rotate: false
-  xy: 841, 124
-  size: 78, 45
-  orig: 179, 179
-  offset: 95, 67
+  rotate: true
+  xy: 943, 233
+  size: 111, 64
+  orig: 256, 256
+  offset: 136, 96
   index: -1
 Comp00005
   rotate: false
-  xy: 963, 442
-  size: 61, 45
-  orig: 179, 179
-  offset: 112, 67
+  xy: 943, 169
+  size: 87, 64
+  orig: 256, 256
+  offset: 160, 96
   index: -1
 Comp00006
-  rotate: false
-  xy: 964, 580
-  size: 48, 45
-  orig: 179, 179
-  offset: 125, 67
+  rotate: true
+  xy: 1094, 180
+  size: 68, 64
+  orig: 256, 256
+  offset: 179, 96
   index: -1
 Comp00007
-  rotate: true
-  xy: 841, 87
-  size: 37, 45
-  orig: 179, 179
-  offset: 136, 67
+  rotate: false
+  xy: 1113, 116
+  size: 53, 64
+  orig: 256, 256
+  offset: 194, 96
   index: -1
 Comp00008
   rotate: true
-  xy: 886, 95
-  size: 29, 42
-  orig: 179, 179
-  offset: 144, 67
+  xy: 1057, 509
+  size: 42, 60
+  orig: 256, 256
+  offset: 205, 96
   index: -1
 Comp00009
-  rotate: false
-  xy: 907, 250
-  size: 23, 33
-  orig: 179, 179
-  offset: 150, 67
+  rotate: true
+  xy: 130, 1
+  size: 33, 48
+  orig: 256, 256
+  offset: 214, 96
   index: -1
 Comp00010
   rotate: true
-  xy: 961, 331
-  size: 19, 27
-  orig: 179, 179
-  offset: 154, 67
+  xy: 20, 1
+  size: 27, 39
+  orig: 256, 256
+  offset: 220, 96
   index: -1
 Comp00011
-  rotate: false
-  xy: 586, 515
-  size: 16, 23
-  orig: 179, 179
-  offset: 157, 67
+  rotate: true
+  xy: 97, 7
+  size: 23, 33
+  orig: 256, 256
+  offset: 224, 96
   index: -1
 Comp00012
   rotate: false
-  xy: 1009, 561
-  size: 14, 19
-  orig: 179, 179
-  offset: 159, 67
+  xy: 0, 0
+  size: 20, 28
+  orig: 256, 256
+  offset: 227, 96
   index: -1
 Comp00013
   rotate: false
-  xy: 1009, 542
-  size: 13, 19
-  orig: 179, 179
-  offset: 160, 67
+  xy: 59, 1
+  size: 19, 27
+  orig: 256, 256
+  offset: 228, 96
   index: -1
 Comp00014
   rotate: false
-  xy: 1009, 523
-  size: 13, 19
-  orig: 179, 179
-  offset: 160, 67
+  xy: 78, 3
+  size: 19, 27
+  orig: 256, 256
+  offset: 228, 96
   index: -1
 Comp00015
   rotate: false
-  xy: 1009, 523
-  size: 13, 19
-  orig: 179, 179
-  offset: 160, 67
+  xy: 78, 3
+  size: 19, 27
+  orig: 256, 256
+  offset: 228, 96
   index: -1
 H_Sampledeck
   rotate: false
-  xy: 600, 283
-  size: 331, 89
-  orig: 331, 89
+  xy: 128, 34
+  size: 473, 127
+  orig: 473, 127
   offset: 0, 0
   index: -1
 H_reward
-  rotate: false
-  xy: 603, 521
-  size: 361, 149
-  orig: 361, 149
+  rotate: true
+  xy: 372, 507
+  size: 516, 213
+  orig: 516, 213
   offset: 0, 0
   index: -1
 O_Sampledeck
   rotate: true
-  xy: 931, 0
-  size: 330, 89
-  orig: 330, 89
+  xy: 997, 551
+  size: 472, 127
+  orig: 472, 127
   offset: 0, 0
   index: -1
 O_reward
-  rotate: false
-  xy: 602, 372
-  size: 361, 149
-  orig: 361, 149
+  rotate: true
+  xy: 585, 507
+  size: 516, 213
+  orig: 516, 213
   offset: 0, 0
   index: -1
 O_reward1
-  rotate: false
-  xy: 0, 271
-  size: 361, 139
-  orig: 361, 139
+  rotate: true
+  xy: 798, 507
+  size: 516, 199
+  orig: 516, 199
   offset: 0, 0
   index: -1
 Victory_human
-  rotate: false
-  xy: 358, 11
-  size: 230, 195
-  orig: 230, 195
+  rotate: true
+  xy: 664, 179
+  size: 328, 279
+  orig: 328, 279
   offset: 0, 0
   index: -1
 Victory_ob
-  rotate: false
-  xy: 0, 538
-  size: 603, 132
-  orig: 603, 132
+  rotate: true
+  xy: 0, 161
+  size: 862, 189
+  orig: 862, 189
   offset: 0, 0
   index: -1
 Victory_ob_orc
-  rotate: false
-  xy: 0, 410
-  size: 586, 128
-  orig: 586, 128
+  rotate: true
+  xy: 189, 186
+  size: 837, 183
+  orig: 837, 183
   offset: 0, 0
   index: -1
 Victory_ob_shadow
   rotate: false
-  xy: 588, 102
-  size: 253, 67
-  orig: 255, 69
+  xy: 1007, 248
+  size: 362, 96
+  orig: 364, 98
   offset: 1, 1
   index: -1
 Victory_orc
-  rotate: false
-  xy: 361, 206
-  size: 239, 204
-  orig: 239, 204
+  rotate: true
+  xy: 372, 166
+  size: 341, 292
+  orig: 341, 292
   offset: 0, 0
   index: -1
 battle
   rotate: false
-  xy: 600, 169
-  size: 307, 114
-  orig: 307, 114
+  xy: 943, 344
+  size: 438, 163
+  orig: 438, 163
   offset: 0, 0
   index: -1
 story
   rotate: false
-  xy: 0, 155
-  size: 358, 116
-  orig: 358, 116
+  xy: 601, 0
+  size: 512, 166
+  orig: 512, 166
   offset: 0, 0
   index: -1

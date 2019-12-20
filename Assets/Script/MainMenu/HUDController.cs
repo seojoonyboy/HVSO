@@ -10,7 +10,7 @@ public class HUDController : MonoBehaviour {
     [SerializeField] HorizontalScrollSnap main_HorizontalScrollSnap;
     [SerializeField] TMPro.TextMeshProUGUI crystalValue;
     [SerializeField] TMPro.TextMeshProUGUI goldValue;
-    [SerializeField] TMPro.TextMeshProUGUI lvValue;
+    [SerializeField] Text lvValue;
     [SerializeField] TMPro.TextMeshProUGUI expValueText;
     [SerializeField] Transform userInfoCanvas;
     [SerializeField] Image expSlider;

@@ -26,9 +26,19 @@ public class BattleReadySceneController : MonoBehaviour {
     [SerializeField] MenuSceneController menuSceneController;
     [SerializeField] RewardsProvider rewardsProvider;
     [SerializeField] BattleReadyHeaderController battleReadyHeaderController;
+    [SerializeField] BattleMenuController BattleMenuController;
 
     public Deck selectedDeck;
     public LeagueData userLeagueData;
+
+    private static BattleReadySceneController m_instance;
+    public static BattleReadySceneController instance {
+        get {
+            if (m_instance == null) m_instance = FindObjectOfType<BattleReadySceneController>();
+
+            return m_instance;
+        }
+    }
 
     void Awake() {
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_INFO_UPDATED, OnLeagueInfoUpdated);
@@ -52,6 +62,7 @@ public class BattleReadySceneController : MonoBehaviour {
 
     void OnDisable() {
         EscapeKeyController.escapeKeyCtrl.RemoveEscape(OnBackButton);
+        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_INFO_UPDATED, OnLeagueInfoUpdated);
     }
 
     void OnDestroy() {
@@ -70,7 +81,7 @@ public class BattleReadySceneController : MonoBehaviour {
 
     public void OnStartButton() {
         if (isIngameButtonClicked) {
-            Logger.Log("이미 대전 시작 버튼이 눌려진 상태");
+            //Logger.Log("이미 대전 시작 버튼이 눌려진 상태");
             return;
         }
         string race = PlayerPrefs.GetString("SelectedRace").ToLower();
@@ -101,10 +112,9 @@ public class BattleReadySceneController : MonoBehaviour {
     }
 
     public void OnBackButton() {
-        HudController.SetHeader(HUDController.Type.SHOW_USER_INFO);
-
         gameObject.SetActive(false);
         SoundManager.Instance.PlaySound(UISfxSound.BUTTON1);
+        HudController.SetHeader(HUDController.Type.SHOW_USER_INFO);
     }
 
     public enum RaceType {

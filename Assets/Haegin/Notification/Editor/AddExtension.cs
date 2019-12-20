@@ -1,6 +1,6 @@
 ﻿using UnityEditor;
 using UnityEngine;
-#if UNITY_IOS || UNITY_2018_3_OR_NEWER
+#if UNITY_IOS
 using UnityEditor.iOS.Xcode;
 using UnityEditor.iOS.Xcode.Extensions;
 #endif
@@ -9,7 +9,7 @@ using UnityEditor.Callbacks;
 
 public class AddExtension : MonoBehaviour
 {
-#if UNITY_IOS || UNITY_2018_3_OR_NEWER
+#if UNITY_IOS
     [PostProcessBuild(101)]
     public static void OnPostProcessBuild(BuildTarget target, string pathToBuiltProject)
     {
@@ -34,6 +34,7 @@ public class AddExtension : MonoBehaviour
                 proj.AddFileToBuild(notificationServiceTarget, proj.AddFile("NotificationExt/Info.plist", "NotificationExt/Info.plist"));
                 proj.AddFrameworkToProject(notificationServiceTarget, "NotificationCenter.framework", true);
                 proj.AddFrameworkToProject(notificationServiceTarget, "UserNotifications.framework", true);
+                proj.AddFrameworkToProject(notificationServiceTarget, "AuthenticationServices.framework", true);
                 proj.SetBuildProperty(notificationServiceTarget, "ARCHS", "$(ARCHS_STANDARD)");
 
                 if(PlayerSettings.iOS.appleEnableAutomaticSigning)
@@ -67,7 +68,8 @@ public class AddExtension : MonoBehaviour
                 manager.AddPushNotifications(Debug.isDebugBuild);
                 manager.AddInAppPurchase();
                 manager.AddGameCenter();
-                if(!string.IsNullOrEmpty(Haegin.ProjectSettings.firebaseDynamicLink)) {
+                manager.AddSignInWithApple();
+                if (!string.IsNullOrEmpty(Haegin.ProjectSettings.firebaseDynamicLink)) {
                     manager.AddAssociatedDomains(new string[] { "applinks:" + Haegin.ProjectSettings.firebaseDynamicLink });
                 }
                 manager.WriteToFile();
@@ -79,7 +81,8 @@ public class AddExtension : MonoBehaviour
                 manager.AddPushNotifications(Debug.isDebugBuild);
                 manager.AddInAppPurchase();
                 manager.AddGameCenter();
-                if(!string.IsNullOrEmpty(Haegin.ProjectSettings.firebaseDynamicLink)) {
+                manager.AddSignInWithApple();
+                if (!string.IsNullOrEmpty(Haegin.ProjectSettings.firebaseDynamicLink)) {
                     manager.AddAssociatedDomains(new string[] { "applinks:" + Haegin.ProjectSettings.firebaseDynamicLink });
                 }
                 manager.WriteToFile();

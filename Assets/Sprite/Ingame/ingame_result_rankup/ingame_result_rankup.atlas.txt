@@ -1,0 +1,62 @@
+
+ingame_result_rankup.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Group 2
+  rotate: false
+  xy: 512, 195
+  size: 350, 385
+  orig: 350, 385
+  offset: 0, 0
+  index: -1
+Group0
+  rotate: false
+  xy: 800, 0
+  size: 180, 195
+  orig: 180, 195
+  offset: 0, 0
+  index: -1
+Group00
+  rotate: true
+  xy: 593, 1
+  size: 194, 207
+  orig: 194, 207
+  offset: 0, 0
+  index: -1
+Victory
+  rotate: false
+  xy: 512, 680
+  size: 351, 70
+  orig: 351, 70
+  offset: 0, 0
+  index: -1
+Victory_ob_orc
+  rotate: false
+  xy: 0, 750
+  size: 882, 192
+  orig: 882, 192
+  offset: 0, 0
+  index: -1
+Victory_ob_shadow
+  rotate: true
+  xy: 882, 580
+  size: 362, 96
+  orig: 364, 98
+  offset: 1, 1
+  index: -1
+Victory_shadow
+  rotate: false
+  xy: 0, 15
+  size: 593, 180
+  orig: 595, 182
+  offset: 1, 1
+  index: -1
+light
+  rotate: false
+  xy: 0, 238
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1

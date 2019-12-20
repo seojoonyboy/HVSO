@@ -29,8 +29,12 @@ public class GameResultManager : MonoBehaviour {
     private bool isHuman;
     private string result;
 
+
+    public bool stopNextReward = false;
+
     public UnityEvent EndRewardLoad = new UnityEvent();
     public LeagueData scriptable_leagueData;
+    public 
 
     string battleType;
     private void Awake() {
@@ -120,6 +124,7 @@ public class GameResultManager : MonoBehaviour {
         iTween.ScaleTo(heroSpine, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.3f));
         getExp = PlayMangement.instance.socketHandler.result.reward.userExp;
         getSupply = PlayMangement.instance.socketHandler.result.reward.supply;
+        additionalSupply = PlayMangement.instance.socketHandler.result.reward.x2supply;
         //additionalSupply = PlayMangement.instance.socketHandler.result.reward.additionalSupply;
         SoundManager.Instance.bgmController.SoundTrackLoopOff();
 
@@ -224,6 +229,72 @@ public class GameResultManager : MonoBehaviour {
             yield return new WaitForSeconds(0.5f);
             yield return StartCoroutine(GetUserExp(expSlider));
         }
+
+        if (PlayMangement.instance.socketHandler.result.lvUp != null) {
+            stopNextReward = true;
+            PlayMangement.instance.levelCanvas.SetActive(true);
+
+            SocketFormat.LevelUp levelData = PlayMangement.instance.socketHandler.result.lvUp;
+
+            Transform levelCanvas = PlayMangement.instance.levelCanvas.transform;
+
+            Transform levelup = levelCanvas.Find("LevelUP");
+            Transform reward = levelCanvas.Find("Reward");
+            Text leveltext = levelCanvas.Find("Level").gameObject.GetComponent<Text>();
+            Button confirmBtn = levelCanvas.Find("ConfirmBtn").gameObject.GetComponent<Button>();
+            SkeletonGraphic levelUPEffect = levelup.gameObject.GetComponent<SkeletonGraphic>();
+            UnityEngine.Animation rewardAnimation = reward.gameObject.GetComponent<UnityEngine.Animation>();
+
+            levelUPEffect.Initialize(true);
+            levelUPEffect.Update(0);
+
+            leveltext.text = levelData.lv.ToString();
+            confirmBtn.onClick.AddListener(delegate () { levelCanvas.gameObject.SetActive(false); stopNextReward = false; rewardAnimation.Stop(); });
+
+            if (levelData.rewards.Length == 0)
+                reward.Find("RewardLayout").gameObject.SetActive(false);
+            else {
+                Transform layout = reward.Find("RewardLayout");                
+                for (int i = 0; i < levelData.rewards.Length; i++) {
+                    Transform slot = layout.GetChild(i);
+                    Image slotSprite = slot.Find("rewardSprite").gameObject.GetComponent<Image>();
+                    TMPro.TextMeshProUGUI amoutObject = slot.Find("rewardAmount").gameObject.GetComponent<TMPro.TextMeshProUGUI>();
+                    slot.gameObject.SetActive(true);
+                    switch (levelData.rewards[i].kind) {
+                        case "goldFree":
+                            slotSprite.sprite = AccountManager.Instance.resource.rewardIcon["goldFree"];                            
+                            break;
+                        case "manaCrystal":
+                            slotSprite.sprite = AccountManager.Instance.resource.rewardIcon["crystal"];
+                            break;
+                        case "supplyBox":
+                            slotSprite.sprite = AccountManager.Instance.resource.rewardIcon["supplyBox"];
+                            break;
+                        //case "add_deck":
+                        //    break;
+                        default:
+                            slotSprite.sprite = AccountManager.Instance.resource.rewardIcon["supplyBox"];
+                            break;
+                    }
+                    amoutObject.text = "x" + levelData.rewards[i].amount.ToString();
+                }
+            }
+
+
+
+            levelup.gameObject.SetActive(true);
+            TrackEntry entry;            
+            entry = levelUPEffect.AnimationState.AddAnimation(0, "01.start", false, 0);
+            entry = levelUPEffect.AnimationState.AddAnimation(0, "02.play", true, 0);
+            yield return new WaitForSeconds(levelUPEffect.AnimationState.Data.SkeletonData.FindAnimation("01.start").Duration - 0.2f);
+            leveltext.gameObject.SetActive(true);
+            yield return new WaitForSeconds(0.2f);
+            if (levelData.rewards.Length > 0) {
+                rewardAnimation.Play();
+            }            
+        }
+
+        yield return new WaitUntil(() => stopNextReward == false);
         if (getSupply > 0) {
             yield return new WaitForSeconds(0.5f);
             yield return StartCoroutine(GetUserSupply(playerSup.Find("ExpSlider/Slider").GetComponent<Slider>(), getSupply, additionalSupply));
@@ -245,6 +316,7 @@ public class GameResultManager : MonoBehaviour {
         //    iTween.ScaleTo(rewards.GetChild(0).gameObject, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.5f));
         //}
     }
+    
 
     public IEnumerator SetLeagueData() {
         var leagueInfo = scriptable_leagueData.leagueInfo;
@@ -581,6 +653,7 @@ public class GameResultManager : MonoBehaviour {
         boxSpine.AnimationState.SetAnimation(0, "02.vibration1", true);
         int start = getSup;
         int total = 0;
+        int box = 0;
         if (isAdditional) {
             int.TryParse(totalVal.text, out total);
         }
@@ -609,6 +682,23 @@ public class GameResultManager : MonoBehaviour {
 
                 supply = 0;
                 value.text = supply.ToString();
+                Transform alertIcon = boxSpine.gameObject.transform.Find("AlertIcon");
+
+                alertIcon.gameObject.SetActive(true);
+                alertIcon.Find("SupplyText").gameObject.SetActive(true);
+                alertIcon.Find("SupplyText").gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = (++box).ToString();
+                if (ScenarioGameManagment.scenarioInstance == null) {
+                    boxSpine.gameObject.GetComponent<Button>().enabled = true;
+                    boxSpine.gameObject.GetComponent<Button>().onClick.AddListener(delegate () {
+                        box--;
+                        alertIcon.Find("SupplyText").gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = box.ToString();
+                        if (box < 1) {
+                            boxSpine.gameObject.GetComponent<Button>().enabled = false;
+                            alertIcon.gameObject.SetActive(false);
+                        }
+                    });
+                }
+
                 boxSpine.AnimationState.SetAnimation(0, "02.vibration1", true);
             }
             yield return new WaitForSeconds(0.01f);
@@ -637,6 +727,25 @@ public class GameResultManager : MonoBehaviour {
 
                     supply = 0;
                     value.text = supply.ToString();
+                    boxSpine.gameObject.GetComponent<Button>().enabled = true;
+
+
+                    Transform alertIcon = boxSpine.gameObject.transform.Find("AlertIcon");
+                    alertIcon.gameObject.SetActive(true);
+                    alertIcon.Find("SupplyText").gameObject.SetActive(true);
+                    alertIcon.Find("SupplyText").gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = (++box).ToString();
+                    if (ScenarioGameManagment.scenarioInstance == null) {
+                        boxSpine.gameObject.GetComponent<Button>().enabled = true;
+                        boxSpine.gameObject.GetComponent<Button>().onClick.AddListener(delegate () {
+                            box--;
+                            alertIcon.Find("SupplyText").gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = box.ToString();
+                            if (box < 1) {
+                                boxSpine.gameObject.GetComponent<Button>().enabled = false;
+                                alertIcon.gameObject.SetActive(false);
+                            }
+                        });
+                    }
+
                     boxSpine.AnimationState.SetAnimation(0, "02.vibration1", true);
                 }
                 yield return new WaitForSeconds(0.01f);

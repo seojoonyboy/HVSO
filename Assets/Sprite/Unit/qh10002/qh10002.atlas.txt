@@ -1,0 +1,97 @@
+
+qh10002.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+L_low_arm
+  rotate: false
+  xy: 2, 405
+  size: 278, 584
+  orig: 278, 584
+  offset: 0, 0
+  index: -1
+L_upper_arm
+  rotate: false
+  xy: 553, 748
+  size: 217, 241
+  orig: 217, 241
+  offset: 0, 0
+  index: -1
+R_hand
+  rotate: false
+  xy: 282, 412
+  size: 113, 139
+  orig: 113, 139
+  offset: 0, 0
+  index: -1
+R_low_arm
+  rotate: false
+  xy: 772, 821
+  size: 164, 168
+  orig: 164, 168
+  offset: 0, 0
+  index: -1
+R_upper_arm
+  rotate: true
+  xy: 612, 81
+  size: 230, 221
+  orig: 230, 221
+  offset: 0, 0
+  index: -1
+body
+  rotate: true
+  xy: 2, 2
+  size: 401, 363
+  orig: 401, 363
+  offset: 0, 0
+  index: -1
+eye
+  rotate: false
+  xy: 397, 424
+  size: 38, 43
+  orig: 38, 43
+  offset: 0, 0
+  index: -1
+eye2
+  rotate: false
+  xy: 437, 430
+  size: 29, 37
+  orig: 29, 37
+  offset: 0, 0
+  index: -1
+hair
+  rotate: false
+  xy: 397, 469
+  size: 63, 82
+  orig: 63, 82
+  offset: 0, 0
+  index: -1
+head
+  rotate: true
+  xy: 367, 81
+  size: 322, 243
+  orig: 322, 243
+  offset: 0, 0
+  index: -1
+head2
+  rotate: true
+  xy: 553, 405
+  size: 322, 243
+  orig: 322, 243
+  offset: 0, 0
+  index: -1
+leg
+  rotate: true
+  xy: 282, 553
+  size: 436, 269
+  orig: 436, 269
+  offset: 0, 0
+  index: -1
+shadow
+  rotate: true
+  xy: 798, 391
+  size: 336, 116
+  orig: 336, 116
+  offset: 0, 0
+  index: -1

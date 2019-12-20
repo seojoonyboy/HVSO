@@ -22,7 +22,7 @@ public class IngameTimer : MonoBehaviour {
     public UnityEvent OnTimeout;        //시간 만료시 호출됨
 
     private void OnTimerUI() {
-        Logger.Log("Timer UI 시작");
+        //Logger.Log("Timer UI 시작");
         timerUI.SetActive(true);
         skeletonGraphic.AnimationState.SetAnimation(0, "animation", false);
         UICoroutine = TimerUIOn();
@@ -50,7 +50,7 @@ public class IngameTimer : MonoBehaviour {
     IEnumerator TimerOn(int totalSec) {
         currentSec = totalSec;
         while (currentSec > uiStartSec) {
-            Logger.Log("Timer : " + currentSec);
+            //Logger.Log("Timer : " + currentSec);
             yield return new WaitForSeconds(1.0f);
             currentSec -= decreaseAmount;
         }
@@ -95,7 +95,7 @@ public class IngameTimer : MonoBehaviour {
 
     IEnumerator tmpTimer(int amount) {
         while (amount > 0) {
-            Logger.Log("Timer : " + currentSec);
+            //Logger.Log("Timer : " + currentSec);
             yield return new WaitForSeconds(1.0f);
             amount -= 1;
         }

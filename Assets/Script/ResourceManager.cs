@@ -27,6 +27,7 @@ public class ResourceManager : SerializedMonoBehaviour
     public Dictionary<string, Sprite> campBackgrounds;   //진영별 뒷배경
     public Dictionary<string, Sprite> rewardIcon;
     public Dictionary<string, Sprite> rankIcons;
+    public Dictionary<string, Sprite> traitIcons;
 
     public Dictionary<string, UnitRace> unitRace;
 
@@ -63,5 +64,6 @@ public enum UnitRace {
     MONSTER,
     ANIMAL,
     CRYSTAL,
-    BEAST
+    BEAST,
+    HUMAN_BOY
 }
