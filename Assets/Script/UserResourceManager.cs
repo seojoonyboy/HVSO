@@ -32,8 +32,7 @@ public class UserResourceManager : SerializedMonoBehaviour {
     public TMPro.TextMeshProUGUI adsLeftNum;
     public bool timerOn;
 
-    private void Awake() {
-        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_ADREWARD_MAIN, OnMainAdOver);
+    private void Start() {
     }
     private void OnDestroy() {
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_ADREWARD_MAIN, OnMainAdOver);
@@ -52,7 +51,7 @@ public class UserResourceManager : SerializedMonoBehaviour {
                             int supply, 
                             int supplyBox, 
                             int supplyX2Coupon) {
-        //timerOn = false;
+        timerOn = false;
         this.lv = lv;
         this.exp = exp;
         this.lvExp = lvExp;
@@ -63,8 +62,13 @@ public class UserResourceManager : SerializedMonoBehaviour {
         SetSupplyTimer(supplyStoreTime);
         SetMainAdsTimer(mainAdTimeRemain);
         this.mainAdCount = mainAdCount;
-        if (adsLeftNum != null)
+        if (adsLeftNum != null) {
             adsLeftNum.text = this.mainAdCount.ToString();
+            if (this.mainAdCount == 0)
+                adsLeftNum.transform.parent.GetComponent<Button>().interactable = false;
+            else
+                adsLeftNum.transform.parent.GetComponent<Button>().interactable = true;
+        }
         this.supply = supply;
         this.supplyBox = supplyBox;
         this.supplyX2Coupon = supplyX2Coupon;
@@ -95,7 +99,7 @@ public class UserResourceManager : SerializedMonoBehaviour {
                     timerOn = false;
                     return;
                 }
-                if ((mainAdTimeRemain * 0.001f) - mainAdTimeRemain >= 1) {
+                if ((mainAdTimeRemain * 0.001f) - adsTimerTime >= 1) {
                     SetMainAdsTimer(mainAdTimeRemain - 1000);
                 }
             }
@@ -103,6 +107,7 @@ public class UserResourceManager : SerializedMonoBehaviour {
     }
 
     public void LinkTimer(TMPro.TextMeshProUGUI timerText, Transform adsBtn) {
+        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_ADREWARD_MAIN, OnMainAdOver);
         this.timerText = timerText;
         adsTimerText = adsBtn.Find("Timer").GetComponent<TMPro.TextMeshProUGUI>();
         adsLeftNum = adsBtn.Find("LeftValue").GetComponent<TMPro.TextMeshProUGUI>();
@@ -125,7 +130,7 @@ public class UserResourceManager : SerializedMonoBehaviour {
     public void SetMainAdsTimer(int mainAdTimeRemain) {
         TimeSpan time = TimeSpan.FromMilliseconds(mainAdTimeRemain);
 
-        this.mainAdTimeRemain = supplyStoreTime;
+        this.mainAdTimeRemain = mainAdTimeRemain;
         adsTimerTime = mainAdTimeRemain * 0.001f;
         if (adsTimerTime > 0) {
             mainAdTimer = time.Hours.ToString() + ":" + time.Minutes.ToString() + ":" + time.Seconds.ToString();
