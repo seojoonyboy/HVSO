@@ -197,7 +197,7 @@ public partial class CardDropManager {
     public void ShowScopeSlot() {
         for(int i= 0; i< 5; i++) {
             if (ScenarioGameManagment.scenarioInstance.forcedSummonAt - 1 == i) {
-                if (ScenarioGameManagment.instance.UnitsObserver.IsUnitExist(new FieldUnitsObserver.Pos(i,0),true)== true)
+                if (ScenarioGameManagment.instance.UnitsObserver.IsUnitExist(new FieldUnitsObserver.Pos(i,0),true)== false)
                     slotLine[i].GetChild(0).gameObject.SetActive(true);
                 else
                     slotLine[i].GetChild(1).gameObject.SetActive(true);
