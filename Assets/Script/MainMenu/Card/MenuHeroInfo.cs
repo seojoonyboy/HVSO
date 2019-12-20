@@ -207,7 +207,8 @@ public class MenuHeroInfo : MonoBehaviour
     }
 
     public void StartAni(Enum Event_Type, Component Sender, object Param) {
-        StartCoroutine(HeroMakingAni());
+        if(gameObject.activeSelf)
+            StartCoroutine(HeroMakingAni());
     }
 
     IEnumerator HeroMakingAni() {
