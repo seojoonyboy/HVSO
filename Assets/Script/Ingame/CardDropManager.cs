@@ -194,10 +194,10 @@ public partial class CardDropManager {
             }
         }
     }
-    public void ShowScopeSlot() {
+    public void ShowScopeSlot(bool isHuman) {
         for(int i= 0; i< 5; i++) {
             if (ScenarioGameManagment.scenarioInstance.forcedSummonAt - 1 == i) {
-                if (ScenarioGameManagment.instance.UnitsObserver.IsUnitExist(new FieldUnitsObserver.Pos(i,0),true)== true)
+                if (PlayMangement.instance.UnitsObserver.IsUnitExist(new FieldUnitsObserver.Pos(i,0),isHuman)== false)
                     slotLine[i].GetChild(0).gameObject.SetActive(true);
                 else
                     slotLine[i].GetChild(1).gameObject.SetActive(true);

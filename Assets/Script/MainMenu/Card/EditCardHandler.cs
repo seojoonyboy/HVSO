@@ -261,7 +261,7 @@ public class EditCardHandler : MonoBehaviour {
 
     public void SetSetNum(bool add = false) {
         if (setNum > 0) {
-            transform.Find("HaveNum/Graphic").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, "bottom_" + setNum.ToString(), false);
+            transform.Find("HaveNum/Graphic").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, setNum.ToString(), false);
             if (add) {
                 Color spineColor = new Color();
                 switch (cardData.rarelity) {
