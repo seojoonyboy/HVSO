@@ -397,6 +397,11 @@ namespace Haegin
                 AuthSteamRes res = (AuthSteamRes)response;
                 if (res.Result == 0) OnAuthenticated(res.Suid, res.Hash);
             }
+            else if (response.ProtocolId == ProtocolId.AuthAppleId)
+            {
+                AuthAppleIdRes res = (AuthAppleIdRes)response;
+                if (res.Result == 0) OnAuthenticated(res.Suid, res.Hash);
+            }
 
             Processing(rar);
         }

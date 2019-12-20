@@ -122,8 +122,10 @@ public class BattleReadyHeaderController : SerializedMonoBehaviour {
     public void SetDescription(AccountManager.LeagueInfo info) {
         StringBuilder sb = new StringBuilder();
         TextMeshProUGUI descTxt = normalUI.transform.Find("Text").GetComponent<TextMeshProUGUI>();
+        descTxt.gameObject.SetActive(true);
+
         //연승중
-        if(info.winningStreak > 1) {
+        if (info.winningStreak > 1) {
             sb
                 .Append("<color=yellow>")
                 .Append(info.winningStreak)
@@ -135,6 +137,9 @@ public class BattleReadyHeaderController : SerializedMonoBehaviour {
                 .Append("<color=red>")
                 .Append(info.losingStreak)
                 .Append("연패중</color>");
+        }
+        else {
+            descTxt.gameObject.SetActive(false);
         }
         descTxt.text = sb.ToString();
     }

@@ -73,6 +73,9 @@ public class MenuLockController : SerializedMonoBehaviour {
             Lock(name, false);
         }
 
+        MainScrollSnapContent.GetComponent<HorizontalLayoutGroup>().enabled = false;
+        MainScrollSnapContent.GetComponent<HorizontalLayoutGroup>().enabled = true;
+
         Logger.Log("unlockMenuList : " + sb.ToString());
         Logger.Log("lockMenuList : " + sb2.ToString());
 

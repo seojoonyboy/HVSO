@@ -438,10 +438,10 @@ namespace MenuTutorialModules {
 
             skeletonGraphic.transform.Find("Header/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "덱 획득";
             if(args[0] == "human") {
-                skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "휴먼 기본 부대, '왕국 수비대' 획득!";
+                skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "휴먼 기본 부대, '시민 자경단' 획득!";
             }
             else {
-                skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 기본 부대, '주술사 부족' 획득!";
+                skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 기본 부대, '방랑 유목민' 획득!";
             }
 
             yield return new WaitForSeconds(1.0f);

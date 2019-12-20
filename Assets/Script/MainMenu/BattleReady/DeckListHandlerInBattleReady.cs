@@ -83,6 +83,9 @@ public class DeckListHandlerInBattleReady : MonoBehaviour {
             button.onClick.AddListener(() => { OnDeckSelected(deckHandler.DECKID, "orc", deck, obj); });
             index++;
         }
+
+        int totalDeckCount = humanDecks.Count + orcDecks.Count;
+        transform.Find("Header/NumValue").GetComponent<TextMeshProUGUI>().text = totalDeckCount + "/10";
     }
 
     private void Start() {
