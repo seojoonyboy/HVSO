@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class ShopManager : MonoBehaviour
 {
     [SerializeField] BoxRewardManager boxRewardManager;
+    [SerializeField] Transform AdvertiseWindow;
 
     int goldItemCount;
     int x2couponCount;
@@ -117,5 +118,14 @@ public class ShopManager : MonoBehaviour
     }
     public void BuyFinished(Enum Event_Type, Component Sender, object Param) {
         buying = false;
+    }
+
+    public void OpenAdvertiseList() {
+        AdvertiseWindow.gameObject.SetActive(true);
+        EscapeKeyController.escapeKeyCtrl.AddEscape(CloseAdvertiseList);
+    }
+    public void CloseAdvertiseList() {
+        AdvertiseWindow.gameObject.SetActive(false);
+        EscapeKeyController.escapeKeyCtrl.RemoveEscape(CloseAdvertiseList);
     }
 }
