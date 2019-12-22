@@ -6,6 +6,7 @@ using System;
 using Haegin;
 using HaeginGame;
 using Facebook.Unity;
+using TMPro;
 
 [Serializable] public class AccountSetup {
     private WebClient webClient;
@@ -25,7 +26,7 @@ using Facebook.Unity;
     }
 
     public void Destory() {
-
+        DestoryWebClient();
     }
 
     private void WebClientInit() {
@@ -44,7 +45,44 @@ using Facebook.Unity;
     }
 
     public void ButtonInit() {
+        TextMeshProUGUI facebookText = facebookBtn.GetComponentInChildren<TextMeshProUGUI>();
+        TextMeshProUGUI gameCenterText = gameCenterBtn.GetComponentInChildren<TextMeshProUGUI>();
+        TextMeshProUGUI appleText = appleBtn.GetComponentInChildren<TextMeshProUGUI>();
+        
 
+        facebookText.text = "페이스북 로그인";
+        #if UNITY_IOS
+        gameCenterText.text = "게임센터 로그인";
+        appleText.text = "애플 로그인";
+        #elif UNITY_ANDROID
+        gameCenterText.text = "구글 로그인";
+        appleBtn.gameObject.SetActive(false);
+        #endif
+        
+        
+
+        if (Account.IsLoggedInGameService() && Account.GameServiceAccountType != Account.HaeginAccountType.Guest) {
+            #if UNITY_IOS
+            gameCenterText.text = "게임센터 연동됨";
+            #elif UNITY_ANDROID
+            gameCenterText.text = "구글 연동됨";
+            #endif
+            gameCenterBtn.enabled = false;
+            gameCenterBtn.image.sprite = btnDisable;
+        }
+
+        if (Account.IsLoggedInFacebook()) {
+            GameObject.Find("FacebookLogin").GetComponent<Text>().text = "페이스북 연동됨";
+            facebookBtn.enabled = false;
+            facebookBtn.image.sprite = btnDisable;
+        }
+        #if UNITY_IOS
+        if(Account.IsSupportedAppleId() && Account.IsLoggedInAppleId()) {
+            appleText.text = "애플 연동됨";
+            appleBtn.enabled = false;
+            appleBtn.image.sprite = btnDisable;
+        }
+        #endif
     }
 
     private void DestoryWebClient() {
@@ -150,6 +188,6 @@ using Facebook.Unity;
     }
 
     public void LoginComplete() {
-
+        ButtonInit();
     }
 }
