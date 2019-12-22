@@ -821,8 +821,13 @@ public class GameResultManager : MonoBehaviour {
                 }
                 datas.Add(new SliderData(_from, _to, query1[i + 1], 0));
             }
-            int index = standards.IndexOf(query1[query1.Count - 1]);
-            datas.Add(new SliderData(query1[query1.Count - 1], to, standards[index + 1], 0));
+            if(query1.Count == 0) {
+                datas.Add(new SliderData(from, to, standards[1], 0));
+            }
+            else {
+                int index = standards.IndexOf(query1[query1.Count - 1]);
+                datas.Add(new SliderData(query1[query1.Count - 1], to, standards[index + 1], 0));
+            }
         }
         else {
             List<int> query1 = standards.FindAll(x => x > to && x < from);      //from과 to 사이에 존재하는 기준값

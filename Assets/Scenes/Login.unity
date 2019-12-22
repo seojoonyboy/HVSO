@@ -4590,6 +4590,12 @@ PrefabInstance:
       propertyPath: m_RaycastTarget
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4626959827965497458, guid: ee840a1733179334e84a54efed633264,
+        type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: ece3e4f0a0e8c3044a1d521c43dc6a88,
+        type: 3}
     - target: {fileID: 4626959826446734568, guid: ee840a1733179334e84a54efed633264,
         type: 3}
       propertyPath: m_RaycastTarget
@@ -13228,14 +13234,19 @@ MonoBehaviour:
   gold: 0
   crystal: 0
   supplyStore: 0
-  timerTime: 0
+  suppllyTimerTime: 0
+  adsTimerTime: 0
   supplyStoreTime: 0
+  mainAdTimeRemain: 0
+  mainAdCount: 0
   supplyStoreTimer: 
+  mainAdTimer: 
   supply: 0
   supplyBox: 0
   supplyX2Coupon: 0
   timerText: {fileID: 0}
-  storeGauge: {fileID: 0}
+  adsTimerText: {fileID: 0}
+  adsLeftNum: {fileID: 0}
   timerOn: 0
 --- !u!114 &1870949079
 MonoBehaviour:
