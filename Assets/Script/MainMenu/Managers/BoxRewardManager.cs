@@ -461,24 +461,27 @@ public class BoxRewardManager : MonoBehaviour {
     }
 
     public void OpenResourceInfo(string resource) {
-        resourceInfo.gameObject.SetActive(true);
-        resourceInfo.Find(resource).gameObject.SetActive(true);
-        resourceInfo.Find(resource).SetSiblingIndex(1);
-        switch (resource) {
-            case "gold":
-                resourceInfo.Find("Header/Name").GetComponent<TMPro.TextMeshProUGUI>().text = "금화";
-                resourceInfo.Find("Body/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "금화 설명";
-                break;
-            case "crystal":
-                resourceInfo.Find("Header/Name").GetComponent<TMPro.TextMeshProUGUI>().text = "마나 크리스탈";
-                resourceInfo.Find("Body/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "마나 크리스탈 설명";
-                break;
-            case "supplyX2Coupon":
-                resourceInfo.Find("Header/Name").GetComponent<TMPro.TextMeshProUGUI>().text = "보상 2배 쿠폰";
-                resourceInfo.Find("Body/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "보상 2배 쿠폰";
-                break;
-        }
-        EscapeKeyController.escapeKeyCtrl.AddEscape(CloseResourceInfo);
+        //resourceInfo.gameObject.SetActive(true);
+        //resourceInfo.Find(resource).gameObject.SetActive(true);
+        //resourceInfo.Find(resource).SetSiblingIndex(1);
+        //switch (resource) {
+        //    case "gold":
+        //        resourceInfo.Find("Header/Name").GetComponent<TMPro.TextMeshProUGUI>().text = "금화";
+        //        resourceInfo.Find("Body/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "금화 설명";
+        //        break;
+        //    case "crystal":
+        //        resourceInfo.Find("Header/Name").GetComponent<TMPro.TextMeshProUGUI>().text = "마나 크리스탈";
+        //        resourceInfo.Find("Body/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "마나 크리스탈 설명";
+        //        break;
+        //    case "supplyX2Coupon":
+        //        resourceInfo.Find("Header/Name").GetComponent<TMPro.TextMeshProUGUI>().text = "보상 2배 쿠폰";
+        //        resourceInfo.Find("Body/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "보상 2배 쿠폰";
+        //        break;
+        //}
+        //EscapeKeyController.escapeKeyCtrl.AddEscape(CloseResourceInfo);
+
+        RewardDescriptionHandler rewardDescriptionHandler = RewardDescriptionHandler.instance;
+        rewardDescriptionHandler.RequestDescriptionModal(resource);
     }
 
     public void CloseResourceInfo() {
