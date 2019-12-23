@@ -613,7 +613,7 @@ public class PlaceMonster : MonoBehaviour {
 
     private void ReturnPosition() {
         unitSoringOrder = 50;
-        iTween.MoveTo(gameObject, iTween.Hash("x", unitLocation.x, "y", unitLocation.y, "z", unitLocation.z, "time", 0.3f, "delay", 0.5f, "easetype", iTween.EaseType.easeInOutExpo));
+        iTween.MoveTo(gameObject, iTween.Hash("x", unitLocation.x, "y", unitLocation.y, "z", unitLocation.z, "time", 0.2f, "delay", 0.3f, "easetype", iTween.EaseType.easeInOutExpo));
     }
 
     public void CheckHP() {
