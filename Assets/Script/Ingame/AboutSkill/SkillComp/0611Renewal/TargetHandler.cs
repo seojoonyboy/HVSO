@@ -646,7 +646,7 @@ namespace TargetModules {
                 case "my":
                     if(args.Length == 2 && args[1] == "place") {
                         if (CanSelect(args[1])) {
-                            PlayMangement.instance.OnBlockPanel("대상을 지정해 주세요.");
+                            PlayMangement.instance.OnBlockPanel("위치를 지정해 주세요.");
                             callback = successCallback;
                             PlaceMonster myMonster = skillHandler.myObject.GetComponent<PlaceMonster>();
                             EffectSystem.Instance.ShowSlotWithDim();
@@ -668,7 +668,7 @@ namespace TargetModules {
                     }
                     if (args.Length == 2 && args[1] == "unit") {
                         if (CanSelect(args[1])) {
-                            PlayMangement.instance.OnBlockPanel("대상을 지정해 주세요.");
+                            PlayMangement.instance.OnBlockPanel("대상을 정해 주세요.");
                             callback = successCallback;
 
                             //잠복중인 유닛은 타겟에서 제외
@@ -697,7 +697,7 @@ namespace TargetModules {
                 case "enemy":
                     if (args.Length == 2 && args[1] == "unit") {
                         if (CanSelect(args[1])) {
-                            PlayMangement.instance.OnBlockPanel("대상을 지정해 주세요.");
+                            PlayMangement.instance.OnBlockPanel("대상을 정해 주세요.");
                             var units = PlayMangement.instance.UnitsObserver.GetAllFieldUnits(!PlayMangement.instance.player.isHuman);
 
                             //잠복중인 유닛은 타겟에서 제외
