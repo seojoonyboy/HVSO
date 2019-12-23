@@ -505,7 +505,7 @@ namespace MenuTutorialModules {
             skeletonGraphic.AnimationState.SetAnimation(0, "story_details", false);
 
             skeletonGraphic.transform.Find("Header/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 스토리 해금";
-            skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 진영 튜토리얼이 개방 되었습니다!";
+            skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 진영 스토리가 개방 되었습니다!";
 
             yield return new WaitForSeconds(1.0f);
 
@@ -548,7 +548,7 @@ namespace MenuTutorialModules {
             skeletonGraphic.AnimationState.SetAnimation(0, "story_reward2", false);
 
             skeletonGraphic.transform.Find("Header/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 스토리 해금";
-            skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 진영 튜토리얼이 개방 되었습니다!";
+            skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 진영 스토리가 개방 되었습니다!";
 
             yield return new WaitForSeconds(1.0f);
 
@@ -591,7 +591,7 @@ namespace MenuTutorialModules {
             skeletonGraphic.AnimationState.SetAnimation(0, "story_reward2", false);
 
             skeletonGraphic.transform.Find("Header/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "휴먼 스토리 해금";
-            skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "휴먼 진영 튜토리얼이 개방 되었습니다!";
+            skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "휴먼 진영 스토리가 개방 되었습니다!";
 
             yield return new WaitForSeconds(1.0f);
 
@@ -637,8 +637,8 @@ namespace MenuTutorialModules {
             skeletonGraphic.transform.parent.Find("SubBackground").gameObject.SetActive(false);
             skeletonGraphic.AnimationState.SetAnimation(0, "story_reward1", false);
 
-            skeletonGraphic.transform.Find("Header/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 튜토리얼 개방";
-            skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 진영 튜토리얼이 개방 되었습니다!";
+            skeletonGraphic.transform.Find("Header/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 스토리 개방";
+            skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 진영 스토리가 개방 되었습니다!";
 
             yield return new WaitForSeconds(1.0f);
 
