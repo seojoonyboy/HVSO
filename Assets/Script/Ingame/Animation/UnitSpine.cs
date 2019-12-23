@@ -50,6 +50,9 @@ public class UnitSpine : MonoBehaviour
     public GameObject hidingObject;
     protected HideUnit hideUnit;
 
+    public string rarelity = "";
+    private UISfxSound appearSound;
+
     public bool teleportMove;
     public bool isGlow = false;
 
@@ -81,7 +84,34 @@ public class UnitSpine : MonoBehaviour
     private void Start() {
         //SetUpGlow();
         //ActiveGlow();
+        SetAppearSound();
     }
+
+    private void SetAppearSound() {
+        if (SoundManager.Instance != null) {
+            switch (rarelity) {
+                case "common":
+                    appearSound = UISfxSound.CARD_USE_NORMAL;
+                    break;
+                case "uncommon":
+                    appearSound = UISfxSound.CARD_USE_NORMAL;
+                    break;
+                case "rare":
+                    appearSound = UISfxSound.CARD_USE_RARE;
+                    break;
+                case "superrare":
+                    appearSound = UISfxSound.CARD_USE_SUPERRARE;
+                    break;
+                case "legend":
+                    appearSound = UISfxSound.CARD_USE_LEGEND;
+                    break;
+                default:
+                    appearSound = UISfxSound.CARD_USE_NORMAL;
+                    break;
+            }
+        }
+    }
+
 
 
     public virtual void Init() {
@@ -89,24 +119,24 @@ public class UnitSpine : MonoBehaviour
         spineAnimationState = skeletonAnimation.AnimationState;
         skeleton = skeletonAnimation.Skeleton;
         spineAnimationState.Event += AnimationEvent;
-        
+
         headbone = transform.Find("effect_head");
         bodybone = transform.Find("effect_body");
         rootbone = transform.Find("effect_root");
         //skeleton.SetToSetupPose();
-        
+
         if (arrow != null && transform.parent.GetComponent<PlaceMonster>().isPlayer == true) {
             if (rangeUpAttackName != "")
                 attackAnimationName = rangeUpAttackName;
             else
                 attackAnimationName = generalAttackName;
         }
-        else if(arrow != null && transform.parent.GetComponent<PlaceMonster>().isPlayer == false) {
+        else if (arrow != null && transform.parent.GetComponent<PlaceMonster>().isPlayer == false) {
             if (rangeDownAttackName != "")
                 attackAnimationName = rangeDownAttackName;
             else
                 attackAnimationName = generalAttackName;
-        }
+        }        
     }
 
     public virtual void Appear() {
@@ -174,8 +204,8 @@ public class UnitSpine : MonoBehaviour
 
         if(e.Data.Name == "APPEAR") {
             EffectSystem.Instance.ShowEffect(EffectSystem.EffectType.APPEAR, transform.position);
-            if (SoundManager.Instance != null)
-                SoundManager.Instance.PlaySound(SoundType.APPEAR_UNIT);
+            if(SoundManager.Instance != null)
+                SoundManager.Instance.PlaySound(appearSound);
         }
     }
 

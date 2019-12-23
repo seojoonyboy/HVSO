@@ -94,6 +94,7 @@ public class PlaceMonster : MonoBehaviour {
         unitSpine = transform.Find("skeleton").GetComponent<UnitSpine>();
         unitSpine.attackCallback += SuccessAttack;
         unitSpine.takeMagicCallback += CheckHP;
+        unitSpine.rarelity = unit.rarelity;
 
         
         if (unit.attackType.Length > 0 && unit.attackType[0] == "double")
