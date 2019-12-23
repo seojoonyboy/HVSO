@@ -157,6 +157,7 @@ public class CardDictionaryManager : MonoBehaviour {
         int count = 0;
         for (int i = 0; i < AccountManager.Instance.allHeroes.Count; i++) {
             dataModules.HeroInventory heroData = AccountManager.Instance.allHeroes[i];
+            if (heroData.unownable) continue;
             if (heroData.camp == "human") {
                 Transform heroSlot = heroParent.GetChild(count);
                 heroSlot.Find("HeroObject/HeroImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[heroData.id + "_dic"];
@@ -210,6 +211,7 @@ public class CardDictionaryManager : MonoBehaviour {
         Transform heroParent = transform.Find("HeroDictionary/HeroSelect");
         for (int i = 0; i < AccountManager.Instance.allHeroes.Count; i++) {
             dataModules.HeroInventory heroData = AccountManager.Instance.allHeroes[i];
+            if (heroData.unownable) continue;
             if (heroData.camp == "orc") {
                 Transform heroSlot = heroParent.GetChild(count);
                 heroSlot.Find("HeroObject/HeroImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[heroData.id + "_dic"];
