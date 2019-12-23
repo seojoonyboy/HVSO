@@ -9,6 +9,7 @@ public class OptionSetupManager : MonoBehaviour
     [SerializeField] TMPro.TextMeshProUGUI bgmValue;
     [SerializeField] Slider soundSlider;
     [SerializeField] TMPro.TextMeshProUGUI soundValue;
+    [SerializeField] AccountSetup accountSetup;
     // Start is called before the first frame update
     public static bool vibrateOn;
     void Start()
@@ -24,6 +25,11 @@ public class OptionSetupManager : MonoBehaviour
         bgmValue.text = ((int)(bgmSlider.value * 100)).ToString();
         soundSlider.value = PlayerPrefs.GetFloat("SoundVolume");
         soundValue.text = ((int)(soundSlider.value * 100)).ToString();
+        accountSetup.Init();
+    }
+
+    void OnDestroy() {
+        accountSetup.Destory();    
     }
 
     // Update is called once per frame
