@@ -603,7 +603,7 @@ public partial class PlayMangement : MonoBehaviour {
 
     public virtual IEnumerator battleCoroutine() {
         dragable = false;
-        yield return new WaitForSeconds(1.1f);
+        yield return new WaitForSeconds(0.8f);
         yield return socketHandler.waitSkillDone(() => { });
         yield return socketHandler.WaitBattle();
         for (int line = 0; line < 5; line++) {
@@ -730,7 +730,7 @@ public partial class PlayMangement : MonoBehaviour {
         if (placeMonster.maxAtkCount == 1 && secondAttack) yield break;
         if (placeMonster.unit.attack <= 0) yield break;
         placeMonster.GetTarget();
-        yield return new WaitForSeconds(1.1f + placeMonster.atkTime);
+        yield return new WaitForSeconds(0.8f + placeMonster.atkTime);
     }
     IEnumerator WaitSocketData(SocketFormat.QueueSocketList<SocketFormat.GameState> queueList, int line, bool isBattle) {
         if (!isGame) yield break;
