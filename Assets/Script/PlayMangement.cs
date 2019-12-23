@@ -644,6 +644,12 @@ public partial class PlayMangement : MonoBehaviour {
             else yield return whoFirstBattle(enemyPlayer, player, line);
         }
         else {
+            // socketHandler.lineBattleList.Dequeue();
+            // socketHandler.lineBattleList.Dequeue();
+            // socketHandler.mapClearList.Dequeue();
+            // socketHandler.lineBattleList.Dequeue();
+            // socketHandler.lineBattleList.Dequeue();
+            // socketHandler.mapClearList.Dequeue();
             yield return WaitSocketData(socketHandler.lineBattleList, line, true);
             shieldDequeue();
             yield return WaitSocketData(socketHandler.lineBattleList, line, true);
@@ -654,7 +660,7 @@ public partial class PlayMangement : MonoBehaviour {
             yield return WaitSocketData(socketHandler.lineBattleList, line, true);
             shieldDequeue();
             yield return WaitSocketData(socketHandler.mapClearList, line, false);
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.1f);
         }
         battleLineEffect.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.6f);
         battleLineEffect.gameObject.SetActive(false);
