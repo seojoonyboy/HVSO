@@ -150,6 +150,7 @@ public class BoxRewardManager : MonoBehaviour {
         if (openCount == 0) {
             boxSpine.AnimationState.SetAnimation(2, "03.TOUCH1", false);
             boxEffect.AnimationState.SetAnimation(1, "01.open", false);
+            StartCoroutine(SkipAllReward());
         }
         if (openCount > 0) {
             transform.Find("OpenBox").GetChild(openCount - 1).gameObject.SetActive(false);
@@ -161,6 +162,15 @@ public class BoxRewardManager : MonoBehaviour {
         StartCoroutine(BoxTotalResult());
         openCount = 5;
         skipBtn.SetActive(false);
+    }
+
+    public IEnumerator SkipAllReward() {
+        SkeletonGraphic targetEffect = transform.Find("OpenBox/TargetSpine").GetComponent<SkeletonGraphic>();
+        yield return new WaitForSeconds(1.0f);
+        targetEffect.gameObject.SetActive(true);
+        targetEffect.Initialize(true);
+        targetEffect.Update(0);
+        targetEffect.AnimationState.SetAnimation(0, "animation", false);
     }
 
     public void SetSkipBackSpine() {

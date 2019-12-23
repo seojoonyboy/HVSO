@@ -41,7 +41,7 @@ public class SoundManager : SerializedMonoBehaviour {
     void Awake() {
         _instance = GetComponent<SoundManager>();
         if (!PlayerPrefs.HasKey("SoundVolume")) 
-            PlayerPrefs.SetFloat("SoundVolume", 0.5f);
+            PlayerPrefs.SetFloat("SoundVolume", 0.7f);
         soundVolume = PlayerPrefs.GetFloat("SoundVolume");
             
         DontDestroyOnLoad(gameObject);    

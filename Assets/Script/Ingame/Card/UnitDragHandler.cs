@@ -75,31 +75,31 @@ public partial class UnitDragHandler : CardHandler, IBeginDragHandler, IDragHand
 
             Invoke("SendEvent", 0.3f);
         }
-        else {
-            UISfxSound sound;
-            switch (cardData.rarelity) {
-                case "common":
-                    sound = UISfxSound.CARD_USE_NORMAL;
-                    break;
-                case "uncommon":
-                    sound = UISfxSound.CARD_USE_NORMAL;
-                    break;
-                case "rare":
-                    sound = UISfxSound.CARD_USE_RARE;
-                    break;
-                case "superrare":
-                    sound = UISfxSound.CARD_USE_SUPERRARE;
-                    break;
-                case "legend":
-                    sound = UISfxSound.CARD_USE_LEGEND;
-                    break;
-                default:
-                    sound = UISfxSound.CARD_USE_NORMAL;
-                    break;
-            }
+        //else {
+        //    UISfxSound sound;
+        //    switch (cardData.rarelity) {
+        //        case "common":
+        //            sound = UISfxSound.CARD_USE_NORMAL;
+        //            break;
+        //        case "uncommon":
+        //            sound = UISfxSound.CARD_USE_NORMAL;
+        //            break;
+        //        case "rare":
+        //            sound = UISfxSound.CARD_USE_RARE;
+        //            break;
+        //        case "superrare":
+        //            sound = UISfxSound.CARD_USE_SUPERRARE;
+        //            break;
+        //        case "legend":
+        //            sound = UISfxSound.CARD_USE_LEGEND;
+        //            break;
+        //        default:
+        //            sound = UISfxSound.CARD_USE_NORMAL;
+        //            break;
+        //    }
 
-            SoundManager.Instance.PlaySound(sound);
-        }
+        //    SoundManager.Instance.PlaySound(sound);
+        //}
         
         CardDropManager.Instance.HideDropableSlot();
         CardInfoOnDrag.instance.OffCardDragInfo();
