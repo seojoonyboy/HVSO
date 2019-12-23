@@ -212,12 +212,6 @@
                         ]
                     },
                     {
-                        "name" : "Wait_Until",
-                        "args" : [
-                            "0.5"
-                        ]
-                    },
-                    {
                         "name": "AutoSelectStoryDeck",
                         "args": [
                             "orc",
