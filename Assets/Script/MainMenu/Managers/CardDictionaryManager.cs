@@ -868,6 +868,17 @@ public class CardDictionaryManager : MonoBehaviour {
         tutorialHand.name = "tutorialHand";
         tutoAction = () => MenuCardInfo.cardInfoWindow.makeShowHand(quest);
         card.cardObject.GetComponent<Button>().onClick.AddListener(tutoAction);
+        SnapTo(card.cardObject.GetComponent<RectTransform>());
+    }
+
+    private async void SnapTo(RectTransform target){
+        await System.Threading.Tasks.Task.Delay(100);
+        ScrollRect scrollRect = GetComponent<ScrollRect>();
+        RectTransform contentPanel = scrollRect.content;
+        contentPanel.anchoredPosition =
+            (Vector2)scrollRect.transform.InverseTransformPoint(contentPanel.position)
+            - (Vector2)scrollRect.transform.InverseTransformPoint(new Vector3(contentPanel.position.x, target.position.y, contentPanel.position.z));
+        Canvas.ForceUpdateCanvases();
     }
 }
 
