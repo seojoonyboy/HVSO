@@ -83,6 +83,7 @@ public class BoxRewardManager : MonoBehaviour {
         openCount = 0;
         boxSpine.Initialize(true);
         boxSpine.Update(0);
+        SoundManager.Instance.PlaySound(UISfxSound.BOX_APPEAR);
         boxSpine.AnimationState.SetAnimation(0, "01.START", false);
         boxSpine.AnimationState.AddAnimation(1, "02.IDLE", true, 0.5f);
         boxEffect.Initialize(true);
@@ -95,6 +96,7 @@ public class BoxRewardManager : MonoBehaviour {
         SetRewards(accountManager.rewardList);
         transform.Find("OpenBox").gameObject.SetActive(true);
     }
+
 
 
     public void GetBoxResult() {
@@ -294,6 +296,16 @@ public class BoxRewardManager : MonoBehaviour {
                 iTween.ScaleTo(targetBox.Find("Name").gameObject, iTween.Hash("x", 1.0f, "y", 1.0f, "islocal", true, "time", 0.3f));
                 yield return new WaitForSeconds(0.2f);
                 iTween.ScaleTo(targetBox.Find("Rarelity").gameObject, iTween.Hash("x", 1.0f, "y", 1.0f, "islocal", true, "time", 0.3f));
+                
+                if (target.Find("GetCrystal").gameObject.activeSelf) {
+                    yield return new WaitForSeconds(0.2f);
+                    SkeletonGraphic crystalSpine = target.Find("GetCrystalEffect").GetComponent<SkeletonGraphic>();
+                    crystalSpine.AnimationState.SetAnimation(0, "animation", false);
+                    yield return new WaitForSeconds(0.2f);
+                    target.Find("GetCrystal").GetChild(0).gameObject.SetActive(true);
+                }
+
+                yield return new WaitForSeconds(0.1f);
                 switch (rarelity) {
                     case "common":
                     case "uncommon":
@@ -308,13 +320,6 @@ public class BoxRewardManager : MonoBehaviour {
                     case "legend":
                         soundManager.PlaySound(UISfxSound.BOX_EPIC);
                         break;
-                }
-                if (target.Find("GetCrystal").gameObject.activeSelf) {
-                    yield return new WaitForSeconds(0.2f);
-                    SkeletonGraphic crystalSpine = target.Find("GetCrystalEffect").GetComponent<SkeletonGraphic>();
-                    crystalSpine.AnimationState.SetAnimation(0, "animation", false);
-                    yield return new WaitForSeconds(0.2f);
-                    target.Find("GetCrystal").GetChild(0).gameObject.SetActive(true);
                 }
             }
         }
@@ -395,6 +400,7 @@ public class BoxRewardManager : MonoBehaviour {
             yield return new WaitForSeconds(0.1f);
             iTween.ScaleTo(reward.gameObject, iTween.Hash("x", 0.9f, "y", 0.9f, "islocal", true, "time", 0.4f));
         }
+        SoundManager.Instance.PlaySound(UISfxSound.BOX_OPEN_FINISH);
         yield return new WaitForSeconds(0.5f);
         transform.Find("ExitButton").gameObject.SetActive(true);
         openAni = false;
