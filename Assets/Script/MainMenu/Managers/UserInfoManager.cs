@@ -20,12 +20,6 @@ public class UserInfoManager : MonoBehaviour
             contents.Find("TierInfo/TierImage").GetComponent<Image>().sprite = AccountManager.Instance.resource.rankIcons["default"];
         contents.Find("TierInfo/Score/Value").GetComponent<Text>().text = AccountManager.Instance.scriptable_leagueData.leagueInfo.ratingPoint.ToString();
         contents.Find("TierInfo/Wins/Value").GetComponent<TMPro.TextMeshProUGUI>().text = "";
-        EscapeKeyController.escapeKeyCtrl.AddEscape(ExitUserInfo);
-    }
-
-    public void ExitUserInfo() {
-        gameObject.SetActive(false);
-        EscapeKeyController.escapeKeyCtrl.RemoveEscape(ExitUserInfo);
     }
 
     public void ChangeId() {
