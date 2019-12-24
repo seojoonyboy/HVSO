@@ -54,8 +54,10 @@ public class OptionSetupManager : MonoBehaviour
     }
 
     public void VibrateOn(bool on) {
-        if (on)
+        if (on) {
+            AccountManager.Instance.customVibrate.Vibrate(1000);
             PlayerPrefs.SetString("Vibrate", "On");
+        }
         else 
             PlayerPrefs.SetString("Vibrate", "Off");
         transform.GetChild(0).Find("Vibration").Find("Off").GetComponent<Button>().interactable = on;

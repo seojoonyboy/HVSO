@@ -79,6 +79,8 @@ public partial class BattleConnector : MonoBehaviour {
         SoundManager.Instance.PlayIngameSfx(IngameSfxSound.GAMEMATCH);
         SetUserInfoText();
         SetSaveGameId();
+
+        AccountManager.Instance.customVibrate.Vibrate(1000);
     }
 
     public void SetSaveGameId() {
