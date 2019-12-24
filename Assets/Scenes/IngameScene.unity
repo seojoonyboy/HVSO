@@ -45663,7 +45663,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1440334950}
   m_Layer: 5
-  m_Name: ExpSlider
+  m_Name: MMRSlider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -55052,6 +55052,12 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 4755937159236611018, guid: b12b9a897cff7e34faad42fec721138d,
+        type: 3}
+      propertyPath: skeletonDataAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: e426d20ad2dd8c24c9850f22e9bc4d73,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b12b9a897cff7e34faad42fec721138d, type: 3}
 --- !u!1 &1676652692 stripped
@@ -58858,7 +58864,7 @@ GameObject:
   - component: {fileID: 1872096188}
   - component: {fileID: 1872096187}
   m_Layer: 5
-  m_Name: ExpValue
+  m_Name: Label
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -66787,7 +66793,7 @@ MonoBehaviour:
   m_Direction: 0
   m_MinValue: 0
   m_MaxValue: 1
-  m_WholeNumbers: 0
+  m_WholeNumbers: 1
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
