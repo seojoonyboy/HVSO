@@ -350,11 +350,11 @@ public class GameResultManager : MonoBehaviour {
             description.text = sb.ToString();
             //MMR 증가
             if (scriptable_leagueData.leagueInfo.ratingPoint > scriptable_leagueData.prevLeagueInfo.ratingPoint) {
-                coroutine = ProgressLeagueBar(scriptable_leagueData.prevLeagueInfo.ratingPoint, scriptable_leagueData.leagueInfo.ratingPoint, true, leagueInfo);
+                coroutine = ProgressLeagueBar();
             }
             //MMR 감소
             else {
-                coroutine = ProgressLeagueBar(scriptable_leagueData.prevLeagueInfo.ratingPoint, scriptable_leagueData.leagueInfo.ratingPoint, false, leagueInfo);
+                coroutine = ProgressLeagueBar();
             }
 
             yield return StartCoroutine(coroutine);
@@ -366,7 +366,6 @@ public class GameResultManager : MonoBehaviour {
                 Logger.Log("승급전 혹은 강등전 발생!");
                 yield return ShowRankChangeChanceUI();
             }
-            yield return ShowTierChangeEffect();
 
             if (icons.ContainsKey(leagueInfo.rankDetail.minorRankName)) {
                 rankIcon.sprite = icons[leagueInfo.rankDetail.minorRankName];
@@ -389,7 +388,7 @@ public class GameResultManager : MonoBehaviour {
 
         Transform secondWindow = transform.Find("SecondWindow");
         Transform playerMmr = secondWindow.Find("PlayerMmr");
-        Transform expSlider = playerMmr.Find("ExpSlider");
+        Transform expSlider = playerMmr.Find("MMRSlider");
         expSlider.Find("RankChangeEffect").gameObject.SetActive(true);
 
         var leagueInfo = scriptable_leagueData.leagueInfo;
@@ -416,7 +415,7 @@ public class GameResultManager : MonoBehaviour {
 
         Transform secondWindow = transform.Find("SecondWindow");
         Transform playerMmr = secondWindow.Find("PlayerMmr");
-        Transform expSlider = playerMmr.Find("ExpSlider");
+        Transform expSlider = playerMmr.Find("MMRSlider");
         Transform rankBoard = playerMmr.Find("RankBoard");
 
         expSlider.gameObject.SetActive(false);
@@ -465,36 +464,32 @@ public class GameResultManager : MonoBehaviour {
     /// <summary>
     /// 승급/강등 이펙트 보여주기
     /// </summary>
-    IEnumerator ShowTierChangeEffect() {
+    IEnumerator ShowTierChangeEffect(bool isRankUp) {
+        yield return new WaitForSeconds(1.0f);
+
+        tierChangeEffectModal.SetActive(true);
         var leagueInfo = scriptable_leagueData.leagueInfo;
         var prevLeagueInfo = scriptable_leagueData.prevLeagueInfo;
 
-        yield return new WaitForSeconds(1.0f);
-        if (scriptable_leagueData.prevLeagueInfo.rankDetail.minorRankName != scriptable_leagueData.leagueInfo.rankDetail.minorRankName) {
-            tierChangeEffectModal.SetActive(true);
-            string animName = GetTierAnimName(leagueInfo.rankDetail.minorRankName);
-            SkeletonGraphic skeletonGraphic = tierChangeEffectModal.transform.Find("Spine").GetComponent<SkeletonGraphic>();
-            skeletonGraphic.Initialize(true);
+        string animName = GetTierAnimName(leagueInfo.rankDetail.minorRankName);
+        SkeletonGraphic skeletonGraphic = tierChangeEffectModal.transform.Find("Spine").GetComponent<SkeletonGraphic>();
+        skeletonGraphic.Initialize(true);
 
-            if (animName != null) skeletonGraphic.Skeleton.SetSkin(animName);
-            skeletonGraphic.Skeleton.SetSlotsToSetupPose();
+        if (animName != null) skeletonGraphic.Skeleton.SetSkin(animName);
+        skeletonGraphic.Skeleton.SetSlotsToSetupPose();
 
-            var message = tierChangeEffectModal.transform.Find("Message").GetComponent<TMPro.TextMeshProUGUI>();
+        var message = tierChangeEffectModal.transform.Find("Message").GetComponent<TMPro.TextMeshProUGUI>();
 
-            //TODO : 승급인지 강등인지 구분 필요
-            if (leagueInfo.ratingPoint - prevLeagueInfo.ratingPoint > 0) {
-                message.text = leagueInfo.rankDetail.minorRankName + "으로 승급하셨습니다.";
-                skeletonGraphic.AnimationState.SetAnimation(0, "UP", false);
-                Logger.Log("승급!");
-            }
-            else if(leagueInfo.ratingPoint - prevLeagueInfo.ratingPoint < 0) {
-                message.text = leagueInfo.rankDetail.minorRankName + "으로 강등되었습니다.";
-                skeletonGraphic.AnimationState.SetAnimation(0, "DOWN", false);
-                Logger.Log("강등!");
-            }
-            else {
-                Logger.Log("??");
-            }
+        //TODO : 승급인지 강등인지 구분 필요
+        if (isRankUp) {
+            message.text = leagueInfo.rankDetail.minorRankName + "으로 승급하셨습니다.";
+            skeletonGraphic.AnimationState.SetAnimation(0, "UP", false);
+            Logger.Log("승급!");
+        }
+        else {
+            message.text = leagueInfo.rankDetail.minorRankName + "으로 강등되었습니다.";
+            skeletonGraphic.AnimationState.SetAnimation(0, "DOWN", false);
+            Logger.Log("강등!");
         }
     }
 
@@ -517,80 +512,130 @@ public class GameResultManager : MonoBehaviour {
             .Subscribe(_ => { currentTime = 0; });
     }
 
-    IEnumerator ProgressLeagueBar(int from, int to, bool isAscend, AccountManager.LeagueInfo leagueInfo) {
+    IEnumerator ProgressLeagueBar() {
         Transform secondWindow = transform.Find("SecondWindow");
         Transform playerMMR = secondWindow.Find("PlayerMmr");
+        Slider slider = playerMMR.Find("MMRSlider/Slider").GetComponent<Slider>();
+        TMPro.TextMeshProUGUI label = playerMMR.Find("MMRSlider/Label").GetComponent<TMPro.TextMeshProUGUI>();
 
-        Slider slider = playerMMR.Find("ExpSlider/Slider").GetComponent<Slider>();
-        float currentVal = scriptable_leagueData.prevLeagueInfo.ratingPoint;
-        var expValue = playerMMR.Find("ExpSlider/ExpValue").GetComponent<TMPro.TextMeshProUGUI>();
+        var prevLeagueInfo = scriptable_leagueData.prevLeagueInfo;
+        var newLeagueInfo = scriptable_leagueData.leagueInfo;
+        int prevMMR = prevLeagueInfo.ratingPoint;
+        int newMMR = newLeagueInfo.ratingPoint;
 
-        int prevMaxMMR = 3000;
-        if(AccountManager.Instance.GetTargetRankArea(scriptable_leagueData.prevLeagueInfo.rankDetail.minorRankName) != null) {
-            prevMaxMMR = AccountManager.Instance.GetTargetRankArea(scriptable_leagueData.prevLeagueInfo.rankDetail.minorRankName).Max;
+        slider.maxValue = prevLeagueInfo.rankDetail.pointLessThen;
+        slider.value = prevMMR;
+        label.text = prevMMR + "/" + prevLeagueInfo.rankDetail.pointLessThen;
+
+        if (prevLeagueInfo.rankDetail.minorRankName != newLeagueInfo.rankDetail.minorRankName) {
+            Logger.Log("등급 변동");
+
+            if(prevMMR < newMMR) {
+                Logger.Log("승급");
+                int from = prevMMR;
+                int to = prevLeagueInfo.rankDetail.pointLessThen;
+                
+                int value = from;
+                while (value < to) {
+                    yield return new WaitForSeconds(0.02f);
+                    slider.value = value;
+                    label.text = value + "/" + (prevLeagueInfo.rankDetail.pointLessThen - 1);
+                    value++;
+
+                    Logger.Log("승급 기회");
+                }
+
+                int value2 = 0;
+                from = 0;
+                to = newLeagueInfo.ratingPoint;
+                slider.maxValue = newLeagueInfo.rankDetail.pointLessThen;
+                slider.value = 0;
+
+                while (value2 < to) {
+                    yield return new WaitForSeconds(0.02f);
+                    slider.value = value2;
+                    label.text = value2 + "/" + (newLeagueInfo.rankDetail.pointLessThen - 1);
+                    value2++;
+                }
+
+                yield return ShowTierChangeEffect(true);
+            }
+            else {
+                Logger.Log("강등");
+
+                int from = prevMMR;
+                int to = prevLeagueInfo.rankDetail.pointOverThen;
+
+                int value = from;
+                while (value > to) {
+                    yield return new WaitForSeconds(0.02f);
+                    slider.value = value;
+                    label.text = value + "/" + (prevLeagueInfo.rankDetail.pointLessThen - 1);
+                    value--;
+                }
+
+                int value2 = newLeagueInfo.rankDetail.pointLessThen;
+
+                from = value2;
+                to = newLeagueInfo.ratingPoint;
+                slider.maxValue = newLeagueInfo.rankDetail.pointLessThen;
+                slider.value = value2;
+
+                while (value2 >= to) {
+                    yield return new WaitForSeconds(0.02f);
+                    slider.value = value2;
+                    label.text = value2 + "/" + (newLeagueInfo.rankDetail.pointLessThen - 1);
+                    value2--;
+                }
+
+                yield return ShowTierChangeEffect(false);
+            }
         }
-        int sliderMaxVal = prevMaxMMR;
-        slider.value = currentVal / sliderMaxVal;
+        else {
+            if(prevMMR < newMMR) {
+                Logger.Log("MMR 증가");
 
-        //테스트 코드
-        //from = 320;
-        //to = 0;
-        //isAscend = false;
+                int from = prevMMR;
+                int to = newMMR;
 
-        float val = 0;
-        var result = SliceSliderData(from, to, isAscend, leagueInfo);
-        foreach(SliderData data in result) {
-            float offset = 1.0f;
-
-            Logger.Log("from : " + data.from);
-            Logger.Log("to : " + data.to);
-
-            if (isAscend) {
-                val = 0;
-                while (val < data.to) {
-                    val += offset;
-                    slider.value = val / data.maxVal;
-                    expValue.text = val + "/" + data.maxVal;
-                    yield return new WaitForSeconds(0.01f);
+                int value = from;
+                if(newMMR > prevLeagueInfo.rankDetail.pointLessThen) {
+                    slider.value = prevLeagueInfo.rankDetail.pointLessThen;
+                    label.text = newMMR + "/" + (newLeagueInfo.rankDetail.pointLessThen - 1);
+                }
+                else {
+                    slider.value = from;
+                }
+                
+                while (value < to) {
+                    yield return new WaitForSeconds(0.02f);
+                    slider.value = value;
+                    label.text = value + "/" + (newLeagueInfo.rankDetail.pointLessThen - 1);
+                    value++;
                 }
             }
             else {
-                //마이너스 이동
-                if (data.from == 0 && data.to < 0) {
+                Logger.Log("MMR 감소");
+
+                int from = prevMMR;
+                int to = newMMR;
+
+                int value = from;
+                if (newMMR < prevLeagueInfo.rankDetail.pointOverThen) {
                     slider.value = 0;
-                    int _to = -1 * data.to;
-                    float _val = data.minVal;
+                    label.text = newMMR + "/" + (newLeagueInfo.rankDetail.pointLessThen - 1);
 
-                    Logger.Log("마이너스 이동");
-                    Logger.Log("_to : " + _to);
-                    Logger.Log("_val : " + _val);
-
-                    while (_val > _to) {
-                        _val -= offset;
-                        Logger.Log("_val : " + _val);
-                        slider.value = _val / data.maxVal;
-                        expValue.text = _val + "/" + data.maxVal;
-                        yield return new WaitForSeconds(0.01f);
-                    }
+                    Logger.Log("강등 위기");
                 }
-                //일반적인 감소
-                else {
-                    val = data.from;
 
-                    Logger.Log("마이너스 이동");
-                    Logger.Log("to : " + to);
-                    Logger.Log("val : " + val);
-
-                    while (val > data.to) {
-                        val -= offset;
-                        slider.value = val / data.maxVal;
-                        expValue.text = val + "/" + data.from;
-                        yield return new WaitForSeconds(0.01f);
-                    }
+                while (value > to) {
+                    yield return new WaitForSeconds(0.02f);
+                    slider.value = value;
+                    label.text = value + "/" + newLeagueInfo.rankDetail.pointLessThen;
+                    value--;
                 }
             }
         }
-        yield return 0;
     }
 
     void OnTimeOut() {
@@ -784,72 +829,6 @@ public class GameResultManager : MonoBehaviour {
             return rankIcons[keyword].name;
         }
         return "1";
-    }
-
-    public List<int> standards = new List<int>() { 0, 150, 300, 450, 600, 800, 1000, 1200, 1400, 1700, 2000, 2300, 2600 };
-    
-    public List<SliderData> SliceSliderData(int from, int to, bool isAscend, AccountManager.LeagueInfo leagueInfo) {
-        List<SliderData> datas = new List<SliderData>();
-
-        //테스트 코드
-        //isAscend = false;
-        //from = 570;
-        //to = 550;
-        //leagueInfo.ratingPoint = 550;
-        //leagueInfo.rankDetail.minorRankName = "자경대 대장";
-
-        if (isAscend) {
-            List<int> query1 = standards.FindAll(x => x > from && x < to);      //from과 to 사이에 존재하는 기준값
-            query1.Sort();
-            for (int i=0; i<query1.Count; i++) {
-                int _from = 0;
-                int _to = 0;
-                if (i == 0) {
-                    _from = from;
-                    _to = query1[i] - 1;
-                }
-                else {
-                    _from = query1[i - 1];
-                    _to = query1[i];
-                }
-                datas.Add(new SliderData(_from, _to, query1[i + 1], 0));
-            }
-            if(query1.Count == 0) {
-                datas.Add(new SliderData(from, to, standards[1], 0));
-            }
-            else {
-                int index = standards.IndexOf(query1[query1.Count - 1]);
-                datas.Add(new SliderData(query1[query1.Count - 1], to, standards[index + 1], 0));
-            }
-        }
-        else {
-            List<int> query1 = standards.FindAll(x => x > to && x < from);      //from과 to 사이에 존재하는 기준값
-            query1.Reverse();
-            for (int i = 0; i < query1.Count; i++) {
-                int _from = 0;
-                int _to = 0;
-                if (i == 0) {
-                    _from = from;
-                    _to = query1[i];
-                }
-                else {
-                    _from = query1[i - 1] - 1;
-                    _to = query1[i];
-                }
-                datas.Add(new SliderData(_from, 0, _from, 0));
-            }
-            var rankArea = AccountManager.Instance.GetTargetRankArea(leagueInfo.rankDetail.minorRankName);
-            if (rankArea == null) rankArea = new AccountManager.Area(3000, 3000);
-
-            //최솟값보다 떨어지는 경우
-            if(from < rankArea.Min) {
-                datas.Add(new SliderData(0, -from, rankArea.Max, rankArea.Min));
-            }
-            else {
-                datas.Add(new SliderData(from, to, rankArea.Max, rankArea.Min));
-            }
-        }
-        return datas;
     }
 
     public class SliderData {

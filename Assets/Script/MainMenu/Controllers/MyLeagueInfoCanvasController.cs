@@ -182,8 +182,8 @@ public class MyLeagueInfoCanvasController : MonoBehaviour {
                     Logger.Log("MMR 증가");
                     currentMMRSlider.maxValue = newLeagueInfo.rankDetail.pointLessThen - newLeagueInfo.rankDetail.pointOverThen;
                     yield return ProceedNewMMRSlider(
-                        prevLeagueInfo.ratingPoint - prevLeagueInfo.rankDetail.pointOverThen,
-                        newLeagueInfo.ratingPoint - newLeagueInfo.rankDetail.pointOverThen,
+                        prevLeagueInfo.ratingPoint,
+                        newLeagueInfo.ratingPoint,
                         newLeagueInfo.rankDetail.pointOverThen);
                 }
             }
@@ -206,7 +206,7 @@ public class MyLeagueInfoCanvasController : MonoBehaviour {
                     currentMMRSlider.maxValue = newLeagueInfo.rankDetail.pointLessThen - newLeagueInfo.rankDetail.pointOverThen;
                     yield return ProceedNewMMRSlider(
                         newLeagueInfo.rankDetail.pointLessThen,
-                        newLeagueInfo.ratingPoint - newLeagueInfo.rankDetail.pointOverThen,
+                        newLeagueInfo.ratingPoint,
                         newLeagueInfo.rankDetail.pointOverThen);
                 }
                 else {
@@ -226,6 +226,10 @@ public class MyLeagueInfoCanvasController : MonoBehaviour {
     }
 
     IEnumerator ProceedNewMMRSlider(int from, int to, int offset) {
+        Logger.Log("From : " + from);
+        Logger.Log("To : " + to);
+        Logger.Log("Offset : " + offset);
+
         currentMMRSlider.value = from;
         if (from < to) {
             while(from <= to) {
