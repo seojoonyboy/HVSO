@@ -157,6 +157,7 @@ public class CardDictionaryManager : MonoBehaviour {
         int count = 0;
         for (int i = 0; i < AccountManager.Instance.allHeroes.Count; i++) {
             dataModules.HeroInventory heroData = AccountManager.Instance.allHeroes[i];
+            if (heroData.unownable) continue;
             if (heroData.camp == "human") {
                 Transform heroSlot = heroParent.GetChild(count);
                 heroSlot.Find("HeroObject/HeroImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[heroData.id + "_dic"];
@@ -210,6 +211,7 @@ public class CardDictionaryManager : MonoBehaviour {
         Transform heroParent = transform.Find("HeroDictionary/HeroSelect");
         for (int i = 0; i < AccountManager.Instance.allHeroes.Count; i++) {
             dataModules.HeroInventory heroData = AccountManager.Instance.allHeroes[i];
+            if (heroData.unownable) continue;
             if (heroData.camp == "orc") {
                 Transform heroSlot = heroParent.GetChild(count);
                 heroSlot.Find("HeroObject/HeroImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[heroData.id + "_dic"];
@@ -868,6 +870,17 @@ public class CardDictionaryManager : MonoBehaviour {
         tutorialHand.name = "tutorialHand";
         tutoAction = () => MenuCardInfo.cardInfoWindow.makeShowHand(quest);
         card.cardObject.GetComponent<Button>().onClick.AddListener(tutoAction);
+        SnapTo(card.cardObject.GetComponent<RectTransform>());
+    }
+
+    private async void SnapTo(RectTransform target){
+        await System.Threading.Tasks.Task.Delay(100);
+        ScrollRect scrollRect = GetComponent<ScrollRect>();
+        RectTransform contentPanel = scrollRect.content;
+        contentPanel.anchoredPosition =
+            (Vector2)scrollRect.transform.InverseTransformPoint(contentPanel.position)
+            - (Vector2)scrollRect.transform.InverseTransformPoint(new Vector3(contentPanel.position.x, target.position.y, contentPanel.position.z));
+        Canvas.ForceUpdateCanvases();
     }
 }
 

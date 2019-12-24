@@ -35,6 +35,8 @@ public class ScenarioManager : SerializedMonoBehaviour
 
     [SerializeField] GameObject orcDeckPrefab;
     [SerializeField] GameObject humanDeckPrefab;
+    [SerializeField] GameObject enemyHeroInfoModal;
+
     [SerializeField] Image backgroundImage;
     [SerializeField] BattleMenuController BattleMenuController;
     [SerializeField] Dictionary<string, Sprite> stroyBackgroundImages;
@@ -555,6 +557,13 @@ public class ScenarioManager : SerializedMonoBehaviour
             .Find("HUD/StagePanel/VictoryConditions/Description")
             .gameObject
             .GetComponent<TextMeshProUGUI>().text = stageButton.chapterData.specialRule;
+
+        var storyEnemyHeroInfo = stageCanvas
+            .transform
+            .Find("HUD/HeroInfo")
+            .GetComponent<StoryEnemyHeroInfo>();
+        object[] data = new object[] { isHuman, stageButton };
+        storyEnemyHeroInfo.SetData(data);
     }
 
     public void OpenDeckListWindow() {

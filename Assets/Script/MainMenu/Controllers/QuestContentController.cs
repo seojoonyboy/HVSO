@@ -244,8 +244,10 @@ namespace Quest {
             }
             //튜토리얼 완료
             MenuSceneController menu = MenuSceneController.menuSceneController;
+            CardDictionaryManager card = CardDictionaryManager.cardDictionaryManager;
             menu.DictionaryRemoveHand();
-            CardDictionaryManager.cardDictionaryManager.closingToShowEditDeckLock = true;
+            card.closingToShowEditDeckLock = true;
+            AddSpinetoButtonAndRemoveClick(card.transform.Find("UIbar/ExitBtn").GetComponent<Button>());
             manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_6);
             AccountManager.Instance.RequestUnlockInTutorial(3);
             AccountManager.Instance.RequestQuestInfo();

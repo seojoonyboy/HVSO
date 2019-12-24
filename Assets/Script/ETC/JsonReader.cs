@@ -56,6 +56,7 @@ namespace dataModules {
         public string heroId;
         public string flavorText;
         public bool userHas;
+        public bool unownable;
         public int piece;
         public int tier;
         public HeroLevel next_level;
