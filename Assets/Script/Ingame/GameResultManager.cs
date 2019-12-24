@@ -779,18 +779,11 @@ public class GameResultManager : MonoBehaviour {
     }
 
     private string GetTierAnimName(string keyword) {
-        switch (keyword) {
-            case "무명 병사":
-                return "t5";
-            case "오합지졸 우두머리":
-                return "t4-3";
-            case "소규모 무력집단":
-                return "t4-2";
-            case "지역 지도자":
-                return "t4-1";
-            default:
-                return "t5";
+        var rankIcons = AccountManager.Instance.resource.rankIcons;
+        if (rankIcons.ContainsKey(keyword)) {
+            return rankIcons[keyword].name;
         }
+        return "1";
     }
 
     public List<int> standards = new List<int>() { 0, 150, 300, 450, 600, 800, 1000, 1200, 1400, 1700, 2000, 2300, 2600 };
