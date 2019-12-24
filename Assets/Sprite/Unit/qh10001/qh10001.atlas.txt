@@ -1,5 +1,5 @@
 
-tutorial__h10001.png
+qh10001.png
 size: 1024,1024
 format: RGBA8888
 filter: Linear,Linear
