@@ -43,8 +43,6 @@ public partial class AccountManager : Singleton<AccountManager> {
     public CardDataPackage cardPackage;    
 
     public ResourceManager resource;
-    public CustomVibrate customVibrate;
-
     public UserResourceManager userResource;
     public RewardClass[] rewardList;
     public DictionaryInfo dicInfo;
@@ -77,8 +75,6 @@ public partial class AccountManager : Singleton<AccountManager> {
         DEVICEID = SystemInfo.deviceUniqueIdentifier;
         cardPackage = Resources.Load("CardDatas/CardDataPackage_01") as CardDataPackage;
         resource = transform.GetComponent<ResourceManager>();
-        customVibrate = transform.GetComponent<CustomVibrate>();
-
         gameObject.AddComponent<Timer.TimerManager>();
         
         PlayerPrefs.DeleteKey("ReconnectData");
