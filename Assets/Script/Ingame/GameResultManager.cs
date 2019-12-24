@@ -537,7 +537,7 @@ public class GameResultManager : MonoBehaviour {
                 
                 int value = from;
                 while (value < to) {
-                    yield return new WaitForSeconds(0.02f);
+                    yield return new WaitForSeconds(0.01f);
                     slider.value = value;
                     label.text = value + "/" + (prevLeagueInfo.rankDetail.pointLessThen - 1);
                     value++;
@@ -546,15 +546,14 @@ public class GameResultManager : MonoBehaviour {
                 }
 
                 int value2 = 0;
-                from = 0;
-                to = newLeagueInfo.ratingPoint;
+                to = newLeagueInfo.ratingPoint - newLeagueInfo.rankDetail.pointLessThen;
                 slider.maxValue = newLeagueInfo.rankDetail.pointLessThen;
                 slider.value = 0;
 
                 while (value2 < to) {
-                    yield return new WaitForSeconds(0.02f);
+                    yield return new WaitForSeconds(0.01f);
                     slider.value = value2;
-                    label.text = value2 + "/" + (newLeagueInfo.rankDetail.pointLessThen - 1);
+                    label.text = (value2 + newLeagueInfo.rankDetail.pointLessThen) + "/" + (newLeagueInfo.rankDetail.pointLessThen - 1);
                     value2++;
                 }
 
@@ -568,7 +567,7 @@ public class GameResultManager : MonoBehaviour {
 
                 int value = from;
                 while (value > to) {
-                    yield return new WaitForSeconds(0.02f);
+                    yield return new WaitForSeconds(0.01f);
                     slider.value = value;
                     label.text = value + "/" + (prevLeagueInfo.rankDetail.pointLessThen - 1);
                     value--;
@@ -582,7 +581,7 @@ public class GameResultManager : MonoBehaviour {
                 slider.value = value2;
 
                 while (value2 >= to) {
-                    yield return new WaitForSeconds(0.02f);
+                    yield return new WaitForSeconds(0.01f);
                     slider.value = value2;
                     label.text = value2 + "/" + (newLeagueInfo.rankDetail.pointLessThen - 1);
                     value2--;
@@ -640,7 +639,7 @@ public class GameResultManager : MonoBehaviour {
 
     void OnTimeOut() {
         if(battleType == "solo") {
-            OnReturnBtn();
+            //OnReturnBtn();
         }
         else {
             GameObject secondWindow = transform.Find("SecondWindow").gameObject;
@@ -651,7 +650,7 @@ public class GameResultManager : MonoBehaviour {
                 OnTimerToExit();
             }
             else {
-                OnReturnBtn();
+                //OnReturnBtn();
             }
         }
     }
