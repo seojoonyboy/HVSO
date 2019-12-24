@@ -278,9 +278,9 @@ public class SceneOBBCheckController : MonoBehaviour {
         patcher.ReachabilityChanged += OnReachabilityChanged;
 
 #if QA
-        patcher.DownloadOBB(OpenConfirmDialog, versionCode, "http://10.0.2.1/HaeginPatch/ModuleSample/Android/main.1.com.haegin.modulesample.obb");
+        patcher.DownloadOBB(OpenConfirmDialog, versionCode, "https://buildmachine.fbl.kr/hvso.obb");
 #elif USE_ONESTORE_IAP
-        patcher.DownloadOBB(OpenConfirmDialog, versionCode, "http://10.0.2.1/HaeginPatch/ModuleSample/Android/main.1.com.haegin.modulesample.obb");
+        patcher.DownloadOBB(OpenConfirmDialog, versionCode, "https://buildmachine.fbl.kr/hvso.obb");
 #else
         patcher.DownloadOBB(OpenConfirmDialog, versionCode);
 #endif
