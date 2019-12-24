@@ -5090,6 +5090,7 @@ GameObject:
   - component: {fileID: 1870949078}
   - component: {fileID: 1870949079}
   - component: {fileID: 1870949080}
+  - component: {fileID: 1870949081}
   m_Layer: 0
   m_Name: AccountManager
   m_TagString: Untagged
@@ -5111,6 +5112,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardPackage: {fileID: 11400000, guid: 238e481b11fd6f5498c98efc46a8b0d8, type: 2}
   resource: {fileID: 1870949076}
+  customVibrate: {fileID: 0}
   userResource: {fileID: 1870949078}
   OnUserResourceRefresh:
     m_PersistentCalls:
@@ -13274,6 +13276,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rewordDescModal: {fileID: 7310344259244489575, guid: 30d6fb87939f9a449a476b3b6c2633e4,
     type: 3}
+--- !u!114 &1870949081
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1870949073}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8706791995273d644b3be4e6800961ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1919021517
 GameObject:
   m_ObjectHideFlags: 0
