@@ -263,7 +263,7 @@ public partial class MenuCardInfo : MonoBehaviour {
         transform.Find("CreateCard").gameObject.SetActive(false);
         transform.Find("CreateSpine").gameObject.SetActive(false);
         transform.Find("SkillBtn").GetComponent<Button>().interactable = false;
-
+        transform.Find("FlavorBtn").GetComponent<Button>().interactable = true;
         transform.Find("CreateBtn").GetComponent<Button>().interactable = true;
     }
 
@@ -273,7 +273,7 @@ public partial class MenuCardInfo : MonoBehaviour {
         transform.Find("CreateCard").gameObject.SetActive(false);
         transform.Find("CreateSpine").gameObject.SetActive(false);
         transform.Find("SkillBtn").GetComponent<Button>().interactable = true;
-
+        transform.Find("FlavorBtn").GetComponent<Button>().interactable = false;
         transform.Find("CreateBtn").GetComponent<Button>().interactable = true;
     }
 
@@ -283,7 +283,7 @@ public partial class MenuCardInfo : MonoBehaviour {
         transform.Find("CreateCard").gameObject.SetActive(true);
         transform.Find("CreateSpine").gameObject.SetActive(true);
         transform.Find("SkillBtn").GetComponent<Button>().interactable = true;
-
+        transform.Find("FlavorBtn").GetComponent<Button>().interactable = true;
         transform.Find("CreateBtn").GetComponent<Button>().interactable = false;
     }
 
