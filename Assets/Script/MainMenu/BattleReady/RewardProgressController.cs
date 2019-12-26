@@ -154,6 +154,7 @@ public class RewardProgressController : MonoBehaviour {
         }
 
         isMoving = false;
+        leagueData.prevLeagueInfo = leagueData.leagueInfo.DeepCopy(leagueData.leagueInfo);
     }
 
     IEnumerator ProgressAscending() {
