@@ -63,7 +63,7 @@ namespace Spine.Unity {
 		public float overrideAlpha = 1;
 		#endregion
 
-		[System.NonSerialized] public SkeletonUtility hierarchy;
+		public SkeletonUtility hierarchy;
 		[System.NonSerialized] public Bone bone;
 		[System.NonSerialized] public bool transformLerpComplete;
 		[System.NonSerialized] public bool valid;
@@ -85,7 +85,7 @@ namespace Spine.Unity {
 		}
 
 		void OnEnable () {
-			hierarchy = transform.GetComponentInParent<SkeletonUtility>();
+			if (hierarchy == null) hierarchy = transform.GetComponentInParent<SkeletonUtility>();
 			if (hierarchy == null) return;
 
 			hierarchy.RegisterBone(this);
@@ -119,6 +119,7 @@ namespace Spine.Unity {
 					return;
 				}
 			}
+			if (!bone.Active) return;
 
 			var thisTransform = cachedTransform;
 			float skeletonFlipRotation = Mathf.Sign(skeleton.ScaleX * skeleton.ScaleY);
@@ -167,7 +168,7 @@ namespace Spine.Unity {
 						}
 						break;
 				}
-				
+
 			} else if (mode == Mode.Override) {
 				if (transformLerpComplete)
 					return;
@@ -229,10 +230,10 @@ namespace Spine.Unity {
 			SkeletonUtility.AddBoundingBoxGameObject(bone.skeleton, skinName, slotName, attachmentName, transform);
 		}
 
-		#if UNITY_EDITOR
+#if UNITY_EDITOR
 		void OnDrawGizmos () {
 			if (IncompatibleTransformMode)
-				Gizmos.DrawIcon(transform.position + new Vector3(0, 0.128f, 0), "icon-warning");		
+				Gizmos.DrawIcon(transform.position + new Vector3(0, 0.128f, 0), "icon-warning");
 		}
 		#endif
 	}

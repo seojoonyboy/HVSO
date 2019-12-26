@@ -31,22 +31,6 @@
 
 #define SPINE_SKELETONMECANIM
 
-#if UNITY_2017_2_OR_NEWER
-#define NEWPLAYMODECALLBACKS
-#endif
-
-#if UNITY_2018_3 || UNITY_2019 || UNITY_2018_3_OR_NEWER
-#define NEW_PREFAB_SYSTEM
-#endif
-
-#if UNITY_2018 || UNITY_2019 || UNITY_2018_3_OR_NEWER
-#define NEWHIERARCHYWINDOWCALLBACKS
-#endif
-
-#if UNITY_2018_3_OR_NEWER
-#define NEW_PREFERENCES_SETTINGS_PROVIDER
-#endif
-
 using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
@@ -60,12 +44,11 @@ namespace Spine.Unity.Editor {
 	using EventType = UnityEngine.EventType;
 
 	public static class SpineHandles {
-		internal static float handleScale = 1f;
 		public static Color BoneColor { get { return new Color(0.8f, 0.8f, 0.8f, 0.4f); } }
 		public static Color PathColor { get { return new Color(254/255f, 127/255f, 0); } }
 		public static Color TransformContraintColor { get { return new Color(170/255f, 226/255f, 35/255f); } }
 		public static Color IkColor { get { return new Color(228/255f,90/255f,43/255f); } }
-		public static Color PointColor { get { return new Color(1f, 1f, 0f, 1f);  } }
+		public static Color PointColor { get { return new Color(1f, 1f, 0f, 1f); } }
 
 		static Vector3[] _boneMeshVerts = {
 			new Vector3(0, 0, 0),
@@ -216,7 +199,7 @@ namespace Spine.Unity.Editor {
 				Quaternion rot = Quaternion.Euler(0, 0, b.WorldRotationX);
 				Vector3 scale = Vector3.one * length * b.WorldScaleX * skeletonRenderScale;
 				const float my = 1.5f;
-				scale.y *= (SpineHandles.handleScale + 1) * 0.5f;
+				scale.y *= (SpineEditorUtilities.Preferences.handleScale + 1) * 0.5f;
 				scale.y = Mathf.Clamp(scale.x, -my * skeletonRenderScale, my * skeletonRenderScale);
 				Handles.DrawPolyLine(GetBoneWireBuffer(transform.localToWorldMatrix * Matrix4x4.TRS(pos, rot, scale)));
 				var wp = transform.TransformPoint(pos);
@@ -234,7 +217,7 @@ namespace Spine.Unity.Editor {
 				Quaternion rot = Quaternion.Euler(0, 0, b.WorldRotationX);
 				Vector3 scale = Vector3.one * length * b.WorldScaleX * skeletonRenderScale;
 				const float my = 1.5f;
-				scale.y *= (SpineHandles.handleScale + 1f) * 0.5f;
+				scale.y *= (SpineEditorUtilities.Preferences.handleScale + 1f) * 0.5f;
 				scale.y = Mathf.Clamp(scale.x, -my * skeletonRenderScale, my * skeletonRenderScale);
 				SpineHandles.GetBoneMaterial().SetPass(0);
 				Graphics.DrawMeshNow(SpineHandles.BoneMesh, transform.localToWorldMatrix * Matrix4x4.TRS(pos, rot, scale));
@@ -251,7 +234,7 @@ namespace Spine.Unity.Editor {
 				Quaternion rot = Quaternion.Euler(0, 0, b.WorldRotationX);
 				Vector3 scale = Vector3.one * length * b.WorldScaleX;
 				const float my = 1.5f;
-				scale.y *= (SpineHandles.handleScale + 1f) * 0.5f;
+				scale.y *= (SpineEditorUtilities.Preferences.handleScale + 1f) * 0.5f;
 				scale.y = Mathf.Clamp(scale.x, -my, my);
 				SpineHandles.GetBoneMaterial(color).SetPass(0);
 				Graphics.DrawMeshNow(SpineHandles.BoneMesh, transform.localToWorldMatrix * Matrix4x4.TRS(pos, rot, scale));
@@ -441,13 +424,13 @@ namespace Spine.Unity.Editor {
 		}
 
 		static void DrawCrosshairs2D (Vector3 position, float scale, float skeletonRenderScale = 1f) {
-			scale *= SpineHandles.handleScale * skeletonRenderScale;
+			scale *= SpineEditorUtilities.Preferences.handleScale * skeletonRenderScale;
 			Handles.DrawLine(position + new Vector3(-scale, 0), position + new Vector3(scale, 0));
 			Handles.DrawLine(position + new Vector3(0, -scale), position + new Vector3(0, scale));
 		}
 
 		static void DrawCrosshairs (Vector3 position, float scale, float a, float b, float c, float d, Transform transform, float skeletonRenderScale = 1f) {
-			scale *= SpineHandles.handleScale * skeletonRenderScale;
+			scale *= SpineEditorUtilities.Preferences.handleScale * skeletonRenderScale;
 
 			var xOffset = (Vector3)(new Vector2(a, c).normalized * scale);
 			var yOffset = (Vector3)(new Vector2(b, d).normalized * scale);
@@ -459,7 +442,7 @@ namespace Spine.Unity.Editor {
 		}
 
 		static void DrawArrowhead2D (Vector3 pos, float localRotation, float scale = 1f) {
-			scale *= SpineHandles.handleScale;
+			scale *= SpineEditorUtilities.Preferences.handleScale;
 
 			SpineHandles.IKMaterial.SetPass(0);
 			Graphics.DrawMeshNow(SpineHandles.ArrowheadMesh, Matrix4x4.TRS(pos, Quaternion.Euler(0, 0, localRotation), new Vector3(scale, scale, scale)));
@@ -470,7 +453,7 @@ namespace Spine.Unity.Editor {
 		}
 
 		static void DrawArrowhead (Matrix4x4 m) {
-			float s = SpineHandles.handleScale;
+			float s = SpineEditorUtilities.Preferences.handleScale;
 			m.m00 *= s;
 			m.m01 *= s;
 			m.m02 *= s;
@@ -486,14 +469,14 @@ namespace Spine.Unity.Editor {
 		}
 
 		static void DrawBoneCircle (Vector3 pos, Color outlineColor, Vector3 normal, float scale = 1f) {
-			scale *= SpineHandles.handleScale;
+			scale *= SpineEditorUtilities.Preferences.handleScale;
 
 			Color o = Handles.color;
 			Handles.color = outlineColor;
 			float firstScale = 0.08f * scale;
 			Handles.DrawSolidDisc(pos, normal, firstScale);
 			const float Thickness = 0.03f;
-			float secondScale = firstScale - (Thickness * SpineHandles.handleScale * scale);
+			float secondScale = firstScale - (Thickness * SpineEditorUtilities.Preferences.handleScale * scale);
 
 			if (secondScale > 0f) {
 				Handles.color = new Color(0.3f, 0.3f, 0.3f, 0.5f);

@@ -142,9 +142,9 @@ namespace Spine.Unity.Editor {
 			var size = bounds.size;
 			var center = bounds.center;
 			var p = new Vector2(
-				        0.5f - (center.x / size.x),
-				        0.5f - (center.y / size.y)
-			        );
+				0.5f - (center.x / size.x),
+				0.5f - (center.y / size.y)
+			);
 
 			skeletonGraphic.rectTransform.sizeDelta = size;
 			skeletonGraphic.rectTransform.pivot = p;
@@ -205,7 +205,7 @@ namespace Spine.Unity.Editor {
 		}
 
 		static GameObject NewSkeletonGraphicGameObject (string gameObjectName) {
-			var go = EditorInstantiation.NewGameObject(gameObjectName, typeof(RectTransform), typeof(CanvasRenderer), typeof(SkeletonGraphic));
+			var go = EditorInstantiation.NewGameObject(gameObjectName, true, typeof(RectTransform), typeof(CanvasRenderer), typeof(SkeletonGraphic));
 			var graphic = go.GetComponent<SkeletonGraphic>();
 			graphic.material = SkeletonGraphicInspector.DefaultSkeletonGraphicMaterial;
 			return go;
