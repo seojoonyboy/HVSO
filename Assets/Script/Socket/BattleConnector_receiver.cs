@@ -25,6 +25,8 @@ public partial class BattleConnector : MonoBehaviour {
     public bool isOpponentPlayerDisconnected = false;
 
     string matchKey = string.Empty;
+    public static bool canPlaySound = true;
+
     private void ReceiveMessage(WebSocket webSocket, string message) {
         ReceiveFormat result = dataModules.JsonReader.Read<ReceiveFormat>(message);
         queue.Enqueue(result);
@@ -76,7 +78,10 @@ public partial class BattleConnector : MonoBehaviour {
         FindObjectOfType<BattleConnectSceneAnimController>().PlayStartBattleAnim();
 
         StopCoroutine(timeCheck);
-        SoundManager.Instance.PlayIngameSfx(IngameSfxSound.GAMEMATCH);
+        if (canPlaySound) {
+            SoundManager.Instance.PlayIngameSfx(IngameSfxSound.GAMEMATCH);
+        }
+        
         SetUserInfoText();
         SetSaveGameId();
     }

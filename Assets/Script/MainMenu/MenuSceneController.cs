@@ -132,6 +132,9 @@ public class MenuSceneController : MonoBehaviour {
                     AddNewbiController();
                 }
                 else {
+                    SoundManager.Instance.bgmController.PlaySoundTrack(BgmController.BgmEnum.MENU);
+                    BattleConnector.canPlaySound = true;
+
                     //오크 튜토리얼 0-1을 진행하지 않았음
                     if (!clearedStages.Exists(x => x.camp == "orc" && x.stageNumber == 1)) {
                         tutorialType = MenuTutorialManager.TutorialType.TO_ORC_STORY;
@@ -170,6 +173,9 @@ public class MenuSceneController : MonoBehaviour {
                 hideModal.SetActive(false);
                 menuTutorialManager.enabled = false;
             }
+
+            SoundManager.Instance.bgmController.PlaySoundTrack(BgmController.BgmEnum.MENU);
+            BattleConnector.canPlaySound = true;
         }
 
         //StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_7);
@@ -188,8 +194,6 @@ public class MenuSceneController : MonoBehaviour {
     }
 
     private void Start() {
-        SoundManager.Instance.bgmController.PlaySoundTrack(BgmController.BgmEnum.MENU);
-
         if (AccountManager.Instance.needChangeNickName) {
             Modal.instantiate("변경하실 닉네임을 입력해 주세요.", "새로운 닉네임", AccountManager.Instance.NickName, Modal.Type.INSERT, (str) => {
                 if (string.IsNullOrEmpty(str)) {
@@ -415,6 +419,7 @@ public class MenuSceneController : MonoBehaviour {
         newbiComp.Init(decksLoader, scenarioManager, newbiLoadingModal);
 
         GetComponent<MenuLockController>().ResetMenuLockData();
+        BattleConnector.canPlaySound = false;
     }
 
     private void UpdateShop(Enum Event_Type, Component Sender, object Param) {
