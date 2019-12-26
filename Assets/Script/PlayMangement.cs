@@ -90,11 +90,6 @@ public partial class PlayMangement : MonoBehaviour {
 
         BgmController.BgmEnum soundTrack =  BgmController.BgmEnum.CITY;
         SoundManager.Instance.bgmController.PlaySoundTrack(soundTrack);
-
-        //StartCoroutine(cameraShake(0.4f, 10));
-        //StartCoroutine(DisconnectTest());
-
-        AccountManager.Instance.prevSceneName = "Ingame";
     }
 
     public void SyncPlayerHp() {

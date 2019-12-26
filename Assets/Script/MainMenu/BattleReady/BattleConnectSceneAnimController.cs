@@ -33,6 +33,13 @@ public class BattleConnectSceneAnimController : MonoBehaviour {
                 animator.Play("OrcWait");                
                 break;
         }
+
+        if(battleType == "story") {
+            AccountManager.Instance.prevSceneName = "Story";
+        }
+        else if(battleType == "league" || battleType == "leagueTest" || battleType == "solo") {
+            AccountManager.Instance.prevSceneName = "Ingame";
+        }
     }
 
     public void PlayStartBattleAnim() {

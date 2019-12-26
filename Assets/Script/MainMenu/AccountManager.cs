@@ -1424,7 +1424,7 @@ public partial class AccountManager {
                 if (res.StatusCode == 200 || res.StatusCode == 304) {
                     var leagueInfo = dataModules.JsonReader.Read<LeagueInfo>(res.DataAsText);
 
-                    if(prevSceneName != "Ingame") {
+                    if(prevSceneName == "Login") {
                         Logger.Log("이전 씬이 Ingame이 아닌 경우");
                         scriptable_leagueData.leagueInfo = leagueInfo;
                         scriptable_leagueData.prevLeagueInfo = leagueInfo.DeepCopy(leagueInfo);
