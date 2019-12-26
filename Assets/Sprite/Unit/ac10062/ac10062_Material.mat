@@ -7,9 +7,9 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ac10071_Material
+  m_Name: ac10062_Material
   m_Shader: {fileID: 4800000, guid: 9ff149e3ecd682e449e511b1ad39b95f, type: 3}
-  m_ShaderKeywords: 
+  m_ShaderKeywords: _USE8NEIGHBOURHOOD_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -20,7 +20,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 9a4d637756849c1408b07a92bff1eee3, type: 3}
+        m_Texture: {fileID: 2800000, guid: 546fe6373bcd62c4d893a96bc08d1822, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
