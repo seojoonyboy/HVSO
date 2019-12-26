@@ -2893,7 +2893,7 @@ PrefabInstance:
     - target: {fileID: 573602221, guid: a4ea8363f031e564e9d9454ce81d63cd, type: 3}
       propertyPath: canvas
       value: 
-      objectReference: {fileID: 573602224}
+      objectReference: {fileID: 157531406}
     - target: {fileID: 7167178456944391580, guid: a4ea8363f031e564e9d9454ce81d63cd,
         type: 3}
       propertyPath: m_ReferenceResolution.x
@@ -2989,12 +2989,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0555444e264774a05864ccf79a7b61f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!223 &573602224 stripped
-Canvas:
-  m_CorrespondingSourceObject: {fileID: 7874505504891461461, guid: a4ea8363f031e564e9d9454ce81d63cd,
-    type: 3}
-  m_PrefabInstance: {fileID: 573602219}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &611433128
 GameObject:
   m_ObjectHideFlags: 0
