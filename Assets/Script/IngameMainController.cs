@@ -34,12 +34,6 @@ public class IngameMainContorller : MonoBehaviour
         if (Instance != null) Instance = null;
     }
 
-
-    void Start()
-    {
-        AccountManager.Instance.prevSceneName = "Ingame";
-    }
-
     // Update is called once per frame
     void Update()
     {
