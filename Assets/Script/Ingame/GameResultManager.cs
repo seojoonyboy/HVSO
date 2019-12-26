@@ -590,48 +590,82 @@ public class GameResultManager : MonoBehaviour {
                 yield return ShowTierChangeEffect(false);
             }
         }
+        //승급이나 강등 없음
         else {
-            if(prevMMR < newMMR) {
-                Logger.Log("MMR 증가");
+            
+            if (newMMR > prevLeagueInfo.rankDetail.pointLessThen || newMMR < prevLeagueInfo.rankDetail.pointOverThen) {
+                //게이지 최저치보다 낮은 경우
+                if (newMMR < prevLeagueInfo.rankDetail.pointOverThen) {
+                    slider.value = 0;
+                }
+                //게이지 최대치보다 높은 경우
+                if(newMMR > prevLeagueInfo.rankDetail.pointLessThen) {
+                    slider.value = slider.maxValue;
+                }
 
                 int from = prevMMR;
                 int to = newMMR;
 
-                int value = from;
-                if(newMMR > prevLeagueInfo.rankDetail.pointLessThen) {
-                    slider.value = prevLeagueInfo.rankDetail.pointLessThen;
-                    label.text = newMMR + "/" + (newLeagueInfo.rankDetail.pointLessThen - 1);
+                if(from < to) {
+                    while(from <= to) {
+                        yield return new WaitForSeconds(0.5f);
+                        label.text = from + "/" + (newLeagueInfo.rankDetail.pointLessThen - 1);
+                        from++;
+                    }
                 }
                 else {
-                    slider.value = from;
-                }
-                
-                while (value < to) {
-                    yield return new WaitForSeconds(0.5f);
-                    slider.value = value;
-                    label.text = value + "/" + (newLeagueInfo.rankDetail.pointLessThen - 1);
-                    value++;
+                    while(from >= to) {
+                        yield return new WaitForSeconds(0.5f);
+                        label.text = from + "/" + (newLeagueInfo.rankDetail.pointLessThen - 1);
+                        from--;
+                    }
                 }
             }
             else {
-                Logger.Log("MMR 감소");
+                if (prevMMR < newMMR) {
+                    Logger.Log("MMR 증가");
 
-                int from = prevMMR;
-                int to = newMMR;
+                    int from = prevMMR;
+                    int to = newMMR;
 
-                int value = from;
-                if (newMMR < prevLeagueInfo.rankDetail.pointOverThen) {
-                    slider.value = 0;
-                    label.text = newMMR + "/" + (newLeagueInfo.rankDetail.pointLessThen - 1);
+                    int value = from;
+                    if (newMMR > prevLeagueInfo.rankDetail.pointLessThen) {
+                        slider.value = prevLeagueInfo.rankDetail.pointLessThen;
+                        label.text = newMMR + "/" + (newLeagueInfo.rankDetail.pointLessThen - 1);
+                    }
+                    else {
+                        slider.value = from;
 
-                    Logger.Log("강등 위기");
+                        while (value < to) {
+                            yield return new WaitForSeconds(0.5f);
+                            slider.value = value;
+                            label.text = value + "/" + (newLeagueInfo.rankDetail.pointLessThen - 1);
+                            value++;
+                        }
+                    }
                 }
+                else {
+                    Logger.Log("MMR 감소");
 
-                while (value > to) {
-                    yield return new WaitForSeconds(0.5f);
-                    slider.value = value;
-                    label.text = value + "/" + newLeagueInfo.rankDetail.pointLessThen;
-                    value--;
+                    int from = prevMMR;
+                    int to = newMMR;
+
+                    int value = from;
+                    if (newMMR < prevLeagueInfo.rankDetail.pointOverThen) {
+                        slider.value = 0;
+                        label.text = newMMR + "/" + (newLeagueInfo.rankDetail.pointLessThen - 1);
+
+                        Logger.Log("강등 위기");
+                    }
+
+                    else {
+                        while (value > to) {
+                            yield return new WaitForSeconds(0.5f);
+                            slider.value = value;
+                            label.text = value + "/" + newLeagueInfo.rankDetail.pointLessThen;
+                            value--;
+                        }
+                    }
                 }
             }
         }
