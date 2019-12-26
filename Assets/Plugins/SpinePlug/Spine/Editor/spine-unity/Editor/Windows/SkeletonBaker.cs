@@ -47,7 +47,7 @@ namespace Spine.Unity.Editor {
 
 	/// <summary>
 	/// [SUPPORTS]
-	/// Linear, Constant, and Bezier Curves* 
+	/// Linear, Constant, and Bezier Curves*
 	/// Inverse Kinematics*
 	/// Inherit Rotation
 	/// Translate Timeline
@@ -55,15 +55,15 @@ namespace Spine.Unity.Editor {
 	/// Scale Timeline**
 	/// Event Timeline***
 	/// Attachment Timeline
-	/// 
+	///
 	/// RegionAttachment
 	/// MeshAttachment (optionally Skinned)
-	/// 
+	///
 	/// [LIMITATIONS]
 	/// *Bezier Curves are baked into the animation at 60fps and are not realtime. Use bakeIncrement constant to adjust key density if desired.
 	/// *Inverse Kinematics is baked into the animation at 60fps and are not realtime. Use bakeIncrement constant to adjust key density if desired.
 	/// ***Events may only fire 1 type of data per event in Unity safely so priority to String data if present in Spine key, otherwise a Float is sent whether the Spine key was Int or Float with priority given to Int.
-	/// 
+	///
 	/// [DOES NOT SUPPORT]
 	/// FFD (Unity does not provide access to BlendShapes with code)
 	/// Color Keys (Maybe one day when Unity supports full FBX standard and provides access with code)
@@ -126,7 +126,7 @@ namespace Spine.Unity.Editor {
 							Debug.LogWarningFormat("Duplicate AnimationClips were found named {0}", clip.name);
 						}
 						unityAnimationClipTable.Add(clip.name, clip);
-					}				
+					}
 				}
 			}
 
@@ -185,10 +185,8 @@ namespace Spine.Unity.Editor {
 				return;
 			}
 
-			#if !NEW_PREFAB_SYSTEM
-
 			if (outputPath == "") {
-				outputPath = System.IO.Path.GetDirectoryName(AssetDatabase.GetAssetPath(skeletonDataAsset)) + "/Baked";
+				outputPath = System.IO.Path.GetDirectoryName(AssetDatabase.GetAssetPath(skeletonDataAsset)).Replace('\\', '/') + "/Baked";
 				System.IO.Directory.CreateDirectory(outputPath);
 			}
 
@@ -279,9 +277,15 @@ namespace Spine.Unity.Editor {
 				string prefabPath = outputPath + "/" + skeletonDataAsset.skeletonJSON.name + " (" + skin.Name + ").prefab";
 
 				Object prefab = AssetDatabase.LoadAssetAtPath(prefabPath, typeof(GameObject));
-				
+
 				if (prefab == null) {
+					#if NEW_PREFAB_SYSTEM
+					GameObject emptyGameObject = new GameObject();
+					prefab = PrefabUtility.SaveAsPrefabAssetAndConnect(emptyGameObject, prefabPath, InteractionMode.AutomatedAction);
+					GameObject.DestroyImmediate(emptyGameObject);
+					#else
 					prefab = PrefabUtility.CreateEmptyPrefab(prefabPath);
+					#endif
 					newPrefab = true;
 				}
 
@@ -295,7 +299,7 @@ namespace Spine.Unity.Editor {
 					}
 				}
 
-				GameObject prefabRoot = EditorInstantiation.NewGameObject("root");
+				GameObject prefabRoot = EditorInstantiation.NewGameObject("root", true);
 
 				Dictionary<string, Transform> slotTable = new Dictionary<string, Transform>();
 				Dictionary<string, Transform> boneTable = new Dictionary<string, Transform>();
@@ -304,7 +308,7 @@ namespace Spine.Unity.Editor {
 				//create bones
 				for (int i = 0; i < skeletonData.Bones.Count; i++) {
 					var boneData = skeletonData.Bones.Items[i];
-					Transform boneTransform = EditorInstantiation.NewGameObject(boneData.Name).transform;
+					Transform boneTransform = EditorInstantiation.NewGameObject(boneData.Name, true).transform;
 					boneTransform.parent = prefabRoot.transform;
 					boneTable.Add(boneTransform.name, boneTransform);
 					boneList.Add(boneTransform);
@@ -335,32 +339,18 @@ namespace Spine.Unity.Editor {
 				//create slots and attachments
 				for (int slotIndex = 0; slotIndex < skeletonData.Slots.Count; slotIndex++) {
 					var slotData = skeletonData.Slots.Items[slotIndex];
-					Transform slotTransform = EditorInstantiation.NewGameObject(slotData.Name).transform;
+					Transform slotTransform = EditorInstantiation.NewGameObject(slotData.Name, true).transform;
 					slotTransform.parent = prefabRoot.transform;
 					slotTable.Add(slotData.Name, slotTransform);
 
-					List<Attachment> attachments = new List<Attachment>();
-					List<string> attachmentNames = new List<string>();
-
 					var skinEntries = new List<Skin.SkinEntry>();
 					skin.GetAttachments(slotIndex, skinEntries);
-					foreach (var entry in skinEntries) {
-						attachments.Add(entry.Attachment);
-						attachmentNames.Add(entry.Name);
-					}
-
-					if (skin != skeletonData.DefaultSkin) {
-						skinEntries.Clear();
+					if (skin != skeletonData.DefaultSkin)
 						skeletonData.DefaultSkin.GetAttachments(slotIndex, skinEntries);
-						foreach (var entry in skinEntries) {
-							attachments.Add(entry.Attachment);
-							attachmentNames.Add(entry.Name);
-						}
-					}
 
-					for (int a = 0; a < attachments.Count; a++) {
-						var attachment = attachments[a];
-						string attachmentName = attachmentNames[a];
+					for (int a = 0; a < skinEntries.Count; a++) {
+						var attachment = skinEntries[a].Attachment;
+						string attachmentName = skinEntries[a].Name;
 						string attachmentMeshName = "[" + slotData.Name + "] " + attachmentName;
 						Vector3 offset = Vector3.zero;
 						float rotation = 0;
@@ -391,7 +381,7 @@ namespace Spine.Unity.Editor {
 								mesh = ExtractWeightedMeshAttachment(attachmentMeshName, meshAttachment, slotIndex, skeletonData, boneList, mesh);
 							else
 								mesh = ExtractMeshAttachment(attachmentMeshName, meshAttachment, mesh);
-							
+
 							material = attachment.GetMaterial();
 							unusedMeshNames.Remove(attachmentMeshName);
 							if (newPrefab || meshTable.ContainsKey(attachmentMeshName) == false)
@@ -399,7 +389,7 @@ namespace Spine.Unity.Editor {
 						} else
 							continue;
 
-						Transform attachmentTransform = EditorInstantiation.NewGameObject(attachmentName).transform;
+						Transform attachmentTransform = EditorInstantiation.NewGameObject(attachmentName, true).transform;
 
 						attachmentTransform.parent = slotTransform;
 						attachmentTransform.localPosition = offset;
@@ -442,16 +432,24 @@ namespace Spine.Unity.Editor {
 				}
 
 				if (newPrefab) {
+					#if NEW_PREFAB_SYSTEM
+					PrefabUtility.SaveAsPrefabAssetAndConnect(prefabRoot, prefabPath, InteractionMode.AutomatedAction);
+					#else
 					PrefabUtility.ReplacePrefab(prefabRoot, prefab, ReplacePrefabOptions.ConnectToPrefab);
+					#endif
 				} else {
 
 					foreach (string str in unusedMeshNames) {
 						Mesh.DestroyImmediate(meshTable[str], true);
 					}
 
+					#if NEW_PREFAB_SYSTEM
+					PrefabUtility.SaveAsPrefabAssetAndConnect(prefabRoot, prefabPath, InteractionMode.AutomatedAction);
+					#else
 					PrefabUtility.ReplacePrefab(prefabRoot, prefab, ReplacePrefabOptions.ReplaceNameBased);
+					#endif
 				}
-				
+
 
 				EditorGUIUtility.PingObject(prefab);
 
@@ -459,10 +457,8 @@ namespace Spine.Unity.Editor {
 				AssetDatabase.SaveAssets();
 
 				GameObject.DestroyImmediate(prefabRoot);
-			
-			}
-			#endif
 
+			}
 		}
 
 		#region Attachment Baking
@@ -510,7 +506,7 @@ namespace Spine.Unity.Editor {
 			if (centered) {
 				bone.X = -attachment.X;
 				bone.Y = -attachment.Y;
-			}	
+			}
 
 			bone.UpdateWorldTransform();
 
@@ -677,7 +673,7 @@ namespace Spine.Unity.Editor {
 				for (int b = 0; b < pairs.Count; b++) {
 					if (b > 3) {
 						if (warningBuilder.Length == 0)
-							warningBuilder.Insert(0, "[Weighted Mesh: " + name + "]\r\nUnity only supports 4 weight influences per vertex!  The 4 strongest influences will be used.\r\n");
+							warningBuilder.Insert(0, "[Weighted Mesh: " + name + "]\r\nUnity only supports 4 weight influences per vertex! The 4 strongest influences will be used.\r\n");
 
 						warningBuilder.AppendFormat("{0} ignored on vertex {1}!\r\n", pairs[b].bone.name, i);
 						continue;
@@ -1315,9 +1311,14 @@ namespace Spine.Unity.Editor {
 			var animEvents = new List<AnimationEvent>();
 			for (int i = 0, n = frames.Length; i < n; i++) {
 				var spineEvent = events[i];
+				string eventName = spineEvent.Data.Name;
+				if (SpineEditorUtilities.Preferences.mecanimEventIncludeFolderName)
+					eventName = eventName.Replace("/", ""); // calls method FolderNameEventName()
+				else
+					eventName = eventName.Substring(eventName.LastIndexOf('/') + 1); // calls method EventName()
 				var unityAnimationEvent = new AnimationEvent {
 					time = frames[i],
-					functionName = spineEvent.Data.Name,
+					functionName = eventName,
 					messageOptions = eventOptions
 				};
 
@@ -1423,7 +1424,7 @@ namespace Spine.Unity.Editor {
 			atlasAsset.GetAtlas(); // Initializes atlasAsset.
 
 			string atlasAssetPath = AssetDatabase.GetAssetPath(atlasAsset);
-			string atlasAssetDirPath = Path.GetDirectoryName(atlasAssetPath);
+			string atlasAssetDirPath = Path.GetDirectoryName(atlasAssetPath).Replace('\\', '/');
 			string bakedDirPath = Path.Combine(atlasAssetDirPath, atlasAsset.name);
 			string bakedPrefabPath = Path.Combine(bakedDirPath, AssetUtility.GetPathSafeName(region.name) + ".prefab").Replace("\\", "/");
 
@@ -1436,7 +1437,7 @@ namespace Spine.Unity.Editor {
 				Directory.CreateDirectory(bakedDirPath);
 
 			if (prefab == null) {
-				root = EditorInstantiation.NewGameObject("temp", typeof(MeshFilter), typeof(MeshRenderer));
+				root = EditorInstantiation.NewGameObject("temp", true, typeof(MeshFilter), typeof(MeshRenderer));
 				#if NEW_PREFAB_SYSTEM
 				prefab = PrefabUtility.SaveAsPrefabAsset(root, bakedPrefabPath);
 				#else

@@ -46,7 +46,7 @@ namespace Spine.Unity.Editor {
 		[MenuItem("CONTEXT/SkeletonRenderer/Add PointFollower GameObject")]
 		static void AddBoneFollowerGameObject (MenuCommand cmd) {
 			var skeletonRenderer = cmd.context as SkeletonRenderer;
-			var go = EditorInstantiation.NewGameObject("PointFollower");
+			var go = EditorInstantiation.NewGameObject("PointFollower", true);
 			var t = go.transform;
 			t.SetParent(skeletonRenderer.transform);
 			t.localPosition = Vector3.zero;
@@ -111,7 +111,7 @@ namespace Spine.Unity.Editor {
 		}
 
 		static void DrawPointsInSkin (Skin skin, Skeleton skeleton, Transform transform) {
-			foreach (DictionaryEntry skinEntry in skin.Attachments) {
+			foreach (var skinEntry in skin.Attachments) {
 				var attachment = skinEntry.Value as PointAttachment;
 				if (attachment != null) {
 					var skinKey = (Skin.SkinEntry)skinEntry.Key;

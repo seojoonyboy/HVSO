@@ -47,7 +47,7 @@ namespace Spine.Unity.Editor {
 		SkeletonUtility skeletonUtility;
 		Skeleton skeleton;
 		SkeletonRenderer skeletonRenderer;
-		
+
 		#if !NEW_PREFAB_SYSTEM
 		bool isPrefab;
 		#endif
@@ -71,8 +71,9 @@ namespace Spine.Unity.Editor {
 			isPrefab |= PrefabUtility.GetPrefabType(this.target) == PrefabType.Prefab;
 			#endif
 		}
-			
+
 		public override void OnInspectorGUI () {
+
 			#if !NEW_PREFAB_SYSTEM
 			if (isPrefab) {
 				GUILayout.Label(new GUIContent("Cannot edit Prefabs", Icons.warning));
@@ -80,12 +81,21 @@ namespace Spine.Unity.Editor {
 			}
 			#endif
 
+			serializedObject.Update();
+
 			if (!skeletonRenderer.valid) {
 				GUILayout.Label(new GUIContent("Spine Component invalid. Check Skeleton Data Asset.", Icons.warning));
-				return;	
+				return;
 			}
 
 			EditorGUILayout.PropertyField(serializedObject.FindProperty("boneRoot"), SpineInspectorUtility.TempContent("Skeleton Root"));
+			EditorGUILayout.PropertyField(serializedObject.FindProperty("flipBy180DegreeRotation"), SpineInspectorUtility.TempContent("Flip by Rotation", null,
+				"If true, Skeleton.ScaleX and Skeleton.ScaleY are followed " +
+				"by 180 degree rotation. If false, negative Transform scale is used. " +
+				"Note that using negative scale is consistent with previous behaviour (hence the default), " +
+				"however causes serious problems with rigidbodies and physics. Therefore, it is recommended to " +
+				"enable this parameter where possible. When creating hinge chains for a chain of skeleton bones " +
+				"via SkeletonUtilityBone, it is mandatory to have this parameter enabled."));
 
 			bool hasRootBone = skeletonUtility.boneRoot != null;
 
@@ -104,6 +114,8 @@ namespace Spine.Unity.Editor {
 					skeletonUtility.boneRoot = null;
 				}
 			}
+
+			serializedObject.ApplyModifiedProperties();
 		}
 
 		void SpawnHierarchyContextMenu () {
@@ -143,21 +155,25 @@ namespace Spine.Unity.Editor {
 		}
 
 		void SpawnFollowHierarchy () {
+			Undo.RegisterCompleteObjectUndo(skeletonUtility, "Spawn Hierarchy");
 			Selection.activeGameObject = skeletonUtility.SpawnHierarchy(SkeletonUtilityBone.Mode.Follow, true, true, true);
 			AttachIconsToChildren(skeletonUtility.boneRoot);
 		}
 
 		void SpawnFollowHierarchyRootOnly () {
+			Undo.RegisterCompleteObjectUndo(skeletonUtility, "Spawn Root");
 			Selection.activeGameObject = skeletonUtility.SpawnRoot(SkeletonUtilityBone.Mode.Follow, true, true, true);
 			AttachIconsToChildren(skeletonUtility.boneRoot);
 		}
 
 		void SpawnOverrideHierarchy () {
+			Undo.RegisterCompleteObjectUndo(skeletonUtility, "Spawn Hierarchy");
 			Selection.activeGameObject = skeletonUtility.SpawnHierarchy(SkeletonUtilityBone.Mode.Override, true, true, true);
 			AttachIconsToChildren(skeletonUtility.boneRoot);
 		}
 
 		void SpawnOverrideHierarchyRootOnly () {
+			Undo.RegisterCompleteObjectUndo(skeletonUtility, "Spawn Root");
 			Selection.activeGameObject = skeletonUtility.SpawnRoot(SkeletonUtilityBone.Mode.Override, true, true, true);
 			AttachIconsToChildren(skeletonUtility.boneRoot);
 		}
