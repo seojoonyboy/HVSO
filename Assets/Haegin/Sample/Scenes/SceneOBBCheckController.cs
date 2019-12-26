@@ -144,9 +144,9 @@ public class SceneOBBCheckController : MonoBehaviour {
 
         UGUICommon.ShowRequestPermission(requestPermissionDialog, canvas, TextManager.GetString(TextManager.StringTag.AppPermissionsTitle1), TextManager.GetString(TextManager.StringTag.AppPermissionsInfo1), (UGUICommon.ButtonType buttonType) =>
         {
-            //RequestAndroidPermission(0);
-            gameObject.SetActive(false);
-            FindObjectOfType<LoginController>().sceneLoginCanvas.gameObject.SetActive(true);
+            RequestAndroidPermission(0);
+            //gameObject.SetActive(false);
+            //FindObjectOfType<LoginController>().sceneLoginCanvas.gameObject.SetActive(true);
         });
     }
 
