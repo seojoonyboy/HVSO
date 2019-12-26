@@ -12,13 +12,21 @@ public class SoundManager : SerializedMonoBehaviour {
     public Dictionary<UISfxSound, AudioClip> uiSfx;
     public Dictionary<IngameSfxSound, AudioClip> ingameSfx;
     public Dictionary<UnitRace, Dictionary<VoiceType, AudioClip>> unitSound;
-    
+    float soundVolume;
+
+    public float SOUNDVOLUME {
+        get { return soundVolume; }
+        set {
+            soundVolume = value;
+            PlayerPrefs.SetFloat("SoundVolume", soundVolume);
+        }
+    }
 
     private static SoundManager _instance;  
     public static SoundManager Instance {
         get {
             if (_instance == null) {
-                Logger.LogError("SoundManager를 찾을 수 없습니다.");
+                //Logger.LogError("SoundManager를 찾을 수 없습니다.");
                 return null;
             }
             else {
@@ -32,6 +40,10 @@ public class SoundManager : SerializedMonoBehaviour {
 
     void Awake() {
         _instance = GetComponent<SoundManager>();
+        if (!PlayerPrefs.HasKey("SoundVolume")) 
+            PlayerPrefs.SetFloat("SoundVolume", 0.7f);
+        soundVolume = PlayerPrefs.GetFloat("SoundVolume");
+            
         DontDestroyOnLoad(gameObject);    
     }
 
@@ -53,6 +65,21 @@ public class SoundManager : SerializedMonoBehaviour {
         AttackSound(magicSfx[id]);
     }
 
+    public void PlayUnitVoice(string id, VoiceType voice) {
+        if (AccountManager.Instance.resource.unitRace.ContainsKey(id) == false) return;
+        UnitRace race = AccountManager.Instance.resource.unitRace[id];
+        if (race == UnitRace.HUMAN_MAN || race == UnitRace.HUMAN_ELDER_MAN || race == UnitRace.HUMAN_WOMAN || race == UnitRace.HUMAN_MIDDLE_MAN) return;
+        AudioClip unitAudio = unitSound[race][voice];
+        PlaySfx(unitAudio);
+    }
+
+    public async void PlayShieldChargeCount(int num) {
+        for (int i = 0; i < num; i++) {            
+            PlaySfx(ingameSfx[IngameSfxSound.SHIELDCHARGECOUNT]);
+            await System.Threading.Tasks.Task.Delay(200);
+        }
+        PlayIngameSfx(IngameSfxSound.SHIELDCHARGE);
+    }
 
     public void PlayAttackSound(string id) {
         if (!unitSfx.ContainsKey(id) || unitSfx[id] == null) {
@@ -69,6 +96,7 @@ public class SoundManager : SerializedMonoBehaviour {
         soundObject.SetActive(true);
         AudioSource sound = soundObject.GetComponent<AudioSource>();
         sound.clip = sfxSource;
+        sound.volume = soundVolume;
         sound.Play();
         StartCoroutine(SoundAfterOff(sfxSource, soundObject));
     }
@@ -76,7 +104,7 @@ public class SoundManager : SerializedMonoBehaviour {
 
     public void PlaySound(SoundType type) {
         if (!sounds.ContainsKey(type) || sounds[type] == null) {
-            Logger.LogError(string.Format("{0}에 대한 음원을 찾을 수 없습니다.", type));
+            //Logger.LogError(string.Format("{0}에 대한 음원을 찾을 수 없습니다.", type));
             return;
         }
         PlaySfx(sounds[type]);
@@ -84,7 +112,7 @@ public class SoundManager : SerializedMonoBehaviour {
 
     public void PlaySound(UISfxSound sfxSound) {
         if(!uiSfx.ContainsKey(sfxSound) || uiSfx[sfxSound] == null) {
-            Logger.LogError(string.Format("{0}에 대한 음원을 찾을 수 없습니다."));
+            //Logger.LogError(string.Format("{0}에 대한 음원을 찾을 수 없습니다."));
             return;
         }
         PlaySfx(uiSfx[sfxSound]);
@@ -96,6 +124,7 @@ public class SoundManager : SerializedMonoBehaviour {
         AudioSource sound = soundObject.GetComponent<AudioSource>();
         sound.clip = sfxSource;
         sound.time = 0;
+        sound.volume = soundVolume;
         sound.Play();
         StartCoroutine(SoundAfterOff(sfxSource, soundObject));
     }
@@ -121,15 +150,8 @@ public class SoundManager : SerializedMonoBehaviour {
         yield return new WaitForSeconds(0.1f);
         soundObject.SetActive(false);
     }
-
-
-
-
-
-
-
-
 }
+
 public enum VoiceType {
     ATTACK = 1500,
     CHARGE,
@@ -155,7 +177,13 @@ public enum UISfxSound {
     CARDCHOICE_UNIT,
     MENUSLIDE1,
     MENUSLIDE2,
-    MENUSLIDE3
+    MENUSLIDE3,
+    CARD_USE_NORMAL,
+    CARD_USE_RARE,
+    CARD_USE_SUPERRARE,
+    CARD_USE_LEGEND,
+    BOX_OPEN_FINISH,
+    BOX_APPEAR
 }
 
 public enum IngameSfxSound {
@@ -168,7 +196,11 @@ public enum IngameSfxSound {
     SHIELDCHARGE,
     TEXTTYPING,
     TURNBUTTON,
-    TURNSTART
+    TURNSTART,
+    HUMANTURN,
+    ORCTURN,
+    ORCMAGICTURN,
+    SHIELDCHARGECOUNT
 }
 
 

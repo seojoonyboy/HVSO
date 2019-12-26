@@ -67,14 +67,25 @@ class ModuleSampleBuildScript
 
     static void PerformOneStoreAndroidBuild()
     {
+        EditorUserBuildSettings.buildAppBundle = false;
         PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.Android, "CUSTOM_NGUI;CROSS_PLATFORM_INPUT;MOBILE_INPUT;MDEBUG;USE_SAMPLE_SCENE");
         PlayerSettings.applicationIdentifier = "com.haegin.modulesample.onestore";
         ProjectSettingsWindow.SetOneStoreSettings(true);
         BuildAndroid(1);
     }
 
+    static void PerformAndroidAppBundleBuild()
+    {
+        EditorUserBuildSettings.buildAppBundle = true;
+        PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.Android, "CUSTOM_NGUI;CROSS_PLATFORM_INPUT;MOBILE_INPUT;MDEBUG;QA;USE_SAMPLE_SCENE");
+        PlayerSettings.applicationIdentifier = "com.haegin.modulesample";
+        ProjectSettingsWindow.SetOneStoreSettings(false);
+        BuildAndroid(1);
+    }
+
     static void PerformAndroidBuild()
     {
+        EditorUserBuildSettings.buildAppBundle = false;
         PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.Android, "CUSTOM_NGUI;CROSS_PLATFORM_INPUT;MOBILE_INPUT;MDEBUG;QA;USE_SAMPLE_SCENE");
         PlayerSettings.applicationIdentifier = "com.haegin.modulesample";
         ProjectSettingsWindow.SetOneStoreSettings(false);

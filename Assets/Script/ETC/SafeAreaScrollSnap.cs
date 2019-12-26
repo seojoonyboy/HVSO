@@ -20,8 +20,8 @@ public class SafeAreaScrollSnap : MonoBehaviour {
         if (rects == null || rects.Count == 0) Init();
 
         foreach (RectTransform rt in rects) {
-            Logger.Log(rt.offsetMin);
-            Logger.Log(rt.offsetMax);
+            //Logger.Log(rt.offsetMin);
+            //Logger.Log(rt.offsetMax);
             rt.offsetMin = new Vector2(rt.offsetMin.x, -1 * r.height / 2.0f);
             rt.offsetMax = new Vector2(rt.offsetMax.x, r.height / 2.0f);
             //rt.offsetMin = new Vector2(0, 0);

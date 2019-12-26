@@ -61,7 +61,8 @@ public partial class PlayMangement : MonoBehaviour {
 
     public ShowCardsHandler showCardsHandler;
     public Button surrendButton;
-    
+
+    public GameObject levelCanvas;
     //public string magicHistroy;
 
     private void Awake() {
@@ -444,12 +445,9 @@ public partial class PlayMangement : MonoBehaviour {
                 break;
             case "line":
                 int line = int.Parse(target.args[0]);
-                Terrain[] lineList = FindObjectsOfType<Terrain>();
-                int terrainLine;
-                for (int i = 0; i < lineList.Length; i++) {
-                    terrainLine = lineList[i].transform.GetSiblingIndex();
-                    if (terrainLine != line) continue;
-                    highlightUI = lineList[i].transform.Find("BattleLineEffect").gameObject;
+                for (int i = 0; i < 5; i++) {
+                    if (i != line) continue;
+                    highlightUI = PlayMangement.instance.backGround.transform.GetChild(i).Find("BattleLineEffect").gameObject;
                     break;
                 }
                 break;
@@ -605,7 +603,7 @@ public partial class PlayMangement : MonoBehaviour {
 
     public virtual IEnumerator battleCoroutine() {
         dragable = false;
-        yield return new WaitForSeconds(1.1f);
+        yield return new WaitForSeconds(0.8f);
         yield return socketHandler.waitSkillDone(() => { });
         yield return socketHandler.WaitBattle();
         for (int line = 0; line < 5; line++) {
@@ -646,6 +644,12 @@ public partial class PlayMangement : MonoBehaviour {
             else yield return whoFirstBattle(enemyPlayer, player, line);
         }
         else {
+            // socketHandler.lineBattleList.Dequeue();
+            // socketHandler.lineBattleList.Dequeue();
+            // socketHandler.mapClearList.Dequeue();
+            // socketHandler.lineBattleList.Dequeue();
+            // socketHandler.lineBattleList.Dequeue();
+            // socketHandler.mapClearList.Dequeue();
             yield return WaitSocketData(socketHandler.lineBattleList, line, true);
             shieldDequeue();
             yield return WaitSocketData(socketHandler.lineBattleList, line, true);
@@ -656,7 +660,7 @@ public partial class PlayMangement : MonoBehaviour {
             yield return WaitSocketData(socketHandler.lineBattleList, line, true);
             shieldDequeue();
             yield return WaitSocketData(socketHandler.mapClearList, line, false);
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.1f);
         }
         battleLineEffect.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.6f);
         battleLineEffect.gameObject.SetActive(false);
@@ -732,7 +736,7 @@ public partial class PlayMangement : MonoBehaviour {
         if (placeMonster.maxAtkCount == 1 && secondAttack) yield break;
         if (placeMonster.unit.attack <= 0) yield break;
         placeMonster.GetTarget();
-        yield return new WaitForSeconds(1.1f + placeMonster.atkTime);
+        yield return new WaitForSeconds(0.8f + placeMonster.atkTime);
     }
     IEnumerator WaitSocketData(SocketFormat.QueueSocketList<SocketFormat.GameState> queueList, int line, bool isBattle) {
         if (!isGame) yield break;

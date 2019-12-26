@@ -8,10 +8,6 @@
                 "description": null,
                 "methods": [
                     {
-                        "name": "DeactiveImageTutorial",
-                        "args": []
-                    },
-                    {
                         "name": "ForceToPage",
                         "args": [
                             "StoryLobby"
@@ -34,11 +30,11 @@
                         ]
                     },
                     {
-                        "name": "UnlockOrcStoryAnim",
+                        "name": "DestroyLoadingModal",
                         "args": []
                     },
                     {
-                        "name": "DestroyLoadingModal",
+                        "name": "UnlockOrcStoryAnim",
                         "args": []
                     },
                     {
@@ -132,6 +128,14 @@
                         ]
                     },
                     {
+                        "name": "Dimmed",
+                        "args": [
+                            "orc_story_tutorial_1",
+                            "off",
+                            "scrollArea"
+                        ]
+                    },
+                    {
                         "name" : "HideNewImage",
                         "args" : [
                             "orc_story_tutorial_1_newImage"
@@ -144,18 +148,74 @@
                         ]
                     },
                     {
-                        "name": "AutoSelectStoryDeck",
+                        "name": "Dimmed",
                         "args": [
-                            "orc",
-                            "1"
+                            "orc_story_detail_button",
+                            "on"
+                        ]
+                    },
+                    {
+                        "name": "ShowHandUI",
+                        "args": [
+                            "orc_story_detail_button",
+                            "touch"
+                        ]
+                    },
+                    {
+                        "name": "Menu_Scope_Object",
+                        "args": [
+                            "orc_story_detail_button"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                            "orc_story_detail_button"
+                        ]
+                    },
+                    {
+                        "name": "HideHandUI",
+                        "args": [
+                            "orc_story_detail_button"
                         ]
                     },
                     {
                         "name": "Dimmed",
                         "args": [
-                            "orc_story_tutorial_1",
-                            "off",
-                            "scrollArea"
+                            "orc_story_detail_button",
+                            "off"
+                        ]
+                    },
+                    {
+                        "name": "ShowHandUI",
+                        "args": [
+                            "story_deckList_enter_button",
+                            "touch"
+                        ]
+                    },
+                    {
+                        "name": "Menu_Scope_Object",
+                        "args": [
+                            "story_deckList_enter_button"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                            "story_deckList_enter_button"
+                        ]
+                    },
+                    {
+                        "name": "HideHandUI",
+                        "args": [
+                            "story_deckList_enter_button"
+                        ]
+                    },
+                    {
+                        "name": "AutoSelectStoryDeck",
+                        "args": [
+                            "orc",
+                            "1"
                         ]
                     },
                     {
@@ -192,6 +252,12 @@
                         ]
                     },
                     {
+                        "name": "HideHandUI",
+                        "args": [
+                            "tutorial_play_button"
+                        ]
+                    },
+                    {
                         "name": "ForceOrcStorySocketConnect",
                         "args": [
                             "orc",
@@ -205,21 +271,25 @@
     },
     {
         "id": 1,
-        "description" : "human 0-2 스토리 강제",
+        "description" : "스토리 메뉴 해금. 이후 퀘스트로 자유 진행",
         "innerDatas": [
             {
                 "id" : 1,
                 "description" : null,
                 "methods" : [
                     {
-                        "name": "Menu_Block_Screen",
-                        "args": []
+                        "name" : "SetPlayerPrefabStoryUnlocked",
+                        "args" : []
                     },
                     {
                         "name": "ForceToPage",
                         "args": [
                             "StoryLobby"
                         ]
+                    },
+                    {
+                        "name": "Menu_Block_Screen",
+                        "args": []
                     },
                     {
                         "name": "RequestReward",
@@ -232,9 +302,126 @@
                         "args": []
                     },
                     {
-                        "name": "Menu_Scope_Object",
+                        "name": "Dimmed",
+                        "args": [
+                            "hud_back_button",
+                            "on"
+                        ]
+                    },
+                    {
+                        "name": "ShowHandUI",
+                        "args": [
+                          "hud_back_button",
+                          "touch"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
                         "args": [
                             "hud_back_button"
+                        ]
+                    },
+                    {
+                        "name": "Dimmed",
+                        "args": [
+                            "hud_back_button",
+                            "off"
+                        ]
+                    },
+                    {
+                        "name": "HideHandUI",
+                        "args": [
+                            "hud_back_button"
+                        ]
+                    },
+                    {
+                        "name" : "RequestUnlockQuest",
+                        "args" : [
+                            "1"
+                        ]
+                    },
+                    {
+                        "name" : "OffHighlight",
+                        "args" : []
+                    },
+                    {
+                        "name" : "EndTutorial",
+                        "args" : []
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "description" : "QUEST_SUB_SET_1",
+        "innerDatas": [
+            {
+                "id" : 1,
+                "description" : null,
+                "methods" : [
+                    {
+                        "name" : "Menu_NPC_Talk",
+                        "args" : [
+                            "h10001",
+                            "스토리 메뉴에서 우리의 이야기들을 경험할 수 있다. 클리어 보상도 확인해 보자.",
+                            "my"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                          "screen"
+                        ]
+                    },
+                    {
+                        "name" : "Menu_NPC_Talk",
+                        "args" : [
+                            "h10001",
+                            "이제 퀘스트를 받을 수 있다. 다양한 임무들을 수행하고 보상을 얻을 수 있지. ",
+                            "my"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                          "screen"
+                        ]
+                    },
+                    {
+                        "name" : "Menu_Hide_Message",
+                        "args" : []
+                    },
+                    {
+                        "name" : "OffHighlight",
+                        "args" : []
+                    },
+                    {
+                        "name" : "EndTutorial",
+                        "args" : []
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 4,
+        "description" : "QUEST_SUB_SET_2",
+        "innerDatas": [
+            {
+                "id" : 1,
+                "description" : null,
+                "methods" : [
+                    {
+                        "name" : "Wait_Until",
+                        "args" : [
+                            "1"
+                        ]
+                    },
+                    {
+                        "name" : "ForceToPage",
+                        "args" : [
+                            "StoryLobby"
                         ]
                     },
                     {
@@ -271,141 +458,29 @@
                         ]
                     },
                     {
-                        "name": "UnlockHumanStory_2_Anim",
-                        "args": []
+                        "name" : "Menu_NPC_Talk",
+                        "args" : [
+                            "h10001",
+                            "완료된 임무가 있는 것 같군. 퀘스트 창을 확인해 보도록 하지.",
+                            "my"
+                        ]
                     },
                     {
-                        "name" : "UnlockStroyAnim",
+                        "name": "Wait_Click",
+                        "args": [
+                          "screen"
+                        ]
+                    },
+                    {
+                        "name" : "Menu_Hide_Message",
                         "args" : []
                     },
                     {
-                        "name": "Menu_Scope_Object",
-                        "args": [
-                            "storyButton"
-                        ]
-                    },
-                    {
-                        "name": "Dimmed",
-                        "args": [
-                            "storyButton",
-                            "on"
-                        ]
-                    },
-                    {
-                        "name": "ShowHandUI",
-                        "args": [
-                          "storyButton",
-                          "touch"
-                        ]
-                    },
-                    {
-                        "name": "Wait_Click",
-                        "args": [
-                            "storyButton"
-                        ]
-                    },
-                    {
-                        "name": "Dimmed",
-                        "args": [
-                            "storyButton",
-                            "off"
-                        ]
-                    },
-                    {
-                        "name": "HideHandUI",
-                        "args": [
-                            "storyButton"
-                        ]
-                    },
-                    {
-                        "name" : "ShowNewImage",
-                        "args" : [
-                            "human_story_tutorial_2_newImage"
-                        ]
-                    },
-                    {
-                        "name": "Dimmed",
-                        "args": [
-                            "human_story_tutorial_2",
-                            "on",
-                            "scrollArea"
-                        ]
-                    },
-                    {
-                        "name": "ShowHandUI",
-                        "args": [
-                            "human_story_tutorial_2",
-                            "touch"
-                        ]
-                    },
-                    {
-                        "name": "Menu_Scope_Object",
-                        "args": [
-                            "human_story_tutorial_2"
-                        ]
-                    },
-                    {
-                        "name": "Wait_Click",
-                        "args": [
-                            "human_story_tutorial_2"
-                        ]
-                    },
-                    {
-                        "name" : "HideNewImage",
-                        "args" : [
-                            "human_story_tutorial_2_newImage"
-                        ]
-                    },
-                    {
-                        "name": "HideHandUI",
-                        "args": [
-                            "human_story_tutorial_2"
-                        ]
-                    },
-                    {
-                        "name": "Dimmed",
-                        "args": [
-                            "human_story_tutorial_2",
-                            "off",
-                            "scrollArea"
-                        ]
-                    },
-                    {
-                        "name": "AutoSelectStoryDeck",
-                        "args": [
-                            "human",
-                            "2"
-                        ]
-                    },
-                    {
-                        "name": "Dimmed",
-                        "args": [
-                            "tutorial_play_button",
-                            "on"
-                        ]
-                    },
-                    {
-                        "name": "Wait_Click",
-                        "args": [
-                            "tutorial_play_button"
-                        ]
-                    },
-                    {
-                        "name": "Dimmed",
-                        "args": [
-                            "tutorial_play_button",
-                            "off"
-                        ]
-                    },
-                    {
-                        "name": "ForceHumanStorySocketConnect",
-                        "args": [
-                            "human",
-                            "2"
-                        ]
-                    },
-                    {
                         "name" : "OffHighlight",
+                        "args" : []
+                    },
+                    {
+                        "name" : "EndTutorial",
                         "args" : []
                     }
                 ]
@@ -413,219 +488,349 @@
         ]
     },
     {
-        "id": 2,
-        "description": "orc 0-2 스토리 강제",
-        "innerDatas": [
+        "id" : 5,
+        "description" : "QUEST_SUB_SET_3",
+        "innerDatas" : [
             {
-                "id": 1,
-                "description": null,
-                "methods": [
+                "id" : 1,
+                "description" : null,
+                "methods" : [
                     {
-                        "name": "Menu_Block_Screen",
-                        "args": []
-                    },
-                    {
-                        "name": "ForceToPage",
-                        "args": [
-                            "StoryLobby"
-                        ]
-                    },
-                    {
-                        "name": "UnlockOrcStory_2_Anim",
-                        "args": []
-                    },
-                    {
-                        "name": "DestroyLoadingModal",
-                        "args": []
-                    },
-                    {
-                        "name": "Dimmed",
-                        "args": [
-                            "story_orc_button",
-                            "on"
-                        ]
-                    },
-                    {
-                        "name" : "ShowNewImage",
+                        "name" : "Menu_NPC_Talk",
                         "args" : [
-                            "story_orc_button_newImage"
-                        ]
-                    },
-                    {
-                        "name": "ShowHandUI",
-                        "args": [
-                            "story_orc_button",
-                            "touch"
-                        ]
-                    },
-                    {
-                        "name": "ChangeSelectBtnImage",
-                        "args": [
-                            "story_orc_btn"
-                        ]
-                    },
-                    {
-                        "name": "Menu_Scope_Object",
-                        "args": [
-                            "story_orc_button"
+                            "h10001",
+                            "퀘스트 보상은 우편으로 발송되니 우편함을 확인해 봐야겠어.",
+                            "my"
                         ]
                     },
                     {
                         "name": "Wait_Click",
                         "args": [
-                            "story_orc_button"
+                          "screen"
                         ]
                     },
                     {
-                        "name" : "HideNewImage",
-                        "args" : [
-                            "story_orc_button_newImage"
-                        ]
-                    },
-                    {
-                        "name": "HideHandUI",
-                        "args": [
-                            "story_orc_button"
-                        ]
-                    },
-                    {
-                        "name": "Dimmed",
-                        "args": [
-                            "story_orc_button",
-                            "off"
-                        ]
-                    },
-                    {
-                        "name" : "ShowNewImage",
-                        "args" : [
-                            "orc_story_tutorial_2_newImage"
-                        ]
-                    },
-                    {
-                        "name": "Dimmed",
-                        "args": [
-                            "orc_story_tutorial_2",
-                            "on",
-                            "scrollArea"
-                        ]
-                    },
-                    {
-                        "name": "ShowHandUI",
-                        "args": [
-                            "orc_story_tutorial_2",
-                            "touch"
-                        ]
-                    },
-                    {
-                        "name": "Menu_Scope_Object",
-                        "args": [
-                            "orc_story_tutorial_2"
-                        ]
-                    },
-                    {
-                        "name": "Wait_Click",
-                        "args": [
-                            "orc_story_tutorial_2"
-                        ]
-                    },
-                    {
-                        "name" : "HideNewImage",
-                        "args" : [
-                            "orc_story_tutorial_2_newImage"
-                        ]
-                    },
-                    {
-                        "name": "HideHandUI",
-                        "args": [
-                            "orc_story_tutorial_2"
-                        ]
-                    },
-                    {
-                        "name": "AutoSelectStoryDeck",
-                        "args": [
-                            "orc",
-                            "2"
-                        ]
-                    },
-                    {
-                        "name": "Dimmed",
-                        "args": [
-                            "orc_story_tutorial_2",
-                            "off",
-                            "scrollArea"
-                        ]
-                    },
-                    {
-                        "name": "ShowHandUI",
-                        "args": [
-                          "tutorial_play_button",
-                          "touch"
-                        ]
-                    },
-                    {
-                        "name": "Menu_Scope_Object",
-                        "args": [
-                            "tutorial_play_button"
-                        ]
-                    },
-                    {
-                        "name": "Dimmed",
-                        "args": [
-                            "tutorial_play_button",
-                            "on"
-                        ]
-                    },
-                    {
-                        "name": "Wait_Click",
-                        "args": [
-                            "tutorial_play_button"
-                        ]
-                    },
-                    {
-                        "name": "Dimmed",
-                        "args": [
-                            "tutorial_play_button",
-                            "off"
-                        ]
-                    },
-                    {
-                        "name": "ForceOrcStorySocketConnect",
-                        "args": [
-                            "orc",
-                            "2"
-                        ]
-                    }
-                ],
-                "isExecute": false
-            }
-        ]
-    },
-    {
-        "id": 3,
-        "description": "배틀 메뉴 오픈",
-        "innerDatas": [
-            {
-                "id": 1,
-                "description": null,
-                "methods": [
-                    {
-                        "name": "Menu_Block_Screen",
-                        "args": []
-                    },
-                    {
-                        "name": "UnlockBattleAnim",
-                        "args": []
-                    },
-                    {
-                        "name": "DestroyLoadingModal",
-                        "args": []
+                        "name" : "Menu_Hide_Message",
+                        "args" : []
                     },
                     {
                         "name" : "OffHighlight",
                         "args" : []
+                    },
+                    {
+                        "name" : "EndTutorial",
+                        "args" : []
                     }
-                ],
-                "isExecute": false
+                ]
+            }
+        ]
+    },
+    {
+        "id" : 6,
+        "description" : "QUEST_SUB_SET_4",
+        "innerDatas" : [
+            {
+                "id" : 1,
+                "description" : null,
+                "methods" : [
+                    {
+                        "name" : "Menu_NPC_Talk",
+                        "args" : [
+                            "h10001",
+                            "이것은 마력결정이로군.",
+                            "my"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                          "screen"
+                        ]
+                    },
+                    {
+                        "name" : "Menu_NPC_Talk",
+                        "args" : [
+                            "h10001",
+                            "마력결정은 카드를 제작하거나 영웅의 레벨을 올리는 등 다양한 곳에서 쓰이지.",
+                            "my"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                          "screen"
+                        ]
+                    },
+                    {
+                        "name" : "Menu_NPC_Talk",
+                        "args" : [
+                            "h10001",
+                            "이번 기회에 부대를 보강해보도록 할까? 일단 카드를 제작하러 가야겠어.",
+                            "my"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                          "screen"
+                        ]
+                    },
+                    {
+                        "name" : "Menu_Hide_Message",
+                        "args" : []
+                    },
+                    {
+                        "name" : "OffHighlight",
+                        "args" : []
+                    },
+                    {
+                        "name" : "EndTutorial",
+                        "args" : []
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id" : 7,
+        "description" : "QUEST_SUB_SET_5",
+        "innerDatas" : [
+            {
+                "id" : 1,
+                "description" : null,
+                "methods" : [
+                    {
+                        "name" : "Menu_NPC_Talk",
+                        "args" : [
+                            "h10001",
+                            "상대 유닛을 견제할 수 있는 {사기저하}을 4장 제작하도록 하지.",
+                            "my"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                          "screen"
+                        ]
+                    },
+                    {
+                        "name" : "Menu_Hide_Message",
+                        "args" : []
+                    },
+                    {
+                        "name" : "OffHighlight",
+                        "args" : []
+                    },
+                    {
+                        "name" : "EndTutorial",
+                        "args" : []
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 8,
+        "description" : "QUEST_SUB_SET_6",
+        "innerDatas": [
+            {
+                "id" : 1,
+                "description" : null,
+                "methods" : [
+                    {
+                        "name" : "Menu_NPC_Talk",
+                        "args" : [
+                            "h10001",
+                            "이제 부대를 편집해 볼까. 새로 확보한 {사기저하}을 부대에 포함시켜야 되겠지.",
+                            "my"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                          "screen"
+                        ]
+                    },
+                    {
+                        "name" : "Menu_Hide_Message",
+                        "args" : []
+                    },
+                    {
+                        "name" : "OffHighlight",
+                        "args" : []
+                    },
+                    {
+                        "name" : "EndTutorial",
+                        "args" : []
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 9,
+        "description" : "QUEST_SUB_SET_7",
+        "innerDatas": [
+            {
+                "id" : 1,
+                "description" : null,
+                "methods" : [
+                    {
+                        "name" : "Menu_NPC_Talk",
+                        "args" : [
+                            "h10001",
+                            "좋아 이제 새로운 부대로 새로운 전략을 사용해 볼 수 있겠군. 어서 시험해 보고 싶어졌어.",
+                            "my"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                          "screen"
+                        ]
+                    },
+                    {
+                        "name" : "RequestUnlockQuest",
+                        "args" : [
+                            "4"
+                        ]
+                    },
+                    {
+                        "name" : "Menu_Hide_Message",
+                        "args" : []
+                    },
+                    {
+                        "name" : "UnlockDeckEditButtons",
+                        "args" : []
+                    },
+                    {
+                        "name" : "OffHighlight",
+                        "args" : []
+                    },
+                    {
+                        "name" : "EndTutorial",
+                        "args" : []
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 10,
+        "description" : "QUEST_SUB_SET_8",
+        "innerDatas": [
+            {
+                "id" : 1,
+                "description" : null,
+                "methods" : [
+                    {
+                        "name" : "Menu_NPC_Talk",
+                        "args" : [
+                            "h10001",
+                            "전투를 통해 보급품을 획득할 수 있고, 보급품을 모아 보급상자를 만들어 카드를 얻을 수 있다.",
+                            "my"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                          "screen"
+                        ]
+                    },
+                    {
+                        "name" : "Menu_NPC_Talk",
+                        "args" : [
+                            "h10001",
+                            "보급상자를 많이 얻을수록 부대가 강해질 수 있다는 거군. 기억해야겠군.",
+                            "my"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                          "screen"
+                        ]
+                    },
+                    {
+                        "name" : "UnlockRewardBoxMenu",
+                        "args" : []
+                    },
+                    {
+                        "name" : "UnlockShopMenu",
+                        "args" : []
+                    },
+                    {
+                        "name" : "Menu_NPC_Talk",
+                        "args" : [
+                            "h10001",
+                            "다른 장군들과의 전투 경험도 무시할 순 없겠어. 틈틈히 진행해보도록 하지.",
+                            "my"
+                        ]
+                    },
+                    {
+                        "name": "Wait_Click",
+                        "args": [
+                          "screen"
+                        ]
+                    },
+                    {
+                        "name" : "Menu_Hide_Message",
+                        "args" : []
+                    },
+                    {
+                        "name" : "OffHighlight",
+                        "args" : []
+                    },
+                    {
+                        "name" : "EndTutorial",
+                        "args" : []
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id" : 11,
+        "description" : "QUEST_SUB_SET_9 (카드 메뉴 잠금 해제)",
+        "innerDatas" : [
+            {
+                "id" : 1,
+                "description" : null,
+                "methods" : [
+                    {
+                        "name" : "UnlockCardMenu",
+                        "args" : []
+                    },
+                    {
+                        "name" : "OffHighlight",
+                        "args" : []
+                    },
+                    {
+                        "name" : "EndTutorial",
+                        "args" : []
+                    }
+                ]
+            }
+        ]
+        
+    },
+    {
+        "id": 100,
+        "description" : "QUEST_SUB_SET_100 (스토리 인게임 플레이 이후 로비 강제 이동시키기)",
+        "innerDatas": [
+            {
+                "id" : 1,
+                "description" : null,
+                "methods" : [
+                    {
+                        "name": "ForceToStory",
+                        "args": [ ]
+                    },
+                    {
+                        "name": "DestroyLoadingModal",
+                        "args": []
+                    }
+                ]
             }
         ]
     }

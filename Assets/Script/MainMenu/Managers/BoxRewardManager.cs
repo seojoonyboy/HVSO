@@ -13,9 +13,9 @@ public class BoxRewardManager : MonoBehaviour {
     [SerializeField] Transform boxObject;
     [SerializeField] TMPro.TextMeshProUGUI supplyStore;
     [SerializeField] TMPro.TextMeshProUGUI storeTimer;
-    [SerializeField] Image storeGauge;
-    [SerializeField] SkeletonGraphic boxSpine;
-    [SerializeField] SkeletonGraphic boxEffect;
+    [SerializeField] Transform AdsButton;
+    [SerializeField] protected SkeletonGraphic boxSpine;
+    [SerializeField] protected SkeletonGraphic boxEffect;
     [SerializeField] Transform additionalSupply;
     [SerializeField] MenuSceneController menuSceneController;
     [SerializeField] Transform targetSpine;
@@ -25,18 +25,19 @@ public class BoxRewardManager : MonoBehaviour {
     // Start is called before the first frame update
     Transform hudCanvas;
 
-    AccountManager accountManager;
-    NetworkManager networkManager;
+    protected AccountManager accountManager;
+    protected NetworkManager networkManager;
 
     public UnityEvent OnBoxLoadFinished = new UnityEvent();
-    static bool openningBox = false;
-    bool openAni = false;
-    int openCount;
+    protected static bool openningBox = false;
+    protected bool openAni = false;
+    protected int openCount;
+    protected float beforeBgmVolume;
 
     void Awake() {
         accountManager = AccountManager.Instance;
         hudCanvas = transform.parent;
-        accountManager.userResource.LinkTimer(storeTimer, storeGauge);
+        accountManager.userResource.LinkTimer(storeTimer, AdsButton);
 
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_OPENBOX, OnBoxOpenRequest);
 
@@ -47,7 +48,7 @@ public class BoxRewardManager : MonoBehaviour {
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_OPENBOX, OnBoxOpenRequest);
     }
 
-    private void OnBoxOpenRequest(Enum Event_Type, Component Sender, object Param) {
+    protected void OnBoxOpenRequest(Enum Event_Type, Component Sender, object Param) {
         SetBoxAnimation();
         OnBoxLoadFinished.Invoke();
     }
@@ -65,21 +66,24 @@ public class BoxRewardManager : MonoBehaviour {
         additionalSupply.Find("Value").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userResource.supplyX2Coupon.ToString();
     }
 
-    public void OpenBox() {
+    public virtual void OpenBox() {
         if (openningBox) return;
         if (openAni) return;
         if (AccountManager.Instance.userResource.supplyBox <= 0) return;
         openningBox = true;
+        beforeBgmVolume = SoundManager.Instance.bgmController.BGMVOLUME;
+        //SoundManager.Instance.bgmController.BGMVOLUME = 0;
         accountManager.RequestRewardInfo();
     }
 
-    public void SetBoxAnimation() {
+    public virtual void SetBoxAnimation() {
         InitBoxObjects();
         transform.Find("ShowBox").gameObject.SetActive(true);
         transform.Find("ShowBox/BoxSpine/Image/Num").GetComponent<Text>().text = "4";
         openCount = 0;
         boxSpine.Initialize(true);
         boxSpine.Update(0);
+        SoundManager.Instance.PlaySound(UISfxSound.BOX_APPEAR);
         boxSpine.AnimationState.SetAnimation(0, "01.START", false);
         boxSpine.AnimationState.AddAnimation(1, "02.IDLE", true, 0.5f);
         boxEffect.Initialize(true);
@@ -88,10 +92,11 @@ public class BoxRewardManager : MonoBehaviour {
         boxEffect.AnimationState.SetAnimation(0, "00.NOANI", false);
         transform.Find("ShowBox/BoxSpine/Image").GetComponent<BoneFollowerGraphic>().Initialize();
         transform.Find("ShowBox/BoxSpine/Image").GetComponent<BoneFollowerGraphic>().boneName = "card";
-        SoundManager.Instance.PlaySound(UISfxSound.BOXOPEN);
+        //SoundManager.Instance.PlaySound(UISfxSound.BOXOPEN);
         SetRewards(accountManager.rewardList);
         transform.Find("OpenBox").gameObject.SetActive(true);
     }
+
 
 
     public void GetBoxResult() {
@@ -133,8 +138,10 @@ public class BoxRewardManager : MonoBehaviour {
                 //CloseBoxOpen();
                 return;
         }
-
-        SoundManager.Instance.PlaySound(UISfxSound.BOXOPEN_2);
+        if(openCount == 0)
+            SoundManager.Instance.PlaySound(UISfxSound.BOXOPEN);
+        else
+            SoundManager.Instance.PlaySound(UISfxSound.BOXOPEN_2);
         int count = openCount;
         openCount++;
         StartCoroutine(ShowEachReward(count));
@@ -145,6 +152,7 @@ public class BoxRewardManager : MonoBehaviour {
         if (openCount == 0) {
             boxSpine.AnimationState.SetAnimation(2, "03.TOUCH1", false);
             boxEffect.AnimationState.SetAnimation(1, "01.open", false);
+            StartCoroutine(SkipAllReward());
         }
         if (openCount > 0) {
             transform.Find("OpenBox").GetChild(openCount - 1).gameObject.SetActive(false);
@@ -156,6 +164,15 @@ public class BoxRewardManager : MonoBehaviour {
         StartCoroutine(BoxTotalResult());
         openCount = 5;
         skipBtn.SetActive(false);
+    }
+
+    public IEnumerator SkipAllReward() {
+        SkeletonGraphic targetEffect = transform.Find("OpenBox/TargetSpine").GetComponent<SkeletonGraphic>();
+        yield return new WaitForSeconds(1.0f);
+        targetEffect.gameObject.SetActive(true);
+        targetEffect.Initialize(true);
+        targetEffect.Update(0);
+        targetEffect.AnimationState.SetAnimation(0, "animation", false);
     }
 
     public void SetSkipBackSpine() {
@@ -221,19 +238,21 @@ public class BoxRewardManager : MonoBehaviour {
         }
     }
 
-    public void CloseBoxOpen() {
+    public virtual void CloseBoxOpen() {
         InitBoxObjects();
         Transform boxParent = transform.Find("OpenBox");
+        //SoundManager.Instance.bgmController.BGMVOLUME = beforeBgmVolume;
         boxParent.gameObject.SetActive(false);
         transform.Find("ShowBox").gameObject.SetActive(false);
         transform.Find("ShowBox/Text").gameObject.SetActive(true);
         transform.Find("ExitButton").gameObject.SetActive(false);
         SetBoxObj();
-        openningBox = false;
+        openningBox = false;        
     }
 
     IEnumerator ShowEachReward(int count) {
         openAni = true;
+        SoundManager soundManager = SoundManager.Instance;
         transform.Find("OpenBox").GetChild(count).Find("Name").localScale = Vector3.zero;
         if (count == 0)
             yield return new WaitForSeconds(0.95f);
@@ -269,7 +288,24 @@ public class BoxRewardManager : MonoBehaviour {
                 backSpine.gameObject.SetActive(true);
                 backSpine.AnimationState.SetAnimation(0, aniName, true);
 
-                SoundManager soundManager = SoundManager.Instance;
+                
+                targetBox.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = accountManager.allCardsDic[cardId].name;
+                targetBox.Find("Rarelity").Find(accountManager.allCardsDic[cardId].rarelity).SetAsFirstSibling();
+                targetBox.Find("Rarelity").GetChild(0).gameObject.SetActive(true);
+                yield return new WaitForSeconds(0.2f);
+                iTween.ScaleTo(targetBox.Find("Name").gameObject, iTween.Hash("x", 1.0f, "y", 1.0f, "islocal", true, "time", 0.3f));
+                yield return new WaitForSeconds(0.2f);
+                iTween.ScaleTo(targetBox.Find("Rarelity").gameObject, iTween.Hash("x", 1.0f, "y", 1.0f, "islocal", true, "time", 0.3f));
+                
+                if (target.Find("GetCrystal").gameObject.activeSelf) {
+                    yield return new WaitForSeconds(0.2f);
+                    SkeletonGraphic crystalSpine = target.Find("GetCrystalEffect").GetComponent<SkeletonGraphic>();
+                    crystalSpine.AnimationState.SetAnimation(0, "animation", false);
+                    yield return new WaitForSeconds(0.2f);
+                    target.Find("GetCrystal").GetChild(0).gameObject.SetActive(true);
+                }
+
+                yield return new WaitForSeconds(0.1f);
                 switch (rarelity) {
                     case "common":
                     case "uncommon":
@@ -285,20 +321,6 @@ public class BoxRewardManager : MonoBehaviour {
                         soundManager.PlaySound(UISfxSound.BOX_EPIC);
                         break;
                 }
-                targetBox.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = accountManager.allCardsDic[cardId].name;
-                targetBox.Find("Rarelity").Find(accountManager.allCardsDic[cardId].rarelity).SetAsFirstSibling();
-                targetBox.Find("Rarelity").GetChild(0).gameObject.SetActive(true);
-                yield return new WaitForSeconds(0.2f);
-                iTween.ScaleTo(targetBox.Find("Name").gameObject, iTween.Hash("x", 1.0f, "y", 1.0f, "islocal", true, "time", 0.3f));
-                yield return new WaitForSeconds(0.2f);
-                iTween.ScaleTo(targetBox.Find("Rarelity").gameObject, iTween.Hash("x", 1.0f, "y", 1.0f, "islocal", true, "time", 0.3f));
-                if (target.Find("GetCrystal").gameObject.activeSelf) {
-                    yield return new WaitForSeconds(0.2f);
-                    SkeletonGraphic crystalSpine = target.Find("GetCrystalEffect").GetComponent<SkeletonGraphic>();
-                    crystalSpine.AnimationState.SetAnimation(0, "animation", false);
-                    yield return new WaitForSeconds(0.2f);
-                    target.Find("GetCrystal").GetChild(0).gameObject.SetActive(true);
-                }
             }
         }
         else if(target.name == "Hero") {
@@ -311,6 +333,7 @@ public class BoxRewardManager : MonoBehaviour {
             iTween.ScaleTo(targetBox.Find("Name").gameObject, iTween.Hash("x", 1.0f, "y", 1.0f, "islocal", true, "time", 0.3f));
             yield return new WaitForSeconds(0.2f);
             iTween.ScaleTo(targetBox.Find("Rarelity").gameObject, iTween.Hash("x", 1.0f, "y", 1.0f, "islocal", true, "time", 0.3f));
+            soundManager.PlaySound(UISfxSound.BOX_EPIC);
             if (target.Find("GetCrystal").gameObject.activeSelf) {
                 yield return new WaitForSeconds(0.4f);
                 SkeletonGraphic crystalSpine = target.Find("GetCrystalEffect").GetComponent<SkeletonGraphic>();
@@ -325,22 +348,24 @@ public class BoxRewardManager : MonoBehaviour {
                 backSpine.gameObject.SetActive(true);
                 backSpine.AnimationState.SetAnimation(0, "g_legend", true);
             }
-            else
+            else {
                 backSpine.gameObject.SetActive(false);
+            }
             yield return new WaitForSeconds(0.2f);
-            SoundManager soundManager = SoundManager.Instance;
             switch (type) {
                 case "gold":
                     targetBox.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = "골드 뭉치";
+                    soundManager.PlaySound(UISfxSound.BOX_EPIC);
                     break;
                 case "supplyX2Coupon":
                     targetBox.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = "2배 쿠폰";
+                    soundManager.PlaySound(UISfxSound.BOX_NORMAL);
                     break;
                 case "crystal":
                     targetBox.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = "마나석 뭉치";
+                    soundManager.PlaySound(UISfxSound.BOX_NORMAL);
                     break;
             }
-            soundManager.PlaySound(UISfxSound.BOX_NORMAL);
             yield return new WaitForSeconds(0.2f);
             targetBox.Find("Rarelity").Find("resource").SetAsFirstSibling();
             targetBox.Find("Rarelity").GetChild(0).gameObject.SetActive(true);
@@ -375,17 +400,18 @@ public class BoxRewardManager : MonoBehaviour {
             yield return new WaitForSeconds(0.1f);
             iTween.ScaleTo(reward.gameObject, iTween.Hash("x", 0.9f, "y", 0.9f, "islocal", true, "time", 0.4f));
         }
+        SoundManager.Instance.PlaySound(UISfxSound.BOX_OPEN_FINISH);
         yield return new WaitForSeconds(0.5f);
         transform.Find("ExitButton").gameObject.SetActive(true);
         openAni = false;
     }
 
-    public void SetRewards(RewardClass[] rewardList) {
+    public virtual void SetRewards(RewardClass[] rewardList) {
         for(int i = 0; i < rewardList.Length; i++) 
             SetEachReward(rewardList[i], i);
     }
 
-    public void SetEachReward(RewardClass reward, int index) {
+    public virtual void SetEachReward(RewardClass reward, int index) {
         Transform boxTarget = transform.Find("OpenBox").GetChild(index);
         Transform effects = transform.Find("EffectSpines");
         effects.GetChild(index).GetComponent<SkeletonGraphic>().Initialize(false);
@@ -451,24 +477,27 @@ public class BoxRewardManager : MonoBehaviour {
     }
 
     public void OpenResourceInfo(string resource) {
-        resourceInfo.gameObject.SetActive(true);
-        resourceInfo.Find(resource).gameObject.SetActive(true);
-        resourceInfo.Find(resource).SetSiblingIndex(1);
-        switch (resource) {
-            case "gold":
-                resourceInfo.Find("Header/Name").GetComponent<TMPro.TextMeshProUGUI>().text = "금화";
-                resourceInfo.Find("Body/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "금화 설명";
-                break;
-            case "crystal":
-                resourceInfo.Find("Header/Name").GetComponent<TMPro.TextMeshProUGUI>().text = "마나 크리스탈";
-                resourceInfo.Find("Body/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "마나 크리스탈 설명";
-                break;
-            case "supplyX2Coupon":
-                resourceInfo.Find("Header/Name").GetComponent<TMPro.TextMeshProUGUI>().text = "보상 2배 쿠폰";
-                resourceInfo.Find("Body/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "보상 2배 쿠폰";
-                break;
-        }
-        EscapeKeyController.escapeKeyCtrl.AddEscape(CloseResourceInfo);
+        //resourceInfo.gameObject.SetActive(true);
+        //resourceInfo.Find(resource).gameObject.SetActive(true);
+        //resourceInfo.Find(resource).SetSiblingIndex(1);
+        //switch (resource) {
+        //    case "gold":
+        //        resourceInfo.Find("Header/Name").GetComponent<TMPro.TextMeshProUGUI>().text = "금화";
+        //        resourceInfo.Find("Body/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "금화 설명";
+        //        break;
+        //    case "crystal":
+        //        resourceInfo.Find("Header/Name").GetComponent<TMPro.TextMeshProUGUI>().text = "마나 크리스탈";
+        //        resourceInfo.Find("Body/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "마나 크리스탈 설명";
+        //        break;
+        //    case "supplyX2Coupon":
+        //        resourceInfo.Find("Header/Name").GetComponent<TMPro.TextMeshProUGUI>().text = "보상 2배 쿠폰";
+        //        resourceInfo.Find("Body/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "보상 2배 쿠폰";
+        //        break;
+        //}
+        //EscapeKeyController.escapeKeyCtrl.AddEscape(CloseResourceInfo);
+
+        RewardDescriptionHandler rewardDescriptionHandler = RewardDescriptionHandler.instance;
+        rewardDescriptionHandler.RequestDescriptionModal(resource);
     }
 
     public void CloseResourceInfo() {
@@ -478,7 +507,7 @@ public class BoxRewardManager : MonoBehaviour {
     }
 
 
-    void CheckNewCardList(string cardId) {
+    protected virtual void CheckNewCardList(string cardId) {
         CollectionCard cardData = accountManager.allCardsDic[cardId];
         if (cardData.camp == "human") {
             if (!accountManager.cardPackage.checkHumanCard.Contains(cardId)) {

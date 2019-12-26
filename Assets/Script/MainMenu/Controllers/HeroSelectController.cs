@@ -84,6 +84,8 @@ public class HeroSelectController : MonoBehaviour
 
         Transform classWindow = transform.Find("InnerCanvas/HeroInfo/ClassWindow");
         Transform skillWindow = transform.Find("InnerCanvas/HeroInfo/SkillWindow");
+        Transform abilityWindow = transform.Find("InnerCanvas/HeroInfo/AbilityWindow");
+        
 
         transform.Find("InnerCanvas/HeroInfo/HeroName").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.name;
 
@@ -100,6 +102,40 @@ public class HeroSelectController : MonoBehaviour
         skillWindow.Find("Card2/Card").GetComponent<MenuCardHandler>().DrawCard(heroData.heroCards[1].cardId, isHuman);
         skillWindow.Find("Card2/CardName").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.heroCards[1].name;
         skillWindow.Find("Card2/CardInfo").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.GetComponent<Translator>().DialogSetRichText(heroData.heroCards[1].skills[0].desc);
+
+        abilityWindow.Find("Ability1/AbilityInfo").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.traitText[0];
+        abilityWindow.Find("Ability2/AbilityInfo").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.traitText[1];
+        for (int i = 0; i < 2; i++) {
+            string traitKey = "";
+            switch (heroData.traitText[i]) {
+                case "최대체력 +2":
+                    traitKey = "health_max_2";
+                    break;
+                case "최대 실드 개수 +1":
+                    traitKey = "shield_max_1";
+                    break;
+                case "실드게이지 충전량 최소치 +1":
+                    traitKey = "shield_min_charge_1";
+                    break;
+                case "마법 페이즈에 자원 1 획득":
+                    traitKey = "magic_phase_1";
+                    break;
+                case "마법의 주문 공격력 +1":
+                    traitKey = "magic_power_1";
+                    break;
+                case "실드게이지 충전량 최대치 +1":
+                    traitKey = "shield_max_charge_1";
+                    break;
+                case "tool 카드 사용 비용 -1":
+                    traitKey = "toolcard_use_1";
+                    break;
+            }
+            if (i == 0)
+                abilityWindow.Find("Ability1/AbilityImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.traitIcons[traitKey];
+            else
+                abilityWindow.Find("Ability2/AbilityImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.traitIcons[traitKey];
+        }
+
         transform.Find("InnerCanvas/OpenTemplateButton").gameObject.SetActive(AccountManager.Instance.myHeroInventories.ContainsKey(heroId) 
             && AccountManager.Instance.myHeroInventories[heroId].tier > 0);
     }
@@ -109,16 +145,16 @@ public class HeroSelectController : MonoBehaviour
         templateDeckCanvas.SetTemplateNewDecks(selectedHeroId, isHuman);
         gameObject.SetActive(false);
         hudController.SetHeader(HUDController.Type.ONLY_BAKCK_BUTTON);
-        hudController.SetBackButton(() => ExitTemplateCanvas());
-        EscapeKeyController.escapeKeyCtrl.AddEscape(ExitTemplateCanvas);
+        hudController.SetBackButton(() => ExitTemplateCanvas_Edit());
+        EscapeKeyController.escapeKeyCtrl.AddEscape(ExitTemplateCanvas_Edit);
     }
 
-    public void ExitTemplateCanvas() {
+    public void ExitTemplateCanvas_Edit() {
         gameObject.SetActive(true);
         templateDeckCanvas.gameObject.SetActive(false);
         templateDeckCanvas.CancelSelectDeck();
         hudController.SetHeader(HUDController.Type.HIDE);
-        EscapeKeyController.escapeKeyCtrl.RemoveEscape(ExitTemplateCanvas);
+        EscapeKeyController.escapeKeyCtrl.RemoveEscape(ExitTemplateCanvas_Edit);
     }
 
     public void OpenClassInfo() {
@@ -126,6 +162,9 @@ public class HeroSelectController : MonoBehaviour
         transform.Find("InnerCanvas/HeroInfo/ClassBtn/UnSelected").gameObject.SetActive(false);
         transform.Find("InnerCanvas/HeroInfo/SkillWindow").gameObject.SetActive(false);
         transform.Find("InnerCanvas/HeroInfo/SkillBtn/UnSelected").gameObject.SetActive(true);
+        transform.Find("InnerCanvas/HeroInfo/AbilityWindow").gameObject.SetActive(false);
+        transform.Find("InnerCanvas/HeroInfo/AbilityBtn/UnSelected").gameObject.SetActive(true);
+        
 
     }
 
@@ -134,7 +173,20 @@ public class HeroSelectController : MonoBehaviour
         transform.Find("InnerCanvas/HeroInfo/ClassBtn/UnSelected").gameObject.SetActive(true);
         transform.Find("InnerCanvas/HeroInfo/SkillWindow").gameObject.SetActive(true);
         transform.Find("InnerCanvas/HeroInfo/SkillBtn/UnSelected").gameObject.SetActive(false);
+        transform.Find("InnerCanvas/HeroInfo/AbilityWindow").gameObject.SetActive(false);
+        transform.Find("InnerCanvas/HeroInfo/AbilityBtn/UnSelected").gameObject.SetActive(true);
     }
+
+    public void OpenAbillityInfo() {
+        transform.Find("InnerCanvas/HeroInfo/ClassWindow").gameObject.SetActive(false);
+        transform.Find("InnerCanvas/HeroInfo/ClassBtn/UnSelected").gameObject.SetActive(true);
+        transform.Find("InnerCanvas/HeroInfo/SkillWindow").gameObject.SetActive(false);
+        transform.Find("InnerCanvas/HeroInfo/SkillBtn/UnSelected").gameObject.SetActive(true);
+        transform.Find("InnerCanvas/HeroInfo/AbilityWindow").gameObject.SetActive(true);
+        transform.Find("InnerCanvas/HeroInfo/AbilityBtn/UnSelected").gameObject.SetActive(false);
+    }
+
+
 
     public void ScrollHeros(bool isHuman) {
         if (isHuman)

@@ -17,6 +17,8 @@ public class SceneLoginController : MonoBehaviour
 
     void Awake()
     {
+        UGUICommon.ResetCanvasReferenceSize(canvas);
+
         webClient = WebClient.GetInstance();
 
         webClient.ErrorOccurred += OnErrorOccurred;
@@ -51,6 +53,18 @@ public class SceneLoginController : MonoBehaviour
             //GameObject.Find("FacebookLogin").GetComponent<Image>().color = Color.grey;
             GameObject.Find("FacebookLogin").GetComponent<Text>().text = "Facebook Logout";
         }
+
+        if(!Account.IsSupportedAppleId())
+        {
+#if MDEBUG
+            Debug.Log("Sign in with Apple is not supported.....");
+#endif
+            //GameObject.Find("SignInWithApple").GetComponent<Button>().interactable = false;
+            GameObject appleSign = GameObject.Find("SignInWithApple");
+            if(appleSign != null) Destroy(appleSign);
+        }
+
+
         ThreadSafeDispatcher.Instance.PushSystemBackKeyListener(OnSystemBackKey);
     }
 
@@ -126,7 +140,7 @@ public class SceneLoginController : MonoBehaviour
     public void OnGuestLoginButtonClick(string param)
     {
         Firebase.Analytics.FirebaseAnalytics.LogEvent("Guest_Login");
-        SceneManager.LoadScene("Login", LoadSceneMode.Single);
+        LoginComplete();
     }
 
 
@@ -139,7 +153,7 @@ public class SceneLoginController : MonoBehaviour
             Debug.Log("LogintAccount  result=" + result + "    code=" + code + " blockSuid=" + blockSuid);
 #endif
             if (result && code == WebClient.AuthCode.SUCCESS)
-                SceneManager.LoadScene("Login", LoadSceneMode.Single);
+                LoginComplete();
         });
 #elif UNITY_ANDROID
         Account.LoginAccount(Account.HaeginAccountType.GooglePlayGameService, accountDialog.OpenSelectDialog, (bool result, WebClient.AuthCode code, TimeSpan blockRemainTime, long blockSuid) =>
@@ -148,7 +162,7 @@ public class SceneLoginController : MonoBehaviour
             Debug.Log("LogintAccount  result=" + result + "    code=" + code + " blockSuid=" + blockSuid);
 #endif
             if (result && code == WebClient.AuthCode.SUCCESS)
-                SceneManager.LoadScene("Login", LoadSceneMode.Single);
+                LoginComplete();
         });
 #elif UNITY_STANDALONE && USE_STEAM
         Account.LoginAccount(Account.HaeginAccountType.Steam, accountDialog.OpenSelectDialog, (bool result, WebClient.AuthCode code, TimeSpan blockRemainTime, long blockSuid) =>
@@ -157,14 +171,26 @@ public class SceneLoginController : MonoBehaviour
             Debug.Log("LogintAccount  result=" + result + "    code=" + code + " blockSuid=" + blockSuid);
 #endif
             if (result && code == WebClient.AuthCode.SUCCESS)
-                SceneManager.LoadScene("Login", LoadSceneMode.Single);
+                LoginComplete();
         });
 #endif
     }
 
+    public void OnSignInWithAppleButtonClick(string param)
+    {
+        Account.LoginAccount(Account.HaeginAccountType.AppleId, accountDialog.OpenSelectDialog, (bool result, WebClient.AuthCode code, TimeSpan blockRemainTime, long blockSuid) =>
+        {
+#if MDEBUG
+            Debug.Log("LogintAccount  result=" + result + "    code=" + code + "  blockSuid=" + blockSuid);
+#endif
+            if (result && code == WebClient.AuthCode.SUCCESS)
+                LoginComplete();
+        });
+    }
+
     public void OnFacebookLoginButtonClick(string param)
     {
-        if(FB.IsLoggedIn)
+        if (FB.IsLoggedIn)
         {
             FB.LogOut();
         }
@@ -176,8 +202,18 @@ public class SceneLoginController : MonoBehaviour
                 Debug.Log("LogintAccount  result=" + result + "    code=" + code + "  blockSuid=" + blockSuid);
 #endif
                 if (result && code == WebClient.AuthCode.SUCCESS)
-                    SceneManager.LoadScene("Login", LoadSceneMode.Single);
+                    LoginComplete();
             });
         }
     }
+
+    public void LoginComplete() {
+        if(PlayerPrefs.GetInt("isFirst", 2) == 2) {
+            PlayerPrefs.SetInt("isFirst", 1);
+            PlayerPrefs.Save();
+        }
+        gameObject.SetActive(false);
+        AccountManager.Instance.OnSignInResultModal();
+    }
 }
+

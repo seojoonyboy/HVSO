@@ -53,7 +53,7 @@ public class MenuExecuteHandler : MonoBehaviour {
             string methodName = string.Format("MenuTutorialModules.{0}", method.name);
             MenuExecute exec = (MenuExecute)gameObject.AddComponent(Type.GetType(methodName));
             if(exec == null) {
-                Logger.LogError(method.name + "에 대한 클래스를 찾을 수 없습니다.");
+                //Logger.LogError(method.name + "에 대한 클래스를 찾을 수 없습니다.");
                 continue;
             }
             executes.Add(exec);

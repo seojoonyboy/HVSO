@@ -24,8 +24,8 @@ public class BattleReadyHeaderController : SerializedMonoBehaviour {
     }
 
     public void SetUI(AccountManager.LeagueInfo data) {
-        TextMeshProUGUI nameTxt = rankObj.transform.Find("NameBg/Name").GetComponent<TextMeshProUGUI>();
-        nameTxt.text = data.rankDetail.minorRankName;
+        TextMeshProUGUI mmrName = transform.Find("Desc/MMR/MinorName").GetComponent<TextMeshProUGUI>();
+        mmrName.text = data.rankDetail.minorRankName;
         Image rankImg = rankObj.transform.Find("Image").GetComponent<Image>();
         rankImg.sprite = GetRankImage(data.rankDetail.minorRankName);
 
@@ -122,26 +122,48 @@ public class BattleReadyHeaderController : SerializedMonoBehaviour {
     public void SetDescription(AccountManager.LeagueInfo info) {
         StringBuilder sb = new StringBuilder();
         TextMeshProUGUI descTxt = normalUI.transform.Find("Text").GetComponent<TextMeshProUGUI>();
-        //연승중
-        if(info.winningStreak > 1) {
-            sb
+
+        if (info.winningStreak > 0) {
+            if(info.winningStreak > 1) {
+                sb
                 .Append("<color=yellow>")
                 .Append(info.winningStreak)
                 .Append("연승! </color>");
+            }
+            else {
+                sb
+                .Append("<color=yellow>")
+                .Append(info.winningStreak)
+                .Append("승 </color>");
+            }
         }
-        //연패중
-        else if(info.losingStreak > 1) {
-            sb
+
+        else if(info.losingStreak > 0) {
+            if(info.losingStreak > 1) {
+                sb
                 .Append("<color=red>")
                 .Append(info.losingStreak)
-                .Append("연패중</color>");
+                .Append("연패중! </color>");
+            }
+            else {
+                sb
+                .Append("<color=red>")
+                .Append(info.losingStreak)
+                .Append("패 </color>");
+            }
+        }
+        else {
+            sb
+                .Append("<color=white>")
+                .Append(info.losingStreak)
+                .Append("승 </color>");
         }
         descTxt.text = sb.ToString();
     }
 
     IEnumerator _SetRank(int mmr) {
         yield return 0;
-        var medalValue = normalUI.transform.Find("Medal/Value").GetComponent<TextMeshProUGUI>();
-        medalValue.text = mmr.ToString();
+        var mmrValue = normalUI.transform.Find("MMR/Value").GetComponent<Text>();
+        mmrValue.text = mmr.ToString();
     }
 }

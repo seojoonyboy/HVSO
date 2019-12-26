@@ -15,9 +15,37 @@ namespace Haegin
         public delegate void OnOpenEULADetailDialog(string title, string content);
         public delegate void OnHelpDialog(HelpDialogAction action);
 
+        private static GameObject EULAWin = null;
+
+        public static void ResetCanvasReferenceSize(Canvas canvas)
+        {
+            if (canvas != null)
+            {
+                Debug.Log("ResetCanvasReferenceSize 1");
+                CanvasScaler scaler = canvas.gameObject.GetComponent<CanvasScaler>();
+                if (scaler != null)
+                {
+                    Debug.Log("ResetCanvasReferenceSize 2 " + scaler.referenceResolution.x + ", " + scaler.referenceResolution.y);
+                    if (Screen.width > Screen.height)
+                    {
+                        Debug.Log("ResetCanvasReferenceSize 3");
+                        scaler.referenceResolution = new Vector2(2560, 1600);
+                    }
+                    else
+                    {
+                        Debug.Log("ResetCanvasReferenceSize 4");
+                        scaler.referenceResolution = new Vector2(1600, 2560);
+                    }
+                    scaler.referencePixelsPerUnit = 100;
+                    scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+                    scaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
+                    canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+                }
+            }
+        }
+
         public static void OpenEULADialog(GameObject eulabg, Canvas canvasEULA, string[] titles, string[] contents, bool[] isChecked, OnOpenEULADetailDialog onOpenDetail, EULA.OnConfirmEULA onConfirm)
         {
-            GameObject EULAWin = null;
             Toggle toggleEULA = null;
             Toggle togglePersonal = null;
             Toggle toggleNightSMS = null;
@@ -29,14 +57,14 @@ namespace Haegin
             EULAWin.GetComponent<RectTransform>().localPosition = new Vector3(0, 0, 0);
             EULAWin.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
 
-            startButton = GameObject.Find("ButtonStart").GetComponent<Button>();
-            toggleEULA = GameObject.Find("EULAToggle1").GetComponent<Toggle>();
+            startButton = EULAWin.transform.Find("ButtonStart").GetComponent<Button>();
+            toggleEULA = EULAWin.transform.Find("List1/EULAToggle1").GetComponent<Toggle>();
             toggleEULA.onValueChanged.AddListener((bool value) =>
             {
                 startButton.interactable = toggleEULA.isOn && togglePersonal.isOn;
             });
             toggleEULA.isOn = isChecked[0];
-            togglePersonal = GameObject.Find("EULAToggle2").GetComponent<Toggle>();
+            togglePersonal = EULAWin.transform.Find("List2/EULAToggle2").GetComponent<Toggle>();
             togglePersonal.onValueChanged.AddListener((bool value) =>
             {
                 startButton.interactable = toggleEULA.isOn && togglePersonal.isOn;
@@ -44,7 +72,7 @@ namespace Haegin
             togglePersonal.isOn = isChecked[1];
             if (isChecked.Length > 2)
             {
-                toggleNightSMS = GameObject.Find("EULAToggle3").GetComponent<Toggle>();
+                toggleNightSMS = EULAWin.transform.Find("List3/EULAToggle3").GetComponent<Toggle>();
                 toggleNightSMS.isOn = isChecked[2];
             }
             else
@@ -64,13 +92,13 @@ namespace Haegin
                 }
             });
 
-            GameObject.Find("EULATitle1").GetComponent<Text>().text = titles[0];
-            GameObject.Find("EULATitle2").GetComponent<Text>().text = titles[1];
+            EULAWin.transform.Find("List1/EULATitle1").GetComponent<Text>().text = titles[0];
+            EULAWin.transform.Find("List2/EULATitle2").GetComponent<Text>().text = titles[1];
             if (isChecked.Length > 2)
             {
-                GameObject.Find("EULATitle3").GetComponent<Text>().text = titles[2];
+                EULAWin.transform.Find("List3/EULATitle3").GetComponent<Text>().text = titles[2];
             }
-            GameObject.Find("ButtonAllAgree").GetComponent<Button>().onClick.AddListener(() =>
+            EULAWin.transform.Find("ButtonAllAgree").GetComponent<Button>().onClick.AddListener(() =>
             {
                 ThreadSafeDispatcher.Instance.PopSystemBackKeyListener();
 
@@ -88,7 +116,7 @@ namespace Haegin
                 EULAWin.transform.SetParent(null);
                 Object.Destroy(EULAWin);
             });
-            GameObject.Find("ButtonStart").GetComponent<Button>().onClick.AddListener(() =>
+            EULAWin.transform.Find("ButtonStart").GetComponent<Button>().onClick.AddListener(() =>
             {
                 if (toggleEULA.isOn && togglePersonal.isOn)
                 {
@@ -105,26 +133,26 @@ namespace Haegin
                     Object.Destroy(EULAWin);
                 }
             });
-            GameObject.Find("ButtonEULADetail1").GetComponent<Button>().onClick.AddListener(() =>
+            EULAWin.transform.Find("List1/ButtonEULADetail1").GetComponent<Button>().onClick.AddListener(() =>
             {
                 onOpenDetail(titles[0], contents[0]);
             });
-            GameObject.Find("ButtonEULADetail2").GetComponent<Button>().onClick.AddListener(() =>
+            EULAWin.transform.Find("List2/ButtonEULADetail2").GetComponent<Button>().onClick.AddListener(() =>
             {
                 onOpenDetail(titles[1], contents[1]);
             });
             if (isChecked.Length > 2)
             {
-                GameObject.Find("ButtonEULADetail3").GetComponent<Button>().onClick.AddListener(() =>
+                EULAWin.transform.Find("List3/ButtonEULADetail3").GetComponent<Button>().onClick.AddListener(() =>
                 {
                     onOpenDetail(titles[2], contents[2]);
                 });
             }
             else
             {
-                GameObject.Find("List3").transform.SetParent(null);
-                GameObject.Find("List1").transform.position = new Vector3(GameObject.Find("List1").transform.position.x, GameObject.Find("List1").transform.position.y - 40, GameObject.Find("List1").transform.position.z);
-                GameObject.Find("List2").transform.position = new Vector3(GameObject.Find("List2").transform.position.x, GameObject.Find("List2").transform.position.y - 60, GameObject.Find("List2").transform.position.z);
+                EULAWin.transform.Find("List3").transform.SetParent(null);
+                EULAWin.transform.Find("List1").transform.position = new Vector3(EULAWin.transform.Find("List1").transform.position.x, EULAWin.transform.Find("List1").transform.position.y - 40, EULAWin.transform.Find("List1").transform.position.z);
+                EULAWin.transform.Find("List2").transform.position = new Vector3(EULAWin.transform.Find("List2").transform.position.x, EULAWin.transform.Find("List2").transform.position.y - 60, EULAWin.transform.Find("List2").transform.position.z);
             }
         }
 
@@ -133,34 +161,34 @@ namespace Haegin
         {
             if(value == false) 
             {
-                backupValues[0] = GameObject.Find("ButtonStart").GetComponent<Button>().interactable;
-                backupValues[1] = GameObject.Find("EULAToggle1").GetComponent<Toggle>().interactable;
-                backupValues[2] = GameObject.Find("EULAToggle2").GetComponent<Toggle>().interactable;
-                if (GameObject.Find("EULAToggle3") != null) backupValues[3] = GameObject.Find("EULAToggle3").GetComponent<Toggle>().interactable;
-                backupValues[4] = GameObject.Find("ButtonAllAgree").GetComponent<Button>().interactable;
-                backupValues[5] = GameObject.Find("ButtonEULADetail1").GetComponent<Button>().interactable;
-                backupValues[6] = GameObject.Find("ButtonEULADetail2").GetComponent<Button>().interactable;
-                if (GameObject.Find("ButtonEULADetail3") != null) backupValues[7] = GameObject.Find("ButtonEULADetail3").GetComponent<Button>().interactable;
+                backupValues[0] = EULAWin.transform.Find("ButtonStart").GetComponent<Button>().interactable;
+                backupValues[1] = EULAWin.transform.Find("List1/EULAToggle1").GetComponent<Toggle>().interactable;
+                backupValues[2] = EULAWin.transform.Find("List2/EULAToggle2").GetComponent<Toggle>().interactable;
+                if (EULAWin.transform.Find("List3/EULAToggle3") != null) backupValues[3] = EULAWin.transform.Find("List3/EULAToggle3").GetComponent<Toggle>().interactable;
+                backupValues[4] = EULAWin.transform.Find("ButtonAllAgree").GetComponent<Button>().interactable;
+                backupValues[5] = EULAWin.transform.Find("List1/ButtonEULADetail1").GetComponent<Button>().interactable;
+                backupValues[6] = EULAWin.transform.Find("List2/ButtonEULADetail2").GetComponent<Button>().interactable;
+                if (EULAWin.transform.Find("List3/ButtonEULADetail3") != null) backupValues[7] = EULAWin.transform.Find("List3/ButtonEULADetail3").GetComponent<Button>().interactable;
 
-                GameObject.Find("ButtonStart").GetComponent<Button>().interactable = value;
-                GameObject.Find("EULAToggle1").GetComponent<Toggle>().interactable = value;
-                GameObject.Find("EULAToggle2").GetComponent<Toggle>().interactable = value;
-                if (GameObject.Find("EULAToggle3") != null) GameObject.Find("EULAToggle3").GetComponent<Toggle>().interactable = value;
-                GameObject.Find("ButtonAllAgree").GetComponent<Button>().interactable = value;
-                GameObject.Find("ButtonEULADetail1").GetComponent<Button>().interactable = value;
-                GameObject.Find("ButtonEULADetail2").GetComponent<Button>().interactable = value;
-                if (GameObject.Find("ButtonEULADetail3") != null) GameObject.Find("ButtonEULADetail3").GetComponent<Button>().interactable = value;
+                EULAWin.transform.Find("ButtonStart").GetComponent<Button>().interactable = value;
+                EULAWin.transform.Find("List1/EULAToggle1").GetComponent<Toggle>().interactable = value;
+                EULAWin.transform.Find("List2/EULAToggle2").GetComponent<Toggle>().interactable = value;
+                if (EULAWin.transform.Find("List3/EULAToggle3") != null) EULAWin.transform.Find("List3/EULAToggle3").GetComponent<Toggle>().interactable = value;
+                EULAWin.transform.Find("ButtonAllAgree").GetComponent<Button>().interactable = value;
+                EULAWin.transform.Find("List1/ButtonEULADetail1").GetComponent<Button>().interactable = value;
+                EULAWin.transform.Find("List2/ButtonEULADetail2").GetComponent<Button>().interactable = value;
+                if (EULAWin.transform.Find("List3/ButtonEULADetail3") != null) EULAWin.transform.Find("List3/ButtonEULADetail3").GetComponent<Button>().interactable = value;
             }
             else 
             {
-                GameObject.Find("ButtonStart").GetComponent<Button>().interactable = backupValues[0];
-                GameObject.Find("EULAToggle1").GetComponent<Toggle>().interactable = backupValues[1];
-                GameObject.Find("EULAToggle2").GetComponent<Toggle>().interactable = backupValues[2];
-                if (GameObject.Find("EULAToggle3") != null) GameObject.Find("EULAToggle3").GetComponent<Toggle>().interactable = backupValues[3];
-                GameObject.Find("ButtonAllAgree").GetComponent<Button>().interactable = backupValues[4];
-                GameObject.Find("ButtonEULADetail1").GetComponent<Button>().interactable = backupValues[5];
-                GameObject.Find("ButtonEULADetail2").GetComponent<Button>().interactable = backupValues[6];
-                if (GameObject.Find("ButtonEULADetail3") != null) GameObject.Find("ButtonEULADetail3").GetComponent<Button>().interactable = backupValues[7];
+                EULAWin.transform.Find("ButtonStart").GetComponent<Button>().interactable = backupValues[0];
+                EULAWin.transform.Find("List1/EULAToggle1").GetComponent<Toggle>().interactable = backupValues[1];
+                EULAWin.transform.Find("List2/EULAToggle2").GetComponent<Toggle>().interactable = backupValues[2];
+                if (EULAWin.transform.Find("List3/EULAToggle3") != null) EULAWin.transform.Find("List3/EULAToggle3").GetComponent<Toggle>().interactable = backupValues[3];
+                EULAWin.transform.Find("ButtonAllAgree").GetComponent<Button>().interactable = backupValues[4];
+                EULAWin.transform.Find("List1/ButtonEULADetail1").GetComponent<Button>().interactable = backupValues[5];
+                EULAWin.transform.Find("List2/ButtonEULADetail2").GetComponent<Button>().interactable = backupValues[6];
+                if (EULAWin.transform.Find("List3/ButtonEULADetail3") != null) EULAWin.transform.Find("List3/ButtonEULADetail3").GetComponent<Button>().interactable = backupValues[7];
             }
         }
 
@@ -193,10 +221,10 @@ namespace Haegin
                 Object.Destroy(gameObject);
                 SetEULAInteractable(true);
             });
-            GameObject.Find("EULATitle").GetComponent<Text>().text = title;
-            GameObject contentObject = GameObject.Find("bg");
+            EULADetailWin.transform.Find("EULATitle").GetComponent<Text>().text = title;
+            Transform contentObjectTransform = EULADetailWin.transform.Find("bg");
 
-            Rect rect = contentObject.GetComponent<RectTransform>().rect;
+            Rect rect = contentObjectTransform.GetComponent<RectTransform>().rect;
             Rect canvasRect = canvasEULA.GetComponent<RectTransform>().rect;
             EULADetailWin.transform.SetParent(null);
             int left = 0, top = 0, bottom = 0;
@@ -288,10 +316,10 @@ namespace Haegin
 
             webViewObject.LoadHTML("<html><body style=\"background-color: #ffffff; font-size: 150%; padding: 10px; color: #484b4f; \">" + content.Replace("\n", "<br>") + "</body></html>", "http://localhost");
 
-            contentObject.transform.SetParent(null);
-            Object.Destroy(contentObject);
+            contentObjectTransform.SetParent(null);
+            Object.Destroy(contentObjectTransform.gameObject);
 
-            GameObject.Find("ButtonClose").GetComponent<Button>().onClick.AddListener(() =>
+            EULADetailWin.transform.Find("ButtonClose").GetComponent<Button>().onClick.AddListener(() =>
             {
                 ThreadSafeDispatcher.Instance.PopSystemBackKeyListener();
                 EULADetailWin.transform.SetParent(null);
@@ -314,24 +342,24 @@ namespace Haegin
             ThreadSafeDispatcher.Instance.PushSystemBackKeyListener(() =>
             {
                 ThreadSafeDispatcher.Instance.PopSystemBackKeyListener();
-                bool doNotShowAgainToday = GameObject.Find("Toggle").GetComponent<Toggle>().isOn;
+                bool doNotShowAgainToday = EventsWin.transform.Find("Toggle").GetComponent<Toggle>().isOn;
                 EventsWin.transform.SetParent(null);
                 Object.Destroy(EventsWin);
                 onClose(doNotShowAgainToday);
             });
 
-            Image image = (Image)GameObject.Find("EventImage").GetComponent<Image>();
+            Image image = (Image)EventsWin.transform.Find("EventImage").GetComponent<Image>();
             image.sprite = sprite;
 
-            GameObject.Find("Close").GetComponent<Button>().onClick.AddListener(() =>
+            EventsWin.transform.Find("Close").GetComponent<Button>().onClick.AddListener(() =>
             {
                 ThreadSafeDispatcher.Instance.PopSystemBackKeyListener();
-                bool doNotShowAgainToday = GameObject.Find("Toggle").GetComponent<Toggle>().isOn;
+                bool doNotShowAgainToday = EventsWin.transform.Find("Toggle").GetComponent<Toggle>().isOn;
                 EventsWin.transform.SetParent(null);
                 Object.Destroy(EventsWin);
                 onClose(doNotShowAgainToday);
             });
-            GameObject.Find("EventImage").GetComponent<Button>().onClick.AddListener(() =>
+            EventsWin.transform.Find("EventImage").GetComponent<Button>().onClick.AddListener(() =>
             {
                 Application.OpenURL(destUrl);
             });
@@ -361,11 +389,11 @@ namespace Haegin
             if (string.IsNullOrEmpty(versionInfo)) versionInfo = "";
 
             string[] substrings = versionInfo.Split('|');
-            GameObject contentObject = GameObject.Find("UpdateContent");
+            Transform contentObjectTransform = VersionUpWin.transform.Find("Scroll View/Viewport/UpdateContent");
             for (int i = 0; i < substrings.Length; i++)
             {
                 GameObject textBlock = (GameObject)Object.Instantiate(eulatext);
-                textBlock.transform.SetParent(contentObject.transform);
+                textBlock.transform.SetParent(contentObjectTransform);
                 textBlock.transform.localRotation = Quaternion.identity;
                 textBlock.transform.localPosition = Vector3.zero;
                 textBlock.transform.localScale = Vector3.one;
@@ -375,11 +403,11 @@ namespace Haegin
 
             if (!isOption)
             {
-                GameObject.Find("Cancel").transform.SetParent(null);
+                VersionUpWin.transform.Find("Cancel").transform.SetParent(null);
             }
             else
             {
-                GameObject.Find("Cancel").GetComponent<Button>().onClick.AddListener(() =>
+                VersionUpWin.transform.Find("Cancel").GetComponent<Button>().onClick.AddListener(() =>
                 {
                     ThreadSafeDispatcher.Instance.PopSystemBackKeyListener();
                     VersionUpWin.transform.SetParent(null);
@@ -387,7 +415,7 @@ namespace Haegin
                     callback();
                 });
             }
-            GameObject.Find("GoToUpdate").GetComponent<Button>().onClick.AddListener(() =>
+            VersionUpWin.transform.Find("GoToUpdate").GetComponent<Button>().onClick.AddListener(() =>
             {
                 // URL로 연결 
                 Application.OpenURL(urlString);
@@ -421,14 +449,14 @@ namespace Haegin
                 callback(backKeyButton);
             });
 
-            GameObject.Find("DialogTitle").GetComponent<Text>().text = title;
+            DialogWin.transform.Find("DialogTitle").GetComponent<Text>().text = title;
 
             string[] substrings = message.Split('|');
-            GameObject contentObject = GameObject.Find("DialogContent");
+            Transform contentObjectTransform = DialogWin.transform.Find("Scroll View/Viewport/DialogContent");
             for (int i = 0; i < substrings.Length; i++)
             {
                 GameObject textBlock = (GameObject)Object.Instantiate(eulatext);
-                textBlock.transform.SetParent(contentObject.transform);
+                textBlock.transform.SetParent(contentObjectTransform);
                 textBlock.transform.localRotation = Quaternion.identity;
                 textBlock.transform.localPosition = Vector3.zero;
                 textBlock.transform.localScale = Vector3.one;
@@ -437,21 +465,21 @@ namespace Haegin
                 textBlock.name = i.ToString();
             }
 
-            GameObject.Find("DialogYes").GetComponent<Button>().onClick.AddListener(() =>
+            DialogWin.transform.Find("DialogYes").GetComponent<Button>().onClick.AddListener(() =>
             {
                 ThreadSafeDispatcher.Instance.PopSystemBackKeyListener();
                 DialogWin.transform.SetParent(null);
                 Object.Destroy(DialogWin);
                 callback(ButtonType.Yes);
             });
-            GameObject.Find("DialogNo").GetComponent<Button>().onClick.AddListener(() =>
+            DialogWin.transform.Find("DialogNo").GetComponent<Button>().onClick.AddListener(() =>
             {
                 ThreadSafeDispatcher.Instance.PopSystemBackKeyListener();
                 DialogWin.transform.SetParent(null);
                 Object.Destroy(DialogWin);
                 callback(ButtonType.No);
             });
-            Object.Destroy(GameObject.Find("DialogOk"));
+            Object.Destroy(DialogWin.transform.Find("DialogOk").gameObject);
         }
 
         public static void ShowMessageDialog(GameObject systemdialog, GameObject eulatext, Canvas canvasVersionUp, string title, string message, OnButtonDelegate callback)
@@ -472,14 +500,14 @@ namespace Haegin
                 callback(backKeyButton);
             });
 
-            GameObject.Find("DialogTitle").GetComponent<Text>().text = title;
+            DialogWin.transform.Find("DialogTitle").GetComponent<Text>().text = title;
 
             string[] substrings = message.Split('|');
-            GameObject contentObject = GameObject.Find("DialogContent");
+            Transform contentObjectTransform = DialogWin.transform.Find("Scroll View/Viewport/DialogContent");
             for (int i = 0; i < substrings.Length; i++)
             {
                 GameObject textBlock = (GameObject)Object.Instantiate(eulatext);
-                textBlock.transform.SetParent(contentObject.transform);
+                textBlock.transform.SetParent(contentObjectTransform);
                 textBlock.transform.localRotation = Quaternion.identity;
                 textBlock.transform.localPosition = Vector3.zero;
                 textBlock.transform.localScale = Vector3.one;
@@ -488,15 +516,15 @@ namespace Haegin
                 textBlock.name = i.ToString();
             }
 
-            GameObject.Find("DialogOk").GetComponent<Button>().onClick.AddListener(() =>
+            DialogWin.transform.Find("DialogOk").GetComponent<Button>().onClick.AddListener(() =>
             {
                 ThreadSafeDispatcher.Instance.PopSystemBackKeyListener();
                 DialogWin.transform.SetParent(null);
                 Object.Destroy(DialogWin);
                 callback(ButtonType.Ok);
             });
-            Object.Destroy(GameObject.Find("DialogYes"));
-            Object.Destroy(GameObject.Find("DialogNo"));
+            Object.Destroy(DialogWin.transform.Find("DialogYes").gameObject);
+            Object.Destroy(DialogWin.transform.Find("DialogNo").gameObject);
         }
 
         static float originWidth = 0;
@@ -554,7 +582,7 @@ namespace Haegin
                     callback(HelpDialogAction.Close);
             });
 
-            GameObject.Find("HelpWinButtonClose").GetComponent<Button>().onClick.AddListener(() =>
+            DialogWin.transform.Find("HelpWinButtonClose").GetComponent<Button>().onClick.AddListener(() =>
             {
                 ThreadSafeDispatcher.Instance.PopSystemBackKeyListener();
                 DialogWin.transform.SetParent(null);
@@ -573,10 +601,10 @@ namespace Haegin
             DialogWin.GetComponent<RectTransform>().localPosition = new Vector3(0, 0, 0);
             DialogWin.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
 
-            GameObject.Find("MaintenanceTime").GetComponent<Text>().text = time;
-            GameObject.Find("MaintenanceContents").GetComponent<Text>().text = contents;
+            DialogWin.transform.Find("MaintenanceTimeBg/MaintenanceTime").GetComponent<Text>().text = time;
+            DialogWin.transform.Find("MaintenanceContents").GetComponent<Text>().text = contents;
 
-            GameObject.Find("ServerCheckWinButtonRetry").GetComponent<Button>().onClick.AddListener(() =>
+            DialogWin.transform.Find("ServerCheckWinButtonRetry").GetComponent<Button>().onClick.AddListener(() =>
             {
                 callback();
             });
@@ -607,9 +635,9 @@ namespace Haegin
                 callback(ButtonType.Ok);
             });
 
-            GameObject.Find("ReqTitle").GetComponent<Text>().text = title;
-            GameObject.Find("ReqMessage").GetComponent<Text>().text = message;
-            GameObject.Find("Okay").GetComponent<Button>().onClick.AddListener(() =>
+            DialogWin.transform.Find("ReqTitle").GetComponent<Text>().text = title;
+            DialogWin.transform.Find("ReqMessage").GetComponent<Text>().text = message;
+            DialogWin.transform.Find("Okay").GetComponent<Button>().onClick.AddListener(() =>
             {
                 ThreadSafeDispatcher.Instance.PopSystemBackKeyListener();
                 DialogWin.transform.SetParent(null);

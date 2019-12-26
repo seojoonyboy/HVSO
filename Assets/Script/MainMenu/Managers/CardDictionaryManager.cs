@@ -157,6 +157,7 @@ public class CardDictionaryManager : MonoBehaviour {
         int count = 0;
         for (int i = 0; i < AccountManager.Instance.allHeroes.Count; i++) {
             dataModules.HeroInventory heroData = AccountManager.Instance.allHeroes[i];
+            if (heroData.unownable) continue;
             if (heroData.camp == "human") {
                 Transform heroSlot = heroParent.GetChild(count);
                 heroSlot.Find("HeroObject/HeroImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[heroData.id + "_dic"];
@@ -210,6 +211,7 @@ public class CardDictionaryManager : MonoBehaviour {
         Transform heroParent = transform.Find("HeroDictionary/HeroSelect");
         for (int i = 0; i < AccountManager.Instance.allHeroes.Count; i++) {
             dataModules.HeroInventory heroData = AccountManager.Instance.allHeroes[i];
+            if (heroData.unownable) continue;
             if (heroData.camp == "orc") {
                 Transform heroSlot = heroParent.GetChild(count);
                 heroSlot.Find("HeroObject/HeroImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.heroPortraite[heroData.id + "_dic"];
@@ -358,26 +360,26 @@ public class CardDictionaryManager : MonoBehaviour {
         SoundManager.Instance.PlaySound(UISfxSound.BUTTON1);
         sortingModal.gameObject.SetActive(true);
         for (int i = 0; i < 5; i++)
-            sortingModal.Find("Buttons").GetChild(i).GetChild(0).gameObject.SetActive(true);
+            sortingModal.Find("Buttons").GetChild(i).Find("DeSelected").gameObject.SetActive(true);
         switch (selectedSortOption) {
             case SortingOptions.CLASS:
-                sortingModal.Find("Buttons/Class").GetChild(0).gameObject.SetActive(false);
+                sortingModal.Find("Buttons/Class/DeSelected").gameObject.SetActive(false);
                 break;
             case SortingOptions.COST_ASCEND:
-                sortingModal.Find("Buttons/Cost").GetChild(0).gameObject.SetActive(false);
-                sortingModal.Find("Buttons/Ascending").GetChild(0).gameObject.SetActive(false);
+                sortingModal.Find("Buttons/Cost/DeSelected").gameObject.SetActive(false);
+                sortingModal.Find("Buttons/Ascending/DeSelected").gameObject.SetActive(false);
                 break;
             case SortingOptions.COST_DESCEND:
-                sortingModal.Find("Buttons/Cost").GetChild(0).gameObject.SetActive(false);
-                sortingModal.Find("Buttons/Descending").GetChild(0).gameObject.SetActive(false);
+                sortingModal.Find("Buttons/Cost/DeSelected").gameObject.SetActive(false);
+                sortingModal.Find("Buttons/Descending/DeSelected").gameObject.SetActive(false);
                 break;
             case SortingOptions.RARELITY_ASCEND:
-                sortingModal.Find("Buttons/Rarelity").GetChild(0).gameObject.SetActive(false);
-                sortingModal.Find("Buttons/Ascending").GetChild(0).gameObject.SetActive(false);
+                sortingModal.Find("Buttons/Rarelity/DeSelected").gameObject.SetActive(false);
+                sortingModal.Find("Buttons/Ascending/DeSelected").gameObject.SetActive(false);
                 break;
             case SortingOptions.RARELITY_DESCEND:
-                sortingModal.Find("Buttons/Rarelity").GetChild(0).gameObject.SetActive(false);
-                sortingModal.Find("Buttons/Descending").GetChild(0).gameObject.SetActive(false);
+                sortingModal.Find("Buttons/Rarelity/DeSelected").gameObject.SetActive(false);
+                sortingModal.Find("Buttons/Descending/DeSelected").gameObject.SetActive(false);
                 break;
         }
         EscapeKeyController.escapeKeyCtrl.AddEscape(CloseSortModal);
@@ -391,58 +393,58 @@ public class CardDictionaryManager : MonoBehaviour {
 
     public void ClickClassButton() {
         for (int i = 0; i < 5; i++)
-            sortingModal.Find("Buttons").GetChild(i).GetChild(0).gameObject.SetActive(true);
-        sortingModal.Find("Buttons/Class").GetChild(0).gameObject.SetActive(false);
+            sortingModal.Find("Buttons").GetChild(i).Find("DeSelected").gameObject.SetActive(true);
+        sortingModal.Find("Buttons/Class/DeSelected").gameObject.SetActive(false);
         beforeSortOption = selectedSortOption;
         selectedSortOption = SortingOptions.CLASS;
     }
 
     public void ClickRarelityButton() {
         for (int i = 0; i < 5; i++)
-            sortingModal.Find("Buttons").GetChild(i).GetChild(0).gameObject.SetActive(true);
-        sortingModal.Find("Buttons/Rarelity").GetChild(0).gameObject.SetActive(false);
-        sortingModal.Find("Buttons/Descending").GetChild(0).gameObject.SetActive(false);
+            sortingModal.Find("Buttons").GetChild(i).Find("DeSelected").gameObject.SetActive(true);
+        sortingModal.Find("Buttons/Rarelity/DeSelected").gameObject.SetActive(false);
+        sortingModal.Find("Buttons/Descending/DeSelected").gameObject.SetActive(false);
         beforeSortOption = selectedSortOption;
         selectedSortOption = SortingOptions.RARELITY_DESCEND;
     }
 
     public void ClickCostButton() {
         for (int i = 0; i < 5; i++)
-            sortingModal.Find("Buttons").GetChild(i).GetChild(0).gameObject.SetActive(true);
-        sortingModal.Find("Buttons/Cost").GetChild(0).gameObject.SetActive(false);
-        sortingModal.Find("Buttons/Descending").GetChild(0).gameObject.SetActive(false);
+            sortingModal.Find("Buttons").GetChild(i).Find("DeSelected").gameObject.SetActive(true);
+        sortingModal.Find("Buttons/Cost/DeSelected").gameObject.SetActive(false);
+        sortingModal.Find("Buttons/Descending/DeSelected").gameObject.SetActive(false);
         beforeSortOption = selectedSortOption;
         selectedSortOption = SortingOptions.COST_DESCEND;
     }
 
     public void ClickAscendingButton() {
         if (selectedSortOption == SortingOptions.CLASS) return;
-        if (!sortingModal.Find("Buttons/Ascending").GetChild(0).gameObject.activeSelf) return;
+        if (!sortingModal.Find("Buttons/Ascending/DeSelected").gameObject.activeSelf) return;
         beforeSortOption = selectedSortOption;
         if (selectedSortOption == SortingOptions.RARELITY_DESCEND) {
-            sortingModal.Find("Buttons/Ascending").GetChild(0).gameObject.SetActive(false);
-            sortingModal.Find("Buttons/Descending").GetChild(0).gameObject.SetActive(true);
+            sortingModal.Find("Buttons/Ascending/DeSelected").gameObject.SetActive(false);
+            sortingModal.Find("Buttons/Descending/DeSelected").gameObject.SetActive(true);
             selectedSortOption = SortingOptions.RARELITY_ASCEND;
         }
         if (selectedSortOption == SortingOptions.COST_DESCEND) {
-            sortingModal.Find("Buttons/Ascending").GetChild(0).gameObject.SetActive(false);
-            sortingModal.Find("Buttons/Descending").GetChild(0).gameObject.SetActive(true);
+            sortingModal.Find("Buttons/Ascending/DeSelected").gameObject.SetActive(false);
+            sortingModal.Find("Buttons/Descending/DeSelected").gameObject.SetActive(true);
             selectedSortOption = SortingOptions.COST_ASCEND;
         }
     }
 
     public void ClickDescendingButton() {
         if (selectedSortOption == SortingOptions.CLASS) return;
-        if (!sortingModal.Find("Buttons/Descending").GetChild(0).gameObject.activeSelf) return;
+        if (!sortingModal.Find("Buttons/Descending/DeSelected").gameObject.activeSelf) return;
         beforeSortOption = selectedSortOption;
         if (selectedSortOption == SortingOptions.RARELITY_ASCEND) {
-            sortingModal.Find("Buttons/Ascending").GetChild(0).gameObject.SetActive(true);
-            sortingModal.Find("Buttons/Descending").GetChild(0).gameObject.SetActive(false);
+            sortingModal.Find("Buttons/Ascending/DeSelected").gameObject.SetActive(true);
+            sortingModal.Find("Buttons/Descending/DeSelected").gameObject.SetActive(false);
             selectedSortOption = SortingOptions.RARELITY_DESCEND;
         }
         if (selectedSortOption == SortingOptions.COST_ASCEND) {
-            sortingModal.Find("Buttons/Ascending").GetChild(0).gameObject.SetActive(true);
-            sortingModal.Find("Buttons/Descending").GetChild(0).gameObject.SetActive(false);
+            sortingModal.Find("Buttons/Ascending/DeSelected").gameObject.SetActive(true);
+            sortingModal.Find("Buttons/Descending/DeSelected").gameObject.SetActive(false);
             selectedSortOption = SortingOptions.COST_DESCEND;
         }
     }
@@ -805,6 +807,15 @@ public class CardDictionaryManager : MonoBehaviour {
                 ExitDictionaryCanvas();
             }
         }
+        if(tutorialHand != null) {
+            tutorialHand.transform.parent.transform.GetComponent<Button>().onClick.RemoveListener(tutoAction);
+            Destroy(tutorialHand);
+        }
+        if(closingToShowEditDeckLock) {
+                quest.CloseDictionary();
+                closingToShowEditDeckLock = false;
+                dicCards.ForEach(x=>x.cardObject.GetComponent<Button>().enabled = true);
+        }
     }
 
     public void ExitDictionaryCanvas() {
@@ -842,6 +853,34 @@ public class CardDictionaryManager : MonoBehaviour {
         transform.Find("CardDictionary").GetComponent<RectTransform>().sizeDelta = new Vector2(1080, result);
         activatedTf.GetComponent<RectTransform>().anchoredPosition = new Vector2(activatedTf.GetComponent<RectTransform>().anchoredPosition.x, 0);
         GetComponent<ScrollRect>().normalizedPosition = new Vector2(0, 1);
+    }
+    public bool closingToShowEditDeckLock;
+    Quest.QuestContentController quest;
+    GameObject tutorialHand;
+    UnityAction tutoAction;
+
+    public void cardShowHand(Quest.QuestContentController quest, string[] args) {
+        this.quest = quest;
+        Transform beforeHand = transform.Find("tutorialHand");
+        if(beforeHand != null) Destroy(beforeHand.gameObject);
+        DictionaryCard card = dicCards.Find(x=>x.cardId == args[0]);
+        dicCards.ForEach(x=>x.cardObject.GetComponent<Button>().enabled = false);
+        card.cardObject.GetComponent<Button>().enabled = true;
+        tutorialHand = Instantiate(quest.manager.handSpinePrefab, card.cardObject.transform, false);
+        tutorialHand.name = "tutorialHand";
+        tutoAction = () => MenuCardInfo.cardInfoWindow.makeShowHand(quest);
+        card.cardObject.GetComponent<Button>().onClick.AddListener(tutoAction);
+        SnapTo(card.cardObject.GetComponent<RectTransform>());
+    }
+
+    private async void SnapTo(RectTransform target){
+        await System.Threading.Tasks.Task.Delay(100);
+        ScrollRect scrollRect = GetComponent<ScrollRect>();
+        RectTransform contentPanel = scrollRect.content;
+        contentPanel.anchoredPosition =
+            (Vector2)scrollRect.transform.InverseTransformPoint(contentPanel.position)
+            - (Vector2)scrollRect.transform.InverseTransformPoint(new Vector3(contentPanel.position.x, target.position.y, contentPanel.position.z));
+        Canvas.ForceUpdateCanvases();
     }
 }
 

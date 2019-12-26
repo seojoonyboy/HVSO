@@ -32,7 +32,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
             //TODO : Filter를 통해(Use Condition) 타겟 표시 추가 제어
             try {
                 if (skillHandler.skills[0].conditionCheckers[0] != null) {
-                    Logger.Log("ConditionChecker [0] 존재 : " + skillHandler.skills[0].conditionCheckers[0]);
+                    //Logger.Log("ConditionChecker [0] 존재 : " + skillHandler.skills[0].conditionCheckers[0]);
                     CardDropManager.Instance.ShowMagicalSlot(cardData.skills[0].target.args, skillHandler.dragFiltering, skillHandler.skills[0].conditionCheckers[0]);
                 }
             }
@@ -63,7 +63,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         //TODO : Filter를 통해(Use Condition) 타겟 표시 추가 제어
         try {
             if(skillHandler.skills[0].conditionCheckers[0] != null) {
-                Logger.Log("ConditionChecker [0] 존재 : " + skillHandler.skills[0].conditionCheckers[0]);
+                //Logger.Log("ConditionChecker [0] 존재 : " + skillHandler.skills[0].conditionCheckers[0]);
                 CardDropManager.Instance.ShowMagicalSlot(cardData.skills[0].target.args, skillHandler.dragFiltering, skillHandler.skills[0].conditionCheckers[0]);
             }
         }
@@ -169,8 +169,9 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
                     transform.Find("GlowEffect").gameObject.SetActive(false);
                     transform.Find("CardInfoWindow").gameObject.SetActive(false);
                     showCardsHandler.hideShowBtn.SetActive(false);
-                    skillHandler.highlight = highlightedSlot; 
-                    if(!skillHandler.TargetSelectExist()) skillHandler.SendSocket();
+                    skillHandler.highlight = highlightedSlot;
+                    SoundManager.Instance.PlaySound(UISfxSound.CARDCHOICE_HERO);
+                    if (!skillHandler.TargetSelectExist()) skillHandler.SendSocket();
                     StartCoroutine(UseSkillCard(parms));
 
                     if (ScenarioGameManagment.scenarioInstance == null) {
@@ -218,7 +219,8 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
             PlayMangement.instance.player.resource.Value -= cardData.cost;
             object[] parms = new object[] { true, gameObject };
             skillHandler.highlight = highlightedSlot;
-            if(!skillHandler.TargetSelectExist()) skillHandler.SendSocket();
+            SoundManager.Instance.PlaySound(UISfxSound.CARDCHOICE_UNIT);
+            if (!skillHandler.TargetSelectExist()) skillHandler.SendSocket();
             StartCoroutine(UseSkillCard(parms));
             //if (GetComponents<Ability>() == null) UseCard();
         }

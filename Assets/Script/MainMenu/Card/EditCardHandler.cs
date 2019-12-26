@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using Spine;
 using Spine.Unity;
+using System;
 
 public class EditCardHandler : MonoBehaviour {
     public string cardID;
@@ -38,6 +39,19 @@ public class EditCardHandler : MonoBehaviour {
     protected float handFirstXPos;
     protected float clickTime;
     protected bool standby;
+    public static QuestInfo questInfo;
+
+    [Serializable] public class QuestInfo {
+        public Quest.QuestContentController quest;
+        public string removeId;
+        public string addId;
+        public GameObject handUIaddCard;
+        public GameObject handUIremoveCard;
+        public GameObject handUIcreateOrRemove;
+        public bool isDoneAddCard;
+    }
+
+
 
     public int SETNUM {
         get { return setNum; }
@@ -59,6 +73,31 @@ public class EditCardHandler : MonoBehaviour {
         editBookRoot = "";
         GetComponent<EditCardHandler>().SETNUM = 0;
         GetComponent<EditCardHandler>().HAVENUM = 0;
+    }
+
+    public void SetTutoHand() {
+        if(questInfo == null) return;
+        if(cardData == null) return;
+        if(cardData.id.CompareTo(questInfo.addId) == 0) {
+            questInfo.handUIaddCard = Instantiate(questInfo.quest.manager.handSpinePrefab, transform, false);
+            questInfo.handUIaddCard.name = "tutorialHand";
+            questInfo.handUIaddCard.SetActive(false);
+        }
+        if(cardData.id.CompareTo(questInfo.removeId) == 0) {
+            questInfo.handUIremoveCard = Instantiate(questInfo.quest.manager.handSpinePrefab, transform, false);
+            questInfo.handUIremoveCard.name = "tutorialHand";
+        }
+    }
+
+    private void RemoveTutoHand() {
+        if(questInfo == null) return;
+        if(cardData == null) return;
+        if(questInfo.handUIaddCard == null && questInfo.handUIremoveCard == null) return;
+        
+        if(cardData.id.CompareTo(questInfo.addId) == 0)
+            Destroy(questInfo.handUIaddCard);
+        if(cardData.id.CompareTo(questInfo.removeId) == 0)
+            Destroy(questInfo.handUIremoveCard);
     }
 
     public void EndClick() {
@@ -222,7 +261,7 @@ public class EditCardHandler : MonoBehaviour {
 
     public void SetSetNum(bool add = false) {
         if (setNum > 0) {
-            transform.Find("HaveNum/Graphic").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, "bottom_" + setNum.ToString(), false);
+            transform.Find("HaveNum/Graphic").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, setNum.ToString(), false);
             if (add) {
                 Color spineColor = new Color();
                 switch (cardData.rarelity) {
@@ -293,8 +332,8 @@ public class EditCardHandler : MonoBehaviour {
         }
 
         if (cardData.type == "unit") {
-            cardObject.Find("Health/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.hp.ToString();
-            cardObject.Find("attack/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.attack.ToString();
+            cardObject.Find("Health/Text").GetComponent<Text>().text = cardData.hp.ToString();
+            cardObject.Find("attack/Text").GetComponent<Text>().text = cardData.attack.ToString();
             if (cardData.attributes.Length == 0 && cardData.attackTypes.Length == 0)
                 cardObject.Find("SkillIcon").gameObject.SetActive(false);
             else {
@@ -307,7 +346,7 @@ public class EditCardHandler : MonoBehaviour {
                     cardObject.Find("SkillIcon").GetComponent<Image>().sprite = AccountManager.Instance.resource.skillIcons["complex"];
             }
         }
-        cardObject.Find("Cost/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.cost.ToString();
+        cardObject.Find("Cost/Text").GetComponent<Text>().text = cardData.cost.ToString();
         if (!cardData.isHeroCard) {
             transform.Find("HaveNum/Graphic").GetComponent<SkeletonGraphic>().Initialize(false);
             Spine.AnimationState aniState = transform.Find("HaveNum/Graphic").GetComponent<SkeletonGraphic>().AnimationState;
@@ -342,5 +381,6 @@ public class EditCardHandler : MonoBehaviour {
                 cardObject.Find("Disabled/NonAbility").gameObject.SetActive(true);
             }
         }
+        RemoveTutoHand();
     }
 }

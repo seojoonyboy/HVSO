@@ -172,14 +172,19 @@ public class CardListManager : MonoBehaviour
 
     public virtual void SetCardInfo(GameObject obj, dataModules.CollectionCard data) {
         Transform info = obj.transform;
+        info.Find("SkillBtn").GetComponent<Button>().onClick.RemoveAllListeners();
+        info.Find("SkillBtn").GetComponent<Button>().onClick.AddListener(() => OpenSkillWindow(info));
+        info.Find("FlavorBtn").GetComponent<Button>().onClick.RemoveAllListeners();
+        info.Find("FlavorBtn").GetComponent<Button>().onClick.AddListener(() => OpenFlavorWindow(info));
         info.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.name;
-        info.Find("Name").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["name_" + data.rarelity];
+        info.Find("FrameImage/TierBack").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["name_" + data.rarelity];
+        info.Find("FrameImage/TierRibbon").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["ribbon_" + data.rarelity];
 
         if (data.skills.Length != 0) {
-            info.Find("Dialog/Text").GetComponent<TMPro.TextMeshProUGUI>().text = translator.DialogSetRichText(data.skills[0].desc);
+            info.Find("SkillInfo/Dialog/Text").GetComponent<TMPro.TextMeshProUGUI>().text = translator.DialogSetRichText(data.skills[0].desc);
         }
         else
-            info.Find("Dialog/Text").GetComponent<TMPro.TextMeshProUGUI>().text = null;
+            info.Find("SkillInfo/Dialog/Text").GetComponent<TMPro.TextMeshProUGUI>().text = null;
 
         if (data.hp != null) {
             info.Find("Health/Text").GetComponent<Text>().text = data.hp.ToString();
@@ -199,28 +204,23 @@ public class CardListManager : MonoBehaviour
         if(data.cardClasses.Length > 0)
             info.Find("Class_1").GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[data.cardClasses[0]];
 
-        for(int i = 0; i < 3; i++) {
-            info.Find("Skill&BuffRow1").GetChild(i).gameObject.SetActive(false);
-            EventTrigger skill1 = info.Find("Skill&BuffRow1").GetChild(i).GetComponent<EventTrigger>();
-            skill1.triggers.RemoveRange(0, skill1.triggers.Count);
+        //for(int i = 0; i < 3; i++) {
+        //    info.Find("Skill&BuffRow1").GetChild(i).gameObject.SetActive(false);
+        //    EventTrigger skill1 = info.Find("Skill&BuffRow1").GetChild(i).GetComponent<EventTrigger>();
+        //    skill1.triggers.RemoveRange(0, skill1.triggers.Count);
 
-            info.Find("Skill&BuffRow2").GetChild(i).gameObject.SetActive(false);
-            EventTrigger skill2 = info.Find("Skill&BuffRow2").GetChild(i).GetComponent<EventTrigger>();
-            skill2.triggers.RemoveRange(0, skill2.triggers.Count);
-        }
+        //    info.Find("Skill&BuffRow2").GetChild(i).gameObject.SetActive(false);
+        //    EventTrigger skill2 = info.Find("Skill&BuffRow2").GetChild(i).GetComponent<EventTrigger>();
+        //    skill2.triggers.RemoveRange(0, skill2.triggers.Count);
+        //}
 
-        info.Find("BottomGroup/Flavor/Text").GetComponent<TMPro.TextMeshProUGUI>().text = string.Empty;
+        //info.Find("BottomGroup/Flavor/Text").GetComponent<TMPro.TextMeshProUGUI>().text = string.Empty;
 
-        info.Find("UnitPortrait").gameObject.SetActive(false);
-        info.Find("MagicPortrait").gameObject.SetActive(false);
-        info.Find("Categories/Text").GetComponent<TMPro.TextMeshProUGUI>().text = string.Empty;
-
+        info.Find("FrameImage/UnitPortrait").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoPortraite[data.id];
+        info.Find("Flavor/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "";
         int skillnum = 0;
         if (data.type == "unit") {
-            info.Find("UnitPortrait").gameObject.SetActive(true);
-            if (AccountManager.Instance.resource.infoPortraite.ContainsKey(data.id)) {
-                info.Find("UnitPortrait").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoPortraite[data.id];
-            }
+
             if (data.attackTypes.Length != 0) {
                 info.Find("Skill&BuffRow1").GetChild(skillnum).gameObject.SetActive(true);
                 var image = AccountManager.Instance.resource.skillIcons[data.attackTypes[0]];
@@ -271,8 +271,9 @@ public class CardListManager : MonoBehaviour
                 if (translatedCategories.Count != cnt) sb.Append(ctg + ", ");
                 else sb.Append(ctg);
             }
-            info.Find("Categories/Text").GetComponent<TMPro.TextMeshProUGUI>().text = sb.ToString();
-            info.Find("BottomGroup/Flavor/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.flavorText;
+            info.Find("SkillInfo/Categories").gameObject.SetActive(true);
+            info.Find("SkillInfo/Categories/Text").GetComponent<TMPro.TextMeshProUGUI>().text = sb.ToString();
+            info.Find("Flavor/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.flavorText;
         }
         //마법 카드
         else {
@@ -287,17 +288,18 @@ public class CardListManager : MonoBehaviour
                 if (translatedCategories.Count != cnt) sb.Append(ctg + ", ");
                 else sb.Append(ctg);
             }
-            info.Find("Categories/Text").GetComponent<TMPro.TextMeshProUGUI>().text = sb.ToString();
-
-            info.Find("MagicPortrait").gameObject.SetActive(true);
-            if (AccountManager.Instance.resource.cardPortraite.ContainsKey(data.id)) {
-                info.Find("MagicPortrait").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardPortraite[data.id];
-                if (!data.isHeroCard)
-                    info.Find("MagicPortrait/Frame").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground["magic_" + data.rarelity];
-                else
-                    info.Find("MagicPortrait/Frame").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground["hero_legend_human"];
-            }
+            info.Find("SkillInfo/Categories/Text").GetComponent<TMPro.TextMeshProUGUI>().text = sb.ToString();
         }
+        info.Find("Flavor").gameObject.SetActive(false);
+        info.Find("FrameImage/ClassFrame").gameObject.SetActive(!data.isHeroCard);
+        info.Find("Class_1").gameObject.SetActive(!data.isHeroCard);
+        info.Find("HeroClass").gameObject.SetActive(data.isHeroCard);
+        info.Find("Name/HeroName").gameObject.SetActive(data.isHeroCard);
+        info.Find("FrameImage/ClassFrame").gameObject.SetActive(!data.isHeroCard);
+        if (data.isHeroCard) {
+            info.Find("FrameImage/TierRibbon").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["ribbon_hero"];
+        }
+        OpenSkillWindow(info);
         //if (data.class_2 == null)
         //    obj.transform.GetChild(2).gameObject.SetActive(false);
         //else {
@@ -305,7 +307,7 @@ public class CardListManager : MonoBehaviour
         //    obj.transform.GetChild(2).name = data.class_2;
         //}
         #region 카드 상세보기 설명 글 클릭 이벤트 추가
-        TMPro.TextMeshProUGUI dialog = info.Find("Dialog/Text").GetComponent<TMPro.TextMeshProUGUI>();
+        TMPro.TextMeshProUGUI dialog = info.Find("SkillInfo/Dialog/Text").GetComponent<TMPro.TextMeshProUGUI>();
         EventTrigger dialogTrigger = dialog.GetComponent<EventTrigger>();
         dialogTrigger.triggers.Clear();
         EventTrigger.Entry ondialogBtn = new EventTrigger.Entry();
@@ -326,8 +328,23 @@ public class CardListManager : MonoBehaviour
         #endregion
     }
 
+    public void OpenSkillWindow(Transform infoObject) {
+        infoObject.Find("SkillInfo").gameObject.SetActive(true);
+        infoObject.Find("Flavor").gameObject.SetActive(false);
+        infoObject.Find("SkillBtn").GetComponent<Button>().interactable = false;
+        infoObject.Find("FlavorBtn").GetComponent<Button>().interactable = true;
+    }
+
+    public void OpenFlavorWindow(Transform infoObject) {
+        infoObject.Find("SkillInfo").gameObject.SetActive(false);
+        infoObject.Find("Flavor").gameObject.SetActive(true);
+        infoObject.Find("SkillBtn").GetComponent<Button>().interactable = true;
+        infoObject.Find("FlavorBtn").GetComponent<Button>().interactable = false;
+    }
+
     public void OpenClassDescModal(string className, Sprite image, Transform modalTransform = null) {
         if (Input.touchCount > 1) return;
+        if (ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.blockInfoModal == true) return;
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         classDescModal.gameObject.SetActive(true);
         classDescModal.position = (modalTransform != null) ? new Vector3(modalTransform.position.x, modalTransform.position.y + 2f, 0f) : new Vector3(mousePos.x, mousePos.y + 2.3f, 0);
@@ -347,7 +364,7 @@ public class CardListManager : MonoBehaviour
     
 
     public virtual void OpenUnitInfoWindow(Vector3 inputPos) {
-        if (ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.infoWindow == false) return;
+        if (ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.blockInfoModal == true) return;
 
         if (!PlayMangement.instance.infoOn && Input.GetMouseButtonDown(0)) {
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(inputPos);

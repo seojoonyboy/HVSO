@@ -10,7 +10,7 @@ public class HUDController : MonoBehaviour {
     [SerializeField] HorizontalScrollSnap main_HorizontalScrollSnap;
     [SerializeField] TMPro.TextMeshProUGUI crystalValue;
     [SerializeField] TMPro.TextMeshProUGUI goldValue;
-    [SerializeField] TMPro.TextMeshProUGUI lvValue;
+    [SerializeField] Text lvValue;
     [SerializeField] TMPro.TextMeshProUGUI expValueText;
     [SerializeField] Transform userInfoCanvas;
     [SerializeField] Image expSlider;
@@ -174,7 +174,16 @@ public class HUDController : MonoBehaviour {
 
     public void OpenUserInfo() {
         userInfoCanvas.GetComponent<UserInfoManager>().SetUserInfo();
+        SetHeader(Type.RESOURCE_ONLY_WITH_BACKBUTTON);
+        SetBackButton(() => CloseUserInfo());
         userInfoCanvas.gameObject.SetActive(true);
+        EscapeKeyController.escapeKeyCtrl.AddEscape(CloseUserInfo);
+    }
+
+    public void CloseUserInfo() {
+        EscapeKeyController.escapeKeyCtrl.RemoveEscape(CloseUserInfo);
+        SetHeader(Type.SHOW_USER_INFO);
+        userInfoCanvas.gameObject.SetActive(false);
     }
 
     public enum Type {

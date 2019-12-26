@@ -17,6 +17,7 @@ public class MenuHeroInfo : MonoBehaviour
     string heroId;
 
     GameObject teirUpModal;
+    int nowTier;
     private void Awake() {
         heroInfoWindow = this;
         init();
@@ -25,6 +26,7 @@ public class MenuHeroInfo : MonoBehaviour
 
     private void Start() {
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_TIERUP_HERO, HeroModified);
+        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_INVENTORIES_UPDATED, StartAni);
     }
 
     private void init() {
@@ -63,12 +65,13 @@ public class MenuHeroInfo : MonoBehaviour
             dataModules.HeroInventory heroData = accountManager.myHeroInventories[heroId];
             transform.Find("HeroSpines/lock").gameObject.SetActive(false);
             heroSpine.GetComponent<SkeletonGraphic>().color = new Color(1, 1, 1);
-            if(heroData.tier == 0) {
+            nowTier = heroData.tier;
+            if (nowTier == 0) {
                 transform.Find("HeroSpines/lock").gameObject.SetActive(true);
                 heroSpine.GetComponent<SkeletonGraphic>().color = new Color(0.35f, 0.35f, 0.35f);
             }
             else {
-                for (int i = 0; i < heroData.tier; i++)
+                for (int i = 0; i < nowTier; i++)
                     transform.Find("HeroLevel/Stars").GetChild(i).GetChild(0).gameObject.SetActive(true);
             }
             if (heroData.next_level != null) {
@@ -76,6 +79,7 @@ public class MenuHeroInfo : MonoBehaviour
                 if (fillExp >= 1) {
                     transform.Find("HeroLevel/Exp/ValueText").gameObject.SetActive(false);
                     transform.Find("HeroLevel/TierUpBtn").gameObject.SetActive(true);
+                    transform.Find("HeroLevel/TierUpBtn/UpgradeSpine").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, "animation", true);
                     transform.Find("HeroLevel/Exp/Slider/Value").localPosition = new Vector3(-490, 0, 0);
                 }
                 else {
@@ -110,6 +114,41 @@ public class MenuHeroInfo : MonoBehaviour
         skillWindow.Find("Card2/Card").GetComponent<MenuCardHandler>().DrawCard(hero.heroCards[1].id);
         skillWindow.Find("Card2/CardName").GetComponent<TMPro.TextMeshProUGUI>().text = hero.heroCards[1].name;
         skillWindow.Find("Card2/CardInfo").GetComponent<TMPro.TextMeshProUGUI>().text = translator.DialogSetRichText(hero.heroCards[1].skills[0].desc);
+
+        Transform abilityWindow = transform.Find("AbilityInfo");
+        abilityWindow.Find("Ability1/AbilityInfo").GetComponent<TMPro.TextMeshProUGUI>().text = hero.traitText[0];
+        abilityWindow.Find("Ability2/AbilityInfo").GetComponent<TMPro.TextMeshProUGUI>().text = hero.traitText[1];
+        for(int i = 0; i < 2; i++) {
+            string traitKey = "";
+            switch (hero.traitText[i]) {
+                case "최대체력 +2":
+                    traitKey = "health_max_2";
+                    break;
+                case "최대 실드 개수 +1":
+                    traitKey = "shield_max_1";
+                    break;
+                case "실드게이지 충전량 최소치 +1":
+                    traitKey = "shield_min_charge_1";
+                    break;
+                case "마법 페이즈에 자원 1 획득":
+                    traitKey = "magic_phase_1";
+                    break;
+                case "마법의 주문 공격력 +1":
+                    traitKey = "magic_power_1";
+                    break;
+                case "실드게이지 충전량 최대치 +1":
+                    traitKey = "shield_max_charge_1";
+                    break;
+                case "tool 카드 사용 비용 -1":
+                    traitKey = "toolcard_use_1";
+                    break;
+            }
+            if (i == 0)
+                abilityWindow.Find("Ability1/AbilityImg").GetComponent<Image>().sprite = accountManager.resource.traitIcons[traitKey];
+            else
+                abilityWindow.Find("Ability2/AbilityImg").GetComponent<Image>().sprite = accountManager.resource.traitIcons[traitKey];
+        }
+
         SetHeroDialog(hero.flavorText, hero.camp == "human");
         EscapeKeyController.escapeKeyCtrl.AddEscape(MenuCardInfo.cardInfoWindow.CloseInfo);
 
@@ -117,8 +156,9 @@ public class MenuHeroInfo : MonoBehaviour
     }
 
     public void ClickHeroTierUp() {
-        int cost = accountManager.myHeroInventories[heroId].next_level.manaCrystal;
+        int cost = accountManager.myHeroInventories[heroId].next_level.crystal;
         if (accountManager.userResource.crystal >= cost) {
+            transform.Find("HeroLevel/TierUpBtn/UpgradeSpine").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, "animation2", false);
             teirUpModal = Modal.instantiate("마나 수정이 " + cost.ToString() + "개 소모됩니다. 진행 하시겠습니까?", Modal.Type.YESNO, TierUpHero, CancelTierUp);
             EscapeKeyController.escapeKeyCtrl.AddEscape(CancelTierUp);
         }
@@ -132,48 +172,102 @@ public class MenuHeroInfo : MonoBehaviour
     public void CancelTierUp() {
         DestroyImmediate(teirUpModal, true);
         EscapeKeyController.escapeKeyCtrl.RemoveEscape(CancelTierUp);
+        transform.Find("HeroLevel/TierUpBtn/UpgradeSpine").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, "animation", true);
     }
 
     public void TierUpHero() {
         if (tierUpHero) return;
-        transform.Find("block").gameObject.SetActive(true);
         SoundManager.Instance.PlaySound(UISfxSound.BUTTON1);
         tierUpHero = true;
+        StartCoroutine(SetUpTeirUp());
         accountManager.RequestHeroTierUp(heroId);
+    }
+
+    IEnumerator SetUpTeirUp() {
+        transform.Find("TierUpField").gameObject.SetActive(true);
+        for (int i = 0; i < nowTier; i++)
+            transform.Find("TierUpField/Stars").GetChild(i).Find("Star").gameObject.SetActive(true);
+        GameObject heroSpines = transform.Find("HeroSpines").gameObject;
+        heroSpines.transform.SetAsLastSibling();
+        iTween.MoveTo(heroSpines, iTween.Hash("y", 0, "islocal", true, "time", 0.8f));
+        iTween.ScaleTo(heroSpines, iTween.Hash("x", 1.2f, "y", 1.2f, "islocal", true, "time", 0.8f));
+        Image[] colors = transform.Find("TierUpField").GetComponentsInChildren<Image>();
+        float colorA = 0;
+        while (colorA < 1.0f) {
+            colorA += 4.0f * Time.deltaTime;
+            for(int i = 0; i < colors.Length; i++) 
+                colors[i].color = new Color(1, 1, 1, colorA);
+            yield return null;
+        }
     }
 
     private void HeroModified(Enum Event_Type, Component Sender, object Param) {
         accountManager.RequestInventories();
-        StartCoroutine(HeroMakingAni());
+        
+    }
+
+    public void StartAni(Enum Event_Type, Component Sender, object Param) {
+        if(gameObject.activeSelf)
+            StartCoroutine(HeroMakingAni());
     }
 
     IEnumerator HeroMakingAni() {
         yield return new WaitForSeconds(0.5f);
-        if(accountManager.myHeroInventories[heroId].camp == "human")
+        dataModules.HeroInventory heroData = accountManager.myHeroInventories[heroId];
+        if (heroData.camp == "human")
             CardDictionaryManager.cardDictionaryManager.RefreshHumanHero();
         else
             CardDictionaryManager.cardDictionaryManager.RefreshOrcHero();
+        SkeletonGraphic spine = transform.Find("TierUpField/Stars").GetChild(nowTier).Find("StartSpine").GetComponent<SkeletonGraphic>();
+        spine.Initialize(true);
+        spine.Update(0);
+        spine.AnimationState.SetAnimation(0, "animation", false);
         SetHeroInfoWindow(heroId);
-        transform.Find("block").gameObject.SetActive(false);
+        yield return new WaitForSeconds(0.3f);
+        transform.Find("TierUpField/Stars").GetChild(nowTier - 1).Find("Star").gameObject.SetActive(true);
         tierUpHero = false;
+    }
+
+    public void CloseHeroTierUp() {
+        if (tierUpHero) return;
+        Transform heroSpines = transform.Find("HeroSpines");
+        heroSpines.SetSiblingIndex(2);
+        heroSpines.localScale = Vector3.one;
+        heroSpines.localPosition = new Vector3(0, 193, 0);
+        transform.Find("TierUpField").GetComponentInChildren<Image>().color = new Color(1, 1, 1, 0);
+        for (int i = 0; i < 3; i++)
+            transform.Find("TierUpField/Stars").GetChild(i).Find("Star").gameObject.SetActive(false);
+        transform.Find("TierUpField").gameObject.SetActive(false);
     }
 
     public void OpenClassWindow() {
         SoundManager.Instance.PlaySound(UISfxSound.BUTTON1);
         transform.Find("Buttons/ClassBtn/UnSelected").gameObject.SetActive(false);
         transform.Find("Buttons/SkillBtn/UnSelected").gameObject.SetActive(true);
-        transform.Find("Buttons/AbillityBtn/UnSelected").gameObject.SetActive(true);
+        transform.Find("Buttons/AbilityBtn/UnSelected").gameObject.SetActive(true);
         transform.Find("ClassInfo").gameObject.SetActive(true);
         transform.Find("SkillInfo").gameObject.SetActive(false);
+        transform.Find("AbilityInfo").gameObject.SetActive(false);
     }
 
     public void OpenSkillWindow() {
         SoundManager.Instance.PlaySound(UISfxSound.BUTTON1);
         transform.Find("Buttons/ClassBtn/UnSelected").gameObject.SetActive(true);
         transform.Find("Buttons/SkillBtn/UnSelected").gameObject.SetActive(false);
-        transform.Find("Buttons/AbillityBtn/UnSelected").gameObject.SetActive(true);
+        transform.Find("Buttons/AbilityBtn/UnSelected").gameObject.SetActive(true);
         transform.Find("ClassInfo").gameObject.SetActive(false);
         transform.Find("SkillInfo").gameObject.SetActive(true);
+        transform.Find("AbilityInfo").gameObject.SetActive(false);
+    }
+
+    public void OpenAbilityWindow() {
+        SoundManager.Instance.PlaySound(UISfxSound.BUTTON1);
+        transform.Find("Buttons/ClassBtn/UnSelected").gameObject.SetActive(true);
+        transform.Find("Buttons/SkillBtn/UnSelected").gameObject.SetActive(true);
+        transform.Find("Buttons/AbilityBtn/UnSelected").gameObject.SetActive(false);
+        transform.Find("ClassInfo").gameObject.SetActive(false);
+        transform.Find("SkillInfo").gameObject.SetActive(false);
+        transform.Find("AbilityInfo").gameObject.SetActive(true);
     }
 
     public void SetHeroDialog(string dialog, bool isHuman) {

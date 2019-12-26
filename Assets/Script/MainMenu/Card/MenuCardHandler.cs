@@ -42,7 +42,6 @@ public class MenuCardHandler : MonoBehaviour {
         cardObject.Find("Portrait").GetComponent<Image>().sprite = portraitImage;
         if (!cardData.isHeroCard) {
             cardObject.Find("BackGround").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground[cardData.type + "_" + cardData.rarelity];
-            cardObject.Find("Name").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground["name_" + cardData.rarelity];
         }
         else {
             string race;
@@ -51,13 +50,12 @@ public class MenuCardHandler : MonoBehaviour {
             else
                 race = "_orc";
             cardObject.Find("BackGround").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground["hero_" + cardData.rarelity + race];
-            cardObject.Find("Name").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground["hero_" + cardData.rarelity + race + "_name"];
         }
 
         if (cardData.type == "unit") {
             //Logger.Log(cardData.name);
-            cardObject.Find("Health/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.hp.ToString();
-            cardObject.Find("attack/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.attack.ToString();
+            cardObject.Find("Health/Text").GetComponent<Text>().text = cardData.hp.ToString();
+            cardObject.Find("attack/Text").GetComponent<Text>().text = cardData.attack.ToString();
             if (cardData.attributes.Length == 0 && cardData.attackTypes.Length == 0)
                 cardObject.Find("SkillIcon").gameObject.SetActive(false);
             else {
@@ -72,9 +70,8 @@ public class MenuCardHandler : MonoBehaviour {
                     cardObject.Find("SkillIcon").GetComponent<Image>().sprite = AccountManager.Instance.resource.skillIcons["complex"];
             }
         }
-        cardObject.Find("Cost/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.cost.ToString();
+        cardObject.Find("Cost/Text").GetComponent<Text>().text = cardData.cost.ToString();
         //cardObject.Find("Class").GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[cardData.cardClasses[0]];
-        cardObject.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.name;
         if (cardData.isHeroCard) return;
         transform.Find("HaveNum").GetComponent<SkeletonGraphic>().Initialize(false);
         Spine.AnimationState aniState = transform.Find("HaveNum").GetComponent<SkeletonGraphic>().AnimationState;
@@ -126,7 +123,6 @@ public class MenuCardHandler : MonoBehaviour {
         cardObject.Find("Portrait").GetComponent<Image>().sprite = portraitImage;
         if (!cardData.isHeroCard) {
             cardObject.Find("BackGround").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground[cardData.type + "_" + cardData.rarelity];
-            cardObject.Find("Name").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground["name_" + cardData.rarelity];
         }
         else {
             string race;
@@ -135,13 +131,12 @@ public class MenuCardHandler : MonoBehaviour {
             else
                 race = "_orc";
             cardObject.Find("BackGround").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground["hero_" + cardData.rarelity + race];
-            cardObject.Find("Name").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground["hero_" + cardData.rarelity + race + "_name"];
         }
 
         if (cardData.type == "unit") {
-            Logger.Log(cardData.name);
-            cardObject.Find("Health/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.hp.ToString();
-            cardObject.Find("attack/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.attack.ToString();
+            //Logger.Log(cardData.name);
+            cardObject.Find("Health/Text").GetComponent<Text>().text = cardData.hp.ToString();
+            cardObject.Find("attack/Text").GetComponent<Text>().text = cardData.attack.ToString();
             if (cardData.attributes.Length == 0 && cardData.attackTypes.Length == 0)
                 cardObject.Find("SkillIcon").gameObject.SetActive(false);
             else {
@@ -156,11 +151,10 @@ public class MenuCardHandler : MonoBehaviour {
                     cardObject.Find("SkillIcon").GetComponent<Image>().sprite = AccountManager.Instance.resource.skillIcons["complex"];
             }
         }
-        cardObject.Find("Cost/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.cost.ToString();
+        cardObject.Find("Cost/Text").GetComponent<Text>().text = cardData.cost.ToString();
         //cardObject.Find("Class").GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[cardData.cardClasses[0]];
-        cardObject.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = cardData.name;
-        if (!cardData.isHeroCard)
-            transform.Find("HaveNum").gameObject.SetActive(false);
+        //if (!cardData.isHeroCard)
+        //    transform.Find("HaveNum").gameObject.SetActive(false);
         cardObject.Find("Disabled").gameObject.SetActive(false);
     }
 
@@ -187,8 +181,6 @@ public class MenuCardHandler : MonoBehaviour {
         else {
             MenuCardInfo.cardInfoWindow.SetCardInfo(cardData, isHuman, null);
             MenuCardInfo.cardInfoWindow.transform.Find("CreateCard").gameObject.SetActive(false);
-            MenuCardInfo.cardInfoWindow.transform.localPosition =
-                new Vector3(0, -(200 * MenuCardInfo.cardInfoWindow.transform.parent.localScale.y));
         }
         if (transform.parent.parent.parent.name == "HeroInfo" && transform.parent.parent.name != "SkillWindow") {
             exitTrigger2.SetActive(true);

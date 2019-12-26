@@ -30,8 +30,8 @@ public class RewardProgressController : MonoBehaviour {
     public void OnRewardObjectSettingFinished() {
         rewardsProvider = GetComponent<RewardsProvider>();
 
-        minMMR = rewardsProvider.buttons[0].transform.Find("MMR").GetComponent<IntergerIndex>().Id;
-        maxMMR = rewardsProvider.buttons[rewardsProvider.buttons.Count - 1].transform.Find("MMR").GetComponent<IntergerIndex>().Id;
+        minMMR = rewardsProvider.buttons[0].GetComponent<RewardButtonInBattleReady>().rewardData.point;
+        maxMMR = rewardsProvider.buttons[rewardsProvider.buttons.Count - 1].GetComponent<RewardButtonInBattleReady>().rewardData.point;
 
         //테스트 코드
         //GetIndex(100);
@@ -43,29 +43,52 @@ public class RewardProgressController : MonoBehaviour {
         StartCoroutine(Progress(currentProgressBar));
     }
 
+    void OnDisable() {
+        StopAllCoroutines();
+    }
+
     public void Init() {
-        SetProgress(progressType.CURR_PROGRESS_BAR);
+        SetProgress();
     }
 
     //진척도 초기 세팅
-    private void SetProgress(progressType type) {
-        GameObject progressBar = null;
-
-        if(type == progressType.CURR_PROGRESS_BAR) {
-            progressBar = currentProgressBar;
-        }
-        else if(type == progressType.PREV_PROGRESS_BAR) {
-            progressBar = prevProgressBar;
-        }
-        else {
-            progressBar = currentProgressBar;
-            Logger.Log("argument is wrong");
-        }
-
-        StartCoroutine(SetProgress(progressBar));
+    private void SetProgress() {
+        StartCoroutine(SetPrevProgressBar());
+        StartCoroutine(SetProgress(currentProgressBar));
     }
 
     const float progressBarOffsetLeft = 50;
+
+    IEnumerator SetPrevProgressBar() {
+        yield return new WaitForEndOfFrame();
+        int ratingTop = leagueData.prevLeagueInfo.ratingPointTop ?? default(int);
+
+        int closestRightTargetIndex = 0;
+        int closestLeftTargetIndex = GetIndex(ratingTop);
+        if (closestLeftTargetIndex == rewardsProvider.buttons.Count - 1) closestRightTargetIndex = rewardsProvider.buttons.Count - 1;
+        else closestRightTargetIndex = GetIndex(ratingTop) + 1;
+
+        float closestLeftTargetMMR = rewardsProvider
+            .standards[closestLeftTargetIndex];
+        float closestLeftTargetX = rewardsProvider
+            .buttons[closestLeftTargetIndex]
+            .GetComponent<RectTransform>()
+            .localPosition.x;
+        float closestRightTargetMMR = rewardsProvider
+            .standards[closestRightTargetIndex];
+        float closestRightTargetX = rewardsProvider
+            .buttons[closestRightTargetIndex]
+            .GetComponent<RectTransform>()
+            .localPosition.x;
+
+        float mmrWidth = closestRightTargetMMR - closestLeftTargetMMR;
+        float localPosWidth = closestRightTargetX - closestLeftTargetX;
+
+        var val = localPosWidth * (ratingTop - closestLeftTargetMMR) / mmrWidth;
+
+        RectTransform rect = prevProgressBar.GetComponent<RectTransform>();
+        rect.sizeDelta = new Vector2(closestLeftTargetX + val - progressBarOffsetLeft, rect.rect.height);
+    }
 
     IEnumerator SetProgress(GameObject progressBar) {
         yield return new WaitForEndOfFrame();

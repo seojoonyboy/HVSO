@@ -14,8 +14,6 @@ public class PlayerController : MonoBehaviour
     public bool isHuman;
     public bool isPlayer;
     private bool myTurn = false;
-    public int[,] placement = new int[2,5] { {0,0,0,0,0 },
-                                              {0,0,0,0,0 }};
     public GameObject card;
     public GameObject back;
     public GameObject playerUI;
@@ -127,7 +125,9 @@ public class PlayerController : MonoBehaviour
         string id;
         GameObject hero;
         if (ScenarioGameManagment.scenarioInstance != null && isPlayer == false && isHuman == true)
-            id = "hac10001";
+            id = "qh10001";
+        else if (ScenarioGameManagment.scenarioInstance != null && isPlayer == false && isHuman == false)
+            id = "qh10002";
         else {
             if (isHuman == true)
                 id = PlayMangement.instance.socketHandler.gameState.players.human.hero.id;
@@ -305,7 +305,7 @@ public class PlayerController : MonoBehaviour
         availableAmountToGet = (enemyShieldStack < amount) ? enemyShieldStack : amount;
         targetPlayer.DiscountShieldStack(targetPlayer.shieldStack.Value, availableAmountToGet);
 
-        Logger.Log("적 실드 " + targetPlayer.shieldStack.Value + "로 바뀜(약탈)");
+        //Logger.Log("적 실드 " + targetPlayer.shieldStack.Value + "로 바뀜(약탈)");
 
         ////내가 채울 수 있는 양 계산
         ChangeShieldStack(shieldStack.Value, availableAmountToGet);
@@ -576,16 +576,15 @@ public class PlayerController : MonoBehaviour
         shieldGauge.AnimationState.ClearTrack(0);
         TrackEntry entry = new TrackEntry();
 
-
+        
+        SoundManager.Instance.PlayShieldChargeCount(amount);
         for (int i = 1; i <= amount; i++) {
 
             if (start + i > 8)
                 break;
 
             entry = shieldGauge.AnimationState.AddAnimation(0, (start + i).ToString(), false, 0);
-
-        }
-        SoundManager.Instance.PlayIngameSfx(IngameSfxSound.SHIELDCHARGE);
+        }       
         // entry.Complete += delegate (TrackEntry trackEntry) {  };       
     }
 
@@ -608,7 +607,7 @@ public class PlayerController : MonoBehaviour
         shieldGauge.Update(0);
         shieldGauge.AnimationState.ClearTrack(0);
         TrackEntry entry = new TrackEntry();
-
+        SoundManager.Instance.PlayShieldChargeCount(amount);
         for (int i = 1; i < amount; i++)
             entry = shieldGauge.AnimationState.AddAnimation(0, (start + i).ToString(), false, 0);
 

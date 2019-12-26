@@ -15,6 +15,14 @@ namespace Haegin
 
         private Stack<OnSystemBackKey> systemBackKeyListeners = new Stack<OnSystemBackKey>();
 
+        public int systemBackKeyListenersSize
+        {
+            get
+            {
+                return systemBackKeyListeners.Count;
+            }
+        }
+
         public static ThreadSafeDispatcher Instance
         {
             get
@@ -55,7 +63,13 @@ namespace Haegin
             {
                 foreach (var action in pending)
                 {
-                    action();
+                    try
+                    {
+                        action();
+                    }
+                    catch
+                    {
+                    }
                 }
                 pending.Clear();
             }

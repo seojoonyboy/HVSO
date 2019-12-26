@@ -7,6 +7,8 @@ using System;
 using Spine.Unity;
 using BestHTTP;
 using dataModules;
+using Spine;
+using UnityEngine.UI.Extensions;
 
 namespace MenuTutorialModules {
     public class MenuExecute : MonoBehaviour {
@@ -101,7 +103,7 @@ namespace MenuTutorialModules {
         }
 
         public void StartGlow(GameObject target) {
-            Logger.Log("Glow Target : " + target);
+            //Logger.Log("Glow Target : " + target);
             //MenuGlow.Instance.StartGlow(target);
         }
     } 
@@ -162,7 +164,7 @@ namespace MenuTutorialModules {
                 menuMask.menuTalkPanel.transform.Find("NameObject/PlayerName").gameObject.SetActive(isPlayer);
                 menuMask.menuTalkPanel.transform.Find("NameObject/EnemyName").gameObject.SetActive(!isPlayer);
                 if (isPlayer) {
-                    Logger.Log(args[0]);
+                    //Logger.Log(args[0]);
                     menuMask.menuTalkPanel.transform.Find("CharacterImage/Player").GetComponent<Image>().sprite = AccountManager.Instance.resource.ScenarioUnitResurce[args[0]].sprite;
                     menuMask.menuTalkPanel.transform.Find("NameObject/PlayerName").GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.resource.ScenarioUnitResurce[args[0]].name;
                 }
@@ -203,54 +205,12 @@ namespace MenuTutorialModules {
         }
     }
 
-
-
     public class Menu_Block_Screen : MenuExecute {
         public Menu_Block_Screen() : base() { }
 
         // 단순한 화면 막기
         public override void Execute() {
             MenuMask.Instance.BlockScreen();
-            handler.isDone = true;
-        }
-    }
-
-    public class Darken_Menu_NPC_Talk : MenuExecute {
-        public Darken_Menu_NPC_Talk() : base() { }
-
-        //대화중 캐릭터 어둡게
-        public override void Execute() {
-            bool isPlayer = args[0] != "enemy";
-
-            MenuMask menuMask = MenuMask.Instance;
-            MenuMask.Instance.gameObject.SetActive(true);
-
-            if (isPlayer) {
-                menuMask.menuTalkPanel.transform.Find("CharacterImage/Player").GetComponent<Image>().color = new Color32(0, 0, 0, 255);
-            }
-            else {
-                menuMask.menuTalkPanel.transform.Find("CharacterImage/Enemy").GetComponent<Image>().color = new Color32(0, 0, 0, 255);
-            }
-            handler.isDone = true;
-        }
-    }
-
-    public class Brighten_Menu_NPC_Talk : MenuExecute {
-        public Brighten_Menu_NPC_Talk() : base() { }
-
-        //대화중 캐릭터 밝게
-        public override void Execute() {
-            bool isPlayer = args[0] != "enemy";
-
-            MenuMask menuMask = MenuMask.Instance;
-            MenuMask.Instance.gameObject.SetActive(true);
-
-            if (isPlayer) {
-                menuMask.menuTalkPanel.transform.Find("CharacterImage/Player").GetComponent<Image>().color = new Color32(255, 255, 255, 255);
-            }
-            else {
-                menuMask.menuTalkPanel.transform.Find("CharacterImage/Enemy").GetComponent<Image>().color = new Color32(255, 255, 255, 255);
-            }
             handler.isDone = true;
         }
     }
@@ -302,7 +262,7 @@ namespace MenuTutorialModules {
             var menuMask = MenuMask.Instance;
             
             string objectName = args[0];
-            Logger.Log(objectName);
+            //Logger.Log(objectName);
 
             var targetObject = menuMask.GetMenuObject(objectName);
 
@@ -342,33 +302,6 @@ namespace MenuTutorialModules {
         }
     }
 
-    public class Disable_Button : MenuExecute {
-        public override void Execute() {
-            var menuMask = MenuMask.Instance;
-
-            string objectName = args[0];
-            var targetObject = menuMask.GetMenuObject(objectName);
-
-            var button = targetObject.GetComponent<Button>();
-            if (button != null) button.enabled = false;
-
-            handler.isDone = true;
-        }
-    }
-
-    public class Enable_Button : MenuExecute {
-        public override void Execute() {
-            var menuMask = MenuMask.Instance;
-
-            string objectName = args[0];
-            var targetObject = menuMask.GetMenuObject(objectName);
-            var button = targetObject.GetComponent<Button>();
-            if (button != null) button.enabled = true;
-
-            handler.isDone = true;
-        }
-    }
-
     public class ChangeSelectBtnImage : MenuExecute {
         public override void Execute() {
             string target = args[0];
@@ -394,7 +327,6 @@ namespace MenuTutorialModules {
             if (args[0] == "human") {
                 ScenarioGameManagment.chapterData = scenarioManager.human_chapterDatas[chapterNum];
                 ScenarioGameManagment.challengeDatas = scenarioManager.human_challengeDatas[chapterNum].challenges;
-
                 string heroId = "h10001";
                 switch (chapterNum) {
                     default:
@@ -420,7 +352,34 @@ namespace MenuTutorialModules {
                 PlayerPrefs.SetString("selectedHeroId", heroId);
             }
 
-            GetComponent<MenuTutorialManager>().ActiveTutorialStoryReadyCanvas(args[0]);
+            scenarioManager.stageCanvas
+                    .transform
+                    .Find("DeckSelectPanel/StagePanel/Scroll View/Viewport/Content")
+                    .GetChild(0)
+                    .Find("Deck")
+                    .GetComponent<Button>().onClick.Invoke();
+            handler.isDone = true;
+        }
+    }
+
+    public class RequestQuestBoxReward : MenuExecute {
+        public override void Execute() {
+            AccountManager.Instance.RequestTutorialBox(callback);
+        }
+
+        private void callback(HTTPRequest originalRequest, HTTPResponse response) {
+            if (response.DataAsText.Contains("already")) {
+                handler.isDone = true;
+            }
+            else {
+                GetComponent<MenuTutorialManager>().BoxRewardPanel.transform.Find("ExitButton").GetComponent<Button>().onClick.AddListener(OnClick);
+                GetComponent<MenuTutorialManager>().menuTextCanvas.SetActive(false);
+            }
+        }
+
+        private void OnClick() {
+            GetComponent<MenuTutorialManager>().BoxRewardPanel.transform.Find("ExitButton").GetComponent<Button>().onClick.RemoveListener(OnClick);
+            GetComponent<MenuTutorialManager>().menuTextCanvas.SetActive(true);
             handler.isDone = true;
         }
     }
@@ -448,20 +407,8 @@ namespace MenuTutorialModules {
 
         IEnumerator Proceed() {
             GameObject target = null;
-
-            NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_DECKS_UPDATED, (type, sender, parm) => {
-                HTTPResponse res = (HTTPResponse)parm;
-                if (res != null) {
-                    if (res.StatusCode == 200 || res.StatusCode == 304) {
-                        var result = JsonReader.Read<Decks>(res.DataAsText);
-                        AccountManager.Instance.orcDecks = result.orc;
-                        AccountManager.Instance.humanDecks = result.human;
-                    }
-                }
-                else {
-                    Logger.Log("Something is wrong");
-                }
-            });
+            
+            NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_DECKS_UPDATED, OnDecksUpdated);
             GetComponent<MenuTutorialManager>().ActiveRewardPanel();
 
             SkeletonGraphic skeletonGraphic = GetComponent<MenuTutorialManager>().rewardPanel.transform.Find("Anim").GetComponent<SkeletonGraphic>();
@@ -479,10 +426,10 @@ namespace MenuTutorialModules {
 
             skeletonGraphic.transform.Find("Header/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "덱 획득";
             if(args[0] == "human") {
-                skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "휴먼 기본 부대, '왕국 수비대' 획득!";
+                skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "휴먼 기본 부대, '시민 자경단' 획득!";
             }
             else {
-                skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 기본 부대, '주술사 부족' 획득!";
+                skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 기본 부대, '방랑 유목민' 획득!";
             }
 
             yield return new WaitForSeconds(1.0f);
@@ -494,6 +441,20 @@ namespace MenuTutorialModules {
             AccountManager.Instance.RequestUserInfo();
             AccountManager.Instance.RequestMyDecks();
             AccountManager.Instance.RequestInventories();
+        }
+
+        private void OnDecksUpdated(Enum Event_Type, Component Sender, object Param) {
+            HTTPResponse res = (HTTPResponse)Param;
+            if (res != null) {
+                if (res.StatusCode == 200 || res.StatusCode == 304) {
+                    var result = JsonReader.Read<Decks>(res.DataAsText);
+                    AccountManager.Instance.orcDecks = result.orc;
+                    AccountManager.Instance.humanDecks = result.human;
+                }
+            }
+            else {
+                Logger.Log("Something is wrong");
+            }
         }
 
         private void CheckClick(GameObject target) {
@@ -508,49 +469,17 @@ namespace MenuTutorialModules {
             public string claimComplete;
             public string error;
         }
+
+        void OnDestroy() {
+            StopAllCoroutines();
+            NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_DECKS_UPDATED, OnDecksUpdated);
+        }
     }
 
     public class DestroyLoadingModal : MenuExecute {
         public override void Execute() {
             var loadingModal = GetComponent<MenuTutorialManager>().menuSceneController.hideModal;
             loadingModal.SetActive(false);
-            handler.isDone = true;
-        }
-    }
-
-    public class Wait_DeckSelect : MenuExecute {
-        public override void Execute() {
-            var deckListPanel = GetComponent<MenuTutorialManager>().BattleReadydeckListPanel;
-            var content = deckListPanel.transform.Find("Viewport/Content");
-
-            deckListPanel.transform.Find("Description").gameObject.SetActive(true);
-
-            foreach (Transform deckObject in content) {
-                if (deckObject.gameObject.activeSelf) {
-                    Button btn = deckObject.GetComponent<Button>();
-                    btn.onClick.AddListener(
-                        () => {
-                            Onclick();
-                        });
-                    GameObject handUI = btn.transform.Find("HandUI").gameObject;
-                    handUI.SetActive(true);
-                    SkeletonGraphic skeletonGraphic = handUI.GetComponent<SkeletonGraphic>();
-                    skeletonGraphic.Initialize(true);
-                    skeletonGraphic.Update(0);
-                    skeletonGraphic.Skeleton.SetSlotsToSetupPose();
-                }
-            }
-        }
-
-        public void Onclick() {
-            var deckListPanel = GetComponent<MenuTutorialManager>().BattleReadydeckListPanel;
-            var content = deckListPanel.transform.Find("Viewport/Content");
-            foreach (Transform deckObject in content) {
-                if (deckObject.gameObject.activeSelf) {
-                    GameObject handUI = deckObject.Find("HandUI").gameObject;
-                    handUI.SetActive(false);
-                }
-            }
             handler.isDone = true;
         }
     }
@@ -583,7 +512,7 @@ namespace MenuTutorialModules {
             skeletonGraphic.AnimationState.SetAnimation(0, "story_details", false);
 
             skeletonGraphic.transform.Find("Header/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 스토리 해금";
-            skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 진영 튜토리얼이 개방 되었습니다!";
+            skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 진영 스토리가 개방 되었습니다!";
 
             yield return new WaitForSeconds(1.0f);
 
@@ -626,7 +555,7 @@ namespace MenuTutorialModules {
             skeletonGraphic.AnimationState.SetAnimation(0, "story_reward2", false);
 
             skeletonGraphic.transform.Find("Header/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 스토리 해금";
-            skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 진영 튜토리얼이 개방 되었습니다!";
+            skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 진영 스토리가 개방 되었습니다!";
 
             yield return new WaitForSeconds(1.0f);
 
@@ -669,7 +598,7 @@ namespace MenuTutorialModules {
             skeletonGraphic.AnimationState.SetAnimation(0, "story_reward2", false);
 
             skeletonGraphic.transform.Find("Header/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "휴먼 스토리 해금";
-            skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "휴먼 진영 튜토리얼이 개방 되었습니다!";
+            skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "휴먼 진영 스토리가 개방 되었습니다!";
 
             yield return new WaitForSeconds(1.0f);
 
@@ -709,13 +638,14 @@ namespace MenuTutorialModules {
 
             skeletonGraphic.Skeleton.SetSkin("orc");
             skeletonGraphic.Skeleton.SetSlotsToSetupPose();
+            skeletonGraphic.transform.Find("Header").GetComponent<BoneFollowerGraphic>().SetBone("text1");
 
             yield return new WaitForEndOfFrame();
             skeletonGraphic.transform.parent.Find("SubBackground").gameObject.SetActive(false);
             skeletonGraphic.AnimationState.SetAnimation(0, "story_reward1", false);
 
-            skeletonGraphic.transform.Find("Header/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 튜토리얼 개방";
-            skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 진영 튜토리얼이 개방 되었습니다!";
+            skeletonGraphic.transform.Find("Header/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 스토리 개방";
+            skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 진영 스토리가 개방 되었습니다!";
 
             yield return new WaitForSeconds(1.0f);
 
@@ -729,97 +659,6 @@ namespace MenuTutorialModules {
                 GetComponent<MenuTutorialManager>().DeactiveRewardPanel();
                 clickStream.Dispose();
                 handler.isDone = true;
-            }
-        }
-    }
-
-    /// <summary>
-    /// 메인화면에서 스토리 메뉴 전체 해금 표시
-    /// </summary>
-    public class UnlockStroyAnim : MenuExecute {
-        IDisposable clickStream;
-        IEnumerator coroutine;
-
-        public override void Execute() {
-            coroutine = Proceed();
-            StartCoroutine(coroutine);
-        }
-
-        IEnumerator Proceed() {
-            GameObject target = null;
-
-            GetComponent<MenuTutorialManager>().ActiveRewardPanel();
-            SkeletonGraphic skeletonGraphic = GetComponent<MenuTutorialManager>().rewardPanel.transform.Find("Anim").GetComponent<SkeletonGraphic>();
-
-            skeletonGraphic.Initialize(true);
-
-            skeletonGraphic.Skeleton.SetSkin("human");
-            skeletonGraphic.Skeleton.SetSlotsToSetupPose();
-            yield return new WaitForEndOfFrame();
-            skeletonGraphic.transform.parent.Find("SubBackground").gameObject.SetActive(false);
-            skeletonGraphic.AnimationState.SetAnimation(0, "story", false);
-
-            skeletonGraphic.transform.Find("Header/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "스토리 메뉴 해금";
-            skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "스토리 메뉴가 오픈되었습니다!";
-
-            yield return new WaitForSeconds(1.0f);
-
-            clickStream = Observable.EveryUpdate()
-                .Where(_ => Input.GetMouseButtonDown(0))
-                .Subscribe(_ => CheckClick(target));
-        }
-
-        private void CheckClick(GameObject target) {
-            if (target == null) {
-                GetComponent<MenuTutorialManager>().DeactiveRewardPanel();
-                clickStream.Dispose();
-                handler.isDone = true;
-            }
-        }
-    }
-
-    public class UnlockBattleAnim : MenuExecute {
-        IDisposable clickStream;
-        IEnumerator coroutine;
-
-        public override void Execute() {
-            coroutine = Proceed();
-            StartCoroutine(coroutine);
-        }
-
-        IEnumerator Proceed() {
-            GameObject target = null;
-
-            GetComponent<MenuTutorialManager>().ActiveRewardPanel();
-            SkeletonGraphic skeletonGraphic = GetComponent<MenuTutorialManager>().rewardPanel.transform.Find("Anim").GetComponent<SkeletonGraphic>();
-
-            skeletonGraphic.Initialize(true);
-
-            skeletonGraphic.Skeleton.SetSkin("human");
-            skeletonGraphic.Skeleton.SetSlotsToSetupPose();
-
-            yield return new WaitForEndOfFrame();
-            skeletonGraphic.transform.parent.Find("SubBackground").gameObject.SetActive(false);
-            skeletonGraphic.AnimationState.SetAnimation(0, "battle", false);
-
-            skeletonGraphic.transform.Find("Header/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "배틀 메뉴 해금";
-            skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "배틀 메뉴가 오픈되었습니다!";
-
-            yield return new WaitForSeconds(1.0f);
-
-            clickStream = Observable.EveryUpdate()
-                .Where(_ => Input.GetMouseButtonDown(0))
-                .Subscribe(_ => CheckClick(target));
-        }
-
-        private void CheckClick(GameObject target) {
-            if (target == null) {
-                GetComponent<MenuTutorialManager>().DeactiveRewardPanel();
-                clickStream.Dispose();
-                handler.isDone = true;
-
-                PlayerPrefs.SetString("isPvpOpened", "true");
-                PlayerPrefs.SetString("NeedUnlockMenu", "false");
             }
         }
     }
@@ -932,7 +771,7 @@ namespace MenuTutorialModules {
                 menuTutorialManager.ActiveRewardBoxCanvas();
             }
             else {
-                Logger.LogError("박스가 없습니다!");
+                //Logger.LogError("박스가 없습니다!");
                 PlayerPrefs.SetInt("TutorialBoxRecieved", 1);
 
                 handler.isDone = true;
@@ -992,7 +831,7 @@ namespace MenuTutorialModules {
     public class MainMenuButtonGlow : MenuExecute {
         public override void Execute() {
             GetComponent<MenuTutorialManager>().FixedMenuCanvas.SetActive(false);
-            Logger.Log("MainMenuButtonGlow : " + args[0]);
+            //Logger.Log("MainMenuButtonGlow : " + args[0]);
             string buttonName = args[0];
             int index = 0;
             switch (buttonName) {
@@ -1036,33 +875,13 @@ namespace MenuTutorialModules {
 
     public class EndTutorial : MenuExecute {
         public override void Execute() {
-            Logger.Log("모든 튜토리얼 끝!");
             MenuMask.Instance.UnBlockScreen();
 
-            GetComponent<MenuTutorialManager>().EndTutorial();
-            GetComponent<MenuTutorialManager>().enabled = false;
-            
-            handler.isDone = true;
-        }
-    }
-
-    public class ActiveImageTutorial : MenuExecute {
-        public override void Execute() {
-            GameObject mainDescCanvas = GetComponent<MenuTutorialManager>().mainDescCanvas;
-            foreach (Transform child in mainDescCanvas.transform) {
-                child.GetComponent<BooleanIndex>().isOn = true;
+            try {
+                GetComponent<MenuTutorialManager>().EndTutorial();
+                GetComponent<MenuTutorialManager>().enabled = false;
             }
-            GetComponent<MenuTutorialManager>().OnMainPageChanged();
-            handler.isDone = true;
-        }
-    }
-
-    public class DeactiveImageTutorial : MenuExecute {
-        public override void Execute() {
-            GameObject mainDescCanvas = GetComponent<MenuTutorialManager>().mainDescCanvas;
-            foreach(Transform child in mainDescCanvas.transform) {
-                child.GetComponent<BooleanIndex>().isOn = false;
-            }
+            catch(Exception ex) { }
             handler.isDone = true;
         }
     }
@@ -1076,6 +895,135 @@ namespace MenuTutorialModules {
                     GetComponent<MenuTutorialManager>().scenarioManager.gameObject.SetActive(true);
                     break;
             }
+
+            handler.isDone = true;
+        }
+    }
+
+    public class ForceToStory : MenuExecute {
+        public override void Execute() {
+            string prevName = AccountManager.Instance.prevSceneName;
+            if(prevName == "Story") {
+                GetComponent<MenuTutorialManager>().scenarioManager.gameObject.SetActive(true);
+            }
+            handler.isDone = true;
+        }
+    }
+
+    public class UnlockCardMenu : MenuExecute {
+        public override void Execute() {
+            AccountManager.Instance.RequestUnlockInTutorial(2);
+            AccountManager.Instance.RequestQuestInfo();
+
+            handler.isDone = true;
+        }
+    }
+
+    public class RequestQuestInfo : MenuExecute {
+        public override void Execute() {
+            AccountManager.Instance.RequestQuestInfo();
+            handler.isDone = true;
+        }
+    }
+
+    public class RequestUnlockQuest : MenuExecute {
+        public override void Execute() {
+            int id = -1;
+            int.TryParse(args[0], out id);
+            if(id == -1) {
+                handler.isDone = true;
+                return;
+            }
+
+            if(id != 4) {
+                AccountManager.Instance.RequestUnlockInTutorial(id);
+                AccountManager.Instance.RequestQuestInfo();
+            }
+            //리그 Unlock시 Mode 버튼 Unlock
+            if(id == 4) {
+                GetComponent<MenuTutorialManager>().lockController.Unlock("Mode", false);
+            }
+
+            handler.isDone = true;
+        }
+    }
+
+    public class SetPlayerPrefabStoryUnlocked : MenuExecute {
+        public override void Execute() {
+            PlayerPrefs.SetString("StoryUnlocked", "true");
+            handler.isDone = true;
+        }
+    }
+
+    public class UnlockRewardBoxMenu : MenuExecute {
+        public override void Execute() {
+            StartCoroutine(Proceed());
+        }
+
+        IEnumerator Proceed() {
+            yield return new WaitForSeconds(0.2f);
+            MenuMask.Instance.HideText();
+
+            MenuLockController menuLockController = GetComponent<MenuTutorialManager>().lockController;
+            HorizontalScrollSnap horizontalScrollSnap = GetComponent<MenuTutorialManager>().scrollSnap;
+            //horizontalScrollSnap.GoToScreen()
+
+            var lockObj = menuLockController.FindButtonLockObject("RewardBox");
+            if (lockObj.activeInHierarchy) {
+                SkeletonGraphic skeletonGraphic = lockObj.GetComponent<SkeletonGraphic>();
+                menuLockController.Unlock("RewardBox", false);
+                yield return new WaitForSeconds(1.5f);
+                handler.isDone = true;
+                //skeletonGraphic.AnimationState.End += delegate (TrackEntry trackEntry) {
+                //    handler.isDone = true;
+                //};
+            }
+            else {
+                handler.isDone = true;
+            }
+        }
+
+        void OnDestroy() {
+            StopAllCoroutines();
+        }
+    }
+
+    public class UnlockShopMenu : MenuExecute {
+        public override void Execute() {
+            StartCoroutine(Proceed());
+        }
+
+        IEnumerator Proceed() {
+            yield return new WaitForSeconds(0.2f);
+            MenuMask.Instance.HideText();
+
+            MenuLockController menuLockController = GetComponent<MenuTutorialManager>().lockController;
+            HorizontalScrollSnap horizontalScrollSnap = GetComponent<MenuTutorialManager>().scrollSnap;
+
+            var lockObj = menuLockController.FindButtonLockObject("Shop");
+            if (lockObj.activeInHierarchy) {
+                SkeletonGraphic skeletonGraphic = lockObj.GetComponent<SkeletonGraphic>();
+                menuLockController.Unlock("Shop", false);
+                yield return new WaitForSeconds(1.5f);
+                handler.isDone = true;
+            }
+            else {
+                handler.isDone = true;
+            }
+        }
+
+        void OnDestroy() {
+            StopAllCoroutines();
+        }
+    }
+
+    public class UnlockDeckEditButtons : MenuExecute {
+        public override void Execute() {
+            MenuLockController menuLockController = GetComponent<MenuTutorialManager>().lockController;
+            menuLockController.Unlock("HumanBaseDeckAiBattleBtn", false);
+            menuLockController.Unlock("HumanBaseDeckDeleteBtn", false);
+            menuLockController.Unlock("OrcBaseDeckAiBattleBtn", false);
+            menuLockController.Unlock("OrcBaseDeckDeleteBtn", false);
 
             handler.isDone = true;
         }

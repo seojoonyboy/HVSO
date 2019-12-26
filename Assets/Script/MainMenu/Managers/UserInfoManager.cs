@@ -6,16 +6,20 @@ using UnityEngine.UI;
 public class UserInfoManager : MonoBehaviour
 {
     public void SetUserInfo() {
-        transform.Find("InnerCanvas/Content/BaseInfo/LevelFrame/LevelValue").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userData.lv.ToString();
-        transform.Find("InnerCanvas/Content/BaseInfo/UserId").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.NickName;
-        transform.Find("InnerCanvas/Content/BaseInfo/Exp/Slider/SliderValue").GetComponent<Image>().fillAmount = (float)AccountManager.Instance.userData.exp / (float)AccountManager.Instance.userData.lvExp;
-        transform.Find("InnerCanvas/Content/BaseInfo/Exp/ExpValue").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userData.exp.ToString() + "/" + AccountManager.Instance.userData.lvExp.ToString();
-        EscapeKeyController.escapeKeyCtrl.AddEscape(ExitUserInfo);
-    }
+        AccountManager.Instance.RequestLeagueInfo();
 
-    public void ExitUserInfo() {
-        gameObject.SetActive(false);
-        EscapeKeyController.escapeKeyCtrl.RemoveEscape(ExitUserInfo);
+        Transform contents = transform.Find("InnerCanvas/Content");
+        contents.Find("BaseInfo/LevelFrame/LevelValue").GetComponent<Text>().text = AccountManager.Instance.userData.lv.ToString();
+        contents.Find("BaseInfo/UserId").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.NickName;
+        contents.Find("BaseInfo/Exp/Slider/SliderValue").GetComponent<Image>().fillAmount = (float)AccountManager.Instance.userData.exp / (float)AccountManager.Instance.userData.lvExp;
+        contents.Find("BaseInfo/Exp/ExpValue").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userData.exp.ToString() + "/" + AccountManager.Instance.userData.lvExp.ToString();
+        string tierName = AccountManager.Instance.scriptable_leagueData.leagueInfo.rankDetail.minorRankName;
+        if (AccountManager.Instance.resource.rankIcons.ContainsKey(tierName))
+            contents.Find("TierInfo/TierImage").GetComponent<Image>().sprite = AccountManager.Instance.resource.rankIcons[tierName];
+        else
+            contents.Find("TierInfo/TierImage").GetComponent<Image>().sprite = AccountManager.Instance.resource.rankIcons["default"];
+        contents.Find("TierInfo/Score/Value").GetComponent<Text>().text = AccountManager.Instance.scriptable_leagueData.leagueInfo.ratingPoint.ToString();
+        contents.Find("TierInfo/Wins/Value").GetComponent<TMPro.TextMeshProUGUI>().text = "";
     }
 
     public void ChangeId() {

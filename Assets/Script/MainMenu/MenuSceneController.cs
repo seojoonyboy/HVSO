@@ -11,6 +11,7 @@ using UIModule;
 
 public class MenuSceneController : MonoBehaviour {
     [SerializeField] Transform fixedCanvas;
+    [SerializeField] GameObject OptionCanvas;
     [SerializeField] HUDController hudController;
     [SerializeField] HorizontalScrollSnap windowScrollSnap;
     [SerializeField] Transform dictionaryMenu;
@@ -31,6 +32,7 @@ public class MenuSceneController : MonoBehaviour {
     [SerializeField] GameObject reconnectingModal;  //재접속 진행시 등장하는 로딩 화면
     [SerializeField] MenuTutorialManager menuTutorialManager;
     [SerializeField] ScenarioManager scenarioManager;
+    [SerializeField] BattleMenuController battleMenuController;
 
     public static MenuSceneController menuSceneController;
 
@@ -73,7 +75,7 @@ public class MenuSceneController : MonoBehaviour {
 
         menuButton.Initialize(true);
         menuButton.Update(0);
-        ClickMenuButton(2);
+        ClickMenuButton("Main");
         EscapeKeyController.escapeKeyCtrl.AddEscape(OpenQuitModal);
 
         hideModal.SetActive(true);
@@ -114,12 +116,12 @@ public class MenuSceneController : MonoBehaviour {
         MenuTutorialManager.TutorialType tutorialType = MenuTutorialManager.TutorialType.NONE;
         if (PlayerPrefs.GetInt("isFirst") == 1) {
             PlayerPrefs.SetInt("isFirst", 0);
-            PlayerPrefs.SetString("isPvpOpened", "false");
             AddNewbiController();
 
             hideModal.SetActive(false);
         }
         else {
+            hideModal.SetActive(true);
             //튜토리얼 남았음
             AccountManager.etcInfo tutorialCleared = etcInfos.Find(x => x.key == "tutorialCleared");
             var clearedStages = AccountManager.Instance.clearedStages;
@@ -128,7 +130,6 @@ public class MenuSceneController : MonoBehaviour {
                 //휴먼 튜토리얼 0-1을 진행하지 않았음
                 if (!clearedStages.Exists(x => x.camp == "human" && x.stageNumber == 1)) {
                     AddNewbiController();
-                    PlayerPrefs.SetString("NeedUnlockMenu", "true");
                 }
                 else {
                     //오크 튜토리얼 0-1을 진행하지 않았음
@@ -136,25 +137,13 @@ public class MenuSceneController : MonoBehaviour {
                         tutorialType = MenuTutorialManager.TutorialType.TO_ORC_STORY;
                     }
                     else {
-                        //휴먼 튜토리얼 0-2을 진행하지 않았음
-                        if (!clearedStages.Exists(x => x.camp == "human" && x.stageNumber == 2)) {
-                            tutorialType = MenuTutorialManager.TutorialType.TO_HUMAN_STORY_2;
+                        string storyUnlocked = PlayerPrefs.GetString("StoryUnlocked", "false");
+                        if(storyUnlocked == "false") {
+                            tutorialType = MenuTutorialManager.TutorialType.UNLOCK_TOTAL_STORY;
                         }
                         else {
-                            //오크 튜토리얼 0-2을 진행하지 않았음
-                            if (!clearedStages.Exists(x => x.camp == "orc" && x.stageNumber == 2)) {
-                                tutorialType = MenuTutorialManager.TutorialType.TO_ORC_STORY_2;
-                            }
-                            else {
-                                var isPvpOpened = PlayerPrefs.GetString("isPvpOpened");
-                                if (isPvpOpened == "true") {
-                                    needTutorial = false;
-                                }
-                                else {
-                                    tutorialType = MenuTutorialManager.TutorialType.UNLOCK_STORY_AND_BATTLE_MENU;
-                                    menuTutorialManager.StartTutorial(tutorialType);
-                                }
-                            }
+                            needTutorial = false;
+                            //퀘스트 제어
                         }
                     }
                 }
@@ -162,18 +151,28 @@ public class MenuSceneController : MonoBehaviour {
             else needTutorial = false;
         }
 
+        //테스트 코드
+        //needTutorial = true;
+        //tutorialType = MenuTutorialManager.TutorialType.UNLOCK_TOTAL_STORY;
+        /////////////////////////////////////////////////////////////////
         if (needTutorial) {
             if (tutorialType != MenuTutorialManager.TutorialType.NONE) {
-                //테스트 코드
-                //tutorialType = MenuTutorialManager.TutorialType.TO_ORC_STORY_2;
                 menuTutorialManager.StartTutorial(tutorialType);
             }
         }
         else {
-            needTutorial = false;
-            hideModal.SetActive(false);
-            menuTutorialManager.enabled = false;
+            var prevScene = AccountManager.Instance.prevSceneName;
+            if (prevScene == "Story") {
+                StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_100);
+            }
+            else {
+                needTutorial = false;
+                hideModal.SetActive(false);
+                menuTutorialManager.enabled = false;
+            }
         }
+
+        //StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_7);
     }
 
     private void OnUserDataUpdate(Enum Event_Type, Component Sender, object Param) {
@@ -221,6 +220,18 @@ public class MenuSceneController : MonoBehaviour {
             Invoke("OnPVPClicked", 0.1f);
             AccountManager.Instance.visitDeckNow = 0;
         }
+
+        var SelectedBattleButton = PlayerPrefs.GetString("SelectedBattleButton");
+        if(SelectedBattleButton == "STORY") {
+            battleMenuController.SetMainMenuDirectPlayButton(1);
+        }
+        else if(SelectedBattleButton == "LEAGUE") {
+            battleMenuController.SetMainMenuDirectPlayButton(0);
+        }
+        else {
+            battleMenuController.ClearDirectPlayButton();
+            //Modal.instantiate("선택된 모드 정보가 없습니다. 모드를 직접 선택해주세요!", Modal.Type.CHECK);
+        }
     }
 
     /// <summary>
@@ -235,29 +246,69 @@ public class MenuSceneController : MonoBehaviour {
         });
     }
 
+    public void OpenOption() {
+        OptionCanvas.SetActive(true);
+        EscapeKeyController.escapeKeyCtrl.AddEscape(CloseOption);
+        hudController.SetHeader(HUDController.Type.RESOURCE_ONLY_WITH_BACKBUTTON);
+        hudController.SetBackButton(CloseOption);
+    }
+
+    void CloseOption() {
+        EscapeKeyController.escapeKeyCtrl.RemoveEscape(CloseOption);
+        OptionCanvas.SetActive(false);
+        hudController.SetHeader(HUDController.Type.SHOW_USER_INFO);
+    }
+
     public void OnStoryClicked() {
         //FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MISSION_SELECT_SCENE);
         storyLobbyPanel.SetActive(true);
     }
 
-    public void ClickMenuButton(int pageNum) {
+    public void ClickMenuButton(string btnName) {
         buttonClicked = true;
-        fixedCanvas.Find("InnerCanvas/Footer").GetChild(currentPage).GetChild(0).gameObject.SetActive(false);
-        currentPage = pageNum;
-        windowScrollSnap.GoToScreen(currentPage);
-        if (currentPage + 1 == 4)
-            currentPage = 4;
-        menuButton.AnimationState.SetAnimation(0, "IDLE_" + (currentPage + 1).ToString(), true);
-        fixedCanvas.Find("InnerCanvas/Footer").GetChild(currentPage).GetChild(0).gameObject.SetActive(true);
+        foreach(GameObject window in windowScrollSnap.ChildObjects) {
+            if(window.name.Contains(btnName)) {
+                windowScrollSnap.GoToScreen(window.transform.GetSiblingIndex());
+            }
+        }
+
+        Transform footer = fixedCanvas.Find("InnerCanvas/Footer");
+        foreach(Transform btn in footer) {
+            if(btn.name == btnName) {
+                int animIndex = btn.GetSiblingIndex() + 1;
+                menuButton.AnimationState.SetAnimation(0, "IDLE_" + (animIndex).ToString(), true);
+                btn.Find("Text").gameObject.SetActive(true);
+            }
+            else {
+                btn.Find("Text").gameObject.SetActive(false);
+            }
+        }
+        //fixedCanvas.Find("InnerCanvas/Footer").GetChild(currentPage).GetChild(0).gameObject.SetActive(false);
+        //currentPage = pageNum;
+        //windowScrollSnap.GoToScreen(currentPage - 1);
+        //menuButton.AnimationState.SetAnimation(0, "IDLE_" + (currentPage + 1).ToString(), true);
+        //fixedCanvas.Find("InnerCanvas/Footer").GetChild(currentPage).GetChild(0).gameObject.SetActive(true);
     }
 
     public void ScrollSnapButtonChange() {
-        fixedCanvas.Find("InnerCanvas/Footer").GetChild(currentPage).GetChild(0).gameObject.SetActive(false);
-        currentPage = windowScrollSnap.CurrentPage;
-        if (currentPage + 1 == 4)
-            currentPage = 4;
-        menuButton.AnimationState.SetAnimation(0, "IDLE_" + (currentPage + 1).ToString(), true);
-        fixedCanvas.Find("InnerCanvas/Footer").GetChild(currentPage).GetChild(0).gameObject.SetActive(true);
+        //Logger.Log("ScrollSnapButtonChange current page : " + windowScrollSnap.CurrentPage);
+
+        Transform footer = fixedCanvas.Find("InnerCanvas/Footer");
+        int pageIndex = windowScrollSnap.CurrentPageObject().GetComponent<dataModules.IntergerIndex>().Id + 1;
+        menuButton.AnimationState.SetAnimation(0, "IDLE_" + (pageIndex).ToString(), true);
+        //fixedCanvas.Find("InnerCanvas/Footer").GetChild(currentPage).GetChild(0).gameObject.SetActive(false);
+        fixedCanvas.Find("InnerCanvas/Footer").GetChild(pageIndex).GetChild(0).gameObject.SetActive(true);
+
+        foreach (Transform btn in footer) {
+            if (windowScrollSnap.CurrentPageObject().name.Contains(btn.name)) {
+                int animIndex = btn.GetSiblingIndex() + 1;
+                menuButton.AnimationState.SetAnimation(0, "IDLE_" + (animIndex).ToString(), true);
+                btn.Find("Text").gameObject.SetActive(true);
+            }
+            else {
+                btn.Find("Text").gameObject.SetActive(false);
+            }
+        }
     }
 
 
@@ -305,6 +356,7 @@ public class MenuSceneController : MonoBehaviour {
         for(int i = 0; i < 5; i++) {
             if(humanBtn.GetChild(i).Find("NewCard").gameObject.activeSelf || orcBtn.GetChild(i).Find("NewCard").gameObject.activeSelf) {
                 menuButton.transform.Find("Dictionary").gameObject.SetActive(true);
+                menuButton.transform.Find("Dictionary").GetComponent<BoneFollowerGraphic>().SetBone("ex3");
                 break;
             }
             if(i == 4)
@@ -354,13 +406,51 @@ public class MenuSceneController : MonoBehaviour {
     }
 
     public void AddNewbiController() {
+        PlayerPrefs.SetString("StoryUnlocked", "false");
+        PlayerPrefs.SetString("SelectedBattleButton", BattleMenuController.BattleType.STORY.ToString());
+
         var newbiComp = newbiLoadingModal.AddComponent<NewbiController>(); //첫 로그인 제어
         newbiComp.menuSceneController = this;
         newbiComp.name = "NewbiController";
         newbiComp.Init(decksLoader, scenarioManager, newbiLoadingModal);
+
+        GetComponent<MenuLockController>().ResetMenuLockData();
     }
 
     private void UpdateShop(Enum Event_Type, Component Sender, object Param) {
         shopManager.SetShop();
+    }
+
+    /// <summary>
+    /// 퀘스트 중간에 등장하는 강제 부분 처리
+    /// </summary>
+    /// <param name="type">Type</param>
+    public void StartQuestSubSet(MenuTutorialManager.TutorialType type) {
+        //Logger.Log("SubSet 시작 : " + type.ToString());
+        menuTutorialManager.enabled = true;
+        menuTutorialManager.StartQuestSubSet(type);
+    }
+    
+    UnityEngine.Events.UnityAction tutoAction;
+
+    public void DictionaryShowHand(Quest.QuestContentController quest, string[] args) {
+        Transform cardMenu = dictionaryMenu.Find("HumanButton/CardDic");
+        Instantiate(quest.manager.handSpinePrefab, cardMenu.transform, false).name = "tutorialHand";
+        tutoAction = () => quest.DictionaryCardHand(args);
+        UnityEngine.Events.UnityAction firstShow = null;
+        firstShow = () => {
+            quest.ReadyEnterCardMenu();
+            cardMenu.GetComponent<Button>().onClick.RemoveListener(firstShow);
+        };
+        cardMenu.GetComponent<Button>().onClick.AddListener(tutoAction);
+        cardMenu.GetComponent<Button>().onClick.AddListener(firstShow);
+    }
+
+    public void DictionaryRemoveHand() {
+        dictionaryMenu.Find("HumanButton/CardDic").GetComponent<Button>().onClick.RemoveListener(tutoAction);
+        tutoAction = null;
+        Transform hand = dictionaryMenu.Find("HumanButton/CardDic").Find("tutorialHand");
+        if(hand == null) return;
+        Destroy(hand.gameObject);
     }
 }

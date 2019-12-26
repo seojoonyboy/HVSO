@@ -238,8 +238,9 @@ namespace Haegin
                         case ProtocolId.ConsumeGoogleReceipt: Process((ConsumeGoogleReceiptReq)req, (ErrorRes)res); break;
 #endif
                         case ProtocolId.AuthFacebook: Process((AuthFacebookReq)req, (ErrorRes)res); break;
+                        case ProtocolId.AuthAppleId: Process((AuthAppleIdReq)req, (ErrorRes)res); break;  // Sign in with Apple
 #if UNITY_IOS
-                        case ProtocolId.AuthApple: Process((AuthAppleReq)req, (ErrorRes)res); break;
+                        case ProtocolId.AuthApple: Process((AuthAppleReq)req, (ErrorRes)res); break;  // GameCenter
                         case ProtocolId.ApnsRegister: break;
                         case ProtocolId.ConsumeAppleReceipt: Process((ConsumeAppleReceiptReq)req, (ErrorRes)res); break;
 #endif
@@ -255,7 +256,7 @@ namespace Haegin
                         case ProtocolId.MaintenanceCheck: Process((MaintenanceCheckReq)req, (ErrorRes)res); break;
                         case ProtocolId.MaintenanceCheckV2: Process((MaintenanceCheckV2Req)req, (ErrorRes)res); break;
                         case ProtocolId.Coupon: Process((CouponReq)req, (ErrorRes)res); break;
-                        default: Processing(rar); break;
+                        default: if(Processing != null) { Processing(rar); } break;
                     }
                 }
                 else
@@ -276,6 +277,7 @@ namespace Haegin
                         case ProtocolId.SteamFinalizeTransaction: Process((SteamFinalizeTransactionReq)req, (SteamFinalizeTransactionRes)res); break;
                         case ProtocolId.ShopProductList: Process((ShopProductListReq)req, (ShopProductListRes)res); break;
 #endif
+                        case ProtocolId.AuthAppleId: Process((AuthAppleIdReq)req, (AuthAppleIdRes)res); break;
                         case ProtocolId.AuthFacebook: Process((AuthFacebookReq)req, (AuthFacebookRes)res); break;
                         case ProtocolId.Alive: Process((AliveReq)req, (AliveRes)res); break;
 #if UNITY_IOS
@@ -300,7 +302,7 @@ namespace Haegin
                         case ProtocolId.MaintenanceCheck: Process((MaintenanceCheckReq)req, (MaintenanceCheckRes)res); break;
                         case ProtocolId.MaintenanceCheckV2: Process((MaintenanceCheckV2Req)req, (MaintenanceCheckV2Res)res); break;
                         case ProtocolId.Coupon: Process((CouponReq)req, (CouponRes)res); break;
-                        default: Processing(rar); break;
+                        default: if(Processing != null) { Processing(rar); } break;
                     }
                 }
             }
@@ -1064,6 +1066,136 @@ namespace Haegin
         }
 
         public void Process(AuthFacebookReq req, ErrorRes res)
+        {
+            switch (res.Result)
+            {
+                case Result.AuthenticationExpired:
+                    linkAuthResult(ErrorCode.OTHER_DEVICE_LOGIN_ERROR, AuthCode.FAILED_AuthExpired, null, AccountType.None, null, null, TimeSpan.Zero, 0);
+                    break;
+                case Result.AuthenticationCrossCheckFailed:
+                    linkAuthResult(ErrorCode.SUCCESS, AuthCode.FAILED_CrossCheckSignatureMismatched, null, AccountType.None, null, null, TimeSpan.Zero, 0);
+                    break;
+                case Result.AuthenticationCrossCheckRetry:
+                    linkAuthResult(ErrorCode.SUCCESS, AuthCode.FAILED_CrossCheckRetry, null, AccountType.None, null, null, TimeSpan.Zero, 0);
+                    break;
+                default:
+                    linkAuthResult(ErrorCode.NETWORK_ERROR, AuthCode.FAILED, null, AccountType.None, null, null, TimeSpan.Zero, 0);
+                    break;
+            }
+        }
+
+
+        public void RequestAppleIdAuth(string appleId, string email, string identityToken, string authCode, string accountId, string name, LinkOption linkOption, LinkAuthResult callback)
+        {
+            StartCoroutine(RequestAppleIdAuthSub(appleId, email, identityToken, authCode, accountId, name, linkOption, callback));
+        }
+
+        public IEnumerator RequestAppleIdAuthSub(string appleId, string email, string identityToken, string authCode, string accountId, string name, LinkOption linkOption, LinkAuthResult callback)
+        {
+            string sdata = null;
+#if !DO_NOT_USE_GPRESTO && !UNITY_EDITOR
+#if UNITY_IOS || UNITY_ANDROID
+            crossCheckSdataWaitingTime = 0.0f;
+            WaitForSeconds delay = new WaitForSeconds(1.0f);
+            while (string.IsNullOrEmpty(sdata = GPrestoApi.GetSData()) && crossCheckSdataWaitingTime <= SDATA_WAITING_TIME_MAX)
+            {
+                yield return delay;
+            }
+#else
+            yield return null;
+#endif
+#else
+            yield return null;
+#endif
+            if (string.IsNullOrEmpty(sdata)) sdata = "";
+#if MDEBUG
+            Debug.Log("GPresto SData : [" + sdata + "]");
+#endif
+            linkAuthResult = callback;
+            AuthAppleIdReq req = new AuthAppleIdReq();
+            req.AccountPass = accountId;
+            req.Link = linkOption;
+            req.Email = email;
+            req.AppleId = appleId;
+            req.IdentityToken = identityToken;
+            req.AuthCode = authCode;
+            req.Name = name;
+            req.DeviceInfo = SystemInfo.operatingSystem + "|" + SystemInfo.deviceModel;
+            req.Market = IAP.GetMarketType();
+            req.ClientVersion = Application.version;
+#if UNITY_IOS
+            req.Os = OsType.iOS;
+#elif UNITY_ANDROID
+            req.Os = OsType.Android;
+#endif
+            req.GpKey = sdata;
+            Request(req);
+        }
+
+        public void Process(AuthAppleIdReq req, AuthAppleIdRes res)
+        {
+#if MDEBUG
+            Debug.Log("Process(AuthAppleIdReq req, AuthAppleIdRes res)   res.Result = " + res.Result);
+#endif
+
+            switch (res.Result)
+            {
+                case Result.OK:
+                    linkAuthResult(ErrorCode.SUCCESS, AuthCode.SUCCESS, res.AccountPass, res.LocalAccountType, res.LocalAccountName, res.ExtraData, TimeSpan.Zero, 0);
+                    if (bAliveStarted == false)
+                    {
+                        bAliveStarted = true;
+                        coroutineSendAlive = StartCoroutine(SendAlive());
+                    }
+                    break;
+                case Result.AuthenticationNeedToLink:
+                    linkAuthResult(ErrorCode.SUCCESS, AuthCode.NEED_TO_LINK, res.AccountPass, res.LocalAccountType, res.LocalAccountName, res.ExtraData, TimeSpan.Zero, 0);
+                    break;
+                case Result.AuthenticationNeedToSelect:
+                    linkAuthResult(ErrorCode.SUCCESS, AuthCode.NEED_TO_SELECT, res.AccountPass, res.LocalAccountType, res.LocalAccountName, res.ExtraData, TimeSpan.Zero, 0);
+                    break;
+                case Result.AuthenticationNeedToLogout:
+                    linkAuthResult(ErrorCode.SUCCESS, AuthCode.NEED_TO_LOGOUT, res.AccountPass, res.LocalAccountType, res.LocalAccountName, res.ExtraData, TimeSpan.Zero, 0);
+                    break;
+                case Result.AuthenticationNeedToLogoutAndClear:
+                    linkAuthResult(ErrorCode.SUCCESS, AuthCode.NEED_TO_LOGOUT_CLEAR, res.AccountPass, res.LocalAccountType, res.LocalAccountName, res.ExtraData, TimeSpan.Zero, 0);
+                    break;
+                case Result.AuthenticationExpired:
+                    linkAuthResult(ErrorCode.OTHER_DEVICE_LOGIN_ERROR, AuthCode.FAILED_AuthExpired, null, AccountType.None, null, res.ExtraData, TimeSpan.Zero, 0);
+                    break;
+                case Result.UserBlocked:
+                    switch (res.BlockType)
+                    {
+                        case BlockType.UnauthorizedProgram:
+                            linkAuthResult(ErrorCode.SUCCESS, AuthCode.FAILED_Blocked_UnauthorizedPrograms, null, AccountType.None, null, res.ExtraData, res.BlockRemainTime, res.BlockedSuid);
+                            break;
+                        case BlockType.MisusingBug:
+                            linkAuthResult(ErrorCode.SUCCESS, AuthCode.FAILED_Blocked_MisusingSystemErrorsAndBugs, null, AccountType.None, null, res.ExtraData, res.BlockRemainTime, res.BlockedSuid);
+                            break;
+                        case BlockType.Abusing:
+                            linkAuthResult(ErrorCode.SUCCESS, AuthCode.FAILED_Blocked_Abusing, null, AccountType.None, null, res.ExtraData, res.BlockRemainTime, res.BlockedSuid);
+                            break;
+                        case BlockType.InvalidPurchase:
+                            linkAuthResult(ErrorCode.SUCCESS, AuthCode.FAILED_Blocked_InvalidPurchase, null, AccountType.None, null, res.ExtraData, res.BlockRemainTime, res.BlockedSuid);
+                            break;
+                        case BlockType.BadManner:
+                            linkAuthResult(ErrorCode.SUCCESS, AuthCode.FAILED_Blocked_InappropriateBehavior, null, AccountType.None, null, res.ExtraData, res.BlockRemainTime, res.BlockedSuid);
+                            break;
+                    }
+                    break;
+                case Result.AuthenticationCrossCheckFailed:
+                    linkAuthResult(ErrorCode.SUCCESS, AuthCode.FAILED_CrossCheckSignatureMismatched, null, AccountType.None, null, null, TimeSpan.Zero, res.BlockedSuid);
+                    break;
+                case Result.AuthenticationCrossCheckRetry:
+                    linkAuthResult(ErrorCode.SUCCESS, AuthCode.FAILED_CrossCheckRetry, null, AccountType.None, null, null, TimeSpan.Zero, res.BlockedSuid);
+                    break;
+                default:
+                    linkAuthResult(ErrorCode.SUCCESS, AuthCode.FAILED, null, AccountType.None, null, res.ExtraData, TimeSpan.Zero, 0);
+                    break;
+            }
+        }
+
+        public void Process(AuthAppleIdReq req, ErrorRes res)
         {
             switch (res.Result)
             {

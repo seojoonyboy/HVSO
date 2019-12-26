@@ -1,0 +1,41 @@
+
+main_lock.png
+size: 1024,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+effect1
+  rotate: true
+  xy: 0, 162
+  size: 260, 262
+  orig: 260, 262
+  offset: 0, 0
+  index: -1
+effect2
+  rotate: false
+  xy: 0, 34
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+lock1
+  rotate: true
+  xy: 262, 0
+  size: 211, 245
+  orig: 211, 245
+  offset: 0, 0
+  index: -1
+lock2
+  rotate: true
+  xy: 262, 211
+  size: 211, 339
+  orig: 211, 339
+  offset: 0, 0
+  index: -1
+lock22
+  rotate: false
+  xy: 601, 83
+  size: 211, 339
+  orig: 211, 339
+  offset: 0, 0
+  index: -1

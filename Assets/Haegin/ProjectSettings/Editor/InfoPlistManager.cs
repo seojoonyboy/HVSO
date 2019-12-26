@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEditor.Callbacks;
-#if UNITY_IOS || UNITY_2018_3_OR_NEWER
+#if UNITY_IOS 
 using UnityEditor.iOS.Xcode;
 #endif
 using System.IO;
@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 public class InfoPlistManager : MonoBehaviour
 {
-#if UNITY_IOS || UNITY_2018_3_OR_NEWER
+#if UNITY_IOS
     [PostProcessBuild(102)]
     static void OnPostprocessBuild(BuildTarget buildTarget, string path)
     {
@@ -34,9 +34,9 @@ public class InfoPlistManager : MonoBehaviour
             // Google Ads 
             // This step is required as of Google Mobile Ads SDK version 7.42.0. Failure to add add this Info.plist entry results in a crash with the message: "The Google Mobile Ads SDK was initialized incorrectly."
 
-            if (!string.IsNullOrEmpty(Haegin.ProjectSettings.AdMobAppId))
+            if (!string.IsNullOrEmpty(Haegin.ProjectSettings.iOSAdMobAppId))
             {
-                rootDict.SetString("GADApplicationIdentifier", Haegin.ProjectSettings.AdMobAppId);
+                rootDict.SetString("GADApplicationIdentifier", Haegin.ProjectSettings.iOSAdMobAppId);
             }
 
             if (Haegin.ProjectSettings.UseIOSGoogleMobileAds7_24_0_OR_HIGHER)

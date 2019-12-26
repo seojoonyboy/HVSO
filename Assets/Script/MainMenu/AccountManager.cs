@@ -29,6 +29,8 @@ public partial class AccountManager : Singleton<AccountManager> {
     public List<Templates> orcTemplates;
 
     public List<Shop> shopItems;
+    public List<Mail> mailList;
+    public List<MailReward> mailRewardList; 
 
     public List<CollectionCard> allCards { get; private set; }
     public List<HeroInventory> allHeroes { get; private set; }
@@ -74,6 +76,7 @@ public partial class AccountManager : Singleton<AccountManager> {
         cardPackage = Resources.Load("CardDatas/CardDataPackage_01") as CardDataPackage;
         resource = transform.GetComponent<ResourceManager>();
         gameObject.AddComponent<Timer.TimerManager>();
+        
         PlayerPrefs.DeleteKey("ReconnectData");
     }
 
@@ -227,12 +230,13 @@ public partial class AccountManager : Singleton<AccountManager> {
 
         public int gold;
         public double supplyTimeRemain;
+        public double mainAdTimeRemain;
         public int supply;
         public int supplyBox;
-        public int manaCrystal;
+        public int crystal;
         public int preSupply;
         public int supplyX2Coupon;
-
+        public int mainAdCount;
         public string nickName;
         public string deviceId;
         public int pass;
@@ -326,6 +330,7 @@ public partial class AccountManager {
 
     public void OnSignInResultModal() {
         Destroy(loadingModal);
+        AdsManager.Instance.Init();
         Modal.instantiate("로그인이 되었습니다.", Modal.Type.CHECK, () => {
             FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
         });
@@ -357,8 +362,10 @@ public partial class AccountManager {
             lvExp: userData.lvExp,
             nextLvExp: userData.nextLvExp,
             gold: userData.gold,
-            crystal: userData.manaCrystal,
+            crystal: userData.crystal,
             supplyStoreTime: (int)userData.supplyTimeRemain,
+            mainAdTimeRemain: (int)userData.mainAdTimeRemain,
+            mainAdCount: userData.mainAdCount,
             supplyStore: userData.preSupply,
             supply: userData.supply,
             supplyBox: userData.supplyBox,
@@ -376,8 +383,10 @@ public partial class AccountManager {
             lvExp: userData.lvExp,
             nextLvExp: userData.nextLvExp,
             gold: userData.gold,
-            crystal: userData.manaCrystal,
+            crystal: userData.crystal,
             supplyStoreTime: (int)userData.supplyTimeRemain,
+            mainAdTimeRemain: (int)userData.mainAdTimeRemain,
+            mainAdCount: userData.mainAdCount,
             supplyStore: userData.preSupply,
             supply: userData.supply,
             supplyBox: userData.supplyBox,
@@ -756,6 +765,36 @@ public partial class AccountManager {
         }, "인벤토리 정보를 불러오는 중...");
     }
 
+    public void RequestMainAdReward() {
+        StringBuilder url = new StringBuilder();
+        string base_url = networkManager.baseUrl;
+
+        url
+            .Append(base_url)
+            .Append("api/user/claim_reward?kind=ad&placementName=main&rewardName=presupply&rewardAmount=40");
+
+        HTTPRequest request = new HTTPRequest(
+            new Uri(url.ToString())
+        );
+        request.MethodType = HTTPMethods.Post;
+        request.AddHeader("authorization", TokenFormat);
+        networkManager.Request(request, (req, res) => {
+            if (res.IsSuccess) {
+                if (res.StatusCode == 200 || res.StatusCode == 304) {
+                    NoneIngameSceneEventHandler
+                        .Instance
+                        .PostNotification(
+                            NoneIngameSceneEventHandler.EVENT_TYPE.API_ADREWARD_MAIN,
+                            null,
+                            res
+                        );
+                }
+            }
+            else {
+                Logger.LogWarning("광고 보상 받기 실패");
+            }
+        }, "광고 보상 불러오는 중...");
+    }
 
 
     public void RequestShopItems() {
@@ -819,6 +858,104 @@ public partial class AccountManager {
                 }
             }
             else {
+                Logger.LogWarning("상품 구매 실패");
+            }
+        }, "상품 구매 중...");
+    }
+
+    public void RequestMailBox() {
+        StringBuilder url = new StringBuilder();
+        string base_url = networkManager.baseUrl;
+
+        url
+            .Append(base_url)
+            .Append("api/posts");
+
+        HTTPRequest request = new HTTPRequest(
+            new Uri(url.ToString())
+        );
+        request.MethodType = HTTPMethods.Get;
+        request.AddHeader("authorization", TokenFormat);
+        networkManager.Request(request, (req, res) => {
+            if (res.IsSuccess) {
+                if (res.StatusCode == 200 || res.StatusCode == 304) {
+                    var result = dataModules.JsonReader.Read<List<Mail>>(res.DataAsText);
+                    mailList = result;
+
+                    NoneIngameSceneEventHandler
+                        .Instance
+                        .PostNotification(
+                            NoneIngameSceneEventHandler.EVENT_TYPE.API_MAIL_UPDATE,
+                            null,
+                            res
+                        );
+                }
+            }
+            else {
+                Logger.LogWarning("우편함 불러오기 실패");
+            }
+        }, "우편함 불러오는중...");
+    }
+
+    public void RequestReadMail(string mailId) {
+        StringBuilder url = new StringBuilder();
+        string base_url = networkManager.baseUrl;
+
+        url
+            .Append(base_url)
+            .Append("api/posts/" + mailId);
+
+        HTTPRequest request = new HTTPRequest(
+            new Uri(url.ToString())
+        );
+        request.MethodType = HTTPMethods.Get;
+        request.AddHeader("authorization", TokenFormat);
+        networkManager.Request(request, (req, res) => {
+            if (res.IsSuccess) {
+                if (res.StatusCode == 200 || res.StatusCode == 304) {
+                    NoneIngameSceneEventHandler
+                        .Instance
+                        .PostNotification(
+                            NoneIngameSceneEventHandler.EVENT_TYPE.API_MAIL_READ,
+                            null,
+                            res
+                        );
+                }
+            }
+            else {
+                Logger.LogWarning("우편 읽기 실패");
+            }
+        }, "우편 불러오는중...");
+    }
+
+    public void RequestReceiveMail(string mailId) {
+        StringBuilder sb = new StringBuilder();
+        sb
+            .Append(networkManager.baseUrl)
+            .Append("api/posts/receive/" + mailId);
+
+        HTTPRequest request = new HTTPRequest(
+            new Uri(sb.ToString())
+        );
+        request.MethodType = BestHTTP.HTTPMethods.Post;
+        request.AddHeader("authorization", TokenFormat);
+
+        networkManager.Request(request, (req, res) => {
+            if (res.IsSuccess) {
+                if (res.StatusCode == 200 || res.StatusCode == 304) {
+                    var result = dataModules.JsonReader.Read<List<MailReward>>(res.DataAsText);
+                    mailRewardList = result;
+                    NoneIngameSceneEventHandler
+                        .Instance
+                        .PostNotification(
+                            NoneIngameSceneEventHandler.EVENT_TYPE.API_MAIL_RECEIVE,
+                            null,
+                            res
+                        );
+                }
+            }
+            else {
+                Debug.Log(res.DataAsText);
                 Logger.LogWarning("상품 구매 실패");
             }
         }, "상품 구매 중...");
@@ -969,7 +1106,7 @@ public partial class AccountManager {
         set {
             tokenId = value;
             TokenFormat = string.Format("Bearer {0}", TokenId);
-            //Logger.Log(TokenId);
+            Logger.Log(TokenFormat);
             tokenSetFinished.Invoke();
         }
     }
@@ -1050,7 +1187,7 @@ public partial class AccountManager {
 
         url.Append(parm);
         HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
-        request.MethodType = HTTPMethods.Get;
+        request.MethodType = HTTPMethods.Post;
         request.AddHeader("authorization", TokenFormat);
         networkManager.Request(request, callback, "보상 받기를 기다리는 중...");
     }
@@ -1096,16 +1233,41 @@ public partial class AccountManager {
             }
         }, "스테이지 진척도 불러오는 중...");
     }
-    public void RequestTutorialBoxReward(OnRequestFinishedDelegate callback) {
+
+    public void RequestTutorialBox(OnRequestFinishedDelegate callback) {
         StringBuilder url = new StringBuilder();
 
         url.Append(networkManager.baseUrl);
-        url.Append("api/user/claim_reward?kind=tutorial");
+        url.Append("api/user/claim_reward?kind=tutorialBox");
 
         HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
-        request.MethodType = HTTPMethods.Get;
+        request.MethodType = HTTPMethods.Post;
         request.AddHeader("authorization", TokenFormat);
-        networkManager.Request(request, callback, "보상 내역 확인중...");
+        networkManager.Request(
+            request, 
+            (req, res) => {
+                if (res.StatusCode == 200 || res.StatusCode == 304) {
+                    Logger.Log(res.DataAsText);
+                    if (res.DataAsText.Contains("already")) {
+                        Logger.Log("이미 보상 받았음");
+                    }
+                    else {
+                        var result = dataModules.JsonReader.Read<RewardClass[]>(res.DataAsText);
+
+                        rewardList = result;
+                        SetRewardInfo(result);
+
+                        NoneIngameSceneEventHandler.Instance.PostNotification(
+                            NoneIngameSceneEventHandler.EVENT_TYPE.API_OPENBOX,
+                            null,
+                            res
+                        );
+                    }
+                }
+                callback(req, res);
+            },
+            "보상 내역 확인중..."
+            );
     }
 
     public void RequestTutorialPreSettings() {
@@ -1141,6 +1303,8 @@ public partial class AccountManager {
                             );
                     }
                     else {
+                        Debug.LogError(_res.IsSuccess);
+                        Debug.LogError(_res.DataAsText);
                         Logger.LogWarning("요청 실패로 튜토리얼 진행 문제 발생");
                     }
                 });
@@ -1168,6 +1332,39 @@ public partial class AccountManager {
         public int losingStreak;
         public string rankingBattleState;
         public bool[] rankingBattleCount;
+        public int? ratingPointTop;
+        public List<Reward> rewards;
+
+        public LeagueInfo DeepCopy(LeagueInfo originData) {
+            LeagueInfo leagueInfo = new LeagueInfo();
+            leagueInfo.modifiedRatingPoint = originData.modifiedRatingPoint;
+            leagueInfo.ratingPoint = originData.ratingPoint;
+            leagueInfo.ratingPointTop = originData.ratingPointTop;
+            //leagueInfo.rankingBattleCount = originData.rankingBattleCount;
+            leagueInfo.rankingBattleCount = new bool[originData.rankingBattleCount.Length];
+            for(int i=0; i<originData.rankingBattleCount.Length; i++) {
+                rankingBattleCount[i] = originData.rankingBattleCount[i];
+            }
+            leagueInfo.rankingBattleState = originData.rankingBattleState;
+            leagueInfo.rewards = originData.rewards;
+
+            leagueInfo.rankDetail = new RankDetail();
+            leagueInfo.rankDetail.majorRankName = originData.rankDetail.majorRankName;
+            leagueInfo.rankDetail.minorRankName = originData.rankDetail.minorRankName;
+            leagueInfo.rankDetail.pointLessThen = originData.rankDetail.pointLessThen;
+            leagueInfo.rankDetail.pointOverThen = originData.rankDetail.pointOverThen;
+            
+
+            if(originData.rankDetail.rankDownBattleCount != null) {
+                leagueInfo.rankDetail.rankDownBattleCount = new RankUpCondition(originData.rankDetail.rankDownBattleCount.needTo, originData.rankDetail.rankDownBattleCount.battles);
+            }
+
+            if(originData.rankDetail.rankUpBattleCount != null) {
+                leagueInfo.rankDetail.rankUpBattleCount = new RankUpCondition(originData.rankDetail.rankUpBattleCount.needTo, originData.rankDetail.rankUpBattleCount.battles);
+            }
+
+            return leagueInfo;
+        }
     }
 
     [Serializable]
@@ -1181,9 +1378,28 @@ public partial class AccountManager {
         public int pointLessThen;
     }
 
+    [Serializable]
     public class RankUpCondition {
         public int needTo;
         public int battles;
+
+        public RankUpCondition(int needTo, int battles) {
+            this.needTo = needTo;
+            this.battles = battles;
+        }
+    }
+
+    public class Reward {
+        public bool claimed;
+        public bool canClaim;
+        public RewardInfo reward;
+        public int id;
+        public int point;
+    }
+
+    public class RewardInfo {
+        public string kind;
+        public string amount;
     }
 
     /// <summary>
@@ -1211,7 +1427,7 @@ public partial class AccountManager {
                     if(prevSceneName != "Ingame") {
                         Logger.Log("이전 씬이 Ingame이 아닌 경우");
                         scriptable_leagueData.leagueInfo = leagueInfo;
-                        scriptable_leagueData.prevLeagueInfo = leagueInfo;
+                        scriptable_leagueData.prevLeagueInfo = leagueInfo.DeepCopy(leagueInfo);
                     }
 
                     NoneIngameSceneEventHandler
@@ -1224,6 +1440,62 @@ public partial class AccountManager {
                 }
             },
             "리그 정보를 불러오는중...");
+    }
+
+    public void RequestLeagueReward(OnRequestFinishedDelegate callback, int rewardId) {
+        StringBuilder url = new StringBuilder();
+        string base_url = networkManager.baseUrl;
+
+        url
+            .Append(base_url)
+            .Append("api/user/claim_reward")
+            .Append("?kind=rating&rewardId=")
+            .Append(rewardId.ToString());
+
+        Logger.Log("RequestLeagueReward");
+        HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
+        request.MethodType = HTTPMethods.Post;
+        request.AddHeader("authorization", TokenFormat);
+
+        networkManager.Request(
+            request, (req, res) => {
+                callback(req, res);
+
+                RequestLeagueInfo();
+            },
+            "리그 보상 요청...");
+    }
+
+    public List<RankTableRow> rankTable = new List<RankTableRow>();
+
+    public void RequestRankTable() {
+        StringBuilder url = new StringBuilder();
+        string base_url = networkManager.baseUrl;
+
+        url
+            .Append(base_url)
+            .Append("api/info/rank_table");
+
+        HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
+        request.MethodType = HTTPMethods.Get;
+        request.AddHeader("authorization", TokenFormat);
+
+        networkManager.Request(
+            request, (req, res) => {
+                var sceneStartController = GetComponent<SceneStartController>();
+                if (res.StatusCode == 200 || res.StatusCode == 304) {
+                    rankTable = dataModules.JsonReader.Read<List<RankTableRow>>(res.DataAsText);
+
+                    NoneIngameSceneEventHandler
+                        .Instance
+                        .PostNotification(
+                            NoneIngameSceneEventHandler.EVENT_TYPE.API_RANK_TABLE_RECEIVED,
+                            null,
+                            rankTable
+                        );
+                }
+            },
+            "등급 테이블을 불러오는중...");
     }
 
     private void MakeAreaDict() {
@@ -1259,5 +1531,303 @@ public partial class AccountManager {
             this.Max = Max;
             this.Min = Min;
         }
+    }
+
+    public class RankTableRow {
+        //public RankUpCondition rankUpBattleCount;
+        //public RankUpCondition rankDownBattleCount;
+        public string majorRankName;
+        public string minorRankName;
+        public int? pointOverThen;
+        public int? pointLessThen;
+
+        public int id;
+    }
+}
+
+public partial class AccountManager {
+    public List<QuestInfo> questInfos;
+
+    public class QuestInfo {
+        public int id;
+        public string name;
+        public bool cleared;
+        public List<QuestUnlockInfo> after;
+    }
+
+    public class QuestUnlockInfo {
+        public string method;
+        public string[] args;
+    }
+
+    /// <summary>
+    /// 메뉴 해금/잠금 여부 목록
+    /// </summary>
+    public void RequestTutorialUnlockInfos() {
+        StringBuilder url = new StringBuilder();
+        string base_url = networkManager.baseUrl;
+
+        url
+            .Append(base_url)
+            .Append("api/user/tutorial_info");
+
+        Logger.Log("Request tutorial_info");
+        HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
+        request.MethodType = HTTPMethods.Get;
+        request.AddHeader("authorization", TokenFormat);
+
+        networkManager.Request(
+            request, (req, res) => {
+                if (res.StatusCode == 200 || res.StatusCode == 304) {
+                    questInfos = dataModules.JsonReader.Read<List<QuestInfo>>(res.DataAsText);
+                    
+                    NoneIngameSceneEventHandler
+                        .Instance
+                        .PostNotification(
+                            NoneIngameSceneEventHandler.EVENT_TYPE.API_TUTORIAL_INFOS_UPDATED,
+                            null,
+                            questInfos
+                        );
+
+                    RequestUserInfo();
+                }
+            },
+            "튜토리얼 정보를 불러오는중...");
+    }
+
+    /// <summary>
+    /// 튜토리얼 완료 처리 요청
+    /// </summary>
+    /// <param name="id"></param>
+    public void RequestUnlockInTutorial(int id) {
+        StringBuilder url = new StringBuilder();
+        string base_url = networkManager.baseUrl;
+
+        url
+            .Append(base_url)
+            .Append("api/user/tutorial_cleared");
+
+        url.Append("/" + id);
+        Logger.Log("Request POST tutorial_info");
+
+        HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
+
+        request.MethodType = HTTPMethods.Post;
+        request.AddHeader("authorization", TokenFormat);
+
+        networkManager.Request(
+            request,
+            (req, res) => {
+                if (res.IsSuccess) {
+                    if(res.StatusCode == 200 || res.StatusCode == 304) {
+                        RequestTutorialUnlockInfos();
+                        //RequestQuestInfo();
+                    }
+                }
+            }, 
+            "튜토리얼 완료 처리중..."
+            );
+    }
+
+    public void RequestQuestClearReward(int id, GameObject obj) {
+        StringBuilder url = new StringBuilder();
+        string base_url = networkManager.baseUrl;
+
+        url
+            .Append(base_url)
+            .Append("api/quest/get_reward");
+
+        url.Append("/" + id);
+        Logger.Log("RequestQuestClearReward");
+
+        HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
+
+        request.MethodType = HTTPMethods.Post;
+        request.AddHeader("authorization", TokenFormat);
+
+        networkManager.Request(
+            request,
+            (req, res) => {
+                Logger.Log(res.DataAsText);
+                if (res.IsSuccess) {
+                    if (res.StatusCode == 200 || res.StatusCode == 304) {
+                        RequestMailBox();
+
+                        NoneIngameSceneEventHandler
+                        .Instance
+                        .PostNotification(
+                            NoneIngameSceneEventHandler.EVENT_TYPE.API_QUEST_REWARD_RECEIVED,
+                            null,
+                            obj
+                        );
+                    }
+                }
+            },
+            "튜토리얼 보상 요청중..."
+            );
+    }
+}
+
+public partial class AccountManager {
+    public void RequestQuestInfo() {
+        StringBuilder url = new StringBuilder();
+        string base_url = networkManager.baseUrl;
+
+        url
+            .Append(base_url)
+            .Append("api/quest");
+
+        Logger.Log("Request Quest Info");
+        HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
+        request.MethodType = HTTPMethods.Get;
+        request.AddHeader("authorization", TokenFormat);
+
+        networkManager.Request(
+            request, (req, res) => {
+                if (res.StatusCode == 200 || res.StatusCode == 304) {
+                    var QuestData = dataModules.JsonReader.Read<Quest.QuestData[]>(res.DataAsText);
+                    
+                    NoneIngameSceneEventHandler
+                        .Instance
+                        .PostNotification(
+                            NoneIngameSceneEventHandler.EVENT_TYPE.API_QUEST_UPDATED,
+                            null,
+                            QuestData
+                        );
+
+                    RequestUserInfo();
+                }
+            },
+            "튜토리얼 정보를 불러오는중...");
+    }
+
+    public void RequestQuestProgress(int questId) {
+        StringBuilder url = new StringBuilder();
+        string base_url = networkManager.baseUrl;
+
+        url
+            .Append(base_url)
+            .Append("api/quest/progress/")
+            .Append(questId);
+
+        Logger.Log("Request Quest Info");
+        HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
+        request.MethodType = HTTPMethods.Post;
+        request.AddHeader("authorization", TokenFormat);
+
+        networkManager.Request(
+            request, (req, res) => {
+                if (res.StatusCode == 200 || res.StatusCode == 304) {
+                    // var QuestData = dataModules.JsonReader.Read<Quest.QuestData[]>(res.DataAsText);
+                    
+                    // NoneIngameSceneEventHandler
+                    //     .Instance
+                    //     .PostNotification(
+                    //         NoneIngameSceneEventHandler.EVENT_TYPE.API_QUEST_UPDATED,
+                    //         null,
+                    //         QuestData
+                    //     );
+
+                    // RequestUserInfo();
+                }
+            },
+            "튜토리얼 정보를 불러오는중...");
+    }
+
+    public void SkipStoryRequest(string camp, int stageNumber) {
+        StringBuilder url = new StringBuilder();
+        string base_url = networkManager.baseUrl;
+
+        url
+            .Append(base_url)
+            .Append("api/test_helper/tutorial/")
+            .Append(camp)
+            .Append("/")
+            .Append(stageNumber);
+
+        HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
+        request.MethodType = HTTPMethods.Get;
+        request.AddHeader("authorization", TokenFormat);
+
+        PlayerPrefs.SetString("SelectedBattleButton", "STORY");
+        PlayerPrefs.SetInt("isFirst", 0);
+
+        MenuLockController.MenuNameData lockMenuList = new MenuLockController.MenuNameData();
+        MenuLockController.MenuNameData unlockMenuList = new MenuLockController.MenuNameData();
+
+        lockMenuList.menuNameList = new List<string>();
+        unlockMenuList.menuNameList = new List<string>();
+
+        lockMenuList.menuNameList.Add("League");
+        //lockMenuList.menuNameList.Add("Story");
+        lockMenuList.menuNameList.Add("DeckEdit");
+        lockMenuList.menuNameList.Add("Dictionary");
+        lockMenuList.menuNameList.Add("Shop");
+        lockMenuList.menuNameList.Add("RewardBox");
+        lockMenuList.menuNameList.Add("Mode");
+        lockMenuList.menuNameList.Add("HumanBaseDeckAiBattleBtn");
+        lockMenuList.menuNameList.Add("HumanBaseDeckDeleteBtn");
+        lockMenuList.menuNameList.Add("OrcBaseDeckAiBattleBtn");
+        lockMenuList.menuNameList.Add("OrcBaseDeckDeleteBtn");
+
+        unlockMenuList.menuNameList.Add("Story");
+
+        PlayerPrefs.SetString("lockMenuList", JsonConvert.SerializeObject(lockMenuList));
+        PlayerPrefs.SetString("unlockMenuList", JsonConvert.SerializeObject(unlockMenuList));
+
+        if (stageNumber == 1) {
+            if(camp == "human") {
+                RequestIngameTutorialReward((req, res) => {
+                    Modal.instantiate("휴먼 기본부대 획득", Modal.Type.CHECK);
+                }, camp);
+            }
+            else {
+                RequestIngameTutorialReward((req, res) => {
+                    Modal.instantiate("오크 기본부대 획득", Modal.Type.CHECK);
+                }, camp);
+            }
+        }
+
+        networkManager.Request(
+            request, (req, res) => {
+                if (res.StatusCode == 200 || res.StatusCode == 304) {
+                    Modal.instantiate("튜토리얼 " + camp + ", " + stageNumber + " 스킵 완료", Modal.Type.CHECK);
+                }
+                else {
+                    Modal.instantiate("튜토리얼 skip 요청 오류", Modal.Type.CHECK);
+                    Logger.LogError(res.DataAsText);
+                }
+            },
+            "튜토리얼 스킵 요청중...");
+    }
+
+    public void RequestChangeMMRForTest(int mmr) {
+        StringBuilder url = new StringBuilder();
+        string base_url = networkManager.baseUrl;
+
+        if (mmr < 0) mmr = 0;
+        else if (mmr > 3000) mmr = 3000;
+
+        url
+            .Append(base_url)
+            .Append("api/test_helper/league_info/")
+            .Append(mmr);
+
+        HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
+        request.MethodType = HTTPMethods.Get;
+        request.AddHeader("authorization", TokenFormat);
+
+        networkManager.Request(
+            request, (req, res) => {
+                if (res.StatusCode == 200 || res.StatusCode == 304) {
+                    Modal.instantiate("MMR 변경 완료", Modal.Type.CHECK);
+                }
+                else {
+                    Modal.instantiate("MMR 변경 요청 오류", Modal.Type.CHECK);
+                    Logger.LogError(res.DataAsText);
+                }
+                
+            },
+            "MMR 변경 요청중...");
     }
 }

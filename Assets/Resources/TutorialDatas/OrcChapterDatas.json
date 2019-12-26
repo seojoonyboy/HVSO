@@ -4,8 +4,12 @@
         "stage_number": 1,
         "stage_Name": "복수",
         "match_type": "tutorial",
+        "stage_type" : "normal",
+        "myHeroId" : "h10002",
+        "enemyHeroId" : "qh10001",
+        "map" : "forest",
         "description": "오크 부족을 토벌하러온 인간 기사와의 전투에서 살아남고 상대를 물리쳐라.",
-        "specialRule": "- 적 영웅 체력 5\n- 튜토리얼",
+        "specialRule": "적 영웅 체력 5",
         "scripts": [
             {
                 "Print_text": "data_stage_1031_1_",
@@ -19,6 +23,12 @@
                         "args": [
                             "units",
                             "all"
+                        ]
+                    },
+                    {
+                        "name": "Show_Info_Modal",
+                        "args": [
+                            "block"
                         ]
                     },
                     {
@@ -54,7 +64,7 @@
                     {
                         "name": "NPC_Print_message",
                         "args": [
-                            "hac10001",
+                            "qh10001",
                             "감히 인간의 마을을 공격해? 미개한 오크주제에, 이런짓을 벌이고 무사할 줄 알았느냐!!",
                             "false"
                         ]
@@ -329,7 +339,7 @@
                     {
                         "name": "NPC_Print_message",
                         "args": [
-                            "hac10001",
+                            "qh10001",
                             "이…이런 건방진 것들이!! 나를 공격해? 해치워주마!!",
                             "false"
                         ]
@@ -438,7 +448,7 @@
                     {
                         "name": "NPC_Print_message",
                         "args": [
-                            "hac10001",
+                            "qh10001",
                             "내 모든걸 걸고 너희를 죽여주마!",
                             "false"
                         ]
@@ -485,7 +495,7 @@
                         "name": "NPC_Print_message",
                         "args": [
                             "ac10012",
-                            "드로우 마법을 사용할 수 있군요. 핸드에 카드는 10장만 가질 수 있습니다. 주의하세요",
+                            "드로우 마법을 사용할 수 있군요. 손패에 가질 수 있는 카드는 10장입니다. 주의하세요.",
                             "true"
                         ]
                     },
@@ -521,7 +531,7 @@
                         "name": "NPC_Print_message",
                         "args": [
                             "ac10012",
-                            "사용할 수 있는 카드는 없군요. 그럼, '턴 종료' 버튼을 터치해서 전투를 시작하세요! ",
+                            "사용할 수 있는 카드가 없군요. 그럼, '턴 종료' 버튼을 터치해서 전투를 시작하세요! ",
                             "true"
                         ]
                     },
@@ -580,7 +590,7 @@
                     {
                         "name": "NPC_Print_message",
                         "args": [
-                            "hac10001",
+                            "qh10001",
                             "으아악! 두고보자 오크놈들!",
                             "false"
                         ]
@@ -636,8 +646,12 @@
         "stage_number": 2,
         "stage_Name": "복수",
         "match_type": "tutorial",
+        "stage_type" : "normal",
+        "myHeroId" : "h10002",
+        "enemyHeroId" : "qh10001",
+        "map" : "forest",
         "description": "적을 추격해온 오크부족은 야영하며 쉬고있던 토벌대를 습격하고자 한다.",
-        "specialRule": "- 적 영웅 체력 5\n- 튜토리얼",
+        "specialRule": "적 영웅 체력 5",
         "scripts": [
             {
                 "Print_text": "data_stage_1031_2",
@@ -651,6 +665,12 @@
                         "args": [
                             "units",
                             "all"
+                        ]
+                    },
+                    {
+                        "name": "Show_Info_Modal",
+                        "args": [
+                            "block"
                         ]
                     },
                     {
@@ -964,7 +984,7 @@
                     {
                         "name": "NPC_Print_message",
                         "args": [
-                            "hac10001",
+                            "qh10001",
                             "큭… 날 지키란 말이다!! 쓸모없는 병사놈들 같으니!  ",
                             "false"
                         ]
@@ -987,6 +1007,12 @@
                         "name": "Wait_click",
                         "args": [
                             "screen"
+                        ]
+                    },
+                    {
+                        "name": "Show_Info_Modal",
+                        "args": [
+                            "open"
                         ]
                     },
                     {
@@ -1038,7 +1064,7 @@
                     {
                         "name": "NPC_Print_message",
                         "args": [
-                            "hac10001",
+                            "qh10001",
                             "안되겠다, 모두 도망쳐라!!  ",
                             "false"
                         ]
@@ -1091,6 +1117,98 @@
             {
                 "reward": "supply",
                 "count": 50
+            }
+        ]
+    },
+    {
+        "chapter": 1,
+        "stage_number": 1,
+        "stage_Name": "진군",
+        "match_type": "tutorial",
+        "stage_type" : "normal",
+        "myHeroId" : "h10002",
+        "enemyHeroId" : "h10001",
+        "map" : "forest",
+        "description": "최근 인간과 마찰이 있던 '산 그림자' 부족의 전멸을 생존자로부터 전해들은 '검은 수정' 부족의 족장 크라쿠스는 인간들에게 피의 복수를 하기 위해 주변 부족들을 규합하고 슈로덴 성으로 진군한다.",
+        "specialRule": "적 영웅의 체력 최대치 15",
+        "scripts": [],
+        "scenarioReward": [
+            {
+                "reward": "exp",
+                "count": 10
+            },
+            {
+                "reward": "supply",
+                "count": 25
+            }
+        ]
+    },
+    {
+        "chapter": 1,
+        "stage_number": 2,
+        "stage_Name": "슈로덴 공성전",
+        "match_type": "story",
+        "stage_type" : "normal",
+        "myHeroId" : "h10002",
+        "enemyHeroId" : "h10001",
+        "map" : "castle",
+        "description": "최근 인간과 마찰이 있던 '산 그림자' 부족의 전멸을 생존자로부터 전해들은 '검은 수정' 부족의 족장 크라쿠스는 인간들에게 피의 복수를 하기 위해 주변 부족들을 규합하고 슈로덴 성으로 진군한다.",
+        "specialRule": "적 영웅의 체력 최대치 20",
+        "scripts": [],
+        "scenarioReward": [
+            {
+                "reward": "exp",
+                "count": 10
+            },
+            {
+                "reward": "supply",
+                "count": 25
+            }
+        ]
+    },
+    {
+        "chapter": 1,
+        "stage_number": 3,
+        "stage_Name": "복수",
+        "match_type": "story",
+        "stage_type" : "normal",
+        "myHeroId" : "h10002",
+        "enemyHeroId" : "h10001",
+        "map" : "castle",
+        "description": "성으로 돌아온 제로드에게 크라쿠스는 그동안 인간들에게 무시당하고 차별받은 오크의 복수를 하려한다.",
+        "specialRule": "적 영웅의 체력 최대치 20",
+        "scripts": [],
+        "scenarioReward": [
+            {
+                "reward": "exp",
+                "count": 10
+            },
+            {
+                "reward": "jewel",
+                "count": 150
+            }
+        ]
+    },
+    {
+        "chapter": 1,
+        "stage_number": 4,
+        "stage_Name": "추격",
+        "match_type": "story",
+        "stage_type" : "boss",
+        "myHeroId" : "h10002",
+        "enemyHeroId" : "h10001",
+        "map" : "forest",
+        "description": "오크 라이더로 구성된 오크의 추격 부대는 결국 슈로덴 성 인근 시길버트 숲에서 주민들과 제로드의 부대를 포위하는데 성공했다. 하지만 무슨일인지 포위망의 외곽이 소란스럽다.",
+        "specialRule": "적 영웅의 체력 최대치 25 \n 적 영웅 자원 2로 시작 \n 아군 오크 파수꾼 유닛 2개 라인에 배치된 상태로 시작 \n 15턴 안에 승리",
+        "scripts": [],
+        "scenarioReward": [
+            {
+                "reward": "exp",
+                "count": 20
+            },
+            {
+                "reward": "h10004",
+                "count": 10
             }
         ]
     }

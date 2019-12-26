@@ -1,0 +1,71 @@
+[
+    {
+        "id" : 0,
+        "tutorials" : [
+            {
+                "method" : "StartMailTutorial",
+                "args" : []
+            }
+        ]
+    },
+    {
+        "id" : 1,
+        "tutorials" : [
+            {
+                "method" : "QuestSubSetShow",
+                "args" : ["quest_sub_set_1"]
+            },
+            {
+                "method" : "QuestIconShow",
+                "args" : []
+            },
+            {
+                "method" : "ShowStoryHand",
+                "args" : ["human", "2"]
+            },
+            {
+                "method" : "QuestClearShow",
+                "args" : []
+            }
+        ]
+    },
+    {
+        "id" : 2,
+        "tutorials" : [
+            {
+                "method" : "MenuDictionaryShowHand",
+                "args" : ["ac10055"]
+            },
+            {
+                "method" : "CreateCardCheck",
+                "args" : ["ac10055"]
+            }
+        ]
+    },
+    {
+        "id" : 3,
+        "tutorials" : [
+            {
+                "method" : "MenuDeckSettingShowHand",
+                "args" : []
+            },
+            {
+                "method" : "DeckSettingRemoveCard",
+                "args" : ["ac10005"]
+            },
+            {
+                "method" : "DeckSettingAddCard",
+                "args" : ["ac10055"]
+            }
+        ]
+    },
+    {
+        "id" : 4,
+        "tutorials" : [
+            {
+                "method" : "BattleShow",
+                "args" : []
+            }
+        ]
+    }
+]

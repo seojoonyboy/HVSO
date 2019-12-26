@@ -164,7 +164,7 @@ public class SceneStartController : MonoBehaviour
     void CheckServiceStatus()
     {
 #if UNITY_EDITOR
-        ServiceMaintenance.CheckStatusV2("http://dev-maintenance.fbl.kr/Gate", "DevForTest", ShowServerMaintenanceWin, OnServerMaintenanceAction, (string CommonUrl, string GameUrl, string PatchUrl) =>
+        ServiceMaintenance.CheckStatusV2("http://dev-maintenance.fbl.kr/Gate", "DevForClient", ShowServerMaintenanceWin, OnServerMaintenanceAction, (string CommonUrl, string GameUrl, string PatchUrl) =>
 #else
         ServiceMaintenance.CheckStatusV2("http://dev-maintenance.fbl.kr/Gate", "DevForTest", ShowServerMaintenanceWin, OnServerMaintenanceAction, (string CommonUrl, string GameUrl, string PatchUrl) =>
 #endif
@@ -398,6 +398,7 @@ public class SceneStartController : MonoBehaviour
 
     public void OnErrorOccurred(int error)
     {
+        //Logger.Log("Error Code : " + error);
         OnNetworkError();
     }
 
@@ -454,9 +455,9 @@ public class SceneStartController : MonoBehaviour
 #if MDEBUG
                                 Debug.Log("LoadScene SceneLogin");
 #endif
-                                //SceneManager.LoadScene("SceneLogin", LoadSceneMode.Single);
-                                EULACanvas.gameObject.SetActive(false);
                                 NetworkManager.Instance.Auth();
+                                FindObjectOfType<LoginController>().gameObject.SetActive(true);
+                                FindObjectOfType<LoginController>().Login();
                             });
                             //Patch();
                         }

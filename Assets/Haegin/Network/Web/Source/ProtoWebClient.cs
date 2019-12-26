@@ -36,6 +36,7 @@ namespace Haegin
                 case ProtocolId.AuthGoogle: Encrypted = 1; break;
                 case ProtocolId.AuthFacebook: Encrypted = 1; break;
                 case ProtocolId.AuthSteam: Encrypted = 1; break;
+                case ProtocolId.AuthAppleId: Encrypted = 1; break;
                 case ProtocolId.Error: Encrypted = 0; break;
                 case ProtocolId.KeyCount: Encrypted = 0; break;
                 default: Encrypted = 2; break;
@@ -155,7 +156,9 @@ namespace Haegin
                 catch (Exception ex)
                 {
                     Logged(ex.ToString());
+#if !DO_NOT_CALL_PROTOWEB_ERROR
                     CallErrorOccurred(PWC_DequeueError);
+#endif
                 }
             }
 
@@ -186,7 +189,9 @@ namespace Haegin
                 catch (Exception ex)
                 {
                     Logged(ex.ToString());
+#if !DO_NOT_CALL_PROTOWEB_ERROR
                     CallErrorOccurred(PWC_HttpWebRequestError);
+#endif
                 }
             }
         }
@@ -216,7 +221,9 @@ namespace Haegin
             catch (Exception ex)
             {
                 Logged(ex.ToString());
+#if !DO_NOT_CALL_PROTOWEB_ERROR
                 CallErrorOccurred(PWC_SerializeError);
+#endif
             }
         }
 
@@ -275,7 +282,9 @@ namespace Haegin
             catch (Exception ex)
             {
                 Logged(ex.ToString());
+#if !DO_NOT_CALL_PROTOWEB_ERROR
                 CallErrorOccurred(PWC_DeserializeError);
+#endif
             }
         }
 
@@ -387,6 +396,11 @@ namespace Haegin
             else if (response.ProtocolId == ProtocolId.AuthSteam)
             {
                 AuthSteamRes res = (AuthSteamRes)response;
+                if (res.Result == 0) OnAuthenticated(res.Suid, res.Hash);
+            }
+            else if (response.ProtocolId == ProtocolId.AuthAppleId)
+            {
+                AuthAppleIdRes res = (AuthAppleIdRes)response;
                 if (res.Result == 0) OnAuthenticated(res.Suid, res.Hash);
             }
 

@@ -22,10 +22,13 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
     public ScenarioManager scenarioManager;
     public GameObject handUIPools;
     public GameObject rewardPanel;  //튜토리얼 중간에 보상받기 패널
-    public GameObject TutorialStageReadyCanvas;
     public GameObject BoxRewardPanel;
     public GameObject FixedMenuCanvas;
+    public GameObject battleMenuCanvas;
+    public GameObject menuTextCanvas;
+
     public MenuSceneController menuSceneController;
+    public MenuLockController lockController;
 
     public void ReadTutorialData() {
         string dataAsJson = ((TextAsset)Resources.Load("TutorialDatas/TutorialDatas")).text;
@@ -96,50 +99,82 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
         rewardPanel.SetActive(false);
     }
 
-    public void ActiveTutorialStoryReadyCanvas(string camp) {
-        TutorialStageReadyCanvas.SetActive(true);
-        Transform stagePanel = TutorialStageReadyCanvas.transform.Find("HUD/StagePanel");
-        switch (camp) {
-            case "human":
-                stagePanel.Find("HumanBack").gameObject.SetActive(true);
-                stagePanel.Find("OrcBack").gameObject.SetActive(false);
-                break;
-            case "orc":
-                stagePanel.Find("HumanBack").gameObject.SetActive(false);
-                stagePanel.Find("OrcBack").gameObject.SetActive(true);
-                break;
-        }
-
-        stagePanel
-            .transform
-            .Find("TextGroup/StageScript")
-            .gameObject
-            .GetComponent<Text>().text = ScenarioGameManagment.chapterData.description;
-    }
-
-    public void DeactiveTutorialStoryReadyCanvas() {
-        TutorialStageReadyCanvas.SetActive(false);
-    }
-
     public void ActiveRewardBoxCanvas() {
         BoxRewardPanel.GetComponent<BoxRewardManager>().OpenBox();
     }
 
-    public void OnMainPageChanged() {
-        int pageNum = scrollSnap.CurrentPage;
-        OnMenuDescPanel(pageNum);
-    }
+    public void OnMainPageChanged() { }
 
-    public void OnMenuDescPanel(int index) {
+    /// <summary>
+    /// 퀘스트 중간에 등장하는 강제 부분 처리
+    /// </summary>
+    /// <param name="type">Type</param>
+    public void StartQuestSubSet(TutorialType type) {
+        if ((int)type <= 10) return;
 
+        int arr_index = -1;
+        switch (type) {
+            case TutorialType.QUEST_SUB_SET_1:
+                arr_index = 2;
+                break;
+            case TutorialType.QUEST_SUB_SET_2:
+                arr_index = 3;
+                break;
+            case TutorialType.QUEST_SUB_SET_3:
+                arr_index = 4;
+                break;
+            case TutorialType.QUEST_SUB_SET_4:
+                arr_index = 5;
+                break;
+            case TutorialType.QUEST_SUB_SET_5:
+                arr_index = 6;
+                break;
+            case TutorialType.QUEST_SUB_SET_6:
+                arr_index = 7;
+                break;
+            case TutorialType.QUEST_SUB_SET_7:
+                arr_index = 8;
+                break;
+            case TutorialType.QUEST_SUB_SET_8:
+                arr_index = 9;
+                break;
+            case TutorialType.QUEST_SUB_SET_9:
+                arr_index = 10;
+                break;
+            case TutorialType.QUEST_SUB_SET_100:
+                arr_index = 11;
+                break;
+        }
+        if (arr_index == -1) return;
+
+        var selectedSets = sets[arr_index];
+
+        var execs = GetComponents<MenuExecute>();
+        if (execs != null) {
+            foreach (var exec in (execs)) {
+                Destroy(exec);
+            }
+        }
+
+        if (executeHandler == null) executeHandler = gameObject.AddComponent<MenuExecuteHandler>();
+
+        if (executeHandler == null) return;
+        executeHandler.Initialize(selectedSets);
     }
 
     public enum TutorialType {
         TO_ORC_STORY = 0,
-        TO_HUMAN_STORY_2 = 1,
-        TO_ORC_STORY_2 = 2,
-        UNLOCK_STORY_AND_BATTLE_MENU = 3,
-        MAIN_BUTTON_DESC = 4,
-        NONE = 5
+        UNLOCK_TOTAL_STORY = 1,
+        QUEST_SUB_SET_1 = 11,
+        QUEST_SUB_SET_2 = 14,
+        QUEST_SUB_SET_3 = 15,
+        QUEST_SUB_SET_4 = 16,
+        QUEST_SUB_SET_5 = 17,
+        QUEST_SUB_SET_6 = 18,
+        QUEST_SUB_SET_7 = 19,
+        QUEST_SUB_SET_8 = 20,
+        QUEST_SUB_SET_9 = 21,
+        QUEST_SUB_SET_100 = 100,
+        NONE = 99
     }
 }
