@@ -233,7 +233,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         if (!cardUsed) {
             BackToDeckCard();
 #if UNITY_ANDROID
-            CustomVibrate.Vibrate(new long[] { 0, 500, 0 }, 2);
+            CustomVibrate.Vibrate(new long[] { 0, 500, 50 }, 2);
 #elif UNITY_IOS && !UNITY_EDITOR
             CustomVibrate.VibrateNope();
 #endif
