@@ -232,11 +232,13 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         handManager.transform.SetParent(mouseXPos.parent);
         if (!cardUsed) {
             BackToDeckCard();
-
+#if UNITY_ANDROID
             CustomVibrate.Vibrate(new long[] { 0, 500, 0 }, 2);
-
-            if (ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.isTutorial == true)
-                SendEvent();
+#elif UNITY_IOS
+            CustomVibrate.VibrateNope();
+#endif
+        if (ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.isTutorial == true)
+            SendEvent();
 
         }
         CardDropManager.Instance.HideMagicSlot();

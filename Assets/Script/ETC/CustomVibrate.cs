@@ -65,6 +65,47 @@ return true;
 #endif
     }
 
+#if UNITY_IOS && !UNITY_EDITOR
+    [DllImport ( "__Internal" )]
+    private static extern bool _HasVibrator ();
+
+    [DllImport ( "__Internal" )]
+    private static extern void _Vibrate ();
+
+    [DllImport ( "__Internal" )]
+    private static extern void _VibratePop ();
+
+    [DllImport ( "__Internal" )]
+    private static extern void _VibratePeek ();
+
+    [DllImport ( "__Internal" )]
+    private static extern void _VibrateNope ();
+
+    ///<summary>
+    ///Only on iOS
+    ///</summary>
+    public static void VibratePop ()
+    {
+        _VibratePop ();
+    }
+
+    ///<summary>
+    ///Only on iOS
+    ///</summary>
+    public static void VibratePeek ()
+    {
+        _VibratePeek ();
+    }
+
+    ///<summary>
+    ///Only on iOS
+    ///</summary>
+    public static void VibrateNope ()
+    {
+        _VibrateNope ();
+    }
+#endif
+
     private static bool isVibrateOn() {
         string isOn = PlayerPrefs.GetString("Vibrate");
         return isOn == "On";

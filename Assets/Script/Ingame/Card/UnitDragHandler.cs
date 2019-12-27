@@ -61,7 +61,11 @@ public partial class UnitDragHandler : CardHandler, IBeginDragHandler, IDragHand
             CardDropManager.Instance.HighLightSlot(highlightedSlot, highlighted);
             highlightedSlot = null;
 
+#if UNITY_ANDROID
             CustomVibrate.Vibrate(new long[] { 0, 500, 0 }, 2);
+#elif UNITY_IOS
+            CustomVibrate.VibrateNope();
+#endif
         }
         else if(turnMachine.isPlayerTurn()) {
             if (ScenarioGameManagment.scenarioInstance != null) ScenarioMask.Instance.SelfOffCard(gameObject);
