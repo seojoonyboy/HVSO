@@ -1,35 +1,29 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public static class CustomVibrate {
-#if UNITY_ANDROID && !UNITY_EDITOR
-    public static AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
-    public static AndroidJavaObject currentActivity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
-    public static AndroidJavaObject vibrator = currentActivity.Call<AndroidJavaObject>("getSystemService", "vibrator");
-#else
-    public static AndroidJavaClass unityPlayer;
-    public static AndroidJavaObject currentActivity;
-    public static AndroidJavaObject vibrator;
-#endif
-
     public static void Vibrate() {
-        if (!isVibrateOn()) return;
-
-        if (isAndroid())
-            vibrator.Call("vibrate");
+        if (isAndroid()) {
+            using (AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer")) {
+                using (AndroidJavaObject obj = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity")) {
+                    var vibrator = obj.Call<AndroidJavaObject>("getSystemService", "vibrator");
+                    vibrator.Call("vibrate");
+                }
+            }
+        }
         else
             Handheld.Vibrate();
     }
 
 
     public static void Vibrate(long milliseconds) {
-        if (!isVibrateOn()) return;
-
-        Logger.Log("Vibrate " + milliseconds);
-
-        if (isAndroid())
-            vibrator.Call("vibrate", milliseconds);
+        if (isAndroid()) {
+            using (AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer")) {
+                using (AndroidJavaObject obj = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity")) {
+                    var vibrator = obj.Call<AndroidJavaObject>("getSystemService", "vibrator");
+                    vibrator.Call("vibrate", milliseconds);
+                }
+            }
+        }
         else
             Handheld.Vibrate();
     }
@@ -40,10 +34,14 @@ public static class CustomVibrate {
     /// <param name="pattern">진동 패턴</param>
     /// <param name="repeat"></param>
     public static void Vibrate(long[] pattern, int repeat) {
-        if (!isVibrateOn()) return;
-
-        if (isAndroid())
-            vibrator.Call("vibrate", pattern, repeat);
+        if (isAndroid()) {
+            using (AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer")) {
+                using (AndroidJavaObject obj = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity")) {
+                    var vibrator = obj.Call<AndroidJavaObject>("getSystemService", "vibrator");
+                    vibrator.Call("vibrate", pattern, repeat);
+                }
+            }
+        }
         else
             Handheld.Vibrate();
     }
@@ -53,20 +51,21 @@ public static class CustomVibrate {
     }
 
     public static void Cancel() {
-        if (isAndroid())
-            vibrator.Call("cancel");
+        if (isAndroid()) {
+            using (AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer")) {
+                using (AndroidJavaObject obj = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity")) {
+                    var vibrator = obj.Call<AndroidJavaObject>("getSystemService", "vibrator");
+                    vibrator.Call("Cancel");
+                }
+            }
+        }
     }
 
     private static bool isAndroid() {
 #if UNITY_ANDROID && !UNITY_EDITOR
-return true;
+        return true;
 #else
         return false;
 #endif
-    }
-
-    private static bool isVibrateOn() {
-        string isOn = PlayerPrefs.GetString("Vibrate");
-        return isOn == "On";
     }
 }
