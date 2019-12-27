@@ -119,6 +119,7 @@ public class MenuSceneController : MonoBehaviour {
             AddNewbiController();
 
             hideModal.SetActive(false);
+            PlayerPrefs.SetString("Vibrate", "On");
         }
         else {
             hideModal.SetActive(true);
@@ -130,6 +131,7 @@ public class MenuSceneController : MonoBehaviour {
                 //휴먼 튜토리얼 0-1을 진행하지 않았음
                 if (!clearedStages.Exists(x => x.camp == "human" && x.stageNumber == 1)) {
                     AddNewbiController();
+                    PlayerPrefs.SetString("Vibrate", "On");
                 }
                 else {
                     SoundManager.Instance.bgmController.PlaySoundTrack(BgmController.BgmEnum.MENU);

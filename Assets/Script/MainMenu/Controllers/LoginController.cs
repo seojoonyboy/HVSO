@@ -110,8 +110,6 @@ public class LoginController : MonoBehaviour {
                     .LoginTypeCanvas
                     .gameObject
                     .SetActive(true);
-
-                PlayerPrefs.SetString("Vibrate", "On");
             }
             else {
                 accountManager.OnSignInResultModal();
