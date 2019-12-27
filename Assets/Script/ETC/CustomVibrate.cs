@@ -60,6 +60,6 @@ return true;
 
     private static bool isVibrateOn() {
         string isOn = PlayerPrefs.GetString("Vibrate");
-        return isOn == "true";
+        return isOn == "On";
     }
 }
