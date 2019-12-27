@@ -13,7 +13,7 @@ public class BoxRewardManager : MonoBehaviour {
     [SerializeField] Transform boxObject;
     [SerializeField] TMPro.TextMeshProUGUI supplyStore;
     [SerializeField] TMPro.TextMeshProUGUI storeTimer;
-    [SerializeField] Transform AdsButton;
+    [SerializeField] Transform AdsWindow;
     [SerializeField] protected SkeletonGraphic boxSpine;
     [SerializeField] protected SkeletonGraphic boxEffect;
     [SerializeField] Transform additionalSupply;
@@ -37,7 +37,7 @@ public class BoxRewardManager : MonoBehaviour {
     void Awake() {
         accountManager = AccountManager.Instance;
         hudCanvas = transform.parent;
-        accountManager.userResource.LinkTimer(storeTimer, AdsButton);
+        accountManager.userResource.LinkTimer(storeTimer, AdsWindow);
 
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_OPENBOX, OnBoxOpenRequest);
 
@@ -522,6 +522,16 @@ public class BoxRewardManager : MonoBehaviour {
             }
         }
         menuSceneController.SetCardNumbersPerDic();
+    }
+
+    public void OpenMainAdWindow() {
+        AdsWindow.gameObject.SetActive(true);
+        EscapeKeyController.escapeKeyCtrl.AddEscape(CloseMainAdWindow);
+    }
+
+    public void CloseMainAdWindow() {
+        AdsWindow.gameObject.SetActive(false);
+        EscapeKeyController.escapeKeyCtrl.RemoveEscape(CloseMainAdWindow);
     }
 }
 
