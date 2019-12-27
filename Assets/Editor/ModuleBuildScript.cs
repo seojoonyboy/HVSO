@@ -72,7 +72,7 @@ class ModuleBuildScript
         PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.Android, "QA;ODIN_INSPECTOR;ENABLE_LOG;DO_NOT_USE_GPRESTO;MDEBUG;STORE_KIT_API_ENABLED;APP_DELEGATE_ENABLED;GAME_KIT_API_ENABLED;USER_NOTIFICATIONS_API_ENABLED;USE_MAINTENANCESERVER_V2;AN_FIREBASE_ANALYTICS;AN_FIREBASE_MESSAGING;USE_SAMPLE_SCENE");
         PlayerSettings.applicationIdentifier = "com.haegin.hvso.onestore";
         ProjectSettingsWindow.SetOneStoreSettings(true);
-        BuildAndroid(1);
+        BuildAndroid(4);
     }
 
     static void PerformAndroidBuild()
@@ -80,7 +80,7 @@ class ModuleBuildScript
         PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.Android, "QA;ODIN_INSPECTOR;ENABLE_LOG;DO_NOT_USE_GPRESTO;MDEBUG;STORE_KIT_API_ENABLED;APP_DELEGATE_ENABLED;GAME_KIT_API_ENABLED;USER_NOTIFICATIONS_API_ENABLED;USE_MAINTENANCESERVER_V2;USE_SAMPLE_SCENE");
         PlayerSettings.applicationIdentifier = "com.haegin.hvso";
         ProjectSettingsWindow.SetOneStoreSettings(false);
-        BuildAndroid(1);
+        BuildAndroid(4);
     }
 
     static void PerformiOSBuild()
