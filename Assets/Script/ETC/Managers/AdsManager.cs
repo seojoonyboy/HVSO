@@ -88,7 +88,7 @@ public class AdsManager : Singleton<AdsManager>
             int rewardAmount = placement.getRewardAmount();
             Debug.Log("보상 이름 : " + rewardName + "\n보상 규모 : " + rewardAmount);
         }
-        AccountManager.Instance.RequestMainAdReward();
+        AccountManager.Instance.RequestMainAdReward(placement);
 #endif
     }
 
@@ -100,7 +100,9 @@ public class AdsManager : Singleton<AdsManager>
 
     public void ShowRewardedBtn(string placementName) {
 #if UNITY_EDITOR
-        AccountManager.Instance.RequestMainAdReward();
+        string rewardName = placementName.CompareTo("main") == 0 ? "presupply" : "gift";
+        int rewardAmount = placementName.CompareTo("main") == 0 ? 40 : 1;
+        AccountManager.Instance.RequestMainAdReward(new IronSourcePlacement(placementName, rewardName, rewardAmount));
 #endif
         if (IronSource.Agent.isRewardedVideoAvailable()) IronSource.Agent.showRewardedVideo(placementName);
         else Modal.instantiate("광고를 가져오지 못했습니다.", Modal.Type.CHECK);
