@@ -84,6 +84,8 @@ public partial class BattleConnector : MonoBehaviour {
         
         SetUserInfoText();
         SetSaveGameId();
+
+        CustomVibrate.Vibrate(1000);
     }
 
     public void SetSaveGameId() {
@@ -329,8 +331,10 @@ public partial class BattleConnector : MonoBehaviour {
         if(ScenarioGameManagment.scenarioInstance == null) {
             player.GetComponent<IngameTimer>().RopeTimerOff();
         }
-        if(PlayMangement.instance.player.isHuman)
+        if (PlayMangement.instance.player.isHuman) {
             PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, TurnType.HUMAN);
+            CustomVibrate.Vibrate(1000);
+        }   
         useCardList.isDone = true;
     }
 
@@ -350,8 +354,10 @@ public partial class BattleConnector : MonoBehaviour {
         if(ScenarioGameManagment.scenarioInstance == null) {
             player.GetComponent<IngameTimer>().RopeTimerOff();
         }
-        if(!PlayMangement.instance.player.isHuman)
+        if (!PlayMangement.instance.player.isHuman) {
             PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, TurnType.SECRET);
+            CustomVibrate.Vibrate(1000);
+        }
         useCardList.isDone = true;
         unitSkillList.isDone = true;
     }

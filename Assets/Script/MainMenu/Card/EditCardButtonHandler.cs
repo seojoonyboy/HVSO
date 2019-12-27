@@ -96,7 +96,10 @@ public class EditCardButtonHandler : MonoBehaviour {
 
     public void AddCardInDeck() {
         DeckEditController deckEdit = deckEditCanvas.GetComponent<DeckEditController>();
-        if (deckEdit.setCardNum == 40) return;
+        if (deckEdit.setCardNum == 40) {
+            CustomVibrate.Vibrate(new long[] { 0, 500, 0 }, 2);
+            return;
+        }
         EditCardHandler cardHandler = transform.GetChild(0).Find("CardImage").GetComponent<EditCardHandler>();
         deckEdit.ConfirmSetDeck(card.gameObject, cardData.id);
         cardHandler.DrawCard(cardData.id, cardData.camp == "human");

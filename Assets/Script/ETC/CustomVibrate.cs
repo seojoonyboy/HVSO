@@ -34,6 +34,11 @@ public static class CustomVibrate {
             Handheld.Vibrate();
     }
 
+    /// <summary>
+    /// 패턴 예시 : long[] { 0, 200, 1000 } => delay : 0 , vibrate : 200 milliseconds , sleep : 1000 milliseconds
+    /// </summary>
+    /// <param name="pattern">진동 패턴</param>
+    /// <param name="repeat"></param>
     public static void Vibrate(long[] pattern, int repeat) {
         if (!isVibrateOn()) return;
 

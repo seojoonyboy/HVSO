@@ -233,6 +233,8 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
         if (!cardUsed) {
             BackToDeckCard();
 
+            CustomVibrate.Vibrate(new long[] { 0, 500, 0 }, 2);
+
             if (ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.isTutorial == true)
                 SendEvent();
 
