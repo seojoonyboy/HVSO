@@ -65,9 +65,9 @@ public class UserResourceManager : SerializedMonoBehaviour {
         if (adsLeftNum != null) {
             adsLeftNum.text = this.mainAdCount.ToString();
             if (this.mainAdCount == 0)
-                adsLeftNum.transform.parent.GetComponent<Button>().interactable = false;
+                adsLeftNum.transform.parent.parent.Find("ReceiveBtn").GetComponent<Button>().interactable = false;
             else
-                adsLeftNum.transform.parent.GetComponent<Button>().interactable = true;
+                adsLeftNum.transform.parent.parent.Find("ReceiveBtn").GetComponent<Button>().interactable = true;
         }
         this.supply = supply;
         this.supplyBox = supplyBox;
@@ -91,7 +91,7 @@ public class UserResourceManager : SerializedMonoBehaviour {
                 }
             }
         }
-        if (adsTimerText != null) {
+        if (adsTimerText != null && adsTimerText.transform.parent.parent.gameObject.activeSelf) {
             if (mainAdCount != 3) {
                 adsTimerTime -= Time.deltaTime;
                 if (adsTimerTime <= 0) {
@@ -106,11 +106,11 @@ public class UserResourceManager : SerializedMonoBehaviour {
         }
     }
 
-    public void LinkTimer(TMPro.TextMeshProUGUI timerText, Transform adsBtn) {
+    public void LinkTimer(TMPro.TextMeshProUGUI timerText, Transform adsWindow) {
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_ADREWARD_MAIN, OnMainAdOver);
         this.timerText = timerText;
-        adsTimerText = adsBtn.Find("Timer").GetComponent<TMPro.TextMeshProUGUI>();
-        adsLeftNum = adsBtn.Find("LeftValue").GetComponent<TMPro.TextMeshProUGUI>();
+        adsTimerText = adsWindow.Find("Timer/TimerText").GetComponent<TMPro.TextMeshProUGUI>();
+        adsLeftNum = adsWindow.Find("Timer/LeftValue").GetComponent<TMPro.TextMeshProUGUI>();
     }
 
     public void SetSupplyTimer(int supplyStoreTime) {
