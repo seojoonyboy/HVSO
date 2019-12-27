@@ -1123,9 +1123,9 @@ public partial class PlayMangement {
         else {
             releaseTurnBtn = turnTable.Find("OrcButton").gameObject;
         }
-        for (int i = 0; i < 4; i++) {
-            turnTable.Find("TurnBoard").position = playerCanvas.transform.GetChild(1).GetChild(2).position;
-        }
+        //for (int i = 0; i < 4; i++) {
+        //    turnTable.Find("TurnBoard").position = playerCanvas.transform.GetChild(1).GetChild(2).position;
+        //}
 
         Debug.Log("isHuman" + isHuman);
     }
