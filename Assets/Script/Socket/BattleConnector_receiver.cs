@@ -72,6 +72,8 @@ public partial class BattleConnector : MonoBehaviour {
             JObject json = (JObject)args;
             orcLeagueInfo = dataModules.JsonReader.Read<AccountManager.LeagueInfo>(json["orc"].ToString());
             humanLeagueInfo = dataModules.JsonReader.Read<AccountManager.LeagueInfo>(json["human"].ToString());
+
+            CustomVibrate.Vibrate(1000);
         }
 
         this.message.text = "대전 상대를 찾았습니다.";
@@ -84,8 +86,6 @@ public partial class BattleConnector : MonoBehaviour {
         
         SetUserInfoText();
         SetSaveGameId();
-
-        CustomVibrate.Vibrate(1000);
     }
 
     public void SetSaveGameId() {
@@ -331,10 +331,8 @@ public partial class BattleConnector : MonoBehaviour {
         if(ScenarioGameManagment.scenarioInstance == null) {
             player.GetComponent<IngameTimer>().RopeTimerOff();
         }
-        if (PlayMangement.instance.player.isHuman) {
-            PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, TurnType.HUMAN);
-            CustomVibrate.Vibrate(1000);
-        }   
+        if (PlayMangement.instance.player.isHuman) PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, TurnType.HUMAN);   
+        
         useCardList.isDone = true;
     }
 
@@ -354,10 +352,8 @@ public partial class BattleConnector : MonoBehaviour {
         if(ScenarioGameManagment.scenarioInstance == null) {
             player.GetComponent<IngameTimer>().RopeTimerOff();
         }
-        if (!PlayMangement.instance.player.isHuman) {
-            PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, TurnType.SECRET);
-            CustomVibrate.Vibrate(1000);
-        }
+        if (!PlayMangement.instance.player.isHuman) PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, TurnType.SECRET);
+        
         useCardList.isDone = true;
         unitSkillList.isDone = true;
     }
