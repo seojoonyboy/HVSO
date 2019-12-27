@@ -16,4 +16,8 @@ public class AdsController : MonoBehaviour {
     public void ShowRewardedShopBtn() {
         adsManager.ShowRewardedBtn("shop");
     }
+
+    public void ShowRewardedChestBtn() {
+        adsManager.ShowRewardedBtn("chest");
+    }
 }
