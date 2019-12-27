@@ -771,7 +771,7 @@ public partial class AccountManager {
 
         url
             .Append(base_url)
-            .Append(string.Format("api/user/claim_reward?kind=ad&placementName={0}}&rewardName={1}&rewardAmount={2}", 
+            .Append(string.Format("api/user/claim_reward?kind=ad&placementName={0}&rewardName={1}&rewardAmount={2}", 
             placement.getPlacementName(), placement.getRewardName(), placement.getRewardAmount()));
 
         HTTPRequest request = new HTTPRequest(
