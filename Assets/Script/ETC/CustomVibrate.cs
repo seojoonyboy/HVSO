@@ -26,6 +26,8 @@ public static class CustomVibrate {
     public static void Vibrate(long milliseconds) {
         if (!isVibrateOn()) return;
 
+        Logger.Log("Vibrate " + milliseconds);
+
         if (isAndroid())
             vibrator.Call("vibrate", milliseconds);
         else
