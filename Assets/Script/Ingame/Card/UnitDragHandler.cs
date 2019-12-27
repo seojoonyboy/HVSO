@@ -63,7 +63,7 @@ public partial class UnitDragHandler : CardHandler, IBeginDragHandler, IDragHand
 
 #if UNITY_ANDROID
             CustomVibrate.Vibrate(new long[] { 0, 500, 0 }, 2);
-#elif UNITY_IOS
+#elif UNITY_IOS && !UNITY_EDITOR
             CustomVibrate.VibrateNope();
 #endif
         }

@@ -234,7 +234,7 @@ public partial class MagicDragHandler : CardHandler, IBeginDragHandler, IDragHan
             BackToDeckCard();
 #if UNITY_ANDROID
             CustomVibrate.Vibrate(new long[] { 0, 500, 0 }, 2);
-#elif UNITY_IOS
+#elif UNITY_IOS && !UNITY_EDITOR
             CustomVibrate.VibrateNope();
 #endif
         if (ScenarioGameManagment.scenarioInstance != null && ScenarioGameManagment.scenarioInstance.isTutorial == true)

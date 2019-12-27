@@ -129,7 +129,7 @@ public class EditCardButtonHandler : MonoBehaviour {
     public void FullAlarm() {
 #if UNITY_ANDROID
         CustomVibrate.Vibrate(1000);
-#elif UNITY_IOS
+#elif UNITY_IOS && !UNITY_EDITOR
         CustomVibrate.VibrateNope();
 #endif
         Logger.Log("FullAlarmed");
