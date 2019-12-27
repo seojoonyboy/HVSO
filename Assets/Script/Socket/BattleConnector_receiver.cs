@@ -25,6 +25,8 @@ public partial class BattleConnector : MonoBehaviour {
     public bool isOpponentPlayerDisconnected = false;
 
     string matchKey = string.Empty;
+    public static bool canPlaySound = true;
+
     private void ReceiveMessage(WebSocket webSocket, string message) {
         ReceiveFormat result = dataModules.JsonReader.Read<ReceiveFormat>(message);
         queue.Enqueue(result);
@@ -76,9 +78,14 @@ public partial class BattleConnector : MonoBehaviour {
         FindObjectOfType<BattleConnectSceneAnimController>().PlayStartBattleAnim();
 
         StopCoroutine(timeCheck);
-        SoundManager.Instance.PlayIngameSfx(IngameSfxSound.GAMEMATCH);
+        if (canPlaySound) {
+            SoundManager.Instance.PlayIngameSfx(IngameSfxSound.GAMEMATCH);
+        }
+        
         SetUserInfoText();
         SetSaveGameId();
+
+        CustomVibrate.Vibrate(1000);
     }
 
     public void SetSaveGameId() {
@@ -324,8 +331,10 @@ public partial class BattleConnector : MonoBehaviour {
         if(ScenarioGameManagment.scenarioInstance == null) {
             player.GetComponent<IngameTimer>().RopeTimerOff();
         }
-        if(PlayMangement.instance.player.isHuman)
+        if (PlayMangement.instance.player.isHuman) {
             PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, TurnType.HUMAN);
+            CustomVibrate.Vibrate(1000);
+        }   
         useCardList.isDone = true;
     }
 
@@ -345,8 +354,10 @@ public partial class BattleConnector : MonoBehaviour {
         if(ScenarioGameManagment.scenarioInstance == null) {
             player.GetComponent<IngameTimer>().RopeTimerOff();
         }
-        if(!PlayMangement.instance.player.isHuman)
+        if (!PlayMangement.instance.player.isHuman) {
             PlayMangement.instance.EventHandler.PostNotification(IngameEventHandler.EVENT_TYPE.END_TURN_BTN_CLICKED, this, TurnType.SECRET);
+            CustomVibrate.Vibrate(1000);
+        }
         useCardList.isDone = true;
         unitSkillList.isDone = true;
     }

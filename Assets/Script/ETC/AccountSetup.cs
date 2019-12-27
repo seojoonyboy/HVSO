@@ -72,7 +72,7 @@ using TMPro;
         }
 
         if (Account.IsLoggedInFacebook()) {
-            GameObject.Find("FacebookLogin").GetComponent<Text>().text = "페이스북 연동됨";
+            facebookText.text = "페이스북 연동됨";
             facebookBtn.enabled = false;
             facebookBtn.image.sprite = btnDisable;
         }

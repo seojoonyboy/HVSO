@@ -765,13 +765,14 @@ public partial class AccountManager {
         }, "인벤토리 정보를 불러오는 중...");
     }
 
-    public void RequestMainAdReward() {
+    public void RequestMainAdReward(IronSourcePlacement placement) {
         StringBuilder url = new StringBuilder();
         string base_url = networkManager.baseUrl;
 
         url
             .Append(base_url)
-            .Append("api/user/claim_reward?kind=ad&placementName=main&rewardName=presupply&rewardAmount=40");
+            .Append(string.Format("api/user/claim_reward?kind=ad&placementName={0}&rewardName={1}&rewardAmount={2}", 
+            placement.getPlacementName(), placement.getRewardName(), placement.getRewardAmount()));
 
         HTTPRequest request = new HTTPRequest(
             new Uri(url.ToString())
@@ -1424,10 +1425,13 @@ public partial class AccountManager {
                 if (res.StatusCode == 200 || res.StatusCode == 304) {
                     var leagueInfo = dataModules.JsonReader.Read<LeagueInfo>(res.DataAsText);
 
-                    if(prevSceneName != "Ingame") {
+                    if (prevSceneName == "Login") {
                         Logger.Log("이전 씬이 Ingame이 아닌 경우");
                         scriptable_leagueData.leagueInfo = leagueInfo;
                         scriptable_leagueData.prevLeagueInfo = leagueInfo.DeepCopy(leagueInfo);
+                    }
+                    else {
+                        scriptable_leagueData.leagueInfo = leagueInfo;
                     }
 
                     NoneIngameSceneEventHandler

@@ -62,6 +62,6 @@ public class OptionSetupManager : MonoBehaviour
         transform.GetChild(0).Find("Vibration").Find("On").GetComponent<Button>().interactable = !on;
         vibrateOn = on;
         if (vibrateOn)
-            Handheld.Vibrate();
+            CustomVibrate.Vibrate(1000);
     }
 }

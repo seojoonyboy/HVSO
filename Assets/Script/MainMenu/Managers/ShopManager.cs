@@ -8,6 +8,7 @@ public class ShopManager : MonoBehaviour
 {
     [SerializeField] BoxRewardManager boxRewardManager;
     [SerializeField] Transform AdvertiseWindow;
+    [SerializeField] IAPSetup iapSetup;
 
     int goldItemCount;
     int x2couponCount;
@@ -17,11 +18,13 @@ public class ShopManager : MonoBehaviour
     private void Start() {
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_SHOP_ITEM_BUY, OpenBoxByBuying);
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, BuyFinished) ;
+        iapSetup.Init();
     }
 
     private void OnDestroy() {
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_SHOP_ITEM_BUY, OpenBoxByBuying);
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, BuyFinished);
+        iapSetup.Destory();
     }
 
     GameObject checkModal;
@@ -95,6 +98,7 @@ public class ShopManager : MonoBehaviour
         else {
             checkModal = Modal.instantiate("상품을 구매 하시겠습니까?", Modal.Type.YESNO, () => {
                 BuyItem(item.id, isBox);
+                //iapSetup.OnButtonBuyClick(item.id, ()=>BuyItem(item.id, isBox));
             }, CancelBuy);
         }
         EscapeKeyController.escapeKeyCtrl.AddEscape(CancelBuy);

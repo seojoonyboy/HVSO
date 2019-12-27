@@ -76,6 +76,8 @@ public class LoginController : MonoBehaviour {
         Spine.AnimationState state = skeletonGraphic.AnimationState;
         state.SetAnimation(0, "loop", true);
         isClicked = false;
+
+        //CustomVibrate.Vibrate(1000);
     }
 
     public void OnStartButton() {
@@ -108,6 +110,8 @@ public class LoginController : MonoBehaviour {
                     .LoginTypeCanvas
                     .gameObject
                     .SetActive(true);
+
+                PlayerPrefs.SetString("Vibrate", "On");
             }
             else {
                 accountManager.OnSignInResultModal();

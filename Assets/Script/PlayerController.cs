@@ -288,6 +288,8 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
+
+        CustomVibrate.Vibrate(1000);
     }
 
     /// <summary>
