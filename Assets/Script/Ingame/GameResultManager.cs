@@ -790,12 +790,12 @@ public class GameResultManager : MonoBehaviour {
             if (exp == (int)lvExp) {
                 lv++;
                 lvExp = nextLvExp;
-                SkeletonGraphic effect = transform.Find("SecondWindow/PlayerExp/LvUpEffect").GetComponent<SkeletonGraphic>();
+                //SkeletonGraphic effect = transform.Find("SecondWindow/PlayerExp/LvUpEffect").GetComponent<SkeletonGraphic>();
                 transform.Find("SecondWindow/PlayerExp/LevelIcon/Value").GetComponent<Text>().text = lv.ToString();
-                effect.gameObject.SetActive(true);
-                effect.Initialize(true);
-                effect.Update(0);
-                effect.AnimationState.SetAnimation(0, "animation", false);
+                //effect.gameObject.SetActive(true);
+                //effect.Initialize(true);
+                //effect.Update(0);
+                //effect.AnimationState.SetAnimation(0, "animation", false);
                 slider.value = 0;
 
                 exp = 0;
@@ -809,12 +809,18 @@ public class GameResultManager : MonoBehaviour {
     IEnumerator GetUserSupply(Slider slider, int getSup, int addSup, int winSup = 0, bool isAdditional = false) {
         TMPro.TextMeshProUGUI value = transform.Find("SecondWindow/PlayerSupply/ExpSlider/SupValue").GetComponent<TMPro.TextMeshProUGUI>();
         SkeletonGraphic boxSpine = transform.Find("SecondWindow/PlayerSupply/BoxSpine").GetComponent<SkeletonGraphic>();
+        SkeletonGraphic supplySpine = transform.Find("SecondWindow/PlayerSupply/SupplySpine").gameObject.GetComponent<SkeletonGraphic>();
         TMPro.TextMeshProUGUI basicVal = transform.Find("SecondWindow/PlayerSupply/ExtraSupply/Basic/Value").GetComponent<TMPro.TextMeshProUGUI>();
         TMPro.TextMeshProUGUI winVal = transform.Find("SecondWindow/PlayerSupply/ExtraSupply/Win/Value").GetComponent<TMPro.TextMeshProUGUI>();
         TMPro.TextMeshProUGUI totalVal = transform.Find("SecondWindow/PlayerSupply/SupplyText/Value").GetComponent<TMPro.TextMeshProUGUI>();
         boxSpine.Initialize(true);
         boxSpine.Update(0);
         boxSpine.AnimationState.SetAnimation(0, "02.vibration1", true);
+        supplySpine.Initialize(true);
+        supplySpine.Update(0);
+        supplySpine.AnimationState.SetAnimation(0, "NOANI", false);
+        supplySpine.AnimationState.TimeScale = 2f;
+
         int start = getSup;
         int total = 0;
         int box = 0;
@@ -822,16 +828,23 @@ public class GameResultManager : MonoBehaviour {
             int.TryParse(totalVal.text, out total);
         }
 
+        if (getSup > 0) {
+
+            for (int i = 0; i < getSup / 2; i++)
+                supplySpine.AnimationState.AddAnimation(0, "animation", false, 0);
+
+        }
+
         while (getSup > 0) {
             supply++;
             getSup--;
             basicVal.text = (start - getSup).ToString();
-            totalVal.text = (++total).ToString();
-
+            totalVal.text = (++total).ToString();            
             slider.value = supply / 100.0f;
 
             value.text = supply.ToString();
-            if(supply == 100) {
+            
+            if (supply == 100) {
                 boxSpine.AnimationState.SetAnimation(0, "03.vibration2", false);
                 slider.transform.localScale = new Vector3(1.1f, 1.1f, 1.1f);
                 yield return new WaitForSeconds(0.2f);
@@ -862,11 +875,12 @@ public class GameResultManager : MonoBehaviour {
                         }
                     });
                 }
-
+                
                 boxSpine.AnimationState.SetAnimation(0, "02.vibration1", true);
             }
-            yield return new WaitForSeconds(0.01f);
+            yield return new WaitForSeconds(0.01f);            
         }
+        supplySpine.AnimationState.AddAnimation(0, "NOANI", true, 0);
         start = addSup;
         if (addSup > 0) {
             yield return new WaitForSeconds(0.5f);

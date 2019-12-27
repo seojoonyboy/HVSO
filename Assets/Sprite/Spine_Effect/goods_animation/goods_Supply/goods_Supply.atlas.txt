@@ -1,0 +1,13 @@
+
+goods_Supply.png
+size: 128,128
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Supply
+  rotate: false
+  xy: 0, 0
+  size: 93, 102
+  orig: 93, 102
+  offset: 0, 0
+  index: -1
