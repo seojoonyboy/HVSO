@@ -33,6 +33,7 @@ public class IngameNotice : MonoBehaviour {
     private List<string> noticeList = new List<string>();
     [SerializeField] private TextMeshProUGUI noticeText;
     [SerializeField] private Image noticeImage;
+    [SerializeField] private Image noticeSelect;
     private float colorAlpha;
 
     private void Update() {
@@ -53,6 +54,7 @@ public class IngameNotice : MonoBehaviour {
 
     public void SetNotice(string text) {
         noticeImage.gameObject.SetActive(false);
+        noticeSelect.gameObject.SetActive(false);
         noticeText.gameObject.SetActive(true);
         colorAlpha = 1f;
         noticeText.text = text;
@@ -61,12 +63,22 @@ public class IngameNotice : MonoBehaviour {
 
     public void SetNotice() {
         noticeText.gameObject.SetActive(false);
+        noticeSelect.gameObject.SetActive(false);
         noticeImage.gameObject.SetActive(true);
         gameObject.SetActive(true);
     }
 
+    public void SelectNotice() {
+        noticeSelect.gameObject.SetActive(true);
+        noticeText.gameObject.SetActive(false);
+        noticeImage.gameObject.SetActive(false);
+        gameObject.SetActive(true);
+    }
+
+
     public void CloseNotice() {
         gameObject.SetActive(false);
+        noticeSelect.gameObject.SetActive(false);
         colorAlpha = 1f;
         noticeText.color = new Vector4(noticeText.color.r, noticeText.color.g, noticeText.color.b, colorAlpha);
         update = slowDown;

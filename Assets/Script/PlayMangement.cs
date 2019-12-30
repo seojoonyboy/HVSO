@@ -792,7 +792,8 @@ public partial class PlayMangement : MonoBehaviour {
             enemyCard.SetActive(true);
             int count = CountEnemyCard();
             enemyPlayer.playerUI.transform.Find("CardCount").GetChild(0).gameObject.GetComponent<Text>().text = (count).ToString();
-            IngameNotice.instance.SetNotice("상대방이 영웅카드 사용 여부를 결정 중입니다");
+            IngameNotice.instance.SelectNotice();
+            //IngameNotice.instance.SetNotice("상대방이 영웅카드 사용 여부를 결정 중입니다");
         }
         yield return new WaitForSeconds(1f);
         if (isPlayer) socketHandler.TurnOver();
