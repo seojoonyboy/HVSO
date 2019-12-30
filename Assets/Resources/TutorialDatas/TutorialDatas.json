@@ -413,12 +413,6 @@
                 "description" : null,
                 "methods" : [
                     {
-                        "name" : "Wait_Until",
-                        "args" : [
-                            "1"
-                        ]
-                    },
-                    {
                         "name" : "ForceToPage",
                         "args" : [
                             "StoryLobby"
