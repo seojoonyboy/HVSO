@@ -23,10 +23,7 @@ public class TurnMachine : MonoBehaviour {
 
     private void OnEndTurnBtnClicked(Enum Event_Type, Component Sender, object Param) {
         if(Param != null)
-            if((TurnType)Param != turn) {
-                CustomVibrate.Vibrate(1000);
-                return;
-            }   
+            if((TurnType)Param != turn) return;   
         NextTurn();
     }
 
