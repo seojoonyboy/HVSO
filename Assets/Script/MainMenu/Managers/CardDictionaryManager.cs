@@ -662,6 +662,9 @@ public class CardDictionaryManager : MonoBehaviour {
         foreach(dataModules.HeroInventory hero in AccountManager.Instance.allHeroes) {
             if (hero.id == selectedHeroId) {
                 transform.Find("HeroDictionary/HeroImage/HeroStory/HeroName").GetComponent<TMPro.TextMeshProUGUI>().text = hero.name;
+                string[] separatingStrings = { "<title>", "</title>", "<desc>", "</desc>" };
+                string[] heroText = hero.flavorText.Split(separatingStrings, System.StringSplitOptions.RemoveEmptyEntries);
+                transform.Find("HeroDictionary/HeroImage/HeroStory/Text").GetComponent<TMPro.TextMeshProUGUI>().text = heroText[1];
                 break;
             }
         }

@@ -8,6 +8,7 @@ public class MailBoxManager : MonoBehaviour
 {
     [SerializeField] Transform mailListParent;
     [SerializeField] HUDController HUDController;
+    [SerializeField] Button receiveAllBtn;
 
     private void OnEnable() {
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_MAIL_UPDATE, RequestMailOver);
@@ -118,6 +119,7 @@ public class MailBoxManager : MonoBehaviour
         Canvas.ForceUpdateCanvases();
         LayoutRebuilder.ForceRebuildLayoutImmediate(mailListParent.parent.GetComponent<RectTransform>());
         transform.Find("Block").gameObject.SetActive(false);
+        receiveAllBtn.interactable = count == 0 ? false : true; 
     }
 
     public void InitMailBox() {
