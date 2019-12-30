@@ -86,21 +86,31 @@ public class IngameSettingModalManager : MonoBehaviour {
         bgmValue.text = ((int)(bgmSlider.value * 100)).ToString();
     }
 
-    public void VolumeUpBtn(Slider slider) {
+    public void BgmUpBtn(Slider slider) {
         bgmSlider.value += 0.01f;
     }
 
-    public void VolumeDownBtn(Slider slider) {
+    public void BgmDownBtn(Slider slider) {
         bgmSlider.value -= 0.01f;
     }
+
+    public void SfxUpBtn(Slider slider) {
+        sfxSlider.value += 0.01f;
+    }
+
+    public void SfxDownBtn(Slider slider) {
+        sfxSlider.value -= 0.01f;
+    }
+
+
 
     public void VibrateOn(bool on) {
         if (on)
             PlayerPrefs.SetString("Vibrate", "On");
         else
             PlayerPrefs.SetString("Vibrate", "Off");
-        transform.GetChild(0).Find("Vibration").Find("Off").GetComponent<Button>().interactable = on;
-        transform.GetChild(0).Find("Vibration").Find("On").GetComponent<Button>().interactable = !on;
+        //transform.GetChild(0).Find("Vibration").Find("Off").GetComponent<Button>().interactable = on;
+        //transform.GetChild(0).Find("Vibration").Find("On").GetComponent<Button>().interactable = !on;
         OptionSetupManager.vibrateOn = on;
         if (OptionSetupManager.vibrateOn)
             CustomVibrate.Vibrate(1000);
