@@ -46,7 +46,7 @@ public class IAPSetup {
     }
 
     private void IAPInit() {
-        string[] products = productDictionary.Keys.ToArray();
+        string[] products = productDictionary.Values.ToArray();
         #if !UNITY_EDITOR
         IAP.init(products, (bool result, bool bProcessIAP, byte[] purchasedData) => {
             if(result) {
