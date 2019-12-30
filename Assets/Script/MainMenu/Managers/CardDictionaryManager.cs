@@ -664,6 +664,7 @@ public class CardDictionaryManager : MonoBehaviour {
                 transform.Find("HeroDictionary/HeroImage/HeroStory/HeroName").GetComponent<TMPro.TextMeshProUGUI>().text = hero.name;
                 string[] separatingStrings = { "<title>", "</title>", "<desc>", "</desc>" };
                 string[] heroText = hero.flavorText.Split(separatingStrings, System.StringSplitOptions.RemoveEmptyEntries);
+                transform.Find("HeroDictionary/HeroImage/HeroStory/Title").GetComponent<TMPro.TextMeshProUGUI>().text = heroText[0];
                 transform.Find("HeroDictionary/HeroImage/HeroStory/Text").GetComponent<TMPro.TextMeshProUGUI>().text = heroText[1];
                 break;
             }
