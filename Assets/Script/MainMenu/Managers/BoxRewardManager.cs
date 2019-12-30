@@ -154,6 +154,7 @@ public class BoxRewardManager : MonoBehaviour {
         if (openCount == 0) {
             boxSpine.AnimationState.SetAnimation(2, "03.TOUCH1", false);
             boxEffect.AnimationState.SetAnimation(1, "01.open", false);
+            SoundManager.Instance.PlaySound(UISfxSound.BOXOPEN);
             StartCoroutine(SkipAllReward());
         }
         if (openCount > 0) {
@@ -175,6 +176,7 @@ public class BoxRewardManager : MonoBehaviour {
         targetEffect.Initialize(true);
         targetEffect.Update(0);
         targetEffect.AnimationState.SetAnimation(0, "animation", false);
+        
     }
 
     public void SetSkipBackSpine() {
