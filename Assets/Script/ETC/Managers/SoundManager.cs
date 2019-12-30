@@ -183,7 +183,9 @@ public enum UISfxSound {
     CARD_USE_SUPERRARE,
     CARD_USE_LEGEND,
     BOX_OPEN_FINISH,
-    BOX_APPEAR
+    BOX_APPEAR,
+    CARD_CREATE,
+    CARD_BREAK
 }
 
 public enum IngameSfxSound {

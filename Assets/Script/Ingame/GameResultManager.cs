@@ -777,9 +777,10 @@ public class GameResultManager : MonoBehaviour {
 
     IEnumerator GetUserExp(Slider slider) {
         float gain = getExp;
+        int showgain = (int)gain;
         TMPro.TextMeshProUGUI expValueText = transform.Find("SecondWindow/PlayerExp/ExpSlider/ExpValue").GetComponent<TMPro.TextMeshProUGUI>();
         TMPro.TextMeshProUGUI lvUpValueText = transform.Find("SecondWindow/PlayerExp/ExpSlider/ExpMaxValue").GetComponent<TMPro.TextMeshProUGUI>();
-
+        // + " " + "(" + "+" + showgain.ToString() + ")"
         while (gain > 0) {
             exp += 1;
             gain -= 1;

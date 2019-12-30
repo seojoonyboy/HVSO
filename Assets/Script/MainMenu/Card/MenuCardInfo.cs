@@ -352,7 +352,7 @@ public partial class MenuCardInfo : MonoBehaviour {
     public void MakeCard() {
         if (cardCreate) return;
         transform.Find("CreateBlock").gameObject.SetActive(true);
-        SoundManager.Instance.PlaySound(UISfxSound.BUTTON1);
+        SoundManager.Instance.PlaySound(UISfxSound.CARD_CREATE);
         if (bookHaveNum == 0)
             bookHaveNum++;
         cardCreate = true;
@@ -369,7 +369,7 @@ public partial class MenuCardInfo : MonoBehaviour {
     public void BreakCard() {
         if (cardCreate) return;
         transform.Find("CreateBlock").gameObject.SetActive(true);
-        SoundManager.Instance.PlaySound(UISfxSound.BUTTON1);
+        SoundManager.Instance.PlaySound(UISfxSound.CARD_BREAK);
         cardCreate = true;
         makeCard = false;
         if (bookHaveNum > 0)
