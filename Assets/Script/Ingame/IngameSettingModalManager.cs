@@ -7,6 +7,9 @@ public class IngameSettingModalManager : MonoBehaviour {
     [SerializeField] GameObject basePanel;
     [SerializeField] GameObject settingModal, quitModal;
     [SerializeField] Button settingBtn;
+    [SerializeField] Slider sfxSlider, bgmSlider;
+    [SerializeField] TMPro.TextMeshProUGUI sfxValue, bgmValue;
+    SoundManager soundManager;
 
     void Awake() {
         if (settingBtn == null) return;
@@ -14,6 +17,12 @@ public class IngameSettingModalManager : MonoBehaviour {
             basePanel.SetActive(true);
             settingModal.SetActive(true);
         });
+        SetUpIngameOption();
+
+    }
+
+    private void Start() {
+        
     }
 
     void Update() {
@@ -27,6 +36,16 @@ public class IngameSettingModalManager : MonoBehaviour {
                 quitModal.SetActive(true);
             }
         }
+
+        if (bgmSlider.value != PlayerPrefs.GetFloat("BgmVolume")) {
+            SoundManager.Instance.bgmController.BGMVOLUME = bgmSlider.value;
+            bgmValue.text = ((int)(bgmSlider.value * 100)).ToString();
+        }
+        if (sfxSlider.value != PlayerPrefs.GetFloat("SoundVolume")) {
+            SoundManager.Instance.SOUNDVOLUME = sfxSlider.value;
+            sfxValue.text = ((int)(sfxSlider.value * 100)).ToString();
+        }
+
     }
 
     public void OnSurrendBtn() {
@@ -49,4 +68,43 @@ public class IngameSettingModalManager : MonoBehaviour {
         settingModal.SetActive(false);
         basePanel.SetActive(false);
     }
+
+
+    private void SetUpIngameOption() {
+        if (SoundManager.Instance == null) return;
+
+        soundManager = SoundManager.Instance;       
+
+        sfxSlider = gameObject.transform.Find("Background/SettingModal/Options/EffectSound/Slider/Slider").gameObject.GetComponent<Slider>();
+        sfxValue = gameObject.transform.Find("Background/SettingModal/Options/EffectSound/Header/Value").gameObject.GetComponent<TMPro.TextMeshProUGUI>();
+        bgmSlider = gameObject.transform.Find("Background/SettingModal/Options/BGM/Slider/Slider").gameObject.GetComponent<Slider>();
+        bgmValue = gameObject.transform.Find("Background/SettingModal/Options/BGM/Header/Value").gameObject.GetComponent<TMPro.TextMeshProUGUI>();
+
+        sfxSlider.value = PlayerPrefs.GetFloat("SoundVolume");
+        sfxValue.text = ((int)(sfxSlider.value * 100)).ToString();
+        bgmSlider.value = PlayerPrefs.GetFloat("BgmVolume");
+        bgmValue.text = ((int)(bgmSlider.value * 100)).ToString();
+    }
+
+    public void VolumeUpBtn(Slider slider) {
+        bgmSlider.value += 0.01f;
+    }
+
+    public void VolumeDownBtn(Slider slider) {
+        bgmSlider.value -= 0.01f;
+    }
+
+    public void VibrateOn(bool on) {
+        if (on)
+            PlayerPrefs.SetString("Vibrate", "On");
+        else
+            PlayerPrefs.SetString("Vibrate", "Off");
+        transform.GetChild(0).Find("Vibration").Find("Off").GetComponent<Button>().interactable = on;
+        transform.GetChild(0).Find("Vibration").Find("On").GetComponent<Button>().interactable = !on;
+        OptionSetupManager.vibrateOn = on;
+        if (OptionSetupManager.vibrateOn)
+            CustomVibrate.Vibrate(1000);
+    }
+
+
 }
