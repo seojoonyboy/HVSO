@@ -79,7 +79,7 @@ public class BoxRewardManager : MonoBehaviour {
     public virtual void SetBoxAnimation() {
         InitBoxObjects();
         transform.Find("ShowBox").gameObject.SetActive(true);
-        transform.Find("ShowBox/BoxSpine/Image/Num").GetComponent<Text>().text = "4";
+        transform.Find("ShowBox/BoxSpine/Image/Num").GetComponent<Text>().text = "3";
         openCount = 0;
         boxSpine.Initialize(true);
         boxSpine.Update(0);
@@ -263,7 +263,7 @@ public class BoxRewardManager : MonoBehaviour {
             yield return new WaitForSeconds(0.95f);
         else
             yield return new WaitForSeconds(0.5f);
-        transform.Find("ShowBox/BoxSpine/Image/Num").GetComponent<Text>().text = (4 - openCount).ToString();
+        transform.Find("ShowBox/BoxSpine/Image/Num").GetComponent<Text>().text = (3 - openCount).ToString();
         Transform targetBox = transform.Find("OpenBox").GetChild(count);
         Transform target = targetBox.GetChild(1);
         iTween.ScaleTo(target.parent.gameObject, iTween.Hash("x", 1.6, "y", 1.6, "islocal", true, "time", 0.4f));
