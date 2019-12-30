@@ -47,29 +47,31 @@ public class IAPSetup {
 
     private void IAPInit() {
         string[] products = productDictionary.Keys.ToArray();
-        // IAP.init(products, (bool result, bool bProcessIAP, byte[] purchasedData) => {
-        //     if(result) {
-        //         #if MDEBUG
-        //         Debug.Log("call requestProductData");
-        //         #endif
-        //         if (bProcessIAP) {
-        //             // 구매과정에서 지급되지 않았다가 재실행시 지급된 아이템 정보
-        //             // 
-        //             Debug.Log("지급되지 않았던 구매 아이템이 있었습니다. 정상적으로 지급 처리 되었습니다.");
-        //         }
+        #if !UNITY_EDITOR
+        IAP.init(products, (bool result, bool bProcessIAP, byte[] purchasedData) => {
+            if(result) {
+                #if MDEBUG
+                Debug.Log("call requestProductData");
+                #endif
+                if (bProcessIAP) {
+                    // 구매과정에서 지급되지 않았다가 재실행시 지급된 아이템 정보
+                    // 
+                    Debug.Log("지급되지 않았던 구매 아이템이 있었습니다. 정상적으로 지급 처리 되었습니다.");
+                }
 
-        //         IAP.requestProductData(products, productList => {
-        //             //가격 세팅
-        //             // Text textProductInfo = GameObject.Find("ProductInfoLabel").GetComponent<Text>();
-        //             // textProductInfo.text = TextManager.GetString(TextManager.StringTag.NameTag) + productList[0].title + "\n" +
-        //             //     TextManager.GetString(TextManager.StringTag.DescTag) + productList[0].description + "\n" +
-        //             //     TextManager.GetString(TextManager.StringTag.PriceTag) + productList[0].price;
-        //         });
-        //     }
-        //     else {
-        //         Debug.Log("인앱 초기화에 실패했습니다.");
-        //     }
-        // });
+                IAP.requestProductData(products, productList => {
+                    //가격 세팅
+                    // Text textProductInfo = GameObject.Find("ProductInfoLabel").GetComponent<Text>();
+                    // textProductInfo.text = TextManager.GetString(TextManager.StringTag.NameTag) + productList[0].title + "\n" +
+                    //     TextManager.GetString(TextManager.StringTag.DescTag) + productList[0].description + "\n" +
+                    //     TextManager.GetString(TextManager.StringTag.PriceTag) + productList[0].price;
+                });
+            }
+            else {
+                Debug.Log("인앱 초기화에 실패했습니다.");
+            }
+        });
+        #endif
     }
 
     void RetryOccurred(Protocol protocol, int retryCount) {

@@ -97,8 +97,11 @@ public class ShopManager : MonoBehaviour
         }
         else {
             checkModal = Modal.instantiate("상품을 구매 하시겠습니까?", Modal.Type.YESNO, () => {
+                #if UNITY_EDITOR
                 BuyItem(item.id, isBox);
-                //iapSetup.OnButtonBuyClick(item.id, ()=>BuyItem(item.id, isBox));
+                #else
+                iapSetup.OnButtonBuyClick(item.id, ()=>BuyItem(item.id, isBox));
+                #endif
             }, CancelBuy);
         }
         EscapeKeyController.escapeKeyCtrl.AddEscape(CancelBuy);
