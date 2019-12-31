@@ -235,7 +235,7 @@ public class DeckEditController : MonoBehaviour {
             DestroyImmediate(hand);
         }
         
-        AccountManager.Instance.RequestQuestProgress(questInfo.quest.data.id);
+        //AccountManager.Instance.RequestQuestProgress(questInfo.quest.data.id);
         AccountManager.Instance.RequestUnlockInTutorial(4);
         questInfo.quest.manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_7);
         EditCardHandler.questInfo = null;

@@ -1,6 +1,6 @@
 [
     {
-        "id" : 0,
+        "id" : "t0",
         "tutorials" : [
             {
                 "method" : "StartMailTutorial",
@@ -9,7 +9,7 @@
         ]
     },
     {
-        "id" : 1,
+        "id" : "t1",
         "tutorials" : [
             {
                 "method" : "QuestSubSetShow",
@@ -30,7 +30,7 @@
         ]
     },
     {
-        "id" : 2,
+        "id" : "t2",
         "tutorials" : [
             {
                 "method" : "MenuDictionaryShowHand",
@@ -43,7 +43,7 @@
         ]
     },
     {
-        "id" : 3,
+        "id" : "t3",
         "tutorials" : [
             {
                 "method" : "MenuDeckSettingShowHand",
@@ -60,7 +60,7 @@
         ]
     },
     {
-        "id" : 4,
+        "id" : "t4",
         "tutorials" : [
             {
                 "method" : "BattleShow",

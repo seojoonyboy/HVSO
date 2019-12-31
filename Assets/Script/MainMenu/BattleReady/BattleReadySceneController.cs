@@ -47,7 +47,7 @@ public class BattleReadySceneController : MonoBehaviour {
         PlayerPrefs.SetString("SelectedDeckId", "");
         PlayerPrefs.SetString("SelectedRace", RaceType.NONE.ToString());
 
-        HudController.SetHeader(HUDController.Type.RESOURCE_ONLY_WITH_BACKBUTTON);
+        HudController.SetHeader(HUDController.Type.BATTLE_READY_CANVAS);
         HudController.SetBackButton(() => {
             OnBackButton();
         });

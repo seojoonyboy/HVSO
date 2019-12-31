@@ -24,11 +24,11 @@ namespace Quest {
         
         private void OnEnable() {
             if(data == null) return;
-            title.text = data.name;
-            info.text = data.desc;
-            slider.maxValue = (float)data.progMax;
-            slider.value = (float)data.prog;
-            sliderInfo.text = data.prog.ToString() + "/" + data.progMax.ToString();
+            title.text = data.questDetail.name;
+            info.text = data.questDetail.desc;
+            slider.maxValue = (float)data.questDetail.progMax;
+            slider.value = (float)data.progress;
+            sliderInfo.text = data.progress.ToString() + "/" + data.questDetail.progMax.ToString();
             if(data.cleared) {
                 if (!data.rewardGet) {
                     getBtn.enabled = true;
@@ -50,11 +50,11 @@ namespace Quest {
 
             var icons = AccountManager.Instance.resource.rewardIcon;
 
-            for(int i=0; i<data.rewards.Length; i++) {
+            for(int i=0; i<data.questDetail.rewards.Length; i++) {
                 rewardUIParent.GetChild(i).gameObject.SetActive(true);
                 Image rewardImg = rewardUIParent.GetChild(i).GetChild(0).GetComponent<Image>();
-                if (icons.ContainsKey(data.rewards[i].kind)) {
-                    rewardImg.sprite = icons[data.rewards[i].kind];
+                if (icons.ContainsKey(data.questDetail.rewards[i].kind)) {
+                    rewardImg.sprite = icons[data.questDetail.rewards[i].kind];
                 }
             }
 
@@ -68,7 +68,7 @@ namespace Quest {
         private void OnRewardReceived(Enum Event_Type, Component Sender, object Param) {
             var targetObj = (GameObject)Param;
             if(gameObject != targetObj) return;
-            Modal.instantiate("\""+data.name+"\"의 보상을 우편함으로 보냈습니다.", Modal.Type.CHECK);
+            Modal.instantiate("\""+data.questDetail.name+"\"의 보상을 우편함으로 보냈습니다.", Modal.Type.CHECK);
             //targetObj.GetComponent<QuestContentController>().getBtn.GetComponentInChildren<TextMeshProUGUI>().text = "획득완료";
             //targetObj.GetComponent<QuestContentController>().getBtn.enabled = false;
         }
@@ -96,14 +96,14 @@ namespace Quest {
         }
 
         public void QuestSubSetShow(string[] args) {
-            if(data.prog > 0) return;
+            if(data.progress > 0) return;
             Type enumType = typeof(MenuTutorialManager.TutorialType);
             MenuTutorialManager.TutorialType questEnum = (MenuTutorialManager.TutorialType)Enum.Parse(enumType, args[0].ToUpper());
             manager.tutoDialog.StartQuestSubSet(questEnum);
         }
 
         public void QuestIconShow(string[] args) {
-            if(data.prog > 0) return;
+            if(data.progress > 0) return;
             manager.ShowHandIcon();
         }
 
@@ -300,7 +300,7 @@ namespace Quest {
             manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_8);
             manager.tutorialSerializeList.newBattleMenu.SetActive(false);
             manager.tutorialSerializeList.BattleButton.GetComponent<Button>().onClick.RemoveListener(BattleClicked);
-            AccountManager.Instance.RequestQuestProgress(data.id);
+            //AccountManager.Instance.RequestQuestProgress(data.id);
         }
     }
 }
