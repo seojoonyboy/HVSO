@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,9 +6,24 @@ using UnityEngine.UI;
 
 public class UserInfoManager : MonoBehaviour
 {
-    public void SetUserInfo() {
+    void Start() {
+        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_INFO_UPDATED, OnLeagueInfoUpdated);
         AccountManager.Instance.RequestLeagueInfo();
+    }
 
+    void OnDisable() {
+        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_INFO_UPDATED, OnLeagueInfoUpdated);
+    }
+
+    void OnDestroy() {
+        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_INFO_UPDATED, OnLeagueInfoUpdated);
+    }
+
+    private void OnLeagueInfoUpdated(Enum Event_Type, Component Sender, object Param) {
+        SetUserInfo();
+    }
+
+    public void SetUserInfo() {
         Transform contents = transform.Find("InnerCanvas/Content");
         contents.Find("BaseInfo/LevelFrame/LevelValue").GetComponent<Text>().text = AccountManager.Instance.userData.lv.ToString();
         contents.Find("BaseInfo/UserId").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.NickName;

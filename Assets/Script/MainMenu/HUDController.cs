@@ -173,7 +173,7 @@ public class HUDController : MonoBehaviour {
     }
 
     public void OpenUserInfo() {
-        userInfoCanvas.GetComponent<UserInfoManager>().SetUserInfo();
+        //userInfoCanvas.GetComponent<UserInfoManager>().SetUserInfo();
         SetHeader(Type.RESOURCE_ONLY_WITH_BACKBUTTON);
         SetBackButton(() => CloseUserInfo());
         userInfoCanvas.gameObject.SetActive(true);
