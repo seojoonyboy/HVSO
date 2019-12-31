@@ -82,7 +82,7 @@ namespace Quest {
             datas = Array.FindAll(datas, x=> !(x.cleared && x.rewardGet));
             Array.ForEach(datas, x=>{
                 Array.ForEach(tutorialJson, y=> {
-                    if(x.id == y.id) x.tutorials = y.tutorials;
+                    if(x.questDetail.id.CompareTo(y.id) == 0) x.tutorials = y.tutorials;
                 });
             });
             Array.ForEach(datas, x=>AddQuest(x));
@@ -158,7 +158,7 @@ namespace Quest {
     }
 
     public class Tutorials {
-        public int id;
+        public string id;
         public TutorialShowList[] tutorials;
     }
 

@@ -300,7 +300,7 @@ namespace Quest {
             manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_8);
             manager.tutorialSerializeList.newBattleMenu.SetActive(false);
             manager.tutorialSerializeList.BattleButton.GetComponent<Button>().onClick.RemoveListener(BattleClicked);
-            AccountManager.Instance.RequestQuestProgress(data.id);
+            //AccountManager.Instance.RequestQuestProgress(data.id);
         }
     }
 }
