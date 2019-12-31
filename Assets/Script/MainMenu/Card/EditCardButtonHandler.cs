@@ -113,7 +113,7 @@ public class EditCardButtonHandler : MonoBehaviour {
         cardHandler.DrawCard(cardData.id, cardData.camp == "human");
         cardHandler.HAVENUM--;
         TutoCheckCardAdd(cardHandler);
-        cardHandler.SetHaveNum();
+        cardHandler.SetHaveNum(true);
         if (cardHandler.HAVENUM == 0) CloseCardButtons();
         if (deckEdit.setCardNum == 40) {
             transform.GetChild(0).Find("ForVibrate").gameObject.SetActive(true);
@@ -151,7 +151,7 @@ public class EditCardButtonHandler : MonoBehaviour {
         deckEditCanvas.GetComponent<DeckEditController>().ExceptFromDeck(card.gameObject, cardData.id);
         cardHandler.DrawCard(cardData.id, cardData.camp == "human");
         cardHandler.HAVENUM--;
-        cardHandler.SetHaveNum();
+        cardHandler.SetHaveNum(true);
         TutoCheckCardRemove(cardHandler);
         if (cardHandler.HAVENUM == 0) CloseCardButtons();
     }
