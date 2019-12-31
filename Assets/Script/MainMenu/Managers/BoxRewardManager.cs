@@ -13,6 +13,7 @@ public class BoxRewardManager : MonoBehaviour {
     [SerializeField] Transform boxObject;
     [SerializeField] TMPro.TextMeshProUGUI supplyStore;
     [SerializeField] TMPro.TextMeshProUGUI storeTimer;
+    [SerializeField] Slider supplySlider;
     [SerializeField] Transform AdsWindow;
     [SerializeField] protected SkeletonGraphic boxSpine;
     [SerializeField] protected SkeletonGraphic boxEffect;
@@ -34,6 +35,7 @@ public class BoxRewardManager : MonoBehaviour {
     protected int openCount;
     protected float beforeBgmVolume;
 
+    bool isSupplySliderInit = false;
     void Awake() {
         accountManager = AccountManager.Instance;
         hudCanvas = transform.parent;
@@ -64,6 +66,32 @@ public class BoxRewardManager : MonoBehaviour {
         else
             boxObject.Find("BoxImage/BoxValue").gameObject.SetActive(false);
         additionalSupply.Find("Value").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userResource.supplyX2Coupon.ToString();
+
+        if (!isSupplySliderInit) {
+            supplySlider.value = AccountManager.Instance.userResource.supplyStore;
+            isSupplySliderInit = true;
+        }
+        else {
+            StartCoroutine(proceedSupplySlider(AccountManager.Instance.userResource.supplyStore));
+        }
+    }
+
+    IEnumerator proceedSupplySlider(int targetVal) {
+        float prevSliderVal = supplySlider.value;
+        if(prevSliderVal < targetVal) {
+            while (prevSliderVal <= targetVal) {
+                supplySlider.value = prevSliderVal;
+                yield return new WaitForSeconds(0.2f);
+                prevSliderVal++;
+            }
+        }
+        else {
+            while (prevSliderVal >= targetVal) {
+                supplySlider.value = prevSliderVal;
+                yield return new WaitForSeconds(0.2f);
+                prevSliderVal--;
+            }
+        }
     }
 
     public virtual void OpenBox() {
