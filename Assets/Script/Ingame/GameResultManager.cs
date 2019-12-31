@@ -648,7 +648,7 @@ public class GameResultManager : MonoBehaviour {
                     else {
                         slider.value = from;
 
-                        while (value < to) {
+                        while (value <= to) {
                             yield return new WaitForSeconds(0.1f);
                             slider.value = value;
                             label.text = value + "/" + (newLeagueInfo.rankDetail.pointLessThen - 1);
@@ -671,7 +671,7 @@ public class GameResultManager : MonoBehaviour {
                     }
 
                     else {
-                        while (value > to) {
+                        while (value >= to) {
                             yield return new WaitForSeconds(0.1f);
                             slider.value = value;
                             label.text = value + "/" + newLeagueInfo.rankDetail.pointLessThen;
