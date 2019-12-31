@@ -59179,6 +59179,7 @@ GameObject:
   - component: {fileID: 4760111526021987383}
   - component: {fileID: 4760111526021987381}
   - component: {fileID: 4760111526021987382}
+  - component: {fileID: 4760111526021987337}
   m_Layer: 5
   m_Name: RankIcon
   m_TagString: Untagged
@@ -59186,6 +59187,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!111 &4760111526021987337
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4760111526021987336}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 40124bb142329764ea63f559c03d4418, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 40124bb142329764ea63f559c03d4418, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!222 &4760111526021987381
 CanvasRenderer:
   m_ObjectHideFlags: 0
