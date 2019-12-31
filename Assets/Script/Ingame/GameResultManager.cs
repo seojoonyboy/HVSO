@@ -214,7 +214,7 @@ public class GameResultManager : MonoBehaviour {
         playerExp.Find("LevelIcon/Value").GetComponent<Text>().text = lv.ToString();
         playerExp.Find("UserName").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userData.nickName;
         playerExp.Find("ExpSlider/ExpValue").GetComponent<TMPro.TextMeshProUGUI>().text = ((int)exp).ToString();
-        playerExp.Find("ExpSlider/ExpMaxValue").GetComponent<TMPro.TextMeshProUGUI>().text = "/" + ((int)lvExp).ToString();
+        playerExp.Find("ExpSlider/ExpMaxValue").GetComponent<TMPro.TextMeshProUGUI>().text = "/" + ((int)lvExp).ToString() + " " + "(" + "+" + getExp.ToString() + ")";
         iTween.ScaleTo(playerExp.gameObject, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.5f));
         yield return new WaitForSeconds(0.1f);
         iTween.ScaleTo(transform.Find("SecondWindow/PlayerMmr").gameObject, iTween.Hash("scale", Vector3.one, "islocal", true, "time", 0.5f));
@@ -787,7 +787,7 @@ public class GameResultManager : MonoBehaviour {
             slider.value = exp / lvExp;
 
             expValueText.text = ((int)exp).ToString();
-            lvUpValueText.text = " / " + ((int)lvExp).ToString();
+            lvUpValueText.text = " / " + ((int)lvExp).ToString() + " " + "(" + "+" + getExp.ToString() + ")";
             if (exp == (int)lvExp) {
                 lv++;
                 lvExp = nextLvExp;
@@ -801,7 +801,7 @@ public class GameResultManager : MonoBehaviour {
 
                 exp = 0;
                 expValueText.text = ((int)exp).ToString();
-                lvUpValueText.text = " / " + ((int)lvExp).ToString();
+                lvUpValueText.text = " / " + ((int)lvExp).ToString() + " " + "(" + "+" + getExp.ToString() + ")";
             }
             yield return new WaitForSeconds(0.01f);
         }
