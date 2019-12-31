@@ -135,13 +135,19 @@ namespace Quest {
 
     [Serializable] public class QuestData {
         public int id;
-        public string name;
-        public string desc;
-        public int progMax;
-        public int prog;
+        public int progress;
+        public QuestDetail questDetail;
         public bool cleared = false;
         public bool rewardGet = false;
         public TutorialShowList[] tutorials;
+    }
+
+    public class QuestDetail {
+        public string id;
+        public string type;
+        public string name;
+        public string desc;
+        public int progMax;
         public Reward[] rewards;
     }
 
