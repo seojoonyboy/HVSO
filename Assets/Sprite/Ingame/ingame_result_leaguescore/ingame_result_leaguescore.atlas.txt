@@ -1,0 +1,13 @@
+
+ingame_result_leaguescore.png
+size: 128,128
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+medal
+  rotate: false
+  xy: 0, 0
+  size: 77, 77
+  orig: 77, 77
+  offset: 0, 0
+  index: -1
