@@ -526,6 +526,7 @@ public class GameResultManager : MonoBehaviour {
         var newLeagueInfo = scriptable_leagueData.leagueInfo;
         int prevMMR = prevLeagueInfo.ratingPoint;
         int newMMR = newLeagueInfo.ratingPoint;
+        int amount = newMMR - prevMMR;
 
         slider.maxValue = prevLeagueInfo.rankDetail.pointLessThen;
         slider.value = prevMMR;
@@ -548,7 +549,7 @@ public class GameResultManager : MonoBehaviour {
                 while (value < to) {
                     yield return new WaitForSeconds(0.1f);
                     slider.value = value;
-                    label.text = value + "/" + (prevLeagueInfo.rankDetail.pointLessThen - 1);
+                    label.text = value + "/" + (prevLeagueInfo.rankDetail.pointLessThen - 1) + " " + "(" + amount.ToString() + ")";
                     value++;
 
                     Logger.Log("승급 기회");
@@ -562,7 +563,7 @@ public class GameResultManager : MonoBehaviour {
                 while (value2 < to) {
                     yield return new WaitForSeconds(0.1f);
                     slider.value = value2;
-                    label.text = (value2 + newLeagueInfo.rankDetail.pointLessThen) + "/" + (newLeagueInfo.rankDetail.pointLessThen - 1);
+                    label.text = (value2 + newLeagueInfo.rankDetail.pointLessThen) + "/" + (newLeagueInfo.rankDetail.pointLessThen - 1) + " " + "(" + amount.ToString() + ")";
                     value2++;
                 }
 
@@ -578,7 +579,7 @@ public class GameResultManager : MonoBehaviour {
                 while (value > to) {
                     yield return new WaitForSeconds(0.1f);
                     slider.value = value;
-                    label.text = value + "/" + (prevLeagueInfo.rankDetail.pointLessThen - 1);
+                    label.text = value + "/" + (prevLeagueInfo.rankDetail.pointLessThen - 1) + " " + "(" + amount.ToString() + ")";
                     value--;
                 }
 
@@ -594,7 +595,7 @@ public class GameResultManager : MonoBehaviour {
                 while (value2 >= to) {
                     yield return new WaitForSeconds(0.1f);
                     slider.value = value2;
-                    label.text = value2 + "/" + (newLeagueInfo.rankDetail.pointLessThen - 1);
+                    label.text = value2 + "/" + (newLeagueInfo.rankDetail.pointLessThen - 1) + " " + "(" + amount.ToString() + ")";
                     value2--;
                 }
 
@@ -621,14 +622,14 @@ public class GameResultManager : MonoBehaviour {
                 if(from < to) {
                     while(from <= to) {
                         yield return new WaitForSeconds(0.1f);
-                        label.text = from + "/" + (newLeagueInfo.rankDetail.pointLessThen - 1);
+                        label.text = from + "/" + (newLeagueInfo.rankDetail.pointLessThen - 1) + " " + "(" + amount.ToString() + ")";
                         from++;
                     }
                 }
                 else {
                     while(from >= to) {
                         yield return new WaitForSeconds(0.1f);
-                        label.text = from + "/" + (newLeagueInfo.rankDetail.pointLessThen - 1);
+                        label.text = from + "/" + (newLeagueInfo.rankDetail.pointLessThen - 1) + " " + "(" + amount.ToString() + ")";
                         from--;
                     }
                 }
@@ -643,7 +644,7 @@ public class GameResultManager : MonoBehaviour {
                     int value = from;
                     if (newMMR > prevLeagueInfo.rankDetail.pointLessThen) {
                         slider.value = prevLeagueInfo.rankDetail.pointLessThen;
-                        label.text = newMMR + "/" + (newLeagueInfo.rankDetail.pointLessThen - 1);
+                        label.text = newMMR + "/" + (newLeagueInfo.rankDetail.pointLessThen - 1) + " " + "(" + amount.ToString() + ")";
                     }
                     else {
                         slider.value = from;
@@ -651,7 +652,7 @@ public class GameResultManager : MonoBehaviour {
                         while (value <= to) {
                             yield return new WaitForSeconds(0.1f);
                             slider.value = value;
-                            label.text = value + "/" + (newLeagueInfo.rankDetail.pointLessThen - 1);
+                            label.text = value + "/" + (newLeagueInfo.rankDetail.pointLessThen - 1) + " " + "(" + amount.ToString() + ")";
                             value++;
                         }
                     }
@@ -665,7 +666,7 @@ public class GameResultManager : MonoBehaviour {
                     int value = from;
                     if (newMMR < prevLeagueInfo.rankDetail.pointOverThen) {
                         slider.value = 0;
-                        label.text = newMMR + "/" + (newLeagueInfo.rankDetail.pointLessThen - 1);
+                        label.text = newMMR + "/" + (newLeagueInfo.rankDetail.pointLessThen - 1) + " " + "(" + amount.ToString() + ")";
 
                         Logger.Log("강등 위기");
                     }
@@ -674,7 +675,7 @@ public class GameResultManager : MonoBehaviour {
                         while (value >= to) {
                             yield return new WaitForSeconds(0.1f);
                             slider.value = value;
-                            label.text = value + "/" + newLeagueInfo.rankDetail.pointLessThen;
+                            label.text = value + "/" + newLeagueInfo.rankDetail.pointLessThen + " " + "(" + amount.ToString() + ")";
                             value--;
                         }
                     }
