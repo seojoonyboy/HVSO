@@ -332,7 +332,7 @@ public class GameResultManager : MonoBehaviour {
             else {
                 rankIcon.sprite = icons["default"];
             }
-            rankIcon.transform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = scriptable_leagueData.prevLeagueInfo.rankDetail.minorRankName;
+            playerMMR.transform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = scriptable_leagueData.prevLeagueInfo.rankDetail.minorRankName;
 
             var description = playerMMR.Find("VictoryInfo").GetComponent<TMPro.TextMeshProUGUI>();
             StringBuilder sb = new StringBuilder();
@@ -370,7 +370,7 @@ public class GameResultManager : MonoBehaviour {
 
             if (icons.ContainsKey(leagueInfo.rankDetail.minorRankName)) {
                 rankIcon.sprite = icons[leagueInfo.rankDetail.minorRankName];
-                rankIcon.transform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = leagueInfo.rankDetail.minorRankName;
+                playerMMR.transform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = leagueInfo.rankDetail.minorRankName;
             }
             else {
                 rankIcon.sprite = icons["default"];
@@ -516,6 +516,41 @@ public class GameResultManager : MonoBehaviour {
             .Subscribe(_ => { currentTime = 0; });
     }
 
+    IEnumerator LeagueAnimation(int amount) {
+        yield return new WaitForSeconds(1.2f);
+        Transform playermmr = transform.Find("SecondWindow/PlayerMmr");
+        RectTransform animationObject = playermmr.Find("Result_League").gameObject.GetComponent<RectTransform>();
+        SkeletonGraphic leagueAnimation = animationObject.gameObject.GetComponent<SkeletonGraphic>();
+        UnityEngine.Animation iconAnimation = playermmr.Find("RankIcon").gameObject.GetComponent<UnityEngine.Animation>();
+        float second = 0;
+        TrackEntry entry;
+        string ani = "";
+
+        if (amount < 0) {
+            ani = "down";
+            
+        }
+        else if (amount == 0) {
+            entry = null;
+            ani = "";
+            second = 0;
+        }
+        else if (amount > 0 && amount < 6)
+            ani = "up1";
+        else if (amount > 5 && amount < 16)
+            ani = "up2";
+        else
+            ani = "up3";
+        
+        if(string.IsNullOrEmpty(ani) == false) {
+            entry = leagueAnimation.AnimationState.SetAnimation(0, ani, false);
+            second = leagueAnimation.SkeletonData.FindAnimation(ani).Duration;
+            iconAnimation.Play();
+        }
+        yield return new WaitForSeconds(second);
+    }
+
+
     IEnumerator ProgressLeagueBar(bool isWin) {
         Transform secondWindow = transform.Find("SecondWindow");
         Transform playerMMR = secondWindow.Find("PlayerMmr");
@@ -530,7 +565,10 @@ public class GameResultManager : MonoBehaviour {
 
         slider.maxValue = prevLeagueInfo.rankDetail.pointLessThen;
         slider.value = prevMMR;
-        label.text = prevMMR + "/" + prevLeagueInfo.rankDetail.pointLessThen;
+        label.text = prevMMR + "/" + prevLeagueInfo.rankDetail.pointLessThen + " " + "(" + amount.ToString() + ")";
+
+        yield return LeagueAnimation(amount);
+
 
         if (prevLeagueInfo.rankDetail.minorRankName != newLeagueInfo.rankDetail.minorRankName) {
             Logger.Log("등급 변동");
@@ -827,6 +865,9 @@ public class GameResultManager : MonoBehaviour {
         TMPro.TextMeshProUGUI basicVal = transform.Find("SecondWindow/PlayerSupply/ExtraSupply/Basic/Value").GetComponent<TMPro.TextMeshProUGUI>();
         TMPro.TextMeshProUGUI winVal = transform.Find("SecondWindow/PlayerSupply/ExtraSupply/Win/Value").GetComponent<TMPro.TextMeshProUGUI>();
         TMPro.TextMeshProUGUI totalVal = transform.Find("SecondWindow/PlayerSupply/SupplyText/Value").GetComponent<TMPro.TextMeshProUGUI>();
+        
+
+        yield return new WaitForSeconds(2f);
         boxSpine.Initialize(true);
         boxSpine.Update(0);
         boxSpine.AnimationState.SetAnimation(0, "02.vibration1", true);
@@ -834,7 +875,6 @@ public class GameResultManager : MonoBehaviour {
         supplySpine.Update(0);
         supplySpine.AnimationState.SetAnimation(0, "NOANI", false);
         supplySpine.AnimationState.TimeScale = 2f;
-
         int start = getSup;
         int total = 0;
         int box = 0;

@@ -68,7 +68,7 @@ namespace Quest {
         private void OnRewardReceived(Enum Event_Type, Component Sender, object Param) {
             var targetObj = (GameObject)Param;
             if(gameObject != targetObj) return;
-            Modal.instantiate("\""+data.questDetail.name+"\"의 보상을 우편함으로 보냈습니다.", Modal.Type.CHECK);
+            Modal.instantiate("보상을 우편으로 발송하였습니다.", Modal.Type.CHECK);
             //targetObj.GetComponent<QuestContentController>().getBtn.GetComponentInChildren<TextMeshProUGUI>().text = "획득완료";
             //targetObj.GetComponent<QuestContentController>().getBtn.enabled = false;
         }
