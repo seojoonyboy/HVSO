@@ -517,9 +517,11 @@ public class GameResultManager : MonoBehaviour {
     }
 
     IEnumerator LeagueAnimation(int amount) {
-        yield return new WaitForSeconds(0.6f);
-        RectTransform animationObject = transform.Find("SecondWindow/PlayerMmr/Result_League").gameObject.GetComponent<RectTransform>();
+        yield return new WaitForSeconds(1.2f);
+        Transform playermmr = transform.Find("SecondWindow/PlayerMmr");
+        RectTransform animationObject = playermmr.Find("Result_League").gameObject.GetComponent<RectTransform>();
         SkeletonGraphic leagueAnimation = animationObject.gameObject.GetComponent<SkeletonGraphic>();
+        UnityEngine.Animation iconAnimation = playermmr.Find("RankIcon").gameObject.GetComponent<UnityEngine.Animation>();
         float second = 0;
         TrackEntry entry;
         string ani = "";
@@ -543,6 +545,7 @@ public class GameResultManager : MonoBehaviour {
         if(string.IsNullOrEmpty(ani) == false) {
             entry = leagueAnimation.AnimationState.SetAnimation(0, ani, false);
             second = leagueAnimation.SkeletonData.FindAnimation(ani).Duration;
+            iconAnimation.Play();
         }
         yield return new WaitForSeconds(second);
     }
@@ -862,6 +865,9 @@ public class GameResultManager : MonoBehaviour {
         TMPro.TextMeshProUGUI basicVal = transform.Find("SecondWindow/PlayerSupply/ExtraSupply/Basic/Value").GetComponent<TMPro.TextMeshProUGUI>();
         TMPro.TextMeshProUGUI winVal = transform.Find("SecondWindow/PlayerSupply/ExtraSupply/Win/Value").GetComponent<TMPro.TextMeshProUGUI>();
         TMPro.TextMeshProUGUI totalVal = transform.Find("SecondWindow/PlayerSupply/SupplyText/Value").GetComponent<TMPro.TextMeshProUGUI>();
+        
+
+        yield return new WaitForSeconds(2f);
         boxSpine.Initialize(true);
         boxSpine.Update(0);
         boxSpine.AnimationState.SetAnimation(0, "02.vibration1", true);
@@ -869,7 +875,6 @@ public class GameResultManager : MonoBehaviour {
         supplySpine.Update(0);
         supplySpine.AnimationState.SetAnimation(0, "NOANI", false);
         supplySpine.AnimationState.TimeScale = 2f;
-
         int start = getSup;
         int total = 0;
         int box = 0;
