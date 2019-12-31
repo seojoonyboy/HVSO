@@ -682,7 +682,7 @@ public class GameResultManager : MonoBehaviour {
             }
         }
 
-        if (scriptable_leagueData.leagueInfo.ratingPoint <= 0) 
+        if (newMMR <= 0) 
             slider.gameObject.transform.Find("Fill Area/Fill/Effect").gameObject.SetActive(false);
         else
             slider.gameObject.transform.Find("Fill Area/Fill/Effect").gameObject.SetActive(true);
