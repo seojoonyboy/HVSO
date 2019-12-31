@@ -59,6 +59,7 @@ public class IngameSettingModalManager : MonoBehaviour {
 
     public void Surrend() {
         if (PlayMangement.instance.isGame == false) return;
+        PlayMangement.instance.isGame = false;
         PlayMangement.instance.SocketHandler.Surrend(null);
         OffAllModals();
     }
