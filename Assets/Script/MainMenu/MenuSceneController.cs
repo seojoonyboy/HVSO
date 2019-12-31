@@ -240,18 +240,6 @@ public class MenuSceneController : MonoBehaviour {
         }
     }
 
-    /// <summary>
-    /// PVP대전 버튼 클릭
-    /// </summary>
-    public void OnPVPClicked() {
-        battleReadyPanel.SetActive(true);
-        hudController.SetHeader(HUDController.Type.BATTLE_READY_CANVAS);
-        hudController.SetBackButton(() => {
-            battleReadyPanel.SetActive(false);
-            hudController.SetHeader(HUDController.Type.SHOW_USER_INFO);
-        });
-    }
-
     public void OpenOption() {
         OptionCanvas.SetActive(true);
         EscapeKeyController.escapeKeyCtrl.AddEscape(CloseOption);
