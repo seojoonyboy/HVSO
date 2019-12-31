@@ -1,0 +1,13 @@
+
+main_leagueInformation.png
+size: 128,128
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+icon
+  rotate: false
+  xy: 0, 0
+  size: 116, 87
+  orig: 116, 87
+  offset: 0, 0
+  index: -1
