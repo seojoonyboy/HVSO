@@ -40,10 +40,6 @@ public class BattleReadySceneController : MonoBehaviour {
         }
     }
 
-    void Awake() {
-        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_INFO_UPDATED, OnLeagueInfoUpdated);
-    }
-
     void OnEnable() {
         isIngameButtonClicked = false;
 
@@ -57,6 +53,7 @@ public class BattleReadySceneController : MonoBehaviour {
         });
         EscapeKeyController.escapeKeyCtrl.AddEscape(OnBackButton);
 
+        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_INFO_UPDATED, OnLeagueInfoUpdated);
         AccountManager.Instance.RequestLeagueInfo();
     }
 
