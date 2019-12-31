@@ -323,6 +323,7 @@ public class GameResultManager : MonoBehaviour {
         if (leagueInfo != null) {
             Transform secondWindow = transform.Find("SecondWindow");
             Transform playerMMR = secondWindow.Find("PlayerMmr");
+            Transform mmrSlider = playerMMR.Find("MMRSlider");
             Image rankIcon = playerMMR.Find("RankIcon").GetComponent<Image>();
             var icons = AccountManager.Instance.resource.rankIcons;
             if (!string.IsNullOrEmpty(scriptable_leagueData.prevLeagueInfo.rankDetail.minorRankName) && icons.ContainsKey(scriptable_leagueData.prevLeagueInfo.rankDetail.minorRankName)) {
@@ -389,10 +390,13 @@ public class GameResultManager : MonoBehaviour {
         Transform secondWindow = transform.Find("SecondWindow");
         Transform playerMmr = secondWindow.Find("PlayerMmr");
         Transform expSlider = playerMmr.Find("MMRSlider");
+
+
         expSlider.Find("RankChangeEffect").gameObject.SetActive(true);
 
         var leagueInfo = scriptable_leagueData.leagueInfo;
-        if(leagueInfo.rankingBattleState == "rank_up") {
+
+        if (leagueInfo.rankingBattleState == "rank_up") {
             Logger.Log("Case 1");
             expSlider.Find("RankChangeEffect/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "승급전 발생";
         }
@@ -578,6 +582,8 @@ public class GameResultManager : MonoBehaviour {
                     value--;
                 }
 
+
+
                 int value2 = newLeagueInfo.rankDetail.pointLessThen;
 
                 from = value2;
@@ -675,6 +681,12 @@ public class GameResultManager : MonoBehaviour {
                 }
             }
         }
+
+        if (scriptable_leagueData.leagueInfo.ratingPoint <= 0) 
+            slider.gameObject.transform.Find("Fill Area/Fill/Effect").gameObject.SetActive(false);
+        else
+            slider.gameObject.transform.Find("Fill Area/Fill/Effect").gameObject.SetActive(true);
+
     }
 
     /// <summary>
