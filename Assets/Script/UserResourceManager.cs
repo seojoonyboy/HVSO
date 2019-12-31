@@ -119,7 +119,7 @@ public class UserResourceManager : SerializedMonoBehaviour {
         this.supplyStoreTime = supplyStoreTime;
         suppllyTimerTime = supplyStoreTime * 0.001f;
         if (suppllyTimerTime > 0) {
-            supplyStoreTimer = time.Hours.ToString() + ":" + time.Minutes.ToString() + ":" + time.Seconds.ToString();
+            supplyStoreTimer = time.Hours.ToString() + ":" + time.Minutes.ToString() + ":" + time.Seconds.ToString() + " +20";
         }
         else
             supplyStoreTimer = "";
