@@ -181,6 +181,7 @@ public class MailBoxManager : MonoBehaviour
     public void RequestOver(Enum Event_Type, Component Sender, object Param) {
         transform.Find("Block").gameObject.SetActive(false);
         transform.GetChild(0).Find("ReceivedReward").gameObject.SetActive(true);
+        SetRewardAnimation();
         CloseMail();
         EscapeKeyController.escapeKeyCtrl.AddEscape(CloseReceiveResult);
     }
@@ -244,6 +245,15 @@ public class MailBoxManager : MonoBehaviour
                 transform.Find("Content/ReceivedReward/Buttons/Next").gameObject.SetActive(false);
         }
     }
+
+    void SetRewardAnimation() {
+        Transform mail_transform = transform.GetChild(0).Find("ReceivedReward/Mail_Reward");
+        Spine.Unity.SkeletonGraphic mail_animation = mail_transform.gameObject.GetComponent<Spine.Unity.SkeletonGraphic>();
+        mail_animation.Initialize(false);
+        mail_animation.Update(0);
+        mail_animation.AnimationState.SetAnimation(0, "story_reward1", false);
+    }
+
 
     void SetNextRewardPage(List<dataModules.MailReward> itemList) {
         InitRewardList();
