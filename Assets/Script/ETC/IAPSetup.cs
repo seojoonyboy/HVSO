@@ -24,11 +24,7 @@ public class IAPSetup : Singleton<IAPSetup> {
     [SerializeField] private GameObject eulaText;
     private WebClient webClient;
 
-    private void Start() {
-        Init();
-    }
-
-    private void Init() {
+    public void Init() {
         WebClientInit();
         IAPInit();
     }
