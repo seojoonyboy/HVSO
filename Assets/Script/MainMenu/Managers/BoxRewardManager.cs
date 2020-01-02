@@ -387,7 +387,7 @@ public class BoxRewardManager : MonoBehaviour {
             yield return new WaitForSeconds(0.2f);
             switch (type) {
                 case "gold":
-                    targetBox.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = "골드 뭉치";
+                    targetBox.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = "금화";
                     soundManager.PlaySound(UISfxSound.BOX_EPIC);
                     break;
                 case "supplyX2Coupon":
@@ -395,7 +395,7 @@ public class BoxRewardManager : MonoBehaviour {
                     soundManager.PlaySound(UISfxSound.BOX_NORMAL);
                     break;
                 case "crystal":
-                    targetBox.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = "마나석 뭉치";
+                    targetBox.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = "마력결정";
                     soundManager.PlaySound(UISfxSound.BOX_NORMAL);
                     break;
             }
@@ -441,8 +441,11 @@ public class BoxRewardManager : MonoBehaviour {
     }
 
     public virtual void SetRewards(RewardClass[] rewardList) {
-        for(int i = 0; i < rewardList.Length; i++) 
+        for(int i = 0; i < rewardList.Length; i++) {
+            Logger.Log("보상정보 : " + rewardList[i].type);
             SetEachReward(rewardList[i], i);
+        }
+            
     }
 
     public virtual void SetEachReward(RewardClass reward, int index) {
@@ -451,6 +454,7 @@ public class BoxRewardManager : MonoBehaviour {
         effects.GetChild(index).GetComponent<SkeletonGraphic>().Initialize(false);
         effects.GetChild(index).GetComponent<SkeletonGraphic>().Update(0);
         if (reward.type == "card") {
+            Logger.Log("카드 보상 :" + reward.item);
             Transform target = boxTarget.Find("card");
             target.SetSiblingIndex(1);
             target.gameObject.SetActive(true);
