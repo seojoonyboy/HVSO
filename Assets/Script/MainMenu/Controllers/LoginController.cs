@@ -76,7 +76,7 @@ public class LoginController : MonoBehaviour {
         Spine.AnimationState state = skeletonGraphic.AnimationState;
         state.SetAnimation(0, "loop", true);
         isClicked = false;
-
+        IAPSetup.Instance.Init();
         //CustomVibrate.Vibrate(1000);
     }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using TMPro;
 
 public class Modal : MonoBehaviour {
     [SerializeField] private GameObject InnerModal;
@@ -68,20 +69,20 @@ public class Modal : MonoBehaviour {
 	/// <param name="function">yes 버튼 누를 경우 실행 함수(필요하면)</param>
 	/// <param name="title">제목에 들어갈 내용(필요하면)(급하게 넣은 매개변수)</param>
 	public void SetData(string text, UnityAction function, Type type, System.Action function2 = null, string title = null, string[] btnTexts = null) {
-        Text describe = null;
+        TextMeshProUGUI describe = null;
         Button yesButton = null;
         if (type == Type.CHECK) {
             checkModal.SetActive(true);
-            describe = checkModal.transform.Find("Describe").GetComponent<Text>();
+            describe = checkModal.transform.Find("Describe").GetComponent<TextMeshProUGUI>();
             yesButton = checkModal.transform.Find("Buttons/YesButton").GetComponent<Button>();
 
             if(btnTexts != null && btnTexts.Length >= 1) {
-                yesButton.transform.Find("Text").GetComponent<Text>().text = btnTexts[0];
+                yesButton.transform.Find("Text").GetComponent<TextMeshProUGUI>().text = btnTexts[0];
             }
 		}
         else if(type == Type.YESNO) {
             YesNoModal.SetActive(true);
-            describe = YesNoModal.transform.Find("Describe").GetComponent<Text>();
+            describe = YesNoModal.transform.Find("Describe").GetComponent<TextMeshProUGUI>();
             yesButton = YesNoModal.transform.Find("Buttons/YesButton").GetComponent<Button>();
             if (function2 != null) {
                 action = function2;
@@ -89,8 +90,8 @@ public class Modal : MonoBehaviour {
             }
 
             if (btnTexts != null && btnTexts.Length >= 2) {
-                yesButton.transform.Find("Text").GetComponent<Text>().text = btnTexts[0];
-                YesNoModal.transform.Find("Buttons/NoButton/Text").GetComponent<Text>().text = btnTexts[1];
+                yesButton.transform.Find("Text").GetComponent<TextMeshProUGUI>().text = btnTexts[0];
+                YesNoModal.transform.Find("Buttons/NoButton/Text").GetComponent<TextMeshProUGUI>().text = btnTexts[1];
             }
         }
         else { Logger.LogError("Modal 타입이 올바르지 않습니다!"); }
