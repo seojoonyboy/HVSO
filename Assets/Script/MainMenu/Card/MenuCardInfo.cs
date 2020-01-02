@@ -351,45 +351,49 @@ public partial class MenuCardInfo : MonoBehaviour {
 
     public void MakeCard() {
         if (cardCreate) return;
-        transform.Find("CreateBlock").gameObject.SetActive(true);
-        SoundManager.Instance.PlaySound(UISfxSound.CARD_CREATE);
-        if (bookHaveNum == 0)
-            bookHaveNum++;
-        cardCreate = true;
-        makeCard = true;
-        transform.Find("FrameImage/UnitPortrait").GetComponent<Image>().color = new Color(0.3f, 0.3f, 0.3f);
-        transform.Find("CreateCard/BreakBtn/Disabled").gameObject.SetActive(true);
-        transform.Find("CreateCard/MakeBtn/Disabled").gameObject.SetActive(true);
-        transform.Find("CreateSpine").gameObject.SetActive(true);
-        transform.Find("CreateSpine").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, "MAKING", false);
-        beforeCrystal = accountManager.userResource.crystal;
-        accountManager.RequestCardMake(cardId);
+        Modal.instantiate("이 카드를 제작하시겠습니까?", Modal.Type.YESNO, () => {
+            transform.Find("CreateBlock").gameObject.SetActive(true);
+            SoundManager.Instance.PlaySound(UISfxSound.CARD_CREATE);
+            if (bookHaveNum == 0)
+                bookHaveNum++;
+            cardCreate = true;
+            makeCard = true;
+            transform.Find("FrameImage/UnitPortrait").GetComponent<Image>().color = new Color(0.3f, 0.3f, 0.3f);
+            transform.Find("CreateCard/BreakBtn/Disabled").gameObject.SetActive(true);
+            transform.Find("CreateCard/MakeBtn/Disabled").gameObject.SetActive(true);
+            transform.Find("CreateSpine").gameObject.SetActive(true);
+            transform.Find("CreateSpine").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, "MAKING", false);
+            beforeCrystal = accountManager.userResource.crystal;
+            accountManager.RequestCardMake(cardId);
+        });
     }
 
     public void BreakCard() {
         if (cardCreate) return;
-        transform.Find("CreateBlock").gameObject.SetActive(true);
-        SoundManager.Instance.PlaySound(UISfxSound.CARD_BREAK);
-        cardCreate = true;
-        makeCard = false;
-        if (bookHaveNum > 0)
-            bookHaveNum--;
-        transform.Find("FrameImage/UnitPortrait").GetComponent<Image>().color = new Color(0.3f, 0.3f, 0.3f);
-        transform.Find("CreateCard/BreakBtn/Disabled").gameObject.SetActive(true);
-        transform.Find("CreateCard/MakeBtn/Disabled").gameObject.SetActive(true);
-        transform.Find("CreateSpine").gameObject.SetActive(true);
-        transform.Find("CreateSpine").GetComponent<SkeletonGraphic>().Update(0);
-        transform.Find("CreateSpine").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, "DECOMPOSITION", false);
-        beforeCrystal = accountManager.userResource.crystal;
+        Modal.instantiate("이 카드를 분해하시겠습니까?", Modal.Type.YESNO, () => {
+            transform.Find("CreateBlock").gameObject.SetActive(true);
+            SoundManager.Instance.PlaySound(UISfxSound.CARD_BREAK);
+            cardCreate = true;
+            makeCard = false;
+            if (bookHaveNum > 0)
+                bookHaveNum--;
+            transform.Find("FrameImage/UnitPortrait").GetComponent<Image>().color = new Color(0.3f, 0.3f, 0.3f);
+            transform.Find("CreateCard/BreakBtn/Disabled").gameObject.SetActive(true);
+            transform.Find("CreateCard/MakeBtn/Disabled").gameObject.SetActive(true);
+            transform.Find("CreateSpine").gameObject.SetActive(true);
+            transform.Find("CreateSpine").GetComponent<SkeletonGraphic>().Update(0);
+            transform.Find("CreateSpine").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, "DECOMPOSITION", false);
+            beforeCrystal = accountManager.userResource.crystal;
 
-        accountManager.RequestCardBreak(cardId);
+            accountManager.RequestCardBreak(cardId);
 
-        string rarelity = accountManager.cardPackage.data[cardId].rarelity;
-        if (accountManager.cardPackage.data[cardId].camp == "human")
-            accountManager.cardPackage.rarelityHumanCardNum[rarelity].Remove(cardId);
-        else
-            accountManager.cardPackage.rarelityOrcCardNum[rarelity].Remove(cardId);
-        accountManager.cardPackage.data.Remove(cardId);
+            string rarelity = accountManager.cardPackage.data[cardId].rarelity;
+            if (accountManager.cardPackage.data[cardId].camp == "human")
+                accountManager.cardPackage.rarelityHumanCardNum[rarelity].Remove(cardId);
+            else
+                accountManager.cardPackage.rarelityOrcCardNum[rarelity].Remove(cardId);
+            accountManager.cardPackage.data.Remove(cardId);
+        });
     }
 
     void EndCardMaking() {
