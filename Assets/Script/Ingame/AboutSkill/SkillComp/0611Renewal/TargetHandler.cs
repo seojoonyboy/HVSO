@@ -458,6 +458,7 @@ namespace TargetModules {
             PlayMangement.instance.infoOn = false;
             PlayMangement.dragable = true;
             PlayMangement.instance.UnlockTurnOver();
+            TintUnit(false);
 
             bool isHuman = PlayMangement.instance.player.isHuman;
             
