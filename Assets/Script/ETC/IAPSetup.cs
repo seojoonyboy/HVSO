@@ -7,8 +7,7 @@ using Haegin;
 using HaeginGame;
 using System.Collections.Generic;
 
-[Serializable]
-public class IAPSetup {
+public class IAPSetup : Singleton<IAPSetup> {
 
     private Dictionary<string, string> productDictionary = 
         new Dictionary<string, string>{{"gold_1", "com_haegin_hvso_fistful_of_gold"},       //금화 한줌
@@ -16,16 +15,20 @@ public class IAPSetup {
                                         {"gold_3", "com_haegin_hvso_sack_of_gold"},         //금화 자루
                                         {"gold_4", "com_haegin_hvso_chest_of_gold"},        //금화 상자
                                         {"gold_5", "com_haegin_hvso_cart_of_gold"},         //금화 수레
-                                        {"gold_6", "com_haegin_hvso_pile_of_gold"},         //금화 더미
-                                        {"welcome_1", "com_haegin_hvso_welcome_package_1"},    //웰컴 패키지1
-                                        {"welcome_2", "com_haegin_hvso_welcome_package_2"},    //웰컴 패키지2
-                                        {"welcome_3", "com_haegin_hvso_welcome_package_3"}};   //웰컴 패키지3
+                                        {"gold_6", "com_haegin_hvso_pile_of_gold"};         //금화 더미
+                                        //{"welcome_1", "com_haegin_hvso_welcome_package_1"},    //웰컴 패키지1
+                                        //{"welcome_2", "com_haegin_hvso_welcome_package_2"},    //웰컴 패키지2
+                                        //{"welcome_3", "com_haegin_hvso_welcome_package_3"}};   //웰컴 패키지3
     [SerializeField] private Canvas canvas;
     [SerializeField] private GameObject systemDialog;
     [SerializeField] private GameObject eulaText;
     private WebClient webClient;
 
-    public void Init() {
+    private void Start() {
+        Init();
+    }
+
+    private void Init() {
         WebClientInit();
         IAPInit();
     }
@@ -107,7 +110,7 @@ public class IAPSetup {
         OnNetworkError();
     }
 
-    public void Destory() {
+    public void OnDestory() {
         if (webClient == null) return;
         webClient.ErrorOccurred -= OnErrorOccurred;
         webClient.Processing -= OnProcessing;
