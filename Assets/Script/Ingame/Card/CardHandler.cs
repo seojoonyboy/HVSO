@@ -375,6 +375,7 @@ public partial class CardHandler : MonoBehaviour {
     }
 
     protected void StartDragCard() {
+        CardInfoOnDrag.instance.crossHair.GetComponent<SkeletonGraphic>().Skeleton.SetSkin("1.yellow");
         transform.localScale = new Vector3(1.15f, 1.15f, 1);
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePos = new Vector3(mousePos.x, mousePos.y, 0);
