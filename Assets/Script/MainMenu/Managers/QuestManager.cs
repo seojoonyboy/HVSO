@@ -14,6 +14,7 @@ namespace Quest {
         [SerializeField] Transform content;
         [SerializeField] HUDController HUDController;
         [SerializeField] GameObject newIcon;
+        [SerializeField] GameObject glowEffect;
         public MenuSceneController tutoDialog;
 
         public GameObject handSpinePrefab;
@@ -66,6 +67,7 @@ namespace Quest {
 
         public void showNewIcon(bool yesno) {
             newIcon.SetActive(yesno);
+            glowEffect.SetActive(yesno);
         }
 
         public void ResetQuest() {

@@ -1,0 +1,27 @@
+
+main_buttons.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+bacK1
+  rotate: false
+  xy: 0, 280
+  size: 523, 330
+  orig: 523, 330
+  offset: 0, 0
+  index: -1
+bacK2
+  rotate: true
+  xy: 523, 26
+  size: 584, 289
+  orig: 584, 289
+  offset: 0, 0
+  index: -1
+bacK3
+  rotate: false
+  xy: 0, 0
+  size: 297, 280
+  orig: 297, 280
+  offset: 0, 0
+  index: -1

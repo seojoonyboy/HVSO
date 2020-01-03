@@ -136,7 +136,7 @@ public class IAPSetup : Singleton<IAPSetup> {
         IAP.purchaseProduct(productDictionary[productId] , (result, purchasedData, errorMsg) => {
             switch (result) {
                 case IAP.PurchaseResultCode.PURCHASE_SUCCESS:
-                    GameObject.Find("PurchaseLabel").GetComponent<Text>().text = TextManager.GetString(TextManager.StringTag.Purchased);
+                    //GameObject.Find("PurchaseLabel").GetComponent<Text>().text = TextManager.GetString(TextManager.StringTag.Purchased);
                     #if MDEBUG
                     Debug.Log("Unity : item purchased..");
                     #endif
