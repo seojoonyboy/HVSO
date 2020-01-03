@@ -154,6 +154,7 @@ public class RewardProgressController : MonoBehaviour {
         }
 
         isMoving = false;
+        leagueData.prevLeagueInfo = leagueData.leagueInfo.DeepCopy(leagueData.leagueInfo);
     }
 
     IEnumerator ProgressAscending() {
@@ -179,6 +180,8 @@ public class RewardProgressController : MonoBehaviour {
             .GetComponent<RectTransform>()
             .localPosition.x;
 
+        RectTransform rect = currentProgressBar.GetComponent<RectTransform>();
+
         if (closestLeftTargetIndex < closestRightTargetIndex) {
             float mmrWidth = closestRightTargetMMR - closestLeftTargetMMR;
             float localPosWidth = closestRightTargetX - closestLeftTargetX;
@@ -192,9 +195,8 @@ public class RewardProgressController : MonoBehaviour {
             }
             
             float targetPosX = val;
-            RectTransform rect = currentProgressBar.GetComponent<RectTransform>();
+            
             float progressValue = rect.sizeDelta.x;
-
             int interval = 0;
             while (progressValue < targetPosX) {
                 progressValue += 10;
@@ -208,7 +210,7 @@ public class RewardProgressController : MonoBehaviour {
                 interval++;
             }
         }
-        SnapTo(closestRightTargetIndex);
+        SnapTo(rect);
     }
 
     IEnumerator ProgressDescending() {
@@ -234,6 +236,7 @@ public class RewardProgressController : MonoBehaviour {
             .GetComponent<RectTransform>()
             .localPosition.x;
 
+        RectTransform rect = currentProgressBar.GetComponent<RectTransform>();
         if (closestLeftTargetIndex < closestRightTargetIndex) {
             float mmrWidth = closestRightTargetMMR - closestLeftTargetMMR;
             float localPosWidth = closestRightTargetX - closestLeftTargetX;
@@ -247,7 +250,6 @@ public class RewardProgressController : MonoBehaviour {
             }
 
             float targetPosX = val;
-            RectTransform rect = currentProgressBar.GetComponent<RectTransform>();
             float progressValue = rect.sizeDelta.x;
 
             int interval = 0;
@@ -263,7 +265,7 @@ public class RewardProgressController : MonoBehaviour {
                 interval++;
             }
         }
-        SnapTo(closestRightTargetIndex);
+        SnapTo(rect);
     }
 
     /// <summary>
@@ -299,9 +301,8 @@ public class RewardProgressController : MonoBehaviour {
         return rewardsProvider.standards[btnIndex];
     }
 
-    public void SnapTo(int closestBtnIndex) {
-        var rect = rewardsProvider.buttons[closestBtnIndex].GetComponent<RectTransform>();
-        var posX = rect.localPosition.x;
+    public void SnapTo(RectTransform progressBarRect) {
+        var posX = progressBarRect.localPosition.x + progressBarRect.sizeDelta.x - 50f;
 
         var totalWidth = scrollRect.content.sizeDelta.x;
         scrollRect.horizontalNormalizedPosition = posX / totalWidth;

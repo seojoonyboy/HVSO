@@ -8,7 +8,7 @@ using System.Text;
 
 public class BattleReadyHeaderController : SerializedMonoBehaviour {
     [SerializeField] BattleReadySceneController battleReadySceneController;
-    [SerializeField] GameObject rankObj, normalUI, rankingBattleUI;
+    [SerializeField] GameObject normalUI, rankingBattleUI;
     [SerializeField] Image headerImg;
     [SerializeField] Sprite[] headerImages;
 
@@ -26,8 +26,8 @@ public class BattleReadyHeaderController : SerializedMonoBehaviour {
     public void SetUI(AccountManager.LeagueInfo data) {
         TextMeshProUGUI mmrName = transform.Find("Desc/MMR/MinorName").GetComponent<TextMeshProUGUI>();
         mmrName.text = data.rankDetail.minorRankName;
-        Image rankImg = rankObj.transform.Find("Image").GetComponent<Image>();
-        rankImg.sprite = GetRankImage(data.rankDetail.minorRankName);
+        //Image rankImg = rankObj.transform.Find("Image").GetComponent<Image>();
+        //rankImg.sprite = GetRankImage(data.rankDetail.minorRankName);
 
         SetRank(data.ratingPoint);
         SetDescription(data);
@@ -74,24 +74,29 @@ public class BattleReadyHeaderController : SerializedMonoBehaviour {
         normalUI.SetActive(false);
         rankingBattleUI.SetActive(true);
 
-        //headerImg.sprite = 
+        rankingBattleUI.transform.Find("Text").GetComponent<TextMeshProUGUI>().text = data.rankDetail.minorRankName;
+        rankingBattleUI.transform.Find("Rank/Image").GetComponent<Image>().sprite = GetRankImage(data.rankDetail.minorRankName);
+        rankingBattleUI.transform.Find("RankingTable/Icon/Value").GetComponent<Text>().text = data.ratingPoint.ToString();
+
         Transform rankingTable = rankingBattleUI.transform.Find("RankingTable");
-        TextMeshProUGUI description = rankingBattleUI.transform.Find("Text").GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI description = rankingBattleUI.transform.Find("Rank/Image/Name").GetComponent<TextMeshProUGUI>();
 
         StringBuilder message = new StringBuilder();
         AccountManager.RankUpCondition rankCondition;
         if (isUp) {
             rankCondition = data.rankDetail.rankUpBattleCount;
-            description.text = "승급전 발생";
+            description.text = "승급전!";
             //message.Append("승급전 발생");
         }
         else {
             rankCondition = data.rankDetail.rankDownBattleCount;
-            description.text = "강등전 발생";
+            description.text = "강등전!";
         }
 
         for (int i = 0; i < rankCondition.battles; i++) {
-            rankingTable.GetChild(i).gameObject.SetActive(true);
+            if (rankingTable.GetChild(i).name != "Icon") {
+                rankingTable.GetChild(i).gameObject.SetActive(true);
+            }   
             yield return new WaitForSeconds(1.0f);
         }
 
@@ -99,11 +104,15 @@ public class BattleReadyHeaderController : SerializedMonoBehaviour {
             for(int i=0; i<data.rankingBattleCount.Length; i++) {
                 //승리
                 if(data.rankingBattleCount[i] == true) {
-                    rankingTable.GetChild(i).Find("Win").gameObject.SetActive(true);
+                    if(rankingTable.GetChild(i).name != "Icon") {
+                        rankingTable.GetChild(i).Find("Win").gameObject.SetActive(true);
+                    }
                 }
                 //패배
                 else {
-                    rankingTable.GetChild(i).Find("Lose").gameObject.SetActive(true);
+                    if (rankingTable.GetChild(i).name != "Icon") {
+                        rankingTable.GetChild(i).Find("Lose").gameObject.SetActive(true);
+                    }
                 }
             }
         }
@@ -113,6 +122,8 @@ public class BattleReadyHeaderController : SerializedMonoBehaviour {
     IEnumerator SetNormalUI(AccountManager.LeagueInfo data) {
         SetDescription(data);
         StartCoroutine(_SetRank(data.ratingPoint));
+
+        normalUI.transform.Find("Rank/Image").GetComponent<Image>().sprite = GetRankImage(data.rankDetail.minorRankName);
         yield return 0;
     }
 

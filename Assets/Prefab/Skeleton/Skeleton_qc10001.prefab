@@ -141,6 +141,7 @@ MonoBehaviour:
   attackEventName: ATTACK
   arrow: {fileID: 0}
   hidingObject: {fileID: 0}
+  rarelity: 
   teleportMove: 0
   isGlow: 0
   spineColor: {r: 1, g: 1, b: 1, a: 1}

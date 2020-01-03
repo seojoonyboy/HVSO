@@ -85,9 +85,7 @@ public class RewardButtonInBattleReady : MonoBehaviour {
             Modal.instantiate("요청 불가", Modal.Type.CHECK);
         }
         else {
-            Modal.instantiate("우편으로 발송되었습니다.", Modal.Type.CHECK, () => {
-
-            });
+            Modal.instantiate("보상을 우편으로 발송하였습니다.", Modal.Type.CHECK, () => {});
         }
     }
 

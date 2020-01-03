@@ -94,6 +94,7 @@ public class PlaceMonster : MonoBehaviour {
         unitSpine = transform.Find("skeleton").GetComponent<UnitSpine>();
         unitSpine.attackCallback += SuccessAttack;
         unitSpine.takeMagicCallback += CheckHP;
+        unitSpine.rarelity = unit.rarelity;
 
         
         if (unit.attackType.Length > 0 && unit.attackType[0] == "double")
@@ -613,7 +614,7 @@ public class PlaceMonster : MonoBehaviour {
 
     private void ReturnPosition() {
         unitSoringOrder = 50;
-        iTween.MoveTo(gameObject, iTween.Hash("x", unitLocation.x, "y", unitLocation.y, "z", unitLocation.z, "time", 0.3f, "delay", 0.5f, "easetype", iTween.EaseType.easeInOutExpo));
+        iTween.MoveTo(gameObject, iTween.Hash("x", unitLocation.x, "y", unitLocation.y, "z", unitLocation.z, "time", 0.2f, "delay", 0.3f, "easetype", iTween.EaseType.easeInOutExpo));
     }
 
     public void CheckHP() {

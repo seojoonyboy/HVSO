@@ -35,6 +35,7 @@ public class IngameBoxRewarder : BoxRewardManager
         openCount = 0;
         boxSpine.Initialize(true);
         boxSpine.Update(0);
+        SoundManager.Instance.PlaySound(UISfxSound.BOX_APPEAR);
         boxSpine.AnimationState.SetAnimation(0, "01.START", false);
         boxSpine.AnimationState.AddAnimation(1, "02.IDLE", true, 0.5f);
         boxEffect.Initialize(true);
@@ -60,7 +61,7 @@ public class IngameBoxRewarder : BoxRewardManager
         effects.GetChild(index).GetComponent<SkeletonGraphic>().Initialize(false);
         effects.GetChild(index).GetComponent<SkeletonGraphic>().Update(0);
         if (reward.type == "card") {
-            Transform target = boxTarget.Find("Card");
+            Transform target = boxTarget.Find("card");
             target.SetSiblingIndex(1);
             target.gameObject.SetActive(true);
             target.Find("DictionaryCardVertical").GetComponent<MenuCardHandler>().DrawCard(reward.item);
@@ -102,7 +103,7 @@ public class IngameBoxRewarder : BoxRewardManager
             }
         }
         else {
-            Transform target = boxTarget.Find("Resource");
+            Transform target = boxTarget.Find("resource");
             target.SetSiblingIndex(1);
             target.gameObject.SetActive(true);
             target.Find(reward.item).gameObject.SetActive(true);

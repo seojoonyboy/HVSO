@@ -212,12 +212,6 @@
                         ]
                     },
                     {
-                        "name" : "Wait_Until",
-                        "args" : [
-                            "0.5"
-                        ]
-                    },
-                    {
                         "name": "AutoSelectStoryDeck",
                         "args": [
                             "orc",
@@ -418,12 +412,6 @@
                 "id" : 1,
                 "description" : null,
                 "methods" : [
-                    {
-                        "name" : "Wait_Until",
-                        "args" : [
-                            "1"
-                        ]
-                    },
                     {
                         "name" : "ForceToPage",
                         "args" : [
@@ -781,6 +769,10 @@
                     },
                     {
                         "name" : "Menu_Hide_Message",
+                        "args" : []
+                    },
+                    {
+                        "name" : "ShowDailyQuestCanvas",
                         "args" : []
                     },
                     {

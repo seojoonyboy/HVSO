@@ -11,6 +11,8 @@ using BestHTTP;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using dataModules;
+using UnityEngine.SceneManagement;
+using Quest;
 
 public partial class AccountManager : Singleton<AccountManager> {
     protected AccountManager() { }
@@ -54,6 +56,7 @@ public partial class AccountManager : Singleton<AccountManager> {
     public UnityEvent OnCardLoadFinished = new UnityEvent();
     public LeagueData scriptable_leagueData;
     public string prevSceneName;
+    public bool canLoadDailyQuest = false;
 
     private string nickName;
     public string NickName {
@@ -78,6 +81,9 @@ public partial class AccountManager : Singleton<AccountManager> {
         gameObject.AddComponent<Timer.TimerManager>();
         
         PlayerPrefs.DeleteKey("ReconnectData");
+
+        //테스트 코드
+        //PlayerPrefs.SetInt("IsQuestLoaded", 0);
     }
 
     // Start is called before the first frame update
@@ -86,7 +92,7 @@ public partial class AccountManager : Singleton<AccountManager> {
         MakeAreaDict(); //랭크 구간 생성
     }
 
-    #if UNITY_EDITOR
+#if UNITY_EDITOR
     void Update() {
         if(Input.GetKeyDown(KeyCode.F)) PlayerPrefs.DeleteKey("ReconnectData");
     }
@@ -765,13 +771,14 @@ public partial class AccountManager {
         }, "인벤토리 정보를 불러오는 중...");
     }
 
-    public void RequestMainAdReward() {
+    public void RequestMainAdReward(IronSourcePlacement placement) {
         StringBuilder url = new StringBuilder();
         string base_url = networkManager.baseUrl;
 
         url
             .Append(base_url)
-            .Append("api/user/claim_reward?kind=ad&placementName=main&rewardName=presupply&rewardAmount=40");
+            .Append(string.Format("api/user/claim_reward?kind=ad&placementName={0}&rewardName={1}&rewardAmount={2}", 
+            placement.getPlacementName(), placement.getRewardName(), placement.getRewardAmount()));
 
         HTTPRequest request = new HTTPRequest(
             new Uri(url.ToString())
@@ -1424,10 +1431,13 @@ public partial class AccountManager {
                 if (res.StatusCode == 200 || res.StatusCode == 304) {
                     var leagueInfo = dataModules.JsonReader.Read<LeagueInfo>(res.DataAsText);
 
-                    if(prevSceneName != "Ingame") {
+                    if (prevSceneName == "Login") {
                         Logger.Log("이전 씬이 Ingame이 아닌 경우");
                         scriptable_leagueData.leagueInfo = leagueInfo;
                         scriptable_leagueData.prevLeagueInfo = leagueInfo.DeepCopy(leagueInfo);
+                    }
+                    else {
+                        scriptable_leagueData.leagueInfo = leagueInfo;
                     }
 
                     NoneIngameSceneEventHandler
@@ -1701,37 +1711,53 @@ public partial class AccountManager {
             "튜토리얼 정보를 불러오는중...");
     }
 
-    public void RequestQuestProgress(int questId) {
+    // public void RequestQuestProgress(int questId) {
+    //     StringBuilder url = new StringBuilder();
+    //     string base_url = networkManager.baseUrl;
+
+    //     url
+    //         .Append(base_url)
+    //         .Append("api/quest/progress/")
+    //         .Append(questId);
+
+    //     Logger.Log("Request Quest Info");
+    //     HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
+    //     request.MethodType = HTTPMethods.Post;
+    //     request.AddHeader("authorization", TokenFormat);
+
+    //     networkManager.Request(
+    //         request, (req, res) => {
+    //             if (res.StatusCode == 200 || res.StatusCode == 304) {
+    //                 // var QuestData = dataModules.JsonReader.Read<Quest.QuestData[]>(res.DataAsText);
+                    
+    //                 // NoneIngameSceneEventHandler
+    //                 //     .Instance
+    //                 //     .PostNotification(
+    //                 //         NoneIngameSceneEventHandler.EVENT_TYPE.API_QUEST_UPDATED,
+    //                 //         null,
+    //                 //         QuestData
+    //                 //     );
+
+    //                 // RequestUserInfo();
+    //             }
+    //         },
+    //         "튜토리얼 정보를 불러오는중...");
+    // }
+
+    public void GetDailyQuest(OnRequestFinishedDelegate callback) {
         StringBuilder url = new StringBuilder();
         string base_url = networkManager.baseUrl;
 
         url
             .Append(base_url)
-            .Append("api/quest/progress/")
-            .Append(questId);
+            .Append("api/quest/get_daily_quest");
 
         Logger.Log("Request Quest Info");
         HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
         request.MethodType = HTTPMethods.Post;
         request.AddHeader("authorization", TokenFormat);
 
-        networkManager.Request(
-            request, (req, res) => {
-                if (res.StatusCode == 200 || res.StatusCode == 304) {
-                    // var QuestData = dataModules.JsonReader.Read<Quest.QuestData[]>(res.DataAsText);
-                    
-                    // NoneIngameSceneEventHandler
-                    //     .Instance
-                    //     .PostNotification(
-                    //         NoneIngameSceneEventHandler.EVENT_TYPE.API_QUEST_UPDATED,
-                    //         null,
-                    //         QuestData
-                    //     );
-
-                    // RequestUserInfo();
-                }
-            },
-            "튜토리얼 정보를 불러오는중...");
+        networkManager.Request(request, callback, "일일 퀘스트 정보를 불러오는중...");
     }
 
     public void SkipStoryRequest(string camp, int stageNumber) {
@@ -1827,6 +1853,38 @@ public partial class AccountManager {
                     Logger.LogError(res.DataAsText);
                 }
                 
+            },
+            "MMR 변경 요청중...");
+    }
+
+    public void RequestChangeMMRForTest(int mmr, int rankId) {
+        StringBuilder url = new StringBuilder();
+        string base_url = networkManager.baseUrl;
+
+        if (mmr < 0) mmr = 0;
+        else if (mmr > 3000) mmr = 3000;
+
+        url
+            .Append(base_url)
+            .Append("api/test_helper/league_info/")
+            .Append(mmr)
+            .Append("/")
+            .Append(rankId);
+
+        HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
+        request.MethodType = HTTPMethods.Get;
+        request.AddHeader("authorization", TokenFormat);
+
+        networkManager.Request(
+            request, (req, res) => {
+                if (res.StatusCode == 200 || res.StatusCode == 304) {
+                    Modal.instantiate("MMR 변경 완료", Modal.Type.CHECK);
+                }
+                else {
+                    Modal.instantiate("MMR 변경 요청 오류", Modal.Type.CHECK);
+                    Logger.LogError(res.DataAsText);
+                }
+
             },
             "MMR 변경 요청중...");
     }

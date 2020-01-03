@@ -24,10 +24,15 @@ public class EditCardButtonHandler : MonoBehaviour {
         this.isHandCard = isHandCard;
         gameObject.SetActive(true);
         transform.position = card.position;
-        if (isHandCard) 
+        if (isHandCard) {
+            transform.GetChild(0).Find("ForVibrate").gameObject.SetActive(false);
             transform.SetParent(handDeckArea);
-        else 
+        }
+           
+        else {
             transform.SetParent(cardBookArea);
+            transform.GetChild(0).Find("ForVibrate").gameObject.SetActive(true);
+        }
 
         transform.GetChild(0).Find("AddCard").gameObject.SetActive(!isHandCard);
         transform.GetChild(0).Find("ExceptCard").gameObject.SetActive(isHandCard);
@@ -39,11 +44,16 @@ public class EditCardButtonHandler : MonoBehaviour {
             cardBookArea.GetComponent<ScrollRect>().enabled = true;
         }
         if (deckEditCanvas.GetComponent<DeckEditController>().setCardNum == 40) {
+            if(!isHandCard) transform.GetChild(0).Find("ForVibrate").gameObject.SetActive(true);
+
             transform.GetChild(0).Find("AddCard").GetComponent<Button>().interactable = false;
             transform.GetChild(0).Find("AddCard/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "FULL";
         }
-        else
+        else {
+            if (!isHandCard) transform.GetChild(0).Find("ForVibrate").gameObject.SetActive(false);
             transform.GetChild(0).Find("AddCard/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "추가";
+        }
+            
         SetTutoHand(cardData);
     }
 
@@ -97,21 +107,33 @@ public class EditCardButtonHandler : MonoBehaviour {
     public void AddCardInDeck() {
         DeckEditController deckEdit = deckEditCanvas.GetComponent<DeckEditController>();
         if (deckEdit.setCardNum == 40) return;
+
         EditCardHandler cardHandler = transform.GetChild(0).Find("CardImage").GetComponent<EditCardHandler>();
         deckEdit.ConfirmSetDeck(card.gameObject, cardData.id);
         cardHandler.DrawCard(cardData.id, cardData.camp == "human");
         cardHandler.HAVENUM--;
         TutoCheckCardAdd(cardHandler);
-        cardHandler.SetHaveNum();
+        cardHandler.SetHaveNum(true);
         if (cardHandler.HAVENUM == 0) CloseCardButtons();
         if (deckEdit.setCardNum == 40) {
+            transform.GetChild(0).Find("ForVibrate").gameObject.SetActive(true);
             transform.GetChild(0).Find("AddCard").GetComponent<Button>().interactable = false;
             transform.GetChild(0).Find("AddCard/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "FULL";
         }
-        else
+        else {
             transform.GetChild(0).Find("AddCard/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "추가";
+            transform.GetChild(0).Find("ForVibrate").gameObject.SetActive(false);
+        }
     }
 
+    public void FullAlarm() {
+#if UNITY_ANDROID
+        CustomVibrate.Vibrate(1000);
+#elif UNITY_IOS && !UNITY_EDITOR
+        CustomVibrate.VibrateNope();
+#endif
+        Logger.Log("FullAlarmed");
+    }
 
     private void TutoCheckCardAdd(EditCardHandler cardHandler) {
         if(EditCardHandler.questInfo == null) return;
@@ -129,7 +151,7 @@ public class EditCardButtonHandler : MonoBehaviour {
         deckEditCanvas.GetComponent<DeckEditController>().ExceptFromDeck(card.gameObject, cardData.id);
         cardHandler.DrawCard(cardData.id, cardData.camp == "human");
         cardHandler.HAVENUM--;
-        cardHandler.SetHaveNum();
+        cardHandler.SetHaveNum(true);
         TutoCheckCardRemove(cardHandler);
         if (cardHandler.HAVENUM == 0) CloseCardButtons();
     }

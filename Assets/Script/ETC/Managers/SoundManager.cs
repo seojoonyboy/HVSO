@@ -41,7 +41,7 @@ public class SoundManager : SerializedMonoBehaviour {
     void Awake() {
         _instance = GetComponent<SoundManager>();
         if (!PlayerPrefs.HasKey("SoundVolume")) 
-            PlayerPrefs.SetFloat("SoundVolume", 0.5f);
+            PlayerPrefs.SetFloat("SoundVolume", 0.7f);
         soundVolume = PlayerPrefs.GetFloat("SoundVolume");
             
         DontDestroyOnLoad(gameObject);    
@@ -181,7 +181,11 @@ public enum UISfxSound {
     CARD_USE_NORMAL,
     CARD_USE_RARE,
     CARD_USE_SUPERRARE,
-    CARD_USE_LEGEND
+    CARD_USE_LEGEND,
+    BOX_OPEN_FINISH,
+    BOX_APPEAR,
+    CARD_CREATE,
+    CARD_BREAK
 }
 
 public enum IngameSfxSound {

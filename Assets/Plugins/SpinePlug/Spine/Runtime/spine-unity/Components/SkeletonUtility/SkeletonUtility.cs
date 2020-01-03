@@ -70,6 +70,10 @@ namespace Spine.Unity {
 
 		public static PolygonCollider2D AddBoundingBoxGameObject (string name, BoundingBoxAttachment box, Slot slot, Transform parent, bool isTrigger = true) {
 			var go = new GameObject("[BoundingBox]" + (string.IsNullOrEmpty(name) ? box.Name : name));
+#if UNITY_EDITOR
+			if (!Application.isPlaying)
+				UnityEditor.Undo.RegisterCreatedObjectUndo(go, "Spawn BoundingBox");
+# endif
 			var got = go.transform;
 			got.parent = parent;
 			got.localPosition = Vector3.zero;
@@ -124,12 +128,30 @@ namespace Spine.Unity {
 		public delegate void SkeletonUtilityDelegate ();
 		public event SkeletonUtilityDelegate OnReset;
 		public Transform boneRoot;
+		/// <summary>
+		/// If true, <see cref="Skeleton.ScaleX"/> and <see cref="Skeleton.ScaleY"/> are followed
+		/// by 180 degree rotation. If false, negative Transform scale is used.
+		/// Note that using negative scale is consistent with previous behaviour (hence the default),
+		/// however causes serious problems with rigidbodies and physics. Therefore, it is recommended to
+		/// enable this parameter where possible. When creating hinge chains for a chain of skeleton bones
+		/// via <see cref="SkeletonUtilityBone"/>, it is mandatory to have <c>flipBy180DegreeRotation</c> enabled.
+		/// </summary>
+		public bool flipBy180DegreeRotation = false;
 
 		void Update () {
 			var skeleton = skeletonRenderer.skeleton;
 			if (skeleton != null && boneRoot != null) {
-				boneRoot.localScale = new Vector3(skeleton.ScaleX, skeleton.ScaleY, 1f);
-			}
+
+				if (flipBy180DegreeRotation) {
+					boneRoot.localScale = new Vector3(Mathf.Abs(skeleton.ScaleX), Mathf.Abs(skeleton.ScaleY), 1f);
+					boneRoot.eulerAngles = new Vector3(skeleton.ScaleY > 0 ? 0 : 180,
+																	skeleton.ScaleX > 0 ? 0 : 180,
+																	0);
+				}
+				else {
+					boneRoot.localScale = new Vector3(skeleton.ScaleX, skeleton.ScaleY, 1f);
+				}
+			 }
 		}
 
 		[HideInInspector] public SkeletonRenderer skeletonRenderer;
@@ -229,7 +251,10 @@ namespace Spine.Unity {
 				var boneComponents = this.boneComponents;
 				for (int i = 0, n = boneComponents.Count; i < n; i++) {
 					var b = boneComponents[i];
-					if (b.bone == null) continue;
+					if (b.bone == null) {
+						b.DoUpdate(SkeletonUtilityBone.UpdatePhase.Local);
+						if (b.bone == null) continue;
+					}
 					hasOverrideBones |= (b.mode == SkeletonUtilityBone.Mode.Override);
 					hasConstraints |= constraintTargets.Contains(b.bone);
 				}
@@ -291,6 +316,10 @@ namespace Spine.Unity {
 				return boneRoot;
 
 			boneRoot = new GameObject("SkeletonUtility-SkeletonRoot").transform;
+#if UNITY_EDITOR
+			if (!Application.isPlaying)
+				UnityEditor.Undo.RegisterCreatedObjectUndo(boneRoot.gameObject, "Spawn Bone");
+#endif
 			boneRoot.parent = transform;
 			boneRoot.localPosition = Vector3.zero;
 			boneRoot.localRotation = Quaternion.identity;
@@ -330,6 +359,10 @@ namespace Spine.Unity {
 
 		public GameObject SpawnBone (Bone bone, Transform parent, SkeletonUtilityBone.Mode mode, bool pos, bool rot, bool sca) {
 			GameObject go = new GameObject(bone.Data.Name);
+		#if UNITY_EDITOR
+			if (!Application.isPlaying)
+				UnityEditor.Undo.RegisterCreatedObjectUndo(go, "Spawn Bone");
+		#endif
 			var goTransform = go.transform;
 			goTransform.parent = parent;
 

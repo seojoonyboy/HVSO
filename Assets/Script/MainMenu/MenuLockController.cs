@@ -16,7 +16,7 @@ public class MenuLockController : SerializedMonoBehaviour {
     [SerializeField] Dictionary<string, GameObject> menues;
 
     NoneIngameSceneEventHandler eventHandler;
-    bool isAllUnlocked = false;
+    public bool isAllUnlocked = false;
 
     void Awake() {
         eventHandler = NoneIngameSceneEventHandler.Instance;
@@ -83,6 +83,8 @@ public class MenuLockController : SerializedMonoBehaviour {
             Logger.Log("///////////////////////");
             Logger.Log("모두 해금됨");
             isAllUnlocked = true;
+
+            GetComponent<MenuSceneController>().CheckDailyQuest();
         }
     }
 
@@ -178,7 +180,15 @@ public class MenuLockController : SerializedMonoBehaviour {
         GameObject menu = menues[translatedKeyword];
         Logger.Log(translatedKeyword + " 해금됨");
         if(translatedKeyword == "Story") {
-            menues["Mode"].transform.parent.parent.Find("SelectedModeImage/Lock").GetComponent<MenuLocker>().OnlyUnlockEffect();
+            string storyAlreadyUnlocked = PlayerPrefs.GetString("StoryUnlocked");
+            if(storyAlreadyUnlocked != "true") {
+                menues["Mode"].transform.parent.parent.Find("SelectedModeImage/Lock").GetComponent<MenuLocker>().OnlyUnlockEffect();
+                PlayerPrefs.SetString("StoryUnlocked", "true");
+            }
+            else {
+                menues["Mode"].transform.parent.parent.Find("SelectedModeImage/Lock").GetComponent<MenuLocker>().UnlockWithNoEffect();
+            }
+            
         }
         if(translatedKeyword == "Shop") {
             mainButtonsParent.transform.GetChild(4).Find("Lock").GetComponent<MenuLocker>().Unlock();

@@ -1,0 +1,13 @@
+
+main_adspeechbubble.png
+size: 128,128
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+speechbubble
+  rotate: false
+  xy: 0, 0
+  size: 112, 111
+  orig: 112, 111
+  offset: 0, 0
+  index: -1

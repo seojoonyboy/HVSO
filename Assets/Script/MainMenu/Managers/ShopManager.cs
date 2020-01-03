@@ -8,6 +8,7 @@ public class ShopManager : MonoBehaviour
 {
     [SerializeField] BoxRewardManager boxRewardManager;
     [SerializeField] Transform AdvertiseWindow;
+    private IAPSetup iapSetup;
 
     int goldItemCount;
     int x2couponCount;
@@ -17,11 +18,13 @@ public class ShopManager : MonoBehaviour
     private void Start() {
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_SHOP_ITEM_BUY, OpenBoxByBuying);
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, BuyFinished) ;
+        iapSetup = IAPSetup.Instance;
     }
 
     private void OnDestroy() {
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_SHOP_ITEM_BUY, OpenBoxByBuying);
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, BuyFinished);
+        iapSetup = null;
     }
 
     GameObject checkModal;
@@ -36,11 +39,14 @@ public class ShopManager : MonoBehaviour
                 case "gold":
                     SetGoldItem(item);
                     break;
-                case "supplyBox":
-                    SetSupplyBoxItem(item);
-                    break;
+                //case "supplyBox":
+                //    SetSupplyBoxItem(item);
+                //    break;
                 case "x2coupon":
                     SetCouponItem(item);
+                    break;
+                default :
+                    Logger.Log(item.category+"doesn't exist now");
                     break;
             }
         }
@@ -70,13 +76,13 @@ public class ShopManager : MonoBehaviour
         x2couponCount++;
     }
 
-    public void SetSupplyBoxItem(dataModules.Shop item) {
-        Transform target = transform.Find("ShopWindowParent/ShopWindow/SuppluBoxShop").GetChild(supplyBoxCount);
-        target.Find("Button/Price").GetComponent<TMPro.TextMeshProUGUI>().text = item.price.ToString();
-        target.Find("Button").GetComponent<Button>().onClick.RemoveAllListeners();
-        target.Find("Button").GetComponent<Button>().onClick.AddListener(() => PopBuyModal(item, true));
-        supplyBoxCount++;
-    }
+    // public void SetSupplyBoxItem(dataModules.Shop item) {
+    //     Transform target = transform.Find("ShopWindowParent/ShopWindow/SuppluBoxShop").GetChild(supplyBoxCount);
+    //     target.Find("Button/Price").GetComponent<TMPro.TextMeshProUGUI>().text = item.price.ToString();
+    //     target.Find("Button").GetComponent<Button>().onClick.RemoveAllListeners();
+    //     target.Find("Button").GetComponent<Button>().onClick.AddListener(() => PopBuyModal(item, true));
+    //     supplyBoxCount++;
+    // }
 
     public void PopBuyModal(dataModules.Shop item, bool isBox = false) {
         if (buying) return;
@@ -94,7 +100,11 @@ public class ShopManager : MonoBehaviour
         }
         else {
             checkModal = Modal.instantiate("상품을 구매 하시겠습니까?", Modal.Type.YESNO, () => {
+                #if UNITY_EDITOR
                 BuyItem(item.id, isBox);
+                #else
+                iapSetup.OnButtonBuyClick(item.id, ()=>BuyItem(item.id, isBox));
+                #endif
             }, CancelBuy);
         }
         EscapeKeyController.escapeKeyCtrl.AddEscape(CancelBuy);

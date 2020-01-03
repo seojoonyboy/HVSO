@@ -299,6 +299,7 @@ public class CardListManager : MonoBehaviour
         if (data.isHeroCard) {
             info.Find("FrameImage/TierRibbon").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["ribbon_hero"];
         }
+        OpenSkillWindow(info);
         //if (data.class_2 == null)
         //    obj.transform.GetChild(2).gameObject.SetActive(false);
         //else {
@@ -330,11 +331,15 @@ public class CardListManager : MonoBehaviour
     public void OpenSkillWindow(Transform infoObject) {
         infoObject.Find("SkillInfo").gameObject.SetActive(true);
         infoObject.Find("Flavor").gameObject.SetActive(false);
+        infoObject.Find("SkillBtn").GetComponent<Button>().interactable = false;
+        infoObject.Find("FlavorBtn").GetComponent<Button>().interactable = true;
     }
 
     public void OpenFlavorWindow(Transform infoObject) {
         infoObject.Find("SkillInfo").gameObject.SetActive(false);
         infoObject.Find("Flavor").gameObject.SetActive(true);
+        infoObject.Find("SkillBtn").GetComponent<Button>().interactable = true;
+        infoObject.Find("FlavorBtn").GetComponent<Button>().interactable = false;
     }
 
     public void OpenClassDescModal(string className, Sprite image, Transform modalTransform = null) {

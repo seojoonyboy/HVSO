@@ -14,6 +14,7 @@ namespace Quest {
         [SerializeField] Transform content;
         [SerializeField] HUDController HUDController;
         [SerializeField] GameObject newIcon;
+        [SerializeField] GameObject glowEffect;
         public MenuSceneController tutoDialog;
 
         public GameObject handSpinePrefab;
@@ -66,6 +67,7 @@ namespace Quest {
 
         public void showNewIcon(bool yesno) {
             newIcon.SetActive(yesno);
+            glowEffect.SetActive(yesno);
         }
 
         public void ResetQuest() {
@@ -82,7 +84,7 @@ namespace Quest {
             datas = Array.FindAll(datas, x=> !(x.cleared && x.rewardGet));
             Array.ForEach(datas, x=>{
                 Array.ForEach(tutorialJson, y=> {
-                    if(x.id == y.id) x.tutorials = y.tutorials;
+                    if(x.questDetail.id.CompareTo(y.id) == 0) x.tutorials = y.tutorials;
                 });
             });
             Array.ForEach(datas, x=>AddQuest(x));
@@ -129,19 +131,26 @@ namespace Quest {
             public GameObject newDeckMenu;
             public GameObject newBattleMenu;
             public Button modeSelect;
+            public GameObject modeGlow;
         }
 
     }
 
     [Serializable] public class QuestData {
         public int id;
-        public string name;
-        public string desc;
-        public int progMax;
-        public int prog;
+        public int progress;
+        public QuestDetail questDetail;
         public bool cleared = false;
         public bool rewardGet = false;
         public TutorialShowList[] tutorials;
+    }
+
+    public class QuestDetail {
+        public string id;
+        public string type;
+        public string name;
+        public string desc;
+        public int progMax;
         public Reward[] rewards;
     }
 
@@ -152,7 +161,7 @@ namespace Quest {
     }
 
     public class Tutorials {
-        public int id;
+        public string id;
         public TutorialShowList[] tutorials;
     }
 

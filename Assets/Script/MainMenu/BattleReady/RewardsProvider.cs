@@ -23,6 +23,8 @@ public class RewardsProvider : SerializedMonoBehaviour {
         Clear();
 
         var rewards = AccountManager.Instance.scriptable_leagueData.leagueInfo.rewards;
+        if (rewards == null) rewards = AccountManager.Instance.scriptable_leagueData.prevLeagueInfo.rewards;
+
         Separate(ref rewards);
     }
 

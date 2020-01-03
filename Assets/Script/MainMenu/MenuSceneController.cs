@@ -8,6 +8,9 @@ using Spine.Unity;
 using System;
 using Newtonsoft.Json;
 using UIModule;
+using UniRx;
+using BestHTTP;
+using Quest;
 
 public class MenuSceneController : MonoBehaviour {
     [SerializeField] Transform fixedCanvas;
@@ -21,6 +24,8 @@ public class MenuSceneController : MonoBehaviour {
     [SerializeField] SkeletonGraphic menuButton;
     [SerializeField] GameObject[] offObjects;
     [SerializeField] ShopManager shopManager;
+    [SerializeField] GameObject dailyQuestAlarmCanvas;
+
     protected SkeletonGraphic selectedAnimation;
     private int currentPage;
     private bool buttonClicked;
@@ -100,6 +105,8 @@ public class MenuSceneController : MonoBehaviour {
         EscapeKeyController.escapeKeyCtrl.AddEscape(OpenQuitModal);
     }
 
+    IDisposable observable_1;
+
     private void CheckTutorial(Enum Event_Type, Component Sender, object Param) {
         if (!isTutorialDataLoaded) {
             menuTutorialManager.ReadTutorialData();
@@ -117,8 +124,10 @@ public class MenuSceneController : MonoBehaviour {
         if (PlayerPrefs.GetInt("isFirst") == 1) {
             PlayerPrefs.SetInt("isFirst", 0);
             AddNewbiController();
+            PlayerPrefs.SetInt("IsQuestLoaded", 0);
 
             hideModal.SetActive(false);
+            PlayerPrefs.SetString("Vibrate", "On");
         }
         else {
             hideModal.SetActive(true);
@@ -130,8 +139,12 @@ public class MenuSceneController : MonoBehaviour {
                 //휴먼 튜토리얼 0-1을 진행하지 않았음
                 if (!clearedStages.Exists(x => x.camp == "human" && x.stageNumber == 1)) {
                     AddNewbiController();
+                    PlayerPrefs.SetString("Vibrate", "On");
                 }
                 else {
+                    SoundManager.Instance.bgmController.PlaySoundTrack(BgmController.BgmEnum.MENU);
+                    BattleConnector.canPlaySound = true;
+
                     //오크 튜토리얼 0-1을 진행하지 않았음
                     if (!clearedStages.Exists(x => x.camp == "orc" && x.stageNumber == 1)) {
                         tutorialType = MenuTutorialManager.TutorialType.TO_ORC_STORY;
@@ -170,9 +183,71 @@ public class MenuSceneController : MonoBehaviour {
                 hideModal.SetActive(false);
                 menuTutorialManager.enabled = false;
             }
+
+            SoundManager.Instance.bgmController.PlaySoundTrack(BgmController.BgmEnum.MENU);
+            BattleConnector.canPlaySound = true;
+
+            CheckDailyQuest();
         }
 
         //StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_7);
+    }
+
+    public void CheckDailyQuest() {
+        bool isQuestLoaded = Convert.ToBoolean(PlayerPrefs.GetInt("IsQuestLoaded"));
+        bool isAllUnlocked = menuTutorialManager.lockController.isAllUnlocked;
+        if (!isQuestLoaded && isAllUnlocked) {
+            //DateTime currentTime = DateTime.UtcNow;
+            //var korCurrentTime = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(currentTime, "Korea Standard Time");
+
+            DateTime tommorowTime = System.DateTime.UtcNow.AddDays(1).AddHours(9.0).AddTicks(-1); //korCurrentTime.AddDays(1).AddTicks(-1);
+            DateTime resetStandardTime = new DateTime(
+                tommorowTime.Year,
+                tommorowTime.Month,
+                tommorowTime.Day,
+                0,
+                0,
+                0
+            );
+            AccountManager.Instance.GetDailyQuest(OnDailyQuestRequestFinished);
+            PlayerPrefs.SetInt("IsQuestLoaded", 1);
+        }
+    }
+
+    public void OpenDailyQuestInstantly() {
+        bool isQuestLoaded = Convert.ToBoolean(PlayerPrefs.GetInt("IsQuestLoaded"));
+        bool isAllUnlocked = menuTutorialManager.lockController.isAllUnlocked;
+        if (!isQuestLoaded && isAllUnlocked) {
+            //DateTime currentTime = DateTime.UtcNow;
+            //var korCurrentTime = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(currentTime, "Korea Standard Time");
+
+            DateTime tommorowTime = System.DateTime.UtcNow.AddDays(1).AddHours(9.0).AddTicks(-1); //korCurrentTime.AddDays(1).AddTicks(-1);
+            DateTime resetStandardTime = new DateTime(
+                tommorowTime.Year,
+                tommorowTime.Month,
+                tommorowTime.Day,
+                0,
+                0,
+                0
+            );
+            AccountManager.Instance.GetDailyQuest(OnDailyQuestRequestFinished);
+            PlayerPrefs.SetInt("IsQuestLoaded", 1);
+        }
+    }
+
+    private void OnDailyQuestRequestFinished(HTTPRequest originalRequest, HTTPResponse response) {
+        if (response.IsSuccess) {
+            List<QuestData> datas = dataModules.JsonReader.Read<List<QuestData>>(response.DataAsText);
+            if (dailyQuestAlarmCanvas == null) {
+                Logger.LogWarning("dailyQuestAlarmCanvas를 찾을 수 없습니다!");
+                return;
+            }
+            dailyQuestAlarmCanvas.gameObject.SetActive(true);
+            dailyQuestAlarmCanvas.GetComponent<DailyQuestAlarmHandler>().ShowQuestList(datas);
+        }
+        else {
+            Modal.instantiate("일일 퀘스트를 불러오는 과정에서 문제가 발생하였습니다.", Modal.Type.CHECK);
+        }
     }
 
     private void OnUserDataUpdate(Enum Event_Type, Component Sender, object Param) {
@@ -188,8 +263,6 @@ public class MenuSceneController : MonoBehaviour {
     }
 
     private void Start() {
-        SoundManager.Instance.bgmController.PlaySoundTrack(BgmController.BgmEnum.MENU);
-
         if (AccountManager.Instance.needChangeNickName) {
             Modal.instantiate("변경하실 닉네임을 입력해 주세요.", "새로운 닉네임", AccountManager.Instance.NickName, Modal.Type.INSERT, (str) => {
                 if (string.IsNullOrEmpty(str)) {
@@ -232,18 +305,6 @@ public class MenuSceneController : MonoBehaviour {
             battleMenuController.ClearDirectPlayButton();
             //Modal.instantiate("선택된 모드 정보가 없습니다. 모드를 직접 선택해주세요!", Modal.Type.CHECK);
         }
-    }
-
-    /// <summary>
-    /// PVP대전 버튼 클릭
-    /// </summary>
-    public void OnPVPClicked() {
-        battleReadyPanel.SetActive(true);
-        hudController.SetHeader(HUDController.Type.BATTLE_READY_CANVAS);
-        hudController.SetBackButton(() => {
-            battleReadyPanel.SetActive(false);
-            hudController.SetHeader(HUDController.Type.SHOW_USER_INFO);
-        });
     }
 
     public void OpenOption() {
@@ -415,6 +476,7 @@ public class MenuSceneController : MonoBehaviour {
         newbiComp.Init(decksLoader, scenarioManager, newbiLoadingModal);
 
         GetComponent<MenuLockController>().ResetMenuLockData();
+        BattleConnector.canPlaySound = false;
     }
 
     private void UpdateShop(Enum Event_Type, Component Sender, object Param) {
@@ -453,4 +515,6 @@ public class MenuSceneController : MonoBehaviour {
         if(hand == null) return;
         Destroy(hand.gameObject);
     }
+
+
 }

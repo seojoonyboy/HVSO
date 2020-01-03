@@ -73,12 +73,18 @@ public class BattleMenuController : MonoBehaviour {
         battleTypeIndex++;
         if (battleTypeIndex > modeButtons.Length - 1) battleTypeIndex = 0;
 
+        BattleType type = (BattleType)battleTypeIndex;
+        PlayerPrefs.SetString("SelectedBattleButton", type.ToString());
+
         SetMainMenuDirectPlayButton(battleTypeIndex);
     }
 
     public void PrevModeButton() {
         battleTypeIndex--;
         if (battleTypeIndex < 0) battleTypeIndex = modeButtons.Length - 1;
+
+        BattleType type = (BattleType)battleTypeIndex;
+        PlayerPrefs.SetString("SelectedBattleButton", type.ToString());
 
         SetMainMenuDirectPlayButton(battleTypeIndex);
     }

@@ -40,10 +40,6 @@ public class BattleReadySceneController : MonoBehaviour {
         }
     }
 
-    void Awake() {
-        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_INFO_UPDATED, OnLeagueInfoUpdated);
-    }
-
     void OnEnable() {
         isIngameButtonClicked = false;
 
@@ -51,12 +47,13 @@ public class BattleReadySceneController : MonoBehaviour {
         PlayerPrefs.SetString("SelectedDeckId", "");
         PlayerPrefs.SetString("SelectedRace", RaceType.NONE.ToString());
 
-        HudController.SetHeader(HUDController.Type.RESOURCE_ONLY_WITH_BACKBUTTON);
+        HudController.SetHeader(HUDController.Type.BATTLE_READY_CANVAS);
         HudController.SetBackButton(() => {
             OnBackButton();
         });
         EscapeKeyController.escapeKeyCtrl.AddEscape(OnBackButton);
 
+        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_INFO_UPDATED, OnLeagueInfoUpdated);
         AccountManager.Instance.RequestLeagueInfo();
     }
 

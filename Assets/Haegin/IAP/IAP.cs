@@ -211,6 +211,9 @@ namespace Haegin
             SA.iOS.ISN_Settings.Instance.InAppProducts.Clear();
             for (int i = 0; i < skus.Length; i++)
             {
+#if MDEBUG
+                Debug.Log(skus[i]);
+#endif
                 ISN_SKPaymentQueue.RegisterProductId(skus[i]);
             }
 
@@ -756,7 +759,7 @@ namespace Haegin
             Debug.Log("OnProductPurchased(AN_BillingPurchaseResult result) ");
             if(result == null) Debug.Log("result = null");
             if(result.Error == null) Debug.Log("result.Error = null");
-            Debug.Log("result.Error.Code = " + result.Error.Code);
+            else Debug.Log("result.Error.Code = " + result.Error.Code);
             Debug.Log("result.IsSucceeded = " + result.IsSucceeded);
             if(result.Purchase == null) Debug.Log("result.Purchase = null");
 #endif

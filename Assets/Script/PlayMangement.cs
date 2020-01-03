@@ -13,7 +13,7 @@ public partial class PlayMangement : MonoBehaviour {
 
     public GameObject cardDB;
     public GameObject uiSlot;
-    public GameObject canvas;
+    public GameObject playerCanvas, enemyPlayerCanvas;
 
     public Transform cardInfoCanvas;
     public Transform battleLineEffect;
@@ -90,11 +90,6 @@ public partial class PlayMangement : MonoBehaviour {
 
         BgmController.BgmEnum soundTrack =  BgmController.BgmEnum.CITY;
         SoundManager.Instance.bgmController.PlaySoundTrack(soundTrack);
-
-        //StartCoroutine(cameraShake(0.4f, 10));
-        //StartCoroutine(DisconnectTest());
-
-        AccountManager.Instance.prevSceneName = "Ingame";
     }
 
     public void SyncPlayerHp() {
@@ -603,7 +598,7 @@ public partial class PlayMangement : MonoBehaviour {
 
     public virtual IEnumerator battleCoroutine() {
         dragable = false;
-        yield return new WaitForSeconds(1.1f);
+        yield return new WaitForSeconds(0.8f);
         yield return socketHandler.waitSkillDone(() => { });
         yield return socketHandler.WaitBattle();
         for (int line = 0; line < 5; line++) {
@@ -644,6 +639,12 @@ public partial class PlayMangement : MonoBehaviour {
             else yield return whoFirstBattle(enemyPlayer, player, line);
         }
         else {
+            // socketHandler.lineBattleList.Dequeue();
+            // socketHandler.lineBattleList.Dequeue();
+            // socketHandler.mapClearList.Dequeue();
+            // socketHandler.lineBattleList.Dequeue();
+            // socketHandler.lineBattleList.Dequeue();
+            // socketHandler.mapClearList.Dequeue();
             yield return WaitSocketData(socketHandler.lineBattleList, line, true);
             shieldDequeue();
             yield return WaitSocketData(socketHandler.lineBattleList, line, true);
@@ -654,7 +655,7 @@ public partial class PlayMangement : MonoBehaviour {
             yield return WaitSocketData(socketHandler.lineBattleList, line, true);
             shieldDequeue();
             yield return WaitSocketData(socketHandler.mapClearList, line, false);
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.1f);
         }
         battleLineEffect.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.6f);
         battleLineEffect.gameObject.SetActive(false);
@@ -730,7 +731,7 @@ public partial class PlayMangement : MonoBehaviour {
         if (placeMonster.maxAtkCount == 1 && secondAttack) yield break;
         if (placeMonster.unit.attack <= 0) yield break;
         placeMonster.GetTarget();
-        yield return new WaitForSeconds(1.1f + placeMonster.atkTime);
+        yield return new WaitForSeconds(0.8f + placeMonster.atkTime);
     }
     IEnumerator WaitSocketData(SocketFormat.QueueSocketList<SocketFormat.GameState> queueList, int line, bool isBattle) {
         if (!isGame) yield break;
@@ -791,7 +792,8 @@ public partial class PlayMangement : MonoBehaviour {
             enemyCard.SetActive(true);
             int count = CountEnemyCard();
             enemyPlayer.playerUI.transform.Find("CardCount").GetChild(0).gameObject.GetComponent<Text>().text = (count).ToString();
-            IngameNotice.instance.SetNotice("상대방이 영웅카드 사용 여부를 결정 중입니다");
+            IngameNotice.instance.SelectNotice();
+            //IngameNotice.instance.SetNotice("상대방이 영웅카드 사용 여부를 결정 중입니다");
         }
         yield return new WaitForSeconds(1f);
         if (isPlayer) socketHandler.TurnOver();
@@ -826,24 +828,6 @@ public partial class PlayMangement : MonoBehaviour {
         heroShieldDone.RemoveAt(0);
         IngameNotice.instance.CloseNotice();
     }
-
-    //public void GetBattleResult() {
-    //    isGame = false;
-    //    resultManager.gameObject.SetActive(true);
-
-    //    if (player.HP.Value <= 0) {
-    //        if (player.isHuman)
-    //            resultManager.SetResultWindow("lose", "human");
-    //        else
-    //            resultManager.SetResultWindow("lose", "orc");
-    //    }
-    //    else if (enemyPlayer.HP.Value <= 0) {
-    //        if (player.isHuman)
-    //            resultManager.SetResultWindow("win", "human");
-    //        else
-    //            resultManager.SetResultWindow("win", "orc");
-    //    }
-    //}
 
     public void OnMoveSceneBtn() {
         FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
@@ -1135,9 +1119,9 @@ public partial class PlayMangement {
         else {
             releaseTurnBtn = turnTable.Find("OrcButton").gameObject;
         }
-        for (int i = 0; i < 4; i++) {
-            turnTable.Find("TurnBoard").position = canvas.transform.GetChild(2).GetChild(2).position;
-        }
+        //for (int i = 0; i < 4; i++) {
+        //    turnTable.Find("TurnBoard").position = playerCanvas.transform.GetChild(1).GetChild(2).position;
+        //}
 
         Debug.Log("isHuman" + isHuman);
     }

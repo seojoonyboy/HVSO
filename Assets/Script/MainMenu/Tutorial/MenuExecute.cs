@@ -407,20 +407,8 @@ namespace MenuTutorialModules {
 
         IEnumerator Proceed() {
             GameObject target = null;
-
-            NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_DECKS_UPDATED, (type, sender, parm) => {
-                HTTPResponse res = (HTTPResponse)parm;
-                if (res != null) {
-                    if (res.StatusCode == 200 || res.StatusCode == 304) {
-                        var result = JsonReader.Read<Decks>(res.DataAsText);
-                        AccountManager.Instance.orcDecks = result.orc;
-                        AccountManager.Instance.humanDecks = result.human;
-                    }
-                }
-                else {
-                    //Logger.Log("Something is wrong");
-                }
-            });
+            
+            NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_DECKS_UPDATED, OnDecksUpdated);
             GetComponent<MenuTutorialManager>().ActiveRewardPanel();
 
             SkeletonGraphic skeletonGraphic = GetComponent<MenuTutorialManager>().rewardPanel.transform.Find("Anim").GetComponent<SkeletonGraphic>();
@@ -455,6 +443,20 @@ namespace MenuTutorialModules {
             AccountManager.Instance.RequestInventories();
         }
 
+        private void OnDecksUpdated(Enum Event_Type, Component Sender, object Param) {
+            HTTPResponse res = (HTTPResponse)Param;
+            if (res != null) {
+                if (res.StatusCode == 200 || res.StatusCode == 304) {
+                    var result = JsonReader.Read<Decks>(res.DataAsText);
+                    AccountManager.Instance.orcDecks = result.orc;
+                    AccountManager.Instance.humanDecks = result.human;
+                }
+            }
+            else {
+                Logger.Log("Something is wrong");
+            }
+        }
+
         private void CheckClick(GameObject target) {
             if (target == null) {
                 GetComponent<MenuTutorialManager>().DeactiveRewardPanel();
@@ -467,12 +469,24 @@ namespace MenuTutorialModules {
             public string claimComplete;
             public string error;
         }
+
+        void OnDestroy() {
+            StopAllCoroutines();
+            NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_DECKS_UPDATED, OnDecksUpdated);
+        }
     }
 
     public class DestroyLoadingModal : MenuExecute {
         public override void Execute() {
             var loadingModal = GetComponent<MenuTutorialManager>().menuSceneController.hideModal;
             loadingModal.SetActive(false);
+            handler.isDone = true;
+        }
+    }
+
+    public class ShowDailyQuestCanvas : MenuExecute {
+        public override void Execute() {
+            GetComponent<MenuTutorialManager>().menuSceneController.OpenDailyQuestInstantly();
             handler.isDone = true;
         }
     }
@@ -505,7 +519,7 @@ namespace MenuTutorialModules {
             skeletonGraphic.AnimationState.SetAnimation(0, "story_details", false);
 
             skeletonGraphic.transform.Find("Header/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 스토리 해금";
-            skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 진영 튜토리얼이 개방 되었습니다!";
+            skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 진영 스토리가 개방 되었습니다!";
 
             yield return new WaitForSeconds(1.0f);
 
@@ -548,7 +562,7 @@ namespace MenuTutorialModules {
             skeletonGraphic.AnimationState.SetAnimation(0, "story_reward2", false);
 
             skeletonGraphic.transform.Find("Header/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 스토리 해금";
-            skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 진영 튜토리얼이 개방 되었습니다!";
+            skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 진영 스토리가 개방 되었습니다!";
 
             yield return new WaitForSeconds(1.0f);
 
@@ -591,7 +605,7 @@ namespace MenuTutorialModules {
             skeletonGraphic.AnimationState.SetAnimation(0, "story_reward2", false);
 
             skeletonGraphic.transform.Find("Header/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "휴먼 스토리 해금";
-            skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "휴먼 진영 튜토리얼이 개방 되었습니다!";
+            skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "휴먼 진영 스토리가 개방 되었습니다!";
 
             yield return new WaitForSeconds(1.0f);
 
@@ -637,8 +651,8 @@ namespace MenuTutorialModules {
             skeletonGraphic.transform.parent.Find("SubBackground").gameObject.SetActive(false);
             skeletonGraphic.AnimationState.SetAnimation(0, "story_reward1", false);
 
-            skeletonGraphic.transform.Find("Header/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 튜토리얼 개방";
-            skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 진영 튜토리얼이 개방 되었습니다!";
+            skeletonGraphic.transform.Find("Header/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 스토리 개방";
+            skeletonGraphic.transform.Find("Description/Text").GetComponent<TMPro.TextMeshProUGUI>().text = "오크 진영 스토리가 개방 되었습니다!";
 
             yield return new WaitForSeconds(1.0f);
 

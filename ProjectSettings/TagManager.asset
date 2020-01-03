@@ -8,6 +8,7 @@ TagManager:
   - Projectile
   - Key
   - Enemy
+  - DailyQuestAlarm
   layers:
   - Default
   - TransparentFX

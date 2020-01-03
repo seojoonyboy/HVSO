@@ -1,62 +1,139 @@
 
 ingame_result_tierup.png
-size: 1024,512
+size: 2048,1024
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
+1
+  rotate: true
+  xy: 724, 84
+  size: 295, 264
+  orig: 295, 264
+  offset: 0, 0
+  index: -1
+10
+  rotate: true
+  xy: 267, 70
+  size: 308, 227
+  orig: 308, 227
+  offset: 0, 0
+  index: -1
+11
+  rotate: true
+  xy: 953, 735
+  size: 263, 227
+  orig: 263, 227
+  offset: 0, 0
+  index: -1
+12
+  rotate: true
+  xy: 2, 70
+  size: 308, 263
+  orig: 308, 263
+  offset: 0, 0
+  index: -1
+13
+  rotate: true
+  xy: 496, 70
+  size: 308, 226
+  orig: 308, 226
+  offset: 0, 0
+  index: -1
+14
+  rotate: true
+  xy: 267, 380
+  size: 308, 229
+  orig: 308, 229
+  offset: 0, 0
+  index: -1
+15
+  rotate: true
+  xy: 990, 146
+  size: 260, 229
+  orig: 260, 229
+  offset: 0, 0
+  index: -1
+2
+  rotate: true
+  xy: 763, 408
+  size: 284, 266
+  orig: 284, 266
+  offset: 0, 0
+  index: -1
+3
+  rotate: true
+  xy: 498, 381
+  size: 307, 263
+  orig: 307, 263
+  offset: 0, 0
+  index: -1
+4
+  rotate: true
+  xy: 2, 380
+  size: 308, 263
+  orig: 308, 263
+  offset: 0, 0
+  index: -1
+5
+  rotate: true
+  xy: 498, 690
+  size: 308, 224
+  orig: 308, 224
+  offset: 0, 0
+  index: -1
+6
+  rotate: true
+  xy: 724, 694
+  size: 304, 227
+  orig: 304, 227
+  offset: 0, 0
+  index: -1
+7
+  rotate: true
+  xy: 1182, 742
+  size: 256, 227
+  orig: 256, 227
+  offset: 0, 0
+  index: -1
+8
+  rotate: true
+  xy: 2, 690
+  size: 308, 265
+  orig: 308, 265
+  offset: 0, 0
+  index: -1
+9
+  rotate: true
+  xy: 269, 690
+  size: 308, 227
+  orig: 308, 227
+  offset: 0, 0
+  index: -1
 Glow11
   rotate: false
-  xy: 451, 114
+  xy: 990, 13
   size: 130, 131
   orig: 130, 131
   offset: 0, 0
   index: -1
 Glow111
   rotate: false
-  xy: 451, 2
+  xy: 1122, 34
   size: 110, 110
   orig: 110, 110
   offset: 0, 0
   index: -1
 Glow22
   rotate: false
-  xy: 563, 46
+  xy: 2, 2
   size: 66, 66
   orig: 66, 66
   offset: 0, 0
   index: -1
 box_light
   rotate: false
-  xy: 446, 247
+  xy: 1031, 477
   size: 256, 256
   orig: 256, 256
-  offset: 0, 0
-  index: -1
-tier1
-  rotate: true
-  xy: 2, 7
-  size: 186, 227
-  orig: 186, 227
-  offset: 0, 0
-  index: -1
-tier2
-  rotate: true
-  xy: 2, 195
-  size: 308, 220
-  orig: 308, 220
-  offset: 0, 0
-  index: -1
-tier3
-  rotate: true
-  xy: 224, 195
-  size: 308, 220
-  orig: 308, 220
-  offset: 0, 0
-  index: -1
-tier4
-  rotate: true
-  xy: 231, 4
-  size: 189, 218
-  orig: 189, 218
   offset: 0, 0
   index: -1

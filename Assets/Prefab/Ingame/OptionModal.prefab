@@ -600,7 +600,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5632087516410757620}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5632087518207193181}
+        m_MethodName: BgmDownBtn
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 5632087516500843490}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Slider, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5632087516437900601
 GameObject:
   m_ObjectHideFlags: 0
@@ -2188,7 +2199,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5632087516817905462}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5632087518207193181}
+        m_MethodName: SfxDownBtn
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 5632087516991924608}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Slider, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5632087516830943672
 GameObject:
   m_ObjectHideFlags: 0
@@ -2809,7 +2831,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5632087517039953246}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5632087518207193181}
+        m_MethodName: BgmUpBtn
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 5632087516500843490}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Slider, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5632087517056679810
 GameObject:
   m_ObjectHideFlags: 0
@@ -3120,7 +3153,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5632087517105102264}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5632087518207193181}
+        m_MethodName: SfxUpBtn
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 5632087516991924608}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Slider, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5632087517188660989
 GameObject:
   m_ObjectHideFlags: 0
@@ -3970,7 +4014,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5632087517409784088}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5632087518207193181}
+        m_MethodName: VibrateOn
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!1 &5632087517436724504
 GameObject:
   m_ObjectHideFlags: 0
@@ -5501,7 +5556,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5632087518098984054}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5632087518207193181}
+        m_MethodName: VibrateOn
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5632087518116016160
 GameObject:
   m_ObjectHideFlags: 0
@@ -6030,6 +6096,10 @@ MonoBehaviour:
   settingModal: {fileID: 5632087516748781135}
   quitModal: {fileID: 5387253513015256681}
   settingBtn: {fileID: 5632087517479126681}
+  sfxSlider: {fileID: 0}
+  bgmSlider: {fileID: 0}
+  sfxValue: {fileID: 0}
+  bgmValue: {fileID: 0}
 --- !u!1 &5632087518259821540
 GameObject:
   m_ObjectHideFlags: 0

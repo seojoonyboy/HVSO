@@ -8,6 +8,7 @@ public class MailBoxManager : MonoBehaviour
 {
     [SerializeField] Transform mailListParent;
     [SerializeField] HUDController HUDController;
+    [SerializeField] Button receiveAllBtn;
 
     private void OnEnable() {
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_MAIL_UPDATE, RequestMailOver);
@@ -118,6 +119,7 @@ public class MailBoxManager : MonoBehaviour
         Canvas.ForceUpdateCanvases();
         LayoutRebuilder.ForceRebuildLayoutImmediate(mailListParent.parent.GetComponent<RectTransform>());
         transform.Find("Block").gameObject.SetActive(false);
+        receiveAllBtn.interactable = count == 0 ? false : true; 
     }
 
     public void InitMailBox() {
@@ -179,6 +181,7 @@ public class MailBoxManager : MonoBehaviour
     public void RequestOver(Enum Event_Type, Component Sender, object Param) {
         transform.Find("Block").gameObject.SetActive(false);
         transform.GetChild(0).Find("ReceivedReward").gameObject.SetActive(true);
+        SetRewardAnimation();
         CloseMail();
         EscapeKeyController.escapeKeyCtrl.AddEscape(CloseReceiveResult);
     }
@@ -243,6 +246,15 @@ public class MailBoxManager : MonoBehaviour
         }
     }
 
+    void SetRewardAnimation() {
+        Transform mail_transform = transform.GetChild(0).Find("ReceivedReward/Mail_Reward");
+        Spine.Unity.SkeletonGraphic mail_animation = mail_transform.gameObject.GetComponent<Spine.Unity.SkeletonGraphic>();
+        mail_animation.Initialize(false);
+        mail_animation.Update(0);
+        mail_animation.AnimationState.SetAnimation(0, "story_reward1", false);
+    }
+
+
     void SetNextRewardPage(List<dataModules.MailReward> itemList) {
         InitRewardList();
         SetReceiveResult(itemList);
@@ -266,8 +278,5 @@ public class MailBoxManager : MonoBehaviour
             transform.Find("Content/OpenedMail/Rewards").GetChild(i).gameObject.SetActive(false);
         if(EscapeKeyController.escapeKeyCtrl.escapeFunc.Contains(CloseMail))
             EscapeKeyController.escapeKeyCtrl.RemoveEscape(CloseMail);
-
-        Handheld.Vibrate();
-        
     }
 }

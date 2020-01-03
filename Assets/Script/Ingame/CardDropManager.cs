@@ -202,6 +202,7 @@ public partial class CardDropManager {
                 else
                     slotLine[i].GetChild(1).gameObject.SetActive(true);
             }
+
         }
     }
 
@@ -467,22 +468,64 @@ public partial class CardDropManager {
                 for (int i = 0; i < 5; i++) {
                     if (magicArgs == "enemy") {
                         if (i == targetline) {
-                            enemyUnitLine[0][i].GetChild(0).Find("ClickableUI").gameObject.SetActive(true);
-                            enemyUnitLine[0][i].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(true);
-                            return;
+                            enemyUnitLine[i][0].GetChild(0).Find("ClickableUI").gameObject.SetActive(true);
+                            enemyUnitLine[i][0].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(true);
                         }
+                        //else {
+                        //    if (enemyUnitLine[i][0].childCount != 0) {
+                        //        enemyUnitLine[i][0].GetChild(0).Find("ClickableUI").gameObject.SetActive(false);
+                        //        enemyUnitLine[i][0].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(false);
+                        //    }
+
+                        //    if (enemyUnitLine[i][1].childCount != 0) {
+                        //        enemyUnitLine[i][1].GetChild(0).Find("ClickableUI").gameObject.SetActive(false);
+                        //        enemyUnitLine[i][1].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(false);
+                        //    }
+                        //}
+
+                        //if (unitLine[i][0].childCount != 0) {
+                        //    unitLine[i][0].GetChild(0).Find("ClickableUI").gameObject.SetActive(false);
+                        //    unitLine[i][0].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(false);
+                        //}
+
+                        //if (unitLine[i][1].childCount != 0) {
+                        //    unitLine[i][1].GetChild(0).Find("ClickableUI").gameObject.SetActive(false);
+                        //    unitLine[i][1].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(false);
+                        //}
                     }
                     else {
                         if (i == targetline) {
                             Debug.Log(unitLine[i][0].GetChild(0).gameObject);
-                            unitLine[0][i].GetChild(0).Find("ClickableUI").gameObject.SetActive(true);
-                            unitLine[0][i].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(true);
-                            return;
+                            unitLine[i][0].GetChild(0).Find("ClickableUI").gameObject.SetActive(true);
+                            unitLine[i][0].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(true);
                         }
+                        //    else {
+                        //        if (unitLine[i][0].childCount != 0) {
+                        //            unitLine[i][0].GetChild(0).Find("ClickableUI").gameObject.SetActive(false);
+                        //            unitLine[i][0].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(false);
+                        //        }
+
+                        //        if (unitLine[i][1].childCount != 0) {
+                        //            unitLine[i][1].GetChild(0).Find("ClickableUI").gameObject.SetActive(false);
+                        //            unitLine[i][1].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(false);
+                        //        }
+                        //    }
+
+                        //    if (enemyUnitLine[i][0].childCount != 0) {
+                        //        enemyUnitLine[i][0].GetChild(0).Find("ClickableUI").gameObject.SetActive(false);
+                        //        enemyUnitLine[i][0].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(false);
+                        //    }
+
+                        //    if (enemyUnitLine[i][1].childCount != 0) {
+                        //        enemyUnitLine[i][1].GetChild(0).Find("ClickableUI").gameObject.SetActive(false);
+                        //        enemyUnitLine[i][1].GetChild(0).Find("MagicTargetTrigger").gameObject.SetActive(false);
+                        //    }
+
+                        //}
                     }
                 }
                 return;
-            }
+            }            
         }
 
 

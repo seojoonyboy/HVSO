@@ -112,6 +112,56 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &55627556
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 55627557}
+  - component: {fileID: 55627558}
+  m_Layer: 5
+  m_Name: Text Area
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &55627557
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 55627556}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1221844288}
+  - {fileID: 466347686}
+  m_Father: {fileID: 893706789}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: -0.5}
+  m_SizeDelta: {x: -20, y: -13}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &55627558
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 55627556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -146154839, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &118938941
 GameObject:
   m_ObjectHideFlags: 0
@@ -281,6 +331,10 @@ MonoBehaviour:
     - {fileID: 8300000, guid: df8acefb92866d84dbea15489d9c1b02, type: 3}
     - {fileID: 8300000, guid: 23e7025c27c87924d990ff1d3b125a6e, type: 3}
     - {fileID: 8300000, guid: ed9767fa561236448a0ff8bb2a3f5fe2, type: 3}
+    - {fileID: 8300000, guid: 22323573a1bb42948b601acd2ee8a9ed, type: 3}
+    - {fileID: 8300000, guid: ecd4bae34d39c3844ab2028bfbdc838b, type: 3}
+    - {fileID: 8300000, guid: 542cebf0606c6df43a2f5790f706125a, type: 3}
+    - {fileID: 8300000, guid: 9cbdf55515d6d98488733a95be0d7894, type: 3}
     - {fileID: 8300000, guid: 611ac5289e5bd554d92c055d1fe86c03, type: 3}
     - {fileID: 8300000, guid: 8fc662d5a9adcbb428019f191ca4e5e2, type: 3}
     - {fileID: 8300000, guid: 58d1d4be3fa2ff641a2ba4b406fdc157, type: 3}
@@ -916,7 +970,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 22
+      Data: 26
     - Name: 
       Entry: 7
       Data: 
@@ -1182,6 +1236,54 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 3522
+    - Name: $v
+      Entry: 10
+      Data: 63
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 3523
+    - Name: $v
+      Entry: 10
+      Data: 64
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 3524
+    - Name: $v
+      Entry: 10
+      Data: 65
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 3525
+    - Name: $v
+      Entry: 10
+      Data: 66
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
       Entry: 13
       Data: 
     - Name: 
@@ -1215,7 +1317,7 @@ MonoBehaviour:
       Data: 4500
     - Name: $v
       Entry: 10
-      Data: 63
+      Data: 67
     - Name: 
       Entry: 8
       Data: 
@@ -1227,7 +1329,7 @@ MonoBehaviour:
       Data: 4501
     - Name: $v
       Entry: 10
-      Data: 64
+      Data: 68
     - Name: 
       Entry: 8
       Data: 
@@ -1239,7 +1341,7 @@ MonoBehaviour:
       Data: 4503
     - Name: $v
       Entry: 10
-      Data: 65
+      Data: 69
     - Name: 
       Entry: 8
       Data: 
@@ -1251,7 +1353,7 @@ MonoBehaviour:
       Data: 4502
     - Name: $v
       Entry: 10
-      Data: 66
+      Data: 70
     - Name: 
       Entry: 8
       Data: 
@@ -1263,7 +1365,7 @@ MonoBehaviour:
       Data: 4504
     - Name: $v
       Entry: 10
-      Data: 67
+      Data: 71
     - Name: 
       Entry: 8
       Data: 
@@ -1275,7 +1377,7 @@ MonoBehaviour:
       Data: 4505
     - Name: $v
       Entry: 10
-      Data: 68
+      Data: 72
     - Name: 
       Entry: 8
       Data: 
@@ -1287,7 +1389,7 @@ MonoBehaviour:
       Data: 4506
     - Name: $v
       Entry: 10
-      Data: 69
+      Data: 73
     - Name: 
       Entry: 8
       Data: 
@@ -1299,7 +1401,7 @@ MonoBehaviour:
       Data: 4507
     - Name: $v
       Entry: 10
-      Data: 70
+      Data: 74
     - Name: 
       Entry: 8
       Data: 
@@ -1311,7 +1413,7 @@ MonoBehaviour:
       Data: 4508
     - Name: $v
       Entry: 10
-      Data: 71
+      Data: 75
     - Name: 
       Entry: 8
       Data: 
@@ -1323,7 +1425,7 @@ MonoBehaviour:
       Data: 4509
     - Name: $v
       Entry: 10
-      Data: 72
+      Data: 76
     - Name: 
       Entry: 8
       Data: 
@@ -1335,7 +1437,7 @@ MonoBehaviour:
       Data: 4510
     - Name: $v
       Entry: 10
-      Data: 73
+      Data: 77
     - Name: 
       Entry: 8
       Data: 
@@ -1347,7 +1449,7 @@ MonoBehaviour:
       Data: 4511
     - Name: $v
       Entry: 10
-      Data: 74
+      Data: 78
     - Name: 
       Entry: 8
       Data: 
@@ -1359,7 +1461,7 @@ MonoBehaviour:
       Data: 4512
     - Name: $v
       Entry: 10
-      Data: 74
+      Data: 78
     - Name: 
       Entry: 8
       Data: 
@@ -1371,7 +1473,7 @@ MonoBehaviour:
       Data: 4513
     - Name: $v
       Entry: 10
-      Data: 75
+      Data: 79
     - Name: 
       Entry: 8
       Data: 
@@ -1415,89 +1517,6 @@ MonoBehaviour:
     - Name: comparer
       Entry: 7
       Data: 12|System.Collections.Generic.EnumEqualityComparer`1[[VoiceType, Assembly-CSharp]],
-        mscorlib
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 12
-      Data: 4
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 1500
-    - Name: $v
-      Entry: 10
-      Data: 76
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 1501
-    - Name: $v
-      Entry: 10
-      Data: 77
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 1502
-    - Name: $v
-      Entry: 10
-      Data: 78
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 1503
-    - Name: $v
-      Entry: 10
-      Data: 79
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 500
-    - Name: $v
-      Entry: 7
-      Data: 13|System.Collections.Generic.Dictionary`2[[VoiceType, Assembly-CSharp],[UnityEngine.AudioClip,
-        UnityEngine.AudioModule]], mscorlib
-    - Name: comparer
-      Entry: 7
-      Data: 14|System.Collections.Generic.EnumEqualityComparer`1[[VoiceType, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
@@ -1573,14 +1592,14 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: 504
+      Data: 500
     - Name: $v
       Entry: 7
-      Data: 15|System.Collections.Generic.Dictionary`2[[VoiceType, Assembly-CSharp],[UnityEngine.AudioClip,
+      Data: 13|System.Collections.Generic.Dictionary`2[[VoiceType, Assembly-CSharp],[UnityEngine.AudioClip,
         UnityEngine.AudioModule]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 16|System.Collections.Generic.EnumEqualityComparer`1[[VoiceType, Assembly-CSharp]],
+      Data: 14|System.Collections.Generic.EnumEqualityComparer`1[[VoiceType, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
@@ -1656,14 +1675,14 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: 503
+      Data: 504
     - Name: $v
       Entry: 7
-      Data: 17|System.Collections.Generic.Dictionary`2[[VoiceType, Assembly-CSharp],[UnityEngine.AudioClip,
+      Data: 15|System.Collections.Generic.Dictionary`2[[VoiceType, Assembly-CSharp],[UnityEngine.AudioClip,
         UnityEngine.AudioModule]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 18|System.Collections.Generic.EnumEqualityComparer`1[[VoiceType, Assembly-CSharp]],
+      Data: 16|System.Collections.Generic.EnumEqualityComparer`1[[VoiceType, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
@@ -1739,14 +1758,14 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: 508
+      Data: 503
     - Name: $v
       Entry: 7
-      Data: 19|System.Collections.Generic.Dictionary`2[[VoiceType, Assembly-CSharp],[UnityEngine.AudioClip,
+      Data: 17|System.Collections.Generic.Dictionary`2[[VoiceType, Assembly-CSharp],[UnityEngine.AudioClip,
         UnityEngine.AudioModule]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 20|System.Collections.Generic.EnumEqualityComparer`1[[VoiceType, Assembly-CSharp]],
+      Data: 18|System.Collections.Generic.EnumEqualityComparer`1[[VoiceType, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
@@ -1805,6 +1824,89 @@ MonoBehaviour:
     - Name: $v
       Entry: 10
       Data: 95
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 508
+    - Name: $v
+      Entry: 7
+      Data: 19|System.Collections.Generic.Dictionary`2[[VoiceType, Assembly-CSharp],[UnityEngine.AudioClip,
+        UnityEngine.AudioModule]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 20|System.Collections.Generic.EnumEqualityComparer`1[[VoiceType, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 4
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 1500
+    - Name: $v
+      Entry: 10
+      Data: 96
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 1501
+    - Name: $v
+      Entry: 10
+      Data: 97
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 1502
+    - Name: $v
+      Entry: 10
+      Data: 98
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 1503
+    - Name: $v
+      Entry: 10
+      Data: 99
     - Name: 
       Entry: 8
       Data: 
@@ -2523,6 +2625,162 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 383296070}
   m_CullTransparentMesh: 0
+--- !u!1 &466347683
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 466347686}
+  - component: {fileID: 466347685}
+  - component: {fileID: 466347684}
+  m_Layer: 5
+  m_Name: Text
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &466347684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 466347683}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: "\u200B"
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: adda2ac3fb4aa87489500531a03976d6, type: 2}
+  m_sharedMaterial: {fileID: 21377361653557934, guid: adda2ac3fb4aa87489500531a03976d6,
+    type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_outlineColor:
+    serializedVersion: 2
+    rgba: 4278190080
+  m_fontSize: 25.9
+  m_fontSizeBase: 14
+  m_fontWeight: 400
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_textAlignment: 257
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 0
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_firstOverflowCharacterIndex: -1
+  m_linkedTextComponent: {fileID: 0}
+  m_isLinkedTextComponent: 0
+  m_isTextTruncated: 0
+  m_enableKerning: 1
+  m_enableExtraPadding: 1
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_ignoreRectMaskCulling: 0
+  m_ignoreCulling: 1
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_VertexBufferAutoSizeReduction: 1
+  m_firstVisibleCharacter: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_textInfo:
+    textComponent: {fileID: 466347684}
+    characterCount: 1
+    spriteCount: 0
+    spaceCount: 0
+    wordCount: 1
+    linkCount: 0
+    lineCount: 1
+    pageCount: 1
+    materialCount: 1
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_spriteAnimator: {fileID: 0}
+  m_hasFontAssetChanged: 0
+  m_subTextObjects:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &466347685
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 466347683}
+  m_CullTransparentMesh: 0
+--- !u!224 &466347686
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 466347683}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 55627557}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &505554552
 GameObject:
   m_ObjectHideFlags: 0
@@ -2623,15 +2881,16 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u200B"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: adda2ac3fb4aa87489500531a03976d6, type: 2}
+  m_sharedMaterial: {fileID: 21377361653557934, guid: adda2ac3fb4aa87489500531a03976d6,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281479730
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2720,6 +2979,79 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 508209762}
+  m_CullTransparentMesh: 0
+--- !u!1 &552375002
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 552375003}
+  - component: {fileID: 552375005}
+  - component: {fileID: 552375004}
+  m_Layer: 5
+  m_Name: TMP SubMeshUI [NanumSquare_acEB_forHeader SDF Material + LiberationSans
+    SDF Atlas]
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &552375003
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 552375002}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1327106824}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &552375004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 552375002}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 058cba836c1846c3aa1c5fd2e28aea77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_spriteAsset: {fileID: 0}
+  m_material: {fileID: 0}
+  m_sharedMaterial: {fileID: 0}
+  m_isDefaultMaterial: 0
+  m_padding: 11.25
+  m_canvasRenderer: {fileID: 552375005}
+  m_TextComponent: {fileID: 1327106825}
+  m_materialReferenceIndex: 1
+--- !u!222 &552375005
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 552375002}
   m_CullTransparentMesh: 0
 --- !u!1001 &573602219
 PrefabInstance:
@@ -2867,7 +3199,7 @@ PrefabInstance:
     - target: {fileID: 573602221, guid: a4ea8363f031e564e9d9454ce81d63cd, type: 3}
       propertyPath: canvas
       value: 
-      objectReference: {fileID: 573602224}
+      objectReference: {fileID: 157531406}
     - target: {fileID: 7167178456944391580, guid: a4ea8363f031e564e9d9454ce81d63cd,
         type: 3}
       propertyPath: m_ReferenceResolution.x
@@ -2963,12 +3295,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0555444e264774a05864ccf79a7b61f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!223 &573602224 stripped
-Canvas:
-  m_CorrespondingSourceObject: {fileID: 7874505504891461461, guid: a4ea8363f031e564e9d9454ce81d63cd,
-    type: 3}
-  m_PrefabInstance: {fileID: 573602219}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &611433128
 GameObject:
   m_ObjectHideFlags: 0
@@ -3263,6 +3589,173 @@ MonoBehaviour:
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
   m_ChildControlHeight: 0
+--- !u!1 &893706787
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 893706789}
+  - component: {fileID: 893706791}
+  - component: {fileID: 893706790}
+  - component: {fileID: 893706788}
+  m_Layer: 5
+  m_Name: InputField_RankId
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &893706788
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 893706787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2da0c512f12947e489f739169773d7ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 893706790}
+  m_TextViewport: {fileID: 55627557}
+  m_TextComponent: {fileID: 466347684}
+  m_Placeholder: {fileID: 1221844287}
+  m_VerticalScrollbar: {fileID: 0}
+  m_VerticalScrollbarEventHandler: {fileID: 0}
+  m_ScrollSensitivity: 1
+  m_ContentType: 2
+  m_InputType: 0
+  m_AsteriskChar: 42
+  m_KeyboardType: 4
+  m_LineType: 0
+  m_HideMobileInput: 0
+  m_HideSoftKeyboard: 0
+  m_CharacterValidation: 2
+  m_RegexValue: 
+  m_GlobalPointSize: 14
+  m_CharacterLimit: 0
+  m_OnEndEdit:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnSubmit:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnSelect:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnDeselect:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnTextSelection:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnEndTextSelection:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnValueChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnTouchScreenKeyboardStatusChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_CaretColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_CustomCaretColor: 0
+  m_SelectionColor: {r: 0.65882355, g: 0.80784315, b: 1, a: 0.7529412}
+  m_Text: 
+  m_CaretBlinkRate: 0.85
+  m_CaretWidth: 1
+  m_ReadOnly: 0
+  m_RichText: 1
+  m_GlobalFontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_OnFocusSelectAll: 1
+  m_ResetOnDeActivation: 1
+  m_RestoreOriginalTextOnEscape: 1
+  m_isRichTextEditingAllowed: 0
+  m_LineLimit: 0
+  m_InputValidator: {fileID: 0}
+--- !u!224 &893706789
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 893706787}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 55627557}
+  m_Father: {fileID: 2079348098}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 144, y: -92.43001}
+  m_SizeDelta: {x: 288, y: 41.62}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &893706790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 893706787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+--- !u!222 &893706791
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 893706787}
+  m_CullTransparentMesh: 0
 --- !u!1 &996388925
 GameObject:
   m_ObjectHideFlags: 0
@@ -3422,6 +3915,163 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1221844286
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1221844288}
+  - component: {fileID: 1221844289}
+  - component: {fileID: 1221844287}
+  m_Layer: 5
+  m_Name: Placeholder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1221844287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1221844286}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: "\uC6D0\uD558\uB294 \uB4F1\uAE09 \uC785\uB825"
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 9ecfd29f662c8844bb65e8c37c87e0f6, type: 2}
+  m_sharedMaterial: {fileID: 21377361653557934, guid: 9ecfd29f662c8844bb65e8c37c87e0f6,
+    type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_outlineColor:
+    serializedVersion: 2
+    rgba: 4278190080
+  m_fontSize: 25.9
+  m_fontSizeBase: 14
+  m_fontWeight: 400
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_textAlignment: 257
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 0
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_firstOverflowCharacterIndex: -1
+  m_linkedTextComponent: {fileID: 0}
+  m_isLinkedTextComponent: 0
+  m_isTextTruncated: 0
+  m_enableKerning: 1
+  m_enableExtraPadding: 1
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_ignoreRectMaskCulling: 0
+  m_ignoreCulling: 1
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_VertexBufferAutoSizeReduction: 1
+  m_firstVisibleCharacter: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_textInfo:
+    textComponent: {fileID: 1221844287}
+    characterCount: 9
+    spriteCount: 0
+    spaceCount: 2
+    wordCount: 3
+    linkCount: 0
+    lineCount: 1
+    pageCount: 1
+    materialCount: 1
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_spriteAnimator: {fileID: 0}
+  m_hasFontAssetChanged: 0
+  m_subTextObjects:
+  - {fileID: 0}
+  - {fileID: 1931952229}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!224 &1221844288
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1221844286}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1931952231}
+  m_Father: {fileID: 55627557}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &1221844289
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1221844286}
+  m_CullTransparentMesh: 0
 --- !u!1 &1236255878
 GameObject:
   m_ObjectHideFlags: 0
@@ -4011,7 +4661,8 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 552375003}
   m_Father: {fileID: 1919021518}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4038,18 +4689,18 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC6D0\uD558\uB294 \uCD08\uAE30 MMR \uAC12 \uC785\uB825..."
+  m_text: "\uC6D0\uD558\uB294 \uCD08\uAE30 MMR \uAC12 \uC785\uB825"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 888e88d596eb5d9489120c200b33c66f, type: 2}
-  m_sharedMaterial: {fileID: 21377361653557934, guid: 888e88d596eb5d9489120c200b33c66f,
+  m_fontAsset: {fileID: 11400000, guid: 9ecfd29f662c8844bb65e8c37c87e0f6, type: 2}
+  m_sharedMaterial: {fileID: 21377361653557934, guid: 9ecfd29f662c8844bb65e8c37c87e0f6,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 2133996082
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 0.5}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -4067,13 +4718,13 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 14
+  m_fontSize: 24.65
   m_fontSizeBase: 14
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 3
+  m_fontStyle: 0
   m_textAlignment: 257
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -4108,21 +4759,21 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1327106825}
-    characterCount: 13
+    characterCount: 15
     spriteCount: 0
-    spaceCount: 1
-    wordCount: 2
+    spaceCount: 4
+    wordCount: 5
     linkCount: 0
     lineCount: 1
     pageCount: 1
-    materialCount: 1
+    materialCount: 2
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
   m_hasFontAssetChanged: 0
   m_subTextObjects:
   - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 552375004}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -4330,11 +4981,11 @@ RectTransform:
   m_Children:
   - {fileID: 1377476960}
   m_Father: {fileID: 2079348098}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -57.7}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 144, y: -200.89001}
   m_SizeDelta: {x: 288, y: 115.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1399069977
@@ -4423,6 +5074,121 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1399069975}
   m_CullTransparentMesh: 0
+--- !u!1 &1406689344
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1406689348}
+  - component: {fileID: 1406689347}
+  - component: {fileID: 1406689346}
+  - component: {fileID: 1406689345}
+  - component: {fileID: 1406689349}
+  m_Layer: 5
+  m_Name: IAPCanvas
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1406689345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1406689344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1301386320, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+--- !u!114 &1406689346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1406689344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1980459831, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_UiScaleMode: 1
+  m_ReferencePixelsPerUnit: 100
+  m_ScaleFactor: 1
+  m_ReferenceResolution: {x: 1080, y: 1920}
+  m_ScreenMatchMode: 1
+  m_MatchWidthOrHeight: 0
+  m_PhysicalUnit: 3
+  m_FallbackScreenDPI: 96
+  m_DefaultSpriteDPI: 96
+  m_DynamicPixelsPerUnit: 1
+--- !u!223 &1406689347
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1406689344}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 0
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 2
+  m_TargetDisplay: 0
+--- !u!224 &1406689348
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1406689344}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 15
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0, y: 0}
+--- !u!114 &1406689349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1406689344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d45a2f8af4cb5479bb2fa434b5953a8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvas: {fileID: 1406689347}
+  systemDialog: {fileID: 1636264367070322, guid: 7b99c9d343cf24c5798c2c2269633c5b,
+    type: 3}
+  eulaText: {fileID: 1201824401596970, guid: e2b9506aae8ac40439a9741e0e23f4fb, type: 3}
 --- !u!1001 &1439483862
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4630,6 +5396,7 @@ MonoBehaviour:
   skipbuttons: {fileID: 842118551}
   mmrchange: {fileID: 2079348097}
   mmrInputField: {fileID: 2028315416}
+  rankIdInputField: {fileID: 893706788}
   obbCanvas: {fileID: 1294867846}
   sceneStartCanvas: {fileID: 573602220}
   sceneLoginCanvas: {fileID: 573602220}
@@ -5090,6 +5857,7 @@ GameObject:
   - component: {fileID: 1870949078}
   - component: {fileID: 1870949079}
   - component: {fileID: 1870949080}
+  - component: {fileID: 1870949081}
   m_Layer: 0
   m_Name: AccountManager
   m_TagString: Untagged
@@ -5121,6 +5889,7 @@ MonoBehaviour:
   scriptable_leagueData: {fileID: 11400000, guid: 376e6853eb3fc2246b5da4276f95bef7,
     type: 2}
   prevSceneName: 
+  canLoadDailyQuest: 0
   visitDeckNow: 0
   needChangeNickName: 0
 --- !u!4 &1870949075
@@ -5294,6 +6063,7 @@ MonoBehaviour:
     - {fileID: 7557904670309727613, guid: 2692001007029e44a926152e81131f87, type: 3}
     - {fileID: 9183088940670367954, guid: ad812a0ba8db5eb428b0fb05361b4923, type: 3}
     - {fileID: 517054166238940013, guid: 739be53139e9aa6459743bb847f4091e, type: 3}
+    - {fileID: 4670541910602221109, guid: 5eb972be6df48e24c9d0010e89b46de0, type: 3}
     - {fileID: 21300000, guid: e5b7d6d129776ee459ebb3761de36acd, type: 3}
     - {fileID: 21300000, guid: 6132ceb7464b76349a668a66a20d36d9, type: 3}
     - {fileID: 21300000, guid: 30a490fb3934351469a7eeb0a66c7f4c, type: 3}
@@ -5480,21 +6250,21 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 5ea355a3640129e42bbf89d989e027e2, type: 3}
     - {fileID: 21300000, guid: da74e348c5c5dcd46ac1fbbc960a0cc5, type: 3}
     - {fileID: 21300000, guid: 7adc67005b6e0dc4594a3a04d1a44742, type: 3}
-    - {fileID: 21300000, guid: fbf5fa5ffed52fd42a7207fc449976c8, type: 3}
-    - {fileID: 21300000, guid: 99d562f15f126ff4786902179db774aa, type: 3}
-    - {fileID: 21300000, guid: 5ec41843af3bff342b8ac8df6921946c, type: 3}
-    - {fileID: 21300000, guid: 3134daf9f0678d7468dcc603d971ee95, type: 3}
-    - {fileID: 21300000, guid: 59ef65c6ee3b3be4385ed00983bc250f, type: 3}
-    - {fileID: 21300000, guid: bfc58761aeaae994c9d54bf56a25c516, type: 3}
-    - {fileID: 21300000, guid: e43b0011288f94b409f7de60c51c48f0, type: 3}
-    - {fileID: 21300000, guid: 1d02fba21abcab149aebf7e40063a712, type: 3}
-    - {fileID: 21300000, guid: 8f126c63b24ee4740bd1086a95b8f921, type: 3}
-    - {fileID: 21300000, guid: c91397bbf9e2d2544ac49e822a7ce884, type: 3}
-    - {fileID: 21300000, guid: 7fd58e2190b6d6a4c9a07b36e461c7bf, type: 3}
-    - {fileID: 21300000, guid: 7a8939fdc01426b4ebe4be4a98706198, type: 3}
-    - {fileID: 21300000, guid: 1043f739fa8ca7d40808271cf881c906, type: 3}
-    - {fileID: 21300000, guid: 20d6e18dc2b829f4086fbb8ea59d35b9, type: 3}
-    - {fileID: 21300000, guid: 80d78832ea0931848b5889bb82867483, type: 3}
+    - {fileID: 21300000, guid: fbbc0e3c44254974eaf3d11fa0c54b13, type: 3}
+    - {fileID: 21300000, guid: df0cc1d6cde9a334896b48a23356b8e2, type: 3}
+    - {fileID: 21300000, guid: 29b0b40cb17664243b1a5e3cf50c7619, type: 3}
+    - {fileID: 21300000, guid: 9ce847ddc6e9db948b2c867af3ac8840, type: 3}
+    - {fileID: 21300000, guid: 68e26d1616e836a4ab194977e2619008, type: 3}
+    - {fileID: 21300000, guid: 33092c55c5151c442ba640f0307d2218, type: 3}
+    - {fileID: 21300000, guid: 969a290243d82d2498a0f4708e55b219, type: 3}
+    - {fileID: 21300000, guid: 058fda17fdc47a744bb043a0902c98be, type: 3}
+    - {fileID: 21300000, guid: fc49c29a85b9ec5478f9ace07e48a262, type: 3}
+    - {fileID: 21300000, guid: 40816a7362276974c98cc62479d8aa1d, type: 3}
+    - {fileID: 21300000, guid: 542fa188788e603429da5488664d2daa, type: 3}
+    - {fileID: 21300000, guid: 4d63b6596c3bde242a32dc80d4c9e38a, type: 3}
+    - {fileID: 21300000, guid: 7291084fadb96514084fc1255bb806c0, type: 3}
+    - {fileID: 21300000, guid: 38fb19027bc481b4f80023fe843e4532, type: 3}
+    - {fileID: 21300000, guid: 0c1951427a7aed947889d277ffccb116, type: 3}
     - {fileID: 21300000, guid: 71ae9517de0f32d4ea3ba8f1cb63612d, type: 3}
     - {fileID: 21300000, guid: 0219215898853ea4697c4016b9922b5e, type: 3}
     - {fileID: 21300000, guid: decb82731192a76459ab0303ca4764f7, type: 3}
@@ -7324,7 +8094,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 52
+      Data: 53
     - Name: 
       Entry: 7
       Data: 
@@ -7950,6 +8720,18 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ac10062
+    - Name: $v
+      Entry: 10
+      Data: 141
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
       Entry: 13
       Data: 
     - Name: 
@@ -7977,7 +8759,7 @@ MonoBehaviour:
       Data: unit_common
     - Name: $v
       Entry: 10
-      Data: 141
+      Data: 142
     - Name: 
       Entry: 8
       Data: 
@@ -7989,7 +8771,7 @@ MonoBehaviour:
       Data: unit_legend
     - Name: $v
       Entry: 10
-      Data: 142
+      Data: 143
     - Name: 
       Entry: 8
       Data: 
@@ -8001,7 +8783,7 @@ MonoBehaviour:
       Data: unit_uncommon
     - Name: $v
       Entry: 10
-      Data: 143
+      Data: 144
     - Name: 
       Entry: 8
       Data: 
@@ -8013,7 +8795,7 @@ MonoBehaviour:
       Data: unit_rare
     - Name: $v
       Entry: 10
-      Data: 144
+      Data: 145
     - Name: 
       Entry: 8
       Data: 
@@ -8025,7 +8807,7 @@ MonoBehaviour:
       Data: unit_superrare
     - Name: $v
       Entry: 10
-      Data: 145
+      Data: 146
     - Name: 
       Entry: 8
       Data: 
@@ -8037,7 +8819,7 @@ MonoBehaviour:
       Data: magic_common
     - Name: $v
       Entry: 10
-      Data: 146
+      Data: 147
     - Name: 
       Entry: 8
       Data: 
@@ -8049,7 +8831,7 @@ MonoBehaviour:
       Data: magic_uncommon
     - Name: $v
       Entry: 10
-      Data: 147
+      Data: 148
     - Name: 
       Entry: 8
       Data: 
@@ -8061,7 +8843,7 @@ MonoBehaviour:
       Data: magic_rare
     - Name: $v
       Entry: 10
-      Data: 148
+      Data: 149
     - Name: 
       Entry: 8
       Data: 
@@ -8073,7 +8855,7 @@ MonoBehaviour:
       Data: magic_superrare
     - Name: $v
       Entry: 10
-      Data: 149
+      Data: 150
     - Name: 
       Entry: 8
       Data: 
@@ -8085,7 +8867,7 @@ MonoBehaviour:
       Data: magic_legend
     - Name: $v
       Entry: 10
-      Data: 150
+      Data: 151
     - Name: 
       Entry: 8
       Data: 
@@ -8097,7 +8879,7 @@ MonoBehaviour:
       Data: hero_superrare_orc
     - Name: $v
       Entry: 10
-      Data: 151
+      Data: 152
     - Name: 
       Entry: 8
       Data: 
@@ -8109,7 +8891,7 @@ MonoBehaviour:
       Data: hero_superrare_human
     - Name: $v
       Entry: 10
-      Data: 151
+      Data: 152
     - Name: 
       Entry: 8
       Data: 
@@ -8121,7 +8903,7 @@ MonoBehaviour:
       Data: hero_legend_human
     - Name: $v
       Entry: 10
-      Data: 151
+      Data: 152
     - Name: 
       Entry: 8
       Data: 
@@ -8133,7 +8915,7 @@ MonoBehaviour:
       Data: hero_legend_orc
     - Name: $v
       Entry: 10
-      Data: 151
+      Data: 152
     - Name: 
       Entry: 8
       Data: 
@@ -8171,10 +8953,10 @@ MonoBehaviour:
       Data: 2
     - Name: 
       Entry: 10
-      Data: 152
+      Data: 153
     - Name: 
       Entry: 10
-      Data: 153
+      Data: 154
     - Name: 
       Entry: 13
       Data: 
@@ -8198,10 +8980,10 @@ MonoBehaviour:
       Data: 2
     - Name: 
       Entry: 10
-      Data: 154
+      Data: 155
     - Name: 
       Entry: 10
-      Data: 155
+      Data: 156
     - Name: 
       Entry: 13
       Data: 
@@ -8225,7 +9007,7 @@ MonoBehaviour:
       Data: 1
     - Name: 
       Entry: 10
-      Data: 156
+      Data: 157
     - Name: 
       Entry: 13
       Data: 
@@ -8249,7 +9031,7 @@ MonoBehaviour:
       Data: 1
     - Name: 
       Entry: 10
-      Data: 157
+      Data: 158
     - Name: 
       Entry: 13
       Data: 
@@ -8287,7 +9069,7 @@ MonoBehaviour:
       Data: h10001
     - Name: $v
       Entry: 10
-      Data: 158
+      Data: 159
     - Name: 
       Entry: 8
       Data: 
@@ -8299,7 +9081,7 @@ MonoBehaviour:
       Data: h10002
     - Name: $v
       Entry: 10
-      Data: 159
+      Data: 160
     - Name: 
       Entry: 8
       Data: 
@@ -8311,7 +9093,7 @@ MonoBehaviour:
       Data: h10003
     - Name: $v
       Entry: 10
-      Data: 160
+      Data: 161
     - Name: 
       Entry: 8
       Data: 
@@ -8323,7 +9105,7 @@ MonoBehaviour:
       Data: h10004
     - Name: $v
       Entry: 10
-      Data: 161
+      Data: 162
     - Name: 
       Entry: 8
       Data: 
@@ -8355,7 +9137,7 @@ MonoBehaviour:
       Data: h10001
     - Name: $v
       Entry: 10
-      Data: 162
+      Data: 163
     - Name: 
       Entry: 8
       Data: 
@@ -8367,7 +9149,7 @@ MonoBehaviour:
       Data: h10002
     - Name: $v
       Entry: 10
-      Data: 163
+      Data: 164
     - Name: 
       Entry: 8
       Data: 
@@ -8379,7 +9161,7 @@ MonoBehaviour:
       Data: h10003
     - Name: $v
       Entry: 10
-      Data: 164
+      Data: 165
     - Name: 
       Entry: 8
       Data: 
@@ -8391,7 +9173,7 @@ MonoBehaviour:
       Data: h10004
     - Name: $v
       Entry: 10
-      Data: 165
+      Data: 166
     - Name: 
       Entry: 8
       Data: 
@@ -8403,7 +9185,7 @@ MonoBehaviour:
       Data: hac10002
     - Name: $v
       Entry: 10
-      Data: 166
+      Data: 167
     - Name: 
       Entry: 8
       Data: 
@@ -8415,7 +9197,7 @@ MonoBehaviour:
       Data: qh10001
     - Name: $v
       Entry: 10
-      Data: 167
+      Data: 168
     - Name: 
       Entry: 8
       Data: 
@@ -8427,7 +9209,7 @@ MonoBehaviour:
       Data: qh10002
     - Name: $v
       Entry: 10
-      Data: 168
+      Data: 169
     - Name: 
       Entry: 8
       Data: 
@@ -8459,7 +9241,7 @@ MonoBehaviour:
       Data: order
     - Name: $v
       Entry: 10
-      Data: 169
+      Data: 170
     - Name: 
       Entry: 8
       Data: 
@@ -8471,7 +9253,7 @@ MonoBehaviour:
       Data: knowledge
     - Name: $v
       Entry: 10
-      Data: 170
+      Data: 171
     - Name: 
       Entry: 8
       Data: 
@@ -8483,7 +9265,7 @@ MonoBehaviour:
       Data: scheme
     - Name: $v
       Entry: 10
-      Data: 171
+      Data: 172
     - Name: 
       Entry: 8
       Data: 
@@ -8495,7 +9277,7 @@ MonoBehaviour:
       Data: sorcery
     - Name: $v
       Entry: 10
-      Data: 172
+      Data: 173
     - Name: 
       Entry: 8
       Data: 
@@ -8507,7 +9289,7 @@ MonoBehaviour:
       Data: mana
     - Name: $v
       Entry: 10
-      Data: 173
+      Data: 174
     - Name: 
       Entry: 8
       Data: 
@@ -8759,7 +9541,7 @@ MonoBehaviour:
       Data: pursuit
     - Name: $v
       Entry: 10
-      Data: 174
+      Data: 175
     - Name: 
       Entry: 8
       Data: 
@@ -9237,7 +10019,7 @@ MonoBehaviour:
       Data: name_common
     - Name: $v
       Entry: 10
-      Data: 175
+      Data: 176
     - Name: 
       Entry: 8
       Data: 
@@ -9249,7 +10031,7 @@ MonoBehaviour:
       Data: name_uncommon
     - Name: $v
       Entry: 10
-      Data: 176
+      Data: 177
     - Name: 
       Entry: 8
       Data: 
@@ -9261,7 +10043,7 @@ MonoBehaviour:
       Data: name_rare
     - Name: $v
       Entry: 10
-      Data: 177
+      Data: 178
     - Name: 
       Entry: 8
       Data: 
@@ -9273,7 +10055,7 @@ MonoBehaviour:
       Data: name_superrare
     - Name: $v
       Entry: 10
-      Data: 178
+      Data: 179
     - Name: 
       Entry: 8
       Data: 
@@ -9285,7 +10067,7 @@ MonoBehaviour:
       Data: name_legend
     - Name: $v
       Entry: 10
-      Data: 179
+      Data: 180
     - Name: 
       Entry: 8
       Data: 
@@ -9297,7 +10079,7 @@ MonoBehaviour:
       Data: ribbon_common
     - Name: $v
       Entry: 10
-      Data: 180
+      Data: 181
     - Name: 
       Entry: 8
       Data: 
@@ -9309,7 +10091,7 @@ MonoBehaviour:
       Data: ribbon_uncommon
     - Name: $v
       Entry: 10
-      Data: 181
+      Data: 182
     - Name: 
       Entry: 8
       Data: 
@@ -9321,7 +10103,7 @@ MonoBehaviour:
       Data: ribbon_rare
     - Name: $v
       Entry: 10
-      Data: 182
+      Data: 183
     - Name: 
       Entry: 8
       Data: 
@@ -9333,7 +10115,7 @@ MonoBehaviour:
       Data: ribbon_superrare
     - Name: $v
       Entry: 10
-      Data: 183
+      Data: 184
     - Name: 
       Entry: 8
       Data: 
@@ -9345,7 +10127,7 @@ MonoBehaviour:
       Data: ribbon_legend
     - Name: $v
       Entry: 10
-      Data: 184
+      Data: 185
     - Name: 
       Entry: 8
       Data: 
@@ -9357,7 +10139,7 @@ MonoBehaviour:
       Data: ribbon_hero
     - Name: $v
       Entry: 10
-      Data: 185
+      Data: 186
     - Name: 
       Entry: 8
       Data: 
@@ -9389,7 +10171,7 @@ MonoBehaviour:
       Data: ac10001
     - Name: $v
       Entry: 10
-      Data: 186
+      Data: 187
     - Name: 
       Entry: 8
       Data: 
@@ -9401,7 +10183,7 @@ MonoBehaviour:
       Data: ac10002
     - Name: $v
       Entry: 10
-      Data: 187
+      Data: 188
     - Name: 
       Entry: 8
       Data: 
@@ -9413,7 +10195,7 @@ MonoBehaviour:
       Data: ac10003
     - Name: $v
       Entry: 10
-      Data: 188
+      Data: 189
     - Name: 
       Entry: 8
       Data: 
@@ -9425,7 +10207,7 @@ MonoBehaviour:
       Data: ac10004
     - Name: $v
       Entry: 10
-      Data: 189
+      Data: 190
     - Name: 
       Entry: 8
       Data: 
@@ -9437,7 +10219,7 @@ MonoBehaviour:
       Data: ac10005
     - Name: $v
       Entry: 10
-      Data: 190
+      Data: 191
     - Name: 
       Entry: 8
       Data: 
@@ -9449,7 +10231,7 @@ MonoBehaviour:
       Data: ac10006
     - Name: $v
       Entry: 10
-      Data: 191
+      Data: 192
     - Name: 
       Entry: 8
       Data: 
@@ -9461,7 +10243,7 @@ MonoBehaviour:
       Data: ac10007
     - Name: $v
       Entry: 10
-      Data: 192
+      Data: 193
     - Name: 
       Entry: 8
       Data: 
@@ -9473,7 +10255,7 @@ MonoBehaviour:
       Data: ac10008
     - Name: $v
       Entry: 10
-      Data: 193
+      Data: 194
     - Name: 
       Entry: 8
       Data: 
@@ -9485,7 +10267,7 @@ MonoBehaviour:
       Data: ac10009
     - Name: $v
       Entry: 10
-      Data: 194
+      Data: 195
     - Name: 
       Entry: 8
       Data: 
@@ -9497,7 +10279,7 @@ MonoBehaviour:
       Data: ac10010
     - Name: $v
       Entry: 10
-      Data: 195
+      Data: 196
     - Name: 
       Entry: 8
       Data: 
@@ -9509,7 +10291,7 @@ MonoBehaviour:
       Data: ac10011
     - Name: $v
       Entry: 10
-      Data: 196
+      Data: 197
     - Name: 
       Entry: 8
       Data: 
@@ -9521,7 +10303,7 @@ MonoBehaviour:
       Data: ac10012
     - Name: $v
       Entry: 10
-      Data: 197
+      Data: 198
     - Name: 
       Entry: 8
       Data: 
@@ -9533,7 +10315,7 @@ MonoBehaviour:
       Data: ac10013
     - Name: $v
       Entry: 10
-      Data: 198
+      Data: 199
     - Name: 
       Entry: 8
       Data: 
@@ -9545,7 +10327,7 @@ MonoBehaviour:
       Data: ac10015
     - Name: $v
       Entry: 10
-      Data: 199
+      Data: 200
     - Name: 
       Entry: 8
       Data: 
@@ -9557,7 +10339,7 @@ MonoBehaviour:
       Data: ac10014
     - Name: $v
       Entry: 10
-      Data: 200
+      Data: 201
     - Name: 
       Entry: 8
       Data: 
@@ -9569,7 +10351,7 @@ MonoBehaviour:
       Data: ac10016
     - Name: $v
       Entry: 10
-      Data: 201
+      Data: 202
     - Name: 
       Entry: 8
       Data: 
@@ -9581,7 +10363,7 @@ MonoBehaviour:
       Data: ac10017
     - Name: $v
       Entry: 10
-      Data: 202
+      Data: 203
     - Name: 
       Entry: 8
       Data: 
@@ -9593,7 +10375,7 @@ MonoBehaviour:
       Data: ac10018
     - Name: $v
       Entry: 10
-      Data: 203
+      Data: 204
     - Name: 
       Entry: 8
       Data: 
@@ -9605,7 +10387,7 @@ MonoBehaviour:
       Data: ac10019
     - Name: $v
       Entry: 10
-      Data: 204
+      Data: 205
     - Name: 
       Entry: 8
       Data: 
@@ -9617,7 +10399,7 @@ MonoBehaviour:
       Data: ac10020
     - Name: $v
       Entry: 10
-      Data: 205
+      Data: 206
     - Name: 
       Entry: 8
       Data: 
@@ -9629,7 +10411,7 @@ MonoBehaviour:
       Data: ac10021
     - Name: $v
       Entry: 10
-      Data: 206
+      Data: 207
     - Name: 
       Entry: 8
       Data: 
@@ -9641,7 +10423,7 @@ MonoBehaviour:
       Data: ac10022
     - Name: $v
       Entry: 10
-      Data: 207
+      Data: 208
     - Name: 
       Entry: 8
       Data: 
@@ -9653,7 +10435,7 @@ MonoBehaviour:
       Data: ac10023
     - Name: $v
       Entry: 10
-      Data: 208
+      Data: 209
     - Name: 
       Entry: 8
       Data: 
@@ -9665,7 +10447,7 @@ MonoBehaviour:
       Data: ac10024
     - Name: $v
       Entry: 10
-      Data: 209
+      Data: 210
     - Name: 
       Entry: 8
       Data: 
@@ -9677,7 +10459,7 @@ MonoBehaviour:
       Data: ac10025
     - Name: $v
       Entry: 10
-      Data: 210
+      Data: 211
     - Name: 
       Entry: 8
       Data: 
@@ -9689,7 +10471,7 @@ MonoBehaviour:
       Data: ac10026
     - Name: $v
       Entry: 10
-      Data: 211
+      Data: 212
     - Name: 
       Entry: 8
       Data: 
@@ -9701,7 +10483,7 @@ MonoBehaviour:
       Data: ac10027
     - Name: $v
       Entry: 10
-      Data: 212
+      Data: 213
     - Name: 
       Entry: 8
       Data: 
@@ -9713,7 +10495,7 @@ MonoBehaviour:
       Data: ac10028
     - Name: $v
       Entry: 10
-      Data: 213
+      Data: 214
     - Name: 
       Entry: 8
       Data: 
@@ -9725,7 +10507,7 @@ MonoBehaviour:
       Data: ac10029
     - Name: $v
       Entry: 10
-      Data: 214
+      Data: 215
     - Name: 
       Entry: 8
       Data: 
@@ -9737,7 +10519,7 @@ MonoBehaviour:
       Data: ac10030
     - Name: $v
       Entry: 10
-      Data: 215
+      Data: 216
     - Name: 
       Entry: 8
       Data: 
@@ -9749,7 +10531,7 @@ MonoBehaviour:
       Data: ac10031
     - Name: $v
       Entry: 10
-      Data: 216
+      Data: 217
     - Name: 
       Entry: 8
       Data: 
@@ -9761,7 +10543,7 @@ MonoBehaviour:
       Data: ac10032
     - Name: $v
       Entry: 10
-      Data: 217
+      Data: 218
     - Name: 
       Entry: 8
       Data: 
@@ -9773,7 +10555,7 @@ MonoBehaviour:
       Data: ac10034
     - Name: $v
       Entry: 10
-      Data: 218
+      Data: 219
     - Name: 
       Entry: 8
       Data: 
@@ -9809,7 +10591,7 @@ MonoBehaviour:
       Data: ac10037
     - Name: $v
       Entry: 10
-      Data: 219
+      Data: 220
     - Name: 
       Entry: 8
       Data: 
@@ -9833,7 +10615,7 @@ MonoBehaviour:
       Data: ac10039
     - Name: $v
       Entry: 10
-      Data: 220
+      Data: 221
     - Name: 
       Entry: 8
       Data: 
@@ -9845,7 +10627,7 @@ MonoBehaviour:
       Data: ac10040
     - Name: $v
       Entry: 10
-      Data: 221
+      Data: 222
     - Name: 
       Entry: 8
       Data: 
@@ -9857,7 +10639,7 @@ MonoBehaviour:
       Data: ac10033
     - Name: $v
       Entry: 10
-      Data: 222
+      Data: 223
     - Name: 
       Entry: 8
       Data: 
@@ -9869,7 +10651,7 @@ MonoBehaviour:
       Data: ac10041
     - Name: $v
       Entry: 10
-      Data: 223
+      Data: 224
     - Name: 
       Entry: 8
       Data: 
@@ -9881,7 +10663,7 @@ MonoBehaviour:
       Data: ac10042
     - Name: $v
       Entry: 10
-      Data: 224
+      Data: 225
     - Name: 
       Entry: 8
       Data: 
@@ -9893,7 +10675,7 @@ MonoBehaviour:
       Data: ac10043
     - Name: $v
       Entry: 10
-      Data: 225
+      Data: 226
     - Name: 
       Entry: 8
       Data: 
@@ -9929,7 +10711,7 @@ MonoBehaviour:
       Data: ac10046
     - Name: $v
       Entry: 10
-      Data: 226
+      Data: 227
     - Name: 
       Entry: 8
       Data: 
@@ -9953,7 +10735,7 @@ MonoBehaviour:
       Data: ac10048
     - Name: $v
       Entry: 10
-      Data: 227
+      Data: 228
     - Name: 
       Entry: 8
       Data: 
@@ -9989,7 +10771,7 @@ MonoBehaviour:
       Data: ac10051
     - Name: $v
       Entry: 10
-      Data: 228
+      Data: 229
     - Name: 
       Entry: 8
       Data: 
@@ -10025,7 +10807,7 @@ MonoBehaviour:
       Data: ac10054
     - Name: $v
       Entry: 10
-      Data: 229
+      Data: 230
     - Name: 
       Entry: 8
       Data: 
@@ -10037,7 +10819,7 @@ MonoBehaviour:
       Data: ac10055
     - Name: $v
       Entry: 10
-      Data: 230
+      Data: 231
     - Name: 
       Entry: 8
       Data: 
@@ -10133,7 +10915,7 @@ MonoBehaviour:
       Data: ac10063
     - Name: $v
       Entry: 10
-      Data: 231
+      Data: 232
     - Name: 
       Entry: 8
       Data: 
@@ -10145,7 +10927,7 @@ MonoBehaviour:
       Data: ac10064
     - Name: $v
       Entry: 10
-      Data: 232
+      Data: 233
     - Name: 
       Entry: 8
       Data: 
@@ -10157,7 +10939,7 @@ MonoBehaviour:
       Data: ac10065
     - Name: $v
       Entry: 10
-      Data: 233
+      Data: 234
     - Name: 
       Entry: 8
       Data: 
@@ -10169,7 +10951,7 @@ MonoBehaviour:
       Data: ac10066
     - Name: $v
       Entry: 10
-      Data: 234
+      Data: 235
     - Name: 
       Entry: 8
       Data: 
@@ -10181,7 +10963,7 @@ MonoBehaviour:
       Data: ac10067
     - Name: $v
       Entry: 10
-      Data: 235
+      Data: 236
     - Name: 
       Entry: 8
       Data: 
@@ -10193,7 +10975,7 @@ MonoBehaviour:
       Data: ac10068
     - Name: $v
       Entry: 10
-      Data: 236
+      Data: 237
     - Name: 
       Entry: 8
       Data: 
@@ -10217,7 +10999,7 @@ MonoBehaviour:
       Data: ac10070
     - Name: $v
       Entry: 10
-      Data: 237
+      Data: 238
     - Name: 
       Entry: 8
       Data: 
@@ -10265,7 +11047,7 @@ MonoBehaviour:
       Data: ac10074
     - Name: $v
       Entry: 10
-      Data: 238
+      Data: 239
     - Name: 
       Entry: 8
       Data: 
@@ -10349,7 +11131,7 @@ MonoBehaviour:
       Data: ac10081
     - Name: $v
       Entry: 10
-      Data: 239
+      Data: 240
     - Name: 
       Entry: 8
       Data: 
@@ -10373,7 +11155,7 @@ MonoBehaviour:
       Data: ac10083
     - Name: $v
       Entry: 10
-      Data: 240
+      Data: 241
     - Name: 
       Entry: 8
       Data: 
@@ -10409,7 +11191,7 @@ MonoBehaviour:
       Data: ac10086
     - Name: $v
       Entry: 10
-      Data: 241
+      Data: 242
     - Name: 
       Entry: 8
       Data: 
@@ -10421,7 +11203,7 @@ MonoBehaviour:
       Data: ac10087
     - Name: $v
       Entry: 10
-      Data: 242
+      Data: 243
     - Name: 
       Entry: 8
       Data: 
@@ -10445,7 +11227,7 @@ MonoBehaviour:
       Data: ac10089
     - Name: $v
       Entry: 10
-      Data: 243
+      Data: 244
     - Name: 
       Entry: 8
       Data: 
@@ -10457,7 +11239,7 @@ MonoBehaviour:
       Data: ac10090
     - Name: $v
       Entry: 10
-      Data: 244
+      Data: 245
     - Name: 
       Entry: 8
       Data: 
@@ -10481,7 +11263,7 @@ MonoBehaviour:
       Data: ac10092
     - Name: $v
       Entry: 10
-      Data: 245
+      Data: 246
     - Name: 
       Entry: 8
       Data: 
@@ -10493,7 +11275,7 @@ MonoBehaviour:
       Data: qc10001
     - Name: $v
       Entry: 10
-      Data: 246
+      Data: 247
     - Name: 
       Entry: 8
       Data: 
@@ -10517,7 +11299,7 @@ MonoBehaviour:
       Data: ac10094
     - Name: $v
       Entry: 10
-      Data: 247
+      Data: 248
     - Name: 
       Entry: 8
       Data: 
@@ -10529,7 +11311,7 @@ MonoBehaviour:
       Data: qc10002
     - Name: $v
       Entry: 10
-      Data: 186
+      Data: 187
     - Name: 
       Entry: 8
       Data: 
@@ -10561,7 +11343,7 @@ MonoBehaviour:
       Data: ambush
     - Name: $v
       Entry: 10
-      Data: 248
+      Data: 249
     - Name: 
       Entry: 8
       Data: 
@@ -10573,7 +11355,7 @@ MonoBehaviour:
       Data: assault
     - Name: $v
       Entry: 10
-      Data: 249
+      Data: 250
     - Name: 
       Entry: 8
       Data: 
@@ -10585,7 +11367,7 @@ MonoBehaviour:
       Data: burst
     - Name: $v
       Entry: 10
-      Data: 250
+      Data: 251
     - Name: 
       Entry: 8
       Data: 
@@ -10597,7 +11379,7 @@ MonoBehaviour:
       Data: chain
     - Name: $v
       Entry: 10
-      Data: 251
+      Data: 252
     - Name: 
       Entry: 8
       Data: 
@@ -10609,7 +11391,7 @@ MonoBehaviour:
       Data: charge
     - Name: $v
       Entry: 10
-      Data: 252
+      Data: 253
     - Name: 
       Entry: 8
       Data: 
@@ -10621,7 +11403,7 @@ MonoBehaviour:
       Data: chase
     - Name: $v
       Entry: 10
-      Data: 253
+      Data: 254
     - Name: 
       Entry: 8
       Data: 
@@ -10633,7 +11415,7 @@ MonoBehaviour:
       Data: double
     - Name: $v
       Entry: 10
-      Data: 254
+      Data: 255
     - Name: 
       Entry: 8
       Data: 
@@ -10645,7 +11427,7 @@ MonoBehaviour:
       Data: footslog
     - Name: $v
       Entry: 10
-      Data: 255
+      Data: 256
     - Name: 
       Entry: 8
       Data: 
@@ -10657,7 +11439,7 @@ MonoBehaviour:
       Data: fusion
     - Name: $v
       Entry: 10
-      Data: 256
+      Data: 257
     - Name: 
       Entry: 8
       Data: 
@@ -10669,7 +11451,7 @@ MonoBehaviour:
       Data: nightaction
     - Name: $v
       Entry: 10
-      Data: 257
+      Data: 258
     - Name: 
       Entry: 8
       Data: 
@@ -10681,7 +11463,7 @@ MonoBehaviour:
       Data: pillage
     - Name: $v
       Entry: 10
-      Data: 258
+      Data: 259
     - Name: 
       Entry: 8
       Data: 
@@ -10693,7 +11475,7 @@ MonoBehaviour:
       Data: poison
     - Name: $v
       Entry: 10
-      Data: 259
+      Data: 260
     - Name: 
       Entry: 8
       Data: 
@@ -10705,7 +11487,7 @@ MonoBehaviour:
       Data: snipe
     - Name: $v
       Entry: 10
-      Data: 260
+      Data: 261
     - Name: 
       Entry: 8
       Data: 
@@ -10717,7 +11499,7 @@ MonoBehaviour:
       Data: protect
     - Name: $v
       Entry: 10
-      Data: 261
+      Data: 262
     - Name: 
       Entry: 8
       Data: 
@@ -10729,7 +11511,7 @@ MonoBehaviour:
       Data: steelskin
     - Name: $v
       Entry: 10
-      Data: 262
+      Data: 263
     - Name: 
       Entry: 8
       Data: 
@@ -10741,7 +11523,7 @@ MonoBehaviour:
       Data: stun
     - Name: $v
       Entry: 10
-      Data: 263
+      Data: 264
     - Name: 
       Entry: 8
       Data: 
@@ -10753,7 +11535,7 @@ MonoBehaviour:
       Data: supremacy
     - Name: $v
       Entry: 10
-      Data: 264
+      Data: 265
     - Name: 
       Entry: 8
       Data: 
@@ -10765,7 +11547,7 @@ MonoBehaviour:
       Data: through
     - Name: $v
       Entry: 10
-      Data: 265
+      Data: 266
     - Name: 
       Entry: 8
       Data: 
@@ -10777,7 +11559,7 @@ MonoBehaviour:
       Data: complex
     - Name: $v
       Entry: 10
-      Data: 266
+      Data: 267
     - Name: 
       Entry: 8
       Data: 
@@ -10809,7 +11591,7 @@ MonoBehaviour:
       Data: ambush
     - Name: $v
       Entry: 10
-      Data: 267
+      Data: 268
     - Name: 
       Entry: 8
       Data: 
@@ -10821,7 +11603,7 @@ MonoBehaviour:
       Data: assault
     - Name: $v
       Entry: 10
-      Data: 268
+      Data: 269
     - Name: 
       Entry: 8
       Data: 
@@ -10833,7 +11615,7 @@ MonoBehaviour:
       Data: burst
     - Name: $v
       Entry: 10
-      Data: 269
+      Data: 270
     - Name: 
       Entry: 8
       Data: 
@@ -10845,7 +11627,7 @@ MonoBehaviour:
       Data: chain
     - Name: $v
       Entry: 10
-      Data: 270
+      Data: 271
     - Name: 
       Entry: 8
       Data: 
@@ -10857,7 +11639,7 @@ MonoBehaviour:
       Data: charge
     - Name: $v
       Entry: 10
-      Data: 271
+      Data: 272
     - Name: 
       Entry: 8
       Data: 
@@ -10869,7 +11651,7 @@ MonoBehaviour:
       Data: chase
     - Name: $v
       Entry: 10
-      Data: 272
+      Data: 273
     - Name: 
       Entry: 8
       Data: 
@@ -10881,7 +11663,7 @@ MonoBehaviour:
       Data: complex
     - Name: $v
       Entry: 10
-      Data: 273
+      Data: 274
     - Name: 
       Entry: 8
       Data: 
@@ -10893,7 +11675,7 @@ MonoBehaviour:
       Data: double
     - Name: $v
       Entry: 10
-      Data: 274
+      Data: 275
     - Name: 
       Entry: 8
       Data: 
@@ -10905,7 +11687,7 @@ MonoBehaviour:
       Data: footslog
     - Name: $v
       Entry: 10
-      Data: 275
+      Data: 276
     - Name: 
       Entry: 8
       Data: 
@@ -10917,7 +11699,7 @@ MonoBehaviour:
       Data: nightaction
     - Name: $v
       Entry: 10
-      Data: 276
+      Data: 277
     - Name: 
       Entry: 8
       Data: 
@@ -10929,7 +11711,7 @@ MonoBehaviour:
       Data: pillage
     - Name: $v
       Entry: 10
-      Data: 277
+      Data: 278
     - Name: 
       Entry: 8
       Data: 
@@ -10941,7 +11723,7 @@ MonoBehaviour:
       Data: poison
     - Name: $v
       Entry: 10
-      Data: 278
+      Data: 279
     - Name: 
       Entry: 8
       Data: 
@@ -10953,7 +11735,7 @@ MonoBehaviour:
       Data: snipe
     - Name: $v
       Entry: 10
-      Data: 279
+      Data: 280
     - Name: 
       Entry: 8
       Data: 
@@ -10965,7 +11747,7 @@ MonoBehaviour:
       Data: protect
     - Name: $v
       Entry: 10
-      Data: 280
+      Data: 281
     - Name: 
       Entry: 8
       Data: 
@@ -10977,7 +11759,7 @@ MonoBehaviour:
       Data: steelskin
     - Name: $v
       Entry: 10
-      Data: 281
+      Data: 282
     - Name: 
       Entry: 8
       Data: 
@@ -10989,7 +11771,7 @@ MonoBehaviour:
       Data: stun
     - Name: $v
       Entry: 10
-      Data: 282
+      Data: 283
     - Name: 
       Entry: 8
       Data: 
@@ -11001,7 +11783,7 @@ MonoBehaviour:
       Data: supremacy
     - Name: $v
       Entry: 10
-      Data: 283
+      Data: 284
     - Name: 
       Entry: 8
       Data: 
@@ -11013,7 +11795,7 @@ MonoBehaviour:
       Data: through
     - Name: $v
       Entry: 10
-      Data: 284
+      Data: 285
     - Name: 
       Entry: 8
       Data: 
@@ -11025,7 +11807,7 @@ MonoBehaviour:
       Data: fusion
     - Name: $v
       Entry: 10
-      Data: 285
+      Data: 286
     - Name: 
       Entry: 8
       Data: 
@@ -11057,7 +11839,7 @@ MonoBehaviour:
       Data: h10001
     - Name: $v
       Entry: 10
-      Data: 286
+      Data: 287
     - Name: 
       Entry: 8
       Data: 
@@ -11069,7 +11851,7 @@ MonoBehaviour:
       Data: h10002
     - Name: $v
       Entry: 10
-      Data: 287
+      Data: 288
     - Name: 
       Entry: 8
       Data: 
@@ -11081,7 +11863,7 @@ MonoBehaviour:
       Data: h10003
     - Name: $v
       Entry: 10
-      Data: 288
+      Data: 289
     - Name: 
       Entry: 8
       Data: 
@@ -11093,7 +11875,7 @@ MonoBehaviour:
       Data: h10004
     - Name: $v
       Entry: 10
-      Data: 289
+      Data: 290
     - Name: 
       Entry: 8
       Data: 
@@ -11105,7 +11887,7 @@ MonoBehaviour:
       Data: h10001_button
     - Name: $v
       Entry: 10
-      Data: 290
+      Data: 291
     - Name: 
       Entry: 8
       Data: 
@@ -11117,7 +11899,7 @@ MonoBehaviour:
       Data: h10002_button
     - Name: $v
       Entry: 10
-      Data: 291
+      Data: 292
     - Name: 
       Entry: 8
       Data: 
@@ -11129,7 +11911,7 @@ MonoBehaviour:
       Data: h10003_button
     - Name: $v
       Entry: 10
-      Data: 292
+      Data: 293
     - Name: 
       Entry: 8
       Data: 
@@ -11141,7 +11923,7 @@ MonoBehaviour:
       Data: h10004_button
     - Name: $v
       Entry: 10
-      Data: 293
+      Data: 294
     - Name: 
       Entry: 8
       Data: 
@@ -11153,7 +11935,7 @@ MonoBehaviour:
       Data: hac10002
     - Name: $v
       Entry: 10
-      Data: 294
+      Data: 295
     - Name: 
       Entry: 8
       Data: 
@@ -11165,7 +11947,7 @@ MonoBehaviour:
       Data: h10002_dic
     - Name: $v
       Entry: 10
-      Data: 295
+      Data: 296
     - Name: 
       Entry: 8
       Data: 
@@ -11177,7 +11959,7 @@ MonoBehaviour:
       Data: h10003_dic
     - Name: $v
       Entry: 10
-      Data: 296
+      Data: 297
     - Name: 
       Entry: 8
       Data: 
@@ -11189,7 +11971,7 @@ MonoBehaviour:
       Data: h10004_dic
     - Name: $v
       Entry: 10
-      Data: 297
+      Data: 298
     - Name: 
       Entry: 8
       Data: 
@@ -11201,7 +11983,7 @@ MonoBehaviour:
       Data: h10001_dic
     - Name: $v
       Entry: 10
-      Data: 298
+      Data: 299
     - Name: 
       Entry: 8
       Data: 
@@ -11213,7 +11995,7 @@ MonoBehaviour:
       Data: qh10001
     - Name: $v
       Entry: 10
-      Data: 299
+      Data: 300
     - Name: 
       Entry: 8
       Data: 
@@ -11225,7 +12007,7 @@ MonoBehaviour:
       Data: qh10002
     - Name: $v
       Entry: 10
-      Data: 300
+      Data: 301
     - Name: 
       Entry: 8
       Data: 
@@ -11257,7 +12039,7 @@ MonoBehaviour:
       Data: h10001
     - Name: $v
       Entry: 10
-      Data: 301
+      Data: 302
     - Name: 
       Entry: 8
       Data: 
@@ -11269,7 +12051,7 @@ MonoBehaviour:
       Data: h10002
     - Name: $v
       Entry: 10
-      Data: 302
+      Data: 303
     - Name: 
       Entry: 8
       Data: 
@@ -11281,7 +12063,7 @@ MonoBehaviour:
       Data: h10003
     - Name: $v
       Entry: 10
-      Data: 303
+      Data: 304
     - Name: 
       Entry: 8
       Data: 
@@ -11293,7 +12075,7 @@ MonoBehaviour:
       Data: h10004
     - Name: $v
       Entry: 10
-      Data: 304
+      Data: 305
     - Name: 
       Entry: 8
       Data: 
@@ -11317,7 +12099,7 @@ MonoBehaviour:
       Data: deck1001
     - Name: $v
       Entry: 10
-      Data: 305
+      Data: 306
     - Name: 
       Entry: 8
       Data: 
@@ -11329,7 +12111,7 @@ MonoBehaviour:
       Data: deck1002
     - Name: $v
       Entry: 10
-      Data: 306
+      Data: 307
     - Name: 
       Entry: 8
       Data: 
@@ -11367,7 +12149,7 @@ MonoBehaviour:
       Data: "\uC800\uACA9\uC0AC\uC218"
     - Name: sprite
       Entry: 10
-      Data: 307
+      Data: 308
     - Name: 
       Entry: 8
       Data: 
@@ -11388,7 +12170,7 @@ MonoBehaviour:
       Data: "\uD06C\uB77C\uCFE0\uC2A4"
     - Name: sprite
       Entry: 10
-      Data: 287
+      Data: 288
     - Name: 
       Entry: 8
       Data: 
@@ -11409,7 +12191,7 @@ MonoBehaviour:
       Data: "\uC624\uD06C\uBCD1\uC0AC"
     - Name: sprite
       Entry: 10
-      Data: 308
+      Data: 309
     - Name: 
       Entry: 8
       Data: 
@@ -11430,7 +12212,7 @@ MonoBehaviour:
       Data: "\uC81C\uC2DD\uAD81\uC218"
     - Name: sprite
       Entry: 10
-      Data: 309
+      Data: 310
     - Name: 
       Entry: 8
       Data: 
@@ -11451,7 +12233,7 @@ MonoBehaviour:
       Data: "\uC81C\uB85C\uB4DC"
     - Name: sprite
       Entry: 10
-      Data: 286
+      Data: 287
     - Name: 
       Entry: 8
       Data: 
@@ -11472,7 +12254,7 @@ MonoBehaviour:
       Data: "\uB808\uC774 \uCCB8 \uBBFC"
     - Name: sprite
       Entry: 10
-      Data: 299
+      Data: 300
     - Name: 
       Entry: 8
       Data: 
@@ -11493,7 +12275,7 @@ MonoBehaviour:
       Data: "\uADDC\uBC94\uAD00\uB9AC\uC778"
     - Name: sprite
       Entry: 10
-      Data: 310
+      Data: 311
     - Name: 
       Entry: 8
       Data: 
@@ -11514,7 +12296,7 @@ MonoBehaviour:
       Data: "\uC624\uD06C \uBD80\uC871\uC7A5"
     - Name: sprite
       Entry: 10
-      Data: 300
+      Data: 301
     - Name: 
       Entry: 8
       Data: 
@@ -11549,7 +12331,7 @@ MonoBehaviour:
       Data: human
     - Name: $v
       Entry: 10
-      Data: 311
+      Data: 312
     - Name: 
       Entry: 8
       Data: 
@@ -11561,7 +12343,7 @@ MonoBehaviour:
       Data: orc
     - Name: $v
       Entry: 10
-      Data: 312
+      Data: 313
     - Name: 
       Entry: 8
       Data: 
@@ -11584,7 +12366,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 19
+      Data: 21
     - Name: 
       Entry: 7
       Data: 
@@ -11593,7 +12375,7 @@ MonoBehaviour:
       Data: goldFree
     - Name: $v
       Entry: 10
-      Data: 313
+      Data: 314
     - Name: 
       Entry: 8
       Data: 
@@ -11605,7 +12387,7 @@ MonoBehaviour:
       Data: jewel
     - Name: $v
       Entry: 10
-      Data: 314
+      Data: 315
     - Name: 
       Entry: 8
       Data: 
@@ -11617,7 +12399,7 @@ MonoBehaviour:
       Data: exp
     - Name: $v
       Entry: 10
-      Data: 315
+      Data: 316
     - Name: 
       Entry: 8
       Data: 
@@ -11629,7 +12411,7 @@ MonoBehaviour:
       Data: supply
     - Name: $v
       Entry: 10
-      Data: 316
+      Data: 317
     - Name: 
       Entry: 8
       Data: 
@@ -11641,7 +12423,7 @@ MonoBehaviour:
       Data: doubleCoupon
     - Name: $v
       Entry: 10
-      Data: 317
+      Data: 318
     - Name: 
       Entry: 8
       Data: 
@@ -11653,7 +12435,7 @@ MonoBehaviour:
       Data: supplyBox
     - Name: $v
       Entry: 10
-      Data: 318
+      Data: 319
     - Name: 
       Entry: 8
       Data: 
@@ -11665,7 +12447,7 @@ MonoBehaviour:
       Data: x2Coupon
     - Name: $v
       Entry: 10
-      Data: 317
+      Data: 318
     - Name: 
       Entry: 8
       Data: 
@@ -11677,7 +12459,7 @@ MonoBehaviour:
       Data: crystal
     - Name: $v
       Entry: 10
-      Data: 314
+      Data: 315
     - Name: 
       Entry: 8
       Data: 
@@ -11689,7 +12471,7 @@ MonoBehaviour:
       Data: cardCommon
     - Name: $v
       Entry: 10
-      Data: 319
+      Data: 320
     - Name: 
       Entry: 8
       Data: 
@@ -11701,7 +12483,7 @@ MonoBehaviour:
       Data: cardUncommon
     - Name: $v
       Entry: 10
-      Data: 320
+      Data: 321
     - Name: 
       Entry: 8
       Data: 
@@ -11713,7 +12495,7 @@ MonoBehaviour:
       Data: cardRare
     - Name: $v
       Entry: 10
-      Data: 321
+      Data: 322
     - Name: 
       Entry: 8
       Data: 
@@ -11725,7 +12507,7 @@ MonoBehaviour:
       Data: cardSuperrare
     - Name: $v
       Entry: 10
-      Data: 322
+      Data: 323
     - Name: 
       Entry: 8
       Data: 
@@ -11737,7 +12519,7 @@ MonoBehaviour:
       Data: cardLegend
     - Name: $v
       Entry: 10
-      Data: 323
+      Data: 324
     - Name: 
       Entry: 8
       Data: 
@@ -11749,7 +12531,7 @@ MonoBehaviour:
       Data: goldPayed
     - Name: $v
       Entry: 10
-      Data: 313
+      Data: 314
     - Name: 
       Entry: 8
       Data: 
@@ -11761,7 +12543,7 @@ MonoBehaviour:
       Data: gold
     - Name: $v
       Entry: 10
-      Data: 324
+      Data: 325
     - Name: 
       Entry: 8
       Data: 
@@ -11773,7 +12555,7 @@ MonoBehaviour:
       Data: result_gold
     - Name: $v
       Entry: 10
-      Data: 324
+      Data: 325
     - Name: 
       Entry: 8
       Data: 
@@ -11785,7 +12567,7 @@ MonoBehaviour:
       Data: result_crystal
     - Name: $v
       Entry: 10
-      Data: 325
+      Data: 326
     - Name: 
       Entry: 8
       Data: 
@@ -11809,7 +12591,31 @@ MonoBehaviour:
       Data: result_x2Coupon
     - Name: $v
       Entry: 10
-      Data: 326
+      Data: 327
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: reinforcedBox
+    - Name: $v
+      Entry: 10
+      Data: 319
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: result_reinforcedBox
+    - Name: $v
+      Entry: 10
+      Data: 319
     - Name: 
       Entry: 8
       Data: 
@@ -11841,7 +12647,7 @@ MonoBehaviour:
       Data: "\uC815\uADDC\uAD70 \uC9C0\uD718\uAD00"
     - Name: $v
       Entry: 10
-      Data: 327
+      Data: 328
     - Name: 
       Entry: 8
       Data: 
@@ -11853,7 +12659,7 @@ MonoBehaviour:
       Data: "\uC18C\uADDC\uBAA8 \uBB34\uB825\uC9D1\uB2E8"
     - Name: $v
       Entry: 10
-      Data: 328
+      Data: 329
     - Name: 
       Entry: 8
       Data: 
@@ -11865,7 +12671,7 @@ MonoBehaviour:
       Data: "\uC624\uD569\uC9C0\uC878 \uC6B0\uB450\uBA38\uB9AC"
     - Name: $v
       Entry: 10
-      Data: 329
+      Data: 330
     - Name: 
       Entry: 8
       Data: 
@@ -11877,7 +12683,7 @@ MonoBehaviour:
       Data: "\uC790\uACBD\uB300 \uB300\uC7A5"
     - Name: $v
       Entry: 10
-      Data: 330
+      Data: 331
     - Name: 
       Entry: 8
       Data: 
@@ -11889,7 +12695,7 @@ MonoBehaviour:
       Data: "\uAD70\uB2E8\uC7A5"
     - Name: $v
       Entry: 10
-      Data: 331
+      Data: 332
     - Name: 
       Entry: 8
       Data: 
@@ -11901,7 +12707,7 @@ MonoBehaviour:
       Data: "\uCD1D\uC0AC\uB839\uAD00"
     - Name: $v
       Entry: 10
-      Data: 332
+      Data: 333
     - Name: 
       Entry: 8
       Data: 
@@ -11913,7 +12719,7 @@ MonoBehaviour:
       Data: "\uCC2C\uB780\uD55C \uC601\uC6C5"
     - Name: $v
       Entry: 10
-      Data: 333
+      Data: 334
     - Name: 
       Entry: 8
       Data: 
@@ -11925,7 +12731,7 @@ MonoBehaviour:
       Data: "\uC804\uB7B5\uC758 \uC81C\uC655"
     - Name: $v
       Entry: 10
-      Data: 334
+      Data: 335
     - Name: 
       Entry: 8
       Data: 
@@ -11937,7 +12743,7 @@ MonoBehaviour:
       Data: "\uC0B4\uC544\uC788\uB294 \uC804\uC124"
     - Name: $v
       Entry: 10
-      Data: 335
+      Data: 336
     - Name: 
       Entry: 8
       Data: 
@@ -11949,7 +12755,7 @@ MonoBehaviour:
       Data: "\uCD08\uAE09 \uC6A9\uBCD1\uB2E8\uC7A5"
     - Name: $v
       Entry: 10
-      Data: 336
+      Data: 337
     - Name: 
       Entry: 8
       Data: 
@@ -11961,7 +12767,7 @@ MonoBehaviour:
       Data: "\uB300\uC7A5\uAD70"
     - Name: $v
       Entry: 10
-      Data: 337
+      Data: 338
     - Name: 
       Entry: 8
       Data: 
@@ -11973,7 +12779,7 @@ MonoBehaviour:
       Data: "\uBCA0\uD14C\uB791 \uC6A9\uBCD1\uB2E8\uC7A5"
     - Name: $v
       Entry: 10
-      Data: 338
+      Data: 339
     - Name: 
       Entry: 8
       Data: 
@@ -11985,7 +12791,7 @@ MonoBehaviour:
       Data: "\uCD5C\uC815\uC608 \uC6A9\uBCD1\uB2E8\uC7A5"
     - Name: $v
       Entry: 10
-      Data: 339
+      Data: 340
     - Name: 
       Entry: 8
       Data: 
@@ -11997,7 +12803,7 @@ MonoBehaviour:
       Data: default
     - Name: $v
       Entry: 10
-      Data: 340
+      Data: 341
     - Name: 
       Entry: 8
       Data: 
@@ -12009,7 +12815,7 @@ MonoBehaviour:
       Data: "\uBB34\uBA85 \uBCD1\uC0AC"
     - Name: $v
       Entry: 10
-      Data: 340
+      Data: 341
     - Name: 
       Entry: 8
       Data: 
@@ -12021,7 +12827,7 @@ MonoBehaviour:
       Data: "\uC9C0\uC5ED \uC9C0\uB3C4\uC790"
     - Name: $v
       Entry: 10
-      Data: 341
+      Data: 342
     - Name: 
       Entry: 8
       Data: 
@@ -12053,7 +12859,7 @@ MonoBehaviour:
       Data: shield_max_charge_1
     - Name: $v
       Entry: 10
-      Data: 342
+      Data: 343
     - Name: 
       Entry: 8
       Data: 
@@ -12065,7 +12871,7 @@ MonoBehaviour:
       Data: health_max_2
     - Name: $v
       Entry: 10
-      Data: 343
+      Data: 344
     - Name: 
       Entry: 8
       Data: 
@@ -12077,7 +12883,7 @@ MonoBehaviour:
       Data: shield_min_charge_1
     - Name: $v
       Entry: 10
-      Data: 344
+      Data: 345
     - Name: 
       Entry: 8
       Data: 
@@ -12089,7 +12895,7 @@ MonoBehaviour:
       Data: magic_phase_1
     - Name: $v
       Entry: 10
-      Data: 345
+      Data: 346
     - Name: 
       Entry: 8
       Data: 
@@ -12101,7 +12907,7 @@ MonoBehaviour:
       Data: magic_power_1
     - Name: $v
       Entry: 10
-      Data: 346
+      Data: 347
     - Name: 
       Entry: 8
       Data: 
@@ -12113,7 +12919,7 @@ MonoBehaviour:
       Data: toolcard_use_1
     - Name: $v
       Entry: 10
-      Data: 347
+      Data: 348
     - Name: 
       Entry: 8
       Data: 
@@ -12125,7 +12931,7 @@ MonoBehaviour:
       Data: shield_max_1
     - Name: $v
       Entry: 10
-      Data: 348
+      Data: 349
     - Name: 
       Entry: 8
       Data: 
@@ -13274,6 +14080,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rewordDescModal: {fileID: 7310344259244489575, guid: 30d6fb87939f9a449a476b3b6c2633e4,
     type: 3}
+--- !u!114 &1870949081
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1870949073}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dec64350032aa90438f07e3126991296, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1919021517
 GameObject:
   m_ObjectHideFlags: 0
@@ -13324,6 +14142,79 @@ MonoBehaviour:
   m_Script: {fileID: -146154839, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1931952228
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1931952231}
+  - component: {fileID: 1931952230}
+  - component: {fileID: 1931952229}
+  m_Layer: 5
+  m_Name: TMP SubMeshUI [NanumSquare_acEB_forHeader SDF Material + LiberationSans
+    SDF Atlas]
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1931952229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1931952228}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 058cba836c1846c3aa1c5fd2e28aea77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_spriteAsset: {fileID: 0}
+  m_material: {fileID: 0}
+  m_sharedMaterial: {fileID: 0}
+  m_isDefaultMaterial: 0
+  m_padding: 11.25
+  m_canvasRenderer: {fileID: 1931952230}
+  m_TextComponent: {fileID: 1221844287}
+  m_materialReferenceIndex: 1
+--- !u!222 &1931952230
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1931952228}
+  m_CullTransparentMesh: 0
+--- !u!224 &1931952231
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1931952228}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1221844288}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1969363929
 GameObject:
   m_ObjectHideFlags: 0
@@ -13526,9 +14417,9 @@ RectTransform:
   m_Father: {fileID: 2079348098}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 29.19}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 144, y: -20.81}
   m_SizeDelta: {x: 288, y: 41.62}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2028315416
@@ -13587,7 +14478,18 @@ MonoBehaviour:
   m_CharacterLimit: 0
   m_OnEndEdit:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1439483864}
+        m_MethodName: ChangeDefaultRank
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_OnSubmit:
     m_PersistentCalls:
       m_Calls: []
@@ -13689,6 +14591,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2028315415}
+  - {fileID: 893706789}
   - {fileID: 1399069976}
   m_Father: {fileID: 1439483865}
   m_RootOrder: 5
@@ -13696,7 +14599,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -180, y: -40}
-  m_SizeDelta: {x: 288, y: 160.31}
+  m_SizeDelta: {x: 288, y: 258.54}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &2079348099
 MonoBehaviour:

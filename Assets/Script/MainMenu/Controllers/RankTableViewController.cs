@@ -90,7 +90,7 @@ public class RankTableViewController : MonoBehaviour {
                 myObject = rankObj;
             }
             else {
-                if (rankTableRow.data.pointOverThen != null && rankTableRow.data.pointOverThen < 2300) {
+                if (rankTableRow.data.pointOverThen != null && rankTableRow.data.pointOverThen < 2600) {
                     rankTableRow.background.sprite = GetBackgroundImage(Category.NORMAL);
                     rankTableRow.upperLine.sprite = rankTableRow.middleLine.sprite = GetLineImage(Category.NORMAL);
                 }
@@ -101,6 +101,25 @@ public class RankTableViewController : MonoBehaviour {
             }
             index++;
         }
+
+        GameObject topTier = Instantiate(rankObject);
+        topTier.SetActive(true);
+        topTier.transform.SetParent(content, true);
+        topTier.transform.SetAsFirstSibling();
+        topTier.name = "item_" + index++;
+
+        var _rankTableRow = topTier.GetComponent<dataModules.RankTableRow>();
+        AccountManager.RankTableRow topRow = new AccountManager.RankTableRow();
+        topRow.pointOverThen = 3000;
+        topRow.minorRankName = "살아있는 전설";
+        topRow.id = 15;
+
+        _rankTableRow.mmr.text = topRow.pointOverThen.ToString();
+        _rankTableRow.minorRankName.text = topRow.minorRankName;
+        _rankTableRow.data = topRow;
+        _rankTableRow.rankIcon.sprite = accountManager.resource.rankIcons[topRow.minorRankName];
+        _rankTableRow.background.sprite = GetBackgroundImage(Category.HIGH);
+        _rankTableRow.upperLine.sprite = _rankTableRow.middleLine.sprite = GetLineImage(Category.HIGH);
 
         StartCoroutine(MoveScrollToMyRank());
     }
