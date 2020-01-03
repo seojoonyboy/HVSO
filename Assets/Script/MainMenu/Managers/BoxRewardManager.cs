@@ -23,6 +23,7 @@ public class BoxRewardManager : MonoBehaviour {
     [SerializeField] Transform lastPos;
     [SerializeField] GameObject skipBtn;
     [SerializeField] Transform resourceInfo;
+    [SerializeField] GameObject buttonGlow;
     // Start is called before the first frame update
     Transform hudCanvas;
 
@@ -59,6 +60,7 @@ public class BoxRewardManager : MonoBehaviour {
         boxObject.Find("SupplyGauge/Value").GetComponent<Image>().fillAmount = (float)AccountManager.Instance.userResource.supply * 0.01f;
         boxObject.Find("SupplyGauge/ValueText").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userResource.supply.ToString() + "/100";
         supplyStore.text = AccountManager.Instance.userResource.supplyStore.ToString();
+        buttonGlow.SetActive(AccountManager.Instance.userResource.supplyStore > 0 ? true : false);
         if (AccountManager.Instance.userResource.supplyBox > 0) {
             boxObject.Find("BoxImage/BoxValue").gameObject.SetActive(true);
             boxObject.Find("BoxImage/BoxValue/BoxNum").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userResource.supplyBox.ToString();

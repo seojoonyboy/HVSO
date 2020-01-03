@@ -286,6 +286,7 @@ namespace Quest {
             manager.tutorialSerializeList.modeSelect.onClick.AddListener(ModeClicked);
             manager.tutorialSerializeList.newBattleMenu.SetActive(true);
             manager.tutorialSerializeList.BattleButton.onClick.AddListener(BattleClicked);
+            manager.tutorialSerializeList.modeGlow.SetActive(true);
         }
 
         public async void ModeClicked() {
@@ -300,6 +301,7 @@ namespace Quest {
             manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_8);
             manager.tutorialSerializeList.newBattleMenu.SetActive(false);
             manager.tutorialSerializeList.BattleButton.GetComponent<Button>().onClick.RemoveListener(BattleClicked);
+            manager.tutorialSerializeList.modeGlow.SetActive(false);
             //AccountManager.Instance.RequestQuestProgress(data.id);
         }
     }

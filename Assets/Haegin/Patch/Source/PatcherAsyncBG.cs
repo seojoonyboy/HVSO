@@ -872,6 +872,9 @@ namespace G.Network
         {
             lock (patcherItems)
             {
+#if UNITY_ANDROID                
+                string urlStart = url + "?token=";
+#endif
                 foreach (PatcherItem i in patcherItems)
                 {
                     string itemUrl = i.URL;
@@ -882,10 +885,19 @@ namespace G.Network
                         Uri localUri = new Uri(uri, itemUrl);
                         itemUrl = localUri.ToString();
                     }
+#if MDEBUG
+                    Debug.Log("SearchItem [" + itemUrl + "] , [" + url + "]"); 
+#endif
                     if (String.Compare(itemUrl, url, false) == 0)
                     {
                         return i;
                     }
+#if UNITY_ANDROID                
+                    else if(itemUrl.StartsWith(urlStart))
+                    {
+                        return i;
+                    }
+#endif                    
                 }
                 return null;
             }
