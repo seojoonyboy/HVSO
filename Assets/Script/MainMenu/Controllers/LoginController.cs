@@ -12,7 +12,7 @@ public class LoginController : MonoBehaviour {
     [SerializeField] GameObject logo, textImage;
     [SerializeField] Button loginBtn;
     [SerializeField] GameObject skipbuttons, mmrchange;
-    [SerializeField] TMPro.TMP_InputField mmrInputField;
+    [SerializeField] TMPro.TMP_InputField mmrInputField, rankIdInputField;
 
     public GameObject obbCanvas, sceneStartCanvas, sceneLoginCanvas, LoginTypeSelCanvas, EULACanvas, fbl_loginCanvas;
 
@@ -23,8 +23,8 @@ public class LoginController : MonoBehaviour {
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, OnRequestUserInfoCallback);
 //#if UNITY_EDITOR
         skipbuttons.SetActive(true);
-        mmrchange.SetActive(true);
 //#endif
+        mmrchange.SetActive(true);
     }
 
     private void OnTokenSetFinished() {
@@ -144,7 +144,30 @@ public class LoginController : MonoBehaviour {
     public void ChangeMMR() {
         //Modal.instantiate(mmrInputField.text, Modal.Type.CHECK);
         int value = 0;
+        int value2 = 0;
         int.TryParse(mmrInputField.text, out value);
-        AccountManager.Instance.RequestChangeMMRForTest(value);
+        int.TryParse(rankIdInputField.text, out value2);
+
+        AccountManager.Instance.RequestChangeMMRForTest(value, 16 - value2);
+    }
+
+    public void ChangeDefaultRank() {
+        int value = 0;
+        int.TryParse(mmrInputField.text, out value);
+
+        if (value >= 0 && value <= 149) rankIdInputField.text = "15";
+        else if (value >= 150 && value <= 299) rankIdInputField.text = "14";
+        else if (value >= 300 && value <= 449) rankIdInputField.text = "13";
+        else if (value >= 450 && value <= 599) rankIdInputField.text = "12";
+        else if(value >= 600 && value <= 799) rankIdInputField.text = "11";
+        else if (value >= 800 && value <= 999) rankIdInputField.text = "10";
+        else if (value >= 1000 && value <= 1199) rankIdInputField.text = "9";
+        else if (value >= 1200 && value <= 1399) rankIdInputField.text = "8";
+        else if (value >= 1400 && value <= 1699) rankIdInputField.text = "7";
+        else if (value >= 1700 && value <= 1999) rankIdInputField.text = "6";
+        else if (value >= 2000 && value <= 2299) rankIdInputField.text = "5";
+        else if (value >= 2300 && value <= 2599) rankIdInputField.text = "4";
+        else if (value >= 2600 && value <= 2999) rankIdInputField.text = "3";
+        else rankIdInputField.text = "2";
     }
 }
