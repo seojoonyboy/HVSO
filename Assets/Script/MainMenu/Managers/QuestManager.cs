@@ -131,6 +131,7 @@ namespace Quest {
             public GameObject newDeckMenu;
             public GameObject newBattleMenu;
             public Button modeSelect;
+            public GameObject modeGlow;
         }
 
     }
