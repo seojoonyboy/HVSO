@@ -278,6 +278,7 @@ public class BoxRewardManager : MonoBehaviour {
         transform.Find("ShowBox").gameObject.SetActive(false);
         transform.Find("ShowBox/Text").gameObject.SetActive(true);
         transform.Find("ShowBox/InfoText").gameObject.SetActive(false);
+        transform.Find("ShowBox/Shadow").gameObject.SetActive(false);
         transform.Find("ExitButton").gameObject.SetActive(false);
         SetBoxObj();
         openningBox = false;        
@@ -436,6 +437,7 @@ public class BoxRewardManager : MonoBehaviour {
         SoundManager.Instance.PlaySound(UISfxSound.BOX_OPEN_FINISH);
         yield return new WaitForSeconds(0.5f);
         transform.Find("ShowBox/InfoText").gameObject.SetActive(true);
+        transform.Find("ShowBox/Shadow").gameObject.SetActive(true);
         transform.Find("ExitButton").gameObject.SetActive(true);
         openAni = false;
     }
