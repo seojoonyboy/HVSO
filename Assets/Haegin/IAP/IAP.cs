@@ -211,6 +211,9 @@ namespace Haegin
             SA.iOS.ISN_Settings.Instance.InAppProducts.Clear();
             for (int i = 0; i < skus.Length; i++)
             {
+#if MDEBUG
+                Debug.Log(skus[i]);
+#endif
                 ISN_SKPaymentQueue.RegisterProductId(skus[i]);
             }
 

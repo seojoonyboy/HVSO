@@ -10,15 +10,27 @@ using System.Collections.Generic;
 public class IAPSetup : Singleton<IAPSetup> {
 
     private Dictionary<string, string> productDictionary = 
-        new Dictionary<string, string>{{"gold_1", "com_haegin_hvso_fistful_of_gold"},       //금화 한줌
-                                        {"gold_2", "com_haegin_hvso_pocket_of_gold"},       //금화 주머니
-                                        {"gold_3", "com_haegin_hvso_sack_of_gold"},         //금화 자루
-                                        {"gold_4", "com_haegin_hvso_chest_of_gold"},        //금화 상자
-                                        {"gold_5", "com_haegin_hvso_cart_of_gold"},         //금화 수레
-                                        {"gold_6", "com_haegin_hvso_pile_of_gold"}};         //금화 더미
-                                        //{"welcome_1", "com_haegin_hvso_welcome_package_1"},    //웰컴 패키지1
-                                        //{"welcome_2", "com_haegin_hvso_welcome_package_2"},    //웰컴 패키지2
-                                        //{"welcome_3", "com_haegin_hvso_welcome_package_3"}};   //웰컴 패키지3
+        new Dictionary<string, string>{{"gold_1", "com_haegin_hvso_fistful_of_gold"},           //금화 한줌
+                                        {"gold_2", "com_haegin_hvso_pocket_of_gold"},           //금화 주머니
+                                        {"gold_3", "com_haegin_hvso_sack_of_gold"},             //금화 자루
+                                        {"gold_4", "com_haegin_hvso_chest_of_gold"},            //금화 상자
+                                        {"gold_5", "com_haegin_hvso_cart_of_gold"},             //금화 수레
+                                        {"gold_6", "com_haegin_hvso_pile_of_gold"},             //금화 더미
+                                        {"welcome_1", "com_haegin_hvso_welcome_package_1"},     //웰컴 패키지1
+                                        {"welcome_2", "com_haegin_hvso_welcome_package_2"},     //웰컴 패키지2
+                                        {"welcome_3", "com_haegin_hvso_welcome_package_3"},     //웰컴 패키지3
+                                        {"hero_2", "com_haegin_hvso_hero_2lv_done_pakage"},     //영웅 2레벨 달성 패키지
+                                        {"hero_3", "com_haegin_hvso_hero_3lv_done_pakage"},     //영웅 3레벨 달성 패키지
+                                        {"beginner", "com_haegin_hvso_beginner_package"},       //초심자 패키지
+                                        {"intermediate", "com_haegin_hvso_intermediate_package"},//중급자 패키지
+                                        {"expert", "com_haegin_hvso_expert_package"},           //상급자 패키지
+                                        {"master", "com_haegin_hvso_master_package"},           //최상급자 패키지
+                                        {"strategist", "com_haegin_hvso_strategist_package"},   //전략가 패키지
+                                        {"legend", "com_haegin_hvso_legend_package"},           //전설 패키지
+                                        {"emoticon_1", "com_haegin_hvso_emoticon_package_1"},   //이모티콘 패키지1
+                                        {"emoticon_2", "com_haegin_hvso_emoticon_package_2"},   //이모티콘 패키지2
+                                        {"optain_hero_1", "com_haegin_hvso_obtain_hero_package_1"},//영웅 획득 패키지1
+                                        {"optain_hero_2", "com_haegin_hvso_obtain_hero_package_2"}};//영웅 획득 패키지2
     [SerializeField] private Canvas canvas;
     [SerializeField] private GameObject systemDialog;
     [SerializeField] private GameObject eulaText;
