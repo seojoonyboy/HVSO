@@ -11,9 +11,9 @@ public class DailyQuestTimer : MonoBehaviour {
 
     void Start() {
         DateTime currentTime = DateTime.UtcNow;
-        var korCurrentTime = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(currentTime, "Korea Standard Time");
+        //var korCurrentTime = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(currentTime, "Korea Standard Time");
 
-        DateTime tommorowTime = korCurrentTime.AddDays(1).AddTicks(-1);
+        DateTime tommorowTime = System.DateTime.UtcNow.AddHours(9).AddDays(1).AddTicks(-1);
         DateTime resetStandardTime = new DateTime(
             tommorowTime.Year,
             tommorowTime.Month,
