@@ -214,6 +214,27 @@ public class MenuSceneController : MonoBehaviour {
         }
     }
 
+    public void OpenDailyQuestInstantly() {
+        bool isQuestLoaded = Convert.ToBoolean(PlayerPrefs.GetInt("IsQuestLoaded"));
+        bool isAllUnlocked = menuTutorialManager.lockController.isAllUnlocked;
+        if (!isQuestLoaded && isAllUnlocked) {
+            //DateTime currentTime = DateTime.UtcNow;
+            //var korCurrentTime = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(currentTime, "Korea Standard Time");
+
+            DateTime tommorowTime = System.DateTime.UtcNow.AddDays(1).AddHours(9.0).AddTicks(-1); //korCurrentTime.AddDays(1).AddTicks(-1);
+            DateTime resetStandardTime = new DateTime(
+                tommorowTime.Year,
+                tommorowTime.Month,
+                tommorowTime.Day,
+                0,
+                0,
+                0
+            );
+            AccountManager.Instance.GetDailyQuest(OnDailyQuestRequestFinished);
+            PlayerPrefs.SetInt("IsQuestLoaded", 1);
+        }
+    }
+
     private void OnDailyQuestRequestFinished(HTTPRequest originalRequest, HTTPResponse response) {
         if (response.IsSuccess) {
             List<QuestData> datas = dataModules.JsonReader.Read<List<QuestData>>(response.DataAsText);

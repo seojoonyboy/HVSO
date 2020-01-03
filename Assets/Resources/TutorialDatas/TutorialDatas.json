@@ -772,6 +772,10 @@
                         "args" : []
                     },
                     {
+                        "name" : "ShowDailyQuestCanvas",
+                        "args" : []
+                    },
+                    {
                         "name" : "OffHighlight",
                         "args" : []
                     },
