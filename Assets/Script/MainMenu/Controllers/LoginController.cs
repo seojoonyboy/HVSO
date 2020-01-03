@@ -21,9 +21,9 @@ public class LoginController : MonoBehaviour {
     private void Awake() {
         AccountManager.Instance.tokenSetFinished += OnTokenSetFinished;
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, OnRequestUserInfoCallback);
-//#if UNITY_EDITOR
+#if UNITY_EDITOR
         skipbuttons.SetActive(true);
-//#endif
+#endif
         mmrchange.SetActive(true);
     }
 

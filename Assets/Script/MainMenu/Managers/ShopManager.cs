@@ -124,6 +124,8 @@ public class ShopManager : MonoBehaviour
     public void OpenBoxByBuying(Enum Event_Type, Component Sender, object Param) {
         if(buyBox)
             boxRewardManager.OpenBox();
+        else
+            Modal.instantiate("구매하신 상품이 우편함으로 보내졌습니다.", Modal.Type.CHECK);
         AccountManager.Instance.RequestUserInfo();
     }
     public void BuyFinished(Enum Event_Type, Component Sender, object Param) {
