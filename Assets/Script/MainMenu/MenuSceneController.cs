@@ -8,6 +8,9 @@ using Spine.Unity;
 using System;
 using Newtonsoft.Json;
 using UIModule;
+using UniRx;
+using BestHTTP;
+using Quest;
 
 public class MenuSceneController : MonoBehaviour {
     [SerializeField] Transform fixedCanvas;
@@ -21,6 +24,8 @@ public class MenuSceneController : MonoBehaviour {
     [SerializeField] SkeletonGraphic menuButton;
     [SerializeField] GameObject[] offObjects;
     [SerializeField] ShopManager shopManager;
+    [SerializeField] GameObject dailyQuestAlarmCanvas;
+
     protected SkeletonGraphic selectedAnimation;
     private int currentPage;
     private bool buttonClicked;
@@ -100,6 +105,8 @@ public class MenuSceneController : MonoBehaviour {
         EscapeKeyController.escapeKeyCtrl.AddEscape(OpenQuitModal);
     }
 
+    IDisposable observable_1;
+
     private void CheckTutorial(Enum Event_Type, Component Sender, object Param) {
         if (!isTutorialDataLoaded) {
             menuTutorialManager.ReadTutorialData();
@@ -117,6 +124,7 @@ public class MenuSceneController : MonoBehaviour {
         if (PlayerPrefs.GetInt("isFirst") == 1) {
             PlayerPrefs.SetInt("isFirst", 0);
             AddNewbiController();
+            PlayerPrefs.SetInt("IsQuestLoaded", 0);
 
             hideModal.SetActive(false);
             PlayerPrefs.SetString("Vibrate", "On");
@@ -178,9 +186,47 @@ public class MenuSceneController : MonoBehaviour {
 
             SoundManager.Instance.bgmController.PlaySoundTrack(BgmController.BgmEnum.MENU);
             BattleConnector.canPlaySound = true;
+
+            CheckDailyQuest();
         }
 
         //StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_7);
+    }
+
+    public void CheckDailyQuest() {
+        bool isQuestLoaded = Convert.ToBoolean(PlayerPrefs.GetInt("IsQuestLoaded"));
+        bool isAllUnlocked = menuTutorialManager.lockController.isAllUnlocked;
+        if (!isQuestLoaded && isAllUnlocked) {
+            DateTime currentTime = DateTime.UtcNow;
+            var korCurrentTime = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(currentTime, "Korea Standard Time");
+
+            DateTime tommorowTime = korCurrentTime.AddDays(1).AddTicks(-1);
+            DateTime resetStandardTime = new DateTime(
+                tommorowTime.Year,
+                tommorowTime.Month,
+                tommorowTime.Day,
+                9,
+                0,
+                0
+            );
+            AccountManager.Instance.GetDailyQuest(OnDailyQuestRequestFinished);
+            PlayerPrefs.SetInt("IsQuestLoaded", 1);
+        }
+    }
+
+    private void OnDailyQuestRequestFinished(HTTPRequest originalRequest, HTTPResponse response) {
+        if (response.IsSuccess) {
+            List<QuestData> datas = dataModules.JsonReader.Read<List<QuestData>>(response.DataAsText);
+            if (dailyQuestAlarmCanvas == null) {
+                Logger.LogWarning("dailyQuestAlarmCanvas를 찾을 수 없습니다!");
+                return;
+            }
+            dailyQuestAlarmCanvas.gameObject.SetActive(true);
+            dailyQuestAlarmCanvas.GetComponent<DailyQuestAlarmHandler>().ShowQuestList(datas);
+        }
+        else {
+            Modal.instantiate("일일 퀘스트를 불러오는 과정에서 문제가 발생하였습니다.", Modal.Type.CHECK);
+        }
     }
 
     private void OnUserDataUpdate(Enum Event_Type, Component Sender, object Param) {
@@ -448,4 +494,6 @@ public class MenuSceneController : MonoBehaviour {
         if(hand == null) return;
         Destroy(hand.gameObject);
     }
+
+
 }

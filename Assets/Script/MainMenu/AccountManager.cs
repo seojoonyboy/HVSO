@@ -11,6 +11,8 @@ using BestHTTP;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using dataModules;
+using UnityEngine.SceneManagement;
+using Quest;
 
 public partial class AccountManager : Singleton<AccountManager> {
     protected AccountManager() { }
@@ -54,6 +56,7 @@ public partial class AccountManager : Singleton<AccountManager> {
     public UnityEvent OnCardLoadFinished = new UnityEvent();
     public LeagueData scriptable_leagueData;
     public string prevSceneName;
+    public bool canLoadDailyQuest = false;
 
     private string nickName;
     public string NickName {
@@ -78,6 +81,9 @@ public partial class AccountManager : Singleton<AccountManager> {
         gameObject.AddComponent<Timer.TimerManager>();
         
         PlayerPrefs.DeleteKey("ReconnectData");
+
+        //테스트 코드
+        //PlayerPrefs.SetInt("IsQuestLoaded", 0);
     }
 
     // Start is called before the first frame update
@@ -86,7 +92,7 @@ public partial class AccountManager : Singleton<AccountManager> {
         MakeAreaDict(); //랭크 구간 생성
     }
 
-    #if UNITY_EDITOR
+#if UNITY_EDITOR
     void Update() {
         if(Input.GetKeyDown(KeyCode.F)) PlayerPrefs.DeleteKey("ReconnectData");
     }
@@ -1737,6 +1743,22 @@ public partial class AccountManager {
     //         },
     //         "튜토리얼 정보를 불러오는중...");
     // }
+
+    public void GetDailyQuest(OnRequestFinishedDelegate callback) {
+        StringBuilder url = new StringBuilder();
+        string base_url = networkManager.baseUrl;
+
+        url
+            .Append(base_url)
+            .Append("api/quest/get_daily_quest");
+
+        Logger.Log("Request Quest Info");
+        HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
+        request.MethodType = HTTPMethods.Post;
+        request.AddHeader("authorization", TokenFormat);
+
+        networkManager.Request(request, callback, "일일 퀘스트 정보를 불러오는중...");
+    }
 
     public void SkipStoryRequest(string camp, int stageNumber) {
         StringBuilder url = new StringBuilder();

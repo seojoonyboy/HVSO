@@ -16,7 +16,7 @@ public class MenuLockController : SerializedMonoBehaviour {
     [SerializeField] Dictionary<string, GameObject> menues;
 
     NoneIngameSceneEventHandler eventHandler;
-    bool isAllUnlocked = false;
+    public bool isAllUnlocked = false;
 
     void Awake() {
         eventHandler = NoneIngameSceneEventHandler.Instance;
@@ -83,6 +83,8 @@ public class MenuLockController : SerializedMonoBehaviour {
             Logger.Log("///////////////////////");
             Logger.Log("모두 해금됨");
             isAllUnlocked = true;
+
+            GetComponent<MenuSceneController>().CheckDailyQuest();
         }
     }
 
