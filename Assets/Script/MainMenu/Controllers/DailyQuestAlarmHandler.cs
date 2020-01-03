@@ -28,12 +28,18 @@ public class DailyQuestAlarmHandler : MonoBehaviour {
         foreach (QuestData data in quests) {
             GameObject _obj = getPool();
             _obj.gameObject.SetActive(true);
+            yield return scaleUp(_obj);
 
             SetData(_obj, data);
             yield return new WaitForSeconds(0.5f);
         }
         yield return new WaitForSeconds(0.5f);
         StartGlowEffect();
+    }
+
+    IEnumerator scaleUp(GameObject target) {
+        iTween.ScaleTo(target, iTween.Hash("x", 1.0f, "y", 1.0f, "easeType", "easeOutBack", "islocal", true, "time", 0.3f));
+        yield return 0;
     }
 
     private void Clear() {
@@ -47,6 +53,7 @@ public class DailyQuestAlarmHandler : MonoBehaviour {
                 slot.gameObject.SetActive(false);
             }
             child.Find("FrameLightEffect").gameObject.SetActive(false);
+            child.localScale = Vector3.zero;
             child.gameObject.SetActive(false);
         }
     }
