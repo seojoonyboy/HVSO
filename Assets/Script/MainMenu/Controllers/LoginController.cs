@@ -21,10 +21,10 @@ public class LoginController : MonoBehaviour {
     private void Awake() {
         AccountManager.Instance.tokenSetFinished += OnTokenSetFinished;
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, OnRequestUserInfoCallback);
-#if UNITY_EDITOR
+//#if UNITY_EDITOR
         skipbuttons.SetActive(true);
         mmrchange.SetActive(true);
-#endif
+//#endif
     }
 
     private void OnTokenSetFinished() {
