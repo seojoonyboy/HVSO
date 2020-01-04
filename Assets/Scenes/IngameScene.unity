@@ -62857,6 +62857,7 @@ MonoBehaviour:
   boxObject: {fileID: 0}
   supplyStore: {fileID: 0}
   storeTimer: {fileID: 0}
+  supplySlider: {fileID: 0}
   AdsWindow: {fileID: 0}
   boxSpine: {fileID: 1681284205}
   boxEffect: {fileID: 1903211649}
@@ -62866,6 +62867,7 @@ MonoBehaviour:
   lastPos: {fileID: 96812686}
   skipBtn: {fileID: 895918398}
   resourceInfo: {fileID: 0}
+  buttonGlow: {fileID: 0}
   OnBoxLoadFinished:
     m_PersistentCalls:
       m_Calls: []
