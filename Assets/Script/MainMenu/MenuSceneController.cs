@@ -446,6 +446,23 @@ public class MenuSceneController : MonoBehaviour {
         EscapeKeyController.escapeKeyCtrl.AddEscape(CloseDictionary);
     }
 
+    public void OpenHumanRarelity(string rarelity) {
+        AccountManager.Instance.dicInfo.isHuman = true;
+        AccountManager.Instance.dicInfo.inDic = true;
+        for (int i = 0; i < offObjects.Length; i++)
+            offObjects[i].SetActive(false);
+        CardDictionaryManager.cardDictionaryManager.GoToRerelity(rarelity);
+        EscapeKeyController.escapeKeyCtrl.AddEscape(CloseDictionary);
+    }
+    public void OpenOrcRarelity(string rarelity) {
+        AccountManager.Instance.dicInfo.isHuman = false;
+        AccountManager.Instance.dicInfo.inDic = true;
+        for (int i = 0; i < offObjects.Length; i++)
+            offObjects[i].SetActive(false);
+        CardDictionaryManager.cardDictionaryManager.GoToRerelity(rarelity);
+        EscapeKeyController.escapeKeyCtrl.AddEscape(CloseDictionary);
+    }
+
     public void OpenHeroDictionary(bool isHuman) {
         AccountManager.Instance.dicInfo.isHuman = isHuman;
         AccountManager.Instance.dicInfo.inDic = true;
