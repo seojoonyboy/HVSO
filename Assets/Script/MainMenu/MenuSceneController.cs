@@ -51,12 +51,51 @@ public class MenuSceneController : MonoBehaviour {
         public TMPro.TextMeshProUGUI tierName;
         public Text tierValue;
         public BattleReadyHeaderController readyHeader;
+        public Image mmrUpIcon;
+        public Image mmrDownIcon;
+        public TMPro.TextMeshProUGUI mmrUpValue;
+        public TMPro.TextMeshProUGUI mmrDownValue;
+        public Slider prevMmrSlider;
+        public Slider currMmrSlider;
+
+
 
         public void OnLeagueInfoUpdated(Enum Event_Type, Component Sender, object Param) {
+            AccountManager accountManager = AccountManager.Instance;
             AccountManager.LeagueInfo info = (AccountManager.LeagueInfo)Param;
+            AccountManager.LeagueInfo prevInfo = accountManager.scriptable_leagueData.prevLeagueInfo;
+
             tierImage.sprite = readyHeader.GetRankImage(info.rankDetail.minorRankName);
             tierName.text = info.rankDetail.minorRankName;
             tierValue.text = info.ratingPoint.ToString();
+
+            int pointOverThen = prevInfo.rankDetail.pointOverThen;
+            int pointLessThen = prevInfo.rankDetail.pointLessThen;
+            int ratingPointTop = prevInfo.ratingPointTop ?? default(int);
+
+            mmrUpValue.text = pointLessThen.ToString();
+            mmrDownValue.text = pointOverThen.ToString();
+            prevMmrSlider.maxValue = pointLessThen - pointOverThen;
+            currMmrSlider.maxValue = pointLessThen - pointOverThen;
+
+            prevMmrSlider.value = ratingPointTop;
+            currMmrSlider.value = prevInfo.ratingPoint - pointOverThen;
+
+            AccountManager.RankTableRow item = accountManager.rankTable.Find(x => x.minorRankName == prevInfo.rankDetail.minorRankName);
+            int prevRankIndex = -1;
+
+            if (item != null) {
+                if (item.minorRankName == "무명 병사")
+                    prevRankIndex = 1;
+                else if (item.minorRankName == "전략의 제왕")
+                    prevRankIndex = accountManager.rankTable.Count - 1;
+                else
+                    prevRankIndex = accountManager.rankTable.IndexOf(item);
+
+
+                mmrDownIcon.sprite = AccountManager.Instance.resource.rankIcons[accountManager.rankTable[prevRankIndex - 1].minorRankName];
+                mmrUpIcon.sprite = accountManager.resource.rankIcons[accountManager.rankTable[prevRankIndex + 1].minorRankName];
+            }
         }
     }
 
