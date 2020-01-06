@@ -397,8 +397,9 @@ public partial class MenuCardInfo : MonoBehaviour {
     }
 
     void EndCardMaking() {
-        if (cardObject.name == "DictionaryCard") {
-            cardObject.GetComponent<MenuCardHandler>().DrawCard(cardId, isHuman);
+        if (cardObject.name.Contains("DictionaryCard")) {
+            if(!cardObject.parent.parent.name.Contains("Reward"))
+                cardObject.GetComponent<MenuCardHandler>().DrawCard(cardId, isHuman);
             CardDictionaryManager.cardDictionaryManager.transform.Find("UIbar/Crystal/Value").GetComponent<TMPro.TextMeshProUGUI>().text
             = AccountManager.Instance.userResource.crystal.ToString();
             SetCardInfo(cardData, isHuman, cardObject, true);
