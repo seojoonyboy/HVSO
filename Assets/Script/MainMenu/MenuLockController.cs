@@ -20,14 +20,19 @@ public class MenuLockController : SerializedMonoBehaviour {
 
     void Awake() {
         eventHandler = NoneIngameSceneEventHandler.Instance;
-        eventHandler.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, OnUserDataUpdated);
+        eventHandler.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_TUTORIAL_INFOS_UPDATED, OnTutorialInfoUpdated);
+    }
+
+    void Start() {
+        AccountManager.Instance.RequestTutorialUnlockInfos(true);
     }
 
     void OnDestroy() {
-        eventHandler.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, OnUserDataUpdated);
+        eventHandler.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_TUTORIAL_INFOS_UPDATED, OnTutorialInfoUpdated);
     }
 
-    private void OnUserDataUpdated(Enum Event_Type, Component Sender, object Param) {
+    private void OnTutorialInfoUpdated(Enum Event_Type, Component Sender, object Param) {
+        //모두 해금된 상태
         if (isAllUnlocked) {
             foreach(KeyValuePair<string, GameObject> keyValuePair in menues) {
                 keyValuePair.Value.transform.Find("Lock").GetComponent<MenuLocker>().UnlockWithNoEffect();
@@ -35,54 +40,40 @@ public class MenuLockController : SerializedMonoBehaviour {
             return;
         }
 
-        string _lockMenuList = PlayerPrefs.GetString("lockMenuList");
-        if (string.IsNullOrEmpty(_lockMenuList)) return;
+        object[] parm = (object[])Param;
+        bool isInitRequest = (bool)parm[0];
 
-        var lockMenuList = dataModules.JsonReader.Read<MenuNameData>(PlayerPrefs.GetString("lockMenuList"));
-        if (lockMenuList.menuNameList == null) lockMenuList.menuNameList = new List<string>();
+        if (isInitRequest) {
+            var unlockList = (List<string>)parm[1];
+            var lockList = (List<string>)parm[2];
 
-        foreach (string menuName in lockMenuList.menuNameList) {
-            Lock(menuName, false);
+            foreach (string unlockName in unlockList) {
+                Unlock(unlockName, false);
+            }
+            foreach(string lockName in lockList) {
+                Lock(lockName);
+            }
         }
+        else {
+            var unlockList = (List<string>)parm[1];
+            var lockList = (List<string>)parm[2];
 
-        var etcInfo = AccountManager.Instance.userData.etcInfo;
-        if (etcInfo != null) {
-            var unlockInfo = etcInfo.Find(x => x.key == "unlockInfo");
-            if (unlockInfo == null) return;
-
-            string data = unlockInfo.value;
-            string[] menuNames = data.Split(',');
-            foreach (string name in menuNames) {
-                Unlock(name, true);
+            foreach (string unlockName in unlockList) {
+                Unlock(unlockName, true);
+            }
+            foreach (string lockName in lockList) {
+                Lock(lockName);
             }
         }
 
-        var unlockMenuList = dataModules.JsonReader.Read<MenuNameData>(PlayerPrefs.GetString("unlockMenuList"));
-        if (unlockMenuList.menuNameList == null) unlockMenuList.menuNameList = new List<string>();
+        var questInfos = AccountManager.Instance.questInfos;
+        if(questInfos != null) {
+            isAllUnlocked = !AccountManager.Instance.questInfos.Exists(x => x.cleared == false);
+        }
         
-        StringBuilder sb = new StringBuilder();
-        StringBuilder sb2 = new StringBuilder();
-        foreach (string name in unlockMenuList.menuNameList) {
-            sb.Append(name + ", ");
-
-            Unlock(name, false);
-            if (lockMenuList.menuNameList.Exists(x => x == name)) lockMenuList.menuNameList.Remove(name);
-        }
-        foreach (string name in lockMenuList.menuNameList) {
-            sb2.Append(name + ", ");
-            Lock(name, false);
-        }
-
-        MainScrollSnapContent.GetComponent<HorizontalLayoutGroup>().enabled = false;
-        MainScrollSnapContent.GetComponent<HorizontalLayoutGroup>().enabled = true;
-
-        Logger.Log("unlockMenuList : " + sb.ToString());
-        Logger.Log("lockMenuList : " + sb2.ToString());
-
-        if (lockMenuList.menuNameList.Count == 0) {
+        if (isAllUnlocked) {
             Logger.Log("///////////////////////");
             Logger.Log("모두 해금됨");
-            isAllUnlocked = true;
 
             GetComponent<MenuSceneController>().CheckDailyQuest();
         }
@@ -93,11 +84,8 @@ public class MenuLockController : SerializedMonoBehaviour {
     /// </summary>
     /// <param name="keyword"></param>
     /// <param name="needTranslate"></param>
-    public void Lock(string keyword, bool fromServer) {
-        var translatedKeyword = keyword;
-        if (fromServer) {
-            translatedKeyword = FindMenuObject(keyword);
-        }
+    public void Lock(string keyword) {
+        var translatedKeyword = FindMenuObject(keyword);
 
         //Logger.Log("Lock : " + keyword);
         if (!menues.ContainsKey(translatedKeyword)) {
@@ -152,26 +140,15 @@ public class MenuLockController : SerializedMonoBehaviour {
                 menu.transform.Find("Lock").GetComponent<MenuLocker>().Lock();
             }
         }
-
-        var unlockMenuList = dataModules.JsonReader.Read<MenuNameData>(PlayerPrefs.GetString("unlockMenuList"));
-        var lockMenuList = dataModules.JsonReader.Read<MenuNameData>(PlayerPrefs.GetString("lockMenuList"));
-
-        if (!lockMenuList.menuNameList.Exists(x => x == translatedKeyword)) lockMenuList.menuNameList.Add(translatedKeyword);
-        if (unlockMenuList.menuNameList.Exists(x => x == translatedKeyword)) unlockMenuList.menuNameList.Remove(translatedKeyword);
-
-        PlayerPrefs.SetString("lockMenuList", JsonConvert.SerializeObject(lockMenuList));
-        PlayerPrefs.SetString("unlockMenuList", JsonConvert.SerializeObject(unlockMenuList));
     }
 
     /// <summary>
     /// 특정 메뉴 해금
     /// </summary>
     /// <param name="keyword"></param>
-    public void Unlock(string keyword, bool fromServer) {
-        var translatedKeyword = keyword;
-        if (fromServer) {
-            translatedKeyword = FindMenuObject(keyword);
-        }
+    public void Unlock(string keyword, bool isNeedEffect = true) {
+        var translatedKeyword = FindMenuObject(keyword);
+        if (string.IsNullOrEmpty(translatedKeyword)) return;
 
         if (!menues.ContainsKey(translatedKeyword)) {
             Logger.LogError("keyword no exist : " + translatedKeyword);
@@ -229,30 +206,30 @@ public class MenuLockController : SerializedMonoBehaviour {
             int mainSibilingIndex = MainScrollSnapContent.Find("MainWindow").GetSiblingIndex();
             MainScrollSnapContent.parent.GetComponent<HorizontalScrollSnap>().GoToScreen(mainSibilingIndex);
 
-            menu.transform.Find("Lock").GetComponent<MenuLocker>().Unlock();
+            if (isNeedEffect) {
+                menu.transform.Find("Lock").GetComponent<MenuLocker>().Unlock();
+            }
+            else menu.transform.Find("Lock").GetComponent<MenuLocker>().UnlockWithNoEffect();
         }
         else {
             if(translatedKeyword.Contains("HumanBaseDeck") || translatedKeyword.Contains("OrcBaseDeck")) {
                 foreach (Transform deckObject in deckEditListParent) {
                     if (deckObject.GetSiblingIndex() == 0) continue;
                     var buttons = deckObject.Find("DeckObject/Buttons");
-                    buttons.Find("DeleteBtn/Lock").GetComponent<MenuLocker>().Unlock();
-                    buttons.Find("AiBattleBtn/Lock").GetComponent<MenuLocker>().Unlock();
+                    if (isNeedEffect) {
+                        buttons.Find("DeleteBtn/Lock").GetComponent<MenuLocker>().Unlock();
+                        buttons.Find("AiBattleBtn/Lock").GetComponent<MenuLocker>().Unlock();
+                    }
+                    else {
+                        buttons.Find("DeleteBtn/Lock").GetComponent<MenuLocker>().UnlockWithNoEffect();
+                        buttons.Find("AiBattleBtn/Lock").GetComponent<MenuLocker>().UnlockWithNoEffect();
+                    }
                 }
             }
             else {
                 menu.transform.Find("Lock").GetComponent<MenuLocker>().Unlock();
             }
         }
-
-        var unlockMenuList = dataModules.JsonReader.Read<MenuNameData>(PlayerPrefs.GetString("unlockMenuList"));
-        var lockMenuList = dataModules.JsonReader.Read<MenuNameData>(PlayerPrefs.GetString("lockMenuList"));
-
-        if (lockMenuList.menuNameList.Exists(x => x == translatedKeyword)) lockMenuList.menuNameList.Remove(translatedKeyword);
-        if (!unlockMenuList.menuNameList.Exists(x => x == translatedKeyword)) unlockMenuList.menuNameList.Add(translatedKeyword);
-
-        PlayerPrefs.SetString("lockMenuList", JsonConvert.SerializeObject(lockMenuList));
-        PlayerPrefs.SetString("unlockMenuList", JsonConvert.SerializeObject(unlockMenuList));
     }
 
     public string FindMenuObject(string keyword) {
@@ -266,6 +243,18 @@ public class MenuLockController : SerializedMonoBehaviour {
                 break;
             case "배틀":
                 translatedKeyword = "League";
+                break;
+            case "퀘스트":
+                translatedKeyword = "Quest";
+                break;
+            case "부대편집":
+                translatedKeyword = "DeckEdit";
+                break;
+            case "보급상자":
+                translatedKeyword = "RewardBox";
+                break;
+            case "상점":
+                translatedKeyword = "Shop";
                 break;
         }
         return translatedKeyword;
@@ -287,34 +276,5 @@ public class MenuLockController : SerializedMonoBehaviour {
         if (keyword == "Dictionary") return true;
         if (keyword == "Shop") return true;
         return false;
-    }
-
-    /// <summary>
-    /// scriptableObject 데이터 초기화
-    /// </summary>
-    public void ResetMenuLockData() {
-        MenuNameData unlockMenuList = new MenuNameData();
-        unlockMenuList.menuNameList = new List<string>();
-       
-        MenuNameData lockMenuList = new MenuNameData();
-        lockMenuList.menuNameList = new List<string>();
-        lockMenuList.menuNameList.Add("League");
-        lockMenuList.menuNameList.Add("Story");
-        lockMenuList.menuNameList.Add("DeckEdit");
-        lockMenuList.menuNameList.Add("Dictionary");
-        lockMenuList.menuNameList.Add("Shop");
-        lockMenuList.menuNameList.Add("RewardBox");
-        lockMenuList.menuNameList.Add("Mode");
-        lockMenuList.menuNameList.Add("HumanBaseDeckAiBattleBtn");
-        lockMenuList.menuNameList.Add("HumanBaseDeckDeleteBtn");
-        lockMenuList.menuNameList.Add("OrcBaseDeckAiBattleBtn");
-        lockMenuList.menuNameList.Add("OrcBaseDeckDeleteBtn");
-
-        PlayerPrefs.SetString("lockMenuList", JsonConvert.SerializeObject(lockMenuList));
-        PlayerPrefs.SetString("unlockMenuList", JsonConvert.SerializeObject(unlockMenuList));
-    }
-
-    public class MenuNameData {
-        public List<string> menuNameList;
     }
 }

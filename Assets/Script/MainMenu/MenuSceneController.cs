@@ -471,8 +471,6 @@ public class MenuSceneController : MonoBehaviour {
         newbiComp.menuSceneController = this;
         newbiComp.name = "NewbiController";
         newbiComp.Init(decksLoader, scenarioManager, newbiLoadingModal);
-
-        GetComponent<MenuLockController>().ResetMenuLockData();
         BattleConnector.canPlaySound = false;
     }
 

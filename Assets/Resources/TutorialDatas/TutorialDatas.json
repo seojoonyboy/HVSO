@@ -393,6 +393,12 @@
                         "args" : []
                     },
                     {
+                        "name" : "RequestUnlockQuest",
+                        "args" : [
+                            "2"
+                        ]
+                    },
+                    {
                         "name" : "OffHighlight",
                         "args" : []
                     },
@@ -646,6 +652,12 @@
                         ]
                     },
                     {
+                        "name" : "RequestUnlockQuest",
+                        "args" : [
+                            "5"
+                        ]
+                    },
+                    {
                         "name" : "Menu_Hide_Message",
                         "args" : []
                     },
@@ -681,12 +693,6 @@
                         "name": "Wait_Click",
                         "args": [
                           "screen"
-                        ]
-                    },
-                    {
-                        "name" : "RequestUnlockQuest",
-                        "args" : [
-                            "4"
                         ]
                     },
                     {

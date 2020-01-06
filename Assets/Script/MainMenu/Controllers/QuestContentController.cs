@@ -240,7 +240,7 @@ namespace Quest {
         }
 
         public void CloseDictionary() {
-            manager.tutorialSerializeList.menuLockController.Unlock("DeckEdit", false);
+            manager.tutorialSerializeList.menuLockController.Unlock("DeckEdit", true);
         }
 
         private async void createCardDone() {
@@ -258,7 +258,7 @@ namespace Quest {
             card.closingToShowEditDeckLock = true;
             AddSpinetoButtonAndRemoveClick(card.transform.Find("UIbar/ExitBtn").GetComponent<Button>());
             manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_6);
-            AccountManager.Instance.RequestUnlockInTutorial(3);
+            AccountManager.Instance.RequestUnlockInTutorial(4);
             AccountManager.Instance.RequestQuestInfo();
         }
 
@@ -304,7 +304,7 @@ namespace Quest {
         public async void ModeClicked() {
             manager.tutorialSerializeList.modeSelect.GetComponent<Button>().onClick.RemoveListener(ModeClicked);
             await Task.Delay(400);
-            manager.tutorialSerializeList.menuLockController.Unlock("League", false);
+            manager.tutorialSerializeList.menuLockController.Unlock("League", true);
             GameObject battle = manager.tutorialSerializeList.BattleButton.gameObject;
             Instantiate(manager.handSpinePrefab, battle.transform, false);
         }

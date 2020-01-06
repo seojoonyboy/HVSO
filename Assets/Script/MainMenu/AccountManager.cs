@@ -1573,7 +1573,7 @@ public partial class AccountManager {
     /// <summary>
     /// 메뉴 해금/잠금 여부 목록
     /// </summary>
-    public void RequestTutorialUnlockInfos() {
+    public void RequestTutorialUnlockInfos(bool isInitRequest = false) {
         StringBuilder url = new StringBuilder();
         string base_url = networkManager.baseUrl;
 
@@ -1589,17 +1589,33 @@ public partial class AccountManager {
         networkManager.Request(
             request, (req, res) => {
                 if (res.StatusCode == 200 || res.StatusCode == 304) {
-                    questInfos = dataModules.JsonReader.Read<List<QuestInfo>>(res.DataAsText);
-                    
+                    var newQuestInfos = dataModules.JsonReader.Read<List<QuestInfo>>(res.DataAsText);
+                    var prevQuestInfo = questInfos;
+                    List<string> unlockList = new List<string>();
+                    List<string> lockList = new List<string>();
+
+                    foreach (QuestInfo questInfo in newQuestInfos) {
+                        QuestUnlockInfo innerData = questInfo.after.Find(x => x.method == "unlock_menu");
+                        if (innerData != null) {
+                            if (questInfo.cleared) {
+                                unlockList.Add(innerData.args[0]);
+                            }
+                            else {
+                                lockList.Add(innerData.args[0]);
+                            }
+
+                        }
+                    }
+
                     NoneIngameSceneEventHandler
                         .Instance
                         .PostNotification(
                             NoneIngameSceneEventHandler.EVENT_TYPE.API_TUTORIAL_INFOS_UPDATED,
                             null,
-                            questInfos
+                            new object[] { isInitRequest, unlockList, lockList }
                         );
 
-                    RequestUserInfo();
+                    questInfos = newQuestInfos;
                 }
             },
             "튜토리얼 정보를 불러오는중...");
@@ -1777,29 +1793,6 @@ public partial class AccountManager {
 
         PlayerPrefs.SetString("SelectedBattleButton", "STORY");
         PlayerPrefs.SetInt("isFirst", 0);
-
-        MenuLockController.MenuNameData lockMenuList = new MenuLockController.MenuNameData();
-        MenuLockController.MenuNameData unlockMenuList = new MenuLockController.MenuNameData();
-
-        lockMenuList.menuNameList = new List<string>();
-        unlockMenuList.menuNameList = new List<string>();
-
-        lockMenuList.menuNameList.Add("League");
-        //lockMenuList.menuNameList.Add("Story");
-        lockMenuList.menuNameList.Add("DeckEdit");
-        lockMenuList.menuNameList.Add("Dictionary");
-        lockMenuList.menuNameList.Add("Shop");
-        lockMenuList.menuNameList.Add("RewardBox");
-        lockMenuList.menuNameList.Add("Mode");
-        lockMenuList.menuNameList.Add("HumanBaseDeckAiBattleBtn");
-        lockMenuList.menuNameList.Add("HumanBaseDeckDeleteBtn");
-        lockMenuList.menuNameList.Add("OrcBaseDeckAiBattleBtn");
-        lockMenuList.menuNameList.Add("OrcBaseDeckDeleteBtn");
-
-        unlockMenuList.menuNameList.Add("Story");
-
-        PlayerPrefs.SetString("lockMenuList", JsonConvert.SerializeObject(lockMenuList));
-        PlayerPrefs.SetString("unlockMenuList", JsonConvert.SerializeObject(unlockMenuList));
 
         if (stageNumber == 1) {
             if(camp == "human") {

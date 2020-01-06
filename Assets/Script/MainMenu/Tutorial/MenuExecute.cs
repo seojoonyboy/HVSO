@@ -919,7 +919,7 @@ namespace MenuTutorialModules {
 
     public class UnlockCardMenu : MenuExecute {
         public override void Execute() {
-            AccountManager.Instance.RequestUnlockInTutorial(2);
+            AccountManager.Instance.RequestUnlockInTutorial(3);
             AccountManager.Instance.RequestQuestInfo();
 
             handler.isDone = true;
@@ -948,7 +948,7 @@ namespace MenuTutorialModules {
             }
             //리그 Unlock시 Mode 버튼 Unlock
             if(id == 4) {
-                GetComponent<MenuTutorialManager>().lockController.Unlock("Mode", false);
+                GetComponent<MenuTutorialManager>().lockController.Unlock("Mode");
             }
 
             handler.isDone = true;
@@ -978,7 +978,9 @@ namespace MenuTutorialModules {
             var lockObj = menuLockController.FindButtonLockObject("RewardBox");
             if (lockObj.activeInHierarchy) {
                 SkeletonGraphic skeletonGraphic = lockObj.GetComponent<SkeletonGraphic>();
-                menuLockController.Unlock("RewardBox", false);
+
+                AccountManager.Instance.RequestUnlockInTutorial(7);
+                menuLockController.Unlock("RewardBox");
                 yield return new WaitForSeconds(1.5f);
                 handler.isDone = true;
                 //skeletonGraphic.AnimationState.End += delegate (TrackEntry trackEntry) {
@@ -1007,10 +1009,12 @@ namespace MenuTutorialModules {
             MenuLockController menuLockController = GetComponent<MenuTutorialManager>().lockController;
             HorizontalScrollSnap horizontalScrollSnap = GetComponent<MenuTutorialManager>().scrollSnap;
 
+            AccountManager.Instance.RequestUnlockInTutorial(8);
+
             var lockObj = menuLockController.FindButtonLockObject("Shop");
             if (lockObj.activeInHierarchy) {
                 SkeletonGraphic skeletonGraphic = lockObj.GetComponent<SkeletonGraphic>();
-                menuLockController.Unlock("Shop", false);
+                menuLockController.Unlock("Shop");
                 yield return new WaitForSeconds(1.5f);
                 handler.isDone = true;
             }
@@ -1027,10 +1031,10 @@ namespace MenuTutorialModules {
     public class UnlockDeckEditButtons : MenuExecute {
         public override void Execute() {
             MenuLockController menuLockController = GetComponent<MenuTutorialManager>().lockController;
-            menuLockController.Unlock("HumanBaseDeckAiBattleBtn", false);
-            menuLockController.Unlock("HumanBaseDeckDeleteBtn", false);
-            menuLockController.Unlock("OrcBaseDeckAiBattleBtn", false);
-            menuLockController.Unlock("OrcBaseDeckDeleteBtn", false);
+            menuLockController.Unlock("HumanBaseDeckAiBattleBtn");
+            menuLockController.Unlock("HumanBaseDeckDeleteBtn");
+            menuLockController.Unlock("OrcBaseDeckAiBattleBtn");
+            menuLockController.Unlock("OrcBaseDeckDeleteBtn");
 
             handler.isDone = true;
         }
