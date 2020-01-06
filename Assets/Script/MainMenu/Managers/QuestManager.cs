@@ -168,5 +168,6 @@ namespace Quest {
     public class TutorialShowList {
         public string method;
         public string[] args;
+        public bool isShowing = false;
     }
 }
