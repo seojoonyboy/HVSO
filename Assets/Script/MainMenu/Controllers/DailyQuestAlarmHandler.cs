@@ -35,6 +35,7 @@ public class DailyQuestAlarmHandler : MonoBehaviour {
         }
         yield return new WaitForSeconds(0.5f);
         StartGlowEffect();
+        transform.Find("InnerCanvas/background").GetComponent<Button>().enabled = true;
     }
 
     IEnumerator scaleUp(GameObject target) {
@@ -56,6 +57,8 @@ public class DailyQuestAlarmHandler : MonoBehaviour {
             child.localScale = Vector3.zero;
             child.gameObject.SetActive(false);
         }
+
+        transform.Find("InnerCanvas/background").GetComponent<Button>().enabled = false;
     }
 
     private void SetData(GameObject obj, QuestData data) {
