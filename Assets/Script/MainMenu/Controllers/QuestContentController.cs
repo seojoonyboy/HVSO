@@ -140,7 +140,8 @@ namespace Quest {
             AddSpinetoButtonAndRemoveClick(getBtn, GetQuestItem);
         }
 
-        private void GetQuestItem() {
+        private async void GetQuestItem() {
+            await Task.Delay(500);
             manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_3);
             PlayerPrefs.SetInt("FirstTutorialClear", 1);
             PlayerPrefs.Save();
@@ -173,12 +174,13 @@ namespace Quest {
             Destroy(hand.gameObject);
         }
 
-        private void SubSet4() {
+        private async void SubSet4() {
             manager.tutorialSerializeList.newMail.SetActive(false);
             manager.tutorialSerializeList.mailBoxManager.tutoQuest.openBtn.enabled = true;
             manager.tutorialSerializeList.mailAllGetButton.interactable = true;
-            manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_4);
             manager.tutorialSerializeList.mailBoxManager.tutoQuest = null;
+            await Task.Delay(500);
+            manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_4);
             AddSpinetoButtonAndRemoveClick(manager.tutorialSerializeList.backButton, BreakCardDictionaryTab);
         }
 
