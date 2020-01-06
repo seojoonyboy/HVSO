@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
 using dataModules;
+using System;
 
 public class MenuTutorialManager : SerializedMonoBehaviour {
     [FilePath] public string tutorialSetsPath;
@@ -147,19 +148,24 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
         }
         if (arr_index == -1) return;
 
-        var selectedSets = sets[arr_index];
+        try {
+            var selectedSets = sets[arr_index];
 
-        var execs = GetComponents<MenuExecute>();
-        if (execs != null) {
-            foreach (var exec in (execs)) {
-                Destroy(exec);
+            var execs = GetComponents<MenuExecute>();
+            if (execs != null) {
+                foreach (var exec in (execs)) {
+                    Destroy(exec);
+                }
             }
+
+            if (executeHandler == null) executeHandler = gameObject.AddComponent<MenuExecuteHandler>();
+
+            if (executeHandler == null) return;
+            executeHandler.Initialize(selectedSets);
         }
-
-        if (executeHandler == null) executeHandler = gameObject.AddComponent<MenuExecuteHandler>();
-
-        if (executeHandler == null) return;
-        executeHandler.Initialize(selectedSets);
+        catch (Exception ex) {
+            Logger.LogError("Index : " + arr_index);
+        }
     }
 
     public enum TutorialType {

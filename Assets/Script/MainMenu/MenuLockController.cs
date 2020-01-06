@@ -202,9 +202,11 @@ public class MenuLockController : SerializedMonoBehaviour {
             MainScrollSnapContent.parent.GetComponent<HorizontalScrollSnap>().enabled = false;
             MainScrollSnapContent.parent.GetComponent<HorizontalScrollSnap>().enabled = true;
 
-            MainScrollSnapContent.parent.GetComponent<HorizontalScrollSnap>().CurrentPage = 2;
-            int mainSibilingIndex = MainScrollSnapContent.Find("MainWindow").GetSiblingIndex();
-            MainScrollSnapContent.parent.GetComponent<HorizontalScrollSnap>().GoToScreen(mainSibilingIndex);
+            //MainScrollSnapContent.parent.GetComponent<HorizontalScrollSnap>().CurrentPage = 2;
+            //int mainSibilingIndex = MainScrollSnapContent.Find("MainWindow").GetSiblingIndex();
+            MainScrollSnapContent.parent.GetComponent<HorizontalScrollSnap>().UpdateLayout();
+
+            //MainScrollSnapContent.parent.GetComponent<HorizontalScrollSnap>().GoToScreen(mainSibilingIndex);
 
             if (isNeedEffect) {
                 menu.transform.Find("Lock").GetComponent<MenuLocker>().Unlock();
@@ -272,7 +274,6 @@ public class MenuLockController : SerializedMonoBehaviour {
 
     private bool IsMainMenu(string keyword) {
         if (keyword == "DeckEdit") return true;
-        if (keyword == "DeckSetting") return true;
         if (keyword == "Dictionary") return true;
         if (keyword == "Shop") return true;
         return false;
