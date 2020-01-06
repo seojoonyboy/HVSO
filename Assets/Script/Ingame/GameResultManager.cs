@@ -567,7 +567,8 @@ public class GameResultManager : MonoBehaviour {
         slider.value = prevMMR;
         label.text = prevMMR + "/" + prevLeagueInfo.rankDetail.pointLessThen + " " + "(" + amount.ToString() + ")";
 
-        yield return LeagueAnimation(amount);
+        if (amount != 0)
+            yield return LeagueAnimation(amount);
 
 
         if (prevLeagueInfo.rankDetail.minorRankName != newLeagueInfo.rankDetail.minorRankName) {
