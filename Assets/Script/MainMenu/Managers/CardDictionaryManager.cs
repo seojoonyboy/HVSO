@@ -14,6 +14,7 @@ public class CardDictionaryManager : MonoBehaviour {
     [SerializeField] Transform heroCards;
     [SerializeField] Transform cardStorage;
     [SerializeField] Transform sortingModal;
+    [SerializeField] Transform rareSlots;
     [SerializeField] TMPro.TextMeshProUGUI cardNum;
 
     bool isHumanDictionary;
@@ -28,6 +29,7 @@ public class CardDictionaryManager : MonoBehaviour {
     bool isAni = false;
 
     public static CardDictionaryManager cardDictionaryManager;
+
     Dictionary<string, int> classHumanCard;
     Dictionary<string, int> classOrcCard;
     List<DictionaryCard> dicCards;
@@ -42,20 +44,39 @@ public class CardDictionaryManager : MonoBehaviour {
         transform.Find("HeroDictionary").gameObject.SetActive(false);
         selectedHero = null;
         selectedHeroId = null;
-        Transform classList = cardList.Find("CardsByCost");
         selectedSortOption = SortingOptions.CLASS;
         transform.Find("UIbar/Crystal/Value").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userResource.crystal.ToString();
         if (AccountManager.Instance.dicInfo.isHuman) {
             isHumanDictionary = true;
-            SetToHumanCards();
             transform.Find("BackgroundImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.campBackgrounds["human"];
         }
         else {
             isHumanDictionary = false;
-            SetToOrcCards();
             transform.Find("BackgroundImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.campBackgrounds["orc"];
         }
+        SetCards();
         RefreshLine();
+    }
+
+    public void GoToRerelity(string rarelity) {
+        isHeroDic = false;
+        gameObject.SetActive(true);
+        transform.Find("HeroDictionary").gameObject.SetActive(false);
+        selectedHero = null;
+        selectedHeroId = null;
+        selectedSortOption = SortingOptions.RARELITY_ASCEND;
+        transform.Find("UIbar/Crystal/Value").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userResource.crystal.ToString();
+        if (AccountManager.Instance.dicInfo.isHuman) {
+            isHumanDictionary = true;            
+            transform.Find("BackgroundImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.campBackgrounds["human"];
+        }
+        else {
+            isHumanDictionary = false;
+            transform.Find("BackgroundImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.campBackgrounds["orc"];
+        }
+        SetCards(true);
+        RefreshLine();
+        SnapTo(rareSlots.Find(rarelity).GetComponent<RectTransform>());
     }
 
     public void SetHeroDictionary() {
@@ -81,18 +102,14 @@ public class CardDictionaryManager : MonoBehaviour {
         RefreshLine();
     }
 
-    public void SetToHumanCards() {        
+    public void SetCards(bool rarelity = false) {        
         transform.Find("CardDictionary").gameObject.SetActive(true);
         transform.Find("UIbar/SortBtn").gameObject.SetActive(true);
         GetCard();
-        SetCardsByClass();
-    }
-
-    public void SetToOrcCards() {
-        transform.Find("CardDictionary").gameObject.SetActive(true);
-        transform.Find("UIbar/SortBtn").gameObject.SetActive(true);
-        GetCard();
-        SetCardsByClass();
+        if (!rarelity)
+            SetCardsByClass();
+        else
+            SetCardsByRarelity(false);
     }
 
     public void GetCard() {
@@ -681,10 +698,7 @@ public class CardDictionaryManager : MonoBehaviour {
         if (selectedHero == null) return;        
         selectedSortOption = SortingOptions.CLASS;
         transform.Find("HeroDictionary").gameObject.SetActive(false);
-        if (isHumanDictionary)
-            SetToHumanCards();
-        else
-            SetToOrcCards();
+        SetCards();
         SortHeroCards();
         EscapeKeyController.escapeKeyCtrl.AddEscape(ExitDictionaryScene);
     }
