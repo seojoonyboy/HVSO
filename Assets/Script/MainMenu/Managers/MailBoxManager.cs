@@ -1,3 +1,4 @@
+using Spine.Unity;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -28,22 +29,15 @@ public class MailBoxManager : MonoBehaviour
         AccountManager.Instance.RequestMailBox();
 
         HUDController.SetHeader(HUDController.Type.ONLY_BAKCK_BUTTON);
-        HUDController.SetBackButton(() => { 
-            CloseMailBox();
-            HUDController.SetHeader(HUDController.Type.SHOW_USER_INFO);
-            if(tutoQuest != null) {
-                tutoQuest.quest
-                    .AddSpinetoButtonAndRemoveClick(
-                        tutoQuest.quest.manager.tutorialSerializeList.backButton, 
-                        tutoQuest.quest.BreakCardDictionaryTab
-                    );
-            }
-        });
+        HUDController.SetBackButton(CloseMailBox);
     }
 
     public void CloseMailBox() {
+        CloseReceiveResult();
         gameObject.SetActive(false);
         EscapeKeyController.escapeKeyCtrl.RemoveEscape(CloseMailBox);
+        HUDController.SetHeader(HUDController.Type.SHOW_USER_INFO);
+        if(tutoQuest != null && tutoQuest.received) tutoQuest.quest.BreakCardDictionaryTab();
     }
 
     public void RequestMailOver(Enum Event_Type, Component Sender, object Param) {
@@ -56,19 +50,30 @@ public class MailBoxManager : MonoBehaviour
         public Quest.QuestContentController quest;
         public Button openBtn;
         public Button receiveBtn;
+        public bool pressed = false;
+        public bool received = false;
     }
 
     private void TutoQuest(Button openBtn, Button receiveBtn) {
         if(tutoQuest.quest == null) return;
         if(tutoQuest.openBtn != null) {
-            tutoQuest.quest.ResetMailOpen(tutoQuest.openBtn);
+            tutoQuest.openBtn.enabled = true;
         }
         if(tutoQuest.receiveBtn != null) {
-            tutoQuest.receiveBtn.enabled = true;
+            tutoQuest.receiveBtn.onClick.RemoveListener(PressTuto);
+            Transform hand = tutoQuest.receiveBtn.transform.Find("tutorialHand");
+            if(hand == null) return;
+            Destroy(hand.gameObject);
         }
         tutoQuest.openBtn = openBtn;
         tutoQuest.receiveBtn = receiveBtn;
-        tutoQuest.quest.MailOpen();
+        tutoQuest.quest.AddSpinetoButtonAndRemoveClick(tutoQuest.receiveBtn, PressTuto);
+        tutoQuest.openBtn.enabled = false;
+        tutoQuest.quest.manager.tutorialSerializeList.mailAllGetButton.interactable = false;
+    }
+
+    private void PressTuto() {
+        tutoQuest.pressed = true;
     }
 
     public void SetMailBox() {
@@ -119,7 +124,10 @@ public class MailBoxManager : MonoBehaviour
         Canvas.ForceUpdateCanvases();
         LayoutRebuilder.ForceRebuildLayoutImmediate(mailListParent.parent.GetComponent<RectTransform>());
         transform.Find("Block").gameObject.SetActive(false);
-        receiveAllBtn.interactable = count == 0 ? false : true; 
+        if(tutoQuest == null)
+            receiveAllBtn.interactable = count == 0 ? false : true; 
+        else
+            receiveAllBtn.interactable = false;
     }
 
     public void InitMailBox() {
@@ -175,7 +183,7 @@ public class MailBoxManager : MonoBehaviour
         AccountManager.Instance.RequestMailBox();
         AccountManager.Instance.RequestUserInfo();
         AccountManager.Instance.RequestInventories();
-        SetReceiveResult();
+        StartCoroutine(SetReceiveResult());
     }
 
     public void RequestOver(Enum Event_Type, Component Sender, object Param) {
@@ -192,17 +200,34 @@ public class MailBoxManager : MonoBehaviour
         EscapeKeyController.escapeKeyCtrl.RemoveEscape(CloseReceiveResult);
     }
 
-    public void SetReceiveResult(List<dataModules.MailReward> rewardList = null ) {
+    IEnumerator SetReceiveResult(List<dataModules.MailReward> rewardList = null ) {
+        yield return SetRewardAnimation();
+
         Transform slotList = transform.GetChild(0).Find("ReceivedReward/RowSlot");
         List<dataModules.MailReward> itemList = new List<dataModules.MailReward>();
         if (rewardList != null)
             itemList = rewardList;
         else
             itemList = AccountManager.Instance.mailRewardList;
+
         for (int i = 0; i < AccountManager.Instance.mailRewardList.Count; i++) {
-            Transform target;
             slotList.GetChild(i / 3).gameObject.SetActive(true);
             slotList.GetChild(i / 3).GetChild(i % 3).gameObject.SetActive(true);
+            slotList.GetChild(i / 3).GetChild(i % 3).Find("NameOrNum").GetComponent<TMPro.TextMeshProUGUI>().text = string.Empty;
+        }
+
+        for (int i = 0; i < AccountManager.Instance.mailRewardList.Count; i++) {
+            var effectObj = slotList.GetChild(i / 3).GetChild(i % 3).Find("Reward/Effect");
+            effectObj.gameObject.SetActive(true);
+            SkeletonGraphic skeletonGraphic = effectObj.GetChild(0).GetComponent<SkeletonGraphic>();
+
+            skeletonGraphic.Initialize(false);
+            skeletonGraphic.Update(0);
+            skeletonGraphic.AnimationState.SetAnimation(0, "animation", false);
+
+            yield return new WaitForSeconds(0.1f);
+
+            Transform target;
             if (itemList[i].kind.Contains("card")) {
                 target = slotList.GetChild(i / 3).GetChild(i % 3).Find("Reward/RewardCard");
                 
@@ -243,21 +268,31 @@ public class MailBoxManager : MonoBehaviour
             }
             else
                 transform.Find("Content/ReceivedReward/Buttons/Next").gameObject.SetActive(false);
+
+            yield return new WaitForSeconds(0.3f);
+            slotList.GetChild(i / 3).GetChild(i % 3).Find("Reward/Effect").gameObject.SetActive(false);
+            ///TODO : 아이템 수령 애니메이션 완료 직후 작업 (튜토리얼)
+            if(tutoQuest != null && tutoQuest.pressed) {
+                tutoQuest.quest.SubSet4();
+                tutoQuest.received = true;
+            }
         }
+        //slotList.GetChild(i / 3).GetChild(i % 3).Find("Reward/Effect").gameObject.SetActive(false);
     }
 
-    void SetRewardAnimation() {
+    IEnumerator SetRewardAnimation() {
         Transform mail_transform = transform.GetChild(0).Find("ReceivedReward/Mail_Reward");
         Spine.Unity.SkeletonGraphic mail_animation = mail_transform.gameObject.GetComponent<Spine.Unity.SkeletonGraphic>();
         mail_animation.Initialize(false);
         mail_animation.Update(0);
-        mail_animation.AnimationState.SetAnimation(0, "story_reward1", false);
+        mail_animation.AnimationState.SetAnimation(0, "NOMAL", false);
+        yield return new WaitForSeconds(0.6f);
     }
 
 
     void SetNextRewardPage(List<dataModules.MailReward> itemList) {
         InitRewardList();
-        SetReceiveResult(itemList);
+        StartCoroutine(SetReceiveResult(itemList));
     }
 
     void InitRewardList() {

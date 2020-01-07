@@ -68,7 +68,8 @@ namespace Quest {
         private void OnRewardReceived(Enum Event_Type, Component Sender, object Param) {
             var targetObj = (GameObject)Param;
             if(gameObject != targetObj) return;
-            Modal.instantiate("보상을 우편으로 발송하였습니다.", Modal.Type.CHECK);
+            if(data.questDetail.id.CompareTo("t1")== 0) Modal.instantiate("보상을 우편으로 발송하였습니다.", Modal.Type.CHECK, GetQuestItem);
+            else Modal.instantiate("보상을 우편으로 발송하였습니다.", Modal.Type.CHECK);
             //targetObj.GetComponent<QuestContentController>().getBtn.GetComponentInChildren<TextMeshProUGUI>().text = "획득완료";
             //targetObj.GetComponent<QuestContentController>().getBtn.enabled = false;
         }
@@ -88,32 +89,37 @@ namespace Quest {
     public partial class QuestContentController : MonoBehaviour {
         public void ActiveTutorial() {
             for(int i = 0; i < data.tutorials.Length; i++) {
+                if(data.tutorials[i].isShowing == true) continue;
                 MethodInfo theMethod = this.GetType().GetMethod(data.tutorials[i].method);
                 object[] args = new object[]{data.tutorials[i].args};
                 Debug.Log(data.tutorials[i].method);
-                theMethod.Invoke(this, args);
+                object played = theMethod.Invoke(this, args);
+                data.tutorials[i].isShowing = (bool)played;
             }
         }
 
-        public void QuestSubSetShow(string[] args) {
-            if(data.progress > 0) return;
+        public bool QuestSubSetShow(string[] args) {
+            if(data.progress > 0) return false;
             Type enumType = typeof(MenuTutorialManager.TutorialType);
             MenuTutorialManager.TutorialType questEnum = (MenuTutorialManager.TutorialType)Enum.Parse(enumType, args[0].ToUpper());
             manager.tutoDialog.StartQuestSubSet(questEnum);
+            return true;
         }
 
-        public void QuestIconShow(string[] args) {
-            if(data.progress > 0) return;
+        public bool QuestIconShow(string[] args) {
+            if(data.progress > 0) return false;
             manager.ShowHandIcon();
+            return true;
         }
 
-        public void ShowStoryHand(string[] args) {
-            if(data.cleared) return;
+        public bool ShowStoryHand(string[] args) {
+            if(data.cleared) return false;
             string camp = args[0];
             int stage = int.Parse(args[1]);
             manager.tutorialSerializeList.scenarioManager.SetTutoQuest(this, stage);
             manager.tutorialSerializeList.playButton.SetActive(true);
             CheckTutorialPlayed(int.Parse(args[1]));
+            return true;
         }
 
         private void CheckTutorialPlayed(int stage) {
@@ -123,60 +129,49 @@ namespace Quest {
             if(!isOrcClear) manager.tutorialSerializeList.OrcFlagIcon.SetActive(true);
         }
 
-        public void QuestClearShow(string[] args) {
-            if(!data.cleared) return;
+        public bool QuestClearShow(string[] args) {
+            if(!data.cleared) return false;
             manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_2);
             manager.ShowHandIcon();
             ShowHandIcon();
-           
+            return true;
         }
 
         private void ShowHandIcon() {
-            AddSpinetoButtonAndRemoveClick(getBtn, GetQuestItem);
+            AddSpinetoButtonAndRemoveClick(getBtn);
         }
 
         private void GetQuestItem() {
             manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_3);
             PlayerPrefs.SetInt("FirstTutorialClear", 1);
             PlayerPrefs.Save();
+            manager.TutorialNoQuestShow();
         }
 
-        public void StartMailTutorial(string[] args) {
+        public bool StartMailTutorial(string[] args) {
             GetPostOffice();
-            if(!manager.tutorialSerializeList.backButton.gameObject.activeInHierarchy) return;
+            if(!manager.tutorialSerializeList.backButton.gameObject.activeInHierarchy) return false;
             AddSpinetoButtonAndRemoveClick(manager.tutorialSerializeList.backButton);
+            return true;
         }
 
         private async void GetPostOffice() {
             await Task.Delay(500);
             manager.tutorialSerializeList.newMail.SetActive(true);
-            manager.tutorialSerializeList.mailAllGetButton.interactable = false;
             manager.tutorialSerializeList.mailBoxManager.tutoQuest = new MailBoxManager.TutorialQuest();
             manager.tutorialSerializeList.mailBoxManager.tutoQuest.quest = this;
         }
 
-        public void MailOpen() {
-            AddSpinetoButtonAndRemoveClick(manager.tutorialSerializeList.mailBoxManager.tutoQuest.receiveBtn, SubSet4);
-            manager.tutorialSerializeList.mailBoxManager.tutoQuest.openBtn.enabled = false;
-        }
-
-        public void ResetMailOpen(Button btn) {
-            btn.onClick.RemoveListener(SubSet4);
-            Transform hand = btn.transform.Find("tutorialHand");
-            if(hand == null) return;
-            Destroy(hand.gameObject);
-        }
-
-        private void SubSet4() {
-            manager.tutorialSerializeList.newMail.SetActive(false);
-            manager.tutorialSerializeList.mailBoxManager.tutoQuest.openBtn.enabled = true;
-            manager.tutorialSerializeList.mailAllGetButton.interactable = true;
+        public void SubSet4() {
+            Transform hand = manager.tutorialSerializeList.mailBoxManager.tutoQuest.receiveBtn.transform.Find("tutorialHand");
+            if(hand != null) Destroy(hand.gameObject);
             manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_4);
-            manager.tutorialSerializeList.mailBoxManager.tutoQuest = null;
-            AddSpinetoButtonAndRemoveClick(manager.tutorialSerializeList.backButton, BreakCardDictionaryTab);
         }
 
         public void BreakCardDictionaryTab() {
+            manager.tutorialSerializeList.newMail.SetActive(false);
+            manager.tutorialSerializeList.mailBoxManager.tutoQuest.openBtn.enabled = true;
+            manager.tutorialSerializeList.mailBoxManager.tutoQuest = null;
             manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_9);
             PlayerPrefs.DeleteKey("FirstTutorialClear");
             PlayerPrefs.Save();
@@ -195,11 +190,12 @@ namespace Quest {
             button.onClick.AddListener(deleteHand);
         }
 
-        public void MenuDictionaryShowHand(string[] args) {
-            if(data.cleared) return;
+        public bool MenuDictionaryShowHand(string[] args) {
+            if(data.cleared) return false;
             MenuSceneController menu = MenuSceneController.menuSceneController;
             menu.DictionaryShowHand(this, args);
             manager.tutorialSerializeList.newCardMenu.SetActive(true);
+            return true;
         }
 
         public void ReadyEnterCardMenu() {
@@ -213,8 +209,8 @@ namespace Quest {
             cardManager.cardShowHand(this, args);
         }
 
-        public void CreateCardCheck(string[] args) {
-            if(data.cleared) return;
+        public bool CreateCardCheck(string[] args) {
+            if(data.cleared) return false;
             OnEvent theEvent = null;
             theEvent = (type, Sender, Param) => {
                 var card = Array.Find(AccountManager.Instance.myCards, x=>x.cardId.CompareTo(args[0])==0);
@@ -229,10 +225,11 @@ namespace Quest {
             NoneIngameSceneEventHandler.Instance.AddListener(
                 NoneIngameSceneEventHandler.EVENT_TYPE.API_INVENTORIES_UPDATED, 
                 theEvent);
+            return true;
         }
 
         public void CloseDictionary() {
-            manager.tutorialSerializeList.menuLockController.Unlock("DeckEdit", false);
+            manager.tutorialSerializeList.menuLockController.Unlock("DeckEdit", true);
         }
 
         private async void createCardDone() {
@@ -250,49 +247,53 @@ namespace Quest {
             card.closingToShowEditDeckLock = true;
             AddSpinetoButtonAndRemoveClick(card.transform.Find("UIbar/ExitBtn").GetComponent<Button>());
             manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_6);
-            AccountManager.Instance.RequestUnlockInTutorial(3);
+            AccountManager.Instance.RequestUnlockInTutorial(4);
             AccountManager.Instance.RequestQuestInfo();
         }
 
-        public void MenuDeckSettingShowHand(string[] args) {
-            if(data.cleared) return;
+        public bool MenuDeckSettingShowHand(string[] args) {
+            if(data.cleared) return false;
             AddSpinetoButtonAndRemoveClick(manager.tutorialSerializeList.ScrollDeckButton);
             manager.tutorialSerializeList.newDeckMenu.SetActive(true);
             manager.tutorialSerializeList.horizontalScrollSnap.OnSelectionChangeEndEvent.AddListener(x=>{if(x==0) manager.tutorialSerializeList.newDeckMenu.SetActive(false);});
             DeckHandler[] decks = manager.tutorialSerializeList.deckSettingManager.transform.GetComponentsInChildren<DeckHandler>();
             Array.ForEach(decks, x=> x.TutorialHandShow(this));
+            return true;
         }
 
-        public void DeckSettingRemoveCard(string[] args) {
-            if(data.cleared) return;
+        public bool DeckSettingRemoveCard(string[] args) {
+            if(data.cleared) return false;
             if(EditCardHandler.questInfo == null)
                 EditCardHandler.questInfo = new EditCardHandler.QuestInfo();
             EditCardHandler.QuestInfo questInfo = EditCardHandler.questInfo;
             questInfo.quest = this;
             questInfo.removeId = args[0];
+            return true;
         }
 
-        public void DeckSettingAddCard(string[] args) {
-            if(data.cleared) return;
+        public bool DeckSettingAddCard(string[] args) {
+            if(data.cleared) return false;
             if(EditCardHandler.questInfo == null)
                 EditCardHandler.questInfo = new EditCardHandler.QuestInfo();
             EditCardHandler.QuestInfo questInfo = EditCardHandler.questInfo;
             questInfo.quest = this;
             questInfo.addId = args[0];
+            return true;
         }
 
-        public void BattleShow(string[] args) {
-            if(data.cleared) return;
+        public bool BattleShow(string[] args) {
+            if(data.cleared) return false;
             manager.tutorialSerializeList.modeSelect.onClick.AddListener(ModeClicked);
             manager.tutorialSerializeList.newBattleMenu.SetActive(true);
             manager.tutorialSerializeList.BattleButton.onClick.AddListener(BattleClicked);
             manager.tutorialSerializeList.modeGlow.SetActive(true);
+            return true;
         }
 
         public async void ModeClicked() {
             manager.tutorialSerializeList.modeSelect.GetComponent<Button>().onClick.RemoveListener(ModeClicked);
             await Task.Delay(400);
-            manager.tutorialSerializeList.menuLockController.Unlock("League", false);
+            manager.tutorialSerializeList.menuLockController.Unlock("League", true);
             GameObject battle = manager.tutorialSerializeList.BattleButton.gameObject;
             Instantiate(manager.handSpinePrefab, battle.transform, false);
         }

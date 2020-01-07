@@ -175,13 +175,7 @@ public class MenuCardHandler : MonoBehaviour {
             }
             transform.Find("NewCard").gameObject.SetActive(false);
         }
-        if (transform.parent.name == "Grid") {
-            MenuCardInfo.cardInfoWindow.SetCardInfo(cardData, isHuman, transform);
-        }
-        else {
-            MenuCardInfo.cardInfoWindow.SetCardInfo(cardData, isHuman, null);
-            MenuCardInfo.cardInfoWindow.transform.Find("CreateCard").gameObject.SetActive(false);
-        }
+        MenuCardInfo.cardInfoWindow.SetCardInfo(cardData, isHuman, transform);
         if (transform.parent.parent.parent.name == "HeroInfo" && transform.parent.parent.name != "SkillWindow") {
             exitTrigger2.SetActive(true);
             EscapeKeyController.escapeKeyCtrl.AddEscape(MenuCardInfo.cardInfoWindow.CloseHeroesCardInfo);

@@ -27,6 +27,11 @@ public class LoginController : MonoBehaviour {
         mmrchange.SetActive(true);
     }
 
+    private void OnDestroy() {
+        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, OnRequestUserInfoCallback);
+        AccountManager.Instance.tokenSetFinished -= OnTokenSetFinished;
+    }
+
     private void OnTokenSetFinished() {
         loginBtn.enabled = true;
     }

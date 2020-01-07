@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
 using dataModules;
+using System;
 
 public class MenuTutorialManager : SerializedMonoBehaviour {
     [FilePath] public string tutorialSetsPath;
@@ -144,22 +145,30 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
             case TutorialType.QUEST_SUB_SET_100:
                 arr_index = 11;
                 break;
+            case TutorialType.QUEST_SUB_SET_101:
+                arr_index = 12;
+                break;
         }
         if (arr_index == -1) return;
 
-        var selectedSets = sets[arr_index];
+        try {
+            var selectedSets = sets[arr_index];
 
-        var execs = GetComponents<MenuExecute>();
-        if (execs != null) {
-            foreach (var exec in (execs)) {
-                Destroy(exec);
+            var execs = GetComponents<MenuExecute>();
+            if (execs != null) {
+                foreach (var exec in (execs)) {
+                    Destroy(exec);
+                }
             }
+
+            if (executeHandler == null) executeHandler = gameObject.AddComponent<MenuExecuteHandler>();
+
+            if (executeHandler == null) return;
+            executeHandler.Initialize(selectedSets);
         }
-
-        if (executeHandler == null) executeHandler = gameObject.AddComponent<MenuExecuteHandler>();
-
-        if (executeHandler == null) return;
-        executeHandler.Initialize(selectedSets);
+        catch (Exception ex) {
+            Logger.LogError("Index : " + arr_index);
+        }
     }
 
     public enum TutorialType {
@@ -175,6 +184,7 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
         QUEST_SUB_SET_8 = 20,
         QUEST_SUB_SET_9 = 21,
         QUEST_SUB_SET_100 = 100,
+        QUEST_SUB_SET_101 = 101,
         NONE = 99
     }
 }

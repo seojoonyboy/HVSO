@@ -393,6 +393,12 @@
                         "args" : []
                     },
                     {
+                        "name" : "RequestUnlockQuest",
+                        "args" : [
+                            "2"
+                        ]
+                    },
+                    {
                         "name" : "OffHighlight",
                         "args" : []
                     },
@@ -646,6 +652,12 @@
                         ]
                     },
                     {
+                        "name" : "RequestUnlockQuest",
+                        "args" : [
+                            "5"
+                        ]
+                    },
+                    {
                         "name" : "Menu_Hide_Message",
                         "args" : []
                     },
@@ -681,12 +693,6 @@
                         "name": "Wait_Click",
                         "args": [
                           "screen"
-                        ]
-                    },
-                    {
-                        "name" : "RequestUnlockQuest",
-                        "args" : [
-                            "4"
                         ]
                     },
                     {
@@ -823,6 +829,26 @@
                     {
                         "name": "ForceToStory",
                         "args": [ ]
+                    },
+                    {
+                        "name": "DestroyLoadingModal",
+                        "args": []
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 101,
+        "description" : "QUEST_SUB_SET_101 (리그 대전 인게임 플레이 이후 대전준비화면 이동시키기)",
+        "innerDatas": [
+            {
+                "id" : 1,
+                "description" : null,
+                "methods" : [
+                    {
+                        "name": "ForceToBattleReady",
+                        "args": []
                     },
                     {
                         "name": "DestroyLoadingModal",

@@ -84,6 +84,13 @@ public class GameResultManager : MonoBehaviour {
     public void OnReturnBtn() {
         PlayMangement.instance.SocketHandler.SendMethod("end_game");
         FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
+
+        string prevSceneName = AccountManager.Instance.prevSceneName;
+        if(prevSceneName == "Story") { }
+        else if(prevSceneName == "League") {
+            AccountManager.Instance.prevSceneName = "Main";
+        }
+        else if(prevSceneName == "Solo") { }
     }
 
     /// <summary>
@@ -91,7 +98,8 @@ public class GameResultManager : MonoBehaviour {
     /// </summary>
     public void OnBattleReadyBtn() {
         AccountManager.Instance.visitDeckNow = 1;
-        OnReturnBtn();
+        PlayMangement.instance.SocketHandler.SendMethod("end_game");
+        FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE);
     }
 
     /// <summary>
@@ -567,7 +575,8 @@ public class GameResultManager : MonoBehaviour {
         slider.value = prevMMR;
         label.text = prevMMR + "/" + prevLeagueInfo.rankDetail.pointLessThen + " " + "(" + amount.ToString() + ")";
 
-        yield return LeagueAnimation(amount);
+        if (amount != 0)
+            yield return LeagueAnimation(amount);
 
 
         if (prevLeagueInfo.rankDetail.minorRankName != newLeagueInfo.rankDetail.minorRankName) {

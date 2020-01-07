@@ -213,6 +213,7 @@ public class SceneLoginController : MonoBehaviour
             PlayerPrefs.Save();
         }
         gameObject.SetActive(false);
+        webClient.Request(new IssueJWTReq());
         AccountManager.Instance.OnSignInResultModal();
     }
 }

@@ -90,7 +90,7 @@ namespace Quest {
             Array.ForEach(datas, x=>AddQuest(x));
         }
 
-        private void TutorialNoQuestShow() {
+        public void TutorialNoQuestShow() {
             bool needStart = PlayerPrefs.GetInt("FirstTutorialClear", 0) == 1 ? true : false;
             if(!needStart) return;
             QuestContentController noQuest = gameObject.AddComponent<QuestContentController>();
@@ -168,5 +168,6 @@ namespace Quest {
     public class TutorialShowList {
         public string method;
         public string[] args;
+        public bool isShowing = false;
     }
 }

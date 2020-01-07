@@ -47,6 +47,10 @@ public class BoxRewardManager : MonoBehaviour {
         OnBoxLoadFinished.AddListener(() => accountManager.RequestInventories());
     }
 
+    void OnDisable() {
+        StopAllCoroutines();
+    }
+
     void OnDestroy() {
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_OPENBOX, OnBoxOpenRequest);
     }
@@ -74,7 +78,9 @@ public class BoxRewardManager : MonoBehaviour {
             isSupplySliderInit = true;
         }
         else {
-            StartCoroutine(proceedSupplySlider(AccountManager.Instance.userResource.supplyStore));
+            if (gameObject.activeInHierarchy) {
+                StartCoroutine(proceedSupplySlider(AccountManager.Instance.userResource.supplyStore));
+            }
         }
     }
 
@@ -126,6 +132,7 @@ public class BoxRewardManager : MonoBehaviour {
         SetRewards(accountManager.rewardList);
         transform.Find("OpenBox").gameObject.SetActive(true);
     }
+
 
 
 

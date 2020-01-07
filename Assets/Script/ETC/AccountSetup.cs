@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using System;
 using Haegin;
 using HaeginGame;
@@ -23,10 +24,12 @@ using TMPro;
     public void Init() {
         WebClientInit();
         ButtonInit();
+        AccountManager.Instance.tokenSetFinished += delegate{};
     }
 
     public void Destory() {
         DestoryWebClient();
+        AccountManager.Instance.tokenSetFinished = null;
     }
 
     private void WebClientInit() {
@@ -45,6 +48,9 @@ using TMPro;
     }
 
     public void ButtonInit() {
+        facebookBtn.onClick.AddListener(OnFacebookLoginButtonClick);
+        gameCenterBtn.onClick.AddListener(OnGameCenterLoginButtonClick);
+        appleBtn.onClick.AddListener(OnSignInWithAppleButtonClick);
         TextMeshProUGUI facebookText = facebookBtn.GetComponentInChildren<TextMeshProUGUI>();
         TextMeshProUGUI gameCenterText = gameCenterBtn.GetComponentInChildren<TextMeshProUGUI>();
         TextMeshProUGUI appleText = appleBtn.GetComponentInChildren<TextMeshProUGUI>();
@@ -95,7 +101,13 @@ using TMPro;
         }
     }
 
-    void OnProcessing(ReqAndRes rar){ }
+    void OnProcessing(ReqAndRes rar){
+        if(ProtocolId.IssueJWT == rar.Res.ProtocolId) {
+            IssueJWTRes result = (IssueJWTRes)rar.Res;
+            AccountManager.Instance.TokenId = result.Token;
+            Modal.instantiate("계정 연동이 완료 되었습니다.\n화면을 다시 불러옵니다.", Modal.Type.CHECK, () => FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE));
+        }
+    }
 
     public void OnErrorOccurred(int error) {
         OnNetworkError();
@@ -130,7 +142,7 @@ using TMPro;
 #endif
     }
 
-    public void OnGameCenterLoginButtonClick(string param) {
+    public void OnGameCenterLoginButtonClick() {
 #if UNITY_IOS
 		Account.LoginAccount(Account.HaeginAccountType.AppleGameCenter, accountDialog.OpenSelectDialog, (bool result, WebClient.AuthCode code, TimeSpan blockRemainTime, long blockSuid) => {
 #if MDEBUG
@@ -153,12 +165,12 @@ using TMPro;
             Debug.Log("LogintAccount  result=" + result + "    code=" + code + " blockSuid=" + blockSuid);
 #endif
             if (result && code == WebClient.AuthCode.SUCCESS)
-                ActivateIssueJWT();
+                LoginComplete();
         });
 #endif
     }
 
-    public void OnSignInWithAppleButtonClick(string param) {
+    public void OnSignInWithAppleButtonClick() {
         Account.LoginAccount(Account.HaeginAccountType.AppleId, accountDialog.OpenSelectDialog, (bool result, WebClient.AuthCode code, TimeSpan blockRemainTime, long blockSuid) => {
 #if MDEBUG
             Debug.Log("LogintAccount  result=" + result + "    code=" + code + "  blockSuid=" + blockSuid);
@@ -168,7 +180,7 @@ using TMPro;
         });
     }
 
-    public void OnFacebookLoginButtonClick(string param)
+    public void OnFacebookLoginButtonClick()
     {
         if (FB.IsLoggedIn)
         {
@@ -188,6 +200,6 @@ using TMPro;
     }
 
     public void LoginComplete() {
-        ButtonInit();
+        webClient.Request(new IssueJWTReq());
     }
 }
