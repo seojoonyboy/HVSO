@@ -129,6 +129,7 @@ public class BoxRewardManager : MonoBehaviour {
 
 
 
+
     public void GetBoxResult() {
         if (openAni) return;
         transform.Find("ShowBox/Text").gameObject.SetActive(false);
