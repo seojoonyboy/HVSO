@@ -74,7 +74,7 @@ public class MenuLockController : SerializedMonoBehaviour {
         if (isAllUnlocked) {
             Logger.Log("///////////////////////");
             Logger.Log("모두 해금됨");
-
+            
             GetComponent<MenuSceneController>().CheckDailyQuest();
         }
     }
