@@ -11,6 +11,7 @@ public class BattleReadyHeaderController : SerializedMonoBehaviour {
     [SerializeField] GameObject normalUI, rankingBattleUI;
     [SerializeField] Image headerImg;
     [SerializeField] Sprite[] headerImages;
+    [SerializeField] GameObject rankingProgress;
 
     void OnDisable() {
         normalUI.SetActive(true);
@@ -28,8 +29,8 @@ public class BattleReadyHeaderController : SerializedMonoBehaviour {
         mmrName.text = data.rankDetail.minorRankName;
         //Image rankImg = rankObj.transform.Find("Image").GetComponent<Image>();
         //rankImg.sprite = GetRankImage(data.rankDetail.minorRankName);
-
-        SetRank(data.ratingPoint);
+        
+        SetRank(data);
         SetDescription(data);
         SetSubUI(data);
     }
@@ -46,8 +47,9 @@ public class BattleReadyHeaderController : SerializedMonoBehaviour {
     /// <summary>
     /// 랭킹 점수 세팅
     /// </summary>
-    public void SetRank(int mmr) {
-        StartCoroutine(_SetRank(mmr));
+    public void SetRank(AccountManager.LeagueInfo mmr) {
+        StartCoroutine(_SetRank(mmr.ratingPoint));
+        StartCoroutine(_SetRankProgress(mmr));
     }
 
     /// <summary>
@@ -122,6 +124,7 @@ public class BattleReadyHeaderController : SerializedMonoBehaviour {
     IEnumerator SetNormalUI(AccountManager.LeagueInfo data) {
         SetDescription(data);
         StartCoroutine(_SetRank(data.ratingPoint));
+        StartCoroutine(_SetRankProgress(data));
 
         normalUI.transform.Find("Rank/Image").GetComponent<Image>().sprite = GetRankImage(data.rankDetail.minorRankName);
         yield return 0;
@@ -176,5 +179,54 @@ public class BattleReadyHeaderController : SerializedMonoBehaviour {
         yield return 0;
         var mmrValue = normalUI.transform.Find("MMR/Value").GetComponent<Text>();
         mmrValue.text = mmr.ToString();
+
     }
+
+
+    IEnumerator _SetRankProgress(AccountManager.LeagueInfo mmr) {
+        AccountManager accountManager = AccountManager.Instance;
+        AccountManager.LeagueInfo currinfo = mmr;
+        AccountManager.LeagueInfo prevInfo = accountManager.scriptable_leagueData.prevLeagueInfo;
+        AccountManager.RankTableRow item = accountManager.rankTable.Find(x => x.minorRankName == prevInfo.rankDetail.minorRankName);
+
+        int prevRankIndex = -1;
+
+        int pointOverThen = prevInfo.rankDetail.pointOverThen;
+        int pointLessThen = prevInfo.rankDetail.pointLessThen;
+        int ratingPointTop = prevInfo.ratingPointTop ?? default(int);
+
+        Slider prevSlider = rankingProgress.transform.Find("PrevSlider").gameObject.GetComponent<Slider>();
+        Slider currSlider = rankingProgress.transform.Find("CurrentSlider").gameObject.GetComponent<Slider>();
+
+        Image rankUpIcon = rankingProgress.transform.Find("CurrentSlider/MMRUpStandardValue").gameObject.GetComponent<Image>();
+        Image rankDownIcon = rankingProgress.transform.Find("CurrentSlider/MMRDownStandardValue").gameObject.GetComponent<Image>();
+
+        TextMeshProUGUI rankUpText = rankingProgress.transform.Find("CurrentSlider/MMRUpStandardValue").gameObject.GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI rankDownText = rankingProgress.transform.Find("CurrentSlider/MMRDownStandardValue").gameObject.GetComponent<TextMeshProUGUI>();        
+
+        rankUpText.text = pointLessThen.ToString();
+        rankDownText.text = pointOverThen.ToString();
+
+        prevSlider.maxValue = pointLessThen - pointOverThen;
+        currSlider.maxValue = pointLessThen - pointOverThen;
+
+        prevSlider.value = ratingPointTop;
+        currSlider.value = prevInfo.ratingPoint - pointOverThen;
+
+        if (item != null) {
+            if (item.minorRankName == "무명 병사")
+                prevRankIndex = 1;
+            else if (item.minorRankName == "전략의 제왕")
+                prevRankIndex = accountManager.rankTable.Count - 1;
+            else
+                prevRankIndex = accountManager.rankTable.IndexOf(item);
+
+
+            rankDownIcon.sprite = AccountManager.Instance.resource.rankIcons[accountManager.rankTable[prevRankIndex - 1].minorRankName];
+            rankUpIcon.sprite = accountManager.resource.rankIcons[accountManager.rankTable[prevRankIndex + 1].minorRankName];
+        }
+        yield return true;
+    }
+
+
 }
