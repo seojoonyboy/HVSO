@@ -74,7 +74,7 @@ public class BoxRewardManager : MonoBehaviour {
             isSupplySliderInit = true;
         }
         else {
-            StartCoroutine(proceedSupplySlider(AccountManager.Instance.userResource.supplyStore));
+            //StartCoroutine(proceedSupplySlider(AccountManager.Instance.userResource.supplyStore));
         }
     }
 
