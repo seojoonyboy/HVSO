@@ -909,10 +909,14 @@ namespace MenuTutorialModules {
 
     public class ForceToStory : MenuExecute {
         public override void Execute() {
-            string prevName = AccountManager.Instance.prevSceneName;
-            if(prevName == "Story") {
-                GetComponent<MenuTutorialManager>().scenarioManager.gameObject.SetActive(true);
-            }
+            GetComponent<MenuTutorialManager>().scenarioManager.gameObject.SetActive(true);
+            handler.isDone = true;
+        }
+    }
+
+    public class ForceToBattleReady : MenuExecute {
+        public override void Execute() {
+            GetComponent<MenuTutorialManager>().BattleReadydeckListPanel.transform.root.gameObject.SetActive(true);
             handler.isDone = true;
         }
     }

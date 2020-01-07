@@ -217,6 +217,9 @@ public class MenuSceneController : MonoBehaviour {
             if (prevScene == "Story") {
                 StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_100);
             }
+            else if(prevScene == "League") {
+                StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_101);
+            }
             else {
                 needTutorial = false;
                 hideModal.SetActive(false);

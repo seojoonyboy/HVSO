@@ -37,8 +37,11 @@ public class BattleConnectSceneAnimController : MonoBehaviour {
         if(battleType == "story") {
             AccountManager.Instance.prevSceneName = "Story";
         }
-        else if(battleType == "league" || battleType == "leagueTest" || battleType == "solo") {
-            AccountManager.Instance.prevSceneName = "Ingame";
+        else if(battleType == "league" || battleType == "leagueTest") {
+            AccountManager.Instance.prevSceneName = "League";
+        }
+        else if(battleType == "solo") {
+            AccountManager.Instance.prevSceneName = "Solo";
         }
     }
 

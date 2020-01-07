@@ -145,6 +145,9 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
             case TutorialType.QUEST_SUB_SET_100:
                 arr_index = 11;
                 break;
+            case TutorialType.QUEST_SUB_SET_101:
+                arr_index = 12;
+                break;
         }
         if (arr_index == -1) return;
 
@@ -181,6 +184,7 @@ public class MenuTutorialManager : SerializedMonoBehaviour {
         QUEST_SUB_SET_8 = 20,
         QUEST_SUB_SET_9 = 21,
         QUEST_SUB_SET_100 = 100,
+        QUEST_SUB_SET_101 = 101,
         NONE = 99
     }
 }
