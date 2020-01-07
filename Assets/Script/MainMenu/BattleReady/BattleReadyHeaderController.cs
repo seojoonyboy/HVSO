@@ -198,11 +198,11 @@ public class BattleReadyHeaderController : SerializedMonoBehaviour {
         Slider prevSlider = rankingProgress.transform.Find("PrevSlider").gameObject.GetComponent<Slider>();
         Slider currSlider = rankingProgress.transform.Find("CurrentSlider").gameObject.GetComponent<Slider>();
 
-        Image rankUpIcon = rankingProgress.transform.Find("CurrnetSlider/MMRUpStandardIcon").gameObject.GetComponent<Image>();
-        Image rankDownIcon = rankingProgress.transform.Find("CurrnetSlider/MMRDownStandardIcon").gameObject.GetComponent<Image>();
+        Image rankUpIcon = rankingProgress.transform.Find("CurrentSlider/MMRUpStandardValue").gameObject.GetComponent<Image>();
+        Image rankDownIcon = rankingProgress.transform.Find("CurrentSlider/MMRDownStandardValue").gameObject.GetComponent<Image>();
 
-        TextMeshProUGUI rankUpText = rankingProgress.transform.Find("CurrnetSlider/MMRUpStandardValue").gameObject.GetComponent<TextMeshProUGUI>();
-        TextMeshProUGUI rankDownText = rankingProgress.transform.Find("CurrnetSlider/MMRDownStandardValue").gameObject.GetComponent<TextMeshProUGUI>();        
+        TextMeshProUGUI rankUpText = rankingProgress.transform.Find("CurrentSlider/MMRUpStandardValue").gameObject.GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI rankDownText = rankingProgress.transform.Find("CurrentSlider/MMRDownStandardValue").gameObject.GetComponent<TextMeshProUGUI>();        
 
         rankUpText.text = pointLessThen.ToString();
         rankDownText.text = pointOverThen.ToString();
