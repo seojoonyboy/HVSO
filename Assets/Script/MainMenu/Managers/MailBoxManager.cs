@@ -29,23 +29,15 @@ public class MailBoxManager : MonoBehaviour
         AccountManager.Instance.RequestMailBox();
 
         HUDController.SetHeader(HUDController.Type.ONLY_BAKCK_BUTTON);
-        HUDController.SetBackButton(() => { 
-            CloseMailBox();
-            HUDController.SetHeader(HUDController.Type.SHOW_USER_INFO);
-            if(tutoQuest != null) {
-                tutoQuest.quest
-                    .AddSpinetoButtonAndRemoveClick(
-                        tutoQuest.quest.manager.tutorialSerializeList.backButton, 
-                        tutoQuest.quest.BreakCardDictionaryTab
-                    );
-            }
-        });
+        HUDController.SetBackButton(CloseMailBox);
     }
 
     public void CloseMailBox() {
         CloseReceiveResult();
         gameObject.SetActive(false);
         EscapeKeyController.escapeKeyCtrl.RemoveEscape(CloseMailBox);
+        HUDController.SetHeader(HUDController.Type.SHOW_USER_INFO);
+        if(tutoQuest != null && tutoQuest.received) tutoQuest.quest.BreakCardDictionaryTab();
     }
 
     public void RequestMailOver(Enum Event_Type, Component Sender, object Param) {
@@ -58,19 +50,30 @@ public class MailBoxManager : MonoBehaviour
         public Quest.QuestContentController quest;
         public Button openBtn;
         public Button receiveBtn;
+        public bool pressed = false;
+        public bool received = false;
     }
 
     private void TutoQuest(Button openBtn, Button receiveBtn) {
         if(tutoQuest.quest == null) return;
         if(tutoQuest.openBtn != null) {
-            tutoQuest.quest.ResetMailOpen(tutoQuest.openBtn);
+            tutoQuest.openBtn.enabled = true;
         }
         if(tutoQuest.receiveBtn != null) {
-            tutoQuest.receiveBtn.enabled = true;
+            tutoQuest.receiveBtn.onClick.RemoveListener(PressTuto);
+            Transform hand = tutoQuest.receiveBtn.transform.Find("tutorialHand");
+            if(hand == null) return;
+            Destroy(hand.gameObject);
         }
         tutoQuest.openBtn = openBtn;
         tutoQuest.receiveBtn = receiveBtn;
-        tutoQuest.quest.MailOpen();
+        tutoQuest.quest.AddSpinetoButtonAndRemoveClick(tutoQuest.receiveBtn, PressTuto);
+        tutoQuest.openBtn.enabled = false;
+        tutoQuest.quest.manager.tutorialSerializeList.mailAllGetButton.interactable = false;
+    }
+
+    private void PressTuto() {
+        tutoQuest.pressed = true;
     }
 
     public void SetMailBox() {
@@ -121,7 +124,10 @@ public class MailBoxManager : MonoBehaviour
         Canvas.ForceUpdateCanvases();
         LayoutRebuilder.ForceRebuildLayoutImmediate(mailListParent.parent.GetComponent<RectTransform>());
         transform.Find("Block").gameObject.SetActive(false);
-        receiveAllBtn.interactable = count == 0 ? false : true; 
+        if(tutoQuest == null)
+            receiveAllBtn.interactable = count == 0 ? false : true; 
+        else
+            receiveAllBtn.interactable = false;
     }
 
     public void InitMailBox() {
@@ -260,6 +266,11 @@ public class MailBoxManager : MonoBehaviour
 
             yield return new WaitForSeconds(0.5f);
             slotList.GetChild(i / 3).GetChild(i % 3).Find("Reward/Effect").gameObject.SetActive(false);
+            ///TODO : 아이템 수령 애니메이션 완료 직후 작업 (튜토리얼)
+            if(tutoQuest != null && tutoQuest.pressed) {
+                tutoQuest.quest.SubSet4();
+                tutoQuest.received = true;
+            }
         }
     }
 

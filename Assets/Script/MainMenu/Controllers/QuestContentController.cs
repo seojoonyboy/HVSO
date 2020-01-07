@@ -158,34 +158,20 @@ namespace Quest {
         private async void GetPostOffice() {
             await Task.Delay(500);
             manager.tutorialSerializeList.newMail.SetActive(true);
-            manager.tutorialSerializeList.mailAllGetButton.interactable = false;
             manager.tutorialSerializeList.mailBoxManager.tutoQuest = new MailBoxManager.TutorialQuest();
             manager.tutorialSerializeList.mailBoxManager.tutoQuest.quest = this;
         }
 
-        public void MailOpen() {
-            AddSpinetoButtonAndRemoveClick(manager.tutorialSerializeList.mailBoxManager.tutoQuest.receiveBtn, SubSet4);
-            manager.tutorialSerializeList.mailBoxManager.tutoQuest.openBtn.enabled = false;
-        }
-
-        public void ResetMailOpen(Button btn) {
-            btn.onClick.RemoveListener(SubSet4);
-            Transform hand = btn.transform.Find("tutorialHand");
-            if(hand == null) return;
-            Destroy(hand.gameObject);
-        }
-
-        private async void SubSet4() {
-            manager.tutorialSerializeList.newMail.SetActive(false);
-            manager.tutorialSerializeList.mailBoxManager.tutoQuest.openBtn.enabled = true;
-            manager.tutorialSerializeList.mailAllGetButton.interactable = true;
-            manager.tutorialSerializeList.mailBoxManager.tutoQuest = null;
-            await Task.Delay(500);
+        public void SubSet4() {
+            Transform hand = manager.tutorialSerializeList.mailBoxManager.tutoQuest.receiveBtn.transform.Find("tutorialHand");
+            if(hand != null) Destroy(hand.gameObject);
             manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_4);
-            AddSpinetoButtonAndRemoveClick(manager.tutorialSerializeList.backButton, BreakCardDictionaryTab);
         }
 
         public void BreakCardDictionaryTab() {
+            manager.tutorialSerializeList.newMail.SetActive(false);
+            manager.tutorialSerializeList.mailBoxManager.tutoQuest.openBtn.enabled = true;
+            manager.tutorialSerializeList.mailBoxManager.tutoQuest = null;
             manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_9);
             PlayerPrefs.DeleteKey("FirstTutorialClear");
             PlayerPrefs.Save();
