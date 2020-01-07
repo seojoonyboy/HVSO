@@ -289,9 +289,4 @@ public class MyLeagueInfoCanvasController : MonoBehaviour {
         OffPanel();
     }
 
-    public void SetUpLeagueReward() {
-
-    }
-
-
 }
