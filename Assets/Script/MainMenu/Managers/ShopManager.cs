@@ -8,6 +8,7 @@ public class ShopManager : MonoBehaviour
 {
     [SerializeField] BoxRewardManager boxRewardManager;
     [SerializeField] Transform AdvertiseWindow;
+    [SerializeField] Transform ProductWindow;
     private IAPSetup iapSetup;
 
     int goldItemCount;
@@ -139,5 +140,14 @@ public class ShopManager : MonoBehaviour
     public void CloseAdvertiseList() {
         AdvertiseWindow.gameObject.SetActive(false);
         EscapeKeyController.escapeKeyCtrl.RemoveEscape(CloseAdvertiseList);
+    }
+
+    public void OpenProductWindow() {
+        ProductWindow.gameObject.SetActive(true);
+        EscapeKeyController.escapeKeyCtrl.AddEscape(CloseProductWindow);
+    }
+    public void CloseProductWindow() {
+        ProductWindow.gameObject.SetActive(false);
+        EscapeKeyController.escapeKeyCtrl.RemoveEscape(CloseProductWindow);
     }
 }

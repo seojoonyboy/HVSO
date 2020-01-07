@@ -68,7 +68,8 @@ namespace Quest {
         private void OnRewardReceived(Enum Event_Type, Component Sender, object Param) {
             var targetObj = (GameObject)Param;
             if(gameObject != targetObj) return;
-            Modal.instantiate("보상을 우편으로 발송하였습니다.", Modal.Type.CHECK);
+            if(data.questDetail.id.CompareTo("t1")== 0) Modal.instantiate("보상을 우편으로 발송하였습니다.", Modal.Type.CHECK, GetQuestItem);
+            else Modal.instantiate("보상을 우편으로 발송하였습니다.", Modal.Type.CHECK);
             //targetObj.GetComponent<QuestContentController>().getBtn.GetComponentInChildren<TextMeshProUGUI>().text = "획득완료";
             //targetObj.GetComponent<QuestContentController>().getBtn.enabled = false;
         }
@@ -137,14 +138,14 @@ namespace Quest {
         }
 
         private void ShowHandIcon() {
-            AddSpinetoButtonAndRemoveClick(getBtn, GetQuestItem);
+            AddSpinetoButtonAndRemoveClick(getBtn);
         }
 
-        private async void GetQuestItem() {
-            await Task.Delay(500);
+        private void GetQuestItem() {
             manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_3);
             PlayerPrefs.SetInt("FirstTutorialClear", 1);
             PlayerPrefs.Save();
+            manager.TutorialNoQuestShow();
         }
 
         public bool StartMailTutorial(string[] args) {
