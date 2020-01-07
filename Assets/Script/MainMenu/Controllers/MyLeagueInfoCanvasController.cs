@@ -288,4 +288,10 @@ public class MyLeagueInfoCanvasController : MonoBehaviour {
         hudController.SetHeader(HUDController.Type.SHOW_USER_INFO);
         OffPanel();
     }
+
+    public void SetUpLeagueReward() {
+
+    }
+
+
 }
