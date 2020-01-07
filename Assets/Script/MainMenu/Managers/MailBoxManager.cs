@@ -203,6 +203,13 @@ public class MailBoxManager : MonoBehaviour
             itemList = rewardList;
         else
             itemList = AccountManager.Instance.mailRewardList;
+
+        for (int i = 0; i < AccountManager.Instance.mailRewardList.Count; i++) {
+            slotList.GetChild(i / 3).gameObject.SetActive(true);
+            slotList.GetChild(i / 3).GetChild(i % 3).gameObject.SetActive(true);
+            slotList.GetChild(i / 3).GetChild(i % 3).Find("NameOrNum").GetComponent<TMPro.TextMeshProUGUI>().text = string.Empty;
+        }
+
         for (int i = 0; i < AccountManager.Instance.mailRewardList.Count; i++) {
             var effectObj = slotList.GetChild(i / 3).GetChild(i % 3).Find("Reward/Effect");
             effectObj.gameObject.SetActive(true);
@@ -215,8 +222,6 @@ public class MailBoxManager : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
 
             Transform target;
-            slotList.GetChild(i / 3).gameObject.SetActive(true);
-            slotList.GetChild(i / 3).GetChild(i % 3).gameObject.SetActive(true);
             if (itemList[i].kind.Contains("card")) {
                 target = slotList.GetChild(i / 3).GetChild(i % 3).Find("Reward/RewardCard");
                 
@@ -258,9 +263,9 @@ public class MailBoxManager : MonoBehaviour
             else
                 transform.Find("Content/ReceivedReward/Buttons/Next").gameObject.SetActive(false);
 
-            yield return new WaitForSeconds(0.5f);
-            slotList.GetChild(i / 3).GetChild(i % 3).Find("Reward/Effect").gameObject.SetActive(false);
+            yield return new WaitForSeconds(0.3f);
         }
+        //slotList.GetChild(i / 3).GetChild(i % 3).Find("Reward/Effect").gameObject.SetActive(false);
     }
 
     IEnumerator SetRewardAnimation() {
