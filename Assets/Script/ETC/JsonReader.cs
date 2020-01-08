@@ -210,4 +210,28 @@ namespace dataModules {
         public string cardId;
         public int crystal;
     }
+
+
+    public class ShopAds {
+        public int id;
+        public string name;
+        public AdReward[] rewards;
+    }
+
+    public class AdReward {
+        public string kind;
+        public int amount;
+        public bool claimed;
+    }
+
+    public class AdRewardRequestResult {
+        public bool claimComplete;
+        public AdRewardItem[] items;
+    }
+
+    public class AdRewardItem {
+        public string kind;
+        public int amount;
+        public List<RewardClass>[] boxes;
+    }
 }

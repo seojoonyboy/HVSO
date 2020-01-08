@@ -48,6 +48,8 @@ public partial class AccountManager : Singleton<AccountManager> {
     public UserResourceManager userResource;
     public RewardClass[] rewardList;
     public DictionaryInfo dicInfo;
+    public ShopAds shopAdsList;
+    public AdRewardRequestResult adRewardResult;
 
 
     NetworkManager networkManager;
@@ -788,19 +790,65 @@ public partial class AccountManager {
         networkManager.Request(request, (req, res) => {
             if (res.IsSuccess) {
                 if (res.StatusCode == 200 || res.StatusCode == 304) {
-                    NoneIngameSceneEventHandler
+                    if(placement.getPlacementName() == "shop") {
+                        var result = dataModules.JsonReader.Read<AdRewardRequestResult>(res.DataAsText);
+                        adRewardResult = result;
+                        NoneIngameSceneEventHandler
+                        .Instance
+                        .PostNotification(
+                            NoneIngameSceneEventHandler.EVENT_TYPE.API_ADREWARD_SHOP,
+                            null,
+                            res
+                        );
+                    }
+                    else if(placement.getPlacementName() == "main") {
+                        NoneIngameSceneEventHandler
                         .Instance
                         .PostNotification(
                             NoneIngameSceneEventHandler.EVENT_TYPE.API_ADREWARD_MAIN,
                             null,
                             res
                         );
+                    }
                 }
             }
             else {
                 Logger.LogWarning("광고 보상 받기 실패");
             }
         }, "광고 보상 불러오는 중...");
+    }
+
+
+    public void RequestShopAds() {
+        StringBuilder sb = new StringBuilder();
+        sb
+            .Append(networkManager.baseUrl)
+            .Append("api/shop/ad_rewards");
+
+        HTTPRequest request = new HTTPRequest(new Uri(sb.ToString()));
+        request.MethodType = HTTPMethods.Get;
+        request.AddHeader("authorization", TokenFormat);
+
+        networkManager.Request(request, (req, res) => {
+            if (res.IsSuccess) {
+                if (res.StatusCode == 200 || res.StatusCode == 304) {
+                    var result = dataModules.JsonReader.Read<ShopAds>(res.DataAsText);
+                    shopAdsList = result;
+
+                    SetCardData();
+                    NoneIngameSceneEventHandler
+                        .Instance
+                        .PostNotification(
+                            NoneIngameSceneEventHandler.EVENT_TYPE.API_AD_SHOPLIST,
+                            null,
+                            res
+                        );
+                }
+            }
+            else {
+                Logger.LogWarning("상점 광고 정보 가져오기 실패");
+            }
+        }, "상점 광고 정보를 불러오는 중...");
     }
 
 

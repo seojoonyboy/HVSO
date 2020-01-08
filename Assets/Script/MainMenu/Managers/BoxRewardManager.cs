@@ -35,6 +35,7 @@ public class BoxRewardManager : MonoBehaviour {
     protected bool openAni = false;
     protected int openCount;
     protected float beforeBgmVolume;
+    protected int countOfRewards;
 
     bool isSupplySliderInit = false;
     void Awake() {
@@ -115,7 +116,6 @@ public class BoxRewardManager : MonoBehaviour {
     public virtual void SetBoxAnimation() {
         InitBoxObjects();
         transform.Find("ShowBox").gameObject.SetActive(true);
-        transform.Find("ShowBox/BoxSpine/Image/Num").GetComponent<Text>().text = "3";
         openCount = 0;
         boxSpine.Initialize(true);
         boxSpine.Update(0);
@@ -130,53 +130,63 @@ public class BoxRewardManager : MonoBehaviour {
         transform.Find("ShowBox/BoxSpine/Image").GetComponent<BoneFollowerGraphic>().boneName = "card";
         //SoundManager.Instance.PlaySound(UISfxSound.BOXOPEN);
         SetRewards(accountManager.rewardList);
+        countOfRewards = accountManager.rewardList.Length;
+        transform.Find("ShowBox/BoxSpine/Image/Num").GetComponent<Text>().text = countOfRewards.ToString();
         transform.Find("OpenBox").gameObject.SetActive(true);
     }
 
-
+    public virtual void SetRewardBoxAnimation(RewardClass[] reward) {
+        InitBoxObjects();
+        transform.Find("ShowBox").gameObject.SetActive(true);
+        openCount = 0;
+        boxSpine.Initialize(true);
+        boxSpine.Update(0);
+        SoundManager.Instance.PlaySound(UISfxSound.BOX_APPEAR);
+        boxSpine.AnimationState.SetAnimation(0, "01.START", false);
+        boxSpine.AnimationState.AddAnimation(1, "02.IDLE", true, 0.5f);
+        boxEffect.Initialize(true);
+        boxEffect.Update(0);
+        boxEffect.gameObject.SetActive(true);
+        boxEffect.AnimationState.SetAnimation(0, "00.NOANI", false);
+        transform.Find("ShowBox/BoxSpine/Image").GetComponent<BoneFollowerGraphic>().Initialize();
+        transform.Find("ShowBox/BoxSpine/Image").GetComponent<BoneFollowerGraphic>().boneName = "card";
+        //SoundManager.Instance.PlaySound(UISfxSound.BOXOPEN);
+        SetRewards(reward);
+        countOfRewards = reward.Length;
+        transform.Find("ShowBox/BoxSpine/Image/Num").GetComponent<Text>().text = countOfRewards.ToString();
+        transform.Find("OpenBox").gameObject.SetActive(true);
+    }
 
 
     public void GetBoxResult() {
         if (openAni) return;
         transform.Find("ShowBox/Text").gameObject.SetActive(false);
         transform.Find("OpenBox/TargetSpine").gameObject.SetActive(false);
-        switch (openCount) {
-            case 0:
-                boxSpine.AnimationState.SetAnimation(2, "03.TOUCH1", false);
-                boxEffect.AnimationState.SetAnimation(1, "01.open", false);
-                boxEffect.AnimationState.AddAnimation(2, "loop", true, 1.2f);
-                break;
-            case 1:
-                transform.Find("OpenBox").GetChild(openCount - 1).gameObject.SetActive(false);
-                transform.Find("OpenBox").GetChild(openCount - 1).localScale = Vector3.zero;
-                boxSpine.AnimationState.SetAnimation(2, "04.TOUCH2", false);
-                boxEffect.AnimationState.SetAnimation(3, "02.open", false);
-                boxEffect.AnimationState.AddAnimation(4, "loop", true, 1.0f);
-                break;
-            case 2:
-                transform.Find("OpenBox").GetChild(openCount - 1).gameObject.SetActive(false);
-                transform.Find("OpenBox").GetChild(openCount - 1).localScale = Vector3.zero;
-                boxSpine.AnimationState.SetAnimation(2, "04.TOUCH2", false);
-                boxEffect.AnimationState.SetAnimation(5, "02.open", false);
-                boxEffect.AnimationState.AddAnimation(6, "loop", true, 1.0f);
-                break;
-            case 3:
-                //transform.Find("OpenBox").GetChild(openCount - 1).gameObject.SetActive(false);
-                //transform.Find("OpenBox").GetChild(openCount - 1).localScale = Vector3.zero;
-                //boxSpine.AnimationState.SetAnimation(2, "04.TOUCH2", false);
-                //boxEffect.AnimationState.SetAnimation(7, "03.open", false);
-            case 4:
-
-                openCount = 4;
-
-                StartCoroutine(BoxTotalResult());
-                openCount++;
-                skipBtn.SetActive(false);
-                return;
-            case 5:
-                //CloseBoxOpen();
-                return;
+        if(openCount == 0) {
+            boxSpine.AnimationState.SetAnimation(2, "03.TOUCH1", false);
+            boxEffect.AnimationState.SetAnimation(1, "01.open", false);
+            boxEffect.AnimationState.AddAnimation(2, "loop", true, 1.2f);
         }
+        if(openCount != 0 && openCount + 1 < countOfRewards) {
+            transform.Find("OpenBox").GetChild(openCount - 1).gameObject.SetActive(false);
+            transform.Find("OpenBox").GetChild(openCount - 1).localScale = Vector3.zero;
+            boxSpine.AnimationState.SetAnimation(2, "04.TOUCH2", false);
+            boxEffect.AnimationState.SetAnimation(1 + (openCount * 2), "02.open", false);
+            boxEffect.AnimationState.AddAnimation(2 + (openCount * 2), "loop", true, 1.0f);
+        }
+        if (openCount != 0 && openCount + 1 == countOfRewards) {
+            transform.Find("OpenBox").GetChild(openCount - 1).gameObject.SetActive(false);
+            transform.Find("OpenBox").GetChild(openCount - 1).localScale = Vector3.zero;
+            boxSpine.AnimationState.SetAnimation(2, "04.TOUCH2", false);
+            boxEffect.AnimationState.SetAnimation(1 + (openCount * 2), "03.open", false);
+        }
+        if(openCount == countOfRewards) {
+            StartCoroutine(BoxTotalResult());
+            openCount++;
+            skipBtn.SetActive(false);
+            return;
+        }
+
         if(openCount == 0)
             SoundManager.Instance.PlaySound(UISfxSound.BOXOPEN);
         else
@@ -202,7 +212,7 @@ public class BoxRewardManager : MonoBehaviour {
         transform.Find("ShowBox/BoxSpine/Image/Num").GetComponent<Text>().text = 0.ToString();
         SetSkipBackSpine();
         StartCoroutine(BoxTotalResult());
-        openCount = 5;
+        openCount = countOfRewards + 1;
         skipBtn.SetActive(false);
     }
 
@@ -217,7 +227,7 @@ public class BoxRewardManager : MonoBehaviour {
     }
 
     public void SetSkipBackSpine() {
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 8; i++) {
             Transform target = transform.Find("OpenBox").GetChild(i).GetChild(1);
             SkeletonGraphic backSpine = target.parent.Find("back").GetComponent<SkeletonGraphic>();
             backSpine.Initialize(true);
@@ -259,7 +269,7 @@ public class BoxRewardManager : MonoBehaviour {
     public void InitBoxObjects() {
         skipBtn.SetActive(true);
         Transform boxParent = transform.Find("OpenBox");
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 8; i++) {
             Transform reward = boxParent.GetChild(i);
             reward.gameObject.SetActive(true);
             reward.localScale = Vector3.zero;
@@ -301,7 +311,7 @@ public class BoxRewardManager : MonoBehaviour {
             yield return new WaitForSeconds(0.95f);
         else
             yield return new WaitForSeconds(0.5f);
-        transform.Find("ShowBox/BoxSpine/Image/Num").GetComponent<Text>().text = (3 - openCount).ToString();
+        transform.Find("ShowBox/BoxSpine/Image/Num").GetComponent<Text>().text = (countOfRewards - openCount).ToString();
         Transform targetBox = transform.Find("OpenBox").GetChild(count);
         Transform target = targetBox.GetChild(1);
         iTween.ScaleTo(target.parent.gameObject, iTween.Hash("x", 1.6, "y", 1.6, "islocal", true, "time", 0.4f));
@@ -426,13 +436,13 @@ public class BoxRewardManager : MonoBehaviour {
             yield return new WaitForSeconds(0.9f);
         boxEffect.gameObject.SetActive(false);
         Transform boxParent = transform.Find("OpenBox");
-        boxParent.GetChild(2).localScale = Vector3.zero;
-        boxParent.GetChild(2).gameObject.SetActive(false);
-        for (int i = 0; i < 3; i++) {
+        boxParent.GetChild(countOfRewards - 1).localScale = Vector3.zero;
+        boxParent.GetChild(countOfRewards - 1).gameObject.SetActive(false);
+        for (int i = 0; i < countOfRewards; i++) {
             Transform reward = boxParent.GetChild(i);
             Transform rewardTarget = reward.GetChild(1);
             reward.gameObject.SetActive(true);
-            reward.position = lastPos.GetChild(i).position;
+            reward.position = lastPos.Find(countOfRewards.ToString()).GetChild(i).position;
             reward.Find("Name").gameObject.SetActive(false);
             reward.Find("Rarelity").localScale = Vector3.zero;
             reward.Find("Rarelity").GetChild(0).gameObject.SetActive(false);

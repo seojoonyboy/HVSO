@@ -16,15 +16,21 @@ public class ShopManager : MonoBehaviour
     int supplyBoxCount;
     bool buyBox = false;
     bool buying = false;
+    string adRewardKind;
+
     private void Start() {
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_SHOP_ITEM_BUY, OpenBoxByBuying);
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, BuyFinished) ;
+        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_AD_SHOPLIST, SetAdWindow);
+        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_ADREWARD_SHOP, OpenAdRewardWindow);
         iapSetup = IAPSetup.Instance;
     }
 
     private void OnDestroy() {
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_SHOP_ITEM_BUY, OpenBoxByBuying);
         NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, BuyFinished);
+        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_AD_SHOPLIST, SetAdWindow);
+        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_ADREWARD_SHOP, OpenAdRewardWindow);
         iapSetup = null;
     }
 
@@ -135,12 +141,65 @@ public class ShopManager : MonoBehaviour
 
     public void OpenAdvertiseList() {
         AdvertiseWindow.gameObject.SetActive(true);
+        AdvertiseWindow.Find("Block").gameObject.SetActive(true);
+        AccountManager.Instance.RequestShopAds();
         EscapeKeyController.escapeKeyCtrl.AddEscape(CloseAdvertiseList);
     }
     public void CloseAdvertiseList() {
         AdvertiseWindow.gameObject.SetActive(false);
         EscapeKeyController.escapeKeyCtrl.RemoveEscape(CloseAdvertiseList);
     }
+
+    public void SetAdWindow(Enum Event_Type, Component Sender, object Param) {
+        AdvertiseWindow.Find("Block").gameObject.SetActive(false);
+        Transform adBtnList = AdvertiseWindow.Find("Ads");
+        dataModules.ShopAds ads = AccountManager.Instance.shopAdsList;
+        bool open = false;
+        for(int i = 0; i < ads.rewards.Length; i++) {
+            if (!ads.rewards[i].claimed && !open) {
+                open = true;
+                adBtnList.GetChild(i).Find("Block").gameObject.SetActive(false);
+            }
+            else {
+                adBtnList.GetChild(i).Find("Block").gameObject.SetActive(true);
+            }
+        }
+    }
+
+    public void OpenAdRewardWindow(Enum Event_Type, Component Sender, object Param) {
+        if (!AccountManager.Instance.adRewardResult.claimComplete) return;
+        Transform rewardWindow = AdvertiseWindow.Find("Reward");
+        rewardWindow.gameObject.SetActive(true);
+        adRewardKind = AccountManager.Instance.adRewardResult.items[0].kind;
+        if (adRewardKind.Contains("Box"))
+            adRewardKind = "supplyBox";
+        rewardWindow.Find("Resource").GetComponent<Image>().sprite 
+            = AccountManager.Instance.resource.rewardIcon["ad_" + adRewardKind];        
+        string resourceName = "";
+        switch (adRewardKind) {
+            case "crystal":
+                resourceName = "마력 수정";
+                break;
+            case "x2Coupon":
+                resourceName = "2배 쿠폰";
+                break;
+            case "supplyBox":
+                resourceName = "보급 상자";
+                break;
+        }
+        rewardWindow.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = resourceName;
+        rewardWindow.Find("Value").GetComponent<TMPro.TextMeshProUGUI>().text = "x" + AccountManager.Instance.adRewardResult.items[0].amount.ToString();
+        EscapeKeyController.escapeKeyCtrl.AddEscape(CloseRewardWindow);
+    }
+    public void CloseRewardWindow() {
+        AdvertiseWindow.Find("Block").gameObject.SetActive(true);
+        AdvertiseWindow.Find("Reward").gameObject.SetActive(false);
+        if (adRewardKind == "supplyBox")
+            boxRewardManager.SetRewardBoxAnimation(AccountManager.Instance.adRewardResult.items[0].boxes[0].ToArray());
+        AccountManager.Instance.RequestShopAds();
+        EscapeKeyController.escapeKeyCtrl.RemoveEscape(CloseRewardWindow);
+    }
+
 
     public void OpenProductWindow() {
         ProductWindow.gameObject.SetActive(true);
