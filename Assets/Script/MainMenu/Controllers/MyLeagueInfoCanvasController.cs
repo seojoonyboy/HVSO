@@ -102,9 +102,9 @@ public class MyLeagueInfoCanvasController : MonoBehaviour {
     }
 
     IEnumerator MMRChangeProceed() {
-        //currentMMRValue.text = prevLeagueInfo.ratingPoint.ToString();
-        //currentMMRIndicator.text = prevLeagueInfo.ratingPoint.ToString();
-        //mmrName.text = prevLeagueInfo.rankDetail.minorRankName;
+        currentMMRValue.text = prevLeagueInfo.ratingPoint.ToString();
+        currentMMRIndicator.text = prevLeagueInfo.ratingPoint.ToString();
+        mmrName.text = prevLeagueInfo.rankDetail.minorRankName;
         //MMRDownStandardValue.text = prevLeagueInfo.rankDetail.pointOverThen.ToString();
         //MMRUpStandardValue.text = prevLeagueInfo.rankDetail.pointLessThen.ToString();
 
@@ -117,8 +117,8 @@ public class MyLeagueInfoCanvasController : MonoBehaviour {
         //prevMaxMMRSlider.value = ratingPointTop;
         //currentMMRSlider.value = prevLeagueInfo.ratingPoint - pointOverThen;
 
-        //rankIcon.sprite = accountManager.resource.rankIcons[prevLeagueInfo.rankDetail.minorRankName];
-        //currentMMRIndicator.text = prevLeagueInfo.ratingPoint.ToString();
+        rankIcon.sprite = accountManager.resource.rankIcons[prevLeagueInfo.rankDetail.minorRankName];
+        currentMMRIndicator.text = prevLeagueInfo.ratingPoint.ToString();
 
         //var item = accountManager.rankTable.Find(x => x.minorRankName == prevLeagueInfo.rankDetail.minorRankName);
         //int prevRankIndex = -1;

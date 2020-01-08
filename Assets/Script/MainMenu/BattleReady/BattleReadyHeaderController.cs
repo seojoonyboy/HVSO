@@ -49,7 +49,7 @@ public class BattleReadyHeaderController : SerializedMonoBehaviour {
     /// </summary>
     public void SetRank(AccountManager.LeagueInfo mmr) {
         StartCoroutine(_SetRank(mmr.ratingPoint));
-        StartCoroutine(_SetRankProgress(mmr));
+        //StartCoroutine(_SetRankProgress(mmr));
     }
 
     /// <summary>
@@ -124,7 +124,7 @@ public class BattleReadyHeaderController : SerializedMonoBehaviour {
     IEnumerator SetNormalUI(AccountManager.LeagueInfo data) {
         SetDescription(data);
         StartCoroutine(_SetRank(data.ratingPoint));
-        StartCoroutine(_SetRankProgress(data));
+        //StartCoroutine(_SetRankProgress(data));
 
         normalUI.transform.Find("Rank/Image").GetComponent<Image>().sprite = GetRankImage(data.rankDetail.minorRankName);
         yield return 0;
@@ -195,23 +195,23 @@ public class BattleReadyHeaderController : SerializedMonoBehaviour {
         int pointLessThen = prevInfo.rankDetail.pointLessThen;
         int ratingPointTop = prevInfo.ratingPointTop ?? default(int);
 
-        Slider prevSlider = rankingProgress.transform.Find("PrevSlider").gameObject.GetComponent<Slider>();
-        Slider currSlider = rankingProgress.transform.Find("CurrentSlider").gameObject.GetComponent<Slider>();
+        //Slider prevSlider = rankingProgress.transform.Find("PrevSlider").gameObject.GetComponent<Slider>();
+        //Slider currSlider = rankingProgress.transform.Find("CurrentSlider").gameObject.GetComponent<Slider>();
 
-        Image rankUpIcon = rankingProgress.transform.Find("CurrentSlider/MMRUpStandardValue").gameObject.GetComponent<Image>();
-        Image rankDownIcon = rankingProgress.transform.Find("CurrentSlider/MMRDownStandardValue").gameObject.GetComponent<Image>();
+        //Image rankUpIcon = rankingProgress.transform.Find("CurrentSlider/MMRUpStandardValue").gameObject.GetComponent<Image>();
+        //Image rankDownIcon = rankingProgress.transform.Find("CurrentSlider/MMRDownStandardValue").gameObject.GetComponent<Image>();
 
-        TextMeshProUGUI rankUpText = rankingProgress.transform.Find("CurrentSlider/MMRUpStandardValue").gameObject.GetComponent<TextMeshProUGUI>();
-        TextMeshProUGUI rankDownText = rankingProgress.transform.Find("CurrentSlider/MMRDownStandardValue").gameObject.GetComponent<TextMeshProUGUI>();        
+        //TextMeshProUGUI rankUpText = rankingProgress.transform.Find("CurrentSlider/MMRUpStandardValue").gameObject.GetComponent<TextMeshProUGUI>();
+        //TextMeshProUGUI rankDownText = rankingProgress.transform.Find("CurrentSlider/MMRDownStandardValue").gameObject.GetComponent<TextMeshProUGUI>();        
 
-        rankUpText.text = pointLessThen.ToString();
-        rankDownText.text = pointOverThen.ToString();
+        //rankUpText.text = pointLessThen.ToString();
+        //rankDownText.text = pointOverThen.ToString();
 
-        prevSlider.maxValue = pointLessThen - pointOverThen;
-        currSlider.maxValue = pointLessThen - pointOverThen;
+        //prevSlider.maxValue = pointLessThen - pointOverThen;
+        //currSlider.maxValue = pointLessThen - pointOverThen;
 
-        prevSlider.value = ratingPointTop;
-        currSlider.value = prevInfo.ratingPoint - pointOverThen;
+        //prevSlider.value = ratingPointTop;
+        //currSlider.value = prevInfo.ratingPoint - pointOverThen;
 
         if (item != null) {
             if (item.minorRankName == "무명 병사")
@@ -222,8 +222,8 @@ public class BattleReadyHeaderController : SerializedMonoBehaviour {
                 prevRankIndex = accountManager.rankTable.IndexOf(item);
 
 
-            rankDownIcon.sprite = AccountManager.Instance.resource.rankIcons[accountManager.rankTable[prevRankIndex - 1].minorRankName];
-            rankUpIcon.sprite = accountManager.resource.rankIcons[accountManager.rankTable[prevRankIndex + 1].minorRankName];
+            //rankDownIcon.sprite = AccountManager.Instance.resource.rankIcons[accountManager.rankTable[prevRankIndex - 1].minorRankName];
+            //rankUpIcon.sprite = accountManager.resource.rankIcons[accountManager.rankTable[prevRankIndex + 1].minorRankName];
         }
         yield return true;
     }
