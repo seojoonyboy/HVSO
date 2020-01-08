@@ -282,7 +282,7 @@ public class MailBoxManager : MonoBehaviour
 
     IEnumerator SetRewardAnimation() {
         Transform mail_transform = transform.GetChild(0).Find("ReceivedReward/Mail_Reward");
-        Spine.Unity.SkeletonGraphic mail_animation = mail_transform.gameObject.GetComponent<Spine.Unity.SkeletonGraphic>();
+        SkeletonGraphic mail_animation = mail_transform.gameObject.GetComponent<SkeletonGraphic>();
         mail_animation.Initialize(false);
         mail_animation.Update(0);
         mail_animation.AnimationState.SetAnimation(0, "NOMAL", false);
