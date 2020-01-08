@@ -19,7 +19,7 @@ namespace Quest {
         [SerializeField] private Button getBtn;
         [SerializeField] private Button rerollBtn;
         [SerializeField] private Transform rewardUIParent;
-        [SerializeField] private GameObject fakeItem, poolObject;
+        [SerializeField] public GameObject fakeItem, poolObject;
 
         [SerializeField] private Transform endPosition;
         [SerializeField] private Transform scrollViewContent;
@@ -207,11 +207,6 @@ namespace Quest {
             
             Destroy(clone);
             animator.enabled = false;
-            
-            GetComponent<RectTransform>().sizeDelta = new Vector2(
-                fakeItem.GetComponent<RectTransform>().sizeDelta.x, 
-                fakeItem.GetComponent<RectTransform>().sizeDelta.y
-            );
         }
 
         public bool StartMailTutorial(string[] args) {

@@ -57,6 +57,12 @@ namespace Quest {
         public void AddQuest(QuestData data) {
             QuestContentController quest = quests.Find(x=>!x.gameObject.activeSelf);
 
+            
+            quest.GetComponent<RectTransform>().sizeDelta = new Vector2(
+                quest.fakeItem.GetComponent<RectTransform>().sizeDelta.x,
+                quest.fakeItem.GetComponent<RectTransform>().sizeDelta.y
+            );
+
             quest.GetComponent<Image>().enabled = true;
             foreach (Transform tf in quest.transform) {
                 tf.gameObject.SetActive(true);
