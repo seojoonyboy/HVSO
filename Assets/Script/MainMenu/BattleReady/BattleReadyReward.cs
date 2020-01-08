@@ -43,7 +43,7 @@ public class BattleReadyReward : MonoBehaviour
     }
 
     private void ShowGauge(AccountManager.Reward frontReward, int pos) {
-        Button rewardButton = rewardTransform.gameObject.GetComponent<Button>();
+        //Button rewardButton = rewardTransform.gameObject.GetComponent<Button>();
         AccountManager.LeagueInfo currinfo = AccountManager.Instance.scriptable_leagueData.leagueInfo;
         AccountManager.LeagueInfo prevInfo = AccountManager.Instance.scriptable_leagueData.prevLeagueInfo;
 
