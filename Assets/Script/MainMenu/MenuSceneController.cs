@@ -335,7 +335,7 @@ public class MenuSceneController : MonoBehaviour {
             AccountManager.Instance.visitDeckNow = 0;
         }
 
-        var SelectedBattleButton = PlayerPrefs.GetString("SelectedBattleButton");
+        var SelectedBattleButton = PlayerPrefs.GetString("SelectedBattleButton", "STORY");
         if(SelectedBattleButton == "STORY") {
             battleMenuController.SetMainMenuDirectPlayButton(1);
         }

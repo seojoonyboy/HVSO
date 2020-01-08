@@ -57,6 +57,12 @@ public class AccountDialogController : MonoBehaviour
                 break;
             case Account.DialogType.Select:
                 {
+                    //첫 로그인에 소셜 계정 연동 시 선택 무조건 YES YES YES
+                    if(PlayerPrefs.GetInt("isFirst", 2) != 0) {
+                        callback(Account.SelectButton.YES);
+                        PlayerPrefs.SetInt("isFirst", 0);
+                        break;
+                    }
                     GameObject SelectDialog = (GameObject)Instantiate(selectDialog);
                     SelectDialog.transform.SetParent(canvas.transform);
                     SelectDialog.GetComponent<RectTransform>().localPosition = new Vector3(0, 0, 0);
