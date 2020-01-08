@@ -12,6 +12,7 @@ public class MyLeagueInfoCanvasController : MonoBehaviour {
     [SerializeField] GameObject rankingPool;
     [SerializeField] HUDController hudController;
     [SerializeField] BattleReadySceneController battleReadySceneController;
+    [SerializeField] RewardsProvider rewardsProvider;
 
     NoneIngameSceneEventHandler eventHandler;
     AccountManager accountManager;
@@ -91,6 +92,7 @@ public class MyLeagueInfoCanvasController : MonoBehaviour {
         prevLeagueInfo = accountManager.scriptable_leagueData.prevLeagueInfo;
 
         StartCoroutine(ShowLeagueInfoChange());
+        rewardsProvider.Provide();
     }
 
     IEnumerator ShowLeagueInfoChange() {
@@ -100,41 +102,41 @@ public class MyLeagueInfoCanvasController : MonoBehaviour {
     }
 
     IEnumerator MMRChangeProceed() {
-        currentMMRValue.text = prevLeagueInfo.ratingPoint.ToString();
-        currentMMRIndicator.text = prevLeagueInfo.ratingPoint.ToString();
-        mmrName.text = prevLeagueInfo.rankDetail.minorRankName;
-        MMRDownStandardValue.text = prevLeagueInfo.rankDetail.pointOverThen.ToString();
-        MMRUpStandardValue.text = prevLeagueInfo.rankDetail.pointLessThen.ToString();
+        //currentMMRValue.text = prevLeagueInfo.ratingPoint.ToString();
+        //currentMMRIndicator.text = prevLeagueInfo.ratingPoint.ToString();
+        //mmrName.text = prevLeagueInfo.rankDetail.minorRankName;
+        //MMRDownStandardValue.text = prevLeagueInfo.rankDetail.pointOverThen.ToString();
+        //MMRUpStandardValue.text = prevLeagueInfo.rankDetail.pointLessThen.ToString();
 
-        int pointOverThen = prevLeagueInfo.rankDetail.pointOverThen; //등급 범위 최솟값
-        int pointLessThen = prevLeagueInfo.rankDetail.pointLessThen; //등급 범위 최댓값
-        prevMaxMMRSlider.maxValue = pointLessThen - pointOverThen;
-        currentMMRSlider.maxValue = pointLessThen - pointOverThen;
+        //int pointOverThen = prevLeagueInfo.rankDetail.pointOverThen; //등급 범위 최솟값
+        //int pointLessThen = prevLeagueInfo.rankDetail.pointLessThen; //등급 범위 최댓값
+        //prevMaxMMRSlider.maxValue = pointLessThen - pointOverThen;
+        //currentMMRSlider.maxValue = pointLessThen - pointOverThen;
 
-        int ratingPointTop = prevLeagueInfo.ratingPointTop ?? default(int);
-        prevMaxMMRSlider.value = ratingPointTop;
-        currentMMRSlider.value = prevLeagueInfo.ratingPoint - pointOverThen;
+        //int ratingPointTop = prevLeagueInfo.ratingPointTop ?? default(int);
+        //prevMaxMMRSlider.value = ratingPointTop;
+        //currentMMRSlider.value = prevLeagueInfo.ratingPoint - pointOverThen;
 
-        rankIcon.sprite = accountManager.resource.rankIcons[prevLeagueInfo.rankDetail.minorRankName];
-        currentMMRIndicator.text = prevLeagueInfo.ratingPoint.ToString();
+        //rankIcon.sprite = accountManager.resource.rankIcons[prevLeagueInfo.rankDetail.minorRankName];
+        //currentMMRIndicator.text = prevLeagueInfo.ratingPoint.ToString();
 
-        var item = accountManager.rankTable.Find(x => x.minorRankName == prevLeagueInfo.rankDetail.minorRankName);
-        int prevRankIndex = -1;
-        string prevRankName = prevLeagueInfo.rankDetail.minorRankName;
-        if (item != null) {
-            if(item.minorRankName == "무명 병사") {
-                prevRankIndex = 1;
-            }
-            else if(item.minorRankName == "전략의 제왕") {
-                prevRankIndex = accountManager.rankTable.Count - 1;
-            }
-            else {
-                prevRankIndex = accountManager.rankTable.IndexOf(item);
-            }
+        //var item = accountManager.rankTable.Find(x => x.minorRankName == prevLeagueInfo.rankDetail.minorRankName);
+        //int prevRankIndex = -1;
+        //string prevRankName = prevLeagueInfo.rankDetail.minorRankName;
+        //if (item != null) {
+        //    if(item.minorRankName == "무명 병사") {
+        //        prevRankIndex = 1;
+        //    }
+        //    else if(item.minorRankName == "전략의 제왕") {
+        //        prevRankIndex = accountManager.rankTable.Count - 1;
+        //    }
+        //    else {
+        //        prevRankIndex = accountManager.rankTable.IndexOf(item);
+        //    }
 
-            MMRDownStandardIcon.sprite = accountManager.resource.rankIcons[accountManager.rankTable[prevRankIndex - 1].minorRankName];
-            MMRUpStandardIcon.sprite = accountManager.resource.rankIcons[accountManager.rankTable[prevRankIndex + 1].minorRankName];
-        }
+        //    MMRDownStandardIcon.sprite = accountManager.resource.rankIcons[accountManager.rankTable[prevRankIndex - 1].minorRankName];
+        //    MMRUpStandardIcon.sprite = accountManager.resource.rankIcons[accountManager.rankTable[prevRankIndex + 1].minorRankName];
+        //}
 
         //start testcode
         //int prevRatingPoint = prevLeagueInfo.ratingPoint + 170;
