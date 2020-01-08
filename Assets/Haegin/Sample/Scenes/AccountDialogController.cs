@@ -83,16 +83,34 @@ public class AccountDialogController : MonoBehaviour
                     };
                     ThreadSafeDispatcher.Instance.PushSystemBackKeyListener(onSystemBack);
 
-                    GameObject.Find("Yes").GetComponent<Button>().onClick.AddListener(() =>
+                    SelectDialog.transform.Find("Background/AuthButton/LevelFrame/LevelValue").GetComponent<Text>().text = 5.ToString();
+                    SelectDialog.transform.Find("Background/AuthButton/UserNickname").GetComponent<TMPro.TextMeshProUGUI>().text = authAccountName;
+                    SelectDialog.transform.Find("Background/AuthButton/Resources/Background/Crystal/Value").GetComponent<TMPro.TextMeshProUGUI>().text = 300.ToString();
+                    SelectDialog.transform.Find("Background/AuthButton/Resources/Background/Gold/Value").GetComponent<TMPro.TextMeshProUGUI>().text = 300.ToString();
+                    SelectDialog.transform.Find("Background/AuthButton/Resources/Background/Card/Value").GetComponent<TMPro.TextMeshProUGUI>().text = 30.ToString();
+                    
+                    SelectDialog.transform.Find("Background/LocalButton/LevelFrame/LevelValue").GetComponent<Text>().text = 5.ToString();
+                    SelectDialog.transform.Find("Background/LocalButton/UserNickname").GetComponent<TMPro.TextMeshProUGUI>().text = localAccountName;
+                    SelectDialog.transform.Find("Background/LocalButton/Resources/Background/Crystal/Value").GetComponent<TMPro.TextMeshProUGUI>().text = 300.ToString();
+                    SelectDialog.transform.Find("Background/LocalButton/Resources/Background/Gold/Value").GetComponent<TMPro.TextMeshProUGUI>().text = 300.ToString();
+                    SelectDialog.transform.Find("Background/LocalButton/Resources/Background/Card/Value").GetComponent<TMPro.TextMeshProUGUI>().text = 30.ToString();
+                    
+                    SelectDialog.transform.Find("Buttons/YesButton").GetComponent<Button>().onClick.AddListener(() =>
                     {
+                        bool authCheck = SelectDialog.transform.Find("Background/AuthButton").GetComponent<Toggle>().isOn;
+                        bool localCheck = SelectDialog.transform.Find("Background/LocalButton").GetComponent<Toggle>().isOn;
+                        if(authCheck == localCheck) return; //만약 토글 둘다 키거나 둘다 꺼지면 판단하기 힘드니까
+                        if(authCheck)
+                            callback(Account.SelectButton.YES);
+                        else if(localCheck)
+                            callback(Account.SelectButton.NO);
                         ThreadSafeDispatcher.Instance.PopSystemBackKeyListener();
-                        callback(Account.SelectButton.YES);
                         Destroy(SelectDialog);
+                        
                     });
-                    GameObject.Find("No").GetComponent<Button>().onClick.AddListener(() =>
+                    SelectDialog.transform.Find("Buttons/NoButton").GetComponent<Button>().onClick.AddListener(() =>
                     {
                         ThreadSafeDispatcher.Instance.PopSystemBackKeyListener();
-                        callback(Account.SelectButton.NO);
                         Destroy(SelectDialog);
                     });
                 }

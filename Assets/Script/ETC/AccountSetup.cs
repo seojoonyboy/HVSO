@@ -105,7 +105,7 @@ using TMPro;
         if(ProtocolId.IssueJWT == rar.Res.ProtocolId) {
             IssueJWTRes result = (IssueJWTRes)rar.Res;
             AccountManager.Instance.TokenId = result.Token;
-            Modal.instantiate("계정 연동이 완료 되었습니다.\n화면을 다시 불러옵니다.", Modal.Type.CHECK, () => FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE));
+            Modal.instantiate("계정 연동이 완료 되었습니다.", Modal.Type.CHECK, () => FBL_SceneManager.Instance.LoadScene(FBL_SceneManager.Scene.MAIN_SCENE));
         }
     }
 
