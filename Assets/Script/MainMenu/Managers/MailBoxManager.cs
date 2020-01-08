@@ -214,6 +214,7 @@ public class MailBoxManager : MonoBehaviour
             slotList.GetChild(i / 3).gameObject.SetActive(true);
             slotList.GetChild(i / 3).GetChild(i % 3).gameObject.SetActive(true);
             slotList.GetChild(i / 3).GetChild(i % 3).Find("NameOrNum").GetComponent<TMPro.TextMeshProUGUI>().text = string.Empty;
+            slotList.GetChild(i / 3).GetChild(i).Find("Reward/Effect").gameObject.SetActive(false);
         }
 
         for (int i = 0; i < AccountManager.Instance.mailRewardList.Count; i++) {
@@ -270,7 +271,7 @@ public class MailBoxManager : MonoBehaviour
                 transform.Find("Content/ReceivedReward/Buttons/Next").gameObject.SetActive(false);
 
             yield return new WaitForSeconds(0.3f);
-            slotList.GetChild(i / 3).GetChild(i % 3).Find("Reward/Effect").gameObject.SetActive(false);
+            //slotList.GetChild(i / 3).GetChild(i % 3).Find("Reward/Effect").gameObject.SetActive(false);
             ///TODO : 아이템 수령 애니메이션 완료 직후 작업 (튜토리얼)
             if(tutoQuest != null && tutoQuest.pressed) {
                 tutoQuest.quest.SubSet4();
