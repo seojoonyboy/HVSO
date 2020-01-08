@@ -7,6 +7,7 @@ using TMPro;
 using System.Reflection;
 using System.Threading.Tasks;
 using UnityEngine.Events;
+using Spine.Unity;
 
 namespace Quest {
     public partial class QuestContentController : MonoBehaviour {
@@ -18,12 +19,17 @@ namespace Quest {
         [SerializeField] private Button getBtn;
         [SerializeField] private Button rerollBtn;
         [SerializeField] private Transform rewardUIParent;
+        [SerializeField] private GameObject fakeItem, poolObject;
+
+        [SerializeField] private Transform endPosition;
+        [SerializeField] private Transform scrollViewContent;
 
         public QuestData data;
         public QuestManager manager;
-        
+
+        GameObject clone;
         private void OnEnable() {
-            if(data == null) return;
+            if (data == null) return;
             title.text = data.questDetail.name;
             info.text = data.questDetail.desc;
             slider.maxValue = (float)data.questDetail.progMax;
@@ -72,6 +78,7 @@ namespace Quest {
             else Modal.instantiate("보상을 우편으로 발송하였습니다.", Modal.Type.CHECK);
             //targetObj.GetComponent<QuestContentController>().getBtn.GetComponentInChildren<TextMeshProUGUI>().text = "획득완료";
             //targetObj.GetComponent<QuestContentController>().getBtn.enabled = false;
+            gameObject.SetActive(false);
         }
 
         private void GetReward() {
@@ -79,10 +86,18 @@ namespace Quest {
         }
 
         public void RequestRewardButtonClicked() {
-            if (data.cleared && !data.rewardGet) {
-                AccountManager.Instance.RequestQuestClearReward(data.id, gameObject);
-                AccountManager.Instance.RequestQuestInfo();
+            clone = Instantiate(fakeItem, scrollViewContent);
+            clone.GetComponent<QuestContentController>().data = data;
+            clone.gameObject.SetActive(true);
+            clone.transform.localScale = Vector3.one;
+            clone.transform.localPosition = transform.localPosition;
+
+            GetComponent<Image>().enabled = false;
+            foreach (Transform tf in transform) {
+                tf.gameObject.SetActive(false);
             }
+
+            StartCoroutine(StartEffect());
         }
     }
 
@@ -146,6 +161,57 @@ namespace Quest {
             PlayerPrefs.SetInt("FirstTutorialClear", 1);
             PlayerPrefs.Save();
             manager.TutorialNoQuestShow();
+        }
+
+        IEnumerator StartEffect() {
+            yield return _stampEffect();
+            yield return _SlideEffect();
+            yield return _ScaleEffect();
+
+            if (data.cleared && !data.rewardGet) {
+                AccountManager.Instance.RequestQuestClearReward(data.id, gameObject);
+                AccountManager.Instance.RequestQuestInfo();
+            }
+        }
+
+        IEnumerator _stampEffect() {
+            clone.transform.Find("Stamp").gameObject.SetActive(true);
+
+            SkeletonGraphic skeletonGraphic = clone.transform.Find("Stamp").GetComponent<SkeletonGraphic>();
+            skeletonGraphic.Initialize(false);
+            skeletonGraphic.Update(0);
+            skeletonGraphic.AnimationState.SetAnimation(0, "animation", false);
+            yield return new WaitForSeconds(0.5f);
+
+            clone.transform.Find("Stamp").gameObject.SetActive(false);
+        }
+
+        IEnumerator _SlideEffect() {
+            float moveTime = 0.3f;
+            Vector3 targetPos2 = new Vector3(endPosition.position.x, transform.position.y, 0);
+            //yield return new WaitForSeconds(0.2f);
+            iTween.MoveTo(clone, iTween.Hash(
+                "position", targetPos2,
+                "time", moveTime,
+                "easetype", iTween.EaseType.easeInBack
+            ));
+            yield return new WaitForSeconds(moveTime);
+            //Destroy(clone.gameObject);
+        }
+
+        IEnumerator _ScaleEffect() {
+            var animator = GetComponent<Animator>();
+            animator.enabled = true;
+            animator.Play("ScaleToZero");
+            yield return new WaitForSeconds(0.6f);
+            
+            Destroy(clone);
+            animator.enabled = false;
+            
+            GetComponent<RectTransform>().sizeDelta = new Vector2(
+                fakeItem.GetComponent<RectTransform>().sizeDelta.x, 
+                fakeItem.GetComponent<RectTransform>().sizeDelta.y
+            );
         }
 
         public bool StartMailTutorial(string[] args) {
