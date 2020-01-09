@@ -78,7 +78,7 @@ public class BattleReadyReward : MonoBehaviour
             currSlider.minValue = pointOverThen;
             currSlider.maxValue = frontReward.point;
 
-            prevSlider.value = ratingPointTop;
+            prevSlider.value = prevInfo.ratingPoint;
             currSlider.value = currinfo.ratingPoint;
 
             rewardIcon.gameObject.transform.GetChild(0).gameObject.GetComponent<Image>().sprite = GetRewardIcon(frontReward.reward.kind);
@@ -95,7 +95,7 @@ public class BattleReadyReward : MonoBehaviour
             currSlider.minValue = pointOverThen;
             currSlider.maxValue = pointlessThen;
 
-            prevSlider.value = ratingPointTop;
+            prevSlider.value = prevInfo.ratingPoint;
             currSlider.value = currinfo.ratingPoint;
 
             AccountManager accountManager = AccountManager.Instance;
