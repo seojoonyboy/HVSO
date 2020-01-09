@@ -13,6 +13,7 @@ public class MyLeagueInfoCanvasController : MonoBehaviour {
     [SerializeField] HUDController hudController;
     [SerializeField] BattleReadySceneController battleReadySceneController;
     [SerializeField] RewardsProvider rewardsProvider;
+    [SerializeField] BattleReadyReward battleReadyReward;
 
     NoneIngameSceneEventHandler eventHandler;
     AccountManager accountManager;
@@ -283,11 +284,13 @@ public class MyLeagueInfoCanvasController : MonoBehaviour {
 
     public void OffPanelByBattleReady() {
         hudController.SetBackButton(() => battleReadySceneController.OnBackButton());
+        battleReadySceneController.RefreshBubble();
         OffPanel();
     }
 
     public void OffPanelByMain() {
         hudController.SetHeader(HUDController.Type.SHOW_USER_INFO);
+        MenuSceneController.menuSceneController.RefreshRewardBubble();
         OffPanel();
     }
 

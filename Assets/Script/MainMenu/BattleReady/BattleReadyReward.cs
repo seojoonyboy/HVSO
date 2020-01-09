@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UniRx;
+using System;
 using TMPro;
 
 public class BattleReadyReward : MonoBehaviour
@@ -12,6 +14,8 @@ public class BattleReadyReward : MonoBehaviour
     [SerializeField] Slider prevSlider, currSlider;
     [SerializeField] Image nextMMR, rewardIcon;
     int rewardPos = 0;
+    IDisposable bubbleAnimation;
+    List<AccountManager.Reward> unClaimedRewards;
 
     private void Awake() {
         rewardIcons = AccountManager.Instance.resource.rewardIcon;
@@ -21,12 +25,18 @@ public class BattleReadyReward : MonoBehaviour
         SetUpReward();
     }
 
+    private void OnDestroy() {
+        StopAllCoroutines();
+    }
+
+
 
     public void SetUpReward() {
         List<AccountManager.Reward> mmrRewards = AccountManager.Instance.scriptable_leagueData.leagueInfo.rewards;
         if (mmrRewards.Count < 1 || mmrRewards == null) mmrRewards = AccountManager.Instance.scriptable_leagueData.prevLeagueInfo.rewards;
 
         SetUpGauge(ref mmrRewards);
+        SetUpRewardBubble(ref mmrRewards);
     }
 
     private void SetUpGauge(ref List<AccountManager.Reward> rewardList) {
@@ -34,7 +44,7 @@ public class BattleReadyReward : MonoBehaviour
         int topLeaguePoint = AccountManager.Instance.scriptable_leagueData.prevLeagueInfo.ratingPointTop ?? default(int);
         //frontReward = rewardList[rewardPos];
         // O(n)? 쩝...
-        while (rewardList[rewardPos].canClaim == true && rewardList[rewardPos].claimed == false && rewardPos < rewardList.Count - 1)
+        while (topLeaguePoint > rewardList[rewardPos].point && rewardPos < rewardList.Count - 1)
             rewardPos++;
 
         frontReward = rewardList[rewardPos];
@@ -139,4 +149,96 @@ public class BattleReadyReward : MonoBehaviour
             Modal.instantiate("보상을 우편으로 발송하였습니다.", Modal.Type.CHECK, () => { });
         }
     }
+
+
+    private void ShowUnreceivedReward(List<AccountManager.Reward> mmrRewards) {
+        List<AccountManager.Reward> unreceivedList = new List<AccountManager.Reward>();
+        int topLeaguePoint = AccountManager.Instance.scriptable_leagueData.prevLeagueInfo.ratingPointTop ?? default;
+        int pos = -1;
+
+        while (pos < mmrRewards.Count - 1) {
+            pos++;
+
+            if (mmrRewards[pos].point > topLeaguePoint)
+                break;
+
+            if(mmrRewards[pos].canClaim == true && mmrRewards[pos].claimed == false) {
+                unreceivedList.Add(mmrRewards[pos]);
+            }
+        }
+
+    }
+
+    public void SetUpRewardBubble(ref List<AccountManager.Reward> mmrRewards) {
+        int topLeaguePoint = AccountManager.Instance.scriptable_leagueData.prevLeagueInfo.ratingPointTop ?? default(int);
+        int listPos = -1;
+
+        if(unClaimedRewards == null) unClaimedRewards = new List<AccountManager.Reward>();
+        unClaimedRewards.Clear();
+
+        while (++listPos < mmrRewards.Count - 1) {
+            if (mmrRewards[listPos].point > topLeaguePoint) break;
+            if (mmrRewards[listPos].claimed == false && mmrRewards[listPos].canClaim == true) unClaimedRewards.Add(mmrRewards[listPos]);
+        }
+
+        //if (unClaimedRewards.Count > 0) StartCoroutine(TraverseReward(unClaimedRewards));
+        if (unClaimedRewards.Count > 0) {
+            SetUpAnimation();
+        }
+        else
+            rewardTransform.gameObject.SetActive(false);
+    }
+
+    public void RefreshRewardBubble() {
+        SetUpReward();
+    }
+
+
+    public void OverWriteRewardBubble(int rewardId) {
+        if (unClaimedRewards == null) return;       
+        unClaimedRewards.Remove(unClaimedRewards.Find(x => x.id == rewardId));
+        if (unClaimedRewards.Count > 0) {
+            SetUpAnimation();
+        }
+        else
+            rewardTransform.gameObject.SetActive(false);
+    }
+
+
+    private void SetUpAnimation() {
+        Animation rewardIcon = rewardTransform.gameObject.GetComponent<Animation>();
+        Image icon = rewardTransform.GetChild(0).gameObject.GetComponent<Image>();
+        int pos = -1;
+
+        if (bubbleAnimation != null) bubbleAnimation.Dispose();
+        bubbleAnimation = Observable.Interval(TimeSpan.FromSeconds(2))
+                                    .TakeWhile(_ => rewardTransform.gameObject.activeSelf == true)
+                                    .Select(_ => pos++)
+                                    .Select(x => x = ++x % unClaimedRewards.Count)
+                                    .Select(x => icon.sprite = GetRewardIcon(unClaimedRewards[x].reward.kind))
+                                    .Subscribe(_ => { rewardIcon.Play(); Debug.Log(pos); })
+                                    .AddTo(rewardTransform.gameObject);
+    }
+
+
+    
+
+
+
+
+
+    private IEnumerator TraverseReward(List<AccountManager.Reward> unclamimed) {        
+        GameObject rewardBubble = rewardTransform.gameObject;
+        rewardBubble.SetActive(true);
+
+        while (rewardBubble.activeSelf == true) {
+            if (rewardBubble.activeSelf == false) yield break;
+
+
+
+
+        }
+    }
+
+
 }
