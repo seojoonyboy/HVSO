@@ -82,18 +82,18 @@ public class AccountDialogController : MonoBehaviour
 #endif
                     };
                     ThreadSafeDispatcher.Instance.PushSystemBackKeyListener(onSystemBack);
-
-                    SelectDialog.transform.Find("Background/AuthButton/LevelFrame/LevelValue").GetComponent<Text>().text = 5.ToString();
-                    SelectDialog.transform.Find("Background/AuthButton/UserNickname").GetComponent<TMPro.TextMeshProUGUI>().text = authAccountName;
-                    SelectDialog.transform.Find("Background/AuthButton/Resources/Background/Crystal/Value").GetComponent<TMPro.TextMeshProUGUI>().text = 300.ToString();
-                    SelectDialog.transform.Find("Background/AuthButton/Resources/Background/Gold/Value").GetComponent<TMPro.TextMeshProUGUI>().text = 300.ToString();
-                    SelectDialog.transform.Find("Background/AuthButton/Resources/Background/Card/Value").GetComponent<TMPro.TextMeshProUGUI>().text = 30.ToString();
+                    Compare users = Compare.GetCompare(accountInfo);
+                    SelectDialog.transform.Find("Background/AuthButton/LevelFrame/LevelValue").GetComponent<Text>().text = users.server.Lv.ToString();
+                    SelectDialog.transform.Find("Background/AuthButton/UserNickname").GetComponent<TMPro.TextMeshProUGUI>().text = users.server.NickName;
+                    SelectDialog.transform.Find("Background/AuthButton/Resources/Background/Crystal/Value").GetComponent<TMPro.TextMeshProUGUI>().text = users.server.Crystal.ToString();
+                    SelectDialog.transform.Find("Background/AuthButton/Resources/Background/Gold/Value").GetComponent<TMPro.TextMeshProUGUI>().text = users.server.Gold.ToString();
+                    SelectDialog.transform.Find("Background/AuthButton/Resources/Background/Card/Value").GetComponent<TMPro.TextMeshProUGUI>().text = users.server.CardCount.ToString();
                     
-                    SelectDialog.transform.Find("Background/LocalButton/LevelFrame/LevelValue").GetComponent<Text>().text = 5.ToString();
-                    SelectDialog.transform.Find("Background/LocalButton/UserNickname").GetComponent<TMPro.TextMeshProUGUI>().text = localAccountName;
-                    SelectDialog.transform.Find("Background/LocalButton/Resources/Background/Crystal/Value").GetComponent<TMPro.TextMeshProUGUI>().text = 300.ToString();
-                    SelectDialog.transform.Find("Background/LocalButton/Resources/Background/Gold/Value").GetComponent<TMPro.TextMeshProUGUI>().text = 300.ToString();
-                    SelectDialog.transform.Find("Background/LocalButton/Resources/Background/Card/Value").GetComponent<TMPro.TextMeshProUGUI>().text = 30.ToString();
+                    SelectDialog.transform.Find("Background/LocalButton/LevelFrame/LevelValue").GetComponent<Text>().text = users.local.Lv.ToString();
+                    SelectDialog.transform.Find("Background/LocalButton/UserNickname").GetComponent<TMPro.TextMeshProUGUI>().text = users.local.NickName;
+                    SelectDialog.transform.Find("Background/LocalButton/Resources/Background/Crystal/Value").GetComponent<TMPro.TextMeshProUGUI>().text = users.local.Crystal.ToString();
+                    SelectDialog.transform.Find("Background/LocalButton/Resources/Background/Gold/Value").GetComponent<TMPro.TextMeshProUGUI>().text = users.local.Gold.ToString();
+                    SelectDialog.transform.Find("Background/LocalButton/Resources/Background/Card/Value").GetComponent<TMPro.TextMeshProUGUI>().text = users.local.CardCount.ToString();
                     
                     SelectDialog.transform.Find("Buttons/YesButton").GetComponent<Button>().onClick.AddListener(() =>
                     {
@@ -106,12 +106,13 @@ public class AccountDialogController : MonoBehaviour
                             callback(Account.SelectButton.NO);
                         ThreadSafeDispatcher.Instance.PopSystemBackKeyListener();
                         Destroy(SelectDialog);
-                        
                     });
                     SelectDialog.transform.Find("Buttons/NoButton").GetComponent<Button>().onClick.AddListener(() =>
                     {
                         ThreadSafeDispatcher.Instance.PopSystemBackKeyListener();
                         Destroy(SelectDialog);
+                        GameObject hide = GameObject.Find("HideModal(Clone)");
+                        if(hide != null) Destroy(hide);
                     });
                 }
                 break;

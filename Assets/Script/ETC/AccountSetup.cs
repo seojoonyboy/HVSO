@@ -18,6 +18,7 @@ using TMPro;
     public Sprite btnDisable;
     public GameObject systemDialog;
     public GameObject eulaText;
+    public GameObject hideModal;
     public Canvas canvas;
     public AccountDialogController accountDialog;
 
@@ -143,40 +144,54 @@ using TMPro;
     }
 
     public void OnGameCenterLoginButtonClick() {
+        GameObject modal = MonoBehaviour.Instantiate(hideModal, canvas.transform);
 #if UNITY_IOS
 		Account.LoginAccount(Account.HaeginAccountType.AppleGameCenter, accountDialog.OpenSelectDialog, (bool result, WebClient.AuthCode code, TimeSpan blockRemainTime, long blockSuid) => {
 #if MDEBUG
             Debug.Log("LogintAccount  result=" + result + "    code=" + code + " blockSuid=" + blockSuid);
 #endif
+            MonoBehaviour.Destroy(modal);
             if (result && code == WebClient.AuthCode.SUCCESS)
                 LoginComplete();
+            else
+                Modal.instantiate("로그인 과정에서 문제가 발생했습니다.", Modal.Type.CHECK);
         });
 #elif UNITY_ANDROID
         Account.LoginAccount(Account.HaeginAccountType.GooglePlayGameService, accountDialog.OpenSelectDialog, (bool result, WebClient.AuthCode code, TimeSpan blockRemainTime, long blockSuid) => {
 #if MDEBUG
             Debug.Log("LogintAccount  result=" + result + "    code=" + code + " blockSuid=" + blockSuid);
 #endif
+            MonoBehaviour.Destroy(modal);
             if (result && code == WebClient.AuthCode.SUCCESS)
                 LoginComplete();
+            else
+                Modal.instantiate("로그인 과정에서 문제가 발생했습니다.", Modal.Type.CHECK);
         });
 #elif UNITY_STANDALONE && USE_STEAM
         Account.LoginAccount(Account.HaeginAccountType.Steam, accountDialog.OpenSelectDialog, (bool result, WebClient.AuthCode code, TimeSpan blockRemainTime, long blockSuid) => {
 #if MDEBUG
             Debug.Log("LogintAccount  result=" + result + "    code=" + code + " blockSuid=" + blockSuid);
 #endif
+            MonoBehaviour.Destroy(modal);
             if (result && code == WebClient.AuthCode.SUCCESS)
                 LoginComplete();
+            else
+                Modal.instantiate("로그인 과정에서 문제가 발생했습니다.", Modal.Type.CHECK);
         });
 #endif
     }
 
     public void OnSignInWithAppleButtonClick() {
+        GameObject modal = MonoBehaviour.Instantiate(hideModal, canvas.transform);
         Account.LoginAccount(Account.HaeginAccountType.AppleId, accountDialog.OpenSelectDialog, (bool result, WebClient.AuthCode code, TimeSpan blockRemainTime, long blockSuid) => {
 #if MDEBUG
             Debug.Log("LogintAccount  result=" + result + "    code=" + code + "  blockSuid=" + blockSuid);
 #endif
+            MonoBehaviour.Destroy(modal);
             if (result && code == WebClient.AuthCode.SUCCESS)
                 LoginComplete();
+            else
+                Modal.instantiate("로그인 과정에서 문제가 발생했습니다.", Modal.Type.CHECK);
         });
     }
 
@@ -188,13 +203,17 @@ using TMPro;
         }
         else
         {
+            GameObject modal = MonoBehaviour.Instantiate(hideModal, canvas.transform);
             Account.LoginAccount(Account.HaeginAccountType.Facebook, accountDialog.OpenSelectDialog, (bool result, WebClient.AuthCode code, TimeSpan blockRemainTime, long blockSuid) =>
             {
 #if MDEBUG
                 Debug.Log("LogintAccount  result=" + result + "    code=" + code + "  blockSuid=" + blockSuid);
 #endif
+                MonoBehaviour.Destroy(modal);
                 if (result && code == WebClient.AuthCode.SUCCESS)
                     LoginComplete();
+                else
+                    Modal.instantiate("로그인 과정에서 문제가 발생했습니다.", Modal.Type.CHECK);
             });
         }
     }
