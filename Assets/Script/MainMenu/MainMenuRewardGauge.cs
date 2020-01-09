@@ -14,6 +14,15 @@ public class MainMenuRewardGauge : BattleReadyReward {
         StartCoroutine(Wait_Deploy_Data());   
     }
 
+    private void OnDestroy() {
+        StopAllCoroutines();
+    }
+
+    private void OnDisable() {
+        StopAllCoroutines();
+    }
+
+
     private void OnEnable() {
 
     }
