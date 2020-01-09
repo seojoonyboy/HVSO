@@ -8,7 +8,7 @@ using System;
 using System.Linq;
 
 public class MenuHeroInfo : MonoBehaviour
-{
+{    
     private AccountManager accountManager;
     private Translator translator;
 
@@ -190,23 +190,40 @@ public class MenuHeroInfo : MonoBehaviour
     }
 
     IEnumerator SetUpTeirUp() {
+        transform.parent.Find("BackButton").gameObject.SetActive(false);
         transform.Find("TierUpField").gameObject.SetActive(true);
         transform.Find("TierUpField/Name/NameText").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.name;
         if (nowTier > 0)
             transform.Find("TierUpField/Ability/AbilityImg").GetComponent<Image>().sprite = accountManager.resource.traitIcons[GetTraitKey(heroData.traitText[nowTier - 1])];
-        transform.Find("TierUpField/BackGround").GetComponent<Image>().sprite = accountManager.resource.campBackgrounds["hero_tier" + nowTier.ToString()];
+        transform.Find("BackGround").GetComponent<Image>().sprite = accountManager.resource.campBackgrounds["hero_tier" + (nowTier + 1).ToString()];
+        Color effectColor = new Color();
+        switch (nowTier) {
+            case 0:
+                effectColor = new Color(0.56f, 1, 0.31f);
+                break;
+            case 1:
+                effectColor = new Color(0.16f, 0.78f, 1);
+                break;
+            case 2:
+                effectColor = new Color(1, 0.31f, 0.98f);
+                break;
+        }
+        transform.Find("BackGround/SpinEffect/ColorLight").GetComponent<Image>().color = effectColor;
+        transform.Find("BackGround").gameObject.SetActive(true);
         for (int i = 0; i < nowTier; i++)
             transform.Find("TierUpField/Stars").GetChild(i).Find("Star").gameObject.SetActive(true);
         GameObject heroSpines = transform.Find("HeroSpines").gameObject;
-        heroSpines.transform.SetAsLastSibling();
+        heroSpines.transform.SetSiblingIndex(transform.childCount - 2);
         iTween.MoveTo(heroSpines, iTween.Hash("y", 0, "islocal", true, "time", 0.8f));
         iTween.ScaleTo(heroSpines, iTween.Hash("x", 1.2f, "y", 1.2f, "islocal", true, "time", 0.8f));
         Image[] colors = transform.Find("TierUpField").GetComponentsInChildren<Image>();
         float colorA = 0;
         while (colorA < 1.0f) {
             colorA += 4.0f * Time.deltaTime;
-            for(int i = 0; i < colors.Length; i++) 
+            for (int i = 0; i < colors.Length; i++) {
                 colors[i].color = new Color(1, 1, 1, colorA);
+                transform.Find("BackGround").GetComponent<Image>().color = new Color(1, 1, 1, colorA);
+            }
             yield return null;
         }
         EscapeKeyController.escapeKeyCtrl.AddEscape(CloseHeroTierUp);
@@ -225,7 +242,6 @@ public class MenuHeroInfo : MonoBehaviour
     IEnumerator HeroMakingAni() {
         yield return new WaitForSeconds(0.5f);
         transform.Find("TierUpField/LevelUp").gameObject.SetActive(true);
-        transform.Find("TierUpField/SpinEffect").gameObject.SetActive(true);
         dataModules.HeroInventory heroData = accountManager.myHeroInventories[heroId];
         if (heroData.camp == "human")
             CardDictionaryManager.cardDictionaryManager.RefreshHumanHero();
@@ -239,28 +255,31 @@ public class MenuHeroInfo : MonoBehaviour
         yield return new WaitForSeconds(0.3f);
         transform.Find("TierUpField/Stars").GetChild(nowTier - 1).Find("Star").gameObject.SetActive(true);
         transform.Find("TierUpField/Name").gameObject.SetActive(true);
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.5f);
         transform.Find("TierUpField/Ability").gameObject.SetActive(true);
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.5f);
         transform.Find("TierUpField/Button").gameObject.SetActive(true);
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.5f);
         tierUpHero = false;
     }
 
     public void CloseHeroTierUp() {
         if (tierUpHero) return;
+        transform.parent.Find("BackButton").gameObject.SetActive(false);
         Transform heroSpines = transform.Find("HeroSpines");
         heroSpines.SetSiblingIndex(2);
         heroSpines.localScale = Vector3.one;
         heroSpines.localPosition = new Vector3(0, 193, 0);
         transform.Find("TierUpField").GetComponentInChildren<Image>().color = new Color(1, 1, 1, 0);
+        transform.Find("BackGround").GetComponent<Image>().color = new Color(1, 1, 1, 0);
+        transform.Find("BackGround").gameObject.SetActive(false);
         for (int i = 0; i < 3; i++)
             transform.Find("TierUpField/Stars").GetChild(i).Find("Star").gameObject.SetActive(false);
         transform.Find("TierUpField").gameObject.SetActive(false);
-        transform.Find("TierUpField/LevelUp").gameObject.SetActive(true);
-        transform.Find("TierUpField/Name").gameObject.SetActive(true);
-        transform.Find("TierUpField/Ability").gameObject.SetActive(true);
-        transform.Find("TierUpField/Button").gameObject.SetActive(true);
+        transform.Find("TierUpField/LevelUp").gameObject.SetActive(false);
+        transform.Find("TierUpField/Name").gameObject.SetActive(false);
+        transform.Find("TierUpField/Ability").gameObject.SetActive(false);
+        transform.Find("TierUpField/Button").gameObject.SetActive(false);
         EscapeKeyController.escapeKeyCtrl.RemoveEscape(CloseHeroTierUp);
     }
 
