@@ -58,29 +58,29 @@ public class MainMenuRewardGauge : BattleReadyReward {
         tierFlag.gameObject.SetActive(true);
 
 
-        for (int i = 0; i < rankCondition.battles; i++) {
-            if (rankTable.GetChild(i).name != "Icon") {
-                rankTable.GetChild(i).gameObject.SetActive(true);
-            }
-            yield return new WaitForSeconds(1.0f);
-        }
+        //for (int i = 0; i < rankCondition.battles; i++) {
+        //    if (rankTable.GetChild(i).name != "Icon") {
+        //        rankTable.GetChild(i).gameObject.SetActive(true);
+        //    }
+        //    yield return new WaitForSeconds(1.0f);
+        //}
 
-        if (currInfo.rankingBattleCount != null) {
-            for (int i = 0; i < currInfo.rankingBattleCount.Length; i++) {
-                //승리
-                if (currInfo.rankingBattleCount[i] == true) {
-                    if (rankTable.GetChild(i).name != "Icon") {
-                        rankTable.GetChild(i).Find("Win").gameObject.SetActive(true);
-                    }
-                }
-                //패배
-                else {
-                    if (rankTable.GetChild(i).name != "Icon") {
-                        rankTable.GetChild(i).Find("Lose").gameObject.SetActive(true);
-                    }
-                }
-            }
-        }
+        //if (currInfo.rankingBattleCount != null) {
+        //    for (int i = 0; i < currInfo.rankingBattleCount.Length; i++) {
+        //        //승리
+        //        if (currInfo.rankingBattleCount[i] == true) {
+        //            if (rankTable.GetChild(i).name != "Icon") {
+        //                rankTable.GetChild(i).Find("Win").gameObject.SetActive(true);
+        //            }
+        //        }
+        //        //패배
+        //        else {
+        //            if (rankTable.GetChild(i).name != "Icon") {
+        //                rankTable.GetChild(i).Find("Lose").gameObject.SetActive(true);
+        //            }
+        //        }
+        //    }
+        //}
 
 
         yield return null;
