@@ -930,6 +930,13 @@ namespace MenuTutorialModules {
         }
     }
 
+    public class UnlockAIBattle : MenuExecute {
+        public override void Execute() {
+            AccountManager.Instance.RequestUnlockInTutorial(9);
+            handler.isDone = true;
+        }
+    }
+
     public class RequestQuestInfo : MenuExecute {
         public override void Execute() {
             AccountManager.Instance.RequestQuestInfo();
@@ -1029,18 +1036,6 @@ namespace MenuTutorialModules {
 
         void OnDestroy() {
             StopAllCoroutines();
-        }
-    }
-
-    public class UnlockDeckEditButtons : MenuExecute {
-        public override void Execute() {
-            MenuLockController menuLockController = GetComponent<MenuTutorialManager>().lockController;
-            menuLockController.Unlock("HumanBaseDeckAiBattleBtn");
-            menuLockController.Unlock("HumanBaseDeckDeleteBtn");
-            menuLockController.Unlock("OrcBaseDeckAiBattleBtn");
-            menuLockController.Unlock("OrcBaseDeckDeleteBtn");
-
-            handler.isDone = true;
         }
     }
 }
