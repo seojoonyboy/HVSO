@@ -32,11 +32,11 @@ public class MainMenuRewardGauge : BattleReadyReward {
         Transform rankTable = rankingBattleUI.Find("RankingTable");
 
 
-        if (currInfo.rankDetail.rankUpBattleCount != null) {
+        if (currInfo.rankingBattleState == "rank_up") {
             rankCondition = currInfo.rankDetail.rankUpBattleCount;
             description.text = "승급전!";
         }
-        else if (currInfo.rankDetail.rankDownBattleCount != null) {
+        else if (currInfo.rankingBattleState == "rank_down") {
             rankCondition = currInfo.rankDetail.rankDownBattleCount;
             description.text = "강등전!";
         }
