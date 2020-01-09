@@ -21,6 +21,9 @@ public class HandUIController : MonoBehaviour {
 
         usedPools[key] = available_pools[0];
         available_pools[0].gameObject.SetActive(true);
+        available_pools[0].GetComponent<RectTransform>().anchorMin = rect.anchorMin;
+        available_pools[0].GetComponent<RectTransform>().anchorMax = rect.anchorMax;
+
         switch (key) {
             case "storyButton":
             case "orc_story_tutorial":
