@@ -128,7 +128,7 @@ public class MenuLockController : SerializedMonoBehaviour {
             menu.transform.Find("Lock").GetComponent<MenuLocker>().Lock();
         }
         else {
-            if (translatedKeyword.Contains("HumanBaseDeck") || translatedKeyword.Contains("OrcBaseDeck")) {
+            if (translatedKeyword == "AI") {
                 foreach (Transform deckObject in deckEditListParent) {
                     if (deckObject.GetSiblingIndex() == 0) continue;
                     var buttons = deckObject.Find("DeckObject/Buttons");
@@ -170,8 +170,15 @@ public class MenuLockController : SerializedMonoBehaviour {
         if(translatedKeyword == "Shop") {
             mainButtonsParent.transform.GetChild(4).Find("Lock").GetComponent<MenuLocker>().Unlock();
         }
-        if(translatedKeyword == "DeckEdit") {
+        if(translatedKeyword == "AI") {
             mainButtonsParent.transform.GetChild(1).Find("Lock").GetComponent<MenuLocker>().Unlock();
+
+            foreach (Transform deckObject in deckEditListParent) {
+                if (deckObject.GetSiblingIndex() == 0) continue;
+                var buttons = deckObject.Find("DeckObject/Buttons");
+                buttons.Find("DeleteBtn/Lock").GetComponent<MenuLocker>().UnlockWithNoEffect();
+                buttons.Find("AiBattleBtn/Lock").GetComponent<MenuLocker>().UnlockWithNoEffect();
+            }
         }
 
         if (IsMainMenu(translatedKeyword)) {
@@ -214,7 +221,7 @@ public class MenuLockController : SerializedMonoBehaviour {
             else menu.transform.Find("Lock").GetComponent<MenuLocker>().UnlockWithNoEffect();
         }
         else {
-            if(translatedKeyword.Contains("HumanBaseDeck") || translatedKeyword.Contains("OrcBaseDeck")) {
+            if(translatedKeyword == "AI") {
                 foreach (Transform deckObject in deckEditListParent) {
                     if (deckObject.GetSiblingIndex() == 0) continue;
                     var buttons = deckObject.Find("DeckObject/Buttons");
@@ -257,6 +264,9 @@ public class MenuLockController : SerializedMonoBehaviour {
                 break;
             case "상점":
                 translatedKeyword = "Shop";
+                break;
+            case "ai대전":
+                translatedKeyword = "AI";
                 break;
         }
         return translatedKeyword;
