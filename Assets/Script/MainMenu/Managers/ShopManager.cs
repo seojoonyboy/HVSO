@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class ShopManager : MonoBehaviour
 {
@@ -41,6 +42,7 @@ public class ShopManager : MonoBehaviour
         GetComponent<ScrollRect>().normalizedPosition = new Vector2(0, 1);
         Invoke("UpdateContentHeight", 0.25f);
     }
+
     public void SetShop() { 
         goldItemCount = 0;
         x2couponCount = 0;
@@ -198,9 +200,11 @@ public class ShopManager : MonoBehaviour
     public void CloseRewardWindow() {
         AdvertiseWindow.Find("Block").gameObject.SetActive(true);
         AdvertiseWindow.Find("Reward").gameObject.SetActive(false);
-        if (adRewardKind == "supplyBox")
+        if (adRewardKind == "supplyBox") 
             boxRewardManager.SetRewardBoxAnimation(AccountManager.Instance.adRewardResult.items[0].boxes[0].ToArray());
         AccountManager.Instance.RequestShopAds();
+        AccountManager.Instance.RequestUserInfo();
+        AccountManager.Instance.RequestInventories();
         EscapeKeyController.escapeKeyCtrl.RemoveEscape(CloseRewardWindow);
     }
 
