@@ -17,6 +17,7 @@ public class MenuHeroInfo : MonoBehaviour
     string heroId;
 
     GameObject teirUpModal;
+    dataModules.HeroInventory heroData;
     int nowTier;
     private void Awake() {
         heroInfoWindow = this;
@@ -38,19 +39,19 @@ public class MenuHeroInfo : MonoBehaviour
     public void SetHeroInfoWindow(string heroId) {
         this.heroId = heroId;
         if (accountManager == null) init();
-        dataModules.HeroInventory hero = new dataModules.HeroInventory();
+        heroData = new dataModules.HeroInventory();
         foreach (dataModules.HeroInventory heroes in accountManager.allHeroes) {
             if (heroes.id == heroId) {
-                hero = heroes;
+                heroData = heroes;
                 break;
             }
         }
-        transform.Find("Image/Human").gameObject.SetActive(hero.camp == "human");
-        transform.Find("Image/Orc").gameObject.SetActive(!(hero.camp == "human"));
-        transform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = hero.name;
-        transform.Find("HeroDialog/Name").GetComponent<TMPro.TextMeshProUGUI>().text = hero.name;
+        transform.Find("Image/Human").gameObject.SetActive(heroData.camp == "human");
+        transform.Find("Image/Orc").gameObject.SetActive(!(heroData.camp == "human"));
+        transform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.name;
+        transform.Find("HeroDialog/Name").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.name;
         transform.Find("HeroSpines").GetChild(0).gameObject.SetActive(false);
-        Transform heroSpine = transform.Find("HeroSpines/" + hero.id);
+        Transform heroSpine = transform.Find("HeroSpines/" + heroData.id);
         for (int i = 0; i < 3; i++)
             transform.Find("HeroLevel/Stars").GetChild(i).GetChild(0).gameObject.SetActive(false);
         if (!accountManager.myHeroInventories.ContainsKey(heroId)) {
@@ -100,59 +101,64 @@ public class MenuHeroInfo : MonoBehaviour
         heroSpine.SetAsFirstSibling();
 
         Transform classWindow = transform.Find("ClassInfo");
-        classWindow.Find("Class1/ClassImg").GetComponent<Image>().sprite = accountManager.resource.classImage[hero.heroClasses[0]];
-        classWindow.Find("Class1/ClassName").GetComponent<TMPro.TextMeshProUGUI>().text = hero.heroClasses[0];
-        classWindow.Find("Class1/ClassInfo").GetComponent<TMPro.TextMeshProUGUI>().text = accountManager.resource.classInfo[hero.heroClasses[0]].info;
-        classWindow.Find("Class2/ClassImg").GetComponent<Image>().sprite = accountManager.resource.classImage[hero.heroClasses[1]];
-        classWindow.Find("Class2/ClassName").GetComponent<TMPro.TextMeshProUGUI>().text = hero.heroClasses[1];
-        classWindow.Find("Class2/ClassInfo").GetComponent<TMPro.TextMeshProUGUI>().text = accountManager.resource.classInfo[hero.heroClasses[1]].info;
+        classWindow.Find("Class1/ClassImg").GetComponent<Image>().sprite = accountManager.resource.classImage[heroData.heroClasses[0]];
+        classWindow.Find("Class1/ClassName").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.heroClasses[0];
+        classWindow.Find("Class1/ClassInfo").GetComponent<TMPro.TextMeshProUGUI>().text = accountManager.resource.classInfo[heroData.heroClasses[0]].info;
+        classWindow.Find("Class2/ClassImg").GetComponent<Image>().sprite = accountManager.resource.classImage[heroData.heroClasses[1]];
+        classWindow.Find("Class2/ClassName").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.heroClasses[1];
+        classWindow.Find("Class2/ClassInfo").GetComponent<TMPro.TextMeshProUGUI>().text = accountManager.resource.classInfo[heroData.heroClasses[1]].info;
 
         Transform skillWindow = transform.Find("SkillInfo");
-        skillWindow.Find("Card1/Card").GetComponent<MenuCardHandler>().DrawCard(hero.heroCards[0].id);
-        skillWindow.Find("Card1/CardName").GetComponent<TMPro.TextMeshProUGUI>().text = hero.heroCards[0].name;
-        skillWindow.Find("Card1/CardInfo").GetComponent<TMPro.TextMeshProUGUI>().text = translator.DialogSetRichText(hero.heroCards[0].skills[0].desc);
-        skillWindow.Find("Card2/Card").GetComponent<MenuCardHandler>().DrawCard(hero.heroCards[1].id);
-        skillWindow.Find("Card2/CardName").GetComponent<TMPro.TextMeshProUGUI>().text = hero.heroCards[1].name;
-        skillWindow.Find("Card2/CardInfo").GetComponent<TMPro.TextMeshProUGUI>().text = translator.DialogSetRichText(hero.heroCards[1].skills[0].desc);
+        skillWindow.Find("Card1/Card").GetComponent<MenuCardHandler>().DrawCard(heroData.heroCards[0].id);
+        skillWindow.Find("Card1/CardName").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.heroCards[0].name;
+        skillWindow.Find("Card1/CardInfo").GetComponent<TMPro.TextMeshProUGUI>().text = translator.DialogSetRichText(heroData.heroCards[0].skills[0].desc);
+        skillWindow.Find("Card2/Card").GetComponent<MenuCardHandler>().DrawCard(heroData.heroCards[1].id);
+        skillWindow.Find("Card2/CardName").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.heroCards[1].name;
+        skillWindow.Find("Card2/CardInfo").GetComponent<TMPro.TextMeshProUGUI>().text = translator.DialogSetRichText(heroData.heroCards[1].skills[0].desc);
 
         Transform abilityWindow = transform.Find("AbilityInfo");
-        abilityWindow.Find("Ability1/AbilityInfo").GetComponent<TMPro.TextMeshProUGUI>().text = hero.traitText[0];
-        abilityWindow.Find("Ability2/AbilityInfo").GetComponent<TMPro.TextMeshProUGUI>().text = hero.traitText[1];
+        abilityWindow.Find("Ability1/AbilityInfo").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.traitText[0];
+        abilityWindow.Find("Ability2/AbilityInfo").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.traitText[1];
         for(int i = 0; i < 2; i++) {
-            string traitKey = "";
-            switch (hero.traitText[i]) {
-                case "최대체력 +2":
-                    traitKey = "health_max_2";
-                    break;
-                case "최대 실드 개수 +1":
-                    traitKey = "shield_max_1";
-                    break;
-                case "실드게이지 충전량 최소치 +1":
-                    traitKey = "shield_min_charge_1";
-                    break;
-                case "마법 페이즈에 자원 1 획득":
-                    traitKey = "magic_phase_1";
-                    break;
-                case "마법의 주문 공격력 +1":
-                    traitKey = "magic_power_1";
-                    break;
-                case "실드게이지 충전량 최대치 +1":
-                    traitKey = "shield_max_charge_1";
-                    break;
-                case "tool 카드 사용 비용 -1":
-                    traitKey = "toolcard_use_1";
-                    break;
-            }
+            string traitKey = GetTraitKey(heroData.traitText[i]);
             if (i == 0)
                 abilityWindow.Find("Ability1/AbilityImg").GetComponent<Image>().sprite = accountManager.resource.traitIcons[traitKey];
             else
                 abilityWindow.Find("Ability2/AbilityImg").GetComponent<Image>().sprite = accountManager.resource.traitIcons[traitKey];
         }
 
-        SetHeroDialog(hero.flavorText, hero.camp == "human");
+        SetHeroDialog(heroData.flavorText, heroData.camp == "human");
         EscapeKeyController.escapeKeyCtrl.AddEscape(MenuCardInfo.cardInfoWindow.CloseInfo);
 
         OpenClassWindow();
+    }
+
+    string GetTraitKey(string trait) {
+        string traitKey = "";
+        switch (trait) {
+            case "최대체력 +2":
+                traitKey = "health_max_2";
+                break;
+            case "최대 실드 개수 +1":
+                traitKey = "shield_max_1";
+                break;
+            case "실드게이지 충전량 최소치 +1":
+                traitKey = "shield_min_charge_1";
+                break;
+            case "마법 페이즈에 자원 1 획득":
+                traitKey = "magic_phase_1";
+                break;
+            case "마법의 주문 공격력 +1":
+                traitKey = "magic_power_1";
+                break;
+            case "실드게이지 충전량 최대치 +1":
+                traitKey = "shield_max_charge_1";
+                break;
+            case "tool 카드 사용 비용 -1":
+                traitKey = "toolcard_use_1";
+                break;
+        }
+        return traitKey;
     }
 
     public void ClickHeroTierUp() {
@@ -185,6 +191,10 @@ public class MenuHeroInfo : MonoBehaviour
 
     IEnumerator SetUpTeirUp() {
         transform.Find("TierUpField").gameObject.SetActive(true);
+        transform.Find("TierUpField/Name/NameText").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.name;
+        if (nowTier > 0)
+            transform.Find("TierUpField/Ability/AbilityImg").GetComponent<Image>().sprite = accountManager.resource.traitIcons[GetTraitKey(heroData.traitText[nowTier - 1])];
+        transform.Find("TierUpField/BackGround").GetComponent<Image>().sprite = accountManager.resource.campBackgrounds["hero_tier" + nowTier.ToString()];
         for (int i = 0; i < nowTier; i++)
             transform.Find("TierUpField/Stars").GetChild(i).Find("Star").gameObject.SetActive(true);
         GameObject heroSpines = transform.Find("HeroSpines").gameObject;
@@ -199,6 +209,7 @@ public class MenuHeroInfo : MonoBehaviour
                 colors[i].color = new Color(1, 1, 1, colorA);
             yield return null;
         }
+        EscapeKeyController.escapeKeyCtrl.AddEscape(CloseHeroTierUp);
     }
 
     private void HeroModified(Enum Event_Type, Component Sender, object Param) {
@@ -213,6 +224,8 @@ public class MenuHeroInfo : MonoBehaviour
 
     IEnumerator HeroMakingAni() {
         yield return new WaitForSeconds(0.5f);
+        transform.Find("TierUpField/LevelUp").gameObject.SetActive(true);
+        transform.Find("TierUpField/SpinEffect").gameObject.SetActive(true);
         dataModules.HeroInventory heroData = accountManager.myHeroInventories[heroId];
         if (heroData.camp == "human")
             CardDictionaryManager.cardDictionaryManager.RefreshHumanHero();
@@ -225,6 +238,12 @@ public class MenuHeroInfo : MonoBehaviour
         SetHeroInfoWindow(heroId);
         yield return new WaitForSeconds(0.3f);
         transform.Find("TierUpField/Stars").GetChild(nowTier - 1).Find("Star").gameObject.SetActive(true);
+        transform.Find("TierUpField/Name").gameObject.SetActive(true);
+        yield return new WaitForSeconds(0.3f);
+        transform.Find("TierUpField/Ability").gameObject.SetActive(true);
+        yield return new WaitForSeconds(0.3f);
+        transform.Find("TierUpField/Button").gameObject.SetActive(true);
+        yield return new WaitForSeconds(0.3f);
         tierUpHero = false;
     }
 
@@ -238,6 +257,11 @@ public class MenuHeroInfo : MonoBehaviour
         for (int i = 0; i < 3; i++)
             transform.Find("TierUpField/Stars").GetChild(i).Find("Star").gameObject.SetActive(false);
         transform.Find("TierUpField").gameObject.SetActive(false);
+        transform.Find("TierUpField/LevelUp").gameObject.SetActive(true);
+        transform.Find("TierUpField/Name").gameObject.SetActive(true);
+        transform.Find("TierUpField/Ability").gameObject.SetActive(true);
+        transform.Find("TierUpField/Button").gameObject.SetActive(true);
+        EscapeKeyController.escapeKeyCtrl.RemoveEscape(CloseHeroTierUp);
     }
 
     public void OpenClassWindow() {
