@@ -283,11 +283,13 @@ public class MyLeagueInfoCanvasController : MonoBehaviour {
 
     public void OffPanelByBattleReady() {
         hudController.SetBackButton(() => battleReadySceneController.OnBackButton());
+        battleReadySceneController.RefreshBubble();
         OffPanel();
     }
 
     public void OffPanelByMain() {
         hudController.SetHeader(HUDController.Type.SHOW_USER_INFO);
+        MenuSceneController.menuSceneController.RefreshRewardBubble();
         OffPanel();
     }
 

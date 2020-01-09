@@ -62,7 +62,7 @@ public class BoxRewardManager : MonoBehaviour {
     }
 
     public void SetBoxObj() {
-        boxObject.Find("SupplyGauge/Value").GetComponent<Image>().fillAmount = (float)AccountManager.Instance.userResource.supply * 0.01f;
+        boxObject.Find("SupplyGauge/ValueSlider").GetComponent<Slider>().value = AccountManager.Instance.userResource.supply;
         boxObject.Find("SupplyGauge/ValueText").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.userResource.supply.ToString() + "/100";
         supplyStore.text = AccountManager.Instance.userResource.supplyStore.ToString();
         buttonGlow.SetActive(AccountManager.Instance.userResource.supplyStore > 0 ? true : false);
