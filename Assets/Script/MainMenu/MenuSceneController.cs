@@ -25,6 +25,7 @@ public class MenuSceneController : MonoBehaviour {
     [SerializeField] GameObject[] offObjects;
     [SerializeField] ShopManager shopManager;
     [SerializeField] GameObject dailyQuestAlarmCanvas;
+    [SerializeField] public BattleReadyReward userMmrGauge;
 
     protected SkeletonGraphic selectedAnimation;
     private int currentPage;
@@ -570,6 +571,10 @@ public class MenuSceneController : MonoBehaviour {
         Transform hand = dictionaryMenu.Find("HumanButton/CardDic").Find("tutorialHand");
         if(hand == null) return;
         Destroy(hand.gameObject);
+    }
+
+    public void RefreshRewardBubble() {
+        userMmrGauge.RefreshRewardBubble();
     }
 
 

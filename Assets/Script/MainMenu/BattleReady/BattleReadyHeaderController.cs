@@ -12,6 +12,7 @@ public class BattleReadyHeaderController : SerializedMonoBehaviour {
     [SerializeField] Image headerImg;
     [SerializeField] Sprite[] headerImages;
     [SerializeField] GameObject rankingProgress;
+    [SerializeField] public BattleReadyReward rewarder;
 
     void OnDisable() {
         normalUI.SetActive(true);
@@ -227,6 +228,4 @@ public class BattleReadyHeaderController : SerializedMonoBehaviour {
         }
         yield return true;
     }
-
-
 }

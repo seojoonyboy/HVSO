@@ -114,6 +114,11 @@ public class BattleReadySceneController : MonoBehaviour {
         HudController.SetHeader(HUDController.Type.SHOW_USER_INFO);
     }
 
+    public void RefreshBubble() {
+        battleReadyHeaderController.rewarder.RefreshRewardBubble();
+    }
+
+
     public enum RaceType {
         HUMAN = 0,
         ORC = 1,
