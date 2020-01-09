@@ -77,8 +77,8 @@ public class FBL_SceneManager : Singleton<FBL_SceneManager> {
             asyncOps[unload - 1] = null;
         if (asyncOps[load - 1] == null) {
             UnityEngine.SceneManagement.SceneManager.LoadScene(load, UnityEngine.SceneManagement.LoadSceneMode.Single);
-            if(load == 1)
-                UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(6, UnityEngine.SceneManagement.LoadSceneMode.Additive);
+            if(load == 2)
+                UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(7, UnityEngine.SceneManagement.LoadSceneMode.Additive);
             for (int i = 0; i < 7; i++) {
                 asyncOps[i] = null;
             }
