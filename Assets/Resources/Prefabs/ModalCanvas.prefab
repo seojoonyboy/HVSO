@@ -2578,7 +2578,7 @@ MonoBehaviour:
   m_material: {fileID: 0}
   m_sharedMaterial: {fileID: 0}
   m_isDefaultMaterial: 0
-  m_padding: 0
+  m_padding: 2.6
   m_canvasRenderer: {fileID: 7104117428502775772}
   m_TextComponent: {fileID: 5172284859067667915}
   m_materialReferenceIndex: 1
@@ -2727,7 +2727,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 237.29988}
-  m_SizeDelta: {x: -116, y: 46.3}
+  m_SizeDelta: {x: -116, y: 52}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &662375659345732659
 CanvasRenderer:
@@ -2784,7 +2784,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 41.9
+  m_fontSize: 47.05
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -3189,12 +3189,12 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 47
+  m_fontSizeBase: 47
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 10
+  m_fontSizeMax: 47
   m_fontStyle: 1
   m_textAlignment: 514
   m_characterSpacing: 0
