@@ -92,9 +92,9 @@ public class MailBoxManager : MonoBehaviour
                 DateTime endTime = Convert.ToDateTime(mail.expiredAt);
                 TimeSpan leftTime = endTime - DateTime.Now;
                 if (leftTime.Days >= 1)
-                    slot.Find("LeftTime").GetComponent<TMPro.TextMeshProUGUI>().text = leftTime.Days.ToString() + "일";
+                    slot.Find("LeftTime").GetComponent<TMPro.TextMeshProUGUI>().text = "남은 시간 " + leftTime.Days.ToString() + "일";
                 else {
-                    slot.Find("LeftTime").GetComponent<TMPro.TextMeshProUGUI>().text = leftTime.Hours.ToString() + "시간 " + leftTime.Minutes.ToString() + "분";
+                    slot.Find("LeftTime").GetComponent<TMPro.TextMeshProUGUI>().text = "남은 시간 " + leftTime.Hours.ToString() + "시간 " + leftTime.Minutes.ToString() + "분";
                 }
             }
             int itemCount = 0;
@@ -151,9 +151,9 @@ public class MailBoxManager : MonoBehaviour
             DateTime endTime = Convert.ToDateTime(mail.expiredAt);
             TimeSpan leftTime = endTime - DateTime.Now;
             if (leftTime.Days >= 1)
-                openedWindow.Find("Until").GetComponent<TMPro.TextMeshProUGUI>().text = leftTime.Days.ToString() + "일";
+                openedWindow.Find("Until").GetComponent<TMPro.TextMeshProUGUI>().text = "남은 시간 " + leftTime.Days.ToString() + "일";
             else {
-                openedWindow.Find("Until").GetComponent<TMPro.TextMeshProUGUI>().text = leftTime.Hours.ToString() + "시간 " + leftTime.Minutes.ToString() + "분";
+                openedWindow.Find("Until").GetComponent<TMPro.TextMeshProUGUI>().text = "남은 시간 " + leftTime.Hours.ToString() + "시간 " + leftTime.Minutes.ToString() + "분";
             }
         }
         openedWindow.Find("RecieveBtn").GetComponent<Button>().onClick.AddListener(() => ReceiveMail(mail));
