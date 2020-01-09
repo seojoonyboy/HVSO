@@ -58,6 +58,8 @@ public class BattleReadyReward : MonoBehaviour
         AccountManager.LeagueInfo currinfo = AccountManager.Instance.scriptable_leagueData.leagueInfo;
         AccountManager.LeagueInfo prevInfo = AccountManager.Instance.scriptable_leagueData.prevLeagueInfo;
 
+        string rankName = prevInfo.rankDetail.minorRankName;
+
         int pointOverThen = prevInfo.rankDetail.pointOverThen;
         int pointlessThen = currinfo.rankDetail.pointLessThen;
         int ratingPointTop = prevInfo.ratingPointTop ?? default(int);
@@ -78,7 +80,7 @@ public class BattleReadyReward : MonoBehaviour
             currSlider.minValue = pointOverThen;
             currSlider.maxValue = frontReward.point;
 
-            prevSlider.value = ratingPointTop;
+            prevSlider.value = prevInfo.ratingPoint;
             currSlider.value = currinfo.ratingPoint;
 
             rewardIcon.gameObject.transform.GetChild(0).gameObject.GetComponent<Image>().sprite = GetRewardIcon(frontReward.reward.kind);
@@ -95,11 +97,12 @@ public class BattleReadyReward : MonoBehaviour
             currSlider.minValue = pointOverThen;
             currSlider.maxValue = pointlessThen;
 
-            prevSlider.value = ratingPointTop;
+            prevSlider.value = prevInfo.ratingPoint;
             currSlider.value = currinfo.ratingPoint;
 
             AccountManager accountManager = AccountManager.Instance;
-            AccountManager.RankTableRow item = AccountManager.Instance.rankTable.Find(x => x.minorRankName == prevInfo.rankDetail.minorRankName);
+            List<AccountManager.RankTableRow> table = AccountManager.Instance.rankTable;
+            AccountManager.RankTableRow item = table.Find(x => x.minorRankName == rankName);
             int prevRankIndex = -1;
 
             if (item != null) {

@@ -700,10 +700,6 @@
                         "args" : []
                     },
                     {
-                        "name" : "UnlockDeckEditButtons",
-                        "args" : []
-                    },
-                    {
                         "name" : "OffHighlight",
                         "args" : []
                     },
@@ -757,6 +753,10 @@
                     },
                     {
                         "name" : "UnlockShopMenu",
+                        "args" : []
+                    },
+                    {
+                        "name" : "UnlockAIBattle",
                         "args" : []
                     },
                     {

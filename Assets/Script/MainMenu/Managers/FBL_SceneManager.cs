@@ -28,26 +28,29 @@ public class FBL_SceneManager : Singleton<FBL_SceneManager> {
     public void LoadScene(Scene scene) {
         int numberOfScene = -1;
         switch (scene) {
-            case Scene.LOGIN:
+            case Scene.OBB:
                 numberOfScene = 0;
                 break;
-            case Scene.MAIN_SCENE:
+            case Scene.LOGIN:
                 numberOfScene = 1;
                 break;
-            case Scene.LOADING_SCENE:
+            case Scene.MAIN_SCENE:
                 numberOfScene = 2;
                 break;
-            case Scene.CONNECT_MATCHING_SCENE:
+            case Scene.LOADING_SCENE:
                 numberOfScene = 3;
                 break;
-            case Scene.MISSION_INGAME:
+            case Scene.CONNECT_MATCHING_SCENE:
                 numberOfScene = 4;
                 break;
-            case Scene.TUTORIAL:
+            case Scene.MISSION_INGAME:
                 numberOfScene = 5;
                 break;
-            case Scene.DICTIONARY_SCENE:
+            case Scene.TUTORIAL:
                 numberOfScene = 6;
+                break;
+            case Scene.DICTIONARY_SCENE:
+                numberOfScene = 7;
                 break;
         }
 
@@ -102,6 +105,7 @@ public class FBL_SceneManager : Singleton<FBL_SceneManager> {
         LOADING_SCENE,
         LOGIN,
         TUTORIAL,
-        DICTIONARY_SCENE
+        DICTIONARY_SCENE,
+        OBB
     }
 }
