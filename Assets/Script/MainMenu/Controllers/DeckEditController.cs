@@ -83,11 +83,11 @@ public class DeckEditController : MonoBehaviour {
     }
 
     private void OnDeckModified(Enum Event_Type, Component Sender, object Param) {
-        try{
-        if (EscapeKeyController.escapeKeyCtrl.escapeFunc.Count > 2)
-            EscapeKeyController.escapeKeyCtrl.escapeFunc.RemoveRange(1, 3);
-        else
-            EscapeKeyController.escapeKeyCtrl.RemoveEscape(CancelButton);
+        try {
+            if (EscapeKeyController.escapeKeyCtrl.escapeFunc.Count > 2)
+                EscapeKeyController.escapeKeyCtrl.escapeFunc.RemoveRange(1, 3);
+            else
+                EscapeKeyController.escapeKeyCtrl.RemoveEscape(CancelButton);
         }
         catch (Exception e) {
             Debug.Log("Escape Error JustSkipping");
@@ -104,7 +104,7 @@ public class DeckEditController : MonoBehaviour {
         transform.Find("InnerCanvas/BackGroundPatern/Orc").gameObject.SetActive(!isHuman);
         if (editCards != null) editCards.Clear();
         editCards = GetCards();
-        
+
         setCardNum = 0;
         haveCardNum = 0;
         dontHaveCard = 0;
@@ -119,7 +119,10 @@ public class DeckEditController : MonoBehaviour {
             cardHandler.InitEditCard();
             cardHandler.deckEditController = this;
         }
-
+        Transform heroSpine = transform.Find("InnerCanvas/HeroSpine");
+        for (int i = 0; i < heroSpine.childCount; i++) {
+            heroSpine.GetChild(i).gameObject.SetActive(false);
+        }
         Transform cardStore = transform.Find("InnerCanvas/CardStore");
         for (int i = 0; i < cardStore.childCount; i++) {
             cardStore.GetChild(i).GetComponent<EditCardHandler>().deckEditController = this;
@@ -145,10 +148,10 @@ public class DeckEditController : MonoBehaviour {
         string heroClass2 = heroData.heroClasses[1];
         ownCardLayout.GetChild(0).name = heroClass1;
         ownCardLayout.GetChild(0).Find("Header/Info/Image").GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[heroClass1];
-        ownCardLayout.GetChild(0).Find("Header/Info/Name").GetComponent<TMPro.TextMeshProUGUI>().text = heroClass1;
+        ownCardLayout.GetChild(0).Find("Header/Info/Name").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.resource.classInfo[heroClass1].name;
         ownCardLayout.GetChild(1).name = heroClass2;
         ownCardLayout.GetChild(1).Find("Header/Info/Image").GetComponent<Image>().sprite = AccountManager.Instance.resource.classImage[heroClass2];
-        ownCardLayout.GetChild(1).Find("Header/Info/Name").GetComponent<TMPro.TextMeshProUGUI>().text = heroClass2;
+        ownCardLayout.GetChild(1).Find("Header/Info/Name").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.resource.classInfo[heroClass2].name;
 
 
         foreach (dataModules.CollectionCard card in AccountManager.Instance.allCards) {
@@ -226,15 +229,15 @@ public class DeckEditController : MonoBehaviour {
     }
 
     private void TutoFinish() {
-        if(EditCardHandler.questInfo == null) return;
+        if (EditCardHandler.questInfo == null) return;
         EditCardHandler.QuestInfo questInfo = EditCardHandler.questInfo;
-        if(!questInfo.isDoneAddCard) return;
-        while(true) {
+        if (!questInfo.isDoneAddCard) return;
+        while (true) {
             GameObject hand = GameObject.Find("tutorialHand");
-            if(hand == null) break;
+            if (hand == null) break;
             DestroyImmediate(hand);
         }
-        
+
         //AccountManager.Instance.RequestQuestProgress(questInfo.quest.data.id);
         AccountManager.Instance.RequestUnlockInTutorial(6);
         questInfo.quest.manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_7);
@@ -271,7 +274,7 @@ public class DeckEditController : MonoBehaviour {
     }
 
     private void RemoveTutoHand() {
-        if(EditCardHandler.questInfo == null) return;
+        if (EditCardHandler.questInfo == null) return;
         EditCardHandler.QuestInfo questInfo = EditCardHandler.questInfo;
         Destroy(questInfo.handUIaddCard);
         Destroy(questInfo.handUIremoveCard);
@@ -392,12 +395,12 @@ public class DeckEditController : MonoBehaviour {
             if (cost > 6) cost = 7;
             setNumsByCost[cost] += obj.Value.GetComponent<EditCardHandler>().SETNUM;
         }
-        for(int i = 0; i < 8; i++) {
-            for(int j = 0; j < 5; j++) {
-                bookCards[i,j] = new List<GameObject>();
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 5; j++) {
+                bookCards[i, j] = new List<GameObject>();
             }
         }
-        for(int i = 0; i < 2; i++) {
+        for (int i = 0; i < 2; i++) {
             for (int j = 0; j < ownCardLayout.GetChild(i).GetChild(1).childCount; j++) {
                 GameObject cardObj = ownCardLayout.GetChild(i).GetChild(1).GetChild(j).gameObject;
                 if (cardObj.activeSelf) {
@@ -507,7 +510,7 @@ public class DeckEditController : MonoBehaviour {
         }
 
         for (int i = 0; i < 2; i++) {
-            for(int j = 0; j < ownCardLayout.GetChild(i).Find("Grid").childCount; j++) { 
+            for (int j = 0; j < ownCardLayout.GetChild(i).Find("Grid").childCount; j++) {
                 EditCardHandler cardHandler = ownCardLayout.GetChild(i).Find("Grid").GetChild(j).GetComponent<EditCardHandler>();
                 if (!cardHandler.gameObject.activeSelf) continue;
                 cardHandler.SetHaveNum();
@@ -613,7 +616,7 @@ public class DeckEditController : MonoBehaviour {
                 StartCoroutine(OpenCardButtonLate(cardObj));
             }
             else
-                cardButtons.SetCardImage(cardObj.GetComponent< EditCardHandler>());
+                cardButtons.SetCardImage(cardObj.GetComponent<EditCardHandler>());
         }
         else {
             if (cardObj.GetComponent<EditCardHandler>().HAVENUM == 0) {
@@ -649,6 +652,7 @@ public class DeckEditController : MonoBehaviour {
 
     public void SetHeroInfo(string heroId) {
         dataModules.HeroInventory hero = new dataModules.HeroInventory();
+        transform.Find("InnerCanvas/HeroSpine/" + heroId).gameObject.SetActive(true);
         foreach (dataModules.HeroInventory heroes in AccountManager.Instance.allHeroes) {
             if (heroes.id == heroId) {
                 hero = heroes;

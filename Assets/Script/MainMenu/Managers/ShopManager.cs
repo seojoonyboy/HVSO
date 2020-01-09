@@ -36,7 +36,11 @@ public class ShopManager : MonoBehaviour
 
     GameObject checkModal;
 
-
+    public void RefreshLine() {
+        Canvas.ForceUpdateCanvases();
+        GetComponent<ScrollRect>().normalizedPosition = new Vector2(0, 1);
+        Invoke("UpdateContentHeight", 0.25f);
+    }
     public void SetShop() { 
         goldItemCount = 0;
         x2couponCount = 0;
@@ -209,4 +213,6 @@ public class ShopManager : MonoBehaviour
         ProductWindow.gameObject.SetActive(false);
         EscapeKeyController.escapeKeyCtrl.RemoveEscape(CloseProductWindow);
     }
+
+
 }
