@@ -90,7 +90,8 @@ public class SceneOBBCheckController : MonoBehaviour {
     }
 
     void StartAfterSplash()
-    { 
+    {
+        transform.Find("Cover").gameObject.SetActive(false);
 #if MDEBUG
         Debug.Log("---------------------------------------------------\nNetwork Operator Name : " + NetworkInfo.GetNetworkOperatorName() + "\n---------------------------------------------------");
 #endif
@@ -145,8 +146,7 @@ public class SceneOBBCheckController : MonoBehaviour {
         UGUICommon.ShowRequestPermission(requestPermissionDialog, canvas, TextManager.GetString(TextManager.StringTag.AppPermissionsTitle1), TextManager.GetString(TextManager.StringTag.AppPermissionsInfo1), (UGUICommon.ButtonType buttonType) =>
         {
             //RequestAndroidPermission(0);
-            gameObject.SetActive(false);
-            FindObjectOfType<LoginController>().sceneLoginCanvas.gameObject.SetActive(true);
+            UnityEngine.SceneManagement.SceneManager.LoadScene(1, UnityEngine.SceneManagement.LoadSceneMode.Single);
         });
     }
 
@@ -259,9 +259,9 @@ public class SceneOBBCheckController : MonoBehaviour {
 
     void StartOBBDownload()
     { 
-        progressbar = GameObject.Find("ProgressBar").GetComponent<Progress>();
+        progressbar = transform.Find("Progress/ProgressBar").GetComponent<Progress>();
         progressbar.Value = 0;
-        progresstext = GameObject.Find("ProgressBarText").GetComponent<Text>();
+        progresstext = transform.Find("Progress/ProgressBarText").GetComponent<Text>();
         progresstext.text = TextManager.GetString(TextManager.StringTag.CheckDownloadFiles);
 
         dataPath = AssetBundleUtility.GetAssetBundlesPath();
@@ -308,6 +308,7 @@ public class SceneOBBCheckController : MonoBehaviour {
         ThreadSafeDispatcher.OnSystemBackKey onSystemBack = () =>
         {
             ThreadSafeDispatcher.Instance.PopSystemBackKeyListener();
+            transform.Find("Progress").gameObject.SetActive(true);
             callback();
             Destroy(SelectDialog);
         };
@@ -354,9 +355,8 @@ public class SceneOBBCheckController : MonoBehaviour {
             progresstext.text = TextManager.GetString(TextManager.StringTag.CompleteDownloadFiles);
             patcher.ClearEvent();
             patcher = null;
-
-            gameObject.SetActive(false);
-            FindObjectOfType<LoginController>().sceneLoginCanvas.gameObject.SetActive(true);
+            
+            UnityEngine.SceneManagement.SceneManager.LoadScene(1, UnityEngine.SceneManagement.LoadSceneMode.Single);
         }
         else
         {
