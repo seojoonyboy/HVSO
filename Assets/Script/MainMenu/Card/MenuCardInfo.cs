@@ -426,6 +426,7 @@ public partial class MenuCardInfo : MonoBehaviour {
         tutoHand = Instantiate(quest.manager.handSpinePrefab, creating, false);
         tutoHand.transform.SetParent(creating.parent.parent);
         tutoHand.name = "tutorialHand";
+        creating.GetComponent<Button>().onClick.AddListener(() => Destroy(tutoHand));
         Instantiate(quest.manager.handSpinePrefab, make, false).name = "tutorialHand";
     }
 }
