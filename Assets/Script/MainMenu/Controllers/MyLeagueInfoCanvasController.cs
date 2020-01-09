@@ -13,7 +13,6 @@ public class MyLeagueInfoCanvasController : MonoBehaviour {
     [SerializeField] HUDController hudController;
     [SerializeField] BattleReadySceneController battleReadySceneController;
     [SerializeField] RewardsProvider rewardsProvider;
-    [SerializeField] BattleReadyReward battleReadyReward;
 
     NoneIngameSceneEventHandler eventHandler;
     AccountManager accountManager;

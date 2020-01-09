@@ -49,6 +49,7 @@ public class BattleReadyReward : MonoBehaviour
 
         frontReward = rewardList[rewardPos];
         if (frontReward == null) return;
+        rewardTransform.gameObject.SetActive(true);
         ShowGauge(frontReward, rewardPos + 1);
     }
 
