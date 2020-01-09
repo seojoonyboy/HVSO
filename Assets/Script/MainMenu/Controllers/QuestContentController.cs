@@ -182,8 +182,6 @@ namespace Quest {
             skeletonGraphic.Update(0);
             skeletonGraphic.AnimationState.SetAnimation(0, "animation", false);
             yield return new WaitForSeconds(0.5f);
-
-            clone.transform.Find("Stamp").gameObject.SetActive(false);
         }
 
         IEnumerator _SlideEffect() {
@@ -197,6 +195,7 @@ namespace Quest {
             ));
             yield return new WaitForSeconds(moveTime);
             //Destroy(clone.gameObject);
+            clone.transform.Find("Stamp").gameObject.SetActive(false);
         }
 
         IEnumerator _ScaleEffect() {
