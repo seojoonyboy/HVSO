@@ -37,7 +37,7 @@ public class HandUIController : MonoBehaviour {
             case "story_deckList_enter_button":
             case "human_story_detail_button":
             case "orc_story_detail_button":
-                available_pools[0].GetComponent<RectTransform>().localPosition = new Vector3(rect.localPosition.x + 100, rect.localPosition.y, rect.localPosition.z);
+                available_pools[0].GetComponent<RectTransform>().position = new Vector3(rect.position.x + 100, rect.position.y, rect.position.z);
                 break;
             case "hud_back_button":
                 available_pools[0].GetComponent<RectTransform>().localPosition = new Vector3(rect.localPosition.x + 60, rect.localPosition.y, rect.localPosition.z);
