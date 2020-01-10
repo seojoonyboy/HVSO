@@ -5,6 +5,10 @@
             {
                 "method" : "StartMailTutorial",
                 "args" : []
+            },
+            {
+                "method" : "FinishMailTutorial",
+                "args" : []
             }
         ]
     },

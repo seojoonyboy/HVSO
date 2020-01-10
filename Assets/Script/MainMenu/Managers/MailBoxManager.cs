@@ -276,6 +276,9 @@ public class MailBoxManager : MonoBehaviour
             if(tutoQuest != null && tutoQuest.pressed) {
                 tutoQuest.quest.SubSet4();
                 tutoQuest.received = true;
+                PlayerPrefs.SetInt("FirstTutorialClear", 2);
+                PlayerPrefs.Save();
+                tutoQuest.quest.data.cleared = true;
             }
         }
         //slotList.GetChild(i / 3).GetChild(i % 3).Find("Reward/Effect").gameObject.SetActive(false);
