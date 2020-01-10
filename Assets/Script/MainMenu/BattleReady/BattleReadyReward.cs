@@ -25,6 +25,11 @@ public class BattleReadyReward : MonoBehaviour
         SetUpReward();
     }
 
+    private void OnDisable() {
+        if (bubbleAnimation != null) bubbleAnimation.Dispose();
+    }
+
+
     private void OnDestroy() {
         StopAllCoroutines();
     }
@@ -212,14 +217,14 @@ public class BattleReadyReward : MonoBehaviour
     private void SetUpAnimation() {
         Animation rewardIcon = rewardTransform.gameObject.GetComponent<Animation>();
         Image icon = rewardTransform.GetChild(0).gameObject.GetComponent<Image>();
-        int pos = -1;
+        int pos = 0;
 
         if (bubbleAnimation != null) bubbleAnimation.Dispose();
         bubbleAnimation = Observable.Interval(TimeSpan.FromSeconds(2))
-                                    .TakeWhile(_ => rewardTransform.gameObject.activeSelf == true)
-                                    .Select(_ => pos++)
-                                    .Select(x => x = ++x % unClaimedRewards.Count)
+                                    .TakeWhile(_ => rewardTransform.gameObject.activeSelf == true)                                    
+                                    .Select(_ => pos = pos % unClaimedRewards.Count)
                                     .Select(x => icon.sprite = GetRewardIcon(unClaimedRewards[x].reward.kind))
+                                    .Select(_ => pos++)
                                     .Subscribe(_ => { rewardIcon.Play(); Debug.Log(pos); })
                                     .AddTo(rewardTransform.gameObject);
     }
