@@ -145,8 +145,8 @@ public class SceneOBBCheckController : MonoBehaviour {
 
         UGUICommon.ShowRequestPermission(requestPermissionDialog, canvas, TextManager.GetString(TextManager.StringTag.AppPermissionsTitle1), TextManager.GetString(TextManager.StringTag.AppPermissionsInfo1), (UGUICommon.ButtonType buttonType) =>
         {
-            //RequestAndroidPermission(0);
-            UnityEngine.SceneManagement.SceneManager.LoadScene(1, UnityEngine.SceneManagement.LoadSceneMode.Single);
+            RequestAndroidPermission(0);
+            //UnityEngine.SceneManagement.SceneManager.LoadScene(1, UnityEngine.SceneManagement.LoadSceneMode.Single);
         });
     }
 
@@ -278,9 +278,11 @@ public class SceneOBBCheckController : MonoBehaviour {
         patcher.ReachabilityChanged += OnReachabilityChanged;
 
 #if QA
-        patcher.DownloadOBB(OpenConfirmDialog, versionCode, "http://10.0.2.1/HaeginPatch/ModuleSample/Android/main.1.com.haegin.modulesample.obb");
+        patcher.DownloadOBB(OpenConfirmDialog, versionCode, "https://buildmachine.fbl.kr/obb/qa/hvso.main.obb");
 #elif USE_ONESTORE_IAP
-        patcher.DownloadOBB(OpenConfirmDialog, versionCode, "http://10.0.2.1/HaeginPatch/ModuleSample/Android/main.1.com.haegin.modulesample.obb");
+        patcher.DownloadOBB(OpenConfirmDialog, versionCode, "https://buildmachine.fbl.kr/obb/one/hvso.main.obb");
+#elif ENABLE_LOG
+        patcher.DownloadOBB(OpenConfirmDialog, versionCode, "https://buildmachine.fbl.kr/obb/test/hvso.main.obb");
 #else
         patcher.DownloadOBB(OpenConfirmDialog, versionCode);
 #endif

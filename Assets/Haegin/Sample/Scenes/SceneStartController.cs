@@ -165,6 +165,8 @@ public class SceneStartController : MonoBehaviour
     {
 #if UNITY_EDITOR
         ServiceMaintenance.CheckStatusV2("http://dev-maintenance.fbl.kr/Gate", "DevForClient", ShowServerMaintenanceWin, OnServerMaintenanceAction, (string CommonUrl, string GameUrl, string PatchUrl) =>
+#elif QA
+        ServiceMaintenance.CheckStatusV2("http://dev-maintenance.fbl.kr/Gate", "QA", ShowServerMaintenanceWin, OnServerMaintenanceAction, (string CommonUrl, string GameUrl, string PatchUrl) =>
 #else
         ServiceMaintenance.CheckStatusV2("http://dev-maintenance.fbl.kr/Gate", "DevForClient", ShowServerMaintenanceWin, OnServerMaintenanceAction, (string CommonUrl, string GameUrl, string PatchUrl) =>
 #endif
