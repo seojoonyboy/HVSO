@@ -103,13 +103,14 @@ namespace Quest {
         }
 
         public void TutorialNoQuestShow() {
-            bool needStart = PlayerPrefs.GetInt("FirstTutorialClear", 0) == 1 ? true : false;
+            bool needStart = (PlayerPrefs.GetInt("FirstTutorialClear", 0) != 0);
             if(!needStart) return;
             QuestContentController noQuest = gameObject.AddComponent<QuestContentController>();
             noQuest.enabled = false;
             noQuest.data = new QuestData();
             noQuest.data.tutorials = tutorialJson[0].tutorials;
             noQuest.manager = this;
+            noQuest.data.cleared = (PlayerPrefs.GetInt("FirstTutorialClear", 0) == 2);
             noQuest.ActiveTutorial();
         }
 

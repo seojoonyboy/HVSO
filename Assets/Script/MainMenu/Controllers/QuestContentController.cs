@@ -209,6 +209,7 @@ namespace Quest {
         }
 
         public bool StartMailTutorial(string[] args) {
+            if(data.cleared) return false;
             GetPostOffice();
             if(!manager.tutorialSerializeList.backButton.gameObject.activeInHierarchy) return false;
             AddSpinetoButtonAndRemoveClick(manager.tutorialSerializeList.backButton);
@@ -232,9 +233,15 @@ namespace Quest {
             manager.tutorialSerializeList.newMail.SetActive(false);
             manager.tutorialSerializeList.mailBoxManager.tutoQuest.openBtn.enabled = true;
             manager.tutorialSerializeList.mailBoxManager.tutoQuest = null;
+            FinishMailTutorial(null);
+        }
+
+        public bool FinishMailTutorial(string[] args) {
+            if(!data.cleared) return false;
             manager.tutoDialog.StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_9);
             PlayerPrefs.DeleteKey("FirstTutorialClear");
             PlayerPrefs.Save();
+            return true;
         }
 
         public void AddSpinetoButtonAndRemoveClick(Button button, UnityAction moreAction = null) {

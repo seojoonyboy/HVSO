@@ -251,7 +251,7 @@ public class MailBoxManager : MonoBehaviour
                 if (itemList[i].kind.Contains("gold"))
                     item = "gold";
                 target.GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon["result_" + item];
-                slotList.GetChild(i / 3).GetChild(i % 3).Find("NameOrNum").GetComponent<TMPro.TextMeshProUGUI>().text = itemList[i].amount;
+                slotList.GetChild(i / 3).GetChild(i % 3).Find("NameOrNum").GetComponent<TMPro.TextMeshProUGUI>().text = "x" + itemList[i].amount;
             }
             target.SetAsFirstSibling();
             target.gameObject.SetActive(true);
@@ -276,6 +276,9 @@ public class MailBoxManager : MonoBehaviour
             if(tutoQuest != null && tutoQuest.pressed) {
                 tutoQuest.quest.SubSet4();
                 tutoQuest.received = true;
+                PlayerPrefs.SetInt("FirstTutorialClear", 2);
+                PlayerPrefs.Save();
+                tutoQuest.quest.data.cleared = true;
             }
         }
         //slotList.GetChild(i / 3).GetChild(i % 3).Find("Reward/Effect").gameObject.SetActive(false);
