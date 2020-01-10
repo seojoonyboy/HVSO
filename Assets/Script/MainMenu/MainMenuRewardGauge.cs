@@ -10,7 +10,7 @@ public class MainMenuRewardGauge : BattleReadyReward {
 
     // Start is called before the first frame update
     void Start()
-    {
+    {        
         StartCoroutine(Wait_Deploy_Data());   
     }
 
@@ -24,12 +24,13 @@ public class MainMenuRewardGauge : BattleReadyReward {
 
 
     private void OnEnable() {
-
+        if (AccountManager.Instance.rankTable == null || AccountManager.Instance.rankTable.Count < 1) AccountManager.Instance.RequestRankTable();
     }
 
     IEnumerator Wait_Deploy_Data() {
         yield return new WaitUntil(() => AccountManager.Instance.scriptable_leagueData.leagueInfo.rewards != null);
         SetUpReward();
+        
         yield return SetRankChangeChanceUI();
     }
 
