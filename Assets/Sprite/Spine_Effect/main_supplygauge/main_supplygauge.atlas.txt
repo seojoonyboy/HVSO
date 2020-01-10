@@ -1,0 +1,13 @@
+
+main_supplygauge.png
+size: 128,64
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+light1
+  rotate: false
+  xy: 0, 0
+  size: 88, 62
+  orig: 88, 62
+  offset: 0, 0
+  index: -1

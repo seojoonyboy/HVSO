@@ -6,8 +6,7 @@ using UnityEngine.UI;
 
 public class BattleMenuController : MonoBehaviour {
     [SerializeField] HUDController HUDController;
-    [SerializeField] GameObject[] subPanels;
-    [SerializeField] Image mainSceneImage;          //메인화면 선택된 모드 이미지
+    [SerializeField] GameObject[] subPanels, spineImages;
     [SerializeField] Button directModePlayButton;   //메인화면 바로 플레이 버튼
     [SerializeField] Button[] modeButtons;
 
@@ -55,8 +54,14 @@ public class BattleMenuController : MonoBehaviour {
 
         directModePlayButton.onClick.RemoveAllListeners();
         if (modeButtons[type].enabled) {
-            mainSceneImage.enabled = true;
-            mainSceneImage.sprite = modeImages[type];
+            if(type == 0) {
+                spineImages[0].SetActive(true);
+                spineImages[1].SetActive(false);
+            }
+            else if(type == 1) {
+                spineImages[1].SetActive(true);
+                spineImages[0].SetActive(false);
+            }
 
             directModePlayButton.onClick.AddListener(() => {
                 subPanels[type].SetActive(true);
@@ -65,7 +70,7 @@ public class BattleMenuController : MonoBehaviour {
     }
 
     public void ClearDirectPlayButton() {
-        mainSceneImage.enabled = false;
+        //mainSceneImage.enabled = false;
         directModePlayButton.onClick.RemoveAllListeners();
     }
     
