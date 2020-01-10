@@ -79,7 +79,7 @@ public class BattleReadyHeaderController : SerializedMonoBehaviour {
 
         rankingBattleUI.transform.Find("Text").GetComponent<TextMeshProUGUI>().text = data.rankDetail.minorRankName;
         rankingBattleUI.transform.Find("Rank/Image").GetComponent<Image>().sprite = GetRankImage(data.rankDetail.minorRankName);
-        rankingBattleUI.transform.Find("RankingTable/Icon/Value").GetComponent<Text>().text = data.ratingPoint.ToString();
+        rankingBattleUI.transform.Find("Value").GetComponent<Text>().text = data.ratingPoint.ToString();
 
         Transform rankingTable = rankingBattleUI.transform.Find("RankingTable");
         TextMeshProUGUI description = rankingBattleUI.transform.Find("Rank/Image/Name").GetComponent<TextMeshProUGUI>();
