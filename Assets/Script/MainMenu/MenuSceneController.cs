@@ -70,18 +70,18 @@ public class MenuSceneController : MonoBehaviour {
             tierName.text = info.rankDetail.minorRankName;
             tierValue.text = info.ratingPoint.ToString();
 
-            int pointOverThen = prevInfo.rankDetail.pointOverThen;
-            int pointLessThen = prevInfo.rankDetail.pointLessThen;
-            int ratingPointTop = prevInfo.ratingPointTop ?? default(int);
+            //int pointOverThen = prevInfo.rankDetail.pointOverThen;
+            //int pointLessThen = prevInfo.rankDetail.pointLessThen;
+            //int ratingPointTop = prevInfo.ratingPointTop ?? default(int);
 
-            mmrUpValue.text = pointLessThen.ToString();
-            mmrDownValue.text = pointOverThen.ToString();
-            prevMmrSlider.maxValue = pointLessThen - pointOverThen;
-            currMmrSlider.maxValue = pointLessThen - pointOverThen;
+            //mmrUpValue.text = pointLessThen.ToString();
+            //mmrDownValue.text = pointOverThen.ToString();
+            //prevMmrSlider.maxValue = pointLessThen - pointOverThen;
+            //currMmrSlider.maxValue = pointLessThen - pointOverThen;
 
-            prevMmrSlider.value = ratingPointTop;
-            currMmrSlider.value = prevInfo.ratingPoint - pointOverThen;
-
+            //prevMmrSlider.value = ratingPointTop;
+            //currMmrSlider.value = prevInfo.ratingPoint - pointOverThen;
+            menuSceneController.userMmrGauge.SetUpReward();
             AccountManager.RankTableRow item = accountManager.rankTable.Find(x => x.minorRankName == prevInfo.rankDetail.minorRankName);
             int prevRankIndex = -1;
 
