@@ -1,0 +1,90 @@
+
+mode_button_battle.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Group 38
+  rotate: false
+  xy: 585, 5
+  size: 134, 134
+  orig: 134, 134
+  offset: 0, 0
+  index: -1
+b1
+  rotate: false
+  xy: 0, 485
+  size: 869, 459
+  orig: 871, 461
+  offset: 1, 1
+  index: -1
+b2
+  rotate: false
+  xy: 585, 250
+  size: 12, 23
+  orig: 14, 25
+  offset: 1, 1
+  index: -1
+h1
+  rotate: false
+  xy: 0, 244
+  size: 273, 241
+  orig: 273, 241
+  offset: 0, 0
+  index: -1
+h2
+  rotate: true
+  xy: 0, 47
+  size: 197, 187
+  orig: 199, 189
+  offset: 1, 1
+  index: -1
+h3
+  rotate: false
+  xy: 273, 273
+  size: 350, 212
+  orig: 350, 212
+  offset: 0, 0
+  index: -1
+o1
+  rotate: true
+  xy: 273, 0
+  size: 273, 209
+  orig: 273, 228
+  offset: 0, 0
+  index: -1
+o2
+  rotate: false
+  xy: 623, 139
+  size: 235, 244
+  orig: 235, 244
+  offset: 0, 0
+  index: -1
+o3
+  rotate: false
+  xy: 869, 796
+  size: 145, 148
+  orig: 147, 150
+  offset: 1, 1
+  index: -1
+o4
+  rotate: true
+  xy: 719, 9
+  size: 130, 146
+  orig: 132, 148
+  offset: 1, 1
+  index: -1
+o5
+  rotate: true
+  xy: 482, 66
+  size: 207, 103
+  orig: 207, 103
+  offset: 0, 0
+  index: -1
+t1
+  rotate: true
+  xy: 869, 383
+  size: 413, 136
+  orig: 415, 138
+  offset: 1, 1
+  index: -1
