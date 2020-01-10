@@ -1,0 +1,90 @@
+
+mode_button_story.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Group 38
+  rotate: false
+  xy: 788, 250
+  size: 134, 134
+  orig: 134, 134
+  offset: 0, 0
+  index: -1
+back
+  rotate: false
+  xy: 0, 633
+  size: 800, 154
+  orig: 802, 156
+  offset: 1, 1
+  index: -1
+h1
+  rotate: true
+  xy: 312, 134
+  size: 251, 331
+  orig: 251, 331
+  offset: 0, 0
+  index: -1
+h2
+  rotate: false
+  xy: 547, 472
+  size: 156, 161
+  orig: 156, 161
+  offset: 0, 0
+  index: -1
+h3
+  rotate: false
+  xy: 643, 339
+  size: 145, 133
+  orig: 145, 133
+  offset: 0, 0
+  index: -1
+o1
+  rotate: false
+  xy: 966, 698
+  size: 57, 89
+  orig: 59, 91
+  offset: 1, 1
+  index: -1
+o2
+  rotate: true
+  xy: 0, 64
+  size: 320, 312
+  orig: 320, 312
+  offset: 0, 0
+  index: -1
+o3
+  rotate: false
+  xy: 219, 385
+  size: 160, 248
+  orig: 160, 248
+  offset: 0, 0
+  index: -1
+o4
+  rotate: true
+  xy: 0, 412
+  size: 221, 219
+  orig: 221, 219
+  offset: 0, 0
+  index: -1
+ob1
+  rotate: false
+  xy: 379, 433
+  size: 168, 200
+  orig: 168, 200
+  offset: 0, 0
+  index: -1
+ob2
+  rotate: false
+  xy: 643, 0
+  size: 267, 250
+  orig: 267, 250
+  offset: 0, 0
+  index: -1
+t1
+  rotate: true
+  xy: 800, 384
+  size: 403, 166
+  orig: 405, 168
+  offset: 1, 1
+  index: -1

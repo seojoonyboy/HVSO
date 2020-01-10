@@ -14,7 +14,7 @@ public class BattleReadyReward : MonoBehaviour
     [SerializeField] Slider prevSlider, currSlider;
     [SerializeField] Image nextMMR, rewardIcon;
     int rewardPos = 0;
-    IDisposable bubbleAnimation;
+    protected IDisposable bubbleAnimation;
     List<AccountManager.Reward> unClaimedRewards;
 
     private void Awake() {
@@ -79,11 +79,11 @@ public class BattleReadyReward : MonoBehaviour
             nextMMR.gameObject.SetActive(!rewardIcon.gameObject.activeSelf);
 
             mmrUp.text = frontReward.point.ToString();
-            mmrDown.text = pointOverThen.ToString();
+            mmrDown.text = (pointOverThen - 30).ToString();
 
-            prevSlider.minValue = pointOverThen;
+            prevSlider.minValue = pointOverThen - 30;
             prevSlider.maxValue = frontReward.point;
-            currSlider.minValue = pointOverThen;
+            currSlider.minValue = pointOverThen - 30;
             currSlider.maxValue = frontReward.point;
 
             prevSlider.value = prevInfo.ratingPoint;
@@ -96,11 +96,11 @@ public class BattleReadyReward : MonoBehaviour
             rewardIcon.gameObject.SetActive(!nextMMR.gameObject.activeSelf);
 
             mmrUp.text = pointlessThen.ToString();
-            mmrDown.text = pointOverThen.ToString();
+            mmrDown.text = (pointOverThen - 30).ToString();
 
-            prevSlider.minValue = pointOverThen;
+            prevSlider.minValue = pointOverThen - 30;
             prevSlider.maxValue = pointlessThen;
-            currSlider.minValue = pointOverThen;
+            currSlider.minValue = pointOverThen - 30;
             currSlider.maxValue = pointlessThen;
 
             prevSlider.value = prevInfo.ratingPoint;
