@@ -766,6 +766,8 @@ public class GameResultManager : MonoBehaviour {
             Transform slots = rankBoard.Find("Bottom");
             if (isBattleOnce) {
                 slots.GetChild(0).gameObject.SetActive(true);
+
+                isWin = prevLeagueInfo.ratingPoint < newLeagueInfo.ratingPoint;
                 if (isWin) {
                     slots.GetChild(0).Find("Win").gameObject.SetActive(true);
                     description.text = "승급!";
@@ -794,6 +796,8 @@ public class GameResultManager : MonoBehaviour {
                 }
 
                 slots.GetChild(prevLeagueInfo.rankingBattleCount.Length).gameObject.SetActive(true);
+
+                isWin = prevLeagueInfo.ratingPoint < newLeagueInfo.ratingPoint;
                 if (isWin) slots.GetChild(0).Find("Win").gameObject.SetActive(true);
                 else slots.GetChild(0).Find("Lose").gameObject.SetActive(true);
             }
