@@ -226,7 +226,7 @@ public class BattleReadyReward : MonoBehaviour
                                     .Select(_ => pos = pos % unClaimedRewards.Count)
                                     .Select(x => icon.sprite = GetRewardIcon(unClaimedRewards[x].reward.kind))
                                     .Select(_ => pos++)
-                                    .Subscribe(_ => { rewardIcon.Play(); Debug.Log(pos); })
+                                    .Subscribe(_ => { rewardIcon.Play();})
                                     .AddTo(rewardTransform.gameObject);
     }
 

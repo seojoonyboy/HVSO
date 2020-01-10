@@ -282,7 +282,7 @@ public class SceneOBBCheckController : MonoBehaviour {
 #elif USE_ONESTORE_IAP
         patcher.DownloadOBB(OpenConfirmDialog, versionCode, "https://buildmachine.fbl.kr/obb/one/hvso.main.obb");
 #elif ENABLE_LOG
-        patcher.DownloadOBB(OpenConfirmDialog, versionCode, "https://buildmachine.fbl.kr/obb/test/hvso.main.obb");
+        patcher.DownloadOBB(null, versionCode, "https://buildmachine.fbl.kr/obb/test/hvso.main.obb");
 #else
         patcher.DownloadOBB(OpenConfirmDialog, versionCode);
 #endif
