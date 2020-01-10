@@ -690,16 +690,10 @@ namespace MenuTutorialModules {
 
     public class ShowHandUI : MenuExecute {
         public override void Execute() {
-            StartCoroutine(_exec());
-        }
-
-        IEnumerator _exec() {
-            yield return new WaitForFixedUpdate();
-
             GameObject target = null;
-            if (args.Count > 2) {
-                foreach (Transform child in MenuMask.Instance.transform.Find("Dimmed")) {
-                    if (child.name == args[0]) {
+            if(args.Count > 2) {
+                foreach(Transform child in MenuMask.Instance.transform.Find("Dimmed")) {
+                    if(child.name == args[0]) {
                         target = child.gameObject;
                     }
                 }
