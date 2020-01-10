@@ -927,17 +927,17 @@ public class GameResultManager : MonoBehaviour {
                 alertIcon.gameObject.SetActive(true);
                 alertIcon.Find("SupplyText").gameObject.SetActive(true);
                 alertIcon.Find("SupplyText").gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = (++box).ToString();
-                if (ScenarioGameManagment.scenarioInstance == null) {
-                    boxSpine.gameObject.GetComponent<Button>().enabled = true;
-                    boxSpine.gameObject.GetComponent<Button>().onClick.AddListener(delegate () {
-                        box--;
-                        alertIcon.Find("SupplyText").gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = box.ToString();
-                        if (box < 1) {
-                            boxSpine.gameObject.GetComponent<Button>().enabled = false;
-                            alertIcon.gameObject.SetActive(false);
-                        }
-                    });
-                }
+                //if (ScenarioGameManagment.scenarioInstance == null) {
+                //    boxSpine.gameObject.GetComponent<Button>().enabled = true;
+                //    boxSpine.gameObject.GetComponent<Button>().onClick.AddListener(delegate () {
+                //        box--;
+                //        alertIcon.Find("SupplyText").gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = box.ToString();
+                //        if (box < 1) {
+                //            boxSpine.gameObject.GetComponent<Button>().enabled = false;
+                //            alertIcon.gameObject.SetActive(false);
+                //        }
+                //    });
+                //}
                 
                 boxSpine.AnimationState.SetAnimation(0, "02.vibration1", true);
             }
@@ -975,17 +975,17 @@ public class GameResultManager : MonoBehaviour {
                     alertIcon.gameObject.SetActive(true);
                     alertIcon.Find("SupplyText").gameObject.SetActive(true);
                     alertIcon.Find("SupplyText").gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = (++box).ToString();
-                    if (ScenarioGameManagment.scenarioInstance == null) {
-                        boxSpine.gameObject.GetComponent<Button>().enabled = true;
-                        boxSpine.gameObject.GetComponent<Button>().onClick.AddListener(delegate () {
-                            box--;
-                            alertIcon.Find("SupplyText").gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = box.ToString();
-                            if (box < 1) {
-                                boxSpine.gameObject.GetComponent<Button>().enabled = false;
-                                alertIcon.gameObject.SetActive(false);
-                            }
-                        });
-                    }
+                    //if (ScenarioGameManagment.scenarioInstance == null) {
+                    //    boxSpine.gameObject.GetComponent<Button>().enabled = true;
+                    //    boxSpine.gameObject.GetComponent<Button>().onClick.AddListener(delegate () {
+                    //        box--;
+                    //        alertIcon.Find("SupplyText").gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = box.ToString();
+                    //        if (box < 1) {
+                    //            boxSpine.gameObject.GetComponent<Button>().enabled = false;
+                    //            alertIcon.gameObject.SetActive(false);
+                    //        }
+                    //    });
+                    //}
 
                     boxSpine.AnimationState.SetAnimation(0, "02.vibration1", true);
                 }

@@ -66,7 +66,7 @@ public class BattleReadyReward : MonoBehaviour
 
         string rankName = prevInfo.rankDetail.minorRankName;
 
-        int pointOverThen = prevInfo.rankDetail.pointOverThen;
+        int pointOverThen = currinfo.rankDetail.pointOverThen;
         int pointlessThen = currinfo.rankDetail.pointLessThen;
         int ratingPointTop = prevInfo.ratingPointTop ?? default(int);
 
@@ -137,12 +137,22 @@ public class BattleReadyReward : MonoBehaviour
     }
 
     Sprite GetRewardIcon(string keyword) {
-        if (rewardIcons.ContainsKey(keyword)) {
-            return rewardIcons[keyword];
+        if (rewardIcons != null) {
+            if (rewardIcons.ContainsKey(keyword)) {
+                return rewardIcons[keyword];
+            }
+            else {
+                return null;
+            }
         }
         else {
-            return null;
+            if (AccountManager.Instance.resource.rewardIcon.ContainsKey(keyword)){
+                return AccountManager.Instance.resource.rewardIcon[keyword];
+            }
+            else
+                return null;
         }
+
     }
 
 
@@ -234,21 +244,7 @@ public class BattleReadyReward : MonoBehaviour
     
 
 
-
-
-
-    private IEnumerator TraverseReward(List<AccountManager.Reward> unclamimed) {        
-        GameObject rewardBubble = rewardTransform.gameObject;
-        rewardBubble.SetActive(true);
-
-        while (rewardBubble.activeSelf == true) {
-            if (rewardBubble.activeSelf == false) yield break;
-
-
-
-
-        }
-    }
+    
 
 
 }

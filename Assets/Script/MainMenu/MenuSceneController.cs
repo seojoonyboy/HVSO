@@ -81,7 +81,6 @@ public class MenuSceneController : MonoBehaviour {
 
             //prevMmrSlider.value = ratingPointTop;
             //currMmrSlider.value = prevInfo.ratingPoint - pointOverThen;
-            menuSceneController.userMmrGauge.SetUpReward();
             AccountManager.RankTableRow item = accountManager.rankTable.Find(x => x.minorRankName == prevInfo.rankDetail.minorRankName);
             int prevRankIndex = -1;
 

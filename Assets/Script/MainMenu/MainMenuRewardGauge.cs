@@ -8,6 +8,11 @@ public class MainMenuRewardGauge : BattleReadyReward {
     [SerializeField] Transform rankingBattleUI;
     [SerializeField] Image tierFlag;
 
+
+    private void Awake() {
+        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_INFO_UPDATED, OnLeagueInfoUpdated);
+    }
+
     // Start is called before the first frame update
     void Start()
     {        
@@ -15,6 +20,7 @@ public class MainMenuRewardGauge : BattleReadyReward {
     }
 
     private void OnDestroy() {
+        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_INFO_UPDATED, OnLeagueInfoUpdated);
         StopAllCoroutines();
     }
 
@@ -28,9 +34,9 @@ public class MainMenuRewardGauge : BattleReadyReward {
         if (AccountManager.Instance.scriptable_leagueData == null) AccountManager.Instance.RequestLeagueInfo();
     }
 
-    public IEnumerator Wait_Deploy_Data() {
-        SetUpReward();        
-        yield return SetRankChangeChanceUI();
+    public IEnumerator Wait_Deploy_Data() {        
+        
+        yield return null;
     }
 
     IEnumerator SetRankChangeChanceUI() {
@@ -85,8 +91,13 @@ public class MainMenuRewardGauge : BattleReadyReward {
 
         yield return null;
     }
+    public void OnLeagueInfoUpdated(System.Enum Event_Type, Component Sender, object Param) {
+        SetUpReward();
+        StartCoroutine(SetRankChangeChanceUI());
+    }
 
-    
+
+
 
 
 }
