@@ -88,5 +88,6 @@ public class NoneIngameSceneEventHandler : Singleton<NoneIngameSceneEventHandler
         API_AD_SHOPLIST,
         API_ADREWARD_MAIN,
         API_ADREWARD_SHOP,
+        API_ALERT
     }
 }
