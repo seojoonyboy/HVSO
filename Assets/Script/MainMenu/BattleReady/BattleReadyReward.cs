@@ -79,11 +79,11 @@ public class BattleReadyReward : MonoBehaviour
             nextMMR.gameObject.SetActive(!rewardIcon.gameObject.activeSelf);
 
             mmrUp.text = frontReward.point.ToString();
-            mmrDown.text = (pointOverThen - 30).ToString();
+            mmrDown.text = (pointOverThen > 0) ? (pointOverThen - 30).ToString() : 0.ToString();
 
-            prevSlider.minValue = pointOverThen - 30;
+            prevSlider.minValue = (pointOverThen > 0) ? pointOverThen - 30 : 0;
             prevSlider.maxValue = frontReward.point;
-            currSlider.minValue = pointOverThen - 30;
+            currSlider.minValue = (pointOverThen > 0) ? pointOverThen - 30 : 0;
             currSlider.maxValue = frontReward.point;
 
             prevSlider.value = prevInfo.ratingPoint;
@@ -96,11 +96,11 @@ public class BattleReadyReward : MonoBehaviour
             rewardIcon.gameObject.SetActive(!nextMMR.gameObject.activeSelf);
 
             mmrUp.text = pointlessThen.ToString();
-            mmrDown.text = (pointOverThen - 30).ToString();
+            mmrDown.text = (pointOverThen > 0) ? (pointOverThen - 30).ToString() : 0.ToString();
 
-            prevSlider.minValue = pointOverThen - 30;
+            prevSlider.minValue = (pointOverThen > 0) ? pointOverThen - 30 : 0;
             prevSlider.maxValue = pointlessThen;
-            currSlider.minValue = pointOverThen - 30;
+            currSlider.minValue = (pointOverThen > 0) ? pointOverThen - 30 : 0;
             currSlider.maxValue = pointlessThen;
 
             prevSlider.value = prevInfo.ratingPoint;
