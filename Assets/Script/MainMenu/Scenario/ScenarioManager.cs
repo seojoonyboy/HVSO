@@ -295,8 +295,28 @@ public class ScenarioManager : SerializedMonoBehaviour
                 selectedList[i].description, 
                 item.transform.Find("StageScript").GetComponent<TextMeshProUGUI>()
             );
+
+            if (selectedList[i].chapter > 0) {
+                item.transform.Find("Locker").gameObject.SetActive(true);
+                item.GetComponent<Button>().enabled = false;
+            }
+            else {
+                item.transform.Find("Locker").gameObject.SetActive(false);
+                item.GetComponent<Button>().enabled = true;
+            }
+
+            if (item.transform.Find("Glow").gameObject.activeSelf == true)
+                item.transform.Find("Glow").gameObject.SetActive(false);
+
+
             //item.transform.Find("StageScript").GetComponent<TextMeshProUGUI>().text = selectedList[i].description;
         }
+
+        if (isHuman == false)
+            orc.StageCanvas.transform.Find("HUD/StageSelect/Buttons").gameObject.SetActive(false);
+        else
+            human.StageCanvas.transform.Find("HUD/StageSelect/Buttons").gameObject.SetActive(false);
+
 
         ShowTutoHand(isHuman ? "human" : "orc");
     }
