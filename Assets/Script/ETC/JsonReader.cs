@@ -164,7 +164,7 @@ namespace dataModules {
     }
 
     public class Shop {
-        public ShopItem[] items;
+        public RewardItem[] items;
         public string id;
         public string name;
         public string desc;
@@ -175,7 +175,7 @@ namespace dataModules {
         public string updatedAt;
     }
 
-    public class ShopItem {
+    public class RewardItem {
         public string name;
         public string amount;
     }
@@ -233,5 +233,35 @@ namespace dataModules {
         public string kind;
         public int amount;
         public List<RewardClass>[] boxes;
+    }
+
+    public class AttendanceResult {
+        public AttendanceType attendance;
+        public AttendanceReward table;
+    }
+
+    public class AttendanceType {
+        public int monthly;
+        public int welcome;
+        public int comeback;
+    }
+
+    public class AttendanceReward {
+        public AttendanceItem[] monthly;
+        public AttendanceItem[] welcome;
+        public AttendanceItem[] comeback;
+    }
+
+    public class AttendanceItem {
+        public AttendaceRewardItem reward;
+        public int id;
+        public string type;
+        public int day;
+        public bool attend;
+    }
+
+    public class AttendaceRewardItem {
+        public string kind;
+        public int amount;
     }
 }
