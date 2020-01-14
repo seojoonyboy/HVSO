@@ -278,7 +278,7 @@ public class SceneOBBCheckController : MonoBehaviour {
         patcher.ReachabilityChanged += OnReachabilityChanged;
 
 #if QA
-        patcher.DownloadOBB(OpenConfirmDialog, versionCode, "https://buildmachine.fbl.kr/obb/qa/hvso.main.obb");
+        patcher.DownloadOBB(null, versionCode, "https://buildmachine.fbl.kr/obb/qa/hvso.main.obb");
 #elif USE_ONESTORE_IAP
         patcher.DownloadOBB(OpenConfirmDialog, versionCode, "https://buildmachine.fbl.kr/obb/one/hvso.main.obb");
 #elif ENABLE_LOG
