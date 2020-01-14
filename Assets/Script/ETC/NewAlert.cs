@@ -8,6 +8,7 @@ using UnityEditor;
 
 [ExecuteInEditMode()]
 public partial class NewAlert : MonoBehaviour {
+#if UNITY_EDITOR
     [MenuItem("GameObject/UI/AddNewAlert")]
     public static void AddNewAlert() {
         GameObject obj = Instantiate(Resources.Load<GameObject>("UI/NewAlert"));
@@ -58,6 +59,7 @@ public partial class NewAlert : MonoBehaviour {
 
         obj.SetActive(false);
     }
+#endif
 }
 
 public partial class NewAlert : MonoBehaviour {
