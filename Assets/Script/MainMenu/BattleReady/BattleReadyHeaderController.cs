@@ -99,7 +99,6 @@ public class BattleReadyHeaderController : SerializedMonoBehaviour {
         for (int i = 0; i < rankCondition.battles; i++) {
             if (rankingTable.GetChild(i).name != "Icon") {
                 rankingTable.GetChild(i).gameObject.SetActive(true);
-                rankingTable.GetChild(i).Find("exclamation").gameObject.SetActive(true);
             }   
             yield return new WaitForSeconds(1.0f);
         }
@@ -109,7 +108,7 @@ public class BattleReadyHeaderController : SerializedMonoBehaviour {
                 //승리
                 if(data.rankingBattleCount[i] == true) {
                     if(rankingTable.GetChild(i).name != "Icon") {
-                        rankingTable.GetChild(i).Find("Win").gameObject.SetActive(true);                        
+                        rankingTable.GetChild(i).Find("Win").gameObject.SetActive(true);
                     }
                 }
                 //패배
@@ -118,7 +117,6 @@ public class BattleReadyHeaderController : SerializedMonoBehaviour {
                         rankingTable.GetChild(i).Find("Lose").gameObject.SetActive(true);
                     }
                 }
-                rankingTable.GetChild(i).Find("exclamation").gameObject.SetActive(false);
             }
         }
         yield return 0;
