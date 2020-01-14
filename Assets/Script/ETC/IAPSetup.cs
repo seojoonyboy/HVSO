@@ -19,8 +19,8 @@ public class IAPSetup : Singleton<IAPSetup> {
                                         {"welcome_1", "com_haegin_hvso_welcome_package_1"},     //웰컴 패키지1
                                         {"welcome_2", "com_haegin_hvso_welcome_package_2"},     //웰컴 패키지2
                                         {"welcome_3", "com_haegin_hvso_welcome_package_3"},     //웰컴 패키지3
-                                        {"hero_2", "com_haegin_hvso_level_achieve_package_1"},  //영웅 2레벨 달성 패키지
-                                        {"hero_3", "com_haegin_hvso_level_achieve_package_2"},  //영웅 3레벨 달성 패키지
+                                        {"hero_2", "com_haegin_hvso_hero_2lv_done_pakage"},     //영웅 2레벨 달성 패키지
+                                        {"hero_3", "com_haegin_hvso_hero_3lv_done_pakage"},     //영웅 3레벨 달성 패키지
                                         {"beginner", "com_haegin_hvso_beginner_package"},       //초심자 패키지
                                         {"intermediate", "com_haegin_hvso_intermediate_package"},//중급자 패키지
                                         {"expert", "com_haegin_hvso_expert_package"},           //상급자 패키지
