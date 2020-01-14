@@ -35,6 +35,7 @@ public class IAPSetup : Singleton<IAPSetup> {
     [SerializeField] private GameObject systemDialog;
     [SerializeField] private GameObject eulaText;
     private WebClient webClient;
+    private List<IAPProduct> productList;
 
     public void Init() {
         WebClientInit();
@@ -76,6 +77,12 @@ public class IAPSetup : Singleton<IAPSetup> {
                     // textProductInfo.text = TextManager.GetString(TextManager.StringTag.NameTag) + productList[0].title + "\n" +
                     //     TextManager.GetString(TextManager.StringTag.DescTag) + productList[0].description + "\n" +
                     //     TextManager.GetString(TextManager.StringTag.PriceTag) + productList[0].price;
+                    #if MDEBUG
+                    foreach(IAPProduct info in productList) {
+                        Debug.Log(info.title + " " + info.description + " " + info.price);
+                    }
+                    #endif
+                    this.productList = productList;
                 });
             }
             else {
