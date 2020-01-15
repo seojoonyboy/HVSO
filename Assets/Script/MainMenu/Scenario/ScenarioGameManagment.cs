@@ -54,7 +54,7 @@ public class ScenarioGameManagment : PlayMangement {
         scenarioInstance = this;
         isTutorial = true;
         SetWorldScale();
-        SetPlayerCard();
+        //SetPlayerCard();
         GetComponent<TurnMachine>().onTurnChanged.AddListener(ChangeTurn);
         //GetComponent<TurnMachine>().onPrepareTurn.AddListener(DistributeCard);
         socketHandler.ClientReady();

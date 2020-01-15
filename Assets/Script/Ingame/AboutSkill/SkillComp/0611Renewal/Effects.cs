@@ -581,7 +581,7 @@ namespace SkillModules {
             enemyCard.transform.SetParent(playMangement.enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(playMangement.CountEnemyCard()));
             enemyCard.transform.localScale = new Vector3(1, 1, 1);
             enemyCard.transform.localPosition = new Vector3(0, 0, 0);
-            enemyCard.SetActive(true);
+            enemyCard.SetActive(false);
         }
 
         private void MakeMyUnitToCard(PlaceMonster placeMonster) {
