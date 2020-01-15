@@ -5,15 +5,15 @@ format: RGBA8888
 filter: Linear,Linear
 repeat: none
 card
-  rotate: false
+  rotate: true
   xy: 0, 0
-  size: 165, 211
-  orig: 165, 211
+  size: 212, 288
+  orig: 212, 288
   offset: 0, 0
   index: -1
 dust
-  rotate: false
-  xy: 165, 119
+  rotate: true
+  xy: 288, 110
   size: 102, 92
   orig: 102, 92
   offset: 0, 0
