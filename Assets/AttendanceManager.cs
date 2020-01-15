@@ -52,6 +52,7 @@ public class AttendanceManager : MonoBehaviour
     }
 
     void SetMonthlyBoard() {
+        transform.Find("MonthlyBoard/BackGround").GetComponent<Button>().onClick.RemoveAllListeners();
         transform.Find("MonthlyBoard/BackGround").GetComponent<Button>().onClick.AddListener(() => SetWeaklyBoard());
         Transform slotList = transform.Find("MonthlyBoard/DayList");
         InitBoard(slotList);
@@ -124,6 +125,7 @@ public class AttendanceManager : MonoBehaviour
 
 
     public void SetMonthlyBoardChecked() {
+        transform.Find("MonthlyBoard/BackGround").GetComponent<Button>().onClick.RemoveAllListeners();
         transform.Find("MonthlyBoard/BackGround").GetComponent<Button>().onClick.AddListener(() => SetWeaklyBoardChecked());
         Transform slotList = transform.Find("MonthlyBoard/DayList");
         InitBoard(slotList);
