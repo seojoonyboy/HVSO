@@ -1,0 +1,90 @@
+
+ac10080.png
+size: 1024,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+L_arm1
+  rotate: true
+  xy: 626, 203
+  size: 79, 124
+  orig: 79, 124
+  offset: 0, 0
+  index: -1
+L_arm2
+  rotate: true
+  xy: 0, 13
+  size: 155, 248
+  orig: 155, 248
+  offset: 0, 0
+  index: -1
+L_leg
+  rotate: true
+  xy: 750, 212
+  size: 70, 91
+  orig: 70, 91
+  offset: 0, 0
+  index: -1
+R_arm
+  rotate: false
+  xy: 757, 370
+  size: 124, 130
+  orig: 124, 130
+  offset: 0, 0
+  index: -1
+R_leg
+  rotate: false
+  xy: 731, 112
+  size: 71, 91
+  orig: 71, 91
+  offset: 0, 0
+  index: -1
+body
+  rotate: true
+  xy: 626, 356
+  size: 144, 131
+  orig: 144, 131
+  offset: 0, 0
+  index: -1
+ex
+  rotate: false
+  xy: 328, 191
+  size: 298, 309
+  orig: 298, 309
+  offset: 0, 0
+  index: -1
+head
+  rotate: false
+  xy: 248, 0
+  size: 165, 168
+  orig: 165, 168
+  offset: 0, 0
+  index: -1
+head2
+  rotate: false
+  xy: 413, 23
+  size: 159, 168
+  orig: 159, 168
+  offset: 0, 0
+  index: -1
+head3
+  rotate: false
+  xy: 572, 23
+  size: 159, 168
+  orig: 159, 168
+  offset: 0, 0
+  index: -1
+shadow
+  rotate: false
+  xy: 626, 282
+  size: 228, 74
+  orig: 228, 74
+  offset: 0, 0
+  index: -1
+sword
+  rotate: false
+  xy: 0, 168
+  size: 328, 332
+  orig: 328, 332
+  offset: 0, 0
+  index: -1

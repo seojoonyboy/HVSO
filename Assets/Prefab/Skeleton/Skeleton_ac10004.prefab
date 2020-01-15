@@ -106,6 +106,7 @@ MonoBehaviour:
   clearStateOnDisable: 0
   tintBlack: 0
   singleSubmesh: 0
+  fixDrawOrder: 0
   addNormals: 0
   calculateTangents: 0
   maskInteraction: 0
@@ -140,7 +141,9 @@ MonoBehaviour:
   deClockAnimationName: 
   attackEventName: SHOT
   arrow: {fileID: 2753944476047113115, guid: 403f8fe5c9b6d6c4d8c6044a8d3700ab, type: 3}
-  hidingObject: {fileID: 0}
+  hidingObject: {fileID: 8875640797152268877, guid: 2bc17b51b7bdecf4a8327178491451ee,
+    type: 3}
+  rarelity: 
   teleportMove: 0
   isGlow: 0
   spineColor: {r: 1, g: 1, b: 1, a: 1}
@@ -192,6 +195,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skeletonRenderer: {fileID: 8680247714993976394}
   boneName: effect_body
+  followXYPosition: 1
   followZPosition: 1
   followBoneRotation: 1
   followSkeletonFlip: 0
@@ -242,6 +246,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skeletonRenderer: {fileID: 8680247714993976394}
   boneName: root
+  followXYPosition: 1
   followZPosition: 1
   followBoneRotation: 1
   followSkeletonFlip: 0
@@ -292,6 +297,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skeletonRenderer: {fileID: 8680247714993976394}
   boneName: effect_head
+  followXYPosition: 1
   followZPosition: 1
   followBoneRotation: 1
   followSkeletonFlip: 0
