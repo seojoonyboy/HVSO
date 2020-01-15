@@ -3713,6 +3713,27 @@ PrefabInstance:
       objectReference: {fileID: 285700652668246596}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ee840a1733179334e84a54efed633264, type: 3}
+--- !u!1 &1439483863 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4626959827091575811, guid: ee840a1733179334e84a54efed633264,
+    type: 3}
+  m_PrefabInstance: {fileID: 1439483862}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1439483864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1439483863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79e117bcca2c3a34eae6b7b04562f285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  subUrl: i18n/{Local}/UI
+  fileName: MainUI.csv
+  key: MainUI
 --- !u!1 &1533249942
 GameObject:
   m_ObjectHideFlags: 0
@@ -11764,7 +11785,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1870949073}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd4d0e7a77106f047a8aab6380c5e046, type: 3}
+  m_Script: {fileID: 11500000, guid: b9045c3fcd6e0ea49ba9be2fe2ef0f49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
@@ -12468,6 +12489,26 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: localizationDatas
+      Entry: 7
+      Data: 5|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.Collections.Generic.Dictionary`2[[System.String,
+        mscorlib],[System.String, mscorlib]], mscorlib]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 6|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 0
     - Name: 
       Entry: 13
       Data: 

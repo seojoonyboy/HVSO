@@ -11,7 +11,7 @@ using Spine.Unity;
 using System;
 
 public partial class MenuCardInfo : MonoBehaviour {
-    Translator translator;
+    fbl_Translator translator;
     [SerializeField] Transform classDescModal;
     [SerializeField] DeckSettingManager deckSettingManager;
 
@@ -63,7 +63,7 @@ public partial class MenuCardInfo : MonoBehaviour {
         this.isHuman = isHuman;
         Transform info = transform;
         cardData = data;
-        translator = AccountManager.Instance.GetComponent<Translator>();
+        translator = AccountManager.Instance.GetComponent<fbl_Translator>();
         info.Find("FrameImage/TierBack").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["name_" + data.rarelity];
         info.Find("FrameImage/TierRibbon").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["ribbon_" + data.rarelity];
         info.Find("Name/Text").GetComponent<TMPro.TextMeshProUGUI>().text = data.name;

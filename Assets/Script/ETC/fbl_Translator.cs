@@ -4,11 +4,12 @@ using UnityEngine;
 using Sirenix;
 using Sirenix.OdinInspector;
 
-public class Translator : SerializedMonoBehaviour {
+public class fbl_Translator : SerializedMonoBehaviour {
     public Dictionary<string, string> unitCategories;
 
     public Dictionary<string, string> skillTypeNames;
     public Dictionary<string, string> skillTypeDescs;
+    public Dictionary<string, Dictionary<string, string>> localizationDatas;
 
     public List<string> GetTranslatedUnitCtg(List<string> data) {
         var keys = data;
@@ -90,5 +91,17 @@ public class Translator : SerializedMonoBehaviour {
         for(int i = 0; i < startList.Count; i++)
             middles.Add(value.Substring(startList[i] + 1, endList[i] - startList[i] - 1));
         return middles;
+    }
+
+    public string GetLocalizedText(string category, string key) {
+        string result = string.Empty;
+        if (category == null || key == null) return result;
+        if (localizationDatas.ContainsKey(category)) {
+            var dict = localizationDatas[category];
+            if (dict.ContainsKey(key)) {
+                result = dict[key];
+            }
+        }
+        return result;
     }
 }

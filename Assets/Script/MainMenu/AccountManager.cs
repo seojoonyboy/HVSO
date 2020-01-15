@@ -72,6 +72,7 @@ public partial class AccountManager : Singleton<AccountManager> {
     public Dictionary<string, Area> rankAreas;  //랭크 구간
 
     public int visitDeckNow = 0;
+    string languageSetting;
 
     private void Awake() {
         Application.targetFrameRate = 60;
@@ -83,6 +84,9 @@ public partial class AccountManager : Singleton<AccountManager> {
         gameObject.AddComponent<Timer.TimerManager>();
         
         PlayerPrefs.DeleteKey("ReconnectData");
+
+        //TOOD : Server의 언어 Setting으로 변경
+        languageSetting = Application.systemLanguage.ToString();
 
         //테스트 코드
         //PlayerPrefs.SetInt("IsQuestLoaded", 0);
@@ -98,7 +102,11 @@ public partial class AccountManager : Singleton<AccountManager> {
     void Update() {
         if(Input.GetKeyDown(KeyCode.F)) PlayerPrefs.DeleteKey("ReconnectData");
     }
-    #endif
+#endif
+
+    public string GetLanguageSetting() {
+        return languageSetting;
+    }
 
     private void OccurErrorModal(long errorCode) {
         Modal.instantiate("네트워크 오류가 발생하였습니다. 다시 시도해 주세요.", Modal.Type.CHECK);
