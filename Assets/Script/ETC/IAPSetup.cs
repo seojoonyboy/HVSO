@@ -134,7 +134,7 @@ public class IAPSetup : Singleton<IAPSetup> {
         webClient.MaintenanceStarted -= OnMaintenanceStarted;
     }
 
-    public void OnButtonBuyClick(string productId, UnityAction callback) {
+    public void OnButtonBuyClick(string productId, UnityAction<PurchasedInfo> callback) {
         #if MDEBUG
         Debug.Log(productId);
         Debug.Log(productDictionary[productId]);
@@ -151,7 +151,6 @@ public class IAPSetup : Singleton<IAPSetup> {
                     //
                     // purchasedData 에 byte[] 로 구매된 게임내 아이템 정보가 넘어옵니다. 이 정보를 이용해서 업데이트 하시면 되겠습니다. 
                     //
-                    callback();
                     if (purchasedData != null) {
                         #if MDEBUG
                         Debug.Log("PurchasedData Length = " + purchasedData.Length);
@@ -163,6 +162,7 @@ public class IAPSetup : Singleton<IAPSetup> {
                         #if MDEBUG
                         Debug.Log("Purchased Info : " + purchasedInfo.ProductId + ", " + purchasedInfo.TransactionId);
                         #endif
+                        callback(purchasedInfo);
                     }
                     #if MDEBUG
                     else

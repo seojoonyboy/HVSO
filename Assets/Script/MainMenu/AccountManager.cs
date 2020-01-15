@@ -896,7 +896,7 @@ public partial class AccountManager {
         }, "상점을 불러오는중...");
     }
 
-    public void RequestBuyItem(string itemId) {
+    public void RequestBuyItem(string itemId, Haegin.PurchasedInfo purchasedInfo = null) {
         StringBuilder sb = new StringBuilder();
         sb
             .Append(networkManager.baseUrl)
@@ -907,8 +907,26 @@ public partial class AccountManager {
         );
         request.MethodType = BestHTTP.HTTPMethods.Post;
         request.AddHeader("authorization", TokenFormat);
+        JObject json = new JObject();
+        json["id"] = new JValue(itemId);
+        if(purchasedInfo != null) {
+            JObject transaction = new JObject();
 
-        request.RawData = Encoding.UTF8.GetBytes(string.Format("{{\"id\":\"{0}\"}}", itemId));
+            #if UNITY_EDITOR
+            transaction.Add("store", new JValue("unity"));
+            #elif UNITY_IOS
+            transaction.Add("store", new JValue("apple"));
+            #elif UNITY_ANDROID
+            transaction.Add("store", new JValue("android"));
+            #endif
+            #if !UNITY_EDITOR
+            transaction.Add("productId", new JValue(purchasedInfo.ProductId));
+            transaction.Add("transactionId", new JValue(purchasedInfo.TransactionId));
+            #endif
+            json["transaction"] = transaction;
+        }
+
+        request.RawData = Encoding.UTF8.GetBytes(json.ToString());
 
         networkManager.Request(request, (req, res) => {
             if (res.IsSuccess) {
