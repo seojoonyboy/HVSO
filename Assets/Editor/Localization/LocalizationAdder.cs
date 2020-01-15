@@ -23,12 +23,14 @@ public class LocalizationAdder : EditorWindow {
     void AddComp() {
          var textmeshProObjects = Resources.FindObjectsOfTypeAll(typeof(TextMeshProUGUI));
         foreach(object obj in textmeshProObjects) {
-            ((TextMeshProUGUI)obj).gameObject.AddComponent<FblTextConverter>();
+            if (((TextMeshProUGUI)obj).gameObject.GetComponent<FblTextConverter>() == null)
+                ((TextMeshProUGUI)obj).gameObject.AddComponent<FblTextConverter>();
         }
 
         var textObjects = Resources.FindObjectsOfTypeAll(typeof(Text));
         foreach(object obj in textObjects) {
-            ((Text)obj).gameObject.AddComponent<FblTextConverter>();
+            if(((Text)obj).gameObject.GetComponent<FblTextConverter>() == null)
+                ((Text)obj).gameObject.AddComponent<FblTextConverter>();
         }
     }
 }

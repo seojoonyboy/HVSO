@@ -3733,7 +3733,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   subUrl: i18n/{Local}/UI
   fileName: MainUI.csv
-  key: MainUI
+  key: UI
 --- !u!1 &1533249942
 GameObject:
   m_ObjectHideFlags: 0
