@@ -15,6 +15,8 @@ public class FblTextConverter : MonoBehaviour {
     }
 
     public void RefreshText() {
+        if (string.IsNullOrEmpty(category) || string.IsNullOrEmpty(key)) return;
+
         var result = AccountManager.Instance.GetComponent<fbl_Translator>().GetLocalizedText(category, key);
         if (string.IsNullOrEmpty(result)) return;
 
