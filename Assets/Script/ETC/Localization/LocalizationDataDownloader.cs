@@ -78,14 +78,14 @@ public class LocalizationDataDownloader : MonoBehaviour {
     }
 
     private void ProcessFragments(byte[] fragments) {
-        string dir = Application.streamingAssetsPath + "/";
+        string dir = Application.dataPath + "/StreamingAssets/";
         string filePath = dir + fileName;
 
         File.WriteAllBytes(filePath, fragments);
     }
 
     private void ReadCsvFile() {
-        var pathToCsv = Application.streamingAssetsPath + "/" + fileName;
+        var pathToCsv = Application.dataPath + "/StreamingAssets/" + fileName;
         var lines = File.ReadLines(pathToCsv);
 
         foreach(string line in lines) {
