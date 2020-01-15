@@ -114,9 +114,9 @@ public class ShopManager : MonoBehaviour
         else {
             checkModal = Modal.instantiate("상품을 구매 하시겠습니까?", Modal.Type.YESNO, () => {
                 #if UNITY_EDITOR
-                BuyItem(item.id, isBox);
+                BuyItem(item.id, isBox, new Haegin.PurchasedInfo());
                 #else
-                iapSetup.OnButtonBuyClick(item.id, ()=>BuyItem(item.id, isBox));
+                iapSetup.OnButtonBuyClick(item.id, (purchasedInfo)=>BuyItem(item.id, isBox, purchasedInfo));
                 #endif
             }, CancelBuy);
         }
@@ -128,9 +128,9 @@ public class ShopManager : MonoBehaviour
         EscapeKeyController.escapeKeyCtrl.RemoveEscape(CancelBuy);
     }
 
-    public void BuyItem(string itemId, bool isBox = false) {
+    public void BuyItem(string itemId, bool isBox = false, Haegin.PurchasedInfo purchasedInfo = null) {
         buying = true;
-        AccountManager.Instance.RequestBuyItem(itemId);
+        AccountManager.Instance.RequestBuyItem(itemId, purchasedInfo);
         buyBox = isBox;
     }
 
