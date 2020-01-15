@@ -3732,7 +3732,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   subUrl: i18n/{Local}/UI
-  fileName: MainUI.csv
+  fileName: UI.csv
   key: UI
 --- !u!1 &1533249942
 GameObject:
