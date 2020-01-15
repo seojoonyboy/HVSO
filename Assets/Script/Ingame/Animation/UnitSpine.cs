@@ -75,6 +75,10 @@ public class UnitSpine : MonoBehaviour
         get { return skeletonAnimation.Skeleton.Data.FindAnimation(attackAnimationName).Duration; }
     }
 
+    public float appearDuration {
+        get { return skeletonAnimation.Skeleton.Data.FindAnimation(appearAnimationName).Duration;}
+    }
+
 
     private void Awake() {
         
