@@ -405,19 +405,17 @@ public class BoxRewardManager : MonoBehaviour {
                 backSpine.gameObject.SetActive(false);
             }
             yield return new WaitForSeconds(0.2f);
-            switch (type) {
-                case "gold":
-                    targetBox.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = "금화";
-                    soundManager.PlaySound(UISfxSound.BOX_EPIC);
-                    break;
-                case "supplyX2Coupon":
-                    targetBox.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = "2배 쿠폰";
-                    soundManager.PlaySound(UISfxSound.BOX_NORMAL);
-                    break;
-                case "crystal":
-                    targetBox.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = "마력결정";
-                    soundManager.PlaySound(UISfxSound.BOX_NORMAL);
-                    break;
+            if (type.Contains("gold")) {
+                targetBox.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = "금화";
+                soundManager.PlaySound(UISfxSound.BOX_EPIC);
+            }
+            else if (type.Contains("Coupon")) {
+                targetBox.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = "2배 쿠폰";
+                soundManager.PlaySound(UISfxSound.BOX_NORMAL);
+            }
+            else if (type.Contains("crystal")) {
+                targetBox.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = "마력결정";
+                soundManager.PlaySound(UISfxSound.BOX_NORMAL);
             }
             yield return new WaitForSeconds(0.2f);
             targetBox.Find("Rarelity").Find("resource").SetAsFirstSibling();
