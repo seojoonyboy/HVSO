@@ -243,7 +243,8 @@ MonoBehaviour:
   deClockAnimationName: 
   attackEventName: SHOT
   arrow: {fileID: 2498560902025155780, guid: f361c38bdf8aea54fba931822c31cf50, type: 3}
-  hidingObject: {fileID: 0}
+  hidingObject: {fileID: 8875640797152268877, guid: 2bc17b51b7bdecf4a8327178491451ee,
+    type: 3}
   rarelity: 
   teleportMove: 0
   isGlow: 0
