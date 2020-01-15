@@ -29,7 +29,8 @@ public class LocalizationDataDownloader : MonoBehaviour {
     }
 
     public void RequestLocalizationInfo(OnRequestFinishedDelegate callback) {
-        var lagnguage = AccountManager.Instance.GetLanguageSetting();
+        var language = AccountManager.Instance.GetLanguageSetting();
+        //language = "English";   //테스트 코드
 
         StringBuilder url = new StringBuilder();
         var networkManager = NetworkManager.Instance;
@@ -40,7 +41,7 @@ public class LocalizationDataDownloader : MonoBehaviour {
         url
             .Append(base_url)
             .Append(prev)
-            .Append(lagnguage)
+            .Append(language)
             .Append(next);
 
         HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
