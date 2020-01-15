@@ -1,0 +1,90 @@
+
+ac10056.png
+size: 1024,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+L_leg
+  rotate: false
+  xy: 488, 179
+  size: 42, 66
+  orig: 42, 66
+  offset: 0, 0
+  index: -1
+L_low_arm
+  rotate: true
+  xy: 481, 93
+  size: 55, 85
+  orig: 55, 85
+  offset: 0, 0
+  index: -1
+L_low_arm2
+  rotate: true
+  xy: 413, 0
+  size: 90, 72
+  orig: 90, 72
+  offset: 0, 0
+  index: -1
+R_arm1
+  rotate: true
+  xy: 393, 90
+  size: 58, 88
+  orig: 58, 88
+  offset: 0, 0
+  index: -1
+R_leg
+  rotate: false
+  xy: 530, 179
+  size: 41, 66
+  orig: 41, 66
+  offset: 0, 0
+  index: -1
+ac1
+  rotate: false
+  xy: 185, 9
+  size: 123, 68
+  orig: 123, 68
+  offset: 0, 0
+  index: -1
+ac2
+  rotate: false
+  xy: 308, 3
+  size: 105, 74
+  orig: 105, 74
+  offset: 0, 0
+  index: -1
+body
+  rotate: false
+  xy: 393, 148
+  size: 95, 97
+  orig: 95, 97
+  offset: 0, 0
+  index: -1
+head
+  rotate: true
+  xy: 0, 77
+  size: 168, 131
+  orig: 168, 131
+  offset: 0, 0
+  index: -1
+head2
+  rotate: true
+  xy: 131, 77
+  size: 168, 131
+  orig: 168, 131
+  offset: 0, 0
+  index: -1
+head3
+  rotate: true
+  xy: 262, 77
+  size: 168, 131
+  orig: 168, 131
+  offset: 0, 0
+  index: -1
+shadow
+  rotate: false
+  xy: 0, 17
+  size: 185, 60
+  orig: 185, 60
+  offset: 0, 0
+  index: -1
