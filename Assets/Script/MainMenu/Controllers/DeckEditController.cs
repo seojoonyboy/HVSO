@@ -669,10 +669,10 @@ public class DeckEditController : MonoBehaviour {
         Transform skillWindow = heroWindow.Find("SkillInfo");
         skillWindow.Find("Card1/Card").GetComponent<MenuCardHandler>().DrawCard(hero.heroCards[0].id);
         skillWindow.Find("Card1/CardName").GetComponent<TMPro.TextMeshProUGUI>().text = hero.heroCards[0].name;
-        skillWindow.Find("Card1/CardInfo").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.GetComponent<Translator>().DialogSetRichText(hero.heroCards[0].skills[0].desc);
+        skillWindow.Find("Card1/CardInfo").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.GetComponent<fbl_Translator>().DialogSetRichText(hero.heroCards[0].skills[0].desc);
         skillWindow.Find("Card2/Card").GetComponent<MenuCardHandler>().DrawCard(hero.heroCards[1].id);
         skillWindow.Find("Card2/CardName").GetComponent<TMPro.TextMeshProUGUI>().text = hero.heroCards[1].name;
-        skillWindow.Find("Card2/CardInfo").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.GetComponent<Translator>().DialogSetRichText(hero.heroCards[1].skills[0].desc);
+        skillWindow.Find("Card2/CardInfo").GetComponent<TMPro.TextMeshProUGUI>().text = AccountManager.Instance.GetComponent<fbl_Translator>().DialogSetRichText(hero.heroCards[1].skills[0].desc);
         cardMana = new int[8];
         for (int i = 0; i < 8; i++)
             cardMana[i] = 0;

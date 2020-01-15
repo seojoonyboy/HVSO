@@ -20,7 +20,7 @@ public class CardListManager : MonoBehaviour
 
     private Transform handCardInfo;
     Animator animator;
-    Translator translator;
+    fbl_Translator fbl_Translator;
     [SerializeField] Transform classDescModal;
 
     public Transform StandbyInfo {
@@ -36,7 +36,7 @@ public class CardListManager : MonoBehaviour
     }
 
     void Awake() {
-        translator = AccountManager.Instance.GetComponent<Translator>();
+        fbl_Translator = AccountManager.Instance.GetComponent<fbl_Translator>();
     }
 
     void Start()
@@ -181,7 +181,7 @@ public class CardListManager : MonoBehaviour
         info.Find("FrameImage/TierRibbon").GetComponent<Image>().sprite = AccountManager.Instance.resource.infoSprites["ribbon_" + data.rarelity];
 
         if (data.skills.Length != 0) {
-            info.Find("SkillInfo/Dialog/Text").GetComponent<TMPro.TextMeshProUGUI>().text = translator.DialogSetRichText(data.skills[0].desc);
+            info.Find("SkillInfo/Dialog/Text").GetComponent<TMPro.TextMeshProUGUI>().text = fbl_Translator.DialogSetRichText(data.skills[0].desc);
         }
         else
             info.Find("SkillInfo/Dialog/Text").GetComponent<TMPro.TextMeshProUGUI>().text = null;
@@ -225,7 +225,7 @@ public class CardListManager : MonoBehaviour
                 info.Find("Skill&BuffRow1").GetChild(skillnum).gameObject.SetActive(true);
                 var image = AccountManager.Instance.resource.skillIcons[data.attackTypes[0]];
                 info.Find("Skill&BuffRow1").GetChild(skillnum).Find("SkillIcon").GetComponent<Image>().sprite = image;
-                info.Find("Skill&BuffRow1").GetChild(skillnum).Find("Text").GetComponent<TMPro.TextMeshProUGUI>().text = translator.GetTranslatedSkillName(data.attackTypes[0]);
+                info.Find("Skill&BuffRow1").GetChild(skillnum).Find("Text").GetComponent<TMPro.TextMeshProUGUI>().text = fbl_Translator.GetTranslatedSkillName(data.attackTypes[0]);
                 //info.Find("Skill&BuffRow1").GetChild(skillnum).GetComponent<Button>().onClick.AddListener(() => {
                 //    OpenClassDescModal(data.attackTypes[0], image);
                 //});
@@ -244,7 +244,7 @@ public class CardListManager : MonoBehaviour
                 info.Find("Skill&BuffRow1").GetChild(skillnum).gameObject.SetActive(true);
                 var image = AccountManager.Instance.resource.skillIcons[data.attributes[0]];
                 info.Find("Skill&BuffRow1").GetChild(skillnum).Find("SkillIcon").GetComponent<Image>().sprite = image;
-                info.Find("Skill&BuffRow1").GetChild(skillnum).Find("Text").GetComponent<TMPro.TextMeshProUGUI>().text = translator.GetTranslatedSkillName(data.attributes[0]);
+                info.Find("Skill&BuffRow1").GetChild(skillnum).Find("Text").GetComponent<TMPro.TextMeshProUGUI>().text = fbl_Translator.GetTranslatedSkillName(data.attributes[0]);
                 //info.Find("Skill&BuffRow1").GetChild(skillnum).GetComponent<Button>().onClick.AddListener(() => {
                 //    OpenClassDescModal(data.attributes[0], image);
                 //});
@@ -262,7 +262,7 @@ public class CardListManager : MonoBehaviour
             List<string> categories = new List<string>();
             if(data.cardCategories.Length > 0 && data.cardCategories[0] != null) categories.Add(data.cardCategories[0]);
             if(data.cardCategories.Length > 1) categories.Add(data.cardCategories[1]);
-            var translatedCategories = translator.GetTranslatedUnitCtg(categories);
+            var translatedCategories = fbl_Translator.GetTranslatedUnitCtg(categories);
             System.Text.StringBuilder sb = new System.Text.StringBuilder();
 
             int cnt = 0;
@@ -279,7 +279,7 @@ public class CardListManager : MonoBehaviour
         else {
             List<string> categories = new List<string>();
             categories.Add("magic");
-            var translatedCategories = translator.GetTranslatedUnitCtg(categories);
+            var translatedCategories = fbl_Translator.GetTranslatedUnitCtg(categories);
             System.Text.StringBuilder sb = new System.Text.StringBuilder();
 
             int cnt = 0;
@@ -348,7 +348,7 @@ public class CardListManager : MonoBehaviour
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         classDescModal.gameObject.SetActive(true);
         classDescModal.position = (modalTransform != null) ? new Vector3(modalTransform.position.x, modalTransform.position.y + 2f, 0f) : new Vector3(mousePos.x, mousePos.y + 2.3f, 0);
-        string[] set = translator.GetTranslatedSkillSet(className);
+        string[] set = fbl_Translator.GetTranslatedSkillSet(className);
         SetClassDescModalData(set[0], set[1], image);
     }
 
@@ -515,6 +515,6 @@ public class CardListManager : MonoBehaviour
             str = "stun";
         }
 
-        return AccountManager.Instance.GetComponent<Translator>().GetTranslatedSkillName(str);
+        return AccountManager.Instance.GetComponent<fbl_Translator>().GetTranslatedSkillName(str);
     }
 }
