@@ -3713,6 +3713,27 @@ PrefabInstance:
       objectReference: {fileID: 285700652668246596}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ee840a1733179334e84a54efed633264, type: 3}
+--- !u!1 &1439483863 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4626959827091575811, guid: ee840a1733179334e84a54efed633264,
+    type: 3}
+  m_PrefabInstance: {fileID: 1439483862}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1439483864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1439483863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79e117bcca2c3a34eae6b7b04562f285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  subUrl: i18n/{Local}/UI
+  fileName: UI.csv
+  key: UI
 --- !u!1 &1533249942
 GameObject:
   m_ObjectHideFlags: 0
@@ -4551,7 +4572,6 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 5ea355a3640129e42bbf89d989e027e2, type: 3}
     - {fileID: 21300000, guid: da74e348c5c5dcd46ac1fbbc960a0cc5, type: 3}
     - {fileID: 21300000, guid: 7adc67005b6e0dc4594a3a04d1a44742, type: 3}
-    - {fileID: 21300000, guid: 529bfc63279225748ac8cbcf51d8474c, type: 3}
     - {fileID: 21300000, guid: 26812ea8dedd1f044917220ce7cadc71, type: 3}
     - {fileID: 21300000, guid: 9cf40fbb473efca449fd8be474c8f0ee, type: 3}
     - {fileID: 21300000, guid: ed68642251a5c483dafeb86fe406484e, type: 3}
@@ -10708,7 +10728,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 31
+      Data: 36
     - Name: 
       Entry: 7
       Data: 
@@ -10945,7 +10965,7 @@ MonoBehaviour:
       Data: reinforcedBox
     - Name: $v
       Entry: 10
-      Data: 331
+      Data: 322
     - Name: 
       Entry: 8
       Data: 
@@ -10957,7 +10977,7 @@ MonoBehaviour:
       Data: result_reinforcedBox
     - Name: $v
       Entry: 10
-      Data: 332
+      Data: 331
     - Name: 
       Entry: 8
       Data: 
@@ -10981,7 +11001,7 @@ MonoBehaviour:
       Data: ad_x2Coupon
     - Name: $v
       Entry: 10
-      Data: 333
+      Data: 332
     - Name: 
       Entry: 8
       Data: 
@@ -10993,7 +11013,7 @@ MonoBehaviour:
       Data: ad_supplyBox
     - Name: $v
       Entry: 10
-      Data: 334
+      Data: 333
     - Name: 
       Entry: 8
       Data: 
@@ -11065,7 +11085,7 @@ MonoBehaviour:
       Data: largeBox
     - Name: $v
       Entry: 10
-      Data: 334
+      Data: 333
     - Name: 
       Entry: 8
       Data: 
@@ -11077,7 +11097,67 @@ MonoBehaviour:
       Data: extraLargeBox
     - Name: $v
       Entry: 10
-      Data: 335
+      Data: 334
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: cardOverCommon
+    - Name: $v
+      Entry: 10
+      Data: 323
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: cardOverRare
+    - Name: $v
+      Entry: 10
+      Data: 325
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: cardOverUncommon
+    - Name: $v
+      Entry: 10
+      Data: 324
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: cardOverSuperrare
+    - Name: $v
+      Entry: 10
+      Data: 326
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: result_extraLargeBox
+    - Name: $v
+      Entry: 10
+      Data: 334
     - Name: 
       Entry: 8
       Data: 
@@ -11109,7 +11189,7 @@ MonoBehaviour:
       Data: "\uC815\uADDC\uAD70 \uC9C0\uD718\uAD00"
     - Name: $v
       Entry: 10
-      Data: 336
+      Data: 335
     - Name: 
       Entry: 8
       Data: 
@@ -11121,7 +11201,7 @@ MonoBehaviour:
       Data: "\uC18C\uADDC\uBAA8 \uBB34\uB825\uC9D1\uB2E8"
     - Name: $v
       Entry: 10
-      Data: 337
+      Data: 336
     - Name: 
       Entry: 8
       Data: 
@@ -11133,7 +11213,7 @@ MonoBehaviour:
       Data: "\uC624\uD569\uC9C0\uC878 \uC6B0\uB450\uBA38\uB9AC"
     - Name: $v
       Entry: 10
-      Data: 338
+      Data: 337
     - Name: 
       Entry: 8
       Data: 
@@ -11145,7 +11225,7 @@ MonoBehaviour:
       Data: "\uC790\uACBD\uB300 \uB300\uC7A5"
     - Name: $v
       Entry: 10
-      Data: 339
+      Data: 338
     - Name: 
       Entry: 8
       Data: 
@@ -11157,7 +11237,7 @@ MonoBehaviour:
       Data: "\uAD70\uB2E8\uC7A5"
     - Name: $v
       Entry: 10
-      Data: 340
+      Data: 339
     - Name: 
       Entry: 8
       Data: 
@@ -11169,7 +11249,7 @@ MonoBehaviour:
       Data: "\uCD1D\uC0AC\uB839\uAD00"
     - Name: $v
       Entry: 10
-      Data: 341
+      Data: 340
     - Name: 
       Entry: 8
       Data: 
@@ -11181,7 +11261,7 @@ MonoBehaviour:
       Data: "\uCC2C\uB780\uD55C \uC601\uC6C5"
     - Name: $v
       Entry: 10
-      Data: 342
+      Data: 341
     - Name: 
       Entry: 8
       Data: 
@@ -11193,7 +11273,7 @@ MonoBehaviour:
       Data: "\uC804\uB7B5\uC758 \uC81C\uC655"
     - Name: $v
       Entry: 10
-      Data: 343
+      Data: 342
     - Name: 
       Entry: 8
       Data: 
@@ -11205,7 +11285,7 @@ MonoBehaviour:
       Data: "\uC0B4\uC544\uC788\uB294 \uC804\uC124"
     - Name: $v
       Entry: 10
-      Data: 344
+      Data: 343
     - Name: 
       Entry: 8
       Data: 
@@ -11217,7 +11297,7 @@ MonoBehaviour:
       Data: "\uCD08\uAE09 \uC6A9\uBCD1\uB2E8\uC7A5"
     - Name: $v
       Entry: 10
-      Data: 345
+      Data: 344
     - Name: 
       Entry: 8
       Data: 
@@ -11229,7 +11309,7 @@ MonoBehaviour:
       Data: "\uB300\uC7A5\uAD70"
     - Name: $v
       Entry: 10
-      Data: 346
+      Data: 345
     - Name: 
       Entry: 8
       Data: 
@@ -11241,7 +11321,7 @@ MonoBehaviour:
       Data: "\uBCA0\uD14C\uB791 \uC6A9\uBCD1\uB2E8\uC7A5"
     - Name: $v
       Entry: 10
-      Data: 347
+      Data: 346
     - Name: 
       Entry: 8
       Data: 
@@ -11253,7 +11333,7 @@ MonoBehaviour:
       Data: "\uCD5C\uC815\uC608 \uC6A9\uBCD1\uB2E8\uC7A5"
     - Name: $v
       Entry: 10
-      Data: 348
+      Data: 347
     - Name: 
       Entry: 8
       Data: 
@@ -11265,7 +11345,7 @@ MonoBehaviour:
       Data: default
     - Name: $v
       Entry: 10
-      Data: 349
+      Data: 348
     - Name: 
       Entry: 8
       Data: 
@@ -11277,7 +11357,7 @@ MonoBehaviour:
       Data: "\uBB34\uBA85 \uBCD1\uC0AC"
     - Name: $v
       Entry: 10
-      Data: 349
+      Data: 348
     - Name: 
       Entry: 8
       Data: 
@@ -11289,7 +11369,7 @@ MonoBehaviour:
       Data: "\uC9C0\uC5ED \uC9C0\uB3C4\uC790"
     - Name: $v
       Entry: 10
-      Data: 350
+      Data: 349
     - Name: 
       Entry: 8
       Data: 
@@ -11321,7 +11401,7 @@ MonoBehaviour:
       Data: shield_max_charge_1
     - Name: $v
       Entry: 10
-      Data: 351
+      Data: 350
     - Name: 
       Entry: 8
       Data: 
@@ -11333,7 +11413,7 @@ MonoBehaviour:
       Data: health_max_2
     - Name: $v
       Entry: 10
-      Data: 352
+      Data: 351
     - Name: 
       Entry: 8
       Data: 
@@ -11345,7 +11425,7 @@ MonoBehaviour:
       Data: shield_min_charge_1
     - Name: $v
       Entry: 10
-      Data: 353
+      Data: 352
     - Name: 
       Entry: 8
       Data: 
@@ -11357,7 +11437,7 @@ MonoBehaviour:
       Data: magic_phase_1
     - Name: $v
       Entry: 10
-      Data: 354
+      Data: 353
     - Name: 
       Entry: 8
       Data: 
@@ -11369,7 +11449,7 @@ MonoBehaviour:
       Data: magic_power_1
     - Name: $v
       Entry: 10
-      Data: 355
+      Data: 354
     - Name: 
       Entry: 8
       Data: 
@@ -11381,7 +11461,7 @@ MonoBehaviour:
       Data: toolcard_use_1
     - Name: $v
       Entry: 10
-      Data: 356
+      Data: 355
     - Name: 
       Entry: 8
       Data: 
@@ -11393,7 +11473,7 @@ MonoBehaviour:
       Data: shield_max_1
     - Name: $v
       Entry: 10
-      Data: 357
+      Data: 356
     - Name: 
       Entry: 8
       Data: 
@@ -11764,7 +11844,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1870949073}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd4d0e7a77106f047a8aab6380c5e046, type: 3}
+  m_Script: {fileID: 11500000, guid: b9045c3fcd6e0ea49ba9be2fe2ef0f49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
@@ -12468,6 +12548,26 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: localizationDatas
+      Entry: 7
+      Data: 5|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.Collections.Generic.Dictionary`2[[System.String,
+        mscorlib],[System.String, mscorlib]], mscorlib]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 6|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 0
     - Name: 
       Entry: 13
       Data: 

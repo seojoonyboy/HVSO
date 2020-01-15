@@ -10,7 +10,7 @@ using System.Linq;
 public class MenuHeroInfo : MonoBehaviour
 {    
     private AccountManager accountManager;
-    private Translator translator;
+    private fbl_Translator translator;
 
     public static MenuHeroInfo heroInfoWindow;
     bool tierUpHero = false;
@@ -32,7 +32,7 @@ public class MenuHeroInfo : MonoBehaviour
 
     private void init() {
         accountManager = AccountManager.Instance;
-        translator = accountManager.GetComponent<Translator>();
+        translator = accountManager.GetComponent<fbl_Translator>();
     }
 
     // Start is called before the first frame update

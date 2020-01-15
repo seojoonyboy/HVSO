@@ -86,7 +86,7 @@ public partial class PlayMangement : MonoBehaviour {
 
     private void Start() {
         SetBackGround();
-        SetPlayerCard();
+        //SetPlayerCard();
 
         BgmController.BgmEnum soundTrack =  BgmController.BgmEnum.CITY;
         SoundManager.Instance.bgmController.PlaySoundTrack(soundTrack);
@@ -789,8 +789,8 @@ public partial class PlayMangement : MonoBehaviour {
                 enemyCard = Instantiate(Resources.Load("Prefabs/OrcBackCard") as GameObject, enemyPlayer.playerUI.transform.Find("CardSlot").GetChild(CountEnemyCard()));
             enemyCard.transform.localScale = new Vector3(1, 1, 1);
             enemyCard.transform.localPosition = new Vector3(0, 0, 0);
-            enemyCard.SetActive(true);
             int count = CountEnemyCard();
+            enemyCard.SetActive(false);
             enemyPlayer.playerUI.transform.Find("CardCount").GetChild(0).gameObject.GetComponent<Text>().text = (count).ToString();
             IngameNotice.instance.SelectNotice();
             //IngameNotice.instance.SetNotice("상대방이 영웅카드 사용 여부를 결정 중입니다");

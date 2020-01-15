@@ -50,6 +50,8 @@ public partial class AccountManager : Singleton<AccountManager> {
     public DictionaryInfo dicInfo;
     public ShopAds shopAdsList;
     public AdRewardRequestResult adRewardResult;
+    public AttendanceResult attendanceResult;
+    public AttendanceReward attendanceBoard;
 
 
     NetworkManager networkManager;
@@ -72,6 +74,7 @@ public partial class AccountManager : Singleton<AccountManager> {
     public Dictionary<string, Area> rankAreas;  //랭크 구간
 
     public int visitDeckNow = 0;
+    string languageSetting;
 
     private void Awake() {
         Application.targetFrameRate = 60;
@@ -83,6 +86,9 @@ public partial class AccountManager : Singleton<AccountManager> {
         gameObject.AddComponent<Timer.TimerManager>();
         
         PlayerPrefs.DeleteKey("ReconnectData");
+
+        //TOOD : Server의 언어 Setting으로 변경
+        languageSetting = Application.systemLanguage.ToString();
 
         //테스트 코드
         //PlayerPrefs.SetInt("IsQuestLoaded", 0);
@@ -98,7 +104,11 @@ public partial class AccountManager : Singleton<AccountManager> {
     void Update() {
         if(Input.GetKeyDown(KeyCode.F)) PlayerPrefs.DeleteKey("ReconnectData");
     }
-    #endif
+#endif
+
+    public string GetLanguageSetting() {
+        return languageSetting;
+    }
 
     private void OccurErrorModal(long errorCode) {
         Modal.instantiate("네트워크 오류가 발생하였습니다. 다시 시도해 주세요.", Modal.Type.CHECK);
@@ -1554,6 +1564,74 @@ public partial class AccountManager {
                 }
             },
             "등급 테이블을 불러오는중...");
+    }
+
+    public void RequestAttendance() {
+        StringBuilder url = new StringBuilder();
+        string base_url = networkManager.baseUrl;
+
+        url
+            .Append(base_url)
+            .Append("api/attendance");
+
+        HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
+        request.MethodType = HTTPMethods.Post;
+        request.AddHeader("authorization", TokenFormat);
+
+        networkManager.Request(
+            request, (req, res) => {
+                if (res.StatusCode == 200 || res.StatusCode == 304) {
+                    if (res.DataAsText.Contains("already_attendance")) {
+                        NoneIngameSceneEventHandler
+                            .Instance
+                            .PostNotification(
+                                NoneIngameSceneEventHandler.EVENT_TYPE.API_ATTEND_ALREADY,
+                                null,
+                                res
+                            );
+                    }
+                    else {
+                        attendanceResult = dataModules.JsonReader.Read<AttendanceResult>(res.DataAsText);
+                        NoneIngameSceneEventHandler
+                            .Instance
+                            .PostNotification(
+                                NoneIngameSceneEventHandler.EVENT_TYPE.API_ATTEND_SUCCESS,
+                                null,
+                                res
+                            );
+                    }
+                }
+            },
+            "출석판을 불러오는중...");
+    }
+
+    public void RequestAttendanceBoard() {
+        StringBuilder url = new StringBuilder();
+        string base_url = networkManager.baseUrl;
+
+        url
+            .Append(base_url)
+            .Append("api/attendance");
+
+        HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
+        request.MethodType = HTTPMethods.Get;
+        request.AddHeader("authorization", TokenFormat);
+
+        networkManager.Request(
+            request, (req, res) => {
+                if (res.StatusCode == 200 || res.StatusCode == 304) {
+                    attendanceBoard = dataModules.JsonReader.Read<AttendanceReward>(res.DataAsText);
+
+                    NoneIngameSceneEventHandler
+                        .Instance
+                        .PostNotification(
+                            NoneIngameSceneEventHandler.EVENT_TYPE.API_ATTENDANCE_LOAD,
+                            null,
+                            res
+                        );
+                }
+            },
+            "출석 확인중...");
     }
 
     private void MakeAreaDict() {
