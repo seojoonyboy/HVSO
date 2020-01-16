@@ -26,16 +26,16 @@ public partial class BattleConnector : MonoBehaviour {
     }
     
     WebSocket webSocket;
-    [SerializeField] Text message;
-    [SerializeField] Text timer;
-    [SerializeField] GameObject machine;
-    [SerializeField] Button returnButton, aiBattleButton;
+    [SerializeField] protected Text message;
+    [SerializeField] protected Text timer;
+    [SerializeField] protected GameObject machine;
+    [SerializeField] protected Button returnButton, aiBattleButton;
 
     public UnityAction<string, int, bool> HandchangeCallback;
-    private Coroutine timeCheck;
-    private bool battleGameFinish = false;
-    private bool isQuit = false;
-    private int reconnectCount = 0;
+    protected Coroutine timeCheck;
+    protected bool battleGameFinish = false;
+    protected bool isQuit = false;
+    protected int reconnectCount = 0;
 
     public static UnityEvent OnOpenSocket = new UnityEvent();
 
@@ -52,7 +52,7 @@ public partial class BattleConnector : MonoBehaviour {
     /// <summary>
     /// open lobby socket
     /// </summary>
-    public void OpenLobby() {
+    public virtual void OpenLobby() {
         reconnectCount = 0;
 
         Debug.Assert(!PlayerPrefs.GetString("SelectedRace").Any(char.IsUpper), "Race 정보는 소문자로 입력해야 합니다!");
@@ -85,7 +85,7 @@ public partial class BattleConnector : MonoBehaviour {
     /// <summary>
     /// open game socket (after lobby socket connected)
     /// </summary>
-    public void OpenSocket() {
+    public virtual void OpenSocket() {
         reconnectCount = 0;
         string url = string.Format("{0}", this.url);
         webSocket = new WebSocket(new Uri(string.Format("{0}?token={1}", url, AccountManager.Instance.TokenId)));
