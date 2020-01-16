@@ -10,13 +10,14 @@ public class MainMenuRewardGauge : BattleReadyReward {
 
 
     private void Awake() {
-        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_INFO_UPDATED, OnLeagueInfoUpdated);
+        
     }
 
     // Start is called before the first frame update
     void Start()
-    {        
+    {
         //StartCoroutine(Wait_Deploy_Data());   
+        NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_LEAGUE_INFO_UPDATED, OnLeagueInfoUpdated);
     }
 
     private void OnDestroy() {

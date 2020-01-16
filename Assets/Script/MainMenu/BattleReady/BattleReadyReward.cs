@@ -9,11 +9,11 @@ using TMPro;
 public class BattleReadyReward : MonoBehaviour
 {
     Dictionary<string, Sprite> rewardIcons;
-    [SerializeField] Transform rewardTransform;
-    [SerializeField] TextMeshProUGUI mmrDown, mmrUp;
-    [SerializeField] Slider prevSlider, currSlider;
-    [SerializeField] Image nextMMR, rewardIcon;
-    int rewardPos = 0;
+    [SerializeField]protected Transform rewardTransform;
+    [SerializeField]protected TextMeshProUGUI mmrDown, mmrUp;
+    [SerializeField]protected Slider prevSlider, currSlider;
+    [SerializeField]protected Image nextMMR, rewardIcon;
+    protected int rewardPos = 0;
     protected IDisposable bubbleAnimation;
     List<AccountManager.Reward> unClaimedRewards;
 
@@ -36,7 +36,7 @@ public class BattleReadyReward : MonoBehaviour
 
 
 
-    public void SetUpReward() {
+    public virtual void SetUpReward() {
         List<AccountManager.Reward> mmrRewards = AccountManager.Instance.scriptable_leagueData.leagueInfo.rewards;
         if (mmrRewards.Count < 1 || mmrRewards == null) mmrRewards = AccountManager.Instance.scriptable_leagueData.prevLeagueInfo.rewards;
         
@@ -45,7 +45,7 @@ public class BattleReadyReward : MonoBehaviour
         SetUpRewardBubble(ref mmrRewards);
     }
 
-    private void SetUpGauge(ref List<AccountManager.Reward> rewardList) {
+    protected virtual void SetUpGauge(ref List<AccountManager.Reward> rewardList) {
         AccountManager.Reward frontReward;
         int topLeaguePoint = AccountManager.Instance.scriptable_leagueData.prevLeagueInfo.ratingPointTop ?? default(int);
         //frontReward = rewardList[rewardPos];
@@ -59,7 +59,7 @@ public class BattleReadyReward : MonoBehaviour
         ShowGauge(frontReward, rewardPos + 1);
     }
 
-    private void ShowGauge(AccountManager.Reward frontReward, int pos) {
+    protected virtual void ShowGauge(AccountManager.Reward frontReward, int pos) {
         //Button rewardButton = rewardTransform.gameObject.GetComponent<Button>();
         AccountManager.LeagueInfo currinfo = AccountManager.Instance.scriptable_leagueData.leagueInfo;
         AccountManager.LeagueInfo prevInfo = AccountManager.Instance.scriptable_leagueData.prevLeagueInfo;
@@ -136,7 +136,7 @@ public class BattleReadyReward : MonoBehaviour
         return sprite;
     }
 
-    Sprite GetRewardIcon(string keyword) {
+    protected Sprite GetRewardIcon(string keyword) {
         if (rewardIcons != null) {
             if (rewardIcons.ContainsKey(keyword)) {
                 return rewardIcons[keyword];
@@ -205,8 +205,10 @@ public class BattleReadyReward : MonoBehaviour
         if (unClaimedRewards.Count > 0) {
             SetUpAnimation();
         }
-        else
-            rewardTransform.gameObject.SetActive(false);
+        else {
+            if (rewardTransform != null)
+                rewardTransform.gameObject.SetActive(false);
+        }
     }
 
     public void RefreshRewardBubble() {
