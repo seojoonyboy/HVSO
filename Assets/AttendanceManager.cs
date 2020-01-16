@@ -16,6 +16,11 @@ public class AttendanceManager : MonoBehaviour
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_ATTEND_ALREADY, AlreadyAttended);
     }
 
+    private void OnDestroy() {
+        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_ATTEND_SUCCESS, AttendSuccess);
+        NoneIngameSceneEventHandler.Instance.RemoveListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_ATTEND_ALREADY, AlreadyAttended);
+    }
+
     public void OpenAttendanceBoard() {
         transform.gameObject.SetActive(true);
         transform.Find("MonthlyBoard").gameObject.SetActive(true);
