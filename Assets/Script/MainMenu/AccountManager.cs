@@ -917,7 +917,7 @@ public partial class AccountManager {
             #elif UNITY_IOS
             transaction.Add("store", new JValue("apple"));
             #elif UNITY_ANDROID
-            transaction.Add("store", new JValue("android"));
+            transaction.Add("store", new JValue("google"));
             #endif
             #if !UNITY_EDITOR
             transaction.Add("productId", new JValue(purchasedInfo.ProductId));
@@ -941,6 +941,7 @@ public partial class AccountManager {
                 }
             }
             else {
+                Logger.LogWarning(res.DataAsText);
                 Logger.LogWarning("상품 구매 실패");
             }
         }, "상품 구매 중...");
