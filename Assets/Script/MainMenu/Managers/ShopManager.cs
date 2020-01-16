@@ -15,6 +15,7 @@ public class ShopManager : MonoBehaviour
     int goldItemCount;
     int x2couponCount;
     int supplyBoxCount;
+    int packageCount;
     bool buyBox = false;
     bool buying = false;
     string adRewardKind;
@@ -52,9 +53,9 @@ public class ShopManager : MonoBehaviour
                 case "gold":
                     SetGoldItem(item);
                     break;
-                //case "supplyBox":
-                //    SetSupplyBoxItem(item);
-                //    break;
+                case "package":
+                    SetPackage(item);
+                    break;
                 case "x2coupon":
                     SetCouponItem(item);
                     break;
@@ -63,6 +64,11 @@ public class ShopManager : MonoBehaviour
                     break;
             }
         }
+        LayoutRebuilder.ForceRebuildLayoutImmediate(transform.Find("ShopWindowParent/ShopWindow/PackageShop/ItemList").GetComponent<RectTransform>());
+        transform.Find("ShopWindowParent/ShopWindow/PackageShop").GetComponent<RectTransform>().sizeDelta 
+            = new Vector2(100, transform.Find("ShopWindowParent/ShopWindow/PackageShop/ItemList").GetComponent<RectTransform>().rect.height + 40);
+        transform.gameObject.SetActive(false);
+        transform.gameObject.SetActive(true);
     }
 
     public void SetGoldItem(dataModules.Shop item) {
@@ -87,6 +93,38 @@ public class ShopManager : MonoBehaviour
         target.GetComponent<Button>().onClick.RemoveAllListeners();
         target.GetComponent<Button>().onClick.AddListener(() => PopBuyModal(item));
         x2couponCount++;
+    }
+
+    public void SetPackage(dataModules.Shop item) {
+        Transform target = transform.Find("ShopWindowParent/ShopWindow/PackageShop/ItemList").GetChild(packageCount);
+        target.GetComponent<Button>().onClick.RemoveAllListeners();
+        target.GetComponent<Button>().onClick.AddListener(() => OpenProductWindow(item));
+        target.gameObject.SetActive(true);
+        target.Find("Price").GetComponent<TMPro.TextMeshProUGUI>().text = "\\" + item.prices.KRW.ToString();
+        int itemNum = 0;
+        for (int i = 0; i < target.Find("Items").childCount; i++)
+            target.Find("Items").GetChild(i).gameObject.SetActive(false);
+        for (int i = 0; i < item.items.Length; i++) {
+            if (item.items[i].kind.Contains("gold")) {
+                Transform slot = target.Find("Items/Gold");
+                slot.gameObject.SetActive(true);
+                slot.GetComponent<TMPro.TextMeshProUGUI>().text = "금화 x" + item.items[i].amount.ToString();
+            }
+            else {
+                Transform slot = target.Find("Items/" + itemNum.ToString());
+                itemNum++;
+                slot.gameObject.SetActive(true);
+                if (item.items[i].kind.Contains("Coupon"))
+                    slot.GetComponent<TMPro.TextMeshProUGUI>().text = "x2쿠폰 x" + item.items[i].amount;
+                else if(item.items[i].kind == "reinforcedBox")
+                    slot.GetComponent<TMPro.TextMeshProUGUI>().text = "보강된 보급상자 x" + item.items[i].amount;
+                else if (item.items[i].kind == "largeBox")
+                    slot.GetComponent<TMPro.TextMeshProUGUI>().text = "대형 보급상자 x" + item.items[i].amount;
+                else if (item.items[i].kind == "extraLargeBox")
+                    slot.GetComponent<TMPro.TextMeshProUGUI>().text = "초대형 보급상자 x" + item.items[i].amount;
+            }
+        }
+        packageCount++;
     }
 
     // public void SetSupplyBoxItem(dataModules.Shop item) {
@@ -209,8 +247,34 @@ public class ShopManager : MonoBehaviour
     }
 
 
-    public void OpenProductWindow() {
+    public void OpenProductWindow(dataModules.Shop item) {
         ProductWindow.gameObject.SetActive(true);
+        ProductWindow.Find("ProductName/Text").GetComponent<TMPro.TextMeshProUGUI>().text = item.name;
+        ProductWindow.Find("ProductText/Text").GetComponent<TMPro.TextMeshProUGUI>().text = item.desc;
+        ProductWindow.Find("BuyBtn/PriceText").GetComponent<TMPro.TextMeshProUGUI>().text = "\\" + item.prices.KRW.ToString();
+        int itemNum = 0;
+        for (int i = 0; i < ProductWindow.Find("ProductInfo/Items").childCount; i++)
+            ProductWindow.Find("ProductInfo/Items").GetChild(i).gameObject.SetActive(false);
+        for (int i = 0; i < item.items.Length; i++) {
+            if (item.items[i].kind.Contains("gold")) {
+                Transform slot = ProductWindow.Find("ProductInfo/Items/Gold");
+                slot.gameObject.SetActive(true);
+                slot.GetComponent<TMPro.TextMeshProUGUI>().text = "금화 x" + item.items[i].amount.ToString();
+            }
+            else {
+                Transform slot = ProductWindow.Find("ProductInfo/Items/" + itemNum.ToString());
+                itemNum++;
+                slot.gameObject.SetActive(true);
+                if (item.items[i].kind.Contains("Coupon"))
+                    slot.GetComponent<TMPro.TextMeshProUGUI>().text = "x2쿠폰 x" + item.items[i].amount;
+                else if (item.items[i].kind == "reinforcedBox")
+                    slot.GetComponent<TMPro.TextMeshProUGUI>().text = "보강된 보급상자 x" + item.items[i].amount;
+                else if (item.items[i].kind == "largeBox")
+                    slot.GetComponent<TMPro.TextMeshProUGUI>().text = "대형 보급상자 x" + item.items[i].amount;
+                else if (item.items[i].kind == "extraLargeBox")
+                    slot.GetComponent<TMPro.TextMeshProUGUI>().text = "초대형 보급상자 x" + item.items[i].amount;
+            }
+        }
         EscapeKeyController.escapeKeyCtrl.AddEscape(CloseProductWindow);
     }
     public void CloseProductWindow() {
