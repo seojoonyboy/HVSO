@@ -1,76 +1,77 @@
 ﻿tag,text
-Mmenu_battle,전투
-Mmenu_story,스토리
-Mmenu_editdeck,부대 편집
-Mmenu_leaguebattle,리그전투
-Mmenu_social,소셜
-Mmenu_shop,상점
-Mmenu_supplies,보급품
-Mmenu_supplybox,보급상자
-Mmenu_quest,퀘스트
-Mmenu_setting,설정
-Mmenu_mail,메일
-Mmenu_checkin,출석체크
-Mmenu_exitgame,게임을 종료 하시겠습니까?
-Mmenu_yes,예
-Mmenu_no,아니오
-Mmenu_ok,확인
-Mmenu_additionalreward,추가 보상
-Mmenu_medal,메달
-Mmenu_battlepass,배틀패스
-Mmenu_mode,모드
-Mmenu_play,플레이
-Mmenu_opensupplybox,보급상자 열기
-Mmenu_cardmanage,카드 관리
-Mmenu_myleagueinfo,내 리그 정보
-Mmenu_viewalltiers,전체 등급 확인
-Mmenu_currnttiers,현재 순위
-Mmenu_rankinginfo,순위 정보
-Mmenu_viewleaderboard,리더보드 확인
-Mmenu_allleaguetiers,전체 리그 등급
-Mmenu_leagueleaderboard,리그 리더 보드
-Mmenu_refreshleaguerank,"리그 순위 정보는 실시간으로 갱신되며, 순위 목록은 리그 리더보드 입장시에 갱신됩니다."
-Mmenu_requestsupport,지원 요청
-Mmenu_lvuppackage1,레벨 달성 패키지 1
-Mmenu_reachlv5,5레벨 달성시
-Mmenu_reachlv10,10레벨 달성시
-Mmenu_reachlv15,15레벨 달성시
-Mmenu_reachlv20,20레벨 달성시
-Mmenu_reachlv25,25레벨 달성시
-Mmenu_lvuppackage2,레벨 달성 패키지 2
-Mmenu_reachlv30,30레벨 달성시
-Mmenu_reachlv35,35레벨 달성시
-Mmenu_reachlv40,40레벨 달성시
-Mmenu_reachlv45,45레벨 달성시
-Mmenu_reachlv50,50레벨 달성시
-Mmenu_mailsent,우편으로 발송되었습니다.
-Tuto_loadbfield,전장을 불러오는 중...
-Tuto_OK,확인
-Tuto_skipQ,정말 튜토리얼을 스킵하시겠습니까?
-Tuto_yes,예
-Tuto_no,아니오
-Tuto_leagueenterB,리그 진입 버튼
-Tuto_collectsupply,보급품 획득
-Tuto_storyenterB,스토리 진입 버튼
-Tuto_mysupplyandbox,보급품 및 보급상자 보유량
-Tuto_x2coupon,x2 쿠폰
-Tuto_mydecknum,보유한 부대 수량
-Tuto_newdecksetupB,신규 부대 편성 버튼
-Tuto_deckinfoA,부대 정보 영역
-Tuto_deckdelB,부대 삭제 버튼
-Tuto_aibattleB,AI대전 진행 버튼
-Tuto_cardnumindeck,부대에 포함된 카드 수
-Tuto_cardraritynum,카드 등급별 보유량
-Tuto_totalcardnum,전체 카드 보유량
-Tuto_factionimg,진영 이미지
-Tuto_newcardnoti,신규 획득 카드 알림
-Tuto_herocollection,영웅 도감
-Tuto_viewownhero,보유중인 영웅 보기
-Tuto_cardcollection,카드 도감
-Tuto_viewowncard,보유중인 유닛 보기
-Tuto_mainmenu,메인 메뉴
-Tuto_orcstoryunlock,오크 스토리 해금
-Tuto_humanstoryunlock,휴먼 스토리 해금
-Tuto_enter,입장
-Tuto_storymenuunlock,스토리 메뉴 해금
-Tuto_battlemenuunlock,배틀 메뉴 해금
+Mmenu_battle,Battle
+Mmenu_story,Story
+Mmenu_editdeck,Edit Deck
+Mmenu_leaguebattle,League Battle
+Mmenu_social,Social
+Mmenu_shop,Shop
+Mmenu_supplies,Supplies
+Mmenu_supplybox,Supply Boxes
+Mmenu_quest,Quest
+Mmenu_setting,Setting
+Mmenu_mail,Mail
+Mmenu_checkin,Check-in
+Mmenu_exitgame,Would you like to close the game?
+Mmenu_yes,Yes
+Mmenu_no,No
+Mmenu_ok,OK
+Mmenu_check, Check
+Mmenu_additionalreward,Additional Reward
+Mmenu_medal,Medal
+Mmenu_battlepass,Battle Pass
+Mmenu_mode,Mode
+Mmenu_play,Play
+Mmenu_opensupplybox,Open Supply Box
+Mmenu_cardmanage,Manage \n Cards
+Mmenu_myleagueinfo,My League Info
+Mmenu_viewalltiers,View All Tiers
+Mmenu_currnttiers,Current Rank
+Mmenu_rankinginfo,Ranking Info
+Mmenu_viewleaderboard,View Leaderboard
+Mmenu_allleaguetiers,All League Tiers
+Mmenu_leagueleaderboard,League Leaderboard
+Mmenu_refreshleaguerank,The League Ranking Information is updated on a real time basis. The ranking list will be reset when you enter the League Leaderboard.
+Mmenu_requestsupport,Request Support
+Mmenu_lvuppackage1,Lv. Milestone Package 1
+Mmenu_reachlv5,At Lv. 5
+Mmenu_reachlv10,At Lv. 10
+Mmenu_reachlv15,At Lv. 15
+Mmenu_reachlv20,At Lv. 20
+Mmenu_reachlv25,At Lv. 25
+Mmenu_lvuppackage2,Lv. Milestone Package 2
+Mmenu_reachlv30,At Lv. 30
+Mmenu_reachlv35,At Lv. 35
+Mmenu_reachlv40,At Lv. 40
+Mmenu_reachlv45,At Lv. 45
+Mmenu_reachlv50,At Lv. 50
+Mmenu_mailsent,Sent to your Inbox.
+Tuto_loadbfield,Loading battlefield...
+Tuto_OK,OK
+Tuto_skipQ,Skip Tutorial?
+Tuto_yes,Yes
+Tuto_no,No
+Tuto_leagueenterB,League Entry Button
+Tuto_collectsupply,Collect Supplies
+Tuto_storyenterB,Story Entry Button
+Tuto_mysupplyandbox,My Supplies and Supply Boxes
+Tuto_x2coupon,x2 Coupon
+Tuto_mydecknum,My Decks (Quantity)
+Tuto_newdecksetupB,New Deck Setup Button
+Tuto_deckinfoA,Deck Info Area
+Tuto_deckdelB,Deck Delete Button
+Tuto_aibattleB,AI Match Button
+Tuto_cardnumindeck,No. of Cards within the Deck
+Tuto_cardraritynum,No. of Cards per Grade
+Tuto_totalcardnum,Total No. of Cards
+Tuto_factionimg,Faction Image
+Tuto_newcardnoti,Notification of you receiving a new card.
+Tuto_herocollection,Hero Collection
+Tuto_viewownhero,View Heroes in your possession.
+Tuto_cardcollection,Card Collection
+Tuto_viewowncard,View Units in your possession.
+Tuto_mainmenu,Main Menu
+Tuto_orcstoryunlock,Orc Story Unlock
+Tuto_humanstoryunlock,Human Story Unlock
+Tuto_enter,Enter
+Tuto_storymenuunlock,Story Menu Unlock
+Tuto_battlemenuunlock,Battle Menu Unlock
