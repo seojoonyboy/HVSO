@@ -67,7 +67,7 @@ public class ShopManager : MonoBehaviour
 
     public void SetGoldItem(dataModules.Shop item) {
         Transform target = transform.Find("ShopWindowParent/ShopWindow/GoldShop/GoldContent").GetChild(goldItemCount);
-        target.Find("Price").GetComponent<TMPro.TextMeshProUGUI>().text = "\\ " + item.price.ToString();
+        target.Find("Price").GetComponent<TMPro.TextMeshProUGUI>().text = "\\ " + item.prices.KRW.ToString();
         target.Find("Value").GetComponent<TMPro.TextMeshProUGUI>().text = item.items[0].amount;
         if (item.items.Length > 1) {
             target.Find("FreeGold").gameObject.SetActive(true);
@@ -82,7 +82,7 @@ public class ShopManager : MonoBehaviour
 
     public void SetCouponItem(dataModules.Shop item) {
         Transform target = transform.Find("ShopWindowParent/ShopWindow/Supply2XCouponShop").GetChild(x2couponCount);
-        target.Find("Price").GetComponent<TMPro.TextMeshProUGUI>().text = item.price.ToString();
+        target.Find("Price").GetComponent<TMPro.TextMeshProUGUI>().text = item.prices.GOLD.ToString();
         target.Find("Value").GetComponent<TMPro.TextMeshProUGUI>().text = item.items[0].amount;
         target.GetComponent<Button>().onClick.RemoveAllListeners();
         target.GetComponent<Button>().onClick.AddListener(() => PopBuyModal(item));
@@ -99,8 +99,8 @@ public class ShopManager : MonoBehaviour
 
     public void PopBuyModal(dataModules.Shop item, bool isBox = false) {
         if (buying) return;
-        if (item.category == "supplyBox" || item.category == "x2coupon") {
-            if (item.price <= AccountManager.Instance.userResource.gold) {
+        if (!item.isRealMoney) {
+            if (item.prices.GOLD <= AccountManager.Instance.userResource.gold) {
                 checkModal = Modal.instantiate("상품을 구매 하시겠습니까?", Modal.Type.YESNO, () => {
                     BuyItem(item.id, isBox);
                 }, CancelBuy);
