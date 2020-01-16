@@ -204,13 +204,13 @@ namespace dataModules {
         public string kind;
         public string amount;
         public MailCard[] cards;
+        public List<List<RewardClass>> boxes;
     }
 
     public class MailCard {
         public string cardId;
         public int crystal;
     }
-
 
     public class ShopAds {
         public int id;

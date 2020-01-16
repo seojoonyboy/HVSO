@@ -36,6 +36,7 @@ public class BoxRewardManager : MonoBehaviour {
     protected int openCount;
     protected float beforeBgmVolume;
     protected int countOfRewards;
+    List<List<RewardClass>> multipleBoxes;
 
     bool isSupplySliderInit = false;
     void Awake() {
@@ -301,6 +302,11 @@ public class BoxRewardManager : MonoBehaviour {
         transform.Find("ExitButton").gameObject.SetActive(false);
         SetBoxObj();
         openningBox = false;        
+        if(multipleBoxes.Count > 0) {
+            multipleBoxes.RemoveAt(0);
+            if (multipleBoxes.Count > 0)
+                SetRewardBoxAnimation(multipleBoxes[0].ToArray());
+        }
     }
 
     IEnumerator ShowEachReward(int count) {
@@ -580,6 +586,12 @@ public class BoxRewardManager : MonoBehaviour {
         }
         menuSceneController.SetCardNumbersPerDic();
     }
+
+    public void OpenMultipleBoxes(List<List<RewardClass>> rewardList) {
+        multipleBoxes = rewardList;
+        SetRewardBoxAnimation(multipleBoxes[0].ToArray());
+    }
+
 
     public void OpenMainAdWindow() {
         AdsWindow.gameObject.SetActive(true);
