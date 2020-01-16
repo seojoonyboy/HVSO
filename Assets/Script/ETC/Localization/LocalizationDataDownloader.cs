@@ -44,37 +44,16 @@ public class LocalizationDataDownloader : MonoBehaviour {
             .Append(language)
             .Append(next);
 
-        HTTPRequest request = new HTTPRequest(new Uri(url.ToString()));
-        request.MethodType = HTTPMethods.Get;
+        HTTPRequest downloadRequest = new HTTPRequest(new Uri(url.ToString()));
+        downloadRequest.MethodType = HTTPMethods.Get;
 
-        networkManager.Request(request, callback, "Localization 정보를 불러오는 중");
+        GetComponent<LocalizationDownloadManager>().Request(downloadRequest, callback);
     }
 
     private void OnRequest(HTTPRequest req, HTTPResponse res) {
-        switch (req.State) {
-            case HTTPRequestStates.Processing:
-                break;
-            case HTTPRequestStates.Finished:
-                if (res.IsSuccess) {
-                    ProcessFragments(res.Data);
-                    ReadCsvFile();
-                    WriteToScriptableObject();
-
-                    Logger.Log(fileName + "Request Finished");
-                }
-                else {
-                    Modal.instantiate("Localization 정보를 불러오는 중에 문제가 발생하였습니다.", Modal.Type.CHECK);
-                }
-                break;
-            case HTTPRequestStates.Error:
-                break;
-            case HTTPRequestStates.Aborted:
-                break;
-            case HTTPRequestStates.ConnectionTimedOut:
-                break;
-            case HTTPRequestStates.TimedOut:
-                break;
-        }
+        ProcessFragments(res.Data);
+        ReadCsvFile();
+        WriteToScriptableObject();
     }
 
     private void ProcessFragments(byte[] fragments) {
