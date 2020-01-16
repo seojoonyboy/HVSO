@@ -15,6 +15,7 @@ public class GameResultManager : MonoBehaviour {
     public GameObject SocketDisconnectedUI;
     [SerializeField] Transform BgCanvas;
     [SerializeField] GameObject tierChangeEffectModal;
+    [SerializeField] Sprite winningStreak, losingStreak;
 
     private float lv;
     private float exp;
@@ -333,6 +334,7 @@ public class GameResultManager : MonoBehaviour {
             Transform playerMMR = secondWindow.Find("PlayerMmr");
             Transform mmrSlider = playerMMR.Find("MMRSlider");
             Image rankIcon = playerMMR.Find("RankIcon").GetComponent<Image>();
+            Image streakFlag = playerMMR.Find("StreakFlag").gameObject.GetComponent<Image>();
             var icons = AccountManager.Instance.resource.rankIcons;
             if (!string.IsNullOrEmpty(scriptable_leagueData.prevLeagueInfo.rankDetail.minorRankName) && icons.ContainsKey(scriptable_leagueData.prevLeagueInfo.rankDetail.minorRankName)) {
                 rankIcon.sprite = icons[scriptable_leagueData.prevLeagueInfo.rankDetail.minorRankName];
@@ -348,15 +350,18 @@ public class GameResultManager : MonoBehaviour {
                 sb
                     .Append("<color=yellow>")
                     .Append(leagueInfo.winningStreak)
-                    .Append("</color> 연승중");
+                    .Append("</color>연승");
+                streakFlag.sprite = winningStreak;
             }
             else if(leagueInfo.losingStreak > 1) {
                 sb
                     .Append("<color=red>")
                     .Append(leagueInfo.losingStreak)
-                    .Append("</color> 연패중");
+                    .Append("</color>연패");
+                streakFlag.sprite = losingStreak;
             }
             description.text = sb.ToString();
+
             //MMR 증가
             if (scriptable_leagueData.leagueInfo.ratingPoint > scriptable_leagueData.prevLeagueInfo.ratingPoint) {
                 coroutine = ProgressLeagueBar(result == "win");
