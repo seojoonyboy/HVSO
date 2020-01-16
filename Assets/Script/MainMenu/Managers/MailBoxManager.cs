@@ -10,6 +10,7 @@ public class MailBoxManager : MonoBehaviour
     [SerializeField] Transform mailListParent;
     [SerializeField] HUDController HUDController;
     [SerializeField] Button receiveAllBtn;
+    [SerializeField] BoxRewardManager boxRewardManager;
 
     private void OnEnable() {
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_MAIL_UPDATE, RequestMailOver);
@@ -195,6 +196,17 @@ public class MailBoxManager : MonoBehaviour
     }
 
     public void CloseReceiveResult() {
+        List<List<RewardClass>> rewards = new List<List<RewardClass>>();
+        if (transform.Find("Content/ReceivedReward").gameObject.activeSelf) {
+            for (int i = 0; i < AccountManager.Instance.mailRewardList.Count; i++) {
+                if (AccountManager.Instance.mailRewardList[i].kind.Contains("Box")) {
+                    for (int j = 0; j < AccountManager.Instance.mailRewardList[i].boxes.Count; j++)
+                        rewards.Add(AccountManager.Instance.mailRewardList[i].boxes[j]);
+                }
+            }
+            if (rewards != null)
+                boxRewardManager.OpenMultipleBoxes(rewards);
+        }
         InitRewardList();
         transform.GetChild(0).Find("ReceivedReward").gameObject.SetActive(false);
         EscapeKeyController.escapeKeyCtrl.RemoveEscape(CloseReceiveResult);
