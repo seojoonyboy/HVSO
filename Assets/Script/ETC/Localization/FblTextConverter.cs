@@ -19,6 +19,7 @@ public class FblTextConverter : MonoBehaviour {
 
         var result = AccountManager.Instance.GetComponent<fbl_Translator>().GetLocalizedText(category, key);
         if (string.IsNullOrEmpty(result)) return;
+        result = result.Replace("\\n", "\n");
 
         switch (type) {
             case TextType.TEXTMESHPROUGUI:
