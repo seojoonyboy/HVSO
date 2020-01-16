@@ -1,34 +1,4 @@
-tag,text
-Tuto_loadbfield,전장을 불러오는 중...
-Tuto_OK,확인
-Tuto_skipQ,정말 튜토리얼을 스킵하시겠습니까?
-Tuto_yes,예
-Tuto_no,아니오
-Tuto_leagueenterB,리그 진입 버튼
-Tuto_collectsupply,보급품 획득
-Tuto_storyenterB,스토리 진입 버튼
-Tuto_mysupplyandbox,보급품 및 보급상자 보유량
-Tuto_x2coupon,x2 쿠폰
-Tuto_mydecknum,보유한 부대 수량
-Tuto_newdecksetupB,신규 부대 편성 버튼
-Tuto_deckinfoA,부대 정보 영역
-Tuto_deckdelB,부대 삭제 버튼
-Tuto_aibattleB,AI대전 진행 버튼
-Tuto_cardnumindeck,부대에 포함된 카드 수
-Tuto_cardraritynum,카드 등급별 보유량
-Tuto_totalcardnum,전체 카드 보유량
-Tuto_factionimg,진영 이미지
-Tuto_newcardnoti,신규 획득 카드 알림
-Tuto_herocollection,영웅 도감
-Tuto_viewownhero,보유중인 영웅 보기
-Tuto_cardcollection,카드 도감
-Tuto_viewowncard,보유중인 유닛 보기
-Tuto_mainmenu,메인 메뉴
-Tuto_orcstoryunlock,오크 스토리 해금
-Tuto_humanstoryunlock,휴먼 스토리 해금
-Tuto_enter,입장
-Tuto_storymenuunlock,스토리 메뉴 해금
-Tuto_battlemenuunlock,배틀 메뉴 해금
+﻿tag,text
 Mmenu_battle,전투
 Mmenu_story,스토리
 Mmenu_editdeck,부대 편집
@@ -74,3 +44,33 @@ Mmenu_reachlv40,40레벨 달성시
 Mmenu_reachlv45,45레벨 달성시
 Mmenu_reachlv50,50레벨 달성시
 Mmenu_mailsent,우편으로 발송되었습니다.
+Tuto_loadbfield,전장을 불러오는 중...
+Tuto_OK,확인
+Tuto_skipQ,정말 튜토리얼을 스킵하시겠습니까?
+Tuto_yes,예
+Tuto_no,아니오
+Tuto_leagueenterB,리그 진입 버튼
+Tuto_collectsupply,보급품 획득
+Tuto_storyenterB,스토리 진입 버튼
+Tuto_mysupplyandbox,보급품 및 보급상자 보유량
+Tuto_x2coupon,x2 쿠폰
+Tuto_mydecknum,보유한 부대 수량
+Tuto_newdecksetupB,신규 부대 편성 버튼
+Tuto_deckinfoA,부대 정보 영역
+Tuto_deckdelB,부대 삭제 버튼
+Tuto_aibattleB,AI대전 진행 버튼
+Tuto_cardnumindeck,부대에 포함된 카드 수
+Tuto_cardraritynum,카드 등급별 보유량
+Tuto_totalcardnum,전체 카드 보유량
+Tuto_factionimg,진영 이미지
+Tuto_newcardnoti,신규 획득 카드 알림
+Tuto_herocollection,영웅 도감
+Tuto_viewownhero,보유중인 영웅 보기
+Tuto_cardcollection,카드 도감
+Tuto_viewowncard,보유중인 유닛 보기
+Tuto_mainmenu,메인 메뉴
+Tuto_orcstoryunlock,오크 스토리 해금
+Tuto_humanstoryunlock,휴먼 스토리 해금
+Tuto_enter,입장
+Tuto_storymenuunlock,스토리 메뉴 해금
+Tuto_battlemenuunlock,배틀 메뉴 해금
