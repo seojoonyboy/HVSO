@@ -124,7 +124,13 @@ public class MenuSceneController : MonoBehaviour {
     }
 
     public void OpenQuitModal() {
-        quitModal = Modal.instantiate("게임을 종료 하시겠습니까?", Modal.Type.YESNO, QuitApp, CloseQuitModal);
+        var fbl_translator = AccountManager.Instance.GetComponent<fbl_Translator>();
+        string message = fbl_translator.GetLocalizedText("UI", "Mmenu_exitgame");
+        string okBtnText = fbl_translator.GetLocalizedText("UI", "Mmenu_yes");
+        string noBtnText = fbl_translator.GetLocalizedText("UI", "Mmenu_no");
+        string headerText = fbl_translator.GetLocalizedText("UI", "Mmenu_check");
+
+        quitModal = Modal.instantiate(message, Modal.Type.YESNO, QuitApp, CloseQuitModal, btnTexts: new string[] { okBtnText, noBtnText }, headerText: headerText);
         EscapeKeyController.escapeKeyCtrl.RemoveEscape(OpenQuitModal);
     }
 
