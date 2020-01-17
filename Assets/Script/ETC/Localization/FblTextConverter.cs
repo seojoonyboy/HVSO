@@ -14,6 +14,12 @@ public class FblTextConverter : MonoBehaviour {
         RefreshText();
     }
 
+    public void Init(string category, string key, TextType type) {
+        this.category = category;
+        this.key = key;
+        this.type = type;
+    }
+
     public void RefreshText() {
         if (string.IsNullOrEmpty(category) || string.IsNullOrEmpty(key)) return;
 
