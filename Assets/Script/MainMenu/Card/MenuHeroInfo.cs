@@ -51,6 +51,7 @@ public class MenuHeroInfo : MonoBehaviour
         transform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.name;
         transform.Find("HeroDialog/Name").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.name;
         transform.Find("HeroSpines").GetChild(0).gameObject.SetActive(false);
+        int myHeroTier = 0;
         Transform heroSpine = transform.Find("HeroSpines/" + heroData.id);
         for (int i = 0; i < 3; i++)
             transform.Find("HeroLevel/Stars").GetChild(i).GetChild(0).gameObject.SetActive(false);
@@ -63,10 +64,11 @@ public class MenuHeroInfo : MonoBehaviour
             transform.Find("HeroLevel/Exp/ValueText").GetComponent<TMPro.TextMeshProUGUI>().text ="0/10";
         }
         else {
-            dataModules.HeroInventory heroData = accountManager.myHeroInventories[heroId];
+            dataModules.HeroInventory myHeroData = accountManager.myHeroInventories[heroId];
+            myHeroTier = myHeroData.tier;
             transform.Find("HeroSpines/lock").gameObject.SetActive(false);
             heroSpine.GetComponent<SkeletonGraphic>().color = new Color(1, 1, 1);
-            nowTier = heroData.tier;
+            nowTier = myHeroData.tier;
             if (nowTier == 0) {
                 transform.Find("HeroSpines/lock").gameObject.SetActive(true);
                 heroSpine.GetComponent<SkeletonGraphic>().color = new Color(0.35f, 0.35f, 0.35f);
@@ -75,8 +77,8 @@ public class MenuHeroInfo : MonoBehaviour
                 for (int i = 0; i < nowTier; i++)
                     transform.Find("HeroLevel/Stars").GetChild(i).GetChild(0).gameObject.SetActive(true);
             }
-            if (heroData.next_level != null) {
-                float fillExp = (float)heroData.piece / heroData.next_level.piece;
+            if (myHeroData.next_level != null) {
+                float fillExp = (float)myHeroData.piece / myHeroData.next_level.piece;
                 if (fillExp >= 1) {
                     transform.Find("HeroLevel/Exp/ValueText").gameObject.SetActive(false);
                     transform.Find("HeroLevel/TierUpBtn").gameObject.SetActive(true);
@@ -87,7 +89,7 @@ public class MenuHeroInfo : MonoBehaviour
                     transform.Find("HeroLevel/Exp/ValueText").gameObject.SetActive(true);
                     transform.Find("HeroLevel/TierUpBtn").gameObject.SetActive(false);
                     transform.Find("HeroLevel/Exp/Slider/Value").localPosition = new Vector3(-1470 + (980 * fillExp), 0, 0);
-                    transform.Find("HeroLevel/Exp/ValueText").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.piece + "/" + heroData.next_level.piece;
+                    transform.Find("HeroLevel/Exp/ValueText").GetComponent<TMPro.TextMeshProUGUI>().text = myHeroData.piece + "/" + myHeroData.next_level.piece;
                 }
             }
             else {
@@ -96,6 +98,7 @@ public class MenuHeroInfo : MonoBehaviour
                 transform.Find("HeroLevel/Exp/Slider/Value").localPosition = new Vector3(-1470, 0, 0);
                 transform.Find("HeroLevel/Exp/ValueText").GetComponent<TMPro.TextMeshProUGUI>().text = "MAX";
             }
+            
         }
         heroSpine.gameObject.SetActive(true);
         heroSpine.SetAsFirstSibling();
@@ -126,8 +129,9 @@ public class MenuHeroInfo : MonoBehaviour
             else
                 abilityWindow.Find("Ability2/AbilityImg").GetComponent<Image>().sprite = accountManager.resource.traitIcons[traitKey];
         }
-        abilityWindow.Find("Ability1/AbilityImg/Block").gameObject.SetActive(heroData.tier > 1);
-        abilityWindow.Find("Ability2/AbilityImg/Block").gameObject.SetActive(heroData.tier > 2);
+        abilityWindow.Find("Ability1/AbilityImg/Block").gameObject.SetActive(myHeroTier < 2);
+        abilityWindow.Find("Ability2/AbilityImg/Block").gameObject.SetActive(myHeroTier < 3);
+
         SetHeroDialog(heroData.flavorText, heroData.camp == "human");
         EscapeKeyController.escapeKeyCtrl.AddEscape(MenuCardInfo.cardInfoWindow.CloseInfo);
 
@@ -257,8 +261,10 @@ public class MenuHeroInfo : MonoBehaviour
         transform.Find("TierUpField/Stars").GetChild(nowTier - 1).Find("Star").gameObject.SetActive(true);
         transform.Find("TierUpField/Name").gameObject.SetActive(true);
         yield return new WaitForSeconds(0.5f);
-        transform.Find("TierUpField/Ability").gameObject.SetActive(true);
-        yield return new WaitForSeconds(0.5f);
+        if (heroData.tier > 1) {
+            transform.Find("TierUpField/Ability").gameObject.SetActive(true);
+            yield return new WaitForSeconds(0.5f);
+        }
         transform.Find("TierUpField/Button").gameObject.SetActive(true);
         yield return new WaitForSeconds(0.5f);
         tierUpHero = false;
