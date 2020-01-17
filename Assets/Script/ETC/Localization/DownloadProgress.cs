@@ -7,7 +7,7 @@ using TMPro;
 public class DownloadProgress : MonoBehaviour {
     [SerializeField] Slider progressBar;
     [SerializeField] TextMeshProUGUI message;
-    [SerializeField] TextMeshProUGUI label;
+    public TextMeshProUGUI label;
 
     public virtual void StartProgress() {
         if(!gameObject.activeSelf) gameObject.SetActive(true);

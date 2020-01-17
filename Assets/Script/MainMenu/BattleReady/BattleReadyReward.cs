@@ -167,7 +167,12 @@ public class BattleReadyReward : MonoBehaviour
             Modal.instantiate("요청 불가", Modal.Type.CHECK);
         }
         else {
-            Modal.instantiate("보상을 우편으로 발송하였습니다.", Modal.Type.CHECK, () => { });
+            var fbl_translator = AccountManager.Instance.GetComponent<fbl_Translator>();
+            string message = fbl_translator.GetLocalizedText("UI", "Mmenu_mailsent");
+            string headerText = fbl_translator.GetLocalizedText("UI", "Mmenu_check");
+            string okBtnText = fbl_translator.GetLocalizedText("UI", "Mmenu_yes");
+
+            Modal.instantiate(message, Modal.Type.CHECK, () => { }, headerText: headerText, btnTexts: new string[] { okBtnText });
         }
     }
 

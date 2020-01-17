@@ -35,15 +35,10 @@ public class LocalizationDownloadManager : MonoBehaviour {
     private void DequeueRequest() {
         dequeueing = true;
         localizationProgress.StartProgress();
-        //loadingModal = LoadingModal.instantiate();
-        //Text loadingMsg = loadingModal.transform.Find("Panel/AdditionalMessage").GetComponent<Text>();
 
         NetworkManager.RequestFormat selectedRequestFormat = requests.Dequeue();
         HTTPRequest request = selectedRequestFormat.request;
-        //loadingMsg.text = selectedRequestFormat.loadingMessage;
-        //loadingModal.SetActive(false);
-        //request.LoadingMessage = selectedRequestFormat.loadingMessage;
-        //request.AddHeader("Content-Type", "application/json");
+        localizationProgress.label.text = selectedRequestFormat.loadingMessage;
 
         if (request.RedirectCount != 0) request.Callback = null;
         request.Callback += CheckCondition;
@@ -52,7 +47,6 @@ public class LocalizationDownloadManager : MonoBehaviour {
         request.OnProgress += OnProgress;
         request.Timeout = timeout;
         request.Send();
-        //StartCoroutine(ActivateLoadingModal(loadingModal));
     }
 
     private void OnProgress(HTTPRequest originalRequest, long downloaded, long downloadLength) {
