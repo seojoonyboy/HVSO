@@ -157,11 +157,14 @@ public class MenuSceneController : MonoBehaviour {
         MenuTutorialManager.TutorialType tutorialType = MenuTutorialManager.TutorialType.NONE;
         if (PlayerPrefs.GetInt("isFirst") == 1) {
             PlayerPrefs.SetInt("isFirst", 0);
-            AddNewbiController();
             PlayerPrefs.SetInt("IsQuestLoaded", 0);
+            PlayerPrefs.SetInt("isAttendanceBoardCalled", 0);
+            PlayerPrefs.SetInt("IsAllTutorialFinished", 0);
+            PlayerPrefs.SetString("Vibrate", "On");
+            PlayerPrefs.Save();
 
             hideModal.SetActive(false);
-            PlayerPrefs.SetString("Vibrate", "On");
+            AddNewbiController();
         }
         else {
             hideModal.SetActive(true);
@@ -227,7 +230,19 @@ public class MenuSceneController : MonoBehaviour {
             CheckDailyQuest();
         }
 
-        //StartQuestSubSet(MenuTutorialManager.TutorialType.QUEST_SUB_SET_7);
+        if (IsAbleToCallAttendanceBoardAfterTutorial()) {
+            AccountManager.Instance.RequestAttendance();
+            PlayerPrefs.SetInt("isAttendanceBoardCalled", 1);
+            PlayerPrefs.Save();
+        }
+    }
+
+    private bool IsAbleToCallAttendanceBoardAfterTutorial() {
+        bool isAttendanceBoardCalled = Convert.ToBoolean(PlayerPrefs.GetInt("isAttendanceBoardCalled", 0));
+        bool isAllUnlocked = menuTutorialManager.lockController.isAllUnlocked;
+
+        if (isAllUnlocked && !isAttendanceBoardCalled) return true;
+        return false;
     }
 
     public void CheckDailyQuest() {
@@ -248,6 +263,8 @@ public class MenuSceneController : MonoBehaviour {
             );
             AccountManager.Instance.GetDailyQuest(OnDailyQuestRequestFinished);
             PlayerPrefs.SetInt("IsQuestLoaded", 1);
+            PlayerPrefs.SetInt("IsAllTutorialFinished", 1);
+            PlayerPrefs.Save();
         }
     }
 

@@ -76,6 +76,9 @@ public class MenuLockController : SerializedMonoBehaviour {
             Logger.Log("모두 해금됨");
             
             GetComponent<MenuSceneController>().CheckDailyQuest();
+
+            PlayerPrefs.SetInt("IsTutorialFinished", 1);
+            PlayerPrefs.Save();
         }
     }
 
