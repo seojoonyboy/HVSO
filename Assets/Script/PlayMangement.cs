@@ -883,7 +883,7 @@ public partial class PlayMangement {
             placeMonster.unit.cardCategories[0] = cardData.cardCategories[0];
         }
 
-        if (cardData.attackTypes != null) {
+        if (cardData.attackTypes.Length != 0) {
             placeMonster.unit.attackType = new string[cardData.attackTypes.Length];
             placeMonster.unit.attackType = cardData.attackTypes;
         }

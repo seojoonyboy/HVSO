@@ -521,7 +521,7 @@ public class CardHandManager : MonoBehaviour {
         SetUsedCardInfo(ref card);
         yield return new WaitForSeconds(0.25f);
 
-        if (card.GetComponent<UnitDragHandler>() != null && card.GetComponent<UnitDragHandler>().cardData.attributes != null && card.GetComponent<UnitDragHandler>().cardData.attributes[0] == "ambush")
+        if (card.GetComponent<UnitDragHandler>() != null && card.GetComponent<UnitDragHandler>().cardData.attributes.Length != 0 && card.GetComponent<UnitDragHandler>().cardData.attributes[0] == "ambush")
             CardInfoOnDrag.instance.SetCardDragInfo(null, new Vector3(0, 5, 0), null);
         else
             CardInfoOnDrag.instance.SetCardDragInfo(null, new Vector3(0, 5, 0), handler.cardData.skills.Length != 0 ? handler.cardData.skills[0].desc : null);
@@ -566,19 +566,19 @@ public class CardHandManager : MonoBehaviour {
         else
             portrait.sprite = AccountManager.Instance.resource.cardPortraite[cardData.id];
 
-        if (cardData.attributes == null && cardData.attackTypes == null && isUnit) skillIcon.gameObject.SetActive(false);
+        if (cardData.attributes.Length == 0 && cardData.attackTypes.Length == 0 && isUnit) skillIcon.gameObject.SetActive(false);
 
-        if (cardData.attributes != null && isUnit)
+        if (cardData.attributes.Length != 0 && isUnit)
             if (AccountManager.Instance.resource.skillIcons.ContainsKey(cardData.attributes[0])) {
                 skillIcon.sprite = AccountManager.Instance.resource.skillIcons[cardData.attributes[0]];
             }
 
-        if (cardData.attackTypes != null && isUnit)
+        if (cardData.attackTypes.Length != 0 && isUnit)
             if (AccountManager.Instance.resource.skillIcons.ContainsKey(cardData.attackTypes[0])) {
                 skillIcon.sprite = AccountManager.Instance.resource.skillIcons[cardData.attackTypes[0]];
             }
 
-        if (cardData.attributes != null && cardData.attackTypes != null && isUnit)
+        if (cardData.attributes.Length != 0 && cardData.attackTypes.Length != 0 && isUnit)
             skillIcon.sprite = AccountManager.Instance.resource.skillIcons["complex"];
         if(!cardData.isHeroCard)
             card.transform.Find("BackGround").GetComponent<Image>().sprite = AccountManager.Instance.resource.cardBackground[cardData.type + "_" + cardData.rarelity];
