@@ -210,7 +210,6 @@ public class MenuLockController : SerializedMonoBehaviour {
                     ShopWindow.SetParent(MainScrollSnapContent);
                     ShopWindow.transform.SetAsLastSibling();            //메인화면보다 오른쪽
                     ShopWindow.gameObject.SetActive(true);
-                    shopOpened = true;
                     break;
             }
 
