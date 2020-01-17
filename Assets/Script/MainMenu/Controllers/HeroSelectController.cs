@@ -136,7 +136,7 @@ public class HeroSelectController : MonoBehaviour
                 abilityWindow.Find("Ability2/AbilityImg").GetComponent<Image>().sprite = AccountManager.Instance.resource.traitIcons[traitKey];
         }
         abilityWindow.Find("Ability1/AbilityImg/Block").gameObject.SetActive(heroData.tier > 1);
-        abilityWindow.Find("Ability1/AbilityImg/Block").gameObject.SetActive(heroData.tier > 2);
+        abilityWindow.Find("Ability2/AbilityImg/Block").gameObject.SetActive(heroData.tier > 2);
         transform.Find("InnerCanvas/OpenTemplateButton").gameObject.SetActive(AccountManager.Instance.myHeroInventories.ContainsKey(heroId) 
             && AccountManager.Instance.myHeroInventories[heroId].tier > 0);
     }

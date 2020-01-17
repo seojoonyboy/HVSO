@@ -127,7 +127,7 @@ public class MenuHeroInfo : MonoBehaviour
                 abilityWindow.Find("Ability2/AbilityImg").GetComponent<Image>().sprite = accountManager.resource.traitIcons[traitKey];
         }
         abilityWindow.Find("Ability1/AbilityImg/Block").gameObject.SetActive(heroData.tier > 1);
-        abilityWindow.Find("Ability1/AbilityImg/Block").gameObject.SetActive(heroData.tier > 2);
+        abilityWindow.Find("Ability2/AbilityImg/Block").gameObject.SetActive(heroData.tier > 2);
         SetHeroDialog(heroData.flavorText, heroData.camp == "human");
         EscapeKeyController.escapeKeyCtrl.AddEscape(MenuCardInfo.cardInfoWindow.CloseInfo);
 
