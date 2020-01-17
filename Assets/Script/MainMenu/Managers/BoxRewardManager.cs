@@ -588,6 +588,7 @@ public class BoxRewardManager : MonoBehaviour {
     }
 
     public void OpenMultipleBoxes(List<List<RewardClass>> rewardList) {
+        if (rewardList.Count == 0) return;
         multipleBoxes = rewardList;
         SetRewardBoxAnimation(multipleBoxes[0].ToArray());
     }
