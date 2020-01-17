@@ -1051,11 +1051,13 @@ static NSMutableArray *_instances = [[NSMutableArray alloc] init];
 
 - (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation withError:(NSError *)error
 {
+    if([error code] == -999) return;  // 링크 연타시에 오류나서 로딩 안되는 이슈 수정  2020/01/15
     UnitySendMessage([gameObjectName UTF8String], "CallOnError", [[error description] UTF8String]);
 }
 
 - (void)webView:(WKWebView *)webView didFailNavigation:(WKNavigation *)navigation withError:(NSError *)error
 {
+    if([error code] == -999) return;  // 링크 연타시에 오류나서 로딩 안되는 이슈 수정  2020/01/15
     UnitySendMessage([gameObjectName UTF8String], "CallOnError", [[error description] UTF8String]);
 }
 
