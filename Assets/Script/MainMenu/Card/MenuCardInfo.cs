@@ -124,7 +124,7 @@ public partial class MenuCardInfo : MonoBehaviour {
         }
         if (data.type == "unit") {
 
-            if (data.attackTypes.Length != 0) {
+            if (data.attackTypes != null) {
                 info.Find("Skill&BuffRow1").GetChild(skillnum).gameObject.SetActive(true);
                 var image = AccountManager.Instance.resource.skillIcons[data.attackTypes[0]];
                 info.Find("Skill&BuffRow1").GetChild(skillnum).Find("SkillIcon").GetComponent<Image>().sprite = image;
@@ -139,7 +139,7 @@ public partial class MenuCardInfo : MonoBehaviour {
                 info.Find("Skill&BuffRow1").GetChild(skillnum).GetComponent<EventTrigger>().triggers.Add(offBtn);
                 skillnum++;
             }
-            if (data.attributes.Length != 0) {
+            if (data.attributes != null) {
                 info.Find("Skill&BuffRow1").GetChild(skillnum).gameObject.SetActive(true);
                 var image = AccountManager.Instance.resource.skillIcons[data.attributes[0]];
                 info.Find("Skill&BuffRow1").GetChild(skillnum).Find("SkillIcon").GetComponent<Image>().sprite = image;

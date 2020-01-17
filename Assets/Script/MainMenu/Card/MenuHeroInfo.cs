@@ -119,14 +119,15 @@ public class MenuHeroInfo : MonoBehaviour
         Transform abilityWindow = transform.Find("AbilityInfo");
         abilityWindow.Find("Ability1/AbilityInfo").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.traitText[0];
         abilityWindow.Find("Ability2/AbilityInfo").GetComponent<TMPro.TextMeshProUGUI>().text = heroData.traitText[1];
-        for(int i = 0; i < 2; i++) {
+        for (int i = 0; i < 2; i++) {
             string traitKey = GetTraitKey(heroData.traitText[i]);
             if (i == 0)
                 abilityWindow.Find("Ability1/AbilityImg").GetComponent<Image>().sprite = accountManager.resource.traitIcons[traitKey];
             else
                 abilityWindow.Find("Ability2/AbilityImg").GetComponent<Image>().sprite = accountManager.resource.traitIcons[traitKey];
         }
-
+        abilityWindow.Find("Ability1/AbilityImg/Block").gameObject.SetActive(heroData.tier > 1);
+        abilityWindow.Find("Ability1/AbilityImg/Block").gameObject.SetActive(heroData.tier > 2);
         SetHeroDialog(heroData.flavorText, heroData.camp == "human");
         EscapeKeyController.escapeKeyCtrl.AddEscape(MenuCardInfo.cardInfoWindow.CloseInfo);
 

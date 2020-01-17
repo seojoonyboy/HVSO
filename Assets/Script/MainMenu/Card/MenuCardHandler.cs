@@ -56,17 +56,17 @@ public class MenuCardHandler : MonoBehaviour {
             //Logger.Log(cardData.name);
             cardObject.Find("Health/Text").GetComponent<Text>().text = cardData.hp.ToString();
             cardObject.Find("attack/Text").GetComponent<Text>().text = cardData.attack.ToString();
-            if (cardData.attributes.Length == 0 && cardData.attackTypes.Length == 0)
+            if (cardData.attributes == null && cardData.attackTypes == null)
                 cardObject.Find("SkillIcon").gameObject.SetActive(false);
             else {
                 cardObject.Find("SkillIcon").gameObject.SetActive(true);
-                if (cardData.attributes.Length != 0)
+                if (cardData.attributes != null)
                     cardObject.Find("SkillIcon").GetComponent<Image>().sprite = AccountManager.Instance.resource.skillIcons[cardData.attributes[0]];
-                if (cardData.attackTypes.Length != 0)
+                if (cardData.attackTypes != null)
                     if (AccountManager.Instance.resource.skillIcons.ContainsKey(cardData.attackTypes[0])) {
                         cardObject.Find("SkillIcon").GetComponent<Image>().sprite = AccountManager.Instance.resource.skillIcons[cardData.attackTypes[0]];
                     }
-                if (cardData.attributes.Length != 0 && cardData.attackTypes.Length != 0)
+                if (cardData.attributes != null && cardData.attackTypes != null)
                     cardObject.Find("SkillIcon").GetComponent<Image>().sprite = AccountManager.Instance.resource.skillIcons["complex"];
             }
         }
@@ -137,17 +137,17 @@ public class MenuCardHandler : MonoBehaviour {
             //Logger.Log(cardData.name);
             cardObject.Find("Health/Text").GetComponent<Text>().text = cardData.hp.ToString();
             cardObject.Find("attack/Text").GetComponent<Text>().text = cardData.attack.ToString();
-            if (cardData.attributes.Length == 0 && cardData.attackTypes.Length == 0)
+            if (cardData.attributes == null && cardData.attackTypes == null)
                 cardObject.Find("SkillIcon").gameObject.SetActive(false);
             else {
                 cardObject.Find("SkillIcon").gameObject.SetActive(true);
-                if (cardData.attributes.Length != 0)
+                if (cardData.attributes != null)
                     cardObject.Find("SkillIcon").GetComponent<Image>().sprite = AccountManager.Instance.resource.skillIcons[cardData.attributes[0]];
-                if (cardData.attackTypes.Length != 0)
+                if (cardData.attackTypes != null)
                     if (AccountManager.Instance.resource.skillIcons.ContainsKey(cardData.attackTypes[0])) {
                         cardObject.Find("SkillIcon").GetComponent<Image>().sprite = AccountManager.Instance.resource.skillIcons[cardData.attackTypes[0]];
                     }
-                if (cardData.attributes.Length != 0 && cardData.attackTypes.Length != 0)
+                if (cardData.attributes != null && cardData.attackTypes != null)
                     cardObject.Find("SkillIcon").GetComponent<Image>().sprite = AccountManager.Instance.resource.skillIcons["complex"];
             }
         }

@@ -107,7 +107,7 @@ public class PlaceMonster : MonoBehaviour {
         else
             maxAtkCount = 1;
 
-        if (unit.attributes.Length > 0 && unit.attributes[0] == "ambush")
+        if (unit.attributes != null && unit.attributes[0] == "ambush")
             gameObject.AddComponent<ambush>();
 
 
@@ -151,7 +151,7 @@ public class PlaceMonster : MonoBehaviour {
 
 
     public void SetHiding() {
-        if (unit.attributes.Length > 0) {
+        if (unit.attributes != null ) {
             if (unit.attributes[0] == "ambush") {
                 unitSpine.hidingObject = AccountManager.Instance.resource.hideObject;
                 GameObject hide = Instantiate(AccountManager.Instance.resource.hideObject, transform);
