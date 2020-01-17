@@ -43,6 +43,7 @@ public class BattleReadyReward : MonoBehaviour
     }
 
     private IEnumerator Wait_Table() {
+        yield return new WaitUntil(() => AccountManager.Instance.scriptable_leagueData.leagueInfo != null);
         yield return new WaitUntil(() => AccountManager.Instance.scriptable_leagueData.leagueInfo.rewards != null);
         List<AccountManager.Reward> mmrRewards = AccountManager.Instance.scriptable_leagueData.leagueInfo.rewards;
         SetUpGauge(ref mmrRewards);
