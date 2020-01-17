@@ -33,6 +33,7 @@ public class MainMenuRewardGauge : BattleReadyReward {
     private void OnEnable() {
         if (AccountManager.Instance.rankTable == null || AccountManager.Instance.rankTable.Count < 1) AccountManager.Instance.RequestRankTable();
         if (AccountManager.Instance.scriptable_leagueData == null) AccountManager.Instance.RequestLeagueInfo();
+        SetUpReward();
     }
 
     public IEnumerator Wait_Deploy_Data() {        
