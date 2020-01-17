@@ -11,8 +11,8 @@ public class AttendanceManager : MonoBehaviour
     bool onLaunchCheck = false;
     // Start is called before the first frame update
     private void Awake() {
-        bool IsTutorialFinished = Convert.ToBoolean(PlayerPrefs.GetInt("IsTutorialFinished", 0));
-        if (IsTutorialFinished) AccountManager.Instance.RequestAttendance();
+        //bool IsTutorialFinished = Convert.ToBoolean(PlayerPrefs.GetInt("IsTutorialFinished", 0));
+        if (PlayerPrefs.HasKey("IsTutorialFinish")) AccountManager.Instance.RequestAttendance();
         else CloseAttendanceBoard();
 
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_ATTEND_SUCCESS, AttendSuccess);
@@ -25,6 +25,8 @@ public class AttendanceManager : MonoBehaviour
     }
 
     public void OpenAttendanceBoard() {
+        if (!onLaunchCheck) 
+            onLaunchCheck = true;
         transform.gameObject.SetActive(true);
         transform.Find("MonthlyBoard").gameObject.SetActive(true);
         transform.Find("WeeklyBoard").gameObject.SetActive(false);

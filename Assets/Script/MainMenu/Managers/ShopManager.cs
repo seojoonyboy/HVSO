@@ -44,31 +44,31 @@ public class ShopManager : MonoBehaviour
         Invoke("UpdateContentHeight", 0.25f);
     }
 
-    public void SetShop() { 
-        goldItemCount = 0;
-        x2couponCount = 0;
-        supplyBoxCount = 0;
-        foreach(dataModules.Shop item in AccountManager.Instance.shopItems) {
-            switch (item.category) {
-                case "gold":
-                    SetGoldItem(item);
-                    break;
-                case "package":
-                    SetPackage(item);
-                    break;
-                case "x2coupon":
-                    SetCouponItem(item);
-                    break;
-                default :
-                    Logger.Log(item.category+"doesn't exist now");
-                    break;
+    public void SetShop() {
+        //bool IsTutorialFinished = Convert.ToBoolean(PlayerPrefs.GetInt("IsTutorialFinished", 0));
+        if (PlayerPrefs.HasKey("IsTutorialFinish")) {
+            goldItemCount = 0;
+            x2couponCount = 0;
+            supplyBoxCount = 0;
+            foreach (dataModules.Shop item in AccountManager.Instance.shopItems) {
+                switch (item.category) {
+                    case "gold":
+                        SetGoldItem(item);
+                        break;
+                    case "package":
+                        SetPackage(item);
+                        break;
+                    case "x2coupon":
+                        SetCouponItem(item);
+                        break;
+                    default:
+                        Logger.Log(item.category + "doesn't exist now");
+                        break;
+                }
             }
-        }
-        LayoutRebuilder.ForceRebuildLayoutImmediate(transform.Find("ShopWindowParent/ShopWindow/PackageShop/ItemList").GetComponent<RectTransform>());
-        transform.Find("ShopWindowParent/ShopWindow/PackageShop").GetComponent<RectTransform>().sizeDelta 
-            = new Vector2(100, transform.Find("ShopWindowParent/ShopWindow/PackageShop/ItemList").GetComponent<RectTransform>().rect.height + 40);
-        bool IsTutorialFinished = Convert.ToBoolean(PlayerPrefs.GetInt("IsTutorialFinished", 0));
-        if (IsTutorialFinished) {
+            LayoutRebuilder.ForceRebuildLayoutImmediate(transform.Find("ShopWindowParent/ShopWindow/PackageShop/ItemList").GetComponent<RectTransform>());
+            transform.Find("ShopWindowParent/ShopWindow/PackageShop").GetComponent<RectTransform>().sizeDelta
+                = new Vector2(100, transform.Find("ShopWindowParent/ShopWindow/PackageShop/ItemList").GetComponent<RectTransform>().rect.height + 40);
             transform.gameObject.SetActive(false);
             transform.gameObject.SetActive(true);
         }

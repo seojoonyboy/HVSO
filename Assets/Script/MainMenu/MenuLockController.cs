@@ -12,7 +12,7 @@ public class MenuLockController : SerializedMonoBehaviour {
     [SerializeField] Transform MainScrollSnapContent;
     [SerializeField] GameObject mainButtonsParent;
     [SerializeField] Transform deckEditListParent;
-
+    [SerializeField] AttendanceManager atm;
     [SerializeField] Dictionary<string, GameObject> menues;
 
     NoneIngameSceneEventHandler eventHandler;
@@ -33,12 +33,7 @@ public class MenuLockController : SerializedMonoBehaviour {
 
     private void OnTutorialInfoUpdated(Enum Event_Type, Component Sender, object Param) {
         //모두 해금된 상태
-        if (isAllUnlocked) {
-            foreach(KeyValuePair<string, GameObject> keyValuePair in menues) {
-                keyValuePair.Value.transform.Find("Lock").GetComponent<MenuLocker>().UnlockWithNoEffect();
-            }
-            return;
-        }
+        
 
         object[] parm = (object[])Param;
         bool isInitRequest = (bool)parm[0];
@@ -68,7 +63,8 @@ public class MenuLockController : SerializedMonoBehaviour {
 
         var questInfos = AccountManager.Instance.questInfos;
         if(questInfos != null) {
-            isAllUnlocked = !AccountManager.Instance.questInfos.Exists(x => x.cleared == false);
+            var lockList = (List<string>)parm[2];
+            isAllUnlocked = lockList.Count == 0;
         }
         
         if (isAllUnlocked) {
@@ -76,9 +72,17 @@ public class MenuLockController : SerializedMonoBehaviour {
             Logger.Log("모두 해금됨");
             
             GetComponent<MenuSceneController>().CheckDailyQuest();
+        }
 
+        if (isAllUnlocked) {
             PlayerPrefs.SetInt("IsTutorialFinished", 1);
-            PlayerPrefs.Save();
+            PlayerPrefs.SetString("IsTutorialFinish", "true");
+            AccountManager.Instance.RequestShopItems();
+            atm.OpenAttendanceBoard();
+            foreach (KeyValuePair<string, GameObject> keyValuePair in menues) {
+                keyValuePair.Value.transform.Find("Lock").GetComponent<MenuLocker>().UnlockWithNoEffect();
+            }
+            return;
         }
     }
 
@@ -206,6 +210,7 @@ public class MenuLockController : SerializedMonoBehaviour {
                     ShopWindow.SetParent(MainScrollSnapContent);
                     ShopWindow.transform.SetAsLastSibling();            //메인화면보다 오른쪽
                     ShopWindow.gameObject.SetActive(true);
+                    shopOpened = true;
                     break;
             }
 
