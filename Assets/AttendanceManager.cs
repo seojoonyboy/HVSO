@@ -62,22 +62,14 @@ public class AttendanceManager : MonoBehaviour
         Transform slotList = transform.Find("MonthlyBoard/DayList");
         InitBoard(slotList);
         dataModules.AttendanceResult boardInfo = AccountManager.Instance.attendanceResult;
-        bool check = false;
+        int days = AccountManager.Instance.attendanceResult.attendance.monthly;
         for (int i = 0; i < boardInfo.table.monthly.Length; i++) {
-            if (!check) { 
-                if (boardInfo.table.monthly[i].attend)
-                    slotList.GetChild(i).Find("Block").gameObject.SetActive(true);
-                else {
-                    if (i - 1 == 0) {
-                        StartCoroutine(GetRewardAimation(slotList.GetChild(i - 1).Find("Block").gameObject));
-                        check = true;
-                    }
-                    if (i != 0 && boardInfo.table.monthly[i - 1].attend) {
-                        StartCoroutine(GetRewardAimation(slotList.GetChild(i - 1).Find("Block").gameObject));
-                        check = true;
-                    }
-                }
-            }
+            if (i < days) 
+                slotList.GetChild(i).Find("Block").gameObject.SetActive(true);
+            else if (i == days) 
+                StartCoroutine(GetRewardAimation(slotList.GetChild(i).Find("Block").gameObject));
+            else
+                slotList.GetChild(i).Find("Block").gameObject.SetActive(false);
             if (boardInfo.table.monthly[i].reward.kind.Contains("Box"))
                 slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon["supplyBox"];
             else
@@ -88,8 +80,8 @@ public class AttendanceManager : MonoBehaviour
 
     public void SetWeaklyBoard() {
         transform.Find("MonthlyBoard").gameObject.SetActive(false);
-        welcome = AccountManager.Instance.attendanceResult.attendance.welcome == 1;
-        comeback = AccountManager.Instance.attendanceResult.attendance.comeback == 1;
+        welcome = AccountManager.Instance.attendanceResult.attendance.welcome != 0;
+        comeback = AccountManager.Instance.attendanceResult.attendance.comeback != 0;
         if (welcome == false && comeback == false) {
             CloseAttendanceBoard();
             return;
@@ -99,26 +91,23 @@ public class AttendanceManager : MonoBehaviour
             Transform slotList = transform.Find("WeeklyBoard/DayList");
             InitBoard(slotList);
             dataModules.AttendanceItem[] items;
-            if (welcome)
+            int days;
+            if (welcome) {
                 items = AccountManager.Instance.attendanceResult.table.welcome;
-            else
+                days = AccountManager.Instance.attendanceResult.attendance.welcome;
+            }
+            else {
                 items = AccountManager.Instance.attendanceResult.table.comeback;
-            bool check = false;
+                days = AccountManager.Instance.attendanceResult.attendance.comeback;
+            }
             for (int i = 0; i < items.Length; i++) {
-                if (!check) {
-                    if (items[i].attend)
-                        slotList.GetChild(i).Find("Block").gameObject.SetActive(true);
-                    else {
-                        if (i - 1 == 0) {
-                            StartCoroutine(GetRewardAimation(slotList.GetChild(i - 1).Find("Block").gameObject));
-                            check = true;
-                        }
-                        if (i != 0 && items[i - 1].attend) {
-                            StartCoroutine(GetRewardAimation(slotList.GetChild(i - 1).Find("Block").gameObject));
-                            check = true;
-                        }
-                    }
-                }
+                if (i < days)
+                    slotList.GetChild(i).Find("Block").gameObject.SetActive(true);
+                else if (i == days)
+                    StartCoroutine(GetRewardAimation(slotList.GetChild(i).Find("Block").gameObject));
+                else
+                    slotList.GetChild(i).Find("Block").gameObject.SetActive(false);
+
                 if (items[i].reward.kind.Contains("Box"))
                     slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon["supplyBox"];
                 else
@@ -135,12 +124,14 @@ public class AttendanceManager : MonoBehaviour
         Transform slotList = transform.Find("MonthlyBoard/DayList");
         InitBoard(slotList);
         dataModules.AttendanceReward boardInfo = AccountManager.Instance.attendanceBoard;
-        bool check = false;
+
+        int days = AccountManager.Instance.attendanceResult.attendance.monthly;
         for (int i = 0; i < boardInfo.monthly.Length; i++) {
-            if (!check) {
-                if (boardInfo.monthly[i].attend)
-                    slotList.GetChild(i).Find("Block").gameObject.SetActive(true);
-            }
+            if (i <= days) 
+                slotList.GetChild(i).Find("Block").gameObject.SetActive(true);
+            else
+                slotList.GetChild(i).Find("Block").gameObject.SetActive(false);
+
             if (boardInfo.monthly[i].reward.kind.Contains("Box"))
                 slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon["supplyBox"];
             else
@@ -162,16 +153,20 @@ public class AttendanceManager : MonoBehaviour
             Transform slotList = transform.Find("WeeklyBoard/DayList");
             InitBoard(slotList);
             dataModules.AttendanceItem[] items;
-            if (welcome)
+            int days;
+            if (welcome) {
                 items = AccountManager.Instance.attendanceBoard.welcome;
-            else
+                days = AccountManager.Instance.attendanceResult.attendance.welcome;
+            }
+            else {
                 items = AccountManager.Instance.attendanceBoard.comeback;
-            bool check = false;
+                days = AccountManager.Instance.attendanceResult.attendance.comeback;
+            }
             for (int i = 0; i < items.Length; i++) {
-                if (!check) {
-                    if (items[i].attend)
-                        slotList.GetChild(i).Find("Block").gameObject.SetActive(true);
-                }
+                if (i <= days)
+                    slotList.GetChild(i).Find("Block").gameObject.SetActive(true);
+                else
+                    slotList.GetChild(i).Find("Block").gameObject.SetActive(false);
                 if (items[i].reward.kind.Contains("Box"))
                     slotList.GetChild(i).Find("Resource").GetComponent<Image>().sprite = AccountManager.Instance.resource.rewardIcon["supplyBox"];
                 else
