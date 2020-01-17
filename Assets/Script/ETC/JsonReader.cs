@@ -248,7 +248,8 @@ namespace dataModules {
 
     public class AttendanceResult {
         public AttendanceType attendance;
-        public AttendanceReward table;
+        public AttendanceReward tables;
+        public bool attendChk;
     }
 
     public class AttendanceType {
