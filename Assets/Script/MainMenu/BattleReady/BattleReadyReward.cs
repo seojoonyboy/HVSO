@@ -38,7 +38,8 @@ public class BattleReadyReward : MonoBehaviour
 
     public virtual void SetUpReward() {
         List<AccountManager.Reward> mmrRewards = AccountManager.Instance.scriptable_leagueData.leagueInfo.rewards;
-        if (mmrRewards.Count < 1 || mmrRewards == null) mmrRewards = AccountManager.Instance.scriptable_leagueData.prevLeagueInfo.rewards;
+        //if (mmrRewards.Count < 1 || mmrRewards == null) mmrRewards = AccountManager.Instance.scriptable_leagueData.prevLeagueInfo.rewards;
+        if (mmrRewards == null) return;
         
 
         SetUpGauge(ref mmrRewards);
