@@ -37,11 +37,14 @@ public class BattleReadyReward : MonoBehaviour
 
 
     public virtual void SetUpReward() {
-        List<AccountManager.Reward> mmrRewards = AccountManager.Instance.scriptable_leagueData.leagueInfo.rewards;
-        //if (mmrRewards.Count < 1 || mmrRewards == null) mmrRewards = AccountManager.Instance.scriptable_leagueData.prevLeagueInfo.rewards;
-        if (mmrRewards == null) return;
-        
+        if (AccountManager.Instance.rankTable == null || AccountManager.Instance.rankTable.Count < 1) AccountManager.Instance.RequestRankTable();
+        if (AccountManager.Instance.scriptable_leagueData == null) AccountManager.Instance.RequestLeagueInfo();
+        StartCoroutine(Wait_Table());
+    }
 
+    private IEnumerator Wait_Table() {
+        yield return new WaitUntil(() => AccountManager.Instance.scriptable_leagueData.leagueInfo.rewards != null);
+        List<AccountManager.Reward> mmrRewards = AccountManager.Instance.scriptable_leagueData.leagueInfo.rewards;
         SetUpGauge(ref mmrRewards);
         SetUpRewardBubble(ref mmrRewards);
     }

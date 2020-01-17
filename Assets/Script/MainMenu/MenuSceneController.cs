@@ -72,7 +72,6 @@ public class MenuSceneController : MonoBehaviour {
 
             AccountManager.RankTableRow item = accountManager.rankTable.Find(x => x.minorRankName == prevInfo.rankDetail.minorRankName);
             int prevRankIndex = -1;
-            menuSceneController.userMmrGauge.SetUpReward();
 
             if (item != null) {
                 if (item.minorRankName == "무명 병사")
