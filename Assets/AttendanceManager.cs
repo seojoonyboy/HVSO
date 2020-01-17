@@ -62,12 +62,12 @@ public class AttendanceManager : MonoBehaviour
         Transform slotList = transform.Find("MonthlyBoard/DayList");
         InitBoard(slotList);
         dataModules.AttendanceResult boardInfo = AccountManager.Instance.attendanceResult;
-        int days = AccountManager.Instance.attendanceResult.attendance.monthly;
+        int days = AccountManager.Instance.attendanceResult.attendance.monthly - 1;
         for (int i = 0; i < boardInfo.table.monthly.Length; i++) {
             if (i < days) 
                 slotList.GetChild(i).Find("Block").gameObject.SetActive(true);
             else if (i == days) 
-                StartCoroutine(GetRewardAimation(slotList.GetChild(i).Find("Block").gameObject));
+                StartCoroutine(GetRewardAimation(slotList.GetChild(i).Find("Block").gameObject, true));
             else
                 slotList.GetChild(i).Find("Block").gameObject.SetActive(false);
             if (boardInfo.table.monthly[i].reward.kind.Contains("Box"))
@@ -94,11 +94,11 @@ public class AttendanceManager : MonoBehaviour
             int days;
             if (welcome) {
                 items = AccountManager.Instance.attendanceResult.table.welcome;
-                days = AccountManager.Instance.attendanceResult.attendance.welcome;
+                days = AccountManager.Instance.attendanceResult.attendance.welcome - 1;
             }
             else {
                 items = AccountManager.Instance.attendanceResult.table.comeback;
-                days = AccountManager.Instance.attendanceResult.attendance.comeback;
+                days = AccountManager.Instance.attendanceResult.attendance.comeback - 1;
             }
             for (int i = 0; i < items.Length; i++) {
                 if (i < days)
@@ -125,7 +125,7 @@ public class AttendanceManager : MonoBehaviour
         InitBoard(slotList);
         dataModules.AttendanceReward boardInfo = AccountManager.Instance.attendanceBoard;
 
-        int days = AccountManager.Instance.attendanceResult.attendance.monthly;
+        int days = AccountManager.Instance.attendanceResult.attendance.monthly - 1;
         for (int i = 0; i < boardInfo.monthly.Length; i++) {
             if (i <= days) 
                 slotList.GetChild(i).Find("Block").gameObject.SetActive(true);
@@ -156,11 +156,11 @@ public class AttendanceManager : MonoBehaviour
             int days;
             if (welcome) {
                 items = AccountManager.Instance.attendanceBoard.welcome;
-                days = AccountManager.Instance.attendanceResult.attendance.welcome;
+                days = AccountManager.Instance.attendanceResult.attendance.welcome - 1;
             }
             else {
                 items = AccountManager.Instance.attendanceBoard.comeback;
-                days = AccountManager.Instance.attendanceResult.attendance.comeback;
+                days = AccountManager.Instance.attendanceResult.attendance.comeback - 1;
             }
             for (int i = 0; i < items.Length; i++) {
                 if (i <= days)
@@ -177,7 +177,9 @@ public class AttendanceManager : MonoBehaviour
     }
 
 
-    IEnumerator GetRewardAimation(GameObject target) {
+    IEnumerator GetRewardAimation(GameObject target, bool isFirst = false) {
+        if(isFirst)
+            yield return new WaitForSeconds(1.5f);
         target.SetActive(false);
         yield return new WaitForSeconds(0.2f);
         target.SetActive(true);

@@ -226,7 +226,7 @@ public class MailBoxManager : MonoBehaviour
             slotList.GetChild(i / 3).gameObject.SetActive(true);
             slotList.GetChild(i / 3).GetChild(i % 3).gameObject.SetActive(true);
             slotList.GetChild(i / 3).GetChild(i % 3).Find("NameOrNum").GetComponent<TMPro.TextMeshProUGUI>().text = string.Empty;
-            slotList.GetChild(i / 3).GetChild(i).Find("Reward/Effect").gameObject.SetActive(false);
+            slotList.GetChild(i / 3).GetChild(i % 3).Find("Reward/Effect").gameObject.SetActive(false);
         }
 
         for (int i = 0; i < AccountManager.Instance.mailRewardList.Count; i++) {
