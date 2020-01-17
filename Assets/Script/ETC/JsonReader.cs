@@ -223,12 +223,6 @@ namespace dataModules {
         public int crystal;
     }
 
-    public class ShopAds {
-        public int id;
-        public string name;
-        public AdReward[] rewards;
-    }
-
     public class AdReward {
         public string kind;
         public int amount;

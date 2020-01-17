@@ -197,10 +197,10 @@ public class ShopManager : MonoBehaviour
     public void SetAdWindow(Enum Event_Type, Component Sender, object Param) {
         AdvertiseWindow.Find("Block").gameObject.SetActive(false);
         Transform adBtnList = AdvertiseWindow.Find("Ads");
-        dataModules.ShopAds ads = AccountManager.Instance.shopAdsList;
+        dataModules.AdReward[] ads = AccountManager.Instance.shopAdsList;
         bool open = false;
-        for(int i = 0; i < ads.rewards.Length; i++) {
-            if (!ads.rewards[i].claimed && !open) {
+        for(int i = 0; i < ads.Length; i++) {
+            if (!ads[i].claimed && !open) {
                 open = true;
                 adBtnList.GetChild(i).Find("Block").gameObject.SetActive(false);
             }

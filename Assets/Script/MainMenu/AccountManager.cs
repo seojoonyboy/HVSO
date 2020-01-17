@@ -48,7 +48,7 @@ public partial class AccountManager : Singleton<AccountManager> {
     public UserResourceManager userResource;
     public RewardClass[] rewardList;
     public DictionaryInfo dicInfo;
-    public ShopAds shopAdsList;
+    public AdReward[] shopAdsList;
     public AdRewardRequestResult adRewardResult;
     public AttendanceResult attendanceResult;
     public AttendanceReward attendanceBoard;
@@ -842,7 +842,7 @@ public partial class AccountManager {
         networkManager.Request(request, (req, res) => {
             if (res.IsSuccess) {
                 if (res.StatusCode == 200 || res.StatusCode == 304) {
-                    var result = dataModules.JsonReader.Read<ShopAds>(res.DataAsText);
+                    var result = dataModules.JsonReader.Read<AdReward[]>(res.DataAsText);
                     shopAdsList = result;
 
                     SetCardData();
