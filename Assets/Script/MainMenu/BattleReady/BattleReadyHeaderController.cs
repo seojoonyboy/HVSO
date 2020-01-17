@@ -204,24 +204,6 @@ public class BattleReadyHeaderController : SerializedMonoBehaviour {
         int pointLessThen = prevInfo.rankDetail.pointLessThen;
         int ratingPointTop = prevInfo.ratingPointTop ?? default(int);
 
-        //Slider prevSlider = rankingProgress.transform.Find("PrevSlider").gameObject.GetComponent<Slider>();
-        //Slider currSlider = rankingProgress.transform.Find("CurrentSlider").gameObject.GetComponent<Slider>();
-
-        //Image rankUpIcon = rankingProgress.transform.Find("CurrentSlider/MMRUpStandardValue").gameObject.GetComponent<Image>();
-        //Image rankDownIcon = rankingProgress.transform.Find("CurrentSlider/MMRDownStandardValue").gameObject.GetComponent<Image>();
-
-        //TextMeshProUGUI rankUpText = rankingProgress.transform.Find("CurrentSlider/MMRUpStandardValue").gameObject.GetComponent<TextMeshProUGUI>();
-        //TextMeshProUGUI rankDownText = rankingProgress.transform.Find("CurrentSlider/MMRDownStandardValue").gameObject.GetComponent<TextMeshProUGUI>();        
-
-        //rankUpText.text = pointLessThen.ToString();
-        //rankDownText.text = pointOverThen.ToString();
-
-        //prevSlider.maxValue = pointLessThen - pointOverThen;
-        //currSlider.maxValue = pointLessThen - pointOverThen;
-
-        //prevSlider.value = ratingPointTop;
-        //currSlider.value = prevInfo.ratingPoint - pointOverThen;
-
         if (item != null) {
             if (item.minorRankName == "무명 병사")
                 prevRankIndex = 1;
@@ -229,10 +211,6 @@ public class BattleReadyHeaderController : SerializedMonoBehaviour {
                 prevRankIndex = accountManager.rankTable.Count - 1;
             else
                 prevRankIndex = accountManager.rankTable.IndexOf(item);
-
-
-            //rankDownIcon.sprite = AccountManager.Instance.resource.rankIcons[accountManager.rankTable[prevRankIndex - 1].minorRankName];
-            //rankUpIcon.sprite = accountManager.resource.rankIcons[accountManager.rankTable[prevRankIndex + 1].minorRankName];
         }
         yield return true;
     }

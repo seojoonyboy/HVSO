@@ -13,6 +13,7 @@ public class LocalizationDataDownloader : MonoBehaviour {
     public string key;
 
     Dictionary<string, string> dictionary;
+    [SerializeField] bool addToDictionary;
 
     void Awake() {
         NoneIngameSceneEventHandler.Instance.AddListener(NoneIngameSceneEventHandler.EVENT_TYPE.API_USER_UPDATED, OnRequestUserInfoCallback);
@@ -53,7 +54,7 @@ public class LocalizationDataDownloader : MonoBehaviour {
     private void OnRequest(HTTPRequest req, HTTPResponse res) {
         ProcessFragments(res.Data);
         ReadCsvFile();
-        WriteToScriptableObject();
+        if(addToDictionary) AddToDictionary();
     }
 
     private void ProcessFragments(byte[] fragments) {
@@ -94,7 +95,7 @@ public class LocalizationDataDownloader : MonoBehaviour {
         }
     }
 
-    private void WriteToScriptableObject() {
+    private void AddToDictionary() {
         AccountManager.Instance.GetComponent<fbl_Translator>().localizationDatas.Add(key, dictionary);
         //MakeEnumScript();   //빌드시에 주석처리 필요함
     }
