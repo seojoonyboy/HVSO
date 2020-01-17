@@ -67,8 +67,11 @@ public class ShopManager : MonoBehaviour
         LayoutRebuilder.ForceRebuildLayoutImmediate(transform.Find("ShopWindowParent/ShopWindow/PackageShop/ItemList").GetComponent<RectTransform>());
         transform.Find("ShopWindowParent/ShopWindow/PackageShop").GetComponent<RectTransform>().sizeDelta 
             = new Vector2(100, transform.Find("ShopWindowParent/ShopWindow/PackageShop/ItemList").GetComponent<RectTransform>().rect.height + 40);
-        transform.gameObject.SetActive(false);
-        transform.gameObject.SetActive(true);
+        bool IsTutorialFinished = Convert.ToBoolean(PlayerPrefs.GetInt("IsTutorialFinished", 0));
+        if (IsTutorialFinished) {
+            transform.gameObject.SetActive(false);
+            transform.gameObject.SetActive(true);
+        }
     }
 
     public void SetGoldItem(dataModules.Shop item) {
